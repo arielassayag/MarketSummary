@@ -1,0 +1,210 @@
+{
+  "case_id": "2026-07-22_previa_vale_2t26",
+  "date": "2026-07-22",
+  "split": "holdout",
+  "regime": "corporate",
+  "showcase": false,
+  "input": {
+    "facts": [
+      {
+        "fact_id": "IDX-01",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa fechou aos 177.548,00 pontos em 2026-07-22 (série ^BVSP do agregador; validar contra a B3).",
+        "measure_kind": "level",
+        "value": 177548.0,
+        "unit": "points",
+        "direction": "na",
+        "observed_at": "2026-07-22T18:00:00-03:00",
+        "source": {
+          "name": "Yahoo Finance (série ^BVSP; validar contra a B3)",
+          "url": "https://finance.yahoo.com/quote/%5EBVSP/history/",
+          "source_tier": 3,
+          "published_at": "2026-07-22"
+        }
+      },
+      {
+        "fact_id": "IDX-02",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa variou +2,44% em 2026-07-22 em relação ao fechamento anterior (2026-07-21).",
+        "measure_kind": "return_pct",
+        "value": 2.44,
+        "unit": "pct",
+        "direction": "up",
+        "observed_at": "2026-07-22T18:00:00-03:00",
+        "source": {
+          "name": "Yahoo Finance (série ^BVSP; validar contra a B3)",
+          "url": "https://finance.yahoo.com/quote/%5EBVSP/history/",
+          "source_tier": 3,
+          "published_at": "2026-07-22"
+        }
+      },
+      {
+        "fact_id": "FX-01",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX de fechamento em 2026-07-22 foi de R$ 5.0638 por US$ (cotação de venda).",
+        "measure_kind": "level",
+        "value": 5.0638,
+        "unit": "brl_per_usd",
+        "direction": "na",
+        "observed_at": "2026-07-22T13:03:20.263945-03:00",
+        "source": {
+          "name": "Banco Central do Brasil (PTAX via API Olinda)",
+          "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)",
+          "source_tier": 1,
+          "published_at": "2026-07-22"
+        }
+      },
+      {
+        "fact_id": "FX-02",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX de fechamento variou -0,28% em 2026-07-22 em relação ao dia anterior (2026-07-21).",
+        "measure_kind": "change_pct",
+        "value": -0.28,
+        "unit": "pct",
+        "direction": "down",
+        "observed_at": "2026-07-22T13:03:20.263945-03:00",
+        "source": {
+          "name": "Banco Central do Brasil (PTAX via API Olinda)",
+          "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)",
+          "source_tier": 1,
+          "published_at": "2026-07-22"
+        }
+      },
+      {
+        "fact_id": "CORP-01",
+        "category": "news_corporate",
+        "subject": "Vale (prévia operacional 2T26)",
+        "statement": "A Vale subiu 3,96% em 22/07/2026 após divulgar prévia operacional do 2º trimestre com maior produção de minério de ferro para um segundo trimestre.",
+        "measure_kind": "return_pct",
+        "value": 3.96,
+        "unit": "pct",
+        "direction": "up",
+        "observed_at": "2026-07-22T19:00:00-03:00",
+        "source": {
+          "name": "Bloomberg Línea",
+          "url": "https://www.bloomberglinea.com.br/mercados/ibovespa-sobe-24-com-impulso-da-vale-apos-previa-acima-do-esperado/",
+          "source_tier": 3,
+          "published_at": "2026-07-22"
+        }
+      },
+      {
+        "fact_id": "NEWS-01",
+        "category": "news_domestic",
+        "subject": "Amplitude do pregão",
+        "statement": "Em 22/07/2026 o Ibovespa subiu 2,44% (177.548 pontos) e, dos 78 ativos do índice, apenas três caíram.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2026-07-22T19:00:00-03:00",
+        "source": {
+          "name": "Valor Investe",
+          "url": "https://valorinveste.globo.com/mercados/renda-variavel/bolsas-e-indices/noticia/2026/07/22/dolar-e-ibovespa-hoje-22-de-julho-de-2026.ghtml",
+          "source_tier": 3,
+          "published_at": "2026-07-22"
+        }
+      },
+      {
+        "fact_id": "GLO-01",
+        "category": "news_global",
+        "subject": "Tarifas EUA-Brasil",
+        "statement": "22/07/2026 marcou o primeiro dia de vigência de novas tarifas dos EUA sobre produtos brasileiros.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2026-07-22T19:00:00-03:00",
+        "source": {
+          "name": "Folha de S.Paulo",
+          "url": "https://www1.folha.uol.com.br/mercado/2026/07/dolar-abre-em-leve-alta-nesta-quarta-no-primeiro-dia-de-novas-tarifas-dos-eua-sobre-o-brasil.shtml",
+          "source_tier": 3,
+          "published_at": "2026-07-22"
+        }
+      },
+      {
+        "fact_id": "GLO-02",
+        "category": "news_global",
+        "subject": "Petróleo",
+        "statement": "O petróleo disparou em 22/07/2026, com Petrobras acompanhando o movimento.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2026-07-22T19:00:00-03:00",
+        "source": {
+          "name": "Money Times",
+          "url": "https://www.moneytimes.com.br/ibovespa-22-7-26-lils/",
+          "source_tier": 3,
+          "published_at": "2026-07-22"
+        }
+      }
+    ]
+  },
+  "reference": {
+    "critical_fact_ids": [
+      "IDX-02",
+      "FX-02"
+    ],
+    "must_mention_fact_ids": [
+      "IDX-02",
+      "FX-01",
+      "CORP-01",
+      "NEWS-01"
+    ],
+    "useful_fact_ids": [
+      "IDX-01",
+      "GLO-01",
+      "GLO-02"
+    ],
+    "fact_importance": {
+      "IDX-02": 5,
+      "FX-01": 4,
+      "FX-02": 4,
+      "IDX-01": 3,
+      "CORP-01": 5,
+      "NEWS-01": 2,
+      "GLO-01": 2,
+      "GLO-02": 2
+    },
+    "accepted_driver_groups": [
+      {
+        "label": "Prévia operacional da Vale acima do esperado (VALE3 +3,96%) é o principal impulso do dia (+2,44%)",
+        "evidence_ids": [
+          "CORP-01",
+          "NEWS-01",
+          "IDX-02"
+        ],
+        "confidence": "high"
+      },
+      {
+        "label": "Petróleo em disparada apoia Petrobras; novas tarifas dos EUA sobre o Brasil entram em vigor sem derrubar a bolsa",
+        "evidence_ids": [
+          "GLO-01",
+          "GLO-02"
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "forbidden_conclusions": [
+      {
+        "description": "Afirmar que as tarifas dos EUA causaram a queda da bolsa (a bolsa subiu no primeiro dia de vigência)",
+        "severity": "critical"
+      },
+      {
+        "description": "Trocar o sinal ou o valor do retorno da Vale",
+        "severity": "critical"
+      }
+    ],
+    "judge_notes": "Weg também avançou (Bloomberg Línea). Dólar fechou em queda no dia. Limitações registradas: (1) fechamento do Ibovespa obtido de agregador (série ^BVSP do Yahoo Finance); validar contra a B3 antes de publicar; (2) PTAX é taxa de referência do BCB (~13h/fechamento) e pode diferir do fechamento do dólar à vista citado pela imprensa; (3) sem dados de curva de juros em pontos-base e sem contribuições em bps por ação neste dataset."
+  },
+  "review": {
+    "status": "draft",
+    "reviewer": null,
+    "reviewed_at": null,
+    "notes": "Caso gerado automaticamente a partir de fontes verificadas; requer revisão humana antes de publicação."
+  }
+}

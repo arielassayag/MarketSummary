@@ -1,0 +1,32 @@
+# Ambientes virtuais e dependências
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+
+# Variáveis de ambiente e segredos
+.env
+*.env
+.env.*
+!.env.example
+
+# Banco de dados e saídas locais
+fechamento.db
+fechamento.db-journal
+outputs/
+*.sqlite3
+
+# Caches
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+# Sistema Operacional
+.DS_Store
+Thumbs.db
+
+# Agentes locais
+.agents/

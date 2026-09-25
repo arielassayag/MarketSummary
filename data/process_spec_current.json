@@ -1,0 +1,244 @@
+{
+  "process_id": "processo_atual_hipotetico",
+  "title": "Processo Atual (Exemplo Hipotético Editável)",
+  "description": "Mapeamento do fluxo de trabalho manual típico para elaboração do comentário de fechamento de mercado. Mostra a dispersão de tempo em tarefas mecânicas e o alto risco de erros de digitação e alucinações humanas.",
+  "is_redesign": false,
+  "steps": [
+    {
+      "step_id": "step_1_open_files",
+      "name": "Abrir arquivos de preços e planilhas",
+      "objective": "Localizar e abrir manualmente os arquivos de cotações e posições da carteira.",
+      "inputs": [
+        "Planilhas locais",
+        "Terminais de mercado"
+      ],
+      "outputs": [
+        "Tabelas abertas na tela"
+      ],
+      "responsible": "Analista Júnior",
+      "dependencies": [],
+      "completion_rule": "Todos os arquivos necessários abertos sem erro de formato.",
+      "exceptions": [
+        "Arquivo corrompido",
+        "Caminho não encontrado"
+      ],
+      "exception_destination": "Interrupção manual e busca por backup",
+      "classification": "eliminar",
+      "observed_time_minutes": null,
+      "estimated_time_minutes": 10.0
+    },
+    {
+      "step_id": "step_2_check_references",
+      "name": "Conferir referências e datas",
+      "objective": "Verificar visualmente se a data das cotações corresponde ao pregão atual.",
+      "inputs": [
+        "Tabelas abertas"
+      ],
+      "outputs": [
+        "Confirmação visual de data"
+      ],
+      "responsible": "Analista Júnior",
+      "dependencies": [
+        "step_1_open_files"
+      ],
+      "completion_rule": "Datas de todos os ativos conferidas com o calendário B3.",
+      "exceptions": [
+        "Data desatualizada em algum ativo"
+      ],
+      "exception_destination": "Contato manual com fornecedor de dados",
+      "classification": "codigo",
+      "observed_time_minutes": null,
+      "estimated_time_minutes": 5.0
+    },
+    {
+      "step_id": "step_3_calc_variations",
+      "name": "Calcular variações e retornos",
+      "objective": "Digitar ou arrastar fórmulas de retorno e contribuição no Excel.",
+      "inputs": [
+        "Cotações e pesos da carteira"
+      ],
+      "outputs": [
+        "Colunas de retorno e contribuição"
+      ],
+      "responsible": "Analista Júnior",
+      "dependencies": [
+        "step_2_check_references"
+      ],
+      "completion_rule": "Planilha calculada com retornos percentuais e em pontos-base.",
+      "exceptions": [
+        "Erro de fórmula (#DIV/0!, #VALOR!)",
+        "Soma de pesos diferente de 100%"
+      ],
+      "exception_destination": "Correção manual de fórmulas",
+      "classification": "codigo",
+      "observed_time_minutes": null,
+      "estimated_time_minutes": 15.0
+    },
+    {
+      "step_id": "step_4_identify_movements",
+      "name": "Identificar movimentos relevantes e destaques",
+      "objective": "Ordenar maiores altas, baixas e principais impactos por setor.",
+      "inputs": [
+        "Colunas calculadas"
+      ],
+      "outputs": [
+        "Lista mental ou rascunho de destaques"
+      ],
+      "responsible": "Analista",
+      "dependencies": [
+        "step_3_calc_variations"
+      ],
+      "completion_rule": "Seleção dos 3 maiores contribuidores positivos e negativos.",
+      "exceptions": [
+        "Movimento atípico sem explicação aparente"
+      ],
+      "exception_destination": "Investigação aprofundada",
+      "classification": "codigo",
+      "observed_time_minutes": null,
+      "estimated_time_minutes": 10.0
+    },
+    {
+      "step_id": "step_5_read_news",
+      "name": "Ler notícias e apurar justificativas",
+      "objective": "Navegar em portais e feeds para buscar fatos relevantes sobre os destaques.",
+      "inputs": [
+        "Feeds de notícias",
+        "Portais financeiros"
+      ],
+      "outputs": [
+        "Anotações com manchetes e explicações"
+      ],
+      "responsible": "Analista",
+      "dependencies": [
+        "step_4_identify_movements"
+      ],
+      "completion_rule": "Pelo menos uma explicação plausível encontrada para cada grande destaque.",
+      "exceptions": [
+        "Nenhuma notícia sobre ativo que oscilou fortemente"
+      ],
+      "exception_destination": "Registro de falta de notícia ou especulação de mercado",
+      "classification": "humano",
+      "observed_time_minutes": null,
+      "estimated_time_minutes": 25.0
+    },
+    {
+      "step_id": "step_6_relate_evidence",
+      "name": "Relacionar evidências aos movimentos",
+      "objective": "Cruzar a narrativa das notícias com os números calculados.",
+      "inputs": [
+        "Anotações de notícias",
+        "Destaques numéricos"
+      ],
+      "outputs": [
+        "Estrutura narrativa do comentário"
+      ],
+      "responsible": "Analista",
+      "dependencies": [
+        "step_5_read_news"
+      ],
+      "completion_rule": "Relações de causalidade estabelecidas ou ausência de nexo sinalizada.",
+      "exceptions": [
+        "Notícia contraditória com a direção do preço"
+      ],
+      "exception_destination": "Debate com time de análise",
+      "classification": "humano",
+      "observed_time_minutes": null,
+      "estimated_time_minutes": 15.0
+    },
+    {
+      "step_id": "step_7_write_commentary",
+      "name": "Escrever o comentário de fechamento",
+      "objective": "Redigir o texto corrido (200-300 palavras) sintetizando o pregão.",
+      "inputs": [
+        "Estrutura narrativa",
+        "Planilha de cálculos"
+      ],
+      "outputs": [
+        "Rascunho de texto"
+      ],
+      "responsible": "Analista",
+      "dependencies": [
+        "step_6_relate_evidence"
+      ],
+      "completion_rule": "Texto completo redigido com introdução, destaques e conclusão.",
+      "exceptions": [
+        "Divergência de estilo ou falta de clareza"
+      ],
+      "exception_destination": "Reescrita do parágrafo",
+      "classification": "ia",
+      "observed_time_minutes": null,
+      "estimated_time_minutes": 20.0
+    },
+    {
+      "step_id": "step_8_review",
+      "name": "Revisão manual do comentário",
+      "objective": "Conferir números digitados no texto contra a planilha e checar coerência.",
+      "inputs": [
+        "Rascunho de texto",
+        "Planilha"
+      ],
+      "outputs": [
+        "Texto aprovado ou com correções"
+      ],
+      "responsible": "Estrategista Chefe",
+      "dependencies": [
+        "step_7_write_commentary"
+      ],
+      "completion_rule": "Aprovação verbal ou via chat pelo gestor.",
+      "exceptions": [
+        "Erro numérico no texto",
+        "Interpretação incorreta de notícia"
+      ],
+      "exception_destination": "Devolução para o analista reescrever",
+      "classification": "humano",
+      "observed_time_minutes": null,
+      "estimated_time_minutes": 15.0
+    },
+    {
+      "step_id": "step_9_copy_distribution",
+      "name": "Copiar para o canal de distribuição",
+      "objective": "Copiar o texto do editor e colar no sistema de e-mail/newsletter.",
+      "inputs": [
+        "Texto aprovado"
+      ],
+      "outputs": [
+        "Comentário colado no canal"
+      ],
+      "responsible": "Analista Júnior",
+      "dependencies": [
+        "step_8_review"
+      ],
+      "completion_rule": "Texto formatado corretamente no canal.",
+      "exceptions": [
+        "Quebra de formatação ou caracteres especiais corrompidos"
+      ],
+      "exception_destination": "Ajuste manual da formatação",
+      "classification": "eliminar",
+      "observed_time_minutes": null,
+      "estimated_time_minutes": 5.0
+    },
+    {
+      "step_id": "step_10_archive_final",
+      "name": "Arquivar versão final",
+      "objective": "Salvar cópia do arquivo com data no diretório compartilhado.",
+      "inputs": [
+        "Arquivo final"
+      ],
+      "outputs": [
+        "Arquivo arquivado em disco"
+      ],
+      "responsible": "Analista Júnior",
+      "dependencies": [
+        "step_9_copy_distribution"
+      ],
+      "completion_rule": "Arquivo salvo com convenção de nomenclatura da empresa.",
+      "exceptions": [
+        "Espaço em disco insuficiente ou permissão negada"
+      ],
+      "exception_destination": "Contato com equipe de TI",
+      "classification": "codigo",
+      "observed_time_minutes": null,
+      "estimated_time_minutes": 5.0
+    }
+  ]
+}

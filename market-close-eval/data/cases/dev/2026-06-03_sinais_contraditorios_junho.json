@@ -1,0 +1,184 @@
+{
+  "case_id": "2026-06-03_sinais_contraditorios_junho",
+  "date": "2026-06-03",
+  "split": "dev",
+  "regime": "stress",
+  "showcase": false,
+  "input": {
+    "facts": [
+      {
+        "fact_id": "IDX-01",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa fechou aos 170.331,00 pontos em 2026-06-03 (série ^BVSP do agregador; validar contra a B3).",
+        "measure_kind": "level",
+        "value": 170331.0,
+        "unit": "points",
+        "direction": "na",
+        "observed_at": "2026-06-03T18:00:00-03:00",
+        "source": {
+          "name": "Yahoo Finance (série ^BVSP; validar contra a B3)",
+          "url": "https://finance.yahoo.com/quote/%5EBVSP/history/",
+          "source_tier": 3,
+          "published_at": "2026-06-03"
+        }
+      },
+      {
+        "fact_id": "IDX-02",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa variou -2,22% em 2026-06-03 em relação ao fechamento anterior (2026-06-02).",
+        "measure_kind": "return_pct",
+        "value": -2.22,
+        "unit": "pct",
+        "direction": "down",
+        "observed_at": "2026-06-03T18:00:00-03:00",
+        "source": {
+          "name": "Yahoo Finance (série ^BVSP; validar contra a B3)",
+          "url": "https://finance.yahoo.com/quote/%5EBVSP/history/",
+          "source_tier": 3,
+          "published_at": "2026-06-03"
+        }
+      },
+      {
+        "fact_id": "FX-01",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX de fechamento em 2026-06-03 foi de R$ 5.0415 por US$ (cotação de venda).",
+        "measure_kind": "level",
+        "value": 5.0415,
+        "unit": "brl_per_usd",
+        "direction": "na",
+        "observed_at": "2026-06-03T13:06:26.540000-03:00",
+        "source": {
+          "name": "Banco Central do Brasil (PTAX via API Olinda)",
+          "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)",
+          "source_tier": 1,
+          "published_at": "2026-06-03"
+        }
+      },
+      {
+        "fact_id": "FX-02",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX de fechamento variou +0,51% em 2026-06-03 em relação ao dia anterior (2026-06-02).",
+        "measure_kind": "change_pct",
+        "value": 0.51,
+        "unit": "pct",
+        "direction": "up",
+        "observed_at": "2026-06-03T13:06:26.540000-03:00",
+        "source": {
+          "name": "Banco Central do Brasil (PTAX via API Olinda)",
+          "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)",
+          "source_tier": 1,
+          "published_at": "2026-06-03"
+        }
+      },
+      {
+        "fact_id": "GLO-01",
+        "category": "news_global",
+        "subject": "Novos ataques no Oriente Médio",
+        "statement": "Novos ataques no Oriente Médio aumentaram a aversão a risco global em 03/06/2026.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2026-06-03T19:00:00-03:00",
+        "source": {
+          "name": "CNN Brasil",
+          "url": "https://www.cnnbrasil.com.br/economia/money/mercado/mercado-financeiro-ibovespa-dolar-3-junho-2026/",
+          "source_tier": 3,
+          "published_at": "2026-06-03"
+        }
+      },
+      {
+        "fact_id": "NEWS-01",
+        "category": "news_domestic",
+        "subject": "Maior perda em quase um mês",
+        "statement": "O Ibovespa teve a maior perda em quase um mês em 03/06/2026 (170,3 mil pontos, -2,22%), com perdas acelerando à tarde num dia de consolidação também em Nova York após sequência de recordes.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2026-06-03T19:00:00-03:00",
+        "source": {
+          "name": "UOL Economia",
+          "url": "https://economia.uol.com.br/noticias/estadao-conteudo/2026/06/03/ibovespa-tem-maior-perda-em-quase-um-mes-aos-1703-mil-pontos.htm",
+          "source_tier": 3,
+          "published_at": "2026-06-03"
+        }
+      },
+      {
+        "fact_id": "NEWS-02",
+        "category": "news_domestic",
+        "subject": "Fatores domésticos acumulados",
+        "statement": "Saída de capital estrangeiro, juros altos e preocupação fiscal pressionavam a bolsa brasileira no período, enquanto o dólar subia 2,3% no mês de junho.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2026-06-03T19:00:00-03:00",
+        "source": {
+          "name": "Forbes Brasil",
+          "url": "https://forbes.com.br/geral/2026/06/ibovespa-fecha-junho-em-queda-pelo-4o-mes-seguido-dolar-sobe-23-no-mes/",
+          "source_tier": 3,
+          "published_at": "2026-06-30"
+        }
+      }
+    ]
+  },
+  "reference": {
+    "critical_fact_ids": [
+      "IDX-02",
+      "FX-02"
+    ],
+    "must_mention_fact_ids": [
+      "IDX-02",
+      "FX-01",
+      "GLO-01",
+      "NEWS-01"
+    ],
+    "useful_fact_ids": [
+      "IDX-01",
+      "NEWS-02"
+    ],
+    "fact_importance": {
+      "IDX-02": 5,
+      "FX-01": 4,
+      "FX-02": 4,
+      "IDX-01": 3,
+      "GLO-01": 5,
+      "NEWS-01": 2,
+      "NEWS-02": 2
+    },
+    "accepted_driver_groups": [
+      {
+        "label": "Dia de sinais contraditórios: aversão global (novos ataques), consolidação pós-recordes de Wall Street e fatores domésticos (fluxo, juros, fiscal) somam-se para a maior perda em quase um mês",
+        "evidence_ids": [
+          "GLO-01",
+          "NEWS-01",
+          "NEWS-02",
+          "IDX-02"
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "forbidden_conclusions": [
+      {
+        "description": "Apontar uma única causa dominante para o dia (as narrativas reportadas são múltiplas e parcialmente contraditórias)",
+        "severity": "critical"
+      },
+      {
+        "description": "Usar a variação mensal do dólar (+2,3% no mês) como se fosse variação do dia",
+        "severity": "critical"
+      }
+    ],
+    "judge_notes": "Quarta queda consecutiva em junho (Money Times). Caso pensado para testar honestidade do modelo diante de narrativas concorrentes. Limitações registradas: (1) fechamento do Ibovespa obtido de agregador (série ^BVSP do Yahoo Finance); validar contra a B3 antes de publicar; (2) PTAX é taxa de referência do BCB (~13h/fechamento) e pode diferir do fechamento do dólar à vista citado pela imprensa; (3) sem dados de curva de juros em pontos-base e sem contribuições em bps por ação neste dataset."
+  },
+  "review": {
+    "status": "draft",
+    "reviewer": null,
+    "reviewed_at": null,
+    "notes": "Caso gerado automaticamente a partir de fontes verificadas; requer revisão humana antes de publicação."
+  }
+}

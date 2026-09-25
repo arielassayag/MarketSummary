@@ -1,0 +1,54 @@
+{
+  "case_id": "2026-01-01_descricao",
+  "date": "2026-01-01",
+  "split": "dev",
+  "regime": "domestic_macro",
+  "showcase": false,
+  "input": {
+    "facts": [
+      {
+        "fact_id": "IDX-01",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "Paráfrase factual e autossuficiente.",
+        "measure_kind": "return_pct",
+        "value": 1.23,
+        "unit": "pct",
+        "direction": "up",
+        "observed_at": "2026-01-01T18:00:00-03:00",
+        "source": {
+          "name": "B3",
+          "url": "https://example.com/fonte",
+          "source_tier": 1,
+          "published_at": "2026-01-01"
+        }
+      }
+    ]
+  },
+  "reference": {
+    "critical_fact_ids": ["IDX-01"],
+    "must_mention_fact_ids": ["IDX-01"],
+    "useful_fact_ids": [],
+    "fact_importance": {"IDX-01": 5},
+    "accepted_driver_groups": [
+      {
+        "label": "Descrição do vetor",
+        "evidence_ids": ["IDX-01"],
+        "confidence": "high"
+      }
+    ],
+    "forbidden_conclusions": [
+      {
+        "description": "Conclusão que não pode ser sustentada",
+        "severity": "critical"
+      }
+    ],
+    "judge_notes": "Informações adicionais para a correção."
+  },
+  "review": {
+    "status": "draft",
+    "reviewer": null,
+    "reviewed_at": null,
+    "notes": null
+  }
+}

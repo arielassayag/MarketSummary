@@ -1,0 +1,180 @@
+{
+  "case_id": "2026-01-21_rotacao_emergentes_recorde",
+  "date": "2026-01-21",
+  "split": "holdout",
+  "regime": "global_macro",
+  "showcase": false,
+  "input": {
+    "facts": [
+      {
+        "fact_id": "IDX-01",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa fechou aos 171.817,00 pontos em 2026-01-21 (série ^BVSP do agregador; validar contra a B3).",
+        "measure_kind": "level",
+        "value": 171817.0,
+        "unit": "points",
+        "direction": "na",
+        "observed_at": "2026-01-21T18:00:00-03:00",
+        "source": {
+          "name": "Yahoo Finance (série ^BVSP; validar contra a B3)",
+          "url": "https://finance.yahoo.com/quote/%5EBVSP/history/",
+          "source_tier": 3,
+          "published_at": "2026-01-21"
+        }
+      },
+      {
+        "fact_id": "IDX-02",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa variou +3,33% em 2026-01-21 em relação ao fechamento anterior (2026-01-20).",
+        "measure_kind": "return_pct",
+        "value": 3.33,
+        "unit": "pct",
+        "direction": "up",
+        "observed_at": "2026-01-21T18:00:00-03:00",
+        "source": {
+          "name": "Yahoo Finance (série ^BVSP; validar contra a B3)",
+          "url": "https://finance.yahoo.com/quote/%5EBVSP/history/",
+          "source_tier": 3,
+          "published_at": "2026-01-21"
+        }
+      },
+      {
+        "fact_id": "FX-01",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX de fechamento em 2026-01-21 foi de R$ 5.3368 por US$ (cotação de venda).",
+        "measure_kind": "level",
+        "value": 5.3368,
+        "unit": "brl_per_usd",
+        "direction": "na",
+        "observed_at": "2026-01-21T13:04:32.866000-03:00",
+        "source": {
+          "name": "Banco Central do Brasil (PTAX via API Olinda)",
+          "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)",
+          "source_tier": 1,
+          "published_at": "2026-01-21"
+        }
+      },
+      {
+        "fact_id": "FX-02",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX de fechamento variou -0,78% em 2026-01-21 em relação ao dia anterior (2026-01-20).",
+        "measure_kind": "change_pct",
+        "value": -0.78,
+        "unit": "pct",
+        "direction": "down",
+        "observed_at": "2026-01-21T13:04:32.866000-03:00",
+        "source": {
+          "name": "Banco Central do Brasil (PTAX via API Olinda)",
+          "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)",
+          "source_tier": 1,
+          "published_at": "2026-01-21"
+        }
+      },
+      {
+        "fact_id": "GLO-01",
+        "category": "news_global",
+        "subject": "Rotação de capitais",
+        "statement": "Análises do dia apontaram rotação de capitais para fora dos ativos americanos em direção a mercados emergentes em 21/01/2026, beneficiando Ibovespa e real; bolsas latinas como Colômbia, Peru e Chile também avançaram com força.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2026-01-21T19:00:00-03:00",
+        "source": {
+          "name": "G1",
+          "url": "https://g1.globo.com/economia/noticia/2026/01/21/dolar-ibovespa.ghtml",
+          "source_tier": 3,
+          "published_at": "2026-01-21"
+        }
+      },
+      {
+        "fact_id": "NEWS-01",
+        "category": "news_domestic",
+        "subject": "Recorde do Ibovespa",
+        "statement": "O Ibovespa disparou 3,33% em 21/01/2026 e fechou, pela primeira vez na história, acima dos 171 mil pontos (171.817).",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2026-01-21T19:00:00-03:00",
+        "source": {
+          "name": "G1",
+          "url": "https://g1.globo.com/economia/noticia/2026/01/21/dolar-ibovespa.ghtml",
+          "source_tier": 3,
+          "published_at": "2026-01-21"
+        }
+      },
+      {
+        "fact_id": "GLO-02",
+        "category": "news_global",
+        "subject": "Dólar à vista (fechamento, imprensa)",
+        "statement": "O dólar à vista recuou 1,10% em 21/01/2026, a R$ 5,3209, menor fechamento desde 04/12/2025, com recuo generalizado da moeda americana no exterior.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2026-01-21T19:00:00-03:00",
+        "source": {
+          "name": "CNN Brasil",
+          "url": "https://www.cnnbrasil.com.br/economia/money/mercado/mercado-financeiro-ibovespa-dolar-21-janeiro-2026/",
+          "source_tier": 3,
+          "published_at": "2026-01-21"
+        }
+      }
+    ]
+  },
+  "reference": {
+    "critical_fact_ids": [
+      "IDX-02",
+      "FX-02"
+    ],
+    "must_mention_fact_ids": [
+      "IDX-02",
+      "FX-01",
+      "GLO-01",
+      "NEWS-01"
+    ],
+    "useful_fact_ids": [
+      "IDX-01",
+      "GLO-02"
+    ],
+    "fact_importance": {
+      "IDX-02": 5,
+      "FX-01": 4,
+      "FX-02": 4,
+      "IDX-01": 3,
+      "GLO-01": 5,
+      "NEWS-01": 2,
+      "GLO-02": 2
+    },
+    "accepted_driver_groups": [
+      {
+        "label": "Rali de emergentes com rotação para fora dos EUA e dólar global mais fraco; recorde histórico do Ibovespa",
+        "evidence_ids": [
+          "GLO-01",
+          "GLO-02",
+          "NEWS-01",
+          "IDX-02"
+        ],
+        "confidence": "high"
+      }
+    ],
+    "forbidden_conclusions": [
+      {
+        "description": "Atribuir o rali a fatores domésticos específicos não presentes no pacote",
+        "severity": "critical"
+      }
+    ],
+    "judge_notes": "'Rotação de capitais' é leitura analítica reportada; em dólar, o Ibovespa equivalia a cerca de 32.291 pontos no dia (Jornal do Comércio). Limitações registradas: (1) fechamento do Ibovespa obtido de agregador (série ^BVSP do Yahoo Finance); validar contra a B3 antes de publicar; (2) PTAX é taxa de referência do BCB (~13h/fechamento) e pode diferir do fechamento do dólar à vista citado pela imprensa; (3) sem dados de curva de juros em pontos-base e sem contribuições em bps por ação neste dataset."
+  },
+  "review": {
+    "status": "draft",
+    "reviewer": null,
+    "reviewed_at": null,
+    "notes": "Caso gerado automaticamente a partir de fontes verificadas; requer revisão humana antes de publicação."
+  }
+}

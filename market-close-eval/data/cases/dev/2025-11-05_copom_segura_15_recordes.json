@@ -1,0 +1,183 @@
+{
+  "case_id": "2025-11-05_copom_segura_15_recordes",
+  "date": "2025-11-05",
+  "split": "dev",
+  "regime": "domestic_macro",
+  "showcase": false,
+  "input": {
+    "facts": [
+      {
+        "fact_id": "IDX-01",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa fechou aos 153.294,00 pontos em 2025-11-05 (série ^BVSP do agregador; validar contra a B3).",
+        "measure_kind": "level",
+        "value": 153294.0,
+        "unit": "points",
+        "direction": "na",
+        "observed_at": "2025-11-05T18:00:00-03:00",
+        "source": {
+          "name": "Yahoo Finance (série ^BVSP; validar contra a B3)",
+          "url": "https://finance.yahoo.com/quote/%5EBVSP/history/",
+          "source_tier": 3,
+          "published_at": "2025-11-05"
+        }
+      },
+      {
+        "fact_id": "IDX-02",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa variou +1,72% em 2025-11-05 em relação ao fechamento anterior (2025-11-04).",
+        "measure_kind": "return_pct",
+        "value": 1.72,
+        "unit": "pct",
+        "direction": "up",
+        "observed_at": "2025-11-05T18:00:00-03:00",
+        "source": {
+          "name": "Yahoo Finance (série ^BVSP; validar contra a B3)",
+          "url": "https://finance.yahoo.com/quote/%5EBVSP/history/",
+          "source_tier": 3,
+          "published_at": "2025-11-05"
+        }
+      },
+      {
+        "fact_id": "FX-01",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX de fechamento em 2025-11-05 foi de R$ 5.3798 por US$ (cotação de venda).",
+        "measure_kind": "level",
+        "value": 5.3798,
+        "unit": "brl_per_usd",
+        "direction": "na",
+        "observed_at": "2025-11-05T13:07:26.804000-03:00",
+        "source": {
+          "name": "Banco Central do Brasil (PTAX via API Olinda)",
+          "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)",
+          "source_tier": 1,
+          "published_at": "2025-11-05"
+        }
+      },
+      {
+        "fact_id": "FX-02",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX de fechamento variou -0,09% em 2025-11-05 em relação ao dia anterior (2025-11-04).",
+        "measure_kind": "change_pct",
+        "value": -0.09,
+        "unit": "pct",
+        "direction": "down",
+        "observed_at": "2025-11-05T13:07:26.804000-03:00",
+        "source": {
+          "name": "Banco Central do Brasil (PTAX via API Olinda)",
+          "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)",
+          "source_tier": 1,
+          "published_at": "2025-11-05"
+        }
+      },
+      {
+        "fact_id": "RATE-01",
+        "category": "rates",
+        "subject": "Taxa Selic",
+        "statement": "O Copom manteve a Selic em 15,00% ao ano na reunião de 05/11/2025, sem sinalizar cortes à frente.",
+        "measure_kind": "level",
+        "value": 15.0,
+        "unit": "pct",
+        "direction": "na",
+        "observed_at": "2025-11-05T19:00:00-03:00",
+        "source": {
+          "name": "G1",
+          "url": "https://g1.globo.com/economia/noticia/2025/11/05/dolar-ibovespa.ghtml",
+          "source_tier": 3,
+          "published_at": "2025-11-05"
+        }
+      },
+      {
+        "fact_id": "NEWS-01",
+        "category": "news_domestic",
+        "subject": "Sequência de recordes",
+        "statement": "O Ibovespa fechou em recorde pela 8ª sessão consecutiva em 05/11/2025 (153.294 pontos, +1,72%), com a decisão de juros no radar.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2025-11-05T19:00:00-03:00",
+        "source": {
+          "name": "G1",
+          "url": "https://g1.globo.com/economia/noticia/2025/11/05/dolar-ibovespa.ghtml",
+          "source_tier": 3,
+          "published_at": "2025-11-05"
+        }
+      },
+      {
+        "fact_id": "GLO-01",
+        "category": "news_global",
+        "subject": "Dólar à vista (fechamento, imprensa)",
+        "statement": "O dólar à vista recuou para a casa de R$ 5,36-5,38 em 05/11/2025.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2025-11-05T19:00:00-03:00",
+        "source": {
+          "name": "Bloomberg Línea",
+          "url": "https://www.bloomberglinea.com.br/mercados/ibovespa-sobe-com-investidores-a-espera-da-decisao-do-copom-dolar-cai-a-r-538/",
+          "source_tier": 3,
+          "published_at": "2025-11-05"
+        }
+      }
+    ]
+  },
+  "reference": {
+    "critical_fact_ids": [
+      "IDX-02",
+      "FX-02"
+    ],
+    "must_mention_fact_ids": [
+      "IDX-02",
+      "FX-01",
+      "RATE-01",
+      "NEWS-01"
+    ],
+    "useful_fact_ids": [
+      "IDX-01",
+      "GLO-01"
+    ],
+    "fact_importance": {
+      "IDX-02": 5,
+      "FX-01": 4,
+      "FX-02": 4,
+      "IDX-01": 3,
+      "RATE-01": 5,
+      "NEWS-01": 2,
+      "GLO-01": 2
+    },
+    "accepted_driver_groups": [
+      {
+        "label": "Euforia acionária com 8º recorde consecutivo na véspera/ dia da decisão do Copom de manter a Selic em 15%",
+        "evidence_ids": [
+          "NEWS-01",
+          "RATE-01",
+          "IDX-02"
+        ],
+        "confidence": "high"
+      }
+    ],
+    "forbidden_conclusions": [
+      {
+        "description": "Afirmar que o Copom cortou ou sinalizou cortes de juros",
+        "severity": "critical"
+      },
+      {
+        "description": "Afirmar causalidade entre a manutenção da Selic e a alta do dia (decisão saiu após o fechamento; correlação não é causa)",
+        "severity": "critical"
+      }
+    ],
+    "judge_notes": "A decisão do Copom é divulgada à noite (após o fechamento); a alta do dia antecede a divulgação formal. Limitações registradas: (1) fechamento do Ibovespa obtido de agregador (série ^BVSP do Yahoo Finance); validar contra a B3 antes de publicar; (2) PTAX é taxa de referência do BCB (~13h/fechamento) e pode diferir do fechamento do dólar à vista citado pela imprensa; (3) sem dados de curva de juros em pontos-base e sem contribuições em bps por ação neste dataset."
+  },
+  "review": {
+    "status": "draft",
+    "reviewer": null,
+    "reviewed_at": null,
+    "notes": "Caso gerado automaticamente a partir de fontes verificadas; requer revisão humana antes de publicação."
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "scenario_id": "live_1d_20260920_132431",
+  "reference_date": "2026-09-20",
+  "previous_session": "2026-09-20",
+  "cutoff_time": "2026-09-20T13:24:31.980097+00:00",
+  "timezone": "America/Sao_Paulo",
+  "files": [
+    {
+      "filename": "quotes.csv",
+      "path": "quotes.csv",
+      "sha256": "ff5c9281653f83207a41228fab0bada9b038a6a0683c953c5a46e8bed7effd5a"
+    },
+    {
+      "filename": "positions.csv",
+      "path": "positions.csv",
+      "sha256": "79ae2f39eef757487a4c03d1bb4396bc608a7954657f2e0ac06924325433dd09"
+    },
+    {
+      "filename": "news.jsonl",
+      "path": "news.jsonl",
+      "sha256": "a873e93fdbae071484b758939b3186458e507541eb21d97dff3b8e4c75d5bc47"
+    }
+  ],
+  "is_synthetic": false
+}

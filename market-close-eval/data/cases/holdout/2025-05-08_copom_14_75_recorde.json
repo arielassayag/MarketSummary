@@ -1,0 +1,205 @@
+{
+  "case_id": "2025-05-08_copom_14_75_recorde",
+  "date": "2025-05-08",
+  "split": "holdout",
+  "regime": "domestic_macro",
+  "showcase": false,
+  "input": {
+    "facts": [
+      {
+        "fact_id": "IDX-01",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa fechou aos 136.232,00 pontos em 2025-05-08 (série ^BVSP do agregador; validar contra a B3).",
+        "measure_kind": "level",
+        "value": 136232.0,
+        "unit": "points",
+        "direction": "na",
+        "observed_at": "2025-05-08T18:00:00-03:00",
+        "source": {
+          "name": "Yahoo Finance (série ^BVSP; validar contra a B3)",
+          "url": "https://finance.yahoo.com/quote/%5EBVSP/history/",
+          "source_tier": 3,
+          "published_at": "2025-05-08"
+        }
+      },
+      {
+        "fact_id": "IDX-02",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa variou +2,12% em 2025-05-08 em relação ao fechamento anterior (2025-05-07).",
+        "measure_kind": "return_pct",
+        "value": 2.12,
+        "unit": "pct",
+        "direction": "up",
+        "observed_at": "2025-05-08T18:00:00-03:00",
+        "source": {
+          "name": "Yahoo Finance (série ^BVSP; validar contra a B3)",
+          "url": "https://finance.yahoo.com/quote/%5EBVSP/history/",
+          "source_tier": 3,
+          "published_at": "2025-05-08"
+        }
+      },
+      {
+        "fact_id": "FX-01",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX de fechamento em 2025-05-08 foi de R$ 5.6860 por US$ (cotação de venda).",
+        "measure_kind": "level",
+        "value": 5.686,
+        "unit": "brl_per_usd",
+        "direction": "na",
+        "observed_at": "2025-05-08T13:06:28.214000-03:00",
+        "source": {
+          "name": "Banco Central do Brasil (PTAX via API Olinda)",
+          "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)",
+          "source_tier": 1,
+          "published_at": "2025-05-08"
+        }
+      },
+      {
+        "fact_id": "FX-02",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX de fechamento variou -0,90% em 2025-05-08 em relação ao dia anterior (2025-05-07).",
+        "measure_kind": "change_pct",
+        "value": -0.9,
+        "unit": "pct",
+        "direction": "down",
+        "observed_at": "2025-05-08T13:06:28.214000-03:00",
+        "source": {
+          "name": "Banco Central do Brasil (PTAX via API Olinda)",
+          "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)",
+          "source_tier": 1,
+          "published_at": "2025-05-08"
+        }
+      },
+      {
+        "fact_id": "RATE-01",
+        "category": "rates",
+        "subject": "Taxa Selic",
+        "statement": "Em 07/05/2025 o Copom elevou a Selic em 0,50 ponto percentual, para 14,75% ao ano, maior patamar em quase 20 anos.",
+        "measure_kind": "level",
+        "value": 14.75,
+        "unit": "pct",
+        "direction": "up",
+        "observed_at": "2025-05-08T19:00:00-03:00",
+        "source": {
+          "name": "Banco Central do Brasil",
+          "url": "https://www.bcb.gov.br/detalhenoticia/20655/nota",
+          "source_tier": 1,
+          "published_at": "2025-05-07"
+        }
+      },
+      {
+        "fact_id": "RATE-02",
+        "category": "rates",
+        "subject": "Ajuste da Selic",
+        "statement": "O ajuste de 07/05/2025 foi de +50 pontos-base, sexta alta consecutiva do ciclo.",
+        "measure_kind": "change_bps",
+        "value": 50.0,
+        "unit": "bps",
+        "direction": "up",
+        "observed_at": "2025-05-08T19:00:00-03:00",
+        "source": {
+          "name": "Banco Central do Brasil",
+          "url": "https://www.bcb.gov.br/detalhenoticia/20655/nota",
+          "source_tier": 1,
+          "published_at": "2025-05-07"
+        }
+      },
+      {
+        "fact_id": "NEWS-01",
+        "category": "news_domestic",
+        "subject": "Tom do comunicado do Copom",
+        "statement": "O comunicado do Copom de 07/05/2025 adotou tom menos duro, indicando riscos 'mais equilibrados' e alimentando a leitura de que o ciclo de alta de juros estaria próximo do fim.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2025-05-08T19:00:00-03:00",
+        "source": {
+          "name": "Valor Investe",
+          "url": "https://valorinveste.globo.com/mercados/renda-variavel/bolsas-e-indices/noticia/2025/05/08/ibovespa-bolsa-valores-fechamento-hoje-quinta-8-maio-2025.ghtml",
+          "source_tier": 3,
+          "published_at": "2025-05-08"
+        }
+      },
+      {
+        "fact_id": "GLO-01",
+        "category": "news_global",
+        "subject": "Acordo comercial EUA-Reino Unido",
+        "statement": "Na noite de 07/05/2025 foi anunciado um acordo comercial entre EUA e Reino Unido, alimentando otimismo com avanços na agenda comercial americana.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2025-05-08T19:00:00-03:00",
+        "source": {
+          "name": "CNN Brasil",
+          "url": "https://www.cnnbrasil.com.br/economia/mercado/mercado-financeiro-ibovespa-dolar-8-maio-2025/",
+          "source_tier": 3,
+          "published_at": "2025-05-08"
+        }
+      }
+    ]
+  },
+  "reference": {
+    "critical_fact_ids": [
+      "IDX-02",
+      "FX-02"
+    ],
+    "must_mention_fact_ids": [
+      "IDX-02",
+      "FX-01",
+      "RATE-01",
+      "RATE-02"
+    ],
+    "useful_fact_ids": [
+      "IDX-01",
+      "NEWS-01",
+      "GLO-01"
+    ],
+    "fact_importance": {
+      "IDX-02": 5,
+      "FX-01": 4,
+      "FX-02": 4,
+      "IDX-01": 3,
+      "RATE-01": 5,
+      "RATE-02": 2,
+      "NEWS-01": 2,
+      "GLO-01": 2
+    },
+    "accepted_driver_groups": [
+      {
+        "label": "Ibovespa em recorde histórico (+2,12%) com tom menos restritivo do Copom e otimismo comercial global; dólar em forte queda",
+        "evidence_ids": [
+          "NEWS-01",
+          "RATE-01",
+          "RATE-02",
+          "GLO-01",
+          "IDX-02",
+          "FX-02"
+        ],
+        "confidence": "high"
+      }
+    ],
+    "forbidden_conclusions": [
+      {
+        "description": "Afirmar que o Copom 'cortou' a Selic ou que a taxa ficou abaixo de 14,75%",
+        "severity": "critical"
+      },
+      {
+        "description": "Atribuir o recorde da bolsa exclusivamente ao Copom, ignorando o contexto global do acordo EUA-Reino Unido",
+        "severity": "warning"
+      }
+    ],
+    "judge_notes": "Pregão de reação à decisão da véspera. Dólar à vista fechou perto de R$ 5,67 (-1%), menor nível desde meados de 2024 (imprensa). Limitações registradas: (1) fechamento do Ibovespa obtido de agregador (série ^BVSP do Yahoo Finance); validar contra a B3 antes de publicar; (2) PTAX é taxa de referência do BCB (~13h/fechamento) e pode diferir do fechamento do dólar à vista citado pela imprensa; (3) sem dados de curva de juros em pontos-base e sem contribuições em bps por ação neste dataset."
+  },
+  "review": {
+    "status": "draft",
+    "reviewer": null,
+    "reviewed_at": null,
+    "notes": "Caso gerado automaticamente a partir de fontes verificadas; requer revisão humana antes de publicação."
+  }
+}

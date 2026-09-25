@@ -1,0 +1,90 @@
+{
+  "case_id": "2026-03-10_mini_fixture",
+  "date": "2026-03-10",
+  "split": "dev",
+  "regime": "domestic_macro",
+  "showcase": false,
+  "input": {
+    "facts": [
+      {
+        "fact_id": "IDX-01",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa fechou aos 120.000,00 pontos em 2026-03-10 (fixture).",
+        "measure_kind": "level",
+        "value": 120000.0,
+        "unit": "points",
+        "direction": "na",
+        "observed_at": "2026-03-10T18:00:00-03:00",
+        "source": {"name": "Fixture", "url": "https://example.com/idx", "source_tier": 3, "published_at": "2026-03-10"}
+      },
+      {
+        "fact_id": "IDX-02",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa variou +1,50% em 2026-03-10 (fixture).",
+        "measure_kind": "return_pct",
+        "value": 1.5,
+        "unit": "pct",
+        "direction": "up",
+        "observed_at": "2026-03-10T18:00:00-03:00",
+        "source": {"name": "Fixture", "url": "https://example.com/idx", "source_tier": 3, "published_at": "2026-03-10"}
+      },
+      {
+        "fact_id": "FX-01",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX de fechamento em 2026-03-10 foi de R$ 5,0000 por US$ (fixture).",
+        "measure_kind": "level",
+        "value": 5.0,
+        "unit": "brl_per_usd",
+        "direction": "na",
+        "observed_at": "2026-03-10T13:06:00-03:00",
+        "source": {"name": "Fixture BCB", "url": "https://example.com/ptax", "source_tier": 1, "published_at": "2026-03-10"}
+      },
+      {
+        "fact_id": "FX-02",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX variou -0,50% em 2026-03-10 (fixture).",
+        "measure_kind": "change_pct",
+        "value": -0.5,
+        "unit": "pct",
+        "direction": "down",
+        "observed_at": "2026-03-10T13:06:00-03:00",
+        "source": {"name": "Fixture BCB", "url": "https://example.com/ptax", "source_tier": 1, "published_at": "2026-03-10"}
+      },
+      {
+        "fact_id": "NEWS-01",
+        "category": "news_domestic",
+        "subject": "Copom",
+        "statement": "O Copom manteve a Selic em 15% ao ano na reunião de 2026-03-10 (fixture).",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2026-03-10T19:00:00-03:00",
+        "source": {"name": "Fixture News", "url": "https://example.com/news", "source_tier": 3, "published_at": "2026-03-10"}
+      }
+    ]
+  },
+  "reference": {
+    "critical_fact_ids": ["IDX-02", "FX-02"],
+    "must_mention_fact_ids": ["IDX-02", "FX-01", "NEWS-01"],
+    "useful_fact_ids": ["IDX-01"],
+    "fact_importance": {"IDX-02": 5, "FX-02": 4, "FX-01": 4, "IDX-01": 3, "NEWS-01": 4},
+    "accepted_driver_groups": [
+      {"label": "Juros no radar", "evidence_ids": ["NEWS-01"], "confidence": "high"}
+    ],
+    "forbidden_conclusions": [
+      {"description": "Afirmar que o Copom cortou juros", "severity": "critical"}
+    ],
+    "judge_notes": "Fixture de teste."
+  },
+  "review": {
+    "status": "draft",
+    "reviewer": null,
+    "reviewed_at": null,
+    "notes": null
+  }
+}

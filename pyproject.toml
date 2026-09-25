@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fechamento"
+version = "0.1.0"
+description = "Fechamento — AI Notes #8: Redesenho do processo de elaboração do comentário de fechamento de mercado"
+requires-python = ">=3.12"
+dependencies = [
+    "pydantic>=2.7",
+    "streamlit>=1.35",
+    "pandas>=2.2",
+    "jinja2>=3.1",
+    "PyYAML>=6.0",
+    "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+gemini = [
+    "google-genai>=0.1.1",
+]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.5",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src", "tests"]
+exclude = ["market-close-eval", ".venv"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B"]
+ignore = ["E501"]
+
+[dependency-groups]
+dev = [
+    "playwright>=1.63.0",
+]

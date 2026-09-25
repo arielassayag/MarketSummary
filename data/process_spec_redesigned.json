@@ -1,0 +1,213 @@
+{
+  "process_id": "processo_redesenhado_ai_notes_08",
+  "title": "Processo Redesenhado (AI Notes #8)",
+  "description": "Redesenho ponta a ponta do processo: etapas mecânicas eliminadas ou transferidas para código puro; IA delimitada estritamente à redação estruturada com placeholders; revisão humana focada em interpretação e aprovação vinculada a hash criptográfico.",
+  "is_redesign": true,
+  "steps": [
+    {
+      "step_id": "step_r1_load_validate",
+      "name": "Carregar e validar dados de entrada",
+      "objective": "Ingerir cotações, posições, notícias e manifesto; verificar hashes e integridade.",
+      "inputs": [
+        "quotes.csv",
+        "positions.csv",
+        "news.jsonl",
+        "manifest.json"
+      ],
+      "outputs": [
+        "Objetos Quote, Position, NewsItem validados",
+        "Alertas e exclusões"
+      ],
+      "responsible": "Sistema (Código)",
+      "dependencies": [],
+      "completion_rule": "Todos os dados obrigatórios válidos; preços positivos; pesos somando 1.0.",
+      "exceptions": [
+        "Dado obrigatório ausente",
+        "Preço negativo/nulo",
+        "Soma de pesos inválida"
+      ],
+      "exception_destination": "Estado BLOCKED com motivo explícito na tela",
+      "classification": "codigo",
+      "observed_time_minutes": null,
+      "estimated_time_minutes": 0.05
+    },
+    {
+      "step_id": "step_r2_compute_metrics",
+      "name": "Cálculo determinístico de métricas e atribuições",
+      "objective": "Calcular variações, retornos da carteira, contribuições em bps e spread vs IBOV.",
+      "inputs": [
+        "Cotações validadas",
+        "Posições validadas"
+      ],
+      "outputs": [
+        "Dicionário de métricas financeiras reconciliadas"
+      ],
+      "responsible": "Sistema (Código)",
+      "dependencies": [
+        "step_r1_load_validate"
+      ],
+      "completion_rule": "Métricas calculadas por funções puras; soma das contribuições = retorno carteira.",
+      "exceptions": [
+        "Inconsistência de reconciliação matemática"
+      ],
+      "exception_destination": "Estado FAILED com log de auditoria",
+      "classification": "codigo",
+      "observed_time_minutes": null,
+      "estimated_time_minutes": 0.05
+    },
+    {
+      "step_id": "step_r3_organize_evidence",
+      "name": "Construção do FactBook e filtro de notícias",
+      "objective": "Criar repositório imutável de fatos numerados e filtrar notícias pré-corte.",
+      "inputs": [
+        "Métricas calculadas",
+        "Notícias validadas",
+        "Manifesto"
+      ],
+      "outputs": [
+        "FactBook estruturado",
+        "Lista de notícias elegíveis"
+      ],
+      "responsible": "Sistema (Código)",
+      "dependencies": [
+        "step_r2_compute_metrics"
+      ],
+      "completion_rule": "FactBook indexado por fact_id único; notícias pós-corte documentadas e excluídas.",
+      "exceptions": [
+        "Fato obrigatório ausente no catálogo"
+      ],
+      "exception_destination": "Estado BLOCKED",
+      "classification": "codigo",
+      "observed_time_minutes": null,
+      "estimated_time_minutes": 0.05
+    },
+    {
+      "step_id": "step_r4_draft_narrative",
+      "name": "Redigir rascunho com placeholders delimitados",
+      "objective": "Gerar texto estruturado usando FactBook e notícias, com placeholders {{fact:id}}.",
+      "inputs": [
+        "FactBook",
+        "Notícias elegíveis",
+        "Instruções de estilo"
+      ],
+      "outputs": [
+        "CommentaryDraft estruturado com placeholders e referências"
+      ],
+      "responsible": "IA / Demo determinístico",
+      "dependencies": [
+        "step_r3_organize_evidence"
+      ],
+      "completion_rule": "Rascunho retornado em JSON estruturado com parágrafos e tipos de afirmação.",
+      "exceptions": [
+        "Erro de conexão ou schema inválido no LLM"
+      ],
+      "exception_destination": "Até 1 retentativa de formato; fallback para DemoProvider ou FAILED",
+      "classification": "ia",
+      "observed_time_minutes": null,
+      "estimated_time_minutes": 0.2
+    },
+    {
+      "step_id": "step_r5_check_draft",
+      "name": "Conferência determinística do rascunho",
+      "objective": "Resolver placeholders, checar integridade de referências e barrar números fabricados.",
+      "inputs": [
+        "CommentaryDraft",
+        "FactBook"
+      ],
+      "outputs": [
+        "Texto renderizado determinístico",
+        "Relatório de verificações"
+      ],
+      "responsible": "Sistema (Código)",
+      "dependencies": [
+        "step_r4_draft_narrative"
+      ],
+      "completion_rule": "Todos os placeholders resolvidos; zero números financeiros não referenciados.",
+      "exceptions": [
+        "Placeholder não resolvido",
+        "Número financeiro alucinado",
+        "Violação de palavra"
+      ],
+      "exception_destination": "Estado FAILED ou devolução para revisão com alerta crítico",
+      "classification": "codigo",
+      "observed_time_minutes": null,
+      "estimated_time_minutes": 0.05
+    },
+    {
+      "step_id": "step_r6_human_review",
+      "name": "Revisão humana lado a lado com evidências",
+      "objective": "Inspecionar comentário e fatos/notícias simultaneamente; editar se necessário.",
+      "inputs": [
+        "Texto conferido",
+        "Painel de Evidências"
+      ],
+      "outputs": [
+        "Texto revisado",
+        "Nova revisão numerada se editado"
+      ],
+      "responsible": "Revisor Humano",
+      "dependencies": [
+        "step_r5_check_draft"
+      ],
+      "completion_rule": "Revisor inspeciona as afirmações e decide pela aprovação ou rejeição.",
+      "exceptions": [
+        "Discordância com a interpretação de mercado"
+      ],
+      "exception_destination": "Edição no painel ou estado REJECTED com justificativa",
+      "classification": "humano",
+      "observed_time_minutes": null,
+      "estimated_time_minutes": 5.0
+    },
+    {
+      "step_id": "step_r7_human_approval",
+      "name": "Aprovação explícita vinculada a hash",
+      "objective": "Registrar autorização humana formal com vinculação aos hashes de texto e dados.",
+      "inputs": [
+        "Revisão final",
+        "Hashes de entrada, fatos e texto"
+      ],
+      "outputs": [
+        "Approval Record assinado com approval_hash"
+      ],
+      "responsible": "Revisor Humano",
+      "dependencies": [
+        "step_r6_human_review"
+      ],
+      "completion_rule": "Revisor clica em 'Aprovar Comentário'; approval_hash gerado e gravado no SQLite.",
+      "exceptions": [
+        "Tentativa de autoaprovação pelo sistema"
+      ],
+      "exception_destination": "Ação bloqueada por código",
+      "classification": "humano",
+      "observed_time_minutes": null,
+      "estimated_time_minutes": 0.5
+    },
+    {
+      "step_id": "step_r8_export_artifacts",
+      "name": "Exportação segura de artefatos",
+      "objective": "Gerar Markdown, HTML estilizado e JSON do bundle com verificação de aprovação.",
+      "inputs": [
+        "Comentário aprovado",
+        "Approval Hash",
+        "Metadados"
+      ],
+      "outputs": [
+        "comentario.md",
+        "comentario.html",
+        "bundle.json em outputs/"
+      ],
+      "responsible": "Sistema (Código)",
+      "dependencies": [
+        "step_r7_human_approval"
+      ],
+      "completion_rule": "Arquivos gerados com tag de dados simulados; hashes validados.",
+      "exceptions": [
+        "Texto alterado após aprovação ou aprovação ausente"
+      ],
+      "exception_destination": "Exportação estritamente bloqueada com erro",
+      "classification": "codigo",
+      "observed_time_minutes": null,
+      "estimated_time_minutes": 0.05
+    }
+  ]
+}

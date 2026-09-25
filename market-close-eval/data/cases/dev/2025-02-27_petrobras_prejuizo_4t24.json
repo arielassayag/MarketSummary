@@ -1,0 +1,204 @@
+{
+  "case_id": "2025-02-27_petrobras_prejuizo_4t24",
+  "date": "2025-02-27",
+  "split": "dev",
+  "regime": "corporate",
+  "showcase": false,
+  "input": {
+    "facts": [
+      {
+        "fact_id": "IDX-01",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa fechou aos 124.799,00 pontos em 2025-02-27 (série ^BVSP do agregador; validar contra a B3).",
+        "measure_kind": "level",
+        "value": 124799.0,
+        "unit": "points",
+        "direction": "na",
+        "observed_at": "2025-02-27T18:00:00-03:00",
+        "source": {
+          "name": "Yahoo Finance (série ^BVSP; validar contra a B3)",
+          "url": "https://finance.yahoo.com/quote/%5EBVSP/history/",
+          "source_tier": 3,
+          "published_at": "2025-02-27"
+        }
+      },
+      {
+        "fact_id": "IDX-02",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa variou +0,02% em 2025-02-27 em relação ao fechamento anterior (2025-02-26).",
+        "measure_kind": "return_pct",
+        "value": 0.02,
+        "unit": "pct",
+        "direction": "up",
+        "observed_at": "2025-02-27T18:00:00-03:00",
+        "source": {
+          "name": "Yahoo Finance (série ^BVSP; validar contra a B3)",
+          "url": "https://finance.yahoo.com/quote/%5EBVSP/history/",
+          "source_tier": 3,
+          "published_at": "2025-02-27"
+        }
+      },
+      {
+        "fact_id": "FX-01",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX de fechamento em 2025-02-27 foi de R$ 5.8228 por US$ (cotação de venda).",
+        "measure_kind": "level",
+        "value": 5.8228,
+        "unit": "brl_per_usd",
+        "direction": "na",
+        "observed_at": "2025-02-27T13:02:27.094000-03:00",
+        "source": {
+          "name": "Banco Central do Brasil (PTAX via API Olinda)",
+          "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)",
+          "source_tier": 1,
+          "published_at": "2025-02-27"
+        }
+      },
+      {
+        "fact_id": "FX-02",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX de fechamento variou +0,82% em 2025-02-27 em relação ao dia anterior (2025-02-26).",
+        "measure_kind": "change_pct",
+        "value": 0.82,
+        "unit": "pct",
+        "direction": "up",
+        "observed_at": "2025-02-27T13:02:27.094000-03:00",
+        "source": {
+          "name": "Banco Central do Brasil (PTAX via API Olinda)",
+          "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)",
+          "source_tier": 1,
+          "published_at": "2025-02-27"
+        }
+      },
+      {
+        "fact_id": "CORP-01",
+        "category": "news_corporate",
+        "subject": "Petrobras (resultado 4T24)",
+        "statement": "A Petrobras reportou prejuízo de R$ 17 bilhões no 4T24, balanço descrito como decepcionante, e as ações sofreram forte pressão em 27/02/2025.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2025-02-27T19:00:00-03:00",
+        "source": {
+          "name": "Investalk BB",
+          "url": "https://investalk.bb.com.br/noticias/mercado/mercado-agora-27-02",
+          "source_tier": 3,
+          "published_at": "2025-02-27"
+        }
+      },
+      {
+        "fact_id": "EQ-01",
+        "category": "equity",
+        "subject": "Petrobras PN (PETR4)",
+        "statement": "PETR4 fechou em queda de 3,53%, a R$ 36,61, em 27/02/2025.",
+        "measure_kind": "return_pct",
+        "value": -3.53,
+        "unit": "pct",
+        "direction": "down",
+        "observed_at": "2025-02-27T19:00:00-03:00",
+        "source": {
+          "name": "Investalk BB",
+          "url": "https://investalk.bb.com.br/noticias/mercado/mercado-agora-27-02",
+          "source_tier": 3,
+          "published_at": "2025-02-27"
+        }
+      },
+      {
+        "fact_id": "EQ-02",
+        "category": "equity",
+        "subject": "Petrobras ON (PETR3)",
+        "statement": "PETR3 despencou 5,56%, a R$ 39,24, em 27/02/2025.",
+        "measure_kind": "return_pct",
+        "value": -5.56,
+        "unit": "pct",
+        "direction": "down",
+        "observed_at": "2025-02-27T19:00:00-03:00",
+        "source": {
+          "name": "Investalk BB",
+          "url": "https://investalk.bb.com.br/noticias/mercado/mercado-agora-27-02",
+          "source_tier": 3,
+          "published_at": "2025-02-27"
+        }
+      },
+      {
+        "fact_id": "EQ-03",
+        "category": "equity",
+        "subject": "Embraer (EMBR3)",
+        "statement": "Embraer (EMBR3) teve forte alta em 27/02/2025 e ajudou a compensar a queda da Petrobras no índice.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2025-02-27T19:00:00-03:00",
+        "source": {
+          "name": "Investalk BB",
+          "url": "https://investalk.bb.com.br/noticias/mercado/mercado-agora-27-02",
+          "source_tier": 3,
+          "published_at": "2025-02-27"
+        }
+      }
+    ]
+  },
+  "reference": {
+    "critical_fact_ids": [
+      "IDX-02",
+      "FX-02"
+    ],
+    "must_mention_fact_ids": [
+      "IDX-02",
+      "FX-01",
+      "CORP-01",
+      "EQ-01"
+    ],
+    "useful_fact_ids": [
+      "IDX-01",
+      "EQ-02",
+      "EQ-03"
+    ],
+    "fact_importance": {
+      "IDX-02": 5,
+      "FX-01": 4,
+      "FX-02": 4,
+      "IDX-01": 3,
+      "CORP-01": 5,
+      "EQ-01": 2,
+      "EQ-02": 2,
+      "EQ-03": 2
+    },
+    "accepted_driver_groups": [
+      {
+        "label": "Balanço negativo da Petrobras pressiona PETR4 (-3,53%) e PETR3 (-5,56%), mas o índice termina estável com compensação de Embraer",
+        "evidence_ids": [
+          "CORP-01",
+          "EQ-01",
+          "EQ-02",
+          "EQ-03",
+          "IDX-02"
+        ],
+        "confidence": "high"
+      }
+    ],
+    "forbidden_conclusions": [
+      {
+        "description": "Afirmar que a Petrobras 'derrubou o Ibovespa' (o índice fechou praticamente estável)",
+        "severity": "critical"
+      },
+      {
+        "description": "Trocar os retornos de PETR3 e PETR4",
+        "severity": "critical"
+      }
+    ],
+    "judge_notes": "Bom caso para testar distinção entre movimento de ação individual e desempenho do índice. Limitações registradas: (1) fechamento do Ibovespa obtido de agregador (série ^BVSP do Yahoo Finance); validar contra a B3 antes de publicar; (2) PTAX é taxa de referência do BCB (~13h/fechamento) e pode diferir do fechamento do dólar à vista citado pela imprensa; (3) sem dados de curva de juros em pontos-base e sem contribuições em bps por ação neste dataset."
+  },
+  "review": {
+    "status": "draft",
+    "reviewer": null,
+    "reviewed_at": null,
+    "notes": "Caso gerado automaticamente a partir de fontes verificadas; requer revisão humana antes de publicação."
+  }
+}

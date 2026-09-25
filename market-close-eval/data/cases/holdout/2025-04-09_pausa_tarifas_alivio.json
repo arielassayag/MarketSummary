@@ -1,0 +1,203 @@
+{
+  "case_id": "2025-04-09_pausa_tarifas_alivio",
+  "date": "2025-04-09",
+  "split": "holdout",
+  "regime": "stress",
+  "showcase": false,
+  "input": {
+    "facts": [
+      {
+        "fact_id": "IDX-01",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa fechou aos 127.796,00 pontos em 2025-04-09 (série ^BVSP do agregador; validar contra a B3).",
+        "measure_kind": "level",
+        "value": 127796.0,
+        "unit": "points",
+        "direction": "na",
+        "observed_at": "2025-04-09T18:00:00-03:00",
+        "source": {
+          "name": "Yahoo Finance (série ^BVSP; validar contra a B3)",
+          "url": "https://finance.yahoo.com/quote/%5EBVSP/history/",
+          "source_tier": 3,
+          "published_at": "2025-04-09"
+        }
+      },
+      {
+        "fact_id": "IDX-02",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa variou +3,12% em 2025-04-09 em relação ao fechamento anterior (2025-04-08).",
+        "measure_kind": "return_pct",
+        "value": 3.12,
+        "unit": "pct",
+        "direction": "up",
+        "observed_at": "2025-04-09T18:00:00-03:00",
+        "source": {
+          "name": "Yahoo Finance (série ^BVSP; validar contra a B3)",
+          "url": "https://finance.yahoo.com/quote/%5EBVSP/history/",
+          "source_tier": 3,
+          "published_at": "2025-04-09"
+        }
+      },
+      {
+        "fact_id": "FX-01",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX de fechamento em 2025-04-09 foi de R$ 6.0605 por US$ (cotação de venda).",
+        "measure_kind": "level",
+        "value": 6.0605,
+        "unit": "brl_per_usd",
+        "direction": "na",
+        "observed_at": "2025-04-09T13:06:01.578000-03:00",
+        "source": {
+          "name": "Banco Central do Brasil (PTAX via API Olinda)",
+          "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)",
+          "source_tier": 1,
+          "published_at": "2025-04-09"
+        }
+      },
+      {
+        "fact_id": "FX-02",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX de fechamento variou +2,08% em 2025-04-09 em relação ao dia anterior (2025-04-08).",
+        "measure_kind": "change_pct",
+        "value": 2.08,
+        "unit": "pct",
+        "direction": "up",
+        "observed_at": "2025-04-09T13:06:01.578000-03:00",
+        "source": {
+          "name": "Banco Central do Brasil (PTAX via API Olinda)",
+          "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)",
+          "source_tier": 1,
+          "published_at": "2025-04-09"
+        }
+      },
+      {
+        "fact_id": "GLO-01",
+        "category": "news_global",
+        "subject": "Pausa de 90 dias nas tarifas",
+        "statement": "O presidente Trump anunciou pausa de 90 dias nas tarifas mais severas da guerra comercial, exceto para a China, gerando forte alívio nos mercados em 09/04/2025.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2025-04-09T19:00:00-03:00",
+        "source": {
+          "name": "InfoMoney",
+          "url": "https://www.infomoney.com.br/mercados/ibovespa-hoje-bolsa-de-valores-ao-vivo-09042025/",
+          "source_tier": 3,
+          "published_at": "2025-04-09"
+        }
+      },
+      {
+        "fact_id": "NEWS-01",
+        "category": "news_domestic",
+        "subject": "Primeira alta após quatro quedas",
+        "statement": "O Ibovespa subiu 3,12% em 09/04/2025 (127.795,93 pontos), primeira alta após quatro quedas consecutivas.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2025-04-09T19:00:00-03:00",
+        "source": {
+          "name": "InfoMoney",
+          "url": "https://www.infomoney.com.br/mercados/ibovespa-hoje-bolsa-de-valores-ao-vivo-09042025/",
+          "source_tier": 3,
+          "published_at": "2025-04-09"
+        }
+      },
+      {
+        "fact_id": "GLO-02",
+        "category": "news_global",
+        "subject": "Extremos intradia do dólar",
+        "statement": "O dólar à vista chegou a R$ 6,095 na máxima do dia antes do anúncio e fechou em queda de 2,53%, a R$ 5,8467.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2025-04-09T19:00:00-03:00",
+        "source": {
+          "name": "CNN Brasil",
+          "url": "https://www.cnnbrasil.com.br/economia/mercado/mercado-financeiro-ibovespa-dolar-9-abril-2025/",
+          "source_tier": 3,
+          "published_at": "2025-04-09"
+        }
+      },
+      {
+        "fact_id": "EQ-01",
+        "category": "equity",
+        "subject": "Destaques de varejo",
+        "statement": "Magazine Luiza e um salto do GPA (PCAR3) estiveram entre os destaques positivos do dia 09/04/2025.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2025-04-09T19:00:00-03:00",
+        "source": {
+          "name": "InfoMoney",
+          "url": "https://www.infomoney.com.br/mercados/ibovespa-hoje-bolsa-de-valores-ao-vivo-09042025/",
+          "source_tier": 3,
+          "published_at": "2025-04-09"
+        }
+      }
+    ]
+  },
+  "reference": {
+    "critical_fact_ids": [
+      "IDX-02",
+      "FX-02"
+    ],
+    "must_mention_fact_ids": [
+      "IDX-02",
+      "FX-01",
+      "GLO-01",
+      "NEWS-01"
+    ],
+    "useful_fact_ids": [
+      "IDX-01",
+      "GLO-02",
+      "EQ-01"
+    ],
+    "fact_importance": {
+      "IDX-02": 5,
+      "FX-01": 4,
+      "FX-02": 4,
+      "IDX-01": 3,
+      "GLO-01": 5,
+      "NEWS-01": 2,
+      "GLO-02": 2,
+      "EQ-01": 2
+    },
+    "accepted_driver_groups": [
+      {
+        "label": "Rally de alívio com a pausa tarifária: bolsa +3,12% e dólar de +1,47% na véspera para queda de 2,53%, após máximas acima de R$ 6,09",
+        "evidence_ids": [
+          "GLO-01",
+          "NEWS-01",
+          "GLO-02",
+          "IDX-02"
+        ],
+        "confidence": "high"
+      }
+    ],
+    "forbidden_conclusions": [
+      {
+        "description": "Afirmar que a guerra comercial terminou (houve apenas pausa de 90 dias, com exceção da China)",
+        "severity": "critical"
+      },
+      {
+        "description": "Omitir a volatilidade extrema do dólar intradia",
+        "severity": "warning"
+      }
+    ],
+    "judge_notes": "Caso clássico de sinais contraditórios intradia: dólar a R$ 6,095 antes do anúncio e fechando em forte queda. Limitações registradas: (1) fechamento do Ibovespa obtido de agregador (série ^BVSP do Yahoo Finance); validar contra a B3 antes de publicar; (2) PTAX é taxa de referência do BCB (~13h/fechamento) e pode diferir do fechamento do dólar à vista citado pela imprensa; (3) sem dados de curva de juros em pontos-base e sem contribuições em bps por ação neste dataset."
+  },
+  "review": {
+    "status": "draft",
+    "reviewer": null,
+    "reviewed_at": null,
+    "notes": "Caso gerado automaticamente a partir de fontes verificadas; requer revisão humana antes de publicação."
+  }
+}

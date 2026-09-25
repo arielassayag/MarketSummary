@@ -1,0 +1,25 @@
+{
+  "scenario_id": "cenario_corrompido_teste_bloqueio",
+  "reference_date": "2026-09-18",
+  "previous_session": "2026-09-17",
+  "cutoff_time": "2026-09-18T18:00:00-03:00",
+  "timezone": "America/Sao_Paulo",
+  "files": [
+    {
+      "filename": "quotes.csv",
+      "path": "quotes.csv",
+      "sha256": "59e0c96484651fa6b4edf6b7e195f4e1fe8fcff79313af237cab26a096755cbe"
+    },
+    {
+      "filename": "positions.csv",
+      "path": "positions.csv",
+      "sha256": "3e35295124682336d3e65cc0bf5eabe977bc256d02104561129abd1d35af9a98"
+    },
+    {
+      "filename": "news.jsonl",
+      "path": "news.jsonl",
+      "sha256": "94ef5afba5810577f56395ebecb503d2b361685870c94803a0196fc7e42f8277"
+    }
+  ],
+  "is_synthetic": true
+}

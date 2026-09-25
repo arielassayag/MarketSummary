@@ -1,0 +1,159 @@
+{
+  "case_id": "2025-04-30_abril_pre_copom",
+  "date": "2025-04-30",
+  "split": "dev",
+  "regime": "calm",
+  "showcase": true,
+  "input": {
+    "facts": [
+      {
+        "fact_id": "IDX-01",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa fechou aos 135.067,00 pontos em 2025-04-30 (série ^BVSP do agregador; validar contra a B3).",
+        "measure_kind": "level",
+        "value": 135067.0,
+        "unit": "points",
+        "direction": "na",
+        "observed_at": "2025-04-30T18:00:00-03:00",
+        "source": {
+          "name": "Yahoo Finance (série ^BVSP; validar contra a B3)",
+          "url": "https://finance.yahoo.com/quote/%5EBVSP/history/",
+          "source_tier": 3,
+          "published_at": "2025-04-30"
+        }
+      },
+      {
+        "fact_id": "IDX-02",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa variou -0,02% em 2025-04-30 em relação ao fechamento anterior (2025-04-29).",
+        "measure_kind": "return_pct",
+        "value": -0.02,
+        "unit": "pct",
+        "direction": "down",
+        "observed_at": "2025-04-30T18:00:00-03:00",
+        "source": {
+          "name": "Yahoo Finance (série ^BVSP; validar contra a B3)",
+          "url": "https://finance.yahoo.com/quote/%5EBVSP/history/",
+          "source_tier": 3,
+          "published_at": "2025-04-30"
+        }
+      },
+      {
+        "fact_id": "FX-01",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX de fechamento em 2025-04-30 foi de R$ 5.6608 por US$ (cotação de venda).",
+        "measure_kind": "level",
+        "value": 5.6608,
+        "unit": "brl_per_usd",
+        "direction": "na",
+        "observed_at": "2025-04-30T13:11:27.944000-03:00",
+        "source": {
+          "name": "Banco Central do Brasil (PTAX via API Olinda)",
+          "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)",
+          "source_tier": 1,
+          "published_at": "2025-04-30"
+        }
+      },
+      {
+        "fact_id": "FX-02",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX de fechamento variou +0,25% em 2025-04-30 em relação ao dia anterior (2025-04-29).",
+        "measure_kind": "change_pct",
+        "value": 0.25,
+        "unit": "pct",
+        "direction": "up",
+        "observed_at": "2025-04-30T13:11:27.944000-03:00",
+        "source": {
+          "name": "Banco Central do Brasil (PTAX via API Olinda)",
+          "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)",
+          "source_tier": 1,
+          "published_at": "2025-04-30"
+        }
+      },
+      {
+        "fact_id": "NEWS-01",
+        "category": "news_domestic",
+        "subject": "Ibovespa (acumulado de abril)",
+        "statement": "O Ibovespa acumulou alta de cerca de 3,7% em abril de 2025, mês descrito como o mais volátil do ano, encerrando o dia 30 praticamente estável na véspera do feriado de 1º de maio.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2025-04-30T19:00:00-03:00",
+        "source": {
+          "name": "CNN Brasil",
+          "url": "https://www.cnnbrasil.com.br/economia/mercado/mercado-financeiro-ibovespa-dolar-30-abril-2025/",
+          "source_tier": 3,
+          "published_at": "2025-04-30"
+        }
+      },
+      {
+        "fact_id": "GLO-01",
+        "category": "news_global",
+        "subject": "Dólar à vista (fechamento, imprensa)",
+        "statement": "O dólar à vista subiu 0,78% em 30/04/2025, a R$ 5,67, interrompendo oito quedas consecutivas; no mês, recuou cerca de 0,5%.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2025-04-30T19:00:00-03:00",
+        "source": {
+          "name": "Nord Investimentos",
+          "url": "https://www.nordinvestimentos.com.br/blog/ibovespa-hoje-bolsa-de-valores-ao-vivo-30-de-abril-de-2025/",
+          "source_tier": 3,
+          "published_at": "2025-04-30"
+        }
+      }
+    ]
+  },
+  "reference": {
+    "critical_fact_ids": [
+      "IDX-02",
+      "FX-02"
+    ],
+    "must_mention_fact_ids": [
+      "IDX-02",
+      "FX-01",
+      "NEWS-01",
+      "GLO-01"
+    ],
+    "useful_fact_ids": [
+      "IDX-01"
+    ],
+    "fact_importance": {
+      "IDX-02": 5,
+      "FX-01": 4,
+      "FX-02": 4,
+      "IDX-01": 3,
+      "NEWS-01": 5,
+      "GLO-01": 2
+    },
+    "accepted_driver_groups": [
+      {
+        "label": "Dia morno de pré-feriado, sem catalisador dominante; mercado aguardava a decisão do Copom da semana seguinte",
+        "evidence_ids": [
+          "IDX-02",
+          "FX-02"
+        ],
+        "confidence": "high"
+      }
+    ],
+    "forbidden_conclusions": [
+      {
+        "description": "Afirmar que o Ibovespa 'esperava a decisão do Copom' como causa comprovada da estabilidade do dia (é contexto reportado, não causa estabelecida)",
+        "severity": "warning"
+      }
+    ],
+    "judge_notes": "Caso de calma com contexto mensal. Copom elevaria a Selic em 07/05/2025 (caso separado). Limitações registradas: (1) fechamento do Ibovespa obtido de agregador (série ^BVSP do Yahoo Finance); validar contra a B3 antes de publicar; (2) PTAX é taxa de referência do BCB (~13h/fechamento) e pode diferir do fechamento do dólar à vista citado pela imprensa; (3) sem dados de curva de juros em pontos-base e sem contribuições em bps por ação neste dataset."
+  },
+  "review": {
+    "status": "draft",
+    "reviewer": null,
+    "reviewed_at": null,
+    "notes": "Caso gerado automaticamente a partir de fontes verificadas; requer revisão humana antes de publicação."
+  }
+}

@@ -1,0 +1,159 @@
+{
+  "case_id": "2025-01-24_semana_estavel_pos_boj",
+  "date": "2025-01-24",
+  "split": "dev",
+  "regime": "calm",
+  "showcase": false,
+  "input": {
+    "facts": [
+      {
+        "fact_id": "IDX-01",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa fechou aos 122.447,00 pontos em 2025-01-24 (série ^BVSP do agregador; validar contra a B3).",
+        "measure_kind": "level",
+        "value": 122447.0,
+        "unit": "points",
+        "direction": "na",
+        "observed_at": "2025-01-24T18:00:00-03:00",
+        "source": {
+          "name": "Yahoo Finance (série ^BVSP; validar contra a B3)",
+          "url": "https://finance.yahoo.com/quote/%5EBVSP/history/",
+          "source_tier": 3,
+          "published_at": "2025-01-24"
+        }
+      },
+      {
+        "fact_id": "IDX-02",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa variou -0,03% em 2025-01-24 em relação ao fechamento anterior (2025-01-23).",
+        "measure_kind": "return_pct",
+        "value": -0.03,
+        "unit": "pct",
+        "direction": "down",
+        "observed_at": "2025-01-24T18:00:00-03:00",
+        "source": {
+          "name": "Yahoo Finance (série ^BVSP; validar contra a B3)",
+          "url": "https://finance.yahoo.com/quote/%5EBVSP/history/",
+          "source_tier": 3,
+          "published_at": "2025-01-24"
+        }
+      },
+      {
+        "fact_id": "FX-01",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX de fechamento em 2025-01-24 foi de R$ 5.8925 por US$ (cotação de venda).",
+        "measure_kind": "level",
+        "value": 5.8925,
+        "unit": "brl_per_usd",
+        "direction": "na",
+        "observed_at": "2025-01-24T13:03:26.922000-03:00",
+        "source": {
+          "name": "Banco Central do Brasil (PTAX via API Olinda)",
+          "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)",
+          "source_tier": 1,
+          "published_at": "2025-01-24"
+        }
+      },
+      {
+        "fact_id": "FX-02",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX de fechamento variou -0,80% em 2025-01-24 em relação ao dia anterior (2025-01-23).",
+        "measure_kind": "change_pct",
+        "value": -0.8,
+        "unit": "pct",
+        "direction": "down",
+        "observed_at": "2025-01-24T13:03:26.922000-03:00",
+        "source": {
+          "name": "Banco Central do Brasil (PTAX via API Olinda)",
+          "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)",
+          "source_tier": 1,
+          "published_at": "2025-01-24"
+        }
+      },
+      {
+        "fact_id": "GLO-01",
+        "category": "news_global",
+        "subject": "Banco do Japão",
+        "statement": "O Banco do Japão elevou sua taxa básica de juros em 24/01/2025, em decisão acompanhada pelo mercado global.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2025-01-24T19:00:00-03:00",
+        "source": {
+          "name": "Investalk BB",
+          "url": "https://investalk.bb.com.br/noticias/mercado/mercado-agora-24-01",
+          "source_tier": 3,
+          "published_at": "2025-01-24"
+        }
+      },
+      {
+        "fact_id": "GLO-02",
+        "category": "news_global",
+        "subject": "Dólar à vista (fechamento, imprensa)",
+        "statement": "O dólar à vista caiu pelo 5º dia consecutivo em 24/01/2025, fechando a R$ 5,91, com queda de cerca de 2,4% na semana.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2025-01-24T19:00:00-03:00",
+        "source": {
+          "name": "UOL Economia",
+          "url": "https://economia.uol.com.br/noticias/redacao/2025/01/24/dolar-abre-em-queda-e-caminha-para-quinto-dia-seguido-de-desvalorizacao.htm",
+          "source_tier": 3,
+          "published_at": "2025-01-24"
+        }
+      }
+    ]
+  },
+  "reference": {
+    "critical_fact_ids": [
+      "IDX-02",
+      "FX-02"
+    ],
+    "must_mention_fact_ids": [
+      "IDX-02",
+      "FX-01",
+      "GLO-01",
+      "GLO-02"
+    ],
+    "useful_fact_ids": [
+      "IDX-01"
+    ],
+    "fact_importance": {
+      "IDX-02": 5,
+      "FX-01": 4,
+      "FX-02": 4,
+      "IDX-01": 3,
+      "GLO-01": 5,
+      "GLO-02": 2
+    },
+    "accepted_driver_groups": [
+      {
+        "label": "Sem catalisador dominante: índice praticamente estável na primeira semana da nova gestão dos EUA",
+        "evidence_ids": [
+          "IDX-02",
+          "FX-02"
+        ],
+        "confidence": "high"
+      }
+    ],
+    "forbidden_conclusions": [
+      {
+        "description": "Afirmar que a decisão do Banco do Japão causou o movimento do Ibovespa no dia",
+        "severity": "critical"
+      }
+    ],
+    "judge_notes": "Semana encerrou 'no zero a zero' segundo a imprensa. Vigilância de IPCA-15 e primeiros movimentos da nova gestão dos EUA no radar. Limitações registradas: (1) fechamento do Ibovespa obtido de agregador (série ^BVSP do Yahoo Finance); validar contra a B3 antes de publicar; (2) PTAX é taxa de referência do BCB (~13h/fechamento) e pode diferir do fechamento do dólar à vista citado pela imprensa; (3) sem dados de curva de juros em pontos-base e sem contribuições em bps por ação neste dataset."
+  },
+  "review": {
+    "status": "draft",
+    "reviewer": null,
+    "reviewed_at": null,
+    "notes": "Caso gerado automaticamente a partir de fontes verificadas; requer revisão humana antes de publicação."
+  }
+}

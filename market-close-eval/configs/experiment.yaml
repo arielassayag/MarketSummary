@@ -1,0 +1,67 @@
+# Configuração principal do experimento.
+# A comparação V1 x V2 muda SOMENTE o prompt: modelos, parâmetros de geração,
+# dataset e schema são idênticos entre as duas versões.
+
+run:
+  concurrency: 4
+  timeout_s: 120
+  max_attempts: 5
+  retry_backoff_base_s: 1.5
+  temperature: 0.0
+  top_p: 1.0
+  # folga para modelos de raciocínio (reasoning conta no orçamento de completion)
+  max_tokens: 16000
+  # raciocínio desligado (aplicado igualmente a todos os modelos; evita que
+  # modelos híbridos consumam todo o orçamento de completion com thinking)
+  reasoning_effort: none
+  repetitions_dev: 2
+  repetitions_holdout: 2
+  # seed por repetição (registrada em cada geração)
+  seeds: [20260827, 20260828]
+  shuffle_seed: 42
+  # json_schema exige structured outputs em TODOS os modelos;
+  # se algum não suportar, use json_object para todos (nunca misture).
+  response_mode: json_schema
+
+cache:
+  sqlite_path: outputs/cache.db
+
+judge:
+  # Judge econômico (não-candidato) após esgotamento do orçamento da chave:
+  # kimi-k2.6 custa ~1/8 do opus-5 por chamada e suporta structured outputs.
+  model: moonshotai/kimi-k2.6
+  temperature: 0.0
+  top_p: 1.0
+  max_tokens: 6000
+  max_attempts: 5
+  reasoning_effort: none
+
+candidates:
+  # Preferências por slot (a 1ª disponível e capaz no catálogo congelado é escolhida).
+  preferences:
+    openai_frontier:
+      - openai/gpt-5.5
+      - openai/gpt-5.2
+      - openai/gpt-5.1
+    anthropic_frontier:
+      - anthropic/claude-sonnet-5
+      - anthropic/claude-sonnet-4.6
+      - anthropic/claude-sonnet-4.5
+    google_frontier:
+      - google/gemini-3.7-flash
+      - google/gemini-3.5-flash
+      - google/gemini-2.5-pro
+    lowcost_openweight:
+      - deepseek/deepseek-v4-pro
+      - z-ai/glm-5.2
+      - moonshotai/kimi-k2.6
+      - minimax/minimax-m3
+  judge_preferences:
+    - anthropic/claude-opus-5
+    - x-ai/grok-4.6
+    - openai/gpt-5.5
+
+paths:
+  prompts_dir: prompts
+  outputs_dir: outputs
+  data_dir: data

@@ -1,0 +1,204 @@
+{
+  "case_id": "2025-04-04_retaliacao_china_panico",
+  "date": "2025-04-04",
+  "split": "dev",
+  "regime": "stress",
+  "showcase": false,
+  "input": {
+    "facts": [
+      {
+        "fact_id": "IDX-01",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa fechou aos 127.256,00 pontos em 2025-04-04 (série ^BVSP do agregador; validar contra a B3).",
+        "measure_kind": "level",
+        "value": 127256.0,
+        "unit": "points",
+        "direction": "na",
+        "observed_at": "2025-04-04T18:00:00-03:00",
+        "source": {
+          "name": "Yahoo Finance (série ^BVSP; validar contra a B3)",
+          "url": "https://finance.yahoo.com/quote/%5EBVSP/history/",
+          "source_tier": 3,
+          "published_at": "2025-04-04"
+        }
+      },
+      {
+        "fact_id": "IDX-02",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa variou -2,96% em 2025-04-04 em relação ao fechamento anterior (2025-04-03).",
+        "measure_kind": "return_pct",
+        "value": -2.96,
+        "unit": "pct",
+        "direction": "down",
+        "observed_at": "2025-04-04T18:00:00-03:00",
+        "source": {
+          "name": "Yahoo Finance (série ^BVSP; validar contra a B3)",
+          "url": "https://finance.yahoo.com/quote/%5EBVSP/history/",
+          "source_tier": 3,
+          "published_at": "2025-04-04"
+        }
+      },
+      {
+        "fact_id": "FX-01",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX de fechamento em 2025-04-04 foi de R$ 5.7777 por US$ (cotação de venda).",
+        "measure_kind": "level",
+        "value": 5.7777,
+        "unit": "brl_per_usd",
+        "direction": "na",
+        "observed_at": "2025-04-04T13:07:28.528000-03:00",
+        "source": {
+          "name": "Banco Central do Brasil (PTAX via API Olinda)",
+          "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)",
+          "source_tier": 1,
+          "published_at": "2025-04-04"
+        }
+      },
+      {
+        "fact_id": "FX-02",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX de fechamento variou +3,05% em 2025-04-04 em relação ao dia anterior (2025-04-03).",
+        "measure_kind": "change_pct",
+        "value": 3.05,
+        "unit": "pct",
+        "direction": "up",
+        "observed_at": "2025-04-04T13:07:28.528000-03:00",
+        "source": {
+          "name": "Banco Central do Brasil (PTAX via API Olinda)",
+          "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)",
+          "source_tier": 1,
+          "published_at": "2025-04-04"
+        }
+      },
+      {
+        "fact_id": "GLO-01",
+        "category": "news_global",
+        "subject": "Retaliação da China",
+        "statement": "A China anunciou tarifas adicionais de 34% sobre produtos dos EUA em 04/04/2025, em retaliação ao 'tarifaço' de Donald Trump, acirrando temores de guerra comercial global e recessão mundial.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2025-04-04T19:00:00-03:00",
+        "source": {
+          "name": "Valor Investe",
+          "url": "https://valorinveste.globo.com/mercados/renda-variavel/bolsas-e-indices/noticia/2025/04/04/china-ibovespa-bolsa-valores-cotacao-fechamento-dolar-hoje-sexta-4-abril-2025.ghtml",
+          "source_tier": 3,
+          "published_at": "2025-04-04"
+        }
+      },
+      {
+        "fact_id": "NEWS-01",
+        "category": "news_domestic",
+        "subject": "Pior dia desde dezembro",
+        "statement": "O Ibovespa caiu cerca de 3% em 04/04/2025 (127.256 pontos), pior dia desde dezembro de 2024, devolvendo os ganhos desde 13 de março.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2025-04-04T19:00:00-03:00",
+        "source": {
+          "name": "InfoMoney",
+          "url": "https://www.infomoney.com.br/mercados/ibovespa-hoje-bolsa-de-valores-ao-vivo-04042025/",
+          "source_tier": 3,
+          "published_at": "2025-04-04"
+        }
+      },
+      {
+        "fact_id": "GLO-02",
+        "category": "news_global",
+        "subject": "Dólar à vista (fechamento, imprensa)",
+        "statement": "O dólar à vista disparou 3,68% em 04/04/2025, a R$ 5,83 — maior alta diária em mais de dois anos.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2025-04-04T19:00:00-03:00",
+        "source": {
+          "name": "G1",
+          "url": "https://g1.globo.com/economia/noticia/2025/04/04/dolar-ibovespa.ghtml",
+          "source_tier": 3,
+          "published_at": "2025-04-04"
+        }
+      },
+      {
+        "fact_id": "GLO-03",
+        "category": "news_global",
+        "subject": "Wall Street e América Latina",
+        "statement": "Wall Street tombou na mesma sessão e ativos da América Latina tiveram a maior queda diária desde a pandemia.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2025-04-04T19:00:00-03:00",
+        "source": {
+          "name": "Valor Investe",
+          "url": "https://valorinveste.globo.com/mercados/renda-variavel/bolsas-e-indices/noticia/2025/04/04/china-ibovespa-bolsa-valores-cotacao-fechamento-dolar-hoje-sexta-4-abril-2025.ghtml",
+          "source_tier": 3,
+          "published_at": "2025-04-04"
+        }
+      }
+    ]
+  },
+  "reference": {
+    "critical_fact_ids": [
+      "IDX-02",
+      "FX-02"
+    ],
+    "must_mention_fact_ids": [
+      "IDX-02",
+      "FX-01",
+      "GLO-01",
+      "NEWS-01"
+    ],
+    "useful_fact_ids": [
+      "IDX-01",
+      "GLO-02",
+      "GLO-03"
+    ],
+    "fact_importance": {
+      "IDX-02": 5,
+      "FX-01": 4,
+      "FX-02": 4,
+      "IDX-01": 3,
+      "GLO-01": 5,
+      "NEWS-01": 2,
+      "GLO-02": 2,
+      "GLO-03": 2
+    },
+    "accepted_driver_groups": [
+      {
+        "label": "Pânico de guerra comercial com retaliação da China: bolsa ~-3%, dólar à vista +3,68% (maior alta em 2 anos), LatAm no pior dia desde a pandemia",
+        "evidence_ids": [
+          "GLO-01",
+          "NEWS-01",
+          "GLO-02",
+          "IDX-02",
+          "FX-02"
+        ],
+        "confidence": "high"
+      }
+    ],
+    "forbidden_conclusions": [
+      {
+        "description": "Afirmar que a recessão global 'aconteceu' (era temor reportado, não constatação)",
+        "severity": "critical"
+      },
+      {
+        "description": "Ignorar a magnitude do movimento do dólar ao descrever o dia",
+        "severity": "warning"
+      }
+    ],
+    "judge_notes": "Dia de extrema volatilidade e sinais contraditórios entre classes de ativos. Limitações registradas: (1) fechamento do Ibovespa obtido de agregador (série ^BVSP do Yahoo Finance); validar contra a B3 antes de publicar; (2) PTAX é taxa de referência do BCB (~13h/fechamento) e pode diferir do fechamento do dólar à vista citado pela imprensa; (3) sem dados de curva de juros em pontos-base e sem contribuições em bps por ação neste dataset."
+  },
+  "review": {
+    "status": "draft",
+    "reviewer": null,
+    "reviewed_at": null,
+    "notes": "Caso gerado automaticamente a partir de fontes verificadas; requer revisão humana antes de publicação."
+  }
+}

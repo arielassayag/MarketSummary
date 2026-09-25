@@ -1,0 +1,211 @@
+{
+  "case_id": "2025-12-05_choque_politico_flavio",
+  "date": "2025-12-05",
+  "split": "holdout",
+  "regime": "stress",
+  "showcase": false,
+  "input": {
+    "facts": [
+      {
+        "fact_id": "IDX-01",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa fechou aos 157.369,00 pontos em 2025-12-05 (série ^BVSP do agregador; validar contra a B3).",
+        "measure_kind": "level",
+        "value": 157369.0,
+        "unit": "points",
+        "direction": "na",
+        "observed_at": "2025-12-05T18:00:00-03:00",
+        "source": {
+          "name": "Yahoo Finance (série ^BVSP; validar contra a B3)",
+          "url": "https://finance.yahoo.com/quote/%5EBVSP/history/",
+          "source_tier": 3,
+          "published_at": "2025-12-05"
+        }
+      },
+      {
+        "fact_id": "IDX-02",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa variou -4,31% em 2025-12-05 em relação ao fechamento anterior (2025-12-04).",
+        "measure_kind": "return_pct",
+        "value": -4.31,
+        "unit": "pct",
+        "direction": "down",
+        "observed_at": "2025-12-05T18:00:00-03:00",
+        "source": {
+          "name": "Yahoo Finance (série ^BVSP; validar contra a B3)",
+          "url": "https://finance.yahoo.com/quote/%5EBVSP/history/",
+          "source_tier": 3,
+          "published_at": "2025-12-05"
+        }
+      },
+      {
+        "fact_id": "FX-01",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX de fechamento em 2025-12-05 foi de R$ 5.3405 por US$ (cotação de venda).",
+        "measure_kind": "level",
+        "value": 5.3405,
+        "unit": "brl_per_usd",
+        "direction": "na",
+        "observed_at": "2025-12-05T13:09:08.512000-03:00",
+        "source": {
+          "name": "Banco Central do Brasil (PTAX via API Olinda)",
+          "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)",
+          "source_tier": 1,
+          "published_at": "2025-12-05"
+        }
+      },
+      {
+        "fact_id": "FX-02",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX de fechamento variou +0,86% em 2025-12-05 em relação ao dia anterior (2025-12-04).",
+        "measure_kind": "change_pct",
+        "value": 0.86,
+        "unit": "pct",
+        "direction": "up",
+        "observed_at": "2025-12-05T13:09:08.512000-03:00",
+        "source": {
+          "name": "Banco Central do Brasil (PTAX via API Olinda)",
+          "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)",
+          "source_tier": 1,
+          "published_at": "2025-12-05"
+        }
+      },
+      {
+        "fact_id": "NEWS-01",
+        "category": "news_domestic",
+        "subject": "Cenário eleitoral 2026",
+        "statement": "Em vez do apoio esperado a Tarcísio de Freitas, veio a sinalização de apoio de Jair Bolsonaro ao senador Flávio Bolsonaro como pré-candidato presidencial em 2026, interpretada como cenário de maior risco pelo mercado em 05/12/2025.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2025-12-05T19:00:00-03:00",
+        "source": {
+          "name": "G1",
+          "url": "https://g1.globo.com/economia/noticia/2025/12/05/dolar-ibovespa.ghtml",
+          "source_tier": 3,
+          "published_at": "2025-12-05"
+        }
+      },
+      {
+        "fact_id": "NEWS-02",
+        "category": "news_domestic",
+        "subject": "Pior dia do ano",
+        "statement": "O Ibovespa caiu 4,31% em 05/12/2025 (157.369 pontos), maior queda diária desde fevereiro de 2021, após bater recordes nos pregões anteriores.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2025-12-05T19:00:00-03:00",
+        "source": {
+          "name": "Agência Brasil",
+          "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2025-12/bolsa-cai-431-em-dia-tenso-e-reverte-inicio-positivo-de-mes",
+          "source_tier": 3,
+          "published_at": "2025-12-05"
+        }
+      },
+      {
+        "fact_id": "NEWS-03",
+        "category": "news_domestic",
+        "subject": "Pressão sobre estatais",
+        "statement": "Empresas estatais ou com forte participação do governo no Ibovespa, como Petrobras, bancos públicos e Eletrobras, sofreram quedas acentuadas em 05/12/2025.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2025-12-05T19:00:00-03:00",
+        "source": {
+          "name": "UOL Economia",
+          "url": "https://economia.uol.com.br/noticias/redacao/2025/12/05/mercado-chega-ao-fim-da-semana-com-dolar-a-r-531-ibovespa-recorde.htm",
+          "source_tier": 3,
+          "published_at": "2025-12-05"
+        }
+      },
+      {
+        "fact_id": "GLO-01",
+        "category": "news_global",
+        "subject": "Dólar à vista (fechamento, imprensa)",
+        "statement": "O dólar à vista disparou mais de 2% em 05/12/2025, fechando a R$ 5,43, maior valor em quase dois meses.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2025-12-05T19:00:00-03:00",
+        "source": {
+          "name": "G1",
+          "url": "https://g1.globo.com/economia/noticia/2025/12/05/dolar-ibovespa.ghtml",
+          "source_tier": 3,
+          "published_at": "2025-12-05"
+        }
+      }
+    ]
+  },
+  "reference": {
+    "critical_fact_ids": [
+      "IDX-02",
+      "FX-02"
+    ],
+    "must_mention_fact_ids": [
+      "IDX-02",
+      "FX-01",
+      "NEWS-01",
+      "NEWS-02"
+    ],
+    "useful_fact_ids": [
+      "IDX-01",
+      "NEWS-03",
+      "GLO-01"
+    ],
+    "fact_importance": {
+      "IDX-02": 5,
+      "FX-01": 4,
+      "FX-02": 4,
+      "IDX-01": 3,
+      "NEWS-01": 5,
+      "NEWS-02": 2,
+      "NEWS-03": 2,
+      "GLO-01": 2
+    },
+    "accepted_driver_groups": [
+      {
+        "label": "Choque político-eleitoral: leitura de maior risco com o nome de Flávio Bolsonaro derruba a bolsa 4,31% (pior dia desde 2021) e dispara o dólar",
+        "evidence_ids": [
+          "NEWS-01",
+          "NEWS-02",
+          "NEWS-03",
+          "IDX-02",
+          "FX-02"
+        ],
+        "confidence": "high"
+      },
+      {
+        "label": "Pressão concentrada em estatais e empresas com participação governamental",
+        "evidence_ids": [
+          "NEWS-03"
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "forbidden_conclusions": [
+      {
+        "description": "Afirmar inelegibilidade como fato jurídico consumado (a imprensa fala em incertezas jurídicas)",
+        "severity": "warning"
+      },
+      {
+        "description": "Atribuir a queda a fatores externos (o choque foi doméstico)",
+        "severity": "critical"
+      }
+    ],
+    "judge_notes": "A bolsa havia batido recorde histórico nos pregões anteriores; o dia reverteu o início positivo do mês. Limitações registradas: (1) fechamento do Ibovespa obtido de agregador (série ^BVSP do Yahoo Finance); validar contra a B3 antes de publicar; (2) PTAX é taxa de referência do BCB (~13h/fechamento) e pode diferir do fechamento do dólar à vista citado pela imprensa; (3) sem dados de curva de juros em pontos-base e sem contribuições em bps por ação neste dataset."
+  },
+  "review": {
+    "status": "draft",
+    "reviewer": null,
+    "reviewed_at": null,
+    "notes": "Caso gerado automaticamente a partir de fontes verificadas; requer revisão humana antes de publicação."
+  }
+}

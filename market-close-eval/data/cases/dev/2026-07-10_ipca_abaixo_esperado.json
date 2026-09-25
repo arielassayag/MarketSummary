@@ -1,0 +1,167 @@
+{
+  "case_id": "2026-07-10_ipca_abaixo_esperado",
+  "date": "2026-07-10",
+  "split": "dev",
+  "regime": "domestic_macro",
+  "showcase": true,
+  "input": {
+    "facts": [
+      {
+        "fact_id": "IDX-01",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa fechou aos 177.866,00 pontos em 2026-07-10 (série ^BVSP do agregador; validar contra a B3).",
+        "measure_kind": "level",
+        "value": 177866.0,
+        "unit": "points",
+        "direction": "na",
+        "observed_at": "2026-07-10T18:00:00-03:00",
+        "source": {
+          "name": "Yahoo Finance (série ^BVSP; validar contra a B3)",
+          "url": "https://finance.yahoo.com/quote/%5EBVSP/history/",
+          "source_tier": 3,
+          "published_at": "2026-07-10"
+        }
+      },
+      {
+        "fact_id": "IDX-02",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa variou +2,97% em 2026-07-10 em relação ao fechamento anterior (2026-07-09).",
+        "measure_kind": "return_pct",
+        "value": 2.97,
+        "unit": "pct",
+        "direction": "up",
+        "observed_at": "2026-07-10T18:00:00-03:00",
+        "source": {
+          "name": "Yahoo Finance (série ^BVSP; validar contra a B3)",
+          "url": "https://finance.yahoo.com/quote/%5EBVSP/history/",
+          "source_tier": 3,
+          "published_at": "2026-07-10"
+        }
+      },
+      {
+        "fact_id": "FX-01",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX de fechamento em 2026-07-10 foi de R$ 5.1088 por US$ (cotação de venda).",
+        "measure_kind": "level",
+        "value": 5.1088,
+        "unit": "brl_per_usd",
+        "direction": "na",
+        "observed_at": "2026-07-10T13:04:16.356177-03:00",
+        "source": {
+          "name": "Banco Central do Brasil (PTAX via API Olinda)",
+          "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)",
+          "source_tier": 1,
+          "published_at": "2026-07-10"
+        }
+      },
+      {
+        "fact_id": "FX-02",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX de fechamento variou -0,47% em 2026-07-10 em relação ao dia anterior (2026-07-09).",
+        "measure_kind": "change_pct",
+        "value": -0.47,
+        "unit": "pct",
+        "direction": "down",
+        "observed_at": "2026-07-10T13:04:16.356177-03:00",
+        "source": {
+          "name": "Banco Central do Brasil (PTAX via API Olinda)",
+          "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)",
+          "source_tier": 1,
+          "published_at": "2026-07-10"
+        }
+      },
+      {
+        "fact_id": "NEWS-01",
+        "category": "news_domestic",
+        "subject": "IPCA",
+        "statement": "Dados de inflação (IPCA) abaixo do esperado alimentaram em 10/07/2026 a alta das ações brasileiras, ao aumentar as expectativas de que o Banco Central possa cortar os juros.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2026-07-10T19:00:00-03:00",
+        "source": {
+          "name": "UOL Economia",
+          "url": "https://economia.uol.com.br/noticias/redacao/2026/07/10/dolar-bolsa-fechamento-hoje-10-de-julho-de-2026.ghtm",
+          "source_tier": 3,
+          "published_at": "2026-07-10"
+        }
+      },
+      {
+        "fact_id": "GLO-01",
+        "category": "news_global",
+        "subject": "Oriente Médio",
+        "statement": "Tensões no Oriente Médio movimentaram câmbio e commodities em 10/07/2026.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2026-07-10T19:00:00-03:00",
+        "source": {
+          "name": "G1",
+          "url": "https://g1.globo.com/economia/noticia/2026/07/10/dolar-ibovespa.ghtml",
+          "source_tier": 3,
+          "published_at": "2026-07-10"
+        }
+      }
+    ]
+  },
+  "reference": {
+    "critical_fact_ids": [
+      "IDX-02",
+      "FX-02"
+    ],
+    "must_mention_fact_ids": [
+      "IDX-02",
+      "FX-01",
+      "NEWS-01",
+      "GLO-01"
+    ],
+    "useful_fact_ids": [
+      "IDX-01"
+    ],
+    "fact_importance": {
+      "IDX-02": 5,
+      "FX-01": 4,
+      "FX-02": 4,
+      "IDX-01": 3,
+      "NEWS-01": 5,
+      "GLO-01": 2
+    },
+    "accepted_driver_groups": [
+      {
+        "label": "IPCA abaixo do esperado reacende aposta em cortes de juros; bolsa sobe quase 3% e dólar cai",
+        "evidence_ids": [
+          "NEWS-01",
+          "IDX-02",
+          "FX-02"
+        ],
+        "confidence": "high"
+      },
+      {
+        "label": "Melhora do apetite a risco no exterior como fator de apoio",
+        "evidence_ids": [
+          "GLO-01"
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "forbidden_conclusions": [
+      {
+        "description": "Apresentar como fato a concretização de corte de juros (era expectativa de mercado, não decisão)",
+        "severity": "critical"
+      }
+    ],
+    "judge_notes": "Expectativa de corte é inferência de mercado reportada pela imprensa; não é decisão do BCB. Limitações registradas: (1) fechamento do Ibovespa obtido de agregador (série ^BVSP do Yahoo Finance); validar contra a B3 antes de publicar; (2) PTAX é taxa de referência do BCB (~13h/fechamento) e pode diferir do fechamento do dólar à vista citado pela imprensa; (3) sem dados de curva de juros em pontos-base e sem contribuições em bps por ação neste dataset."
+  },
+  "review": {
+    "status": "draft",
+    "reviewer": null,
+    "reviewed_at": null,
+    "notes": "Caso gerado automaticamente a partir de fontes verificadas; requer revisão humana antes de publicação."
+  }
+}

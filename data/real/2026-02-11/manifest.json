@@ -1,0 +1,25 @@
+{
+  "scenario_id": "real_2026-02-11_recorde_ibov",
+  "reference_date": "2026-02-11",
+  "previous_session": "2026-02-10",
+  "cutoff_time": "2026-02-11T18:00:00-03:00",
+  "timezone": "America/Sao_Paulo",
+  "files": [
+    {
+      "filename": "quotes.csv",
+      "path": "quotes.csv",
+      "sha256": "83771ee59a60b52600227f0cc84dca70ea73af21874fb22d5c15c9776a844e91"
+    },
+    {
+      "filename": "positions.csv",
+      "path": "positions.csv",
+      "sha256": "a8ad7409b076e3af5148aceb60482a9f93fc8e16ac3603ade6d5bbe648b1349b"
+    },
+    {
+      "filename": "news.jsonl",
+      "path": "news.jsonl",
+      "sha256": "ee508ea340f4002bed856198b40b13a295cf51c1b0207c227b81631139b0a27b"
+    }
+  ],
+  "is_synthetic": false
+}

@@ -1,0 +1,199 @@
+{
+  "case_id": "2026-05-07_balancos_1t26_petrobras_bradesco",
+  "date": "2026-05-07",
+  "split": "dev",
+  "regime": "corporate",
+  "showcase": false,
+  "input": {
+    "facts": [
+      {
+        "fact_id": "IDX-01",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa fechou aos 183.218,00 pontos em 2026-05-07 (série ^BVSP do agregador; validar contra a B3).",
+        "measure_kind": "level",
+        "value": 183218.0,
+        "unit": "points",
+        "direction": "na",
+        "observed_at": "2026-05-07T18:00:00-03:00",
+        "source": {
+          "name": "Yahoo Finance (série ^BVSP; validar contra a B3)",
+          "url": "https://finance.yahoo.com/quote/%5EBVSP/history/",
+          "source_tier": 3,
+          "published_at": "2026-05-07"
+        }
+      },
+      {
+        "fact_id": "IDX-02",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa variou -2,38% em 2026-05-07 em relação ao fechamento anterior (2026-05-06).",
+        "measure_kind": "return_pct",
+        "value": -2.38,
+        "unit": "pct",
+        "direction": "down",
+        "observed_at": "2026-05-07T18:00:00-03:00",
+        "source": {
+          "name": "Yahoo Finance (série ^BVSP; validar contra a B3)",
+          "url": "https://finance.yahoo.com/quote/%5EBVSP/history/",
+          "source_tier": 3,
+          "published_at": "2026-05-07"
+        }
+      },
+      {
+        "fact_id": "FX-01",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX de fechamento em 2026-05-07 foi de R$ 4.9170 por US$ (cotação de venda).",
+        "measure_kind": "level",
+        "value": 4.917,
+        "unit": "brl_per_usd",
+        "direction": "na",
+        "observed_at": "2026-05-07T13:09:28.692000-03:00",
+        "source": {
+          "name": "Banco Central do Brasil (PTAX via API Olinda)",
+          "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)",
+          "source_tier": 1,
+          "published_at": "2026-05-07"
+        }
+      },
+      {
+        "fact_id": "FX-02",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX de fechamento variou -0,21% em 2026-05-07 em relação ao dia anterior (2026-05-06).",
+        "measure_kind": "change_pct",
+        "value": -0.21,
+        "unit": "pct",
+        "direction": "down",
+        "observed_at": "2026-05-07T13:09:28.692000-03:00",
+        "source": {
+          "name": "Banco Central do Brasil (PTAX via API Olinda)",
+          "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)",
+          "source_tier": 1,
+          "published_at": "2026-05-07"
+        }
+      },
+      {
+        "fact_id": "CORP-01",
+        "category": "news_corporate",
+        "subject": "Petrobras e Bradesco",
+        "statement": "As ações da Petrobras e do Bradesco pesaram contra o Ibovespa em 07/05/2026, em dia de bateria de balanços do 1T26.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2026-05-07T19:00:00-03:00",
+        "source": {
+          "name": "CNN Brasil",
+          "url": "https://www.cnnbrasil.com.br/economia/mercado/mercado-financeiro-ibovespa-dolar-7-maio-2026/",
+          "source_tier": 3,
+          "published_at": "2026-05-07"
+        }
+      },
+      {
+        "fact_id": "GLO-01",
+        "category": "news_global",
+        "subject": "Petróleo",
+        "statement": "O petróleo recuou no exterior em 07/05/2026, pressionando as ações de petróleo.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2026-05-07T19:00:00-03:00",
+        "source": {
+          "name": "CNN Brasil",
+          "url": "https://www.cnnbrasil.com.br/economia/mercado/mercado-financeiro-ibovespa-dolar-7-maio-2026/",
+          "source_tier": 3,
+          "published_at": "2026-05-07"
+        }
+      },
+      {
+        "fact_id": "GLO-02",
+        "category": "news_global",
+        "subject": "Conflito EUA-Irã",
+        "statement": "O mercado acompanhava com cautela o conflito no Oriente Médio entre EUA e Irã em 07/05/2026.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2026-05-07T19:00:00-03:00",
+        "source": {
+          "name": "CNN Brasil",
+          "url": "https://www.cnnbrasil.com.br/economia/mercado/mercado-financeiro-ibovespa-dolar-7-maio-2026/",
+          "source_tier": 3,
+          "published_at": "2026-05-07"
+        }
+      },
+      {
+        "fact_id": "GLO-03",
+        "category": "news_global",
+        "subject": "Dólar à vista (fechamento, imprensa)",
+        "statement": "O dólar à vista subiu 0,05% em 07/05/2026, fechando a R$ 4,9233.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2026-05-07T19:00:00-03:00",
+        "source": {
+          "name": "CNN Brasil",
+          "url": "https://www.cnnbrasil.com.br/economia/mercado/mercado-financeiro-ibovespa-dolar-7-maio-2026/",
+          "source_tier": 3,
+          "published_at": "2026-05-07"
+        }
+      }
+    ]
+  },
+  "reference": {
+    "critical_fact_ids": [
+      "IDX-02",
+      "FX-02"
+    ],
+    "must_mention_fact_ids": [
+      "IDX-02",
+      "FX-01",
+      "CORP-01",
+      "GLO-01"
+    ],
+    "useful_fact_ids": [
+      "IDX-01",
+      "GLO-02",
+      "GLO-03"
+    ],
+    "fact_importance": {
+      "IDX-02": 5,
+      "FX-01": 4,
+      "FX-02": 4,
+      "IDX-01": 3,
+      "CORP-01": 5,
+      "GLO-01": 2,
+      "GLO-02": 2,
+      "GLO-03": 2
+    },
+    "accepted_driver_groups": [
+      {
+        "label": "Queda de 2,38% com pressão de Petrobras e Bradesco em dia cheio de balanços, recuo do petróleo e cautela com o Oriente Médio",
+        "evidence_ids": [
+          "CORP-01",
+          "GLO-01",
+          "GLO-02",
+          "IDX-02"
+        ],
+        "confidence": "high"
+      }
+    ],
+    "forbidden_conclusions": [
+      {
+        "description": "Afirmar que o Ibovespa caiu 'por causa' apenas dos balanços (houve também recuo do petróleo e aversão global)",
+        "severity": "warning"
+      }
+    ],
+    "judge_notes": "Maio/2026 terminou com queda de ~7%, pior mês em mais de três anos (contexto). Limitações registradas: (1) fechamento do Ibovespa obtido de agregador (série ^BVSP do Yahoo Finance); validar contra a B3 antes de publicar; (2) PTAX é taxa de referência do BCB (~13h/fechamento) e pode diferir do fechamento do dólar à vista citado pela imprensa; (3) sem dados de curva de juros em pontos-base e sem contribuições em bps por ação neste dataset."
+  },
+  "review": {
+    "status": "draft",
+    "reviewer": null,
+    "reviewed_at": null,
+    "notes": "Caso gerado automaticamente a partir de fontes verificadas; requer revisão humana antes de publicação."
+  }
+}

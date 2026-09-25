@@ -1,0 +1,180 @@
+{
+  "case_id": "2026-03-03_guerra_ira_aversao_global",
+  "date": "2026-03-03",
+  "split": "dev",
+  "regime": "global_macro",
+  "showcase": false,
+  "input": {
+    "facts": [
+      {
+        "fact_id": "IDX-01",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa fechou aos 183.105,00 pontos em 2026-03-03 (série ^BVSP do agregador; validar contra a B3).",
+        "measure_kind": "level",
+        "value": 183105.0,
+        "unit": "points",
+        "direction": "na",
+        "observed_at": "2026-03-03T18:00:00-03:00",
+        "source": {
+          "name": "Yahoo Finance (série ^BVSP; validar contra a B3)",
+          "url": "https://finance.yahoo.com/quote/%5EBVSP/history/",
+          "source_tier": 3,
+          "published_at": "2026-03-03"
+        }
+      },
+      {
+        "fact_id": "IDX-02",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa variou -3,28% em 2026-03-03 em relação ao fechamento anterior (2026-03-02).",
+        "measure_kind": "return_pct",
+        "value": -3.28,
+        "unit": "pct",
+        "direction": "down",
+        "observed_at": "2026-03-03T18:00:00-03:00",
+        "source": {
+          "name": "Yahoo Finance (série ^BVSP; validar contra a B3)",
+          "url": "https://finance.yahoo.com/quote/%5EBVSP/history/",
+          "source_tier": 3,
+          "published_at": "2026-03-03"
+        }
+      },
+      {
+        "fact_id": "FX-01",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX de fechamento em 2026-03-03 foi de R$ 5.2870 por US$ (cotação de venda).",
+        "measure_kind": "level",
+        "value": 5.287,
+        "unit": "brl_per_usd",
+        "direction": "na",
+        "observed_at": "2026-03-03T13:10:27.879000-03:00",
+        "source": {
+          "name": "Banco Central do Brasil (PTAX via API Olinda)",
+          "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)",
+          "source_tier": 1,
+          "published_at": "2026-03-03"
+        }
+      },
+      {
+        "fact_id": "FX-02",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX de fechamento variou +1,67% em 2026-03-03 em relação ao dia anterior (2026-03-02).",
+        "measure_kind": "change_pct",
+        "value": 1.67,
+        "unit": "pct",
+        "direction": "up",
+        "observed_at": "2026-03-03T13:10:27.879000-03:00",
+        "source": {
+          "name": "Banco Central do Brasil (PTAX via API Olinda)",
+          "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)",
+          "source_tier": 1,
+          "published_at": "2026-03-03"
+        }
+      },
+      {
+        "fact_id": "GLO-01",
+        "category": "news_global",
+        "subject": "Guerra EUA-Irã",
+        "statement": "A guerra entre Estados Unidos e Irã derrubou bolsas globais em 03/03/2026 por aversão a risco, com receio de interrupções no mercado de energia e de pressão inflacionária global.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2026-03-03T19:00:00-03:00",
+        "source": {
+          "name": "Bloomberg Línea",
+          "url": "https://www.bloomberglinea.com.br/mercados/ibovespa-cai-33-e-dolar-sobe-a-r-527-diante-de-temor-global-com-guerra-no-ira/",
+          "source_tier": 3,
+          "published_at": "2026-03-03"
+        }
+      },
+      {
+        "fact_id": "NEWS-01",
+        "category": "news_domestic",
+        "subject": "Sequência de quedas",
+        "statement": "Em 03/03/2026 o Ibovespa caiu mais de 3%, no quarto dia consecutivo de perdas.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2026-03-03T19:00:00-03:00",
+        "source": {
+          "name": "Valor Investe",
+          "url": "https://valorinveste.globo.com/mercados/renda-variavel/bolsas-e-indices/noticia/2026/03/03/ibovespa-hoje-3-de-marco-de-2026.ghtml",
+          "source_tier": 3,
+          "published_at": "2026-03-03"
+        }
+      },
+      {
+        "fact_id": "GLO-02",
+        "category": "news_global",
+        "subject": "Dólar à vista (fechamento, imprensa)",
+        "statement": "O dólar à vista subiu para cerca de R$ 5,27 em 03/03/2026, impulsionado pelo temor global.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2026-03-03T19:00:00-03:00",
+        "source": {
+          "name": "Bloomberg Línea",
+          "url": "https://www.bloomberglinea.com.br/mercados/ibovespa-cai-33-e-dolar-sobe-a-r-527-diante-de-temor-global-com-guerra-no-ira/",
+          "source_tier": 3,
+          "published_at": "2026-03-03"
+        }
+      }
+    ]
+  },
+  "reference": {
+    "critical_fact_ids": [
+      "IDX-02",
+      "FX-02"
+    ],
+    "must_mention_fact_ids": [
+      "IDX-02",
+      "FX-01",
+      "GLO-01",
+      "NEWS-01"
+    ],
+    "useful_fact_ids": [
+      "IDX-01",
+      "GLO-02"
+    ],
+    "fact_importance": {
+      "IDX-02": 5,
+      "FX-01": 4,
+      "FX-02": 4,
+      "IDX-01": 3,
+      "GLO-01": 5,
+      "NEWS-01": 2,
+      "GLO-02": 2
+    },
+    "accepted_driver_groups": [
+      {
+        "label": "Aversão a risco global com guerra EUA-Irã; bolsa cai ~3,3% e dólar sobe",
+        "evidence_ids": [
+          "GLO-01",
+          "NEWS-01",
+          "IDX-02",
+          "FX-02"
+        ],
+        "confidence": "high"
+      }
+    ],
+    "forbidden_conclusions": [
+      {
+        "description": "Apresentar estimativas próprias de impacto no petróleo ou na inflação como fatos",
+        "severity": "critical"
+      }
+    ],
+    "judge_notes": "Quarto pregão consecutivo de perdas. A imprensa também cita medo de inflação global com o conflito. Limitações registradas: (1) fechamento do Ibovespa obtido de agregador (série ^BVSP do Yahoo Finance); validar contra a B3 antes de publicar; (2) PTAX é taxa de referência do BCB (~13h/fechamento) e pode diferir do fechamento do dólar à vista citado pela imprensa; (3) sem dados de curva de juros em pontos-base e sem contribuições em bps por ação neste dataset."
+  },
+  "review": {
+    "status": "draft",
+    "reviewer": null,
+    "reviewed_at": null,
+    "notes": "Caso gerado automaticamente a partir de fontes verificadas; requer revisão humana antes de publicação."
+  }
+}

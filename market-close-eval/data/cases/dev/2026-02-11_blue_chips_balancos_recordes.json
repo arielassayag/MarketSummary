@@ -1,0 +1,187 @@
+{
+  "case_id": "2026-02-11_blue_chips_balancos_recordes",
+  "date": "2026-02-11",
+  "split": "dev",
+  "regime": "corporate",
+  "showcase": false,
+  "input": {
+    "facts": [
+      {
+        "fact_id": "IDX-01",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa fechou aos 189.699,00 pontos em 2026-02-11 (série ^BVSP do agregador; validar contra a B3).",
+        "measure_kind": "level",
+        "value": 189699.0,
+        "unit": "points",
+        "direction": "na",
+        "observed_at": "2026-02-11T18:00:00-03:00",
+        "source": {
+          "name": "Yahoo Finance (série ^BVSP; validar contra a B3)",
+          "url": "https://finance.yahoo.com/quote/%5EBVSP/history/",
+          "source_tier": 3,
+          "published_at": "2026-02-11"
+        }
+      },
+      {
+        "fact_id": "IDX-02",
+        "category": "index",
+        "subject": "Ibovespa",
+        "statement": "O Ibovespa variou +2,03% em 2026-02-11 em relação ao fechamento anterior (2026-02-10).",
+        "measure_kind": "return_pct",
+        "value": 2.03,
+        "unit": "pct",
+        "direction": "up",
+        "observed_at": "2026-02-11T18:00:00-03:00",
+        "source": {
+          "name": "Yahoo Finance (série ^BVSP; validar contra a B3)",
+          "url": "https://finance.yahoo.com/quote/%5EBVSP/history/",
+          "source_tier": 3,
+          "published_at": "2026-02-11"
+        }
+      },
+      {
+        "fact_id": "FX-01",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX de fechamento em 2026-02-11 foi de R$ 5.1836 por US$ (cotação de venda).",
+        "measure_kind": "level",
+        "value": 5.1836,
+        "unit": "brl_per_usd",
+        "direction": "na",
+        "observed_at": "2026-02-11T13:03:28.474000-03:00",
+        "source": {
+          "name": "Banco Central do Brasil (PTAX via API Olinda)",
+          "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)",
+          "source_tier": 1,
+          "published_at": "2026-02-11"
+        }
+      },
+      {
+        "fact_id": "FX-02",
+        "category": "currency",
+        "subject": "USD/BRL (PTAX fechamento)",
+        "statement": "A PTAX de fechamento variou -0,36% em 2026-02-11 em relação ao dia anterior (2026-02-10).",
+        "measure_kind": "change_pct",
+        "value": -0.36,
+        "unit": "pct",
+        "direction": "down",
+        "observed_at": "2026-02-11T13:03:28.474000-03:00",
+        "source": {
+          "name": "Banco Central do Brasil (PTAX via API Olinda)",
+          "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)",
+          "source_tier": 1,
+          "published_at": "2026-02-11"
+        }
+      },
+      {
+        "fact_id": "CORP-01",
+        "category": "news_corporate",
+        "subject": "Itaú Unibanco",
+        "statement": "O Itaú Unibanco seguia como destaque positivo da temporada de balanços do 4T25; na semana anterior (06/02/2026) o banco fora um dos principais propulsores da bolsa.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2026-02-11T19:00:00-03:00",
+        "source": {
+          "name": "G1",
+          "url": "https://g1.globo.com/economia/noticia/2026/02/11/dolar-ibovespa.ghtml",
+          "source_tier": 3,
+          "published_at": "2026-02-11"
+        }
+      },
+      {
+        "fact_id": "NEWS-01",
+        "category": "news_domestic",
+        "subject": "Recorde de fechamento",
+        "statement": "O Ibovespa subiu 2,03% em 11/02/2026 e fechou acima dos 189 mil pontos (189.699) pela primeira vez, 11º recorde do ano; na máxima do dia superou 190 mil pontos.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2026-02-11T19:00:00-03:00",
+        "source": {
+          "name": "CNN Brasil",
+          "url": "https://www.cnnbrasil.com.br/economia/mercado/mercado-financeiro-ibovespa-dolar-11-fevereiro-2026/",
+          "source_tier": 3,
+          "published_at": "2026-02-11"
+        }
+      },
+      {
+        "fact_id": "NEWS-02",
+        "category": "news_domestic",
+        "subject": "Falas de Haddad no câmbio",
+        "statement": "O dólar caiu 0,18%, a R$ 5,187, em 11/02/2026, em sessão em que declarações do ministro Fernando Haddad pesaram no câmbio.",
+        "measure_kind": "text_only",
+        "value": null,
+        "unit": "none",
+        "direction": "na",
+        "observed_at": "2026-02-11T19:00:00-03:00",
+        "source": {
+          "name": "UOL Economia",
+          "url": "https://economia.uol.com.br/noticias/redacao/2026/02/11/fecha-dolar-bolsa-hoje-11-de-fevereiro-de-2026.htm",
+          "source_tier": 3,
+          "published_at": "2026-02-11"
+        }
+      }
+    ]
+  },
+  "reference": {
+    "critical_fact_ids": [
+      "IDX-02",
+      "FX-02"
+    ],
+    "must_mention_fact_ids": [
+      "IDX-02",
+      "FX-01",
+      "CORP-01",
+      "NEWS-01"
+    ],
+    "useful_fact_ids": [
+      "IDX-01",
+      "NEWS-02"
+    ],
+    "fact_importance": {
+      "IDX-02": 5,
+      "FX-01": 4,
+      "FX-02": 4,
+      "IDX-01": 3,
+      "CORP-01": 5,
+      "NEWS-01": 2,
+      "NEWS-02": 2
+    },
+    "accepted_driver_groups": [
+      {
+        "label": "Blue chips (Itaú com momentum pós-balanço, Petrobras e Vale) puxam o 11º recorde do ano",
+        "evidence_ids": [
+          "CORP-01",
+          "NEWS-01",
+          "IDX-02"
+        ],
+        "confidence": "high"
+      },
+      {
+        "label": "Câmbio em queda com falas de Haddad e fluxo estrangeiro forte na B3",
+        "evidence_ids": [
+          "NEWS-02",
+          "FX-02"
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "forbidden_conclusions": [
+      {
+        "description": "Atribuir a alta exclusivamente a balanços (o dia também teve fluxo externo e falas políticas no câmbio)",
+        "severity": "warning"
+      }
+    ],
+    "judge_notes": "Janeiro/2026 foi o melhor mês da B3 (+12,6%) puxado por estrangeiro, segundo Itaú BBA (contexto). Limitações registradas: (1) fechamento do Ibovespa obtido de agregador (série ^BVSP do Yahoo Finance); validar contra a B3 antes de publicar; (2) PTAX é taxa de referência do BCB (~13h/fechamento) e pode diferir do fechamento do dólar à vista citado pela imprensa; (3) sem dados de curva de juros em pontos-base e sem contribuições em bps por ação neste dataset."
+  },
+  "review": {
+    "status": "draft",
+    "reviewer": null,
+    "reviewed_at": null,
+    "notes": "Caso gerado automaticamente a partir de fontes verificadas; requer revisão humana antes de publicação."
+  }
+}

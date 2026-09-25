@@ -1,0 +1,25 @@
+{
+  "scenario_id": "cenario_normal_2026_09_18",
+  "reference_date": "2026-09-18",
+  "previous_session": "2026-09-17",
+  "cutoff_time": "2026-09-18T18:00:00-03:00",
+  "timezone": "America/Sao_Paulo",
+  "files": [
+    {
+      "filename": "quotes.csv",
+      "path": "quotes.csv",
+      "sha256": "14c80f3d0587562a2a52f42fa2f887afdb24ecc2879c6e716d21fe0b8e23d7a2"
+    },
+    {
+      "filename": "positions.csv",
+      "path": "positions.csv",
+      "sha256": "d34d0689bbb87e838f92ef56df408551ecfc311624e65eca6d9af98fb395b3a1"
+    },
+    {
+      "filename": "news.jsonl",
+      "path": "news.jsonl",
+      "sha256": "d9edbc77e51e9f4d930f8cccbe3fb263531a185cf34692dde8dc908dcd1dec7c"
+    }
+  ],
+  "is_synthetic": true
+}

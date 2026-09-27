@@ -150,7 +150,7 @@ def test_article_example_sends_only_free_request(monkeypatch, capsys):
         payload = json.loads(req.data)
         assert payload['model'] == 'openrouter/free'
         assert payload['provider']['max_price'] == {'prompt': 0, 'completion': 0}
-        return response({'choices': [{'message': {'content': 'Dados fictícios.'}}]})
+        return response({'choices': [{'message': {'content': '{"texto":"Dados fictícios."}'}}]})
     with patch('dotenv.load_dotenv'), patch('urllib.request.urlopen', side_effect=api):
         runpy.run_path('examples/chamada_ia.py', run_name='__main__')
     assert 'Dados fictícios.' in capsys.readouterr().out
@@ -192,3 +192,12 @@ def test_json_repair_keeps_original_factbook():
     assert result.success
     assert 'ibov.return_pct' in prompts[1]
     assert 'CATÁLOGO DE FATOS DISPONÍVEIS' in prompts[1]
+
+
+def test_article_example_rejects_classification_instead_of_commentary(monkeypatch):
+    import runpy
+    monkeypatch.setenv('OPENROUTER_API_KEY', 'test-only')
+    payload = {'choices': [{'finish_reason': 'stop', 'message': {'content': 'User Safety: safe'}}]}
+    with patch('dotenv.load_dotenv'), patch('urllib.request.urlopen', return_value=response(payload)):
+        with pytest.raises(SystemExit):
+            runpy.run_path('examples/chamada_ia.py', run_name='__main__')

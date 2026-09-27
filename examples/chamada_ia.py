@@ -16,9 +16,10 @@ if not chave:
 fatos_do_dia = "Ibovespa: +1,25% | Dólar: R$ 5,1836 (-0,36%) | PETR4: +1,83%"
 envelope = {
     "model": "openrouter/free",
-    "provider": {"max_price": {"prompt": 0, "completion": 0}},
+    "provider": {"max_price": {"prompt": 0, "completion": 0}, "require_parameters": True},
+    "response_format": {"type": "json_object"},
     "messages": [
-        {"role": "system", "content": "Redija em português. Identifique os dados como fictícios. Use apenas os números fornecidos e não invente explicações para os movimentos. Retorne somente os dois parágrafos finais, sem comentários sobre como escrever a resposta."},
+        {"role": "system", "content": "Redija em português. Identifique os dados como fictícios. Use apenas os números fornecidos e não invente explicações para os movimentos. Responda apenas um JSON com o campo texto contendo os dois parágrafos finais. Não inclua classificações de segurança nem comentários sobre como escrever a resposta."},
         {"role": "user", "content": f"Escreva dois parágrafos curtos com estes dados fictícios: {fatos_do_dia}"},
     ],
     "temperature": 0.2,
@@ -36,8 +37,8 @@ try:
     escolha = resultado["choices"][0]
     if escolha.get("finish_reason") == "length":
         raise ValueError("Resposta incompleta por limite de tokens; tente novamente")
-    texto = escolha["message"]["content"]
-    if not texto:
+    texto = json.loads(escolha["message"]["content"])["texto"]
+    if not isinstance(texto, str) or not texto.strip():
         raise ValueError("Resposta vazia")
     print("DADOS FICTÍCIOS — EXEMPLO DIDÁTICO\n")
     print(texto)

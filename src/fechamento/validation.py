@@ -135,6 +135,7 @@ def resolve_text_placeholders(
 
     rendered = re.sub(r"\{\{([^}]+)\}\}", replace_placeholder, text)
     rendered = re.sub(r"%\s*%", "%", rendered)
+    rendered = re.sub(r"\bbps(?:\s*(?:%|\bbps\b|\bpontos[- ]base\b))+", "bps", rendered, flags=re.IGNORECASE)
 
     return rendered, errors
 

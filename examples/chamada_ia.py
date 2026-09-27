@@ -18,11 +18,12 @@ envelope = {
     "model": "openrouter/free",
     "provider": {"max_price": {"prompt": 0, "completion": 0}},
     "messages": [
-        {"role": "system", "content": "Redija em português. Identifique os dados como fictícios. Use apenas os números fornecidos e não invente explicações para os movimentos."},
+        {"role": "system", "content": "Redija em português. Identifique os dados como fictícios. Use apenas os números fornecidos e não invente explicações para os movimentos. Retorne somente os dois parágrafos finais, sem comentários sobre como escrever a resposta."},
         {"role": "user", "content": f"Escreva dois parágrafos curtos com estes dados fictícios: {fatos_do_dia}"},
     ],
     "temperature": 0.2,
-    "max_tokens": 1000,
+    "max_tokens": 4096,
+    "reasoning": {"effort": "low", "exclude": True},
 }
 requisicao = urllib.request.Request(
     "https://openrouter.ai/api/v1/chat/completions",
@@ -32,9 +33,13 @@ requisicao = urllib.request.Request(
 try:
     with urllib.request.urlopen(requisicao, timeout=60) as resposta:
         resultado = json.loads(resposta.read().decode("utf-8"))
-    texto = resultado["choices"][0]["message"]["content"]
+    escolha = resultado["choices"][0]
+    if escolha.get("finish_reason") == "length":
+        raise ValueError("Resposta incompleta por limite de tokens; tente novamente")
+    texto = escolha["message"]["content"]
     if not texto:
         raise ValueError("Resposta vazia")
+    print("DADOS FICTÍCIOS — EXEMPLO DIDÁTICO\n")
     print(texto)
 except urllib.error.HTTPError as erro:
     raise SystemExit(f"OpenRouter retornou HTTP {erro.code}. Confira a chave, os limites gratuitos e a disponibilidade. Não houve troca para modelo pago.") from None

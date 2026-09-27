@@ -154,3 +154,41 @@ def test_article_example_sends_only_free_request(monkeypatch, capsys):
     with patch('dotenv.load_dotenv'), patch('urllib.request.urlopen', side_effect=api):
         runpy.run_path('examples/chamada_ia.py', run_name='__main__')
     assert 'Dados fictícios.' in capsys.readouterr().out
+
+
+def test_article_example_rejects_truncated_response(monkeypatch, capsys):
+    import runpy
+    monkeypatch.setenv('OPENROUTER_API_KEY', 'test-only')
+    payload = {'choices': [{'finish_reason': 'length', 'message': {'content': 'Texto cortado'}}]}
+    with patch('dotenv.load_dotenv'), patch('urllib.request.urlopen', return_value=response(payload)):
+        with pytest.raises(SystemExit, match='incompleta'):
+            runpy.run_path('examples/chamada_ia.py', run_name='__main__')
+    assert 'Texto cortado' not in capsys.readouterr().out
+
+
+def test_provider_rejects_truncated_json_even_when_parseable():
+    payload = {'choices': [{'finish_reason': 'length', 'message': {'content': '{"paragraphs": []}'}}]}
+    with patch('urllib.request.urlopen', return_value=response(payload)):
+        with pytest.raises(ValueError, match='incompleta'):
+            OpenRouterProvider(api_key='test')._call_openrouter('system', 'user')
+
+
+def test_json_repair_keeps_original_factbook():
+    from fechamento.evidence import organize_evidence
+    from fechamento.ingestion import load_and_validate_package
+    from fechamento.metrics import compute_all_metrics
+    from fechamento.providers import NarrativeRequest
+    pkg = load_and_validate_package('data/demo/normal')
+    ev = organize_evidence(compute_all_metrics(pkg.quotes, pkg.positions), pkg.manifest, pkg.eligible_news, [])
+    prompts = []
+    def answer(system, user):
+        prompts.append(user)
+        if len(prompts) == 1:
+            return 'safe', {}, 0
+        return '{"paragraphs":[{"paragraph_id":1,"text":"IBOV: {{fact:ibov.return_pct}}.","claim_type":"factual"}]}', {}, 0
+    provider = OpenRouterProvider(api_key='test')
+    with patch.object(provider, '_call_openrouter', side_effect=answer):
+        result = provider.generate(NarrativeRequest(factbook=ev.factbook, eligible_news=ev.eligible_news))
+    assert result.success
+    assert 'ibov.return_pct' in prompts[1]
+    assert 'CATÁLOGO DE FATOS DISPONÍVEIS' in prompts[1]

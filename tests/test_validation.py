@@ -64,3 +64,12 @@ def test_validate_draft_prohibited_terms() -> None:
     _, checks = validate_draft(bad_draft, ev.factbook, ev.eligible_news)
     prohibited_check = next(c for c in checks if c.check_id == "check_prohibited_terms")
     assert prohibited_check.passed is False
+
+
+def test_duplicate_bps_units_from_model_are_normalized():
+    pkg = load_and_validate_package('data/demo/normal')
+    ev = organize_evidence(compute_all_metrics(pkg.quotes, pkg.positions), pkg.manifest, [], [])
+    text = 'Spread: {{fact:portfolio.spread_vs_ibov_bps}} bps; relativo: {{fact:portfolio.spread_vs_ibov_bps}} pontos-base; terceiro: {{fact:portfolio.spread_vs_ibov_bps}}%.'
+    rendered, errors = resolve_text_placeholders(text, ev.factbook, {})
+    assert not errors
+    assert rendered == 'Spread: +13,7 bps; relativo: +13,7 bps; terceiro: +13,7 bps.'

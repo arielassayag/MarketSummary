@@ -67,6 +67,19 @@ Somente o período diário está implementado. Datas de bolsa/câmbio incompatí
 3. Preencha `OPENROUTER_API_KEY="sua-chave"`. No Windows, evite o nome `.env.txt`.
 4. Mantenha a chave privada. Use somente dados públicos ou fictícios no exercício.
 
+### O que é `.env`?
+
+Variáveis de ambiente são configurações que o programa lê enquanto executa. Cada uma tem um nome e um valor: `OPENROUTER_API_KEY` é o nome; sua chave é o valor. Assim, o mesmo código usa configurações diferentes em cada computador.
+
+`.env` é um arquivo de texto simples com uma configuração por linha, no formato `NOME=valor`. Neste projeto, `python-dotenv` lê esse arquivo e o Python consulta a chave com `os.environ.get("OPENROUTER_API_KEY")`. O arquivo não configura automaticamente todo o computador nem criptografa seu conteúdo.
+
+Duplique `.env.example` na pasta que contém `pyproject.toml`, renomeie a cópia para `.env`, abra em um editor de texto simples e preencha a chave entre as aspas. Se o arquivo já existir, preserve as outras configurações. Salve antes de executar o programa.
+
+- Windows/Bloco de Notas: em “Salvar como”, escolha “Todos os arquivos”, nome `.env` e UTF-8. Confira que não virou `.env.txt`.
+- macOS: `Command + Shift + .` mostra arquivos ocultos no Finder. No TextEdit, use “Formatar → Converter para Texto Simples” e confira que não acrescentou `.txt`.
+- O projeto ignora `.env` no Git por meio de `.gitignore`; mantenha esse arquivo privado e compartilhe apenas `.env.example` sem sua chave.
+
+
 Teste a conexão com números fictícios:
 
 ```sh

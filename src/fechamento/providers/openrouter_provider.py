@@ -158,7 +158,9 @@ class OpenRouterProvider(NarrativeProvider):
         if parse_error and not draft:
             # 1 retentativa de correção
             try:
-                retry_prompt = f"O JSON anterior continha erros de sintaxe ou schema: {parse_error}. Retorne apenas o JSON estrito:\n{raw_text}"
+                retry_prompt = (user_content + f"\n\nA resposta anterior não seguiu o formato solicitado: {parse_error}. "
+                                "Gere novamente usando o catálogo de fatos acima. Retorne apenas o JSON com paragraphs. "
+                                "Não responda com classificação de segurança nem comentários sobre a tarefa.")
                 raw_text, token_usage_retry, cost_retry = self._call_openrouter(system_prompt, retry_prompt)
                 draft, parse_error = self._parse_response(raw_text)
                 if token_usage and token_usage_retry:
@@ -222,10 +224,12 @@ class OpenRouterProvider(NarrativeProvider):
                 ],
                 "response_format": {"type": "json_object"},
                 "temperature": 0.2,
+                "max_tokens": 8192,
+                "reasoning": {"effort": "low", "exclude": True},
             }
 
             if free_route:
-                payload["provider"] = {"max_price": {"prompt": 0, "completion": 0}}
+                payload["provider"] = {"max_price": {"prompt": 0, "completion": 0}, "require_parameters": True}
 
             headers = {
                 "Authorization": f"Bearer {self.api_key}",
@@ -252,6 +256,8 @@ class OpenRouterProvider(NarrativeProvider):
                     err_info = res_json.get("error", {})
                     raise ValueError(f"OpenRouter ({model_cand}): {err_info.get('message', body)}")
 
+                if choices[0].get("finish_reason") == "length":
+                    raise ValueError("OpenRouter retornou resposta incompleta por limite de tokens.")
                 raw_text = choices[0].get("message", {}).get("content", "")
                 if not isinstance(raw_text, str) or not raw_text.strip():
                     raise ValueError("OpenRouter retornou resposta vazia; tente novamente mais tarde.")

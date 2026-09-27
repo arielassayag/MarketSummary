@@ -1,73 +1,24 @@
-# Guia: Como Usar os Modelos Gratuitos Mais Potentes no OpenRouter (`:free`)
+# OpenRouter gratuito no MarketSummary
 
-O **OpenRouter** (`https://openrouter.ai`) é um dos maiores agregadores de modelos de IA do mundo. Além dos modelos pagos, ele disponibiliza **modelos de ponta 100% gratuitos** identificados pelo sufixo `:free`.
+Siga a instalação e a configuração da chave no [README](../README.md).
 
----
+Use `openrouter/free`. O nome dos modelos individuais pode mudar. O catálogo público em `https://openrouter.ai/api/v1/models` permite verificar IDs, preços e parâmetros disponíveis. O projeto filtra variantes gratuitas com preço zero e usa o roteador gratuito como opção quando não consegue consultar o catálogo.
 
-## 1. Top Modelos Gratuitos Mais Potentes no OpenRouter
+**`openrouter/auto` não é garantia de gratuidade.** Não é utilizado neste tutorial.
 
-| Modelo | ID no OpenRouter | Fornecedor | Destaque Principal | Custo |
-| :--- | :--- | :--- | :--- | :---: |
-| **Llama 3.3 70B Instruct** | `meta-llama/llama-3.3-70b-instruct:free` | Meta | Desempenho equivalente aos modelos fechados de ponta em redação institucional e análise de mercado. | **$0.00** |
-| **Gemini 2.0 Flash Exp** | `google/gemini-2.0-flash-exp:free` | Google | Altíssima velocidade, excelente aderência a JSON schemas e disciplina factual. | **$0.00** |
-| **Qwen 2.5 72B Instruct** | `qwen/qwen-2.5-72b-instruct:free` | Alibaba Cloud | Líder em benchmarks matemáticos, lógica e formatação estruturada. | **$0.00** |
-| **DeepSeek R1** | `deepseek/deepseek-r1:free` | DeepSeek | Modelo de raciocínio profundo (*reasoning model*) com cadeia de pensamento analítica. | **$0.00** |
-| **Auto Router** | `openrouter/auto` | OpenRouter | Roteia dinamicamente para o melhor modelo disponível no momento. | **$0.00** |
-
----
-
-## 2. Como Obter Sua Chave Gratuita no OpenRouter
-
-1. Acesse [openrouter.ai](https://openrouter.ai) e faça login com sua conta do GitHub ou Google.
-2. Não é necessário cadastrar cartão de crédito para usar os modelos `:free`.
-3. Acesse **Keys** no menu superior e clique em **Create Key**.
-4. Copie a chave gerada (ela começa com `sk-or-v1-...`).
-5. Cole no arquivo `.env` do seu projeto:
-   ```bash
-   OPENROUTER_API_KEY="sk-or-v1-sua-chave-aqui"
-   ```
-
----
-
-## 3. Como Listar Automaticamente Todos os Modelos Gratuitos em Python
-
-O OpenRouter oferece um catálogo público via API para consultar os modelos ativos:
-
-```python
-import urllib.request
-import json
-
-url = "https://openrouter.ai/api/v1/models"
-with urllib.request.urlopen(url) as response:
-    models = json.loads(response.read().decode("utf-8"))["data"]
-    
-    # Filtrar modelos gratuitos (pricing zerado ou id terminando em :free)
-    free_models = [
-        m for m in models 
-        if m["id"].endswith(":free") or (
-            float(m.get("pricing", {}).get("prompt", 1.0)) == 0.0 and
-            float(m.get("pricing", {}).get("completion", 1.0)) == 0.0
-        )
-    ]
-    
-    print(f"Total de modelos 100% gratuitos encontrados: {len(free_models)}")
-    for m in free_models[:10]:
-        print(f" - {m['id']} ({m.get('name', '')})")
+```sh
+uv run python -m fechamento run --scenario-dir data/real/minha_coleta --provider openrouter --model openrouter/free
 ```
 
----
+A rota gratuita usa `provider.max_price` com `prompt: 0` e `completion: 0`. Um modelo `:free` indisponível pode ser substituído por `openrouter/free`, nunca por uma rota paga. Não se deve inventar o sufixo `:free` para um modelo que não tem essa variante no catálogo.
 
-## 4. Uso no Projeto Fechamento
+- 401: confira a chave e o arquivo `.env`.
+- 402: confira as condições da conta; não compre créditos para seguir o tutorial gratuito.
+- 404: modelo/provedor indisponível ou incompatível com os parâmetros.
+- 429: cota ou capacidade esgotada; aguarde.
+- 5xx ou timeout: falha temporária; tente mais tarde.
+- JSON inválido ou falha na conferência: a execução não produz um rascunho aprovado. Revise o erro.
 
-Na aplicação **Fechamento — AI Notes #8**, os modelos `:free` são suportados nativamente:
+As respostas variam. Não há promessa de prazo nem sucesso para todas as contas. Não exponha chaves, carteiras privadas ou dados confidenciais.
 
-- **Pela Interface Web (Streamlit):**
-  Na aba **2. Executar**, selecione `OpenRouterProvider` e escolha `meta-llama/llama-3.3-70b-instruct:free`. O sistema garantirá que a chamada não consuma créditos e exibirá o custo de `$0.00`.
-  
-- **Pelo Terminal (CLI):**
-  ```bash
-  uv run python -m fechamento run \
-    --scenario-dir data/real/2026-02-11 \
-    --provider openrouter \
-    --model meta-llama/llama-3.3-70b-instruct:free
-  ```
+Fontes oficiais: [roteador gratuito](https://openrouter.ai/docs/cookbook/get-started/free-models-router-playground), [limites](https://openrouter.ai/docs/api-reference/limits), [privacidade](https://openrouter.ai/docs/guides/privacy/data-collection), [limites de preço](https://openrouter.ai/docs/guides/routing/provider-selection#max-price).

@@ -1,5 +1,6 @@
 """Testes unitários para o módulo live_fetcher (BrasilAPI, AwesomeAPI, B3)."""
 
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
@@ -37,10 +38,8 @@ def test_fetch_brasilapi_taxas_mocked() -> None:
 
 def test_fetch_brasilapi_taxas_fallback_on_error() -> None:
     with patch("urllib.request.urlopen", side_effect=Exception("Timeout simulado")):
-        taxas = fetch_brasilapi_taxas()
-        assert "SELIC" in taxas
-        assert "CDI" in taxas
-        assert "_error" in taxas
+        with pytest.raises(RuntimeError, match="BrasilAPI"):
+            fetch_brasilapi_taxas()
 
 
 def test_fetch_awesomeapi_usd_brl_mocked() -> None:
@@ -54,11 +53,11 @@ def test_fetch_awesomeapi_usd_brl_mocked() -> None:
         assert res["ticker"] == "USD/BRL"
         assert res["current_price"] == 5.4520
         assert res["previous_price"] == 5.4520 - 0.0210
-        assert res["pct_change"] == pytest.approx(0.0039)
+        assert res["pct_change"] == pytest.approx(0.0038667, abs=1e-7)
 
 
 def test_fetch_yahoo_chart_mocked() -> None:
-    mock_payload = b'{"chart": {"result": [{"meta": {"regularMarketPrice": 38.50, "chartPreviousClose": 38.00, "currency": "BRL"}}]}}'
+    mock_payload = b'{"chart": {"result": [{"meta": {"regularMarketPrice": 38.50, "regularMarketTime": 1790367480, "chartPreviousClose": 35.00, "currency": "BRL"}, "timestamp": [1790254800, 1790341200], "indicators": {"quote": [{"close": [38.00, 38.50]}]}}]}}'
     mock_resp = MagicMock()
     mock_resp.read.return_value = mock_payload
     mock_resp.__enter__.return_value = mock_resp
@@ -74,17 +73,22 @@ def test_fetch_yahoo_chart_mocked() -> None:
 def test_build_live_market_package(tmp_path: Path) -> None:
     out_dir = tmp_path / "live_pkg"
 
-    # Mock das 3 chamadas externas para teste hermético
+    now = datetime.now(UTC)
+    today = now.date().isoformat()
+    previous = (now.date() - timedelta(days=1)).isoformat()
+    # Todas as chamadas externas substituídas; teste não depende da internet.
     with (
         patch("fechamento.live_fetcher.fetch_awesomeapi_usd_brl", return_value={
-            "ticker": "USD/BRL", "current_price": 5.20, "previous_price": 5.18, "pct_change": 0.0038
+            "ticker": "USD/BRL", "current_price": 5.20, "previous_price": 5.18, "pct_change": 0.0038, "reference_date": today, "observed_at": now.isoformat()
         }),
         patch("fechamento.live_fetcher.fetch_yahoo_chart", side_effect=lambda t: {
             "ticker": t.replace(".SA", "").replace("^BVSP", "IBOV"),
             "current_price": 100.0 if "BVSP" in t else 30.0,
             "previous_price": 98.0 if "BVSP" in t else 29.0,
             "currency": "POINTS" if "BVSP" in t else "BRL",
+            "reference_date": today, "previous_session": previous, "observed_at": now.isoformat(),
         }),
+        patch("fechamento.live_fetcher.fetch_real_market_news", return_value=[]),
         patch("fechamento.live_fetcher.fetch_brasilapi_taxas", return_value={"SELIC": 13.75, "CDI": 13.65}),
     ):
         pkg_dir = build_live_market_package(out_dir, timeframe="1d", tickers=["PETR4.SA", "VALE3.SA"])
@@ -98,6 +102,9 @@ def test_build_live_market_package(tmp_path: Path) -> None:
         ingestion_res = load_and_validate_package(pkg_dir)
         assert ingestion_res.is_blocked is False
         assert ingestion_res.manifest is not None
-        assert ingestion_res.manifest.is_synthetic is False
+        assert ingestion_res.manifest.is_synthetic is True
+        assert all(p.is_synthetic for p in ingestion_res.positions.values())
+        assert all(not q.is_synthetic for q in ingestion_res.quotes.values())
+        assert "Agencia_Mercado_Ao_Vivo" not in (pkg_dir / "news.jsonl").read_text()
         assert len(ingestion_res.quotes) == 4  # IBOV, USD/BRL, PETR4, VALE3
         assert len(ingestion_res.positions) == 2

@@ -28,7 +28,7 @@ def cmd_demo(args: argparse.Namespace) -> None:
     print("==================================================================")
     print("  FECHAMENTO — AI NOTES #8: DEMONSTRAÇÃO DETERMINÍSTICA (CLI)")
     print("==================================================================")
-    print("Aviso: Todos os dados, carteira e notícias são EST RITAMENTE SIMULADOS.\n")
+    print("Aviso: Todos os dados, carteira e notícias são ESTRITAMENTE SIMULADOS.\n")
 
     storage = Storage()
     controller = WorkflowController(storage=storage)
@@ -180,10 +180,17 @@ def cmd_run(args: argparse.Namespace) -> None:
 
     if args.provider.lower() == "openrouter":
         from .providers.openrouter_provider import OpenRouterProvider
-        provider = OpenRouterProvider(model_name=args.model)
+        model = args.model or "openrouter/free"
+        if not (model == "openrouter/free" or model.endswith(":free")) and not args.allow_paid:
+            print("Erro: modelo pago exige --allow-paid. Para esta edição use --model openrouter/free.", file=sys.stderr)
+            sys.exit(1)
+        provider = OpenRouterProvider(model_name=model)
+        if not provider.api_key.strip():
+            print("Erro: configure OPENROUTER_API_KEY no arquivo .env da pasta do projeto. Crie sua chave em https://openrouter.ai/settings/keys. A demo funciona sem chave.", file=sys.stderr)
+            sys.exit(1)
     elif args.provider.lower() == "gemini":
         from .providers.gemini_provider import GeminiProvider
-        provider = GeminiProvider(model_name=args.model, enabled=True)
+        provider = GeminiProvider(model_name=args.model or "gemini-2.5-flash", enabled=True)
     else:
         provider = DemoProvider()
 
@@ -211,8 +218,29 @@ def cmd_run(args: argparse.Namespace) -> None:
         print(f" - Carteira: {ctx.metrics.portfolio_return_pct * 100:+.2f}%")
         print(f" - Spread vs IBOV: {ctx.metrics.portfolio_vs_ibov_bps:+.1f} bps")
 
+    if ctx.ingestion and ctx.ingestion.manifest:
+        print(f"\nData de referência: {ctx.ingestion.manifest.reference_date}")
+        if ctx.ingestion.manifest.is_synthetic:
+            print("ATENÇÃO: O PACOTE CONTÉM DADOS OU CARTEIRA SIMULADOS.")
+        if ctx.ingestion.manifest.data_notice:
+            print(ctx.ingestion.manifest.data_notice)
+    for check in ctx.checks:
+        print(f"[{'PASS' if check.passed else 'ATENÇÃO'}] {check.name}")
     print("\n--- RASCUNHO GERADO ---")
     print(ctx.latest_revision.text if ctx.latest_revision else "Nenhum texto.")
+
+
+def cmd_fetch(args: argparse.Namespace) -> None:
+    """Coleta sem chave de IA, preservando o pacote anterior."""
+    from .live_fetcher import build_live_market_package
+    try:
+        package = build_live_market_package(args.output_dir)
+    except (RuntimeError, ValueError, OSError) as exc:
+        print(f"Coleta interrompida: {exc}", file=sys.stderr)
+        sys.exit(1)
+    print(f"Pacote salvo em: {package}")
+    print("Cotações públicas; CARTEIRA SIMULADA. Confira horários e limitações em sources.json.")
+    print(f'Próximo passo: uv run python -m fechamento run --scenario-dir "{package}" --provider demo')
 
 
 def main() -> None:
@@ -226,11 +254,16 @@ def main() -> None:
     sub_demo = subparsers.add_parser("demo", help="Executa a demonstração determinística offline.")
     sub_demo.set_defaults(func=cmd_demo)
 
+    sub_fetch = subparsers.add_parser("fetch", help="Coleta dados públicos e cria uma carteira didática, sem usar IA.")
+    sub_fetch.add_argument("--output-dir", required=True, help="Pasta nova para os dados; não sobrescreve pacotes existentes.")
+    sub_fetch.set_defaults(func=cmd_fetch)
+
     # Subcomando run
     sub_run = subparsers.add_parser("run", help="Executa o pipeline especificando cenário e provedor.")
-    sub_run.add_argument("--scenario-dir", default="data/real/2026-02-11", help="Caminho do pacote de dados.")
+    sub_run.add_argument("--scenario-dir", default="data/demo/normal", help="Caminho do pacote; padrão: demonstração simulada.")
     sub_run.add_argument("--provider", default="demo", choices=["demo", "openrouter", "gemini"], help="Provedor de narrativa.")
-    sub_run.add_argument("--model", default="google/gemini-2.5-flash", help="Nome do modelo.")
+    sub_run.add_argument("--model", default=None, help="OpenRouter: openrouter/free por padrão. Gemini: gemini-2.5-flash.")
+    sub_run.add_argument("--allow-paid", action="store_true", help="Autoriza explicitamente um modelo pago do OpenRouter.")
     sub_run.set_defaults(func=cmd_run)
 
     # Subcomando approve

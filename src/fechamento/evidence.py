@@ -206,6 +206,7 @@ def build_factbook(
         reference_date=manifest.reference_date,
         facts=facts,
         is_synthetic=manifest.is_synthetic,
+        data_notice=manifest.data_notice,
     )
 
 

@@ -31,38 +31,11 @@ OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 def get_recommended_free_models() -> list[dict[str, str]]:
     """Retorna os modelos gratuitos mais potentes e ativos disponíveis no OpenRouter (cost = $0.00)."""
-    defaults = [
-        {
-            "id": "openrouter/free",
-            "name": "OpenRouter Free Router (Recomendado — Roteamento Automático)",
-            "description": "Roteia automaticamente para o melhor modelo gratuito disponível com alta disponibilidade.",
-        },
-        {
-            "id": "inclusionai/ling-3.0-flash-fin:free",
-            "name": "Ling 3.0 Flash Fin (Free — Especializado em Mercado)",
-            "description": "Modelo de ponta treinado especificamente em finanças corporativas e análise quantitativa.",
-        },
-        {
-            "id": "google/gemma-4-31b-it:free",
-            "name": "Google Gemma 4 31B (Free)",
-            "description": "Modelo avançado de 31B parâmetros do Google, excelente em raciocínio factual e aderência a schemas.",
-        },
-        {
-            "id": "qwen/qwen3.8-27b:free",
-            "name": "Qwen 3.8 27B (Free)",
-            "description": "Modelo de 27B da Alibaba Cloud líder em matemática financeira e dados estruturados.",
-        },
-        {
-            "id": "nvidia/nemotron-3-super-120b-a12b:free",
-            "name": "NVIDIA Nemotron 3 Super 120B (Free)",
-            "description": "Modelo de grande porte da NVIDIA com alta precisão descritiva e raciocínio analítico.",
-        },
-        {
-            "id": "z-ai/glm-5.2:free",
-            "name": "Z.ai GLM 5.2 (Free)",
-            "description": "Modelo de última geração para síntese de relatórios institucionais.",
-        },
-    ]
+    defaults = [{
+        "id": "openrouter/free",
+        "name": "OpenRouter Free Router",
+        "description": "Roteamento entre modelos gratuitos, sujeito a cotas e disponibilidade.",
+    }]
 
     try:
         req = urllib.request.Request("https://openrouter.ai/api/v1/models", headers={"User-Agent": "Mozilla/5.0"})
@@ -72,7 +45,9 @@ def get_recommended_free_models() -> list[dict[str, str]]:
             live_free = [
                 {"id": m["id"], "name": f"{m.get('name', m['id'])} (Free)", "description": m.get("description", "Modelo gratuito")}
                 for m in live_models
-                if ":free" in m["id"] or m["id"] == "openrouter/free"
+                if (m["id"].endswith(":free") or m["id"] == "openrouter/free")
+                and float(m.get("pricing", {}).get("prompt", 1)) == 0
+                and float(m.get("pricing", {}).get("completion", 1)) == 0
             ]
             if live_free:
                 # Garante openrouter/free no topo
@@ -89,7 +64,7 @@ class OpenRouterProvider(NarrativeProvider):
     def __init__(
         self,
         api_key: str | None = None,
-        model_name: str = "google/gemini-2.5-flash",
+        model_name: str = "openrouter/free",
         site_url: str = "https://github.com/arielassayag/MarketSummary",
         app_name: str = "AI Notes Fechamento",
         timeout_seconds: float = 60.0,
@@ -158,7 +133,9 @@ class OpenRouterProvider(NarrativeProvider):
         ]
 
         user_content = (
-            f"DATA DO PREGÃO: {request.factbook.reference_date.isoformat()}\n\n"
+            f"DATA DE REFERÊNCIA: {request.factbook.reference_date.isoformat()}\n"
+            f"LIMITAÇÕES DOS DADOS: {request.factbook.data_notice}\n"
+            "Não afirme encerramento de pregão nem causalidade sem comprovação.\n\n"
             f"CATÁLOGO DE FATOS DISPONÍVEIS (FactBook):\n" + "\n".join(facts_summary) + "\n\n"
             "NOTÍCIAS ELEGÍVEIS (pré-corte):\n" + ("\n".join(news_summary) if news_summary else "Nenhuma notícia no período.") + "\n\n"
             f"INSTRUÇÕES DE ESTILO:\n{request.style_instructions}\n\n"
@@ -228,8 +205,9 @@ class OpenRouterProvider(NarrativeProvider):
         self, system_prompt: str, user_prompt: str
     ) -> tuple[str, dict[str, int], float | None]:
         models_to_try = [self.model_name]
-        if ":free" in self.model_name or self.model_name == "openrouter/free":
-            for fallback in ["openrouter/free", "inclusionai/ling-3.0-flash-fin:free", "google/gemma-4-31b-it:free"]:
+        free_route = self.model_name.endswith(":free") or self.model_name == "openrouter/free"
+        if free_route:
+            for fallback in ["openrouter/free"]:
                 if fallback not in models_to_try:
                     models_to_try.append(fallback)
 
@@ -245,6 +223,9 @@ class OpenRouterProvider(NarrativeProvider):
                 "response_format": {"type": "json_object"},
                 "temperature": 0.2,
             }
+
+            if free_route:
+                payload["provider"] = {"max_price": {"prompt": 0, "completion": 0}}
 
             headers = {
                 "Authorization": f"Bearer {self.api_key}",
@@ -272,6 +253,8 @@ class OpenRouterProvider(NarrativeProvider):
                     raise ValueError(f"OpenRouter ({model_cand}): {err_info.get('message', body)}")
 
                 raw_text = choices[0].get("message", {}).get("content", "")
+                if not isinstance(raw_text, str) or not raw_text.strip():
+                    raise ValueError("OpenRouter retornou resposta vazia; tente novamente mais tarde.")
                 self.model_name = model_cand
 
                 usage = res_json.get("usage", {})
@@ -289,7 +272,7 @@ class OpenRouterProvider(NarrativeProvider):
             except Exception as e:
                 last_error = e
                 err_msg = str(e).lower()
-                if "503" in err_msg or "429" in err_msg or "overloaded" in err_msg:
+                if any(code in err_msg for code in ("404", "502", "503", "429", "overloaded")):
                     time.sleep(1)
                     continue
                 raise e

@@ -1,115 +1,104 @@
-# Fechamento — AI Notes #8 e #9
+# MarketSummary — Fechamento | AI Notes
 
-> **Antes de automatizar, entenda e redesenhe o trabalho.**
-> Aplicação local, didática e funcional para redesenhar o processo de elaboração do comentário de fechamento do mercado brasileiro, materializando a distinção entre **código determinístico, síntese com IA generativa e julgamento humano**.
+Aplicação didática para separar coleta, cálculos em Python, redação e revisão humana.
 
----
+## O que é gratuito — e o que cada modo faz
 
-## 1. Visão Geral
+| Caminho | Internet após instalação | Chave | Resultado |
+|---|---|---|---|
+| `demo` | Não | Não | Dados simulados e texto por regras; não usa IA |
+| `fetch` + `run --provider demo` | Na coleta | Não | Cotações públicas e carteira simulada; texto por regras |
+| `run --provider openrouter --model openrouter/free` | Sim | OpenRouter | Rascunho por IA, sujeito à disponibilidade e cotas gratuitas |
 
-Este projeto acompanha a série de publicações do *AI Notes* (edições #8 e #9). O objetivo é demonstrar na prática como uma rotina profissional de mercado financeiro é reconstruída e automatizada com segurança:
-- **Quais etapas desaparecem:** abertura manual de planilhas e colagem de textos.
-- **Quais viram regras em código:** ingestão, validação de tipos, cálculos de retornos e contribuições em bps, FactBook determinístico e verificação de integridade.
-- **Quais dependem de interpretação (IA):** redação preliminar de narrativa com placeholders rigorosamente delimitados (`{{fact:id}}`).
-- **Onde uma pessoa continua responsável:** julgamento qualitativo de causalidade, revisão lado a lado com evidências e aprovação formal vinculada a hash criptográfico.
+Não há garantia de dados em tempo real, fechamento oficial ou disponibilidade contínua. A coleta obrigatória falha sem inventar preços. O modo gratuito não migra para modelos pagos.
 
-> [!IMPORTANT]
-> **Aviso de Dados Simulados**: Todos os preços, pesos de carteira e notícias do pacote de demonstração são **estritamente sintéticos**. Tickers reais da B3 foram usados apenas com finalidade didática.
+## 1. Instalação
 
----
+Instale [uv](https://docs.astral.sh/uv/getting-started/installation/). No Windows com WinGet:
 
-## 2. Instalação Rápida
-
-Requisitos: Python **3.12+** e gerenciador de pacotes **uv**.
-
-```bash
-# Sincronizar dependências e criar o ambiente virtual (.venv)
-uv sync --extra dev
+```powershell
+winget install --id astral-sh.uv --exact
 ```
 
----
+No macOS/Linux:
 
-## 3. Como Executar
-
-### Execução com Dados 100% Reais e OpenRouter
-Para executar o pipeline com dados reais da B3/BACEN (Pregão de 11/02/2026) e gerar o comentário via OpenRouter:
-
-```bash
-uv run python -m fechamento run --scenario-dir data/real/2026-02-11 --provider openrouter --model google/gemini-2.5-flash
+```sh
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-Ou usando o provedor determinístico com dados reais (offline):
-```bash
-uv run python -m fechamento run --scenario-dir data/real/2026-02-11 --provider demo
+Reabra o terminal e confira `uv --version`. Baixe o projeto em **Code → Download ZIP**, extraia e abra o terminal na pasta que contém `pyproject.toml`. Ou, se já tiver Git:
+
+```sh
+git clone https://github.com/arielassayag/MarketSummary.git
+cd MarketSummary
 ```
 
-Para aprovar e exportar uma execução via terminal:
-```bash
-# Aprovação explícita
-uv run python -m fechamento approve <run_id> --approver "Seu Nome"
+O uv instala o Python necessário:
 
-# Exportação segura dos artefatos
-uv run python -m fechamento export <run_id>
-```
-
-### Demonstração Sintética Offline (CLI)
-Executa a demonstração sintética determinística:
-
-```bash
+```sh
+uv python install 3.12
+uv sync --python 3.12 --locked
 uv run python -m fechamento demo
 ```
 
-### Interface Gráfica Web (Streamlit)
-Inicia a aplicação local no navegador:
+Esperado: aviso de simulação, cálculos, rascunho e estado `IN_REVIEW`. A primeira instalação precisa de internet. Esse teste não usa IA nem chave.
 
-```bash
+## 2. Coleta pública sem chave
+
+```sh
+uv run python -m fechamento fetch --output-dir data/real/minha_coleta
+uv run python -m fechamento run --scenario-dir data/real/minha_coleta --provider demo
+```
+
+A pasta precisa ser nova. Use outro nome para repetir; arquivos anteriores não são sobrescritos. Confira `sources.json`, `quotes.csv`, `positions.csv`, `news.jsonl` e `manifest.json`.
+
+- Ações e índice: Yahoo Finance, com horários da fonte. A referência é a última sessão disponível; o preço atual pode ser intradiário.
+- Câmbio: bid e varBid da AwesomeAPI, cuja referência pode diferir da bolsa.
+- Taxas: BrasilAPI, na data da consulta; o endpoint não informa data de vigência.
+- Notícias: Google News RSS, com `pubDate` e link (possivelmente um redirecionamento). Manchetes não são fatos verificados nem prova de causalidade.
+- Carteira: pesos iguais **simulados**. O pacote inteiro é sinalizado como contendo simulação. Preços sem ajuste de dividendos/desdobramentos.
+
+Somente o período diário está implementado. Datas de bolsa/câmbio incompatíveis ou cotação obrigatória ausente interrompem a coleta. Taxas/manchetes ausentes são registradas como limitações. Notícias recentes podem ser posteriores à sessão em fins de semana.
+
+## 3. Configure a IA gratuita
+
+1. Entre em [OpenRouter → Keys](https://openrouter.ai/settings/keys), crie sua conta ou faça login e clique em **Create Key**.
+2. Copie `.env.example` para um novo arquivo `.env` na pasta do projeto.
+3. Preencha `OPENROUTER_API_KEY="sua-chave"`. No Windows, evite o nome `.env.txt`.
+4. Mantenha a chave privada. Use somente dados públicos ou fictícios no exercício.
+
+Teste a conexão com números fictícios:
+
+```sh
+uv run python examples/chamada_ia.py
+```
+
+Rode a IA sobre o pacote coletado:
+
+```sh
+uv run python -m fechamento run --scenario-dir data/real/minha_coleta --provider openrouter --model openrouter/free
+```
+
+`openrouter/free` escolhe entre modelos gratuitos disponíveis e o código envia um teto zero para os preços dos tokens. A chamada pode falhar por cota, chave, indisponibilidade ou resposta inválida. Confira as [condições atuais](https://openrouter.ai/docs/api-reference/limits) e a [política de dados](https://openrouter.ai/docs/guides/privacy/data-collection). A retenção e o uso para treinamento dependem dos provedores e das configurações, não apenas de ser gratuito.
+
+A CLI exige `--allow-paid` para um modelo pago explicitamente escolhido. Essa opção não faz parte do tutorial gratuito. A integração Gemini é opcional e tem regras próprias de preço; não é usada neste roteiro.
+
+## 4. Revisão e interface
+
+`IN_REVIEW` significa que o resultado aguarda revisão humana. Cálculos são feitos em Python; o fluxo completo de IA usa referências ao FactBook e verificações. Isso reduz riscos, mas não garante que uma narrativa seja verdadeira.
+
+```sh
 uv run streamlit run app.py --server.address 127.0.0.1
 ```
 
-A interface está organizada em 4 áreas:
-1. **1. Processo:** Visualização em DAG (Mermaid) do processo atual vs redesenhado, com tabela editável de parâmetros.
-2. **2. Executar:** Seleção de cenários (Normal vs Corrompido) e provedores (Demo vs Gemini), exibindo motivos de eventuais bloqueios.
-3. **3. Revisar:** Inspeção lado a lado de texto e evidências (`FactBook` e notícias), editor de revisões, botão de aprovação e exportação.
-4. **4. Evidências:** Histórico de auditoria persistido em SQLite (`fechamento.db`), métricas objetivas do sistema e formulário de medição manual.
+A interface permite revisar, aprovar e exportar. A aplicação não se autoaprova. A aprovação vincula a versão do texto e os dados por hash.
 
----
+## 5. Testes
 
-## 4. Configuração Opcional do Provedor Gemini
-
-O modo `DemoProvider` é **100% offline, determinístico e não requer chaves de API**. Caso deseje testar a integração com o modelo Gemini:
-
-1. Configure a variável de ambiente:
-   ```bash
-   export GEMINI_API_KEY="sua-chave-aqui"
-   ```
-2. Na aba **2. Executar**, selecione `GeminiProvider` e marque a opção para autorizar chamadas externas.
-
-O modelo não tem acesso a ferramentas, execução de código ou navegação web; ele recebe exclusivamente o `FactBook` e as notícias elegíveis, e deve responder em JSON validado por schema com placeholders `{{fact:id}}`.
-
----
-
-## 5. Testes e Qualidade de Código
-
-Para rodar a suíte completa de 34 testes automatizados:
-
-```bash
+```sh
+uv sync --extra dev
 uv run pytest
-```
-
-Para verificar conformidade com as regras de estilo e linting:
-
-```bash
 uv run ruff check .
 ```
 
----
-
-## 6. Documentação Detalhada
-
-- [`docs/guia_brasilapi_mercado.md`](file:///Users/arielassayag/codigos/MarketSummary/docs/guia_brasilapi_mercado.md): Coleta de dados de mercado 100% reais e gratuitos via BrasilAPI, AwesomeAPI e B3.
-- [`docs/guia_openrouter_modelos_free.md`](file:///Users/arielassayag/codigos/MarketSummary/docs/guia_openrouter_modelos_free.md): Guia de uso dos modelos de ponta gratuitos (`:free`) no OpenRouter (Llama 3.3 70B, DeepSeek R1).
-- [`docs/processo_atual.md`](file:///Users/arielassayag/codigos/MarketSummary/docs/processo_atual.md): Mapeamento do fluxo manual tradicional e diagnóstico crítico.
-- [`docs/processo_redesenhado.md`](file:///Users/arielassayag/codigos/MarketSummary/docs/processo_redesenhado.md): Matriz de mudanças, princípios de redesenho e justificativas.
-- [`docs/evidencias_ai_notes_08.md`](file:///Users/arielassayag/codigos/MarketSummary/docs/evidencias_ai_notes_08.md): Resultados empíricos, testes de bloqueio, limitações e backlog.
-- [`docs/demo_script.md`](file:///Users/arielassayag/codigos/MarketSummary/docs/demo_script.md): Roteiro guiado de 5 minutos para apresentação.
-- [`AGENTS.md`](file:///Users/arielassayag/codigos/MarketSummary/AGENTS.md): Regras e invariantes para desenvolvimento automatizado.
+Os testes usam respostas controladas para dependências externas. Testes locais não comprovam disponibilidade futura das APIs ou de uma conta nova.

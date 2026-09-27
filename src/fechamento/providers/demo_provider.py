@@ -63,7 +63,7 @@ class DemoProvider(NarrativeProvider):
         # Parágrafo 1: Visão Geral do Mercado e Carteira (Factual)
         p1_facts = ["ibov.return_pct", "portfolio.return_pct", "portfolio.spread_vs_ibov_bps"]
         p1_text = (
-            "No pregão desta sessão, o Ibovespa encerrou com variação de {{fact:ibov.return_pct}}, "
+            "No retrato de mercado do pacote, o Ibovespa apresentou variação de {{fact:ibov.return_pct}}, "
             "enquanto a carteira de referência registrou retorno de {{fact:portfolio.return_pct}}, "
             "resultando em um desempenho relativo de {{fact:portfolio.spread_vs_ibov_bps}} frente ao benchmark. "
         )
@@ -72,13 +72,16 @@ class DemoProvider(NarrativeProvider):
             p1_facts.extend(["usd_brl.change_pct", "usd_brl.level"])
             p1_text += (
                 "No mercado de câmbio, o dólar comercial apresentou oscilação de {{fact:usd_brl.change_pct}}, "
-                "cotado a R$ {{fact:usd_brl.level}} por dólar ao término dos negócios regulares. "
+                "cotado a R$ {{fact:usd_brl.level}} por dólar no horário informado pela fonte. "
             )
 
         p1_text += (
-            "O comportamento agregado refletiu a recomposição de posições entre setores cíclicos e defensivos, "
-            "com liquidez concentrada nos papéis de maior capitalização da bolsa brasileira."
+            "Os resultados descrevem as variações dos preços no pacote e não identificam suas causas. "
+            "A comparação requer conferir datas, fontes e critérios de ajuste antes de interpretar o desempenho."
         )
+
+        if fb.is_synthetic:
+            p1_text = "PACOTE DIDÁTICO — CONTÉM DADOS OU CARTEIRA SIMULADOS. " + p1_text
 
         paragraphs.append(CommentaryParagraph(
             paragraph_id=1,
@@ -110,8 +113,8 @@ class DemoProvider(NarrativeProvider):
                 n_id = news_by_ticker[ticker_pos][0]
                 p2_news.append(n_id)
                 p2_text += (
-                    f"O papel foi influenciado por desdobramentos operacionais noticiados na sessão ({{{{news:{n_id}}}}}), "
-                    "embora a confirmação plena do efeito estrutural sobre as receitas dependa dos próximos resultados trimestrais. "
+                    f"Há uma manchete associada ao ativo ({{{{news:{n_id}}}}}). "
+                    "Essa associação não comprova que a notícia tenha causado o movimento do preço. "
                 )
 
             if len(pos_facts) > 1:
@@ -126,8 +129,8 @@ class DemoProvider(NarrativeProvider):
                 )
 
             p2_text += (
-                "O setor financeiro e as empresas de bens de capital sustentaram o viés positivo, "
-                "compensando a volatilidade externa observada nas primeiras horas de negociação."
+                "O ranking considera os pesos iniciais da carteira e os retornos calculados em código. "
+                "Ele descreve o impacto de cada posição no resultado, sem atribuir motivos ao movimento."
             )
         else:
             p2_text += "nenhum ativo individual apresentou contribuição positiva relevante na sessão de hoje."
@@ -161,8 +164,8 @@ class DemoProvider(NarrativeProvider):
                 n_id_neg = news_by_ticker[ticker_neg][0]
                 p3_news.append(n_id_neg)
                 p3_text += (
-                    f"O recuo coincidiu com informes setoriais sobre demanda e preços internacionais ({{{{news:{n_id_neg}}}}}), "
-                    "mantendo os analistas cautelosos quanto à volatilidade de curto prazo. "
+                    f"O pacote contém uma manchete associada ao ativo ({{{{news:{n_id_neg}}}}}). "
+                    "Sua relevância para a variação observada depende de revisão humana. "
                 )
 
             if len(neg_facts) > 1:
@@ -177,8 +180,8 @@ class DemoProvider(NarrativeProvider):
                 )
 
             p3_text += (
-                "Ressalta-se que, para os ativos sem comunicados formais ao mercado, os movimentos foram "
-                "atribuídos a fluxos técnicos de liquidação, sem evidência de alterações em fundamentos corporativos."
+                "Quando faltam evidências para explicar um movimento, sua causa permanece indeterminada. "
+                "A leitura de manchetes, por si só, não confirma mudanças nos fundamentos nem permite atribuir causalidade."
             )
         else:
             p3_text += "nenhum ativo apresentou detração expressiva no período analisado."

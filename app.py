@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import json
 import os
+from datetime import datetime
 from pathlib import Path
 
 import pandas as pd
@@ -256,11 +257,11 @@ with tab_execute:
     st.markdown('<div class="section-title">Execução do Pipeline Funcional</div>', unsafe_allow_html=True)
     st.markdown(
         "Execute o fluxo funcional de fechamento de mercado. Escolha entre o **Leitor de Mercado ao Vivo** "
-        "(100% dados reais de B3, BrasilAPI e AwesomeAPI com modelos gratuitos do OpenRouter) ou **Cenários Pré-gravados**."
+        "(cotações públicas e carteira simulada com modelos gratuitos do OpenRouter) ou **Cenários Pré-gravados**."
     )
 
     tab_sub_live, tab_sub_presets = st.tabs([
-        "📡 Leitor de Mercado ao Vivo (100% Real & Gratuito)",
+        "📡 Coleta Pública & Carteira Simulada",
         "📁 Cenários Pré-gravados / Demonstração",
     ])
 
@@ -268,10 +269,10 @@ with tab_execute:
     # SUB-ABA 1: LEITOR DE MERCADO AO VIVO
     # --------------------------------------------------------------------------
     with tab_sub_live:
-        st.markdown("##### Coleta em Tempo Real & Geração de Narrativa")
+        st.markdown("##### Últimas Cotações Disponíveis & Geração de Narrativa")
         st.markdown(
             "Esta modalidade coleta cotações reais da **B3** (Yahoo Chart API), taxas oficiais **Selic e CDI** da **BrasilAPI** "
-            "e cotação do **USD/BRL** da **AwesomeAPI**, montando um pacote auditável sob demanda."
+            "e cotação do **USD/BRL** da **AwesomeAPI**, com os horários de cada fonte e uma carteira de pesos iguais SIMULADA."
         )
 
         col_live_cfg1, col_live_cfg2 = st.columns([1, 1])
@@ -280,9 +281,7 @@ with tab_execute:
             live_timeframe = st.selectbox(
                 "Timeframe de Análise:",
                 [
-                    "1d — Diário (Fechamento da Sessão)",
-                    "5d — Semanal (Últimos 5 Dias)",
-                    "1mo — Mensal (Último Mês)",
+                    "1d — Última cotação disponível versus sessão anterior",
                 ],
                 index=0,
             )
@@ -301,14 +300,14 @@ with tab_execute:
             live_provider_choice = st.radio(
                 "Provedor de Narrativa para Dados Reais:",
                 [
-                    "OpenRouter (Modelos Free Mais Potentes — Gratuito)",
+                    "OpenRouter (Modelos gratuitos — sujeito a disponibilidade)",
                     "DemoProvider (Determinístico e 100% Offline)",
                 ],
                 key="live_prov_choice",
             )
 
             live_openrouter_key = os.environ.get("OPENROUTER_API_KEY", "")
-            live_model_selected = "meta-llama/llama-3.3-70b-instruct:free"
+            live_model_selected = "openrouter/free"
 
             if "OpenRouter" in live_provider_choice:
                 free_models = get_recommended_free_models()
@@ -359,12 +358,16 @@ with tab_execute:
 
         if btn_live_exec:
             with st.spinner("Conectando às APIs públicas, validando manifesto SHA-256 e executando..."):
-                live_dir = Path("data/real/live_current")
-                build_live_market_package(
-                    output_dir=live_dir,
-                    timeframe=tf_code,
-                    tickers=live_tickers if live_tickers else default_tickers,
-                )
+                live_dir = Path("data/real") / ("live_" + datetime.now().strftime("%Y%m%d_%H%M%S_%f"))
+                try:
+                    build_live_market_package(
+                        output_dir=live_dir,
+                        timeframe=tf_code,
+                        tickers=live_tickers if live_tickers else default_tickers,
+                    )
+                except (RuntimeError, ValueError, OSError) as exc:
+                    st.error(f"Coleta interrompida: {exc}")
+                    st.stop()
 
                 if "DemoProvider" in live_provider_choice:
                     live_prov = DemoProvider()
@@ -495,7 +498,7 @@ with tab_execute:
             if (ctx.ingestion and ctx.ingestion.manifest)
             else (ctx.evidence.factbook.is_synthetic if (ctx.evidence and ctx.evidence.factbook) else True)
         )
-        nature_tag = "🔴 DADOS SIMULADOS" if is_synth else "🟢 DADOS 100% REAIS (B3 / BRASILAPI / AWESOMEAPI)"
+        nature_tag = "🔴 CONTÉM DADOS OU CARTEIRA SIMULADOS" if is_synth else "🟢 DADOS DECLARADOS REAIS NO PACOTE"
 
         st.markdown(
             f'Estado Atual: <span class="badge-state {state_class}">{ctx.run.state.value}</span> '

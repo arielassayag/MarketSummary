@@ -370,6 +370,7 @@ dependencies = [
     { name = "python-dotenv" },
     { name = "pyyaml" },
     { name = "streamlit" },
+    { name = "tzdata" },
 ]
 
 [package.optional-dependencies]
@@ -397,6 +398,7 @@ requires-dist = [
     { name = "pyyaml", specifier = ">=6.0" },
     { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.5" },
     { name = "streamlit", specifier = ">=1.35" },
+    { name = "tzdata", specifier = ">=2024.1" },
 ]
 provides-extras = ["gemini", "dev"]
 

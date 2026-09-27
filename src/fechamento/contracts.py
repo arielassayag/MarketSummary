@@ -134,6 +134,7 @@ class NewsItem(BaseModel):
     body: str = Field(..., description="Corpo do texto da notícia")
     published_at: datetime = Field(..., description="Timestamp de publicação com fuso horário")
     source: str = Field(..., description="Fonte da notícia")
+    url: str | None = Field(default=None, description="Link fornecido pela fonte; pode ser redirecionamento")
     related_tickers: list[str] = Field(default_factory=list, description="Tickers diretamente relacionados")
     is_synthetic: bool = Field(default=True, description="Indicador obrigatório de dado simulado")
 
@@ -156,6 +157,7 @@ class ManifestFileEntry(BaseModel):
 class Manifest(BaseModel):
     model_config = ConfigDict(frozen=True)
 
+    data_notice: str = Field(default="", description="Limitações e natureza dos dados do pacote")
     scenario_id: str = Field(..., description="Identificador do cenário de dados")
     reference_date: date = Field(..., description="Data do pregão atual")
     previous_session: date = Field(..., description="Data da sessão anterior")
@@ -200,6 +202,7 @@ class Fact(BaseModel):
 class FactBook(BaseModel):
     model_config = ConfigDict(frozen=True)
 
+    data_notice: str = Field(default="", description="Limitações e natureza dos dados do pacote")
     scenario_id: str = Field(...)
     reference_date: date = Field(...)
     facts: dict[str, Fact] = Field(default_factory=dict)

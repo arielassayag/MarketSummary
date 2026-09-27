@@ -1,329 +1,221 @@
-"""Módulo de coleta de dados de mercado 100% reais e gratuitos.
-
-Integra:
-1. BrasilAPI (https://brasilapi.com.br): Taxas oficiais Selic e CDI (público e gratuito).
-2. AwesomeAPI (https://economia.awesomeapi.com.br): Câmbio USD/BRL em tempo real (gratuito).
-3. Cotações B3: Endpoints públicos para cotações reais da bolsa brasileira (IBOV e ações).
-
-Permite gerar pacotes estruturados sob demanda para qualquer timeframe selecionado.
-"""
-
+"""Coleta pública, sujeita a atraso e indisponibilidade, sem substituir fatos ausentes."""
 from __future__ import annotations
 
 import csv
 import hashlib
 import json
-import urllib.error
+import math
+import tempfile
 import urllib.parse
 import urllib.request
+import warnings
 import xml.etree.ElementTree as ET
 from datetime import UTC, datetime
+from email.utils import parsedate_to_datetime
 from pathlib import Path
 from typing import Any
+from zoneinfo import ZoneInfo
 
-# User-Agent para requisições HTTP públicas
-DEFAULT_HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-    "Accept": "application/json",
-}
+DEFAULT_HEADERS = {"User-Agent": "Mozilla/5.0", "Accept": "application/json"}
+MARKET_TZ = ZoneInfo("America/Sao_Paulo")
 
 
 def compute_sha256(filepath: Path) -> str:
-    h = hashlib.sha256()
-    with open(filepath, "rb") as f:
-        while chunk := f.read(8192):
-            h.update(chunk)
-    return h.hexdigest()
+    return hashlib.sha256(filepath.read_bytes()).hexdigest()
+
+
+def _get_json(url: str) -> Any:
+    req = urllib.request.Request(url, headers=DEFAULT_HEADERS)
+    with urllib.request.urlopen(req, timeout=15) as resp:
+        return json.loads(resp.read().decode("utf-8"))
+
+
+def _positive(value: Any) -> float:
+    number = float(value)
+    if not math.isfinite(number) or number <= 0:
+        raise ValueError("Preço/taxa ausente, não finito ou não positivo")
+    return number
 
 
 def fetch_brasilapi_taxas() -> dict[str, float]:
-    """Consulta taxas financeiras oficiais na BrasilAPI (Selic, CDI, etc.).
-
-    Endpoint público e 100% gratuito: https://brasilapi.com.br/api/taxas/v1
-    """
-    url = "https://brasilapi.com.br/api/taxas/v1"
-    req = urllib.request.Request(url, headers=DEFAULT_HEADERS)
+    """Obtém taxas da BrasilAPI; uma falha nunca vira uma taxa fixa."""
     try:
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            data = json.loads(resp.read().decode("utf-8"))
-            taxas: dict[str, float] = {}
-            for item in data:
-                nome = item.get("nome", "").upper()
-                valor = item.get("valor", 0.0)
-                taxas[nome] = float(valor)
-            return taxas
-    except Exception as e:
-        # Fallback para valores vigentes caso haja timeout de rede
-        return {"SELIC": 13.25, "CDI": 13.15, "IPCA": 4.50, "_error": str(e)}  # type: ignore[dict-item]
+        data = _get_json("https://brasilapi.com.br/api/taxas/v1")
+        taxas = {item["nome"].upper(): _positive(item["valor"]) for item in data}
+        for required in ("SELIC", "CDI"):
+            if required not in taxas:
+                raise ValueError(f"Taxa {required} ausente")
+        return taxas
+    except Exception as exc:
+        raise RuntimeError(f"BrasilAPI: taxas indisponíveis ({exc}).") from exc
 
 
 def fetch_awesomeapi_usd_brl() -> dict[str, Any]:
-    """Consulta cotação do dólar e euro em tempo real na AwesomeAPI.
-
-    Endpoint público gratuito: https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL
-    """
+    """Obtém bid e timestamp da fonte; a referência cambial é definida pela AwesomeAPI."""
     url = "https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL"
-    req = urllib.request.Request(url, headers=DEFAULT_HEADERS)
     try:
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            data = json.loads(resp.read().decode("utf-8"))
-            usd_data = data.get("USDBRL", {})
-            current_price = float(usd_data.get("bid", 5.40))
-            var_bid = float(usd_data.get("varBid", 0.0))
-            previous_price = current_price - var_bid
-            pct_change = float(usd_data.get("pctChange", 0.0)) / 100.0
-
-            return {
-                "ticker": "USD/BRL",
-                "current_price": current_price,
-                "previous_price": previous_price,
-                "pct_change": pct_change,
-                "high": float(usd_data.get("high", current_price)),
-                "low": float(usd_data.get("low", current_price)),
-                "timestamp": usd_data.get("create_date", datetime.now().isoformat()),
-            }
-    except Exception:
-        # Fallback auditável com base em dados reais do pregão
+        usd = _get_json(url)["USDBRL"]
+        current = _positive(usd["bid"])
+        variation = float(usd["varBid"])
+        previous = _positive(current - variation)
+        if usd.get("timestamp"):
+            observed = datetime.fromtimestamp(int(usd["timestamp"]), UTC)
+        else:
+            observed = datetime.fromisoformat(usd["create_date"]).replace(tzinfo=MARKET_TZ).astimezone(UTC)
         return {
-            "ticker": "USD/BRL",
-            "current_price": 5.1836,
-            "previous_price": 5.2023,
-            "pct_change": -0.0036,
-            "high": 5.2100,
-            "low": 5.1780,
-            "timestamp": datetime.now().isoformat(),
+            "ticker": "USD/BRL", "current_price": current, "previous_price": previous,
+            "pct_change": current / previous - 1,
+            "high": _positive(usd["high"]), "low": _positive(usd["low"]),
+            "timestamp": observed.isoformat(), "observed_at": observed.isoformat(),
+            "reference_date": observed.astimezone(MARKET_TZ).date().isoformat(),
+            "source_url": url,
         }
+    except Exception as exc:
+        raise RuntimeError(f"AwesomeAPI: câmbio indisponível ({exc}).") from exc
 
 
 def fetch_yahoo_chart(ticker: str) -> dict[str, Any]:
-    """Consulta dados de cotação diária via endpoint público da Yahoo Finance Chart API.
-
-    Exemplos: ^BVSP (Ibovespa), PETR4.SA, VALE3.SA, ITUB4.SA.
-    """
-    url = f"https://query1.finance.yahoo.com/v8/finance/chart/{ticker}?interval=1d&range=5d"
-    req = urllib.request.Request(url, headers=DEFAULT_HEADERS)
+    """Usa o último preço e o fechamento da sessão anterior, nunca o início do range."""
+    url = f"https://query1.finance.yahoo.com/v8/finance/chart/{urllib.parse.quote(ticker, safe='')}?interval=1d&range=5d"
     try:
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            res_json = json.loads(resp.read().decode("utf-8"))
-            result = res_json.get("chart", {}).get("result", [])[0]
-            meta = result.get("meta", {})
-            regular_price = float(meta.get("regularMarketPrice", 0.0))
-            chart_prev = float(meta.get("chartPreviousClose", regular_price))
-            prev_close = float(meta.get("previousClose", chart_prev))
-
-            # Se previousClose for igual ao preço regular, usa chartPreviousClose
-            if prev_close == regular_price and chart_prev > 0:
-                prev_close = chart_prev
-
-            return {
-                "ticker": ticker.replace(".SA", "").replace("^BVSP", "IBOV"),
-                "current_price": regular_price,
-                "previous_price": prev_close,
-                "currency": meta.get("currency", "BRL"),
-            }
-    except Exception:
-        # Cotações históricas reais do pregão de referência da B3
-        real_defaults = {
-            "^BVSP": {"current_price": 189699.0, "previous_price": 185925.0, "currency": "POINTS"},
-            "PETR4.SA": {"current_price": 38.90, "previous_price": 38.20, "currency": "BRL"},
-            "VALE3.SA": {"current_price": 64.20, "previous_price": 63.50, "currency": "BRL"},
-            "ITUB4.SA": {"current_price": 35.40, "previous_price": 34.30, "currency": "BRL"},
-            "BBDC4.SA": {"current_price": 15.10, "previous_price": 14.70, "currency": "BRL"},
-            "BBAS3.SA": {"current_price": 29.80, "previous_price": 29.18, "currency": "BRL"},
-            "WEGE3.SA": {"current_price": 54.10, "previous_price": 53.60, "currency": "BRL"},
-        }
-        fallback = real_defaults.get(ticker, {"current_price": 30.0, "previous_price": 29.5, "currency": "BRL"})
+        result = _get_json(url)["chart"]["result"][0]
+        meta = result["meta"]
+        observed = datetime.fromtimestamp(int(meta["regularMarketTime"]), UTC)
+        session = observed.astimezone(MARKET_TZ).date()
+        bars = result["indicators"]["quote"][0]["close"]
+        history = []
+        for timestamp, close in zip(result["timestamp"], bars, strict=True):
+            day = datetime.fromtimestamp(timestamp, MARKET_TZ).date()
+            if day < session:
+                # Não pula uma sessão com fechamento ausente para calcular um retorno de vários dias.
+                history.append((day, close))
+        if not history:
+            raise ValueError("Fechamento da sessão anterior ausente na série diária")
+        previous_session, close = max(history, key=lambda row: row[0])
         return {
             "ticker": ticker.replace(".SA", "").replace("^BVSP", "IBOV"),
-            "current_price": fallback["current_price"],
-            "previous_price": fallback["previous_price"],
-            "currency": fallback["currency"],
+            "current_price": _positive(meta["regularMarketPrice"]),
+            "previous_price": _positive(close), "currency": meta["currency"],
+            "observed_at": observed.isoformat(), "reference_date": session.isoformat(),
+            "previous_session": previous_session.isoformat(), "source_url": url,
         }
+    except Exception as exc:
+        raise RuntimeError(f"Yahoo Finance: cotação de {ticker} indisponível ({exc}).") from exc
 
 
 def fetch_real_market_news(query: str = "Ibovespa B3", max_items: int = 4) -> list[dict[str, Any]]:
-    """Consulta notícias 100% reais em tempo real via RSS público de notícias financeiras brasileiras."""
-    url = f"https://news.google.com/rss/search?q={urllib.parse.quote(query)}&hl=pt-BR&gl=BR&ceid=BR:pt-419"
-    req = urllib.request.Request(url, headers=DEFAULT_HEADERS)
-    news_list: list[dict[str, Any]] = []
+    """Lê manchetes RSS, preservando pubDate e link (que pode ser um redirecionamento)."""
+    url = "https://news.google.com/rss/search?" + urllib.parse.urlencode({
+        "q": f"{query} when:1d", "hl": "pt-BR", "gl": "BR", "ceid": "BR:pt-419",
+    })
     try:
-        with urllib.request.urlopen(req, timeout=10) as resp:
+        req = urllib.request.Request(url, headers=DEFAULT_HEADERS)
+        with urllib.request.urlopen(req, timeout=15) as resp:
             tree = ET.fromstring(resp.read())
-            items = tree.findall(".//item")[:max_items]
-            for idx, it in enumerate(items):
-                title = it.find("title").text if it.find("title") is not None else "Notícia de Mercado"
-                source_elem = it.find("source")
-                source = source_elem.text if source_elem is not None else "Imprensa_Financeira"
-                link = it.find("link").text if it.find("link") is not None else ""
-
-                related = []
-                for tk in ["PETR4", "VALE3", "ITUB4", "BBDC4", "BBAS3", "WEGE3", "IBOV", "USD/BRL"]:
-                    if tk in title.upper():
-                        related.append(tk)
-                if not related:
-                    related = ["IBOV"]
-
-                news_list.append({
-                    "news_id": f"news_real_rss_{idx+1:02d}",
-                    "title": title,
-                    "body": f"Notícia verificada via {source}: {title}. Fonte: {link}",
-                    "published_at": datetime.now(UTC).isoformat(),
-                    "source": source.replace(" ", "_"),
-                    "related_tickers": related,
-                    "is_synthetic": False,
+        news = []
+        for item in tree.findall(".//item"):
+            try:
+                title = item.findtext("title")
+                link = item.findtext("link")
+                published = parsedate_to_datetime(item.findtext("pubDate") or "")
+                if not title or not link or published.tzinfo is None:
+                    raise ValueError("Manchete sem título, link ou data com fuso")
+                source = item.findtext("source") or "Google News RSS"
+                related = [tk for tk in ["PETR4", "VALE3", "ITUB4", "BBDC4", "BBAS3", "WEGE3", "IBOV", "USD/BRL"] if tk in title.upper()]
+                news.append({
+                    "news_id": "rss_" + hashlib.sha256(link.encode()).hexdigest()[:12],
+                    "title": title, "body": f"Manchete coletada de {source}: {title}",
+                    "url": link, "published_at": published.astimezone(UTC).isoformat(),
+                    "source": source, "related_tickers": related, "is_synthetic": False,
                 })
-    except Exception:
-        pass
-    return news_list
+                if len(news) >= max_items:
+                    break
+            except (ValueError, TypeError) as exc:
+                warnings.warn(f"Manchete ignorada: {exc}", stacklevel=2)
+        return news
+    except Exception as exc:
+        warnings.warn(f"Google News RSS indisponível; nenhuma manchete substituta será criada: {exc}", stacklevel=2)
+        return []
 
 
-def build_live_market_package(
-    output_dir: str | Path,
-    timeframe: str = "1d",
-    tickers: list[str] | None = None,
-) -> Path:
-    """Coleta dados 100% reais de mercado (BrasilAPI, AwesomeAPI e B3) e constrói o pacote de fechamento.
+def build_live_market_package(output_dir: str | Path, timeframe: str = "1d", tickers: list[str] | None = None) -> Path:
+    """Monta snapshot diário com preços coletados e carteira explicitamente simulada."""
+    target = Path(output_dir)
+    if target.exists():
+        raise FileExistsError(f"{target} já existe. Escolha uma nova pasta para preservar os dados anteriores.")
+    if timeframe != "1d":
+        raise ValueError("A coleta suporta apenas 1d; períodos semanais/mensais não estão implementados.")
+    stocks = tickers if tickers is not None else ["PETR4.SA", "VALE3.SA", "ITUB4.SA", "BBDC4.SA", "BBAS3.SA", "WEGE3.SA"]
+    if not stocks or len(set(stocks)) != len(stocks):
+        raise ValueError("Selecione ao menos um ativo, sem duplicatas.")
 
-    Gera quotes.csv, positions.csv, news.jsonl e manifest.json.
-    """
-    target_dir = Path(output_dir)
-    target_dir.mkdir(parents=True, exist_ok=True)
-
+    # Coletar e validar os dados obrigatórios antes de criar qualquer pacote.
+    usd = fetch_awesomeapi_usd_brl()
+    ibov = fetch_yahoo_chart("^BVSP")
+    quotes = [fetch_yahoo_chart(ticker) for ticker in stocks]
+    ref_date, previous_session = ibov["reference_date"], ibov["previous_session"]
+    if any(q["reference_date"] != ref_date or q["previous_session"] != previous_session for q in quotes):
+        raise RuntimeError("As cotações correspondem a sessões diferentes; coleta interrompida.")
+    if usd["reference_date"] != ref_date:
+        raise RuntimeError("Câmbio e bolsa correspondem a datas diferentes; coleta interrompida.")
     now = datetime.now(UTC)
-    obs_time = now.isoformat()
-    ref_date = now.date()
-
-    # 1. Obter Câmbio em Tempo Real da AwesomeAPI
-    usd_info = fetch_awesomeapi_usd_brl()
-
-    # 2. Obter Cotações da B3
-    default_stock_tickers = tickers or ["PETR4.SA", "VALE3.SA", "ITUB4.SA", "BBDC4.SA", "BBAS3.SA", "WEGE3.SA"]
-
-    quotes_data: list[list[str]] = []
-    # IBOV
-    ibov_info = fetch_yahoo_chart("^BVSP")
-    quotes_data.append([
-        "IBOV", "index", "POINTS",
-        str(ibov_info["previous_price"]), str(ibov_info["current_price"]),
-        obs_time, "B3_YAHOO_LIVE", "SEM_AJUSTE", "False"
-    ])
-
-    # USD/BRL
-    quotes_data.append([
-        "USD/BRL", "currency", "BRL_PER_USD",
-        str(usd_info["previous_price"]), str(usd_info["current_price"]),
-        obs_time, "AWESOMEAPI_LIVE", "SEM_AJUSTE", "False"
-    ])
-
-    # Ações B3
-    for t in default_stock_tickers:
-        stock_info = fetch_yahoo_chart(t)
-        quotes_data.append([
-            stock_info["ticker"], "equity", stock_info["currency"],
-            str(stock_info["previous_price"]), str(stock_info["current_price"]),
-            obs_time, "B3_LIVE", "EX_DIV_SPLIT", "False"
-        ])
-
-    quotes_path = target_dir / "quotes.csv"
-    with open(quotes_path, "w", newline="", encoding="utf-8") as f:
-        writer = csv.writer(f)
-        writer.writerow(["ticker", "instrument_type", "currency", "previous_price", "current_price", "observed_at", "source", "adjustment_criteria", "is_synthetic"])
-        writer.writerows(quotes_data)
-
-    # 3. Posições Ponderadas da Carteira (Pesos somando 1.0)
-    stocks_clean = [t.replace(".SA", "").replace("^BVSP", "IBOV") for t in default_stock_tickers]
-    n_stocks = len(stocks_clean)
-    base_weight = round(1.0 / n_stocks, 4)
-    weights = [base_weight] * n_stocks
-    # Ajuste de arredondamento no primeiro ativo para soma exata de 1.0
-    weights[0] = round(1.0 - sum(weights[1:]), 4)
-
-    sectors_map = {
-        "PETR4": "Petróleo e Gás",
-        "VALE3": "Materiais Básicos",
-        "ITUB4": "Financeiro",
-        "BBDC4": "Financeiro",
-        "BBAS3": "Financeiro",
-        "WEGE3": "Bens Industriais",
-    }
-
-    positions_data: list[list[str]] = []
-    for ticker, w in zip(stocks_clean, weights, strict=True):
-        positions_data.append([
-            ticker, sectors_map.get(ticker, "Geral"), str(w), str(ref_date), "False"
-        ])
-
-    positions_path = target_dir / "positions.csv"
-    with open(positions_path, "w", newline="", encoding="utf-8") as f:
-        writer = csv.writer(f)
-        writer.writerow(["ticker", "sector", "weight_start", "reference_date", "is_synthetic"])
-        writer.writerows(positions_data)
-
-    # 4. Obter Taxas Oficiais da BrasilAPI e Notícias Reais via RSS
-    taxas = fetch_brasilapi_taxas()
-    selic_val = taxas.get("SELIC", 13.25)
-    cdi_val = taxas.get("CDI", 13.15)
-
-    news_data = [
-        {
-            "news_id": "news_brasilapi_taxas_01",
-            "title": f"BrasilAPI Taxas Oficiais: Taxa Selic em {selic_val:.2f}% e CDI em {cdi_val:.2f}% ao ano",
-            "body": f"Informações públicas do Banco Central e B3 consolidadas via BrasilAPI apontam taxa básica de juros (Selic) a {selic_val:.2f}% e taxa CDI em {cdi_val:.2f}% ao ano.",
-            "published_at": obs_time,
-            "source": "BrasilAPI_Oficial",
-            "related_tickers": ["IBOV", "USD/BRL"],
-            "is_synthetic": False,
-        },
+    observed_times = [datetime.fromisoformat(q["observed_at"]) for q in [ibov, usd, *quotes]]
+    if any(t > now or (now - t).total_seconds() > 7 * 86400 for t in observed_times):
+        raise RuntimeError("Cotação com timestamp futuro ou mais de sete dias de atraso; coleta interrompida.")
+    notes = [
+        "Cotações públicas nos horários de cada fonte; podem ter atraso e não representam necessariamente o fechamento oficial.",
+        "CARTEIRA SIMULADA: pesos iguais gerados para fins didáticos; preços sem ajuste de proventos/splits.",
+        "O câmbio usa bid e varBid da AwesomeAPI; sua referência pode diferir do fechamento da bolsa.",
+        "Notícias da janela recente até a coleta; podem ser posteriores à sessão das cotações.",
     ]
-
-    rss_news = fetch_real_market_news("Ibovespa B3", max_items=4)
-    if rss_news:
-        news_data.extend(rss_news)
-    else:
-        news_data.append({
-            "news_id": "news_real_mercado_01",
-            "title": "Mercado brasileiro repercute liquidez de grandes bancos e commodities",
-            "body": "Papéis do setor financeiro e de energia lideraram as negociações na B3, refletindo fluxo de investidores institucionais.",
-            "published_at": obs_time,
-            "source": "Agencia_Mercado_Ao_Vivo",
-            "related_tickers": ["ITUB4", "PETR4"],
-            "is_synthetic": False,
+    news = fetch_real_market_news()
+    if not news:
+        notes.append("Nenhuma manchete coletada. Ausência de resultado não significa ausência de notícias.")
+    try:
+        taxas = fetch_brasilapi_taxas()
+    except RuntimeError as exc:
+        taxas = {}
+        notes.append(str(exc))
+    if taxas:
+        news.append({
+            "news_id": "brasilapi_taxas", "title": f"Taxas consultadas: Selic em {taxas['SELIC']}% e CDI em {taxas['CDI']}% ao ano",
+            "body": "Retrato das taxas na consulta, sem data de vigência informada neste endpoint; não é manchete jornalística.",
+            "published_at": datetime.now(UTC).isoformat(), "source": "BrasilAPI_Consulta",
+            "url": "https://brasilapi.com.br/api/taxas/v1", "related_tickers": [], "is_synthetic": False,
         })
-
-    news_path = target_dir / "news.jsonl"
-    with open(news_path, "w", encoding="utf-8") as f:
-        for item in news_data:
-            f.write(json.dumps(item, ensure_ascii=False) + "\n")
-
-    # 5. Manifesto de Integridade com Hashes SHA-256
-    manifest_path = target_dir / "manifest.json"
-    manifest_content = {
-        "scenario_id": f"live_{timeframe}_{now.strftime('%Y%m%d_%H%M%S')}",
-        "reference_date": str(ref_date),
-        "previous_session": str(ref_date),
-        "cutoff_time": obs_time,
-        "timezone": "America/Sao_Paulo",
-        "files": [
-            {
-                "filename": "quotes.csv",
-                "path": "quotes.csv",
-                "sha256": compute_sha256(quotes_path),
-            },
-            {
-                "filename": "positions.csv",
-                "path": "positions.csv",
-                "sha256": compute_sha256(positions_path),
-            },
-            {
-                "filename": "news.jsonl",
-                "path": "news.jsonl",
-                "sha256": compute_sha256(news_path),
-            },
-        ],
-        "is_synthetic": False,
-    }
-
-    with open(manifest_path, "w", encoding="utf-8") as f:
-        json.dump(manifest_content, f, indent=2, ensure_ascii=False)
-
-    return target_dir
+    cutoff = datetime.now(UTC).isoformat()
+    sectors = {"PETR4": "Petróleo e Gás", "VALE3": "Materiais Básicos", "ITUB4": "Financeiro", "BBDC4": "Financeiro", "BBAS3": "Financeiro", "WEGE3": "Bens Industriais"}
+    weights = [round(1 / len(quotes), 8)] * len(quotes)
+    weights[0] = 1 - sum(weights[1:])
+    target.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(dir=target.parent, prefix=".coleta-") as staging:
+        stage = Path(staging) / "package"
+        stage.mkdir()
+        with (stage / "quotes.csv").open("w", newline="", encoding="utf-8") as f:
+            writer = csv.writer(f)
+            writer.writerow(["ticker", "instrument_type", "currency", "previous_price", "current_price", "observed_at", "source", "adjustment_criteria", "is_synthetic"])
+            for quote in [ibov, usd, *quotes]:
+                ticker = quote["ticker"]
+                kind = "index" if ticker == "IBOV" else "currency" if ticker == "USD/BRL" else "equity"
+                currency = "POINTS" if kind == "index" else "BRL_PER_USD" if kind == "currency" else quote["currency"]
+                source = "AWESOMEAPI" if kind == "currency" else "YAHOO_FINANCE"
+                writer.writerow([ticker, kind, currency, quote["previous_price"], quote["current_price"], quote["observed_at"], source, "SEM_AJUSTE", "False"])
+        with (stage / "positions.csv").open("w", newline="", encoding="utf-8") as f:
+            writer = csv.writer(f)
+            writer.writerow(["ticker", "sector", "weight_start", "reference_date", "is_synthetic"])
+            for quote, weight in zip(quotes, weights, strict=True):
+                ticker = quote["ticker"]
+                writer.writerow([ticker, sectors.get(ticker, "Geral"), weight, ref_date, "True"])
+        (stage / "news.jsonl").write_text("".join(json.dumps(n, ensure_ascii=False) + "\n" for n in news), encoding="utf-8")
+        (stage / "sources.json").write_text(json.dumps({"collected_at": cutoff, "quotes": [ibov, usd, *quotes], "taxas": taxas, "notes": notes}, ensure_ascii=False, indent=2), encoding="utf-8")
+        manifest = {
+            "scenario_id": target.name, "reference_date": ref_date, "previous_session": previous_session,
+            "cutoff_time": cutoff, "timezone": "America/Sao_Paulo", "is_synthetic": True,
+            "data_notice": " ".join(notes),
+            "files": [{"filename": name, "path": name, "sha256": compute_sha256(stage / name)} for name in ("quotes.csv", "positions.csv", "news.jsonl", "sources.json")],
+        }
+        (stage / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+        if target.exists():
+            raise FileExistsError(f"{target} já existe; dados preservados.")
+        stage.rename(target)
+    return target

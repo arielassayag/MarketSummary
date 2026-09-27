@@ -98,13 +98,24 @@ A CLI exige `--allow-paid` para um modelo pago explicitamente escolhido. Essa op
 
 ## 4. Revisão e interface
 
-`IN_REVIEW` significa que o resultado aguarda revisão humana. Cálculos são feitos em Python; o fluxo completo de IA usa referências ao FactBook e verificações. Isso reduz riscos, mas não garante que uma narrativa seja verdadeira.
+`IN_REVIEW` significa geração concluída e rascunho pronto para revisão humana. Cálculos são feitos em Python; o fluxo completo de IA usa referências ao FactBook e verificações. Isso reduz riscos, mas não garante que uma narrativa seja verdadeira.
 
 ```sh
 uv run streamlit run app.py --server.address 127.0.0.1
 ```
 
 A interface permite revisar, aprovar e exportar. A aplicação não se autoaprova. A aprovação vincula a versão do texto e os dados por hash.
+
+### Concluir pela CLI
+
+Depois de revisar o texto, substitua `ID_DA_EXECUCAO` pelo `Run ID` informado na geração:
+
+```sh
+uv run python -m fechamento approve ID_DA_EXECUCAO --approver "Seu nome"
+uv run python -m fechamento export ID_DA_EXECUCAO
+```
+
+A exportação conclui em `EXPORTED` e salva `comentario.md`, `comentario.html` e `bundle.json` em `outputs/ID_DA_EXECUCAO/`. Alterações no pacote ou no texto invalidam a conferência. Para pacotes fora de `data/real` ou `data/demo`, informe também `--scenario-dir CAMINHO` nos comandos de aprovação e exportação.
 
 ## 5. Testes
 

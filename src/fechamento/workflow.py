@@ -57,6 +57,7 @@ class WorkflowContext:
     draft: CommentaryDraft | None = None
     checks: list[ValidationCheckResult] = field(default_factory=list)
     revisions: list[RevisionRecord] = field(default_factory=list)
+    storage: Storage | None = field(default=None, repr=False)
 
     @property
     def latest_revision(self) -> RevisionRecord | None:
@@ -93,7 +94,7 @@ class WorkflowController:
         self.storage.save_run(run)
         self.storage.log_audit_event(actual_run_id, "RUN_CREATED", f"Execução iniciada para o cenário {pdir}")
 
-        ctx = WorkflowContext(run=run, package_dir=pdir)
+        ctx = WorkflowContext(run=run, package_dir=pdir, storage=self.storage)
 
         # 2. Ingestão e Validação de Entradas
         ingestion = load_and_validate_package(pdir)

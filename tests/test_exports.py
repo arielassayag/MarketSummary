@@ -41,3 +41,22 @@ def test_export_success_after_approval() -> None:
             content = f.read()
             assert "DADOS SIMULADOS" in content
             assert ctx.run.approval_hash in content
+
+
+def test_export_preserves_collector_limitations(tmp_path):
+    import json
+    import shutil
+
+    package = tmp_path / 'package'
+    shutil.copytree('data/demo/normal', package)
+    manifest = json.loads((package/'manifest.json').read_text())
+    manifest['data_notice'] = 'Cotações públicas com atraso; CARTEIRA SIMULADA de pesos iguais.'
+    (package/'manifest.json').write_text(json.dumps(manifest))
+    ctx = WorkflowController(Storage(':memory:')).execute_flow(package, DemoProvider())
+    ctx = WorkflowController(ctx.storage).approve(ctx, approver='TESTE AUTOMATIZADO')
+    paths = export_artifacts(ctx, tmp_path/'output')
+    md = paths['markdown'].read_text()
+    assert manifest['data_notice'] in md
+    assert 'Todos os números, carteira e notícias' not in md
+    assert 'CARTEIRA SIMULADA' in paths['html'].read_text()
+    assert json.loads(paths['bundle'].read_text())['data_notice'] == manifest['data_notice']

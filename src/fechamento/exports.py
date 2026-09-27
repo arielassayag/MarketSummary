@@ -10,6 +10,7 @@ from __future__ import annotations
 import html
 import json
 import re
+from datetime import UTC, datetime
 from pathlib import Path
 
 from .contracts import WorkflowState
@@ -189,6 +190,13 @@ def export_artifacts(
             "BrasilAPI e AwesomeAPI pelo projeto Fechamento — AI Notes #8."
         )
 
+    data_notice = ctx.evidence.factbook.data_notice if ctx.evidence else ""
+    if data_notice:
+        header_title = "# Comentário de Mercado — CONTÉM DADOS OU CARTEIRA SIMULADOS\n\n" if is_synthetic else "# Comentário de Mercado\n\n"
+        header_warning = f"> **Limitações e origem dos dados:** {data_notice}\n\n"
+        disclaimer = data_notice
+        badge_html = '<div class="badge-synthetic">Contém dados ou carteira simulados</div>' if is_synthetic else '<div class="badge-synthetic">Dados declarados reais no pacote</div>'
+
     md_content = (
         f"{header_title}"
         f"{header_warning}"
@@ -222,7 +230,7 @@ def export_artifacts(
         disclaimer=html.escape(disclaimer),
     )
     # Substitui o badge se for dados reais
-    if not is_synthetic:
+    if not is_synthetic or data_notice:
         html_content = html_content.replace(
             '<div class="badge-synthetic">Dados Simulados — AI Notes #8</div>',
             badge_html,
@@ -236,8 +244,9 @@ def export_artifacts(
     bundle_data = {
         "run_id": ctx.run.run_id,
         "scenario_id": ctx.run.scenario_id,
-        "state": ctx.run.state.value,
+        "state": WorkflowState.EXPORTED.value,
         "is_synthetic": is_synthetic,
+        "data_notice": data_notice,
         "reference_date": ref_date,
         "approved_by": approver,
         "approved_at": ctx.run.approved_at.isoformat() if ctx.run.approved_at else None,
@@ -264,11 +273,12 @@ def export_artifacts(
     ctx.run = ctx.run.model_copy(
         update={
             "state": WorkflowState.EXPORTED,
-            "updated_at": ctx.run.updated_at,
+            "updated_at": datetime.now(UTC),
         }
     )
-    if hasattr(ctx, "storage") and ctx.storage:  # type: ignore[attr-defined]
-        ctx.storage.save_run(ctx.run)  # type: ignore[attr-defined]
+    if ctx.storage:
+        ctx.storage.save_run(ctx.run)
+        ctx.storage.log_audit_event(ctx.run.run_id, "STATE_EXPORTED", "Arquivos Markdown, HTML e JSON exportados.")
 
     return {
         "markdown": md_path,

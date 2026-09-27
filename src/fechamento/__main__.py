@@ -77,7 +77,7 @@ def cmd_demo(args: argparse.Namespace) -> None:
     print(ctx.latest_revision.text if ctx.latest_revision else "Nenhum texto gerado.")
 
     print("\n==================================================================")
-    print("O sistema interrompeu propositalmente no estado IN_REVIEW.")
+    print("Geração concluída. Rascunho pronto para revisão humana (IN_REVIEW).")
     print("A aplicação NÃO se autoaprova.")
     print("Para aprovar e exportar via CLI, utilize:")
     print(f"  uv run python -m fechamento approve {ctx.run.run_id} --approver \"Seu Nome\"")
@@ -87,85 +87,65 @@ def cmd_demo(args: argparse.Namespace) -> None:
     print("==================================================================")
 
 
-def cmd_approve(args: argparse.Namespace) -> None:
-    """Aprova explicitamente uma execução específica."""
-    storage = Storage()
+def _saved_context(args: argparse.Namespace, storage: Storage):
+    """Reconstrói o contexto e confere os dados da execução, sem escolher outro cenário."""
+    import hashlib
+
+    from .evidence import compute_factbook_hash, organize_evidence
+    from .metrics import compute_all_metrics
+    from .workflow import WorkflowContext, compute_text_hash
+
     run = storage.get_run(args.run_id)
     if not run:
-        print(f"Erro: Run '{args.run_id}' não encontrada no histórico.", file=sys.stderr)
-        sys.exit(1)
-
+        raise ValueError(f"Execução '{args.run_id}' não encontrada.")
+    requested = getattr(args, "scenario_dir", None)
+    candidates = [Path(requested)] if requested else [Path("data/real") / run.scenario_id, Path("data/demo") / run.scenario_id]
+    package_dir = next((p for p in candidates if p.is_dir()), None)
+    if package_dir is None:
+        raise ValueError("Pacote original não encontrado. Informe --scenario-dir com a pasta utilizada na geração.")
+    ingestion = load_and_validate_package(package_dir)
+    if ingestion.is_blocked or ingestion.manifest is None:
+        raise ValueError("Pacote alterado ou inválido: " + "; ".join(ingestion.blocking_errors))
+    inputs_hash = hashlib.sha256("".join(f.sha256 for f in ingestion.manifest.files).encode()).hexdigest()
+    if inputs_hash != run.inputs_hash:
+        raise ValueError("Dados diferentes dos utilizados na geração. Gere um novo rascunho.")
+    metrics = compute_all_metrics(ingestion.quotes, ingestion.positions)
+    evidence = organize_evidence(metrics, ingestion.manifest, ingestion.eligible_news, ingestion.excluded_news)
+    if compute_factbook_hash(evidence.factbook) != run.facts_hash:
+        raise ValueError("FactBook diferente do utilizado na geração. Gere um novo rascunho.")
     revisions = storage.get_revisions(args.run_id)
-    if not revisions:
-        print(f"Erro: Nenhuma revisão encontrada para a run '{args.run_id}'.", file=sys.stderr)
+    if not revisions or compute_text_hash(revisions[-1].text) != revisions[-1].text_hash:
+        raise ValueError("Revisão ausente ou texto alterado fora do fluxo de revisão.")
+    return WorkflowContext(run=run, package_dir=package_dir, ingestion=ingestion, metrics=metrics,
+                           evidence=evidence, revisions=revisions, storage=storage)
+
+
+def cmd_approve(args: argparse.Namespace) -> None:
+    """Registra a aprovação explicitamente solicitada pelo revisor."""
+    storage = Storage()
+    try:
+        ctx = _saved_context(args, storage)
+        ctx = WorkflowController(storage).approve(ctx, approver=args.approver)
+    except (ValueError, OSError) as exc:
+        print(f"Aprovação bloqueada: {exc}", file=sys.stderr)
         sys.exit(1)
-
-    # Reconstrução do contexto para aprovação
-    controller = WorkflowController(storage=storage)
-    package_dir = Path("data/real") / run.scenario_id
-    if not package_dir.exists():
-        package_dir = Path("data/demo") / run.scenario_id
-    if not package_dir.exists():
-        package_dir = Path("data/demo/normal")
-
-    from .workflow import WorkflowContext
-    ctx = WorkflowContext(
-        run=run,
-        package_dir=package_dir,
-        revisions=revisions,
-    )
-
-    ctx = controller.approve(ctx, approver=args.approver)
     print(f"[+] Run '{args.run_id}' APROVADA com sucesso por '{args.approver}'!")
     print(f"[+] Approval Hash: {ctx.run.approval_hash}")
     print(f"Para exportar: uv run python -m fechamento export {args.run_id}")
 
 
 def cmd_export(args: argparse.Namespace) -> None:
-    """Exporta artefatos de uma run aprovada."""
+    """Exporta os artefatos de uma execução aprovada e registra a conclusão."""
     storage = Storage()
-    run = storage.get_run(args.run_id)
-    if not run:
-        print(f"Erro: Run '{args.run_id}' não encontrada.", file=sys.stderr)
+    try:
+        ctx = _saved_context(args, storage)
+        paths = export_artifacts(ctx, output_base_dir=args.output_dir)
+    except (ValueError, PermissionError, OSError) as exc:
+        print(f"Exportação bloqueada: {exc}", file=sys.stderr)
         sys.exit(1)
-
-    if run.state != WorkflowState.APPROVED:
-        print(f"Erro: Run '{args.run_id}' está no estado '{run.state.value}'. Apenas runs APPROVED podem ser exportadas.", file=sys.stderr)
-        sys.exit(1)
-
-    revisions = storage.get_revisions(args.run_id)
-    package_dir = Path("data/real") / run.scenario_id
-    if not package_dir.exists():
-        package_dir = Path("data/demo") / run.scenario_id
-    if not package_dir.exists():
-        package_dir = Path("data/demo/normal")
-
-    # Reconstrução do contexto para exportação sem resetar o estado
-    from .evidence import organize_evidence
-    from .metrics import compute_all_metrics
-    from .workflow import WorkflowContext
-
-    ingestion = load_and_validate_package(package_dir)
-    metrics = compute_all_metrics(ingestion.quotes, ingestion.positions)
-    evidence = organize_evidence(
-        metrics=metrics,
-        manifest=ingestion.manifest,  # type: ignore[arg-type]
-        eligible_news=ingestion.eligible_news,
-        excluded_news=ingestion.excluded_news,
-    )
-    ctx = WorkflowContext(
-        run=run,
-        package_dir=package_dir,
-        ingestion=ingestion,
-        metrics=metrics,
-        evidence=evidence,
-        revisions=revisions,
-    )
-
-    paths = export_artifacts(ctx, output_base_dir=args.output_dir)
-    print(f"[+] Exportação concluída com sucesso para a run '{args.run_id}':")
-    for k, p in paths.items():
-        print(f" - {k}: {p}")
+    print(f"[+] Exportação concluída com sucesso para a run '{args.run_id}' (EXPORTED):")
+    for key, path in paths.items():
+        print(f" - {key}: {path}")
 
 
 def cmd_run(args: argparse.Namespace) -> None:
@@ -226,6 +206,7 @@ def cmd_run(args: argparse.Namespace) -> None:
             print(ctx.ingestion.manifest.data_notice)
     for check in ctx.checks:
         print(f"[{'PASS' if check.passed else 'ATENÇÃO'}] {check.name}")
+    print("\nGeração concluída. Rascunho pronto para revisão humana (IN_REVIEW).")
     print("\n--- RASCUNHO GERADO ---")
     print(ctx.latest_revision.text if ctx.latest_revision else "Nenhum texto.")
 
@@ -269,12 +250,14 @@ def main() -> None:
     # Subcomando approve
     sub_app = subparsers.add_parser("approve", help="Aprova um comentário em revisão.")
     sub_app.add_argument("run_id", help="Identificador da execução.")
+    sub_app.add_argument("--scenario-dir", default=None, help="Pasta original, se estiver fora de data/real ou data/demo.")
     sub_app.add_argument("--approver", default="Revisor Humano", help="Nome do aprovador.")
     sub_app.set_defaults(func=cmd_approve)
 
     # Subcomando export
     sub_exp = subparsers.add_parser("export", help="Exporta artefatos de uma execução aprovada.")
     sub_exp.add_argument("run_id", help="Identificador da execução.")
+    sub_exp.add_argument("--scenario-dir", default=None, help="Pasta original, se estiver fora de data/real ou data/demo.")
     sub_exp.add_argument("--output-dir", default="outputs", help="Diretório de saída.")
     sub_exp.set_defaults(func=cmd_export)
 

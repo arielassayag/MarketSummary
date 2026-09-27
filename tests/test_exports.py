@@ -60,3 +60,24 @@ def test_export_preserves_collector_limitations(tmp_path):
     assert 'Todos os números, carteira e notícias' not in md
     assert 'CARTEIRA SIMULADA' in paths['html'].read_text()
     assert json.loads(paths['bundle'].read_text())['data_notice'] == manifest['data_notice']
+
+
+@pytest.mark.parametrize("change", ["input", "text", "facts"])
+def test_export_refuses_content_changed_after_approval(tmp_path, change):
+    import shutil
+
+    package = tmp_path / "package"
+    shutil.copytree("data/demo/normal", package)
+    controller = WorkflowController(Storage(":memory:"))
+    ctx = controller.execute_flow(package, DemoProvider())
+    controller.approve(ctx, approver="TESTE")
+    if change == "input":
+        with (package / "quotes.csv").open("a") as f:
+            f.write("\n")
+    elif change == "text":
+        ctx.revisions[-1] = ctx.latest_revision.model_copy(update={"text": "Texto substituído."})
+    else:
+        ctx.evidence.factbook.facts.clear()
+    with pytest.raises(ValueError):
+        export_artifacts(ctx, tmp_path / "output")
+    assert not (tmp_path / "output").exists()

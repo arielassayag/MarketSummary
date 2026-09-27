@@ -3,6 +3,8 @@
 import tempfile
 from pathlib import Path
 
+import pytest
+
 from fechamento.contracts import WorkflowState
 from fechamento.providers import DemoProvider
 from fechamento.storage import Storage
@@ -65,3 +67,17 @@ def test_rejection_flow() -> None:
         ctx = controller.reject(ctx, reason="Falta de dados macroeconômicos", rejector="Gestor")
         assert ctx.run.state == WorkflowState.REJECTED
         assert "Falta de dados" in (ctx.run.blocking_reason or "")
+
+
+def test_approval_refuses_changed_original_input(tmp_path):
+    import shutil
+
+    package = tmp_path / "package"
+    shutil.copytree("data/demo/normal", package)
+    controller = WorkflowController(Storage(":memory:"))
+    ctx = controller.execute_flow(package, DemoProvider())
+    with (package / "quotes.csv").open("a") as f:
+        f.write("\n")
+    with pytest.raises(ValueError):
+        controller.approve(ctx, approver="TESTE")
+    assert ctx.run.state == WorkflowState.IN_REVIEW

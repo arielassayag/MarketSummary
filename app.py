@@ -17,6 +17,7 @@ from pathlib import Path
 
 import pandas as pd
 import streamlit as st
+from dotenv import load_dotenv
 
 from fechamento.contracts import (
     ProcessSpec,
@@ -42,6 +43,9 @@ from fechamento.providers import (
 )
 from fechamento.storage import Storage
 from fechamento.workflow import WorkflowController
+
+# A tela precisa da chave antes de criar os campos e o provedor.
+load_dotenv(Path(__file__).resolve().parent / ".env")
 
 # Configuração da página
 st.set_page_config(
@@ -489,6 +493,7 @@ with tab_execute:
         state_class = {
             WorkflowState.IN_REVIEW: "badge-in-review",
             WorkflowState.APPROVED: "badge-approved",
+            WorkflowState.EXPORTED: "badge-approved",
             WorkflowState.BLOCKED: "badge-blocked",
             WorkflowState.FAILED: "badge-failed",
         }.get(ctx.run.state, "badge-state")
@@ -514,8 +519,8 @@ with tab_execute:
         elif ctx.run.state == WorkflowState.FAILED:
             st.error(f"**FALHA NA EXECUÇÃO:**\n\n{ctx.run.blocking_reason}")
 
-        elif ctx.run.state in (WorkflowState.IN_REVIEW, WorkflowState.CHECKED, WorkflowState.APPROVED):
-            st.success("Pipeline executado com sucesso até a etapa de revisão humana!")
+        elif ctx.run.state in (WorkflowState.IN_REVIEW, WorkflowState.CHECKED, WorkflowState.APPROVED, WorkflowState.EXPORTED):
+            st.success("Exportação concluída. Arquivos finais disponíveis na aba 3. Revisar." if ctx.run.state == WorkflowState.EXPORTED else "Pipeline executado com sucesso até a etapa de revisão humana!")
 
             # Resumo Quantitativo
             if ctx.metrics:
@@ -592,7 +597,7 @@ with tab_review:
             st.markdown(f"**Revisão Atual:** #{ctx.latest_revision.revision_number if ctx.latest_revision else 1}")
             st.markdown(f"**Hash do Texto:** <code>{ctx.latest_revision.text_hash if ctx.latest_revision else 'N/A'}</code>", unsafe_allow_html=True)
 
-            if ctx.run.state == WorkflowState.APPROVED:
+            if ctx.run.state in (WorkflowState.APPROVED, WorkflowState.EXPORTED):
                 st.success(f"✅ **COMENTÁRIO APROVADO** por {ctx.run.approved_by}")
                 st.markdown(f"**Approval Hash (SHA-256):** <code>{ctx.run.approval_hash}</code>", unsafe_allow_html=True)
             else:
@@ -602,10 +607,13 @@ with tab_review:
                 with col_btn_app:
                     approver_name = st.text_input("Nome do Aprovador:", value="Ariel Assayag")
                     if st.button("✔ Aprovar Comentário Formalmente", type="primary", use_container_width=True):
-                        ctx = controller.approve(ctx, approver=approver_name)
-                        st.session_state.workflow_ctx = ctx
-                        st.success(f"Comentário aprovado com sucesso por {approver_name}!")
-                        st.rerun()
+                        try:
+                            ctx = controller.approve(ctx, approver=approver_name)
+                        except ValueError as exc:
+                            st.error(str(exc))
+                        else:
+                            st.session_state.workflow_ctx = ctx
+                            st.rerun()
 
                 with col_btn_rej:
                     reject_reason = st.text_input("Motivo de Rejeição:", placeholder="Ex: Causalidade inconsistente")
@@ -624,10 +632,17 @@ with tab_review:
             st.markdown("##### Exportação de Artefatos")
             if ctx.run.state == WorkflowState.APPROVED:
                 if st.button("📦 Exportar Artefatos (Markdown, HTML, JSON)", type="secondary", use_container_width=True):
-                    paths = export_artifacts(ctx)
-                    st.success("Exportação concluída com sucesso em `outputs/`!")
-                    for k, p in paths.items():
-                        st.markdown(f"- **{k}:** `{p}`")
+                    try:
+                        export_artifacts(ctx)
+                    except (ValueError, PermissionError) as exc:
+                        st.error(str(exc))
+                    else:
+                        st.session_state.workflow_ctx = ctx
+                        st.rerun()
+            elif ctx.run.state == WorkflowState.EXPORTED:
+                st.success("Exportação concluída com sucesso em `outputs/`!")
+                for filename in ("comentario.md", "comentario.html", "bundle.json"):
+                    st.markdown(f"- `{Path('outputs') / ctx.run.run_id / filename}`")
             else:
                 st.info("🔒 **Exportação bloqueada.** A exportação requer aprovação humana formal no estado `APPROVED`.")
 

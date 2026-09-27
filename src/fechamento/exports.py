@@ -14,7 +14,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 from .contracts import WorkflowState
-from .workflow import WorkflowContext, compute_approval_hash
+from .workflow import WorkflowContext, compute_approval_hash, verify_context_integrity
 
 HTML_TEMPLATE = """<!DOCTYPE html>
 <html lang="pt-BR">
@@ -142,6 +142,8 @@ def export_artifacts(
 
     if not ctx.run.approval_hash:
         raise ValueError("Exportação bloqueada: hash de aprovação ausente.")
+
+    verify_context_integrity(ctx)
 
     # Verificação de segurança criptográfica: o hash do texto atual bate com o hash aprovado?
     expected_hash = compute_approval_hash(

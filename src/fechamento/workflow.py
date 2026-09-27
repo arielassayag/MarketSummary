@@ -64,6 +64,26 @@ class WorkflowContext:
         return self.revisions[-1] if self.revisions else None
 
 
+def verify_context_integrity(ctx: WorkflowContext) -> None:
+    """Confere o conteúdo atual, não apenas os hashes guardados no contexto."""
+    current = load_and_validate_package(ctx.package_dir)
+    if current.is_blocked or current.manifest is None:
+        raise ValueError("Pacote alterado ou inválido. Gere uma nova execução: " + "; ".join(current.blocking_errors))
+    inputs_hash = hashlib.sha256("".join(f.sha256 for f in current.manifest.files).encode()).hexdigest()
+    if inputs_hash != ctx.run.inputs_hash:
+        raise ValueError("Dados diferentes dos utilizados na geração. Gere uma nova execução.")
+    metrics = compute_all_metrics(current.quotes, current.positions)
+    evidence = organize_evidence(metrics, current.manifest, current.eligible_news, current.excluded_news)
+    if (
+        compute_factbook_hash(evidence.factbook) != ctx.run.facts_hash
+        or ctx.evidence is None
+        or compute_factbook_hash(ctx.evidence.factbook) != ctx.run.facts_hash
+    ):
+        raise ValueError("FactBook alterado depois da geração. Gere uma nova execução.")
+    if not ctx.latest_revision or compute_text_hash(ctx.latest_revision.text) != ctx.latest_revision.text_hash:
+        raise ValueError("Texto alterado fora do fluxo de revisão. Salve uma nova revisão antes de aprovar.")
+
+
 class WorkflowController:
     def __init__(self, storage: Storage | None = None) -> None:
         self.storage = storage or Storage()
@@ -347,6 +367,8 @@ class WorkflowController:
 
         if not ctx.latest_revision:
             raise ValueError("Não há revisão disponível para aprovação.")
+
+        verify_context_integrity(ctx)
 
         text_hash = ctx.latest_revision.text_hash
         facts_hash = ctx.run.facts_hash or ""

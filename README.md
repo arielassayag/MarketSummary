@@ -106,6 +106,8 @@ uv run streamlit run app.py --server.address 127.0.0.1
 
 A interface permite revisar, aprovar e exportar. A aplicação não se autoaprova. A aprovação vincula a versão do texto e os dados por hash.
 
+Na primeira abertura, o Streamlit pode pedir `Email:` no terminal. O cadastro é opcional: deixe em branco e pressione Enter. A interface lê o `.env` da pasta do projeto ao iniciar; reinicie a aplicação se alterar a chave com ela aberta.
+
 ### Concluir pela CLI
 
 Depois de revisar o texto, substitua `ID_DA_EXECUCAO` pelo `Run ID` informado na geração:

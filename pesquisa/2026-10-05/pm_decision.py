@@ -50,10 +50,12 @@ for iid,st,cv,r in views:
     if iid in seen or r=="Repetição evitada": continue
     seen.add(iid)
     vv.append({"issuer_id":iid,"stance":st,"conviction":cv,"horizon_weeks":8,"rationale":r,"evidence_ids":[nid(iid)]})
-election_no_short = ["BR_COSAN","BR_INTER","BR_EQUATORIAL","BR_ASSAI","BR_SMARTFIT","BR_XP","BR_LOCALIZA","BR_ECORODOVIAS","BR_BRADESCO","BR_STONE","BR_ENEVA","BR_CVC","BR_PICPAY","BR_PAGS","BR_ALUPAR","BR_NATURA","BR_RIACHUELO","BR_SBF","BR_MOURADUBEUX","BR_PAGUEMENOS","BR_PETROBRAS"]
+election_no_short = ["BR_COSAN","BR_INTER","BR_EQUATORIAL","BR_ASSAI","BR_SMARTFIT","BR_XP","BR_LOCALIZA","BR_ECORODOVIAS","BR_BRADESCO","BR_STONE","BR_ENEVA","BR_CVC","BR_PICPAY","BR_PAGS","BR_ALUPAR","BR_NATURA","BR_RIACHUELO","BR_SBF","BR_MOURADUBEUX","BR_PAGUEMENOS","BR_PETROBRAS","BR_ENERGISA","BR_EZTEC"]
 excl=[]
 for iid in election_no_short:
     excl.append({"issuer_id":iid,"no_long":False,"no_short":True,"reason":"Janela do segundo turno: nome que sobe com vitória da oposição; sem shorts novos até após 2026-10-25 (risco de squeeze e evento binário)."})
+for iid in ["BR_COPASA","BR_SANEPAR","BR_CEMIG"]:
+    excl.append({"issuer_id":iid,"no_long":False,"no_short":True,"reason":"Estatal com tese de privatização ligada ao resultado do segundo turno em 2026-10-25: evento binário com risco de gap; sem shorts novos até a definição."})
 excl.append({"issuer_id":"BR_AFYA","no_long":True,"no_short":True,"reason":"Fusão com a Yduqs com relação de troca fixa assinada em 2026-09-23: o preço segue o da Yduqs e os sinais próprios perdem validade; tratar como arbitragem de fusão, fora do livro direcional."})
 excl.append({"issuer_id":"BR_YDUQS","no_long":True,"no_short":True,"reason":"Contraparte da fusão com a Afya: evitar par espúrio entre as duas linhas e risco de decisão do CADE."})
 journal=[

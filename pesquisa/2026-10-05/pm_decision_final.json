@@ -1,0 +1,569 @@
+{
+  "mind": "claude-code",
+  "regime": "neutral",
+  "risk_posture": "defensiva",
+  "abstain": false,
+  "market_view": "Primeira carteira do CDP, montada no primeiro pregão após o primeiro turno brasileiro, com resultado mais favorável à oposição do que indicavam as pesquisas e segundo turno em 2026-10-25. O pano de fundo global é de aperto: Fed subindo juros, juro longo americano nas máximas em décadas e dólar forte. O petróleo está alto, o cobre forte e o minério e o lítio fracos. A postura é defensiva durante a janela eleitoral. O livro é neutro em dólar, beta, país, setor, estilos, estatais, sensibilidade a commodities e choque eleitoral, medido pela reação de hoje. O alpha vem do quant, com inclinações da pesquisa onde há concordância. Em nomes domésticos que sobem com vitória da oposição não há shorts novos. Divergências fortes entre quant e pesquisa reduzem a aposta. A fusão Afya e Yduqs fica fora do livro direcional.",
+  "what_changed": "Inception: não há carteira nem visões anteriores. A semana estabelece a metodologia: quant como base, pesquisa como inclinação limitada e vetos de risco, e neutralização explícita do fator eleição.",
+  "evaluation_last_week": "Não se aplica: primeira semana do fundo, sem teses anteriores a avaliar.",
+  "views": [
+    {
+      "issuer_id": "BR_TENDA",
+      "stance": 1,
+      "conviction": 4,
+      "horizon_weeks": 8,
+      "rationale": "Quant e pesquisa concordam: execução forte e previsível, projeções do ano elevadas após o 2T26 e desalavancagem em curso; a sensibilidade eleitoral é ambígua e fica neutralizada pelo modelo de risco.",
+      "evidence_ids": [
+        "cdp-2026-10-05-br_tenda"
+      ]
+    },
+    {
+      "issuer_id": "BR_RIACHUELO",
+      "stance": 1,
+      "conviction": 4,
+      "horizon_weeks": 8,
+      "rationale": "Quant e pesquisa concordam: virada operacional com melhora de margens e de crédito; o risco de beta doméstico é neutralizado pelas restrições de país, setor e choque eleitoral.",
+      "evidence_ids": [
+        "cdp-2026-10-05-br_riachuelo"
+      ]
+    },
+    {
+      "issuer_id": "BR_MOURADUBEUX",
+      "stance": 1,
+      "conviction": 4,
+      "horizon_weeks": 8,
+      "rationale": "Quant e pesquisa concordam: lucro recorde no 2T26, margens em expansão pelo modelo de condomínio, alavancagem quase nula e recompra em curso; a prévia do 3T26 é o próximo teste.",
+      "evidence_ids": [
+        "cdp-2026-10-05-br_mouradubeux"
+      ]
+    },
+    {
+      "issuer_id": "AR_CEPU",
+      "stance": 1,
+      "conviction": 3,
+      "horizon_weeks": 8,
+      "rationale": "Quant e pesquisa convergem em geração de energia com receita dolarizada e balanço líquido; o risco-país argentino é fator e fica neutralizado; convicção moderada pela cauda política.",
+      "evidence_ids": [
+        "cdp-2026-10-05-ar_cepu"
+      ]
+    },
+    {
+      "issuer_id": "BR_PAGUEMENOS",
+      "stance": 1,
+      "conviction": 3,
+      "horizon_weeks": 8,
+      "rationale": "Quant e pesquisa convergem em ganho de margem e desalavancagem; a cadeia de farmácias tem driver próprio, com o beta de consumo neutralizado pelo modelo.",
+      "evidence_ids": [
+        "cdp-2026-10-05-br_paguemenos"
+      ]
+    },
+    {
+      "issuer_id": "BR_ALUPAR",
+      "stance": 1,
+      "conviction": 3,
+      "horizon_weeks": 8,
+      "rationale": "Quant e pesquisa convergem: transmissão com receita regulada e projetos entrando em operação; a sensibilidade a juros é tratada como fator.",
+      "evidence_ids": [
+        "cdp-2026-10-05-br_alupar"
+      ]
+    },
+    {
+      "issuer_id": "BR_ISAENERGIA",
+      "stance": 1,
+      "conviction": 3,
+      "horizon_weeks": 8,
+      "rationale": "Quant e pesquisa convergem em receita regulada previsível e dividendos; tese idiossincrática de baixo risco.",
+      "evidence_ids": [
+        "cdp-2026-10-05-br_isaenergia"
+      ]
+    },
+    {
+      "issuer_id": "BR_SBF",
+      "stance": 1,
+      "conviction": 3,
+      "horizon_weeks": 8,
+      "rationale": "Quant e pesquisa convergem em execução de margens e da marca Nike no Brasil; não há linha alugável, então a visão atua só no lado comprado.",
+      "evidence_ids": [
+        "cdp-2026-10-05-br_sbf"
+      ]
+    },
+    {
+      "issuer_id": "CL_LATAM",
+      "stance": 1,
+      "conviction": 3,
+      "horizon_weeks": 8,
+      "rationale": "Quant e pesquisa convergem em capacidade disciplinada, geração de caixa e recompras; o petróleo alto é risco, mas a sensibilidade a commodity fica neutralizada.",
+      "evidence_ids": [
+        "cdp-2026-10-05-cl_latam"
+      ]
+    },
+    {
+      "issuer_id": "BR_PAGS",
+      "stance": 1,
+      "conviction": 3,
+      "horizon_weeks": 8,
+      "rationale": "Quant e pesquisa convergem em valuation descontado, geração de caixa e retorno ao acionista; risco competitivo em adquirência acompanhado.",
+      "evidence_ids": [
+        "cdp-2026-10-05-br_pags"
+      ]
+    },
+    {
+      "issuer_id": "BR_NATURA",
+      "stance": 1,
+      "conviction": 3,
+      "horizon_weeks": 8,
+      "rationale": "Quant e pesquisa convergem na simplificação após a reorganização societária e na melhora de margens; execução ainda em teste.",
+      "evidence_ids": [
+        "cdp-2026-10-05-br_natura"
+      ]
+    },
+    {
+      "issuer_id": "BR_WEG",
+      "stance": 1,
+      "conviction": 3,
+      "horizon_weeks": 8,
+      "rationale": "Quant e pesquisa convergem em qualidade, carteira de pedidos de transmissão e baixa alavancagem; nome defensivo diante do evento eleitoral.",
+      "evidence_ids": [
+        "cdp-2026-10-05-br_weg"
+      ]
+    },
+    {
+      "issuer_id": "CO_GEOPARK",
+      "stance": 1,
+      "conviction": 3,
+      "horizon_weeks": 8,
+      "rationale": "Quant e pesquisa convergem em ativos produtores com custo baixo e retorno ao acionista; o fator petróleo é neutralizado à parte.",
+      "evidence_ids": [
+        "cdp-2026-10-05-co_geopark"
+      ]
+    },
+    {
+      "issuer_id": "BR_AURA",
+      "stance": 1,
+      "conviction": 3,
+      "horizon_weeks": 8,
+      "rationale": "Quant e pesquisa convergem em crescimento de produção de ouro com custos controlados; a sensibilidade ao ouro é neutralizada pela restrição de commodity.",
+      "evidence_ids": [
+        "cdp-2026-10-05-br_aura"
+      ]
+    },
+    {
+      "issuer_id": "BR_BRADSAUDE",
+      "stance": 1,
+      "conviction": 2,
+      "horizon_weeks": 8,
+      "rationale": "Quant positivo e pesquisa construtiva, mas evidência mais curta; convicção baixa.",
+      "evidence_ids": [
+        "cdp-2026-10-05-br_bradsaude"
+      ]
+    },
+    {
+      "issuer_id": "BR_PICPAY",
+      "stance": 1,
+      "conviction": 2,
+      "horizon_weeks": 8,
+      "rationale": "Quant positivo e pesquisa construtiva sobre crescimento da base e rentabilidade, com histórico curto como companhia listada; convicção baixa.",
+      "evidence_ids": [
+        "cdp-2026-10-05-br_picpay"
+      ]
+    },
+    {
+      "issuer_id": "PE_BVN",
+      "stance": 1,
+      "conviction": 2,
+      "horizon_weeks": 8,
+      "rationale": "Quant positivo e pesquisa construtiva em ouro e cobre; risco social no sul do Peru limita a convicção.",
+      "evidence_ids": [
+        "cdp-2026-10-05-pe_bvn"
+      ]
+    },
+    {
+      "issuer_id": "BR_AXIA",
+      "stance": 1,
+      "conviction": 2,
+      "horizon_weeks": 8,
+      "rationale": "Pesquisa construtiva sobre desalavancagem e dividendos; quant levemente positivo; convicção baixa.",
+      "evidence_ids": [
+        "cdp-2026-10-05-br_axia"
+      ]
+    },
+    {
+      "issuer_id": "BR_CURY",
+      "stance": -1,
+      "conviction": 2,
+      "horizon_weeks": 8,
+      "rationale": "Divergência: quant comprado, mas a pesquisa aponta momento idiossincrático desfavorável frente aos pares e sensibilidade negativa a mudanças na política habitacional; reduzir a aposta.",
+      "evidence_ids": [
+        "cdp-2026-10-05-br_cury"
+      ]
+    },
+    {
+      "issuer_id": "CL_SQM",
+      "stance": -1,
+      "conviction": 2,
+      "horizon_weeks": 8,
+      "rationale": "Divergência: quant comprado, mas a pesquisa aponta lítio em queda e oferta chinesa crescente; reduzir a aposta, sem short por risco de squeeze em commodity.",
+      "evidence_ids": [
+        "cdp-2026-10-05-cl_sqm"
+      ]
+    },
+    {
+      "issuer_id": "BR_MARCOPOLO",
+      "stance": -1,
+      "conviction": 2,
+      "horizon_weeks": 8,
+      "rationale": "Divergência: quant comprado, mas a pesquisa aponta desaceleração de pedidos e base de comparação difícil; reduzir a aposta.",
+      "evidence_ids": [
+        "cdp-2026-10-05-br_marcopolo"
+      ]
+    },
+    {
+      "issuer_id": "BR_BBSEG",
+      "stance": -1,
+      "conviction": 2,
+      "horizon_weeks": 8,
+      "rationale": "Pesquisa cautelosa sobre a renovação do acordo de distribuição com o controlador; estatal tratada como tema neutro.",
+      "evidence_ids": [
+        "cdp-2026-10-05-br_bbseg"
+      ]
+    },
+    {
+      "issuer_id": "BR_CMIN",
+      "stance": -1,
+      "conviction": 2,
+      "horizon_weeks": 8,
+      "rationale": "Pesquisa negativa com minério de ferro fraco e oferta nova entrando; sem linha alugável, a visão só reduz a exposição comprada.",
+      "evidence_ids": [
+        "cdp-2026-10-05-br_cmin"
+      ]
+    },
+    {
+      "issuer_id": "MX_VOLARIS",
+      "stance": -1,
+      "conviction": 3,
+      "horizon_weeks": 8,
+      "rationale": "Quant e pesquisa concordam em pressão de custos e de demanda no México; sem catalisador iminente que gere squeeze; tamanho limitado pela cautela da sentinela.",
+      "evidence_ids": [
+        "cdp-2026-10-05-mx_volaris"
+      ]
+    },
+    {
+      "issuer_id": "BR_MBRF",
+      "stance": -1,
+      "conviction": 2,
+      "horizon_weeks": 8,
+      "rationale": "Quant e pesquisa concordam em integração desafiadora e ciclo de proteína desfavorável; convicção baixa.",
+      "evidence_ids": [
+        "cdp-2026-10-05-br_mbrf"
+      ]
+    },
+    {
+      "issuer_id": "CO_TECNOGLASS",
+      "stance": -1,
+      "conviction": 2,
+      "horizon_weeks": 8,
+      "rationale": "Quant e pesquisa concordam em desaceleração e tarifas nos Estados Unidos; convicção baixa.",
+      "evidence_ids": [
+        "cdp-2026-10-05-co_tecnoglass"
+      ]
+    },
+    {
+      "issuer_id": "PE_SCCO",
+      "stance": -1,
+      "conviction": 2,
+      "horizon_weeks": 8,
+      "rationale": "Quant e pesquisa levemente negativos no idiossincrático, com valuation esticado; o fator cobre é neutralizado à parte; cautela de squeeze limita o tamanho.",
+      "evidence_ids": [
+        "cdp-2026-10-05-pe_scco"
+      ]
+    },
+    {
+      "issuer_id": "BR_BTG",
+      "stance": 1,
+      "conviction": 2,
+      "horizon_weeks": 8,
+      "rationale": "Divergência: quant vendido, pesquisa positiva em crescimento de receita e captação; neutralizar a aposta vendida.",
+      "evidence_ids": [
+        "cdp-2026-10-05-br_btg"
+      ]
+    },
+    {
+      "issuer_id": "BR_SABESP",
+      "stance": 1,
+      "conviction": 2,
+      "horizon_weeks": 8,
+      "rationale": "Divergência: quant vendido, pesquisa positiva em continuidade regulatória com a reeleição em São Paulo; neutralizar a aposta vendida.",
+      "evidence_ids": [
+        "cdp-2026-10-05-br_sabesp"
+      ]
+    },
+    {
+      "issuer_id": "LA_MELI",
+      "stance": 1,
+      "conviction": 2,
+      "horizon_weeks": 8,
+      "rationale": "Divergência: quant levemente vendido, pesquisa positiva em crescimento e margens; neutralizar a aposta vendida.",
+      "evidence_ids": [
+        "cdp-2026-10-05-la_meli"
+      ]
+    },
+    {
+      "issuer_id": "BR_NU",
+      "stance": 1,
+      "conviction": 3,
+      "horizon_weeks": 8,
+      "rationale": "Divergência: quant levemente vendido, pesquisa positiva em crescimento e rentabilidade com risco eleitoral baixo; inclinar para o lado comprado.",
+      "evidence_ids": [
+        "cdp-2026-10-05-br_nu"
+      ]
+    },
+    {
+      "issuer_id": "PE_CREDICORP",
+      "stance": 1,
+      "conviction": 2,
+      "horizon_weeks": 8,
+      "rationale": "Divergência: quant levemente vendido, pesquisa positiva em rentabilidade e qualidade de crédito; neutralizar a aposta vendida.",
+      "evidence_ids": [
+        "cdp-2026-10-05-pe_credicorp"
+      ]
+    },
+    {
+      "issuer_id": "MX_CEMEX",
+      "stance": 1,
+      "conviction": 2,
+      "horizon_weeks": 8,
+      "rationale": "Pesquisa positiva em desalavancagem e potencial de acordo comercial; neutralizar a aposta vendida até a definição tarifária.",
+      "evidence_ids": [
+        "cdp-2026-10-05-mx_cemex"
+      ]
+    },
+    {
+      "issuer_id": "LA_MILLICOM",
+      "stance": 1,
+      "conviction": 2,
+      "horizon_weeks": 8,
+      "rationale": "Divergência: o quant sugeria short relevante, mas a pesquisa é construtiva em geração de caixa e aquisições; neutralizar a aposta vendida.",
+      "evidence_ids": [
+        "cdp-2026-10-05-la_millicom"
+      ]
+    },
+    {
+      "issuer_id": "BR_VIBRA",
+      "stance": 1,
+      "conviction": 2,
+      "horizon_weeks": 8,
+      "rationale": "Divergência: quant neutro a vendido, pesquisa positiva em margens de distribuição; neutralizar.",
+      "evidence_ids": [
+        "cdp-2026-10-05-br_vibra"
+      ]
+    }
+  ],
+  "exclusions": [
+    {
+      "issuer_id": "BR_COSAN",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Janela do segundo turno: nome que sobe com vitória da oposição; sem shorts novos até após 2026-10-25 (risco de squeeze e evento binário)."
+    },
+    {
+      "issuer_id": "BR_INTER",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Janela do segundo turno: nome que sobe com vitória da oposição; sem shorts novos até após 2026-10-25 (risco de squeeze e evento binário)."
+    },
+    {
+      "issuer_id": "BR_EQUATORIAL",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Janela do segundo turno: nome que sobe com vitória da oposição; sem shorts novos até após 2026-10-25 (risco de squeeze e evento binário)."
+    },
+    {
+      "issuer_id": "BR_ASSAI",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Janela do segundo turno: nome que sobe com vitória da oposição; sem shorts novos até após 2026-10-25 (risco de squeeze e evento binário)."
+    },
+    {
+      "issuer_id": "BR_SMARTFIT",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Janela do segundo turno: nome que sobe com vitória da oposição; sem shorts novos até após 2026-10-25 (risco de squeeze e evento binário)."
+    },
+    {
+      "issuer_id": "BR_XP",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Janela do segundo turno: nome que sobe com vitória da oposição; sem shorts novos até após 2026-10-25 (risco de squeeze e evento binário)."
+    },
+    {
+      "issuer_id": "BR_LOCALIZA",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Janela do segundo turno: nome que sobe com vitória da oposição; sem shorts novos até após 2026-10-25 (risco de squeeze e evento binário)."
+    },
+    {
+      "issuer_id": "BR_ECORODOVIAS",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Janela do segundo turno: nome que sobe com vitória da oposição; sem shorts novos até após 2026-10-25 (risco de squeeze e evento binário)."
+    },
+    {
+      "issuer_id": "BR_BRADESCO",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Janela do segundo turno: nome que sobe com vitória da oposição; sem shorts novos até após 2026-10-25 (risco de squeeze e evento binário)."
+    },
+    {
+      "issuer_id": "BR_STONE",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Janela do segundo turno: nome que sobe com vitória da oposição; sem shorts novos até após 2026-10-25 (risco de squeeze e evento binário)."
+    },
+    {
+      "issuer_id": "BR_ENEVA",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Janela do segundo turno: nome que sobe com vitória da oposição; sem shorts novos até após 2026-10-25 (risco de squeeze e evento binário)."
+    },
+    {
+      "issuer_id": "BR_CVC",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Janela do segundo turno: nome que sobe com vitória da oposição; sem shorts novos até após 2026-10-25 (risco de squeeze e evento binário)."
+    },
+    {
+      "issuer_id": "BR_PICPAY",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Janela do segundo turno: nome que sobe com vitória da oposição; sem shorts novos até após 2026-10-25 (risco de squeeze e evento binário)."
+    },
+    {
+      "issuer_id": "BR_PAGS",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Janela do segundo turno: nome que sobe com vitória da oposição; sem shorts novos até após 2026-10-25 (risco de squeeze e evento binário)."
+    },
+    {
+      "issuer_id": "BR_ALUPAR",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Janela do segundo turno: nome que sobe com vitória da oposição; sem shorts novos até após 2026-10-25 (risco de squeeze e evento binário)."
+    },
+    {
+      "issuer_id": "BR_NATURA",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Janela do segundo turno: nome que sobe com vitória da oposição; sem shorts novos até após 2026-10-25 (risco de squeeze e evento binário)."
+    },
+    {
+      "issuer_id": "BR_RIACHUELO",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Janela do segundo turno: nome que sobe com vitória da oposição; sem shorts novos até após 2026-10-25 (risco de squeeze e evento binário)."
+    },
+    {
+      "issuer_id": "BR_SBF",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Janela do segundo turno: nome que sobe com vitória da oposição; sem shorts novos até após 2026-10-25 (risco de squeeze e evento binário)."
+    },
+    {
+      "issuer_id": "BR_MOURADUBEUX",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Janela do segundo turno: nome que sobe com vitória da oposição; sem shorts novos até após 2026-10-25 (risco de squeeze e evento binário)."
+    },
+    {
+      "issuer_id": "BR_PAGUEMENOS",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Janela do segundo turno: nome que sobe com vitória da oposição; sem shorts novos até após 2026-10-25 (risco de squeeze e evento binário)."
+    },
+    {
+      "issuer_id": "BR_PETROBRAS",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Janela do segundo turno: nome que sobe com vitória da oposição; sem shorts novos até após 2026-10-25 (risco de squeeze e evento binário)."
+    },
+    {
+      "issuer_id": "BR_ENERGISA",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Janela do segundo turno: nome que sobe com vitória da oposição; sem shorts novos até após 2026-10-25 (risco de squeeze e evento binário)."
+    },
+    {
+      "issuer_id": "BR_EZTEC",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Janela do segundo turno: nome que sobe com vitória da oposição; sem shorts novos até após 2026-10-25 (risco de squeeze e evento binário)."
+    },
+    {
+      "issuer_id": "BR_COPASA",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Estatal com tese de privatização ligada ao resultado do segundo turno em 2026-10-25: evento binário com risco de gap; sem shorts novos até a definição."
+    },
+    {
+      "issuer_id": "BR_SANEPAR",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Estatal com tese de privatização ligada ao resultado do segundo turno em 2026-10-25: evento binário com risco de gap; sem shorts novos até a definição."
+    },
+    {
+      "issuer_id": "BR_CEMIG",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Estatal com tese de privatização ligada ao resultado do segundo turno em 2026-10-25: evento binário com risco de gap; sem shorts novos até a definição."
+    },
+    {
+      "issuer_id": "BR_AFYA",
+      "no_long": true,
+      "no_short": true,
+      "reason": "Fusão com a Yduqs com relação de troca fixa assinada em 2026-09-23: o preço segue o da Yduqs e os sinais próprios perdem validade; tratar como arbitragem de fusão, fora do livro direcional."
+    },
+    {
+      "issuer_id": "BR_YDUQS",
+      "no_long": true,
+      "no_short": true,
+      "reason": "Contraparte da fusão com a Afya: evitar par espúrio entre as duas linhas e risco de decisão do CADE."
+    }
+  ],
+  "position_journal": [
+    {
+      "issuer_id": "BR_TENDA",
+      "thesis": "Execução previsível no segmento econômico com projeções elevadas e desalavancagem.",
+      "invalidation_criteria": "Revisão para baixo das projeções do ano, piora relevante de distratos ou mudança desfavorável no programa habitacional.",
+      "premortem": "A tese falha se o vencedor do segundo turno reduzir subsídios do programa habitacional ou se a curva de juros abrir com força."
+    },
+    {
+      "issuer_id": "BR_RIACHUELO",
+      "thesis": "Virada operacional do varejo de moda com margem e crédito em melhora.",
+      "invalidation_criteria": "Inadimplência da carteira própria voltando a subir ou margem bruta recuando no 3T26.",
+      "premortem": "A tese falha se o consumo de baixa renda desacelerar mais que o esperado após o ciclo eleitoral."
+    },
+    {
+      "issuer_id": "BR_MOURADUBEUX",
+      "thesis": "Incorporadora de alta rentabilidade com alavancagem quase nula e recompra.",
+      "invalidation_criteria": "Prévia do 3T26 com nova queda de vendas e lançamentos sem recuperação de ritmo.",
+      "premortem": "A tese falha se a demanda no Nordeste seguir fraca e a recompra não sustentar o papel."
+    },
+    {
+      "issuer_id": "AR_CEPU",
+      "thesis": "Geradora com receita dolarizada e balanço líquido em ambiente de normalização regulatória.",
+      "invalidation_criteria": "Retrocesso regulatório no setor elétrico argentino ou controle cambial mais rígido.",
+      "premortem": "A tese falha em um choque de risco-país que arraste todos os ativos argentinos, caso a neutralidade de país não absorva o gap."
+    },
+    {
+      "issuer_id": "MX_VOLARIS",
+      "thesis": "Pressão de custos e demanda doméstica fraca no México.",
+      "invalidation_criteria": "Queda forte do petróleo ou acordo comercial que reacenda a demanda; sinais de aumento do short interest.",
+      "premortem": "A tese falha se um acordo tarifário com os Estados Unidos gerar rali generalizado em nomes mexicanos de consumo e viagem."
+    },
+    {
+      "issuer_id": "LA_MILLICOM",
+      "thesis": "Neutralizar o short sugerido pelo quant diante de pesquisa construtiva.",
+      "invalidation_criteria": "Deterioração de geração de caixa ou falha na integração das aquisições.",
+      "premortem": "A neutralização custa alpha se o sinal quant estiver certo; o custo é limitado pela convicção baixa."
+    }
+  ]
+}

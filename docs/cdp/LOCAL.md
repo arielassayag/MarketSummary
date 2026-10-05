@@ -336,8 +336,13 @@ uv run python -m cdp painel --publicado
   `read` da URL devolve a página, não os outros arquivos). Se a recusa disser que um arquivo
   mudou desde a listagem (outra rotina publicou no meio), a skill lista de novo e publica uma
   única vez; nunca usa `force`. Depois de uma publicação com a página nova, a skill roda
-  `cdp painel --publicado` e faz um commit só do marcador. Nunca criam um
-  artifact novo: sem `artifacts/painel/ARTIFACT_URL`, pulam a publicação e dizem isso no resumo.
+  `cdp painel --publicado` e faz um commit só do marcador. Antes de publicar, a skill confere a
+  versão da página viva (o `<meta name="cdp-page-sha256">` devolvido pelo `read`) contra
+  `artifact.pagina_publicada`: se outra sessão publicou uma página fora das rotinas (por exemplo,
+  uma reformulação do painel em andamento), a rotina não publica para não desfazê-la e diz isso
+  no resumo; a página nova volta a ser publicada pelas rotinas depois que o template dela chegar
+  à `main` e for registrado com `cdp painel --publicado`. Nunca criam um artifact novo: sem
+  `artifacts/painel/ARTIFACT_URL`, pulam a publicação e dizem isso no resumo.
 - **Tamanho.** A ferramenta de publicação exige que a mente leia por inteiro cada arquivo
   publicado. Com `artifact.publicavel: false` (dados acima de 260 KB ou linha acima de 1.500
   caracteres; página acima de 260 KB ou linha acima de 2.000 caracteres, quando ela mudou), as

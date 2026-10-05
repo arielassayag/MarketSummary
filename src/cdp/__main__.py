@@ -258,7 +258,8 @@ def cmd_risk(args: argparse.Namespace) -> int:
 DEFAULT_PAINEL_DIR = Path("artifacts/painel")
 
 
-def painel_artifact_check(out_dir: Path, *, page_changed: bool) -> dict:
+def painel_artifact_check(out_dir: Path, *, page_changed: bool,
+                          page_version: str | None = None) -> dict:
     """O que a mente precisa ler por inteiro antes de publicar, se isso cabe no orçamento e o que
     publicar.
 
@@ -269,8 +270,10 @@ def painel_artifact_check(out_dir: Path, *, page_changed: bool) -> dict:
     no artifact. Publicável quando ``data.json`` tem até ``DATA_MAX_BYTES`` bytes e linhas de até
     ``DATA_MAX_LINE`` caracteres e os arquivos da página até ``PAGE_MAX_BYTES``/``PAGE_MAX_LINE``.
     Devolve também ``publicar`` (``file_path`` e ``files`` prontos para a ferramenta), a URL de
-    ``ARTIFACT_URL`` (``None`` se o arquivo não existe: não publique) e a versão da página
-    registrada como publicada (``pagina_publicada``)."""
+    ``ARTIFACT_URL`` (``None`` se o arquivo não existe: não publique), a versão da página
+    registrada como publicada (``pagina_publicada``) e a versão gerada agora (``pagina_atual``):
+    antes de publicar, a skill compara a página viva do artifact com essas duas e não publica se
+    ela for outra (página publicada fora das rotinas)."""
     from .workflow.painel import ASSET_RE, DATA_NAME, INDEX_NAME, URL_NAME, published_page_sha
     from .workflow.painel_publicacao import (
         DATA_MAX_BYTES,
@@ -284,7 +287,8 @@ def painel_artifact_check(out_dir: Path, *, page_changed: bool) -> dict:
               "pagina_bytes": PAGE_MAX_BYTES, "pagina_linha": PAGE_MAX_LINE}
     out = {"publicavel": False, "motivo": "", "arquivos_para_ler": [], "tamanho_dados": None,
            "linhas_max": None, "linhas_dados": None, "pagina_mudou": bool(page_changed),
-           "pagina_publicada": published_page_sha(out_dir), "url": None, "publicar": None,
+           "pagina_publicada": published_page_sha(out_dir), "pagina_atual": page_version,
+           "url": None, "publicar": None,
            "limites": limits}
     url_file = out_dir / URL_NAME
     try:
@@ -353,7 +357,8 @@ def cmd_painel(args: argparse.Namespace) -> int:
     rt = Runtime.from_args(args)
     out = write_painel(rt, out_dir, standalone=not args.sem_local)
     out = {**out, "artifact": painel_artifact_check(
-        out_dir, page_changed=bool(out.get("page_changed")))}
+        out_dir, page_changed=bool(out.get("page_changed")),
+        page_version=out.get("page_sha256"))}
     _print(out)
     return 0
 

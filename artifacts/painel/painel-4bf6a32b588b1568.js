@@ -1,0 +1,3307 @@
+(function () {
+"use strict";
+
+/* =====================================================================
+   Portal CDP — esta página só FORMATA e PLOTA. Todo número vem do JSON
+   exportado por cdp.workflow.painel (código Python testado). Ausente = "n/d".
+   Dados: embutidos em #cdp-data (cópia local, perfil "completo") ou, na
+   página publicada (#cdp-data = null), buscados em data.json ao lado da
+   página (perfil "publicacao"); ver load() no fim deste script. O perfil
+   publicado não traz os campos técnicos (hashes, trilha, agenda): nenhum
+   renderizador depende deles nem os mostra.
+   ===================================================================== */
+
+var PAGE_SCHEMA = "cdp-painel/3";
+/* versão desta página (SHA-256 do template), carimbada por cdp.workflow.painel ao gravar */
+var PAGE_SHA = "4bf6a32b588b1568b7c5187c36a0308f7beade447d4b18e237e4aa90eac23707";
+var DATA_URL = "data.json";
+
+function start(D) {
+var NA = "n/d";
+var BOOT = document.getElementById("boot");
+if (BOOT && BOOT.parentNode) BOOT.parentNode.removeChild(BOOT);
+
+/* ---------------------------------------------------------- utilidades */
+function isNum(x) { return typeof x === "number" && isFinite(x); }
+function has(x) { return x !== null && x !== undefined && x !== ""; }
+function arr(x) { return Array.isArray(x) ? x : []; }
+function obj(x) { return x && typeof x === "object" && !Array.isArray(x) ? x : {}; }
+function g(o, path) {
+  var cur = o, parts = path.split(".");
+  for (var i = 0; i < parts.length; i++) { if (cur == null) return undefined; cur = cur[parts[i]]; }
+  return cur;
+}
+function first() { for (var i = 0; i < arguments.length; i++) { if (has(arguments[i])) return arguments[i]; } return null; }
+function lsGet(k) { try { return window.localStorage.getItem("cdp-painel:" + k); } catch (e) { return null; } }
+function lsSet(k, v) { try { window.localStorage.setItem("cdp-painel:" + k, v); } catch (e) { /* sem armazenamento */ } }
+
+/* ---------------------------------------------------------- formatação pt-BR */
+var NFC = {};
+function nf(d) {
+  if (!NFC[d]) NFC[d] = new Intl.NumberFormat("pt-BR", { minimumFractionDigits: d, maximumFractionDigits: d });
+  return NFC[d];
+}
+var MINUS = "−";
+function fnum(x, d, signed) {
+  if (!isNum(x)) return NA;
+  if (d === undefined) d = 2;
+  var s = nf(d).format(Math.abs(x));
+  if (!/[1-9]/.test(s)) return s;
+  return (x < 0 ? MINUS : (signed ? "+" : "")) + s;
+}
+function pct(x, d, signed) { return isNum(x) ? fnum(x * 100, d === undefined ? 2 : d, signed) + "%" : NA; }
+function spct(x, d) { return pct(x, d, true); }
+function bps(x, signed) {
+  if (!isNum(x)) return NA;
+  var v = x * 1e4;
+  return fnum(v, Math.abs(v) >= 10 ? 0 : 1, signed !== false) + " bps";
+}
+function usd(x, signed) {
+  if (!isNum(x)) return NA;
+  var a = Math.abs(x), s;
+  if (a >= 1e9) s = nf(2).format(a / 1e9) + " bi";
+  else if (a >= 1e6) s = nf(2).format(a / 1e6) + " mi";
+  else if (a >= 1e4) s = nf(1).format(a / 1e3) + " mil";
+  else s = nf(0).format(a);
+  var sign = !/[1-9]/.test(s) ? "" : x < 0 ? MINUS : signed ? "+" : "";
+  return sign + "US$ " + s;
+}
+function usdFull(x, signed) {
+  if (!isNum(x)) return NA;
+  var s = nf(0).format(Math.abs(x));
+  var sign = !/[1-9]/.test(s) ? "" : x < 0 ? MINUS : signed ? "+" : "";
+  return sign + "US$ " + s;
+}
+function int(x) { return isNum(x) ? nf(0).format(x) : NA; }
+function days(x) { return isNum(x) ? fnum(x, Math.abs(x) >= 10 ? 1 : 2) + " d" : NA; }
+function xnum(x, d) { return fnum(x, d === undefined ? 3 : d, true); }
+function yesno(b) { return b === true ? "sim" : b === false ? "não" : NA; }
+function fmtUnit(v, unit) {
+  if (v === null || v === undefined) return NA;
+  if (typeof v === "boolean") return yesno(v);
+  if (typeof v === "string") return v;
+  switch (unit) {
+    case "pct": return pct(v);
+    case "x": return fnum(v, 3, false);
+    case "days": return days(v);
+    case "count": return int(v);
+    case "usd": return usdFull(v);
+    case "score": return fnum(v, 0);
+    case "ratio": return fnum(v, 3);
+    case "bool": return yesno(!!v);
+    default: return isNum(v) ? fnum(v, 2) : String(v);
+  }
+}
+function fmtLimit(c) {
+  var lim = c.limit;
+  if (lim === null || lim === undefined) return NA;
+  if (Array.isArray(lim)) {
+    var sep = (c.id === "vol_ex_ante" || c.id === "vol_realizada_21d") ? " – " : " / ";
+    return lim.map(function (v) { return fmtUnit(v, c.unit); }).join(sep);
+  }
+  if (c.unit === "count") return "≤ " + int(lim);
+  return (c.floor || c.id === "gross_min" || c.id === "country_gap_stress" ? "≥ " : c.id === "drawdown" ? "" : "≤ ") + fmtUnit(lim, c.unit);
+}
+
+var MESES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
+var DRE = /^(\d{4})-(\d{2})-(\d{2})/;
+function fdate(s) { var m = DRE.exec(s || ""); return m ? m[3] + "/" + m[2] + "/" + m[1] : (has(s) ? String(s) : NA); }
+function fdshort(s) { var m = DRE.exec(s || ""); return m ? m[3] + "/" + m[2] : (s || ""); }
+function fmonth(s) { var m = DRE.exec(s || ""); return m ? MESES[+m[2] - 1] + "/" + m[1].slice(2) : (s || ""); }
+/* horário de parede já local (strings *_local com offset -03:00) */
+function flocal(s) {
+  if (!has(s)) return NA;
+  var m = /^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2})/.exec(String(s));
+  return m ? m[3] + "/" + m[2] + "/" + m[1] + " " + m[4] + ":" + m[5] : fdate(s);
+}
+/* instante qualquer (UTC) mostrado no fuso de Brasília */
+var DTF = null;
+function fbrt(s) {
+  if (!has(s)) return NA;
+  var t = String(s).trim().replace(" ", "T").replace(/(\.\d{3})\d+/, "$1");
+  if (/-03:00$/.test(t)) return flocal(t);
+  var d = new Date(t);
+  if (isNaN(d.getTime())) return String(s);
+  try {
+    if (!DTF) DTF = new Intl.DateTimeFormat("pt-BR", { timeZone: "America/Sao_Paulo", day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit", hourCycle: "h23" });
+    return DTF.format(d).replace(",", "");
+  } catch (e) { return String(s); }
+}
+
+/* ---------------------------------------------------------- rótulos pt-BR */
+var SECTOR_PT = {
+  "Financials": "Financeiro", "Energy": "Energia", "Materials": "Materiais", "Utilities": "Utilidades públicas",
+  "Industrials": "Industriais", "Consumer Discretionary": "Consumo discricionário", "Consumer Staples": "Consumo básico",
+  "Health Care": "Saúde", "Real Estate": "Imobiliário", "Communication Services": "Comunicações",
+  "Information Technology": "Tecnologia", "OTHER": "Outros"
+};
+var STYLE_PT = {
+  momentum: "Momentum", value: "Valor (value)", size: "Tamanho (size)", beta: "Beta de mercado", resvol: "Vol residual",
+  liquidity: "Liquidez", fx_sens: "Sensibilidade cambial", quality: "Qualidade", growth: "Crescimento",
+  leverage: "Alavancagem", market: "Mercado", low_risk: "Baixo risco", residual_momentum: "Momentum residual",
+  short_term_reversal: "Reversão de curto prazo", composite: "Composto", analyst_revision: "Revisão de analistas"
+};
+var COMMODITY_PT = { oil: "petróleo", copper: "cobre", gold: "ouro", iron_ore: "minério de ferro", lithium: "lítio", soy: "soja", silver: "prata" };
+var THEME_PT = { state_owned: "estatais" };
+var COMPONENT_PT = { equity: "Ações (total)", factor: "Fatorial", specific: "Específico (alpha)", costs: "Custos de transação", borrow: "Aluguel", financing: "Financiamento" };
+var GROUP_PT = {
+  component: "Componente", factor_group: "Grupo de fatores", factor: "Fator", country: "País", sector: "Setor",
+  side: "Lado", issuer: "Emissor", market: "Mercado, temas e commodities", style: "Estilos", currency: "Moeda"
+};
+var SIDE_PT = { LONG: "Comprado", SHORT: "Vendido" };
+var FG_PT = { market: "Mercado", style: "Estilos", country: "País", sector: "Setor", commodity: "Commodities", theme: "Temas", currency: "Moeda" };
+var STATUS = {
+  ok: ["Dentro", "ok"], info: ["Informativo", "info"], alerta: ["Alerta", "warn"], excesso: ["Excesso", "crit"], "n/d": ["n/d", "na"]
+};
+var STAGE_TONE = { normal: "ok", soft_stop: "warn", hard_stop: "crit", stop_out: "crit", desconhecido: "na" };
+var STAGE_PT = { normal: "Normal", soft_stop: "Nível 1 · revisão", hard_stop: "Nível 2 · redução", stop_out: "Nível 3 · stop-out" };
+var WEEK_STAGE = { vazia: "Sem carteira", preparada: "Em preparação", entradas_gravadas: "Em análise", decidida: "Decidida", efetivada: "Executada" };
+var WEEK_STAGE_TONE = { vazia: "na", preparada: "info", entradas_gravadas: "info", decidida: "accent", efetivada: "ok" };
+/* caminho da decisão: só aparece quando não é o processo completo */
+var PATH_PT = {
+  "cdp-restricoes": "Somente restrições da pesquisa e do gestor", quant: "Somente modelo quantitativo",
+  manter: "Carteira anterior mantida", "reduzir-risco": "Somente redução de risco"
+};
+var CHANGE_PT = { entrada: "Entrada", saida: "Saída", inversao: "Inversão", aumento: "Aumento", reducao: "Redução" };
+var ROLE_PT = { fundamental: "Fundamental", short_risk: "Risco de short", macro: "Macro", technical: "Técnica", event: "Evento" };
+var VERDICT = { ok: ["Sem objeção", "ok"], caution: ["Cautela", "warn"], veto: ["Veto", "crit"] };
+var DIR_PT = { positive: "positivo", negative: "negativo", uncertain: "incerto", neutral: "neutro", mixed: "misto" };
+var ACTION_PT = { BUY: "Compra", SELL: "Venda", SHORT: "Venda a descoberto", COVER: "Recompra do short", HOLD: "Manter" };
+var SQ_PT = { HIGH: "Alto", MEDIUM: "Médio", LOW: "Baixo", NA: "Sem dado" };
+var LINE_PT = { LOCAL: "ação local", LOCAL_BR: "ação local (B3)", ADR: "ADR", US_LISTED: "listada nos EUA" };
+var SEV_PT = { HARD: ["Limite rígido", "crit"], SOFT: ["Limite de alerta", "warn"], INFO: ["Indicador", "info"] };
+var LEVEL_PT = { HARD: "limite rígido", SOFT: "alerta", INFO: "indicador" };
+var EXCL_PT = {
+  sem_linha_short: "sem linha alugável para short", squeeze_alto: "risco de squeeze alto", squeeze_medio_teto: "squeeze médio (teto reduzido)",
+  squeeze_na_teto: "squeeze sem dado (teto reduzido)", visao_no_long: "pesquisa/gestor: sem long", visao_no_short: "pesquisa/gestor: sem short",
+  visao_teto_peso: "pesquisa/gestor: teto de peso", sem_adtv: "sem liquidez medida", adtv_baixo: "liquidez abaixo do mínimo", aluguel_alto: "aluguel acima do teto"
+};
+var COUNTRY_PT = { AR: "Argentina", BR: "Brasil", CL: "Chile", CO: "Colômbia", MX: "México", PE: "Peru", UY: "Uruguai", PA: "Panamá", US: "Estados Unidos", LATAM: "Regional (América Latina)", OTHER: "Outros" };
+function plural(n, one, many) { return int(n) + " " + (n === 1 ? one : many); }
+/* textos gravados pelo código em notação en-US (detalhes de gates, cenários): só troca a
+   pontuação decimal e o sinal de menos — nenhum número é recalculado */
+function ptNums(t) {
+  if (!has(t)) return t;
+  return isoDates(String(t)).replace(/\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+\.\d+/g, function (m) {
+    return m.replace(/[.,]/g, function (c) { return c === "," ? "." : ","; });
+  }).replace(/(^|[\s(±=:])-(?=\d)/g, "$1" + MINUS);
+}
+/* datas ISO soltas no texto viram dd/mm/aaaa (fora de URLs e identificadores) */
+function isoDates(t) { return String(t).replace(/(^|[^\w/.-])(\d{4})-(\d{2})-(\d{2})(?![\w/-])/g, "$1$4/$3/$2"); }
+/* rótulos do código em inglês (setores, estilos, temas, commodities, emissores) em pt-BR */
+function ptLabel(t) {
+  if (!has(t)) return t;
+  var s = String(t).replace(/\s*\(gate [^)]*\)/g, "").replace(/commodity:(\w+)/g, function (m, c) { return COMMODITY_PT[c] || c; })
+    .replace(/'?state_owned'?/g, "estatais").replace(/estilo (\w+)/g, function (m, k) { return "estilo " + (STYLE_PT[k] || k).toLowerCase(); })
+    .replace(/\b(?:(?:AR|BR|CL|CO|MX|PE|UY|PA|LA|US)_[A-Z0-9_]+|SIM\d{3})\b/g, function (id) { return nm(id); }).replace(/registro diário/g, "fechamento")
+    .replace(/\b([A-Z0-9]{3,10})\.(?:SA|MX|SN|BA|CL|LM)\b/g, "$1")
+    .replace(/\b(AR|BR|CL|CO|MX|PE|UY|PA)(?=:)/g, function (c) { return countryName(c); })
+    .replace(/\ba escada de drawdown/gi, "o controle de perdas").replace(/escada de drawdown/gi, "controle de perdas").replace(/drawdown indispon[ií]vel/gi, function (m) { return (m.charAt(0) === "D" ? "S" : "s") + "em histórico de drawdown"; })
+    .replace(/\s*\([^()]*\bcódigo\)/g, "").replace(/registros diários/g, "fechamentos diários").replace(/\bNAV\b/g, "PL");
+  /* setor em inglês só em contexto de setor (nunca dentro de nomes como "Vista Energy") */
+  return gapPT(s.replace(SECTOR_RE, function (m, a, k) { return a + SECTOR_PT[k]; }));
+}
+var SECTOR_RE = new RegExp("(^|[Ss]etor:? |: ?|\\| ?|\\()(" + Object.keys(SECTOR_PT).filter(function (k) { return k !== "OTHER"; }).join("|") + ")\\b", "g");
+function countryName(c) { return COUNTRY_PT[c] || c || NA; }
+/* cenário de gap de país com o nome do país ("Gap AR -56%" ⇒ "Gap Argentina -56%") e o grupo
+   regional com o mesmo rótulo em todo o portal */
+function gapPT(t) {
+  return has(t) ? String(t).replace(/\bGap (AR|BR|CL|CO|MX|PE|UY|PA|US)\b/g, function (m, c) { return "Gap " + countryName(c); })
+    .replace(/\bLatAm \(regional\)/gi, COUNTRY_PT.LATAM) : t;
+}
+/* rótulo do cenário de estresse (Risco e exposições) */
+function stressLbl(s) { return gapPT(ptNums(s.scenario || s.label)); }
+function constraintName(c) {
+  var s = String(c || ""), i = s.indexOf(":");
+  if (i < 0) return { net_exposure: "net do mandato", gross: "gross", beta: "beta", turnover: "giro", vol: "vol-alvo" }[s] || s.replace(/_/g, " ");
+  var k = s.slice(0, i), v = s.slice(i + 1);
+  if (k === "max_short") return "teto do short " + nm(v);
+  if (k === "max_long") return "teto do long " + nm(v);
+  if (k === "country") return "net de " + countryName(v);
+  if (k === "sector") return "net setor " + sectorName(v);
+  if (k === "commodity") return "commodity " + (COMMODITY_PT[v] || v);
+  if (k === "tema" || k === "theme") return "tema " + (THEME_PT[v] || v);
+  if (k === "style") return "estilo " + (STYLE_PT[v] || v);
+  return k.replace(/_/g, " ") + " " + v;
+}
+
+function sectorName(s) { return SECTOR_PT[s] || s || NA; }
+function expoName(group, name) {
+  if (!has(name)) return NA;
+  var s = String(name);
+  if (s.indexOf("tema:") === 0) return "Tema: " + (THEME_PT[s.slice(5)] || s.slice(5));
+  if (s.indexOf("commodity:") === 0) return "Commodity: " + (COMMODITY_PT[s.slice(10)] || s.slice(10));
+  if (s.indexOf("evento:") === 0) return "Evento: " + s.slice(7);
+  if (group === "sector") return sectorName(s);
+  if (group === "country") return countryName(s);
+  if (group === "style") return STYLE_PT[s] || s;
+  if (group === "market" && s === "market") return "Mercado";
+  return s;
+}
+function factorName(f) {
+  if (!has(f)) return NA;
+  var s = String(f), i = s.indexOf(":");
+  if (i > 0) {
+    var k = s.slice(0, i), v = s.slice(i + 1);
+    if (k === "country") return countryName(v);
+    if (k === "sector") return sectorName(v);
+    if (k === "commodity") return "Commodity: " + (COMMODITY_PT[v] || v);
+    if (k === "tema" || k === "theme") return "Tema: " + (THEME_PT[v] || v);
+    return s;
+  }
+  return STYLE_PT[s] || GROUP_PT[s] || s;
+}
+function attrName(group, name, names) {
+  if (group === "component") return COMPONENT_PT[name] || name;
+  if (group === "factor") return factorName(name);
+  if (group === "factor_group") return FG_PT[name] || GROUP_PT[name] || STYLE_PT[name] || name;
+  if (group === "sector") return sectorName(name);
+  if (group === "side") return SIDE_PT[name] || name;
+  if (group === "issuer") return nm(name);
+  if (group === "country") return countryName(name);
+  return name;
+}
+
+/* ---------------------------------------------------------- DOM */
+function h(tag, a) {
+  var el = document.createElement(tag);
+  if (a) {
+    for (var k in a) {
+      if (!Object.prototype.hasOwnProperty.call(a, k)) continue;
+      var v = a[k];
+      if (v === null || v === undefined || v === false) continue;
+      if (k === "class") el.className = v;
+      else if (k === "text") el.textContent = v;
+      else if (k.slice(0, 2) === "on" && typeof v === "function") el.addEventListener(k.slice(2), v);
+      else el.setAttribute(k, v === true ? "" : String(v));
+    }
+  }
+  for (var i = 2; i < arguments.length; i++) add(el, arguments[i]);
+  return el;
+}
+function add(el, c) {
+  if (c === null || c === undefined || c === false) return;
+  if (Array.isArray(c)) { for (var i = 0; i < c.length; i++) add(el, c[i]); return; }
+  if (c.nodeType) { el.appendChild(c); return; }
+  el.appendChild(document.createTextNode(String(c)));
+}
+var SVGNS = "http://www.w3.org/2000/svg";
+function S(tag, a) {
+  var el = document.createElementNS(SVGNS, tag);
+  if (a) for (var k in a) { if (a[k] !== null && a[k] !== undefined) el.setAttribute(k, String(a[k])); }
+  for (var i = 2; i < arguments.length; i++) {
+    var c = arguments[i];
+    if (c === null || c === undefined) continue;
+    if (c.nodeType) el.appendChild(c); else el.appendChild(document.createTextNode(String(c)));
+  }
+  return el;
+}
+
+/* Markdown seguro: marked + DOMPurify (cdnjs); sem as bibliotecas, texto puro. */
+function md(text, cls) {
+  var box = h("div", { class: "md" + (cls ? " " + cls : "") });
+  if (!has(text)) { box.textContent = NA; return box; }
+  var src = isoDates(text);
+  if (window.marked && window.DOMPurify && typeof window.marked.parse === "function") {
+    try {
+      var raw = window.marked.parse(src, { gfm: true, breaks: false });
+      box.innerHTML = window.DOMPurify.sanitize(raw, {
+        USE_PROFILES: { html: true },
+        FORBID_TAGS: ["style", "img", "form", "input", "button", "textarea", "select", "iframe", "svg", "math", "video", "audio", "source"],
+        FORBID_ATTR: ["style", "id", "class", "srcset"]
+      });
+      var links = box.querySelectorAll("a");
+      for (var i = 0; i < links.length; i++) {
+        var a = links[i], href = a.getAttribute("href") || "";
+        if (/^https?:\/\//i.test(href)) { a.setAttribute("target", "_blank"); a.setAttribute("rel", "noopener noreferrer"); }
+        else { a.removeAttribute("href"); }
+      }
+      var tables = box.querySelectorAll("table");
+      for (var j = 0; j < tables.length; j++) {
+        var t = tables[j], w = document.createElement("div");
+        w.className = "mdt"; t.parentNode.insertBefore(w, t); w.appendChild(t);
+      }
+      return box;
+    } catch (e) { box.textContent = ""; }
+  }
+  box.appendChild(h("pre", { class: "md-plain" }, src));
+  return box;
+}
+function txt(s) { return h("p", { class: "txt" }, has(s) ? String(s) : NA); }
+
+function pill(text, tone, title) { return h("span", { class: "pill k-" + (tone || "na"), title: title || null }, text); }
+function statusPill(st) { var s = STATUS[st] || [st || NA, "na"]; return pill(s[0], s[1]); }
+function statusTone(st) { return (STATUS[st] || [0, "na"])[1]; }
+function chip(text, title) { return h("span", { class: "chip", title: title || null }, text); }
+function sideTag(side) { return side === "LONG" ? h("span", { class: "side L" }, "Long") : side === "SHORT" ? h("span", { class: "side S" }, "Short") : NA; }
+/* visão −2..+2; sem visão registrada = neutro ("—"), não dado ausente */
+function stanceTag(v) {
+  if (!isNum(v)) return h("span", { class: "muted", title: "sem visão: neutro" }, "—");
+  return h("span", { class: "stance" + (v > 0 ? " up" : v < 0 ? " down" : ""), title: "Visão (−2 a +2)" }, fnum(v, 0, true));
+}
+function sqTag(b, score) {
+  if (!has(b)) return h("span", { class: "muted" }, NA);
+  return h("span", { class: "nowrap" }, h("span", { class: "sq " + b }, SQ_PT[b] || b), isNum(score) ? " " + fnum(score, 0) : "");
+}
+function signCls(x) { return isNum(x) ? (x > 0 ? "pos" : x < 0 ? "neg" : "") : "muted"; }
+function signed(text, x) { return h("span", { class: signCls(x) }, text); }
+function sec(title, sub) {
+  var s = h("section", { class: "sec" }, h("div", { class: "sec-h" }, h("h2", null, title), sub ? h("span", { class: "sub" }, sub) : null));
+  for (var i = 2; i < arguments.length; i++) add(s, arguments[i]);
+  return s;
+}
+function block(title, sub) {
+  var b = h("div", { class: "block" });
+  if (title) b.appendChild(h("div", { class: "block-h" }, h("h3", null, title), sub ? h("span", { class: "sub" }, sub) : null));
+  for (var i = 2; i < arguments.length; i++) add(b, arguments[i]);
+  return b;
+}
+function fold(title, sub, open) {
+  var d = h("details", { class: "fold", open: open ? true : null }, h("summary", null, h("span", null, title), sub ? h("span", { class: "sub" }, sub) : null));
+  var body = h("div", { class: "fold-b" });
+  for (var i = 3; i < arguments.length; i++) add(body, arguments[i]);
+  d.appendChild(body);
+  return d;
+}
+function empty(text) { return h("p", { class: "empty" }, text); }
+function note(text) { return h("p", { class: "note" }, text); }
+function kv(rows) {
+  var dl = h("dl", { class: "kv" });
+  rows.forEach(function (r) {
+    if (!r) return;
+    var v = r[1];
+    dl.appendChild(h("dt", null, r[0]));
+    dl.appendChild(h("dd", null, (v === null || v === undefined || v === "") ? NA : v));
+  });
+  return dl;
+}
+function tile(label, value, sub) {
+  var t = h("div", { class: "tile" }, h("div", { class: "tile-l" }, label), h("div", { class: "tile-v" }, value));
+  for (var i = 2; i < arguments.length; i++) {
+    var s = arguments[i];
+    if (s === null || s === undefined || s === "") continue;
+    t.appendChild(s.nodeType ? s : h("div", { class: "tile-s" }, s));
+  }
+  return t;
+}
+function list(items, render) {
+  var a = arr(items);
+  if (!a.length) return h("p", { class: "muted" }, "nenhum");
+  var ul = h("ul", { class: "list" });
+  a.forEach(function (x) { ul.appendChild(h("li", null, render ? render(x) : String(x))); });
+  return ul;
+}
+function safeUrl(u) { return (typeof u === "string" && /^https?:\/\/[^\s]+$/i.test(u)) ? u : null; }
+function extLink(url, label) {
+  var u = safeUrl(url);
+  return u ? h("a", { href: u, target: "_blank", rel: "noopener noreferrer" }, label || u) : h("span", null, label || NA);
+}
+
+/* Tabela genérica com ordenação opcional. cols: {label, key?, get(row), render(row), num, cls, sortable}.
+   Sem linhas: mensagem (opts.empty) no lugar de um cabeçalho solto. */
+function table(cols, rows, opts) {
+  opts = opts || {};
+  rows = arr(rows);
+  if (!rows.length) return empty(opts.empty || "Sem dados.");
+  var state = { key: null, dir: 1 };
+  var t = h("table", { class: "tbl" });
+  var thead = h("thead"), tr = h("tr"), tbody = h("tbody");
+  cols.forEach(function (c, i) {
+    var th = h("th", { class: (c.num ? "num " : "") + (c.cls || ""), scope: "col", title: c.title || null });
+    if (opts.sortable && c.get) {
+      var ar = h("span", { class: "ar", "aria-hidden": "true" }, "");
+      var b = h("button", { class: "sortbtn", type: "button" }, c.label, ar);
+      b.addEventListener("click", function () {
+        if (state.key === i) state.dir = -state.dir; else { state.key = i; state.dir = c.num ? -1 : 1; }
+        thead.querySelectorAll("th").forEach(function (x) { x.removeAttribute("aria-sort"); var a2 = x.querySelector(".ar"); if (a2) a2.textContent = ""; });
+        th.setAttribute("aria-sort", state.dir > 0 ? "ascending" : "descending");
+        ar.textContent = state.dir > 0 ? "▲" : "▼";
+        draw();
+      });
+      th.appendChild(b);
+    } else th.textContent = c.label;
+    tr.appendChild(th);
+  });
+  thead.appendChild(tr); t.appendChild(thead); t.appendChild(tbody);
+  function sorted() {
+    var r = rows.slice();
+    if (state.key === null) return r;
+    var c = cols[state.key];
+    r.sort(function (a, b) {
+      var x = c.get(a), y = c.get(b);
+      var xn = x === null || x === undefined || x === "" || (typeof x === "number" && !isFinite(x));
+      var yn = y === null || y === undefined || y === "" || (typeof y === "number" && !isFinite(y));
+      if (xn && yn) return 0; if (xn) return 1; if (yn) return -1;
+      if (typeof x === "number" && typeof y === "number") return (x - y) * state.dir;
+      return String(x).localeCompare(String(y), "pt-BR") * state.dir;
+    });
+    return r;
+  }
+  function draw() {
+    tbody.textContent = "";
+    sorted().forEach(function (row) {
+      var r = h("tr", { class: opts.rowClass ? opts.rowClass(row) : null });
+      cols.forEach(function (c) {
+        var v = c.render ? c.render(row) : (c.get ? c.get(row) : null);
+        r.appendChild(h("td", { class: (c.num ? "num " : "") + (c.cls || ""), "data-label": c.label }, (v === null || v === undefined || v === "") ? NA : v));
+      });
+      tbody.appendChild(r);
+      if (opts.after) { var extra = opts.after(row, r, cols.length); if (extra) tbody.appendChild(extra); }
+    });
+  }
+  draw();
+  t._redraw = draw;
+  if (opts.stack) t.classList.add("stackable");
+  return h("div", { class: "scroll" + (opts.tall ? " tall" : "") + (opts.stack ? " stackable" : "") }, t);
+}
+
+/* ---------------------------------------------------------- visualizações HTML */
+function utilTone(st, u) {
+  if (st === "excesso") return "crit";
+  if (st === "alerta") return "warn";
+  if (st === "info") return "info";
+  if (st === "n/d" || !isNum(u)) return "na";
+  return u >= 0.9 ? "near" : "ok";
+}
+/* utilização = |valor| / |limite| (calculada no exportador); escala até 125% */
+function utilBar(u, tone) {
+  var w = isNum(u) ? Math.min(Math.abs(u), 1.25) / 1.25 * 100 : 0;
+  return h("div", { class: "ubw" },
+    h("div", { class: "ub t-" + (tone || "ok"), role: "img", "aria-label": isNum(u) ? pct(u, 0) + " do limite" : "sem utilização" },
+      h("span", { class: "ub-f", style: "width:" + w.toFixed(2) + "%" }),
+      h("span", { class: "ub-m", style: "left:72%", title: "90% do limite" }),
+      h("span", { class: "ub-m lim", style: "left:80%", title: "limite" })),
+    h("span", { class: "ubv" }, isNum(u) ? pct(u, 0) : NA));
+}
+function utilLegend() {
+  return h("p", { class: "ub-legend" }, "Uso do limite:", h("span", null, h("i"), "90%"), h("span", null, h("i", { class: "lim" }), "limite"),
+    h("span", null, "pisos: área hachurada = abaixo do piso"));
+}
+/* piso (gross mínimo, liquidez em 3/5 dias): o valor precisa ficar ACIMA do traço; a distância
+   ao piso (shortfall/headroom) vem do exportador */
+function floorGauge(c, tone) {
+  var v = c.value, lim = c.limit;
+  if (!isNum(lim)) return NA;
+  var max = Math.max(lim * 1.6, isNum(v) ? v * 1.15 : 0) || 1;
+  function p(x) { return Math.max(0, Math.min(100, x / max * 100)); }
+  var below = isNum(c.shortfall) && c.shortfall > 0;
+  var label = !isNum(v) ? "sem valor" : below ? "abaixo do piso em " + fnum(c.shortfall * 100, 2) + " p.p." : "folga de " + fnum(c.headroom * 100, 2) + " p.p. acima do piso";
+  return h("div", { class: "fg t-" + (tone || "ok"), role: "img", "aria-label": c.label + ": " + label },
+    h("div", { class: "fg-t" },
+      h("span", { class: "fg-below", style: "width:" + p(lim).toFixed(2) + "%" }),
+      h("span", { class: "fg-floor", style: "left:" + p(lim).toFixed(2) + "%", title: "piso " + fmtUnit(lim, c.unit) }),
+      isNum(v) ? h("span", { class: "fg-mk", style: "left:" + p(v).toFixed(2) + "%", title: fmtUnit(v, c.unit) }) : null),
+    h("span", { class: "fg-txt" }, label));
+}
+/* banda (vol ex-ante; gross entre o mínimo e o máximo): posição do valor em relação a [mín, máx] */
+function bandGauge(v, lo, hi, target, mini, what) {
+  if (!isNum(lo) || !isNum(hi)) return null;
+  var max = Math.max(hi * 1.3, isNum(v) ? v * 1.08 : 0);
+  function p(x) { return Math.max(0, Math.min(100, x / max * 100)); }
+  var gEl = h("div", { class: "gauge" + (mini ? " mini" : ""), role: "img", "aria-label": (what || "Vol") + " " + pct(v) + " na banda " + pct(lo, 0) + "–" + pct(hi, 0) },
+    h("span", { class: "g-track" }),
+    h("span", { class: "g-band", style: "left:" + p(lo) + "%;width:" + (p(hi) - p(lo)) + "%" }),
+    isNum(target) ? h("span", { class: "g-tgt", style: "left:" + p(target) + "%", title: "meta " + pct(target) }) : null,
+    isNum(v) ? h("span", { class: "g-mk", style: "left:" + p(v) + "%", title: pct(v) }) : null);
+  if (mini) return gEl;
+  return h("div", { class: "gauge-w" }, gEl, h("div", { class: "g-lbl" },
+    h("span", null, (what ? "faixa " : "banda ") + pct(lo, 0) + "–" + pct(hi, 0)), isNum(target) ? h("span", null, "meta " + pct(target, 2)) : null));
+}
+/* escada de drawdown: 0 → stop-out (+25%), com o drawdown atual e o máximo */
+function ladderViz(dd, dcfg, maxdd, mini) {
+  var soft = dcfg.soft_stop, hard = dcfg.hard_stop, stop = dcfg.stop_out;
+  if (!isNum(soft) || !isNum(hard) || !isNum(stop)) return null;
+  var ext = Math.max(Math.abs(stop) * 1.25, isNum(dd) ? Math.abs(dd) * 1.05 : 0);
+  function p(x) { return Math.min(Math.abs(x), ext) / ext * 100; }
+  var segs = [[0, soft, "normal", "s0"], [soft, hard, "revisão", "s1"], [hard, stop, "redução", "s2"], [stop, -ext, "stop-out", "s3"]];
+  var track = h("div", { class: "lad-track" });
+  segs.forEach(function (s) { track.appendChild(h("div", { class: "lad-seg " + s[3], style: "width:" + (p(s[1]) - p(s[0])).toFixed(2) + "%" }, s[2])); });
+  var wrapEl = h("div", { class: "lad-wrap", style: isNum(dd) || isNum(maxdd) ? null : "padding-top:0" }, track);
+  if (isNum(maxdd) && maxdd !== dd) wrapEl.appendChild(h("span", { class: "lad-mk ghost" + (p(maxdd) > 70 ? " r" : ""), style: "left:" + p(maxdd) + "%", title: "drawdown máximo " + pct(maxdd) }, h("span", null, "máx. " + pct(maxdd))));
+  if (isNum(dd)) wrapEl.appendChild(h("span", { class: "lad-mk" + (p(dd) > 70 ? " r" : ""), style: "left:" + p(dd) + "%", title: "drawdown atual " + pct(dd) }, h("span", null, "atual " + pct(dd))));
+  var out = h("div", { class: "ladder" + (mini ? " mini" : ""), role: "img", "aria-label": "Níveis de controle de perdas" + (isNum(dd) ? ": drawdown atual " + pct(dd) : "") }, wrapEl);
+  if (!mini) {
+    out.appendChild(h("div", { class: "lad-ticks" },
+      h("span", { style: "left:0" }, "0%"),
+      h("span", { style: "left:" + p(soft) + "%" }, pct(soft, 1)),
+      h("span", { style: "left:" + p(hard) + "%" }, pct(hard, 1)),
+      h("span", { style: "left:" + p(stop) + "%" }, pct(stop, 1))));
+  }
+  return out;
+}
+/* barras horizontais (HTML). rows: {label, value, note, color, title} */
+function barList(rows, cfg) {
+  cfg = cfg || {};
+  rows = arr(rows);
+  if (!rows.length) return empty(cfg.empty || "Sem dados.");
+  if (cfg.emptyIfAllNa && !rows.some(function (r) { return isNum(r.value); })) return empty(cfg.emptyIfAllNa);
+  var vals = rows.map(function (r) { return r.value; }).filter(isNum);
+  var refs = arr(cfg.refs).filter(function (r) { return isNum(r.value); });
+  var rowRefs = [];
+  rows.forEach(function (r) { arr(r.refs).forEach(function (x) { if (isNum(x.value) && !rowRefs.some(function (y) { return y.label === x.label; })) rowRefs.push(x); }); });
+  var neg = cfg.diverging !== undefined ? cfg.diverging : vals.some(function (v) { return v < 0; });
+  var m = cfg.max || 0;
+  if (!m) { vals.concat(refs.concat(rowRefs).map(function (r) { return r.value; })).forEach(function (v) { m = Math.max(m, Math.abs(v)); }); }
+  if (!(m > 0)) m = 1;
+  var fmt = cfg.fmt || function (v) { return fnum(v); };
+  var box = h("div", { class: "bars" + (neg ? " div" : "") });
+  rows.forEach(function (r) {
+    if (r.gap) { box.appendChild(h("div", { class: "gap-row", "aria-hidden": "true" }, "· · ·")); return; }
+    var track = h("div", { class: "bt" });
+    if (isNum(r.value)) {
+      var w = Math.min(Math.abs(r.value) / m, 1) * (neg ? 50 : 100);
+      var col = r.color || cfg.color || (r.value < 0 ? "var(--div-neg)" : "var(--div-pos)");
+      var pos = neg ? (r.value < 0 ? "right:50%" : "left:50%") : "left:0";
+      track.appendChild(h("span", { class: "bf" + (r.value < 0 && neg ? " n" : ""), style: "width:" + w.toFixed(2) + "%;" + pos + ";background:" + col }));
+    }
+    refs.concat(arr(r.refs).filter(function (x) { return isNum(x.value); })).forEach(function (ref) {
+      var pp = neg ? 50 + ref.value / m * 50 : ref.value / m * 100;
+      if (pp >= 0 && pp <= 100) track.appendChild(h("span", { class: "bref", style: "left:" + pp.toFixed(2) + "%", title: ref.label }));
+    });
+    box.appendChild(h("div", { class: "bl", title: r.title || null }, r.label, r.sub ? h("small", null, r.sub) : null));
+    box.appendChild(track);
+    box.appendChild(h("div", { class: "bv" }, isNum(r.value) ? fmt(r.value) : NA, r.note ? h("small", null, r.note) : null));
+  });
+  var legend = refs.concat(rowRefs);
+  if (!legend.length) return box;
+  return h("div", { class: "stack", style: "gap:8px" }, box,
+    h("div", { class: "bars-legend" }, legend.map(function (r) { return h("span", null, h("i"), r.label); })));
+}
+
+/* ---------------------------------------------------------- gráficos SVG */
+function niceTicks(lo, hi, n) {
+  if (!(hi > lo)) { var pad = Math.abs(lo) * 0.01 || 0.01; lo -= pad; hi += pad; }
+  var raw = (hi - lo) / Math.max(1, n || 4);
+  var mag = Math.pow(10, Math.floor(Math.log10(raw)));
+  var e = raw / mag;
+  var step = mag * (e >= 7.5 ? 10 : e >= 3.5 ? 5 : e >= 1.5 ? 2 : 1);
+  var a = Math.floor(lo / step) * step, b = Math.ceil(hi / step) * step;
+  var ticks = [];
+  for (var v = a, k = 0; v <= b + step * 1e-6 && k < 30; v += step, k++) ticks.push(Math.abs(v) < step * 1e-9 ? 0 : v);
+  return { lo: a, hi: b, ticks: ticks };
+}
+function chartWidth(el) {
+  var w = el.clientWidth || (el.getBoundingClientRect ? el.getBoundingClientRect().width : 0);
+  return Math.max(260, Math.round(w || 640));
+}
+function legendEl(series, last) {
+  return h("div", { class: "legend" }, series.map(function (s) {
+    var lv = last ? last(s) : null;
+    return h("span", null, h("i", { class: s.bar ? "sq2" : null, style: "background:" + s.color }), s.name, lv ? h("b", null, lv) : null);
+  }));
+}
+function attachTip(svgEl, wrapEl, W, n, X, onIdx, mt, ph, ml, pw) {
+  var tip = h("div", { class: "tip", hidden: true });
+  wrapEl.appendChild(tip);
+  var xh = S("line", { class: "xhair", x1: 0, x2: 0, y1: mt, y2: mt + ph, visibility: "hidden" });
+  svgEl.appendChild(xh);
+  var ov = S("rect", { x: ml, y: mt, width: Math.max(1, pw), height: Math.max(1, ph), fill: "transparent" });
+  svgEl.appendChild(ov);
+  function move(ev) {
+    var r = svgEl.getBoundingClientRect();
+    if (!r.width) return;
+    var px = (ev.clientX - r.left) * (W / r.width);
+    /* ponto mais próximo na horizontal (vale para escala uniforme e para escala de datas) */
+    var i = 0, best = Infinity;
+    for (var k = 0; k < n; k++) { var dx = Math.abs(X(k) - px); if (dx < best) { best = dx; i = k; } }
+    xh.setAttribute("x1", X(i)); xh.setAttribute("x2", X(i)); xh.setAttribute("visibility", "visible");
+    tip.textContent = "";
+    onIdx(i, tip);
+    tip.hidden = false;
+    var sx = X(i) * (r.width / W);
+    var tw = tip.offsetWidth || 160;
+    var left = sx + 14;
+    if (left + tw > r.width) left = Math.max(0, sx - tw - 14);
+    tip.style.left = left + "px";
+    tip.style.top = Math.max(0, (ev.clientY - r.top) - 20) + "px";
+  }
+  function leave() { tip.hidden = true; xh.setAttribute("visibility", "hidden"); }
+  ov.addEventListener("pointermove", move);
+  ov.addEventListener("pointerdown", move);
+  ov.addEventListener("pointerleave", leave);
+}
+/* dias desde 1970 de uma data ISO (NaN se não for data) */
+function dayNum(s) { var m = DRE.exec(s || ""); return m ? Date.UTC(+m[1], +m[2] - 1, +m[3]) / 864e5 : NaN; }
+/* posições no tempo dos rótulos (escala de datas): "início" fica 1 dia antes da 1ª data; null se
+   algum rótulo não for data ou se as datas não forem crescentes (aí a escala é uniforme) */
+function timeScale(labels) {
+  var xs = labels.map(dayNum);
+  if (xs.length > 1 && !isFinite(xs[0]) && isFinite(xs[1])) xs[0] = xs[1] - 1;
+  for (var i = 0; i < xs.length; i++) if (!isFinite(xs[i]) || (i && xs[i] <= xs[i - 1])) return null;
+  return xs;
+}
+/* linhas. cfg: {labels, series:[{name,color,values}], yFmt, xFmt, height, refs:[{y,label}], band:{lo,hi,label}, zero, title,
+   timeX (eixo x proporcional às datas), zone:{from,to,label} (faixa sombreada entre dois índices)} */
+function lineChart(el, cfg) {
+  el.textContent = "";
+  var labels = arr(cfg.labels), n = labels.length;
+  var series = arr(cfg.series);
+  var lo = Infinity, hi = -Infinity;
+  series.forEach(function (s) { arr(s.values).forEach(function (v) { if (isNum(v)) { lo = Math.min(lo, v); hi = Math.max(hi, v); } }); });
+  if (!isFinite(lo) || !n) { el.appendChild(empty(cfg.empty || "Sem dados para o gráfico.")); return; }
+  arr(cfg.refs).forEach(function (r) { if (isNum(r.y) && r.fit !== false) { lo = Math.min(lo, r.y); hi = Math.max(hi, r.y); } });
+  if (cfg.band && isNum(cfg.band.lo) && isNum(cfg.band.hi)) { lo = Math.min(lo, cfg.band.lo); hi = Math.max(hi, cfg.band.hi); }
+  if (cfg.zero) { lo = Math.min(lo, 0); hi = Math.max(hi, 0); }
+  var t = niceTicks(lo, hi, cfg.ticks || 4);
+  var yFmt = cfg.yFmt || function (v) { return fnum(v); };
+  var xFmt = cfg.xFmt || fdshort;
+  var ylab = t.ticks.map(yFmt);
+  var W = chartWidth(el), H = cfg.height || 240;
+  var ml = Math.min(120, 12 + Math.max.apply(null, ylab.map(function (s) { return s.length; })) * 6.4);
+  var mr = 16, mt = 12, mb = 26;
+  var pw = W - ml - mr, ph = H - mt - mb;
+  var xs = cfg.timeX && n > 1 ? timeScale(labels) : null, xa = xs ? xs[0] : 0, xb = xs ? xs[n - 1] : 1;
+  function X(i) { return ml + (n <= 1 ? pw / 2 : xs ? (xs[i] - xa) / (xb - xa) * pw : i * pw / (n - 1)); }
+  function Y(v) { return mt + (t.hi - v) / (t.hi - t.lo) * ph; }
+  var svgEl = S("svg", { viewBox: "0 0 " + W + " " + H, width: W, height: H, role: "img", "aria-label": cfg.title || "gráfico" });
+  var zn = cfg.zone;
+  if (zn && n > 1 && zn.to > zn.from && zn.from >= 0 && zn.to < n) {
+    /* faixa dos meses consolidados (um ponto por fim de mês) antes dos pregões em linhas diárias */
+    svgEl.appendChild(S("rect", { class: "zone", x: X(zn.from), width: Math.max(0, X(zn.to) - X(zn.from)), y: mt, height: ph }));
+    svgEl.appendChild(S("line", { class: "zonel", x1: X(zn.to), x2: X(zn.to), y1: mt, y2: mt + ph }));
+    if (zn.label && X(zn.to) - X(zn.from) > 70) svgEl.appendChild(S("text", { class: "zonet", x: X(zn.from) + 4, y: mt + 11 }, zn.label));
+  }
+  if (cfg.band && isNum(cfg.band.lo) && isNum(cfg.band.hi)) {
+    svgEl.appendChild(S("rect", { class: "band", x: ml, width: pw, y: Y(cfg.band.hi), height: Math.max(0, Y(cfg.band.lo) - Y(cfg.band.hi)) }));
+    if (cfg.band.label) svgEl.appendChild(S("text", { class: "reft", x: W - mr - 4, y: Y(cfg.band.hi) + 12, "text-anchor": "end" }, cfg.band.label));
+  }
+  t.ticks.forEach(function (v, i) {
+    svgEl.appendChild(S("line", { class: v === 0 ? "axis" : "gridl", x1: ml, x2: W - mr, y1: Y(v), y2: Y(v) }));
+    svgEl.appendChild(S("text", { x: ml - 6, y: Y(v) + 4, "text-anchor": "end" }, ylab[i]));
+  });
+  arr(cfg.refs).forEach(function (r) {
+    if (!isNum(r.y) || r.y < t.lo || r.y > t.hi) return;
+    svgEl.appendChild(S("line", { class: "refl", x1: ml, x2: W - mr, y1: Y(r.y), y2: Y(r.y) }));
+    /* rótulo dentro da área do gráfico: abaixo da linha quando ela encosta no topo */
+    var below = Y(r.y) - 4 < mt + 11;
+    if (r.label) svgEl.appendChild(S("text", { class: "reft", x: W - mr - 4, y: below ? Y(r.y) + 13 : Y(r.y) - 4, "text-anchor": "end" }, r.label));
+  });
+  var gap = cfg.xGap || 84;
+  if (xs) {
+    /* escala de datas: rótulos espaçados na tela (não por índice), sem encostar no último */
+    var lastX = -Infinity;
+    for (var i = 0; i < n - 1; i++) {
+      if (X(i) - lastX < gap || X(n - 1) - X(i) < gap * 0.6) continue;
+      svgEl.appendChild(S("text", { x: X(i), y: H - 8, "text-anchor": i === 0 ? "start" : "middle" }, xFmt(labels[i])));
+      lastX = X(i);
+    }
+  } else {
+    var maxLabels = Math.max(2, Math.floor(pw / gap));
+    var step = Math.max(1, Math.ceil(n / maxLabels));
+    for (var i2 = 0; i2 < n; i2 += step) {
+      if (n > 1 && (i2 === n - 1 || (n - 1 - i2) < step * 0.6)) continue;
+      svgEl.appendChild(S("text", { x: X(i2), y: H - 8, "text-anchor": n === 1 ? "middle" : i2 === 0 ? "start" : "middle" }, xFmt(labels[i2])));
+    }
+  }
+  if (n > 1) svgEl.appendChild(S("text", { x: X(n - 1), y: H - 8, "text-anchor": "end" }, xFmt(labels[n - 1])));
+  series.forEach(function (s) {
+    var d = "", pen = false, lastI = -1, single = [];
+    arr(s.values).forEach(function (v, i) {
+      if (isNum(v)) {
+        d += (pen ? "L" : "M") + X(i).toFixed(1) + " " + Y(v).toFixed(1);
+        if (!pen) single.push(i);
+        pen = true; lastI = i;
+      } else pen = false;
+    });
+    if (d) svgEl.appendChild(S("path", { class: "ln", d: d, style: "stroke:" + s.color + (s.width ? ";stroke-width:" + s.width : "") }));
+    single.forEach(function (i) {
+      var nxt = arr(s.values)[i + 1];
+      if (!isNum(nxt)) svgEl.appendChild(S("circle", { cx: X(i), cy: Y(s.values[i]), r: 3, style: "fill:" + s.color }));
+    });
+    if (lastI >= 0 && s.end !== false) svgEl.appendChild(S("circle", { class: "enddot", cx: X(lastI), cy: Y(s.values[lastI]), r: 4, style: "fill:" + s.color }));
+  });
+  var wrapEl = h("div", { class: "chart" });
+  wrapEl.appendChild(svgEl);
+  attachTip(svgEl, wrapEl, W, n, X, function (i, tip) {
+    tip.appendChild(h("b", null, (cfg.tipX || fdate)(labels[i])));
+    series.forEach(function (s) {
+      var v = arr(s.values)[i];
+      tip.appendChild(h("div", null, h("span", null, h("i", { style: "background:" + s.color }), s.name), h("span", null, isNum(v) ? (cfg.tipFmt || yFmt)(v) : NA)));
+    });
+  }, mt, ph, ml, pw);
+  if (series.length > 1 || cfg.legend) el.appendChild(legendEl(cfg.legendReverse ? series.slice().reverse() : series, cfg.legendLast ? function (s) {
+    var vs = arr(s.values);
+    for (var k = vs.length - 1; k >= 0; k--) if (isNum(vs[k])) return " " + (cfg.tipFmt || yFmt)(vs[k]);
+    return null;
+  } : null));
+  el.appendChild(wrapEl);
+}
+/* colunas agrupadas em torno do zero. cfg: {labels, series:[{name,color,values}], yFmt, height} */
+function colChart(el, cfg) {
+  el.textContent = "";
+  var labels = arr(cfg.labels), n = labels.length, series = arr(cfg.series), ns = series.length;
+  var lo = 0, hi = 0, any = false;
+  series.forEach(function (s) { arr(s.values).forEach(function (v) { if (isNum(v)) { any = true; lo = Math.min(lo, v); hi = Math.max(hi, v); } }); });
+  if (!any || !n) { el.appendChild(empty(cfg.empty || "Sem dados para o gráfico.")); return; }
+  var t = niceTicks(lo, hi, 4);
+  var yFmt = cfg.yFmt || function (v) { return fnum(v); };
+  var ylab = t.ticks.map(yFmt);
+  var W = chartWidth(el), H = cfg.height || 220;
+  var ml = Math.min(120, 12 + Math.max.apply(null, ylab.map(function (s) { return s.length; })) * 6.4);
+  var mr = 12, mt = 10, mb = 26, pw = W - ml - mr, ph = H - mt - mb;
+  var band = pw / n, gap = 2;
+  var bw = Math.max(1, Math.min(24, (band * 0.78 - gap * (ns - 1)) / ns));
+  function X(i) { return ml + band * i + band / 2; }
+  function Y(v) { return mt + (t.hi - v) / (t.hi - t.lo) * ph; }
+  var svgEl = S("svg", { viewBox: "0 0 " + W + " " + H, width: W, height: H, role: "img", "aria-label": cfg.title || "gráfico" });
+  t.ticks.forEach(function (v, i) {
+    svgEl.appendChild(S("line", { class: v === 0 ? "axis" : "gridl", x1: ml, x2: W - mr, y1: Y(v), y2: Y(v) }));
+    svgEl.appendChild(S("text", { x: ml - 6, y: Y(v) + 4, "text-anchor": "end" }, ylab[i]));
+  });
+  var y0 = Y(0);
+  series.forEach(function (s, j) {
+    arr(s.values).forEach(function (v, i) {
+      if (!isNum(v)) return;
+      var x = X(i) - (ns * bw + (ns - 1) * gap) / 2 + j * (bw + gap);
+      var y = Math.min(Y(v), y0), hh = Math.max(1, Math.abs(Y(v) - y0));
+      svgEl.appendChild(S("rect", { x: x.toFixed(1), y: y.toFixed(1), width: bw.toFixed(1), height: hh.toFixed(1), rx: Math.min(2, bw / 3), style: "fill:" + s.color }));
+    });
+  });
+  var maxLabels = Math.max(2, Math.floor(pw / 84)), step = Math.max(1, Math.ceil(n / maxLabels));
+  for (var i = 0; i < n; i += step) svgEl.appendChild(S("text", { x: X(i), y: H - 8, "text-anchor": "middle" }, (cfg.xFmt || fdshort)(labels[i])));
+  var wrapEl = h("div", { class: "chart" });
+  wrapEl.appendChild(svgEl);
+  attachTip(svgEl, wrapEl, W, n, function (i) { return X(i); }, function (i, tip) {
+    tip.appendChild(h("b", null, fdate(labels[i])));
+    series.forEach(function (s) {
+      var v = arr(s.values)[i];
+      tip.appendChild(h("div", null, h("span", null, h("i", { style: "background:" + s.color }), s.name), h("span", null, isNum(v) ? (cfg.tipFmt || yFmt)(v) : NA)));
+    });
+  }, mt, ph, ml, pw);
+  el.appendChild(legendEl(series.map(function (s) { return { name: s.name, color: s.color, bar: true }; })));
+  el.appendChild(wrapEl);
+}
+
+/* registro dos gráficos por aba (redesenho ao redimensionar) */
+var CHARTS = {}, CUR = null, ACTIVE = null;
+function chart(draw, minH) {
+  var el = h("div", { class: "chart-host", style: minH ? "min-height:" + minH + "px" : null });
+  var panel = CUR;
+  (CHARTS[panel] = CHARTS[panel] || []).push({ el: el, draw: draw, w: 0 });
+  return el;
+}
+function drawCharts(panel, force) {
+  arr(CHARTS[panel]).forEach(function (c) {
+    if (!c.el.isConnected) return;
+    var w = c.el.clientWidth;
+    if (!w) return;
+    if (!force && Math.abs(w - c.w) < 2) return;
+    c.w = w;
+    try { c.draw(c.el); } catch (e) { c.el.textContent = ""; c.el.appendChild(empty("Gráfico indisponível.")); }
+  });
+  if (CHARTS[panel]) CHARTS[panel] = CHARTS[panel].filter(function (c) { return c.el.isConnected; });
+}
+
+
+/* ====================================================================== dados */
+function $(id) { return document.getElementById(id); }
+if (!D || typeof D !== "object" || !D.meta) {
+  var m0 = $("main");
+  m0.textContent = "";
+  m0.appendChild(h("div", { class: "fatal" }, empty("Os dados do fundo não estão disponíveis nesta página no momento.")));
+  $("mast-asof").textContent = "Dados indisponíveis.";
+  return;
+}
+var META = obj(D.meta), ST = obj(D.status), TR = obj(D.track_record), LD = D.latest_day || null, RK = obj(D.risk);
+var WEEKS = arr(D.weeks), DREP = arr(D.daily_reports), RIDX = arr(D.reports_index), RM = obj(D.risk_monitor);
+var BT = obj(D.backtests);
+var MAND = obj(META.mandate), MR = obj(MAND.risk), MLQ = obj(MAND.liquidity), MDD = obj(MAND.drawdown), MSQ = obj(MAND.squeeze);
+var MSH = obj(MAND.shorting), MAL = obj(MAND.alpha), MRM = obj(MAND.risk_model);
+/* perfil publicado: históricos antigos consolidados e textos resumidos */
+var PUB = META.profile === "publicacao", PUBM = obj(META.publication);
+var ROLLUP = arr(TR.rollup), ROLLDATES = {};
+ROLLUP.forEach(function (r) { if (r && r.date) ROLLDATES[r.date] = 1; });
+function truncMark(o, what) { return o && o._truncado ? h("p", { class: "trunc" }, (what || "Texto") + " resumido nesta versão do portal.") : null; }
+function rollTip(s) { return ROLLDATES[s] ? fdate(s) + " (fim do mês)" : tipDate(s); }
+/* caminho do Markdown de um relatório do índice (a publicação não repete o caminho em cada linha) */
+function reportPath(r) { return r.path || (r.has_md ? (PUBM.reports_dir || "reports") + "/" + r.kind + "/" + r.date + "/relatorio.md" : null); }
+var WBY = {};
+WEEKS.forEach(function (w) { if (w && w.week) WBY[w.week] = w; });
+var LASTW = WEEKS.length ? WEEKS[WEEKS.length - 1] : null;
+var LIVEW = WBY[RK.live_week] || WBY[ST.live_book_week] || WBY[ST.latest_decision_week] || LASTW;
+var CURW = WBY[ST.current_week] || LASTW;
+var LIVEP = LIVEW && LIVEW.proposal ? LIVEW.proposal : null;
+var TH = LIVEW && LIVEW.thesis && LIVEW.thesis.available !== false ? obj(LIVEW.thesis) : null;
+var CHECKS = arr(RK.limit_checks);
+function CK(id) { for (var i = 0; i < CHECKS.length; i++) if (CHECKS[i].id === id) return CHECKS[i]; return null; }
+/* nomes dos emissores: meta.issuer_names (exportado) e as carteiras; nunca o id cru na tela */
+var NAMES = {};
+var INAMES = obj(META.issuer_names);
+Object.keys(INAMES).forEach(function (k) { if (has(INAMES[k])) NAMES[k] = INAMES[k]; });
+function addNames(list, idk, nk) { arr(list).forEach(function (p) { var k = p && p[idk || "issuer_id"]; if (k && p[nk || "name"] && !NAMES[k]) NAMES[k] = p[nk || "name"]; }); }
+WEEKS.forEach(function (w) { if (w.proposal) addNames(w.proposal.positions); if (w.shadow) addNames(w.shadow.positions); addNames(w.changes_vs_previous); });
+if (LD) addNames(LD.positions);
+addNames(RK.squeeze_shorts); addNames(g(RK, "ex_ante.top_risk_contributors"));
+function prettyId(id) {
+  var s = String(id).replace(/^[A-Z]{2}_/, "").replace(/_/g, " ").toLowerCase();
+  return s.replace(/(^|\s)\S/g, function (c) { return c.toUpperCase(); });
+}
+function nm(id) { return has(id) ? NAMES[id] || prettyId(id) : NA; }
+/* ticker para leitura: sem o sufixo de bolsa do provedor de dados (.SA, .MX, .SN…) */
+function tk(t) { return has(t) ? String(t).replace(/\.(SA|MX|SN|BA|CL|LM)$/i, "") : ""; }
+var RISKSRC = RK.daily || RK.ex_ante || null;
+var EVENTS = arr(ST.next_events);
+var WEEKLY_EVENT = EVENTS.filter(function (e) { return /Decis/.test(e.label || ""); })[0] || null;
+/* textos do código com jargão de execução: só troca a expressão, nunca números */
+function plain(t) {
+  return has(t) ? String(t).replace(/fechamento \(MOC\)/g, "leilão de fechamento").replace(/\s*\(MOC\)/g, "").replace(/\bMOC\b/g, "leilão de fechamento")
+    .replace(/gerad([oa]s?) por código/g, "gerad$1 por simulação").replace(/registro diário/g, "fechamento diário").replace(/(calculad[oa]s?) (?:por|pelo) código/g, "$1 pelos modelos quantitativos da gestão") : t;
+}
+function firstCloseText() {
+  if (ST.phase === "pre_inception" || !LIVEW) {
+    return "O fundo ainda não tem carteira." + (WEEKLY_EVENT ? " A primeira decisão de investimento está prevista para " + fdate(WEEKLY_EVENT.when_local) + "." : "");
+  }
+  return "A carteira decidida em " + fdate(LIVEW.week) + " é executada no leilão de fechamento; cota, retorno e atribuição passam a ser publicados a partir do primeiro pregão após a execução.";
+}
+/* meta de vol aplicada na semana (ajuste do gestor) e a do mandato */
+function volTarget(w) { var o = obj(g(w, "proposal.overrides")); return isNum(o.vol_target) ? o.vol_target : MR.vol_target_annual; }
+function stageLabel(s) { return STAGE_PT[s] || null; }
+/* narrativa gravada (gestor, diário): ids viram nomes, jargão de execução sai */
+function prose(t) { return has(t) ? ptLabel(plain(t)) : t; }
+function goTab(id, label) { var b = h("button", { class: "go", type: "button" }, label + " →"); b.addEventListener("click", function () { showTab(id); window.scrollTo(0, 0); }); return b; }
+
+/* ====================================================================== cabeçalho e rodapé */
+function compliance() {
+  if (!CHECKS.length) return null;
+  var sm = obj(RK.summary), ex = sm.excesso || 0, al = sm.alerta || 0;
+  if (ex) return ["Excesso de limite", "crit"];
+  if (al) return [plural(al, "alerta", "alertas"), "warn"];
+  return ["Dentro do mandato", "ok"];
+}
+function renderHeader() {
+  var fn = META.fund_name || "CDP — Cabra da Peste";
+  var parts = String(fn).split(/\s+[—–]\s+/);
+  $("brand-mark").textContent = parts.length > 1 ? parts[0] : "CDP";
+  $("brand-name").textContent = parts.length > 1 ? parts.slice(1).join(" — ") : fn;
+  $("brand-sub").textContent = "Long/short de ações da América Latina · neutro em mercado · base " + (META.base_currency || "USD");
+
+  var chips = $("mast-chips");
+  if (META.is_synthetic) chips.appendChild(pill(META.simulated_label || "DADOS SIMULADOS", "sim"));
+  var ks = obj(ST.kill_switch);
+  if (ks.active) chips.appendChild(pill("Modo somente redução de risco", "crit", ks.reason || null));
+  var cp = compliance();
+  if (cp) {
+    var cb = h("button", { class: "pillbtn", type: "button", title: "Ver risco e limites do mandato" }, pill(cp[0], cp[1]));
+    cb.addEventListener("click", function () { showTab("risco"); });
+    chips.appendChild(cb);
+  }
+  var schemaOld = META.schema_version && META.schema_version !== PAGE_SCHEMA;
+  var shaOld = typeof META.page_sha256 === "string" && /^[0-9a-f]{64}$/.test(PAGE_SHA) && META.page_sha256 !== PAGE_SHA;
+  if (schemaOld || shaOld) chips.appendChild(pill("Página desatualizada", "warn", "Os dados são mais novos que esta versão da página; recarregue para ver a versão atual."));
+
+  var pos = first(LD && LD.date, ST.last_record_date, LIVEW && LIVEW.week);
+  var px = first(ST.market_last_date, g(META, "market.last_date"));
+  add($("mast-asof"), [
+    pos ? h("span", null, "Posição de ", h("b", null, fdate(pos))) : h("span", null, "Sem carteira"),
+    px ? h("span", null, "preços até " + fdshort(px)) : null,
+    isNum(ST.nav_usd) ? h("span", null, "PL ", h("b", null, usd(ST.nav_usd))) : null
+  ]);
+
+  if (META.is_synthetic) {
+    $("sim-band").hidden = false;
+    $("tabs").className = "tabs sim";
+    $("tabs").setAttribute("aria-label", "Seções do portal (DADOS SIMULADOS)");
+    $("sim-txt").textContent = plain(String(META.data_notice || "").replace(/^DADOS SIMULADOS\s*[—–-]\s*/, "")) || "Mercado e carteira sintéticos, só para demonstração.";
+  }
+  renderFoot();
+}
+function renderFoot() {
+  var notice = META.data_notice || "", m = /\(([^)]+)\)/.exec(notice);
+  var srcTxt = META.is_synthetic ? "Fontes de dados: simuladas (demonstração)." : m ? "Fontes de dados de mercado: " + m[1] + "." : notice;
+  var theme = h("div", { class: "seg", role: "group", "aria-label": "Aparência" });
+  [["", "Automática"], ["light", "Clara"], ["dark", "Escura"]].forEach(function (o) {
+    var b = h("button", { type: "button", "aria-pressed": (lsGet("tema") || "") === o[0] ? "true" : "false" }, o[1]);
+    b.addEventListener("click", function () {
+      setTheme(o[0]); lsSet("tema", o[0]);
+      theme.querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+      if (ACTIVE) drawCharts(ACTIVE, true);
+    });
+    theme.appendChild(b);
+  });
+  add($("foot"), h("div", { class: "wrap foot-in" },
+    h("div", { class: "disc" },
+      h("h2", null, "Informações importantes"),
+      h("p", null, plain(META.paper_trading_text) || "Carteira simulada (paper trading) com preços reais e execução hipotética no leilão de fechamento, com custos estimados; não representa resultado de fundo real nem oferta de investimento."),
+      h("p", null, "Retornos, riscos, pesos e contribuições são calculados por modelos quantitativos determinísticos da gestão. Textos de pesquisa e de comentário podem ser elaborados com apoio de IA e citam apenas números calculados por esses modelos. Dado ausente aparece como “n/d”, nunca como zero. Rentabilidade passada não é garantia de resultados futuros."),
+      META.is_synthetic ? h("p", null, h("b", null, "DADOS SIMULADOS: "), "mercado e carteira sintéticos, só para demonstração.") : null,
+      h("p", { class: "src" }, srcTxt)),
+    h("div", { class: "foot-side" },
+      h("p", null, h("b", null, META.fund_name || "CDP — Cabra da Peste")),
+      kv([["Início", fdate(META.inception_date)], ["PL inicial", usd(META.inception_nav_usd)], ["Moeda base", META.base_currency]]),
+      h("div", { class: "field" }, "Aparência", theme))));
+}
+function setTheme(t) { try { if (t) document.documentElement.setAttribute("data-theme", t); else document.documentElement.removeAttribute("data-theme"); } catch (e) { /* sem DOM */ } }
+setTheme(lsGet("tema") || "");
+
+/* ====================================================================== destaques de risco */
+/* nomes das verificações de conformidade (para os códigos reconhecidos na decisão) */
+var GATE_NAME = {};
+arr(g(LIVEP, "compliance.checks")).forEach(function (c) { if (c.check_id && c.name) GATE_NAME[c.check_id] = ptLabel(c.name); });
+GATE_NAME.VOL_TARGET = "Distância à meta do mandato";
+function gateName(id) { return GATE_NAME[id] || { GROSS_MIN: "Exposição bruta mínima", SINGLE_NAME_RISK: "Contribuição máxima de um nome ao risco" }[id] || ptLabel(String(id).replace(/_/g, " ").toLowerCase()); }
+function checkTxt(c) {
+  var t = c.label + ": " + fmtUnit(c.value, c.unit) + " (limite " + fmtLimit(c) + ")";
+  if (isNum(c.shortfall) && c.shortfall > 0) t += ", abaixo do piso em " + fnum(c.shortfall * 100, 2) + " p.p.";
+  return t + (c.detail ? " · " + ptLabel(ptNums(c.detail)) : "") + ".";
+}
+function highlights(expos, basis) {
+  var items = [];
+  function it(tone, label, text) { items.push({ tone: tone, label: label, text: text }); }
+  var ks = obj(ST.kill_switch);
+  if (ks.active) it("crit", "Redução de risco", "Modo somente redução de risco ativo" + (ks.reason ? ": " + ks.reason : "") + ". Nenhuma posição nova; só operações que reduzem risco.");
+  if (STAGE_PT[ST.ladder_stage] && ST.ladder_stage !== "normal") it(STAGE_TONE[ST.ladder_stage] || "warn", "Controle de perdas", "Drawdown de " + pct(ST.drawdown) + ": " + STAGE_PT[ST.ladder_stage] + ".");
+  CHECKS.forEach(function (c) { if (c.status === "excesso") it("crit", "Excesso", checkTxt(c)); });
+  CHECKS.forEach(function (c) { if (c.status === "alerta") it("warn", "Alerta", checkTxt(c)); });
+  function expoTxt(e) { return expoName(e.group, e.name) + " " + (e.group === "style" ? xnum(e.net) : spct(e.net)) + " (" + pct(e.utilization, 0) + " do limite)"; }
+  var exc = arr(expos).filter(function (e) { return e.status === "excesso"; });
+  if (exc.length) it("crit", "Excesso", "Exposições acima do limite: " + exc.map(expoTxt).join("; ") + ".");
+  var drift = arr(expos).filter(function (e) { return e.status === "alerta"; });
+  if (drift.length) it("warn", "Alerta", (basis === "daily" ? "Exposições acima do limite pela variação de preços desde a decisão (reequilibradas no próximo rebalanceamento): " : "Exposições acima de limite de alerta: ") + drift.map(expoTxt).join("; ") + ".");
+  var ack = arr(g(LIVEW, "decision.acknowledged_soft_checks"));
+  if (ack.length) it("info", "Reconhecido", "Limites de alerta reconhecidos pelo comitê na decisão de " + fdate(LIVEW.week) + ": " + ack.map(gateName).join("; ") + ".");
+  var la = LD ? arr(LD.alerts) : [];
+  if (la.length) it("warn", "Fechamento", h("span", null, "Ocorrências no fechamento de " + fdate(LD.date) + ":", h("ul", { class: "list" }, la.map(function (a) { return h("li", null, ptLabel(plain(a))); }))));
+  if (!CHECKS.length) it("na", "Sem carteira", "Sem carteira vigente: nada a comparar com o mandato.");
+  else if (!items.some(function (x) { return x.tone === "crit" || x.tone === "warn"; })) it("ok", "Mandato", "Todos os limites do mandato dentro do permitido na base atual.");
+  return items;
+}
+function hlList(items) {
+  return h("ul", { class: "alerts" }, items.map(function (x) { return h("li", { class: "t-" + x.tone }, pill(x.label, x.tone), x.text && x.text.nodeType ? x.text : h("span", null, x.text)); }));
+}
+
+/* ====================================================================== Visão geral */
+/* resumo de investimento da semana (sem campos operacionais) */
+function decisionCard(w, noLink) {
+  if (!w) return block("Decisão da semana", null, empty(firstCloseText()));
+  var d = w.decision || null, pm = pmFor(w), j = d && d.journal ? obj(d.journal) : {};
+  var vt = g(w, "proposal.overrides.vol_target");
+  var execTxt = w.executed ? (g(w, "booked.booked_at") ? "em " + fdate(String(w.booked.booked_at).slice(0, 10)) : "")
+    : d ? "execução no leilão de fechamento de " + fdate(w.week) : "aguardando decisão";
+  var rows = [
+    ["Semana", fdate(w.week)],
+    ["Situação", h("span", null, pill(WEEK_STAGE[w.stage] || w.stage || NA, WEEK_STAGE_TONE[w.stage] || "na"), " ", execTxt)],
+    pm ? ["Postura de risco", pm.posture_label || pm.risk_posture] : null,
+    pm ? ["Regime de mercado", pm.regime_label || pm.regime] : null,
+    d && isNum(d.conviction) ? ["Convicção", d.conviction + " de 5"] : null,
+    isNum(j.horizon_weeks) ? ["Horizonte", j.horizon_weeks + " semanas"] : null,
+    isNum(vt) ? ["Vol-alvo da semana", pct(vt) + (isNum(MR.vol_target_annual) && Math.abs(vt - MR.vol_target_annual) > 1e-9 ? " (mandato " + pct(MR.vol_target_annual) + ")" : "")] : null,
+    w.path_taken && PATH_PT[w.path_taken] ? ["Construção", PATH_PT[w.path_taken]] : null,
+    WEEKLY_EVENT && w === CURW ? ["Próxima decisão", fdate(WEEKLY_EVENT.when_local)] : null
+  ];
+  var b = block("Decisão da semana", null, kv(rows));
+  if (d && d.rationale) b.appendChild(fold("Racional da decisão", null, false, md(prose(scrubPath(scrubMind(d.rationale))), "sm")));
+  if (!noLink) b.appendChild(goTab("decisoes", "Comitê de investimento"));
+  return b;
+}
+/* o racional gravado pode trazer o nome da ferramenta de IA ("; mente claude-code", "mente de IA"):
+   sai da leitura. Só a palavra inteira "mente" seguida de um nome conhecido — advérbios como
+   "fortemente comprada", "inteiramente simulado" e "somente em" ficam intactos. */
+var MIND_RE = /[ \t]*[;,]?[ \t]*\bmente[ \t]+(?:claude-code|codex|api|demo|de[ \t]+IA)\b(?:[ \t]*\[IA\])?/gi;
+function scrubMind(t) { return has(t) ? String(t).replace(MIND_RE, "").replace(/^\s*[.;,]\s*/, "") : t; }
+/* "Caminho: cdp." (rota interna da decisão) não é leitura de investimento */
+function scrubPath(t) { return has(t) ? String(t).replace(/[ \t]*\bCaminho:[ \t]*[\w-]+\.?/g, "").replace(/^[ \t]+/, "") : t; }
+/* âncora da inception (exportada): NAV de abertura do 1º registro, para o 1º dia ter segmento */
+function navSeries() {
+  var cmp = arr(TR.compare), recs = arr(TR.records), an = TR.anchor ? obj(TR.anchor) : null;
+  var lab0 = an ? ["início"] : [];
+  /* publicação: meses consolidados (fim de mês) antes dos pregões em linhas diárias */
+  var ru = ROLLUP, ruLab = ru.map(function (r) { return r.date; });
+  var zone = ru.length ? { from: 0, to: lab0.length + ru.length - 1, label: "meses consolidados (fim de mês)" } : null;
+  if (cmp.length) {
+    return {
+      zone: zone,
+      labels: lab0.concat(ruLab, cmp.map(function (r) { return r.date; })),
+      series: [
+        { name: "Referência quantitativa", color: "var(--shadow)", values: (an ? [an.nav_shadow] : []).concat(ru.map(function (r) { return r.nav_shadow; }), cmp.map(function (r) { return r.nav_shadow; })) },
+        { name: "CDP", color: "var(--accent)", width: 2.5, values: (an ? [an.nav_cdp] : []).concat(ru.map(function (r) { return r.nav_end; }), cmp.map(function (r) { return r.nav_cdp; })) }
+      ], rows: cmp
+    };
+  }
+  if (recs.length || ru.length) {
+    return { zone: zone, labels: lab0.concat(ruLab, recs.map(function (r) { return r.date; })), series: [{ name: "CDP", color: "var(--accent)", values: (an ? [an.nav_cdp] : []).concat(ru.map(function (r) { return r.nav_end; }), recs.map(function (r) { return r.nav_end; })) }], rows: null };
+  }
+  return null;
+}
+function rollupTable() {
+  if (!ROLLUP.length) return null;
+  return h("details", { class: "mini" }, h("summary", null, "Meses anteriores (" + ROLLUP.length + ") consolidados no fim do mês"),
+    table([
+      { label: "Mês", render: function (r) { return fmonth(r.date) + " (" + fdate(r.first_date) + " a " + fdate(r.date) + ")"; } },
+      { label: "PL no fim do mês", num: true, render: function (r) { return usdFull(r.nav_end); } },
+      { label: "Retorno do mês", num: true, render: function (r) { return signed(spct(r.ret), r.ret); } },
+      { label: "Vol ex-ante média", num: true, render: function (r) { return pct(r.ex_ante_vol_avg); } },
+      { label: "Drawdown no fim", num: true, render: function (r) { return pct(r.drawdown); } },
+      { label: "Pregões", num: true, render: function (r) { return int(r.n_days); } }
+    ], ROLLUP.slice().reverse(), { tall: true }));
+}
+function tipDate(s) { return s === "início" ? "Início (PL de abertura)" : fdate(s); }
+function statsTable() {
+  var a = obj(TR.stats), b = obj(g(TR, "shadow.stats"));
+  var rows = [
+    ["Retorno desde o início", "since_inception_return", function (v) { return spct(v); }], ["Retorno anualizado", "annualized_return", function (v) { return spct(v); }],
+    ["Volatilidade anualizada", "annualized_vol", function (v) { return pct(v); }], ["Índice de Sharpe", "sharpe", function (v) { return fnum(v, 2); }],
+    ["Drawdown máximo", "max_drawdown", function (v) { return pct(v); }], ["Drawdown atual", "current_drawdown", function (v) { return pct(v); }],
+    ["Dias positivos", "pct_positive_days", function (v) { return pct(v, 0); }],
+    ["Melhor dia", "best_day", function (v) { return v ? spct(v.ret) + " (" + fdate(v.date) + ")" : NA; }],
+    ["Pior dia", "worst_day", function (v) { return v ? spct(v.ret) + " (" + fdate(v.date) + ")" : NA; }],
+    ["Vol realizada 21d", "realized_vol_21d", function (v) { return pct(v); }], ["Vol realizada 63d", "realized_vol_63d", function (v) { return pct(v); }],
+    ["Vol realizada × banda", "realized_vol_status", function (v) { return v || NA; }],
+    ["Pregões", "n_days", int], ["Período", "first_date", function (v, s) { return s.first_date ? fdate(s.first_date) + " a " + fdate(s.last_date) : NA; }]
+  ];
+  var t = table([
+    { label: "Indicador", render: function (r) { return r[0]; } },
+    { label: "CDP", num: true, render: function (r) { var v = a[r[1]]; return v === undefined || v === null ? NA : r[2](v, a); } },
+    { label: "Referência quantitativa", num: true, render: function (r) { var v = b[r[1]]; return v === undefined || v === null ? NA : r[2](v, b); } }
+  ], rows);
+  return h("div", { class: "stack" }, t, a.annualization_note ? note(a.annualization_note) : null);
+}
+function monthlyTable() {
+  var m = TR.monthly;
+  if (!m || !arr(m.rows).length) return null;
+  var cols = [{ label: "Ano", render: function (r) { return String(r.year); } }];
+  arr(m.columns).forEach(function (c, i) {
+    cols.push({ label: c === "YTD" ? "Ano" : c, num: true, render: function (r) { var v = arr(r.values)[i]; return isNum(v) ? signed(spct(v), v) : h("span", { class: "muted" }, "·"); } });
+  });
+  return table(cols, m.rows);
+}
+function ddText(stats) {
+  if (!isNum(ST.drawdown)) return "sem histórico ainda";
+  return "máximo " + pct(stats.max_drawdown) + (isNum(MDD.soft_stop) ? " · revisão em " + pct(MDD.soft_stop, 1) : "");
+}
+/* ficha do fundo (mandato, carteira vigente, natureza do histórico) */
+function factsBox() {
+  var conc = obj(RK.concentration), src = obj(RISKSRC), c3 = CK("liquidez_3d"), vt = volTarget(LIVEW);
+  var hz = first(TS.horizon_weeks, g(LIVEW, "decision.journal.horizon_weeks"), MAL.horizon_weeks);
+  var nL = first(src.n_long, conc.n_long, TS.n_long), nS = first(src.n_short, conc.n_short, TS.n_short), lq3 = c3 ? c3.value : g(RK, "liquidity_by_side.liquid_3d");
+  return block("O fundo", null, kv([
+    ["Estratégia", "Long/short de ações da América Latina, neutro em mercado"],
+    ["Início", fdate(META.inception_date)],
+    ["Moeda base", META.base_currency],
+    ["Patrimônio (PL)", usd(ST.nav_usd)],
+    ["Meta de volatilidade", pct(MR.vol_target_annual) + " no mandato" + (isNum(vt) && isNum(MR.vol_target_annual) && Math.abs(vt - MR.vol_target_annual) > 1e-9 ? " · " + pct(vt) + " aplicada na semana" : "")],
+    ["Banda de volatilidade", rng(MR.vol_band_min, MR.vol_band_max, function (v) { return pct(v, 0); })],
+    ["Exposição líquida · beta", pm0(MR.net_exposure_max_abs) + " · ±" + fnum(MR.beta_max_abs, 2)],
+    ["Exposição bruta", rng(MR.gross_min, MR.gross_max, function (v) { return pct(v, 0); }) + " do PL"],
+    ["Posições", has(nL) || has(nS) ? int(nL) + " long · " + int(nS) + " short" : "sem carteira"],
+    ["Liquidez da carteira", isNum(lq3) ? pct(lq3, 0) + " do bruto em 3 dias" : NA],
+    ["Horizonte", isNum(hz) ? fnum(hz, 0) + " semanas" : NA],
+    ["Gestor", META.manager],
+    ["Natureza", META.is_synthetic ? h("span", null, pill("DADOS SIMULADOS", "sim"), " demonstração") : "paper trading com preços reais"]
+  ]));
+}
+function perfStrip() {
+  if (!LD) {
+    return h("div", { class: "block ov-first" },
+      h("p", { class: "lead" }, LIVEW ? "Primeiro resultado após o primeiro fechamento da carteira (" + fdshort(LIVEW.week) + ")." : firstCloseText()),
+      h("p", { class: "note" }, "PL inicial de " + usd(META.inception_nav_usd) + ". Cota, retorno, volatilidade realizada e drawdown passam a ser publicados a partir do primeiro pregão com a carteira executada."));
+  }
+  var per = obj(LD.period), stats = obj(TR.stats), rv = first(ST.realized_vol_21d, stats.annualized_vol);
+  function sv(x) { return signed(spct(x), x); }
+  return h("div", { class: "kpis k5" },
+    tile("Dia", sv(LD.ret), h("div", { class: "tile-s" }, signed(usdFull(LD.pnl, true), LD.pnl)), fdate(LD.date)),
+    tile("Mês", sv(per.mtd), "no mês corrente"),
+    tile("Desde o início", sv(per.itd), "desde " + fdate(per.first_date) + " · " + plural(per.n_days, "pregão", "pregões")),
+    tile("Vol realizada", pct(rv), isNum(ST.realized_vol_21d) ? "anualizada, 21 pregões" : "anualizada, desde o início"),
+    tile("Drawdown", pct(ST.drawdown), "máximo " + pct(first(per.max_drawdown, stats.max_drawdown))));
+}
+function thesisHighlight() {
+  if (!TH) return block("Tese de investimento", null, h("p", { class: "ink2" }, LIVEW ? "A tese da carteira desta semana ainda não foi publicada; a leitura do gestor está no Comitê de investimento." : "A tese de investimento é publicada após a primeira decisão do comitê."), LIVEW ? goTab("decisoes", "Comitê de investimento") : null);
+  var b = h("button", { class: "btn btn-p", type: "button" }, "Ler a tese completa →");
+  b.addEventListener("click", function () { showTab("tese"); window.scrollTo(0, 0); });
+  return h("article", { class: "block th-hl" },
+    h("p", { class: "eyebrow" }, "Tese da carteira · semana de " + fdate(TH.week)),
+    h("h2", { class: "th-hl-t" }, tt(TH.title) || "Tese de investimento"),
+    has(TH.summary_md) ? tmd(TH.summary_md, "sm") : null,
+    arr(TH.themes).length ? h("div", { class: "chips" }, arr(TH.themes).map(function (t) { var s = TSIDE[t.side] || ["", ""]; return h("span", { class: "nchip thc " + s[1] }, tt(t.title), s[0] ? h("b", null, s[0]) : null); })) : null,
+    h("div", null, b));
+}
+function posSnapshot() {
+  var rows = positionModel().rows;
+  if (!rows.length) return null;
+  function top(side) { return rows.filter(function (r) { return r.side === side; }).sort(wSort).slice(0, 5); }
+  function mini(list, title) {
+    return h("div", { class: "stack", style: "gap:6px" }, h("h4", null, title), list.length ? table([
+      { label: "Nome", render: function (r) { return h("span", null, r.name || nm(r.issuer_id), h("span", { class: "cellsub" }, [tk(r.ticker), sectorName(r.sector)].filter(Boolean).join(" · "))); } },
+      { label: "Peso", num: true, render: function (r) { return spct(r.weight); } }
+    ], list) : h("p", { class: "muted" }, "nenhuma"));
+  }
+  var ex = arr(g(RISKSRC, "exposures"));
+  function nets(grp, lab) {
+    return ex.filter(function (e) { return e.group === grp && isNum(e.net); }).sort(function (a, b) { return Math.abs(b.net) - Math.abs(a.net); }).slice(0, 6)
+      .map(function (e) { return { label: lab(e.name), net: e.net, limit: e.limit, tone: expoTone(e) }; });
+  }
+  return block("Posicionamento", RK.daily ? "fechamento de " + fdate(RK.as_of_date) : "carteira decidida em " + fdate(LIVEW && LIVEW.week),
+    h("div", { class: "cols-2" }, mini(top("LONG"), "Maiores compras"), mini(top("SHORT"), "Maiores vendas")),
+    ex.length ? h("div", { class: "cols-2" },
+      h("div", { class: "stack", style: "gap:8px" }, h("h4", null, "Líquido por país"), netRows(nets("country", countryName), spct, pct)),
+      h("div", { class: "stack", style: "gap:8px" }, h("h4", null, "Líquido por setor"), netRows(nets("sector", sectorName), spct, pct))) : null,
+    ex.length ? note("Maiores exposições líquidas em % do PL; tracejado = limite do mandato (±).") : null,
+    goTab("carteira", "Carteira completa"));
+}
+function riskSnap() {
+  var vc = CK("vol_ex_ante"), bc = CK("beta"), gc = CK("gross_max"), nc = CK("net"), vr = CK("var_1d"), cp = compliance();
+  var lim = vc && Array.isArray(vc.limit) ? vc.limit : [MR.vol_band_min, MR.vol_band_max], basis = RK.daily ? "daily" : "ex_ante";
+  var hl = CHECKS.length ? highlights(g(RK, basis + ".exposures"), basis).filter(function (x) { return x.tone === "crit" || x.tone === "warn"; }) : [];
+  if (!CHECKS.length) return block("Risco", null, h("p", { class: "muted" }, "Sem carteira vigente: nada a comparar com o mandato."));
+  return block("Risco", RK.daily ? "fechamento de " + fdate(RK.as_of_date) : "ex-ante da carteira decidida",
+    h("div", null, h("div", { class: "rs-v" }, h("span", { class: "tile-l" }, "Vol ex-ante"), h("b", null, vc ? pct(vc.value) : NA)), bandGauge(vc ? vc.value : null, lim[0], lim[1], volTarget(LIVEW))),
+    kv([["Beta previsto", (bc ? xnum(bc.value) : NA) + " (limite ±" + fnum(MR.beta_max_abs, 2) + ")"],
+      ["Bruta · líquida", (gc ? pct(gc.value, 1) : NA) + " · " + (nc ? spct(nc.value) : NA)],
+      ["VaR 1 dia (99%)", (vr ? pct(vr.value) : NA) + " (limite " + pct(MR.var_1d_max) + ")"]]),
+    cp ? h("p", { class: "rs-c" }, pill(cp[0], cp[1]), cp[1] === "ok" ? "todos os limites do mandato dentro do permitido" : "conformidade com o mandato") : null,
+    hl.length ? hlList(hl.slice(0, 3)) : null,
+    goTab("risco", "Risco e exposições"));
+}
+function eventsBox() {
+  var base = dayNum(first(LD && LD.date, ST.today));
+  var cal = arr(TH && TH.calendar).filter(function (c) { var d = dayNum(c && c.date); return isFinite(d) && (!isFinite(base) || (d >= base && d <= base + 21)); }).slice(0, 6);
+  var b = h("button", { class: "go", type: "button" }, "Calendário completo na tese →");
+  b.addEventListener("click", function () { showTab("tese"); thGo("calendario"); });
+  return block("Próximos eventos", "próximas três semanas",
+    WEEKLY_EVENT ? kv([["Próxima decisão semanal", flocal(WEEKLY_EVENT.when_local)]]) : null,
+    cal.length ? h("ul", { class: "tl tl-c" }, cal.map(calItem)) : h("p", { class: "muted" }, TH ? "Sem datas da carteira no período." : "O calendário da carteira acompanha a tese da semana."),
+    TH && arr(TH.calendar).length ? b : null);
+}
+function renderVisao(p) {
+  p.appendChild(sec("Resumo do fundo", RISKSRC ? (RK.daily ? "risco medido no fechamento de " + fdate(RK.as_of_date) : "risco ex-ante da carteira decidida em " + fdate(RK.live_week)) : null,
+    h("div", { class: "cols ov" },
+      h("div", { class: "stack" }, perfStrip(), thesisHighlight(), posSnapshot()),
+      h("div", { class: "stack" }, factsBox(), riskSnap(), eventsBox()))));
+
+  var ns = navSeries();
+  if (!ns) return;
+  var navBlock = block("Evolução do patrimônio", "CDP × referência quantitativa, US$" + (ROLLUP.length ? " · meses antigos no fim do mês (faixa sombreada)" : ""));
+  navBlock.appendChild(chart(function (el) {
+    lineChart(el, {
+      labels: ns.labels, series: ns.series, height: 260, legendLast: true, legendReverse: true, title: "Patrimônio do CDP e da referência quantitativa", tipX: rollTip,
+      timeX: !!ns.zone, zone: ns.zone,
+      yFmt: function (v) { return usd(v); }, tipFmt: function (v) { return usdFull(v); },
+      refs: isNum(META.inception_nav_usd) ? [{ y: META.inception_nav_usd, label: "PL inicial " + usd(META.inception_nav_usd) }] : []
+    });
+  }, 280));
+  if (ns.rows) {
+    navBlock.appendChild(h("details", { class: "mini" }, h("summary", null, "Ver os dados do gráfico"),
+      table([
+        { label: "Data", get: function (r) { return r.date; }, render: function (r) { return fdate(r.date); } },
+        { label: "PL CDP", num: true, render: function (r) { return usdFull(r.nav_cdp); } },
+        { label: "PL referência", num: true, render: function (r) { return usdFull(r.nav_shadow); } },
+        { label: "Ret. CDP", num: true, render: function (r) { return signed(spct(r.ret_cdp), r.ret_cdp); } },
+        { label: "Ret. referência", num: true, render: function (r) { return signed(spct(r.ret_shadow), r.ret_shadow); } },
+        { label: "Valor adicionado (dia)", num: true, render: function (r) { return bps(r.value_added); } },
+        { label: "Acumulado", num: true, render: function (r) { return signed(spct(r.cum_value_added), r.cum_value_added); } }
+      ], ns.rows.slice().reverse(), { tall: true })));
+  }
+  var rt0 = rollupTable();
+  if (rt0) navBlock.appendChild(rt0);
+  p.appendChild(sec("Desempenho", "CDP × carteira quantitativa de referência", h("div", { class: "cols" }, navBlock, block("Histórico de desempenho", null, TR.exists ? statsTable() : empty(firstCloseText())))));
+  var mt = monthlyTable();
+  if (mt) p.appendChild(sec("Retornos mensais", "compostos por mês e no ano", mt));
+}
+
+/* ====================================================================== Tese de investimento */
+var AUTH_PT = { mente: "Narrativa da gestão (IA)", codigo: "Narrativa automática" };
+/* tese da semana vigente: todos os números já vêm calculados pelo código (a página só formata) */
+var TN = TH ? obj(TH.numbers) : {}, TS = obj(TN.summary);
+var TPOS = {};
+arr(TH && TH.positions).forEach(function (x) { if (x && x.iid) TPOS[x.iid] = x; });
+/* nome, ticker, país e setor de cada emissor: carteira decidida (e o fechamento, se houver) */
+var PINFO = {};
+arr(LIVEP && LIVEP.positions).forEach(function (x) { if (x && x.issuer_id) PINFO[x.issuer_id] = x; });
+if (LD) arr(LD.positions).forEach(function (x) { if (x && x.issuer_id && !PINFO[x.issuer_id]) PINFO[x.issuer_id] = x; });
+var SIZING_PT = { interior: "Ótimo (sem teto)", teto_nome: "Teto de peso", teto_risco: "Teto de risco", teto_visao: "Teto da visão/sentinela", liquidez: "Liquidez", squeeze: "Risco de squeeze", aluguel: "Aluguel", indeterminado: "—" };
+var ROLE_T = { alpha: "Geradora de alpha", alpha_div: "Alpha que diversifica", hedge: "Hedge / neutralidade" };
+var TSIDE = { long: ["Compra", "L"], short: ["Venda", "S"], long_short: ["Long-short", "LS"] };
+var CAL_PT = { resultado: "Resultado", catalisador: "Catalisador", macro: "Macro", evento: "Evento" };
+var CUR_PT = { BRL: "Real", MXN: "Peso mexicano", CLP: "Peso chileno", COP: "Peso colombiano", PEN: "Sol peruano", ARS: "Peso argentino", UYU: "Peso uruguaio", USD: "Dólar" };
+var VB_PT = { mandato: "Mandato", postura: "Postura", aplicada: "Aplicada", piso: "Piso", atingida: "Atingida" };
+var RG_COLOR = { mercado: "var(--c4)", pais: "var(--c2)", setor: "var(--c3)", estilo: "var(--c5)", especifico: "var(--c1)" };
+/* sinais do alpha por posição: rótulos exportados pelo código (numbers.signals); sem eles, os do
+   modelo vigente — "rev" é revisões de analistas, nunca a reversão de curto prazo (desligada) */
+var SIG_PT = { mom: "Momentum residual", val: "Valor", qual: "Qualidade", lowrisk: "Baixo risco", rev: "Revisões de analistas" };
+function cap1(s) { s = String(s); return s.charAt(0).toUpperCase() + s.slice(1); }
+var SIGS = (arr(TN.signals).length ? arr(TN.signals) : Object.keys(SIG_PT).map(function (k) { return { code: k }; }))
+  .filter(function (s) { return s && has(s.code); })
+  .map(function (s) { return [s.code, has(s.label) ? cap1(s.label) : SIG_PT[s.code] || s.code]; });
+var DOW = ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"];
+var TNAV = [["contexto", "Contexto"], ["temas", "Temas"], ["construcao", "Construção"], ["posicoes", "Posições"], ["exposicoes", "Exposições"], ["sensibilidade", "Sensibilidade"], ["volatilidade", "Volatilidade"], ["estresse", "Estresse"], ["riscos", "Riscos"], ["calendario", "Calendário"]];
+/* texto final da tese (números já resolvidos pelo código): ids viram nomes, sem jargão de execução */
+function tt(t) {
+  if (!has(t)) return t;
+  return isoDates(gapPT(plain(String(t)).replace(/\b(?:(?:AR|BR|CL|CO|MX|PE|UY|PA|LA|US)_[A-Z0-9_]+|SIM\d{3})\b/g, function (id) { return nm(id); })
+    .replace(/\b([A-Z0-9]{3,10})\.(?:SA|MX|SN|BA|CL|LM)\b/g, "$1").replace(/no modo de meta '?match'? /g, "").replace(/(^|[\s(±=:\/])-(?=\d)/g, "$1" + MINUS)));
+}
+/* notas metodológicas da tese: a conferência interna dos números vira a frase de método */
+function thNote(x) {
+  var s = String(x || "");
+  return /^Analytics recalculados\b/.test(s) ? "Números recalculados com os pesos aprovados na decisão, sem reotimizar a carteira." : tt(s);
+}
+function tmd(t, cls) { return md(tt(t), cls); }
+function thSec(id) { return arr(TH && TH.sections).filter(function (s) { return s && s.id === id && has(s.md); })[0] || null; }
+function tickerOf(id) { var i = PINFO[id] || {}; return tk(i.execution_ticker || i.ticker); }
+function wSort(a, b) { return Math.abs(b.weight || 0) - Math.abs(a.weight || 0); }
+function nchip(x) {
+  var w = x.weight;
+  return h("span", { class: "nchip" + (isNum(w) ? (w < 0 ? " S" : " L") : ""), title: tickerOf(x.iid) || null }, nm(x.iid), isNum(w) ? h("b", null, spct(w)) : null);
+}
+/* lista Markdown a partir de itens já em Markdown */
+function mlist(items) {
+  var a = arr(items).filter(has);
+  return a.length ? tmd(a.map(function (x) { return "- " + String(x).replace(/\s*\n+\s*/g, " "); }).join("\n"), "sm") : h("p", { class: "muted" }, NA);
+}
+function cmpBy(get, dir) {
+  return function (a, b) {
+    var x = get(a), y = get(b), xn = !has(x) || (typeof x === "number" && !isFinite(x)), yn = !has(y) || (typeof y === "number" && !isFinite(y));
+    if (xn && yn) return 0; if (xn) return 1; if (yn) return -1;
+    return (typeof x === "number" && typeof y === "number" ? x - y : String(x).localeCompare(String(y), "pt-BR")) * dir;
+  };
+}
+function lsKey() {
+  return h("p", { class: "ls-key" }, h("span", null, h("i", { style: "background:var(--long)" }), "long"), h("span", null, h("i", { style: "background:var(--short)" }), "short"),
+    h("span", null, h("i", { class: "n" }), "líquido"), h("span", null, h("i", { class: "lim" }), "limite do líquido (±)"));
+}
+/* situação de uma exposição da tese: a MESMA política da aba Risco (uso do limite exportado pelo
+   código, expoTone/expoState); sem uso exportado, nenhuma marca — a página não calcula o uso */
+function thFlag(e) { var t = expoTone(e); return t === "crit" || t === "warn" || t === "near" ? expoState(e, "ex_ante") : null; }
+/* long × short por país/setor (borboleta): escala comum a todas as linhas */
+function bfly(rows, lab) {
+  rows = arr(rows);
+  if (!rows.length) return empty("Sem exposições.");
+  var m = 0;
+  rows.forEach(function (e) { [e.long, e.short, e.net, e.limit].forEach(function (x) { if (isNum(x)) m = Math.max(m, Math.abs(x)); }); });
+  return h("div", { class: "bars bf3" }, rows.map(function (e) {
+    var fl = thFlag(e);
+    return [h("div", { class: "bl" }, (lab && lab(e)) || e.label || e.code, h("small", null, "bruto " + pct(e.gross, 1), fl ? " " : null, fl)),
+      lsBar(e, m || 1), h("div", { class: "bv" }, h("b", null, spct(e.net)), h("small", null, pct(e.long, 1) + " / " + pct(e.short, 1)))];
+  }));
+}
+/* só o líquido contra o limite (estilos, temas, países/setores no resumo) */
+function netRows(rows, f, lf) {
+  rows = arr(rows);
+  if (!rows.length) return empty("Sem exposições.");
+  var m = 0;
+  rows.forEach(function (e) { [e.net, isNum(e.limit) ? e.limit * 1.15 : null].forEach(function (x) { if (isNum(x)) m = Math.max(m, Math.abs(x)); }); });
+  return h("div", { class: "bars bf3" }, rows.map(function (e) {
+    var fl = e.tone ? null : thFlag(e);
+    return [h("div", { class: "bl" }, e.label || e.code, fl ? h("small", null, fl) : null), netBar(e, m || 1, e.tone || expoTone(e)),
+      h("div", { class: "bv" }, f(e.net), isNum(e.limit) ? h("small", null, "limite ±" + lf(Math.abs(e.limit))) : null)];
+  }));
+}
+function tprose(x) { return x ? h("div", { class: "th-prose" }, tmd(x.md), truncMark(x, "Texto")) : null; }
+function tsec(id, title, sub) {
+  var s = sec(title, sub);
+  s.id = "ts-" + id; s.className += " th-s";
+  for (var i = 3; i < arguments.length; i++) add(s, arguments[i]);
+  return s;
+}
+/* altura ocupada no topo pelas barras fixas: abas e, quando gruda (telas largas), o índice da
+   tese — medida no momento do uso, nunca um valor fixo */
+function tabsBottom() {
+  var tb = $("tabs");
+  if (!tb) return 0;
+  var top = 0;
+  try { top = parseFloat(window.getComputedStyle(tb).top) || 0; } catch (e) { /* sem estilo */ }
+  return top + tb.offsetHeight;
+}
+function stickyBottom() {
+  var y = tabsBottom(), nav = document.querySelector("#p-tese .tnav"), sticky = false;
+  try { sticky = !!nav && window.getComputedStyle(nav).position === "sticky"; } catch (e) { /* sem estilo */ }
+  return sticky && nav.offsetHeight ? Math.max(y, (parseFloat(nav.style.top) || y) + nav.offsetHeight) : y;
+}
+/* rola até uma seção da tese, com o título logo abaixo das barras fixas */
+function thGo(id) {
+  var s = $("ts-" + id);
+  if (!s) return;
+  var y = Math.max(0, s.getBoundingClientRect().top + (window.pageYOffset || 0) - stickyBottom() - 10);
+  try { window.scrollTo({ top: y, behavior: "smooth" }); } catch (e) { window.scrollTo(0, y); }
+}
+function truncAny() {
+  if (TH._truncado) return true;
+  return [TH.positions, TH.sections, TH.themes].some(function (l) { return arr(l).some(function (x) { return x && x._truncado; }); });
+}
+function teseHead() {
+  return h("header", { class: "th-head" },
+    h("p", { class: "eyebrow" }, "Tese de investimento · semana de " + fdate(TH.week || (LIVEW && LIVEW.week))),
+    h("h2", { class: "thesis-title" }, TH.title ? tt(TH.title) : "Tese de investimento"),
+    h("p", { class: "thesis-meta" },
+      TH.is_synthetic || META.is_synthetic ? pill("DADOS SIMULADOS", "sim") : null,
+      h("span", null, AUTH_PT[TH.authorship] || "Narrativa da gestão"),
+      h("span", null, "números calculados pelo modelo quantitativo"),
+      h("span", null, "posição ex-ante da decisão" + (TH.prices_as_of ? "; preços até " + fdshort(TH.prices_as_of) : ""))),
+    truncAny() ? h("p", { class: "trunc" }, "Versão resumida nesta publicação: parte dos textos foi encurtada.") : null);
+}
+function vbRows() { var o = {}; arr(TN.vol_budget).forEach(function (s) { if (s && s.step) o[s.step] = s; }); return o; }
+function teseKpis() {
+  var vb = vbRows();
+  return h("div", { class: "kpis th-kpis" },
+    tile("Posições", h("span", null, int(TS.n_long), h("small", null, " long"), " ", int(TS.n_short), h("small", null, " short")), "nº efetivo de posições " + fnum(TS.effective_n, 1)),
+    tile("Bruta / líquida", h("span", null, pct(TS.gross, 1), h("small", null, " / " + spct(TS.net))), "long " + pct(TS.long, 1) + " · short " + pct(TS.short, 1)),
+    tile("Beta previsto", xnum(TS.beta), isNum(TS.beta_limit) ? "limite ±" + fnum(TS.beta_limit, 2) : null),
+    tile("Vol ex-ante", pct(TS.vol), "meta aplicada " + pct(vb.aplicada ? vb.aplicada.value : null) + (vb.mandato ? " · mandato " + pct(vb.mandato.value) : "")),
+    tile("Alpha esperado a.a.", spct(TS.alpha), "líquido de custos " + spct(TS.alpha_net) + " · custo " + pct(TS.cost)),
+    tile("VaR 1 dia (99%)", pct(TS.var_1d), "ES 1 dia " + pct(TS.es_1d) + " · VaR 1 semana " + pct(TS.var_1w)));
+}
+/* barras proporcionais ao universo: universo → candidatos → carteira final */
+function funnel(fu) {
+  var U = fu.universe;
+  if (!isNum(U) || !(U > 0)) return empty("Sem dados do funil de seleção.");
+  return h("div", { class: "fn" }, [["Universo elegível", fu.universe, "f0"], ["Candidatos (limite de compra ou venda)", fu.candidates, "f1"], ["Carteira final", fu.final, "f2", int(fu.long) + " long · " + int(fu.short) + " short"]].map(function (r) {
+    return h("div", { class: "fn-r" }, h("div", { class: "bl" }, r[0], r[3] ? h("small", null, r[3]) : null),
+      h("div", { class: "fn-t" }, isNum(r[1]) ? h("span", { class: "fn-b " + r[2], style: "width:" + (Math.min(1, r[1] / U) * 100).toFixed(1) + "%" }) : null), h("div", { class: "bv" }, h("b", null, int(r[1]))));
+  }));
+}
+/* orçamento de volatilidade em degraus (colunas na mesma escala, a partir de zero) */
+function volSteps(el, rows) {
+  el.textContent = "";
+  var vals = rows.map(function (r) { return r.value; }).filter(isNum);
+  if (!vals.length) { el.appendChild(empty("Sem dados do orçamento de risco.")); return; }
+  var t = niceTicks(0, Math.max.apply(null, vals), 4);
+  var W = chartWidth(el), H = 236, ml = 46, mr = 8, mt = 22, mb = 30, n = rows.length;
+  var pw = W - ml - mr, ph = H - mt - mb, band = pw / n, bw = Math.min(72, band * 0.6);
+  function Y(v) { return mt + (t.hi - v) / (t.hi - t.lo) * ph; }
+  var sv = S("svg", { viewBox: "0 0 " + W + " " + H, width: W, height: H, role: "img", "aria-label": "Orçamento de volatilidade: " + rows.map(function (r) { return (r.label || r.step) + " " + pct(r.value); }).join(", ") });
+  t.ticks.forEach(function (v) {
+    sv.appendChild(S("line", { class: v === 0 ? "axis" : "gridl", x1: ml, x2: W - mr, y1: Y(v), y2: Y(v) }));
+    sv.appendChild(S("text", { x: ml - 6, y: Y(v) + 4, "text-anchor": "end" }, pct(v, 0)));
+  });
+  var fl = rows.filter(function (r) { return r.step === "piso" && isNum(r.value); })[0];
+  if (fl) sv.appendChild(S("line", { class: "refl", x1: ml, x2: W - mr, y1: Y(fl.value), y2: Y(fl.value) }));
+  rows.forEach(function (r, i) {
+    var x = ml + band * i + (band - bw) / 2, cx = x + bw / 2;
+    if (isNum(r.value)) {
+      var y = Y(r.value), nx = rows[i + 1];
+      sv.appendChild(S("rect", { class: "vb" + (r.step === "atingida" ? " on" : r.step === "piso" ? " fl" : ""), x: x.toFixed(1), y: y.toFixed(1), width: bw.toFixed(1), height: Math.max(1, Y(0) - y).toFixed(1), rx: 2 },
+        S("title", null, (r.label || r.step) + ": " + pct(r.value))));
+      sv.appendChild(S("text", { class: "vbv", x: cx, y: y - 6, "text-anchor": "middle" }, pct(r.value)));
+      if (nx && isNum(nx.value)) sv.appendChild(S("line", { class: "vbs", x1: x + bw, x2: x + band, y1: y, y2: y }));
+    }
+    sv.appendChild(S("text", { x: cx, y: H - 10, "text-anchor": "middle" }, VB_PT[r.step] || r.label || ""));
+  });
+  el.appendChild(h("div", { class: "chart" }, sv));
+}
+function countBars(key, labels, order) {
+  var c = {};
+  arr(TH.positions).forEach(function (x) { var k = x[key] || "indeterminado"; c[k] = (c[k] || 0) + 1; });
+  var keys = order.filter(function (k) { return c[k]; }).concat(Object.keys(c).filter(function (k) { return order.indexOf(k) < 0; }));
+  return barList(keys.map(function (k) { return { label: labels[k] && labels[k] !== "—" ? labels[k] : "não determinado", value: c[k] }; }), { fmt: function (v) { return plural(v, "posição", "posições"); }, diverging: false, color: "var(--accent)", empty: "Sem posições." });
+}
+function themeCard(t) {
+  var sd = TSIDE[t.side] || [t.side || NA, ""];
+  var mem = arr(t.issuers).map(function (id) { return TPOS[id] || { iid: id, weight: null }; }).sort(wSort);
+  function mm(l, v) { return h("div", null, h("dt", null, l), h("dd", null, v)); }
+  return h("article", { class: "card th-theme" },
+    h("div", { class: "card-h" }, h("h3", null, tt(t.title) || NA), h("span", { class: "side " + sd[1] }, sd[0])),
+    has(t.md) ? tmd(t.md, "sm") : null, truncMark(t, "Texto do tema"),
+    mem.length ? h("div", { class: "chips" }, mem.map(nchip)) : null,
+    h("dl", { class: "mm" }, mm("Long", pct(t.long, 1)), mm("Short", pct(t.short, 1)), mm("Líquido", spct(t.net)), mm("Bruto", pct(t.gross, 1)), mm("Participação no risco", pct(t.risk_share, 1)), mm("Contribuição ao alpha", spct(t.alpha))),
+    has(t.risks_md) ? h("details", { class: "mini" }, h("summary", null, "Riscos do tema"), tmd(t.risks_md, "sm")) : null);
+}
+function tDetail(x) {
+  function tx(title, t) { return has(t) ? h("div", null, h("h4", null, title), tmd(t, "sm")) : null; }
+  var sig = SIGS.map(function (s) { var z = x["z_" + s[0]]; return { label: s[1], sub: "sinal (z) " + fnum(z, 2, true), value: x["c_" + s[0]] }; });
+  sig.push({ label: "Visões da pesquisa/PM", sub: "inclinação sobre o modelo", value: x.tilt, color: "var(--c5)" });
+  var vr = VERDICT[x.r_squeeze];
+  return h("div", { class: "td-grid" },
+    h("div", { class: "stack td-txt" }, tx("Por que está na carteira", x.why_md), tx("Principal risco", x.risk_md), tx("Gatilho de revisão", x.trigger_md),
+      !has(x.why_md) && !has(x.risk_md) && !has(x.trigger_md) ? h("p", { class: "muted" }, "O texto desta posição não acompanha esta versão do portal.") : null,
+      truncMark(x, "Texto"), x.author === "codigo" && (has(x.why_md) || has(x.risk_md) || has(x.trigger_md)) ? h("p", { class: "note" }, "Texto automático, montado a partir dos números do modelo.") : null),
+    h("div", { class: "card" }, h("h4", null, "Alpha esperado " + spct(x.alpha) + " a.a."),
+      barList(sig, { fmt: function (v) { return spct(v); }, diverging: true }),
+      note("Contribuição de cada sinal ao alpha (a.a.); modelo quantitativo puro " + spct(x.alpha_quant) + ".")),
+    h("div", { class: "card" }, h("h4", null, "Sensibilidades e visões"), kv([
+      ["Beta de mercado", fnum(x.beta, 2)],
+      ["Beta a petróleo · cobre · ouro", fnum(x.oil, 2, true) + " · " + fnum(x.copper, 2, true) + " · " + fnum(x.gold, 2, true)],
+      ["Reação ao evento eleitoral", spct(x.election)],
+      ["Visão da pesquisa", h("span", null, stanceTag(x.r_stance), isNum(x.r_conf) ? " confiança " + pct(x.r_conf, 0) : "")],
+      x.side === "SHORT" || vr ? ["Risco de squeeze (pesquisa)", vr ? pill(vr[0], vr[1]) : NA] : null,
+      ["Visão do gestor", h("span", null, stanceTag(x.pm_stance), isNum(x.pm_conv) ? " convicção " + x.pm_conv + "/5" : "")],
+      ["Próximo resultado", fdate(x.next_earnings)]
+    ])));
+}
+function teseTable() {
+  var P = arr(TH.positions);
+  if (!P.length) return empty("Sem posições na carteira decidida.");
+  var tmap = {};
+  arr(TH.themes).forEach(function (t, i) { arr(t.issuers).forEach(function (id) { (tmap[id] = tmap[id] || []).push(i); }); });
+  var fs = { side: "", theme: "", role: "" }, open = {}, so = { i: null, dir: 1 };
+  var seg = h("div", { class: "seg", role: "group", "aria-label": "Lado" });
+  [["", "Todas"], ["LONG", "Compra"], ["SHORT", "Venda"]].forEach(function (o) {
+    var b = h("button", { type: "button", "aria-pressed": o[0] ? "false" : "true" }, o[1]);
+    b.addEventListener("click", function () { fs.side = o[0]; seg.querySelectorAll("button").forEach(function (y) { y.setAttribute("aria-pressed", y === b ? "true" : "false"); }); draw(); });
+    seg.appendChild(b);
+  });
+  var roles = {};
+  P.forEach(function (x) { if (x.role) roles[x.role] = 1; });
+  var selT = h("select", { id: "tp-tema" }, h("option", { value: "" }, "todos"), arr(TH.themes).map(function (t, i) { return h("option", { value: String(i) }, tt(t.title)); }));
+  var selR = h("select", { id: "tp-papel" }, h("option", { value: "" }, "todos"), Object.keys(roles).map(function (k) { return h("option", { value: k }, ROLE_T[k] || k); }));
+  selT.addEventListener("change", function () { fs.theme = selT.value; draw(); });
+  selR.addEventListener("change", function () { fs.role = selR.value; draw(); });
+  var count = h("span", { class: "count" }), holder = h("div");
+  var cols = [
+    { label: "Nome", get: function (x) { return nm(x.iid); }, render: function (x) {
+      var inf = PINFO[x.iid] || {};
+      var b = h("button", { class: "rowbtn", type: "button", "aria-expanded": open[x.iid] ? "true" : "false", "aria-label": "Tese de " + nm(x.iid) }, open[x.iid] ? "▾" : "▸");
+      b.addEventListener("click", function (ev) { ev.stopPropagation(); open[x.iid] = !open[x.iid]; draw(); });
+      return h("span", null, b, " ", nm(x.iid), h("span", { class: "cellsub" }, [tickerOf(x.iid), inf.country ? countryName(inf.country) : "", inf.sector ? sectorName(inf.sector) : ""].filter(Boolean).join(" · ")));
+    } },
+    { label: "Lado", get: function (x) { return x.side; }, render: function (x) { return sideTag(x.side); } },
+    { label: "Peso", num: true, get: function (x) { return x.weight; }, render: function (x) { return spct(x.weight); } },
+    { label: "Papel", get: function (x) { return ROLE_T[x.role] || x.role; } },
+    { label: "Dimensionamento", get: function (x) { return SIZING_PT[x.sizing] || x.sizing; } },
+    { label: "Alpha a.a.", num: true, get: function (x) { return x.alpha; }, render: function (x) { return spct(x.alpha); } },
+    { label: "Participação no risco", num: true, get: function (x) { return x.risk; }, render: function (x) { return pct(x.risk, 1); } },
+    { label: "Beta", num: true, get: function (x) { return x.beta; }, render: function (x) { return fnum(x.beta, 2); } }
+  ];
+  function draw() {
+    var rows = P.filter(function (x) { return (!fs.side || x.side === fs.side) && (!fs.role || x.role === fs.role) && (fs.theme === "" || arr(tmap[x.iid]).indexOf(+fs.theme) >= 0); });
+    if (so.i !== null) rows.sort(cmpBy(cols[so.i].get, so.dir));
+    count.textContent = rows.length + " de " + P.length + " posições";
+    var tr = h("tr"), tb = h("tbody");
+    cols.forEach(function (c, i) {
+      var b = h("button", { class: "sortbtn", type: "button" }, c.label, h("span", { class: "ar", "aria-hidden": "true" }, so.i === i ? (so.dir > 0 ? "▲" : "▼") : ""));
+      b.addEventListener("click", function () { if (so.i === i) so.dir = -so.dir; else { so.i = i; so.dir = c.num ? -1 : 1; } draw(); });
+      tr.appendChild(h("th", { class: c.num ? "num" : null, scope: "col", "aria-sort": so.i === i ? (so.dir > 0 ? "ascending" : "descending") : null }, b));
+    });
+    rows.forEach(function (x) {
+      var r = h("tr", { class: "tp-r" + (open[x.iid] ? " sel" : "") });
+      cols.forEach(function (c) { var v = c.render ? c.render(x) : c.get(x); r.appendChild(h("td", { class: c.num ? "num" : null, "data-label": c.label }, has(v) ? v : NA)); });
+      r.addEventListener("click", function (ev) { if (ev.target.closest("a,button,summary")) return; open[x.iid] = !open[x.iid]; draw(); });
+      tb.appendChild(r);
+      if (open[x.iid]) tb.appendChild(h("tr", { class: "detail" }, h("td", { colspan: cols.length }, tDetail(x))));
+    });
+    if (!rows.length) tb.appendChild(h("tr", null, h("td", { colspan: cols.length, class: "muted" }, "Nenhuma posição com esses filtros.")));
+    holder.textContent = "";
+    holder.appendChild(h("div", { class: "scroll stackable" }, h("table", { class: "tbl stackable tp" }, h("thead", null, tr), tb)));
+  }
+  draw();
+  return [h("div", { class: "ctrl" }, h("div", { class: "field" }, "Lado", seg), h("label", { class: "field", for: "tp-tema" }, "Tema", selT), h("label", { class: "field", for: "tp-papel" }, "Papel", selR), count), holder];
+}
+function kindPT(k) { var x = STRESS_KIND.filter(function (y) { return y[0] === k; })[0]; return x ? x[1] : ""; }
+function teseStress() {
+  var st = arr(TN.stress);
+  if (!st.length) return empty("Sem cenários de estresse nesta publicação.");
+  function asc(a, b) { return a.pnl - b.pnl; }
+  var ok = st.filter(function (s) { return isNum(s.pnl); }).sort(asc), smax = 0;
+  ok.forEach(function (s) { smax = Math.max(smax, Math.abs(s.pnl)); });
+  var worst = ok.filter(function (s) { return s.pnl < 0; }).slice(0, 3);
+  var lossMax = isNum(MR.country_stress_max_loss) ? -Math.abs(MR.country_stress_max_loss) : null;
+  var groups = STRESS_KIND.map(function (k) {
+    var rows = st.filter(function (s) { return stressKind(s) === k[0]; });
+    if (!rows.length) return null;
+    var okR = rows.filter(function (s) { return isNum(s.pnl); }).sort(asc), na = rows.filter(function (s) { return !isNum(s.pnl); });
+    return block(k[1], plural(rows.length, "cenário", "cenários"),
+      okR.length ? barList(okR.map(function (s) { return { label: tt(s.label || s.code), value: s.pnl, note: usd(s.usd, true), title: s.note ? tt(s.note) : null }; }),
+        { fmt: function (v) { return spct(v); }, diverging: true, max: smax, refs: k[0] === "gap" && lossMax !== null ? [{ value: lossMax, label: "perda máxima admitida por gap de país " + pct(lossMax) }] : null }) : null,
+      na.length ? h("div", { class: "na-list" }, h("h4", null, "Sem cálculo (dado ausente, nunca tratado como zero)"),
+        list(na, function (s) { return h("span", null, h("b", null, tt(s.label || s.code)), ": " + NA + (s.note ? " · " + tt(s.note) : s.status ? " · " + s.status : "")); })) : null);
+  }).filter(Boolean);
+  return [worst.length ? h("div", { class: "cards worst" }, worst.map(function (s) {
+    return h("div", { class: "card" }, h("p", { class: "eyebrow" }, kindPT(stressKind(s))), h("h3", null, tt(s.label || s.code)),
+      h("p", { class: "wv" }, h("span", { class: "neg" }, spct(s.pnl)), h("small", null, " do PL · " + usd(s.usd, true))), s.note ? h("p", { class: "note" }, tt(s.note)) : null);
+  })) : null, h("div", { class: "cols-2" }, groups)];
+}
+function weekKey(s) {
+  var d = dayNum(s);
+  if (!isFinite(d)) return String(s);
+  return new Date((d - (new Date(d * 864e5).getUTCDay() + 6) % 7) * 864e5).toISOString().slice(0, 10);
+}
+function calItem(c) {
+  var lab = tt(c.label || ""), d = dayNum(c.date), names = arr(c.issuers).filter(function (id) { return lab.indexOf(nm(id)) < 0; });
+  return h("li", { class: "tl-i" }, h("time", { class: "tl-d", datetime: c.date }, fdshort(c.date) + (isFinite(d) ? " " + DOW[new Date(d * 864e5).getUTCDay()] : "")),
+    h("span", { class: "kc kc-" + c.kind }, CAL_PT[c.kind] || "Evento"),
+    h("span", { class: "tl-t" }, lab, names.length ? h("span", { class: "chips" }, names.map(function (id) { return chip(nm(id)); })) : null));
+}
+function calTimeline(items, nWeeks) {
+  var keys = [], by = {};
+  items.forEach(function (c) { var k = weekKey(c.date); if (!by[k]) { by[k] = []; keys.push(k); } by[k].push(c); });
+  function grp(k) { return h("div", { class: "tl-w" }, h("h4", null, "Semana de " + fdate(k)), h("ul", { class: "tl" }, by[k].map(calItem))); }
+  var rest = keys.slice(nWeeks), n = 0;
+  rest.forEach(function (k) { n += by[k].length; });
+  return [h("div", { class: "tl-g" }, keys.slice(0, nWeeks).map(grp)),
+    rest.length ? fold("Mais adiante", plural(n, "evento", "eventos") + " até " + fdate(items[items.length - 1].date), false, h("div", { class: "tl-g" }, rest.map(grp))) : null];
+}
+function heldThesis() {
+  if (!LIVEW || LIVEW.path_taken !== "manter") return null;
+  var prev = arr(WEEKS).filter(function (w) { return w && w.week < LIVEW.week && w.thesis && w.thesis.available; });
+  return prev.length ? prev[prev.length - 1] : { week: null, thesis: null };
+}
+function renderTese(p) {
+  var held = !TH ? heldThesis() : null;
+  if (held) {
+    var ht = obj(held.thesis);
+    p.appendChild(sec("Tese de investimento", "decisão de " + fdate(LIVEW.week),
+      h("div", { class: "block" },
+        h("p", { class: "lead" }, "A decisão desta semana manteve a carteira vigente" + (held.week ? ", montada na semana de " + fdate(held.week) : "") + "; a tese que a explica continua valendo."),
+        has(ht.title) ? h("h3", { class: "thesis-title" }, tt(ht.title)) : null,
+        has(ht.summary_md) ? tmd(ht.summary_md, "lead-md") : null,
+        h("p", { class: "note" }, "Sem carteira nova não há nova tese; a leitura do gestor sobre a semana está no Comitê de investimento."),
+        goTab("decisoes", "Comitê de investimento"))));
+    return;
+  }
+  if (!TH) {
+    p.appendChild(sec("Tese de investimento", LIVEW ? "carteira decidida em " + fdate(LIVEW.week) : null,
+      h("div", { class: "block" },
+        h("p", { class: "lead" }, "A tese da carteira desta semana ainda não foi publicada."),
+        h("p", { class: "note" }, "Ela é publicada depois da decisão do comitê e explica por que cada nome está na carteira, o tamanho de cada posição, as exposições, a sensibilidade ao mercado e o orçamento de risco. Enquanto isso, a leitura do gestor está no Comitê de investimento."),
+        goTab("decisoes", "Comitê de investimento"))));
+    return;
+  }
+  p.appendChild(h("section", { class: "sec th-top" }, teseHead(), has(TH.summary_md) ? tmd(TH.summary_md, "lead-md") : null, teseKpis()));
+  var body = [], pmD = LIVE_PM, dec = obj(LIVEW && LIVEW.decision), vb = vbRows(), ev = TN.event ? obj(TN.event) : null;
+
+  var ctx = thSec("contexto");
+  body.push(tsec("contexto", "Contexto e postura", null, h("div", { class: "cols" },
+    tprose(ctx) || h("p", { class: "muted" }, NA),
+    block("Postura da semana", null, kv([
+      pmD ? ["Postura de risco", pmD.posture_label || pmD.risk_posture] : null,
+      pmD ? ["Regime de mercado", pmD.regime_label || pmD.regime] : null,
+      isNum(dec.conviction) ? ["Convicção do comitê", dec.conviction + " de 5"] : null,
+      ["Horizonte", isNum(TS.horizon_weeks) ? fnum(TS.horizon_weeks, 0) + " semanas" : NA],
+      ["Meta de vol aplicada", pct(vb.aplicada ? vb.aplicada.value : null) + (vb.mandato ? " (mandato " + pct(vb.mandato.value) + ")" : "")],
+      ev ? ["Evento no radar", tt(ev.label)] : null
+    ])))));
+
+  var th = arr(TH.themes);
+  if (th.length) body.push(tsec("temas", "Temas da carteira", plural(th.length, "tema", "temas") + " · nomes com o peso na carteira (compra em verde-azulado, venda em cobre)", h("div", { class: "cards wide" }, th.map(themeCard))));
+
+  var fu = obj(TN.funnel), cs = thSec("construcao"), ref = obj(TN.reference), lq = obj(TN.liquidity), vbl = arr(TN.vol_budget);
+  function liqTxt(s) { s = obj(s); return pct(s.d1, 0) + " em 1 dia · " + pct(s.d3, 0) + " em 3 dias · maior prazo " + days(s.max_days); }
+  body.push(tsec("construcao", "Construção e dimensionamento", "do universo à carteira final e ao tamanho de cada posição",
+    tprose(cs),
+    h("div", { class: "cols-2" },
+      block("Funil de seleção", "nº de emissores", funnel(fu),
+        arr(fu.exclusions).length ? h("div", { class: "stack", style: "gap:8px" }, h("h4", null, "Motivos de exclusão"),
+          barList(arr(fu.exclusions).map(function (x) { return { label: tt(x.label) || EXCL_PT[x.code] || x.code, value: x.n }; }), { fmt: function (v) { return int(v); }, diverging: false, color: "var(--shadow)" }),
+          note("Um emissor pode ser excluído por mais de um motivo, ou só de uma das pontas.")) : null),
+      block("Orçamento de volatilidade", "da meta do mandato à volatilidade atingida (a.a.)",
+        vbl.length ? chart(function (el) { volSteps(el, vbl); }, 240) : empty("Sem dados do orçamento de risco."),
+        vbl.length ? h("ol", { class: "vb-notes" }, vbl.map(function (s) { return h("li", null, h("b", null, (s.label || VB_PT[s.step] || s.step) + " " + pct(s.value)), s.note ? " · " + tt(s.note) : ""); })) : null)),
+    h("div", { class: "cols-2" },
+      block("O que limita cada posição", "nº de posições por fator de dimensionamento", countBars("sizing", SIZING_PT, ["interior", "teto_nome", "teto_risco", "teto_visao", "liquidez", "squeeze", "aluguel", "indeterminado"])),
+      block("Papel das posições", "nº de posições por papel na carteira", countBars("role", ROLE_T, ["alpha", "alpha_div", "hedge"]),
+        note("Geradora de alpha: alpha a favor da ponta e risco somado à carteira. Alpha que diversifica: alpha a favor e risco que reduz a variância. Hedge: alpha neutro ou contra, mantida para neutralizar exposições.")),
+      block("Carteira quantitativa de referência", "o que o modelo montaria sem pesquisa e gestor", kv([
+        ["Alpha esperado a.a.", "CDP " + spct(TS.alpha) + " · referência " + spct(ref.alpha)],
+        ["Vol ex-ante", "CDP " + pct(TS.vol) + " · referência " + pct(ref.vol)],
+        ["Nomes", int(ref.names) + " na referência · " + int(ref.common) + " em comum"],
+        ["Active share", pct(ref.active_share, 1)], ["Sobreposição de pesos", pct(ref.overlap, 1)]])),
+      block("Liquidez", "parcela de cada ponta liquidável no prazo", kv([["Longs", liqTxt(lq.long)], ["Shorts", liqTxt(lq.short)]]),
+        note("A " + pct(MLQ.participation_rate, 0) + " (long) e " + pct(MLQ.short_participation_rate, 0) + " (short) do volume médio diário.")))));
+
+  body.push(tsec("posicoes", "Posições", "a tese de cada nome · clique numa linha para ver o porquê, o risco e o gatilho de revisão", teseTable()));
+
+  var ex = thSec("exposicoes"), tm = arr(TN.themes_market), cur = arr(TN.currencies);
+  body.push(tsec("exposicoes", "Exposições", "long, short e líquido em % do PL contra os limites do mandato",
+    tprose(ex), lsKey(),
+    h("div", { class: "cols-2" }, block("Por país", null, bfly(TN.countries, function (e) { return COUNTRY_PT[e.code]; })), block("Por setor", null, bfly(TN.sectors, function (e) { return SECTOR_PT[e.code]; }))),
+    h("div", { class: "cols-2" },
+      block("Estilos (fatores)", "exposição líquida em desvios-padrão × PL", netRows(TN.styles, function (v) { return fnum(v, 3, true); }, function (v) { return fnum(v, 3); })),
+      block("Commodities", "Σ peso × beta em fração do PL (0,030 = 3% do PL para uma alta de 100% no preço) e resultado para o choque indicado", table([
+        { label: "Commodity", render: function (c) { return tt(c.label) || COMMODITY_PT[c.code] || c.code; } },
+        { label: "Σ w·β (fração do PL)", num: true, render: function (c) { return fnum(c.beta, 3, true); } },
+        { label: "Choque", num: true, render: function (c) { return spct(c.shock, 0); } },
+        { label: "Resultado no PL", num: true, render: function (c) { return signed(spct(c.pnl), c.pnl); } },
+        { label: "Limite", num: true, render: function (c) { return isNum(c.limit) ? "±" + fnum(c.limit, 3) : NA; } }
+      ].concat(arr(TN.commodities).some(function (c) { return isNum(c.utilization) || has(c.status); }) ? [{ label: "Situação", render: function (c) { return expoState(c, "ex_ante"); } }] : []),
+      arr(TN.commodities), { stack: true, empty: "Sensibilidade a commodities não medida nesta semana." }))),
+    h("div", { class: "cols-2" },
+      block("Temas e evento", null, tm.length ? netRows(tm.map(function (x) { return { label: tt(x.label) || THEME_PT[x.code] || x.code, net: x.net, limit: x.limit, utilization: x.utilization, status: x.status }; }), spct, pct) : null,
+        ev ? kv([["Evento", tt(ev.label)], ["Exposição à reação do evento", spct(ev.exposure)], ["Limite", isNum(ev.limit) ? "±" + pct(ev.limit) : NA],
+          isNum(ev.utilization) || has(ev.status) ? ["Situação", expoState(ev, "ex_ante")] : null]) : null,
+        !tm.length && !ev ? h("p", { class: "muted" }, "Sem tema ou evento com limite nesta semana.") : null),
+      block("Moedas", "exposição cambial econômica", barList(cur.map(function (c) { return { label: c.code, sub: CUR_PT[c.code] || null, value: c.net, note: usd(c.net_usd, true) }; }), { fmt: function (v) { return spct(v); }, diverging: true, empty: "Sem exposição cambial." })))));
+
+  var sn = thSec("sensibilidade"), hs = obj(TN.historical);
+  body.push(tsec("sensibilidade", "Sensibilidade de mercado", "resultado estimado da carteira para choques em mercados, moedas e commodities",
+    tprose(sn),
+    table([
+      { label: "Ativo", render: function (s) { return tt(s.label) || s.code; } },
+      { label: "Tipo", render: function (s) { return s.kind === "modelo" ? "Modelo de risco" : s.kind === "historico" ? "Histórico" : s.kind || NA; } },
+      { label: "Beta", num: true, render: function (s) { return fnum(s.beta, 3, true); } },
+      { label: "Correlação", num: true, render: function (s) { return fnum(s.corr, 2, true); } },
+      { label: "Choque", num: true, render: function (s) { return spct(s.shock, 0); } },
+      { label: "Resultado (% do PL)", num: true, render: function (s) { return signed(spct(s.pnl), s.pnl); } },
+      { label: "Resultado (US$)", num: true, render: function (s) { return signed(usd(s.pnl_usd, true), s.pnl_usd); } },
+      { label: "Observações", cls: "wc", render: function (s) { return s.kind === "historico" ? (isNum(s.n_obs) ? plural(s.n_obs, "pregão", "pregões") + "; " : "") + "pesos atuais reprecificados" : "beta previsto × choque"; } }
+    ], arr(TN.sensitivity), { stack: true, empty: "Sensibilidade de mercado não medida nesta semana." }),
+    block("Volatilidade realizada × ex-ante", "carteira atual", barList([
+      { label: "Ex-ante (modelo de risco)", value: TS.vol },
+      { label: "Realizada da carteira atual reprecificada", sub: hs.start ? fdate(hs.start) + " a " + fdate(hs.end) + " · " + plural(hs.n_days, "pregão", "pregões") : null, value: hs.vol }
+    ], { fmt: function (v) { return pct(v); }, diverging: false, color: "var(--accent)" }),
+      note("A realizada aplica os pesos atuais aos retornos históricos de cada nome; não é o histórico do fundo."))));
+
+  var vo = thSec("volatilidade"), rg = arr(TN.risk_groups).filter(function (x) { return isNum(x.share); });
+  body.push(tsec("volatilidade", "Volatilidade e orçamento de risco", "de onde vem a variância da carteira",
+    tprose(vo),
+    h("div", { class: "cols-2" },
+      block("Participação na variância por grupo", "risco ex-ante", rg.length ? sharesBar(rg.map(function (x, i) { return { label: x.label || x.group, share: x.share, color: RG_COLOR[x.group] || SERIES_COLORS[i % 6] }; })) : empty("Sem decomposição."),
+        kv([["Volatilidade ex-ante", pct(TS.vol)], ["Fatorial", pct(TS.factor_vol)], ["Específica", pct(TS.specific_vol)], ["Parcela fatorial da variância", pct(TS.factor_share, 1)]]),
+        note("Volatilidades não se somam (fatorial² + específica² = total²); por isso a decomposição é feita na variância.")),
+      block("Maiores fatores", "participação na variância; negativa = diversifica", barList(arr(TN.factors).slice(0, 10).map(function (f) { return { label: tt(f.label) || factorName(f.factor), value: f.share }; }), { fmt: function (v) { return pct(v, 2); }, empty: "Sem fatores." }))),
+    h("div", { class: "cols-2" },
+      block("Oscilação típica", "um desvio-padrão da carteira", table([
+        { label: "Horizonte", render: function (s) { return s.label || s.horizon; } },
+        { label: "% do PL", num: true, render: function (s) { return pct(s.pct); } },
+        { label: "US$", num: true, render: function (s) { return usd(s.usd); } }
+      ], arr(TN.sigma), { empty: "Oscilação típica não disponível nesta semana." })),
+      block("Perdas extremas (99%)", "modelo de risco", kv([["VaR 1 dia", pct(TS.var_1d)], ["ES 1 dia", pct(TS.es_1d)], ["VaR 1 semana", pct(TS.var_1w)],
+        ["Limites do mandato", "VaR 1 dia " + pct(MR.var_1d_max) + " · ES 1 dia " + pct(MR.es_1d_max)]])))));
+
+  body.push(tsec("estresse", "Testes de estresse", "resultado estimado da carteira atual; piores cenários primeiro", teseStress()));
+
+  var pmt = thSec("premortem");
+  body.push(tsec("riscos", "Riscos, pré-mortem e gatilhos de revisão", null,
+    h("div", { class: "cols-2" }, block("Principais riscos", null, mlist(TH.risks)), block("Gatilhos de revisão", "quando a tese é reavaliada", mlist(TH.triggers))),
+    pmt ? block("Pré-mortem", "se a carteira perder dinheiro, os caminhos mais prováveis", tmd(pmt.md), truncMark(pmt, "Texto")) : null));
+
+  var mo = thSec("monitoramento"), cal = arr(TH.calendar).filter(function (c) { return c && c.date; });
+  body.push(tsec("calendario", "O que monitorar e calendário", cal.length ? plural(cal.length, "data", "datas") + " até " + fdate(cal[cal.length - 1].date) : null,
+    tprose(mo),
+    cal.length ? block("Calendário", "resultados, catalisadores, macro e eventos", calTimeline(cal, 4)) : empty("Sem datas no calendário da carteira.")));
+
+  var nav = h("nav", { class: "tnav", "aria-label": "Seções da tese" }), btns = {};
+  body.forEach(function (s) {
+    var id = s.id.slice(3), lab = TNAV.filter(function (x) { return x[0] === id; })[0];
+    var b = h("button", { type: "button", class: "tnav-b" }, lab ? lab[1] : id);
+    b.addEventListener("click", function () { thGo(id); });
+    btns[s.id] = b; nav.appendChild(b);
+  });
+  /* o índice gruda logo abaixo das abas: recalculado quando a largura muda (as abas e o índice
+     podem quebrar linha) */
+  function navTop() { nav.style.top = (tabsBottom() || 46) + "px"; }
+  navTop();
+  var nt = null;
+  window.addEventListener("resize", function () { clearTimeout(nt); nt = setTimeout(navTop, 120); });
+  p.appendChild(nav);
+  body.forEach(function (s) { p.appendChild(s); });
+  var notes = arr(TN.notes).concat(arr(TH.notes));
+  p.appendChild(h("footer", { class: "th-notes" }, notes.length ? [h("h3", null, "Notas metodológicas"), list(notes, thNote)] : null,
+    has(TH.disclaimer) ? h("p", null, tt(TH.disclaimer)) : null));
+  var tick = false;
+  function spy() {
+    tick = false;
+    if (ACTIVE !== "tese") return;
+    var cur = null;
+    var lim = stickyBottom() + 40;
+    body.forEach(function (s) { if (s.getBoundingClientRect().top <= lim) cur = s.id; });
+    Object.keys(btns).forEach(function (k) { btns[k].classList.toggle("on", k === cur); });
+  }
+  window.addEventListener("scroll", function () { if (!tick) { tick = true; window.requestAnimationFrame(spy); } }, { passive: true });
+}
+
+/* ====================================================================== Carteira */
+function positionModel() {
+  if (LD && arr(LD.positions).length) {
+    return {
+      basis: "daily", rows: LD.positions.map(function (p) {
+        return {
+          issuer_id: p.issuer_id, name: p.name, ticker: p.ticker, line_type: p.line_type, currency: p.currency, country: p.country,
+          sector: p.sector, side: p.side, weight: p.weight, target_weight: p.target_weight, drift: p.drift, notional: p.market_value_usd,
+          alpha_z: p.alpha_z, view_score: p.view_score, days: p.days_to_liquidate, pct_adtv: p.pct_adtv, adtv: p.adtv_usd,
+          sq_bucket: p.squeeze_bucket, sq_score: p.squeeze_score, borrow: p.borrow_fee_annual, risk: p.risk_contribution_ex_ante,
+          day_pnl: p.day_pnl_usd, day_ret: p.day_return_usd, beta: p.beta, price_local: p.price_local,
+          price_usd: p.price_usd, shares: p.shares, alpha_annual: null
+        };
+      })
+    };
+  }
+  if (LIVEP && arr(LIVEP.positions).length) {
+    return {
+      basis: "target", rows: LIVEP.positions.map(function (p) {
+        return {
+          issuer_id: p.issuer_id, name: p.name, ticker: p.execution_ticker, line_type: p.line_type, currency: p.currency, country: p.country,
+          sector: p.sector, side: p.side, weight: p.weight, target_weight: p.weight, drift: null, notional: p.notional_usd,
+          alpha_z: p.alpha_z, view_score: p.view_score, days: p.days_to_liquidate, pct_adtv: p.pct_adtv, adtv: p.adtv_usd,
+          sq_bucket: p.squeeze_bucket, sq_score: p.squeeze_score, borrow: p.borrow_fee_annual, risk: p.risk_contribution,
+          day_pnl: null, day_ret: null, beta: p.beta, price_local: p.price_local, price_usd: null,
+          shares: p.shares, alpha_annual: p.alpha_annual
+        };
+      })
+    };
+  }
+  return { basis: null, rows: [] };
+}
+var ITD_ISSUER = {};
+arr(g(TR, "periods.itd.attribution.issuer")).forEach(function (r) { ITD_ISSUER[r.name] = r; });
+function pmFor(w) { return w && w.pm_decision && w.pm_decision.valid !== false ? w.pm_decision : null; }
+function byIssuer(list) { var m = {}; arr(list).forEach(function (x) { if (x && x.issuer_id) (m[x.issuer_id] = m[x.issuer_id] || []).push(x); }); return m; }
+var LIVE_PM = pmFor(LIVEW);
+var PM_VIEWS = byIssuer(LIVE_PM ? LIVE_PM.views : []);
+var PM_JOURNAL = byIssuer(LIVE_PM ? LIVE_PM.position_journal : []);
+var DEC_JOURNAL = byIssuer(g(LIVEW, "decision.journal.positions"));
+var EXCL = byIssuer(LIVE_PM ? LIVE_PM.exclusions : []);
+var NOTES = byIssuer(g(LIVEW, "research.notes"));
+var NOTES_T = byIssuer(g(LIVEW, "research.notes_table"));
+var RVIEWS = byIssuer(g(LIVEW, "research.views"));
+/* linha da tabela de notas (publicação: emissor fora da carteira ou sem visão do gestor) */
+function noteRowText(n) {
+  var v = n.squeeze_verdict ? (VERDICT[n.squeeze_verdict] || [n.squeeze_verdict])[0] : null;
+  return (ROLE_PT[n.role] || n.role || "nota") + " · visão " + (isNum(n.stance) ? fnum(n.stance, 0, true) : "neutra") + (isNum(n.confidence) ? " · confiança " + pct(n.confidence, 0) : "") + (isNum(n.horizon_weeks) ? " · " + n.horizon_weeks + " sem." : "") + (v ? " · squeeze: " + v.toLowerCase() : "");
+}
+/* fontes: só links externos (referências internas de notas não aparecem) */
+function evidenceList(ev) {
+  var a = arr(ev).filter(function (e) { return safeUrl(e.url); });
+  if (!a.length) return null;
+  return h("details", { class: "mini" }, h("summary", null, plural(a.length, "fonte", "fontes")), h("div", { class: "evid" }, a.map(function (e) {
+    var host = /^https?:\/\/(?:www\.)?([^/]+)/i.exec(e.url);
+    return h("div", null, extLink(e.url, e.note ? ptNums(e.note) : host ? host[1] : "fonte"));
+  })));
+}
+function noteCard(n) {
+  var sq = n.squeeze ? obj(n.squeeze) : null;
+  var v = sq ? (VERDICT[sq.verdict] || [sq.verdict || NA, "na"]) : null;
+  return h("div", { class: "card" },
+    h("div", { class: "card-h" }, h("b", null, nm(n.issuer_id) + " · " + (ROLE_PT[n.role] || n.role || "nota")),
+      h("span", { class: "chips" }, stanceTag(n.stance), isNum(n.confidence) ? chip("confiança " + pct(n.confidence, 0)) : null, isNum(n.horizon_weeks) ? chip(n.horizon_weeks + " sem.") : null, v ? pill("Squeeze: " + v[0].toLowerCase(), v[1]) : null)),
+    n.thesis ? md(n.thesis, "sm") : null,
+    truncMark(n, "Nota"),
+    arr(n.bull_points).length ? h("div", null, h("h4", null, "A favor"), list(n.bull_points, ptNums)) : null,
+    arr(n.bear_points).length ? h("div", null, h("h4", null, "Contra"), list(n.bear_points, ptNums)) : null,
+    arr(n.key_risks).length ? h("div", null, h("h4", null, "Riscos"), list(n.key_risks, ptNums)) : null,
+    arr(n.catalysts).length ? h("div", null, h("h4", null, "Catalisadores"), list(n.catalysts, catText)) : null,
+    sq && sq.rationale ? h("div", null, h("h4", null, "Risco de squeeze"), txt(ptNums(sq.rationale))) : null,
+    evidenceList(n.evidence));
+}
+function catText(c) { return (c.expected_date ? fdate(c.expected_date) + " · " : "") + (DIR_PT[c.direction] ? DIR_PT[c.direction] + " · " : "") + ptNums(c.description || ""); }
+function journalCard(j, title) {
+  return h("div", { class: "card" }, h("div", { class: "card-h" }, h("b", null, title || nm(j.issuer_id))), kv([
+    ["Tese", prose(j.thesis)], ["Invalidação", prose(j.invalidation_criteria)], ["Pré-mortem", prose(j.premortem)],
+    j.variant_perception ? ["Visão divergente do consenso", prose(j.variant_perception)] : null,
+    isNum(j.probability_correct) ? ["Probabilidade de acerto", pct(j.probability_correct, 0)] : null
+  ]));
+}
+function positionDetail(r) {
+  var g1 = kv([
+    ["Instrumento", h("span", null, h("code", null, tk(r.ticker) || NA), " · " + (LINE_PT[r.line_type] || r.line_type || NA) + " · " + (r.currency || NA))],
+    ["País · setor", countryName(r.country) + " · " + sectorName(r.sector)],
+    ["Valor da posição", usd(r.notional)], ["Peso decidido", spct(r.target_weight)], r.drift !== null && r.drift !== undefined ? ["Variação do peso desde a decisão", bps(r.drift)] : null,
+    ["Preço local", fnum(r.price_local, 2)], isNum(r.price_usd) ? ["Preço em US$", fnum(r.price_usd, 2)] : null, ["Quantidade", int(r.shares)],
+    ["Volume médio diário (ADTV)", usd(r.adtv)], ["Beta", fnum(r.beta, 2)], isNum(r.alpha_annual) ? ["Alpha esperado a.a. (modelo)", spct(r.alpha_annual)] : null
+  ]);
+  var parts = [h("div", { class: "card" }, h("h4", null, "Posição e liquidez"), g1)];
+  arr(PM_VIEWS[r.issuer_id]).forEach(function (v) {
+    parts.push(h("div", { class: "card" }, h("div", { class: "card-h" }, h("h4", null, "Visão do gestor"), h("span", { class: "chips" }, stanceTag(v.stance), chip("convicção " + (v.conviction || NA) + "/5"), isNum(v.horizon_weeks) ? chip(v.horizon_weeks + " sem.") : null)),
+      md(prose(v.rationale), "sm"), evidenceList(v.evidence)));
+  });
+  arr(EXCL[r.issuer_id]).forEach(function (x) {
+    parts.push(h("div", { class: "card" }, h("h4", null, "Restrição do gestor"), h("span", { class: "chips" }, x.no_long ? pill("sem long", "warn") : null, x.no_short ? pill("sem short", "warn") : null), txt(prose(ptNums(x.reason)))));
+  });
+  var js = arr(PM_JOURNAL[r.issuer_id]);
+  (js.length ? js : arr(DEC_JOURNAL[r.issuer_id])).forEach(function (j) { parts.push(journalCard(j, "Diário da posição")); });
+  arr(RVIEWS[r.issuer_id]).forEach(function (v) {
+    parts.push(h("div", { class: "card" }, h("div", { class: "card-h" }, h("h4", null, "Visão da pesquisa"), h("span", { class: "chips" }, stanceTag(v.score), isNum(v.confidence) ? chip("confiança " + pct(v.confidence, 0)) : null, v.no_long ? pill("sem long", "warn") : null, v.no_short ? pill("sem short", "warn") : null)), md(v.rationale, "sm")));
+  });
+  arr(NOTES[r.issuer_id]).forEach(function (n) { parts.push(noteCard(n)); });
+  if (!arr(NOTES[r.issuer_id]).length && arr(NOTES_T[r.issuer_id]).length) {
+    parts.push(h("div", { class: "card" }, h("h4", null, "Pesquisa (resumo)"), list(NOTES_T[r.issuer_id], noteRowText)));
+  }
+  if (parts.length === 1) parts.push(h("p", { class: "muted" }, "Sem tese, visão ou nota de pesquisa registradas para este emissor na semana."));
+  return h("div", { class: "detail-grid" }, parts);
+}
+function renderCarteira(p) {
+  var model = positionModel(), rows = model.rows;
+  if (!rows.length) { p.appendChild(sec("Carteira", null, empty(firstCloseText()))); return; }
+  var basisTxt = model.basis === "daily"
+    ? "Posição no fechamento de " + fdate(LD.date) + "; pesos com a variação de preços desde a decisão."
+    : "Carteira decidida em " + fdate(LIVEW.week) + (LIVEW.executed ? "." : "; execução no leilão de fechamento.");
+  var src = obj(RISKSRC), conc = obj(RK.concentration);
+  var longE = src.long_exposure, shortE = src.short_exposure;
+  var mx = Math.max(Math.abs(longE || 0), Math.abs(shortE || 0)) || 1;
+  var ls = h("div", { class: "bars" },
+    h("div", { class: "bl" }, "Long (" + int(src.n_long) + ")"), h("div", { class: "bt" }, isNum(longE) ? h("span", { class: "bf", style: "left:0;width:" + (Math.abs(longE) / mx * 100).toFixed(2) + "%;background:var(--long)" }) : null), h("div", { class: "bv" }, pct(longE, 1)),
+    h("div", { class: "bl" }, "Short (" + int(src.n_short) + ")"), h("div", { class: "bt" }, isNum(shortE) ? h("span", { class: "bf", style: "left:0;width:" + (Math.abs(shortE) / mx * 100).toFixed(2) + "%;background:var(--short)" }) : null), h("div", { class: "bv" }, pct(shortE, 1)));
+  var k = h("div", { class: "kpis" },
+    tile("Long × short", ls, "bruta " + pct(src.gross, 1) + " · líquida " + spct(src.net)),
+    tile("Maior long", conc.largest_long ? h("span", null, pct(conc.largest_long.weight), h("small", null, " " + nm(conc.largest_long.issuer_id))) : NA, "teto por nome " + pct(MR.max_long_weight)),
+    tile("Maior short", conc.largest_short ? h("span", null, pct(conc.largest_short.weight), h("small", null, " " + nm(conc.largest_short.issuer_id))) : NA, "teto por nome " + pct(MR.max_short_weight)),
+    tile("Concentração", h("span", null, pct(conc.top10_gross_share, 0), h("small", null, " da exposição bruta nas 10 maiores")), "5 maiores longs " + pct(conc.top5_long, 1) + " · 5 maiores shorts " + pct(conc.top5_short, 1), "nº efetivo de posições " + fnum(conc.effective_n_ex_ante, 1)));
+  p.appendChild(sec("Carteira", basisTxt, k));
+
+  /* filtros */
+  var countries = {}, sectors = {};
+  rows.forEach(function (r) { if (r.country) countries[r.country] = 1; if (r.sector) sectors[r.sector] = 1; });
+  function opts(map, labeler) { return [h("option", { value: "" }, "todos")].concat(Object.keys(map).sort().map(function (x) { return h("option", { value: x }, labeler ? labeler(x) : x); })); }
+  var fSide = h("select", { id: "pos-side" }, h("option", { value: "" }, "todos"), h("option", { value: "LONG" }, "Long"), h("option", { value: "SHORT" }, "Short"));
+  var fCountry = h("select", { id: "pos-country" }, opts(countries, countryName));
+  var fSector = h("select", { id: "pos-sector" }, opts(sectors, sectorName));
+  var fQ = h("input", { id: "pos-search", type: "search", placeholder: "nome ou ticker", autocomplete: "off" });
+  var count = h("span", { class: "count" });
+  var ctrl = h("div", { class: "ctrl" },
+    h("label", { class: "field", for: "pos-side" }, "Lado", fSide),
+    h("label", { class: "field", for: "pos-country" }, "País", fCountry),
+    h("label", { class: "field", for: "pos-sector" }, "Setor", fSector),
+    h("label", { class: "field", for: "pos-search" }, "Busca", fQ), count);
+
+  var hasDaily = model.basis === "daily";
+  var hasItd = Object.keys(ITD_ISSUER).length > 0;
+  var maxW = 0; rows.forEach(function (r) { if (isNum(r.weight)) maxW = Math.max(maxW, Math.abs(r.weight)); });
+  var open = {};
+  var cols = [
+    { label: "Emissor", cls: "sticky", get: function (r) { return r.name || nm(r.issuer_id); }, render: function (r) {
+      var btn = h("button", { class: "rowbtn", type: "button", "aria-expanded": open[r.issuer_id] ? "true" : "false", "aria-label": "Detalhes de " + (r.name || nm(r.issuer_id)) }, open[r.issuer_id] ? "▾" : "▸");
+      btn.addEventListener("click", function (ev) { ev.stopPropagation(); open[r.issuer_id] = !open[r.issuer_id]; redraw(); });
+      return h("span", null, btn, " ", r.name || nm(r.issuer_id), h("span", { class: "cellsub" }, tk(r.ticker) + (r.country ? " · " + countryName(r.country) : "")));
+    } },
+    { label: "Lado", get: function (r) { return r.side; }, render: function (r) { return sideTag(r.side); } },
+    { label: "Peso", num: true, get: function (r) { return r.weight; }, render: function (r) {
+      var w = isNum(r.weight) && maxW ? Math.abs(r.weight) / maxW * 50 : 0;
+      return h("span", { style: "display:inline-flex;align-items:center;gap:8px" },
+        h("span", { class: "bt wbar", style: "width:56px;height:10px;display:inline-block" }, h("span", { class: "bf" + (r.weight < 0 ? " n" : ""), style: "top:1px;height:8px;width:" + w.toFixed(1) + "%;" + (r.weight < 0 ? "right:50%" : "left:50%") + ";background:var(" + (r.weight < 0 ? "--short" : "--long") + ")" }), h("span", { style: "position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:var(--line)" })),
+        spct(r.weight));
+    } }
+  ];
+  if (hasDaily) {
+    cols.push({ label: "Resultado dia", num: true, get: function (r) { return r.day_pnl; }, render: function (r) { return signed(usd(r.day_pnl, true), r.day_pnl); } });
+    cols.push({ label: "Retorno dia (US$)", num: true, get: function (r) { return r.day_ret; }, render: function (r) { return signed(spct(r.day_ret), r.day_ret); } });
+  }
+  cols.push(
+    { label: "Contribuição ao risco", num: true, title: "participação na variância ex-ante da carteira", get: function (r) { return r.risk; }, render: function (r) { return pct(r.risk, 1); } },
+    { label: "Dias p/ liquidar", num: true, title: "a " + pct(MLQ.participation_rate, 0) + " do volume médio diário (long) e " + pct(MLQ.short_participation_rate, 0) + " (short)", get: function (r) { return r.days; }, render: function (r) { return days(r.days); } },
+    { label: "% ADTV", num: true, title: "tamanho da posição em % do volume médio diário", get: function (r) { return r.pct_adtv; }, render: function (r) { return pct(r.pct_adtv, 1); } },
+    { label: "Squeeze", get: function (r) { return isNum(r.sq_score) ? r.sq_score : null; }, render: function (r) { return r.side === "SHORT" || r.sq_bucket === "HIGH" ? sqTag(r.sq_bucket, r.sq_score) : h("span", { class: "muted" }, "—"); } },
+    { label: "Aluguel a.a.", num: true, get: function (r) { return r.borrow; }, render: function (r) { return r.side === "SHORT" ? pct(r.borrow) : h("span", { class: "muted" }, "—"); } }
+  );
+  if (hasItd) cols.push({ label: "Resultado desde o início", num: true, get: function (r) { var x = ITD_ISSUER[r.issuer_id]; return x ? x.pnl_usd : null; }, render: function (r) { var x = ITD_ISSUER[r.issuer_id]; return x ? signed(usd(x.pnl_usd, true), x.pnl_usd) : NA; } });
+  cols.push(
+    { label: "Sinal quant. (z)", num: true, title: "escore padronizado do modelo quantitativo", get: function (r) { return r.alpha_z; }, render: function (r) { return fnum(r.alpha_z, 2, true); } },
+    { label: "Visão do gestor", num: true, title: "−2 a +2; — = neutro (sem visão)", get: function (r) { return r.view_score; }, render: function (r) { return stanceTag(r.view_score); } },
+    { label: "Setor", get: function (r) { return sectorName(r.sector); } }
+  );
+
+  var holder = h("div");
+  var sortState = { i: null, dir: 1 };
+  function filtered() {
+    var q = (fQ.value || "").trim().toLowerCase();
+    return rows.filter(function (r) {
+      if (fSide.value && r.side !== fSide.value) return false;
+      if (fCountry.value && r.country !== fCountry.value) return false;
+      if (fSector.value && r.sector !== fSector.value) return false;
+      if (q && ((r.name || "") + " " + tk(r.ticker) + " " + nm(r.issuer_id)).toLowerCase().indexOf(q) < 0) return false;
+      return true;
+    });
+  }
+  function redraw() {
+    var fr = filtered();
+    if (sortState.i !== null) {
+      var c = cols[sortState.i];
+      fr.sort(function (a, b) {
+        var x = c.get(a), y = c.get(b);
+        var xn = x === null || x === undefined || x === "", yn = y === null || y === undefined || y === "";
+        if (xn && yn) return 0; if (xn) return 1; if (yn) return -1;
+        if (typeof x === "number" && typeof y === "number") return (x - y) * sortState.dir;
+        return String(x).localeCompare(String(y), "pt-BR") * sortState.dir;
+      });
+    }
+    count.textContent = fr.length + " de " + rows.length + " posições";
+    var t = h("table", { class: "tbl" });
+    var tr = h("tr");
+    cols.forEach(function (c, i) {
+      var th = h("th", { class: (c.num ? "num " : "") + (c.cls || ""), scope: "col", title: c.title || null, "aria-sort": sortState.i === i ? (sortState.dir > 0 ? "ascending" : "descending") : null });
+      var b = h("button", { class: "sortbtn", type: "button" }, c.label, h("span", { class: "ar", "aria-hidden": "true" }, sortState.i === i ? (sortState.dir > 0 ? "▲" : "▼") : ""));
+      b.addEventListener("click", function () { if (sortState.i === i) sortState.dir = -sortState.dir; else { sortState.i = i; sortState.dir = c.num ? -1 : 1; } redraw(); });
+      th.appendChild(b); tr.appendChild(th);
+    });
+    t.appendChild(h("thead", null, tr));
+    var tb = h("tbody");
+    fr.forEach(function (r) {
+      var row = h("tr", { class: r.sq_bucket === "HIGH" && r.side === "SHORT" ? "st-crit" : null });
+      cols.forEach(function (c) {
+        var v = c.render ? c.render(r) : c.get(r);
+        row.appendChild(h("td", { class: (c.num ? "num " : "") + (c.cls || "") }, (v === null || v === undefined || v === "") ? NA : v));
+      });
+      row.addEventListener("click", function (ev) { if (ev.target.closest("a,button")) return; open[r.issuer_id] = !open[r.issuer_id]; redraw(); });
+      row.style.cursor = "pointer";
+      tb.appendChild(row);
+      if (open[r.issuer_id]) tb.appendChild(h("tr", { class: "detail" }, h("td", { colspan: cols.length }, h("div", { class: "detail-in" }, positionDetail(r)))));
+    });
+    if (!fr.length) tb.appendChild(h("tr", null, h("td", { colspan: cols.length, class: "muted" }, "Nenhuma posição com esses filtros.")));
+    t.appendChild(tb);
+    holder.textContent = "";
+    var sc = h("div", { class: "scroll" }, t);
+    holder.appendChild(sc);
+    fitDetails(sc);
+  }
+  /* o detalhe fica do tamanho da área visível da tabela (e preso à esquerda ao rolar) */
+  function fitDetails(sc) {
+    var cw = sc.clientWidth;
+    if (!cw) return;
+    sc.querySelectorAll(".detail-in").forEach(function (el) { el.style.width = Math.max(240, cw - 34) + "px"; });
+  }
+  var fitT = null;
+  window.addEventListener("resize", function () { clearTimeout(fitT); fitT = setTimeout(function () { var sc = holder.querySelector(".scroll"); if (sc) fitDetails(sc); }, 120); });
+  [fSide, fCountry, fSector].forEach(function (s) { s.addEventListener("change", redraw); });
+  fQ.addEventListener("input", redraw);
+  redraw();
+  p.appendChild(sec("Posições", (model.basis === "daily" ? "fechamento de " + fdate(LD.date) : "carteira decidida") + " · clique numa linha para ver a tese, a visão do gestor e a pesquisa", ctrl, holder,
+    note("Contribuição ao risco = participação de cada nome na variância ex-ante da carteira. Squeeze: escore de risco de recompra forçada do short (médio ≥ " + fnum(MSQ.score_medium, 0) + ", alto ≥ " + fnum(MSQ.score_high, 0) + "). Visão do gestor: −2 a +2; “—” = neutro.")));
+
+  /* 10 maiores por |peso| + mudanças */
+  var top = rows.slice().sort(function (a, b) { return Math.abs(b.weight || 0) - Math.abs(a.weight || 0); }).slice(0, 10).map(function (r) {
+    return { label: r.name || nm(r.issuer_id), sub: tk(r.ticker) + " · " + countryName(r.country), value: r.weight, color: r.weight < 0 ? "var(--short)" : "var(--long)" };
+  });
+  var chg = arr(LIVEW && LIVEW.changes_vs_previous);
+  var chgBlock = block("Mudanças em relação à semana anterior", LIVEW && LIVEW.previous_week ? "contra " + fdate(LIVEW.previous_week) : null,
+    chg.length ? table([
+      { label: "Emissor", get: function (r) { return r.name || nm(r.issuer_id); } },
+      { label: "Mudança", get: function (r) { return r.change; }, render: function (r) { return chip(CHANGE_PT[r.change] || r.change); } },
+      { label: "Peso anterior", num: true, get: function (r) { return r.w_old; }, render: function (r) { return wOrOut(r.w_old); } },
+      { label: "Peso novo", num: true, get: function (r) { return r.w_new; }, render: function (r) { return wOrOut(r.w_new); } },
+      { label: "Δ peso", num: true, title: "variação do peso com sinal", get: function (r) { return r.delta; }, render: function (r) { return bps(r.delta); } }
+    ], chg, { sortable: true, tall: true }) : empty(LIVEW && !LIVEW.previous_week ? "Primeira carteira do fundo: não há semana anterior para comparar." : "Sem mudanças relevantes de peso."));
+  p.appendChild(h("div", { class: "cols-2" },
+    block("10 maiores posições", "por tamanho absoluto; peso com sinal (long à direita, short à esquerda)", barList(top, { fmt: function (v) { return spct(v); }, diverging: true })),
+    chgBlock));
+
+  /* diário do gestor: posições da carteira; ideias fora dela à parte */
+  var held = {};
+  rows.forEach(function (r) { held[r.issuer_id] = 1; });
+  var pj = LIVE_PM ? arr(LIVE_PM.position_journal) : [];
+  var pjIn = pj.filter(function (j) { return held[j.issuer_id]; }), pjOut = pj.filter(function (j) { return !held[j.issuer_id]; });
+  if (pjIn.length) p.appendChild(sec("Teses do gestor por posição", "tese, critério de invalidação e pré-mortem registrados na decisão", h("div", { class: "cards" }, pjIn.map(function (j) { return journalCard(j); }))));
+  if (pjOut.length) p.appendChild(fold("Ideias fora da carteira", plural(pjOut.length, "emissor analisado que não entrou", "emissores analisados que não entraram") + " na carteira final", false, h("div", { class: "cards" }, pjOut.map(function (j) { return journalCard(j); }))));
+
+  /* implementação: giro e custos (agregados; o detalhe das ordens só quando exportado) */
+  if (LIVEP) {
+    var sm = obj(LIVEP.summary);
+    var trades = arr(LIVEP.trades), fx = arr(LIVEP.fx_hedges);
+    var impl = block("Implementação: giro e custos", "semana de " + fdate(LIVEW.week) + " · execução no leilão de fechamento",
+      h("div", { class: "kpis" },
+        tile("Giro", pct(sm.turnover, 1), "do PL, uma ponta"),
+        tile("Ordens", int(sm.n_trades), null),
+        tile("Custo estimado", usd(sm.trade_cost_usd), sm.trade_cost_partial ? "estimativa parcial" : "corretagem, spread e impacto"),
+        tile("Custo esperado a.a.", pct(sm.expected_cost_annual), "inclui aluguel dos shorts")),
+      trades.length ? h("details", { class: "mini" }, h("summary", null, "Ordens da semana (" + trades.length + ")"), tradesTable(LIVEP)) : null);
+    p.appendChild(impl);
+    if (fx.length) p.appendChild(fold("Hedge cambial", plural(fx.length, "moeda", "moedas"), false, fxTable(LIVEP)));
+  }
+}
+/* peso ausente numa comparação de carteiras = nome fora daquela carteira (não "n/d") */
+function wOrOut(w) { return isNum(w) ? spct(w) : h("span", { class: "na-txt" }, "fora da carteira"); }
+function tradesTable(prop) {
+  return table([
+    { label: "Emissor", get: function (r) { return nm(r.issuer_id); }, render: function (r) { return h("span", null, nm(r.issuer_id), h("span", { class: "cellsub" }, tk(r.ticker))); } },
+    { label: "Operação", get: function (r) { return r.action; }, render: function (r) { return ACTION_PT[r.action] || r.action || NA; } },
+    { label: "Quantidade", num: true, get: function (r) { return r.shares; }, render: function (r) { return int(r.shares); } },
+    { label: "Valor", num: true, get: function (r) { return r.notional_usd; }, render: function (r) { return usd(r.notional_usd); } },
+    { label: "Δ peso", num: true, get: function (r) { return r.weight_change; }, render: function (r) { return bps(r.weight_change); } },
+    { label: "% ADTV", num: true, get: function (r) { return r.pct_adtv; }, render: function (r) { return pct(r.pct_adtv, 1); } },
+    { label: "Custo est.", num: true, get: function (r) { return r.est_cost_bps; }, render: function (r) { return isNum(r.est_cost_bps) ? fnum(r.est_cost_bps, 1) + " bps" : NA; } },
+    { label: "Prazo est.", num: true, get: function (r) { return r.est_days; }, render: function (r) { return days(r.est_days); } }
+  ], arr(prop.trades), { sortable: true, tall: true });
+}
+function fxTable(prop) {
+  return table([
+    { label: "Moeda", get: function (r) { return r.currency; } },
+    { label: "Exposição econômica", num: true, render: function (r) { return usd(r.exposure_usd, true); } },
+    { label: "Hedge", num: true, render: function (r) { return usd(r.hedge_notional_usd, true); } },
+    { label: "Instrumento", render: function (r) { return String(r.instrument || NA).replace(/^NDF (\d+)M$/, "termo (NDF) de $1 mês"); } }
+  ], arr(prop.fx_hedges), { stack: true });
+}
+
+/* ====================================================================== Risco e exposições */
+var EXPO_GROUPS = ["country", "sector", "style", "market", "currency"];
+var EXPO_PT = { country: "Por país", sector: "Por setor", style: "Estilos (fatores)", market: "Temas e commodities", currency: "Moedas" };
+/* estado de cada exposição pela MESMA política dos limites (status exportado) */
+function expoTone(e) {
+  if (e.status === "excesso") return "crit";
+  if (e.status === "alerta") return "warn";
+  if (!isNum(e.limit)) return "na";
+  if (isNum(e.utilization) && e.utilization >= 0.9) return "near";
+  return "ok";
+}
+function expoState(e, basis) {
+  if (e.status === "excesso") return pill("Excesso", "crit");
+  if (e.status === "alerta") return pill(basis === "daily" ? "Acima (variação de preços)" : "Acima do alerta", "warn");
+  if (!isNum(e.limit)) return h("span", { class: "muted" }, "sem limite");
+  if (isNum(e.utilization) && e.utilization >= 0.9) return pill("No limite", "info");
+  return h("span", { class: "muted" }, "dentro");
+}
+/* sensibilidade a +10% na commodity: texto do código na verificação COMMODITY:<c> */
+function commodityShock(name) {
+  var c = String(name || "").replace(/^commodity:/, "");
+  var ck = arr(g(LIVEP, "compliance.checks")).filter(function (x) { return x.check_id === "COMMODITY:" + c; })[0];
+  var m = ck && /⇒\s*([+\-−]?[\d.,]+%)/.exec(ck.details || "");
+  return m ? "+10% em " + (COMMODITY_PT[c] || c) + " ⇒ " + ptNums(m[1]) + " do PL" : null;
+}
+function lsBar(e, m) {
+  function w(x) { return (Math.min(Math.abs(x), m) / m * 50).toFixed(2) + "%"; }
+  function at(x) { return (50 + Math.max(-1, Math.min(1, x / m)) * 50).toFixed(2) + "%"; }
+  var lim = isNum(e.limit) ? Math.abs(e.limit) : null;
+  return h("div", { class: "ls", role: "img", "aria-label": "long " + pct(e.long) + ", short " + pct(e.short) + ", líquido " + spct(e.net) },
+    lim !== null ? h("span", { class: "ls-lim", style: "left:" + at(-lim) }) : null, lim !== null ? h("span", { class: "ls-lim", style: "left:" + at(lim) }) : null,
+    isNum(e.short) ? h("span", { class: "ls-s", style: "width:" + w(e.short) }) : null,
+    isNum(e.long) ? h("span", { class: "ls-l", style: "width:" + w(e.long) }) : null,
+    isNum(e.net) ? h("span", { class: "ls-n", style: "left:" + at(e.net) }) : null);
+}
+function netBar(e, m, tone) {
+  function at(x) { return (50 + Math.max(-1, Math.min(1, x / m)) * 50).toFixed(2) + "%"; }
+  var lim = isNum(e.limit) ? Math.abs(e.limit) : null, col = tone === "crit" ? "var(--crit-mark)" : tone === "warn" || tone === "near" ? "var(--warn-mark)" : "var(--accent)";
+  var wd = isNum(e.net) ? (Math.min(Math.abs(e.net), m) / m * 50).toFixed(2) + "%" : "0";
+  return h("div", { class: "ls", role: "img", "aria-label": "líquido " + (isNum(e.net) ? fnum(e.net, 3, true) : NA) },
+    lim !== null ? h("span", { class: "ls-lim", style: "left:" + at(-lim) }) : null, lim !== null ? h("span", { class: "ls-lim", style: "left:" + at(lim) }) : null,
+    isNum(e.net) ? h("span", { class: e.net < 0 ? "ls-s" : "ls-l", style: "width:" + wd + ";background:" + col }) : null);
+}
+function expoBlock(k, rows, basis) {
+  var hasLS = function (e) { return k !== "style" && !e.measure && (isNum(e.long) || isNum(e.short)); };
+  var mL = 0, mN = 0;
+  rows.forEach(function (e) {
+    if (hasLS(e)) [e.long, e.short, e.net, e.limit].forEach(function (x) { if (isNum(x)) mL = Math.max(mL, Math.abs(x)); });
+    else [e.net, isNum(e.limit) ? e.limit * 1.15 : null].forEach(function (x) { if (isNum(x)) mN = Math.max(mN, Math.abs(x)); });
+  });
+  var anyLS = rows.some(hasLS);
+  function f(e, v) { return k === "style" ? xnum(v) : spct(v); }
+  var cols = [{ label: "Nome", get: function (e) { return expoName(k, e.name); }, render: function (e) {
+    var s = /^commodity:/.test(e.name || "") ? commodityShock(e.name) : null;
+    return h("span", null, expoName(k, e.name), s ? h("span", { class: "cellsub" }, s) : null);
+  } }];
+  if (anyLS) cols.push(
+    { label: "Long", num: true, get: function (e) { return e.long; }, render: function (e) { return hasLS(e) ? pct(e.long) : h("span", { class: "muted" }, "—"); } },
+    { label: "Short", num: true, get: function (e) { return e.short; }, render: function (e) { return hasLS(e) ? pct(e.short) : h("span", { class: "muted" }, "—"); } });
+  cols.push(
+    { label: anyLS ? "Long × short" : "Exposição", render: function (e) { return hasLS(e) ? lsBar(e, mL || 1) : netBar(e, mN || 1, expoTone(e)); } },
+    { label: k === "style" ? "Líquido (z)" : "Líquido", num: true, get: function (e) { return e.net; }, render: function (e) { return f(e, e.net); } },
+    { label: "Limite", num: true, get: function (e) { return e.limit; }, render: function (e) { return isNum(e.limit) ? "±" + (k === "style" ? fnum(e.limit, 2) : pct(e.limit)) : NA; } },
+    { label: "Uso", num: true, get: function (e) { return e.utilization; }, render: function (e) { return isNum(e.utilization) ? pct(e.utilization, 0) : NA; } },
+    { label: "Situação", get: function (e) { return e.status === "excesso" ? 3 : e.status === "alerta" ? 2 : isNum(e.utilization) && e.utilization >= 0.9 ? 1 : 0; }, render: function (e) { return expoState(e, basis); } });
+  var sub = k === "style" ? "exposição líquida em desvios-padrão × PL" : k === "market" ? "tema em % do PL; commodities em Σ peso × beta (% do PL por variação de 100% no preço)" : "% do PL";
+  return block(EXPO_PT[k] || GROUP_PT[k] || k, sub, table(cols, rows, { sortable: true, stack: true, rowClass: function (e) { var t = expoTone(e); return t === "crit" ? "st-crit" : t === "warn" ? "st-warn" : t === "near" ? "st-info" : null; } }));
+}
+function expoTables(expos, basis) {
+  var groups = {};
+  arr(expos).forEach(function (e) { (groups[e.group] = groups[e.group] || []).push(e); });
+  var keys = EXPO_GROUPS.filter(function (k) { return groups[k]; }).concat(Object.keys(groups).filter(function (k) { return EXPO_GROUPS.indexOf(k) < 0; }));
+  if (!keys.length) return [empty("Sem exposições nesta base.")];
+  return [lsKey()].concat(keys.map(function (k) { return expoBlock(k, groups[k], basis); }));
+}
+function eventWindows() {
+  var ew = arr(MR.event_windows);
+  if (!ew.length) return null;
+  return block("Janelas de evento", "eleições e eventos binários previstos no mandato", table([
+    { label: "Evento", render: function (e) { return e.name; } },
+    { label: "País", render: function (e) { return countryName(e.country); } },
+    { label: "Janela", render: function (e) { return fdate(e.start) + " a " + fdate(e.end); } },
+    { label: "Vol do país no modelo", num: true, render: function (e) { return isNum(e.vol_multiplier) ? "× " + fnum(e.vol_multiplier, 2) : NA; } },
+    { label: "Exposição máx. ao choque", num: true, render: function (e) { return isNum(e.reaction_exposure_max_abs) ? "±" + pct(e.reaction_exposure_max_abs) + " do PL" : NA; } }
+  ], ew, { stack: true }), note("Durante a janela, a volatilidade do país é ampliada no modelo de risco e a exposição líquida da carteira à reação do evento fica limitada pelo mandato."));
+}
+/* participação na variância: barra empilhada (as partes vêm do exportador) */
+function sharesBar(items, rest) {
+  var bar = h("div", { class: "shares-bar", role: "img", "aria-label": items.map(function (x) { return x.label + " " + pct(x.share, 1); }).join(", ") });
+  items.forEach(function (x) { if (isNum(x.share) && x.share > 0) bar.appendChild(h("span", { style: "width:" + Math.min(100, x.share * 100).toFixed(2) + "%;background:" + x.color, title: x.label + " " + pct(x.share, 1) })); });
+  if (rest) bar.appendChild(h("span", { style: "flex:1 1 auto;background:" + rest.color, title: rest.label }));
+  return h("div", { class: "shares" }, bar, h("div", { class: "shares-key" },
+    items.map(function (x) { return h("span", null, h("i", { style: "background:" + x.color }), x.label + " ", h("b", null, pct(x.share, 1))); }),
+    rest ? h("span", null, h("i", { style: "background:" + rest.color }), rest.label) : null));
+}
+var STRESS_KIND = [["historico", "Cenários históricos"], ["hipotetico", "Choques hipotéticos de mercado"], ["idiossincratico", "Choques de concentração"], ["gap", "Gaps de país"]];
+function stressKind(s) {
+  if (s.kind) return s.kind;
+  var n = String(s.scenario || s.label || "");
+  if (/^Gap /.test(n)) return "gap";
+  if (/^(Quebra|Squeeze)\b/.test(n)) return "idiossincratico";
+  return /\(|\b(19|20)\d{2}\b/.test(n) ? "historico" : "hipotetico";
+}
+function renderRisco(p) {
+  var ex = RK.ex_ante ? obj(RK.ex_ante) : null, dl = RK.daily ? obj(RK.daily) : null;
+  var bases = [];
+  if (dl && arr(dl.exposures).length) bases.push(["daily", "Fechamento de " + fdate(RK.as_of_date), dl.exposures]);
+  if (ex && arr(ex.exposures).length) bases.push(["ex_ante", "Carteira decidida em " + fdate(RK.live_week), ex.exposures]);
+  var curExpo = bases.length ? bases[0][2] : [];
+  var basis = bases.length ? bases[0][0] : null;
+  var basisLine = dl ? "risco medido no fechamento de " + fdate(RK.as_of_date) + " (pesos com a variação de preços desde a decisão)" : ex ? "risco ex-ante da carteira decidida em " + fdate(RK.live_week) : null;
+
+  /* 1. resumo contra o mandato */
+  var vsrc = dl || ex || {};
+  var vc = CK("vol_ex_ante"), bc = CK("beta"), nc = CK("net"), gc = CK("gross_max"), gmin = CK("gross_min"), varC = CK("var_1d"), esC = CK("es_1d"), c3 = CK("liquidez_3d");
+  var vt = volTarget(LIVEW), stats = obj(TR.stats);
+  function ut(c) { return c && isNum(c.utilization) ? utilBar(c.utilization, utilTone(c.status, c.utilization)) : null; }
+  var k = h("div", { class: "kpis k8" },
+    tile("Vol ex-ante", h("span", null, pct(vc ? vc.value : vsrc.ex_ante_vol), " ", vc && vc.status !== "ok" ? statusPill(vc.status) : null),
+      bandGauge(vc ? vc.value : vsrc.ex_ante_vol, MR.vol_band_min, MR.vol_band_max, vt), isNum(vt) ? "meta da semana " + pct(vt) : null),
+    tile("Beta previsto", h("span", null, bc ? xnum(bc.value) : xnum(vsrc.beta), h("small", null, " limite ±" + fnum(MR.beta_max_abs, 2))), ut(bc)),
+    tile("Exposição líquida", h("span", null, nc ? spct(nc.value) : spct(vsrc.net), h("small", null, " limite ±" + pct(MR.net_exposure_max_abs))), ut(nc)),
+    tile("Exposição bruta", h("span", null, gc ? pct(gc.value, 1) : pct(vsrc.gross, 1), " ", gmin && gmin.status !== "ok" ? statusPill(gmin.status) : null),
+      gmin && isNum(gmin.shortfall) && gmin.shortfall > 0 ? "abaixo do piso de " + pct(gmin.limit, 0) + " em " + fnum(gmin.shortfall * 100, 2) + " p.p." : "faixa " + pct(MR.gross_min, 0) + "–" + pct(MR.gross_max, 0)),
+    tile("VaR 1 dia (99%)", h("span", null, pct(varC ? varC.value : vsrc.var_1d_99), h("small", null, " limite " + pct(MR.var_1d_max))), ut(varC), "ES 1 dia " + pct(esC ? esC.value : vsrc.es_1d_99) + " (limite " + pct(MR.es_1d_max) + ")", ex && isNum(ex.var_1w_99) ? "VaR 1 semana " + pct(ex.var_1w_99) : null),
+    tile("Liquidez", h("span", null, pct(c3 ? c3.value : g(RK, "liquidity_by_side.liquid_3d"), 0), h("small", null, " do bruto em 3 dias")), "piso do mandato " + pct(MLQ.min_gross_liquid_3d, 0)),
+    tile("Drawdown", isNum(ST.drawdown) ? pct(ST.drawdown) : h("small", null, "—"), isNum(ST.drawdown) ? ladderViz(ST.drawdown, MDD, stats.max_drawdown, true) : null, ddText(stats)),
+    tile("Diversificação", h("span", null, fnum(first(vsrc.effective_n, g(RK, "concentration.effective_n_ex_ante")), 1), h("small", null, " posições efetivas")), CK("single_name_risk") ? "maior nome: " + pct(CK("single_name_risk").value, 1) + " da variância (limite " + pct(MR.max_single_name_risk_share, 0) + ")" : null));
+  p.appendChild(sec("Risco e exposições", basisLine, k, block("Destaques", null, hlList(highlights(curExpo, basis)))));
+
+  /* 2. exposições */
+  if (bases.length) {
+    var holder = h("div", { class: "stack" });
+    var bsel = h("select", { id: "expo-basis" }, bases.map(function (b, i) { return h("option", { value: String(i) }, b[1]); }));
+    var saved = lsGet("expo-basis");
+    if (saved && +saved < bases.length) bsel.value = saved;
+    var drawExpo = function () { var b = bases[+bsel.value || 0]; holder.textContent = ""; add(holder, expoTables(b[2], b[0])); };
+    bsel.addEventListener("change", function () { lsSet("expo-basis", bsel.value); drawExpo(); });
+    drawExpo();
+    p.appendChild(sec("Exposições", "long, short e líquido por país, setor, estilo, tema e commodity, contra os limites do mandato",
+      bases.length > 1 ? h("div", { class: "ctrl" }, h("label", { class: "field", for: "expo-basis" }, "Base", bsel)) : null,
+      holder, eventWindows()));
+  } else {
+    p.appendChild(sec("Exposições", null, empty("Sem exposições: nenhuma carteira decidida.")));
+  }
+
+  /* 3. decomposição do risco */
+  if (ex || dl) {
+    var frs = first(ex && ex.factor_risk_share, g(TH, "numbers.summary.factor_share"));
+    var rg = arr(g(TH, "numbers.risk_groups")).filter(function (x) { return isNum(x.share); });
+    var shares = rg.length ? sharesBar(rg.map(function (x, i) { return { label: x.label || x.group, share: x.share, color: SERIES_COLORS[i % SERIES_COLORS.length] }; }))
+      : isNum(frs) ? sharesBar([{ label: "Fatorial", share: frs, color: "var(--c2)" }], { label: "Específico (restante)", color: "var(--c1)" }) : empty("Sem decomposição nesta base.");
+    var decB = block("Fatorial × específico", "participação na variância ex-ante", shares,
+      kv([["Volatilidade ex-ante", pct(vsrc.ex_ante_vol)], ["Volatilidade fatorial", pct(vsrc.factor_vol)], ["Volatilidade específica", pct(vsrc.specific_vol)],
+        isNum(first(vsrc.realized_vol_21d, ST.realized_vol_21d)) ? ["Volatilidade realizada (21 pregões)", pct(first(vsrc.realized_vol_21d, ST.realized_vol_21d))] : null,
+        isNum(vsrc.realized_vol_63d) ? ["Volatilidade realizada (63 pregões)", pct(vsrc.realized_vol_63d)] : null,
+        ["Limite da parcela fatorial", pct(MR.max_factor_risk_share, 0) + " da variância"]]),
+      note("Volatilidades não se somam (fatorial² + específica² = total²); por isso a decomposição é mostrada em participação na variância."));
+    var fc = arr(ex && ex.factor_contributions).map(function (r) { return { label: factorName(r.factor), value: r.share }; });
+    var trc = arr(ex && ex.top_risk_contributors).map(function (r) { return { label: r.name || nm(r.issuer_id), value: r.share }; });
+    p.appendChild(sec("Decomposição do risco", "de onde vem a variância da carteira",
+      h("div", { class: "cols-2" }, decB,
+        block("Fatores", "participação de cada fator na variância", barList(fc, { fmt: function (v) { return pct(v, 2); }, empty: "Sem contribuições fatoriais." }))),
+      block("Maiores contribuições por nome", "participação na variância · limite por nome " + pct(MR.max_single_name_risk_share, 0),
+        barList(trc, { fmt: function (v) { return pct(v, 1); }, refs: [{ value: MR.max_single_name_risk_share, label: "limite por nome " + pct(MR.max_single_name_risk_share, 0) }], color: "var(--accent)", empty: "Sem contribuições por nome." }))));
+
+    /* 4. estresse */
+    var st = arr(ex && ex.stress_tests);
+    if (st.length) {
+      var byK = {};
+      st.forEach(function (s) { var kd = stressKind(s); (byK[kd] = byK[kd] || []).push(s); });
+      var na = st.filter(function (s) { return !isNum(s.pnl); });
+      var worst = st.filter(function (s) { return isNum(s.pnl); }).sort(function (a, b) { return a.pnl - b.pnl; })[0];
+      var smax = 0;
+      st.forEach(function (s) { if (isNum(s.pnl)) smax = Math.max(smax, Math.abs(s.pnl)); });
+      var blocks = STRESS_KIND.filter(function (x) { return arr(byK[x[0]]).some(function (s) { return isNum(s.pnl); }); }).map(function (x) {
+        var rows = byK[x[0]].filter(function (s) { return isNum(s.pnl); }).sort(function (a, b) { return a.pnl - b.pnl; });
+        var lossMax = x[0] === "gap" && isNum(MR.country_stress_max_loss) ? [{ value: -Math.abs(MR.country_stress_max_loss), label: "perda máxima admitida por gap de país " + pct(-Math.abs(MR.country_stress_max_loss)) }] : null;
+        return block(x[1], null, barList(rows.map(function (s) { return { label: stressLbl(s), value: s.pnl }; }), { fmt: function (v) { return spct(v); }, diverging: true, max: smax, refs: lossMax, empty: "Sem cenários calculados." }));
+      });
+      p.appendChild(sec("Testes de estresse", "resultado estimado da carteira atual em % do PL; pior cenário primeiro",
+        worst ? h("p", { class: "lead" }, "Pior cenário: ", h("b", null, stressLbl(worst)), ", com ", h("b", { class: "neg" }, spct(worst.pnl)), " do PL.") : null,
+        h("div", { class: "cols-2" }, blocks),
+        na.length ? note("Sem cálculo (dados insuficientes da carteira atual na janela do evento; nunca tratados como zero): " + na.map(stressLbl).join("; ") + ".") : null));
+    }
+  }
+
+  /* 5. liquidez */
+  var liq = RK.liquidity_by_side ? obj(RK.liquidity_by_side) : null;
+  var model = positionModel();
+  var illiq = model.rows.filter(function (r) { return isNum(r.days); }).sort(function (a, b) { return b.days - a.days; }).slice(0, 8);
+  var lL = liq ? obj(liq.LONG) : {}, lS = liq ? obj(liq.SHORT) : {};
+  var cL = CK("liq_days_long"), cS = CK("liq_days_short"), c5 = CK("liquidez_5d");
+  function liqTile(label, c, s) {
+    return tile(label, h("span", null, days(c ? c.value : s.max_days), " ", c && c.status !== "ok" ? statusPill(c.status) : null), ut(c),
+      "limite " + days(s.limit) + " a " + pct(s.participation, 0) + " do volume médio · " + plural(s.n, "nome", "nomes") + (s.n_missing ? " · " + int(s.n_missing) + " sem volume medido" : ""));
+  }
+  var liqB = block("Prazo de liquidação", "dias para zerar cada posição a " + pct(MLQ.participation_rate, 0) + " do volume médio diário (long) e " + pct(MLQ.short_participation_rate, 0) + " (short)",
+    liq ? h("div", { class: "kpis" },
+      liqTile("Long: nome menos líquido", cL, lL),
+      liqTile("Short: nome menos líquido", cS, lS),
+      tile("Exposição bruta liquidável", h("div", { class: "trio" },
+        h("div", null, h("b", null, pct(c3 ? c3.value : liq.liquid_3d, 1)), h("span", null, "em 3 dias (piso " + pct(MLQ.min_gross_liquid_3d, 0) + ")")),
+        h("div", null, h("b", null, pct(c5 ? c5.value : liq.liquid_5d, 1)), h("span", null, "em 5 dias (piso " + pct(MLQ.min_gross_liquid_5d, 0) + ")")),
+        dl ? h("div", null, h("b", null, pct(dl.pct_gross_liquid_1d, 1)), h("span", null, "em 1 dia (fechamento)")) : null))) : null,
+    liq ? h("div", null, h("h4", null, "Distribuição da exposição bruta por prazo de liquidação"), barList(arr(liq.buckets).map(function (b) { return { label: b.bucket, value: b.gross_share, sub: plural(b.n, "posição", "posições") + " · " + pct(b.gross, 1) + " do PL" }; }), { fmt: function (v) { return pct(v, 1); }, diverging: false, max: 1, color: "var(--accent)" })) : empty("Sem dados de liquidez."),
+    kv([["Volume médio mínimo", "long " + usd(MLQ.min_adtv_long_usd) + " · short " + usd(MLQ.min_adtv_short_usd)], ["Giro semanal máximo", pct(MLQ.max_weekly_turnover, 0)], ["Janela do volume médio", isNum(MLQ.adv_window_days) ? MLQ.adv_window_days + " pregões" : NA]]));
+  var illB = block("Posições menos líquidas", "por dias para liquidar",
+    illiq.length ? table([
+      { label: "Emissor", render: function (r) { return h("span", null, r.name || nm(r.issuer_id), h("span", { class: "cellsub" }, tk(r.ticker))); } },
+      { label: "Lado", render: function (r) { return sideTag(r.side); } },
+      { label: "Peso", num: true, render: function (r) { return spct(r.weight); } },
+      { label: "Dias", num: true, render: function (r) { return days(r.days); } },
+      { label: "% ADTV", num: true, render: function (r) { return pct(r.pct_adtv, 1); } },
+      { label: "Volume médio", num: true, render: function (r) { return usd(r.adtv); } }
+    ], illiq, { stack: true }) : empty("Sem posições."));
+  p.appendChild(sec("Liquidez", null, h("div", { class: "cols-2" }, liqB, illB)));
+
+  /* 6. shorts e squeeze */
+  var sqs = arr(RK.squeeze_shorts);
+  var byb = arr(g(LIVEP, "squeeze.by_bucket"));
+  var mon = latestMonitor();
+  var stops = mon && mon.data ? arr(g(mon.data, "squeeze.stops_intradiario")).map(function (x) { return { r: x, base: "intradiário" }; })
+    .concat(arr(g(mon.data, "squeeze.stops_fechamento")).map(function (x) { return { r: x, base: "fechamento" }; })) : [];
+  var sqB = block("Shorts e risco de squeeze", "escore de risco de recompra forçada; parecer da pesquisa ao lado",
+    byb.length ? h("div", { class: "chips" }, byb.map(function (b) { return h("span", { class: "chip" }, h("span", { class: "sq " + b.bucket }, SQ_PT[b.bucket] || b.bucket), " " + plural(b.n, "nome", "nomes") + (isNum(b.weight) ? " · " + pct(b.weight, 2) : "")); })) : null,
+    sqs.length ? table([
+      { label: "Emissor", get: function (r) { return r.name || nm(r.issuer_id); }, render: function (r) { return h("span", null, r.name || nm(r.issuer_id), h("span", { class: "cellsub" }, tk(r.ticker))); } },
+      { label: "Squeeze", get: function (r) { return r.score; }, render: function (r) { return sqTag(r.bucket, r.score); } },
+      { label: "Peso", num: true, get: function (r) { return r.weight; }, render: function (r) { return spct(r.weight); } },
+      { label: "Aluguel a.a.", num: true, get: function (r) { return r.borrow_fee_annual; }, render: function (r) { return pct(r.borrow_fee_annual); } },
+      { label: "Dias p/ recomprar", num: true, get: function (r) { return r.days_to_liquidate; }, render: function (r) { return days(r.days_to_liquidate); } },
+      { label: "% ADTV", num: true, get: function (r) { return r.pct_adtv; }, render: function (r) { return pct(r.pct_adtv, 1); } },
+      { label: "Parecer da pesquisa", cls: "wrapcell", render: function (r) {
+        var n = arr(NOTES[r.issuer_id]).filter(function (x) { return x.squeeze || x.role === "short_risk"; })[0];
+        if (!n) {
+          var t = arr(NOTES_T[r.issuer_id]).filter(function (x) { return x.squeeze_verdict || x.role === "short_risk"; })[0];
+          if (!t) return h("span", { class: "muted" }, "sem nota");
+          var tv = VERDICT[t.squeeze_verdict] || null;
+          return h("span", null, tv ? pill(tv[0], tv[1]) : null, " ", noteRowText(t));
+        }
+        var sq = obj(n.squeeze), v = VERDICT[sq.verdict] || null;
+        var full = ptNums(String(sq.rationale || n.thesis || "")), short = full.length > 260 ? full.slice(0, 257).replace(/\s+\S*$/, "") + "…" : full;
+        return h("span", { title: full.length > 260 ? full : null }, v ? pill(v[0], v[1]) : null, " ", short);
+      } }
+    ], sqs, { sortable: true, tall: true, stack: true, rowClass: function (r) { return r.bucket === "HIGH" ? "st-crit" : r.bucket === "MEDIUM" ? "st-warn" : null; } }) : empty("Sem shorts na carteira."),
+    kv([
+      ["Escore (médio / alto)", fnum(MSQ.score_medium, 0) + " / " + fnum(MSQ.score_high, 0)],
+      ["Teto do short com squeeze médio", isNum(MSQ.medium_short_cap_multiplier) ? "× " + fnum(MSQ.medium_short_cap_multiplier, 2) + " do teto por nome" : NA],
+      ["Squeeze alto", "short vedado"],
+      ["Stops do short", "perda de " + pct(MSQ.stop_short_position_loss, 0) + " desde a entrada (corta metade) ou " + pct(MSQ.stop_short_nav_loss, 1) + " do PL"]
+    ]),
+    stops.length ? h("div", null, h("h4", null, "Distância aos stops dos shorts (" + flocal(mon.tl.gerado_em) + ")"), table([
+      { label: "Emissor", render: function (x) { return x.r.emissor ? nm(x.r.emissor) : tk(x.r.ticker); } },
+      { label: "Base", render: function (x) { return x.base; } },
+      { label: "Perda desde a entrada", num: true, render: function (x) { return pct(x.r.perda_desde_entrada, 1); } },
+      { label: "Perda % do PL", num: true, render: function (x) { return pct(x.r.perda_pct_nav, 2); } },
+      { label: "Stop da posição", render: function (x) { return triPill(x.r.stop_posicao, "Acionado", "Não"); } },
+      { label: "Stop do PL", render: function (x) { return triPill(x.r.stop_nav, "Acionado", "Não"); } }
+    ], stops, { stack: true })) : null);
+  p.appendChild(sec("Shorts e squeeze", plural(sqs.length, "short", "shorts"), sqB));
+
+  /* 7. política de controle de perdas */
+  var recs = arr(TR.records);
+  var ladB = block("Política de controle de perdas", "níveis de drawdown do mandato",
+    ladderViz(ST.drawdown, MDD, g(TR, "stats.max_drawdown")) || empty("Níveis não configurados."),
+    table([
+      { label: "Nível", render: function (r) { return pill(r[0], r[3]); } },
+      { label: "Gatilho (drawdown)", num: true, render: function (r) { return r[1]; } },
+      { label: "Ação prevista", cls: "wrapcell", render: function (r) { return r[2]; } }
+    ], [
+      ["Normal", "acima de " + pct(MDD.soft_stop, 1), "gestão normal", "ok"],
+      ["Nível 1 · revisão", pct(MDD.soft_stop, 1), "revisão da carteira; exposição bruta × " + fnum(MDD.soft_degross_multiplier, 2), "warn"],
+      ["Nível 2 · redução", pct(MDD.hard_stop, 1), "exposição bruta × " + fnum(MDD.degross_multiplier, 2), "crit"],
+      ["Nível 3 · stop-out", pct(MDD.stop_out, 1), "exposição bruta reduzida a " + pct(MDD.stop_out_gross, 0) + " do PL", "crit"]
+    ], { stack: true }),
+    note(isNum(ST.drawdown) ? "Drawdown atual " + pct(ST.drawdown) + (stageLabel(ST.ladder_stage) ? " · " + stageLabel(ST.ladder_stage) : "") + ", medido contra o pico do PL." : "Sem histórico de cota ainda: o drawdown passa a ser medido a partir do primeiro pregão executado."));
+  var ddChart = recs.length + ROLLUP.length >= 2 ? block("Drawdown diário", "% do PL, com os gatilhos de revisão e de redução" + (ROLLUP.length ? " · meses antigos no fim do mês (faixa sombreada)" : ""),
+    chart(function (el) {
+      lineChart(el, {
+        labels: ROLLUP.map(function (r) { return r.date; }).concat(recs.map(function (r) { return r.date; })), height: 220, zero: true, title: "Drawdown diário do CDP", tipX: rollTip,
+        timeX: ROLLUP.length > 0, zone: ROLLUP.length ? { from: 0, to: ROLLUP.length - 1, label: "meses consolidados (fim de mês)" } : null,
+        series: [{ name: "Drawdown", color: "var(--crit-mark)", values: ROLLUP.map(function (r) { return r.drawdown; }).concat(recs.map(function (r) { return g(r, "risk.drawdown"); })) }],
+        yFmt: function (v) { return pct(v, 1); }, tipFmt: function (v) { return pct(v, 2); },
+        refs: [{ y: MDD.soft_stop, label: "revisão " + pct(MDD.soft_stop, 1) }, { y: MDD.hard_stop, label: "redução " + pct(MDD.hard_stop, 1), fit: false }]
+      });
+    }, 240)) : null;
+  p.appendChild(sec("Controle de perdas", null, ddChart ? h("div", { class: "cols-2" }, ladB, ddChart) : ladB));
+
+  /* 8. limites do mandato e conformidade */
+  p.appendChild(sec("Limites do mandato", null, limitsTable(), complianceFold()));
+
+  /* 9. monitor intradiário */
+  add(p, monitorSection());
+}
+function limitsTable() {
+  if (!CHECKS.length) return empty("Sem carteira decidida: não há risco vigente a comparar com o mandato.");
+  var bs = {};
+  CHECKS.forEach(function (c) { if (c.basis) bs[c.basis] = 1; });
+  var one = Object.keys(bs).length === 1;
+  return h("div", { class: "stack", style: "gap:8px" }, one ? note("Base: " + plain(Object.keys(bs)[0]) + ".") : null, table([
+    { label: "Limite", get: function (c) { return c.label; }, render: function (c) { return h("span", null, c.label, !one && c.basis ? h("span", { class: "cellsub" }, plain(c.basis)) : null); } },
+    { label: "Carteira", num: true, get: function (c) { return c.value; }, render: function (c) { return fmtUnit(c.value, c.unit); } },
+    { label: "Mandato", num: true, render: function (c) { return fmtLimit(c); } },
+    { label: "Uso do limite", get: function (c) { return c.utilization; }, render: function (c) {
+      if (c.id === "vol_ex_ante" || c.id === "vol_realizada_21d") return Array.isArray(c.limit) ? bandGauge(c.value, c.limit[0], c.limit[1], volTarget(LIVEW), true) : NA;
+      if (c.id === "drawdown") return isNum(c.value) ? ladderViz(c.value, MDD, g(TR, "stats.max_drawdown"), true) : h("span", { class: "muted" }, "sem histórico");
+      if (c.floor) return floorGauge(c, utilTone(c.status, null));
+      if (!isNum(c.limit) && !Array.isArray(c.limit)) return h("span", { class: "muted" }, "informativo");
+      return utilBar(c.utilization, utilTone(c.status, c.utilization));
+    } },
+    { label: "Situação", get: function (c) { return c.status; }, render: function (c) { return c.status === "ok" ? h("span", { class: "muted" }, "dentro") : statusPill(c.status); } },
+    { label: "Observação", cls: "wrapcell", render: function (c) {
+      if (c.id === "vol_ex_ante" && isNum(volTarget(LIVEW))) return "meta da semana " + pct(volTarget(LIVEW)) + (isNum(MR.vol_target_annual) && Math.abs(volTarget(LIVEW) - MR.vol_target_annual) > 1e-9 ? " (mandato " + pct(MR.vol_target_annual) + ")" : "");
+      return c.detail ? ptLabel(ptNums(c.detail)) : h("span", { class: "muted" }, "—");
+    } }
+  ], CHECKS, { sortable: true, stack: true, rowClass: function (c) { var t = statusTone(c.status); return t === "crit" ? "st-crit" : t === "warn" ? "st-warn" : null; } }), utilLegend());
+}
+/* conformidade da decisão: verificações do mandato (rígidas, de alerta e indicadores) */
+var CK_UNIT = { BETA: "x", STYLE: "x", LIQ_DAYS_LONG: "days", LIQ_DAYS_SHORT: "days", SQUEEZE_HIGH: "count", LONG_NOT_ALLOWED: "count", SHORT_NOT_ALLOWED: "count", RISK_MODEL_COVERAGE: "count" };
+var CK_HIDE = { WEIGHTS_VALID: 1, SYNTHETIC_DATA: 1, DATA_STALENESS: 1 };
+function ckFmt(c, v) {
+  var k = String(c.check_id || "").split(":")[0], u = CK_UNIT[k] || "pct";
+  if (!isNum(v)) return NA;
+  return u === "x" ? fnum(v, 3, true) : u === "days" ? days(v) : u === "count" ? int(v) : pct(v);
+}
+/* VOL_TARGET compara a vol ex-ante com a meta do MANDATO; a meta aplicada na semana (postura e viés
+   a priori) aparece ao lado. Indicadores (INFO) só informam: nunca contam como "pedem atenção". */
+function ckName(c) { return String(c.check_id) === "VOL_TARGET" ? "Distância à meta do mandato" : ptLabel(c.name || c.check_id); }
+function ckAttn(c) { return c.passed === false && c.severity !== "INFO"; }
+function ckDetail(c) {
+  var t = ptLabel(ptNums(c.details || "")), vt = volTarget(LIVEW);
+  if (String(c.check_id) === "VOL_TARGET" && isNum(vt)) t = (t ? t.replace(/\.\s*$/, "") + " · " : "") + "meta aplicada na semana " + pct(vt) + ".";
+  return t;
+}
+function complianceFold() {
+  var cp = obj(g(LIVEP, "compliance"));
+  var checks = arr(cp.checks).filter(function (c) { return !CK_HIDE[String(c.check_id || "").split(":")[0]]; });
+  if (!checks.length) return null;
+  var fails = checks.filter(ckAttn);
+  var csel = h("select", { id: "comp-filter" }, [["fail", "pedem atenção"], ["", "todas"], ["HARD", "limites rígidos"], ["SOFT", "limites de alerta"], ["INFO", "indicadores"]].map(function (o) { return h("option", { value: o[0] }, o[1]); }));
+  if (!fails.length) csel.value = "";
+  var chold = h("div");
+  var drawComp = function () {
+    var f = csel.value;
+    var rows = checks.filter(function (c) { return !f || (f === "fail" ? ckAttn(c) : c.severity === f); });
+    chold.textContent = "";
+    chold.appendChild(rows.length ? table([
+      { label: "Verificação", get: function (c) { return ckName(c); }, render: function (c) { return ckName(c); } },
+      { label: "Tipo", get: function (c) { return c.severity; }, render: function (c) { return (SEV_PT[c.severity] || [c.severity || NA])[0]; } },
+      { label: "Resultado", get: function (c) { return c.passed ? 1 : 0; }, render: function (c) { return c.passed === true ? h("span", { class: "muted" }, "dentro") : c.passed === false ? pill(c.severity === "HARD" ? "Violado" : c.severity === "SOFT" ? "Em alerta" : "Fora da meta", (SEV_PT[c.severity] || [0, "info"])[1]) : NA; } },
+      { label: "Carteira", num: true, get: function (c) { return c.value; }, render: function (c) { return ckFmt(c, c.value); } },
+      { label: "Limite", num: true, get: function (c) { return c.limit; }, render: function (c) { return ckFmt(c, c.limit); } },
+      { label: "Detalhe", cls: "wrapcell", render: ckDetail }
+    ], rows, { sortable: true, tall: true, stack: true, rowClass: function (c) { return c.passed === false ? (c.severity === "HARD" ? "st-crit" : c.severity === "SOFT" ? "st-warn" : "st-info") : null; } }) : empty("Nenhuma verificação nesta seleção."));
+  };
+  csel.addEventListener("change", drawComp);
+  drawComp();
+  var ack = arr(g(LIVEW, "decision.acknowledged_soft_checks"));
+  return fold("Conformidade com o mandato", "decisão de " + fdate(LIVEW.week) + " · " + plural(fails.length, "verificação pede", "verificações pedem") + " atenção", fails.length > 0,
+    h("div", { class: "ctrl" }, h("label", { class: "field", for: "comp-filter" }, "Mostrar", csel)), chold,
+    note("Limite rígido: uma carteira que o viole não é executada. Limite de alerta: exige reconhecimento explícito do comitê" + (ack.length ? " (reconhecidos nesta decisão: " + ack.map(gateName).join("; ") + ")" : "") + ". Indicador: só informa."),
+    PUB && isNum(cp.n) && arr(cp.checks).length < cp.n ? note("Nesta versão do portal aparecem só as verificações que pedem atenção; as demais estão dentro do limite.") : null);
+}
+/* sinalizador do monitor: true / false / ausente (ausente nunca vira "não") */
+function triPill(v, yes, no) { return v === true ? pill(yes, "crit") : v === false ? h("span", { class: "muted" }, no) : NA; }
+function latestMonitor() {
+  var tl = arr(RM.timeline);
+  if (!tl.length) return null;
+  var t0 = tl[0], run = arr(RM.runs).filter(function (r) { return r.key === t0.run_key; })[0];
+  var f = run ? arr(run.files).filter(function (x) { return x.name === t0.file; })[0] : null;
+  return { tl: t0, data: f && f.data ? f.data : null };
+}
+function monitorSection() {
+  if (!RM.available || !arr(RM.timeline).length) return null;
+  var mon = latestMonitor(), d = mon.data ? obj(mon.data) : null;
+  var tl = arr(RM.timeline);
+  var parts = [table([
+    { label: "Horário", render: function (r) { return flocal(r.gerado_em); } },
+    { label: "Leitura", render: function (r) { return r.intradiario ? "intradiária" : "fechamento"; } },
+    { label: "PL estimado", num: true, render: function (r) { return usd(first(r.nav_estimado_usd, r.nav_fechamento_usd)); } },
+    { label: "Resultado % do PL", num: true, render: function (r) { return signed(spct(first(r.pnl_pct_nav, r.retorno_dia)), first(r.pnl_pct_nav, r.retorno_dia)); } },
+    { label: "Drawdown estimado", num: true, render: function (r) { return pct(first(r.drawdown_estimado, r.drawdown_fechamento)); } },
+    { label: "Cobertura de preços", num: true, render: function (r) { return pct(r.cobertura_gross, 0); } },
+    { label: "Ocorrências", num: true, render: function (r) { var n = obj(r.n_gatilhos); return int(n.HARD || 0) + " rígidas · " + int(n.SOFT || 0) + " alertas"; } }
+  ], tl, { tall: true, stack: true, rowClass: function (r) { var n = obj(r.n_gatilhos); return n.HARD ? "st-crit" : n.SOFT ? "st-warn" : null; } })];
+  if (d) {
+    var gat = arr(d.gatilhos), intra = d.intradiario ? obj(d.intradiario) : null;
+    parts.push(h("div", { class: "cols-2" },
+      block("Ocorrências da última leitura", flocal(d.gerado_em),
+        gat.length ? h("ul", { class: "alerts" }, gat.map(function (x) {
+          var tone = x.nivel === "HARD" ? "crit" : x.nivel === "SOFT" ? "warn" : "info";
+          return h("li", { class: "t-" + tone }, pill(LEVEL_PT[x.nivel] || "ocorrência", tone), h("span", null, h("b", null, ptLabel(x.motivo || "")), x.acao ? " → " + ptLabel(x.acao) : ""));
+        })) : h("p", { class: "muted" }, "Nenhuma ocorrência."),
+        arr(d.acoes_recomendadas).length ? h("div", null, h("h4", null, "Ações recomendadas"), list(d.acoes_recomendadas, ptLabel)) : null,
+        arr(d.limitacoes).length ? h("div", null, h("h4", null, "Limitações da leitura"), list(d.limitacoes)) : null),
+      block("Retrato da carteira", "última leitura",
+        kv([
+          ["PL no fechamento anterior", usdFull(g(d, "nav.fechamento_usd"))],
+          ["Retorno acumulado", spct(g(d, "nav.retorno_acumulado"))],
+          ["Drawdown", pct(g(d, "drawdown.fechamento"))],
+          ["Vol ex-ante / meta", pct(g(d, "risco.vol_ex_ante")) + " / " + pct(g(d, "risco.vol_alvo"))],
+          ["Beta / líquida / bruta", xnum(g(d, "risco.beta")) + " / " + spct(g(d, "risco.net")) + " / " + pct(g(d, "risco.gross"), 1)],
+          ["VaR / ES 1 dia", pct(g(d, "risco.var_1d_99")) + " / " + pct(g(d, "risco.es_1d_99"))],
+          intra ? ["Intradiário", "PL estimado " + usdFull(intra.nav_estimado_usd) + " · resultado " + spct(intra.pnl_pct_nav) + " · cobertura " + pct(intra.cobertura_gross, 0) + (intra.parcial ? " (parcial)" : "")] : null
+        ]))));
+    if (intra && arr(intra.posicoes).length) {
+      parts.push(fold("Posições na leitura intradiária", plural(arr(intra.posicoes).length, "posição", "posições"), false, table([
+        { label: "Emissor", get: function (r) { return nm(r.emissor); }, render: function (r) { return h("span", null, nm(r.emissor), h("span", { class: "cellsub" }, tk(r.ticker))); } },
+        { label: "Lado", get: function (r) { return r.lado; }, render: function (r) { return sideTag(r.lado); } },
+        { label: "Fechamento", num: true, render: function (r) { return fnum(r.preco_fechamento, 2); } },
+        { label: "Agora", num: true, render: function (r) { return fnum(r.preco_agora, 2); } },
+        { label: "Retorno (US$)", num: true, get: function (r) { return r.ret_usd; }, render: function (r) { return signed(spct(r.ret_usd), r.ret_usd); } },
+        { label: "Resultado", num: true, get: function (r) { return r.pnl_usd; }, render: function (r) { return signed(usd(r.pnl_usd, true), r.pnl_usd); } },
+        { label: "Contribuição", num: true, get: function (r) { return r.contribuicao; }, render: function (r) { return signed(bps(r.contribuicao), r.contribuicao); } }
+      ], intra.posicoes, { sortable: true, tall: true })));
+    }
+  }
+  return sec("Monitor intradiário de risco", "leituras durante o pregão, mais recente primeiro", parts);
+}
+
+/* ====================================================================== Performance */
+var PERIOD_ORDER = ["dia", "semana", "mtd", "ytd", "itd"];
+function attrBars(rows, group, limit) {
+  var r = arr(rows);
+  if (limit && r.length > limit * 2) {
+    var top = r.slice(0, limit), bot = r.slice(r.length - limit);
+    r = top.concat([{ name: "…", pnl_usd: null, contribution: null, _gap: true }]).concat(bot);
+  }
+  return barList(r.map(function (x) {
+    return x._gap ? { gap: true } : {
+      label: attrName(group, x.name, NAMES), value: x.contribution,
+      note: usd(x.pnl_usd, true) + (isNum(x.days) ? " · " + plural(x.days, "pregão", "pregões") : "")
+    };
+  }), { fmt: function (v) { return bps(v); }, diverging: true, empty: "Sem atribuição neste período." });
+}
+function renderPeriod(P, box) {
+  box.textContent = "";
+  var comps = {};
+  arr(P.components).forEach(function (c) { comps[c.key] = c; });
+  function compRow(k) { var c = comps[k]; return { label: COMPONENT_PT[k] || k, value: c ? c.contribution : null, note: c ? usd(c.pnl_usd, true) : NA }; }
+  var head = h("div", { class: "kpis" },
+    tile(P.label || "Período", signed(spct(P.ret), P.ret), fdate(P.start) + " a " + fdate(P.end) + " · " + plural(P.n_days, "pregão", "pregões"), P.ret === null ? "retorno composto n/d: falta algum dia no período" : null),
+    tile("Resultado", signed(usdFull(P.pnl_usd, true), P.pnl_usd), "soma dos resultados diários (US$)"));
+  var a = obj(P.attribution);
+  box.appendChild(head);
+  box.appendChild(h("div", { class: "cols-2" },
+    block("Resultado por componente", "contribuição em bps do PL · ações + financiamento + aluguel + custos",
+      barList(["equity", "financing", "borrow", "costs"].map(compRow), { fmt: function (v) { return bps(v); }, diverging: true })),
+    block("Ações: fatorial × específico", "decomposição do resultado das ações pelo modelo de risco",
+      barList(["factor", "specific"].map(compRow), { fmt: function (v) { return bps(v); }, diverging: true }),
+      note("Fatorial e específico decompõem a linha “Ações”; não se somam a ela."))));
+  box.appendChild(h("div", { class: "cols-2" },
+    block("Por grupo de fatores", null, attrBars(a.factor_group, "factor_group")),
+    block("Por lado", null, attrBars(a.side, "side"))));
+  box.appendChild(h("div", { class: "cols-2" },
+    block("Por país", null, attrBars(a.country, "country")),
+    block("Por setor", null, attrBars(a.sector, "sector"))));
+  box.appendChild(h("div", { class: "cols-2" },
+    block("Por fator", "maiores ganhos e perdas", attrBars(a.factor, "factor", 8)),
+    block("Por emissor", "8 maiores contribuições e 8 maiores detrações", attrBars(a.issuer, "issuer", 8))));
+}
+function renderAtribuicao(p) {
+  var periods = obj(TR.periods);
+  var keys = PERIOD_ORDER.filter(function (k) { return periods[k]; });
+  if (!keys.length && LD && LD.attribution) {
+    periods = { dia: { label: "Dia", start: LD.date, end: LD.date, n_days: 1, ret: LD.ret, pnl_usd: LD.pnl, components: Object.keys(obj(LD.pnl_components)).map(function (k) { return { key: k, pnl_usd: LD.pnl_components[k], contribution: null }; }), attribution: LD.attribution } };
+    keys = ["dia"];
+  }
+  if (!keys.length) { p.appendChild(sec("Performance", null, empty(firstCloseText()))); return; }
+  var saved = lsGet("attr-period");
+  var cur = keys.indexOf(saved) >= 0 ? saved : (keys.indexOf("itd") >= 0 ? "itd" : keys[0]);
+  var seg = h("div", { class: "seg", role: "group", "aria-label": "Período" });
+  var box = h("div", { class: "stack" });
+  keys.forEach(function (k) {
+    var b = h("button", { type: "button", id: "attr-" + k, "aria-pressed": k === cur ? "true" : "false" }, periods[k].label || k);
+    b.addEventListener("click", function () {
+      cur = k; lsSet("attr-period", k);
+      seg.querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+      renderPeriod(periods[k], box);
+    });
+    seg.appendChild(b);
+  });
+  renderPeriod(periods[cur], box);
+  p.appendChild(sec("Performance e atribuição", "contribuição de cada dia = resultado ÷ PL de abertura, somada no período", seg, box));
+
+  var recs = arr(TR.records);
+  if (recs.length) {
+    p.appendChild(sec("Resultado diário: fatorial × específico", "US$ por pregão (componentes do resultado das ações)" + (ROLLUP.length ? " · últimos " + plural(recs.length, "pregão", "pregões") : ""),
+      block(null, null, chart(function (el) {
+        colChart(el, {
+          labels: recs.map(function (r) { return r.date; }), height: 230, title: "Resultado fatorial e específico por dia",
+          series: [
+            { name: "Fatorial", color: "var(--c2)", values: recs.map(function (r) { return g(r, "pnl_components.factor"); }) },
+            { name: "Específico (alpha)", color: "var(--c1)", values: recs.map(function (r) { return g(r, "pnl_components.specific"); }) }
+          ],
+          yFmt: function (v) { return usd(v); }, tipFmt: function (v) { return usdFull(v, true); }
+        });
+      }, 250),
+      h("details", { class: "mini" }, h("summary", null, "Ver o resultado diário por componente"),
+        table([
+          { label: "Data", get: function (r) { return r.date; }, render: function (r) { return fdate(r.date); } },
+          { label: "Resultado", num: true, get: function (r) { return r.pnl; }, render: function (r) { return signed(usdFull(r.pnl, true), r.pnl); } },
+          { label: "Retorno", num: true, get: function (r) { return r.ret; }, render: function (r) { return signed(spct(r.ret), r.ret); } },
+          { label: "Ações", num: true, render: function (r) { return usdFull(g(r, "pnl_components.equity"), true); } },
+          { label: "Fatorial", num: true, render: function (r) { return usdFull(g(r, "pnl_components.factor"), true); } },
+          { label: "Específico", num: true, render: function (r) { return usdFull(g(r, "pnl_components.specific"), true); } },
+          { label: "Financiamento", num: true, render: function (r) { return usdFull(g(r, "pnl_components.financing"), true); } },
+          { label: "Aluguel", num: true, render: function (r) { return usdFull(g(r, "pnl_components.borrow"), true); } },
+          { label: "Custos", num: true, render: function (r) { return usdFull(g(r, "pnl_components.costs"), true); } }
+        ], recs.slice().reverse(), { sortable: true, tall: true })))));
+  }
+}
+
+/* ====================================================================== Comitê de investimento */
+function metricFmt(v, unit) {
+  if (unit === "pct") return pct(v);
+  if (unit === "x") return fnum(v, 3, false);
+  if (unit === "count") return int(v);
+  if (unit === "days") return days(v);
+  return isNum(v) ? fnum(v, 3) : NA;
+}
+function diffFmt(v, unit) {
+  if (unit === "pct") return isNum(v) ? fnum(v * 100, 2, true) + " p.p." : NA;
+  if (unit === "x") return fnum(v, 3, true);
+  if (unit === "count") return fnum(v, 0, true);
+  if (unit === "days") return fnum(v, 2, true) + " d";
+  return fnum(v, 3, true);
+}
+function nameChips(ids) { return arr(ids).length ? h("span", { class: "chips" }, ids.map(function (x) { return chip(nm(x)); })) : "nenhum"; }
+function shadowSection(w) {
+  var s = w.shadow, T = "CDP × carteira quantitativa de referência";
+  if (!s || s.omitido) return fold(T, "não disponível nesta semana", false, empty("A comparação com a carteira quantitativa de referência não acompanha esta semana nesta versão do portal."));
+  var c = obj(s.comparison), ov = obj(c.overlap);
+  var mt = table([
+    { label: "Métrica", render: function (m) { return m.label || m.key; } },
+    { label: "CDP", num: true, render: function (m) { return metricFmt(m.cdp, m.unit); } },
+    { label: "Referência", num: true, render: function (m) { return metricFmt(m.shadow, m.unit); } },
+    { label: "Diferença", num: true, render: function (m) { return diffFmt(m.diff, m.unit); } }
+  ], arr(c.metrics));
+  var wd = table([
+    { label: "Emissor", get: function (r) { return nm(r.issuer_id); } },
+    { label: "Peso CDP", num: true, get: function (r) { return r.w_cdp; }, render: function (r) { return wOrOut(r.w_cdp); } },
+    { label: "Peso referência", num: true, get: function (r) { return r.w_shadow; }, render: function (r) { return wOrOut(r.w_shadow); } },
+    { label: "Diferença", num: true, title: "peso CDP − peso da referência (fora da carteira conta como zero)", get: function (r) { return r.diff; }, render: function (r) { return bps(r.diff); } }
+  ], arr(c.weight_diffs), { sortable: true, tall: true });
+  return fold(T, "o que a pesquisa e o gestor mudaram em relação ao modelo quantitativo puro", false,
+    h("div", { class: "cols-2" },
+      h("div", { class: "stack" }, mt, kv([
+        ["Nomes (CDP / referência)", int(ov.names_cdp) + " / " + int(ov.names_shadow)],
+        ["Em comum, mesmo lado", int(ov.common_same_side)],
+        ["Sobreposição de pesos", pct(ov.weight_overlap, 1)],
+        ["Active share", pct(ov.active_share, 1)],
+        ["Só no CDP", nameChips(ov.only_cdp)],
+        ["Só na referência", nameChips(ov.only_shadow)]
+      ])),
+      h("div", { class: "stack" }, h("h4", null, "Maiores diferenças de peso"), wd)));
+}
+function researchSection(w) {
+  var r = w.research;
+  if (!r) return fold("Pesquisa da semana", "sem pesquisa registrada", false, empty("Sem pesquisa registrada para esta semana."));
+  var cn = obj(r.counts);
+  var macro = arr(r.macro);
+  var macroCards = macro.length ? h("div", { class: "cards" }, macro.map(function (m) {
+    return h("div", { class: "card" },
+      h("div", { class: "card-h" }, h("b", null, COUNTRY_PT[m.scope] || (m.scope === "global" ? "Global" : m.scope) || NA), h("span", { class: "chips" }, stanceTag(m.stance))),
+      m.regime ? h("p", { class: "ink2" }, ptNums(m.regime)) : null,
+      m.summary ? md(m.summary, "sm") : null,
+      truncMark(m, "Nota macro"),
+      arr(m.key_events).length ? h("div", null, h("h4", null, "Eventos"), list(m.key_events, catText)) : null,
+      arr(m.risks).length ? h("div", null, h("h4", null, "Riscos"), list(m.risks, ptNums)) : null,
+      arr(m.portfolio_implications).length ? h("div", null, h("h4", null, "Implicações para a carteira"), list(m.portfolio_implications, ptLabel)) : null,
+      evidenceList(m.evidence));
+  })) : h("p", { class: "muted" }, "Sem leitura macro.");
+  var notes = arr(r.notes);
+  var notesBox = h("div", { class: "stack" });
+  if (notes.length) {
+    var roles = {};
+    notes.forEach(function (n) { if (n.role) roles[n.role] = 1; });
+    var q = h("input", { id: "notes-q", type: "search", placeholder: "emissor, tese, catalisador…", autocomplete: "off" });
+    var rs = h("select", { id: "notes-role" }, [h("option", { value: "" }, "todos")].concat(Object.keys(roles).sort().map(function (x) { return h("option", { value: x }, ROLE_PT[x] || x); })));
+    var list0 = h("div", { class: "cards" }), cnt = h("span", { class: "count" });
+    var more = h("button", { class: "btn", type: "button" }, "Mostrar mais");
+    var shown = 24;
+    var idx = notes.map(function (n) {
+      return [n, (nm(n.issuer_id) + " " + (n.thesis || "") + " " + arr(n.bull_points).join(" ") + " " + arr(n.bear_points).join(" ") + " " + arr(n.catalysts).map(function (c) { return c.description || ""; }).join(" ")).toLowerCase()];
+    });
+    var drawNotes = function () {
+      var qq = (q.value || "").trim().toLowerCase(), rr = rs.value;
+      var f = idx.filter(function (x) { return (!rr || x[0].role === rr) && (!qq || x[1].indexOf(qq) >= 0); });
+      list0.textContent = "";
+      f.slice(0, shown).forEach(function (x) { list0.appendChild(noteCard(x[0])); });
+      cnt.textContent = Math.min(shown, f.length) + " de " + f.length + " notas";
+      more.hidden = f.length <= shown;
+    };
+    q.addEventListener("input", function () { shown = 24; drawNotes(); });
+    rs.addEventListener("change", function () { shown = 24; drawNotes(); });
+    more.addEventListener("click", function () { shown += 24; drawNotes(); });
+    drawNotes();
+    add(notesBox, [h("div", { class: "ctrl" }, h("label", { class: "field", for: "notes-q" }, "Busca", q), h("label", { class: "field", for: "notes-role" }, "Tipo", rs), cnt), list0, more]);
+  } else {
+    notesBox.appendChild(h("p", { class: "muted" }, arr(r.notes_table).length ? "Nesta versão do portal, as notas aparecem resumidas na tabela abaixo." : "Sem notas por emissor nesta semana."));
+  }
+  var nt = arr(r.notes_table);
+  if (nt.length) {
+    notesBox.appendChild(h("details", { class: "mini" }, h("summary", null, "Demais notas (" + nt.length + ") em resumo"), table([
+      { label: "Emissor", get: function (n) { return nm(n.issuer_id); } },
+      { label: "Tipo", get: function (n) { return n.role; }, render: function (n) { return ROLE_PT[n.role] || n.role || NA; } },
+      { label: "Visão", num: true, get: function (n) { return n.stance; }, render: function (n) { return stanceTag(n.stance); } },
+      { label: "Confiança", num: true, get: function (n) { return n.confidence; }, render: function (n) { return pct(n.confidence, 0); } },
+      { label: "Horizonte", num: true, get: function (n) { return n.horizon_weeks; }, render: function (n) { return isNum(n.horizon_weeks) ? n.horizon_weeks + " sem." : NA; } },
+      { label: "Squeeze", get: function (n) { return n.squeeze_verdict; }, render: function (n) { var v = VERDICT[n.squeeze_verdict]; return v ? pill(v[0], v[1]) : h("span", { class: "muted" }, "—"); } }
+    ], nt, { sortable: true, tall: true })));
+  }
+  var views = arr(r.views);
+  var viewsT = views.length ? table([
+    { label: "Emissor", get: function (v) { return nm(v.issuer_id); } },
+    { label: "Visão", num: true, get: function (v) { return v.score; }, render: function (v) { return stanceTag(v.score); } },
+    { label: "Confiança", num: true, get: function (v) { return v.confidence; }, render: function (v) { return pct(v.confidence, 0); } },
+    { label: "Restrições", render: function (v) { return h("span", { class: "chips" }, v.no_long ? pill("sem long", "warn") : null, v.no_short ? pill("sem short", "warn") : null, isNum(v.max_abs_weight) ? chip("teto " + pct(v.max_abs_weight)) : null); } },
+    { label: "Racional", cls: "wrapcell", render: function (v) { return ptNums(v.rationale || ""); } }
+  ], views, { sortable: true, tall: true }) : h("p", { class: "muted" }, "Sem visões consolidadas.");
+  var news = arr(r.news);
+  var subTxt = plural(cn.notes, "nota", "notas") + " · " + plural(cn.views, "visão", "visões") + (isNum(cn.squeeze_veto) ? " · " + plural(cn.squeeze_veto, "veto", "vetos") + " de short por squeeze" : "");
+  return fold("Pesquisa da semana", subTxt, false,
+    r.is_synthetic ? h("div", null, pill("DADOS SIMULADOS", "sim")) : null,
+    h("h4", null, "Leitura macro por país"), macroCards,
+    h("h4", null, "Notas por emissor"), notesBox,
+    h("h4", null, "Visões consolidadas da pesquisa"), viewsT,
+    news.length ? h("div", null, h("h4", null, "Notícias consultadas (fonte externa, só referência)"), list(news, function (n) {
+      return h("span", null, fbrt(n.published_at) + " · " + (n.source || "") + " · ", extLink(n.url, n.title || "notícia"), n.is_synthetic ? " (simulada)" : "");
+    })) : null);
+}
+function weekSummaryDetail(w) {
+  var sm = obj(g(w, "proposal.summary")), perf = w.performance ? obj(w.performance) : null;
+  return h("div", { class: "stack" },
+    h("div", { class: "cols" }, decisionCard(w, true),
+      block("Carteira e desempenho", null,
+        h("div", { class: "kpis" },
+          tile("Posições", int(sm.n_long) + " long · " + int(sm.n_short) + " short", "vol ex-ante " + pct(sm.ex_ante_vol)),
+          tile("Bruta / líquida", pct(sm.gross, 1), "líquida " + spct(sm.net) + " · beta " + xnum(sm.beta)),
+          tile("Semana", perf ? signed(spct(perf.ret), perf.ret) : NA, perf ? "valor adicionado " + spct(perf.value_added) + " · " + plural(perf.n_days, "pregão", "pregões") : (w.executed ? "sem histórico" : "não executada"))))),
+    note("Semana anterior em versão resumida nesta versão do portal."));
+}
+/* dimensionamento do diário: a "vol-alvo" gravada é a meta da POSTURA (antes do viés a priori);
+   a meta aplicada na semana (exportada) vem ao lado, para não haver duas "metas" sem nome */
+function sizingTxt(t, w) {
+  if (!has(t)) return t;
+  var s = prose(String(t).replace(/\bvol-alvo(?= \d)/g, "vol-alvo da postura")), vt = volTarget(w);
+  return /vol-alvo da postura/.test(s) && isNum(vt) ? s.replace(/\s*$/, "") + " Meta de volatilidade aplicada na semana: " + pct(vt) + "." : s;
+}
+function weekDetail(w) {
+  if (w && w.detail === "resumo" && PUB) return weekSummaryDetail(w);
+  var box = h("div", { class: "stack" });
+  var d = w.decision || null, pm = pmFor(w), prop = w.proposal || null, j = d && d.journal ? obj(d.journal) : null;
+  var perf = w.performance ? obj(w.performance) : null;
+  if (PUB && w.detail_publicacao === "enxuta") box.appendChild(note("Semana anterior em versão resumida: leitura do gestor, decisão e carteira; risco detalhado e notas de pesquisa ficam no relatório semanal."));
+
+  /* leitura do gestor primeiro */
+  if (pm) {
+    box.appendChild(block("Leitura do gestor", "postura " + (pm.posture_label || pm.risk_posture || NA) + " · regime " + (pm.regime_label || pm.regime || NA) + (pm.abstain ? " · gestor sem visões novas" : ""),
+      h("div", { class: "reading" },
+        h("div", null, h("h3", null, "Visão de mercado"), md(prose(pm.market_view), "sm")),
+        h("div", null, h("h3", null, "O que mudou"), md(prose(pm.what_changed), "sm")),
+        h("div", null, h("h3", null, "Avaliação da semana anterior"), md(prose(pm.evaluation_last_week), "sm")))));
+  } else if (w.pm_decision && w.pm_decision.valid === false) {
+    box.appendChild(note("A leitura do gestor desta semana não pôde ser aproveitada; a carteira seguiu o modelo quantitativo dentro dos limites do mandato."));
+  }
+
+  /* resumo da decisão + desempenho */
+  var sm = prop ? obj(prop.summary) : {};
+  var ack = d ? arr(d.acknowledged_soft_checks) : [];
+  var decB = decisionCard(w, true);
+  if (d) {
+    var dl = decB.querySelector("dl");
+    if (dl && d.decision) { dl.insertBefore(h("dd", null, d.decision === "APPROVE" ? "aprovada" : d.decision === "REJECT" ? "rejeitada" : d.decision), dl.firstChild); dl.insertBefore(h("dt", null, "Decisão do comitê"), dl.firstChild); }
+    if (dl && ack.length) { dl.appendChild(h("dt", null, "Limites de alerta reconhecidos")); dl.appendChild(h("dd", null, ack.map(gateName).join("; "))); }
+  }
+  box.appendChild(h("div", { class: "cols" }, decB,
+    block("Desempenho da semana", perf ? fdate(perf.first_date) + " a " + fdate(perf.last_date) : null,
+      perf ? h("div", { class: "kpis" },
+        tile("CDP", signed(spct(perf.ret), perf.ret), usdFull(perf.pnl_usd, true) + " · " + plural(perf.n_days, "pregão", "pregões")),
+        tile("Referência quantitativa", signed(spct(perf.shadow_ret), perf.shadow_ret), plural(perf.shadow_n_days, "pregão", "pregões")),
+        tile("Valor adicionado", signed(spct(perf.value_added), perf.value_added), "CDP − referência")) : empty(w.executed ? "Sem histórico desta carteira ainda." : "Carteira ainda não executada."))));
+  if (prop) {
+    box.appendChild(h("div", { class: "kpis" },
+      tile("Posições", int(sm.n_positions), int(sm.n_long) + " long · " + int(sm.n_short) + " short"),
+      tile("Vol ex-ante", pct(sm.ex_ante_vol), "VaR 1 dia " + pct(sm.var_1d_99)),
+      tile("Bruta / líquida", pct(sm.gross, 1), "líquida " + spct(sm.net) + " · beta " + xnum(sm.beta)),
+      tile("Alpha esperado a.a.", pct(sm.expected_alpha_annual), "custo esperado " + pct(sm.expected_cost_annual) + " a.a."),
+      tile("Giro", pct(sm.turnover, 1), plural(sm.n_trades, "ordem", "ordens"))));
+  }
+
+  if (pm) {
+    var views = arr(pm.views);
+    box.appendChild(fold("Visões do gestor", plural(views.length, "emissor", "emissores") + " · visão −2 a +2, convicção 1 a 5", false, views.length ? table([
+      { label: "Emissor", get: function (v) { return nm(v.issuer_id); } },
+      { label: "Visão", num: true, get: function (v) { return v.stance; }, render: function (v) { return stanceTag(v.stance); } },
+      { label: "Convicção", num: true, get: function (v) { return v.conviction; }, render: function (v) { return isNum(v.conviction) ? v.conviction + "/5" : NA; } },
+      { label: "Horizonte", num: true, get: function (v) { return v.horizon_weeks; }, render: function (v) { return isNum(v.horizon_weeks) ? v.horizon_weeks + " sem." : NA; } },
+      { label: "Racional", cls: "wrapcell", render: function (v) { return prose(ptNums(v.rationale || "")); } }
+    ], views, { sortable: true, tall: true, stack: true }) : h("p", { class: "muted" }, "Sem visões.")));
+    var exl = arr(pm.exclusions);
+    if (exl.length) box.appendChild(fold("Restrições do gestor", plural(exl.length, "emissor", "emissores"), false, table([
+      { label: "Emissor", get: function (x) { return nm(x.issuer_id); } },
+      { label: "Restrição", render: function (x) { return h("span", { class: "chips" }, x.no_long ? pill("sem long", "warn") : null, x.no_short ? pill("sem short", "warn") : null); } },
+      { label: "Motivo", cls: "wrapcell", render: function (x) { return prose(ptNums(x.reason || "")); } }
+    ], exl, { tall: true, stack: true })));
+  }
+  if (j) {
+    box.appendChild(fold("Diário da decisão", "situação, alternativas, dimensionamento e pré-mortem", false,
+      kv([
+        ["Situação", md(prose(j.situation), "sm")], ["Variáveis-chave", list(j.key_variables, prose)], ["Alternativas consideradas", md(prose(j.alternatives_considered), "sm")],
+        ["Horizonte", isNum(j.horizon_weeks) ? j.horizon_weeks + " semanas" : NA], ["Dimensionamento", md(sizingTxt(j.sizing_rationale, w), "sm")],
+        ["Pesquisa × modelo × gestor", md(prose(j.ai_vs_quant_vs_pm), "sm")], ["Pré-mortem", md(prose(j.premortem), "sm")],
+        ["Catalisadores", list(j.catalysts, catText)]
+      ])));
+  }
+  if (prop) {
+    var opt = prop.optimizer ? obj(prop.optimizer) : null, exc = obj(opt && opt.n_excluded);
+    var vt = volTarget(w);
+    var cParts = [kv([
+      opt && isNum(opt.n_candidates) ? ["Candidatos analisados", int(opt.n_candidates)] : null,
+      ["Posições na carteira final", int(sm.n_positions)],
+      isNum(vt) ? ["Vol-alvo aplicada", pct(vt) + (isNum(MR.vol_target_annual) ? " (mandato " + pct(MR.vol_target_annual) + ")" : "")] : null,
+      opt && arr(opt.binding_constraints).length ? ["Restrições ativas na solução", h("span", { class: "chips" }, opt.binding_constraints.map(function (x) { return chip(constraintName(x)); }))] : null
+    ])];
+    if (Object.keys(exc).length) cParts.push(h("div", null, h("h4", null, "Motivos de exclusão no universo"), barList(Object.keys(exc).map(function (k) { return { label: EXCL_PT[k] || k.replace(/_/g, " "), value: exc[k] }; }), { fmt: function (v) { return int(v); }, diverging: false, color: "var(--shadow)" }),
+      note("Um mesmo emissor pode ser excluído por mais de um motivo, ou só de uma das pontas.")));
+    if (arr(prop.positions).length) {
+      cParts.push(h("details", { class: "mini" }, h("summary", null, "Posições-alvo (" + prop.positions.length + ")"), table([
+        { label: "Emissor", get: function (r) { return r.name || nm(r.issuer_id); }, render: function (r) { return h("span", null, r.name || nm(r.issuer_id), h("span", { class: "cellsub" }, tk(r.execution_ticker))); } },
+        { label: "Lado", get: function (r) { return r.side; }, render: function (r) { return sideTag(r.side); } },
+        { label: "Peso", num: true, get: function (r) { return r.weight; }, render: function (r) { return spct(r.weight); } },
+        { label: "País", get: function (r) { return countryName(r.country); } },
+        { label: "Setor", get: function (r) { return sectorName(r.sector); } },
+        { label: "Alpha a.a.", num: true, get: function (r) { return r.alpha_annual; }, render: function (r) { return spct(r.alpha_annual); } },
+        { label: "Contribuição ao risco", num: true, get: function (r) { return r.risk_contribution; }, render: function (r) { return pct(r.risk_contribution, 1); } }
+      ], prop.positions, { sortable: true, tall: true })));
+    }
+    box.appendChild(fold("Construção da carteira", "do universo à carteira final", false, cParts));
+  }
+  box.appendChild(shadowSection(w));
+  box.appendChild(researchSection(w));
+  return box;
+}
+function renderDecisoes(p) {
+  if (!WEEKS.length) { p.appendChild(sec("Comitê de investimento", null, empty(firstCloseText()))); return; }
+  var desc = WEEKS.slice().reverse();
+  var saved = lsGet("week");
+  var cur = WBY[saved] ? saved : (CURW ? CURW.week : desc[0].week);
+  var strip = h("div", { class: "weeks", role: "group", "aria-label": "Semanas" });
+  var holder = h("div");
+  function sel(wk) {
+    cur = wk; lsSet("week", wk);
+    strip.querySelectorAll(".wk").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-week") === wk ? "true" : "false"); });
+    holder.textContent = "";
+    holder.appendChild(weekDetail(WBY[wk]));
+    drawCharts("decisoes", false);
+  }
+  desc.forEach(function (w) {
+    var perf = w.performance ? obj(w.performance) : null;
+    var b = h("button", { class: "wk", type: "button", id: "wk-" + w.week, "data-week": w.week, "aria-pressed": w.week === cur ? "true" : "false" },
+      h("b", null, fdate(w.week)),
+      h("span", null, pill(WEEK_STAGE[w.stage] || w.stage || NA, WEEK_STAGE_TONE[w.stage] || "na")),
+      h("span", null, perf ? "semana " + spct(perf.ret) + " · valor adic. " + spct(perf.value_added) : (w.executed ? "sem histórico" : "não executada")));
+    b.addEventListener("click", function () { sel(w.week); });
+    strip.appendChild(b);
+  });
+  p.appendChild(sec("Comitê de investimento", "leitura do gestor, decisão e pesquisa de cada semana", desc.length > 1 ? strip : null, holder));
+  holder.appendChild(weekDetail(WBY[cur]));
+}
+
+/* ====================================================================== Relatórios */
+/* relatório gravado pelo processo: fica a leitura de investimento; seções e linhas operacionais saem */
+var REP_DROP = /^(Integridade|Compliance|Trilha|Auditoria)/i;
+var REP_LINE = /\b(claude|codex|hash|fallback|AUTONOMOUS|HARD|SOFT|gates?)\b|sha-?256|^\|\s*(Caminho|Mente|Modo)\b|^_?Autoria:/;
+function repMd(t) {
+  if (!has(t)) return t;
+  var out = [], skip = false;
+  scrubPath(scrubMind(String(t))).split("\n").forEach(function (l) {
+    var m = /^#{1,4}\s+(.*)$/.exec(l);
+    if (m) skip = REP_DROP.test(m[1].trim());
+    if (!skip && !REP_LINE.test(l)) out.push(l);
+  });
+  return prose(out.join("\n")).replace(/sombra só-quant/g, "carteira quantitativa de referência").replace(/\bsombra\b/g, "referência quantitativa").replace(/ · · /g, " · ");
+}
+function renderRelatorios(p) {
+  var items = [];
+  WEEKS.slice().reverse().forEach(function (w) {
+    var r = obj(w.report);
+    if (r.available) items.push({ kind: "weekly", date: w.week, key: "w:" + w.week, md: r.markdown, week: w });
+    else if (w.memo_markdown) items.push({ kind: "weekly", date: w.week, key: "w:" + w.week, md: w.memo_markdown, memo: true, week: w });
+  });
+  DREP.forEach(function (r) { items.push({ kind: "daily", date: r.date, key: "d:" + r.date, md: r.report_markdown, rep: r }); });
+  var seen = {};
+  items.forEach(function (i) { seen[i.key] = 1; });
+  RIDX.forEach(function (r) {
+    var k = (r.kind === "weekly" ? "w:" : "d:") + r.date;
+    if (!seen[k]) { items.push({ kind: r.kind, date: r.date, key: k, md: null, notExported: true, path: reportPath(r) }); seen[k] = 1; }
+  });
+  items.sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : (a.kind === "weekly" ? -1 : 1); });
+  if (!items.length) { p.appendChild(sec("Relatórios", null, empty("Nenhum relatório publicado ainda. O relatório semanal sai com a decisão do comitê; o diário, após o fechamento."))); return; }
+  var listEl = h("div", { class: "replist", role: "group", "aria-label": "Relatórios" });
+  var view = h("div", { class: "stack" });
+  var saved = lsGet("report");
+  var cur = items.filter(function (i) { return i.key === saved; })[0] || items[0];
+  function show(it) {
+    cur = it; lsSet("report", it.key);
+    listEl.querySelectorAll(".repitem").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-key") === it.key ? "true" : "false"); });
+    view.textContent = "";
+    var title = (it.kind === "weekly" ? "Relatório semanal · semana de " : "Relatório diário · ") + fdate(it.date);
+    var meta = h("div", { class: "chips" });
+    if (it.rep && isNum(it.rep.ret)) meta.appendChild(chip("dia " + spct(it.rep.ret)));
+    if (it.rep && isNum(it.rep.nav_end)) meta.appendChild(chip("PL " + usd(it.rep.nav_end)));
+    if (it.memo) meta.appendChild(pill("Memorando da decisão", "info"));
+    view.appendChild(h("div", { class: "block-h" }, h("h3", null, title), meta.childNodes.length ? meta : null));
+    var c = it.rep && it.rep.commentary ? obj(it.rep.commentary) : null;
+    if (c && has(c.markdown)) {
+      view.appendChild(h("div", { class: "comment" },
+        h("div", { class: "card-h" }, h("h3", null, "Comentário do dia"), h("span", { class: "muted" }, c.ai ? "Comentário da gestão (IA)" : "Comentário automático")),
+        md(repMd(c.markdown)), truncMark(c, "Comentário")));
+    }
+    if (it.notExported) view.appendChild(empty("Este relatório não acompanha esta versão do portal."));
+    else if (!has(it.md) && PUB) view.appendChild(empty("O texto completo do relatório não acompanha esta versão do portal. " + (it.kind === "weekly" ? "A decisão da semana está em Comitê de investimento." : "O comentário do dia aparece acima quando disponível.")));
+    else if (!has(it.md)) view.appendChild(empty("Relatório resumido: o texto completo acompanha só os relatórios mais recentes."));
+    else view.appendChild(block(null, null, md(repMd(it.md))));
+  }
+  items.forEach(function (it) {
+    var b = h("button", { class: "repitem", type: "button", "data-key": it.key, "aria-pressed": "false" },
+      h("span", null, h("b", null, fdate(it.date)), h("small", null, " " + (it.kind === "weekly" ? "semanal" : "diário"))),
+      h("small", null, it.rep && isNum(it.rep.ret) ? spct(it.rep.ret) : it.memo ? "memorando" : ""));
+    b.addEventListener("click", function () { show(it); });
+    listEl.appendChild(b);
+  });
+  p.appendChild(sec("Relatórios", plural(items.length, "relatório", "relatórios"), h("div", { class: "rep" }, listEl, view)));
+  show(cur);
+}
+
+/* ====================================================================== Pesquisa quantitativa */
+var BT_METRICS = [
+  ["Retorno", [["ann_return", "Retorno a.a. (líquido)", "pct"], ["ann_return_gross", "Retorno a.a. só das ações (bruto)", "pct"], ["total_return", "Retorno total", "pct"], ["final_nav", "PL final", "usd"]]],
+  ["Risco", [["ann_vol", "Volatilidade realizada a.a.", "pct"], ["max_drawdown", "Drawdown máximo", "pct"], ["best_week", "Melhor semana", "pct"], ["worst_week", "Pior semana", "pct"], ["skew", "Assimetria", "ratio"], ["excess_kurtosis", "Curtose em excesso", "ratio"]]],
+  ["Eficiência", [["sharpe", "Índice de Sharpe", "ratio"], ["sharpe_gross", "Sharpe das ações (bruto)", "ratio"], ["sortino", "Sortino", "ratio"], ["calmar", "Calmar", "ratio"], ["psr", "Probabilidade de Sharpe > 0", "pct"], ["deflated_sharpe", "Sharpe deflacionado", "pct"], ["hit_rate_weekly", "Semanas positivas", "pct"]]],
+  ["Banda de volatilidade", [["vol_target", "Vol-alvo", "pct"], ["avg_ex_ante_vol", "Vol ex-ante média", "pct"], ["max_ex_ante_vol", "Vol ex-ante máxima", "pct"], ["avg_realized_vol_63d", "Vol realizada 63d média", "pct"], ["pct_time_vol_in_band", "% do tempo na banda", "pct"]]],
+  ["Carteira e custos", [["avg_gross", "Exposição bruta média", "pct"], ["avg_abs_net", "|Exposição líquida| média", "pct"], ["avg_turnover_weekly", "Giro semanal médio", "pct"], ["cost_drag_annual", "Custos de transação a.a.", "pct"], ["borrow_drag_annual", "Aluguel a.a.", "pct"], ["financing_annual", "Financiamento a.a.", "pct"]]],
+  ["Atribuição", [["factor_pnl_annual", "Resultado fatorial a.a.", "pct"], ["specific_pnl_annual", "Resultado específico a.a.", "pct"]]],
+  ["Amostra", [["n_obs", "Observações (dias)", "int"], ["n_rebalances", "Rebalanceamentos", "int"], ["n_relaxed", "Semanas com restrições relaxadas", "int"], ["n_trials", "Variantes testadas (base do Sharpe deflacionado)", "int"]]]
+];
+function btFmt(v, u) {
+  if (!isNum(v)) return NA;
+  if (u === "pct") return pct(v);
+  if (u === "usd") return usd(v);
+  if (u === "int") return int(v);
+  return fnum(v, u === "ic" ? 4 : 2);
+}
+var SERIES_COLORS = ["var(--c1)", "var(--c2)", "var(--c3)", "var(--c4)", "var(--c5)", "var(--c6)"];
+/* rótulo legível da variante a partir do identificador exportado */
+var BT_PHRASES = { alpha_kappa: "meta de risco escalando o alpha", lambda_kappa: "meta de risco pela aversão a risco", custo_x2: "custos ×2", sem_reversao: "sem reversão de curto prazo" };
+function btWords(s) {
+  Object.keys(BT_PHRASES).forEach(function (k) { s = s.split(k).join("|" + BT_PHRASES[k] + "|"); });
+  return s.split("|").map(function (x) { return x.replace(/^_+|_+$/g, "").replace(/_/g, " "); }).filter(Boolean).join(" + ");
+}
+function btLabel(r) {
+  var id = String(r.id || r.label || ""), tail = id.slice(id.lastIndexOf("/") + 1);
+  var m = /^([A-Z])_(.+)$/.exec(tail), v = /^v(\d+)_(.+)$/.exec(tail);
+  if (m) return "Variante " + m[1] + " · " + btWords(m[2]);
+  if (v) return "Versão " + v[1] + " · " + btWords(v[2]);
+  return r.label && !/_/.test(r.label) ? r.label : btWords(tail);
+}
+var RELAX_PT = { turnover: "giro", style: "estilos", country_sector: "país e setor", country: "país", sector: "setor", liquidity: "liquidez" };
+function btNote(n) {
+  var m = /^(\d{4}-\d{2}-\d{2}): relaxamentos \[([^\]]*)\]/.exec(n);
+  if (m) return fdate(m[1]) + ": restrições relaxadas (" + m[2].replace(/'/g, "").split(/,\s*/).map(function (x) { return RELAX_PT[x] || x; }).join(", ") + ")";
+  return ptLabel(ptNums(plain(btPlain(n)).replace(/\b(residual_momentum|short_term_reversal|low_risk|analyst_revision|momentum|value|quality)\b/g, function (k) { return (STYLE_PT[k] || k).toLowerCase(); }).replace(/\(PIT\)/g, "(point-in-time)").replace(/\s*\(NaN\)/g, "")));
+}
+/* notas do estudo com jargão de engenharia/execução (como tt() faz na tese): só troca a expressão,
+   nenhum número muda */
+function btPlain(n) {
+  return String(n).replace(/\s*\((?:docs|configs|reports|data)\/[^)]*\)/g, "")
+    .replace(/\s*(?:em|no) modo (?:de meta )?'?match'?/g, "").replace(/\(config ([^/)]*?)\s*\/\s*/g, "(mandato $1; ").replace(/\(config /g, "(mandato ")
+    .replace(/\bdo pipeline ao vivo\b/g, "da carteira ao vivo").replace(/\bpipeline ao vivo\b/g, "carteira ao vivo").replace(/\bpipeline\b/g, "processo")
+    .replace(/\(bucket LOW\)/g, "(todos tratados como risco baixo)").replace(/\bbucket (LOW|MEDIUM|HIGH)\b/g, function (m, b) { return "risco " + (SQ_PT[b] || b).toLowerCase(); })
+    .replace(/\btaxas GC\b/g, "taxas de aluguel padrão").replace(/\bpesos WLS do modelo\b/g, "a ponderação por capitalização do modelo de risco").replace(/\bWLS\b/g, "regressão ponderada")
+    .replace(/\bUSD_3M\b/g, "juro de 3 meses em dólar").replace(/\bvisões de LLM\b/g, "visões geradas por IA").replace(/\bLLM\b/g, "IA")
+    .replace(/^Escada de drawdown do mandato não é aplicada/, "A política de controle de perdas do mandato não é aplicada");
+}
+function renderBacktest(p) {
+  var runs = arr(BT.runs);
+  if (!BT.available || !runs.length) {
+    p.appendChild(sec("Pesquisa quantitativa", null, empty("Nenhum estudo histórico do modelo quantitativo disponível. Os estudos medem só o núcleo quantitativo: a camada de pesquisa assistida por IA não pode ser testada honestamente em dados passados.")));
+    return;
+  }
+  var color = {};
+  runs.forEach(function (r, i) { color[r.id] = SERIES_COLORS[i % SERIES_COLORS.length]; });
+  var saved = lsGet("bt-run");
+  var sel = obj(BT.selected);
+  var cur = runs.filter(function (r) { return r.id === saved; })[0] || runs.filter(function (r) { return r.id === sel.id; })[0] || runs[0];
+  var icKeys = {};
+  runs.forEach(function (r) { Object.keys(obj(r.metrics)).forEach(function (k) { if (k.indexOf("ic_mean:") === 0) icKeys[k] = 1; }); });
+  var groups = BT_METRICS.concat([["IC médio por sinal", Object.keys(icKeys).sort().map(function (k) { return [k, STYLE_PT[k.slice(8)] || k.slice(8), "ic"]; })]]);
+  var t = h("table", { class: "tbl" });
+  var hr = h("tr", null, h("th", { class: "sticky", scope: "col" }, "Métrica"));
+  runs.forEach(function (r) { hr.appendChild(h("th", { class: "num", scope: "col" }, h("span", { class: "nowrap" }, h("i", { style: "display:inline-block;width:10px;height:3px;border-radius:2px;margin-right:6px;vertical-align:middle;background:" + color[r.id] }), btLabel(r)), r.id === sel.id ? h("span", { class: "cellsub" }, "vigente") : null, r.is_synthetic ? h("span", { class: "cellsub" }, "DADOS SIMULADOS") : null)); });
+  t.appendChild(h("thead", null, hr));
+  var tb = h("tbody");
+  groups.forEach(function (gr) {
+    var rows = gr[1].filter(function (m) { return runs.some(function (r) { return obj(r.metrics)[m[0]] !== undefined; }); });
+    if (!rows.length) return;
+    tb.appendChild(h("tr", { class: "grp" }, h("td", { class: "sticky", colspan: runs.length + 1 }, gr[0])));
+    rows.forEach(function (m) {
+      var tr = h("tr", null, h("td", { class: "sticky" }, m[1]));
+      runs.forEach(function (r) { tr.appendChild(h("td", { class: "num" + (r.id === cur.id ? " selcol" : "") }, btFmt(obj(r.metrics)[m[0]], m[2]))); });
+      tb.appendChild(tr);
+    });
+  });
+  t.appendChild(tb);
+  p.appendChild(sec("Pesquisa quantitativa", "estudos históricos do modelo quantitativo (sem a camada de pesquisa assistida por IA)",
+    h("p", { class: "lead" }, "Simulações semanais fora da amostra do núcleo quantitativo do fundo, com custos de transação, aluguel e financiamento. Servem para calibrar o modelo; não são o histórico do fundo."),
+    h("div", { class: "scroll" }, t),
+    sel.id ? note("Configuração vigente: " + btLabel(runs.filter(function (r) { return r.id === sel.id; })[0] || { id: sel.id }) + ".") : null));
+
+  var dates = {}, monthly = false;
+  runs.forEach(function (r) { var nv = navOf(r); if (nv && !r.nav_weekly) monthly = true; arr(g(nv, "date")).forEach(function (d) { dates[d] = 1; }); });
+  var labels = Object.keys(dates).sort();
+  if (labels.length) {
+    var navSer = runs.filter(function (r) { return navOf(r); }).map(function (r) {
+      var nv = navOf(r), m = {}, ds = arr(nv.date), vs = arr(nv.nav);
+      ds.forEach(function (d, i) { m[d] = vs[i]; });
+      return { name: btLabel(r), color: color[r.id], values: labels.map(function (d) { return m[d] === undefined ? null : m[d]; }) };
+    });
+    p.appendChild(sec("Evolução simulada do patrimônio", (monthly ? "fim de mês" : "semanal") + ", US$",
+      block(null, null, chart(function (el) {
+        lineChart(el, { labels: labels, series: navSer, height: 300, yFmt: function (v) { return usd(v); }, tipFmt: function (v) { return usd(v); }, xFmt: fmonth, legend: true, legendLast: true, title: "Patrimônio simulado das variantes" });
+      }, 320))));
+  }
+
+  var seg = h("div", { class: "seg", role: "group", "aria-label": "Variante" });
+  var box = h("div", { class: "stack" });
+  runs.forEach(function (r) {
+    var b = h("button", { type: "button", id: "bt-" + String(r.id).replace(/[^A-Za-z0-9_-]/g, "_"), "aria-pressed": r.id === cur.id ? "true" : "false" }, btLabel(r));
+    b.addEventListener("click", function () {
+      cur = r; lsSet("bt-run", r.id);
+      seg.querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+      t.querySelectorAll("td.selcol").forEach(function (x) { x.classList.remove("selcol"); });
+      var idx = runs.indexOf(r) + 2;
+      t.querySelectorAll("tbody tr").forEach(function (tr) { var c = tr.querySelector("td:nth-child(" + idx + ")"); if (c && tr.children.length > 1) c.classList.add("selcol"); });
+      drawRun(r, box);
+      drawCharts("backtest", true);
+    });
+    seg.appendChild(b);
+  });
+  p.appendChild(sec("Detalhe da variante", null, seg, box));
+  drawRun(cur, box);
+}
+function navOf(r) { return r && (r.nav_weekly || r.nav_monthly) ? obj(r.nav_weekly || r.nav_monthly) : null; }
+function drawRun(r, box) {
+  box.textContent = "";
+  var pv = obj(r.provenance), nw = navOf(r), wk = r.weekly ? obj(r.weekly) : null, ic = r.ic ? obj(r.ic) : null;
+  var freq = r.nav_weekly ? "semanal" : "fim de mês";
+  var notes = arr(r.notes);
+  var relax = notes.filter(function (n) { return /^\d{4}-\d{2}-\d{2}/.test(n); }), lims = notes.filter(function (n) { return !/^\d{4}-\d{2}-\d{2}/.test(n); });
+  var sw = obj(r.signal_weights);
+  box.appendChild(h("div", { class: "cols" },
+    block(btLabel(r), null,
+      r.is_synthetic ? pill("DADOS SIMULADOS", "sim") : null,
+      kv([
+        ["Período", fdate(pv.first_date) + " a " + fdate(pv.last_date)],
+        ["Observações diárias", int(r.n_daily_obs)],
+        ["Emissores no modelo", int(pv.n_estimation_issuers)],
+        ["Pesos dos sinais", Object.keys(sw).length ? Object.keys(sw).map(function (k) { return (STYLE_PT[k] || k) + " " + pct(sw[k], 0); }).join(" · ") : "os do mandato"]
+      ])),
+    block("Limitações", "o que o estudo não mede",
+      lims.length ? list(lims, btNote) : h("p", { class: "muted" }, "Sem notas de limitação nesta versão do portal."),
+      relax.length ? h("details", { class: "mini" }, h("summary", null, plural(relax.length, "semana", "semanas") + " com restrições relaxadas"), list(relax, btNote)) : null)));
+  if (nw && arr(nw.date).length) {
+    var d = arr(nw.date);
+    box.appendChild(h("div", { class: "cols-2" },
+      block("Drawdown", freq,
+        chart(function (el) { lineChart(el, { labels: d, series: [{ name: "Drawdown", color: "var(--crit-mark)", values: arr(nw.drawdown) }], zero: true, height: 220, yFmt: function (v) { return pct(v, 0); }, tipFmt: function (v) { return pct(v, 2); }, xFmt: fmonth, title: "Drawdown simulado" }); }, 240)),
+      nw.cum_specific_pnl ? block("Resultado acumulado por componente", "fração do PL; custos e aluguel subtraem",
+        chart(function (el) {
+          lineChart(el, {
+            labels: d, zero: true, height: 220, xFmt: fmonth, yFmt: function (v) { return pct(v, 0); }, tipFmt: function (v) { return spct(v, 2); }, title: "Resultado acumulado por componente",
+            series: [
+              { name: "Específico", color: "var(--c1)", values: arr(nw.cum_specific_pnl) }, { name: "Fatorial", color: "var(--c2)", values: arr(nw.cum_factor_pnl) },
+              { name: "Financiamento", color: "var(--c3)", values: arr(nw.cum_financing) }, { name: "Custos de transação", color: "var(--c4)", values: arr(nw.cum_cost_pnl) },
+              { name: "Aluguel", color: "var(--c5)", values: arr(nw.cum_borrow_pnl) }
+            ]
+          });
+        }, 260)) : block("Patrimônio simulado", freq, chart(function (el) {
+          lineChart(el, { labels: d, series: [{ name: "PL", color: "var(--accent)", values: arr(nw.nav) }], height: 220, xFmt: fmonth, yFmt: function (v) { return usd(v); }, tipFmt: function (v) { return usd(v); }, title: "Patrimônio simulado" });
+        }, 240))));
+  }
+  if (wk && arr(wk.date).length) {
+    box.appendChild(block("Vol ex-ante × banda do mandato", "por rebalanceamento",
+      chart(function (el) {
+        lineChart(el, {
+          labels: arr(wk.date), height: 220, xFmt: fmonth, yFmt: function (v) { return pct(v, 1); }, tipFmt: function (v) { return pct(v, 2); }, title: "Vol ex-ante simulada",
+          band: { lo: MR.vol_band_min, hi: MR.vol_band_max, label: "banda " + pct(MR.vol_band_min, 0) + "–" + pct(MR.vol_band_max, 0) },
+          series: [{ name: "Vol ex-ante", color: "var(--accent)", values: arr(wk.ex_ante_vol) }, { name: "Vol-alvo", color: "var(--shadow)", values: arr(wk.vol_target) }]
+        });
+      }, 240)));
+  }
+  if (ic) {
+    var sm = obj(ic.summary), keys = Object.keys(sm);
+    var cum = obj(ic.cumulative), cd = arr(cum.date);
+    box.appendChild(h("div", { class: "cols" },
+      block("Poder preditivo por sinal (IC)", "correlação de ordem entre o sinal e o retorno da semana seguinte",
+        cd.length ? chart(function (el) {
+          lineChart(el, {
+            labels: cd, height: 240, zero: true, xFmt: fmonth, yFmt: function (v) { return fnum(v, 1); }, tipFmt: function (v) { return fnum(v, 2); }, legend: true, title: "IC acumulado por sinal",
+            series: keys.filter(function (k) { return cum[k]; }).map(function (k, i) { return { name: STYLE_PT[k] || k, color: SERIES_COLORS[i % SERIES_COLORS.length], values: arr(cum[k]) }; })
+          });
+        }, 260) : null, note("Linhas = IC acumulado semana a semana.")),
+      block("Resumo do IC", null, table([
+        { label: "Sinal", render: function (k) { return STYLE_PT[k] || k; } },
+        { label: "Semanas", num: true, render: function (k) { return int(sm[k].n); } },
+        { label: "Média", num: true, render: function (k) { return fnum(sm[k].mean, 4); } },
+        { label: "Desvio", num: true, render: function (k) { return fnum(sm[k].std, 3); } },
+        { label: "Estatística t", num: true, render: function (k) { return fnum(sm[k].t_stat, 2); } },
+        { label: "% positivo", num: true, render: function (k) { return pct(sm[k].pct_positive, 0); } }
+      ], keys))));
+  }
+}
+
+/* ====================================================================== Mandato e metodologia */
+function rng(a, b, f) { return isNum(a) && isNum(b) ? f(a) + " – " + f(b) : NA; }
+function pm0(v) { return isNum(v) ? "±" + pct(v) : NA; }
+function mandTable(title, rows) {
+  rows = rows.filter(function (r) { return r && r[1] !== undefined; });
+  return h("div", { class: "card" }, h("h3", null, title), kv(rows.map(function (r) { return [r[0], r[1] === null || r[1] === "" ? NA : r[1]]; })));
+}
+function renderMandato(p) {
+  var gsm = obj(MR.country_gross_share_max), th = obj(MR.theme_net_max_abs), sw = obj(MAL.signal_weights);
+  var hasMand = Object.keys(MR).length > 0;
+  var cards = hasMand ? h("div", { class: "cards wide" },
+    mandTable("Risco e exposição", [
+      ["Volatilidade-alvo ex-ante (a.a.)", pct(MR.vol_target_annual)],
+      ["Banda de volatilidade", rng(MR.vol_band_min, MR.vol_band_max, function (v) { return pct(v, 0); })],
+      ["Exposição líquida", pm0(MR.net_exposure_max_abs) + " do PL"],
+      ["Beta para o mercado", isNum(MR.beta_max_abs) ? "±" + fnum(MR.beta_max_abs, 2) : NA],
+      ["Exposição bruta", rng(MR.gross_min, MR.gross_max, function (v) { return pct(v, 0); }) + " do PL"],
+      ["Líquido por país / por setor", pm0(MR.country_net_max_abs) + " / " + pm0(MR.sector_net_max_abs)],
+      ["Estilos (fatores)", isNum(MR.style_exposure_max_abs) ? "±" + fnum(MR.style_exposure_max_abs, 2) + " desvio-padrão × PL" : NA],
+      Object.keys(th).length ? ["Temas", Object.keys(th).map(function (k) { return (THEME_PT[k] || k) + " " + pm0(th[k]); }).join(" · ")] : null,
+      ["Commodities (Σ peso × beta)", pm0(MR.commodity_beta_max_abs)],
+      ["Peso por nome (long / short)", pct(MR.max_long_weight) + " / " + pct(MR.max_short_weight) + (isNum(MR.min_position_weight) ? " · mínimo " + pct(MR.min_position_weight) : "")],
+      ["Contribuição de um nome ao risco", "até " + pct(MR.max_single_name_risk_share, 0) + " da variância"],
+      ["Parcela fatorial do risco", "até " + pct(MR.max_factor_risk_share, 0) + " da variância"],
+      ["VaR / ES 1 dia (99%)", pct(MR.var_1d_max) + " / " + pct(MR.es_1d_max) + " do PL"],
+      ["Perda máxima em gap de país", pct(MR.country_stress_max_loss) + " do PL"],
+      Object.keys(gsm).length ? ["Fatia máxima da exposição bruta por país", Object.keys(gsm).map(function (k) { return countryName(k) + " " + pct(gsm[k], 0); }).join(" · ")] : null
+    ]),
+    mandTable("Liquidez", [
+      ["Participação no volume diário", "long " + pct(MLQ.participation_rate, 0) + " · short " + pct(MLQ.short_participation_rate, 0)],
+      ["Prazo máximo para liquidar", "long " + days(MLQ.max_days_to_liquidate_long) + " · short " + days(MLQ.max_days_to_liquidate_short)],
+      ["Exposição bruta liquidável", "≥ " + pct(MLQ.min_gross_liquid_3d, 0) + " em 3 dias · ≥ " + pct(MLQ.min_gross_liquid_5d, 0) + " em 5 dias"],
+      ["Volume médio diário mínimo", "long " + usd(MLQ.min_adtv_long_usd) + " · short " + usd(MLQ.min_adtv_short_usd)],
+      ["Giro semanal máximo", pct(MLQ.max_weekly_turnover, 0) + " do PL"],
+      ["Janela do volume médio", isNum(MLQ.adv_window_days) ? MLQ.adv_window_days + " pregões" : NA]
+    ]),
+    mandTable("Short e aluguel", [
+      ["Instrumentos com short permitido", arr(MSH.shortable_line_types).map(function (x) { return LINE_PT[x] || x; }).join(", ") || NA],
+      ["Aluguel máximo", pct(MSH.max_borrow_fee) + " a.a."],
+      ["Valor de mercado mínimo para short", usd(MSH.min_market_cap_short_usd)]
+    ]),
+    mandTable("Risco de squeeze", [
+      ["Escore (médio / alto)", fnum(MSQ.score_medium, 0) + " / " + fnum(MSQ.score_high, 0)],
+      ["Short interest, % do free float", pct(MSQ.si_pct_float_medium, 0) + " / " + pct(MSQ.si_pct_float_high, 0)],
+      ["Dias para cobrir", fnum(MSQ.days_to_cover_medium, 0) + " / " + fnum(MSQ.days_to_cover_high, 0)],
+      ["Aluguel (médio / alto)", pct(MSQ.borrow_fee_medium, 0) + " / " + pct(MSQ.borrow_fee_high, 0) + (isNum(MSQ.br_borrow_fee_medium) ? " · B3 " + pct(MSQ.br_borrow_fee_medium, 0) + " / " + pct(MSQ.br_borrow_fee_high, 0) : "")],
+      ["Squeeze alto", "short vedado"],
+      ["Squeeze médio ou sem dado", isNum(MSQ.medium_short_cap_multiplier) ? "teto do nome × " + fnum(MSQ.medium_short_cap_multiplier, 2) : NA],
+      ["Stops do short", pct(MSQ.stop_short_position_loss, 0) + " de perda desde a entrada (corta metade) ou " + pct(MSQ.stop_short_nav_loss, 1) + " do PL"]
+    ]),
+    mandTable("Política de controle de perdas", [
+      ["Nível 1 · revisão", "drawdown de " + pct(MDD.soft_stop, 1) + ": revisão da carteira e exposição bruta × " + fnum(MDD.soft_degross_multiplier, 2)],
+      ["Nível 2 · redução", "drawdown de " + pct(MDD.hard_stop, 1) + ": exposição bruta × " + fnum(MDD.degross_multiplier, 2)],
+      ["Nível 3 · stop-out", "drawdown de " + pct(MDD.stop_out, 1) + ": exposição bruta reduzida a " + pct(MDD.stop_out_gross, 0) + " do PL"],
+      ["Referência", "pico do patrimônio desde o início"]
+    ])) : empty("Os limites do mandato não acompanham esta versão do portal; os aplicados à carteira aparecem em Risco e exposições.");
+  p.appendChild(sec("Mandato", "limites de investimento e de risco do fundo", cards, eventWindows()));
+
+  var sigs = Object.keys(sw).filter(function (k) { return isNum(sw[k]) && sw[k] > 0; }).map(function (k) { return (STYLE_PT[k] || k).toLowerCase() + " " + pct(sw[k], 0); });
+  var steps = [
+    ["Decisão semanal", "A carteira é decidida uma vez por semana, no primeiro pregão da semana na B3, com dados até o pregão anterior, e executada no leilão de fechamento do mesmo dia. Entre as decisões, a carteira é acompanhada diariamente contra o mandato."],
+    ["Alpha quantitativo", "Sinais padronizados por emissor" + (sigs.length ? " (" + sigs.join(", ") + ")" : "") + ", ortogonalizados aos fatores de risco" + (isNum(MAL.horizon_weeks) ? ", com horizonte de " + MAL.horizon_weeks + " semanas" : "") + "."],
+    ["Pesquisa", "Pesquisa fundamental por emissor, análise de risco de short (squeeze e aluguel) e leitura macro por país, com apoio de IA. Visões da pesquisa e do gestor só inclinam o alpha dentro de um teto" + (isNum(MAL.max_view_tilt_z) ? " de " + fnum(MAL.max_view_tilt_z, 1) + " desvio-padrão" : "") + " e só restringem risco; nunca ampliam limites do mandato."],
+    ["Modelo de risco", "Modelo fatorial com mercado, países, setores, estilos e commodities" + (isNum(MRM.history_days) ? ", estimado com " + int(MRM.history_days) + " pregões de histórico" : "") + (MRM.market_proxy ? " e o ETF " + MRM.market_proxy + " como referência de mercado" : "") + ". Mede volatilidade ex-ante, VaR, ES, contribuições ao risco e cenários de estresse."],
+    ["Otimização", "Maximiza o alpha esperado líquido de custos de transação e de aluguel, sujeito a todos os limites do mandato, buscando a volatilidade-alvo dentro da banda. Uma carteira que viole limite rígido não é executada."],
+    ["Execução e custos", "Ordens no leilão de fechamento; custos estimados com corretagem por mercado, meio spread por faixa de liquidez e impacto de mercado."]
+  ];
+  p.appendChild(sec("Processo de investimento", null, h("div", { class: "cards wide" }, steps.map(function (s) { return h("div", { class: "card" }, h("h3", null, s[0]), h("p", { class: "prose" }, s[1])); }))));
+
+  p.appendChild(sec("Natureza do histórico", null, h("div", { class: "cols-2" },
+    block(null, null, h("p", { class: "prose" }, plain(META.paper_trading_text) || "Carteira simulada (paper trading)."), META.is_synthetic ? h("p", null, pill("DADOS SIMULADOS", "sim")) : null),
+    block(null, null, kv([["Início", fdate(META.inception_date)], ["PL inicial", usdFull(META.inception_nav_usd)], ["Gestor", META.manager], ["Moeda base", META.base_currency]])))));
+
+  var gl = [
+    ["Exposição bruta (gross)", "Soma dos valores absolutos das posições long e short, em % do PL."],
+    ["Exposição líquida (net)", "Longs menos shorts, em % do PL. Perto de zero = carteira neutra em mercado."],
+    ["Beta", "Sensibilidade prevista da carteira a um movimento do mercado latino-americano."],
+    ["Volatilidade ex-ante", "Volatilidade anual prevista pelo modelo de risco para a carteira atual."],
+    ["VaR (99%)", "Perda que só deve ser superada em 1% dos dias, segundo o modelo."],
+    ["ES (99%)", "Perda média nos dias que superam o VaR (expected shortfall)."],
+    ["Drawdown", "Queda do patrimônio desde o pico anterior."],
+    ["Contribuição ao risco", "Parcela da variância da carteira atribuída a um nome ou fator."],
+    ["Risco fatorial × específico", "Parte da variância explicada por fatores comuns (mercado, país, setor, estilo) × parte própria de cada empresa."],
+    ["Squeeze", "Alta forçada de uma ação com muitos vendidos, que obriga a recompra dos shorts."],
+    ["ADTV", "Volume financeiro médio diário negociado; base para os prazos de liquidação."],
+    ["Active share", "Quanto a carteira difere da carteira quantitativa de referência (0% = idêntica)."],
+    ["Sinal quantitativo (z)", "Escore padronizado do modelo para o emissor; positivo favorece long."],
+    ["Referência quantitativa", "Carteira que o modelo montaria sem a pesquisa e o gestor; mede o valor adicionado por eles."],
+    ["Leilão de fechamento", "Negociação no preço de fechamento do pregão, usada para executar a carteira."]
+  ];
+  p.appendChild(sec("Glossário", null, h("div", { class: "block" }, kv(gl))));
+}
+
+/* ====================================================================== abas e início */
+var TABS = [
+  ["visao", "Visão geral", renderVisao], ["tese", "Tese de investimento", renderTese], ["carteira", "Carteira", renderCarteira],
+  ["risco", "Risco e exposições", renderRisco], ["atribuicao", "Performance", renderAtribuicao], ["decisoes", "Comitê de investimento", renderDecisoes],
+  ["relatorios", "Relatórios", renderRelatorios], ["backtest", "Pesquisa quantitativa", renderBacktest], ["mandato", "Mandato e metodologia", renderMandato]
+];
+/* aba antiga (Auditoria) e ids desconhecidos */
+var TAB_ALIAS = { auditoria: "mandato" };
+var RENDERED = {};
+function tabIds() { return TABS.map(function (t) { return t[0]; }); }
+function tabId(id) { id = TAB_ALIAS[id] || id; return tabIds().indexOf(id) < 0 ? "visao" : id; }
+function showTab(id, fromHash) {
+  id = tabId(id);
+  TABS.forEach(function (t) {
+    var on = t[0] === id;
+    $("p-" + t[0]).hidden = !on;
+    var b = $("t-" + t[0]);
+    b.setAttribute("aria-selected", on ? "true" : "false");
+    b.tabIndex = on ? 0 : -1;
+    if (on && b.scrollIntoView) { try { b.scrollIntoView({ block: "nearest", inline: "nearest" }); } catch (e) { /* navegador antigo */ } }
+  });
+  ACTIVE = id;
+  if (!RENDERED[id]) {
+    RENDERED[id] = true;
+    var panel = $("p-" + id), t = TABS.filter(function (x) { return x[0] === id; })[0];
+    CUR = id;
+    try { t[2](panel); } catch (e) {
+      panel.appendChild(empty("Não foi possível montar esta seção agora. Recarregue a página."));
+      if (window.console) console.error(e);
+    }
+    CUR = null;
+  }
+  drawCharts(id, false);
+  lsSet("tab", id);
+  if (!fromHash) { try { history.replaceState(null, "", "#" + id); } catch (e) { /* sem histórico */ } }
+}
+function initTabs() {
+  var tl = $("tablist");
+  TABS.forEach(function (t) {
+    var b = h("button", { class: "tab", role: "tab", id: "t-" + t[0], type: "button", "aria-controls": "p-" + t[0], "aria-selected": "false", tabindex: "-1" }, t[1]);
+    b.addEventListener("click", function () { showTab(t[0]); });
+    b.addEventListener("keydown", function (ev) {
+      var ids = tabIds(), i = ids.indexOf(t[0]), n = null;
+      if (ev.key === "ArrowRight" || ev.key === "ArrowLeft") n = ids[(i + (ev.key === "ArrowRight" ? 1 : ids.length - 1)) % ids.length];
+      else if (ev.key === "Home") n = ids[0];
+      else if (ev.key === "End") n = ids[ids.length - 1];
+      if (n) { ev.preventDefault(); showTab(n); $("t-" + n).focus(); }
+    });
+    tl.appendChild(b);
+  });
+  var fromHash = (location.hash || "").replace(/^#/, "");
+  var known = !!fromHash && (tabIds().indexOf(fromHash) >= 0 || !!TAB_ALIAS[fromHash]);
+  showTab(known ? fromHash : (lsGet("tab") || "visao"), known && !TAB_ALIAS[fromHash]);
+  window.addEventListener("hashchange", function () {
+    var id = (location.hash || "").replace(/^#/, "");
+    if ((tabIds().indexOf(id) >= 0 || TAB_ALIAS[id]) && tabId(id) !== ACTIVE) showTab(id, !TAB_ALIAS[id]);
+  });
+  var rt = null;
+  window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(function () { if (ACTIVE) drawCharts(ACTIVE, false); }, 160); });
+  document.addEventListener("toggle", function () { if (ACTIVE) drawCharts(ACTIVE, false); }, true);
+}
+
+try { renderHeader(); } catch (e) { if (window.console) console.error(e); }
+initTabs();
+}
+
+
+/* ====================================================================== carregamento */
+/* Formas compactas do data.json publicado (sem perda; ver cdp.workflow.painel_publicacao):
+   {"_colunas": {...}, "_n": N, "_faltam": {...}} = tabela em colunas ("a.b" = campo b do
+   objeto a), {"_rep": {"v": [...], "n": [...]}} = coluna em corridas (valor v[k] repetido n[k]
+   vezes) e {"_partes": [...]} = texto em partes. Desfeitas aqui, antes de qualquer uso. */
+function unrep(c) {
+  if (!c || typeof c !== "object" || Array.isArray(c) || !c._rep) return c || [];
+  var v = c._rep.v || [], k = c._rep.n || [], out = [];
+  for (var j = 0; j < v.length; j++) for (var t = 0; t < k[j]; t++) out.push(v[j]);
+  return out;
+}
+function unpack(x) {
+  if (Array.isArray(x)) { return x.map(unpack); }
+  if (!x || typeof x !== "object") return x;
+  var keys = Object.keys(x);
+  if (keys.length === 1 && Array.isArray(x._partes)) return x._partes.join("");
+  if (x._colunas && typeof x._colunas === "object" && typeof x._n === "number") {
+    var n = x._n, miss = x._faltam || {}, rows = [], i;
+    for (i = 0; i < n; i++) rows.push({});
+    Object.keys(x._colunas).forEach(function (col) {
+      var vals = unrep(x._colunas[col]), skip = {}, dot = col.indexOf(".");
+      (miss[col] || []).forEach(function (j) { skip[j] = 1; });
+      var a = dot > 0 ? col.slice(0, dot) : col, b = dot > 0 ? col.slice(dot + 1) : null;
+      for (var r = 0; r < n; r++) {
+        if (skip[r]) continue;
+        var v = unpack(vals[r]);
+        if (b === null) rows[r][a] = v;
+        else {
+          if (!rows[r][a] || typeof rows[r][a] !== "object" || Array.isArray(rows[r][a])) rows[r][a] = {};
+          rows[r][a][b] = v;
+        }
+      }
+    });
+    return rows;
+  }
+  var out = {};
+  keys.forEach(function (k) { out[k] = unpack(x[k]); });
+  /* {"_igual": "<chave irmã>", ...}: o conteúdo da chave irmã com estes campos */
+  keys.forEach(function (k) {
+    var v = out[k], ref = v && typeof v === "object" && !Array.isArray(v) ? v._igual : null;
+    var src = typeof ref === "string" ? out[ref] : null;
+    if (!src || typeof src !== "object" || Array.isArray(src) || src._igual !== undefined) return;
+    var cp = {};
+    Object.keys(src).forEach(function (kk) { cp[kk] = src[kk]; });
+    Object.keys(v).forEach(function (kk) { if (kk !== "_igual") cp[kk] = v[kk]; });
+    out[k] = cp;
+  });
+  return out;
+}
+function bootShow(kind, title, msg, detail) {
+  var b = document.getElementById("boot");
+  if (!b) return;
+  b.className = "boot" + (kind === "err" ? " err" : "");
+  b.setAttribute("role", kind === "err" ? "alert" : "status");
+  b.textContent = "";
+  var t = document.createElement("h2"); t.textContent = title; b.appendChild(t);
+  if (kind !== "err") { var bar = document.createElement("div"); bar.className = "boot-bar"; bar.setAttribute("aria-hidden", "true"); b.appendChild(bar); }
+  var p = document.createElement("p"); p.textContent = msg; b.appendChild(p);
+  if (detail) { var c = document.createElement("p"); var code = document.createElement("code"); code.textContent = detail; c.appendChild(code); b.appendChild(c); }
+  if (kind === "err") {
+    var again = document.createElement("button");
+    again.type = "button"; again.className = "btn"; again.textContent = "Tentar de novo";
+    again.addEventListener("click", function () { load(); });
+    b.appendChild(again);
+    var sum = document.getElementById("mast-asof");
+    if (sum) sum.textContent = "Dados indisponíveis no momento.";
+  }
+}
+function inlineData() {
+  var node = document.getElementById("cdp-data");
+  if (!node) return null;
+  try {
+    var v = JSON.parse(node.textContent);
+    return v && typeof v === "object" && !Array.isArray(v) ? v : null;
+  } catch (e) { return null; }
+}
+function run(data) {
+  try { start(data); } catch (e) {
+    if (window.console) console.error(e);
+    var m = document.getElementById("main");
+    if (!m) return;
+    var box = document.createElement("div");
+    box.className = "boot err"; box.setAttribute("role", "alert");
+    var t = document.createElement("h2"); t.textContent = "Falha ao montar o painel";
+    var p = document.createElement("p"); p.textContent = "Os dados chegaram, mas a página não conseguiu montá-los. Recarregue a página; se o problema continuar, aguarde a próxima atualização.";
+    box.appendChild(t); box.appendChild(p);
+    m.insertBefore(box, m.firstChild);
+  }
+}
+var LOADING = false;
+function load() {
+  var inl = inlineData();
+  if (inl) { run(unpack(inl)); return; }
+  if (LOADING) return;
+  LOADING = true;
+  bootShow("load", "Carregando o painel…", "Lendo os dados mais recentes do fundo.");
+  var slow = setTimeout(function () {
+    bootShow("load", "Carregando o painel…", "A conexão está lenta: o portal aparece assim que os dados chegarem.");
+  }, 12000);
+  /* o investidor vê só a mensagem sobre os dados do fundo; o detalhe técnico (arquivo, HTTP) vai
+     para o console e para um atributo oculto, para o diagnóstico de quem publica */
+  function fail(e) {
+    clearTimeout(slow); LOADING = false;
+    var tech = "Não foi possível carregar data.json" + (e && e.message ? ": " + e.message : "");
+    if (window.console) console.error(tech, e);
+    bootShow("err", "Não foi possível carregar os dados do fundo",
+      "Os dados do fundo não puderam ser lidos agora. Recarregue a página em alguns instantes; se o problema continuar, os dados podem estar sendo atualizados.");
+    var bx = document.getElementById("boot");
+    if (bx) bx.setAttribute("data-erro", tech);
+  }
+  if (typeof window.fetch !== "function") { fail(new Error("este navegador não tem fetch")); return; }
+  window.fetch(DATA_URL, { cache: "no-store" }).then(function (r) {
+    if (!r.ok) throw new Error("HTTP " + r.status + " ao buscar " + DATA_URL);
+    return r.json();
+  }).then(function (d) {
+    if (!d || typeof d !== "object" || !d.meta) throw new Error("data.json sem o bloco meta");
+    clearTimeout(slow); LOADING = false;
+    return unpack(d);
+  }).then(run, fail);
+}
+load();
+})();

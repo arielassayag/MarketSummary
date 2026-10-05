@@ -1411,6 +1411,7 @@ def test_cli_painel_is_publishable_on_demo(demo, tmp_path, capsys):
     res = json.loads(capsys.readouterr().out)
     art = res["artifact"]
     assert art["publicavel"] is True and art["motivo"] == "ok" and art["pagina_mudou"] is True
+    assert art["pagina_atual"] == res["page_sha256"] == page_sha256()
     css, js = (out_dir / n for n in asset_names(page_sha256()))
     index, data_file = out_dir / "index.html", out_dir / "data.json"
     assert art["arquivos_para_ler"] == [index.as_posix(), css.as_posix(), js.as_posix(),

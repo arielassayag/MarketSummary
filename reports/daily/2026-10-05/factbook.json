@@ -1,0 +1,944 @@
+{
+  "as_of": "2026-10-05",
+  "facts": {
+    "attr.borrow": {
+      "fact_id": "attr.borrow",
+      "formatted": "0,0 bps",
+      "formula": "P&L aluguel / NAV de abertura; ausente ⇒ n/d (em bps do NAV de abertura)",
+      "inputs": [
+        "record.pnl_components.borrow"
+      ],
+      "issuer_id": null,
+      "name": "Contribuição aluguel",
+      "point_in_time": true,
+      "unit": "bps",
+      "value": 0.0
+    },
+    "attr.borrow.pnl_usd": {
+      "fact_id": "attr.borrow.pnl_usd",
+      "formatted": "US$ 0",
+      "formula": "componente borrow do P&L do dia",
+      "inputs": [
+        "record.pnl_components.borrow"
+      ],
+      "issuer_id": null,
+      "name": "P&L aluguel (USD)",
+      "point_in_time": true,
+      "unit": "usd",
+      "value": 0.0
+    },
+    "attr.costs": {
+      "fact_id": "attr.costs",
+      "formatted": "-17,7 bps",
+      "formula": "P&L custos / NAV de abertura; ausente ⇒ n/d (em bps do NAV de abertura)",
+      "inputs": [
+        "record.pnl_components.costs"
+      ],
+      "issuer_id": null,
+      "name": "Contribuição custos",
+      "point_in_time": true,
+      "unit": "bps",
+      "value": -17.719547024417658
+    },
+    "attr.costs.pnl_usd": {
+      "fact_id": "attr.costs.pnl_usd",
+      "formatted": "-US$ 177.195",
+      "formula": "componente costs do P&L do dia",
+      "inputs": [
+        "record.pnl_components.costs"
+      ],
+      "issuer_id": null,
+      "name": "P&L custos (USD)",
+      "point_in_time": true,
+      "unit": "usd",
+      "value": -177195.47024417657
+    },
+    "attr.equity": {
+      "fact_id": "attr.equity",
+      "formatted": "0,0 bps",
+      "formula": "P&L ações / NAV de abertura; ausente ⇒ n/d (em bps do NAV de abertura)",
+      "inputs": [
+        "record.pnl_components.equity"
+      ],
+      "issuer_id": null,
+      "name": "Contribuição ações",
+      "point_in_time": true,
+      "unit": "bps",
+      "value": 0.0
+    },
+    "attr.equity.pnl_usd": {
+      "fact_id": "attr.equity.pnl_usd",
+      "formatted": "US$ 0",
+      "formula": "componente equity do P&L do dia",
+      "inputs": [
+        "record.pnl_components.equity"
+      ],
+      "issuer_id": null,
+      "name": "P&L ações (USD)",
+      "point_in_time": true,
+      "unit": "usd",
+      "value": 0.0
+    },
+    "attr.factor": {
+      "fact_id": "attr.factor",
+      "formatted": "0,0 bps",
+      "formula": "P&L fatorial / NAV de abertura; ausente ⇒ n/d (em bps do NAV de abertura)",
+      "inputs": [
+        "record.pnl_components.factor"
+      ],
+      "issuer_id": null,
+      "name": "Contribuição fatorial",
+      "point_in_time": true,
+      "unit": "bps",
+      "value": 0.0
+    },
+    "attr.factor.pnl_usd": {
+      "fact_id": "attr.factor.pnl_usd",
+      "formatted": "US$ 0",
+      "formula": "componente factor do P&L do dia",
+      "inputs": [
+        "record.pnl_components.factor"
+      ],
+      "issuer_id": null,
+      "name": "P&L fatorial (USD)",
+      "point_in_time": true,
+      "unit": "usd",
+      "value": 0.0
+    },
+    "attr.financing": {
+      "fact_id": "attr.financing",
+      "formatted": "0,0 bps",
+      "formula": "P&L financiamento / NAV de abertura; ausente ⇒ n/d (em bps do NAV de abertura)",
+      "inputs": [
+        "record.pnl_components.financing"
+      ],
+      "issuer_id": null,
+      "name": "Contribuição financiamento",
+      "point_in_time": true,
+      "unit": "bps",
+      "value": 0.0
+    },
+    "attr.financing.pnl_usd": {
+      "fact_id": "attr.financing.pnl_usd",
+      "formatted": "US$ 0",
+      "formula": "componente financing do P&L do dia",
+      "inputs": [
+        "record.pnl_components.financing"
+      ],
+      "issuer_id": null,
+      "name": "P&L financiamento (USD)",
+      "point_in_time": true,
+      "unit": "usd",
+      "value": 0.0
+    },
+    "attr.long": {
+      "fact_id": "attr.long",
+      "formatted": "0,0 bps",
+      "formula": "P&L do lado / NAV de abertura (em bps do NAV de abertura)",
+      "inputs": [
+        "record.attribution[side]"
+      ],
+      "issuer_id": null,
+      "name": "Contribuição do lado comprado",
+      "point_in_time": true,
+      "unit": "bps",
+      "value": 0.0
+    },
+    "attr.long.pnl_usd": {
+      "fact_id": "attr.long.pnl_usd",
+      "formatted": "US$ 0",
+      "formula": "soma do P&L das posições do lado",
+      "inputs": [
+        "record.attribution[side]"
+      ],
+      "issuer_id": null,
+      "name": "P&L do lado comprado",
+      "point_in_time": true,
+      "unit": "usd",
+      "value": 0.0
+    },
+    "attr.short": {
+      "fact_id": "attr.short",
+      "formatted": "0,0 bps",
+      "formula": "P&L do lado / NAV de abertura (em bps do NAV de abertura)",
+      "inputs": [
+        "record.attribution[side]"
+      ],
+      "issuer_id": null,
+      "name": "Contribuição do lado vendido",
+      "point_in_time": true,
+      "unit": "bps",
+      "value": 0.0
+    },
+    "attr.short.pnl_usd": {
+      "fact_id": "attr.short.pnl_usd",
+      "formatted": "US$ 0",
+      "formula": "soma do P&L das posições do lado",
+      "inputs": [
+        "record.attribution[side]"
+      ],
+      "issuer_id": null,
+      "name": "P&L do lado vendido",
+      "point_in_time": true,
+      "unit": "usd",
+      "value": 0.0
+    },
+    "attr.specific": {
+      "fact_id": "attr.specific",
+      "formatted": "0,0 bps",
+      "formula": "P&L específica / NAV de abertura; ausente ⇒ n/d (em bps do NAV de abertura)",
+      "inputs": [
+        "record.pnl_components.specific"
+      ],
+      "issuer_id": null,
+      "name": "Contribuição específica",
+      "point_in_time": true,
+      "unit": "bps",
+      "value": 0.0
+    },
+    "attr.specific.pnl_usd": {
+      "fact_id": "attr.specific.pnl_usd",
+      "formatted": "US$ 0",
+      "formula": "componente specific do P&L do dia",
+      "inputs": [
+        "record.pnl_components.specific"
+      ],
+      "issuer_id": null,
+      "name": "P&L específica (USD)",
+      "point_in_time": true,
+      "unit": "usd",
+      "value": 0.0
+    },
+    "day.n_alerts": {
+      "fact_id": "day.n_alerts",
+      "formatted": "20",
+      "formula": "número de alertas determinísticos do registro diário",
+      "inputs": [],
+      "issuer_id": null,
+      "name": "Alertas do sistema no dia",
+      "point_in_time": true,
+      "unit": "count",
+      "value": 20.0
+    },
+    "day.pnl_usd": {
+      "fact_id": "day.pnl_usd",
+      "formatted": "-US$ 177.195",
+      "formula": "variação do NAV no dia (ações, custos, aluguel e financiamento)",
+      "inputs": [
+        "record.pnl_usd"
+      ],
+      "issuer_id": null,
+      "name": "P&L do dia (USD)",
+      "point_in_time": true,
+      "unit": "usd",
+      "value": -177195.47024417657
+    },
+    "day.ret": {
+      "fact_id": "day.ret",
+      "formatted": "-0,18%",
+      "formula": "P&L do dia / NAV de abertura",
+      "inputs": [
+        "record.ret"
+      ],
+      "issuer_id": null,
+      "name": "Retorno do dia (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.0017719547024417656
+    },
+    "dd.current": {
+      "fact_id": "dd.current",
+      "formatted": "-0,18%",
+      "formula": "NAV / máximo histórico do NAV − 1",
+      "inputs": [
+        "record.risk.drawdown"
+      ],
+      "issuer_id": null,
+      "name": "Drawdown atual a partir do pico",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.001771954702441736
+    },
+    "dd.max": {
+      "fact_id": "dd.max",
+      "formatted": "-0,18%",
+      "formula": "mínimo dos drawdowns diários registrados desde 2026-10-05",
+      "inputs": [
+        "track_record"
+      ],
+      "issuer_id": null,
+      "name": "Drawdown máximo do período registrado",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.001771954702441736
+    },
+    "fx.ARS.ret_1d": {
+      "fact_id": "fx.ARS.ret_1d",
+      "formatted": "+0,32%",
+      "formula": "USD por 1 ARS em 2026-10-05 / observação válida anterior − 1; positivo = moeda local se valorizou",
+      "inputs": [
+        "fx[ARS]"
+      ],
+      "issuer_id": null,
+      "name": "Variação do ARS no dia (USD por unidade)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.003208441483347091
+    },
+    "fx.BRL.ret_1d": {
+      "fact_id": "fx.BRL.ret_1d",
+      "formatted": "+4,63%",
+      "formula": "USD por 1 BRL em 2026-10-05 / observação válida anterior − 1; positivo = moeda local se valorizou",
+      "inputs": [
+        "fx[BRL]"
+      ],
+      "issuer_id": null,
+      "name": "Variação do BRL no dia (USD por unidade)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.04629872523078582
+    },
+    "fx.CLP.ret_1d": {
+      "fact_id": "fx.CLP.ret_1d",
+      "formatted": "+1,07%",
+      "formula": "USD por 1 CLP em 2026-10-05 / observação válida anterior − 1; positivo = moeda local se valorizou",
+      "inputs": [
+        "fx[CLP]"
+      ],
+      "issuer_id": null,
+      "name": "Variação do CLP no dia (USD por unidade)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.010743929995485901
+    },
+    "fx.COP.ret_1d": {
+      "fact_id": "fx.COP.ret_1d",
+      "formatted": "+3,59%",
+      "formula": "USD por 1 COP em 2026-10-05 / observação válida anterior − 1; positivo = moeda local se valorizou",
+      "inputs": [
+        "fx[COP]"
+      ],
+      "issuer_id": null,
+      "name": "Variação do COP no dia (USD por unidade)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.035943216586128424
+    },
+    "fx.MXN.ret_1d": {
+      "fact_id": "fx.MXN.ret_1d",
+      "formatted": "+1,39%",
+      "formula": "USD por 1 MXN em 2026-10-05 / observação válida anterior − 1; positivo = moeda local se valorizou",
+      "inputs": [
+        "fx[MXN]"
+      ],
+      "issuer_id": null,
+      "name": "Variação do MXN no dia (USD por unidade)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.01385858208726698
+    },
+    "itd.ret": {
+      "fact_id": "itd.ret",
+      "formatted": "-0,18%",
+      "formula": "Π(1+r_d)−1 dos retornos diários registrados desde o início (registros desde 2026-10-05); dia sem retorno ⇒ n/d",
+      "inputs": [
+        "track_record"
+      ],
+      "issuer_id": null,
+      "name": "Retorno desde o início (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.001771954702441736
+    },
+    "mandate.dd_soft_stop": {
+      "fact_id": "mandate.dd_soft_stop",
+      "formatted": "-2,50%",
+      "formula": "parâmetro do mandato (configs/cdp/fund.yaml)",
+      "inputs": [],
+      "issuer_id": null,
+      "name": "Escada de drawdown — stop suave",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.025
+    },
+    "mandate.var_1d_max": {
+      "fact_id": "mandate.var_1d_max",
+      "formatted": "1,00%",
+      "formula": "parâmetro do mandato (configs/cdp/fund.yaml)",
+      "inputs": [],
+      "issuer_id": null,
+      "name": "VaR de um dia máximo",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.01
+    },
+    "mandate.vol_band_max": {
+      "fact_id": "mandate.vol_band_max",
+      "formatted": "7,00%",
+      "formula": "parâmetro do mandato (configs/cdp/fund.yaml)",
+      "inputs": [],
+      "issuer_id": null,
+      "name": "Banda de vol — máximo",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.07
+    },
+    "mandate.vol_band_min": {
+      "fact_id": "mandate.vol_band_min",
+      "formatted": "3,00%",
+      "formula": "parâmetro do mandato (configs/cdp/fund.yaml)",
+      "inputs": [],
+      "issuer_id": null,
+      "name": "Banda de vol — mínimo",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.03
+    },
+    "mandate.vol_target": {
+      "fact_id": "mandate.vol_target",
+      "formatted": "5,00%",
+      "formula": "parâmetro do mandato (configs/cdp/fund.yaml)",
+      "inputs": [],
+      "issuer_id": null,
+      "name": "Vol-alvo do mandato",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.05
+    },
+    "mkt.ARGT.ret_1d": {
+      "fact_id": "mkt.ARGT.ret_1d",
+      "formatted": "+5,93%",
+      "formula": "fechamento de ARGT em 2026-10-05 / fechamento válido anterior − 1; sem negociação no dia ⇒ n/d",
+      "inputs": [
+        "benchmarks[ARGT]"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de ARGT no dia (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.059275938656127014
+    },
+    "mkt.BOVA11.SA.ret_1d": {
+      "fact_id": "mkt.BOVA11.SA.ret_1d",
+      "formatted": "+7,55%",
+      "formula": "fechamento de BOVA11.SA em 2026-10-05 / fechamento válido anterior − 1; sem negociação no dia ⇒ n/d",
+      "inputs": [
+        "benchmarks[BOVA11.SA]"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de BOVA11.SA no dia (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0755263479132402
+    },
+    "mkt.BVSP.ret_1d": {
+      "fact_id": "mkt.BVSP.ret_1d",
+      "formatted": "+7,70%",
+      "formula": "fechamento de ^BVSP em 2026-10-05 / fechamento válido anterior − 1; sem negociação no dia ⇒ n/d",
+      "inputs": [
+        "benchmarks[^BVSP]"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de ^BVSP no dia (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.07702100629831099
+    },
+    "mkt.BZ_F.ret_1d": {
+      "fact_id": "mkt.BZ_F.ret_1d",
+      "formatted": "-1,86%",
+      "formula": "fechamento de BZ=F em 2026-10-05 / fechamento válido anterior − 1; sem negociação no dia ⇒ n/d",
+      "inputs": [
+        "benchmarks[BZ=F]"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de BZ=F no dia (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.01858192201348563
+    },
+    "mkt.CL_F.ret_1d": {
+      "fact_id": "mkt.CL_F.ret_1d",
+      "formatted": "-2,03%",
+      "formula": "fechamento de CL=F em 2026-10-05 / fechamento válido anterior − 1; sem negociação no dia ⇒ n/d",
+      "inputs": [
+        "benchmarks[CL=F]"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de CL=F no dia (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.020305108788583492
+    },
+    "mkt.COLO.ret_1d": {
+      "fact_id": "mkt.COLO.ret_1d",
+      "formatted": "+4,40%",
+      "formula": "fechamento de COLO em 2026-10-05 / fechamento válido anterior − 1; sem negociação no dia ⇒ n/d",
+      "inputs": [
+        "benchmarks[COLO]"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de COLO no dia (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.04398639257157044
+    },
+    "mkt.DX-Y.NYB.ret_1d": {
+      "fact_id": "mkt.DX-Y.NYB.ret_1d",
+      "formatted": "+0,17%",
+      "formula": "fechamento de DX-Y.NYB em 2026-10-05 / fechamento válido anterior − 1; sem negociação no dia ⇒ n/d",
+      "inputs": [
+        "benchmarks[DX-Y.NYB]"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de DX-Y.NYB no dia (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0016874038045475714
+    },
+    "mkt.ECH.ret_1d": {
+      "fact_id": "mkt.ECH.ret_1d",
+      "formatted": "+2,43%",
+      "formula": "fechamento de ECH em 2026-10-05 / fechamento válido anterior − 1; sem negociação no dia ⇒ n/d",
+      "inputs": [
+        "benchmarks[ECH]"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de ECH no dia (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.02425880223436394
+    },
+    "mkt.EEM.ret_1d": {
+      "fact_id": "mkt.EEM.ret_1d",
+      "formatted": "+1,57%",
+      "formula": "fechamento de EEM em 2026-10-05 / fechamento válido anterior − 1; sem negociação no dia ⇒ n/d",
+      "inputs": [
+        "benchmarks[EEM]"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de EEM no dia (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.015664330082318934
+    },
+    "mkt.EPU.ret_1d": {
+      "fact_id": "mkt.EPU.ret_1d",
+      "formatted": "+1,26%",
+      "formula": "fechamento de EPU em 2026-10-05 / fechamento válido anterior − 1; sem negociação no dia ⇒ n/d",
+      "inputs": [
+        "benchmarks[EPU]"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de EPU no dia (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.012617294703175963
+    },
+    "mkt.EWW.ret_1d": {
+      "fact_id": "mkt.EWW.ret_1d",
+      "formatted": "+1,10%",
+      "formula": "fechamento de EWW em 2026-10-05 / fechamento válido anterior − 1; sem negociação no dia ⇒ n/d",
+      "inputs": [
+        "benchmarks[EWW]"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de EWW no dia (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.01097209802887078
+    },
+    "mkt.EWZ.ret_1d": {
+      "fact_id": "mkt.EWZ.ret_1d",
+      "formatted": "+12,54%",
+      "formula": "fechamento de EWZ em 2026-10-05 / fechamento válido anterior − 1; sem negociação no dia ⇒ n/d",
+      "inputs": [
+        "benchmarks[EWZ]"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de EWZ no dia (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.12542553254184607
+    },
+    "mkt.GC_F.ret_1d": {
+      "fact_id": "mkt.GC_F.ret_1d",
+      "formatted": "+0,18%",
+      "formula": "fechamento de GC=F em 2026-10-05 / fechamento válido anterior − 1; sem negociação no dia ⇒ n/d",
+      "inputs": [
+        "benchmarks[GC=F]"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de GC=F no dia (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.001825937105176978
+    },
+    "mkt.HG_F.ret_1d": {
+      "fact_id": "mkt.HG_F.ret_1d",
+      "formatted": "+2,26%",
+      "formula": "fechamento de HG=F em 2026-10-05 / fechamento válido anterior − 1; sem negociação no dia ⇒ n/d",
+      "inputs": [
+        "benchmarks[HG=F]"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de HG=F no dia (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.02264322760872406
+    },
+    "mkt.ILF.ret_1d": {
+      "fact_id": "mkt.ILF.ret_1d",
+      "formatted": "+8,23%",
+      "formula": "fechamento de ILF em 2026-10-05 / fechamento válido anterior − 1; sem negociação no dia ⇒ n/d",
+      "inputs": [
+        "benchmarks[ILF]"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de ILF no dia (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.08233279319051445
+    },
+    "mkt.MERV.ret_1d": {
+      "fact_id": "mkt.MERV.ret_1d",
+      "formatted": "+3,68%",
+      "formula": "fechamento de ^MERV em 2026-10-05 / fechamento válido anterior − 1; sem negociação no dia ⇒ n/d",
+      "inputs": [
+        "benchmarks[^MERV]"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de ^MERV no dia (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.036790967686455955
+    },
+    "mkt.MXX.ret_1d": {
+      "fact_id": "mkt.MXX.ret_1d",
+      "formatted": "+0,69%",
+      "formula": "fechamento de ^MXX em 2026-10-05 / fechamento válido anterior − 1; sem negociação no dia ⇒ n/d",
+      "inputs": [
+        "benchmarks[^MXX]"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de ^MXX no dia (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.006871019623961416
+    },
+    "mkt.SI_F.ret_1d": {
+      "fact_id": "mkt.SI_F.ret_1d",
+      "formatted": "+2,35%",
+      "formula": "fechamento de SI=F em 2026-10-05 / fechamento válido anterior − 1; sem negociação no dia ⇒ n/d",
+      "inputs": [
+        "benchmarks[SI=F]"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de SI=F no dia (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.023475617376782942
+    },
+    "mkt.SPY.ret_1d": {
+      "fact_id": "mkt.SPY.ret_1d",
+      "formatted": "+0,67%",
+      "formula": "fechamento de SPY em 2026-10-05 / fechamento válido anterior − 1; sem negociação no dia ⇒ n/d",
+      "inputs": [
+        "benchmarks[SPY]"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de SPY no dia (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.00674341554834168
+    },
+    "mkt.VIX.ret_1d": {
+      "fact_id": "mkt.VIX.ret_1d",
+      "formatted": "+1,37%",
+      "formula": "fechamento de ^VIX em 2026-10-05 / fechamento válido anterior − 1; sem negociação no dia ⇒ n/d",
+      "inputs": [
+        "benchmarks[^VIX]"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de ^VIX no dia (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.013716527262657596
+    },
+    "mtd.ret": {
+      "fact_id": "mtd.ret",
+      "formatted": "-0,18%",
+      "formula": "Π(1+r_d)−1 dos retornos diários registrados no mês (registros desde 2026-10-05); dia sem retorno ⇒ n/d",
+      "inputs": [
+        "track_record"
+      ],
+      "issuer_id": null,
+      "name": "Retorno no mês (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.001771954702441736
+    },
+    "nav": {
+      "fact_id": "nav",
+      "formatted": "US$ 99,82 mi",
+      "formula": "NAV de fechamento",
+      "inputs": [
+        "record.nav_end_usd"
+      ],
+      "issuer_id": null,
+      "name": "NAV de fechamento (USD)",
+      "point_in_time": true,
+      "unit": "usd",
+      "value": 99822804.52975583
+    },
+    "nav.start": {
+      "fact_id": "nav.start",
+      "formatted": "US$ 100,00 mi",
+      "formula": "NAV de abertura",
+      "inputs": [
+        "record.nav_start_usd"
+      ],
+      "issuer_id": null,
+      "name": "NAV de abertura (USD)",
+      "point_in_time": true,
+      "unit": "usd",
+      "value": 100000000.0
+    },
+    "risk.beta": {
+      "fact_id": "risk.beta",
+      "formatted": "+0,02",
+      "formula": "risco ex-ante/realizado do registro diário (código)",
+      "inputs": [
+        "record.risk.beta"
+      ],
+      "issuer_id": null,
+      "name": "Beta previsto vs. mercado LatAm",
+      "point_in_time": true,
+      "unit": "ratio",
+      "value": 0.020189016034082963
+    },
+    "risk.es_1d": {
+      "fact_id": "risk.es_1d",
+      "formatted": "0,52%",
+      "formula": "risco ex-ante/realizado do registro diário (código)",
+      "inputs": [
+        "record.risk.es_1d"
+      ],
+      "issuer_id": null,
+      "name": "Expected shortfall de um dia",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.005248822236796686
+    },
+    "risk.ex_ante_vol": {
+      "fact_id": "risk.ex_ante_vol",
+      "formatted": "3,13%",
+      "formula": "risco ex-ante/realizado do registro diário (código)",
+      "inputs": [
+        "record.risk.ex_ante_vol"
+      ],
+      "issuer_id": null,
+      "name": "Volatilidade ex-ante anual",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.03126295411874545
+    },
+    "risk.factor_vol": {
+      "fact_id": "risk.factor_vol",
+      "formatted": "1,08%",
+      "formula": "risco ex-ante/realizado do registro diário (código)",
+      "inputs": [
+        "record.risk.factor_vol"
+      ],
+      "issuer_id": null,
+      "name": "Volatilidade fatorial ex-ante",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.010789102179740537
+    },
+    "risk.gross": {
+      "fact_id": "risk.gross",
+      "formatted": "45,92%",
+      "formula": "risco ex-ante/realizado do registro diário (código)",
+      "inputs": [
+        "record.risk.gross"
+      ],
+      "issuer_id": null,
+      "name": "Exposição bruta (% do NAV)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.45918732426301534
+    },
+    "risk.long": {
+      "fact_id": "risk.long",
+      "formatted": "23,46%",
+      "formula": "risco ex-ante/realizado do registro diário (código)",
+      "inputs": [
+        "record.risk.long"
+      ],
+      "issuer_id": null,
+      "name": "Exposição comprada (% do NAV)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.23460283416639077
+    },
+    "risk.max_days_to_liquidate": {
+      "fact_id": "risk.max_days_to_liquidate",
+      "formatted": "0,7 dias",
+      "formula": "risco ex-ante/realizado do registro diário (código)",
+      "inputs": [
+        "record.risk.max_days_to_liquidate"
+      ],
+      "issuer_id": null,
+      "name": "Máximo de dias para liquidar",
+      "point_in_time": true,
+      "unit": "days",
+      "value": 0.6618615541599571
+    },
+    "risk.n_long": {
+      "fact_id": "risk.n_long",
+      "formatted": "25",
+      "formula": "risco ex-ante/realizado do registro diário (código)",
+      "inputs": [
+        "record.risk.n_long"
+      ],
+      "issuer_id": null,
+      "name": "Número de posições compradas",
+      "point_in_time": true,
+      "unit": "count",
+      "value": 25.0
+    },
+    "risk.n_short": {
+      "fact_id": "risk.n_short",
+      "formatted": "21",
+      "formula": "risco ex-ante/realizado do registro diário (código)",
+      "inputs": [
+        "record.risk.n_short"
+      ],
+      "issuer_id": null,
+      "name": "Número de posições vendidas",
+      "point_in_time": true,
+      "unit": "count",
+      "value": 21.0
+    },
+    "risk.net": {
+      "fact_id": "risk.net",
+      "formatted": "+1,00%",
+      "formula": "risco ex-ante/realizado do registro diário (código)",
+      "inputs": [
+        "record.risk.net"
+      ],
+      "issuer_id": null,
+      "name": "Exposição líquida (% do NAV)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.010018344069766224
+    },
+    "risk.pct_gross_liquid_1d": {
+      "fact_id": "risk.pct_gross_liquid_1d",
+      "formatted": "100,00%",
+      "formula": "risco ex-ante/realizado do registro diário (código)",
+      "inputs": [
+        "record.risk.pct_gross_liquid_1d"
+      ],
+      "issuer_id": null,
+      "name": "Fração do gross liquidável em um dia",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 1.0
+    },
+    "risk.realized_vol_21d": {
+      "fact_id": "risk.realized_vol_21d",
+      "formatted": "n/d",
+      "formula": "risco ex-ante/realizado do registro diário (código)",
+      "inputs": [
+        "record.risk.realized_vol_21d"
+      ],
+      "issuer_id": null,
+      "name": "Vol realizada — 21 pregões",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": null
+    },
+    "risk.realized_vol_63d": {
+      "fact_id": "risk.realized_vol_63d",
+      "formatted": "n/d",
+      "formula": "risco ex-ante/realizado do registro diário (código)",
+      "inputs": [
+        "record.risk.realized_vol_63d"
+      ],
+      "issuer_id": null,
+      "name": "Vol realizada — 63 pregões",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": null
+    },
+    "risk.short": {
+      "fact_id": "risk.short",
+      "formatted": "-22,46%",
+      "formula": "risco ex-ante/realizado do registro diário (código)",
+      "inputs": [
+        "record.risk.short"
+      ],
+      "issuer_id": null,
+      "name": "Exposição vendida (% do NAV)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.2245844900966246
+    },
+    "risk.specific_vol": {
+      "fact_id": "risk.specific_vol",
+      "formatted": "2,93%",
+      "formula": "risco ex-ante/realizado do registro diário (código)",
+      "inputs": [
+        "record.risk.specific_vol"
+      ],
+      "issuer_id": null,
+      "name": "Volatilidade específica ex-ante",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.02934224896605406
+    },
+    "risk.squeeze_high_shorts": {
+      "fact_id": "risk.squeeze_high_shorts",
+      "formatted": "0",
+      "formula": "risco ex-ante/realizado do registro diário (código)",
+      "inputs": [
+        "record.risk.squeeze_high_shorts"
+      ],
+      "issuer_id": null,
+      "name": "Shorts com risco de squeeze alto",
+      "point_in_time": true,
+      "unit": "count",
+      "value": 0.0
+    },
+    "risk.var_1d": {
+      "fact_id": "risk.var_1d",
+      "formatted": "0,46%",
+      "formula": "risco ex-ante/realizado do registro diário (código)",
+      "inputs": [
+        "record.risk.var_1d"
+      ],
+      "issuer_id": null,
+      "name": "VaR de um dia (nível do mandato)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.004581465294075298
+    },
+    "ytd.ret": {
+      "fact_id": "ytd.ret",
+      "formatted": "-0,18%",
+      "formula": "Π(1+r_d)−1 dos retornos diários registrados no ano (registros desde 2026-10-05); dia sem retorno ⇒ n/d",
+      "inputs": [
+        "track_record"
+      ],
+      "issuer_id": null,
+      "name": "Retorno no ano (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.001771954702441736
+    }
+  },
+  "is_synthetic": false,
+  "snapshot_id": "daily:2026-10-05:7b481b7cdacd"
+}

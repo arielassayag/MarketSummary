@@ -1,0 +1,54 @@
+{
+  "additionalProperties": false,
+  "description": "Comentário do dia do CDP (pt-BR, sóbrio); números só como {{fact:<fact_id>}}.",
+  "properties": {
+    "headline": {
+      "description": "Manchete curta com placeholders.",
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Headline",
+      "type": "string"
+    },
+    "mind": {
+      "description": "Mente que escreveu o comentário.",
+      "enum": [
+        "claude-code",
+        "codex",
+        "api",
+        "demo"
+      ],
+      "title": "Mind",
+      "type": "string"
+    },
+    "paragraphs": {
+      "description": "De dois a cinco parágrafos.",
+      "items": {
+        "maxLength": 1500,
+        "minLength": 1,
+        "type": "string"
+      },
+      "maxItems": 5,
+      "minItems": 2,
+      "title": "Paragraphs",
+      "type": "array"
+    },
+    "risk_flags": {
+      "description": "Alertas de risco do dia (com placeholders).",
+      "items": {
+        "maxLength": 300,
+        "minLength": 1,
+        "type": "string"
+      },
+      "maxItems": 10,
+      "title": "Risk Flags",
+      "type": "array"
+    }
+  },
+  "required": [
+    "mind",
+    "headline",
+    "paragraphs"
+  ],
+  "title": "DailyCommentaryOutput",
+  "type": "object"
+}

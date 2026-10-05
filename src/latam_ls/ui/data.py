@@ -3,7 +3,10 @@
 Regras:
 
 - Somente leitura: nada aqui grava arquivos, exceto :func:`set_kill_switch` (única ação de escrita
-  do app, delegada a ``workflow.runtime.Runtime`` e auditada na trilha).
+  do app: ``book/KILL_SWITCH`` com ``{reason, created_at, by}`` e o evento KILL_SWITCH_ON/OFF na
+  trilha encadeada; recusa se o estado mudou desde que o operador abriu o formulário).
+- Integridade verificada já na carga (``TrackRecord.verify`` e ``Book.verify_integrity``): uma
+  adulteração aparece em todas as páginas, não só ao clicar em "Verificar".
 - Diretórios ausentes (antes da inception) viram estruturas vazias — nunca exceções nem pastas
   criadas como efeito colateral.
 - Números vêm dos registros gravados pelo pipeline; aqui só há agregações simples (somas,
@@ -245,10 +248,15 @@ class TrackData:
     csv_bytes: bytes | None = None
     issues: list[str] = field(default_factory=list)
     integrity: list[CheckResult] = field(default_factory=list)
+    unreadable: list[date] = field(default_factory=list)
 
     @property
     def empty(self) -> bool:
         return not self.records
+
+    def unreadable_between(self, start: date, end: date) -> list[date]:
+        """Pregões com registro ilegível no intervalo (somas/compostos ficariam incompletos)."""
+        return [d for d in self.unreadable if start <= d <= end]
 
     @property
     def integrity_failures(self) -> list[CheckResult]:
@@ -268,14 +276,19 @@ class TrackData:
         return [r.date for r in self.records]
 
 
-def _load_records(tr: Any, issues: list[str], label: str) -> list[DailyRecord]:
-    """Registros um a um: um JSON ilegível vira apontamento sem esconder os demais."""
+def _load_records(tr: Any, issues: list[str], label: str
+                  ) -> tuple[list[DailyRecord], list[date]]:
+    """Registros um a um: um JSON ilegível vira apontamento (e data ilegível) sem esconder os
+    demais."""
     out: list[DailyRecord] = []
+    bad: list[date] = []
     for d in _attempt(issues, f"{label} (datas)", tr.dates, []):
         rec = _attempt(issues, f"{label} {d.isoformat()} ilegível", lambda d=d: tr.get(d), None)
-        if rec is not None:
+        if rec is None:
+            bad.append(d)
+        else:
             out.append(rec)
-    return out
+    return out, bad
 
 
 def load_track(book_root: Path, cfg: FundConfig) -> TrackData:
@@ -299,7 +312,7 @@ def load_track(book_root: Path, cfg: FundConfig) -> TrackData:
     td.exists = True
     issues = td.issues
     main = TrackRecord(main_dir)
-    td.records = _load_records(main, issues, "Track record")
+    td.records, td.unreadable = _load_records(main, issues, "Track record")
     td.frame = _attempt(issues, "Track record (CSV)", main.frame, None)
     td.stats = _attempt(issues, "Track record (estatísticas)", lambda: main.stats(cfg), {})
     td.monthly = _attempt(issues, "Track record (grade mensal)", main.monthly_returns_table, None)
@@ -308,7 +321,7 @@ def load_track(book_root: Path, cfg: FundConfig) -> TrackData:
     shadow_dir = root / SHADOW_DIR
     if shadow_dir.is_dir():
         shadow = TrackRecord(shadow_dir, audit_event=_shadow_event())
-        td.shadow_records = _load_records(shadow, issues, "Sombra só-quant")
+        td.shadow_records, _ = _load_records(shadow, issues, "Sombra só-quant")
         td.shadow_frame = _attempt(issues, "Sombra só-quant (CSV)", shadow.frame, None)
         td.compare = _attempt(issues, "CDP vs sombra", lambda: compare_tracks(main, shadow), None)
     return td
@@ -345,11 +358,25 @@ def risk_series(records: Sequence[DailyRecord]) -> pd.DataFrame:
     return df.astype(float)
 
 
-def period_summary(record: DailyRecord, history: Sequence[DailyRecord]) -> dict[str, Any]:
-    """MTD/YTD/ITD pelo mesmo código do comentário/relatório diário."""
+def period_summary(record: DailyRecord, history: Sequence[DailyRecord],
+                   unreadable: Sequence[date] = ()) -> dict[str, Any]:
+    """MTD/YTD/ITD pelo mesmo código do comentário/relatório diário.
+
+    Um pregão com registro ilegível dentro da janela torna o período ``None`` (n/d): compor só
+    os dias legíveis trataria o dia ausente como retorno zero.
+    """
     from ..research.commentary import period_returns
 
-    return period_returns(record, list(history))
+    out = dict(period_returns(record, list(history)))
+    d = record.date
+    gaps = [g for g in unreadable if g <= d]
+    if gaps:
+        out["itd"] = None
+        if any(g.year == d.year for g in gaps):
+            out["ytd"] = None
+        if any((g.year, g.month) == (d.year, d.month) for g in gaps):
+            out["mtd"] = None
+    return out
 
 
 # ==========================================================

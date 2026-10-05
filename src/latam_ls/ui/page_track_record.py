@@ -21,8 +21,11 @@ def _stats(state: AppState) -> None:
     ui.kpi(c[1], "Retorno anualizado", fmt.pct(s.get("annualized_return"), signed=True),
            fmt.Status("pouco informativo", "orange") if s.get("annualization_note")
            else "composto")
+    # O estado vs. banda vem da vol realizada de 21 pregões (não da vol desde o início).
     ui.kpi(c[2], "Vol anualizada", fmt.pct(s.get("annualized_vol")),
-           s.get("realized_vol_status") or "")
+           f"21d: {s.get('realized_vol_status') or fmt.NA}",
+           help="Desvio-padrão dos retornos diários desde o início × √252; o estado vs. banda "
+                "usa a vol realizada de 21 pregões.")
     ui.kpi(c[3], "Sharpe", fmt.num(s.get("sharpe"), 2), "sobre caixa USD 3M",
            help="Excesso de retorno sobre o financiamento registrado (taxa USD 3M, ACT/360).")
     ui.kpi(c[4], "Drawdown máximo", fmt.pct(s.get("max_drawdown")),
@@ -94,12 +97,17 @@ def _charts(state: AppState) -> None:
 def _integrity(state: AppState) -> None:
     ui.section("Integridade", help="Recalcula todos os hashes dos registros, confere os elos, o "
                                    "CSV × JSON e a presença de cada registro na trilha.")
+    fp = state.track_fp
     if st.button("Verificar integridade", icon=":material/verified:", key="verify_track",
                  type="primary"):
-        st.session_state["cdp_track_checks"] = data.verify_track_integrity(state.paths.book)
-    results = st.session_state.get("cdp_track_checks")
-    if results:
-        ui.checks(results)
+        st.session_state["cdp_track_checks"] = (fp, data.verify_track_integrity(state.paths.book))
+    saved = st.session_state.get("cdp_track_checks")
+    if saved:
+        checked_fp, results = saved
+        if checked_fp == fp:
+            ui.checks(results)
+        else:  # resultado antigo nunca é exibido como se valesse para os arquivos atuais
+            st.caption("Os arquivos mudaram desde a última verificação: verifique novamente.")
 
 
 def render(state: AppState) -> None:

@@ -16,7 +16,7 @@ def _kpis(state: AppState) -> None:
     rec = track.latest
     assert rec is not None
     rk = rec.risk
-    per = data.period_summary(rec, track.history_until(rec))
+    per = data.period_summary(rec, track.history_until(rec), track.unreadable)
     c = st.columns(5)
     ui.kpi(c[0], "NAV", fmt.usd_mm(rec.nav_end_usd),
            f"abertura {fmt.usd_mm(rec.nav_start_usd)}")

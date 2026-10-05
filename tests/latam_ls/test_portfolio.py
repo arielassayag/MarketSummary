@@ -408,7 +408,10 @@ def test_vol_close_to_target_with_strong_alpha(env: Env, inception) -> None:
     _assert_feasible(res, cons, env, env.cfg)
 
 
-def test_match_mode_reaches_target_with_weak_alpha(env: Env) -> None:
+def test_match_mode_with_weak_alpha_respects_costs_and_band_floor(env: Env) -> None:
+    """Alpha fraco diante dos custos: o modo 'match' reduz a aversão a risco (troca alpha × custo
+    preservada) e, se a meta for inatingível, escala o alpha só até o PISO da banda — nunca
+    força a meta girando a carteira com alpha líquido negativo."""
     cons = _constraints(env)
     weak = env.alpha * 0.1
     capped = optimize(weak, env.model, cons, env.cost_model, env.cfg, NAV, None, True,
@@ -417,15 +420,28 @@ def test_match_mode_reaches_target_with_weak_alpha(env: Env) -> None:
     assert capped.alpha_scale == 1.0
     matched = optimize(weak, env.model, cons, env.cost_model, env.cfg, NAV, None, True,
                        env.market_w, overrides={"risk_target_mode": "match"})
-    vt = env.cfg.risk.vol_target_annual
-    assert vt * 0.99 <= matched.ex_ante_vol <= vt + TOL
+    vt, floor = env.cfg.risk.vol_target_annual, env.cfg.risk.vol_band_min
+    assert floor * 0.99 <= matched.ex_ante_vol <= vt + TOL
     assert matched.alpha_scale > 1.0
+    assert any("piso da banda" in n for n in matched.diagnostics.notes)
     assert any("Modo 'match'" in n for n in matched.diagnostics.notes)
     assert matched.expected_alpha == pytest.approx(float((weak * matched.weights).sum()))
     _assert_feasible(matched, cons, env, env.cfg)
     with pytest.raises(ValueError, match="risk_target_mode"):
         optimize(weak, env.model, cons, env.cost_model, env.cfg, NAV, None, True,
                  overrides={"risk_target_mode": "auto"})
+
+
+def test_match_mode_reaches_target_when_alpha_beats_costs(env: Env) -> None:
+    """Com alpha que paga os custos, reduzir só a aversão a risco já atinge a meta."""
+    cons = _constraints(env)
+    strong = env.alpha * 3.0
+    matched = optimize(strong, env.model, cons, env.cost_model, env.cfg, NAV, None, True,
+                       env.market_w, overrides={"risk_target_mode": "match"})
+    vt = env.cfg.risk.vol_target_annual
+    assert vt * 0.99 <= matched.ex_ante_vol <= vt + TOL
+    assert not any("piso da banda" in n for n in matched.diagnostics.notes)
+    _assert_feasible(matched, cons, env, env.cfg)
 
 
 def test_vol_target_override_inside_band(env: Env) -> None:

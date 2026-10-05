@@ -536,7 +536,8 @@ def test_match_mode_uses_the_risk_budget(md):
     vt = CFG.risk.vol_target_annual / CFG.risk.bias_prior
     assert (wk["status"] == "ok").all()
     assert (wk["ex_ante_vol"] <= vt * (1 + 1e-4)).all()
-    assert (wk["ex_ante_vol"] >= 0.97 * vt).all()
+    # A meta só é perseguida enquanto o alpha paga os custos; nunca abaixo do piso da banda.
+    assert (wk["ex_ante_vol"] >= 0.97 * CFG.risk.vol_band_min).all()
     assert (wk["alpha_scale"] >= 1.0).all()
     assert (wk["net"].abs() <= CFG.risk.net_exposure_max_abs + 1e-6).all()
     assert "modo 'match'" in "\n".join(res.notes)

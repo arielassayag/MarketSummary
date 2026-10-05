@@ -89,7 +89,8 @@ def _factors(state: AppState) -> None:
 def _exposures(state: AppState) -> None:
     rec = state.track.latest
     prop = state.book.live_proposal(rec)
-    lines = list(rec.risk.exposures) if rec is not None and rec.risk.exposures else (
+    from_record = rec is not None and bool(rec.risk.exposures)
+    lines = list(rec.risk.exposures) if from_record and rec is not None else (
         list(prop.risk.exposures) if prop is not None else [])
     market_lines = [e for e in (prop.risk.exposures if prop is not None else [])
                     if e.group in ("market", "currency")]
@@ -99,6 +100,11 @@ def _exposures(state: AppState) -> None:
     if df.empty:
         st.caption("Sem exposições gravadas.")
         return
+    if from_record and rec is not None:
+        st.caption(f"País, setor e estilo: registro diário de {fmt.date_br(rec.date)}.")
+    elif prop is not None:
+        st.caption(f"Proposta vigente (ex-ante na decisão de {fmt.date_br(prop.week)}): o "
+                   "registro diário não tem exposições gravadas.")
     tabs = st.tabs(["País", "Setor", "Estilo", "Temas, commodities e moedas"])
     for tab, group, title in ((tabs[0], "country", "Exposição líquida por país (% NAV)"),
                               (tabs[1], "sector", "Exposição líquida por setor (% NAV)")):

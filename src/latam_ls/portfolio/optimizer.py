@@ -79,6 +79,7 @@ _ALLOWED_OVERRIDES = {
 RISK_TARGET_MODES = ("cap", "match")
 MATCH_REL_TOL = 0.005        # "na meta": vol ≥ 99,5% da meta (o teto continua duro)
 MAX_ALPHA_SCALE = 64.0
+FLOOR_MARGIN = 0.05          # piso da banda + 5% (as passadas de limpeza reduzem um pouco a vol)
 MATCH_BISECT_STEPS = 8
 
 RELAXATION_STEPS: tuple[tuple[str, str], ...] = (
@@ -883,24 +884,30 @@ def _vol_of(p: _Problem, w: np.ndarray) -> float:
     return float(np.sqrt(gw @ gw + np.sum((p.sd * w) ** 2)))
 
 
-def _match_vol_target(p: _Problem, relax: _Relax, base: _Outcome
+def _match_vol_target(p: _Problem, relax: _Relax, base: _Outcome, *, scale: str = "lam",
+                      target_vol: float | None = None
                       ) -> tuple[float, _Outcome, float, bool]:
-    """Menor κ ≥ 1 tal que o portfólio com alpha κ·α atinja a meta de vol (teto ativo).
+    """Menor κ ≥ 1 tal que o portfólio com aversão a risco λ/κ atinja a meta de vol (teto ativo).
 
-    Custos, aluguel e aversão a risco não mudam: escalar α equivale a reduzir proporcionalmente
-    a aversão a custo/risco relativa ao alpha. Retorna ``(κ, solução, segundos, atingiu)``.
+    Só a aversão a RISCO muda: equivale a escalar alpha, custos e aluguel juntos por κ, o que
+    preserva a troca alpha × custo (escalar só o alpha tornaria o giro quase gratuito e o
+    otimizador giraria demais). Retorna ``(κ, solução, segundos, atingiu)``.
     Se a meta for inatingível até ``MAX_ALPHA_SCALE`` (capacidade de liquidez/aluguel), devolve
     a solução de maior vol encontrada.
     """
     no_fix = np.zeros(len(p.ids), dtype=bool)
-    target = p.vol_target * (1 - MATCH_REL_TOL)
+    target = (p.vol_target if target_vol is None else target_vol) * (1 - MATCH_REL_TOL)
+
+    def scaled(k: float) -> _Problem:
+        return replace(p, lam=p.lam / k) if scale == "lam" else replace(p, alpha=p.alpha * k)
+
     secs = 0.0
     lo, best_lo = 1.0, base
     hi: float | None = None
     best_hi: _Outcome | None = None
     k = 2.0
     while k <= MAX_ALPHA_SCALE + TOL:
-        o = _solve_clean(replace(p, alpha=p.alpha * k), relax, no_fix, no_fix)
+        o = _solve_clean(scaled(k), relax, no_fix, no_fix)
         secs += o.seconds
         if o.w is None:
             break
@@ -913,7 +920,7 @@ def _match_vol_target(p: _Problem, relax: _Relax, base: _Outcome
         return lo, best_lo, secs, False
     for _ in range(MATCH_BISECT_STEPS):
         mid = float(np.sqrt(lo * hi))
-        o = _solve_clean(replace(p, alpha=p.alpha * mid), relax, no_fix, no_fix)
+        o = _solve_clean(scaled(mid), relax, no_fix, no_fix)
         secs += o.seconds
         if o.w is None:
             break
@@ -945,9 +952,10 @@ def optimize(alpha: pd.Series, model: RiskModel, constraints: pd.DataFrame,
 
     ``risk_target_mode``: ``"cap"`` (padrão) trata a meta de vol como teto — com alpha fraco
     diante dos custos, a carteira fica abaixo da meta (a compliance alerta em ``VOL_MIN``).
-    ``"match"`` calibra o menor multiplicador κ ≥ 1 do alpha que faz o teto de vol ficar ativo
-    (equivale a reduzir a aversão a custo/risco relativa ao alpha); κ vai para
-    ``alpha_scale`` e para as notas, e ``expected_alpha`` continua usando o alpha original.
+    ``"match"`` calibra o menor κ ≥ 1 tal que a aversão a risco λ/κ faça o teto de vol ficar
+    ativo (equivale a escalar alpha, custos e aluguel juntos: a troca alpha × custo é
+    preservada); κ vai para ``alpha_scale`` e para as notas, e ``expected_alpha`` usa o alpha
+    original.
 
     Levanta :class:`OptimizationError` se nenhum degrau da escada de relaxamento tornar o
     problema viável (nunca devolve carteira zerada silenciosamente).
@@ -1089,13 +1097,26 @@ def optimize(alpha: pd.Series, model: RiskModel, constraints: pd.DataFrame,
             and _vol_of(p, outcome.w) < p.vol_target * (1 - MATCH_REL_TOL):
         kappa, outcome, secs, reached = _match_vol_target(p, relax, outcome)
         total_seconds += secs
-        p = replace(p, alpha=alpha_raw * kappa)
+        p = replace(p, lam=p.lam / kappa)
         if reached:
-            notes.append(f"Modo 'match': alpha escalado em {kappa:.2f}x para atingir a meta de "
-                         f"vol (custos, aluguel e limites inalterados).")
+            notes.append(f"Modo 'match': aversão a risco dividida por {kappa:.2f} para atingir a "
+                         "meta de vol (troca alpha × custo, aluguel e limites inalterados).")
         else:
-            notes.append(f"Modo 'match': meta de vol inatingível até {MAX_ALPHA_SCALE:.0f}x "
-                         f"(capacidade de liquidez/aluguel); usado {kappa:.2f}x.")
+            notes.append(f"Modo 'match': meta de vol inatingível só reduzindo a aversão a risco "
+                         f"(alpha líquido de custos insuficiente ou capacidade de liquidez/"
+                         f"aluguel); usado {kappa:.2f}x.")
+            floor = min(float(cfg.risk.vol_band_min) * (1 + FLOOR_MARGIN), p.vol_target)
+            if _vol_of(p, outcome.w) < floor * (1 - MATCH_REL_TOL):
+                # Piso da banda do mandato: escala o alpha só até a vol mínima (nunca além).
+                k2, out2, secs2, reached2 = _match_vol_target(p, relax, outcome, scale="alpha",
+                                                              target_vol=floor)
+                total_seconds += secs2
+                outcome = out2
+                p = replace(p, alpha=p.alpha * k2)
+                kappa *= k2
+                notes.append(f"Modo 'match': alpha escalado em {k2:.2f}x só para atingir o piso "
+                             f"da banda de vol com margem ({floor:.2%})"
+                             + ("." if reached2 else " — piso inatingível (capacidade)."))
     assert outcome.w is not None
 
     # ---------- passadas de limpeza (posição mínima) ----------

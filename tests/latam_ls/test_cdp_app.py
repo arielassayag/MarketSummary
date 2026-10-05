@@ -24,9 +24,12 @@ from streamlit.testing.v1 import AppTest
 from latam_ls.audit import AuditLog
 from latam_ls.config import FundConfig, load_config
 from latam_ls.contracts import (
+    BookEntry,
     DailyPosition,
     DailyRecord,
     DailyRisk,
+    Decision,
+    DecisionType,
     LineType,
     OptimizerDiagnostics,
     PositionTarget,
@@ -34,6 +37,7 @@ from latam_ls.contracts import (
     RiskSummary,
     Side,
 )
+from latam_ls.hashing import sha256_obj
 from latam_ls.ui import data, fmt
 from latam_ls.ui.app import PAGES
 from latam_ls.ui.settings import AppPaths
@@ -308,10 +312,15 @@ def test_each_page_renders_with_fixture(key, fx_env):
     _no_exceptions(at)
     text = _texts(at)
     assert BANNER in text
+    assert "FALHA DE INTEGRIDADE" not in text  # livro-fixture íntegro: sem falso alarme
     last = fx_env.records[-1]
     if key == "visao-geral":
         assert any(m.label == "NAV" and m.value == fmt.usd_mm(last.nav_end_usd)
                    for m in at.metric)
+        dec = next(df.value for df in at.dataframe if "Item" in df.value.columns)
+        rows = dict(zip(dec["Item"], dec["Valor"], strict=False))
+        assert rows["Execução"].startswith("em carteira")
+        assert rows["Prazo do mandato"].startswith("dentro do prazo")
         assert any(m.label == "Retorno do dia" and m.value == fmt.pct(last.ret, signed=True)
                    for m in at.metric)
         assert "Comentário do dia :violet-badge" in text  # comentário da mente com selo IA
@@ -345,6 +354,7 @@ def test_decision_page_shows_autonomous_decision_hashes(fx_env):
     values = dict(zip(decision_tbl["Item"], decision_tbl["Valor"], strict=False))
     assert values["Modo"] == "AUTONOMOUS" and values["Mente"] == MIND
     assert values["Assinada por"] == "CDP — Cabra da Peste (PM autônomo)"
+    assert values["Prazo do mandato"] == "dentro do prazo (16:30 de 05/10/2026)"
     hashes = next(t for t in tables if "Hash" in t.columns)
     d = fx_env.decision
     assert set(hashes["Valor"]) >= {d.approval_hash, d.proposal_hash, d.pm_decision_hash,
@@ -416,6 +426,16 @@ def _copy_fixture(fx: SimpleNamespace, dest: Path) -> SimpleNamespace:
                            config=dest / "fund.yaml", market=dest / "market")
 
 
+def _fill_kill_switch(at: AppTest, act: str, reason: str, by: str = "Operador de risco",
+                      confirm: bool = True) -> AppTest:
+    """Preenche e envia o formulário do kill switch da ação ``act`` (on | off)."""
+    at.text_area(key=f"ks_reason_{act}").input(reason)
+    at.text_input(key=f"ks_by_{act}").input(by)
+    if confirm:
+        at.checkbox(key=f"ks_confirm_{act}").check()
+    return at.button(key=f"ks_submit_{act}").click().run()
+
+
 def test_kill_switch_on_and_off_writes_file_and_audit_events(fixture_book, tmp_path,
                                                              monkeypatch):
     c = _copy_fixture(fixture_book, tmp_path / "copia")
@@ -423,20 +443,21 @@ def test_kill_switch_on_and_off_writes_file_and_audit_events(fixture_book, tmp_p
     n0 = len(AuditLog(c.book / "audit_log.jsonl").events())
     at = page_app("auditoria")
     reason = "Teste de emergência <script>alert(1)</script> [x](javascript:alert(1))"
-    at.text_area(key="ks_reason").input(reason)
-    at.text_input(key="ks_by").input("Operador de risco")
-    at.checkbox(key="ks_confirm").check()
-    at.button(key="ks_submit").click().run()
+    _fill_kill_switch(at, "on", reason)
     _no_exceptions(at)
     ks_file = c.book / "KILL_SWITCH"
     assert ks_file.exists()
     payload = json.loads(ks_file.read_text(encoding="utf-8"))
+    # Campos do spec ({reason, created_at, by}) + os da CLI (on, at).
     assert payload["reason"] == reason and payload["by"] == "Operador de risco"
-    assert payload.get("created_at") or payload.get("at")
+    assert payload["created_at"] and payload["on"] is True
+    assert datetime.fromisoformat(payload["created_at"]).tzinfo is not None
     events = AuditLog(c.book / "audit_log.jsonl").events()
     assert len(events) == n0 + 1 and events[-1].event_type == "KILL_SWITCH_ON"
     assert events[-1].actor == "Operador de risco"
+    assert events[-1].payload_hash == sha256_obj(payload)  # arquivo = payload auditado
     assert AuditLog(c.book / "audit_log.jsonl").verify_chain()[0]
+    assert not any("mudou" in str(e.value) for e in at.error)  # sem falso "estado mudou"
     # Banner e status aparecem; o texto digitado é exibido escapado (nunca como HTML).
     errors = [str(e.value) for e in at.error]
     assert any("KILL SWITCH LIGADO" in e for e in errors)
@@ -444,10 +465,7 @@ def test_kill_switch_on_and_off_writes_file_and_audit_events(fixture_book, tmp_p
     assert any("\\<script\\>" in e for e in errors)
     assert any("registrado na trilha" in str(s.value) for s in at.success)
 
-    at.text_area(key="ks_reason").input("Fim do teste de emergência")
-    at.text_input(key="ks_by").input("Operador de risco")
-    at.checkbox(key="ks_confirm").check()
-    at.button(key="ks_submit").click().run()
+    _fill_kill_switch(at, "off", "Fim do teste de emergência")
     _no_exceptions(at)
     assert not ks_file.exists()
     events = AuditLog(c.book / "audit_log.jsonl").events()
@@ -460,9 +478,7 @@ def test_kill_switch_requires_reason_and_confirmation(fixture_book, tmp_path, mo
     _env(monkeypatch, c.book, c.reports, c.config, c.market)
     n0 = len(AuditLog(c.book / "audit_log.jsonl").events())
     at = page_app("auditoria")
-    at.text_area(key="ks_reason").input("curto")
-    at.text_input(key="ks_by").input("Op")
-    at.button(key="ks_submit").click().run()
+    _fill_kill_switch(at, "on", "curto", by="Op", confirm=False)
     _no_exceptions(at)
     assert not (c.book / "KILL_SWITCH").exists()
     assert len(AuditLog(c.book / "audit_log.jsonl").events()) == n0
@@ -642,6 +658,8 @@ def test_components_and_attribution_aggregation():
             _record(date(2026, 10, 6), -0.001, {"factor": -20_000.0, "costs": -80_000.0})]
     comp = data.components_table(recs).set_index("key")
     assert comp.loc["factor", "pnl_usd"] == pytest.approx(30_000.0)
+    # Cobertura explícita: componente ausente num dia não é somado como zero às escondidas.
+    assert comp.loc["factor", "days"] == 2 and comp.loc["specific", "days"] == 1
     assert comp.loc["costs", "contribution"] == pytest.approx(-0.0008)
     assert list(comp.index) == ["factor", "specific", "costs"]
     assert data.attribution_table(recs, "country").empty
@@ -711,3 +729,299 @@ def test_track_table_keeps_missing_as_nan():
     rec = _record(date(2026, 10, 5), 0.001, {"factor": 1.0})
     df = data.track_table([rec])
     assert pd.isna(df.loc[0, "Custos"]) and df.loc[0, "Fatorial"] == 1.0
+
+
+# ==========================================================
+# Revisão adversarial: regressões (cada teste expõe um defeito corrigido)
+# ==========================================================
+
+def test_kill_switch_intent_is_never_inverted_by_concurrent_change(fixture_book, tmp_path,
+                                                                   monkeypatch):
+    """Operador preenche LIGAR; outro operador (ou a CLI) liga antes do envio. Antes, o envio
+    era reinterpretado pelo estado novo e DESLIGAVA o kill switch."""
+    c = _copy_fixture(fixture_book, tmp_path / "copia")
+    _env(monkeypatch, c.book, c.reports, c.config, c.market)
+    at = page_app("auditoria")
+    data.set_kill_switch(AppPaths.from_env(), FundConfig(), True, "Ligado por outro operador",
+                         "Outro operador")
+    n0 = len(AuditLog(c.book / "audit_log.jsonl").events())
+    _fill_kill_switch(at, "on", "Quero ligar: risco de gap no Brasil")
+    _no_exceptions(at)
+    assert (c.book / "KILL_SWITCH").exists(), "intenção de LIGAR virou DESLIGAR"
+    events = AuditLog(c.book / "audit_log.jsonl").events()
+    assert len(events) == n0 and events[-1].event_type == "KILL_SWITCH_ON"
+    assert any("estado do kill switch mudou" in str(e.value) for e in at.error)
+
+
+def test_set_kill_switch_refuses_stale_expectation(tmp_path):
+    paths = AppPaths.from_env({"CDP_BOOK_DIR": str(tmp_path / "book")})
+    with pytest.raises(RuntimeError, match="mudou"):
+        data.set_kill_switch(paths, FundConfig(), False, "desligar agora", "Ana",
+                             expect_active=True)
+    assert not (tmp_path / "book").exists()  # nada gravado
+    ks = data.set_kill_switch(paths, FundConfig(), True, "ligar por teste", "Ana",
+                              expect_active=False,
+                              now=datetime(2026, 10, 5, 15, 0, tzinfo=UTC))
+    assert ks.active and ks.created_at == "2026-10-05T15:00:00+00:00"
+    with pytest.raises(RuntimeError, match="já está LIGADO"):
+        data.set_kill_switch(paths, FundConfig(), True, "ligar de novo", "Ana")
+    assert len(AuditLog(tmp_path / "book" / "audit_log.jsonl").events()) == 1
+
+
+def test_tampered_record_raises_integrity_banner_on_every_page(fixture_book, tmp_path,
+                                                               monkeypatch):
+    """Antes, um registro adulterado só aparecia ao clicar em "Verificar integridade"; as
+    páginas exibiam os números alterados como se fossem válidos."""
+    c = _copy_fixture(fixture_book, tmp_path / "copia")
+    path = c.book / "track_record" / "records" / f"{SESSIONS[1].isoformat()}.json"
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    raw["pnl_components"]["specific"] = raw["pnl_components"]["specific"] + 50_000.0
+    path.write_text(json.dumps(raw, indent=2, sort_keys=True), encoding="utf-8")
+    _env(monkeypatch, c.book, c.reports, c.config, c.market)
+    for key in ("visao-geral", "atribuicao"):
+        at = page_app(key)
+        _no_exceptions(at)
+        assert any("FALHA DE INTEGRIDADE" in str(e.value) for e in at.error), key
+
+
+def test_corrupted_record_is_flagged_not_shown_as_empty_track(fixture_book, tmp_path,
+                                                              monkeypatch):
+    """Antes, um único JSON ilegível zerava a lista de registros e a visão geral dizia
+    "Track record ainda não iniciado"; compor só os dias legíveis trataria o dia ilegível como
+    retorno zero."""
+    c = _copy_fixture(fixture_book, tmp_path / "copia")
+    (c.book / "track_record" / "records" / f"{SESSIONS[1].isoformat()}.json").write_text(
+        '{"date": "2026-10-06"', encoding="utf-8")
+    _env(monkeypatch, c.book, c.reports, c.config, c.market)
+    track = data.load_track(c.book, fixture_book.cfg)
+    assert [r.date for r in track.records] == [SESSIONS[0], SESSIONS[2]]
+    assert track.unreadable == [SESSIONS[1]] and track.integrity_failures
+    assert any("ilegível" in i for i in track.issues)
+    at = page_app("visao-geral")
+    _no_exceptions(at)
+    text = _texts(at)
+    assert "Track record ainda não iniciado" not in text
+    assert any("FALHA DE INTEGRIDADE" in str(e.value) for e in at.error)
+    metrics = {m.label: m.value for m in at.metric}
+    assert metrics["NAV"] == fmt.usd_mm(fixture_book.records[2].nav_end_usd)
+    assert metrics["Desde o início (ITD)"] == "n/d" and metrics["Retorno no mês (MTD)"] == "n/d"
+    at = page_app("atribuicao")
+    _no_exceptions(at)
+    assert any("registro ilegível no período" in str(e.value) for e in at.error)
+    assert {m.label: m.value for m in at.metric}["Retorno no período"] == "n/d"
+
+
+def test_integrity_result_is_not_reused_after_files_change(fixture_book, tmp_path,
+                                                           monkeypatch):
+    c = _copy_fixture(fixture_book, tmp_path / "copia")
+    _env(monkeypatch, c.book, c.reports, c.config, c.market)
+    at = page_app("track-record")
+    at.button(key="verify_track").click().run()
+    assert any("íntegro" in str(s.value) for s in at.success)
+    path = c.book / "track_record" / "records" / f"{SESSIONS[0].isoformat()}.json"
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    raw["ret"] = raw["ret"] + 0.01
+    path.write_text(json.dumps(raw, indent=2, sort_keys=True), encoding="utf-8")
+    at.run()
+    _no_exceptions(at)
+    assert not any("Track record do CDP: íntegro" in str(s.value) for s in at.success)
+    assert "verifique novamente" in _texts(at)
+
+
+def test_deleted_track_record_is_detected(fixture_book, tmp_path, monkeypatch):
+    """Antes, sem a pasta do track record a verificação dizia "Sem registros diários ainda"
+    (íntegro) mesmo com a trilha listando três registros."""
+    c = _copy_fixture(fixture_book, tmp_path / "copia")
+    shutil.rmtree(c.book / "track_record")
+    results = data.verify_track_integrity(c.book)
+    main = next(r for r in results if r.label == "Track record do CDP")
+    assert not main.ok and any("sem registro correspondente" in m for m in main.messages)
+    assert not (c.book / "track_record").exists()  # verificar não recria a pasta
+    _env(monkeypatch, c.book, c.reports, c.config, c.market)
+    at = page_app("risco")
+    _no_exceptions(at)
+    assert any("FALHA DE INTEGRIDADE" in str(e.value) for e in at.error)
+    # Sem registro diário, o monitor de squeeze diz n/d (nunca "0 HIGH").
+    assert any(m.label == "HIGH no último fechamento" and m.value == "n/d" for m in at.metric)
+
+
+def test_html_report_with_active_content_is_not_rendered(fixture_book, tmp_path, monkeypatch):
+    for r in data.list_reports(fixture_book.reports):
+        assert data.html_active_content(r.html.read_text(encoding="utf-8")) == [], r.label
+    for bad in ("<script>alert(1)</script>", '<img src=x onerror="alert(1)">',
+                '<a href="javascript:alert(1)">x</a>', '<img src="https://evil.example/p.png">',
+                "<iframe srcdoc='x'></iframe>", "<style>@import url(//evil.example/x.css)</style>"):
+        assert data.html_active_content(bad), bad
+    c = _copy_fixture(fixture_book, tmp_path / "copia")
+    html = c.reports / "daily" / SESSIONS[2].isoformat() / "relatorio.html"
+    html.write_text(html.read_text(encoding="utf-8").replace(
+        "</body>", "<script>parent.document.title='x'</script></body>"), encoding="utf-8")
+    _env(monkeypatch, c.book, c.reports, c.config, c.market)
+    at = page_app("relatorios")
+    at.toggle(key="rep_html").set_value(True).run()
+    _no_exceptions(at)
+    assert any("HTML não exibido" in str(e.value) for e in at.error)
+
+
+def test_ai_text_in_widget_labels_is_escaped(fixture_book, tmp_path, monkeypatch):
+    """Rótulos de expander interpretam Markdown (links e imagens): o escopo macro vem da IA."""
+    from latam_ls.workflow.book import Book
+
+    evil = "BR ![x](https://evil.example/p.png) [clique](https://evil.example)"
+    assert "](" not in fmt.label(evil)
+    c = _copy_fixture(fixture_book, tmp_path / "copia")
+    book = Book(c.book)
+    pack = book.load_research_pack(W1)
+    macro = [m.model_copy(update={"scope": evil}) if i == 0 else m
+             for i, m in enumerate(pack.macro) if m.scope.upper() != "GOVERNANÇA"]
+    book.save_research_pack(pack.model_copy(update={"macro": macro}), actor=MIND)
+    _env(monkeypatch, c.book, c.reports, c.config, c.market)
+    at = page_app("pesquisa")
+    _no_exceptions(at)
+    labels = _block_labels(at.main)
+    assert any("evil" in lb and "BR" in lb for lb in labels)
+    assert all("](" not in lb for lb in labels)
+
+
+def _block_labels(node: object) -> list[str]:
+    """Rótulos de blocos expansíveis (expander com ícone aparece como ``Status`` no AppTest)."""
+    out: list[str] = []
+    for child in getattr(node, "children", {}).values():
+        if type(child).__name__ in ("Expander", "Status") and getattr(child, "label", None):
+            out.append(str(child.label))
+        out += _block_labels(child)
+    return out
+
+
+def test_report_md_defuses_links_and_images():
+    md = fmt.report_md("![p](https://evil.example/p.png) e [a](javascript:alert(1)) "
+                       "<https://evil.example> e `[c](d)`")
+    assert "](" not in md.replace("`[c](d)`", "") and "`[c](d)`" in md
+    assert "\\<https:" in md
+
+
+def _decision_for(p: Proposal, kind: DecisionType) -> Decision:
+    return Decision(week=p.week, proposal_id=p.proposal_id, proposal_hash="d" * 64,
+                    snapshot_hash=p.snapshot_hash, config_hash=p.config_hash,
+                    research_hash=p.research_hash, decision=kind, approver="Ana Gestora",
+                    rationale="Racional de teste suficiente.", decided_at=T_DECIDED,
+                    approval_hash="e" * 64)
+
+
+def _versions() -> tuple[Proposal, Proposal]:
+    base = _proposal([_pt("A", 0.02), _pt("B", -0.02)])
+    return (base.model_copy(update={"proposal_id": "P1", "version": 1}),
+            base.model_copy(update={"proposal_id": "P2", "version": 2}))
+
+
+def test_week_never_pairs_a_proposal_with_another_versions_decision():
+    p1, p2 = _versions()
+    wk = data.WeekData(week=W1, proposals=[p1, p2],
+                       decisions={1: _decision_for(p1, DecisionType.REJECT)})
+    # Antes: proposta v2 exibida com a decisão (REJECT) da v1.
+    assert wk.proposal is p2 and wk.decision is None
+    approved = _decision_for(p1, DecisionType.APPROVE)
+    wk = data.WeekData(week=W1, proposals=[p1, p2], decisions={1: approved})
+    assert wk.proposal is p1 and wk.decision is approved  # rascunho v2 não substitui a decidida
+    wk = data.WeekData(week=W1, proposals=[p1, p2],
+                       decisions={2: _decision_for(p2, DecisionType.APPROVE)})
+    assert wk.proposal is p2 and wk.decision.proposal_id == "P2"
+
+
+def _booked(week: date, pid: str) -> BookEntry:
+    return BookEntry(week=week, proposal_id=pid, approval_hash="e" * 64, booked_at=T_DECIDED,
+                     nav_usd=1e8, positions=[])
+
+
+def test_live_week_has_no_look_ahead_and_previous_prefers_booked():
+    p1, p2 = _versions()
+    w0, w1, w2 = date(2026, 9, 28), date(2026, 10, 5), date(2026, 10, 13)
+    book = data.BookData(root=Path("x"), weeks=[
+        data.WeekData(week=w0, proposals=[p1], booked=_booked(w0, "P1")),
+        data.WeekData(week=w1, proposals=[p2]),
+        data.WeekData(week=w2, proposals=[p1])])
+    rec = _record(date(2026, 10, 7), 0.0, {})
+    # Semana citada no registro fora do livro ⇒ None (antes: a decisão mais NOVA, de 13/10).
+    assert book.live_week(rec.model_copy(update={"live_book_week": date(2026, 9, 21)})) is None
+    assert book.live_week(rec).week == w1  # sem semana no registro: a última até a data
+    assert book.live_week(None).week == w2
+    # "O que mudou" compara com a carteira efetivada (w0), não com a proposta não executada.
+    assert book.previous(w2).week == w0
+
+
+def test_liquidity_uses_the_short_side_limit_and_missing_first():
+    cfg = FundConfig()
+    lo = _pt("A", 0.03).model_copy(update={"days_to_liquidate": 2.5})
+    sh = _pt("B", -0.02).model_copy(update={"days_to_liquidate": 2.5})
+    unknown = _pt("C", -0.01)
+    by_side = data.liquidity_by_side([lo, sh], cfg)
+    assert by_side["LONG"].status.color == "green"  # 2,5 d ≤ 3 d (long)
+    assert by_side["SHORT"].status.color == "red"   # 2,5 d > 2 d (short): antes ficava verde
+    worst = data.worst_liquidity_status(by_side)
+    assert worst.color == "red" and worst.label.startswith("S:")
+    assert data.liquidity_by_side([lo, unknown], cfg)["SHORT"].status.color == "orange"
+    assert [p.issuer_id for p in data.least_liquid([lo, sh, unknown])] == ["C", "A", "B"]
+
+
+def test_value_added_series_does_not_treat_missing_day_as_zero():
+    idx = pd.DatetimeIndex([pd.Timestamp(d) for d in SESSIONS], name="date")
+    cmp_ = pd.DataFrame({"ret_cdp": [0.01, float("nan"), 0.01], "ret_shadow": [0.0, 0.0, 0.0]},
+                        index=idx)
+    va = data.value_added_series(cmp_, SESSIONS[0], SESSIONS[2])
+    assert va["value_added"].iloc[0] == pytest.approx(0.01)
+    assert va["value_added"].iloc[1:].isna().all()  # antes: 1,01² − 1 (dia ausente = 0%)
+
+
+def test_next_events_flags_overdue_weekly_decision():
+    from zoneinfo import ZoneInfo
+
+    cfg = FundConfig()
+    tz = ZoneInfo("America/Sao_Paulo")
+    late = datetime(2026, 10, 19, 17, 0, tzinfo=tz)
+    ev = data.next_events(late, cfg, set())
+    overdue = [e for e in ev if e.overdue]
+    assert len(overdue) == 1 and overdue[0].when.date() == date(2026, 10, 19)
+    assert not any(e.overdue for e in data.next_events(late, cfg, {date(2026, 10, 19)}))
+    before_inception = datetime(2026, 9, 28, 17, 0, tzinfo=tz)
+    assert not any(e.overdue for e in data.next_events(before_inception, cfg, set()))
+
+
+def test_decision_timing_against_mandate_deadline():
+    cfg = FundConfig()
+    p1, _ = _versions()
+    d = _decision_for(p1, DecisionType.APPROVE)
+    assert data.decision_timing(d, cfg).color == "green"  # 14h de Brasília
+    late = d.model_copy(update={"decided_at": datetime(2026, 10, 5, 20, 0, tzinfo=UTC)})
+    status = data.decision_timing(late, cfg)
+    assert status.color == "red" and status.label.startswith("APÓS o prazo")
+
+
+def test_commentary_mind_comes_from_the_code_provenance_line():
+    md = ("Parágrafo que imita: mente impostora [IA] fez isto.\n\n"
+          "_Autoria: mente codex [IA]; números calculados por código._")
+    assert data._commentary_meta(md) == (True, "codex")
+
+
+def test_list_reports_ignores_symlinks_outside_root(tmp_path):
+    secret = tmp_path / "segredo.md"
+    secret.write_text("# segredo", encoding="utf-8")
+    folder = tmp_path / "reports" / "daily" / "2026-10-05"
+    folder.mkdir(parents=True)
+    (folder / "relatorio.md").symlink_to(secret)
+    assert data.list_reports(tmp_path / "reports") == []
+    (folder / "relatorio.html").write_text("<html></html>", encoding="utf-8")
+    [rep] = data.list_reports(tmp_path / "reports")
+    assert rep.md is None and rep.html is not None
+
+
+def test_fingerprint_content_mode_detects_same_size_and_mtime_edit(tmp_path):
+    import os
+
+    f = tmp_path / "audit_log.jsonl"
+    f.write_text('{"seq": 0}\n', encoding="utf-8")
+    st0 = f.stat()
+    a, a_content = data.fingerprint(f), data.fingerprint(f, content=True)
+    f.write_text('{"seq": 9}\n', encoding="utf-8")
+    os.utime(f, ns=(st0.st_atime_ns, st0.st_mtime_ns))
+    assert data.fingerprint(f) == a  # tamanho e mtime iguais
+    assert data.fingerprint(f, content=True) != a_content

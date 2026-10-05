@@ -65,11 +65,18 @@ def render(state: AppState) -> None:
     if not recs:
         st.info("Nenhum registro no período escolhido.")
         return
+    gaps = track.unreadable_between(start, end)
+    if gaps:
+        st.error(f"{len(gaps)} pregão(ões) com registro ilegível no período ("
+                 + ", ".join(fmt.date_br(g) for g in gaps) + "): retorno e P&L do período ficam "
+                 "n/d e as somas abaixo estão incompletas.", icon=":material/gpp_bad:")
     va = data.value_added_series(track.compare, start, end)
     c = st.columns(4)
-    ui.kpi(c[0], "Retorno no período", fmt.pct(data.compound(r.ret for r in recs), signed=True),
+    period_ret = None if gaps else data.compound(r.ret for r in recs)
+    period_pnl = None if gaps else sum(r.pnl_usd for r in recs)
+    ui.kpi(c[0], "Retorno no período", fmt.pct(period_ret, signed=True),
            "composto dos retornos diários")
-    ui.kpi(c[1], "P&L no período", fmt.usd_mm(sum(r.pnl_usd for r in recs), 3, True),
+    ui.kpi(c[1], "P&L no período", fmt.usd_mm(period_pnl, 3, True),
            "soma dos P&L diários")
     ui.kpi(c[2], "Sombra só-quant", fmt.pct(va["cum_shadow"].iloc[-1] if not va.empty else None,
                                             signed=True), "composto no período")

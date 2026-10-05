@@ -35,15 +35,22 @@ def _audit(state: AppState) -> None:
     events = [ev for ev in audit.events if ev.event_type in sel]
     df = data.audit_frame(list(reversed(events)), state.cfg.fund.timezone)
     ui.table(df, height=min(560, 36 * (len(df) + 1)))
+    m = state.paths.market
+    fp = (data.fingerprint(state.paths.book) + state.audit_fp
+          + data.fingerprint(m / "base", m / "daily"))
     if st.button("Verificar livro, track record e base de mercado", icon=":material/verified:",
                  key="verify_book", type="primary"):
         results = data.verify_book_integrity(state.paths.book)
         results += data.verify_track_integrity(state.paths.book)
         results.append(data.verify_market_integrity(state.paths.market))
-        st.session_state["cdp_book_checks"] = results
-    results = st.session_state.get("cdp_book_checks")
-    if results:
-        ui.checks(results)
+        st.session_state["cdp_book_checks"] = (fp, results)
+    saved = st.session_state.get("cdp_book_checks")
+    if saved:
+        checked_fp, results = saved
+        if checked_fp == fp:
+            ui.checks(results)
+        else:  # resultado antigo nunca é exibido como se valesse para os arquivos atuais
+            st.caption("Os arquivos mudaram desde a última verificação: verifique novamente.")
 
 
 def _mandate(state: AppState) -> None:

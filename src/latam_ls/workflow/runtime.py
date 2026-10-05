@@ -8,7 +8,8 @@ o mesmo ``MarketData`` a partir desses arquivos e falha se qualquer hash divergi
 from __future__ import annotations
 
 import json
-from dataclasses import dataclass
+from collections.abc import Callable
+from dataclasses import dataclass, field
 from datetime import UTC, date, datetime
 from pathlib import Path
 
@@ -39,6 +40,12 @@ class Runtime:
     book_root: Path
     market_root: Path
     reports_root: Path
+    store_override: object | None = None
+    clock: Callable[[], datetime] | None = field(default=None, repr=False)
+
+    def now(self) -> datetime:
+        """Relógio da rotina (UTC); a demonstração usa um relógio lógico determinístico."""
+        return (self.clock() if self.clock is not None else datetime.now(UTC)).astimezone(UTC)
 
     # ------------------------------------------------------------------ fábrica
     @classmethod
@@ -53,6 +60,8 @@ class Runtime:
 
     @property
     def store(self):
+        if self.store_override is not None:
+            return self.store_override
         from ..data.store import MarketStore
 
         return MarketStore(self.market_root, cfg=self.cfg)
@@ -70,7 +79,7 @@ class Runtime:
     def set_kill_switch(self, on: bool, reason: str, by: str) -> None:
         path = self.book_root / KILL_SWITCH_FILE
         audit = AuditLog(self.book_root / "audit_log.jsonl")
-        payload = {"on": on, "reason": reason, "by": by, "at": datetime.now(UTC).isoformat()}
+        payload = {"on": on, "reason": reason, "by": by, "at": self.now().isoformat()}
         if on:
             _write_json(path, payload)
         elif path.exists():
@@ -154,9 +163,9 @@ class Runtime:
             info: dict = {"week": week, "previous_session": prev,
                           "store_content_hash": md.manifest.content_hash(), "live": live,
                           "config_hash": self.cfg.config_hash(),
-                          "prepared_at": datetime.now(UTC)}
+                          "prepared_at": self.now()}
             if live:
-                captured = datetime.now(UTC)
+                captured = self.now()
                 lines = list(md.universe.lines.index)
                 quotes = fetch_intraday_quotes(lines, md.universe.currencies, BENCH_INTRADAY)
                 qpath = briefing_dir / "intraday_quotes.parquet"
@@ -313,7 +322,7 @@ class Runtime:
         from ..research.pm_agent import validate_inputs
 
         _md, _info, _ctx, _fb, pmctx = self._week_state(week)
-        return validate_inputs(self.week_dir(week), pmctx, expected_mind=mind)
+        return validate_inputs(self.week_dir(week), pmctx, expected_mind=mind, now=self.now())
 
     def weekly_decide(self, week: date, *, mind: str) -> dict:
         from ..research.pm_agent import load_week_inputs, pm_factbook, to_bundle
@@ -325,7 +334,7 @@ class Runtime:
         if b.list_decisions(week):
             raise FileExistsError(f"A semana {week} já tem decisão gravada.")
         _md, info, ctx, _fb, pmctx = self._week_state(week)
-        pack, out, issues, pm_ctx = load_week_inputs(self.week_dir(week), pmctx)
+        pack, out, issues, pm_ctx = load_week_inputs(self.week_dir(week), pmctx, now=self.now())
         if out.mind != mind and not out.abstain:
             issues.append(f"mind declarado {out.mind!r} difere do informado {mind!r}")
         pack = pack.model_copy(update={"mind": out.mind or mind})
@@ -334,7 +343,8 @@ class Runtime:
         outcome = run_weekly_decision(ctx, pack, bundle, version=b.next_version(week),
                                       live_weeks=self.live_weeks(),
                                       kill_switch=self.kill_switch_active(),
-                                      audit_head_hash=b.audit_head())
+                                      audit_head_hash=b.audit_head(),
+                                      decided_at=self.now(), created_at=self.now())
         b.save_research_pack(pack, actor=pack.mind or mind)
         b.save_proposal(outcome.final)
         shadow_path = self.week_dir(week) / "shadow_quant.json"
@@ -347,7 +357,7 @@ class Runtime:
             outcome.final, research_hash=outcome.research_hash,
             pm_decision_hash=d0.pm_decision_hash or bundle.pm_output_hash,
             rationale=d0.rationale, journal=d0.journal, conviction=d0.conviction,
-            decided_at=datetime.now(UTC), audit_head_hash=b.audit_head(),
+            decided_at=self.now(), audit_head_hash=b.audit_head(),
         ).model_copy(update={"mind": pack.mind})
         b.save_decision(decision)
         _write_json(self.week_dir(week) / "attempts.json",
@@ -433,7 +443,7 @@ class Runtime:
         (out_dir / "factbook.json").write_text(factbook_json(fb), encoding="utf-8")
         paths = write_daily_commentary_inputs(out_dir, rec, fb, mind_hint=mind, overwrite=True)
         return {"data": session, "status": "registrado", "registro": rec.record_hash,
-                "nav_usd": rec.nav_end_usd, "retorno_dia": rec.daily_return,
+                "nav_usd": rec.nav_end_usd, "retorno_dia": rec.ret,
                 "efetivacao": (res.booked.proposal_id if res.booked is not None else None),
                 "alertas": list(rec.alerts), "fatos": {k: str(v) for k, v in paths.items()},
                 "proximo_passo": (f"escreva {out_dir / 'comentario.json'} e rode "

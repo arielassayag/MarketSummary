@@ -24,6 +24,7 @@ from collections.abc import Iterable, Mapping, Sequence
 from datetime import date, datetime
 from pathlib import Path
 from typing import Annotated, Any
+from zoneinfo import ZoneInfo
 
 import pandas as pd
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
@@ -65,6 +66,8 @@ MAX_FLAG = 300
 MAX_FLAGS = 10
 MAX_NEWS = 30
 PAPER_TRADING_LABEL = "paper trading com preços reais"
+FUND_TZ = ZoneInfo(FundConfig().fund.timezone)
+"""Fuso do fundo (Brasília): o dia de uma notícia é o dia local do pregão da B3."""
 
 COMMENTARY_RULES: tuple[str, ...] = (
     "Números apenas como {{fact:<fact_id>}} copiados da lista de FATOS do dia; datas e anos são "
@@ -427,17 +430,23 @@ def _template_output(fb: FactBook, mind: str = DEMO_MIND) -> DailyCommentaryOutp
 
     d = fb.as_of.strftime("%d/%m/%Y")
     ret = _value(fb, "day.ret")
-    verb_h = "sobe" if (ret or 0) > 0 else "recua" if (ret or 0) < 0 else "fica estável"
-    verb_p = "subiu" if (ret or 0) > 0 else "recuou" if (ret or 0) < 0 else "ficou estável em"
     if not _has(fb, "day.ret"):
         return DailyCommentaryOutput(
             mind=mind,  # type: ignore[arg-type]
             headline=f"CDP — fechamento de {d}",
             paragraphs=["Fatos do dia indisponíveis para o comentário automático.",
                         "Consulte o relatório diário para os números calculados pelo código."])
-    headline = f"CDP {verb_h} {_ph('day.ret')} no dia; NAV em {_ph('nav')}"
-    p1 = (f"No pregão de {d}, o fundo {verb_p} {_ph('day.ret')} ({_ph('day.pnl_usd')}), "
-          f"encerrando com NAV de {_ph('nav')}. No mês, {_ph('mtd.ret')}; no ano, "
+    if ret is None:  # retorno ausente nunca vira "estável" (ausente ≠ zero)
+        headline = f"CDP — retorno do dia indisponível ({_ph('day.ret')}); NAV em {_ph('nav')}"
+        lead = (f"No pregão de {d}, o retorno do fundo ficou indisponível ({_ph('day.ret')}; "
+                f"P&L {_ph('day.pnl_usd')})")
+    else:
+        shown = round(ret * 100.0, 2)  # verbo coerente com o valor exibido (duas casas em %)
+        verb_h = "sobe" if shown > 0 else "recua" if shown < 0 else "fica estável em"
+        verb_p = "subiu" if shown > 0 else "recuou" if shown < 0 else "ficou estável em"
+        headline = f"CDP {verb_h} {_ph('day.ret')} no dia; NAV em {_ph('nav')}"
+        lead = f"No pregão de {d}, o fundo {verb_p} {_ph('day.ret')} ({_ph('day.pnl_usd')})"
+    p1 = (f"{lead}, encerrando com NAV de {_ph('nav')}. No mês, {_ph('mtd.ret')}; no ano, "
           f"{_ph('ytd.ret')}; desde o início do registro, {_ph('itd.ret')}.")
     parts = [f"Na atribuição, a parcela específica (alpha) respondeu por {_ph('attr.specific')} "
              f"e a fatorial por {_ph('attr.factor')}"]
@@ -551,6 +560,16 @@ def _provenance(mind: str) -> str:
             "do dia.")
 
 
+def _file_provenance(mind: str) -> str:
+    """Procedência da rota por arquivo: texto escrito fora do código é SEMPRE rotulado [IA].
+
+    O ``mind`` é declarado pelo próprio arquivo; um arquivo que se diz ``demo`` não pode se
+    passar por texto determinístico do código.
+    """
+    return (f"Autoria: mente {mind} [IA] ({COMMENTARY_JSON} validado); números calculados por "
+            "código a partir do FactBook do dia.")
+
+
 TEMPLATE_PROVENANCE = ("Autoria: template determinístico do CDP [Calculado]; o texto da mente não "
                        "foi publicado (ver apontamentos de validação).")
 
@@ -583,7 +602,7 @@ def _facts_lines(fb: FactBook) -> list[str]:
 def _clean_news(news: Iterable[NewsItem] | None, d: date) -> list[NewsItem]:
     out = []
     for n in news or []:
-        if n.published_at.date() > d:
+        if n.published_at.astimezone(FUND_TZ).date() > d:
             continue
         title, flags = sanitize_untrusted(n.title)
         source, sflags = sanitize_untrusted(n.source, 80)
@@ -711,7 +730,7 @@ def load_commentary_file(path: Path | str, fb: FactBook, *, record: DailyRecord 
     if problems:
         return deterministic_commentary(record, fb), problems + [
             "Comentário da mente não publicado: usado o template determinístico."]
-    return render_commentary(out, fb, _provenance(out.mind)), []
+    return render_commentary(out, fb, _file_provenance(out.mind)), []
 
 
 # ==========================================================

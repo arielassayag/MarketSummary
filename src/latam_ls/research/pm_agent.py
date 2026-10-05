@@ -25,6 +25,7 @@ from __future__ import annotations
 import json
 import math
 import os
+import re
 import statistics
 import tempfile
 import urllib.parse
@@ -117,6 +118,9 @@ MAX_DEMO_VIEWS = 30
 DEMO_JOURNAL_ITEMS = 5
 MAX_BRIEFING_NEWS = 40
 FUTURE_TOLERANCE = timedelta(minutes=5)
+MAX_URL_LEN = 500
+_URL_BAD_CHARS_RE = re.compile(r"[\s<>\"'`{}|\\^\x00-\x1f\x7f]")
+"""Caracteres que nunca aparecem numa URL de fonte legítima (espaços, controle, marcação)."""
 
 NEUTRAL_TEXT = ("Texto omitido pelo verificador do CDP (números fora de placeholders, fatos "
                 "inexistentes ou conteúdo suspeito).")
@@ -167,7 +171,8 @@ PM_RULES: tuple[str, ...] = (
     "Sem evidência ⇒ abstenção (abstain=true): o quant decide. Convicção alta exige concordância "
     "entre quant e pesquisa; divergência forte ⇒ convicção baixa ou exclusão.",
     "A postura vira vol-alvo e gross máximo por código, sempre dentro da banda do mandato e sob a "
-    "escada de drawdown; os gates determinísticos de risco têm a palavra final.",
+    "escada de drawdown; kill switch ativo ⇒ postura muito_defensiva (só redução de risco); os "
+    "gates determinísticos de risco têm a palavra final.",
     "Em janela de evento binário (eleições, decisões regulatórias) prefira postura defensiva e "
     "não abra shorts em nomes com catalisador próximo.",
     "Use apenas emissores de valid_issuers e registre o campo mind (claude-code, codex, api ou "
@@ -384,6 +389,31 @@ def _is_http_url(value: str) -> bool:
     return parsed.scheme in ("http", "https") and bool(parsed.netloc)
 
 
+def _looks_like_url(value: str) -> bool:
+    return str(value).strip().lower().startswith(("http://", "https://", "www."))
+
+
+def url_evidence_problem(value: str) -> str | None:
+    """Motivo para rejeitar uma URL citada como evidência (``None`` = aceita).
+
+    A URL é dado NÃO confiável que segue para as visões, o hash da decisão e os relatórios:
+    precisa ser http(s) com domínio, sem credenciais, sem espaços/controle/marcação, com tamanho
+    limitado e sem padrões de injeção de instruções (inclusive percent-codificados).
+    """
+    raw = str(value)
+    if len(raw) > MAX_URL_LEN:
+        return "URL longa demais"
+    if _URL_BAD_CHARS_RE.search(raw):
+        return "caracteres inválidos (espaço, controle ou marcação)"
+    if not _is_http_url(raw):
+        return "não é URL http(s) com domínio"
+    if "@" in urllib.parse.urlparse(raw).netloc:
+        return "credenciais/usuário embutidos no domínio"
+    if detect_injection(raw):
+        return "padrão de injeção de instruções"
+    return None
+
+
 def _fact(fact_id: str, name: str, value: object, unit: str, formula: str, *,
           issuer_id: str | None = None, signed: bool = False, inputs: Iterable[str] = (),
           formatted: str | None = None) -> Fact:
@@ -471,6 +501,18 @@ def analysis_date(ctx: PMContext) -> date:
     if ctx.analysis_ts is not None and ctx.analysis_ts.tzinfo is not None:
         return ctx.analysis_ts.astimezone(_tz(ctx.cfg)).date()
     return max(ctx.week, ctx.as_of)
+
+
+def news_is_late(n: NewsItem, ctx: PMContext) -> bool:
+    """Notícia publicada depois do momento da análise (look-ahead).
+
+    Com ``analysis_ts`` (com fuso) a comparação é por horário, com tolerância de relógio de
+    :data:`FUTURE_TOLERANCE`; sem ele, pela data da análise no fuso do fundo.
+    """
+    ts = ctx.analysis_ts
+    if ts is not None and ts.tzinfo is not None:
+        return n.published_at > ts + FUTURE_TOLERANCE
+    return n.published_at.astimezone(_tz(ctx.cfg)).date() > analysis_date(ctx)
 
 
 def active_event_windows(cfg: FundConfig, d: date) -> list[str]:
@@ -643,6 +685,9 @@ def posture_limits(posture: str, cfg: FundConfig, drawdown: float | None = None)
     rk = cfg.risk
     gross = min(gross, rk.gross_max)
     vt = min(max(vt, rk.vol_band_min), rk.vol_band_max)
+    if gross < rk.gross_min:
+        notes.append("Gross máximo abaixo do piso de utilização do mandato (gross_min): o piso "
+                     "acompanha o corte (redução de risco exigida pela escada).")
     return PostureLimits(requested=posture, effective=eff, stage=stage, vol_target=round(vt, 6),
                          gross_max=round(gross, 6), notes=tuple(notes))
 
@@ -746,17 +791,18 @@ def _fmt(fb: FactBook, fid: str) -> str:
 class _EvidenceIndex:
     valid: frozenset[str]
     late: frozenset[str]
-    cutoff: date
+    cutoff: str
 
 
 def _evidence_index(ctx: PMContext, fb: FactBook) -> _EvidenceIndex:
-    cutoff = analysis_date(ctx)
-    tz = _tz(ctx.cfg)
+    ts = ctx.analysis_ts
+    cutoff = (ts.isoformat() if ts is not None and ts.tzinfo is not None
+              else analysis_date(ctx).isoformat())
     valid = set(fb.facts) | {n.note_id for n in ctx.research_notes}
     valid |= {m.note_id for m in ctx.macro_notes}
     late: set[str] = set()
     for n in ctx.news:
-        if n.published_at.astimezone(tz).date() > cutoff:
+        if news_is_late(n, ctx):
             late.add(n.news_id)
             continue
         _, flags = sanitize_untrusted(n.title)
@@ -796,10 +842,16 @@ def _check_evidence(ids: Iterable[str], index: _EvidenceIndex) -> tuple[list[str
     for raw in dict.fromkeys(str(x).strip() for x in ids):
         if not raw:
             continue
-        if raw in index.valid or _is_http_url(raw):
+        if raw in index.valid:
             ok.append(raw)
+        elif _looks_like_url(raw):
+            problem = url_evidence_problem(raw)
+            if problem is None:
+                ok.append(raw)
+            else:
+                problems.append(f"URL de evidência rejeitada ({problem}) {_truncate(raw, 80)!r}")
         elif raw in index.late:
-            problems.append(f"evidência publicada após {index.cutoff.isoformat()} (look-ahead) "
+            problems.append(f"evidência publicada após a análise ({index.cutoff}) (look-ahead) "
                             f"{raw!r}")
         else:
             problems.append(f"evidência inexistente no pacote da semana {raw!r}")
@@ -908,9 +960,19 @@ def _normalize_abstain(out: PMDecisionOutput, issues: list[str]) -> PMDecisionOu
     return out.model_copy(update={"views": [], "risk_posture": posture})
 
 
+def _apply_kill_switch(out: PMDecisionOutput, ctx: PMContext,
+                       issues: list[str]) -> PMDecisionOutput:
+    """Kill switch ativo ⇒ postura ``muito_defensiva`` (só redução de risco; nunca afrouxa)."""
+    if not ctx.kill_switch or out.risk_posture == "muito_defensiva":
+        return out
+    issues.append(f"kill switch ativo: postura {out.risk_posture} limitada a muito_defensiva "
+                  "(apenas redução de risco) — use risk_posture=muito_defensiva")
+    return out.model_copy(update={"risk_posture": "muito_defensiva"})
+
+
 def _finalize(out: PMDecisionOutput, ctx: PMContext) -> tuple[PMDecisionOutput, list[str]]:
     verified, issues = verify_pm_output(out, ctx)
-    return _normalize_abstain(verified, issues), issues
+    return _apply_kill_switch(_normalize_abstain(verified, issues), ctx, issues), issues
 
 
 def fallback_pm_output(mind: str = API_MIND) -> PMDecisionOutput:
@@ -971,7 +1033,7 @@ def _relevant_news(ctx: PMContext) -> list[NewsItem]:
     out = []
     for n in ctx.news:
         d = n.published_at.astimezone(tz).date()
-        if d > cutoff or d < start:
+        if news_is_late(n, ctx) or d < start:
             continue
         title, flags = sanitize_untrusted(n.title)
         source, sflags = sanitize_untrusted(n.source, 80)
@@ -1977,7 +2039,9 @@ def pm_output_to_views(out: PMDecisionOutput, cfg: FundConfig, *, drawdown: floa
       somada (e prevalece se contrária);
     - exclusões sem visão ⇒ restrição pura (``source=AI``, score 0) para não apagar a
       inclinação da pesquisa — só apertam;
-    - overrides: ``{'risk': {'vol_target_annual', 'gross_max'}}`` da postura + escada;
+    - overrides: ``{'risk': {'vol_target_annual', 'gross_max'}}`` da postura + escada (válidos
+      para ``FundConfig.with_overrides``; quando a escada corta o gross abaixo do piso
+      ``gross_min`` do mandato, ``gross_min`` acompanha o corte — só reduz risco);
     - abstenção ⇒ nenhuma inclinação (só restrições).
     """
     limits = posture_limits(out.risk_posture, cfg, drawdown)
@@ -2012,8 +2076,10 @@ def pm_output_to_views(out: PMDecisionOutput, cfg: FundConfig, *, drawdown: floa
             rationale=_truncate("Exclusão do PM: " + _render(e["reason"], factbook),
                                 VIEW_RATIONALE_CHARS),
             author=AUTONOMOUS_DECIDER, no_short=bool(e["no_short"]), no_long=bool(e["no_long"])))
-    overrides = {"risk": {"vol_target_annual": limits.vol_target, "gross_max": limits.gross_max}}
-    return views, overrides, _journal(out, limits, cfg, factbook)
+    risk_ov = {"vol_target_annual": limits.vol_target, "gross_max": limits.gross_max}
+    if limits.gross_max < cfg.risk.gross_min:
+        risk_ov["gross_min"] = limits.gross_max
+    return views, {"risk": risk_ov}, _journal(out, limits, cfg, factbook)
 
 
 def _journal(out: PMDecisionOutput, limits: PostureLimits, cfg: FundConfig,
@@ -2106,6 +2172,7 @@ __all__ = [
     "load_pm_decision_file",
     "load_research_pack_file",
     "load_week_inputs",
+    "news_is_late",
     "pm_factbook",
     "pm_output_hash",
     "pm_output_to_views",
@@ -2118,6 +2185,7 @@ __all__ = [
     "run_pm_agent",
     "text_problems",
     "to_bundle",
+    "url_evidence_problem",
     "validate_inputs",
     "verify_pm_output",
     "with_research",

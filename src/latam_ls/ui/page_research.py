@@ -8,8 +8,8 @@ import pandas as pd
 import streamlit as st
 
 from ..contracts import EvidenceRef
-from . import data, fmt
 from . import components as ui
+from . import data, fmt
 from .state import AppState
 
 _STANCE = {2: "+2 forte compra", 1: "+1 compra", 0: "0 neutra", -1: "−1 venda",
@@ -51,8 +51,8 @@ def _macro(wd: data.WeekData) -> None:
     for i, m in enumerate(sorted(notes, key=lambda m: m.scope)):
         with st.expander(f"{m.scope} — stance {_STANCE.get(m.stance, m.stance)}",
                          icon=":material/public:"):
-            st.markdown(f"{ui.IA_BADGE} · provedor `{fmt.escape_md(m.provider)}` · "
-                        f"prompt `{fmt.escape_md(m.prompt_version)}`")
+            st.markdown(f"{ui.IA_BADGE} · provedor {fmt.code(m.provider)} · "
+                        f"prompt {fmt.code(m.prompt_version)}")
             ui.plain(data.render_facts(m.regime, wd.facts), prefix="**Regime:** ")
             ui.plain(data.render_facts(m.summary, wd.facts))
             if m.key_events:
@@ -97,8 +97,8 @@ def _notes(state: AppState, wd: data.WeekData) -> None:
         with st.expander(f"{n.issuer_id} · {_ROLE_PT.get(n.role, n.role)} · stance "
                          f"{_STANCE.get(n.stance, n.stance)} · confiança {fmt.pct(n.confidence, 0)}",
                          icon=":material/smart_toy:"):
-            st.markdown(f"{ui.IA_BADGE} · provedor `{fmt.escape_md(n.provider)}` · horizonte "
-                        f"{n.horizon_weeks} semanas · nota `{fmt.escape_md(n.note_id)}`")
+            st.markdown(f"{ui.IA_BADGE} · provedor {fmt.code(n.provider)} · horizonte "
+                        f"{n.horizon_weeks} semanas · nota {fmt.code(n.note_id)}")
             ui.plain(data.render_facts(n.thesis, wd.facts), prefix="**Tese:** ")
             cols = st.columns(2)
             with cols[0]:
@@ -150,8 +150,8 @@ def _pm(wd: data.WeekData) -> None:
         st.caption("Decisão estruturada do PM (inputs/pm_decision.json) não encontrada.")
         return
     st.markdown(f"{ui.IA_BADGE} · mente :violet-badge[{fmt.escape_md(pm.mind)}] · regime "
-                f"`{fmt.escape_md(_REGIME.get(pm.regime, pm.regime))}` · postura "
-                f"`{fmt.escape_md(_POSTURE.get(pm.risk_posture, pm.risk_posture))}` · abstenção: "
+                f"{fmt.code(_REGIME.get(pm.regime, pm.regime))} · postura "
+                f"{fmt.code(_POSTURE.get(pm.risk_posture, pm.risk_posture))} · abstenção: "
                 f"{'sim' if pm.abstain else 'não'}")
     for title, text in (("Leitura de mercado", pm.market_view),
                         ("O que mudou", pm.what_changed),
@@ -212,7 +212,7 @@ def render(state: AppState) -> None:
     weeks = [w for w in book.weeks if w.research is not None or w.pm_output is not None]
     flags_kill = data.governance_flags(None, book.kill_switch)
     if not weeks:
-        for sev, text in flags_kill:
+        for _sev, text in flags_kill:
             st.error(fmt.escape_md(text), icon=":material/emergency:")
         ui.empty_state("Sem pesquisa registrada",
                        "A mente (claude-code ou codex) grava a pesquisa e a decisão do PM a cada "
@@ -224,7 +224,7 @@ def render(state: AppState) -> None:
     ui.issues(wd.issues)
     pack = wd.research
     st.markdown(f"Mente: :violet-badge[{fmt.escape_md(wd.mind or fmt.NA)}] · provedor "
-                f"`{fmt.escape_md(pack.provider if pack else fmt.NA)}` · "
+                f"{fmt.code(pack.provider if pack else fmt.NA)} · "
                 f"{len(pack.notes) if pack else 0} notas · {len(pack.macro) if pack else 0} macro · "
                 f"{len(pack.views) if pack else 0} visões"
                 + (f" · research_hash `{pack.research_hash()[:16]}…`" if pack else ""))

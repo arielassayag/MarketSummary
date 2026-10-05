@@ -515,7 +515,9 @@ def test_weekly_report_changes_and_shadow_comparison():
     avaliacao = md.split("## Avaliação da semana anterior", 1)[1].split("## O que mudou", 1)[0]
     assert "resíduo -1,50%" in avaliacao and "| CCC | -1 | pm | 0,60 | resíduo -1,50% | sim |" \
         in avaliacao
-    assert "| BBB | +1 | pm | 0,40 | P&L" in avaliacao
+    # sem resíduo: mede-se o retorno total da ação (direção), não o sinal do P&L
+    assert "| BBB | +1 | pm | 0,40 | retorno total USD -" in avaliacao
+    assert "| BBB | +1 | pm | 0,40 | P&L" not in avaliacao
 
 
 def test_weekly_report_renders_or_marks_placeholders():
@@ -573,3 +575,171 @@ def test_md_to_safe_html_and_sparklines():
     assert svg.count("<polyline") == 1 and svg.count("<circle") == 1  # lacuna quebra a linha
     assert "sem dados" in sparkline_svg([None], [date(2026, 1, 1)], title="t", fmt=str)
     assert sparkline_text([1, 2, 3]) == "▁▄█" and sparkline_text([]) == "n/d"
+
+
+# ==========================================================
+# Revisão adversarial (bugs corrigidos)
+# ==========================================================
+
+def test_thesis_evaluation_uses_stock_direction_not_pnl_sign():
+    """Short que funcionou (ação caiu, P&L positivo) não pode aparecer como "não funcionou"."""
+    r1, r2, r3 = make_chain()
+    cur = _proposal([_pos("AAA", 0.03)])
+    prev_views = [View(issuer_id="CCC", source=ViewSource.PM, score=-1, confidence=0.6,
+                       rationale="Venda CCC.", author="x")]
+    md, _ = render_weekly_report(WEEK, cur, None, None, None, prev_views, [], [r1, r2, r3], None,
+                                 FUND, cfg=CFG)
+    sec = md.split("## Avaliação da semana anterior", 1)[1].split("## O que mudou", 1)[0]
+    row = next(line for line in sec.splitlines() if line.startswith("| CCC |"))
+    assert row.endswith("| sim |"), row  # P&L do short positivo e ação em queda ⇒ funcionou
+    assert "retorno total USD -" in row and "P&L" not in row
+
+
+def test_issuer_period_returns_compounds_direction_and_skips_missing_days():
+    from latam_ls.workflow.reports import issuer_period_returns
+
+    r1, r2, r3 = make_chain()
+    rets = issuer_period_returns([r3, r1, r2])  # ordem de entrada irrelevante
+    ccc = [p for r in (r1, r2, r3) for p in r.positions if p.issuer_id == "CCC"]
+    expected = 1.0
+    for p in ccc:
+        expected *= 1.0 + p.day_return_usd
+    assert rets["CCC"] == pytest.approx(expected - 1.0)
+    no_trade = r1.model_copy(update={"positions": [
+        p.model_copy(update={"day_return_usd": None}) for p in r1.positions]})
+    assert issuer_period_returns([no_trade]) == {}  # sem negociação ⇒ ausente, nunca zero
+
+
+def test_weekly_report_ignores_records_on_or_after_the_week():
+    r1, r2, r3 = make_chain()
+    late = make_record(WEEK, r3.nav_end_usd, 0.05, r3.record_hash)
+    later = make_record(date(2026, 11, 10), late.nav_end_usd, 0.05, late.record_hash)
+    cur = _proposal([_pos("AAA", 0.03)])
+    md_ok, _ = render_weekly_report(WEEK, cur, None, None, None, [], [], [r1, r2, r3], None,
+                                    FUND, cfg=CFG)
+    md, _ = render_weekly_report(WEEK, cur, None, None, None, [], [], [r1, r2, r3, late, later],
+                                 None, FUND, cfg=CFG)
+    sec = md.split("## Avaliação da semana anterior", 1)[1].split("## O que mudou", 1)[0]
+    assert "29/10/2026 a 02/11/2026 (3 pregões)" in sec
+    assert md == md_ok  # registros da própria semana (ou depois) não entram (sem look-ahead)
+
+
+def test_daily_report_flags_tampered_record_and_broken_chain():
+    r1, r2, r3 = make_chain()
+    md, html = render_daily_report(r3, [r1, r2], "Comentário.", FUND, cfg=CFG)
+    assert "| Hash do registro (recalculado) | confere |" in md
+    assert "desde a inception, GENESIS) | íntegra |" in md
+    assert "NÃO CONFERE" not in md + html
+    tampered = r3.model_copy(update={"nav_end_usd": r3.nav_end_usd * 1.5})  # hash antigo
+    md, html = render_daily_report(tampered, [r1, r2], "Comentário.", FUND, cfg=CFG)
+    assert "| Hash do registro (recalculado) | NÃO CONFERE" in md
+    assert "ALERTA DE INTEGRIDADE" in md and "ALERTA DE INTEGRIDADE" in html
+    # elo quebrado: o registro do meio foi adulterado e re-hasheado sozinho
+    r2x = r2.model_copy(update={"pnl_usd": r2.pnl_usd + 1.0})
+    r2x = r2x.model_copy(update={"record_hash": r2x.compute_hash()})
+    md, _ = render_daily_report(r3, [r1, r2x], "Comentário.", FUND, cfg=CFG)
+    assert "| Hash do registro (recalculado) | confere |" in md
+    assert "elo quebrado" in md and "Integridade: 2026-11-02: elo quebrado" in md
+    # histórico parcial: verificado a partir do primeiro registro informado
+    md, _ = render_daily_report(r3, [r2], "Comentário.", FUND, cfg=CFG)
+    assert "histórico parcial) | íntegra |" in md
+
+
+def test_weekly_report_verifies_decision_binding():
+    md, _ = _weekly()
+    assert "| Verificação da decisão (hashes recalculados) | confere |" in md
+    assert "ALERTA DE INTEGRIDADE" not in md
+    cur = _proposal([_pos("AAA", 0.03)])
+    other = _proposal([_pos("BBB", 0.03)])
+    dec = make_autonomous_decision(other, research_hash=other.research_hash,
+                                   pm_decision_hash="p" * 64, rationale="Racional da decisão.",
+                                   decided_at=datetime(2026, 11, 9, 19, tzinfo=UTC))
+    md, html = render_weekly_report(WEEK, cur, dec, None, None, [], [], [], None, FUND, cfg=CFG)
+    assert "| Verificação da decisão (hashes recalculados) | NÃO CONFERE" in md
+    assert "proposal_hash diverge" in md
+    assert "ALERTA DE INTEGRIDADE" in md and "ALERTA DE INTEGRIDADE" in html
+
+
+def test_template_commentary_missing_return_is_not_reported_as_stable():
+    r1, r2, r3 = make_chain()
+    rn = r3.model_copy(update={"ret": float("nan")})
+    fb = build_daily_factbook(rn, [r1, r2], cfg=CFG)
+    assert fb.facts["day.ret"].value is None
+    out = _template_output(fb)
+    assert "estável" not in out.headline and "indisponível" in out.headline
+    assert verify_commentary(out, fb) == []
+    md = deterministic_commentary(rn, fb)
+    assert "estável" not in md and "retorno do fundo ficou indisponível (n/d" in md
+
+
+def test_template_verb_matches_displayed_value():
+    r1, r2, r3 = make_chain()
+    tiny = r3.model_copy(update={"ret": 0.00001})  # exibido como +0,00%
+    out = _template_output(build_daily_factbook(tiny, [r1, r2], cfg=CFG))
+    assert out.headline.startswith("CDP fica estável em") and "sobe" not in out.headline
+
+
+def test_commentary_file_route_is_always_labelled_ia(tmp_path):
+    """Arquivo que se declara 'demo' não pode se passar por texto determinístico do código."""
+    record, fb = _fb()
+    path = tmp_path / COMMENTARY_JSON
+    path.write_text(json.dumps(commentary_payload(mind="demo")), encoding="utf-8")
+    md, issues = load_commentary_file(path, fb, record=record)
+    assert issues == [] and "mente demo [IA]" in md and "modo demo" not in md
+
+
+def test_daily_report_labels_ai_commentary():
+    r1, r2, r3 = make_chain()
+    fb = build_daily_factbook(r3, [r1, r2], cfg=CFG)
+    ai_md, _ = daily_commentary(FakeProvider(commentary_payload()), r3, fb)
+    md, html = render_daily_report(r3, [r1, r2], ai_md, FUND, cfg=CFG)
+    assert "## Comentário do dia [IA]" in md
+    assert 'class="badge ia">IA</span>Comentário do dia' in html
+    md, html = render_daily_report(r3, [r1, r2], deterministic_commentary(r3, fb), FUND, cfg=CFG)
+    assert "## Comentário do dia\n" in md  # template do código não é rotulado IA
+
+
+def test_markdown_links_and_images_in_ai_text_are_defused():
+    views = [View(issuer_id="AAA", source=ViewSource.PM, score=1, confidence=0.6,
+                  rationale="Veja ![x](https://evil.example/p.png) e [aqui](javascript:alert(1))",
+                  author="x")]
+    cur = _proposal([_pos("AAA", 0.03)])
+    pm = _pm(market_view="Leitura [fonte](https://evil.example/leak?d=nav).")
+    md, html = render_weekly_report(WEEK, cur, None, pm, None, [], views, [], None, FUND, cfg=CFG)
+    assert "](https://" not in md and "](javascript:" not in md
+    assert "]\\(https://evil.example/p.png)" in md  # texto preservado, link desarmado
+    assert "<img" not in html.lower() and "<a " not in html.lower()
+    r1, r2, r3 = make_chain()
+    md, _ = render_daily_report(r3, [r1, r2], "Texto ![t](https://e.x/i)", FUND, cfg=CFG)
+    assert "](https://" not in md
+
+
+@pytest.mark.parametrize("stem", ["../fora", "a/b", "..", ".oculto", "", "x" * 200])
+def test_write_report_files_rejects_unsafe_stem(tmp_path, stem):
+    with pytest.raises(ValueError):
+        write_report_files(tmp_path / "r", "# md\n", "<p>x</p>", stem=stem)
+    assert not (tmp_path / "fora.md").exists()
+
+
+def test_commentary_news_day_uses_fund_timezone():
+    from latam_ls.research.commentary import commentary_user_prompt
+
+    record, fb = _fb()  # pregão de 2026-11-02
+    same_day_utc = NewsItem(news_id="n-noite", title="Manchete da noite",
+                            published_at=datetime(2026, 11, 3, 1, 0, tzinfo=UTC))  # 22h BRT
+    next_day = NewsItem(news_id="n-amanha", title="Manchete de amanhã",
+                        published_at=datetime(2026, 11, 3, 12, 0, tzinfo=UTC))
+    prompt = commentary_user_prompt(record, fb, [same_day_utc, next_day])
+    assert "n-noite" in prompt and "n-amanha" not in prompt
+
+
+def test_reports_default_to_repository_mandate():
+    from latam_ls.research.pm_agent import _default_config
+    from latam_ls.workflow.memo import fmt_pct
+
+    repo_cfg = _default_config()
+    if repo_cfg == FundConfig():
+        pytest.skip("sem configs/latam_ls/fund.yaml no diretório de execução")
+    cur = _proposal([_pos("AAA", 0.03)])
+    md, _ = render_weekly_report(WEEK, cur, None, None, None, [], [], [], None, FUND)
+    assert f"(máx. {fmt_pct(repo_cfg.risk.max_factor_risk_share)})" in md

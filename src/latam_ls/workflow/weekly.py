@@ -597,7 +597,7 @@ def tighten_only(views: list[View]) -> list[View]:
 
 
 def hold_proposal(ctx: WeekContext, research_hash: str, version: int,
-                  reason: str) -> Proposal:
+                  reason: str, created_at: datetime | None = None) -> Proposal:
     """Mantém a carteira atual (ou caixa na inception) quando nenhuma alternativa passa nos gates."""
     w = ctx.current_w[ctx.current_w != 0]
     if w.empty:
@@ -614,7 +614,7 @@ def hold_proposal(ctx: WeekContext, research_hash: str, version: int,
                                 notes=[reason] + list(ctx.notes))
     p = Proposal(
         proposal_id=f"CDP-{ctx.week.isoformat()}-manter", week=ctx.week, version=version,
-        created_at=datetime.now(UTC), created_by=SYSTEM_CREATOR, nav_usd=ctx.nav,
+        created_at=created_at or datetime.now(UTC), created_by=SYSTEM_CREATOR, nav_usd=ctx.nav,
         snapshot_id=ctx.snapshot_id, snapshot_hash=ctx.snapshot_hash,
         config_hash=ctx.cfg.config_hash(), research_hash=research_hash,
         overrides={"label": "manter"}, positions=[], trades=[], fx_hedges=[], risk=summary,
@@ -626,8 +626,12 @@ def hold_proposal(ctx: WeekContext, research_hash: str, version: int,
 def run_weekly_decision(ctx: WeekContext, pack: ResearchPack, pm: PMDecisionBundle, *,
                         version: int, live_weeks: int = 0, kill_switch: bool = False,
                         audit_head_hash: str | None = None,
-                        decided_at: datetime | None = None) -> WeeklyOutcome:
-    """Gera sombra só-quant e a carteira do CDP; aplica fallback por gates e decide sozinho."""
+                        decided_at: datetime | None = None,
+                        created_at: datetime | None = None) -> WeeklyOutcome:
+    """Gera sombra só-quant e a carteira do CDP; aplica fallback por gates e decide sozinho.
+
+    ``created_at``/``decided_at``: relógio da rotina (padrão: agora, UTC).
+    """
     from ..hashing import combine_hashes
     from .autonomy import effective_vol_target, make_autonomous_decision
 
@@ -638,7 +642,7 @@ def run_weekly_decision(ctx: WeekContext, pack: ResearchPack, pm: PMDecisionBund
              "vol_target": min(vt_pm, float(pm.overrides.get("vol_target", vt_pm)))}
     shadow = build_proposal(ctx, views=[], overrides={"vol_target": vt_default, **MATCH},
                             research_hash=research_hash, version=version, label="sombra-quant",
-                            pack=pack).proposal
+                            pack=pack, created_at=created_at).proposal
     ai_views = [v for v in pack.views]
     attempts_spec: list[tuple[str, list[View], dict, str]] = []
     if kill_switch:
@@ -658,7 +662,8 @@ def run_weekly_decision(ctx: WeekContext, pack: ResearchPack, pm: PMDecisionBund
     path = ""
     for label, views, ov, why in attempts_spec:
         b = build_proposal(ctx, views=views, overrides=ov, research_hash=research_hash,
-                           version=version, label=label, pack=pack, extra_notes=[why])
+                           version=version, label=label, pack=pack, extra_notes=[why],
+                           created_at=created_at)
         attempts.append({"label": label, "why": why, **proposal_fingerprint(b.proposal)})
         if proposal_ok(b.proposal):
             final, path = b.proposal, label
@@ -666,7 +671,7 @@ def run_weekly_decision(ctx: WeekContext, pack: ResearchPack, pm: PMDecisionBund
     if final is None:
         final = hold_proposal(ctx, research_hash, version,
                               "Fallback 3: nenhuma alternativa passou nos gates HARD; mantida a "
-                              "carteira anterior (ou caixa na inception).")
+                              "carteira anterior (ou caixa na inception).", created_at=created_at)
         path = "manter"
     rationale = (pm.rationale or "Decisão autônoma do CDP.") + f" Caminho: {path}."
     decision = make_autonomous_decision(

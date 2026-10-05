@@ -33,6 +33,7 @@ from ..contracts import (
     AUTONOMOUS_DECIDER,
     DailyRecord,
     Decision,
+    DecisionMode,
     FactBook,
     PositionTarget,
     Proposal,
@@ -44,7 +45,7 @@ from ..contracts import (
 from ..hashing import sha256_file
 from ..research.commentary import format_bps, format_money, period_returns
 from ..research.guardrails import PLACEHOLDER_RE, render_placeholders
-from ..research.pm_agent import POSTURE_PT, REGIME_PT, PMDecisionOutput
+from ..research.pm_agent import POSTURE_PT, REGIME_PT, PMDecisionOutput, _default_config
 from .memo import NA, fmt_date, fmt_num, fmt_pct
 
 PAPER_TRADING_LABEL = "paper trading com preços reais"
@@ -63,6 +64,9 @@ _GROUP_PT = {"factor_group": "Grupos de fatores", "country": "País", "sector": 
 _STAGE_LABEL = {"normal": "normal", "soft_stop": "stop suave", "hard_stop": "stop duro",
                 "stop_out": "stop-out"}
 _SPARK = "▁▂▃▄▅▆▇█"
+_STEM_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,80}")
+GENESIS_RECORD_HASH = "0" * 64
+"""Elo do primeiro registro diário (mesmo valor de ``audit.GENESIS_HASH``)."""
 
 
 # ==========================================================
@@ -189,6 +193,43 @@ def _chain(record: DailyRecord, history: Iterable[DailyRecord]) -> list[DailyRec
     return [by_date[d] for d in sorted(by_date)]
 
 
+def verify_record_chain(chain: Sequence[DailyRecord]) -> tuple[bool, list[str]]:
+    """Recalcula ``record_hash`` de cada registro e confere os elos ``prev_record_hash``.
+
+    ``chain`` em ordem de data (o último é o registro do relatório). O primeiro elo só é
+    conferido contra GENESIS quando o histórico começa na inception (``prev`` = GENESIS);
+    histórico parcial é verificado a partir do primeiro registro informado.
+    """
+    problems: list[str] = []
+    for i, r in enumerate(chain):
+        if not r.record_hash:
+            problems.append(f"{r.date.isoformat()}: registro sem record_hash")
+        elif r.compute_hash() != r.record_hash:
+            problems.append(f"{r.date.isoformat()}: conteúdo adulterado (record_hash não confere)")
+        if i > 0 and r.prev_record_hash != chain[i - 1].record_hash:
+            problems.append(f"{r.date.isoformat()}: elo quebrado (prev_record_hash não é o hash "
+                            f"de {chain[i - 1].date.isoformat()})")
+    return not problems, problems
+
+
+def _decision_problems(decision: Decision, proposal: Proposal) -> list[str]:
+    """Reverifica a decisão contra a proposta exibida (hashes recalculados, signatário, gates)."""
+    from .approval import verify_decision
+    from .autonomy import verify_autonomous_decision
+
+    try:
+        if decision.mode == DecisionMode.AUTONOMOUS:
+            ok, reasons = verify_autonomous_decision(decision, proposal, proposal.snapshot_hash,
+                                                     proposal.config_hash,
+                                                     proposal.research_hash)
+        else:
+            ok, reasons = verify_decision(decision, proposal, proposal.snapshot_hash,
+                                          proposal.config_hash, proposal.research_hash)
+    except Exception as exc:  # noqa: BLE001 - relatório nunca derruba; a falha é exibida
+        return [f"verificação indisponível ({type(exc).__name__})"]
+    return [] if ok else list(reasons)
+
+
 # ==========================================================
 # Gráficos (SVG inline e sparkline unicode)
 # ==========================================================
@@ -261,13 +302,19 @@ def sparkline_text(values: Sequence[float | None]) -> str:
 # Renderização Markdown
 # ==========================================================
 
+def _defuse_links(text: str) -> str:
+    """Desarma links/imagens Markdown (``[x](url)``, ``![x](url)``): nada é carregado/clicável."""
+    return text.replace("](", "]\\(")
+
+
 def _md_cell(text: object) -> str:
-    return " ".join(str(text).split()).replace("|", "\\|").replace("<", "&lt;")
+    return _defuse_links(" ".join(str(text).split()).replace("|", "\\|").replace("<", "&lt;"))
 
 
 def _md_safe(text: str) -> str:
-    """Texto de IA em Markdown: sem HTML interpretável (``<`` escapado; ``>`` é citação)."""
-    return text.replace("<", "&lt;")
+    """Texto de IA em Markdown: sem HTML interpretável (``<`` escapado; ``>`` é citação) e sem
+    links/imagens ativos."""
+    return _defuse_links(text.replace("<", "&lt;"))
 
 
 def _md_table(headers: Sequence[str], rows: Sequence[Sequence[str]]) -> list[str]:
@@ -489,16 +536,25 @@ def render_daily_report(record: DailyRecord, history: list[DailyRecord], comment
                         fund_name: str, *, cfg: FundConfig | None = None,
                         squeeze_buckets: Mapping[str, str] | None = None) -> tuple[str, str]:
     """Relatório diário (Markdown, HTML): KPIs, comentário, atribuição, posições, alertas,
-    evolução do NAV/drawdown desde o início e rodapé de integridade."""
-    cfg = cfg or FundConfig()
+    evolução do NAV/drawdown desde o início e rodapé de integridade.
+
+    O rodapé recalcula o ``record_hash`` de cada registro e confere os elos da cadeia; registro
+    adulterado ou cadeia quebrada aparecem em destaque (nunca como "íntegro"). ``cfg`` ausente ⇒
+    mandato do repositório. Comentário com procedência ``[IA]`` é rotulado IA.
+    """
+    cfg = cfg or _default_config()
     rk = record.risk
     nav0 = float(record.nav_start_usd)
     periods = period_returns(record, history)
     chain = _chain(record, history)
     synthetic = record.is_synthetic
     notice = record.data_notice or ("dados reais de mercado" if not synthetic else "")
+    chain_ok, chain_problems = verify_record_chain(chain)
     labels = [f"Track record: {record.track_record_type}", PAPER_TRADING_TEXT,
               f"Aviso de dados: {notice or NA}"]
+    if not chain_ok:
+        labels.insert(0, "ALERTA DE INTEGRIDADE: cadeia de hashes do track record NÃO CONFERE ("
+                      + "; ".join(chain_problems[:3]) + ")")
     vol = _f(rk.ex_ante_vol)
     kpis = [
         ("NAV", format_money(record.nav_end_usd), f"abertura {format_money(nav0)}"),
@@ -518,8 +574,9 @@ def render_daily_report(record: DailyRecord, history: list[DailyRecord], comment
     ]
     sections: list[Section] = []
 
-    s = Section("Comentário do dia")
-    s.blocks.append(Block("md", commentary_md or "Comentário indisponível.", ai=False))
+    ai_comment = f"[{AI_LABEL}]" in (commentary_md or "")
+    s = Section("Comentário do dia", ai=ai_comment)
+    s.blocks.append(Block("md", commentary_md or "Comentário indisponível.", ai=ai_comment))
     sections.append(s)
 
     s = Section("Atribuição")
@@ -557,7 +614,8 @@ def render_daily_report(record: DailyRecord, history: list[DailyRecord], comment
     sections.append(s)
 
     s = Section("Alertas de risco")
-    s.items(list(record.alerts) or ["Nenhum alerta no dia."])
+    integrity_alerts = [f"Integridade: {p}" for p in chain_problems]
+    s.items(integrity_alerts + list(record.alerts) or ["Nenhum alerta no dia."])
     sections.append(s)
 
     s = Section("Evolução desde o início")
@@ -579,7 +637,15 @@ def render_daily_report(record: DailyRecord, history: list[DailyRecord], comment
     sections.append(s)
 
     s = Section("Integridade")
+    first = chain[0]
+    scope = ("desde a inception, GENESIS" if first.prev_record_hash == GENESIS_RECORD_HASH
+             else f"desde {fmt_date(first.date)}, histórico parcial")
     kv = [("record_hash", record.record_hash or NA), ("prev_record_hash", record.prev_record_hash),
+          ("Hash do registro (recalculado)",
+           "confere" if record.record_hash and record.compute_hash() == record.record_hash
+           else "NÃO CONFERE (registro adulterado ou sem hash)"),
+          (f"Cadeia de hashes ({len(chain)} registros {scope})",
+           "íntegra" if chain_ok else "NÃO CONFERE: " + "; ".join(chain_problems[:5])),
           ("approval_hash", record.approval_hash or NA),
           ("semana da carteira vigente", record.live_book_week.isoformat()
            if record.live_book_week else NA)]
@@ -616,6 +682,28 @@ def _view_label(v: View | None) -> str:
         flags.append(f"teto {fmt_pct(v.max_abs_weight)}")
     base = f"{v.score:+d} ({v.source.value}, conf. {fmt_num(v.confidence, 2)})"
     return base + (f" [{', '.join(flags)}]" if flags else "")
+
+
+def issuer_period_returns(records: Sequence[DailyRecord]) -> dict[str, float]:
+    """Retorno total em USD de cada emissor no período (Π(1+r)−1), pela linha de maior |valor|.
+
+    Mede a DIREÇÃO da ação (independe do lado da posição), ao contrário do P&L, cujo sinal já
+    embute o lado (short que ganha tem P&L positivo com a ação caindo). Dias sem negociação
+    (``day_return_usd`` ausente) não contam — ausente nunca vira zero.
+    """
+    growth: dict[str, float] = {}
+    for r in sorted(records, key=lambda x: x.date):
+        best: dict[str, Any] = {}
+        for pos in r.positions:
+            if not _finite(pos.day_return_usd):
+                continue
+            cur = best.get(pos.issuer_id)
+            key = (abs(pos.market_value_usd), pos.ticker)
+            if cur is None or key > (abs(cur.market_value_usd), cur.ticker):
+                best[pos.issuer_id] = pos
+        for iid, pos in best.items():
+            growth[iid] = growth.get(iid, 1.0) * (1.0 + float(pos.day_return_usd))
+    return {k: v - 1.0 for k, v in sorted(growth.items())}
 
 
 def _weights(p: Proposal | None) -> dict[str, PositionTarget]:
@@ -742,8 +830,14 @@ def render_weekly_report(week: date, proposal: Proposal, decision: Decision | No
     visão, O que mudou na carteira, Carteira, Risco, Compliance, CDP vs sombra só-quant, Diário
     de decisão e Integridade. ``factbook`` resolve placeholders de textos de IA ainda não
     renderizados; números sempre formatados por código.
+
+    Sem look-ahead: só entram registros diários anteriores a ``week``. A tese anterior é medida
+    pelo retorno residual realizado (``realized_residual``) ou, na falta dele, pelo retorno total
+    da ação em USD — nunca pelo sinal do P&L (que embute o lado da posição). A decisão é
+    reverificada contra a proposta (hashes recalculados) e a divergência aparece em destaque.
     """
-    cfg = cfg or FundConfig()
+    cfg = cfg or _default_config()
+    week_records = [r for r in week_records if r.date < week]
     synthetic = bool(proposal.is_synthetic)
     notice = proposal.data_notice or (SIMULATED_DATA_NOTICE if synthetic else "dados reais")
     mind = (pm.mind if pm is not None else None) or (decision.mind if decision else None) or NA
@@ -752,6 +846,10 @@ def render_weekly_report(week: date, proposal: Proposal, decision: Decision | No
     labels = [f"Mente que conduziu a semana: {mind}",
               f"Decisão autônoma assinada por {decision.approver if decision else AUTONOMOUS_DECIDER}",
               PAPER_TRADING_TEXT, f"Aviso de dados: {notice}"]
+    decision_problems = _decision_problems(decision, proposal) if decision is not None else []
+    if decision_problems:
+        labels.insert(0, "ALERTA DE INTEGRIDADE: a decisão NÃO CONFERE com a proposta exibida ("
+                      + "; ".join(decision_problems[:3]) + ")")
     vt = _f(proposal.overrides.get("vol_target"))
     kpis = [
         ("Caminho da decisão", path, "gates determinísticos"),
@@ -822,18 +920,15 @@ def render_weekly_report(week: date, proposal: Proposal, decision: Decision | No
     else:
         s.p("Sem registros diários na semana anterior (inception ou primeira semana).")
     prev_map = {k: v for k, v in _by_issuer(prev_views).items() if v.score != 0}
-    issuer_week: dict[str, float] = {}
-    for r in recs:
-        for a in r.attribution:
-            if a.group == "issuer":
-                issuer_week[a.name] = issuer_week.get(a.name, 0.0) + float(a.pnl_usd)
+    stock_ret = issuer_period_returns(recs)
     thesis_rows = []
     for iid, v in prev_map.items():
         resid = _f((realized_residual or {}).get(iid))
+        total = _f(stock_ret.get(iid))
         if resid is not None:
             measure, sign = f"resíduo {_pct(resid, True)}", resid
-        elif iid in issuer_week:
-            measure, sign = f"P&L {_usd(issuer_week[iid], True)}", issuer_week[iid]
+        elif total is not None:
+            measure, sign = f"retorno total USD {_pct(total, True)}", total
         else:
             measure, sign = NA, None
         worked = NA if sign is None or sign == 0 else ("sim" if (sign > 0) == (v.score > 0)
@@ -1038,7 +1133,10 @@ def render_weekly_report(week: date, proposal: Proposal, decision: Decision | No
           ("snapshot_hash", proposal.snapshot_hash), ("config_hash", proposal.config_hash),
           ("research_hash", proposal.research_hash)]
     if decision is not None:
-        kv += [("approval_hash", decision.approval_hash),
+        kv += [("Verificação da decisão (hashes recalculados)",
+                "confere" if not decision_problems
+                else "NÃO CONFERE: " + "; ".join(decision_problems[:5])),
+               ("approval_hash", decision.approval_hash),
                ("pm_decision_hash", decision.pm_decision_hash or NA),
                ("risk_gate_hash", decision.risk_gate_hash or NA),
                ("audit_head_hash", decision.audit_head_hash or NA)]
@@ -1080,8 +1178,11 @@ def write_report_files(out_dir: Path | str, md: str, html_text: str, *,
                        stem: str = REPORT_STEM) -> dict[str, str]:
     """Grava ``<stem>.md`` e ``<stem>.html`` (exclusivos) e devolve caminhos e SHA-256.
 
-    Recusa sobrescrever: se qualquer um dos arquivos existir, nada é gravado.
+    Recusa sobrescrever: se qualquer um dos arquivos existir, nada é gravado. ``stem`` é um nome
+    simples (sem separadores de caminho nem ``..``).
     """
+    if not _STEM_RE.fullmatch(stem) or ".." in stem:
+        raise ValueError(f"Nome de relatório inválido: {stem!r}")
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
     md_path, html_path = out / f"{stem}.md", out / f"{stem}.html"
@@ -1104,6 +1205,7 @@ __all__ = [
     "Block",
     "Document",
     "Section",
+    "issuer_period_returns",
     "md_to_safe_html",
     "render_daily_report",
     "render_weekly_report",
@@ -1111,5 +1213,6 @@ __all__ = [
     "sparkline_text",
     "to_html",
     "to_markdown",
+    "verify_record_chain",
     "write_report_files",
 ]

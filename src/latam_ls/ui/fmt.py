@@ -119,6 +119,12 @@ def escape_md(text: object) -> str:
     return _MD_SPECIAL.sub(r"\\\1", clean)
 
 
+def code(text: object) -> str:
+    """Texto como trecho de código Markdown (sem crases internas; nada é interpretado)."""
+    clean = str(text if text is not None else NA).replace("`", "'").replace("\n", " ")
+    return f"`{clean}`"
+
+
 def sign_color(x: object) -> str:
     v = _f(x)
     if v is None or v == 0:

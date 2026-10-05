@@ -6,8 +6,8 @@ from __future__ import annotations
 import pandas as pd
 import streamlit as st
 
-from . import data, fmt
 from . import components as ui
+from . import data, fmt
 from .state import AppState
 
 
@@ -18,7 +18,7 @@ def _decision_block(state: AppState, wd: data.WeekData) -> None:
     mind = wd.mind or fmt.NA
     st.markdown(f"**Mente que conduziu a semana:** :violet-badge[{fmt.escape_md(mind)}] · "
                 f"**Caminho:** {fmt.escape_md(fmt.PATH_PT.get(wd.path_taken or '', wd.path_taken or fmt.NA))}"
-                f" · **Estado:** `{fmt.escape_md(wd.state or fmt.NA)}`")
+                f" · **Estado:** {fmt.code(wd.state or fmt.NA)}")
     if d is None:
         st.warning("Semana sem decisão gravada.", icon=":material/pending:")
         return

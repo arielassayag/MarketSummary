@@ -50,7 +50,7 @@ def _tiles(state: AppState) -> None:
     if rec is not None:
         src.append(f"registro diário de {fmt.date_br(rec.date)} (carteira derivada no dia)")
     if prop is not None:
-        src.append(f"proposta `{fmt.escape_md(prop.proposal_id)}` v{prop.version} "
+        src.append(f"proposta {fmt.code(prop.proposal_id)} v{prop.version} "
                    f"(ex-ante na decisão de {fmt.date_br(prop.week)})")
     st.caption("Fontes: " + "; ".join(src) + f" {ui.CALC_BADGE}")
 

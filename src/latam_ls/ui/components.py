@@ -23,7 +23,7 @@ SIM_BADGE = ":red-badge[DADOS SIMULADOS]"
 
 _CSS = """
 <style>
-  .block-container {padding-top: 1.6rem; padding-bottom: 3rem; max-width: 1500px;}
+  .block-container {padding-top: 3.2rem; padding-bottom: 3rem; max-width: 1500px;}
   .cdp-header {display:flex; align-items:baseline; justify-content:space-between;
                border-bottom: 3px solid #1D3557; padding-bottom: .45rem; margin-bottom: .6rem;}
   .cdp-title {font-size: 1.75rem; font-weight: 750; color: #1D3557; letter-spacing: .2px;}

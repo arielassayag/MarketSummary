@@ -23,7 +23,7 @@ from collections.abc import Callable, Iterable, Sequence
 from dataclasses import dataclass, field
 from datetime import date, datetime, timedelta
 from pathlib import Path
-from typing import Any, TypeVar
+from typing import Any
 from zoneinfo import ZoneInfo
 
 import pandas as pd
@@ -80,7 +80,6 @@ CDP_INVARIANTS = (
     "risco são aceitas; ligar/desligar é auditado.",
 )
 
-T = TypeVar("T")
 
 
 # ==========================================================
@@ -123,7 +122,7 @@ def fingerprint(*paths: Path | str, skip_dirs: Iterable[str] = _SKIP_DIRS) -> st
     return h.hexdigest()
 
 
-def _attempt(issues: list[str], label: str, fn: Callable[[], T], default: T) -> T:
+def _attempt[T](issues: list[str], label: str, fn: Callable[[], T], default: T) -> T:
     """Executa ``fn``; erro vira apontamento legível (o app nunca quebra por um artefato)."""
     try:
         return fn()

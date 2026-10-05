@@ -10,7 +10,12 @@ fund:
   rebalance_weekday: MON
   manager_role: "Gestor (PM)"
   manager_name: "CDP — Cabra da Peste"
-  track_record_type: "paper trading com preços reais (execução hipotética)"
+  track_record_type: "paper trading com preços reais (execução hipotética no fechamento)"
+  timezone: America/Sao_Paulo
+  weekly_research_start_local: "11:00"   # segunda: pesquisa e decisão com dados até sexta
+  decision_deadline_local: "16:30"       # decisão gravada antes do call de fechamento da B3
+  execution_convention: "MOC: carteira decidida antes do fechamento de segunda com dados até sexta; executada pelo valor-alvo (peso × NAV) ao preço de fechamento de segunda de cada linha, com custos do modelo"
+  daily_close_run_local: "19:20"         # marcação, risco, atribuição, comentário e relatório
 
 risk:
   vol_target_annual: 0.05      # meta ex-ante

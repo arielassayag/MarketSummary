@@ -415,8 +415,12 @@ def test_constraints_hold_every_day(planted_est, est):
             cols = [c for c in cw.columns if c.startswith(prefix)]
             s = np.nansum(cw[cols].to_numpy() * fr[cols].to_numpy(), axis=1)
             assert np.abs(s).max() < 1e-12
-            # Pesos das restrições somam 1 sobre os grupos ativos (todos os nomes têm grupo).
         assert len(fr) > 0
+    # No painel plantado (sem feriados) todo nome tem país e setor: pesos somam 1 por bloco.
+    cw = planted_est.constraint_weights
+    for prefix in ("country:", "sector:"):
+        cols = [c for c in cw.columns if c.startswith(prefix)]
+        np.testing.assert_allclose(cw[cols].sum(axis=1), 1.0, rtol=1e-12)
 
 
 # ======================================================================

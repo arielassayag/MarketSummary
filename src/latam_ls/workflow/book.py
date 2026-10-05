@@ -291,25 +291,26 @@ class Book:
         if Proposal.model_validate(json.loads(text)).proposal_hash() != h:
             raise ValueError("A proposta não é serializável de forma estável (hash muda ao "
                              "regravar); verifique valores não finitos.")
-        _write_exclusive(path, text)
-
-        d = self.week_dir(week)
-        _write_replace(d / f"positions_v{k}.csv",
-                       _models_csv(list(proposal.positions), PositionTarget))
-        _write_replace(d / f"trades_v{k}.csv", _models_csv(list(proposal.trades), Trade))
+        # Derivados são preparados antes da gravação: uma falha aqui não deixa proposta órfã.
         state = ProposalState.BLOCKED if proposal.hard_failures else ProposalState.IN_REVIEW
         memo = proposal.memo_markdown or render_memo(
             proposal, self.load_research_pack_by_hash(week, proposal.research_hash),
             config=self.config, state=state, audit_head_hash=self.audit_head())
-        footer = f"\n---\n\n_Hash da proposta (SHA-256): `{h}`_\n"
-        _write_replace(d / f"memo_v{k}.md", memo.rstrip() + "\n" + footer)
+        memo_text = memo.rstrip() + f"\n\n---\n\n_Hash da proposta (SHA-256): `{h}`_\n"
+        positions_csv = _models_csv(list(proposal.positions), PositionTarget)
+        trades_csv = _models_csv(list(proposal.trades), Trade)
 
+        _write_exclusive(path, text)
         self.audit.append(
             "PROPOSAL_CREATED", proposal.created_by, h,
             summary=f"Proposta {proposal.proposal_id} v{k}: {len(proposal.positions)} posições, "
                     f"{len(proposal.hard_failures)} falha(s) HARD, "
                     f"{len(proposal.soft_failures)} SOFT ({state.value}).",
             week=week)
+        d = self.week_dir(week)
+        _write_replace(d / f"positions_v{k}.csv", positions_csv)
+        _write_replace(d / f"trades_v{k}.csv", trades_csv)
+        _write_replace(d / f"memo_v{k}.md", memo_text)
         return path
 
     def load_proposal(self, week: date, version: int | None = None) -> Proposal | None:

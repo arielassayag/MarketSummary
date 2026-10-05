@@ -405,6 +405,8 @@ class RiskModelEstimator:
             "window_start": str(self.dates[lo].date()),
             "n_dates_window": int(len(win)),
             "n_dates_regression": int(len(ok_rows)),
+            "first_regression_date": str(dates_ok[0].date()),
+            "last_regression_date": str(dates_ok[-1].date()),
             "skipped_dates": skipped,
             "n_factors": len(kept),
             "dropped_factors": dropped,

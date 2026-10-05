@@ -30,6 +30,7 @@ import pandas as pd
 from ..analytics.panel import AssetPanel, fx_for_lines
 from ..config import FundConfig
 from ..market import MarketData
+from ..universe import GICS_SECTORS
 from .types import (
     MARKET_FACTOR,
     STYLE_FACTORS,
@@ -209,8 +210,6 @@ def _group_block(
 
 def factor_structure(panel: AssetPanel, issuers: list[str], min_names: int) -> FactorStructure:
     """Define os fatores de país e setor para ``issuers`` agrupando grupos pequenos."""
-    from ..universe import GICS_SECTORS
-
     missing = sorted(set(issuers) - set(panel.assets.index))
     if missing:
         raise KeyError(f"Emissores fora do painel: {missing}")
@@ -253,8 +252,10 @@ def _book_to_price_last(
     """
     bp = pd.Series(np.nan, index=issuers, dtype=float)
     src = pd.Series("sem_dado", index=issuers, dtype=object)
-    if md is None or md.fundamentals is None or md.fundamentals.empty:
+    if md is None:
         return bp, pd.Series("sem_marketdata", index=issuers, dtype=object)
+    if md.fundamentals is None or md.fundamentals.empty:
+        return bp, pd.Series("sem_fundamentos", index=issuers, dtype=object)
     fund = md.fundamentals
     if "price_to_book" not in fund.columns:
         return bp, pd.Series("sem_price_to_book", index=issuers, dtype=object)

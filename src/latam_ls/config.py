@@ -31,7 +31,15 @@ class FundSection(_Frozen):
     rebalance_weekday: Literal["MON"] = "MON"
     manager_role: str = "Gestor (PM)"
     manager_name: str = "CDP — Cabra da Peste"
-    track_record_type: str = "paper trading com preços reais (execução hipotética)"
+    track_record_type: str = "paper trading com preços reais (execução hipotética no fechamento)"
+    timezone: str = "America/Sao_Paulo"
+    weekly_research_start_local: str = "11:00"
+    decision_deadline_local: str = Field("16:30", description="Decisão gravada antes do call de fechamento da B3")
+    execution_convention: str = (
+        "MOC: carteira decidida antes do fechamento de segunda com dados até sexta; executada pelo "
+        "valor-alvo (peso × NAV) ao preço de fechamento de segunda de cada linha, com custos do modelo"
+    )
+    daily_close_run_local: str = "19:20"
 
 
 class RiskSection(_Frozen):

@@ -79,7 +79,6 @@ from .security_master import (
     HttpGet,
     RateLimiter,
     _sec_get,
-    build_line_master,
     build_security_master,
     default_http_get,
     fetch_cvm_fca,
@@ -127,7 +126,7 @@ DEFAULT_MAX_AGE_DAYS = 540
 """Idade máxima (``as_of − period_end``) para um fundamento ainda ser usado (≈ 18 meses)."""
 DEFAULT_MAX_PRICE_AGE_DAYS = 7
 
-CVM_PARSER_VERSION = "2"
+CVM_PARSER_VERSION = "4"
 CVM_DOCS = ("ITR", "DFP")
 SEC_COMPANYFACTS_URL = "https://data.sec.gov/api/xbrl/companyfacts/CIK{cik}.json"
 SEC_ACCEPTED_FORMS = frozenset({
@@ -586,8 +585,17 @@ def _balance_facts(bpa: pd.DataFrame, bpp: pd.DataFrame, fin: pd.DataFrame) -> p
     return pd.concat(facts, ignore_index=True)
 
 
-SHARE_SCALE_BANDS = {"ok": (0.3, 3.0), "x1000": (300.0, 3000.0)}
+SHARE_SCALE_BANDS = {"ok": (0.4, 2.5), "x1000": (400.0, 2500.0)}
 """Faixas de ``LL ÷ LPA ÷ ações reportadas`` para validar a unidade de ``composicao_capital``."""
+MAX_TREASURY_SHARE = 0.25
+"""Tesouraria acima disso do capital é inconsistente (limite legal ~10% do free float por
+classe): o fato de ações do documento é descartado e o PIT recai no documento anterior."""
+SMALL_SHARE_COUNT = 50_000_000
+MAX_BOOK_PER_SHARE = 1_000.0
+"""Menos de 50 milhões de ações com PL > R$ 1.000 por ação ⇒ contagem em milhares (não há
+ação listada na B3 com esse PL por ação). Pega companhias que reportam o LPA "por lote de
+mil" (ex.: CBA, LPA 185,91 com LL de R$ 121 mi e 651 mi de ações) e documentos sem LPA
+(ex.: Bradesco 2020, 8,8 mi "ações" com PL de R$ 140 bi)."""
 
 
 def _implied_shares(dre: pd.DataFrame, ni_flows: pd.DataFrame) -> pd.DataFrame:
@@ -621,12 +629,15 @@ def _implied_shares(dre: pd.DataFrame, ni_flows: pd.DataFrame) -> pd.DataFrame:
     return m[out_cols].reset_index(drop=True)
 
 
-def _capital_facts(capital: pd.DataFrame, implied: pd.DataFrame | None = None) -> pd.DataFrame:
-    """Ações em circulação = total − tesouraria, com checagem de unidade pelo LPA.
+def _capital_facts(capital: pd.DataFrame, implied: pd.DataFrame | None = None,
+                   equity: pd.DataFrame | None = None) -> pd.DataFrame:
+    """Ações em circulação = total − tesouraria, com checagem de unidade pelo LPA e pelo PL.
 
-    ``scale_check``: ``ok`` (unidade confirmada), ``x1000`` (reportado em milhares e
-    corrigido), ``divergente`` (fora das duas faixas: mantido como reportado) ou ``na`` (sem
-    LPA utilizável no documento; resolvido depois por herança de documentos anteriores).
+    ``scale_check``: ``ok`` (unidade confirmada pelo LPA), ``x1000`` (reportado em milhares e
+    corrigido), ``x1000_pl`` (contagem < 50 mi com PL/ação > R$ 1.000: milhares, mesmo com LPA
+    "por mil" coerente), ``divergente`` (LPA fora das faixas) ou ``na`` (sem LPA utilizável).
+    ``divergente``/``na`` são resolvidos depois por herança de documentos anteriores
+    (:func:`resolve_share_scale`). Tesouraria > 25% do capital ⇒ documento descartado.
     """
     cols = ["cnpj", "dt_refer", "versao", "value", "scale_check"]
     need = {"CNPJ_CIA", "DT_REFER", "VERSAO", "QT_ACAO_TOTAL_CAP_INTEGR", "QT_ACAO_TOTAL_TESOURO"}
@@ -640,12 +651,17 @@ def _capital_facts(capital: pd.DataFrame, implied: pd.DataFrame | None = None) -
         "versao": pd.to_numeric(capital["VERSAO"], errors="coerce"),
         "value": total - treasury,
     })
-    out = out[(total > 0) & out["value"].gt(0)].dropna()
+    bad_treasury = (treasury / total) > MAX_TREASURY_SHARE
+    if bad_treasury.any():
+        logger.warning("%d documentos com tesouraria > %.0f%% do capital descartados.",
+                       int(bad_treasury.sum()), 100 * MAX_TREASURY_SHARE)
+    out = out[(total > 0) & out["value"].gt(0) & ~bad_treasury].dropna()
     out["versao"] = out["versao"].astype(int)
-    if implied is None or implied.empty:
-        out["scale_check"] = "na"
-        return out[cols]
-    out = out.merge(implied, on=["cnpj", "dt_refer", "versao"], how="left")
+    key = ["cnpj", "dt_refer", "versao"]
+    if implied is not None and not implied.empty:
+        out = out.merge(implied, on=key, how="left")
+    else:
+        out["implied_shares"] = np.nan
     ratio = out["implied_shares"] / out["value"]
     lo_ok, hi_ok = SHARE_SCALE_BANDS["ok"]
     lo_k, hi_k = SHARE_SCALE_BANDS["x1000"]
@@ -653,6 +669,12 @@ def _capital_facts(capital: pd.DataFrame, implied: pd.DataFrame | None = None) -
         [ratio.isna(), ratio.between(lo_ok, hi_ok), ratio.between(lo_k, hi_k)],
         ["na", "ok", "x1000"], default="divergente")
     out.loc[out["scale_check"] == "x1000", "value"] *= 1000.0
+    if equity is not None and not equity.empty:
+        out = out.merge(equity.rename(columns={"value": "equity"}), on=key, how="left")
+        bvps = out["equity"] / out["value"]
+        small = (out["value"] < SMALL_SHARE_COUNT) & (bvps.abs() > MAX_BOOK_PER_SHARE)
+        out.loc[small, "value"] *= 1000.0
+        out.loc[small, "scale_check"] = "x1000_pl"
     return out[cols]
 
 
@@ -686,7 +708,11 @@ def extract_cvm_facts(tables: Mapping[str, pd.DataFrame], doc: str) -> pd.DataFr
     stocks["period_start"] = pd.NaT
     stocks["source"] = f"cvm:{doc_l}:" + stocks["kind"].astype(str)
     ni_flows = flows[flows["metric"] == "net_income"]
-    cap = _capital_facts(tables.get("capital", pd.DataFrame()), _implied_shares(dre, ni_flows))
+    eq_doc = (stocks[stocks["metric"] == "equity"]
+              .drop_duplicates(["cnpj", "dt_refer", "versao"])[["cnpj", "dt_refer", "versao",
+                                                                "value"]])
+    cap = _capital_facts(tables.get("capital", pd.DataFrame()), _implied_shares(dre, ni_flows),
+                         eq_doc)
     cap = cap.assign(metric="shares_outstanding", period_start=pd.NaT,
                      period_end=cap["dt_refer"], currency=np.nan,
                      source=f"cvm:{doc_l}:capital|unidade:" + cap["scale_check"].astype(str))
@@ -1003,11 +1029,13 @@ def _coerce_pit(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def resolve_share_scale(raw: pd.DataFrame) -> pd.DataFrame:
-    """Resolve a unidade das ações CVM sem LPA utilizável (``unidade:na``) sem look-ahead.
+    """Resolve a unidade das ações CVM não verificadas (``na``/``divergente``) sem look-ahead.
 
-    Herda a unidade do documento VERIFICADO mais recente da mesma entidade com
-    ``period_end`` anterior (convenção de reporte da companhia); sem histórico verificado,
-    mantém o valor reportado. ``unidade:divergente`` nunca é alterado.
+    Continuidade com a última contagem RESOLVIDA da mesma entidade (``period_end`` anterior):
+    razão entre 0,4 e 2,5 ⇒ unidade como reportada (``ok(herdada)``; cobre desdobramentos);
+    razão ≈ 1/1000 ⇒ reportado em milhares (``x1000(herdada)``); fora disso ou sem histórico
+    ⇒ mantém o valor reportado com a tag original. Herdar a "convenção" às cegas falha quando a
+    companhia muda de milhares para unidades (ex.: Telefônica Brasil em 2022).
     """
     if raw.empty or "source" not in raw.columns:
         return raw
@@ -1015,22 +1043,36 @@ def resolve_share_scale(raw: pd.DataFrame) -> pd.DataFrame:
         "cvm:")
     if not is_sh.any():
         return raw
-    out = raw.copy()
-    sh = out[is_sh].copy()
+    out = raw.reset_index(drop=True)  # índice posicional único (entrada pode vir de concat)
+    sh = out[is_sh.to_numpy()].copy()
     sh["_check"] = sh["source"].astype(str).str.extract(r"\|unidade:(\w+)$")[0]
-    sh = sh.sort_values(["entity", "period_end", "received_date"])
-    verified = sh["_check"].where(sh["_check"].isin(["ok", "x1000"]))
-    sh["_inherit"] = verified.groupby(sh["entity"]).transform(lambda s: s.ffill().shift(1))
-    # documentos do mesmo period_end compartilham a verificação do próprio período quando há
-    same = verified.groupby([sh["entity"], sh["period_end"]]).transform("first")
-    sh["_inherit"] = same.where(same.notna(), sh["_inherit"])
-    fix = (sh["_check"] == "na") & (sh["_inherit"] == "x1000")
-    keep = (sh["_check"] == "na") & sh["_inherit"].isin(["ok"])
-    out.loc[fix[fix].index, "value"] = out.loc[fix[fix].index, "value"] * 1000.0
-    out.loc[fix[fix].index, "source"] = out.loc[fix[fix].index, "source"].str.replace(
-        "|unidade:na", "|unidade:x1000(herdada)", regex=False)
-    out.loc[keep[keep].index, "source"] = out.loc[keep[keep].index, "source"].str.replace(
-        "|unidade:na", "|unidade:ok(herdada)", regex=False)
+    sh = sh.sort_values(["entity", "period_end", "received_date", "version"])
+    lo, hi = SHARE_SCALE_BANDS["ok"]
+    lo_k, hi_k = SHARE_SCALE_BANDS["x1000"]
+    for _, g in sh.groupby("entity", sort=False):
+        # (period_end, received_date, contagem resolvida) já conhecidos
+        resolved: list[tuple[pd.Timestamp, pd.Timestamp, float]] = []
+        for idx, pe, rd, val, check in zip(g.index, g["period_end"], g["received_date"],
+                                           g["value"], g["_check"], strict=True):
+            if check in ("ok", "x1000", "x1000_pl"):
+                resolved.append((pe, rd, float(val)))
+                continue
+            # referência: último período anterior PUBLICADO até o recebimento deste documento
+            known = [t for t in resolved if t[0] < pe and t[1] <= rd]
+            if not known or not (val > 0):
+                continue
+            ref = max(known, key=lambda t: (t[0], t[1]))[2]
+            r = ref / float(val)
+            if lo <= r <= hi:
+                tag = "ok(herdada)"
+            elif lo_k <= r <= hi_k:
+                tag = "x1000(herdada)"
+                out.loc[idx, "value"] = float(val) * 1000.0
+            else:
+                continue
+            out.loc[idx, "source"] = re.sub(r"\|unidade:(na|divergente)$", f"|unidade:{tag}",
+                                            str(out.loc[idx, "source"]))
+            resolved.append((pe, rd, float(out.loc[idx, "value"])))
     return out
 
 
@@ -1133,8 +1175,11 @@ def build_pit_fundamentals(
     cvm_dir = cache_root / "cvm"
     sec_dir = cache_root / "sec"
     if security_master is None:
+        # Identidade (ticker → CNPJ) usa o FCA mais recente: o universo tem tickers atuais e o
+        # CNPJ não muda no tempo (não é dado de mercado, não há look-ahead).
         fca = None
-        for year in (end.year, end.year - 1):
+        ref_year = (today or date.today()).year
+        for year in (ref_year, ref_year - 1, ref_year - 2):
             try:
                 fca = fetch_cvm_fca(year, http_get=http_get, cache_dir=cvm_dir)
                 break
@@ -1158,6 +1203,11 @@ def build_pit_fundamentals(
         "reapresentações valem a partir do próprio DT_RECEB (política estrita).",
         "composicao_capital da CVM só existe a partir de 2020: ações antes disso ausentes.",
         "Financeiras (bancos/seguradoras): EBIT, caixa e dívida bruta não se aplicam (ausentes).",
+        "composicao_capital não informa a unidade: checada por LPA e PL/ação no próprio "
+        "documento e por continuidade com documentos anteriores (tag 'unidade:' no source).",
+        "SEC companyfacts pode atrasar a incorporação de 20-F recentes (ex.: FY2025 de "
+        "NU/STNE/XP/PAGS/INTR/PAX ausentes em 2026-10); fundamento velho (> max_age_days) é "
+        "ignorado nos índices.",
     ]
     raw_frames: list[pd.DataFrame] = []
     entity_map: dict[str, list[str]] = {}
@@ -1441,10 +1491,10 @@ def pit_coverage(pit: pd.DataFrame) -> pd.DataFrame:
 
 __all__ = [
     "PIT_COLUMNS", "PIT_METRICS", "RATIO_COLUMNS", "RAW_FACT_COLUMNS", "FLOW_METRICS",
-    "STOCK_METRICS", "PIT_SNAPSHOT_FILENAME", "DEFAULT_PIT_PATH", "add_business_days",
-    "discrete_quarters", "ttm_at", "cvm_zip_url", "fetch_cvm_zip", "read_cvm_zip",
-    "extract_cvm_facts", "cvm_facts_cached", "fetch_sec_companyfacts", "extract_sec_facts",
-    "pit_from_raw_facts", "build_pit_fundamentals", "pit_snapshot", "pit_ratios",
-    "local_equivalent_prices", "validate_pit", "save_pit", "load_pit", "pit_coverage",
-    "build_line_master",
+    "STOCK_METRICS", "PIT_SNAPSHOT_FILENAME", "DEFAULT_PIT_PATH", "SHARE_SCALE_BANDS",
+    "add_business_days", "discrete_quarters", "ttm_at", "cvm_zip_name", "cvm_zip_url",
+    "fetch_cvm_zip", "read_cvm_zip", "extract_cvm_facts", "cvm_facts_cached",
+    "fetch_sec_companyfacts", "extract_sec_facts", "resolve_share_scale", "pit_from_raw_facts",
+    "build_pit_fundamentals", "pit_snapshot", "pit_ratios", "local_equivalent_prices",
+    "validate_pit", "save_pit", "load_pit", "pit_coverage",
 ]

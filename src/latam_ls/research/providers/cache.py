@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import json
 from collections.abc import Iterable
+from datetime import date
 from pathlib import Path
 from typing import Any
 
@@ -21,10 +22,12 @@ from pydantic import BaseModel
 
 from ...contracts import LLMCallRecord
 from ...hashing import sha256_obj, sha256_text
+from ..schemas import SCHEMAS
 from .base import (
     LLMProvider,
     LLMResult,
     error_result,
+    parse_json_payload,
     request_sha256,
     result_from_payload,
     result_payload,
@@ -50,6 +53,41 @@ def calls_digest(records: Iterable[LLMCallRecord]) -> str:
          "issues": list(r.validation_issues)}
         for r in records
     ])
+
+
+def _read_payload(path: Path) -> dict[str, Any] | None:
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    return payload if isinstance(payload, dict) else None
+
+
+def payload_integrity(payload: dict[str, Any] | None, record: LLMCallRecord) -> str | None:
+    """Confere a resposta gravada contra o registro do ledger (``None`` = íntegra).
+
+    O texto bruto é a fonte da verdade: precisa bater com ``response_sha256``; o objeto
+    ``parsed`` gravado (se houver) precisa ser exatamente o que o texto bruto produz; e o
+    desfecho (erro × sucesso) precisa ser o mesmo registrado em ``parse_ok``.
+    """
+    if payload is None:
+        return "resposta bruta ilegível"
+    if payload.get("request_sha256") not in (None, record.request_sha256):
+        return "resposta bruta de outra requisição"
+    raw_text = payload.get("raw_text")
+    got = sha256_text(raw_text) if isinstance(raw_text, str) else None
+    if got != record.response_sha256:
+        return "resposta bruta adulterada (hash do texto difere do ledger)"
+    if bool(record.parse_ok) != (payload.get("error") is None):
+        return "desfecho gravado (erro/sucesso) difere do ledger"
+    schema = SCHEMAS.get(record.schema_name)
+    stored = payload.get("parsed")
+    if (record.parse_ok and schema is not None and stored is not None
+            and isinstance(raw_text, str)):
+        parsed, err = parse_json_payload(raw_text, schema)
+        if err is not None or parsed is None or parsed.model_dump(mode="json") != stored:
+            return "objeto interpretado gravado difere do texto bruto (adulteração)"
+    return None
 
 
 class LLMCallLedger:
@@ -103,6 +141,23 @@ class LLMCallLedger:
             target.write_text(content, encoding="utf-8")
         return target.relative_to(self.dir).as_posix(), response_hash
 
+    def _safe_raw_path(self, rel: str | None) -> Path | None:
+        """Caminho da resposta bruta confinado a ``<ledger_dir>/raw`` (sem *path traversal*)."""
+        if not rel:
+            return None
+        try:
+            path = (self.dir / rel).resolve()
+            root = self.raw_dir.resolve()
+        except (OSError, ValueError):
+            return None
+        return path if path.is_relative_to(root) else None
+
+    def missing_records(self, records: Iterable[LLMCallRecord]) -> list[str]:
+        """``call_id`` dos registros que NÃO estão gravados (idênticos) neste ledger."""
+        stored = {sha256_obj(r.model_dump(mode="json")) for r in self.records()}
+        return [r.call_id for r in records
+                if sha256_obj(r.model_dump(mode="json")) not in stored]
+
     def raw_index(self) -> dict[str, str]:
         """``request_sha256`` → caminho relativo da resposta bruta mais recente."""
         index: dict[str, str] = {}
@@ -115,10 +170,14 @@ class LLMCallLedger:
                  index: dict[str, str] | None = None) -> dict[str, Any] | None:
         """Payload bruto mais recente gravado para ``request_hash`` (``None`` se ausente)."""
         rel = (index if index is not None else self.raw_index()).get(request_hash)
-        path = self.dir / rel if rel else self.raw_dir / f"{request_hash}.json"
-        if not path.exists():
+        path = self._safe_raw_path(rel or f"{RAW_DIRNAME}/{request_hash}.json")
+        if path is None or not path.exists():
             return None
-        return json.loads(path.read_text(encoding="utf-8"))
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            return None
+        return payload if isinstance(payload, dict) else None
 
     def ledger_hash(self) -> str:
         """SHA-256 de todos os registros (ordem de gravação preservada)."""
@@ -130,14 +189,17 @@ class LLMCallLedger:
         for r in self.records():
             if not r.raw_response_path:
                 continue
-            path = self.dir / r.raw_response_path
+            path = self._safe_raw_path(r.raw_response_path)
+            if path is None:
+                problems.append(f"{r.call_id}: caminho de resposta bruta fora do ledger "
+                                f"({r.raw_response_path}).")
+                continue
             if not path.exists():
                 problems.append(f"{r.call_id}: resposta bruta ausente ({r.raw_response_path}).")
                 continue
-            raw_text = json.loads(path.read_text(encoding="utf-8")).get("raw_text")
-            got = sha256_text(raw_text) if isinstance(raw_text, str) else None
-            if got != r.response_sha256:
-                problems.append(f"{r.call_id}: resposta bruta adulterada ({r.raw_response_path}).")
+            problem = payload_integrity(_read_payload(path), r)
+            if problem:
+                problems.append(f"{r.call_id}: {problem} ({r.raw_response_path}).")
         return problems
 
 
@@ -186,16 +248,24 @@ class ReplayProvider(LLMProvider):
     """Reproduz respostas gravadas no ledger; resposta ausente ⇒ erro explícito (sem regenerar).
 
     Nome, modelo configurado e determinismo são inferidos das respostas gravadas (precisam ser
-    iguais aos da execução original para que os ``request_sha256`` coincidam).
+    iguais aos da execução original para que os ``request_sha256`` coincidam). Cada resposta é
+    conferida contra o registro do ledger antes de ser servida (hash do texto bruto, desfecho
+    erro/sucesso) e é sempre REINTERPRETADA a partir do texto bruto: um ``parsed`` adulterado
+    no arquivo nunca é servido. ``week`` restringe o replay às chamadas daquela semana.
     """
 
     def __init__(self, ledger_dir: str | Path, name: str | None = None, model: str | None = None,
-                 deterministic: bool | None = None) -> None:
+                 deterministic: bool | None = None, week: date | None = None) -> None:
         self.ledger = LLMCallLedger(ledger_dir)
-        self._index = self.ledger.raw_index()
-        records = self.ledger.records()
-        self.recorded_at = records[0].created_at if records else None
-        """Carimbo da execução original (o orquestrador o reutiliza no replay)."""
+        records = [r for r in self.ledger.records() if week is None or r.week == week]
+        self._records: dict[str, LLMCallRecord] = {}
+        self._index: dict[str, str] = {}
+        for r in records:  # o mais recente prevalece (mesma regra do raw_index)
+            self._records[r.request_sha256] = r
+            if r.raw_response_path:
+                self._index[r.request_sha256] = r.raw_response_path
+        self.recorded_at = records[-1].created_at if records else None
+        """Carimbo da execução gravada mais recente (o orquestrador o reutiliza no replay)."""
         first = self._first_payload()
         self.name = name or (str(first.get("provider")) if first else "replay")
         self.model = model if model is not None else (first.get("configured_model")
@@ -204,31 +274,46 @@ class ReplayProvider(LLMProvider):
                               else bool(first.get("deterministic", True)) if first else True)
 
     def _first_payload(self) -> dict[str, Any] | None:
-        if not self.ledger.raw_dir.exists():
-            return None
-        for path in sorted(self.ledger.raw_dir.glob("*.json")):
-            try:
-                return json.loads(path.read_text(encoding="utf-8"))
-            except (OSError, ValueError):
-                continue
+        for key in sorted(self._index):
+            payload = self.ledger.load_raw(key, self._index)
+            if payload is not None:
+                return payload
         return None
+
+    def _fail(self, message: str, payload: dict[str, Any] | None = None) -> LLMResult:
+        raw = payload.get("raw_text") if payload else None
+        return error_result(self.name, self.model, message, deterministic=self.deterministic,
+                            raw_text=raw if isinstance(raw, str) else None,
+                            stop_reason=payload.get("stop_reason") if payload else None)
 
     def complete_json(self, system: str, user: str, schema: type[BaseModel], *, task: str,
                       temperature: float = 0.0, sample: int = 0,
                       context: dict | None = None) -> LLMResult:
         key = request_sha256(self.name, self.model, system, user, schema.__name__, temperature,
                              sample)
-        payload = self.ledger.load_raw(key, self._index)
-        if payload is None:
-            return error_result(self.name, self.model,
-                                f"Replay sem resposta gravada para request_sha256={key} "
-                                f"(tarefa {task}); reexecução não é permitida.",
-                                deterministic=self.deterministic)
+        record = self._records.get(key)
+        payload = self.ledger.load_raw(key, self._index) if record is not None else None
+        if record is None or payload is None:
+            return self._fail(f"Replay sem resposta gravada para request_sha256={key} "
+                              f"(tarefa {task}); reexecução não é permitida.")
         if payload.get("schema_name") not in (None, schema.__name__):
-            return error_result(self.name, self.model,
-                                f"Replay: schema gravado {payload.get('schema_name')} difere de "
-                                f"{schema.__name__}.", deterministic=self.deterministic)
-        result = result_from_payload(payload, schema)
+            return self._fail(f"Replay: schema gravado {payload.get('schema_name')} difere de "
+                              f"{schema.__name__}.")
+        problem = payload_integrity(payload, record)
+        if problem:
+            return self._fail(f"Replay recusado: {problem}.")
+        if payload.get("error") is not None:
+            result = result_from_payload(payload, schema)
+        elif isinstance(payload.get("raw_text"), str):
+            # Fonte da verdade = texto bruto (o ``parsed`` gravado é só conveniência).
+            result = result_from_payload({**payload, "parsed": None}, schema)
+            stored = payload.get("parsed")
+            if (result.ok and stored is not None
+                    and stored != result.parsed.model_dump(mode="json")):  # type: ignore[union-attr]
+                return self._fail("Replay recusado: objeto interpretado gravado difere do texto "
+                                  "bruto (adulteração).", payload)
+        else:
+            result = result_from_payload(payload, schema)
         result.provider = self.name
         result.deterministic = self.deterministic
         return result

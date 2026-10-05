@@ -183,12 +183,25 @@ def compound_window(daily: pd.Series, window: int) -> tuple[float | None, int, i
     return value, n_valid, window, start, end
 
 
+def level_returns(level: pd.Series) -> pd.Series:
+    """Retornos diários de uma série de NÍVEL (câmbio, ETF) sem perder movimentos em lacunas.
+
+    O retorno é calculado entre observações válidas consecutivas (o movimento através de um
+    dia sem dado entra no próximo pregão válido) e reindexado ao calendário original: o dia
+    sem dado fica ``NaN`` (conta contra a cobertura), nunca zero. ``pct_change`` direto sobre
+    o nível com ``NaN`` descartaria o movimento através da lacuna.
+    """
+    valid = level.where(level > 0).dropna()
+    return valid.pct_change(fill_method=None).reindex(level.index)
+
+
 def annualized_vol(daily: pd.Series, window: int) -> tuple[float | None, int, int]:
     """Desvio-padrão amostral × √252 das últimas ``window`` linhas (cobertura >= 80%)."""
     tail = daily.tail(window)
     valid = tail.dropna()
+    valid = valid[np.isfinite(valid.to_numpy(dtype=float))]
     n_valid = int(len(valid))
-    if n_valid / window < MIN_COVERAGE or n_valid < 2:
+    if window <= 0 or n_valid / window < MIN_COVERAGE or n_valid < 2:
         return None, n_valid, window
     return float(valid.std(ddof=1) * math.sqrt(TRADING_DAYS)), n_valid, window
 
@@ -396,8 +409,7 @@ def _macro_facts(b: _Builder, md: MarketData, as_of: date, currencies: list[str]
         if ccy == "USD":
             continue
         if ccy in fx.columns:
-            level = fx[ccy]
-            daily = level.where(level > 0).pct_change(fill_method=None)
+            daily = level_returns(fx[ccy])
             value, n, w, start, end = compound_window(daily, RETURN_WINDOWS["1m"])
         else:
             value, n, w, start, end = None, 0, RETURN_WINDOWS["1m"], "", ""
@@ -407,8 +419,7 @@ def _macro_facts(b: _Builder, md: MarketData, as_of: date, currencies: list[str]
               [f"fx[{ccy}]", f"janela={start}..{end}"], signed=True)
     bench = _upto(md.benchmarks, as_of)
     for sym in sorted(str(c) for c in bench.columns):
-        px = bench[sym]
-        daily = px.where(px > 0).pct_change(fill_method=None)
+        daily = level_returns(bench[sym])
         value, n, w, start, end = compound_window(daily, RETURN_WINDOWS["1m"])
         b.add(f"bench.{sym}.ret_1m", None, f"Retorno de 1 mês de {sym} (USD)", value, "pct",
               f"variação composta do fechamento de {sym} nos últimos {RETURN_WINDOWS['1m']} "

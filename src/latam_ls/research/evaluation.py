@@ -31,6 +31,7 @@ from .agents import VERDICT_ORDER, ResearchOrchestrator, ResearchRequest, Resear
 from .factbook import format_value
 from .guardrails import find_free_numbers, sanitize_untrusted
 from .providers.base import LLMProvider, LLMResult
+from .schemas import SCHEMAS
 
 TRACKER_FILENAME = "view_tracker.jsonl"
 MIN_IC_OBS = 3
@@ -100,8 +101,24 @@ class ViewTracker:
             for r in rows:
                 f.write(json.dumps(r, ensure_ascii=False, sort_keys=True) + "\n")
 
+    def _weeks_with(self, kind: str) -> set[str]:
+        df = self._frame()
+        if df.empty or "kind" not in df.columns:
+            return set()
+        return set(df.loc[df["kind"] == kind, "week"].astype(str))
+
     def append_week(self, week: date, views: Iterable[View], alpha_z: pd.Series | None) -> int:
-        """Grava os escores da semana (visões de IA e alpha quant). Retorna o nº de linhas."""
+        """Grava os escores da semana (visões de IA e alpha quant). Retorna o nº de linhas.
+
+        Os escores precisam ser gravados ANTES do resultado: semanas iguais ou anteriores ao
+        último resultado registrado por ``record_outcomes`` são recusadas com ``ValueError``
+        (regravar ou preencher sinais retroativamente seria look-ahead).
+        """
+        done = self._weeks_with("outcome")
+        if done and week.isoformat() <= max(done):
+            raise ValueError(f"Semana {week.isoformat()} não é posterior ao último resultado "
+                             f"realizado gravado ({max(done)}): sinais não podem ser gravados "
+                             "ou regravados depois do resultado (look-ahead).")
         ai: dict[str, View] = {}
         for v in views:
             if v.source == ViewSource.AI and v.score != 0:
@@ -119,7 +136,12 @@ class ViewTracker:
         return len(rows)
 
     def record_outcomes(self, week: date, residual_returns: pd.Series) -> int:
-        """Grava os retornos residuais realizados da semana (``NaN`` é ignorado, nunca zero)."""
+        """Grava os retornos residuais realizados da semana (``NaN`` é ignorado, nunca zero).
+
+        ``week`` é a semana em que os sinais foram gravados; ``residual_returns`` são os
+        retornos residuais do período de carteira que COMEÇA nessa segunda-feira (gravados só
+        depois do fim do período).
+        """
         rows = []
         for iid, val in sorted(residual_returns.items(), key=lambda kv: str(kv[0])):
             if val is None or pd.isna(val) or not math.isfinite(float(val)):
@@ -225,7 +247,12 @@ def load_golden_cases(path: str | Path | None = None) -> list[dict[str, Any]]:
 
 
 class _RecordingProvider(LLMProvider):
-    """Repassa ao provedor real e guarda os resultados brutos (pré-verificador)."""
+    """Repassa ao provedor real e guarda os resultados brutos (pré-verificador).
+
+    Cada chamada gera uma entrada (inclusive exceções), alinhada 1:1 com os registros do
+    ledger; ``snapshots`` guarda o objeto devolvido NO RECEBIMENTO (antes de qualquer
+    revalidação do orquestrador) para medir o gate de schema de forma independente.
+    """
 
     def __init__(self, inner: LLMProvider) -> None:
         self.inner = inner
@@ -233,15 +260,39 @@ class _RecordingProvider(LLMProvider):
         self.model = inner.model
         self.deterministic = inner.deterministic
         self.results: list[tuple[str, LLMResult]] = []
+        self.snapshots: list[dict[str, Any] | None] = []
 
     def complete_json(self, system: str, user: str, schema: type[BaseModel], *, task: str,
                       temperature: float = 0.0, sample: int = 0,
                       context: dict | None = None) -> LLMResult:
-        result = self.inner.complete_json(system, user, schema, task=task,
-                                          temperature=temperature, sample=sample,
-                                          context=context)
+        try:
+            result = self.inner.complete_json(system, user, schema, task=task,
+                                              temperature=temperature, sample=sample,
+                                              context=context)
+        except Exception:
+            self.results.append((task, LLMResult(None, None, self.name, self.model, 0.0, None,
+                                                 None, "exceção do provedor", False)))
+            self.snapshots.append(None)
+            raise
+        try:
+            snap = (result.parsed.model_dump(mode="json", warnings=False)
+                    if result.parsed is not None else None)
+        except Exception:  # noqa: BLE001
+            snap = None
         self.results.append((task, result))
+        self.snapshots.append(snap)
         return result
+
+
+def _schema_valid(schema_name: str, data: dict[str, Any] | None) -> bool:
+    schema = SCHEMAS.get(schema_name)
+    if schema is None or data is None:
+        return False
+    try:
+        schema.model_validate(data)
+    except Exception:  # noqa: BLE001
+        return False
+    return True
 
 
 def _issuer_of(fact_id: str) -> str | None:
@@ -329,7 +380,7 @@ def _note_texts(run: ResearchRun) -> list[tuple[str, list[str], str]]:
     for n in run.pack.notes:
         if n.confidence == 0 and n.stance == 0 and n.role != "short_risk":
             continue  # abstenção: nenhum conteúdo de IA aceito
-        texts = [n.thesis, *n.bull_points, *n.bear_points,
+        texts = [n.thesis, *n.bull_points, *n.bear_points, *n.key_risks,
                  *[c.description for c in n.catalysts]]
         if n.squeeze is not None:
             texts.append(n.squeeze.rationale)
@@ -373,13 +424,16 @@ def _evaluate_case(case: dict[str, Any], provider: LLMProvider, cfg: FundConfig)
         for t in texts:
             oc.unauthorized += len(find_free_numbers(t, terms))
         oc.accepted_texts += texts
+    # Gate de schema: toda saída ACEITA pelo pipeline (parse_ok) precisa ser válida no schema
+    # tal como o provedor a devolveu (instantâneo no recebimento, antes de revalidações).
+    for snap, rec in zip(recorder.snapshots, run.records, strict=False):
+        if rec.parse_ok:
+            oc.schema_ok.append(_schema_valid(rec.schema_name, snap))
     for n in run.pack.notes:
-        oc.schema_ok.append(type(n).model_validate(n.model_dump()) == n)
         ok = all((e.kind == EvidenceKind.FACT and e.ref_id in fb.facts)
                  or (e.kind == EvidenceKind.NEWS and e.ref_id in eligible) for e in n.evidence)
         oc.accepted_evidence_ok.append(ok)
     for m in run.pack.macro:
-        oc.schema_ok.append(type(m).model_validate(m.model_dump()) == m)
         ok = all((e.kind == EvidenceKind.FACT and e.ref_id in fb.facts)
                  or (e.kind == EvidenceKind.NEWS and e.ref_id in eligible) for e in m.evidence)
         oc.accepted_evidence_ok.append(ok)

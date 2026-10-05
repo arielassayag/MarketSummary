@@ -362,29 +362,40 @@ _MONTHS_PT_ES = (
 )
 _MONTHS_EN = ("january|february|march|april|may|june|july|august|september|october|november|"
               "december")
+_NOT_QUANTITY = r"(?!\s?%|\s?p\.p\.|[.,]\d|\s?[xX]\b)"
+"""Uma data/rótulo nunca é seguido de ``%``, ``p.p.``, casa decimal ou ``x`` (senão é número)."""
 _ALLOWED_NUMERIC_RES: tuple[re.Pattern[str], ...] = (
     # Datas ISO (com hora opcional) e dd/mm/aaaa.
-    _P(r"\b\d{4}-\d{2}-\d{2}(?:[T ]\d{2}:\d{2}(?::\d{2})?(?:Z|[+-]\d{2}:?\d{2})?)?\b"),
-    _P(r"\b\d{1,2}/\d{1,2}/\d{4}\b"),
+    _P(r"\b\d{4}-\d{2}-\d{2}(?:[T ]\d{2}:\d{2}(?::\d{2})?(?:Z|[+-]\d{2}:?\d{2})?)?\b"
+       + _NOT_QUANTITY),
+    _P(r"\b\d{1,2}/\d{1,2}/\d{4}\b" + _NOT_QUANTITY),
     # "25 de outubro", "25 de octubre", "October 25", "25th of October".
     _P(rf"(?i)\b\d{{1,2}}(?:º|o)?\s+de\s+(?:{_MONTHS_PT_ES})\b"),
-    _P(rf"(?i)\b(?:{_MONTHS_EN})\s+\d{{1,2}}(?:st|nd|rd|th)?\b"),
+    _P(rf"(?i)\b(?:{_MONTHS_EN})\s+\d{{1,2}}(?:st|nd|rd|th)?\b{_NOT_QUANTITY}"),
     _P(rf"(?i)\b\d{{1,2}}(?:st|nd|rd|th)?\s+(?:of\s+)?(?:{_MONTHS_EN})\b"),
     # Trimestres/semestres: 3T26, 4Q25, 1S26, 2T2026, Q3 2026, Q3'26, H1 2026, 3º trimestre.
-    _P(r"(?i)\b[1-4]\s?[TQSH]\s?(?:\d{4}|\d{2})\b"),
-    _P(r"(?i)\b[QTH][1-4](?:\s?['’]?\s?(?:\d{4}|\d{2}))?\b"),
+    _P(rf"(?i)\b[1-4]\s?[TQSH]\s?(?:\d{{4}}|\d{{2}})\b{_NOT_QUANTITY}"),
+    _P(rf"(?i)\b[QTH][1-4](?:\s?['’]?\s?(?:\d{{4}}|\d{{2}})\b{_NOT_QUANTITY})?\b"),
     _P(r"(?i)\b[1-4](?:º|o|st|nd|rd|th)?\s?(?:tri|trimestre|semestre|quarter|half)\b"),
-    _P(r"(?i)\bFY\s?(?:\d{4}|\d{2})\b"),
+    _P(rf"(?i)\bFY\s?(?:\d{{4}}|\d{{2}})\b{_NOT_QUANTITY}"),
     # Ordinais (1º, 2ª).
     _P(r"\b\d{1,2}[ºª]"),
 )
-_NUMBER_RE = _P(r"(?<![\w.,/])([+\-−]?\d+(?:[.,]\d+)*)(\s?%|\s?p\.p\.|[A-Za-zÀ-ÿ]+)?")
+# Sem lookbehind em "." e ",": ".5x" e ",75%" são números escritos sem o zero inicial.
+_NUMBER_RE = _P(r"(?<![\w/])([+\-−]?\d+(?:[.,]\d+)*)(\s?%|\s?p\.p\.|[A-Za-zÀ-ÿ]+)?")
+_SPELLED_QUANTITY_RE = _P(
+    r"(?i)\b(por\s*cento|por\s*ciento|percent|per\s*cent|pontos?\s+percentuais|"
+    r"puntos?\s+porcentuales|percentage\s+points?|pontos?[\s-]+base|puntos?\s+b[aá]sicos|"
+    r"basis\s+points?)\b")
+"""Quantidades por extenso ("treze por cento"): números também não podem ser escritos assim."""
 _YEAR_RE = _P(r"^(?:19|20)\d{2}$")
 _UNIT_SUFFIXES = frozenset({
     "x", "bi", "mi", "bn", "mm", "m", "k", "b", "pp", "bp", "bps", "mil", "tri", "pts", "pt",
     "p", "pct", "usd", "brl", "mxn", "clp", "cop", "pen", "ars", "d", "dias", "days", "a",
     "aa", "y", "yr", "yrs", "anos", "meses", "semanas", "w", "mo", "milhoes", "milhões",
-    "bilhoes", "bilhões", "millones", "million", "billion", "vezes", "times",
+    "bilhoes", "bilhões", "millones", "million", "billion", "vezes", "times", "percent",
+    "porcento", "porciento", "reais", "dolares", "dólares", "pesos", "bilhao", "bilhão",
+    "milhao", "milhão", "trilhoes", "trilhões", "trillion", "thousand",
 })
 
 
@@ -419,7 +430,50 @@ def find_free_numbers(text: str, allowed_terms: Iterable[str] = ()) -> list[str]
         if not suffix and number[0] not in "+-−" and _YEAR_RE.match(number):
             continue
         found.append(f"{number}{suffix}".strip())
+    found += [m.group(0) for m in _SPELLED_QUANTITY_RE.finditer(s)]
     return found
+
+
+_MARKUP_RES: tuple[tuple[str, re.Pattern[str]], ...] = (
+    ("link_markdown", _P(r"!?\[[^\]\n]*\]\s*\([^)\n]*\)")),
+    ("referencia_markdown", _P(r"(?m)^\s*\[[^\]\n]+\]:\s*\S+")),
+    ("url", _P(r"(?i)\b(?:https?|ftp|file|javascript|data|vbscript|mailto)\s*:|\bwww\.")),
+    ("html", _P(r"<(?:/?[A-Za-z][\w:-]*(?:\s[^<>]*)?/?>|!--)")),
+)
+"""Marcação proibida em texto livre de modelo: links/imagens (exfiltração ao renderizar),
+URLs e HTML. Fontes externas entram só como evidência (``EvidenceRef``), nunca no texto."""
+
+
+def find_markup(text: str) -> list[str]:
+    """Tipos de marcação proibida encontrados no texto livre (vazio se nenhum)."""
+    if not isinstance(text, str) or not text:
+        return []
+    return [name for name, rx in _MARKUP_RES if rx.search(text)]
+
+
+def malformed_placeholders(text: str) -> list[str]:
+    """Trechos de placeholder mal formados (``{{ fact: x }}``, ``{{fact:x}``, ``{fact:x}``).
+
+    Um placeholder inválido não seria renderizado e apareceria cru ao gestor.
+    """
+    if not isinstance(text, str) or not text:
+        return []
+    rest = PLACEHOLDER_RE.sub(" ", text)
+    bad = [m.group(0) for m in _P(r"\{\{[^{}]{0,80}\}?\}?|\}\}|\{\s*fact\s*:[^}]{0,80}\}?",
+                                  re.I).finditer(rest)]
+    return list(dict.fromkeys(b.strip() for b in bad))
+
+
+def text_format_issues(path: str, text: str) -> list[str]:
+    """Problemas de forma do texto livre (marcação/URL e placeholders mal formados)."""
+    issues: list[str] = []
+    markup = find_markup(text)
+    if markup:
+        issues.append(f"{path}: marcação/URL não permitida em texto livre {markup}")
+    bad = malformed_placeholders(text)
+    if bad:
+        issues.append(f"{path}: {len(bad)} placeholder(s) mal formado(s)")
+    return issues
 
 
 def check_placeholders(text: str, factbook: FactBook) -> list[str]:
@@ -482,6 +536,7 @@ def _text_issues(path: str, text: str, factbook: FactBook, *, cited: set[str] | 
         uncited = [f for f in known if f not in cited]
         if uncited:
             issues.append(f"{path}: fato usado no texto sem citação como evidência {uncited}")
+    issues += text_format_issues(path, text)
     inj = detect_injection(text)
     if inj:
         issues.append(f"{path}: padrão de injeção na saída do modelo {inj}")
@@ -648,9 +703,26 @@ def verify_output(out: BaseModel, **kwargs: object) -> list[str]:
     return fn(out, **kwargs)  # type: ignore[operator]
 
 
+def defuse_for_display(text: str, max_len: int = 400) -> str:
+    """Diagnóstico seguro para exibição (memo/app): dígitos mascarados e marcação desarmada.
+
+    Mensagens de verificação e de erro ecoam strings controladas pelo modelo (ids de evidência
+    inválidos, nomes de chaves extras, trechos de placeholder); colchetes, sinais de tag e
+    esquemas de URL são trocados por equivalentes inertes para que nada vire link, imagem ou
+    HTML ao renderizar Markdown.
+    """
+    out = mask_digits(str(text))
+    for a, b in (("[", "⟦"), ("]", "⟧"), ("<", "‹"), (">", "›"), ("://", "∶//"),
+                 ("www.", "www․"), ("`", "'")):
+        out = out.replace(a, b)
+    out = re.sub(r"(?i)\b(javascript|data|vbscript|file|mailto)\s*:", r"\1∶", out)
+    return out if len(out) <= max_len else out[: max_len - 1] + "…"
+
+
 def verifier_messages(issues: Iterable[str]) -> list[str]:
-    """Diagnósticos para exibição em notas: prefixo ``VERIFICADOR:`` e dígitos mascarados."""
-    return [f"{VERIFIER_PREFIX} {mask_digits(i)}" for i in issues]
+    """Diagnósticos para exibição em notas: prefixo ``VERIFICADOR:``, dígitos mascarados e
+    marcação desarmada (ver :func:`defuse_for_display`)."""
+    return [f"{VERIFIER_PREFIX} {defuse_for_display(i)}" for i in issues]
 
 
 # ==========================================================

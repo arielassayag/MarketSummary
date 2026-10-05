@@ -193,6 +193,14 @@ def make_universe():
         dict(issuer_id="SIM_EPS", issuer_name="Simulada Epsilon", country="BR",
              gics_sector="Utilities", line_type="LOCAL", yahoo_ticker="SEPS3.SA",
              exchange="B3", currency="BRL", adr_ratio="", primary_line=True),
+        # FCA com código inválido ('000000'): CNPJ só por nome (único)
+        dict(issuer_id="SIM_OMEGA", issuer_name="Simulada Omega Siderurgica", country="BR",
+             gics_sector="Materials", line_type="LOCAL", yahoo_ticker="OMGA11.SA",
+             exchange="B3", currency="BRL", adr_ratio="", primary_line=True),
+        # nome ambíguo (casa com duas companhias do FCA) ⇒ nenhum CNPJ
+        dict(issuer_id="SIM_OMG2", issuer_name="Omega", country="BR",
+             gics_sector="Utilities", line_type="LOCAL", yahoo_ticker="OMGX3.SA",
+             exchange="B3", currency="BRL", adr_ratio="", primary_line=True),
     ]
     return universe_from_frame(pd.DataFrame(rows), source_sha256="fixture")
 
@@ -268,6 +276,76 @@ def test_received_date_and_versions_come_from_index(cvm_raw):
     assert q1["version"].tolist() == [1, 2]
     assert q1["value"].tolist() == [270 * K, 275 * K]
     assert [d.date() for d in q1["received_date"]] == [date(2025, 5, 8), date(2025, 9, 15)]
+
+
+def test_share_unit_checked_against_eps(cvm_raw, cvm_pit):
+    """composicao_capital sem unidade: LPA/PL do próprio documento revelam milhares."""
+    sh = cvm_raw[cvm_raw["metric"] == "shares_outstanding"].set_index(
+        ["entity", "period_end", "version"])
+    alfa_dfp = sh.loc[(ALFA, pd.Timestamp("2024-12-31"), 1)]
+    assert alfa_dfp["value"] == 990_000 and alfa_dfp["source"].endswith("|unidade:ok")
+    beta_dfp = sh.loc[(BETA, pd.Timestamp("2024-12-31"), 1)]
+    assert beta_dfp["value"] == 2_000_000  # reportado 2.000 (milhares) e corrigido pelo LPA
+    assert beta_dfp["source"].endswith("|unidade:x1000")
+    beta_itr = sh.loc[(BETA, pd.Timestamp("2025-03-31"), 1)]
+    assert beta_itr["value"] == 2_000_000  # sem LPA, mas PL/ação absurdo ⇒ milhares
+    assert beta_itr["source"].endswith("|unidade:x1000_pl")
+    alfa_q1 = sh.loc[(ALFA, pd.Timestamp("2025-03-31"), 1)]
+    assert alfa_q1["source"].endswith("|unidade:na")
+    # na montagem PIT o ITR sem LPA herda a unidade do documento verificado anterior
+    a = rows(cvm_pit, "SIM_ALFA", "shares_outstanding").set_index("period_end")
+    assert a.loc["2025-03-31", "source"].endswith("|unidade:ok(herdada)")
+    assert a.loc["2024-03-31", "source"].endswith("|unidade:na")  # sem histórico: como reportado
+    assert a.loc["2025-06-30", "source"].endswith("|unidade:ok")
+
+
+def test_resolve_share_scale_inherits_without_look_ahead():
+    def fact(ent, end, val, tag, recv):
+        return {"entity": ent, "metric": "shares_outstanding", "period_start": pd.NaT,
+                "period_end": pd.Timestamp(end), "value": val, "currency": None,
+                "received_date": pd.Timestamp(recv), "version": 1,
+                "source": f"cvm:itr:capital|unidade:{tag}"}
+
+    raw = pd.DataFrame([
+        fact("E", "2024-12-31", 5e6, "x1000", "2025-02-10"),
+        fact("E", "2025-03-31", 5_000, "na", "2025-05-10"),  # milhares ⇒ corrigido
+        fact("E", "2025-06-30", 5_100, "divergente", "2025-08-10"),
+        fact("E", "2025-09-30", 10.2e6, "na", "2025-11-10"),  # mudou p/ unidades (+ desdobro 2:1)
+        fact("E", "2025-12-31", 7, "na", "2026-02-10"),  # incoerente ⇒ como reportado
+        fact("F", "2024-12-31", 7_000, "na", "2025-02-10"),  # sem histórico verificado
+        fact("F", "2025-03-31", 7e6, "ok", "2025-05-10"),  # verificação POSTERIOR não volta
+        # referência publicada DEPOIS do documento não pode ser usada (sem look-ahead)
+        fact("G", "2024-12-31", 9e6, "x1000", "2025-09-01"),
+        fact("G", "2025-03-31", 9_000, "na", "2025-05-10"),
+    ])
+    out = fp.resolve_share_scale(raw).set_index(["entity", "period_end"])
+    e = out.loc["E"]
+    assert e.loc["2025-03-31", "value"] == 5e6
+    assert e.loc["2025-06-30", "value"] == 5.1e6
+    assert e.loc["2025-06-30", "source"].endswith("x1000(herdada)")
+    assert e.loc["2025-09-30", "value"] == 10.2e6  # convenção mudou: não multiplica
+    assert e.loc["2025-09-30", "source"].endswith("ok(herdada)")
+    assert e.loc["2025-12-31", "value"] == 7 and e.loc["2025-12-31", "source"].endswith(":na")
+    assert out.loc[("F", pd.Timestamp("2024-12-31")), "value"] == 7_000
+    assert out.loc[("F", pd.Timestamp("2024-12-31")), "source"].endswith("|unidade:na")
+    assert out.loc[("G", pd.Timestamp("2025-03-31")), "value"] == 9_000
+
+
+def test_capital_treasury_and_per_thousand_eps_guards():
+    cap = pd.DataFrame({
+        "CNPJ_CIA": ["A", "B", "C"], "DT_REFER": ["2026-06-30"] * 3, "VERSAO": ["1"] * 3,
+        "QT_ACAO_TOTAL_CAP_INTEGR": ["122578", "651073", "100000000"],
+        "QT_ACAO_TOTAL_TESOURO": ["65148", "0", "1000000"],
+    })
+    key = {"dt_refer": pd.Timestamp("2026-06-30"), "versao": 1}
+    implied = pd.DataFrame([{"cnpj": "B", **key, "implied_shares": 651.0e3},  # LPA "por mil"
+                            {"cnpj": "C", **key, "implied_shares": 99.5e6}])
+    equity = pd.DataFrame([{"cnpj": "B", **key, "value": 4.5e9},
+                           {"cnpj": "C", **key, "value": 2.0e9}])
+    out = fp._capital_facts(cap, implied, equity).set_index("cnpj")
+    assert "A" not in out.index  # tesouraria de 53% do capital ⇒ documento descartado
+    assert out.loc["B", "value"] == 651_073_000 and out.loc["B", "scale_check"] == "x1000_pl"
+    assert out.loc["C", "value"] == 99_000_000 and out.loc["C", "scale_check"] == "ok"
 
 
 def test_rows_without_receipt_are_dropped():
@@ -658,6 +736,39 @@ def test_build_security_master_from_official_sources():
     assert pd.isna(sm.loc["SIM_EPS", "fundamentals_source"])
 
 
+def test_security_master_name_fallback_and_overrides():
+    uni = make_universe()
+    fca = parse_fca_zip(fca_zip())
+    sec = parse_sec_company_tickers(SEC_TICKERS_JSON)
+    sm = build_security_master(uni, fca, sec)
+    # FCA com códigos lixo ('4030', '000000'): CNPJ pelo nome, ticker NÃO validado
+    assert sm.loc["SIM_OMEGA", "cnpj"] == "55.555.555/0001-55"
+    assert "nome" in sm.loc["SIM_OMEGA", "notes"] and "000000" in sm.loc["SIM_OMEGA", "notes"]
+    assert sm.loc["SIM_OMEGA", "unvalidated_tickers"] == "OMGA11.SA"
+    lm = build_line_master(uni, fca, sec)
+    assert lm.loc["OMGA11.SA", "shares_per_line"] == 3  # "1 ON E 2 PNA" da linha Units
+    assert lm.loc["OMGA11.SA", "validation_source"] == "CVM_FCA(nome)"
+    assert pd.isna(sm.loc["SIM_OMG2", "cnpj"])  # ambíguo ⇒ ausente
+    sm_off = build_security_master(uni, fca, sec, name_fallback=False)
+    assert pd.isna(sm_off.loc["SIM_OMEGA", "cnpj"])
+    # overrides explícitos têm precedência (e não validam o ticker)
+    sm2 = build_security_master(uni, fca, sec, cnpj_overrides={"SIM_EPS": "44.444.444/0001-44"},
+                                cik_overrides={"SIM_ALFA": "1119639"})
+    assert sm2.loc["SIM_EPS", "cnpj"] == "44.444.444/0001-44"
+    assert "override" in sm2.loc["SIM_EPS", "notes"]
+    assert sm2.loc["SIM_EPS", "unvalidated_tickers"] == "SEPS3.SA"
+    assert sm2.loc["SIM_ALFA", "cik"] == "0001119639"
+    # coluna cnpj no universo também é respeitada
+    frame = uni.lines.reset_index(drop=True)[
+        ["issuer_id", "issuer_name", "country", "gics_sector", "line_type", "yahoo_ticker",
+         "exchange", "currency", "adr_ratio", "primary_line"]].copy()
+    frame["cnpj"] = np.where(frame["issuer_id"] == "SIM_OMG2", "77.777.777/0001-77", "")
+    uni2 = universe_from_frame(frame)
+    sm3 = build_security_master(uni2, fca, sec)
+    assert sm3.loc["SIM_OMG2", "cnpj"] == "77.777.777/0001-77"
+    assert "universo" in sm3.loc["SIM_OMG2", "notes"]
+
+
 def test_fetch_fca_and_sec_tickers_with_cache(tmp_path):
     http = FakeHttp(all_routes())
     fca = fetch_cvm_fca(2025, http_get=http, cache_dir=tmp_path)
@@ -707,7 +818,7 @@ def test_build_pit_fundamentals_end_to_end(tmp_path):
     assert list(pit.columns) == PIT_COLUMNS
     cov = pit_coverage(pit)
     assert set(cov.index) == {"SIM_ALFA", "SIM_BETA", "SIM_GAMA", "SIM_DELTA"}
-    assert pit.attrs["issuers_without_data"] == ["SIM_EPS"]
+    assert pit.attrs["issuers_without_data"] == ["SIM_EPS", "SIM_OMEGA", "SIM_OMG2"]
     assert (pit["available_date"] <= pd.Timestamp("2025-10-03")).all()
     assert set(pit.loc[pit["issuer_id"] == "SIM_DELTA", "source"].str[:4]) == {"sec:"}
     assert set(pit.loc[pit["issuer_id"] == "SIM_ALFA", "source"].str[:4]) == {"cvm:"}

@@ -22,7 +22,7 @@ from __future__ import annotations
 import json
 import urllib.parse
 from collections.abc import Iterable
-from datetime import date
+from datetime import UTC, date
 from pathlib import Path
 from typing import Any
 
@@ -47,6 +47,7 @@ from ..guardrails import (
     extract_fact_ids,
     find_free_numbers,
     sanitize_untrusted,
+    text_format_issues,
 )
 
 IMPORTED_PREFIX = "imported:"
@@ -85,6 +86,7 @@ def _text_problems(label: str, text: str, fb: FactBook, issuer_id: str | None,
     uncited = [f for f in known if f not in cited_facts]
     if uncited:
         out.append(f"{label}: fato usado sem citação como evidência {uncited}")
+    out += text_format_issues(label, text)
     inj = detect_injection(text)
     if inj:
         out.append(f"{label}: padrão de injeção {inj}")
@@ -104,6 +106,19 @@ def _evidence_problems(label: str, evidence: Iterable[EvidenceRef], fb: FactBook
     return out
 
 
+def _meta_problems(label: str, values: dict[str, str | None]) -> list[str]:
+    """Metadados exibidos (ids, autor, modelo): sem marcação, URL ou padrão de injeção."""
+    out: list[str] = []
+    for key, value in values.items():
+        if not value:
+            continue
+        out += text_format_issues(f"{label}.{key}", value)
+        inj = detect_injection(value)
+        if inj:
+            out.append(f"{label}.{key}: padrão de injeção {inj}")
+    return out
+
+
 def _note_texts(note: ResearchNote) -> list[tuple[str, str]]:
     items = [("thesis", note.thesis)]
     items += [(f"bull_points[{i}]", t) for i, t in enumerate(note.bull_points)]
@@ -112,6 +127,7 @@ def _note_texts(note: ResearchNote) -> list[tuple[str, str]]:
     items += [(f"key_risks[{i}]", t) for i, t in enumerate(note.key_risks)]
     if note.squeeze is not None:
         items.append(("squeeze.rationale", note.squeeze.rationale))
+    items += [(f"evidence[{i}].note", e.note) for i, e in enumerate(note.evidence) if e.note]
     return items
 
 
@@ -121,6 +137,7 @@ def _macro_texts(note: MacroNote) -> list[tuple[str, str]]:
     items += [(f"risks[{i}]", t) for i, t in enumerate(note.risks)]
     items += [(f"portfolio_implications[{i}]", t)
               for i, t in enumerate(note.portfolio_implications)]
+    items += [(f"evidence[{i}].note", e.note) for i, e in enumerate(note.evidence) if e.note]
     return items
 
 
@@ -172,7 +189,7 @@ def load_imported_pack(path: Path, week: date, snapshot_id: str, factbook: FactB
     news_items = {n.news_id: n for n in (news or [])}
     usable_news: dict[str, NewsItem] = {}
     for nid, n in news_items.items():
-        if n.published_at.date() > as_of:
+        if n.published_at.astimezone(UTC).date() > as_of:
             continue
         title, flags = sanitize_untrusted(n.title)
         if any(f.startswith("injecao:") for f in flags) or not title:
@@ -207,11 +224,14 @@ def load_imported_pack(path: Path, week: date, snapshot_id: str, factbook: FactB
             issues.append(f"{label}: rejeitada (note_id duplicado)")
             continue
         problems = _evidence_problems(label, note.evidence, factbook, news_ids)
+        problems += _meta_problems(label, {"note_id": note.note_id, "issuer_id": note.issuer_id,
+                                           "provider": note.provider, "model": note.model})
         cited = {e.ref_id for e in note.evidence if e.kind == EvidenceKind.FACT}
         for path_, text in _note_texts(note):
             problems += _text_problems(f"{label}.{path_}", text, factbook, note.issuer_id, cited)
         late = [e.ref_id for e in note.evidence if e.kind == EvidenceKind.NEWS
-                and e.ref_id in news_items and news_items[e.ref_id].published_at.date() > as_of]
+                and e.ref_id in news_items
+                and news_items[e.ref_id].published_at.astimezone(UTC).date() > as_of]
         if late:
             problems.append(f"{label}: evidência publicada após {as_of.isoformat()} {late}")
         if note.stance != 0 and not note.evidence:
@@ -240,6 +260,8 @@ def load_imported_pack(path: Path, week: date, snapshot_id: str, factbook: FactB
             continue
         assert isinstance(m, MacroNote)
         problems = _evidence_problems(label, m.evidence, factbook, news_ids)
+        problems += _meta_problems(label, {"note_id": m.note_id, "scope": m.scope,
+                                           "provider": m.provider, "model": m.model})
         cited = {e.ref_id for e in m.evidence if e.kind == EvidenceKind.FACT}
         for path_, text in _macro_texts(m):
             problems += _text_problems(f"{label}.{path_}", text, factbook, None, cited)
@@ -275,6 +297,7 @@ def load_imported_pack(path: Path, week: date, snapshot_id: str, factbook: FactB
             continue
         text_issues = _text_problems(f"{label}.rationale", v.rationale, factbook, v.issuer_id,
                                      set())
+        text_issues += _meta_problems(label, {"issuer_id": v.issuer_id, "author": v.author})
         if text_issues:
             issues += [f"{p} — visão rejeitada" for p in text_issues]
             continue

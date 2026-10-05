@@ -41,6 +41,8 @@ log = logging.getLogger(__name__)
 
 GOOGLE_NEWS_RSS = "https://news.google.com/rss/search"
 MAX_TITLE_LEN = 300
+# Google News devolveu 503 para ~4% das consultas com 8 threads (2026-10-05): usar 4.
+NEWS_MAX_WORKERS = 4
 SOURCE_NAME = "Google News RSS"
 
 # país -> (hl, gl, ceid, idioma do NewsItem, fuso local do pregão)
@@ -246,9 +248,9 @@ def dedupe_news(items: Iterable[NewsItem]) -> list[NewsItem]:
 
 
 def fetch_news(queries: Sequence[NewsQuery], as_of: date, lookback_days: int = 14, *,
-               session: Any | None = None, max_workers: int = MAX_WORKERS,
+               session: Any | None = None, max_workers: int = NEWS_MAX_WORKERS,
                sleep: Sleeper = time.sleep) -> tuple[list[NewsItem], list[str]]:
-    """Notícias de vários emissores (<= 8 threads). Devolve ``(itens, emissores_com_falha)``.
+    """Notícias de vários emissores (4 threads por padrão). Devolve ``(itens, falhas)``.
 
     Se TODAS as consultas falharem, levanta :class:`FetchError` (fonte indisponível).
     """

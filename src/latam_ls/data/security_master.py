@@ -360,7 +360,7 @@ def _fca_class(row: pd.Series) -> str | None:
     return None
 
 
-_VALID_B3_CODE = re.compile(r"^[A-Z0-9]{4}\d{1,2}$")
+_VALID_B3_CODE = re.compile(r"^[A-Z][A-Z0-9]{3}\d{1,2}$")  # raiz começa por letra (B3SA3, PETR4)
 _NAME_STOPWORDS = frozenset({
     "sa", "s", "a", "cia", "companhia", "bco", "banco", "de", "do", "da", "dos", "das", "e",
     "em", "the", "inc", "ltd", "ltda", "holding", "holdings", "participacoes", "part", "grupo",

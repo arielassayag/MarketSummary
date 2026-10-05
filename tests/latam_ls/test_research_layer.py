@@ -1008,11 +1008,13 @@ def test_golden_set_flags_canary_leak() -> None:
 
 def test_no_hardcoded_model_identifiers() -> None:
     root = Path(__file__).resolve().parents[2]
-    # Montado em partes para que este próprio arquivo não contenha o padrão procurado.
-    pattern = re.compile(r"\b(" + "cla" + "ude|g" + "pt)-[0-9a-z]")
+    # Montado em partes para que este próprio arquivo não contenha o padrão procurado. O nome
+    # do harness "<...>-code" (contracts.HARNESS_MINDS) é uma mente, não um id de modelo.
+    pattern = re.compile(r"\b(" + "cla" + "ude|g" + r"pt)-(?!code\b)[0-9a-z]")
     files = list((root / "src/latam_ls/research").rglob("*.py"))
     files += [root / "tests/latam_ls/test_research_layer.py",
               root / "tests/latam_ls/test_research_providers.py",
+              root / "tests/latam_ls/test_research_review.py",
               root / "tests/latam_ls/golden/research_cases.jsonl"]
     offenders = [str(p) for p in files if p.exists()
                  and pattern.search(p.read_text(encoding="utf-8").lower())]

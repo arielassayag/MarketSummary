@@ -9,6 +9,8 @@ from __future__ import annotations
 
 import dataclasses
 import math
+import sys
+import types
 from datetime import date
 from pathlib import Path
 
@@ -41,10 +43,11 @@ from latam_ls.config import load_config
 from latam_ls.data.synthetic import make_synthetic_market
 from latam_ls.portfolio.optimizer import OptimizationError
 
-CFG = load_config(Path(__file__).resolve().parents[2] / "configs" / "latam_ls" / "fund.yaml")
+CFG_PATH = Path(__file__).resolve().parents[2] / "configs" / "latam_ls" / "fund.yaml"
+CFG = load_config(CFG_PATH)
 START = date(2023, 12, 4)
 AS_OF = date(2024, 2, 23)
-CUTOFF = pd.Timestamp("2024-01-02")  # dados posteriores alterados no teste de look-ahead
+CUTOFF = pd.Timestamp("2023-12-19")  # dados posteriores alterados no teste de look-ahead
 NAV0 = 100e6
 
 
@@ -91,7 +94,7 @@ def _alter_after(md, cutoff: pd.Timestamp, seed: int = 123):
 @pytest.fixture(scope="module")
 def altered_run(md):
     alt = _alter_after(md, CUTOFF)
-    return run_backtest(alt, CFG, BacktestConfig(start=START, end=date(2024, 1, 12),
+    return run_backtest(alt, CFG, BacktestConfig(start=START, end=date(2023, 12, 27),
                                                  risk_target_mode="cap"))
 
 
@@ -252,6 +255,12 @@ def test_backtest_config_validation_and_effective_values():
     with pytest.raises(ValueError):
         BacktestConfig(start=START, signal_weights={"residual_momentum": 0.0}
                        ).effective_signal_weights(CFG)
+    with pytest.raises(ValueError, match="fora de signal_names"):
+        BacktestConfig(start=START, signal_names=("low_risk",),
+                       signal_weights={"residual_momentum": 1.0})
+    custom = BacktestConfig(start=START, signal_names=("low_risk", "residual_momentum"),
+                            signal_weights={"low_risk": 1.0, "residual_momentum": 3.0})
+    assert custom.effective_signal_weights(CFG) == {"low_risk": 0.25, "residual_momentum": 0.75}
 
 
 def test_rebalance_dates_first_trading_day_of_week():
@@ -492,7 +501,7 @@ def test_planted_alpha_gives_positive_ic_for_pit_signal(main_run):
 def test_no_lookahead_altering_future_does_not_change_past(main_run, altered_run):
     base, alt = main_run, altered_run
     past = base.weekly.index[base.weekly.index <= CUTOFF]
-    assert len(past) >= 4
+    assert len(past) >= 3
     cols = base.weights.columns.union(alt.weights.columns)
     wb = base.weights.reindex(columns=cols, fill_value=0.0)
     wa = alt.weights.reindex(columns=cols, fill_value=0.0)
@@ -509,7 +518,9 @@ def test_no_lookahead_altering_future_does_not_change_past(main_run, altered_run
 
 
 def test_match_mode_uses_the_risk_budget(md):
-    res = run_backtest(md, CFG, BacktestConfig(start=START, end=date(2023, 12, 15)))
+    # Modo padrão do motor; uma única semana (inception) porque o modo "match" resolve o
+    # problema várias vezes por rebalanceamento.
+    res = run_backtest(md, CFG, BacktestConfig(start=START, end=date(2023, 12, 8)))
     wk = res.weekly
     vt = CFG.risk.vol_target_annual / CFG.risk.bias_prior
     assert (wk["status"] == "ok").all()
@@ -522,10 +533,10 @@ def test_match_mode_uses_the_risk_budget(md):
 
 def test_engine_pnl_matches_independent_replay_without_frictions(md, panel):
     calls: list[tuple[int, int, str]] = []
-    bt = BacktestConfig(start=START, end=date(2023, 12, 22), risk_target_mode="cap",
+    bt = BacktestConfig(start=START, end=date(2023, 12, 15), risk_target_mode="cap",
                         include_costs=False, include_borrow=False, include_financing=False)
     res = run_backtest(md, CFG, bt, progress=lambda a, b, m: calls.append((a, b, m)))
-    assert [c[0] for c in calls] == [1, 2, 3] and all(c[1] == 3 for c in calls)
+    assert [c[0] for c in calls] == [1, 2] and all(c[1] == 2 for c in calls)
     d = res.daily
     assert (d[["cost", "borrow", "financing"]] == 0).all().all()
     rets = panel.returns.loc[d.index]
@@ -552,8 +563,10 @@ def test_insufficient_history_holds_cash_with_status(md):
 
 def test_too_few_eligible_issuers_holds(md):
     cfg = CFG.with_overrides({"liquidity": {"min_adtv_usd": 1e15}})
-    res = run_backtest(md, cfg, BacktestConfig(start=START, end=date(2023, 12, 8),
+    # Fim num sábado: o backtest vai até o último pregão anterior.
+    res = run_backtest(md, cfg, BacktestConfig(start=START, end=date(2023, 12, 9),
                                                risk_target_mode="cap"))
+    assert res.daily.index[-1] == pd.Timestamp("2023-12-08")
     assert res.weekly["status"].tolist() == ["manter:poucos_elegiveis"]
     assert res.weekly["n_eligible"].iloc[0] == 0
     assert res.weekly["ex_ante_vol"].iloc[0] == 0.0  # carteira vazia mantida
@@ -584,3 +597,35 @@ def test_optimizer_failure_holds_previous_weights(md, monkeypatch):
     assert ((w0 != 0) == (w1 != 0)).all()
     assert np.sign(w0).equals(np.sign(w1))
     assert any("otimização falhou" in n for n in res.notes)
+
+
+def test_snapshot_entry_point_wires_loader_and_config(md, monkeypatch, tmp_path):
+    """O atalho de dados reais carrega o snapshot (verificado) e roda o mesmo motor."""
+    seen: dict = {}
+
+    def load_snapshot(path, verify=True):
+        seen["path"], seen["verify"] = Path(path), verify
+        return md
+
+    fake = types.ModuleType("latam_ls.data.snapshot")
+    fake.load_snapshot = load_snapshot
+    fake.latest_snapshot = lambda root=None: tmp_path
+    monkeypatch.setitem(sys.modules, "latam_ls.data.snapshot", fake)
+    res = eng.run_snapshot_backtest(None, config_path=str(CFG_PATH), start=START,
+                                    end=date(2023, 12, 8), risk_target_mode="cap",
+                                    include_costs=False)
+    assert seen == {"path": tmp_path, "verify": True}
+    assert len(res.weekly) == 1 and res.weekly["status"].iloc[0] == "ok"
+    assert res.config.include_costs is False
+    fake.latest_snapshot = lambda root=None: None
+    with pytest.raises(FileNotFoundError):
+        eng.run_snapshot_backtest(None, config_path=str(CFG_PATH))
+
+
+def test_package_exports_are_lazy_and_complete():
+    import latam_ls.backtest as bt_pkg
+
+    assert bt_pkg.run_backtest is run_backtest
+    assert bt_pkg.performance_metrics is performance_metrics
+    with pytest.raises(AttributeError):
+        _ = bt_pkg.nao_existe

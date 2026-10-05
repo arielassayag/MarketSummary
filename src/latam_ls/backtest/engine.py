@@ -10,8 +10,13 @@ Regras point-in-time (sem look-ahead):
 - O painel é montado UMA vez com todo o histórico; elegibilidade, ADTV (por linha e por emissor),
   número de observações e defasagem de preço são recalculados em cada data de informação ``d``
   com dados ``<= d`` (``panel.assets['eligible']`` é do fim da amostra e NÃO é usado).
-- ``RiskModelEstimator`` é ajustado uma vez; na segunda-feira ``t`` usa-se ``model_at(d)``, em
-  que ``d`` é o pregão anterior (sexta). Sinais: ``compute_signals(..., as_of=d, pit_only=True)``.
+- Rebalanceamento no PRIMEIRO pregão da semana da bolsa primária (``fund.primary_calendar``,
+  B3), como ao vivo: segunda-feira feriado na B3 ⇒ terça. Os pregões da B3 são inferidos dos
+  dados (dias com fechamento em ao menos metade das linhas locais listadas).
+- ``RiskModelEstimator`` é ajustado uma vez; no rebalanceamento ``t`` usa-se ``model_at(d)``, em
+  que ``d`` é o pregão anterior da B3 (sexta). Sinais: ``compute_signals(..., as_of=d,
+  pit_only=True)``. Dados posteriores ao fim do backtest e barras provisórias (intradiárias) não
+  entram.
 - Short interest, aluguel B3 e escore de squeeze são retratos atuais (não PIT): só valem as
   regras de alugabilidade (ADR/US e locais BR; demais mercados não alugáveis) com taxas GC e sem
   exclusão por squeeze — viés otimista registrado nas notas.
@@ -20,6 +25,9 @@ Convenção de execução e contabilidade (frações do NAV):
 
 - Pesos novos valem a partir do fechamento do dia de rebalanceamento (MOC); o retorno do dia
   ``t`` acumula nos pesos anteriores: ``P&L_t = Σ w_{i,t−1} r_{i,t}``.
+- Emissor cuja linha primária não tem preço em ``t`` (mercado fechado/sem negócio) NÃO é
+  negociado em ``t``: mantém o peso derivado até o rebalanceamento seguinte. Negociá-lo "no
+  fechamento" usaria o último preço — o mesmo da data de informação (look-ahead de execução).
 - Retorno ausente (``NaN``) contribui 0 naquele dia e a posição é carregada inalterada (contagem
   nas notas; nenhum retorno é inventado — o retorno após o feriado cobre o intervalo).
 - Deriva: ``w_{i,t} = w_{i,t−1}(1 + r_{i,t}) / (1 + R_t)`` com ``R_t`` o retorno do NAV no dia.
@@ -33,11 +41,12 @@ Convenção de execução e contabilidade (frações do NAV):
 from __future__ import annotations
 
 import dataclasses
+import json
 import math
 import warnings
-from collections.abc import Callable
+from collections.abc import Callable, Mapping
 from dataclasses import dataclass, field
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -50,6 +59,7 @@ from ..alpha.signals import MIN_OBS_MOMENTUM, MOMENTUM_SKIP, SIGNALS, compute_si
 from ..analytics.panel import STALE_DAYS_MAX, AssetPanel, build_asset_panel, fx_for_lines
 from ..analytics.shortability import issuer_side_lines, short_availability
 from ..config import FundConfig, load_config
+from ..hashing import canonical_json, sha256_obj
 from ..market import MarketData
 from ..portfolio.costs import CostModel, build_cost_model, estimate_rebalance_costs
 from ..portfolio.optimizer import (
@@ -77,12 +87,20 @@ MIN_ELIGIBLE = 10
 ASSUMED_SQUEEZE_BUCKET = "LOW"
 """Bucket de squeeze assumido no backtest (sem dado PIT): nenhum short é vetado por squeeze."""
 INACCURATE_WARNING = "Solution may be inaccurate"
+MAX_ANNUAL_RATE = 1.0
+"""Taxa anual acima disso (100% a.a.) indica série em % e não em decimal: erro explícito."""
+SESSION_MIN_SHARE = 0.5
+"""Fração mínima das linhas locais listadas com fechamento para o dia contar como pregão."""
+PRIMARY_MARKET_BY_CALENDAR = {"BVMF": "BR", "XMEX": "MX", "XSGO": "CL", "XBOG": "CO",
+                              "XLIM": "PE", "XBUE": "AR", "XNYS": "US"}
+"""Mercado das linhas cujo calendário de pregões define o rebalanceamento (``primary_calendar``)."""
+FROZEN_REASON = "mercado_fechado_no_rebalanceamento"
 
 DAILY_COLUMNS = ["ret_net", "ret_gross", "cost", "borrow", "financing", "factor_pnl",
                  "specific_pnl", "nav", "gross", "net", "rebalance"]
 WEEKLY_COLUMNS = ["info_date", "status", "ex_ante_vol", "vol_target", "gross", "net", "beta",
                   "n_long", "n_short", "turnover", "cost", "expected_alpha", "alpha_scale",
-                  "relaxations", "n_eligible", "n_alpha", "event_window"]
+                  "relaxations", "n_eligible", "n_alpha", "n_frozen", "event_window"]
 COMPOSITE_IC = "composite"
 
 ProgressFn = Callable[[int, int, str], None]
@@ -104,6 +122,9 @@ class BacktestConfig:
     - ``n_trials``: número de configurações testadas até chegar a esta (Deflated Sharpe).
     - ``include_*``: ligam custos, aluguel e juros do caixa na CONTABILIDADE (o otimizador
       sempre considera custos e aluguel no objetivo, como ao vivo).
+    - ``themes``: tema → emissores com neutralidade própria (limites em
+      ``risk.theme_net_max_abs``); ausente ⇒ o mesmo arquivo de temas do pipeline ao vivo;
+      ``{}`` ⇒ sem temas.
     """
 
     start: date
@@ -118,6 +139,7 @@ class BacktestConfig:
     vol_target: float | None = None
     risk_target_mode: str = "match"
     n_trials: int = 1
+    themes: dict[str, list[str]] | None = None
 
     def __post_init__(self) -> None:
         start = pd.Timestamp(self.start).date()
@@ -140,6 +162,9 @@ class BacktestConfig:
         if len(set(names)) != len(names):
             raise ValueError(f"Sinais duplicados: {list(names)}")
         if self.signal_weights is not None:
+            extra = sorted(set(self.signal_weights) - set(names))
+            if extra:
+                raise ValueError(f"Pesos para sinais fora de signal_names: {extra}")
             for k, v in self.signal_weights.items():
                 if not (isinstance(v, int | float) and math.isfinite(float(v)) and v >= 0):
                     raise ValueError(f"Peso inválido para o sinal '{k}': {v!r}.")
@@ -155,6 +180,15 @@ class BacktestConfig:
         if self.vol_target is not None and not (math.isfinite(self.vol_target)
                                                 and self.vol_target > 0):
             raise ValueError("vol_target precisa ser positivo.")
+        if self.themes is not None:
+            if not isinstance(self.themes, Mapping):
+                raise ValueError("themes precisa ser um dicionário tema -> lista de emissores.")
+            clean: dict[str, list[str]] = {}
+            for k, v in self.themes.items():
+                if isinstance(v, str) or not all(isinstance(x, str) for x in v):
+                    raise ValueError(f"Membros do tema '{k}' precisam ser uma lista de emissores.")
+                clean[str(k)] = sorted(set(v))
+            object.__setattr__(self, "themes", clean)
 
     def effective_vol_target(self, cfg: FundConfig) -> float:
         """Meta ex-ante usada no otimizador (sempre dentro da banda do mandato)."""
@@ -193,6 +227,9 @@ class BacktestResult:
     - ``weights``: pesos-alvo por data de rebalanceamento × emissor (0 = sem posição).
     - ``ic``: IC de Spearman por data × sinal (z do sinal em ``d`` contra a soma dos retornos
       específicos da semana seguinte); coluna ``composite`` = alpha puro.
+    - ``provenance``: hashes SHA-256 dos dados (manifesto), da configuração do fundo e dos
+      resultados (:func:`results_hash`), parâmetros do backtest e aviso de dados — permite
+      reproduzir e detectar adulteração dos números exportados.
     """
 
     daily: pd.DataFrame
@@ -204,6 +241,7 @@ class BacktestResult:
     config: BacktestConfig | None = None
     is_synthetic: bool = False
     data_notice: str = ""
+    provenance: dict[str, Any] = field(default_factory=dict)
 
     @property
     def ic_stats(self) -> pd.DataFrame:
@@ -217,10 +255,11 @@ class BacktestResult:
 
 def rebalance_dates(calendar: pd.DatetimeIndex, start: date | pd.Timestamp,
                     end: date | pd.Timestamp | None = None) -> pd.DatetimeIndex:
-    """Primeiro pregão de cada semana (segunda-feira; feriado ⇒ próximo pregão da semana).
+    """Primeiro pregão de cada semana do ``calendar`` (segunda; feriado ⇒ próximo pregão).
 
-    Só entram semanas cujo primeiro pregão está em ``[start, end]``: início no meio da semana
-    passa para a semana seguinte.
+    O motor passa os pregões da bolsa primária (:func:`primary_sessions`). Só entram semanas
+    cujo primeiro pregão está em ``[start, end]``: início no meio da semana passa para a semana
+    seguinte.
     """
     cal = pd.DatetimeIndex(calendar).sort_values().unique()
     if cal.empty:
@@ -230,6 +269,34 @@ def rebalance_dates(calendar: pd.DatetimeIndex, start: date | pd.Timestamp,
     lo = pd.Timestamp(start)
     hi = pd.Timestamp(end) if end is not None else cal[-1]
     return pd.DatetimeIndex(out[(out >= lo) & (out <= hi)], name="date")
+
+
+def primary_sessions(md: MarketData, cfg: FundConfig) -> pd.DatetimeIndex:
+    """Pregões da bolsa primária (``fund.primary_calendar``, B3) inferidos dos dados de preço.
+
+    Uma data do calendário de preços é pregão quando ao menos ``SESSION_MIN_SHARE`` das linhas
+    do mercado primário listadas na data (entre o primeiro e o último fechamento válido da
+    linha) têm fechamento. Datas sem nenhuma linha listada, ou universo sem linhas do mercado
+    primário, seguem o calendário completo de preços (sem informação de feriado).
+    """
+    cal = pd.DatetimeIndex(md.close.index).sort_values()
+    market = PRIMARY_MARKET_BY_CALENDAR.get(str(cfg.fund.primary_calendar).upper())
+    lines = md.universe.lines
+    if market is None or "market" not in lines.columns:
+        return cal
+    cols = [t for t in lines.index[lines["market"].astype(str) == market]
+            if t in md.close.columns]
+    valid = md.close.reindex(index=cal, columns=cols).notna()
+    valid = valid.loc[:, valid.any()]
+    if valid.shape[1] == 0:
+        return cal
+    v = valid.to_numpy(dtype=np.int8)
+    started = np.maximum.accumulate(v, axis=0)
+    not_ended = np.maximum.accumulate(v[::-1], axis=0)[::-1]
+    listed = pd.Series((started * not_ended).sum(axis=1), index=cal)
+    trading = pd.Series(v.sum(axis=1), index=cal)
+    is_session = (listed == 0) | (trading >= SESSION_MIN_SHARE * listed)
+    return pd.DatetimeIndex(cal[is_session.to_numpy()], name=cal.name)
 
 
 def _last_valid_dates(df: pd.DataFrame) -> pd.DataFrame:
@@ -259,12 +326,16 @@ def rf_daily_series(md: MarketData, calendar: pd.DatetimeIndex,
                     series: str = RATE_SERIES) -> pd.Series | None:
     """Juro diário (taxa anual do pregão ANTERIOR / 252) alinhado ao calendário.
 
-    ``None`` se ``md.rates`` não tem a série. Datas sem taxa conhecida ficam ``NaN``.
+    ``None`` se ``md.rates`` não tem a série. Datas sem taxa conhecida ficam ``NaN``. Taxas
+    acima de ``MAX_ANNUAL_RATE`` (série em % em vez de decimal) são erro explícito.
     """
     rates = md.rates
     if rates is None or rates.empty or series not in rates.columns:
         return None
     s = pd.to_numeric(rates[series], errors="coerce").dropna().sort_index()
+    if len(s) and float(s.abs().max()) > MAX_ANNUAL_RATE:
+        raise ValueError(f"Série {series} com taxa de {float(s.abs().max()):g} a.a.: as taxas "
+                         "precisam estar em decimal (0,05 = 5% a.a.), não em %.")
     s = s[~s.index.duplicated(keep="last")]
     idx = pd.DatetimeIndex(calendar).union(s.index)
     s = s.reindex(idx).ffill(limit=RATE_FFILL_LIMIT).reindex(calendar)
@@ -343,13 +414,14 @@ class PointInTimeInputs:
 
 
 def earliest_start(md: MarketData, cfg: FundConfig) -> date:
-    """Primeira segunda-feira com histórico suficiente para modelo de risco e sinais PIT."""
+    """Primeiro rebalanceamento (1º pregão da semana na B3) com histórico suficiente para o
+    modelo de risco e os sinais PIT."""
     cal = pd.DatetimeIndex(md.close.index).sort_values()
     need = max(cfg.risk_model.min_obs_days, MIN_FACTOR_OBS, MIN_OBS_MOMENTUM + MOMENTUM_SKIP) + 1
     if len(cal) <= need + 1:
         raise ValueError(f"Histórico curto demais para o backtest ({len(cal)} pregões; "
                          f"são necessários mais de {need + 1}).")
-    reb = rebalance_dates(cal, cal[need + 1])
+    reb = rebalance_dates(primary_sessions(md, cfg), cal[need + 1])
     if reb.empty:
         raise ValueError("Sem segunda-feira disponível após o histórico mínimo.")
     return reb[0].date()
@@ -644,9 +716,12 @@ def run_backtest(md: MarketData, cfg: FundConfig, bt: BacktestConfig,
     if len(cal) < 3:
         raise ValueError("Calendário de preços curto demais para o backtest.")
     last = cal[-1]
-    end_ts = last if bt.end is None else min(pd.Timestamp(bt.end), last)
     if bt.end is not None and pd.Timestamp(bt.end) > last:
         notes.append(f"Fim pedido {bt.end} posterior aos dados; backtest até {last.date()}.")
+    upto = cal[cal <= (last if bt.end is None else min(pd.Timestamp(bt.end), last))]
+    if upto.empty:
+        raise ValueError(f"Fim do backtest {bt.end} anterior ao início dos dados.")
+    end_ts = upto[-1]  # último pregão <= fim pedido
     reb = rebalance_dates(cal, bt.start, end_ts)
     reb = reb[[cal.get_loc(t) >= 1 for t in reb]] if len(reb) else reb
     if reb.empty:

@@ -23,6 +23,7 @@ restrições das regras determinísticas de short).
 from __future__ import annotations
 
 import math
+import re
 import statistics
 from collections.abc import Callable, Iterable, Sequence
 from dataclasses import dataclass, field
@@ -30,7 +31,7 @@ from datetime import UTC, date, datetime, time, timedelta
 from typing import Any
 
 import pandas as pd
-from pydantic import BaseModel
+from pydantic import BaseModel, ValidationError
 
 from ..config import FundConfig
 from ..contracts import (
@@ -52,8 +53,9 @@ from .factbook import facts_for_issuer, macro_facts, render_facts_block
 from .guardrails import (
     INJECTION_FLAG_PREFIX,
     ai_kill_switch,
+    defuse_for_display,
+    detect_injection,
     is_injection_flagged,
-    mask_digits,
     sanitize_untrusted,
     verifier_messages,
     verify_analyst_output,
@@ -105,6 +107,11 @@ PROVIDER_FAILURE_RATE = 0.5
 MAX_NEWS_PER_ISSUER = 15
 MAX_NEWS_PER_COUNTRY = 20
 NEWS_TITLE_MAX_LEN = 500
+VIEW_RATIONALE_MAX_LEN = 300
+NEWS_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.:\-]{0,119}$")
+"""Ids de notícia/emissor aceitos nos prompts (metadados não confiáveis fora do título)."""
+LANGUAGE_RE = re.compile(r"^[A-Za-z]{2,3}(?:[-_][A-Za-z0-9]{2,8})?$")
+UNKNOWN_LANGUAGE = "und"
 VERDICT_ORDER = {"ok": 0, "caution": 1, "veto": 2}
 GOVERNANCE_SCOPE = "GOVERNANÇA"
 GOVERNANCE_PROVIDER = "codigo (governança determinística)"
@@ -249,21 +256,45 @@ def _caution_cap(cfg: FundConfig) -> float:
     return float(cfg.risk.max_short_weight * cfg.squeeze.medium_short_cap_multiplier)
 
 
-def notes_to_views(notes: Iterable[ResearchNote], cfg: FundConfig) -> list[View]:
+def _clip_text(text: str, limit: int = VIEW_RATIONALE_MAX_LEN) -> str:
+    """Trunca sem cortar um placeholder ``{{fact:…}}`` ao meio (renderização segura)."""
+    if len(text) <= limit:
+        return text
+    cut = text[: max(0, limit - 1)]
+    opened = cut.rfind("{{")
+    if opened > cut.rfind("}}"):
+        cut = cut[:opened]
+    return cut.rstrip() + "…"
+
+
+def notes_to_views(notes: Iterable[ResearchNote], cfg: FundConfig, *,
+                   long_candidates: Iterable[str] = ()) -> list[View]:
     """Converte notas verificadas em visões (uma por emissor; só restringem risco).
 
-    - ``fundamental``/``bull_bear_judge`` com stance ≠ 0 e confiança > 0 ⇒ inclinação
-      (score = stance), escolhendo a nota de evidência mais forte (mais evidências, depois
-      maior confiança, depois o juiz);
+    - inclinação (score = stance): se houver nota ``bull_bear_judge`` aceita (confiança > 0),
+      ela prevalece — o juiz viu a tese do analista e o debate, inclusive quando neutraliza a
+      stance (stance 0 ⇒ sem inclinação). Sem juiz aceito, vale a nota ``fundamental`` com
+      stance ≠ 0 e confiança > 0. Entre notas do mesmo papel, a de evidência mais forte (mais
+      evidências, depois maior confiança);
     - ``short_risk`` ``veto`` ⇒ ``no_short``; ``caution`` ⇒ ``max_abs_weight`` =
       ``max_short_weight × medium_short_cap_multiplier``;
     - restrições combinadas pelo mais restritivo.
+
+    ``long_candidates``: emissores que também são candidatos/posições compradas. Para eles o
+    ``caution`` NÃO vira ``max_abs_weight``: o contrato ``View`` não tem teto por lado e o teto
+    simétrico limitaria a posição comprada (risco de squeeze só existe vendido); o lado vendido
+    continua limitado pelo multiplicador MEDIUM/NA que o otimizador aplica a partir da tabela
+    de squeeze. ``veto`` (``no_short``) vale sempre.
     """
-    stance_notes: dict[str, list[ResearchNote]] = {}
+    protect = {str(i) for i in long_candidates}
+    judges: dict[str, list[ResearchNote]] = {}
+    analysts: dict[str, list[ResearchNote]] = {}
     restrict: dict[str, dict[str, Any]] = {}
     for n in notes:
-        if n.role in ("fundamental", "bull_bear_judge") and n.stance != 0 and n.confidence > 0:
-            stance_notes.setdefault(n.issuer_id, []).append(n)
+        if n.role == "bull_bear_judge" and n.confidence > 0:
+            judges.setdefault(n.issuer_id, []).append(n)
+        elif n.role == "fundamental" and n.stance != 0 and n.confidence > 0:
+            analysts.setdefault(n.issuer_id, []).append(n)
         if n.role == "short_risk" and n.squeeze is not None and n.squeeze.verdict != "ok":
             r = restrict.setdefault(n.issuer_id, {"no_short": False, "cap": None, "notes": [],
                                                   "author": n.provider,
@@ -271,23 +302,29 @@ def notes_to_views(notes: Iterable[ResearchNote], cfg: FundConfig) -> list[View]
             r["notes"].append(n.note_id)
             if n.squeeze.verdict == "veto":
                 r["no_short"] = True
-            else:
+            elif n.issuer_id not in protect:
                 cap = _caution_cap(cfg)
                 r["cap"] = cap if r["cap"] is None else min(r["cap"], cap)
     views = []
-    for iid in sorted(set(stance_notes) | set(restrict)):
-        cands = stance_notes.get(iid, [])
-        best = max(cands, key=lambda n: (len(n.evidence), n.confidence,
-                                         n.role == "bull_bear_judge", n.note_id)) if cands else None
-        r = restrict.get(iid, {"no_short": False, "cap": None, "notes": [], "author": "",
-                               "rationale": ""})
+    for iid in sorted(set(judges) | set(analysts) | set(restrict)):
+        cands = judges.get(iid) or analysts.get(iid) or []
+        best = max(cands, key=lambda n: (len(n.evidence), n.confidence, n.note_id)
+                   ) if cands else None
+        if best is not None and best.stance == 0:
+            best = None  # juiz neutralizou a stance do analista: sem inclinação
+        r = restrict.get(iid)
+        if r is not None and not r["no_short"] and r["cap"] is None:
+            r = None  # caution protegido (candidato comprado): nada a restringir pela visão
+        if best is None and r is None:
+            continue
+        r = r or {"no_short": False, "cap": None, "notes": [], "author": "", "rationale": ""}
         if best is not None:
             score, conf = best.stance, best.confidence
-            rationale, author = best.thesis[:300], best.provider
+            rationale, author = _clip_text(best.thesis), best.provider
             note_ids = [best.note_id] + r["notes"]
         else:
             score, conf = 0, (1.0 if r["no_short"] else 0.0)
-            rationale = (r["rationale"] or "Restrição de risco de short")[:300]
+            rationale = _clip_text(r["rationale"] or "Restrição de risco de short")
             author, note_ids = r["author"], list(r["notes"])
         views.append(View(issuer_id=iid, source=ViewSource.AI, score=score,
                           confidence=round(float(conf), 4), rationale=rationale, author=author,
@@ -323,15 +360,20 @@ def merge_views(views: Iterable[View]) -> list[View]:
     return out
 
 
-def rule_views(rule_verdicts: dict[str, str], cfg: FundConfig) -> list[View]:
-    """Restrições das regras determinísticas de short (mantidas mesmo com a IA desligada)."""
+def rule_views(rule_verdicts: dict[str, str], cfg: FundConfig, *,
+               long_candidates: Iterable[str] = ()) -> list[View]:
+    """Restrições das regras determinísticas de short (mantidas mesmo com a IA desligada).
+
+    ``long_candidates``: ver :func:`notes_to_views` (``caution`` não limita o lado comprado).
+    """
+    protect = {str(i) for i in long_candidates}
     out = []
     for iid, verdict in sorted(rule_verdicts.items()):
         if verdict == "veto":
             out.append(View(issuer_id=iid, source=ViewSource.AI, score=0, confidence=1.0,
                             rationale="Veto de short por regra determinística (squeeze/aluguel).",
                             author=RULES_AUTHOR, no_short=True))
-        elif verdict == "caution":
+        elif verdict == "caution" and iid not in protect:
             out.append(View(issuer_id=iid, source=ViewSource.AI, score=0, confidence=0.0,
                             rationale="Teto reduzido de short por regra determinística.",
                             author=RULES_AUTHOR, max_abs_weight=_caution_cap(cfg)))
@@ -354,6 +396,28 @@ def _finite(x: Any) -> float | None:
     except (TypeError, ValueError):
         return None
     return v if math.isfinite(v) else None
+
+
+def _safe_id(value: str) -> str:
+    """Id não confiável para exibição: ids inválidos nunca são ecoados (podem carregar a
+    própria injeção); aparecem como ``id-invalido:<sha256[:12]>``."""
+    text = str(value)
+    return text if NEWS_ID_RE.match(text) else f"id-invalido:{sha256_text(text)[:12]}"
+
+
+def _revalidate(parsed: BaseModel | None, schema: type[BaseModel]
+                ) -> tuple[BaseModel | None, str | None]:
+    """Revalida a saída do provedor pelo schema (objetos montados sem validação, ex.
+    ``model_construct``, não podem furar intervalos como stance −2…+2)."""
+    try:
+        data = parsed.model_dump(mode="json", warnings=False)  # type: ignore[union-attr]
+        return schema.model_validate(data), None
+    except ValidationError as exc:
+        details = "; ".join(f"{'.'.join(str(x) for x in e['loc'])}: {e['msg']}"
+                            for e in exc.errors()[:5])
+        return None, f"Saída fora do schema {schema.__name__} na revalidação: {details}"
+    except Exception as exc:  # noqa: BLE001 — objeto malformado vira erro, nunca exceção
+        return None, f"Saída ilegível na revalidação ({type(exc).__name__})."
 
 
 def _evidence_refs(ids: Iterable[str], fb: FactBook, news_ids: set[str],
@@ -536,6 +600,10 @@ class _RunState:
         if result.error is None and not isinstance(result.parsed, schema):
             result.error = f"Saída sem o schema esperado {schema.__name__}."
             result.parsed = None
+        elif result.error is None:
+            result.parsed, problem = _revalidate(result.parsed, schema)
+            if problem:
+                result.error = problem
         issues: list[str] = []
         if result.ok:
             try:
@@ -572,7 +640,7 @@ class _RunState:
         if call is None:
             return ["Orçamento de chamadas de IA esgotado: tarefa não executada (abstenção)."]
         if call.result.error:
-            return [f"Falha do provedor de IA: {mask_digits(call.result.error)[:300]}"]
+            return [f"Falha do provedor de IA: {defuse_for_display(call.result.error, 300)}"]
         return verifier_messages(call.issues)
 
     def input_hash(self, calls: Sequence[_Call | None], extra: str = "") -> str:
@@ -596,6 +664,9 @@ class _RunState:
     def prepare_news(self) -> None:
         lookback = self.cfg.research.news_lookback_days
         start = self.as_of - timedelta(days=lookback)
+        counts: dict[str, int] = {}
+        for n in self.req.news:
+            counts[n.news_id] = counts.get(n.news_id, 0) + 1
         for n in sorted(self.req.news, key=lambda x: (x.published_at, x.news_id)):
             reasons = []
             pub = n.published_at.astimezone(UTC).date()
@@ -606,23 +677,36 @@ class _RunState:
             title, flags = sanitize_untrusted(n.title, NEWS_TITLE_MAX_LEN)
             source, sflags = sanitize_untrusted(n.source, 80)
             flags = sorted(set(flags) | {f for f in sflags if f.startswith(INJECTION_FLAG_PREFIX)})
+            # Metadados também são não confiáveis: id, idioma e emissores entram nos prompts.
+            meta = [n.news_id, n.language, *n.issuer_ids]
+            meta_inj = sorted({h for m in meta for h in detect_injection(str(m))})
+            flags = sorted(set(flags) | {f"{INJECTION_FLAG_PREFIX}{h}" for h in meta_inj})
             if is_injection_flagged(flags):
                 names = [f[len(INJECTION_FLAG_PREFIX):] for f in flags
                          if f.startswith(INJECTION_FLAG_PREFIX)]
                 reasons.append(f"suspeita de injeção de instruções ({', '.join(names)})")
+            if not NEWS_ID_RE.match(n.news_id or ""):
+                reasons.append("id de notícia inválido (metadado não confiável)")
+            if counts.get(n.news_id, 0) > 1:
+                reasons.append("id de notícia duplicado no pacote")
             if not title:
                 reasons.append("título vazio após sanitização")
             if reasons:
-                self.excluded[n.news_id] = reasons
+                self.excluded.setdefault(n.news_id, [])
+                self.excluded[n.news_id] += [r for r in reasons
+                                             if r not in self.excluded[n.news_id]]
                 continue
             url = n.url if (n.url or "").lower().startswith(("http://", "https://")) else None
-            self.eligible[n.news_id] = n.model_copy(update={"title": title, "source": source,
-                                                            "url": url})
+            language = n.language if LANGUAGE_RE.match(n.language or "") else UNKNOWN_LANGUAGE
+            issuer_ids = sorted({i for i in n.issuer_ids if NEWS_ID_RE.match(i or "")})
+            self.eligible[n.news_id] = n.model_copy(update={
+                "title": title, "source": source, "url": url, "language": language,
+                "issuer_ids": issuer_ids})
             self.news_flags[n.news_id] = flags
         for nid, reasons in sorted(self.excluded.items()):
             if any("injeção" in r for r in reasons):
-                self.events.append(f"Notícia {nid} excluída do contexto dos analistas: "
-                                   + "; ".join(reasons) + ".")
+                self.events.append(f"Notícia {_safe_id(nid)} excluída do contexto dos "
+                                   "analistas: " + "; ".join(reasons) + ".")
 
     # ------------------------------------------------------------------ R5 macro
     def run_macro(self) -> None:
@@ -968,12 +1052,14 @@ class _RunState:
         if self.budget_exhausted:
             self.events.append(f"Orçamento de chamadas de IA esgotado: {self.skipped_tasks} "
                                "tarefa(s) viraram abstenção.")
-        lookahead = sorted(n for n, rs in self.excluded.items() if any("look-ahead" in r for r in rs))
+        lookahead = sorted(_safe_id(n) for n, rs in self.excluded.items()
+                           if any("look-ahead" in r for r in rs))
         if lookahead:
             self.events.append("Notícias posteriores ao as_of descartadas (look-ahead): "
                                + ", ".join(lookahead) + ".")
-        views = (rule_views(self.rule_verdicts, self.cfg) if kill
-                 else notes_to_views(self.notes, self.cfg))
+        longs = [str(i) for i in self.req.long_candidates]
+        views = (rule_views(self.rule_verdicts, self.cfg, long_candidates=longs) if kill
+                 else notes_to_views(self.notes, self.cfg, long_candidates=longs))
         macro = list(self.macro)
         if kill or self.events:
             macro.append(MacroNote(
@@ -991,8 +1077,9 @@ class _RunState:
         pack = ResearchPack(week=self.req.week, snapshot_id=self.req.snapshot_id,
                             provider=self.p.name, notes=notes, macro=macro, views=views,
                             news=news, is_synthetic=self.fb.is_synthetic)
-        ledger_hash = (self.o.ledger.ledger_hash() if self.o.ledger is not None
-                       else sha256_obj([r.model_dump(mode="json") for r in self.records]))
+        # Hash dos registros DESTA execução (o arquivo do ledger pode acumular execuções;
+        # anexar outra execução depois não pode mudar o hash vinculado a esta aprovação).
+        ledger_hash = sha256_obj([r.model_dump(mode="json") for r in self.records])
         return ResearchRun(
             pack=pack, records=list(self.records), ledger_hash=ledger_hash,
             calls_hash=calls_digest(self.records), kill_switch=kill, kill_reason=reason,

@@ -5,7 +5,7 @@ Configuração exclusivamente por ambiente (nenhum identificador de modelo no c�
 - ``ANTHROPIC_API_KEY`` — chave da API;
 - ``LATAM_LS_ANTHROPIC_MODEL`` — ID COMPLETO do snapshot do modelo (sem aliases); sem ele a
   chamada devolve erro em português e a pesquisa se abstém;
-- ``LATAM_LS_ANTHROPIC_MAX_TOKENS`` (padrão 4096), ``LATAM_LS_ANTHROPIC_EFFORT`` (opcional,
+- ``LATAM_LS_ANTHROPIC_MAX_TOKENS`` (padrão 16000), ``LATAM_LS_ANTHROPIC_EFFORT`` (opcional,
   ``low``…``max``), ``LATAM_LS_ANTHROPIC_TEMPERATURE`` (opcional — só é enviada se configurada:
   modelos recentes rejeitam temperatura não padrão com erro 400);
 - ``LATAM_LS_ANTHROPIC_PRICE_IN_PER_MTOK`` / ``LATAM_LS_ANTHROPIC_PRICE_OUT_PER_MTOK``
@@ -42,7 +42,9 @@ ENV_EFFORT = "LATAM_LS_ANTHROPIC_EFFORT"
 ENV_TEMPERATURE = "LATAM_LS_ANTHROPIC_TEMPERATURE"
 ENV_PRICE_IN = "LATAM_LS_ANTHROPIC_PRICE_IN_PER_MTOK"
 ENV_PRICE_OUT = "LATAM_LS_ANTHROPIC_PRICE_OUT_PER_MTOK"
-DEFAULT_MAX_TOKENS = 4096
+DEFAULT_MAX_TOKENS = 16000
+"""Modelos recentes pensam sempre (pensamento adaptativo conta em ``max_tokens``): um teto
+baixo trunca a resposta (``stop_reason=max_tokens``) e vira abstenção."""
 CACHE_WRITE_MULTIPLIER = 1.25
 CACHE_READ_MULTIPLIER = 0.1
 VALID_EFFORTS = ("low", "medium", "high", "xhigh", "max")

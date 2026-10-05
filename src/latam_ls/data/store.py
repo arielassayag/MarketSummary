@@ -524,6 +524,8 @@ class MarketStore:
         """Grava, em ordem, todos os pregões fechados após o último gravado até ``until``.
 
         Dias sem nenhuma negociação (fins de semana, feriados globais) são pulados.
+        :class:`DataNotReadyError` (fonte atrasada em dia de pregão) interrompe a recuperação e
+        é propagada: os incrementos anteriores ficam gravados e a próxima execução continua.
         """
         out: list[IncrementManifest] = []
         last = self.last_date()
@@ -538,7 +540,6 @@ class MarketStore:
             except NoSessionError as exc:
                 log.info("Sem pregão em %s: %s", d, exc)
         return out
-
 
     def append_daily(self, session_date: date, fetchers: Fetchers | None = None,
                      refresh_slow: bool = False, *, include_news: bool = False,

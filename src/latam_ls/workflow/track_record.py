@@ -124,7 +124,7 @@ def _parse_float(raw: str) -> float | None:
 
 
 def realized_vol(returns: Sequence[float] | pd.Series, window: int) -> float | None:
-    """Vol realizada anualizada dos últimos ``window`` retornos (``None`` sem histórico suficiente)."""
+    """Vol realizada anualizada dos últimos ``window`` retornos (``None`` sem histórico)."""
     r = pd.Series(list(returns) if not isinstance(returns, pd.Series) else returns, dtype=float)
     r = r.dropna()
     if len(r) < window or window < 2:
@@ -254,7 +254,8 @@ class TrackRecord:
             raise ValueError(f"CSV {self.csv_path} existe sem registros JSON: rode verify().")
         text = record_json(record)
         if DailyRecord.model_validate_json(text).compute_hash() != record.record_hash:
-            raise ValueError("Registro não é serializável de forma estável (hash muda ao regravar).")
+            raise ValueError("Registro não é serializável de forma estável (hash muda ao "
+                             "regravar).")
         path = self.record_path(record.date)
         row = record_summary(record)
         buf = io.StringIO()
@@ -358,7 +359,8 @@ class TrackRecord:
             "annualized_return": None, "annualized_vol": None, "sharpe": None,
             "max_drawdown": None, "current_drawdown": None, "pct_positive_days": None,
             "best_day": None, "worst_day": None, "realized_vol_21d": None,
-            "realized_vol_63d": None, "vol_band": band, "realized_vol_status": "histórico insuficiente",
+            "realized_vol_63d": None, "vol_band": band,
+            "realized_vol_status": "histórico insuficiente",
             "annualization_note": "",
         }
         if f.empty:
@@ -426,7 +428,8 @@ class TrackRecord:
                 problems.append(f"{rec.date}: encadeamento quebrado (registro anterior removido, "
                                 "alterado ou fora de ordem).")
             if prev_date is not None and rec.date <= prev_date:
-                problems.append(f"{rec.date}: data não posterior ao registro anterior ({prev_date}).")
+                problems.append(f"{rec.date}: data não posterior ao registro anterior "
+                                f"({prev_date}).")
             prev_hash = rec.record_hash
             prev_date = rec.date
 

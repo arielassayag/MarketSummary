@@ -118,22 +118,32 @@ class OpenRouterResearchProvider(LLMProvider):
         if body is None:
             return error_result(self.name, self.model, f"OpenRouter: {last_error}",
                                 latency_ms=latency)
+        if not isinstance(body, dict):
+            return error_result(self.name, self.model,
+                                "OpenRouter: resposta do gateway não é um objeto JSON.",
+                                latency_ms=latency)
 
-        usage_raw = body.get("usage") or {}
+        usage_raw = body.get("usage") if isinstance(body.get("usage"), dict) else {}
         usage = {k: int(v) for k, v in usage_raw.items()
                  if k in ("prompt_tokens", "completion_tokens", "total_tokens")
                  and isinstance(v, (int, float)) and not isinstance(v, bool)} or None
         cost = usage_raw.get("cost")
         cost = float(cost) if isinstance(cost, (int, float)) and not isinstance(cost, bool) else None
-        served = body.get("model") or self.model
-        choices = body.get("choices") or []
+        served = body.get("model") if isinstance(body.get("model"), str) else self.model
+        choices = body.get("choices") if isinstance(body.get("choices"), list) else []
         if not choices:
-            message = (body.get("error") or {}).get("message", "sem 'choices' na resposta")
-            return error_result(self.name, served, f"OpenRouter: {message}", latency_ms=latency,
-                                usage=usage, cost_usd=cost)
-        choice = choices[0] or {}
+            err = body.get("error")
+            message = (err.get("message") if isinstance(err, dict) else err) or \
+                "sem 'choices' na resposta"
+            return error_result(self.name, served, f"OpenRouter: {str(message)[:300]}",
+                                latency_ms=latency, usage=usage, cost_usd=cost)
+        choice = choices[0]
+        msg = choice.get("message") if isinstance(choice, dict) else None
+        if not isinstance(msg, dict):
+            return error_result(self.name, served,
+                                "OpenRouter: resposta sem mensagem estruturada em 'choices'.",
+                                latency_ms=latency, usage=usage, cost_usd=cost)
         finish = choice.get("finish_reason")
-        msg = choice.get("message") or {}
         raw_text = msg.get("content") if isinstance(msg.get("content"), str) else None
         common = {"latency_ms": latency, "raw_text": raw_text, "usage": usage, "cost_usd": cost,
                   "stop_reason": finish}

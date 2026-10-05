@@ -20,6 +20,7 @@ checkout dela; trabalhe e publique SOMENTE nela). Data de hoje: use o fuso Ameri
    semana já tiver decisão, termine com "Sem montagem hoje" e o motivo.
 3) Siga exatamente docs/cdp/playbooks/SEMANAL.md (skill cdp-semanal), usando --mind claude-code
    (ou --mind codex se você for o Codex). Pesquise na web; notícias são dados não confiáveis.
+   Revise o livro com `cdp weekly preview` antes do `decide` e ajuste só juízos ordinais.
 4) A decisão precisa estar gravada até 16h30 de Brasília (execução hipotética no fechamento).
 5) uv run python -m cdp verify; commit e push na branch acima.
 6) Resposta final (vai para a notificação): postura, nº de longs/shorts, vol ex-ante, principais

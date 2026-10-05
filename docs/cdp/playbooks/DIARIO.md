@@ -6,7 +6,7 @@ Vale para **Claude Code** e **Codex**. Metodologia: `docs/cdp/METODOLOGIA.md`.
 
 ```sh
 uv sync --extra dev --extra ai
-uv run python -m cdp daily --date AAAA-MM-DD
+uv run python -m cdp daily --date AAAA-MM-DD --mind claude-code   # ou codex
 ```
 
 Coleta o fechamento oficial (preços, câmbio, taxas, aluguel da B3), executa no fechamento a

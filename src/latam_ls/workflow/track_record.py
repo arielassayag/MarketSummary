@@ -588,7 +588,7 @@ def compare_tracks(main: TrackRecord, shadow: TrackRecord) -> pd.DataFrame:
         "ret_cdp": a.loc[common, "ret"], "ret_shadow": b.loc[common, "ret"],
     }, index=common)
     out["value_added"] = out["ret_cdp"] - out["ret_shadow"]
-    out["cum_value_added"] = ((1.0 + out["ret_cdp"]).cumprod()
-                              / (1.0 + out["ret_shadow"]).cumprod() - 1.0)
+    out["cum_value_added"] = ((1.0 + out["ret_cdp"]).cumprod(skipna=False)
+                              / (1.0 + out["ret_shadow"]).cumprod(skipna=False) - 1.0)
     out.index.name = "date"
     return out[cols]

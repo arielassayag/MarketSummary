@@ -79,7 +79,8 @@ class Runtime:
     def set_kill_switch(self, on: bool, reason: str, by: str) -> None:
         path = self.book_root / KILL_SWITCH_FILE
         audit = AuditLog(self.book_root / "audit_log.jsonl")
-        payload = {"on": on, "reason": reason, "by": by, "at": self.now().isoformat()}
+        at = self.now().isoformat()
+        payload = {"on": on, "reason": reason, "by": by, "at": at, "created_at": at}
         if on:
             _write_json(path, payload)
         elif path.exists():

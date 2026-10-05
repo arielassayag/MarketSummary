@@ -95,6 +95,7 @@ class WeekContext:
     current_positions: list[BookedPosition] | None
     inception: bool
     themes: dict[str, list[str]] = field(default_factory=dict)
+    commodity_betas: pd.DataFrame = field(default_factory=pd.DataFrame)
     drawdown: float | None = None
     notes: list[str] = field(default_factory=list)
 
@@ -127,6 +128,40 @@ def current_weights_from_book(entry: BookEntry | None, nav: float,
     for p in entry.positions:
         w[p.issuer_id] = w.get(p.issuer_id, 0.0) + p.notional_usd / nav
     return pd.Series(w, dtype=float)
+
+
+def commodity_betas(panel: AssetPanel, md: MarketData, cfg: FundConfig, issuers: list[str],
+                    window: int = 252, min_obs: int = 126) -> pd.DataFrame:
+    """β de cada emissor a cada commodity (controlando pelo mercado LatAm), dados <= ``as_of``.
+
+    Regressão diária r_i = a + b_m·r_mkt + b_c·r_commodity nos últimos ``window`` pregões.
+    Sem histórico suficiente ⇒ ``NaN`` (registrado; o otimizador não presume sensibilidade).
+    """
+    from ..risk.exposures import market_return_series
+
+    proxies = cfg.risk.commodity_proxies or {}
+    if not proxies:
+        return pd.DataFrame(index=issuers)
+    end = pd.Timestamp(panel.as_of)
+    rets = panel.returns.loc[:end, issuers].tail(window)
+    mkt = market_return_series(panel, issuers).reindex(rets.index)
+    out = {}
+    for name, sym in proxies.items():
+        if sym not in md.benchmarks.columns:
+            continue
+        px = md.benchmarks[sym].loc[:end].dropna()
+        rc = px.pct_change(fill_method=None).reindex(rets.index)
+        betas = {}
+        for i in issuers:
+            df = pd.DataFrame({"y": rets[i], "m": mkt, "c": rc}).dropna()
+            if len(df) < min_obs:
+                betas[i] = np.nan
+                continue
+            X = np.column_stack([np.ones(len(df)), df["m"].to_numpy(), df["c"].to_numpy()])
+            coef, *_ = np.linalg.lstsq(X, df["y"].to_numpy(), rcond=None)
+            betas[i] = float(coef[2])
+        out[name] = pd.Series(betas)
+    return pd.DataFrame(out).reindex(issuers)
 
 
 def prepare_week(md: MarketData, cfg: FundConfig, week: date, *, nav: float | None = None,
@@ -171,6 +206,7 @@ def prepare_week(md: MarketData, cfg: FundConfig, week: date, *, nav: float | No
         current_w=current_w, current_positions=list(current_entry.positions) if current_entry
         else None, inception=inception, themes=themes if themes is not None else load_themes(),
         drawdown=drawdown, notes=notes,
+        commodity_betas=commodity_betas(panel, md, cfg, list(model.assets)),
     )
 
 
@@ -217,6 +253,17 @@ def _exposure_lines(w: pd.Series, assets: pd.DataFrame, model: RiskModel, cfg: F
     return lines
 
 
+def _commodity_lines(w: pd.Series, betas: pd.DataFrame, cfg: FundConfig) -> list[ExposureLine]:
+    out: list[ExposureLine] = []
+    for c in betas.columns:
+        b = betas[c].reindex(w.index)
+        known = b.notna()
+        net = float((w[known] * b[known]).sum())
+        out.append(ExposureLine(group="market", name=f"commodity:{c}", long=0.0, short=0.0,
+                                net=net, gross=abs(net), limit=cfg.risk.commodity_beta_max_abs))
+    return out
+
+
 def risk_summary(ctx: WeekContext, w: pd.Series) -> RiskSummary:
     cfg, model = ctx.cfg, ctx.model
     w = w[w != 0]
@@ -246,7 +293,8 @@ def risk_summary(ctx: WeekContext, w: pd.Series) -> RiskSummary:
         var_1w_99=float(var5), effective_n=float(effective_n(w)),
         max_days_to_liquidate=float(prof["days_to_liquidate"].max()) if len(prof) else 0.0,
         pct_nav_liquidated_1d=pct_1d,
-        exposures=_exposure_lines(w, ctx.panel.assets, model, cfg, ctx.themes),
+        exposures=_exposure_lines(w, ctx.panel.assets, model, cfg, ctx.themes)
+        + _commodity_lines(w, ctx.commodity_betas, cfg),
         factor_contributions={str(k): float(v) for k, v in by_factor.head(15).items()},
         stress_tests=stress,
         top_risk_contributors={str(k): float(v) for k, v in top_assets.items()},
@@ -271,6 +319,14 @@ def theme_checks(ctx: WeekContext, w: pd.Series) -> list:
             check_id=f"THEME_NET:{t}", name=f"Exposição líquida ao tema {t}",
             passed=abs(v) <= limit + 1e-6, severity=Severity.HARD, value=v, limit=limit,
             details=f"Líquido {v:.2%} no tema '{t}' (limite ±{limit:.2%})."))
+    for line in _commodity_lines(w, ctx.commodity_betas, ctx.cfg):
+        lim = line.limit or 0.0
+        out.append(ComplianceCheck(
+            check_id=f"COMMODITY:{line.name.split(':', 1)[1]}",
+            name=f"Sensibilidade líquida a {line.name}", passed=abs(line.net) <= lim + 1e-6,
+            severity=Severity.SOFT, value=line.net, limit=lim,
+            details=f"Σ w·β = {line.net:+.4f} (limite ±{lim:.2f}); 10% na commodity ⇒ "
+                    f"{line.net * 0.10:+.2%} do NAV."))
     gaps = country_gap_stress(w, ctx.panel.assets, ctx.cfg)
     worst = min(gaps.values()) if gaps else 0.0
     lim = ctx.cfg.risk.country_stress_max_loss
@@ -308,7 +364,14 @@ def build_proposal(ctx: WeekContext, *, views: list[View], overrides: dict | Non
     constraints = apply_liquidity_minimums(constraints, cfg, ctx.nav)
     vol_target = float(overrides.get("vol_target", cfg.risk.vol_target_annual))
     constraints = apply_specific_risk_caps(constraints, spec_vol, cfg, vol_target)
-    opt_overrides = {**overrides, "themes": ctx.themes} if ctx.themes else overrides
+    opt_overrides = dict(overrides)
+    if ctx.themes:
+        opt_overrides["themes"] = ctx.themes
+    if not ctx.commodity_betas.empty:
+        opt_overrides["exposure_limits"] = {
+            f"commodity:{c}": {"exposures": ctx.commodity_betas[c].dropna().to_dict(),
+                               "limit": cfg.risk.commodity_beta_max_abs}
+            for c in ctx.commodity_betas.columns}
     result = optimize(alpha_adj, ctx.model, constraints, ctx.cost_model, cfg, ctx.nav,
                       current=current, inception=ctx.inception, market_w=ctx.market_w,
                       overrides=opt_overrides)

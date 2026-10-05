@@ -71,6 +71,10 @@ class RiskSection(_Frozen):
     theme_net_max_abs: dict[str, float] = Field(default_factory=lambda: {"state_owned": 0.01})
     country_gross_share_max: dict[str, float] = Field(default_factory=dict,
                                                       description="Teto da fatia do gross por país")
+    # Sensibilidades a commodities neutralizadas à parte (livro neutro em setor pode esconder
+    # aposta em cobre x minério ou petróleo x consumidores de combustível).
+    commodity_proxies: dict[str, str] = Field(default_factory=dict)
+    commodity_beta_max_abs: float = Field(0.03, ge=0, description="|Σ w·β_commodity| máximo")
     # Janelas de evento: multiplicador de vol para fatores país e risco específico (vol implícita >> realizada).
     event_windows: list[dict] = Field(default_factory=lambda: [
         {"name": "Eleição Brasil 2026 (2º turno 25/out)", "country": "BR", "start": "2026-10-05",

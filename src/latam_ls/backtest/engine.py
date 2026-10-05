@@ -166,7 +166,9 @@ class BacktestConfig:
             if extra:
                 raise ValueError(f"Pesos para sinais fora de signal_names: {extra}")
             for k, v in self.signal_weights.items():
-                if not (isinstance(v, int | float) and math.isfinite(float(v)) and v >= 0):
+                numeric = isinstance(v, int | float | np.integer | np.floating) \
+                    and not isinstance(v, bool | np.bool_)
+                if not (numeric and math.isfinite(float(v)) and v >= 0):
                     raise ValueError(f"Peso inválido para o sinal '{k}': {v!r}.")
         if not (math.isfinite(float(self.nav)) and self.nav > 0):
             raise ValueError("NAV inicial precisa ser positivo.")
@@ -999,6 +1001,9 @@ def run_backtest(md: MarketData, cfg: FundConfig, bt: BacktestConfig,
                 # Mercado fechado: mantém exatamente o peso derivado (nenhuma negociação).
                 w_new = np.where(closed, mark.w_pre, w_new)
                 n_frozen_total += rec["n_frozen"]
+                if not np.any(w_new):
+                    notes.append(f"{t.date()}: otimizador devolveu carteira vazia (caixa); "
+                                 f"status do solver {rec.get('solver_status')}.")
                 invested = invested or bool(np.any(w_new))
                 if bt.include_costs and dec.cost_model is not None:
                     target = pd.Series(w_new, index=ids)

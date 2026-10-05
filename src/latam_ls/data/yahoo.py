@@ -275,7 +275,9 @@ def _clean_price_frame(t: str, fr: pd.DataFrame) -> pd.DataFrame:
     close = fr["close"].where(fr["close"] > 0)
     adj = fr["adj_close"].where(fr["adj_close"] > 0)
     vol = fr["volume"].where(fr["volume"] >= 0)
-    suspect = (vol == 0) & close.notna()
+    # Volume 0 é AUSENTE sempre que a barra é mantida (close OU adj_close válido): nunca
+    # "liquidez zero" — inclusive quando só o adj_close sobreviveu à validação.
+    suspect = (vol == 0) & (close.notna() | adj.notna())
     vol = vol.mask(suspect)
     out = pd.DataFrame({
         "date": fr.index, "ticker": t, "close": close.to_numpy(dtype=float),
@@ -713,6 +715,11 @@ def build_short_interest_row(ticker: str, info: Mapping[str, Any] | None,
     if y_date is not None and y_date > as_of:
         y_ss, y_spf, y_date = math.nan, math.nan, None
         flags.append("yahoo_si_futuro_descartado")
+    elif y_date is not None and finra_publication_date(y_date) > as_of:
+        # Liquidação <= as_of, mas ainda NÃO publicada em as_of (liquidação + 7 dias úteis):
+        # usar seria look-ahead (snapshots reconstruídos com as_of passado).
+        y_ss, y_spf, y_date = math.nan, math.nan, None
+        flags.append("yahoo_si_nao_publicado_descartado")
     float_base = math.nan
     if y_ss > 0 and 0 < y_spf <= 1:
         float_base = y_ss / y_spf

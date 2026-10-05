@@ -18,7 +18,9 @@ Layout (docs/latam_ls/ARQUITETURA.md §4)::
 Regras: a pasta de destino precisa ser NOVA (nunca sobrescreve); a gravação é feita numa pasta
 temporária ao lado e renomeada atomicamente; Parquet via pyarrow (zstd), colunas em ordem
 determinística e linhas ordenadas; :func:`load_snapshot` recalcula todos os hashes e falha em
-qualquer divergência. Fontes obrigatórias (preços, câmbio) com falha em mais de 20% dos
+qualquer divergência. Os caminhos do manifesto precisam ser nomes simples dentro da pasta (sem
+``..``/absolutos) e o ``is_synthetic`` do manifesto precisa coincidir com o registrado no
+``qa.json`` (arquivo coberto pelo hash) — virar a flag de dados simulados é adulteração. Fontes obrigatórias (preços, câmbio) com falha em mais de 20% dos
 tickers/moedas abortam a construção; fontes opcionais (benchmarks, taxas, fundamentos, short
 interest, aluguel, notícias) que falham viram limitação registrada no manifesto.
 """
@@ -371,6 +373,16 @@ class _Staged:
     files: list[SnapshotFile] = field(default_factory=list)
 
 
+def member_path(root: Path, rel: str) -> Path:
+    """Arquivo listado num manifesto: só nomes simples DENTRO da pasta (sem ``..``, absolutos
+    ou subpastas). Um manifesto adulterado nunca faz o leitor tocar arquivos de fora."""
+    name = str(rel)
+    if (not name or name in (".", "..") or "/" in name or "\\" in name or "\x00" in name
+            or name != Path(name).name):
+        raise SnapshotIntegrityError(f"Caminho inválido no manifesto (fora da pasta): {rel!r}")
+    return Path(root) / name
+
+
 def _stage_file(staged: _Staged, root: Path, name: str, rows: int | None) -> None:
     staged.files.append(SnapshotFile(path=name, sha256=sha256_file(root / name), rows=rows,
                                      description=FILE_DESCRIPTIONS.get(name, "")))
@@ -473,7 +485,7 @@ def verify_files(root: Path, manifest: SnapshotManifest) -> None:
         if required not in names:
             raise SnapshotIntegrityError(f"Manifesto sem o arquivo obrigatório {required}.")
     for f in manifest.files:
-        p = root / f.path
+        p = member_path(root, f.path)
         if not p.exists():
             raise SnapshotIntegrityError(f"Arquivo do manifesto ausente: {p}")
         h = sha256_file(p)
@@ -483,6 +495,16 @@ def verify_files(root: Path, manifest: SnapshotManifest) -> None:
     uni_hash = sha256_file(root / FILE_UNIVERSE)
     if uni_hash != manifest.universe_sha256:
         raise SnapshotIntegrityError("universe.csv não corresponde ao universe_sha256 do manifesto.")
+    if FILE_QA in names:
+        # qa.json é coberto pelo hash; o manifesto em si não entra no content_hash do contrato.
+        try:
+            qa = json.loads((root / FILE_QA).read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, UnicodeDecodeError) as exc:
+            raise SnapshotIntegrityError(f"qa.json ilegível: {exc}") from exc
+        if isinstance(qa, dict) and "is_synthetic" in qa \
+                and bool(qa["is_synthetic"]) != bool(manifest.is_synthetic):
+            raise SnapshotIntegrityError(
+                "is_synthetic do manifesto diverge do qa.json (flag de DADOS SIMULADOS adulterada).")
 
 
 def read_tables(path: Path, verify: bool = True) -> SnapshotTables:
@@ -759,6 +781,7 @@ def quality_report(prices: pd.DataFrame, fx: pd.DataFrame, universe: Universe, a
     if missing:
         lim.append(f"Tickers sem dados na fonte (ausentes/renomeados): {', '.join(missing)}.")
     report = {
+        "is_synthetic": False,
         "as_of": as_of.isoformat(), "n_lines_with_prices": int(close.shape[1]),
         "n_price_rows": int(len(p)), "first_date": p["date"].min().date().isoformat()
         if len(p) else None, "last_date": p["date"].max().date().isoformat() if len(p) else None,
@@ -768,6 +791,41 @@ def quality_report(prices: pd.DataFrame, fx: pd.DataFrame, universe: Universe, a
             pd.Series([listing_market(t) for t in close.columns]).value_counts().items())},
     }
     return report, lim
+
+
+MarketCalendar = Callable[[date, str], bool | None]
+
+
+def drop_holiday_bars(prices: pd.DataFrame, calendar: MarketCalendar | None
+                      ) -> tuple[pd.DataFrame, dict[str, int]]:
+    """Remove barras que o Yahoo cria em FERIADOS OFICIAIS (preço repetido, volume 0/NaN).
+
+    Uma barra só sai quando o calendário oficial diz que o mercado da linha estava FECHADO e
+    nenhuma linha daquele mercado teve volume na data (barra sintética). Mercado fechado com
+    volume real é mantido (o calendário pode estar errado) — quem chama sinaliza. Devolve
+    ``(preços, {mercado: barras_removidas})``. Mercados fechados ficam ``NaN``, nunca preenchidos.
+    """
+    if calendar is None or prices is None or prices.empty:
+        return prices, {}
+    dates = pd.to_datetime(prices["date"])
+    mkts = prices["ticker"].astype(str).map(listing_market)
+    closed: set[tuple[pd.Timestamp, str]] = set()
+    for d, m in set(zip(dates, mkts, strict=True)):
+        try:
+            is_open = calendar(pd.Timestamp(d).date(), str(m))
+        except Exception:  # calendário indisponível: nunca descarta
+            is_open = None
+        if is_open is False:
+            closed.add((d, m))
+    if not closed:
+        return prices, {}
+    key = pd.Series(list(zip(dates, mkts, strict=True)), index=prices.index)
+    in_closed = key.map(lambda k: k in closed).astype(bool)
+    no_vol = pd.to_numeric(prices["volume"], errors="coerce").isna()
+    all_no_vol = no_vol.groupby([dates, mkts]).transform("all").astype(bool)
+    drop = in_closed & all_no_vol
+    counts = {str(k): int(v) for k, v in mkts[drop].value_counts().sort_index().items()}
+    return prices[~drop].reset_index(drop=True), counts
 
 
 # ======================================================================
@@ -810,12 +868,15 @@ def build_snapshot(universe_path: Path, out_dir: Path, as_of: date, start: date 
                    cfg: FundConfig | None = None, fetchers: Fetchers | None = None,
                    include_news: bool = True, news_issuers: list[str] | None = None, *,
                    benchmarks: Sequence[str] | None = None,
-                   now: Callable[[], datetime] | None = None) -> SnapshotManifest:
+                   now: Callable[[], datetime] | None = None,
+                   calendar: MarketCalendar | None = None) -> SnapshotManifest:
     """Coleta todas as fontes e grava um snapshot imutável em ``out_dir`` (que não pode existir).
 
     ``as_of`` = último pregão completo incluído (linhas com data > ``as_of`` são descartadas).
     Levanta :class:`SnapshotError` quando preços ou câmbio falham para mais de 20% dos
-    tickers/moedas; falhas de fontes opcionais viram limitação no manifesto.
+    tickers/moedas; falhas de fontes opcionais viram limitação no manifesto. Com ``calendar``
+    (``(data, mercado) -> bool | None``), barras sintéticas do Yahoo em feriados oficiais
+    (volume 0) são descartadas e registradas como limitação.
     """
     out_dir = Path(out_dir)
     if out_dir.exists():
@@ -841,6 +902,11 @@ def build_snapshot(universe_path: Path, out_dir: Path, as_of: date, start: date 
     prices = normalize_prices(prices)
     prices = prices[prices["ticker"].isin(tickers) & (prices["date"] <= ts_end)
                     & (prices["date"] >= pd.Timestamp(start))]
+    prices, holiday_bars = drop_holiday_bars(prices, calendar)
+    if holiday_bars:
+        limitations.append("Barras sintéticas do Yahoo em feriados oficiais (volume 0) "
+                           "descartadas (mercado fechado => NaN): "
+                           + ", ".join(f"{k} ({v})" for k, v in holiday_bars.items()) + ".")
     missing = sorted(set(missing or []) | (set(tickers) - set(prices["ticker"])))
     if len(missing) > REQUIRED_FAILURE_THRESHOLD * len(tickers):
         raise SnapshotError(f"Preços ausentes para {len(missing)}/{len(tickers)} tickers "
@@ -985,6 +1051,7 @@ def build_snapshot(universe_path: Path, out_dir: Path, as_of: date, start: date 
         limitations.append("Notícias não coletadas neste snapshot (include_news=False).")
 
     qa, qa_lim = quality_report(prices, fx, uni, as_of, cfg, missing)
+    qa["holiday_bars_dropped"] = holiday_bars
     limitations.extend(qa_lim)
     fields = {
         "snapshot_id": f"snapshot-{as_of.isoformat()}", "as_of": as_of, "created_at": clock(),

@@ -151,6 +151,23 @@ def test_theme_neutrality_is_enforced(mx_run, theme_members):
     assert any("state_owned" in n for n in mx_run.notes)
 
 
+def test_borrow_and_financing_accrue_on_previous_close_book(mx_run, md):
+    """Aluguel = taxa GC/252 sobre os shorts do fechamento anterior; juros = USD_3M/252 sobre o
+    caixa (1 − líquido) do fechamento anterior (verificação independente do livro)."""
+    d = mx_run.daily
+    sh = CFG.shorting
+    short_prev = ((d["gross"] - d["net"]) / 2).shift(1).iloc[1:]
+    fee_annual = (d["borrow"].iloc[1:] / short_prev * 252)[short_prev > 0]
+    assert len(fee_annual) > 5
+    # Sem dado PIT de aluguel: só taxas GC (US 0,3% a.a.; BR 0,8% a.a.) ou a máxima do mandato.
+    lo, hi = sh.gc_borrow_fee_us, max(sh.gc_borrow_fee_br, sh.max_borrow_fee)
+    assert ((fee_annual >= lo - 1e-12) & (fee_annual <= hi + 1e-12)).all()
+    rate = float(md.rates["USD_3M"].iloc[0])
+    expected = (1.0 - d["net"].shift(1).iloc[1:]) * rate / 252
+    np.testing.assert_allclose(d["financing"].iloc[1:], expected, rtol=1e-12)
+    assert d["financing"].iloc[0] == pytest.approx(rate / 252)  # 1º dia: só caixa
+
+
 # ======================================================================
 # Proveniência (hash dos dados, da configuração e dos resultados)
 # ======================================================================
@@ -260,6 +277,23 @@ def test_vol_band_is_validated_even_for_short_series():
     r = pd.Series([0.001, -0.002, 0.003], index=pd.bdate_range("2024-01-01", periods=3))
     with pytest.raises(ValueError):
         performance_metrics(r, vol_band_min=0.07, vol_band_max=0.03)
+
+
+def test_config_rejects_boolean_weights_and_string_theme_members():
+    with pytest.raises(ValueError, match="Peso inválido"):
+        BacktestConfig(start=date(2024, 1, 1), signal_weights={"residual_momentum": True})
+    with pytest.raises(ValueError, match="tema"):
+        BacktestConfig(start=date(2024, 1, 1), themes={"state_owned": "SIM001"})
+    ok = BacktestConfig(start=date(2024, 1, 1), signal_weights={"low_risk": np.float64(2.0)},
+                        signal_names=("low_risk",))
+    assert ok.effective_signal_weights(CFG) == {"low_risk": 1.0}
+
+
+def test_all_package_exports_resolve():
+    import latam_ls.backtest as bt_pkg
+
+    for name in bt_pkg.__all__:
+        assert getattr(bt_pkg, name) is not None, name
 
 
 def test_deflated_sharpe_matches_bailey_lopez_de_prado_example():

@@ -42,6 +42,8 @@ risk:
   var_confidence: 0.99
   theme_net_max_abs: {state_owned: 0.01}  # estatais neutras (janela eleitoral)
   country_gross_share_max: {BR: 0.70, MX: 0.35, CL: 0.15, PE: 0.12, CO: 0.10, AR: 0.10, LATAM: 0.10, PA: 0.05, UY: 0.05}
+  commodity_proxies: {oil: "BZ=F", copper: "HG=F", gold: "GC=F"}   # betas neutralizados à parte
+  commodity_beta_max_abs: 0.03         # 10% no Brent/cobre/ouro ⇒ ≤ 0,3% do NAV
   event_windows:
     - {name: "Eleição Brasil 2026 (2º turno 25/out)", country: BR, start: "2026-10-05", end: "2026-10-26", vol_multiplier: 1.5}
   bias_prior: 1.10                     # risco de carteira otimizada é subestimado (USE4): alvo efetivo 5%/1,10

@@ -12,6 +12,9 @@
   (futuros em relação a ``as_of``) são EXCLUÍDOS — sem look-ahead.
 - Deduplicação por ``news_id`` (o mesmo link para vários emissores une ``issuer_ids``) e por
   (título normalizado, fonte).
+- Defesas contra conteúdo hostil: RSS com ``<!DOCTYPE``/``<!ENTITY`` é recusado (expansão de
+  entidades); só links ``http(s)`` são aceitos (``javascript:``/``data:`` descartados);
+  placeholders ``{{…}}`` são neutralizados mesmo quando chegam codificados em entidades HTML.
 """
 
 from __future__ import annotations
@@ -63,6 +66,8 @@ _TAG_RE = re.compile(r"<[^>]*>")
 _CTRL_RE = re.compile(r"[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f-\u009f​-‏"
                       r"‪-‮⁠-⁤﻿]")
 _WS_RE = re.compile(r"\s+")
+_DTD_RE = re.compile(rb"<!\s*(DOCTYPE|ENTITY)", re.IGNORECASE)
+_SAFE_LINK_RE = re.compile(r"^https?://[^\s<>\"']+$", re.IGNORECASE)
 _SUFFIX_RE = re.compile(r"\.(SA|MX|SN|CL|LM|BA)$", re.IGNORECASE)
 
 
@@ -98,8 +103,17 @@ def _local_sanitize(text: str, max_len: int = MAX_TITLE_LEN) -> str:
     t = _TAG_RE.sub(" ", t)
     t = _CTRL_RE.sub("", t)
     t = unicodedata.normalize("NFC", t)
+    # Placeholders do memo ({{fact:...}}) nunca podem nascer de texto externo — inclusive
+    # quando chegam codificados (``&#123;&#123;``) e só aparecem após o unescape acima.
+    t = t.replace("{{", "{ {").replace("}}", "} }")
     t = _WS_RE.sub(" ", t).strip()
     return t[:max_len].rstrip()
+
+
+def safe_link(link: str) -> str | None:
+    """Link aceito somente se for ``http(s)`` sem espaços/caracteres de controle; senão ``None``."""
+    t = _CTRL_RE.sub("", str(link or "")).strip()
+    return t if _SAFE_LINK_RE.match(t) else None
 
 
 def _resolve_sanitizer() -> Callable[[str], str]:
@@ -163,6 +177,9 @@ def parse_rss(content: bytes | str) -> list[dict[str, Any]]:
     """Itens do RSS: ``title, link, source, published_at`` (UTC, tz-aware)."""
     if isinstance(content, str):
         content = content.encode("utf-8")
+    if _DTD_RE.search(content):
+        # RSS legítimo do Google News não tem DTD; DTD/entidades = possível expansão maliciosa.
+        raise FetchError("RSS com DOCTYPE/ENTITY recusado (conteúdo não confiável).")
     try:
         root = ET.fromstring(content)
     except ET.ParseError as exc:
@@ -170,7 +187,7 @@ def parse_rss(content: bytes | str) -> list[dict[str, Any]]:
     items = []
     for it in root.iter("item"):
         title = (it.findtext("title") or "").strip()
-        link = (it.findtext("link") or "").strip()
+        link = safe_link(it.findtext("link") or "")
         pub = (it.findtext("pubDate") or "").strip()
         src_el = it.find("source")
         source = (src_el.text or "").strip() if src_el is not None and src_el.text else ""
@@ -237,7 +254,9 @@ def dedupe_news(items: Iterable[NewsItem]) -> list[NewsItem]:
             by_id[it.news_id] = first.model_copy(update={"issuer_ids": ids})
     by_key: dict[tuple[str, str], NewsItem] = {}
     for it in sorted(by_id.values(), key=lambda n: (n.published_at, n.news_id)):
-        key = (_norm_title(it.title), it.source.strip().lower())
+        norm = _norm_title(it.title)
+        # Título sem letras/dígitos (ex.: só símbolos) não identifica a notícia: usa o id.
+        key = (norm or f"id:{it.news_id}", it.source.strip().lower())
         prev = by_key.get(key)
         if prev is None:
             by_key[key] = it

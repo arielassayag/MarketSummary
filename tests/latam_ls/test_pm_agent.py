@@ -44,6 +44,7 @@ from latam_ls.research.pm_agent import (
     ladder_stage,
     load_pm_decision_file,
     load_research_pack_file,
+    load_week_inputs,
     pm_factbook,
     pm_output_hash,
     pm_output_to_views,
@@ -715,3 +716,88 @@ def test_run_pm_agent_with_demo_provider(tmp_path):
                          current_book=None)
     out2, _ = run_pm_agent(DemoResearchProvider(), no_signal)
     assert out2.abstain and out2.views == []
+
+
+def test_unknown_issuers_in_research_pack_are_flagged(tmp_path):
+    ctx = make_ctx()
+    rp = example_research_pack(ctx)
+    ghost = dict(rp["notes"][0], note_id="n-ghost", issuer_id="FANTASMA")
+    rp["notes"].append(ghost)
+    rp["views"] = [{"issuer_id": "FANTASMA", "confidence": 1.0, "rationale": "Veto.",
+                    "author": "claude-code", "no_short": True}]
+    _write_inputs(tmp_path / "w", ctx, rp)
+    ok, issues = validate_inputs(tmp_path / "w", ctx, now=NOW)
+    assert not ok
+    assert sum("FANTASMA" in i and "fora do universo" in i for i in issues) == 2
+
+
+def test_pm_views_may_cite_research_note_ids_from_the_week(tmp_path):
+    ctx = make_ctx()  # contexto sem as notas: vêm do research_pack.json da semana
+    rp = example_research_pack(ctx)
+    note_id = rp["notes"][0]["note_id"]
+    pm = example_pm_decision(ctx)
+    pm["views"][0]["evidence_ids"] = [note_id]
+    pm["views"][0]["rationale"] = "Pesquisa fundamental alinhada ao quant."
+    _write_inputs(tmp_path / "w", ctx, rp, pm)
+    ok, issues = validate_inputs(tmp_path / "w", ctx, now=NOW)
+    assert ok, issues
+    pack, out, load_issues, pm_ctx = load_week_inputs(tmp_path / "w", ctx, now=NOW)
+    assert load_issues == [] and pack.mind == "claude-code"
+    assert out.views[0].evidence_ids == [note_id]
+    assert [n.note_id for n in pm_ctx.research_notes] == [note_id]
+    empty_pack, fallback, issues2, _ = load_week_inputs(tmp_path / "nada", ctx, now=NOW)
+    assert empty_pack.notes == [] and fallback.abstain and len(issues2) == 2
+
+
+# ==========================================================
+# Integração com o pipeline semanal (mercado sintético)
+# ==========================================================
+
+def test_demo_pm_end_to_end_with_weekly_pipeline():
+    from latam_ls.config import load_config
+    from latam_ls.contracts import ResearchPack
+    from latam_ls.data.synthetic import make_synthetic_market
+    from latam_ls.research.factbook import build_factbook
+    from latam_ls.workflow.autonomy import verify_autonomous_decision
+    from latam_ls.workflow.reports import render_weekly_report
+    from latam_ls.workflow.weekly import prepare_week, run_weekly_decision
+
+    cfg = load_config()
+    md = make_synthetic_market(as_of=date(2026, 10, 2))
+    wctx = prepare_week(md, cfg, ELECTION_WEEK, drawdown=0.0)
+    alpha = wctx.alpha.alpha.dropna()
+    longs = list(alpha.sort_values(ascending=False).head(8).index)
+    shorts = list(alpha.sort_values().head(8).index)
+    fb = build_factbook(wctx.panel, wctx.md, sorted(set(longs) | set(shorts)),
+                        alpha_z=wctx.alpha.composite_z, signal_z=wctx.alpha.signal_z,
+                        squeeze=wctx.squeeze, betas=wctx.betas,
+                        specific_vol=wctx.model.specific_vol, snapshot_id=wctx.snapshot_id)
+    ctx = PMContext(
+        week=ELECTION_WEEK, as_of=md.as_of, fund_name=cfg.fund.name, factbook=fb,
+        universe_issuers=wctx.panel.assets[["issuer_name", "country", "sector"]],
+        quant_alpha_z=wctx.alpha.composite_z, quant_candidates_long=longs,
+        quant_candidates_short=shorts, current_book=None, previous_views=[],
+        previous_pm_output=None, research_notes=[], macro_notes=[], drawdown=0.0,
+        realized_vol_21d=None, track_record_facts={}, kill_switch=False, cfg=cfg)
+    out, issues = run_pm_agent(DemoResearchProvider(), ctx)
+    assert issues == [] and out.mind == "demo"
+    assert out.risk_posture == "defensiva"  # janela eleitoral ativa
+    pfb = pm_factbook(ctx)
+    bundle = to_bundle(out, cfg, 0.0, factbook=pfb)
+    pack = ResearchPack(week=ELECTION_WEEK, snapshot_id=wctx.snapshot_id, provider="demo",
+                        mind="demo", is_synthetic=True)
+    outcome = run_weekly_decision(wctx, pack, bundle, version=1)
+    final = outcome.final
+    assert not final.hard_failures
+    assert final.risk.ex_ante_vol <= bundle.posture_vol_target + 1e-6
+    assert final.risk.gross <= bundle.overrides["gross_max"] + 1e-6
+    assert outcome.decision.pm_decision_hash == bundle.pm_output_hash
+    ok, reasons = verify_autonomous_decision(outcome.decision, final, final.snapshot_hash,
+                                             cfg.config_hash(), outcome.research_hash)
+    assert ok, reasons
+    md_txt, html = render_weekly_report(
+        ELECTION_WEEK, final, outcome.decision, out, None, [], bundle.views, [],
+        outcome.shadow_quant, cfg.fund.name, factbook=pfb, cfg=cfg, attempts=outcome.attempts,
+        path_taken=outcome.path_taken)
+    assert "CDP vs sombra só-quant" in md_txt and "mente demo" in md_txt
+    assert "DADOS SIMULADOS" in html and "{{fact:" not in md_txt

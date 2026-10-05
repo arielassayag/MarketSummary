@@ -74,7 +74,7 @@ _INFEASIBLE = {cp.INFEASIBLE, cp.INFEASIBLE_INACCURATE}
 
 _ALLOWED_OVERRIDES = {
     "vol_target", "vol_target_annual", "gross_max", "gross_multiplier", "risk_aversion",
-    "max_weekly_turnover", "exclude_issuers", "risk_target_mode", "themes",
+    "max_weekly_turnover", "exclude_issuers", "risk_target_mode", "themes", "exposure_limits",
 }
 RISK_TARGET_MODES = ("cap", "match")
 MATCH_REL_TOL = 0.005        # "na meta": vol ≥ 99,5% da meta (o teto continua duro)
@@ -429,6 +429,7 @@ class _Settings:
     notes: tuple[str, ...]
     risk_target_mode: str = "cap"
     themes: dict | None = None
+    exposure_limits: dict | None = None
 
 
 def _finite(name: str, value: object) -> float:
@@ -491,8 +492,17 @@ def _resolve_settings(cfg: FundConfig, overrides: dict | None, inception: bool) 
     themes = ov.get("themes")
     if themes is not None and not isinstance(themes, dict):
         raise ValueError("themes precisa ser um dicionário tema -> lista de emissores.")
+    limits = ov.get("exposure_limits")
+    if limits is not None:
+        if not isinstance(limits, dict):
+            raise ValueError("exposure_limits precisa ser {nome: {'exposures': {...}, 'limit': x}}.")
+        for k, v in limits.items():
+            lim = _finite(f"exposure_limits[{k}]", v.get("limit"))
+            if lim < 0:
+                raise ValueError(f"Limite negativo em exposure_limits[{k}].")
     return _Settings(vt, gross * mult, lam, turnover, excl, tuple(notes), mode,
-                     {str(k): [str(x) for x in v] for k, v in (themes or {}).items()})
+                     {str(k): [str(x) for x in v] for k, v in (themes or {}).items()},
+                     limits)
 
 
 @dataclass(frozen=True)
@@ -774,6 +784,14 @@ def _build_problem(alpha: pd.Series, model: RiskModel, cons: pd.DataFrame, cm: C
             theme_names.append(tname)
             theme_rows.append(row)
             theme_lims.append(float(lim))
+    for lname, spec in sorted((settings.exposure_limits or {}).items()):
+        expo = spec.get("exposures", {}) or {}
+        row = np.array([float(expo.get(i, 0.0)) if np.isfinite(float(expo.get(i, 0.0)))
+                        else 0.0 for i in ids])
+        if np.any(row != 0):
+            theme_names.append(str(lname))
+            theme_rows.append(row)
+            theme_lims.append(float(spec["limit"]))
     shares_cfg = getattr(rk, "country_gross_share_max", {}) or {}
     country_share = np.array([float(shares_cfg.get(c, np.nan)) for c in c_names])
     return _Problem(

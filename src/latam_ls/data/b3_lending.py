@@ -66,7 +66,8 @@ def fetch_bdi_table(table: str, session_date: date, *, session: Any | None = Non
                     take: int = MAX_TAKE, max_pages: int = MAX_PAGES,
                     sleep: Sleeper = time.sleep) -> tuple[pd.DataFrame, dict[str, Any]]:
     """Pagina uma tabela do BDI para um pregão. Tabela vazia (fora da janela D-21, feriado ou
-    ainda não publicada) devolve DataFrame vazio. Erro HTTP levanta :class:`FetchError`."""
+    ainda não publicada) devolve DataFrame vazio. Erro HTTP levanta :class:`FetchError`, assim
+    como uma tabela com mais páginas que ``max_pages`` (nunca devolve tabela truncada)."""
     if not 1 <= take <= MAX_TAKE:
         raise ValueError(f"take precisa estar entre 1 e {MAX_TAKE} (a API devolve 400 acima disso).")
     frames: list[pd.DataFrame] = []
@@ -90,8 +91,12 @@ def fetch_bdi_table(table: str, session_date: date, *, session: Any | None = Non
         if not values:
             break
         frames.append(pd.DataFrame(values, columns=columns))
-        if page >= int(tbl.get("pageCount") or 1):
+        page_count = int(tbl.get("pageCount") or 1)
+        if page >= page_count:
             break
+        if page >= max_pages:
+            raise FetchError(f"BDI {table} {session_date}: {page_count} páginas > limite "
+                             f"{max_pages} (tabela seria truncada).")
         page += 1
     df = pd.concat(frames, ignore_index=True) if frames else pd.DataFrame(columns=columns)
     return df, meta

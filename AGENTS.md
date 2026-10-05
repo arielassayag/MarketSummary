@@ -21,7 +21,7 @@ Este documento define regras fundamentais e comandos operacionais para agentes e
 
 ---
 
-# CDP — Cabra da Peste (pacote `src/cdp`, antes `cdp`)
+# CDP — Cabra da Peste (pacote `src/cdp`, antes `latam_ls`)
 
 Gestor **100% autônomo** de um fundo long/short de ações LatAm (USD, NAV inicial US$ 100 mi, net neutral,
 vol-alvo ex-ante 5% com banda 3–7%). O CDP decide posições e sizing sozinho; rotinas agendadas rodam o
@@ -36,6 +36,10 @@ Quem conduz pesquisa, decisões de carteira e comentários é um agente de códi
 - Roteiro semanal (primeiro pregão da semana na B3, decisão até 16h30, execução no fechamento):
   `docs/cdp/playbooks/SEMANAL.md`
 - Roteiro diário (após o fechamento, 19h20): `docs/cdp/playbooks/DIARIO.md`
+- Operação no PC local (tarefas agendadas do Claude Code + plugin `cdp` em `plugins/cdp/`, com as
+  skills `semanal`, `diario`, `risco`, `status` e `calibracao`): `docs/cdp/LOCAL.md` e
+  `docs/cdp/ROTINAS.md`. Os passos das skills valem para o Codex trocando `claude-code` por `codex`.
+  Uma só mente por vez no mesmo livro (a trilha é encadeada por hash).
 - Registre sempre `mind: "codex"` ou `mind: "claude-code"` nos arquivos de entrada do CDP.
 - A mente escreve apenas JSON validado por schema (pesquisa, decisão do PM, comentário); todo número
   é calculado pelo código e citado como `{{fact:id}}`.
@@ -44,9 +48,12 @@ Quem conduz pesquisa, decisões de carteira e comentários é um agente de códi
 
 - **Testes do CDP**: `uv run pytest tests/cdp -q`
 - **Demo offline (DADOS SIMULADOS)**: `uv run python -m cdp demo`
-- **Fechamento diário**: `uv run python -m cdp daily --date AAAA-MM-DD --mind claude-code`, depois `daily publish`
+- **Fechamento diário**: `uv run python -m cdp daily close --date AAAA-MM-DD --mind claude-code`, depois `validate-daily` e `daily publish`
 - **Rebalanceamento semanal**: `uv run python -m cdp weekly prepare --date AAAA-MM-DD --mind claude-code`, depois `validate`, `weekly preview` (opcional) e `weekly decide` (ver `docs/cdp/playbooks/SEMANAL.md`)
 - **App**: `uv run streamlit run cdp_app.py --server.address 127.0.0.1`
+- **Agenda das rotinas** (o que fazer agora, pelo relógio de Brasília; fechamentos pendentes): `uv run python -m cdp agenda`
+- **Monitor de risco**: `uv run python -m cdp risk` (último fechamento) ou `uv run python -m cdp risk --live` (intradiário); grava `reports/risk/<data>/risco_<HHMM>.md`
+- **Validar o comentário do dia sem publicar** (a publicação é imutável): `uv run python -m cdp validate-daily --date AAAA-MM-DD`
 
 ## Invariantes do CDP (substituem os itens 3 e 4 acima apenas para o CDP)
 

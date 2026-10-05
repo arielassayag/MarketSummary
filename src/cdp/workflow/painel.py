@@ -55,11 +55,12 @@ DEFAULT_TEMPLATE = Path(__file__).with_name("painel_template.html")
 DEFAULT_OUT = Path("artifacts/painel/cdp_painel.html")
 DEFAULT_MAX_DAILY_REPORTS = 60
 DEFAULT_FULL_WEEKS = 8
+DEFAULT_FULL_RESEARCH_WEEKS = 2
 DEFAULT_AUDIT_TAIL = 40
 DEFAULT_MAX_RISK_RUNS = 30
 MAX_RISK_FILE_BYTES = 2_000_000
 MAX_BACKTEST_DEPTH = 3
-EVIDENCE_NOTE_CHARS = 280
+EVIDENCE_NOTE_CHARS = 160
 MAX_EVIDENCE_PER_NOTE = 8
 LIMIT_TOL = 1e-9
 COMMENTARY_SECTION = "Comentário do dia"
@@ -104,8 +105,16 @@ LIQUIDITY_BUCKETS = ((1.0, "≤ 1 dia"), (2.0, "1–2 dias"), (3.0, "2–3 dias"
 # Sanitização e serialização determinística
 # ==========================================================
 
+_URL_ONLY_RE = re.compile(r"^https?://\S+$")
+
+
 def scrub_text(text: str) -> str:
-    """Remove identificadores de modelo de um texto livre (a mente claude-code/codex fica)."""
+    """Remove identificadores de modelo de um texto livre (a mente claude-code/codex fica).
+
+    Uma URL isolada (evidência) é preservada: alterá-la quebraria a referência à fonte.
+    """
+    if _URL_ONLY_RE.match(text):
+        return text
     return _MODEL_ID_RE.sub("[modelo]", text)
 
 
@@ -826,7 +835,7 @@ def _evidence(refs: Sequence[Any]) -> list[dict[str, Any]]:
 
 
 def _research_section(pack: Any, facts: Mapping[str, str], *, full: bool,
-                      source: str = "livro") -> dict[str, Any]:
+                      source: str = "livro", notes_detail: bool = True) -> dict[str, Any]:
     """Pesquisa da semana: ``source="livro"`` (pacote gravado com hash) ou ``"entradas"``
     (arquivo da mente em ``inputs/``, ainda não validado pela decisão)."""
     notes = list(pack.notes)
@@ -858,7 +867,8 @@ def _research_section(pack: Any, facts: Mapping[str, str], *, full: bool,
     }
     if not full:
         return out
-    out["notes"] = [{
+    out["notes_detail"] = notes_detail
+    out["notes"] = [] if not notes_detail else [{
         "note_id": n.note_id, "issuer_id": n.issuer_id, "role": n.role, "stance": n.stance,
         "confidence": n.confidence, "horizon_weeks": n.horizon_weeks,
         "thesis": _render_facts(n.thesis, facts),
@@ -914,12 +924,16 @@ def _ai_calls(week_dir: Path, issues: _Issues, scope: str) -> dict[str, Any] | N
             "cost_usd": sum(cost) if cost else None}
 
 
-def _decision_dict(d: Any, cfg: FundConfig, facts: Mapping[str, str]) -> dict[str, Any]:
+def _decision_dict(d: Any, cfg: FundConfig, facts: Mapping[str, str], *,
+                   journal: bool = True) -> dict[str, Any]:
     tz = ZoneInfo(cfg.fund.timezone)
     h, m = (int(x) for x in cfg.fund.decision_deadline_local.split(":"))
     deadline = datetime(d.week.year, d.week.month, d.week.day, h, m, tzinfo=tz)
     out = d.model_dump(mode="json")
     out["rationale"] = _render_facts(out.get("rationale"), facts)
+    out["journal_omitted"] = not journal and out.get("journal") is not None
+    if not journal:
+        out["journal"] = None
     j = out.get("journal")
     if isinstance(j, dict):
         for k in ("situation", "alternatives_considered", "sizing_rationale",
@@ -952,7 +966,7 @@ def _week_performance(week: date, records: Sequence[Any], shadow: Sequence[Any]
 
 def _week_entry(rt: Any, cfg: FundConfig, book: Any, week: date, full: bool,
                 prev_final: Any, records: Sequence[Any], shadow_records: Sequence[Any],
-                issues: _Issues) -> tuple[dict[str, Any], Any]:
+                issues: _Issues, notes_detail: bool = True) -> tuple[dict[str, Any], Any]:
     """Uma semana do livro (``full`` ⇒ detalhe completo; senão resumo)."""
     from ..contracts import Proposal
     from ..hashing import sha256_obj
@@ -976,10 +990,11 @@ def _week_entry(rt: Any, cfg: FundConfig, book: Any, week: date, full: bool,
                                    lambda: book._read_booked(week))
     research = local.attempt("pacote de pesquisa", lambda: book.load_research_pack(week))
     final = _final_proposal(proposals, decisions, booked)
-    facts = _facts_from_briefing(wdir, local, "briefing") if full else {}
     decision = decisions.get(final.version) if final is not None else None
     if decision is not None and decision.proposal_id != final.proposal_id:
         decision = None
+    needs_facts = full or (decision is not None and "{{" in decision.rationale)
+    facts = _facts_from_briefing(wdir, local, "briefing") if needs_facts else {}
     attempts = None
     if (wdir / "attempts.json").is_file():
         attempts = local.attempt("attempts.json", lambda: _read_json(wdir / "attempts.json"))
@@ -1005,7 +1020,8 @@ def _week_entry(rt: Any, cfg: FundConfig, book: Any, week: date, full: bool,
                        "decided_at": d.decided_at, "approval_hash": d.approval_hash,
                        "proposal_id": d.proposal_id}
                       for v, d in sorted(decisions.items())],
-        "decision": _decision_dict(decision, cfg, facts) if decision is not None else None,
+        "decision": (_decision_dict(decision, cfg, facts, journal=full)
+                     if decision is not None else None),
         "path_taken": (attempts or {}).get("path") if isinstance(attempts, dict) else None,
         "attempts": (attempts or {}).get("attempts", []) if isinstance(attempts, dict) else [],
         "input_issues": ((attempts or {}).get("input_issues", [])
@@ -1051,7 +1067,8 @@ def _week_entry(rt: Any, cfg: FundConfig, book: Any, week: date, full: bool,
     entry["pm_decision"] = (_pm_section(wdir / "inputs" / "pm_decision.json", facts, local,
                                         "inputs") if full else None)
     entry["research"] = (local.attempt("resumo da pesquisa",
-                                       lambda: _research_section(research, facts, full=full))
+                                       lambda: _research_section(research, facts, full=full,
+                                                                 notes_detail=notes_detail))
                          if research is not None else None)
     rp_input = wdir / "inputs" / "research_pack.json"
     if research is None and full and rp_input.is_file():
@@ -1062,7 +1079,8 @@ def _week_entry(rt: Any, cfg: FundConfig, book: Any, week: date, full: bool,
         if rp is not None:
             entry["research"] = local.attempt(
                 "resumo da pesquisa (entradas)",
-                lambda: _research_section(rp, facts, full=True, source="entradas"))
+                lambda: _research_section(rp, facts, full=True, source="entradas",
+                                          notes_detail=notes_detail))
     entry["ai_calls"] = _ai_calls(wdir, local, "ledger") if wdir.is_dir() else None
     rdir = reports_root / "weekly" / week.isoformat()
     md_path = rdir / "relatorio.md"
@@ -1080,16 +1098,18 @@ def _week_entry(rt: Any, cfg: FundConfig, book: Any, week: date, full: bool,
 
 
 def _weeks_section(rt: Any, cfg: FundConfig, book: Any, records: Sequence[Any],
-                   shadow_records: Sequence[Any], issues: _Issues, full_weeks: int
+                   shadow_records: Sequence[Any], issues: _Issues, full_weeks: int,
+                   full_research_weeks: int = DEFAULT_FULL_RESEARCH_WEEKS
                    ) -> tuple[list[dict[str, Any]], dict[date, Any]]:
     weeks = issues.attempt("Semanas do livro", book.list_weeks, []) if book is not None else []
     full_set = set(weeks[-full_weeks:]) if full_weeks > 0 else set()
+    notes_set = set(weeks[-full_research_weeks:]) if full_research_weeks > 0 else set()
     out: list[dict[str, Any]] = []
     finals: dict[date, Any] = {}
     prev_final = None
     for week in weeks:
         entry, final = _week_entry(rt, cfg, book, week, week in full_set, prev_final, records,
-                                   shadow_records, issues)
+                                   shadow_records, issues, notes_detail=week in notes_set)
         finals[week] = final
         if final is not None:
             prev_final = final
@@ -1166,11 +1186,14 @@ def _check(cid: str, label: str, basis: str, value: Any, limit: Any, unit: str, 
             "unit": unit, "status": status, "detail": detail, "utilization": utilization}
 
 
-def _max_status(value: float | None, limit: float | None, soft: bool = False) -> str:
+def _over(value: float | None, limit: float | None, *, daily: bool, hard: bool) -> str:
+    """Status de um teto: ``excesso`` só para limite HARD na decisão (ex-ante); no registro
+    diário (carteira com drift) o excesso é ``alerta`` — o código reequilibra no próximo
+    rebalanceamento, como os gatilhos SOFT do monitor de risco."""
     if value is None or limit is None:
         return "n/d"
     if value > limit + LIMIT_TOL:
-        return "alerta" if soft else "excesso"
+        return "excesso" if hard and not daily else "alerta"
     return "ok"
 
 
@@ -1186,6 +1209,12 @@ def _worst_exposure(lines: Sequence[Any], group: str) -> tuple[Any | None, float
 
 
 def _limit_checks(cfg: FundConfig, rec: Any | None, proposal: Any | None) -> list[dict]:
+    """Risco vigente × mandato, em código.
+
+    Base: o último registro diário (carteira com drift) quando existe; senão o ex-ante da
+    decisão. Liquidez, stress, contribuições ao risco e aluguel vêm sempre do ex-ante da decisão
+    vigente. Status: ``ok`` | ``info`` | ``alerta`` | ``excesso`` | ``n/d``.
+    """
     rk, lq = cfg.risk, cfg.liquidity
     checks: list[dict[str, Any]] = []
     dr = rec.risk if rec is not None else None
@@ -1193,8 +1222,9 @@ def _limit_checks(cfg: FundConfig, rec: Any | None, proposal: Any | None) -> lis
     d_basis = f"diário ({rec.date.isoformat()})" if rec is not None else ""
     p_basis = (f"ex-ante na decisão ({proposal.week.isoformat()})"
                if proposal is not None else "")
-    basis = d_basis or p_basis
-    src = dr if dr is not None else pr
+    daily = dr is not None
+    basis = d_basis if daily else p_basis
+    src = dr if daily else pr
     if src is None:
         return checks
 
@@ -1203,38 +1233,48 @@ def _limit_checks(cfg: FundConfig, rec: Any | None, proposal: Any | None) -> lis
 
     band = [rk.vol_band_min, rk.vol_band_max]
     vol = pick("ex_ante_vol")
-    st = ("n/d" if vol is None else "excesso" if vol > rk.vol_band_max + LIMIT_TOL
-          else "alerta" if vol < rk.vol_band_min - LIMIT_TOL else "ok")
+    if vol is None:
+        st = "n/d"
+    elif vol > rk.vol_band_max + LIMIT_TOL:
+        st = "alerta" if daily else "excesso"
+    elif vol < rk.vol_band_min - LIMIT_TOL:
+        st = "info" if daily else "alerta"
+    else:
+        st = "ok"
     checks.append(_check("vol_ex_ante", "Vol ex-ante vs. banda do mandato", basis, vol, band,
                          "pct", st, f"meta {fmt_pct(rk.vol_target_annual)}",
                          vol / rk.vol_band_max if vol is not None else None))
-    if dr is not None:
+    if daily:
         rv = _num(dr.realized_vol_21d)
-        st = ("n/d" if rv is None else "alerta"
-              if rv > rk.vol_band_max + LIMIT_TOL or rv < rk.vol_band_min - LIMIT_TOL else "ok")
+        st = ("n/d" if rv is None else "alerta" if rv > rk.vol_band_max + LIMIT_TOL
+              else "info" if rv < rk.vol_band_min - LIMIT_TOL else "ok")
         checks.append(_check("vol_realizada_21d", "Vol realizada 21d vs. banda", d_basis, rv,
-                             band, "pct", st, "histórico insuficiente" if rv is None else ""))
+                             band, "pct", st, "histórico insuficiente" if rv is None else "",
+                             rv / rk.vol_band_max if rv is not None else None))
     net = pick("net")
     checks.append(_check("net", "Exposição líquida (|net|)", basis, net,
                          rk.net_exposure_max_abs, "pct",
-                         _max_status(abs(net) if net is not None else None,
-                                     rk.net_exposure_max_abs)))
+                         _over(abs(net) if net is not None else None, rk.net_exposure_max_abs,
+                               daily=daily, hard=True)))
     beta = pick("beta")
     checks.append(_check("beta", "Beta previsto (|β|)", basis, beta, rk.beta_max_abs, "x",
-                         _max_status(abs(beta) if beta is not None else None, rk.beta_max_abs)))
+                         _over(abs(beta) if beta is not None else None, rk.beta_max_abs,
+                               daily=daily, hard=True)))
     gross = pick("gross")
     checks.append(_check("gross_max", "Gross máximo", basis, gross, rk.gross_max, "pct",
-                         _max_status(gross, rk.gross_max)))
+                         _over(gross, rk.gross_max, daily=daily, hard=True)))
     checks.append(_check("gross_min", "Gross mínimo", basis, gross, rk.gross_min, "pct",
-                         "n/d" if gross is None else
-                         "alerta" if gross < rk.gross_min - LIMIT_TOL else "ok"))
+                         "n/d" if gross is None else "ok" if gross >= rk.gross_min - LIMIT_TOL
+                         else "info" if daily else "alerta",
+                         "pode refletir a escada de drawdown"))
     var = pick("var_1d_99")
-    checks.append(_check("var_1d", "VaR 1d (99%)", basis, var, rk.var_1d_max, "pct",
-                         _max_status(var, rk.var_1d_max)))
+    checks.append(_check("var_1d", f"VaR 1d ({fmt_pct(rk.var_confidence, 0)})", basis, var,
+                         rk.var_1d_max, "pct", _over(var, rk.var_1d_max, daily=daily,
+                                                     hard=False)))
     es = pick("es_1d_99")
-    checks.append(_check("es_1d", "ES 1d (99%)", basis, es, rk.es_1d_max, "pct",
-                         _max_status(es, rk.es_1d_max)))
-    if dr is not None:
+    checks.append(_check("es_1d", f"ES 1d ({fmt_pct(rk.var_confidence, 0)})", basis, es,
+                         rk.es_1d_max, "pct", _over(es, rk.es_1d_max, daily=daily, hard=False)))
+    if daily:
         dd = _num(dr.drawdown)
         stage = ladder_stage(dd, cfg)
         st = {"normal": "ok", "soft_stop": "alerta", "hard_stop": "excesso",
@@ -1245,21 +1285,21 @@ def _limit_checks(cfg: FundConfig, rec: Any | None, proposal: Any | None) -> lis
                              dd / cfg.drawdown.soft_stop if dd is not None else None))
     lines = list(src.exposures)
     p_lines = list(pr.exposures) if pr is not None else []
-    for group, cid, label, soft in (("country", "country_net", "Net por país (pior)", False),
-                                    ("sector", "sector_net", "Net por setor (pior)", False),
-                                    ("style", "style", "Exposição a estilo (pior)", True),
-                                    ("market", "tema_commodity",
-                                     "Tema/commodity (pior)", False)):
+    for group, cid, label in (("country", "country_net", "Net por país (pior)"),
+                              ("sector", "sector_net", "Net por setor (pior)"),
+                              ("style", "style", "Exposição a estilo (pior)"),
+                              ("market", "tema_commodity", "Tema/commodity (pior)")):
         worst, util = _worst_exposure(lines, group)
-        g_basis = basis
-        if worst is None and p_lines and src is not pr:
+        g_daily = daily
+        if worst is None and p_lines and daily:
             # O registro diário não traz tema/commodity: usa o ex-ante da decisão.
             worst, util = _worst_exposure(p_lines, group)
-            g_basis = p_basis
+            g_daily = False
         if worst is None or util is None:
             continue
-        st = "ok" if util <= 1 + LIMIT_TOL else ("alerta" if soft else "excesso")
-        checks.append(_check(cid, label, g_basis, worst.net, worst.limit,
+        hard = group in ("country", "sector") or str(worst.name).startswith("tema:")
+        st = _over(util, 1.0, daily=g_daily, hard=hard)
+        checks.append(_check(cid, label, d_basis if g_daily else p_basis, worst.net, worst.limit,
                              "x" if group == "style" else "pct", st,
                              f"{worst.name}: {fmt_pct(util, 1)} do limite", util))
     shares = rk.country_gross_share_max
@@ -1276,28 +1316,46 @@ def _limit_checks(cfg: FundConfig, rec: Any | None, proposal: Any | None) -> lis
         if worst_name is not None:
             checks.append(_check("country_gross_share", "Fatia do gross por país (pior)", basis,
                                  worst_val, shares[worst_name], "pct",
-                                 "ok" if worst_ratio <= 1 + LIMIT_TOL else "excesso",
+                                 _over(worst_ratio, 1.0, daily=daily, hard=True),
                                  f"{worst_name}: {fmt_pct(worst_ratio, 1)} do limite",
                                  worst_ratio))
-    if rec is not None and rec.positions:
+    if daily and rec.positions:
         longs = [p.weight for p in rec.positions if p.weight > 0]
         shorts = [-p.weight for p in rec.positions if p.weight < 0]
         if longs:
             checks.append(_check("name_long_max", "Maior posição long", d_basis, max(longs),
                                  rk.max_long_weight, "pct",
-                                 _max_status(max(longs), rk.max_long_weight)))
+                                 _over(max(longs), rk.max_long_weight, daily=True, hard=True)))
         if shorts:
             checks.append(_check("name_short_max", "Maior posição short (|w|)", d_basis,
                                  max(shorts), rk.max_short_weight, "pct",
-                                 _max_status(max(shorts), rk.max_short_weight)))
+                                 _over(max(shorts), rk.max_short_weight, daily=True,
+                                       hard=True)))
         n_high = int(rec.risk.squeeze_high_shorts)
         checks.append(_check("squeeze_high", "Shorts com squeeze ALTO", d_basis, n_high, 0,
-                             "count", "excesso" if n_high > 0 else "ok"))
+                             "count", "alerta" if n_high > 0 else "ok",
+                             "reavaliar/reduzir no próximo rebalanceamento" if n_high else ""))
         liq = _num(rec.risk.pct_gross_liquid_1d)
         checks.append(_check("liquidez_1d", "Gross liquidável em 1 dia", d_basis, liq, None,
                              "pct", "info" if liq is not None else "n/d",
                              f"mín. {fmt_pct(lq.min_gross_liquid_3d, 0)} em 3 dias e "
                              f"{fmt_pct(lq.min_gross_liquid_5d, 0)} em 5 dias"))
+    elif proposal is not None and proposal.positions:
+        longs = [t.weight for t in proposal.positions if t.weight > 0]
+        shorts = [-t.weight for t in proposal.positions if t.weight < 0]
+        if longs:
+            checks.append(_check("name_long_max", "Maior posição long", p_basis, max(longs),
+                                 rk.max_long_weight, "pct",
+                                 _over(max(longs), rk.max_long_weight, daily=False, hard=True)))
+        if shorts:
+            checks.append(_check("name_short_max", "Maior posição short (|w|)", p_basis,
+                                 max(shorts), rk.max_short_weight, "pct",
+                                 _over(max(shorts), rk.max_short_weight, daily=False,
+                                       hard=True)))
+        n_high = sum(1 for t in proposal.positions
+                     if t.side.value == "SHORT" and t.squeeze_bucket == "HIGH")
+        checks.append(_check("squeeze_high", "Shorts com squeeze ALTO", p_basis, n_high, 0,
+                             "count", "excesso" if n_high > 0 else "ok"))
     if proposal is not None:
         liq = _liquidity_by_side(proposal.positions, cfg)
         for side, cid, label in (("LONG", "liq_days_long", "Dias para liquidar (long)"),
@@ -1305,35 +1363,36 @@ def _limit_checks(cfg: FundConfig, rec: Any | None, proposal: Any | None) -> lis
             s = liq[side]
             if s["n"]:
                 checks.append(_check(cid, label, p_basis, s["max_days"], s["limit"], "days",
-                                     _max_status(s["max_days"], s["limit"]),
+                                     _over(s["max_days"], s["limit"], daily=False, hard=True),
                                      f"{s['n_missing']} posição(ões) sem dado"
                                      if s["n_missing"] else ""))
         frs = _num(pr.factor_risk_share)
         checks.append(_check("factor_risk_share", "Fração do risco vinda de fatores", p_basis,
                              frs, rk.max_factor_risk_share, "pct",
-                             _max_status(frs, rk.max_factor_risk_share, soft=True)))
+                             _over(frs, rk.max_factor_risk_share, daily=False, hard=False)))
         tops = [v for v in (_num(x) for x in pr.top_risk_contributors.values()) if v is not None]
         tops += [v for v in (_num(t.risk_contribution) for t in proposal.positions)
                  if v is not None]
         if tops:
             checks.append(_check("single_name_risk", "Maior contribuição de um nome ao risco",
                                  p_basis, max(tops), rk.max_single_name_risk_share, "pct",
-                                 _max_status(max(tops), rk.max_single_name_risk_share,
-                                             soft=True)))
+                                 _over(max(tops), rk.max_single_name_risk_share, daily=False,
+                                       hard=False)))
         gaps = [(k, v) for k, v in pr.stress_tests.items()
                 if k.startswith("Gap ") and _num(v) is not None]
         if gaps:
             k, v = min(gaps, key=lambda kv: kv[1])
             checks.append(_check("country_gap_stress", "Pior gap de país (cenário)", p_basis,
                                  v, -rk.country_stress_max_loss, "pct",
-                                 "alerta" if v < -rk.country_stress_max_loss - LIMIT_TOL
-                                 else "ok", k))
+                                 _over(-v, rk.country_stress_max_loss, daily=False, hard=False),
+                                 k))
         fees = [v for t in proposal.positions if t.side.value == "SHORT"
                 and (v := _num(t.borrow_fee_annual)) is not None]
         if fees:
             checks.append(_check("borrow_fee", "Maior taxa de aluguel (shorts)", p_basis,
                                  max(fees), cfg.shorting.max_borrow_fee, "pct",
-                                 _max_status(max(fees), cfg.shorting.max_borrow_fee)))
+                                 _over(max(fees), cfg.shorting.max_borrow_fee, daily=False,
+                                       hard=True)))
     return checks
 
 
@@ -1479,7 +1538,7 @@ def _daily_reports(rt: Any, cfg: FundConfig, records: Sequence[Any], issues: _Is
 def _risk_monitor(rt: Any, issues: _Issues, limit: int) -> dict[str, Any]:
     root = Path(rt.reports_root) / "risk"
     if not root.is_dir():
-        return {"available": False, "runs": []}
+        return {"available": False, "latest": None, "runs": []}
     groups: dict[str, list[Path]] = {}
     for path in sorted(root.rglob("*")):
         if not path.is_file() or path.suffix.lower() not in (".json", ".md"):
@@ -1488,9 +1547,10 @@ def _risk_monitor(rt: Any, issues: _Issues, limit: int) -> dict[str, Any]:
         key = rel.parts[0] if len(rel.parts) > 1 else ""
         groups.setdefault(key, []).append(path)
     runs = []
+    latest = None
     for key in sorted(groups, reverse=True)[:max(limit, 0)]:
         files = []
-        for path in groups[key]:
+        for path in sorted(groups[key], key=lambda x: x.name, reverse=True):
             rel = path.relative_to(root / key if key else root).as_posix()
             entry: dict[str, Any] = {"name": rel, "kind": path.suffix.lower().lstrip("."),
                                      "sha256": _sha256_file(path)}
@@ -1507,9 +1567,11 @@ def _risk_monitor(rt: Any, issues: _Issues, limit: int) -> dict[str, Any]:
             else:
                 entry["text"] = _read_text(path)
             files.append(entry)
+            if latest is None and entry["kind"] == "json" and entry.get("data") is not None:
+                latest = {"run_key": key or "(raiz)", "file": rel}
         runs.append({"key": key or "(raiz)", "date": key if _WEEK_DIR_RE.match(key) else None,
                      "files": files})
-    return {"available": bool(runs), "runs": runs}
+    return {"available": bool(runs), "latest": latest, "runs": runs}
 
 
 def _round(v: Any) -> float | None:
@@ -1547,7 +1609,10 @@ def _backtest_run(run_dir: Path, base: Path, issues: _Issues) -> dict[str, Any] 
     rel = run_dir.relative_to(base).as_posix() if run_dir != base else run_dir.name
     notice = str(prov.get("data_notice") or "")
     run: dict[str, Any] = {
-        "id": rel, "label": f"Variante {variant}" if variant else run_dir.name,
+        "id": rel,
+        "label": (run_dir.name if not variant else f"Variante {variant}"
+                  if run_dir.name.lower() in (str(variant).lower(), f"bt_{variant}".lower())
+                  else f"Variante {variant} — {run_dir.name}"),
         "variant": variant, "description": "; ".join(desc) or "configuração do mandato",
         "overrides": raw.get("overrides"), "signal_weights": sw,
         "metrics": raw.get("metrics") or {}, "notes": list(raw.get("notes") or []),
@@ -1603,9 +1668,27 @@ def _backtest_run(run_dir: Path, base: Path, issues: _Issues) -> dict[str, Any] 
     return run
 
 
+def _backtest_documents(base: Path) -> list[dict[str, Any]]:
+    """Notas em Markdown da árvore de backtests (ex.: ``CALIBRACAO.md``), até 3 níveis."""
+    docs = []
+    for path in sorted(base.rglob("*.md")):
+        rel = path.relative_to(base)
+        if len(rel.parts) > MAX_BACKTEST_DEPTH or not path.is_file():
+            continue
+        try:
+            if path.stat().st_size > MAX_RISK_FILE_BYTES:
+                continue
+        except OSError:
+            continue
+        text = _read_text(path)
+        if text is not None:
+            docs.append({"path": rel.as_posix(), "sha256": _sha256_file(path), "markdown": text})
+    return docs
+
+
 def _backtests(root: Path | None, pattern: str, issues: _Issues) -> dict[str, Any]:
     if root is None or not Path(root).is_dir():
-        return {"available": False, "runs": []}
+        return {"available": False, "runs": [], "documents": []}
     base = Path(root)
     found: list[Path] = []
     if (base / "metrics.json").is_file():
@@ -1619,7 +1702,9 @@ def _backtests(root: Path | None, pattern: str, issues: _Issues) -> dict[str, An
             if found:
                 break
     runs = [r for p in found if (r := _backtest_run(p, base, issues)) is not None]
-    return {"available": bool(runs), "runs": sorted(runs, key=lambda r: r["id"])}
+    docs = _backtest_documents(base) if pattern == "*" else []
+    return {"available": bool(runs), "runs": sorted(runs, key=lambda r: r["id"]),
+            "documents": docs}
 
 
 def _audit(book_root: Path, book_exists: bool, cfg: FundConfig, tail: int,
@@ -1726,6 +1811,21 @@ def _market_info(rt: Any, issues: _Issues) -> dict[str, Any]:
                                         lambda: market_is_synthetic(Path(rt.market_root)),
                                         False))
     return {"available": True, "last_date": last, "is_synthetic": synthetic}
+
+
+_AGENDA_DROP = frozenset({"fuso_do_pc", "pc_menos_brasilia_horas"})
+
+
+def _agenda(rt: Any, now: datetime, book_exists: bool, issues: _Issues) -> dict[str, Any] | None:
+    """``cdp agenda`` (o que a rotina deve fazer agora), sem os campos da máquina local."""
+    if not book_exists:
+        return None
+    from .agenda import agenda
+
+    raw = issues.attempt("Agenda operacional", lambda: agenda(rt, now=now))
+    if not isinstance(raw, dict):
+        return None
+    return {k: v for k, v in raw.items() if k not in _AGENDA_DROP}
 
 
 def _status(rt: Any, cfg: FundConfig, now: datetime, weeks: Sequence[dict[str, Any]],
@@ -1865,14 +1965,18 @@ def _data_notice(is_synth: bool, notice: str | None, records: Sequence[Any],
 def painel_data(rt: Any, *, now: datetime | None = None,
                 max_daily_reports: int = DEFAULT_MAX_DAILY_REPORTS,
                 backtest_root: Path | str | None = None, backtest_pattern: str = "*",
-                full_weeks: int = DEFAULT_FULL_WEEKS, audit_tail: int = DEFAULT_AUDIT_TAIL,
+                full_weeks: int = DEFAULT_FULL_WEEKS,
+                full_research_weeks: int = DEFAULT_FULL_RESEARCH_WEEKS,
+                audit_tail: int = DEFAULT_AUDIT_TAIL,
                 max_risk_runs: int = DEFAULT_MAX_RISK_RUNS) -> dict[str, Any]:
     """Retrato JSON completo e determinístico da operação do CDP (somente leitura).
 
     ``now`` (com fuso; sem fuso ⇒ UTC) fixa o relógio do painel (padrão: ``rt.now()``).
     ``backtest_root`` (padrão: ``<reports>/backtest``) pode conter um ``metrics.json`` ou
-    subpastas de execuções (``backtest_pattern`` filtra os nomes, ex.: ``"bt_*"``).
-    Semanas mais antigas que as ``full_weeks`` mais recentes vêm resumidas.
+    subpastas de execuções até 3 níveis (``backtest_pattern`` filtra os nomes, ex.:
+    ``"bt_*"``; com o padrão ``"*"`` as notas ``*.md`` da árvore também entram).
+    Semanas mais antigas que as ``full_weeks`` mais recentes vêm resumidas; as notas por
+    emissor da pesquisa só vêm nas ``full_research_weeks`` mais recentes.
     """
     from ..ui.data import CDP_INVARIANTS, kill_switch_state
     from .reports import PAPER_TRADING_TEXT
@@ -1892,7 +1996,7 @@ def painel_data(rt: Any, *, now: datetime | None = None,
         book = issues.attempt("Livro", lambda: Book(book_root, config=cfg))
     track, records, shadow_records = _track_section(rt, cfg, book_exists, issues)
     weeks, finals = _weeks_section(rt, cfg, book, records, shadow_records, issues,
-                                   full_weeks) if book is not None else ([], {})
+                                   full_weeks, full_research_weeks) if book is not None else ([], {})
     latest = _latest_day(records, shadow_records, finals, cfg)
     # Carteira vigente: a da semana do último registro; sem registro, a última decidida.
     live_week = records[-1].live_book_week if records else None
@@ -1912,6 +2016,7 @@ def painel_data(rt: Any, *, now: datetime | None = None,
     market = _market_info(rt, issues)
     kill = kill_switch_state(book_root)
     status = _status(rt, cfg, now, weeks, records, kill, integrity, market, risk)
+    status["agenda"] = _agenda(rt, now, book_exists, issues)
     is_synth, sources, notice = _synthetic(records, shadow_records, weeks, market)
     synth_bt = [r["id"] for r in backtests["runs"] if r.get("is_synthetic")]
     if synth_bt:
@@ -1939,7 +2044,8 @@ def painel_data(rt: Any, *, now: datetime | None = None,
                    "audit_events": audit.get("n_events"),
                    "backtests": len(backtests["runs"])},
         "export_limits": {"max_daily_reports": max_daily_reports, "full_weeks": full_weeks,
-                   "audit_tail": audit_tail, "max_risk_runs": max_risk_runs},
+                          "full_research_weeks": full_research_weeks,
+                          "audit_tail": audit_tail, "max_risk_runs": max_risk_runs},
     }
     data = {
         "meta": meta, "status": status, "track_record": track, "latest_day": latest,

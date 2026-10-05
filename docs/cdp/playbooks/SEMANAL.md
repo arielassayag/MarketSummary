@@ -8,11 +8,14 @@ Metodologia: `docs/cdp/METODOLOGIA.md`. Horário de Brasília. Prazo: decisão g
 ```sh
 uv sync --extra dev --extra ai
 uv run python -m cdp status
+uv run python -m cdp agenda
 ```
 
-`status` informa se hoje é o primeiro pregão da semana na B3, se a semana já tem decisão, o
-estado do kill switch e a integridade da trilha. Se não for dia de rebalanceamento ou a semana já
-tiver decisão, encerre com um resumo (nada a fazer).
+`status` informa se hoje é o primeiro pregão da semana na B3, se a semana já tem decisão e o
+estado do kill switch. `agenda` decide pelo relógio de Brasília (independente do fuso do PC):
+`semanal.acao` = `montar` (com a `etapa` de onde retomar e `minutos_ate_o_prazo`), `aguardar`,
+`prazo_vencido` ou `nenhuma`. Se não for `montar`, encerre com um resumo (nada a fazer). No PC
+local, a skill `cdp:semanal` do plugin operacionaliza este roteiro (`docs/cdp/LOCAL.md`).
 
 ## 1. Coleta e preparação (código)
 
@@ -62,7 +65,7 @@ Corrija os apontamentos e repita até `OK`.
 ## 4b. Revisão pré-trade (opcional, recomendada)
 
 ```sh
-uv run python -m cdp weekly preview --week AAAA-MM-DD --mind claude-code --out /tmp/previa.json
+uv run python -m cdp weekly preview --week AAAA-MM-DD --mind claude-code --out outputs/previa_AAAA-MM-DD.json
 ```
 
 Roda o mesmo pipeline do `decide` **sem gravar nada** e mostra o livro proposto, as posições com a

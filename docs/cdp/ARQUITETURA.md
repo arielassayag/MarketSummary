@@ -53,6 +53,7 @@ Falha HARD de compliance ⇒ `BLOCKED` (não aprovável).
 | `backtest/` | Walk-forward semanal e métricas | `run_backtest`, `performance_metrics` |
 | `research/` | Camada GenAI multiagente + guardrails | `run_research`, provedores `demo/anthropic/openrouter/imported` |
 | `workflow/` | Pipeline semanal, aprovação, livro, ledger, memo | `WeeklyPipeline`, `Book` |
+| `workflow/agenda.py`, `workflow/risk_monitor.py` | Rotinas locais: agenda pelo relógio de Brasília (pendências, prazos) e monitor de risco intradiário/fechamento com ações determinísticas (`kill-switch:` só para gatilhos HARD) | `agenda`, `run_risk_monitor` |
 | `ui/` + `pm_app.py` | App Streamlit do gestor | `uv run streamlit run pm_app.py` |
 
 ## 4. Contratos de dados em memória

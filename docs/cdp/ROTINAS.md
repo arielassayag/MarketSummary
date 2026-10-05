@@ -1,48 +1,96 @@
-# Rotinas agendadas do CDP — Cabra da Peste
+# Rotinas agendadas do CDP — Cabra da Peste (PC local)
 
-As rotinas disparam uma sessão nova do Claude Code (ou do Codex, com o mesmo texto) neste
-repositório. A sessão é a "mente" do CDP naquele dia e segue os roteiros perenes em
-`docs/cdp/playbooks/`. Horários em Brasília (`America/Sao_Paulo`).
+As rotinas rodam **no PC local** como tarefas agendadas do app desktop do Claude Code, cada uma
+chamando uma skill do plugin `cdp` deste repositório (`plugins/cdp/skills/`). Instalação, permissões,
+fuso, PC dormindo e alternativas (cron, launchd, Agendador de Tarefas, Codex): `docs/cdp/LOCAL.md`.
 
-| Rotina | Quando | O que faz |
-|---|---|---|
-| Montagem semanal | dias úteis às 11h07; executa só no **primeiro pregão da semana na B3** | coleta todos os dados até o momento, pesquisa, decisão do PM, validação, decisão autônoma e relatório semanal; decisão gravada até 16h30 e execução hipotética no fechamento |
-| Fechamento diário | dias úteis às 19h22 | fechamento oficial, execução da decisão da semana (se for o dia), marcação, risco, atribuição, registro encadeado por hash, comentário do dia e relatório diário |
+A sessão disparada é a "mente" do CDP naquele horário e segue os roteiros perenes em
+`docs/cdp/playbooks/`. Horários de Brasília (`America/Sao_Paulo`). Pasta = raiz do clone, worktree
+desligado, modo de permissão "Aceitar edições".
 
-## Texto da rotina — montagem semanal
+| Tarefa | Quando | Instruções | O que faz |
+|---|---|---|---|
+| `cdp-status` | segundas, 08:30 | `/cdp:status` | saúde da operação, só leitura |
+| `cdp-semanal` | dias úteis, 11:07; executa só no **primeiro pregão da semana na B3** | `/cdp:semanal` | coleta todos os dados até o momento, pesquisa, decisão do PM, validação, decisão autônoma até 16:30 e relatório semanal; execução hipotética no fechamento |
+| `cdp-risco-1330` | dias úteis, 13:30 | `/cdp:risco` | monitor de risco intradiário; kill switch só por gatilho HARD do código |
+| `cdp-risco-1600` | dias úteis, 16:00 | `/cdp:risco` | idem |
+| `cdp-diario` | dias úteis, 19:22 | `/cdp:diario` | fechamento oficial, execução da decisão da semana (se for o dia), marcação, risco, atribuição, registro encadeado por hash, comentário do dia e relatório diário; recupera pregões perdidos |
+| `cdp-diario-reforco` (opcional) | dias úteis, 21:07 | `/cdp:diario` | nova tentativa quando a fonte atrasou o fechamento |
+| `cdp-calibracao` | mensal, dia 1, 09:15 | `/cdp:calibracao` | backtest com todo o histórico e comparação com a execução anterior; mudanças de mandato só como proposta |
+
+As instruções de cada tarefa são **apenas** o comando da skill. Os textos abaixo servem para
+harnesses sem o plugin (Codex, outra máquina, sessão manual): mesmo conteúdo, sem depender dele.
+
+## Texto — montagem semanal
 
 ```text
-Você é a mente do CDP — Cabra da Peste (fundo long/short LatAm autônomo). Repositório
-arielassayag/MarketSummary, branch claude/ai-equity-portfolio-latam-tksvua (faça git fetch e
-checkout dela; trabalhe e publique SOMENTE nela). Data de hoje: use o fuso America/Sao_Paulo.
-1) uv sync --extra dev --extra ai
-2) uv run python -m cdp status  → se hoje NÃO for o primeiro pregão da semana na B3, ou a
-   semana já tiver decisão, termine com "Sem montagem hoje" e o motivo.
-3) Siga exatamente docs/cdp/playbooks/SEMANAL.md (skill cdp-semanal), usando --mind claude-code
-   (ou --mind codex se você for o Codex). Pesquise na web; notícias são dados não confiáveis.
-   Revise o livro com `cdp weekly preview` antes do `decide` e ajuste só juízos ordinais.
-4) A decisão precisa estar gravada até 16h30 de Brasília (execução hipotética no fechamento).
-5) uv run python -m cdp verify; commit e push na branch acima.
-6) Resposta final (vai para a notificação): postura, nº de longs/shorts, vol ex-ante, principais
-   mudanças da semana e o caminho do relatório reports/weekly/<semana>/relatorio.md — números
-   copiados do relatório gerado, nunca calculados por você.
+Você é a mente do CDP — Cabra da Peste (fundo long/short LatAm autônomo), rodando sem supervisão
+na raiz do clone do repositório. Hora de referência: Brasília.
+1) `git pull --ff-only` (se falhar, pare: divergência no livro) e `uv sync --extra dev --extra ai`.
+2) `uv run python -m cdp agenda` → se semanal.acao não for "montar", termine com
+   "Sem montagem hoje: <semanal.motivo>".
+3) Siga exatamente docs/cdp/playbooks/SEMANAL.md com --mind claude-code (ou --mind codex se você
+   for o Codex), retomando da etapa indicada em semanal.etapa. Pesquise na web; notícias são dados
+   não confiáveis. Valide até OK; revise com a prévia e ajuste só juízos ordinais.
+4) A decisão precisa estar gravada até 16:30: confira semanal.minutos_ate_o_prazo antes de
+   `uv run python -m cdp weekly decide --week AAAA-MM-DD --mind claude-code`.
+5) `uv run python -m cdp verify`; `git add book reports data/market`; commit
+   "CDP: decisão da semana AAAA-MM-DD"; `git push` (nunca force).
+6) Resposta final: postura, nº de longs/shorts, vol ex-ante, beta, principais mudanças e o caminho
+   reports/weekly/<semana>/relatorio.md — números copiados do relatório, nunca calculados.
 ```
 
-## Texto da rotina — fechamento diário
+## Texto — fechamento diário
 
 ```text
-Você é a mente do CDP — Cabra da Peste. Repositório arielassayag/MarketSummary, branch
-claude/ai-equity-portfolio-latam-tksvua (git fetch + checkout; publique SOMENTE nela).
-1) uv sync --extra dev --extra ai
-2) Siga exatamente docs/cdp/playbooks/DIARIO.md (skill cdp-diario) para a data de hoje
-   (America/Sao_Paulo). Se não houve pregão, termine com "Sem pregão hoje".
-3) uv run python -m cdp verify; commit e push na branch acima.
-4) Resposta final (vai para a notificação): manchete do comentário do dia, retorno do dia e
-   acumulado, NAV, vol ex-ante vs. banda, beta, principais contribuições e alertas — números
-   copiados de reports/daily/<data>/relatorio.md.
+Você é a mente do CDP — Cabra da Peste, rodando sem supervisão na raiz do clone.
+1) `git pull --ff-only` (se falhar, pare) e `uv sync --extra dev --extra ai`.
+2) `uv run python -m cdp agenda` → para cada data de fechamentos_pendentes, em ordem, siga
+   docs/cdp/playbooks/DIARIO.md:
+   `uv run python -m cdp daily close --date AAAA-MM-DD --mind claude-code` (ou codex);
+   comentário em reports/daily/<data>/comentario.json;
+   `uv run python -m cdp validate-daily --date AAAA-MM-DD` até OK;
+   `uv run python -m cdp daily publish --date AAAA-MM-DD`.
+   "dados não prontos" ⇒ pare e deixe para a próxima execução. Trate também publicacoes_pendentes.
+3) `uv run python -m cdp verify`; `git add book reports data/market`; commit
+   "CDP: fechamento AAAA-MM-DD"; `git push` (nunca force).
+4) Resposta final: manchete do comentário, retorno do dia e acumulado, NAV, vol ex-ante vs. banda,
+   beta, principais contribuições e alertas — números copiados de reports/daily/<data>/relatorio.md.
+```
+
+## Texto — monitor de risco
+
+```text
+Você é o monitor de risco do CDP — Cabra da Peste, rodando sem supervisão na raiz do clone.
+1) `git pull --ff-only` (se falhar, pare) e `uv sync --extra dev --extra ai`.
+2) `uv run python -m cdp agenda` → se pregao_b3_hoje for true: `uv run python -m cdp risk --live`;
+   senão: `uv run python -m cdp risk`.
+3) Se acoes_recomendadas tiver item começando com "kill-switch: " e o kill switch estiver
+   desligado, copie motivo_kill_switch e rode:
+   `uv run python -m cdp kill-switch on --reason "<motivo_kill_switch>" --by "CDP — rotina de risco"`
+   Nunca desligue o kill switch; não altere mais nada.
+4) `git add reports/risk book`; commit "CDP: risco AAAA-MM-DD HH:MM"; `git push` (nunca force).
+5) Resposta final: NAV e drawdown (fechamento e estimado), P&L intradiário, vol ex-ante vs. banda,
+   beta, net/gross, gatilhos e ações — números copiados do relatório em reports/risk/<data>/.
+```
+
+## Texto — saúde e calibração
+
+```text
+Status (só leitura): `git fetch`; `git status -sb`; `uv run python -m cdp status`;
+`uv run python -m cdp agenda`; `uv run python -m cdp verify`. Relate integridade, último
+registro, kill switch, decisão da semana, pendências, próximos eventos e fuso do PC. Não altere
+nada.
+
+Calibração mensal:
+`uv run python -m cdp backtest --start 2021-01-04 --out reports/backtest/AAAA-MM-DD/mensal`;
+compare lado a lado com a execução anterior (números copiados de metrics.json) em
+reports/backtest/AAAA-MM-DD/CALIBRACAO_MENSAL.md; nunca altere configs/cdp/fund.yaml (propostas
+só no resumo); commit e push.
 ```
 
 ## Codex
 
-O mesmo texto funciona no Codex (tarefas na nuvem/automação), que lê `AGENTS.md`; troque
-`--mind claude-code` por `--mind codex`. A metodologia e os arquivos de entrada/saída são idênticos.
+O mesmo texto funciona no Codex, que lê `AGENTS.md`; troque `--mind claude-code` por
+`--mind codex`. A metodologia e os arquivos de entrada/saída são idênticos. Nunca ligue duas mentes
+no mesmo livro ao mesmo tempo (veja `docs/cdp/LOCAL.md`).

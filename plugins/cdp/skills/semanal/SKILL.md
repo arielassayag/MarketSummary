@@ -13,13 +13,13 @@ allowed-tools:
   - Bash(uv sync *)
   - Bash(uv run python -m cdp *)
   - Bash(git status *)
-  - Bash(git pull *)
+  - Bash(git pull --ff-only)
   - Bash(git fetch *)
   - Bash(git log *)
   - Bash(git diff *)
   - Bash(git add *)
   - Bash(git commit *)
-  - Bash(git push *)
+  - Bash(git push)
 ---
 
 # CDP — montagem semanal da carteira (rotina local)

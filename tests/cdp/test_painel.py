@@ -99,6 +99,9 @@ def test_all_sections_present(data):
     assert data["weeks"][0]["stage"] == "efetivada"
     assert data["status"]["phase"] == "em_operacao"
     assert data["status"]["integrity"]["ok"] is True
+    agenda = data["status"]["agenda"]
+    assert agenda["ultimo_registro_diario"] == "2024-03-05"
+    assert agenda["fechamentos_pendentes"] == [] and "fuso_do_pc" not in agenda
     assert data["audit"]["chain_ok"] is True and data["audit"]["events"]
     assert {c["id"] for c in data["risk"]["limit_checks"]} >= {"vol_ex_ante", "net", "beta",
                                                               "var_1d", "drawdown"}
@@ -115,6 +118,16 @@ def test_json_is_strict_without_nan(data):
 
     json.loads(text, parse_constant=_bad)
     assert all(math.isfinite(x) for x in _floats(data))
+
+
+def test_daily_drift_breach_is_alert_not_hard_excess():
+    from cdp.workflow.painel import _over
+
+    assert _over(0.0101, 0.01, daily=True, hard=True) == "alerta"
+    assert _over(0.0101, 0.01, daily=False, hard=True) == "excesso"
+    assert _over(0.0101, 0.01, daily=False, hard=False) == "alerta"
+    assert _over(0.0099, 0.01, daily=False, hard=True) == "ok"
+    assert _over(None, 0.01, daily=True, hard=True) == "n/d"
 
 
 def test_nan_becomes_null_never_zero():
@@ -243,6 +256,7 @@ def test_empty_book_before_inception(tmp_path):
     assert d["status"]["nav_usd"] == load_config().fund.inception_nav_usd
     assert d["meta"]["is_synthetic"] is False
     assert d["risk"]["limit_checks"] == []
+    assert d["status"]["agenda"] is None
     assert any(e["label"].startswith("Decisão semanal") for e in d["status"]["next_events"])
     assert not (root / "book").exists()  # leitura nunca cria pastas
     json.loads(to_json(d))
@@ -311,6 +325,9 @@ def test_decided_week_not_yet_executed(tmp_path):
     assert risk["ex_ante"]["ex_ante_vol"] == rt.book.load_proposal(week).risk.ex_ante_vol
     assert risk["daily"] is None and "ainda sem registro diário" in risk["basis_note"]
     assert risk["limit_checks"] and all("ex-ante" in c["basis"] for c in risk["limit_checks"])
+    # Coerência com o compliance gravado: sem falha HARD na decisão ⇒ nenhum "excesso" ex-ante.
+    assert not w1["proposal"]["compliance"]["failed_hard"]
+    assert not [c["id"] for c in risk["limit_checks"] if c["status"] == "excesso"]
     assert decided["meta"]["is_synthetic"] is True
 
 
@@ -333,6 +350,7 @@ def test_backtests_and_risk_monitor(demo, tmp_path):
                                    encoding="utf-8")
     (run / "ic.csv").write_text("date,composite\n2024-01-01,0.1\n2024-01-08,-0.05\n",
                                 encoding="utf-8")
+    (reports / "backtest" / "NOTA.md").write_text("# Calibração\n", encoding="utf-8")
     risk_dir = reports / "risk" / "2024-03-05"
     risk_dir.mkdir(parents=True)
     (risk_dir / "monitor.json").write_text(json.dumps({"var": float("nan"), "model": "x",
@@ -349,9 +367,25 @@ def test_backtests_and_risk_monitor(demo, tmp_path):
     assert r["weekly"]["ex_ante_vol"] == [0.04, None]
     assert r["nav_weekly"]["nav"][-1] == 98.98
     assert r["ic"]["summary"]["composite"]["n"] == 2
+    assert [(x["path"], x["markdown"]) for x in bt["documents"]] == [("NOTA.md", "# Calibração\n")]
     mon = d["risk_monitor"]
     assert mon["available"] and mon["runs"][0]["date"] == "2024-03-05"
+    assert mon["latest"] == {"run_key": "2024-03-05", "file": "monitor.json"}
     files = {f["name"]: f for f in mon["runs"][0]["files"]}
     assert files["monitor.json"]["data"] == {"var": None, "texto": MALICIOUS}
     assert files["monitor.md"]["text"] == "# Monitor\n"
     assert "<script>alert(1)" not in render_painel(d)
+
+
+def test_older_weeks_are_summarized(demo, data):
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        d = painel_data(_rt(demo), now=NOW, full_weeks=0)
+    w = d["weeks"][0]
+    assert w["detail"] == "resumo"
+    assert "trades" not in w["proposal"] and w["proposal"]["positions"]
+    assert w["proposal"]["summary"] == data["weeks"][0]["proposal"]["summary"]
+    assert w["decision"]["journal"] is None and w["decision"]["journal_omitted"] is True
+    assert w["pm_decision"] is None and w["report"]["markdown"] is None
+    assert "notes" not in w["research"] and w["research"]["counts"]["notes"] >= 1
+    assert "{{fact:" not in to_json(data)

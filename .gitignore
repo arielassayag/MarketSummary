@@ -37,3 +37,6 @@ data/cache/
 # CDP: trava e staging do armazenamento de mercado
 data/market/.write.lock
 data/market/**/.*.staging-*
+
+# CDP: logs das rotinas locais (scripts/cdp_run_task.*)
+logs/

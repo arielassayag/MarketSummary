@@ -13,13 +13,13 @@ allowed-tools:
   - Bash(uv sync *)
   - Bash(uv run python -m cdp *)
   - Bash(git status *)
-  - Bash(git pull *)
+  - Bash(git pull --ff-only)
   - Bash(git fetch *)
   - Bash(git log *)
   - Bash(git diff *)
   - Bash(git add *)
   - Bash(git commit *)
-  - Bash(git push *)
+  - Bash(git push)
 ---
 
 # CDP — fechamento diário (rotina local)
@@ -87,6 +87,9 @@ Leia `status` na saída:
    ```sh
    uv run python -m cdp validate-daily --date AAAA-MM-DD
    ```
+
+   Se depois de 3 correções ainda `FALHOU`, publique assim mesmo (o código usa o template
+   determinístico, só com fatos) e relate os apontamentos — o dia não pode ficar sem relatório.
 
 5. Publique:
 

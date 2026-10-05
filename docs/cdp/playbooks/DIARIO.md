@@ -6,8 +6,14 @@ Vale para **Claude Code** e **Codex**. Metodologia: `docs/cdp/METODOLOGIA.md`.
 
 ```sh
 uv sync --extra dev --extra ai
-uv run python -m cdp daily --date AAAA-MM-DD --mind claude-code   # ou codex
+uv run python -m cdp agenda                                         # pregões pendentes
+uv run python -m cdp daily close --date AAAA-MM-DD --mind claude-code   # ou codex
 ```
+
+`agenda` lista em `fechamentos_pendentes` todos os pregões sem registro (inclusive os de dias em
+que a rotina não rodou), em ordem: feche um por um, cada um com seu comentário. Se o fechamento
+devolver `dados não prontos`, pare e tente mais tarde. No PC local, a skill `cdp:diario` do plugin
+operacionaliza este roteiro (`docs/cdp/LOCAL.md`).
 
 Coleta o fechamento oficial (preços, câmbio, taxas, aluguel da B3), executa no fechamento a
 decisão da semana se hoje for dia de rebalanceamento, marca a mercado a carteira do CDP e a
@@ -25,7 +31,11 @@ dados não confiáveis.
 
 ## 3. Publicação (código)
 
+A publicação é **imutável**: valide antes e corrija até `OK` (com problemas, o código publicaria o
+template determinístico no lugar do comentário).
+
 ```sh
+uv run python -m cdp validate-daily --date AAAA-MM-DD
 uv run python -m cdp daily publish --date AAAA-MM-DD
 uv run python -m cdp verify
 git add book reports data/market && git commit -m "CDP: fechamento AAAA-MM-DD" && git push

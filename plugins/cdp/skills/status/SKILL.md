@@ -18,7 +18,8 @@ allowed-tools:
 # CDP — saúde da operação (somente leitura)
 
 Rotina sem supervisão e **sem efeitos**: não escreva arquivos, não faça commit, pull ou push, não
-mexa no kill switch. Números são copiados das saídas da CLI; nunca calculados.
+mexa no kill switch. Números são copiados das saídas da CLI; nunca calculados. Contexto do mandato
+e das rotinas: `docs/cdp/METODOLOGIA.md` e `docs/cdp/LOCAL.md`.
 
 ## Passos
 

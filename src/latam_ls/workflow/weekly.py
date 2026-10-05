@@ -38,7 +38,6 @@ from ..contracts import (
     ResearchPack,
     RiskSummary,
     Severity,
-    Side,
     View,
 )
 from ..hashing import sha256_obj
@@ -66,6 +65,8 @@ from ..risk.types import STYLE_FACTORS, RiskModel
 from .memo import render_memo
 
 SYSTEM_CREATOR = "CDP — motor quantitativo"
+# O mandato tem vol-alvo: o otimizador escala o alpha (κ ≥ 1) até usar o orçamento de risco.
+MATCH = {"risk_target_mode": "match"}
 THEMES_PATH = "data/universe/themes.csv"
 
 
@@ -304,6 +305,8 @@ def build_proposal(ctx: WeekContext, *, views: list[View], overrides: dict | Non
         issuers, ctx.sides, ctx.squeeze, vcons, ctx.betas, ctx.panel.assets, cfg, ctx.nav,
         current=current, inception=ctx.inception)
     constraints = apply_liquidity_minimums(constraints, cfg, ctx.nav)
+    vol_target = float(overrides.get("vol_target", cfg.risk.vol_target_annual))
+    constraints = apply_specific_risk_caps(constraints, spec_vol, cfg, vol_target)
     result = optimize(alpha_adj, ctx.model, constraints, ctx.cost_model, cfg, ctx.nav,
                       current=current, inception=ctx.inception, market_w=ctx.market_w,
                       overrides=overrides)
@@ -374,6 +377,17 @@ def apply_liquidity_minimums(constraints: pd.DataFrame, cfg: FundConfig,
     return c
 
 
+def apply_specific_risk_caps(constraints: pd.DataFrame, specific_vol: pd.Series,
+                             cfg: FundConfig, vol_target: float) -> pd.DataFrame:
+    """|w_i|·σ_esp,i ≤ √(participação máx. de risco por nome)·σ_alvo (forma convexa; só aperta)."""
+    c = constraints.copy()
+    sv = specific_vol.reindex(c.index)
+    cap = (np.sqrt(cfg.risk.max_single_name_risk_share) * vol_target / sv).fillna(0.0)
+    c["max_long"] = np.minimum(c["max_long"].astype(float), cap)
+    c["max_short"] = np.minimum(c["max_short"].astype(float), cap)
+    return c
+
+
 def proposal_ok(p: Proposal) -> bool:
     return not p.hard_failures
 
@@ -389,3 +403,120 @@ def proposal_fingerprint(p: Proposal) -> dict:
 
 def risk_gate_hash(p: Proposal) -> str:
     return sha256_obj([c.model_dump(mode="json") for c in p.compliance])
+
+
+# ---------------------------------------------------------------- decisão autônoma
+
+@dataclass
+class PMDecisionBundle:
+    """Saída já validada e convertida do agente PM (visões PM, overrides e diário)."""
+
+    views: list[View]
+    overrides: dict
+    journal: object | None
+    pm_output_hash: str
+    posture: str = "neutra"
+    posture_vol_target: float | None = None
+    abstain: bool = False
+    rationale: str = ""
+    conviction: int | None = None
+
+
+@dataclass
+class WeeklyOutcome:
+    final: Proposal
+    shadow_quant: Proposal
+    decision: object
+    path_taken: str
+    attempts: list[dict]
+    research_hash: str
+
+
+def tighten_only(views: list[View]) -> list[View]:
+    """Mantém só as restrições (no_short/no_long/teto), sem inclinação de alpha."""
+    out = []
+    for v in views:
+        if v.no_short or v.no_long or v.max_abs_weight is not None:
+            out.append(v.model_copy(update={"score": 0, "confidence": 0.0}))
+    return out
+
+
+def hold_proposal(ctx: WeekContext, research_hash: str, version: int,
+                  reason: str) -> Proposal:
+    """Mantém a carteira atual (ou caixa na inception) quando nenhuma alternativa passa nos gates."""
+    w = ctx.current_w[ctx.current_w != 0]
+    if w.empty:
+        summary = RiskSummary(
+            ex_ante_vol=0.0, factor_vol=0.0, specific_vol=0.0, factor_risk_share=0.0, beta=0.0,
+            gross=0.0, net=0.0, long_exposure=0.0, short_exposure=0.0, n_long=0, n_short=0,
+            var_1d_99=0.0, es_1d_99=0.0, var_1w_99=0.0, effective_n=0.0,
+            max_days_to_liquidate=0.0, pct_nav_liquidated_1d=1.0)
+        checks = []
+    else:
+        summary = risk_summary(ctx, w)
+        checks = []
+    diag = OptimizerDiagnostics(status="hold", solver="none", solve_seconds=0.0,
+                                notes=[reason] + list(ctx.notes))
+    p = Proposal(
+        proposal_id=f"CDP-{ctx.week.isoformat()}-manter", week=ctx.week, version=version,
+        created_at=datetime.now(UTC), created_by=SYSTEM_CREATOR, nav_usd=ctx.nav,
+        snapshot_id=ctx.snapshot_id, snapshot_hash=ctx.snapshot_hash,
+        config_hash=ctx.cfg.config_hash(), research_hash=research_hash,
+        overrides={"label": "manter"}, positions=[], trades=[], fx_hedges=[], risk=summary,
+        compliance=checks, optimizer=diag, is_synthetic=ctx.is_synthetic,
+        data_notice=SIMULATED_DATA_NOTICE if ctx.is_synthetic else "Dados reais.")
+    return p.model_copy(update={"memo_markdown": render_memo(p, None, None, config=ctx.cfg)})
+
+
+def run_weekly_decision(ctx: WeekContext, pack: ResearchPack, pm: PMDecisionBundle, *,
+                        version: int, live_weeks: int = 0, kill_switch: bool = False,
+                        audit_head_hash: str | None = None,
+                        decided_at: datetime | None = None) -> WeeklyOutcome:
+    """Gera sombra só-quant e a carteira do CDP; aplica fallback por gates e decide sozinho."""
+    from ..hashing import combine_hashes
+    from .autonomy import effective_vol_target, make_autonomous_decision
+
+    research_hash = combine_hashes(pack.research_hash(), pm.pm_output_hash)
+    vt_default = effective_vol_target(ctx.cfg, None, live_weeks)
+    vt_pm = effective_vol_target(ctx.cfg, pm.posture_vol_target, live_weeks)
+    pm_ov = {**MATCH, **pm.overrides,
+             "vol_target": min(vt_pm, float(pm.overrides.get("vol_target", vt_pm)))}
+    shadow = build_proposal(ctx, views=[], overrides={"vol_target": vt_default, **MATCH},
+                            research_hash=research_hash, version=version, label="sombra-quant",
+                            pack=pack).proposal
+    ai_views = [v for v in pack.views]
+    attempts_spec: list[tuple[str, list[View], dict, str]] = []
+    if kill_switch:
+        attempts_spec.append(("reduzir-risco", tighten_only(ai_views + pm.views),
+                              {**pm_ov, "gross_multiplier": 0.5, "max_weekly_turnover": 1.0},
+                              "KILL_SWITCH ativo: apenas redução de risco."))
+    else:
+        if not pm.abstain:
+            attempts_spec.append(("cdp", ai_views + pm.views, pm_ov,
+                                  "Carteira do CDP: pesquisa de IA + decisão do agente PM."))
+        attempts_spec.append(("cdp-restricoes", tighten_only(ai_views + pm.views), pm_ov,
+                              "Fallback 1: apenas restrições da IA/PM (sem inclinações)."))
+        attempts_spec.append(("quant", [], {"vol_target": vt_default, **MATCH},
+                              "Fallback 2: carteira só-quant."))
+    attempts: list[dict] = []
+    final: Proposal | None = None
+    path = ""
+    for label, views, ov, why in attempts_spec:
+        b = build_proposal(ctx, views=views, overrides=ov, research_hash=research_hash,
+                           version=version, label=label, pack=pack, extra_notes=[why])
+        attempts.append({"label": label, "why": why, **proposal_fingerprint(b.proposal)})
+        if proposal_ok(b.proposal):
+            final, path = b.proposal, label
+            break
+    if final is None:
+        final = hold_proposal(ctx, research_hash, version,
+                              "Fallback 3: nenhuma alternativa passou nos gates HARD; mantida a "
+                              "carteira anterior (ou caixa na inception).")
+        path = "manter"
+    rationale = (pm.rationale or "Decisão autônoma do CDP.") + f" Caminho: {path}."
+    decision = make_autonomous_decision(
+        final, research_hash=research_hash, pm_decision_hash=pm.pm_output_hash,
+        rationale=rationale, journal=pm.journal, conviction=pm.conviction,
+        decided_at=decided_at, audit_head_hash=audit_head_hash)
+    return WeeklyOutcome(final=final, shadow_quant=shadow, decision=decision, path_taken=path,
+                         attempts=attempts, research_hash=research_hash)

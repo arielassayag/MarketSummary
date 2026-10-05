@@ -46,7 +46,7 @@
    - O VIX está baixo, em 15,31 [41].
    - **[F]/[S]**
 6. **Commodities muito dispersas:**
-   - **cobre** perto do recorde: LME a US$ 14.253,50/t em 01/out, com recorde de ~US$ 14.860–14.875/t em setembro. Em **Escondida**, as operações pararam em 23/set depois da **morte de um terceirizado**, com retomada gradual a partir do dia seguinte. Os supervisores aprovaram com 95% a autorização de greve, mas a lei exige mediação antes de uma greve legal. **A mina não está parada por greve desde 23/set** [46].
+   - **cobre** perto do recorde: LME a US$ 14.253,50/t em 01/out, com recorde de ~US$ 14.860–14.875/t em setembro. Em **Escondida**, as operações pararam em 23/set depois da **morte de um terceirizado**, com retomada gradual a partir do dia seguinte. Os supervisores aprovaram com 95% a autorização de greve, mas a lei exige mediação antes de uma greve legal. **Não há greve em curso confirmada, e a afirmação anterior de "mina parada desde 23/set" estava errada** [46].
    - **minério** fraco: US$ 91,35/t, −8,12% no mês, com Simandou entrando em produção [44][45].
    - **lítio** caindo: −22,5% no mês [48].
    - **petróleo** alto [42].
@@ -249,11 +249,11 @@
 ### 2.2 Câmbio e bolsa
 
 - **USD/MXN:**
-  - **18,1637** no fechamento de 02/out, segundo referência do Banxico [62]. Um ganho de 0,71% no dia, mas **−2,58% na semana** e a **4ª semana seguida de depreciação** [60]. **[F]/[S]**
-  - Mínima intradiária de 18,43, a pior desde nov/2025, com o DXY na máxima de 17 meses [61]. **[F]**
+  - **18,1637** no fechamento de 02/out, segundo referência do Banxico [62]. Um ganho de 0,71% no dia, mas **−2,58% na semana** e a **4ª semana seguida de depreciação** [60]. **[F]** Na releitura, El CEO [60] confirma, e o fechamento oficial anterior de 18,2928, reportado pela N+ [61], é coerente com a alta de 0,71% do peso no dia.
+  - Mínima intradiária de 18,4330, a pior desde nov/2025, com o DXY na máxima de 17 meses [61]. **[F]**
   - O TradingEconomics mostra 18,1638 em 05/out e o peso com **−7,36% no mês** [59]. **[F]**
   - O peso estava em 17,15 em 17/set [66]. **[F]**
-- **S&P/BMV IPC:** **64.531,68 (+1,10%)** em 02/out, com −0,71% na semana [70]. **[S]**
+- **S&P/BMV IPC:** **64.531,68 (+1,10%)** em 02/out, com −0,71% na semana [70]. **[F]**: nível confirmado na série ^MXX do Yahoo, e o script de verificação reproduz as variações de +1,10% e −0,71% [108].
   - O acumulado no ano é **controverso**: +4,28% segundo a EBC, sem data clara [71], e +12,17% segundo o Rio Times [63b]. **Não usar nenhum dos dois.**
   - A favor da faixa mais baixa: o **EWW (em USD) tinha +2,13% no ano em 01/out**, segundo a iShares [53]. Este é o número oficial mais confiável. **[F]**
 
@@ -348,7 +348,7 @@
 
 - **Eleições de 2026** [89], **[F]**:
   - 1º turno (12/abr): Keiko Fujimori 17,19%, Roberto Sánchez 12,03% e López-Aliaga 11,91%;
-  - **2º turno (07/jun): Keiko Fujimori (Fuerza Popular) com 50,14% contra Roberto Sánchez (Juntos por el Perú) com 49,86%**, uma diferença de 49.641 votos;
+  - **2º turno (07/jun): Keiko Fujimori (Fuerza Popular) com 50,14% contra Roberto Sánchez (Juntos por el Perú) com 49,86%**, uma diferença de 49.641 votos (9.223.396 × 9.173.755). A Wikipedia em inglês [110] arredonda para **50,13% × 49,87%**, que é o que os votos implicam (50,135%). A diferença é só de arredondamento;
   - proclamação pelo JNE em 03/jul [90]. **Posse em 28/jul/2026**. Keiko é a primeira mulher eleita presidente.
 - **Congresso bicameral:** Fuerza Popular tem 22 de 60 senadores e 41 de 130 deputados. Juntos por el Perú tem 14 e 32 [89]. **[F]** Isso é um risco de governabilidade com maioria apertada. **[I]**
 - **Gabinete e BC:**
@@ -395,20 +395,20 @@
 | Variável | Nível / evento | Fonte | Evid. |
 |---|---|---|---|
 | **Fed funds** | **+25 bp para 3,75%–4,00%** em 16/set/2026, voto **12–0**, primeira alta desde 2023. "Inflation remains elevated. Today's policy action will support a timelier return to the Committee's 2 percent goal." | [36] | [F] |
-| **Dot plot (set)** | Mediana de **4,1%** no fim de 2026 (+25 bp adicionais) e 4,1% no fim de 2027. 3,9% em 2028 e 3,2% no longo prazo. | [38] | [S] |
-| **Presidente do Fed** | **Kevin Warsh**, desde 22/mai/2026 | [39] | [F] |
+| **Dot plot (set)** | Mediana de **4,1%** no fim de 2026 (+25 bp adicionais) e 4,1% no fim de 2027. 3,9% em 2028 e 3,2% no longo prazo. | [38][107] | [F] (Tabela 1 do SEP) |
+| **Presidente do Fed** | **Kevin Warsh**, desde 22/mai/2026. A página do Board lista Warsh como *Chairman*; a data vem só da Wikipedia. | [39][111] | [F] |
 | **Próximo FOMC** | **27–28/out/2026**, depois 8–9/dez | [37] | [F] |
-| **Payroll de setembro** | +29 mil (consenso +90 mil), com revisões para baixo. Desemprego de 4,2%. | [10][40] | [F] |
-| **Probabilidade de alta em outubro** | ~25%–28% (contra 70% uma semana antes) | [40] | [F] |
-| **UST 10y** | Pico de **5,34%** na semana, o maior desde 2002. **5,175%** na sexta, 02/out. | [40] | [F] |
+| **Payroll de setembro** | +29 mil (consenso +90 mil). Revisões: julho de +21 mil para −10 mil e agosto de +162 mil para +133 mil. Desemprego de 4,2%. | [106][10][40] | [F] (BLS) |
+| **Probabilidade de alta em outubro** | ~25%–28% (contra 70% uma semana antes), número **anterior ao payroll** (o artigo é de sexta antes do dado). A probabilidade pós-payroll **[NÃO VERIFICADO]**. | [40] | [F] (pré-payroll) |
+| **UST 10y** | Pico intradiário de **5,34%** (01/out), o maior desde 2002 [40][108]. **CORRIGIDO:** o fechamento oficial (Treasury CMT) foi **5,28%** na sexta, 02/out, e não 5,175%. O fechamento de 5,29% em 30/set foi o mais alto desde mai/2002 (5,32%) [105]. A TradingView falava em "near 5.25%" antes do payroll. | [40][105][108] | [F] |
 | **DXY** | ~**102,0**, perto da máxima de 17 meses, 3ª semana seguida de alta. EUR/USD em ~1,124 e USD/JPY em ~158. | [40] | [F] |
-| **VIX** | **15,31** (02/out) | [41] | [S] |
-| **Brent** | **US$ 102,25** em 02/out [10] e **US$ 100,83** em 05/out, +54% no ano [42]. Fatores: interrupções em Hormuz e Bab el-Mandeb, liberação de 100 mi de barris pelo G7, exportações do Golfo de volta ao nível pré-conflito no fim de setembro, OPEP+ com cotas inalteradas. A EIA estimou *shut-ins* de 6,7 mb/d em agosto [43]. | [10][42][43] | [F]/[S] |
+| **VIX** | **15,31** (02/out) | [41][108] | [F] |
+| **Brent** | **US$ 102,25** em 02/out [10][108] e **US$ 100,83** em 05/out, um retrato intradiário do TE (na releitura, US$ 103,07; no Yahoo, ~US$ 101,9–102,3) [42][108]. **CORRIGIDO:** os "+54%" (agora +57,43%) do TE são a variação **em 12 meses**; o TE mostra o mesmo número nos campos YTD e 12 meses. O front-month fechou 2025 em US$ 60,85 (Yahoo BZ=F), então a alta YTD é bem maior. O FactBook deve recalcular. Fatores: interrupções em Hormuz e Bab el-Mandeb, liberação de 100 mi de barris pelo G7, exportações do Golfo de volta ao nível pré-conflito no fim de setembro, OPEP+ com cotas inalteradas. A EIA estimou *shut-ins* de 6,7 mb/d em agosto [43]. | [10][42][43] | [F]/[S] |
 | **Minério de ferro (62%)** | **US$ 91,35/t** (02/out), −8,12% no mês e −12,47% em 12 meses. Simandou entrando. Consenso de 2026 em ~US$ 94/t. | [44][45] | [F]/[S] |
 | **Cobre** | LME a US$ 14.253,50/t (01/out). COMEX a US$ 6,55/lb (05/out). Recordes em setembro. Ver a seção 3. | [46][47] | [F] |
 | **China** | PMI industrial de **50,1** em setembro (agosto: 49,8), a primeira expansão desde junho | [49] | [F] |
 | **Fluxos EM (EPFR, início de setembro)** | Fundos de ações EM: +US$ 467 mi na semana (antes +US$ 2,2 bi). LatAm: +US$ 8 mi. **Brasil: +US$ 523 mi.** O Brasil tem **22 gestores líquidos *overweight*** (antes 17). México é *overweight* de consenso. | [50] | [F] |
-| **Volatilidade implícita do Brasil** | EWZ 1M em ~46% (máxima em 4 anos) e realizada em ~24% | [14] | [F] |
+| **Volatilidade implícita do Brasil** | EWZ 1M em ~46% (máxima em 4 anos) e realizada em ~24% | [14] | [S] [NÃO VERIFICADO] (fonte única: blog) |
 
 **Leitura do regime [I]:**
 - O Fed voltou a apertar e o UST 10y está acima de 5%, com o dólar forte. Isso é **vento contrário para moedas e *carry* de EM**, mais evidente no MXN.
@@ -423,12 +423,12 @@
 
 | Ativo | Nível (data) | 1M | 3M | Ano (YTD) | Fonte | Evid. |
 |---|---|---|---|---|---|---|
-| **EWZ** (iShares MSCI Brazil) | NAV de US$ 38,1152 (02/out). Mercado a US$ 38,19 (02/out). | n/d | n/d | **+17,76%** (retorno total do NAV, até 01/out) | [51][15] | [F] |
+| **EWZ** (iShares MSCI Brazil) | NAV de US$ 38,1152 (02/out). Mercado a US$ 38,19 (02/out). | n/d | n/d | **+17,76%** (retorno total do NAV, até 01/out). Na releitura, o iShares confirma, e é coerente com os ~+18,0% de retorno ajustado do Yahoo até 01/out. | [51][15][108] | [F] |
 | **EWZ, 12 meses** | n/d | n/d | n/d | 1 ano: +25,47% (NAV) | [51] | [F] |
-| **EWW** (iShares MSCI Mexico) | NAV de US$ 71,1752 (02/out) | n/d | n/d | **+2,13%** (NAV, até 01/out) | [53] | [F] |
-| **ILF** (iShares LatAm 40) | NAV de US$ 34,9952 (02/out). Brasil 56,74%, México 24,15%, Chile 7,35%, Peru 6,89%, Colômbia 2,78%. | n/d | n/d | **+13,87%** (NAV, até 02/out) | [52] | [F] |
+| **EWW** (iShares MSCI Mexico) | NAV de US$ 71,1752 (02/out) | n/d | n/d | **+2,13%** (NAV, até 01/out). Na releitura, o iShares confirma, e o Yahoo dá ~+2,12% ajustado até 01/out. | [53][108] | [F] |
+| **ILF** (iShares LatAm 40) | NAV de US$ 34,9952 (02/out). Brasil 56,74%, México 24,15%, Chile 7,35%, Peru 6,89%, Colômbia 2,78%. | n/d | n/d | **+13,87%** (NAV). **CORRIGIDO:** a data provável é **01/out**, e não 02/out. O retorno ajustado do Yahoo dá ~+14,0% até 01/out e ~+16,3% até 02/out, e o iShares mostra o YTD com data D−1 também em EWZ e EWW [108]. | [52][108] | [F] |
 | **Ibovespa** | 192.114,55 (02/out) | Setembro: +3,14% [12] ou ~+5% [13] (divergente) | n/d | +13,57% até 28/set [12] | [10][12][13] | [F] |
-| **S&P/BMV IPC** | 64.531,68 (02/out) | Semana: −0,71% | n/d | **Divergente**: +4,28% [71] ou +12,17% [63b]. Usar a série de preço. | [70][71] | [S] |
+| **S&P/BMV IPC** | 64.531,68 (02/out) | Semana: −0,71% | n/d | **Divergente**: +4,28% [71] ou +12,17% [63b]. **Os dois parecem errados**: pela série ^MXX do Yahoo (31/12/2025: 64.308,29), o índice está praticamente estável no ano, segundo o script de verificação. Usar a série de preço. | [70][71][108] | [F] (nível) |
 | **IPSA** | 10.916,57 (02/out), segundo o Rio Times | n/d | n/d | n/d | [16] | [S] |
 | **S&P Merval** | 2.819.323 (30/set) | Setembro: números conflitantes na fonte | n/d | n/d | [96] | [F] (nível) |
 
@@ -462,7 +462,7 @@
 | Qui 22/out | MX | INPC da 1ª quinzena de outubro e desemprego | Banxico de 05/nov | [72] [S] |
 | **Sex 23/out** | BR | **IPCA-15 de outubro** | Juros | [34] [S] |
 | Sex 23/out | MX | IGAE de agosto | Atividade | [72] [S] |
-| **Dom 25/out** | BR | **2º TURNO PRESIDENCIAL** e 2º turno para governador em RJ, DF, ES, RN, AC, TO (+1, segundo [2]) | **Evento binário principal** | [1][2][3] [F] |
+| **Dom 25/out** | BR | **2º TURNO PRESIDENCIAL** e 2º turno para governador em **7 estados**: RJ, DF, ES, RN, AC, TO e AM. O AM ainda estava sem status oficial, mas o primeiro colocado teve 40,63%. | **Evento binário principal** | [1][2][103] [F] |
 | **Seg 26/out** | BR | 1º pregão pós-2º turno. Focus. | **Gap e rebalanceamento semanal no dia seguinte ao evento** | [34] [S] |
 | **Ter 27/out** | CL | **RPM do BCCh** (TPM em 4,50%) | Bancos chilenos e CLP | [75][80] [S] |
 | Ter 27/out | BR | Transações correntes e IDP de setembro | BRL | [34] [S] |
@@ -498,7 +498,7 @@
     - **(b)** usar, para nomes brasileiros, a vol que for maior entre a realizada e a implícita escalada, durante a janela de evento;
     - **(c)** estressar a carteira com cenários de gap de ±10% no EWZ, ordem de grandeza do movimento *overnight* de 04/out [2][9].
 - **R3. Fed, dólar e juros americanos.**
-  - Com UST 10y acima de 5%, DXY na máxima de 17 meses e o FOMC de 28/out com ~25%–28% de chance de alta [40], o fator "EM FX / *carry*" está estressado.
+  - Com UST 10y acima de 5%, DXY na máxima de 17 meses e o FOMC de 28/out com ~25%–28% de chance de alta (número anterior ao payroll) [40], o fator "EM FX / *carry*" está estressado.
   - O MXN já caiu 4 semanas seguidas [60].
   - Hipótese: neutralizar a **sensibilidade a moeda** (beta de cada ação ao FX local contra o USD) além do beta de mercado.
 - **R4. Dispersão de commodities.**
@@ -522,8 +522,8 @@
 | **BR-4** | **Long domésticas sensíveis a juros / short exportadoras de celulose** (por exemplo, Suzano) | Real mais forte e curva fechando são a expectativa pós-1º turno [9]. Suzano está entre as "proteções" [29]. | O mercado | **Juros domésticos e BRL**, correlacionados com a eleição | **Correlacionado a R1.** Squeeze em *small caps*. Contar como exposição ao fator eleição. |
 | **MX-1** | **Long receita em USD (Grupo México, Gruma, Cemex) / short consumo doméstico (Walmex ou FEMSA)** | Peso com −7,36% no mês [59], 4 semanas de queda [60]. Banxico parado com o Fed subindo [56]. | O mercado mexicano | **Fator MXN e exportação** | Um acordo da Seção 232 ou do USMCA antes de 03/nov pode **apreciar o peso** e virar o par [67]. O Grupo México também carrega beta a cobre, que precisa de hedge. |
 | **MX-2** | **Long beneficiários de acordo na Seção 232 (Ternium, FIBRAs industriais e Vesta) / short pares domésticos** | Negociação avançando, com o México "confiante" [67]. Tarifas de 50% em aço e 25% em autos [66]. | Mercado e setor | **Notícia comercial** | Notícias binárias e possível atraso até 2027 [65]. Liquidez local de FIBRAs e Nemak. |
-| **CL/PE-1** | **Long cobre (SCCO ou Grupo México) / short lítio (SQM)** | Cobre +30,9% no ano, greve em Escondida, oferta chilena na mínima desde 2011 [46][47]. Lítio −22,5% no mês, com estoques chineses revisados para cima [48]. | O fator "mineração LatAm" | **Cobre contra lítio** | **Squeeze em SQM**: o lítio tem saltos ligados à oferta chinesa, como a revogação da mina da CATL [48]. Fim da greve em Escondida. Verificar *short interest* e custo de aluguel da SQM. |
-| **CL-1** | **Long domésticas com alívio do IR corporativo / short exportadoras chilenas** | IR corporativo de 27% para 23% até 2029 (trecho [S]). BCCh parado com atividade fraca [74]. | O mercado chileno | **Reforma tributária contra ciclo** | Desemprego de 9,6% [76]. Fonte da reforma ainda não confirmada. Liquidez de Santiago e ADRs (BCH, BSAC). |
+| **CL/PE-1** | **Long cobre (SCCO ou Grupo México) / short lítio (SQM)** | Cobre com alta de ~30% em 12 meses (não YTD) [46][47]. Risco de greve em Escondida: autorização aprovada, sujeita a mediação, mas a mina **não está parada por greve** [46]. Oferta chilena na mínima desde 2011 [47]. Lítio −22,5% no mês, com estoques chineses revisados para cima [48]. | O fator "mineração LatAm" | **Cobre contra lítio** | **Squeeze em SQM**: o lítio tem saltos ligados à oferta chinesa, como a revogação da mina da CATL [48]. Desfecho da mediação em Escondida: um acordo derrubaria o prêmio de oferta, e uma greve efetiva o elevaria. Verificar *short interest* e custo de aluguel da SQM. |
+| **CL-1** | **Long domésticas com alívio do IR corporativo / short exportadoras chilenas** | IR corporativo de 27% para 23% até 2029 (trecho [S], **[NÃO VERIFICADO]**). BCCh parado com atividade fraca [74]. | O mercado chileno | **Reforma tributária contra ciclo** | Desemprego de 9,6% [76]. Fonte da reforma ainda não confirmada. Liquidez de Santiago e ADRs (BCH, BSAC). |
 | **CO-1** | **Long Ecopetrol (EC) / short Bancolombia (CIB)**, ou o contrário | Governo pró-petróleo com Brent a ~US$ 100 [87][42]. BanRep subindo juros [83]. Fiscal de 7,2%–9,4% do PIB [85]. | O fator Colômbia (soberano e COP) | **Petróleo contra crédito e margem** | Extração de dividendos da EC pelo Tesouro. Rebaixamento soberano. COP. Liquidez local baixa: usar os ADRs. |
 | **PE-1** | **Long Credicorp (BAP) / short banco LatAm comparável** (por exemplo, Bancolombia) | Governo Keiko pró-mercado, Velarde ratificado, possível fim dos tetos de juros [93][94]. BCRP estável [91]. | Setor bancário regional | **Regime político e regulatório do Peru** | Margem eleitoral mínima e Congresso fragmentado [89]. El Niño [92]. Risco cambial cruzado no par. |
 | **AR-1** | **Long energia com receita em USD (YPF, Vista) / short ADRs de bancos (GGAL, BMA, SUPV)** | Risco-país acima de 600 pb, bancos −15% a −18% em setembro [96]. Petróleo alto [42]. | O fator Argentina e parte do beta global | **Petróleo e USD contra crédito doméstico e câmbio** | **Squeeze nos bancos**, que já caíram muito, com qualquer anúncio de swap ou apoio [99]. Custo e disponibilidade de aluguel. *Gaps* em feriados. Tamanho pequeno. |
@@ -542,7 +542,7 @@
 - IPCA de setembro (09/out) e IPCA-15 de outubro (23/out).
 - CPI dos EUA (14/out) e FOMC (28/out), sobretudo a probabilidade de alta.
 - Anúncio de acordo EUA–México na Seção 232 (antes de 03/nov).
-- Fim da greve em Escondida.
+- Desfecho da mediação e da autorização de greve em Escondida (a mina não está parada por greve).
 - Decisões de BCCh (27/out) e BanRep (30/out).
 - Anúncios de swap na Argentina.
 
@@ -554,22 +554,22 @@
 
 | # | Parâmetro | Valor | Data de referência | Fonte | Evid. |
 |---|---|---|---|---|---|
-| P1 | Flávio Bolsonaro, % válidos, 1º turno | 47,03% | 2026-10-04 | [1][2] | F |
-| P2 | Lula, % válidos, 1º turno | 45,16% | 2026-10-04 | [1][2] | F |
+| P1 | Flávio Bolsonaro, % válidos, 1º turno | 47,03% | 2026-10-04 | [103][1][2] | F |
+| P2 | Lula, % válidos, 1º turno | 45,16% | 2026-10-04 | [103][1][2] | F |
 | P3 | Data do 2º turno (BR) | 2026-10-25 | n/a | [1][5] | F |
-| P4 | Selic meta | 13,75% | 2026-09-16 | [17][33] | F |
-| P5 | Próximo Copom | 2026-11-03 e 04 | n/a | [20] | S |
+| P4 | Selic meta | 13,75% | 2026-09-16 (vigente desde 17/09) | [17][33][104] | F |
+| P5 | Próximo Copom | 2026-11-03 e 04 | n/a | [20][104] | F |
 | P6 | Focus: Selic no fim de 2026 e de 2027 | 13,50% e 12,00% | 2026-09-28 | [19] | F |
 | P7 | Projeção de IPCA do Copom para 2026 e 2027 | 5,2% e 3,9% | 2026-09-22 | [18] | F |
-| P8 | IPCA em 12 meses | 4,22% | ago/2026 | [21] | S |
-| P9 | IPCA-15 m/m e em 12 meses | 0,70% e 4,47% | set/2026 | [22] | S |
+| P8 | IPCA em 12 meses | 4,22% | ago/2026 | [21][104] | F |
+| P9 | IPCA-15 m/m e em 12 meses | 0,70% e 4,47% | set/2026 | [22][104] | F |
 | P10 | Meta de inflação (BR) | 3,0% ±1,5 p.p. | n/a | [22] | S |
-| P11 | Dívida bruta / PIB (BR) | 82,9% | ago/2026 | [23] | S |
+| P11 | Dívida bruta / PIB (BR) | 82,9% (SGS 13762: 82,86%) | ago/2026 | [23][104] | F |
 | P12 | Meta de primário 2026 e PLOA 2027 | +0,25% e +0,5% do PIB | n/a | [24][25] | S |
 | P13 | PIB BR do 2T26, t/t | +0,5% | 2T26 | [17] | F |
 | P14 | USD/BRL | 5,2173 e 5,2139 | 2026-10-02 e 2026-10-05 | [10][32] | F |
-| P15 | Ibovespa | 192.114,55 | 2026-10-02 | [10] | F |
-| P16 | Vol implícita 1M do EWZ e vol realizada | ~46% e ~24% | ~2026-10-01 | [14] | F |
+| P15 | Ibovespa | 192.114,55 | 2026-10-02 | [10][108] | F |
+| P16 | Vol implícita 1M do EWZ e vol realizada | ~46% e ~24% | ~2026-10-01 | [14] | S [NÃO VERIFICADO] |
 | P17 | EWZ YTD (NAV TR) | +17,76% | 2026-10-01 | [51] | F |
 | P18 | Banxico (meta) | 6,50% | 2026-09-24 | [55] | F |
 | P19 | Próximo Banxico | 2026-11-05 | n/a | [58] | S |
@@ -584,12 +584,12 @@
 | P28 | IPoM: PIB 2026 do Chile | 0,25%–0,75% | set/2026 | [74] | S |
 | P29 | USD/CLP | 979,51 | 2026-10-05 | [76] | F |
 | P30 | Cobre LME 3M | US$ 14.253,50/t | 2026-10-01 | [46] | F |
-| P31 | Cobre COMEX | US$ 6,55/lb | 2026-10-05 | [47] | F |
+| P31 | Cobre COMEX | US$ 6,55/lb (retrato intradiário; os +30,9% do TE são em 12 meses, não YTD) | 2026-10-05 | [47][108] | F |
 | P32 | Carbonato de lítio (China) | 122.800 CNY/t | 2026-09-30 | [48] | F |
 | P33 | Taxa do BanRep | 12,25% (+25 bp) | 2026-09-30 | [83][84] | F |
 | P34 | Próximo BanRep | 2026-10-30 | n/a | [84] | S |
 | P35 | IPC Colômbia | 6,24% | ago/2026 | [84] | F |
-| P36 | Déficit da Colômbia em 2026 e no PGN 2027 | 7,2% e 9,4%–9,5% do PIB | set/2026 | [85] | F |
+| P36 | Déficit da Colômbia em 2026 e no PGN 2027 | 7,2% e 9,4%–9,5% do PIB (PGN reapresentado em 29/ago; aprovação final não verificada) | set/2026 | [85] | F |
 | P37 | USD/COP | 3.308,89 | 2026-10-05 | [87] | F |
 | P38 | Taxa do BCRP | 4,25% | 2026-09-10 | [91][92] | F/S |
 | P39 | Próximo BCRP | 2026-10-07 | n/a | [92] | S |
@@ -598,13 +598,13 @@
 | P42 | USD/ARS mayorista e teto da banda | 1.517 e 1.919,40 | 2026-09-30 | [96] | F |
 | P43 | ARS CCL e MEP | 1.616,44 e 1.542,56 | 2026-09-30 | [96] | F |
 | P44 | Inflação da Argentina, m/m e a/a | 1,7% e 33,5% | ago/2026 | [101] | F |
-| P45 | Fed funds | 3,75%–4,00% | 2026-09-16 | [36] | F |
-| P46 | Mediana do *dot plot* no fim de 2026 | 4,1% | 2026-09-16 | [38] | S |
+| P45 | Fed funds | 3,75%–4,00% | 2026-09-16 | [36] | F (Fed) |
+| P46 | Mediana do *dot plot* no fim de 2026 | 4,1% | 2026-09-16 | [38][107] | F |
 | P47 | Próximo FOMC | 2026-10-27 e 28 | n/a | [37] | F |
-| P48 | UST 10y (fechamento e pico) | 5,175% e 5,34% | semana até 2026-10-02 | [40] | F |
+| P48 | UST 10y (fechamento e pico) | **5,28%** (CMT em 02/out; CORRIGIDO, antes 5,175%) e 5,34% (intradiário em 01/out) | semana até 2026-10-02 | [105][40][108] | F |
 | P49 | DXY | ~102,0 | 2026-10-02 | [40] | F |
-| P50 | VIX | 15,31 | 2026-10-02 | [41] | S |
-| P51 | Brent | US$ 102,25 e US$ 100,83 | 2026-10-02 e 2026-10-05 | [10][42] | F |
+| P50 | VIX | 15,31 | 2026-10-02 | [41][108] | F |
+| P51 | Brent | US$ 102,25 e US$ 100,83 (o de 05/out é intradiário) | 2026-10-02 e 2026-10-05 | [10][42][108] | F |
 | P52 | Minério de ferro 62% | US$ 91,35/t | 2026-10-02 | [44] | F |
 | P53 | PMI industrial da China | 50,1 | set/2026 | [49] | F |
 
@@ -624,9 +624,9 @@
 
 ## 12. Conflitos de dados e limitações conhecidas
 
-1. **Eleição no Brasil:** os números parciais de 22h07 (47,50% × 44,61%) diferem dos finais (47,03% × 45,16%). **Usar os finais.** Os detalhes de Congresso e governadores vêm de 1 ou 2 fontes. A contagem de estados com 2º turno é de 6 [3] ou 7 [2].
+1. **Eleição no Brasil:** os números parciais de 22h07 (47,50% × 44,61%) diferem dos finais (47,03% × 45,16%). **Usar os finais.** Os detalhes de Congresso e governadores vêm de 1 ou 2 fontes. A contagem de estados com 2º turno é **7** (AC, AM, DF, ES, RJ, RN, TO), segundo o JSON do TSE [103]. Ela confirma o Rio Times [2]. A InfoMoney [3] listava 6 porque o AM ainda não estava classificado. Os percentuais de governador da InfoMoney às 22h07 eram parciais e foram trocados pelos finais do TSE. O total de 121 deputados do PL [2] **não foi confirmado** pelo TSE, onde faltava o status de SP, MG e AM.
 2. **Contaminação de busca:** um trecho afirmou que "Lula venceu o 2º turno de 25/out com 50,90%". **Isso é falso para 2026**: são os números de 2022, e o 2º turno de 2026 **ainda não ocorreu**.
-3. **Brent:** o Rio Times [16] reporta US$ 88,88 em 02/out. A Forbes Brasil (US$ 102,25 [10]), o TradingEconomics (US$ 100,83 [42]) e a Infobae (US$ 103,70 em 23/set [98]) divergem. **O Rio Times foi descartado** para commodities. Os preços de ações individuais reportados pelo Rio Times (por exemplo, BBAS3) também conflitam com a Exame [30] e foram tratados como **[S]** ou descartados.
+3. **Brent:** o Rio Times [16] reporta US$ 88,88 em 02/out. A Forbes Brasil (US$ 102,25 [10]), o TradingEconomics (US$ 100,83 [42]) e a Infobae (US$ 103,70 em 23/set [98]) divergem. **O Rio Times foi descartado** para commodities. Na verificação, o Yahoo BZ=F confirma o fechamento de US$ 102,25 em 02/out [108]. A variação "no ano" do TE é, na verdade, em 12 meses. Os preços de ações individuais reportados pelo Rio Times (por exemplo, BBAS3) também conflitam com a Exame [30] e foram tratados como **[S]** ou descartados.
 4. **YTD do IPC México:** +4,28% [71] contra +12,17% [63b]. A iShares, para o EWW em USD (+2,13% [53]), sugere a faixa baixa. **Usar a série de preço.**
 5. **Ibovespa:** setembro com +3,14% (até 28/set) [12] contra ~+5% (até 30/set) [13]. A semana até 02/out com +4,71% [11] contra +5,81% [10]. Calcular pela série de preço.
 6. **USD/BRL no ano:** −1,86% [32] contra −4,95% [10]. As bases diferem.
@@ -765,6 +765,84 @@
 100. Perfil, *Reservas, elecciones y tasas de Estados Unidos: por qué el riesgo país argentino volvió a superar los 600 puntos* (set/2026), trecho de busca. https://www.perfil.com/noticias/economia/reservas-elecciones-tasas-estados-unidos-riesgo-pais-argentino-volvio-superar-600-puntos-a40.phtml
 101. TradingEconomics, *Argentina Inflation Rate* (dado de ago/2026; acesso em 2026-10-05). https://tradingeconomics.com/argentina/inflation-cpi
 102. TradingEconomics, *Argentina Calendar* (2026-10-05). https://tradingeconomics.com/argentina/calendar
+
+**Fontes adicionadas na verificação independente (acesso em 2026-10-05)**
+
+103. TSE, JSON oficial de resultados. Presidente: eleição 6257, arquivo gerado em 05/10/2026 às 02h59, 100% das seções totalizadas. Governador, Senador e Deputado Federal: eleição 6259, um arquivo por UF. https://resultados.tse.jus.br/oficial/ele2026/6257/dados/br/br-c0001-e006257-u.json ; padrão por UF: https://resultados.tse.jus.br/oficial/ele2026/6259/dados/{uf}/{uf}-c{0003|0005|0006}-e006259-u.json
+104. Banco Central do Brasil, API SGS: séries 432 (Selic meta), 13762 (DBGG/PIB), 7478 (IPCA-15), 433 e 13522 (IPCA) e 1 (PTAX venda; 02/out: 5,2238). https://api.bcb.gov.br/dados/serie/bcdata.sgs.{série}/dados?formato=json
+105. U.S. Department of the Treasury, *Daily Treasury Par Yield Curve Rates* (2026; comparação com 2002, 2006, 2007, 2023 e 2025). https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/2026/all?type=daily_treasury_yield_curve&field_tdr_date_value=2026
+106. U.S. BLS, *The Employment Situation: September 2026* (2026-10-02). https://www.bls.gov/news.release/empsit.nr0.htm
+107. Federal Reserve, *Summary of Economic Projections*, Tabela 1 (2026-09-16). https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260916.htm
+108. Yahoo Finance, API de gráficos (agregador; usado só para checagem cruzada de níveis e datas: EWZ, PBR, VALE, EWW, ILF, ^BVSP, ^MXX, ^MERV, ^TNX, ^VIX, DX-Y.NYB, BZ=F, HG=F, BRL=X, MXN=X). https://query1.finance.yahoo.com/v8/finance/chart/{ticker}
+109. Wikipedia, *United States–Mexico–Canada Agreement* (revisão conjunta de 01/07/2026). https://en.wikipedia.org/wiki/United_States%E2%80%93Mexico%E2%80%93Canada_Agreement
+110. Wikipedia (en), *2026 Colombian presidential election* e *2026 Peruvian general election*. https://en.wikipedia.org/wiki/2026_Colombian_presidential_election ; https://en.wikipedia.org/wiki/2026_Peruvian_general_election
+111. Federal Reserve Board, *Board Members*. https://www.federalreserve.gov/aboutthefed/bios/board/default.htm
+
+---
+
+## Verificação independente
+
+> **Passe adversarial, 2026-10-05, segunda-feira, antes da abertura.**
+>
+> **Método.** Cada afirmação datada ou numérica prioritária foi re-checada, quando possível, numa **fonte primária diferente** da original: JSON oficial do TSE, API SGS do BCB, Treasury, BLS, Fed, Banxico e iShares. Para níveis de mercado, a checagem cruzada usou a série do Yahoo Finance [108].
+>
+> **Limites.**
+> - O orçamento de WebSearch da sessão estava esgotado, então a verificação usou leitura direta de URLs (WebFetch e APIs públicas).
+> - Bloomberg, White & Case, ADVFN, Okai, BanRep, BCRP e BCCh bloquearam a leitura automatizada.
+> - As variações percentuais citadas como "script de verificação" foram calculadas **por código** (Python, sobre as séries baixadas), **só para testar as fontes**. Elas **não** substituem o FactBook, que deve recalcular tudo pela camada de dados determinística (AGENTS.md, invariante 1).
+>
+> **Legenda.**
+> - **CONFIRMADO**: bate com uma fonte independente ou primária.
+> - **CORRIGIDO**: o texto foi alterado.
+> - **NÃO VERIFICADO**: não houve confirmação independente, e o trecho foi marcado no corpo do documento.
+
+| # | Afirmação verificada | Status | Resultado da verificação | Fontes |
+|---|---|---|---|---|
+| V1 | Flávio 47,03% (56.104.503) × Lula 45,16% (53.879.538); 2º turno em 25/out | **CONFIRMADO** | O JSON do TSE (100% das seções, gerado em 05/10 às 02h59) traz exatamente esses votos e percentuais. O Rio Times tem contagens ligeiramente diferentes (56.104.049 e 53.876.219); usar as do TSE. O 2º turno em 25/out está confirmado na Wikipedia e no Rio Times. | [103][1][2] |
+| V2 | Comparecimento de 78,92%; Cury 2,89%, Renan Santos 2,24%, Caiado 2,18%, Zema 0,27% | **CONFIRMADO** | Tudo confere no TSE: comparecimento de 78,92% (125.275.835), Cury com 3.448.569 votos, Renan com 2.675.887, Caiado com 2.605.148 e Zema com 326.488. | [103] |
+| V3 | PL com 121 deputados | **NÃO VERIFICADO** | O TSE mostra o PL com 79 eleitos em 24 UFs. SP, MG e AM ainda estavam sem status de eleitos. O número é plausível, mas não está confirmado. | [103][2] |
+| V4 | Tarcísio reeleito em SP com 62,85% | **CORRIGIDO** | Foi reeleito, mas com **62,65%** (TSE, final). Os 62,85% eram parciais da InfoMoney. | [103] |
+| V5 | RJ: Ruas 49,31% × Paes 42,72%; DF: Celina 49,93% × Grass 34,48% | **CORRIGIDO** | Finais do TSE: **RJ com 49,27% × 42,76%** e DF com 49,93% × **34,47%**. Os demais governadores também foram atualizados para os finais (MG 55,40%, RS 58,05%, SC 68,98%, BA 55,80%, CE 53,19%, PE 53,27%; PR 50,10% confere). | [103] |
+| V6 | 2º turno de governador em 6 ou 7 estados | **CORRIGIDO** | São **7**: AC, AM, DF, ES, RJ, RN e TO. O AM aparece sem status, mas o líder teve 40,63%. Há 20 estados decididos no 1º turno, como diz o Rio Times. | [103][2] |
+| V7 | PL elegeu 16 senadores (parcial às 22h07) | **CORRIGIDO** | No TSE, com 52 das 54 vagas definidas (falta AM), o **PL tem 19 senadores**, contra 6 do PT e 6 do MDB. Michelle Bolsonaro e Bia Kicis estão eleitas pelo DF. A projeção de 28 de 81 cadeiras no total (Rio Times) é **NÃO VERIFICADO**. | [103][3][2] |
+| V8 | EWZ +8,72% (US$ 41,52) no *overnight* de domingo | **CONFIRMADO** (retrato) | O PlatôBR/EM (04/10, 23h12) diz exatamente isso, e o número é coerente com o fechamento de US$ 38,19 de 02/out (Yahoo). Em horários posteriores: +10,29% (Rio Times) e ~US$ 42,66–42,74 (+11,6% a +11,9%) no Yahoo na madrugada de segunda. A liquidez é fina. | [9][2][108] |
+| V9 | Vol implícita 1M do EWZ ~46% (máxima em 4 anos), realizada ~24%, OI de calls ~US$ 20 bi (maior desde 2007) | **NÃO VERIFICADO** | Na releitura, o OptionBeast (01/10) diz exatamente isso, inclusive o spread de ~22,5 vols, o maior em 8 anos, e o OI do início de setembro. Mas é fonte única (blog) e não houve dado independente da Cboe/OCC. Marcado [NÃO VERIFICADO] no corpo. | [14] |
+| V10 | Ibovespa em 192.114,55 (+2,63%) em 02/out; Brent a US$ 102,25; payroll +29 mil | **CONFIRMADO** | O Yahoo mostra ^BVSP em 192.114,55 (+2,627%) e BZ=F com fechamento de 102,25. O BLS confirma +29 mil, desemprego de 4,2%, julho revisado para −10 mil e agosto para +133 mil. Extra: a variação semanal do Ibovespa é de **+4,71%** (script sobre o Yahoo), então os +5,81% da Forbes parecem errados. | [10][106][108] |
+| V11 | Copom cortou de 14,00% para 13,75% em 16/set, unânime, 5º corte seguido desde março | **CONFIRMADO** | A série SGS 432 mostra 15,00% para 14,75% (19/03), 14,50% (30/04), 14,25% (18/06), 14,00% (06/08) e 13,75% (17/09). A CNN Brasil confirma a unanimidade e o "5º corte seguido desde março". | [104][17] |
+| V12 | Próximos Copom em 3–4/nov e 8–9/dez; sem reunião em outubro | **CONFIRMADO** (nov) / **NÃO VERIFICADO** (dez) | A SGS 432 já publica 13,75% vigente até 04/11, o que é coerente com uma reunião em 3–4/nov e nenhuma em outubro. A data de 8–9/dez não foi confirmada em fonte primária, porque as páginas do BCB e da Okai bloquearam a leitura. | [104][20] |
+| V13 | Dívida bruta de 82,9% do PIB em ago/2026 | **CONFIRMADO** (com ajuste) | A SGS 13762 dá 82,86% (jul: 82,56%). **Ajuste:** é o maior nível desde **mar/2021** (85,1%), e não "desde 2020". O valor de R$ 11,1 tri **NÃO VERIFICADO**. | [104][23] |
+| V14 | IPCA-15 de set/2026 em +0,70% m/m e 4,47% em 12 meses | **CONFIRMADO** | A SGS 7478 mostra 0,70% em setembro. O script reproduz os 4,47% em 12 meses a partir da mesma série. O consenso de 0,53% e os grupos (alimentação e habitação) não foram re-checados. | [104][22] |
+| V15 | FOMC +25 bp para 3,75%–4,00% em 16/set, 12–0 | **CONFIRMADO** | O comunicado do Fed diz "raise the target range... by 1/4 percentage point to 3-3/4 to 4 percent", com voto de 12–0. A mediana do *dot plot* de 4,1% para 2026 está confirmada na Tabela 1 do SEP. | [36][107] |
+| V16 | Kevin Warsh é presidente do Fed desde 22/mai/2026 | **CONFIRMADO** | A página oficial do Board lista Warsh como *Chairman* (e Powell segue como governador). A data de 22/mai/2026 vem da Wikipedia, que dá o fim do mandato de Powell como chair nesse dia. | [111][39] |
+| V17 | UST 10y com pico de 5,34% (maior desde 2002), DXY ~102 (máxima de 17 meses), probabilidade de alta em outubro de 25–28% | **CORRIGIDO** (parcial) | O pico de 5,34% é intradiário (máxima do ^TNX em 01/out: 5,342). No Treasury CMT, 5,29% em 30/set é o maior fechamento desde mai/2002. **O fechamento de 02/out foi 5,28%, e não 5,175%** (esse número não aparece nem na fonte, que fala em "near 5.25%"). O DXY ~102 está confirmado: 102,19 em 05/out, e o último nível ≥ 102 foi em abr/2025. Os 25–28% estão na fonte, mas são **anteriores ao payroll**. | [105][108][40] |
+| V18 | Brent a US$ 100,83 em 05/out, +54% no ano | **CORRIGIDO** | O preço é um retrato intradiário: na releitura, o TE mostra US$ 103,07, e o Yahoo ~101,9–102,3. Os "+54%" são **variação em 12 meses** (o TE agora mostra +57,43% tanto em "YTD" quanto em "same time last year"). O front-month fechou 2025 em US$ 60,85, então o YTD é bem maior. | [42][108] |
+| V19 | Escondida paralisada desde 23/set; LME a US$ 14.253,50/t em 01/out; recorde em setembro | **CORRIGIDO** | A própria fonte [46] diz que as operações pararam em 23/set depois da **morte de um terceirizado**, com **retomada gradual no dia seguinte**. Os supervisores votaram com 95% para **autorizar** greve, sujeita a mediação. **A mina não está parada por greve.** O LME a US$ 14.253,50 e o recorde de ~US$ 14.875/t conferem na fonte. O pico do COMEX em US$ 6,83/lb em 22/set confere no Yahoo (HG=F). Extra: os "+30,9% no ano" do cobre no TE são **em 12 meses**, não YTD. | [46][47][108] |
+| V20 | Banxico manteve 6,50% em 24/set (unânime, 3ª manutenção) | **CONFIRMADO** | A página oficial do Banxico lista manutenção em 24/09, 06/08 e 25/06 e cortes em 07/05 e 26/03. A Infobae confirma a unanimidade e a inflação geral subindo de 3,10% para 3,42%, com a subjacente caindo de 3,95% para 3,79%. | [55][56] |
+| V21 | Próxima decisão do Banxico em 05/nov | **CONFIRMADO** [S] | O calendário do TE mostra 05/11 e depois 17/12. O calendário oficial do Banxico não foi lido. | [58] |
+| V22 | USMCA: os EUA não renovaram em 01/jul, o que abriu revisões anuais; acordo em vigor até 2036 | **CONFIRMADO** | A Wikipedia diz: "On July 1, 2026, the United States announced it would not renew"; as revisões anuais seguem até 01/07/2036. A White & Case bloqueou a leitura (403). | [109][64] |
+| V23 | México confiante num acordo para cortar as tarifas da Seção 232 antes das *midterms* | **NÃO VERIFICADO** | A Bloomberg bloqueou a leitura (403) e não houve fonte independente acessível. Também **NÃO VERIFICADO**: a proposta mexicana de 5%–10% para veículos, ausente de [65] e [66]. Confirmados: as tarifas de 50% (aço e alumínio) e 25% (autos), a exigência de 50% de conteúdo dos EUA, a regra de 40% a ≥ US$ 16/h e o mínimo estatal de 54% na energia [65][66]. | [67][65][66] |
+| V24 | USD/MXN em 18,1637 em 02/out; 4ª semana seguida de depreciação | **CONFIRMADO** | El CEO (releitura) dá 18,1637 (Banxico), +0,71% para o peso no dia, −2,58% na semana e 4 semanas seguidas. A N+ dá o fechamento oficial anterior em 18,2928 e a mínima intradiária em 18,4330, a pior desde nov/2025, o que é coerente. | [60][61] |
+| V25 | YTD (NAV TR): EWZ +17,76% (até 01/out), ILF +13,87% (até 02/out), EWW +2,13% (até 01/out) | **CORRIGIDO** (data do ILF) | Os três números conferem no iShares. EWZ e EWW batem com o retorno ajustado do Yahoo até 01/out (~18,0% e ~2,12%). Para o ILF, o Yahoo dá ~14,0% até 01/out contra ~16,3% até 02/out, então os **+13,87% são, provavelmente, até 01/out**. | [51][52][53][108] |
+| V26 | BCCh manteve a TPM em 4,50% em 08/set; próxima RPM em 27/out | **CONFIRMADO** [S] | Na releitura, o TE confirma 4,50% em 08/09 por unanimidade, inflação de 4,1% (subjacente de 3,3%) e próxima reunião em 27/10. O comunicado e o calendário do BCCh bloquearam a leitura automatizada. | [75] |
+| V27 | Kast tomou posse em 11/mar/2026; o ministro da Fazenda é Jorge Quiroz | **CONFIRMADO** | Na releitura, a Wikipedia confirma: posse em 11/03/2026, vitória em 14/12/2025 com mais de 58%, Quiroz na Fazenda e aprovação de 57%, 42%, 34% e 35–40%. Também **NÃO VERIFICADO**: a reforma do IR corporativo de 27% para 23%, que não aparece na fonte. | [77] |
+| V28 | De la Espriella venceu o 2º turno com 49,66% × 48,70% (21/jun) e tomou posse em 07/ago | **CONFIRMADO** | As Wikipedias em espanhol e em inglês trazem 12.960.166 votos (49,66%) contra 12.708.312 (48,70%). A posse em 07/08/2026 aparece na versão em espanhol. | [81][110] |
+| V29 | BanRep subiu para 12,25% em 30/set (placar 4–2–1) | **CONFIRMADO** | A Valora Analitik confirma a alta surpresa para 12,25% em 30/09, com o mercado esperando 12%. O TE confirma o placar: 4 votos pela alta, 2 pela manutenção e 1 por +50 bp. Nota: a Valora cita desemprego de 9,4% em agosto, e o TE cita 9,1% para o urbano. | [83][84] |
+| V30 | Orçamento 2027 da Colômbia de COP 634,9 tri; déficit de 9,4%–9,5% do PIB; déficit de 2026 de 7,2% | **CORRIGIDO** | Os números conferem, mas a fonte diz que o PGN foi **reapresentado em 29/ago**, depois que o Congresso devolveu a versão de COP 575,6 tri. **Não confirma a aprovação final**, então o texto "o Congresso aprovou" foi removido. | [85] |
+| V31 | Keiko Fujimori venceu com 50,14% × 49,86% (07/jun) e tomou posse em 28/jul | **CONFIRMADO** (arredondamento) | Os votos são 9.223.396 contra 9.173.755, uma diferença de 49.641. A Wikipedia em inglês traz 50,13% × 49,87%, que é o que os votos implicam. A posse em 28/07 e a proclamação em 03/07 vêm da Wikipedia em espanhol. | [89][110] |
+| V32 | BCRP em 4,25% (10/set, 12ª manutenção); próxima reunião em 07/out | **CONFIRMADO** (taxa) / **CONFIRMADO** [S] (data) | A Infobae confirma 4,25% em 10/09, mantida desde set/2025. O TE confirma a 12ª pausa seguida e a próxima decisão em 07/10. O calendário do BCRP bloqueou a leitura. | [91][92] |
+| V33 | Risco-país da Argentina em 607 pb em 30/set (+95 no mês); mayorista em 1.517; bancos de −15% a −18% em setembro | **CONFIRMADO** | Na releitura, La Nación confirma: 607 pb, +95 no mês (+18,6%), o primeiro nível acima de 600 desde 07/04, mayorista em 1.517, MEP em 1.542,56, CCL em 1.616,44, teto da banda em 1.919,40, Supervielle −18,1%, BBVA −15,3% e Macro −15,1%. O Merval em 2.819.323 também confere no Yahoo. | [96][108] |
+| V34 | "Bazuca" de US$ 75 bi; a EcoGo estima capacidade de US$ 25–45 bi | **CONFIRMADO** | Na releitura, a Infobae (03/10) confirma: 20 + 20 (swap EUA) + 20 (swap China) + 15 (futuros), EcoGo com US$ 25–45 bi e teto do FMI para futuros de US$ 9 bi. | [99] |
+| V35 | FOMC em 27–28/out/2026 | **CONFIRMADO** | O calendário oficial do Fed traz 27–28/out e depois 8–9/dez (este com SEP). | [37] |
+
+**Resumo.** Foram verificadas 35 afirmações:
+- **23 CONFIRMADAS**: V1, V2, V8, V10, V11, V12 (nov), V13, V14, V15, V16, V20, V21, V22, V24, V26, V27, V28, V29, V31, V32, V33, V34 e V35. Destas, V21, V26 e V32 (data) dependem só de fonte secundária, o TE. V13 teve um ajuste de redação (de "desde 2020" para "desde mar/2021").
+- **9 CORRIGIDAS**: V4, V5, V6, V7, V17, V18, V19, V25 e V30.
+- **3 NÃO VERIFICADAS**: V3, V9 e V23. Também ficaram sem verificação a data de dezembro do Copom (V12), os R$ 11,1 tri (V13), a reforma do IR corporativo no Chile (V27) e a proposta mexicana de 5%–10% (V23).
+
+**Impacto para o livro [I]:**
+- A correção de **Escondida** muda a leitura do par CL/PE-1. O prêmio de oferta de cobre depende de uma greve **potencial**, sujeita a mediação, e não de uma paralisação em curso.
+- A correção do **UST 10y** (5,28% no fechamento, e não 5,175%) reforça o regime de juros americanos altos.
+- A vol implícita do EWZ, que justifica começar na parte baixa da banda de vol, é **[NÃO VERIFICADO]**. Recomenda-se medir a vol implícita diretamente na camada de dados (cadeia de opções do EWZ) antes de usá-la no modelo de risco.
 
 ---
 

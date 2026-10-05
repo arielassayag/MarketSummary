@@ -761,3 +761,15 @@ def test_liquidity_profile_rejects_duplicate_names():
     w = pd.Series([0.02, 0.02], index=["A", "A"])
     with pytest.raises(ValueError):
         liquidity_profile(w, pd.Series({"A": 15e6}), NAV, 0.2)
+
+
+def test_liquidity_summary_of_filtered_profile():
+    # O perfil é normalizado pelo gross TOTAL; um recorte (só longs) não pode mudar a escala.
+    w = pd.Series({"A": 0.04, "B": -0.02, "C": 0.01, "D": -0.03})
+    adtv = pd.Series({"A": 10e6, "B": 5e6, "C": 100e6})
+    prof = liquidity_profile(w, adtv, NAV, 0.2)
+    full = liquidity_summary(prof)
+    longs = liquidity_summary(prof[prof["side"] == "LONG"])
+    pd.testing.assert_series_equal(longs["gross"], full["long"], check_names=False)
+    pd.testing.assert_series_equal(longs["long"], full["long"])
+    assert longs["short"].isna().all()

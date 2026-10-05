@@ -130,8 +130,8 @@ def liquidity_profile(weights: pd.Series, adtv_usd: pd.Series, nav: float, parti
 
     Retorna um DataFrame indexado pelos nomes com peso não nulo (ordem de ``weights``) e colunas:
 
-    - ``weight``, ``side`` (``LONG``/``SHORT``), ``notional_usd`` (com sinal), ``adtv_usd``,
-      ``adtv_missing`` (bool), ``days_to_liquidate``;
+    - ``weight``, ``gross_share`` (``|w| / Σ|w|``), ``side`` (``LONG``/``SHORT``),
+      ``notional_usd`` (com sinal), ``adtv_usd``, ``adtv_missing`` (bool), ``days_to_liquidate``;
     - ``pct_gross_<h>d`` para cada horizonte ``h``: contribuição do nome para a fração do
       **gross** liquidável em até ``h`` dias, ``min(|w|, h × p × ADTV / NAV) / Σ|w|`` (cada nome
       limitado ao próprio tamanho).
@@ -154,8 +154,8 @@ def liquidity_profile(weights: pd.Series, adtv_usd: pd.Series, nav: float, parti
         dups = sorted(map(str, set(w.index[w.index.duplicated()])))
         raise ValueError(f"Nomes duplicados no perfil de liquidez (capacidade contada 2×): {dups}")
     w = w[w != 0.0]
-    cols = ["weight", "side", "notional_usd", "adtv_usd", "adtv_missing", "days_to_liquidate",
-            *[horizon_column(h) for h in hs]]
+    cols = ["weight", "gross_share", "side", "notional_usd", "adtv_usd", "adtv_missing",
+            "days_to_liquidate", *[horizon_column(h) for h in hs]]
     if w.empty:
         return pd.DataFrame(columns=cols, index=pd.Index([], name=weights.index.name))
 
@@ -166,6 +166,7 @@ def liquidity_profile(weights: pd.Series, adtv_usd: pd.Series, nav: float, parti
 
     out = pd.DataFrame({
         "weight": w,
+        "gross_share": w.abs() / gross,
         "side": np.where(w > 0, SIDE_LONG, SIDE_SHORT),
         "notional_usd": notional,
         "adtv_usd": adtv,
@@ -184,6 +185,10 @@ def liquidity_summary(profile: pd.DataFrame) -> pd.DataFrame:
 
     Índice ``horizon_days`` (float) e colunas ``gross``, ``long`` e ``short`` (fração de cada
     book liquidável em até ``h`` dias). Um lado sem posições fica ``NaN`` (não há book).
+
+    Aceita um recorte do perfil (ex.: só longs). As colunas ``pct_gross_<h>d`` são normalizadas
+    pelo gross da carteira inteira, que é reconstruído por ``Σ|w| / Σ gross_share``. Assim
+    ``gross`` passa a ser a fração do gross *do recorte*.
     """
     hcols = [c for c in profile.columns if c.startswith("pct_gross_") and c.endswith("d")]
     horizons = [float(c[len("pct_gross_"):-1]) for c in hcols]
@@ -191,15 +196,18 @@ def liquidity_summary(profile: pd.DataFrame) -> pd.DataFrame:
     if profile.empty:
         return pd.DataFrame(np.nan, index=index, columns=["gross", "long", "short"])
     abs_w = profile["weight"].astype(float).abs()
-    gross = float(abs_w.sum())
+    book = float(abs_w.sum())
+    share = (float(profile["gross_share"].astype(float).sum())
+             if "gross_share" in profile.columns else 1.0)
+    full_gross = book / share if share > 0 else book  # gross da carteira que gerou o perfil
     is_long = profile["weight"] > 0
+    long_book = float(abs_w[is_long].sum())
+    short_book = float(abs_w[~is_long].sum())
     rows = {}
     for h, c in zip(horizons, hcols, strict=True):
-        liq_w = profile[c].astype(float) * gross  # volta para fração do NAV
-        long_book = float(abs_w[is_long].sum())
-        short_book = float(abs_w[~is_long].sum())
+        liq_w = profile[c].astype(float) * full_gross  # volta para fração do NAV
         rows[h] = {
-            "gross": float(profile[c].sum()),
+            "gross": float(liq_w.sum()) / book,
             "long": float(liq_w[is_long].sum()) / long_book if long_book > 0 else np.nan,
             "short": float(liq_w[~is_long].sum()) / short_book if short_book > 0 else np.nan,
         }

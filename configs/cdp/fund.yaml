@@ -115,7 +115,7 @@ costs:
 alpha:
   signal_weights:
     residual_momentum: 0.25
-    short_term_reversal: 0.15
+    short_term_reversal: 0.0    # calibração 2026-10-05: giro sem alpha líquido (reports/backtest/2026-10-05)
     value: 0.20
     quality: 0.15
     low_risk: 0.10

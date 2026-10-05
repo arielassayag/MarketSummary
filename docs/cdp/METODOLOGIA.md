@@ -46,9 +46,14 @@
 - **Modelo de risco** estilo Barra em USD: mercado + países + setores GICS + estilos, regressão
   WLS diária com restrições, covariância EWMA com Newey-West, risco específico com shrinkage,
   ajuste de janelas de evento (ex.: eleição brasileira até 26/10/2026, ×1,5 na vol do Brasil).
-- **Sinais**: momentum residual, reversão de curto prazo, baixo risco, valor, qualidade e
-  revisões/preço-alvo de analistas; z-scores robustos por setor; combinação ponderada;
-  α = IC × σ_específico × z (Grinold), ortogonalizado aos fatores (alpha puro).
+- **Sinais**: momentum residual, baixo risco, valor, qualidade e revisões/preço-alvo de
+  analistas; z-scores robustos por setor; combinação ponderada;
+  α = IC × σ_específico × z × √(52/H) (Grinold, horizonte H = 8 semanas), ortogonalizado aos
+  fatores (alpha puro). A reversão de curto prazo é calculada, mas tem peso zero desde a
+  calibração de 2026-10-05 (giro sem alpha líquido; `reports/backtest/2026-10-05/CALIBRACAO.md`).
+- **Calibração**: backtest walk-forward mensal com dados reais (sinais point-in-time, custos,
+  aluguel, caixa). Toda mudança de mandato é registrada com evidência e Sharpe deflacionado;
+  nada muda automaticamente.
 - **Otimizador** (cvxpy/CLARABEL): maximiza alpha − custos amortizados − aluguel − λ·risco, com vol
   ex-ante na meta, neutralidades, limites por nome (long ≤ 4%, short ≤ 2,5%), liquidez (20% do
   ADTV; 3 dias long, 2 dias short; ADTV mínimo US$ 5 mi long / US$ 10 mi short), squeeze, aluguel

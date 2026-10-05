@@ -203,7 +203,12 @@ Republique o painel **no mesmo artifact** — a URL fica em `artifacts/painel/AR
    2.000 linhas por leitura) até a última linha — todas as partes. São gerados pelo código: não
    os edite.
 5. Chame `Artifact` com essa `url`, nesta ordem:
-   1. `action: "read"` (uma vez; lê a página publicada);
+   1. `action: "read"` (uma vez; lê a página publicada). Confira a versão dela: o valor de
+      `<meta name="cdp-page-sha256" content="…">` (em páginas antigas, `var PAGE_SHA = "…"`)
+      precisa ser igual a `artifact.pagina_publicada`. Diferente ou ausente: **não publique** —
+      outra sessão publicou uma página fora das rotinas (por exemplo, uma reformulação em
+      andamento) e republicar a desfaria. Anote "painel não republicado: página publicada
+      <valor> difere do registro <artifact.pagina_publicada>" e siga para o resumo;
    2. `action: "list"` com `scope: "files"` (lista os arquivos publicados, sem baixar conteúdo).
       É obrigatório: a ferramenta só substitui ou remove um arquivo publicado que esta sessão
       leu pelo caminho, viu numa listagem ou publicou;

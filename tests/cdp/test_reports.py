@@ -236,6 +236,28 @@ def test_missing_values_are_na_not_zero():
     assert mkt["mkt.ILF.ret_1d"].value is None  # sem negociação no dia ≠ zero
 
 
+def test_market_fact_labels_state_the_quote_unit():
+    """Índices e linhas locais não são retornos em USD: o rótulo diz a unidade de cotação."""
+    from cdp.research.commentary import benchmark_unit
+
+    idx = pd.to_datetime(["2026-10-02", "2026-10-05"])
+    cols = ["EWZ", "^BVSP", "BOVA11.SA", "^MERV", "^MXX", "BZ=F", "^VIX", "DX-Y.NYB", "^XYZ"]
+    mkt = build_market_day_facts(pd.DataFrame({c: [1.0, 1.1] for c in cols}, index=idx), None,
+                                 date(2026, 10, 5))
+    desc = {c: mkt[f"mkt.{c.replace('^', '').replace('=', '_')}.ret_1d"].name
+            for c in ("EWZ", "^BVSP", "BOVA11.SA", "^MERV", "BZ=F", "^VIX")}
+    assert desc["EWZ"] == "Retorno de EWZ no dia (USD)"
+    assert desc["^BVSP"] == "Retorno de ^BVSP no dia (em BRL, moeda local)"
+    assert desc["BOVA11.SA"] == "Retorno de BOVA11.SA no dia (em BRL, moeda local)"
+    assert desc["^MERV"] == "Retorno de ^MERV no dia (em ARS, moeda local)"
+    assert desc["BZ=F"] == "Retorno de BZ=F no dia (futuro cotado em USD)"
+    assert desc["^VIX"] == "Retorno de ^VIX no dia (variação do nível do índice)"
+    assert benchmark_unit("^MXX") == "em MXN, moeda local"
+    assert benchmark_unit("DX-Y.NYB") == "variação do nível do índice"
+    assert benchmark_unit("^XYZ") == "nível do índice, moeda local"
+    assert benchmark_unit("PETR4.SA") == "em BRL, moeda local"
+
+
 # ==========================================================
 # Comentário
 # ==========================================================

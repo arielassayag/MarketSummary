@@ -239,12 +239,40 @@ def _side_pnl(record: DailyRecord) -> dict[str, float | None]:
     return {"LONG": acc["LONG"], "SHORT": acc["SHORT"]}
 
 
+#: Moeda de cotação dos índices locais e dos sufixos de bolsa do Yahoo (retorno sem conversão).
+_INDEX_CCY = {"^BVSP": "BRL", "^MXX": "MXN", "^MERV": "ARS", "^IPSA": "CLP", "^COLCAP": "COP",
+              "^SPBLPGPT": "PEN"}
+_SUFFIX_CCY = {".SA": "BRL", ".MX": "MXN", ".SN": "CLP", ".BA": "ARS", ".CL": "COP", ".LM": "PEN"}
+#: Indicadores cujo "retorno" é variação de nível (não um preço em moeda).
+_LEVEL_INDICATORS = {"^VIX", "DX-Y.NYB"}
+
+
+def benchmark_unit(symbol: str) -> str:
+    """Em que unidade está o retorno de um benchmark: o código só mede a variação do nível ou do
+    preço como cotado, sem conversão cambial. ETFs listados nos EUA ⇒ USD; índices locais e
+    linhas locais ⇒ moeda local; futuros ⇒ contrato cotado em USD; VIX e índice do dólar ⇒
+    nível do índice."""
+    if symbol in _LEVEL_INDICATORS:
+        return "variação do nível do índice"
+    if symbol.endswith("=F"):
+        return "futuro cotado em USD"
+    ccy = _INDEX_CCY.get(symbol) or next(
+        (c for suffix, c in _SUFFIX_CCY.items() if symbol.endswith(suffix)), None)
+    if ccy:
+        return f"em {ccy}, moeda local"
+    if symbol.startswith("^"):
+        return "nível do índice, moeda local"
+    return "USD"
+
+
 def build_market_day_facts(benchmarks: pd.DataFrame | None, fx: pd.DataFrame | None,
                            d: date) -> dict[str, Fact]:
     """Fatos ``mkt.<símbolo>.ret_1d`` e ``fx.<MOEDA>.ret_1d`` do pregão ``d`` (sem look-ahead).
 
     Retorno entre a última observação válida em ``d`` e a anterior; sem negociação em ``d`` ⇒
-    ``None`` (nunca zero). Câmbio em USD por unidade: positivo = moeda local se valorizou.
+    ``None`` (nunca zero). Benchmarks na unidade em que são cotados (:func:`benchmark_unit`: USD
+    para ETFs americanos, moeda local para índices e linhas locais). Câmbio em USD por unidade:
+    positivo = moeda local se valorizou.
     """
     b = _Facts()
     ts = pd.Timestamp(d)
@@ -259,7 +287,8 @@ def build_market_day_facts(benchmarks: pd.DataFrame | None, fx: pd.DataFrame | N
             rets = level_returns(series)
             value = _num(rets.iloc[-1]) if len(rets) and cut.index[-1] == ts else None
             if kind == "mkt":
-                b.add(f"mkt.{slug(col)}.ret_1d", f"Retorno de {col} no dia (USD)", value, "pct",
+                b.add(f"mkt.{slug(col)}.ret_1d", f"Retorno de {col} no dia ({benchmark_unit(col)})",
+                      value, "pct",
                       f"fechamento de {col} em {d.isoformat()} / fechamento válido anterior − 1; "
                       "sem negociação no dia ⇒ n/d", signed=True, inputs=[f"benchmarks[{col}]"])
             else:

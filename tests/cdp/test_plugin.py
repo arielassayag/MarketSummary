@@ -321,6 +321,9 @@ def test_writer_skills_end_by_republishing_the_painel(name: str):
     assert "pagina_mudou" in flat and "por inteiro" in flat
     assert "painel-*.css" in flat and "valor `null`" in flat
     assert "exige a página em toda publicação" in flat
+    # nunca desfaz uma página publicada fora das rotinas (versão viva ≠ registro ⇒ não publica)
+    assert '<meta name="cdp-page-sha256" content="…">' in flat
+    assert "artifact.pagina_publicada" in flat and "outra sessão publicou uma página" in flat
     assert 'icon: "chart"' not in flat and "CDP: URL do painel" not in flat
     assert "não publique" in flat and "nunca cria um artifact novo" in flat
     assert "nunca use `force`" in flat

@@ -3,12 +3,14 @@
 # docs/research/04_estrutura_mercado_latam.md.
 
 fund:
-  name: "LatAm Pure Alpha Long/Short"
+  name: "CDP — Cabra da Peste"
   base_currency: USD
   inception_date: "2026-10-05"
   inception_nav_usd: 100000000
   rebalance_weekday: MON
   manager_role: "Gestor (PM)"
+  manager_name: "CDP — Cabra da Peste"
+  track_record_type: "paper trading com preços reais (execução hipotética)"
 
 risk:
   vol_target_annual: 0.05      # meta ex-ante

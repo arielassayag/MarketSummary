@@ -24,12 +24,14 @@ class _Frozen(BaseModel):
 
 
 class FundSection(_Frozen):
-    name: str = "LatAm Pure Alpha Long/Short"
+    name: str = "CDP — Cabra da Peste"
     base_currency: Literal["USD"] = "USD"
     inception_date: date = date(2026, 10, 5)
     inception_nav_usd: float = Field(100_000_000.0, gt=0)
     rebalance_weekday: Literal["MON"] = "MON"
     manager_role: str = "Gestor (PM)"
+    manager_name: str = "CDP — Cabra da Peste"
+    track_record_type: str = "paper trading com preços reais (execução hipotética)"
 
 
 class RiskSection(_Frozen):

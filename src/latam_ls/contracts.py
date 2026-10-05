@@ -509,3 +509,84 @@ class AuditEvent(_Model):
     event_hash: str
 
     _tz = field_validator("ts")(classmethod(lambda cls, v: _require_tz(v)))
+
+
+# ==========================================================
+# Track record diário auditável (marcação a mercado, risco e atribuição)
+# ==========================================================
+
+class AttributionLine(_Model):
+    group: Literal["component", "factor_group", "factor", "country", "sector", "issuer", "side"]
+    name: str
+    pnl_usd: float
+    contribution: float = Field(..., description="P&L / NAV de abertura do dia")
+
+
+class DailyPosition(_Model):
+    issuer_id: str
+    ticker: str
+    currency: str
+    side: Side
+    shares: float | None = None
+    price_local: float | None = None
+    price_usd: float | None = None
+    market_value_usd: float
+    weight: float
+    day_pnl_usd: float
+    day_return_usd: float | None = Field(default=None, description="None quando a linha não negociou (sem reprecificação)")
+    repriced: bool = True
+
+
+class DailyRisk(_Model):
+    ex_ante_vol: float | None = None
+    factor_vol: float | None = None
+    specific_vol: float | None = None
+    beta: float | None = None
+    gross: float
+    net: float
+    long_exposure: float
+    short_exposure: float
+    n_long: int
+    n_short: int
+    var_1d_99: float | None = None
+    es_1d_99: float | None = None
+    realized_vol_21d: float | None = None
+    realized_vol_63d: float | None = None
+    drawdown: float = 0.0
+    max_days_to_liquidate: float | None = None
+    pct_gross_liquid_1d: float | None = None
+    squeeze_high_shorts: int = 0
+    exposures: list[ExposureLine] = Field(default_factory=list)
+
+
+class DailyRecord(_Model):
+    """Registro diário imutável do track record, encadeado por hash ao registro anterior."""
+
+    date: date
+    fund_name: str
+    track_record_type: str
+    nav_start_usd: float = Field(..., gt=0)
+    nav_end_usd: float = Field(..., gt=0)
+    pnl_usd: float
+    ret: float
+    pnl_components: dict[str, float] = Field(default_factory=dict, description="equity, factor, specific, costs, borrow, financing")
+    attribution: list[AttributionLine] = Field(default_factory=list)
+    positions: list[DailyPosition] = Field(default_factory=list)
+    risk: DailyRisk
+    alerts: list[str] = Field(default_factory=list)
+    live_book_week: date | None = None
+    approval_hash: str | None = None
+    input_hashes: dict[str, str] = Field(default_factory=dict)
+    is_synthetic: bool
+    data_notice: str = ""
+    prev_record_hash: str
+    record_hash: str = ""
+
+    @model_validator(mode="after")
+    def _notice(self) -> DailyRecord:
+        if self.is_synthetic and "DADOS SIMULADOS" not in self.data_notice.upper():
+            raise ValueError("Registros com dados sintéticos precisam do aviso 'DADOS SIMULADOS'.")
+        return self
+
+    def compute_hash(self) -> str:
+        return sha256_obj(self.model_dump(mode="json", exclude={"record_hash"}))

@@ -27,6 +27,19 @@ Gestor **100% autônomo** de um fundo long/short de ações LatAm (USD, NAV inic
 vol-alvo ex-ante 5% com banda 3–7%). O CDP decide posições e sizing sozinho; rotinas agendadas rodam o
 fechamento diário (marcação, risco, atribuição, comentário e relatório) e o rebalanceamento de segunda-feira.
 
+## A mente do CDP (Claude Code ou Codex — intercambiáveis)
+
+Quem conduz pesquisa, decisões de carteira e comentários é um agente de código: **Claude Code** ou
+**Codex**. Os harnesses podem ser diferentes; a mente, o processo e a metodologia são perenes:
+
+- Metodologia de investimento: `docs/cdp/METODOLOGIA.md`
+- Roteiro semanal (primeiro pregão da semana na B3, decisão até 16h30, execução no fechamento):
+  `docs/cdp/playbooks/SEMANAL.md`
+- Roteiro diário (após o fechamento, 19h20): `docs/cdp/playbooks/DIARIO.md`
+- Registre sempre `mind: "codex"` ou `mind: "claude-code"` nos arquivos de entrada do CDP.
+- A mente escreve apenas JSON validado por schema (pesquisa, decisão do PM, comentário); todo número
+  é calculado pelo código e citado como `{{fact:id}}`.
+
 ## Comandos
 
 - **Testes do CDP**: `uv run pytest tests/cdp -q`

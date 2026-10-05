@@ -16,6 +16,10 @@ fund:
   decision_deadline_local: "16:30"       # decisão gravada antes do call de fechamento da B3
   execution_convention: "MOC: carteira decidida antes do fechamento de segunda com dados até sexta; executada pelo valor-alvo (peso × NAV) ao preço de fechamento de segunda de cada linha, com custos do modelo"
   daily_close_run_local: "19:20"         # marcação, risco, atribuição, comentário e relatório
+  primary_calendar: BVMF                 # calendário oficial da B3 (exchange_calendars)
+  rebalance_rule: "primeiro pregão da semana na B3 (segunda ou o próximo dia útil)"
+  minds: [claude-code, codex]            # a "mente" do CDP: intercambiável, metodologia perene
+  use_all_available_data: true           # inclui intradiário e notícias até o momento da análise
 
 risk:
   vol_target_annual: 0.05      # meta ex-ante
@@ -126,7 +130,7 @@ drawdown:                    # escada a partir do pico (Millennium-style, escala
   stop_out_gross: 0.5
 
 risk_model:
-  history_days: 756
+  history_days: 2000                     # todo o histórico disponível (desde 2019); EWMA pondera o recente
   min_obs_days: 126
   halflife_factor_vol: 84
   halflife_factor_corr: 252
@@ -137,7 +141,7 @@ risk_model:
   market_proxy: ILF
 
 research:
-  provider: demo
+  provider: imported                     # pesquisa e decisão escritas pela mente (Claude Code / Codex)
   top_n_candidates: 40
   news_lookback_days: 14
   llm_can_only_tighten: true

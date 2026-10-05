@@ -83,6 +83,10 @@ class SnapshotManifest(_Model):
     missing_tickers: list[str] = Field(default_factory=list)
     is_synthetic: bool
     data_notice: str = ""
+    provisional_dates: list[date] = Field(
+        default_factory=list,
+        description="Datas cuja barra é intradiária provisória (preço disponível no momento da análise)")
+    provisional_as_of: datetime | None = Field(default=None, description="Horário da barra provisória")
 
     _tz = field_validator("created_at")(classmethod(lambda cls, v: _require_tz(v)))
 
@@ -232,10 +236,14 @@ class View(_Model):
     note_ids: list[str] = Field(default_factory=list)
 
 
+HARNESS_MINDS = ("claude-code", "codex", "api", "demo")
+
+
 class ResearchPack(_Model):
     week: date
     snapshot_id: str
     provider: str
+    mind: str | None = Field(default=None, description="Mente que conduziu a pesquisa: claude-code | codex | api | demo")
     notes: list[ResearchNote] = Field(default_factory=list)
     macro: list[MacroNote] = Field(default_factory=list)
     views: list[View] = Field(default_factory=list)
@@ -495,6 +503,7 @@ class Decision(_Model):
     journal: DecisionJournal | None = None
     audit_head_hash: str | None = Field(default=None, description="Topo da trilha de auditoria no momento da decisão")
     mode: DecisionMode = DecisionMode.HUMAN
+    mind: str | None = Field(default=None, description="Mente (harness) que conduziu a decisão do PM")
     pm_decision_hash: str | None = Field(default=None, description="Hash da decisão estruturada do agente PM (modo autônomo)")
     risk_gate_hash: str | None = Field(default=None, description="Hash do resultado dos gates determinísticos de risco")
 

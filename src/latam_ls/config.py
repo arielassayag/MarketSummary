@@ -40,6 +40,11 @@ class FundSection(_Frozen):
         "valor-alvo (peso × NAV) ao preço de fechamento de segunda de cada linha, com custos do modelo"
     )
     daily_close_run_local: str = "19:20"
+    primary_calendar: str = "BVMF"
+    rebalance_rule: str = "primeiro pregão da semana na B3 (segunda ou o próximo dia útil)"
+    minds: list[str] = Field(default_factory=lambda: ["claude-code", "codex"])
+    use_all_available_data: bool = Field(
+        True, description="Usa todo dado disponível até o momento da análise, inclusive intradiário")
 
 
 class RiskSection(_Frozen):

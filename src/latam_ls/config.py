@@ -180,6 +180,8 @@ class AlphaSection(_Frozen):
     orthogonalize_to_factors: bool = True
     view_information_coefficient: float = Field(0.03, ge=0, le=0.5)
     max_view_tilt_z: float = Field(1.5, ge=0)
+    view_sign_coherence: bool = Field(
+        False, description="Visão final positiva ⇒ sem short; negativa ⇒ sem long (só aperta)")
 
 
 class DrawdownSection(_Frozen):

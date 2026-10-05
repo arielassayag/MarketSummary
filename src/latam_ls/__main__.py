@@ -4,6 +4,7 @@ Fluxo semanal (primeiro pregão da semana na B3):
     cdp weekly prepare --date D --mind claude-code|codex
     (a mente escreve book/<D>/inputs/research_pack.json e pm_decision.json)
     cdp validate --week D
+    cdp weekly preview --week D --mind ...   (opcional: revisão pré-trade, não grava)
     cdp weekly decide --week D --mind ...
 
 Fluxo diário (após o fechamento):
@@ -112,6 +113,18 @@ def cmd_weekly_decide(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_weekly_preview(args: argparse.Namespace) -> int:
+    from .workflow.runtime import Runtime
+
+    rt = Runtime.from_args(args)
+    out = rt.weekly_preview(_d(args.week), mind=args.mind)
+    if args.out:
+        Path(args.out).write_text(json.dumps(out, ensure_ascii=False, indent=2, default=str),
+                                  encoding="utf-8")
+    _print({k: v for k, v in out.items() if k not in ("posicoes", "sombra_quant", "tentativas")})
+    return 0
+
+
 def cmd_daily(args: argparse.Namespace) -> int:
     from .workflow.runtime import Runtime
 
@@ -198,6 +211,11 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--force", action="store_true", help="ignora a regra do primeiro pregão")
     s.add_argument("--offline", action="store_true", help="sem barra intradiária/coleta ao vivo")
     s.set_defaults(func=cmd_weekly_prepare)
+    s = wsub.add_parser("preview", help="prévia pré-trade do livro (não grava nada)")
+    s.add_argument("--week", required=True)
+    s.add_argument("--mind", choices=["claude-code", "codex", "api", "demo"], required=True)
+    s.add_argument("--out", help="grava a prévia completa (JSON) neste caminho")
+    s.set_defaults(func=cmd_weekly_preview)
     s = wsub.add_parser("decide", help="valida, otimiza, aplica gates e decide (autônomo)")
     s.add_argument("--week", required=True)
     s.add_argument("--mind", choices=["claude-code", "codex", "api", "demo"], required=True)

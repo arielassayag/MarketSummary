@@ -40,7 +40,7 @@ def _tiles(state: AppState) -> None:
     mdl = rk.max_days_to_liquidate if rk is not None else (
         pr.max_days_to_liquidate if pr else None)
     ui.kpi(c[3], "Máx. dias p/ liquidar", fmt.days(mdl),
-           fmt.max_status(mdl, cfg.liquidity.max_days_to_liquidate_long)
+           fmt.max_status(mdl, cfg.liquidity.max_days_to_liquidate_long, fmt.days)
            if fmt.is_num(mdl) else "n/d")
     liq1 = rk.pct_gross_liquid_1d if rk is not None else (
         pr.pct_nav_liquidated_1d if pr else None)
@@ -180,16 +180,24 @@ def _squeeze(state: AppState) -> None:
         st.caption("Sem shorts vigentes.")
         return
     counts = df["bucket"].value_counts()
+    alerted = data.squeeze_alerted(rec)
     c = st.columns(4)
-    for col, b, color in zip(c, ("HIGH", "MEDIUM", "LOW", "NA"),
-                             ("red", "orange", "green", "gray"), strict=False):
-        ui.kpi(col, f"Shorts {b}", str(int(counts.get(b, 0))),
-               fmt.Status("balde de squeeze", color))
+    n_high = rec.risk.squeeze_high_shorts if rec is not None else 0
+    ui.kpi(c[0], "HIGH no último fechamento", str(n_high),
+           fmt.Status("reavaliar/reduzir" if n_high else "nenhum", "red" if n_high else "green"),
+           help="Balde recalculado na rotina diária (registro do dia).")
+    for col, b, color in zip(c[1:], ("HIGH", "MEDIUM", "LOW"), ("red", "orange", "green"),
+                             strict=False):
+        ui.kpi(col, f"{b} na decisão", str(int(counts.get(b, 0))),
+               fmt.Status("balde da proposta", color))
+    df = df.assign(alert=["HIGH (alerta diário)" if i in alerted else "—"
+                          for i in df["issuer_id"]])
     ui.table(ui.formatted(df, {
         "weight": lambda v: fmt.pct(v, signed=True), "score": lambda v: fmt.num(v, 1),
         "borrow_fee": fmt.pct, "days_to_liquidate": fmt.days,
     }).rename(columns={"issuer_id": "Emissor", "name": "Nome", "ticker": "Linha",
-                       "weight": "Peso", "bucket": "Balde", "score": "Escore",
+                       "weight": "Peso", "bucket": "Balde na decisão", "score": "Escore",
+                       "alert": "Último fechamento",
                        "borrow_fee": "Aluguel a.a.", "days_to_liquidate": "Dias p/ liquidar"}))
 
 

@@ -194,8 +194,8 @@ def render(state: AppState) -> None:
         if text:
             st.caption(f"`{reports[0].md.as_posix()}` — números formatados pelo código; textos "
                        "de IA rotulados [IA] no próprio relatório.")
-            with st.container(border=True):
-                st.markdown(text)
+            with st.container(border=True, height=900):
+                st.markdown(fmt.report_md(text, demote=2))
         else:
             st.caption("Relatório semanal ainda não publicado para esta semana.")
     with tabs[1]:
@@ -209,8 +209,8 @@ def render(state: AppState) -> None:
     with tabs[5]:
         memo = wd.proposal.memo_markdown
         if memo:
-            with st.container(border=True):
-                st.markdown(memo)
+            with st.container(border=True, height=900):
+                st.markdown(fmt.report_md(memo, demote=2))
         else:
             st.caption("Proposta sem memo.")
     with tabs[6]:

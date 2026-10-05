@@ -743,3 +743,33 @@ def test_reports_default_to_repository_mandate():
     cur = _proposal([_pos("AAA", 0.03)])
     md, _ = render_weekly_report(WEEK, cur, None, None, None, [], [], [], None, FUND)
     assert f"(máx. {fmt_pct(repo_cfg.risk.max_factor_risk_share)})" in md
+
+
+def test_weekly_positions_prefer_pm_rationale_over_research():
+    cur = _proposal([_pos("AAA", 0.03), _pos("DDD", -0.02)])
+    research = [View(issuer_id="AAA", source=ViewSource.AI, score=1, confidence=0.5,
+                     rationale="Racional da pesquisa.", author="imported:claude-code"),
+                View(issuer_id="DDD", source=ViewSource.AI, score=-1, confidence=0.5,
+                     rationale="Pesquisa de DDD.", author="imported:claude-code")]
+    pm = _pm(views=[{"issuer_id": "AAA", "rationale": "Tese do PM para AAA.",
+                     "evidence_ids": ["AAA.alpha_z"], "stance": 1, "conviction": 3}])
+    md, _ = render_weekly_report(WEEK, cur, None, pm, None, [], research, [], None, FUND, cfg=CFG)
+    carteira = md.split("## Carteira", 1)[1].split("## Risco", 1)[0]
+    assert "Tese do PM para AAA." in carteira and "Racional da pesquisa." not in carteira
+    assert "Pesquisa de DDD." in carteira  # sem visão do PM: racional da pesquisa
+    abst = _pm(abstain=True, views=[])
+    md, _ = render_weekly_report(WEEK, cur, None, abst, None, [], research, [], None, FUND,
+                                 cfg=CFG)
+    assert "Racional da pesquisa." in md.split("## Carteira", 1)[1]
+
+
+def test_template_never_ranks_missing_country_attribution():
+    r1, r2, r3 = make_chain()
+    na = r3.model_copy(update={"attribution": [
+        a.model_copy(update={"contribution": float("nan")}) if a.group == "country" else a
+        for a in r3.attribution]})
+    fb = build_daily_factbook(na, [r1, r2], cfg=CFG)
+    assert fb.facts["attr.country.BR"].value is None
+    assert not any("maior efeito" in p for p in _template_output(fb).paragraphs)
+    fb_ok = build_daily_factbook(r3, [r1, r2], cfg=CFG)
+    assert any("maior efeito veio de BR" in p for p in _template_output(fb_ok).paragraphs)

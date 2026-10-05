@@ -26,7 +26,8 @@ def _kpis(state: AppState) -> None:
     ui.kpi(c[2], "Retorno no mês (MTD)", fmt.pct(per.get("mtd"), signed=True), "composto")
     ui.kpi(c[3], "Retorno no ano (YTD)", fmt.pct(per.get("ytd"), signed=True), "composto")
     ui.kpi(c[4], "Desde o início (ITD)", fmt.pct(per.get("itd"), signed=True),
-           f"desde {fmt.date_br(per.get('first_date'))} · {per.get('n_days')} pregão(ões)")
+           f"{per.get('n_days')} pregão(ões)",
+           help=f"Composto desde o primeiro registro ({fmt.date_br(per.get('first_date'))}).")
 
     c = st.columns(5)
     ui.kpi(c[0], "Vol ex-ante", fmt.pct(rk.ex_ante_vol), fmt.vol_status(rk.ex_ante_vol, cfg),
@@ -47,7 +48,8 @@ def _kpis(state: AppState) -> None:
            help=f"Escada: stop suave {fmt.pct(cfg.drawdown.soft_stop, 1)}, stop duro "
                 f"{fmt.pct(cfg.drawdown.hard_stop, 1)}, stop-out {fmt.pct(cfg.drawdown.stop_out, 1)}.")
     ui.kpi(c[1], "Longs / shorts", f"{rk.n_long} / {rk.n_short}",
-           f"comprado {fmt.pct(rk.long_exposure)} · vendido {fmt.pct(rk.short_exposure)}")
+           f"L {fmt.pct(rk.long_exposure, 1)} · S {fmt.pct(rk.short_exposure, 1)}",
+           help="Exposição comprada (L) e vendida (S) em % do NAV.")
     ui.kpi(c[2], "ES 1d (99%)", fmt.pct(rk.es_1d_99), fmt.max_status(rk.es_1d_99,
                                                                      cfg.risk.es_1d_max))
     ui.kpi(c[3], "Shorts com squeeze HIGH", str(rk.squeeze_high_shorts),
@@ -57,8 +59,8 @@ def _kpis(state: AppState) -> None:
     if track.compare is not None and not track.compare.empty:
         va = track.compare["cum_value_added"].iloc[-1]
     ui.kpi(c[4], "Valor agregado vs. sombra", fmt.pct(va, signed=True),
-           "CDP ÷ só-quant − 1 desde o início" if va is not None else "sem sombra",
-           help="Mede o que o PM de IA agregou sobre a carteira só-quant (série-sombra).")
+           "desde o início" if va is not None else "sem sombra",
+           help="CDP ÷ sombra só-quant − 1: o que o PM de IA agregou sobre a carteira só-quant.")
     st.caption(f"Registro diário de {fmt.date_br(rec.date)} · hash "
                f"`{fmt.short_hash(rec.record_hash, 16)}` · números do registro gravado "
                f"{ui.CALC_BADGE}")
@@ -77,7 +79,7 @@ def _commentary(state: AppState) -> None:
     badge = ui.IA_BADGE if com.ai else ui.CALC_BADGE
     ui.section("Comentário do dia", badge)
     with st.container(border=True):
-        st.markdown(com.markdown)
+        st.markdown(fmt.report_md(com.markdown, demote=2))
     origin = f"Fonte: {com.source}"
     if com.mind:
         origin += f" · mente {fmt.escape_md(com.mind)}"

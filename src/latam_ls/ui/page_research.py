@@ -48,9 +48,16 @@ def _macro(wd: data.WeekData) -> None:
     if not notes:
         st.caption("Sem notas macro na semana.")
         return
-    for i, m in enumerate(sorted(notes, key=lambda m: m.scope)):
+    notes = sorted(notes, key=lambda m: m.scope)
+    st.markdown(f"{len(notes)} nota(s) macro {ui.IA_BADGE}")
+    ui.table(pd.DataFrame([{"Escopo": m.scope, "Stance": _STANCE.get(m.stance, str(m.stance)),
+                            "Regime": data.render_facts(m.regime, wd.facts),
+                            "Eventos": len(m.key_events), "Riscos": len(m.risks),
+                            "Abstenção": "sim" if m.regime.startswith("indeterminado") else "não"}
+                           for m in notes]))
+    for i, m in enumerate(notes):
         with st.expander(f"{m.scope} — stance {_STANCE.get(m.stance, m.stance)}",
-                         icon=":material/public:"):
+                         icon=":material/public:", expanded=(i == 0)):
             st.markdown(f"{ui.IA_BADGE} · provedor {fmt.code(m.provider)} · "
                         f"prompt {fmt.code(m.prompt_version)}")
             ui.plain(data.render_facts(m.regime, wd.facts), prefix="**Regime:** ")

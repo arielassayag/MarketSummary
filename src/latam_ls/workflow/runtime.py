@@ -388,6 +388,48 @@ class Runtime:
                 "analise": info.get("captured_at") or info.get("prepared_at"),
                 "execucao": f"fechamento de {week} (MOC) pela rotina diária"}
 
+    def weekly_preview(self, week: date, *, mind: str) -> dict:
+        """Prévia do livro da semana SEM gravar nada (revisão pré-trade da mente).
+
+        Roda exatamente o pipeline do ``decide`` (pesquisa + decisão do PM + otimizador + gates)
+        sobre os arquivos de ``inputs/`` e devolve as posições com a visão de cada nome e os
+        conflitos (posição contrária à visão da pesquisa/PM). A mente ajusta só juízos ordinais
+        (visões e exclusões) — números continuam vindo do código.
+        """
+        from ..research.pm_agent import load_week_inputs, pm_factbook, to_bundle
+        from .weekly import run_weekly_decision
+
+        _md, _info, ctx, _fb, pmctx = self._week_state(week)
+        pack, out, issues, pm_ctx = load_week_inputs(self.week_dir(week), pmctx, now=self.now())
+        bundle = to_bundle(out, self.cfg, pm_ctx.drawdown, factbook=pm_factbook(pm_ctx))
+        outcome = run_weekly_decision(ctx, pack, bundle, version=self.book.next_version(week),
+                                      live_weeks=self.live_weeks(),
+                                      kill_switch=self.kill_switch_active(),
+                                      decided_at=self.now(), created_at=self.now())
+        stance: dict[str, int] = {}
+        for v in list(pack.views) + list(bundle.views):
+            if v.score != 0:
+                stance[v.issuer_id] = v.score  # a visão do PM (última) prevalece
+        p = outcome.final
+        rows, conflicts = [], []
+        for pos in sorted(p.positions, key=lambda x: -abs(x.weight)):
+            st = stance.get(pos.issuer_id)
+            row = {"emissor": pos.issuer_id, "peso": round(pos.weight, 5), "pais": pos.country,
+                   "setor": pos.sector, "alpha_z": pos.alpha_z, "visao": st,
+                   "risco": pos.risk_contribution}
+            rows.append(row)
+            if st is not None and st * pos.weight < 0:
+                conflicts.append(row)
+        shadow = {x.issuer_id: x.weight for x in outcome.shadow_quant.positions}
+        return {"semana": week, "caminho": outcome.path_taken, "postura": bundle.posture,
+                "vol_ex_ante": p.risk.ex_ante_vol, "gross": p.risk.gross, "net": p.risk.net,
+                "beta": p.risk.beta, "n_long": p.risk.n_long, "n_short": p.risk.n_short,
+                "falhas_hard": [c.check_id for c in p.hard_failures],
+                "falhas_soft": [c.check_id for c in p.soft_failures],
+                "apontamentos_entrada": issues, "conflitos_visao_posicao": conflicts,
+                "posicoes": rows, "sombra_quant": shadow,
+                "tentativas": outcome.attempts}
+
     # ------------------------------------------------------------------ diário
     def _records(self, shadow: bool = False) -> list:
         try:

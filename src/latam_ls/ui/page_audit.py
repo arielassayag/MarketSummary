@@ -74,7 +74,7 @@ def _invariants(state: AppState) -> None:
     if section:
         st.caption(f"Fonte: {fmt.code(source)}")
         with st.container(border=True):
-            st.markdown(section)
+            st.markdown(fmt.report_md(section, demote=2))
     else:
         st.caption(f"Fonte: invariantes do código ({fmt.escape_md(source)}).")
         ui.bullet_list(list(data.CDP_INVARIANTS))

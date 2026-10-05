@@ -190,4 +190,40 @@ def apply_views(
             log_t.append(f"{issuer}: inclinação {row['source'].upper()} z={row['z_tilt']:+.2f} "
                          f"⇒ α {row['alpha_add']:+.2%} a.a.")
     adjusted.name = alpha.name
-    return adjusted, constraints, log_t + log_c
+    log_s: list[str] = []
+    if getattr(cfg.alpha, "view_sign_coherence", False):
+        constraints, log_s = sign_coherence_constraints(constraints, vs)
+    return adjusted, constraints, log_t + log_c + log_s
+
+
+def final_view_sign(views: list[View]) -> dict[str, int]:
+    """Sinal final da visão por emissor: o PM prevalece; senão Σ score·confiança da pesquisa."""
+    pm: dict[str, int] = {}
+    ai: dict[str, float] = {}
+    for v in views:
+        if v.score == 0:
+            continue
+        if v.source == ViewSource.PM:
+            pm[v.issuer_id] = int(np.sign(v.score))
+        else:
+            ai[v.issuer_id] = ai.get(v.issuer_id, 0.0) + v.score * float(v.confidence)
+    out = {k: int(np.sign(x)) for k, x in ai.items() if x != 0}
+    out.update(pm)
+    return out
+
+
+def sign_coherence_constraints(constraints: pd.DataFrame, views: list[View]
+                               ) -> tuple[pd.DataFrame, list[str]]:
+    """Coerência de sinal: nunca vender um nome com visão final positiva nem comprar um com
+    visão final negativa (o otimizador busca hedges em outros nomes). Só aperta."""
+    c = constraints.copy()
+    log: list[str] = []
+    for issuer, sign in sorted(final_view_sign(views).items()):
+        if issuer not in c.index:
+            continue
+        col = "no_short" if sign > 0 else "no_long"
+        if not bool(c.at[issuer, col]):
+            c.at[issuer, col] = True
+            log.append(f"{issuer}: coerência de sinal com a visão "
+                       f"{'positiva' if sign > 0 else 'negativa'} ⇒ {col}")
+    return c, log

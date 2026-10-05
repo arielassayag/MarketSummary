@@ -19,11 +19,12 @@ def _stats(state: AppState) -> None:
     ui.kpi(c[0], "Retorno desde o início", fmt.pct(s.get("since_inception_return"), signed=True),
            f"{s.get('n_days')} pregão(ões)")
     ui.kpi(c[1], "Retorno anualizado", fmt.pct(s.get("annualized_return"), signed=True),
-           "pouco informativo (< 252 pregões)" if s.get("annualization_note") else "composto")
+           fmt.Status("pouco informativo", "orange") if s.get("annualization_note")
+           else "composto")
     ui.kpi(c[2], "Vol anualizada", fmt.pct(s.get("annualized_vol")),
            s.get("realized_vol_status") or "")
-    ui.kpi(c[3], "Sharpe (sobre caixa USD 3M)", fmt.num(s.get("sharpe"), 2),
-           "excesso sobre o financiamento registrado")
+    ui.kpi(c[3], "Sharpe", fmt.num(s.get("sharpe"), 2), "sobre caixa USD 3M",
+           help="Excesso de retorno sobre o financiamento registrado (taxa USD 3M, ACT/360).")
     ui.kpi(c[4], "Drawdown máximo", fmt.pct(s.get("max_drawdown")),
            fmt.ladder_status(s.get("max_drawdown"), state.cfg))
     best, worst = s.get("best_day"), s.get("worst_day")
@@ -53,7 +54,7 @@ def _records_table(state: AppState) -> None:
     ui.table(show, height=min(560, 36 * (len(show) + 1)))
 
 
-def _style_month(v: object) -> str:
+def _month_css(v: object) -> str:
     if not fmt.is_num(v):
         return "color: #9AA3AF"
     x = float(v)  # type: ignore[arg-type]
@@ -69,14 +70,14 @@ def _monthly(state: AppState) -> None:
                help="Retornos diários compostos por mês; mês sem registro fica vazio (não zero).")
     table = state.track.monthly
     if table is None or table.empty:
-        st.caption("Sem meses completos ainda.")
+        st.caption("Sem meses com registros ainda.")
         return
     t = table.copy()
     t.index = [str(i) for i in t.index]
     t.index.name = "Ano"
-    styled = t.style.map(_style_month).format(lambda v: fmt.pct(v, 2, signed=True)
-                                              if fmt.is_num(v) else "")
-    st.dataframe(styled, width="stretch")
+    css = t.map(_month_css)
+    text = t.map(lambda v: fmt.pct(v, 2, signed=True) if fmt.is_num(v) else "—")
+    st.dataframe(text.style.apply(lambda _: css, axis=None), width="stretch")
 
 
 def _charts(state: AppState) -> None:
@@ -115,13 +116,10 @@ def render(state: AppState) -> None:
         return
     _stats(state)
     _charts(state)
-    left, right = st.columns([3, 2])
-    with left:
-        _records_table(state)
-    with right:
-        _monthly(state)
-        if track.csv_bytes:
-            st.download_button("Baixar track_record.csv", data=track.csv_bytes,
-                               file_name="track_record.csv", mime="text/csv",
-                               icon=":material/download:", key="dl_track_csv")
+    _monthly(state)
+    _records_table(state)
+    if track.csv_bytes:
+        st.download_button("Baixar track_record.csv", data=track.csv_bytes,
+                           file_name="track_record.csv", mime="text/csv",
+                           icon=":material/download:", key="dl_track_csv")
     _integrity(state)

@@ -512,3 +512,79 @@ def test_pit_ratios_ignore_prices_and_filings_after_as_of():
     assert r["earnings_yield"] == pytest.approx(111 * K / (10.0 * 990_000))
     r_early = fp.pit_ratios(pit, px, date(2025, 8, 7)).loc["SIM_ALFA"]
     assert math.isnan(r_early["earnings_yield"])  # último preço é posterior ⇒ sem preço
+
+
+def _flow(s, e, v, recv, src):
+    return {"entity": "T", "metric": "net_income", "period_start": pd.Timestamp(s),
+            "period_end": pd.Timestamp(e), "value": v, "currency": "BRL",
+            "received_date": pd.Timestamp(recv), "version": 1, "source": src}
+
+
+@pytest.mark.parametrize("reverse", [False, True])
+def test_itr_beats_interim_dfp_for_same_quarter_and_day(reverse):
+    """Caso real (Tenda): DFP de 31/03/2023 com LL atribuível 0 no mesmo dia do ITR."""
+    rows_ = [
+        _flow("2022-01-01", "2022-06-30", -181.782, "2022-08-04", "cvm:itr:con"),
+        _flow("2022-04-01", "2022-06-30", -114.441, "2022-08-04", "cvm:itr:con"),
+        _flow("2022-01-01", "2022-09-30", -392.191, "2022-11-03", "cvm:itr:con"),
+        _flow("2022-01-01", "2022-12-31", -547.302, "2023-03-09", "cvm:dfp:con"),
+        _flow("2023-01-01", "2023-03-31", 0.0, "2023-05-03", "cvm:dfp:con"),
+        _flow("2023-01-01", "2023-03-31", -41.902, "2023-05-03", "cvm:itr:con"),
+    ]
+    raw = pd.DataFrame(rows_[::-1] if reverse else rows_)
+    pit = pit_from_raw_facts(raw, {"T": "SIM_T"})
+    r = pit[(pit["metric"] == "net_income_ttm") & (pit["period_end"] == "2023-03-31")]
+    q4 = -547.302 + 392.191
+    q3 = -392.191 + 181.782
+    assert r["value"].tolist() == [pytest.approx(-41.902 + q4 + q3 - 114.441)]
+    assert r["source"].str.startswith("cvm:itr").all()
+
+
+def test_zero_attributable_placeholder_and_zero_duplicate_placeholder():
+    base = read_cvm_zip(cvm_zip("DFP", 2024), "DFP", 2024)
+    t = dict(base)
+    dre = t["DRE_con"]
+    is_child = (dre["CNPJ_CIA"] == ALFA) & (dre["CD_CONTA"] == "3.11.01")
+    t["DRE_con"] = dre.assign(VL_CONTA=dre["VL_CONTA"].where(~is_child, "0.0"))
+    f = extract_cvm_facts(t, "DFP")
+    ni = f[(f["entity"] == ALFA) & (f["metric"] == "net_income")]["value"].tolist()
+    assert ni == [104 * K]  # consolidado (3.11), não o 0 reservado do controlador
+    # duplicata da EBIT com 0 ao lado do valor real ⇒ fica o valor não nulo
+    ebit = dre[(dre["CNPJ_CIA"] == ALFA) & (dre["CD_CONTA"] == "3.05")].copy()
+    ebit["VL_CONTA"] = "0.0"
+    t2 = dict(base)
+    t2["DRE_con"] = pd.concat([dre, ebit], ignore_index=True)
+    f2 = extract_cvm_facts(t2, "DFP")
+    assert f2[(f2["entity"] == ALFA) & (f2["metric"] == "ebit")]["value"].tolist() == [200 * K]
+
+
+def test_all_zero_consolidated_statement_falls_back_to_individual():
+    """Caso real (TIM S.A., 2024): formulário consolidado entregue inteiro zerado."""
+    base = read_cvm_zip(cvm_zip("DFP", 2024), "DFP", 2024)
+    t = dict(base)
+    dre = t["DRE_con"]
+    alfa = dre["CNPJ_CIA"] == ALFA
+    t["DRE_con"] = dre.assign(VL_CONTA=dre["VL_CONTA"].where(~alfa, "0.0"))
+    f = extract_cvm_facts(t, "DFP")
+    a = f[(f["entity"] == ALFA) & f["metric"].isin(["revenue", "net_income"])]
+    assert dict(zip(a["metric"], a["value"], strict=True)) == {"revenue": 999 * K,
+                                                                "net_income": 888 * K}
+    assert (a["source"] == "cvm:dfp:ind").all()
+    # consolidado zerado e SEM individual ⇒ métricas ausentes (nunca zero)
+    t2 = dict(t)
+    t2["DRE_ind"] = t["DRE_ind"].iloc[0:0]
+    f2 = extract_cvm_facts(t2, "DFP")
+    assert f2[(f2["entity"] == ALFA) & f2["metric"].isin(["revenue", "net_income"])].empty
+
+
+def test_asset_turnover_needs_positive_revenue():
+    pit = pd.DataFrame([
+        ("H", "revenue_ttm", "2025-06-30", "2025-08-01", 0.0, "BRL", "t", 1),
+        ("H", "total_assets", "2025-06-30", "2025-08-01", 500.0, "BRL", "t", 1),
+        ("H", "net_income_ttm", "2025-06-30", "2025-08-01", 50.0, "BRL", "t", 1),
+        ("H", "equity", "2025-06-30", "2025-08-01", 400.0, "BRL", "t", 1),
+    ], columns=PIT_COLUMNS)
+    px = pd.DataFrame({"H": [10.0]}, index=pd.to_datetime(["2025-08-01"]))
+    r = fp.pit_ratios(fp._coerce_pit(pit), px, date(2025, 8, 1)).loc["H"]
+    assert math.isnan(r["asset_turnover"]) and math.isnan(r["ebit_margin"])
+    assert r["roe"] == pytest.approx(50 / 400)

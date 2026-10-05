@@ -9,6 +9,7 @@ from __future__ import annotations
 import math
 import numbers
 import re
+from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import date, datetime
 from zoneinfo import ZoneInfo
@@ -119,6 +120,37 @@ def escape_md(text: object) -> str:
     return _MD_SPECIAL.sub(r"\\\1", clean)
 
 
+_UNESCAPED_DOLLAR = re.compile(r"(?<!\\)\$")
+_HEADING = re.compile(r"^(#{1,6})(\s)")
+_CODE_SPAN = re.compile(r"(`[^`]*`)")
+
+
+def report_md(text: str, demote: int = 0) -> str:
+    """Markdown gerado pelo código (relatórios, memo, comentário) pronto para ``st.markdown``.
+
+    Escapa ``$`` fora de trechos de código (evita que ``US$ 1,00`` vire fórmula LaTeX) e,
+    opcionalmente, rebaixa os títulos em ``demote`` níveis (limitado a ``######``).
+    """
+    out: list[str] = []
+    fenced = False
+    for line in (text or "").splitlines():
+        if line.lstrip().startswith("```"):
+            fenced = not fenced
+            out.append(line)
+            continue
+        if fenced:
+            out.append(line)
+            continue
+        parts = _CODE_SPAN.split(line)
+        parts = [p if i % 2 else _UNESCAPED_DOLLAR.sub(r"\\$", p) for i, p in enumerate(parts)]
+        line = "".join(parts)
+        if demote > 0:
+            line = _HEADING.sub(lambda m: "#" * min(6, len(m.group(1)) + demote) + m.group(2),
+                                line)
+        out.append(line)
+    return "\n".join(out)
+
+
 def code(text: object) -> str:
     """Texto como trecho de código Markdown (sem crases internas; nada é interpretado)."""
     clean = str(text if text is not None else NA).replace("`", "'").replace("\n", " ")
@@ -164,12 +196,12 @@ def ladder_status(drawdown: object, cfg: FundConfig) -> Status:
         return Status("n/d", "gray")
     lad = cfg.drawdown
     if dd <= lad.stop_out:
-        return Status(f"stop-out (≤ {pct(lad.stop_out, 1)})", "red")
+        return Status("stop-out", "red")
     if dd <= lad.hard_stop:
-        return Status(f"stop duro (≤ {pct(lad.hard_stop, 1)})", "red")
+        return Status("stop duro", "red")
     if dd <= lad.soft_stop:
-        return Status(f"stop suave (≤ {pct(lad.soft_stop, 1)})", "orange")
-    return Status(f"normal (stop suave em {pct(lad.soft_stop, 1)})", "green")
+        return Status("stop suave", "orange")
+    return Status("normal", "green")
 
 
 def limit_status(value: object, limit: object) -> Status:
@@ -182,11 +214,13 @@ def limit_status(value: object, limit: object) -> Status:
     return Status(f"dentro do limite ±{pct(limit)}", "green")
 
 
-def max_status(value: object, limit: object) -> Status:
-    """Valor vs. teto (VaR, ES)."""
+def max_status(value: object, limit: object,
+               formatter: Callable[[object], str] | None = None) -> Status:
+    """Valor vs. teto (VaR, ES, dias para liquidar); ``formatter`` formata o teto."""
     v, lim = _f(value), _f(limit)
     if v is None or lim is None:
         return Status("n/d", "gray")
+    f = formatter or pct
     if v > lim + 1e-12:
-        return Status(f"acima do teto {pct(lim)}", "red")
-    return Status(f"teto {pct(limit)}", "green")
+        return Status(f"acima do teto {f(lim)}", "red")
+    return Status(f"teto {f(lim)}", "green")

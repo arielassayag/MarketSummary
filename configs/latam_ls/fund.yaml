@@ -126,6 +126,7 @@ alpha:
   orthogonalize_to_factors: true
   view_information_coefficient: 0.03   # teto (adoção plena S3); efetivo vem de research.llm_phase
   max_view_tilt_z: 1.5
+  view_sign_coherence: true          # visão final + ⇒ sem short; − ⇒ sem long (PM prevalece)
 
 drawdown:                    # escada a partir do pico (Millennium-style, escalada p/ vol 5%)
   soft_stop: -0.025            # revisão de risco + corte de 25% do gross

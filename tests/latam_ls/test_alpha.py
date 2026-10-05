@@ -923,3 +923,31 @@ def test_line_selection_prefers_usable_local_line_without_currency_info(md, as_o
     assert len(nofx) >= 1
     assert early.loc[nofx, "earnings_yield"].notna().all()
     assert early.loc[nofx, ["book_to_price", "ebitda_to_ev"]].isna().all().all()
+
+
+def test_sign_coherence_blocks_side_against_final_view():
+    import pandas as pd
+
+    from latam_ls.alpha.views import apply_views, final_view_sign
+    from latam_ls.config import FundConfig
+    from latam_ls.contracts import View, ViewSource
+
+    cfg = FundConfig().with_overrides({"alpha": {"view_sign_coherence": True}})
+    alpha = pd.Series({"A": 0.01, "B": -0.01, "C": 0.0, "D": 0.0}, name="alpha")
+    vol = pd.Series(0.3, index=alpha.index)
+    views = [
+        View(issuer_id="A", source=ViewSource.AI, score=-1, confidence=0.5, rationale="x", author="ai"),
+        View(issuer_id="A", source=ViewSource.PM, score=1, confidence=0.6, rationale="x", author="pm"),
+        View(issuer_id="B", source=ViewSource.AI, score=-1, confidence=0.4, rationale="x", author="ai"),
+        View(issuer_id="C", source=ViewSource.AI, score=0, confidence=1.0, rationale="x", author="ai",
+             no_short=True),
+    ]
+    assert final_view_sign(views) == {"A": 1, "B": -1}
+    _, cons, log = apply_views(alpha, views, vol, cfg)
+    assert bool(cons.at["A", "no_short"]) and not bool(cons.at["A", "no_long"])
+    assert bool(cons.at["B", "no_long"]) and not bool(cons.at["B", "no_short"])
+    assert bool(cons.at["C", "no_short"]) and not bool(cons.at["C", "no_long"])
+    assert not bool(cons.at["D", "no_short"]) and not bool(cons.at["D", "no_long"])
+    assert any("coerência de sinal" in x for x in log)
+    _, cons_off, _ = apply_views(alpha, views, vol, FundConfig())
+    assert not bool(cons_off.at["A", "no_short"])

@@ -742,11 +742,17 @@ def _week_components(records: Sequence[DailyRecord]) -> list[list[str]]:
 
 
 def _position_rows(positions: Sequence[PositionTarget], views: Mapping[str, View],
-                   factbook: FactBook | None) -> list[list[str]]:
+                   factbook: FactBook | None,
+                   pm_rationale: Mapping[str, str] | None = None) -> list[list[str]]:
+    """Linhas da carteira; o racional prefere a visão do PM (``views`` com fonte PM ou, na falta
+    dela, a visão verificada em ``pm``) e cai para a visão de pesquisa."""
     rows = []
+    pm_rationale = pm_rationale or {}
     for p in positions:
         v = views.get(p.issuer_id)
-        rationale = _truncate(_ai_text(v.rationale, factbook), AI_CELL_CHARS) if v else NA
+        text = (v.rationale if v is not None and v.source == ViewSource.PM
+                else pm_rationale.get(p.issuer_id) or (v.rationale if v is not None else None))
+        rationale = _truncate(_ai_text(text, factbook), AI_CELL_CHARS) if text else NA
         rows.append([p.issuer_id, p.name, p.country, p.sector, _pct(p.weight, signed=True),
                      _usd(p.notional_usd, signed=True), f"{p.execution_ticker} ({p.line_type})",
                      fmt_num(_f(p.days_to_liquidate), 1), p.squeeze_bucket,
@@ -1026,9 +1032,11 @@ def render_weekly_report(week: date, proposal: Proposal, decision: Decision | No
                     key=lambda p: (-abs(p.weight), p.issuer_id))
     headers = ["Emissor", "Nome", "País", "Setor", "Peso", "Nocional", "Linha", "Dias p/ liquidar",
                "Squeeze", "alpha z", "Visão", "Racional [IA]"]
-    s.table(headers, _position_rows(longs[:TOP_N], view_map, factbook),
+    pm_rat = ({v.issuer_id: v.rationale for v in pm.views}
+              if pm is not None and not pm.abstain else {})
+    s.table(headers, _position_rows(longs[:TOP_N], view_map, factbook, pm_rat),
             caption=f"Maiores longs ({len(longs)} no total)")
-    s.table(headers, _position_rows(shorts[:TOP_N], view_map, factbook),
+    s.table(headers, _position_rows(shorts[:TOP_N], view_map, factbook, pm_rat),
             caption=f"Maiores shorts ({len(shorts)} no total)")
     sections.append(s)
 

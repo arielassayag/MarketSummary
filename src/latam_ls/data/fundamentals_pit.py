@@ -43,6 +43,16 @@ Plano de contas (verificado nos arquivos de 2017–2026)
 - Ações: ``composicao_capital`` (``QT_ACAO_TOTAL_CAP_INTEGR − QT_ACAO_TOTAL_TESOURO``), publicado
   pela CVM apenas a partir de 2020 (antes disso ⇒ ausente).
 - Preferência ``con`` (consolidado) com *fallback* ``ind`` (individual) por documento/demonstração.
+- Linhas duplicadas nos CSVs: idênticas ⇒ uma; zero ao lado de um único valor não nulo ⇒ o
+  valor (zero é espaço reservado do formulário); valores não nulos divergentes ⇒ conta ausente.
+  Caixa e dívida exigem todas as contas componentes (nunca soma parcial).
+- Mesmo período, data e versão em ITR e numa DFP "intermediária" ⇒ vale o ITR.
+
+Persistência e auditoria
+------------------------
+:func:`save_pit` grava ``attrs["content_sha256"]`` (:func:`pit_content_sha256`) e recusa
+sobrescrever sem ``overwrite=True``; :func:`load_pit` recalcula o hash e falha em divergência.
+``attrs["source_files"]`` registra o SHA-256 de cada arquivo bruto (ZIP da CVM, JSON da SEC).
 
 Moeda e preços
 --------------
@@ -127,7 +137,7 @@ DEFAULT_MAX_AGE_DAYS = 540
 """Idade máxima (``as_of − period_end``) para um fundamento ainda ser usado (≈ 18 meses)."""
 DEFAULT_MAX_PRICE_AGE_DAYS = 7
 
-CVM_PARSER_VERSION = "5"
+CVM_PARSER_VERSION = "7"
 CVM_DOCS = ("ITR", "DFP")
 SEC_COMPANYFACTS_URL = "https://data.sec.gov/api/xbrl/companyfacts/CIK{cik}.json"
 SEC_ACCEPTED_FORMS = frozenset({
@@ -181,6 +191,16 @@ def _to_date(x) -> date:
 # ==========================================================
 # Motor de trimestres discretos e TTM
 # ==========================================================
+
+def _doc_priority(source: pd.Series) -> pd.Series:
+    """Precedência entre documentos com o MESMO período, data e versão: ITR (1) > demais (0).
+
+    Há DFPs "intermediárias" (ex.: Tenda, DFP de 31/03/2023 recebida no mesmo dia do ITR, com
+    o lucro atribuível zerado). Para períodos trimestrais o documento próprio é o ITR; períodos
+    anuais só existem na DFP, então a regra não muda nada no caso normal.
+    """
+    return source.astype(str).str.startswith("cvm:itr").astype(int)
+
 
 def _match_end(by_end: Mapping[date, Mapping[date, float]], target: date) -> date | None:
     if target in by_end:
@@ -241,7 +261,8 @@ def _known_state(flows: pd.DataFrame, as_of: date | pd.Timestamp | None,
     df = flows
     if as_of is not None:
         df = df[pd.to_datetime(df[date_col]) <= pd.Timestamp(as_of)]
-    df = df.sort_values([date_col, "version"], kind="stable")
+    df = df.assign(_prio=_doc_priority(df["source"]) if "source" in df.columns else 0)
+    df = df.sort_values([date_col, "version", "_prio"], kind="stable")
     by_end: dict[date, dict[date, float]] = {}
     for s, e, v in zip(df["period_start"], df["period_end"], df["value"], strict=True):
         if pd.isna(s) or pd.isna(e) or pd.isna(v):
@@ -286,8 +307,10 @@ def _ttm_history(flows: pd.DataFrame) -> list[dict]:
     if df.empty:
         return []
     # ordenação total e estável: empates (mesma data/versão) não dependem da ordem de entrada
-    df = df.sort_values(["available_date", "version", "source", "period_end", "period_start",
-                         "value"], kind="stable")
+    # (a última linha de cada (início, fim) vence: ITR depois de DFP no mesmo dia/versão)
+    df = df.assign(_prio=_doc_priority(df["source"]))
+    df = df.sort_values(["available_date", "version", "_prio", "source", "period_end",
+                         "period_start", "value"], kind="stable")
     by_end: dict[date, dict[date, float]] = {}
     anchor: dict[date, tuple[int, int, str, str | None]] = {}
     last: dict[date, float] = {}
@@ -483,14 +506,29 @@ def _prepare_statement(tables: Mapping[str, pd.DataFrame], stmt: str) -> pd.Data
     out = out.drop_duplicates(acct_key + ["value"], keep="first")
     conflict = out.duplicated(acct_key, keep=False)
     if conflict.any():
-        logger.warning("%s: %d linhas com valores divergentes para a mesma conta descartadas.",
-                       stmt, int(conflict.sum()))
-        out = out[~conflict]
+        # Zero repetido ao lado de um único valor não nulo é o espaço reservado do formulário
+        # (ex.: Bradesco Saúde, DFP 2023, EBIT 0 e 646.051): fica o valor não nulo. Dois ou
+        # mais valores não nulos divergentes ⇒ conta ausente.
+        c = out[conflict]
+        nz = c[c["value"] != 0]
+        n_nz = nz.groupby(acct_key, dropna=False)["value"].transform("size")
+        keep_idx = nz.index[n_nz == 1]
+        drop_idx = c.index.difference(keep_idx)
+        logger.warning("%s: %d linhas duplicadas com valores divergentes descartadas.",
+                       stmt, len(drop_idx))
+        out = out.drop(index=drop_idx)
     doc_key = ["cnpj", "dt_refer", "versao"]
-    has_con = out.loc[out["kind"] == "con", doc_key].drop_duplicates()
+    # Consolidado só vale se tiver conteúdo: companhias sem controladas (ex.: TIM S.A. em
+    # 2024–2025) entregam o formulário consolidado inteiro ZERADO; aí vale o individual.
+    con = out[out["kind"] == "con"]
+    has_con = (con.assign(_nz=con["value"].ne(0)).groupby(doc_key, as_index=False)["_nz"]
+               .any())
+    has_con = has_con[has_con["_nz"]].drop(columns="_nz")
     has_con["_con"] = True
     out = out.merge(has_con, on=doc_key, how="left")
-    out = out[(out["kind"] == "con") | out["_con"].isna()].drop(columns="_con")
+    keep = ((out["kind"] == "con") & out["_con"].notna()) | (
+        (out["kind"] != "con") & out["_con"].isna())
+    out = out[keep].drop(columns="_con")
     return out.reset_index(drop=True)
 
 
@@ -543,7 +581,10 @@ def _dre_facts(dre: pd.DataFrame, fin: pd.DataFrame) -> pd.DataFrame:
     attrib = _first_per_key(attrib, key, ["parent"])
     ni = ni.merge(attrib[key + ["value"]].rename(columns={"value": "v_parent"}), on=key,
                   how="left")
-    ni["value"] = ni["v_parent"].where(ni["v_parent"].notna(), ni["value"])
+    # Atribuível ao controlador exatamente 0 com consolidado não nulo é espaço reservado do
+    # formulário (100% do lucro para não controladores não ocorre): usa o consolidado.
+    use_parent = ni["v_parent"].notna() & ~((ni["v_parent"] == 0) & (ni["value"] != 0))
+    ni["value"] = ni["v_parent"].where(use_parent, ni["value"])
     facts.append(ni.assign(metric="net_income"))
     cols = key + ["metric", "value", "currency"]
     return pd.concat([f[cols] for f in facts], ignore_index=True)
@@ -1138,9 +1179,10 @@ def pit_from_raw_facts(raw: pd.DataFrame, entity_to_issuer: Mapping[str, str | I
                        int(early.sum()))
         df = df[~early]
     out_frames = []
-    stocks = df[df["metric"].isin(STOCK_METRICS)].sort_values(
-        ["issuer_id", "metric", "period_end", "available_date", "version", "source", "value"],
-        kind="stable")
+    stocks = df[df["metric"].isin(STOCK_METRICS)]
+    stocks = stocks.assign(_prio=-_doc_priority(stocks["source"])).sort_values(
+        ["issuer_id", "metric", "period_end", "available_date", "version", "_prio", "source",
+         "value"], kind="stable").drop(columns="_prio")
     stocks = stocks.drop_duplicates(["issuer_id", "metric", "period_end", "available_date",
                                      "version"], keep="first")
     if not stocks.empty:
@@ -1400,7 +1442,7 @@ def pit_ratios(pit: pd.DataFrame, price_local: pd.DataFrame, as_of: date,
     Colunas: ``earnings_yield`` (LL TTM / valor de mercado), ``book_to_price`` (PL / valor de
     mercado), ``roe`` (LL TTM / PL), ``ebit_margin`` (EBIT TTM / receita TTM),
     ``net_debt_to_equity`` ((dívida bruta − caixa) / PL), ``asset_turnover`` (receita TTM /
-    ativo total). Denominadores ``<= 0`` ou ausentes ⇒ ``NaN``.
+    ativo total; receita ``<= 0`` ⇒ ``NaN``). Denominadores ``<= 0`` ou ausentes ⇒ ``NaN``.
     """
     snap = pit_snapshot(pit, as_of, max_age_days=max_age_days)
     wide = (snap.pivot(index="issuer_id", columns="metric", values="value")
@@ -1427,7 +1469,9 @@ def pit_ratios(pit: pd.DataFrame, price_local: pd.DataFrame, as_of: date,
     out["roe"] = _safe_div(wide["net_income_ttm"], eq)
     out["ebit_margin"] = _safe_div(wide["ebit_ttm"], wide["revenue_ttm"])
     out["net_debt_to_equity"] = _safe_div(wide["gross_debt"] - wide["cash"], eq)
-    out["asset_turnover"] = _safe_div(wide["revenue_ttm"], wide["total_assets"])
+    # receita TTM <= 0 (holdings/seguradoras cuja conta 3.01 é zero) não informa giro ⇒ NaN
+    rev = wide["revenue_ttm"]
+    out["asset_turnover"] = _safe_div(rev.where(rev > 0), wide["total_assets"])
     out.attrs = {"as_of": pd.Timestamp(as_of).date().isoformat(), "point_in_time": True,
                  "max_age_days": int(max_age_days)}
     return out

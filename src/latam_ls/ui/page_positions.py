@@ -47,13 +47,15 @@ def render(state: AppState) -> None:
         return
 
     f1, f2, f3 = st.columns(3)
-    sides = f1.multiselect("Lado", ["LONG", "SHORT"], default=["LONG", "SHORT"],
-                           format_func=lambda s: fmt.SIDE_PT.get(s, s), key="pos_side")
-    countries = sorted(df["country"].dropna().unique())
-    sel_c = f2.multiselect("País", countries, default=countries, key="pos_country")
-    sectors = sorted(df["sector"].dropna().unique())
-    sel_s = f3.multiselect("Setor", sectors, default=sectors, key="pos_sector")
-    view = df[df["side"].isin(sides) & df["country"].isin(sel_c) & df["sector"].isin(sel_s)]
+    sides = f1.multiselect("Lado", ["LONG", "SHORT"], format_func=lambda s: fmt.SIDE_PT.get(s, s),
+                           key="pos_side", placeholder="Todos")
+    sel_c = f2.multiselect("País", sorted(df["country"].dropna().unique()), key="pos_country",
+                           placeholder="Todos")
+    sel_s = f3.multiselect("Setor", sorted(df["sector"].dropna().unique()), key="pos_sector",
+                           placeholder="Todos")
+    view = df[df["side"].isin(sides or ["LONG", "SHORT"])
+              & (df["country"].isin(sel_c) if sel_c else True)
+              & (df["sector"].isin(sel_s) if sel_s else True)]
 
     c = st.columns(4)
     longs = view[view["side"] == "LONG"]
@@ -85,7 +87,8 @@ def render(state: AppState) -> None:
         "days_to_liquidate": "Dias p/ liquidar"}), height=min(640, 36 * (len(show) + 1)))
 
     ui.section("Histórico por emissor", ui.CALC_BADGE)
-    issuers = data.held_issuers(track.records)
+    current = list(dict.fromkeys(df["issuer_id"]))
+    issuers = current + [i for i in data.held_issuers(track.records) if i not in current]
     names = data.issuer_meta(state.book)
     iid = st.selectbox("Emissor", issuers, key="pos_issuer",
                        format_func=lambda i: f"{i} · {names.get(i, {}).get('name', '')}"

@@ -1117,6 +1117,22 @@ def squeeze_frame(proposal: Proposal | None, record: DailyRecord | None) -> pd.D
         drop=True)
 
 
+def squeeze_alerted(record: DailyRecord | None) -> set[str]:
+    """Emissores citados em alertas de squeeze do registro (texto gerado pela rotina diária)."""
+    if record is None:
+        return set()
+    ids = {p.issuer_id for p in record.positions} | {p.ticker for p in record.positions}
+    by_ticker = {p.ticker: p.issuer_id for p in record.positions}
+    out: set[str] = set()
+    for alert in record.alerts:
+        if "squeeze" not in alert.lower():
+            continue
+        for token in re.findall(r"[\w.\-]+", alert):
+            if token in ids:
+                out.add(by_ticker.get(token, token))
+    return out
+
+
 # ==========================================================
 # Pesquisa
 # ==========================================================
@@ -1312,16 +1328,21 @@ def load_market_context(market_root: Path) -> MarketContext:
 # ==========================================================
 
 def agents_invariants(path: Path) -> tuple[str | None, str]:
-    """Seção do CDP no AGENTS.md (cabeçalho com "CDP") ou ``None`` com a origem consultada."""
+    """Seção de invariantes do CDP no AGENTS.md (ou ``None``) e a origem consultada.
+
+    Preferência: título com "CDP" e "Invariantes"; senão o primeiro título com "CDP".
+    """
     text = read_text(Path(path))
     if not text:
         return None, f"{Path(path).as_posix()} não encontrado"
     lines = text.splitlines()
+    heads: list[tuple[int, int, str]] = []
     for i, line in enumerate(lines):
         m = re.match(r"^(#{1,6})\s+(.*)$", line)
-        if not m or "CDP" not in m.group(2):
-            continue
-        level = len(m.group(1))
+        if m and "CDP" in m.group(2):
+            heads.append((i, len(m.group(1)), m.group(2).strip()))
+    heads.sort(key=lambda h: (0 if "invariante" in h[2].lower() else 1, h[0]))
+    for i, level, title in heads:
         body: list[str] = []
         for nxt in lines[i + 1:]:
             m2 = re.match(r"^(#{1,6})\s+", nxt)
@@ -1330,5 +1351,5 @@ def agents_invariants(path: Path) -> tuple[str | None, str]:
             body.append(nxt)
         section = "\n".join(body).strip()
         if section:
-            return section, f"{Path(path).as_posix()} — {m.group(2).strip()}"
+            return section, f"{Path(path).as_posix()} — {title}"
     return None, f"{Path(path).as_posix()} (sem seção do CDP)"

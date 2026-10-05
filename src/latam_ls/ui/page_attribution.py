@@ -85,10 +85,13 @@ def render(state: AppState) -> None:
                    help="Ações = fatorial + específico; NAV = ações + custos + aluguel + "
                         "financiamento. Contribuição = soma das contribuições diárias (P&L / NAV "
                         "de abertura).")
-        _bars(comp, "Contribuição por componente (bps do NAV)", "attr_comp")
+        _bars(comp[comp["key"] != "equity"], "Contribuição por componente (bps do NAV)",
+              "attr_comp")
     with right:
         st.write("")
         ui.table(_table(comp.drop(columns="key"), "Componente"))
+        st.caption("Ações (total) = fatorial + específico; fora do gráfico para não contar duas "
+                   "vezes.")
 
     left, right = st.columns(2)
     with left:

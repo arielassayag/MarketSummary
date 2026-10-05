@@ -49,7 +49,7 @@ def render(state: AppState) -> None:
         if as_html and html_text is not None:
             components.html(html_text, height=1100, scrolling=True)
         elif md_text is not None:
-            st.markdown(md_text)
+            st.markdown(fmt.report_md(md_text, demote=1))
         else:
             st.caption("Relatório sem versão Markdown.")
     with st.expander(f"Todos os relatórios ({len(reports)})"):

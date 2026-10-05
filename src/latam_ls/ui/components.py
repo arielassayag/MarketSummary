@@ -56,7 +56,7 @@ def header(state: AppState) -> None:
         f"<span class='cdp-tag'>Long/short LatAm · USD · net neutral</span></div>"
         f"<div class='cdp-sub'>Último fechamento: {last}</div></div>",
         unsafe_allow_html=True)
-    if fmt.escape_md(cfg.fund.name) and cfg.fund.name != "CDP — Cabra da Peste":
+    if cfg.fund.name != "CDP — Cabra da Peste":
         st.caption(f"Mandato carregado: {fmt.escape_md(cfg.fund.name)}")
     if state.synthetic:
         st.markdown("<div class='cdp-banner-sim'>DADOS SIMULADOS — artefatos sintéticos "

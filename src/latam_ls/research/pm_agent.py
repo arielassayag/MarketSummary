@@ -29,7 +29,7 @@ import re
 import statistics
 import tempfile
 import urllib.parse
-from collections.abc import Iterable, Mapping, Sequence
+from collections.abc import Callable, Iterable, Mapping, Sequence
 from dataclasses import dataclass, field, replace
 from datetime import UTC, date, datetime, time, timedelta
 from pathlib import Path
@@ -67,6 +67,7 @@ from .guardrails import (
     detect_injection,
     extract_fact_ids,
     find_free_numbers,
+    find_markup,
     is_injection_flagged,
     render_placeholders,
     sanitize_untrusted,
@@ -496,21 +497,31 @@ def _md_table(headers: Sequence[str], rows: Sequence[Sequence[object]]) -> list[
     return out
 
 
+def analysis_moment(ctx: PMContext) -> datetime | None:
+    """Momento da análise com fuso; ``analysis_ts`` sem fuso é hora local do fundo (Brasília)
+    — nunca é ignorado (ignorá-lo afrouxaria a régua de look-ahead para a data da semana)."""
+    ts = ctx.analysis_ts
+    if ts is None:
+        return None
+    return ts if ts.tzinfo is not None else ts.replace(tzinfo=_tz(ctx.cfg))
+
+
 def analysis_date(ctx: PMContext) -> date:
     """Data da análise (Brasília): ``analysis_ts`` quando informado, senão a semana da decisão."""
-    if ctx.analysis_ts is not None and ctx.analysis_ts.tzinfo is not None:
-        return ctx.analysis_ts.astimezone(_tz(ctx.cfg)).date()
+    ts = analysis_moment(ctx)
+    if ts is not None:
+        return ts.astimezone(_tz(ctx.cfg)).date()
     return max(ctx.week, ctx.as_of)
 
 
 def news_is_late(n: NewsItem, ctx: PMContext) -> bool:
     """Notícia publicada depois do momento da análise (look-ahead).
 
-    Com ``analysis_ts`` (com fuso) a comparação é por horário, com tolerância de relógio de
+    Com ``analysis_ts`` (sem fuso = Brasília) a comparação é por horário, com tolerância de
     :data:`FUTURE_TOLERANCE`; sem ele, pela data da análise no fuso do fundo.
     """
-    ts = ctx.analysis_ts
-    if ts is not None and ts.tzinfo is not None:
+    ts = analysis_moment(ctx)
+    if ts is not None:
         return n.published_at > ts + FUTURE_TOLERANCE
     return n.published_at.astimezone(_tz(ctx.cfg)).date() > analysis_date(ctx)
 
@@ -795,9 +806,8 @@ class _EvidenceIndex:
 
 
 def _evidence_index(ctx: PMContext, fb: FactBook) -> _EvidenceIndex:
-    ts = ctx.analysis_ts
-    cutoff = (ts.isoformat() if ts is not None and ts.tzinfo is not None
-              else analysis_date(ctx).isoformat())
+    ts = analysis_moment(ctx)
+    cutoff = ts.isoformat() if ts is not None else analysis_date(ctx).isoformat()
     valid = set(fb.facts) | {n.note_id for n in ctx.research_notes}
     valid |= {m.note_id for m in ctx.macro_notes}
     late: set[str] = set()
@@ -988,12 +998,8 @@ def fallback_pm_output(mind: str = API_MIND) -> PMDecisionOutput:
         risk_posture="neutra", abstain=True)
 
 
-def render_pm_texts(out: PMDecisionOutput, fb: FactBook) -> PMDecisionOutput:
-    """Cópia com todos os placeholders resolvidos pelo FactBook (para exibição/relatórios)."""
-
-    def r(text: str) -> str:
-        return render_placeholders(text, fb)
-
+def _map_texts(out: PMDecisionOutput, r: Callable[[str], str]) -> PMDecisionOutput:
+    """Cópia com a função ``r`` aplicada a todos os textos livres da decisão."""
     return out.model_copy(update={
         "market_view": r(out.market_view), "what_changed": r(out.what_changed),
         "evaluation_last_week": r(out.evaluation_last_week),
@@ -1003,6 +1009,36 @@ def render_pm_texts(out: PMDecisionOutput, fb: FactBook) -> PMDecisionOutput:
             "thesis": r(j.thesis), "invalidation_criteria": r(j.invalidation_criteria),
             "premortem": r(j.premortem)}) for j in out.position_journal],
     })
+
+
+def render_pm_texts(out: PMDecisionOutput, fb: FactBook) -> PMDecisionOutput:
+    """Cópia com todos os placeholders resolvidos pelo FactBook (para exibição/relatórios)."""
+    return _map_texts(out, lambda text: render_placeholders(text, fb))
+
+
+def _safe_previous_text(text: str) -> str:
+    """Texto livre da semana anterior só volta ao contexto se não tiver injeção nem marcação."""
+    return NEUTRAL_TEXT if (detect_injection(text) or find_markup(text)) else text
+
+
+def defused_previous_output(prev: PMDecisionOutput) -> PMDecisionOutput:
+    """Decisão anterior (arquivo bruto da mente) desarmada para reentrar no briefing.
+
+    O arquivo da semana anterior não é reverificado contra o FactBook atual; para que um texto
+    envenenado (ex.: página da web lida pela mente) não persista de semana a semana como
+    instrução, textos com injeção/marcação viram :data:`NEUTRAL_TEXT` e evidências URL inválidas
+    ou suspeitas são removidas.
+    """
+    safe = _map_texts(prev, _safe_previous_text)
+
+    def ok_id(x: str) -> bool:
+        if _looks_like_url(x):
+            return url_evidence_problem(x) is None
+        return not detect_injection(x) and not find_markup(x)
+
+    return safe.model_copy(update={"views": [
+        v.model_copy(update={"evidence_ids": [x for x in v.evidence_ids if ok_id(x)]})
+        for v in safe.views]})
 
 
 # ==========================================================
@@ -1088,7 +1124,9 @@ def example_research_pack(ctx: PMContext, mind: str = "claude-code") -> dict[str
     """Exemplo mínimo e válido de ``research_pack.json`` (ilustrativo)."""
     fb = pm_factbook(ctx)
     iid, fid = _example_issuer(ctx, fb)
-    stamp = f"{analysis_date(ctx).isoformat()}T12:00:00-03:00"
+    moment = analysis_moment(ctx)
+    stamp = (moment.isoformat() if moment is not None
+             else f"{analysis_date(ctx).isoformat()}T12:00:00-03:00")
     evidence: list[dict[str, str]] = [{"kind": "source", "ref_id": "https://www.gov.br/cvm",
                                        "note": "fonte consultada (exemplo)"}]
     thesis = "Tese neutra com fontes locais consultadas."
@@ -1149,6 +1187,7 @@ def build_pm_briefing(ctx: PMContext) -> tuple[str, dict[str, Any]]:
     fb = pm_factbook(ctx)
     universe = valid_issuers(ctx)
     adate = analysis_date(ctx)
+    moment = analysis_moment(ctx)
     synthetic = fb.is_synthetic
     notice = (f"{SIMULATED_DATA_NOTICE} — mercado sintético; nada aqui representa preços reais."
               if synthetic else "Dados reais de mercado; paper trading com preços reais.")
@@ -1170,7 +1209,7 @@ def build_pm_briefing(ctx: PMContext) -> tuple[str, dict[str, Any]]:
     L += [
         f"- Data de referência (último pregão completo): {ctx.as_of.isoformat()}",
         f"- Data da análise: {adate.isoformat()}"
-        + (f" ({ctx.analysis_ts.isoformat()})" if ctx.analysis_ts else ""),
+        + (f" ({moment.isoformat()})" if moment is not None else ""),
         f"- Snapshot: `{fb.snapshot_id}` · FactBook `{fb.factbook_hash()[:16]}`",
         f"- Aviso de dados: {notice}",
         "- Papel: PM autônomo do CDP. Você decide visões, exclusões, regime e postura; o código "
@@ -1333,7 +1372,7 @@ def build_pm_briefing(ctx: PMContext) -> tuple[str, dict[str, Any]]:
         "week": ctx.week,
         "as_of": ctx.as_of,
         "analysis_date": adate,
-        "analysis_ts": ctx.analysis_ts,
+        "analysis_ts": moment,
         "snapshot_id": fb.snapshot_id,
         "factbook_hash": fb.factbook_hash(),
         "is_synthetic": synthetic,
@@ -1373,7 +1412,8 @@ def build_pm_briefing(ctx: PMContext) -> tuple[str, dict[str, Any]]:
              "confidence": v.confidence, "no_long": v.no_long, "no_short": v.no_short}
             for v in prev_views.values()],
         "evaluation": eval_json,
-        "previous_pm_output": (ctx.previous_pm_output.model_dump(mode="json")
+        "previous_pm_output": (defused_previous_output(ctx.previous_pm_output)
+                               .model_dump(mode="json")
                                if ctx.previous_pm_output is not None else None),
         "news": [{"news_id": n.news_id, "issuer_ids": sorted(n.issuer_ids), "title": n.title,
                   "source": n.source, "published_at": n.published_at, "untrusted": True}
@@ -2162,7 +2202,9 @@ __all__ = [
     "ResearchViewInput",
     "active_event_windows",
     "analysis_date",
+    "analysis_moment",
     "build_pm_briefing",
+    "defused_previous_output",
     "example_pm_decision",
     "example_research_pack",
     "export_schemas",

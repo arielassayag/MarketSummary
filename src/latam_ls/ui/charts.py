@@ -31,6 +31,15 @@ def _base(fig: go.Figure, title: str = "", height: int = 340, y_title: str = "")
     return fig
 
 
+def _date_axis(fig: go.Figure, index: Sequence[object]) -> go.Figure:
+    """Eixo de datas em pt-BR (dd/mm/aa), um tique por pregão em séries curtas."""
+    idx = pd.to_datetime(pd.Index(list(index)))
+    fig.update_xaxes(type="date", tickformat="%d/%m/%y", hoverformat="%d/%m/%Y")
+    if len(idx) and (idx.max() - idx.min()).days <= 20:
+        fig.update_xaxes(dtick=86_400_000, tick0=idx.min())
+    return fig
+
+
 def nav_chart(main: pd.DataFrame | None, shadow: pd.DataFrame | None,
               inception_nav: float | None = None) -> go.Figure:
     """NAV (USD mm) do CDP vs. sombra só-quant desde o início."""
@@ -47,6 +56,7 @@ def nav_chart(main: pd.DataFrame | None, shadow: pd.DataFrame | None,
     if inception_nav is not None:
         fig.add_hline(y=inception_nav / 1e6, line={"color": "#C9CED6", "dash": "dot"},
                       annotation_text="NAV inicial", annotation_position="bottom right")
+    _date_axis(fig, main.index if main is not None else [])
     return _base(fig, "NAV desde o início (USD mm)", y_title="USD mm")
 
 
@@ -69,6 +79,7 @@ def drawdown_chart(dd: pd.Series, cfg: FundConfig) -> go.Figure:
     fig.update_yaxes(ticksuffix="%", range=[min(lad.stop_out * 100 * 1.15,
                                                  float(dd.min() * 100) - 0.5 if not dd.empty
                                                  else 0.0), 0.5])
+    _date_axis(fig, dd.index)
     return _base(fig, "Drawdown desde o pico vs. escada do mandato", y_title="% do pico")
 
 
@@ -96,6 +107,7 @@ def vol_chart(series: pd.DataFrame, cfg: FundConfig) -> go.Figure:
                   annotation_text=f"meta {fmt.pct(rk.vol_target_annual, 0)}",
                   annotation_position="top left")
     fig.update_yaxes(ticksuffix="%", rangemode="tozero")
+    _date_axis(fig, series.index)
     return _base(fig, f"Volatilidade vs. banda {fmt.pct(rk.vol_band_min, 0)}–"
                       f"{fmt.pct(rk.vol_band_max, 0)}", y_title="% a.a.")
 
@@ -170,6 +182,7 @@ def value_added_chart(va: pd.DataFrame) -> go.Figure:
                              marker={"color": [fmt.sign_color(v) for v in va["value_added"]]},
                              opacity=0.55))
     fig.update_yaxes(ticksuffix="%")
+    _date_axis(fig, va.index)
     return _base(fig, "CDP vs. sombra só-quant (acumulado no período)", y_title="%")
 
 
@@ -182,9 +195,10 @@ def position_history_chart(hist: pd.DataFrame, title: str) -> go.Figure:
                              yaxis="y2", opacity=0.6))
         fig.add_trace(go.Scatter(x=x, y=hist["weight"] * 100, name="Peso (% NAV)",
                                  mode="lines+markers", line={"color": fmt.CDP_COLOR, "width": 2}))
-    fig.update_layout(yaxis={"ticksuffix": "%", "title": "Peso"},
+    fig.update_layout(yaxis={"ticksuffix": "%", "title": "Peso", "rangemode": "tozero"},
                       yaxis2={"overlaying": "y", "side": "right", "title": "USD mil",
-                              "showgrid": False})
+                              "showgrid": False, "rangemode": "tozero"})
+    _date_axis(fig, hist["date"] if not hist.empty else [])
     return _base(fig, title)
 
 

@@ -464,8 +464,9 @@ def _template_output(fb: FactBook, mind: str = DEMO_MIND) -> DailyCommentaryOutp
         p2 += " Maiores detratores: " + "; ".join(
             f"{_ph(f'top.detract.{k}.name')}, com {_ph(f'top.detract.{k}.pnl')}"
             for k in bottoms) + "."
-    countries = sorted((f for f in fb.facts if f.startswith("attr.country.")),
-                       key=lambda f: (-abs(_value(fb, f) or 0.0), f))
+    countries = sorted((f for f in fb.facts
+                        if f.startswith("attr.country.") and _value(fb, f) is not None),
+                       key=lambda f: (-abs(_value(fb, f) or 0.0), f))  # ausente não ranqueia
     if countries:
         top = countries[0]
         p2 += f" Por país, o maior efeito veio de {top.split('.', 2)[2]} ({_ph(top)})."

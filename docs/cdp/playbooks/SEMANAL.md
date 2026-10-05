@@ -54,10 +54,23 @@ pesos nem limites; sem evidência ⇒ abster-se.
 ## 4. Validação (código)
 
 ```sh
-uv run python -m cdp validate --week AAAA-MM-DD
+uv run python -m cdp validate --week AAAA-MM-DD --mind claude-code   # ou codex
 ```
 
 Corrija os apontamentos e repita até `OK`.
+
+## 4b. Revisão pré-trade (opcional, recomendada)
+
+```sh
+uv run python -m cdp weekly preview --week AAAA-MM-DD --mind claude-code --out /tmp/previa.json
+```
+
+Roda o mesmo pipeline do `decide` **sem gravar nada** e mostra o livro proposto, as posições com a
+visão de cada nome e eventuais conflitos. Revise como um PM: se uma posição relevante contradiz a
+pesquisa ou depende de um fato que você não confirmou, ajuste **somente juízos ordinais** (visões,
+convicções, exclusões, postura) em `pm_decision.json`, valide de novo e repita. Nunca escreva
+pesos ou limites. A coerência de sinal (visão final positiva ⇒ sem short; negativa ⇒ sem long) é
+aplicada pelo código.
 
 ## 5. Decisão autônoma e relatório (código)
 

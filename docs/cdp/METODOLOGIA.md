@@ -53,6 +53,15 @@
   ex-ante na meta, neutralidades, limites por nome (long ≤ 4%, short ≤ 2,5%), liquidez (20% do
   ADTV; 3 dias long, 2 dias short; ADTV mínimo US$ 5 mi long / US$ 10 mi short), squeeze, aluguel
   ≤ 5% a.a. para shorts novos, turnover ≤ 30%/semana, risco específico por nome e temas.
+- **Neutralidades de alpha puro** (restrições duras): net ≤ 1%, beta ≤ 0,05, país ≤ 2%, setor ≤
+  2,5%, estilos ≤ 0,10 desvio-padrão, fração de risco fatorial ≤ 25%, tema estatais ≤ 1%,
+  sensibilidade a petróleo, cobre e ouro ≤ 0,03, exposição ao choque de evento medido na reação
+  do pregão (ex.: dia seguinte ao 1º turno) e participação de cada país no gross.
+- **Risco por nome**: teto convexo de risco específico e, se ainda assim um nome passar de 8% da
+  variância (Euler, incluindo a covariância fatorial), o teto do lado é reduzido e a carteira é
+  reotimizada (até 3 passos, registrados nas notas da proposta).
+- **Coerência de sinal**: nome com visão final positiva (PM prevalece sobre a pesquisa) nunca é
+  vendido; com visão final negativa nunca é comprado. O otimizador busca hedges em outros nomes.
 - **Gates de compliance** (HARD bloqueia, SOFT registra): nunca afrouxados pela mente.
 
 ## 5. Processo semanal — primeiro pregão da semana na B3
@@ -86,6 +95,8 @@ Regras de decisão do PM (perenes):
   neutralidade de temas expostos (ex.: estatais brasileiras); não abrir shorts em nomes com
   catalisador em ≤ 5 pregões.
 - A mente **nunca** define pesos, números, limites ou ordens; o código traduz a decisão.
+- Antes de decidir, a mente pode revisar o livro proposto com `cdp weekly preview` (não grava
+  nada) e ajustar apenas juízos ordinais — como um PM revisando a proposta antes de assinar.
 
 ## 6. Processo diário — após o fechamento (19h20)
 

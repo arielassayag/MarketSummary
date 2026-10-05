@@ -229,7 +229,7 @@ def _parse_dates(table: pd.DataFrame, column: str, index: pd.Index) -> pd.Series
 
 def _first_by_issuer(values: pd.Series, issuer: pd.Series, ascending: bool) -> pd.DataFrame:
     """Linha com o maior (ou menor) valor por emissor, ignorando ``NaN``."""
-    df = pd.DataFrame({"issuer_id": issuer, "value": values.astype(float)})
+    df = pd.DataFrame({"issuer_id": issuer, "value": values.astype(float)}).rename_axis(None)
     df = df[df["value"].notna()]
     df["ticker"] = df.index.astype(str)
     df = df.sort_values(["issuer_id", "value", "ticker"], ascending=[True, ascending, True])

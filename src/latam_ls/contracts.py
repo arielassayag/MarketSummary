@@ -436,6 +436,34 @@ class DecisionType(StrEnum):
 FORBIDDEN_APPROVERS = {"", "system", "sistema", "ai", "ia", "llm", "bot", "auto", "claude", "demo"}
 
 
+class JournalPosition(_Model):
+    """Registro de tese por posição relevante (premortem e critérios de saída pré-comprometidos)."""
+
+    issuer_id: str
+    thesis: str
+    variant_perception: str = ""
+    probability_correct: float | None = Field(default=None, ge=0, le=1)
+    invalidation_criteria: str = ""
+    premortem: str = ""
+    ai_vs_pm_divergence: str = ""
+
+
+class DecisionJournal(_Model):
+    """Diário de decisão do gestor, gravado ANTES do resultado e incluído no hash de aprovação."""
+
+    situation: str = Field(..., min_length=10, description="Contexto de mercado e da carteira")
+    key_variables: list[str] = Field(default_factory=list)
+    alternatives_considered: str = ""
+    horizon_weeks: int = Field(8, ge=1, le=52)
+    catalysts: list[Catalyst] = Field(default_factory=list)
+    sizing_rationale: str = ""
+    ai_vs_quant_vs_pm: str = Field("", description="Onde o gestor divergiu da IA/quant e por quê")
+    premortem: str = ""
+    bias_checklist: dict[str, bool] = Field(default_factory=dict)
+    positions: list[JournalPosition] = Field(default_factory=list)
+    mental_state: str = ""
+
+
 class Decision(_Model):
     week: date
     proposal_id: str
@@ -450,6 +478,12 @@ class Decision(_Model):
     conviction: int | None = Field(default=None, ge=1, le=5)
     decided_at: datetime
     approval_hash: str
+    # Quatro olhos: co-assinatura independente (risco/compliance) quando exigida.
+    co_signer: str | None = None
+    co_signed_at: datetime | None = None
+    co_sign_reasons: list[str] = Field(default_factory=list)
+    journal: DecisionJournal | None = None
+    audit_head_hash: str | None = Field(default=None, description="Topo da trilha de auditoria no momento da decisão")
 
     _tz = field_validator("decided_at")(classmethod(lambda cls, v: _require_tz(v)))
 
@@ -459,6 +493,23 @@ class Decision(_Model):
         if v.strip().lower() in FORBIDDEN_APPROVERS:
             raise ValueError("A aprovação exige um responsável humano identificado (sem autoaprovação).")
         return v.strip()
+
+    @field_validator("co_signer")
+    @classmethod
+    def _human_cosigner(cls, v: str | None) -> str | None:
+        if v is None:
+            return v
+        if v.strip().lower() in FORBIDDEN_APPROVERS:
+            raise ValueError("A co-assinatura exige um responsável humano identificado.")
+        return v.strip()
+
+    @model_validator(mode="after")
+    def _four_eyes(self) -> Decision:
+        if self.co_signer is not None and self.co_signer.lower() == self.approver.lower():
+            raise ValueError("Co-assinante precisa ser pessoa diferente do aprovador (quatro olhos).")
+        if self.co_signer is not None and self.co_signed_at is None:
+            raise ValueError("Co-assinatura sem data.")
+        return self
 
 
 class BookedPosition(_Model):
@@ -590,3 +641,33 @@ class DailyRecord(_Model):
 
     def compute_hash(self) -> str:
         return sha256_obj(self.model_dump(mode="json", exclude={"record_hash"}))
+
+
+# ==========================================================
+# Ledger de chamadas a LLM (reprodutibilidade = replay, nunca regeneração)
+# ==========================================================
+
+class LLMCallRecord(_Model):
+    call_id: str
+    week: date | None = None
+    task: str
+    role: str
+    issuer_id: str | None = None
+    provider: str
+    model: str | None = Field(default=None, description="ID completo do snapshot do modelo (sem aliases)")
+    prompt_version: str
+    schema_name: str
+    request_sha256: str
+    input_pack_sha256: str = ""
+    response_sha256: str | None = None
+    raw_response_path: str | None = None
+    stop_reason: str | None = None
+    parse_ok: bool
+    validation_issues: list[str] = Field(default_factory=list)
+    input_tokens: int | None = None
+    output_tokens: int | None = None
+    cost_usd: float | None = None
+    latency_ms: float | None = None
+    created_at: datetime
+
+    _tz = field_validator("created_at")(classmethod(lambda cls, v: _require_tz(v)))

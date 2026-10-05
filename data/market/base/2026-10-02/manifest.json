@@ -1,0 +1,226 @@
+{
+  "snapshot_id": "snapshot-2026-10-02",
+  "as_of": "2026-10-02",
+  "created_at": "2026-10-05T09:24:11.706211Z",
+  "universe_sha256": "a8f28ee5d20395a6e245c50ebb635eb56ada88922c01876351278cb99f5a29db",
+  "files": [
+    {
+      "path": "benchmarks.parquet",
+      "sha256": "109530a8690162c49fc4825eb708d72cf74dbb801c180958443842c2d643f571",
+      "rows": 38902,
+      "description": "Fechamento nativo de ETFs/índices/indicadores de referência"
+    },
+    {
+      "path": "fundamentals.parquet",
+      "sha256": "580b06b1d6ea8d08b9dbee5fd357bf51caf9fb0dbe5909f6530d895366d4e80d",
+      "rows": 281,
+      "description": "Fundamentos por linha (retrato atual, NÃO point-in-time)"
+    },
+    {
+      "path": "fx.parquet",
+      "sha256": "fa8a8200b07b62696bb4746d355220b104b352fc32632d260bc985c685d491c4",
+      "rows": 10085,
+      "description": "Câmbio: USD por 1 unidade da moeda (USD=1 adicionado na leitura)"
+    },
+    {
+      "path": "lending.parquet",
+      "sha256": "43b34c2e08f55095fa45188b144f85984a8a28faacf8f8f2dd1b99a56be367df",
+      "rows": 125,
+      "description": "Aluguel B3/BTC do último pregão disponível <= as_of"
+    },
+    {
+      "path": "lending_history.parquet",
+      "sha256": "6a8057a064c52d15c2228b04d9843506c7fb0fd994ee1024be37218bf044c06a",
+      "rows": 2625,
+      "description": "Aluguel B3/BTC diário da janela D-21 do BDI"
+    },
+    {
+      "path": "news.jsonl",
+      "sha256": "17f5f457e2a21bad870fe0b0920e6c5b12797da3e29454396b3bd5f237cf2306",
+      "rows": 2823,
+      "description": "Manchetes (Google News RSS) — conteúdo NÃO confiável"
+    },
+    {
+      "path": "prices.parquet",
+      "sha256": "72d425e515b966a675e2454088c906157f4de77a146a2fa58f6099febe01ae5d",
+      "rows": 512128,
+      "description": "Preços diários longos: close (ajuste só por desdobramento), adj_close (proventos), volume (0 com preço => NaN + flag volume_suspeito)"
+    },
+    {
+      "path": "qa.json",
+      "sha256": "512b2371b721e0d7e27f94009313e0f13c6a5e623b38243cf1351c5ac5eb1b3c",
+      "rows": null,
+      "description": "Relatório de qualidade: paridade ADR, volume suspeito, linhas defasadas"
+    },
+    {
+      "path": "rates.parquet",
+      "sha256": "d9e48daf44e64b21579c4176d05922a94cdbb7cf9d945b30ff5d288f2dd8634c",
+      "rows": 4780,
+      "description": "Taxas anuais em decimal (USD_3M, SELIC)"
+    },
+    {
+      "path": "short_interest.parquet",
+      "sha256": "fc5da4e9c64ff65d7410c44228f5acf7c0e2d326db7c4b02c1074ed11f042202",
+      "rows": 88,
+      "description": "Short interest de linhas nos EUA (FINRA/Yahoo; float do ADS)"
+    },
+    {
+      "path": "universe.csv",
+      "sha256": "a8f28ee5d20395a6e245c50ebb635eb56ada88922c01876351278cb99f5a29db",
+      "rows": null,
+      "description": "Universo (emissores e linhas) usado no snapshot"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "yahoo_prices",
+      "name": "Yahoo Finance (yfinance) — barras diárias",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/",
+      "fields": [
+        "close",
+        "adj_close",
+        "volume"
+      ],
+      "retrieved_at": "2026-10-05T09:18:43.172588Z",
+      "point_in_time": true,
+      "notes": "auto_adjust=False; volume 0 com preço => NaN + flag volume_suspeito; barras com data > as_of descartadas."
+    },
+    {
+      "source_id": "yahoo_fx",
+      "name": "Yahoo Finance — câmbio <CCY>=X (invertido: USD por unidade)",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/",
+      "fields": [
+        "usd_per_unit"
+      ],
+      "retrieved_at": "2026-10-05T09:18:43.723108Z",
+      "point_in_time": true,
+      "notes": "Barras em Europe/London normalizadas para a data."
+    },
+    {
+      "source_id": "yahoo_benchmarks",
+      "name": "Yahoo Finance — ETFs, índices e indicadores",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/",
+      "fields": [
+        "close",
+        "adj_close"
+      ],
+      "retrieved_at": "2026-10-05T09:18:45.306498Z",
+      "point_in_time": true,
+      "notes": "Futuros 'front' (=F) têm saltos de rolagem."
+    },
+    {
+      "source_id": "rates",
+      "name": "BCB SGS 432 (Selic meta) + Yahoo ^IRX / FRED DGS3MO",
+      "url": "https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados",
+      "fields": [
+        "USD_3M",
+        "SELIC"
+      ],
+      "retrieved_at": "2026-10-05T09:19:13.213772Z",
+      "point_in_time": true,
+      "notes": "Datas futuras da série 432 descartadas (sem look-ahead)."
+    },
+    {
+      "source_id": "yahoo_fundamentals",
+      "name": "Yahoo Finance — Ticker.info (retrato atual)",
+      "url": "https://query1.finance.yahoo.com/v10/finance/quoteSummary/",
+      "fields": [
+        "currency",
+        "financial_currency",
+        "market_cap",
+        "shares_outstanding",
+        "float_shares",
+        "trailing_pe",
+        "forward_pe",
+        "price_to_book",
+        "book_value",
+        "trailing_eps",
+        "forward_eps",
+        "return_on_equity",
+        "return_on_assets",
+        "profit_margins",
+        "operating_margins",
+        "gross_margins",
+        "debt_to_equity",
+        "dividend_yield",
+        "enterprise_to_ebitda",
+        "revenue_growth",
+        "earnings_growth",
+        "beta",
+        "target_mean_price",
+        "recommendation_mean",
+        "number_of_analyst_opinions",
+        "average_daily_volume_3m",
+        "next_earnings_date",
+        "sector",
+        "industry"
+      ],
+      "retrieved_at": "2026-10-05T09:20:17.087281Z",
+      "point_in_time": false,
+      "notes": "dividend_yield normalizado para decimal; múltiplos sinalizados em fundamentals_quality."
+    },
+    {
+      "source_id": "finra_yahoo_short_interest",
+      "name": "FINRA consolidatedShortInterest + Yahoo (base de float do ADS)",
+      "url": "https://api.finra.org/data/group/otcMarket/name/consolidatedShortInterest",
+      "fields": [
+        "shares_short",
+        "short_pct_float",
+        "short_ratio_days",
+        "short_interest_date",
+        "source"
+      ],
+      "retrieved_at": "2026-10-05T09:20:23.861561Z",
+      "point_in_time": false,
+      "notes": "Somente liquidações com publicação estimada <= as_of."
+    },
+    {
+      "source_id": "b3_bdi_lending",
+      "name": "B3 Boletim Diário (BDI) — BTBLendingOpenPosition + BTBLoanBalance",
+      "url": "https://arquivos.b3.com.br/bdi/table/{table}/{d}/{d}/{page}/{take}",
+      "fields": [
+        "lent_shares",
+        "lending_pct_shares",
+        "lending_rate_annual",
+        "lending_date",
+        "source"
+      ],
+      "retrieved_at": "2026-10-05T09:22:43.990857Z",
+      "point_in_time": false,
+      "notes": "Janela móvel D-21; coleta diária necessária."
+    },
+    {
+      "source_id": "google_news_rss",
+      "name": "Google News RSS (conteúdo NÃO confiável)",
+      "url": "https://news.google.com/rss/search",
+      "fields": [
+        "title",
+        "source",
+        "url",
+        "published_at"
+      ],
+      "retrieved_at": "2026-10-05T09:24:11.092494Z",
+      "point_in_time": false,
+      "notes": "Janela de 14 dias até as_of 23:59 local; itens futuros excluídos."
+    }
+  ],
+  "limitations": [
+    "Viés de sobrevivência: o universo foi definido na data de criação (não é point-in-time); emissores deslistados antes dessa data não aparecem no histórico.",
+    "Fundamentos (Yahoo Ticker.info) são retrato atual, NÃO point-in-time; múltiplos podem misturar moedas/classes — ver coluna fundamentals_quality.",
+    "Adj Close do Yahoo é ajustado retroativamente por proventos/desdobramentos e muda a cada novo evento; o hash é por snapshot.",
+    "Câmbio do Yahoo (=X) usa barras diárias carimbadas em Europe/London, normalizadas para a data do pregão; não é fixing oficial (PTAX/FIX/TRM).",
+    "Short interest de ADRs refere-se ao float do ADS (não ao float total da companhia) e é publicado pela FINRA com defasagem (liquidação + 7 dias úteis).",
+    "Saldo de aluguel B3 (BTC) inclui arbitragem/ETF/hedge (limite superior do short); taxas sem contratos no dia são a última taxa calculada (rate_stale).",
+    "Notícias (Google News RSS) são conteúdo NÃO confiável: usadas apenas como dado citado.",
+    "Notícias indisponíveis para 10 emissores.",
+    "Volume zero com preço válido tratado como AUSENTE (NaN + volume_suspeito): 4547 observações em 108 linhas; maiores: EISA.SN (635), AMXB.MX (625), SGML (362), PCAR3.SA (252), GRUPOSURA.CL (186), GRUPOARGOS.CL (165), CIBEST.CL (159), ERO (156).",
+    "Retornos diários > 35% em módulo (revisar eventos corporativos): BBAR (2), BMA (2), BMA.BA (1), CAAP (2), CEPU (2), CIBEST.CL (2), COLBUN.SN (1), CRESY (1), DLO (1), GGAL (2), GGAL.BA (1), GRUPOARGOS.CL (1), GRUPOSURA.CL (1), GTE (3), HAPV3.SA (1), IRS (1), JBSS32.SA (1), LOMA (1), LTM.SN (15), NATU3.SA (2), ONCO3.SA (1), PAM (1), PAMP.BA (1), PCAR3.SA (2), PFGRUPOARG.CL (1), PFGRUPSURA.CL (2), PRIO3.SA (1), STNE (1), SUPV (2), TEO (1), TGLS (1), TGS (2), UGPA3.SA (1), VLRS (1), YPF (1).",
+    "QA paridade ADR: SID vs CSNA3.SA desvio mediano -3.7% (último -1.8%; referência +0.0%; tolerância 3%).",
+    "Argentina: CCL implícito nas paridades ADR ≈ +5.9% vs câmbio oficial (ARS=X); preços locais em ARS embutem o CCL."
+  ],
+  "missing_tickers": [],
+  "is_synthetic": false,
+  "data_notice": "Dados reais de fontes públicas gratuitas (Yahoo, FINRA, B3/BDI, BCB, Google News); uso de pesquisa — não é feed licenciado.",
+  "provisional_dates": [],
+  "provisional_as_of": null
+}

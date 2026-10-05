@@ -1,0 +1,282 @@
+issuer_id,issuer_name,country,gics_sector,line_type,yahoo_ticker,exchange,currency,adr_ratio,primary_line,notes
+AR_ADECOAGRO,Adecoagro,AR,Consumer Staples,US_LISTED,AGRO,NYSE,USD,,true,Luxemburgo; Argentina/Brasil/Uruguai; controle Tether (2025)
+AR_BBVA,BBVA Argentina,AR,Financials,ADR,BBAR,NYSE,USD,3,true,"ADS = 3 ações locais | BBAR = 3 acoes | OK (implicito 2.831, desvio -5.6%, n=20)"
+AR_CAAP,Corporacion America Airports,AR,Industrials,US_LISTED,CAAP,NYSE,USD,,true,Luxemburgo; ~ metade do EBITDA na Argentina
+AR_CEPU,Central Puerto,AR,Utilities,ADR,CEPU,NYSE,USD,10,true,"ADS = 10 ações locais | CEPU = 10 acoes | OK (implicito 9.509, desvio -4.9%, n=20) | ADTV 3m < US$ 5 mi"
+AR_CRESUD,Cresud,AR,Real Estate,ADR,CRESY,NASDAQ,USD,10,true,"ADS = 10 ações locais | CRESY = 10 acoes | OK (implicito 9.467, desvio -5.3%, n=20) | ADTV 3m < US$ 5 mi"
+AR_GALICIA,Grupo Financiero Galicia,AR,Financials,ADR,GGAL,NASDAQ,USD,10,true,"ADS = 10 ações locais | GGAL = 10 acoes B | OK (implicito 9.428, desvio -5.7%, n=20)"
+AR_GALICIA,Grupo Financiero Galicia,AR,Financials,LOCAL,GGAL.BA,BYMA,ARS,,false,GGAL = 10 acoes B | ARS convertido pelo câmbio oficial (preço local embute CCL)
+AR_GLOBANT,Globant,AR,Information Technology,US_LISTED,GLOB,NYSE,USD,,true,"Luxemburgo; base operacional Argentina/LatAm, receita majoritaria EUA"
+AR_IRSA,IRSA,AR,Real Estate,ADR,IRS,NYSE,USD,10,true,"ADS = 10 ações locais | IRS = 10 acoes | OK (implicito 9.470, desvio -5.3%, n=20) | ADTV 3m < US$ 5 mi"
+AR_LAR,Lithium Argentina,AR,Materials,US_LISTED,LAR,NYSE,USD,,true,
+AR_LOMA,Loma Negra,AR,Materials,ADR,LOMA,NYSE,USD,5,true,"ADS = 5 ações locais | LOMA = 5 acoes | OK (implicito 4.729, desvio -5.4%, n=20) | ADTV 3m < US$ 5 mi"
+AR_MACRO,Banco Macro,AR,Financials,ADR,BMA,NYSE,USD,10,true,"ADS = 10 ações locais | BMA = 10 acoes B | OK (implicito 9.439, desvio -5.6%, n=20)"
+AR_MACRO,Banco Macro,AR,Financials,LOCAL,BMA.BA,BYMA,ARS,,false,BMA = 10 acoes B | ADTV 3m < US$ 5 mi | ARS convertido pelo câmbio oficial (preço local embute CCL)
+AR_PAMPA,Pampa Energia,AR,Utilities,ADR,PAM,NYSE,USD,25,true,"ADS = 25 ações locais | PAM = 25 acoes | OK (implicito 23.613, desvio -5.5%, n=20)"
+AR_PAMPA,Pampa Energia,AR,Utilities,LOCAL,PAMP.BA,BYMA,ARS,,false,PAM = 25 acoes | ADTV 3m < US$ 5 mi | ARS convertido pelo câmbio oficial (preço local embute CCL)
+AR_SUPERVIELLE,Grupo Supervielle,AR,Financials,ADR,SUPV,NYSE,USD,5,true,"ADS = 5 ações locais | SUPV = 5 acoes B | OK (implicito 4.698, desvio -6.0%, n=20) | ADTV 3m < US$ 5 mi"
+AR_TEO,Telecom Argentina,AR,Communication Services,ADR,TEO,NYSE,USD,5,true,"ADS = 5 ações locais | TEO = 5 acoes B | OK (implicito 4.713, desvio -5.7%, n=20) | ADTV 3m < US$ 5 mi"
+AR_TGS,Transportadora de Gas del Sur,AR,Energy,ADR,TGS,NYSE,USD,5,true,"ADS = 5 ações locais | TGS = 5 acoes B | OK (implicito 4.726, desvio -5.5%, n=20)"
+AR_YPF,YPF,AR,Energy,ADR,YPF,NYSE,USD,10,true,"ADS = 10 ações locais | Desdobramento 10:1 das acoes locais em 03/08/2026 (Yahoo splits) sem ajuste do ADS => 1 ADS = 10 acoes D (inferido por preco) | OK (implicito 9.454, desvio -5.5%, n=20) | short interest Yahoo inconsistente (shortPercentOfFloat=72,36, provavel erro de unidade pos-desdobramento) - descartado; sharesPercentSharesOut=1,47% (15/09/2026)"
+AR_YPF,YPF,AR,Energy,LOCAL,YPFD.BA,BYMA,ARS,,false,Desdobramento 10:1 das acoes locais em 03/08/2026 (Yahoo splits) sem ajuste do ADS => 1 ADS = 10 acoes D (inferido por preco) | ARS convertido pelo câmbio oficial (preço local embute CCL)
+BR_3TENTOS,3tentos,BR,Consumer Staples,LOCAL,TTEN3.SA,B3,BRL,,true,classe ON | ADTV 3m < US$ 5 mi
+BR_ABC,Banco ABC Brasil,BR,Financials,LOCAL,ABCB4.SA,B3,BRL,,true,classe PN | ADTV 3m < US$ 5 mi
+BR_AFYA,Afya,BR,Consumer Discretionary,US_LISTED,AFYA,NASDAQ,USD,,true,Educacao medica | ADTV 3m < US$ 5 mi
+BR_ALLOS,Allos,BR,Real Estate,LOCAL,ALOS3.SA,B3,BRL,,true,classe ON
+BR_ALPARGATAS,Alpargatas,BR,Consumer Discretionary,LOCAL,ALPA4.SA,B3,BRL,,true,classe PN | ADTV 3m < US$ 5 mi
+BR_ALUPAR,Alupar,BR,Utilities,LOCAL,ALUP11.SA,B3,BRL,,true,classe Unit
+BR_AMBEV,Ambev,BR,Consumer Staples,LOCAL,ABEV3.SA,B3,BRL,,true,classe ON
+BR_AMBEV,Ambev,BR,Consumer Staples,ADR,ABEV,NYSE,USD,1,false,"ADS = 1 ações locais | OK (implicito 0.985, desvio -1.5%, n=20)"
+BR_ANIMA,Anima Educacao,BR,Consumer Discretionary,LOCAL,ANIM3.SA,B3,BRL,,true,classe ON | ADTV 3m < US$ 5 mi
+BR_ASSAI,Assai Atacadista,BR,Consumer Staples,LOCAL,ASAI3.SA,B3,BRL,,true,classe ON | ADR ASAI encerrado (Form 15F 12/01/2026)
+BR_AURA,Aura Minerals,BR,Materials,LOCAL,AURA33.SA,B3,BRL,,true,"classe BDR | Listada na Nasdaq (AUGO) em 07/2025; BDR AURA33 na B3 | BDR: 1 acao US = 3.003 BDR (implicito, n=20) | linha primária pela regra de histórico (rascunho: AUGO)"
+BR_AURA,Aura Minerals,BR,Materials,US_LISTED,AUGO,NASDAQ,USD,,false,Listada na Nasdaq (AUGO) em 07/2025; BDR AURA33 na B3 | histórico válido desde 2025-07-16
+BR_AUREN,Auren Energia,BR,Utilities,LOCAL,AURE3.SA,B3,BRL,,true,classe ON
+BR_AXIA,Axia Energia (ex-Eletrobras),BR,Utilities,LOCAL,AXIA3.SA,B3,BRL,,true,"classe ON | Renomeada em 10/11/2025: ELET3->AXIA3, ELET6->AXIA6, EBR->AXIA, EBR-B->AXIA PR | ADRs AXIA/AXIA-P deslistados da NYSE (Form 25 em 11/06 e 27/07/2026; 15F em 07/08/2026); AXIA6 sem dados no Yahoo"
+BR_AZZAS,Azzas 2154,BR,Consumer Discretionary,LOCAL,AZZA3.SA,B3,BRL,,true,classe ON | Fusao Arezzo+Soma
+BR_B3,B3 SA,BR,Financials,LOCAL,B3SA3.SA,B3,BRL,,true,
+BR_BANRISUL,Banrisul,BR,Financials,LOCAL,BRSR6.SA,B3,BRL,,true,classe PNB
+BR_BB,Banco do Brasil,BR,Financials,LOCAL,BBAS3.SA,B3,BRL,,true,classe ON | ADR apenas OTC (BDORY) - excluida
+BR_BBSEG,BB Seguridade,BR,Financials,LOCAL,BBSE3.SA,B3,BRL,,true,classe ON
+BR_BEMOBI,Bemobi,BR,Information Technology,LOCAL,BMOB3.SA,B3,BRL,,true,classe ON | ADTV 3m < US$ 5 mi
+BR_BRADESCO,Banco Bradesco,BR,Financials,LOCAL,BBDC4.SA,B3,BRL,,true,classe PN | BBD = 1 PN; BBDO = 1 ON
+BR_BRADESCO,Banco Bradesco,BR,Financials,ADR,BBD,NYSE,USD,1,false,"ADS = 1 ações locais | BBD = 1 PN; BBDO = 1 ON | OK (implicito 0.988, desvio -1.2%, n=20)"
+BR_BRADESCO,Banco Bradesco,BR,Financials,LOCAL,BBDC3.SA,B3,BRL,,false,classe ON | BBD = 1 PN; BBDO = 1 ON
+BR_BRADESPAR,Bradespar,BR,Materials,LOCAL,BRAP4.SA,B3,BRL,,true,classe PN | Holding (Vale)
+BR_BRADSAUDE,Bradesco Saude,BR,Health Care,LOCAL,SAUD3.SA,B3,BRL,,true,classe ON | Nova listagem (SAUD3) - verificar estrutura (Odontoprev)
+BR_BRASKEM,Braskem,BR,Materials,LOCAL,BRKM5.SA,B3,BRL,,true,classe PNA | BAK = 2 PNA; disputa de controle (Novonor)
+BR_BRASKEM,Braskem,BR,Materials,ADR,BAK,NYSE,USD,2,false,"ADS = 2 ações locais | BAK = 2 PNA; disputa de controle (Novonor) | OK (implicito 1.996, desvio -0.2%, n=20) | ADTV 3m < US$ 5 mi"
+BR_BRAVA,Brava Energia,BR,Energy,LOCAL,BRAV3.SA,B3,BRL,,true,classe ON | ex-3R/Enauta
+BR_BTG,BTG Pactual,BR,Financials,LOCAL,BPAC11.SA,B3,BRL,,true,classe Unit | Unit BPAC11
+BR_CBA,Companhia Brasileira de Aluminio,BR,Materials,LOCAL,CBAV3.SA,B3,BRL,,true,classe ON | ADTV 3m < US$ 5 mi
+BR_CEA,C&A Modas,BR,Consumer Discretionary,LOCAL,CEAB3.SA,B3,BRL,,true,classe ON
+BR_CEMIG,Cemig,BR,Utilities,LOCAL,CMIG4.SA,B3,BRL,,true,classe PN | CIG = 1 PN
+BR_CEMIG,Cemig,BR,Utilities,ADR,CIG,NYSE,USD,1,false,"ADS = 1 ações locais | CIG = 1 PN | OK (implicito 0.979, desvio -2.1%, n=20)"
+BR_CMIN,CSN Mineracao,BR,Materials,LOCAL,CMIN3.SA,B3,BRL,,true,classe ON
+BR_COGNA,Cogna,BR,Consumer Discretionary,LOCAL,COGN3.SA,B3,BRL,,true,classe ON
+BR_COMPASS,Compass Gas e Energia,BR,Utilities,LOCAL,PASS3.SA,B3,BRL,,true,classe ON | IPO na B3 em 11/05/2026 (PASS3) | histórico válido desde 2026-05-11
+BR_COPASA,Copasa,BR,Utilities,LOCAL,CSMG3.SA,B3,BRL,,true,classe ON
+BR_COPEL,Copel,BR,Utilities,LOCAL,CPLE3.SA,B3,BRL,,true,classe ON | Novo Mercado 22/12/2025 (so ON CPLE3); ADS ELP (PNB) trocado por ELPC (4 ON) em 26/12/2025
+BR_COPEL,Copel,BR,Utilities,ADR,ELPC,NYSE,USD,4,false,"ADS = 4 ações locais | Novo Mercado 22/12/2025 (so ON CPLE3); ADS ELP (PNB) trocado por ELPC (4 ON) em 26/12/2025 | OK (implicito 4.004, desvio +0.1%, n=20) | histórico válido desde 2023-12-29"
+BR_COSAN,Cosan,BR,Energy,LOCAL,CSAN3.SA,B3,BRL,,true,classe ON | CSAN ADR = 4 ON | ADR CSAN deslistado da NYSE (ultimo pregao 18/09/2026; OTC Level I) - fora do universo
+BR_CPFL,CPFL Energia,BR,Utilities,LOCAL,CPFE3.SA,B3,BRL,,true,classe ON
+BR_CSN,CSN Siderurgica Nacional,BR,Materials,LOCAL,CSNA3.SA,B3,BRL,,true,classe ON
+BR_CSN,CSN Siderurgica Nacional,BR,Materials,ADR,SID,NYSE,USD,1,false,"ADS = 1 ações locais | OK (implicito 0.963, desvio -3.7%, n=20)"
+BR_CURY,Cury,BR,Consumer Discretionary,LOCAL,CURY3.SA,B3,BRL,,true,classe ON
+BR_CVC,CVC Brasil,BR,Consumer Discretionary,LOCAL,CVCB3.SA,B3,BRL,,true,classe ON | ADTV 3m < US$ 5 mi
+BR_CXSEG,Caixa Seguridade,BR,Financials,LOCAL,CXSE3.SA,B3,BRL,,true,classe ON
+BR_CYRELA,Cyrela,BR,Consumer Discretionary,LOCAL,CYRE3.SA,B3,BRL,,true,classe ON
+BR_DIRECIONAL,Direcional,BR,Consumer Discretionary,LOCAL,DIRR3.SA,B3,BRL,,true,classe ON
+BR_ECORODOVIAS,EcoRodovias,BR,Industrials,LOCAL,ECOR3.SA,B3,BRL,,true,classe ON
+BR_EMBRAER,Embraer,BR,Industrials,LOCAL,EMBJ3.SA,B3,BRL,,true,"classe ON | Ticker mudou 03/11/2025: EMBR3->EMBJ3, ERJ->EMBJ (1 ADS = 4 ON)"
+BR_EMBRAER,Embraer,BR,Industrials,ADR,EMBJ,NYSE,USD,4,false,"ADS = 4 ações locais | Ticker mudou 03/11/2025: EMBR3->EMBJ3, ERJ->EMBJ (1 ADS = 4 ON) | OK (implicito 3.981, desvio -0.5%, n=20)"
+BR_ENERGISA,Energisa,BR,Utilities,LOCAL,ENGI11.SA,B3,BRL,,true,classe Unit | Unit ENGI11
+BR_ENEVA,Eneva,BR,Utilities,LOCAL,ENEV3.SA,B3,BRL,,true,classe ON
+BR_ENGIE,Engie Brasil Energia,BR,Utilities,LOCAL,EGIE3.SA,B3,BRL,,true,classe ON
+BR_EQUATORIAL,Equatorial,BR,Utilities,LOCAL,EQTL3.SA,B3,BRL,,true,classe ON
+BR_ERO,Ero Copper,BR,Materials,US_LISTED,ERO,NYSE,USD,,true,Canada; ativos no Brasil
+BR_EZTEC,EZTec,BR,Consumer Discretionary,LOCAL,EZTC3.SA,B3,BRL,,true,classe ON
+BR_FLEURY,Fleury,BR,Health Care,LOCAL,FLRY3.SA,B3,BRL,,true,classe ON
+BR_GERDAU,Gerdau,BR,Materials,ADR,GGB,NYSE,USD,1,true,"ADS = 1 ações locais | GGB = 1 PN | OK (implicito 1.002, desvio +0.2%, n=20)"
+BR_GERDAU,Gerdau,BR,Materials,LOCAL,GGBR4.SA,B3,BRL,,false,classe PN | GGB = 1 PN
+BR_GOAU,Metalurgica Gerdau,BR,Materials,LOCAL,GOAU4.SA,B3,BRL,,true,classe PN | Holding de Gerdau
+BR_GPA,GPA (Pao de Acucar),BR,Consumer Staples,LOCAL,PCAR3.SA,B3,BRL,,true,"classe ON | ADR CBD deslistado | ADTV 3m < US$ 5 mi | QUEBRA de nível na série Yahoo em 2021-03-01 (+112%, evento não ajustado): histórico anterior não comparável"
+BR_GPS,GPS Participacoes,BR,Industrials,LOCAL,GGPS3.SA,B3,BRL,,true,classe ON
+BR_GRENDENE,Grendene,BR,Consumer Discretionary,LOCAL,GRND3.SA,B3,BRL,,true,classe ON | ADTV 3m < US$ 5 mi
+BR_HAPVIDA,Hapvida,BR,Health Care,LOCAL,HAPV3.SA,B3,BRL,,true,classe ON
+BR_HYPERA,Hypera,BR,Health Care,LOCAL,HYPE3.SA,B3,BRL,,true,classe ON
+BR_IGUATEMI,Iguatemi,BR,Real Estate,LOCAL,IGTI11.SA,B3,BRL,,true,classe Unit
+BR_INTELBRAS,Intelbras,BR,Information Technology,LOCAL,INTB3.SA,B3,BRL,,true,classe ON | ADTV 3m < US$ 5 mi
+BR_INTER,Inter&Co,BR,Financials,US_LISTED,INTR,NASDAQ,USD,,true,
+BR_IRB,IRB Brasil RE,BR,Financials,LOCAL,IRBR3.SA,B3,BRL,,true,classe ON
+BR_ISAENERGIA,ISA Energia Brasil,BR,Utilities,LOCAL,ISAE4.SA,B3,BRL,,true,classe PN | ex-ISA CTEEP (TRPL4->ISAE4)
+BR_ITAU,Itau Unibanco,BR,Financials,LOCAL,ITUB4.SA,B3,BRL,,true,classe PN | ITUB = 1 PN
+BR_ITAU,Itau Unibanco,BR,Financials,ADR,ITUB,NYSE,USD,1,false,"ADS = 1 ações locais | ITUB = 1 PN | OK (implicito 0.997, desvio -0.3%, n=20)"
+BR_ITAU,Itau Unibanco,BR,Financials,LOCAL,ITUB3.SA,B3,BRL,,false,classe ON | ITUB = 1 PN
+BR_ITAUSA,Itausa,BR,Financials,LOCAL,ITSA4.SA,B3,BRL,,true,classe PN | Holding (Itau); desconto de holding
+BR_JBS,JBS N.V.,BR,Consumer Staples,US_LISTED,JBS,NYSE,USD,,true,NYSE desde 13/06/2025 (JBS); JBSS3 deslistada 06/06/2025; BDR JBSS32 na B3; JBS S.A. pediu cancelamento CVM em 21/09/2026 | histórico válido desde 2025-06-13
+BR_JBS,JBS N.V.,BR,Consumer Staples,LOCAL,JBSS32.SA,B3,BRL,,false,"classe BDR | NYSE desde 13/06/2025 (JBS); JBSS3 deslistada 06/06/2025; BDR JBSS32 na B3; JBS S.A. pediu cancelamento CVM em 21/09/2026 | BDR: 1 acao US = 0.998 BDR (implicito, n=20) | QUEBRA de nível na série Yahoo em 2025-06-09 (+100%, evento não ajustado): histórico anterior não comparável | histórico válido desde 2025-06-09"
+BR_JHSF,JHSF,BR,Real Estate,LOCAL,JHSF3.SA,B3,BRL,,true,classe ON
+BR_KLABIN,Klabin,BR,Materials,LOCAL,KLBN11.SA,B3,BRL,,true,classe Unit | Unit KLBN11 = 1 ON + 4 PN
+BR_KLABIN,Klabin,BR,Materials,LOCAL,KLBN4.SA,B3,BRL,,false,classe PN | Unit KLBN11 = 1 ON + 4 PN | ADTV 3m < US$ 5 mi
+BR_LOCALIZA,Localiza,BR,Industrials,LOCAL,RENT3.SA,B3,BRL,,true,classe ON
+BR_LOCAWEB,Locaweb (LWSA),BR,Information Technology,LOCAL,LWSA3.SA,B3,BRL,,true,classe ON | ADTV 3m < US$ 5 mi
+BR_LOGCP,LOG Commercial Properties,BR,Real Estate,LOCAL,LOGG3.SA,B3,BRL,,true,classe ON | ADTV 3m < US$ 5 mi
+BR_MAGALU,Magazine Luiza,BR,Consumer Discretionary,LOCAL,MGLU3.SA,B3,BRL,,true,classe ON
+BR_MARCOPOLO,Marcopolo,BR,Industrials,LOCAL,POMO4.SA,B3,BRL,,true,classe PN
+BR_MATEUS,Grupo Mateus,BR,Consumer Staples,LOCAL,GMAT3.SA,B3,BRL,,true,classe ON | ADTV 3m < US$ 5 mi
+BR_MBRF,MBRF (Marfrig+BRF),BR,Consumer Staples,LOCAL,MBRF3.SA,B3,BRL,,true,"classe ON | BRF incorporada; MRFG3->MBRF3 em 23/09/2025 (0,8521 MBRF3 por BRFS3)"
+BR_MDIAS,M. Dias Branco,BR,Consumer Staples,LOCAL,MDIA3.SA,B3,BRL,,true,classe ON | ADTV 3m < US$ 5 mi
+BR_MILLS,Mills,BR,Industrials,LOCAL,MILS3.SA,B3,BRL,,true,classe ON | ADTV 3m < US$ 5 mi
+BR_MINERVA,Minerva,BR,Consumer Staples,LOCAL,BEEF3.SA,B3,BRL,,true,classe ON
+BR_MOTIVA,Motiva (ex-CCR),BR,Industrials,LOCAL,MOTV3.SA,B3,BRL,,true,classe ON | CCRO3 -> MOTV3 (2025)
+BR_MOURADUBEUX,Moura Dubeux,BR,Consumer Discretionary,LOCAL,MDNE3.SA,B3,BRL,,true,classe ON
+BR_MOVIDA,Movida,BR,Industrials,LOCAL,MOVI3.SA,B3,BRL,,true,classe ON
+BR_MRV,MRV Engenharia,BR,Consumer Discretionary,LOCAL,MRVE3.SA,B3,BRL,,true,classe ON
+BR_MULTIPLAN,Multiplan,BR,Real Estate,LOCAL,MULT3.SA,B3,BRL,,true,classe ON
+BR_NATURA,Natura Cosmeticos,BR,Consumer Staples,LOCAL,NATU3.SA,B3,BRL,,true,classe ON | NTCO3->NATU3 apos incorporacao da Natura &Co (01/07/2025); ADR NTCO deslistado
+BR_NU,Nu Holdings,BR,Financials,US_LISTED,NU,NYSE,USD,,true,Cayman; Brasil/Mexico/Colombia
+BR_ONCOCLINICAS,Oncoclinicas,BR,Health Care,LOCAL,ONCO3.SA,B3,BRL,,true,classe ON | ADTV 3m < US$ 5 mi
+BR_ORIZON,Orizon,BR,Industrials,LOCAL,ORVR3.SA,B3,BRL,,true,classe ON
+BR_PAGS,PagSeguro Digital,BR,Financials,US_LISTED,PAGS,NYSE,USD,,true,
+BR_PAGUEMENOS,Pague Menos,BR,Consumer Staples,LOCAL,PGMN3.SA,B3,BRL,,true,classe ON | ADTV 3m < US$ 5 mi
+BR_PATRIA,Patria Investments,BR,Financials,US_LISTED,PAX,NASDAQ,USD,,true,
+BR_PETROBRAS,Petrobras,BR,Energy,ADR,PBR,NYSE,USD,2,true,"ADS = 2 ações locais | ON e PN; PBR=2 ON, PBR-A=2 PN | OK (implicito 1.994, desvio -0.3%, n=20)"
+BR_PETROBRAS,Petrobras,BR,Energy,ADR,PBR-A,NYSE,USD,2,false,"ADS = 2 ações locais | ON e PN; PBR=2 ON, PBR-A=2 PN | OK (implicito 1.996, desvio -0.2%, n=20)"
+BR_PETROBRAS,Petrobras,BR,Energy,LOCAL,PETR3.SA,B3,BRL,,false,"classe ON | ON e PN; PBR=2 ON, PBR-A=2 PN"
+BR_PETROBRAS,Petrobras,BR,Energy,LOCAL,PETR4.SA,B3,BRL,,false,"classe PN | ON e PN; PBR=2 ON, PBR-A=2 PN"
+BR_PETZCOBASI,Petz-Cobasi,BR,Consumer Discretionary,LOCAL,AUAU3.SA,B3,BRL,,true,classe ON | Fusao Petz+Cobasi; ticker AUAU3 | ADTV 3m < US$ 5 mi | histórico válido desde 2026-01-05
+BR_PICPAY,PicPay (PicS N.V.),BR,Financials,US_LISTED,PICS,NASDAQ,USD,,true,IPO Nasdaq 29/01/2026 a US$19 | ADTV 3m < US$ 5 mi | histórico válido desde 2026-01-29
+BR_PINE,Banco Pine,BR,Financials,LOCAL,PINE4.SA,B3,BRL,,true,classe PN | ADTV 3m < US$ 5 mi
+BR_PLANO,Plano & Plano,BR,Consumer Discretionary,LOCAL,PLPL3.SA,B3,BRL,,true,classe ON | ADTV 3m < US$ 5 mi
+BR_PORTO,Porto Seguro,BR,Financials,LOCAL,PSSA3.SA,B3,BRL,,true,classe ON
+BR_PRIO,PRIO,BR,Energy,LOCAL,PRIO3.SA,B3,BRL,,true,classe ON
+BR_RAIADROGASIL,Raia Drogasil,BR,Consumer Staples,LOCAL,RADL3.SA,B3,BRL,,true,classe ON
+BR_RANDON,Randoncorp,BR,Industrials,LOCAL,RAPT4.SA,B3,BRL,,true,classe PN | ADTV 3m < US$ 5 mi
+BR_RECV,PetroReconcavo,BR,Energy,LOCAL,RECV3.SA,B3,BRL,,true,classe ON | ADTV 3m < US$ 5 mi
+BR_REDEDOR,Rede D'Or Sao Luiz,BR,Health Care,LOCAL,RDOR3.SA,B3,BRL,,true,classe ON
+BR_RENNER,Lojas Renner,BR,Consumer Discretionary,LOCAL,LREN3.SA,B3,BRL,,true,classe ON
+BR_RIACHUELO,Riachuelo (ex-Guararapes),BR,Consumer Discretionary,LOCAL,RIAA3.SA,B3,BRL,,true,classe ON | ADTV 3m < US$ 5 mi
+BR_RUMO,Rumo,BR,Industrials,LOCAL,RAIL3.SA,B3,BRL,,true,classe ON
+BR_SABESP,Sabesp,BR,Utilities,LOCAL,SBSP3.SA,B3,BRL,,true,classe ON
+BR_SABESP,Sabesp,BR,Utilities,ADR,SBS,NYSE,USD,1,false,"ADS = 1 ações locais | OK (implicito 0.998, desvio -0.2%, n=20)"
+BR_SANEPAR,Sanepar,BR,Utilities,LOCAL,SAPR11.SA,B3,BRL,,true,classe Unit
+BR_SANTANDER,Banco Santander Brasil,BR,Financials,LOCAL,SANB11.SA,B3,BRL,,true,classe Unit | BSBR = 1 unit SANB11
+BR_SANTANDER,Banco Santander Brasil,BR,Financials,ADR,BSBR,NYSE,USD,1,false,"ADS = 1 ações locais | BSBR = 1 unit SANB11 | OK (implicito 1.003, desvio +0.3%, n=20)"
+BR_SAOMARTINHO,Sao Martinho,BR,Consumer Staples,LOCAL,SMTO3.SA,B3,BRL,,true,classe ON
+BR_SBF,Grupo SBF (Centauro),BR,Consumer Discretionary,LOCAL,SBFG3.SA,B3,BRL,,true,classe ON | ADTV 3m < US$ 5 mi
+BR_SER,Ser Educacional,BR,Consumer Discretionary,LOCAL,SEER3.SA,B3,BRL,,true,classe ON | ADTV 3m < US$ 5 mi
+BR_SIGMALITH,Sigma Lithium,BR,Materials,US_LISTED,SGML,NASDAQ,USD,,true,
+BR_SIMPAR,Simpar,BR,Industrials,LOCAL,SIMH3.SA,B3,BRL,,true,classe ON | ADTV 3m < US$ 5 mi
+BR_SLC,SLC Agricola,BR,Consumer Staples,LOCAL,SLCE3.SA,B3,BRL,,true,classe ON
+BR_SMARTFIT,Smart Fit,BR,Consumer Discretionary,LOCAL,SMFT3.SA,B3,BRL,,true,classe ON
+BR_STONE,StoneCo,BR,Financials,US_LISTED,STNE,NASDAQ,USD,,true,GICS 2023: payments -> Financials
+BR_SUZANO,Suzano,BR,Materials,LOCAL,SUZB3.SA,B3,BRL,,true,classe ON
+BR_SUZANO,Suzano,BR,Materials,ADR,SUZ,NYSE,USD,1,false,"ADS = 1 ações locais | OK (implicito 1.000, desvio -0.0%, n=20)"
+BR_TAESA,Taesa,BR,Utilities,LOCAL,TAEE11.SA,B3,BRL,,true,classe Unit
+BR_TENDA,Tenda,BR,Consumer Discretionary,LOCAL,TEND3.SA,B3,BRL,,true,classe ON
+BR_TIM,TIM Brasil,BR,Communication Services,LOCAL,TIMS3.SA,B3,BRL,,true,classe ON | TIMB = 5 ON
+BR_TIM,TIM Brasil,BR,Communication Services,ADR,TIMB,NYSE,USD,5,false,"ADS = 5 ações locais | TIMB = 5 ON | OK (implicito 5.006, desvio +0.1%, n=20)"
+BR_TOTVS,Totvs,BR,Information Technology,LOCAL,TOTS3.SA,B3,BRL,,true,classe ON
+BR_TUPY,Tupy,BR,Industrials,LOCAL,TUPY3.SA,B3,BRL,,true,classe ON | ADTV 3m < US$ 5 mi
+BR_ULTRAPAR,Ultrapar,BR,Energy,LOCAL,UGPA3.SA,B3,BRL,,true,"classe ON | QUEBRA de nível na série Yahoo em 2021-06-28 (+119%, evento não ajustado): histórico anterior não comparável"
+BR_ULTRAPAR,Ultrapar,BR,Energy,ADR,UGP,NYSE,USD,1,false,"ADS = 1 ações locais | OK (implicito 0.998, desvio -0.2%, n=20)"
+BR_UNIPAR,Unipar,BR,Materials,LOCAL,UNIP6.SA,B3,BRL,,true,classe PNB | ADTV 3m < US$ 5 mi
+BR_USIMINAS,Usiminas,BR,Materials,LOCAL,USIM5.SA,B3,BRL,,true,classe PNA
+BR_VALE,Vale,BR,Materials,ADR,VALE,NYSE,USD,1,true,"ADS = 1 ações locais | OK (implicito 0.996, desvio -0.4%, n=20)"
+BR_VALE,Vale,BR,Materials,LOCAL,VALE3.SA,B3,BRL,,false,classe ON
+BR_VAMOS,Vamos,BR,Industrials,LOCAL,VAMO3.SA,B3,BRL,,true,classe ON
+BR_VIBRA,Vibra Energia,BR,Energy,LOCAL,VBBR3.SA,B3,BRL,,true,classe ON
+BR_VIVARA,Vivara,BR,Consumer Discretionary,LOCAL,VIVA3.SA,B3,BRL,,true,classe ON
+BR_VIVO,Telefonica Brasil (Vivo),BR,Communication Services,LOCAL,VIVT3.SA,B3,BRL,,true,classe ON | Desdobramento 1:2 de VIVT3 em 15/04/2025 sem ajuste do ADS => 1 ADS = 2 ON (inferido por preco)
+BR_VIVO,Telefonica Brasil (Vivo),BR,Communication Services,ADR,VIV,NYSE,USD,2,false,"ADS = 2 ações locais | Desdobramento 1:2 de VIVT3 em 15/04/2025 sem ajuste do ADS => 1 ADS = 2 ON (inferido por preco) | OK (implicito 1.990, desvio -0.5%, n=20)"
+BR_VTEX,VTEX,BR,Information Technology,US_LISTED,VTEX,NYSE,USD,,true,ADTV 3m < US$ 5 mi
+BR_VULCABRAS,Vulcabras,BR,Consumer Discretionary,LOCAL,VULC3.SA,B3,BRL,,true,classe ON | ADTV 3m < US$ 5 mi
+BR_WEG,WEG,BR,Industrials,LOCAL,WEGE3.SA,B3,BRL,,true,classe ON
+BR_XP,XP Inc,BR,Financials,US_LISTED,XP,NASDAQ,USD,,true,BDR XPBR31 nao incluido
+BR_YDUQS,Yduqs,BR,Consumer Discretionary,LOCAL,YDUQ3.SA,B3,BRL,,true,classe ON
+CL_ANDINA,Embotelladora Andina,CL,Consumer Staples,LOCAL,ANDINA-B.SN,BCS,CLP,,true,AKO-B = 6 serie B | YAHOO_VOLUME_GAPS (media de 10 pregoes com volume) | ADTV 3m < US$ 5 mi
+CL_BCHILE,Banco de Chile,CL,Financials,ADR,BCH,NYSE,USD,200,true,"ADS = 200 ações locais | BCH = 200 acoes | OK (implicito 199.286, desvio -0.4%, n=20)"
+CL_BCHILE,Banco de Chile,CL,Financials,LOCAL,CHILE.SN,BCS,CLP,,false,BCH = 200 acoes
+CL_BCI,Banco de Credito e Inversiones,CL,Financials,LOCAL,BCI.SN,BCS,CLP,,true,YAHOO_VOLUME_GAPS (media de 13 pregoes com volume)
+CL_BSAC,Banco Santander-Chile,CL,Financials,ADR,BSAC,NYSE,USD,400,true,"ADS = 400 ações locais | BSAC = 400 acoes | OK (implicito 397.731, desvio -0.6%, n=20)"
+CL_BSAC,Banco Santander-Chile,CL,Financials,LOCAL,BSANTANDER.SN,BCS,CLP,,false,BSAC = 400 acoes
+CL_CENCOMALLS,Cencosud Shopping,CL,Real Estate,LOCAL,CENCOMALLS.SN,BCS,CLP,,true,YAHOO_VOLUME_GAPS (media de 13 pregoes com volume) | ADTV 3m < US$ 5 mi
+CL_CENCOSUD,Cencosud,CL,Consumer Staples,LOCAL,CENCOSUD.SN,BCS,CLP,,true,YAHOO_VOLUME_GAPS (media de 13 pregoes com volume)
+CL_CMPC,Empresas CMPC,CL,Materials,LOCAL,CMPC.SN,BCS,CLP,,true,YAHOO_VOLUME_GAPS (media de 13 pregoes com volume) | ADTV 3m < US$ 5 mi
+CL_COLBUN,Colbun,CL,Utilities,LOCAL,COLBUN.SN,BCS,CLP,,true,YAHOO_VOLUME_GAPS (media de 13 pregoes com volume) | ADTV 3m < US$ 5 mi
+CL_COPEC,Empresas Copec,CL,Energy,LOCAL,COPEC.SN,BCS,CLP,,true,YAHOO_VOLUME_GAPS (media de 13 pregoes com volume)
+CL_ECL,Engie Energia Chile,CL,Utilities,LOCAL,ECL.SN,BCS,CLP,,true,YAHOO_VOLUME_GAPS (media de 13 pregoes com volume) | ADTV 3m < US$ 5 mi
+CL_EISA,Echeverria Izquierdo,CL,Industrials,LOCAL,EISA.SN,BCS,CLP,,true,YAHOO_VOLUME_GAPS (media de 13 pregoes com volume) | ADTV 3m < US$ 5 mi
+CL_ENELAM,Enel Americas,CL,Utilities,LOCAL,ENELAM.SN,BCS,CLP,,true,YAHOO_VOLUME_GAPS (media de 13 pregoes com volume) | ADTV 3m < US$ 5 mi
+CL_ENELCHILE,Enel Chile,CL,Utilities,LOCAL,ENELCHILE.SN,BCS,CLP,,true,ENIC = 50 acoes | YAHOO_VOLUME_GAPS (media de 13 pregoes com volume) | ADTV 3m < US$ 5 mi
+CL_ENELCHILE,Enel Chile,CL,Utilities,ADR,ENIC,NYSE,USD,50,false,"ADS = 50 ações locais | ENIC = 50 acoes | OK (implicito 50.566, desvio +1.1%, n=20) | ADTV 3m < US$ 5 mi"
+CL_FALABELLA,Falabella,CL,Consumer Discretionary,LOCAL,FALABELLA.SN,BCS,CLP,,true,YAHOO_VOLUME_GAPS (media de 13 pregoes com volume)
+CL_ITAU,Banco Itau Chile,CL,Financials,LOCAL,ITAUCL.SN,BCS,CLP,,true,YAHOO_VOLUME_GAPS (media de 13 pregoes com volume)
+CL_LATAM,LATAM Airlines Group,CL,Industrials,LOCAL,LTM.SN,BCS,CLP,,true,"Relistado NYSE 25/07/2024; LTM = 2000 acoes | YAHOO_VOLUME_GAPS (media de 13 pregoes com volume) | QUEBRA de nível na série Yahoo em 2022-09-14 (+312%, evento não ajustado): histórico anterior não comparável | linha primária pela regra de histórico (rascunho: LTM)"
+CL_LATAM,LATAM Airlines Group,CL,Industrials,ADR,LTM,NYSE,USD,2000,false,"ADS = 2000 ações locais | Relistado NYSE 25/07/2024; LTM = 2000 acoes | OK (implicito 1982.952, desvio -0.9%, n=20) | histórico válido desde 2024-07-25"
+CL_MALLPLAZA,Plaza SA (Mallplaza),CL,Real Estate,LOCAL,MALLPLAZA.SN,BCS,CLP,,true,YAHOO_VOLUME_GAPS (media de 13 pregoes com volume) | ADTV 3m < US$ 5 mi
+CL_PARAUCO,Parque Arauco,CL,Real Estate,LOCAL,PARAUCO.SN,BCS,CLP,,true,YAHOO_VOLUME_GAPS (media de 13 pregoes com volume) | ADTV 3m < US$ 5 mi
+CL_SQM,SQM,CL,Materials,ADR,SQM,NYSE,USD,1,true,"ADS = 1 ações locais | SQM = 1 serie B | OK (implicito 1.002, desvio +0.2%, n=20)"
+CL_SQM,SQM,CL,Materials,LOCAL,SQM-B.SN,BCS,CLP,,false,SQM = 1 serie B | YAHOO_VOLUME_GAPS (media de 10 pregoes com volume)
+CO_CEMARGOS,Cementos Argos,CO,Materials,LOCAL,CEMARGOS.CL,BVC,COP,,true,classe ordinária | ADTV 3m < US$ 5 mi
+CO_CIBEST,Grupo Cibest (ex-Bancolombia),CO,Financials,ADR,CIB,NYSE,USD,4,true,"ADS = 4 ações locais | Holding criada 16/05/2025; CIB = 4 preferenciais | OK (implicito 4.006, desvio +0.1%, n=20)"
+CO_CIBEST,Grupo Cibest (ex-Bancolombia),CO,Financials,LOCAL,CIBEST.CL,BVC,COP,,false,classe ordinária | Holding criada 16/05/2025; CIB = 4 preferenciais | ADTV 3m < US$ 5 mi | pico isolado na série Yahoo em 2020-03-09 (-68%; provável erro)
+CO_CIBEST,Grupo Cibest (ex-Bancolombia),CO,Financials,LOCAL,PFCIBEST.CL,BVC,COP,,false,classe preferencial | Holding criada 16/05/2025; CIB = 4 preferenciais
+CO_ECOPETROL,Ecopetrol,CO,Energy,ADR,EC,NYSE,USD,20,true,"ADS = 20 ações locais | EC = 20 acoes | OK (implicito 20.025, desvio +0.1%, n=20)"
+CO_ECOPETROL,Ecopetrol,CO,Energy,LOCAL,ECOPETROL.CL,BVC,COP,,false,classe ordinária | EC = 20 acoes
+CO_GEOPARK,GeoPark,CO,Energy,US_LISTED,GPRK,NYSE,USD,,true,
+CO_GRANTIERRA,Gran Tierra Energy,CO,Energy,US_LISTED,GTE,NYSE American,USD,,true,
+CO_GRUPOARGOS,Grupo Argos,CO,Materials,LOCAL,PFGRUPOARG.CL,BVC,COP,,true,classe preferencial | ADTV 3m < US$ 5 mi
+CO_GRUPOARGOS,Grupo Argos,CO,Materials,LOCAL,GRUPOARGOS.CL,BVC,COP,,false,classe ordinária | ADTV 3m < US$ 5 mi
+CO_ISA,Interconexion Electrica (ISA),CO,Utilities,LOCAL,ISA.CL,BVC,COP,,true,classe ordinária | ADTV 3m < US$ 5 mi
+CO_SURA,Grupo Sura,CO,Financials,LOCAL,PFGRUPSURA.CL,BVC,COP,,true,classe preferencial | ADTV 3m < US$ 5 mi | pico isolado na série Yahoo em 2021-06-23 (+110%; provável erro)
+CO_SURA,Grupo Sura,CO,Financials,LOCAL,GRUPOSURA.CL,BVC,COP,,false,classe ordinária | ADTV 3m < US$ 5 mi
+CO_TECNOGLASS,Tecnoglass,CO,Industrials,US_LISTED,TGLS,NYSE,USD,,true,
+LA_ARCOS,Arcos Dorados,LATAM,Consumer Discretionary,US_LISTED,ARCO,NYSE,USD,,true,BVI/Uruguai; Brasil maior divisao
+LA_BLADEX,Bladex,PA,Financials,US_LISTED,BLX,NYSE,USD,,true,
+LA_COPA,Copa Holdings,PA,Industrials,US_LISTED,CPA,NYSE,USD,,true,
+LA_DLOCAL,dLocal,UY,Financials,US_LISTED,DLO,NASDAQ,USD,,true,GICS 2023: payments -> Financials
+LA_FORTUNA,Fortuna Mining,LATAM,Materials,US_LISTED,FSM,NYSE,USD,,true,Canada; Mexico/Peru/Argentina + Africa Ocidental | SATELLITE: emissor estrangeiro com ativos LatAm (opcional)
+LA_LILA,Liberty Latin America,LATAM,Communication Services,US_LISTED,LILAK,NASDAQ,USD,,true,Caribe/Porto Rico/Costa Rica/Panama | SATELLITE: emissor estrangeiro com ativos LatAm (opcional)
+LA_LILA,Liberty Latin America,LATAM,Communication Services,US_LISTED,LILA,NASDAQ,USD,,false,Caribe/Porto Rico/Costa Rica/Panama | SATELLITE: emissor estrangeiro com ativos LatAm (opcional) | ADTV 3m < US$ 5 mi
+LA_MELI,MercadoLibre,BR,Consumer Discretionary,US_LISTED,MELI,NASDAQ,USD,,true,"Delaware/Uruguai; receita ~50%+ Brasil, Mexico, Argentina (pais de risco = Brasil)"
+LA_MILLICOM,Millicom (Tigo),LATAM,Communication Services,US_LISTED,TIGO,NASDAQ,USD,,true,America Central/Colombia
+LA_PAAS,Pan American Silver,LATAM,Materials,US_LISTED,PAAS,NYSE,USD,,true,Canada; minas Mexico/Peru/Bolivia/Argentina/Brasil | SATELLITE: emissor estrangeiro com ativos LatAm (opcional)
+MX_AC,Arca Continental,MX,Consumer Staples,LOCAL,AC.MX,BMV,MXN,,true,
+MX_AEROMEXICO,Grupo Aeromexico,MX,Industrials,ADR,AERO,NYSE,USD,10,true,ADS = 10 ações locais | Relistagem 11/2025 (NYSE+BMV); 1 ADS = 10 acoes comuns (SEC 8-A12B 03/11/2025); serie AERO.MX no Yahoo sem volume/preco defasado | NAO_VERIFICAVEL (sem linha local liquida/serie) | ADTV 3m < US$ 5 mi | histórico válido desde 2025-11-06
+MX_ALPEK,Alpek,MX,Materials,LOCAL,ALPEKA.MX,BMV,MXN,,true,
+MX_ALSEA,Alsea,MX,Consumer Discretionary,LOCAL,ALSEA.MX,BMV,MXN,,true,ADTV 3m < US$ 5 mi
+MX_AMX,America Movil,MX,Communication Services,ADR,AMX,NYSE,USD,20,true,"ADS = 20 ações locais | AMX = 20 serie B | OK (implicito 19.952, desvio -0.2%, n=20)"
+MX_AMX,America Movil,MX,Communication Services,LOCAL,AMXB.MX,BMV,MXN,,false,AMX = 20 serie B
+MX_ASUR,Grupo Aeroportuario del Sureste,MX,Industrials,ADR,ASR,NYSE,USD,10,true,"ADS = 10 ações locais | ASR = 10 B | OK (implicito 9.973, desvio -0.3%, n=20)"
+MX_ASUR,Grupo Aeroportuario del Sureste,MX,Industrials,LOCAL,ASURB.MX,BMV,MXN,,false,ASR = 10 B
+MX_BAJIO,Banco del Bajio,MX,Financials,LOCAL,BBAJIOO.MX,BMV,MXN,,true,
+MX_BANORTE,Grupo Financiero Banorte,MX,Financials,LOCAL,GFNORTEO.MX,BMV,MXN,,true,
+MX_BIMBO,Grupo Bimbo,MX,Consumer Staples,LOCAL,BIMBOA.MX,BMV,MXN,,true,
+MX_BMV,Bolsa Mexicana de Valores,MX,Financials,LOCAL,BOLSAA.MX,BMV,MXN,,true,ADTV 3m < US$ 5 mi
+MX_CARSO,Grupo Carso,MX,Industrials,LOCAL,GCARSOA1.MX,BMV,MXN,,true,ADTV 3m < US$ 5 mi
+MX_CEMEX,Cemex,MX,Materials,ADR,CX,NYSE,USD,10,true,"ADS = 10 ações locais | CX = 10 CPO | OK (implicito 9.942, desvio -0.6%, n=20)"
+MX_CEMEX,Cemex,MX,Materials,LOCAL,CEMEXCPO.MX,BMV,MXN,,false,CX = 10 CPO
+MX_CHEDRAUI,Grupo Comercial Chedraui,MX,Consumer Staples,LOCAL,CHDRAUIB.MX,BMV,MXN,,true,ADTV 3m < US$ 5 mi
+MX_ENDEAVOUR,Endeavour Silver,MX,Materials,US_LISTED,EXK,NYSE,USD,,true,Canada; minas no Mexico | SATELLITE: emissor estrangeiro com ativos LatAm (opcional)
+MX_FEMSA,FEMSA,MX,Consumer Staples,ADR,FMX,NYSE,USD,10,true,"ADS = 10 ações locais | FMX = 10 units BD | OK (implicito 10.006, desvio +0.1%, n=20)"
+MX_FEMSA,FEMSA,MX,Consumer Staples,LOCAL,FEMSAUBD.MX,BMV,MXN,,false,FMX = 10 units BD
+MX_FIBRAPL,Fibra Prologis,MX,Real Estate,LOCAL,FIBRAPL14.MX,BMV,MXN,,true,
+MX_FIRSTMAJ,First Majestic Silver,MX,Materials,US_LISTED,AG,NYSE,USD,,true,Canada; minas no Mexico | SATELLITE: emissor estrangeiro com ativos LatAm (opcional)
+MX_FMTY,Fibra Mty,MX,Real Estate,LOCAL,FMTY14.MX,BMV,MXN,,true,ADTV 3m < US$ 5 mi
+MX_FUNO,Fibra Uno,MX,Real Estate,LOCAL,FUNO11.MX,BMV,MXN,,true,
+MX_GAP,Grupo Aeroportuario del Pacifico,MX,Industrials,ADR,PAC,NYSE,USD,10,true,"ADS = 10 ações locais | PAC = 10 B | OK (implicito 9.985, desvio -0.1%, n=20)"
+MX_GAP,Grupo Aeroportuario del Pacifico,MX,Industrials,LOCAL,GAPB.MX,BMV,MXN,,false,PAC = 10 B
+MX_GCC,GCC,MX,Materials,LOCAL,GCC.MX,BMV,MXN,,true,ADTV 3m < US$ 5 mi
+MX_GENOMMA,Genomma Lab,MX,Consumer Staples,LOCAL,LABB.MX,BMV,MXN,,true,ADTV 3m < US$ 5 mi
+MX_GENTERA,Gentera,MX,Financials,LOCAL,GENTERA.MX,BMV,MXN,,true,
+MX_GMEXICO,Grupo Mexico,MX,Materials,LOCAL,GMEXICOB.MX,BMV,MXN,,true,
+MX_GRUMA,Gruma,MX,Consumer Staples,LOCAL,GRUMAB.MX,BMV,MXN,,true,
+MX_INBURSA,Grupo Financiero Inbursa,MX,Financials,LOCAL,GFINBURO.MX,BMV,MXN,,true,
+MX_KIMBER,Kimberly-Clark de Mexico,MX,Consumer Staples,LOCAL,KIMBERA.MX,BMV,MXN,,true,
+MX_KOF,Coca-Cola FEMSA,MX,Consumer Staples,ADR,KOF,NYSE,USD,10,true,"ADS = 10 ações locais | KOF = 10 units | OK (implicito 9.995, desvio -0.0%, n=20)"
+MX_KOF,Coca-Cola FEMSA,MX,Consumer Staples,LOCAL,KOFUBL.MX,BMV,MXN,,false,KOF = 10 units
+MX_MEGACABLE,Megacable,MX,Communication Services,LOCAL,MEGACPO.MX,BMV,MXN,,true,ADTV 3m < US$ 5 mi
+MX_OMA,Grupo Aeroportuario Centro Norte,MX,Industrials,ADR,OMAB,NASDAQ,USD,8,true,"ADS = 8 ações locais | OMAB = 8 B | OK (implicito 8.002, desvio +0.0%, n=20)"
+MX_OMA,Grupo Aeroportuario Centro Norte,MX,Industrials,LOCAL,OMAB.MX,BMV,MXN,,false,OMAB = 8 B
+MX_ORBIA,Orbia,MX,Materials,LOCAL,ORBIA.MX,BMV,MXN,,true,ADTV 3m < US$ 5 mi
+MX_PENOLES,Industrias Penoles,MX,Materials,LOCAL,PE&OLES.MX,BMV,MXN,,true,
+MX_PINFRA,Pinfra,MX,Industrials,LOCAL,PINFRA.MX,BMV,MXN,,true,ADTV 3m < US$ 5 mi
+MX_QUALITAS,Qualitas,MX,Financials,LOCAL,Q.MX,BMV,MXN,,true,
+MX_REGIONAL,Regional (Banregio),MX,Financials,LOCAL,RA.MX,BMV,MXN,,true,ADTV 3m < US$ 5 mi
+MX_SIGMA,Sigma Foods (ex-Alfa),MX,Consumer Staples,LOCAL,SIGMAFA.MX,BMV,MXN,,true,ALFAA->SIGMAFA (12/2025) apos spin-off da Alpek (04/2025)
+MX_TELEVISA,Grupo Televisa,MX,Communication Services,LOCAL,TLEVISACPO.MX,BMV,MXN,,true,TV = 5 CPO | ADTV 3m < US$ 5 mi
+MX_TELEVISA,Grupo Televisa,MX,Communication Services,ADR,TV,NYSE,USD,5,false,"ADS = 5 ações locais | TV = 5 CPO | OK (implicito 5.017, desvio +0.3%, n=20) | ADTV 3m < US$ 5 mi"
+MX_TERNIUM,Ternium,MX,Materials,ADR,TX,NYSE,USD,10,true,ADS = 10 ações locais | Luxemburgo; Mexico/Argentina/Brasil; TX = 10 acoes | NAO_VERIFICAVEL (sem linha local liquida/serie)
+MX_VESTA,Corporacion Inmobiliaria Vesta,MX,Real Estate,LOCAL,VESTA.MX,BMV,MXN,,true,VTMX = 10 acoes
+MX_VESTA,Corporacion Inmobiliaria Vesta,MX,Real Estate,ADR,VTMX,NYSE,USD,10,false,"ADS = 10 ações locais | VTMX = 10 acoes | OK (implicito 9.971, desvio -0.3%, n=20) | ADTV 3m < US$ 5 mi"
+MX_VISTA,Vista Energy,AR,Energy,ADR,VIST,NYSE,USD,1,true,"ADS = 1 ações locais | Domicilio Mexico (BMV), operacao Vaca Muerta; VIST = 1 serie A | OK (implicito 0.996, desvio -0.4%, n=20)"
+MX_VOLARIS,Volaris,MX,Industrials,ADR,VLRS,NYSE,USD,10,true,"ADS = 10 ações locais | VLRS = 10 A | OK (implicito 9.907, desvio -0.9%, n=20) | ADTV 3m < US$ 5 mi"
+MX_WALMEX,Walmart de Mexico,MX,Consumer Staples,LOCAL,WALMEX.MX,BMV,MXN,,true,
+PE_BVN,Buenaventura,PE,Materials,ADR,BVN,NYSE,USD,1,true,"ADS = 1 ações locais | BVN = 1 acao comum | OK (implicito 0.931, desvio -6.9%, n=20)"
+PE_CREDICORP,Credicorp,PE,Financials,US_LISTED,BAP,NYSE,USD,,true,Bermudas; acoes ordinarias na NYSE e BVL
+PE_HUDBAY,Hudbay Minerals,PE,Materials,US_LISTED,HBM,NYSE,USD,,true,Canada; Peru (Constancia) + Canada/EUA | SATELLITE: emissor estrangeiro com ativos LatAm (opcional)
+PE_IFS,Intercorp Financial Services,PE,Financials,US_LISTED,IFS,NYSE,USD,,true,
+PE_NEXA,Nexa Resources,PE,Materials,US_LISTED,NEXA,NYSE,USD,,true,Luxemburgo; Peru/Brasil (Votorantim)
+PE_SCCO,Southern Copper,PE,Materials,US_LISTED,SCCO,NYSE,USD,,true,Delaware; minas no Peru e Mexico; controlada pelo Grupo Mexico

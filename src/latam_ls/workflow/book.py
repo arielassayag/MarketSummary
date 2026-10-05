@@ -528,6 +528,18 @@ class Book:
     def week_states(self, week: date) -> dict[int, ProposalState]:
         return {v: self.proposal_state(week, v) for v in self.proposal_versions(week)}
 
+    def _research_integrity(self, week: date, audited: set[str]) -> list[str]:
+        problems: list[str] = []
+        for path in sorted(self.week_dir(week).glob("research_pack_*.json")):
+            try:
+                h = ResearchPack.model_validate(_read_json(path)).research_hash()
+            except ValueError as exc:
+                problems.append(f"{week}: {path.name} ilegível ({exc}).")
+                continue
+            if path.name != f"research_pack_{h[:HASH_PREFIX]}.json" or sha256_obj(h) not in audited:
+                problems.append(f"{week}: {path.name} não confere com o hash/trilha de auditoria.")
+        return problems
+
     def verify_integrity(self) -> tuple[bool, list[str]]:
         """Confere a cadeia de auditoria e se cada artefato gravado corresponde ao auditado."""
         problems: list[str] = []
@@ -539,6 +551,8 @@ class Book:
         for ev in events:
             by_type.setdefault((ev.event_type, ev.week), set()).add(ev.payload_hash)
         for week in self.list_weeks():
+            problems += self._research_integrity(week, by_type.get(("RESEARCH_SAVED", week),
+                                                                  set()))
             created = by_type.get(("PROPOSAL_CREATED", week), set())
             for v in self.proposal_versions(week):
                 try:

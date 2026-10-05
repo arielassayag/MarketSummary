@@ -440,7 +440,8 @@ def build_proposal(ctx: WeekContext, *, views: list[View], overrides: dict | Non
     positions = build_positions(
         w, ctx.sides, ctx.panel.lines, ctx.panel.assets, ctx.squeeze, alpha_adj,
         ctx.alpha.composite_z, view_scores, None, ctx.betas, ctx.nav, fx_last,
-        participation=cfg.liquidity.participation_rate)
+        participation=cfg.liquidity.participation_rate,
+        short_participation=cfg.liquidity.short_participation_rate)
     dec_contrib = risk_decomposition(w, ctx.model).asset_contrib if len(w) else pd.Series()
     positions = [p.model_copy(update={"risk_contribution": float(dec_contrib.get(p.issuer_id))})
                  if p.issuer_id in dec_contrib.index else p for p in positions]

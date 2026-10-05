@@ -55,8 +55,8 @@
 
    O app deve ainda medir o **valor agregado da IA e do gestor**, separando a proposta da IA, a proposta quant e a decisão final. **[I]**
 9. **O repositório já cobre parte relevante dos controles:**
-   - trilha de auditoria append-only encadeada por hash (`latam_ls.audit`);
-   - hashes canônicos (`latam_ls.hashing`);
+   - trilha de auditoria append-only encadeada por hash (`cdp.audit`);
+   - hashes canônicos (`cdp.hashing`);
    - `Decision` com proibição de aprovadores não humanos;
    - `NewsItem.untrusted = True`;
    - `ResearchNote` com `provider/model/prompt_version/input_hash/evidence`;
@@ -137,13 +137,13 @@
 
 | Componente do repo | É "modelo" (SR 26-2)? | Materialidade | Tratamento MRM proposto |
 |---|---|---|---|
-| Modelo de risco fatorial (`latam_ls.risk`) | **Sim** (estatístico) | **Alta**: define vol ex-ante, beta, neutralidade e o tamanho de todas as posições | Validação independente antes do uso; back-test do previsto vs. realizado (vol e beta) com *bias statistic*; monitoramento semanal |
-| Sinais de alpha (`latam_ls.alpha`) | **Sim** | Alta | Testes *out-of-time*; IC realizado vs. assumido (`information_coefficient: 0.04`); decaimento; registro de tentativas |
-| Otimizador (`latam_ls.portfolio`) | Sim: aplica teoria financeira (média-variância) | Alta | Testes de viabilidade, sensibilidade a λ, verificação pós-solução das restrições em código separado |
+| Modelo de risco fatorial (`cdp.risk`) | **Sim** (estatístico) | **Alta**: define vol ex-ante, beta, neutralidade e o tamanho de todas as posições | Validação independente antes do uso; back-test do previsto vs. realizado (vol e beta) com *bias statistic*; monitoramento semanal |
+| Sinais de alpha (`cdp.alpha`) | **Sim** | Alta | Testes *out-of-time*; IC realizado vs. assumido (`information_coefficient: 0.04`); decaimento; registro de tentativas |
+| Otimizador (`cdp.portfolio`) | Sim: aplica teoria financeira (média-variância) | Alta | Testes de viabilidade, sensibilidade a λ, verificação pós-solução das restrições em código separado |
 | Modelo de custos e liquidez (impacto raiz quadrada) | Sim | Média | Comparação do custo estimado com o realizado (TCA) após execução |
 | Score de *short squeeze* | Sim, heurístico com teoria | Média/Alta (risco de cauda) | *Outcomes analysis* sobre eventos de squeeze; revisão de limiares |
 | Motor de compliance pré-trade | **Não**: *"deterministic rule-based"* | — | Fora da definição de modelo, mas sujeito a **testes unitários e controle de mudanças**, como controle interno |
-| LLMs de pesquisa (`latam_ls.research`) | **Fora do escopo** (GenAI) | Média: influência limitada por "só aperta" | Regime próprio (§5): inventário, avaliação, logs, pinagem, kill switch, *effective challenge* humano |
+| LLMs de pesquisa (`cdp.research`) | **Fora do escopo** (GenAI) | Média: influência limitada por "só aperta" | Regime próprio (§5): inventário, avaliação, logs, pinagem, kill switch, *effective challenge* humano |
 
 Dois pontos de desenho decorrem do SR 26-2:
 
@@ -360,8 +360,8 @@ Cada subseção segue a estrutura **risco → evidência → controle → onde n
 
 **No app:**
 
-- `latam_ls.research` produz `ResearchNote` e `View`.
-- `latam_ls.portfolio` consome as visões apenas pela função de *tilt*.
+- `cdp.research` produz `ResearchNote` e `View`.
+- `cdp.portfolio` consome as visões apenas pela função de *tilt*.
 - O teste de regressão compara a proposta com e sem a camada LLM e verifica que o risco ex-ante não aumenta acima do teto e que nenhuma posição excede o limite quant.
 
 ### 5.2 *Grounding* com IDs de evidência e saídas estruturadas
@@ -387,7 +387,7 @@ Cada subseção segue a estrutura **risco → evidência → controle → onde n
 **Controle:**
 
 - O texto gerado pelo LLM **não pode conter números financeiros literais**. Usa *placeholders* `{{fact:ID}}`, resolvidos deterministicamente a partir do FactBook.
-- O módulo `fechamento.validation` já implementa `find_unauthorized_numbers()` (regex que ignora tickers, datas e ordinais) e a resolução de *placeholders*. Vamos **reutilizá-lo** no memo semanal do `latam_ls`.
+- O módulo `fechamento.validation` já implementa `find_unauthorized_numbers()` (regex que ignora tickers, datas e ordinais) e a resolução de *placeholders*. Vamos **reutilizá-lo** no memo semanal do `cdp`.
 - **Limiar:** **0** números não autorizados. Unidades e sinais são formatados só pelo código (`Fact.formatted`).
 
 **Evidência que motiva [F]:** a ESMA cita 19,5% de respostas alucinadas, e o FinanceBench registra erros de unidade e de direção (*"reporting negative growth when it is actually positive"*).
@@ -555,7 +555,7 @@ O *ledger* é append-only. Seu hash entra no `research_hash` e, portanto, no `ap
 
 ### 6.3 Trilha de auditoria imutável
 
-**Já existe:** `latam_ls.audit.AuditLog`, append-only e encadeado por hash (`prev_hash`, `event_hash`, `verify_chain()`).
+**Já existe:** `cdp.audit.AuditLog`, append-only e encadeado por hash (`prev_hash`, `event_hash`, `verify_chain()`).
 
 **Limitação [I]:** uma cadeia de hash detecta edição parcial, mas **não detecta regravação completa** da cadeia por quem tem acesso de escrita.
 
@@ -769,7 +769,7 @@ Esses gatilhos geram **alerta** e exigem decisão registrada (manter, reduzir ou
 | HITL-04 | Quatro olhos: co-assinatura independente de risco/compliance nos gatilhos do §6.4; `approver ≠ co_signer` | MUST | CVM 21, art. 26, §5º; RTS 6, art. 15(6) | Campo `co_signer` em `Decision` | I4 | N |
 | HITL-05 | Nível de autonomia declarado por fluxo, com limiar de acurácia e ação de degradação | SHOULD | IOSCO 2026 | Página "Governança" | — | N |
 | HITL-06 | UI que mostra a origem de cada número (FactBook) e de cada afirmação (evidência), deixando claro o que é IA e o que é código | MUST | IOSCO 2025 (viés de automação); NIST (humano–IA) | Cartões com selo "IA" vs. "Calculado" | I1, I6 | N |
-| AUD-01 | Trilha append-only encadeada por hash, com `verify_chain()` na abertura do app | MUST | CVM 21, art. 34; SEC 204-2 | `latam_ls.audit` | I3 | E |
+| AUD-01 | Trilha append-only encadeada por hash, com `verify_chain()` na abertura do app | MUST | CVM 21, art. 34; SEC 204-2 | `cdp.audit` | I3 | E |
 | AUD-02 | Ancoragem externa do hash-cabeça a cada aprovação e diariamente (Git assinado, WORM ou e-mail ao compliance) | MUST | [I] | `audit.anchor()` | I3 | N |
 | AUD-03 | Retenção ≥ 5 anos de todos os artefatos (respostas brutas, prompts, snapshots, memos, atas) | MUST | CVM 21, art. 34; SEC 204-2 | Política de retenção | I5 | N |
 | AUD-04 | Arquivos de entrada nunca alterados; correções geram nova versão com hash | MUST | AGENTS.md | `SnapshotManifest` | I5 | E/P |

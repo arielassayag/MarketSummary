@@ -13,7 +13,7 @@
   menos de 26 semanas, a meta efetiva é dividida pelo viés a priori de 1,10 (carteiras otimizadas
   têm risco subestimado).
 - Pode operar linhas locais (B3, BMV, Santiago, BVC, BVL, BYMA) e ADRs/US listings.
-- Todos os números do mandato vivem em `configs/latam_ls/fund.yaml` (fonte única, com hash).
+- Todos os números do mandato vivem em `configs/cdp/fund.yaml` (fonte única, com hash).
 
 ## 2. Filosofia
 

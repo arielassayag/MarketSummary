@@ -9,6 +9,6 @@ mercado); a única ação de escrita é o KILL SWITCH de emergência, auditado n
 configuráveis por ``CDP_BOOK_DIR``, ``CDP_REPORTS_DIR``, ``CDP_CONFIG`` e ``CDP_MARKET_DIR``.
 """
 
-from latam_ls.ui.app import main
+from cdp.ui.app import main
 
 main()

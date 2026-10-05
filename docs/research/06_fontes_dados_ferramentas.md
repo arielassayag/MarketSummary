@@ -715,7 +715,7 @@ Solvers instalados com cvxpy 1.9.3: `CLARABEL, SCS, SCIPY, HIGHS, OSQP` [V].
 
 | Ferramenta | Versão (PyPI, data) | O que entrega | Encaixe no projeto [I] |
 |---|---|---|---|
-| **Anthropic Python SDK** (`anthropic`) | 1.11.0 (2026-09-30) | Messages API; **structured outputs** (`client.messages.parse(..., output_format=PydanticModel)` → `response.parsed_output`; ou `output_config={"format": {"type": "json_schema", ...}}`); **strict tool use** (`"strict": True` + `additionalProperties: false`); citações em documentos; prompt caching (leitura ~0,1× do preço de input); Message Batches (50% do custo, assíncrono) [D: docs Anthropic via skill, cache 2026-09-25] | **Recomendado como núcleo.** Notas de research em JSON validado por Pydantic (já há `ResearchNote`, `SqueezeAssessment`, `View` em `latam_ls/contracts.py`); tools somente leitura `get_fact(fact_id)` e `search_news(ticker)` com `strict`; o LLM **cita** fatos do FactBook e nunca calcula |
+| **Anthropic Python SDK** (`anthropic`) | 1.11.0 (2026-09-30) | Messages API; **structured outputs** (`client.messages.parse(..., output_format=PydanticModel)` → `response.parsed_output`; ou `output_config={"format": {"type": "json_schema", ...}}`); **strict tool use** (`"strict": True` + `additionalProperties: false`); citações em documentos; prompt caching (leitura ~0,1× do preço de input); Message Batches (50% do custo, assíncrono) [D: docs Anthropic via skill, cache 2026-09-25] | **Recomendado como núcleo.** Notas de research em JSON validado por Pydantic (já há `ResearchNote`, `SqueezeAssessment`, `View` em `cdp/contracts.py`); tools somente leitura `get_fact(fact_id)` e `search_news(ticker)` com `strict`; o LLM **cita** fatos do FactBook e nunca calcula |
 | Modelos Claude (2026-09) | — | `claude-opus-5-5` US$ 4/20 por Mtok (in/out); `claude-sonnet-5-5` US$ 2/10; `claude-haiku-4-5` US$ 1/5 [D] | Opus 5.5 para a tese semanal do PM; Haiku/Sonnet para triagem em lote de notícias (Batches) |
 | Comportamentos a respeitar | — | Opus 5.5: thinking adaptativo sempre ligado, controle por `output_config.effort` (default `medium`); `tool_choice` forçado (`any`/`tool`) devolve **400**; sem prefill; verificar `stop_reason == "refusal"` [D] | O código não pode depender de forçar tool; use `auto` + `strict`, ou structured outputs |
 | **Claude Agent SDK** (`claude-agent-sdk`) | 0.2.163 (2026-09-30) | Harness do Claude Code como biblioteca: tools nativas (arquivos, bash, web), **hooks**, subagents, **MCP**, permissões, sessões [D] | Opcional: um "analista de pesquisa" interativo para o PM, com hooks que bloqueiam escrita fora de `data/research/`. Não é necessário para o pipeline semanal determinístico |
@@ -728,7 +728,7 @@ Solvers instalados com cvxpy 1.9.3: `CLARABEL, SCS, SCIPY, HIGHS, OSQP` [V].
 ```python
 # Esboço: nota de pesquisa estruturada, ancorada no FactBook (números só por fact_id)
 from anthropic import Anthropic
-from latam_ls.contracts import ResearchNote          # contrato Pydantic já existente
+from cdp.contracts import ResearchNote          # contrato Pydantic já existente
 
 client = Anthropic()
 resp = client.messages.parse(
@@ -785,7 +785,7 @@ note = resp.parsed_output                 # validado; números referenciados por
 1. **raw/**: bytes exatamente como recebidos (CSV/JSON/ZIP/PDF/RSS), **imutáveis**, nomeados pelo SHA-256 do conteúdo, com um `.meta.json` de proveniência ao lado. Nunca sobrescrever (invariante 5).
 2. **norm/**: Parquet tipado por dataset e `as_of`, gerado por um parser **versionado** (`parser_version`) a partir do raw. Reprocessável a qualquer momento.
 3. **features/**: retornos em USD, ADV, BTC/FF, SI em ações-equivalentes, fatores, sempre calculados por código testado.
-4. **snapshots/{as_of}/manifest.json**: lista fechada de arquivos norm/features com hash. `snapshot_id = sha256(manifest canônico)`. É isso que o FactBook, a proposta e a aprovação referenciam (já modelado em `SnapshotManifest`, `SnapshotFile` e `SourceRecord` de `latam_ls/contracts.py`).
+4. **snapshots/{as_of}/manifest.json**: lista fechada de arquivos norm/features com hash. `snapshot_id = sha256(manifest canônico)`. É isso que o FactBook, a proposta e a aprovação referenciam (já modelado em `SnapshotManifest`, `SnapshotFile` e `SourceRecord` de `cdp/contracts.py`).
 
 ### 13.2 Layout de diretórios proposto
 
@@ -937,7 +937,7 @@ def store_raw(root: Path, source: str, dataset: str, as_of: str, content: bytes,
 | `adr_ratio.tolerance` | 3% (5% para ARS com CCL) | SQM 3,3% de gap por horário/CLP [V] |
 | `fx.nav_snapshot` | Um horário fixo por dia + fixings oficiais | Yahoo FX em fuso de Londres [V] |
 | `parquet.compression` | zstd | [I] |
-| `hash.algorithm` | SHA-256 sobre bytes brutos; manifesto canônico (chaves ordenadas, floats com 10 casas) | Alinhado a `latam_ls/hashing.py` |
+| `hash.algorithm` | SHA-256 sobre bytes brutos; manifesto canônico (chaves ordenadas, floats com 10 casas) | Alinhado a `cdp/hashing.py` |
 | `optimizer.solver_primary/fallback` | CLARABEL / SCS; HIGHS para MILP | Benchmark §9.1 [V] |
 | `optimizer.vol_constraint` | SOCP explícita (σ* = 5%, banda 3–7%) | QP com λ fixo errou o alvo (5,92%) [V] |
 | `optimizer.post_solve_checks` | Net, beta, gross, vol, liquidez recalculados | OSQP violou o gross [V] |

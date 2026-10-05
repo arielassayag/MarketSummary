@@ -21,7 +21,7 @@ Este documento define regras fundamentais e comandos operacionais para agentes e
 
 ---
 
-# CDP — Cabra da Peste (pacote `src/cdp`, antes `latam_ls`)
+# CDP — Cabra da Peste (pacote `src/cdp`, antes `cdp`)
 
 Gestor **100% autônomo** de um fundo long/short de ações LatAm (USD, NAV inicial US$ 100 mi, net neutral,
 vol-alvo ex-ante 5% com banda 3–7%). O CDP decide posições e sizing sozinho; rotinas agendadas rodam o

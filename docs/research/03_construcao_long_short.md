@@ -65,7 +65,7 @@
     - **Métricas:** Sharpe idiossincrático, *hit rate*, *slugging ratio*, TC realizado e alfa long × short.
     - **Riscos:** *crowding* (métricas MSCI: valuation, *short interest*, *turnover*, volatilidade, reversão), VaR 99% e ES 97,5% em 1 dia por *filtered historical simulation*, e estresses históricos LatAm repetidos com dados reais pelo código.
 
-**Divergências em relação ao `configs/latam_ls/fund.yaml` atual (para decisão do orquestrador) [I]:**
+**Divergências em relação ao `configs/cdp/fund.yaml` atual (para decisão do orquestrador) [I]:**
 - **Drawdown:** −3%/−5% → recomendamos −4%/−7%, com corte de risco escalonado (§4.4).
 - **`max_weekly_turnover`:** 0,60 → recomendamos 0,30 do NAV (Σ|Δw|) como teto rígido. A 15 bps por US$ negociado, 60% do NAV por semana custam ≈ 4,7% a.a., mais que o alfa esperado [C].
 - **`specific_shrinkage`:** 0,3 → no estilo USE4, *q* = 0,1 com *prior* por quintil de tamanho. A semântica é outra; ver §1.5.
@@ -472,7 +472,7 @@ custo_i (fração do NAV) = κ_spread,i·|z_i| + κ_impact,i·|z_i|^{3/2}
 - **Determinismo.** Mesmos inputs → mesmo output: ordenação estável dos emissores, tolerâncias fixas e versões travadas no `uv.lock`. O *hash* dos inputs entra na aprovação.
 - **Teste de sanidade pós-solve.** Recalcular em numpy, fora do cvxpy, todas as métricas (vol, net, beta, exposições, liquidez) e comparar dentro da tolerância.
 
-### 3.7 Esboço cvxpy (referência para `src/latam_ls/portfolio/`)
+### 3.7 Esboço cvxpy (referência para `src/cdp/portfolio/`)
 
 ```python
 import cvxpy as cp

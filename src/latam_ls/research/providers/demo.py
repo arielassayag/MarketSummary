@@ -31,8 +31,9 @@ from .base import LLMProvider, LLMResult, error_result
 DEMO_NAME = "demo"
 DEMO_MODEL_LABEL = "demo (regras determinísticas)"
 
-STANCE_THRESHOLDS = ((1.5, 2), (0.5, 1), (-0.5, 0), (-1.5, -1))
-"""alpha_z >= 1,5 ⇒ +2; >= 0,5 ⇒ +1; > −0,5 ⇒ 0; > −1,5 ⇒ −1; senão −2."""
+STRONG_Z = 1.5
+MILD_Z = 0.5
+"""alpha_z >= 1,5 ⇒ +2; >= 0,5 ⇒ +1; <= −1,5 ⇒ −2; <= −0,5 ⇒ −1; senão 0 (simétrico)."""
 
 _STANCE_LABEL = {2: "fortemente comprador", 1: "comprador", 0: "neutro", -1: "vendedor",
                  -2: "fortemente vendedor"}
@@ -93,10 +94,16 @@ def _finite(x: Any) -> float | None:
 
 
 def stance_from_alpha(alpha_z: float) -> int:
-    for threshold, stance in STANCE_THRESHOLDS:
-        if alpha_z >= threshold:
-            return stance
-    return -2
+    """Stance ordinal a partir do escore z do alpha composto (limiares simétricos)."""
+    if alpha_z >= STRONG_Z:
+        return 2
+    if alpha_z >= MILD_Z:
+        return 1
+    if alpha_z <= -STRONG_Z:
+        return -2
+    if alpha_z <= -MILD_Z:
+        return -1
+    return 0
 
 
 def _ph(fact_id: str) -> str:

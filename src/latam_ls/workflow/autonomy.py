@@ -23,7 +23,8 @@ from ..contracts import (
     DecisionType,
     Proposal,
 )
-from ..hashing import combine_hashes, sha256_obj
+from ..hashing import sha256_obj
+from .approval import compute_approval_hash, journal_hash, verify_decision
 
 
 def risk_gate_hash(proposal: Proposal) -> str:
@@ -35,14 +36,12 @@ def autonomous_approval_hash(proposal_hash: str, snapshot_hash: str, config_hash
                              decided_at: datetime, pm_decision_hash: str, risk_gate: str,
                              journal: DecisionJournal | None,
                              audit_head_hash: str | None) -> str:
-    parts = [proposal_hash, snapshot_hash, config_hash, research_hash, AUTONOMOUS_DECIDER,
-             DecisionType(decision).value, decided_at.isoformat(), "mode:AUTONOMOUS",
-             f"pm:{pm_decision_hash}", f"risk_gate:{risk_gate}"]
-    if journal is not None:
-        parts.append(f"journal:{sha256_obj(journal)}")
-    if audit_head_hash:
-        parts.append(f"audit_head:{audit_head_hash}")
-    return combine_hashes(*parts)
+    """Mesmo layout de ``approval.compute_approval_hash`` no modo ``AUTONOMOUS``."""
+    return compute_approval_hash(
+        proposal_hash, snapshot_hash, config_hash, research_hash, AUTONOMOUS_DECIDER, decision,
+        decided_at, journal_hash=journal_hash(journal), audit_head_hash=audit_head_hash,
+        mode=DecisionMode.AUTONOMOUS, pm_decision_hash=pm_decision_hash,
+        risk_gate_hash=risk_gate)
 
 
 def make_autonomous_decision(proposal: Proposal, *, research_hash: str, pm_decision_hash: str,
@@ -79,34 +78,14 @@ def make_autonomous_decision(proposal: Proposal, *, research_hash: str, pm_decis
 def verify_autonomous_decision(decision: Decision, proposal: Proposal, snapshot_hash_now: str,
                                config_hash_now: str, research_hash_now: str
                                ) -> tuple[bool, list[str]]:
-    reasons: list[str] = []
+    """Verificação completa (``approval.verify_decision``) + recálculo dos gates de risco."""
     if decision.mode != DecisionMode.AUTONOMOUS:
         return False, ["Decisão não é autônoma."]
-    if decision.approver != AUTONOMOUS_DECIDER:
-        reasons.append("Assinante inválido para decisão autônoma.")
-    if decision.proposal_hash != proposal.proposal_hash():
-        reasons.append("Proposta alterada após a decisão.")
-    if decision.snapshot_hash != snapshot_hash_now or proposal.snapshot_hash != snapshot_hash_now:
-        reasons.append("Dados de mercado diferentes dos usados na decisão.")
-    if decision.config_hash != config_hash_now or proposal.config_hash != config_hash_now:
-        reasons.append("Mandato (configuração) alterado após a decisão.")
-    if decision.research_hash != research_hash_now or proposal.research_hash != research_hash_now:
-        reasons.append("Pesquisa alterada após a decisão.")
-    gate = risk_gate_hash(proposal)
-    if decision.risk_gate_hash != gate:
-        reasons.append("Resultado dos gates de risco não confere.")
-    if decision.decision == DecisionType.APPROVE and proposal.hard_failures:
-        reasons.append("Proposta com falha HARD não pode ter decisão APPROVE.")
-    soft = sorted(c.check_id for c in proposal.soft_failures)
-    if sorted(decision.acknowledged_soft_checks) != soft:
-        reasons.append("Ciência das falhas SOFT não confere com a proposta.")
-    expected = autonomous_approval_hash(
-        decision.proposal_hash, decision.snapshot_hash, decision.config_hash,
-        decision.research_hash, decision.decision, decision.decided_at,
-        decision.pm_decision_hash or "", decision.risk_gate_hash or "", decision.journal,
-        decision.audit_head_hash)
-    if expected != decision.approval_hash:
-        reasons.append("approval_hash não confere (decisão adulterada).")
+    ok, reasons = verify_decision(decision, proposal, snapshot_hash_now, config_hash_now,
+                                  research_hash_now)
+    reasons = list(reasons)
+    if decision.risk_gate_hash != risk_gate_hash(proposal):
+        reasons.append("Resultado dos gates de risco não confere com a proposta.")
     return (not reasons), reasons
 
 

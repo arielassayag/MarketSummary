@@ -573,7 +573,9 @@ def test_short_risk_llm_failure_floors_at_caution(world: dict) -> None:
         make_request(world, longs=[], shorts=[iid]))
     note = next(n for n in run.pack.notes if n.role == "short_risk")
     assert note.squeeze is not None and note.squeeze.verdict == "caution"
-    view = next(v for v in run.pack.views if v.issuer_id == iid)
+    # A nota reprovada ultrapassa 5% das notas da semana ⇒ kill switch (somente quant).
+    assert run.kill_switch and run.pack.views == rule_views(run.rule_verdicts, cfg)
+    view = next(v for v in notes_to_views(run.pack.notes, cfg) if v.issuer_id == iid)
     assert view.max_abs_weight is not None and not view.no_short
 
 
@@ -659,7 +661,11 @@ def test_judge_changes_stance_only_with_new_evidence(world: dict) -> None:
         make_request(world, longs=[target], shorts=[]))
     judge = next(n for n in run.pack.notes if n.role == "bull_bear_judge")
     assert judge.stance == 0 and any(k.startswith(VERIFIER_PREFIX) for k in judge.key_risks)
-    assert next(v for v in run.pack.views if v.issuer_id == target).score == 1
+    # Sem o kill switch, prevaleceria a stance do analista; com a nota reprovada, a semana
+    # ultrapassa 5% de falhas e só restam as regras determinísticas.
+    assert next(v for v in notes_to_views(run.pack.notes, cfg)
+                if v.issuer_id == target).score == 1
+    assert run.kill_switch and run.pack.views == rule_views(run.rule_verdicts, cfg)
 
 
 def test_provider_exceptions_never_raise(world: dict) -> None:

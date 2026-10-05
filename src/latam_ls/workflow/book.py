@@ -154,8 +154,11 @@ def _parse_week(name: str) -> date | None:
 
 
 def _check_week(week: date) -> None:
-    if week.weekday() != 0:
-        raise ValueError(f"A semana do livro precisa ser uma segunda-feira (recebido {week}).")
+    from ..calendar import first_session_of_week
+
+    if first_session_of_week(week) != week:
+        raise ValueError(f"A semana do livro precisa ser o primeiro pregão da semana na B3 "
+                         f"(segunda ou o próximo dia útil); recebido {week}.")
 
 
 def _index_events(events: list[AuditEvent]) -> _Index:

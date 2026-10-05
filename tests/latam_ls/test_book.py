@@ -367,7 +367,7 @@ def test_proposal_and_decision_immutability(tmp_path):
         book.save_proposal(p)
     with pytest.raises(ValueError, match="sequência"):
         book.save_proposal(make_proposal(version=3))
-    with pytest.raises(ValueError, match="segunda-feira"):
+    with pytest.raises(ValueError, match="primeiro pregão"):
         book.save_proposal(make_proposal(week=date(2026, 10, 6)))
     with pytest.raises(ValueError, match="proposal_id"):
         book.save_proposal(make_proposal(version=2, proposal_id=p.proposal_id))
@@ -525,7 +525,7 @@ def test_book_four_eyes_on_config_change_and_audit_head(tmp_path):
     w1 = make_proposal()
     book.save_proposal(w1)
     book.save_decision(_approve(w1, audit_head_hash=book.audit_head()))
-    week2 = date(2026, 10, 12)
+    week2 = date(2026, 10, 13)
     w2 = make_proposal(week=week2).model_copy(update={"config_hash": "d" * 64})
     book.save_proposal(w2)
     reasons = book.co_sign_reasons(w2)
@@ -684,7 +684,7 @@ def test_mtm_default_borrow_fee_flagged_and_bad_inputs():
     assert rows[0].cost_usd == pytest.approx(-5e5 * 0.02 / 252 - 1000.0)
     assert "padrão conservador" in rows[0].note and "custo de execução" in rows[0].note
     assert mark_to_market(_toy_booked(), _toy_returns(), date(2026, 10, 9),
-                          date(2026, 10, 12), 10e6, 0.0, None) == []
+                          date(2026, 10, 13), 10e6, 0.0, None) == []
     with pytest.raises(KeyError):
         mark_to_market(_toy_booked(), _toy_returns()[["AAA"]], date(2026, 10, 5),
                        date(2026, 10, 8), 10e6, 0.0, None)
@@ -1061,7 +1061,7 @@ def test_review_kill_switch_allows_only_risk_reduction(tmp_path):
     book.save_booked(book_entry_from_proposal(p, d, booked_at=NOW), SNAP_H, CFG_H, RES_H)
     # Semana seguinte com kill switch: só reduções de posições existentes são aceitas.
     (tmp_path / "KILL_SWITCH").write_text("parar", encoding="utf-8")
-    week2 = date(2026, 10, 12)
+    week2 = date(2026, 10, 13)
     halved = [pos.model_copy(update={"weight": round(pos.weight / 2, 6),
                                      "notional_usd": pos.notional_usd / 2})
               for pos in p.positions]

@@ -44,10 +44,9 @@ git add book reports data/market artifacts/painel && git commit -m "CDP: fechame
 
 `publish` valida o comentário (sem números livres, fatos existentes) e gera o relatório diário
 (`relatorio.md` e `relatorio.html`). `painel` regenera o painel de operação e risco
-(`artifacts/painel/data.json` e `index.html`, só código); se o seu harness publica artifacts e a
-saída trouxer `artifact.publicavel: true`, leia por inteiro `artifact.arquivos_para_ler` e
-republique os dados no mesmo artifact cuja URL está em `artifacts/painel/ARTIFACT_URL` (ler a
-URL, listar os arquivos publicados e só então publicar `data.json`; ver `docs/cdp/LOCAL.md`,
-seção "Painel (artifact)"). Termine com um
-resumo curto (manchete, retorno do dia, NAV, vol ex-ante, alertas), copiando os números do
-relatório.
+(`artifacts/painel/data.json`, a casca `index.html` e o estilo e o script versionados, só código);
+se o seu harness publica artifacts e a saída trouxer `artifact.publicavel: true`, leia por inteiro
+`artifact.arquivos_para_ler` e republique os dados no mesmo artifact cuja URL está em
+`artifacts/painel/ARTIFACT_URL` (ler a URL, listar os arquivos publicados e só então publicar
+`artifact.publicar`; ver `docs/cdp/LOCAL.md`, seção "Painel (artifact)"). Termine com um resumo
+curto (manchete, retorno do dia, NAV, vol ex-ante, alertas), copiando os números do relatório.

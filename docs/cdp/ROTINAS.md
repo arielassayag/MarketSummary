@@ -45,12 +45,13 @@ na raiz do clone do repositório. Hora de referência: Brasília.
    ÍNTEGRO (nunca force).
 6) Painel: com a ferramenta Artifact, artifact.publicavel = true e
    artifacts/painel/ARTIFACT_URL presente, leia por inteiro cada arquivo de
-   artifact.arquivos_para_ler (data.json; index.html só se artifact.pagina_mudou) e republique no
-   MESMO artifact da URL, nesta ordem: read com essa url; list com scope "files" e essa url
-   (obrigatório: sem a listagem a ferramenta recusa substituir o data.json publicado); publish
-   com essa url, files {"data.json": "artifacts/painel/data.json"} e, se a página mudou,
-   file_path artifacts/painel/index.html. Recusa porque data.json mudou: list de novo e publique
-   uma vez. Se a publicação incluiu index.html e deu certo:
+   artifact.arquivos_para_ler (a casca index.html e data.json; o estilo e o script versionados
+   só se artifact.pagina_mudou) e republique no MESMO artifact da URL, nesta ordem: read com essa
+   url; list com scope "files" e essa url (obrigatório: sem a listagem a ferramenta recusa
+   substituir arquivos publicados); publish com essa url, file_path = artifact.publicar.file_path
+   e files = artifact.publicar.files (se a página mudou, acrescente com null os painel-*.css/.js
+   da listagem que não estão nele). Recusa porque um arquivo mudou: list de novo e publique uma
+   vez. Se a página mudou e a publicação deu certo:
    `uv run python -m cdp painel --publicado` e commit só de
    artifacts/painel/PAGINA_PUBLICADA.sha256. Senão, pule e diga o motivo (nunca crie outro
    artifact; nunca use force).
@@ -80,12 +81,13 @@ Você é a mente do CDP — Cabra da Peste, rodando sem supervisão na raiz do c
    (nunca force).
 4) Painel: com a ferramenta Artifact, artifact.publicavel = true e
    artifacts/painel/ARTIFACT_URL presente, leia por inteiro cada arquivo de
-   artifact.arquivos_para_ler (data.json; index.html só se artifact.pagina_mudou) e republique no
-   MESMO artifact da URL, nesta ordem: read com essa url; list com scope "files" e essa url
-   (obrigatório: sem a listagem a ferramenta recusa substituir o data.json publicado); publish
-   com essa url, files {"data.json": "artifacts/painel/data.json"} e, se a página mudou,
-   file_path artifacts/painel/index.html. Recusa porque data.json mudou: list de novo e publique
-   uma vez. Se a publicação incluiu index.html e deu certo:
+   artifact.arquivos_para_ler (a casca index.html e data.json; o estilo e o script versionados
+   só se artifact.pagina_mudou) e republique no MESMO artifact da URL, nesta ordem: read com essa
+   url; list com scope "files" e essa url (obrigatório: sem a listagem a ferramenta recusa
+   substituir arquivos publicados); publish com essa url, file_path = artifact.publicar.file_path
+   e files = artifact.publicar.files (se a página mudou, acrescente com null os painel-*.css/.js
+   da listagem que não estão nele). Recusa porque um arquivo mudou: list de novo e publique uma
+   vez. Se a página mudou e a publicação deu certo:
    `uv run python -m cdp painel --publicado` e commit só de
    artifacts/painel/PAGINA_PUBLICADA.sha256. Senão, pule e diga o motivo (nunca crie outro
    artifact; nunca use force).
@@ -116,12 +118,13 @@ Você é o monitor de risco do CDP — Cabra da Peste, rodando sem supervisão n
    ÍNTEGRO (nunca force).
 5) Painel: com a ferramenta Artifact, artifact.publicavel = true e
    artifacts/painel/ARTIFACT_URL presente, leia por inteiro cada arquivo de
-   artifact.arquivos_para_ler (data.json; index.html só se artifact.pagina_mudou) e republique no
-   MESMO artifact da URL, nesta ordem: read com essa url; list com scope "files" e essa url
-   (obrigatório: sem a listagem a ferramenta recusa substituir o data.json publicado); publish
-   com essa url, files {"data.json": "artifacts/painel/data.json"} e, se a página mudou,
-   file_path artifacts/painel/index.html. Recusa porque data.json mudou: list de novo e publique
-   uma vez. Se a publicação incluiu index.html e deu certo:
+   artifact.arquivos_para_ler (a casca index.html e data.json; o estilo e o script versionados
+   só se artifact.pagina_mudou) e republique no MESMO artifact da URL, nesta ordem: read com essa
+   url; list com scope "files" e essa url (obrigatório: sem a listagem a ferramenta recusa
+   substituir arquivos publicados); publish com essa url, file_path = artifact.publicar.file_path
+   e files = artifact.publicar.files (se a página mudou, acrescente com null os painel-*.css/.js
+   da listagem que não estão nele). Recusa porque um arquivo mudou: list de novo e publique uma
+   vez. Se a página mudou e a publicação deu certo:
    `uv run python -m cdp painel --publicado` e commit só de
    artifacts/painel/PAGINA_PUBLICADA.sha256. Senão, pule e diga o motivo (nunca crie outro
    artifact; nunca use force).

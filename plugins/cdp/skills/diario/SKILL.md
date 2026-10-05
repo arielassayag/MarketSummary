@@ -141,11 +141,12 @@ uv run python -m cdp painel
 ```
 
 `painel` grava em `artifacts/painel/` (só lê o livro, a trilha e os relatórios): `data.json` (os
-dados publicados, enxutos para a leitura integral), `index.html` (a página; regravada só quando o
-template muda) e a cópia local `cdp_painel_local.html`. Anote `data_hash`, `generated_at` e o bloco
-`artifact` (`publicavel`, `motivo`, `arquivos_para_ler`, `pagina_mudou`, `url`).
-`pagina_mudou: true` = a página atual ainda não foi publicada no artifact (vale até o registro com
-`cdp painel --publicado`, no passo do artifact). Se falhar, siga sem o painel e relate no resumo.
+dados publicados, enxutos para a leitura integral), `index.html` (a casca da página), o estilo e o
+script versionados `painel-<versão>.css`/`.js` (regravados só quando o template muda) e a cópia
+local `cdp_painel_local.html`. Anote `data_hash`, `generated_at` e o bloco `artifact` (`publicavel`,
+`motivo`, `arquivos_para_ler`, `pagina_mudou`, `publicar`, `url`). `pagina_mudou: true` = a página
+atual ainda não foi publicada no artifact (vale até o registro com `cdp painel --publicado`, no
+passo do artifact). Se falhar, siga sem o painel e relate no resumo.
 
 ## 6. Publicação
 
@@ -173,28 +174,31 @@ Republique o painel **no mesmo artifact** — a URL fica em `artifacts/painel/AR
    artifact é criado uma única vez fora das rotinas. Anote "painel não republicado: sem
    ARTIFACT_URL".
 4. Leia por inteiro, com `Read`, cada arquivo de `artifact.arquivos_para_ler`: sempre
-   `artifacts/painel/data.json` e, só quando `artifact.pagina_mudou` for `true`, também
-   `artifacts/painel/index.html`. Leia em partes com `offset`/`limit` (até 2.000 linhas por
-   leitura) até a última linha — todas as partes. São gerados pelo código: não os edite.
+   `artifacts/painel/index.html` (a casca da página, poucas linhas) e `artifacts/painel/data.json`;
+   quando `artifact.pagina_mudou` for `true`, também o estilo e o script versionados
+   (`artifacts/painel/painel-<versão>.css` e `.js`). Leia em partes com `offset`/`limit` (até
+   2.000 linhas por leitura) até a última linha — todas as partes. São gerados pelo código: não
+   os edite.
 5. Chame `Artifact` com essa `url`, nesta ordem:
    1. `action: "read"` (uma vez; lê a página publicada);
-   2. `action: "list"` com `scope: "files"` (lista os arquivos publicados, entre eles
-      `data.json`, sem baixar conteúdo). É obrigatório: a ferramenta só substitui um arquivo
-      publicado que esta sessão leu pelo caminho, viu numa listagem ou publicou; sem a listagem,
-      a atualização de `data.json` é recusada;
-   3. `action: "publish"` com `files: {"data.json": "artifacts/painel/data.json"}` e, só quando
-      `artifact.pagina_mudou` for `true`, também `file_path: "artifacts/painel/index.html"`.
+   2. `action: "list"` com `scope: "files"` (lista os arquivos publicados, sem baixar conteúdo).
+      É obrigatório: a ferramenta só substitui ou remove um arquivo publicado que esta sessão
+      leu pelo caminho, viu numa listagem ou publicou;
+   3. `action: "publish"` com `file_path` = `artifact.publicar.file_path` (a casca
+      `artifacts/painel/index.html`: a ferramenta exige a página em toda publicação) e `files` =
+      `artifact.publicar.files` (sempre `data.json`; com a página nova, também o estilo e o script
+      versionados — os já publicados ficam no artifact quando a página não muda). Quando
+      `artifact.pagina_mudou` for `true` e a listagem mostrar arquivos `painel-*.css` ou
+      `painel-*.js` que não estão em `artifact.publicar.files`, acrescente cada um em `files` com
+      valor `null` (remove a versão antiga).
 
-   Se a ferramenta recusar a atualização só com `files`, leia `artifacts/painel/index.html` por
-   inteiro (se ainda não leu) e publique de novo com `file_path` e `files`. Se a recusa disser
-   que `data.json` mudou desde a listagem (outra rotina publicou no meio), repita o `list` com
-   `scope: "files"` uma vez e publique uma única vez. Recusa por conflito na página (a
-   ferramenta devolve a versão publicada): rode `uv run python -m cdp painel` de novo, leia o que
-   `artifact.arquivos_para_ler` pedir, repita o `list` e publique uma única vez; nunca use
-   `force`.
-6. Só depois de uma publicação bem-sucedida **que incluiu** `index.html`, quando
-   `artifact.pagina_mudou` era `true`, registre a página publicada e faça um commit só desse
-   marcador (o push segue com a próxima rotina):
+   Se a recusa disser que um arquivo mudou desde a listagem (outra rotina publicou no meio),
+   repita o `list` com `scope: "files"` uma vez e publique uma única vez. Recusa por conflito na
+   página (a ferramenta devolve a versão publicada): rode `uv run python -m cdp painel` de novo,
+   leia o que `artifact.arquivos_para_ler` pedir, repita o `list` e publique uma única vez; nunca
+   use `force`.
+6. Só depois de uma publicação bem-sucedida, quando `artifact.pagina_mudou` era `true`, registre
+   a página publicada e faça um commit só desse marcador (o push segue com a próxima rotina):
 
    ```sh
    uv run python -m cdp painel --publicado

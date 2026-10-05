@@ -77,8 +77,8 @@ Contexto: `docs/cdp/METODOLOGIA.md` e a calibração-base em `reports/backtest/2
      houver, marcadas como "para revisão humana — não aplicadas".
 6. Integridade e painel (código; o painel inclui os backtests):
    `uv run python -m cdp verify` e `uv run python -m cdp painel` (grava `artifacts/painel/data.json`,
-   `index.html` — só quando o template muda — e a cópia local; anote o bloco `artifact`). Se o
-   painel falhar, siga sem ele.
+   a casca `index.html`, o estilo e o script versionados — só quando o template muda — e a cópia
+   local; anote o bloco `artifact`). Se o painel falhar, siga sem ele.
 7. Publicação:
 
    ```sh
@@ -95,18 +95,19 @@ Contexto: `docs/cdp/METODOLOGIA.md` e a calibração-base em `reports/backtest/2
    leia nem publique nada; anote o `artifact.motivo`. Sem `artifacts/painel/ARTIFACT_URL`
    (`artifact.url` nulo), não publique e anote "sem ARTIFACT_URL". Com `publicavel: true`: leia por
    inteiro, com `Read` (em partes com `offset`/`limit`, até a última linha), cada arquivo de
-   `artifact.arquivos_para_ler` — sempre `artifacts/painel/data.json`; `artifacts/painel/index.html`
-   só quando `artifact.pagina_mudou` for `true`. Chame `Artifact` com essa `url`, nesta ordem:
+   `artifact.arquivos_para_ler` — sempre a casca `artifacts/painel/index.html` e
+   `artifacts/painel/data.json`; o estilo e o script versionados (`painel-<versão>.css`/`.js`) só
+   quando `artifact.pagina_mudou` for `true`. Chame `Artifact` com essa `url`, nesta ordem:
    `action: "read"` (uma vez); `action: "list"` com `scope: "files"` (obrigatório: a ferramenta
-   só substitui um arquivo publicado que a sessão leu pelo caminho, viu numa listagem ou
-   publicou); e `action: "publish"` com `files: {"data.json": "artifacts/painel/data.json"}` e,
-   só quando `pagina_mudou` for `true`, `file_path: "artifacts/painel/index.html"`. Se a
-   ferramenta recusar a atualização só com `files`, leia `index.html` por inteiro e publique de
-   novo com `file_path` e `files`. Se a recusa disser que `data.json` mudou desde a listagem,
-   repita o `list` com `scope: "files"` uma vez e publique uma única vez. Recusa por conflito na
-   página: rode `uv run python -m cdp painel` de novo, leia o que `artifact.arquivos_para_ler`
-   pedir, repita o `list` e publique uma única vez; nunca use `force`. Só depois de uma
-   publicação bem-sucedida que incluiu `index.html`, com `pagina_mudou: true`:
+   só substitui ou remove um arquivo publicado que a sessão leu pelo caminho, viu numa listagem
+   ou publicou); e `action: "publish"` com `file_path` = `artifact.publicar.file_path` (a
+   ferramenta exige a página em toda publicação) e `files` = `artifact.publicar.files`; com
+   `pagina_mudou: true`, acrescente em `files`, com valor `null`, cada `painel-*.css`/`painel-*.js`
+   da listagem que não esteja em `artifact.publicar.files`. Se a recusa disser que um arquivo
+   mudou desde a listagem, repita o `list` com `scope: "files"` uma vez e publique uma única vez.
+   Recusa por conflito na página: rode `uv run python -m cdp painel` de novo, leia o que
+   `artifact.arquivos_para_ler` pedir, repita o `list` e publique uma única vez; nunca use
+   `force`. Só depois de uma publicação bem-sucedida com `pagina_mudou: true`:
    `uv run python -m cdp painel --publicado`,
    `git add artifacts/painel/PAGINA_PUBLICADA.sha256` e
    `git commit -m "CDP: painel publicado" -- artifacts/painel/PAGINA_PUBLICADA.sha256` (sem esse

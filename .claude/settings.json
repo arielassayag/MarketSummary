@@ -82,7 +82,9 @@
       "Edit(/reports/risk/**)",
       "Edit(/artifacts/painel/*.html)",
       "Edit(/artifacts/painel/data.json)",
-      "Edit(/artifacts/painel/PAGINA_PUBLICADA.sha256)"
+      "Edit(/artifacts/painel/PAGINA_PUBLICADA.sha256)",
+      "Edit(/artifacts/painel/*.css)",
+      "Edit(/artifacts/painel/*.js)"
     ]
   }
 }

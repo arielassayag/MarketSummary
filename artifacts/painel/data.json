@@ -1024,7 +1024,7 @@
    "weekly_reports": 1,
    "weeks": 1
   },
-  "data_hash": "658e55aa7657d618927ade1cdff81119c9757f32e1bb72d7a58421a6f17469d5",
+  "data_hash": "578747bdb60a70181e5f48c1c511c2aa6cd4dd3892ebaee6526374b985932698",
   "data_notice": "Dados reais (Yahoo Finance, B3, FINRA, BCB); paper trading com execução hipotética.",
   "export_limits": {
    "audit_tail": 20,
@@ -1043,8 +1043,8 @@
    "track_rows": 90
   },
   "fund_name": "CDP — Cabra da Peste",
-  "generated_at": "2026-10-05T17:00:49.099278+00:00",
-  "generated_at_local": "2026-10-05T14:00:49.099278-03:00",
+  "generated_at": "2026-10-05T17:13:03.972558+00:00",
+  "generated_at_local": "2026-10-05T14:13:03.972558-03:00",
   "inception_date": "2026-10-05",
   "inception_nav_usd": 100000000.0,
   "invariants": [
@@ -1617,12 +1617,12 @@
    "is_synthetic": false,
    "last_date": "2026-10-02"
   },
-  "page_sha256": "7e7eb08b9bc539024bb4235fe1e9c8744c234f72181ae22f53371401fcc03377",
+  "page_sha256": "a12263c5233387cb701c60b5a77dc46dd7ad0c774195554728562670075e0da7",
   "paper_trading_label": "paper trading com preços reais (execução hipotética no fechamento)",
   "paper_trading_text": "Natureza: paper trading com preços reais — execução hipotética no fechamento (MOC) com custos do modelo; não representa resultado de fundo real nem oferta de investimento.",
   "profile": "publicacao",
   "publication": {
-   "data_hash_completo": "5ca81f070e90305ac56c3d821adbad83f3cb1787d4cbc4acc91f32e63d3aa35e",
+   "data_hash_completo": "6f4d12ae6a2c2659aca1f2d59e1718927033485865f000ea9781cbd7021d234e",
    "formato": "JSON indentado; {\"_colunas\": ..., \"_n\": N} = tabela em colunas, {\"_rep\": {\"v\": [...], \"n\": [...]}} = coluna em corridas, {\"_partes\": [...]} = texto em partes e {\"_igual\": \"x\", ...} = igual à chave irmã x com estes campos (a página desfaz as quatro formas)",
    "limites": {
     "apontamentos": 100,
@@ -3053,7 +3053,7 @@
  },
  "status": {
   "agenda": {
-   "agora_brasilia": "2026-10-05T14:00:49.099278-03:00",
+   "agora_brasilia": "2026-10-05T14:13:03.972558-03:00",
    "b3_aberta_agora": true,
    "fechamentos_pendentes": [],
    "fechamentos_pendentes_excedem_limite": false,
@@ -3084,7 +3084,7 @@
     },
     "hoje_e_dia_de_rebalanceamento": true,
     "inicio_pesquisa": "11:00",
-    "minutos_ate_o_prazo": 149,
+    "minutos_ate_o_prazo": 136,
     "motivo": "decisão da semana já gravada",
     "prazo_decisao": "16:30",
     "semana": "2026-10-05"
@@ -3197,8 +3197,8 @@
     "when_utc": "2026-10-13T19:30:00+00:00"
    }
   ],
-  "now_local": "2026-10-05T14:00:49.099278-03:00",
-  "now_utc": "2026-10-05T17:00:49.099278+00:00",
+  "now_local": "2026-10-05T14:13:03.972558-03:00",
+  "now_utc": "2026-10-05T17:13:03.972558+00:00",
   "open_markets_today": {
    "AR": true,
    "BR": true,

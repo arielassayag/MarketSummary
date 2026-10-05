@@ -248,7 +248,8 @@ A skill `status` avisa quando o PC não está no fuso de Brasília.
 ## 10. Painel (artifact)
 
 O painel de operação e risco é gerado **pelo código** a partir do livro, da trilha e dos relatórios
-(nenhum número é escrito pela IA) e publicado em dois arquivos — a página e os dados:
+(nenhum número é escrito pela IA) e publicado como uma página pequena, o estilo e o script
+versionados e os dados:
 
 ```sh
 uv run python -m cdp painel
@@ -257,10 +258,17 @@ uv run python -m cdp painel --publicado
 ```
 
 - Saída em `artifacts/painel/` (versionada; vai em cada commit das rotinas):
-  - `artifacts/painel/index.html` — a página, com o elemento de dados vazio (`null`) e a versão
-    da página (SHA-256 do template) carimbada: ao abrir, ela busca `data.json` ao lado dela e
-    mostra um estado de carregamento; se não conseguir, mostra "Não foi possível carregar
-    data.json" (nunca uma página em branco). O arquivo só é regravado quando o template muda.
+  - `artifacts/painel/index.html` — a casca da página (cerca de 3 KB): cabeçalho, marcação, o
+    elemento de dados vazio (`null`) e a versão da página (SHA-256 do formato de publicação e do
+    template) carimbada, com referências ao estilo e ao script. Ao abrir, a página busca
+    `data.json` ao lado dela e mostra um estado de carregamento; se não conseguir, mostra "Não foi
+    possível carregar data.json" (nunca uma página em branco). Só é regravada quando o template
+    muda.
+  - `artifacts/painel/painel-<versão>.css` e `painel-<versão>.js` — o estilo e o script do
+    template, com a versão no nome (versões antigas saem da pasta). A ferramenta `Artifact` exige
+    a página em toda publicação e quem publica precisa ler por inteiro o que publica: por isso a
+    página publicada a cada rotina é só a casca, e estes dois arquivos só vão junto quando a
+    página muda (os já publicados continuam no artifact).
   - `artifacts/painel/data.json` — os dados publicados, no perfil **publicação**: JSON indentado
     com no máximo 260 KB e linhas de até 1.500 caracteres, para caber na leitura integral que a
     ferramenta de publicação exige. Mesmos números do retrato completo (nunca arredondados);
@@ -280,11 +288,12 @@ uv run python -m cdp painel --publicado
     para abrir direto no navegador, offline (`--sem-local` não a grava).
   - `artifacts/painel/PAGINA_PUBLICADA.sha256` — a versão da página publicada por último no
     artifact. É gravado por `uv run python -m cdp painel --publicado` (que não gera nada) **só
-    depois** de uma publicação bem-sucedida que incluiu `index.html`.
+    depois** de uma publicação bem-sucedida com a página nova (casca, estilo e script).
 - O comando só lê o livro, a trilha e os relatórios (grava apenas esses arquivos) e imprime, em
   JSON, caminhos, tamanhos, SHA-256, maior linha, `data_hash`, `page_changed`, `index_written`
   e o bloco `artifact`: `publicavel`, `motivo`, `arquivos_para_ler`, `tamanho_dados`,
-  `linhas_max`, `pagina_mudou`, `pagina_publicada` e `url`.
+  `linhas_max`, `pagina_mudou`, `pagina_publicada`, `url` e `publicar` (`file_path` e `files`
+  prontos para a ferramenta).
 - **Página publicada × página local.** `pagina_mudou` compara a versão atual da página com
   `PAGINA_PUBLICADA.sha256` — não com o `index.html` local. Assim, se o template mudar e o
   `index.html` novo for gerado e commitado por quem não publica (você conferindo a saída, o
@@ -293,20 +302,21 @@ uv run python -m cdp painel --publicado
   A página publicada também compara a sua versão com `meta.page_sha256` dos dados e mostra
   "Página desatualizada" no topo quando diferem (ou quando o esquema dos dados é outro).
 - **Link fixo**: a URL do artifact fica em `artifacts/painel/ARTIFACT_URL` (uma linha,
-  versionada). O artifact é criado uma única vez, fora das rotinas, com a página (`index.html`)
-  publicada junto do `data.json` (`files`); quem o cria grava `ARTIFACT_URL` e roda
-  `uv run python -m cdp painel --publicado`. As skills `semanal`, `diario`, `risco` e
-  `calibracao`, no fim de cada execução, geram o painel, fazem o commit e o **republicam no mesmo
-  artifact** com a ferramenta `Artifact`: leem por inteiro `data.json` (e `index.html`, só
-  quando `pagina_mudou` é `true`) e, com a `url` do arquivo, fazem nesta ordem um `read`, um
-  `list` com `scope: "files"` e o `publish` com `files: {"data.json": "artifacts/painel/data.json"}`
-  — mais `file_path: artifacts/painel/index.html` quando a página mudou ou quando a ferramenta
-  recusa a atualização só com `files`. A listagem é obrigatória: a ferramenta só substitui um
-  arquivo publicado que a sessão leu pelo caminho, viu numa listagem ou publicou (o `read` da URL
-  devolve a página, não o `data.json`); sem ela, a atualização dos dados seria recusada. Se a
-  recusa disser que `data.json` mudou desde a listagem (outra rotina publicou no meio), a skill
-  lista de novo e publica uma única vez; nunca usa `force`. Depois de uma publicação que incluiu
-  a página, a skill roda `cdp painel --publicado` e faz um commit só do marcador. Nunca criam um
+  versionada). O artifact é criado uma única vez, fora das rotinas, com a casca (`index.html`)
+  publicada junto do estilo, do script e do `data.json` (`files`); quem o cria grava
+  `ARTIFACT_URL` e roda `uv run python -m cdp painel --publicado`. As skills `semanal`, `diario`,
+  `risco` e `calibracao`, no fim de cada execução, geram o painel, fazem o commit e o
+  **republicam no mesmo artifact** com a ferramenta `Artifact`: leem por inteiro cada arquivo de
+  `artifact.arquivos_para_ler` (a casca e `data.json`; o estilo e o script só quando
+  `pagina_mudou` é `true`) e, com a `url` do arquivo, fazem nesta ordem um `read`, um `list` com
+  `scope: "files"` e o `publish` com `artifact.publicar` (`file_path` = a casca, exigida em toda
+  publicação; `files` = `data.json` e, com a página nova, o estilo e o script — as versões
+  antigas desses dois saem com `null`). A listagem é obrigatória: a ferramenta só substitui ou
+  remove um arquivo publicado que a sessão leu pelo caminho, viu numa listagem ou publicou (o
+  `read` da URL devolve a página, não os outros arquivos). Se a recusa disser que um arquivo
+  mudou desde a listagem (outra rotina publicou no meio), a skill lista de novo e publica uma
+  única vez; nunca usa `force`. Depois de uma publicação com a página nova, a skill roda
+  `cdp painel --publicado` e faz um commit só do marcador. Nunca criam um
   artifact novo: sem `artifacts/painel/ARTIFACT_URL`, pulam a publicação e dizem isso no resumo.
 - **Tamanho.** A ferramenta de publicação exige que a mente leia por inteiro cada arquivo
   publicado. Com `artifact.publicavel: false` (dados acima de 260 KB ou linha acima de 1.500
@@ -475,7 +485,7 @@ interativo do Codex CLI (consulte a documentação do Codex para as flags) e um 
 | `uv`/`claude` não encontrados no agendador do sistema | PATH mínimo do cron/launchd/Agendador: use caminhos absolutos ou ajuste `CDP_CLAUDE_BIN`; os scripts já incluem `~/.local/bin`; o erro fica no log |
 | Execução marcada como "skipped" no app | o PC dormia, a execução anterior ainda rodava ou outra tarefa estava em andamento (ex.: risco das 16:00 durante a montagem semanal); as reservas da semanal e o reforço do diário cobrem os casos importantes |
 | Decisão da semana perdida | o PC estava desligado entre 11:00 e 16:30 do primeiro pregão; a carteira anterior segue até a próxima semana |
-| "painel não republicado" no resumo | `artifact.publicavel: false` (dados grandes demais para a leitura integral), `artifacts/painel/ARTIFACT_URL` ausente, sem a ferramenta `Artifact` na sessão (ex.: `claude -p`, Codex) ou recusa da ferramenta; os arquivos commitados valem. Para publicar à mão: abra uma sessão na pasta e peça "republique artifacts/painel/data.json (e index.html, se mudou) no artifact de artifacts/painel/ARTIFACT_URL" |
+| "painel não republicado" no resumo | `artifact.publicavel: false` (dados grandes demais para a leitura integral), `artifacts/painel/ARTIFACT_URL` ausente, sem a ferramenta `Artifact` na sessão (ex.: `claude -p`, Codex) ou recusa da ferramenta; os arquivos commitados valem. Para publicar à mão: abra uma sessão na pasta e rode `uv run python -m cdp painel` e peça "republique o painel no artifact de artifacts/painel/ARTIFACT_URL seguindo artifact.publicar" |
 | Painel mostra "Não foi possível carregar data.json" | a página foi publicada sem o `data.json` ao lado: rode `uv run python -m cdp painel` e republique com `files: {"data.json": "artifacts/painel/data.json"}` no mesmo artifact; offline, abra `artifacts/painel/cdp_painel_local.html` |
 | Link do painel sumiu ou mudou | `artifacts/painel/ARTIFACT_URL` ausente ou apagado: restaure a URL antiga nele (uma linha) e faça commit; as rotinas nunca criam um artifact novo (sem o arquivo, só pulam a publicação) |
 | Kill switch religado logo depois de você desligar | só acontece por piora (estágio pior da escada ou short novo no stop): veja `revisao_humana` e os gatilhos HARD no relatório de risco |

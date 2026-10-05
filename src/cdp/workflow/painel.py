@@ -3,11 +3,14 @@
 O painel é um artifact republicado pelas rotinas após cada decisão semanal, fechamento diário e
 monitor de risco intradiário. Este módulo só LÊ os artefatos do fundo (livro, track record,
 relatórios, base de mercado, backtests) e monta um retrato JSON da operação; a página apenas
-formata e plota esses dados. Publicação em dois arquivos (:func:`write_painel`):
+formata e plota esses dados. Publicação (:func:`write_painel`):
 
-- ``index.html``: o template com o elemento de dados vazio (``null``) e a versão da página
-  (SHA-256 do template) carimbada; a página busca ``data.json`` ao lado dela. Só é regravado
-  quando o template muda.
+- ``index.html``: casca pequena da página (cabeçalho, marcação, elemento de dados vazio ``null``
+  e a versão da página carimbada) que referencia o estilo e o script do template em arquivos
+  versionados ``painel-<versão>.css`` e ``painel-<versão>.js``. A ferramenta Artifact exige a
+  página em toda publicação, e quem publica precisa ler por inteiro o que publica: a casca é
+  pequena, e os arquivos versionados só vão junto quando a página muda (os já publicados ficam
+  no artifact). Só é regravado quando o template muda; a página busca ``data.json`` ao lado dela.
 - ``data.json``: perfil ``publicacao`` (:mod:`cdp.workflow.painel_publicacao`), JSON indentado
   que cabe na leitura integral exigida de quem publica (≤ 260 KB, linhas ≤ 1.500 caracteres),
   com a versão da página para a qual foi gerado (``meta.page_sha256``).
@@ -64,9 +67,17 @@ SCHEMA_VERSION = "cdp-painel/2"
 PLACEHOLDER = "__CDP_DATA__"
 DATA_ELEMENT = f'<script type="application/json" id="cdp-data">{PLACEHOLDER}</script>'
 EMPTY_DATA_ELEMENT = DATA_ELEMENT.replace(PLACEHOLDER, "null")
-#: Carimbo da versão da página (SHA-256 do template) no ``index.html`` e na cópia local.
+#: Carimbo da versão da página no script (``var PAGE_SHA``) e, na casca publicada, também no
+#: ``<meta name="cdp-page-sha256">``.
 PAGE_SHA_PLACEHOLDER = "__CDP_PAGE_SHA256__"
-PAGE_SHA_RE = re.compile(r'var PAGE_SHA = "([0-9a-f]{64})";')
+PAGE_SHA_RE = re.compile(r'(?:var PAGE_SHA = "|<meta name="cdp-page-sha256" content=")'
+                         r'([0-9a-f]{64})"')
+#: Formato da publicação (casca + estilo e script versionados). Entra na versão da página: mudar o
+#: formato obriga a republicar a página mesmo com o template igual.
+PAGE_LAYOUT = "cdp-painel-casca/1"
+#: Arquivos versionados da página: ``painel-<16 primeiros hex da versão>.css``/``.js``.
+ASSET_PREFIX = "painel-"
+ASSET_RE = re.compile(r"painel-[0-9a-f]{16}\.(?:css|js)")
 DEFAULT_TEMPLATE = Path(__file__).with_name("painel_template.html")
 DEFAULT_OUT_DIR = Path("artifacts/painel")
 INDEX_NAME = "index.html"
@@ -2569,15 +2580,20 @@ def _template(template_path: Path | str | None) -> str:
     return template
 
 
+def _version(template: str) -> str:
+    return hashlib.sha256(f"{PAGE_LAYOUT}\n{template}".encode()).hexdigest()
+
+
 def page_sha256(template_path: Path | str | None = None) -> str:
-    """Versão da página: SHA-256 do template (muda só quando o template muda). Vai carimbada no
-    ``index.html`` (``var PAGE_SHA``) e em ``data.json`` (``meta.page_sha256``)."""
-    return hashlib.sha256(_template(template_path).encode("utf-8")).hexdigest()
+    """Versão da página: SHA-256 do formato de publicação (``PAGE_LAYOUT``) e do template — muda
+    só quando um dos dois muda. Vai carimbada no ``index.html``, no script versionado, na cópia
+    local e em ``data.json`` (``meta.page_sha256``)."""
+    return _version(_template(template_path))
 
 
 def _split_template(template_path: Path | str | None) -> tuple[str, str]:
     template = _template(template_path)
-    sha = hashlib.sha256(template.encode("utf-8")).hexdigest()
+    sha = _version(template)
     head, tail = template.split(DATA_ELEMENT)
     return head.replace(PAGE_SHA_PLACEHOLDER, sha), tail.replace(PAGE_SHA_PLACEHOLDER, sha)
 
@@ -2589,11 +2605,49 @@ def render_painel(data: Mapping[str, Any], template_path: Path | str | None = No
     return head + element + tail
 
 
-def render_page(template_path: Path | str | None = None) -> str:
-    """``index.html`` publicado: o template com o elemento de dados vazio (``null``) — a página
-    busca ``data.json`` ao lado dela. Não depende dos dados: só muda quando o template muda."""
+def asset_names(version: str) -> tuple[str, str]:
+    """Nomes do estilo e do script versionados de uma versão da página."""
+    stem = f"{ASSET_PREFIX}{version[:16]}"
+    return f"{stem}.css", f"{stem}.js"
+
+
+def _page_parts(template_path: Path | str | None) -> dict[str, str]:
+    """Separa o template (já com a versão carimbada) em cabeçalho, estilo, marcação, scripts de
+    CDN e script da página. Exige exatamente um ``<style>`` e um ``<script>`` sem atributos
+    depois do elemento de dados."""
     head, tail = _split_template(template_path)
-    return head + EMPTY_DATA_ELEMENT + tail
+    if head.count("<style>") != 1 or head.count("</style>") != 1:
+        raise ValueError("O template precisa de exatamente um <style> antes do elemento de dados.")
+    top, rest = head.split("<style>")
+    css, body = rest.split("</style>")
+    if tail.count("<script>") != 1:
+        raise ValueError("O template precisa de exatamente um <script> sem atributos depois do "
+                         "elemento de dados.")
+    cdn, rest = tail.split("<script>")
+    js, sep, after = rest.rpartition("</script>")
+    if not sep:
+        raise ValueError("O <script> da página não fecha.")
+    return {"top": top, "css": css.strip("\n") + "\n", "body": body, "cdn": cdn,
+            "js": js.strip("\n") + "\n", "after": after}
+
+
+def page_assets(template_path: Path | str | None = None) -> dict[str, str]:
+    """Estilo e script da página, versionados (``painel-<versão>.css``/``.js``)."""
+    parts = _page_parts(template_path)
+    css_name, js_name = asset_names(page_sha256(template_path))
+    return {css_name: parts["css"], js_name: parts["js"]}
+
+
+def render_page(template_path: Path | str | None = None) -> str:
+    """``index.html`` publicado: a casca da página com o elemento de dados vazio (``null``), a
+    versão carimbada e as referências ao estilo e ao script versionados — a página busca
+    ``data.json`` ao lado dela. Não depende dos dados: só muda quando o template muda."""
+    parts = _page_parts(template_path)
+    version = page_sha256(template_path)
+    css_name, js_name = asset_names(version)
+    return (parts["top"] + f'<meta name="cdp-page-sha256" content="{version}">\n'
+            + f'<link rel="stylesheet" href="{css_name}">' + parts["body"] + EMPTY_DATA_ELEMENT
+            + parts["cdn"] + f'<script src="{js_name}"></script>' + parts["after"])
 
 
 def page_version(page_text: str) -> str | None:
@@ -2663,8 +2717,10 @@ def write_painel(rt: Any, out_dir: Path | str = DEFAULT_OUT_DIR, *, standalone: 
                  **kw: Any) -> dict[str, Any]:
     """Grava o painel para o artifact em ``out_dir``:
 
-    - ``index.html`` (template com ``#cdp-data`` = ``null`` e a versão da página carimbada),
+    - ``index.html`` (casca com ``#cdp-data`` = ``null`` e a versão da página carimbada),
       regravado só quando o conteúdo muda (``index_written``);
+    - ``painel-<versão>.css``/``.js`` (estilo e script do template), regravados só quando mudam;
+      versões antigas desses arquivos saem da pasta (``assets_removed``);
     - ``data.json``: perfil ``publicacao`` (indentado, chaves ordenadas) — sempre;
     - ``cdp_painel_local.html`` (``standalone``): cópia autônoma com o perfil ``completo``
       embutido e esqueleto ``<!doctype>``, para abrir offline.
@@ -2688,6 +2744,18 @@ def write_painel(rt: Any, out_dir: Path | str = DEFAULT_OUT_DIR, *, standalone: 
     index_written = _sha256_file(index) != hashlib.sha256(page.encode("utf-8")).hexdigest()
     if index_written:
         _write_atomic(index, page)
+    assets = page_assets(template_path)
+    asset_info = []
+    for name, text in assets.items():
+        path = out / name
+        if _sha256_file(path) != hashlib.sha256(text.encode("utf-8")).hexdigest():
+            _write_atomic(path, text)
+        asset_info.append(_file_info(path, text))
+    removed = []
+    for old_asset in sorted(out.glob(f"{ASSET_PREFIX}*")):
+        if ASSET_RE.fullmatch(old_asset.name) and old_asset.name not in assets:
+            old_asset.unlink()
+            removed.append(old_asset.name)
     published = published_page_sha(out)
     page_changed = published != version
     text = dump_publicacao(pub)
@@ -2699,6 +2767,9 @@ def write_painel(rt: Any, out_dir: Path | str = DEFAULT_OUT_DIR, *, standalone: 
         "page_sha256": version, "published_page_sha256": published,
         "index_path": index_info["path"], "index_bytes": index_info["bytes"],
         "index_sha256": index_info["sha256"], "index_max_line": index_info["max_line"],
+        "assets": [{"path": a["path"], "bytes": a["bytes"], "sha256": a["sha256"],
+                    "max_line": a["max_line"]} for a in asset_info],
+        "assets_removed": removed,
         "data_path": data_info["path"], "data_bytes": data_info["bytes"],
         "data_sha256": data_info["sha256"], "data_max_line": data_info["max_line"],
         "data_lines": data_info["lines"], "data_hash": pmeta["data_hash"],
@@ -2730,9 +2801,9 @@ def expandir(x: Any) -> Any:
     return ex(x)
 
 
-__all__ = ["DATA_ELEMENT", "DATA_NAME", "DEFAULT_OUT_DIR", "DEFAULT_TEMPLATE",
-           "EMPTY_DATA_ELEMENT", "INDEX_NAME", "LOCAL_NAME", "MARKER_NAME", "PAGE_SHA_PLACEHOLDER",
-           "PLACEHOLDER", "SCHEMA_VERSION", "URL_NAME", "clean", "data_hash", "embed_json",
-           "expandir", "mark_published", "page_sha256", "page_version", "painel_data",
-           "published_page_sha", "render_page", "render_painel", "scrub_text", "to_json",
-           "write_painel"]
+__all__ = ["ASSET_PREFIX", "ASSET_RE", "DATA_ELEMENT", "DATA_NAME", "DEFAULT_OUT_DIR",
+           "DEFAULT_TEMPLATE", "EMPTY_DATA_ELEMENT", "INDEX_NAME", "LOCAL_NAME", "MARKER_NAME",
+           "PAGE_LAYOUT", "PAGE_SHA_PLACEHOLDER", "PLACEHOLDER", "SCHEMA_VERSION", "URL_NAME",
+           "asset_names", "clean", "data_hash", "embed_json", "expandir", "mark_published",
+           "page_assets", "page_sha256", "page_version", "painel_data", "published_page_sha",
+           "render_page", "render_painel", "scrub_text", "to_json", "write_painel"]

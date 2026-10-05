@@ -20,11 +20,14 @@ from cdp.workflow.painel import (
     DATA_ELEMENT,
     EMPTY_DATA_ELEMENT,
     MARKER_NAME,
+    PAGE_LAYOUT,
     PAGE_SHA_PLACEHOLDER,
     PLACEHOLDER,
+    asset_names,
     clean,
     embed_json,
     mark_published,
+    page_assets,
     page_sha256,
     page_version,
     painel_data,
@@ -297,6 +300,34 @@ def test_write_painel_files(demo, tmp_path, data):
     assert res["local_sha256"] == hashlib.sha256(local.read_bytes()).hexdigest()
     assert res["data_bytes"] <= DATA_MAX_BYTES and res["data_max_line"] <= DATA_MAX_LINE
     assert res["index_bytes"] <= PAGE_MAX_BYTES and res["index_max_line"] <= PAGE_MAX_LINE
+    # estilo e script versionados ao lado da casca
+    css, js = asset_names(version)
+    assert [a["path"] for a in res["assets"]] == [(out / css).as_posix(), (out / js).as_posix()]
+    for a in res["assets"]:
+        raw = Path(a["path"]).read_bytes()
+        assert a["bytes"] == len(raw) <= PAGE_MAX_BYTES and a["max_line"] <= PAGE_MAX_LINE
+        assert a["sha256"] == hashlib.sha256(raw).hexdigest()
+    assert res["assets_removed"] == []
+
+
+def test_page_is_a_small_shell_with_versioned_assets():
+    """A casca publicada referencia o estilo e o script versionados; juntos, reproduzem o
+    template (com a versão carimbada) — a cópia local continua com tudo embutido."""
+    page, assets, version = render_page(), page_assets(), page_sha256()
+    css, js = asset_names(version)
+    assert list(assets) == [css, js] and css == f"painel-{version[:16]}.css"
+    assert f'<link rel="stylesheet" href="{css}">' in page and f'<script src="{js}"></script>' in page
+    assert f'<meta name="cdp-page-sha256" content="{version}">' in page
+    assert "<style>" not in page and "<script>" not in page  # sem estilo/script embutidos
+    assert len(page.encode("utf-8")) < 8_000
+    assert f'var PAGE_SHA = "{version}";' in assets[js] and PAGE_SHA_PLACEHOLDER not in assets[js]
+    template = (Path(__file__).resolve().parents[2] / "src" / "cdp" / "workflow"
+                / "painel_template.html").read_text(encoding="utf-8")
+    assert assets[css].strip() in template and "var DATA_URL" in assets[js]
+    assert assets[js].strip() in template.replace(PAGE_SHA_PLACEHOLDER, version)
+    # a versão cobre o formato de publicação: mudar o formato obriga a republicar a página
+    assert version == hashlib.sha256(f"{PAGE_LAYOUT}\n{template}".encode()).hexdigest()
+    assert version != hashlib.sha256(template.encode()).hexdigest()
 
 
 def test_second_write_keeps_the_page(demo, tmp_path):
@@ -339,6 +370,10 @@ def test_page_change_stays_pending_until_published(demo, tmp_path):
         runs = [write_painel(_rt(demo), out, now=NOW, standalone=False, template_path=new_template)
                 for _ in range(3)]
         assert [r["index_written"] for r in runs] == [True, False, False]
+        # estilo e script da versão anterior saem da pasta; ficam só os da versão nova
+        assert sorted(runs[0]["assets_removed"]) == sorted(asset_names(old))
+        assert sorted(p.name for p in out.glob("painel-*")) == sorted(
+            asset_names(page_sha256(new_template)))
         assert all(r["page_changed"] is True for r in runs)
         assert all(r["published_page_sha256"] == old != r["page_sha256"] for r in runs)
         assert runs[0]["page_sha256"] == page_sha256(new_template)
@@ -1295,9 +1330,16 @@ def test_cli_painel_is_publishable_on_demo(demo, tmp_path, capsys):
     res = json.loads(capsys.readouterr().out)
     art = res["artifact"]
     assert art["publicavel"] is True and art["motivo"] == "ok" and art["pagina_mudou"] is True
-    assert art["arquivos_para_ler"] == [(out_dir / "index.html").as_posix(),
-                                        (out_dir / "data.json").as_posix()]
-    assert art["tamanho_dados"] == (out_dir / "data.json").stat().st_size <= DATA_MAX_BYTES
+    css, js = (out_dir / n for n in asset_names(page_sha256()))
+    index, data_file = out_dir / "index.html", out_dir / "data.json"
+    assert art["arquivos_para_ler"] == [index.as_posix(), css.as_posix(), js.as_posix(),
+                                        data_file.as_posix()]
+    # a ferramenta exige a página (a casca) em toda publicação; com a página nova, vão também o
+    # estilo e o script versionados
+    assert art["publicar"] == {"file_path": index.as_posix(),
+                               "files": {css.name: css.as_posix(), js.name: js.as_posix(),
+                                         "data.json": data_file.as_posix()}}
+    assert art["tamanho_dados"] == data_file.stat().st_size <= DATA_MAX_BYTES
     assert art["linhas_max"] <= PAGE_MAX_LINE and art["url"] is None
     (out_dir / "ARTIFACT_URL").write_text("https://claude.ai/artifact/exemplo\n", encoding="utf-8")
     assert main(base + ["painel", "--out-dir", str(out_dir), "--sem-local"]) == 0
@@ -1314,7 +1356,11 @@ def test_cli_painel_is_publishable_on_demo(demo, tmp_path, capsys):
     assert main(base + ["painel", "--out-dir", str(out_dir), "--sem-local"]) == 0
     third = json.loads(capsys.readouterr().out)["artifact"]
     assert third["pagina_mudou"] is False and third["publicavel"] is True
-    assert third["arquivos_para_ler"] == [(out_dir / "data.json").as_posix()]
+    # página já publicada: só a casca (pequena) e os dados são lidos e publicados
+    assert third["arquivos_para_ler"] == [index.as_posix(), data_file.as_posix()]
+    assert third["publicar"] == {"file_path": index.as_posix(),
+                                 "files": {"data.json": data_file.as_posix()}}
+    assert index.stat().st_size < 8_000
     assert third["pagina_publicada"] == marked["page_sha256"]
     assert third["linhas_max"] <= DATA_MAX_LINE
     assert main(["painel", "--out-dir", str(tmp_path / "nada"), "--publicado"]) == 2

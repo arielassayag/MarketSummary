@@ -309,3 +309,111 @@ def test_cli_risk_and_agenda(demo, tmp_path, capsys):
     assert main(base + ["agenda", "--agora", "2024-03-08T20:00"]) == 0
     ag = json.loads(capsys.readouterr().out)
     assert ag["fechamentos_pendentes"] == ["2024-03-06", "2024-03-07", "2024-03-08"]
+
+
+def test_cli_painel_on_demo_book(demo, tmp_path, capsys):
+    """``cdp painel`` ponta a ponta no livro sintético: só lê o livro e grava o HTML pedido."""
+    import hashlib
+
+    from cdp.__main__ import main
+
+    base = ["--book", str(demo / "book"), "--market", str(demo / "market"),
+            "--reports", str(demo / "reports")]
+    before = sorted(p.relative_to(demo).as_posix() for p in demo.rglob("*") if p.is_file())
+    out = tmp_path / "artifacts" / "painel" / "cdp_painel.html"
+    local = tmp_path / "local.html"
+    assert main(base + ["painel", "--out", str(out), "--standalone", str(local)]) == 0
+    res = json.loads(capsys.readouterr().out)
+    assert res["path"] == out.as_posix() and out.is_file() and local.is_file()
+    assert res["sha256"] == hashlib.sha256(out.read_bytes()).hexdigest()
+    assert res["is_synthetic"] is True
+    check = res["artifact"]
+    assert check["bytes"] == out.stat().st_size and isinstance(check["publicavel"], bool)
+    assert check["motivo"] == "ok" or not check["publicavel"]
+    assert "DADOS SIMULADOS" in out.read_text(encoding="utf-8")
+    after = sorted(p.relative_to(demo).as_posix() for p in demo.rglob("*") if p.is_file())
+    assert after == before  # nada gravado no livro, na trilha ou nos relatórios
+
+
+# ----------------------------------------------------------------------------- revisão humana
+
+
+def _low_squeeze_cfg():
+    """Mandato com stop de squeeze minúsculo: todo short que perde desde a entrada aciona o stop."""
+    cfg = load_config()
+    return cfg.model_copy(update={"squeeze": cfg.squeeze.model_copy(
+        update={"stop_short_position_loss": 1e-9})})
+
+
+def test_human_off_is_not_overridden_by_a_persisting_condition(demo, tmp_path):
+    """Kill switch desligado por humano: a mesma condição de fechamento não o religa."""
+    root = tmp_path / "copia"
+    shutil.copytree(demo, root)
+    cfg = _low_squeeze_cfg()
+    rt = _rt(root, cfg)
+    first = run_risk_monitor(rt, as_of=SESSION, now=_at(SESSION, 13, 30))
+    hard = [t["codigo"] for t in first["gatilhos"] if t["nivel"] == "HARD"]
+    squeeze = [c for c in hard if c.startswith("stop_squeeze_")]
+    if not squeeze:
+        pytest.skip("livro sintético sem short com perda desde a entrada")
+    assert _kill_actions(first) and "revisao_humana" not in first
+    write_risk_report(first, root / "reports" / "risk", cfg)
+    rt.set_kill_switch(True, first["motivo_kill_switch"], "CDP — rotina de risco (teste)")
+    rt.set_kill_switch(False, "revisado: stop aceito até o rebalanceamento", "humano (teste)")
+
+    again = run_risk_monitor(rt, as_of=SESSION, now=_at(SESSION, 16))
+    assert again["kill_switch"]["ativo"] is False
+    assert not _kill_actions(again) and again["motivo_kill_switch"] is None
+    levels = {t["codigo"]: t["nivel"] for t in again["gatilhos"]}
+    assert all(levels[c] == "SOFT" for c in squeeze)
+    rev = again["revisao_humana"]
+    assert rev["registro_base"] == LAST and rev["por"] == "humano (teste)"
+    assert set(squeeze) <= set(rev["codigos_rebaixados"]) <= set(rev["codigos_revisados"])
+    assert any(a.startswith("revisar: ") and "já revisado por humano" in a
+               for a in again["acoes_recomendadas"])
+    assert "Revisão humana" in render_risk_markdown(again, cfg)
+
+    # Piora depois da revisão (escada de drawdown intradiária em hard stop): religa.
+    crash = _quotes(rt, mult=lambda p: 0.82 if p.market_value_usd > 0 else 1.18)
+    worse = run_risk_monitor(rt, as_of=SESSION, live=True, now=_at(SESSION, 16, 5),
+                             fetch_quotes=crash)
+    stage = worse["intradiario"]["estagio_estimado"]
+    assert stage in {"hard_stop", "stop_out"}
+    levels = {t["codigo"]: t["nivel"] for t in worse["gatilhos"]}
+    assert levels[f"drawdown_{stage}_intradiario"] == "HARD"
+    assert all(levels[c] == "SOFT" for c in squeeze)
+    assert len(_kill_actions(worse)) == 1
+
+
+def test_intraday_hard_seen_before_the_off_stays_reviewed(demo, tmp_path):
+    """Relatório das 13:30 com HARD intradiário, humano desliga às 14:00: 16:00 não religa."""
+    root = tmp_path / "copia"
+    shutil.copytree(demo, root)
+    rt = _rt(root)
+    crash = _quotes(rt, mult=lambda p: 0.82 if p.market_value_usd > 0 else 1.18)
+    first = run_risk_monitor(rt, as_of=SESSION, live=True, now=_at(SESSION, 13, 30),
+                             fetch_quotes=crash)
+    assert _kill_actions(first)
+    write_risk_report(first, root / "reports" / "risk", rt.cfg)
+    rt.set_kill_switch(True, first["motivo_kill_switch"], "CDP — rotina de risco (teste)")
+    rt.set_kill_switch(False, "revisado", "humano (teste)")
+    later = run_risk_monitor(rt, as_of=SESSION, live=True, now=_at(SESSION, 16),
+                             fetch_quotes=crash)
+    assert not _kill_actions(later)
+    assert later["revisao_humana"]["estagio_revisado"] in {"hard_stop", "stop_out"}
+
+
+def test_squeeze_stop_text_says_what_the_code_does(demo):
+    from cdp.workflow.risk_monitor import SQUEEZE_STOP_ACTION
+
+    rt = _rt(demo)
+    rec = rt.track().last()
+    short = min((p for p in rec.positions if p.market_value_usd < 0),
+                key=lambda p: p.market_value_usd)
+    res = run_risk_monitor(rt, as_of=SESSION, live=True, now=_at(SESSION, 15),
+                           fetch_quotes=_quotes(rt, mult=lambda p: 1.6 if p.ticker == short.ticker
+                                                else 1.0))
+    trig = next(t for t in res["gatilhos"] if t["codigo"] == f"stop_squeeze_posicao_{short.ticker}")
+    assert trig["acao"] == SQUEEZE_STOP_ACTION
+    assert "gross × 0,5" in trig["acao"] and "não é automático" in trig["acao"]
+    assert "livro inteiro" in trig["motivo"]

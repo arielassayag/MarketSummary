@@ -26,7 +26,9 @@ sem fazer nada quando não é dia: por isso as tarefas podem rodar em todos os d
 | `cdp-calibracao` | mensal, dia 1, 09:15 | `/cdp:calibracao` | backtest com todo o histórico em `reports/backtest/<data>/mensal`, comparação com a execução anterior; nunca muda o mandato |
 
 Skills do plugin (`plugins/cdp/skills/`): `semanal`, `diario`, `risco`, `status`, `calibracao`,
-invocadas como `/cdp:<nome>`.
+invocadas como `/cdp:<nome>`. As que gravam algo (`semanal`, `diario`, `risco`, `calibracao`)
+terminam atualizando o **painel** de operação e risco e republicando-o no mesmo artifact
+(seção 10); `status` só informa o link.
 
 ## 2. Pré-requisitos
 
@@ -112,13 +114,19 @@ O arquivo versionado `.claude/settings.json` define o que as rotinas podem fazer
   kill switch), `uv run pytest`, `uv run ruff check`, git
   (`status`, `pull`, `fetch`, `log`, `diff`, `add`, `commit`, `push`), WebSearch, WebFetch, e
   escrever só os arquivos da mente (`book/<semana>/inputs/research_pack.json`,
-  `pm_decision.json`, `reports/daily/<data>/comentario.json`, `reports/backtest/**`, `outputs/**`).
+  `pm_decision.json`, `reports/daily/<data>/comentario.json`, `reports/backtest/**`, `outputs/**`)
+  e o link do painel (`artifacts/painel/ARTIFACT_URL`).
 - **Sempre pergunta**: editar `configs/` (mandato) e `data/`, `git reset --hard`, `rebase`,
   `clean`, `restore`, `checkout --`.
 - **Nunca**: `git push --force` (em qualquer forma), `rm -rf`, apagar `book/` ou `data/`,
   **desligar o kill switch**, editar arquivos gravados pelo código (trilha de auditoria, track
-  record, decisões, propostas, briefing, base de mercado, relatórios publicados).
+  record, decisões, propostas, briefing, base de mercado, relatórios publicados, HTML do painel).
 - `defaultMode: acceptEdits` e `PYTHONUTF8=1` (acentos corretos no Windows).
+
+Cada skill também declara no próprio `SKILL.md` (`allowed-tools`) as ferramentas que usa —
+inclusive a ferramenta `Artifact`, que republica o painel —, pré-aprovadas enquanto a skill roda.
+A ferramenta `Artifact` não entra no `.claude/settings.json` do projeto de propósito: fora das
+skills, publicar ou apagar artifacts continua pedindo confirmação.
 
 Abra a pasta uma vez no Claude Code e aceite a confiança na pasta ("trust"): sem isso as regras do
 projeto não valem e a tarefa agendada não pode ser salva.
@@ -141,8 +149,10 @@ da tabela da seção 1:
   calibração mensal, peça numa sessão do desktop: "agende a tarefa cdp-calibracao para o dia 1 de
   cada mês às 09:15".
 
-Depois de criar, clique em **Run now** em `cdp-status` (e, se quiser, em `cdp-risco-1330`): se
-aparecer algum pedido de permissão, escolha "always allow"; as próximas execuções não perguntam.
+Depois de criar, clique em **Run now** em `cdp-status` e em `cdp-risco-1330` (o risco também
+republica o painel): se aparecer algum pedido de permissão — por exemplo, da ferramenta `Artifact`
+—, escolha "always allow"; as próximas execuções não perguntam. Uma tarefa parada esperando
+aprovação fica "em andamento" e pode fazer o app pular as seguintes.
 As tarefas ficam em `~/.claude/scheduled-tasks/<nome>/SKILL.md` (o corpo é o texto das
 instruções; agenda, pasta e modo ficam no app).
 
@@ -184,11 +194,42 @@ A skill `status` avisa quando o PC não está no fuso de Brasília.
   lateral; a resposta final de cada skill é um resumo curto (números copiados dos relatórios).
 - Relatórios: `reports/weekly/<semana>/relatorio.md`, `reports/daily/<data>/relatorio.md`,
   `reports/risk/<data>/risco_<HHMM>.md`, `reports/backtest/<data>/`.
-- Painel: `uv run streamlit run cdp_app.py --server.address 127.0.0.1`.
+- Painel publicado (artifact): seção 10. App local completo (Streamlit):
+  `uv run streamlit run cdp_app.py --server.address 127.0.0.1`.
 - Comandos úteis: `uv run python -m cdp agenda` (o que está pendente), `uv run python -m cdp risk`
   (risco do último fechamento), `uv run python -m cdp risk --live` (intradiário), `uv run python -m cdp verify`.
 
-## 10. Kill switch
+## 10. Painel (artifact)
+
+O painel de operação e risco é uma página HTML única, gerada **pelo código** a partir do livro, da
+trilha e dos relatórios (nenhum número é escrito pela IA):
+
+```sh
+uv run python -m cdp painel
+uv run python -m cdp painel --standalone outputs/painel_local.html
+```
+
+- Saída padrão: `artifacts/painel/cdp_painel.html` (versionado; vai em cada commit das rotinas).
+  `--standalone` grava também uma cópia completa para abrir direto no navegador, sem publicar.
+- O comando só lê o livro, a trilha e os relatórios (grava apenas o HTML pedido) e imprime
+  `path`, `sha256`, `data_hash` e `generated_at` (JSON).
+- **Link fixo**: a URL do artifact fica em `artifacts/painel/ARTIFACT_URL` (uma linha, versionada).
+  As skills `semanal`, `diario`, `risco` e `calibracao`, no fim de cada execução, geram o painel,
+  fazem o commit e o **republicam no mesmo artifact** com a ferramenta `Artifact`: leem a URL do
+  arquivo, fazem um `read` dessa URL e depois `publish` com essa `url` e
+  `file_path: artifacts/painel/cdp_painel.html`. Nunca criam um artifact novo quando o arquivo
+  existe; só na primeira publicação (arquivo ausente) publicam sem `url`, gravam a URL devolvida
+  no arquivo e fazem commit dele (`CDP: URL do painel`).
+- A skill `status` só informa a URL e a data do último commit do HTML.
+- Sem a ferramenta `Artifact` na sessão (agendador do sistema com `claude -p`, Codex) ou se a
+  ferramenta recusar/falhar, a skill pula a republicação e diz isso no resumo — o HTML commitado
+  continua valendo e a próxima rotina com a ferramenta publica a versão nova.
+- A ferramenta de publicação exige que o arquivo seja lido antes de publicá-lo; se a skill não
+  conseguir lê-lo por inteiro, ela não publica e relata (o painel é grande: a maior parte é o JSON
+  de dados embutido).
+- O artifact é privado por padrão; compartilhar o link é decisão sua, no claude.ai.
+
+## 11. Kill switch
 
 - A skill `risco` liga o kill switch **somente** quando `cdp risk` traz uma ação
   `kill-switch: <motivo>` — gatilhos HARD do mandato (escada de drawdown em `hard_stop`/`stop_out`,
@@ -202,7 +243,7 @@ A skill `status` avisa quando o PC não está no fuso de Brasília.
 
   As regras do projeto impedem o Claude de rodar esse comando.
 
-## 11. Sem o app aberto: agendador do sistema (alternativa)
+## 12. Sem o app aberto: agendador do sistema (alternativa)
 
 `scripts/cdp_run_task.sh` (macOS/Linux) e `scripts/cdp_run_task.ps1` (Windows) rodam uma skill sem
 interface com `claude -p "/cdp:<skill>" --permission-mode acceptEdits`, gravando o log em
@@ -214,6 +255,8 @@ simultâneas. Use **uma** das duas formas (app ou agendador do sistema), nunca a
 - No modo `-p` ninguém aprova pedidos: o que não estiver liberado no `.claude/settings.json` é
   negado e a skill relata no resumo. Em versões recentes do CLI, `CDP_CLAUDE_ARGS="--permission-prompts none"`
   deixa isso explícito.
+- O painel (seção 10) é sempre gerado e commitado; a republicação no artifact só acontece se a
+  ferramenta `Artifact` estiver disponível nessa execução — senão a skill pula e relata no log.
 
 **Linux (cron)** — `crontab -e` (com `CRON_TZ`, se o seu cron suportar; senão, converta os horários):
 
@@ -273,7 +316,7 @@ schtasks /Create /TN "CDP\calibracao" /TR "$ps calibracao" /SC MONTHLY /D 1 /ST 
 Em cada tarefa, marque "Executar assim que possível após uma inicialização agendada ter sido
 perdida" (aba Configurações) para recuperar execuções com o PC desligado.
 
-## 12. Codex como mente
+## 13. Codex como mente
 
 O Codex lê `AGENTS.md` e segue a mesma metodologia e os mesmos roteiros. Os passos das skills em
 `plugins/cdp/skills/<skill>/SKILL.md` valem para ele trocando `claude-code` por `codex` (use
@@ -281,7 +324,7 @@ O Codex lê `AGENTS.md` e segue a mesma metodologia e os mesmos roteiros. Os pas
 interativo do Codex CLI (consulte a documentação do Codex para as flags) e um texto como os de
 `docs/cdp/ROTINAS.md`. Não ligue as duas mentes no mesmo livro ao mesmo tempo.
 
-## 13. Solução de problemas
+## 14. Solução de problemas
 
 | Sintoma | Causa provável e correção |
 |---|---|
@@ -294,3 +337,5 @@ interativo do Codex CLI (consulte a documentação do Codex para as flags) e um 
 | `uv`/`claude` não encontrados no agendador do sistema | PATH mínimo do cron/launchd/Agendador: use caminhos absolutos ou ajuste `CDP_CLAUDE_BIN`; os scripts já incluem `~/.local/bin` |
 | Execução marcada como "skipped" no app | o PC dormia, a execução anterior ainda rodava ou outra tarefa estava em andamento (ex.: risco das 16:00 durante a montagem semanal) |
 | Decisão da semana perdida | o PC estava desligado entre 11:00 e 16:30 do primeiro pregão; a carteira anterior segue até a próxima semana |
+| "painel não republicado" no resumo | sem a ferramenta `Artifact` na sessão (ex.: `claude -p`, Codex), recusa da ferramenta ou arquivo grande demais para ler; o HTML commitado vale e a próxima rotina no app republica. Para publicar à mão: abra uma sessão na pasta e peça "republique artifacts/painel/cdp_painel.html no artifact de artifacts/painel/ARTIFACT_URL" |
+| Painel virou um artifact novo (link mudou) | `artifacts/painel/ARTIFACT_URL` ausente ou apagado: restaure a URL antiga nele (uma linha) e faça commit; as skills só criam artifact quando o arquivo não existe |

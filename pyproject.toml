@@ -54,7 +54,8 @@ addopts = "-q"
 line-length = 100
 target-version = "py312"
 src = ["src", "tests"]
-exclude = ["market-close-eval", ".venv"]
+# pesquisa/: material de trabalho da mente arquivado para auditoria (não é código do pacote)
+exclude = ["market-close-eval", ".venv", "pesquisa"]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "UP", "B"]

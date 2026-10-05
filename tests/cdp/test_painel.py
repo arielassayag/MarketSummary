@@ -166,6 +166,20 @@ def test_numbers_equal_source_records(demo, data):
         p.issuer_id: p.weight for p in proposal.positions}
     assert exported["risk"]["ex_ante_vol"] == proposal.risk.ex_ante_vol
     assert exported["risk"]["var_1d_99"] == proposal.risk.var_1d_99
+    from cdp.contracts import Proposal
+
+    shadow = Proposal.model_validate_json(
+        (demo / "book" / week.isoformat() / "shadow_quant.json").read_text(encoding="utf-8"))
+    sh = data["weeks"][0]["shadow"]
+    assert sh["risk"]["ex_ante_vol"] == shadow.risk.ex_ante_vol
+    # Mesmo formato (listas ordenadas) na proposta do CDP e na sombra; ausente ⇒ null.
+    for block, src in ((sh["risk"], shadow.risk), (exported["risk"], proposal.risk)):
+        assert {r["factor"]: r["share"] for r in block["factor_contributions"]} == {
+            k: (v if math.isfinite(v) else None) for k, v in src.factor_contributions.items()}
+        assert {r["scenario"]: r["pnl"] for r in block["stress_tests"]} == {
+            k: (v if math.isfinite(v) else None) for k, v in src.stress_tests.items()}
+        assert [r["issuer_id"] for r in block["top_risk_contributors"]] == sorted(
+            src.top_risk_contributors, key=lambda i: (-abs(src.top_risk_contributors[i]), i))
     decision = rt.book.load_decision(week)
     assert data["weeks"][0]["decision"]["approval_hash"] == decision.approval_hash
     assert data["weeks"][0]["decision"]["mode"] == "AUTONOMOUS"
@@ -370,11 +384,49 @@ def test_backtests_and_risk_monitor(demo, tmp_path):
     assert [(x["path"], x["markdown"]) for x in bt["documents"]] == [("NOTA.md", "# Calibração\n")]
     mon = d["risk_monitor"]
     assert mon["available"] and mon["runs"][0]["date"] == "2024-03-05"
-    assert mon["latest"] == {"run_key": "2024-03-05", "file": "monitor.json"}
+    assert mon["latest"] == {"run_key": "2024-03-05", "file": "monitor.json",
+                             "md_file": "monitor.md"}
+    assert mon["timeline"][0]["file"] == "monitor.json"
     files = {f["name"]: f for f in mon["runs"][0]["files"]}
     assert files["monitor.json"]["data"] == {"var": None, "texto": MALICIOUS}
     assert files["monitor.md"]["text"] == "# Monitor\n"
     assert "<script>alert(1)" not in render_painel(d)
+
+
+def test_risk_monitor_runs_timeline_and_limits(demo, tmp_path):
+    """Saídas reais do monitor: a mais recente completa, as antigas só no resumo (timeline)."""
+    from cdp.workflow.risk_monitor import run_risk_monitor, write_risk_report
+
+    reports = tmp_path / "reports"
+    shutil.copytree(demo / "reports", reports)
+    rt = _rt(demo, reports)
+    session = date(2024, 3, 5)
+    written = []
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        for hh in (13, 18):
+            res = run_risk_monitor(rt, as_of=session,
+                                   now=datetime(2024, 3, 5, hh, 0, tzinfo=UTC))
+            written.append(write_risk_report(res, reports / "risk", rt.cfg))
+        d = painel_data(rt, now=NOW, max_risk_full_runs=1)
+    mon = d["risk_monitor"]
+    assert mon["available"] and len(mon["timeline"]) == 2
+    newest = json.loads(Path(written[-1]["json"]).read_text(encoding="utf-8"))
+    assert mon["latest"]["file"] == Path(written[-1]["json"]).name
+    assert mon["latest"]["md_file"] == Path(written[-1]["md"]).name
+    top = mon["timeline"][0]
+    assert top["file"] == mon["latest"]["file"]
+    assert top["nav_fechamento_usd"] == newest["nav"]["fechamento_usd"]
+    assert top["nav_fechamento_usd"] == rt.track().get(session).nav_end_usd
+    assert top["drawdown_fechamento"] == newest["drawdown"]["fechamento"]
+    assert sum(top["n_gatilhos"].values()) == len(newest["gatilhos"])
+    files = {f["name"]: f for f in mon["runs"][0]["files"]}
+    new_json, old_json = Path(written[-1]["json"]).name, Path(written[0]["json"]).name
+    assert files[new_json]["full"] and files[new_json]["data"]["nav"] == newest["nav"]
+    assert files[Path(written[-1]["md"]).name]["text"].startswith("#")
+    assert not files[old_json]["full"] and "data" not in files[old_json]
+    assert files[old_json]["summary"]["status"] == "ok" and "omitted" in files[old_json]
+    assert "text" not in files[Path(written[0]["md"]).name]
 
 
 def test_older_weeks_are_summarized(demo, data):
@@ -384,6 +436,10 @@ def test_older_weeks_are_summarized(demo, data):
     w = d["weeks"][0]
     assert w["detail"] == "resumo"
     assert "trades" not in w["proposal"] and w["proposal"]["positions"]
+    full_risk = data["weeks"][0]["proposal"]["risk"]
+    for key in ("factor_contributions", "stress_tests", "top_risk_contributors"):
+        assert w["proposal"]["risk"][key] == full_risk[key]
+    assert "exposures" not in w["proposal"]["risk"]
     assert w["proposal"]["summary"] == data["weeks"][0]["proposal"]["summary"]
     assert w["decision"]["journal"] is None and w["decision"]["journal_omitted"] is True
     assert w["pm_decision"] is None and w["report"]["markdown"] is None

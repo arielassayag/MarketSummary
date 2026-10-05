@@ -16,6 +16,7 @@ Fluxo diário (após o fechamento):
 Rotinas locais (plugin ``cdp`` do Claude Code; ver docs/cdp/LOCAL.md):
     cdp agenda                       (o que fazer agora: semana, prazos, fechamentos pendentes)
     cdp risk [--live] [--date D]     (monitor de risco; grava reports/risk/<D>/risco_<HHMM>.md)
+    cdp painel [--out F] [--standalone F]  (painel HTML de operação e risco para o artifact)
 
 Outros: status, verify, demo, backtest, fetch-base, kill-switch.
 """
@@ -219,6 +220,51 @@ def cmd_risk(args: argparse.Namespace) -> int:
     return 0
 
 
+DEFAULT_PAINEL = Path("artifacts/painel/cdp_painel.html")
+#: A ferramenta que publica o artifact exige que a mente leia o arquivo inteiro antes; a leitura
+#: de arquivos devolve no máximo ~25 mil tokens por chamada. Acima destes limites a skill não tenta
+#: ler nem publicar (não gasta contexto) e relata o motivo.
+PAINEL_ARTIFACT_MAX_BYTES = 100_000
+PAINEL_ARTIFACT_MAX_LINE = 2_000
+
+
+def painel_artifact_check(path: Path) -> dict:
+    """Se o HTML do painel cabe numa leitura integral pela mente (pré-requisito da publicação)."""
+    limits = {"bytes": PAINEL_ARTIFACT_MAX_BYTES, "linha": PAINEL_ARTIFACT_MAX_LINE}
+    try:
+        raw = path.read_bytes()
+    except OSError as exc:
+        return {"publicavel": False, "bytes": None, "maior_linha": None, "limites": limits,
+                "motivo": f"arquivo ilegível: {exc.__class__.__name__}"}
+    longest = max((len(x) for x in raw.decode("utf-8", errors="replace").splitlines()), default=0)
+    problems = []
+    if len(raw) > PAINEL_ARTIFACT_MAX_BYTES:
+        problems.append(f"{len(raw)} bytes (limite {PAINEL_ARTIFACT_MAX_BYTES})")
+    if longest > PAINEL_ARTIFACT_MAX_LINE:
+        problems.append(f"linha de {longest} caracteres (limite {PAINEL_ARTIFACT_MAX_LINE})")
+    return {"publicavel": not problems, "bytes": len(raw), "maior_linha": longest,
+            "limites": limits,
+            "motivo": ("grande demais para a leitura integral exigida antes de publicar: "
+                       + "; ".join(problems)) if problems else "ok"}
+
+
+def cmd_painel(args: argparse.Namespace) -> int:
+    """Grava o painel (artifact) de operação e risco; só lê o livro, a trilha e os relatórios.
+
+    A saída inclui ``artifact`` (:func:`painel_artifact_check`): as skills só leem e publicam o
+    HTML no artifact quando ``artifact.publicavel`` é ``true``.
+    """
+    from .workflow.painel import write_painel
+    from .workflow.runtime import Runtime
+
+    rt = Runtime.from_args(args)
+    out = write_painel(rt, Path(args.out),
+                       standalone_out=Path(args.standalone) if args.standalone else None)
+    out = {**out, "artifact": painel_artifact_check(Path(args.out))}
+    _print(out)
+    return 0
+
+
 def _aware(s: str) -> datetime:
     dt = datetime.fromisoformat(s)
     if dt.tzinfo is None:
@@ -318,6 +364,13 @@ def build_parser() -> argparse.ArgumentParser:
                    help="marca a carteira com cotações do momento (fonte atrasada)")
     s.add_argument("--out", default=None, help="pasta dos relatórios (padrão: <reports>/risk)")
     s.set_defaults(func=cmd_risk)
+
+    s = sub.add_parser("painel", help="painel HTML de operação e risco (artifact; só leitura)")
+    s.add_argument("--out", default=str(DEFAULT_PAINEL),
+                   help=f"arquivo do artifact (padrão: {DEFAULT_PAINEL.as_posix()})")
+    s.add_argument("--standalone", default=None,
+                   help="também grava uma cópia autônoma para abrir no navegador")
+    s.set_defaults(func=cmd_painel)
 
     s = sub.add_parser("backtest", help="backtest walk-forward semanal (sinais point-in-time)")
     s.add_argument("--start", required=True)

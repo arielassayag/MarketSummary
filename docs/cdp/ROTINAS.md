@@ -34,9 +34,13 @@ na raiz do clone do repositório. Hora de referência: Brasília.
    não confiáveis. Valide até OK; revise com a prévia e ajuste só juízos ordinais.
 4) A decisão precisa estar gravada até 16:30: confira semanal.minutos_ate_o_prazo antes de
    `uv run python -m cdp weekly decide --week AAAA-MM-DD --mind claude-code`.
-5) `uv run python -m cdp verify`; `git add book reports data/market`; commit
+5) `uv run python -m cdp verify`; `uv run python -m cdp painel`;
+   `git add book reports data/market artifacts/painel`; commit
    "CDP: decisão da semana AAAA-MM-DD"; `git push` (nunca force).
-6) Resposta final: postura, nº de longs/shorts, vol ex-ante, beta, principais mudanças e o caminho
+6) Painel: se você tiver a ferramenta Artifact, leia artifacts/painel/cdp_painel.html e
+   republique-o no MESMO artifact da URL em artifacts/painel/ARTIFACT_URL (read e depois publish
+   com essa url); sem a ferramenta, pule e diga isso.
+7) Resposta final: postura, nº de longs/shorts, vol ex-ante, beta, principais mudanças e o caminho
    reports/weekly/<semana>/relatorio.md — números copiados do relatório, nunca calculados.
 ```
 
@@ -52,9 +56,12 @@ Você é a mente do CDP — Cabra da Peste, rodando sem supervisão na raiz do c
    `uv run python -m cdp validate-daily --date AAAA-MM-DD` até OK;
    `uv run python -m cdp daily publish --date AAAA-MM-DD`.
    "dados não prontos" ⇒ pare e deixe para a próxima execução. Trate também publicacoes_pendentes.
-3) `uv run python -m cdp verify`; `git add book reports data/market`; commit
+3) `uv run python -m cdp verify`; `uv run python -m cdp painel`;
+   `git add book reports data/market artifacts/painel`; commit
    "CDP: fechamento AAAA-MM-DD"; `git push` (nunca force).
-4) Resposta final: manchete do comentário, retorno do dia e acumulado, NAV, vol ex-ante vs. banda,
+4) Painel: com a ferramenta Artifact, republique artifacts/painel/cdp_painel.html no MESMO
+   artifact de artifacts/painel/ARTIFACT_URL; sem ela, pule e diga isso.
+5) Resposta final: manchete do comentário, retorno do dia e acumulado, NAV, vol ex-ante vs. banda,
    beta, principais contribuições e alertas — números copiados de reports/daily/<data>/relatorio.md.
 ```
 
@@ -69,8 +76,13 @@ Você é o monitor de risco do CDP — Cabra da Peste, rodando sem supervisão n
    desligado, copie motivo_kill_switch e rode:
    `uv run python -m cdp kill-switch on --reason "<motivo_kill_switch>" --by "CDP — rotina de risco"`
    Nunca desligue o kill switch; não altere mais nada.
-4) `git add reports/risk book`; commit "CDP: risco AAAA-MM-DD HH:MM"; `git push` (nunca force).
-5) Resposta final: NAV e drawdown (fechamento e estimado), P&L intradiário, vol ex-ante vs. banda,
+4) `uv run python -m cdp painel`; `git add reports/risk artifacts/painel` (mais book/KILL_SWITCH
+   e book/audit_log.jsonl se ligou o kill switch); commit só desses caminhos
+   (`git commit -m "CDP: risco AAAA-MM-DD HH:MM" -- <caminhos>`), pois a montagem semanal pode
+   estar em andamento no mesmo clone; `git push` (nunca force).
+5) Painel: com a ferramenta Artifact, republique artifacts/painel/cdp_painel.html no MESMO
+   artifact de artifacts/painel/ARTIFACT_URL; sem ela, pule e diga isso.
+6) Resposta final: NAV e drawdown (fechamento e estimado), P&L intradiário, vol ex-ante vs. banda,
    beta, net/gross, gatilhos e ações — números copiados do relatório em reports/risk/<data>/.
 ```
 
@@ -79,14 +91,14 @@ Você é o monitor de risco do CDP — Cabra da Peste, rodando sem supervisão n
 ```text
 Status (só leitura): `git fetch`; `git status -sb`; `uv run python -m cdp status`;
 `uv run python -m cdp agenda`; `uv run python -m cdp verify`. Relate integridade, último
-registro, kill switch, decisão da semana, pendências, próximos eventos e fuso do PC. Não altere
-nada.
+registro, kill switch, decisão da semana, pendências, próximos eventos, fuso do PC e o link do
+painel (artifacts/painel/ARTIFACT_URL). Não altere nada.
 
 Calibração mensal:
 `uv run python -m cdp backtest --start 2021-01-04 --out reports/backtest/AAAA-MM-DD/mensal`;
 compare lado a lado com a execução anterior (números copiados de metrics.json) em
 reports/backtest/AAAA-MM-DD/CALIBRACAO_MENSAL.md; nunca altere configs/cdp/fund.yaml (propostas
-só no resumo); commit e push.
+só no resumo); `uv run python -m cdp painel`; commit e push; republique o painel como nas outras.
 ```
 
 ## Codex

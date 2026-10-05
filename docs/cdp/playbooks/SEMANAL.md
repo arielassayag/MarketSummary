@@ -89,8 +89,13 @@ fechamento de hoje, pela rotina diária.
 
 ```sh
 uv run python -m cdp verify
-git add book reports data/market && git commit -m "CDP: decisão da semana AAAA-MM-DD" && git push
+uv run python -m cdp painel
+git add book reports data/market artifacts/painel && git commit -m "CDP: decisão da semana AAAA-MM-DD" && git push
 ```
+
+`painel` regenera o painel de operação e risco (`artifacts/painel/cdp_painel.html`, só código); se
+o seu harness publica artifacts, republique-o no mesmo artifact cuja URL está em
+`artifacts/painel/ARTIFACT_URL` (`docs/cdp/LOCAL.md`, seção "Painel (artifact)").
 
 Termine com um resumo curto: postura, nº de longs/shorts, vol ex-ante, principais mudanças e o
 link/caminho do relatório semanal. Não invente números: copie-os do relatório gerado.

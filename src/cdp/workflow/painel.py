@@ -58,6 +58,7 @@ DEFAULT_FULL_WEEKS = 8
 DEFAULT_FULL_RESEARCH_WEEKS = 2
 DEFAULT_AUDIT_TAIL = 40
 DEFAULT_MAX_RISK_RUNS = 30
+DEFAULT_RISK_FULL_RUNS = 8
 MAX_RISK_FILE_BYTES = 2_000_000
 MAX_BACKTEST_DEPTH = 3
 EVIDENCE_NOTE_CHARS = 160
@@ -391,9 +392,24 @@ def _mandate_table(cfg: FundConfig) -> list[dict[str, Any]]:
 # Track record
 # ==========================================================
 
-def _risk_scalars(risk: Any) -> dict[str, Any]:
+def _risk_scalars(risk: Any, names: Mapping[str, str] | None = None) -> dict[str, Any]:
+    """Bloco de risco sem as linhas de exposição. Em ``RiskSummary`` os mapas de contribuição
+    fatorial, stress e maiores contribuintes viram listas ordenadas (mesmo formato em toda parte).
+    """
     d = risk.model_dump(mode="json")
     d.pop("exposures", None)
+    if "factor_contributions" in d:
+        d["factor_contributions"] = _sorted_map(risk.factor_contributions, by_abs=True,
+                                                key_name="factor", value_name="share")
+    if "stress_tests" in d:
+        d["stress_tests"] = _sorted_map(risk.stress_tests, key_name="scenario",
+                                        value_name="pnl")
+    if "top_risk_contributors" in d:
+        tops = _sorted_map(risk.top_risk_contributors, by_abs=True, key_name="issuer_id",
+                           value_name="share")
+        for row in tops:
+            row["name"] = (names or {}).get(row["issuer_id"])
+        d["top_risk_contributors"] = tops
     return d
 
 
@@ -595,16 +611,8 @@ def _sorted_map(m: Mapping[str, Any], *, by_abs: bool = False, key_name: str = "
 
 
 def _risk_summary(risk: Any, names: Mapping[str, str]) -> dict[str, Any]:
-    d = risk.model_dump(mode="json")
+    d = _risk_scalars(risk, names)
     d["exposures"] = _exposure_rows(risk.exposures)
-    d["factor_contributions"] = _sorted_map(risk.factor_contributions, by_abs=True,
-                                            key_name="factor", value_name="share")
-    d["stress_tests"] = _sorted_map(risk.stress_tests, key_name="scenario", value_name="pnl")
-    tops = _sorted_map(risk.top_risk_contributors, by_abs=True, key_name="issuer_id",
-                       value_name="share")
-    for row in tops:
-        row["name"] = names.get(row["issuer_id"])
-    d["top_risk_contributors"] = tops
     return d
 
 
@@ -707,7 +715,8 @@ def _proposal_compact(p: Any, proposal_hash: str | None) -> dict[str, Any]:
         "proposal_id": p.proposal_id, "week": p.week, "version": p.version,
         "created_at": p.created_at, "proposal_hash": proposal_hash,
         "is_synthetic": p.is_synthetic, "summary": _proposal_summary(p),
-        "risk": _risk_scalars(p.risk), "compliance": {
+        "risk": _risk_scalars(p.risk, {t.issuer_id: t.name for t in p.positions}),
+        "compliance": {
             k: v for k, v in _compliance(p.compliance).items() if k != "checks"},
         "positions": [{"issuer_id": t.issuer_id, "name": t.name, "side": t.side.value,
                        "weight": t.weight, "country": t.country, "sector": t.sector}
@@ -780,7 +789,7 @@ def _shadow_section(cdp: Any, shadow: Any) -> dict[str, Any]:
                    key=lambda r: (-abs(r["diff"]), r["issuer_id"]))
     return {
         "proposal_id": shadow.proposal_id, "summary": _proposal_summary(shadow),
-        "risk": _risk_scalars(shadow.risk),
+        "risk": _risk_scalars(shadow.risk, {t.issuer_id: t.name for t in shadow.positions}),
         "compliance": {k: v for k, v in _compliance(shadow.compliance).items() if k != "checks"},
         "positions": [{"issuer_id": t.issuer_id, "name": t.name, "side": t.side.value,
                        "weight": t.weight, "country": t.country, "sector": t.sector,
@@ -1535,10 +1544,46 @@ def _daily_reports(rt: Any, cfg: FundConfig, records: Sequence[Any], issues: _Is
     return out, index
 
 
-def _risk_monitor(rt: Any, issues: _Issues, limit: int) -> dict[str, Any]:
+def _risk_run_summary(raw: Any) -> dict[str, Any] | None:
+    """Resumo de uma execução do monitor (``risco_<HHMM>.json``): valores copiados do JSON
+    gravado pelo código; só a contagem de gatilhos por nível é feita aqui."""
+    if not isinstance(raw, dict):
+        return None
+
+    def sub(key: str) -> dict[str, Any]:
+        v = raw.get(key)
+        return v if isinstance(v, dict) else {}
+
+    nav, dd, live, ks = sub("nav"), sub("drawdown"), sub("intradiario"), sub("kill_switch")
+    gat = [g for g in (raw.get("gatilhos") or []) if isinstance(g, dict)]
+    levels = Counter(str(g.get("nivel")) for g in gat)
+    return {
+        "gerado_em": raw.get("gerado_em"), "data": raw.get("data"), "modo": raw.get("modo"),
+        "status": raw.get("status"), "intradiario": bool(live),
+        "nav_fechamento_usd": nav.get("fechamento_usd"), "retorno_dia": nav.get("retorno_dia"),
+        "drawdown_fechamento": dd.get("fechamento"), "estagio": dd.get("estagio"),
+        "nav_estimado_usd": live.get("nav_estimado_usd"),
+        "pnl_pct_nav": live.get("pnl_pct_nav"),
+        "drawdown_estimado": live.get("drawdown_estimado"),
+        "estagio_estimado": live.get("estagio_estimado"),
+        "cobertura_gross": live.get("cobertura_gross"),
+        "n_gatilhos": {lv: int(levels.get(lv, 0)) for lv in ("HARD", "SOFT", "INFO")},
+        "gatilhos": [str(g.get("codigo")) for g in gat],
+        "kill_switch_ativo": ks.get("ativo"),
+        "motivo_kill_switch": raw.get("motivo_kill_switch"),
+    }
+
+
+def _risk_monitor(rt: Any, issues: _Issues, limit: int, full_runs: int) -> dict[str, Any]:
+    """Saídas do monitor de risco (``reports/risk/<data>/risco_<HHMM>.{json,md}``).
+
+    Uma execução = um par ``.json``/``.md`` com o mesmo nome-base. As ``full_runs`` execuções
+    mais recentes vêm completas (JSON e Markdown); as anteriores só com o resumo (``timeline``),
+    para o painel não crescer sem limite com o monitor intradiário.
+    """
     root = Path(rt.reports_root) / "risk"
     if not root.is_dir():
-        return {"available": False, "latest": None, "runs": []}
+        return {"available": False, "latest": None, "runs": [], "timeline": []}
     groups: dict[str, list[Path]] = {}
     for path in sorted(root.rglob("*")):
         if not path.is_file() or path.suffix.lower() not in (".json", ".md"):
@@ -1546,32 +1591,55 @@ def _risk_monitor(rt: Any, issues: _Issues, limit: int) -> dict[str, Any]:
         rel = path.relative_to(root)
         key = rel.parts[0] if len(rel.parts) > 1 else ""
         groups.setdefault(key, []).append(path)
-    runs = []
-    latest = None
+    runs: list[dict[str, Any]] = []
+    timeline: list[dict[str, Any]] = []
+    latest: dict[str, Any] | None = None
+    n_full = 0
     for key in sorted(groups, reverse=True)[:max(limit, 0)]:
+        base = root / key if key else root
+        stems: dict[str, list[Path]] = {}
+        for path in groups[key]:
+            rel = path.relative_to(base).as_posix()
+            stems.setdefault(rel[: -len(path.suffix)], []).append(path)
         files = []
-        for path in sorted(groups[key], key=lambda x: x.name, reverse=True):
-            rel = path.relative_to(root / key if key else root).as_posix()
-            entry: dict[str, Any] = {"name": rel, "kind": path.suffix.lower().lstrip("."),
-                                     "sha256": _sha256_file(path)}
-            try:
-                size = path.stat().st_size
-            except OSError:
-                size = None
-            entry["bytes"] = size
-            if size is not None and size > MAX_RISK_FILE_BYTES:
-                entry["omitted"] = "arquivo grande demais para o painel"
-            elif entry["kind"] == "json":
-                entry["data"] = issues.attempt(f"Monitor de risco {key}/{rel}",
-                                               lambda path=path: _read_json(path))
-            else:
-                entry["text"] = _read_text(path)
-            files.append(entry)
-            if latest is None and entry["kind"] == "json" and entry.get("data") is not None:
-                latest = {"run_key": key or "(raiz)", "file": rel}
+        for stem in sorted(stems, reverse=True):
+            full = n_full < max(full_runs, 0)
+            n_full += 1
+            md_rel = next((p.relative_to(base).as_posix() for p in stems[stem]
+                           if p.suffix.lower() == ".md"), None)
+            for path in sorted(stems[stem], key=lambda p: (p.suffix.lower() != ".json", p.name)):
+                rel = path.relative_to(base).as_posix()
+                entry: dict[str, Any] = {"name": rel, "kind": path.suffix.lower().lstrip("."),
+                                         "sha256": _sha256_file(path), "full": full}
+                try:
+                    size: int | None = path.stat().st_size
+                except OSError:
+                    size = None
+                entry["bytes"] = size
+                if size is not None and size > MAX_RISK_FILE_BYTES:
+                    entry["omitted"] = "arquivo grande demais para o painel"
+                elif entry["kind"] == "json":
+                    raw = issues.attempt(f"Monitor de risco {key}/{rel}",
+                                         lambda path=path: _read_json(path))
+                    summary = _risk_run_summary(raw)
+                    entry["summary"] = summary
+                    if full:
+                        entry["data"] = raw
+                    else:
+                        entry["omitted"] = "execução antiga: só o resumo (limite do painel)"
+                    if summary is not None:
+                        timeline.append({"run_key": key or "(raiz)", "file": rel,
+                                         "md_file": md_rel, **summary})
+                    if latest is None and raw is not None:
+                        latest = {"run_key": key or "(raiz)", "file": rel, "md_file": md_rel}
+                elif full:
+                    entry["text"] = _read_text(path)
+                else:
+                    entry["omitted"] = "execução antiga: só o resumo (limite do painel)"
+                files.append(entry)
         runs.append({"key": key or "(raiz)", "date": key if _WEEK_DIR_RE.match(key) else None,
                      "files": files})
-    return {"available": bool(runs), "latest": latest, "runs": runs}
+    return {"available": bool(runs), "latest": latest, "runs": runs, "timeline": timeline}
 
 
 def _round(v: Any) -> float | None:
@@ -1968,7 +2036,8 @@ def painel_data(rt: Any, *, now: datetime | None = None,
                 full_weeks: int = DEFAULT_FULL_WEEKS,
                 full_research_weeks: int = DEFAULT_FULL_RESEARCH_WEEKS,
                 audit_tail: int = DEFAULT_AUDIT_TAIL,
-                max_risk_runs: int = DEFAULT_MAX_RISK_RUNS) -> dict[str, Any]:
+                max_risk_runs: int = DEFAULT_MAX_RISK_RUNS,
+                max_risk_full_runs: int = DEFAULT_RISK_FULL_RUNS) -> dict[str, Any]:
     """Retrato JSON completo e determinístico da operação do CDP (somente leitura).
 
     ``now`` (com fuso; sem fuso ⇒ UTC) fixa o relógio do painel (padrão: ``rt.now()``).
@@ -1976,7 +2045,9 @@ def painel_data(rt: Any, *, now: datetime | None = None,
     subpastas de execuções até 3 níveis (``backtest_pattern`` filtra os nomes, ex.:
     ``"bt_*"``; com o padrão ``"*"`` as notas ``*.md`` da árvore também entram).
     Semanas mais antigas que as ``full_weeks`` mais recentes vêm resumidas; as notas por
-    emissor da pesquisa só vêm nas ``full_research_weeks`` mais recentes.
+    emissor da pesquisa só vêm nas ``full_research_weeks`` mais recentes. O monitor de risco
+    traz as pastas das ``max_risk_runs`` datas mais recentes, com JSON/Markdown completos só
+    nas ``max_risk_full_runs`` execuções mais recentes (as demais, resumidas).
     """
     from ..ui.data import CDP_INVARIANTS, kill_switch_state
     from .reports import PAPER_TRADING_TEXT
@@ -2045,13 +2116,14 @@ def painel_data(rt: Any, *, now: datetime | None = None,
                    "backtests": len(backtests["runs"])},
         "export_limits": {"max_daily_reports": max_daily_reports, "full_weeks": full_weeks,
                           "full_research_weeks": full_research_weeks,
-                          "audit_tail": audit_tail, "max_risk_runs": max_risk_runs},
+                          "audit_tail": audit_tail, "max_risk_runs": max_risk_runs,
+                          "max_risk_full_runs": max_risk_full_runs},
     }
     data = {
         "meta": meta, "status": status, "track_record": track, "latest_day": latest,
         "risk": risk, "weeks": weeks, "daily_reports": daily_reports,
         "reports_index": reports_index,
-        "risk_monitor": _risk_monitor(rt, issues, max_risk_runs),
+        "risk_monitor": _risk_monitor(rt, issues, max_risk_runs, max_risk_full_runs),
         "backtests": backtests, "audit": audit, "issues": issues.items,
     }
     data = clean(data)

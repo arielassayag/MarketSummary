@@ -1,6 +1,6 @@
 ---
 name: status
-description: Checagem de saúde do CDP — Cabra da Peste, somente leitura — estado do fundo e do calendário, agenda (decisão da semana, prazos, fechamentos e publicações pendentes, próximos eventos), integridade da trilha de auditoria, do track record e da base de mercado, e estado do git (alterações locais, commits não enviados). Não altera nada. Use na tarefa agendada de segunda cedo ou quando pedirem o status do CDP.
+description: Checagem de saúde do CDP — Cabra da Peste, somente leitura — estado do fundo e do calendário, agenda (decisão da semana, prazos, fechamentos e publicações pendentes, próximos eventos), integridade da trilha de auditoria, do track record e da base de mercado, e estado do git (alterações locais, commits não enviados) e o link do painel (artifact). Não altera nada. Use na tarefa agendada de segunda cedo ou quando pedirem o status do CDP.
 argument-hint: "[sem argumentos]"
 allowed-tools:
   - Read
@@ -42,6 +42,13 @@ e das rotinas: `docs/cdp/METODOLOGIA.md` e `docs/cdp/LOCAL.md`.
    uv run python -m cdp verify
    ```
 
+5. Painel (só leitura; não gere nem republique): leia `artifacts/painel/ARTIFACT_URL` (uma linha;
+   se não existir, "painel ainda não publicado") e veja quando o HTML foi commitado:
+
+   ```sh
+   git log -1 --format=%ci -- artifacts/painel/cdp_painel.html
+   ```
+
 ## O que relatar (resumo final, até 12 linhas)
 
 - **Integridade**: resultado de `verify` (`ÍNTEGRO` ou cada falha listada).
@@ -52,5 +59,9 @@ e das rotinas: `docs/cdp/METODOLOGIA.md` e `docs/cdp/LOCAL.md`.
 - **Próximos eventos**: `proximos_eventos` (horários de Brasília).
 - **Relógio**: se `pc_menos_brasilia_horas` ≠ 0, avise que o PC não está no fuso de Brasília e que
   os horários das tarefas agendadas precisam ser convertidos (ver `docs/cdp/LOCAL.md`).
-- **Git**: atraso em relação ao remoto, commits não enviados ou alterações locais inesperadas
-  (fora de `book/`, `reports/` e `data/market/`).
+- **Painel**: URL do artifact (ou "ainda não publicado") e a data do último commit do HTML; se
+  for anterior ao último registro diário, avise que a rotina `diario` não atualizou o painel.
+- **Git**: branch diferente de `main` ou alterações rastreadas fora de `book/`, `reports/`,
+  `data/market/` e `artifacts/painel/` (as rotinas que gravam param nesse caso: precisam de um
+  clone dedicado na `main`), atraso em relação ao remoto e commits não enviados (push retido por
+  falha de `verify`, de rede ou por divergência — ver `docs/cdp/LOCAL.md`, solução de problemas).

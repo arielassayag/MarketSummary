@@ -29,6 +29,7 @@
       "Edit(/reports/daily/*/comentario.json)",
       "Edit(/reports/backtest/**)",
       "Edit(/outputs/**)",
+      "Edit(/artifacts/painel/ARTIFACT_URL)",
       "Skill(cdp:semanal)",
       "Skill(cdp:diario)",
       "Skill(cdp:risco)",
@@ -78,7 +79,8 @@
       "Edit(/reports/daily/*/comentario.schema.json)",
       "Edit(/reports/daily/*/relatorio.*)",
       "Edit(/reports/weekly/**)",
-      "Edit(/reports/risk/**)"
+      "Edit(/reports/risk/**)",
+      "Edit(/artifacts/painel/*.html)"
     ]
   }
 }

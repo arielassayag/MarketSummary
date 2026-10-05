@@ -164,7 +164,65 @@ def test_every_cli_command_in_skills_and_docs_parses():
             pytest.fail(f"{where}: a CLI rejeita `{cmd}`")
         seen.add(args.cmd)
     assert {"agenda", "risk", "validate-daily", "daily", "weekly", "validate", "verify",
-            "kill-switch", "backtest", "status"} <= seen
+            "kill-switch", "backtest", "status", "painel"} <= seen
+
+
+def test_painel_command_defaults():
+    args = build_parser().parse_args(["painel"])
+    assert Path(args.out).as_posix() == "artifacts/painel/cdp_painel.html"
+    assert args.standalone is None
+    args = build_parser().parse_args(["painel", "--out", "x.html", "--standalone", "y.html"])
+    assert (args.out, args.standalone) == ("x.html", "y.html")
+
+
+def test_cli_painel_delegates_to_write_painel(monkeypatch, tmp_path, capsys):
+    """``cdp painel`` só repassa os caminhos para ``write_painel`` e imprime o resultado (JSON)."""
+    import cdp.workflow.painel as painel
+    from cdp.__main__ import main
+
+    calls = []
+
+    def fake(rt, out_path, *, standalone_out=None, now=None, **kw):
+        calls.append((rt, out_path, standalone_out, now, kw))
+        return {"path": Path(out_path).as_posix(), "sha256": "0" * 64}
+
+    monkeypatch.setattr(painel, "write_painel", fake)
+    out, local = tmp_path / "p" / "cdp_painel.html", tmp_path / "local.html"
+    base = ["--book", str(tmp_path / "book"), "--market", str(tmp_path / "market"),
+            "--reports", str(tmp_path / "reports")]
+    assert main(base + ["painel", "--out", str(out), "--standalone", str(local)]) == 0
+    printed = json.loads(capsys.readouterr().out)
+    check = printed.pop("artifact")
+    assert printed == {"path": out.as_posix(), "sha256": "0" * 64}
+    assert check["publicavel"] is False and "ilegível" in check["motivo"]  # o falso não grava
+    (rt, out_path, standalone, now, kw), = calls
+    assert out_path == out and standalone == local and now is None and kw == {}
+    assert rt.book_root == tmp_path / "book"
+    assert main(base + ["painel", "--out", str(out)]) == 0
+    assert calls[-1][2] is None
+
+
+def test_painel_artifact_check_limits(tmp_path):
+    """A skill só lê e publica o painel quando ele cabe numa leitura integral."""
+    from cdp.__main__ import (
+        PAINEL_ARTIFACT_MAX_BYTES,
+        PAINEL_ARTIFACT_MAX_LINE,
+        painel_artifact_check,
+    )
+
+    small = tmp_path / "ok.html"
+    small.write_text("<html>\n<p>DADOS SIMULADOS</p>\n</html>\n", encoding="utf-8")
+    ok = painel_artifact_check(small)
+    assert ok["publicavel"] is True and ok["motivo"] == "ok"
+    assert ok["bytes"] == small.stat().st_size and ok["maior_linha"] == len("<p>DADOS SIMULADOS</p>")
+    one_line = tmp_path / "linha.html"
+    one_line.write_text("x" * (PAINEL_ARTIFACT_MAX_LINE + 1), encoding="utf-8")
+    bad = painel_artifact_check(one_line)
+    assert bad["publicavel"] is False and "linha de" in bad["motivo"]
+    big = tmp_path / "grande.html"
+    big.write_text(("y" * 99 + "\n") * (PAINEL_ARTIFACT_MAX_BYTES // 100 + 1), encoding="utf-8")
+    assert painel_artifact_check(big)["publicavel"] is False
+    assert painel_artifact_check(tmp_path / "nao_existe.html")["publicavel"] is False
 
 
 def test_skill_commands_cover_their_workflow():
@@ -180,6 +238,63 @@ def test_skill_commands_cover_their_workflow():
     assert "backtest" in by_skill["calibracao"]
     for name in SKILLS:
         assert "agenda" in by_skill[name] or name == "calibracao" and "backtest" in by_skill[name]
+
+
+PAINEL_SKILLS = ("semanal", "diario", "risco", "calibracao")
+PAINEL_HTML = "artifacts/painel/cdp_painel.html"
+PAINEL_URL = "artifacts/painel/ARTIFACT_URL"
+
+
+@pytest.mark.parametrize("name", PAINEL_SKILLS)
+def test_writer_skills_end_by_republishing_the_painel(name: str):
+    path = PLUGIN / "skills" / name / "SKILL.md"
+    body = path.read_text(encoding="utf-8")
+    assert "Artifact" in _frontmatter(path)["allowed-tools"]
+    cmds = _commands(body)
+    assert "uv run python -m cdp painel" in cmds
+    # Ordem: painel (código) → commit/push principal (inclui o HTML) → republicação no artifact.
+    i_painel = body.index("uv run python -m cdp painel")
+    i_commit = body.index('git commit -m "CDP: ')
+    i_read, i_pub = body.index('action: "read"'), body.index('action: "publish"')
+    assert i_painel < i_commit < i_read < i_pub
+    assert re.search(r"^\s*git add .*\bartifacts/painel\b", body, re.MULTILINE)
+    # Mesmo artifact: URL do arquivo; só a primeira publicação cria (e commita) a URL.
+    flat = " ".join(body.split())
+    assert PAINEL_URL in flat and PAINEL_HTML in flat and 'icon: "chart"' in flat
+    assert f'git commit -m "CDP: URL do painel" -- {PAINEL_URL}' in flat
+    assert "sem a ferramenta `artifact`" in flat.lower()  # headless/Codex: pula e relata
+    assert "não insista" in flat  # falha ou recusa da ferramenta não bloqueia a rotina
+    tail = body[body.lower().rindex("resumo final"):]
+    assert "painel" in tail.lower()
+
+
+def test_status_only_reports_the_painel_url():
+    path = PLUGIN / "skills" / "status" / "SKILL.md"
+    body = path.read_text(encoding="utf-8")
+    assert PAINEL_URL in body
+    assert "Artifact" not in _frontmatter(path).get("allowed-tools", [])
+    assert 'action: "publish"' not in body
+    assert not any(" painel" in c for c in _commands(body))
+
+
+def test_risk_skill_commits_only_its_own_paths():
+    """A montagem semanal pode estar em andamento no mesmo clone: o risco não leva o livro junto."""
+    body = (PLUGIN / "skills" / "risco" / "SKILL.md").read_text(encoding="utf-8")
+    assert 'git commit -m "CDP: risco AAAA-MM-DD HH:MM" -- reports/risk artifacts/painel' in body
+    assert "git add reports/risk artifacts/painel" in body
+    assert not re.search(r"^\s*git add .*\bbook\b", body, re.MULTILINE)
+    assert "book/KILL_SWITCH" in body and "book/audit_log.jsonl" in body
+
+
+def test_local_guide_documents_the_painel_artifact():
+    local = (ROOT / "docs" / "cdp" / "LOCAL.md").read_text(encoding="utf-8")
+    assert "## 10. Painel (artifact)" in local
+    for needle in (PAINEL_URL, PAINEL_HTML, "uv run python -m cdp painel", "--standalone",
+                   "`read`", "`publish`", "Nunca criam um artifact novo"):
+        assert needle in local, needle
+    for doc in ("ROTINAS.md", "playbooks/DIARIO.md", "playbooks/SEMANAL.md"):
+        text = (ROOT / "docs" / "cdp" / doc).read_text(encoding="utf-8")
+        assert "uv run python -m cdp painel" in text and PAINEL_URL in text, doc
 
 
 # ----------------------------------------------------------------------------- permissões
@@ -229,8 +344,11 @@ def test_project_settings_permissions():
     for mind_file in ("book/2026-10-05/inputs/research_pack.json",
                       "book/2026-10-05/inputs/pm_decision.json",
                       "reports/daily/2026-10-05/comentario.json",
-                      "reports/backtest/2026-11-02/CALIBRACAO_MENSAL.md"):
+                      "reports/backtest/2026-11-02/CALIBRACAO_MENSAL.md", PAINEL_URL):
         assert _matches(a, mind_file) and not _matches(d, mind_file), mind_file
+    # O HTML do painel é gerado pelo código; a ferramenta Artifact só vale dentro das skills.
+    assert _matches(d, PAINEL_HTML) and not _matches(a, PAINEL_HTML)
+    assert not any(r == "Artifact" or r.startswith("Artifact(") for r in allow)
     for code_file in ("book/audit_log.jsonl", "book/KILL_SWITCH",
                       "book/track_record/records/2026-10-05.json",
                       "book/2026-10-05/decision_v1.json", "book/2026-10-05/proposal_v1.json",

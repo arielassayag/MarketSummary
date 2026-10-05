@@ -38,9 +38,13 @@ template determinístico no lugar do comentário).
 uv run python -m cdp validate-daily --date AAAA-MM-DD
 uv run python -m cdp daily publish --date AAAA-MM-DD
 uv run python -m cdp verify
-git add book reports data/market && git commit -m "CDP: fechamento AAAA-MM-DD" && git push
+uv run python -m cdp painel
+git add book reports data/market artifacts/painel && git commit -m "CDP: fechamento AAAA-MM-DD" && git push
 ```
 
 `publish` valida o comentário (sem números livres, fatos existentes) e gera o relatório diário
-(`relatorio.md` e `relatorio.html`). Termine com um resumo curto (manchete, retorno do dia, NAV,
-vol ex-ante, alertas), copiando os números do relatório.
+(`relatorio.md` e `relatorio.html`). `painel` regenera o painel de operação e risco
+(`artifacts/painel/cdp_painel.html`, só código); se o seu harness publica artifacts, republique-o
+no mesmo artifact cuja URL está em `artifacts/painel/ARTIFACT_URL` (`docs/cdp/LOCAL.md`, seção
+"Painel (artifact)"). Termine com um resumo curto (manchete, retorno do dia, NAV, vol ex-ante,
+alertas), copiando os números do relatório.

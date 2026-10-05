@@ -13,7 +13,11 @@ EM CÓDIGO:
 
 Gatilhos HARD do mandato (stop de drawdown ``hard_stop``/``stop_out`` e stops de squeeze) geram a
 ação determinística ``kill-switch: <motivo>``. O kill switch só bloqueia risco novo (redução
-continua permitida) e nunca afrouxa limites. Ausente continua ausente: cotação sem negócio hoje,
+continua permitida) e nunca afrouxa limites. Depois que um humano o desliga (``KILL_SWITCH_OFF`` na
+trilha de auditoria), a condição que ele já revisou não o religa: só uma piora (estágio pior da
+escada ou short novo no stop) volta a ser HARD; o resto vira SOFT "já revisado por humano".
+O stop de squeeze escala para o livro inteiro (o corte de 50% de um short específico não é
+automático): ver :data:`SQUEEZE_STOP_ACTION`. Ausente continua ausente: cotação sem negócio hoje,
 câmbio indisponível ou ADTV desconhecido nunca viram zero. O monitor não altera livro, trilha nem
 dados; grava apenas o relatório em ``reports/risk/<data>/risco_<HHMM>.md`` (e o ``.json``).
 """
@@ -22,6 +26,7 @@ from __future__ import annotations
 
 import json
 import math
+import re
 from collections.abc import Callable, Iterable, Iterator
 from dataclasses import asdict, dataclass
 from datetime import date, datetime
@@ -32,11 +37,14 @@ from zoneinfo import ZoneInfo
 import pandas as pd
 
 from .. import SIMULATED_DATA_NOTICE
+from ..audit import AuditLog
 from ..calendar import first_session_of_week, previous_session
 from ..config import FundConfig
 from ..contracts import DailyPosition, DailyRecord, Proposal, Side
+from ..hashing import sha256_obj
 from .daily import short_entry_prices
 from .memo import fmt_days, fmt_num, fmt_pct, fmt_usd, fmt_usd_mm
+from .track_record import DAILY_RECORD_EVENT
 
 if TYPE_CHECKING:  # pragma: no cover - só para tipos
     from .runtime import Runtime
@@ -193,6 +201,16 @@ def squeeze_stop_checks(cfg: FundConfig, shorts: list[dict], history: Iterable[D
     return out
 
 
+#: O que o código realmente faz com um stop de squeeze. O corte de 50% de um short específico
+#: ainda não é automático: o stop escala para o livro inteiro (kill switch ⇒ só redução de risco;
+#: no rebalanceamento seguinte a carteira é reconstruída no caminho ``reduzir-risco``, com gross
+#: × 0,5). Regra registrada em ``docs/cdp/METODOLOGIA.md`` (seção 7).
+SQUEEZE_STOP_ACTION = (
+    "ligar o kill switch: o livro inteiro fica só-redução e, no próximo rebalanceamento, o código "
+    "reconstrói a carteira com gross × 0,5 (caminho reduzir-risco); o corte de 50% deste short "
+    "não é automático — revisão humana do nome")
+
+
 def _squeeze_triggers(cfg: FundConfig, stops: list[dict], origem: str) -> list[Trigger]:
     out: list[Trigger] = []
     sq = cfg.squeeze
@@ -202,17 +220,174 @@ def _squeeze_triggers(cfg: FundConfig, stops: list[dict], origem: str) -> list[T
                 "HARD", f"stop_squeeze_posicao_{s['ticker']}",
                 f"STOP DE SQUEEZE {origem}: short {s['ticker']} ({s['emissor']}) perde "
                 f"{fmt_pct(s['perda_desde_entrada'])} desde a entrada (limite "
-                f"{fmt_pct(sq.stop_short_position_loss)}) — mandato exige cortar 50% da posição",
-                "ligar o kill switch (só redução de risco); corte de 50% do short no próximo "
-                "fechamento/rebalanceamento"))
+                f"{fmt_pct(sq.stop_short_position_loss)}) — mandato pede cortar 50% do short; "
+                "o código escala para o livro inteiro (só redução, gross × 0,5 no rebalanceamento)",
+                SQUEEZE_STOP_ACTION))
         if s["stop_nav"]:
             out.append(Trigger(
                 "HARD", f"stop_squeeze_nav_{s['ticker']}",
                 f"STOP DE SQUEEZE {origem}: short {s['ticker']} ({s['emissor']}) perde "
                 f"{fmt_pct(s['perda_pct_nav'])} do NAV desde a entrada (limite "
-                f"{fmt_pct(sq.stop_short_nav_loss)}) — mandato exige cortar 50% da posição",
-                "ligar o kill switch (só redução de risco); corte de 50% do short no próximo "
-                "fechamento/rebalanceamento"))
+                f"{fmt_pct(sq.stop_short_nav_loss)}) — mandato pede cortar 50% do short; "
+                "o código escala para o livro inteiro (só redução, gross × 0,5 no rebalanceamento)",
+                SQUEEZE_STOP_ACTION))
+    return out
+
+
+# ----------------------------------------------------------------------------- revisão humana
+
+_DRAWDOWN_CODE = re.compile(r"^drawdown_(soft_stop|hard_stop|stop_out)_")
+_SQUEEZE_CODE = re.compile(r"^stop_squeeze_(?:posicao|nav)_(.+)$")
+
+
+def _squeeze_codes(stops: Iterable[dict]) -> dict[str, float]:
+    """Código do gatilho de squeeze → preço médio de entrada do short acionado."""
+    out: dict[str, float] = {}
+    for s in stops:
+        avg = _num(s.get("preco_medio_entrada"))
+        if avg is None:
+            continue
+        if s.get("stop_posicao"):
+            out[f"stop_squeeze_posicao_{s['ticker']}"] = avg
+        if s.get("stop_nav"):
+            out[f"stop_squeeze_nav_{s['ticker']}"] = avg
+    return out
+
+
+def _parse_ts(value: object) -> datetime | None:
+    if isinstance(value, datetime):
+        return value if value.tzinfo is not None else None
+    try:
+        ts = datetime.fromisoformat(str(value))
+    except (TypeError, ValueError):
+        return None
+    return ts if ts.tzinfo is not None else None
+
+
+def _reported_before(risk_root: Path, base_date: date, off_ts: datetime
+                     ) -> tuple[int, dict[str, set[float]]]:
+    """Gatilhos que os relatórios de risco já mostravam ao humano antes do desligamento.
+
+    Considera só relatórios calculados sobre o mesmo registro-base (``base.registro``) e gerados até
+    ``off_ts``: os HARD e os já rebaixados por revisão anterior. Devolve o pior estágio da escada de
+    drawdown visto e os códigos de squeeze com o preço médio de entrada de cada short.
+    """
+    rank = 0
+    codes: dict[str, set[float]] = {}
+    if not risk_root.is_dir():
+        return rank, codes
+    for folder in sorted(p for p in risk_root.iterdir() if p.is_dir()):
+        try:
+            if date.fromisoformat(folder.name) < base_date:
+                continue
+        except ValueError:
+            continue
+        for path in sorted(folder.glob("risco_*.json")):
+            try:
+                res = json.loads(path.read_text(encoding="utf-8"))
+            except (OSError, ValueError):
+                continue
+            if not isinstance(res, dict) or (res.get("base") or {}).get("registro") != str(base_date):
+                continue
+            gen = _parse_ts(res.get("gerado_em"))
+            if gen is None or gen > off_ts:
+                continue
+            downgraded = set((res.get("revisao_humana") or {}).get("codigos_rebaixados") or [])
+            sq = res.get("squeeze") or {}
+            entries = _squeeze_codes([*(sq.get("stops_fechamento") or []),
+                                      *(sq.get("stops_intradiario") or [])])
+            for t in res.get("gatilhos") or []:
+                code = str(t.get("codigo", ""))
+                if t.get("nivel") != "HARD" and code not in downgraded:
+                    continue
+                m = _DRAWDOWN_CODE.match(code)
+                if m:
+                    rank = max(rank, STAGE_RANK[m.group(1)])
+                elif code in entries:
+                    codes.setdefault(code, set()).add(entries[code])
+    return rank, codes
+
+
+def _human_review(rt: Runtime, cfg: FundConfig, history: list[DailyRecord]) -> dict | None:
+    """O que um humano já revisou ao desligar o kill switch pela última vez (``None`` se nunca).
+
+    Base: o último registro diário já gravado na trilha quando veio o ``KILL_SWITCH_OFF`` (ordem
+    da trilha de auditoria encadeada). Revisado = estágio da escada de drawdown e stops de squeeze
+    desse registro, mais os gatilhos HARD dos relatórios de risco sobre esse mesmo registro gerados
+    até o desligamento. Só uma piora religa o kill switch: estágio pior da escada ou short novo no
+    stop (ou o mesmo short com outro preço médio de entrada, isto é, risco novo).
+    """
+    path = rt.book_root / "audit_log.jsonl"
+    if not path.is_file():
+        return None
+    try:
+        events = AuditLog(path).events()
+    except (OSError, ValueError):
+        return None
+    offs = [i for i, e in enumerate(events) if e.event_type == "KILL_SWITCH_OFF"]
+    if not offs:
+        return None
+    off = events[offs[-1]]
+    known = {e.payload_hash for e in events[:offs[-1]] if e.event_type == DAILY_RECORD_EVENT}
+    base = None
+    for r in history:  # do mais antigo para o mais recente
+        if sha256_obj(r.record_hash) in known:
+            base = r
+    review: dict[str, Any] = {
+        "desligado_em": off.ts, "por": off.actor,
+        "registro_base": base.date if base else None,
+        "estagio_revisado": "normal", "codigos_revisados": [], "codigos_rebaixados": [],
+    }
+    if base is None:
+        return review
+    rank = STAGE_RANK.get(drawdown_stage(base.risk.drawdown, cfg) or "", 0)
+    shorts = [{"ticker": p.ticker, "emissor": p.issuer_id, "acoes": p.shares,
+               "preco_local": p.price_local, "fx": _fx_from_position(p)}
+              for p in base.positions if p.market_value_usd < 0]
+    before = [r for r in reversed(history) if r.date < base.date]
+    codes = {k: {v} for k, v in
+             _squeeze_codes(squeeze_stop_checks(cfg, shorts, before, base.nav_end_usd)).items()}
+    rep_rank, rep_codes = _reported_before(rt.reports_root / RISK_DIRNAME, base.date, off.ts)
+    for k, v in rep_codes.items():
+        codes.setdefault(k, set()).update(v)
+    rank = max(rank, rep_rank)
+    review["estagio_revisado"] = next(s for s, r in STAGE_RANK.items() if r == rank)
+    review["codigos_revisados"] = sorted(codes)
+    review["_entradas"] = codes
+    return review
+
+
+def _apply_review(triggers: list[Trigger], review: dict | None, entries: dict[str, float]
+                  ) -> list[Trigger]:
+    """Rebaixa a SOFT os gatilhos HARD que o humano já revisou e que não pioraram."""
+    if review is None:
+        return triggers
+    rank = STAGE_RANK[review["estagio_revisado"]]
+    seen: dict[str, set[float]] = review.get("_entradas", {})
+    when = review["desligado_em"]
+    when_txt = when.isoformat(timespec="minutes") if isinstance(when, datetime) else str(when)
+    out: list[Trigger] = []
+    for t in triggers:
+        reviewed = False
+        if t.nivel == "HARD":
+            m = _DRAWDOWN_CODE.match(t.codigo)
+            if m:
+                reviewed = STAGE_RANK[m.group(1)] <= rank
+            elif _SQUEEZE_CODE.match(t.codigo):
+                avg = entries.get(t.codigo)
+                reviewed = avg is not None and any(
+                    math.isclose(avg, x, rel_tol=1e-9, abs_tol=1e-12)
+                    for x in seen.get(t.codigo, ()))
+        if not reviewed:
+            out.append(t)
+            continue
+        review["codigos_rebaixados"].append(t.codigo)
+        out.append(Trigger(
+            "SOFT", t.codigo,
+            f"{t.motivo} (já revisado por humano: kill switch desligado em {when_txt} por "
+            f"{review['por']}; só uma piora religa)",
+            "condição já revisada por humano; o código aplica a escada e os limites no próximo "
+            "rebalanceamento"))
     return out
 
 
@@ -647,6 +822,13 @@ def run_risk_monitor(rt: Runtime, *, as_of: date | None = None, live: bool = Fal
     triggers += _squeeze_triggers(cfg, [s for s in live_stops if s["ticker"] not in closed_hits],
                                   "intradiário")
     out["alertas_do_registro"] = list(rec.alerts)
+    if not ks["ativo"]:
+        # Kill switch desligado por humano: condição já revisada não o religa; só piora religa.
+        review = _human_review(rt, cfg, history_all)
+        entries = {**_squeeze_codes(live_stops), **_squeeze_codes(stops)}
+        triggers = _apply_review(triggers, review, entries)
+        if review is not None:
+            out["revisao_humana"] = {k: v for k, v in review.items() if not k.startswith("_")}
     return _finish(out, triggers, limitations, ks)
 
 
@@ -698,6 +880,14 @@ def render_risk_markdown(res: dict, cfg: FundConfig) -> str:
     if base:
         L.append(f"- Base: registro de {base['registro']} (semana vigente "
                  f"{base['semana_vigente']}; hash `{str(base['registro_hash'])[:12]}`)")
+    rev = res.get("revisao_humana")
+    if rev:
+        when = rev.get("desligado_em")
+        when_txt = when.isoformat(timespec="minutes") if isinstance(when, datetime) else str(when)
+        L.append(f"- Revisão humana: kill switch desligado em {when_txt} por {rev.get('por')} "
+                 f"(registro-base {rev.get('registro_base')}); só uma piora religa"
+                 + (f" — rebaixados a SOFT: {', '.join(rev['codigos_rebaixados'])}"
+                    if rev.get("codigos_rebaixados") else ""))
     pend = res.get("decisao_pendente")
     if pend:
         if "erro" in pend:

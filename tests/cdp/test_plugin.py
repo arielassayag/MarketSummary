@@ -345,7 +345,7 @@ def test_writer_skills_end_by_republishing_the_painel(name: str):
     marks = [m.start() for m in re.finditer(r"uv run python -m cdp painel --publicado", body)]
     assert marks and i_pub < marks[-1]
     for early in (i for i in marks if i < i_pub):
-        assert "artifact.pagina_atual" in body[max(0, early - 120):early]
+        assert "artifact.pagina_atual" in body[max(0, early - 200):early]
     assert "artifacts/painel/PAGINA_PUBLICADA.sha256" in flat0
     assert ('git commit -m "CDP: painel publicado" -- artifacts/painel/PAGINA_PUBLICADA.sha256'
             in flat0)

@@ -15,7 +15,18 @@ dependencies = [
     "PyYAML>=6.0",
     "python-dotenv>=1.0",
     "tzdata>=2024.1",
+    "numpy>=2.0",
+    "scipy>=1.13",
+    "cvxpy>=1.5",
+    "clarabel>=0.9",
+    "yfinance>=0.2.50",
+    "pyarrow>=16",
+    "plotly>=5.22",
+    "exchange-calendars>=4.5",
 ]
+
+[project.scripts]
+cdp = "cdp.__main__:main"
 
 [project.optional-dependencies]
 gemini = [
@@ -25,9 +36,15 @@ dev = [
     "pytest>=8.0",
     "ruff>=0.5",
 ]
+ai = [
+    "anthropic>=0.40",
+]
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+cdp = ["workflow/*.html"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -37,7 +54,8 @@ addopts = "-q"
 line-length = 100
 target-version = "py312"
 src = ["src", "tests"]
-exclude = ["market-close-eval", ".venv"]
+# pesquisa/: material de trabalho da mente arquivado para auditoria (não é código do pacote)
+exclude = ["market-close-eval", ".venv", "pesquisa"]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "UP", "B"]

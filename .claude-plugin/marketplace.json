@@ -1,0 +1,17 @@
+{
+  "name": "cdp-cabra-da-peste",
+  "description": "Marketplace do CDP — Cabra da Peste: rotinas locais do fundo long/short LatAm autônomo (montagem semanal, fechamento diário, risco, saúde e calibração).",
+  "owner": {
+    "name": "CDP — Cabra da Peste",
+    "url": "https://github.com/arielassayag/MarketSummary"
+  },
+  "plugins": [
+    {
+      "name": "cdp",
+      "source": "./plugins/cdp",
+      "description": "Skills do CDP — Cabra da Peste para tarefas agendadas no PC local: montagem semanal da carteira, fechamento diário com comentário, monitor de risco intradiário, saúde da trilha e calibração mensal.",
+      "category": "finance",
+      "tags": ["cdp", "long-short", "latam", "paper-trading", "rotinas"]
+    }
+  ]
+}

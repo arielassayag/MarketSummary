@@ -1,0 +1,9 @@
+# CDP — Cabra da Peste: arquivos com hash na trilha de auditoria precisam dos MESMOS bytes em
+# qualquer sistema. Sem conversão automática de fim de linha (ex.: core.autocrlf=true no Windows),
+# senão `cdp verify` acusaria hashes divergentes depois do clone.
+book/** -text
+data/** -text
+reports/** -text
+
+# Scripts de shell sempre com LF (rodam no macOS/Linux/WSL/Git Bash).
+*.sh text eol=lf

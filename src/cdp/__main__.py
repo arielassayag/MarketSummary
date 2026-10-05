@@ -1,0 +1,464 @@
+"""CLI do CDP — Cabra da Peste (interface comum para Claude Code e Codex).
+
+Fluxo semanal (primeiro pregão da semana na B3):
+    cdp weekly prepare --date D --mind claude-code|codex
+    (a mente escreve book/<D>/inputs/research_pack.json e pm_decision.json)
+    cdp validate --week D
+    cdp weekly preview --week D --mind ...   (opcional: revisão pré-trade, não grava)
+    cdp weekly decide --week D --mind ...
+
+Fluxo diário (após o fechamento):
+    cdp daily --date D
+    (a mente escreve reports/daily/<D>/comentario.json)
+    cdp validate-daily --date D             (valida o comentário sem publicar)
+    cdp daily publish --date D
+
+Rotinas locais (plugin ``cdp`` do Claude Code; ver docs/cdp/LOCAL.md):
+    cdp agenda                       (o que fazer agora: semana, prazos, fechamentos pendentes)
+    cdp risk [--live] [--date D]     (monitor de risco; grava reports/risk/<D>/risco_<HHMM>.md)
+    cdp painel [--out-dir D] [--sem-local]  (painel de operação e risco: index.html + data.json)
+    cdp painel --publicado           (registra a página publicada no artifact; só depois de publicar)
+
+Outros: status, verify, demo, backtest, fetch-base, kill-switch.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+from datetime import date, datetime
+from pathlib import Path
+
+from . import SIMULATED_DATA_NOTICE
+
+DEFAULT_BOOK = Path("book")
+DEFAULT_MARKET = Path("data/market")
+DEFAULT_REPORTS = Path("reports")
+DEFAULT_UNIVERSE = Path("data/universe/latam_universe.csv")
+
+
+def _d(s: str) -> date:
+    return date.fromisoformat(s)
+
+
+def _today_brt() -> date:
+    from zoneinfo import ZoneInfo
+
+    return datetime.now(ZoneInfo("America/Sao_Paulo")).date()
+
+
+def _print(obj) -> None:
+    print(json.dumps(obj, ensure_ascii=False, indent=2, default=str))
+
+
+# ----------------------------------------------------------------------------- comandos
+
+
+def cmd_status(args: argparse.Namespace) -> int:
+    from .calendar import first_session_of_week, is_rebalance_day, open_markets
+    from .workflow.runtime import Runtime
+
+    d = args.date or _today_brt()
+    rt = Runtime.from_args(args)
+    week = first_session_of_week(d)
+    info = {
+        "data": d, "pregao_b3": open_markets(d).get("BR"), "mercados_abertos": open_markets(d),
+        "dia_de_rebalanceamento": is_rebalance_day(d), "semana": week,
+        "kill_switch": rt.kill_switch_active(),
+        "decisao_da_semana": bool(week and rt.book.list_decisions(week)),
+        "ultimo_registro_diario": rt.last_record_date(),
+        "nav_atual_usd": rt.current_nav(),
+        "ultimo_pregao_gravado": rt.store_last_date(),
+    }
+    _print(info)
+    return 0
+
+
+def cmd_fetch_base(args: argparse.Namespace) -> int:
+    from .data.store import MarketStore
+
+    store = MarketStore(args.market)
+    manifest = store.build_base(Path(args.universe), _d(args.as_of), start=_d(args.start))
+    _print({"base": manifest.snapshot_id, "as_of": manifest.as_of,
+            "arquivos": len(manifest.files), "faltantes": manifest.missing_tickers[:20],
+            "limitacoes": manifest.limitations})
+    return 0
+
+
+def cmd_weekly_prepare(args: argparse.Namespace) -> int:
+    from .calendar import is_rebalance_day
+    from .workflow.runtime import Runtime
+
+    d = args.date or _today_brt()
+    if not args.force and not is_rebalance_day(d):
+        print(f"{d} não é o primeiro pregão da semana na B3 — nada a fazer.")
+        return 0
+    rt = Runtime.from_args(args)
+    out = rt.weekly_prepare(d, mind=args.mind, live=not args.offline)
+    _print(out)
+    return 0
+
+
+def cmd_validate(args: argparse.Namespace) -> int:
+    from .workflow.runtime import Runtime
+
+    rt = Runtime.from_args(args)
+    ok, issues = rt.validate_inputs(_d(args.week), mind=args.mind)
+    print("OK" if ok else "FALHOU")
+    for i in issues:
+        print(f"- {i}")
+    return 0 if ok else 1
+
+
+def cmd_weekly_decide(args: argparse.Namespace) -> int:
+    from .workflow.runtime import Runtime
+
+    rt = Runtime.from_args(args)
+    out = rt.weekly_decide(_d(args.week), mind=args.mind)
+    _print(out)
+    return 0
+
+
+def cmd_weekly_preview(args: argparse.Namespace) -> int:
+    from .workflow.runtime import Runtime
+
+    rt = Runtime.from_args(args)
+    out = rt.weekly_preview(_d(args.week), mind=args.mind)
+    if args.out:
+        Path(args.out).parent.mkdir(parents=True, exist_ok=True)
+        Path(args.out).write_text(json.dumps(out, ensure_ascii=False, indent=2, default=str),
+                                  encoding="utf-8")
+    _print({k: v for k, v in out.items() if k not in ("posicoes", "sombra_quant", "tentativas")})
+    return 0
+
+
+def cmd_daily(args: argparse.Namespace) -> int:
+    from .workflow.runtime import Runtime
+
+    rt = Runtime.from_args(args)
+    d = args.date or _today_brt()
+    if args.action == "publish":
+        out = rt.daily_publish(d)
+    else:
+        out = rt.daily_close(d, live=not args.offline, mind=args.mind)
+    _print(out)
+    return 0
+
+
+def cmd_validate_daily(args: argparse.Namespace) -> int:
+    """Valida ``comentario.json`` do dia SEM publicar (``daily publish`` é imutável)."""
+    from .workflow.agenda import validate_daily_commentary
+    from .workflow.runtime import Runtime
+
+    ok, issues = validate_daily_commentary(Runtime.from_args(args), args.date or _today_brt())
+    print("OK" if ok else "FALHOU")
+    for i in issues:
+        print(f"- {i}")
+    return 0 if ok else 1
+
+
+def cmd_verify(args: argparse.Namespace) -> int:
+    from .workflow.runtime import Runtime
+
+    rt = Runtime.from_args(args)
+    ok, msgs = rt.verify_all()
+    print("ÍNTEGRO" if ok else "FALHA DE INTEGRIDADE")
+    for m in msgs:
+        print(f"- {m}")
+    return 0 if ok else 1
+
+
+def cmd_kill_switch(args: argparse.Namespace) -> int:
+    from .workflow.runtime import Runtime
+
+    rt = Runtime.from_args(args)
+    if args.state == "on":
+        if not args.reason or len(args.reason) < 10:
+            print("Informe --reason com pelo menos 10 caracteres.", file=sys.stderr)
+            return 2
+        rt.set_kill_switch(True, args.reason, args.by)
+    else:
+        rt.set_kill_switch(False, args.reason or "desligado", args.by)
+    print(f"Kill switch: {args.state}")
+    return 0
+
+
+def cmd_demo(args: argparse.Namespace) -> int:
+    from .workflow.demo import run_demo
+
+    print(f"{SIMULATED_DATA_NOTICE}: demonstração offline com mercado sintético.")
+    out = run_demo(Path(args.out), days=args.days)
+    _print(out)
+    return 0
+
+
+def cmd_agenda(args: argparse.Namespace) -> int:
+    from .workflow.agenda import agenda
+    from .workflow.runtime import Runtime
+
+    rt = Runtime.from_args(args)
+    _print(agenda(rt, now=args.agora))
+    return 0
+
+
+def cmd_risk(args: argparse.Namespace) -> int:
+    from .workflow.risk_monitor import (
+        RISK_DIRNAME,
+        run_risk_monitor,
+        summary_view,
+        write_risk_report,
+    )
+    from .workflow.runtime import Runtime
+
+    rt = Runtime.from_args(args)
+    res = run_risk_monitor(rt, as_of=args.date, live=args.live)
+    out_root = Path(args.out) if args.out else Path(args.reports) / RISK_DIRNAME
+    paths = write_risk_report(res, out_root, rt.cfg)
+    view = summary_view(res)
+    view["relatorio"] = paths
+    _print(view)
+    return 0
+
+
+DEFAULT_PAINEL_DIR = Path("artifacts/painel")
+
+
+def painel_artifact_check(out_dir: Path, *, page_changed: bool) -> dict:
+    """O que a mente precisa ler por inteiro antes de publicar, se isso cabe no orçamento e o que
+    publicar.
+
+    A ferramenta Artifact exige a página (``file_path``) em toda publicação: ``index.html`` (a
+    casca, pequena) e ``data.json`` são lidos e publicados sempre; o estilo e o script versionados
+    (``painel-<versão>.css``/``.js``) só quando a página mudou em relação à última PUBLICADA
+    (``page_changed``, ver :func:`cdp.workflow.painel.mark_published`) — os já publicados ficam
+    no artifact. Publicável quando ``data.json`` tem até ``DATA_MAX_BYTES`` bytes e linhas de até
+    ``DATA_MAX_LINE`` caracteres e os arquivos da página até ``PAGE_MAX_BYTES``/``PAGE_MAX_LINE``.
+    Devolve também ``publicar`` (``file_path`` e ``files`` prontos para a ferramenta), a URL de
+    ``ARTIFACT_URL`` (``None`` se o arquivo não existe: não publique) e a versão da página
+    registrada como publicada (``pagina_publicada``)."""
+    from .workflow.painel import ASSET_RE, DATA_NAME, INDEX_NAME, URL_NAME, published_page_sha
+    from .workflow.painel_publicacao import (
+        DATA_MAX_BYTES,
+        DATA_MAX_LINE,
+        PAGE_MAX_BYTES,
+        PAGE_MAX_LINE,
+        max_line,
+    )
+
+    limits = {"dados_bytes": DATA_MAX_BYTES, "dados_linha": DATA_MAX_LINE,
+              "pagina_bytes": PAGE_MAX_BYTES, "pagina_linha": PAGE_MAX_LINE}
+    out = {"publicavel": False, "motivo": "", "arquivos_para_ler": [], "tamanho_dados": None,
+           "linhas_max": None, "linhas_dados": None, "pagina_mudou": bool(page_changed),
+           "pagina_publicada": published_page_sha(out_dir), "url": None, "publicar": None,
+           "limites": limits}
+    url_file = out_dir / URL_NAME
+    try:
+        url = url_file.read_text(encoding="utf-8").strip() if url_file.is_file() else ""
+    except OSError:
+        url = ""
+    out["url"] = url or None
+    assets = sorted(p for p in out_dir.glob("painel-*") if ASSET_RE.fullmatch(p.name))
+    if page_changed and len(assets) != 2:
+        out["motivo"] = (f"estilo e script da página ausentes em {out_dir.as_posix()}: rode "
+                         "`cdp painel` de novo")
+        return out
+    files = [(out_dir / INDEX_NAME, PAGE_MAX_BYTES, PAGE_MAX_LINE)]
+    files += [(a, PAGE_MAX_BYTES, PAGE_MAX_LINE) for a in assets] if page_changed else []
+    files.append((out_dir / DATA_NAME, DATA_MAX_BYTES, DATA_MAX_LINE))
+    problems, longest = [], 0
+    for path, max_bytes, max_len in files:
+        try:
+            raw = path.read_bytes()
+        except OSError as exc:
+            out["motivo"] = f"{path.name} ilegível: {exc.__class__.__name__}"
+            return out
+        text = raw.decode("utf-8", errors="replace")
+        line = max_line(text)
+        longest = max(longest, line)
+        if path.name == DATA_NAME:
+            out["tamanho_dados"] = len(raw)
+            out["linhas_dados"] = text.count("\n")
+        if len(raw) > max_bytes:
+            problems.append(f"{path.name} com {len(raw)} bytes (limite {max_bytes})")
+        if line > max_len:
+            problems.append(f"{path.name} com linha de {line} caracteres (limite {max_len})")
+        out["arquivos_para_ler"].append(path.as_posix())
+    out["linhas_max"] = longest
+    out["publicavel"] = not problems
+    out["motivo"] = ("grande demais para a leitura integral exigida antes de publicar: "
+                     + "; ".join(problems)) if problems else "ok"
+    if not problems:
+        out["publicar"] = {"file_path": (out_dir / INDEX_NAME).as_posix(),
+                           "files": {p.name: p.as_posix() for p, _, _ in files[1:]}}
+    return out
+
+
+def cmd_painel(args: argparse.Namespace) -> int:
+    """Grava o painel do artifact (casca ``index.html``, estilo e script versionados,
+    ``data.json`` e a cópia local); só lê o livro, a trilha e os relatórios.
+
+    A saída inclui ``artifact`` (:func:`painel_artifact_check`): as skills só leem e publicam
+    quando ``artifact.publicavel`` é ``true``, lendo por inteiro ``artifact.arquivos_para_ler`` e
+    publicando ``artifact.publicar``.
+    ``--publicado`` não gera nada: registra (``PAGINA_PUBLICADA.sha256``) que o ``index.html``
+    atual foi publicado no artifact — rode só depois de uma publicação bem-sucedida que incluiu
+    a página.
+    """
+    from .workflow.painel import mark_published, write_painel
+    from .workflow.runtime import Runtime
+
+    out_dir = Path(args.out_dir)
+    if args.publicado:
+        try:
+            _print({"pagina_publicada": mark_published(out_dir)})
+        except ValueError as exc:
+            print(f"Erro: {exc}", file=sys.stderr)
+            return 2
+        return 0
+    rt = Runtime.from_args(args)
+    out = write_painel(rt, out_dir, standalone=not args.sem_local)
+    out = {**out, "artifact": painel_artifact_check(
+        out_dir, page_changed=bool(out.get("page_changed")))}
+    _print(out)
+    return 0
+
+
+def _aware(s: str) -> datetime:
+    dt = datetime.fromisoformat(s)
+    if dt.tzinfo is None:
+        from zoneinfo import ZoneInfo
+
+        dt = dt.replace(tzinfo=ZoneInfo("America/Sao_Paulo"))
+    return dt
+
+
+def cmd_backtest(args: argparse.Namespace) -> int:
+    from .workflow.runtime import Runtime
+
+    rt = Runtime.from_args(args)
+    out = rt.run_backtest(_d(args.start), _d(args.end) if args.end else None, Path(args.out))
+    _print(out)
+    return 0
+
+
+# ----------------------------------------------------------------------------- parser
+
+
+def build_parser() -> argparse.ArgumentParser:
+    p = argparse.ArgumentParser(prog="cdp", description="CDP — Cabra da Peste (PM autônomo LatAm L/S)")
+    p.add_argument("--config", default=None, help="fund.yaml (padrão: configs/cdp/fund.yaml)")
+    p.add_argument("--book", default=str(DEFAULT_BOOK))
+    p.add_argument("--market", default=str(DEFAULT_MARKET))
+    p.add_argument("--reports", default=str(DEFAULT_REPORTS))
+    sub = p.add_subparsers(dest="cmd", required=True)
+
+    s = sub.add_parser("status", help="estado do fundo e do calendário")
+    s.add_argument("--date", type=_d)
+    s.set_defaults(func=cmd_status)
+
+    s = sub.add_parser("fetch-base", help="constrói o histórico-base imutável (dados reais)")
+    s.add_argument("--as-of", required=True)
+    s.add_argument("--start", default="2019-01-02")
+    s.add_argument("--universe", default=str(DEFAULT_UNIVERSE))
+    s.set_defaults(func=cmd_fetch_base)
+
+    w = sub.add_parser("weekly", help="montagem semanal da carteira")
+    wsub = w.add_subparsers(dest="action", required=True)
+    s = wsub.add_parser("prepare", help="coleta todos os dados até agora e gera o briefing")
+    s.add_argument("--date", type=_d)
+    s.add_argument("--mind", choices=["claude-code", "codex", "api", "demo"], required=True)
+    s.add_argument("--force", action="store_true", help="ignora a regra do primeiro pregão")
+    s.add_argument("--offline", action="store_true", help="sem barra intradiária/coleta ao vivo")
+    s.set_defaults(func=cmd_weekly_prepare)
+    s = wsub.add_parser("preview", help="prévia pré-trade do livro (não grava nada)")
+    s.add_argument("--week", required=True)
+    s.add_argument("--mind", choices=["claude-code", "codex", "api", "demo"], required=True)
+    s.add_argument("--out", help="grava a prévia completa (JSON) neste caminho")
+    s.set_defaults(func=cmd_weekly_preview)
+    s = wsub.add_parser("decide", help="valida, otimiza, aplica gates e decide (autônomo)")
+    s.add_argument("--week", required=True)
+    s.add_argument("--mind", choices=["claude-code", "codex", "api", "demo"], required=True)
+    s.set_defaults(func=cmd_weekly_decide)
+
+    s = sub.add_parser("validate", help="valida os arquivos escritos pela mente")
+    s.add_argument("--week", required=True)
+    s.add_argument("--mind", choices=["claude-code", "codex", "api", "demo"])
+    s.set_defaults(func=cmd_validate)
+
+    s = sub.add_parser("daily", help="fechamento diário (close) ou publicação do relatório")
+    s.add_argument("action", nargs="?", default="close", choices=["close", "publish"])
+    s.add_argument("--date", type=_d)
+    s.add_argument("--offline", action="store_true")
+    s.add_argument("--mind", choices=["claude-code", "codex", "api", "demo"])
+    s.set_defaults(func=cmd_daily)
+
+    s = sub.add_parser("validate-daily",
+                       help="valida o comentario.json do dia sem publicar (publish é imutável)")
+    s.add_argument("--date", type=_d)
+    s.set_defaults(func=cmd_validate_daily)
+
+    s = sub.add_parser("verify", help="verifica trilha de auditoria, track record e decisões")
+    s.set_defaults(func=cmd_verify)
+
+    s = sub.add_parser("kill-switch", help="liga/desliga o kill switch (só redução de risco)")
+    s.add_argument("state", choices=["on", "off"])
+    s.add_argument("--reason", default="")
+    s.add_argument("--by", default="operador")
+    s.set_defaults(func=cmd_kill_switch)
+
+    s = sub.add_parser("demo", help="demonstração offline completa (DADOS SIMULADOS)")
+    s.add_argument("--out", default="outputs/cdp_demo")
+    s.add_argument("--days", type=int, default=5)
+    s.set_defaults(func=cmd_demo)
+
+    s = sub.add_parser("agenda", help="o que a rotina local deve fazer agora (determinístico)")
+    s.add_argument("--agora", type=_aware, default=None,
+                   help="instante ISO (sem fuso = Brasília); padrão: agora")
+    s.set_defaults(func=cmd_agenda)
+
+    s = sub.add_parser("risk", help="monitor de risco (fechamento ou intradiário com --live)")
+    s.add_argument("--date", type=_d, help="data de referência (padrão: hoje em Brasília)")
+    s.add_argument("--live", action="store_true",
+                   help="marca a carteira com cotações do momento (fonte atrasada)")
+    s.add_argument("--out", default=None, help="pasta dos relatórios (padrão: <reports>/risk)")
+    s.set_defaults(func=cmd_risk)
+
+    s = sub.add_parser("painel", help="painel de operação e risco para o artifact (só leitura)")
+    s.add_argument("--out-dir", default=str(DEFAULT_PAINEL_DIR),
+                   help="pasta de index.html, data.json e da cópia local "
+                        f"(padrão: {DEFAULT_PAINEL_DIR.as_posix()})")
+    s.add_argument("--sem-local", action="store_true",
+                   help="não grava a cópia autônoma cdp_painel_local.html")
+    s.add_argument("--publicado", action="store_true",
+                   help="só registra que o index.html atual foi publicado no artifact "
+                        "(PAGINA_PUBLICADA.sha256); use depois de publicar a página")
+    s.set_defaults(func=cmd_painel)
+
+    s = sub.add_parser("backtest", help="backtest walk-forward semanal (sinais point-in-time)")
+    s.add_argument("--start", required=True)
+    s.add_argument("--end")
+    s.add_argument("--out", default="reports/backtest")
+    s.set_defaults(func=cmd_backtest)
+    return p
+
+
+def _utf8_stdio() -> None:
+    """Saída UTF-8 mesmo em consoles/pipes do Windows (cp1252 não tem "≤", "Σ", "→")."""
+    for stream in (sys.stdout, sys.stderr):
+        enc = (getattr(stream, "encoding", None) or "").lower().replace("-", "")
+        if enc != "utf8" and hasattr(stream, "reconfigure"):
+            try:
+                stream.reconfigure(encoding="utf-8", errors="replace")
+            except (OSError, ValueError):  # pragma: no cover - stream já fechado/sem suporte
+                pass
+
+
+def main(argv: list[str] | None = None) -> int:
+    _utf8_stdio()
+    args = build_parser().parse_args(argv)
+    return int(args.func(args) or 0)
+
+
+if __name__ == "__main__":
+    sys.exit(main())

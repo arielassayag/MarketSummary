@@ -1,0 +1,99 @@
+{
+  "acknowledged_soft_checks": [
+    "GROSS_MIN"
+  ],
+  "approval_hash": "99ae23d170f0c22725e3b14c7eb971c94b6b22363ac5a1fffe8c8cc9f4c49a0c",
+  "approver": "CDP — Cabra da Peste (PM autônomo)",
+  "audit_head_hash": "944040edf224ab5fbcc88ff298c2d703596b30ca5f59b443216677bc23629576",
+  "co_sign_reasons": [
+    "Ciência automática de GROSS_MIN (limite SOFT do mandato; registrado no relatório)."
+  ],
+  "co_signed_at": null,
+  "co_signer": null,
+  "config_hash": "5b8bdd690f10bf79488a78f22787d60fd4de05eef791166dfae1426de551abda",
+  "conviction": 2,
+  "decided_at": "2026-10-05T14:30:43.484819Z",
+  "decision": "APPROVE",
+  "journal": {
+    "ai_vs_quant_vs_pm": "Avaliação da semana anterior: Não se aplica: primeira semana do fundo, sem teses anteriores a avaliar.",
+    "alternatives_considered": "O que mudou na visão: Inception: não há carteira nem visões anteriores. A semana estabelece a metodologia: quant como base, pesquisa como inclinação limitada e vetos de risco, e neutralização explícita do fator eleição.",
+    "bias_checklist": {},
+    "catalysts": [],
+    "horizon_weeks": 8,
+    "key_variables": [
+      "Regime: neutro",
+      "Postura: defensiva → defensiva",
+      "Escada de drawdown: drawdown indisponível"
+    ],
+    "mental_state": "Mente: claude-code",
+    "positions": [
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Revisão para baixo das projeções do ano, piora relevante de distratos ou mudança desfavorável no programa habitacional.",
+        "issuer_id": "BR_TENDA",
+        "premortem": "A tese falha se o vencedor do segundo turno reduzir subsídios do programa habitacional ou se a curva de juros abrir com força.",
+        "probability_correct": null,
+        "thesis": "Execução previsível no segmento econômico com projeções elevadas e desalavancagem.",
+        "variant_perception": ""
+      },
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Inadimplência da carteira própria voltando a subir ou margem bruta recuando no 3T26.",
+        "issuer_id": "BR_RIACHUELO",
+        "premortem": "A tese falha se o consumo de baixa renda desacelerar mais que o esperado após o ciclo eleitoral.",
+        "probability_correct": null,
+        "thesis": "Virada operacional do varejo de moda com margem e crédito em melhora.",
+        "variant_perception": ""
+      },
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Prévia do 3T26 com nova queda de vendas e lançamentos sem recuperação de ritmo.",
+        "issuer_id": "BR_MOURADUBEUX",
+        "premortem": "A tese falha se a demanda no Nordeste seguir fraca e a recompra não sustentar o papel.",
+        "probability_correct": null,
+        "thesis": "Incorporadora de alta rentabilidade com alavancagem quase nula e recompra.",
+        "variant_perception": ""
+      },
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Retrocesso regulatório no setor elétrico argentino ou controle cambial mais rígido.",
+        "issuer_id": "AR_CEPU",
+        "premortem": "A tese falha em um choque de risco-país que arraste todos os ativos argentinos, caso a neutralidade de país não absorva o gap.",
+        "probability_correct": null,
+        "thesis": "Geradora com receita dolarizada e balanço líquido em ambiente de normalização regulatória.",
+        "variant_perception": ""
+      },
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Queda forte do petróleo ou acordo comercial que reacenda a demanda; sinais de aumento do short interest.",
+        "issuer_id": "MX_VOLARIS",
+        "premortem": "A tese falha se um acordo tarifário com os Estados Unidos gerar rali generalizado em nomes mexicanos de consumo e viagem.",
+        "probability_correct": null,
+        "thesis": "Pressão de custos e demanda doméstica fraca no México.",
+        "variant_perception": ""
+      },
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Deterioração de geração de caixa ou falha na integração das aquisições.",
+        "issuer_id": "LA_MILLICOM",
+        "premortem": "A neutralização custa alpha se o sinal quant estiver certo; o custo é limitado pela convicção baixa.",
+        "probability_correct": null,
+        "thesis": "Neutralizar o short sugerido pelo quant diante de pesquisa construtiva.",
+        "variant_perception": ""
+      }
+    ],
+    "premortem": "BR_TENDA: A tese falha se o vencedor do segundo turno reduzir subsídios do programa habitacional ou se a curva de juros abrir com força. | BR_RIACHUELO: A tese falha se o consumo de baixa renda desacelerar mais que o esperado após o ciclo eleitoral. | BR_MOURADUBEUX: A tese falha se a demanda no Nordeste seguir fraca e a recompra não sustentar o papel. | AR_CEPU: A tese falha em um choque de risco-país que arraste todos os ativos argentinos, caso a neutralidade de país não absorva o gap. | MX_VOLARIS: A tese falha se um acordo tarifário com os Estados Unidos gerar rali generalizado em nomes mexicanos de consumo e viagem.",
+    "situation": "Primeira carteira do CDP, montada no primeiro pregão após o primeiro turno brasileiro, com resultado mais favorável à oposição do que indicavam as pesquisas e segundo turno em 2026-10-25. O pano de fundo global é de aperto: Fed subindo juros, juro longo americano nas máximas em décadas e dólar forte. O petróleo está alto, o cobre forte e o minério e o lítio fracos. A postura é defensiva durante a janela eleitoral. O livro é neutro em dólar, beta, país, setor, estilos, estatais, sensibilidade a commodities e choque eleitoral, medido pela reação de hoje. O alpha vem do quant, com inclinações da pesquisa onde há concordância. Em nomes domésticos que sobem com vitória da oposição não há shorts novos. Divergências fortes entre quant e pesquisa reduzem a aposta. A fusão Afya e Yduqs fica fora do livro direcional.",
+    "sizing_rationale": "Postura solicitada defensiva; efetiva defensiva (escada de drawdown: drawdown indisponível); vol-alvo 4,00% e gross máximo 2,00x (calculados por código). Drawdown indisponível: postura limitada a neutra."
+  },
+  "mind": "claude-code",
+  "mode": "AUTONOMOUS",
+  "pm_decision_hash": "bad53c85846226f8a3c5ff0fca89d6158384c4425672d0de2b3fe54c0cd8948d",
+  "proposal_hash": "8b5767db92806faa540d2d9bab71a32f6ed0ce695514d108b8f237bf73ef5dbb",
+  "proposal_id": "CDP-2026-10-05-cdp",
+  "rationale": "Postura defensiva; regime neutro; mente claude-code. Primeira carteira do CDP, montada no primeiro pregão após o primeiro turno brasileiro, com resultado mais favorável à oposição do que indicavam as pesquisas e segundo turno em 2026-10-25. O pano de fundo global é de aperto: Fed subindo juros, juro longo americano nas máximas em décadas e dólar forte. O petróleo está alto, o cobre forte e o minério e o lítio fracos. A postura é defensiva durante a janela eleitoral. O livro é neutro em dólar, beta, país, setor, estilos, estatais, sensibilidade a commodities e choque eleitoral, medido pela rea… Caminho: cdp.",
+  "research_hash": "1d34b1ebda9a7dad743b2347f87babf7a9b969bb11385e4313a04a469be79352",
+  "risk_gate_hash": "40837978d01f3b01571d3a6818f157cdabb7d377f6c31dedc14acd828fae6f42",
+  "snapshot_hash": "eba7e32a8a6bfaca1d98227e15b32b7bd9858bd1d884e711b8d1244f5b7e22c0",
+  "week": "2026-10-05"
+}

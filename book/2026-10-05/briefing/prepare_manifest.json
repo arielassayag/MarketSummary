@@ -1,0 +1,21 @@
+{
+  "captured_at": "2026-10-05 14:06:36.004703+00:00",
+  "config_hash": "5b8bdd690f10bf79488a78f22787d60fd4de05eef791166dfae1426de551abda",
+  "intraday_sha256": "4a9d0e5b92314f094b5c8367b47269e941927a60912fc673e352fc5c387eb78b",
+  "live": true,
+  "n_quotes": 292,
+  "prepared_at": "2026-10-05 14:06:36.004687+00:00",
+  "previous_session": "2026-10-02",
+  "slow_failures": [
+    "notícias: 5 emissor(es) sem resposta"
+  ],
+  "slow_hashes": {
+    "fundamentals.parquet": "e43ec525461eb02769f7b5fb2563d7aa4664f52d14fa554451eaf4c7ddc46d79",
+    "lending.parquet": "71778c027c88269f9237d7211a053681384f47e7b43d2a312c9b64cabe293e51",
+    "news.jsonl": "793e9e9fa7152f090a19ceabcb46eac15e1fb691f1eb93d36a2bf68036c4e275",
+    "short_interest.parquet": "ec29849ff8e50f50da0b010a934482a332dfbd11852f557952b8f45e688c8bcf"
+  },
+  "snapshot_hash": "eba7e32a8a6bfaca1d98227e15b32b7bd9858bd1d884e711b8d1244f5b7e22c0",
+  "store_content_hash": "ebd4d440b91b2012784eab694e007badd83e039f320be7a2a577dcad9990038d",
+  "week": "2026-10-05"
+}

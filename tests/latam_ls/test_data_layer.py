@@ -464,7 +464,8 @@ class FakeMarket:
 
     def __init__(self, start=date(2026, 6, 1), end=date(2026, 10, 30)):
         self.dates = list(pd.bdate_range(start, end))
-        self.closed: dict[pd.Timestamp, set[str]] = {}
+        self.closed: dict[pd.Timestamp, set[str]] = {}          # sem preços na fonte
+        self.calendar_closed: dict[pd.Timestamp, set[str]] = {}  # feriado oficial
         self.fx_closed: set[pd.Timestamp] = set()
         self.dividends: dict[tuple[str, pd.Timestamp], float] = {}
         self.base_close: dict[str, list[float]] = {}
@@ -656,9 +657,17 @@ def test_adr_parity_flags_wrong_ratio():
 # MarketStore: incrementos diários encadeados
 # ======================================================================
 
+def fake_calendar(mk: FakeMarket):
+    """Calendário oficial simulado, coerente com os feriados do mercado falso."""
+    def is_open(d: date, market: str) -> bool:
+        ts = pd.Timestamp(d)
+        return ts.weekday() < 5 and market not in mk.calendar_closed.get(ts, set())
+    return is_open
+
+
 def make_store(tmp_path: Path, mk: FakeMarket, now: datetime) -> MarketStore:
     st = MarketStore(tmp_path / "market", fetchers=mk.fetchers(), cfg=FundConfig(),
-                     now=lambda: now, benchmarks=["SPY", "EWZ"])
+                     now=lambda: now, benchmarks=["SPY", "EWZ"], calendar=fake_calendar(mk))
     st.init_base(build_fake_base(tmp_path, mk))
     return st
 
@@ -736,11 +745,12 @@ def test_store_chain_tamper_detected(tmp_path):
 def test_store_holidays_partial_and_full(tmp_path):
     mk = FakeMarket()
     mon = pd.Timestamp("2026-10-12")  # B3, Santiago fechados; NYSE/BMV abertos
-    mk.closed[mon] = {"BR", "CL"}
     tue = pd.Timestamp("2026-10-13")  # nenhuma linha negocia, mas câmbio/EUA "abertos"
-    mk.closed[tue] = {"BR", "CL", "MX", "US"}
     wed = pd.Timestamp("2026-10-14")  # nada negocia (nem câmbio)
-    mk.closed[wed] = {"BR", "CL", "MX", "US"}
+    for d, mkts in ((mon, {"BR", "CL"}), (tue, {"BR", "CL", "MX", "US"}),
+                    (wed, {"BR", "CL", "MX", "US"})):
+        mk.closed[d] = set(mkts)
+        mk.calendar_closed[d] = set(mkts)
     mk.fx_closed.add(wed)
     st = make_store(tmp_path, mk, at_close(date(2026, 10, 15)))
     made = st.catch_up(date(2026, 10, 13))
@@ -950,3 +960,27 @@ def test_store_without_base_and_init_base_refuses_duplicates(tmp_path):
     st2 = make_store(tmp_path, mk, at_close(date(2026, 10, 5)))
     with pytest.raises(FileExistsError):
         st2.init_base(tmp_path / "snap" / BASE_AS_OF.isoformat())
+
+
+def test_store_refuses_false_holiday_when_data_not_ready(tmp_path):
+    from latam_ls.data.store import DataNotReadyError, market_is_open
+
+    mk = FakeMarket()
+    st = make_store(tmp_path, mk, at_close(date(2026, 10, 6)))
+    late = pd.Timestamp("2026-10-05")
+    mk.closed[late] = {"BR"}  # B3 abriu (calendário), mas o Yahoo ainda não publicou
+    with pytest.raises(DataNotReadyError):
+        st.append_daily(date(2026, 10, 5))
+    assert not (st.daily_root / "2026-10-05").exists()
+    assert st.verify_chain()[0]
+    mk.closed[late] = {"BR", "CL", "MX", "US"}  # nada publicado em dia de pregão
+    with pytest.raises(DataNotReadyError):
+        st.append_daily(date(2026, 10, 5))
+    mk.closed[late] = {"BR"}
+    m = st.append_daily(date(2026, 10, 5), allow_incomplete=True)
+    assert any("allow_incomplete" in x for x in m.limitations)
+    assert m.markets_closed == ["BR"]
+    # calendário real (exchange_calendars): 2026-10-12 fecha B3/Santiago/BVC/BYMA
+    assert market_is_open(date(2026, 10, 12), "BR") in (False, None)
+    assert market_is_open(date(2026, 10, 12), "US") in (True, None)
+    assert market_is_open(date(2026, 10, 12), "LATAM") is None

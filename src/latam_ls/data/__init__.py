@@ -17,11 +17,12 @@ from .snapshot import (
     snapshot_hash,
     write_snapshot,
 )
-from .store import IncrementManifest, MarketStore, NoSessionError
+from .store import DataNotReadyError, IncrementManifest, MarketStore, NoSessionError
 from .synthetic import SYNTHETIC_NOTICE, make_synthetic_market
 
 __all__ = [
     "BENCHMARKS",
+    "DataNotReadyError",
     "MARKET_INDICATORS",
     "SYNTHETIC_NOTICE",
     "Fetchers",

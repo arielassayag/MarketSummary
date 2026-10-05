@@ -58,7 +58,7 @@ from __future__ import annotations
 import math
 from collections.abc import Callable, Iterable, Mapping
 from dataclasses import dataclass, field
-from datetime import date, datetime, time, timedelta
+from datetime import date, datetime, time
 from pathlib import Path
 from typing import Any, Protocol
 from zoneinfo import ZoneInfo
@@ -104,7 +104,7 @@ from .approval import verify_decision
 from .autonomy import verify_autonomous_decision
 from .book import Book, dump_json
 from .ledger import DEFAULT_BORROW_FEE_ANNUAL, cross_sectional_factor_returns
-from .memo import fmt_pct, fmt_usd, fmt_usd_mm
+from .memo import fmt_days, fmt_num, fmt_pct, fmt_usd, fmt_usd_mm
 from .track_record import (
     GENESIS_RECORD_HASH,
     REALIZED_VOL_WINDOWS,
@@ -218,11 +218,6 @@ def close_datetime(session: date, cfg: FundConfig) -> datetime:
     return datetime.combine(session, MARKET_CLOSE_LOCAL, tzinfo=ZoneInfo(cfg.fund.timezone))
 
 
-def week_of(d: date) -> date:
-    """Segunda-feira da semana de ``d``."""
-    return d - timedelta(days=d.weekday())
-
-
 def session_has_prices(md: MarketData, session: date) -> bool:
     ts = pd.Timestamp(session)
     return ts in md.close.index and bool(md.close.loc[ts].notna().any())
@@ -314,7 +309,8 @@ def risk_alerts(cfg: FundConfig, risk: DailyRisk, has_positions: bool = True) ->
         out.append(f"Exposição líquida {fmt_pct(risk.net, signed=True)} fora do limite "
                    f"±{fmt_pct(rk.net_exposure_max_abs)} (net neutral).")
     if risk.beta is not None and abs(risk.beta) > rk.beta_max_abs:
-        out.append(f"Beta previsto {risk.beta:+.3f} fora do limite ±{rk.beta_max_abs:.3f}.")
+        out.append(f"Beta previsto {fmt_num(risk.beta, 3, signed=True)} fora do limite "
+                   f"±{fmt_num(rk.beta_max_abs, 3)}.")
     dd = risk.drawdown
     if dd <= dd_cfg.stop_out:
         out.append(f"STOP-OUT: drawdown {fmt_pct(dd)} atingiu {fmt_pct(dd_cfg.stop_out)} — "
@@ -724,10 +720,10 @@ class DailyRunner:
                                       if shadow_hash else None)
 
         # Gravação: sombra (efetivação + registro), depois CDP (efetivação + registro).
-        if shadow_res is not None:
+        if shadow_res is not None and self.shadow is not None:
             if shadow_res.commit is not None:
                 shadow_res.commit()
-            self.shadow.track.append(shadow_res.record)  # type: ignore[union-attr]
+            self.shadow.track.append(shadow_res.record)
         if main_res.commit is not None:
             main_res.commit()
         self.track.append(main_res.record)
@@ -774,7 +770,7 @@ class DailyRunner:
         return out
 
     def execute_decision(self, session_date: date, proposal: Proposal, decision: Decision,
-                         md: MarketData | None = None, *, nav_before_costs: float | None = None,
+                         md: MarketData | None = None, *,
                          snapshot_hash_now: str | None = None) -> BookEntry:
         """Executa (efetiva) a proposta decidida no fechamento de ``session_date``.
 
@@ -798,12 +794,15 @@ class DailyRunner:
         plan = self._plan_from_pending(ctx, prev, pending)
         if plan.entry is not None:
             return plan.entry
-        live_entry, live_prop = self._live(self.main, prev, [])
+        _, live_prop = self._live(self.main, prev, [])
         marked = self._mark(ctx, prev, live_prop)
-        nav_pre = float(nav_before_costs) if nav_before_costs is not None else marked.nav_pre
-        execs, _ = self._size(ctx, plan, marked, nav_pre)
-        cost, _ = self._costs(ctx, marked.lines, execs, nav_pre, plan)
-        entry = self._build_entry(ctx, plan, execs, marked, nav_pre, cost)
+        nav_pre = marked.nav_pre
+        if plan.hold:
+            entry = self._build_hold_entry(ctx, plan, nav_pre)
+        else:
+            execs, _ = self._size(ctx, plan, marked, nav_pre)
+            cost, _ = self._costs(ctx, marked.lines, execs, nav_pre, plan)
+            entry = self._build_entry(ctx, plan, execs, nav_pre, cost)
         if plan.preflight is not None:
             plan.preflight(entry)
         assert plan.persist is not None
@@ -833,7 +832,7 @@ class DailyRunner:
                                                      session_date)
                 for w in ctx.risk_model.meta.get("event_windows", []):
                     ctx.notes.append(f"Janela de evento ativa: {w['name']} (vol × "
-                                     f"{float(w['multiplier']):.2f} em {w['country']}).")
+                                     f"{fmt_num(float(w['multiplier']), 2)} em {w['country']}).")
             elif session_date in self._model_notes:
                 ctx.notes.append(self._model_notes[session_date])
             if prev is not None:
@@ -1040,11 +1039,8 @@ class DailyRunner:
         live_entry, live_prop = self._live(side, prev, alerts)
         marked = self._mark(ctx, prev, live_prop)
         alerts += marked.alerts
-        model_prev = ctx.model_prev
-        if prev is not None and ctx.model_prev is not None and ctx.model_prev.as_of != prev.date:
-            model_prev = self._model_for(ctx.md, prev.date)
-        if prev is not None and ctx.model_prev is None and marked.lines:
-            model_prev = self._model_for(ctx.md, prev.date)
+        model_prev = (self._model_for(ctx.md, prev.date)
+                      if prev is not None and marked.lines else None)
         attribution, factor_pnl, attr_alerts = self._attribution(ctx, prev, marked, model_prev)
         alerts += attr_alerts
 
@@ -1060,14 +1056,9 @@ class DailyRunner:
                 alerts.append(f"Execução da decisão da semana {plan.week} no fechamento de "
                               f"{ctx.date} (primeiro pregão disponível).")
             if plan.hold:
-                execs = [
-                    _Exec(ln.issuer_id, ln.ticker, ln.currency,
-                          _round_shares(ln.shares) if ln.shares is not None else 0,
-                          ln.price_local or 0.0, 0.0)
-                    for ln in marked.lines]
                 alerts.append(f"Decisão da semana {plan.week}: manter a carteira anterior "
                               "(sem negociação).")
-                entry = plan.entry or self._build_hold_entry(ctx, plan, marked, nav_pre)
+                entry = plan.entry or self._build_hold_entry(ctx, plan, nav_pre)
             else:
                 execs, size_alerts = self._size(ctx, plan, marked, nav_pre)
                 alerts += size_alerts
@@ -1075,8 +1066,7 @@ class DailyRunner:
                 alerts += cost_alerts
                 cost = -cost_usd
                 end_lines = _merge_execution(marked.lines, execs)
-                entry = plan.entry or self._build_entry(ctx, plan, execs, marked, nav_pre,
-                                                        cost_usd)
+                entry = plan.entry or self._build_entry(ctx, plan, execs, nav_pre, cost_usd)
             if plan.entry is None:
                 if plan.preflight is not None:
                     plan.preflight(entry)
@@ -1087,10 +1077,10 @@ class DailyRunner:
                     persist(_e)
             entry_after = entry
             proposal_after = plan.proposal
-        nav_end = nav_pre + cost
+        pnl = marked.equity + marked.financing + marked.borrow + cost
+        nav_end = marked.nav_start + pnl
         if not (math.isfinite(nav_end) and nav_end > 0):
             raise ValueError(f"NAV não positivo em {ctx.date}: registro interrompido.")
-        pnl = marked.equity + marked.financing + marked.borrow + cost
 
         components = {"equity": marked.equity, "financing": marked.financing,
                       "borrow": marked.borrow, "costs": cost}
@@ -1124,7 +1114,7 @@ class DailyRunner:
                       "fechamento (MOC) e custos do modelo.")
         record = DailyRecord(
             date=ctx.date, fund_name=side.fund_name, track_record_type=side.track_type,
-            nav_start_usd=marked.nav_start, nav_end_usd=marked.nav_start + pnl, pnl_usd=pnl,
+            nav_start_usd=marked.nav_start, nav_end_usd=nav_end, pnl_usd=pnl,
             ret=pnl / marked.nav_start, pnl_components=components,
             attribution=comp_lines + attribution, positions=positions, risk=risk,
             alerts=list(dict.fromkeys(alerts)),
@@ -1514,8 +1504,8 @@ class DailyRunner:
                           f"{default_bps:.0f} bps): {_list(sorted(set(fallback_used)))}.")
         return total, alerts
 
-    def _build_entry(self, ctx: DailyContext, plan: _Plan, execs: list[_Exec], marked: _Marked,
-                     nav_pre: float, cost_usd: float) -> BookEntry:
+    def _build_entry(self, ctx: DailyContext, plan: _Plan, execs: list[_Exec], nav_pre: float,
+                     cost_usd: float) -> BookEntry:
         nav_end = nav_pre - cost_usd
         note = (f"Execução hipotética MOC no fechamento de {ctx.date} (paper trading): "
                 f"nocional-alvo = peso × NAV antes dos custos ({fmt_usd_mm(nav_pre)}), ações pelo "
@@ -1533,18 +1523,12 @@ class DailyRunner:
                          booked_at=close_datetime(ctx.date, self.cfg), nav_usd=nav_pre,
                          positions=positions, pricing_note=note)
 
-    def _build_hold_entry(self, ctx: DailyContext, plan: _Plan, marked: _Marked,
-                          nav_pre: float) -> BookEntry:
-        positions = [
-            BookedPosition(issuer_id=ln.issuer_id, ticker=ln.ticker, weight=ln.mv_end / nav_pre,
-                           notional_usd=ln.mv_end,
-                           shares=_round_shares(ln.shares) if ln.shares is not None else None,
-                           entry_price_local=ln.price_local, currency=ln.currency)
-            for ln in marked.lines if ln.mv_end != 0]
+    def _build_hold_entry(self, ctx: DailyContext, plan: _Plan, nav_pre: float) -> BookEntry:
+        """Efetivação de "manter": sem posições-alvo (como no livro); a carteira segue derivando."""
         return BookEntry(week=plan.week, proposal_id=plan.proposal_id,
                          approval_hash=plan.approval_hash,
                          booked_at=close_datetime(ctx.date, self.cfg), nav_usd=nav_pre,
-                         positions=positions,
+                         positions=[],
                          pricing_note=(f"Manter a carteira anterior no fechamento de {ctx.date} "
                                        "(sem negociação, sem custos)."))
 
@@ -1655,8 +1639,9 @@ class DailyRunner:
             if e.group in ("country", "sector", "style") and e.limit is not None \
                     and abs(e.net) > e.limit + 1e-9:
                 label = {"country": "país", "sector": "setor", "style": "estilo"}[e.group]
-                val = fmt_pct(e.net, signed=True) if e.group != "style" else f"{e.net:+.3f}"
-                lim = fmt_pct(e.limit) if e.group != "style" else f"{e.limit:.3f}"
+                val = (fmt_pct(e.net, signed=True) if e.group != "style"
+                       else fmt_num(e.net, 3, signed=True))
+                lim = fmt_pct(e.limit) if e.group != "style" else fmt_num(e.limit, 3)
                 alerts.append(f"Exposição líquida de {label} {e.name} {val} acima do limite ±{lim}.")
         return risk, alerts
 
@@ -1709,7 +1694,7 @@ class DailyRunner:
                 continue
             days = abs(mv) / (rate * float(a))
             if days > limit + 1e-9:
-                illiquid.append(f"{iid} ({days:.1f} d > {limit:.1f} d)")
+                illiquid.append(f"{iid} ({fmt_days(days)} > {fmt_days(limit)})")
         if illiquid:
             alerts.append(f"Posições acima do limite de liquidez: {_list(illiquid)}.")
         # Squeeze: shorts em HIGH (e mudança desde a decisão) e stops de perda.

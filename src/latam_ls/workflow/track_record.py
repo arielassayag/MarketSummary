@@ -147,7 +147,7 @@ def _parse_record_name(path: Path) -> date | None:
         return None
 
 
-def _write_exclusive(path: Path, text: str) -> None:
+def write_exclusive(path: Path, text: str) -> None:
     """Cria ``path`` atomicamente; ``FileExistsError`` se já existir (nunca sobrescreve)."""
     path.parent.mkdir(parents=True, exist_ok=True)
     if path.exists():
@@ -263,7 +263,7 @@ class TrackRecord:
             writer.writerow(CSV_COLUMNS)
         writer.writerow([_cell(row[c]) for c in CSV_COLUMNS])
 
-        _write_exclusive(path, text)
+        write_exclusive(path, text)
         self.root.mkdir(parents=True, exist_ok=True)
         with self.csv_path.open("a", encoding="utf-8", newline="") as f:
             f.write(buf.getvalue())
@@ -295,7 +295,7 @@ class TrackRecord:
         df["date"] = pd.to_datetime(df["date"])
         df = df.set_index("date")
         for c in FLOAT_COLUMNS:
-            df[c] = pd.to_numeric(df[c].replace("", np.nan), errors="raise").astype(float)
+            df[c] = df[c].map(_parse_float).astype(float)
         return df[cols]
 
     def returns(self) -> pd.Series:

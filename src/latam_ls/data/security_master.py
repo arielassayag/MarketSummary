@@ -360,31 +360,106 @@ def _fca_class(row: pd.Series) -> str | None:
     return None
 
 
-def _fca_by_code(cvm_fca: pd.DataFrame | None) -> pd.DataFrame:
-    """Uma linha por código B3 (versão mais recente do FCA), só mercado de bolsa."""
-    cols = ["cnpj", "code", "share_class", "unit_composition", "active", "cvm_code"]
+_VALID_B3_CODE = re.compile(r"^[A-Z0-9]{4}\d{1,2}$")
+_NAME_STOPWORDS = frozenset({
+    "sa", "s", "a", "cia", "companhia", "bco", "banco", "de", "do", "da", "dos", "das", "e",
+    "em", "the", "inc", "ltd", "ltda", "holding", "holdings", "participacoes", "part", "grupo",
+    "co", "corp", "nv", "n", "v", "brasil", "brazil", "ex",
+})
+
+
+def _name_tokens(text: object) -> frozenset[str]:
+    """Tokens significativos de um nome de empresa (sem acentos, pontuação e termos genéricos)."""
+    words = re.sub(r"[^a-z0-9]+", " ", normalize_text(text)).split()
+    return frozenset(w for w in words if len(w) > 1 and w not in _NAME_STOPWORDS)
+
+
+def _fca_rows(cvm_fca: pd.DataFrame | None) -> pd.DataFrame:
+    """Ações/units/BDRs negociados em bolsa no FCA (versão mais recente por CNPJ e código)."""
+    cols = ["cnpj", "name", "code", "valid_code", "share_class", "unit_composition", "active",
+            "cvm_code"]
     if cvm_fca is None or cvm_fca.empty:
-        return pd.DataFrame(columns=cols).set_index("code")
+        return pd.DataFrame(columns=cols)
     df = cvm_fca.copy()
-    df = df[df["Codigo_Negociacao"].notna()]
     if "Mercado" in df.columns:
         df = df[df["Mercado"].fillna("").map(normalize_text).isin(["bolsa", ""])]
     if df.empty:
-        return pd.DataFrame(columns=cols).set_index("code")
-    df["code"] = df["Codigo_Negociacao"].astype(str).str.upper().str.strip()
-    sort_cols = [c for c in ("Data_Referencia", "Versao") if c in df.columns]
+        return pd.DataFrame(columns=cols)
+    df["share_class"] = df.apply(_fca_class, axis=1)
+    df = df[df["share_class"].notna()]
+    if df.empty:
+        return pd.DataFrame(columns=cols)
     if "Versao" in df.columns:
         df["Versao"] = pd.to_numeric(df["Versao"], errors="coerce")
-    df = df.sort_values(sort_cols).drop_duplicates("code", keep="last") if sort_cols else df
+    sort_cols = [c for c in ("Data_Referencia", "Versao") if c in df.columns]
+    if sort_cols:
+        df = df.sort_values(sort_cols)
+    code = df["Codigo_Negociacao"].fillna("").astype(str).str.upper().str.strip()
     out = pd.DataFrame({
         "cnpj": df["CNPJ_Companhia"].astype(str).str.strip(),
-        "code": df["code"],
-        "share_class": df.apply(_fca_class, axis=1),
+        "name": df.get("Nome_Empresarial", pd.Series("", index=df.index)),
+        "code": code,
+        "valid_code": code.str.match(_VALID_B3_CODE),
+        "share_class": df["share_class"],
         "unit_composition": df.get("Composicao_BDR_Unit", pd.Series(pd.NA, index=df.index)),
         "active": df.get("Data_Fim_Negociacao", pd.Series(pd.NA, index=df.index)).isna(),
         "cvm_code": df.get("Codigo_CVM", pd.Series(pd.NA, index=df.index)),
     })
-    return out.set_index("code")
+    return out.drop_duplicates(["cnpj", "code", "share_class"], keep="last").reset_index(drop=True)
+
+
+def _fca_by_code(cvm_fca: pd.DataFrame | None) -> pd.DataFrame:
+    """Uma linha por código B3 válido (versão mais recente do FCA), só mercado de bolsa."""
+    rows = _fca_rows(cvm_fca)
+    rows = rows[rows["valid_code"]].drop_duplicates("code", keep="last")
+    return rows.set_index("code")[["cnpj", "share_class", "unit_composition", "active",
+                                   "cvm_code"]]
+
+
+def _explicit_ids(universe: Universe, column: str,
+                  overrides: Mapping[str, str] | None) -> dict[str, tuple[str, str]]:
+    """Identificadores explícitos por emissor: parâmetro ``overrides`` > coluna do universo."""
+    out: dict[str, tuple[str, str]] = {}
+    if column in universe.lines.columns:
+        for iid, grp in universe.lines.groupby("issuer_id"):
+            vals = [str(v).strip() for v in grp[column].tolist() if _is_text(v)]
+            if vals:
+                out[str(iid)] = (vals[0], "universo")
+    for iid, val in (overrides or {}).items():
+        if _is_text(val):
+            out[str(iid)] = (str(val).strip(), "override")
+    return out
+
+
+def _name_fallback(universe: Universe, fca_rows: pd.DataFrame, matched: set[str],
+                   ) -> dict[str, tuple[str, str]]:
+    """CNPJ por nome SÓ para companhias do FCA cujos códigos de negociação são inválidos.
+
+    O FCA traz lixo em ``Codigo_Negociacao`` para ~15% das ações (ex.: CSN ``4030``, BTG
+    ``000000``, CSN Mineração ``25585``). Casamento conservador: os tokens significativos de um
+    nome contidos no outro, com correspondência ÚNICA nos dois sentidos. Sem casamento ⇒ fica
+    ausente (use ``cnpj_overrides`` ou a coluna ``cnpj`` do universo).
+    """
+    if fca_rows.empty:
+        return {}
+    by_cnpj = fca_rows[fca_rows["active"]].groupby("cnpj")
+    invalid = [(cnpj, _name_tokens(g["name"].iloc[-1]), g["code"].iloc[-1])
+               for cnpj, g in by_cnpj if not g["valid_code"].any()]
+    invalid = [t for t in invalid if t[1]]
+    b3_issuers = sorted({str(i) for t, i in universe.lines["issuer_id"].items()
+                         if b3_code(str(t)) is not None} - matched)
+    cand: dict[str, list[tuple[str, str]]] = {}
+    for iid in b3_issuers:
+        u_tok = _name_tokens(universe.issuers.loc[iid, "issuer_name"])
+        if not u_tok:
+            continue
+        hits = [(c, code) for c, tok, code in invalid if tok <= u_tok or u_tok <= tok]
+        if len(hits) == 1:
+            cand[iid] = hits[0]
+    counts: dict[str, int] = {}
+    for c, _ in cand.values():
+        counts[c] = counts.get(c, 0) + 1
+    return {iid: (c, code) for iid, (c, code) in cand.items() if counts[c] == 1}
 
 
 LINE_MASTER_COLUMNS = [
@@ -393,40 +468,70 @@ LINE_MASTER_COLUMNS = [
 ]
 
 
-def build_line_master(universe: Universe, cvm_fca: pd.DataFrame | None,
-                      sec_tickers: pd.DataFrame | None) -> pd.DataFrame:
-    """Uma linha por ticker do universo: classe, ações por linha e validação oficial.
+def _class_spl(share_class: str | None, unit_text: object) -> float:
+    if share_class in ("ON", "PN", "PNA", "PNB", "PNC", "PND"):
+        return 1.0
+    if share_class == "UNIT":
+        return parse_unit_composition(unit_text)
+    return float("nan")
 
-    ``shares_per_line`` converte o preço da linha em preço por ação local:
-    ON/PN = 1; unit = soma da composição do FCA; ADR = ``adr_ratio`` oficial do universo;
-    US_LISTED = 1 (a própria ação); BDR e composição ilegível ⇒ ``NaN``.
-    """
+
+def _resolve_lines(universe: Universe, cvm_fca: pd.DataFrame | None,
+                   sec_tickers: pd.DataFrame | None, cnpj_overrides: Mapping[str, str] | None,
+                   cik_overrides: Mapping[str, str] | None, name_fallback: bool,
+                   ) -> tuple[pd.DataFrame, dict[str, list[str]]]:
     fca = _fca_by_code(cvm_fca)
+    rows_all = _fca_rows(cvm_fca)
     sec = pd.DataFrame(columns=SEC_TICKER_COLUMNS) if sec_tickers is None else sec_tickers
     sec_map = (sec.assign(ticker=sec["ticker"].astype(str).str.upper())
                .drop_duplicates("ticker").set_index("ticker")["cik"].map(format_cik))
-    rows = []
+    explicit_cnpj = _explicit_ids(universe, "cnpj", cnpj_overrides)
+    explicit_cik = {k: (format_cik(v) or "", src)
+                    for k, (v, src) in _explicit_ids(universe, "cik", cik_overrides).items()}
+    matched = {str(universe.lines.loc[t, "issuer_id"]) for t in universe.lines.index
+               if (c := b3_code(str(t))) is not None and c in fca.index}
+    fallback = (_name_fallback(universe, rows_all, matched | set(explicit_cnpj))
+                if name_fallback else {})
+    notes: dict[str, list[str]] = {}
+    for iid, (c, src) in explicit_cnpj.items():
+        notes.setdefault(iid, []).append(f"CNPJ explícito ({src}): {c}")
+    for iid, (c, code) in fallback.items():
+        notes.setdefault(iid, []).append(
+            f"CNPJ por nome no FCA (código de negociação inválido no FCA: {code!r}): {c}")
+    for iid, (c, src) in explicit_cik.items():
+        notes.setdefault(iid, []).append(f"CIK explícito ({src}): {c}")
+    out = []
     for ticker, ln in universe.lines.iterrows():
+        iid = str(ln["issuer_id"])
         lt = str(ln["line_type"])
         code = b3_code(str(ticker))
         share_class: str | None
         spl = float("nan")
         validated = False
         vsource = ""
-        cnpj = None
-        cik = None
+        cnpj: str | None = None
+        cik: str | None = None
         if code is not None:
             hit = fca.loc[code] if code in fca.index else None
             fca_class = hit["share_class"] if hit is not None else None
             share_class = fca_class if isinstance(fca_class, str) else b3_class_from_code(code)
+            unit_text = hit["unit_composition"] if hit is not None else None
             if hit is not None:
                 cnpj = str(hit["cnpj"])
                 validated = bool(hit["active"])
                 vsource = "CVM_FCA" if validated else "CVM_FCA(inativo)"
-            if share_class in ("ON", "PN", "PNA", "PNB", "PNC", "PND"):
-                spl = 1.0
-            elif share_class == "UNIT":
-                spl = parse_unit_composition(hit["unit_composition"]) if hit is not None else np.nan
+            alt = explicit_cnpj.get(iid)
+            alt_src = alt[1] if alt else None
+            if alt is None and iid in fallback:
+                alt, alt_src = (fallback[iid][0], "nome"), "nome"
+            if alt is not None and alt[0] != cnpj:
+                cnpj = alt[0]
+                validated = False
+                vsource = f"CVM_FCA({alt_src})"
+                same = rows_all[(rows_all["cnpj"] == cnpj)
+                                & (rows_all["share_class"] == share_class)]
+                unit_text = same["unit_composition"].iloc[-1] if not same.empty else None
+            spl = _class_spl(share_class, unit_text)
         else:
             share_class = "ADR" if lt == "ADR" else ("US" if lt == "US_LISTED" else None)
             sym = str(ticker).upper().strip()
@@ -434,19 +539,44 @@ def build_line_master(universe: Universe, cvm_fca: pd.DataFrame | None,
                 cik = str(sec_map.loc[sym])
                 validated = True
                 vsource = "SEC"
+            if iid in explicit_cik and lt in ("ADR", "US_LISTED") and explicit_cik[iid][0]:
+                if cik != explicit_cik[iid][0]:
+                    validated = False
+                    vsource = f"SEC({explicit_cik[iid][1]})"
+                cik = explicit_cik[iid][0]
             if lt == "ADR":
                 ratio = pd.to_numeric(ln.get("adr_ratio"), errors="coerce")
                 spl = float(ratio) if pd.notna(ratio) and ratio > 0 else float("nan")
             elif lt == "US_LISTED":
                 spl = 1.0
-        rows.append({
-            "yahoo_ticker": ticker, "issuer_id": ln["issuer_id"], "line_type": lt,
+        out.append({
+            "yahoo_ticker": ticker, "issuer_id": iid, "line_type": lt,
             "market": ln.get("market", ""), "currency": ln["currency"],
-            "primary_line": bool(ln.get("primary_line", False)), "share_class": share_class, "shares_per_line": spl, "validated": validated,
-            "validation_source": vsource, "cnpj": cnpj, "cik": cik,
+            "primary_line": bool(ln.get("primary_line", False)), "share_class": share_class,
+            "shares_per_line": spl, "validated": validated, "validation_source": vsource,
+            "cnpj": cnpj, "cik": cik,
         })
-    out = pd.DataFrame(rows, columns=["yahoo_ticker", *LINE_MASTER_COLUMNS])
-    return out.set_index("yahoo_ticker").sort_index()
+    lm = pd.DataFrame(out, columns=["yahoo_ticker", *LINE_MASTER_COLUMNS])
+    return lm.set_index("yahoo_ticker").sort_index(), notes
+
+
+def build_line_master(universe: Universe, cvm_fca: pd.DataFrame | None,
+                      sec_tickers: pd.DataFrame | None, *,
+                      cnpj_overrides: Mapping[str, str] | None = None,
+                      cik_overrides: Mapping[str, str] | None = None,
+                      name_fallback: bool = True) -> pd.DataFrame:
+    """Uma linha por ticker do universo: classe, ações por linha e validação oficial.
+
+    ``shares_per_line`` converte o preço da linha em preço por ação local:
+    ON/PN = 1; unit = soma da composição do FCA; ADR = ``adr_ratio`` oficial do universo;
+    US_LISTED = 1 (a própria ação); BDR e composição ilegível ⇒ ``NaN``.
+    ``validated`` só é verdadeiro quando o PRÓPRIO ticker consta de fonte oficial (FCA ativo
+    ou mapa da SEC); CNPJ/CIK vindos de override, coluna do universo ou nome não validam o
+    ticker.
+    """
+    lm, _ = _resolve_lines(universe, cvm_fca, sec_tickers, cnpj_overrides, cik_overrides,
+                           name_fallback)
+    return lm
 
 
 SECURITY_MASTER_COLUMNS = [
@@ -470,23 +600,33 @@ def _most_common(values: Iterable[str]) -> str | None:
 
 
 def build_security_master(universe: Universe, cvm_fca: pd.DataFrame | None,
-                          sec_tickers: pd.DataFrame | None) -> pd.DataFrame:
+                          sec_tickers: pd.DataFrame | None, *,
+                          cnpj_overrides: Mapping[str, str] | None = None,
+                          cik_overrides: Mapping[str, str] | None = None,
+                          name_fallback: bool = True) -> pd.DataFrame:
     """Security master por ``issuer_id``: CNPJ (BR), CIK (SEC), classes, ADR e tickers válidos.
 
-    - ``cnpj``: das linhas B3 do emissor no FCA (conflito ⇒ CNPJ da linha primária + nota).
-    - ``cik``: das linhas ADR/US do emissor no mapa da SEC.
+    Precedência do CNPJ: ``cnpj_overrides`` > coluna ``cnpj`` do universo > código de
+    negociação no FCA > nome (só para companhias com código inválido no FCA). CIK:
+    ``cik_overrides`` > coluna ``cik`` do universo > mapa ticker→CIK da SEC.
+
     - ``adr_ratio``: razão OFICIAL do universo (ações locais por ADR) da linha ADR primária
       (ou da primeira em ordem alfabética).
     - ``fundamentals_source``: ``CVM`` quando há CNPJ, senão ``SEC`` quando há CIK, senão ``NaN``.
+    - ``notes``: origem de identificadores não validados pelo ticker e divergências.
     """
-    lm = build_line_master(universe, cvm_fca, sec_tickers)
-    fca = _fca_by_code(cvm_fca)
-    cvm_code_by_cnpj = (fca.dropna(subset=["cvm_code"]).drop_duplicates("cnpj")
-                        .set_index("cnpj")["cvm_code"] if not fca.empty else pd.Series(dtype=str))
+    lm, id_notes = _resolve_lines(universe, cvm_fca, sec_tickers, cnpj_overrides,
+                                  cik_overrides, name_fallback)
+    rows_all = _fca_rows(cvm_fca)
+    cvm_code_by_cnpj = (rows_all.dropna(subset=["cvm_code"]).drop_duplicates("cnpj")
+                        .set_index("cnpj")["cvm_code"] if not rows_all.empty
+                        else pd.Series(dtype=str))
+    explicit_cik = {k: format_cik(v) for k, (v, _) in
+                    _explicit_ids(universe, "cik", cik_overrides).items()}
     rows = []
     for iid, iss in universe.issuers.iterrows():
         lines = lm[lm["issuer_id"] == iid]
-        notes: list[str] = []
+        notes: list[str] = list(id_notes.get(str(iid), []))
         primary = str(iss["primary_ticker"])
         cnpjs = [c for c in lines["cnpj"].tolist() if _is_text(c)]
         cnpj = None
@@ -498,7 +638,7 @@ def build_security_master(universe: Universe, cvm_fca: pd.DataFrame | None,
             else:
                 cnpj = cnpjs[0]
         ciks = [c for c in lines["cik"].tolist() if _is_text(c)]
-        cik = _most_common(ciks)
+        cik = explicit_cik.get(str(iid)) or _most_common(ciks)
         if len(set(ciks)) > 1:
             notes.append(f"CIKs divergentes entre linhas: {sorted(set(ciks))}")
         classes = sorted({c for c in lines["share_class"].tolist()

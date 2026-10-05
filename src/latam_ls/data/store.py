@@ -40,6 +40,7 @@ import shutil
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from datetime import UTC, date, datetime, time, timedelta
+from functools import lru_cache
 from pathlib import Path
 from typing import Any, Literal
 from zoneinfo import ZoneInfo
@@ -103,6 +104,10 @@ DEFAULT_WINDOW_DAYS = 10
 DEFAULT_CLOSE_CUTOFF = time(19, 0)
 DEFAULT_CLOSE_TZ = "America/Sao_Paulo"
 REVISION_REL_TOL = 1e-6
+READY_MIN_COVERAGE = 0.5
+# Mercado de listagem (universe.listing_market) -> calendário oficial (exchange_calendars).
+MARKET_CALENDARS = {"BR": "BVMF", "MX": "XMEX", "CL": "XSGO", "CO": "XBOG", "PE": "XLIM",
+                    "AR": "XBUE", "US": "XNYS"}
 PREV_COLUMNS = ["prev_date", "prev_close_window", "prev_adj_close_window"]
 INCREMENT_DESCRIPTIONS = {
     FILE_PRICES: "Preços do pregão (+ barra anterior da mesma coleta para encadear retorno total)",
@@ -270,8 +275,10 @@ class MarketStore:
                  cfg: FundConfig | None = None, now: Callable[[], datetime] | None = None,
                  close_cutoff: time = DEFAULT_CLOSE_CUTOFF, close_tz: str = DEFAULT_CLOSE_TZ,
                  window_days: int = DEFAULT_WINDOW_DAYS,
-                 benchmarks: Sequence[str] | None = None) -> None:
+                 benchmarks: Sequence[str] | None = None,
+                 calendar: Callable[[date, str], bool | None] | None = None) -> None:
         self.root = Path(root)
+        self.calendar = calendar or market_is_open
         self.fetchers = fetchers or Fetchers()
         self.cfg = cfg
         self._now = now or (lambda: datetime.now(UTC))
@@ -442,7 +449,7 @@ class MarketStore:
         if as_of is not None:
             eligible = [b for b in bases if read_manifest(b).as_of <= as_of]
             base = eligible[-1] if eligible else bases[0]
-        bt = read_tables(base, verify=verify)
+        bt = read_tables(base, verify=False)  # já verificada em _require_chain quando verify
         incs = [i for i in self.increments(base) if as_of is None or i.session_date <= as_of]
         tabs = [self._read_increment(i) for i in incs]
         base_as_of = bt.manifest.as_of
@@ -532,13 +539,20 @@ class MarketStore:
                 log.info("Sem pregão em %s: %s", d, exc)
         return out
 
+
     def append_daily(self, session_date: date, fetchers: Fetchers | None = None,
                      refresh_slow: bool = False, *, include_news: bool = False,
-                     allow_gap: bool = False) -> IncrementManifest:
+                     allow_gap: bool = False, allow_incomplete: bool = False
+                     ) -> IncrementManifest:
         """Coleta uma janela curta e grava SOMENTE as linhas com ``date == session_date``.
 
         ``refresh_slow=True`` também atualiza fundamentos, short interest e notícias (segundas
         ou sob demanda). O aluguel B3 é coletado em todo incremento (janela D-21 do BDI).
+
+        Se o calendário oficial indica que um mercado do universo abriu, mas a fonte ainda não
+        trouxe preços para a maioria das suas linhas, levanta :class:`DataNotReadyError` e NADA é
+        gravado (evita registrar um falso feriado de forma irreversível); ``allow_incomplete``
+        grava mesmo assim, registrando a limitação.
         """
         f = fetchers or self.fetchers
         cfg = _cfg_or_default(self.cfg)
@@ -659,7 +673,26 @@ class MarketStore:
         markets_all = sorted({listing_market(t) for t in tickers})
         traded = sorted({listing_market(t) for t in day["ticker"]})
         closed = sorted(set(markets_all) - set(traded))
+        sched = {m: self.calendar(session_date, m) for m in markets_all}
+        recent_dates = sorted(set(stored["date"]))[-5:]
+        active = stored[stored["date"].isin(recent_dates)].groupby(
+            stored["ticker"].map(listing_market))["ticker"].nunique()
+        got = day.groupby(day["ticker"].map(listing_market))["ticker"].nunique()
+        not_ready = sorted(m for m in markets_all if sched[m] is True and active.get(m, 0) > 0
+                           and got.get(m, 0) / active.get(m, 1) < READY_MIN_COVERAGE)
+        if not_ready:
+            msg = (f"Mercados abertos pelo calendário oficial sem preços suficientes em "
+                   f"{session_date}: {', '.join(not_ready)} (dados ainda não publicados?).")
+            if not allow_incomplete:
+                raise DataNotReadyError(msg + " Nada foi gravado.")
+            limitations.append(msg + " Gravado com allow_incomplete=True.")
+        surprise = sorted(m for m in traded if sched[m] is False)
+        if surprise:
+            notes.append("negociou_fora_do_calendario: " + ",".join(surprise))
         if day.empty:
+            if any(v is True for v in sched.values()) and not allow_incomplete:
+                raise DataNotReadyError(f"Calendário indica pregão em {session_date}, mas a "
+                                        "fonte não trouxe nenhum preço. Nada foi gravado.")
             if fx_day.empty and bench_day.empty:
                 raise NoSessionError(f"Nenhuma linha, câmbio ou benchmark negociou em "
                                      f"{session_date}; nada a gravar.")
@@ -839,3 +872,29 @@ class MarketStore:
 
 class NoSessionError(ValueError):
     """Nenhum mercado negociou na data (fim de semana ou feriado global)."""
+
+
+class DataNotReadyError(RuntimeError):
+    """O calendário indica pregão, mas a fonte ainda não publicou os preços (nada é gravado)."""
+
+
+@lru_cache(maxsize=16)
+def _exchange_calendar(code: str) -> Any:
+    import exchange_calendars as xc
+
+    return xc.get_calendar(code, start="2015-01-01")
+
+
+def market_is_open(session_date: date, market: str) -> bool | None:
+    """True/False pelo calendário oficial (``exchange_calendars``); ``None`` se desconhecido."""
+    code = MARKET_CALENDARS.get(market)
+    if code is None:
+        return None
+    try:
+        cal = _exchange_calendar(code)
+        ts = pd.Timestamp(session_date)
+        if ts < cal.first_session or ts > cal.last_session:
+            return None
+        return bool(cal.is_session(ts))
+    except Exception:  # biblioteca ausente ou calendário indisponível
+        return None

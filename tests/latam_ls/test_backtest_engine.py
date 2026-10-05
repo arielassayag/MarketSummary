@@ -344,8 +344,10 @@ def test_simulate_weights_pnl_equals_sum_w_r_with_drift():
     # Dia do rebalanceamento: retorno acumula nos pesos anteriores (caixa).
     assert d["ret_gross"].iloc[0] == 0.0
     assert d["ret_gross"].iloc[1] == pytest.approx(0.5 * 0.01 + (-0.5) * (-0.02))
-    w_a = 0.5 * 1.01 / 1.015
+    w_a = 0.5 * 1.01 / 1.015  # deriva: w_{t} = w_{t-1}(1 + r) / (1 + R)
     w_b = -0.5 * 0.98 / 1.015
+    assert d["gross"].iloc[1] == pytest.approx(abs(w_a) + abs(w_b))
+    assert d["net"].iloc[1] == pytest.approx(w_a + w_b)
     # A sem retorno: contribui 0 e a posição é carregada; só B rende.
     assert d["ret_gross"].iloc[2] == pytest.approx(w_b * 0.01)
     assert d["ret_gross"].iloc[3] == pytest.approx(0.3 * 0.02)
@@ -353,7 +355,7 @@ def test_simulate_weights_pnl_equals_sum_w_r_with_drift():
     np.testing.assert_allclose(d["ret_gross"], led["ret_gross"], atol=1e-14)
     np.testing.assert_allclose(d["nav"], led["nav"], atol=1e-14)
     assert d["nav"].iloc[-1] == pytest.approx(float(np.prod(1 + d["ret_net"])))
-    assert w_a > 0.5  # deriva: o comprado que subiu ganha peso
+    assert d["gross"].iloc[2] == pytest.approx(0.6)  # rebalanceado para (0,3; −0,3)
 
 
 def test_costs_borrow_and_financing_reduce_or_add_as_expected():

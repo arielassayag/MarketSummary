@@ -15,6 +15,13 @@ dependencies = [
     "PyYAML>=6.0",
     "python-dotenv>=1.0",
     "tzdata>=2024.1",
+    "numpy>=2.0",
+    "scipy>=1.13",
+    "cvxpy>=1.5",
+    "clarabel>=0.9",
+    "yfinance>=0.2.50",
+    "pyarrow>=16",
+    "plotly>=5.22",
 ]
 
 [project.optional-dependencies]
@@ -24,6 +31,9 @@ gemini = [
 dev = [
     "pytest>=8.0",
     "ruff>=0.5",
+]
+ai = [
+    "anthropic>=0.40",
 ]
 
 [tool.setuptools.packages.find]

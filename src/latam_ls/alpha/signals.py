@@ -9,7 +9,7 @@ registrados em ``serie.attrs["notes"]``.
 | ``residual_momentum`` | Σ resíduos t−252…t−21 / desvio dos resíduos (Blitz-Huij-Martens) | Sim |
 | ``short_term_reversal`` | −Σ resíduos dos últimos 21 pregões | Sim |
 | ``low_risk`` | −vol residual de 126 pregões (anualizada) | Sim |
-| ``value`` | E/P, B/P e EBITDA/EV relativos ao setor | Não |
+| ``value`` | E/P, B/P e EBITDA/EV relativos ao setor (moeda do balanço) | Não |
 | ``quality`` | ROE, margens operacional e bruta, −dívida/PL relativos ao setor | Não |
 | ``analyst_revision`` | upside ao preço-alvo médio e −(recomendação média − 3) | Não |
 
@@ -357,10 +357,12 @@ def select_fundamental_lines(
 
     Preferência: (1) moeda da linha = moeda de cotação da fonte = moeda das demonstrações
     (evita o descasamento de moeda típico de ADRs, ex.: preço em USD e lucro em BRL); (2) linha
-    primária; (3) ticker. Só concorrem linhas com ao menos um dos ``fields`` preenchido (e
-    ``usable`` verdadeiro, se informado). Retorna DataFrame indexado por ``issuers`` com
-    ``ticker``, ``line_type``, ``quote_currency``, ``line_currency``, ``financial_currency`` e
-    ``currency_match`` (``NaN`` sem linha).
+    não ADR (sem moeda coerente, os múltiplos de um ADR misturam moeda e razão de conversão e
+    são descartados, enquanto os de uma linha local/listada nos EUA podem ser usados ou
+    corrigidos pelo câmbio); (3) linha primária; (4) ticker. Só concorrem linhas com ao menos
+    um dos ``fields`` preenchido (e ``usable`` verdadeiro, se informado). Retorna DataFrame
+    indexado por ``issuers`` com ``ticker``, ``line_type``, ``quote_currency``,
+    ``line_currency``, ``financial_currency`` e ``currency_match`` (``NaN`` sem linha).
     """
     cand = _candidate_lines(md, issuers)
     fund = md.fundamentals
@@ -370,8 +372,9 @@ def select_fundamental_lines(
     if usable is not None:
         has &= usable.reindex(cand.index).fillna(False).astype(bool)
     cand = cand[has]
-    cand = cand.assign(no_match=~cand["currency_match"], not_primary=~cand["primary"])
-    cand = cand.sort_values(["issuer_id", "no_match", "not_primary", "ticker"])
+    cand = cand.assign(no_match=~cand["currency_match"], is_adr=cand["line_type"] == "ADR",
+                       not_primary=~cand["primary"])
+    cand = cand.sort_values(["issuer_id", "no_match", "is_adr", "not_primary", "ticker"])
     best = cand.groupby("issuer_id").head(1).set_index("issuer_id")
     cols = ["ticker", "line_type", "quote_currency", "line_currency", "financial_currency",
             "currency_match"]
@@ -440,31 +443,121 @@ def _sector_of(panel: AssetPanel, md: MarketData, issuers: list[str]) -> pd.Seri
     return sec
 
 
-def value(panel: AssetPanel, md: MarketData, model: RiskModel | None,
-          as_of: pd.Timestamp, issuers: list[str]) -> pd.Series:
-    """Valor relativo ao setor: E/P, B/P e EBITDA/EV (mínimo 1 componente)."""
-    notes: list[str] = []
+CURRENCY_STATUS_LABELS = {
+    "ok": "linha, cotação da fonte e demonstrações na mesma moeda",
+    "fx_corrigido": "moeda do balanço ≠ moeda da linha (não ADR): P/VPA e EV/EBITDA corrigidos "
+                    "pelo câmbio; P/L da fonte mantido; LPA/preço não usado",
+    "sem_cambio": "moeda do balanço ≠ moeda da linha sem câmbio disponível: P/VPA e EV/EBITDA "
+                  "descartados; P/L da fonte mantido",
+    "moeda_fin_desconhecida": "moeda do balanço desconhecida em linha não ADR: múltiplos da "
+                              "fonte usados como estão; LPA/preço não usado",
+    "adr_moeda_divergente": "ADR com moeda do balanço diferente/desconhecida: múltiplos "
+                            "descartados (a fonte mistura moeda e razão do ADR)",
+    "cotacao_inconsistente": "moeda de cotação da fonte ≠ moeda da linha: múltiplos descartados",
+}
+
+
+def _currency_status(sel: pd.DataFrame, fx_factor: pd.Series) -> pd.Series:
+    """Classifica a coerência de moedas da linha escolhida para os múltiplos de valor.
+
+    Evidência real (docs/research/06, §3.5): o Yahoo calcula P/VPA e EV/EBITDA com preço na
+    moeda da linha e balanço na moeda das demonstrações (SQM-B.SN: P/B = 2.889, EV/EBITDA =
+    6.071) e, em ADRs, também ignora a razão de conversão (GGAL P/B 9,50 vs GGAL.BA 1,02).
+    """
+    has = sel["ticker"].notna()
+    is_adr = (sel["line_type"].astype("string") == "ADR").fillna(False).astype(bool)
+    fin_known = sel["financial_currency"].notna()
+    quote_ok = _same(sel["quote_currency"], sel["line_currency"])
+    conds = [
+        ~has,
+        has & ~quote_ok,
+        has & sel["currency_match"].fillna(False).astype(bool),
+        has & is_adr,
+        has & ~fin_known,
+        has & fx_factor.notna(),
+    ]
+    choices = ["sem_linha", "cotacao_inconsistente", "ok", "adr_moeda_divergente",
+               "moeda_fin_desconhecida", "fx_corrigido"]
+    return pd.Series(np.select(conds, choices, default="sem_cambio"), index=sel.index,
+                     dtype=object)
+
+
+def _bounded(x: pd.Series, name: str) -> tuple[pd.Series, pd.Series]:
+    """Aplica ``VALUE_BOUNDS[name]``; devolve (série limpa, máscara dos descartados)."""
+    lo, hi = VALUE_BOUNDS[name]
+    bad = x.notna() & ((x < lo) | (x > hi))
+    return x.where(~bad), bad
+
+
+def value_components(md: MarketData, issuers: list[str], as_of: pd.Timestamp) -> pd.DataFrame:
+    """Componentes brutos do sinal de valor por emissor, com a linha e a moeda usadas.
+
+    Colunas: ``ticker``, ``line_type``, ``currency_status`` (ver ``CURRENCY_STATUS_LABELS``),
+    ``fx_factor`` (USD/moeda do balanço ÷ USD/moeda de cotação, último câmbio ``<= as_of``),
+    ``earnings_yield``, ``book_to_price``, ``ebitda_to_ev`` e ``flag`` (componentes descartados
+    por implausibilidade). Ausências e descartes ficam ``NaN`` — nunca zero.
+    """
+    as_of = pd.Timestamp(as_of)
     sel = select_fundamental_lines(md, issuers, VALUE_FIELDS)
-    if sel["ticker"].isna().all():
-        return _empty(issuers, "value", ["Sem fundamentos de valor para nenhum emissor."])
     f = _fields_for(md, sel, VALUE_FIELDS)
     px = last_close(md, sel["ticker"], as_of)["price"]
-    same_ccy = sel["currency_match"].fillna(False).astype(bool)
-    eps = f["trailing_eps"].where(same_ccy)
-    blocked = ~(f["trailing_pe"] > 0) & f["trailing_eps"].notna() & ~same_ccy
-    if blocked.any():
-        blocked_ids = blocked.index[blocked].tolist()
-        notes.append(f"LPA não usado por moeda de cotação ≠ moeda do balanço em "
-                     f"{len(blocked_ids)} emissor(es): {_fmt_ids(blocked_ids)}.")
-    comps = {
-        "earnings_yield": earnings_yield(f["trailing_pe"], eps, px),
-        "book_to_price": _inverse_positive(f["price_to_book"]),
-        "ebitda_to_ev": _inverse_positive(f["enterprise_to_ebitda"]),
-    }
-    nonmatch = sel.index[sel["ticker"].notna() & ~same_ccy].tolist()
-    if nonmatch:
-        notes.append(f"{len(nonmatch)} emissor(es) sem linha na moeda do balanço; usada a linha "
-                     f"primária/disponível: {_fmt_ids(nonmatch)}.")
+    fx = _fx_last(md, as_of).to_dict()
+    fin_usd = sel["financial_currency"].astype(object).map(fx).astype(float)
+    quote_usd = sel["quote_currency"].astype(object).map(fx).astype(float)
+    fx_factor = fin_usd / quote_usd
+    status = _currency_status(sel, fx_factor)
+
+    ok = status == "ok"
+    raw_bp = _inverse_positive(f["price_to_book"])
+    raw_ev = _inverse_positive(f["enterprise_to_ebitda"])
+    # B/P e EBITDA/EV verdadeiros = (1/múltiplo da fonte) × USD/fin ÷ USD/cotação.
+    factor = pd.Series(np.nan, index=sel.index, dtype=float)
+    factor[ok | (status == "moeda_fin_desconhecida")] = 1.0
+    factor[status == "fx_corrigido"] = fx_factor[status == "fx_corrigido"]
+    # P/L da fonte não depende de câmbio (preço e LPA convertidos pela fonte; docs/research/06
+    # só registra mistura de moedas em P/VPA e EV/EBITDA): mantido em linhas não ADR.
+    pe_usable = status.isin(["ok", "fx_corrigido", "sem_cambio", "moeda_fin_desconhecida"])
+    # LPA/preço só com LPA e preço comprovadamente na mesma moeda.
+    ey = earnings_yield(f["trailing_pe"].where(pe_usable), f["trailing_eps"].where(ok), px)
+    out = pd.DataFrame({
+        "ticker": sel["ticker"],
+        "line_type": sel["line_type"],
+        "currency_status": status,
+        "fx_factor": fx_factor.where(status == "fx_corrigido"),
+    }, index=sel.index)
+    flags = pd.Series("", index=sel.index, dtype=object)
+    for name, x in [("earnings_yield", ey), ("book_to_price", raw_bp * factor),
+                    ("ebitda_to_ev", raw_ev * factor)]:
+        clean, bad = _bounded(x, name)
+        out[name] = clean
+        flags[bad] = flags[bad].map(lambda s: f"{s};" if s else s) + f"{name}_implausivel"
+    out["flag"] = flags
+    return out
+
+
+def value(panel: AssetPanel, md: MarketData, model: RiskModel | None,
+          as_of: pd.Timestamp, issuers: list[str]) -> pd.Series:
+    """Valor relativo ao setor: E/P, B/P e EBITDA/EV (mínimo 1 componente).
+
+    Usa a linha cotada na moeda das demonstrações; sem ela, a linha primária/disponível com o
+    tratamento de moeda de :func:`value_components` (câmbio para linhas não ADR, descarte para
+    ADR) e faixas de plausibilidade (``VALUE_BOUNDS``).
+    """
+    notes: list[str] = []
+    comp = value_components(md, issuers, as_of)
+    if comp["ticker"].isna().all():
+        return _empty(issuers, "value", ["Sem fundamentos de valor para nenhum emissor."])
+    for st, label in CURRENCY_STATUS_LABELS.items():
+        if st == "ok":
+            continue
+        ids = comp.index[comp["currency_status"] == st].tolist()
+        if ids:
+            notes.append(f"{len(ids)} emissor(es) — {label}: {_fmt_ids(ids)}.")
+    bad = comp.index[comp["flag"] != ""].tolist()
+    if bad:
+        notes.append(f"{len(bad)} emissor(es) com múltiplo fora da faixa plausível (provável "
+                     f"erro de moeda/unidade da fonte), descartado: {_fmt_ids(bad)}.")
+    comps = {k: comp[k] for k in ("earnings_yield", "book_to_price", "ebitda_to_ev")}
     score, _ = _composite(comps, _sector_of(panel, md, issuers), MIN_VALUE_COMPONENTS)
     missing = score.index[score.isna()].tolist()
     if missing:
@@ -484,11 +577,12 @@ def quality(panel: AssetPanel, md: MarketData, model: RiskModel | None,
     de = f["debt_to_equity"]
     neg_equity = de < 0
     if neg_equity.any():
-        notes.append(f"Dívida/PL negativa (PL negativo) tratada como ausente em "
+        # PL negativo: dívida/PL e ROE perdem o sentido (prejuízo ÷ PL negativo = ROE positivo).
+        notes.append(f"PL negativo (dívida/PL < 0): dívida/PL e ROE tratados como ausentes em "
                      f"{int(neg_equity.sum())} emissor(es): "
                      f"{_fmt_ids(neg_equity.index[neg_equity].tolist())}.")
     comps = {
-        "roe": f["return_on_equity"],
+        "roe": f["return_on_equity"].where(~neg_equity),
         "operating_margin": f["operating_margins"],
         "gross_margin": f["gross_margins"],
         "neg_leverage": -de.where(de >= 0),
@@ -507,11 +601,12 @@ def analyst_inputs(md: MarketData, issuers: list[str], as_of: pd.Timestamp) -> p
 
     Considera apenas linhas com ``number_of_analyst_opinions >= MIN_ANALYST_OPINIONS``.
     Preferência de linha como em :func:`select_fundamental_lines`. ``upside`` é ``NaN``
-    quando a moeda dos fundamentos difere da moeda de cotação do preço, quando o preço está
-    defasado (> ``STALE_DAYS_MAX`` dias) ou quando cai fora de ``UPSIDE_BOUNDS``.
-    Colunas: ``ticker``, ``currency``, ``price``, ``price_date``, ``target_mean_price``,
-    ``upside``, ``recommendation_mean``, ``rec_score`` (= 3 − recomendação), ``n_opinions``,
-    ``flag``.
+    quando a moeda dos fundamentos difere da moeda de cotação do preço, quando não há preço
+    ``<= as_of``, quando o preço está defasado (> ``STALE_DAYS_MAX`` dias) ou quando cai fora de
+    ``UPSIDE_BOUNDS``. Colunas: ``ticker``, ``currency``, ``price``, ``price_date``,
+    ``target_mean_price``, ``upside``, ``recommendation_mean``, ``rec_score`` (= 3 −
+    recomendação), ``n_opinions``, ``flag`` (``sem_cobertura_minima`` | ``moeda_inconsistente``
+    | ``sem_preco`` | ``preco_defasado`` | ``upside_implausivel``).
     """
     as_of = pd.Timestamp(as_of)
     fund = md.fundamentals
@@ -524,8 +619,10 @@ def analyst_inputs(md: MarketData, issuers: list[str], as_of: pd.Timestamp) -> p
     flag = pd.Series("", index=sel.index, dtype=object)
     flag[sel["ticker"].isna()] = "sem_cobertura_minima"
     target = f["target_mean_price"].where(f["target_mean_price"] > 0)
-    ccy_ok = (sel["quote_currency"] == sel["line_currency"]).fillna(False).astype(bool)
+    ccy_ok = _same(sel["quote_currency"], sel["line_currency"])
     flag[sel["ticker"].notna() & ~ccy_ok] = "moeda_inconsistente"
+    no_price = sel["ticker"].notna() & px["price"].isna()
+    flag[no_price & (flag == "")] = "sem_preco"
     stale = (as_of - px["price_date"]).dt.days > STALE_DAYS_MAX
     stale = stale.fillna(False).astype(bool) & sel["ticker"].notna()
     flag[stale & (flag == "")] = "preco_defasado"
@@ -558,6 +655,7 @@ def analyst_revision(panel: AssetPanel, md: MarketData, model: RiskModel | None,
     for flag, label in [
         ("sem_cobertura_minima", f"menos de {MIN_ANALYST_OPINIONS} analistas"),
         ("moeda_inconsistente", "moeda do preço-alvo ≠ moeda do preço"),
+        ("sem_preco", "sem preço até as_of (upside indisponível)"),
         ("preco_defasado", "preço defasado"),
         ("upside_implausivel", "upside fora da faixa plausível (provável erro de moeda)"),
     ]:

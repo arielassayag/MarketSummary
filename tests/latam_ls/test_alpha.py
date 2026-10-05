@@ -10,12 +10,15 @@ import pandas as pd
 import pytest
 
 from latam_ls.alpha.combine import (
+    CORR_EIGEN_FLOOR,
     MAX_WLS_WEIGHT_RATIO,
     AlphaResult,
     build_alpha,
+    coverage_scale,
     information_coefficient,
     neutralize,
     robust_zscore,
+    signal_correlation,
     wls_weights,
 )
 from latam_ls.alpha.signals import (
@@ -24,13 +27,22 @@ from latam_ls.alpha.signals import (
     RESIDUAL_WINDOW,
     SIGNALS,
     VALUE_FIELDS,
+    _cap_weighted_market,
+    _market_over_gaps,
     analyst_inputs,
+    cap_weights_usd,
     compute_signals,
     earnings_yield,
     residual_returns,
     select_fundamental_lines,
+    value_components,
 )
-from latam_ls.alpha.views import apply_views, mandate_max_abs_weight, view_tilt_table
+from latam_ls.alpha.views import (
+    ai_view_ic,
+    apply_views,
+    mandate_max_abs_weight,
+    view_tilt_table,
+)
 from latam_ls.analytics.panel import build_asset_panel
 from latam_ls.config import FundConfig
 from latam_ls.contracts import View, ViewSource
@@ -301,9 +313,12 @@ def test_value_uses_primary_line_without_currency_match(md, ids, signals):
     sel = select_fundamental_lines(md, ids, VALUE_FIELDS)
     nomatch = sel.index[~sel["currency_match"].astype(bool)]
     assert len(nomatch) >= 1  # ex.: empresa regional listada em USD com balanço em BRL
+    comp = value_components(md, ids, pd.Timestamp(md.close.index[-1]))
     for iid in nomatch:
         assert sel.loc[iid, "ticker"] == md.universe.issuers.loc[iid, "primary_ticker"]
         assert np.isfinite(signals.loc[iid, "value"])
+        # Linha não ADR com balanço em outra moeda: P/VPA e EV/EBITDA corrigidos pelo câmbio.
+        assert comp.loc[iid, "currency_status"] == "fx_corrigido"
 
 
 def test_value_negative_earnings_and_missing_data(md, panel, as_of, ids):
@@ -590,12 +605,11 @@ def test_view_tilt_is_bounded(base_alpha, cfg):
         conf = float(rng.uniform(0, 1))
         src = ViewSource.AI if rng.uniform() < 0.5 else ViewSource.PM
         adj, _, _ = apply_views(alpha, [_view("A", src, score, conf)], vol, cfg)
-        ic = (cfg.alpha.view_information_coefficient if src == ViewSource.AI
-              else cfg.alpha.information_coefficient)
+        ic = ai_view_ic(cfg) if src == ViewSource.AI else cfg.alpha.information_coefficient
         bound = ic * vol["A"] * cfg.alpha.max_view_tilt_z
         assert abs(adj["A"] - alpha["A"]) <= bound + 1e-15
     adj, _, log = apply_views(alpha, [_view("A", ViewSource.AI, 2, 1.0)], vol, cfg)
-    expected = cfg.alpha.view_information_coefficient * 0.25 * cfg.alpha.max_view_tilt_z
+    expected = ai_view_ic(cfg) * 0.25 * cfg.alpha.max_view_tilt_z
     assert adj["A"] - alpha["A"] == pytest.approx(expected)
     assert adj.drop("A").equals(alpha.drop("A"))
     assert any("A:" in m for m in log)
@@ -617,7 +631,7 @@ def test_multiple_ai_views_are_averaged(base_alpha, cfg):
     views = [_view("C", ViewSource.AI, 2, 1.0), _view("C", ViewSource.AI, -2, 0.5)]
     adj, _, log = apply_views(alpha, views, vol, cfg)
     z = (1.0 * cfg.alpha.max_view_tilt_z + (-1.0) * cfg.alpha.max_view_tilt_z * 0.5) / 2
-    expected = cfg.alpha.view_information_coefficient * 0.20 * z
+    expected = ai_view_ic(cfg) * 0.20 * z
     assert adj["C"] - alpha["C"] == pytest.approx(expected)
     assert any("média" in m for m in log)
 
@@ -692,3 +706,219 @@ def test_views_end_to_end_with_alpha(alpha_res, model, cfg):
     assert adj[top] < a[top]
     assert bool(cons.loc[top, "no_long"])
     assert adj.drop(top).equals(a.drop(top))
+
+
+# ==========================================================
+# Revisão adversarial: testes que expõem bugs corrigidos
+# ==========================================================
+
+def _single_line_issuer(md: MarketData, country: str) -> tuple[str, str]:
+    """(emissor, ticker) de um emissor com uma única linha (local) no país."""
+    iss = md.universe.issuers
+    sub = iss[(iss["country"] == country) & (iss["n_lines"] == 1)]
+    iid = str(sub.index[0])
+    return iid, str(sub.loc[iid, "primary_ticker"])
+
+
+def test_market_residuals_have_zero_covariance_with_market(panel, md, as_of):
+    """Beta MQO correto: o resíduo (com intercepto) não covaria com o mercado na janela."""
+    resid, _ = residual_returns(panel, md, None, as_of)
+    R_all = panel.returns.loc[panel.returns.index <= as_of]
+    rm, _ = _cap_weighted_market(R_all, cap_weights_usd(md, as_of))
+    M = _market_over_gaps(R_all, rm).loc[resid.index]
+    for iid in resid.columns[resid.notna().sum() >= 60]:
+        e, m = resid[iid], M[iid]
+        ok = e.notna() & m.notna()
+        cov = float(((e[ok] - e[ok].mean()) * (m[ok] - m[ok].mean())).mean())
+        assert abs(cov) < 1e-12, iid
+
+
+def test_value_fx_corrects_mixed_currency_multiples_on_local_line(md, panel, as_of, ids):
+    """Caso real SQM-B.SN: linha local em CLP, balanço em USD, P/B = 2.889, EV/EBITDA = 6.071."""
+    iid, tkr = _single_line_issuer(md, "CL")
+    md2 = _with_fundamentals(md, {(tkr, "financial_currency"): "USD",
+                                  (tkr, "price_to_book"): 2889.0,
+                                  (tkr, "enterprise_to_ebitda"): 6071.0})
+    comp = value_components(md2, ids, as_of)
+    fx_clp = float(md.fx["CLP"].loc[md.fx.index <= as_of].iloc[-1])
+    assert comp.loc[iid, "currency_status"] == "fx_corrigido"
+    assert comp.loc[iid, "book_to_price"] == pytest.approx(1.0 / 2889.0 / fx_clp)
+    assert comp.loc[iid, "ebitda_to_ev"] == pytest.approx(1.0 / 6071.0 / fx_clp)
+    assert 0.2 < comp.loc[iid, "book_to_price"] < 0.5  # P/VPA real ≈ 3,1
+    v = compute_signals(panel, md2, None, as_of, ids, names=["value"])
+    assert v["value"].rank(pct=True)[iid] > 0.2  # antes: entre os 7% mais "caros"
+    assert any("corrigidos pelo câmbio" in n for n in v.attrs["notes"])
+
+
+def test_value_discards_multiples_of_adr_with_foreign_financials(md, panel, as_of, ids):
+    """ADR com balanço em moeda local (CIB, GGAL): múltiplos da fonte misturam moeda e razão."""
+    iid, local, adr = _local_primary_with_adr(md)
+    md2 = replace(md, fundamentals=md.fundamentals.drop(index=local))
+    comp = value_components(md2, ids, as_of)
+    assert comp.loc[iid, "ticker"] == adr
+    assert comp.loc[iid, "currency_status"] == "adr_moeda_divergente"
+    assert comp.loc[iid, ["earnings_yield", "book_to_price", "ebitda_to_ev"]].isna().all()
+    v = compute_signals(panel, md2, None, as_of, ids, names=["value"])
+    assert np.isnan(v.loc[iid, "value"])  # ausente ⇒ NaN, nunca zero
+    assert any("ADR com moeda do balanço" in n for n in v.attrs["notes"])
+
+
+def test_value_implausible_multiple_is_discarded(md, panel, as_of, ids):
+    """CIB P/B = 0,00207 (preço USD / PL COP): fora da faixa plausível ⇒ componente NaN."""
+    iid, local, _ = _local_primary_with_adr(md)
+    md2 = _with_fundamentals(md, {(local, "price_to_book"): 0.00207})
+    comp = value_components(md2, ids, as_of)
+    assert np.isnan(comp.loc[iid, "book_to_price"])
+    assert comp.loc[iid, "flag"] == "book_to_price_implausivel"
+    assert np.isfinite(comp.loc[iid, "earnings_yield"])
+    v = compute_signals(panel, md2, None, as_of, ids, names=["value"])
+    assert np.isfinite(v.loc[iid, "value"])
+    assert any("fora da faixa plausível" in n for n in v.attrs["notes"])
+
+
+def test_line_selection_requires_line_currency_to_match(md, ids):
+    """Fonte rotulando um ADR (USD) com moeda local não torna a linha 'coerente'."""
+    iss = md.universe.issuers
+    ar = str(iss.index[(iss["country"] == "AR")][0])
+    adr = str(iss.loc[ar, "primary_ticker"])  # na Argentina a linha primária é o ADR
+    assert md.universe.lines.loc[adr, "line_type"] == "ADR"
+    md2 = _with_fundamentals(md, {(adr, "currency"): "ARS"})
+    sel = select_fundamental_lines(md2, ids, VALUE_FIELDS)
+    assert sel.loc[ar, "ticker"] != adr and sel.loc[ar, "line_currency"] == "ARS"
+    assert bool(sel.loc[ar, "currency_match"])
+    # Sem a linha local, o ADR rotulado errado é classificado como inconsistente.
+    lines = md.universe.lines
+    local = [t for t in lines.index[lines["issuer_id"] == ar] if t != adr][0]
+    md3 = replace(md2, fundamentals=md2.fundamentals.drop(index=local))
+    comp = value_components(md3, ids, pd.Timestamp(md.close.index[-1]))
+    assert comp.loc[ar, "currency_status"] == "cotacao_inconsistente"
+    assert comp.loc[ar, ["earnings_yield", "book_to_price", "ebitda_to_ev"]].isna().all()
+
+
+def test_quality_ignores_roe_when_equity_is_negative(md, panel, as_of, ids):
+    """PL negativo: prejuízo ÷ PL negativo dá ROE positivo enorme — não pode virar qualidade."""
+    iid, local, _ = _local_primary_with_adr(md)
+    bad = _with_fundamentals(md, {(local, "debt_to_equity"): -40.0,
+                                  (local, "return_on_equity"): 3.0})
+    ref = _with_fundamentals(md, {(local, "debt_to_equity"): np.nan,
+                                  (local, "return_on_equity"): np.nan})
+    q_bad = compute_signals(panel, bad, None, as_of, ids, names=["quality"])
+    q_ref = compute_signals(panel, ref, None, as_of, ids, names=["quality"])
+    pd.testing.assert_series_equal(q_bad["quality"], q_ref["quality"])
+    assert any("ROE tratados como ausentes" in n for n in q_bad.attrs["notes"])
+
+
+def test_analyst_flags_missing_price_and_adr_ratio_errors(md, as_of, ids):
+    inp = analyst_inputs(md, ids, as_of)
+    iid, _, _ = _local_primary_with_adr(md)
+    tkr = inp.loc[iid, "ticker"]
+    close = md.close.copy()
+    close[tkr] = np.nan
+    no_px = analyst_inputs(replace(md, close=close), ids, as_of).loc[iid]
+    assert no_px["flag"] == "sem_preco" and np.isnan(no_px["upside"])
+    assert np.isfinite(no_px["rec_score"])  # recomendação continua válida
+    # Preço-alvo por ação local contra preço por ADR de 5 ações: upside ≈ −78% ⇒ descartado.
+    px = float(inp.loc[iid, "price"])
+    md_ratio = _with_fundamentals(md, {(tkr, "target_mean_price"): px * 1.1 / 5.0})
+    row = analyst_inputs(md_ratio, ids, as_of).loc[iid]
+    assert row["flag"] == "upside_implausivel" and np.isnan(row["upside"])
+
+
+def _toy_model(ids: list[str], spec_var: float = 0.09) -> RiskModel:
+    idx = pd.Index(ids, name="issuer_id")
+    B = pd.DataFrame({"market": 1.0}, index=idx)
+    F = pd.DataFrame([[0.04]], index=["market"], columns=["market"])
+    return RiskModel(as_of=date(2026, 10, 2), exposures=B, factor_cov=F,
+                     specific_var=pd.Series(spec_var, index=idx),
+                     factor_returns=pd.DataFrame(columns=["market"], dtype=float),
+                     specific_returns=pd.DataFrame(columns=ids, dtype=float),
+                     factor_groups={"market": "market"})
+
+
+def test_partial_coverage_does_not_inflate_composite(cfg):
+    """Emissor com um único sinal não pode ter |z| sistematicamente maior que o coberto."""
+    rng = np.random.default_rng(42)
+    n = 4000
+    ids = [f"X{i:04d}" for i in range(n)]
+    common = rng.normal(size=n)
+    raw = pd.DataFrame({
+        "residual_momentum": np.sqrt(0.5) * common + np.sqrt(0.5) * rng.normal(size=n),
+        "value": np.sqrt(0.5) * common + np.sqrt(0.5) * rng.normal(size=n),  # ρ ≈ 0,5
+        "quality": rng.normal(size=n),
+        "low_risk": rng.normal(size=n),
+    }, index=ids)
+    single = ids[: n // 2]
+    for k, iid in enumerate(single):
+        keep = raw.columns[k % 4]
+        raw.loc[iid, raw.columns != keep] = np.nan
+    w = {c: 0.25 for c in raw.columns}
+    res = build_alpha(raw, _toy_model(ids), cfg, weights=w)
+    full = ids[n // 2:]
+    ratio = res.composite_z[single].std() / res.composite_z[full].std()
+    assert 0.9 < ratio < 1.1  # sem a normalização: ≈ 1,8
+    total = res.contributions.sum(axis=1, min_count=1)
+    np.testing.assert_allclose(total, res.alpha_raw, atol=1e-15, equal_nan=True)
+    assert any("normalizado pelo desvio esperado" in m for m in res.notes)
+
+
+def test_signal_correlation_is_positive_definite_and_handles_missing_pairs():
+    """Correlações por pares podem ser inconsistentes (não PSD); a matriz usada é PD."""
+    rng = np.random.default_rng(9)
+    base = rng.normal(size=60)
+    z = pd.DataFrame(np.nan, index=range(60), columns=["s1", "s2", "s3", "s4"])
+    z.loc[0:19, "s1"] = base[0:20]
+    z.loc[0:19, "s2"] = base[0:20] + 0.05 * rng.normal(size=20)    # ρ(s1,s2) ≈ +1
+    z.loc[20:39, "s2"] = base[20:40]
+    z.loc[20:39, "s3"] = base[20:40] + 0.05 * rng.normal(size=20)   # ρ(s2,s3) ≈ +1
+    z.loc[40:59, "s1"] = base[40:60]
+    z.loc[40:59, "s3"] = -base[40:60] + 0.05 * rng.normal(size=20)  # ρ(s1,s3) ≈ −1
+    z.loc[0:5, "s4"] = rng.normal(size=6)                           # sem pares suficientes
+    raw_c = z.corr(min_periods=10).to_numpy()[:3, :3]
+    assert np.linalg.eigvalsh(raw_c).min() < -0.5  # inconsistente de fato
+    notes: list[str] = []
+    c = signal_correlation(z, notes)
+    vals = np.linalg.eigvalsh(c.to_numpy())
+    assert vals.min() > 0.5 * CORR_EIGEN_FLOOR
+    np.testing.assert_allclose(np.diag(c.to_numpy()), 1.0)
+    assert c.loc["s4", "s1"] == 0.0 and any("assumida 0" in m for m in notes)
+    a = pd.DataFrame([[0.5, 0.0, 0.5, 0.0], [np.nan] * 4], columns=c.columns, index=["a", "b"])
+    s = coverage_scale(a, c)
+    assert s["a"] > 0 and np.isnan(s["b"])
+
+
+def test_ai_view_ic_follows_adoption_phase(base_alpha, cfg):
+    """Fase S0 (shadow): IA não move o alpha, mas as restrições valem; IC nunca passa a fase."""
+    alpha, vol = base_alpha
+    views = [_view("A", ViewSource.AI, 2, 1.0, no_short=True)]
+    s0 = cfg.with_overrides({"research": {"llm_phase": "S0"}})
+    adj, cons, log = apply_views(alpha, views, vol, s0)
+    assert adj["A"] == alpha["A"] and bool(cons.loc["A", "no_short"])
+    assert any("shadow" in m for m in log)
+    assert ai_view_ic(cfg) == pytest.approx(cfg.research.llm_view_ic)  # S1 padrão = 0,01
+    adj1, _, _ = apply_views(alpha, views, vol, cfg)
+    assert adj1["A"] - alpha["A"] == pytest.approx(0.01 * 0.25 * cfg.alpha.max_view_tilt_z)
+    capped = cfg.with_overrides({"research": {"llm_phase": "S3"},
+                                 "alpha": {"view_information_coefficient": 0.005}})
+    assert ai_view_ic(capped) == pytest.approx(0.005)
+    # Gestor (PM) usa o IC do alpha quantitativo, independentemente da fase da IA.
+    pm = apply_views(alpha, [_view("A", ViewSource.PM, 2, 1.0)], vol, s0)[0]
+    expected = cfg.alpha.information_coefficient * 0.25 * cfg.alpha.max_view_tilt_z
+    assert pm["A"] - alpha["A"] == pytest.approx(expected)
+
+
+def test_line_selection_prefers_usable_local_line_without_currency_info(md, as_of, ids):
+    """Sem moeda do balanço na fonte: emissor argentino (ADR primário) usa a linha local .BA,
+    cujos múltiplos são aproveitáveis, em vez do ADR (múltiplos descartados)."""
+    f = md.fundamentals.drop(columns=["financial_currency"])
+    comp = value_components(replace(md, fundamentals=f), ids, as_of)
+    iss = md.universe.issuers
+    for ar in iss.index[iss["country"] == "AR"]:
+        assert comp.loc[ar, "line_type"] == "LOCAL"
+        assert comp.loc[ar, "currency_status"] == "moeda_fin_desconhecida"
+        assert np.isfinite(comp.loc[ar, "earnings_yield"])
+    # Sem câmbio (as_of anterior ao histórico): P/L mantido, P/VPA e EV/EBITDA descartados.
+    early = value_components(md, ids, pd.Timestamp("2023-06-01"))
+    nofx = early.index[early["currency_status"] == "sem_cambio"]
+    assert len(nofx) >= 1
+    assert early.loc[nofx, "earnings_yield"].notna().all()
+    assert early.loc[nofx, ["book_to_price", "ebitda_to_ev"]].isna().all().all()

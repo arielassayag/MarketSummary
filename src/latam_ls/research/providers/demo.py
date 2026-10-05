@@ -37,6 +37,7 @@ STANCE_THRESHOLDS = ((1.5, 2), (0.5, 1), (-0.5, 0), (-1.5, -1))
 _STANCE_LABEL = {2: "fortemente comprador", 1: "comprador", 0: "neutro", -1: "vendedor",
                  -2: "fortemente vendedor"}
 _BUCKET_LABEL = {"HIGH": "alta", "MEDIUM": "média", "LOW": "baixa", "NA": "indeterminada"}
+_MATERIALITY_LABEL = {"high": "alta", "medium": "média", "low": "baixa"}
 _COUNTRY_BENCH = {"BR": "EWZ", "MX": "EWW", "CL": "ECH", "CO": "GXG", "PE": "EPU", "AR": "ARGT"}
 _COUNTRY_RATE = {"BR": "SELIC"}
 
@@ -188,12 +189,12 @@ class DemoResearchProvider(LLMProvider):
             sentiment = item.get("sentiment")
             nid = str(item["news_id"])
             if sentiment == "negative":
-                risks.append(Driver(text="Notícia recente com tom negativo "
-                                         f"(materialidade {item.get('materiality', 'n/d')})",
+                mat = _MATERIALITY_LABEL.get(str(item.get("materiality")), "n/d")
+                risks.append(Driver(text=f"Notícia recente com tom negativo (materialidade {mat})",
                                     evidence_ids=[nid]))
             elif sentiment == "positive" and stance >= 0:
-                drivers.append(Driver(text="Notícia recente com tom positivo "
-                                           f"(materialidade {item.get('materiality', 'n/d')})",
+                mat = _MATERIALITY_LABEL.get(str(item.get("materiality")), "n/d")
+                drivers.append(Driver(text=f"Notícia recente com tom positivo (materialidade {mat})",
                                       evidence_ids=[nid]))
         gaps = []
         if not ctx.get("local_language"):

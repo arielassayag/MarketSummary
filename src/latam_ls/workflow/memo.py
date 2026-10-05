@@ -14,9 +14,10 @@ Regras:
 from __future__ import annotations
 
 import math
+import numbers
 import re
 from collections import Counter
-from datetime import date, datetime
+from datetime import UTC, date, datetime
 
 from .. import SIMULATED_DATA_NOTICE
 from ..config import FundConfig
@@ -64,11 +65,14 @@ _WS_RE = re.compile(r"\s+")
 # Formatação numérica (pt-BR)
 # ==========================================================
 
-def _finite(x: float | int | None) -> bool:
-    return x is not None and isinstance(x, (int, float)) and math.isfinite(float(x))
+def _finite(x: object) -> bool:
+    """Número real finito (inclui escalares numpy); ``None``/NaN/inf/bool não são números."""
+    return (isinstance(x, numbers.Real) and not isinstance(x, bool)
+            and math.isfinite(float(x)))
 
 
 def _br(value: float, digits: int, signed: bool = False) -> str:
+    value = round(value, digits) + 0.0  # sem "-0,00": zero arredondado não tem sinal
     sign = "+" if signed and value > 0 else ""
     text = f"{value:,.{digits}f}"
     return sign + text.replace(",", "\x00").replace(".", ",").replace("\x00", ".")
@@ -103,7 +107,12 @@ def fmt_days(x: float | None, digits: int = 1) -> str:
 
 
 def fmt_date(d: date | datetime) -> str:
-    return d.strftime("%d/%m/%Y %H:%M UTC") if isinstance(d, datetime) else d.strftime("%d/%m/%Y")
+    """Data ``dd/mm/aaaa``; horários com fuso são convertidos para UTC antes de rotular."""
+    if isinstance(d, datetime):
+        if d.tzinfo is None:
+            return d.strftime("%d/%m/%Y %H:%M (sem fuso)")
+        return d.astimezone(UTC).strftime("%d/%m/%Y %H:%M UTC")
+    return d.strftime("%d/%m/%Y")
 
 
 def _short_hash(h: str) -> str:
@@ -142,22 +151,33 @@ def render_research_text(text: str, factbook: FactBook | None = None) -> str:
     return _WS_RE.sub(" ", _FACT_RE.sub(_sub, strip_html(text))).strip()
 
 
+def _inline(text: object) -> str:
+    """Texto não confiável em uma linha (sem HTML nem quebras) para rótulos e títulos."""
+    return _WS_RE.sub(" ", strip_html(str(text))).strip()
+
+
+def _is_pm_provider(provider: str) -> bool:
+    return provider.strip().lower() in _PM_PROVIDERS
+
+
 def _is_pm_note(note: ResearchNote) -> bool:
-    return note.role == "pm"
+    """Nota do gestor: papel ``pm`` E provedor humano. Um provedor de IA que declare o papel
+    ``pm`` continua rotulado como IA (não se apresenta como visão do gestor)."""
+    return note.role == "pm" and _is_pm_provider(note.provider)
 
 
 def _note_label(note: ResearchNote) -> str:
     if _is_pm_note(note):
-        return f"Gestor (PM) — {note.provider}"
-    model = f", modelo {note.model}" if note.model else ""
-    return f"gerado por IA — provedor {note.provider}{model}, papel {note.role}"
+        return f"Gestor (PM) — {_inline(note.provider)}"
+    model = f", modelo {_inline(note.model)}" if note.model else ""
+    return f"gerado por IA — provedor {_inline(note.provider)}{model}, papel {note.role}"
 
 
 def _macro_label(note: MacroNote) -> str:
-    if note.provider.strip().lower() in _PM_PROVIDERS:
-        return f"Gestor (PM) — {note.provider}"
-    model = f", modelo {note.model}" if note.model else ""
-    return f"gerado por IA — provedor {note.provider}{model}"
+    if _is_pm_provider(note.provider):
+        return f"Gestor (PM) — {_inline(note.provider)}"
+    model = f", modelo {_inline(note.model)}" if note.model else ""
+    return f"gerado por IA — provedor {_inline(note.provider)}{model}"
 
 
 def _best_notes(pack: ResearchPack | None) -> dict[str, ResearchNote]:
@@ -450,15 +470,16 @@ def _section_research(pack: ResearchPack | None, fb: FactBook | None) -> list[st
     if pack is None:
         return out + ["_Pacote de pesquisa não disponível para este memo._", ""]
     n_ai = sum(1 for n in pack.notes if not _is_pm_note(n))
-    out += [f"Provedor: {pack.provider}; {len(pack.notes)} nota(s) por emissor ({n_ai} geradas "
-            f"por IA), {len(pack.macro)} nota(s) macro, {len(pack.views)} visão(ões).", ""]
+    out += [f"Provedor: {_inline(pack.provider)}; {len(pack.notes)} nota(s) por emissor "
+            f"({n_ai} geradas por IA), {len(pack.macro)} nota(s) macro, "
+            f"{len(pack.views)} visão(ões).", ""]
     if pack.news:
         out += [f"{len(pack.news)} manchete(s) considerada(s) — conteúdo NÃO confiável, não "
                 "reproduzido neste memo.", ""]
     if pack.macro:
         out += ["### Notas macro", ""]
         for m in sorted(pack.macro, key=lambda m: (m.scope, m.note_id)):
-            out += [f"#### {m.scope} — regime: {render_research_text(m.regime, fb)} "
+            out += [f"#### {_inline(m.scope)} — regime: {render_research_text(m.regime, fb)} "
                     f"(viés {m.stance:+d})", f"_({_macro_label(m)})_", "",
                     f"> {render_research_text(m.summary, fb)}", ""]
             for title, items in (("Riscos", m.risks),
@@ -480,7 +501,7 @@ def _section_research(pack: ResearchPack | None, fb: FactBook | None) -> list[st
             origin = "Gestor (PM)" if v.source == ViewSource.PM else "IA"
             rows.append([v.issuer_id, origin, f"{v.score:+d}" if v.score else "0",
                          fmt_pct(v.confidence, 0),
-                         ", ".join(limits) or "—", v.author])
+                         ", ".join(limits) or "—", _inline(v.author)])
         out += ["### Visões aplicadas", ""]
         out += _table(["Emissor", "Origem", "Score", "Confiança", "Restrições", "Autor"], rows)
         out += [""]

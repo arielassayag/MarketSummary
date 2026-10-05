@@ -7,7 +7,15 @@ Severidades (``contracts.Severity``):
 
 Todas as checagens têm ``value`` (medido), ``limit`` e ``details`` em português. A tolerância
 ``TOL`` = 1e-6 absorve ruído numérico do solver. Dados ausentes nunca viram zero: um nome com
-ADTV ausente reprova a checagem de liquidez; aluguel ausente reprova a checagem de aluguel.
+ADTV da linha ausente reprova a checagem de liquidez (o ADTV agregado do emissor só é usado
+quando a tabela de restrições não traz a coluna da linha, e isso é dito no detalhe); aluguel
+ausente reprova a checagem de aluguel.
+
+Liquidez: longs a ``participation_rate``; shorts a ``short_participation_rate`` (mandato).
+Drawdown: no stop duro o gross precisa cair a ``degross_multiplier`` × gross atual — ou o risco
+já estar cortado (vol ex-ante ≤ ``degross_multiplier`` × meta), para não exigir um novo corte a
+cada semana enquanto o drawdown persistir; no ``stop_out`` o gross não pode exceder
+``stop_out_gross``.
 """
 
 from __future__ import annotations
@@ -231,25 +239,32 @@ def run_compliance(
         f"{_offenders(short_bad)}."))
 
     # ---------- liquidez ----------
-    part = liq.participation_rate
-    for side, sel, col, lim in (
-        ("LONG", longs, "adtv_long_usd", liq.max_days_to_liquidate_long),
-        ("SHORT", shorts, "adtv_short_usd", liq.max_days_to_liquidate_short),
+    for side, sel, col, lim, part in (
+        ("LONG", longs, "adtv_long_usd", liq.max_days_to_liquidate_long,
+         liq.participation_rate),
+        ("SHORT", shorts, "adtv_short_usd", liq.max_days_to_liquidate_short,
+         liq.short_participation_rate),
     ):
-        adtv = pd.to_numeric(_lookup(col, sel.index, cons), errors="coerce")
+        if col in cons.columns:
+            # ADTV da linha de execução; ausente ⇒ NaN ⇒ reprova (nunca o agregado do emissor,
+            # que soma todas as linhas e superestimaria a liquidez da linha).
+            adtv = pd.to_numeric(cons[col].reindex(sel.index), errors="coerce")
+            src = ""
+        else:
+            adtv = pd.to_numeric(_lookup("adtv_usd", sel.index, panel_assets), errors="coerce")
+            src = " ADTV agregado do emissor (tabela sem ADTV por linha)."
         adtv = adtv.where(adtv > 0)
-        fallback = pd.to_numeric(_lookup("adtv_usd", sel.index, panel_assets), errors="coerce")
-        adtv = adtv.fillna(fallback.where(fallback > 0))
         days = sel.abs() * nav / (part * adtv)
         bad_days = days[~(days <= lim * (1 + TOL) + TOL)]  # NaN (sem ADTV) reprova
         worst = float(days.max()) if days.notna().any() else (0.0 if sel.empty else float("nan"))
         label = "comprada" if side == "LONG" else "vendida"
         checks.append(_check(
             f"LIQ_DAYS_{side}", f"Dias para liquidar (ponta {label})", bad_days.empty, HARD, worst,
-            lim, (f"Máximo {worst:.2f} dias a {part:.0%} do ADTV (limite {lim:.1f})."
+            lim, (f"Máximo {worst:.2f} dias a {part:.0%} do ADTV (limite {lim:.1f}).{src}"
                   if bad_days.empty else
-                  f"Nomes acima de {lim:.1f} dias (ou sem ADTV): "
-                  f"{_offenders(days.reindex(bad_days.index), fmt=lambda v: f'{v:.2f}d')}.")))
+                  f"Nomes acima de {lim:.1f} dias a {part:.0%} do ADTV (ou sem ADTV): "
+                  f"{_offenders(days.reindex(bad_days.index), fmt=lambda v: f'{v:.2f}d')}."
+                  f"{src}")))
 
     # ---------- short: permissões, squeeze e aluguel ----------
     shortable = _bool_col(cons, "shortable", shorts.index)
@@ -362,22 +377,38 @@ def run_compliance(
     if drawdown is not None:
         dd = -abs(float(drawdown))  # aceita 0,04 ou −0,04 como drawdown de 4%
         dds = cfg.drawdown
+        # Gatilhos inclusivos (drawdown igual ao stop aciona), com a mesma tolerância.
+        soft_hit = dd <= dds.soft_stop + TOL
         checks.append(_check(
-            "DRAWDOWN_SOFT", "Stop de drawdown (revisão)", dd > dds.soft_stop - TOL, SOFT, dd,
+            "DRAWDOWN_SOFT", "Stop de drawdown (revisão)", not soft_hit, SOFT, dd,
             dds.soft_stop,
             f"Drawdown {_fmt_pct(dd)} (gatilho de revisão {_fmt_pct(dds.soft_stop)})."
-            + ("" if dd > dds.soft_stop - TOL else " Revisão obrigatória da carteira.")))
+            + ("" if not soft_hit else
+               f" Revisão obrigatória da carteira; corte recomendado do gross para "
+               f"{dds.soft_degross_multiplier:.0%}.")))
         cur_gross = float(cur.dropna().abs().sum()) if len(cur.dropna()) else 0.0
         ref_gross = cur_gross if cur_gross > 0 else rk.gross_max
         gross_cap = dds.degross_multiplier * ref_gross
+        risk_cap = dds.degross_multiplier * target
         hard_hit = dd <= dds.hard_stop + TOL
-        ok = (not hard_hit) or gross <= gross_cap + TOL
+        stop_out = dd <= dds.stop_out + TOL
+        degrossed = gross <= gross_cap + TOL
+        # Risco já cortado (semanas seguintes ao stop): não exige novo corte a cada semana.
+        risk_cut = parts is not None and vol <= risk_cap + TOL
+        ok_hard = (not hard_hit) or degrossed or risk_cut
+        ok_out = (not stop_out) or gross <= dds.stop_out_gross + TOL
+        det = f"Drawdown {_fmt_pct(dd)} (stop {_fmt_pct(dds.hard_stop)}, stop-out " \
+              f"{_fmt_pct(dds.stop_out)})."
+        if hard_hit:
+            det += (f" Stop acionado: gross proposto {gross:.2f}x precisa ser ≤ {gross_cap:.2f}x "
+                    f"({dds.degross_multiplier:.0%} do gross de referência {ref_gross:.2f}x) "
+                    f"ou vol ex-ante ≤ {_fmt_pct(risk_cap)} (risco já cortado).")
+        if stop_out:
+            det += (f" Stop-out acionado: gross proposto {gross:.2f}x precisa ser ≤ "
+                    f"{dds.stop_out_gross:.2f}x e revisão completa do processo.")
         checks.append(_check(
-            "DRAWDOWN_HARD", "Stop de drawdown (corte de gross)", ok, HARD, dd, dds.hard_stop,
-            f"Drawdown {_fmt_pct(dd)} (stop {_fmt_pct(dds.hard_stop)})."
-            + ("" if not hard_hit else
-               f" Stop acionado: gross proposto {gross:.2f}x precisa ser ≤ {gross_cap:.2f}x "
-               f"({dds.degross_multiplier:.0%} do gross de referência {ref_gross:.2f}x).")))
+            "DRAWDOWN_HARD", "Stop de drawdown (corte de gross)", ok_hard and ok_out, HARD, dd,
+            dds.hard_stop, det))
 
     checks.append(_check(
         "SYNTHETIC_DATA", "Origem dos dados", True, INFO, 1.0 if is_synthetic else 0.0, None,

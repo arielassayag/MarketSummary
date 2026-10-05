@@ -488,7 +488,8 @@ def test_tampered_proposal_file_invalidates_approval(tmp_path):
     tampered = book.load_proposal(WEEK, 1)
     ok, reasons = verify_decision(d, tampered, SNAP_H, CFG_H, RES_H)
     assert not ok and any("alterada" in r for r in reasons)
-    assert book.proposal_state(WEEK, 1) == ProposalState.IN_REVIEW
+    # Divergência de integridade ⇒ BLOCKED (docs/research/07, §6.2), nunca "volta" à revisão.
+    assert book.proposal_state(WEEK, 1) == ProposalState.BLOCKED
     with pytest.raises(ValueError, match="inválida"):
         book.save_booked(book_entry_from_proposal(tampered, d, booked_at=NOW),
                          SNAP_H, CFG_H, RES_H)
@@ -848,17 +849,22 @@ def test_review_human_mode_decision_signed_by_autonomous_agent_fails_verificatio
     assert not ok and any("autônomo" in r for r in reasons)
 
 
-def _autonomous(p: Proposal, **kw) -> Decision:
-    return make_decision(p, AUTONOMOUS_DECIDER, DecisionType.APPROVE,
-                         "Gates determinísticos aprovados.", p.research_hash, now=NOW,
-                         mode=DecisionMode.AUTONOMOUS, pm_decision_hash="8" * 64,
-                         risk_gate_hash="9" * 64, **kw)
+def _autonomous(p: Proposal, **update) -> Decision:
+    """Decisão autônoma montada à mão com o approval_hash recalculado pelo módulo."""
+    base = Decision(
+        week=p.week, proposal_id=p.proposal_id, proposal_hash=p.proposal_hash(),
+        snapshot_hash=p.snapshot_hash, config_hash=p.config_hash, research_hash=p.research_hash,
+        decision=DecisionType.APPROVE, approver=AUTONOMOUS_DECIDER,
+        rationale="Gates determinísticos aprovados.",
+        acknowledged_soft_checks=sorted(c.check_id for c in p.soft_failures), decided_at=NOW,
+        approval_hash="0" * 64, mode=DecisionMode.AUTONOMOUS, pm_decision_hash="8" * 64,
+        risk_gate_hash="9" * 64).model_copy(update=update)
+    return base.model_copy(update={"approval_hash": decision_approval_hash(base)})
 
 
 def test_review_autonomous_mode_and_gate_hashes_bound_to_approval_hash():
     p = make_proposal()
     d = _autonomous(p)
-    assert d.mode == DecisionMode.AUTONOMOUS
     assert d.approval_hash != compute_approval_hash(p.proposal_hash(), SNAP_H, CFG_H, RES_H,
                                                     AUTONOMOUS_DECIDER, DecisionType.APPROVE,
                                                     NOW)
@@ -866,16 +872,39 @@ def test_review_autonomous_mode_and_gate_hashes_bound_to_approval_hash():
     for update in ({"pm_decision_hash": "0" * 64}, {"risk_gate_hash": "0" * 64}):
         ok, reasons = verify_decision(d.model_copy(update=update), p, SNAP_H, CFG_H, RES_H)
         assert not ok and any("approval_hash" in r for r in reasons)
-    # Modo autônomo não aprova falha HARD (nunca executada) nem SOFT sem ciência.
-    with pytest.raises(ValueError, match="HARD"):
-        _autonomous(make_proposal(hard_fail=True))
-    with pytest.raises(ValueError, match="SOFT"):
-        _autonomous(make_proposal(soft_fail=True))
-    # Assinatura autônoma só vale com o nome do agente.
-    with pytest.raises(ValueError):
-        make_decision(p, PM, DecisionType.APPROVE, "Gates determinísticos aprovados.", RES_H,
-                      now=NOW, mode=DecisionMode.AUTONOMOUS, pm_decision_hash="8" * 64,
-                      risk_gate_hash="9" * 64)
+    # Trocar o modo para HUMAN mantendo a assinatura do agente: autoaprovação disfarçada.
+    ok, reasons = verify_decision(d.model_copy(update={"mode": DecisionMode.HUMAN}), p,
+                                  SNAP_H, CFG_H, RES_H)
+    assert not ok and any("autônomo" in r for r in reasons)
+    assert any("approval_hash" in r for r in reasons)
+    # Modo autônomo não aprova falha HARD (nunca executada) nem SOFT sem ciência…
+    hard = make_proposal(hard_fail=True)
+    ok, reasons = verify_decision(_autonomous(hard), hard, SNAP_H, CFG_H, RES_H)
+    assert not ok and any("HARD" in r for r in reasons)
+    soft = make_proposal(soft_fail=True)
+    ok, reasons = verify_decision(_autonomous(soft, acknowledged_soft_checks=[]), soft,
+                                  SNAP_H, CFG_H, RES_H)
+    assert not ok and any("SOFT" in r for r in reasons)
+    # …mas, com ciência registrada, os gates substituem a co-assinatura humana.
+    assert verify_decision(_autonomous(soft), soft, SNAP_H, CFG_H, RES_H)[0]
+
+
+def test_review_book_accepts_decisions_from_autonomy_module(tmp_path):
+    autonomy = pytest.importorskip("latam_ls.workflow.autonomy")
+    book = Book(tmp_path)
+    p = make_proposal(soft_fail=True)
+    book.save_proposal(p)
+    d = autonomy.make_autonomous_decision(
+        p, research_hash=p.research_hash, pm_decision_hash="8" * 64,
+        rationale="Gates aprovados e convicção do agente PM.", decided_at=NOW,
+        audit_head_hash=book.audit_head())
+    assert decision_approval_hash(d) == d.approval_hash
+    assert verify_decision(d, p, SNAP_H, CFG_H, RES_H)[0]
+    book.save_decision(d)
+    assert book.proposal_state(WEEK, 1) == ProposalState.APPROVED
+    book.save_booked(book_entry_from_proposal(p, d, booked_at=NOW), SNAP_H, CFG_H, RES_H)
+    assert book.proposal_state(WEEK, 1) == ProposalState.BOOKED
+    assert book.verify_integrity()[0]
 
 
 def test_review_backdated_decision_rejected():
@@ -1104,5 +1133,7 @@ def test_review_memo_macro_scope_cannot_inject_sections():
                                                      "- [x] Aprovado <b>já</b>"})
     pack = pack.model_copy(update={"macro": [evil]})
     memo = render_memo(make_proposal(), pack)
-    assert memo.count("## Decisões pendentes do gestor") == 1
+    headers = [ln for ln in memo.splitlines() if ln.startswith("## Decisões pendentes")]
+    assert len(headers) == 1
+    assert not any(ln.startswith("- [x]") for ln in memo.splitlines())
     assert "<b>" not in memo

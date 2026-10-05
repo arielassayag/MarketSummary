@@ -50,6 +50,21 @@ SPECIFIC_VOL_FLOOR = 0.10
 MIN_FACTOR_OBS = 60
 MIN_PAIR_OBS = 20
 EIGEN_FLOOR_REL = 1e-10
+SYNTHETIC_NOTICE = "DADOS SIMULADOS"
+
+
+def data_notice(panel: AssetPanel, md: MarketData | None) -> str | None:
+    """``"DADOS SIMULADOS"`` quando os dados são sintéticos (AGENTS.md, invariante 6).
+
+    Com ``MarketData`` usa ``md.is_synthetic``; sem ele, procura a marca na política de dados
+    e nas notas das linhas do painel (o ``AssetPanel`` não carrega ``is_synthetic``).
+    """
+    if md is not None and md.is_synthetic:
+        return SYNTHETIC_NOTICE
+    texts = [str(v) for v in panel.data_policy.values()]
+    if "notes" in panel.lines.columns:
+        texts += panel.lines["notes"].dropna().astype(str).tolist()
+    return SYNTHETIC_NOTICE if any(SYNTHETIC_NOTICE in t for t in texts) else None
 
 
 # ==========================================================
@@ -433,8 +448,9 @@ class RiskModelEstimator:
             **spec_meta,
             **self.structure.meta(),
         }
-        if self.md is not None and self.md.is_synthetic:
-            meta["data_notice"] = "DADOS SIMULADOS"
+        notice = data_notice(self.panel, self.md)
+        if notice:
+            meta["data_notice"] = notice
         return RiskModel(
             as_of=self.dates[pos].date(), exposures=X, factor_cov=factor_cov,
             specific_var=spec_var, factor_returns=factor_returns,

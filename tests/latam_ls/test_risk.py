@@ -20,6 +20,7 @@ from latam_ls.config import FundConfig
 from latam_ls.data.synthetic import make_synthetic_market
 from latam_ls.risk.analytics import (
     effective_n,
+    fill_with_model_returns,
     historical_pnl,
     historical_var_es,
     model_implied_returns,
@@ -35,6 +36,7 @@ from latam_ls.risk.exposures import (
     factor_structure,
     historical_mcap,
     market_weights,
+    prepare_style_inputs,
     standardize_style,
     style_exposures,
 )
@@ -42,6 +44,7 @@ from latam_ls.risk.model import (
     SPECIFIC_VOL_FLOOR,
     RiskModelEstimator,
     _restriction_matrix,
+    data_notice,
     estimate_risk_model,
     ewma_weights,
     nearest_psd,
@@ -654,3 +657,169 @@ def test_historical_scenario_missing_issuer_uses_factor_implied(model, panel, mk
     assert rep.loc[name, "status"] == "ok"
     assert rep.loc[name, "pnl"] == pytest.approx(float(cum_o @ others) + w[victim] * cum_v)
     assert "implícito" in rep.loc[name, "detail"]
+
+
+# ======================================================================
+# Revisão adversarial: regressões para bugs corrigidos
+# ======================================================================
+
+def test_value_exposure_has_no_fx_lookahead(est, panel, md):
+    """Câmbio futuro (após d) não pode alterar exposições nem o modelo em d.
+
+    Antes da correção, o B/P histórico convertia o patrimônio pelo câmbio da ÚLTIMA data do
+    painel: uma desvalorização futura do BRL mudava o ``value`` em d (|Δz| ≈ 0,7).
+    """
+    d = pd.Timestamp("2025-06-30")
+    fx = md.fx.copy()
+    fut = fx.index > d
+    fx.loc[fut, "BRL"] *= 0.7
+    fx.loc[fut, "MXN"] *= 1.2
+    md2 = dataclasses.replace(md, fx=fx)
+    p2 = build_asset_panel(md2, CFG)
+    ids = panel.eligible
+    # O cenário não é vazio: preços em USD futuros mudam de fato.
+    br = [i for i in ids if panel.assets.loc[i, "country"] == "BR"]
+    assert not np.allclose(panel.price_usd[br].iloc[-1], p2.price_usd[br].iloc[-1])
+    a = style_exposures(panel, md, CFG, d, ids)
+    b = style_exposures(p2, md2, CFG, d, ids)
+    assert a["value"].std() > 0.5
+    pd.testing.assert_frame_equal(a, b, check_exact=False, atol=1e-10)
+    m1 = est.model_at(d)
+    m2 = estimate_risk_model(p2, CFG, md=md2, as_of=d, issuers=ids)
+    pd.testing.assert_frame_equal(m1.exposures, m2.exposures, check_exact=False, atol=1e-10)
+    pd.testing.assert_frame_equal(m1.factor_cov, m2.factor_cov, check_exact=False, atol=1e-12)
+    pd.testing.assert_series_equal(m1.specific_var, m2.specific_var, check_exact=False,
+                                   atol=1e-12)
+
+
+def test_value_ignores_marketdata_beyond_panel(md):
+    """``MarketData`` mais longo que o painel não vaza câmbio futuro para o ``value``."""
+    d = date(2025, 6, 30)
+    pt = build_asset_panel(md, CFG, as_of=d)
+    ids = pt.eligible
+    a = style_exposures(pt, md, CFG, pd.Timestamp(d), ids)
+    b = style_exposures(pt, md.truncate(d), CFG, pd.Timestamp(d), ids)
+    pd.testing.assert_frame_equal(a, b, check_exact=False, atol=1e-12)
+
+
+def test_value_rejects_adr_pb_with_ambiguous_ratio(panel, md):
+    """P/B de ADR com razão ≠ 1 mistura preço por ADR e patrimônio por ação: não é usado."""
+    lines = panel.lines
+    adr = lines[(lines["line_type"] == "ADR") & (pd.to_numeric(lines["adr_ratio"]) != 1)]
+    tkr = str(adr.index[0])
+    iid = str(adr.loc[tkr, "issuer_id"])
+    others = [t for t in lines.index[lines["issuer_id"] == iid] if t != tkr]
+    fund = md.fundamentals.copy()
+    fund.loc[tkr, "financial_currency"] = fund.loc[tkr, "currency"]  # ADR "mesma moeda"
+    fund.loc[others, "price_to_book"] = np.nan                        # sem linha local
+    md2 = dataclasses.replace(md, fundamentals=fund)
+    ids = [iid] + [i for i in panel.eligible if i != iid][:10]
+    inp = prepare_style_inputs(panel, md2, CFG, ids)
+    assert inp.value_source[iid] == "sem_dado"
+    assert np.isnan(inp.book_to_price_last[0])
+    # Mesma linha com razão 1 é consistente e passa a ser usada.
+    lines1 = lines.copy()
+    lines1.loc[tkr, "adr_ratio"] = 1.0
+    inp1 = prepare_style_inputs(dataclasses.replace(panel, lines=lines1), md2, CFG, ids)
+    assert inp1.value_source[iid] == "linha_mesma_moeda"
+    assert inp1.book_to_price_last[0] == pytest.approx(1.0 / fund.loc[tkr, "price_to_book"])
+
+
+def test_fill_with_model_returns_rescales_spanning_return():
+    idx = pd.bdate_range("2025-01-01", periods=6)
+    r = pd.DataFrame({"A": [np.nan, 0.01, np.nan, np.nan, 0.05, np.nan],
+                      "B": [np.nan, 0.02, np.nan, 0.03, 0.01, 0.0]}, index=idx)
+    m = pd.DataFrame({"A": [0.004, 0.002, 0.01, np.nan, 0.003, -0.02],
+                      "B": [np.nan, 0.0, np.nan, 0.0, 0.0, 0.0]}, index=idx)
+    out, meta = fill_with_model_returns(r, m)
+    # A: início e fim implícitos; lacuna interna parcialmente definida (dia 3 sem modelo).
+    assert out.loc[idx[0], "A"] == 0.004 and out.loc[idx[5], "A"] == -0.02
+    assert out.loc[idx[2], "A"] == 0.01 and np.isnan(out.loc[idx[3], "A"])
+    assert (1 + out.loc[idx[2], "A"]) * (1 + out.loc[idx[4], "A"]) == pytest.approx(1.05)
+    # B: lacuna sem retorno implícito fica NaN e o retorno seguinte não é alterado.
+    assert np.isnan(out.loc[idx[2], "B"]) and out.loc[idx[3], "B"] == 0.03
+    assert np.isnan(out.loc[idx[0], "B"])
+    assert meta["n_spanning_returns_rescaled"] == 1
+    pd.testing.assert_frame_equal(r, r.copy())  # entrada não é alterada
+
+
+def test_historical_pnl_gap_fill_does_not_double_count(model, panel):
+    """Lacuna preenchida por B·f não pode somar de novo o movimento do retorno que a cobre."""
+    w = _ls_weights(model, seed=12)
+    victim = w.abs().idxmax()
+    rets = panel.returns
+    cal = rets.index[rets.index <= pd.Timestamp(model.as_of)][-504:]
+    implied = model_implied_returns(model, [victim], cal)[victim]
+    cand = [(cal[k], cal[k + 1]) for k in range(len(cal) - 1)
+            if np.isfinite(implied[cal[k]]) and abs(implied[cal[k]]) > 1e-4
+            and rets.loc[[cal[k], cal[k + 1]], w.index].notna().all().all()]
+    t0, t1 = cand[-15]
+    r_span = (1 + rets.loc[t0, victim]) * (1 + rets.loc[t1, victim]) - 1
+    r2 = rets.copy()
+    r2.loc[t0, victim] = np.nan          # convenção do painel: o dia seguinte cobre a lacuna
+    r2.loc[t1, victim] = r_span
+    pnl, meta = historical_pnl(w, dataclasses.replace(panel, returns=r2), model)
+    others = w.drop(victim)
+    v0 = (pnl[t0] - float(r2.loc[t0, others.index] @ others)) / w[victim]
+    v1 = (pnl[t1] - float(r2.loc[t1, others.index] @ others)) / w[victim]
+    assert v0 == pytest.approx(implied[t0], rel=1e-10)
+    assert (1 + v0) * (1 + v1) == pytest.approx(1 + r_span, rel=1e-12)
+    assert abs(v1 - r_span) > 1e-6       # o comportamento antigo (dupla contagem) falharia
+    assert meta["n_spanning_returns_rescaled"] >= 1
+
+
+def test_historical_pnl_holiday_without_model_is_dropped_not_zero(model, panel):
+    w = _ls_weights(model, seed=13)
+    rets = panel.returns
+    cal = rets.index[rets.index <= pd.Timestamp(model.as_of)][-504:]
+    implied = model_implied_returns(model, list(w.index), cal)
+    pnl, meta = historical_pnl(w, panel, model)
+    hol = [k for k in range(len(cal) - 1)
+           if (rets.loc[cal[k], w.index].isna() & implied.loc[cal[k]].isna()).any()
+           and rets.loc[cal[k + 1], w.index].notna().all()]
+    assert hol
+    for k in hol[-3:]:
+        assert np.isnan(pnl[cal[k]])
+        # O retorno que cobre o feriado entra inteiro no dia seguinte.
+        assert pnl[cal[k + 1]] == pytest.approx(float(rets.loc[cal[k + 1], w.index] @ w))
+    assert meta["n_dropped"] >= len(hol)
+
+
+def test_nan_weights_raise_instead_of_becoming_zero(model, panel, mkt_w):
+    w = _ls_weights(model)
+    w.iloc[3] = np.nan
+    calls = [
+        lambda: risk_decomposition(w, model),
+        lambda: parametric_var_es(w, model),
+        lambda: historical_var_es(w, panel, model),
+        lambda: stress_tests(w, panel, model, mkt_w),
+        lambda: portfolio_beta(w, model, mkt_w),
+        lambda: effective_n(w),
+    ]
+    for fn in calls:
+        with pytest.raises(ValueError, match="não finitos"):
+            fn()
+
+
+def test_factor_structure_missing_labels_are_unassigned(planted):
+    assets = planted.panel.assets.copy()
+    ids = list(assets.index)
+    assets["sector"] = assets["sector"].astype(object)
+    assets.loc[ids[:4], "sector"] = np.nan
+    assets.loc[ids[4], "country"] = None
+    p = dataclasses.replace(planted.panel, assets=assets)
+    st = factor_structure(p, ids, 3)
+    names = [f.lower() for f in st.country_factors + st.sector_factors]
+    assert not any(f.endswith((":nan", ":none")) for f in names)
+    assert set(ids[:4]) <= set(st.unassigned_sector)
+    assert ids[4] in st.unassigned_country
+    dm = st.dummies(ids)
+    assert (dm.loc[ids[:4], st.sector_factors] == 0).all().all()
+    assert (dm.loc[ids[4], st.country_factors] == 0).all()
+
+
+def test_data_notice_without_marketdata(planted, planted_est):
+    m = planted_est.model_at(planted.panel.as_of)
+    assert m.meta["data_notice"] == "DADOS SIMULADOS"
+    real_like = dataclasses.replace(planted.panel, data_policy={"origem": "snapshot"})
+    assert data_notice(real_like, None) is None

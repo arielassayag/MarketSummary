@@ -31,7 +31,6 @@ import urllib.parse
 import urllib.request
 import zipfile
 from collections.abc import Callable, Iterable, Mapping
-from datetime import date
 from pathlib import Path
 
 import numpy as np
@@ -370,6 +369,8 @@ def _fca_by_code(cvm_fca: pd.DataFrame | None) -> pd.DataFrame:
     df = df[df["Codigo_Negociacao"].notna()]
     if "Mercado" in df.columns:
         df = df[df["Mercado"].fillna("").map(normalize_text).isin(["bolsa", ""])]
+    if df.empty:
+        return pd.DataFrame(columns=cols).set_index("code")
     df["code"] = df["Codigo_Negociacao"].astype(str).str.upper().str.strip()
     sort_cols = [c for c in ("Data_Referencia", "Versao") if c in df.columns]
     if "Versao" in df.columns:
@@ -387,8 +388,8 @@ def _fca_by_code(cvm_fca: pd.DataFrame | None) -> pd.DataFrame:
 
 
 LINE_MASTER_COLUMNS = [
-    "issuer_id", "line_type", "market", "currency", "share_class", "shares_per_line",
-    "validated", "validation_source", "cnpj", "cik",
+    "issuer_id", "line_type", "market", "currency", "primary_line", "share_class",
+    "shares_per_line", "validated", "validation_source", "cnpj", "cik",
 ]
 
 
@@ -416,8 +417,8 @@ def build_line_master(universe: Universe, cvm_fca: pd.DataFrame | None,
         cik = None
         if code is not None:
             hit = fca.loc[code] if code in fca.index else None
-            share_class = (hit["share_class"] if hit is not None and hit["share_class"]
-                           else b3_class_from_code(code))
+            fca_class = hit["share_class"] if hit is not None else None
+            share_class = fca_class if isinstance(fca_class, str) else b3_class_from_code(code)
             if hit is not None:
                 cnpj = str(hit["cnpj"])
                 validated = bool(hit["active"])
@@ -441,7 +442,7 @@ def build_line_master(universe: Universe, cvm_fca: pd.DataFrame | None,
         rows.append({
             "yahoo_ticker": ticker, "issuer_id": ln["issuer_id"], "line_type": lt,
             "market": ln.get("market", ""), "currency": ln["currency"],
-            "share_class": share_class, "shares_per_line": spl, "validated": validated,
+            "primary_line": bool(ln.get("primary_line", False)), "share_class": share_class, "shares_per_line": spl, "validated": validated,
             "validation_source": vsource, "cnpj": cnpj, "cik": cik,
         })
     out = pd.DataFrame(rows, columns=["yahoo_ticker", *LINE_MASTER_COLUMNS])
@@ -537,8 +538,3 @@ def security_master_summary(sm: pd.DataFrame) -> dict[str, int]:
         "without_source": int(sm["fundamentals_source"].isna().sum()),
         "br_without_cnpj": int(((sm["country"] == "BR") & sm["cnpj"].isna()).sum()),
     }
-
-
-def fca_year_for(as_of: date) -> int:
-    """Ano do FCA a usar em ``as_of`` (o FCA do ano corrente é entregue até maio)."""
-    return as_of.year

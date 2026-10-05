@@ -12,10 +12,13 @@ Convenções do P&L diário (datas em ``(start, end]``, sem look-ahead):
   de linhas não reprecificadas fica registrada em ``LedgerRow.note``.
 - **Financiamento:** o caixa/colateral rende a taxa curta em USD:
   ``nav_{t-1} · taxa / 252``, com a taxa conhecida no pregão anterior (sem look-ahead). Sem
-  taxa disponível o financiamento não é apurado (``financing_usd = None``) e isso é anotado.
+  taxa disponível — ou com a última taxa defasada em mais de ``RATE_STALE_DAYS_MAX`` dias
+  corridos — o financiamento não é apurado (``financing_usd = None``) e isso é anotado. Taxas
+  acima de 100% a.a. são tratadas como erro de unidade (percentual em vez de decimal).
 - **Aluguel (shorts):** ``-Σ |n_{i,t-1}| · fee_i / 252`` registrado em ``cost_usd``. Short sem
   taxa informada recebe a taxa padrão conservadora ``DEFAULT_BORROW_FEE_ANNUAL`` (anotada).
-- **Atribuição (opcional, com ``model``):** exposições B fixas na data do booking;
+- **Atribuição (opcional, com ``model``):** exposições B fixas na data do booking (o modelo
+  precisa ter ``as_of <= start``; um modelo estimado depois do booking seria look-ahead);
   ``factor_pnl_t = Σ_i n_{i,t-1} · (B_i · f_t)`` e ``specific = pnl_eq - factor_pnl``.
   Os retornos fatoriais ``f_t`` vêm de ``model.factor_returns`` quando cobrem a data; senão,
   de uma regressão cross-section dos ``issuer_returns`` do dia sobre B (pesos 1/variância
@@ -48,6 +51,15 @@ DEFAULT_BORROW_FEE_ANNUAL = 0.02
 
 MIN_XS_DOF = 5
 """Graus de liberdade mínimos (observações − posto de B) na regressão cross-section diária."""
+
+RATE_STALE_DAYS_MAX = 10
+"""Defasagem máxima (dias corridos) da taxa de financiamento usada; acima disso é ausente."""
+
+MAX_PLAUSIBLE_RATE = 1.0
+"""Taxa anual (decimal) acima da qual o valor é tratado como erro de unidade (ex.: 5.04 = %)."""
+
+NAV_START_RATIO_RANGE = (0.5, 2.0)
+"""Faixa plausível de ``nav_start / booked.nav_usd``: fora dela, erro de unidade/escala."""
 
 _MAX_TICKERS_IN_NOTE = 5
 
@@ -197,11 +209,14 @@ def _factor_return_path(model: RiskModel, issuer_returns: pd.DataFrame | None,
                         dates: pd.DatetimeIndex) -> tuple[np.ndarray, list[str]]:
     """Matriz T×K de retornos fatoriais (linhas ``NaN`` quando indisponíveis) e a origem."""
     names = model.factor_names
-    fr = model.factor_returns.reindex(index=dates, columns=names).to_numpy(dtype=float,
-                                                                         copy=True)
+    frame = model.factor_returns.copy()
+    frame.index = pd.DatetimeIndex(frame.index)
+    fr = frame.reindex(index=dates, columns=names).to_numpy(dtype=float, copy=True)
     source = ["modelo" if np.isfinite(row).all() else "" for row in fr]
     if issuer_returns is not None:
-        ir = issuer_returns.sort_index()
+        ir = issuer_returns.copy()
+        ir.index = pd.DatetimeIndex(ir.index)
+        ir = ir.sort_index()
         for t, ts in enumerate(dates):
             if source[t] or ts not in ir.index:
                 continue
@@ -228,17 +243,36 @@ def _signed_notional(p: BookedPosition) -> float:
     return math.copysign(abs(p.notional_usd), p.weight)
 
 
-def _rate_path(financing_rate: pd.Series | float, prev_dates: pd.DatetimeIndex) -> np.ndarray:
-    """Taxa anual vigente no início de cada dia (último valor conhecido em ``prev_dates``)."""
+def _rate_path(financing_rate: pd.Series | float,
+               prev_dates: pd.DatetimeIndex) -> tuple[np.ndarray, np.ndarray]:
+    """Taxa anual vigente no início de cada dia e máscara de taxas defasadas.
+
+    Usa o último valor conhecido em cada data de ``prev_dates`` (sem look-ahead). Valores com
+    mais de ``RATE_STALE_DAYS_MAX`` dias corridos viram ``NaN`` (ausente, nunca reaproveitados
+    indefinidamente). Taxas acima de ``MAX_PLAUSIBLE_RATE`` levantam ``ValueError``.
+    """
+    n = len(prev_dates)
+    stale = np.zeros(n, dtype=bool)
     if isinstance(financing_rate, pd.Series):
         s = pd.to_numeric(financing_rate, errors="coerce").dropna()
         if s.empty:
-            return np.full(len(prev_dates), np.nan)
+            return np.full(n, np.nan), stale
         s.index = pd.DatetimeIndex(s.index)
         s = s[~s.index.duplicated(keep="last")].sort_index()
-        return s.asof(prev_dates).to_numpy(dtype=float)
-    value = float(financing_rate)
-    return np.full(len(prev_dates), value if math.isfinite(value) else np.nan)
+        pos = s.index.searchsorted(prev_dates, side="right") - 1
+        known = pos >= 0
+        safe = np.clip(pos, 0, None)
+        rates = np.where(known, s.to_numpy(dtype=float)[safe], np.nan)
+        age = np.asarray((prev_dates - s.index[safe]).days)
+        stale = known & (age > RATE_STALE_DAYS_MAX)
+    else:
+        value = float(financing_rate)
+        rates = np.full(n, value if math.isfinite(value) else np.nan)
+    used = rates[np.isfinite(rates)]
+    if used.size and float(np.abs(used).max()) > MAX_PLAUSIBLE_RATE:
+        raise ValueError("Taxa de financiamento acima de 100% a.a.: parece estar em % — informe "
+                         "em decimal (0.05 = 5% a.a.).")
+    return np.where(stale, np.nan, rates), stale
 
 
 def _lookup_fee(borrow_fees: pd.Series, key: str) -> float:
@@ -253,9 +287,11 @@ def _lookup_fee(borrow_fees: pd.Series, key: str) -> float:
 
 
 def _borrow_fee_vector(positions: list[BookedPosition], borrow_fees: pd.Series | None,
-                       default_fee: float) -> tuple[np.ndarray, list[str]]:
+                       default_fee: float) -> tuple[np.ndarray, list[str], list[str]]:
+    """Taxas anuais por posição, shorts com taxa padrão e shorts com taxa implausível (> 100%)."""
     fees = np.empty(len(positions))
     defaulted: list[str] = []
+    suspicious: list[str] = []
     for k, p in enumerate(positions):
         fee = math.nan
         if borrow_fees is not None:
@@ -267,8 +303,10 @@ def _borrow_fee_vector(positions: list[BookedPosition], borrow_fees: pd.Series |
             fee = default_fee
             if p.weight < 0:
                 defaulted.append(p.ticker)
+        elif p.weight < 0 and fee > MAX_PLAUSIBLE_RATE:
+            suspicious.append(p.ticker)
         fees[k] = fee
-    return fees, defaulted
+    return fees, defaulted, suspicious
 
 
 def _list_tickers(tickers: list[str]) -> str:
@@ -295,6 +333,17 @@ def mark_to_market(booked: BookEntry, line_returns: pd.DataFrame, start: date, e
         raise ValueError("O fim do período de marcação precisa ser posterior ao início.")
     if not (math.isfinite(nav_start) and nav_start > 0):
         raise ValueError("NAV inicial precisa ser positivo e finito.")
+    if not (math.isfinite(booked.nav_usd) and booked.nav_usd > 0):
+        raise ValueError("NAV do booking precisa ser positivo e finito.")
+    lo, hi = NAV_START_RATIO_RANGE
+    if not (lo <= nav_start / booked.nav_usd <= hi):
+        raise ValueError(f"NAV inicial ({fmt_usd(nav_start)}) incompatível com o NAV do booking "
+                         f"({fmt_usd(booked.nav_usd)}); conferir unidade/escala.")
+    if not (math.isfinite(default_borrow_fee) and 0 <= default_borrow_fee <= MAX_PLAUSIBLE_RATE):
+        raise ValueError("Taxa de aluguel padrão precisa ser decimal anual entre 0 e 1.")
+    if model is not None and model.as_of > start:
+        raise ValueError(f"Modelo de risco de {model.as_of} é posterior ao booking ({start}): "
+                         "exposições fora da data do booking seriam look-ahead.")
     if line_returns.index.has_duplicates:
         raise ValueError("Retornos por linha com datas duplicadas.")
     positions = [p for p in booked.positions if p.weight != 0]
@@ -317,10 +366,11 @@ def mark_to_market(booked: BookEntry, line_returns: pd.DataFrame, start: date, e
     n_prev = np.vstack([n0[None, :], n_end[:-1]])
     eq_pnl = np.where(valid, n_prev * np.where(valid, R, 0.0), 0.0).sum(axis=1)
 
-    fees, defaulted = _borrow_fee_vector(positions, borrow_fees, default_borrow_fee)
+    fees, defaulted, suspicious = _borrow_fee_vector(positions, borrow_fees,
+                                                     default_borrow_fee)
     borrow = -(np.where(n_prev < 0, -n_prev, 0.0) * fees[None, :]).sum(axis=1) / TRADING_DAYS
     prev_dates = pd.DatetimeIndex([pd.Timestamp(start)]).append(dates[:-1])
-    rates = _rate_path(financing_rate, prev_dates)
+    rates, stale_rate = _rate_path(financing_rate, prev_dates)
 
     # Atribuição fatorial (exposições fixas na data do booking).
     H = None
@@ -350,11 +400,18 @@ def mark_to_market(booked: BookEntry, line_returns: pd.DataFrame, start: date, e
             financing: float | None = nav_prev * float(rate) / TRADING_DAYS
         else:
             financing = None
-            notes.append("taxa de financiamento indisponível: financiamento não apurado")
+            if stale_rate[t]:
+                notes.append(f"taxa de financiamento defasada (> {RATE_STALE_DAYS_MAX} dias): "
+                             "financiamento não apurado")
+            else:
+                notes.append("taxa de financiamento indisponível: financiamento não apurado")
         cost = float(borrow[t])
         if defaulted and (n_prev[t] < 0).any():
             notes.append(f"aluguel padrão conservador de {fmt_pct(default_borrow_fee)} a.a. "
                          f"para short(s) sem taxa: {_list_tickers(defaulted)}")
+        if suspicious:
+            notes.append("taxa de aluguel acima de 100% a.a. (conferir unidade decimal): "
+                         f"{_list_tickers(suspicious)}")
         if t == 0 and execution_cost_usd is not None:
             if not math.isfinite(execution_cost_usd):
                 raise ValueError("Custo de execução informado não é finito.")

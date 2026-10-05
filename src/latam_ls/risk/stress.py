@@ -22,7 +22,7 @@ import numpy as np
 import pandas as pd
 
 from ..analytics.panel import AssetPanel
-from .analytics import model_implied_returns
+from .analytics import check_weights, model_implied_returns
 from .types import MARKET_FACTOR, TRADING_DAYS, RiskModel, country_factor, sector_factor
 
 NO_DATA = "sem dados"
@@ -66,7 +66,7 @@ def historical_scenario_pnl(
     w: pd.Series, panel: AssetPanel, model: RiskModel, start: date, end: date,
 ) -> tuple[float, str]:
     """P&L da carteira estática ``w`` reaplicando os retornos de ``(start, end]``."""
-    wa = model.align(w)
+    wa = model.align(check_weights(w))
     held = wa[wa != 0]
     cal = pd.DatetimeIndex(panel.returns.index)
     cal = cal[cal <= pd.Timestamp(model.as_of)]
@@ -124,7 +124,7 @@ def conditional_factor_move(model: RiskModel, shocks: dict[str, float]) -> pd.Se
 
 def factor_shock_pnl(w: pd.Series, model: RiskModel, shocks: dict[str, float]) -> float:
     """P&L fatorial (sem específico) da carteira para o choque condicional."""
-    x = model.factor_exposure(w)
+    x = model.factor_exposure(check_weights(w))
     return float(x @ conditional_factor_move(model, shocks).reindex(x.index))
 
 
@@ -187,7 +187,7 @@ def _momentum_crash(w: pd.Series, model: RiskModel) -> StressResult:
 
 
 def _idiosyncratic(w: pd.Series, model: RiskModel) -> list[StressResult]:
-    wa = model.align(w)
+    wa = model.align(check_weights(w))
     shorts = wa[wa < 0].sort_values().head(IDIO_TOP_N)
     longs = wa[wa > 0].sort_values(ascending=False).head(IDIO_TOP_N)
     return [
@@ -209,6 +209,7 @@ def stress_report(
     scenarios: dict[str, tuple[date, date]] | None = None,
 ) -> pd.DataFrame:
     """Tabela completa (cenário × tipo, pnl, status, detalhe); "sem dados" ⇒ ``pnl`` NaN."""
+    w = check_weights(w)
     results: list[StressResult] = []
     for name, (d0, d1) in (scenarios or HISTORICAL_SCENARIOS).items():
         pnl, detail = historical_scenario_pnl(w, panel, model, d0, d1)

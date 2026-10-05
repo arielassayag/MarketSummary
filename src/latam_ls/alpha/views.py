@@ -4,7 +4,8 @@ Regras (ver docs/latam_ls/ARQUITETURA.md, princípio 2 — "IA só aperta, nunca
 
 - Inclinação por visão: ``z_tilt = (score/2) × max_view_tilt_z × confiança`` (|z_tilt| ≤
   ``max_view_tilt_z``) e ``α_add = IC_v × σ_específico × z_tilt``, com ``IC_v`` =
-  ``view_information_coefficient`` para IA e ``information_coefficient`` para o gestor.
+  ``min(view_information_coefficient, research.llm_view_ic)`` para IA (teto × fase de adoção;
+  S0 ⇒ 0) e ``information_coefficient`` para o gestor.
 - Várias visões da mesma fonte para um emissor: média das inclinações (continua limitada).
 - Se houver visão do gestor (PM) para o emissor, ela SUBSTITUI a inclinação da IA (registrado).
 - Restrições (``no_short``, ``no_long``, ``max_abs_weight``) são a união mais restritiva de
@@ -48,6 +49,17 @@ def mandate_max_abs_weight(cfg: FundConfig) -> float:
     return float(max(cfg.risk.max_long_weight, cfg.risk.max_short_weight))
 
 
+def ai_view_ic(cfg: FundConfig) -> float:
+    """IC efetivo das visões de IA: ``min(alpha.view_information_coefficient,
+    research.llm_view_ic)``.
+
+    ``view_information_coefficient`` é o teto (adoção plena, S3); o IC efetivo vem da fase de
+    adoção ``research.llm_phase`` (S0 = shadow ⇒ 0: a IA não move o alpha, só restringe).
+    O mínimo garante que nenhum chamador ultrapasse a fase, com ou sem override de config.
+    """
+    return float(min(cfg.alpha.view_information_coefficient, cfg.research.llm_view_ic))
+
+
 def view_tilt_z(view: View, cfg: FundConfig) -> float:
     """Inclinação em unidades de z de uma visão: ``(score/2) × max_view_tilt_z × confiança``."""
     return float(view.score) / 2.0 * float(cfg.alpha.max_view_tilt_z) * float(view.confidence)
@@ -70,7 +82,13 @@ def view_tilt_table(
     """
     log: list[str] = []
     rows: dict[str, dict] = {}
-    for issuer, vs in _group_by_issuer(_as_views(views)).items():
+    ic_ai = ai_view_ic(cfg)
+    vlist = _as_views(views)
+    if any(v.source == ViewSource.AI for v in vlist):
+        log.append(f"IC das visões de IA = {ic_ai:g} (fase {cfg.research.llm_phase}, teto "
+                   f"{cfg.alpha.view_information_coefficient:g})"
+                   + (" — modo shadow: IA não altera o alpha." if ic_ai == 0 else "."))
+    for issuer, vs in _group_by_issuer(vlist).items():
         if issuer not in alpha.index:
             log.append(f"{issuer}: {len(vs)} visão(ões) ignorada(s) — emissor fora do universo "
                        "do alpha.")
@@ -83,7 +101,7 @@ def view_tilt_table(
                 log.append(f"{issuer}: visão do gestor substitui a inclinação de "
                            f"{len(ai)} visão(ões) de IA.")
         else:
-            chosen, source, ic = ai, ViewSource.AI, float(cfg.alpha.view_information_coefficient)
+            chosen, source, ic = ai, ViewSource.AI, ic_ai
         z_tilt = float(np.mean([view_tilt_z(v, cfg) for v in chosen]))
         if len(chosen) > 1:
             log.append(f"{issuer}: {len(chosen)} visões de {source.value.upper()} agregadas "

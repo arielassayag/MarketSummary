@@ -10,7 +10,9 @@ Regras de dados (ver AGENTS.md e docs/latam_ls/ARQUITETURA.md):
 - Capitalização histórica = capitalização atual × preço_usd(data) / preço_usd(último), isto é,
   número de ações constante (aproximação registrada como não point-in-time).
 - ``value`` usa o P/B do retrato atual de fundamentos (NÃO point-in-time), levado ao passado
-  pela razão de preços (valor patrimonial por ação constante).
+  com patrimônio por ação constante na moeda das demonstrações: ``B/P(t) = B/P(último) ×
+  preço_usd(último)/preço_usd(t) × fx_fin(t)/fx_fin(último)`` — o câmbio usado em ``t`` é o de
+  ``t`` (nunca o futuro) e só datas do painel são consideradas.
 - Ausências nunca viram zero antes da padronização. Depois de padronizar (média ponderada por
   capitalização = 0), a exposição ausente recebe 0 — exatamente a média do corte transversal —
   e a quantidade de imputações é registrada em ``meta``.
@@ -64,8 +66,9 @@ HOME_CURRENCY: dict[str, str | None] = {
 
 NON_PIT_NOTES = {
     "value": (
-        "value: P/B do retrato atual de fundamentos (não point-in-time), levado ao passado "
-        "pela razão de preços em USD"
+        "value: P/B do retrato atual de fundamentos (não point-in-time); patrimônio por ação "
+        "constante na moeda das demonstrações, convertido pelo câmbio de cada data e dividido "
+        "pelo preço em USD da data"
     ),
     "size": (
         "size/capitalização histórica: ações em circulação atuais × preço histórico em USD "
@@ -175,20 +178,33 @@ class FactorStructure:
         }
 
 
+def _clean_labels(raw: pd.Series) -> pd.Series:
+    """Rótulos de país/setor como ``str``; ausente (NaN/None/vazio) continua ausente.
+
+    Evita que ``astype(str)`` transforme ausências em um grupo ``"nan"`` com fator próprio.
+    """
+    s = raw.astype(object)
+    ok = s.notna() & (s.astype(str).str.strip() != "")
+    return s.where(ok).map(lambda v: str(v) if pd.notna(v) else None)
+
+
 def _group_block(
     labels: pd.Series, min_names: int, other_label: str, make_name, order: list[str] | None,
     kind: str,
 ) -> tuple[pd.Series, list[str], list[str], list[str], list[str]]:
+    labels = _clean_labels(labels)
     counts = labels.value_counts()
     small = sorted(counts.index[counts < min_names].tolist())
-    merged = labels.where(~labels.isin(small), other_label)
+    merged = labels.where(~labels.isin(small), other_label).where(labels.notna(), None)
     notes: list[str] = []
-    unassigned: list[str] = []
+    unassigned: list[str] = sorted(labels.index[labels.isna()].tolist())
+    if unassigned:
+        notes.append(f"{kind}: {len(unassigned)} emissor(es) sem rótulo; sem fator de {kind}")
     n_other = int((merged == other_label).sum())
     if small and n_other < min_names:
         # Mesmo agrupados, os pequenos não formam um fator com membros suficientes:
         # ficam sem fator do bloco (efeito vai para o resíduo), com flag.
-        unassigned = sorted(merged.index[merged == other_label].tolist())
+        unassigned = sorted(set(unassigned) | set(merged.index[merged == other_label]))
         merged = merged.where(merged != other_label, None)
         notes.append(
             f"{kind}: grupo agrupado com {n_other} emissor(es) < {min_names}; "
@@ -215,10 +231,9 @@ def factor_structure(panel: AssetPanel, issuers: list[str], min_names: int) -> F
         raise KeyError(f"Emissores fora do painel: {missing}")
     assets = panel.assets.loc[issuers]
     c_map, c_fac, c_merged, c_un, c_notes = _group_block(
-        assets["country"].astype(str), min_names, OTHER_COUNTRY, country_factor, None, "país")
+        assets["country"], min_names, OTHER_COUNTRY, country_factor, None, "país")
     s_map, s_fac, s_merged, s_un, s_notes = _group_block(
-        assets["sector"].astype(str), min_names, OTHER_SECTOR, sector_factor, GICS_SECTORS,
-        "setor")
+        assets["sector"], min_names, OTHER_SECTOR, sector_factor, GICS_SECTORS, "setor")
     # Fator de setor com exatamente os mesmos membros de um fator de país é colinear com ele
     # (regressão sem posto completo): o setor é removido e os membros ficam sem fator setorial.
     c_sets = {frozenset(c_map.index[c_map == f]) for f in c_fac}
@@ -240,33 +255,55 @@ def factor_structure(panel: AssetPanel, issuers: list[str], min_names: int) -> F
 # Insumos de estilo (pré-computados uma vez, todos causais)
 # ==========================================================
 
+def _fx_on_panel_dates(md: MarketData, dates: pd.DatetimeIndex) -> pd.DataFrame:
+    """Câmbio (USD por unidade) no calendário do painel, propagado só para frente (causal).
+
+    Usa apenas datas do painel: um ``MarketData`` mais longo que o painel não vaza câmbio
+    futuro para as exposições.
+    """
+    fx = fx_for_lines(md)
+    return fx.reindex(fx.index.union(dates)).sort_index().ffill().reindex(dates)
+
+
+def _adr_ratio(own: pd.DataFrame, tkr: str) -> float:
+    if "adr_ratio" not in own.columns or tkr not in own.index:
+        return np.nan
+    return float(pd.to_numeric(pd.Series([own.loc[tkr, "adr_ratio"]]), errors="coerce").iloc[0])
+
+
 def _book_to_price_last(
     panel: AssetPanel, md: MarketData | None, issuers: list[str],
-) -> tuple[pd.Series, pd.Series]:
-    """B/P no último preço a partir do P/B do retrato atual de fundamentos.
+    fx_last: pd.Series | None = None,
+) -> tuple[pd.Series, pd.Series, pd.Series]:
+    """B/P em USD na última data do painel a partir do P/B do retrato atual de fundamentos.
 
-    Preferência: (1) linha cuja moeda de cotação = moeda das demonstrações (P/B consistente);
-    (2) linha não-ADR com moedas diferentes, corrigida pelo câmbio da última data;
-    (3) linha local com moeda das demonstrações desconhecida. ADR com moeda diferente não é
-    usado (o P/B mistura moedas e razão de conversão). Sem fonte ⇒ ``NaN``.
+    Retorna (B/P, fonte, moeda das demonstrações) por emissor. Preferência:
+    (1) linha cuja moeda de cotação = moeda das demonstrações (P/B consistente);
+    (2) linha não-ADR com moedas diferentes, corrigida pelo câmbio da última data do painel;
+    (3) linha local com moeda das demonstrações desconhecida (assume a moeda da linha).
+    ADR só é usado com moeda igual à das demonstrações E razão 1: com razão ≠ 1 o P/B do
+    fornecedor pode dividir o preço por ADR pelo patrimônio por ação (erro de unidade de até
+    ``adr_ratio`` vezes). Sem fonte ⇒ ``NaN``.
     """
     bp = pd.Series(np.nan, index=issuers, dtype=float)
     src = pd.Series("sem_dado", index=issuers, dtype=object)
+    fin_ccy = pd.Series(None, index=issuers, dtype=object)
     if md is None:
-        return bp, pd.Series("sem_marketdata", index=issuers, dtype=object)
+        return bp, pd.Series("sem_marketdata", index=issuers, dtype=object), fin_ccy
     if md.fundamentals is None or md.fundamentals.empty:
-        return bp, pd.Series("sem_fundamentos", index=issuers, dtype=object)
+        return bp, pd.Series("sem_fundamentos", index=issuers, dtype=object), fin_ccy
     fund = md.fundamentals
     if "price_to_book" not in fund.columns:
-        return bp, pd.Series("sem_price_to_book", index=issuers, dtype=object)
-    fx_last = fx_for_lines(md).ffill()
-    fx_last = fx_last.iloc[-1] if len(fx_last) else pd.Series(dtype=float)
+        return bp, pd.Series("sem_price_to_book", index=issuers, dtype=object), fin_ccy
+    if fx_last is None:
+        fx_all = _fx_on_panel_dates(md, pd.DatetimeIndex(panel.returns.index))
+        fx_last = fx_all.iloc[-1] if len(fx_all) else pd.Series(dtype=float)
     lines = panel.lines
     for iid in issuers:
         own = lines[lines["issuer_id"] == iid] if "issuer_id" in lines.columns else lines.iloc[:0]
         prim = panel.assets.loc[iid].get("primary_ticker") if iid in panel.assets.index else None
         order = ([prim] if isinstance(prim, str) else []) + [t for t in own.index if t != prim]
-        best: tuple[int, float, str] | None = None
+        best: tuple[int, float, str, str] | None = None
         for tkr in order:
             if tkr not in fund.index:
                 continue
@@ -279,15 +316,18 @@ def _book_to_price_last(
                 ccy = own.loc[tkr, "currency"]
             fin = row.get("financial_currency")
             line_type = own.loc[tkr, "line_type"] if tkr in own.index else None
+            if line_type == "ADR" and not (isinstance(fin, str) and fin == ccy
+                                           and _adr_ratio(own, tkr) == 1.0):
+                continue
             if isinstance(fin, str) and fin == ccy:
-                cand = (0, 1.0 / pb, "linha_mesma_moeda")
-            elif (isinstance(fin, str) and isinstance(ccy, str) and line_type != "ADR"
+                cand = (0, 1.0 / pb, "linha_mesma_moeda", fin)
+            elif (isinstance(fin, str) and isinstance(ccy, str)
                   and np.isfinite(fx_last.get(fin, np.nan))
                   and np.isfinite(fx_last.get(ccy, np.nan)) and fx_last.get(ccy) > 0):
                 cand = (1, (1.0 / pb) * float(fx_last[fin]) / float(fx_last[ccy]),
-                        "corrigido_cambio")
-            elif not isinstance(fin, str) and line_type == "LOCAL":
-                cand = (2, 1.0 / pb, "local_moeda_fin_desconhecida")
+                        "corrigido_cambio", fin)
+            elif not isinstance(fin, str) and line_type == "LOCAL" and isinstance(ccy, str):
+                cand = (2, 1.0 / pb, "local_moeda_fin_desconhecida", ccy)
             else:
                 continue
             if best is None or cand[0] < best[0]:
@@ -295,9 +335,32 @@ def _book_to_price_last(
             if best[0] == 0:
                 break
         if best is not None:
-            bp[iid] = best[1]
-            src[iid] = best[2]
-    return bp, src
+            bp[iid], src[iid], fin_ccy[iid] = best[1], best[2], best[3]
+    return bp, src, fin_ccy
+
+
+def _book_fx_ratio(
+    fx: pd.DataFrame | None, fin_ccy: pd.Series, dates: pd.DatetimeIndex,
+) -> np.ndarray:
+    """``fx_fin(t) / fx_fin(último)`` (T × N): leva o patrimônio em USD de hoje à data ``t``.
+
+    O patrimônio por ação é constante na moeda das demonstrações (aproximação não-PIT); o seu
+    valor em USD em ``t`` usa o câmbio de ``t`` (nunca o futuro). Moeda desconhecida ⇒ ``NaN``.
+    """
+    out = np.full((len(dates), len(fin_ccy)), np.nan)
+    if fx is None or fx.empty:
+        return out
+    for j, ccy in enumerate(fin_ccy.to_numpy()):
+        if not isinstance(ccy, str):
+            continue
+        if ccy == "USD":
+            out[:, j] = 1.0
+        elif ccy in fx.columns:
+            s = fx[ccy].to_numpy(dtype=float)
+            last = s[-1]
+            if np.isfinite(last) and last > 0:
+                out[:, j] = np.where(np.isfinite(s) & (s > 0), s / last, np.nan)
+    return out
 
 
 @dataclass(frozen=True)
@@ -317,7 +380,8 @@ class StyleInputs:
     price_last: np.ndarray     # N, último preço em USD do painel
     adtv: np.ndarray           # T × N, média móvel do valor negociado em USD
     fx_returns: np.ndarray     # T × N, retorno em USD da moeda de origem (NaN se indefinida)
-    book_to_price_last: np.ndarray  # N
+    book_to_price_last: np.ndarray  # N, B/P em USD na última data do painel
+    book_fx_ratio: np.ndarray  # T × N, fx_moeda_demonstrações(t) / fx(último)
     home_currency: dict[str, str | None]
     value_source: dict[str, str]
     available_styles: list[str]
@@ -350,7 +414,10 @@ class StyleInputs:
             out["size"] = np.where(np.isfinite(mc) & (mc > 0), np.log(mc), np.nan)
             px = self.price[pos]
             ok_px = np.isfinite(px) & (px > 0)
-            out["value"] = np.where(ok_px, self.book_to_price_last * self.price_last / px, np.nan)
+            # B/P(t) = patrimônio_fin × fx_fin(t) / preço_usd(t) (patrimônio constante, não-PIT).
+            out["value"] = np.where(
+                ok_px, self.book_to_price_last * self.price_last / px * self.book_fx_ratio[pos],
+                np.nan)
             liq_ok = np.isfinite(self.adtv[pos]) & (self.adtv[pos] > 0) & np.isfinite(mc) & (mc > 0)
             out["liquidity"] = np.where(liq_ok, np.log(self.adtv[pos] / mc), np.nan)
         out["fx_sens"] = _fx_sensitivity(self.returns, self.market, self.fx_returns, pos)
@@ -465,8 +532,10 @@ def prepare_style_inputs(
     home: dict[str, str | None] = {}
     fx_ret = pd.DataFrame(np.nan, index=dates, columns=issuers)
     available = ["beta", "size", "momentum", "resvol", "liquidity"]
+    fx_ffill: pd.DataFrame | None = None
     if md is not None and md.fx is not None and not md.fx.empty:
         fx = fx_for_lines(md).reindex(dates)
+        fx_ffill = _fx_on_panel_dates(md, dates)
         fx_r = fx.pct_change(fill_method=None)
         for iid in issuers:
             ccy = HOME_CURRENCY.get(str(panel.assets.loc[iid, "country"]))
@@ -482,8 +551,17 @@ def prepare_style_inputs(
         home = {i: None for i in issuers}
         flags["fx_sens"] = "sem MarketData/câmbio: estilo indisponível"
 
-    bp, src = _book_to_price_last(panel, md, issuers)
-    if np.isfinite(bp.to_numpy()).any():
+    fx_last = (fx_ffill.iloc[-1] if fx_ffill is not None and len(fx_ffill)
+               else pd.Series(dtype=float))
+    bp, src, fin_ccy = _book_to_price_last(panel, md, issuers, fx_last)
+    book_fx = _book_fx_ratio(fx_ffill, fin_ccy, dates)
+    last_ratio = book_fx[-1] if len(dates) else np.full(len(issuers), np.nan)
+    has_bp = np.isfinite(bp.to_numpy())
+    no_fx = [i for i, b, r in zip(issuers, has_bp, np.isfinite(last_ratio), strict=True)
+             if b and not r]
+    if no_fx:
+        flags["value_sem_cambio_moeda_demonstracoes"] = no_fx
+    if (has_bp & np.isfinite(last_ratio)).any():
         available.append("value")
     else:
         flags["value"] = "sem P/B utilizável: estilo indisponível"
@@ -493,7 +571,8 @@ def prepare_style_inputs(
         market=mkt.to_numpy(dtype=float), mcap=mcap.to_numpy(dtype=float),
         price=price.to_numpy(dtype=float), price_last=price_last,
         adtv=adtv.to_numpy(dtype=float), fx_returns=fx_ret.to_numpy(dtype=float),
-        book_to_price_last=bp.to_numpy(dtype=float), home_currency=home,
+        book_to_price_last=bp.to_numpy(dtype=float), book_fx_ratio=book_fx,
+        home_currency=home,
         value_source={k: str(v) for k, v in src.items()}, available_styles=available,
         flags=flags,
     )

@@ -15,10 +15,18 @@ Problema (pesos ``w`` em fração do NAV, separados em perna comprada ``l ≥ 0`
          Σ(l + s) ≤ gross_max
          0 ≤ l ≤ max_long,  0 ≤ s ≤ max_short (liquidez, squeeze, visões, mandato)
          |w − w₀| ≤ max_trade                 (dias de execução × participação × ADTV)
+         min(w₀ − m, 0) ≤ w ≤ max(w₀ + m, 0)  (m = ``max_trade_liq``: aumentos limitados pela
+                                               liquidez; reduções até zero sempre permitidas)
          Σ|w − w₀| ≤ turnover_max             (fora da inception)
 
 Meta de vol: por padrão é um teto (``risk_target_mode="cap"``); o modo ``"match"`` calibra a
 escala do alpha para que a carteira atinja a meta (ver :func:`optimize`).
+
+Complementaridade: a separação ``w = l − s`` é uma relaxação convexa. Como o impacto é
+superaditivo (|t|^1,5), o solver pode "dividir" uma redução/inversão entre as duas pernas
+(l > 0 e s > 0 no mesmo emissor), subestimando o custo real da ordem líquida. Toda solução
+passa por um reparo: emissores com as duas pernas abertas têm a perna oposta ao sinal líquido
+fixada em zero e o problema é resolvido de novo (a solução líquida anterior continua viável).
 
 Duas passadas: posições com |w| < ``min_position_weight`` são fixadas em zero e o problema é
 resolvido de novo (até ``MAX_PASSES`` vezes). Se o problema for inviável, aplica-se a escada
@@ -46,6 +54,8 @@ TOL = 1e-6
 BINDING_REL_SLACK = 1e-4
 WEIGHT_NOISE = 1e-9
 MAX_PASSES = 3
+BOX_TOL = 1e-7               # perna "aberta" para o reparo de complementaridade
+MAX_BOX_REPAIRS = 6
 WEEKS_PER_YEAR = 52.0
 PSD_EIG_FLOOR = 1e-14
 SOLVER_ORDER: tuple[str, ...] = ("CLARABEL", "SCS", "ECOS")
@@ -173,23 +183,34 @@ def portfolio_risk_parts(w: pd.Series, model: RiskModel) -> RiskParts:
 
 
 def model_implied_betas(model: RiskModel, market_w: pd.Series) -> pd.Series:
-    """β_i = (Σm)_i / (mᵀΣm) usando o modelo de risco e os pesos de mercado ``m``."""
+    """β_i = (Σm)_i / (mᵀΣm) usando o modelo de risco e os pesos de mercado ``m``.
+
+    Emissores sem exposições ou variância específica finitas ficam com β ``NaN`` (nunca risco
+    específico zero) e saem da carteira de mercado, que é renormalizada nos nomes cobertos.
+    """
+    factors = model.factor_names
+    ids = model.exposures.index
+    B_all = model.exposures[factors].to_numpy(dtype=float)
+    D_all = pd.to_numeric(model.specific_var.reindex(ids), errors="coerce").to_numpy(dtype=float)
+    covered = np.all(np.isfinite(B_all), axis=1) & np.isfinite(D_all) & (D_all >= 0)
     m = pd.to_numeric(market_w, errors="coerce").dropna()
-    m = m[m.index.isin(model.exposures.index)]
+    m = m[m.index.isin(ids[covered]) & (m > 0)]
     if m.empty or m.sum() <= 0:
         raise ValueError("Pesos de mercado vazios ou não positivos para o beta implícito.")
     m = m / m.sum()
-    factors = model.factor_names
-    B = model.exposures[factors].to_numpy(dtype=float)
+    B = B_all[covered]
+    D = D_all[covered]
     L = psd_factor_root(model.factor_cov.loc[factors, factors])
-    mv = m.reindex(model.exposures.index).fillna(0.0).to_numpy()  # fora do índice = peso zero
-    D = model.specific_var.reindex(model.exposures.index).to_numpy(dtype=float)
+    # Nomes cobertos sem peso de mercado: peso zero na carteira de mercado (não são dado ausente).
+    mv = m.reindex(ids[covered]).fillna(0.0).to_numpy()
     Lx = L.T @ (B.T @ mv)
-    sigma_m = B @ (L @ Lx) + np.where(np.isfinite(D), D, 0.0) * mv
+    sigma_m = B @ (L @ Lx) + D * mv
     var_m = float(mv @ sigma_m)
     if not var_m > 0:
         raise ValueError("Variância do portfólio de mercado não positiva.")
-    return pd.Series(sigma_m / var_m, index=model.exposures.index)
+    out = pd.Series(np.nan, index=ids, dtype=float)
+    out.iloc[np.flatnonzero(covered)] = sigma_m / var_m
+    return out
 
 
 # ==========================================================
@@ -247,15 +268,16 @@ def build_asset_constraints(
     positivos), ``max_trade`` (teto de |Δw|), ``borrow_fee``, ``beta``, ``country``, ``sector``,
     ``reasons``. Colunas auxiliares: ``squeeze_bucket``, ``shortable``, ``view_no_long``,
     ``view_no_short``, ``view_max_abs``, ``adtv_long_usd``, ``adtv_short_usd``, ``current``,
-    ``flags``.
+    ``max_trade_liq`` (teto de negociação só pela liquidez, sem o piso de saída), ``flags``.
 
     Regras:
     - ``max_long = min(max_long_weight, part·ADTV_long·dias_long/NAV, teto da visão)``.
-    - ``max_short = min(max_short_weight, part·ADTV_short·dias_short/NAV, teto da visão)``
-      × multiplicador se squeeze MEDIUM/NA; zero se HIGH, sem aluguel, aluguel acima do limite,
+    - ``max_short = min(max_short_weight, part_short·ADTV_short·dias_short/NAV, teto da visão)``
+      × multiplicador se squeeze MEDIUM/NA (``part_short`` = ``short_participation_rate``); zero se HIGH, sem aluguel, aluguel acima do limite,
       market cap abaixo do mínimo (ou ausente), visão ``no_short`` ou emissor inelegível.
     - ``max_trade = part·ADTV_ref·dias_exec/NAV`` (ADTV_ref = menor ADTV entre as linhas
-      utilizáveis — conservador), nunca abaixo de |peso atual| (permite zerar).
+      utilizáveis — conservador), nunca abaixo de |peso atual| (permite zerar). O otimizador
+      usa ``max_trade_liq`` (sem o piso) para limitar AUMENTOS: o piso serve só para sair.
     - Emissores com posição atual entram mesmo fora de ``issuers`` (para poder sair).
     """
     if not nav > 0:
@@ -342,7 +364,9 @@ def build_asset_constraints(
 
     shortable = has_short & lendable & ~mcap_missing & ~mcap_low & eligible
     tag(has_short & lendable & adtv_short.isna(), "adtv_short_ausente")
-    liq_short = (part * adtv_short * liq.max_days_to_liquidate_short / nav).fillna(0.0)
+    # Shorts: participação própria do mandato (mais conservadora), coerente com a compliance.
+    liq_short = (liq.short_participation_rate * adtv_short * liq.max_days_to_liquidate_short
+                 / nav).fillna(0.0)
     max_short = np.minimum(rk.max_short_weight, liq_short)
     max_short = max_short.where(view_max.isna(), np.minimum(max_short, view_max))
     mult = np.where(bucket.isin(["MEDIUM", "NA"]), sq.medium_short_cap_multiplier, 1.0)
@@ -354,9 +378,11 @@ def build_asset_constraints(
     days_exec = liq.max_trade_days_inception if inception else liq.max_trade_days_weekly
     adtv_ref = adtv_long.where(has_long)
     adtv_ref = pd.Series(np.fmin(adtv_ref, adtv_short.where(short_ok)), index=idx)
-    max_trade = (part * adtv_ref * days_exec / nav)
+    # ADTV de negociação ausente ⇒ nenhum aumento (exclusão sinalizada); reduzir é permitido.
+    max_trade_liq = (part * adtv_ref * days_exec / nav)
     tag(adtv_ref.isna(), "sem_adtv_negociacao")
-    max_trade = np.maximum(max_trade.fillna(0.0), cur.abs())
+    max_trade_liq = max_trade_liq.fillna(0.0)
+    max_trade = np.maximum(max_trade_liq, cur.abs())
 
     # --- beta previsto ---
     beta = pd.to_numeric(betas.reindex(idx), errors="coerce") if betas is not None \
@@ -383,6 +409,7 @@ def build_asset_constraints(
         "adtv_long_usd": adtv_long.astype(float),
         "adtv_short_usd": adtv_short.astype(float),
         "current": cur.astype(float),
+        "max_trade_liq": max_trade_liq.astype(float),
         "flags": [";".join(flags[i]) for i in ids],
     }, index=idx)
     return out
@@ -436,7 +463,10 @@ def _resolve_settings(cfg: FundConfig, overrides: dict | None, inception: bool) 
         turnover = float(ov.get("max_weekly_turnover", cfg.liquidity.max_weekly_turnover))
         if turnover > cfg.liquidity.max_weekly_turnover + TOL or turnover <= 0:
             raise ValueError("max_weekly_turnover só pode apertar o mandato.")
-    excl = tuple(sorted(map(str, ov.get("exclude_issuers", []) or [])))
+    raw_excl = ov.get("exclude_issuers", []) or []
+    if isinstance(raw_excl, str):  # um único emissor (não iterar caractere a caractere)
+        raw_excl = [raw_excl]
+    excl = tuple(sorted(map(str, raw_excl)))
     if excl:
         notes.append(f"Emissores excluídos pelo gestor (apenas saída): {', '.join(excl)}.")
     mode = str(ov.get("risk_target_mode", "cap"))
@@ -462,6 +492,7 @@ class _Problem:
     max_long: np.ndarray
     max_short: np.ndarray
     max_trade: np.ndarray
+    trade_liq: np.ndarray | None  # teto de AUMENTO por liquidez (None = só |Δw| ≤ max_trade)
     fee: np.ndarray
     lin_l: np.ndarray
     k_l: np.ndarray
@@ -507,6 +538,10 @@ class _Outcome:
     objective: float | None
     infeasible: bool
     errors: tuple[str, ...] = ()
+    long_leg: np.ndarray | None = None
+    short_leg: np.ndarray | None = None
+    box_repaired: int = 0         # emissores com pernas l e s simultâneas reparados
+    box_unresolved: int = 0       # pernas simultâneas que o reparo não conseguiu eliminar
 
 
 def _indicator(labels: pd.Series) -> tuple[list[str], np.ndarray]:
@@ -522,7 +557,8 @@ def _available_solvers() -> list[str]:
 
 
 def _solve(p: _Problem, relax: _Relax, fixed_zero: np.ndarray,
-           reduce_only: np.ndarray) -> _Outcome:
+           reduce_only: np.ndarray, zero_long: np.ndarray | None = None,
+           zero_short: np.ndarray | None = None) -> _Outcome:
     n = len(p.ids)
     l0 = np.maximum(p.w0, 0.0)
     s0 = np.maximum(-p.w0, 0.0)
@@ -530,6 +566,10 @@ def _solve(p: _Problem, relax: _Relax, fixed_zero: np.ndarray,
     ub_s = p.max_short.copy()
     ub_l[fixed_zero] = 0.0
     ub_s[fixed_zero] = 0.0
+    if zero_long is not None:
+        ub_l[zero_long] = 0.0
+    if zero_short is not None:
+        ub_s[zero_short] = 0.0
     ub_l[reduce_only] = np.minimum(ub_l[reduce_only], l0[reduce_only])
     ub_s[reduce_only] = np.minimum(ub_s[reduce_only], s0[reduce_only])
     # Posições acima do teto (ou já zeradas) só podem diminuir; nunca aumentar.
@@ -570,6 +610,10 @@ def _solve(p: _Problem, relax: _Relax, fixed_zero: np.ndarray,
         st = p.style_max * relax.style_mult
         cons += [p.styles @ w <= st, p.styles @ w >= -st]
     cons += [cp.abs(w - p.w0) <= p.max_trade]
+    if p.trade_liq is not None:
+        # Aumentos limitados pela liquidez; reduzir até zero (saída) é sempre permitido.
+        cons += [w <= np.maximum(p.w0 + p.trade_liq, 0.0),
+                 w >= np.minimum(p.w0 - p.trade_liq, 0.0)]
     if p.turnover_max is not None and not relax.turnover:
         cons += [cp.sum(cp.abs(w - p.w0)) <= p.turnover_max]
 
@@ -583,17 +627,55 @@ def _solve(p: _Problem, relax: _Relax, fixed_zero: np.ndarray,
             errors.append(f"{solver}: {exc}")
             continue
         status = prob.status
-        if status in _OK and lv.value is not None:
-            wv = np.asarray(lv.value - sv.value, dtype=float)
+        if status in _OK and lv.value is not None and sv.value is not None:
+            lval = np.maximum(np.asarray(lv.value, dtype=float), 0.0)
+            sval = np.maximum(np.asarray(sv.value, dtype=float), 0.0)
+            wv = lval - sval
             wv[np.abs(wv) < WEIGHT_NOISE] = 0.0
             return _Outcome(status, solver, time.perf_counter() - t0, wv,
-                            float(prob.value), False, tuple(errors))
+                            float(prob.value), False, tuple(errors), lval, sval)
         if status in _INFEASIBLE:
             return _Outcome(status, solver, time.perf_counter() - t0, None, None, True,
                             tuple(errors))
         errors.append(f"{solver}: status {status}")
     return _Outcome("solver_error", ",".join(_available_solvers()),
                     time.perf_counter() - t0, None, None, False, tuple(errors))
+
+
+def _solve_clean(p: _Problem, relax: _Relax, fixed_zero: np.ndarray,
+                 reduce_only: np.ndarray) -> _Outcome:
+    """Resolve e repara pernas simultâneas (l > 0 e s > 0 no mesmo emissor).
+
+    A cada rodada, emissores com as duas pernas abertas têm a perna oposta ao sinal líquido
+    fixada em zero (líquido ≥ 0 ⇒ s = 0; líquido < 0 ⇒ l = 0). A solução líquida anterior
+    continua viável, então o reparo nunca cria inviabilidade; ele só remove a economia
+    artificial de custo de dividir uma ordem entre duas pernas.
+    """
+    n = len(p.ids)
+    zl = np.zeros(n, dtype=bool)
+    zs = np.zeros(n, dtype=bool)
+    out = _solve(p, relax, fixed_zero, reduce_only)
+    seconds = out.seconds
+    repaired = 0
+    for _ in range(MAX_BOX_REPAIRS):
+        if out.w is None or out.long_leg is None or out.short_leg is None:
+            break
+        box = (out.long_leg > BOX_TOL) & (out.short_leg > BOX_TOL)
+        if not box.any():
+            break
+        net = out.long_leg - out.short_leg
+        zs = zs | (box & (net >= 0))
+        zl = zl | (box & (net < 0))
+        nxt = _solve(p, relax, fixed_zero, reduce_only, zl, zs)
+        seconds += nxt.seconds
+        if nxt.w is None:  # numericamente não deveria ocorrer: mantém a solução anterior
+            break
+        repaired += int(box.sum())
+        out = nxt
+    unresolved = 0
+    if out.long_leg is not None and out.short_leg is not None:
+        unresolved = int(((out.long_leg > BOX_TOL) & (out.short_leg > BOX_TOL)).sum())
+    return replace(out, seconds=seconds, box_repaired=repaired, box_unresolved=unresolved)
 
 
 def _build_problem(alpha: pd.Series, model: RiskModel, cons: pd.DataFrame, cm: CostModel,
@@ -631,6 +713,13 @@ def _build_problem(alpha: pd.Series, model: RiskModel, cons: pd.DataFrame, cm: C
     fee = fee.where(~legacy, cfg.shorting.max_borrow_fee)
     fee = fee.where(new_short | (w0 < 0), 0.0)
 
+    trade_liq = None
+    if "max_trade_liq" in cons.columns:
+        tl = pd.to_numeric(cons["max_trade_liq"], errors="coerce")
+        if tl.isna().any():
+            raise ValueError(f"Coluna 'max_trade_liq' com NaN: {list(tl.index[tl.isna()])}")
+        trade_liq = tl.clip(lower=0.0).to_numpy(dtype=float)
+
     rk = cfg.risk
     return _Problem(
         ids=ids, alpha=alpha.to_numpy(dtype=float), w0=w0.to_numpy(dtype=float), G=G, sd=sd,
@@ -638,7 +727,8 @@ def _build_problem(alpha: pd.Series, model: RiskModel, cons: pd.DataFrame, cm: C
         country_names=c_names, countries=c_mat, sector_names=s_names, sectors=s_mat,
         max_long=cons["max_long"].to_numpy(dtype=float),
         max_short=cons["max_short"].to_numpy(dtype=float),
-        max_trade=cons["max_trade"].to_numpy(dtype=float), fee=fee.to_numpy(dtype=float),
+        max_trade=cons["max_trade"].to_numpy(dtype=float), trade_liq=trade_liq,
+        fee=fee.to_numpy(dtype=float),
         lin_l=lin_l.to_numpy(dtype=float), k_l=k_l.to_numpy(dtype=float),
         lin_s=lin_s.to_numpy(dtype=float), k_s=k_s.to_numpy(dtype=float),
         vol_target=settings.vol_target, net_max=rk.net_exposure_max_abs,
@@ -682,6 +772,12 @@ def _binding(p: _Problem, relax: _Relax, w: np.ndarray) -> list[str]:
             out.append(f"max_short:{iid}")
         if w[i] != p.w0[i] and rel(p.max_trade[i], w[i] - p.w0[i]):
             out.append(f"max_trade:{iid}")
+        elif p.trade_liq is not None and p.trade_liq[i] > TOL:
+            hi = max(p.w0[i] + p.trade_liq[i], 0.0)
+            lo = min(p.w0[i] - p.trade_liq[i], 0.0)
+            gap = hi - w[i] if w[i] > p.w0[i] else w[i] - lo if w[i] < p.w0[i] else np.inf
+            if gap / p.trade_liq[i] < BINDING_REL_SLACK:
+                out.append(f"max_trade_liq:{iid}")
     return out
 
 
@@ -727,7 +823,7 @@ def _match_vol_target(p: _Problem, relax: _Relax, base: _Outcome
     best_hi: _Outcome | None = None
     k = 2.0
     while k <= MAX_ALPHA_SCALE + TOL:
-        o = _solve(replace(p, alpha=p.alpha * k), relax, no_fix, no_fix)
+        o = _solve_clean(replace(p, alpha=p.alpha * k), relax, no_fix, no_fix)
         secs += o.seconds
         if o.w is None:
             break
@@ -740,7 +836,7 @@ def _match_vol_target(p: _Problem, relax: _Relax, base: _Outcome
         return lo, best_lo, secs, False
     for _ in range(MATCH_BISECT_STEPS):
         mid = float(np.sqrt(lo * hi))
-        o = _solve(replace(p, alpha=p.alpha * mid), relax, no_fix, no_fix)
+        o = _solve_clean(replace(p, alpha=p.alpha * mid), relax, no_fix, no_fix)
         secs += o.seconds
         if o.w is None:
             break
@@ -877,7 +973,7 @@ def optimize(alpha: pd.Series, model: RiskModel, constraints: pd.DataFrame,
     relaxations: list[str] = []
     total_seconds = 0.0
     no_fix = np.zeros(n, dtype=bool)
-    outcome = _solve(p, relax, no_fix, no_fix)
+    outcome = _solve_clean(p, relax, no_fix, no_fix)
     total_seconds += outcome.seconds
     steps = [s for s in RELAXATION_STEPS if not (s[0] == "turnover" and p.turnover_max is None)]
     step_iter = iter(steps)
@@ -888,7 +984,7 @@ def optimize(alpha: pd.Series, model: RiskModel, constraints: pd.DataFrame,
         relax = relax.step(nxt[0])
         relaxations.append(nxt[0])
         notes.append(nxt[1])
-        outcome = _solve(p, relax, no_fix, no_fix)
+        outcome = _solve_clean(p, relax, no_fix, no_fix)
         total_seconds += outcome.seconds
     if outcome.w is None:
         reason = ("inviável mesmo após toda a escada de relaxamento" if outcome.infeasible
@@ -927,12 +1023,12 @@ def optimize(alpha: pd.Series, model: RiskModel, constraints: pd.DataFrame,
         if not np.any(tiny & (w != 0)):
             break
         trial_fixed = fixed | tiny
-        out2 = _solve(p, relax, trial_fixed, no_fix)
+        out2 = _solve_clean(p, relax, trial_fixed, no_fix)
         total_seconds += out2.seconds
         if out2.w is None:
             held_tiny = trial_fixed & (p.w0 != 0) & ~fixed
             fixed_wo_held = trial_fixed & ~held_tiny
-            out2 = _solve(p, relax, fixed_wo_held, held_tiny)
+            out2 = _solve_clean(p, relax, fixed_wo_held, held_tiny)
             total_seconds += out2.seconds
             if out2.w is None:
                 notes.append("Passada de posição mínima inviável: mantida a solução anterior "
@@ -949,6 +1045,13 @@ def optimize(alpha: pd.Series, model: RiskModel, constraints: pd.DataFrame,
         notes.append(f"{int(residual.sum())} posições abaixo do mínimo de {min_pos:.2%} "
                      "permaneceram (saída gradual ou limite de passadas).")
     notes.append(f"Passadas de otimização: {passes}.")
+    if outcome.box_repaired:
+        notes.append(f"Reparo de complementaridade: {outcome.box_repaired} emissores tinham "
+                     "perna comprada e vendida simultâneas (custo subestimado) e foram "
+                     "re-otimizados com uma única perna.")
+    if outcome.box_unresolved:
+        notes.append(f"ATENÇÃO: {outcome.box_unresolved} emissores mantêm pernas simultâneas "
+                     "após o reparo; custo de negociação pode estar subestimado.")
 
     # ---------- resultados ----------
     weights = pd.Series(0.0, index=cons.index)

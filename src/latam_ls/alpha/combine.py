@@ -6,7 +6,9 @@ Pipeline (ver docs/latam_ls/ARQUITETURA.md, seção 6):
    opcionalmente dentro de grupos (ex.: setor).
 2. Combinação ponderada pelos pesos da configuração, **renormalizados por emissor** sobre os
    sinais disponíveis. Sinal ausente não vira zero: ele simplesmente não entra na média
-   daquele emissor. Emissor sem nenhum sinal fica ``NaN`` e é excluído.
+   daquele emissor. Emissor sem nenhum sinal fica ``NaN`` e é excluído. O composto de cada
+   emissor é dividido pelo seu desvio esperado ``sqrt(aᵀCa)`` (C = correlação entre sinais),
+   para que a cobertura parcial não infle o z.
 3. O composto é re-padronizado (média 0, desvio 1) e limitado a ``±winsor_z``.
 4. Alpha anual (Grinold): ``α = IC × σ_específico × z``.
 5. Alpha puro: resíduo WLS de ``α`` contra as exposições do modelo de risco (pesos
@@ -42,6 +44,14 @@ MIN_IC_OBS = 3
 
 ORTHOGONALITY_TOL = 1e-8
 """Tolerância relativa usada apenas para reportar a qualidade numérica da ortogonalização."""
+
+MIN_CORR_OBS = 10
+"""Mínimo de emissores com os dois sinais para estimar a correlação entre eles; abaixo disso o
+par é tratado como independente (registrado nas notas)."""
+
+CORR_EIGEN_FLOOR = 0.05
+"""Piso dos autovalores da correlação entre sinais: garante matriz positiva definida (a
+correlação por pares completos pode não ser) e limita a amplificação de compostos degenerados."""
 
 MAX_WLS_WEIGHT_RATIO = 1e4
 """Teto do peso WLS (1/σ²) relativo à mediana: equivale a um piso de σ específico de 1% da
@@ -235,6 +245,53 @@ def _resolve_weights(
     return {s: w / total for s, w in used.items()}
 
 
+def signal_correlation(z: pd.DataFrame, notes: list[str] | None = None) -> pd.DataFrame:
+    """Correlação cross-section entre os z-scores dos sinais, positiva definida.
+
+    Pares completos com pelo menos ``MIN_CORR_OBS`` emissores; par sem dado suficiente (ou sinal
+    sem dispersão) ⇒ correlação 0 (independência, registrada). Autovalores limitados a
+    ``CORR_EIGEN_FLOOR`` e diagonal re-normalizada para 1.
+    """
+    cols = list(z.columns)
+    c = z.astype(float).corr(min_periods=MIN_CORR_OBS).reindex(index=cols, columns=cols)
+    m = c.to_numpy(dtype=float, copy=True)
+    unknown = ~np.isfinite(m)
+    np.fill_diagonal(unknown, False)
+    if unknown.any() and notes is not None:
+        pairs = sorted({tuple(sorted((cols[i], cols[j]))) for i, j in zip(*np.nonzero(unknown),
+                                                                        strict=True)})
+        notes.append(f"Correlação entre sinais sem dados suficientes (assumida 0): {pairs}.")
+    m[~np.isfinite(m)] = 0.0
+    np.fill_diagonal(m, 1.0)
+    m = (m + m.T) / 2.0
+    if len(cols):
+        vals, vecs = np.linalg.eigh(m)
+        if vals.min() < CORR_EIGEN_FLOOR:
+            m = (vecs * np.maximum(vals, CORR_EIGEN_FLOOR)) @ vecs.T
+            d = np.sqrt(np.diag(m))
+            m = m / np.outer(d, d)
+    return pd.DataFrame(m, index=cols, columns=cols)
+
+
+def coverage_scale(a: pd.DataFrame, corr: pd.DataFrame) -> pd.Series:
+    """Desvio-padrão esperado do composto de cada emissor: ``sqrt(aᵢᵀ C aᵢ)``.
+
+    ``a``: pesos renormalizados por emissor (0 para sinal indisponível; linha ``NaN`` = sem
+    sinais). Dividir o composto por essa escala dá variância unitária a todos os emissores,
+    qualquer que seja a cobertura — sem isso, um emissor com um único sinal teria dispersão
+    ``1/sqrt(aᵀCa)`` vezes maior que um emissor com todos os sinais (≈2× com os pesos padrão)
+    depois da re-padronização, ou seja, mais alpha justamente onde há menos informação.
+    """
+    cols = list(corr.columns)
+    av = a.reindex(columns=cols).to_numpy(dtype=float)
+    c = corr.to_numpy(dtype=float)
+    row_ok = np.isfinite(av).all(axis=1) & (np.abs(av).sum(axis=1) > 0)
+    av0 = np.where(row_ok[:, None], av, 0.0)
+    v = np.einsum("ij,jk,ik->i", av0, c, av0)
+    out = np.where(row_ok & (v > 0), np.sqrt(np.where(v > 0, v, 1.0)), np.nan)
+    return pd.Series(out, index=a.index, dtype=float)
+
+
 def _fmt_ids(ids: list[str], limit: int = 10) -> str:
     head = ", ".join(ids[:limit])
     return head + (f" … (+{len(ids) - limit})" if len(ids) > limit else "")
@@ -291,7 +348,11 @@ def build_alpha(
     wsum = W.sum(axis=1)
     A = W.div(wsum.where(wsum > 0), axis=0)
     coverage_u = avail.sum(axis=1).astype(int)
-    composite = (A * Z).sum(axis=1, min_count=1).where(coverage_u > 0)
+    # Normalização pela cobertura: cada composto passa a ter variância esperada unitária
+    # (sqrt(aᵀCa)), para que poucos sinais não inflem o z depois da re-padronização.
+    cscale = coverage_scale(A, signal_correlation(Z, notes)).where(coverage_u > 0)
+    Zs = Z.div(cscale, axis=0)
+    composite = (A * Zs).sum(axis=1, min_count=1).where(coverage_u > 0)
     no_signal = universe[(coverage_u == 0).to_numpy(dtype=bool)].tolist()
     if no_signal:
         reason.loc[no_signal] = "sem_sinais"
@@ -299,8 +360,10 @@ def build_alpha(
                      f"{_fmt_ids([str(i) for i in no_signal])}.")
     partial = int(((coverage_u > 0) & (coverage_u < len(sig_names))).sum())
     if partial:
+        cs = cscale[(coverage_u > 0) & (coverage_u < len(sig_names))]
         notes.append(f"{partial} emissor(es) com cobertura parcial: pesos renormalizados "
-                     "sobre os sinais disponíveis.")
+                     "sobre os sinais disponíveis e composto normalizado pelo desvio esperado "
+                     f"(sqrt(aᵀCa) entre {cs.min():.2f} e {cs.max():.2f}).")
 
     valid_c = composite.dropna()
     mu = float(valid_c.mean()) if len(valid_c) else float("nan")
@@ -327,7 +390,8 @@ def build_alpha(
     alpha_raw_u = ic * spec_vol * cz
 
     scale = (ic * spec_vol * shrink / sd) if sd > 0 else pd.Series(np.nan, index=universe)
-    contrib_u = (A * (Z - mu)).mul(scale, axis=0).where(Z.notna())
+    # Σ_s a_s (z_s/escala − μ) = composto − μ, pois Σ_s a_s = 1 ⇒ soma exata = alpha_raw.
+    contrib_u = (A * (Zs - mu)).mul(scale, axis=0).where(Z.notna())
     contrib_u = contrib_u.where(alpha_raw_u.notna(), axis=0)
 
     if acfg.orthogonalize_to_factors:

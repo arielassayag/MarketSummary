@@ -219,7 +219,8 @@ def _assert_feasible(res: OptimizationResult, cons: pd.DataFrame, env: Env, cfg:
     liq = cfg.liquidity
     longs, shorts = w[w > 0], w[w < 0]
     days_l = longs * NAV / (liq.participation_rate * cons.loc[longs.index, "adtv_long_usd"])
-    days_s = -shorts * NAV / (liq.participation_rate * cons.loc[shorts.index, "adtv_short_usd"])
+    days_s = -shorts * NAV / (liq.short_participation_rate
+                              * cons.loc[shorts.index, "adtv_short_usd"])
     assert (days_l <= liq.max_days_to_liquidate_long + 1e-4).all()
     assert (days_s <= liq.max_days_to_liquidate_short + 1e-4).all()
 
@@ -319,7 +320,7 @@ def test_asset_constraints_rules(env: Env) -> None:
     assert "squeeze_alto" in cons.loc[sp["high"], "reasons"]
     for key in ("medium", "na"):
         iid = sp[key]
-        base = min(cfg.risk.max_short_weight, liq.participation_rate
+        base = min(cfg.risk.max_short_weight, liq.short_participation_rate
                    * env.sides.loc[iid, "adtv_short_usd"] * liq.max_days_to_liquidate_short / NAV)
         assert cons.loc[iid, "max_short"] == pytest.approx(base * 0.5)
     assert cons.loc[sp["na"], "squeeze_bucket"] == "NA"
@@ -815,3 +816,176 @@ def test_fx_hedges_sign_and_threshold() -> None:
     clp = hedges["CLP"]
     assert clp.hedge_notional_usd == pytest.approx(0.02 * NAV)  # short ⇒ hedge comprado
     assert "comprar CLP a termo" in clp.rationale
+
+
+# ==========================================================
+# Revisão adversarial: regressões de bugs encontrados
+# ==========================================================
+
+def _true_objective(res: OptimizationResult, alpha: pd.Series, cons: pd.DataFrame,
+                    current: pd.Series, env: Env) -> float:
+    """Objetivo recalculado a partir dos pesos LÍQUIDOS (custo por perna real, sem caixas)."""
+    w = res.weights
+    w0 = current.reindex(w.index).fillna(0.0)
+    cost = float(estimate_rebalance_costs(w, w0, env.cost_model.reindex(w.index)).sum())
+    fee = cons["borrow_fee"].reindex(w.index)
+    short = (-w).clip(lower=0.0)
+    assert not fee[short > 0].isna().any()
+    borrow = float((fee[short > 0] * short[short > 0]).sum())
+    amort = 52.0 / env.cfg.costs.amortization_weeks
+    var = env.model.portfolio_variance(w)
+    return (float((alpha.reindex(w.index) * w).sum()) - amort * cost - borrow
+            - env.cfg.risk.risk_aversion * var)
+
+
+def test_rebalance_has_no_split_legs_and_objective_matches_net_weights(env: Env,
+                                                                       inception) -> None:
+    """Bug: l > 0 e s > 0 no mesmo emissor dividiam a ordem (impacto superaditivo) e o
+    otimizador subestimava o custo real; o objetivo reportado não batia com os pesos líquidos."""
+    res0, _ = inception
+    current = res0.weights[res0.weights != 0]
+    alpha = -env.alpha  # inverte o sinal: reduz/inverte longs e shorts existentes
+    cons = _constraints(env, current=current, inception=False)
+    res = optimize(alpha, env.model, cons, env.cost_model, env.cfg, NAV, current, False,
+                   env.market_w)
+    true_obj = _true_objective(res, alpha, cons, current, env)
+    assert res.diagnostics.objective == pytest.approx(true_obj, rel=1e-6, abs=1e-8)
+    assert any("complementaridade" in n for n in res.diagnostics.notes)
+    assert not any("ATENÇÃO" in n for n in res.diagnostics.notes)
+    _assert_feasible(res, cons, env, env.cfg, current=current, check_turnover=True)
+
+
+def test_exit_floor_does_not_allow_oversized_increase(env: Env) -> None:
+    """Bug: max_trade com piso |w₀| (para permitir saída) também permitia AUMENTAR a posição
+    além do teto de negociação por liquidez."""
+    cfg = env.cfg.with_overrides({"liquidity": {"max_days_to_liquidate_long": 10.0}})
+    liq = cfg.liquidity
+    base = _constraints(env, cfg, inception=False)
+    cand = base[(base["max_long"] >= 0.04 - 1e-12) & (base["max_trade_liq"] < 0.02)
+                & ~base.index.isin(list(env.special.values()))]
+    iid = cand.index[0]
+    mtl = liq.participation_rate * base.loc[iid, "adtv_long_usd"] * liq.max_trade_days_weekly / NAV
+    assert base.loc[iid, "max_trade_liq"] == pytest.approx(mtl)
+    start = 1.5 * mtl
+    current = pd.Series({iid: start})
+    cons = _constraints(env, cfg, current=current, inception=False)
+    assert cons.loc[iid, "max_trade"] == pytest.approx(start)  # piso de saída preservado
+    alpha = env.alpha.copy()
+    alpha[iid] = 2.0
+    res = optimize(alpha, env.model, cons, env.cost_model, cfg, NAV, current, False, env.market_w)
+    assert res.weights[iid] - start <= mtl + TOL
+    assert res.weights[iid] - start == pytest.approx(mtl, abs=1e-6)  # usa o teto, não o piso
+    assert f"max_trade_liq:{iid}" in res.diagnostics.binding_constraints
+    # saída total (redução > teto de liquidez) continua permitida
+    out = optimize(alpha, env.model, cons, env.cost_model, cfg, NAV, current, False,
+                   env.market_w, overrides={"exclude_issuers": iid})  # string única
+    assert out.weights[iid] == 0.0
+
+
+def test_model_implied_betas_missing_specific_var_is_nan(env: Env) -> None:
+    """Bug: variância específica ausente virava zero no beta implícito."""
+    m = env.model
+    iid = m.assets[0]
+    D = m.specific_var.copy()
+    D[iid] = np.nan
+    broken = RiskModel(as_of=m.as_of, exposures=m.exposures, factor_cov=m.factor_cov,
+                       specific_var=D, factor_returns=m.factor_returns,
+                       specific_returns=m.specific_returns, factor_groups=m.factor_groups)
+    betas = model_implied_betas(broken, env.market_w)
+    assert np.isnan(betas[iid])
+    assert betas.drop(iid).notna().all()
+    # equivalente a excluir o nome da carteira de mercado
+    ref = model_implied_betas(m, env.market_w.drop(iid))
+    assert np.allclose(betas.drop(iid), ref.drop(iid))
+
+
+def test_compliance_liquidity_uses_line_adtv_and_short_participation(env: Env,
+                                                                     inception) -> None:
+    """Bugs: ADTV da linha ausente caía no ADTV agregado do emissor (otimista) e shorts eram
+    medidos a 20% de participação em vez de ``short_participation_rate`` (15%)."""
+    res, cons = inception
+    w = res.weights[res.weights != 0]
+    liq = env.cfg.liquidity
+    long_id = w[w > 0].index[0]
+    c2 = cons.copy()
+    c2.loc[long_id, "adtv_long_usd"] = np.nan
+    by_id = {c.check_id: c for c in _run(env, w, c2)}
+    assert not by_id["LIQ_DAYS_LONG"].passed and long_id in by_id["LIQ_DAYS_LONG"].details
+    # sem a coluna de ADTV por linha: usa o agregado e avisa no detalhe
+    c3 = cons.drop(columns=["adtv_long_usd"])
+    det = {c.check_id: c for c in _run(env, w, c3)}["LIQ_DAYS_LONG"].details
+    assert "agregado do emissor" in det
+    # short dimensionado para 2 dias a 20% do ADTV (= 2,67 dias a 15%) reprova
+    sid = cons[cons["can_short"] & (cons["squeeze_bucket"] == "LOW")].index[0]
+    size = 0.99 * liq.participation_rate * cons.loc[sid, "adtv_short_usd"] \
+        * liq.max_days_to_liquidate_short / NAV
+    bad = pd.Series({sid: -size, long_id: size})
+    chk = {c.check_id: c for c in _run(env, bad, cons)}["LIQ_DAYS_SHORT"]
+    assert not chk.passed
+    assert chk.value == pytest.approx(0.99 * liq.participation_rate
+                                      * liq.max_days_to_liquidate_short
+                                      / liq.short_participation_rate)
+    # e o teto do otimizador já respeita a participação de short do mandato
+    assert cons.loc[sid, "max_short"] <= (liq.short_participation_rate
+                                          * cons.loc[sid, "adtv_short_usd"]
+                                          * liq.max_days_to_liquidate_short / NAV) + 1e-12
+
+
+def test_drawdown_hard_does_not_ratchet_and_stop_out_caps_gross(env: Env, inception) -> None:
+    """Bugs: o stop duro exigia novo corte de 50% do gross a cada semana enquanto o drawdown
+    persistisse; o stop-out (gross máximo) não era verificado; o gatilho soft era exclusivo."""
+    res, cons = inception
+    w = res.weights[res.weights != 0]
+    dds = env.cfg.drawdown
+    vol = portfolio_risk_parts(w, env.model).vol
+    cut = w * (0.9 * dds.degross_multiplier * env.cfg.risk.vol_target_annual / vol)
+    # semana seguinte ao corte: mesma carteira (já com risco cortado) continua aprovável
+    again = {c.check_id: c for c in _run(env, cut, cons, current=cut, inception=False,
+                                         drawdown=-0.06)}
+    assert again["DRAWDOWN_HARD"].passed
+    # stop-out: gross acima de stop_out_gross reprova mesmo cortando 50% do gross atual
+    prop = w * (0.8 / float(w.abs().sum()))           # gross 0,8x > stop_out_gross (0,5x)
+    cur = prop * 2.0                                   # corte de 50% em relação ao atual
+    out = {c.check_id: c for c in _run(env, prop, cons, current=cur, inception=False,
+                                       drawdown=-0.08)}
+    assert not out["DRAWDOWN_HARD"].passed and "Stop-out" in out["DRAWDOWN_HARD"].details
+    hard_only = {c.check_id: c for c in _run(env, prop, cons, current=cur, inception=False,
+                                             drawdown=-0.06)}
+    assert hard_only["DRAWDOWN_HARD"].passed           # sem stop-out, o corte basta
+    small = prop * (0.95 * dds.stop_out_gross / 0.8)
+    ok = {c.check_id: c for c in _run(env, small, cons, current=cur, inception=False,
+                                      drawdown=-0.08)}
+    assert ok["DRAWDOWN_HARD"].passed
+    # gatilho soft inclusivo: drawdown exatamente no stop aciona a revisão
+    edge = {c.check_id: c for c in _run(env, w, cons, drawdown=dds.soft_stop)}
+    assert not edge["DRAWDOWN_SOFT"].passed
+
+
+def test_build_trades_share_driven_notional_is_consistent() -> None:
+    """Bug: com ações conhecidas, a ação seguia as ações, mas notional/variação de peso
+    seguiam a diferença de pesos (deriva de preço) — ex.: VENDA com variação positiva."""
+    targets = [_pt("A", "A.SA", 0.012, 1000)]          # preço subiu: 1000 ações = 1,2%
+    current = [_bp("A", "A.SA", 0.010, 1100)]          # peso registrado no preço antigo
+    trades = build_trades(targets, current, NAV)
+    assert len(trades) == 1
+    t = trades[0]
+    assert t.action == TradeAction.SELL and t.shares == 100
+    px = 0.012 * NAV / 1000
+    assert t.notional_usd == pytest.approx(100 * px)
+    assert t.weight_change == pytest.approx(-100 * px / NAV)
+    # sem ações conhecidas: segue a diferença de pesos
+    t2 = build_trades([_pt("A", "A.SA", 0.012, None)], [_bp("A", "A.SA", 0.010, None)], NAV)
+    assert t2[0].action == TradeAction.BUY and t2[0].weight_change == pytest.approx(0.002)
+
+
+def test_build_positions_short_participation(env: Env, targets, inception) -> None:
+    res, _ = inception
+    alt = build_positions(
+        res.weights, env.sides, env.panel.lines, env.panel.assets, env.squeeze, env.alpha,
+        None, None, None, env.betas, NAV, env.md.fx.iloc[-1], participation=0.20,
+        short_participation=0.15)
+    for a, b in zip(alt, targets, strict=True):
+        if a.side == Side.SHORT:
+            assert a.days_to_liquidate == pytest.approx(a.pct_adtv / 0.15)
+        else:
+            assert a.days_to_liquidate == pytest.approx(b.days_to_liquidate)

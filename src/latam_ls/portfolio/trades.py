@@ -109,9 +109,12 @@ def build_positions(
     alpha_z: pd.Series | None, view_scores: pd.Series | None, risk_contrib: pd.Series | None,
     betas: pd.Series | None, nav: float, fx_last: pd.Series,
     participation: float = DEFAULT_PARTICIPATION,
+    short_participation: float | None = None,
 ) -> list[PositionTarget]:
     """Converte pesos por emissor em posições-alvo por linha de execução.
 
+    ``days_to_liquidate`` usa ``participation`` nos longs e ``short_participation`` nos shorts
+    (padrão: a mesma participação; o mandato usa ``short_participation_rate`` para shorts).
     Erros explícitos: peso ``NaN``; short sem linha de short; long sem linha comprada nem
     linha primária; moeda da linha desconhecida. Ordenação: longs por peso decrescente,
     depois shorts do maior para o menor (empate por ``issuer_id``).
@@ -155,7 +158,9 @@ def build_positions(
             adtv = _opt(lrow, "adtv_usd")
         adtv = adtv if adtv is not None and adtv > 0 else None
         pct_adtv = abs(notional) / adtv if adtv else None
-        days = abs(notional) / (participation * adtv) if adtv else None
+        part = participation if side == Side.LONG or short_participation is None \
+            else short_participation
+        days = abs(notional) / (part * adtv) if adtv else None
 
         bucket = "NA"
         score = None
@@ -194,6 +199,18 @@ def _signed_shares(shares: int | None, weight: float) -> int | None:
     return int(math.copysign(abs(int(shares)), weight)) if weight != 0 else int(shares)
 
 
+def _usd_per_share(t: PositionTarget | None, b: BookedPosition | None) -> float | None:
+    """Preço em USD por ação: do alvo (preço atual) ou, na falta, da posição registrada."""
+    for notional, shares in ((t.notional_usd, t.shares) if t is not None else (None, None),
+                             (b.notional_usd, b.shares) if b is not None else (None, None)):
+        if notional is None or not shares:
+            continue
+        px = abs(float(notional)) / abs(int(shares))
+        if math.isfinite(px) and px > 0:
+            return px
+    return None
+
+
 def build_trades(
     targets: list[PositionTarget], current: list[BookedPosition] | None, nav: float,
     cost_bps: pd.Series | None = None, participation: float = DEFAULT_PARTICIPATION,
@@ -204,12 +221,15 @@ def build_trades(
     - Ponta comprada: ``BUY``/``SELL``; ponta vendida: ``SHORT``/``COVER``.
     - Cruzar o zero na mesma linha gera duas ordens (zerar e abrir).
     - Troca de linha de execução: fecha a linha antiga e abre a nova.
-    - ``shares`` e ``notional_usd`` são magnitudes; ``weight_change`` tem sinal.
+    - ``shares`` e ``notional_usd`` são magnitudes; ``weight_change`` tem sinal (positivo
+      para BUY/COVER, negativo para SELL/SHORT).
     - ``cost_bps``: custo estimado em bps do valor negociado, indexado por ticker ou emissor.
     - ``line_adtv``: ADTV por ticker para linhas que só existem na carteira atual.
 
     Com quantidades conhecidas dos dois lados, a ordem segue a diferença de ações (deriva de
-    preço sem mudança de quantidade não gera ordem); sem quantidades, segue a diferença de peso.
+    preço sem mudança de quantidade não gera ordem) e o notional é ações × preço USD por ação
+    (do alvo ou da posição registrada), coerente com a ação; sem quantidades, segue a
+    diferença de peso.
     """
     if not nav > 0:
         raise ValueError("NAV precisa ser positivo.")
@@ -246,6 +266,7 @@ def build_trades(
         cost = _opt(cost_bps, ticker)
         if cost is None:
             cost = _opt(cost_bps, issuer)
+        px = _usd_per_share(t, b) if shares_known else None
 
         legs: list[tuple[TradeAction, float, int | None]] = []
         if old_w > 0 > new_w or old_w < 0 < new_w:
@@ -265,7 +286,14 @@ def build_trades(
             legs.append((action, dw, abs(dsh) if dsh is not None else None))
 
         for action, dw, sh in legs:
-            notional = abs(dw) * nav
+            if sh is not None and px is not None:
+                # Ordem guiada por ações: notional e variação de peso seguem a quantidade, com
+                # sinal coerente com a ação (evita VENDA com variação de peso positiva).
+                notional = sh * px
+                sign = 1.0 if action in (TradeAction.BUY, TradeAction.COVER) else -1.0
+                dw = sign * notional / nav
+            else:
+                notional = abs(dw) * nav
             trades.append(Trade(
                 issuer_id=issuer, ticker=ticker, action=action, shares=sh,
                 notional_usd=notional, weight_change=float(dw),

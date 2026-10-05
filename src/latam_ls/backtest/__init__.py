@@ -19,8 +19,8 @@ from .metrics import (
 
 _ENGINE_EXPORTS = frozenset({
     "BacktestConfig", "BacktestResult", "PointInTimeInputs", "earliest_start",
-    "rebalance_dates", "run_backtest", "run_full_backtest", "run_snapshot_backtest",
-    "simulate_weights",
+    "primary_sessions", "rebalance_dates", "results_hash", "run_backtest", "run_full_backtest",
+    "run_snapshot_backtest", "simulate_weights", "summary_metrics",
 })
 
 __all__ = [
@@ -32,11 +32,14 @@ __all__ = [
     "earliest_start",
     "ic_summary",
     "performance_metrics",
+    "primary_sessions",
     "rebalance_dates",
+    "results_hash",
     "run_backtest",
     "run_full_backtest",
     "run_snapshot_backtest",
     "simulate_weights",
+    "summary_metrics",
     "weekly_returns",
 ]
 

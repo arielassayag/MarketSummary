@@ -124,6 +124,8 @@ def performance_metrics(
     """
     if periods <= 0:
         raise ValueError("periods precisa ser positivo.")
+    if vol_band_min is not None and vol_band_max is not None and vol_band_min > vol_band_max:
+        raise ValueError("vol_band_min não pode exceder vol_band_max.")
     nan = float("nan")
     out: dict[str, float] = dict.fromkeys(METRIC_KEYS, nan)
     r, n_missing = _clean(daily_returns)
@@ -178,8 +180,6 @@ def performance_metrics(
         if len(rvol):
             out["avg_realized_vol_63d"] = float(rvol.mean())
             if vol_band_min is not None and vol_band_max is not None:
-                if vol_band_min > vol_band_max:
-                    raise ValueError("vol_band_min não pode exceder vol_band_max.")
                 inside = (rvol >= vol_band_min) & (rvol <= vol_band_max)
                 out["pct_time_vol_in_band"] = float(inside.mean())
     return out

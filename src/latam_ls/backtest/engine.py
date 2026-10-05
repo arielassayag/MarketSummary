@@ -46,7 +46,7 @@ import math
 import warnings
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass, field
-from datetime import date, timedelta
+from datetime import date
 from pathlib import Path
 from typing import Any
 
@@ -509,17 +509,18 @@ def simulate_weights(
     tg = tg.reindex(columns=cols, fill_value=0.0)
     cost_v = _as_vector(cost_rate, cols, "Custo")
     fee_v = _as_vector(borrow_fee, cols, "Taxa de aluguel")
+    days = rets.index[rets.index >= tg.index[0]]
     if rf_annual is None:
         rf = pd.Series(0.0, index=rets.index)
     elif isinstance(rf_annual, pd.Series):
         rf = (pd.to_numeric(rf_annual, errors="coerce").reindex(rets.index).shift(1)
               / TRADING_DAYS)
-        if rf.iloc[1:].isna().any():
-            raise ValueError("Taxa de juros ausente em datas do período.")
-        rf = rf.fillna(0.0)
+        missing = rf.reindex(days).isna()
+        if missing.any():
+            bad = [str(d.date()) for d in days[missing.to_numpy()]][:5]
+            raise ValueError(f"Taxa de juros ausente (pregão anterior) em dias simulados: {bad}")
     else:
         rf = pd.Series(float(rf_annual) / TRADING_DAYS, index=rets.index)
-    days = rets.index[rets.index >= tg.index[0]]
     book = _Book(len(cols), nav)
     rows = []
     for t in days:
@@ -565,6 +566,7 @@ class _Context:
     signal_weights: dict[str, float]
     squeeze: pd.DataFrame
     limit_fns: tuple[Callable, Callable]
+    themes: dict[str, list[str]] = field(default_factory=dict)
 
 
 def _live_limit_functions() -> tuple[Callable, Callable]:
@@ -572,6 +574,59 @@ def _live_limit_functions() -> tuple[Callable, Callable]:
     from ..workflow.weekly import apply_liquidity_minimums, apply_specific_risk_caps
 
     return apply_liquidity_minimums, apply_specific_risk_caps
+
+
+def _resolve_themes(bt: BacktestConfig, cfg: FundConfig,
+                    issuers: list[str]) -> tuple[dict[str, list[str]], str]:
+    """Temas neutros aplicados (os do pipeline ao vivo por padrão) e a nota correspondente."""
+    if bt.themes is None:
+        from ..workflow.weekly import load_themes
+
+        raw = load_themes()
+        origin = "arquivo de temas do pipeline ao vivo"
+    else:
+        raw = bt.themes
+        origin = "informados no backtest"
+    limits = cfg.risk.theme_net_max_abs
+    universe = set(issuers)
+    themes = {t: sorted(set(m) & universe) for t, m in raw.items() if t in limits}
+    themes = {t: m for t, m in themes.items() if m}
+    if not themes:
+        return {}, (f"Temas neutros ({origin}): nenhum tema com limite no mandato e membros no "
+                    "universo; restrição de tema não aplicada.")
+    desc = ", ".join(f"{t} (|líquido| ≤ {limits[t]:.2%} NAV, {len(m)} emissores)"
+                     for t, m in sorted(themes.items()))
+    return themes, f"Temas neutros ({origin}), como ao vivo: {desc}."
+
+
+def _freeze_untradable(cons: pd.DataFrame, frozen: frozenset[str], current: pd.Series | None,
+                       cfg: FundConfig) -> tuple[pd.DataFrame, int]:
+    """Emissores sem preço da linha primária no dia do rebalanceamento não são negociados.
+
+    ``max_trade``/``max_trade_liq`` = 0 (peso igual ao atual) e tetos ampliados até a posição
+    atual para que mantê-la seja viável; short mantido sem taxa usa a taxa máxima do mandato
+    (conservador). Retorna a tabela e o número de emissores congelados nela.
+    """
+    idx = cons.index[cons.index.isin(sorted(frozen))]
+    if len(idx) == 0:
+        return cons, 0
+    c = cons.copy()
+    w0 = (pd.to_numeric(current, errors="coerce").reindex(idx).fillna(0.0)
+          if current is not None else pd.Series(0.0, index=idx)).astype(float)
+    c.loc[idx, "max_trade"] = 0.0
+    if "max_trade_liq" in c.columns:
+        c.loc[idx, "max_trade_liq"] = 0.0
+    c.loc[idx, "max_long"] = np.maximum(c.loc[idx, "max_long"].astype(float),
+                                        w0.clip(lower=0.0))
+    c.loc[idx, "max_short"] = np.maximum(c.loc[idx, "max_short"].astype(float),
+                                         (-w0).clip(lower=0.0))
+    fee = pd.to_numeric(c.loc[idx, "borrow_fee"], errors="coerce")
+    no_fee = idx[((w0 < 0) & fee.isna()).to_numpy()]
+    c.loc[no_fee, "borrow_fee"] = cfg.shorting.max_borrow_fee
+    if "reasons" in c.columns:
+        c.loc[idx, "reasons"] = [";".join(x for x in (str(r or ""), FROZEN_REASON) if x)
+                                 for r in c.loc[idx, "reasons"]]
+    return c, len(idx)
 
 
 def _held_stats(model: RiskModel | None, w: pd.Series, betas: pd.Series | None) -> dict:
@@ -591,8 +646,11 @@ def _held_stats(model: RiskModel | None, w: pd.Series, betas: pd.Series | None) 
 
 
 def _decide(ctx: _Context, t: pd.Timestamp, pos_d: int, w_cur: pd.Series, nav: float,
-            inception: bool) -> _Decision:
-    """Carteira-alvo da segunda ``t`` com dados até o pregão ``pos_d`` (sem look-ahead)."""
+            inception: bool, frozen: frozenset[str] = frozenset()) -> _Decision:
+    """Carteira-alvo do rebalanceamento ``t`` com dados até o pregão ``pos_d`` (sem look-ahead).
+
+    ``frozen``: emissores cuja linha primária não negocia em ``t`` (não podem ser negociados).
+    """
     cfg, bt, panel = ctx.cfg, ctx.bt, ctx.panel
     d = ctx.pit.calendar[pos_d]
     record: dict = {"info_date": d, "vol_target": ctx.vol_target}
@@ -651,9 +709,13 @@ def _decide(ctx: _Context, t: pd.Timestamp, pos_d: int, w_cur: pd.Series, nav: f
                                    nav, current=current, inception=inception)
     cons = liq_min(cons, cfg, nav)
     cons = spec_caps(cons, model.specific_vol, cfg, ctx.vol_target)
+    cons, _ = _freeze_untradable(cons, frozen, current, cfg)
     daily_vol = panel.returns.iloc[max(0, pos_d - DAILY_VOL_WINDOW + 1): pos_d + 1].std()
     cost_model = build_cost_model(sides, assets, daily_vol, cfg, nav)
-    overrides = {"risk_target_mode": bt.risk_target_mode, "vol_target": ctx.vol_target}
+    overrides: dict[str, Any] = {"risk_target_mode": bt.risk_target_mode,
+                                 "vol_target": ctx.vol_target}
+    if ctx.themes:
+        overrides["themes"] = ctx.themes
     try:
         with warnings.catch_warnings():
             warnings.filterwarnings("ignore", message=INACCURATE_WARNING, category=UserWarning)
@@ -701,6 +763,97 @@ def _forward_specific(returns: np.ndarray, fmat: np.ndarray, ok_rows: np.ndarray
     return np.where(finite.any(axis=0), total, np.nan)
 
 
+def _drop_provisional(md: MarketData) -> tuple[MarketData, str | None]:
+    """Remove barras provisórias (intradiárias) do fim dos dados: o backtest só usa fechamentos."""
+    prov = sorted(getattr(md.manifest, "provisional_dates", None) or [])
+    if not prov:
+        return md, None
+    first = pd.Timestamp(prov[0])
+    keep = md.close.index[md.close.index < first]
+    if keep.empty:
+        raise ValueError("Só há barras provisórias nos dados: sem fechamentos para o backtest.")
+    cut = keep[-1].date()
+    note = (f"Barra(s) provisória(s) (intradiária) a partir de {first.date()} excluída(s): o "
+            f"backtest usa apenas fechamentos (dados até {cut}).")
+    return md.truncate(cut), note
+
+
+def results_hash(daily: pd.DataFrame, weekly: pd.DataFrame, weights: pd.DataFrame,
+                 ic: pd.DataFrame) -> str:
+    """SHA-256 canônico dos resultados (floats com 10 casas; ``NaN`` explícito, nunca zero)."""
+    return sha256_obj({name: df.to_dict("split") for name, df in
+                       (("daily", daily), ("weekly", weekly), ("weights", weights), ("ic", ic))})
+
+
+def _config_record(bt: BacktestConfig) -> dict[str, Any]:
+    return json.loads(canonical_json(dataclasses.asdict(bt)))
+
+
+def summary_metrics(daily: pd.DataFrame, weekly: pd.DataFrame, ic: pd.DataFrame,
+                    rf_daily: pd.Series | None, cfg: FundConfig, bt: BacktestConfig,
+                    vol_target: float) -> dict[str, float]:
+    """Métricas agregadas do backtest (planas, em decimal; anualização com 252 pregões).
+
+    - Desempenho: :func:`performance_metrics` do retorno líquido (Sharpe sobre ``rf_daily``,
+      a mesma taxa dos juros do caixa; dia sem taxa conhecida = 0, como na contabilidade).
+    - Arrasto de custos/aluguel/juros: soma × 252 / dias do backtest.
+    - Atribuição: média dos dias COM atribuição × 252 (dias sem regressão fatorial ficam fora;
+      contagem em ``n_days_without_attribution``).
+    - ``avg_turnover_weekly``: média dos rebalanceamentos posteriores à montagem da carteira
+      (primeira semana com gross > 0); semanas em caixa antes dela também ficam fora.
+    """
+    rf_m = None if rf_daily is None else rf_daily.reindex(daily.index).fillna(0.0)
+    m = performance_metrics(daily["ret_net"], rf_m, TRADING_DAYS, cfg.risk.vol_band_min,
+                            cfg.risk.vol_band_max)
+    gross_m = performance_metrics(daily["ret_gross"])
+    nan = float("nan")
+    n_days = max(len(daily), 1)
+    factor = pd.to_numeric(daily["factor_pnl"], errors="coerce")
+    specific = pd.to_numeric(daily["specific_pnl"], errors="coerce")
+    n_attr = int(factor.notna().sum())
+    status = weekly["status"].astype(str)
+    ok = (status == "ok").to_numpy()
+    gross_w = pd.to_numeric(weekly["gross"], errors="coerce").to_numpy()
+    invested = np.flatnonzero(gross_w > 0)
+    after_inception = (np.arange(len(weekly)) > invested[0]) if len(invested) \
+        else np.zeros(len(weekly), dtype=bool)
+    turnover = pd.to_numeric(weekly["turnover"], errors="coerce").to_numpy()
+    vol = pd.to_numeric(weekly["ex_ante_vol"], errors="coerce").to_numpy()
+    relax = weekly["relaxations"].fillna("").astype(str) if "relaxations" in weekly.columns \
+        else pd.Series("", index=weekly.index)
+    m.update({
+        "ann_return_gross": gross_m["ann_return"],
+        "sharpe_gross": gross_m["sharpe"],
+        "cost_drag_annual": float(daily["cost"].sum() * TRADING_DAYS / n_days),
+        "borrow_drag_annual": float(daily["borrow"].sum() * TRADING_DAYS / n_days),
+        "financing_annual": float(daily["financing"].sum() * TRADING_DAYS / n_days),
+        "factor_pnl_annual": float(factor.mean() * TRADING_DAYS) if n_attr else nan,
+        "specific_pnl_annual": float(specific.mean() * TRADING_DAYS) if n_attr else nan,
+        "n_days_without_attribution": float(len(daily) - n_attr),
+        "avg_turnover_weekly": float(np.mean(turnover[after_inception]))
+        if after_inception.any() else nan,
+        "avg_gross": float(daily["gross"].mean()),
+        "avg_abs_net": float(daily["net"].abs().mean()),
+        "avg_ex_ante_vol": float(np.nanmean(vol[ok])) if np.isfinite(vol[ok]).any() else nan,
+        "max_ex_ante_vol": float(np.nanmax(vol[ok])) if np.isfinite(vol[ok]).any() else nan,
+        "vol_target": float(vol_target),
+        "n_rebalances": float(len(weekly)),
+        "n_rebalance_failures": float((~ok).sum()),
+        "n_relaxed": float((relax != "").sum()),
+        "final_nav": float(daily["nav"].iloc[-1]) if len(daily) else nan,
+        "n_trials": float(bt.n_trials),
+    })
+    m["psr"] = deflated_sharpe_ratio(m["sharpe"], int(m["n_obs"]), 1, m["skew"],
+                                     m["excess_kurtosis"], periods_per_year=TRADING_DAYS)
+    m["deflated_sharpe"] = deflated_sharpe_ratio(m["sharpe"], int(m["n_obs"]), bt.n_trials,
+                                                 m["skew"], m["excess_kurtosis"],
+                                                 periods_per_year=TRADING_DAYS)
+    stats = ic_summary(ic)
+    for s in stats.index:
+        m[f"ic_mean:{s}"] = float(stats.loc[s, "mean"])
+    return m
+
+
 def run_backtest(md: MarketData, cfg: FundConfig, bt: BacktestConfig,
                  progress: ProgressFn | None = None) -> BacktestResult:
     """Backtest walk-forward semanal do núcleo quantitativo (ver docstring do módulo).
@@ -711,6 +864,9 @@ def run_backtest(md: MarketData, cfg: FundConfig, bt: BacktestConfig,
     if md.is_synthetic:
         notes.append(f"{SIMULATED_DATA_NOTICE}: backtest sobre mercado sintético; os números não "
                      "representam desempenho real.")
+    md, prov_note = _drop_provisional(md)
+    if prov_note:
+        notes.append(prov_note)
     panel = build_asset_panel(md, cfg)
     cal = pd.DatetimeIndex(panel.returns.index)
     if len(cal) < 3:
@@ -722,20 +878,28 @@ def run_backtest(md: MarketData, cfg: FundConfig, bt: BacktestConfig,
     if upto.empty:
         raise ValueError(f"Fim do backtest {bt.end} anterior ao início dos dados.")
     end_ts = upto[-1]  # último pregão <= fim pedido
-    reb = rebalance_dates(cal, bt.start, end_ts)
-    reb = reb[[cal.get_loc(t) >= 1 for t in reb]] if len(reb) else reb
+    # Rebalanceamento no 1º pregão da semana da B3; informação até o pregão anterior da B3.
+    sessions = primary_sessions(md, cfg)
+    info_pos: dict[pd.Timestamp, int] = {}
+    for t in rebalance_dates(sessions, bt.start, end_ts):
+        prev = sessions[sessions < t]
+        if len(prev):
+            info_pos[t] = int(cal.get_loc(prev[-1]))
+    reb = pd.DatetimeIndex(sorted(info_pos), name="date")
     if reb.empty:
         raise ValueError(f"Nenhuma data de rebalanceamento entre {bt.start} e {end_ts.date()}.")
-    first_pos = int(cal.get_loc(reb[0]))
     rm = cfg.risk_model
-    fit_start = cal[max(1, first_pos - 1 - rm.history_days + 1)]
-    est_issuers = [i for i in panel.assets.index if panel.returns[i].notna().any()]
+    fit_start = cal[max(1, info_pos[reb[0]] - rm.history_days + 1)]
+    # Universo de estimação: emissores com algum retorno até o fim do backtest (nada posterior).
+    has_ret = panel.returns.loc[:end_ts].notna().any()
+    est_issuers = [i for i in panel.assets.index if bool(has_ret.get(i, False))]
     if not est_issuers:
         raise ValueError("Nenhum emissor com retornos no painel.")
     est = RiskModelEstimator(panel, cfg, md=md, issuers=est_issuers,
                              exposure_refresh_days=bt.exposure_refresh_days,
                              start=fit_start, end=end_ts)
     vol_target = bt.effective_vol_target(cfg)
+    themes, theme_note = _resolve_themes(bt, cfg, list(panel.assets.index))
     ctx = _Context(
         md=md,
         md_no_borrow=dataclasses.replace(md, short_interest=pd.DataFrame(),
@@ -743,7 +907,7 @@ def run_backtest(md: MarketData, cfg: FundConfig, bt: BacktestConfig,
         cfg=cfg, bt=bt, panel=panel, pit=PointInTimeInputs(panel, md, cfg), est=est,
         vol_target=vol_target, signal_weights=bt.effective_signal_weights(cfg),
         squeeze=pd.DataFrame({"bucket": ASSUMED_SQUEEZE_BUCKET}, index=panel.assets.index),
-        limit_fns=_live_limit_functions(),
+        limit_fns=_live_limit_functions(), themes=themes,
     )
 
     ids = list(panel.assets.index)
@@ -771,9 +935,9 @@ def run_backtest(md: MarketData, cfg: FundConfig, bt: BacktestConfig,
     invested = False
     n_missing_returns = 0
     n_rf_missing = 0
-    n_attr_missing = 0
     n_fee_imputed = 0
     n_events = 0
+    n_frozen_total = 0
     daily_rows: list[dict] = []
     weekly_rows: dict[pd.Timestamp, dict] = {}
     weight_rows: dict[pd.Timestamp, np.ndarray] = {}
@@ -804,14 +968,16 @@ def run_backtest(md: MarketData, cfg: FundConfig, bt: BacktestConfig,
                 factor_pnl = float("nan")
             else:
                 factor_pnl = float((Bh.T @ w_prev[held]) @ fmat_all[p, k_cur])
-        if not math.isfinite(factor_pnl):
-            n_attr_missing += 1
 
         w_new: np.ndarray | None = None
         trade_cost = 0.0
         if t in reb_set:
+            # Linha primária sem preço em t (mercado fechado): o emissor não negocia hoje.
+            closed = ~np.isfinite(R[p])
+            frozen = frozenset(ids[k] for k in np.flatnonzero(closed))
             w_cur = pd.Series(w_prev, index=ids)
-            dec = _decide(ctx, t, p - 1, w_cur[w_cur != 0], book.nav, not invested)
+            dec = _decide(ctx, t, info_pos[t], w_cur[w_cur != 0], book.nav, not invested,
+                          frozen)
             rec: dict = dict.fromkeys(WEEKLY_COLUMNS, np.nan)
             rec.update({"status": dec.status, "relaxations": "", "event_window": ""})
             rec.update(dec.record)
@@ -826,9 +992,13 @@ def run_backtest(md: MarketData, cfg: FundConfig, bt: BacktestConfig,
             if dec.fees is not None:
                 fees = pd.to_numeric(dec.fees, errors="coerce").reindex(ids)
                 fee_vec = fees.to_numpy(dtype=float)
+            rec["n_frozen"] = int(np.sum(closed & (mark.w_pre != 0)))
             if dec.status == "ok" and dec.weights is not None:
                 w_new = dec.weights.reindex(ids).fillna(0.0).to_numpy(dtype=float)
                 # Emissor fora da tabela de restrições não tem posição-alvo (peso zero).
+                # Mercado fechado: mantém exatamente o peso derivado (nenhuma negociação).
+                w_new = np.where(closed, mark.w_pre, w_new)
+                n_frozen_total += rec["n_frozen"]
                 invested = invested or bool(np.any(w_new))
                 if bt.include_costs and dec.cost_model is not None:
                     target = pd.Series(w_new, index=ids)
@@ -898,68 +1068,32 @@ def run_backtest(md: MarketData, cfg: FundConfig, bt: BacktestConfig,
                                 columns=list(bt.signal_names) + [COMPOSITE_IC])
     ic.index = pd.DatetimeIndex(ic.index, name="date")
 
-    # ---------------- métricas ----------------
-    rf_metrics = None
-    if rf is not None:
-        rf_metrics = rf.reindex(daily.index).fillna(0.0)  # mesma taxa usada nos juros do caixa
-    metrics = performance_metrics(daily["ret_net"], rf_metrics, TRADING_DAYS,
-                                  cfg.risk.vol_band_min, cfg.risk.vol_band_max)
-    gross_m = performance_metrics(daily["ret_gross"])
-    n_days = max(len(daily), 1)
-    ok = weekly["status"] == "ok"
-    non_inception = weekly.index != weekly.index[0]
-    metrics.update({
-        "ann_return_gross": gross_m["ann_return"],
-        "sharpe_gross": gross_m["sharpe"],
-        "cost_drag_annual": float(daily["cost"].sum() * TRADING_DAYS / n_days),
-        "borrow_drag_annual": float(daily["borrow"].sum() * TRADING_DAYS / n_days),
-        "financing_annual": float(daily["financing"].sum() * TRADING_DAYS / n_days),
-        "factor_pnl_annual": float(daily["factor_pnl"].sum(min_count=1) * TRADING_DAYS / n_days),
-        "specific_pnl_annual": float(daily["specific_pnl"].sum(min_count=1) * TRADING_DAYS
-                                     / n_days),
-        "avg_turnover_weekly": float(weekly.loc[non_inception, "turnover"].mean())
-        if non_inception.any() else float("nan"),
-        "avg_gross": float(daily["gross"].mean()),
-        "avg_abs_net": float(daily["net"].abs().mean()),
-        "avg_ex_ante_vol": float(pd.to_numeric(weekly.loc[ok, "ex_ante_vol"]).mean())
-        if ok.any() else float("nan"),
-        "max_ex_ante_vol": float(pd.to_numeric(weekly.loc[ok, "ex_ante_vol"]).max())
-        if ok.any() else float("nan"),
-        "vol_target": vol_target,
-        "n_rebalances": float(len(weekly)),
-        "n_rebalance_failures": float((~ok).sum()),
-        "n_relaxed": float((weekly["relaxations"].astype(str) != "").sum()),
-        "final_nav": float(daily["nav"].iloc[-1]),
-        "n_trials": float(bt.n_trials),
-    })
-    dsr_args = (metrics["sharpe"], int(metrics["n_obs"]))
-    moments = (metrics["skew"], metrics["excess_kurtosis"])
-    metrics["psr"] = deflated_sharpe_ratio(dsr_args[0], dsr_args[1], 1, *moments,
-                                           periods_per_year=TRADING_DAYS)
-    metrics["deflated_sharpe"] = deflated_sharpe_ratio(dsr_args[0], dsr_args[1], bt.n_trials,
-                                                       *moments, periods_per_year=TRADING_DAYS)
-    stats = ic_summary(ic)
-    for s in stats.index:
-        metrics[f"ic_mean:{s}"] = float(stats.loc[s, "mean"])
+    metrics = summary_metrics(daily, weekly, ic, rf, cfg, bt, vol_target)
 
     # ---------------- notas ----------------
     notes.extend(_standard_notes(cfg, bt, vol_target, est))
+    notes.append(theme_note)
+    n_attr_missing = int(metrics["n_days_without_attribution"])
     if n_missing_returns:
         notes.append(f"{n_missing_returns} posição-dia(s) sem retorno (feriado/sem negociação): "
                      "contribuição 0 no dia e posição carregada inalterada (nenhum retorno "
                      "inventado; o retorno seguinte cobre o intervalo).")
+    if n_frozen_total:
+        notes.append(f"{n_frozen_total} posição(ões) não negociada(s) no rebalanceamento por "
+                     "mercado da linha primária fechado no dia: peso derivado mantido até a "
+                     "semana seguinte (negociar usaria o preço da data de informação).")
     if n_rf_missing and rf is not None:
         notes.append(f"{n_rf_missing} dia(s) sem taxa {RATE_SERIES} conhecida: juros do caixa 0 "
                      "nesses dias.")
     if n_attr_missing:
         notes.append(f"{n_attr_missing} dia(s) sem atribuição fatorial (regressão do dia pulada): "
-                     "fator/específico ausentes (NaN).")
+                     "fator/específico ausentes (NaN) e fora da média anualizada.")
     if n_fee_imputed:
         notes.append(f"{n_fee_imputed} short(s) sem taxa de aluguel: usada a taxa máxima do "
                      f"mandato ({fallback_fee:.1%} a.a., conservador).")
     if n_events:
         notes.append(f"Janela de evento (vol escalada) ativa em {n_events} rebalanceamento(s).")
-    n_fail = int((~ok).sum())
+    n_fail = int(metrics["n_rebalance_failures"])
     if n_fail:
         notes.append(f"{n_fail} rebalanceamento(s) sem nova carteira (carteira anterior mantida).")
     for k_name, v in (("costs", bt.include_costs), ("borrow", bt.include_borrow),
@@ -967,10 +1101,21 @@ def run_backtest(md: MarketData, cfg: FundConfig, bt: BacktestConfig,
         if not v:
             notes.append(f"Contabilidade sem '{k_name}' (include_{k_name}=False).")
 
+    data_notice = SIMULATED_DATA_NOTICE if md.is_synthetic else "Dados reais (snapshot)."
+    provenance = {
+        "snapshot_id": md.manifest.snapshot_id,
+        "data_hash": md.manifest.content_hash(),
+        "config_hash": cfg.config_hash(),
+        "backtest_config": _config_record(bt),
+        "data_notice": data_notice,
+        "first_date": str(daily.index[0].date()),
+        "last_date": str(daily.index[-1].date()),
+        "n_estimation_issuers": len(est_issuers),
+        "results_hash": results_hash(daily, weekly, weights, ic),
+    }
     return BacktestResult(
         daily=daily, weekly=weekly, weights=weights, ic=ic, metrics=metrics, notes=notes,
-        config=bt, is_synthetic=md.is_synthetic,
-        data_notice=SIMULATED_DATA_NOTICE if md.is_synthetic else "Dados reais (snapshot).",
+        config=bt, is_synthetic=md.is_synthetic, data_notice=data_notice, provenance=provenance,
     )
 
 
@@ -988,13 +1133,19 @@ def _standard_notes(cfg: FundConfig, bt: BacktestConfig, vol_target: float,
         f"GC estimadas e sem exclusão por squeeze (bucket {ASSUMED_SQUEEZE_BUCKET}) — viés "
         "otimista (aluguel subestimado; shorts que seriam vetados ficam permitidos).",
         "Capitalização histórica = ações atuais × preço histórico (não point-in-time): afeta "
-        "pesos WLS do modelo, estilo size, beta de mercado e mínimo de market cap para short.",
+        "pesos WLS do modelo, estilo size, beta de mercado e mínimo de market cap para short. "
+        "O estilo value (B/P) também usa o patrimônio do retrato atual.",
+        "Calendário: rebalanceamento no 1º pregão da semana da B3 (segunda; feriado na B3 ⇒ "
+        "pregão seguinte), com dados até o pregão anterior da B3 — mesma regra do pipeline ao "
+        "vivo; o P&L diário segue o calendário completo (ADRs negociam em feriados locais).",
         "Execução: decisão com dados até o pregão anterior; pesos novos valem do fechamento do "
-        "dia de rebalanceamento (MOC); o retorno do dia acumula nos pesos anteriores.",
+        "dia de rebalanceamento (MOC); o retorno do dia acumula nos pesos anteriores. Nome com a "
+        "linha primária sem preço no dia não é negociado (mercado fechado).",
         "Elegibilidade, ADTV e linhas de execução recalculados em cada data com dados até a "
         "data de informação (sem usar a elegibilidade do fim da amostra).",
         f"Otimizador em modo '{bt.risk_target_mode}' com meta de vol ex-ante {vol_target:.2%} "
-        f"(config {cfg.risk.vol_target_annual:.2%} / viés a priori {cfg.risk.bias_prior:.2f})"
+        f"(config {cfg.risk.vol_target_annual:.2%} / viés a priori {cfg.risk.bias_prior:.2f} "
+        "durante todo o período)"
         if bt.vol_target is None else
         f"Otimizador em modo '{bt.risk_target_mode}' com meta de vol ex-ante {vol_target:.2%} "
         "(informada no backtest).",

@@ -1024,7 +1024,7 @@
    "weekly_reports": 1,
    "weeks": 1
   },
-  "data_hash": "2bd6ec2916d2483164df27ccb43b918521ce11d7f177ef20f3c816a3fa03580d",
+  "data_hash": "658e55aa7657d618927ade1cdff81119c9757f32e1bb72d7a58421a6f17469d5",
   "data_notice": "Dados reais (Yahoo Finance, B3, FINRA, BCB); paper trading com execução hipotética.",
   "export_limits": {
    "audit_tail": 20,
@@ -1043,8 +1043,8 @@
    "track_rows": 90
   },
   "fund_name": "CDP — Cabra da Peste",
-  "generated_at": "2026-10-05T16:59:18.436975+00:00",
-  "generated_at_local": "2026-10-05T13:59:18.436975-03:00",
+  "generated_at": "2026-10-05T17:00:49.099278+00:00",
+  "generated_at_local": "2026-10-05T14:00:49.099278-03:00",
   "inception_date": "2026-10-05",
   "inception_nav_usd": 100000000.0,
   "invariants": [
@@ -1622,7 +1622,7 @@
   "paper_trading_text": "Natureza: paper trading com preços reais — execução hipotética no fechamento (MOC) com custos do modelo; não representa resultado de fundo real nem oferta de investimento.",
   "profile": "publicacao",
   "publication": {
-   "data_hash_completo": "df5102b95c85fd4d2d6fa6ed2ecf51fd85c25383bd839bf0a494b741fdad4d7d",
+   "data_hash_completo": "5ca81f070e90305ac56c3d821adbad83f3cb1787d4cbc4acc91f32e63d3aa35e",
    "formato": "JSON indentado; {\"_colunas\": ..., \"_n\": N} = tabela em colunas, {\"_rep\": {\"v\": [...], \"n\": [...]}} = coluna em corridas, {\"_partes\": [...]} = texto em partes e {\"_igual\": \"x\", ...} = igual à chave irmã x com estes campos (a página desfaz as quatro formas)",
    "limites": {
     "apontamentos": 100,
@@ -3053,7 +3053,7 @@
  },
  "status": {
   "agenda": {
-   "agora_brasilia": "2026-10-05T13:59:18.436975-03:00",
+   "agora_brasilia": "2026-10-05T14:00:49.099278-03:00",
    "b3_aberta_agora": true,
    "fechamentos_pendentes": [],
    "fechamentos_pendentes_excedem_limite": false,
@@ -3084,7 +3084,7 @@
     },
     "hoje_e_dia_de_rebalanceamento": true,
     "inicio_pesquisa": "11:00",
-    "minutos_ate_o_prazo": 150,
+    "minutos_ate_o_prazo": 149,
     "motivo": "decisão da semana já gravada",
     "prazo_decisao": "16:30",
     "semana": "2026-10-05"
@@ -3197,8 +3197,8 @@
     "when_utc": "2026-10-13T19:30:00+00:00"
    }
   ],
-  "now_local": "2026-10-05T13:59:18.436975-03:00",
-  "now_utc": "2026-10-05T16:59:18.436975+00:00",
+  "now_local": "2026-10-05T14:00:49.099278-03:00",
+  "now_utc": "2026-10-05T17:00:49.099278+00:00",
   "open_markets_today": {
    "AR": true,
    "BR": true,

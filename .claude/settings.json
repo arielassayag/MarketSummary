@@ -80,7 +80,9 @@
       "Edit(/reports/daily/*/relatorio.*)",
       "Edit(/reports/weekly/**)",
       "Edit(/reports/risk/**)",
-      "Edit(/artifacts/painel/*.html)"
+      "Edit(/artifacts/painel/*.html)",
+      "Edit(/artifacts/painel/data.json)",
+      "Edit(/artifacts/painel/PAGINA_PUBLICADA.sha256)"
     ]
   }
 }

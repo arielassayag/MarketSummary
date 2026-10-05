@@ -14,7 +14,13 @@ trading com preços reais) a partir de **tarefas agendadas locais** do Claude Co
 As skills `semanal`, `diario`, `risco` e `calibracao` terminam gerando o painel de operação e
 risco (`uv run python -m cdp painel` → `artifacts/painel/cdp_painel.html`, commitado) e o
 republicam no mesmo artifact cuja URL está em `artifacts/painel/ARTIFACT_URL`, quando a ferramenta
-`Artifact` existe na sessão; `status` só informa a URL.
+`Artifact` existe na sessão e o painel cabe numa leitura integral (`artifact.publicavel` na saída
+de `cdp painel`); `status` só informa a URL.
+
+Antes de gravar, as skills conferem que o clone é dedicado (branch `main`, sem código alterado) e
+sincronizam com o GitHub (`git fetch`; `git pull --no-rebase --no-edit` só quando o remoto não
+mexeu no livro); o push só sai com `cdp verify` íntegro. A montagem semanal tem tarefas de reserva
+(12:37, 14:07, 15:07) que retomam de onde a principal parou.
 
 Instalação, permissões, agendas, fuso horário, PC dormindo, painel e alternativas:
 `docs/cdp/LOCAL.md` (na raiz do repositório). Metodologia: `docs/cdp/METODOLOGIA.md`.

@@ -47,10 +47,12 @@ $autocrlf = git config --get core.autocrlf
 if ($autocrlf) { Write-Host "core.autocrlf=$autocrlf (book/, data/ e reports/ ficam sem conversão via .gitattributes)" }
 
 Step "uv"
+$uvInstalled = $false
 if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
     Write-Host "uv não encontrado: instalando pelo instalador oficial (https://astral.sh/uv)..."
     powershell -NoProfile -ExecutionPolicy ByPass -Command "irm https://astral.sh/uv/install.ps1 | iex"
     $env:Path = "$env:USERPROFILE\.local\bin;$env:Path"
+    $uvInstalled = $true
 }
 Run "uv --version" { uv --version }
 
@@ -93,18 +95,27 @@ if (Get-Command claude -ErrorAction SilentlyContinue) {
 }
 
 Step "Próximos passos (docs/cdp/LOCAL.md)"
+if ($uvInstalled) {
+    Warn "o uv acabou de ser instalado: feche e reabra o app do Claude (o PATH novo só vale para processos novos)."
+}
 @"
 1. Desative as rotinas do CDP na nuvem, se existirem (duas mentes não podem gravar o mesmo livro).
+   Use um clone só para as rotinas (na main), separado do clone de desenvolvimento.
 2. No app desktop do Claude: Code -> Routines -> New routine -> Local, pasta = $Root,
-   worktree DESLIGADO, modo de permissão "Aceitar edições", e crie:
-     cdp-semanal     dias úteis 11:07   instruções: /cdp:semanal
-     cdp-risco-1330  dias úteis 13:30   instruções: /cdp:risco
-     cdp-risco-1600  dias úteis 16:00   instruções: /cdp:risco
-     cdp-diario      dias úteis 19:22   instruções: /cdp:diario
-     cdp-status      segundas 08:30     instruções: /cdp:status
-     cdp-calibracao  mensal (dia 1)     instruções: /cdp:calibracao
+   worktree DESLIGADO, modo de permissão "Accept edits" (Aceitar edições), e crie:
+     cdp-status          segundas 08:30     instruções: /cdp:status
+     cdp-semanal         dias úteis 11:07   instruções: /cdp:semanal
+     cdp-semanal-b       dias úteis 12:37   instruções: /cdp:semanal   (reserva)
+     cdp-risco-1330      dias úteis 13:30   instruções: /cdp:risco
+     cdp-semanal-c       dias úteis 14:07   instruções: /cdp:semanal   (reserva)
+     cdp-semanal-d       dias úteis 15:07   instruções: /cdp:semanal   (reserva)
+     cdp-risco-1600      dias úteis 16:00   instruções: /cdp:risco
+     cdp-diario          dias úteis 19:22   instruções: /cdp:diario
+     cdp-diario-reforco  dias úteis 21:07   instruções: /cdp:diario
+     cdp-calibracao      mensal, dia 1, 09:15  instruções: /cdp:calibracao
    Horários de Brasília: se o PC estiver em outro fuso, converta (campo
    pc_menos_brasilia_horas de 'uv run python -m cdp agenda').
-3. Clique em "Run now" em cdp-status para conferir permissões; ative "Keep computer awake".
+3. Clique em "Run now" em cdp-status e em cdp-risco-1330 e responda "always allow" a cada pedido
+   de permissão; ative "Keep computer awake".
 4. Sem o app aberto? Use scripts\cdp_run_task.ps1 com o Agendador de Tarefas (exemplos em docs/cdp/LOCAL.md).
 "@ | Write-Host

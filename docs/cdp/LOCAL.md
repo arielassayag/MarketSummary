@@ -13,22 +13,36 @@ dias perdidos e publica (commit e push). Todo número continua vindo do código.
 ## 1. O que roda e quando
 
 Horários de Brasília (`America/Sao_Paulo`). As skills checam o calendário da B3 no código e saem
-sem fazer nada quando não é dia: por isso as tarefas podem rodar em todos os dias úteis.
+sem fazer nada quando não é dia: por isso as tarefas podem rodar em todos os dias úteis. Todas
+usam a **mesma pasta** (a raiz do clone dedicado, seção 3), **worktree desligado** e o modo de
+permissão **Accept edits** ("Aceitar edições").
 
 | Tarefa (nome) | Agenda | Instruções | O que faz |
 |---|---|---|---|
 | `cdp-status` | segundas, 08:30 | `/cdp:status` | saúde: integridade da trilha, pendências, próximos eventos, git (só leitura) |
 | `cdp-semanal` | dias úteis, 11:07 | `/cdp:semanal` | só no 1º pregão da semana na B3: coleta, pesquisa, decisão do PM, validação, decisão autônoma até 16:30, commit e push |
+| `cdp-semanal-b` | dias úteis, 12:37 | `/cdp:semanal` | reserva: se a montagem não começou ou parou no meio, retoma da etapa em que parou; com a decisão gravada, sai sem fazer nada |
 | `cdp-risco-1330` | dias úteis, 13:30 | `/cdp:risco` | monitor de risco intradiário (`cdp risk --live`); liga o kill switch só se o código mandar |
+| `cdp-semanal-c` | dias úteis, 14:07 | `/cdp:semanal` | reserva (idem) |
+| `cdp-semanal-d` | dias úteis, 15:07 | `/cdp:semanal` | reserva (idem; com menos de 60 minutos de prazo a skill encurta a pesquisa) |
 | `cdp-risco-1600` | dias úteis, 16:00 | `/cdp:risco` | idem, perto do fechamento |
 | `cdp-diario` | dias úteis, 19:22 | `/cdp:diario` | fechamento oficial (execução MOC da semana, marcação, risco, atribuição, registro), comentário, relatório, commit e push; recupera pregões perdidos |
-| `cdp-diario-reforco` (opcional) | dias úteis, 21:07 | `/cdp:diario` | segunda tentativa se a fonte ainda não tinha publicado o fechamento às 19:22 (sem pendência ⇒ não faz nada) |
+| `cdp-diario-reforco` | dias úteis, 21:07 | `/cdp:diario` | segunda tentativa se a fonte ainda não tinha publicado o fechamento às 19:22 ou se a das 19:22 foi pulada (sem pendência ⇒ não faz nada) |
 | `cdp-calibracao` | mensal, dia 1, 09:15 | `/cdp:calibracao` | backtest com todo o histórico em `reports/backtest/<data>/mensal`, comparação com a execução anterior; nunca muda o mandato |
+
+**Por que as reservas.** O app roda **uma tarefa por vez**: um disparo que encontra outra tarefa em
+andamento (ou o PC dormindo) é **pulado**, não enfileirado, e ao acordar cada tarefa ganha só uma
+execução de recuperação. Uma única tarefa semanal perderia a semana inteira se, por exemplo, a
+recuperação do fechamento de sexta ainda estivesse rodando às 11:07 de segunda, ou se a coleta
+falhasse por um erro de rede passageiro. As reservas são idempotentes (o `cdp agenda` diz se ainda
+há o que fazer); nos outros dias úteis elas só conferem a agenda e saem. Se preferir economizar
+essas execuções, deixe as reservas só às segundas e terças (cobre segunda-feira feriado), sabendo
+que semanas com dois feriados seguidos (Carnaval) ficam só com a tarefa principal.
 
 Skills do plugin (`plugins/cdp/skills/`): `semanal`, `diario`, `risco`, `status`, `calibracao`,
 invocadas como `/cdp:<nome>`. As que gravam algo (`semanal`, `diario`, `risco`, `calibracao`)
-terminam atualizando o **painel** de operação e risco e republicando-o no mesmo artifact
-(seção 10); `status` só informa o link.
+terminam atualizando o **painel** de operação e risco e, quando possível, republicando-o no mesmo
+artifact (seção 10); `status` só informa o link.
 
 ## 2. Pré-requisitos
 
@@ -42,11 +56,16 @@ terminam atualizando o **painel** de operação e risco e republicando-o no mesm
 
 ## 3. Clonar e preparar
 
+Use um **clone dedicado às rotinas**, na `main`, separado do clone em que você desenvolve. As
+skills que gravam param logo no início se a branch não for `main` ou se houver código ou
+configuração alterados sem commit (o registro do dia seria calculado com código não commitado e
+publicado fora da `main`).
+
 macOS/Linux:
 
 ```sh
-git clone https://github.com/arielassayag/MarketSummary.git
-cd MarketSummary
+git clone https://github.com/arielassayag/MarketSummary.git MarketSummary-rotinas
+cd MarketSummary-rotinas
 git checkout main
 bash scripts/cdp_setup_local.sh
 ```
@@ -54,8 +73,8 @@ bash scripts/cdp_setup_local.sh
 Windows (PowerShell):
 
 ```powershell
-git clone https://github.com/arielassayag/MarketSummary.git
-cd MarketSummary
+git clone https://github.com/arielassayag/MarketSummary.git MarketSummary-rotinas
+cd MarketSummary-rotinas
 git checkout main
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\cdp_setup_local.ps1
 ```
@@ -63,7 +82,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts\cdp_setup_local.ps1
 O script confere o git, instala o uv se faltar, roda `uv sync --extra dev --extra ai`, mostra
 `cdp status` e `cdp agenda`, roda `cdp verify` (precisa dizer `ÍNTEGRO`), um teste offline com
 DADOS SIMULADOS, testa o push (`--dry-run`), registra o marketplace e instala o plugin. Nada no
-livro, na trilha ou nos dados é alterado.
+livro, na trilha ou nos dados é alterado. **Se o script instalou o uv, feche e reabra o app do
+Claude** depois: o PATH novo só vale para processos novos, e as tarefas agendadas herdam o
+ambiente do app.
 
 Comandos equivalentes, à mão:
 
@@ -75,6 +96,18 @@ uv run python -m cdp verify
 uv run pytest tests/cdp/test_demo_runtime.py -q
 ```
 
+**Sincronização com o GitHub (feita pelas skills).** No início e antes de cada push, as skills
+rodam `git fetch` e comparam com o remoto:
+
+- remoto igual ou só o local à frente ⇒ seguem;
+- remoto à frente só com código/documentação (nada em `book/`, `data/`, `reports/` ou
+  `artifacts/`) ⇒ `git pull --no-rebase --no-edit` (merge que não reescreve commits locais; os
+  bytes do livro não mudam e a trilha continua íntegra) e seguem — um PR de documentação
+  mesclado no GitHub durante a montagem semanal não trava as rotinas;
+- remoto com mudanças no livro ⇒ param (outra máquina ou sessão gravou o livro);
+- `git fetch` falhou (rede, token expirado) ⇒ seguem localmente, sem push, e relatam; a próxima
+  rotina com rede envia os commits retidos.
+
 > **Fins de linha (Windows).** Os arquivos de `book/`, `data/` e `reports/` têm hash na trilha de
 > auditoria. O `.gitattributes` do repositório desliga a conversão automática de fim de linha
 > nessas pastas. Se você clonou antes dele existir e o `verify` falhar, clone de novo.
@@ -83,24 +116,25 @@ uv run pytest tests/cdp/test_demo_runtime.py -q
 
 O repositório é também um **marketplace** (`.claude-plugin/marketplace.json`, nome
 `cdp-cabra-da-peste`) com um plugin (`plugins/cdp`). Registre o marketplace apontando para a
-pasta do clone — assim o Claude Code lê as skills direto do clone e cada `git pull` das rotinas já
-traz a versão nova na sessão seguinte:
+pasta do clone — um plugin de marketplace local é carregado direto da pasta (sem cópia em cache),
+então cada `git pull` das rotinas já traz a versão nova na sessão seguinte:
 
 ```sh
-claude plugin marketplace add /caminho/para/MarketSummary
+claude plugin marketplace add /caminho/para/MarketSummary-rotinas
 claude plugin install cdp@cdp-cabra-da-peste
 claude plugin list
 ```
 
-No Windows, use o caminho da pasta (ex.: `C:\Users\voce\MarketSummary`). Dentro de uma sessão do
-Claude Code, o equivalente é `/plugin marketplace add <pasta>` e `/plugin install cdp@cdp-cabra-da-peste`.
-Para conferir, abra uma sessão na pasta do repositório e rode `/cdp:status`.
+No Windows, use o caminho da pasta (ex.: `C:\Users\voce\MarketSummary-rotinas`). Dentro de uma
+sessão do Claude Code, o equivalente é `/plugin marketplace add <pasta>` e
+`/plugin install cdp@cdp-cabra-da-peste`. Para conferir, abra uma sessão na pasta do repositório e
+rode `/cdp:status`.
 
 Alternativa (sem depender da pasta local): `claude plugin marketplace add arielassayag/MarketSummary`
-— o Claude Code guarda uma cópia; atualize com `claude plugin marketplace update cdp-cabra-da-peste`
-e `claude plugin update cdp@cdp-cabra-da-peste` (a versão do plugin, em
-`plugins/cdp/.claude-plugin/plugin.json`, precisa subir quando as skills mudarem). Para validar os
-manifestos: `claude plugin validate .`
+— o Claude Code guarda uma cópia, presa à `version` de `plugins/cdp/.claude-plugin/plugin.json`;
+atualize com `claude plugin marketplace update cdp-cabra-da-peste` e
+`claude plugin update cdp@cdp-cabra-da-peste` (a versão precisa subir quando as skills mudarem).
+Para validar os manifestos: `claude plugin validate .`
 
 As skills antigas do projeto (`.claude/skills/cdp-semanal` e `cdp-diario`) agora são atalhos: com
 o plugin instalado, delegam para `cdp:semanal`/`cdp:diario`; sem ele (nuvem, Codex), seguem os
@@ -112,10 +146,11 @@ O arquivo versionado `.claude/settings.json` define o que as rotinas podem fazer
 
 - **Permitido**: `uv sync`, todos os subcomandos da CLI do CDP via `uv run` (exceto desligar o
   kill switch), `uv run pytest`, `uv run ruff check`, git
-  (`status`, `pull`, `fetch`, `log`, `diff`, `add`, `commit`, `push`), WebSearch, WebFetch, e
-  escrever só os arquivos da mente (`book/<semana>/inputs/research_pack.json`,
-  `pm_decision.json`, `reports/daily/<data>/comentario.json`, `reports/backtest/**`, `outputs/**`)
-  e o link do painel (`artifacts/painel/ARTIFACT_URL`).
+  (`status`, `pull`, `fetch`, `log`, `diff`, `add`, `commit`, `push`, `branch --show-current`),
+  WebSearch, WebFetch, as skills do plugin, e escrever só os arquivos da mente
+  (`book/<semana>/inputs/research_pack.json`, `pm_decision.json`,
+  `reports/daily/<data>/comentario.json`, `reports/backtest/**`, `outputs/**`) e o link do painel
+  (`artifacts/painel/ARTIFACT_URL`).
 - **Sempre pergunta**: editar `configs/` (mandato) e `data/`, `git reset --hard`, `rebase`,
   `clean`, `restore`, `checkout --`.
 - **Nunca**: `git push --force` (em qualquer forma), `rm -rf`, apagar `book/` ou `data/`,
@@ -127,6 +162,15 @@ Cada skill também declara no próprio `SKILL.md` (`allowed-tools`) as ferrament
 inclusive a ferramenta `Artifact`, que republica o painel —, pré-aprovadas enquanto a skill roda.
 A ferramenta `Artifact` não entra no `.claude/settings.json` do projeto de propósito: fora das
 skills, publicar ou apagar artifacts continua pedindo confirmação.
+
+**O que ainda pode parar uma tarefa.** "Accept edits" só aprova sozinho edições de arquivos e
+comandos simples de sistema de arquivos (`mkdir`, `touch`, `mv`, `cp`); qualquer outro comando
+fora das regras acima pede aprovação, e no app a tarefa **fica parada esperando você** — e, como o
+app roda uma tarefa por vez, as seguintes são puladas enquanto ela estiver aberta. O modo que nega
+em vez de perguntar (`dontAsk`) só existe no CLI, não no app. Por isso as skills só usam os
+comandos liberados (nada de `python -c`, `jq`, `sleep` ou laços de espera) e param, relatando,
+quando precisariam de outro. Se uma tarefa aparecer parada na barra lateral, responda ao pedido
+("always allow" só se o comando for seguro) e avise o mantenedor para ajustar a skill.
 
 Abra a pasta uma vez no Claude Code e aceite a confiança na pasta ("trust"): sem isso as regras do
 projeto não valem e a tarefa agendada não pode ser salva.
@@ -140,25 +184,24 @@ da tabela da seção 1:
 - **Description**: a coluna "O que faz".
 - **Instructions**: exatamente `/cdp:<skill>` (ex.: `/cdp:diario`). Se preferir texto livre:
   "Use a skill cdp:diario do plugin cdp; rotina agendada sem supervisão."
-- **Permission mode**: **Aceitar edições** (`acceptEdits`). As regras do `.claude/settings.json`
-  liberam o resto; nada fica esperando aprovação.
+- **Permission mode**: **Accept edits** ("Aceitar edições", `acceptEdits`).
 - **Model**: deixe o padrão.
-- **Folder**: a raiz do clone (`MarketSummary`).
+- **Folder**: a raiz do clone dedicado (`MarketSummary-rotinas`).
 - **Worktree**: **desligado** (as rotinas precisam gravar e publicar no próprio clone, na `main`).
 - **Schedule**: `Weekdays` com a hora da tabela; `Weekly` (segunda) para o status. Para a
   calibração mensal, peça numa sessão do desktop: "agende a tarefa cdp-calibracao para o dia 1 de
   cada mês às 09:15".
 
 Depois de criar, clique em **Run now** em `cdp-status` e em `cdp-risco-1330` (o risco também
-republica o painel): se aparecer algum pedido de permissão — por exemplo, da ferramenta `Artifact`
-—, escolha "always allow"; as próximas execuções não perguntam. Uma tarefa parada esperando
-aprovação fica "em andamento" e pode fazer o app pular as seguintes.
-As tarefas ficam em `~/.claude/scheduled-tasks/<nome>/SKILL.md` (o corpo é o texto das
-instruções; agenda, pasta e modo ficam no app).
+publica) e acompanhe: se aparecer algum pedido de permissão — por exemplo, da ferramenta
+`Artifact` —, escolha "always allow"; as próximas execuções daquela tarefa não perguntam. As
+aprovações ficam no painel **Always allowed** de cada tarefa. As tarefas ficam em
+`~/.claude/scheduled-tasks/<nome>/SKILL.md` (o corpo é o texto das instruções; agenda, pasta e
+modo ficam no app).
 
 **Antes de ligar as tarefas locais, desative as rotinas do CDP na nuvem** (claude.ai/code →
-Routines), se existirem. Duas mentes gravando o mesmo livro divergem: as skills fazem
-`git pull --ff-only` e param quando isso acontece, mas o dia fica sem rotina.
+Routines), se existirem. Duas mentes gravando o mesmo livro divergem: as skills param quando o
+remoto mudou o livro, e o dia fica sem rotina.
 
 ## 7. Fuso horário
 
@@ -176,8 +219,10 @@ A skill `status` avisa quando o PC não está no fuso de Brasília.
 
 - As tarefas só disparam com o **app aberto e o PC acordado**. Ative **Settings → This computer →
   System → Keep computer awake** (fechar a tampa do notebook ainda faz o PC dormir).
-- Ao acordar, o app faz **uma** execução de recuperação do horário perdido mais recente (até 7
-  dias). As skills foram feitas para isso:
+- Ao abrir o app ou acordar o PC, o app verifica as execuções perdidas nos últimos 7 dias e faz
+  **uma** execução de recuperação por tarefa, a do horário perdido mais recente nesse período;
+  as mais antigas são descartadas. Como as tarefas rodam uma por vez, recuperações que coincidem
+  disputam a vez (daí as reservas da seção 1). As skills foram feitas para isso:
   - `diario` processa **todos** os pregões pendentes, em ordem (`cdp agenda` →
     `fechamentos_pendentes`), com o comentário de cada data. Para recuperar à mão, rode
     `/cdp:diario` numa sessão na pasta do repositório (ou `/cdp:diario AAAA-MM-DD` para uma data).
@@ -185,13 +230,14 @@ A skill `status` avisa quando o PC não está no fuso de Brasília.
     dia), não decide: a carteira anterior é mantida até a semana seguinte e o `status` destaca a
     decisão perdida. O código não permite decidir fora do primeiro pregão (seria look-ahead).
   - `risco` mede o estado no momento em que roda; execuções perdidas não são refeitas.
-- Se a fonte ainda não publicou o fechamento (`dados não prontos`), o `diario` para e a próxima
-  execução (o reforço das 21:07 ou o dia seguinte) retoma.
+- Se a fonte ainda não publicou o fechamento (`dados não prontos`), o `diario` para e o reforço
+  das 21:07 (ou o dia seguinte) retoma.
 
 ## 9. Acompanhamento e notificações
 
 - Cada disparo gera uma notificação do desktop e uma sessão na seção **Scheduled** da barra
   lateral; a resposta final de cada skill é um resumo curto (números copiados dos relatórios).
+  No histórico da tarefa, passe o mouse sobre uma execução pulada para ver o motivo.
 - Relatórios: `reports/weekly/<semana>/relatorio.md`, `reports/daily/<data>/relatorio.md`,
   `reports/risk/<data>/risco_<HHMM>.md`, `reports/backtest/<data>/`.
 - Painel publicado (artifact): seção 10. App local completo (Streamlit):
@@ -212,7 +258,7 @@ uv run python -m cdp painel --standalone outputs/painel_local.html
 - Saída padrão: `artifacts/painel/cdp_painel.html` (versionado; vai em cada commit das rotinas).
   `--standalone` grava também uma cópia completa para abrir direto no navegador, sem publicar.
 - O comando só lê o livro, a trilha e os relatórios (grava apenas o HTML pedido) e imprime
-  `path`, `sha256`, `data_hash` e `generated_at` (JSON).
+  `path`, `sha256`, `data_hash`, `generated_at` e o bloco `artifact` (JSON).
 - **Link fixo**: a URL do artifact fica em `artifacts/painel/ARTIFACT_URL` (uma linha, versionada).
   As skills `semanal`, `diario`, `risco` e `calibracao`, no fim de cada execução, geram o painel,
   fazem o commit e o **republicam no mesmo artifact** com a ferramenta `Artifact`: leem a URL do
@@ -220,13 +266,19 @@ uv run python -m cdp painel --standalone outputs/painel_local.html
   `file_path: artifacts/painel/cdp_painel.html`. Nunca criam um artifact novo quando o arquivo
   existe; só na primeira publicação (arquivo ausente) publicam sem `url`, gravam a URL devolvida
   no arquivo e fazem commit dele (`CDP: URL do painel`).
+- **Tamanho.** A ferramenta de publicação exige que a mente leia o arquivo inteiro antes de
+  publicá-lo. O bloco `artifact` da saída de `cdp painel` diz se isso é viável
+  (`publicavel`, `bytes`, `maior_linha`, `motivo`; limites de 100 mil bytes e 2.000 caracteres por
+  linha). Com `publicavel: false`, as skills não leem nem publicam o HTML (não gastam contexto) e
+  relatam o `motivo`. O painel atual embute todo o histórico num JSON de uma linha e passa desses
+  limites: enquanto não houver uma versão enxuta para o artifact, o HTML é só commitado (abra-o
+  pelo GitHub ou gere a cópia `--standalone`) e o link não é atualizado.
 - A skill `status` só informa a URL e a data do último commit do HTML.
 - Sem a ferramenta `Artifact` na sessão (agendador do sistema com `claude -p`, Codex) ou se a
   ferramenta recusar/falhar, a skill pula a republicação e diz isso no resumo — o HTML commitado
   continua valendo e a próxima rotina com a ferramenta publica a versão nova.
-- A ferramenta de publicação exige que o arquivo seja lido antes de publicá-lo; se a skill não
-  conseguir lê-lo por inteiro, ela não publica e relata (o painel é grande: a maior parte é o JSON
-  de dados embutido).
+- A pasta `artifacts/painel/` existe no repositório (com `.gitkeep`), então o `git add` das
+  rotinas funciona mesmo quando o painel falha.
 - O artifact é privado por padrão; compartilhar o link é decisão sua, no claude.ai.
 
 ## 11. Kill switch
@@ -234,45 +286,62 @@ uv run python -m cdp painel --standalone outputs/painel_local.html
 - A skill `risco` liga o kill switch **somente** quando `cdp risk` traz uma ação
   `kill-switch: <motivo>` — gatilhos HARD do mandato (escada de drawdown em `hard_stop`/`stop_out`,
   stops de squeeze). O motivo é o texto do código.
-- O kill switch só bloqueia risco novo (redução continua permitida) e nunca afrouxa limites.
+- O kill switch só bloqueia risco novo (redução continua permitida) e nunca afrouxa limites. O
+  stop de squeeze de um short escala para o livro inteiro: só redução e, no rebalanceamento
+  seguinte, carteira reconstruída com gross × 0,5 (o corte de 50% daquele nome não é automático;
+  revise-o). Regra em `docs/cdp/METODOLOGIA.md`, seção 7.
 - **Só um humano desliga**, no terminal, depois de revisar:
 
   ```sh
   uv run python -m cdp kill-switch off --reason "<motivo da revisão>" --by "<seu nome>"
   ```
 
-  As regras do projeto impedem o Claude de rodar esse comando.
+  As regras do projeto impedem o Claude de rodar esse comando. Depois do desligamento, o monitor
+  não religa o kill switch pela mesma condição que você revisou (ela aparece como SOFT "já
+  revisado por humano", com o bloco `revisao_humana` no relatório); só uma piora religa — estágio
+  pior da escada de drawdown ou um short novo no stop.
 
 ## 12. Sem o app aberto: agendador do sistema (alternativa)
 
 `scripts/cdp_run_task.sh` (macOS/Linux) e `scripts/cdp_run_task.ps1` (Windows) rodam uma skill sem
 interface com `claude -p "/cdp:<skill>" --permission-mode acceptEdits`, gravando o log em
-`logs/cdp/<tarefa>_<data_hora>.log` (pasta ignorada pelo git) e com trava contra execuções
-simultâneas. Use **uma** das duas formas (app ou agendador do sistema), nunca as duas.
+`logs/cdp/<tarefa>_<data_hora>.log` (pasta ignorada pelo git). Use **uma** das duas formas (app ou
+agendador do sistema), nunca as duas.
 
+- Trava contra execuções simultâneas: `semanal` e `diario` esperam até 60 minutos
+  (`CDP_LOCK_WAIT_MIN`) que a rotina em andamento termine; as outras não esperam. Se a trava
+  continuar ocupada, o script sai com código 75 (o agendador mostra a execução como não
+  concluída) e não roda a skill.
+- Calibração: o script roda o backtest (`reports/backtest/<hoje>/mensal`) **antes** de chamar a
+  skill — no modo `-p`, uma tarefa em segundo plano morre quando a resposta termina.
 - O `claude` precisa estar logado no usuário que roda o agendador (ou com `ANTHROPIC_API_KEY`).
   Não use `--bare`: ele não carrega plugins nem skills.
 - No modo `-p` ninguém aprova pedidos: o que não estiver liberado no `.claude/settings.json` é
-  negado e a skill relata no resumo. Em versões recentes do CLI, `CDP_CLAUDE_ARGS="--permission-prompts none"`
-  deixa isso explícito.
+  negado e a skill relata no resumo. `CDP_CLAUDE_ARGS="--permission-prompts none"` deixa isso
+  explícito.
 - O painel (seção 10) é sempre gerado e commitado; a republicação no artifact só acontece se a
   ferramenta `Artifact` estiver disponível nessa execução — senão a skill pula e relata no log.
 
-**Linux (cron)** — `crontab -e` (com `CRON_TZ`, se o seu cron suportar; senão, converta os horários):
+**Linux (cron)** — `crontab -e` (com `CRON_TZ`, se o seu cron suportar; senão, converta os
+horários). O cron não recupera execuções perdidas com o PC desligado; o `diario` seguinte processa
+os pregões pendentes.
 
 ```text
 CRON_TZ=America/Sao_Paulo
-30 8 * * 1    /caminho/MarketSummary/scripts/cdp_run_task.sh status
-7 11 * * 1-5  /caminho/MarketSummary/scripts/cdp_run_task.sh semanal
-30 13 * * 1-5 /caminho/MarketSummary/scripts/cdp_run_task.sh risco
-0 16 * * 1-5  /caminho/MarketSummary/scripts/cdp_run_task.sh risco
-22 19 * * 1-5 /caminho/MarketSummary/scripts/cdp_run_task.sh diario
-7 21 * * 1-5  /caminho/MarketSummary/scripts/cdp_run_task.sh diario
-15 9 1 * *    /caminho/MarketSummary/scripts/cdp_run_task.sh calibracao
+30 8 * * 1    /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh status
+7 11 * * 1-5  /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh semanal
+37 12 * * 1-5 /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh semanal
+30 13 * * 1-5 /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh risco
+7 14 * * 1-5  /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh semanal
+7 15 * * 1-5  /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh semanal
+0 16 * * 1-5  /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh risco
+22 19 * * 1-5 /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh diario
+7 21 * * 1-5  /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh diario
+15 9 1 * *    /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh calibracao
 ```
 
-**macOS (launchd)** — um arquivo por tarefa em `~/Library/LaunchAgents/` (horário local do Mac).
-Exemplo do fechamento diário, `com.cdp.diario.plist`:
+**macOS (launchd)** — um arquivo por tarefa em `~/Library/LaunchAgents/` (horário local do Mac),
+com os mesmos horários da tabela do cron. Exemplo do fechamento diário, `com.cdp.diario.plist`:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -283,7 +352,7 @@ Exemplo do fechamento diário, `com.cdp.diario.plist`:
   <key>ProgramArguments</key>
   <array>
     <string>/bin/bash</string>
-    <string>/Users/voce/MarketSummary/scripts/cdp_run_task.sh</string>
+    <string>/Users/voce/MarketSummary-rotinas/scripts/cdp_run_task.sh</string>
     <string>diario</string>
   </array>
   <key>StartCalendarInterval</key>
@@ -301,20 +370,45 @@ Exemplo do fechamento diário, `com.cdp.diario.plist`:
 Carregue com `launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.cdp.diario.plist`
 (o launchd roda tarefas perdidas durante o sono quando o Mac acorda).
 
-**Windows (Agendador de Tarefas)** — no PowerShell:
+**Windows (Agendador de Tarefas)** — no PowerShell (sem administrador), ajuste `$repo` e rode o
+bloco. As tarefas rodam com a sua sessão do Windows aberta (como o app), em janela oculta, também
+na bateria, e são recuperadas assim que possível quando o horário foi perdido:
 
 ```powershell
-$ps = "powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:\Users\voce\MarketSummary\scripts\cdp_run_task.ps1"
-schtasks /Create /TN "CDP\status"     /TR "$ps status"     /SC WEEKLY  /D MON /ST 08:30
-schtasks /Create /TN "CDP\semanal"    /TR "$ps semanal"    /SC WEEKLY  /D MON,TUE,WED,THU,FRI /ST 11:07
-schtasks /Create /TN "CDP\risco1330"  /TR "$ps risco"      /SC WEEKLY  /D MON,TUE,WED,THU,FRI /ST 13:30
-schtasks /Create /TN "CDP\risco1600"  /TR "$ps risco"      /SC WEEKLY  /D MON,TUE,WED,THU,FRI /ST 16:00
-schtasks /Create /TN "CDP\diario"     /TR "$ps diario"     /SC WEEKLY  /D MON,TUE,WED,THU,FRI /ST 19:22
-schtasks /Create /TN "CDP\calibracao" /TR "$ps calibracao" /SC MONTHLY /D 1 /ST 09:15
+$repo = "C:\Users\voce\MarketSummary-rotinas"   # pasta do clone (pode ter espaços)
+$script = Join-Path $repo "scripts\cdp_run_task.ps1"
+$settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries `
+    -StartWhenAvailable -ExecutionTimeLimit (New-TimeSpan -Hours 6) -MultipleInstances IgnoreNew
+$weekdays = "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"
+function Add-CdpTask([string]$name, [string]$task, [string[]]$days, [string]$at) {
+    $action = New-ScheduledTaskAction -Execute "powershell.exe" -WorkingDirectory $repo `
+        -Argument "-NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File `"$script`" $task"
+    $trigger = New-ScheduledTaskTrigger -Weekly -DaysOfWeek $days -At $at
+    Register-ScheduledTask -TaskPath "\CDP\" -TaskName $name -Action $action -Trigger $trigger `
+        -Settings $settings -Force | Out-Null
+}
+Add-CdpTask "status"     "status"  @("Monday") "08:30"
+Add-CdpTask "semanal"    "semanal" $weekdays "11:07"
+Add-CdpTask "semanal-b"  "semanal" $weekdays "12:37"
+Add-CdpTask "risco1330"  "risco"   $weekdays "13:30"
+Add-CdpTask "semanal-c"  "semanal" $weekdays "14:07"
+Add-CdpTask "semanal-d"  "semanal" $weekdays "15:07"
+Add-CdpTask "risco1600"  "risco"   $weekdays "16:00"
+Add-CdpTask "diario"     "diario"  $weekdays "19:22"
+Add-CdpTask "diario2107" "diario"  $weekdays "21:07"
 ```
 
-Em cada tarefa, marque "Executar assim que possível após uma inicialização agendada ter sido
-perdida" (aba Configurações) para recuperar execuções com o PC desligado.
+A calibração mensal precisa do `schtasks` (o `New-ScheduledTaskTrigger` não tem gatilho mensal).
+Escreva o caminho do clone por extenso (o `--%` repassa a linha sem interpretar variáveis) e depois
+aplique as mesmas configurações:
+
+```powershell
+schtasks --% /Create /TN "CDP\calibracao" /SC MONTHLY /D 1 /ST 09:15 /TR "powershell.exe -NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File \"C:\Users\voce\MarketSummary-rotinas\scripts\cdp_run_task.ps1\" calibracao"
+Set-ScheduledTask -TaskPath "\CDP\" -TaskName "calibracao" -Settings $settings | Out-Null
+```
+
+Confira com `Get-ScheduledTask -TaskPath "\CDP\"`; o resultado de cada execução aparece em "Último
+resultado" (75 = não iniciada porque outra rotina estava rodando) e no log em `logs\cdp\`.
 
 ## 13. Codex como mente
 
@@ -329,13 +423,18 @@ interativo do Codex CLI (consulte a documentação do Codex para as flags) e um 
 | Sintoma | Causa provável e correção |
 |---|---|
 | `/cdp:diario` desconhecido na tarefa | plugin não instalado/ativado: `claude plugin list`; repita a seção 4; confira se a tarefa usa a pasta do clone |
-| Tarefa parada esperando aprovação | modo "Manual" ou ferramenta fora do `.claude/settings.json`: use "Aceitar edições", clique em Run now e "always allow" |
-| `git pull --ff-only` falhou | outra máquina/sessão gravou o livro. Não faça merge/rebase do livro (a trilha é encadeada por hash): descubra quem gravou, mantenha uma só mente e alinhe o clone com o remoto |
+| `uv: command not found` nas tarefas do app | o app foi aberto antes da instalação do uv: feche e reabra o app (o PATH novo só vale para processos novos) |
+| Tarefa parada esperando aprovação | um comando fora das regras (seção 5): responda ao pedido na sessão parada, use "Accept edits" e, no Run now, "always allow" só para comandos seguros |
+| "clone em desenvolvimento" no resumo | a pasta da tarefa não está na `main` ou tem código/configuração alterados sem commit: use um clone dedicado às rotinas (seção 3) |
+| "sem sincronizar" ou push não feito | `git fetch` falhou (rede, token) ou `verify` não disse `ÍNTEGRO`: o commit ficou local; a próxima rotina com rede e trilha íntegra envia. Confira com `git status -sb` |
+| Rotina parou: "outra máquina ou sessão gravou o livro" | o remoto tem commits em `book/`, `data/`, `reports/` ou `artifacts/` que o clone não tem — duas mentes ou dois clones gravando. Não faça merge/rebase do livro (a trilha é encadeada por hash): mantenha uma só mente; se os commits locais ainda não foram enviados e o remoto é o livro oficial, guarde-os (`git branch backup-AAAA-MM-DD`) e só então alinhe o clone com o remoto, com revisão humana |
+| Push rejeitado com o remoto à frente só em código/docs | a sincronização seguinte faz `git pull --no-rebase --no-edit` e envia; à mão: `git fetch`, `git diff --name-only "HEAD...@{u}" -- book data reports artifacts` (vazio) e `git pull --no-rebase --no-edit && git push` |
 | `dados não prontos` no fechamento | a fonte ainda não publicou o fechamento; o reforço das 21:07 ou o dia seguinte recupera |
 | `verify` acusa hash divergente após clonar no Windows | fins de linha convertidos: confira o `.gitattributes` e clone de novo |
 | Acentos estranhos / `UnicodeEncodeError` no Windows | `PYTHONUTF8=1` (já no `.claude/settings.json` e nos scripts); para o terminal, `chcp 65001` |
-| `uv`/`claude` não encontrados no agendador do sistema | PATH mínimo do cron/launchd/Agendador: use caminhos absolutos ou ajuste `CDP_CLAUDE_BIN`; os scripts já incluem `~/.local/bin` |
-| Execução marcada como "skipped" no app | o PC dormia, a execução anterior ainda rodava ou outra tarefa estava em andamento (ex.: risco das 16:00 durante a montagem semanal) |
+| `uv`/`claude` não encontrados no agendador do sistema | PATH mínimo do cron/launchd/Agendador: use caminhos absolutos ou ajuste `CDP_CLAUDE_BIN`; os scripts já incluem `~/.local/bin`; o erro fica no log |
+| Execução marcada como "skipped" no app | o PC dormia, a execução anterior ainda rodava ou outra tarefa estava em andamento (ex.: risco das 16:00 durante a montagem semanal); as reservas da semanal e o reforço do diário cobrem os casos importantes |
 | Decisão da semana perdida | o PC estava desligado entre 11:00 e 16:30 do primeiro pregão; a carteira anterior segue até a próxima semana |
-| "painel não republicado" no resumo | sem a ferramenta `Artifact` na sessão (ex.: `claude -p`, Codex), recusa da ferramenta ou arquivo grande demais para ler; o HTML commitado vale e a próxima rotina no app republica. Para publicar à mão: abra uma sessão na pasta e peça "republique artifacts/painel/cdp_painel.html no artifact de artifacts/painel/ARTIFACT_URL" |
+| "painel não republicado" no resumo | `artifact.publicavel: false` (painel grande demais para a leitura integral), sem a ferramenta `Artifact` na sessão (ex.: `claude -p`, Codex) ou recusa da ferramenta; o HTML commitado vale. Para publicar à mão: abra uma sessão na pasta e peça "republique artifacts/painel/cdp_painel.html no artifact de artifacts/painel/ARTIFACT_URL" |
 | Painel virou um artifact novo (link mudou) | `artifacts/painel/ARTIFACT_URL` ausente ou apagado: restaure a URL antiga nele (uma linha) e faça commit; as skills só criam artifact quando o arquivo não existe |
+| Kill switch religado logo depois de você desligar | só acontece por piora (estágio pior da escada ou short novo no stop): veja `revisao_humana` e os gatilhos HARD no relatório de risco |

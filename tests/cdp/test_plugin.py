@@ -268,6 +268,101 @@ def test_writer_skills_end_by_republishing_the_painel(name: str):
     assert "painel" in tail.lower()
 
 
+WRITER_SKILLS = PAINEL_SKILLS
+SYNC_DIFF = 'git diff --name-only "HEAD...@{u}" -- book data reports artifacts'
+
+
+@pytest.mark.parametrize("name", WRITER_SKILLS)
+def test_writer_skills_guard_the_clone_and_sync_safely(name: str):
+    """Clone dedicado na main; fetch + merge só sem mudanças no livro; push só com verify íntegro."""
+    path = PLUGIN / "skills" / name / "SKILL.md"
+    body = path.read_text(encoding="utf-8")
+    flat = " ".join(body.split())
+    tools = _frontmatter(path)["allowed-tools"]
+    for needed in ("Bash(git branch --show-current)", "Bash(git fetch *)",
+                   "Bash(git pull --no-rebase --no-edit)", "Bash(git diff *)", "Bash(git push)"):
+        assert needed in tools, needed
+    assert "Bash(git pull --ff-only)" not in tools and "git pull --ff-only" not in body
+    assert "git branch --show-current" in body and "`main`" in body
+    assert "clone dedicado" in flat and "git status --porcelain" in body
+    assert SYNC_DIFF in body and "git pull --no-rebase --no-edit" in body
+    assert "git fetch" in body and ("sem push" in flat or "não** faça push" in flat)
+    assert "uv run python -m cdp verify" in body and "Push só se `verify`" in flat
+    assert re.search(r"Nunca use `git push --force`, `rebase` nem `reset`", flat)
+    # Painel: só lê e publica quando o código diz que cabe na leitura integral.
+    assert "artifact.publicavel" in flat and "não leia nem publique" in flat
+
+
+@pytest.mark.parametrize("name", WRITER_SKILLS)
+def test_writer_skills_never_wait_on_permission_prompts(name: str):
+    """Comando fora das regras para a tarefa no app: as skills proíbem os casos comuns."""
+    body = (PLUGIN / "skills" / name / "SKILL.md").read_text(encoding="utf-8")
+    flat = " ".join(body.split())
+    assert "`python -c`, `jq`, `sleep`" in flat and "laços de espera" in flat
+    fences = re.findall(r"```(?:sh|bash)?\n(.*?)```", body, re.S)
+    for block in fences:
+        for line in block.splitlines():
+            st = line.strip()
+            if st:
+                assert st.split()[0] in {"uv", "git"}, (name, st)
+
+
+def test_calibration_is_idempotent_and_never_polls():
+    body = (PLUGIN / "skills" / "calibracao" / "SKILL.md").read_text(encoding="utf-8")
+    flat = " ".join(body.split())
+    assert "`CALIBRACAO_MENSAL.md` existe → encerre" in flat
+    assert "`mensal/metrics.json` existe" in flat and "pule o passo 3" in flat
+    assert "run_in_background" in flat and "encerre o turno sem esperar" in flat
+    for script in ("cdp_run_task.sh", "cdp_run_task.ps1"):
+        text = (ROOT / "scripts" / script).read_bytes().decode("utf-8-sig")
+        i_bt = text.index("cdp backtest --start 2021-01-04")
+        i_claude = text.index("-p $prompt" if script.endswith(".ps1") else '-p "$PROMPT"')
+        assert i_bt < i_claude, script  # backtest antes da skill (no -p o segundo plano morre)
+        assert "CALIBRACAO_MENSAL.md" in text and "metrics.json" in text
+
+
+def test_run_task_scripts_wait_for_the_lock_and_report_skips():
+    for script in ("cdp_run_task.sh", "cdp_run_task.ps1"):
+        text = (ROOT / "scripts" / script).read_bytes().decode("utf-8-sig")
+        assert "CDP_LOCK_WAIT_MIN" in text and "exit 75" in text, script
+        assert "semanal" in text and "diario" in text
+    ps1 = (ROOT / "scripts" / "cdp_run_task.ps1").read_bytes().decode("utf-8-sig")
+    assert "[Console]::OutputEncoding = [System.Text.Encoding]::UTF8" in ps1
+    assert re.search(r"try \{\s*& \$claude", ps1) and "CommandNotFoundException" in ps1
+
+
+def test_painel_folder_exists_for_git_add():
+    """``git add ... artifacts/painel`` não pode abortar quando o painel falha."""
+    assert (ROOT / "artifacts" / "painel" / ".gitkeep").is_file()
+
+
+def test_project_semanal_validates_with_mind():
+    body = (ROOT / ".claude" / "skills" / "cdp-semanal" / "SKILL.md").read_text(encoding="utf-8")
+    flat = " ".join(body.split())
+    assert "validate --week AAAA-MM-DD --mind claude-code" in flat
+
+
+def test_local_guide_schedules_backups_and_is_honest_about_prompts():
+    local = (ROOT / "docs" / "cdp" / "LOCAL.md").read_text(encoding="utf-8")
+    flat = " ".join(local.split())
+    for needle in ("cdp-semanal-b", "cdp-semanal-c", "cdp-semanal-d", "12:37", "14:07", "15:07",
+                   "cdp-diario-reforco", "21:07", "uma tarefa por vez", "últimos 7 dias",
+                   "Register-ScheduledTask", "-AllowStartIfOnBatteries",
+                   "-DontStopIfGoingOnBatteries", "-StartWhenAvailable", "-WindowStyle Hidden",
+                   "feche e reabra o app", "git pull --no-rebase --no-edit", "clone dedicado",
+                   "revisao_humana", "artifact.publicavel"):
+        assert needle in flat, needle
+    assert "(opcional)" not in local  # o reforço das 21:07 é parte da agenda
+    assert "nada fica esperando aprovação" not in flat
+    assert "`dontAsk`) só existe no CLI" in flat
+    for script in ("cdp_setup_local.sh", "cdp_setup_local.ps1"):
+        text = (ROOT / "scripts" / script).read_bytes().decode("utf-8-sig")
+        for task in ("cdp-semanal-b", "cdp-semanal-c", "cdp-semanal-d", "cdp-diario-reforco",
+                     "cdp-calibracao", "cdp-status"):
+            assert task in text, (script, task)
+        assert "feche e reabra o app do Claude" in text, script
+
+
 def test_status_only_reports_the_painel_url():
     path = PLUGIN / "skills" / "status" / "SKILL.md"
     body = path.read_text(encoding="utf-8")
@@ -396,7 +491,8 @@ def test_repo_files_for_local_operation():
     for needle in ("claude plugin marketplace add", "claude plugin install cdp@cdp-cabra-da-peste",
                    "/cdp:semanal", "/cdp:diario", "/cdp:risco", "/cdp:status", "/cdp:calibracao",
                    "11:07", "13:30", "16:00", "19:22", "Worktree", "pc_menos_brasilia_horas",
-                   "kill-switch off", "cron", "launchd", "schtasks", "--mind codex"):
+                   "kill-switch off", "cron", "launchd", "schtasks", "Register-ScheduledTask",
+                   "--mind codex"):
         assert needle in local, needle
 
 

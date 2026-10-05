@@ -238,9 +238,12 @@ def test_backtest_config_validation_and_effective_values():
     assert bt.effective_vol_target(CFG) == pytest.approx(
         CFG.risk.vol_target_annual / CFG.risk.bias_prior)
     w = bt.effective_signal_weights(CFG)
-    assert set(w) == set(bt.signal_names)
-    assert sum(w.values()) == pytest.approx(1.0)
     cfg_w = CFG.alpha.signal_weights
+    # Sinais com peso zero na configuração (ex.: reversão de curto prazo, calibração 2026-10-05)
+    # saem do backtest; os demais entram com o peso normalizado.
+    assert set(w) == {n for n in bt.signal_names if cfg_w.get(n, 0.0) > 0}
+    assert all(cfg_w.get(n, 0.0) == 0 for n in set(bt.signal_names) - set(w))
+    assert sum(w.values()) == pytest.approx(1.0)
     total = sum(cfg_w[n] for n in bt.signal_names)
     assert w["residual_momentum"] == pytest.approx(cfg_w["residual_momentum"] / total)
     with pytest.raises(ValueError, match="point-in-time"):

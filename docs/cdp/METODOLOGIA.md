@@ -118,6 +118,13 @@ placeholders) e relatório diário.
   snapshot, mandato, pesquisa, decisão do PM e gates de risco; registra a mente que conduziu.
 - Kill switches: `book/KILL_SWITCH` (só redução de risco); degradação automática para só-quant em
   falha de dados ou da camada de IA (> 5% de notas reprovadas, injeção confirmada).
+- Monitor de risco (`cdp risk`, código): gatilhos HARD do mandato — escada de drawdown em hard
+  stop/stop-out e stops de squeeze (`squeeze.stop_short_position_loss` e
+  `squeeze.stop_short_nav_loss` em `configs/cdp/fund.yaml`) — recomendam ligar o kill switch. O
+  corte de 50% de um short específico ainda não é automático: o stop de squeeze escala para o livro
+  inteiro (só redução e, no rebalanceamento seguinte, carteira reconstruída com gross × 0,5 no
+  caminho `reduzir-risco`) até revisão humana. Depois que um humano desliga o kill switch, a
+  condição revisada não o religa; só uma piora (estágio pior da escada ou short novo no stop).
 - Avaliação contínua: IC das visões da mente vs. resíduo realizado, IC do quant, carteira-sombra
   só-quant, calibração (Brier) e comparação **entre mentes** (Claude Code × Codex) — mesma régua.
 - Nenhuma alegação de valor agregado da IA antes de 26 semanas de track record.

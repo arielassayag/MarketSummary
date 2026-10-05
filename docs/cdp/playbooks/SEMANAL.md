@@ -94,8 +94,9 @@ git add book reports data/market artifacts/painel && git commit -m "CDP: decisã
 ```
 
 `painel` regenera o painel de operação e risco (`artifacts/painel/cdp_painel.html`, só código); se
-o seu harness publica artifacts, republique-o no mesmo artifact cuja URL está em
-`artifacts/painel/ARTIFACT_URL` (`docs/cdp/LOCAL.md`, seção "Painel (artifact)").
+o seu harness publica artifacts e a saída trouxer `artifact.publicavel: true`, republique-o no
+mesmo artifact cuja URL está em `artifacts/painel/ARTIFACT_URL` (`docs/cdp/LOCAL.md`, seção
+"Painel (artifact)").
 
 Termine com um resumo curto: postura, nº de longs/shorts, vol ex-ante, principais mudanças e o
 link/caminho do relatório semanal. Não invente números: copie-os do relatório gerado.

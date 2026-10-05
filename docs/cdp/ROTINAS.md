@@ -12,10 +12,11 @@ desligado, modo de permissão "Aceitar edições".
 |---|---|---|---|
 | `cdp-status` | segundas, 08:30 | `/cdp:status` | saúde da operação, só leitura |
 | `cdp-semanal` | dias úteis, 11:07; executa só no **primeiro pregão da semana na B3** | `/cdp:semanal` | coleta todos os dados até o momento, pesquisa, decisão do PM, validação, decisão autônoma até 16:30 e relatório semanal; execução hipotética no fechamento |
+| `cdp-semanal-b`, `-c`, `-d` | dias úteis, 12:37, 14:07 e 15:07 | `/cdp:semanal` | reservas: retomam a montagem se a principal foi pulada ou parou; com a decisão gravada, saem sem fazer nada |
 | `cdp-risco-1330` | dias úteis, 13:30 | `/cdp:risco` | monitor de risco intradiário; kill switch só por gatilho HARD do código |
 | `cdp-risco-1600` | dias úteis, 16:00 | `/cdp:risco` | idem |
 | `cdp-diario` | dias úteis, 19:22 | `/cdp:diario` | fechamento oficial, execução da decisão da semana (se for o dia), marcação, risco, atribuição, registro encadeado por hash, comentário do dia e relatório diário; recupera pregões perdidos |
-| `cdp-diario-reforco` (opcional) | dias úteis, 21:07 | `/cdp:diario` | nova tentativa quando a fonte atrasou o fechamento |
+| `cdp-diario-reforco` | dias úteis, 21:07 | `/cdp:diario` | nova tentativa quando a fonte atrasou o fechamento ou a das 19:22 foi pulada |
 | `cdp-calibracao` | mensal, dia 1, 09:15 | `/cdp:calibracao` | backtest com todo o histórico e comparação com a execução anterior; mudanças de mandato só como proposta |
 
 As instruções de cada tarefa são **apenas** o comando da skill. Os textos abaixo servem para
@@ -26,7 +27,11 @@ harnesses sem o plugin (Codex, outra máquina, sessão manual): mesmo conteúdo,
 ```text
 Você é a mente do CDP — Cabra da Peste (fundo long/short LatAm autônomo), rodando sem supervisão
 na raiz do clone do repositório. Hora de referência: Brasília.
-1) `git pull --ff-only` (se falhar, pare: divergência no livro) e `uv sync --extra dev --extra ai`.
+1) Sincronize: `git fetch` (se falhar, siga sem push no fim); se `git status -sb` mostrar o
+   clone atrás do remoto, rode `git diff --name-only "HEAD...@{u}" -- book data reports artifacts`:
+   vazio ⇒ `git pull --no-rebase --no-edit`; não vazio ⇒ pare (outra sessão gravou o livro).
+   Pare também se a branch não for `main` ou houver código/configuração alterados sem commit.
+   Depois, `uv sync --extra dev --extra ai`.
 2) `uv run python -m cdp agenda` → se semanal.acao não for "montar", termine com
    "Sem montagem hoje: <semanal.motivo>".
 3) Siga exatamente docs/cdp/playbooks/SEMANAL.md com --mind claude-code (ou --mind codex se você
@@ -36,10 +41,12 @@ na raiz do clone do repositório. Hora de referência: Brasília.
    `uv run python -m cdp weekly decide --week AAAA-MM-DD --mind claude-code`.
 5) `uv run python -m cdp verify`; `uv run python -m cdp painel`;
    `git add book reports data/market artifacts/painel`; commit
-   "CDP: decisão da semana AAAA-MM-DD"; `git push` (nunca force).
-6) Painel: se você tiver a ferramenta Artifact, leia artifacts/painel/cdp_painel.html e
-   republique-o no MESMO artifact da URL em artifacts/painel/ARTIFACT_URL (read e depois publish
-   com essa url); sem a ferramenta, pule e diga isso.
+   "CDP: decisão da semana AAAA-MM-DD"; sincronize de novo e `git push` só se verify disser
+   ÍNTEGRO (nunca force).
+6) Painel: se você tiver a ferramenta Artifact e a saída de `cdp painel` trouxer
+   artifact.publicavel = true, leia artifacts/painel/cdp_painel.html inteiro e republique-o no
+   MESMO artifact da URL em artifacts/painel/ARTIFACT_URL (read e depois publish com essa url);
+   senão, pule e diga o motivo.
 7) Resposta final: postura, nº de longs/shorts, vol ex-ante, beta, principais mudanças e o caminho
    reports/weekly/<semana>/relatorio.md — números copiados do relatório, nunca calculados.
 ```
@@ -48,7 +55,11 @@ na raiz do clone do repositório. Hora de referência: Brasília.
 
 ```text
 Você é a mente do CDP — Cabra da Peste, rodando sem supervisão na raiz do clone.
-1) `git pull --ff-only` (se falhar, pare) e `uv sync --extra dev --extra ai`.
+1) Sincronize: `git fetch` (se falhar, siga sem push no fim); se `git status -sb` mostrar o
+   clone atrás do remoto, rode `git diff --name-only "HEAD...@{u}" -- book data reports artifacts`:
+   vazio ⇒ `git pull --no-rebase --no-edit`; não vazio ⇒ pare (outra sessão gravou o livro).
+   Pare também se a branch não for `main` ou houver código/configuração alterados sem commit.
+   Depois, `uv sync --extra dev --extra ai`.
 2) `uv run python -m cdp agenda` → para cada data de fechamentos_pendentes, em ordem, siga
    docs/cdp/playbooks/DIARIO.md:
    `uv run python -m cdp daily close --date AAAA-MM-DD --mind claude-code` (ou codex);
@@ -58,9 +69,11 @@ Você é a mente do CDP — Cabra da Peste, rodando sem supervisão na raiz do c
    "dados não prontos" ⇒ pare e deixe para a próxima execução. Trate também publicacoes_pendentes.
 3) `uv run python -m cdp verify`; `uv run python -m cdp painel`;
    `git add book reports data/market artifacts/painel`; commit
-   "CDP: fechamento AAAA-MM-DD"; `git push` (nunca force).
-4) Painel: com a ferramenta Artifact, republique artifacts/painel/cdp_painel.html no MESMO
-   artifact de artifacts/painel/ARTIFACT_URL; sem ela, pule e diga isso.
+   "CDP: fechamento AAAA-MM-DD"; sincronize de novo e `git push` só se verify disser ÍNTEGRO
+   (nunca force).
+4) Painel: com a ferramenta Artifact e artifact.publicavel = true, republique
+   artifacts/painel/cdp_painel.html no MESMO artifact de artifacts/painel/ARTIFACT_URL; senão,
+   pule e diga o motivo.
 5) Resposta final: manchete do comentário, retorno do dia e acumulado, NAV, vol ex-ante vs. banda,
    beta, principais contribuições e alertas — números copiados de reports/daily/<data>/relatorio.md.
 ```
@@ -69,19 +82,26 @@ Você é a mente do CDP — Cabra da Peste, rodando sem supervisão na raiz do c
 
 ```text
 Você é o monitor de risco do CDP — Cabra da Peste, rodando sem supervisão na raiz do clone.
-1) `git pull --ff-only` (se falhar, pare) e `uv sync --extra dev --extra ai`.
+1) Sincronize: `git fetch` (se falhar, siga sem push no fim); se `git status -sb` mostrar o
+   clone atrás do remoto, rode `git diff --name-only "HEAD...@{u}" -- book data reports artifacts`:
+   vazio ⇒ `git pull --no-rebase --no-edit`; não vazio ⇒ pare (outra sessão gravou o livro).
+   Pare também se a branch não for `main` ou houver código/configuração alterados sem commit.
+   Depois, `uv sync --extra dev --extra ai`.
 2) `uv run python -m cdp agenda` → se pregao_b3_hoje for true: `uv run python -m cdp risk --live`;
    senão: `uv run python -m cdp risk`.
 3) Se acoes_recomendadas tiver item começando com "kill-switch: " e o kill switch estiver
    desligado, copie motivo_kill_switch e rode:
    `uv run python -m cdp kill-switch on --reason "<motivo_kill_switch>" --by "CDP — rotina de risco"`
    Nunca desligue o kill switch; não altere mais nada.
-4) `uv run python -m cdp painel`; `git add reports/risk artifacts/painel` (mais book/KILL_SWITCH
-   e book/audit_log.jsonl se ligou o kill switch); commit só desses caminhos
+4) `uv run python -m cdp verify`; `uv run python -m cdp painel`;
+   `git add reports/risk artifacts/painel` (mais book/KILL_SWITCH e book/audit_log.jsonl se ligou
+   o kill switch); commit só desses caminhos
    (`git commit -m "CDP: risco AAAA-MM-DD HH:MM" -- <caminhos>`), pois a montagem semanal pode
-   estar em andamento no mesmo clone; `git push` (nunca force).
-5) Painel: com a ferramenta Artifact, republique artifacts/painel/cdp_painel.html no MESMO
-   artifact de artifacts/painel/ARTIFACT_URL; sem ela, pule e diga isso.
+   estar em andamento no mesmo clone; sincronize de novo e `git push` só se verify disser
+   ÍNTEGRO (nunca force).
+5) Painel: com a ferramenta Artifact e artifact.publicavel = true, republique
+   artifacts/painel/cdp_painel.html no MESMO artifact de artifacts/painel/ARTIFACT_URL; senão,
+   pule e diga o motivo.
 6) Resposta final: NAV e drawdown (fechamento e estimado), P&L intradiário, vol ex-ante vs. banda,
    beta, net/gross, gatilhos e ações — números copiados do relatório em reports/risk/<data>/.
 ```
@@ -94,7 +114,9 @@ Status (só leitura): `git fetch`; `git status -sb`; `uv run python -m cdp statu
 registro, kill switch, decisão da semana, pendências, próximos eventos, fuso do PC e o link do
 painel (artifacts/painel/ARTIFACT_URL). Não altere nada.
 
-Calibração mensal:
+Calibração mensal (pule o backtest se `reports/backtest/AAAA-MM-DD/mensal/metrics.json` de hoje já
+existir; ele leva mais que o limite de um comando, então rode-o em segundo plano e espere a
+notificação de término, sem laços de espera):
 `uv run python -m cdp backtest --start 2021-01-04 --out reports/backtest/AAAA-MM-DD/mensal`;
 compare lado a lado com a execução anterior (números copiados de metrics.json) em
 reports/backtest/AAAA-MM-DD/CALIBRACAO_MENSAL.md; nunca altere configs/cdp/fund.yaml (propostas

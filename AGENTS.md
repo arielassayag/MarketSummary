@@ -44,8 +44,8 @@ Quem conduz pesquisa, decisões de carteira e comentários é um agente de códi
 
 - **Testes do CDP**: `uv run pytest tests/cdp -q`
 - **Demo offline (DADOS SIMULADOS)**: `uv run python -m cdp demo`
-- **Fechamento diário**: `uv run python -m cdp daily --date AAAA-MM-DD`
-- **Rebalanceamento semanal**: `uv run python -m cdp weekly --date AAAA-MM-DD`
+- **Fechamento diário**: `uv run python -m cdp daily --date AAAA-MM-DD --mind claude-code`, depois `daily publish`
+- **Rebalanceamento semanal**: `uv run python -m cdp weekly prepare --date AAAA-MM-DD --mind claude-code`, depois `validate`, `weekly preview` (opcional) e `weekly decide` (ver `docs/cdp/playbooks/SEMANAL.md`)
 - **App**: `uv run streamlit run cdp_app.py --server.address 127.0.0.1`
 
 ## Invariantes do CDP (substituem os itens 3 e 4 acima apenas para o CDP)

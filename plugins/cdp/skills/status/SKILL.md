@@ -43,10 +43,10 @@ e das rotinas: `docs/cdp/METODOLOGIA.md` e `docs/cdp/LOCAL.md`.
    ```
 
 5. Painel (só leitura; não gere nem republique): leia `artifacts/painel/ARTIFACT_URL` (uma linha;
-   se não existir, "painel ainda não publicado") e veja quando o HTML foi commitado:
+   se não existir, "painel ainda não publicado") e veja quando os dados do painel foram commitados:
 
    ```sh
-   git log -1 --format=%ci -- artifacts/painel/cdp_painel.html
+   git log -1 --format=%ci -- artifacts/painel/data.json
    ```
 
 ## O que relatar (resumo final, até 12 linhas)
@@ -59,8 +59,9 @@ e das rotinas: `docs/cdp/METODOLOGIA.md` e `docs/cdp/LOCAL.md`.
 - **Próximos eventos**: `proximos_eventos` (horários de Brasília).
 - **Relógio**: se `pc_menos_brasilia_horas` ≠ 0, avise que o PC não está no fuso de Brasília e que
   os horários das tarefas agendadas precisam ser convertidos (ver `docs/cdp/LOCAL.md`).
-- **Painel**: URL do artifact (ou "ainda não publicado") e a data do último commit do HTML; se
-  for anterior ao último registro diário, avise que a rotina `diario` não atualizou o painel.
+- **Painel**: URL do artifact (ou "ainda não publicado") e a data do último commit de
+  `artifacts/painel/data.json`; se for anterior ao último registro diário, avise que a rotina
+  `diario` não atualizou o painel.
 - **Git**: branch diferente de `main` ou alterações rastreadas fora de `book/`, `reports/`,
   `data/market/` e `artifacts/painel/` (as rotinas que gravam param nesse caso: precisam de um
   clone dedicado na `main`), atraso em relação ao remoto e commits não enviados (push retido por

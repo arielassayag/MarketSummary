@@ -169,60 +169,80 @@ def test_every_cli_command_in_skills_and_docs_parses():
 
 def test_painel_command_defaults():
     args = build_parser().parse_args(["painel"])
-    assert Path(args.out).as_posix() == "artifacts/painel/cdp_painel.html"
-    assert args.standalone is None
-    args = build_parser().parse_args(["painel", "--out", "x.html", "--standalone", "y.html"])
-    assert (args.out, args.standalone) == ("x.html", "y.html")
+    assert Path(args.out_dir).as_posix() == "artifacts/painel" and args.sem_local is False
+    assert args.publicado is False
+    args = build_parser().parse_args(["painel", "--out-dir", "x", "--sem-local"])
+    assert (args.out_dir, args.sem_local) == ("x", True)
+    assert build_parser().parse_args(["painel", "--publicado"]).publicado is True
 
 
 def test_cli_painel_delegates_to_write_painel(monkeypatch, tmp_path, capsys):
-    """``cdp painel`` só repassa os caminhos para ``write_painel`` e imprime o resultado (JSON)."""
+    """``cdp painel`` só repassa a pasta para ``write_painel`` e imprime o resultado (JSON) com o
+    bloco ``artifact`` lido do disco."""
     import cdp.workflow.painel as painel
     from cdp.__main__ import main
 
     calls = []
 
-    def fake(rt, out_path, *, standalone_out=None, now=None, **kw):
-        calls.append((rt, out_path, standalone_out, now, kw))
-        return {"path": Path(out_path).as_posix(), "sha256": "0" * 64}
+    def fake(rt, out_dir, *, standalone=True, now=None, **kw):
+        calls.append((rt, out_dir, standalone, now, kw))
+        return {"out_dir": Path(out_dir).as_posix(), "page_changed": True}
 
     monkeypatch.setattr(painel, "write_painel", fake)
-    out, local = tmp_path / "p" / "cdp_painel.html", tmp_path / "local.html"
+    out = tmp_path / "p"
     base = ["--book", str(tmp_path / "book"), "--market", str(tmp_path / "market"),
             "--reports", str(tmp_path / "reports")]
-    assert main(base + ["painel", "--out", str(out), "--standalone", str(local)]) == 0
+    assert main(base + ["painel", "--out-dir", str(out)]) == 0
     printed = json.loads(capsys.readouterr().out)
     check = printed.pop("artifact")
-    assert printed == {"path": out.as_posix(), "sha256": "0" * 64}
+    assert printed == {"out_dir": out.as_posix(), "page_changed": True}
     assert check["publicavel"] is False and "ilegível" in check["motivo"]  # o falso não grava
-    (rt, out_path, standalone, now, kw), = calls
-    assert out_path == out and standalone == local and now is None and kw == {}
+    assert check["pagina_mudou"] is True
+    (rt, out_dir, standalone, now, kw), = calls
+    assert out_dir == out and standalone is True and now is None and kw == {}
     assert rt.book_root == tmp_path / "book"
-    assert main(base + ["painel", "--out", str(out)]) == 0
-    assert calls[-1][2] is None
+    assert main(base + ["painel", "--out-dir", str(out), "--sem-local"]) == 0
+    assert calls[-1][2] is False
+    # --publicado não gera nada: só registra a página publicada (aqui não há index.html)
+    n = len(calls)
+    assert main(base + ["painel", "--out-dir", str(out), "--publicado"]) == 2
+    assert len(calls) == n and "index.html" in capsys.readouterr().err
 
 
 def test_painel_artifact_check_limits(tmp_path):
-    """A skill só lê e publica o painel quando ele cabe numa leitura integral."""
-    from cdp.__main__ import (
-        PAINEL_ARTIFACT_MAX_BYTES,
-        PAINEL_ARTIFACT_MAX_LINE,
-        painel_artifact_check,
-    )
+    """A skill só lê e publica quando os arquivos cabem na leitura integral; a página só entra
+    na leitura quando mudou."""
+    from cdp.__main__ import painel_artifact_check
+    from cdp.workflow.painel_publicacao import DATA_MAX_BYTES, DATA_MAX_LINE, PAGE_MAX_LINE
 
-    small = tmp_path / "ok.html"
-    small.write_text("<html>\n<p>DADOS SIMULADOS</p>\n</html>\n", encoding="utf-8")
-    ok = painel_artifact_check(small)
-    assert ok["publicavel"] is True and ok["motivo"] == "ok"
-    assert ok["bytes"] == small.stat().st_size and ok["maior_linha"] == len("<p>DADOS SIMULADOS</p>")
-    one_line = tmp_path / "linha.html"
-    one_line.write_text("x" * (PAINEL_ARTIFACT_MAX_LINE + 1), encoding="utf-8")
-    bad = painel_artifact_check(one_line)
-    assert bad["publicavel"] is False and "linha de" in bad["motivo"]
-    big = tmp_path / "grande.html"
-    big.write_text(("y" * 99 + "\n") * (PAINEL_ARTIFACT_MAX_BYTES // 100 + 1), encoding="utf-8")
-    assert painel_artifact_check(big)["publicavel"] is False
-    assert painel_artifact_check(tmp_path / "nao_existe.html")["publicavel"] is False
+    out = tmp_path / "painel"
+    out.mkdir()
+    data, index = out / "data.json", out / "index.html"
+    data.write_text('{\n "meta": "DADOS SIMULADOS"\n}\n', encoding="utf-8")
+    index.write_text("<title>x</title>\n" + "y" * (PAGE_MAX_LINE + 1) + "\n", encoding="utf-8")
+    ok = painel_artifact_check(out, page_changed=False)
+    assert ok["publicavel"] is True and ok["motivo"] == "ok" and ok["pagina_mudou"] is False
+    assert ok["arquivos_para_ler"] == [data.as_posix()] and ok["url"] is None
+    assert ok["pagina_publicada"] is None
+    (out / "PAGINA_PUBLICADA.sha256").write_text("a" * 64 + "\n", encoding="utf-8")
+    assert painel_artifact_check(out, page_changed=False)["pagina_publicada"] == "a" * 64
+    assert ok["tamanho_dados"] == data.stat().st_size and ok["linhas_dados"] == 3
+    assert ok["linhas_max"] == len(' "meta": "DADOS SIMULADOS"')
+    page = painel_artifact_check(out, page_changed=True)  # página mudou: entra na leitura
+    assert page["publicavel"] is False and "index.html com linha de" in page["motivo"]
+    assert page["arquivos_para_ler"] == [index.as_posix(), data.as_posix()]
+    index.write_text("<title>x</title>\n", encoding="utf-8")
+    assert painel_artifact_check(out, page_changed=True)["publicavel"] is True
+    (out / "ARTIFACT_URL").write_text("https://claude.ai/artifact/abc\n", encoding="utf-8")
+    assert painel_artifact_check(out, page_changed=False)["url"] == "https://claude.ai/artifact/abc"
+    data.write_text("x" * (DATA_MAX_LINE + 1), encoding="utf-8")
+    bad = painel_artifact_check(out, page_changed=False)
+    assert bad["publicavel"] is False and "data.json com linha de" in bad["motivo"]
+    data.write_text(("y" * 99 + "\n") * (DATA_MAX_BYTES // 100 + 1), encoding="utf-8")
+    assert "bytes" in painel_artifact_check(out, page_changed=False)["motivo"]
+    data.unlink()
+    gone = painel_artifact_check(out, page_changed=False)
+    assert gone["publicavel"] is False and "ilegível" in gone["motivo"]
 
 
 def test_skill_commands_cover_their_workflow():
@@ -241,7 +261,9 @@ def test_skill_commands_cover_their_workflow():
 
 
 PAINEL_SKILLS = ("semanal", "diario", "risco", "calibracao")
-PAINEL_HTML = "artifacts/painel/cdp_painel.html"
+PAINEL_HTML = "artifacts/painel/index.html"
+PAINEL_DATA = "artifacts/painel/data.json"
+PAINEL_FILES = 'files: {"data.json": "artifacts/painel/data.json"}'
 PAINEL_URL = "artifacts/painel/ARTIFACT_URL"
 
 
@@ -256,12 +278,30 @@ def test_writer_skills_end_by_republishing_the_painel(name: str):
     i_painel = body.index("uv run python -m cdp painel")
     i_commit = body.index('git commit -m "CDP: ')
     i_read, i_pub = body.index('action: "read"'), body.index('action: "publish"')
-    assert i_painel < i_commit < i_read < i_pub
+    # read → list dos arquivos publicados → publish: a ferramenta só substitui um arquivo
+    # publicado (data.json) que a sessão leu pelo caminho, viu numa listagem ou publicou.
+    i_list = body.index('action: "list"')
+    assert i_painel < i_commit < i_read < i_list < i_pub
+    flat0 = " ".join(body.split())
+    assert 'action: "list"` com `scope: "files"`' in flat0
+    assert flat0.count('`scope: "files"`') >= 2  # e de novo, se data.json mudou no meio
+    assert "data.json` mudou desde a listagem" in flat0
+    # página registrada como publicada só depois de publicar com sucesso (e commitada)
+    i_mark = body.index("uv run python -m cdp painel --publicado")
+    assert i_pub < i_mark
+    assert "artifacts/painel/PAGINA_PUBLICADA.sha256" in flat0
+    assert ('git commit -m "CDP: painel publicado" -- artifacts/painel/PAGINA_PUBLICADA.sha256'
+            in flat0)
     assert re.search(r"^\s*git add .*\bartifacts/painel\b", body, re.MULTILINE)
-    # Mesmo artifact: URL do arquivo; só a primeira publicação cria (e commita) a URL.
+    # Mesmo artifact: URL do arquivo; dados sempre lidos por inteiro e publicados em `files`; a
+    # página só quando mudou. A rotina nunca cria artifact (sem a URL, não publica).
     flat = " ".join(body.split())
-    assert PAINEL_URL in flat and PAINEL_HTML in flat and 'icon: "chart"' in flat
-    assert f'git commit -m "CDP: URL do painel" -- {PAINEL_URL}' in flat
+    assert PAINEL_URL in flat and PAINEL_DATA in flat and PAINEL_HTML in flat
+    assert PAINEL_FILES in flat and "artifact.arquivos_para_ler" in flat
+    assert "pagina_mudou" in flat and "por inteiro" in flat
+    assert 'icon: "chart"' not in flat and "CDP: URL do painel" not in flat
+    assert "não publique" in flat and "nunca cria um artifact novo" in flat
+    assert "nunca use `force`" in flat
     assert "sem a ferramenta `artifact`" in flat.lower()  # headless/Codex: pula e relata
     assert "não insista" in flat  # falha ou recusa da ferramenta não bloqueia a rotina
     tail = body[body.lower().rindex("resumo final"):]
@@ -366,7 +406,7 @@ def test_local_guide_schedules_backups_and_is_honest_about_prompts():
 def test_status_only_reports_the_painel_url():
     path = PLUGIN / "skills" / "status" / "SKILL.md"
     body = path.read_text(encoding="utf-8")
-    assert PAINEL_URL in body
+    assert PAINEL_URL in body and f"git log -1 --format=%ci -- {PAINEL_DATA}" in body
     assert "Artifact" not in _frontmatter(path).get("allowed-tools", [])
     assert 'action: "publish"' not in body
     assert not any(" painel" in c for c in _commands(body))
@@ -384,12 +424,26 @@ def test_risk_skill_commits_only_its_own_paths():
 def test_local_guide_documents_the_painel_artifact():
     local = (ROOT / "docs" / "cdp" / "LOCAL.md").read_text(encoding="utf-8")
     assert "## 10. Painel (artifact)" in local
-    for needle in (PAINEL_URL, PAINEL_HTML, "uv run python -m cdp painel", "--standalone",
-                   "`read`", "`publish`", "Nunca criam um artifact novo"):
-        assert needle in local, needle
+    flat = " ".join(local.split())
+    for needle in (PAINEL_URL, PAINEL_HTML, PAINEL_DATA, "artifacts/painel/cdp_painel_local.html",
+                   "uv run python -m cdp painel", "--sem-local", "`read`", "`publish`",
+                   '`list` com `scope: "files"`', "uv run python -m cdp painel --publicado",
+                   "artifacts/painel/PAGINA_PUBLICADA.sha256", "meta.page_sha256",
+                   "não com o `index.html` local", "Página desatualizada",
+                   "Nunca criam um artifact novo", "Não foi possível carregar data.json",
+                   "260 KB", "1.500 caracteres", "meta.truncations", "artifact.publicavel",
+                   "arquivos_para_ler", "pagina_mudou", PAINEL_FILES.replace("files: ", "")):
+        assert needle in flat, needle
+    # o texto antigo ("avisa sempre que a página for mais antiga que os dados") era falso
+    assert "Se a página publicada ficar mais antiga que os dados" not in flat
     for doc in ("ROTINAS.md", "playbooks/DIARIO.md", "playbooks/SEMANAL.md"):
         text = (ROOT / "docs" / "cdp" / doc).read_text(encoding="utf-8")
         assert "uv run python -m cdp painel" in text and PAINEL_URL in text, doc
+        assert "cdp_painel.html" not in text and "arquivos_para_ler" in text, doc
+        assert "list" in text, doc
+    rotinas = " ".join((ROOT / "docs" / "cdp" / "ROTINAS.md").read_text(encoding="utf-8").split())
+    assert rotinas.count('list com scope "files"') >= 3
+    assert rotinas.count("uv run python -m cdp painel --publicado") >= 3
 
 
 # ----------------------------------------------------------------------------- permissões

@@ -12,10 +12,12 @@ trading com preços reais) a partir de **tarefas agendadas locais** do Claude Co
 | `calibracao` | `/cdp:calibracao` | backtest mensal e comparação com a execução anterior |
 
 As skills `semanal`, `diario`, `risco` e `calibracao` terminam gerando o painel de operação e
-risco (`uv run python -m cdp painel` → `artifacts/painel/cdp_painel.html`, commitado) e o
-republicam no mesmo artifact cuja URL está em `artifacts/painel/ARTIFACT_URL`, quando a ferramenta
-`Artifact` existe na sessão e o painel cabe numa leitura integral (`artifact.publicavel` na saída
-de `cdp painel`); `status` só informa a URL.
+risco (`uv run python -m cdp painel` → `artifacts/painel/data.json`, `index.html` e a cópia
+local `cdp_painel_local.html`, commitados) e republicam os dados no mesmo artifact cuja URL está em
+`artifacts/painel/ARTIFACT_URL`, quando a ferramenta `Artifact` existe na sessão, o arquivo da URL
+existe e os dados cabem numa leitura integral (`artifact.publicavel` na saída de `cdp painel`):
+`read` da URL, `list` com `scope: "files"` e `publish` (a página só quando `pagina_mudou`; depois
+dela, `cdp painel --publicado`). `status` só informa a URL.
 
 Antes de gravar, as skills conferem que o clone é dedicado (branch `main`, sem código alterado) e
 sincronizam com o GitHub (`git fetch`; `git pull --no-rebase --no-edit` só quando o remoto não

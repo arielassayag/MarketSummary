@@ -312,7 +312,7 @@ def test_cli_risk_and_agenda(demo, tmp_path, capsys):
 
 
 def test_cli_painel_on_demo_book(demo, tmp_path, capsys):
-    """``cdp painel`` ponta a ponta no livro sintético: só lê o livro e grava o HTML pedido."""
+    """``cdp painel`` ponta a ponta no livro sintético: só lê o livro e grava a pasta pedida."""
     import hashlib
 
     from cdp.__main__ import main
@@ -320,17 +320,20 @@ def test_cli_painel_on_demo_book(demo, tmp_path, capsys):
     base = ["--book", str(demo / "book"), "--market", str(demo / "market"),
             "--reports", str(demo / "reports")]
     before = sorted(p.relative_to(demo).as_posix() for p in demo.rglob("*") if p.is_file())
-    out = tmp_path / "artifacts" / "painel" / "cdp_painel.html"
-    local = tmp_path / "local.html"
-    assert main(base + ["painel", "--out", str(out), "--standalone", str(local)]) == 0
+    out_dir = tmp_path / "artifacts" / "painel"
+    assert main(base + ["painel", "--out-dir", str(out_dir)]) == 0
     res = json.loads(capsys.readouterr().out)
-    assert res["path"] == out.as_posix() and out.is_file() and local.is_file()
-    assert res["sha256"] == hashlib.sha256(out.read_bytes()).hexdigest()
-    assert res["is_synthetic"] is True
+    data, index = out_dir / "data.json", out_dir / "index.html"
+    local = out_dir / "cdp_painel_local.html"
+    assert res["data_path"] == data.as_posix() and data.is_file() and index.is_file()
+    assert local.is_file() and res["local_path"] == local.as_posix()
+    assert res["data_sha256"] == hashlib.sha256(data.read_bytes()).hexdigest()
+    assert res["is_synthetic"] is True and res["page_changed"] is True
     check = res["artifact"]
-    assert check["bytes"] == out.stat().st_size and isinstance(check["publicavel"], bool)
+    assert check["tamanho_dados"] == data.stat().st_size and isinstance(check["publicavel"], bool)
     assert check["motivo"] == "ok" or not check["publicavel"]
-    assert "DADOS SIMULADOS" in out.read_text(encoding="utf-8")
+    assert "DADOS SIMULADOS" in data.read_text(encoding="utf-8")
+    assert "DADOS SIMULADOS" in local.read_text(encoding="utf-8")
     after = sorted(p.relative_to(demo).as_posix() for p in demo.rglob("*") if p.is_file())
     assert after == before  # nada gravado no livro, na trilha ou nos relatórios
 

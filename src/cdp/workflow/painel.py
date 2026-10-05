@@ -1,9 +1,21 @@
 """Exportador determinístico do painel do CDP — Cabra da Peste (artifact HTML de operação e risco).
 
-O painel é uma página única (claude.ai artifact) republicada pelas rotinas após cada decisão
-semanal, fechamento diário e monitor de risco intradiário. Este módulo só LÊ os artefatos do
-fundo (livro, track record, relatórios, base de mercado, backtests) e monta um retrato JSON
-completo da operação; a página apenas formata e plota esses dados.
+O painel é um artifact republicado pelas rotinas após cada decisão semanal, fechamento diário e
+monitor de risco intradiário. Este módulo só LÊ os artefatos do fundo (livro, track record,
+relatórios, base de mercado, backtests) e monta um retrato JSON da operação; a página apenas
+formata e plota esses dados. Publicação em dois arquivos (:func:`write_painel`):
+
+- ``index.html``: o template com o elemento de dados vazio (``null``) e a versão da página
+  (SHA-256 do template) carimbada; a página busca ``data.json`` ao lado dela. Só é regravado
+  quando o template muda.
+- ``data.json``: perfil ``publicacao`` (:mod:`cdp.workflow.painel_publicacao`), JSON indentado
+  que cabe na leitura integral exigida de quem publica (≤ 260 KB, linhas ≤ 1.500 caracteres),
+  com a versão da página para a qual foi gerado (``meta.page_sha256``).
+- ``cdp_painel_local.html``: cópia autônoma com o perfil ``completo`` embutido (abrir offline).
+- ``PAGINA_PUBLICADA.sha256``: a versão da página publicada por último no artifact, gravada
+  por :func:`mark_published` (``cdp painel --publicado``) depois de uma publicação bem-sucedida.
+  ``page_changed`` compara a versão atual com ESTE marcador (não com o ``index.html`` local):
+  fica verdadeiro até a página nova ser de fato publicada.
 
 Regras:
 
@@ -48,11 +60,20 @@ from ..research.pm_agent import POSTURE_PT, REGIME_PT, STAGE_PT, ladder_stage
 from ..ui.fmt import PATH_PT
 from .memo import fmt_pct
 
-SCHEMA_VERSION = "cdp-painel/1"
+SCHEMA_VERSION = "cdp-painel/2"
 PLACEHOLDER = "__CDP_DATA__"
 DATA_ELEMENT = f'<script type="application/json" id="cdp-data">{PLACEHOLDER}</script>'
+EMPTY_DATA_ELEMENT = DATA_ELEMENT.replace(PLACEHOLDER, "null")
+#: Carimbo da versão da página (SHA-256 do template) no ``index.html`` e na cópia local.
+PAGE_SHA_PLACEHOLDER = "__CDP_PAGE_SHA256__"
+PAGE_SHA_RE = re.compile(r'var PAGE_SHA = "([0-9a-f]{64})";')
 DEFAULT_TEMPLATE = Path(__file__).with_name("painel_template.html")
-DEFAULT_OUT = Path("artifacts/painel/cdp_painel.html")
+DEFAULT_OUT_DIR = Path("artifacts/painel")
+INDEX_NAME = "index.html"
+DATA_NAME = "data.json"
+LOCAL_NAME = "cdp_painel_local.html"
+URL_NAME = "ARTIFACT_URL"
+MARKER_NAME = "PAGINA_PUBLICADA.sha256"
 DEFAULT_MAX_DAILY_REPORTS = 60
 DEFAULT_FULL_WEEKS = 8
 DEFAULT_FULL_RESEARCH_WEEKS = 2
@@ -2419,7 +2440,7 @@ def _data_notice(is_synth: bool, notice: str | None, records: Sequence[Any],
 # API pública
 # ==========================================================
 
-def painel_data(rt: Any, *, now: datetime | None = None,
+def painel_data(rt: Any, *, now: datetime | None = None, profile: str = "completo",
                 max_daily_reports: int = DEFAULT_MAX_DAILY_REPORTS,
                 backtest_root: Path | str | None = None, backtest_pattern: str = "*",
                 full_weeks: int = DEFAULT_FULL_WEEKS,
@@ -2427,8 +2448,11 @@ def painel_data(rt: Any, *, now: datetime | None = None,
                 audit_tail: int = DEFAULT_AUDIT_TAIL,
                 max_risk_runs: int = DEFAULT_MAX_RISK_RUNS,
                 max_risk_full_runs: int = DEFAULT_RISK_FULL_RUNS) -> dict[str, Any]:
-    """Retrato JSON completo e determinístico da operação do CDP (somente leitura).
+    """Retrato JSON determinístico da operação do CDP (somente leitura).
 
+    ``profile="completo"`` (padrão): o retrato inteiro (cópia local e app). ``"publicacao"``:
+    o retrato compacto do artifact (``data.json``), derivado do completo por
+    :func:`cdp.workflow.painel_publicacao.publicacao` — mesmos números, menos itens e textos.
     ``now`` (com fuso; sem fuso ⇒ UTC) fixa o relógio do painel (padrão: ``rt.now()``).
     ``backtest_root`` (padrão: ``<reports>/backtest``) pode conter um ``metrics.json`` ou
     subpastas de execuções até 3 níveis (``backtest_pattern`` filtra os nomes, ex.:
@@ -2439,8 +2463,11 @@ def painel_data(rt: Any, *, now: datetime | None = None,
     nas ``max_risk_full_runs`` execuções mais recentes (as demais, resumidas).
     """
     from ..ui.data import CDP_INVARIANTS, kill_switch_state
+    from .painel_publicacao import PROFILES, publicacao
     from .reports import PAPER_TRADING_TEXT
 
+    if profile not in PROFILES:
+        raise ValueError(f"perfil desconhecido: {profile!r} (use {', '.join(PROFILES)})")
     cfg: FundConfig = rt.cfg
     if now is None:
         now = rt.now()
@@ -2488,7 +2515,7 @@ def painel_data(rt: Any, *, now: datetime | None = None,
         is_synth = True
     tz = ZoneInfo(cfg.fund.timezone)
     meta = {
-        "schema_version": SCHEMA_VERSION, "fund_name": cfg.fund.name,
+        "schema_version": SCHEMA_VERSION, "profile": "completo", "fund_name": cfg.fund.name,
         "generated_at": now.astimezone(UTC).isoformat(),
         "generated_at_local": now.astimezone(tz).isoformat(), "timezone": cfg.fund.timezone,
         "is_synthetic": is_synth, "synthetic_sources": sources,
@@ -2521,20 +2548,89 @@ def painel_data(rt: Any, *, now: datetime | None = None,
     }
     data = clean(data)
     data["meta"]["data_hash"] = data_hash(data)
+    if profile == "publicacao":
+        return publicacao(data, reports_dir=_reports_label(rt), page_sha256=page_sha256())
     return data
 
 
-def render_painel(data: Mapping[str, Any], template_path: Path | str | None = None) -> str:
-    """Injeta o JSON do painel no template (no elemento ``<script id="cdp-data">``)."""
+def _reports_label(rt: Any) -> str:
+    """Pasta dos relatórios como aparece nos caminhos publicados (relativa; senão só o nome)."""
+    p = Path(rt.reports_root)
+    return p.as_posix() if not p.is_absolute() else p.name
+
+
+def _template(template_path: Path | str | None) -> str:
     path = Path(template_path) if template_path is not None else DEFAULT_TEMPLATE
     template = path.read_text(encoding="utf-8")
     n = template.count(DATA_ELEMENT)
     if n != 1:
         raise ValueError(f"O template precisa conter exatamente um {DATA_ELEMENT!r} "
                          f"(encontrado(s): {n}).")
+    return template
+
+
+def page_sha256(template_path: Path | str | None = None) -> str:
+    """Versão da página: SHA-256 do template (muda só quando o template muda). Vai carimbada no
+    ``index.html`` (``var PAGE_SHA``) e em ``data.json`` (``meta.page_sha256``)."""
+    return hashlib.sha256(_template(template_path).encode("utf-8")).hexdigest()
+
+
+def _split_template(template_path: Path | str | None) -> tuple[str, str]:
+    template = _template(template_path)
+    sha = hashlib.sha256(template.encode("utf-8")).hexdigest()
     head, tail = template.split(DATA_ELEMENT)
+    return head.replace(PAGE_SHA_PLACEHOLDER, sha), tail.replace(PAGE_SHA_PLACEHOLDER, sha)
+
+
+def render_painel(data: Mapping[str, Any], template_path: Path | str | None = None) -> str:
+    """Injeta o JSON do painel no template (no elemento ``<script id="cdp-data">``)."""
+    head, tail = _split_template(template_path)
     element = DATA_ELEMENT.replace(PLACEHOLDER, embed_json(data))
     return head + element + tail
+
+
+def render_page(template_path: Path | str | None = None) -> str:
+    """``index.html`` publicado: o template com o elemento de dados vazio (``null``) — a página
+    busca ``data.json`` ao lado dela. Não depende dos dados: só muda quando o template muda."""
+    head, tail = _split_template(template_path)
+    return head + EMPTY_DATA_ELEMENT + tail
+
+
+def page_version(page_text: str) -> str | None:
+    """A versão carimbada num ``index.html`` (``None`` se não houver carimbo)."""
+    m = PAGE_SHA_RE.search(page_text)
+    return m.group(1) if m else None
+
+
+def published_page_sha(out_dir: Path | str = DEFAULT_OUT_DIR) -> str | None:
+    """Versão da página publicada por último no artifact (``PAGINA_PUBLICADA.sha256``)."""
+    try:
+        text = (Path(out_dir) / MARKER_NAME).read_text(encoding="utf-8").strip()
+    except OSError:
+        return None
+    return text if re.fullmatch(r"[0-9a-f]{64}", text) else None
+
+
+def mark_published(out_dir: Path | str = DEFAULT_OUT_DIR) -> dict[str, Any]:
+    """Registra que o ``index.html`` atual foi publicado no artifact: grava a versão carimbada
+    nele em ``PAGINA_PUBLICADA.sha256``. Chamado (``cdp painel --publicado``) só depois de uma
+    publicação bem-sucedida que incluiu a página; até lá ``page_changed`` continua verdadeiro."""
+    out = Path(out_dir)
+    index = out / INDEX_NAME
+    try:
+        sha = page_version(index.read_text(encoding="utf-8"))
+    except OSError as exc:
+        raise ValueError(f"{index.as_posix()} ilegível ({exc.__class__.__name__}): rode "
+                         "`cdp painel` antes") from exc
+    if sha is None:
+        raise ValueError(f"{index.as_posix()} sem a versão da página (var PAGE_SHA): rode "
+                         "`cdp painel` de novo")
+    before = published_page_sha(out)
+    marker = out / MARKER_NAME
+    if before != sha:
+        _write_atomic(marker, sha + "\n")
+    return {"marcador": marker.as_posix(), "page_sha256": sha, "anterior": before,
+            "mudou": before != sha}
 
 
 STANDALONE_HEAD = ('<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">'
@@ -2549,39 +2645,94 @@ def _write_atomic(path: Path, text: str) -> None:
     try:
         with os.fdopen(fd, "w", encoding="utf-8", newline="\n") as f:
             f.write(text)
+        os.chmod(tmp, 0o644)  # mkstemp cria 0600; os arquivos do painel são públicos no clone
         os.replace(tmp, path)
     finally:
         if os.path.exists(tmp):
             os.unlink(tmp)
 
 
-def write_painel(rt: Any, out_path: Path | str = DEFAULT_OUT, *,
-                 standalone_out: Path | str | None = None, now: datetime | None = None,
-                 template_path: Path | str | None = None, **kw: Any) -> dict[str, Any]:
-    """Grava o artifact (sem esqueleto ``<!doctype>``; o publicador envolve a página) e,
-    opcionalmente, uma cópia autônoma para abrir localmente no navegador."""
-    data = painel_data(rt, now=now, **kw)
-    page = render_painel(data, template_path)
-    out = Path(out_path)
-    _write_atomic(out, page)
+def _file_info(path: Path, text: str) -> dict[str, Any]:
+    raw = text.encode("utf-8")
+    return {"path": path.as_posix(), "bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest(),
+            "max_line": max_line(text), "lines": text.count("\n") + (not text.endswith("\n"))}
+
+
+def write_painel(rt: Any, out_dir: Path | str = DEFAULT_OUT_DIR, *, standalone: bool = True,
+                 now: datetime | None = None, template_path: Path | str | None = None,
+                 **kw: Any) -> dict[str, Any]:
+    """Grava o painel para o artifact em ``out_dir``:
+
+    - ``index.html`` (template com ``#cdp-data`` = ``null`` e a versão da página carimbada),
+      regravado só quando o conteúdo muda (``index_written``);
+    - ``data.json``: perfil ``publicacao`` (indentado, chaves ordenadas) — sempre;
+    - ``cdp_painel_local.html`` (``standalone``): cópia autônoma com o perfil ``completo``
+      embutido e esqueleto ``<!doctype>``, para abrir offline.
+
+    ``page_changed``: a versão da página (SHA-256 do template) difere da última PUBLICADA no
+    artifact (``PAGINA_PUBLICADA.sha256``, ver :func:`mark_published`) ou ainda não há registro
+    de publicação — continua verdadeiro em todas as execuções até a página ser publicada, mesmo
+    que o ``index.html`` local já tenha sido regravado (e commitado) antes.
+
+    Monta o retrato completo uma vez e deriva dele a publicação (mesmos números). Devolve
+    caminhos, tamanhos, SHA-256, maior linha, ``data_hash``, ``page_changed`` e
+    ``index_written``."""
+    from .painel_publicacao import dump_publicacao, publicacao
+
+    full = painel_data(rt, now=now, profile="completo", **kw)
+    version = page_sha256(template_path)
+    pub = publicacao(full, reports_dir=_reports_label(rt), page_sha256=version)
+    out = Path(out_dir)
+    page = render_page(template_path)
+    index = out / INDEX_NAME
+    index_written = _sha256_file(index) != hashlib.sha256(page.encode("utf-8")).hexdigest()
+    if index_written:
+        _write_atomic(index, page)
+    published = published_page_sha(out)
+    page_changed = published != version
+    text = dump_publicacao(pub)
+    _write_atomic(out / DATA_NAME, text)
+    index_info, data_info = _file_info(index, page), _file_info(out / DATA_NAME, text)
+    pmeta = pub["meta"]
     result: dict[str, Any] = {
-        "path": out.as_posix(), "sha256": hashlib.sha256(page.encode("utf-8")).hexdigest(),
-        "bytes": len(page.encode("utf-8")), "data_hash": data["meta"]["data_hash"],
-        "json_bytes": len(to_json(data).encode("utf-8")),
-        "generated_at": data["meta"]["generated_at"],
-        "is_synthetic": data["meta"]["is_synthetic"], "standalone_path": None,
-        "standalone_sha256": None, "standalone_bytes": None,
+        "out_dir": out.as_posix(), "page_changed": page_changed, "index_written": index_written,
+        "page_sha256": version, "published_page_sha256": published,
+        "index_path": index_info["path"], "index_bytes": index_info["bytes"],
+        "index_sha256": index_info["sha256"], "index_max_line": index_info["max_line"],
+        "data_path": data_info["path"], "data_bytes": data_info["bytes"],
+        "data_sha256": data_info["sha256"], "data_max_line": data_info["max_line"],
+        "data_lines": data_info["lines"], "data_hash": pmeta["data_hash"],
+        "data_hash_completo": full["meta"]["data_hash"], "profile": pmeta.get("profile"),
+        "nivel_publicacao": (pmeta.get("publication") or {}).get("nivel"),
+        "cortes": len(expandir(pmeta.get("truncations") or [])),
+        "generated_at": pmeta["generated_at"], "is_synthetic": pmeta["is_synthetic"],
+        "local_path": None, "local_bytes": None, "local_sha256": None,
     }
-    if standalone_out is not None:
-        full = STANDALONE_HEAD + page + STANDALONE_TAIL
-        sp = Path(standalone_out)
-        _write_atomic(sp, full)
-        result.update({"standalone_path": sp.as_posix(),
-                       "standalone_sha256": hashlib.sha256(full.encode("utf-8")).hexdigest(),
-                       "standalone_bytes": len(full.encode("utf-8"))})
+    if standalone:
+        local = STANDALONE_HEAD + render_painel(full, template_path) + STANDALONE_TAIL
+        lp = out / LOCAL_NAME
+        _write_atomic(lp, local)
+        info = _file_info(lp, local)
+        result.update({"local_path": info["path"], "local_bytes": info["bytes"],
+                       "local_sha256": info["sha256"]})
     return result
 
 
-__all__ = ["DATA_ELEMENT", "DEFAULT_OUT", "DEFAULT_TEMPLATE", "PLACEHOLDER", "SCHEMA_VERSION",
-           "clean", "data_hash", "embed_json", "painel_data", "render_painel", "scrub_text",
-           "to_json", "write_painel"]
+def max_line(text: str) -> int:
+    from .painel_publicacao import max_line as ml
+
+    return ml(text)
+
+
+def expandir(x: Any) -> Any:
+    from .painel_publicacao import expandir as ex
+
+    return ex(x)
+
+
+__all__ = ["DATA_ELEMENT", "DATA_NAME", "DEFAULT_OUT_DIR", "DEFAULT_TEMPLATE",
+           "EMPTY_DATA_ELEMENT", "INDEX_NAME", "LOCAL_NAME", "MARKER_NAME", "PAGE_SHA_PLACEHOLDER",
+           "PLACEHOLDER", "SCHEMA_VERSION", "URL_NAME", "clean", "data_hash", "embed_json",
+           "expandir", "mark_published", "page_sha256", "page_version", "painel_data",
+           "published_page_sha", "render_page", "render_painel", "scrub_text", "to_json",
+           "write_painel"]

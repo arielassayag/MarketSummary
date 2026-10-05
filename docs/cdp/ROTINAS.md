@@ -43,10 +43,17 @@ na raiz do clone do repositório. Hora de referência: Brasília.
    `git add book reports data/market artifacts/painel`; commit
    "CDP: decisão da semana AAAA-MM-DD"; sincronize de novo e `git push` só se verify disser
    ÍNTEGRO (nunca force).
-6) Painel: se você tiver a ferramenta Artifact e a saída de `cdp painel` trouxer
-   artifact.publicavel = true, leia artifacts/painel/cdp_painel.html inteiro e republique-o no
-   MESMO artifact da URL em artifacts/painel/ARTIFACT_URL (read e depois publish com essa url);
-   senão, pule e diga o motivo.
+6) Painel: com a ferramenta Artifact, artifact.publicavel = true e
+   artifacts/painel/ARTIFACT_URL presente, leia por inteiro cada arquivo de
+   artifact.arquivos_para_ler (data.json; index.html só se artifact.pagina_mudou) e republique no
+   MESMO artifact da URL, nesta ordem: read com essa url; list com scope "files" e essa url
+   (obrigatório: sem a listagem a ferramenta recusa substituir o data.json publicado); publish
+   com essa url, files {"data.json": "artifacts/painel/data.json"} e, se a página mudou,
+   file_path artifacts/painel/index.html. Recusa porque data.json mudou: list de novo e publique
+   uma vez. Se a publicação incluiu index.html e deu certo:
+   `uv run python -m cdp painel --publicado` e commit só de
+   artifacts/painel/PAGINA_PUBLICADA.sha256. Senão, pule e diga o motivo (nunca crie outro
+   artifact; nunca use force).
 7) Resposta final: postura, nº de longs/shorts, vol ex-ante, beta, principais mudanças e o caminho
    reports/weekly/<semana>/relatorio.md — números copiados do relatório, nunca calculados.
 ```
@@ -71,9 +78,17 @@ Você é a mente do CDP — Cabra da Peste, rodando sem supervisão na raiz do c
    `git add book reports data/market artifacts/painel`; commit
    "CDP: fechamento AAAA-MM-DD"; sincronize de novo e `git push` só se verify disser ÍNTEGRO
    (nunca force).
-4) Painel: com a ferramenta Artifact e artifact.publicavel = true, republique
-   artifacts/painel/cdp_painel.html no MESMO artifact de artifacts/painel/ARTIFACT_URL; senão,
-   pule e diga o motivo.
+4) Painel: com a ferramenta Artifact, artifact.publicavel = true e
+   artifacts/painel/ARTIFACT_URL presente, leia por inteiro cada arquivo de
+   artifact.arquivos_para_ler (data.json; index.html só se artifact.pagina_mudou) e republique no
+   MESMO artifact da URL, nesta ordem: read com essa url; list com scope "files" e essa url
+   (obrigatório: sem a listagem a ferramenta recusa substituir o data.json publicado); publish
+   com essa url, files {"data.json": "artifacts/painel/data.json"} e, se a página mudou,
+   file_path artifacts/painel/index.html. Recusa porque data.json mudou: list de novo e publique
+   uma vez. Se a publicação incluiu index.html e deu certo:
+   `uv run python -m cdp painel --publicado` e commit só de
+   artifacts/painel/PAGINA_PUBLICADA.sha256. Senão, pule e diga o motivo (nunca crie outro
+   artifact; nunca use force).
 5) Resposta final: manchete do comentário, retorno do dia e acumulado, NAV, vol ex-ante vs. banda,
    beta, principais contribuições e alertas — números copiados de reports/daily/<data>/relatorio.md.
 ```
@@ -99,9 +114,17 @@ Você é o monitor de risco do CDP — Cabra da Peste, rodando sem supervisão n
    (`git commit -m "CDP: risco AAAA-MM-DD HH:MM" -- <caminhos>`), pois a montagem semanal pode
    estar em andamento no mesmo clone; sincronize de novo e `git push` só se verify disser
    ÍNTEGRO (nunca force).
-5) Painel: com a ferramenta Artifact e artifact.publicavel = true, republique
-   artifacts/painel/cdp_painel.html no MESMO artifact de artifacts/painel/ARTIFACT_URL; senão,
-   pule e diga o motivo.
+5) Painel: com a ferramenta Artifact, artifact.publicavel = true e
+   artifacts/painel/ARTIFACT_URL presente, leia por inteiro cada arquivo de
+   artifact.arquivos_para_ler (data.json; index.html só se artifact.pagina_mudou) e republique no
+   MESMO artifact da URL, nesta ordem: read com essa url; list com scope "files" e essa url
+   (obrigatório: sem a listagem a ferramenta recusa substituir o data.json publicado); publish
+   com essa url, files {"data.json": "artifacts/painel/data.json"} e, se a página mudou,
+   file_path artifacts/painel/index.html. Recusa porque data.json mudou: list de novo e publique
+   uma vez. Se a publicação incluiu index.html e deu certo:
+   `uv run python -m cdp painel --publicado` e commit só de
+   artifacts/painel/PAGINA_PUBLICADA.sha256. Senão, pule e diga o motivo (nunca crie outro
+   artifact; nunca use force).
 6) Resposta final: NAV e drawdown (fechamento e estimado), P&L intradiário, vol ex-ante vs. banda,
    beta, net/gross, gatilhos e ações — números copiados do relatório em reports/risk/<data>/.
 ```
@@ -120,7 +143,8 @@ notificação de término, sem laços de espera):
 `uv run python -m cdp backtest --start 2021-01-04 --out reports/backtest/AAAA-MM-DD/mensal`;
 compare lado a lado com a execução anterior (números copiados de metrics.json) em
 reports/backtest/AAAA-MM-DD/CALIBRACAO_MENSAL.md; nunca altere configs/cdp/fund.yaml (propostas
-só no resumo); `uv run python -m cdp painel`; commit e push; republique o painel como nas outras.
+só no resumo); `uv run python -m cdp painel`; commit e push; republique o painel como nas outras
+(read → list com scope "files" → publish; `cdp painel --publicado` se a página foi junto).
 ```
 
 ## Codex

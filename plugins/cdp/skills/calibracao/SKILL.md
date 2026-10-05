@@ -76,7 +76,8 @@ Contexto: `docs/cdp/METODOLOGIA.md` e a calibração-base em `reports/backtest/2
    - leitura qualitativa (estabilidade dos sinais, custos, risco) e **propostas** de mudança, se
      houver, marcadas como "para revisão humana — não aplicadas".
 6. Integridade e painel (código; o painel inclui os backtests):
-   `uv run python -m cdp verify` e `uv run python -m cdp painel` (anote o bloco `artifact`). Se o
+   `uv run python -m cdp verify` e `uv run python -m cdp painel` (grava `artifacts/painel/data.json`,
+   `index.html` — só quando o template muda — e a cópia local; anote o bloco `artifact`). Se o
    painel falhar, siga sem ele.
 7. Publicação:
 
@@ -88,17 +89,29 @@ Contexto: `docs/cdp/METODOLOGIA.md` e a calibração-base em `reports/backtest/2
    Push só se `verify` disse `ÍNTEGRO` e o `git fetch` funcionou: repita a sincronização do passo 1
    e então rode `git push`. Se não, ou se o push for rejeitado: não force; relate.
 
-8. Painel no artifact, **no mesmo artifact** (nunca crie outro quando a URL já existe): sem a
-   ferramenta `Artifact` nesta sessão, pule e anote no resumo. Se `cdp painel` falhou ou trouxe
-   `artifact.publicavel: false`, não leia nem publique o HTML; anote o `artifact.motivo`. Com
-   `publicavel: true`: leia `artifacts/painel/cdp_painel.html` por inteiro com `Read` (em partes,
-   se preciso); leia a URL de `artifacts/painel/ARTIFACT_URL`, chame `Artifact` com
-   `action: "read"` e essa `url` (uma vez) e depois `action: "publish"` com essa `url` e
-   `file_path: "artifacts/painel/cdp_painel.html"`. Se o arquivo da URL não existir, publique sem
-   `url` (com `icon: "chart"`), grave a URL devolvida (uma linha) em
-   `artifacts/painel/ARTIFACT_URL` e faça `git add artifacts/painel/ARTIFACT_URL`,
-   `git commit -m "CDP: URL do painel" -- artifacts/painel/ARTIFACT_URL` e, se o push do passo 7
-   foi feito, `git push`. Falha ou recusa: não insista; relate.
+8. Painel no artifact, **no mesmo artifact** (URL em `artifacts/painel/ARTIFACT_URL`, também em
+   `artifact.url`; a rotina nunca cria um artifact novo): sem a ferramenta `Artifact` nesta sessão,
+   pule e anote no resumo. Se `cdp painel` falhou ou trouxe `artifact.publicavel: false`, não
+   leia nem publique nada; anote o `artifact.motivo`. Sem `artifacts/painel/ARTIFACT_URL`
+   (`artifact.url` nulo), não publique e anote "sem ARTIFACT_URL". Com `publicavel: true`: leia por
+   inteiro, com `Read` (em partes com `offset`/`limit`, até a última linha), cada arquivo de
+   `artifact.arquivos_para_ler` — sempre `artifacts/painel/data.json`; `artifacts/painel/index.html`
+   só quando `artifact.pagina_mudou` for `true`. Chame `Artifact` com essa `url`, nesta ordem:
+   `action: "read"` (uma vez); `action: "list"` com `scope: "files"` (obrigatório: a ferramenta
+   só substitui um arquivo publicado que a sessão leu pelo caminho, viu numa listagem ou
+   publicou); e `action: "publish"` com `files: {"data.json": "artifacts/painel/data.json"}` e,
+   só quando `pagina_mudou` for `true`, `file_path: "artifacts/painel/index.html"`. Se a
+   ferramenta recusar a atualização só com `files`, leia `index.html` por inteiro e publique de
+   novo com `file_path` e `files`. Se a recusa disser que `data.json` mudou desde a listagem,
+   repita o `list` com `scope: "files"` uma vez e publique uma única vez. Recusa por conflito na
+   página: rode `uv run python -m cdp painel` de novo, leia o que `artifact.arquivos_para_ler`
+   pedir, repita o `list` e publique uma única vez; nunca use `force`. Só depois de uma
+   publicação bem-sucedida que incluiu `index.html`, com `pagina_mudou: true`:
+   `uv run python -m cdp painel --publicado`,
+   `git add artifacts/painel/PAGINA_PUBLICADA.sha256` e
+   `git commit -m "CDP: painel publicado" -- artifacts/painel/PAGINA_PUBLICADA.sha256` (sem esse
+   registro, `pagina_mudou` continua `true` e a próxima rotina publica a página de novo). Falha
+   ou recusa: não insista; relate.
 
 ## Resumo final (até 10 linhas)
 

@@ -16,7 +16,8 @@ Fluxo diário (após o fechamento):
 Rotinas locais (plugin ``cdp`` do Claude Code; ver docs/cdp/LOCAL.md):
     cdp agenda                       (o que fazer agora: semana, prazos, fechamentos pendentes)
     cdp risk [--live] [--date D]     (monitor de risco; grava reports/risk/<D>/risco_<HHMM>.md)
-    cdp painel [--out F] [--standalone F]  (painel HTML de operação e risco para o artifact)
+    cdp painel [--out-dir D] [--sem-local]  (painel de operação e risco: index.html + data.json)
+    cdp painel --publicado           (registra a página publicada no artifact; só depois de publicar)
 
 Outros: status, verify, demo, backtest, fetch-base, kill-switch.
 """
@@ -220,47 +221,90 @@ def cmd_risk(args: argparse.Namespace) -> int:
     return 0
 
 
-DEFAULT_PAINEL = Path("artifacts/painel/cdp_painel.html")
-#: A ferramenta que publica o artifact exige que a mente leia o arquivo inteiro antes; a leitura
-#: de arquivos devolve no máximo ~25 mil tokens por chamada. Acima destes limites a skill não tenta
-#: ler nem publicar (não gasta contexto) e relata o motivo.
-PAINEL_ARTIFACT_MAX_BYTES = 100_000
-PAINEL_ARTIFACT_MAX_LINE = 2_000
+DEFAULT_PAINEL_DIR = Path("artifacts/painel")
 
 
-def painel_artifact_check(path: Path) -> dict:
-    """Se o HTML do painel cabe numa leitura integral pela mente (pré-requisito da publicação)."""
-    limits = {"bytes": PAINEL_ARTIFACT_MAX_BYTES, "linha": PAINEL_ARTIFACT_MAX_LINE}
+def painel_artifact_check(out_dir: Path, *, page_changed: bool) -> dict:
+    """O que a mente precisa ler por inteiro antes de publicar e se isso cabe no orçamento.
+
+    ``data.json`` sempre; ``index.html`` só quando a página mudou em relação à última PUBLICADA
+    (``page_changed``, ver :func:`cdp.workflow.painel.mark_published`). Publicável quando o
+    ``data.json`` tem até ``DATA_MAX_BYTES`` bytes e linhas de até ``DATA_MAX_LINE`` caracteres
+    (e o ``index.html``, se mudou, até ``PAGE_MAX_BYTES``/``PAGE_MAX_LINE``). Também devolve a
+    URL de ``ARTIFACT_URL`` (``None`` se o arquivo não existe: não publique) e a versão da
+    página registrada como publicada (``pagina_publicada``)."""
+    from .workflow.painel import DATA_NAME, INDEX_NAME, URL_NAME, published_page_sha
+    from .workflow.painel_publicacao import (
+        DATA_MAX_BYTES,
+        DATA_MAX_LINE,
+        PAGE_MAX_BYTES,
+        PAGE_MAX_LINE,
+        max_line,
+    )
+
+    limits = {"dados_bytes": DATA_MAX_BYTES, "dados_linha": DATA_MAX_LINE,
+              "pagina_bytes": PAGE_MAX_BYTES, "pagina_linha": PAGE_MAX_LINE}
+    out = {"publicavel": False, "motivo": "", "arquivos_para_ler": [], "tamanho_dados": None,
+           "linhas_max": None, "linhas_dados": None, "pagina_mudou": bool(page_changed),
+           "pagina_publicada": published_page_sha(out_dir), "url": None, "limites": limits}
+    url_file = out_dir / URL_NAME
     try:
-        raw = path.read_bytes()
-    except OSError as exc:
-        return {"publicavel": False, "bytes": None, "maior_linha": None, "limites": limits,
-                "motivo": f"arquivo ilegível: {exc.__class__.__name__}"}
-    longest = max((len(x) for x in raw.decode("utf-8", errors="replace").splitlines()), default=0)
-    problems = []
-    if len(raw) > PAINEL_ARTIFACT_MAX_BYTES:
-        problems.append(f"{len(raw)} bytes (limite {PAINEL_ARTIFACT_MAX_BYTES})")
-    if longest > PAINEL_ARTIFACT_MAX_LINE:
-        problems.append(f"linha de {longest} caracteres (limite {PAINEL_ARTIFACT_MAX_LINE})")
-    return {"publicavel": not problems, "bytes": len(raw), "maior_linha": longest,
-            "limites": limits,
-            "motivo": ("grande demais para a leitura integral exigida antes de publicar: "
-                       + "; ".join(problems)) if problems else "ok"}
+        url = url_file.read_text(encoding="utf-8").strip() if url_file.is_file() else ""
+    except OSError:
+        url = ""
+    out["url"] = url or None
+    files = [(out_dir / INDEX_NAME, PAGE_MAX_BYTES, PAGE_MAX_LINE)] if page_changed else []
+    files.append((out_dir / DATA_NAME, DATA_MAX_BYTES, DATA_MAX_LINE))
+    problems, longest = [], 0
+    for path, max_bytes, max_len in files:
+        try:
+            raw = path.read_bytes()
+        except OSError as exc:
+            out["motivo"] = f"{path.name} ilegível: {exc.__class__.__name__}"
+            return out
+        text = raw.decode("utf-8", errors="replace")
+        line = max_line(text)
+        longest = max(longest, line)
+        if path.name == DATA_NAME:
+            out["tamanho_dados"] = len(raw)
+            out["linhas_dados"] = text.count("\n")
+        if len(raw) > max_bytes:
+            problems.append(f"{path.name} com {len(raw)} bytes (limite {max_bytes})")
+        if line > max_len:
+            problems.append(f"{path.name} com linha de {line} caracteres (limite {max_len})")
+        out["arquivos_para_ler"].append(path.as_posix())
+    out["linhas_max"] = longest
+    out["publicavel"] = not problems
+    out["motivo"] = ("grande demais para a leitura integral exigida antes de publicar: "
+                     + "; ".join(problems)) if problems else "ok"
+    return out
 
 
 def cmd_painel(args: argparse.Namespace) -> int:
-    """Grava o painel (artifact) de operação e risco; só lê o livro, a trilha e os relatórios.
+    """Grava o painel do artifact (``index.html`` + ``data.json`` e a cópia local); só lê o livro,
+    a trilha e os relatórios.
 
-    A saída inclui ``artifact`` (:func:`painel_artifact_check`): as skills só leem e publicam o
-    HTML no artifact quando ``artifact.publicavel`` é ``true``.
+    A saída inclui ``artifact`` (:func:`painel_artifact_check`): as skills só leem e publicam
+    quando ``artifact.publicavel`` é ``true``, lendo por inteiro ``artifact.arquivos_para_ler``.
+    ``--publicado`` não gera nada: registra (``PAGINA_PUBLICADA.sha256``) que o ``index.html``
+    atual foi publicado no artifact — rode só depois de uma publicação bem-sucedida que incluiu
+    a página.
     """
-    from .workflow.painel import write_painel
+    from .workflow.painel import mark_published, write_painel
     from .workflow.runtime import Runtime
 
+    out_dir = Path(args.out_dir)
+    if args.publicado:
+        try:
+            _print({"pagina_publicada": mark_published(out_dir)})
+        except ValueError as exc:
+            print(f"Erro: {exc}", file=sys.stderr)
+            return 2
+        return 0
     rt = Runtime.from_args(args)
-    out = write_painel(rt, Path(args.out),
-                       standalone_out=Path(args.standalone) if args.standalone else None)
-    out = {**out, "artifact": painel_artifact_check(Path(args.out))}
+    out = write_painel(rt, out_dir, standalone=not args.sem_local)
+    out = {**out, "artifact": painel_artifact_check(
+        out_dir, page_changed=bool(out.get("page_changed")))}
     _print(out)
     return 0
 
@@ -365,11 +409,15 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--out", default=None, help="pasta dos relatórios (padrão: <reports>/risk)")
     s.set_defaults(func=cmd_risk)
 
-    s = sub.add_parser("painel", help="painel HTML de operação e risco (artifact; só leitura)")
-    s.add_argument("--out", default=str(DEFAULT_PAINEL),
-                   help=f"arquivo do artifact (padrão: {DEFAULT_PAINEL.as_posix()})")
-    s.add_argument("--standalone", default=None,
-                   help="também grava uma cópia autônoma para abrir no navegador")
+    s = sub.add_parser("painel", help="painel de operação e risco para o artifact (só leitura)")
+    s.add_argument("--out-dir", default=str(DEFAULT_PAINEL_DIR),
+                   help="pasta de index.html, data.json e da cópia local "
+                        f"(padrão: {DEFAULT_PAINEL_DIR.as_posix()})")
+    s.add_argument("--sem-local", action="store_true",
+                   help="não grava a cópia autônoma cdp_painel_local.html")
+    s.add_argument("--publicado", action="store_true",
+                   help="só registra que o index.html atual foi publicado no artifact "
+                        "(PAGINA_PUBLICADA.sha256); use depois de publicar a página")
     s.set_defaults(func=cmd_painel)
 
     s = sub.add_parser("backtest", help="backtest walk-forward semanal (sinais point-in-time)")

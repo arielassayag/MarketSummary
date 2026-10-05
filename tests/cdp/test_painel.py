@@ -1,7 +1,10 @@
-"""Exportador do painel (artifact) do CDP: retrato completo, determinístico e seguro (offline)."""
+"""Exportador do painel (artifact) do CDP: retrato completo, determinístico e seguro (offline);
+publicação em ``index.html`` + ``data.json`` (perfil ``publicacao``) e cópia local completa."""
 
 from __future__ import annotations
 
+import copy
+import hashlib
 import json
 import math
 import re
@@ -15,13 +18,40 @@ import pytest
 from cdp.config import load_config
 from cdp.workflow.painel import (
     DATA_ELEMENT,
+    EMPTY_DATA_ELEMENT,
+    MARKER_NAME,
+    PAGE_SHA_PLACEHOLDER,
+    PLACEHOLDER,
     clean,
     embed_json,
+    mark_published,
+    page_sha256,
+    page_version,
     painel_data,
+    published_page_sha,
+    render_page,
     render_painel,
     scrub_text,
     to_json,
     write_painel,
+)
+from cdp.workflow.painel_publicacao import (
+    COMENTARIOS_MINIMOS,
+    DATA_MAX_BYTES,
+    DATA_MAX_LINE,
+    NIVEIS,
+    PAGE_MAX_BYTES,
+    PAGE_MAX_LINE,
+    PREGOES_MINIMOS,
+    cabe,
+    chosen_backtest,
+    compactar,
+    dump_publicacao,
+    expandir,
+    max_line,
+    partes,
+    publicacao,
+    report_path,
 )
 from cdp.workflow.runtime import Runtime
 
@@ -86,7 +116,7 @@ def _embedded(html: str) -> dict:
 def test_all_sections_present(data):
     assert set(data) == SECTIONS
     meta = data["meta"]
-    assert meta["schema_version"] == "cdp-painel/1"
+    assert meta["schema_version"] == "cdp-painel/2" and meta["profile"] == "completo"
     assert meta["fund_name"] == "CDP — Cabra da Peste"
     assert meta["generated_at"] == NOW.isoformat()
     assert len(meta["data_hash"]) == 64
@@ -235,20 +265,92 @@ def test_deterministic_with_fixed_now(demo, data):
 
 
 def test_write_painel_files(demo, tmp_path, data):
-    out, standalone = tmp_path / "painel" / "cdp.html", tmp_path / "local.html"
+    """index.html (dados vazios) + data.json (publicação) + cópia local com o retrato completo."""
+    out = tmp_path / "painel"
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        res = write_painel(_rt(demo), out, standalone_out=standalone, now=NOW)
-    page = out.read_text(encoding="utf-8")
-    full = standalone.read_text(encoding="utf-8")
-    assert not page.lower().startswith("<!doctype")
-    assert full.startswith("<!doctype html><html lang=\"pt-BR\">") and page in full
-    assert res["data_hash"] == data["meta"]["data_hash"]
-    import hashlib
+        res = write_painel(_rt(demo), out, now=NOW)
+    index, data_file, local = out / "index.html", out / "data.json", out / "cdp_painel_local.html"
+    page, text, full = (f.read_text(encoding="utf-8") for f in (index, data_file, local))
+    assert not page.lower().startswith("<!doctype") and page == render_page()
+    assert page.count(EMPTY_DATA_ELEMENT) == 1 and PLACEHOLDER not in page
+    # versão da página (SHA-256 do template) carimbada na página, na cópia local e nos dados
+    version = page_sha256()
+    assert PAGE_SHA_PLACEHOLDER not in page and page_version(page) == version
+    assert page_version(full) == version and res["page_sha256"] == version
+    assert full.startswith("<!doctype html><html lang=\"pt-BR\">")
+    assert _embedded(full)["meta"]["data_hash"] == data["meta"]["data_hash"]  # completo embutido
+    assert _embedded(full)["meta"]["profile"] == "completo"
+    pub = json.loads(text)
+    assert text == dump_publicacao(pub)  # indentado, chaves ordenadas, UTF-8
+    assert pub["meta"]["profile"] == "publicacao" and res["data_hash"] == pub["meta"]["data_hash"]
+    assert pub["meta"]["page_sha256"] == version
+    assert res["data_hash_completo"] == data["meta"]["data_hash"]
+    # nada publicado ainda (sem PAGINA_PUBLICADA.sha256): a página precisa ir junto
+    assert res["page_changed"] is True and res["index_written"] is True
+    assert res["published_page_sha256"] is None and not (out / MARKER_NAME).exists()
+    for key, f, body in (("index", index, page), ("data", data_file, text)):
+        raw = f.read_bytes()
+        assert res[f"{key}_path"] == f.as_posix() and res[f"{key}_bytes"] == len(raw)
+        assert res[f"{key}_sha256"] == hashlib.sha256(raw).hexdigest()
+        assert res[f"{key}_max_line"] == max_line(body)
+    assert res["local_sha256"] == hashlib.sha256(local.read_bytes()).hexdigest()
+    assert res["data_bytes"] <= DATA_MAX_BYTES and res["data_max_line"] <= DATA_MAX_LINE
+    assert res["index_bytes"] <= PAGE_MAX_BYTES and res["index_max_line"] <= PAGE_MAX_LINE
 
-    assert res["sha256"] == hashlib.sha256(page.encode("utf-8")).hexdigest()
-    assert res["bytes"] == len(page.encode("utf-8"))
-    assert _embedded(page)["meta"]["data_hash"] == data["meta"]["data_hash"]
+
+def test_second_write_keeps_the_page(demo, tmp_path):
+    """``index.html`` só é regravado quando o template muda; ``page_changed`` compara com a
+    página PUBLICADA (marcador gravado por ``mark_published``), não com o arquivo local."""
+    out = tmp_path / "painel"
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        first = write_painel(_rt(demo), out, now=NOW, standalone=False)
+        stamp = (out / "index.html").stat().st_mtime_ns
+        second = write_painel(_rt(demo), out, now=NOW, standalone=False)
+        assert first["index_written"] is True and second["index_written"] is False
+        assert (out / "index.html").stat().st_mtime_ns == stamp  # não regravada
+        # regravado localmente (e talvez commitado), mas ainda não publicado: continua mudado
+        assert first["page_changed"] is True and second["page_changed"] is True
+        assert second["data_sha256"] == first["data_sha256"]  # determinístico
+        assert second["local_path"] is None and not (out / "cdp_painel_local.html").exists()
+        marked = mark_published(out)  # a rotina publicou a página com sucesso
+        assert marked["mudou"] is True and marked["anterior"] is None
+        assert marked["page_sha256"] == page_sha256() == published_page_sha(out)
+        assert mark_published(out)["mudou"] is False  # idempotente
+        third = write_painel(_rt(demo), out, now=NOW, standalone=False)
+    assert third["page_changed"] is False and third["index_written"] is False
+
+
+def test_page_change_stays_pending_until_published(demo, tmp_path):
+    """Template novo gerado fora de uma sessão que publica (Codex, execução sem a ferramenta,
+    publicação recusada): ``page_changed`` fica verdadeiro em TODAS as execuções seguintes até
+    ``mark_published`` — o ``index.html`` local já atualizado não esconde a mudança."""
+    out = tmp_path / "painel"
+    template = Path(__file__).resolve().parents[2] / "src" / "cdp" / "workflow" / "painel_template.html"
+    new_template = tmp_path / "template.html"
+    new_template.write_text(template.read_text(encoding="utf-8").replace(
+        "<title>", "<title>Nova versão — "), encoding="utf-8")
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        write_painel(_rt(demo), out, now=NOW, standalone=False)
+        mark_published(out)
+        old = published_page_sha(out)
+        runs = [write_painel(_rt(demo), out, now=NOW, standalone=False, template_path=new_template)
+                for _ in range(3)]
+        assert [r["index_written"] for r in runs] == [True, False, False]
+        assert all(r["page_changed"] is True for r in runs)
+        assert all(r["published_page_sha256"] == old != r["page_sha256"] for r in runs)
+        assert runs[0]["page_sha256"] == page_sha256(new_template)
+        data = json.loads((out / "data.json").read_text(encoding="utf-8"))
+        assert data["meta"]["page_sha256"] == page_sha256(new_template)  # a página velha avisa
+        mark_published(out)
+        again = write_painel(_rt(demo), out, now=NOW, standalone=False, template_path=new_template)
+    assert again["page_changed"] is False
+    bad = tmp_path / "vazio"
+    bad.mkdir()
+    with pytest.raises(ValueError):
+        mark_published(bad)  # sem index.html: nada a registrar
 
 
 def test_template_requires_single_placeholder(tmp_path, data):
@@ -625,3 +727,594 @@ def test_backtest_costs_have_pnl_sign_and_bad_files_become_issues(demo, tmp_path
     assert "bt_lista" not in runs
     scopes = " ".join(i["scope"] + " " + i["message"] for i in d["issues"])
     assert "bt_ruim" in scopes and "bt_lista" in scopes and "data inválida" in scopes
+
+
+# ---------------------------------------------------------------- publicação (artifact)
+
+NOW6 = datetime(2024, 3, 12, 22, 30, tzinfo=UTC)
+
+
+@pytest.fixture(scope="module")
+def demo6(tmp_path_factory):
+    """Livro sintético com duas semanas e seis pregões (o orçamento vale num livro "real")."""
+    from cdp.workflow.demo import run_demo
+
+    out = tmp_path_factory.mktemp("painel_demo6")
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        run_demo(out, days=6)
+    return out
+
+
+@pytest.fixture(scope="module")
+def full6(demo6):
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        return painel_data(_rt(demo6), now=NOW6)
+
+
+def _floats_outside(obj, skip: tuple[str, ...] = (), path: str = ""):
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            p = f"{path}.{k}"
+            if not any(p.startswith(s) for s in skip):
+                yield from _floats_outside(v, skip, p)
+    elif isinstance(obj, list):
+        for v in obj:
+            yield from _floats_outside(v, skip, path + "[]")
+    elif isinstance(obj, float):
+        yield obj
+
+
+def _assert_budget(pub):
+    text = dump_publicacao(pub)
+    assert len(text.encode("utf-8")) <= DATA_MAX_BYTES, len(text.encode("utf-8"))
+    assert max_line(text) <= DATA_MAX_LINE, max_line(text)
+    assert cabe(text)
+    return text
+
+
+def test_publication_budget_on_demo_book(demo6, full6, tmp_path):
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        res = write_painel(_rt(demo6), tmp_path / "painel", now=NOW6)
+    text = (tmp_path / "painel" / "data.json").read_text(encoding="utf-8")
+    pub = json.loads(text)
+    _assert_budget(pub)
+    assert res["data_bytes"] <= DATA_MAX_BYTES and res["data_max_line"] <= DATA_MAX_LINE
+    meta = expandir(pub["meta"])
+    assert meta["profile"] == "publicacao" and meta["is_synthetic"] is True
+    assert "DADOS SIMULADOS" in meta["data_notice"]
+    assert meta["publication"]["nivel"] == res["nivel_publicacao"]
+    assert meta["truncations"] and all({"campo", "regra", "n"} <= set(c) for c in meta["truncations"])
+    full = expandir(pub)
+    assert set(full) == SECTIONS
+    assert len(full["weeks"]) == 2 and full["latest_day"]["date"] == "2024-03-11"
+    assert full["status"]["phase"] == full6["status"]["phase"]
+
+
+def test_publication_numbers_equal_the_full_export(full6):
+    """Números nunca alterados: todo float publicado existe no retrato completo (exceto os meses
+    consolidados, agregados novos calculados em código) e os itens mantidos são idênticos."""
+    pub = expandir(publicacao(full6))
+    allowed = set(_floats_outside(full6))
+    published = list(_floats_outside(pub, skip=(".track_record.rollup",)))
+    assert published and not [x for x in published if x not in allowed]
+    ld, ld0 = pub["latest_day"], full6["latest_day"]
+    assert {p["issuer_id"]: p["weight"] for p in ld["positions"]} == {
+        p["issuer_id"]: p["weight"] for p in ld0["positions"]}
+    assert ld["nav_end"] == ld0["nav_end"] and ld["risk"]["ex_ante_vol"] == ld0["risk"]["ex_ante_vol"]
+    assert pub["risk"]["limit_checks"] == full6["risk"]["limit_checks"]
+    assert pub["risk"]["ex_ante"]["exposures"] == full6["risk"]["ex_ante"]["exposures"]
+    recs0 = {r["date"]: r for r in full6["track_record"]["records"]}
+    for r in pub["track_record"]["records"]:
+        r0 = recs0[r["date"]]
+        assert (r["nav_end"], r["ret"], r["pnl"]) == (r0["nav_end"], r0["ret"], r0["pnl"])
+        assert r["pnl_components"] == r0["pnl_components"]
+        assert r["risk"]["drawdown"] == r0["risk"]["drawdown"]
+    assert pub["track_record"]["compare"] == full6["track_record"]["compare"]
+    assert pub["track_record"]["stats"] == full6["track_record"]["stats"]
+    w, w0 = pub["weeks"][-1], full6["weeks"][-1]
+    assert w["decision"] == w0["decision"] and w["pm_decision"] == w0["pm_decision"]
+    assert [c["value"] for c in w["proposal"]["compliance"]["checks"]] == [
+        c["value"] for c in w0["proposal"]["compliance"]["checks"]]
+    assert w["proposal"]["summary"] == w0["proposal"]["summary"]
+    pos0 = {p["issuer_id"]: p for p in w0["proposal"]["positions"]}
+    for p in w["proposal"]["positions"]:
+        assert all(p[k] == pos0[p["issuer_id"]][k] for k in p), p["issuer_id"]
+    assert w["shadow"]["comparison"]["metrics"] == w0["shadow"]["comparison"]["metrics"]
+
+
+def test_publication_index_page_has_empty_data_and_fetch_fallback(tmp_path):
+    page = render_page()
+    assert page.count(EMPTY_DATA_ELEMENT) == 1 and PLACEHOLDER not in page
+    assert page_version(page) == page_sha256() and PAGE_SHA_PLACEHOLDER not in page
+    assert len(page.encode("utf-8")) <= PAGE_MAX_BYTES and max_line(page) <= PAGE_MAX_LINE
+    template = (Path(__file__).resolve().parents[2] / "src" / "cdp" / "workflow"
+                / "painel_template.html").read_text(encoding="utf-8")
+    for needle in ('var DATA_URL = "data.json"', 'window.fetch(DATA_URL, { cache: "no-store" })',
+                   "Carregando o painel", "Não foi possível carregar data.json", "Tentar de novo",
+                   "_colunas", "_partes", "_faltam", "_rep", "_igual", "function unrep",
+                   'var PAGE_SCHEMA = "cdp-painel/2"', 'var PAGE_SHA = "__CDP_PAGE_SHA256__"',
+                   "META.page_sha256 !== PAGE_SHA", "Página desatualizada",
+                   # eixo x proporcional às datas quando meses consolidados precedem os pregões
+                   "function timeScale", "timeX: ROLLUP.length > 0", "timeX: !!ns.zone",
+                   "meses consolidados (fim de mês)", "function reportPath"):
+        assert needle in template, needle
+    from cdp.workflow.painel import SCHEMA_VERSION
+
+    assert f'var PAGE_SCHEMA = "{SCHEMA_VERSION}"' in template  # página e dados da mesma versão
+
+
+def test_publication_compact_forms_roundtrip():
+    """Colunas e partes são formas sem perda: expandir(compactado) == original."""
+    from cdp.workflow.painel_publicacao import _columnar, _pack, _split
+
+    long = ('linha com "aspas", \\barra e acentuação — ' * 40 + "\n") * 6 + "x" * 3_500
+    rows = [{"a": 1.5, "b": {"c": None, "d": [1, 2]}, "t": "curto"},
+            {"a": None, "b": None, "t": long, "_truncado": True},
+            {"a": 2.0, "b": {"c": 3.25, "d": []}, "e": {}},
+            {"a": -0.0, "b": {"c": 1e-12, "d": [{"x": 1}]}, "t": None}]
+    col = _columnar(rows)  # linhas heterogêneas: colunas ausentes em _faltam
+    assert col["_n"] == 4 and col["_faltam"] and expandir(col) == rows
+    assert _columnar([{"a.b": 1}, {"a.b": 2}, {"a.b": 3}]) is None  # ponto na chave: ambíguo
+    table = [{"issuer_id": f"ID{i:02d}", "weight": i / 100, "side": "LONG",
+              "risk": {"vol": 0.1 * i, "beta": None}} for i in range(30)]
+    obj = {"tabela": table, "linhas": rows, "texto": long, "num": [0.1, 0.2, 0.3], "vazio": [],
+           "ponto": [{"a.b": 1}, {"a.b": 2}, {"a.b": 3}]}
+    packed = _split(_pack(copy.deepcopy(obj)))
+    assert "_colunas" in packed["tabela"] and "_partes" in packed["texto"]
+    assert expandir(packed) == obj
+    text = dump_publicacao(packed)
+    assert max_line(text) <= DATA_MAX_LINE and len(text) < len(dump_publicacao(obj))
+    assert "".join(partes(long)) == long
+    assert all(len(json.dumps(p, ensure_ascii=False)) - 2 <= 1_000 for p in partes(long))
+    # colunas em corridas: só quando encurta; 1, 1.0, True e -0.0 nunca se misturam
+    runs = [{"k": "daily", "v": v, "n": 1.5} for v in (1, 1, 1.0, True, -0.0, 0.0, None, None)] * 4
+    packed = _pack(copy.deepcopy(runs))
+    assert "_rep" in packed["_colunas"]["k"] and "_rep" in packed["_colunas"]["n"]
+    back = expandir(json.loads(dump_publicacao(packed)))
+    assert back == runs and [type(r["v"]) for r in back] == [type(r["v"]) for r in runs]
+    assert [str(r["v"]) for r in back] == [str(r["v"]) for r in runs]  # -0.0 continua -0.0
+    # período idêntico a um irmão: {"_igual": ...} com os próprios campos
+    alias = {"itd": {"label": "Desde o início", "ret": 0.01, "x": [1, 2]},
+             "mtd": {"_igual": "itd", "label": "Mês"}}
+    assert expandir(alias) == {"itd": alias["itd"], "mtd": {"label": "Mês", "ret": 0.01, "x": [1, 2]}}
+
+
+def _big_full(full):
+    """Pesquisa artificialmente grande (notas longas) e track record longo sobre o retrato real."""
+    big = copy.deepcopy(full)
+    w = big["weeks"][-1]
+    book = [p["issuer_id"] for p in w["proposal"]["positions"]]
+    text = ("Tese longa com fatos, contexto e riscos detalhados do emissor. " * 80).strip()
+    notes = []
+    for i in range(400):
+        iid = book[i % len(book)] if i < 2 * len(book) else f"FORA{i:03d}"
+        notes.append({
+            "note_id": f"n{i}", "issuer_id": iid, "role": "short_risk" if i % 2 else "fundamental",
+            "stance": (i % 5) - 2, "confidence": 0.25 + (i % 4) / 10, "horizon_weeks": 4 + i % 9,
+            "thesis": text, "bull_points": [text[:600]] * 6, "bear_points": [text[:600]] * 6,
+            "key_risks": [f"Risco {k}: {text[:450]}" for k in range(7)],
+            "catalysts": [{"description": f"Evento {k}: {text[:450]}", "direction": "positive",
+                           "expected_date": "2024-04-01"} for k in range(6)],
+            "squeeze": ({"verdict": "caution", "rationale": text[:900], "si_pct_float": 0.125}
+                        if i % 2 else None),
+            "evidence": [{"kind": "source", "ref_id": f"https://exemplo.org/{i}/{k}",
+                          "url": f"https://exemplo.org/{i}/{k}", "note": text[:160]}
+                         for k in range(8)],
+            "n_evidence": 11, "provider": "imported:demo", "created_at": "2024-03-11T14:00:00+00:00"})
+    w["research"]["notes"] = notes
+    w["research"]["notes_detail"] = True
+    w["research"]["views"] = [{"issuer_id": n["issuer_id"], "source": "ai", "score": 1,
+                               "confidence": 0.5, "no_short": False, "no_long": False,
+                               "max_abs_weight": None, "rationale": text, "author": "claude-code",
+                               "note_ids": ["n1", "n2"]} for n in notes[:150]]
+    w["research"]["macro"] = [{
+        "note_id": f"m{k}", "scope": c, "stance": 0, "regime": "neutro", "summary": text * 2,
+        "key_events": [{"description": text[:500], "direction": "uncertain", "expected_date": None}
+                       for _ in range(9)],
+        "risks": [text[:500]] * 9, "portfolio_implications": [text[:500]] * 9,
+        "evidence": notes[0]["evidence"], "n_evidence": 20, "provider": "imported:demo",
+        "created_at": "2024-03-11T14:00:00+00:00"} for k, c in enumerate(
+            ("BR", "MX", "CL", "CO", "PE", "AR", "LATAM"))]
+    w["pm_decision"]["views"] = [{"issuer_id": iid, "stance": 1, "conviction": 3,
+                                  "horizon_weeks": 8, "rationale": text[:1_500], "evidence": []}
+                                 for iid in book]
+    tr = big["track_record"]
+    base_recs, base_cmp = tr["records"], tr["compare"]
+    day, dates = date(2023, 1, 2), []
+    while len(dates) < 320:
+        if day.weekday() < 5:
+            dates.append(day.isoformat())
+        day = day.fromordinal(day.toordinal() + 1)
+    tr["records"] = [{**copy.deepcopy(base_recs[i % len(base_recs)]), "date": d, "ret": 0.001 * (i % 7 - 3)}
+                     for i, d in enumerate(dates)]
+    tr["compare"] = [{**copy.deepcopy(base_cmp[i % len(base_cmp)]), "date": d}
+                     for i, d in enumerate(dates)] if base_cmp else []
+    tr["n_days"] = len(dates)
+    rep = big["daily_reports"][0]
+    big["daily_reports"] = [{**copy.deepcopy(rep), "date": d,
+                             "commentary": {**rep["commentary"], "markdown": text * 3}}
+                            for d in reversed(dates[-60:])]
+    big["reports_index"] = [{"kind": "daily", "date": d, "has_md": True, "has_html": True,
+                             "md_sha256": hashlib.sha256(d.encode()).hexdigest()}
+                            for d in reversed(dates)]
+    big["meta"]["data_hash"] = "0" * 64
+    return big
+
+
+def test_publication_budget_with_large_research_and_long_track(full6):
+    big = _big_full(full6)
+    pub = publicacao(big)
+    _assert_budget(pub)
+    meta = expandir(pub["meta"])
+    # pesquisa artificialmente enorme: os cortes caem nos textos da pesquisa, não no histórico
+    assert meta["publication"]["nivel"] <= 3
+    out = expandir(pub)
+    tr = out["track_record"]
+    kept = meta["publication"]["limites"]["pregoes"]
+    assert len(tr["records"]) == kept >= PREGOES_MINIMOS and tr["rollup"]
+    assert len(out["daily_reports"]) >= COMENTARIOS_MINIMOS
+    assert sum(r["n_days"] for r in tr["rollup"]) + kept == 320
+    tail = big["track_record"]["records"][-kept:]
+    assert [(r["date"], r["nav_end"], r["ret"]) for r in tr["records"]] == [
+        (r["date"], r["nav_end"], r["ret"]) for r in tail]
+    # meses consolidados em código: retorno composto e NAV do último pregão do mês
+    first = tr["rollup"][0]
+    month = [r for r in big["track_record"]["records"] if r["date"].startswith(first["month"])]
+    g = 1.0
+    for r in month:
+        g *= 1.0 + r["ret"]
+    assert first["ret"] == pytest.approx(g - 1.0) and first["nav_end"] == month[-1]["nav_end"]
+    assert first["n_days"] == len(month)
+    cuts = {c["campo"] for c in meta["truncations"]}
+    assert "track_record.records" in cuts and "weeks[].research.notes[]" in cuts
+
+
+def test_publication_level0_rules(full6):
+    """Nível 0 (regras do artifact), mesmo quando não cabe: limites por campo e marcações."""
+    big = _big_full(full6)
+    out = expandir(compactar(big, 0))
+    lim = NIVEIS[0]
+    r = out["weeks"][-1]["research"]
+    assert r["notes"] and r["notes_table"]
+    book = {p["issuer_id"] for p in big["weeks"][-1]["proposal"]["positions"]}
+    assert {n["issuer_id"] for n in r["notes"]} <= book
+    assert all(not n["issuer_id"].startswith("FORA") for n in r["notes"])
+    for n in r["notes"]:
+        assert n["_truncado"] is True and len(n["thesis"]) <= lim.tese_chars
+        assert n["thesis"].endswith("…")
+        assert len(n["catalysts"]) <= 3 and len(n["key_risks"]) <= 3 and len(n["evidence"]) <= 3
+        assert n["n_evidence"] == 11 and "bull_points" not in n
+        assert all(e["url"].startswith("https://") for e in n["evidence"])
+    assert {"issuer_id", "role", "stance", "confidence", "horizon_weeks", "squeeze_verdict"} == set(
+        r["notes_table"][0])
+    for m in r["macro"]:
+        assert len(m["summary"]) <= 1_200 and m["_truncado"] is True
+        assert max(len(m["key_events"]), len(m["risks"]), len(m["portfolio_implications"])) <= 5
+    assert all(len(c["commentary"]["markdown"]) <= 4_000 for c in out["daily_reports"])
+    assert len(out["daily_reports"]) == 10 and all("report_markdown" not in x
+                                                   for x in out["daily_reports"])
+    assert len(out["reports_index"]) == 320 and all(x["has_md"] and x["md_sha256"]
+                                                    for x in out["reports_index"])
+    # o caminho não se repete em cada linha: a página o monta (reports_dir/kind/date/relatorio.md)
+    assert all("path" not in x for x in out["reports_index"])
+    assert out["meta"]["publication"]["reports_dir"] == "reports"
+    assert report_path("reports", "daily", "2024-03-11") == "reports/daily/2024-03-11/relatorio.md"
+    assert len(out["track_record"]["records"]) == 90 and len(out["audit"]["events"]) <= 20
+    w = out["weeks"][-1]
+    assert "markdown" not in w["report"] and w["report"]["sha256"]
+    assert len(w["shadow"]["positions"]) <= 20
+
+
+def test_publication_previous_week_is_slim_at_level_1(full6):
+    """Nível 1: a semana anterior fica enxuta (decisão, leitura do PM e hashes íntegros; sem
+    gates aprovados, risco ex-ante nem notas da pesquisa); a semana vigente não muda."""
+    lvl0, lvl1 = expandir(compactar(full6, 0)), expandir(compactar(full6, 1))
+    old, new = lvl1["weeks"]
+    assert old["detail"] == "completo" and old["detail_publicacao"] == "enxuta"
+    assert "detail_publicacao" not in new
+    w0 = full6["weeks"][0]
+    assert old["decision"] == w0["decision"] and old["pm_decision"] == w0["pm_decision"]
+    assert "risk" not in old["proposal"] and all(
+        c["passed"] is False for c in old["proposal"]["compliance"]["checks"])
+    assert old["proposal"]["compliance"]["n"] == w0["proposal"]["compliance"]["n"]
+    assert old["research"]["resumo"] is True and old["research"]["notes"] == []
+    assert new["proposal"]["compliance"]["n"] == len(new["proposal"]["compliance"]["checks"])
+    assert all("details" not in c for c in new["proposal"]["compliance"]["checks"]
+               if c["passed"] is True)  # nível 1: sem o texto dos gates aprovados
+    assert any("details" in c for c in lvl0["weeks"][-1]["proposal"]["compliance"]["checks"]
+               if c["passed"] is True)
+    # a semana vigente nunca repete o risco ex-ante (idêntico a risk.ex_ante)
+    assert "risk" not in lvl0["weeks"][-1]["proposal"] and lvl0["risk"]["ex_ante"]
+
+
+def test_publication_older_weeks_are_one_line_summaries(full6):
+    pub = expandir(compactar(full6, 2))  # nível 2: só a semana mais recente em detalhe
+    old, new = pub["weeks"]
+    assert old["detail"] == "resumo" and new["detail"] == "completo"
+    assert set(old) <= {"week", "detail", "stage", "state", "executed", "path_taken",
+                        "shadow_verified", "inputs_verified", "decision", "pm_decision",
+                        "proposal", "performance", "report"}
+    w0 = full6["weeks"][0]
+    assert old["decision"]["approval_hash"] == w0["decision"]["approval_hash"]
+    assert old["proposal"]["summary"]["ex_ante_vol"] == w0["proposal"]["summary"]["ex_ante_vol"]
+    assert old["pm_decision"]["posture_label"] == w0["pm_decision"]["posture_label"]
+
+
+def _txt(tag: str, n: int) -> str:
+    return (f"{tag}: fatos, contexto, riscos e catalisadores com números citados por fato. " * 60)[:n]
+
+
+def _bdays(start: date, n: int) -> list[str]:
+    out, d = [], start
+    while len(out) < n:
+        if d.weekday() < 5:
+            out.append(d.isoformat())
+        d = d.fromordinal(d.toordinal() + 1)
+    return out
+
+
+def _year_full(full, *, n_days=250, n_weeks=52, n_comm=60, n_runs=5, n_pos=46):
+    """Livro sintético de ~1 ano no tamanho do livro real: pesquisa com 156 notas e 7 notas
+    macro, 46 posições, 35 visões e 28 exclusões do PM, 250 pregões, 60 comentários de 3.500
+    caracteres e ``n_runs`` execuções de backtest com a curva semanal."""
+    y = copy.deepcopy(full)
+    dates = _bdays(date(2023, 3, 6), n_days)
+    mondays = [d for d in dates if date.fromisoformat(d).weekday() == 0][-n_weeks:]
+    base = y["weeks"][-1]
+    pos0 = base["proposal"]["positions"]
+    positions = [{**copy.deepcopy(pos0[i % len(pos0)]), "issuer_id": f"P{i:03d}",
+                  "name": f"Emissor {i:03d}"} for i in range(n_pos)]
+    book = [p["issuer_id"] for p in positions]
+    notes = [{
+        "note_id": f"n{i}", "issuer_id": book[i] if i < n_pos else f"FORA{i:03d}",
+        "role": ("fundamental", "short_risk", "catalyst")[i % 3], "stance": i % 5 - 2,
+        "confidence": 0.3 + (i % 5) / 10, "horizon_weeks": 4 + i % 9, "thesis": _txt(f"Tese {i}", 900),
+        "bull_points": [_txt("a favor", 300)] * 3, "bear_points": [_txt("contra", 300)] * 3,
+        "key_risks": [_txt(f"risco {k}", 220) for k in range(4)],
+        "catalysts": [{"description": _txt(f"evento {k}", 220), "direction": "positive",
+                       "expected_date": "2024-01-15"} for k in range(4)],
+        "squeeze": ({"verdict": "caution", "rationale": _txt("squeeze", 400), "si_pct_float": 0.1}
+                    if i % 3 == 1 else None),
+        "evidence": [{"kind": "source", "ref_id": f"https://exemplo.org/{i}/{k}",
+                      "url": f"https://exemplo.org/{i}/{k}", "note": _txt("fonte", 120)}
+                     for k in range(8)],
+        "n_evidence": 8, "provider": "imported:demo", "created_at": "2024-01-08T14:00:00+00:00"}
+        for i in range(156)]
+    macro = [{"note_id": f"m{k}", "scope": c, "stance": k % 3 - 1, "regime": "neutro",
+              "summary": _txt(f"Macro {c}", 1_500),
+              "key_events": [{"description": _txt("evento", 250), "direction": "uncertain",
+                              "expected_date": None} for _ in range(6)],
+              "risks": [_txt("risco macro", 250)] * 6,
+              "portfolio_implications": [_txt("implicação", 250)] * 6,
+              "evidence": notes[0]["evidence"][:5], "n_evidence": 12, "provider": "imported:demo",
+              "created_at": "2024-01-08T14:00:00+00:00"}
+             for k, c in enumerate(("BR", "MX", "CL", "CO", "PE", "AR", "LATAM"))]
+    views = [{"issuer_id": n["issuer_id"], "source": "ai", "score": n["stance"], "confidence": 0.5,
+              "no_short": False, "no_long": False, "max_abs_weight": None,
+              "rationale": _txt("visão", 300), "author": "demo", "note_ids": [n["note_id"]]}
+             for n in notes[:82]]
+    pm = {**copy.deepcopy(base["pm_decision"]),
+          "market_view": _txt("Visão de mercado", 1_500), "what_changed": _txt("Mudanças", 1_500),
+          "evaluation_last_week": _txt("Avaliação", 1_500),
+          "views": [{"issuer_id": iid, "stance": 1, "conviction": 3, "horizon_weeks": 8,
+                     "rationale": _txt("racional", 600),
+                     "evidence": [{"id": f"e{k}", "url": f"https://exemplo.org/pm/{k}"}
+                                  for k in range(3)]} for iid in book[:35]],
+          "exclusions": [{"issuer_id": f"FORA{k:03d}", "no_long": True, "no_short": False,
+                          "reason": _txt("exclusão", 300)} for k in range(28)],
+          "position_journal": [{"issuer_id": iid, "thesis": _txt("tese", 400),
+                                "invalidation_criteria": _txt("invalida", 400),
+                                "premortem": _txt("premortem", 400)} for iid in book[:6]]}
+    trade0 = (base["proposal"].get("trades") or [{}])[0]
+    weeks = []
+    for i, wk in enumerate(mondays):
+        w = copy.deepcopy(base)
+        w.update({"week": wk, "detail": "completo" if i >= len(mondays) - 8 else "resumo",
+                  "pm_decision": copy.deepcopy(pm)})
+        w["proposal"]["positions"] = copy.deepcopy(positions)
+        w["proposal"]["trades"] = [{**copy.deepcopy(trade0), "issuer_id": iid} for iid in book]
+        recent = i >= len(mondays) - 2  # o completo só traz as notas das 2 semanas mais recentes
+        w["research"].update({"macro": copy.deepcopy(macro), "views": copy.deepcopy(views),
+                              "notes": copy.deepcopy(notes) if recent else [],
+                              "notes_detail": recent})
+        weeks.append(w)
+    y["weeks"] = weeks
+    y["risk"]["live_week"] = mondays[-1]
+    for key in ("live_book_week", "current_week", "latest_decision_week"):
+        if key in y["status"]:
+            y["status"][key] = mondays[-1]
+    tr = y["track_record"]
+    recs, cmp = tr["records"], tr["compare"]
+    tr["records"] = [{**copy.deepcopy(recs[i % len(recs)]), "date": d, "ret": 0.0004 * (i % 9 - 4),
+                      "live_book_week": max((m for m in mondays if m <= d), default=None)}
+                     for i, d in enumerate(dates)]
+    tr["compare"] = [{**copy.deepcopy(cmp[i % len(cmp)]), "date": d} for i, d in enumerate(dates)]
+    tr["n_days"] = n_days
+    ld = y["latest_day"]
+    lp = ld["positions"]
+    ld["positions"] = [{**copy.deepcopy(lp[i % len(lp)]), "issuer_id": p["issuer_id"],
+                        "name": p["name"]} for i, p in enumerate(positions)]
+    ld["date"] = dates[-1]
+    rep = y["daily_reports"][0]
+    y["daily_reports"] = [{**copy.deepcopy(rep), "date": d,
+                           "commentary": {**rep["commentary"], "markdown": _txt("Comentário", 3_500)}}
+                          for d in reversed(dates[-n_comm:])]
+    y["reports_index"] = (
+        [{"kind": "daily", "date": d, "has_md": True, "has_html": True,
+          "md_sha256": hashlib.sha256(d.encode()).hexdigest()} for d in reversed(dates)]
+        + [{"kind": "weekly", "date": w, "has_md": True, "has_html": True,
+            "md_sha256": hashlib.sha256(w.encode()).hexdigest()} for w in mondays])
+    nav_dates = _bdays(date(2019, 1, 4), 1_500)[::5]
+    y["backtests"] = {"available": True, "documents": [], "runs": [{
+        "id": f"2023-{1 + k // 28:02d}-{1 + k % 28:02d}/V{k}", "label": f"Variante {k}",
+        "variant": f"V{k}", "description": _txt("descrição", 200), "overrides": {},
+        "signal_weights": {"value": 0.3}, "metrics": {f"m{j}": 0.01 * (j + k) for j in range(25)},
+        "is_synthetic": True,
+        "notes": [_txt("limitação", 280)] * 4 + [f"2023-01-0{j}: relaxada" for j in range(1, 8)],
+        "provenance": {"config_hash": f"c{k}", "data_notice": "DADOS SIMULADOS"},
+        "nav_weekly": {"date": nav_dates, "nav": [1e8 + j * 1e4 for j in range(len(nav_dates))],
+                       "drawdown": [-0.001 * (j % 7) for j in range(len(nav_dates))]},
+        "ic": {"summary": {"value": {"n": 50, "mean": 0.02, "std": 0.1, "t_stat": 1.4,
+                                     "pct_positive": 0.55}},
+               "cumulative": {"date": nav_dates, "value": [0.01 * j for j in range(len(nav_dates))]}},
+        "files": {}, "n_daily_obs": 1_500} for k in range(n_runs)]}
+    y["meta"]["data_hash"] = "0" * 64
+    return y
+
+
+def test_publication_levels_are_pinned(full6):
+    """Regressão do orçamento: o livro de demonstração (2 semanas, 6 pregões) cabe no nível 0
+    (regras do artifact, 2 semanas completas) e um livro de ~1 ano no tamanho do real cabe até o
+    nível 3 com ao menos 75 pregões em linhas diárias e 7 comentários do dia."""
+    demo_pub = publicacao(full6)
+    _assert_budget(demo_pub)
+    assert demo_pub["meta"]["publication"]["nivel"] == 0
+    assert [w["detail"] for w in expandir(demo_pub["weeks"])] == ["completo", "completo"]
+    year = _year_full(full6)
+    pub = publicacao(year)
+    _assert_budget(pub)
+    nivel = pub["meta"]["publication"]["nivel"]
+    assert nivel <= 3, nivel
+    out = expandir(pub)
+    assert len(out["track_record"]["records"]) >= 75 and len(out["daily_reports"]) >= 7
+    assert sum(r["n_days"] for r in out["track_record"]["rollup"]) + len(
+        out["track_record"]["records"]) == 250
+    # o que sai antes do histórico: textos da pesquisa, detalhe das semanas anteriores, etc.
+    w = out["weeks"][-1]
+    assert w["detail"] == "completo" and w["pm_decision"]["views"]
+    assert w["proposal"]["positions"] and w["decision"]["approval_hash"]
+    cuts = {c["campo"] for c in out["meta"]["truncations"]}
+    assert {"weeks[].proposal.compliance.checks[].details", "weeks[].research.views"} <= cuts
+
+
+def test_ladder_cuts_low_value_content_before_daily_history():
+    """Os primeiros níveis cortam o que a página quase não mostra; o histórico diário (pregões
+    em linhas e comentários do dia) só cai abaixo do mínimo nos dois últimos níveis."""
+    for i, lim in enumerate(NIVEIS[:7]):
+        assert lim.pregoes >= PREGOES_MINIMOS and lim.comentarios >= COMENTARIOS_MINIMOS, i
+    assert NIVEIS[-1].pregoes < PREGOES_MINIMOS and NIVEIS[-1].comentarios < COMENTARIOS_MINIMOS
+    n0, n1, n2 = NIVEIS[:3]
+    assert (n0.detalhes_aprovadas, n0.visao_chars, n0.semana_anterior_detalhe) == (True, 200, True)
+    assert (n1.detalhes_aprovadas, n1.visao_chars, n1.visoes_fora_carteira,
+            n1.semana_anterior_detalhe) == (False, 0, False, False)
+    assert (n1.pregoes, n1.comentarios, n1.notas_completas) == (n0.pregoes, n0.comentarios, True)
+    assert not n2.mandato_tabela and n2.backtests_execucoes < n0.backtests_execucoes
+    assert (n2.pregoes, n2.comentarios) == (n0.pregoes, n0.comentarios)
+    keys = ("pregoes", "comentarios", "comentario_chars", "semanas_resumo", "auditoria",
+            "tese_chars", "resumo_macro_chars", "backtests_execucoes", "posicoes_sombra")
+    for a, b in zip(NIVEIS, NIVEIS[1:], strict=False):  # cada nível só aperta
+        assert all(getattr(b, k) <= getattr(a, k) for k in keys)
+
+
+def test_backtest_runs_are_bounded(full6):
+    """A calibração mensal acrescenta execuções: só a escolhida e as mais recentes são
+    publicadas (as demais entram na contagem), e o bloco não cresce com o número de execuções."""
+    few, many = _year_full(full6, n_runs=5), _year_full(full6, n_runs=125)
+    lim = NIVEIS[0]
+    a = expandir(compactar(few, 0))["backtests"]
+    b = expandir(compactar(many, 0))["backtests"]
+    assert a["n_runs"] == 5 and b["n_runs"] == 125
+    assert len(a["runs"]) == 5 and len(b["runs"]) == 1 + lim.backtests_execucoes
+    sel = b["selected"]["id"]
+    assert sel == many["backtests"]["runs"][-1]["id"]  # sem config_hash nem nota: a mais recente
+    ids = [r["id"] for r in many["backtests"]["runs"]]
+    assert [r["id"] for r in b["runs"]] == ids[-(1 + lim.backtests_execucoes):]
+    full_runs = {r["id"]: r for r in many["backtests"]["runs"]}
+    assert all(r["metrics"] == full_runs[r["id"]]["metrics"] for r in b["runs"])
+    cut = [c for c in expandir(compactar(many, 0))["meta"]["truncations"]
+           if c["campo"] == "backtests.runs"]
+    assert cut and cut[0]["n"] == 125 - len(b["runs"])
+    size = lambda x: len(dump_publicacao(x))  # noqa: E731
+    assert size(compactar(many, 0)["backtests"]) <= size(compactar(few, 0)["backtests"]) * 1.4
+    pub = publicacao(many)
+    _assert_budget(pub)
+    assert pub["meta"]["publication"]["nivel"] <= 3
+
+
+def test_chosen_backtest_rule():
+    runs = [{"id": "a/A", "variant": "A", "provenance": {"config_hash": "x"}},
+            {"id": "a/B", "variant": "B", "provenance": {"config_hash": "y"}},
+            {"id": "a/C", "variant": "C", "provenance": {"config_hash": "z"}}]
+    doc = [{"path": "a/CALIBRACAO.md", "markdown": "| **B** | ... \nA variante B foi escolhida."}]
+    assert chosen_backtest(runs, doc, "z") == ("a/C", "configuração vigente (config_hash)")
+    assert chosen_backtest(runs, doc, "nenhum")[0] == "a/B"
+    assert chosen_backtest(runs, [], None) == ("a/C", "execução mais recente")
+    assert chosen_backtest([], doc, "z") == (None, None)
+
+
+def test_publication_backtests_keep_metrics_and_the_chosen_curve(demo, tmp_path):
+    reports = tmp_path / "reports"
+    shutil.copytree(demo / "reports", reports)
+    for name, variant in (("bt_a", "A"), ("bt_b", "B")):
+        run = reports / "backtest" / name
+        run.mkdir(parents=True)
+        (run / "metrics.json").write_text(json.dumps(
+            {"variant": variant, "metrics": {"sharpe": 0.5 if variant == "A" else 0.7},
+             "notes": [f"2024-01-0{k}: relaxamentos" for k in range(1, 9)] + ["limitação"] * 3,
+             "provenance": {"data_notice": "DADOS SIMULADOS — teste", "config_hash": "q"}}),
+            encoding="utf-8")
+        lines = ["date,ret_net,nav"] + [f"2024-0{m}-{d:02d},0.0,{100 + m + d / 100}"
+                                         for m in (1, 2, 3) for d in (5, 12, 19, 26)]
+        (run / "daily.csv").write_text("\n".join(lines) + "\n", encoding="utf-8")
+        (run / "ic.csv").write_text("date,composite\n2024-01-05,0.1\n2024-01-12,-0.05\n",
+                                    encoding="utf-8")
+    (reports / "backtest" / "CALIBRACAO.md").write_text("A variante B foi escolhida.\n",
+                                                        encoding="utf-8")
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        full = painel_data(_rt(demo, reports), now=NOW)
+    bt = expandir(publicacao(full))["backtests"]
+    assert bt["selected"]["id"] == "bt_b" and "CALIBRACAO.md" in bt["selected"]["criterio"]
+    runs = {r["id"]: r for r in bt["runs"]}
+    full_runs = {r["id"]: r for r in full["backtests"]["runs"]}
+    for rid, r in runs.items():
+        assert r["metrics"] == full_runs[rid]["metrics"]
+    b, a = runs["bt_b"], runs["bt_a"]
+    assert b["selected"] is True and "nav_weekly" not in b and "weekly" not in b
+    nw = full_runs["bt_b"]["nav_weekly"]
+    assert b["nav_monthly"]["date"] == ["2024-01-26", "2024-02-23", "2024-03-29"]
+    for k in ("nav", "drawdown"):
+        assert b["nav_monthly"][k] == [nw[k][nw["date"].index(d)] for d in b["nav_monthly"]["date"]]
+    assert b["ic"] == {"summary": full_runs["bt_b"]["ic"]["summary"]}
+    assert b["notes"][:3] == ["limitação"] * 3 and len(b["notes"]) == 8 and b["n_notes"] == 11
+    assert set(a) <= {"id", "label", "variant", "description", "overrides", "signal_weights",
+                      "metrics", "is_synthetic", "n_notes"}
+    assert bt["documents"] == [{"path": "CALIBRACAO.md", "sha256": full["backtests"]["documents"][0]["sha256"]}]
+
+
+def test_cli_painel_is_publishable_on_demo(demo, tmp_path, capsys):
+    from cdp.__main__ import main
+
+    base = ["--book", str(demo / "book"), "--market", str(demo / "market"),
+            "--reports", str(demo / "reports")]
+    out_dir = tmp_path / "artifacts" / "painel"
+    assert main(base + ["painel", "--out-dir", str(out_dir)]) == 0
+    res = json.loads(capsys.readouterr().out)
+    art = res["artifact"]
+    assert art["publicavel"] is True and art["motivo"] == "ok" and art["pagina_mudou"] is True
+    assert art["arquivos_para_ler"] == [(out_dir / "index.html").as_posix(),
+                                        (out_dir / "data.json").as_posix()]
+    assert art["tamanho_dados"] == (out_dir / "data.json").stat().st_size <= DATA_MAX_BYTES
+    assert art["linhas_max"] <= PAGE_MAX_LINE and art["url"] is None
+    (out_dir / "ARTIFACT_URL").write_text("https://claude.ai/artifact/exemplo\n", encoding="utf-8")
+    assert main(base + ["painel", "--out-dir", str(out_dir), "--sem-local"]) == 0
+    again = json.loads(capsys.readouterr().out)
+    assert again["index_written"] is False  # index.html local já atualizado...
+    again = again["artifact"]
+    assert again["pagina_mudou"] is True  # ... mas ainda não publicado: a página vai junto
+    assert again["arquivos_para_ler"][0] == (out_dir / "index.html").as_posix()
+    assert again["url"] == "https://claude.ai/artifact/exemplo" and again["pagina_publicada"] is None
+    # depois de publicar com sucesso, a rotina registra a página publicada
+    assert main(["painel", "--out-dir", str(out_dir), "--publicado"]) == 0
+    marked = json.loads(capsys.readouterr().out)["pagina_publicada"]
+    assert marked["mudou"] is True and marked["marcador"] == (out_dir / MARKER_NAME).as_posix()
+    assert main(base + ["painel", "--out-dir", str(out_dir), "--sem-local"]) == 0
+    third = json.loads(capsys.readouterr().out)["artifact"]
+    assert third["pagina_mudou"] is False and third["publicavel"] is True
+    assert third["arquivos_para_ler"] == [(out_dir / "data.json").as_posix()]
+    assert third["pagina_publicada"] == marked["page_sha256"]
+    assert third["linhas_max"] <= DATA_MAX_LINE
+    assert main(["painel", "--out-dir", str(tmp_path / "nada"), "--publicado"]) == 2

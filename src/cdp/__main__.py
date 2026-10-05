@@ -10,7 +10,12 @@ Fluxo semanal (primeiro pregão da semana na B3):
 Fluxo diário (após o fechamento):
     cdp daily --date D
     (a mente escreve reports/daily/<D>/comentario.json)
+    cdp validate-daily --date D             (valida o comentário sem publicar)
     cdp daily publish --date D
+
+Rotinas locais (plugin ``cdp`` do Claude Code; ver docs/cdp/LOCAL.md):
+    cdp agenda                       (o que fazer agora: semana, prazos, fechamentos pendentes)
+    cdp risk [--live] [--date D]     (monitor de risco; grava reports/risk/<D>/risco_<HHMM>.md)
 
 Outros: status, verify, demo, backtest, fetch-base, kill-switch.
 """
@@ -119,6 +124,7 @@ def cmd_weekly_preview(args: argparse.Namespace) -> int:
     rt = Runtime.from_args(args)
     out = rt.weekly_preview(_d(args.week), mind=args.mind)
     if args.out:
+        Path(args.out).parent.mkdir(parents=True, exist_ok=True)
         Path(args.out).write_text(json.dumps(out, ensure_ascii=False, indent=2, default=str),
                                   encoding="utf-8")
     _print({k: v for k, v in out.items() if k not in ("posicoes", "sombra_quant", "tentativas")})
@@ -136,6 +142,18 @@ def cmd_daily(args: argparse.Namespace) -> int:
         out = rt.daily_close(d, live=not args.offline, mind=args.mind)
     _print(out)
     return 0
+
+
+def cmd_validate_daily(args: argparse.Namespace) -> int:
+    """Valida ``comentario.json`` do dia SEM publicar (``daily publish`` é imutável)."""
+    from .workflow.agenda import validate_daily_commentary
+    from .workflow.runtime import Runtime
+
+    ok, issues = validate_daily_commentary(Runtime.from_args(args), args.date or _today_brt())
+    print("OK" if ok else "FALHOU")
+    for i in issues:
+        print(f"- {i}")
+    return 0 if ok else 1
 
 
 def cmd_verify(args: argparse.Namespace) -> int:
@@ -171,6 +189,43 @@ def cmd_demo(args: argparse.Namespace) -> int:
     out = run_demo(Path(args.out), days=args.days)
     _print(out)
     return 0
+
+
+def cmd_agenda(args: argparse.Namespace) -> int:
+    from .workflow.agenda import agenda
+    from .workflow.runtime import Runtime
+
+    rt = Runtime.from_args(args)
+    _print(agenda(rt, now=args.agora))
+    return 0
+
+
+def cmd_risk(args: argparse.Namespace) -> int:
+    from .workflow.risk_monitor import (
+        RISK_DIRNAME,
+        run_risk_monitor,
+        summary_view,
+        write_risk_report,
+    )
+    from .workflow.runtime import Runtime
+
+    rt = Runtime.from_args(args)
+    res = run_risk_monitor(rt, as_of=args.date, live=args.live)
+    out_root = Path(args.out) if args.out else Path(args.reports) / RISK_DIRNAME
+    paths = write_risk_report(res, out_root, rt.cfg)
+    view = summary_view(res)
+    view["relatorio"] = paths
+    _print(view)
+    return 0
+
+
+def _aware(s: str) -> datetime:
+    dt = datetime.fromisoformat(s)
+    if dt.tzinfo is None:
+        from zoneinfo import ZoneInfo
+
+        dt = dt.replace(tzinfo=ZoneInfo("America/Sao_Paulo"))
+    return dt
 
 
 def cmd_backtest(args: argparse.Namespace) -> int:
@@ -233,6 +288,11 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--mind", choices=["claude-code", "codex", "api", "demo"])
     s.set_defaults(func=cmd_daily)
 
+    s = sub.add_parser("validate-daily",
+                       help="valida o comentario.json do dia sem publicar (publish é imutável)")
+    s.add_argument("--date", type=_d)
+    s.set_defaults(func=cmd_validate_daily)
+
     s = sub.add_parser("verify", help="verifica trilha de auditoria, track record e decisões")
     s.set_defaults(func=cmd_verify)
 
@@ -247,6 +307,18 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--days", type=int, default=5)
     s.set_defaults(func=cmd_demo)
 
+    s = sub.add_parser("agenda", help="o que a rotina local deve fazer agora (determinístico)")
+    s.add_argument("--agora", type=_aware, default=None,
+                   help="instante ISO (sem fuso = Brasília); padrão: agora")
+    s.set_defaults(func=cmd_agenda)
+
+    s = sub.add_parser("risk", help="monitor de risco (fechamento ou intradiário com --live)")
+    s.add_argument("--date", type=_d, help="data de referência (padrão: hoje em Brasília)")
+    s.add_argument("--live", action="store_true",
+                   help="marca a carteira com cotações do momento (fonte atrasada)")
+    s.add_argument("--out", default=None, help="pasta dos relatórios (padrão: <reports>/risk)")
+    s.set_defaults(func=cmd_risk)
+
     s = sub.add_parser("backtest", help="backtest walk-forward semanal (sinais point-in-time)")
     s.add_argument("--start", required=True)
     s.add_argument("--end")
@@ -255,7 +327,19 @@ def build_parser() -> argparse.ArgumentParser:
     return p
 
 
+def _utf8_stdio() -> None:
+    """Saída UTF-8 mesmo em consoles/pipes do Windows (cp1252 não tem "≤", "Σ", "→")."""
+    for stream in (sys.stdout, sys.stderr):
+        enc = (getattr(stream, "encoding", None) or "").lower().replace("-", "")
+        if enc != "utf8" and hasattr(stream, "reconfigure"):
+            try:
+                stream.reconfigure(encoding="utf-8", errors="replace")
+            except (OSError, ValueError):  # pragma: no cover - stream já fechado/sem suporte
+                pass
+
+
 def main(argv: list[str] | None = None) -> int:
+    _utf8_stdio()
     args = build_parser().parse_args(argv)
     return int(args.func(args) or 0)
 

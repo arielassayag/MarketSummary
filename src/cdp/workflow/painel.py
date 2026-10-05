@@ -1,0 +1,2016 @@
+"""Exportador determinístico do painel do CDP — Cabra da Peste (artifact HTML de operação e risco).
+
+O painel é uma página única (claude.ai artifact) republicada pelas rotinas após cada decisão
+semanal, fechamento diário e monitor de risco intradiário. Este módulo só LÊ os artefatos do
+fundo (livro, track record, relatórios, base de mercado, backtests) e monta um retrato JSON
+completo da operação; a página apenas formata e plota esses dados.
+
+Regras:
+
+- Números só em código: tudo o que é número vem dos registros/propostas gravados ou de
+  agregações simples e testadas feitas aqui em Python (somas, compostos, comparações com os
+  limites do mandato). A página nunca calcula nada além de formatação.
+- Ausente continua ausente: ``NaN``/``inf`` viram ``null`` (``n/d`` na página), nunca zero.
+- Determinístico: mesma entrada (e mesmo ``now``) ⇒ mesmo JSON (chaves ordenadas) e mesmo hash.
+- Somente leitura: nada é gravado no livro, nos relatórios ou na base; antes da inception nenhuma
+  pasta é criada como efeito colateral.
+- Robusto: arquivo corrompido ou adulterado vira apontamento de integridade (``issues`` e
+  ``status.integrity``), nunca uma exceção.
+- Dados simulados carregam sempre "DADOS SIMULADOS" (``meta.is_synthetic``/``meta.data_notice``).
+- Sem identificadores de modelo: campos ``model``/``models`` são descartados e nomes de modelos
+  em textos livres são substituídos por ``[modelo]`` (a mente — claude-code/codex — é mantida).
+- Injeção: o JSON é embutido em ``<script type="application/json">`` com ``<``, ``>`` e ``&``
+  escapados como ``\\u003c``/``\\u003e``/``\\u0026`` — nenhum texto de IA, notícia ou relatório
+  consegue fechar o elemento.
+"""
+
+from __future__ import annotations
+
+import enum
+import hashlib
+import json
+import math
+import os
+import re
+import tempfile
+from collections import Counter
+from collections.abc import Callable, Iterable, Mapping, Sequence
+from datetime import UTC, date, datetime
+from pathlib import Path
+from typing import Any
+from zoneinfo import ZoneInfo
+
+from pydantic import BaseModel
+
+from .. import SIMULATED_DATA_NOTICE
+from ..config import FundConfig
+from ..research.pm_agent import POSTURE_PT, REGIME_PT, STAGE_PT, ladder_stage
+from ..ui.fmt import PATH_PT
+from .memo import fmt_pct
+
+SCHEMA_VERSION = "cdp-painel/1"
+PLACEHOLDER = "__CDP_DATA__"
+DATA_ELEMENT = f'<script type="application/json" id="cdp-data">{PLACEHOLDER}</script>'
+DEFAULT_TEMPLATE = Path(__file__).with_name("painel_template.html")
+DEFAULT_OUT = Path("artifacts/painel/cdp_painel.html")
+DEFAULT_MAX_DAILY_REPORTS = 60
+DEFAULT_FULL_WEEKS = 8
+DEFAULT_AUDIT_TAIL = 40
+DEFAULT_MAX_RISK_RUNS = 30
+MAX_RISK_FILE_BYTES = 2_000_000
+MAX_BACKTEST_DEPTH = 3
+EVIDENCE_NOTE_CHARS = 280
+MAX_EVIDENCE_PER_NOTE = 8
+LIMIT_TOL = 1e-9
+COMMENTARY_SECTION = "Comentário do dia"
+REAL_DATA_NOTICE = ("Dados reais de mercado; paper trading com execução hipotética no "
+                    "fechamento (MOC).")
+EMPTY_DATA_NOTICE = "Sem artefatos do fundo ainda (antes da inception)."
+
+_MODEL_KEYS = frozenset({"model", "models", "model_id", "model_name"})
+_MODEL_ID_RE = re.compile(
+    r"\b(?:claude-(?!code\b)[a-z0-9][\w.\-]*|gpt-[\w.\-]+|chatgpt-[\w.\-]+|"
+    r"o[134]-(?:mini|preview|pro)[\w.\-]*|gemini-[\w.\-]+|text-davinci-[\w.\-]+)",
+    re.IGNORECASE)
+_PROVENANCE_RE = re.compile(r"^_\s*(Autoria:.*?)\s*_\s*$", re.MULTILINE)
+_MIND_RE = re.compile(r"mente\s+([\w.-]+)\s*\[IA\]", re.IGNORECASE)
+_WEEK_DIR_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+PHASE_PT = {
+    "pre_inception": "Antes da inception: nenhuma carteira decidida ainda.",
+    "aguardando_decisao": "Semana em preparação: briefing/pesquisa gravados, aguardando a "
+                          "decisão autônoma.",
+    "decidida_aguardando_execucao": "Carteira decidida; execução no fechamento (MOC) pela "
+                                    "rotina diária.",
+    "bloqueada": "Decisão da semana bloqueada (falha de integridade ou de compliance HARD).",
+    "em_operacao": "Em operação: carteira efetivada e marcada diariamente.",
+}
+WEEK_STAGE_PT = {
+    "vazia": "sem artefatos", "preparada": "briefing preparado (dados congelados com hash)",
+    "entradas_gravadas": "pesquisa e decisão do PM gravadas pela mente; aguardando validação "
+                         "e decisão",
+    "decidida": "decisão autônoma gravada; execução no fechamento (MOC)",
+    "efetivada": "carteira efetivada (booked) e marcada diariamente",
+}
+BACKTEST_SIG_DIGITS = 8
+ATTRIBUTION_GROUPS = ("component", "factor_group", "factor", "country", "sector", "side",
+                      "issuer")
+COMPONENT_ORDER = ("equity", "factor", "specific", "costs", "borrow", "financing")
+LIQUIDITY_BUCKETS = ((1.0, "≤ 1 dia"), (2.0, "1–2 dias"), (3.0, "2–3 dias"), (5.0, "3–5 dias"),
+                     (math.inf, "> 5 dias"))
+
+
+# ==========================================================
+# Sanitização e serialização determinística
+# ==========================================================
+
+def scrub_text(text: str) -> str:
+    """Remove identificadores de modelo de um texto livre (a mente claude-code/codex fica)."""
+    return _MODEL_ID_RE.sub("[modelo]", text)
+
+
+def clean(obj: Any) -> Any:
+    """Estrutura JSON pura e determinística: NaN/inf ⇒ ``None``, datas ISO, enums por valor,
+    conjuntos ordenados, chaves de modelo descartadas e textos sem identificadores de modelo."""
+    if obj is None or isinstance(obj, bool):
+        return obj
+    if isinstance(obj, BaseModel):
+        return clean(obj.model_dump(mode="json"))
+    if isinstance(obj, enum.Enum):
+        return clean(obj.value)
+    if isinstance(obj, str):
+        return scrub_text(obj)
+    if isinstance(obj, int):
+        return int(obj)
+    if isinstance(obj, float):
+        return float(obj) if math.isfinite(obj) else None
+    if isinstance(obj, Mapping):
+        return {str(k): clean(v) for k, v in obj.items() if str(k) not in _MODEL_KEYS}
+    if isinstance(obj, (set, frozenset)):
+        return sorted((clean(v) for v in obj), key=lambda v: json.dumps(v, sort_keys=True))
+    if isinstance(obj, (list, tuple)):
+        return [clean(v) for v in obj]
+    if hasattr(obj, "to_pydatetime"):  # pandas.Timestamp (subclasse de datetime)
+        ts = obj.to_pydatetime()
+        midnight = ts.time() == datetime.min.time() and ts.tzinfo is None
+        return ts.date().isoformat() if midnight else ts.isoformat()
+    if isinstance(obj, (datetime, date)):
+        return obj.isoformat()
+    if isinstance(obj, Path):
+        return obj.as_posix()
+    if hasattr(obj, "item"):  # escalares numpy
+        return clean(obj.item())
+    return scrub_text(str(obj))
+
+
+def to_json(data: Any) -> str:
+    """JSON canônico (chaves ordenadas, sem espaços, UTF-8, sem NaN)."""
+    return json.dumps(clean(data), ensure_ascii=False, sort_keys=True, separators=(",", ":"),
+                      allow_nan=False)
+
+
+def data_hash(data: Mapping[str, Any]) -> str:
+    """SHA-256 do JSON canônico do painel sem ``meta.data_hash``."""
+    body = dict(data)
+    meta = dict(body.get("meta") or {})
+    meta.pop("data_hash", None)
+    body["meta"] = meta
+    return hashlib.sha256(to_json(body).encode("utf-8")).hexdigest()
+
+
+def embed_json(data: Any) -> str:
+    """JSON seguro para ``<script type="application/json">`` (nada fecha o elemento)."""
+    text = to_json(data)
+    return (text.replace("&", "\\u0026").replace("<", "\\u003c").replace(">", "\\u003e")
+            .replace("\u2028", "\\u2028").replace("\u2029", "\\u2029"))
+
+
+# ==========================================================
+# Utilidades
+# ==========================================================
+
+def _num(x: object) -> float | None:
+    if x is None or isinstance(x, bool):
+        return None
+    try:
+        v = float(x)  # type: ignore[arg-type]
+    except (TypeError, ValueError):
+        return None
+    return v if math.isfinite(v) else None
+
+
+def _iso(d: date | datetime | None) -> str | None:
+    return d.isoformat() if d is not None else None
+
+
+def _compound(rets: Iterable[object]) -> float | None:
+    """Π(1 + r) − 1; vazio ou algum dia ausente ⇒ ``None`` (nunca zero)."""
+    g, n = 1.0, 0
+    for r in rets:
+        v = _num(r)
+        if v is None:
+            return None
+        g *= 1.0 + v
+        n += 1
+    return g - 1.0 if n else None
+
+
+def _sha256_file(path: Path) -> str | None:
+    try:
+        return hashlib.sha256(path.read_bytes()).hexdigest()
+    except OSError:
+        return None
+
+
+def _read_text(path: Path) -> str | None:
+    try:
+        return path.read_text(encoding="utf-8") if path.is_file() else None
+    except (OSError, UnicodeDecodeError):
+        return None
+
+
+def _read_json(path: Path) -> Any:
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+class _Issues:
+    """Apontamentos de leitura (o painel nunca quebra por um artefato)."""
+
+    def __init__(self) -> None:
+        self.items: list[dict[str, str]] = []
+
+    def add(self, scope: str, message: str) -> None:
+        self.items.append({"scope": scope, "message": scrub_text(message)[:500]})
+
+    def attempt(self, scope: str, fn: Callable[[], Any], default: Any = None) -> Any:
+        try:
+            return fn()
+        except Exception as exc:  # noqa: BLE001 - qualquer falha vira apontamento
+            self.add(scope, f"{type(exc).__name__}: {exc}")
+            return default
+
+
+def _local(dt: datetime | None, tz: ZoneInfo) -> str | None:
+    if dt is None:
+        return None
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=UTC)
+    return dt.astimezone(tz).isoformat()
+
+
+def _render_facts(text: Any, facts: Mapping[str, str]) -> Any:
+    if not isinstance(text, str) or "{{" not in text:
+        return text
+    from ..ui.data import render_facts
+
+    return render_facts(text, dict(facts))
+
+
+def _safe_url(url: Any) -> str | None:
+    from ..ui.data import safe_url
+
+    return safe_url(str(url)) if url else None
+
+
+# ==========================================================
+# Mandato
+# ==========================================================
+
+def _mandate(cfg: FundConfig) -> dict[str, Any]:
+    rs = cfg.research
+    return {
+        "risk": cfg.risk.model_dump(mode="json"),
+        "liquidity": cfg.liquidity.model_dump(mode="json"),
+        "shorting": cfg.shorting.model_dump(mode="json"),
+        "squeeze": cfg.squeeze.model_dump(mode="json"),
+        "drawdown": cfg.drawdown.model_dump(mode="json"),
+        "costs": cfg.costs.model_dump(mode="json"),
+        "alpha": cfg.alpha.model_dump(mode="json"),
+        "risk_model": cfg.risk_model.model_dump(mode="json"),
+        "ai_adoption": {
+            "provider": rs.provider, "phase": rs.llm_phase, "view_ic": rs.llm_view_ic,
+            "view_ic_by_phase": dict(rs.llm_view_ic_by_phase),
+            "llm_can_only_tighten": rs.llm_can_only_tighten,
+            "samples_per_judgment": rs.samples_per_judgment,
+            "min_sign_agreement": rs.min_sign_agreement,
+            "top_n_candidates": rs.top_n_candidates,
+            "news_lookback_days": rs.news_lookback_days,
+            "quant_information_coefficient": cfg.alpha.information_coefficient,
+            "view_information_coefficient": cfg.alpha.view_information_coefficient,
+            "max_view_tilt_z": cfg.alpha.max_view_tilt_z,
+            "view_sign_coherence": cfg.alpha.view_sign_coherence,
+        },
+        "schedule": {
+            "timezone": cfg.fund.timezone, "primary_calendar": cfg.fund.primary_calendar,
+            "rebalance_rule": cfg.fund.rebalance_rule,
+            "weekly_research_start_local": cfg.fund.weekly_research_start_local,
+            "decision_deadline_local": cfg.fund.decision_deadline_local,
+            "daily_close_run_local": cfg.fund.daily_close_run_local,
+            "execution_convention": cfg.fund.execution_convention,
+            "minds": list(cfg.fund.minds),
+        },
+        "table": _mandate_table(cfg),
+    }
+
+
+def _mandate_table(cfg: FundConfig) -> list[dict[str, Any]]:
+    rk, lq, sh, sq, dd = cfg.risk, cfg.liquidity, cfg.shorting, cfg.squeeze, cfg.drawdown
+    rows: list[tuple[str, str, str, Any, str]] = [
+        ("risco", "vol_target_annual", "Vol-alvo ex-ante (a.a.)", rk.vol_target_annual, "pct"),
+        ("risco", "vol_band", "Banda de vol ex-ante", [rk.vol_band_min, rk.vol_band_max], "pct"),
+        ("risco", "risk_target_mode", "Modo da meta de risco", rk.risk_target_mode, "text"),
+        ("risco", "bias_prior", "Viés a priori do risco ex-ante", rk.bias_prior, "x"),
+        ("risco", "net_exposure_max_abs", "Net máximo (|Σw|)", rk.net_exposure_max_abs, "pct"),
+        ("risco", "beta_max_abs", "Beta máximo (|β|)", rk.beta_max_abs, "x"),
+        ("risco", "gross", "Gross mínimo / máximo", [rk.gross_min, rk.gross_max], "pct"),
+        ("risco", "country_net_max_abs", "Net por país (|net|)", rk.country_net_max_abs, "pct"),
+        ("risco", "sector_net_max_abs", "Net por setor (|net|)", rk.sector_net_max_abs, "pct"),
+        ("risco", "style_exposure_max_abs", "Exposição por estilo (|z × NAV|)",
+         rk.style_exposure_max_abs, "x"),
+        ("risco", "theme_net_max_abs", "Net por tema", dict(rk.theme_net_max_abs), "pct"),
+        ("risco", "country_gross_share_max", "Fatia máxima do gross por país",
+         dict(rk.country_gross_share_max), "pct"),
+        ("risco", "commodity_beta_max_abs", "Sensibilidade a commodity (|Σ w·β|)",
+         rk.commodity_beta_max_abs, "pct"),
+        ("risco", "max_long_weight", "Peso máximo por nome (long)", rk.max_long_weight, "pct"),
+        ("risco", "max_short_weight", "Peso máximo por nome (short)", rk.max_short_weight,
+         "pct"),
+        ("risco", "min_position_weight", "Peso mínimo por posição", rk.min_position_weight,
+         "pct"),
+        ("risco", "max_single_name_risk_share", "Contribuição máxima de um nome ao risco",
+         rk.max_single_name_risk_share, "pct"),
+        ("risco", "max_factor_risk_share", "Fração máxima do risco vinda de fatores",
+         rk.max_factor_risk_share, "pct"),
+        ("risco", "var_1d_max", f"VaR 1d ({rk.var_confidence:.0%}) máximo", rk.var_1d_max,
+         "pct"),
+        ("risco", "es_1d_max", f"ES 1d ({rk.var_confidence:.0%}) máximo", rk.es_1d_max, "pct"),
+        ("risco", "country_stress_max_loss", "Perda máxima por gap de país",
+         rk.country_stress_max_loss, "pct"),
+        ("risco", "event_windows", "Janelas de evento", list(rk.event_windows), "list"),
+        ("liquidez", "min_adtv_usd", "ADTV mínimo (USD)", lq.min_adtv_usd, "usd"),
+        ("liquidez", "min_adtv_long_usd", "ADTV mínimo long (USD)", lq.min_adtv_long_usd, "usd"),
+        ("liquidez", "min_adtv_short_usd", "ADTV mínimo short (USD)", lq.min_adtv_short_usd,
+         "usd"),
+        ("liquidez", "participation_rate", "Participação no ADTV (long)", lq.participation_rate,
+         "pct"),
+        ("liquidez", "short_participation_rate", "Participação no ADTV (short)",
+         lq.short_participation_rate, "pct"),
+        ("liquidez", "max_days_to_liquidate_long", "Dias para liquidar (long)",
+         lq.max_days_to_liquidate_long, "days"),
+        ("liquidez", "max_days_to_liquidate_short", "Dias para liquidar (short)",
+         lq.max_days_to_liquidate_short, "days"),
+        ("liquidez", "max_weekly_turnover", "Giro semanal máximo", lq.max_weekly_turnover, "pct"),
+        ("liquidez", "min_gross_liquid_3d", "Gross liquidável em 3 dias (mín.)",
+         lq.min_gross_liquid_3d, "pct"),
+        ("liquidez", "min_gross_liquid_5d", "Gross liquidável em 5 dias (mín.)",
+         lq.min_gross_liquid_5d, "pct"),
+        ("short", "max_borrow_fee", "Taxa de aluguel máxima (a.a.)", sh.max_borrow_fee, "pct"),
+        ("short", "min_market_cap_short_usd", "Market cap mínimo para short (USD)",
+         sh.min_market_cap_short_usd, "usd"),
+        ("short", "shortable_line_types", "Linhas alugáveis", list(sh.shortable_line_types),
+         "list"),
+        ("squeeze", "score_buckets", "Escore de squeeze (médio / alto)",
+         [sq.score_medium, sq.score_high], "score"),
+        ("squeeze", "si_pct_float", "Short interest % float (médio / alto)",
+         [sq.si_pct_float_medium, sq.si_pct_float_high], "pct"),
+        ("squeeze", "days_to_cover", "Dias para cobrir (médio / alto)",
+         [sq.days_to_cover_medium, sq.days_to_cover_high], "days"),
+        ("squeeze", "borrow_fee", "Taxa de aluguel (médio / alto)",
+         [sq.borrow_fee_medium, sq.borrow_fee_high], "pct"),
+        ("squeeze", "medium_short_cap_multiplier", "Multiplicador do teto (squeeze médio)",
+         sq.medium_short_cap_multiplier, "x"),
+        ("squeeze", "stop_short_position_loss", "Stop de perda no short (corte de 50%)",
+         sq.stop_short_position_loss, "pct"),
+        ("squeeze", "stop_short_nav_loss", "Stop de perda do short em % do NAV",
+         sq.stop_short_nav_loss, "pct"),
+        ("drawdown", "soft_stop", "Stop suave (revisão; gross × multiplicador)",
+         [dd.soft_stop, dd.soft_degross_multiplier], "pct"),
+        ("drawdown", "hard_stop", "Stop duro (gross × multiplicador)",
+         [dd.hard_stop, dd.degross_multiplier], "pct"),
+        ("drawdown", "stop_out", "Stop-out (gross mínimo)", [dd.stop_out, dd.stop_out_gross],
+         "pct"),
+        ("ia", "llm_phase", "Fase de adoção das visões de IA", cfg.research.llm_phase, "text"),
+        ("ia", "llm_view_ic", "IC efetivo das visões de IA", cfg.research.llm_view_ic, "ratio"),
+        ("ia", "llm_can_only_tighten", "IA só aperta (nunca afrouxa)",
+         cfg.research.llm_can_only_tighten, "bool"),
+    ]
+    return [{"section": s, "key": k, "label": lab, "value": v, "unit": u}
+            for s, k, lab, v, u in rows]
+
+
+# ==========================================================
+# Track record
+# ==========================================================
+
+def _risk_scalars(risk: Any) -> dict[str, Any]:
+    d = risk.model_dump(mode="json")
+    d.pop("exposures", None)
+    return d
+
+
+def _record_compact(r: Any) -> dict[str, Any]:
+    return {
+        "date": r.date, "nav_start": r.nav_start_usd, "nav_end": r.nav_end_usd,
+        "pnl": r.pnl_usd, "ret": r.ret, "pnl_components": dict(r.pnl_components),
+        "risk": _risk_scalars(r.risk), "n_alerts": len(r.alerts), "alerts": list(r.alerts),
+        "n_positions": len(r.positions), "live_book_week": r.live_book_week,
+        "approval_hash": r.approval_hash, "record_hash": r.record_hash,
+        "prev_record_hash": r.prev_record_hash, "is_synthetic": r.is_synthetic,
+    }
+
+
+def _load_records(tr: Any, issues: _Issues, label: str) -> tuple[list[Any], list[str]]:
+    """Registros um a um: JSON ilegível vira apontamento sem esconder os demais."""
+    out, bad = [], []
+    for d in issues.attempt(f"{label} (datas)", tr.dates, []):
+        rec = issues.attempt(f"{label} {d.isoformat()} ilegível", lambda d=d: tr.get(d))
+        if rec is None:
+            bad.append(d.isoformat())
+        else:
+            out.append(rec)
+    return out, bad
+
+
+def _stats(tr: Any, cfg: FundConfig, issues: _Issues, label: str) -> dict[str, Any] | None:
+    raw = issues.attempt(f"{label} (estatísticas)", lambda: tr.stats(cfg))
+    if not raw:
+        return None
+    out = dict(raw)
+    for key in ("best_day", "worst_day"):
+        v = out.get(key)
+        out[key] = {"date": v[0], "ret": v[1]} if v else None
+    band = out.get("vol_band")
+    out["vol_band"] = list(band) if band else None
+    return out
+
+
+def _monthly(tr: Any, issues: _Issues) -> dict[str, Any] | None:
+    table = issues.attempt("Track record (grade mensal)", tr.monthly_returns_table)
+    if table is None:
+        return None
+    cols = [str(c) for c in table.columns]
+    rows = [{"year": int(y), "values": [_num(v) for v in table.loc[y].tolist()]}
+            for y in table.index]
+    return {"columns": cols, "rows": rows}
+
+
+def _attribution_sum(records: Sequence[Any]) -> dict[str, list[dict[str, Any]]]:
+    acc: dict[str, dict[str, list[float]]] = {}
+    for r in records:
+        for a in r.attribution:
+            slot = acc.setdefault(a.group, {}).setdefault(a.name, [0.0, 0.0, 0])
+            slot[0] += float(a.pnl_usd)
+            slot[1] += float(a.contribution)
+            slot[2] += 1
+    out: dict[str, list[dict[str, Any]]] = {}
+    for g in [*ATTRIBUTION_GROUPS, *sorted(set(acc) - set(ATTRIBUTION_GROUPS))]:
+        if g not in acc:
+            continue
+        rows = [{"name": k, "pnl_usd": v[0], "contribution": v[1], "days": int(v[2])}
+                for k, v in acc[g].items()]
+        out[g] = sorted(rows, key=lambda x: (-x["pnl_usd"], x["name"]))
+    return out
+
+
+def _components_sum(records: Sequence[Any]) -> list[dict[str, Any]]:
+    acc: dict[str, list[float]] = {}
+    for r in records:
+        nav0 = float(r.nav_start_usd)
+        for k, v in r.pnl_components.items():
+            fv = _num(v)
+            if fv is None:
+                continue
+            slot = acc.setdefault(k, [0.0, 0.0, 0])
+            slot[0] += fv
+            slot[1] += fv / nav0
+            slot[2] += 1
+    order = [k for k in COMPONENT_ORDER if k in acc] + sorted(set(acc) - set(COMPONENT_ORDER))
+    return [{"key": k, "pnl_usd": acc[k][0], "contribution": acc[k][1], "days": int(acc[k][2])}
+            for k in order]
+
+
+def _period(records: Sequence[Any], label: str, start: date | None, end: date | None
+            ) -> dict[str, Any]:
+    sub = [r for r in records if (start is None or r.date >= start)
+           and (end is None or r.date <= end)]
+    return {
+        "label": label, "start": sub[0].date if sub else start, "end": sub[-1].date if sub else end,
+        "n_days": len(sub), "ret": _compound(r.ret for r in sub),
+        "pnl_usd": sum(float(r.pnl_usd) for r in sub) if sub else None,
+        "components": _components_sum(sub), "attribution": _attribution_sum(sub),
+    }
+
+
+def _track_section(rt: Any, cfg: FundConfig, book_exists: bool, issues: _Issues
+                   ) -> tuple[dict[str, Any], list[Any], list[Any]]:
+    from .track_record import SHADOW_RECORD_EVENT, TrackRecord, compare_tracks
+
+    empty = {"exists": False, "n_days": 0, "records": [], "unreadable_dates": [],
+             "stats": None, "monthly": None, "shadow": {"exists": False, "records": [],
+                                                       "stats": None},
+             "compare": [], "periods": {}}
+    root = Path(rt.book_root)
+    main_dir, shadow_dir = root / "track_record", root / "track_record_shadow"
+    if not book_exists or not main_dir.is_dir():
+        return empty, [], []
+    main = TrackRecord(main_dir)
+    records, bad = _load_records(main, issues, "Track record")
+    out = dict(empty)
+    out.update({"exists": True, "n_days": len(records), "unreadable_dates": bad,
+                "records": [_record_compact(r) for r in records],
+                "stats": _stats(main, cfg, issues, "Track record"),
+                "monthly": _monthly(main, issues),
+                "inception_nav": issues.attempt("Track record (NAV inicial)",
+                                                main.inception_nav)})
+    shadow_records: list[Any] = []
+    if shadow_dir.is_dir():
+        shadow = TrackRecord(shadow_dir, audit_event=SHADOW_RECORD_EVENT)
+        shadow_records, sbad = _load_records(shadow, issues, "Sombra só-quant")
+        out["shadow"] = {"exists": True, "n_days": len(shadow_records),
+                         "unreadable_dates": sbad,
+                         "records": [_record_compact(r) for r in shadow_records],
+                         "stats": _stats(shadow, cfg, issues, "Sombra só-quant")}
+        cmp = issues.attempt("CDP vs sombra", lambda: compare_tracks(main, shadow))
+        if cmp is not None:
+            out["compare"] = [{"date": idx.date(), **{c: _num(row[c]) for c in cmp.columns}}
+                              for idx, row in cmp.iterrows()]
+    if records:
+        last = records[-1].date
+        week_start = records[-1].live_book_week
+        out["periods"] = {
+            "itd": _period(records, "Desde o início", None, None),
+            "ytd": _period(records, "No ano", date(last.year, 1, 1), last),
+            "mtd": _period(records, "No mês", date(last.year, last.month, 1), last),
+            "semana": _period(records, "Carteira da semana vigente", week_start, last)
+            if week_start else None,
+            "dia": _period(records, "Último pregão", last, last),
+        }
+    return out, records, shadow_records
+
+
+# ==========================================================
+# Livro semanal
+# ==========================================================
+
+def _facts_from_briefing(week_dir: Path, issues: _Issues, scope: str) -> dict[str, str]:
+    path = week_dir / "briefing" / "context.json"
+    if not path.is_file():
+        return {}
+    raw = issues.attempt(f"{scope}: briefing/context.json", lambda: _read_json(path))
+    facts = raw.get("facts") if isinstance(raw, dict) else None
+    if not isinstance(facts, dict):
+        return {}
+    return {str(k): str(v.get("formatted", "n/d")) for k, v in facts.items()
+            if isinstance(v, dict)}
+
+
+def _final_proposal(proposals: Sequence[Any], decisions: Mapping[int, Any], booked: Any):
+    """Proposta vigente: a efetivada; senão a última APPROVE; senão a versão mais recente."""
+    if booked is not None:
+        for p in proposals:
+            if p.proposal_id == booked.proposal_id:
+                return p
+    approved = [p for p in proposals if (d := decisions.get(p.version)) is not None
+                and d.proposal_id == p.proposal_id and d.decision.value == "APPROVE"]
+    if approved:
+        return approved[-1]
+    return proposals[-1] if proposals else None
+
+
+def _issuer_weights(p: Any) -> dict[str, float]:
+    out: dict[str, float] = {}
+    for t in (p.positions if p is not None else []):
+        out[t.issuer_id] = out.get(t.issuer_id, 0.0) + float(t.weight)
+    return out
+
+
+def _exposure_rows(lines: Iterable[Any]) -> list[dict[str, Any]]:
+    rows = []
+    for e in lines:
+        d = e.model_dump(mode="json")
+        lim, net = _num(e.limit), _num(e.net)
+        d["utilization"] = abs(net) / lim if lim and net is not None and lim > 0 else None
+        d["breach"] = (abs(net) > lim + LIMIT_TOL) if lim is not None and net is not None else None
+        rows.append(d)
+    return rows
+
+
+def _sorted_map(m: Mapping[str, Any], *, by_abs: bool = False, key_name: str = "name",
+                value_name: str = "value") -> list[dict[str, Any]]:
+    items = [(k, _num(v)) for k, v in m.items()]
+    if by_abs:
+        items.sort(key=lambda kv: (kv[1] is None, -abs(kv[1] or 0.0), kv[0]))
+    else:
+        items.sort(key=lambda kv: (kv[1] is None, kv[1] if kv[1] is not None else 0.0, kv[0]))
+    return [{key_name: k, value_name: v} for k, v in items]
+
+
+def _risk_summary(risk: Any, names: Mapping[str, str]) -> dict[str, Any]:
+    d = risk.model_dump(mode="json")
+    d["exposures"] = _exposure_rows(risk.exposures)
+    d["factor_contributions"] = _sorted_map(risk.factor_contributions, by_abs=True,
+                                            key_name="factor", value_name="share")
+    d["stress_tests"] = _sorted_map(risk.stress_tests, key_name="scenario", value_name="pnl")
+    tops = _sorted_map(risk.top_risk_contributors, by_abs=True, key_name="issuer_id",
+                       value_name="share")
+    for row in tops:
+        row["name"] = names.get(row["issuer_id"])
+    d["top_risk_contributors"] = tops
+    return d
+
+
+def _compliance(checks: Sequence[Any]) -> dict[str, Any]:
+    sev_order = {"HARD": 0, "SOFT": 1, "INFO": 2}
+    rows = [c.model_dump(mode="json") for c in checks]
+    rows.sort(key=lambda c: (c["passed"], sev_order.get(c["severity"], 9), c["check_id"]))
+    failed = [c for c in rows if not c["passed"]]
+    return {
+        "n": len(rows), "n_passed": len(rows) - len(failed),
+        "failed_hard": [c["check_id"] for c in failed if c["severity"] == "HARD"],
+        "failed_soft": [c["check_id"] for c in failed if c["severity"] == "SOFT"],
+        "failed_info": [c["check_id"] for c in failed if c["severity"] == "INFO"],
+        "checks": rows,
+    }
+
+
+def _liquidity_by_side(positions: Sequence[Any], cfg: FundConfig) -> dict[str, Any]:
+    limits = {"LONG": cfg.liquidity.max_days_to_liquidate_long,
+              "SHORT": cfg.liquidity.max_days_to_liquidate_short}
+    out: dict[str, Any] = {}
+    for side, lim in limits.items():
+        ps = [p for p in positions if p.side.value == side]
+        vals = [v for p in ps if (v := _num(p.days_to_liquidate)) is not None]
+        mx = max(vals) if vals else None
+        out[side] = {"max_days": mx, "limit": float(lim), "n": len(ps),
+                     "n_missing": len(ps) - len(vals),
+                     "breach": (mx > lim + LIMIT_TOL) if mx is not None else None}
+    total = sum(abs(float(p.weight)) for p in positions)
+    buckets: dict[str, list[float]] = {label: [0.0, 0] for _, label in LIQUIDITY_BUCKETS}
+    buckets["n/d"] = [0.0, 0]
+    for p in positions:
+        d = _num(p.days_to_liquidate)
+        label = "n/d" if d is None else next(lab for ub, lab in LIQUIDITY_BUCKETS if d <= ub)
+        buckets[label][0] += abs(float(p.weight))
+        buckets[label][1] += 1
+    out["buckets"] = [{"bucket": k, "gross": v[0], "gross_share": v[0] / total if total else None,
+                       "n": int(v[1])} for k, v in buckets.items()]
+    return out
+
+
+def _squeeze_summary(positions: Sequence[Any]) -> dict[str, Any]:
+    shorts = [p for p in positions if p.side.value == "SHORT"]
+    counts = Counter(p.squeeze_bucket for p in shorts)
+    weights: dict[str, float] = {}
+    for p in shorts:
+        weights[p.squeeze_bucket] = weights.get(p.squeeze_bucket, 0.0) + float(p.weight)
+    return {"n_shorts": len(shorts),
+            "by_bucket": [{"bucket": b, "n": int(counts.get(b, 0)), "weight": weights.get(b)}
+                          for b in ("HIGH", "MEDIUM", "LOW", "NA")]}
+
+
+def _proposal_summary(p: Any) -> dict[str, Any]:
+    total_cost, partial = 0.0, False
+    for t in p.trades:
+        bps = _num(t.est_cost_bps)
+        if bps is None:
+            partial = True
+        else:
+            total_cost += abs(float(t.notional_usd)) * bps / 1e4
+    return {
+        "n_positions": len(p.positions), "n_long": p.risk.n_long, "n_short": p.risk.n_short,
+        "gross": p.risk.gross, "net": p.risk.net, "beta": p.risk.beta,
+        "ex_ante_vol": p.risk.ex_ante_vol, "var_1d_99": p.risk.var_1d_99,
+        "expected_alpha_annual": p.optimizer.expected_alpha_annual,
+        "expected_cost_annual": p.optimizer.expected_cost_annual,
+        "n_trades": len(p.trades),
+        "turnover": sum(abs(float(t.weight_change)) for t in p.trades) if p.trades else 0.0,
+        "trade_cost_usd": total_cost if p.trades else 0.0,
+        "trade_cost_partial": partial,
+        "hard_failures": [c.check_id for c in p.hard_failures],
+        "soft_failures": [c.check_id for c in p.soft_failures],
+    }
+
+
+def _proposal_full(p: Any, cfg: FundConfig, proposal_hash: str | None) -> dict[str, Any]:
+    names = {t.issuer_id: t.name for t in p.positions}
+    positions = sorted((t.model_dump(mode="json") for t in p.positions),
+                       key=lambda t: (-abs(t["weight"]), t["issuer_id"]))
+    trades = sorted((t.model_dump(mode="json") for t in p.trades),
+                    key=lambda t: (-abs(t["notional_usd"]), t["issuer_id"]))
+    return {
+        "proposal_id": p.proposal_id, "week": p.week, "version": p.version,
+        "created_at": p.created_at, "created_by": p.created_by, "nav_usd": p.nav_usd,
+        "snapshot_id": p.snapshot_id, "snapshot_hash": p.snapshot_hash,
+        "config_hash": p.config_hash, "research_hash": p.research_hash,
+        "proposal_hash": proposal_hash, "overrides": dict(p.overrides),
+        "is_synthetic": p.is_synthetic, "data_notice": p.data_notice,
+        "summary": _proposal_summary(p), "positions": positions, "trades": trades,
+        "fx_hedges": [h.model_dump(mode="json") for h in p.fx_hedges],
+        "risk": _risk_summary(p.risk, names), "compliance": _compliance(p.compliance),
+        "optimizer": p.optimizer.model_dump(mode="json"),
+        "liquidity_by_side": _liquidity_by_side(p.positions, cfg),
+        "squeeze": _squeeze_summary(p.positions),
+    }
+
+
+def _proposal_compact(p: Any, proposal_hash: str | None) -> dict[str, Any]:
+    return {
+        "proposal_id": p.proposal_id, "week": p.week, "version": p.version,
+        "created_at": p.created_at, "proposal_hash": proposal_hash,
+        "is_synthetic": p.is_synthetic, "summary": _proposal_summary(p),
+        "risk": _risk_scalars(p.risk), "compliance": {
+            k: v for k, v in _compliance(p.compliance).items() if k != "checks"},
+        "positions": [{"issuer_id": t.issuer_id, "name": t.name, "side": t.side.value,
+                       "weight": t.weight, "country": t.country, "sector": t.sector}
+                      for t in sorted(p.positions, key=lambda t: (-abs(t.weight), t.issuer_id))],
+    }
+
+
+def _changes(new: Any, old: Any, threshold: float = 0.0025) -> list[dict[str, Any]]:
+    """Entradas, saídas, inversões e redimensionamentos (|Δw| ≥ ``threshold``)."""
+    if old is None:
+        return []
+    a, b = _issuer_weights(old), _issuer_weights(new)
+    names = {t.issuer_id: t.name for t in [*old.positions, *new.positions]}
+    rows = []
+    for iid in sorted(set(a) | set(b)):
+        wa, wb = a.get(iid), b.get(iid)
+        delta = (wb or 0.0) - (wa or 0.0)
+        if wa is None:
+            kind = "entrada"
+        elif wb is None:
+            kind = "saida"
+        elif wa * wb < 0:
+            kind = "inversao"
+        elif abs(delta) >= threshold:
+            kind = "aumento" if abs(wb) > abs(wa) else "reducao"
+        else:
+            continue
+        rows.append({"issuer_id": iid, "name": names.get(iid, iid), "change": kind,
+                     "w_old": wa, "w_new": wb, "delta": delta})
+    order = {"entrada": 0, "saida": 1, "inversao": 2, "aumento": 3, "reducao": 4}
+    return sorted(rows, key=lambda r: (order[r["change"]], -abs(r["delta"]), r["issuer_id"]))
+
+
+def _shadow_section(cdp: Any, shadow: Any) -> dict[str, Any]:
+    from .reports import _overlap
+
+    ra, rb = cdp.risk, shadow.risk
+    oa, ob = cdp.optimizer, shadow.optimizer
+
+    def row(key: str, label: str, a: Any, b: Any, unit: str) -> dict[str, Any]:
+        x, y = _num(a), _num(b)
+        return {"key": key, "label": label, "cdp": x, "shadow": y, "unit": unit,
+                "diff": (x - y) if x is not None and y is not None else None}
+
+    metrics = [
+        row("expected_alpha_annual", "Alpha esperado (a.a.)", oa.expected_alpha_annual,
+            ob.expected_alpha_annual, "pct"),
+        row("expected_cost_annual", "Custo esperado (a.a.)", oa.expected_cost_annual,
+            ob.expected_cost_annual, "pct"),
+        row("ex_ante_vol", "Vol ex-ante", ra.ex_ante_vol, rb.ex_ante_vol, "pct"),
+        row("factor_vol", "Vol fatorial", ra.factor_vol, rb.factor_vol, "pct"),
+        row("specific_vol", "Vol específica", ra.specific_vol, rb.specific_vol, "pct"),
+        row("factor_risk_share", "Fração de risco fatorial", ra.factor_risk_share,
+            rb.factor_risk_share, "pct"),
+        row("beta", "Beta", ra.beta, rb.beta, "x"),
+        row("gross", "Gross", ra.gross, rb.gross, "pct"),
+        row("net", "Net", ra.net, rb.net, "pct"),
+        row("n_long", "Longs", ra.n_long, rb.n_long, "count"),
+        row("n_short", "Shorts", ra.n_short, rb.n_short, "count"),
+        row("effective_n", "N efetivo", ra.effective_n, rb.effective_n, "x"),
+        row("var_1d_99", "VaR 1d (99%)", ra.var_1d_99, rb.var_1d_99, "pct"),
+        row("es_1d_99", "ES 1d (99%)", ra.es_1d_99, rb.es_1d_99, "pct"),
+        row("max_days_to_liquidate", "Máx. dias para liquidar", ra.max_days_to_liquidate,
+            rb.max_days_to_liquidate, "days"),
+    ]
+    ov = _overlap(cdp, shadow)
+    wa, wb = _issuer_weights(cdp), _issuer_weights(shadow)
+    diffs = sorted(({"issuer_id": i, "w_cdp": wa.get(i), "w_shadow": wb.get(i),
+                     "diff": wa.get(i, 0.0) - wb.get(i, 0.0)} for i in set(wa) | set(wb)),
+                   key=lambda r: (-abs(r["diff"]), r["issuer_id"]))
+    return {
+        "proposal_id": shadow.proposal_id, "summary": _proposal_summary(shadow),
+        "risk": _risk_scalars(shadow.risk),
+        "compliance": {k: v for k, v in _compliance(shadow.compliance).items() if k != "checks"},
+        "positions": [{"issuer_id": t.issuer_id, "name": t.name, "side": t.side.value,
+                       "weight": t.weight, "country": t.country, "sector": t.sector,
+                       "alpha_z": t.alpha_z}
+                      for t in sorted(shadow.positions,
+                                      key=lambda t: (-abs(t.weight), t.issuer_id))],
+        "comparison": {"metrics": metrics, "overlap": ov, "weight_diffs": diffs[:40],
+                       "active_weight_sum": 0.5 * sum(abs(r["diff"]) for r in diffs)},
+    }
+
+
+def _pm_section(path: Path, facts: Mapping[str, str], issues: _Issues, scope: str
+                ) -> dict[str, Any] | None:
+    if not path.is_file():
+        return None
+    from ..research.pm_agent import PMDecisionOutput
+
+    out = issues.attempt(f"{scope}: decisão do PM fora do schema",
+                         lambda: PMDecisionOutput.model_validate(_read_json(path)))
+    if out is None:
+        return {"valid": False, "file_sha256": _sha256_file(path)}
+    d = out.model_dump(mode="json")
+    for key in ("market_view", "what_changed", "evaluation_last_week"):
+        d[key] = _render_facts(d.get(key), facts)
+    for v in d.get("views", []):
+        v["rationale"] = _render_facts(v.get("rationale"), facts)
+        v["evidence"] = [{"id": e, "url": _safe_url(e) if str(e).startswith("http") else None}
+                         for e in v.pop("evidence_ids", [])]
+    for x in d.get("exclusions", []):
+        x["reason"] = _render_facts(x.get("reason"), facts)
+    for j in d.get("position_journal", []):
+        for k in ("thesis", "invalidation_criteria", "premortem"):
+            j[k] = _render_facts(j.get(k), facts)
+    d["views"] = sorted(d.get("views", []), key=lambda v: (-v["stance"], -v["conviction"],
+                                                           v["issuer_id"]))
+    d.update({"valid": True, "file_sha256": _sha256_file(path),
+              "regime_label": REGIME_PT.get(str(d.get("regime")), d.get("regime")),
+              "posture_label": POSTURE_PT.get(str(d.get("risk_posture")),
+                                              d.get("risk_posture"))})
+    return d
+
+
+def _evidence(refs: Sequence[Any]) -> list[dict[str, Any]]:
+    out = []
+    for e in list(refs)[:MAX_EVIDENCE_PER_NOTE]:
+        kind = str(getattr(e.kind, "value", e.kind))
+        ref = e.ref_id
+        url = _safe_url(ref) if kind == "source" or str(ref).startswith("http") else None
+        out.append({"kind": kind, "ref_id": ref, "url": url,
+                    "note": (e.note or "")[:EVIDENCE_NOTE_CHARS]})
+    return out
+
+
+def _research_section(pack: Any, facts: Mapping[str, str], *, full: bool,
+                      source: str = "livro") -> dict[str, Any]:
+    """Pesquisa da semana: ``source="livro"`` (pacote gravado com hash) ou ``"entradas"``
+    (arquivo da mente em ``inputs/``, ainda não validado pela decisão)."""
+    notes = list(pack.notes)
+    roles = Counter(n.role for n in notes)
+    news = list(getattr(pack, "news", []) or [])
+    rh = getattr(pack, "research_hash", None)
+    out: dict[str, Any] = {
+        "source": source, "provider": getattr(pack, "provider", None), "mind": pack.mind,
+        "snapshot_id": getattr(pack, "snapshot_id", None),
+        "research_hash": rh() if callable(rh) else None,
+        "is_synthetic": bool(getattr(pack, "is_synthetic", False)),
+        "counts": {"notes": len(notes), "by_role": dict(sorted(roles.items())),
+                   "issuers": len({n.issuer_id for n in notes}), "macro": len(pack.macro),
+                   "views": len(pack.views), "news": len(news),
+                   "squeeze_veto": sum(1 for n in notes if n.squeeze
+                                       and n.squeeze.verdict == "veto"),
+                   "squeeze_caution": sum(1 for n in notes if n.squeeze
+                                          and n.squeeze.verdict == "caution")},
+        "macro": [{
+            "note_id": m.note_id, "scope": m.scope, "stance": m.stance, "regime": m.regime,
+            "summary": _render_facts(m.summary, facts),
+            "key_events": [c.model_dump(mode="json") for c in m.key_events],
+            "risks": [_render_facts(r, facts) for r in m.risks],
+            "portfolio_implications": [_render_facts(r, facts)
+                                       for r in m.portfolio_implications],
+            "evidence": _evidence(m.evidence), "n_evidence": len(m.evidence),
+            "provider": m.provider, "created_at": m.created_at,
+        } for m in sorted(pack.macro, key=lambda m: m.scope)],
+    }
+    if not full:
+        return out
+    out["notes"] = [{
+        "note_id": n.note_id, "issuer_id": n.issuer_id, "role": n.role, "stance": n.stance,
+        "confidence": n.confidence, "horizon_weeks": n.horizon_weeks,
+        "thesis": _render_facts(n.thesis, facts),
+        "bull_points": [_render_facts(x, facts) for x in n.bull_points],
+        "bear_points": [_render_facts(x, facts) for x in n.bear_points],
+        "key_risks": [_render_facts(x, facts) for x in n.key_risks],
+        "catalysts": [c.model_dump(mode="json") for c in n.catalysts],
+        "squeeze": n.squeeze.model_dump(mode="json") if n.squeeze else None,
+        "evidence": _evidence(n.evidence), "n_evidence": len(n.evidence),
+        "provider": n.provider, "created_at": n.created_at,
+    } for n in sorted(notes, key=lambda n: (n.issuer_id, n.role, n.note_id))]
+    out["views"] = [{
+        "issuer_id": v.issuer_id, "source": str(getattr(v.source, "value", v.source)),
+        "score": v.score,
+        "confidence": v.confidence, "no_short": v.no_short, "no_long": v.no_long,
+        "max_abs_weight": v.max_abs_weight, "rationale": _render_facts(v.rationale, facts),
+        "author": v.author, "note_ids": list(v.note_ids),
+    } for v in sorted(pack.views, key=lambda v: (v.issuer_id,
+                                                 str(getattr(v.source, "value", v.source))))]
+    out["news"] = [{
+        "news_id": x.news_id, "title": x.title, "source": x.source, "url": _safe_url(x.url),
+        "published_at": x.published_at, "issuer_ids": list(x.issuer_ids),
+        "is_synthetic": x.is_synthetic,
+    } for x in sorted(news, key=lambda x: (x.published_at, x.news_id), reverse=True)]
+    return out
+
+
+def _ai_calls(week_dir: Path, issues: _Issues, scope: str) -> dict[str, Any] | None:
+    from ..contracts import LLMCallRecord
+
+    calls = []
+    for path in sorted(week_dir.rglob("llm_calls.jsonl")):
+        if "raw" in path.relative_to(week_dir).parts[:-1]:
+            continue
+        for line in (_read_text(path) or "").splitlines():
+            if line.strip():
+                rec = issues.attempt(f"{scope}: ledger de IA ({path.name})",
+                                     lambda line=line: LLMCallRecord.model_validate_json(line))
+                if rec is not None:
+                    calls.append(rec)
+    if not calls:
+        return None
+    tin = [c.input_tokens for c in calls if c.input_tokens is not None]
+    tout = [c.output_tokens for c in calls if c.output_tokens is not None]
+    cost = [v for c in calls if (v := _num(c.cost_usd)) is not None]
+    return {"n_calls": len(calls), "parse_ok": sum(1 for c in calls if c.parse_ok),
+            "failed": sum(1 for c in calls if not c.parse_ok),
+            "with_issues": sum(1 for c in calls if c.validation_issues),
+            "by_task": dict(sorted(Counter(c.task for c in calls).items())),
+            "prompt_versions": sorted({c.prompt_version for c in calls}),
+            "input_tokens": sum(tin) if tin else None,
+            "output_tokens": sum(tout) if tout else None,
+            "cost_usd": sum(cost) if cost else None}
+
+
+def _decision_dict(d: Any, cfg: FundConfig, facts: Mapping[str, str]) -> dict[str, Any]:
+    tz = ZoneInfo(cfg.fund.timezone)
+    h, m = (int(x) for x in cfg.fund.decision_deadline_local.split(":"))
+    deadline = datetime(d.week.year, d.week.month, d.week.day, h, m, tzinfo=tz)
+    out = d.model_dump(mode="json")
+    out["rationale"] = _render_facts(out.get("rationale"), facts)
+    j = out.get("journal")
+    if isinstance(j, dict):
+        for k in ("situation", "alternatives_considered", "sizing_rationale",
+                  "ai_vs_quant_vs_pm", "premortem", "mental_state"):
+            j[k] = _render_facts(j.get(k), facts)
+        for jp in j.get("positions", []):
+            for k in ("thesis", "variant_perception", "invalidation_criteria", "premortem",
+                      "ai_vs_pm_divergence"):
+                jp[k] = _render_facts(jp.get(k), facts)
+    out["decided_at_local"] = _local(d.decided_at, tz)
+    out["deadline_local"] = deadline.isoformat()
+    out["on_time"] = d.decided_at <= deadline
+    return out
+
+
+def _week_performance(week: date, records: Sequence[Any], shadow: Sequence[Any]
+                      ) -> dict[str, Any] | None:
+    sub = [r for r in records if r.live_book_week == week]
+    if not sub:
+        return None
+    dates = {r.date for r in sub}
+    sh = [r for r in shadow if r.date in dates]
+    ret, sret = _compound(r.ret for r in sub), _compound(r.ret for r in sh)
+    return {"n_days": len(sub), "first_date": sub[0].date, "last_date": sub[-1].date,
+            "ret": ret, "pnl_usd": sum(float(r.pnl_usd) for r in sub),
+            "shadow_n_days": len(sh), "shadow_ret": sret,
+            "value_added": ((1 + ret) / (1 + sret) - 1)
+            if ret is not None and sret is not None and len(sh) == len(sub) else None}
+
+
+def _week_entry(rt: Any, cfg: FundConfig, book: Any, week: date, full: bool,
+                prev_final: Any, records: Sequence[Any], shadow_records: Sequence[Any],
+                issues: _Issues) -> tuple[dict[str, Any], Any]:
+    """Uma semana do livro (``full`` ⇒ detalhe completo; senão resumo)."""
+    from ..contracts import Proposal
+    from ..hashing import sha256_obj
+
+    reports_root = Path(rt.reports_root)
+    scope = f"Semana {week.isoformat()}"
+    wdir = Path(rt.book_root) / week.isoformat()
+    local = _Issues()
+    proposals = []
+    for v in local.attempt("versões de proposta", lambda: book.proposal_versions(week), []):
+        p = local.attempt(f"proposta v{v}", lambda v=v: book.load_proposal(week, v))
+        if p is not None:
+            proposals.append(p)
+    states = local.attempt("estados das propostas", lambda: book.week_states(week), {})
+    decisions = local.attempt("decisões", lambda: book.list_decisions(week), {})
+    booked = local.attempt("efetivação (booked.json não confere com a trilha)",
+                           lambda: book.load_booked(week))
+    booked_raw = booked
+    if booked is None and (wdir / "booked.json").is_file():
+        booked_raw = local.attempt("efetivação (leitura crua)",
+                                   lambda: book._read_booked(week))
+    research = local.attempt("pacote de pesquisa", lambda: book.load_research_pack(week))
+    final = _final_proposal(proposals, decisions, booked)
+    facts = _facts_from_briefing(wdir, local, "briefing") if full else {}
+    decision = decisions.get(final.version) if final is not None else None
+    if decision is not None and decision.proposal_id != final.proposal_id:
+        decision = None
+    attempts = None
+    if (wdir / "attempts.json").is_file():
+        attempts = local.attempt("attempts.json", lambda: _read_json(wdir / "attempts.json"))
+    manifest = None
+    mpath = wdir / "briefing" / "prepare_manifest.json"
+    if mpath.is_file():
+        manifest = local.attempt("prepare_manifest.json", lambda: _read_json(mpath))
+    shadow = None
+    spath = wdir / "shadow_quant.json"
+    if spath.is_file():
+        shadow = local.attempt("shadow_quant.json",
+                               lambda: Proposal.model_validate(_read_json(spath)))
+    state = (states.get(final.version) if final is not None else None)
+    entry: dict[str, Any] = {
+        "week": week, "detail": "completo" if full else "resumo",
+        "state": state.value if state is not None else None,
+        "proposals": [{"version": p.version, "proposal_id": p.proposal_id,
+                       "created_at": p.created_at,
+                       "state": (states.get(p.version).value
+                                 if states.get(p.version) is not None else None),
+                       "n_positions": len(p.positions)} for p in proposals],
+        "decisions": [{"version": v, "decision": d.decision.value, "mode": d.mode.value,
+                       "decided_at": d.decided_at, "approval_hash": d.approval_hash,
+                       "proposal_id": d.proposal_id}
+                      for v, d in sorted(decisions.items())],
+        "decision": _decision_dict(decision, cfg, facts) if decision is not None else None,
+        "path_taken": (attempts or {}).get("path") if isinstance(attempts, dict) else None,
+        "attempts": (attempts or {}).get("attempts", []) if isinstance(attempts, dict) else [],
+        "input_issues": ((attempts or {}).get("input_issues", [])
+                         if isinstance(attempts, dict) else []),
+        "executed": booked is not None,
+        "booked": ({"booked_at": booked_raw.booked_at, "proposal_id": booked_raw.proposal_id,
+                    "approval_hash": booked_raw.approval_hash, "nav_usd": booked_raw.nav_usd,
+                    "n_positions": len(booked_raw.positions),
+                    "pricing_note": booked_raw.pricing_note,
+                    "verified": booked is not None}
+                   if booked_raw is not None else None),
+        "briefing": ({k: manifest.get(k) for k in (
+            "prepared_at", "captured_at", "previous_session", "live", "snapshot_hash",
+            "store_content_hash", "config_hash", "n_quotes", "slow_failures")}
+            if isinstance(manifest, dict) else None),
+        "performance": _week_performance(week, records, shadow_records),
+    }
+    entry["path_label"] = PATH_PT.get(str(entry["path_taken"]), entry["path_taken"])
+    inputs = {"briefing": (wdir / "briefing" / "prepare_manifest.json").is_file(),
+              "research_pack": (wdir / "inputs" / "research_pack.json").is_file(),
+              "pm_decision": (wdir / "inputs" / "pm_decision.json").is_file()}
+    entry["inputs"] = inputs
+    stage = ("efetivada" if booked is not None else "decidida" if decisions
+             else "entradas_gravadas" if inputs["pm_decision"] or inputs["research_pack"]
+             else "preparada" if inputs["briefing"] else "vazia")
+    entry["stage"] = stage
+    entry["stage_label"] = WEEK_STAGE_PT[stage]
+    if final is not None:
+        ph = local.attempt("hash da proposta", lambda: sha256_obj(final))
+        entry["proposal"] = (_proposal_full(final, cfg, ph) if full
+                             else _proposal_compact(final, ph))
+        entry["changes_vs_previous"] = _changes(final, prev_final)
+        entry["previous_week"] = prev_final.week if prev_final is not None else None
+    else:
+        entry["proposal"] = None
+        entry["changes_vs_previous"] = []
+        entry["previous_week"] = None
+    if shadow is not None and final is not None:
+        entry["shadow"] = local.attempt("comparação CDP × sombra",
+                                        lambda: _shadow_section(final, shadow))
+    else:
+        entry["shadow"] = None
+    entry["pm_decision"] = (_pm_section(wdir / "inputs" / "pm_decision.json", facts, local,
+                                        "inputs") if full else None)
+    entry["research"] = (local.attempt("resumo da pesquisa",
+                                       lambda: _research_section(research, facts, full=full))
+                         if research is not None else None)
+    rp_input = wdir / "inputs" / "research_pack.json"
+    if research is None and full and rp_input.is_file():
+        from ..research.pm_agent import ResearchPackFile
+
+        rp = local.attempt("inputs/research_pack.json fora do schema",
+                           lambda: ResearchPackFile.model_validate(_read_json(rp_input)))
+        if rp is not None:
+            entry["research"] = local.attempt(
+                "resumo da pesquisa (entradas)",
+                lambda: _research_section(rp, facts, full=True, source="entradas"))
+    entry["ai_calls"] = _ai_calls(wdir, local, "ledger") if wdir.is_dir() else None
+    rdir = reports_root / "weekly" / week.isoformat()
+    md_path = rdir / "relatorio.md"
+    md = _read_text(md_path)
+    entry["report"] = ({"available": True, "has_html": (rdir / "relatorio.html").is_file(),
+                        "sha256": _sha256_file(md_path),
+                        "markdown": md if full else None, "chars": len(md)}
+                       if md is not None else {"available": False})
+    if md is None and full and final is not None and final.memo_markdown:
+        entry["memo_markdown"] = final.memo_markdown
+    entry["issues"] = local.items
+    for it in local.items:
+        issues.add(f"{scope}: {it['scope']}", it["message"])
+    return entry, final
+
+
+def _weeks_section(rt: Any, cfg: FundConfig, book: Any, records: Sequence[Any],
+                   shadow_records: Sequence[Any], issues: _Issues, full_weeks: int
+                   ) -> tuple[list[dict[str, Any]], dict[date, Any]]:
+    weeks = issues.attempt("Semanas do livro", book.list_weeks, []) if book is not None else []
+    full_set = set(weeks[-full_weeks:]) if full_weeks > 0 else set()
+    out: list[dict[str, Any]] = []
+    finals: dict[date, Any] = {}
+    prev_final = None
+    for week in weeks:
+        entry, final = _week_entry(rt, cfg, book, week, week in full_set, prev_final, records,
+                                   shadow_records, issues)
+        finals[week] = final
+        if final is not None:
+            prev_final = final
+        out.append(entry)
+    return out, finals
+
+
+# ==========================================================
+# Dia mais recente e risco consolidado
+# ==========================================================
+
+def _latest_day(records: Sequence[Any], shadow_records: Sequence[Any],
+                finals: Mapping[date, Any], cfg: FundConfig) -> dict[str, Any] | None:
+    if not records:
+        return None
+    from ..research.commentary import period_returns
+
+    rec = records[-1]
+    history = list(records[:-1])
+    live = finals.get(rec.live_book_week) if rec.live_book_week else None
+    targets = {t.issuer_id: t for t in (live.positions if live is not None else [])}
+    positions = []
+    for p in sorted(rec.positions, key=lambda x: (-abs(x.weight), x.issuer_id)):
+        d = p.model_dump(mode="json")
+        t = targets.get(p.issuer_id)
+        d.update({
+            "name": t.name if t else None, "country": t.country if t else None,
+            "sector": t.sector if t else None,
+            "line_type": t.line_type.value if t else None,
+            "target_weight": t.weight if t else None,
+            "drift": (p.weight - t.weight) if t else None,
+            "squeeze_bucket": t.squeeze_bucket if t else None,
+            "squeeze_score": t.squeeze_score if t else None,
+            "borrow_fee_annual": t.borrow_fee_annual if t else None,
+            "days_to_liquidate": t.days_to_liquidate if t else None,
+            "pct_adtv": t.pct_adtv if t else None, "adtv_usd": t.adtv_usd if t else None,
+            "beta": t.beta if t else None, "alpha_z": t.alpha_z if t else None,
+            "view_score": t.view_score if t else None,
+            "risk_contribution_ex_ante": t.risk_contribution if t else None,
+        })
+        positions.append(d)
+    attribution: dict[str, list[dict[str, Any]]] = {}
+    for a in rec.attribution:
+        attribution.setdefault(a.group, []).append(
+            {"name": a.name, "pnl_usd": a.pnl_usd, "contribution": a.contribution})
+    for g in attribution:
+        attribution[g].sort(key=lambda x: (-x["pnl_usd"], x["name"]))
+    risk = rec.risk.model_dump(mode="json")
+    risk["exposures"] = _exposure_rows(rec.risk.exposures)
+    shadow_same = next((s for s in shadow_records if s.date == rec.date), None)
+    return {
+        "date": rec.date, "fund_name": rec.fund_name, "nav_start": rec.nav_start_usd,
+        "nav_end": rec.nav_end_usd, "pnl": rec.pnl_usd, "ret": rec.ret,
+        "pnl_components": dict(rec.pnl_components),
+        "period": period_returns(rec, history),
+        "risk": risk, "ladder_stage": ladder_stage(rec.risk.drawdown, cfg),
+        "positions": positions, "attribution": attribution, "alerts": list(rec.alerts),
+        "live_book_week": rec.live_book_week, "approval_hash": rec.approval_hash,
+        "record_hash": rec.record_hash, "prev_record_hash": rec.prev_record_hash,
+        "input_hashes": dict(rec.input_hashes), "is_synthetic": rec.is_synthetic,
+        "data_notice": rec.data_notice, "track_record_type": rec.track_record_type,
+        "shadow": _record_compact(shadow_same) if shadow_same is not None else None,
+    }
+
+
+def _check(cid: str, label: str, basis: str, value: Any, limit: Any, unit: str, status: str,
+           detail: str = "", utilization: float | None = None) -> dict[str, Any]:
+    """Uma verificação de limite. ``utilization`` = |valor| / |limite| (quando aplicável)."""
+    if utilization is None and not isinstance(limit, list):
+        v, lim = _num(value), _num(limit)
+        if v is not None and lim not in (None, 0.0):
+            utilization = abs(v) / abs(lim)
+    return {"id": cid, "label": label, "basis": basis, "value": value, "limit": limit,
+            "unit": unit, "status": status, "detail": detail, "utilization": utilization}
+
+
+def _max_status(value: float | None, limit: float | None, soft: bool = False) -> str:
+    if value is None or limit is None:
+        return "n/d"
+    if value > limit + LIMIT_TOL:
+        return "alerta" if soft else "excesso"
+    return "ok"
+
+
+def _worst_exposure(lines: Sequence[Any], group: str) -> tuple[Any | None, float | None]:
+    worst, util = None, None
+    for e in lines:
+        if e.group != group or _num(e.limit) in (None, 0.0) or _num(e.net) is None:
+            continue
+        u = abs(float(e.net)) / float(e.limit)
+        if util is None or u > util:
+            worst, util = e, u
+    return worst, util
+
+
+def _limit_checks(cfg: FundConfig, rec: Any | None, proposal: Any | None) -> list[dict]:
+    rk, lq = cfg.risk, cfg.liquidity
+    checks: list[dict[str, Any]] = []
+    dr = rec.risk if rec is not None else None
+    pr = proposal.risk if proposal is not None else None
+    d_basis = f"diário ({rec.date.isoformat()})" if rec is not None else ""
+    p_basis = (f"ex-ante na decisão ({proposal.week.isoformat()})"
+               if proposal is not None else "")
+    basis = d_basis or p_basis
+    src = dr if dr is not None else pr
+    if src is None:
+        return checks
+
+    def pick(name: str) -> float | None:
+        return _num(getattr(src, name, None))
+
+    band = [rk.vol_band_min, rk.vol_band_max]
+    vol = pick("ex_ante_vol")
+    st = ("n/d" if vol is None else "excesso" if vol > rk.vol_band_max + LIMIT_TOL
+          else "alerta" if vol < rk.vol_band_min - LIMIT_TOL else "ok")
+    checks.append(_check("vol_ex_ante", "Vol ex-ante vs. banda do mandato", basis, vol, band,
+                         "pct", st, f"meta {fmt_pct(rk.vol_target_annual)}",
+                         vol / rk.vol_band_max if vol is not None else None))
+    if dr is not None:
+        rv = _num(dr.realized_vol_21d)
+        st = ("n/d" if rv is None else "alerta"
+              if rv > rk.vol_band_max + LIMIT_TOL or rv < rk.vol_band_min - LIMIT_TOL else "ok")
+        checks.append(_check("vol_realizada_21d", "Vol realizada 21d vs. banda", d_basis, rv,
+                             band, "pct", st, "histórico insuficiente" if rv is None else ""))
+    net = pick("net")
+    checks.append(_check("net", "Exposição líquida (|net|)", basis, net,
+                         rk.net_exposure_max_abs, "pct",
+                         _max_status(abs(net) if net is not None else None,
+                                     rk.net_exposure_max_abs)))
+    beta = pick("beta")
+    checks.append(_check("beta", "Beta previsto (|β|)", basis, beta, rk.beta_max_abs, "x",
+                         _max_status(abs(beta) if beta is not None else None, rk.beta_max_abs)))
+    gross = pick("gross")
+    checks.append(_check("gross_max", "Gross máximo", basis, gross, rk.gross_max, "pct",
+                         _max_status(gross, rk.gross_max)))
+    checks.append(_check("gross_min", "Gross mínimo", basis, gross, rk.gross_min, "pct",
+                         "n/d" if gross is None else
+                         "alerta" if gross < rk.gross_min - LIMIT_TOL else "ok"))
+    var = pick("var_1d_99")
+    checks.append(_check("var_1d", "VaR 1d (99%)", basis, var, rk.var_1d_max, "pct",
+                         _max_status(var, rk.var_1d_max)))
+    es = pick("es_1d_99")
+    checks.append(_check("es_1d", "ES 1d (99%)", basis, es, rk.es_1d_max, "pct",
+                         _max_status(es, rk.es_1d_max)))
+    if dr is not None:
+        dd = _num(dr.drawdown)
+        stage = ladder_stage(dd, cfg)
+        st = {"normal": "ok", "soft_stop": "alerta", "hard_stop": "excesso",
+              "stop_out": "excesso"}.get(stage, "n/d")
+        checks.append(_check("drawdown", "Drawdown vs. escada do mandato", d_basis, dd,
+                             [cfg.drawdown.soft_stop, cfg.drawdown.hard_stop,
+                              cfg.drawdown.stop_out], "pct", st, STAGE_PT.get(stage, stage),
+                             dd / cfg.drawdown.soft_stop if dd is not None else None))
+    lines = list(src.exposures)
+    p_lines = list(pr.exposures) if pr is not None else []
+    for group, cid, label, soft in (("country", "country_net", "Net por país (pior)", False),
+                                    ("sector", "sector_net", "Net por setor (pior)", False),
+                                    ("style", "style", "Exposição a estilo (pior)", True),
+                                    ("market", "tema_commodity",
+                                     "Tema/commodity (pior)", False)):
+        worst, util = _worst_exposure(lines, group)
+        g_basis = basis
+        if worst is None and p_lines and src is not pr:
+            # O registro diário não traz tema/commodity: usa o ex-ante da decisão.
+            worst, util = _worst_exposure(p_lines, group)
+            g_basis = p_basis
+        if worst is None or util is None:
+            continue
+        st = "ok" if util <= 1 + LIMIT_TOL else ("alerta" if soft else "excesso")
+        checks.append(_check(cid, label, g_basis, worst.net, worst.limit,
+                             "x" if group == "style" else "pct", st,
+                             f"{worst.name}: {fmt_pct(util, 1)} do limite", util))
+    shares = rk.country_gross_share_max
+    if shares and gross:
+        worst_name, worst_ratio, worst_val = None, None, None
+        for e in lines:
+            lim = shares.get(e.name)
+            if e.group != "country" or lim is None or lim <= 0:
+                continue
+            share = float(e.gross) / gross
+            ratio = share / lim
+            if worst_ratio is None or ratio > worst_ratio:
+                worst_name, worst_ratio, worst_val = e.name, ratio, share
+        if worst_name is not None:
+            checks.append(_check("country_gross_share", "Fatia do gross por país (pior)", basis,
+                                 worst_val, shares[worst_name], "pct",
+                                 "ok" if worst_ratio <= 1 + LIMIT_TOL else "excesso",
+                                 f"{worst_name}: {fmt_pct(worst_ratio, 1)} do limite",
+                                 worst_ratio))
+    if rec is not None and rec.positions:
+        longs = [p.weight for p in rec.positions if p.weight > 0]
+        shorts = [-p.weight for p in rec.positions if p.weight < 0]
+        if longs:
+            checks.append(_check("name_long_max", "Maior posição long", d_basis, max(longs),
+                                 rk.max_long_weight, "pct",
+                                 _max_status(max(longs), rk.max_long_weight)))
+        if shorts:
+            checks.append(_check("name_short_max", "Maior posição short (|w|)", d_basis,
+                                 max(shorts), rk.max_short_weight, "pct",
+                                 _max_status(max(shorts), rk.max_short_weight)))
+        n_high = int(rec.risk.squeeze_high_shorts)
+        checks.append(_check("squeeze_high", "Shorts com squeeze ALTO", d_basis, n_high, 0,
+                             "count", "excesso" if n_high > 0 else "ok"))
+        liq = _num(rec.risk.pct_gross_liquid_1d)
+        checks.append(_check("liquidez_1d", "Gross liquidável em 1 dia", d_basis, liq, None,
+                             "pct", "info" if liq is not None else "n/d",
+                             f"mín. {fmt_pct(lq.min_gross_liquid_3d, 0)} em 3 dias e "
+                             f"{fmt_pct(lq.min_gross_liquid_5d, 0)} em 5 dias"))
+    if proposal is not None:
+        liq = _liquidity_by_side(proposal.positions, cfg)
+        for side, cid, label in (("LONG", "liq_days_long", "Dias para liquidar (long)"),
+                                 ("SHORT", "liq_days_short", "Dias para liquidar (short)")):
+            s = liq[side]
+            if s["n"]:
+                checks.append(_check(cid, label, p_basis, s["max_days"], s["limit"], "days",
+                                     _max_status(s["max_days"], s["limit"]),
+                                     f"{s['n_missing']} posição(ões) sem dado"
+                                     if s["n_missing"] else ""))
+        frs = _num(pr.factor_risk_share)
+        checks.append(_check("factor_risk_share", "Fração do risco vinda de fatores", p_basis,
+                             frs, rk.max_factor_risk_share, "pct",
+                             _max_status(frs, rk.max_factor_risk_share, soft=True)))
+        tops = [v for v in (_num(x) for x in pr.top_risk_contributors.values()) if v is not None]
+        tops += [v for v in (_num(t.risk_contribution) for t in proposal.positions)
+                 if v is not None]
+        if tops:
+            checks.append(_check("single_name_risk", "Maior contribuição de um nome ao risco",
+                                 p_basis, max(tops), rk.max_single_name_risk_share, "pct",
+                                 _max_status(max(tops), rk.max_single_name_risk_share,
+                                             soft=True)))
+        gaps = [(k, v) for k, v in pr.stress_tests.items()
+                if k.startswith("Gap ") and _num(v) is not None]
+        if gaps:
+            k, v = min(gaps, key=lambda kv: kv[1])
+            checks.append(_check("country_gap_stress", "Pior gap de país (cenário)", p_basis,
+                                 v, -rk.country_stress_max_loss, "pct",
+                                 "alerta" if v < -rk.country_stress_max_loss - LIMIT_TOL
+                                 else "ok", k))
+        fees = [v for t in proposal.positions if t.side.value == "SHORT"
+                and (v := _num(t.borrow_fee_annual)) is not None]
+        if fees:
+            checks.append(_check("borrow_fee", "Maior taxa de aluguel (shorts)", p_basis,
+                                 max(fees), cfg.shorting.max_borrow_fee, "pct",
+                                 _max_status(max(fees), cfg.shorting.max_borrow_fee)))
+    return checks
+
+
+def _risk_section(cfg: FundConfig, latest_rec: Any | None, live: Any | None,
+                  live_week: date | None, executed: bool) -> dict[str, Any]:
+    if latest_rec is not None:
+        note = (f"Carteira efetivada (semana {live_week.isoformat()}) marcada em "
+                f"{latest_rec.date.isoformat()}: risco diário com drift; liquidez, stress e "
+                "contribuições ex-ante da decisão." if live_week else
+                f"Registro diário de {latest_rec.date.isoformat()}.")
+    elif live is not None:
+        note = (f"Carteira decidida em {live.week.isoformat()}"
+                + ("" if executed else ", ainda sem registro diário (execução no fechamento)")
+                + ": risco ex-ante da decisão.")
+    else:
+        note = "Sem carteira decidida: nada a medir."
+    checks = _limit_checks(cfg, latest_rec, live)
+    counts = Counter(c["status"] for c in checks)
+    names = {t.issuer_id: t.name for t in (live.positions if live is not None else [])}
+    out: dict[str, Any] = {
+        "basis_note": note, "as_of_date": latest_rec.date if latest_rec is not None else None,
+        "live_week": live_week, "executed": executed,
+        "limit_checks": checks,
+        "summary": {k: int(counts.get(k, 0)) for k in ("ok", "alerta", "excesso", "n/d",
+                                                       "info")},
+        "daily": None, "ex_ante": None, "liquidity_by_side": None, "squeeze_shorts": [],
+        "concentration": None,
+    }
+    if latest_rec is not None:
+        d = latest_rec.risk.model_dump(mode="json")
+        d["exposures"] = _exposure_rows(latest_rec.risk.exposures)
+        out["daily"] = d
+    if live is not None:
+        out["ex_ante"] = _risk_summary(live.risk, names)
+        out["liquidity_by_side"] = _liquidity_by_side(live.positions, cfg)
+        targets = {t.issuer_id: t for t in live.positions}
+        if latest_rec is not None:
+            shorts = [(p.issuer_id, p.ticker, p.weight) for p in latest_rec.positions
+                      if p.side.value == "SHORT"]
+        else:
+            shorts = [(t.issuer_id, t.execution_ticker, t.weight) for t in live.positions
+                      if t.side.value == "SHORT"]
+        order = {"HIGH": 0, "MEDIUM": 1, "LOW": 2, "NA": 3}
+        rows = []
+        for iid, ticker, w in shorts:
+            t = targets.get(iid)
+            rows.append({"issuer_id": iid, "name": t.name if t else None, "ticker": ticker,
+                         "weight": w, "bucket": t.squeeze_bucket if t else "NA",
+                         "score": t.squeeze_score if t else None,
+                         "borrow_fee_annual": t.borrow_fee_annual if t else None,
+                         "days_to_liquidate": t.days_to_liquidate if t else None,
+                         "pct_adtv": t.pct_adtv if t else None})
+        out["squeeze_shorts"] = sorted(rows, key=lambda r: (
+            order.get(r["bucket"], 4), -(_num(r["score"]) or -1.0), r["issuer_id"]))
+    weights = ([(p.issuer_id, p.weight) for p in latest_rec.positions]
+               if latest_rec is not None and latest_rec.positions else
+               [(t.issuer_id, t.weight) for t in (live.positions if live is not None else [])])
+    if weights:
+        longs = sorted((w for w in weights if w[1] > 0), key=lambda x: (-x[1], x[0]))
+        shorts_w = sorted((w for w in weights if w[1] < 0), key=lambda x: (x[1], x[0]))
+        gross = sum(abs(w) for _, w in weights)
+        out["concentration"] = {
+            "basis": "diário" if latest_rec is not None and latest_rec.positions else "ex-ante",
+            "n_long": len(longs), "n_short": len(shorts_w), "gross": gross,
+            "top5_long": sum(w for _, w in longs[:5]) if longs else None,
+            "top5_short": sum(w for _, w in shorts_w[:5]) if shorts_w else None,
+            "top10_gross_share": (sum(abs(w) for _, w in sorted(
+                weights, key=lambda x: (-abs(x[1]), x[0]))[:10]) / gross) if gross else None,
+            "largest_long": ({"issuer_id": longs[0][0], "name": names.get(longs[0][0]),
+                              "weight": longs[0][1]} if longs else None),
+            "largest_short": ({"issuer_id": shorts_w[0][0], "name": names.get(shorts_w[0][0]),
+                               "weight": shorts_w[0][1]} if shorts_w else None),
+            "effective_n_ex_ante": live.risk.effective_n if live is not None else None,
+        }
+    return out
+
+
+# ==========================================================
+# Relatórios diários, monitor de risco, backtests e auditoria
+# ==========================================================
+
+def _commentary(md: str | None, folder: Path, rec: Any | None, history: Sequence[Any],
+                cfg: FundConfig, issues: _Issues) -> dict[str, Any] | None:
+    from ..ui.data import extract_section
+
+    section = extract_section(md, COMMENTARY_SECTION) if md else None
+    source = "relatório diário publicado"
+    found_issues: list[str] = []
+    if not section and rec is not None and (folder / "comentario.json").is_file():
+        from ..ui.data import commentary_for
+
+        c = issues.attempt(f"Comentário {folder.name}",
+                           lambda: commentary_for(folder.parent.parent, rec, history, cfg))
+        if c is None or not c.markdown:
+            return None
+        section, source, found_issues = c.markdown, c.source, list(c.issues)
+    if not section:
+        return None
+    prov = _PROVENANCE_RE.findall(section)
+    provenance = prov[-1] if prov else None
+    minds = _MIND_RE.findall(provenance or "")
+    return {"markdown": section, "source": source, "provenance": provenance,
+            "ai": bool(provenance and "[IA]" in provenance),
+            "mind": minds[-1] if minds else None, "issues": found_issues}
+
+
+def _daily_reports(rt: Any, cfg: FundConfig, records: Sequence[Any], issues: _Issues,
+                   limit: int) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    from ..ui.data import list_reports
+
+    root = Path(rt.reports_root)
+    reports = issues.attempt("Relatórios publicados", lambda: list_reports(root), [])
+    index = [{"kind": r.kind, "date": r.key, "has_md": r.md is not None,
+              "has_html": r.html is not None,
+              "md_sha256": _sha256_file(r.md) if r.md is not None else None}
+             for r in reports]
+    by_date = {r.date: r for r in records}
+    daily = [r for r in reports if r.kind == "daily"]
+    report_dates = {r.key for r in daily}
+    # Registros com comentário validado ainda não publicado também aparecem.
+    pending = [r for r in records if r.date not in report_dates
+               and (root / "daily" / r.date.isoformat() / "comentario.json").is_file()]
+    items: list[tuple[date, Path, Path | None, Path | None]] = [
+        (r.key, r.folder, r.md, r.html) for r in daily]
+    items += [(r.date, root / "daily" / r.date.isoformat(), None, None) for r in pending]
+    items.sort(key=lambda x: x[0], reverse=True)
+    out = []
+    for d, folder, md_path, html_path in items[:max(limit, 0)]:
+        md = _read_text(md_path) if md_path is not None else None
+        rec = by_date.get(d)
+        history = [r for r in records if r.date < d]
+        out.append({
+            "date": d, "published": md is not None, "has_html": html_path is not None,
+            "report_markdown": md, "report_sha256": _sha256_file(md_path) if md_path else None,
+            "commentary": _commentary(md, folder, rec, history, cfg, issues),
+            "record_hash": rec.record_hash if rec is not None else None,
+            "nav_end": rec.nav_end_usd if rec is not None else None,
+            "ret": rec.ret if rec is not None else None,
+        })
+    return out, index
+
+
+def _risk_monitor(rt: Any, issues: _Issues, limit: int) -> dict[str, Any]:
+    root = Path(rt.reports_root) / "risk"
+    if not root.is_dir():
+        return {"available": False, "runs": []}
+    groups: dict[str, list[Path]] = {}
+    for path in sorted(root.rglob("*")):
+        if not path.is_file() or path.suffix.lower() not in (".json", ".md"):
+            continue
+        rel = path.relative_to(root)
+        key = rel.parts[0] if len(rel.parts) > 1 else ""
+        groups.setdefault(key, []).append(path)
+    runs = []
+    for key in sorted(groups, reverse=True)[:max(limit, 0)]:
+        files = []
+        for path in groups[key]:
+            rel = path.relative_to(root / key if key else root).as_posix()
+            entry: dict[str, Any] = {"name": rel, "kind": path.suffix.lower().lstrip("."),
+                                     "sha256": _sha256_file(path)}
+            try:
+                size = path.stat().st_size
+            except OSError:
+                size = None
+            entry["bytes"] = size
+            if size is not None and size > MAX_RISK_FILE_BYTES:
+                entry["omitted"] = "arquivo grande demais para o painel"
+            elif entry["kind"] == "json":
+                entry["data"] = issues.attempt(f"Monitor de risco {key}/{rel}",
+                                               lambda path=path: _read_json(path))
+            else:
+                entry["text"] = _read_text(path)
+            files.append(entry)
+        runs.append({"key": key or "(raiz)", "date": key if _WEEK_DIR_RE.match(key) else None,
+                     "files": files})
+    return {"available": bool(runs), "runs": runs}
+
+
+def _round(v: Any) -> float | None:
+    """Séries de backtest com ``BACKTEST_SIG_DIGITS`` algarismos significativos (tamanho)."""
+    x = _num(v)
+    return float(f"{x:.{BACKTEST_SIG_DIGITS}g}") if x is not None else None
+
+
+def _cell(v: Any) -> Any:
+    if v is None or isinstance(v, (str, bool)):
+        return v
+    return _round(v)
+
+
+def _columns(df: Any) -> dict[str, list[Any]]:
+    return {str(c): [_cell(v) for v in df[c].tolist()] for c in df.columns}
+
+
+def _backtest_run(run_dir: Path, base: Path, issues: _Issues) -> dict[str, Any] | None:
+    import pandas as pd
+
+    scope = f"Backtest {run_dir.name}"
+    raw = issues.attempt(f"{scope}: metrics.json", lambda: _read_json(run_dir / "metrics.json"))
+    if not isinstance(raw, dict):
+        return None
+    prov = raw.get("provenance") or {}
+    variant = raw.get("variant")
+    desc = []
+    for sec, vals in sorted((raw.get("overrides") or {}).items()):
+        for k, v in sorted((vals or {}).items()):
+            desc.append(f"{sec}.{k} = {v}")
+    sw = raw.get("signal_weights")
+    if sw:
+        desc.append("sinais: " + ", ".join(f"{k} {v}" for k, v in sorted(sw.items())))
+    rel = run_dir.relative_to(base).as_posix() if run_dir != base else run_dir.name
+    notice = str(prov.get("data_notice") or "")
+    run: dict[str, Any] = {
+        "id": rel, "label": f"Variante {variant}" if variant else run_dir.name,
+        "variant": variant, "description": "; ".join(desc) or "configuração do mandato",
+        "overrides": raw.get("overrides"), "signal_weights": sw,
+        "metrics": raw.get("metrics") or {}, "notes": list(raw.get("notes") or []),
+        "provenance": prov, "is_synthetic": SIMULATED_DATA_NOTICE in notice.upper(),
+        "files": {n: _sha256_file(run_dir / n) for n in ("metrics.json", "weekly.csv",
+                                                         "daily.csv", "ic.csv")
+                  if (run_dir / n).is_file()},
+        "weekly": None, "nav_weekly": None, "ic": None,
+    }
+    wpath, dpath, ipath = run_dir / "weekly.csv", run_dir / "daily.csv", run_dir / "ic.csv"
+    if wpath.is_file():
+        w = issues.attempt(f"{scope}: weekly.csv", lambda: pd.read_csv(wpath))
+        if w is not None:
+            run["weekly"] = _columns(w.astype(object).where(w.notna(), None))
+    if dpath.is_file():
+        d = issues.attempt(f"{scope}: daily.csv",
+                           lambda: pd.read_csv(dpath, parse_dates=["date"]).set_index("date"))
+        if d is not None and "nav" in d.columns:
+            nav = d["nav"].astype(float)
+            dd = nav / nav.cummax() - 1.0
+            ret = d["ret_net"].astype(float) if "ret_net" in d.columns else nav.pct_change()
+            rv63 = ret.rolling(63).std(ddof=1) * math.sqrt(252)
+            frame = pd.DataFrame({"nav": nav, "drawdown": dd, "realized_vol_63d": rv63})
+            for col in ("factor_pnl", "specific_pnl", "cost", "borrow", "financing"):
+                if col in d.columns:
+                    frame[f"cum_{col}"] = d[col].astype(float).cumsum()
+            for col in ("gross", "net"):
+                if col in d.columns:
+                    frame[col] = d[col].astype(float)
+            wk = frame.resample("W-FRI").last().dropna(how="all")
+            series = {"date": [ix.date().isoformat() for ix in wk.index]}
+            series.update({c: [_round(v) for v in wk[c].tolist()] for c in wk.columns})
+            run["nav_weekly"] = series
+            run["n_daily_obs"] = int(len(d))
+    if ipath.is_file():
+        ic = issues.attempt(f"{scope}: ic.csv",
+                            lambda: pd.read_csv(ipath, parse_dates=["date"]).set_index("date"))
+        if ic is not None:
+            summary = {}
+            for c in ic.columns:
+                s = pd.to_numeric(ic[c], errors="coerce").dropna()
+                n = int(len(s))
+                sd = float(s.std(ddof=1)) if n > 1 else None
+                mean = float(s.mean()) if n else None
+                summary[str(c)] = {
+                    "n": n, "mean": mean, "std": sd,
+                    "t_stat": (mean / (sd / math.sqrt(n))) if mean is not None and sd else None,
+                    "pct_positive": float((s > 0).mean()) if n else None}
+            cum = ic.apply(pd.to_numeric, errors="coerce").cumsum()
+            run["ic"] = {"summary": summary, "cumulative": {
+                "date": [ix.date().isoformat() for ix in cum.index],
+                **{str(c): [_round(v) for v in cum[c].tolist()] for c in cum.columns}}}
+    return run
+
+
+def _backtests(root: Path | None, pattern: str, issues: _Issues) -> dict[str, Any]:
+    if root is None or not Path(root).is_dir():
+        return {"available": False, "runs": []}
+    base = Path(root)
+    found: list[Path] = []
+    if (base / "metrics.json").is_file():
+        found.append(base)
+    else:
+        for depth in range(1, MAX_BACKTEST_DEPTH + 1):
+            glob = "/".join(["*"] * (depth - 1) + [pattern]) if depth > 1 else pattern
+            for p in sorted(base.glob(glob)):
+                if p.is_dir() and (p / "metrics.json").is_file() and p not in found:
+                    found.append(p)
+            if found:
+                break
+    runs = [r for p in found if (r := _backtest_run(p, base, issues)) is not None]
+    return {"available": bool(runs), "runs": sorted(runs, key=lambda r: r["id"])}
+
+
+def _audit(book_root: Path, book_exists: bool, cfg: FundConfig, tail: int,
+           issues: _Issues) -> dict[str, Any]:
+    from ..audit import AuditLog
+
+    path = Path(book_root) / "audit_log.jsonl"
+    if not book_exists or not path.is_file():
+        return {"exists": False, "chain_ok": None, "chain_message": "Trilha ainda não existe.",
+                "n_events": 0, "head_hash": None, "by_type": {}, "events": []}
+    log = AuditLog(path)
+    try:
+        events = log.events()
+    except Exception as exc:  # noqa: BLE001 - linha corrompida
+        issues.add("Trilha de auditoria", f"{type(exc).__name__}: {exc}")
+        return {"exists": True, "chain_ok": False, "chain_message": "Trilha ilegível.",
+                "n_events": None, "head_hash": None, "by_type": {}, "events": []}
+    ok, msg = log.verify_chain()
+    tz = ZoneInfo(cfg.fund.timezone)
+    return {
+        "exists": True, "chain_ok": ok, "chain_message": msg, "n_events": len(events),
+        "head_hash": events[-1].event_hash if events else None,
+        "first_ts": events[0].ts if events else None,
+        "last_ts": events[-1].ts if events else None,
+        "by_type": dict(sorted(Counter(e.event_type for e in events).items())),
+        "events": [{"seq": e.seq, "ts": e.ts, "ts_local": _local(e.ts, tz),
+                    "event_type": e.event_type, "actor": e.actor, "summary": e.summary,
+                    "week": e.week, "payload_hash": e.payload_hash, "event_hash": e.event_hash,
+                    "prev_hash": e.prev_hash}
+                   for e in reversed(events[-tail:] if tail > 0 else [])],
+    }
+
+
+# ==========================================================
+# Integridade, status e meta
+# ==========================================================
+
+def _integrity(rt: Any, book: Any, book_exists: bool, audit: Mapping[str, Any]
+               ) -> dict[str, Any]:
+    from .track_record import DAILY_RECORD_EVENT, SHADOW_RECORD_EVENT, TrackRecord
+
+    checks: list[dict[str, Any]] = []
+
+    def add(cid: str, label: str, fn: Callable[[], tuple[bool, list[str]]], ok_msg: str) -> None:
+        try:
+            ok, msgs = fn()
+        except Exception as exc:  # noqa: BLE001
+            ok, msgs = False, [f"{type(exc).__name__}: {exc}"]
+        checks.append({"id": cid, "label": label, "ok": bool(ok),
+                       "messages": [scrub_text(str(m)) for m in (msgs or [ok_msg])]})
+
+    root = Path(rt.book_root)
+    if not book_exists:
+        checks.append({"id": "livro", "label": "Livro × trilha", "ok": None,
+                       "messages": ["Livro ainda não existe (antes da inception)."]})
+    else:
+        checks.append({"id": "auditoria", "label": "Cadeia da trilha de auditoria",
+                       "ok": audit.get("chain_ok"),
+                       "messages": [str(audit.get("chain_message") or "")]})
+        add("livro", "Livro × trilha (pesquisa, propostas, decisões, efetivações, ledger)",
+            book.verify_integrity, "Todos os artefatos conferem com a trilha.")
+        for cid, label, sub, event in (
+                ("track_record", "Track record do CDP", "track_record", DAILY_RECORD_EVENT),
+                ("sombra", "Track record da sombra só-quant", "track_record_shadow",
+                 SHADOW_RECORD_EVENT)):
+            # Pasta ausente sem eventos na trilha: nada a verificar. Pasta ausente COM eventos
+            # (registros removidos) é verificada e acusa o problema.
+            if not (root / sub).is_dir() and not (audit.get("by_type") or {}).get(event):
+                checks.append({"id": cid, "label": label, "ok": None,
+                               "messages": ["Sem registros diários ainda."]})
+                continue
+
+            def run(sub=sub, event=event) -> tuple[bool, list[str]]:
+                return TrackRecord(root / sub, audit_event=event).verify()
+
+            add(cid, label, run, "Registros íntegros.")
+    store = getattr(rt, "store_override", None)
+    if store is not None:
+        add("dados", "Base de mercado", store.verify_chain, "Base íntegra.")
+    elif (Path(rt.market_root) / "base").is_dir():
+        add("dados", "Base de mercado (base + incrementos)", lambda: rt.store.verify_chain(),
+            "Base e incrementos íntegros.")
+    else:
+        checks.append({"id": "dados", "label": "Base de mercado", "ok": None,
+                       "messages": ["Base de mercado ausente neste ambiente."]})
+    ok = all(c["ok"] is not False for c in checks)
+    return {"ok": ok, "checks": checks}
+
+
+def _market_info(rt: Any, issues: _Issues) -> dict[str, Any]:
+    store = getattr(rt, "store_override", None)
+    if store is None and not (Path(rt.market_root) / "base").is_dir():
+        return {"available": False, "last_date": None, "is_synthetic": False}
+    last = issues.attempt("Base de mercado (último pregão)",
+                          lambda: (store or rt.store).last_date())
+    synthetic = False
+    md = getattr(store, "md", None)
+    if md is not None:
+        synthetic = bool(getattr(md, "is_synthetic", False))
+    else:
+        from ..ui.data import market_is_synthetic
+
+        synthetic = bool(issues.attempt("Base de mercado (manifesto)",
+                                        lambda: market_is_synthetic(Path(rt.market_root)),
+                                        False))
+    return {"available": True, "last_date": last, "is_synthetic": synthetic}
+
+
+def _status(rt: Any, cfg: FundConfig, now: datetime, weeks: Sequence[dict[str, Any]],
+            records: Sequence[Any], kill: Any, integrity: Mapping[str, Any],
+            market: Mapping[str, Any], risk: Mapping[str, Any]) -> dict[str, Any]:
+    from ..calendar import is_rebalance_day, is_session, open_markets, week_id
+    from ..ui.data import next_events
+
+    tz = ZoneInfo(cfg.fund.timezone)
+    local = now.astimezone(tz)
+    today = local.date()
+    current = week_id(today)
+    by_week = {w["week"]: w for w in weeks}
+    cw = by_week.get(current)
+    decided = {w["week"] for w in weeks if w["decisions"]}
+    last = records[-1] if records else None
+    latest_decided = max(decided) if decided else None
+    executed_weeks = [w["week"] for w in weeks if w["executed"]]
+    lw = by_week.get(latest_decided) if latest_decided else None
+    if lw is None:
+        phase = ("em_operacao" if records else "aguardando_decisao" if weeks
+                 else "pre_inception")
+    elif lw.get("state") == "BLOCKED":
+        phase = "bloqueada"
+    elif not lw["executed"]:
+        phase = "decidida_aguardando_execucao"
+    else:
+        phase = "em_operacao"
+    events = next_events(now, cfg, decided)
+    dd = float(last.risk.drawdown) if last is not None else None
+    stage = ladder_stage(dd, cfg) if last is not None else "desconhecido"
+    alerts: list[dict[str, str]] = []
+    if kill.active:
+        alerts.append({"severity": "error",
+                       "text": f"KILL SWITCH LIGADO: {kill.reason or 'motivo não informado'}"})
+    if not integrity.get("ok", True):
+        bad = [c["label"] for c in integrity.get("checks", []) if c["ok"] is False]
+        alerts.append({"severity": "error", "text": "Falha de integridade: " + ", ".join(bad)})
+    for ev in events:
+        if ev.overdue:
+            alerts.append({"severity": "error", "text": f"{ev.label}: {ev.note}"})
+    if lw is not None:
+        path = lw.get("path_taken")
+        if path and path != "cdp":
+            alerts.append({"severity": "warning",
+                           "text": f"Semana {latest_decided.isoformat()}: caminho de fallback — "
+                                   f"{PATH_PT.get(path, path)}."})
+        for issue in (lw.get("input_issues") or [])[:10]:
+            alerts.append({"severity": "warning", "text": f"Verificador de entradas: {issue}"})
+        soft = ((lw.get("proposal") or {}).get("summary") or {}).get("soft_failures") or []
+        if soft:
+            alerts.append({"severity": "warning",
+                           "text": "Limites SOFT reconhecidos na decisão: " + ", ".join(soft)})
+    for c in risk.get("limit_checks", []):
+        if c["status"] in ("excesso", "alerta"):
+            alerts.append({"severity": "error" if c["status"] == "excesso" else "warning",
+                           "text": f"Risco — {c['label']}: {c['status']}"
+                                   + (f" ({c['detail']})" if c.get("detail") else "")})
+    if last is not None and last.alerts:
+        alerts.append({"severity": "info",
+                       "text": f"{len(last.alerts)} alerta(s) do sistema no fechamento de "
+                               f"{last.date.isoformat()}."})
+    nav = float(last.nav_end_usd) if last is not None else float(cfg.fund.inception_nav_usd)
+    return {
+        "now_utc": now.astimezone(UTC).isoformat(), "now_local": local.isoformat(),
+        "today": today, "timezone": cfg.fund.timezone,
+        "is_session_today": is_session(today, "BVMF"),
+        "open_markets_today": open_markets(today),
+        "is_rebalance_day": is_rebalance_day(today), "current_week": current,
+        "current_week_status": {
+            "exists": cw is not None, "decided": bool(cw and cw["decisions"]),
+            "executed": bool(cw and cw["executed"]),
+            "decision_mode": ((cw or {}).get("decision") or {}).get("mode"),
+            "path_taken": (cw or {}).get("path_taken"),
+            "state": (cw or {}).get("state")},
+        "phase": phase, "phase_label": PHASE_PT[phase],
+        "kill_switch": {"active": kill.active, "reason": kill.reason, "by": kill.by,
+                        "created_at": kill.created_at, "error": kill.error},
+        "last_record_date": last.date if last is not None else None,
+        "nav_usd": nav,
+        "nav_source": "registro diário" if last is not None else "NAV inicial do mandato",
+        "day_ret": last.ret if last is not None else None,
+        "drawdown": dd, "realized_vol_21d": last.risk.realized_vol_21d if last else None,
+        "ladder_stage": stage, "ladder_stage_label": STAGE_PT.get(stage, stage),
+        "latest_decision_week": latest_decided,
+        "live_book_week": max(executed_weeks) if executed_weeks else None,
+        "market_last_date": market.get("last_date"),
+        "integrity": integrity,
+        "next_events": [{"label": e.label, "when_utc": e.when.astimezone(UTC).isoformat(),
+                         "when_local": e.when.astimezone(tz).isoformat(), "note": e.note,
+                         "overdue": e.overdue} for e in events],
+        "alerts": alerts,
+    }
+
+
+def _synthetic(records: Sequence[Any], shadow: Sequence[Any], weeks: Sequence[dict[str, Any]],
+               market: Mapping[str, Any]) -> tuple[bool, list[str], str | None]:
+    found: list[str] = []
+    notice = None
+    if any(r.is_synthetic for r in records):
+        found.append("track record")
+        notice = next(r.data_notice for r in records if r.is_synthetic)
+    if any(r.is_synthetic for r in shadow):
+        found.append("sombra só-quant")
+    for w in weeks:
+        p = w.get("proposal") or {}
+        if p.get("is_synthetic"):
+            found.append(f"proposta {w['week'].isoformat()}")
+            notice = notice or p.get("data_notice")
+        if (w.get("research") or {}).get("is_synthetic"):
+            found.append(f"pesquisa {w['week'].isoformat()}")
+    if market.get("is_synthetic"):
+        found.append("base de mercado")
+    return bool(found), found, notice
+
+
+def _data_notice(is_synth: bool, notice: str | None, records: Sequence[Any],
+                 weeks: Sequence[dict[str, Any]]) -> str:
+    if is_synth:
+        text = notice or "mercado sintético gerado por código."
+        if SIMULATED_DATA_NOTICE not in text.upper():
+            text = f"{SIMULATED_DATA_NOTICE} — {text}"
+        return text
+    if records:
+        return records[-1].data_notice or REAL_DATA_NOTICE
+    for w in reversed(weeks):
+        p = w.get("proposal") or {}
+        if p.get("data_notice"):
+            return str(p["data_notice"])
+    return REAL_DATA_NOTICE if weeks else EMPTY_DATA_NOTICE
+
+
+# ==========================================================
+# API pública
+# ==========================================================
+
+def painel_data(rt: Any, *, now: datetime | None = None,
+                max_daily_reports: int = DEFAULT_MAX_DAILY_REPORTS,
+                backtest_root: Path | str | None = None, backtest_pattern: str = "*",
+                full_weeks: int = DEFAULT_FULL_WEEKS, audit_tail: int = DEFAULT_AUDIT_TAIL,
+                max_risk_runs: int = DEFAULT_MAX_RISK_RUNS) -> dict[str, Any]:
+    """Retrato JSON completo e determinístico da operação do CDP (somente leitura).
+
+    ``now`` (com fuso; sem fuso ⇒ UTC) fixa o relógio do painel (padrão: ``rt.now()``).
+    ``backtest_root`` (padrão: ``<reports>/backtest``) pode conter um ``metrics.json`` ou
+    subpastas de execuções (``backtest_pattern`` filtra os nomes, ex.: ``"bt_*"``).
+    Semanas mais antigas que as ``full_weeks`` mais recentes vêm resumidas.
+    """
+    from ..ui.data import CDP_INVARIANTS, kill_switch_state
+    from .reports import PAPER_TRADING_TEXT
+
+    cfg: FundConfig = rt.cfg
+    if now is None:
+        now = rt.now()
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=UTC)
+    issues = _Issues()
+    book_root = Path(rt.book_root)
+    book_exists = book_root.is_dir()
+    book = None
+    if book_exists:
+        from .book import Book
+
+        book = issues.attempt("Livro", lambda: Book(book_root, config=cfg))
+    track, records, shadow_records = _track_section(rt, cfg, book_exists, issues)
+    weeks, finals = _weeks_section(rt, cfg, book, records, shadow_records, issues,
+                                   full_weeks) if book is not None else ([], {})
+    latest = _latest_day(records, shadow_records, finals, cfg)
+    # Carteira vigente: a da semana do último registro; sem registro, a última decidida.
+    live_week = records[-1].live_book_week if records else None
+    if live_week is None:
+        decided = [w["week"] for w in weeks if w["decision"] is not None
+                   and w["decision"].get("decision") == "APPROVE"]
+        live_week = decided[-1] if decided else None
+    live = finals.get(live_week) if live_week is not None else None
+    executed = any(w["week"] == live_week and w["executed"] for w in weeks)
+    risk = _risk_section(cfg, records[-1] if records else None, live, live_week, executed)
+    daily_reports, reports_index = _daily_reports(rt, cfg, records, issues, max_daily_reports)
+    bt_root = Path(backtest_root) if backtest_root is not None else (
+        Path(rt.reports_root) / "backtest")
+    backtests = _backtests(bt_root, backtest_pattern, issues)
+    audit = _audit(book_root, book_exists, cfg, audit_tail, issues)
+    integrity = _integrity(rt, book, book_exists, audit)
+    market = _market_info(rt, issues)
+    kill = kill_switch_state(book_root)
+    status = _status(rt, cfg, now, weeks, records, kill, integrity, market, risk)
+    is_synth, sources, notice = _synthetic(records, shadow_records, weeks, market)
+    synth_bt = [r["id"] for r in backtests["runs"] if r.get("is_synthetic")]
+    if synth_bt:
+        sources += [f"backtest {i}" for i in synth_bt]
+        is_synth = True
+    tz = ZoneInfo(cfg.fund.timezone)
+    meta = {
+        "schema_version": SCHEMA_VERSION, "fund_name": cfg.fund.name,
+        "generated_at": now.astimezone(UTC).isoformat(),
+        "generated_at_local": now.astimezone(tz).isoformat(), "timezone": cfg.fund.timezone,
+        "is_synthetic": is_synth, "synthetic_sources": sources,
+        "data_notice": _data_notice(is_synth, notice, records, weeks),
+        "simulated_label": SIMULATED_DATA_NOTICE if is_synth else None,
+        "paper_trading_label": cfg.fund.track_record_type,
+        "paper_trading_text": PAPER_TRADING_TEXT,
+        "base_currency": cfg.fund.base_currency, "inception_date": cfg.fund.inception_date,
+        "inception_nav_usd": cfg.fund.inception_nav_usd, "manager": cfg.fund.manager_name,
+        "config_hash": cfg.config_hash(), "mandate": _mandate(cfg),
+        "invariants": list(CDP_INVARIANTS),
+        "market": market,
+        "counts": {"weeks": len(weeks), "daily_records": len(records),
+                   "shadow_records": len(shadow_records),
+                   "daily_reports": sum(1 for r in reports_index if r["kind"] == "daily"),
+                   "weekly_reports": sum(1 for r in reports_index if r["kind"] == "weekly"),
+                   "audit_events": audit.get("n_events"),
+                   "backtests": len(backtests["runs"])},
+        "export_limits": {"max_daily_reports": max_daily_reports, "full_weeks": full_weeks,
+                   "audit_tail": audit_tail, "max_risk_runs": max_risk_runs},
+    }
+    data = {
+        "meta": meta, "status": status, "track_record": track, "latest_day": latest,
+        "risk": risk, "weeks": weeks, "daily_reports": daily_reports,
+        "reports_index": reports_index,
+        "risk_monitor": _risk_monitor(rt, issues, max_risk_runs),
+        "backtests": backtests, "audit": audit, "issues": issues.items,
+    }
+    data = clean(data)
+    data["meta"]["data_hash"] = data_hash(data)
+    return data
+
+
+def render_painel(data: Mapping[str, Any], template_path: Path | str | None = None) -> str:
+    """Injeta o JSON do painel no template (no elemento ``<script id="cdp-data">``)."""
+    path = Path(template_path) if template_path is not None else DEFAULT_TEMPLATE
+    template = path.read_text(encoding="utf-8")
+    n = template.count(DATA_ELEMENT)
+    if n != 1:
+        raise ValueError(f"O template precisa conter exatamente um {DATA_ELEMENT!r} "
+                         f"(encontrado(s): {n}).")
+    head, tail = template.split(DATA_ELEMENT)
+    element = DATA_ELEMENT.replace(PLACEHOLDER, embed_json(data))
+    return head + element + tail
+
+
+STANDALONE_HEAD = ('<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">'
+                   '<meta name="viewport" content="width=device-width,initial-scale=1,'
+                   'viewport-fit=cover"></head><body>')
+STANDALONE_TAIL = "</body></html>"
+
+
+def _write_atomic(path: Path, text: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fd, tmp = tempfile.mkstemp(prefix=".tmp_", dir=path.parent)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8", newline="\n") as f:
+            f.write(text)
+        os.replace(tmp, path)
+    finally:
+        if os.path.exists(tmp):
+            os.unlink(tmp)
+
+
+def write_painel(rt: Any, out_path: Path | str = DEFAULT_OUT, *,
+                 standalone_out: Path | str | None = None, now: datetime | None = None,
+                 template_path: Path | str | None = None, **kw: Any) -> dict[str, Any]:
+    """Grava o artifact (sem esqueleto ``<!doctype>``; o publicador envolve a página) e,
+    opcionalmente, uma cópia autônoma para abrir localmente no navegador."""
+    data = painel_data(rt, now=now, **kw)
+    page = render_painel(data, template_path)
+    out = Path(out_path)
+    _write_atomic(out, page)
+    result: dict[str, Any] = {
+        "path": out.as_posix(), "sha256": hashlib.sha256(page.encode("utf-8")).hexdigest(),
+        "bytes": len(page.encode("utf-8")), "data_hash": data["meta"]["data_hash"],
+        "json_bytes": len(to_json(data).encode("utf-8")),
+        "generated_at": data["meta"]["generated_at"],
+        "is_synthetic": data["meta"]["is_synthetic"], "standalone_path": None,
+        "standalone_sha256": None, "standalone_bytes": None,
+    }
+    if standalone_out is not None:
+        full = STANDALONE_HEAD + page + STANDALONE_TAIL
+        sp = Path(standalone_out)
+        _write_atomic(sp, full)
+        result.update({"standalone_path": sp.as_posix(),
+                       "standalone_sha256": hashlib.sha256(full.encode("utf-8")).hexdigest(),
+                       "standalone_bytes": len(full.encode("utf-8"))})
+    return result
+
+
+__all__ = ["DATA_ELEMENT", "DEFAULT_OUT", "DEFAULT_TEMPLATE", "PLACEHOLDER", "SCHEMA_VERSION",
+           "clean", "data_hash", "embed_json", "painel_data", "render_painel", "scrub_text",
+           "to_json", "write_painel"]

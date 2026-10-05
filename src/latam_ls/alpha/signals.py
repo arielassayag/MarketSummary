@@ -54,9 +54,18 @@ SUBSIGNAL_WINSOR_Z = 3.0
 MIN_VALUE_COMPONENTS = 1
 MIN_QUALITY_COMPONENTS = 2
 MIN_ANALYST_COMPONENTS = 1
-UPSIDE_BOUNDS = (-0.9, 3.0)
-"""Upside fora desta faixa indica provável descasamento de moeda/unidade (preço-alvo vs. preço)."""
+UPSIDE_BOUNDS = (-0.7, 2.0)
+"""Upside fora desta faixa indica provável descasamento de moeda/unidade (preço-alvo vs. preço;
+ex.: preço-alvo por ação local contra preço por ADR de 5 ou 10 ações)."""
 RECOMMENDATION_RANGE = (1.0, 5.0)
+VALUE_BOUNDS = {
+    "earnings_yield": (-1.0, 1.0),
+    "book_to_price": (0.01, 20.0),
+    "ebitda_to_ev": (0.005, 2.0),
+}
+"""Faixas plausíveis dos componentes de valor (|P/L| ≥ 1; P/VPA entre 0,05 e 100; EV/EBITDA entre
+0,5 e 200). Fora delas o múltiplo é tratado como erro de moeda/unidade da fonte — ex. reais do
+Yahoo (docs/research/06, §3.5): CIB P/B = 0,00207 e SQM-B.SN EV/EBITDA = 6.071 — e fica ``NaN``."""
 
 VALUE_FIELDS = ["trailing_pe", "trailing_eps", "price_to_book", "enterprise_to_ebitda"]
 QUALITY_FIELDS = ["return_on_equity", "operating_margins", "gross_margins", "debt_to_equity"]
@@ -111,6 +120,23 @@ def _rows_upto(df: pd.DataFrame, as_of: pd.Timestamp) -> pd.DataFrame:
     return df.loc[df.index <= as_of]
 
 
+def _fx_last(md: MarketData, as_of: pd.Timestamp) -> pd.Series:
+    """USD por unidade de cada moeda: último valor disponível ``<= as_of`` (``USD`` = 1)."""
+    fx = _rows_upto(md.fx, as_of)
+    last = fx.ffill().iloc[-1] if len(fx) else pd.Series(dtype=float)
+    last = pd.to_numeric(last, errors="coerce").astype(float)
+    last.index = [str(c).upper() for c in last.index]
+    last = last.where(last > 0)
+    last.loc["USD"] = 1.0
+    return last
+
+
+def _same(a: pd.Series, b: pd.Series) -> pd.Series:
+    """Igualdade elemento a elemento de textos; ausente em qualquer lado ⇒ ``False``."""
+    eq = a.astype("string") == b.astype("string")
+    return eq.fillna(False).astype(bool)
+
+
 def last_close(md: MarketData, tickers: pd.Series, as_of: pd.Timestamp) -> pd.DataFrame:
     """Último fechamento (moeda da linha) com data ``<= as_of`` para cada ticker.
 
@@ -143,12 +169,9 @@ def cap_weights_usd(md: MarketData, as_of: pd.Timestamp) -> pd.Series:
     fund = md.fundamentals
     mcap = _numeric_field(fund, "market_cap", lines.index)
     ccy = _text_field(fund, "currency", lines.index)
-    ccy = ccy.fillna(lines["currency"].astype("string"))
-    fx = _rows_upto(md.fx, as_of)
-    fx_last = fx.ffill().iloc[-1] if len(fx) else pd.Series(dtype=float)
-    fx_last = pd.to_numeric(fx_last, errors="coerce").astype(float)
-    fx_last.loc["USD"] = 1.0
-    usd = mcap * ccy.map(fx_last).astype(float)
+    ccy = ccy.fillna(lines["currency"].astype("string").str.upper())
+    fx_last = _fx_last(md, as_of)
+    usd = mcap * ccy.astype(object).map(fx_last.to_dict()).astype(float)
     frame = pd.DataFrame({
         "issuer_id": lines["issuer_id"].astype(str),
         "not_primary": ~lines["primary_line"].astype(bool),
@@ -311,11 +334,14 @@ def _candidate_lines(md: MarketData, issuers: list[str]) -> pd.DataFrame:
     fin = _text_field(fund, "financial_currency", idx)
     issuer_fin = fin.groupby(cand["issuer_id"]).first()  # primeira moeda de balanço não nula
     fin = fin.fillna(cand["issuer_id"].map(issuer_fin).astype("string"))
-    match = (quote == fin).fillna(False).astype(bool)
-    line_ccy = cand["currency"].astype("string").str.upper()
+    line_ccy = cand["currency"].astype("string").str.strip().str.upper()
+    # Coerente = fonte, linha e demonstrações na mesma moeda. A moeda da linha (universo) é a do
+    # preço em ``md.close``; uma fonte que rotula a cotação em outra moeda não é coerente.
+    match = _same(quote, fin) & _same(line_ccy, fin)
     return pd.DataFrame({
         "issuer_id": cand["issuer_id"].astype(str),
         "ticker": idx.astype(str),
+        "line_type": cand["line_type"].astype(str),
         "quote_currency": quote,
         "line_currency": line_ccy,
         "financial_currency": fin,
@@ -329,11 +355,12 @@ def select_fundamental_lines(
 ) -> pd.DataFrame:
     """Escolhe, por emissor, a linha cujos fundamentos serão usados.
 
-    Preferência: (1) moeda de cotação = moeda das demonstrações (evita o descasamento de
-    moeda típico de ADRs, ex.: preço em USD e lucro em BRL); (2) linha primária; (3) ticker.
-    Só concorrem linhas com ao menos um dos ``fields`` preenchido (e ``usable`` verdadeiro,
-    se informado). Retorna DataFrame indexado por ``issuers`` com ``ticker``,
-    ``quote_currency``, ``financial_currency`` e ``currency_match`` (``NaN`` sem linha).
+    Preferência: (1) moeda da linha = moeda de cotação da fonte = moeda das demonstrações
+    (evita o descasamento de moeda típico de ADRs, ex.: preço em USD e lucro em BRL); (2) linha
+    primária; (3) ticker. Só concorrem linhas com ao menos um dos ``fields`` preenchido (e
+    ``usable`` verdadeiro, se informado). Retorna DataFrame indexado por ``issuers`` com
+    ``ticker``, ``line_type``, ``quote_currency``, ``line_currency``, ``financial_currency`` e
+    ``currency_match`` (``NaN`` sem linha).
     """
     cand = _candidate_lines(md, issuers)
     fund = md.fundamentals
@@ -346,7 +373,8 @@ def select_fundamental_lines(
     cand = cand.assign(no_match=~cand["currency_match"], not_primary=~cand["primary"])
     cand = cand.sort_values(["issuer_id", "no_match", "not_primary", "ticker"])
     best = cand.groupby("issuer_id").head(1).set_index("issuer_id")
-    cols = ["ticker", "quote_currency", "line_currency", "financial_currency", "currency_match"]
+    cols = ["ticker", "line_type", "quote_currency", "line_currency", "financial_currency",
+            "currency_match"]
     return best[cols].reindex(pd.Index(issuers, name="issuer_id"))
 
 

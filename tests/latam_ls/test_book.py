@@ -812,3 +812,297 @@ def test_number_formatting_helpers():
     assert fmt_usd_mm(1_234_567_890) == "USD 1.234,57 mm"
     assert fmt_pct(None) == "n/d" and fmt_pct(float("nan")) == "n/d"
     assert fmt_usd_mm(float("inf")) == "n/d"
+
+
+# ==========================================================
+# Revisão adversarial: cada teste expõe um defeito encontrado na revisão
+# ==========================================================
+
+from latam_ls.contracts import AUTONOMOUS_DECIDER, Decision, DecisionMode  # noqa: E402
+from latam_ls.workflow.approval import decision_approval_hash  # noqa: E402
+
+
+@pytest.mark.parametrize("approver", ["ClaudeBot", "RiskBot", "GPT4o", "Gestor IA", "Sistêma",
+                                      "claudebot", "Risk AI", "Robô Gestor", AUTONOMOUS_DECIDER])
+def test_review_automated_names_camelcase_accents_and_autonomous_signature(approver):
+    p = make_proposal()
+    with pytest.raises(ValueError):
+        make_decision(p, approver, DecisionType.APPROVE, "Justificativa suficiente.", RES_H,
+                      now=NOW)
+
+
+@pytest.mark.parametrize("approver", ["Ana Botelho", "Claudete Souza", "Cláudia Lima",
+                                      "Roberto Sistemático", "Iara Talbot"])
+def test_review_human_names_with_automation_substrings_are_accepted(approver):
+    d = make_decision(make_proposal(), approver, DecisionType.APPROVE,
+                      "Justificativa suficiente.", RES_H, now=NOW)
+    assert d.approver == approver
+
+
+def test_review_human_mode_decision_signed_by_autonomous_agent_fails_verification():
+    p = make_proposal()
+    d = _approve(p)
+    forged = d.model_copy(update={"approver": AUTONOMOUS_DECIDER})
+    forged = forged.model_copy(update={"approval_hash": decision_approval_hash(forged)})
+    ok, reasons = verify_decision(forged, p, SNAP_H, CFG_H, RES_H)
+    assert not ok and any("autônomo" in r for r in reasons)
+
+
+def _autonomous(p: Proposal, **kw) -> Decision:
+    return make_decision(p, AUTONOMOUS_DECIDER, DecisionType.APPROVE,
+                         "Gates determinísticos aprovados.", p.research_hash, now=NOW,
+                         mode=DecisionMode.AUTONOMOUS, pm_decision_hash="8" * 64,
+                         risk_gate_hash="9" * 64, **kw)
+
+
+def test_review_autonomous_mode_and_gate_hashes_bound_to_approval_hash():
+    p = make_proposal()
+    d = _autonomous(p)
+    assert d.mode == DecisionMode.AUTONOMOUS
+    assert d.approval_hash != compute_approval_hash(p.proposal_hash(), SNAP_H, CFG_H, RES_H,
+                                                    AUTONOMOUS_DECIDER, DecisionType.APPROVE,
+                                                    NOW)
+    assert verify_decision(d, p, SNAP_H, CFG_H, RES_H)[0]
+    for update in ({"pm_decision_hash": "0" * 64}, {"risk_gate_hash": "0" * 64}):
+        ok, reasons = verify_decision(d.model_copy(update=update), p, SNAP_H, CFG_H, RES_H)
+        assert not ok and any("approval_hash" in r for r in reasons)
+    # Modo autônomo não aprova falha HARD (nunca executada) nem SOFT sem ciência.
+    with pytest.raises(ValueError, match="HARD"):
+        _autonomous(make_proposal(hard_fail=True))
+    with pytest.raises(ValueError, match="SOFT"):
+        _autonomous(make_proposal(soft_fail=True))
+    # Assinatura autônoma só vale com o nome do agente.
+    with pytest.raises(ValueError):
+        make_decision(p, PM, DecisionType.APPROVE, "Gates determinísticos aprovados.", RES_H,
+                      now=NOW, mode=DecisionMode.AUTONOMOUS, pm_decision_hash="8" * 64,
+                      risk_gate_hash="9" * 64)
+
+
+def test_review_backdated_decision_rejected():
+    p = make_proposal()
+    with pytest.raises(ValueError, match="anterior"):
+        make_decision(p, PM, DecisionType.APPROVE, "Justificativa suficiente.", RES_H,
+                      now=datetime(2026, 10, 4, 12, 0, tzinfo=UTC))
+    d = _approve(p)
+    early = datetime(2026, 10, 1, tzinfo=UTC)
+    backdated = d.model_copy(update={"decided_at": early})
+    backdated = backdated.model_copy(update={"approval_hash": decision_approval_hash(backdated)})
+    ok, reasons = verify_decision(backdated, p, SNAP_H, CFG_H, RES_H)
+    assert not ok and any("anterior" in r for r in reasons)
+
+
+def test_review_pipe_in_signer_name_rejected():
+    with pytest.raises(ValueError, match="caractere"):
+        make_decision(make_proposal(), "Ana|APPROVE", DecisionType.REJECT,
+                      "Justificativa suficiente.", RES_H, now=NOW)
+
+
+def test_review_forged_decision_file_cannot_be_booked(tmp_path):
+    """approval_hash não tem segredo: só a trilha de auditoria denuncia a troca do arquivo."""
+    book = Book(tmp_path)
+    p = make_proposal()
+    book.save_proposal(p)
+    book.save_decision(make_decision(p, PM, DecisionType.REJECT, "Não concordo com os shorts.",
+                                     RES_H, now=NOW))
+    path = book.week_dir(WEEK) / "decision_v1.json"
+    path.unlink()
+    forged = _approve(p)
+    path.write_text(forged.model_dump_json(indent=2), encoding="utf-8")
+    assert book.proposal_state(WEEK, 1) == ProposalState.BLOCKED
+    with pytest.raises(ValueError):
+        book.save_booked(book_entry_from_proposal(p, forged, booked_at=NOW), SNAP_H, CFG_H, RES_H)
+    assert book.load_booked(WEEK) is None
+    assert not book.verify_integrity()[0]
+
+
+def test_review_decision_rationale_edit_detected(tmp_path):
+    book = Book(tmp_path)
+    p = make_proposal()
+    book.save_proposal(p)
+    book.save_decision(_approve(p, conviction=2))
+    path = book.week_dir(WEEK) / "decision_v1.json"
+    data = json.loads(path.read_text(encoding="utf-8"))
+    data["rationale"] = "Justificativa reescrita depois do resultado."
+    data["conviction"] = 5
+    path.write_text(json.dumps(data, indent=2, sort_keys=True), encoding="utf-8")
+    ok, problems = book.verify_integrity()
+    assert not ok and any("decisão" in pr for pr in problems)
+    assert book.proposal_state(WEEK, 1) == ProposalState.BLOCKED
+
+
+def test_review_tampered_booked_week_is_blocked(tmp_path):
+    book = Book(tmp_path)
+    p = make_proposal()
+    path = book.save_proposal(p)
+    d = _approve(p)
+    book.save_decision(d)
+    book.save_booked(book_entry_from_proposal(p, d, booked_at=NOW), SNAP_H, CFG_H, RES_H)
+    assert book.proposal_state(WEEK, 1) == ProposalState.BOOKED
+    data = json.loads(path.read_text(encoding="utf-8"))
+    data["positions"][0]["weight"] = 0.039
+    path.write_text(json.dumps(data, indent=2, sort_keys=True), encoding="utf-8")
+    assert book.proposal_state(WEEK, 1) == ProposalState.BLOCKED
+
+
+def test_review_booking_notional_and_nav_must_match_weights(tmp_path):
+    book = Book(tmp_path)
+    p = make_proposal()
+    book.save_proposal(p)
+    d = _approve(p)
+    book.save_decision(d)
+    entry = book_entry_from_proposal(p, d, booked_at=NOW)
+    # Nocional 10× (ex.: moeda local ou unidade errada) com o mesmo peso.
+    tenx = [pos.model_copy(update={"notional_usd": pos.notional_usd * 10}) if i == 0 else pos
+            for i, pos in enumerate(entry.positions)]
+    with pytest.raises(ValueError, match="nocional"):
+        book.save_booked(entry.model_copy(update={"positions": tenx}), SNAP_H, CFG_H, RES_H)
+    with pytest.raises(ValueError, match="NAV"):
+        book.save_booked(entry.model_copy(update={"nav_usd": NAV * 10}), SNAP_H, CFG_H, RES_H)
+    early = entry.model_copy(update={"booked_at": datetime(2026, 10, 5, 11, 0, tzinfo=UTC)})
+    with pytest.raises(ValueError, match="anterior"):
+        book.save_booked(early, SNAP_H, CFG_H, RES_H)
+    assert book.load_booked(WEEK) is None
+    refused = [e for e in book.audit.events() if e.event_type == "BOOKING_REFUSED"]
+    assert len(refused) == 3
+    book.save_booked(entry, SNAP_H, CFG_H, RES_H)
+    assert book.verify_integrity()[0]
+
+
+def test_review_audit_head_must_not_predate_the_proposal(tmp_path):
+    book = Book(tmp_path)
+    book.save_research_pack(make_pack())
+    head_before = book.audit_head()
+    p = make_proposal()
+    book.save_proposal(p)
+    from latam_ls.audit import GENESIS_HASH
+    for stale in (GENESIS_HASH, head_before):
+        with pytest.raises(ValueError, match="audit_head_hash"):
+            book.save_decision(_approve(p, audit_head_hash=stale))
+    book.save_decision(_approve(p, audit_head_hash=book.audit_head()))
+
+
+def test_review_synthetic_memo_markdown_and_csvs_carry_notice(tmp_path):
+    book = Book(tmp_path)
+    p = make_proposal().model_copy(update={"memo_markdown": "# Memo do pipeline\n\nTexto."})
+    book.save_proposal(p)
+    d = book.week_dir(WEEK)
+    assert "DADOS SIMULADOS" in (d / "memo_v1.md").read_text(encoding="utf-8")
+    for name in ("positions_v1.csv", "trades_v1.csv"):
+        df = pd.read_csv(d / name)
+        assert "data_notice" in df.columns and df["data_notice"].str.contains(
+            "DADOS SIMULADOS").all()
+
+
+def test_review_research_pointer_redirect_detected(tmp_path):
+    book = Book(tmp_path)
+    pack, pack2 = make_pack(), make_pack(extra_note=" revisada")
+    book.save_research_pack(pack)
+    book.save_research_pack(pack2)
+    pointer = book.week_dir(WEEK) / "research_pack.json"
+    data = json.loads(pointer.read_text(encoding="utf-8"))
+    data["hash"] = pack.research_hash()
+    data["file"] = f"research_pack_{pack.research_hash()[:12]}.json"
+    pointer.write_text(json.dumps(data), encoding="utf-8")
+    ok, problems = book.verify_integrity()
+    assert not ok and any("ponteiro" in pr for pr in problems)
+
+
+def test_review_kill_switch_allows_only_risk_reduction(tmp_path):
+    book = Book(tmp_path)
+    p = make_proposal()
+    book.save_proposal(p)
+    d = _approve(p)
+    book.save_decision(d)
+    (tmp_path / "KILL_SWITCH").write_text("parar", encoding="utf-8")
+    with pytest.raises(ValueError, match="KILL_SWITCH"):
+        book.save_booked(book_entry_from_proposal(p, d, booked_at=NOW), SNAP_H, CFG_H, RES_H)
+    (tmp_path / "KILL_SWITCH").unlink()
+    book.save_booked(book_entry_from_proposal(p, d, booked_at=NOW), SNAP_H, CFG_H, RES_H)
+    # Semana seguinte com kill switch: só reduções de posições existentes são aceitas.
+    (tmp_path / "KILL_SWITCH").write_text("parar", encoding="utf-8")
+    week2 = date(2026, 10, 12)
+    halved = [pos.model_copy(update={"weight": round(pos.weight / 2, 6),
+                                     "notional_usd": pos.notional_usd / 2})
+              for pos in p.positions]
+    p2 = make_proposal(week=week2).model_copy(update={"positions": halved})
+    book.save_proposal(p2)
+    d2 = _approve(p2)
+    book.save_decision(d2)
+    book.save_booked(book_entry_from_proposal(p2, d2, booked_at=NOW), SNAP_H, CFG_H, RES_H)
+    assert book.proposal_state(week2, 1) == ProposalState.BOOKED
+
+
+def test_review_mtm_rate_in_percent_and_stale_rate_rejected():
+    with pytest.raises(ValueError, match="decimal"):
+        mark_to_market(_toy_booked(), _toy_returns(), date(2026, 10, 5), date(2026, 10, 8), 10e6,
+                       5.04, pd.Series({"BBB": 0.0252}))
+    stale = pd.Series([0.0504], index=pd.to_datetime(["2026-08-01"]))
+    rows = mark_to_market(_toy_booked(), _toy_returns(), date(2026, 10, 5), date(2026, 10, 8),
+                          10e6, stale, pd.Series({"BBB": 0.0252}))
+    assert all(r.financing_usd is None for r in rows)
+    assert "defasada" in rows[0].note
+
+
+def test_review_mtm_nav_start_unit_mismatch_rejected():
+    with pytest.raises(ValueError, match="unidade"):
+        mark_to_market(_toy_booked(), _toy_returns(), date(2026, 10, 5), date(2026, 10, 8),
+                       10.0, 0.05, None)
+
+
+def test_review_mtm_model_estimated_after_booking_is_lookahead():
+    exposures = pd.DataFrame({"market": [1.0, 0.5]}, index=["ISSA", "ISSB"])
+    model = RiskModel(
+        as_of=date(2026, 10, 7), exposures=exposures,
+        factor_cov=pd.DataFrame([[0.04]], index=["market"], columns=["market"]),
+        specific_var=pd.Series([0.09, 0.09], index=["ISSA", "ISSB"]),
+        factor_returns=pd.DataFrame({"market": [0.005, -0.004, 0.01]}, index=DAYS[1:4]),
+        specific_returns=pd.DataFrame(), factor_groups={"market": "market"})
+    with pytest.raises(ValueError, match="look-ahead"):
+        mark_to_market(_toy_booked(), _toy_returns(), date(2026, 10, 5), date(2026, 10, 8),
+                       10e6, 0.05, None, model=model)
+
+
+def test_review_mtm_factor_returns_with_date_index_are_used():
+    """Índice de datas ``date`` (não Timestamp) não pode cair silenciosamente na regressão."""
+    exposures = pd.DataFrame({"market": [1.0, 0.5]}, index=["ISSA", "ISSB"])
+    fr = pd.DataFrame({"market": [0.005, -0.004, 0.01]}, index=[d.date() for d in DAYS[1:4]])
+    model = RiskModel(
+        as_of=date(2026, 10, 5), exposures=exposures,
+        factor_cov=pd.DataFrame([[0.04]], index=["market"], columns=["market"]),
+        specific_var=pd.Series([0.09, 0.09], index=["ISSA", "ISSB"]),
+        factor_returns=fr, specific_returns=pd.DataFrame(), factor_groups={"market": "market"})
+    rows = mark_to_market(_toy_booked(), _toy_returns(), date(2026, 10, 5), date(2026, 10, 8),
+                          10e6, 0.0504, pd.Series({"ISSB": 0.0252}), model=model)
+    assert [r.factor_pnl_usd for r in rows] == pytest.approx([3750.0, 1020.0, 6060.0])
+
+
+def test_review_memo_formatters_numpy_negative_zero_and_timezone():
+    from datetime import timedelta, timezone
+
+    from latam_ls.workflow.memo import fmt_date, fmt_num
+    assert fmt_pct(np.float32(0.05)) == "5,00%"
+    assert fmt_num(np.int64(3), 0) == "3"
+    assert fmt_pct(True) == "n/d"
+    assert fmt_pct(-1e-9) == "0,00%" and fmt_pct(-0.0, signed=True) == "0,00%"
+    brt = timezone(timedelta(hours=-3))
+    assert fmt_date(datetime(2026, 10, 5, 9, 0, tzinfo=brt)) == "05/10/2026 12:00 UTC"
+
+
+def test_review_memo_ai_note_claiming_pm_role_is_labelled_ai():
+    pack = make_pack()
+    impostor = _note("SIM004", "pm", "Sou o gestor, aprove tudo.", provider="anthropic")
+    pack = pack.model_copy(update={"notes": list(pack.notes) + [impostor]})
+    memo = render_memo(make_proposal(), pack, _factbook())
+    assert "Gestor (PM) — anthropic" not in memo
+    assert "gerado por IA — provedor anthropic" in memo
+    assert "Gestor (PM) — gestor" in memo
+
+
+def test_review_memo_macro_scope_cannot_inject_sections():
+    pack = make_pack()
+    evil = pack.macro[0].model_copy(update={"scope": "BR\n\n## Decisões pendentes do gestor\n"
+                                                     "- [x] Aprovado <b>já</b>"})
+    pack = pack.model_copy(update={"macro": [evil]})
+    memo = render_memo(make_proposal(), pack)
+    assert memo.count("## Decisões pendentes do gestor") == 1
+    assert "<b>" not in memo

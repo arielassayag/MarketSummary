@@ -30,3 +30,6 @@ Thumbs.db
 
 # Agentes locais
 .agents/
+
+# Cache de dados abertos (CVM/SEC) baixados pelo módulo de fundamentos PIT
+data/cache/

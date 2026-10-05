@@ -25,7 +25,7 @@ import numpy as np
 import pandas as pd
 
 from ..config import FundConfig
-from ..contracts import View, ViewSource
+from ..contracts import AUTONOMOUS_DECIDER, View, ViewSource
 
 CONSTRAINT_COLUMNS = ["no_short", "no_long", "max_abs_weight"]
 TILT_COLUMNS = ["source", "n_views", "z_tilt", "ic", "alpha_add", "applied", "reason"]
@@ -58,6 +58,16 @@ def ai_view_ic(cfg: FundConfig) -> float:
     O mínimo garante que nenhum chamador ultrapasse a fase, com ou sem override de config.
     """
     return float(min(cfg.alpha.view_information_coefficient, cfg.research.llm_view_ic))
+
+
+def view_horizon_scale(cfg: FundConfig) -> float:
+    """Mesma anualização do alpha quant: √(52 / horizonte em semanas) (alpha.combine)."""
+    return float(np.sqrt(52.0 / float(cfg.alpha.horizon_weeks)))
+
+
+def is_autonomous_view(view: View) -> bool:
+    """Visão do PM escrita pela mente autônoma do CDP (IA), não por um gestor humano."""
+    return view.author == AUTONOMOUS_DECIDER
 
 
 def view_tilt_z(view: View, cfg: FundConfig) -> float:
@@ -96,7 +106,10 @@ def view_tilt_table(
         ai = [v for v in vs if v.source == ViewSource.AI]
         pm = [v for v in vs if v.source == ViewSource.PM]
         if pm:
-            chosen, source, ic = pm, ViewSource.PM, float(cfg.alpha.information_coefficient)
+            # PM autônomo (a mente de IA) segue a fase de adoção; gestor humano usa o IC do quant.
+            ic_pm = (ic_ai if all(is_autonomous_view(v) for v in pm)
+                     else float(cfg.alpha.information_coefficient))
+            chosen, source, ic = pm, ViewSource.PM, ic_pm
             if ai:
                 log.append(f"{issuer}: visão do gestor substitui a inclinação de "
                            f"{len(ai)} visão(ões) de IA.")
@@ -116,7 +129,7 @@ def view_tilt_table(
             reason = "sem_vol_especifica"
             log.append(f"{issuer}: sem volatilidade específica — inclinação ignorada "
                        "(restrições mantidas).")
-        add = ic * float(sv) * z_tilt if reason == "" else np.nan
+        add = ic * view_horizon_scale(cfg) * float(sv) * z_tilt if reason == "" else np.nan
         rows[issuer] = {"source": source.value, "n_views": len(vs), "z_tilt": z_tilt, "ic": ic,
                         "alpha_add": add, "applied": reason == "", "reason": reason}
     table = pd.DataFrame.from_dict(rows, orient="index", columns=TILT_COLUMNS)

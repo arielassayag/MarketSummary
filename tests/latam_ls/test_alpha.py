@@ -41,11 +41,12 @@ from latam_ls.alpha.views import (
     ai_view_ic,
     apply_views,
     mandate_max_abs_weight,
+    view_horizon_scale,
     view_tilt_table,
 )
 from latam_ls.analytics.panel import build_asset_panel
 from latam_ls.config import FundConfig
-from latam_ls.contracts import View, ViewSource
+from latam_ls.contracts import AUTONOMOUS_DECIDER, View, ViewSource
 from latam_ls.data.synthetic import make_synthetic_market
 from latam_ls.market import MarketData
 from latam_ls.risk.types import TRADING_DAYS, RiskModel
@@ -607,10 +608,10 @@ def test_view_tilt_is_bounded(base_alpha, cfg):
         src = ViewSource.AI if rng.uniform() < 0.5 else ViewSource.PM
         adj, _, _ = apply_views(alpha, [_view("A", src, score, conf)], vol, cfg)
         ic = ai_view_ic(cfg) if src == ViewSource.AI else cfg.alpha.information_coefficient
-        bound = ic * vol["A"] * cfg.alpha.max_view_tilt_z
+        bound = ic * view_horizon_scale(cfg) * vol["A"] * cfg.alpha.max_view_tilt_z
         assert abs(adj["A"] - alpha["A"]) <= bound + 1e-15
     adj, _, log = apply_views(alpha, [_view("A", ViewSource.AI, 2, 1.0)], vol, cfg)
-    expected = ai_view_ic(cfg) * 0.25 * cfg.alpha.max_view_tilt_z
+    expected = ai_view_ic(cfg) * view_horizon_scale(cfg) * 0.25 * cfg.alpha.max_view_tilt_z
     assert adj["A"] - alpha["A"] == pytest.approx(expected)
     assert adj.drop("A").equals(alpha.drop("A"))
     assert any("A:" in m for m in log)
@@ -621,7 +622,8 @@ def test_pm_view_replaces_ai_tilt(base_alpha, cfg):
     views = [_view("B", ViewSource.AI, 2, 1.0), _view("B", ViewSource.PM, -1, 0.5)]
     adj, _, log = apply_views(alpha, views, vol, cfg)
     z = -1 / 2 * cfg.alpha.max_view_tilt_z * 0.5
-    assert adj["B"] - alpha["B"] == pytest.approx(cfg.alpha.information_coefficient * 0.30 * z)
+    assert adj["B"] - alpha["B"] == pytest.approx(
+        cfg.alpha.information_coefficient * view_horizon_scale(cfg) * 0.30 * z)
     assert any("substitui" in m for m in log)
     table, _ = view_tilt_table(alpha, views, vol, cfg)
     assert table.loc["B", "source"] == "pm" and table.loc["B", "n_views"] == 2
@@ -632,7 +634,7 @@ def test_multiple_ai_views_are_averaged(base_alpha, cfg):
     views = [_view("C", ViewSource.AI, 2, 1.0), _view("C", ViewSource.AI, -2, 0.5)]
     adj, _, log = apply_views(alpha, views, vol, cfg)
     z = (1.0 * cfg.alpha.max_view_tilt_z + (-1.0) * cfg.alpha.max_view_tilt_z * 0.5) / 2
-    expected = ai_view_ic(cfg) * 0.20 * z
+    expected = ai_view_ic(cfg) * view_horizon_scale(cfg) * 0.20 * z
     assert adj["C"] - alpha["C"] == pytest.approx(expected)
     assert any("média" in m for m in log)
 
@@ -897,14 +899,23 @@ def test_ai_view_ic_follows_adoption_phase(base_alpha, cfg):
     assert any("shadow" in m for m in log)
     assert ai_view_ic(cfg) == pytest.approx(cfg.research.llm_view_ic)  # S1 padrão = 0,01
     adj1, _, _ = apply_views(alpha, views, vol, cfg)
-    assert adj1["A"] - alpha["A"] == pytest.approx(0.01 * 0.25 * cfg.alpha.max_view_tilt_z)
+    assert adj1["A"] - alpha["A"] == pytest.approx(
+        0.01 * view_horizon_scale(cfg) * 0.25 * cfg.alpha.max_view_tilt_z)
     capped = cfg.with_overrides({"research": {"llm_phase": "S3"},
                                  "alpha": {"view_information_coefficient": 0.005}})
     assert ai_view_ic(capped) == pytest.approx(0.005)
-    # Gestor (PM) usa o IC do alpha quantitativo, independentemente da fase da IA.
+    # Gestor humano (PM) usa o IC do alpha quantitativo, independentemente da fase da IA.
     pm = apply_views(alpha, [_view("A", ViewSource.PM, 2, 1.0)], vol, s0)[0]
-    expected = cfg.alpha.information_coefficient * 0.25 * cfg.alpha.max_view_tilt_z
+    expected = (cfg.alpha.information_coefficient * view_horizon_scale(cfg) * 0.25
+                * cfg.alpha.max_view_tilt_z)
     assert pm["A"] - alpha["A"] == pytest.approx(expected)
+    # PM autônomo (a mente de IA do CDP) segue a fase de adoção: S0 não move o alpha.
+    auto = View(issuer_id="A", source=ViewSource.PM, score=2, confidence=1.0, rationale="t",
+                author=AUTONOMOUS_DECIDER)
+    assert apply_views(alpha, [auto], vol, s0)[0]["A"] == alpha["A"]
+    s1 = apply_views(alpha, [auto], vol, cfg)[0]
+    assert s1["A"] - alpha["A"] == pytest.approx(
+        ai_view_ic(cfg) * view_horizon_scale(cfg) * 0.25 * cfg.alpha.max_view_tilt_z)
 
 
 def test_line_selection_prefers_usable_local_line_without_currency_info(md, as_of, ids):

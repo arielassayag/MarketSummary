@@ -21,7 +21,7 @@ import statistics
 from collections import Counter
 from collections.abc import Callable, Iterable, Sequence
 from dataclasses import dataclass, field
-from datetime import date, datetime, timedelta
+from datetime import UTC, date, datetime, timedelta
 from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo
@@ -85,10 +85,14 @@ CDP_INVARIANTS = (
 # Utilidades
 # ==========================================================
 
-def fingerprint(*paths: Path | str, skip_dirs: Iterable[str] = _SKIP_DIRS) -> str:
+def fingerprint(*paths: Path | str, skip_dirs: Iterable[str] = _SKIP_DIRS,
+                content: bool = False) -> str:
     """Impressão digital (caminho relativo, tamanho, mtime) de arquivos/árvores para o cache.
 
     Muda sempre que um arquivo é criado, removido ou alterado; ausente ⇒ marcador estável.
+    ``content=True`` inclui o SHA-256 do conteúdo dos arquivos passados diretamente (para
+    arquivos pequenos e críticos como a trilha de auditoria: uma edição que preserve tamanho e
+    mtime também invalida o cache).
     """
     skip = set(skip_dirs)
     h = hashlib.sha256()
@@ -102,6 +106,8 @@ def fingerprint(*paths: Path | str, skip_dirs: Iterable[str] = _SKIP_DIRS) -> st
             if p.is_file():
                 st = p.stat()
                 h.update(f"{p.name}|{st.st_size}|{st.st_mtime_ns}\n".encode())
+                if content:
+                    h.update(hashlib.sha256(p.read_bytes()).hexdigest().encode())
                 continue
         except OSError:
             h.update(b"erro\n")
@@ -238,10 +244,16 @@ class TrackData:
     monthly: pd.DataFrame | None = None
     csv_bytes: bytes | None = None
     issues: list[str] = field(default_factory=list)
+    integrity: list[CheckResult] = field(default_factory=list)
 
     @property
     def empty(self) -> bool:
         return not self.records
+
+    @property
+    def integrity_failures(self) -> list[CheckResult]:
+        """Verificações reprovadas na carga (registro adulterado, removido ou ilegível)."""
+        return [r for r in self.integrity if not r.ok]
 
     @property
     def latest(self) -> DailyRecord | None:
@@ -256,18 +268,38 @@ class TrackData:
         return [r.date for r in self.records]
 
 
+def _load_records(tr: Any, issues: list[str], label: str) -> list[DailyRecord]:
+    """Registros um a um: um JSON ilegível vira apontamento sem esconder os demais."""
+    out: list[DailyRecord] = []
+    for d in _attempt(issues, f"{label} (datas)", tr.dates, []):
+        rec = _attempt(issues, f"{label} {d.isoformat()} ilegível", lambda d=d: tr.get(d), None)
+        if rec is not None:
+            out.append(rec)
+    return out
+
+
 def load_track(book_root: Path, cfg: FundConfig) -> TrackData:
+    """Track record do CDP e da sombra, com a verificação de integridade feita já na carga.
+
+    A verificação (``TrackRecord.verify`` + cadeia da trilha) roda sempre que o livro existe —
+    inclusive sem a pasta do track record, para acusar registros removidos que a trilha ainda
+    lista. Nenhuma pasta é criada.
+    """
     from ..workflow.track_record import TrackRecord, compare_tracks
 
     root = Path(book_root)
     td = TrackData()
+    if not root.is_dir():
+        return td
+    td.integrity = _attempt(td.issues, "Verificação de integridade",
+                            lambda: verify_track_integrity(root), [])
     main_dir = root / TRACK_DIR
-    if not root.is_dir() or not main_dir.is_dir():
+    if not main_dir.is_dir():
         return td
     td.exists = True
     issues = td.issues
     main = TrackRecord(main_dir)
-    td.records = _attempt(issues, "Track record (registros)", main.records, [])
+    td.records = _load_records(main, issues, "Track record")
     td.frame = _attempt(issues, "Track record (CSV)", main.frame, None)
     td.stats = _attempt(issues, "Track record (estatísticas)", lambda: main.stats(cfg), {})
     td.monthly = _attempt(issues, "Track record (grade mensal)", main.monthly_returns_table, None)
@@ -276,7 +308,7 @@ def load_track(book_root: Path, cfg: FundConfig) -> TrackData:
     shadow_dir = root / SHADOW_DIR
     if shadow_dir.is_dir():
         shadow = TrackRecord(shadow_dir, audit_event=_shadow_event())
-        td.shadow_records = _attempt(issues, "Sombra só-quant (registros)", shadow.records, [])
+        td.shadow_records = _load_records(shadow, issues, "Sombra só-quant")
         td.shadow_frame = _attempt(issues, "Sombra só-quant (CSV)", shadow.frame, None)
         td.compare = _attempt(issues, "CDP vs sombra", lambda: compare_tracks(main, shadow), None)
     return td
@@ -341,19 +373,28 @@ class WeekData:
 
     @property
     def proposal(self) -> Proposal | None:
-        """Proposta efetivada (se houver) ou a versão mais recente."""
+        """Proposta vigente da semana: a efetivada; senão a mais recente com decisão APPROVE;
+        senão a versão mais recente."""
         if self.booked is not None:
             for p in self.proposals:
                 if p.proposal_id == self.booked.proposal_id:
                     return p
+        approved = [p for p in self.proposals
+                    if (d := self.decisions.get(p.version)) is not None
+                    and d.proposal_id == p.proposal_id
+                    and getattr(d.decision, "value", d.decision) == "APPROVE"]
+        if approved:
+            return approved[-1]
         return self.proposals[-1] if self.proposals else None
 
     @property
     def decision(self) -> Decision | None:
+        """Decisão da proposta exibida (nunca a de outra versão)."""
         p = self.proposal
-        if p is not None and p.version in self.decisions:
-            return self.decisions[p.version]
-        return self.decisions[max(self.decisions)] if self.decisions else None
+        if p is None:
+            return None
+        d = self.decisions.get(p.version)
+        return d if d is not None and d.proposal_id == p.proposal_id else None
 
     @property
     def state(self) -> str | None:
@@ -395,12 +436,22 @@ class BookData:
     weeks: list[WeekData] = field(default_factory=list)
     kill_switch: KillSwitchState = field(default_factory=lambda: KillSwitchState(False))
     issues: list[str] = field(default_factory=list)
+    integrity: list[CheckResult] = field(default_factory=list)
+
+    @property
+    def integrity_failures(self) -> list[CheckResult]:
+        return [r for r in self.integrity if not r.ok]
 
     def week(self, d: date) -> WeekData | None:
         return next((w for w in self.weeks if w.week == d), None)
 
     def previous(self, d: date) -> WeekData | None:
+        """Carteira anterior a ``d``: a última semana EFETIVADA (a que estava em carteira);
+        sem efetivação anterior, a última semana com proposta."""
         before = [w for w in self.weeks if w.week < d and w.proposal is not None]
+        booked = [w for w in before if w.booked is not None]
+        if booked:
+            return booked[-1]
         return before[-1] if before else None
 
     @property
@@ -413,12 +464,17 @@ class BookData:
         return {w.week for w in self.weeks if w.decisions}
 
     def live_week(self, record: DailyRecord | None) -> WeekData | None:
-        """Semana da carteira vigente no registro (ou a mais recente com proposta)."""
-        if record is not None and record.live_book_week is not None:
-            wd = self.week(record.live_book_week)
-            if wd is not None:
-                return wd
-        return self.latest
+        """Semana da carteira em carteira no registro (sem registro: a mais recente).
+
+        Nunca devolve uma semana posterior ao registro (sem look-ahead): se a semana citada no
+        registro não estiver no livro, devolve ``None`` em vez de uma decisão mais nova.
+        """
+        if record is None:
+            return self.latest
+        if record.live_book_week is not None:
+            return self.week(record.live_book_week)
+        before = [w for w in self.weeks if w.week <= record.date and w.proposal is not None]
+        return before[-1] if before else None
 
     def live_proposal(self, record: DailyRecord | None) -> Proposal | None:
         wd = self.live_week(record)
@@ -534,6 +590,8 @@ def load_book(book_root: Path) -> BookData:
         return bd
     weeks = _attempt(bd.issues, "Semanas do livro", book.list_weeks, [])
     bd.weeks = [_load_week(book, root, w) for w in weeks]
+    bd.integrity = _attempt(bd.issues, "Verificação de integridade do livro",
+                            lambda: verify_book_integrity(root), [])
     return bd
 
 
@@ -573,15 +631,55 @@ def validate_kill_switch_request(turn_on: bool, reason: str, by: str, confirmed:
     return problems
 
 
-def set_kill_switch(paths: AppPaths, cfg: FundConfig, turn_on: bool, reason: str,
-                    by: str) -> KillSwitchState:
-    """Liga/desliga ``book/KILL_SWITCH`` via ``Runtime`` (evento KILL_SWITCH_ON/OFF auditado)."""
-    from ..workflow.runtime import Runtime
+def kill_switch_payload(turn_on: bool, reason: str, by: str, now: datetime) -> dict[str, Any]:
+    """Conteúdo de ``book/KILL_SWITCH`` e do evento de auditoria.
 
-    rt = Runtime(cfg=cfg, book_root=Path(paths.book), market_root=Path(paths.market),
-                 reports_root=Path(paths.reports))
-    rt.set_kill_switch(turn_on, reason.strip(), by.strip())
-    return kill_switch_state(Path(paths.book))
+    Campos do app (``reason``, ``created_at``, ``by``) mais ``on`` e ``at``, os mesmos que
+    ``workflow.runtime.Runtime.set_kill_switch`` grava (CLI e app ficam legíveis um pelo outro).
+    """
+    ts = now.astimezone(UTC).isoformat()
+    return {"on": bool(turn_on), "reason": reason.strip(), "by": by.strip(), "created_at": ts,
+            "at": ts}
+
+
+def set_kill_switch(paths: AppPaths, cfg: FundConfig, turn_on: bool, reason: str,
+                    by: str, *, expect_active: bool | None = None,
+                    now: datetime | None = None) -> KillSwitchState:
+    """Liga/desliga ``book/KILL_SWITCH`` e anexa ``KILL_SWITCH_ON``/``OFF`` à trilha encadeada.
+
+    ``expect_active`` é o estado que o operador viu ao preencher o formulário: se o arquivo
+    mudou nesse meio-tempo (outro operador ou a CLI), nada é gravado e ``RuntimeError`` é
+    levantado — a intenção do operador nunca é invertida. Ligar grava o arquivo antes do evento
+    (falha segura: o fundo fica protegido mesmo se a trilha falhar); desligar grava o evento
+    antes de remover o arquivo (nunca há desligamento sem auditoria).
+    """
+    del cfg  # o mandato não altera a ação; mantido na assinatura por compatibilidade
+    book = Path(paths.book)
+    path = book / KILL_SWITCH_FILE
+    active = path.exists()
+    if expect_active is not None and active != expect_active:
+        raise RuntimeError("O estado do kill switch mudou desde que a página foi aberta "
+                           f"(agora {'LIGADO' if active else 'DESLIGADO'}); nada foi gravado.")
+    if turn_on == active:
+        raise RuntimeError(f"O kill switch já está {'LIGADO' if active else 'DESLIGADO'}.")
+    payload = kill_switch_payload(turn_on, reason, by, now or datetime.now(UTC))
+    book.mkdir(parents=True, exist_ok=True)
+    audit = AuditLog(book / AUDIT_FILE)
+    summary = (f"Kill switch {'ligado' if turn_on else 'desligado'} pelo app: "
+               f"{payload['reason']}")
+    event = "KILL_SWITCH_ON" if turn_on else "KILL_SWITCH_OFF"
+    if turn_on:
+        tmp = book / f".tmp_{KILL_SWITCH_FILE}"
+        tmp.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True),
+                       encoding="utf-8")
+        os.replace(tmp, path)
+        audit.append(event, payload["by"], payload, summary=summary,
+                     ts=datetime.fromisoformat(payload["created_at"]))
+    else:
+        audit.append(event, payload["by"], payload, summary=summary,
+                     ts=datetime.fromisoformat(payload["created_at"]))
+        path.unlink(missing_ok=True)
+    return kill_switch_state(book)
 
 
 # ==========================================================
@@ -634,20 +732,24 @@ def verify_track_integrity(book_root: Path) -> list[CheckResult]:
 
     root = Path(book_root)
     out: list[CheckResult] = []
-    if not (root / TRACK_DIR).is_dir():
+    if not root.is_dir():
+        # Livro inexistente: nada a verificar (e nada é criado ao apenas ler).
         return [CheckResult("Track record", True, ("Sem registros diários ainda.",))]
     for label, sub, event in (("Track record do CDP", TRACK_DIR, None),
                               ("Sombra só-quant", SHADOW_DIR, _shadow_event())):
-        if not (root / sub).is_dir():
-            continue
+        # A pasta ausente também é verificada: eventos na trilha sem registro ⇒ registros
+        # removidos (a verificação nunca cria pastas: só lê).
         try:
             tr = (TrackRecord(root / sub) if event is None
                   else TrackRecord(root / sub, audit_event=event))
             ok, msgs = tr.verify()
+            n = len(tr.dates())
         except Exception as exc:  # noqa: BLE001
-            ok, msgs = False, [f"{type(exc).__name__}: {exc}"]
-        n = len(list((root / sub / "records").glob("*.json"))) if (root / sub).is_dir() else 0
-        out.append(CheckResult(label, ok, tuple(msgs) or (f"{n} registro(s) íntegro(s).",)))
+            ok, msgs, n = False, [f"{type(exc).__name__}: {exc}"], 0
+        if ok and not (root / sub).is_dir() and sub == SHADOW_DIR:
+            continue  # sem série-sombra e sem eventos dela na trilha
+        default = f"{n} registro(s) íntegro(s)." if n else "Sem registros diários ainda."
+        out.append(CheckResult(label, ok, tuple(msgs) or (default,)))
     audit = load_audit(root)
     if audit.exists:
         out.append(CheckResult("Trilha de auditoria", bool(audit.chain_ok),
@@ -711,6 +813,18 @@ def list_reports(reports_root: Path, kind: str | None = None) -> list[ReportInfo
     """Relatórios publicados (mais recentes primeiro); pastas sem relatório são ignoradas."""
     root = Path(reports_root)
     out: list[ReportInfo] = []
+    try:
+        real_root = root.resolve()
+    except OSError:
+        return out
+
+    def inside(p: Path) -> bool:
+        """Arquivo regular dentro da raiz (link simbólico para fora ⇒ ignorado)."""
+        try:
+            return p.is_file() and p.resolve().is_relative_to(real_root)
+        except OSError:
+            return False
+
     for k in ("daily", "weekly"):
         if kind is not None and k != kind:
             continue
@@ -726,11 +840,36 @@ def list_reports(reports_root: Path, kind: str | None = None) -> list[ReportInfo
                 continue
             md = folder / f"{REPORT_STEM}.md"
             html = folder / f"{REPORT_STEM}.html"
-            if not md.is_file() and not html.is_file():
+            md_ok, html_ok = inside(md), inside(html)
+            if not md_ok and not html_ok:
                 continue
-            out.append(ReportInfo(k, key, folder, md if md.is_file() else None,
-                                  html if html.is_file() else None))
+            out.append(ReportInfo(k, key, folder, md if md_ok else None,
+                                  html if html_ok else None))
     return sorted(out, key=lambda r: (r.key, r.kind), reverse=True)
+
+
+_ACTIVE_HTML = (
+    (re.compile(r"<\s*script\b", re.I), "elemento <script>"),
+    (re.compile(r"<\s*(iframe|frame|object|embed|applet|form|base|link|portal)\b", re.I),
+     "elemento ativo/externo (iframe, object, embed, form, base, link)"),
+    (re.compile(r"<\s*meta\b[^>]*http-equiv", re.I), "meta http-equiv"),
+    (re.compile(r"\son[a-z]+\s*=", re.I), "atributo de evento (on…=)"),
+    (re.compile(r"javascript\s*:", re.I), "URL javascript:"),
+    (re.compile(r"(src|href|action|srcset|xlink:href)\s*=\s*[\"']?\s*(https?:)?//", re.I),
+     "recurso externo (src/href remoto)"),
+    (re.compile(r"url\(\s*[\"']?\s*(https?:)?//", re.I), "CSS url() remoto"),
+    (re.compile(r"@import", re.I), "CSS @import"),
+)
+
+
+def html_active_content(text: str) -> list[str]:
+    """Conteúdo ativo ou externo num relatório HTML (lista vazia ⇒ seguro para exibir).
+
+    O relatório gerado pelo código é autocontido e sem scripts; um arquivo alterado fora do
+    pipeline poderia executar código no navegador do operador (o iframe do Streamlit compartilha
+    a origem do app). Nesses casos o app não renderiza o HTML.
+    """
+    return [label for rx, label in _ACTIVE_HTML if rx.search(text or "")]
 
 
 def extract_section(markdown: str, title: str) -> str | None:
@@ -763,9 +902,11 @@ class Commentary:
 
 
 def _commentary_meta(md: str) -> tuple[bool, str | None]:
-    m = _MIND_RE.search(md)
-    if m:
-        return True, m.group(1)
+    """(texto de IA?, mente) pela linha de procedência — a ÚLTIMA ocorrência, escrita pelo
+    código após o texto da mente (um parágrafo que imite a procedência não troca a mente)."""
+    found = _MIND_RE.findall(md)
+    if found:
+        return True, found[-1]
     if "template determinístico" in md or "modo demo" in md:
         return False, None
     return "[IA]" in md, None
@@ -827,7 +968,11 @@ def records_between(records: Sequence[DailyRecord], start: date, end: date
 
 
 def components_table(records: Sequence[DailyRecord]) -> pd.DataFrame:
-    """P&L acumulado por componente (soma dos registros) e contribuição (soma das diárias)."""
+    """P&L acumulado por componente (soma dos registros) e contribuição (soma das diárias).
+
+    ``days`` conta os pregões em que o componente foi registrado: cobertura parcial
+    (``days`` < pregões do período) fica visível em vez de somar ausente como zero.
+    """
     acc: dict[str, list[float]] = {}
     for r in records:
         nav0 = float(r.nav_start_usd)
@@ -835,13 +980,14 @@ def components_table(records: Sequence[DailyRecord]) -> pd.DataFrame:
             fv = _finite(v)
             if fv is None:
                 continue
-            slot = acc.setdefault(k, [0.0, 0.0])
+            slot = acc.setdefault(k, [0.0, 0.0, 0.0])
             slot[0] += fv
             slot[1] += fv / nav0
+            slot[2] += 1
     order = [k for k in COMPONENT_ORDER if k in acc] + sorted(set(acc) - set(COMPONENT_ORDER))
     rows = [{"key": k, "name": fmt.COMPONENT_PT.get(k, k), "pnl_usd": acc[k][0],
-             "contribution": acc[k][1]} for k in order]
-    return pd.DataFrame(rows, columns=["key", "name", "pnl_usd", "contribution"])
+             "contribution": acc[k][1], "days": int(acc[k][2])} for k in order]
+    return pd.DataFrame(rows, columns=["key", "name", "pnl_usd", "contribution", "days"])
 
 
 def attribution_table(records: Sequence[DailyRecord], group: str) -> pd.DataFrame:
@@ -870,8 +1016,9 @@ def value_added_series(compare: pd.DataFrame | None, start: date, end: date) -> 
     sub = compare[(idx >= pd.Timestamp(start)) & (idx <= pd.Timestamp(end))]
     if sub.empty:
         return pd.DataFrame(columns=cols)
-    g_cdp = (1.0 + sub["ret_cdp"].astype(float)).cumprod()
-    g_sh = (1.0 + sub["ret_shadow"].astype(float)).cumprod()
+    # skipna=False: um dia sem retorno interrompe a série (NaN daí em diante), nunca vira 0%.
+    g_cdp = (1.0 + sub["ret_cdp"].astype(float)).cumprod(skipna=False)
+    g_sh = (1.0 + sub["ret_shadow"].astype(float)).cumprod(skipna=False)
     return pd.DataFrame({"cum_cdp": g_cdp - 1.0, "cum_shadow": g_sh - 1.0,
                          "value_added": g_cdp / g_sh - 1.0}, index=sub.index)
 
@@ -1094,6 +1241,66 @@ def liquidity_buckets(positions: Sequence[PositionTarget]) -> pd.DataFrame:
     return pd.DataFrame(rows, columns=["Faixa", "gross_share", "n"])
 
 
+@dataclass(frozen=True)
+class SideLiquidity:
+    """Máximo de dias para liquidar de um lado vs. o teto do mandato para esse lado."""
+
+    side: str
+    max_days: float | None
+    limit: float
+    n: int
+    n_missing: int
+
+    @property
+    def status(self) -> fmt.Status:
+        if self.n == 0:
+            return fmt.Status("sem posições", "gray")
+        if self.n_missing:
+            return fmt.Status(f"{self.n_missing} sem ADTV (n/d)", "orange")
+        return fmt.max_status(self.max_days, self.limit, fmt.days)
+
+
+def liquidity_by_side(positions: Sequence[PositionTarget], cfg: FundConfig
+                      ) -> dict[str, SideLiquidity]:
+    """Máx. de dias para liquidar por lado com o teto de cada lado (long 3 d; short 2 d).
+
+    Um único teto para a carteira inteira esconderia um short acima do limite dos shorts.
+    Ausente continua ausente (contado em ``n_missing``), nunca zero.
+    """
+    limits = {"LONG": cfg.liquidity.max_days_to_liquidate_long,
+              "SHORT": cfg.liquidity.max_days_to_liquidate_short}
+    out: dict[str, SideLiquidity] = {}
+    for side, lim in limits.items():
+        ps = [p for p in positions if p.side.value == side]
+        vals = [v for p in ps if (v := _finite(p.days_to_liquidate)) is not None]
+        out[side] = SideLiquidity(side, max(vals) if vals else None, float(lim), len(ps),
+                                  len(ps) - len(vals))
+    return out
+
+
+def least_liquid(positions: Sequence[PositionTarget], n: int = 10) -> list[PositionTarget]:
+    """Posições menos líquidas primeiro; dias ausentes (liquidez desconhecida) vêm antes de
+    todas — nunca tratadas como liquidez imediata."""
+    def key(p: PositionTarget) -> tuple[int, float, str]:
+        d = _finite(p.days_to_liquidate)
+        return (0, 0.0, p.issuer_id) if d is None else (1, -d, p.issuer_id)
+
+    return sorted(positions, key=key)[:n]
+
+
+def decision_timing(decision: Decision, cfg: FundConfig) -> fmt.Status:
+    """Horário da decisão vs. prazo do mandato no pregão de decisão (antes do MOC)."""
+    dt = decision.decided_at
+    if dt.tzinfo is None:
+        return fmt.Status("horário sem fuso: prazo não verificável", "orange")
+    tz = ZoneInfo(cfg.fund.timezone)
+    deadline = _at(decision.week, cfg.fund.decision_deadline_local, tz)
+    hhmm = cfg.fund.decision_deadline_local
+    if dt <= deadline:
+        return fmt.Status(f"dentro do prazo ({hhmm} de {fmt.date_br(decision.week)})", "green")
+    return fmt.Status(f"APÓS o prazo ({hhmm} de {fmt.date_br(decision.week)})", "red")
+
+
 def squeeze_frame(proposal: Proposal | None, record: DailyRecord | None) -> pd.DataFrame:
     """Shorts vigentes com balde/escore de squeeze e aluguel gravados na proposta."""
     targets = {t.issuer_id: t for t in (proposal.positions if proposal else [])}
@@ -1274,6 +1481,13 @@ def next_events(now: datetime, cfg: FundConfig, decided_weeks: set[date] | None 
     events: list[Event] = []
 
     monday = today - timedelta(days=today.weekday())
+    current = first_session_of_week(monday)
+    if (current is not None and current <= today and current not in decided
+            and current >= cfg.fund.inception_date):
+        deadline = _at(current, cfg.fund.decision_deadline_local, tz)
+        if deadline <= local:
+            events.append(Event("Decisão semanal ATRASADA", deadline,
+                                "prazo do mandato vencido sem decisão gravada no livro"))
     for k in range(0, 8):
         first = first_session_of_week(monday + timedelta(weeks=k))
         if first is None or first < today or first in decided:

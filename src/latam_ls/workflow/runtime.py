@@ -245,7 +245,12 @@ class Runtime:
                 out = PMDecisionOutput.model_validate_json(path.read_text(encoding="utf-8"))
             except ValueError:
                 out = None
-        return (list(pack.views) if pack else []), out, prev
+        views = list(pack.views) if pack else []
+        if out is not None and not out.abstain:
+            from ..research.pm_agent import pm_output_to_views
+
+            views = list(pm_output_to_views(out, self.cfg)[0]) + views
+        return views, out, prev
 
     @staticmethod
     def _realized_residual(ctx, since: date | None, week: date) -> pd.Series | None:
@@ -345,6 +350,10 @@ class Runtime:
                                       kill_switch=self.kill_switch_active(),
                                       audit_head_hash=b.audit_head(),
                                       decided_at=self.now(), created_at=self.now())
+        inputs_dir = self.week_dir(week) / "inputs"
+        b.audit.append("WEEKLY_INPUTS", pack.mind or mind,
+                       {p.name: sha256_file(p) for p in sorted(inputs_dir.glob("*.json"))},
+                       summary=f"Arquivos brutos da mente para {week} (hash).", week=week)
         b.save_research_pack(pack, actor=pack.mind or mind)
         b.save_proposal(outcome.final)
         shadow_path = self.week_dir(week) / "shadow_quant.json"
@@ -369,7 +378,8 @@ class Runtime:
         week_records = [r for r in self._records() if prev_week and prev_week <= r.date < week]
         rr = pm_ctx.realized_residual_returns
         md_txt, html = render_weekly_report(
-            week, outcome.final, decision, out, prev_prop, prev_views, list(pack.views),
+            week, outcome.final, decision, out, prev_prop, prev_views,
+            list(bundle.views) + list(pack.views),
             week_records, outcome.shadow_quant, self.cfg.fund.name, factbook=pfb, cfg=self.cfg,
             attempts=outcome.attempts, path_taken=outcome.path_taken,
             realized_residual=(None if rr is None else

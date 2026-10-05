@@ -24,8 +24,8 @@
   --mast-2: #232a55;
   --mast-ink: #f1f2fb;
   --mast-muted: #aeb3d8;
-  --long: #00889e;
-  --short: #c4561c;
+  --long: #007587;
+  --short: #b04a14;
   --shadow: #8e93a8;
   --div-pos: #2a78d6;
   --div-neg: #e34948;
@@ -36,7 +36,7 @@
   --warn: #835300; --warn-bg: #fbedc9; --warn-mark: #d99a14;
   --crit: #b3261e; --crit-bg: #fbe1de; --crit-mark: #d4443b;
   --info: #33548a; --info-bg: #e1e8f5;
-  --na: #6b7088; --na-bg: #eceef3;
+  --na: #5b6077; --na-bg: #eceef3;
   --sim: #f6c83a; --sim-2: #e9b520; --sim-ink: #1d1700;
   --band: #d9efe1;
   --tip-shadow: rgba(20, 24, 51, 0.16);
@@ -60,7 +60,7 @@
     --crit: #ff8f86; --crit-bg: #3a1716; --crit-mark: #e5534b; --info: #9fb8e8; --info-bg: #1a2438;
     --na: #9095ab; --na-bg: #222636;
     --sim: #f6c83a; --sim-2: #d9a514; --sim-ink: #1d1700;
-    --band: #173323; --tip-shadow: rgba(0, 0, 0, 0.5);
+    --band: #1d4430; --tip-shadow: rgba(0, 0, 0, 0.5);
     color-scheme: dark;
   }
 }
@@ -77,7 +77,7 @@
   --crit: #ff8f86; --crit-bg: #3a1716; --crit-mark: #e5534b; --info: #9fb8e8; --info-bg: #1a2438;
   --na: #9095ab; --na-bg: #222636;
   --sim: #f6c83a; --sim-2: #d9a514; --sim-ink: #1d1700;
-  --band: #173323; --tip-shadow: rgba(0, 0, 0, 0.5);
+  --band: #1d4430; --tip-shadow: rgba(0, 0, 0, 0.5);
   color-scheme: dark;
 }
 
@@ -148,6 +148,7 @@ small { font-size: 12px; }
 }
 .tab:hover { color: var(--ink); }
 .tab[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+.tab:focus-visible { outline-offset: -3px; }
 .tab-sim {
   align-self: center; flex: 0 0 auto; font: 800 11px/1 var(--font-display); letter-spacing: 0.08em;
   background: var(--sim); color: var(--sim-ink); padding: 5px 8px; border-radius: 3px;
@@ -192,6 +193,11 @@ h4 { font-size: 13px; font-weight: 600; color: var(--ink-2); }
 .tile-l { font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
 .tile-v { font-size: 24px; font-weight: 600; line-height: 1.1; letter-spacing: -0.01em; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; }
 .tile-v small { font-size: 13px; font-weight: 500; color: var(--muted); letter-spacing: 0; }
+.tile-v > .bars, .tile-v > .stack, .tile-v > .gauge-w { flex: 1 1 100%; width: 100%; font-size: 12.5px; font-weight: 400; letter-spacing: 0; }
+/* KPIs dentro de um bloco: sem moldura própria (o bloco já é o objeto) */
+.block .tile { border: 0; background: var(--surface-3); }
+.block .alerts > li { background: none; border-bottom: 1px solid var(--grid); border-radius: 0; }
+.block .alerts > li:last-child { border-bottom: 0; }
 .tile-s { font-size: 12px; color: var(--muted); }
 .trio { display: grid; gap: 2px; width: 100%; }
 .trio > div { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; border-bottom: 1px solid var(--grid); padding-bottom: 2px; }
@@ -217,7 +223,7 @@ h4 { font-size: 13px; font-weight: 600; color: var(--ink-2); }
 .k-info { background: var(--info-bg); color: var(--info); }
 .k-na { background: var(--na-bg); color: var(--na); }
 .k-sim { background: var(--sim); color: var(--sim-ink); }
-.k-accent { background: var(--accent-soft); color: var(--accent); }
+.k-accent { background: var(--accent-soft); color: var(--accent-2); }
 .chip {
   display: inline-flex; align-items: center; gap: 4px; padding: 1px 7px; border-radius: 4px;
   border: 1px solid var(--line); background: var(--surface); font-size: 12px; line-height: 1.6;
@@ -238,15 +244,16 @@ h4 { font-size: 13px; font-weight: 600; color: var(--ink-2); }
 
 /* ---------- listas de alerta / leitura ---------- */
 .alerts { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
-.alerts li {
+.alerts > li {
   display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; align-items: start;
   padding: 8px 10px; border-radius: 4px; background: var(--surface-3); border-left: 3px solid var(--line);
 }
-.alerts li.t-crit { border-left-color: var(--crit-mark); }
-.alerts li.t-warn { border-left-color: var(--warn-mark); }
-.alerts li.t-info { border-left-color: var(--info); }
-.alerts li.t-ok { border-left-color: var(--ok); }
-.alerts .pill { margin-top: 1px; }
+.alerts > li.t-crit { border-left-color: var(--crit-mark); }
+.alerts > li.t-warn { border-left-color: var(--warn-mark); }
+.alerts > li.t-info { border-left-color: var(--info); }
+.alerts > li.t-ok { border-left-color: var(--ok); }
+.alerts > li > .pill { margin-top: 1px; }
+.alerts .list { margin-top: 4px; font-size: 12.5px; }
 .reading { display: grid; gap: 6px; }
 .reading h4 { margin-top: 6px; }
 
@@ -259,6 +266,7 @@ h4 { font-size: 13px; font-weight: 600; color: var(--ink-2); }
 /* ---------- tabelas ---------- */
 .scroll { overflow-x: auto; max-width: 100%; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); }
 .scroll.tall { max-height: 560px; overflow-y: auto; }
+@media (max-width: 640px) { .scroll.stackable.tall { max-height: none; overflow-y: visible; } }
 .tbl { border-collapse: collapse; width: 100%; font-size: 12.5px; }
 .tbl th {
   text-align: left; font-weight: 600; color: var(--ink-2); background: var(--surface-2);
@@ -286,6 +294,9 @@ h4 { font-size: 13px; font-weight: 600; color: var(--ink-2); }
 tr.detail > td { background: var(--surface-3); padding: 14px; white-space: normal; }
 tr.detail:hover > td { background: var(--surface-3); }
 .detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 14px; white-space: normal; max-width: 1200px; }
+.detail-in { position: sticky; left: 14px; max-width: 100%; }
+.bars .gap-row { grid-column: 1 / -1; color: var(--muted); font-size: 11.5px; text-align: center; letter-spacing: 0.2em; line-height: 1; }
+.na-txt { color: var(--muted); font-style: italic; }
 
 /* ---------- barras HTML ---------- */
 .bars { display: grid; grid-template-columns: minmax(70px, 34%) minmax(0, 1fr) max-content; gap: 5px 10px; align-items: center; font-size: 12.5px; }
@@ -315,6 +326,18 @@ tr.detail:hover > td { background: var(--surface-3); }
 .ub.t-info .ub-f { background: var(--info); }
 .ub.t-na .ub-f { background: var(--na); }
 .ubv { font-size: 12px; font-variant-numeric: tabular-nums; min-width: 3.4em; text-align: right; }
+.ub-legend { font-size: 11.5px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: center; }
+.ub-legend i { display: inline-block; width: 1px; height: 10px; background: var(--muted); margin-right: 5px; vertical-align: -1px; }
+.ub-legend i.lim { width: 2px; background: var(--ink); }
+/* piso (gross mínimo, liquidez em 3/5 dias): região abaixo do piso hachurada */
+.fg { display: grid; gap: 3px; min-width: 150px; }
+.fg-t { position: relative; height: 8px; background: var(--grid); border-radius: 4px; }
+.fg-below { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px 0 0 4px; background: repeating-linear-gradient(135deg, var(--crit-bg) 0 4px, var(--grid) 4px 8px); }
+.fg-floor { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--ink); }
+.fg-mk { position: absolute; top: -4px; bottom: -4px; width: 4px; margin-left: -2px; border-radius: 2px; background: var(--accent); }
+.fg.t-warn .fg-mk, .fg.t-info .fg-mk { background: var(--warn-mark); }
+.fg.t-crit .fg-mk { background: var(--crit-mark); }
+.fg-txt { font-size: 11.5px; color: var(--ink-2); font-variant-numeric: tabular-nums; white-space: normal; }
 
 /* banda de vol */
 .gauge { position: relative; height: 26px; margin-top: 4px; }
@@ -333,24 +356,24 @@ tr.detail:hover > td { background: var(--surface-3); }
 /* escada de drawdown */
 .ladder { display: grid; gap: 6px; }
 .lad-track { position: relative; height: 34px; border-radius: 4px; overflow: hidden; display: flex; }
-.lad-seg { height: 100%; display: flex; align-items: flex-end; padding: 0 6px 3px; font-size: 10.5px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; white-space: nowrap; overflow: hidden; }
+.lad-seg { height: 100%; display: flex; align-items: flex-end; justify-content: flex-end; padding: 0 6px 3px; font-size: 10.5px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; white-space: nowrap; overflow: hidden; }
 .lad-seg.s0 { background: var(--ok-bg); color: var(--ok); }
 .lad-seg.s1 { background: var(--warn-bg); color: var(--warn); }
 .lad-seg.s2 { background: var(--crit-bg); color: var(--crit); }
-.lad-seg.s3 { background: var(--crit-mark); color: var(--on-accent); }
-.lad-wrap { position: relative; padding-top: 18px; }
+.lad-seg.s3 { background: var(--crit); color: var(--on-accent); }
+.lad-wrap { position: relative; padding-top: 34px; }
 .lad-mk { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--ink); margin-left: -1px; }
-.lad-mk span { position: absolute; top: 0; left: 4px; font-size: 11px; font-weight: 600; white-space: nowrap; color: var(--ink); }
+.lad-mk span { position: absolute; top: 0; left: 4px; font-size: 11px; font-weight: 600; white-space: nowrap; color: var(--ink); line-height: 14px; }
 .lad-mk.r span { left: auto; right: 4px; }
-.lad-mk.ghost { background: var(--muted); }
-.lad-mk.ghost span { color: var(--muted); top: auto; bottom: -16px; font-weight: 500; }
+.lad-mk.ghost { background: var(--muted); top: 17px; }
+.lad-mk.ghost span { color: var(--ink-2); font-weight: 500; }
 .lad-ticks { position: relative; height: 16px; font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .lad-ticks span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
 .lad-ticks span:first-child { transform: none; }
 .ladder.mini .lad-track { height: 10px; }
 .ladder.mini .lad-seg { font-size: 0; padding: 0; }
 .ladder.mini .lad-wrap { padding-top: 0; }
-.ladder.mini .lad-mk { top: -3px; bottom: -3px; }
+.ladder.mini .lad-mk, .ladder.mini .lad-mk.ghost { top: -3px; bottom: -3px; }
 .ladder.mini .lad-mk span { display: none; }
 
 /* ---------- gráficos SVG ---------- */
@@ -422,12 +445,12 @@ details.mini > summary { cursor: pointer; color: var(--accent); font-size: 12.5p
 .md h2 { font: 700 18px/1.25 var(--font-display); margin-top: 1.1em; }
 .md h3 { font-size: 15px; margin-top: 1em; }
 .md h4 { font-size: 14px; margin-top: 0.9em; }
-.md p, .md ul, .md ol { margin-block: 0; }
+:where(.md) :where(p, ul, ol) { margin: 0; }
 .md ul, .md ol { padding-left: 1.3em; }
 .md li + li { margin-top: 0.2em; }
-.md blockquote { margin: 0; padding: 6px 12px; border-left: 3px solid var(--warn-mark); background: var(--surface-3); color: var(--ink-2); }
+.md blockquote { margin-inline: 0; margin-bottom: 0; padding: 6px 12px; border-left: 3px solid var(--warn-mark); background: var(--surface-3); color: var(--ink-2); }
 .md code { background: var(--surface-2); padding: 0 4px; border-radius: 3px; }
-.md pre { background: var(--surface-2); padding: 10px; border-radius: 4px; overflow-x: auto; }
+.md pre { margin-inline: 0; margin-bottom: 0; background: var(--surface-2); padding: 10px; border-radius: 4px; overflow-x: auto; }
 .md pre code { background: none; padding: 0; }
 .md .mdt { overflow-x: auto; max-width: 100%; }
 .md table { border-collapse: collapse; font-size: 12.5px; font-variant-numeric: tabular-nums; }
@@ -466,12 +489,37 @@ details.mini > summary { cursor: pointer; color: var(--accent); font-size: 12.5p
 }
 .repitem[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
 .repitem small { color: var(--muted); }
+.repitem[aria-pressed="true"] small { color: var(--ink-2); }
 .comment { border-left: 3px solid var(--accent); background: var(--surface-3); padding: 12px 14px; border-radius: 0 var(--r) var(--r) 0; display: grid; gap: 8px; }
 
 footer.wrap { padding-block: 0 40px; color: var(--muted); font-size: 12px; display: grid; gap: 4px; }
 .fatal { margin: 40px auto; max-width: 70ch; }
 
 @media (max-width: 640px) {
+  .tablist { flex-wrap: wrap; overflow: visible; row-gap: 0; }
+  .tab { padding: 9px 10px 7px; }
+  .tab-sim { display: none; }
+  .scroll.stackable { overflow-x: visible; border: 0; background: none; }
+  .tbl.stackable, .tbl.stackable tbody { display: block; }
+  .tbl.stackable thead { display: none; }
+  .tbl.stackable tr { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2px; padding: 8px 12px; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); margin-bottom: 8px; }
+  .tbl.stackable tr.st-crit { border-left: 3px solid var(--crit-mark); }
+  .tbl.stackable tr.st-warn { border-left: 3px solid var(--warn-mark); }
+  .tbl.stackable tr.st-info { border-left: 3px solid var(--info); }
+  .tbl.stackable tr > td:first-child { box-shadow: none; }
+  .tbl.stackable td { display: flex; justify-content: space-between; align-items: center; gap: 12px; border: 0; padding: 2px 0; white-space: normal; text-align: right; min-width: 0; }
+  .tbl.stackable td::before { content: attr(data-label); color: var(--muted); font-size: 11.5px; text-align: left; flex: none; max-width: 45%; }
+  .tbl.stackable td:first-child { display: block; text-align: left; font-weight: 600; padding-bottom: 4px; }
+  .tbl.stackable td:first-child::before { display: none; }
+  .tbl.stackable td.wrapcell { display: block; text-align: left; min-width: 0; max-width: none; font-size: 12px; color: var(--ink-2); }
+  .tbl.stackable td.wrapcell::before { display: block; }
+  .tbl.stackable .ubw, .tbl.stackable .fg { min-width: 0; flex: 1 1 auto; max-width: 60%; }
+  .tbl.stackable tbody tr:hover > td { background: none; }
+  .tbl.stackable td:first-child .cellsub { font-weight: 400; }
+  .tbl td.sticky { white-space: normal; min-width: 7.5em; max-width: 9.5em; overflow-wrap: anywhere; }
+  .tbl .wbar { display: none !important; }
+  .alerts > li { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .alerts > li > .pill { justify-self: start; }
   .brand-mark { font-size: 34px; }
   .brand-name { font-size: 21px; }
   .mast-summary { font-size: 14px; }
@@ -617,7 +665,7 @@ function fmtLimit(c) {
     return lim.map(function (v) { return fmtUnit(v, c.unit); }).join(sep);
   }
   if (c.unit === "count") return "≤ " + int(lim);
-  return (c.id === "gross_min" || c.id === "country_gap_stress" ? "≥ " : c.id === "drawdown" ? "" : "≤ ") + fmtUnit(lim, c.unit);
+  return (c.floor || c.id === "gross_min" || c.id === "country_gap_stress" ? "≥ " : c.id === "drawdown" ? "" : "≤ ") + fmtUnit(lim, c.unit);
 }
 
 var MESES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
@@ -690,6 +738,40 @@ var VERDICT = { ok: ["OK", "ok"], caution: ["Cautela", "warn"], veto: ["Veto", "
 var DIR_PT = { positive: "positivo", negative: "negativo", uncertain: "incerto", neutral: "neutro", mixed: "misto" };
 var ACTION_PT = { BUY: "Compra", SELL: "Venda", SHORT: "Venda a descoberto", COVER: "Zeragem do short", HOLD: "Manter" };
 var SECTION_PT = { risco: "Risco", liquidez: "Liquidez", short: "Short e aluguel", squeeze: "Squeeze", drawdown: "Escada de drawdown", ia: "Adoção de IA" };
+var STATE_PT = { DRAFT: "rascunho", IN_REVIEW: "em revisão", APPROVED: "aprovada", REJECTED: "rejeitada", BOOKED: "efetivada", SUPERSEDED: "substituída", BLOCKED: "bloqueada" };
+var DECISION_PT = { APPROVE: "aprovada", REJECT: "rejeitada" };
+var MODE_PT = { AUTONOMOUS: "autônoma", HUMAN: "humana" };
+var INPUT_PT = { briefing: "Briefing", research_pack: "Pesquisa", pm_decision: "Decisão do PM" };
+var RISK_MODE_PT = { match: "usar o orçamento de risco (igualar a meta)", cap: "teto (não exceder a meta)" };
+var EXCL_PT = {
+  sem_linha_short: "sem linha alugável para short", squeeze_alto: "squeeze alto", squeeze_medio_teto: "squeeze médio (teto reduzido)",
+  squeeze_na_teto: "squeeze sem dado (teto reduzido)", visao_no_long: "visão da IA/PM: sem long", visao_no_short: "visão da IA/PM: sem short",
+  visao_teto_peso: "visão da IA/PM: teto de peso", sem_adtv: "sem ADTV", adtv_baixo: "ADTV abaixo do mínimo", aluguel_alto: "aluguel acima do teto"
+};
+var HASH_PT = {
+  approval: "Aprovação", book_entry: "Efetivação (livro)", config: "Configuração", market_data: "Dados de mercado", proposal: "Proposta",
+  risk_model: "Modelo de risco", risk_model_prev: "Modelo de risco (pregão anterior)", shadow_record: "Registro da sombra", universe: "Universo"
+};
+function plural(n, one, many) { return int(n) + " " + (n === 1 ? one : many); }
+/* textos gravados pelo código em notação en-US (detalhes de gates, cenários): só troca a
+   pontuação decimal e o sinal de menos — nenhum número é recalculado */
+function ptNums(t) {
+  if (!has(t)) return t;
+  return String(t).replace(/(\d)\.(\d)/g, "$1,$2").replace(/(^|[\s(±=:])-(?=\d)/g, "$1" + MINUS);
+}
+function constraintName(c) {
+  var s = String(c || ""), i = s.indexOf(":");
+  if (i < 0) return { net_exposure: "net do mandato", gross: "gross", beta: "beta", turnover: "giro", vol: "vol-alvo" }[s] || s.replace(/_/g, " ");
+  var k = s.slice(0, i), v = s.slice(i + 1);
+  if (k === "max_short") return "teto do short " + nm(v);
+  if (k === "max_long") return "teto do long " + nm(v);
+  if (k === "country") return "net país " + (v === "OTHER" ? "Outros" : v);
+  if (k === "sector") return "net setor " + sectorName(v);
+  if (k === "commodity") return "commodity " + (COMMODITY_PT[v] || v);
+  if (k === "tema" || k === "theme") return "tema " + (THEME_PT[v] || v);
+  if (k === "style") return "estilo " + (STYLE_PT[v] || v);
+  return k.replace(/_/g, " ") + " " + v;
+}
 
 function sectorName(s) { return SECTOR_PT[s] || s || NA; }
 function expoName(group, name) {
@@ -708,7 +790,7 @@ function factorName(f) {
   var s = String(f), i = s.indexOf(":");
   if (i > 0) {
     var k = s.slice(0, i), v = s.slice(i + 1);
-    if (k === "country") return "País " + v;
+    if (k === "country") return "País " + (v === "OTHER" ? "Outros" : v);
     if (k === "sector") return "Setor " + sectorName(v);
     if (k === "commodity") return "Commodity " + (COMMODITY_PT[v] || v);
     if (k === "tema" || k === "theme") return "Tema " + (THEME_PT[v] || v);
@@ -926,7 +1008,7 @@ function table(cols, rows, opts) {
       var r = h("tr", { class: opts.rowClass ? opts.rowClass(row) : null });
       cols.forEach(function (c) {
         var v = c.render ? c.render(row) : (c.get ? c.get(row) : null);
-        r.appendChild(h("td", { class: (c.num ? "num " : "") + (c.cls || "") }, (v === null || v === undefined || v === "") ? NA : v));
+        r.appendChild(h("td", { class: (c.num ? "num " : "") + (c.cls || ""), "data-label": c.label }, (v === null || v === undefined || v === "") ? NA : v));
       });
       tbody.appendChild(r);
       if (opts.after) { var extra = opts.after(row, r, cols.length); if (extra) tbody.appendChild(extra); }
@@ -934,7 +1016,8 @@ function table(cols, rows, opts) {
   }
   draw();
   t._redraw = draw;
-  return h("div", { class: "scroll" + (opts.tall ? " tall" : "") }, t);
+  if (opts.stack) t.classList.add("stackable");
+  return h("div", { class: "scroll" + (opts.tall ? " tall" : "") + (opts.stack ? " stackable" : "") }, t);
 }
 
 /* ---------------------------------------------------------- visualizações HTML */
@@ -955,19 +1038,39 @@ function utilBar(u, tone) {
       h("span", { class: "ub-m lim", style: "left:80%", title: "limite" })),
     h("span", { class: "ubv" }, isNum(u) ? pct(u, 0) : NA));
 }
-/* banda de vol: posição do valor em relação a [mín, máx] e à meta */
-function bandGauge(v, lo, hi, target, mini) {
+function utilLegend() {
+  return h("p", { class: "ub-legend" }, "Barra de uso (escala até 125% do limite):", h("span", null, h("i"), "traço fino = 90%"), h("span", null, h("i", { class: "lim" }), "traço grosso = limite"),
+    h("span", null, "pisos: região hachurada = abaixo do piso"));
+}
+/* piso (gross mínimo, liquidez em 3/5 dias): o valor precisa ficar ACIMA do traço; a distância
+   ao piso (shortfall/headroom) vem do exportador */
+function floorGauge(c, tone) {
+  var v = c.value, lim = c.limit;
+  if (!isNum(lim)) return NA;
+  var max = Math.max(lim * 1.6, isNum(v) ? v * 1.15 : 0) || 1;
+  function p(x) { return Math.max(0, Math.min(100, x / max * 100)); }
+  var below = isNum(c.shortfall) && c.shortfall > 0;
+  var label = !isNum(v) ? "sem valor" : below ? "abaixo do piso em " + fnum(c.shortfall * 100, 2) + " p.p." : "folga de " + fnum(c.headroom * 100, 2) + " p.p. acima do piso";
+  return h("div", { class: "fg t-" + (tone || "ok"), role: "img", "aria-label": c.label + ": " + label },
+    h("div", { class: "fg-t" },
+      h("span", { class: "fg-below", style: "width:" + p(lim).toFixed(2) + "%" }),
+      h("span", { class: "fg-floor", style: "left:" + p(lim).toFixed(2) + "%", title: "piso " + fmtUnit(lim, c.unit) }),
+      isNum(v) ? h("span", { class: "fg-mk", style: "left:" + p(v).toFixed(2) + "%", title: fmtUnit(v, c.unit) }) : null),
+    h("span", { class: "fg-txt" }, label));
+}
+/* banda (vol ex-ante; gross entre o mínimo e o máximo): posição do valor em relação a [mín, máx] */
+function bandGauge(v, lo, hi, target, mini, what) {
   if (!isNum(lo) || !isNum(hi)) return null;
   var max = Math.max(hi * 1.3, isNum(v) ? v * 1.08 : 0);
   function p(x) { return Math.max(0, Math.min(100, x / max * 100)); }
-  var gEl = h("div", { class: "gauge" + (mini ? " mini" : ""), role: "img", "aria-label": "Vol " + pct(v) + " na banda " + pct(lo, 0) + "–" + pct(hi, 0) },
+  var gEl = h("div", { class: "gauge" + (mini ? " mini" : ""), role: "img", "aria-label": (what || "Vol") + " " + pct(v) + " na banda " + pct(lo, 0) + "–" + pct(hi, 0) },
     h("span", { class: "g-track" }),
     h("span", { class: "g-band", style: "left:" + p(lo) + "%;width:" + (p(hi) - p(lo)) + "%" }),
     isNum(target) ? h("span", { class: "g-tgt", style: "left:" + p(target) + "%", title: "meta " + pct(target) }) : null,
     isNum(v) ? h("span", { class: "g-mk", style: "left:" + p(v) + "%", title: pct(v) }) : null);
   if (mini) return gEl;
-  return h("div", null, gEl, h("div", { class: "g-lbl" },
-    h("span", null, "faixa verde = banda " + pct(lo, 0) + "–" + pct(hi, 0) + (isNum(target) ? " · traço = meta " + pct(target, 0) : "") + (isNum(v) ? " · ▼ = " + pct(v) : ""))));
+  return h("div", { class: "gauge-w" }, gEl, h("div", { class: "g-lbl" },
+    h("span", null, "faixa verde = " + (what ? what.toLowerCase() + " " : "banda ") + pct(lo, 0) + "–" + pct(hi, 0) + (isNum(target) ? " · traço = meta " + pct(target, 0) : "") + (isNum(v) ? " · ▼ = " + pct(v, what ? 1 : 2) : ""))));
 }
 /* escada de drawdown: 0 → stop-out (+25%), com o drawdown atual e o máximo */
 function ladderViz(dd, dcfg, maxdd, mini) {
@@ -978,7 +1081,7 @@ function ladderViz(dd, dcfg, maxdd, mini) {
   var segs = [[0, soft, "normal", "s0"], [soft, hard, "stop suave", "s1"], [hard, stop, "stop duro", "s2"], [stop, -ext, "stop-out", "s3"]];
   var track = h("div", { class: "lad-track" });
   segs.forEach(function (s) { track.appendChild(h("div", { class: "lad-seg " + s[3], style: "width:" + (p(s[1]) - p(s[0])).toFixed(2) + "%" }, s[2])); });
-  var wrapEl = h("div", { class: "lad-wrap" }, track);
+  var wrapEl = h("div", { class: "lad-wrap", style: isNum(dd) || isNum(maxdd) ? null : "padding-top:0" }, track);
   if (isNum(maxdd) && maxdd !== dd) wrapEl.appendChild(h("span", { class: "lad-mk ghost" + (p(maxdd) > 70 ? " r" : ""), style: "left:" + p(maxdd) + "%", title: "drawdown máximo " + pct(maxdd) }, h("span", null, "máx. " + pct(maxdd))));
   if (isNum(dd)) wrapEl.appendChild(h("span", { class: "lad-mk" + (p(dd) > 70 ? " r" : ""), style: "left:" + p(dd) + "%", title: "drawdown atual " + pct(dd) }, h("span", null, "atual " + pct(dd))));
   var out = h("div", { class: "ladder" + (mini ? " mini" : ""), role: "img", "aria-label": "Escada de drawdown: atual " + pct(dd) }, wrapEl);
@@ -996,15 +1099,19 @@ function barList(rows, cfg) {
   cfg = cfg || {};
   rows = arr(rows);
   if (!rows.length) return empty(cfg.empty || "Sem dados.");
+  if (cfg.emptyIfAllNa && !rows.some(function (r) { return isNum(r.value); })) return empty(cfg.emptyIfAllNa);
   var vals = rows.map(function (r) { return r.value; }).filter(isNum);
   var refs = arr(cfg.refs).filter(function (r) { return isNum(r.value); });
+  var rowRefs = [];
+  rows.forEach(function (r) { arr(r.refs).forEach(function (x) { if (isNum(x.value) && !rowRefs.some(function (y) { return y.label === x.label; })) rowRefs.push(x); }); });
   var neg = cfg.diverging !== undefined ? cfg.diverging : vals.some(function (v) { return v < 0; });
   var m = cfg.max || 0;
-  if (!m) { vals.concat(refs.map(function (r) { return r.value; })).forEach(function (v) { m = Math.max(m, Math.abs(v)); }); }
+  if (!m) { vals.concat(refs.concat(rowRefs).map(function (r) { return r.value; })).forEach(function (v) { m = Math.max(m, Math.abs(v)); }); }
   if (!(m > 0)) m = 1;
   var fmt = cfg.fmt || function (v) { return fnum(v); };
   var box = h("div", { class: "bars" + (neg ? " div" : "") });
   rows.forEach(function (r) {
+    if (r.gap) { box.appendChild(h("div", { class: "gap-row", "aria-hidden": "true" }, "· · ·")); return; }
     var track = h("div", { class: "bt" });
     if (isNum(r.value)) {
       var w = Math.min(Math.abs(r.value) / m, 1) * (neg ? 50 : 100);
@@ -1012,7 +1119,7 @@ function barList(rows, cfg) {
       var pos = neg ? (r.value < 0 ? "right:50%" : "left:50%") : "left:0";
       track.appendChild(h("span", { class: "bf" + (r.value < 0 && neg ? " n" : ""), style: "width:" + w.toFixed(2) + "%;" + pos + ";background:" + col }));
     }
-    refs.forEach(function (ref) {
+    refs.concat(arr(r.refs).filter(function (x) { return isNum(x.value); })).forEach(function (ref) {
       var pp = neg ? 50 + ref.value / m * 50 : ref.value / m * 100;
       if (pp >= 0 && pp <= 100) track.appendChild(h("span", { class: "bref", style: "left:" + pp.toFixed(2) + "%", title: ref.label }));
     });
@@ -1020,9 +1127,10 @@ function barList(rows, cfg) {
     box.appendChild(track);
     box.appendChild(h("div", { class: "bv" }, isNum(r.value) ? fmt(r.value) : NA, r.note ? h("small", null, r.note) : null));
   });
-  if (!refs.length) return box;
+  var legend = refs.concat(rowRefs);
+  if (!legend.length) return box;
   return h("div", { class: "stack", style: "gap:8px" }, box,
-    h("div", { class: "bars-legend" }, refs.map(function (r) { return h("span", null, h("i"), r.label); })));
+    h("div", { class: "bars-legend" }, legend.map(function (r) { return h("span", null, h("i"), r.label); })));
 }
 
 /* ---------------------------------------------------------- gráficos SVG */
@@ -1109,7 +1217,9 @@ function lineChart(el, cfg) {
   arr(cfg.refs).forEach(function (r) {
     if (!isNum(r.y) || r.y < t.lo || r.y > t.hi) return;
     svgEl.appendChild(S("line", { class: "refl", x1: ml, x2: W - mr, y1: Y(r.y), y2: Y(r.y) }));
-    if (r.label) svgEl.appendChild(S("text", { class: "reft", x: ml + 4, y: Y(r.y) - 4 }, r.label));
+    /* rótulo dentro da área do gráfico: abaixo da linha quando ela encosta no topo */
+    var below = Y(r.y) - 4 < mt + 11;
+    if (r.label) svgEl.appendChild(S("text", { class: "reft", x: W - mr - 4, y: below ? Y(r.y) + 13 : Y(r.y) - 4, "text-anchor": "end" }, r.label));
   });
   var maxLabels = Math.max(2, Math.floor(pw / (cfg.xGap || 84)));
   var step = Math.max(1, Math.ceil(n / maxLabels));
@@ -1143,7 +1253,7 @@ function lineChart(el, cfg) {
       tip.appendChild(h("div", null, h("span", null, h("i", { style: "background:" + s.color }), s.name), h("span", null, isNum(v) ? (cfg.tipFmt || yFmt)(v) : NA)));
     });
   }, mt, ph, ml, pw);
-  if (series.length > 1 || cfg.legend) el.appendChild(legendEl(series, cfg.legendLast ? function (s) {
+  if (series.length > 1 || cfg.legend) el.appendChild(legendEl(cfg.legendReverse ? series.slice().reverse() : series, cfg.legendLast ? function (s) {
     var vs = arr(s.values);
     for (var k = vs.length - 1; k >= 0; k--) if (isNum(vs[k])) return " " + (cfg.tipFmt || yFmt)(vs[k]);
     return null;
@@ -1330,7 +1440,8 @@ function decisionCard(w) {
   if (!w) return block("Decisão da semana", null, empty(ST.phase === "pre_inception" ? firstCloseText() : "Nenhuma semana registrada no livro."));
   var d = w.decision || null, pm = w.pm_decision && w.pm_decision.valid !== false ? w.pm_decision : null;
   var stageTone = WEEK_STAGE_TONE[w.stage] || "na";
-  var head = h("div", { class: "chips" }, pill(WEEK_STAGE[w.stage] || w.stage || NA, stageTone, w.stage_label), w.state ? chip(w.state) : null,
+  var head = h("div", { class: "chips" }, pill(WEEK_STAGE[w.stage] || w.stage || NA, stageTone, w.stage_label),
+    w.state && w.state !== "APPROVED" && w.state !== "BOOKED" ? pill("Proposta " + (STATE_PT[w.state] || w.state), w.state === "BLOCKED" || w.state === "REJECTED" ? "crit" : "na") : null,
     d ? pill(d.decision === "APPROVE" ? "Aprovada" : d.decision === "REJECT" ? "Rejeitada" : d.decision, d.decision === "APPROVE" ? "ok" : "crit") : null,
     w.path_taken && w.path_taken !== "cdp" ? pill("Fallback: " + (w.path_label || w.path_taken), "warn") : null);
   var execTxt = w.executed ? ("efetivada" + (g(w, "booked.booked_at") ? " em " + fbrt(w.booked.booked_at) : "") + (g(w, "booked.verified") === false ? " (verificação falhou)" : ""))
@@ -1345,7 +1456,7 @@ function decisionCard(w) {
     ["Mente", weekMind(w)],
     ["Decidida em", d ? h("span", null, flocal(d.decided_at_local), " · prazo " + ftime(d.deadline_local) + " ", d.on_time === true ? pill("no prazo", "ok") : d.on_time === false ? pill("fora do prazo", "crit") : null) : null],
     ["Execução", execTxt],
-    ["SOFT reconhecidos", d && arr(d.acknowledged_soft_checks).length ? h("span", { class: "chips" }, d.acknowledged_soft_checks.map(function (x) { return chip(x); })) : (d ? "nenhum" : null)],
+    ["SOFT reconhecidos", d && arr(d.acknowledged_soft_checks).length ? h("span", { class: "chips" }, d.acknowledged_soft_checks.map(function (x) { return chip(x, "gate de compliance " + x); })) : (d ? "nenhum" : null)],
     ["Assinatura", d ? d.approver : null]
   ];
   var b = block("Decisão da semana", w.week ? fdate(w.week) : null, head, kv(rows));
@@ -1358,7 +1469,7 @@ function alertsList(alerts) {
   if (!a.length) return h("p", { class: "muted" }, "Nenhum alerta ativo.");
   return h("ul", { class: "alerts" }, a.map(function (x) {
     var s = SEVERITY[x.severity] || [x.severity || "Info", "info"];
-    return h("li", { class: "t-" + s[1] }, pill(s[0], s[1]), h("span", null, x.text || ""));
+    return h("li", { class: "t-" + s[1] }, pill(s[0], s[1]), h("span", null, x.text || "", x.source === "fechamento" ? h("span", { class: "cellsub" }, "alerta gravado no registro diário pelo código") : null));
   }));
 }
 function eventsBlock() {
@@ -1390,26 +1501,29 @@ function integrityList() {
   if (!checks.length) return h("p", { class: "muted" }, NA);
   return h("ul", { class: "alerts" }, checks.map(function (c) {
     var tone = c.ok === true ? "ok" : c.ok === false ? "crit" : "na";
-    return h("li", { class: "t-" + tone }, pill(c.ok === true ? "OK" : c.ok === false ? "Falha" : "N/A", tone),
+    return h("li", { class: "t-" + tone }, pill(c.ok === true ? "OK" : c.ok === false ? "Falha" : "N/D", tone),
       h("span", null, h("b", null, c.label || c.id), arr(c.messages).length ? " · " + c.messages.join(" ") : ""));
   }));
 }
+/* âncora da inception (exportada): NAV de abertura do 1º registro, para o 1º dia ter segmento */
 function navSeries() {
-  var cmp = arr(TR.compare), recs = arr(TR.records);
+  var cmp = arr(TR.compare), recs = arr(TR.records), an = TR.anchor ? obj(TR.anchor) : null;
+  var lab0 = an ? ["início"] : [];
   if (cmp.length) {
     return {
-      labels: cmp.map(function (r) { return r.date; }),
+      labels: lab0.concat(cmp.map(function (r) { return r.date; })),
       series: [
-        { name: "CDP", color: "var(--accent)", values: cmp.map(function (r) { return r.nav_cdp; }) },
-        { name: "Sombra só-quant", color: "var(--shadow)", values: cmp.map(function (r) { return r.nav_shadow; }) }
+        { name: "Sombra só-quant", color: "var(--shadow)", values: (an ? [an.nav_shadow] : []).concat(cmp.map(function (r) { return r.nav_shadow; })) },
+        { name: "CDP", color: "var(--accent)", width: 2.5, values: (an ? [an.nav_cdp] : []).concat(cmp.map(function (r) { return r.nav_cdp; })) }
       ], rows: cmp
     };
   }
   if (recs.length) {
-    return { labels: recs.map(function (r) { return r.date; }), series: [{ name: "CDP", color: "var(--accent)", values: recs.map(function (r) { return r.nav_end; }) }], rows: null };
+    return { labels: lab0.concat(recs.map(function (r) { return r.date; })), series: [{ name: "CDP", color: "var(--accent)", values: (an ? [an.nav_cdp] : []).concat(recs.map(function (r) { return r.nav_end; })) }], rows: null };
   }
   return null;
 }
+function tipDate(s) { return s === "início" ? "Início (NAV de abertura do 1º pregão)" : fdate(s); }
 function statsTable() {
   var a = obj(TR.stats), b = obj(g(TR, "shadow.stats"));
   var rows = [
@@ -1450,7 +1564,7 @@ function renderVisao(p) {
     h("div", null, h("b", { class: signCls(LD ? LD.ret : null) }, spct(LD ? LD.ret : null)), h("span", null, "dia")),
     h("div", null, h("b", { class: signCls(per.mtd) }, spct(per.mtd)), h("span", null, "mês")),
     h("div", null, h("b", { class: signCls(per.itd) }, spct(per.itd)), h("span", null, "desde o início"))),
-    LD ? "desde " + fdate(per.first_date) + " · " + int(per.n_days) + " pregões" : "sem registro diário ainda"));
+    LD ? "desde " + fdate(per.first_date) + " · " + plural(per.n_days, "pregão", "pregões") : "sem registro diário ainda"));
   var lim = vc && Array.isArray(vc.limit) ? vc.limit : [MR.vol_band_min, MR.vol_band_max];
   k.appendChild(tile("Vol ex-ante", h("span", null, vc ? pct(vc.value) : NA, " ", vc ? statusPill(vc.status) : null),
     bandGauge(vc ? vc.value : null, lim[0], lim[1], MR.vol_target_annual),
@@ -1459,9 +1573,12 @@ function renderVisao(p) {
     ladderViz(ST.drawdown, MDD, stats.max_drawdown, true), "máximo " + pct(stats.max_drawdown) + " · stop suave " + pct(MDD.soft_stop, 1)));
   k.appendChild(tile("Beta previsto", h("span", null, bc ? xnum(bc.value) : NA, " ", h("small", null, bc && isNum(bc.limit) ? "limite ±" + fnum(bc.limit, 3) : "")),
     bc ? utilBar(bc.utilization, utilTone(bc.status, bc.utilization)) : null, bc ? bc.basis : null));
-  k.appendChild(tile("Gross / net", h("span", null, gc ? pct(gc.value, 1) : NA, h("small", null, " / net " + (nc ? spct(nc.value) : NA))),
-    nc ? utilBar(nc.utilization, utilTone(nc.status, nc.utilization)) : null,
-    "gross " + pct(MR.gross_min, 0) + "–" + pct(MR.gross_max, 0) + " · |net| ≤ " + pct(MR.net_exposure_max_abs)));
+  var gmin = CK("gross_min");
+  var gState = gmin && gmin.status !== "ok" ? gmin : gc && gc.status !== "ok" ? gc : null;
+  k.appendChild(tile("Gross / net", h("span", null, gc ? pct(gc.value, 1) : NA, h("small", null, " / net " + (nc ? spct(nc.value) : NA)), gState ? statusPill(gState.status) : null),
+    gc ? bandGauge(gc.value, MR.gross_min, MR.gross_max, null, false, "Gross") : null,
+    gmin && isNum(gmin.shortfall) && gmin.shortfall > 0 ? h("div", { class: "tile-s" }, "gross abaixo do piso em " + fnum(gmin.shortfall * 100, 2) + " p.p.") : null,
+    nc ? h("div", { class: "tile-s" }, "uso do |net| (limite ±" + pct(MR.net_exposure_max_abs) + ")", utilBar(nc.utilization, utilTone(nc.status, nc.utilization))) : null));
   k.appendChild(tile("Posições", h("span", null, int(first(src.n_long, conc.n_long)), h("small", null, " longs"), " ", int(first(src.n_short, conc.n_short)), h("small", null, " shorts")),
     "N efetivo (ex-ante) " + fnum(conc.effective_n_ex_ante, 1), conc.basis ? "base: " + conc.basis : null));
   var cmp = arr(TR.compare), lastC = cmp.length ? cmp[cmp.length - 1] : null;
@@ -1476,7 +1593,7 @@ function renderVisao(p) {
   if (ns) {
     navBlock.appendChild(chart(function (el) {
       lineChart(el, {
-        labels: ns.labels, series: ns.series, height: 260, legendLast: true, title: "NAV do CDP e da sombra só-quant",
+        labels: ns.labels, series: ns.series, height: 260, legendLast: true, legendReverse: true, title: "NAV do CDP e da sombra só-quant", tipX: tipDate,
         yFmt: function (v) { return usd(v); }, tipFmt: function (v) { return usdFull(v); },
         refs: isNum(META.inception_nav_usd) ? [{ y: META.inception_nav_usd, label: "NAV inicial " + usd(META.inception_nav_usd) }] : []
       });
@@ -1496,7 +1613,7 @@ function renderVisao(p) {
   } else navBlock.appendChild(empty(firstCloseText()));
 
   var right = h("div", { class: "stack" },
-    block("Alertas ativos", arr(ST.alerts).length ? int(arr(ST.alerts).length) + " alerta(s)" : null, alertsList(ST.alerts)),
+    block("Alertas ativos", arr(ST.alerts).length ? plural(arr(ST.alerts).length, "alerta", "alertas") : null, alertsList(ST.alerts)),
     decisionCard(CURW));
   p.appendChild(h("div", { class: "cols" }, h("div", { class: "stack" }, navBlock, block("Track record", "CDP × sombra só-quant", TR.exists ? statsTable() : empty(firstCloseText()))), right));
 
@@ -1574,16 +1691,18 @@ function noteCard(n) {
     arr(n.catalysts).length ? h("div", null, h("h4", null, "Catalisadores"), list(n.catalysts, function (c) { return (c.expected_date ? fdate(c.expected_date) + " · " : "") + (DIR_PT[c.direction] || c.direction || "") + " · " + (c.description || ""); })) : null,
     sq && sq.rationale ? h("div", null, h("h4", null, "Risco de squeeze"), txt(sq.rationale), extra.length ? kv(extra.map(function (k) { return [k, isNum(sq[k]) ? fnum(sq[k], 2) : String(sq[k])]; })) : null) : null,
     evidenceList(n.evidence),
-    h("p", { class: "note" }, (n.provider ? "fonte: " + n.provider + " · " : "") + (n.created_at ? fbrt(n.created_at) : "") + (isNum(n.n_evidence) ? " · " + n.n_evidence + " evidência(s)" : "")));
+    h("p", { class: "note" }, (n.provider ? "fonte: " + n.provider + " · " : "") + (n.created_at ? fbrt(n.created_at) : "") + (isNum(n.n_evidence) ? " · " + plural(n.n_evidence, "evidência", "evidências") : "")));
 }
 function positionDetail(r) {
   var g1 = kv([
     ["Linha", h("span", null, h("code", null, r.ticker || NA), " · " + (r.line_type || NA) + " · " + (r.currency || NA))],
+    ["País · setor", (r.country || NA) + " · " + sectorName(r.sector)],
+    ["Nocional", usd(r.notional)], ["Peso decidido", spct(r.target_weight)], ["Drift desde a decisão", bps(r.drift)],
     ["Preço local", fnum(r.price_local, 2)], ["Preço em USD", fnum(r.price_usd, 2)], ["Ações", int(r.shares)],
-    ["ADTV", usd(r.adtv)], ["Beta", fnum(r.beta, 2)], ["Alpha anual (modelo)", pct(r.alpha_annual)],
-    ["Peso decidido", pct(r.target_weight)], ["Drift", bps(r.drift)], ["Remarcado hoje", r.repriced === null || r.repriced === undefined ? NA : yesno(r.repriced)]
+    ["ADTV da linha", usd(r.adtv)], ["Beta", fnum(r.beta, 2)], ["Alpha anual (modelo)", pct(r.alpha_annual)],
+    ["Remarcado hoje", r.repriced === null || r.repriced === undefined ? NA : yesno(r.repriced)]
   ]);
-  var parts = [h("div", { class: "card" }, h("h4", null, "Linha e liquidez"), g1)];
+  var parts = [h("div", { class: "card" }, h("h4", null, "Linha, alvo e liquidez"), g1)];
   arr(PM_VIEWS[r.issuer_id]).forEach(function (v) {
     parts.push(h("div", { class: "card" }, h("div", { class: "card-h" }, h("h4", null, "Visão do PM"), h("span", { class: "chips" }, stanceTag(v.stance), chip("convicção " + (v.conviction || NA) + "/5"), isNum(v.horizon_weeks) ? chip(v.horizon_weeks + " sem.") : null)),
       md(v.rationale), evidenceList(arr(v.evidence).map(function (e) { return { ref_id: e.id, url: e.url }; }))));
@@ -1644,42 +1763,39 @@ function renderCarteira(p) {
   var hasItd = Object.keys(ITD_ISSUER).length > 0;
   var maxW = 0; rows.forEach(function (r) { if (isNum(r.weight)) maxW = Math.max(maxW, Math.abs(r.weight)); });
   var open = {};
+  /* ordem de leitura de risco: identidade, lado, peso, P&L e risco primeiro; linha, alvo,
+     drift e nocional ficam no detalhe da linha */
   var cols = [
     { label: "Emissor", cls: "sticky", get: function (r) { return r.name || r.issuer_id; }, render: function (r) {
       var btn = h("button", { class: "rowbtn", type: "button", "aria-expanded": open[r.issuer_id] ? "true" : "false", "aria-label": "Detalhes de " + (r.name || r.issuer_id) }, open[r.issuer_id] ? "▾" : "▸");
       btn.addEventListener("click", function (ev) { ev.stopPropagation(); open[r.issuer_id] = !open[r.issuer_id]; redraw(); });
-      return h("span", null, btn, " ", r.name || r.issuer_id, h("span", { class: "cellsub" }, r.issuer_id));
+      return h("span", null, btn, " ", r.name || r.issuer_id, h("span", { class: "cellsub" }, (r.ticker || r.issuer_id) + (r.country ? " · " + r.country : "")));
     } },
-    { label: "Linha", get: function (r) { return r.ticker; }, render: function (r) { return h("span", null, h("code", null, r.ticker || NA), h("span", { class: "cellsub" }, (r.line_type || "") + " · " + (r.currency || ""))); } },
-    { label: "País", get: function (r) { return r.country; } },
-    { label: "Setor", get: function (r) { return sectorName(r.sector); } },
     { label: "Lado", get: function (r) { return r.side; }, render: function (r) { return sideTag(r.side); } },
     { label: "Peso", num: true, get: function (r) { return r.weight; }, render: function (r) {
       var w = isNum(r.weight) && maxW ? Math.abs(r.weight) / maxW * 50 : 0;
       return h("span", { style: "display:inline-flex;align-items:center;gap:8px" },
-        h("span", { class: "bt", style: "width:64px;height:10px;display:inline-block" }, h("span", { class: "bf" + (r.weight < 0 ? " n" : ""), style: "top:1px;height:8px;width:" + w.toFixed(1) + "%;" + (r.weight < 0 ? "right:50%" : "left:50%") + ";background:var(" + (r.weight < 0 ? "--short" : "--long") + ")" }), h("span", { style: "position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:var(--line)" })),
+        h("span", { class: "bt wbar", style: "width:56px;height:10px;display:inline-block" }, h("span", { class: "bf" + (r.weight < 0 ? " n" : ""), style: "top:1px;height:8px;width:" + w.toFixed(1) + "%;" + (r.weight < 0 ? "right:50%" : "left:50%") + ";background:var(" + (r.weight < 0 ? "--short" : "--long") + ")" }), h("span", { style: "position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:var(--line)" })),
         spct(r.weight));
     } }
   ];
   if (hasDaily) {
-    cols.push({ label: "Alvo", num: true, get: function (r) { return r.target_weight; }, render: function (r) { return spct(r.target_weight); } });
-    cols.push({ label: "Drift", num: true, get: function (r) { return r.drift; }, render: function (r) { return bps(r.drift); } });
-  }
-  cols.push(
-    { label: "Nocional", num: true, get: function (r) { return r.notional; }, render: function (r) { return usd(r.notional, true); } },
-    { label: "α z", num: true, title: "z-score do alpha quant", get: function (r) { return r.alpha_z; }, render: function (r) { return fnum(r.alpha_z, 2, true); } },
-    { label: "Visão", num: true, title: "escore de visão (−2 a +2)", get: function (r) { return r.view_score; }, render: function (r) { return stanceTag(r.view_score); } },
-    { label: "Dias p/ liquidar", num: true, get: function (r) { return r.days; }, render: function (r) { return days(r.days); } },
-    { label: "% ADTV", num: true, get: function (r) { return r.pct_adtv; }, render: function (r) { return pct(r.pct_adtv, 1); } },
-    { label: "Squeeze", get: function (r) { return isNum(r.sq_score) ? r.sq_score : null; }, render: function (r) { return r.side === "SHORT" || r.sq_bucket === "HIGH" ? sqTag(r.sq_bucket, r.sq_score) : h("span", { class: "muted" }, r.sq_bucket ? r.sq_bucket : NA); } },
-    { label: "Aluguel a.a.", num: true, get: function (r) { return r.borrow; }, render: function (r) { return r.side === "SHORT" ? pct(r.borrow) : h("span", { class: "muted" }, "—"); } },
-    { label: "Contrib. risco", num: true, title: "fração da variância ex-ante (Euler)", get: function (r) { return r.risk; }, render: function (r) { return pct(r.risk, 1); } }
-  );
-  if (hasDaily) {
     cols.push({ label: "P&L dia", num: true, get: function (r) { return r.day_pnl; }, render: function (r) { return signed(usd(r.day_pnl, true), r.day_pnl); } });
     cols.push({ label: "Ret. dia (USD)", num: true, get: function (r) { return r.day_ret; }, render: function (r) { return signed(spct(r.day_ret), r.day_ret); } });
   }
+  cols.push(
+    { label: "Contrib. risco", num: true, title: "fração da variância ex-ante (Euler)", get: function (r) { return r.risk; }, render: function (r) { return pct(r.risk, 1); } },
+    { label: "Dias p/ liquidar", num: true, title: "a " + pct(MLQ.participation_rate, 0) + " do ADTV (long) e " + pct(MLQ.short_participation_rate, 0) + " (short)", get: function (r) { return r.days; }, render: function (r) { return days(r.days); } },
+    { label: "% ADTV", num: true, get: function (r) { return r.pct_adtv; }, render: function (r) { return pct(r.pct_adtv, 1); } },
+    { label: "Squeeze", get: function (r) { return isNum(r.sq_score) ? r.sq_score : null; }, render: function (r) { return r.side === "SHORT" || r.sq_bucket === "HIGH" ? sqTag(r.sq_bucket, r.sq_score) : h("span", { class: "muted" }, "—"); } },
+    { label: "Aluguel a.a.", num: true, get: function (r) { return r.borrow; }, render: function (r) { return r.side === "SHORT" ? pct(r.borrow) : h("span", { class: "muted" }, "—"); } }
+  );
   if (hasItd) cols.push({ label: "P&L desde o início", num: true, get: function (r) { var x = ITD_ISSUER[r.issuer_id]; return x ? x.pnl_usd : null; }, render: function (r) { var x = ITD_ISSUER[r.issuer_id]; return x ? signed(usd(x.pnl_usd, true), x.pnl_usd) : NA; } });
+  cols.push(
+    { label: "α z", num: true, title: "z-score do alpha quant", get: function (r) { return r.alpha_z; }, render: function (r) { return fnum(r.alpha_z, 2, true); } },
+    { label: "Visão", num: true, title: "escore de visão (−2 a +2)", get: function (r) { return r.view_score; }, render: function (r) { return stanceTag(r.view_score); } },
+    { label: "Setor", get: function (r) { return sectorName(r.sector); } }
+  );
 
   var holder = h("div");
   var sortState = { i: null, dir: 1 };
@@ -1725,13 +1841,23 @@ function renderCarteira(p) {
       row.addEventListener("click", function (ev) { if (ev.target.closest("a,button")) return; open[r.issuer_id] = !open[r.issuer_id]; redraw(); });
       row.style.cursor = "pointer";
       tb.appendChild(row);
-      if (open[r.issuer_id]) tb.appendChild(h("tr", { class: "detail" }, h("td", { colspan: cols.length }, positionDetail(r))));
+      if (open[r.issuer_id]) tb.appendChild(h("tr", { class: "detail" }, h("td", { colspan: cols.length }, h("div", { class: "detail-in" }, positionDetail(r)))));
     });
     if (!fr.length) tb.appendChild(h("tr", null, h("td", { colspan: cols.length, class: "muted" }, "Nenhuma posição com esses filtros.")));
     t.appendChild(tb);
     holder.textContent = "";
-    holder.appendChild(h("div", { class: "scroll" }, t));
+    var sc = h("div", { class: "scroll" }, t);
+    holder.appendChild(sc);
+    fitDetails(sc);
   }
+  /* o detalhe fica do tamanho da área visível da tabela (e preso à esquerda ao rolar) */
+  function fitDetails(sc) {
+    var cw = sc.clientWidth;
+    if (!cw) return;
+    sc.querySelectorAll(".detail-in").forEach(function (el) { el.style.width = Math.max(240, cw - 30) + "px"; });
+  }
+  var fitT = null;
+  window.addEventListener("resize", function () { clearTimeout(fitT); fitT = setTimeout(function () { var sc = holder.querySelector(".scroll"); if (sc) fitDetails(sc); }, 120); });
   [fSide, fCountry, fSector].forEach(function (s) { s.addEventListener("change", redraw); });
   fQ.addEventListener("input", redraw);
   redraw();
@@ -1745,9 +1871,9 @@ function renderCarteira(p) {
     chg.length ? table([
       { label: "Emissor", get: function (r) { return r.name || nm(r.issuer_id); } },
       { label: "Mudança", get: function (r) { return r.change; }, render: function (r) { return chip(CHANGE_PT[r.change] || r.change); } },
-      { label: "Peso anterior", num: true, get: function (r) { return r.w_old; }, render: function (r) { return spct(r.w_old); } },
-      { label: "Peso novo", num: true, get: function (r) { return r.w_new; }, render: function (r) { return spct(r.w_new); } },
-      { label: "Δ", num: true, get: function (r) { return r.delta; }, render: function (r) { return signed(bps(r.delta), r.delta); } }
+      { label: "Peso anterior", num: true, get: function (r) { return r.w_old; }, render: function (r) { return wOrOut(r.w_old); } },
+      { label: "Peso novo", num: true, get: function (r) { return r.w_new; }, render: function (r) { return wOrOut(r.w_new); } },
+      { label: "Δ peso", num: true, title: "variação do peso com sinal (não é P&L)", get: function (r) { return r.delta; }, render: function (r) { return bps(r.delta); } }
     ], chg, { sortable: true, tall: true }) : empty(LIVEW && !LIVEW.previous_week ? "Primeira carteira (inception): não há semana anterior para comparar." : "Sem mudanças acima do limiar de 25 bps."));
   p.appendChild(h("div", { class: "cols-2" },
     block("10 maiores posições", "peso com sinal; teal = long, couro = short", barList(top, { fmt: function (v) { return spct(v); }, diverging: true })),
@@ -1758,7 +1884,7 @@ function renderCarteira(p) {
   if (pj.length) {
     p.appendChild(sec("Diário de posições do PM", "tese, critério de invalidação e pré-mortem gravados na decisão",
       h("div", { class: "cards" }, pj.map(function (j) {
-        return h("div", { class: "card" }, h("div", { class: "card-h" }, h("b", null, nm(j.issuer_id)), h("code", { class: "muted" }, j.issuer_id)),
+        return h("div", { class: "card" }, h("div", { class: "card-h" }, h("b", null, nm(j.issuer_id)), nm(j.issuer_id) !== j.issuer_id ? h("code", { class: "muted" }, j.issuer_id) : null),
           kv([["Tese", j.thesis], ["Invalidação", j.invalidation_criteria], ["Pré-mortem", j.premortem]]));
       }))));
   }
@@ -1766,16 +1892,18 @@ function renderCarteira(p) {
   /* ordens e hedge cambial da semana vigente */
   if (LIVEP && (arr(LIVEP.trades).length || arr(LIVEP.fx_hedges).length)) {
     var sm = obj(LIVEP.summary);
-    p.appendChild(fold("Ordens da semana (MOC)", int(sm.n_trades) + " ordens · giro " + pct(sm.turnover, 1) + " · custo " + usd(sm.trade_cost_usd) + (sm.trade_cost_partial ? " (parcial)" : ""), false, tradesTable(LIVEP)));
+    p.appendChild(fold("Ordens da semana (MOC)", plural(sm.n_trades, "ordem", "ordens") + " · giro " + pct(sm.turnover, 1) + " · custo " + usd(sm.trade_cost_usd) + (sm.trade_cost_partial ? " (parcial)" : ""), false, tradesTable(LIVEP)));
     if (arr(LIVEP.fx_hedges).length) p.appendChild(fold("Hedge cambial sugerido", arr(LIVEP.fx_hedges).length + " moedas", false, fxTable(LIVEP)));
   }
 }
+/* peso ausente numa comparação de carteiras = nome fora daquela carteira (não "n/d") */
+function wOrOut(w) { return isNum(w) ? spct(w) : h("span", { class: "na-txt" }, "fora da carteira"); }
 function tradesTable(prop) {
   return table([
     { label: "Ticker", get: function (r) { return r.ticker; }, render: function (r) { return h("span", null, h("code", null, r.ticker || NA), h("span", { class: "cellsub" }, nm(r.issuer_id))); } },
     { label: "Ação", get: function (r) { return r.action; }, render: function (r) { return ACTION_PT[r.action] || r.action || NA; } },
     { label: "Ações", num: true, get: function (r) { return r.shares; }, render: function (r) { return int(r.shares); } },
-    { label: "Nocional", num: true, get: function (r) { return r.notional_usd; }, render: function (r) { return usd(r.notional_usd, true); } },
+    { label: "Nocional", num: true, title: "magnitude da ordem; o sentido está na ação", get: function (r) { return r.notional_usd; }, render: function (r) { return usd(r.notional_usd); } },
     { label: "Δ peso", num: true, get: function (r) { return r.weight_change; }, render: function (r) { return bps(r.weight_change); } },
     { label: "% ADTV", num: true, get: function (r) { return r.pct_adtv; }, render: function (r) { return pct(r.pct_adtv, 1); } },
     { label: "Custo est.", num: true, get: function (r) { return r.est_cost_bps; }, render: function (r) { return isNum(r.est_cost_bps) ? fnum(r.est_cost_bps, 1) + " bps" : NA; } },
@@ -1795,11 +1923,21 @@ function fxTable(prop) {
 
 /* ====================================================================== Risco */
 var EXPO_GROUPS = ["country", "sector", "style", "market", "currency"];
+/* estado de cada exposição pela MESMA política dos limites (status exportado): drift diário
+   acima do limite = alerta; excesso só para limite HARD no ex-ante da decisão */
 function expoTone(e) {
-  if (e.breach === true) return "crit";
-  if (isNum(e.utilization) && e.utilization >= 0.9) return "near";
+  if (e.status === "excesso") return "crit";
+  if (e.status === "alerta") return "warn";
   if (!isNum(e.limit)) return "na";
+  if (isNum(e.utilization) && e.utilization >= 0.9) return "near";
   return "ok";
+}
+function expoPill(e, basis) {
+  if (e.status === "excesso") return pill("Excesso", "crit", "acima do limite " + (e.severity || "") + " na decisão");
+  if (e.status === "alerta") return pill(basis === "daily" ? "Acima (drift)" : "Acima (SOFT)", "warn", basis === "daily" ? "drift da carteira desde a decisão; o código reequilibra no próximo rebalanceamento" : "limite SOFT: exige reconhecimento na decisão");
+  if (!isNum(e.limit)) return pill("Sem limite", "na");
+  if (isNum(e.utilization) && e.utilization >= 0.9) return pill("No limite", "info", "uso ≥ 90% do limite");
+  return pill("OK", "ok");
 }
 function latestMonitor() {
   var tl = arr(RM.timeline);
@@ -1809,24 +1947,34 @@ function latestMonitor() {
   var mdF = run && t0.md_file ? arr(run.files).filter(function (x) { return x.name === t0.md_file; })[0] : null;
   return { tl: t0, data: f && f.data ? f.data : null, md: mdF && mdF.text ? mdF.text : null, file: f };
 }
+var curBasis = null;
 function riskReading(expos) {
   var items = [];
-  function it(tone, label, text) { items.push(h("li", { class: "t-" + tone }, pill(label, tone), h("span", null, text))); }
+  function it(tone, label, text) { items.push(h("li", { class: "t-" + tone }, pill(label, tone), text && text.nodeType ? text : h("span", null, text))); }
   var ks = obj(ST.kill_switch);
   if (ks.active) it("crit", "Kill switch", "Ativo" + (ks.reason ? ": " + ks.reason : "") + ". Nenhuma operação nova; apenas redução de risco.");
   if (ST.ladder_stage && ST.ladder_stage !== "normal" && ST.ladder_stage !== "desconhecido") it(STAGE_TONE[ST.ladder_stage] || "warn", "Escada", "Drawdown " + pct(ST.drawdown) + ": estágio " + (ST.ladder_stage_label || ST.ladder_stage) + ".");
+  function floorTxt(c) {
+    if (isNum(c.shortfall) && c.shortfall > 0) return " (abaixo do piso em " + fnum(c.shortfall * 100, 2) + " p.p.)";
+    return isNum(c.utilization) && c.utilization > 1 ? " (" + pct(c.utilization, 2) + " do limite)" : "";
+  }
   CHECKS.forEach(function (c) {
-    if (c.status === "excesso") it("crit", "Excesso", c.label + ": " + fmtUnit(c.value, c.unit) + " vs. limite " + fmtLimit(c) + " (" + c.basis + ")" + (c.detail ? ". " + c.detail : "") + ".");
+    if (c.status === "excesso") it("crit", "Excesso", c.label + ": " + fmtUnit(c.value, c.unit) + " vs. limite " + fmtLimit(c) + floorTxt(c) + " (" + c.basis + ")" + (c.detail ? ". " + c.detail : "") + ".");
   });
   CHECKS.forEach(function (c) {
-    if (c.status === "alerta") it("warn", "Alerta", c.label + ": " + fmtUnit(c.value, c.unit) + " vs. limite " + fmtLimit(c) + " (" + c.basis + ")" + (c.detail ? ". " + c.detail : "") + ".");
+    if (c.status === "alerta") it("warn", "Alerta", c.label + ": " + fmtUnit(c.value, c.unit) + " vs. limite " + fmtLimit(c) + floorTxt(c) + " (" + c.basis + ")" + (c.detail ? ". " + c.detail : "") + ".");
   });
-  var bind = CHECKS.filter(function (c) { return c.status === "ok" && isNum(c.utilization) && c.utilization >= 0.9; });
+  var bind = CHECKS.filter(function (c) { return c.status === "ok" && !c.floor && !(c.subject && arr(expos).length) && isNum(c.utilization) && c.utilization >= 0.9; });
   bind.forEach(function (c) { it("info", "No limite", c.label + ": " + pct(c.utilization, 0) + " do limite" + (c.detail ? " · " + c.detail : "") + "."); });
-  var br = arr(expos).filter(function (e) { return e.breach === true; });
-  if (br.length) it("crit", "Acima", "Exposições acima do limite: " + br.map(function (e) { return expoName(e.group, e.name) + " " + spct(e.net); }).join("; ") + ".");
-  var near = arr(expos).filter(function (e) { return e.breach !== true && isNum(e.utilization) && e.utilization >= 0.9; });
+  function expoTxt(e) { return expoName(e.group, e.name) + " " + (e.group === "style" ? xnum(e.net) : spct(e.net)) + " (" + pct(e.utilization, 2) + " do limite)"; }
+  var exc = arr(expos).filter(function (e) { return e.status === "excesso"; });
+  if (exc.length) it("crit", "Excesso", "Exposições acima do limite HARD na decisão: " + exc.map(expoTxt).join("; ") + ".");
+  var drift = arr(expos).filter(function (e) { return e.status === "alerta"; });
+  if (drift.length) it("warn", "Acima", (curBasis === "daily" ? "Exposições acima do limite pelo drift desde a decisão (alerta; o código reequilibra no próximo rebalanceamento): " : "Exposições acima de limite SOFT: ") + drift.map(expoTxt).join("; ") + ".");
+  var near = arr(expos).filter(function (e) { return e.status === "ok" && isNum(e.utilization) && e.utilization >= 0.9; });
   if (near.length) it("info", "No limite", "Exposições com uso ≥ 90%: " + near.map(function (e) { return expoName(e.group, e.name) + " (" + pct(e.utilization, 0) + ")"; }).join("; ") + ".");
+  var la = LD ? arr(LD.alerts) : [];
+  if (la.length) it("warn", "Fechamento", h("span", null, "Alertas gravados pelo código no fechamento de " + fdate(LD.date) + ":", h("ul", { class: "list" }, la.map(function (a) { return h("li", null, a); }))));
   if (LIVEP && LIVEP.compliance) {
     var cp = obj(LIVEP.compliance);
     var hard = arr(cp.failed_hard), soft = arr(cp.failed_soft), info = arr(cp.failed_info);
@@ -1834,33 +1982,34 @@ function riskReading(expos) {
     it(hard.length ? "crit" : soft.length ? "warn" : "ok", "Gates", "Compliance da decisão de " + fdate(LIVEW.week) + ": " + int(cp.n_passed) + " de " + int(cp.n) + " verificações aprovadas. HARD reprovadas: " + (hard.length ? hard.join(", ") : "nenhuma") + ". SOFT: " + (soft.length ? soft.join(", ") + (ack.length ? " (reconhecidas na decisão: " + ack.join(", ") + ")" : "") : "nenhuma") + ". INFO: " + (info.length ? info.join(", ") : "nenhuma") + ".");
   }
   var bc = arr(g(LIVEP, "optimizer.binding_constraints"));
-  if (bc.length) it("info", "Otimizador", "Restrições ativas na solução (" + bc.length + "): " + bc.join(", ") + ".");
+  if (bc.length) it("info", "Otimizador", "Restrições ativas na solução (" + bc.length + "): " + bc.map(constraintName).join(", ") + ".");
   var mon = latestMonitor();
   if (mon && mon.tl) {
     var ng = obj(mon.tl.n_gatilhos);
-    it(ng.HARD ? "crit" : ng.SOFT ? "warn" : "ok", "Monitor", "Última execução do monitor de risco (" + flocal(mon.tl.gerado_em) + ", " + (mon.tl.modo || "") + "): " + int(ng.HARD || 0) + " gatilho(s) HARD, " + int(ng.SOFT || 0) + " SOFT, " + int(ng.INFO || 0) + " INFO.");
+    it(ng.HARD ? "crit" : ng.SOFT ? "warn" : "ok", "Monitor", "Última execução do monitor de risco (" + flocal(mon.tl.gerado_em) + ", " + (mon.tl.modo || "") + "): " + plural(ng.HARD || 0, "gatilho HARD", "gatilhos HARD") + ", " + int(ng.SOFT || 0) + " SOFT, " + int(ng.INFO || 0) + " INFO.");
   }
-  if (!CHECKS.some(function (c) { return c.status === "excesso" || c.status === "alerta"; })) {
-    it("ok", "Limites", CHECKS.length ? "Nenhum limite do mandato em excesso ou alerta na base atual." : "Sem carteira vigente: nada a verificar contra o mandato.");
-  }
+  if (!CHECKS.length) it("na", "Sem carteira", "Sem carteira vigente: nada a verificar contra o mandato.");
+  else if (!CHECKS.some(function (c) { return c.status === "excesso" || c.status === "alerta"; })) it("ok", "Limites", "Nenhum limite do mandato em excesso ou alerta na base atual.");
   return h("ul", { class: "alerts" }, items);
 }
 function limitsTable() {
   if (!CHECKS.length) return empty("Sem carteira decidida: não há risco vigente a comparar com o mandato.");
-  return table([
-    { label: "Limite", get: function (c) { return c.label; }, render: function (c) { return h("span", null, c.label, h("span", { class: "cellsub" }, c.basis || "")); } },
+  return h("div", { class: "stack", style: "gap:8px" }, table([
+    { label: "Limite", get: function (c) { return c.label; }, render: function (c) { return h("span", null, c.label, h("span", { class: "cellsub" }, (c.basis || "") + (c.gate ? " · gate " + c.gate + " (" + c.severity + ")" : " · sem gate próprio"))); } },
     { label: "Valor", num: true, get: function (c) { return c.value; }, render: function (c) { return fmtUnit(c.value, c.unit); } },
     { label: "Limite do mandato", num: true, render: function (c) { return fmtLimit(c); } },
     { label: "Uso do limite", get: function (c) { return c.utilization; }, render: function (c) {
       if (c.id === "vol_ex_ante" || c.id === "vol_realizada_21d") return Array.isArray(c.limit) ? bandGauge(c.value, c.limit[0], c.limit[1], MR.vol_target_annual, true) : NA;
       if (c.id === "drawdown") return ladderViz(c.value, MDD, g(TR, "stats.max_drawdown"), true);
+      if (c.floor) return floorGauge(c, utilTone(c.status, null));
+      if (!isNum(c.limit) && !Array.isArray(c.limit)) return h("span", { class: "muted" }, "informativo");
       return utilBar(c.utilization, utilTone(c.status, c.utilization));
     } },
     { label: "Estado", get: function (c) { return c.status; }, render: function (c) { return statusPill(c.status); } },
-    { label: "Detalhe", cls: "wrapcell", render: function (c) { return c.detail || h("span", { class: "muted" }, "—"); } }
-  ], CHECKS, { sortable: true, rowClass: function (c) { var t = statusTone(c.status); return t === "crit" ? "st-crit" : t === "warn" ? "st-warn" : null; } });
+    { label: "Detalhe", cls: "wrapcell", render: function (c) { return c.detail ? ptNums(c.detail) : h("span", { class: "muted" }, "—"); } }
+  ], CHECKS, { sortable: true, stack: true, rowClass: function (c) { var t = statusTone(c.status); return t === "crit" ? "st-crit" : t === "warn" ? "st-warn" : null; } }), utilLegend());
 }
-function expoTables(expos) {
+function expoTables(expos, basis) {
   var groups = {};
   arr(expos).forEach(function (e) { (groups[e.group] = groups[e.group] || []).push(e); });
   var keys = EXPO_GROUPS.filter(function (k) { return groups[k]; }).concat(Object.keys(groups).filter(function (k) { return EXPO_GROUPS.indexOf(k) < 0; }));
@@ -1873,8 +2022,8 @@ function expoTables(expos) {
     function f(v) { return unit === "x" ? xnum(v) : spct(v); }
     var t = table([
       { label: "Nome", get: function (e) { return expoName(k, e.name); } },
-      { label: "Long", num: true, get: function (e) { return e.long; }, render: function (e) { return k === "style" ? h("span", { class: "muted" }, "—") : pct(e.long); } },
-      { label: "Short", num: true, get: function (e) { return e.short; }, render: function (e) { return k === "style" ? h("span", { class: "muted" }, "—") : pct(e.short); } },
+      { label: "Long", num: true, get: function (e) { return e.long; }, render: function (e) { return e.measure || k === "style" ? h("span", { class: "muted", title: "sem ponta long/short: " + (e.measure || "z × NAV") }, "—") : pct(e.long); } },
+      { label: "Short", num: true, get: function (e) { return e.short; }, render: function (e) { return e.measure || k === "style" ? h("span", { class: "muted", title: "sem ponta long/short: " + (e.measure || "z × NAV") }, "—") : pct(e.short); } },
       { label: "Net vs. ±limite", get: function (e) { return e.net; }, render: function (e) {
         var w = isNum(e.net) ? Math.min(Math.abs(e.net) / m, 1) * 50 : 0;
         var lp = isNum(e.limit) ? Math.abs(e.limit) / m * 50 : null;
@@ -1884,17 +2033,15 @@ function expoTables(expos) {
             h("span", { style: "position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:var(--line)" }),
             lp !== null ? h("span", { class: "bref", style: "left:" + (50 - lp).toFixed(1) + "%", title: "−limite" }) : null,
             lp !== null ? h("span", { class: "bref", style: "left:" + (50 + lp).toFixed(1) + "%", title: "+limite" }) : null,
-            isNum(e.net) ? h("span", { class: "bf" + (e.net < 0 ? " n" : ""), style: "top:2px;height:8px;width:" + w.toFixed(1) + "%;" + (e.net < 0 ? "right:50%" : "left:50%") + ";background:var(" + (tone === "crit" ? "--crit-mark" : tone === "near" ? "--warn-mark" : "--accent") + ")" }) : null),
-          h("span", { class: "tnum" }, f(e.net)));
+            isNum(e.net) ? h("span", { class: "bf" + (e.net < 0 ? " n" : ""), style: "top:2px;height:8px;width:" + w.toFixed(1) + "%;" + (e.net < 0 ? "right:50%" : "left:50%") + ";background:var(" + (tone === "crit" ? "--crit-mark" : tone === "warn" || tone === "near" ? "--warn-mark" : "--accent") + ")" }) : null),
+          h("span", { class: "tnum" }, e.measure === "Σ w·β" ? fnum(e.net, 4, true) : f(e.net)));
       } },
-      { label: "Gross", num: true, get: function (e) { return e.gross; }, render: function (e) { return unit === "x" ? fnum(e.gross, 3) : pct(e.gross); } },
-      { label: "Limite", num: true, get: function (e) { return e.limit; }, render: function (e) { return isNum(e.limit) ? "±" + (unit === "x" ? fnum(e.limit, 3) : pct(e.limit)) : NA; } },
+      { label: "Gross", num: true, get: function (e) { return e.gross; }, render: function (e) { return e.measure ? h("span", { class: "muted" }, "—") : unit === "x" ? fnum(e.gross, 3) : pct(e.gross); } },
+      { label: "Limite", num: true, get: function (e) { return e.limit; }, render: function (e) { return isNum(e.limit) ? "±" + (unit === "x" ? fnum(e.limit, 3) : e.measure === "Σ w·β" ? fnum(e.limit, 2) : pct(e.limit)) : NA; } },
       { label: "Uso", get: function (e) { return e.utilization; }, render: function (e) { return isNum(e.utilization) ? utilBar(e.utilization, expoTone(e)) : NA; } },
-      { label: "Estado", get: function (e) { return e.breach === true ? 2 : isNum(e.utilization) && e.utilization >= 0.9 ? 1 : 0; }, render: function (e) {
-        return e.breach === true ? pill("Acima", "crit") : isNum(e.utilization) && e.utilization >= 0.9 ? pill("No limite", "warn") : isNum(e.limit) ? pill("OK", "ok") : pill("Sem limite", "na");
-      } }
-    ], rows, { sortable: true, rowClass: function (e) { var t = expoTone(e); return t === "crit" ? "st-crit" : t === "near" ? "st-warn" : null; } });
-    return block(GROUP_PT[k] || k, k === "style" ? "exposição em z × NAV" : "% do NAV", t);
+      { label: "Estado", get: function (e) { return e.status === "excesso" ? 3 : e.status === "alerta" ? 2 : isNum(e.utilization) && e.utilization >= 0.9 ? 1 : 0; }, render: function (e) { return expoPill(e, basis); } }
+    ], rows, { sortable: true, rowClass: function (e) { var t = expoTone(e); return t === "crit" ? "st-crit" : t === "warn" ? "st-warn" : t === "near" ? "st-info" : null; } });
+    return block(GROUP_PT[k] || k, k === "style" ? "exposição em z × NAV · gate SOFT" : k === "market" ? "temas em % do NAV (gate HARD) · commodities em Σ w·β (gate SOFT)" : k === "country" || k === "sector" ? "% do NAV · gate HARD" : "% do NAV", t);
   });
 }
 function eventWindows() {
@@ -1920,11 +2067,12 @@ function renderRisco(p) {
   if (dl && arr(dl.exposures).length) bases.push(["daily", "Diário (" + fdate(RK.as_of_date) + ", com drift)", dl.exposures]);
   if (ex && arr(ex.exposures).length) bases.push(["ex_ante", "Ex-ante na decisão (" + fdate(RK.live_week) + ")", ex.exposures]);
   var curExpo = bases.length ? bases[0][2] : [];
+  curBasis = bases.length ? bases[0][0] : null;
   p.appendChild(sec("Leitura de risco", RK.basis_note || null,
     head,
     block(null, null, riskReading(curExpo), note("Texto gerado por regras a partir dos dados exportados: excessos e alertas dos limites, restrições com uso ≥ 90% (no limite), resultado dos gates de compliance e do monitor de risco. Nenhum número é calculado nesta página."))));
 
-  p.appendChild(sec("Limites do mandato × carteira", "uso = |valor| / |limite| (vol: vol / teto da banda; drawdown: dd / stop suave)", limitsTable()));
+  p.appendChild(sec("Limites do mandato × carteira", "uso = |valor| / |limite| (vol: vol / teto da banda; drawdown: dd / stop suave); pisos mostram a distância ao piso", limitsTable()));
 
   /* volatilidade e cauda */
   var vsrc = dl || ex || {};
@@ -1938,14 +2086,14 @@ function renderRisco(p) {
     { label: "Realizada 63d", value: vsrc.realized_vol_63d, color: "var(--shadow)" }
   ];
   var volB = block("Volatilidade", dl ? "diário (" + fdate(RK.as_of_date) + ")" : "ex-ante na decisão",
-    barList(volRows, { fmt: function (v) { return pct(v); }, refs: [{ value: MR.vol_band_min, label: "piso da banda " + pct(MR.vol_band_min, 0) }, { value: MR.vol_target_annual, label: "meta " + pct(MR.vol_target_annual, 0) }, { value: MR.vol_band_max, label: "teto " + pct(MR.vol_band_max, 0) }], diverging: false }),
+    barList(volRows, { emptyIfAllNa: "Sem medidas de volatilidade nesta base (n/d).", fmt: function (v) { return pct(v); }, refs: [{ value: MR.vol_band_min, label: "piso da banda " + pct(MR.vol_band_min, 0) }, { value: MR.vol_target_annual, label: "meta " + pct(MR.vol_target_annual, 0) }, { value: MR.vol_band_max, label: "teto " + pct(MR.vol_band_max, 0) }], diverging: false }),
     vc && Array.isArray(vc.limit) ? bandGauge(vc.value, vc.limit[0], vc.limit[1], MR.vol_target_annual) : null,
     kv([
       ["Fração fatorial da variância", ex ? h("span", null, pct(frs, 1), " de no máx. " + pct(MR.max_factor_risk_share, 0)) : NA],
       ["Uso do limite fatorial", CK("factor_risk_share") ? utilBar(CK("factor_risk_share").utilization, utilTone(CK("factor_risk_share").status, CK("factor_risk_share").utilization)) : NA],
       ["Vol realizada × banda", g(TR, "stats.realized_vol_status") || "histórico insuficiente"],
       ["Viés a priori do risco", isNum(MR.bias_prior) ? "× " + fnum(MR.bias_prior, 2) + (isNum(MR.bias_prior_weeks) ? " (" + MR.bias_prior_weeks + " semanas)" : "") : NA],
-      ["Modo da meta", MR.risk_target_mode]
+      ["Modo da meta", RISK_MODE_PT[MR.risk_target_mode] || MR.risk_target_mode]
     ]));
   var varC = CK("var_1d"), esC = CK("es_1d");
   var tailB = block("VaR e ES (99%)", "% do NAV",
@@ -1953,6 +2101,7 @@ function renderRisco(p) {
       tile("VaR 1d", varC ? pct(varC.value) : pct(vsrc.var_1d_99), varC ? utilBar(varC.utilization, utilTone(varC.status, varC.utilization)) : null, "limite " + pct(MR.var_1d_max)),
       tile("ES 1d", esC ? pct(esC.value) : pct(vsrc.es_1d_99), esC ? utilBar(esC.utilization, utilTone(esC.status, esC.utilization)) : null, "limite " + pct(MR.es_1d_max)),
       tile("VaR 1 semana", ex ? pct(ex.var_1w_99) : NA, "ex-ante da decisão; sem limite próprio")),
+    utilLegend(),
     kv([["Beta previsto", CK("beta") ? h("span", null, xnum(CK("beta").value), " · limite ±" + fnum(MR.beta_max_abs, 3)) : NA],
       ["Net", CK("net") ? h("span", null, spct(CK("net").value), " · limite ±" + pct(MR.net_exposure_max_abs)) : NA],
       ["Gross", CK("gross_max") ? h("span", null, pct(CK("gross_max").value, 1), " · faixa " + pct(MR.gross_min, 0) + "–" + pct(MR.gross_max, 0)) : NA],
@@ -1965,7 +2114,7 @@ function renderRisco(p) {
     var bsel = h("select", { id: "expo-basis" }, bases.map(function (b, i) { return h("option", { value: String(i) }, b[1]); }));
     var saved = lsGet("expo-basis");
     if (saved && +saved < bases.length) bsel.value = saved;
-    function drawExpo() { holder.textContent = ""; add(holder, expoTables(bases[+bsel.value || 0][2])); }
+    function drawExpo() { var b = bases[+bsel.value || 0]; holder.textContent = ""; add(holder, expoTables(b[2], b[0])); }
     bsel.addEventListener("change", function () { lsSet("expo-basis", bsel.value); drawExpo(); });
     drawExpo();
     p.appendChild(sec("Exposições × limites", "país, setor, estilos, temas (estatais) e commodities",
@@ -1991,8 +2140,11 @@ function renderRisco(p) {
     var stOk = st.filter(function (s) { return isNum(s.pnl); }), stNa = st.filter(function (s) { return !isNum(s.pnl); });
     p.appendChild(sec("Testes de estresse", "P&L em % do NAV, pior primeiro (históricos e hipotéticos)",
       block(null, null,
-        barList(stOk.map(function (s) { return { label: s.scenario, value: s.pnl }; }), { fmt: function (v) { return spct(v); }, diverging: true, refs: isNum(MR.country_stress_max_loss) ? [{ value: -Math.abs(MR.country_stress_max_loss), label: "perda máxima por gap de país (só cenários “Gap”): " + pct(-Math.abs(MR.country_stress_max_loss)) }] : [] }),
-        stNa.length ? h("div", null, h("h4", null, "Sem cálculo (n/d)"), h("div", { class: "chips" }, stNa.map(function (s) { return chip(s.scenario); })), note("Cenários históricos sem dados suficientes da carteira atual na janela do evento ficam n/d; nunca entram como zero.")) : null)));
+        barList(stOk.map(function (s) {
+          var gap = /^Gap /.test(s.scenario || "");
+          return { label: ptNums(s.scenario), value: s.pnl, refs: gap && isNum(MR.country_stress_max_loss) ? [{ value: -Math.abs(MR.country_stress_max_loss), label: "perda máxima por gap de país (só nos cenários “Gap”): " + pct(-Math.abs(MR.country_stress_max_loss)) }] : null };
+        }), { fmt: function (v) { return spct(v); }, diverging: true }),
+        stNa.length ? h("div", null, h("h4", null, "Sem cálculo (n/d)"), h("div", { class: "chips" }, stNa.map(function (s) { return chip(ptNums(s.scenario)); })), note("Cenários históricos sem dados suficientes da carteira atual na janela do evento ficam n/d; nunca entram como zero.")) : null)));
   }
 
   /* liquidez */
@@ -2000,12 +2152,24 @@ function renderRisco(p) {
   var model = positionModel();
   var illiq = model.rows.filter(function (r) { return isNum(r.days); }).sort(function (a, b) { return b.days - a.days; }).slice(0, 8);
   var lL = liq ? obj(liq.LONG) : {}, lS = liq ? obj(liq.SHORT) : {};
-  var liqB = block("Liquidez", "dias para liquidar a " + pct(MLQ.participation_rate, 0) + " do ADTV (long) e " + pct(MLQ.short_participation_rate, 0) + " (short)",
+  var cL = CK("liq_days_long"), cS = CK("liq_days_short"), c3 = CK("liquidez_3d"), c5 = CK("liquidez_5d"), cD = CK("liq_days_daily");
+  function liqTile(label, c, s) {
+    return tile(label, h("span", null, days(c ? c.value : s.max_days), " ", c ? statusPill(c.status) : null),
+      c ? utilBar(c.utilization, utilTone(c.status, c.utilization)) : null,
+      "limite " + days(s.limit) + " a " + pct(s.participation, 0) + " do ADTV · " + plural(s.n, "nome", "nomes") + (s.n_missing ? " · " + int(s.n_missing) + " sem ADTV" : ""));
+  }
+  var liqB = block("Prazo de liquidação e gross liquidável", "ex-ante da decisão: dias para liquidar a " + pct(MLQ.participation_rate, 0) + " do ADTV (long) e " + pct(MLQ.short_participation_rate, 0) + " (short), como os gates LIQ_DAYS",
     liq ? h("div", { class: "kpis" },
-      tile("Long: pior nome", days(lL.max_days), utilBar(isNum(lL.max_days) && isNum(lL.limit) ? CK("liq_days_long") ? CK("liq_days_long").utilization : null : null, lL.breach ? "crit" : "ok"), "limite " + days(lL.limit) + " · " + int(lL.n) + " nomes" + (lL.n_missing ? " · " + int(lL.n_missing) + " sem ADTV" : "")),
-      tile("Short: pior nome", days(lS.max_days), utilBar(CK("liq_days_short") ? CK("liq_days_short").utilization : null, lS.breach ? "crit" : "ok"), "limite " + days(lS.limit) + " · " + int(lS.n) + " nomes" + (lS.n_missing ? " · " + int(lS.n_missing) + " sem ADTV" : "")),
-      tile("Liquidável em 1 dia", pct(first(dl ? dl.pct_gross_liquid_1d : null, ex ? ex.pct_nav_liquidated_1d : null), 1), "mín. " + pct(MLQ.min_gross_liquid_3d, 0) + " em 3 dias e " + pct(MLQ.min_gross_liquid_5d, 0) + " em 5 dias")) : null,
-    liq ? h("div", null, h("h4", null, "Distribuição do gross por prazo de liquidação"), barList(arr(liq.buckets).map(function (b) { return { label: b.bucket, value: b.gross_share, sub: int(b.n) + " posições · " + pct(b.gross, 1) + " do NAV" }; }), { fmt: function (v) { return pct(v, 1); }, diverging: false, max: 1, color: "var(--accent)" })) : empty("Sem dados de liquidez."),
+      liqTile("Long: pior nome", cL, lL),
+      liqTile("Short: pior nome", cS, lS),
+      tile("Gross liquidável", h("div", { class: "trio" },
+          h("div", null, h("b", null, pct(c3 ? c3.value : liq.liquid_3d, 1)), h("span", null, "em 3 dias (piso " + pct(MLQ.min_gross_liquid_3d, 0) + ")")),
+          h("div", null, h("b", null, pct(c5 ? c5.value : liq.liquid_5d, 1)), h("span", null, "em 5 dias (piso " + pct(MLQ.min_gross_liquid_5d, 0) + ")")),
+          dl ? h("div", null, h("b", null, pct(dl.pct_gross_liquid_1d, 1)), h("span", null, "em 1 dia (registro diário)")) : null),
+        c3 && c3.status !== "ok" ? statusPill(c3.status) : null, c5 && c5.status !== "ok" ? statusPill(c5.status) : null)) : null,
+    cD && isNum(cD.value) ? note("Registro diário de " + fdate(RK.as_of_date) + " (carteira com drift): pior nome em " + days(cD.value) + " a " + pct(MLQ.participation_rate, 0) + " do ADTV agregado do emissor, todas as posições; os limites por ponta acima usam o ex-ante da decisão.") : null,
+    liq ? h("div", null, h("h4", null, "Distribuição do gross por prazo de liquidação do nome inteiro"), barList(arr(liq.buckets).map(function (b) { return { label: b.bucket, value: b.gross_share, sub: plural(b.n, "posição", "posições") + " · " + pct(b.gross, 1) + " do NAV" }; }), { fmt: function (v) { return pct(v, 1); }, diverging: false, max: 1, color: "var(--accent)" }),
+      note("Fatia do gross em nomes cujo prazo total cai em cada faixa; não é a mesma medida dos pisos de 3 e 5 dias (que contam a parte liquidável de cada nome).")) : empty("Sem dados de liquidez."),
     kv([["ADTV mínimo", "long " + usd(MLQ.min_adtv_long_usd) + " · short " + usd(MLQ.min_adtv_short_usd)], ["Giro semanal máximo", pct(MLQ.max_weekly_turnover, 0)], ["Janela do ADTV", isNum(MLQ.adv_window_days) ? MLQ.adv_window_days + " pregões" : NA]]));
   var illB = block("Posições menos líquidas", "ordenadas por dias para liquidar",
     illiq.length ? table([
@@ -2022,7 +2186,9 @@ function renderRisco(p) {
   var sqs = arr(RK.squeeze_shorts);
   var byb = arr(g(LIVEP, "squeeze.by_bucket"));
   var mon = latestMonitor();
-  var stops = mon && mon.data ? arr(g(mon.data, "squeeze.stops_intradiario")).concat(arr(g(mon.data, "squeeze.stops_fechamento"))) : [];
+  var stops = mon && mon.data ? arr(g(mon.data, "squeeze.stops_intradiario")).map(function (x) { return { r: x, base: "intradiário" }; })
+    .concat(arr(g(mon.data, "squeeze.stops_fechamento")).map(function (x) { return { r: x, base: "fechamento" }; })) : [];
+  stops.sort(function (a, b) { var ta = String(a.r.ticker || a.r.emissor || ""), tb = String(b.r.ticker || b.r.emissor || ""); return ta < tb ? -1 : ta > tb ? 1 : a.base === "intradiário" ? -1 : 1; });
   var sqB = block("Shorts e risco de squeeze", "HIGH destacado; nota de risco de short da pesquisa ao lado",
     byb.length ? h("div", { class: "chips" }, byb.map(function (b) { return h("span", { class: "chip" }, h("span", { class: "sq " + b.bucket }, b.bucket === "NA" ? "N/D" : b.bucket), " " + int(b.n) + " nomes · " + (isNum(b.weight) ? pct(b.weight, 2) : NA)); })) : null,
     sqs.length ? table([
@@ -2050,13 +2216,14 @@ function renderRisco(p) {
       ["Stops do short", "perda de " + pct(MSQ.stop_short_position_loss, 0) + " desde a entrada (corta 50%) ou " + pct(MSQ.stop_short_nav_loss, 1) + " do NAV"]
     ]),
     stops.length ? h("div", null, h("h4", null, "Distância aos stops (monitor de " + flocal(mon.tl.gerado_em) + ")"), table([
-      { label: "Ticker", render: function (r) { return h("code", null, r.ticker || r.emissor || NA); } },
-      { label: "Perda desde a entrada", num: true, render: function (r) { return pct(r.perda_desde_entrada, 1); } },
-      { label: "Perda % NAV", num: true, render: function (r) { return pct(r.perda_pct_nav, 2); } },
-      { label: "Perda", num: true, render: function (r) { return usd(r.perda_usd); } },
-      { label: "Stop posição", render: function (r) { return r.stop_posicao ? pill("Acionado", "crit") : pill("Não", "ok"); } },
-      { label: "Stop NAV", render: function (r) { return r.stop_nav ? pill("Acionado", "crit") : pill("Não", "ok"); } }
-    ], stops)) : null);
+      { label: "Ticker", render: function (x) { return h("code", null, x.r.ticker || x.r.emissor || NA); } },
+      { label: "Base", render: function (x) { return x.base === "intradiário" ? pill("intradiário", "info") : pill("fechamento", "na"); } },
+      { label: "Perda desde a entrada", num: true, render: function (x) { return pct(x.r.perda_desde_entrada, 1); } },
+      { label: "Perda % NAV", num: true, render: function (x) { return pct(x.r.perda_pct_nav, 2); } },
+      { label: "Perda", num: true, render: function (x) { return usd(x.r.perda_usd); } },
+      { label: "Stop posição", render: function (x) { return triPill(x.r.stop_posicao, "Acionado", "Não"); } },
+      { label: "Stop NAV", render: function (x) { return triPill(x.r.stop_nav, "Acionado", "Não"); } }
+    ], stops), note("Perda positiva = o short está perdendo (preço subiu desde a entrada). Stops: " + pct(MSQ.stop_short_position_loss, 0) + " desde a entrada ou " + pct(MSQ.stop_short_nav_loss, 1) + " do NAV.")) : null);
   p.appendChild(sec("Squeeze", int(sqs.length) + " shorts", sqB));
 
   /* escada de drawdown */
@@ -2095,13 +2262,13 @@ function renderRisco(p) {
       var rows = checks.filter(function (c) { return !f || (f === "fail" ? c.passed === false : c.severity === f); });
       chold.textContent = "";
       chold.appendChild(table([
-        { label: "Severidade", get: function (c) { return c.severity; }, render: function (c) { return pill(c.severity, c.severity === "HARD" ? "crit" : c.severity === "SOFT" ? "warn" : "info"); } },
-        { label: "Verificação", get: function (c) { return c.check_id; }, render: function (c) { return h("span", null, c.name || c.check_id, h("span", { class: "cellsub" }, c.check_id)); } },
+        { label: "Verificação", get: function (c) { return c.check_id; }, render: function (c) { return h("span", null, ptNums(c.name || c.check_id), h("span", { class: "cellsub" }, c.check_id)); } },
         { label: "Resultado", get: function (c) { return c.passed ? 1 : 0; }, render: function (c) { return c.passed === true ? pill("Passou", "ok") : c.passed === false ? pill("Reprovada", c.severity === "HARD" ? "crit" : c.severity === "SOFT" ? "warn" : "info") : pill("N/D", "na"); } },
+        { label: "Severidade", get: function (c) { return c.severity; }, render: function (c) { return pill(c.severity, c.severity === "HARD" ? "crit" : c.severity === "SOFT" ? "warn" : "info"); } },
         { label: "Valor", num: true, get: function (c) { return c.value; }, render: function (c) { return isNum(c.value) ? fnum(c.value, 4) : NA; } },
         { label: "Limite", num: true, get: function (c) { return c.limit; }, render: function (c) { return isNum(c.limit) ? fnum(c.limit, 4) : NA; } },
-        { label: "Detalhe", cls: "wrapcell", render: function (c) { return c.details || ""; } }
-      ], rows, { sortable: true, tall: true, rowClass: function (c) { return c.passed === false ? (c.severity === "HARD" ? "st-crit" : c.severity === "SOFT" ? "st-warn" : "st-info") : null; } }));
+        { label: "Detalhe", cls: "wrapcell", render: function (c) { return ptNums(c.details || ""); } }
+      ], rows, { sortable: true, tall: true, stack: true, rowClass: function (c) { return c.passed === false ? (c.severity === "HARD" ? "st-crit" : c.severity === "SOFT" ? "st-warn" : "st-info") : null; } }));
     };
     csel.addEventListener("change", drawComp);
     drawComp();
@@ -2114,6 +2281,8 @@ function renderRisco(p) {
   /* monitor intradiário */
   p.appendChild(monitorSection());
 }
+/* sinalizador do monitor: true / false / ausente (ausente nunca vira "não") */
+function triPill(v, yes, no) { return v === true ? pill(yes, "crit") : v === false ? pill(no, "ok") : pill("N/D", "na"); }
 function monitorSection() {
   if (!RM.available || !arr(RM.timeline).length) {
     return sec("Monitor de risco", null, empty("Nenhuma execução do monitor de risco (cdp risk / cdp risk --live) encontrada em reports/risk."));
@@ -2131,7 +2300,7 @@ function monitorSection() {
     { label: "Estágio", render: function (r) { return r.estagio_estimado || r.estagio || NA; } },
     { label: "Cobertura", num: true, render: function (r) { return pct(r.cobertura_gross, 0); } },
     { label: "Gatilhos H/S/I", num: true, render: function (r) { var n = obj(r.n_gatilhos); return int(n.HARD || 0) + " / " + int(n.SOFT || 0) + " / " + int(n.INFO || 0); } },
-    { label: "Kill switch", render: function (r) { return r.kill_switch_ativo ? pill("ativo", "crit") : pill("desligado", "ok"); } }
+    { label: "Kill switch", render: function (r) { return triPill(r.kill_switch_ativo, "ativo", "desligado"); } }
   ], tl, { tall: true, rowClass: function (r) { var n = obj(r.n_gatilhos); return n.HARD ? "st-crit" : n.SOFT ? "st-warn" : null; } });
   var parts = [tlt];
   if (d) {
@@ -2189,9 +2358,9 @@ function attrBars(rows, group, limit) {
     r = top.concat([{ name: "…", pnl_usd: null, contribution: null, _gap: true }]).concat(bot);
   }
   return barList(r.map(function (x) {
-    return x._gap ? { label: "…", value: null } : {
+    return x._gap ? { gap: true } : {
       label: attrName(group, x.name, NAMES), value: x.contribution, title: x.name,
-      note: usd(x.pnl_usd, true) + (isNum(x.days) ? " · " + x.days + " d" : "")
+      note: usd(x.pnl_usd, true) + (isNum(x.days) ? " · " + plural(x.days, "pregão", "pregões") : "")
     };
   }), { fmt: function (v) { return bps(v); }, diverging: true, empty: "Sem atribuição neste período." });
 }
@@ -2201,7 +2370,7 @@ function renderPeriod(P, box) {
   arr(P.components).forEach(function (c) { comps[c.key] = c; });
   function compRow(k) { var c = comps[k]; return { label: COMPONENT_PT[k] || k, value: c ? c.contribution : null, note: c ? usd(c.pnl_usd, true) : NA }; }
   var head = h("div", { class: "kpis" },
-    tile(P.label || "Período", signed(spct(P.ret), P.ret), fdate(P.start) + " a " + fdate(P.end) + " · " + int(P.n_days) + " pregão(ões)", P.ret === null ? "retorno composto n/d: falta algum dia no período" : null),
+    tile(P.label || "Período", signed(spct(P.ret), P.ret), fdate(P.start) + " a " + fdate(P.end) + " · " + plural(P.n_days, "pregão", "pregões"), P.ret === null ? "retorno composto n/d: falta algum dia no período" : null),
     tile("P&L", signed(usdFull(P.pnl_usd, true), P.pnl_usd), "soma dos P&L diários (US$)"));
   var a = obj(P.attribution);
   box.appendChild(head);
@@ -2304,18 +2473,20 @@ function shadowSection(w) {
   ], arr(c.metrics));
   var wd = table([
     { label: "Emissor", get: function (r) { return nm(r.issuer_id); }, render: function (r) { return h("span", null, nm(r.issuer_id), h("span", { class: "cellsub" }, r.issuer_id)); } },
-    { label: "Peso CDP", num: true, get: function (r) { return r.w_cdp; }, render: function (r) { return spct(r.w_cdp); } },
-    { label: "Peso sombra", num: true, get: function (r) { return r.w_shadow; }, render: function (r) { return spct(r.w_shadow); } },
-    { label: "Diferença", num: true, get: function (r) { return r.diff; }, render: function (r) { return signed(bps(r.diff), r.diff); } }
+    { label: "Peso CDP", num: true, get: function (r) { return r.w_cdp; }, render: function (r) { return wOrOut(r.w_cdp); } },
+    { label: "Peso sombra", num: true, get: function (r) { return r.w_shadow; }, render: function (r) { return wOrOut(r.w_shadow); } },
+    { label: "Diferença", num: true, title: "peso CDP − peso sombra (nome fora da carteira conta como peso zero)", get: function (r) { return r.diff; }, render: function (r) { return bps(r.diff); } }
   ], arr(c.weight_diffs), { sortable: true, tall: true });
-  return fold("CDP × sombra só-quant", "o que a pesquisa e o PM mudaram em relação ao quant puro", true,
+  return fold("CDP × sombra só-quant", "o que a pesquisa e o PM mudaram em relação ao quant puro" + (s.verified === false ? " · ARQUIVO NÃO CONFERE COM A TRILHA" : ""), true,
+    s.verified === false ? h("ul", { class: "alerts" }, h("li", { class: "t-crit" }, pill("Não verificado", "crit"), h("span", null, "shadow_quant.json não confere com o evento SHADOW_QUANT da trilha: os números abaixo podem ter sido alterados depois da decisão."))) : null,
     h("div", { class: "cols-2" },
       h("div", { class: "stack" }, mt, kv([
         ["Nomes (CDP / sombra)", int(ov.names_cdp) + " / " + int(ov.names_shadow)],
         ["Em comum, mesmo lado", int(ov.common_same_side)],
         ["Sobreposição de pesos", pct(ov.weight_overlap, 1)],
         ["Active share", pct(ov.active_share, 1)],
-        ["Σ |peso ativo|", pct(c.active_weight_sum, 1)],
+        ["½ Σ |peso ativo| (giro de uma ponta)", pct(c.active_weight_sum, 1)],
+        isNum(c.active_weight_abs_sum) ? ["Σ |peso ativo|", pct(c.active_weight_abs_sum, 1)] : null,
         ["Só no CDP", arr(ov.only_cdp).length ? h("span", { class: "chips" }, ov.only_cdp.map(function (x) { return chip(nm(x), x); })) : "nenhum"],
         ["Só na sombra", arr(ov.only_shadow).length ? h("span", { class: "chips" }, ov.only_shadow.map(function (x) { return chip(nm(x), x); })) : "nenhum"]
       ])),
@@ -2334,7 +2505,7 @@ function researchSection(w) {
       arr(m.key_events).length ? h("div", null, h("h4", null, "Eventos"), list(m.key_events, function (e) { return (e.expected_date ? fdate(e.expected_date) + " · " : "") + (DIR_PT[e.direction] || e.direction || "") + " · " + (e.description || ""); })) : null,
       arr(m.risks).length ? h("div", null, h("h4", null, "Riscos"), list(m.risks)) : null,
       arr(m.portfolio_implications).length ? h("div", null, h("h4", null, "Implicações para a carteira"), list(m.portfolio_implications)) : null,
-      arr(m.evidence).length ? h("details", { class: "mini" }, h("summary", null, int(m.n_evidence || m.evidence.length) + " evidência(s)"), evidenceList(m.evidence)) : null);
+      arr(m.evidence).length ? h("details", { class: "mini" }, h("summary", null, plural(m.n_evidence || m.evidence.length, "evidência", "evidências")), evidenceList(m.evidence)) : null);
   })) : h("p", { class: "muted" }, "Sem notas macro.");
   var notes = arr(r.notes);
   var notesBox = h("div", { class: "stack" });
@@ -2375,16 +2546,22 @@ function researchSection(w) {
     { label: "Racional", cls: "wrapcell", render: function (v) { return v.rationale || ""; } }
   ], views, { sortable: true, tall: true }) : h("p", { class: "muted" }, "Sem visões.");
   var news = arr(r.news);
-  return fold("Pesquisa", (r.source === "entradas" ? "entradas da mente (ainda não decididas)" : "pacote do livro") + " · " + int(cn.notes) + " notas · " + int(cn.views) + " visões · " + int(cn.macro) + " macro", false,
+  return fold("Pesquisa", (r.source === "entradas" ? "entradas da mente (ainda não decididas)" : "pacote do livro") + " · " + plural(cn.notes, "nota", "notas") + " · " + plural(cn.views, "visão", "visões") + " · " + int(cn.macro) + " macro", false,
+    r.verified === false ? h("ul", { class: "alerts" }, h("li", { class: "t-crit" }, pill("Não verificado", "crit"), h("span", null, "inputs/*.json não confere com o evento WEEKLY_INPUTS da trilha."))) : null,
     h("div", { class: "chips" }, chip("provedor: " + (r.provider || NA)), r.mind ? chip("mente: " + r.mind) : null, chip("snapshot: " + (r.snapshot_id || NA)), r.is_synthetic ? pill("DADOS SIMULADOS", "sim") : null,
       isNum(cn.squeeze_veto) ? chip("vetos de squeeze: " + cn.squeeze_veto) : null, isNum(cn.squeeze_caution) ? chip("cautela de squeeze: " + cn.squeeze_caution) : null),
-    r.research_hash ? h("p", null, "Hash da pesquisa ", hashEl(r.research_hash, "hash da pesquisa")) : null,
+    r.research_hash ? h("p", null, "Hash do pacote de pesquisa ", hashEl(r.research_hash, "hash do pacote de pesquisa"), h("span", { class: "cellsub" }, "só o pacote; o hash “Pesquisa + decisão do PM” da decisão combina este com a decisão do PM")) : null,
     h("h4", null, "Macro por país"), macroCards,
     h("h4", null, "Notas por emissor"), notesBox,
     h("h4", null, "Visões agregadas"), viewsT,
     news.length ? h("div", null, h("h4", null, "Notícias (conteúdo não confiável, só referência)"), list(news, function (n) {
       return h("span", null, fbrt(n.published_at) + " · " + (n.source || "") + " · ", extLink(n.url, n.title || n.news_id), n.is_synthetic ? " (simulada)" : "");
     })) : null);
+}
+function verChip(label, v) {
+  if (v === true) return pill(label + " confere", "ok");
+  if (v === false) return pill(label + " NÃO confere", "crit");
+  return null;
 }
 function weekDetail(w) {
   var box = h("div", { class: "stack" });
@@ -2394,36 +2571,39 @@ function weekDetail(w) {
     h("div", { class: "stack" },
       block("Desempenho da semana", perf ? fdate(perf.first_date) + " a " + fdate(perf.last_date) : null,
         perf ? h("div", { class: "kpis" },
-          tile("CDP", signed(spct(perf.ret), perf.ret), usdFull(perf.pnl_usd, true) + " · " + int(perf.n_days) + " pregões"),
-          tile("Sombra só-quant", signed(spct(perf.shadow_ret), perf.shadow_ret), int(perf.shadow_n_days) + " pregões"),
+          tile("CDP", signed(spct(perf.ret), perf.ret), usdFull(perf.pnl_usd, true) + " · " + plural(perf.n_days, "pregão", "pregões")),
+          tile("Sombra só-quant", signed(spct(perf.shadow_ret), perf.shadow_ret), plural(perf.shadow_n_days, "pregão", "pregões")),
           tile("Valor adicionado", signed(spct(perf.value_added), perf.value_added), "CDP − sombra")) : empty(w.executed ? "Sem registros diários desta carteira ainda." : "Carteira ainda não efetivada.")),
       block("Arquivos e versões", null, kv([
-        ["Entradas", h("span", { class: "chips" }, ["briefing", "research_pack", "pm_decision"].map(function (k) { return pill(k, g(w, "inputs." + k) ? "ok" : "na"); }))],
-        ["Propostas", arr(w.proposals).length ? arr(w.proposals).map(function (x) { return "v" + x.version + " " + (x.state || "") + " (" + int(x.n_positions) + " posições)"; }).join(" · ") : "nenhuma"],
-        ["Decisões", arr(w.decisions).length ? arr(w.decisions).map(function (x) { return "v" + x.version + " " + x.decision + " · " + (x.mode || "") + " · " + fbrt(x.decided_at); }).join(" · ") : "nenhuma"],
+        ["Entradas", h("span", { class: "chips" }, ["briefing", "research_pack", "pm_decision"].map(function (k) { return pill(INPUT_PT[k] || k, g(w, "inputs." + k) ? "ok" : "na", g(w, "inputs." + k) ? "gravado" : "ausente"); }))],
+        ["Conferência × trilha", h("span", { class: "chips" }, verChip("sombra", w.shadow_verified), verChip("entradas", w.inputs_verified), verChip("relatório", g(w, "report.verified")))],
+        ["Propostas", arr(w.proposals).length ? arr(w.proposals).map(function (x) { return "v" + x.version + " " + (STATE_PT[x.state] || x.state || "") + " (" + plural(x.n_positions, "posição", "posições") + ")"; }).join(" · ") : "nenhuma"],
+        ["Decisões", arr(w.decisions).length ? arr(w.decisions).map(function (x) { return "v" + x.version + " " + (DECISION_PT[x.decision] || x.decision) + " · " + (MODE_PT[x.mode] || x.mode || "") + " · " + fbrt(x.decided_at); }).join(" · ") : "nenhuma"],
         ["Briefing", w.briefing ? "preparado " + fbrt(w.briefing.prepared_at) + " · pregão anterior " + fdate(w.briefing.previous_session) + (w.briefing.live ? " · cotações ao vivo" : "") : NA],
-        ["Efetivação", w.booked ? fbrt(w.booked.booked_at) + " · NAV " + usd(w.booked.nav_usd) + " · " + int(w.booked.n_positions) + " posições" + (w.booked.verified === false ? " · verificação falhou" : "") : "não efetivada"],
-        ["Chamadas de IA", w.ai_calls ? int(w.ai_calls.n_calls) + " chamadas · " + int(w.ai_calls.parse_ok) + " ok · " + int(w.ai_calls.failed) + " falhas · " + usd(w.ai_calls.cost_usd) : NA]
+        ["Efetivação", w.booked ? fbrt(w.booked.booked_at) + " · NAV " + usd(w.booked.nav_usd) + " · " + plural(w.booked.n_positions, "posição", "posições") + (w.booked.verified === false ? " · verificação falhou" : "") : "não efetivada"],
+        ["Chamadas de IA", w.ai_calls ? plural(w.ai_calls.n_calls, "chamada", "chamadas") + " · " + int(w.ai_calls.parse_ok) + " ok · " + plural(w.ai_calls.failed, "falha", "falhas") + " · " + usd(w.ai_calls.cost_usd) : NA]
       ])))));
 
   if (d) {
     box.appendChild(fold("Hashes da decisão", "vínculo por hash: snapshot, configuração, pesquisa, decisão do PM, gates e aprovação", false, hashRows([
-      ["Proposta", d.proposal_hash], ["Snapshot de mercado", d.snapshot_hash], ["Configuração", d.config_hash], ["Pesquisa", d.research_hash],
-      ["Decisão do PM (arquivo)", d.pm_decision_hash], ["Gates de risco", d.risk_gate_hash], ["Aprovação", d.approval_hash], ["Cabeça da trilha de auditoria", d.audit_head_hash]
-    ]), arr(d.co_sign_reasons).length ? h("div", null, h("h4", null, "Ciência / co-assinatura"), list(d.co_sign_reasons)) : null));
+      ["Proposta", d.proposal_hash], ["Snapshot de mercado", d.snapshot_hash], ["Configuração", d.config_hash], ["Pesquisa + decisão do PM (hash combinado)", d.research_hash],
+      ["Decisão do PM (hash canônico do conteúdo)", d.pm_decision_hash], ["SHA-256 do arquivo inputs/pm_decision.json", g(w, "pm_decision.file_sha256")],
+      ["Gates de risco", d.risk_gate_hash], ["Aprovação", d.approval_hash], ["Cabeça da trilha de auditoria", d.audit_head_hash]
+    ]), note("O hash canônico da decisão do PM é calculado sobre o conteúdo validado (JSON canônico), por isso difere do SHA-256 do arquivo bruto."), arr(d.co_sign_reasons).length ? h("div", null, h("h4", null, "Ciência / co-assinatura"), list(d.co_sign_reasons)) : null));
   }
 
   if (pm && pm.valid === false) {
     box.appendChild(block("Decisão do PM", null, h("ul", { class: "alerts" }, h("li", { class: "t-crit" }, pill("Inválida", "crit"), h("span", null, "O arquivo pm_decision.json não passa no schema; o código ignora as visões da IA nesta semana."))), hashEl(pm.file_sha256)));
   } else if (pm) {
     box.appendChild(fold("Leitura do PM", (pm.posture_label || "") + " · regime " + (pm.regime_label || NA) + (pm.abstain ? " · absteve-se" : ""), true,
+      pm.verified === false ? h("ul", { class: "alerts" }, h("li", { class: "t-crit" }, pill("Não verificado", "crit"), h("span", null, "inputs/pm_decision.json não confere com o evento WEEKLY_INPUTS da trilha: o texto abaixo pode ter sido alterado depois da decisão."))) : null,
       h("div", { class: "chips" }, chip("postura: " + (pm.posture_label || pm.risk_posture || NA)), chip("regime: " + (pm.regime_label || pm.regime || NA)), pm.mind ? chip("mente: " + pm.mind) : null, pm.abstain ? pill("abstenção", "warn") : null),
       h("div", { class: "cols-3" },
         h("div", null, h("h4", null, "Visão de mercado"), md(pm.market_view)),
         h("div", null, h("h4", null, "O que mudou"), md(pm.what_changed)),
         h("div", null, h("h4", null, "Avaliação da semana anterior"), md(pm.evaluation_last_week)))));
     var views = arr(pm.views);
-    box.appendChild(fold("Visões do PM", int(views.length) + " emissores · stance −2 a +2, convicção 1 a 5", false, views.length ? table([
+    box.appendChild(fold("Visões do PM", plural(views.length, "emissor", "emissores") + " · stance −2 a +2, convicção 1 a 5", false, views.length ? table([
       { label: "Emissor", get: function (v) { return nm(v.issuer_id); }, render: function (v) { return h("span", null, nm(v.issuer_id), h("span", { class: "cellsub" }, v.issuer_id)); } },
       { label: "Stance", num: true, get: function (v) { return v.stance; }, render: function (v) { return stanceTag(v.stance); } },
       { label: "Convicção", num: true, get: function (v) { return v.conviction; }, render: function (v) { return isNum(v.conviction) ? v.conviction + "/5" : NA; } },
@@ -2432,7 +2612,7 @@ function weekDetail(w) {
       { label: "Evidências", render: function (v) { return arr(v.evidence).length ? h("div", { class: "evid" }, v.evidence.map(function (e) { return extLink(e.url, e.id || "fonte"); })) : NA; } }
     ], views, { sortable: true, tall: true }) : h("p", { class: "muted" }, "Sem visões.")));
     var ex = arr(pm.exclusions);
-    if (ex.length) box.appendChild(fold("Exclusões do PM", int(ex.length) + " emissores", false, table([
+    if (ex.length) box.appendChild(fold("Exclusões do PM", plural(ex.length, "emissor", "emissores"), false, table([
       { label: "Emissor", render: function (x) { return h("span", null, nm(x.issuer_id), h("span", { class: "cellsub" }, x.issuer_id)); } },
       { label: "Restrição", render: function (x) { return h("span", { class: "chips" }, x.no_long ? pill("sem long", "warn") : null, x.no_short ? pill("sem short", "warn") : null); } },
       { label: "Motivo", cls: "wrapcell", render: function (x) { return x.reason || ""; } }
@@ -2487,9 +2667,9 @@ function weekDetail(w) {
           ["Status", (opt.status || NA) + " · " + (opt.solver || "") + (isNum(opt.solve_seconds) ? " · " + fnum(opt.solve_seconds, 1) + " s" : "")],
           ["Objetivo", isNum(opt.objective) ? fnum(opt.objective, 5) : NA],
           ["Candidatos", int(opt.n_candidates)],
-          ["Restrições ativas", arr(opt.binding_constraints).length ? h("span", { class: "chips" }, opt.binding_constraints.map(function (x) { return chip(x); })) : "nenhuma"]
+          ["Restrições ativas", arr(opt.binding_constraints).length ? h("span", { class: "chips" }, opt.binding_constraints.map(function (x) { return chip(constraintName(x), x); })) : "nenhuma"]
         ])),
-        h("div", null, h("h4", null, "Exclusões do universo"), Object.keys(exc).length ? barList(Object.keys(exc).map(function (k) { return { label: k.replace(/_/g, " "), value: exc[k] }; }), { fmt: function (v) { return int(v); }, diverging: false, color: "var(--shadow)" }) : h("p", { class: "muted" }, "nenhuma"))));
+        h("div", null, h("h4", null, "Exclusões do universo"), Object.keys(exc).length ? barList(Object.keys(exc).map(function (k) { return { label: EXCL_PT[k] || k.replace(/_/g, " "), value: exc[k], title: k }; }), { fmt: function (v) { return int(v); }, diverging: false, color: "var(--shadow)" }) : h("p", { class: "muted" }, "nenhuma"))));
       if (arr(opt.notes).length) propParts.push(h("details", { class: "mini" }, h("summary", null, "Notas do otimizador (" + opt.notes.length + ")"), list(opt.notes)));
     }
     if (w.detail === "completo" && arr(prop.positions).length && prop.positions[0].execution_ticker !== undefined) {
@@ -2541,12 +2721,12 @@ function renderDecisoes(p) {
     var b = h("button", { class: "wk", type: "button", id: "wk-" + w.week, "data-week": w.week, "aria-pressed": w.week === cur ? "true" : "false" },
       h("b", null, fdate(w.week)),
       h("span", null, pill(WEEK_STAGE[w.stage] || w.stage || NA, WEEK_STAGE_TONE[w.stage] || "na")),
-      h("span", null, (w.path_taken ? (w.path_taken === "cdp" ? "caminho CDP" : "fallback: " + w.path_taken) : "sem caminho") + (weekMind(w) ? " · " + weekMind(w) : "")),
+      h("span", null, (w.path_taken ? (w.path_taken === "cdp" ? "caminho CDP" : "fallback: " + (PATH_PT[w.path_taken] || w.path_taken)) : "sem caminho") + (weekMind(w) ? " · " + weekMind(w) : "")),
       h("span", null, perf ? "semana " + spct(perf.ret) + " · VA " + spct(perf.value_added) : (w.executed ? "sem registro" : "não efetivada")));
     b.addEventListener("click", function () { sel(w.week); });
     strip.appendChild(b);
   });
-  p.appendChild(sec("Decisões semanais", int(WEEKS.length) + " semana(s) no livro · as " + int(g(META, "export_limits.full_weeks")) + " mais recentes em detalhe", strip, holder));
+  p.appendChild(sec("Decisões semanais", plural(WEEKS.length, "semana", "semanas") + " no livro · as " + int(g(META, "export_limits.full_weeks")) + " mais recentes em detalhe", strip, holder));
   holder.appendChild(weekDetail(WBY[cur]));
 }
 
@@ -2583,6 +2763,10 @@ function renderRelatorios(p) {
       if (isNum(it.rep.nav_end)) meta.appendChild(chip("NAV " + usd(it.rep.nav_end)));
     }
     if (it.memo) meta.appendChild(pill("Memorando (sem relatório publicado)", "info"));
+    var ver = it.rep ? it.rep.verified : it.week ? g(it.week, "report.verified") : undefined;
+    if (ver === true) meta.appendChild(pill("Confere com a trilha", "ok"));
+    else if (ver === false) meta.appendChild(pill("NÃO confere com a trilha", "crit"));
+    else if (ver === null && !it.memo && !it.notExported) meta.appendChild(pill("Sem conferência pela trilha", "na"));
     view.appendChild(block(title, null, meta,
       kv([["SHA-256 do Markdown", hashEl(it.sha, "hash do relatório")], it.rep ? ["Registro diário", hashEl(it.rep.record_hash, "hash do registro")] : null])));
     var c = it.rep && it.rep.commentary ? obj(it.rep.commentary) : null;
@@ -2604,7 +2788,7 @@ function renderRelatorios(p) {
     b.addEventListener("click", function () { show(it); });
     listEl.appendChild(b);
   });
-  p.appendChild(sec("Relatórios", int(items.length) + " relatório(s) · Markdown renderizado com sanitização",
+  p.appendChild(sec("Relatórios", plural(items.length, "relatório", "relatórios") + " · Markdown renderizado com sanitização",
     h("div", { class: "rep" }, listEl, view)));
   show(cur);
 }
@@ -2657,7 +2841,7 @@ function renderBacktest(p) {
     });
   });
   t.appendChild(tb);
-  p.appendChild(sec("Backtest: comparação das variantes", int(runs.length) + " execução(ões) · só o núcleo quantitativo (sem a camada de IA)", h("div", { class: "scroll" }, t)));
+  p.appendChild(sec("Backtest: comparação das variantes", plural(runs.length, "execução", "execuções") + " · só o núcleo quantitativo (sem a camada de IA)", h("div", { class: "scroll" }, t)));
 
   /* curvas de NAV */
   var dates = {};
@@ -2717,20 +2901,20 @@ function drawRun(r, box) {
       ])),
     block("Limitações e notas", "o que o backtest não mede",
       lims.length ? list(lims) : h("p", { class: "muted" }, "Sem notas de limitação na exportação."),
-      relax.length ? h("details", { class: "mini" }, h("summary", null, relax.length + " semana(s) com restrições relaxadas"), list(relax)) : null)));
+      relax.length ? h("details", { class: "mini" }, h("summary", null, plural(relax.length, "semana", "semanas") + " com restrições relaxadas"), list(relax)) : null)));
   if (nw && arr(nw.date).length) {
     var d = arr(nw.date);
     box.appendChild(h("div", { class: "cols-2" },
       block("Drawdown", "semanal",
         chart(function (el) { lineChart(el, { labels: d, series: [{ name: "Drawdown", color: "var(--crit-mark)", values: arr(nw.drawdown) }], zero: true, height: 220, yFmt: function (v) { return pct(v, 0); }, tipFmt: function (v) { return pct(v, 2); }, xFmt: fmonth, title: "Drawdown do backtest" }); }, 240)),
-      block("P&L acumulado por componente", "fração do NAV",
+      block("P&L acumulado por componente", "fração do NAV, com sinal de P&L (custos e aluguel subtraem)",
         chart(function (el) {
           lineChart(el, {
             labels: d, zero: true, height: 220, xFmt: fmonth, yFmt: function (v) { return pct(v, 0); }, tipFmt: function (v) { return spct(v, 2); }, title: "P&L acumulado por componente",
             series: [
               { name: "Específico", color: "var(--c1)", values: arr(nw.cum_specific_pnl) }, { name: "Fatorial", color: "var(--c2)", values: arr(nw.cum_factor_pnl) },
-              { name: "Financiamento", color: "var(--c3)", values: arr(nw.cum_financing) }, { name: "Custos", color: "var(--c4)", values: arr(nw.cum_cost) },
-              { name: "Aluguel", color: "var(--c5)", values: arr(nw.cum_borrow) }
+              { name: "Financiamento", color: "var(--c3)", values: arr(nw.cum_financing) }, { name: "Custos de transação", color: "var(--c4)", values: arr(nw.cum_cost_pnl) },
+              { name: "Aluguel", color: "var(--c5)", values: arr(nw.cum_borrow_pnl) }
             ]
           });
         }, 260))));
@@ -2779,23 +2963,23 @@ function mandateValue(r) {
     if (r.section === "drawdown") return pct(v[0], 1) + " · " + fnum(v[1], 2);
     return v.map(function (x) { return fmtUnit(x, r.unit); }).join(" / ");
   }
-  if (typeof v === "object") return h("span", { class: "chips" }, Object.keys(v).map(function (k) { return chip(k + " " + fmtUnit(v[k], r.unit)); }));
+  if (typeof v === "object") return h("span", { class: "chips" }, Object.keys(v).map(function (k) { return chip((THEME_PT[k] || k) + " " + fmtUnit(v[k], r.unit)); }));
   return fmtUnit(v, r.unit);
 }
 function renderAuditoria(p) {
   p.appendChild(sec("Integridade", g(ST, "integrity.ok") === true ? "todas as verificações aplicáveis passaram" : g(ST, "integrity.ok") === false ? "há falhas: veja abaixo" : null,
     h("div", { class: "cols-2" }, block("Verificações", null, integrityList()),
-      block("Problemas de leitura", ISSUES.length ? int(ISSUES.length) + " apontamento(s)" : null,
+      block("Problemas de leitura", ISSUES.length ? plural(ISSUES.length, "apontamento", "apontamentos") : null,
         ISSUES.length ? h("ul", { class: "alerts" }, ISSUES.map(function (x) { return h("li", { class: "t-crit" }, pill("Leitura", "crit"), h("span", null, (x.scope ? x.scope + ": " : "") + (x.message || ""))); })) : h("p", { class: "muted" }, "Todos os arquivos foram lidos sem erro.")))));
 
   var dec = LIVEW && LIVEW.decision ? LIVEW.decision : null;
   var hashes = [["Dados do painel", META.data_hash], ["Configuração", META.config_hash], ["Cabeça da trilha de auditoria", AUD.head_hash]];
   if (LD) hashes.push(["Último registro diário (" + fdate(LD.date) + ")", LD.record_hash], ["Registro anterior", LD.prev_record_hash], ["Aprovação vigente", LD.approval_hash]);
-  if (dec) hashes.push(["Proposta vigente", dec.proposal_hash], ["Snapshot de mercado", dec.snapshot_hash], ["Pesquisa", dec.research_hash], ["Decisão do PM", dec.pm_decision_hash], ["Gates de risco", dec.risk_gate_hash], ["Aprovação da decisão", dec.approval_hash]);
+  if (dec) hashes.push(["Proposta vigente", dec.proposal_hash], ["Snapshot de mercado", dec.snapshot_hash], ["Pesquisa + decisão do PM (combinado)", dec.research_hash], ["Decisão do PM (hash canônico)", dec.pm_decision_hash], ["Gates de risco", dec.risk_gate_hash], ["Aprovação da decisão", dec.approval_hash]);
   var ih = LD ? obj(LD.input_hashes) : {};
   p.appendChild(sec("Hashes", "vínculos por SHA-256; copie para conferir com o livro",
     h("div", { class: "cols-2" }, block("Cadeia vigente", null, hashRows(hashes)),
-      block("Entradas do último registro diário", LD ? fdate(LD.date) : null, Object.keys(ih).length ? hashRows(Object.keys(ih).sort().map(function (k) { return [k, ih[k]]; })) : h("p", { class: "muted" }, "Sem registro diário ainda.")))));
+      block("Entradas do último registro diário", LD ? fdate(LD.date) : null, Object.keys(ih).length ? hashRows(Object.keys(ih).sort().map(function (k) { return [HASH_PT[k] || k, ih[k]]; })) : h("p", { class: "muted" }, "Sem registro diário ainda.")))));
 
   var ev = arr(AUD.events), bt = obj(AUD.by_type);
   p.appendChild(sec("Trilha de auditoria", AUD.exists ? (int(AUD.n_events) + " eventos · " + (AUD.chain_ok === true ? "cadeia íntegra" : AUD.chain_ok === false ? "cadeia quebrada" : "cadeia n/d") + (AUD.first_ts ? " · " + fbrt(AUD.first_ts) + " a " + fbrt(AUD.last_ts) : "")) : "sem trilha",

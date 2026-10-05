@@ -63,7 +63,9 @@ MAX_RISK_FILE_BYTES = 2_000_000
 MAX_BACKTEST_DEPTH = 3
 EVIDENCE_NOTE_CHARS = 160
 MAX_EVIDENCE_PER_NOTE = 8
-LIMIT_TOL = 1e-9
+#: Tolerância dos limites: a mesma dos gates de compliance (``portfolio.compliance.TOL``), para o
+#: painel nunca acusar "excesso" num limite que o gate aprovou.
+LIMIT_TOL = 1e-6
 COMMENTARY_SECTION = "Comentário do dia"
 REAL_DATA_NOTICE = ("Dados reais de mercado; paper trading com execução hipotética no "
                     "fechamento (MOC).")
@@ -100,6 +102,20 @@ ATTRIBUTION_GROUPS = ("component", "factor_group", "factor", "country", "sector"
 COMPONENT_ORDER = ("equity", "factor", "specific", "costs", "borrow", "financing")
 LIQUIDITY_BUCKETS = ((1.0, "≤ 1 dia"), (2.0, "1–2 dias"), (3.0, "2–3 dias"), (5.0, "3–5 dias"),
                      (math.inf, "> 5 dias"))
+#: Rótulos pt-BR dos nomes de exposição usados nos textos gerados aqui (alertas e detalhes).
+SECTOR_PT = {
+    "Financials": "Financeiro", "Energy": "Energia", "Materials": "Materiais",
+    "Utilities": "Utilidades públicas", "Industrials": "Industriais",
+    "Consumer Discretionary": "Consumo discricionário", "Consumer Staples": "Consumo básico",
+    "Health Care": "Saúde", "Real Estate": "Imobiliário", "Communication Services": "Comunicações",
+    "Information Technology": "Tecnologia", "OTHER": "Outros"}
+STYLE_PT = {"momentum": "Momentum", "value": "Valor (value)", "size": "Tamanho (size)",
+            "beta": "Beta de mercado", "resvol": "Vol residual", "liquidity": "Liquidez",
+            "fx_sens": "Sensibilidade cambial", "quality": "Qualidade", "growth": "Crescimento"}
+COMMODITY_PT = {"oil": "petróleo", "copper": "cobre", "gold": "ouro",
+                "iron_ore": "minério de ferro", "lithium": "lítio", "soy": "soja",
+                "silver": "prata"}
+THEME_PT = {"state_owned": "estatais"}
 
 
 # ==========================================================
@@ -540,6 +556,13 @@ def _track_section(rt: Any, cfg: FundConfig, book_exists: bool, issues: _Issues
             out["compare"] = [{"date": idx.date(), **{c: _num(row[c]) for c in cmp.columns}}
                               for idx, row in cmp.iterrows()]
     if records:
+        # Âncora da inception: NAV de abertura do primeiro registro (antes da execução no MOC),
+        # para o gráfico do 1º dia ter um segmento a partir do NAV inicial.
+        first_shadow = shadow_records[0] if shadow_records else None
+        out["anchor"] = {
+            "label": "início", "date": records[0].date, "nav_cdp": records[0].nav_start_usd,
+            "nav_shadow": (first_shadow.nav_start_usd if first_shadow is not None
+                           and first_shadow.date == records[0].date else None)}
         last = records[-1].date
         week_start = records[-1].live_book_week
         out["periods"] = {
@@ -589,13 +612,51 @@ def _issuer_weights(p: Any) -> dict[str, float]:
     return out
 
 
-def _exposure_rows(lines: Iterable[Any]) -> list[dict[str, Any]]:
+def _expo_label(group: str, name: str) -> str:
+    """Nome pt-BR de uma linha de exposição (para os textos gerados pelo painel)."""
+    s = str(name)
+    if s.startswith("tema:"):
+        return f"tema {THEME_PT.get(s[5:], s[5:])}"
+    if s.startswith("commodity:"):
+        return f"commodity {COMMODITY_PT.get(s[10:], s[10:])}"
+    if s.startswith("evento:"):
+        return f"evento {s[7:]}"
+    if group == "sector":
+        return SECTOR_PT.get(s, s)
+    if group == "style":
+        return STYLE_PT.get(s, s)
+    return s
+
+
+def _expo_severity(group: str, name: str) -> str | None:
+    """Severidade do gate de compliance que cobre a linha: país, setor e tema são HARD
+    (``COUNTRY_NET``/``SECTOR_NET``/``THEME_NET``); estilo, commodity e evento, SOFT."""
+    s = str(name)
+    if group in ("country", "sector") or s.startswith("tema:"):
+        return "HARD"
+    if group in ("style", "market"):
+        return "SOFT"
+    return None
+
+
+def _exposure_rows(lines: Iterable[Any], *, daily: bool) -> list[dict[str, Any]]:
+    """Linhas de exposição com uso do limite e ``status`` pela MESMA política dos limites
+    (:func:`_over`): no registro diário (drift) o excesso é ``alerta``; ``excesso`` só para
+    limite HARD no ex-ante da decisão. Estilo e commodity não têm ponta long/short (o produtor
+    grava 0,0 como marcador): long/short/gross saem ``None`` e ``measure`` diz a unidade."""
     rows = []
     for e in lines:
         d = e.model_dump(mode="json")
         lim, net = _num(e.limit), _num(e.net)
+        sev = _expo_severity(e.group, e.name)
         d["utilization"] = abs(net) / lim if lim and net is not None and lim > 0 else None
         d["breach"] = (abs(net) > lim + LIMIT_TOL) if lim is not None and net is not None else None
+        d["severity"] = sev if lim is not None else None
+        d["status"] = (_over(abs(net) / lim, 1.0, daily=daily, hard=sev == "HARD")
+                       if lim and lim > 0 and net is not None else None)
+        if e.group == "style" or str(e.name).startswith("commodity:"):
+            d.update({"long": None, "short": None, "gross": None,
+                      "measure": "z × NAV" if e.group == "style" else "Σ w·β"})
         rows.append(d)
     return rows
 
@@ -612,7 +673,7 @@ def _sorted_map(m: Mapping[str, Any], *, by_abs: bool = False, key_name: str = "
 
 def _risk_summary(risk: Any, names: Mapping[str, str]) -> dict[str, Any]:
     d = _risk_scalars(risk, names)
-    d["exposures"] = _exposure_rows(risk.exposures)
+    d["exposures"] = _exposure_rows(risk.exposures, daily=False)
     return d
 
 
@@ -630,27 +691,68 @@ def _compliance(checks: Sequence[Any]) -> dict[str, Any]:
     }
 
 
+def _participation(side: str, cfg: FundConfig) -> float:
+    lq = cfg.liquidity
+    return float(lq.participation_rate if side == "LONG" else lq.short_participation_rate)
+
+
+def _liq_days(p: Any, cfg: FundConfig) -> float | None:
+    """Dias para liquidar uma posição-alvo com a participação do mandato POR PONTA (long
+    ``participation_rate``, short ``short_participation_rate``): ``|nocional| / (p × ADTV)``,
+    a mesma conta do gate ``LIQ_DAYS_<ponta>``. O ``days_to_liquidate`` gravado na proposta usa
+    a participação dos longs também nos shorts; por isso é recalculado aqui. Sem ADTV ⇒ ``None``."""
+    adtv, notional = _num(getattr(p, "adtv_usd", None)), _num(getattr(p, "notional_usd", None))
+    rate = _participation(p.side.value, cfg)
+    if adtv is None or adtv <= 0 or notional is None or not rate > 0:
+        return None
+    return abs(notional) / (rate * adtv)
+
+
+def _liquid_share(positions: Sequence[Any], cfg: FundConfig, horizon: float) -> float | None:
+    """Fração do gross liquidável em ``horizon`` dias: Σ min(|w|, h × p × ADTV / NAV) / Σ|w|
+    (participação por ponta; cada nome limitado ao próprio tamanho). Algum nome sem ADTV ⇒
+    ``None`` (ausente nunca vira zero)."""
+    total, liquid = 0.0, 0.0
+    for p in positions:
+        w = abs(float(p.weight))
+        notional, adtv = _num(p.notional_usd), _num(p.adtv_usd)
+        if adtv is None or adtv <= 0 or notional is None or w == 0:
+            if w:
+                return None
+            continue
+        nav = abs(notional) / w
+        total += w
+        liquid += min(w, horizon * _participation(p.side.value, cfg) * adtv / nav)
+    return liquid / total if total else None
+
+
 def _liquidity_by_side(positions: Sequence[Any], cfg: FundConfig) -> dict[str, Any]:
     limits = {"LONG": cfg.liquidity.max_days_to_liquidate_long,
               "SHORT": cfg.liquidity.max_days_to_liquidate_short}
     out: dict[str, Any] = {}
+    days = {id(p): _liq_days(p, cfg) for p in positions}
     for side, lim in limits.items():
         ps = [p for p in positions if p.side.value == side]
-        vals = [v for p in ps if (v := _num(p.days_to_liquidate)) is not None]
+        vals = [v for p in ps if (v := days[id(p)]) is not None]
         mx = max(vals) if vals else None
         out[side] = {"max_days": mx, "limit": float(lim), "n": len(ps),
+                     "participation": _participation(side, cfg),
                      "n_missing": len(ps) - len(vals),
                      "breach": (mx > lim + LIMIT_TOL) if mx is not None else None}
     total = sum(abs(float(p.weight)) for p in positions)
     buckets: dict[str, list[float]] = {label: [0.0, 0] for _, label in LIQUIDITY_BUCKETS}
     buckets["n/d"] = [0.0, 0]
     for p in positions:
-        d = _num(p.days_to_liquidate)
+        d = days[id(p)]
         label = "n/d" if d is None else next(lab for ub, lab in LIQUIDITY_BUCKETS if d <= ub)
         buckets[label][0] += abs(float(p.weight))
         buckets[label][1] += 1
     out["buckets"] = [{"bucket": k, "gross": v[0], "gross_share": v[0] / total if total else None,
                        "n": int(v[1])} for k, v in buckets.items()]
+    n_missing = sum(1 for p in positions if days[id(p)] is None)
+    out["liquid_3d"] = _liquid_share(positions, cfg, 3.0)
+    out["liquid_5d"] = _liquid_share(positions, cfg, 5.0)
+    out["n_missing_adtv"] = n_missing
     return out
 
 
@@ -690,7 +792,10 @@ def _proposal_summary(p: Any) -> dict[str, Any]:
 
 def _proposal_full(p: Any, cfg: FundConfig, proposal_hash: str | None) -> dict[str, Any]:
     names = {t.issuer_id: t.name for t in p.positions}
-    positions = sorted((t.model_dump(mode="json") for t in p.positions),
+    positions = sorted(({**t.model_dump(mode="json"), "days_to_liquidate": _liq_days(t, cfg),
+                         "days_to_liquidate_recorded": t.days_to_liquidate,
+                         "liq_participation": _participation(t.side.value, cfg)}
+                        for t in p.positions),
                        key=lambda t: (-abs(t["weight"]), t["issuer_id"]))
     trades = sorted((t.model_dump(mode="json") for t in p.trades),
                     key=lambda t: (-abs(t["notional_usd"]), t["issuer_id"]))
@@ -750,7 +855,7 @@ def _changes(new: Any, old: Any, threshold: float = 0.0025) -> list[dict[str, An
     return sorted(rows, key=lambda r: (order[r["change"]], -abs(r["delta"]), r["issuer_id"]))
 
 
-def _shadow_section(cdp: Any, shadow: Any) -> dict[str, Any]:
+def _shadow_section(cdp: Any, shadow: Any, cfg: FundConfig) -> dict[str, Any]:
     from .reports import _overlap
 
     ra, rb = cdp.risk, shadow.risk
@@ -779,14 +884,15 @@ def _shadow_section(cdp: Any, shadow: Any) -> dict[str, Any]:
         row("effective_n", "N efetivo", ra.effective_n, rb.effective_n, "x"),
         row("var_1d_99", "VaR 1d (99%)", ra.var_1d_99, rb.var_1d_99, "pct"),
         row("es_1d_99", "ES 1d (99%)", ra.es_1d_99, rb.es_1d_99, "pct"),
-        row("max_days_to_liquidate", "Máx. dias para liquidar", ra.max_days_to_liquidate,
-            rb.max_days_to_liquidate, "days"),
+        row("max_days_to_liquidate", "Máx. dias para liquidar (participação por ponta)",
+            _max_liq_days(cdp, cfg), _max_liq_days(shadow, cfg), "days"),
     ]
     ov = _overlap(cdp, shadow)
     wa, wb = _issuer_weights(cdp), _issuer_weights(shadow)
     diffs = sorted(({"issuer_id": i, "w_cdp": wa.get(i), "w_shadow": wb.get(i),
                      "diff": wa.get(i, 0.0) - wb.get(i, 0.0)} for i in set(wa) | set(wb)),
                    key=lambda r: (-abs(r["diff"]), r["issuer_id"]))
+    abs_sum = sum(abs(r["diff"]) for r in diffs)
     return {
         "proposal_id": shadow.proposal_id, "summary": _proposal_summary(shadow),
         "risk": _risk_scalars(shadow.risk, {t.issuer_id: t.name for t in shadow.positions}),
@@ -797,8 +903,13 @@ def _shadow_section(cdp: Any, shadow: Any) -> dict[str, Any]:
                       for t in sorted(shadow.positions,
                                       key=lambda t: (-abs(t.weight), t.issuer_id))],
         "comparison": {"metrics": metrics, "overlap": ov, "weight_diffs": diffs[:40],
-                       "active_weight_sum": 0.5 * sum(abs(r["diff"]) for r in diffs)},
+                       "active_weight_sum": 0.5 * abs_sum, "active_weight_abs_sum": abs_sum},
     }
+
+
+def _max_liq_days(p: Any, cfg: FundConfig) -> float | None:
+    vals = [v for t in p.positions if (v := _liq_days(t, cfg)) is not None]
+    return max(vals) if vals else None
 
 
 def _pm_section(path: Path, facts: Mapping[str, str], issues: _Issues, scope: str
@@ -1070,7 +1181,7 @@ def _week_entry(rt: Any, cfg: FundConfig, book: Any, week: date, full: bool,
         entry["previous_week"] = None
     if shadow is not None and final is not None:
         entry["shadow"] = local.attempt("comparação CDP × sombra",
-                                        lambda: _shadow_section(final, shadow))
+                                        lambda: _shadow_section(final, shadow, cfg))
     else:
         entry["shadow"] = None
     entry["pm_decision"] = (_pm_section(wdir / "inputs" / "pm_decision.json", facts, local,
@@ -1153,7 +1264,7 @@ def _latest_day(records: Sequence[Any], shadow_records: Sequence[Any],
             "squeeze_bucket": t.squeeze_bucket if t else None,
             "squeeze_score": t.squeeze_score if t else None,
             "borrow_fee_annual": t.borrow_fee_annual if t else None,
-            "days_to_liquidate": t.days_to_liquidate if t else None,
+            "days_to_liquidate": _liq_days(t, cfg) if t else None,
             "pct_adtv": t.pct_adtv if t else None, "adtv_usd": t.adtv_usd if t else None,
             "beta": t.beta if t else None, "alpha_z": t.alpha_z if t else None,
             "view_score": t.view_score if t else None,
@@ -1167,7 +1278,7 @@ def _latest_day(records: Sequence[Any], shadow_records: Sequence[Any],
     for g in attribution:
         attribution[g].sort(key=lambda x: (-x["pnl_usd"], x["name"]))
     risk = rec.risk.model_dump(mode="json")
-    risk["exposures"] = _exposure_rows(rec.risk.exposures)
+    risk["exposures"] = _exposure_rows(rec.risk.exposures, daily=True)
     shadow_same = next((s for s in shadow_records if s.date == rec.date), None)
     return {
         "date": rec.date, "fund_name": rec.fund_name, "nav_start": rec.nav_start_usd,
@@ -1184,15 +1295,49 @@ def _latest_day(records: Sequence[Any], shadow_records: Sequence[Any],
     }
 
 
+#: Gate de compliance que cobre cada verificação do painel (``None``: limite do mandato sem gate
+#: próprio, acompanhado só aqui). Só define a severidade exibida; o status segue :func:`_over`.
+CHECK_GATES: dict[str, tuple[str | None, str | None]] = {
+    "vol_ex_ante": ("VOL_MAX / VOL_MIN", "HARD"), "net": ("NET_EXPOSURE", "HARD"),
+    "beta": ("BETA", "HARD"), "gross_max": ("GROSS_MAX", "HARD"),
+    "gross_min": ("GROSS_MIN", "SOFT"), "country_net": ("COUNTRY_NET", "HARD"),
+    "sector_net": ("SECTOR_NET", "HARD"), "style": ("STYLE", "SOFT"),
+    "theme_net": ("THEME_NET", "HARD"), "commodity_beta": ("COMMODITY", "SOFT"),
+    "name_long_max": ("NAME_LONG_MAX", "HARD"), "name_short_max": ("NAME_SHORT_MAX", "HARD"),
+    "name_short_medium_max": ("SQUEEZE_MEDIUM_CAP", "HARD"),
+    "squeeze_high": ("SQUEEZE_HIGH", "HARD"), "liq_days_long": ("LIQ_DAYS_LONG", "HARD"),
+    "liq_days_short": ("LIQ_DAYS_SHORT", "HARD"),
+    "factor_risk_share": ("FACTOR_RISK_SHARE", "SOFT"),
+    "single_name_risk": ("SINGLE_NAME_RISK", "SOFT"),
+    "country_gap_stress": ("COUNTRY_GAP_STRESS", "SOFT"), "borrow_fee": ("BORROW_FEE", "HARD"),
+}
+#: Verificações de PISO (o valor precisa ficar acima do limite): sem "uso do limite".
+FLOOR_CHECKS = frozenset({"gross_min", "liquidez_3d", "liquidez_5d"})
+
+
 def _check(cid: str, label: str, basis: str, value: Any, limit: Any, unit: str, status: str,
-           detail: str = "", utilization: float | None = None) -> dict[str, Any]:
-    """Uma verificação de limite. ``utilization`` = |valor| / |limite| (quando aplicável)."""
-    if utilization is None and not isinstance(limit, list):
-        v, lim = _num(value), _num(limit)
+           detail: str = "", utilization: float | None = None, *,
+           subject: Mapping[str, Any] | None = None) -> dict[str, Any]:
+    """Uma verificação de limite. Teto: ``utilization`` = |valor| / |limite|. Piso
+    (:data:`FLOOR_CHECKS`): ``utilization`` é ``None`` e ``floor``/``shortfall`` (quanto falta
+    para o piso, ≥ 0) e ``headroom`` (valor − piso) descrevem a distância ao limite."""
+    floor = cid in FLOOR_CHECKS
+    v, lim = _num(value), _num(limit)
+    if floor:
+        utilization = None
+    elif utilization is None and not isinstance(limit, list):
         if v is not None and lim not in (None, 0.0):
             utilization = abs(v) / abs(lim)
-    return {"id": cid, "label": label, "basis": basis, "value": value, "limit": limit,
-            "unit": unit, "status": status, "detail": detail, "utilization": utilization}
+    gate, severity = CHECK_GATES.get(cid, (None, None))
+    out = {"id": cid, "label": label, "basis": basis, "value": value, "limit": limit,
+           "unit": unit, "status": status, "detail": detail, "utilization": utilization,
+           "floor": floor, "gate": gate, "severity": severity,
+           "subject": dict(subject) if subject else None}
+    if floor:
+        ok = v is not None and lim is not None
+        out["shortfall"] = max(0.0, lim - v) if ok else None
+        out["headroom"] = v - lim if ok else None
+    return out
 
 
 def _over(value: float | None, limit: float | None, *, daily: bool, hard: bool) -> str:
@@ -1206,15 +1351,41 @@ def _over(value: float | None, limit: float | None, *, daily: bool, hard: bool) 
     return "ok"
 
 
-def _worst_exposure(lines: Sequence[Any], group: str) -> tuple[Any | None, float | None]:
+def _under(value: float | None, floor: float | None, *, daily: bool) -> str:
+    """Status de um piso SOFT/sem gate: abaixo do piso é ``alerta`` (``info`` no diário)."""
+    if value is None or floor is None:
+        return "n/d"
+    if value < floor - LIMIT_TOL:
+        return "info" if daily else "alerta"
+    return "ok"
+
+
+def _worst_exposure(lines: Sequence[Any], group: str, prefix: str | None = None
+                    ) -> tuple[Any | None, float | None]:
     worst, util = None, None
     for e in lines:
         if e.group != group or _num(e.limit) in (None, 0.0) or _num(e.net) is None:
+            continue
+        if prefix is not None and not str(e.name).startswith(prefix):
             continue
         u = abs(float(e.net)) / float(e.limit)
         if util is None or u > util:
             worst, util = e, u
     return worst, util
+
+
+def _util_txt(util: float) -> str:
+    """Uso do limite em texto: 2 casas acima de 100% (para "100,02%" não virar "100,0%")."""
+    return fmt_pct(util, 2 if util > 1.0 + LIMIT_TOL else 1)
+
+
+EXPOSURE_CHECKS = (
+    ("country", None, "country_net", "Net por país (pior)", True),
+    ("sector", None, "sector_net", "Net por setor (pior)", True),
+    ("style", None, "style", "Exposição a estilo (pior)", False),
+    ("market", "tema:", "theme_net", "Net por tema (pior)", True),
+    ("market", "commodity:", "commodity_beta", "Sensibilidade a commodity (pior, Σ w·β)", False),
+)
 
 
 def _limit_checks(cfg: FundConfig, rec: Any | None, proposal: Any | None) -> list[dict]:
@@ -1228,8 +1399,8 @@ def _limit_checks(cfg: FundConfig, rec: Any | None, proposal: Any | None) -> lis
     checks: list[dict[str, Any]] = []
     dr = rec.risk if rec is not None else None
     pr = proposal.risk if proposal is not None else None
-    d_basis = f"diário ({rec.date.isoformat()})" if rec is not None else ""
-    p_basis = (f"ex-ante na decisão ({proposal.week.isoformat()})"
+    d_basis = f"diário de {rec.date:%d/%m/%Y}" if rec is not None else ""
+    p_basis = (f"ex-ante na decisão de {proposal.week:%d/%m/%Y}"
                if proposal is not None else "")
     daily = dr is not None
     basis = d_basis if daily else p_basis
@@ -1272,9 +1443,8 @@ def _limit_checks(cfg: FundConfig, rec: Any | None, proposal: Any | None) -> lis
     gross = pick("gross")
     checks.append(_check("gross_max", "Gross máximo", basis, gross, rk.gross_max, "pct",
                          _over(gross, rk.gross_max, daily=daily, hard=True)))
-    checks.append(_check("gross_min", "Gross mínimo", basis, gross, rk.gross_min, "pct",
-                         "n/d" if gross is None else "ok" if gross >= rk.gross_min - LIMIT_TOL
-                         else "info" if daily else "alerta",
+    checks.append(_check("gross_min", "Gross mínimo (piso)", basis, gross, rk.gross_min, "pct",
+                         _under(gross, rk.gross_min, daily=daily),
                          "pode refletir a escada de drawdown"))
     var = pick("var_1d_99")
     checks.append(_check("var_1d", f"VaR 1d ({fmt_pct(rk.var_confidence, 0)})", basis, var,
@@ -1294,23 +1464,20 @@ def _limit_checks(cfg: FundConfig, rec: Any | None, proposal: Any | None) -> lis
                              dd / cfg.drawdown.soft_stop if dd is not None else None))
     lines = list(src.exposures)
     p_lines = list(pr.exposures) if pr is not None else []
-    for group, cid, label in (("country", "country_net", "Net por país (pior)"),
-                              ("sector", "sector_net", "Net por setor (pior)"),
-                              ("style", "style", "Exposição a estilo (pior)"),
-                              ("market", "tema_commodity", "Tema/commodity (pior)")):
-        worst, util = _worst_exposure(lines, group)
+    for group, prefix, cid, label, hard in EXPOSURE_CHECKS:
+        worst, util = _worst_exposure(lines, group, prefix)
         g_daily = daily
         if worst is None and p_lines and daily:
             # O registro diário não traz tema/commodity: usa o ex-ante da decisão.
-            worst, util = _worst_exposure(p_lines, group)
+            worst, util = _worst_exposure(p_lines, group, prefix)
             g_daily = False
         if worst is None or util is None:
             continue
-        hard = group in ("country", "sector") or str(worst.name).startswith("tema:")
         st = _over(util, 1.0, daily=g_daily, hard=hard)
         checks.append(_check(cid, label, d_basis if g_daily else p_basis, worst.net, worst.limit,
                              "x" if group == "style" else "pct", st,
-                             f"{worst.name}: {fmt_pct(util, 1)} do limite", util))
+                             f"{_expo_label(group, worst.name)}: {_util_txt(util)} do limite",
+                             util, subject={"group": group, "name": worst.name}))
     shares = rk.country_gross_share_max
     if shares and gross:
         worst_name, worst_ratio, worst_val = None, None, None
@@ -1323,11 +1490,15 @@ def _limit_checks(cfg: FundConfig, rec: Any | None, proposal: Any | None) -> lis
             if worst_ratio is None or ratio > worst_ratio:
                 worst_name, worst_ratio, worst_val = e.name, ratio, share
         if worst_name is not None:
+            # Sem gate de compliance (só restrição do otimizador): nunca "excesso".
             checks.append(_check("country_gross_share", "Fatia do gross por país (pior)", basis,
                                  worst_val, shares[worst_name], "pct",
-                                 _over(worst_ratio, 1.0, daily=daily, hard=True),
-                                 f"{worst_name}: {fmt_pct(worst_ratio, 1)} do limite",
-                                 worst_ratio))
+                                 _over(worst_ratio, 1.0, daily=daily, hard=False),
+                                 f"{worst_name}: {_util_txt(worst_ratio)} do limite",
+                                 worst_ratio, subject={"group": "country", "name": worst_name}))
+    med_cap = rk.max_short_weight * cfg.squeeze.medium_short_cap_multiplier
+    buckets = ({t.issuer_id: t.squeeze_bucket for t in proposal.positions
+                if t.side.value == "SHORT"} if proposal is not None else {})
     if daily and rec.positions:
         longs = [p.weight for p in rec.positions if p.weight > 0]
         shorts = [-p.weight for p in rec.positions if p.weight < 0]
@@ -1340,6 +1511,15 @@ def _limit_checks(cfg: FundConfig, rec: Any | None, proposal: Any | None) -> lis
                                  max(shorts), rk.max_short_weight, "pct",
                                  _over(max(shorts), rk.max_short_weight, daily=True,
                                        hard=True)))
+        med = [-p.weight for p in rec.positions
+               if p.weight < 0 and buckets.get(p.issuer_id, "NA") in ("MEDIUM", "NA")]
+        if med:
+            checks.append(_check("name_short_medium_max",
+                                 "Maior short com squeeze MÉDIO/sem dado (|w|)", d_basis,
+                                 max(med), med_cap, "pct",
+                                 _over(max(med), med_cap, daily=True, hard=True),
+                                 f"teto por nome × {cfg.squeeze.medium_short_cap_multiplier:g}"
+                                 .replace(".", ",") + " (faixa da decisão)"))
         n_high = int(rec.risk.squeeze_high_shorts)
         checks.append(_check("squeeze_high", "Shorts com squeeze ALTO", d_basis, n_high, 0,
                              "count", "alerta" if n_high > 0 else "ok",
@@ -1347,8 +1527,15 @@ def _limit_checks(cfg: FundConfig, rec: Any | None, proposal: Any | None) -> lis
         liq = _num(rec.risk.pct_gross_liquid_1d)
         checks.append(_check("liquidez_1d", "Gross liquidável em 1 dia", d_basis, liq, None,
                              "pct", "info" if liq is not None else "n/d",
-                             f"mín. {fmt_pct(lq.min_gross_liquid_3d, 0)} em 3 dias e "
-                             f"{fmt_pct(lq.min_gross_liquid_5d, 0)} em 5 dias"))
+                             "registro diário (participação dos longs no ADTV agregado do "
+                             "emissor); pisos de 3 e 5 dias abaixo"))
+        mdl = _num(rec.risk.max_days_to_liquidate)
+        checks.append(_check("liq_days_daily", "Dias para liquidar, pior nome (carteira com "
+                             "drift)", d_basis, mdl, None, "days",
+                             "info" if mdl is not None else "n/d",
+                             f"registro diário: todas as posições a "
+                             f"{fmt_pct(lq.participation_rate, 0)} do ADTV agregado do emissor;"
+                             " os limites por ponta usam o ex-ante da decisão"))
     elif proposal is not None and proposal.positions:
         longs = [t.weight for t in proposal.positions if t.weight > 0]
         shorts = [-t.weight for t in proposal.positions if t.weight < 0]
@@ -1361,20 +1548,48 @@ def _limit_checks(cfg: FundConfig, rec: Any | None, proposal: Any | None) -> lis
                                  max(shorts), rk.max_short_weight, "pct",
                                  _over(max(shorts), rk.max_short_weight, daily=False,
                                        hard=True)))
+        med = [-t.weight for t in proposal.positions
+               if t.side.value == "SHORT" and t.squeeze_bucket in ("MEDIUM", "NA")]
+        if med:
+            checks.append(_check("name_short_medium_max",
+                                 "Maior short com squeeze MÉDIO/sem dado (|w|)", p_basis,
+                                 max(med), med_cap, "pct",
+                                 _over(max(med), med_cap, daily=False, hard=True),
+                                 f"teto por nome × {cfg.squeeze.medium_short_cap_multiplier:g}"
+                                 .replace(".", ",")))
         n_high = sum(1 for t in proposal.positions
                      if t.side.value == "SHORT" and t.squeeze_bucket == "HIGH")
         checks.append(_check("squeeze_high", "Shorts com squeeze ALTO", p_basis, n_high, 0,
                              "count", "excesso" if n_high > 0 else "ok"))
     if proposal is not None:
         liq = _liquidity_by_side(proposal.positions, cfg)
+        gates = {c.check_id: c for c in proposal.compliance}
         for side, cid, label in (("LONG", "liq_days_long", "Dias para liquidar (long)"),
                                  ("SHORT", "liq_days_short", "Dias para liquidar (short)")):
             s = liq[side]
-            if s["n"]:
+            if not s["n"]:
+                continue
+            part = f"a {fmt_pct(s['participation'], 0)} do ADTV"
+            gate = gates.get(f"LIQ_DAYS_{side}")
+            gv = _num(gate.value) if gate is not None else None
+            if gate is not None and gv is not None:
+                # O gate de compliance é a fonte: mesma conta, mesma participação por ponta.
+                checks.append(_check(cid, label, p_basis, gv, s["limit"], "days",
+                                     "ok" if gate.passed else "excesso",
+                                     f"{part} (gate {gate.check_id})"))
+            else:
                 checks.append(_check(cid, label, p_basis, s["max_days"], s["limit"], "days",
                                      _over(s["max_days"], s["limit"], daily=False, hard=True),
-                                     f"{s['n_missing']} posição(ões) sem dado"
-                                     if s["n_missing"] else ""))
+                                     part + (f"; {s['n_missing']} posição(ões) sem ADTV"
+                                             if s["n_missing"] else "")))
+        for h, cid, floor in ((3, "liquidez_3d", lq.min_gross_liquid_3d),
+                              (5, "liquidez_5d", lq.min_gross_liquid_5d)):
+            v = liq[f"liquid_{h}d"]
+            checks.append(_check(cid, f"Gross liquidável em {h} dias (piso)", p_basis, v, floor,
+                                 "pct", _under(v, floor, daily=False),
+                                 "participação do mandato por ponta"
+                                 + (f"; {liq['n_missing_adtv']} posição(ões) sem ADTV ⇒ n/d"
+                                    if v is None and liq["n_missing_adtv"] else "")))
         frs = _num(pr.factor_risk_share)
         checks.append(_check("factor_risk_share", "Fração do risco vinda de fatores", p_basis,
                              frs, rk.max_factor_risk_share, "pct",
@@ -1391,10 +1606,13 @@ def _limit_checks(cfg: FundConfig, rec: Any | None, proposal: Any | None) -> lis
                 if k.startswith("Gap ") and _num(v) is not None]
         if gaps:
             k, v = min(gaps, key=lambda kv: kv[1])
+            loss = max(0.0, -float(v))
             checks.append(_check("country_gap_stress", "Pior gap de país (cenário)", p_basis,
                                  v, -rk.country_stress_max_loss, "pct",
-                                 _over(-v, rk.country_stress_max_loss, daily=False, hard=False),
-                                 k))
+                                 _over(loss, rk.country_stress_max_loss, daily=False,
+                                       hard=False),
+                                 k, loss / rk.country_stress_max_loss
+                                 if rk.country_stress_max_loss else None))
         fees = [v for t in proposal.positions if t.side.value == "SHORT"
                 and (v := _num(t.borrow_fee_annual)) is not None]
         if fees:
@@ -1408,12 +1626,12 @@ def _limit_checks(cfg: FundConfig, rec: Any | None, proposal: Any | None) -> lis
 def _risk_section(cfg: FundConfig, latest_rec: Any | None, live: Any | None,
                   live_week: date | None, executed: bool) -> dict[str, Any]:
     if latest_rec is not None:
-        note = (f"Carteira efetivada (semana {live_week.isoformat()}) marcada em "
-                f"{latest_rec.date.isoformat()}: risco diário com drift; liquidez, stress e "
+        note = (f"Carteira efetivada (semana de {live_week:%d/%m/%Y}) marcada em "
+                f"{latest_rec.date:%d/%m/%Y}: risco diário com drift; liquidez, stress e "
                 "contribuições ex-ante da decisão." if live_week else
-                f"Registro diário de {latest_rec.date.isoformat()}.")
+                f"Registro diário de {latest_rec.date:%d/%m/%Y}.")
     elif live is not None:
-        note = (f"Carteira decidida em {live.week.isoformat()}"
+        note = (f"Carteira decidida em {live.week:%d/%m/%Y}"
                 + ("" if executed else ", ainda sem registro diário (execução no fechamento)")
                 + ": risco ex-ante da decisão.")
     else:
@@ -1432,7 +1650,7 @@ def _risk_section(cfg: FundConfig, latest_rec: Any | None, live: Any | None,
     }
     if latest_rec is not None:
         d = latest_rec.risk.model_dump(mode="json")
-        d["exposures"] = _exposure_rows(latest_rec.risk.exposures)
+        d["exposures"] = _exposure_rows(latest_rec.risk.exposures, daily=True)
         out["daily"] = d
     if live is not None:
         out["ex_ante"] = _risk_summary(live.risk, names)
@@ -1452,7 +1670,7 @@ def _risk_section(cfg: FundConfig, latest_rec: Any | None, live: Any | None,
                          "weight": w, "bucket": t.squeeze_bucket if t else "NA",
                          "score": t.squeeze_score if t else None,
                          "borrow_fee_annual": t.borrow_fee_annual if t else None,
-                         "days_to_liquidate": t.days_to_liquidate if t else None,
+                         "days_to_liquidate": _liq_days(t, cfg) if t else None,
                          "pct_adtv": t.pct_adtv if t else None})
         out["squeeze_shorts"] = sorted(rows, key=lambda r: (
             order.get(r["bucket"], 4), -(_num(r["score"]) or -1.0), r["issuer_id"]))
@@ -1658,20 +1876,88 @@ def _columns(df: Any) -> dict[str, list[Any]]:
     return {str(c): [_cell(v) for v in df[c].tolist()] for c in df.columns}
 
 
+def _read_dated_csv(path: Path, issues: _Issues, scope: str) -> Any:
+    """CSV com coluna ``date``: datas inválidas viram NaT e a linha é descartada (com
+    apontamento); arquivo ilegível ou sem ``date`` levanta (o chamador transforma em apontamento).
+    """
+    import pandas as pd
+
+    df = pd.read_csv(path)
+    if "date" not in df.columns:
+        raise ValueError("coluna 'date' ausente")
+    dates = pd.to_datetime(df["date"], errors="coerce")
+    bad = int(dates.isna().sum())
+    if bad:
+        issues.add(scope, f"{bad} linha(s) com data inválida ignorada(s) (arquivo ainda sendo "
+                          "gravado ou corrompido).")
+    df = df.assign(date=dates).dropna(subset=["date"]).set_index("date").sort_index()
+    return df
+
+
+def _backtest_nav_weekly(d: Any) -> dict[str, list[Any]]:
+    """Séries semanais (sexta) do backtest. Custos e aluguel saem com sinal de P&L
+    (``cum_cost_pnl``/``cum_borrow_pnl`` ≤ 0): no ``daily.csv`` são magnitudes positivas
+    (``ret_net = ret_gross − cost − borrow + financing``). Valor não numérico levanta."""
+    import pandas as pd
+
+    nav = d["nav"].astype(float)
+    dd = nav / nav.cummax() - 1.0
+    ret = d["ret_net"].astype(float) if "ret_net" in d.columns else nav.pct_change()
+    rv63 = ret.rolling(63).std(ddof=1) * math.sqrt(252)
+    frame = pd.DataFrame({"nav": nav, "drawdown": dd, "realized_vol_63d": rv63})
+    for col, key, sign in (("factor_pnl", "cum_factor_pnl", 1.0),
+                           ("specific_pnl", "cum_specific_pnl", 1.0),
+                           ("financing", "cum_financing", 1.0),
+                           ("cost", "cum_cost_pnl", -1.0), ("borrow", "cum_borrow_pnl", -1.0)):
+        if col in d.columns:
+            frame[key] = sign * d[col].astype(float).cumsum()
+    for col in ("gross", "net"):
+        if col in d.columns:
+            frame[col] = d[col].astype(float)
+    wk = frame.resample("W-FRI").last().dropna(how="all")
+    series = {"date": [ix.date().isoformat() for ix in wk.index]}
+    series.update({c: [_round(v) for v in wk[c].tolist()] for c in wk.columns})
+    return series
+
+
+def _backtest_ic(ic: Any) -> dict[str, Any]:
+    import pandas as pd
+
+    summary = {}
+    for c in ic.columns:
+        s = pd.to_numeric(ic[c], errors="coerce").dropna()
+        n = int(len(s))
+        sd = float(s.std(ddof=1)) if n > 1 else None
+        mean = float(s.mean()) if n else None
+        summary[str(c)] = {
+            "n": n, "mean": mean, "std": sd,
+            "t_stat": (mean / (sd / math.sqrt(n))) if mean is not None and sd else None,
+            "pct_positive": float((s > 0).mean()) if n else None}
+    cum = ic.apply(pd.to_numeric, errors="coerce").cumsum()
+    return {"summary": summary, "cumulative": {
+        "date": [ix.date().isoformat() for ix in cum.index],
+        **{str(c): [_round(v) for v in cum[c].tolist()] for c in cum.columns}}}
+
+
 def _backtest_run(run_dir: Path, base: Path, issues: _Issues) -> dict[str, Any] | None:
     import pandas as pd
 
     scope = f"Backtest {run_dir.name}"
     raw = issues.attempt(f"{scope}: metrics.json", lambda: _read_json(run_dir / "metrics.json"))
-    if not isinstance(raw, dict):
+    if raw is None:
         return None
-    prov = raw.get("provenance") or {}
+    if not isinstance(raw, dict):
+        issues.add(f"{scope}: metrics.json",
+                   f"conteúdo não é um objeto JSON ({type(raw).__name__}); execução ignorada.")
+        return None
+    prov = raw.get("provenance") if isinstance(raw.get("provenance"), dict) else {}
     variant = raw.get("variant")
     desc = []
-    for sec, vals in sorted((raw.get("overrides") or {}).items()):
-        for k, v in sorted((vals or {}).items()):
+    overrides = raw.get("overrides") if isinstance(raw.get("overrides"), dict) else {}
+    for sec, vals in sorted(overrides.items()):
+        for k, v in sorted((vals if isinstance(vals, dict) else {}).items()):
             desc.append(f"{sec}.{k} = {v}")
-    sw = raw.get("signal_weights")
+    sw = raw.get("signal_weights") if isinstance(raw.get("signal_weights"), dict) else None
     if sw:
         desc.append("sinais: " + ", ".join(f"{k} {v}" for k, v in sorted(sw.items())))
     rel = run_dir.relative_to(base).as_posix() if run_dir != base else run_dir.name
@@ -1682,8 +1968,10 @@ def _backtest_run(run_dir: Path, base: Path, issues: _Issues) -> dict[str, Any] 
                   if run_dir.name.lower() in (str(variant).lower(), f"bt_{variant}".lower())
                   else f"Variante {variant} — {run_dir.name}"),
         "variant": variant, "description": "; ".join(desc) or "configuração do mandato",
-        "overrides": raw.get("overrides"), "signal_weights": sw,
-        "metrics": raw.get("metrics") or {}, "notes": list(raw.get("notes") or []),
+        "overrides": overrides or None, "signal_weights": sw,
+        "metrics": raw.get("metrics") if isinstance(raw.get("metrics"), dict) else {},
+        "notes": [str(x) for x in (raw.get("notes") or [])] if isinstance(
+            raw.get("notes"), list) else [],
         "provenance": prov, "is_synthetic": SIMULATED_DATA_NOTICE in notice.upper(),
         "files": {n: _sha256_file(run_dir / n) for n in ("metrics.json", "weekly.csv",
                                                          "daily.csv", "ic.csv")
@@ -1697,42 +1985,16 @@ def _backtest_run(run_dir: Path, base: Path, issues: _Issues) -> dict[str, Any] 
             run["weekly"] = _columns(w.astype(object).where(w.notna(), None))
     if dpath.is_file():
         d = issues.attempt(f"{scope}: daily.csv",
-                           lambda: pd.read_csv(dpath, parse_dates=["date"]).set_index("date"))
+                           lambda: _read_dated_csv(dpath, issues, f"{scope}: daily.csv"))
         if d is not None and "nav" in d.columns:
-            nav = d["nav"].astype(float)
-            dd = nav / nav.cummax() - 1.0
-            ret = d["ret_net"].astype(float) if "ret_net" in d.columns else nav.pct_change()
-            rv63 = ret.rolling(63).std(ddof=1) * math.sqrt(252)
-            frame = pd.DataFrame({"nav": nav, "drawdown": dd, "realized_vol_63d": rv63})
-            for col in ("factor_pnl", "specific_pnl", "cost", "borrow", "financing"):
-                if col in d.columns:
-                    frame[f"cum_{col}"] = d[col].astype(float).cumsum()
-            for col in ("gross", "net"):
-                if col in d.columns:
-                    frame[col] = d[col].astype(float)
-            wk = frame.resample("W-FRI").last().dropna(how="all")
-            series = {"date": [ix.date().isoformat() for ix in wk.index]}
-            series.update({c: [_round(v) for v in wk[c].tolist()] for c in wk.columns})
-            run["nav_weekly"] = series
+            run["nav_weekly"] = issues.attempt(f"{scope}: daily.csv (séries semanais)",
+                                               lambda: _backtest_nav_weekly(d))
             run["n_daily_obs"] = int(len(d))
     if ipath.is_file():
         ic = issues.attempt(f"{scope}: ic.csv",
-                            lambda: pd.read_csv(ipath, parse_dates=["date"]).set_index("date"))
+                            lambda: _read_dated_csv(ipath, issues, f"{scope}: ic.csv"))
         if ic is not None:
-            summary = {}
-            for c in ic.columns:
-                s = pd.to_numeric(ic[c], errors="coerce").dropna()
-                n = int(len(s))
-                sd = float(s.std(ddof=1)) if n > 1 else None
-                mean = float(s.mean()) if n else None
-                summary[str(c)] = {
-                    "n": n, "mean": mean, "std": sd,
-                    "t_stat": (mean / (sd / math.sqrt(n))) if mean is not None and sd else None,
-                    "pct_positive": float((s > 0).mean()) if n else None}
-            cum = ic.apply(pd.to_numeric, errors="coerce").cumsum()
-            run["ic"] = {"summary": summary, "cumulative": {
-                "date": [ix.date().isoformat() for ix in cum.index],
-                **{str(c): [_round(v) for v in cum[c].tolist()] for c in cum.columns}}}
+            run["ic"] = issues.attempt(f"{scope}: ic.csv (resumo)", lambda: _backtest_ic(ic))
     return run
 
 
@@ -1773,6 +2035,16 @@ def _backtests(root: Path | None, pattern: str, issues: _Issues) -> dict[str, An
     docs = _backtest_documents(base) if pattern == "*" else []
     return {"available": bool(runs), "runs": sorted(runs, key=lambda r: r["id"]),
             "documents": docs}
+
+
+def _audit_events(book_root: Path) -> list[Any]:
+    """Eventos da trilha (lista vazia se ilegível: :func:`_audit` já aponta o problema)."""
+    from ..audit import AuditLog
+
+    try:
+        return AuditLog(Path(book_root) / "audit_log.jsonl").events()
+    except Exception:  # noqa: BLE001
+        return []
 
 
 def _audit(book_root: Path, book_exists: bool, cfg: FundConfig, tail: int,
@@ -1858,8 +2130,122 @@ def _integrity(rt: Any, book: Any, book_exists: bool, audit: Mapping[str, Any]
     else:
         checks.append({"id": "dados", "label": "Base de mercado", "ok": None,
                        "messages": ["Base de mercado ausente neste ambiente."]})
-    ok = all(c["ok"] is not False for c in checks)
-    return {"ok": ok, "checks": checks}
+    return {"ok": _integrity_ok(checks), "checks": checks}
+
+
+def _integrity_ok(checks: Sequence[Mapping[str, Any]]) -> bool | None:
+    """``False`` se alguma verificação falhou; ``True`` só se ao menos uma passou; senão
+    ``None`` (nada a verificar ainda — nunca um "OK" sem verificação)."""
+    oks = [c.get("ok") for c in checks]
+    if any(o is False for o in oks):
+        return False
+    return True if any(o is True for o in oks) else None
+
+
+def _path_forms(path: Path) -> list[str]:
+    """Grafias possíveis de um caminho gravado num payload da trilha: como dado, absoluto,
+    resolvido e cada sufixo relativo (rotina rodando de qualquer pasta ancestral)."""
+    forms: list[str] = []
+    for p in (path, path.absolute(), path.resolve()):
+        forms.append(p.as_posix())
+        parts = p.parts
+        for i in range(1, len(parts)):
+            forms.append(Path(*parts[i:]).as_posix())
+    seen: set[str] = set()
+    return [f for f in forms if not (f in seen or seen.add(f))]
+
+
+def _report_payload_ok(folder: Path, hashes: set[str], extra: Mapping[str, Any] | None = None
+                       ) -> bool | None:
+    """Relatório (``relatorio.md``/``.html``) × payload do evento ``*_REPORT`` da trilha."""
+    from ..hashing import sha256_obj
+
+    md, html = folder / "relatorio.md", folder / "relatorio.html"
+    if not hashes:
+        return None
+    if not md.is_file() or not html.is_file():
+        return False
+    md_sha, html_sha = _sha256_file(md), _sha256_file(html)
+    for md_s, html_s in zip(_path_forms(md), _path_forms(html), strict=False):
+        payload = {"md": md_s, "html": html_s, "md_sha256": md_sha, "html_sha256": html_sha,
+                   **(extra or {})}
+        if sha256_obj(payload) in hashes:
+            return True
+    return False
+
+
+def _aux_integrity(rt: Any, events: Sequence[Any], weeks: Sequence[dict[str, Any]],
+                   daily_reports: Sequence[dict[str, Any]]) -> dict[str, Any]:
+    """Artefatos exibidos pelo painel que ``Book.verify_integrity`` não cobre × a trilha:
+    ``shadow_quant.json`` (evento ``SHADOW_QUANT``), ``inputs/*.json`` (``WEEKLY_INPUTS``),
+    relatório semanal (``WEEKLY_REPORT``) e diário (``DAILY_REPORT``). Marca cada seção com
+    ``verified`` (``True``/``False``/``None`` = sem âncora para conferir)."""
+    from ..hashing import sha256_obj
+
+    by: dict[tuple[str, Any], set[str]] = {}
+    for ev in events:
+        by.setdefault((ev.event_type, ev.week), set()).add(ev.payload_hash)
+    root, reports = Path(rt.book_root), Path(rt.reports_root)
+    bad: list[str] = []
+    n_ok = 0
+
+    def note(ok: bool | None, what: str) -> bool | None:
+        nonlocal n_ok
+        if ok is True:
+            n_ok += 1
+        elif ok is False:
+            bad.append(what)
+        return ok
+
+    for w in weeks:
+        week = w["week"]
+        wdir = root / week.isoformat()
+        spath = wdir / "shadow_quant.json"
+        if spath.is_file():
+            ok = sha256_obj({"sha256": _sha256_file(spath)}) in by.get(("SHADOW_QUANT", week),
+                                                                       set())
+            w["shadow_verified"] = note(ok, f"{week.isoformat()}: shadow_quant.json")
+            if isinstance(w.get("shadow"), dict):
+                w["shadow"]["verified"] = ok
+        files = sorted((wdir / "inputs").glob("*.json")) if (wdir / "inputs").is_dir() else []
+        anchors = by.get(("WEEKLY_INPUTS", week), set())
+        ok_in: bool | None = None
+        if files and anchors:
+            ok_in = sha256_obj({f.name: _sha256_file(f) for f in files}) in anchors
+            note(ok_in, f"{week.isoformat()}: inputs/*.json")
+        w["inputs_verified"] = ok_in
+        if isinstance(w.get("pm_decision"), dict):
+            w["pm_decision"]["verified"] = ok_in
+        if isinstance(w.get("research"), dict) and w["research"].get("source") == "entradas":
+            w["research"]["verified"] = ok_in
+        rep = w.get("report")
+        if isinstance(rep, dict) and rep.get("available"):
+            ok_r = _report_payload_ok(reports / "weekly" / week.isoformat(),
+                                      by.get(("WEEKLY_REPORT", week), set()))
+            rep["verified"] = note(ok_r, f"{week.isoformat()}: relatório semanal")
+    daily_hashes = by.get(("DAILY_REPORT", None), set())
+    n_unknown = 0
+    for r in daily_reports:
+        if not r.get("published"):
+            r["verified"] = None
+            continue
+        ok_d = _report_payload_ok(reports / "daily" / r["date"].isoformat(), daily_hashes,
+                                  {"record": r.get("record_hash"), "commentary_issues": []})
+        if ok_d is False:
+            # O evento grava também os apontamentos do comentário (desconhecidos aqui):
+            # sem casar com a lista vazia, o relatório fica "não verificado", não "falho".
+            ok_d = None
+            n_unknown += 1
+        r["verified"] = note(ok_d, f"{r['date'].isoformat()}: relatório diário")
+    msgs = ([f"Não conferem com a trilha: {', '.join(bad)}."] if bad else
+            [f"{n_ok} artefato(s) conferem com a trilha."] if n_ok else
+            ["Nada a conferir ainda."])
+    if n_unknown:
+        msgs.append(f"{n_unknown} relatório(s) diário(s) sem conferência possível (evento com "
+                    "apontamentos do comentário ou pasta movida).")
+    return {"id": "auxiliares",
+            "label": "Artefatos auxiliares × trilha (sombra, entradas da mente, relatórios)",
+            "ok": False if bad else True if n_ok else None, "messages": msgs}
 
 
 def _market_info(rt: Any, issues: _Issues) -> dict[str, Any]:
@@ -1929,7 +2315,7 @@ def _status(rt: Any, cfg: FundConfig, now: datetime, weeks: Sequence[dict[str, A
     if kill.active:
         alerts.append({"severity": "error",
                        "text": f"KILL SWITCH LIGADO: {kill.reason or 'motivo não informado'}"})
-    if not integrity.get("ok", True):
+    if integrity.get("ok") is False:
         bad = [c["label"] for c in integrity.get("checks", []) if c["ok"] is False]
         alerts.append({"severity": "error", "text": "Falha de integridade: " + ", ".join(bad)})
     for ev in events:
@@ -1939,8 +2325,8 @@ def _status(rt: Any, cfg: FundConfig, now: datetime, weeks: Sequence[dict[str, A
         path = lw.get("path_taken")
         if path and path != "cdp":
             alerts.append({"severity": "warning",
-                           "text": f"Semana {latest_decided.isoformat()}: caminho de fallback — "
-                                   f"{PATH_PT.get(path, path)}."})
+                           "text": f"Semana {latest_decided.strftime('%d/%m/%Y')}: caminho de "
+                                   f"fallback — {PATH_PT.get(path, path)}."})
         for issue in (lw.get("input_issues") or [])[:10]:
             alerts.append({"severity": "warning", "text": f"Verificador de entradas: {issue}"})
         soft = ((lw.get("proposal") or {}).get("summary") or {}).get("soft_failures") or []
@@ -1952,10 +2338,13 @@ def _status(rt: Any, cfg: FundConfig, now: datetime, weeks: Sequence[dict[str, A
             alerts.append({"severity": "error" if c["status"] == "excesso" else "warning",
                            "text": f"Risco — {c['label']}: {c['status']}"
                                    + (f" ({c['detail']})" if c.get("detail") else "")})
-    if last is not None and last.alerts:
-        alerts.append({"severity": "info",
-                       "text": f"{len(last.alerts)} alerta(s) do sistema no fechamento de "
-                               f"{last.date.isoformat()}."})
+    if last is not None:
+        # Alertas gravados pelo fechamento diário (liquidez por ponta, squeeze desde a decisão,
+        # stops do short, ADTV ausente, limitações de dados): o texto do código, um a um.
+        for a in last.alerts:
+            alerts.append({"severity": "info" if str(a).startswith("Limitação de dados")
+                           else "warning", "source": "fechamento",
+                           "text": f"Fechamento de {last.date.strftime('%d/%m/%Y')}: {a}"})
     nav = float(last.nav_end_usd) if last is not None else float(cfg.fund.inception_nav_usd)
     return {
         "now_utc": now.astimezone(UTC).isoformat(), "now_local": local.isoformat(),
@@ -2001,10 +2390,10 @@ def _synthetic(records: Sequence[Any], shadow: Sequence[Any], weeks: Sequence[di
     for w in weeks:
         p = w.get("proposal") or {}
         if p.get("is_synthetic"):
-            found.append(f"proposta {w['week'].isoformat()}")
+            found.append(f"proposta de {w['week']:%d/%m/%Y}")
             notice = notice or p.get("data_notice")
         if (w.get("research") or {}).get("is_synthetic"):
-            found.append(f"pesquisa {w['week'].isoformat()}")
+            found.append(f"pesquisa de {w['week']:%d/%m/%Y}")
     if market.get("is_synthetic"):
         found.append("base de mercado")
     return bool(found), found, notice
@@ -2084,6 +2473,10 @@ def painel_data(rt: Any, *, now: datetime | None = None,
     backtests = _backtests(bt_root, backtest_pattern, issues)
     audit = _audit(book_root, book_exists, cfg, audit_tail, issues)
     integrity = _integrity(rt, book, book_exists, audit)
+    if book_exists and audit.get("exists"):
+        events = _audit_events(book_root)
+        integrity["checks"].append(_aux_integrity(rt, events, weeks, daily_reports))
+        integrity["ok"] = _integrity_ok(integrity["checks"])
     market = _market_info(rt, issues)
     kill = kill_switch_state(book_root)
     status = _status(rt, cfg, now, weeks, records, kill, integrity, market, risk)

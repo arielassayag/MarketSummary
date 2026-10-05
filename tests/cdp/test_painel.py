@@ -445,3 +445,183 @@ def test_older_weeks_are_summarized(demo, data):
     assert w["pm_decision"] is None and w["report"]["markdown"] is None
     assert "notes" not in w["research"] and w["research"]["counts"]["notes"] >= 1
     assert "{{fact:" not in to_json(data)
+
+
+# ---------------------------------------------------------------- política dos limites
+
+def _line(group, name, net, limit, long=0.0, short=0.0):
+    from cdp.contracts import ExposureLine
+
+    return ExposureLine(group=group, name=name, long=long, short=short, net=net,
+                        gross=abs(net), limit=limit)
+
+
+def test_exposure_status_follows_limit_policy():
+    """Drift diário acima do limite é alerta (como nos limites e no monitor); excesso só para
+    limite HARD no ex-ante; SOFT (estilo/commodity) nunca é excesso; sem long/short fictícios."""
+    from cdp.workflow.painel import _exposure_rows
+
+    lines = [_line("country", "BR", 0.020004, 0.02, 0.1, -0.08),
+             _line("style", "value", -0.105, 0.1),
+             _line("market", "commodity:gold", 0.0315, 0.03),
+             _line("market", "tema:state_owned", 0.0102, 0.01, 0.02, -0.0098),
+             _line("currency", "BRL", 0.3, None)]
+    daily = {r["name"]: r for r in _exposure_rows(lines, daily=True)}
+    ex_ante = {r["name"]: r for r in _exposure_rows(lines, daily=False)}
+    assert daily["BR"]["status"] == "alerta" and daily["BR"]["breach"] is True
+    assert ex_ante["BR"]["status"] == "excesso" and ex_ante["BR"]["severity"] == "HARD"
+    assert ex_ante["tema:state_owned"]["status"] == "excesso"
+    assert ex_ante["value"]["status"] == "alerta" and ex_ante["value"]["severity"] == "SOFT"
+    assert ex_ante["commodity:gold"]["status"] == "alerta"
+    assert ex_ante["BRL"]["status"] is None and ex_ante["BRL"]["severity"] is None
+    for name in ("value", "commodity:gold"):
+        row = ex_ante[name]
+        assert row["long"] is None and row["short"] is None and row["gross"] is None
+        assert row["measure"]
+    assert ex_ante["BR"]["long"] == 0.1  # linhas com pontas reais ficam intactas
+
+
+def test_gross_floor_is_not_a_ceiling():
+    from cdp.workflow.painel import _check
+
+    comfortable = _check("gross_min", "Gross mínimo", "b", 1.0, 0.5, "pct", "ok")
+    assert comfortable["floor"] is True and comfortable["utilization"] is None
+    assert comfortable["shortfall"] == 0.0 and comfortable["headroom"] == pytest.approx(0.5)
+    below = _check("gross_min", "Gross mínimo", "b", 0.4735, 0.5, "pct", "alerta")
+    assert below["shortfall"] == pytest.approx(0.0265) and below["utilization"] is None
+    assert below["severity"] == "SOFT" and below["gate"] == "GROSS_MIN"
+    ceiling = _check("net", "Net", "b", -0.009, 0.01, "pct", "ok")
+    assert ceiling["floor"] is False and ceiling["utilization"] == pytest.approx(0.9)
+
+
+def test_theme_and_commodity_are_separate_checks(demo):
+    """Tema (HARD) e commodity (SOFT) não se misturam num "pior" só; a fatia do gross por país
+    não tem gate e nunca vira excesso; ganho no pior gap não consome o limite de perda."""
+    from cdp.workflow.painel import _limit_checks
+
+    rt = _rt(demo)
+    prop = rt.book.load_proposal(date(2024, 3, 4))
+    lines = [x for x in prop.risk.exposures if x.group != "market"]
+    lines += [_line("market", "tema:state_owned", 0.0102, 0.01, 0.02, -0.0098),
+              _line("market", "commodity:gold", 0.0315, 0.03)]
+    stress = {k: (abs(v) if k.startswith("Gap ") else v) for k, v in prop.risk.stress_tests.items()}
+    risk = prop.risk.model_copy(update={"exposures": lines, "stress_tests": stress})
+    checks = {c["id"]: c for c in _limit_checks(rt.cfg, None, prop.model_copy(
+        update={"risk": risk}))}
+    assert checks["theme_net"]["status"] == "excesso"
+    assert checks["theme_net"]["subject"] == {"group": "market", "name": "tema:state_owned"}
+    assert checks["commodity_beta"]["status"] == "alerta"
+    assert "ouro" in checks["commodity_beta"]["detail"]
+    if "country_gross_share" in checks:
+        assert checks["country_gross_share"]["status"] != "excesso"
+        assert checks["country_gross_share"]["severity"] is None
+    if "country_gap_stress" in checks:
+        assert checks["country_gap_stress"]["utilization"] == 0.0
+
+
+def test_short_liquidity_uses_short_participation(demo, data):
+    """Dias para liquidar os shorts a 15% do ADTV (como o gate LIQ_DAYS_SHORT), não a 20%."""
+    rt = _rt(demo)
+    week = data["risk"]["live_week"]
+    prop = rt.book.load_proposal(date.fromisoformat(week))
+    gate = {c.check_id: c for c in prop.compliance}
+    checks = {c["id"]: c for c in data["risk"]["limit_checks"]}
+    assert checks["liq_days_short"]["value"] == pytest.approx(gate["LIQ_DAYS_SHORT"].value)
+    assert checks["liq_days_long"]["value"] == pytest.approx(gate["LIQ_DAYS_LONG"].value)
+    liq = data["risk"]["liquidity_by_side"]
+    assert liq["SHORT"]["max_days"] == pytest.approx(gate["LIQ_DAYS_SHORT"].value)
+    assert liq["SHORT"]["participation"] == rt.cfg.liquidity.short_participation_rate
+    lq = rt.cfg.liquidity
+    for p in prop.positions:
+        if p.side.value == "SHORT" and p.adtv_usd:
+            exported = next(x for x in data["weeks"][-1]["proposal"]["positions"]
+                            if x["issuer_id"] == p.issuer_id)
+            assert exported["days_to_liquidate"] == pytest.approx(
+                abs(p.notional_usd) / (lq.short_participation_rate * p.adtv_usd))
+    for key in ("liquid_3d", "liquid_5d"):
+        assert liq[key] is None or 0.0 <= liq[key] <= 1.0
+    assert {"liquidez_3d", "liquidez_5d"} <= set(checks)
+
+
+def test_latest_day_alerts_and_anchor(demo, data):
+    rt = _rt(demo)
+    records = rt.track().records()
+    last = records[-1]
+    texts = [a["text"] for a in data["status"]["alerts"] if a.get("source") == "fechamento"]
+    assert len(texts) == len(last.alerts)
+    assert all(any(a in t for t in texts) for a in last.alerts)
+    anchor = data["track_record"]["anchor"]
+    assert anchor["nav_cdp"] == records[0].nav_start_usd
+    assert anchor["date"] == records[0].date.isoformat()
+
+
+def test_integrity_is_not_ok_without_checks(tmp_path):
+    d = painel_data(_rt(tmp_path / "nada"), now=datetime(2026, 10, 5, 12, 0, tzinfo=UTC))
+    assert d["status"]["integrity"]["ok"] is None
+    assert not any("integridade" in a["text"].lower() for a in d["status"]["alerts"])
+
+
+def test_aux_artifacts_are_verified_against_audit_trail(demo, data, tmp_path):
+    """sombra, entradas da mente e relatórios exibidos conferem com a trilha; adulterados ⇒
+    integridade falha e a seção fica marcada como não verificada."""
+    aux = next(c for c in data["status"]["integrity"]["checks"] if c["id"] == "auxiliares")
+    assert aux["ok"] is True
+    week = data["weeks"][-1]
+    assert week["shadow_verified"] is True and week["inputs_verified"] is True
+    assert week["report"]["verified"] is True and week["pm_decision"]["verified"] is True
+    assert all(r["verified"] is True for r in data["daily_reports"] if r["published"])
+
+    root = tmp_path / "adulterado"
+    shutil.copytree(demo, root)
+    wdir = root / "book" / week["week"]
+    shadow = json.loads((wdir / "shadow_quant.json").read_text(encoding="utf-8"))
+    shadow["optimizer"]["expected_alpha_annual"] = 0.5
+    (wdir / "shadow_quant.json").write_text(json.dumps(shadow), encoding="utf-8")
+    pm = json.loads((wdir / "inputs" / "pm_decision.json").read_text(encoding="utf-8"))
+    pm["market_view"] = "texto trocado depois da decisão"
+    (wdir / "inputs" / "pm_decision.json").write_text(json.dumps(pm), encoding="utf-8")
+    md = root / "reports" / "weekly" / week["week"] / "relatorio.md"
+    md.write_text(md.read_text(encoding="utf-8") + "\nadulterado\n", encoding="utf-8")
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        d = painel_data(_rt(root), now=NOW)
+    aux = next(c for c in d["status"]["integrity"]["checks"] if c["id"] == "auxiliares")
+    assert aux["ok"] is False and d["status"]["integrity"]["ok"] is False
+    w = next(x for x in d["weeks"] if x["week"] == week["week"])
+    assert w["shadow_verified"] is False and w["shadow"]["verified"] is False
+    assert w["inputs_verified"] is False and w["pm_decision"]["verified"] is False
+    assert w["report"]["verified"] is False
+    assert any("integridade" in a["text"].lower() for a in d["status"]["alerts"])
+
+
+def test_backtest_costs_have_pnl_sign_and_bad_files_become_issues(demo, tmp_path):
+    reports = tmp_path / "reports"
+    good = reports / "backtest" / "bt_ok"
+    good.mkdir(parents=True)
+    (good / "metrics.json").write_text(json.dumps({"metrics": {"sharpe": 1.0}}), encoding="utf-8")
+    (good / "daily.csv").write_text("date,ret_net,nav,cost,borrow,financing\n"
+                                    "2024-01-01,-0.001,99.9,0.001,0.0002,0.0001\n"
+                                    "2024-01-02,0.0,99.9,0.0,0.0002,0.0001\n", encoding="utf-8")
+    bad = reports / "backtest" / "bt_ruim"
+    bad.mkdir(parents=True)
+    (bad / "metrics.json").write_text(json.dumps({"metrics": {}}), encoding="utf-8")
+    (bad / "daily.csv").write_text("date,ret_net,nav\n2024-01-01,0.0,100.0\n2024-0\n"
+                                   "2024-01-03,0.0,abc\n", encoding="utf-8")
+    (bad / "ic.csv").write_text("date,composite\nxx,0.1\n2024-01-08,-0.05\n", encoding="utf-8")
+    lst = reports / "backtest" / "bt_lista"
+    lst.mkdir(parents=True)
+    (lst / "metrics.json").write_text("[1]", encoding="utf-8")
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        d = painel_data(_rt(demo, reports), now=NOW)
+    runs = {r["id"]: r for r in d["backtests"]["runs"]}
+    nw = runs["bt_ok"]["nav_weekly"]
+    assert nw["cum_cost_pnl"][-1] == pytest.approx(-0.001)
+    assert nw["cum_borrow_pnl"][-1] == pytest.approx(-0.0004)
+    assert nw["cum_financing"][-1] == pytest.approx(0.0002)
+    assert "cum_cost" not in nw and all(v <= 0 for v in nw["cum_cost_pnl"])
+    assert runs["bt_ruim"]["nav_weekly"] is None  # valor não numérico: apontamento, não exceção
+    assert runs["bt_ruim"]["ic"]["summary"]["composite"]["n"] == 1
+    assert "bt_lista" not in runs
+    scopes = " ".join(i["scope"] + " " + i["message"] for i in d["issues"])
+    assert "bt_ruim" in scopes and "bt_lista" in scopes and "data inválida" in scopes

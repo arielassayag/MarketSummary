@@ -46,7 +46,8 @@ def _kpis(state: AppState) -> None:
     c = st.columns(5)
     ui.kpi(c[0], "Drawdown", fmt.pct(rk.drawdown), fmt.ladder_status(rk.drawdown, cfg),
            help=f"Escada: stop suave {fmt.pct(cfg.drawdown.soft_stop, 1)}, stop duro "
-                f"{fmt.pct(cfg.drawdown.hard_stop, 1)}, stop-out {fmt.pct(cfg.drawdown.stop_out, 1)}.")
+                f"{fmt.pct(cfg.drawdown.hard_stop, 1)}, stop-out "
+                f"{fmt.pct(cfg.drawdown.stop_out, 1)}.")
     ui.kpi(c[1], "Longs / shorts", f"{rk.n_long} / {rk.n_short}",
            f"L {fmt.pct(rk.long_exposure, 1)} · S {fmt.pct(rk.short_exposure, 1)}",
            help="Exposição comprada (L) e vendida (S) em % do NAV.")

@@ -16,9 +16,9 @@ def _decision_block(state: AppState, wd: data.WeekData) -> None:
     p = wd.proposal
     tz = state.cfg.fund.timezone
     mind = wd.mind or fmt.NA
+    path = fmt.PATH_PT.get(wd.path_taken or "", wd.path_taken or fmt.NA)
     st.markdown(f"**Mente que conduziu a semana:** :violet-badge[{fmt.escape_md(mind)}] · "
-                f"**Caminho:** {fmt.escape_md(fmt.PATH_PT.get(wd.path_taken or '', wd.path_taken or fmt.NA))}"
-                f" · **Estado:** {fmt.code(wd.state or fmt.NA)}")
+                f"**Caminho:** {fmt.escape_md(path)} · **Estado:** {fmt.code(wd.state or fmt.NA)}")
     if d is None:
         st.warning("Semana sem decisão gravada.", icon=":material/pending:")
         return
@@ -113,7 +113,8 @@ def _compliance(wd: data.WeekData) -> None:
                                                         "red" if n_hard else "green"))
     ui.kpi(c[2], "Falhas SOFT", str(n_soft), fmt.Status("ciência automática registrada",
                                                         "orange" if n_soft else "green"))
-    ui.table(ui.formatted(df, {"Valor": lambda v: fmt.num(v, 4), "Limite": lambda v: fmt.num(v, 4)}),
+    ui.table(ui.formatted(df, {"Valor": lambda v: fmt.num(v, 4),
+                               "Limite": lambda v: fmt.num(v, 4)}),
              height=min(640, 36 * (len(df) + 1)))
 
 
@@ -175,8 +176,9 @@ def render(state: AppState) -> None:
     if not weeks:
         ui.empty_state("Nenhuma decisão semanal ainda",
                        "No primeiro pregão de cada semana na B3 o CDP pesquisa, decide sozinho e "
-                       f"grava a decisão até {fmt.escape_md(state.cfg.fund.decision_deadline_local)} "
-                       "(Brasília); a execução hipotética ocorre no fechamento.")
+                       "grava a decisão até "
+                       f"{fmt.escape_md(state.cfg.fund.decision_deadline_local)} (Brasília); a "
+                       "execução hipotética ocorre no fechamento.")
         return
     ui.section("Semanas e mentes", ui.CALC_BADGE,
                help="Cada semana é conduzida por uma mente intercambiável (claude-code ou codex); "
@@ -207,8 +209,9 @@ def render(state: AppState) -> None:
         reports = [r for r in state.reports if r.kind == "weekly" and r.key == wd.week]
         text = data.read_text(reports[0].md) if reports else None
         if text:
-            st.caption(f"{fmt.code(reports[0].md.as_posix())} — números formatados pelo código; textos "
-                       "de IA rotulados [IA] no próprio relatório.")
+            rel = data.relative_to(reports[0].md, state.paths.reports)
+            st.caption(f"{fmt.code(rel)} — números formatados pelo código; textos de IA "
+                       "rotulados [IA] no próprio relatório.")
             with st.container(border=True, height=900):
                 st.markdown(fmt.report_md(text, demote=2))
         else:

@@ -41,8 +41,9 @@ def render(state: AppState) -> None:
         c[1].download_button("Baixar .html", data=html_text.encode("utf-8"),
                              file_name=f"{rep.kind}_{rep.key.isoformat()}.html",
                              mime="text/html", icon=":material/download:", key="rep_dl_html")
-    c[2].caption(f"Pasta {fmt.code(rep.folder.as_posix())} · arquivos imutáveis gerados pelo "
-                 "código (números formatados; textos de IA rotulados [IA]).")
+    rel = data.relative_to(rep.folder, state.paths.reports)
+    c[2].caption(f"Pasta {fmt.code(rel)} · arquivos imutáveis gerados pelo código (números "
+                 "formatados; textos de IA rotulados [IA]).")
     as_html = html_text is not None and st.toggle("Ver versão HTML (autocontida, sem scripts)",
                                                   key="rep_html")
     with st.container(border=True, height=1100):
@@ -61,4 +62,4 @@ def _index_table(reports: list[data.ReportInfo]) -> pd.DataFrame:
                           "Data": fmt.date_br(r.key),
                           "Markdown": r.md.name if r.md else "—",
                           "HTML": r.html.name if r.html else "—",
-                          "Pasta": r.folder.as_posix()} for r in reports])
+                          "Pasta": f"{r.kind}/{r.key.isoformat()}"} for r in reports])

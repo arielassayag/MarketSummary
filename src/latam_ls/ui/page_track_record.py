@@ -1,4 +1,4 @@
-"""Página 2 — Track record diário: registros, grade mensal, vol vs. banda, drawdown e integridade."""
+"""Página 2 — Track record diário: registros, grade mensal, vol × banda, drawdown, integridade."""
 
 from __future__ import annotations
 

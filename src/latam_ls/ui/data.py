@@ -130,6 +130,14 @@ def _attempt[T](issues: list[str], label: str, fn: Callable[[], T], default: T) 
         return default
 
 
+def relative_to(path: Path, root: Path) -> str:
+    """Caminho relativo à raiz configurada (para exibição); fora dela ⇒ caminho completo."""
+    try:
+        return f"{Path(root).name}/{Path(path).relative_to(Path(root)).as_posix()}"
+    except ValueError:
+        return Path(path).as_posix()
+
+
 def read_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
@@ -210,11 +218,10 @@ def load_config_info(path: Path) -> ConfigInfo:
 # ==========================================================
 
 def _shadow_event() -> str:
-    try:
-        from ..workflow.daily import SHADOW_RECORD_EVENT
-    except Exception:  # noqa: BLE001 - módulo em evolução: usa o nome documentado
-        return SHADOW_RECORD_EVENT_FALLBACK
-    return SHADOW_RECORD_EVENT
+    """Tipo de evento de auditoria da série-sombra (``DAILY_RECORD_SHADOW``)."""
+    from ..workflow import track_record
+
+    return str(getattr(track_record, "SHADOW_RECORD_EVENT", SHADOW_RECORD_EVENT_FALLBACK))
 
 
 @dataclass

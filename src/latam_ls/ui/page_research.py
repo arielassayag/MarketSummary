@@ -47,7 +47,8 @@ def _evidence(refs: list[EvidenceRef], facts: dict[str, str], key: str) -> None:
 
 def _macro(wd: data.WeekData) -> None:
     pack = wd.research
-    notes = [m for m in (pack.macro if pack else []) if m.scope.upper() not in data.GOVERNANCE_SCOPES]
+    notes = [m for m in (pack.macro if pack else [])
+             if m.scope.upper() not in data.GOVERNANCE_SCOPES]
     if not notes:
         st.caption("Sem notas macro na semana.")
         return
@@ -104,9 +105,9 @@ def _notes(state: AppState, wd: data.WeekData) -> None:
     st.markdown(f"{len(shown)} nota(s) {ui.IA_BADGE}")
     ui.table(summary, height=min(360, 36 * (len(summary) + 1)))
     for i, n in enumerate(shown[:40]):
-        with st.expander(f"{n.issuer_id} · {_ROLE_PT.get(n.role, n.role)} · stance "
-                         f"{_STANCE.get(n.stance, n.stance)} · confiança {fmt.pct(n.confidence, 0)}",
-                         icon=":material/smart_toy:"):
+        title = (f"{n.issuer_id} · {_ROLE_PT.get(n.role, n.role)} · stance "
+                 f"{_STANCE.get(n.stance, n.stance)} · confiança {fmt.pct(n.confidence, 0)}")
+        with st.expander(title, icon=":material/smart_toy:"):
             st.markdown(f"{ui.IA_BADGE} · provedor {fmt.code(n.provider)} · horizonte "
                         f"{n.horizon_weeks} semanas · nota {fmt.code(n.note_id)}")
             ui.plain(data.render_facts(n.thesis, wd.facts), prefix="**Tese:** ")
@@ -238,7 +239,8 @@ def render(state: AppState) -> None:
     pack = wd.research
     st.markdown(f"Mente: :violet-badge[{fmt.escape_md(wd.mind or fmt.NA)}] · provedor "
                 f"{fmt.code(pack.provider if pack else fmt.NA)} · "
-                f"{len(pack.notes) if pack else 0} notas · {len(pack.macro) if pack else 0} macro · "
+                f"{len(pack.notes) if pack else 0} notas · "
+                f"{len(pack.macro) if pack else 0} macro · "
                 f"{len(pack.views) if pack else 0} visões"
                 + (f" · research_hash `{pack.research_hash()[:16]}…`" if pack else ""))
     ui.section("Governança")

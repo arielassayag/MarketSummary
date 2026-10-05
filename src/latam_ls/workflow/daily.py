@@ -26,6 +26,19 @@ semana (:func:`executable_in`). Decisões autônomas são conferidas com
 é gravada pelo próprio livro (``Book.save_proposal``/``save_decision``/``save_booked``, que
 revalida a aprovação, a carteira aprovada, a cronologia e o KILL_SWITCH).
 
+Uma efetivação JÁ gravada no livro é adotada conferindo a decisão contra os próprios hashes (o
+livro validou o mandato no booking; mudança posterior vira alerta). Com carteira vigente, uma
+decisão descoberta no livro que não passa nas checagens, ou uma execução recusada (livro,
+KILL_SWITCH, linha sem preço/câmbio — :class:`ExecutionRefused`), NÃO interrompe o track record:
+o dia é registrado com a carteira anterior e um alerta com o motivo. Uma decisão inválida passada
+explicitamente (``pending``) continua sendo erro do chamador.
+
+Integridade e ausência de look-ahead: a marcação só parte de um último registro íntegro (hash
+recalculado, CSV e evento de auditoria); os dados são cortados na data do pregão e barra
+intradiária provisória é recusada; o modelo de risco da sessão anterior (exposições da atribuição)
+é estimado com ``store.load(sessão anterior)``, de modo que o registro não depende do caminho
+(rotina diária × backfill).
+
 Contas do dia (USD)
 -------------------
 - As posições derivam com os preços entre rebalanceamentos: o valor de mercado inicial vem das
@@ -818,6 +831,10 @@ class DailyRunner:
 
     def __init__(self, cfg: FundConfig, store: MarketSource, book: Book, track: TrackRecord,
                  *, shadow_track: TrackRecord | None = None, actor: str = DAILY_ACTOR) -> None:
+        if (shadow_track is not None and shadow_track.audit_event == track.audit_event
+                and shadow_track.audit.path.resolve() == track.audit.path.resolve()):
+            raise ValueError("Track record e carteira-sombra compartilham a trilha com o mesmo "
+                             f"tipo de evento ({track.audit_event}): verify() acusaria órfãos.")
         self.cfg = cfg
         self.store = store
         self.book = book
@@ -837,7 +854,7 @@ class DailyRunner:
         book = Book(root, cfg)
         track = TrackRecord(root / "track_record")
         shadow = (TrackRecord(root / "track_record_shadow", audit_event=SHADOW_RECORD_EVENT)
-                  if with_shadow else None)
+                  if with_shadow else None)  # o mesmo tipo seria inferido da pasta
         return cls(cfg, store, book, track, shadow_track=shadow)
 
     @property
@@ -857,20 +874,22 @@ class DailyRunner:
 
     def run_session(self, session_date: date,
                     pending: PendingExecution | None = None) -> DailyRunResult:
+        """Registro do dia (e da sombra). Decisão explícita inválida ⇒ ``ValueError``; decisão
+        descoberta no livro inválida ou execução recusada (livro/KILL_SWITCH/preço) com carteira
+        vigente ⇒ o dia é registrado com a carteira anterior e alerta (sem negociação)."""
         prev = self.track.last()
         if prev is not None and session_date <= prev.date:
             kind = "já registrado" if session_date == prev.date else "anterior ao último registro"
             raise ValueError(f"Pregão {session_date} {kind} ({prev.date}).")
         _check_track_tail(self.track, prev)
-        md = self.store.load(as_of=session_date)
-        if not session_has_prices(md, session_date):
-            raise NoSessionError(f"{session_date}: sem pregão (sem preços de fechamento no "
-                                 "armazenamento de mercado).")
-        plan = self._main_plan(session_date, prev, pending)
+        md = self._session_market(session_date)
+        refusals: list[str] = []
+        plan = self._main_plan(session_date, prev, pending, refusals)
         if prev is None and plan is None:
             raise NoBookError(
                 f"Sem carteira efetivada executável em {session_date}: o track record começa no "
-                "fechamento do pregão de efetivação da primeira carteira aprovada.")
+                "fechamento do pregão de efetivação da primeira carteira aprovada."
+                + (" " + " ".join(refusals) if refusals else ""))
         ctx = self.context(session_date, md, prev)
 
         shadow_res: _SideResult | None = None
@@ -880,20 +899,31 @@ class DailyRunner:
             try:
                 shadow_res, shadow_existing = self._run_shadow(ctx, pending)
             except (ValueError, KeyError, FileExistsError) as exc:
-                shadow_alert = f"Carteira-sombra só-quant não processada: {exc}"
+                shadow_alert = ("Carteira-sombra só-quant não processada: "
+                                f"{clean_text(exc, 600)}")
         shadow_hash = (shadow_res.record.record_hash if shadow_res is not None
                        else shadow_existing.record_hash if shadow_existing is not None else None)
 
-        extra = [shadow_alert] if shadow_alert else []
-        main_res = self._compute_side(self.main, ctx, prev, plan, extra_alerts=extra,
-                                      extra_hashes={"shadow_record": shadow_hash}
-                                      if shadow_hash else None)
+        extra = refusals + ([shadow_alert] if shadow_alert else [])
+        hashes = {"shadow_record": shadow_hash} if shadow_hash else None
 
         # Gravação: primeiro a efetivação do CDP no livro (o passo que o livro pode recusar, ex.:
         # KILL_SWITCH); depois a sombra (efetivação + registro) e por fim o registro do CDP, que
         # já carrega o hash do registro-sombra. Uma nova execução retoma de onde parou.
-        if main_res.commit is not None:
-            main_res.commit()
+        try:
+            main_res = self._compute_side(self.main, ctx, prev, plan, extra_alerts=extra,
+                                          extra_hashes=hashes)
+            if main_res.commit is not None:
+                main_res.commit()
+        except ExecutionRefused as exc:
+            if prev is None or plan is None:
+                raise
+            refused = (f"Execução da decisão da semana {plan.week} RECUSADA no fechamento de "
+                       f"{session_date}: {clean_text(exc, 600)} Carteira anterior mantida (sem "
+                       "negociação).")
+            main_res = self._compute_side(self.main, ctx, prev, None,
+                                          extra_alerts=extra + [refused], extra_hashes=hashes)
+            plan = None
         if shadow_res is not None and self.shadow is not None:
             if shadow_res.commit is not None:
                 shadow_res.commit()
@@ -948,9 +978,10 @@ class DailyRunner:
         """Executa (efetiva) a proposta decidida no fechamento de ``session_date``.
 
         Nocional-alvo = peso × NAV antes dos custos (P&L do dia da carteira antiga incluído);
-        ações pelo fechamento local e câmbio do dia. Persiste no livro (decisão autônoma: helper
-        compatível; humana: ``Book.save_booked``) e devolve o ``BookEntry``. Idempotente quando a
-        mesma decisão já foi efetivada. O registro diário do pregão é gravado por :meth:`run`.
+        ações pelo fechamento local e câmbio do dia. Persiste no livro via :func:`book_execution`
+        (proposta, decisão e ``Book.save_booked``) e devolve o ``BookEntry``. Idempotente quando a
+        mesma decisão já foi efetivada. Recusa do livro ou execução impossível ⇒
+        :class:`ExecutionRefused`. O registro diário do pregão é gravado por :meth:`run`.
         """
         existing = self.book.load_booked(proposal.week)
         if existing is not None:
@@ -958,10 +989,11 @@ class DailyRunner:
                     and existing.approval_hash == decision.approval_hash):
                 return existing
             raise FileExistsError(f"A semana {proposal.week} já foi efetivada com outra decisão.")
-        md = md if md is not None else self.store.load(as_of=session_date)
         prev = self.track.last()
         if prev is not None and session_date <= prev.date:
             raise ValueError(f"Pregão {session_date} já registrado ({prev.date}).")
+        _check_track_tail(self.track, prev)
+        md = self._session_market(session_date, md)
         pending = PendingExecution(proposal, decision, snapshot_hash_now=snapshot_hash_now)
         plan = self._plan_from_pending(session_date, prev, pending)
         ctx = self.context(session_date, md, prev, need_models=False)
@@ -973,13 +1005,15 @@ class DailyRunner:
         if plan.hold:
             entry = self._build_hold_entry(ctx, plan, nav_pre)
         else:
-            execs, _ = self._size(ctx, plan, marked, nav_pre)
+            try:
+                execs, _ = self._size(ctx, plan, marked, nav_pre)
+            except ValueError as exc:
+                raise ExecutionRefused(str(exc)) from exc
             cost, _ = self._costs(ctx, marked.lines, execs, nav_pre, plan)
             entry = self._build_entry(ctx, plan, execs, nav_pre, cost)
-        if plan.preflight is not None:
-            plan.preflight(entry)
         assert plan.persist is not None
-        plan.persist(entry)
+        _guarded(plan.preflight, entry)
+        _guarded(plan.persist, entry)
         return entry
 
     def verify_all(self) -> tuple[bool, list[str]]:
@@ -995,13 +1029,29 @@ class DailyRunner:
         return (not problems, problems)
 
     # ------------------------------------------------------------------ contexto
-    def context(self, session_date: date, md: MarketData | None = None,
-                prev: DailyRecord | None = None, *, need_models: bool = True) -> DailyContext:
-        """Monta os insumos da sessão; ``NoSessionError`` se não houve pregão."""
+    def _session_market(self, session_date: date, md: MarketData | None = None) -> MarketData:
+        """Dados de mercado da sessão sem look-ahead: cortados em ``session_date`` (mesmo que a
+        fonte ou o chamador entregue mais), com fechamento OFICIAL (barra intradiária provisória
+        é recusada) e com preço de fechamento no dia (senão ``NoSessionError``)."""
         md = md if md is not None else self.store.load(as_of=session_date)
+        md = md.truncate(session_date)
+        if session_date in set(md.manifest.provisional_dates):
+            raise ValueError(f"{session_date}: barra intradiária provisória — a marcação e a "
+                             "execução MOC exigem o fechamento oficial do pregão.")
         if not session_has_prices(md, session_date):
             raise NoSessionError(f"{session_date}: sem pregão (sem preços de fechamento no "
                                  "armazenamento de mercado).")
+        return md
+
+    def context(self, session_date: date, md: MarketData | None = None,
+                prev: DailyRecord | None = None, *, need_models: bool = True) -> DailyContext:
+        """Monta os insumos da sessão (sem look-ahead); ``NoSessionError`` se não houve pregão.
+
+        O modelo da sessão anterior é estimado com os dados carregados NA sessão anterior
+        (``store.load(prev.date)``), de modo que o registro não depende do caminho (rotina dia a
+        dia × backfill) nem de retratos atualizados depois (fundamentos, short interest).
+        """
+        md = self._session_market(session_date, md)
         panel = build_asset_panel(md, self.cfg, as_of=session_date)
         ctx = DailyContext(date=session_date, md=md, panel=panel, model=None,
                            book_entry=None, prev=prev)
@@ -1011,7 +1061,7 @@ class DailyRunner:
             except ValueError as exc:
                 ctx.notes.append(f"Efetivação vigente inválida no livro: {exc}")
         if need_models:
-            ctx.model = self._model_for(md, session_date, panel)
+            ctx.model = self._model_at(session_date, md, panel)
             if ctx.model is not None:
                 ctx.risk_model = apply_event_windows(ctx.model, panel.assets["country"], self.cfg,
                                                      session_date)
@@ -1021,18 +1071,23 @@ class DailyRunner:
             elif session_date in self._model_notes:
                 ctx.notes.append(self._model_notes[session_date])
             if prev is not None:
-                ctx.model_prev = self._model_for(md, prev.date)
+                ctx.model_prev = self._model_at(prev.date)
         return ctx
 
-    def _model_for(self, md: MarketData, d: date, panel: AssetPanel | None = None
-                   ) -> RiskModel | None:
-        """Modelo de risco com dados ≤ ``d`` (cacheado por data; falha ⇒ ``None`` anotado)."""
+    def _model_at(self, d: date, md: MarketData | None = None, panel: AssetPanel | None = None
+                  ) -> RiskModel | None:
+        """Modelo de risco estimado com os dados da sessão ``d`` (cacheado por data; falha ⇒
+        ``None`` anotado). Sem ``md``, carrega ``store.load(d)`` — os mesmos dados que a rotina
+        daquela sessão usou."""
         if d in self._models:
             return self._models[d]
         model: RiskModel | None = None
+        if md is None:
+            md = self.store.load(as_of=d)
+        md = md.truncate(d)
         try:
-            p = panel if panel is not None else build_asset_panel(md.truncate(d), self.cfg, as_of=d)
-            model = estimate_risk_model(p, self.cfg, md.truncate(d), as_of=d, issuers=p.eligible)
+            p = panel if panel is not None else build_asset_panel(md, self.cfg, as_of=d)
+            model = estimate_risk_model(p, self.cfg, md, as_of=d, issuers=p.eligible)
         except (ValueError, KeyError, IndexError, np.linalg.LinAlgError) as exc:
             self._model_notes[d] = f"Modelo de risco indisponível em {d}: {exc}"
         self._models[d] = model
@@ -1042,7 +1097,14 @@ class DailyRunner:
 
     # ------------------------------------------------------------------ planos de execução
     def _verify_decision(self, session: date, proposal: Proposal, decision: Decision | None,
-                         snapshot_hash_now: str | None) -> None:
+                         snapshot_hash_now: str | None, *, booked: bool = False) -> list[str]:
+        """Confere a decisão para execução no fechamento de ``session`` e devolve notas.
+
+        A executar (``booked=False``): contra o mandato ATUAL e o snapshot informado. Já
+        efetivada no livro (``booked=True``): o livro validou os hashes no booking, então aqui se
+        confere a integridade da decisão contra os PRÓPRIOS hashes (mudança posterior do mandato
+        não desfaz uma execução já ocorrida; vira nota/alerta).
+        """
         if decision is None:
             raise ValueError(f"Proposta {proposal.proposal_id} sem decisão gravada.")
         if decision.decision != DecisionType.APPROVE:
@@ -1053,14 +1115,20 @@ class DailyRunner:
         if decision.decided_at > close:
             raise ValueError(f"Decisão gravada após o fechamento de {session} "
                              f"({decision.decided_at.isoformat()}): executa no pregão seguinte.")
-        snap = snapshot_hash_now or proposal.snapshot_hash
+        snap = decision.snapshot_hash if booked else (snapshot_hash_now or proposal.snapshot_hash)
+        cfg_hash = decision.config_hash if booked else self.cfg.config_hash()
         if decision.mode == DecisionMode.AUTONOMOUS:
-            _verify_autonomous(proposal, decision, self.cfg, snap)
-            return
-        ok, reasons = verify_decision(decision, proposal, snap, self.cfg.config_hash(),
-                                      decision.research_hash)
-        if not ok:
-            raise ValueError("Aprovação inválida para execução: " + " ".join(reasons))
+            _verify_autonomous(proposal, decision, self.cfg, snap, cfg_hash)
+        else:
+            ok, reasons = verify_decision(decision, proposal, snap, cfg_hash,
+                                          decision.research_hash)
+            if not ok:
+                raise ValueError("Aprovação inválida para execução: " + " ".join(reasons))
+        if booked and decision.config_hash != self.cfg.config_hash():
+            return [f"Mandato atual difere do vigente na decisão da semana {proposal.week} "
+                    "(efetivação já gravada no livro adotada sem revalidar contra o novo "
+                    "mandato)."]
+        return []
 
     def _check_week_window(self, session: date, week: date, prev: DailyRecord | None) -> None:
         if not executable_in(week, session):
@@ -1080,8 +1148,11 @@ class DailyRunner:
                     or existing.approval_hash != decision.approval_hash):
                 raise FileExistsError(f"A semana {proposal.week} já foi efetivada com outra "
                                       "decisão.")
-            self._verify_decision(session, proposal, decision, pending.snapshot_hash_now)
-            return self._adopt_plan(existing, proposal, decision, "livro")
+            notes = self._verify_decision(session, proposal, decision, pending.snapshot_hash_now,
+                                          booked=True)
+            plan = self._adopt_plan(existing, proposal, decision, "livro")
+            plan.notes.extend(notes)
+            return plan
         self._verify_decision(session, proposal, decision, pending.snapshot_hash_now)
         return self._execute_plan(proposal, decision, pending.snapshot_hash_now, "decisão")
 
@@ -1111,46 +1182,86 @@ class DailyRunner:
                      source=source)
 
     def _main_plan(self, session: date, prev: DailyRecord | None,
-                   pending: PendingExecution | None) -> _Plan | None:
+                   pending: PendingExecution | None,
+                   refusals: list[str] | None = None) -> _Plan | None:
+        """Plano de execução do dia: a decisão explícita (inválida ⇒ ``ValueError``) ou a
+        descoberta no livro. Semana descoberta inválida é ignorada com o motivo em ``refusals``
+        (alerta do registro) — a carteira vigente continua sendo marcada."""
         if pending is not None:
             return self._plan_from_pending(session, prev, pending)
+        refusals = refusals if refusals is not None else []
         live = prev.live_book_week if prev is not None else None
-        close = close_datetime(session, self.cfg)
         weeks = [w for w in self.book.list_weeks()
                  if executable_in(w, session) and (live is None or w > live)]
         for w in sorted(weeks, reverse=True):
-            entry = self.book.load_booked(w)
-            if entry is not None:
-                if entry.booked_at > close:
-                    continue
-                proposal = self.main.proposal_for(entry)
-                if proposal is None:
-                    raise ValueError(f"Efetivação da semana {w} sem a proposta correspondente.")
-                decision = self.book.load_decision(w, proposal.version)
-                if decision is None or decision.approval_hash != entry.approval_hash:
-                    raise ValueError(f"Efetivação da semana {w} sem decisão correspondente "
-                                     "(approval_hash).")
-                self._verify_decision(session, proposal, decision, None)
-                return self._adopt_plan(entry, proposal, decision, "livro")
-            proposal = self.book.load_proposal(w)
-            decision = self.book.load_decision(w)
-            if (proposal is None or decision is None or decision.decision != DecisionType.APPROVE
-                    or decision.proposal_id != proposal.proposal_id):
+            try:
+                plan = self._discover_plan(session, w)
+            except ValueError as exc:
+                refusals.append(f"Decisão da semana {w} não executada em {session}: "
+                                f"{clean_text(exc, 600)}")
                 continue
-            if decision.decided_at > close:
-                continue
-            self._verify_decision(session, proposal, decision, None)
-            return self._execute_plan(proposal, decision, None, "decisão")
+            if plan is not None:
+                return plan
         return None
+
+    def _discover_plan(self, session: date, w: date) -> _Plan | None:
+        close = close_datetime(session, self.cfg)
+        entry = self.book.load_booked(w)
+        if entry is not None:
+            if entry.booked_at > close:
+                return None
+            proposal = self.main.proposal_for(entry)
+            if proposal is None:
+                raise ValueError(f"Efetivação da semana {w} sem a proposta correspondente.")
+            decision = self.book.load_decision(w, proposal.version)
+            if decision is None or decision.approval_hash != entry.approval_hash:
+                raise ValueError(f"Efetivação da semana {w} sem decisão correspondente "
+                                 "(approval_hash).")
+            notes = self._verify_decision(session, proposal, decision, None, booked=True)
+            plan = self._adopt_plan(entry, proposal, decision, "livro")
+            plan.notes.extend(notes)
+            return plan
+        proposal = self.book.load_proposal(w)
+        decision = self.book.load_decision(w)
+        if (proposal is None or decision is None or decision.decision != DecisionType.APPROVE
+                or decision.proposal_id != proposal.proposal_id):
+            return None
+        if decision.decided_at > close:
+            return None
+        self._verify_decision(session, proposal, decision, None)
+        return self._execute_plan(proposal, decision, None, "decisão")
 
     def _run_shadow(self, ctx: DailyContext, pending: PendingExecution | None
                     ) -> tuple[_SideResult | None, DailyRecord | None]:
+        """Registro do dia da carteira-sombra. Com série já iniciada, proposta-sombra inválida ou
+        execução recusada vira alerta no registro-sombra (a carteira-sombra anterior continua)."""
         side = self.shadow
         assert side is not None
         prev = side.track.last()
         if prev is not None and prev.date >= ctx.date:
             return None, (prev if prev.date == ctx.date else None)
         _check_track_tail(side.track, prev)
+        alerts: list[str] = []
+        try:
+            plan = self._shadow_plan(side, ctx, prev, pending)
+        except ValueError as exc:
+            if prev is None:
+                raise
+            alerts.append(f"Proposta-sombra não executada em {ctx.date}: {clean_text(exc, 600)}")
+            plan = None
+        if prev is None and plan is None:
+            return None, None
+        try:
+            return self._compute_side(side, ctx, prev, plan, extra_alerts=alerts), None
+        except ExecutionRefused as exc:
+            if prev is None or plan is None:
+                raise
+            alerts.append(f"Execução da proposta-sombra da semana {plan.week} RECUSADA: "
+                          f"{clean_text(exc, 600)} Carteira-sombra anterior mantida.")
+            return self._compute_side(side, ctx, prev, None, extra_alerts=alerts), None
+
+    def _shadow_plan(self, side: _ShadowSide, ctx: DailyContext, prev: DailyRecord | None,
+                     pending: PendingExecution | None) -> _Plan | None:
         live = prev.live_book_week if prev is not None else None
         proposal: Proposal | None = None
         if pending is not None and pending.shadow is not None:
@@ -1162,33 +1273,32 @@ class DailyRunner:
                 raise ValueError("Proposta-sombra com insumos (snapshot/mandato) diferentes da "
                                  "proposta do CDP.")
         else:
-            for w in sorted(side.store.weeks(), reverse=True):
+            weeks = set(side.store.weeks()) | {
+                w for w in self.book.list_weeks()
+                if (self.book.week_dir(w) / BOOK_SHADOW_FILE).exists()}
+            for w in sorted(weeks, reverse=True):
                 if executable_in(w, ctx.date) and (live is None or w > live):
-                    proposal = side.store.load_proposal(w)
+                    proposal = side.store.load_proposal(w) or book_shadow_proposal(self.book, w)
                     break
-        plan: _Plan | None = None
-        if proposal is not None and (live is None or proposal.week > live):
-            if not executable_in(proposal.week, ctx.date):
-                raise ValueError(f"Proposta-sombra da semana {proposal.week} fora da janela.")
-            if proposal.config_hash != self.cfg.config_hash():
-                raise ValueError("Proposta-sombra com mandato diferente do atual.")
-            existing = side.store.load_booked(proposal.week)
-            if existing is not None:
-                plan = self._adopt_plan(existing, proposal, None, "sombra")
-            else:
-                store = side.store
+        if proposal is None or (live is not None and proposal.week <= live):
+            return None
+        if not executable_in(proposal.week, ctx.date):
+            raise ValueError(f"Proposta-sombra da semana {proposal.week} fora da janela.")
+        if proposal.config_hash != self.cfg.config_hash():
+            raise ValueError("Proposta-sombra com mandato diferente do atual.")
+        existing = side.store.load_booked(proposal.week)
+        if existing is not None:
+            return self._adopt_plan(existing, proposal, None, "sombra")
+        store = side.store
 
-                def persist(entry: BookEntry, _p: Proposal = proposal) -> None:
-                    store.save_proposal(_p)
-                    store.save_booked(entry)
+        def persist(entry: BookEntry, _p: Proposal = proposal) -> None:
+            store.save_proposal(_p)
+            store.save_booked(entry)
 
-                plan = _Plan(week=proposal.week, proposal=proposal, decision=None, entry=None,
-                             hold=proposal.optimizer.status == HOLD_STATUS,
-                             approval_hash=proposal.proposal_hash(),
-                             proposal_id=proposal.proposal_id, source="sombra", persist=persist)
-        if prev is None and plan is None:
-            return None, None
-        return self._compute_side(side, ctx, prev, plan), None
+        return _Plan(week=proposal.week, proposal=proposal, decision=None, entry=None,
+                     hold=proposal.optimizer.status == HOLD_STATUS,
+                     approval_hash=proposal.proposal_hash(),
+                     proposal_id=proposal.proposal_id, source="sombra", persist=persist)
 
     # ------------------------------------------------------------------ cálculo do dia
     def _live(self, side: _MainSide | _ShadowSide, prev: DailyRecord | None,
@@ -1234,8 +1344,7 @@ class DailyRunner:
         live_entry, live_prop, ref_prop = self._live(side, prev, alerts)
         marked = self._mark(ctx, prev, ref_prop)
         alerts += marked.alerts
-        model_prev = (self._model_for(ctx.md, prev.date)
-                      if prev is not None and marked.lines else None)
+        model_prev = self._model_at(prev.date) if prev is not None and marked.lines else None
         attribution, factor_pnl, attr_alerts = self._attribution(ctx, prev, marked, model_prev)
         alerts += attr_alerts
 
@@ -1255,7 +1364,10 @@ class DailyRunner:
                               "(sem negociação).")
                 entry = plan.entry or self._build_hold_entry(ctx, plan, nav_pre)
             else:
-                execs, size_alerts = self._size(ctx, plan, marked, nav_pre)
+                try:
+                    execs, size_alerts = self._size(ctx, plan, marked, nav_pre)
+                except ValueError as exc:
+                    raise ExecutionRefused(str(exc)) from exc
                 alerts += size_alerts
                 cost_usd, cost_alerts = self._costs(ctx, marked.lines, execs, nav_pre, plan)
                 alerts += cost_alerts
@@ -1263,13 +1375,12 @@ class DailyRunner:
                 end_lines = _merge_execution(marked.lines, execs)
                 entry = plan.entry or self._build_entry(ctx, plan, execs, nav_pre, cost_usd)
             if plan.entry is None:
-                if plan.preflight is not None:
-                    plan.preflight(entry)
+                _guarded(plan.preflight, entry)
                 persist = plan.persist
                 assert persist is not None
 
                 def commit(_e: BookEntry = entry) -> None:
-                    persist(_e)
+                    _guarded(persist, _e)
             entry_after = entry
             proposal_after = plan.proposal
             if not plan.hold:
@@ -1347,16 +1458,6 @@ class DailyRunner:
             return str(lines.loc[ticker, "currency"])
         return fallback
 
-    def _rate_asof(self, ctx: DailyContext, d: date) -> tuple[float | None, date | None]:
-        rates = ctx.md.rates
-        if FINANCING_RATE_SERIES not in rates.columns:
-            return None, None
-        s = pd.to_numeric(rates[FINANCING_RATE_SERIES], errors="coerce").dropna()
-        s = s[s.index <= pd.Timestamp(d)]
-        if s.empty:
-            return None, None
-        return float(s.iloc[-1]), s.index[-1].date()
-
     def _availability(self, ctx: DailyContext) -> pd.DataFrame:
         if "availability" not in ctx.cache:
             ctx.cache["availability"] = short_availability(ctx.panel, ctx.md, self.cfg)
@@ -1427,15 +1528,11 @@ class DailyRunner:
         equity = float(sum(ln.pnl for ln in lines))
 
         financing = 0.0
-        rate, rate_date = self._rate_asof(ctx, prev.date)
         if days > 0:
-            if rate is None:
-                alerts.append(f"Taxa {FINANCING_RATE_SERIES} indisponível: financiamento do caixa "
-                              "não apurado (zero) no período.")
-            else:
+            rate, _, rate_alerts = financing_rate(ctx.md, prev.date)
+            alerts += rate_alerts
+            if rate is not None:
                 financing = marked_financing(prev.nav_end_usd, rate, days)
-                if rate_date is not None and (prev.date - rate_date).days > RATE_STALE_DAYS:
-                    alerts.append(f"Taxa {FINANCING_RATE_SERIES} defasada (de {rate_date}).")
         borrow = 0.0
         defaulted: list[str] = []
         for ln in lines:
@@ -1491,32 +1588,6 @@ class DailyRunner:
             out += sorted(side_lines, key=lambda a: order[a.name])
         return out, factor_pnl, alerts
 
-    def _factor_returns_source(self, ctx: DailyContext, model_prev: RiskModel
-                               ) -> Callable[[pd.Timestamp], pd.Series | None]:
-        names = model_prev.factor_names
-        frames = [m.factor_returns for m in (ctx.model, model_prev) if m is not None]
-        cache: dict[pd.Timestamp, pd.Series | None] = {}
-
-        def get(s: pd.Timestamp) -> pd.Series | None:
-            if s in cache:
-                return cache[s]
-            row: pd.Series | None = None
-            for fr in frames:
-                if s in fr.index:
-                    row = fr.loc[s].reindex(names)
-                    break
-            if row is None and s == ctx.ts and s in ctx.panel.returns.index:
-                est = cross_sectional_factor_returns(model_prev.exposures,
-                                                     ctx.panel.returns.loc[s],
-                                                     model_prev.specific_var)
-                if est is not None:
-                    row = est.reindex(names)
-                    ctx.cache["factor_fallback"] = True
-            cache[s] = row
-            return row
-
-        return get
-
     def _factor_attribution(self, ctx: DailyContext, prev: DailyRecord | None, marked: _Marked,
                             model_prev: RiskModel | None
                             ) -> tuple[float | None, list[AttributionLine], list[str]]:
@@ -1528,7 +1599,9 @@ class DailyRunner:
             return None, [], [("Atribuição fatorial indisponível (modelo de risco da sessão "
                                "anterior ausente): fatores × específico não calculados. "
                                + note).strip()]
-        get = self._factor_returns_source(ctx, model_prev)
+        session_returns = (ctx.panel.returns.loc[ctx.ts] if ctx.ts in ctx.panel.returns.index
+                           else None)
+        get, source_state = factor_returns_source(ctx.model, model_prev, ctx.ts, session_returns)
         names = model_prev.factor_names
         calendar = ctx.panel.returns.index
         prev_ts, ts = pd.Timestamp(prev.date), ctx.ts
@@ -1574,9 +1647,14 @@ class DailyRunner:
             return None, [], [f"Retornos fatoriais de {ctx.date} indisponíveis (modelo e regressão "
                               "do dia): atribuição fatorial não calculada."]
         alerts: list[str] = []
-        if ctx.cache.get("factor_fallback"):
+        if source_state["fallback"]:
             alerts.append("Retornos fatoriais do dia estimados por regressão cross-section com as "
                           "exposições da sessão anterior.")
+        if source_state["partial"]:
+            detail = "; ".join(f"{d}: {_list(fs)}"
+                               for d, fs in sorted(source_state["partial"].items()))
+            alerts.append("Fatores sem retorno estimado (contribuição fatorial zero, P&L no "
+                          f"específico): {detail}.")
         if missing_days:
             alerts.append("Sessões sem retornos fatoriais na janela de linhas que voltaram a "
                           "negociar (contribuição fatorial zero nelas): "
@@ -1779,11 +1857,17 @@ class DailyRunner:
                     hv, he = historical_var_es(wm, ctx.panel, model, cfg.risk.var_confidence, 1)
                 except ValueError:
                     hv, he = math.nan, math.nan
-                var = float(np.nanmax([pv, hv]))
-                es = float(np.nanmax([pe, he]))
+                var, es = _max_finite(pv, hv), _max_finite(pe, he)
+                if var is None or es is None:
+                    alerts.append("VaR/ES 1d indisponível (paramétrico e histórico não finitos).")
                 try:
                     betas = predicted_betas(model, market_weights(ctx.panel, model.assets))
-                    beta = float(betas.reindex(wm.index).fillna(0.0) @ wm)
+                    b = betas.reindex(wm.index).astype(float)
+                    if b.notna().all():
+                        beta = float(b @ wm)
+                    else:
+                        alerts.append("Beta previsto indisponível para "
+                                      f"{_list(sorted(b.index[b.isna()]))}: beta não apurado.")
                 except ValueError as exc:
                     alerts.append(f"Beta previsto indisponível: {exc}")
                 x = dec.exposures
@@ -1989,12 +2073,26 @@ def _merge_execution(old: list[_Line], execs: list[_Exec]) -> list[_Line]:
 
 
 def _check_track_tail(track: TrackRecord, prev: DailyRecord | None) -> None:
-    """O CSV-resumo precisa terminar no último registro JSON (senão: rode ``verify()``)."""
-    frame = track.frame()
-    if prev is None:
-        if not frame.empty:
-            raise ValueError(f"Track record inconsistente em {track.root}: CSV sem registros JSON.")
+    """O último registro (ponto de partida da marcação do dia) precisa estar íntegro: hash
+    recalculado, CSV terminando nele e evento na trilha (:meth:`TrackRecord.tail_problems`)."""
+    problems = track.tail_problems(prev)
+    if problems:
+        raise ValueError(f"Track record inconsistente em {track.root}: " + " ".join(problems))
+
+
+def _guarded(step: Callable[[BookEntry], object] | None, entry: BookEntry) -> None:
+    """Executa um passo de efetivação; recusas (``ValueError``) viram :class:`ExecutionRefused`."""
+    if step is None:
         return
-    if frame.empty or frame["record_hash"].iloc[-1] != prev.record_hash:
-        raise ValueError(f"Track record inconsistente em {track.root}: o CSV não termina no último "
-                         "registro JSON (rode verify()).")
+    try:
+        step(entry)
+    except ExecutionRefused:
+        raise
+    except ValueError as exc:
+        raise ExecutionRefused(str(exc)) from exc
+
+
+def _max_finite(*values: float) -> float | None:
+    """Maior valor finito (``None`` se nenhum for finito) — VaR/ES conservador sem NaN."""
+    finite = [float(v) for v in values if _finite(v)]
+    return max(finite) if finite else None

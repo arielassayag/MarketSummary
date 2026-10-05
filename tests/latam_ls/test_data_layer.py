@@ -981,9 +981,14 @@ def test_store_refuses_false_holiday_when_data_not_ready(tmp_path):
     assert any("allow_incomplete" in x for x in m.limitations)
     assert m.markets_closed == ["BR"]
     # calendário real (exchange_calendars): 2026-10-12 fecha B3/Santiago/BVC/BYMA
-    assert market_is_open(date(2026, 10, 12), "BR") in (False, None)
-    assert market_is_open(date(2026, 10, 12), "US") in (True, None)
     assert market_is_open(date(2026, 10, 12), "LATAM") is None
+    import importlib.util
+
+    if importlib.util.find_spec("exchange_calendars") is not None:  # dependência do projeto
+        assert market_is_open(date(2026, 10, 12), "BR") is False
+        assert market_is_open(date(2026, 10, 12), "US") is True
+    else:  # pragma: no cover - ambiente sem a biblioteca: desconhecido, nunca "aberto"
+        assert market_is_open(date(2026, 10, 12), "BR") is None
 
 
 # ======================================================================
@@ -1232,3 +1237,34 @@ def test_catch_up_refreshes_slow_data_on_first_session_of_week(tmp_path):
     assert made[date(2026, 10, 5)].slow_refreshed  # segunda normal
     assert made[date(2026, 10, 13)].slow_refreshed  # 1º pregão da semana (segunda sem pregão)
     assert not made[date(2026, 10, 6)].slow_refreshed
+
+
+def test_news_query_window_covers_as_of_when_fetched_later():
+    q = news.NewsQuery("BR_PETROBRAS", "Petrobras", "PETR4", "BR")
+    sess = FakeSession([FakeResponse(200, content=RSS.encode("utf-8"))])
+    news.fetch_issuer_news(q, date(2026, 10, 2), 14, session=sess, sleep=NO_SLEEP,
+                           today=date(2026, 10, 5))
+    assert sess.calls[0][2]["params"]["q"] == "Petrobras PETR4 when:17d"
+    assert news.query_span_days(date(2026, 10, 2), 14, date(2026, 10, 2)) == 14
+
+
+def test_drop_holiday_bars_only_removes_zero_volume_bars_on_closed_markets():
+    from latam_ls.data.snapshot import drop_holiday_bars
+
+    d1, d2 = pd.Timestamp("2026-10-12"), pd.Timestamp("2026-10-13")
+    px = pd.DataFrame({
+        "date": [d1, d1, d1, d2],
+        "ticker": ["DDDD.SN", "AAAA3.SA", "BBBB.MX", "DDDD.SN"],
+        "close": [10.0, 20.0, 30.0, 10.5], "adj_close": [10.0, 20.0, 30.0, 10.5],
+        "volume": [np.nan, 1000.0, np.nan, 5.0],
+        "volume_flag": [yahoo.VOLUME_SUSPECT_FLAG, "", yahoo.VOLUME_SUSPECT_FLAG, ""]})
+
+    def cal(d, m):  # 10-12: CL e BR fechados (calendário); MX aberto
+        return not (d == d1.date() and m in ("CL", "BR"))
+
+    out, counts = drop_holiday_bars(px, cal)
+    assert counts == {"CL": 1}  # barra sintética (sem volume) de mercado fechado
+    kept = set(zip(out["date"], out["ticker"], strict=True))
+    assert (d1, "AAAA3.SA") in kept  # calendário diz fechado, mas houve volume: mantém
+    assert (d1, "BBBB.MX") in kept and (d2, "DDDD.SN") in kept  # mercado aberto: mantém
+    assert drop_holiday_bars(px, None)[0] is px  # sem calendário: nada muda

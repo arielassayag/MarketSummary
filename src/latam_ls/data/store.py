@@ -28,7 +28,15 @@ Garantias:
   reajusta todo o histórico a cada provento); o ``adj_close`` montado na leitura é encadeado e
   reescalado para que o último valor coincida com o ajuste mais recente do Yahoo.
 - :meth:`MarketStore.load` verifica todos os hashes e a cadeia; o manifesto resultante lista
-  os arquivos da base e dos incrementos (o ``content_hash`` muda se qualquer insumo mudar).
+  os arquivos da base (inclusive o ``manifest.json`` da base) e dos incrementos (o
+  ``content_hash`` muda se qualquer insumo mudar). Cada incremento ancora o SHA-256 do
+  manifesto da base (``base_manifest_sha256``): editar limitações/fontes/``is_synthetic`` da base
+  quebra a cadeia.
+- Escrita serializada por lock de arquivo (``root/.write.lock``, ``fcntl.flock``) e pasta
+  temporária única por gravação: dois processos nunca bifurcam a cadeia nem misturam arquivos.
+- Fonte atrasada em dia de pregão (preços ou câmbio das linhas negociadas) => nada é gravado
+  (:class:`DataNotReadyError`); após ``incomplete_grace`` do corte, o dado é tratado como nunca
+  publicado e o incremento é gravado com limitação (o processo autônomo não trava).
 """
 
 from __future__ import annotations
@@ -37,17 +45,26 @@ import json
 import logging
 import math
 import shutil
-from collections.abc import Callable, Sequence
+import uuid
+from collections.abc import Callable, Iterator, Sequence
+from contextlib import contextmanager
 from dataclasses import dataclass
 from datetime import UTC, date, datetime, time, timedelta
 from functools import lru_cache
 from pathlib import Path
+from time import monotonic
+from time import sleep as _sleep
 from typing import Any, Literal
 from zoneinfo import ZoneInfo
 
 import numpy as np
 import pandas as pd
 from pydantic import BaseModel, ConfigDict, Field, field_validator
+
+try:  # lock de arquivo (POSIX); sem fcntl o lock vira no-op documentado
+    import fcntl
+except ImportError:  # pragma: no cover - Windows
+    fcntl = None  # type: ignore[assignment]
 
 from ..config import FundConfig
 from ..contracts import NewsItem, SnapshotFile, SnapshotManifest, SourceRecord
@@ -81,8 +98,10 @@ from .snapshot import (
     adr_parity_report,
     assemble_market_data,
     build_snapshot,
+    drop_holiday_bars,
     filter_news_as_of,
     fx_to_wide,
+    member_path,
     normalize_benchmarks,
     normalize_fx,
     normalize_indexed,
@@ -105,6 +124,11 @@ DEFAULT_CLOSE_CUTOFF = time(19, 0)
 DEFAULT_CLOSE_TZ = "America/Sao_Paulo"
 REVISION_REL_TOL = 1e-6
 READY_MIN_COVERAGE = 0.5
+DEFAULT_INCOMPLETE_GRACE = timedelta(days=3)
+DEFAULT_LOCK_TIMEOUT = 600.0
+LOCK_FILE = ".write.lock"
+# Pregões B3 cobrados do BDI (janela móvel D-21; margem de 1 pregão).
+LENDING_WINDOW_SESSIONS = 20
 # Mercado de listagem (universe.listing_market) -> calendário oficial (exchange_calendars).
 MARKET_CALENDARS = {"BR": "BVMF", "MX": "XMEX", "CL": "XSGO", "CO": "XBOG", "PE": "XLIM",
                     "AR": "XBUE", "US": "XNYS"}
@@ -132,6 +156,9 @@ class IncrementManifest(BaseModel):
     created_at: datetime
     base_as_of: date
     base_content_hash: str
+    base_manifest_sha256: str = Field(
+        default="", description="SHA-256 do manifest.json da base (âncora de limitações, fontes "
+                                "e is_synthetic, que não entram no content_hash do contrato)")
     prev_manifest_hash: str
     universe_sha256: str
     files: list[SnapshotFile]
@@ -194,7 +221,11 @@ def _read_increment_manifest(path: Path) -> IncrementManifest:
 def _verify_increment_files(path: Path, m: IncrementManifest) -> list[str]:
     problems = []
     for f in m.files:
-        p = Path(path) / f.path
+        try:
+            p = member_path(Path(path), f.path)
+        except SnapshotIntegrityError as exc:
+            problems.append(f"{path.name}: {exc}")
+            continue
         if not p.exists():
             problems.append(f"{path.name}: arquivo ausente {f.path}")
         elif sha256_file(p) != f.sha256:
@@ -276,8 +307,13 @@ class MarketStore:
                  close_cutoff: time = DEFAULT_CLOSE_CUTOFF, close_tz: str = DEFAULT_CLOSE_TZ,
                  window_days: int = DEFAULT_WINDOW_DAYS,
                  benchmarks: Sequence[str] | None = None,
-                 calendar: Callable[[date, str], bool | None] | None = None) -> None:
+                 calendar: Callable[[date, str], bool | None] | None = None,
+                 incomplete_grace: timedelta | None = DEFAULT_INCOMPLETE_GRACE,
+                 lock_timeout: float = DEFAULT_LOCK_TIMEOUT) -> None:
         self.root = Path(root)
+        self.incomplete_grace = incomplete_grace
+        self.lock_timeout = float(lock_timeout)
+        self._lock_depth = 0
         self.calendar = calendar or market_is_open
         self.fetchers = fetchers or Fetchers()
         self.cfg = cfg
@@ -287,6 +323,50 @@ class MarketStore:
         self.window_days = int(window_days)
         self.benchmark_symbols = list(benchmarks) if benchmarks is not None else (
             BENCHMARKS + MARKET_INDICATORS)
+
+    # ------------------------------------------------------------------ lock
+    @contextmanager
+    def write_lock(self) -> Iterator[None]:
+        """Lock exclusivo de escrita (``root/.write.lock``), reentrante na mesma instância.
+
+        Espera até ``lock_timeout`` segundos e então levanta :class:`StoreLockedError`. O lock do
+        sistema operacional é liberado automaticamente se o processo morrer (sem lock órfão).
+        """
+        if self._lock_depth > 0 or fcntl is None:
+            self._lock_depth += 1
+            try:
+                yield
+            finally:
+                self._lock_depth -= 1
+            return
+        self.root.mkdir(parents=True, exist_ok=True)
+        with open(self.root / LOCK_FILE, "a+", encoding="utf-8") as fh:
+            deadline = monotonic() + max(0.0, self.lock_timeout)
+            while True:
+                try:
+                    fcntl.flock(fh.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+                    break
+                except BlockingIOError:
+                    if monotonic() >= deadline:
+                        raise StoreLockedError(
+                            f"Repositório {self.root} em uso por outro processo (lock "
+                            f"{LOCK_FILE}); tente novamente.") from None
+                    _sleep(0.2)
+            self._lock_depth = 1
+            try:
+                yield
+            finally:
+                self._lock_depth = 0
+                fcntl.flock(fh.fileno(), fcntl.LOCK_UN)
+
+    @staticmethod
+    def _remove_stale_staging(parent: Path) -> None:
+        """Remove pastas temporárias órfãs (processo que caiu). Só sob o lock de escrita."""
+        if fcntl is None or not parent.exists():
+            return
+        for p in parent.iterdir():
+            if p.is_dir() and p.name.startswith(".") and ".staging" in p.name:
+                shutil.rmtree(p, ignore_errors=True)
 
     # ------------------------------------------------------------------ base
     @property
@@ -317,36 +397,59 @@ class MarketStore:
         m = read_manifest(src)
         verify_files(src, m)
         dest = self.base_root / m.as_of.isoformat()
-        if dest.exists():
-            raise FileExistsError(f"Base já existe: {dest}")
-        if self.bases() and self.bases()[-1].name >= dest.name:
-            raise ValueError("Nova base precisa ser posterior à base mais recente.")
-        self.base_root.mkdir(parents=True, exist_ok=True)
-        staging = self.base_root / f".{dest.name}.staging"
-        if staging.exists():
-            shutil.rmtree(staging)
-        shutil.copytree(src, staging)
-        verify_files(staging, read_manifest(staging))
-        staging.rename(dest)
+        with self.write_lock():
+            if dest.exists():
+                raise FileExistsError(f"Base já existe: {dest}")
+            if self.bases() and self.bases()[-1].name >= dest.name:
+                raise ValueError("Nova base precisa ser posterior à base mais recente.")
+            self.base_root.mkdir(parents=True, exist_ok=True)
+            self._remove_stale_staging(self.base_root)
+            staging = self.base_root / f".{dest.name}.staging-{uuid.uuid4().hex[:10]}"
+            try:
+                shutil.copytree(src, staging)
+                verify_files(staging, read_manifest(staging))
+                staging.rename(dest)
+            except BaseException:
+                shutil.rmtree(staging, ignore_errors=True)
+                raise
         return dest
 
     def build_base(self, universe_path: Path, as_of: date, **kwargs: Any) -> SnapshotManifest:
-        """Coleta e grava uma base diretamente em ``root/base/<as_of>``."""
+        """Coleta e grava uma base diretamente em ``root/base/<as_of>`` (sob o lock de escrita;
+        barras sintéticas de feriado descartadas pelo calendário oficial do repositório)."""
         kwargs.setdefault("fetchers", self.fetchers)
         kwargs.setdefault("cfg", self.cfg)
         kwargs.setdefault("benchmarks", self.benchmark_symbols)
-        return build_snapshot(Path(universe_path), self.base_root / as_of.isoformat(), as_of,
-                              **kwargs)
+        kwargs.setdefault("calendar", self.calendar)
+        with self.write_lock():
+            return build_snapshot(Path(universe_path), self.base_root / as_of.isoformat(), as_of,
+                                  **kwargs)
 
     # ----------------------------------------------------------- incrementos
-    def _all_increments(self) -> list[Increment]:
+    def _scan_increments(self) -> tuple[list[Increment], list[str]]:
+        """Incrementos legíveis + problemas (pasta sem manifesto, manifesto ilegível)."""
         if not self.daily_root.exists():
-            return []
-        out = []
+            return [], []
+        out: list[Increment] = []
+        problems: list[str] = []
         for p in sorted(self.daily_root.iterdir()):
-            if p.is_dir() and not p.name.startswith(".") and (p / FILE_MANIFEST).exists():
+            if not p.is_dir() or p.name.startswith("."):
+                continue
+            if not (p / FILE_MANIFEST).exists():
+                problems.append(f"{p.name}: pasta de incremento sem manifesto")
+                continue
+            try:
                 out.append(Increment(p, _read_increment_manifest(p)))
-        return sorted(out, key=lambda i: i.session_date)
+            except Exception as exc:
+                problems.append(f"{p.name}: manifesto ilegível ou inválido "
+                                f"({exc.__class__.__name__})")
+        return sorted(out, key=lambda i: i.session_date), problems
+
+    def _all_increments(self) -> list[Increment]:
+        out, problems = self._scan_increments()
+        if problems:
+            raise SnapshotIntegrityError("Incrementos inválidos: " + "; ".join(problems))
+        return out
 
     def increments(self, base: Path | None = None) -> list[Increment]:
         """Incrementos encadeados à base (padrão: base mais recente), em ordem de data."""
@@ -361,21 +464,28 @@ class MarketStore:
         return [read_manifest(self.base_dir).as_of] + [i.session_date for i in self.increments()]
 
     def last_date(self) -> date:
-        return self.dates()[-1]
+        dates = self.dates()
+        if not dates:
+            raise FileNotFoundError(f"Nenhuma base em {self.base_root}; use init_base().")
+        return dates[-1]
 
     def verify_chain(self) -> tuple[bool, list[str]]:
         """Verifica hashes da(s) base(s), de cada incremento e o encadeamento."""
         problems: list[str] = []
         base_hashes: dict[str, tuple[Path, SnapshotManifest]] = {}
+        base_manifest_sha: dict[str, str] = {}
         for b in self.bases():
             try:
                 m = read_manifest(b)
                 verify_files(b, m)
                 base_hashes[m.content_hash()] = (b, m)
+                base_manifest_sha[m.content_hash()] = sha256_file(b / FILE_MANIFEST)
             except Exception as exc:
                 problems.append(f"base {b.name}: {exc}")
         by_base: dict[str, list[Increment]] = {}
-        for inc in self._all_increments():
+        incs_all, scan_problems = self._scan_increments()
+        problems.extend(scan_problems)
+        for inc in incs_all:
             by_base.setdefault(inc.manifest.base_content_hash, []).append(inc)
         for h, incs in by_base.items():
             if h not in base_hashes:
@@ -395,6 +505,11 @@ class MarketStore:
                     problems.append(f"{inc.path.name}: data fora de ordem")
                 if m.universe_sha256 != base_hashes[h][1].universe_sha256:
                     problems.append(f"{inc.path.name}: universo difere da base")
+                if m.base_manifest_sha256 and m.base_manifest_sha256 != base_manifest_sha[h]:
+                    problems.append(f"{inc.path.name}: manifesto da base alterado após o "
+                                    "incremento (limitações/fontes/is_synthetic)")
+                if m.is_synthetic != base_hashes[h][1].is_synthetic:
+                    problems.append(f"{inc.path.name}: is_synthetic difere do manifesto da base")
                 problems.extend(_verify_increment_files(inc.path, m))
                 prev_hash, prev_date = m.manifest_hash, m.session_date
         return (not problems), problems
@@ -484,8 +599,11 @@ class MarketStore:
                 items.extend(t.news)
         items = [n for n in news.dedupe_news(items) if n.published_at.date() <= eff]
 
-        files = [SnapshotFile(path=f"base/{base.name}/{f.path}", sha256=f.sha256, rows=f.rows,
-                              description=f.description) for f in bt.manifest.files]
+        files = [SnapshotFile(path=f"base/{base.name}/{FILE_MANIFEST}",
+                              sha256=sha256_file(base / FILE_MANIFEST),
+                              description="Manifesto da base (fontes, limitações, is_synthetic)")]
+        files.extend(SnapshotFile(path=f"base/{base.name}/{f.path}", sha256=f.sha256, rows=f.rows,
+                                  description=f.description) for f in bt.manifest.files)
         sources = list(bt.manifest.sources)
         limitations = list(bt.manifest.limitations)
         created = bt.manifest.created_at
@@ -519,26 +637,37 @@ class MarketStore:
                                   tzinfo=ZoneInfo(self.close_tz))
         return self._now() >= cutoff
 
+    def _week_has_slow_refresh(self, d: date) -> bool:
+        """True se a semana ISO de ``d`` já tem dados lentos (base ou incremento com refresh)."""
+        week = d.isocalendar()[:2]
+        if read_manifest(self.base_dir).as_of.isocalendar()[:2] == week:
+            return True
+        return any(i.session_date.isocalendar()[:2] == week and i.manifest.slow_refreshed
+                   for i in self.increments())
+
     def catch_up(self, until: date, fetchers: Fetchers | None = None,
                  refresh_slow_on_monday: bool = True) -> list[IncrementManifest]:
         """Grava, em ordem, todos os pregões fechados após o último gravado até ``until``.
 
-        Dias sem nenhuma negociação (fins de semana, feriados globais) são pulados.
-        :class:`DataNotReadyError` (fonte atrasada em dia de pregão) interrompe a recuperação e
-        é propagada: os incrementos anteriores ficam gravados e a próxima execução continua.
+        Dias sem nenhuma negociação (fins de semana, feriados globais) são pulados. Dados lentos
+        (fundamentos, short interest, notícias) são renovados no PRIMEIRO incremento gravado de
+        cada semana (normalmente a segunda; se a segunda não tiver pregão, o dia seguinte).
+        :class:`DataNotReadyError` (fonte atrasada em dia de pregão, dentro da carência)
+        interrompe a recuperação e é propagada: os incrementos anteriores ficam gravados e a
+        próxima execução continua.
         """
         out: list[IncrementManifest] = []
-        last = self.last_date()
-        for ts in pd.bdate_range(last + timedelta(days=1), until):
-            d = ts.date()
-            if not self.session_closed(d):
-                break
-            try:
-                out.append(self.append_daily(d, fetchers=fetchers,
-                                             refresh_slow=refresh_slow_on_monday
-                                             and d.weekday() == 0))
-            except NoSessionError as exc:
-                log.info("Sem pregão em %s: %s", d, exc)
+        with self.write_lock():
+            last = self.last_date()
+            for ts in pd.bdate_range(last + timedelta(days=1), until):
+                d = ts.date()
+                if not self.session_closed(d):
+                    break
+                refresh = refresh_slow_on_monday and not self._week_has_slow_refresh(d)
+                try:
+                    out.append(self.append_daily(d, fetchers=fetchers, refresh_slow=refresh))
+                except NoSessionError as exc:
+                    log.info("Sem pregão em %s: %s", d, exc)
         return out
 
     def append_daily(self, session_date: date, fetchers: Fetchers | None = None,
@@ -960,6 +1089,10 @@ class NoSessionError(ValueError):
 
 class DataNotReadyError(RuntimeError):
     """O calendário indica pregão, mas a fonte ainda não publicou os preços (nada é gravado)."""
+
+
+class StoreLockedError(RuntimeError):
+    """Outro processo está gravando no repositório (lock de escrita ocupado)."""
 
 
 @lru_cache(maxsize=16)

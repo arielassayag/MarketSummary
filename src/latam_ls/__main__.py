@@ -96,7 +96,7 @@ def cmd_validate(args: argparse.Namespace) -> int:
     from .workflow.runtime import Runtime
 
     rt = Runtime.from_args(args)
-    ok, issues = rt.validate_inputs(_d(args.week))
+    ok, issues = rt.validate_inputs(_d(args.week), mind=args.mind)
     print("OK" if ok else "FALHOU")
     for i in issues:
         print(f"- {i}")
@@ -120,7 +120,7 @@ def cmd_daily(args: argparse.Namespace) -> int:
     if args.action == "publish":
         out = rt.daily_publish(d)
     else:
-        out = rt.daily_close(d, live=not args.offline)
+        out = rt.daily_close(d, live=not args.offline, mind=args.mind)
     _print(out)
     return 0
 
@@ -205,12 +205,14 @@ def build_parser() -> argparse.ArgumentParser:
 
     s = sub.add_parser("validate", help="valida os arquivos escritos pela mente")
     s.add_argument("--week", required=True)
+    s.add_argument("--mind", choices=["claude-code", "codex", "api", "demo"])
     s.set_defaults(func=cmd_validate)
 
     s = sub.add_parser("daily", help="fechamento diário (close) ou publicação do relatório")
     s.add_argument("action", nargs="?", default="close", choices=["close", "publish"])
     s.add_argument("--date", type=_d)
     s.add_argument("--offline", action="store_true")
+    s.add_argument("--mind", choices=["claude-code", "codex", "api", "demo"])
     s.set_defaults(func=cmd_daily)
 
     s = sub.add_parser("verify", help="verifica trilha de auditoria, track record e decisões")

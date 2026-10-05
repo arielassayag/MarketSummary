@@ -56,7 +56,6 @@ Ausências permanecem ``NaN`` — nunca viram zero.
 from __future__ import annotations
 
 import calendar
-import hashlib
 import io
 import json
 import logging
@@ -71,6 +70,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+from ..hashing import sha256_obj
 from ..universe import Universe
 from .security_master import (
     CVM_DOC_BASE_URL,
@@ -86,6 +86,7 @@ from .security_master import (
     format_cik,
     normalize_text,
     read_cvm_csv,
+    sha256_path,
 )
 
 logger = logging.getLogger(__name__)
@@ -126,7 +127,7 @@ DEFAULT_MAX_AGE_DAYS = 540
 """Idade máxima (``as_of − period_end``) para um fundamento ainda ser usado (≈ 18 meses)."""
 DEFAULT_MAX_PRICE_AGE_DAYS = 7
 
-CVM_PARSER_VERSION = "4"
+CVM_PARSER_VERSION = "5"
 CVM_DOCS = ("ITR", "DFP")
 SEC_COMPANYFACTS_URL = "https://data.sec.gov/api/xbrl/companyfacts/CIK{cik}.json"
 SEC_ACCEPTED_FORMS = frozenset({
@@ -240,7 +241,7 @@ def _known_state(flows: pd.DataFrame, as_of: date | pd.Timestamp | None,
     df = flows
     if as_of is not None:
         df = df[pd.to_datetime(df[date_col]) <= pd.Timestamp(as_of)]
-    df = df.sort_values([date_col, "version"])
+    df = df.sort_values([date_col, "version"], kind="stable")
     by_end: dict[date, dict[date, float]] = {}
     for s, e, v in zip(df["period_start"], df["period_end"], df["value"], strict=True):
         if pd.isna(s) or pd.isna(e) or pd.isna(v):
@@ -284,7 +285,9 @@ def _ttm_history(flows: pd.DataFrame) -> list[dict]:
     df = flows.dropna(subset=["period_start", "period_end", "value", "available_date"])
     if df.empty:
         return []
-    df = df.sort_values(["available_date", "version"])
+    # ordenação total e estável: empates (mesma data/versão) não dependem da ordem de entrada
+    df = df.sort_values(["available_date", "version", "source", "period_end", "period_start",
+                         "value"], kind="stable")
     by_end: dict[date, dict[date, float]] = {}
     anchor: dict[date, tuple[int, int, str, str | None]] = {}
     last: dict[date, float] = {}
@@ -472,6 +475,17 @@ def _prepare_statement(tables: Mapping[str, pd.DataFrame], stmt: str) -> pd.Data
     })
     out = out.dropna(subset=["dt_refer", "versao", "dt_fim", "value"])
     out["versao"] = out["versao"].astype(int)
+    # Os CSVs reais trazem linhas DUPLICADAS para alguns documentos (ex.: 5 documentos no ITR
+    # 2025): somá-las dobraria contas (dívida = 2.01.04 + 2.02.01). Duplicata idêntica ⇒ uma
+    # linha; mesma conta com valores DIVERGENTES ⇒ conta ausente no documento (sem escolha
+    # arbitrária).
+    acct_key = ["cnpj", "dt_refer", "versao", "kind", "dt_ini", "dt_fim", "cd"]
+    out = out.drop_duplicates(acct_key + ["value"], keep="first")
+    conflict = out.duplicated(acct_key, keep=False)
+    if conflict.any():
+        logger.warning("%s: %d linhas com valores divergentes para a mesma conta descartadas.",
+                       stmt, int(conflict.sum()))
+        out = out[~conflict]
     doc_key = ["cnpj", "dt_refer", "versao"]
     has_con = out.loc[out["kind"] == "con", doc_key].drop_duplicates()
     has_con["_con"] = True
@@ -548,10 +562,11 @@ def _balance_facts(bpa: pd.DataFrame, bpp: pd.DataFrame, fin: pd.DataFrame) -> p
         c2 = nf[(nf["cd"] == "1.01.02") & nf["ds"].str.contains("aplica")]
         c1 = _first_per_key(c1, key, ["cd"])
         c2 = _first_per_key(c2, key, ["cd"])
-        cash = c1.merge(c2[key + ["value"]].rename(columns={"value": "v2"}), on=key, how="left")
-        # 1.01.02 (aplicações financeiras) é conta fixa do layout comercial; quando o documento
-        # não a traz, não há o que somar: caixa = 1.01.01 (sem 1.01.01 ⇒ caixa ausente).
-        cash["value"] = cash["value"] + cash["v2"].fillna(0.0)
+        # 1.01.01 e 1.01.02 são contas fixas do layout comercial (presentes em 100% dos ITR
+        # 2025): sem uma delas o caixa fica AUSENTE — nunca soma parcial nem zero implícito.
+        cash = c1.merge(c2[key + ["value"]].rename(columns={"value": "v2"}), on=key,
+                        how="inner")
+        cash["value"] = cash["value"] + cash["v2"]
         facts.append(cash.assign(metric="cash")[cols])
     if not bpp.empty:
         bpp = bpp.copy()
@@ -577,8 +592,12 @@ def _balance_facts(bpa: pd.DataFrame, bpp: pd.DataFrame, fin: pd.DataFrame) -> p
         facts.append(eq.assign(metric="equity")[cols])
         nf = bpp[~bpp["financial"]]
         debt = nf[nf["cd"].isin(["2.01.04", "2.02.01"]) & nf["ds"].str.contains("emprestim")]
+        debt = _first_per_key(debt, key + ["cd"], [])
+        # curto + longo prazo obrigatórios: com só uma das contas a dívida fica AUSENTE
         debt = (debt.groupby(key, as_index=False)
-                .agg(value=("value", "sum"), currency=("currency", "first")))
+                .agg(value=("value", "sum"), currency=("currency", "first"),
+                     n=("cd", "nunique")))
+        debt = debt[debt["n"] == 2]
         facts.append(debt.assign(metric="gross_debt")[cols])
     if not facts:
         return pd.DataFrame(columns=cols)
@@ -672,7 +691,10 @@ def _capital_facts(capital: pd.DataFrame, implied: pd.DataFrame | None = None,
     if equity is not None and not equity.empty:
         out = out.merge(equity.rename(columns={"value": "equity"}), on=key, how="left")
         bvps = out["equity"] / out["value"]
-        small = (out["value"] < SMALL_SHARE_COUNT) & (bvps.abs() > MAX_BOOK_PER_SHARE)
+        # Contagem já corrigida pelo LPA (x1000) nunca é multiplicada de novo: LPA coerente
+        # com milhares contradiz a hipótese de "LPA por lote de mil" do filtro de PL/ação.
+        small = ((out["value"] < SMALL_SHARE_COUNT) & (bvps.abs() > MAX_BOOK_PER_SHARE)
+                 & (out["scale_check"] != "x1000"))
         out.loc[small, "value"] *= 1000.0
         out.loc[small, "scale_check"] = "x1000_pl"
     return out[cols]
@@ -730,16 +752,9 @@ def extract_cvm_facts(tables: Mapping[str, pd.DataFrame], doc: str) -> pd.DataFr
     return out.reset_index(drop=True)
 
 
-def _sha256_file(path: Path) -> str:
-    h = hashlib.sha256()
-    with open(path, "rb") as f:
-        while chunk := f.read(1 << 20):
-            h.update(chunk)
-    return h.hexdigest()
-
-
 def cvm_facts_cached(zip_path: str | Path, doc: str, year: int,
-                     extracted_dir: str | Path | None = None) -> pd.DataFrame:
+                     extracted_dir: str | Path | None = None, *,
+                     zip_sha256: str | None = None) -> pd.DataFrame:
     """Fatos do ZIP com cache por hash (e união com extrações de downloads anteriores).
 
     Cada versão do ZIP baixado gera ``{stem}__{sha16}__p{parser}.parquet``. A leitura une todas
@@ -749,7 +764,7 @@ def cvm_facts_cached(zip_path: str | Path, doc: str, year: int,
     zip_path = Path(zip_path)
     ext_dir = Path(extracted_dir) if extracted_dir else zip_path.parent / "extracted"
     stem = zip_path.stem
-    sha16 = _sha256_file(zip_path)[:16]
+    sha16 = (zip_sha256 or sha256_path(zip_path))[:16]
     target = ext_dir / f"{stem}__{sha16}__p{CVM_PARSER_VERSION}.parquet"
     if not target.exists():
         facts = extract_cvm_facts(read_cvm_zip(zip_path, doc, year), doc)
@@ -763,7 +778,7 @@ def cvm_facts_cached(zip_path: str | Path, doc: str, year: int,
     if not frames:
         return pd.DataFrame(columns=RAW_FACT_COLUMNS)
     out = pd.concat(frames, ignore_index=True)
-    return (out.sort_values(["received_date"])
+    return (out.sort_values(["received_date"], kind="stable")
             .drop_duplicates(["entity", "metric", "period_start", "period_end", "version",
                               "source"], keep="first")
             .reset_index(drop=True))
@@ -834,22 +849,34 @@ def fetch_sec_companyfacts(cik: str | int, *, http_get: HttpGet | None = None,
     if path is not None and path.exists() and not refresh:
         age_days = (time.time() - path.stat().st_mtime) / 86400.0
         if age_days <= max_age_days:
-            return json.loads(path.read_bytes())
+            return _parse_companyfacts(path.read_bytes(), cik10)
     try:
         data = _sec_get(SEC_COMPANYFACTS_URL.format(cik=cik10), http_get, user_agent, limiter)
+        # valida ANTES de gravar: JSON inválido ou de outro CIK nunca entra no cache
+        obj = _parse_companyfacts(data, cik10)
     except HttpError as exc:
         if exc.status == 404:
             return None
         if path is not None and path.exists():
             logger.warning("Falha ao atualizar companyfacts %s (%s); usando cache.", cik10, exc)
-            return json.loads(path.read_bytes())
+            return _parse_companyfacts(path.read_bytes(), cik10)
         raise
-    obj = json.loads(data)
     if path is not None:
         path.parent.mkdir(parents=True, exist_ok=True)
-        tmp = path.with_suffix(".part")
+        tmp = path.with_name(path.name + ".part")
         tmp.write_bytes(data)
         tmp.replace(path)
+    return obj
+
+
+def _parse_companyfacts(data: bytes, cik10: str) -> dict:
+    """JSON ``companyfacts`` validado: objeto com ``facts`` e CIK igual ao pedido."""
+    obj = json.loads(data)
+    if not isinstance(obj, dict) or not isinstance(obj.get("facts", {}), dict):
+        raise ValueError(f"companyfacts com formato inesperado para o CIK {cik10}.")
+    got = format_cik(obj.get("cik"))
+    if got is not None and got != cik10:
+        raise ValueError(f"companyfacts do CIK {got} recebido para o CIK {cik10}.")
     return obj
 
 
@@ -972,6 +999,7 @@ def extract_sec_facts(companyfacts: Mapping) -> pd.DataFrame:
                 dur = (df["end"] - df["start"]).dt.days + 1
                 df = df[dur.between(_QUARTER_DAYS[0], _ANNUAL_DAYS[1])]
             if is_shares:
+                df = df[df["val"] > 0]  # contagem zero/negativa não é informação de capital
                 # Capa (dei) com várias classes no mesmo arquivo/data: soma de valores distintos.
                 df = (df.groupby(["end", "filed", "accn"], as_index=False, dropna=False)
                       .agg(val=("val", lambda s: float(pd.Series(s).drop_duplicates().sum())),
@@ -1046,7 +1074,7 @@ def resolve_share_scale(raw: pd.DataFrame) -> pd.DataFrame:
     out = raw.reset_index(drop=True)  # índice posicional único (entrada pode vir de concat)
     sh = out[is_sh.to_numpy()].copy()
     sh["_check"] = sh["source"].astype(str).str.extract(r"\|unidade:(\w+)$")[0]
-    sh = sh.sort_values(["entity", "period_end", "received_date", "version"])
+    sh = sh.sort_values(["entity", "period_end", "received_date", "version"], kind="stable")
     lo, hi = SHARE_SCALE_BANDS["ok"]
     lo_k, hi_k = SHARE_SCALE_BANDS["x1000"]
     for _, g in sh.groupby("entity", sort=False):
@@ -1080,9 +1108,11 @@ def pit_from_raw_facts(raw: pd.DataFrame, entity_to_issuer: Mapping[str, str | I
                        lag_bdays: int = DEFAULT_LAG_BDAYS) -> pd.DataFrame:
     """Converte fatos brutos em tabela PIT longa (``PIT_COLUMNS``).
 
-    ``available_date = received_date + lag_bdays`` dias úteis. Saldos: uma linha por
-    publicação que muda o valor do período. Fluxos: histórico PIT do TTM (ver módulo).
+    ``available_date = received_date + lag_bdays`` dias úteis (``lag_bdays >= 0``: lag
+    negativo anteciparia a publicação ⇒ ``ValueError``). Saldos: uma linha por publicação que
+    muda o valor do período. Fluxos: histórico PIT do TTM (ver módulo).
     """
+    _check_lag(lag_bdays)
     if raw is None or raw.empty:
         return _empty_pit()
     mapping: list[tuple[str, str]] = []
@@ -1094,7 +1124,7 @@ def pit_from_raw_facts(raw: pd.DataFrame, entity_to_issuer: Mapping[str, str | I
     if not mapping:
         return _empty_pit()
     mp = pd.DataFrame(mapping, columns=["entity", "issuer_id"]).drop_duplicates()
-    df = resolve_share_scale(raw)
+    df = resolve_share_scale(raw).copy()  # nunca altera o DataFrame do chamador
     df["entity"] = df["entity"].astype(str)
     df = df.merge(mp, on="entity", how="inner")
     if df.empty:
@@ -1109,7 +1139,8 @@ def pit_from_raw_facts(raw: pd.DataFrame, entity_to_issuer: Mapping[str, str | I
         df = df[~early]
     out_frames = []
     stocks = df[df["metric"].isin(STOCK_METRICS)].sort_values(
-        ["issuer_id", "metric", "period_end", "available_date", "version", "source"])
+        ["issuer_id", "metric", "period_end", "available_date", "version", "source", "value"],
+        kind="stable")
     stocks = stocks.drop_duplicates(["issuer_id", "metric", "period_end", "available_date",
                                      "version"], keep="first")
     if not stocks.empty:
@@ -1133,7 +1164,14 @@ def pit_from_raw_facts(raw: pd.DataFrame, entity_to_issuer: Mapping[str, str | I
     out = pd.concat([f.reindex(columns=PIT_COLUMNS) for f in out_frames], ignore_index=True)
     out = _coerce_pit(out)
     return out.sort_values(["issuer_id", "metric", "period_end", "available_date",
-                            "version"]).reset_index(drop=True)
+                            "version", "source"], kind="stable").reset_index(drop=True)
+
+
+def _check_lag(lag_bdays: int) -> None:
+    if not isinstance(lag_bdays, (int, np.integer)) or isinstance(lag_bdays, bool) \
+            or lag_bdays < 0:
+        raise ValueError(f"lag_bdays precisa ser inteiro >= 0 (recebido {lag_bdays!r}): lag "
+                         "negativo anteciparia a data de publicação (look-ahead).")
 
 
 def _progress(cb: Callable[[str], None] | None, msg: str) -> None:
@@ -1167,25 +1205,35 @@ def build_pit_fundamentals(
     até ``end.year``, com cache em ``cache_root/cvm`` e ``cache_root/sec``. Mantém linhas com
     ``available_date <= end`` e ``period_end >= start − 760 dias``.
 
-    ``df.attrs`` registra janela, fontes, limitações e cobertura (JSON-serializável).
+    ``df.attrs`` registra janela, fontes, limitações, cobertura, falhas por emissor
+    (``errors``) e o SHA-256 de cada arquivo bruto usado (``source_files``), tudo
+    JSON-serializável. Falha de um CIK na SEC não derruba a montagem: o emissor fica sem dados
+    (ausente, nunca zero) e a falha é registrada.
     """
     if start > end:
         raise ValueError("start precisa ser <= end.")
+    _check_lag(lag_bdays)
     cache_root = Path(cache_root)
     cvm_dir = cache_root / "cvm"
     sec_dir = cache_root / "sec"
+    errors: list[str] = []
     if security_master is None:
         # Identidade (ticker → CNPJ) usa o FCA mais recente: o universo tem tickers atuais e o
-        # CNPJ não muda no tempo (não é dado de mercado, não há look-ahead).
+        # CNPJ não muda no tempo (não é dado de mercado, não há look-ahead). Falha num ano ⇒
+        # tenta o anterior; nenhum FCA por falha (≠ 404) ⇒ erro explícito.
         fca = None
         ref_year = (today or date.today()).year
+        fca_failures: list[Exception] = []
         for year in (ref_year, ref_year - 1, ref_year - 2):
             try:
-                fca = fetch_cvm_fca(year, http_get=http_get, cache_dir=cvm_dir)
+                fca = fetch_cvm_fca(year, http_get=http_get, cache_dir=cvm_dir, today=today)
                 break
-            except HttpError as exc:
-                if exc.status != 404:
-                    raise
+            except (HttpError, ValueError) as exc:
+                if not (isinstance(exc, HttpError) and exc.status == 404):
+                    fca_failures.append(exc)
+                    errors.append(f"FCA {year}: {exc}")
+        if fca is None and fca_failures:
+            raise fca_failures[0]
         sec_t = None
         if include_sec:
             us = [t for t, ln in universe.lines.iterrows()
@@ -1194,8 +1242,9 @@ def build_pit_fundamentals(
                 sec_t = fetch_sec_company_tickers(http_get=http_get, user_agent=user_agent,
                                                   limiter=limiter, fallback_tickers=us,
                                                   cache_dir=sec_dir)
-            except HttpError as exc:
+            except (HttpError, ValueError) as exc:
                 logger.warning("Mapa ticker→CIK da SEC indisponível: %s", exc)
+                errors.append(f"Mapa ticker→CIK da SEC indisponível: {exc}")
         security_master = build_security_master(universe, fca, sec_t)
     sm = security_master
     limitations = [
@@ -1212,6 +1261,7 @@ def build_pit_fundamentals(
     raw_frames: list[pd.DataFrame] = []
     entity_map: dict[str, list[str]] = {}
     sources: list[str] = []
+    source_files: dict[str, str] = {}
     if include_cvm:
         cvm_iss = sm[sm["cnpj"].notna()]
         for iid, cnpj in cvm_iss["cnpj"].items():
@@ -1225,7 +1275,9 @@ def build_pit_fundamentals(
                     if path is None:
                         _progress(progress, f"CVM {doc} {year}: não publicado (404).")
                         continue
-                    facts = cvm_facts_cached(path, doc, year)
+                    sha = sha256_path(path)
+                    source_files[path.name] = sha
+                    facts = cvm_facts_cached(path, doc, year, zip_sha256=sha)
                     facts = facts[facts["entity"].isin(cnpjs)]
                     _progress(progress, f"CVM {doc} {year}: {len(facts)} fatos do universo.")
                     raw_frames.append(facts)
@@ -1237,12 +1289,22 @@ def build_pit_fundamentals(
     if include_sec:
         sec_iss = sm[sm["cik"].notna() & ~sm.index.astype(str).isin(sorted(cvm_covered))]
         for iid, cik in sec_iss["cik"].items():
-            obj = fetch_sec_companyfacts(cik, http_get=http_get, cache_dir=sec_dir,
-                                         max_age_days=sec_max_age_days, user_agent=user_agent,
-                                         limiter=limiter)
+            try:
+                obj = fetch_sec_companyfacts(cik, http_get=http_get, cache_dir=sec_dir,
+                                             max_age_days=sec_max_age_days,
+                                             user_agent=user_agent, limiter=limiter)
+            except (HttpError, ValueError) as exc:
+                msg = f"SEC CIK {cik} ({iid}): falha ao obter companyfacts ({exc})."
+                logger.warning(msg)
+                errors.append(msg)
+                _progress(progress, msg)
+                continue
             if obj is None:
                 _progress(progress, f"SEC CIK {cik} ({iid}): sem companyfacts (404).")
                 continue
+            cf_path = sec_dir / f"companyfacts_CIK{format_cik(cik)}.json"
+            if cf_path.exists():
+                source_files[cf_path.name] = sha256_path(cf_path)
             facts = extract_sec_facts(obj)
             entity_map.setdefault(str(format_cik(cik)), []).append(str(iid))
             _progress(progress, f"SEC CIK {cik} ({iid}): {len(facts)} fatos.")
@@ -1265,6 +1327,8 @@ def build_pit_fundamentals(
         "issuers_requested": int(len(sm)),
         "issuers_with_data": int(cov.shape[0]),
         "issuers_without_data": sorted(set(sm.index.astype(str)) - set(cov.index.astype(str))),
+        "errors": errors,
+        "source_files": dict(sorted(source_files.items())),
     }
     return pit
 
@@ -1379,28 +1443,25 @@ def local_equivalent_prices(close: pd.DataFrame, fx: pd.DataFrame, line_master: 
     (ON/PN antes de unit), depois ADR/US; dentro de cada grupo a linha primária e depois a
     ordem alfabética. Exige ``shares_per_line`` conhecido. Conversão:
     ``preço_linha / ações_por_linha × fx[moeda_linha] / fx[moeda_demonstrações]`` com ``fx`` em
-    USD por unidade (``USD`` = 1). Câmbio pode ser propagado até ``fx_max_gap_days`` dias;
-    preços NUNCA são propagados.
+    USD por unidade (``USD`` = 1). Câmbio pode ser propagado por até ``fx_max_gap_days`` dias
+    CORRIDOS desde a última cotação (nunca para trás); preços NUNCA são propagados. Moeda das
+    demonstrações ausente (``None``/``NaN``/``pd.NA``) ⇒ coluna ``NaN``.
     """
     stmt = pd.Series(statement_currency, dtype=object)
     want = list(issuers) if issuers is not None else sorted(stmt.index.astype(str))
-    fxx = fx.copy()
-    fxx.index = pd.to_datetime(fxx.index)
-    fxx = fxx.sort_index().reindex(pd.to_datetime(close.index).union(fxx.index))
-    fxx = fxx.ffill(limit=fx_max_gap_days)
-    if "USD" not in fxx.columns:
-        fxx["USD"] = 1.0
     cl = close.copy()
     cl.index = pd.to_datetime(cl.index)
+    fxx = _fx_on_dates(fx, cl.index, fx_max_gap_days)
     out = {}
     for iid in want:
         s_ccy = stmt.get(iid)
         lines = line_master[(line_master["issuer_id"] == iid)
                             & line_master["shares_per_line"].notna()
                             & line_master.index.isin(cl.columns)]
-        if lines.empty or s_ccy is None or (isinstance(s_ccy, float) and math.isnan(s_ccy)):
+        if lines.empty or s_ccy is None or pd.isna(s_ccy) or not str(s_ccy).strip():
             out[iid] = pd.Series(np.nan, index=cl.index)
             continue
+        s_ccy = str(s_ccy).strip()
         rank = pd.DataFrame({
             "other_ccy": (lines["currency"] != s_ccy).astype(int),
             "unit": (lines["share_class"] == "UNIT").astype(int),
@@ -1415,10 +1476,28 @@ def local_equivalent_prices(close: pd.DataFrame, fx: pd.DataFrame, line_master: 
             if l_ccy not in fxx.columns or s_ccy not in fxx.columns:
                 out[iid] = pd.Series(np.nan, index=cl.index)
                 continue
-            conv = (fxx[l_ccy] / fxx[s_ccy]).reindex(cl.index)
-            px = px * conv
+            px = px * (fxx[l_ccy] / fxx[s_ccy])
         out[iid] = px
     return pd.DataFrame(out, index=cl.index)
+
+
+def _fx_on_dates(fx: pd.DataFrame, dates: pd.DatetimeIndex, max_gap_days: int) -> pd.DataFrame:
+    """Câmbio nas ``dates``: última cotação ``<=`` data com idade até ``max_gap_days`` dias."""
+    fxx = fx.copy()
+    fxx.index = pd.to_datetime(fxx.index)
+    fxx = fxx[~fxx.index.duplicated(keep="last")].sort_index()
+    if "USD" not in fxx.columns:
+        fxx["USD"] = 1.0
+    grid = pd.DatetimeIndex(dates).union(fxx.index)
+    full = fxx.reindex(grid)
+    out = {}
+    for c in full.columns:
+        col = pd.to_numeric(full[c], errors="coerce")
+        col = col.where(col > 0)
+        last_obs = pd.Series(grid.where(col.notna()), index=grid).ffill()
+        age = (pd.Series(grid, index=grid) - last_obs).dt.days
+        out[c] = col.ffill().where(age <= max_gap_days)
+    return pd.DataFrame(out, index=grid).reindex(pd.DatetimeIndex(dates))
 
 
 # ==========================================================
@@ -1426,31 +1505,73 @@ def local_equivalent_prices(close: pd.DataFrame, fx: pd.DataFrame, line_master: 
 # ==========================================================
 
 def validate_pit(df: pd.DataFrame) -> None:
-    """Valida esquema e invariantes da tabela PIT (levanta ``ValueError``)."""
+    """Valida esquema e invariantes da tabela PIT (levanta ``ValueError``).
+
+    Datas obrigatórias, valores finitos (ausência = sem linha, nunca ``NaN``/``inf``), ações
+    positivas, ``available_date >= period_end`` (sem look-ahead) e sem publicações duplicadas.
+    """
     missing = [c for c in PIT_COLUMNS if c not in df.columns]
     if missing:
         raise ValueError(f"Tabela PIT sem colunas: {missing}")
     bad = sorted(set(df["metric"]) - set(PIT_METRICS))
     if bad:
         raise ValueError(f"Métricas desconhecidas na tabela PIT: {bad}")
-    if df["value"].isna().any():
+    values = pd.to_numeric(df["value"], errors="coerce")
+    if values.isna().any():
         raise ValueError("Tabela PIT não armazena valores ausentes (ausência = sem linha).")
-    if (pd.to_datetime(df["available_date"]) < pd.to_datetime(df["period_end"])).any():
+    if not np.isfinite(values.to_numpy(dtype=float)).all():
+        raise ValueError("Tabela PIT só aceita valores finitos (inf encontrado).")
+    pe = pd.to_datetime(df["period_end"])
+    av = pd.to_datetime(df["available_date"])
+    if pe.isna().any() or av.isna().any():
+        raise ValueError("Tabela PIT com datas ausentes (period_end/available_date).")
+    if (av < pe).any():
         raise ValueError("available_date anterior ao fim do período (look-ahead).")
+    if (values[df["metric"] == "shares_outstanding"] <= 0).any():
+        raise ValueError("Tabela PIT com quantidade de ações não positiva.")
+    if pd.to_numeric(df["version"], errors="coerce").isna().any():
+        raise ValueError("Tabela PIT com versão ausente.")
     dup = df.duplicated(["issuer_id", "metric", "period_end", "available_date", "version"])
     if dup.any():
         raise ValueError("Linhas PIT duplicadas para a mesma publicação.")
 
 
-def save_pit(df: pd.DataFrame, path: str | Path = DEFAULT_PIT_PATH) -> Path:
-    """Grava a tabela PIT em parquet (zstd) após validação; não sobrescreve outro arquivo
-    silenciosamente — escreve em ``.part`` e renomeia (atômico)."""
+def pit_content_sha256(df: pd.DataFrame) -> str:
+    """SHA-256 canônico do CONTEÚDO da tabela PIT (independe da ordem das linhas e de attrs).
+
+    Usado por :func:`save_pit`/:func:`load_pit` para detectar adulteração e para o integrador
+    registrar a versão exata dos fundamentos no manifesto do snapshot.
+    """
+    c = _coerce_pit(df)
+    c = c.sort_values(PIT_COLUMNS, kind="stable", na_position="first")
+    rows = [
+        [i, m, pe.date().isoformat(), av.date().isoformat(), float(v),
+         None if pd.isna(ccy) else str(ccy), src, int(ver)]
+        for i, m, pe, av, v, ccy, src, ver in zip(
+            c["issuer_id"], c["metric"], c["period_end"], c["available_date"], c["value"],
+            c["currency"], c["source"], c["version"], strict=True)
+    ]
+    return sha256_obj({"columns": PIT_COLUMNS, "rows": rows})
+
+
+def save_pit(df: pd.DataFrame, path: str | Path = DEFAULT_PIT_PATH, *,
+             overwrite: bool = False) -> Path:
+    """Grava a tabela PIT em parquet (zstd) após validação, com hash de conteúdo nos metadados.
+
+    Nunca sobrescreve silenciosamente: arquivo existente ⇒ ``FileExistsError``, salvo
+    ``overwrite=True`` explícito. Escrita atômica (``.part`` + rename). ``attrs`` (JSON) e
+    ``attrs["content_sha256"]`` (:func:`pit_content_sha256`) vão para o parquet.
+    """
     validate_pit(df)
     p = Path(path)
+    if p.exists() and not overwrite:
+        raise FileExistsError(f"{p} já existe; use overwrite=True para substituir.")
     p.parent.mkdir(parents=True, exist_ok=True)
     tmp = p.with_suffix(p.suffix + ".part")
     out = _coerce_pit(df)
-    out.attrs = {k: v for k, v in df.attrs.items() if _json_ok(v)}
+    attrs = {k: v for k, v in df.attrs.items() if k != "content_sha256" and _json_ok(v)}
+    attrs["content_sha256"] = pit_content_sha256(out)
+    out.attrs = attrs
     out.to_parquet(tmp, index=False, compression="zstd")
     tmp.replace(p)
     return p
@@ -1460,16 +1581,28 @@ def _json_ok(v) -> bool:
     try:
         json.dumps(v)
         return True
-    except TypeError:
+    except (TypeError, ValueError):
         return False
 
 
-def load_pit(path: str | Path = DEFAULT_PIT_PATH) -> pd.DataFrame:
-    """Lê e valida uma tabela PIT gravada por :func:`save_pit`."""
+def load_pit(path: str | Path = DEFAULT_PIT_PATH, *, verify: bool = True) -> pd.DataFrame:
+    """Lê e valida uma tabela PIT gravada por :func:`save_pit`.
+
+    ``verify=True`` (padrão) recalcula o hash do conteúdo e exige que confira com o gravado:
+    divergência (adulteração/corrupção) ou hash ausente ⇒ ``ValueError``.
+    """
     df = pd.read_parquet(Path(path))
     attrs = dict(df.attrs)
     out = _coerce_pit(df)
     validate_pit(out)
+    if verify:
+        expected = attrs.get("content_sha256")
+        if not isinstance(expected, str) or not expected:
+            raise ValueError(f"{path}: tabela PIT sem hash de conteúdo (content_sha256); "
+                             "regrave com save_pit ou leia com verify=False.")
+        if pit_content_sha256(out) != expected:
+            raise ValueError(f"{path}: conteúdo da tabela PIT diverge do hash gravado "
+                             "(arquivo adulterado ou corrompido).")
     out.attrs = attrs
     return out
 
@@ -1496,5 +1629,5 @@ __all__ = [
     "fetch_cvm_zip", "read_cvm_zip", "extract_cvm_facts", "cvm_facts_cached",
     "fetch_sec_companyfacts", "extract_sec_facts", "resolve_share_scale", "pit_from_raw_facts",
     "build_pit_fundamentals", "pit_snapshot", "pit_ratios", "local_equivalent_prices",
-    "validate_pit", "save_pit", "load_pit", "pit_coverage",
+    "validate_pit", "save_pit", "load_pit", "pit_coverage", "pit_content_sha256",
 ]

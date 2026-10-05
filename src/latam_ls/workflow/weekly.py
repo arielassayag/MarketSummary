@@ -425,6 +425,10 @@ def build_proposal(ctx: WeekContext, *, views: list[View], overrides: dict | Non
     result = optimize(alpha_adj, ctx.model, constraints, ctx.cost_model, cfg, ctx.nav,
                       current=current, inception=ctx.inception, market_w=ctx.market_w,
                       overrides=opt_overrides)
+    constraints, result, repair_log = _repair_single_name_risk(
+        ctx, constraints, result, lambda c: optimize(
+            alpha_adj, ctx.model, c, ctx.cost_model, cfg, ctx.nav, current=current,
+            inception=ctx.inception, market_w=ctx.market_w, overrides=opt_overrides))
     w = result.weights[result.weights.abs() > 0]
     checks = run_compliance(w, ctx.model, constraints, ctx.squeeze, ctx.panel.assets, cfg,
                             ctx.nav, current, ctx.inception, ctx.as_of, ctx.week, ctx.market_w,
@@ -449,7 +453,8 @@ def build_proposal(ctx: WeekContext, *, views: list[View], overrides: dict | Non
                           line_adtv=ctx.panel.lines["adtv_usd"])
     hedges = fx_hedges(positions, ctx.nav)
     diag = result.diagnostics
-    notes = list(diag.notes) + list(ctx.notes) + list(extra_notes or []) + [f"[visões] {x}" for x in vlog]
+    notes = (list(diag.notes) + list(ctx.notes) + list(extra_notes or [])
+             + [f"[visões] {x}" for x in vlog] + [f"[risco por nome] {x}" for x in repair_log])
     diag = OptimizerDiagnostics(**{**diag.model_dump(), "notes": notes})
     week_id = ctx.week.isoformat()
     proposal = Proposal(
@@ -467,6 +472,41 @@ def build_proposal(ctx: WeekContext, *, views: list[View], overrides: dict | Non
     proposal = proposal.model_copy(update={"memo_markdown": memo})
     return ProposalBuild(proposal=proposal, result=result, constraints=constraints,
                          alpha_used=alpha_adj, view_log=vlog)
+
+
+SINGLE_NAME_REPAIR_ITERS = 3
+SINGLE_NAME_REPAIR_MARGIN = 0.97
+
+
+def _repair_single_name_risk(ctx: WeekContext, constraints: pd.DataFrame,
+                             result: OptimizationResult, solve
+                             ) -> tuple[pd.DataFrame, OptimizationResult, list[str]]:
+    """Reotimiza enquanto algum nome passar da participação máxima na variância (Euler).
+
+    O teto convexo de risco específico não enxerga a covariância fatorial do nome; aqui, para cada
+    nome acima do limite, o teto do lado é reduzido para |w|·√(limite/participação)·margem e a
+    carteira é reotimizada (no máximo ``SINGLE_NAME_REPAIR_ITERS`` vezes). Só aperta limites.
+    """
+    limit = float(ctx.cfg.risk.max_single_name_risk_share)
+    log: list[str] = []
+    c = constraints
+    for it in range(1, SINGLE_NAME_REPAIR_ITERS + 1):
+        w = result.weights[result.weights.abs() > 0]
+        if w.empty:
+            break
+        share = risk_decomposition(w, ctx.model).asset_contrib.dropna()
+        over = share[share > limit]
+        if over.empty:
+            break
+        c = c.copy()
+        for iid, sh in over.sort_values(ascending=False).items():
+            col = "max_long" if w[iid] > 0 else "max_short"
+            cap = abs(float(w[iid])) * float(np.sqrt(limit / sh)) * SINGLE_NAME_REPAIR_MARGIN
+            c.loc[iid, col] = min(float(c.loc[iid, col]), cap)
+            log.append(f"passo {it}: {iid} com {sh:.2%} da variância (limite {limit:.2%}); "
+                       f"teto {col} reduzido para {cap:.2%}")
+        result = solve(c)
+    return c, result, log
 
 
 def apply_liquidity_minimums(constraints: pd.DataFrame, cfg: FundConfig,

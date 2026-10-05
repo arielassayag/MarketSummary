@@ -216,13 +216,25 @@ def window_bounds(as_of: date, lookback_days: int, tz_name: str) -> tuple[dateti
     return start.astimezone(UTC), end.astimezone(UTC)
 
 
+def query_span_days(as_of: date, lookback_days: int, today: date | None = None) -> int:
+    """Dias do operador ``when:`` (relativo a HOJE) que cobrem ``[as_of - lookback, as_of]``.
+
+    Numa coleta feita depois de ``as_of`` (ex.: snapshot de sexta montado na segunda), ``when:``
+    só com o lookback perderia o início da janela; o excesso é cortado pelo filtro de datas.
+    """
+    ref = today or datetime.now(UTC).date()
+    return int(lookback_days) + max(0, (ref - as_of).days)
+
+
 def fetch_issuer_news(query: NewsQuery, as_of: date, lookback_days: int, *,
                       session: Any | None = None, sleep: Sleeper = time.sleep,
-                      sanitizer: Callable[[str], str] | None = None) -> list[NewsItem]:
+                      sanitizer: Callable[[str], str] | None = None,
+                      today: date | None = None) -> list[NewsItem]:
     """Manchetes de um emissor dentro da janela (sem itens futuros)."""
     hl, gl, ceid, lang, tz_name = query.locale
+    span = query_span_days(as_of, lookback_days, today)
     resp = http_request("GET", GOOGLE_NEWS_RSS, session=session, sleep=sleep,
-                        params={"q": query.query_text(lookback_days), "hl": hl, "gl": gl,
+                        params={"q": query.query_text(span), "hl": hl, "gl": gl,
                                 "ceid": ceid})
     if resp.status_code != 200:
         raise FetchError(f"Google News RSS HTTP {resp.status_code} ({query.issuer_id})")
@@ -268,7 +280,8 @@ def dedupe_news(items: Iterable[NewsItem]) -> list[NewsItem]:
 
 def fetch_news(queries: Sequence[NewsQuery], as_of: date, lookback_days: int = 14, *,
                session: Any | None = None, max_workers: int = NEWS_MAX_WORKERS,
-               sleep: Sleeper = time.sleep) -> tuple[list[NewsItem], list[str]]:
+               sleep: Sleeper = time.sleep, today: date | None = None
+               ) -> tuple[list[NewsItem], list[str]]:
     """Notícias de vários emissores (4 threads por padrão). Devolve ``(itens, falhas)``.
 
     Se TODAS as consultas falharem, levanta :class:`FetchError` (fonte indisponível).
@@ -278,7 +291,7 @@ def fetch_news(queries: Sequence[NewsQuery], as_of: date, lookback_days: int = 1
     def one(q: NewsQuery) -> tuple[str, list[NewsItem] | None]:
         try:
             return q.issuer_id, fetch_issuer_news(q, as_of, lookback_days, session=session,
-                                                  sleep=sleep, sanitizer=san)
+                                                  sleep=sleep, sanitizer=san, today=today)
         except Exception as exc:
             log.warning("Notícias indisponíveis para %s: %r", q.issuer_id, exc)
             return q.issuer_id, None

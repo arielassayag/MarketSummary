@@ -345,7 +345,8 @@ class TrackRecord:
             raise ValueError(f"Registro de {record.date} {kind} (último: {last.date}).")
         incoherent = record_consistency(record, last)
         if incoherent:
-            raise ValueError("Contas do NAV incoerentes; registro recusado: " + " ".join(incoherent))
+            raise ValueError("Contas do NAV incoerentes; registro recusado: "
+                             + " ".join(incoherent))
         text = record_json(record)
         if DailyRecord.model_validate_json(text).compute_hash() != record.record_hash:
             raise ValueError("Registro não é serializável de forma estável (hash muda ao "

@@ -153,7 +153,8 @@ class Runtime:
             md = store.load(as_of=prev)
             info: dict = {"week": week, "previous_session": prev,
                           "store_content_hash": md.manifest.content_hash(), "live": live,
-                          "config_hash": self.cfg.config_hash()}
+                          "config_hash": self.cfg.config_hash(),
+                          "prepared_at": datetime.now(UTC)}
             if live:
                 captured = datetime.now(UTC)
                 lines = list(md.universe.lines.index)
@@ -216,8 +217,74 @@ class Runtime:
     def week_dir(self, week: date) -> Path:
         return self.book_root / week.isoformat()
 
+    def _previous_week(self, week: date) -> date | None:
+        weeks = [w for w in self.book.list_weeks() if w < week]
+        return weeks[-1] if weeks else None
+
+    def _previous_views(self, week: date):
+        """Visões e decisão estruturada da semana anterior (para a avaliação da semana)."""
+        from ..research.pm_agent import PM_INPUT, PMDecisionOutput
+
+        prev = self._previous_week(week)
+        if prev is None:
+            return [], None, None
+        pack = self.book.load_research_pack(prev)
+        out = None
+        path = self.week_dir(prev) / "inputs" / PM_INPUT
+        if path.exists():
+            try:
+                out = PMDecisionOutput.model_validate_json(path.read_text(encoding="utf-8"))
+            except ValueError:
+                out = None
+        return (list(pack.views) if pack else []), out, prev
+
+    @staticmethod
+    def _realized_residual(ctx, since: date | None, week: date) -> pd.Series | None:
+        """Σ resíduos diários do modelo de risco entre a efetivação anterior e a semana atual."""
+        if since is None:
+            return None
+        sr = ctx.model.specific_returns
+        idx = pd.to_datetime(sr.index)
+        mask = (idx > pd.Timestamp(since)) & (idx < pd.Timestamp(week))
+        if not mask.any():
+            return None
+        return sr.loc[mask].sum(min_count=1)
+
+    def _pm_context(self, md: MarketData, ctx, week: date, fb, analysis_ts: datetime | None):
+        from ..research.pm_agent import PMContext
+
+        longs, shorts = self._candidates(ctx, self.cfg.research.top_n_candidates)
+        prev_views, prev_out, prev_week = self._previous_views(week)
+        dd, vol = self.drawdown_and_vol()
+        return PMContext(
+            week=week, as_of=md.as_of, fund_name=self.cfg.fund.name, factbook=fb,
+            universe_issuers=ctx.panel.assets[["issuer_name", "country", "sector"]],
+            quant_alpha_z=ctx.alpha.composite_z, quant_candidates_long=longs,
+            quant_candidates_short=shorts, current_book=ctx.current_positions,
+            previous_views=prev_views, previous_pm_output=prev_out, research_notes=[],
+            macro_notes=[], drawdown=dd if self.last_record_date() else None,
+            realized_vol_21d=vol, track_record_facts={}, kill_switch=self.kill_switch_active(),
+            cfg=self.cfg, news=list(md.news),
+            realized_residual_returns=self._realized_residual(ctx, prev_week, week),
+            analysis_ts=analysis_ts)
+
+    @staticmethod
+    def _analysis_ts(info: dict) -> datetime | None:
+        raw = info.get("captured_at") or info.get("prepared_at")
+        return datetime.fromisoformat(str(raw)) if raw else None
+
+    def _week_state(self, week: date):
+        """Reconstrói (com verificação de hash) o estado exato do ``prepare`` da semana."""
+        briefing = self.week_dir(week) / "briefing"
+        md, info = self.market_for_week(week, live=False, briefing_dir=briefing, record=False)
+        ctx = self._context(md, week)
+        longs, shorts = self._candidates(ctx, self.cfg.research.top_n_candidates)
+        fb = self._factbook(ctx, sorted(set(longs) | set(shorts)))
+        pmctx = self._pm_context(md, ctx, week, fb, self._analysis_ts(info))
+        return md, info, ctx, fb, pmctx
+
     def weekly_prepare(self, week: date, *, mind: str, live: bool = True) -> dict:
-        from ..research.pm_agent import PMContext, write_briefing_bundle
+        from ..research.pm_agent import write_briefing_bundle
 
         if first_session_of_week(week) != week:
             raise ValueError(f"{week} não é o primeiro pregão da semana na B3.")
@@ -228,133 +295,169 @@ class Runtime:
         ctx = self._context(md, week)
         longs, shorts = self._candidates(ctx, self.cfg.research.top_n_candidates)
         fb = self._factbook(ctx, sorted(set(longs) | set(shorts)))
-        prev_views, prev_out = self._previous_views(week)
-        dd, vol = self.drawdown_and_vol()
-        pmctx = PMContext(
-            week=week, as_of=md.as_of, fund_name=self.cfg.fund.name, factbook=fb,
-            universe_issuers=ctx.panel.assets[["issuer_name", "country", "sector"]],
-            quant_alpha_z=ctx.alpha.composite_z, quant_candidates_long=longs,
-            quant_candidates_short=shorts,
-            current_book=ctx.current_positions, previous_views=prev_views,
-            previous_pm_output=prev_out, research_notes=[], macro_notes=[], drawdown=dd,
-            realized_vol_21d=vol, track_record_facts={}, kill_switch=self.kill_switch_active())
+        pmctx = self._pm_context(md, ctx, week, fb, self._analysis_ts(info))
         paths = write_briefing_bundle(pmctx, briefing, mind_hint=mind)
         (self.week_dir(week) / "inputs").mkdir(parents=True, exist_ok=True)
         self.book.audit.append("WEEKLY_PREPARED", mind, info,
                                summary=f"Briefing da semana {week} preparado pela mente {mind}.",
                                week=week)
-        return {"semana": week, "briefing": str(briefing), "arquivos": {k: str(v) for k, v in paths.items()},
+        return {"semana": week, "briefing": str(briefing),
+                "arquivos": {k: str(v) for k, v in paths.items()},
+                "entradas": str(self.week_dir(week) / "inputs"),
                 "candidatos_long": len(longs), "candidatos_short": len(shorts),
+                "emissores_elegiveis": int(ctx.panel.assets["eligible"].sum()),
+                "barra_provisoria": bool(info.get("live")),
                 "snapshot_hash": info["snapshot_hash"], "falhas_coleta": info.get("slow_failures", [])}
 
-    def _previous_views(self, week: date):
-        b = self.book
-        weeks = [w for w in b.list_weeks() if w < week]
-        if not weeks:
-            return [], None
-        pack = b.load_research_pack(weeks[-1])
-        return (list(pack.views) if pack else []), None
-
-    def _load_inputs(self, week: date, ctx, fb):
-        from ..research.pm_agent import PMContext, load_pm_decision_file
-        from ..research.providers.imported import load_imported_pack
-
-        inputs = self.week_dir(week) / "inputs"
-        pack, issues = load_imported_pack(inputs / "research_pack.json", week, ctx.snapshot_id, fb,
-                                          as_of=week, cfg=self.cfg, news=list(ctx.md.news))
-        longs, shorts = self._candidates(ctx, self.cfg.research.top_n_candidates)
-        dd, vol = self.drawdown_and_vol()
-        pmctx = PMContext(
-            week=week, as_of=ctx.md.as_of, fund_name=self.cfg.fund.name, factbook=fb,
-            universe_issuers=ctx.panel.assets[["issuer_name", "country", "sector"]],
-            quant_alpha_z=ctx.alpha.composite_z, quant_candidates_long=longs,
-            quant_candidates_short=shorts, current_book=ctx.current_positions,
-            previous_views=[], previous_pm_output=None, research_notes=list(pack.notes),
-            macro_notes=list(pack.macro), drawdown=dd, realized_vol_21d=vol,
-            track_record_facts={}, kill_switch=self.kill_switch_active())
-        out, pm_issues = load_pm_decision_file(inputs / "pm_decision.json", pmctx)
-        return pack, issues, out, pm_issues, pmctx
-
-    def validate_inputs(self, week: date) -> tuple[bool, list[str]]:
+    def validate_inputs(self, week: date, *, mind: str | None = None) -> tuple[bool, list[str]]:
         from ..research.pm_agent import validate_inputs
 
-        briefing = self.week_dir(week) / "briefing"
-        md, _ = self.market_for_week(week, live=False, briefing_dir=briefing, record=False)
-        ctx = self._context(md, week)
-        longs, shorts = self._candidates(ctx, self.cfg.research.top_n_candidates)
-        fb = self._factbook(ctx, sorted(set(longs) | set(shorts)))
-        _pack, issues, _out, pm_issues, pmctx = self._load_inputs(week, ctx, fb)
-        ok, extra = validate_inputs(self.week_dir(week), pmctx)
-        all_issues = list(issues) + list(pm_issues) + list(extra)
-        return ok and not any(i.startswith("ERRO") for i in all_issues), all_issues
+        _md, _info, _ctx, _fb, pmctx = self._week_state(week)
+        return validate_inputs(self.week_dir(week), pmctx, expected_mind=mind)
 
     def weekly_decide(self, week: date, *, mind: str) -> dict:
-        from ..research.pm_agent import to_bundle
+        from ..research.pm_agent import load_week_inputs, pm_factbook, to_bundle
+        from .autonomy import make_autonomous_decision
         from .reports import render_weekly_report, write_report_files
         from .weekly import run_weekly_decision
 
         b = self.book
         if b.list_decisions(week):
             raise FileExistsError(f"A semana {week} já tem decisão gravada.")
-        briefing = self.week_dir(week) / "briefing"
-        md, info = self.market_for_week(week, live=False, briefing_dir=briefing, record=False)
-        ctx = self._context(md, week)
-        longs, shorts = self._candidates(ctx, self.cfg.research.top_n_candidates)
-        fb = self._factbook(ctx, sorted(set(longs) | set(shorts)))
-        pack, issues, out, pm_issues, _pmctx = self._load_inputs(week, ctx, fb)
-        pack = pack.model_copy(update={"mind": mind})
-        dd, _ = self.drawdown_and_vol()
-        bundle = to_bundle(out, self.cfg, dd)
+        _md, info, ctx, _fb, pmctx = self._week_state(week)
+        pack, out, issues, pm_ctx = load_week_inputs(self.week_dir(week), pmctx)
+        if out.mind != mind and not out.abstain:
+            issues.append(f"mind declarado {out.mind!r} difere do informado {mind!r}")
+        pack = pack.model_copy(update={"mind": out.mind or mind})
+        pfb = pm_factbook(pm_ctx)
+        bundle = to_bundle(out, self.cfg, pm_ctx.drawdown, factbook=pfb)
         outcome = run_weekly_decision(ctx, pack, bundle, version=b.next_version(week),
                                       live_weeks=self.live_weeks(),
                                       kill_switch=self.kill_switch_active(),
                                       audit_head_hash=b.audit_head())
-        decision = outcome.decision.model_copy(update={"mind": mind})
-        b.save_research_pack(pack, actor=mind)
+        b.save_research_pack(pack, actor=pack.mind or mind)
         b.save_proposal(outcome.final)
         shadow_path = self.week_dir(week) / "shadow_quant.json"
         _write_json(shadow_path, outcome.shadow_quant.model_dump(mode="json"))
         b.audit.append("SHADOW_QUANT", "CDP", {"sha256": sha256_file(shadow_path)},
                        summary="Carteira-sombra só-quant gravada.", week=week)
+        # A decisão é ancorada na trilha DEPOIS da proposta gravada (nunca retroativa).
+        d0 = outcome.decision
+        decision = make_autonomous_decision(
+            outcome.final, research_hash=outcome.research_hash,
+            pm_decision_hash=d0.pm_decision_hash or bundle.pm_output_hash,
+            rationale=d0.rationale, journal=d0.journal, conviction=d0.conviction,
+            decided_at=datetime.now(UTC), audit_head_hash=b.audit_head(),
+        ).model_copy(update={"mind": pack.mind})
         b.save_decision(decision)
         _write_json(self.week_dir(week) / "attempts.json",
                     {"path": outcome.path_taken, "attempts": outcome.attempts,
-                     "input_issues": issues + pm_issues})
-        prev_weeks = [w for w in b.list_weeks() if w < week]
-        prev_prop = b.load_proposal(prev_weeks[-1]) if prev_weeks else None
-        prev_pack = b.load_research_pack(prev_weeks[-1]) if prev_weeks else None
+                     "input_issues": issues})
+        prev_week = self._previous_week(week)
+        prev_prop = b.load_proposal(prev_week) if prev_week else None
+        prev_views = list(pm_ctx.previous_views)
+        week_records = [r for r in self._records() if prev_week and prev_week <= r.date < week]
+        rr = pm_ctx.realized_residual_returns
         md_txt, html = render_weekly_report(
-            week, outcome.final, decision, out, prev_prop,
-            list(prev_pack.views) if prev_pack else [], list(pack.views), [],
-            outcome.shadow_quant, self.cfg.fund.name)
+            week, outcome.final, decision, out, prev_prop, prev_views, list(pack.views),
+            week_records, outcome.shadow_quant, self.cfg.fund.name, factbook=pfb, cfg=self.cfg,
+            attempts=outcome.attempts, path_taken=outcome.path_taken,
+            realized_residual=(None if rr is None else
+                               {k: float(v) for k, v in rr.dropna().items()}))
         report = write_report_files(self.reports_root / "weekly" / week.isoformat(), md_txt, html)
+        b.audit.append("WEEKLY_REPORT", "CDP", report,
+                       summary=f"Relatório semanal {week} publicado.", week=week)
         p = outcome.final
-        return {"semana": week, "mente": mind, "caminho": outcome.path_taken,
+        return {"semana": week, "mente": pack.mind, "caminho": outcome.path_taken,
+                "postura": bundle.posture, "abstencao": bundle.abstain,
                 "decisao": decision.approval_hash, "vol_ex_ante": p.risk.ex_ante_vol,
                 "gross": p.risk.gross, "net": p.risk.net, "beta": p.risk.beta,
                 "n_long": p.risk.n_long, "n_short": p.risk.n_short,
-                "falhas_soft": [c.check_id for c in p.soft_failures], "relatorio": report,
+                "falhas_soft": [c.check_id for c in p.soft_failures],
+                "apontamentos_entrada": issues, "relatorio": report,
+                "analise": info.get("captured_at") or info.get("prepared_at"),
                 "execucao": f"fechamento de {week} (MOC) pela rotina diária"}
 
     # ------------------------------------------------------------------ diário
-    def daily_close(self, session: date, *, live: bool = True) -> dict:
+    def _records(self, shadow: bool = False) -> list:
+        try:
+            return self.track(shadow).records()
+        except Exception:  # noqa: BLE001 - sem série antes da primeira efetivação
+            return []
+
+    def _runner(self, store=None):
         from .daily import DailyRunner
+        from .track_record import SHADOW_RECORD_EVENT, TrackRecord
+
+        shadow = TrackRecord(self.book_root / "track_record_shadow",
+                             audit_event=SHADOW_RECORD_EVENT)
+        return DailyRunner(self.cfg, store or self.store, self.book, self.track(),
+                           shadow_track=shadow)
+
+    def _daily_factbook(self, session: date, record, store=None):
+        from ..research.commentary import build_daily_factbook, build_market_day_facts
+
+        history = [r for r in self._records() if r.date < session]
+        md = (store or self.store).load(as_of=session)
+        mkt = build_market_day_facts(md.benchmarks, md.fx, session)
+        return build_daily_factbook(record, history, mkt, cfg=self.cfg), history
+
+    def daily_dir(self, session: date) -> Path:
+        return self.reports_root / "daily" / session.isoformat()
+
+    def daily_close(self, session: date, *, live: bool = True, mind: str | None = None) -> dict:
+        """Fechamento oficial: efetiva a decisão da semana (MOC), marca, mede risco e atribui.
+
+        Grava o registro diário encadeado e os insumos do comentário da mente
+        (``reports/daily/<data>/facts.md``); a publicação vem depois (``daily publish``).
+        """
+        from ..research.commentary import factbook_json, write_daily_commentary_inputs
+        from .daily import NoBookError, NoSessionError
 
         if not any(is_session(session, ex) for ex in ("BVMF", "XNYS", "XMEX")):
             return {"data": session, "status": "sem pregão"}
         store = self.store
         if live:
             store.catch_up(session)
-        runner = DailyRunner(self.cfg, store, self.book, self.track(),
-                             shadow_track=self.track(shadow=True), reports_root=self.reports_root)
-        return runner.close(session)
+        runner = self._runner(store)
+        try:
+            res = runner.run_session(session)
+        except NoSessionError as exc:
+            return {"data": session, "status": "sem pregão", "motivo": str(exc)}
+        except NoBookError as exc:
+            return {"data": session, "status": "sem carteira efetivada", "motivo": str(exc)}
+        rec = res.record
+        fb, _history = self._daily_factbook(session, rec, store)
+        out_dir = self.daily_dir(session)
+        out_dir.mkdir(parents=True, exist_ok=True)
+        (out_dir / "factbook.json").write_text(factbook_json(fb), encoding="utf-8")
+        paths = write_daily_commentary_inputs(out_dir, rec, fb, mind_hint=mind, overwrite=True)
+        return {"data": session, "status": "registrado", "registro": rec.record_hash,
+                "nav_usd": rec.nav_end_usd, "retorno_dia": rec.daily_return,
+                "efetivacao": (res.booked.proposal_id if res.booked is not None else None),
+                "alertas": list(rec.alerts), "fatos": {k: str(v) for k, v in paths.items()},
+                "proximo_passo": (f"escreva {out_dir / 'comentario.json'} e rode "
+                                  f"`cdp daily publish --date {session}`")}
 
     def daily_publish(self, session: date) -> dict:
-        from .daily import DailyRunner
+        """Valida o comentário da mente e publica o relatório diário (imutável)."""
+        from ..research.commentary import COMMENTARY_JSON, load_commentary_file
+        from .reports import render_daily_report, write_report_files
 
-        runner = DailyRunner(self.cfg, self.store, self.book, self.track(),
-                             shadow_track=self.track(shadow=True), reports_root=self.reports_root)
-        return runner.publish(session)
+        rec = self.track().get(session)
+        if rec is None:
+            raise ValueError(f"Sem registro diário em {session}: rode `cdp daily close` antes.")
+        fb, history = self._daily_factbook(session, rec)
+        out_dir = self.daily_dir(session)
+        comment_md, issues = load_commentary_file(out_dir / COMMENTARY_JSON, fb, record=rec)
+        md_txt, html = render_daily_report(rec, history, comment_md, self.cfg.fund.name,
+                                           cfg=self.cfg)
+        report = write_report_files(out_dir, md_txt, html)
+        self.book.audit.append("DAILY_REPORT", "CDP", {**report, "record": rec.record_hash,
+                                                       "commentary_issues": issues},
+                               summary=f"Relatório diário {session} publicado.")
+        return {"data": session, "relatorio": report, "apontamentos_comentario": issues,
+                "comentario_da_mente": not issues}
 
     # ------------------------------------------------------------------ integridade
     def verify_all(self) -> tuple[bool, list[str]]:

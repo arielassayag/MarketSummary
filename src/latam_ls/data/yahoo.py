@@ -705,7 +705,9 @@ def build_short_interest_row(ticker: str, info: Mapping[str, Any] | None,
       inferior, flag ``pct_sobre_total``).
     - ``short_pct_shares_equiv``: SI em ações-equivalentes / total de ações =
       ``SI_ADS × razão / ações locais`` = ``SI_ADS / (market cap USD / preço do ADS)``.
-    Sem SI em nenhuma fonte => ``None`` (linha omitida; nunca zero).
+    Sem SI em nenhuma fonte => ``None`` (linha omitida; nunca zero). O SI do Yahoo só é usado
+    se a sua liquidação já estiver PUBLICADA em ``as_of`` (liquidação + 7 dias úteis); senão é
+    descartado (flag ``yahoo_si_nao_publicado_descartado``), como a FINRA.
     """
     info = dict(info or {})
     flags: list[str] = []

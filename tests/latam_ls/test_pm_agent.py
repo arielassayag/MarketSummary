@@ -731,6 +731,20 @@ def test_unknown_issuers_in_research_pack_are_flagged(tmp_path):
     assert sum("FANTASMA" in i and "fora do universo" in i for i in issues) == 2
 
 
+def test_research_restriction_view_uses_schema_defaults(tmp_path):
+    ctx = make_ctx()
+    rp = example_research_pack(ctx)
+    rp["views"] = [{"issuer_id": "DDD", "confidence": 1.0, "rationale": "Squeeze alto.",
+                    "author": "claude-code", "no_short": True}]
+    ResearchPackFile.model_validate(rp)
+    path = tmp_path / "rp.json"
+    path.write_text(json.dumps(rp), encoding="utf-8")
+    pack, issues = load_research_pack_file(path, ctx, now=NOW)
+    assert issues == []
+    ddd = next(v for v in pack.views if v.issuer_id == "DDD")
+    assert ddd.no_short and ddd.score == 0 and ddd.source == ViewSource.AI
+
+
 def test_pm_views_may_cite_research_note_ids_from_the_week(tmp_path):
     ctx = make_ctx()  # contexto sem as notas: vêm do research_pack.json da semana
     rp = example_research_pack(ctx)
@@ -754,7 +768,6 @@ def test_pm_views_may_cite_research_note_ids_from_the_week(tmp_path):
 # ==========================================================
 
 def test_demo_pm_end_to_end_with_weekly_pipeline():
-    from latam_ls.config import load_config
     from latam_ls.contracts import ResearchPack
     from latam_ls.data.synthetic import make_synthetic_market
     from latam_ls.research.factbook import build_factbook
@@ -762,7 +775,7 @@ def test_demo_pm_end_to_end_with_weekly_pipeline():
     from latam_ls.workflow.reports import render_weekly_report
     from latam_ls.workflow.weekly import prepare_week, run_weekly_decision
 
-    cfg = load_config()
+    cfg = FundConfig()  # padrões do código: independe do fund.yaml vivo do repositório
     md = make_synthetic_market(as_of=date(2026, 10, 2))
     wctx = prepare_week(md, cfg, ELECTION_WEEK, drawdown=0.0)
     alpha = wctx.alpha.alpha.dropna()

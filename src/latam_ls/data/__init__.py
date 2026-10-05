@@ -17,7 +17,13 @@ from .snapshot import (
     snapshot_hash,
     write_snapshot,
 )
-from .store import DataNotReadyError, IncrementManifest, MarketStore, NoSessionError
+from .store import (
+    DataNotReadyError,
+    IncrementManifest,
+    MarketStore,
+    NoSessionError,
+    StoreLockedError,
+)
 from .synthetic import SYNTHETIC_NOTICE, make_synthetic_market
 
 __all__ = [
@@ -31,6 +37,7 @@ __all__ = [
     "NoSessionError",
     "SnapshotError",
     "SnapshotIntegrityError",
+    "StoreLockedError",
     "build_snapshot",
     "latest_snapshot",
     "load_snapshot",

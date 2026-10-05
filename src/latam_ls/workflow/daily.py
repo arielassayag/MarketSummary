@@ -111,6 +111,7 @@ from .memo import fmt_days, fmt_num, fmt_pct, fmt_usd, fmt_usd_mm
 from .track_record import (
     GENESIS_RECORD_HASH,
     REALIZED_VOL_WINDOWS,
+    SHADOW_RECORD_EVENT,
     TrackRecord,
     realized_vol,
     write_exclusive,
@@ -121,14 +122,19 @@ MARKET_CLOSE_LOCAL = time(17, 0)
 DAY_COUNT_BASIS = 360.0
 FINANCING_RATE_SERIES = "USD_3M"
 RATE_STALE_DAYS = 10
+RATE_PLAUSIBLE_RANGE = (-0.02, 0.25)
+"""Faixa plausível da taxa anual em decimal; fora dela (ex.: 4.5 = taxa em %) a taxa é recusada."""
+MAX_ALERT_TEXT = 300
 ENTRY_LOOKBACK_RECORDS = 260
 """Registros consultados (do mais recente para trás) para o preço médio de entrada dos shorts."""
 HOLD_STATUS = "hold"
 DAILY_ACTOR = "CDP — rotina diária"
 SHADOW_LABEL = "sombra só-quant"
-SHADOW_RECORD_EVENT = "DAILY_RECORD_SHADOW"
 SHADOW_BOOKED_EVENT = "BOOKED_SHADOW"
 SHADOW_PROPOSAL_EVENT = "SHADOW_PROPOSAL_SAVED"
+BOOK_SHADOW_FILE = "shadow_quant.json"
+"""Proposta-sombra gravada pelo pipeline semanal em ``<livro>/<semana>/`` (evento SHADOW_QUANT)."""
+BOOK_SHADOW_EVENT = "SHADOW_QUANT"
 COMPONENTS = ("equity", "factor", "specific", "financing", "borrow", "costs")
 FACTOR_GROUPS = ("market", "country", "sector", "style")
 _MAX_LISTED = 8
@@ -140,6 +146,14 @@ class NoSessionError(ValueError):
 
 class NoBookError(ValueError):
     """Não há carteira efetivada para iniciar (ou continuar) o track record."""
+
+
+class ExecutionRefused(ValueError):
+    """A execução MOC da decisão foi recusada (livro, KILL_SWITCH, preço/câmbio ausente).
+
+    Na rotina diária com carteira vigente, a recusa NÃO interrompe o track record: o dia é
+    registrado com a carteira anterior e um alerta com o motivo (nenhuma negociação ocorreu).
+    """
 
 
 class MarketSource(Protocol):
@@ -272,10 +286,20 @@ def store_input_hashes(store: object, session: date) -> dict[str, str]:
     return out
 
 
+def clean_text(text: object, max_len: int = MAX_ALERT_TEXT) -> str:
+    """Texto de origem externa (manifestos, mensagens de erro de coleta) numa linha só, sem
+    caracteres de controle e com tamanho limitado — os alertas viram insumo do comentário do dia
+    e nunca podem carregar blocos arbitrários (injeção de instruções)."""
+    raw = "".join(ch if ch.isprintable() else " " for ch in str(text))
+    one = " ".join(raw.split())
+    return one if len(one) <= max_len else one[:max_len - 1].rstrip() + "…"
+
+
 def session_limitations(md: MarketData, session: date) -> list[str]:
     """Limitações de dados relevantes para o pregão: as da base (sem data) e as do incremento do
     próprio dia (``"[AAAA-MM-DD] ..."`` no ``MarketStore``); as de outros dias e a linha de
-    composição ficam fora (já constam dos registros dos respectivos dias/manifestos)."""
+    composição ficam fora (já constam dos registros dos respectivos dias/manifestos). Cada texto
+    é saneado por :func:`clean_text`."""
     tag = f"[{session.isoformat()}]"
     out: list[str] = []
     for lim in md.manifest.limitations:
@@ -284,10 +308,83 @@ def session_limitations(md: MarketData, session: date) -> list[str]:
             continue
         if text.startswith("[") and "]" in text[:13]:
             if text.startswith(tag):
-                out.append(text[len(tag):].strip())
+                out.append(clean_text(text[len(tag):].strip()))
             continue
-        out.append(text)
+        out.append(clean_text(text))
     return out
+
+
+def financing_rate(md: MarketData, as_of: date) -> tuple[float | None, date | None, list[str]]:
+    """Taxa ``USD_3M`` (decimal anual) conhecida em ``as_of`` e alertas.
+
+    Ausente ⇒ ``None`` com alerta. Fora de :data:`RATE_PLAUSIBLE_RANGE` (ex.: série gravada em %)
+    ⇒ ``None`` com alerta: uma taxa 100× maior num registro imutável é pior que não apurar o
+    financiamento. Defasada há mais de :data:`RATE_STALE_DAYS` dias ⇒ usada com alerta.
+    """
+    rates = md.rates
+    if FINANCING_RATE_SERIES not in rates.columns:
+        return None, None, [f"Taxa {FINANCING_RATE_SERIES} indisponível: financiamento do caixa "
+                            "não apurado (zero) no período."]
+    s = pd.to_numeric(rates[FINANCING_RATE_SERIES], errors="coerce").dropna()
+    s = s[s.index <= pd.Timestamp(as_of)]
+    if s.empty:
+        return None, None, [f"Taxa {FINANCING_RATE_SERIES} indisponível: financiamento do caixa "
+                            "não apurado (zero) no período."]
+    rate, rate_date = float(s.iloc[-1]), s.index[-1].date()
+    lo, hi = RATE_PLAUSIBLE_RANGE
+    if not (lo <= rate <= hi):
+        return None, rate_date, [
+            f"Taxa {FINANCING_RATE_SERIES} de {rate_date} fora da faixa plausível "
+            f"({fmt_num(rate, 4)}; esperado decimal anual entre {fmt_pct(lo)} e {fmt_pct(hi)}): "
+            "financiamento do caixa não apurado (zero) — conferir a unidade da série."]
+    alerts = []
+    if (as_of - rate_date).days > RATE_STALE_DAYS:
+        alerts.append(f"Taxa {FINANCING_RATE_SERIES} defasada (de {rate_date}).")
+    return rate, rate_date, alerts
+
+
+def factor_returns_source(session_model: RiskModel | None, model_prev: RiskModel,
+                          session_ts: pd.Timestamp, session_returns: pd.Series | None
+                          ) -> tuple[Callable[[pd.Timestamp], pd.Series | None], dict[str, Any]]:
+    """Retornos fatoriais por sessão para a atribuição com as exposições de ``model_prev``.
+
+    Ordem: linha COMPLETA (todos os fatores de ``model_prev``) do modelo da sessão, depois do
+    modelo anterior; para a própria sessão, regressão cross-section dos retornos do dia com as
+    exposições de ``model_prev`` (``session_returns``). Uma linha incompleta (fator que o modelo
+    do dia descartou) só é usada como último recurso e é registrada em ``state['partial']`` —
+    os fatores sem retorno contribuem zero com alerta, nunca em silêncio.
+    """
+    names = model_prev.factor_names
+    frames = [m.factor_returns for m in (session_model, model_prev) if m is not None]
+    cache: dict[pd.Timestamp, pd.Series | None] = {}
+    state: dict[str, Any] = {"fallback": False, "partial": {}}
+
+    def get(s: pd.Timestamp) -> pd.Series | None:
+        if s in cache:
+            return cache[s]
+        row: pd.Series | None = None
+        partial: pd.Series | None = None
+        for fr in frames:
+            if s in fr.index:
+                cand = fr.loc[s].reindex(names).astype(float)
+                if cand.notna().all():
+                    row = cand
+                    break
+                if partial is None and cand.notna().any():
+                    partial = cand
+        if row is None and s == session_ts and session_returns is not None:
+            est = cross_sectional_factor_returns(model_prev.exposures, session_returns,
+                                                 model_prev.specific_var)
+            if est is not None:
+                row = est.reindex(names).astype(float)
+                state["fallback"] = True
+        if row is None and partial is not None:
+            state["partial"][str(s.date())] = sorted(partial.index[partial.isna()])
+            row = partial
+        cache[s] = row
+        return row
+
+    return get, state
 
 
 def _list(items: Iterable[str]) -> str:
@@ -397,14 +494,15 @@ def short_entry_prices(history: Iterable[DailyRecord],
 # ==========================================================
 
 def _verify_autonomous(proposal: Proposal, decision: Decision, cfg: FundConfig,
-                       snapshot_hash_now: str | None) -> None:
+                       snapshot_hash_now: str | None, config_hash: str | None = None) -> None:
+    """``verify_autonomous_decision`` contra o mandato atual (ou ``config_hash`` informado)."""
     if decision.mode != DecisionMode.AUTONOMOUS:
         raise ValueError("Decisão não é autônoma.")
     if decision.decision != DecisionType.APPROVE:
         raise ValueError("Somente decisões APPROVE são executadas.")
     ok, reasons = verify_autonomous_decision(
-        decision, proposal, snapshot_hash_now or proposal.snapshot_hash, cfg.config_hash(),
-        proposal.research_hash)
+        decision, proposal, snapshot_hash_now or proposal.snapshot_hash,
+        config_hash or cfg.config_hash(), proposal.research_hash)
     if not ok:
         raise ValueError("Decisão autônoma inválida: " + " ".join(reasons))
 
@@ -501,23 +599,36 @@ class ShadowBook:
     def _audited(self, event_type: str) -> set[str]:
         return {ev.payload_hash for ev in self.audit.events() if ev.event_type == event_type}
 
+    def _audited_in_week(self, event_type: str, week: date) -> set[str]:
+        return {ev.payload_hash for ev in self.audit.events()
+                if ev.event_type == event_type and ev.week == week}
+
     def load_proposal(self, week: date) -> Proposal | None:
-        """Proposta-sombra da semana, conferida contra a trilha (``ValueError`` se alterada)."""
+        """Proposta-sombra da semana, conferida contra a trilha (``ValueError`` se alterada ou
+        copiada de outra semana)."""
         path = self.proposal_path(week)
         if not path.exists():
             return None
         proposal = Proposal.model_validate_json(path.read_text(encoding="utf-8"))
-        if sha256_obj(proposal.proposal_hash()) not in self._audited(SHADOW_PROPOSAL_EVENT):
+        if proposal.week != week:
+            raise ValueError(f"Proposta-sombra em {path.name} é da semana {proposal.week} "
+                             "(arquivo copiado/renomeado).")
+        if (sha256_obj(proposal.proposal_hash())
+                not in self._audited_in_week(SHADOW_PROPOSAL_EVENT, week)):
             raise ValueError(f"Proposta-sombra de {week} não confere com a trilha de auditoria.")
         return proposal
 
     def load_booked(self, week: date) -> BookEntry | None:
-        """Efetivação-sombra da semana, conferida contra a trilha (``ValueError`` se alterada)."""
+        """Efetivação-sombra da semana, conferida contra a trilha (``ValueError`` se alterada ou
+        copiada de outra semana)."""
         path = self.booked_path(week)
         if not path.exists():
             return None
         entry = BookEntry.model_validate_json(path.read_text(encoding="utf-8"))
-        if sha256_obj(entry) not in self._audited(SHADOW_BOOKED_EVENT):
+        if entry.week != week:
+            raise ValueError(f"Efetivação-sombra em {path.name} é da semana {entry.week} "
+                             "(arquivo copiado/renomeado).")
+        if sha256_obj(entry) not in self._audited_in_week(SHADOW_BOOKED_EVENT, week):
             raise ValueError(f"Efetivação-sombra de {week} não confere com a trilha de auditoria.")
         return entry
 
@@ -545,6 +656,28 @@ class ShadowBook:
                                    f"{len(entry.positions)} posições."),
                           week=entry.week)
         return path
+
+
+def book_shadow_proposal(book: Book, week: date) -> Proposal | None:
+    """Proposta-sombra só-quant gravada pelo pipeline semanal em ``<livro>/<semana>/`` (arquivo
+    :data:`BOOK_SHADOW_FILE`, evento ``SHADOW_QUANT`` com ``{"sha256": <sha256 do arquivo>}``).
+
+    ``None`` se não houver arquivo; ``ValueError`` se o arquivo não conferir com a trilha ou for
+    de outra semana (nunca executa uma sombra alterada fora do pipeline).
+    """
+    path = book.week_dir(week) / BOOK_SHADOW_FILE
+    if not path.exists():
+        return None
+    payload = sha256_obj({"sha256": sha256_file(path)})
+    if not any(ev.event_type == BOOK_SHADOW_EVENT and ev.week == week
+               and ev.payload_hash == payload for ev in book.audit.events()):
+        raise ValueError(f"{BOOK_SHADOW_FILE} da semana {week} não confere com a trilha de "
+                         "auditoria.")
+    proposal = Proposal.model_validate_json(path.read_text(encoding="utf-8"))
+    if proposal.week != week:
+        raise ValueError(f"{BOOK_SHADOW_FILE} da semana {week} contém a proposta de "
+                         f"{proposal.week}.")
+    return proposal
 
 
 # ==========================================================

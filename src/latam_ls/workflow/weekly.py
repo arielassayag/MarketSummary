@@ -96,6 +96,7 @@ class WeekContext:
     inception: bool
     themes: dict[str, list[str]] = field(default_factory=dict)
     commodity_betas: pd.DataFrame = field(default_factory=pd.DataFrame)
+    event_exposures: dict = field(default_factory=dict)
     drawdown: float | None = None
     notes: list[str] = field(default_factory=list)
 
@@ -164,6 +165,40 @@ def commodity_betas(panel: AssetPanel, md: MarketData, cfg: FundConfig, issuers:
     return pd.DataFrame(out).reindex(issuers)
 
 
+def event_reaction_exposures(panel: AssetPanel, cfg: FundConfig, betas: pd.Series,
+                             market_w: pd.Series, on: date) -> dict[str, dict]:
+    """Exposição a eventos binários medida pela reação residual no pregão de reação.
+
+    Para cada janela de evento ativa com ``reaction_date`` disponível nos dados (inclusive a barra
+    intradiária provisória do momento da análise), e_i = r_i − β_i·r_mkt nesse pregão para os
+    emissores do país do evento (demais = 0). Devolve ``{nome: {exposures, limit, date}}``.
+    """
+    from ..risk.event_scaling import active_event_windows
+
+    out: dict[str, dict] = {}
+    for w in active_event_windows(cfg, on):
+        rd = w.get("reaction_date")
+        lim = w.get("reaction_exposure_max_abs")
+        if not rd or lim is None:
+            continue
+        ts = pd.Timestamp(date.fromisoformat(str(rd)))
+        if ts not in panel.returns.index:
+            continue
+        r = panel.returns.loc[ts]
+        mw = market_w.reindex(r.index).fillna(0.0)
+        valid = r.notna() & (mw > 0)
+        if not valid.any():
+            continue
+        r_mkt = float((r[valid] * mw[valid]).sum() / mw[valid].sum())
+        b = betas.reindex(r.index)
+        members = panel.assets["country"].reindex(r.index) == w["country"]
+        e = (r - b * r_mkt).where(members & r.notna() & b.notna())
+        out[f"evento:{w['country']}:{rd}"] = {
+            "exposures": e.dropna().to_dict(), "limit": float(lim), "date": str(rd),
+            "name": w.get("name", ""), "market_return": r_mkt}
+    return out
+
+
 def prepare_week(md: MarketData, cfg: FundConfig, week: date, *, nav: float | None = None,
                  current_entry: BookEntry | None = None,
                  current_drifted_w: dict[str, float] | None = None,
@@ -207,6 +242,7 @@ def prepare_week(md: MarketData, cfg: FundConfig, week: date, *, nav: float | No
         else None, inception=inception, themes=themes if themes is not None else load_themes(),
         drawdown=drawdown, notes=notes,
         commodity_betas=commodity_betas(panel, md, cfg, list(model.assets)),
+        event_exposures=event_reaction_exposures(panel, cfg, betas, mkt_w, week),
     )
 
 
@@ -327,6 +363,15 @@ def theme_checks(ctx: WeekContext, w: pd.Series) -> list:
             severity=Severity.SOFT, value=line.net, limit=lim,
             details=f"Σ w·β = {line.net:+.4f} (limite ±{lim:.2f}); 10% na commodity ⇒ "
                     f"{line.net * 0.10:+.2%} do NAV."))
+    for name, spec in ctx.event_exposures.items():
+        e = pd.Series(spec["exposures"], dtype=float).reindex(w.index)
+        v = float((w[e.notna()] * e.dropna()).sum())
+        out.append(ComplianceCheck(
+            check_id=f"EVENT:{name}", name=f"Exposição ao choque de evento ({spec['name']})",
+            passed=abs(v) <= spec["limit"] + 1e-6, severity=Severity.SOFT, value=v,
+            limit=spec["limit"],
+            details=f"Reação residual de {spec['date']} replicada na carteira: {v:+.3%} do NAV "
+                    f"(limite ±{spec['limit']:.2%})."))
     gaps = country_gap_stress(w, ctx.panel.assets, ctx.cfg)
     worst = min(gaps.values()) if gaps else 0.0
     lim = ctx.cfg.risk.country_stress_max_loss
@@ -372,6 +417,11 @@ def build_proposal(ctx: WeekContext, *, views: list[View], overrides: dict | Non
             f"commodity:{c}": {"exposures": ctx.commodity_betas[c].dropna().to_dict(),
                                "limit": cfg.risk.commodity_beta_max_abs}
             for c in ctx.commodity_betas.columns}
+    if ctx.event_exposures:
+        opt_overrides.setdefault("exposure_limits", {})
+        for name, spec in ctx.event_exposures.items():
+            opt_overrides["exposure_limits"][name] = {"exposures": spec["exposures"],
+                                                      "limit": spec["limit"]}
     result = optimize(alpha_adj, ctx.model, constraints, ctx.cost_model, cfg, ctx.nav,
                       current=current, inception=ctx.inception, market_w=ctx.market_w,
                       overrides=opt_overrides)

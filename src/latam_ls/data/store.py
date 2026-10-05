@@ -548,13 +548,56 @@ class MarketStore:
         """Coleta uma janela curta e grava SOMENTE as linhas com ``date == session_date``.
 
         ``refresh_slow=True`` também atualiza fundamentos, short interest e notícias (segundas
-        ou sob demanda). O aluguel B3 é coletado em todo incremento (janela D-21 do BDI).
+        ou sob demanda). O aluguel B3 é coletado em todo incremento (janela D-21 do BDI),
+        incluindo pregões anteriores que ficaram sem aluguel por falha transitória.
 
         Se o calendário oficial indica que um mercado do universo abriu, mas a fonte ainda não
-        trouxe preços para a maioria das suas linhas, levanta :class:`DataNotReadyError` e NADA é
-        gravado (evita registrar um falso feriado de forma irreversível); ``allow_incomplete``
-        grava mesmo assim, registrando a limitação.
+        trouxe preços para a maioria das suas linhas — ou se falta o câmbio de uma moeda com
+        linhas negociadas no pregão —, levanta :class:`DataNotReadyError` e NADA é gravado (evita
+        registrar um falso feriado ou um MTM com câmbio defasado de forma irreversível).
+        ``allow_incomplete`` grava mesmo assim; passada a carência ``incomplete_grace`` após o
+        corte do pregão, o dado é tratado como nunca publicado (NaN) e o incremento é gravado
+        com a limitação — o processo autônomo nunca fica travado para sempre.
+        Barras sintéticas do Yahoo em feriados oficiais (volume 0) são descartadas.
+        Escritores concorrentes são serializados por um lock de arquivo (``write_lock``).
         """
+        with self.write_lock():
+            return self._append_daily(session_date, fetchers, refresh_slow,
+                                      include_news=include_news, allow_gap=allow_gap,
+                                      allow_incomplete=allow_incomplete)
+
+    def _grace_expired(self, session_date: date) -> bool:
+        """True quando já passou ``incomplete_grace`` desde o corte do pregão."""
+        if self.incomplete_grace is None:
+            return False
+        cutoff = datetime.combine(session_date, self.close_cutoff,
+                                  tzinfo=ZoneInfo(self.close_tz))
+        return self._now() >= cutoff + self.incomplete_grace
+
+    @staticmethod
+    def _lending_plan(stored: pd.DataFrame, known: set[pd.Timestamp], session_date: date
+                      ) -> tuple[date, list[pd.Timestamp]]:
+        """(início da coleta do BDI, pregões B3 já fechados que deveriam ter aluguel).
+
+        Pregão B3 = data em que alguma linha ``.SA`` negociou com volume. Só os últimos
+        ``LENDING_WINDOW_SESSIONS`` pregões (ainda dentro da janela D-21 do BDI) posteriores ao
+        primeiro aluguel gravado são cobrados; a coleta recomeça no pregão faltante mais antigo.
+        """
+        if not known:
+            return b3_lending.lending_window_start(session_date), []
+        is_br = stored["ticker"].map(listing_market) == "BR"
+        traded = stored.loc[is_br & stored["volume"].notna(), "date"]
+        first_known = min(known)
+        sessions = sorted(d for d in set(traded)
+                          if first_known < d < pd.Timestamp(session_date))
+        expected = sessions[-LENDING_WINDOW_SESSIONS:]
+        missing = [d for d in expected if d not in known]
+        start = min(missing) if missing else max(known) + pd.Timedelta(days=1)
+        return pd.Timestamp(start).date(), expected
+
+    def _append_daily(self, session_date: date, fetchers: Fetchers | None,
+                      refresh_slow: bool, *, include_news: bool, allow_gap: bool,
+                      allow_incomplete: bool) -> IncrementManifest:
         f = fetchers or self.fetchers
         cfg = _cfg_or_default(self.cfg)
         base = self.base_dir
@@ -579,17 +622,37 @@ class MarketStore:
         limitations: list[str] = []
         notes: list[str] = []
         sources: list[SourceRecord] = []
+        grace = self._grace_expired(session_date)
+
+        def tolerate(msg: str) -> None:
+            """Fonte incompleta: por padrão NADA é gravado; com override/carência, registra."""
+            if allow_incomplete:
+                limitations.append(msg + " Gravado com allow_incomplete=True.")
+            elif grace:
+                limitations.append(msg + f" Gravado após a carência de {self.incomplete_grace} "
+                                   "do corte: dado nunca publicado, tratado como ausente (NaN).")
+            else:
+                raise DataNotReadyError(msg + " Nada foi gravado.")
 
         def src(sid: str, name: str, pit: bool, notes_: str = "") -> SourceRecord:
             return SourceRecord(source_id=sid, name=name, url="", fields=[],
                                 retrieved_at=self._now(), point_in_time=pit, notes=notes_)
 
         # Preços (obrigatório): janela curta, gravando só a data do pregão.
-        win, _missing = f.prices(tickers, start_w, session_date)
-        win = normalize_prices(win)
-        win = win[win["ticker"].isin(tickers) & (win["date"] <= ts)]
-        win = win.drop_duplicates(["date", "ticker"], keep="last").reset_index(drop=True)
-        day = win[win["date"] == ts].copy()
+        win_all, _missing = f.prices(tickers, start_w, session_date)
+        win_all = normalize_prices(win_all)
+        win_all = win_all[win_all["ticker"].isin(tickers) & (win_all["date"] <= ts)]
+        win_all = win_all.drop_duplicates(["date", "ticker"], keep="last").reset_index(drop=True)
+        win, _ = drop_holiday_bars(win_all, self.calendar)
+        day, hol_today = drop_holiday_bars(win_all[win_all["date"] == ts].reset_index(drop=True),
+                                           self.calendar)
+        day = day.copy()
+        if hol_today:
+            notes.append("barras_de_feriado_descartadas: "
+                         + ",".join(f"{k}({v})" for k, v in hol_today.items()))
+            limitations.append("Barras sintéticas do Yahoo (volume 0) em mercados fechados pelo "
+                               "calendário oficial descartadas: "
+                               + ", ".join(f"{k} ({v})" for k, v in hol_today.items()) + ".")
         sources.append(src("yahoo_prices", "Yahoo Finance — barras diárias (janela)", True))
         stored = pd.concat([bt.prices] + [t.prices for t in tabs], ignore_index=True)
         stored = normalize_prices(stored)
@@ -603,10 +666,28 @@ class MarketStore:
             limitations.append("Pregões intermediários NÃO gravados (allow_gap): "
                                + ", ".join(d.isoformat() for d in missed) + ".")
 
+        # Prontidão por mercado (calendário oficial x linhas com preço no pregão).
+        markets_all = sorted({listing_market(t) for t in tickers})
+        traded = sorted({listing_market(t) for t in day["ticker"]})
+        closed = sorted(set(markets_all) - set(traded))
+        sched = {m: self.calendar(session_date, m) for m in markets_all}
+        recent_dates = sorted(set(stored["date"]))[-5:]
+        active = stored[stored["date"].isin(recent_dates)].groupby(
+            stored["ticker"].map(listing_market))["ticker"].nunique()
+        got = day.groupby(day["ticker"].map(listing_market))["ticker"].nunique()
+        not_ready = sorted(m for m in markets_all if sched[m] is True and active.get(m, 0) > 0
+                           and got.get(m, 0) / active.get(m, 1) < READY_MIN_COVERAGE)
+        if not_ready:
+            tolerate(f"Mercados abertos pelo calendário oficial sem preços suficientes em "
+                     f"{session_date}: {', '.join(not_ready)} (dados ainda não publicados?).")
+        surprise = sorted(m for m in traded if sched[m] is False)
+        if surprise:
+            notes.append("negociou_fora_do_calendario: " + ",".join(surprise))
+
         # Barra anterior (mesma coleta) para encadear o retorno total.
         last_stored = stored[stored["date"] < ts].sort_values("date").groupby("ticker").tail(1)
         prev_map = {str(r.ticker): pd.Timestamp(r.date) for r in last_stored.itertuples()}
-        win_idx = win.set_index(["ticker", "date"])
+        win_idx = win_all.set_index(["ticker", "date"])
         prev_rows = []
         price_only: list[str] = []
         for r in day.itertuples(index=False):
@@ -643,23 +724,33 @@ class MarketStore:
             limitations.append(f"Barras tardias (datas anteriores não gravadas) NÃO aplicadas: "
                                f"{n_late}.")
 
-        # Câmbio, benchmarks e taxas do pregão.
+        # Câmbio (obrigatório para as moedas das linhas negociadas), benchmarks e taxas.
         ccys = sorted(c for c in uni.currencies if c != "USD")
+        fx_error = ""
         try:
             fx_day = normalize_fx(f.fx(ccys, start_w, session_date))
             fx_day = fx_day[(fx_day["date"] == ts) & fx_day["currency"].isin(ccys)]
             sources.append(src("yahoo_fx", "Yahoo Finance — câmbio", True))
         except Exception as exc:
             fx_day = normalize_fx(None)
-            limitations.append(f"Câmbio indisponível no pregão: {exc!r}.")
-        if not fx_day.empty and set(fx_day["currency"]) != set(ccys):
-            limitations.append("Câmbio ausente no pregão para: "
-                               + ", ".join(sorted(set(ccys) - set(fx_day["currency"]))) + ".")
+            fx_error = f"{exc!r}"
+        needed = sorted({str(uni.lines.loc[t, "currency"]) for t in day["ticker"]} - {"USD"})
+        missing_fx = sorted(set(needed) - set(fx_day["currency"]))
+        if missing_fx:
+            tolerate(f"Câmbio do pregão {session_date} ausente para {', '.join(missing_fx)} "
+                     "(moedas de linhas negociadas; o MTM em USD ficaria com câmbio defasado)"
+                     + (f"; erro da fonte: {fx_error}" if fx_error else "") + ".")
+        other_fx = sorted(set(ccys) - set(fx_day["currency"]) - set(missing_fx))
+        if other_fx:
+            limitations.append("Câmbio ausente no pregão para: " + ", ".join(other_fx) + ".")
         try:
             bench_day = normalize_benchmarks(f.benchmarks(self.benchmark_symbols, start_w,
                                                           session_date))
             bench_day = bench_day[bench_day["date"] == ts]
             sources.append(src("yahoo_benchmarks", "Yahoo Finance — benchmarks", True))
+            miss_b = sorted(set(self.benchmark_symbols) - set(bench_day["symbol"]))
+            if miss_b and not bench_day.empty:
+                limitations.append("Benchmarks sem barra no pregão: " + ", ".join(miss_b) + ".")
         except Exception as exc:
             bench_day = normalize_benchmarks(None)
             limitations.append(f"Benchmarks indisponíveis no pregão: {exc!r}.")
@@ -671,29 +762,10 @@ class MarketStore:
             rates_day = normalize_rates(None)
             limitations.append(f"Taxas indisponíveis no pregão: {exc!r}.")
 
-        markets_all = sorted({listing_market(t) for t in tickers})
-        traded = sorted({listing_market(t) for t in day["ticker"]})
-        closed = sorted(set(markets_all) - set(traded))
-        sched = {m: self.calendar(session_date, m) for m in markets_all}
-        recent_dates = sorted(set(stored["date"]))[-5:]
-        active = stored[stored["date"].isin(recent_dates)].groupby(
-            stored["ticker"].map(listing_market))["ticker"].nunique()
-        got = day.groupby(day["ticker"].map(listing_market))["ticker"].nunique()
-        not_ready = sorted(m for m in markets_all if sched[m] is True and active.get(m, 0) > 0
-                           and got.get(m, 0) / active.get(m, 1) < READY_MIN_COVERAGE)
-        if not_ready:
-            msg = (f"Mercados abertos pelo calendário oficial sem preços suficientes em "
-                   f"{session_date}: {', '.join(not_ready)} (dados ainda não publicados?).")
-            if not allow_incomplete:
-                raise DataNotReadyError(msg + " Nada foi gravado.")
-            limitations.append(msg + " Gravado com allow_incomplete=True.")
-        surprise = sorted(m for m in traded if sched[m] is False)
-        if surprise:
-            notes.append("negociou_fora_do_calendario: " + ",".join(surprise))
         if day.empty:
-            if any(v is True for v in sched.values()) and not allow_incomplete:
-                raise DataNotReadyError(f"Calendário indica pregão em {session_date}, mas a "
-                                        "fonte não trouxe nenhum preço. Nada foi gravado.")
+            if any(v is True for v in sched.values()) and not not_ready:
+                tolerate(f"Calendário indica pregão em {session_date}, mas a fonte não trouxe "
+                         "nenhum preço.")
             if fx_day.empty and bench_day.empty:
                 raise NoSessionError(f"Nenhuma linha, câmbio ou benchmark negociou em "
                                      f"{session_date}; nada a gravar.")
@@ -702,13 +774,12 @@ class MarketStore:
         elif closed:
             notes.append("mercados_fechados: " + ",".join(closed))
 
-        # Aluguel B3: todos os pregões publicados após o último gravado.
+        # Aluguel B3: pregões publicados ainda não gravados (inclusive falhas anteriores).
         br = [t for t in tickers if listing_market(t) == "BR"]
         lend_known = pd.concat([self._base_lending_long(bt)] + [t.lending for t in tabs],
                                ignore_index=True)
-        last_lend = lend_known["date"].max() if not lend_known.empty else pd.NaT
-        start_l = (last_lend + pd.Timedelta(days=1)).date() if pd.notna(last_lend) else \
-            b3_lending.lending_window_start(session_date)
+        known = set(lend_known["date"]) if not lend_known.empty else set()
+        start_l, expected_l = self._lending_plan(stored, known, session_date)
         fund_now = bt.fundamentals
         for t in tabs:
             if t.fundamentals is not None:
@@ -722,15 +793,24 @@ class MarketStore:
             try:
                 lend_new = normalize_lending_history(f.lending(br, start_l, session_date, so_map))
                 lend_new = lend_new[(lend_new["date"] >= pd.Timestamp(start_l))
-                                    & (lend_new["date"] <= ts)]
+                                    & (lend_new["date"] <= ts) & ~lend_new["date"].isin(known)]
+                lend_new = lend_new.reset_index(drop=True)
                 sources.append(src("b3_bdi_lending", "B3 BDI — aluguel (BTC)", False))
                 if lend_new.empty:
                     limitations.append(f"Aluguel B3 sem publicação nova entre {start_l} e "
                                        f"{session_date} (BDI publica em D+1).")
             except Exception as exc:
                 limitations.append(f"Aluguel B3 indisponível: {exc!r}.")
+        if br:
+            have = known | set(lend_new["date"])
+            still = [d for d in expected_l if d not in have]
+            if still:
+                limitations.append("Aluguel B3 (BDI) ausente para pregões já fechados: "
+                                   + ", ".join(d.date().isoformat() for d in still)
+                                   + " (nova tentativa nos próximos incrementos enquanto "
+                                     "estiverem na janela D-21).")
 
-        # Dados lentos (segundas ou sob demanda).
+        # Dados lentos (1º pregão da semana ou sob demanda).
         slow: list[str] = []
         fund_new = si_new = None
         news_new: list[NewsItem] | None = None
@@ -769,7 +849,9 @@ class MarketStore:
         # QA: paridade ADR no pregão (com 30 dias de histórico gravado para a mediana).
         qa: dict[str, Any] = {"session_date": session_date.isoformat(), "revisions": revisions,
                               "markets_traded": traded, "markets_closed": closed,
-                              "n_price_rows": int(len(day)), "price_only_returns": price_only}
+                              "n_price_rows": int(len(day)), "price_only_returns": price_only,
+                              "holiday_bars_dropped": hol_today,
+                              "is_synthetic": bt.manifest.is_synthetic}
         if not day.empty:
             recent = stored[stored["date"] >= ts - pd.Timedelta(days=45)]
             close_w, _, _ = prices_to_wide(pd.concat([recent, day[recent.columns]],
@@ -788,6 +870,7 @@ class MarketStore:
                                        f"{p['dev_median']:+.1%}; tolerância {p['tolerance']:.0%}).")
 
         base_m = bt.manifest
+        base_manifest_sha = sha256_file(base / FILE_MANIFEST)
         prev_hash = incs[-1].manifest.manifest_hash if incs else base_m.content_hash()
         lend_dates = sorted({d.date() for d in lend_new["date"]}) if not lend_new.empty else []
 
@@ -818,9 +901,10 @@ class MarketStore:
             add(FILE_QA, None)
             m = IncrementManifest(
                 session_date=session_date, created_at=self._now(), base_as_of=base_m.as_of,
-                base_content_hash=base_m.content_hash(), prev_manifest_hash=prev_hash,
-                universe_sha256=base_m.universe_sha256, files=sorted(files, key=lambda x: x.path),
-                sources=sources, limitations=limitations, notes=notes, markets_traded=traded,
+                base_content_hash=base_m.content_hash(), base_manifest_sha256=base_manifest_sha,
+                prev_manifest_hash=prev_hash, universe_sha256=base_m.universe_sha256,
+                files=sorted(files, key=lambda x: x.path), sources=sources,
+                limitations=limitations, notes=notes, markets_traded=traded,
                 markets_closed=closed, slow_refreshed=slow, lending_dates=lend_dates,
                 is_synthetic=base_m.is_synthetic, data_notice=base_m.data_notice)
             m = m.model_copy(update={"manifest_hash": m.compute_hash()})
@@ -829,9 +913,8 @@ class MarketStore:
             return m
 
         self.daily_root.mkdir(parents=True, exist_ok=True)
-        staging = self.daily_root / f".{inc_dir.name}.staging"
-        if staging.exists():
-            shutil.rmtree(staging)
+        self._remove_stale_staging(self.daily_root)
+        staging = self.daily_root / f".{inc_dir.name}.staging-{uuid.uuid4().hex[:10]}"
         staging.mkdir()
         try:
             manifest = writer(staging)

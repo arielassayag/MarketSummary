@@ -45,7 +45,9 @@ risk:
   commodity_proxies: {oil: "BZ=F", copper: "HG=F", gold: "GC=F"}   # betas neutralizados à parte
   commodity_beta_max_abs: 0.03         # 10% no Brent/cobre/ouro ⇒ ≤ 0,3% do NAV
   event_windows:
-    - {name: "Eleição Brasil 2026 (2º turno 25/out)", country: BR, start: "2026-10-05", end: "2026-10-26", vol_multiplier: 1.5}
+    # reaction_date: pregão de reação ao evento (1º pregão pós-1º turno). A reação residual de cada
+    # emissor nesse dia mede a exposição ao "fator eleição"; |Σ w·reação| ≤ reaction_exposure_max_abs.
+    - {name: "Eleição Brasil 2026 (2º turno 25/out)", country: BR, start: "2026-10-05", end: "2026-10-26", vol_multiplier: 1.5, reaction_date: "2026-10-05", reaction_exposure_max_abs: 0.0015}
   bias_prior: 1.10                     # risco de carteira otimizada é subestimado (USE4): alvo efetivo 5%/1,10
   bias_prior_weeks: 26
   var_1d_max: 0.010                    # VaR 99% 1d

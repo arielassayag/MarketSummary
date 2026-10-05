@@ -14,8 +14,18 @@ Regras:
 - **Imutabilidade:** cada arquivo é criado de forma exclusiva e atômica; nunca é sobrescrito.
 - **Datas estritamente crescentes** (um registro por pregão).
 - **Sem zeros silenciosos:** números não finitos são recusados; ausentes ficam vazios no CSV.
+- **Aritmética do NAV:** ``NAV final = NAV inicial + P&L``, ``retorno = P&L / NAV inicial``,
+  ``P&L = ações + financiamento + aluguel + custos``, ``fatores + específico = ações`` e
+  ``NAV inicial = NAV final do registro anterior`` (:func:`record_consistency`). Um registro
+  "reselado" com hash válido mas contas incoerentes é recusado na gravação e na verificação.
+- **Cauda íntegra antes de anexar:** o último registro gravado é conferido (hash recalculado, CSV
+  e evento de auditoria) antes de servir de elo ou de ponto de partida da marcação do dia
+  (:meth:`TrackRecord.tail_problems`).
 - :meth:`TrackRecord.verify` recalcula todos os hashes, confere os elos, a ordem das datas, a
-  consistência do CSV com os JSON e a presença de cada registro na trilha de auditoria.
+  aritmética do NAV, a consistência do CSV com os JSON e a presença de cada registro na trilha.
+- O tipo de evento de auditoria é inferido da pasta quando não informado: ``*_shadow`` ⇒
+  ``DAILY_RECORD_SHADOW`` (carteira-sombra), senão ``DAILY_RECORD`` — duas séries na mesma
+  trilha nunca usam o mesmo tipo por descuido de quem as instancia.
 
 As estatísticas (:meth:`TrackRecord.stats`, :meth:`TrackRecord.monthly_returns_table`) usam só os
 registros gravados; o excesso de retorno sobre o caixa usa o próprio financiamento registrado
@@ -46,6 +56,8 @@ from ..risk.types import TRADING_DAYS
 
 GENESIS_RECORD_HASH = GENESIS_HASH
 DAILY_RECORD_EVENT = "DAILY_RECORD"
+SHADOW_RECORD_EVENT = "DAILY_RECORD_SHADOW"
+SHADOW_TRACK_SUFFIX = "_shadow"
 DEFAULT_TRACK_ROOT = Path("book/track_record")
 RECORDS_DIRNAME = "records"
 CSV_NAME = "track_record.csv"
@@ -61,6 +73,10 @@ REQUIRED_FLOAT_COLUMNS = ("nav", "ret", "pnl", "gross", "net", "drawdown")
 MONTH_LABELS = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"]
 YTD_LABEL = "YTD"
 REALIZED_VOL_WINDOWS = (21, 63)
+NAV_REL_TOL = 1e-9
+"""Tolerância relativa das identidades do NAV (as contas do dia são feitas em ``float``)."""
+NAV_ABS_TOL_USD = 1e-4
+PNL_COMPONENTS = ("equity", "financing", "borrow", "costs")
 
 
 # ==========================================================
@@ -109,6 +125,46 @@ def record_summary(record: DailyRecord) -> dict[str, object]:
         "financing": comp.get("financing"),
         "record_hash": record.record_hash,
     }
+
+
+def default_audit_event(root: Path | str) -> str:
+    """Tipo de evento padrão da série: ``DAILY_RECORD_SHADOW`` para pastas ``*_shadow``."""
+    return (SHADOW_RECORD_EVENT if Path(root).name.endswith(SHADOW_TRACK_SUFFIX)
+            else DAILY_RECORD_EVENT)
+
+
+def _close(a: float, b: float, scale: float) -> bool:
+    return math.isclose(a, b, rel_tol=NAV_REL_TOL,
+                        abs_tol=max(NAV_ABS_TOL_USD, NAV_REL_TOL * abs(scale)))
+
+
+def record_consistency(record: DailyRecord, prev: DailyRecord | None = None) -> list[str]:
+    """Identidades contábeis do registro (e do elo com o anterior); lista vazia se coerente.
+
+    ``NAV final = NAV inicial + P&L``; ``retorno = P&L / NAV inicial``; com os quatro componentes
+    presentes, ``P&L = ações + financiamento + aluguel + custos``; com fatores e específico,
+    ``fatores + específico = ações``; e ``NAV inicial`` = ``NAV final`` do registro anterior.
+    """
+    out: list[str] = []
+    nav0, nav1, pnl = record.nav_start_usd, record.nav_end_usd, record.pnl_usd
+    d = record.date
+    if not _close(nav1, nav0 + pnl, nav0):
+        out.append(f"{d}: NAV final ({nav1!r}) difere de NAV inicial + P&L ({nav0 + pnl!r}).")
+    if not math.isclose(record.ret, pnl / nav0, rel_tol=NAV_REL_TOL, abs_tol=1e-12):
+        out.append(f"{d}: retorno ({record.ret!r}) difere de P&L / NAV inicial.")
+    comp = record.pnl_components
+    if all(k in comp for k in PNL_COMPONENTS):
+        total = sum(float(comp[k]) for k in PNL_COMPONENTS)
+        if not _close(pnl, total, nav0):
+            out.append(f"{d}: P&L ({pnl!r}) difere da soma dos componentes ({total!r}).")
+    if "factor" in comp and "specific" in comp and "equity" in comp:
+        if not _close(comp["factor"] + comp["specific"], comp["equity"], nav0):
+            out.append(f"{d}: fatores + específico difere do P&L de ações.")
+    if prev is not None and not math.isclose(nav0, prev.nav_end_usd, rel_tol=1e-12,
+                                             abs_tol=NAV_ABS_TOL_USD):
+        out.append(f"{d}: NAV inicial ({nav0!r}) difere do NAV final do registro anterior "
+                   f"({prev.date}: {prev.nav_end_usd!r}).")
+    return out
 
 
 def _cell(value: object) -> str:
@@ -177,16 +233,17 @@ class TrackRecord:
 
     ``audit_path`` (padrão: ``<root>/../audit_log.jsonl``, a trilha do livro) recebe um evento
     ``audit_event`` por registro com ``payload = record_hash``. Duas séries que compartilham a
-    trilha (ex.: CDP e sombra só-quant) devem usar tipos de evento distintos.
+    trilha (ex.: CDP e sombra só-quant) devem usar tipos de evento distintos; sem
+    ``audit_event`` o tipo é inferido da pasta (:func:`default_audit_event`).
     """
 
     def __init__(self, root: Path | str = DEFAULT_TRACK_ROOT, *,
                  audit_path: Path | str | None = None,
-                 audit_event: str = DAILY_RECORD_EVENT, actor: str = TRACK_ACTOR) -> None:
+                 audit_event: str | None = None, actor: str = TRACK_ACTOR) -> None:
         self.root = Path(root)
         self.records_dir = self.root / RECORDS_DIRNAME
         self.csv_path = self.root / CSV_NAME
-        self.audit_event = audit_event
+        self.audit_event = audit_event or default_audit_event(self.root)
         self.actor = actor
         self.audit = AuditLog(Path(audit_path) if audit_path is not None
                               else self.root.parent / "audit_log.jsonl")
@@ -227,13 +284,46 @@ class TrackRecord:
     def __len__(self) -> int:
         return len(self._record_files())
 
+    # ---------------------------------------------- integridade da cauda
+    def _audited_hashes(self) -> set[str]:
+        return {ev.payload_hash for ev in self.audit.events()
+                if ev.event_type == self.audit_event}
+
+    def tail_problems(self, last: DailyRecord | None = None) -> list[str]:
+        """Problemas do último registro gravado (lista vazia se íntegro).
+
+        Recalcula o hash do último JSON, confere que o CSV termina nele e que a trilha tem o seu
+        evento. Sem registros, o CSV não pode ter linhas. Usado antes de anexar e antes de marcar
+        o dia a partir das posições do registro anterior (nunca parte de um registro adulterado).
+        """
+        last = self.last() if last is None else last
+        try:
+            rows = self._csv_rows()
+        except ValueError as exc:
+            return [str(exc)]
+        if last is None:
+            return ([f"CSV {self.csv_path} com {len(rows)} linha(s) sem registros JSON: rode "
+                     "verify()."] if rows else [])
+        out: list[str] = []
+        if last.compute_hash() != last.record_hash:
+            out.append(f"Último registro ({last.date}) adulterado: record_hash não confere com o "
+                       "conteúdo.")
+        if not rows or rows[-1].get("record_hash") != last.record_hash:
+            out.append(f"O CSV não termina no último registro JSON ({last.date}): rode verify().")
+        if sha256_obj(last.record_hash) not in self._audited_hashes():
+            out.append(f"Último registro ({last.date}) sem evento {self.audit_event} na trilha "
+                       "de auditoria.")
+        return out
+
     # ---------------------------------------------- gravação
     def append(self, record: DailyRecord) -> Path:
         """Anexa o registro do dia (imutável), o resumo no CSV e o evento de auditoria.
 
-        Recusa: hash divergente de ``compute_hash()``, elo ``prev_record_hash`` diferente do
-        último registro (ou de GENESIS no primeiro), data não posterior à última, números não
-        finitos, serialização instável e arquivo já existente.
+        Recusa: hash divergente de ``compute_hash()``, último registro gravado adulterado ou
+        sem CSV/evento (:meth:`tail_problems`), elo ``prev_record_hash`` diferente do último
+        registro (ou de GENESIS no primeiro), data não posterior à última, identidades do NAV
+        violadas (:func:`record_consistency`), números não finitos, serialização instável e
+        arquivo já existente.
         """
         if record.record_hash != record.compute_hash():
             raise ValueError("record_hash não confere com o conteúdo do registro.")
@@ -242,6 +332,9 @@ class TrackRecord:
             raise ValueError("Registro com números não finitos (use None para ausente): "
                              + ", ".join(bad[:10]))
         last = self.last()
+        tail = self.tail_problems(last)
+        if tail:
+            raise ValueError("Track record inconsistente; registro recusado: " + " ".join(tail))
         expected_prev = last.record_hash if last is not None else GENESIS_RECORD_HASH
         if record.prev_record_hash != expected_prev:
             raise ValueError(
@@ -250,8 +343,9 @@ class TrackRecord:
         if last is not None and record.date <= last.date:
             kind = "duplicado" if record.date == last.date else "fora de ordem"
             raise ValueError(f"Registro de {record.date} {kind} (último: {last.date}).")
-        if self.csv_path.exists() and last is None:
-            raise ValueError(f"CSV {self.csv_path} existe sem registros JSON: rode verify().")
+        incoherent = record_consistency(record, last)
+        if incoherent:
+            raise ValueError("Contas do NAV incoerentes; registro recusado: " + " ".join(incoherent))
         text = record_json(record)
         if DailyRecord.model_validate_json(text).compute_hash() != record.record_hash:
             raise ValueError("Registro não é serializável de forma estável (hash muda ao "
@@ -411,12 +505,14 @@ class TrackRecord:
         records: list[DailyRecord] = []
         prev_hash: str | None = GENESIS_RECORD_HASH
         prev_date: date | None = None
+        prev_rec: DailyRecord | None = None
         for d, path in self._record_files():
             try:
                 rec = self._load(path)
             except ValueError as exc:
                 problems.append(f"{path.name}: registro ilegível ({str(exc)[:200]}).")
                 prev_hash = None
+                prev_rec = None
                 continue
             records.append(rec)
             if rec.date != d:
@@ -430,8 +526,11 @@ class TrackRecord:
             if prev_date is not None and rec.date <= prev_date:
                 problems.append(f"{rec.date}: data não posterior ao registro anterior "
                                 f"({prev_date}).")
+            problems += [f"Contas do NAV incoerentes — {m}"
+                         for m in record_consistency(rec, prev_rec)]
             prev_hash = rec.record_hash
             prev_date = rec.date
+            prev_rec = rec
 
         try:
             rows = self._csv_rows()
@@ -459,8 +558,7 @@ class TrackRecord:
         ok_chain, msg = self.audit.verify_chain()
         if not ok_chain:
             problems.append(f"Trilha de auditoria: {msg}")
-        audited = {ev.payload_hash for ev in self.audit.events()
-                   if ev.event_type == self.audit_event}
+        audited = self._audited_hashes()
         expected_hashes = {sha256_obj(rec.record_hash) for rec in records}
         for rec in records:
             if sha256_obj(rec.record_hash) not in audited:

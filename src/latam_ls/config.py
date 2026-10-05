@@ -78,7 +78,8 @@ class RiskSection(_Frozen):
     # Janelas de evento: multiplicador de vol para fatores país e risco específico (vol implícita >> realizada).
     event_windows: list[dict] = Field(default_factory=lambda: [
         {"name": "Eleição Brasil 2026 (2º turno 25/out)", "country": "BR", "start": "2026-10-05",
-         "end": "2026-10-26", "vol_multiplier": 1.5},
+         "end": "2026-10-26", "vol_multiplier": 1.5, "reaction_date": "2026-10-05",
+         "reaction_exposure_max_abs": 0.0015},
     ])
     bias_prior: float = Field(1.10, ge=1.0, description="Viés a priori do risco ex-ante de carteiras otimizadas")
     bias_prior_weeks: int = Field(26, ge=0, description="Semanas de histórico antes de estimar o viés realizado")

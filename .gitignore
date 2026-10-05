@@ -33,3 +33,7 @@ Thumbs.db
 
 # Cache de dados abertos (CVM/SEC) baixados pelo módulo de fundamentos PIT
 data/cache/
+
+# CDP: trava e staging do armazenamento de mercado
+data/market/.write.lock
+data/market/**/.*.staging-*

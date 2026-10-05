@@ -158,7 +158,7 @@ class Runtime:
         manifest_path = briefing_dir / PREPARE_MANIFEST
         if record:
             if live:
-                store.catch_up(prev)
+                self._anchor_increments(store.catch_up(prev))
             md = store.load(as_of=prev)
             info: dict = {"week": week, "previous_session": prev,
                           "store_content_hash": md.manifest.content_hash(), "live": live,
@@ -454,6 +454,14 @@ class Runtime:
         mkt = build_market_day_facts(md.benchmarks, md.fx, session)
         return build_daily_factbook(record, history, mkt, cfg=self.cfg), history
 
+    def _anchor_increments(self, increments) -> None:
+        """Ancora cada incremento diário de dados na trilha (detecta truncamento da cauda)."""
+        for inc in increments or []:
+            self.book.audit.append(
+                "MARKET_INCREMENT", "CDP — rotina diária",
+                {"session_date": inc.session_date, "manifest_hash": inc.manifest_hash},
+                summary=f"Incremento de mercado de {inc.session_date} gravado.")
+
     def daily_dir(self, session: date) -> Path:
         return self.reports_root / "daily" / session.isoformat()
 
@@ -470,7 +478,14 @@ class Runtime:
             return {"data": session, "status": "sem pregão"}
         store = self.store
         if live:
-            store.catch_up(session)
+            from ..data.store import DataNotReadyError, StoreLockedError
+
+            try:
+                increments = store.catch_up(session)
+            except (DataNotReadyError, StoreLockedError) as exc:
+                return {"data": session, "status": "dados não prontos",
+                        "motivo": str(exc), "acao": "tente de novo em alguns minutos"}
+            self._anchor_increments(increments)
         runner = self._runner(store)
         try:
             res = runner.run_session(session)

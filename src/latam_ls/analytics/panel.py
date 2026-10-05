@@ -157,7 +157,7 @@ def build_asset_panel(md: MarketData, cfg: FundConfig, as_of: date | None = None
 
     ts_asof = pd.Timestamp(as_of)
     reasons = []
-    for i, row in assets.iterrows():
+    for _i, row in assets.iterrows():
         r = []
         if pd.isna(row["last_date"]):
             r.append("sem_dados")

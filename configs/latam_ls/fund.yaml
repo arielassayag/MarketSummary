@@ -27,7 +27,7 @@ risk:
   gross_min: 0.5
   country_net_max_abs: 0.05
   sector_net_max_abs: 0.05
-  style_exposure_max_abs: 0.15
+  style_exposure_max_abs: 0.10          # fatores de estilo neutros (|z| <= 0,10)
   max_long_weight: 0.04
   max_short_weight: 0.025      # shorts menores: perda ilimitada e risco de squeeze
   min_position_weight: 0.002
@@ -35,6 +35,11 @@ risk:
   max_factor_risk_share: 0.30
   risk_aversion: 1.0
   var_confidence: 0.99
+  theme_net_max_abs: {state_owned: 0.01}  # estatais neutras (janela eleitoral)
+  event_windows:
+    - {name: "Eleição Brasil 2026 (2º turno 25/out)", country: BR, start: "2026-10-05", end: "2026-10-26", vol_multiplier: 1.5}
+  country_stress_max_loss: 0.015       # perda máx. por cenário de gap de país (% NAV)
+  country_gap_scenarios: {BR: [-0.10, 0.10], MX: [-0.13], CL: [-0.15], PE: [-0.10], CO: [-0.11], AR: [-0.56, 0.41]}
 
 liquidity:
   min_adtv_usd: 2000000
@@ -45,19 +50,24 @@ liquidity:
   max_trade_days_inception: 5.0
   max_trade_days_weekly: 2.0
   max_weekly_turnover: 0.60
+  min_adtv_long_usd: 5000000
+  min_adtv_short_usd: 10000000
+  short_participation_rate: 0.15       # shorts: 2 dias a 15% => <= 30% do ADTV
+  min_gross_liquid_3d: 0.80
+  min_gross_liquid_5d: 0.95
 
 shorting:
   shortable_line_types: [ADR, US_LISTED, LOCAL_BR]
   gc_borrow_fee_us: 0.003
   gc_borrow_fee_br: 0.008
-  max_borrow_fee: 0.08
+  max_borrow_fee: 0.05                 # vermelho > 5% a.a. para shorts novos
   min_market_cap_short_usd: 500000000
 
 squeeze:
-  si_pct_float_medium: 0.05
-  si_pct_float_high: 0.15
-  days_to_cover_medium: 3.0
-  days_to_cover_high: 7.0
+  si_pct_float_medium: 0.10            # ADRs: SI em equivalentes de ações / free float
+  si_pct_float_high: 0.20
+  days_to_cover_medium: 5.0
+  days_to_cover_high: 10.0
   borrow_fee_medium: 0.03
   borrow_fee_high: 0.08
   ret_1m_medium: 0.15
@@ -71,6 +81,11 @@ squeeze:
   br_btc_dtc_medium: 10.0
   br_btc_dtc_high: 20.0
   adr_parity_tolerance: 0.03
+  free_float_min_pct: 0.20             # sem short abaixo disso (caso Ambipar)
+  controller_max_pct: 0.70
+  catalyst_block_sessions: 5           # sem short novo a <= 5 pregões de catalisador
+  stop_short_position_loss: 0.25       # stop de squeeze: corte de 50%
+  stop_short_nav_loss: 0.01
   score_medium: 40
   score_high: 70
   medium_short_cap_multiplier: 0.5

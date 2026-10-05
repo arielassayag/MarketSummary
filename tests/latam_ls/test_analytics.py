@@ -611,3 +611,134 @@ def test_dtc_infinite_when_no_volume(panel, md, avail, cfg):
     assert t.loc[iid, "score_dtc"] == 100.0
     assert t.loc[iid, "bucket"] == "HIGH"
     assert "dtc_infinito_sem_volume" in t.loc[iid, "data_quality"]
+
+
+# ----------------------------------------------------------------------------------------
+# Revisão adversarial: casos que expõem defeitos corrigidos
+# ----------------------------------------------------------------------------------------
+
+def _br_only(panel) -> tuple[str, str]:
+    for iid, g in panel.lines.groupby("issuer_id"):
+        if list(g["market"]) == ["BR"] and list(g["line_type"]) == ["LOCAL"]:
+            return str(iid), str(g.index[0])
+    raise AssertionError("Universo simulado sem emissor só com linha local BR")
+
+
+def _float_frac(md, tkr: str) -> float:
+    f = md.fundamentals.loc[tkr]
+    return float(f["float_shares"]) / float(f["shares_outstanding"])
+
+
+def _thr(x: float, medium: float, high: float) -> float:
+    return float(threshold_score(pd.Series([x]), medium, high).iloc[0])
+
+
+def test_bucket_normalization_fails_closed(cfg):
+    # Faixa ausente/desconhecida NUNCA pode virar LOW (teto cheio de short).
+    b = pd.Series(["LOW", np.nan, None, " high ", "XYZ", "NA", "medium"])
+    assert effective_bucket(b).tolist() == ["LOW", "MEDIUM", "MEDIUM", "HIGH", "MEDIUM",
+                                            "MEDIUM", "MEDIUM"]
+    mult = short_cap_multiplier(pd.DataFrame({"bucket": b}), cfg)
+    half = cfg.squeeze.medium_short_cap_multiplier
+    assert mult.tolist() == [1.0, half, half, 0.0, half, half, half]
+
+
+def test_catalyst_past_date_is_not_a_catalyst():
+    # Data de resultado no passado é dado defasado (NaN), não "resultado em até 7 dias".
+    s = catalyst_score(pd.Series([-3.0, -30.0, 3.0]))
+    assert math.isnan(s.iloc[0]) and math.isnan(s.iloc[1]) and s.iloc[2] == 100.0
+
+
+def test_br_btc_proxy_on_free_float_base(sq, panel, md, cfg):
+    iid, tkr = _br_only(panel)
+    frac = _float_frac(md, tkr)
+    assert 0 < frac < 1
+    lend = float(md.lending.loc[tkr, "lending_pct_shares"])
+    row = sq.loc[iid]
+    # saldo BTC em % das ações ⇒ convertido para % do free float (mesma base do SI dos EUA)
+    assert row["btc_pct_float"] == pytest.approx(lend / frac)
+    assert row["si_pct_float"] == pytest.approx(lend / frac)
+    assert row["lending_pct_shares"] == pytest.approx(lend)
+    sqc = cfg.squeeze
+    assert row["score_si"] == pytest.approx(
+        _thr(lend / frac, sqc.br_btc_pct_float_medium, sqc.br_btc_pct_float_high))
+    assert "btc_base=free_float" in row["data_quality"]
+
+
+def test_br_btc_invalid_float_falls_back_to_shares_base(panel, md, avail, cfg):
+    iid, tkr = _br_only(panel)
+    fund = md.fundamentals.copy()
+    fund.loc[tkr, "float_shares"] = 2.0 * float(fund.loc[tkr, "shares_outstanding"])  # PETR4
+    t = squeeze_table(panel, replace(md, fundamentals=fund), avail, cfg)
+    lend = float(md.lending.loc[tkr, "lending_pct_shares"])
+    assert t.loc[iid, "si_pct_float"] == pytest.approx(lend)
+    assert "btc_base=acoes" in t.loc[iid, "data_quality"]
+
+
+def test_br_btc_uses_market_specific_thresholds(panel, md, cfg):
+    iid, tkr = _br_only(panel)
+    frac = _float_frac(md, tkr)
+    avg_vol = float(md.volume[tkr].tail(cfg.liquidity.adv_window_days).mean())
+    lending = md.lending.copy()
+    lending.loc[tkr, "lending_rate_annual"] = 0.06
+    lending.loc[tkr, "lent_shares"] = 12.0 * avg_vol
+    lending.loc[tkr, "lending_pct_shares"] = 0.10 * frac  # 10% do free float
+    md2 = replace(md, lending=lending)
+    t = squeeze_table(panel, md2, short_availability(panel, md2, cfg), cfg)
+    row, s = t.loc[iid], cfg.squeeze
+    assert row["days_to_cover"] == pytest.approx(12.0)
+    # limiares da B3 (config br_*), não os dos EUA (que dariam 91 e HIGH)
+    assert row["score_dtc"] == pytest.approx(_thr(12.0, s.br_btc_dtc_medium, s.br_btc_dtc_high))
+    assert row["score_fee"] == pytest.approx(
+        _thr(0.06, s.br_borrow_fee_medium, s.br_borrow_fee_high))
+    assert row["score_si"] == pytest.approx(
+        _thr(0.10, s.br_btc_pct_float_medium, s.br_btc_pct_float_high))
+    assert row["bucket"] != "HIGH"
+    # taxa B3 >= alto da B3 é sinal vermelho
+    lending.loc[tkr, "lending_rate_annual"] = s.br_borrow_fee_high
+    md3 = replace(md, lending=lending)
+    t3 = squeeze_table(panel, md3, short_availability(panel, md3, cfg), cfg)
+    assert t3.loc[iid, "score_fee"] == pytest.approx(70.0) and t3.loc[iid, "bucket"] == "HIGH"
+
+
+def test_estimated_fee_is_reported_but_not_scored(sq, panel, cfg):
+    us_only = [i for i, g in panel.lines.groupby("issuer_id")
+               if set(g["line_type"]) == {"US_LISTED"}]
+    assert us_only
+    row = sq.loc[us_only[0]]
+    assert row["borrow_fee"] == pytest.approx(cfg.shorting.gc_borrow_fee_us)
+    assert bool(row["borrow_fee_is_estimate"])
+    # taxa GC é suposição (derivada do próprio SI), não evidência: não dilui o composto
+    assert math.isnan(row["score_fee"])
+    assert "fora_do_escore" in row["data_quality"]
+    comps = sq.loc[[us_only[0]], [c for c in sq.columns if c.startswith("score_")]]
+    assert row["squeeze_score"] == pytest.approx(
+        float(composite_squeeze_score(comps, cfg.squeeze.score_high).iloc[0]))
+
+
+def test_adr_fee_floored_by_local_b3_fee(panel, md, cfg):
+    iid, local, adr = _br_issuer_with_adr(panel)
+    lending = md.lending.copy()
+    lending.loc[local, "lending_rate_annual"] = 0.06
+    av = short_availability(panel, replace(md, lending=lending), cfg)
+    # ADR e local são arbitrados via depositário: o aluguel do ADR não é GC se a B3 é cara
+    assert av.loc[adr, "borrow_fee_annual"] == pytest.approx(0.06)
+    assert av.loc[adr, "fee_source"] == FEE_SOURCE_GC_US and bool(av.loc[adr, "fee_is_estimate"])
+    assert bool(av.loc[adr, "shortable"]) and "B3" in av.loc[adr, "reason"]
+    lending.loc[local, "lending_rate_annual"] = 0.12  # special local ⇒ ADR também bloqueado
+    av2 = short_availability(panel, replace(md, lending=lending), cfg)
+    assert not av2.loc[adr, "shortable"] and not av2.loc[local, "shortable"]
+    side = issuer_side_lines(panel, av2)
+    assert not side.loc[iid, "can_short"]
+
+
+def test_si_driver_line_consistency(sq, panel, md, cfg):
+    iid, local, adr = _br_issuer_with_adr(panel)
+    s = cfg.squeeze
+    si_us = float(md.short_interest.loc[adr, "short_pct_float"])
+    btc = float(md.lending.loc[local, "lending_pct_shares"]) / _float_frac(md, local)
+    sc_us = _thr(si_us, s.si_pct_float_medium, s.si_pct_float_high)
+    sc_br = _thr(btc, s.br_btc_pct_float_medium, s.br_btc_pct_float_high)
+    assert sq.loc[iid, "score_si"] == pytest.approx(max(sc_us, sc_br))
+    assert sq.loc[iid, "si_pct_float"] == pytest.approx(si_us if sc_us >= sc_br else btc)
+    assert "SI_US+BTC_B3" in sq.loc[iid, "data_quality"]

@@ -60,6 +60,17 @@ class RiskSection(_Frozen):
     max_factor_risk_share: float = Field(0.30, gt=0, description="Fração máxima da variância vinda de fatores (alerta)")
     risk_aversion: float = Field(1.0, ge=0, description="λ do termo de variância (regularização sob o teto de vol)")
     var_confidence: float = Field(0.99, gt=0.5, lt=1)
+    # Temas com neutralidade própria (ex.: estatais brasileiras durante a eleição).
+    theme_net_max_abs: dict[str, float] = Field(default_factory=lambda: {"state_owned": 0.01})
+    # Janelas de evento: multiplicador de vol para fatores país e risco específico (vol implícita >> realizada).
+    event_windows: list[dict] = Field(default_factory=lambda: [
+        {"name": "Eleição Brasil 2026 (2º turno 25/out)", "country": "BR", "start": "2026-10-05",
+         "end": "2026-10-26", "vol_multiplier": 1.5},
+    ])
+    country_stress_max_loss: float = Field(0.015, gt=0, description="Perda máxima por cenário de gap de país")
+    country_gap_scenarios: dict[str, list[float]] = Field(default_factory=lambda: {
+        "BR": [-0.10, 0.10], "MX": [-0.13], "CL": [-0.15], "PE": [-0.10], "CO": [-0.11], "AR": [-0.56, 0.41],
+    })
 
     @model_validator(mode="after")
     def _band(self) -> RiskSection:
@@ -79,6 +90,11 @@ class LiquiditySection(_Frozen):
     max_trade_days_inception: float = Field(5.0, gt=0)
     max_trade_days_weekly: float = Field(2.0, gt=0)
     max_weekly_turnover: float = Field(0.60, gt=0, description="Σ|Δw| máximo por semana fora da inception")
+    min_adtv_long_usd: float = Field(5_000_000.0, ge=0)
+    min_adtv_short_usd: float = Field(10_000_000.0, ge=0)
+    short_participation_rate: float = Field(0.15, gt=0, le=1)
+    min_gross_liquid_3d: float = Field(0.80, ge=0, le=1)
+    min_gross_liquid_5d: float = Field(0.95, ge=0, le=1)
 
 
 class ShortingSection(_Frozen):
@@ -108,6 +124,11 @@ class SqueezeSection(_Frozen):
     br_btc_dtc_medium: float = 10.0
     br_btc_dtc_high: float = 20.0
     adr_parity_tolerance: float = 0.03
+    free_float_min_pct: float = Field(0.20, ge=0, le=1, description="Free float abaixo disso: sem short")
+    controller_max_pct: float = Field(0.70, ge=0, le=1, description="Controlador acima disso: sem short")
+    catalyst_block_sessions: int = Field(5, ge=0, description="Sem short novo com catalisador próximo")
+    stop_short_position_loss: float = Field(0.25, gt=0, description="Perda no short que força corte de 50%")
+    stop_short_nav_loss: float = Field(0.01, gt=0, description="Perda em % do NAV que força corte de 50%")
     score_medium: float = Field(40.0, ge=0, le=100)
     score_high: float = Field(70.0, ge=0, le=100)
     medium_short_cap_multiplier: float = Field(0.5, ge=0, le=1)

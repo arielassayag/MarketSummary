@@ -363,11 +363,13 @@ def _exposure_table(proposal: Proposal, group: str) -> list[str]:
     if not lines:
         return []
     lines.sort(key=lambda e: (-abs(e.net) if _finite(e.net) else math.inf, e.name))
-    pct_groups = {"country", "sector", "currency", "market"}
-    fmt = fmt_pct if group in pct_groups else (lambda x: fmt_num(x, 3))
-    rows = [[e.name, fmt(e.long), fmt(e.short), fmt(e.net) if group in pct_groups
-             else fmt_num(e.net, 3, signed=True), fmt(e.gross),
-             (f"±{fmt(e.limit)}" if _finite(e.limit) else NA)]
+    is_pct = group != "style"
+
+    def f(x: float | None, signed: bool = False) -> str:
+        return fmt_pct(x, signed=signed) if is_pct else fmt_num(x, 3, signed=signed)
+
+    rows = [[e.name, f(e.long), f(e.short), f(e.net, signed=True), f(e.gross),
+             f"±{f(e.limit)}" if _finite(e.limit) else NA]
             for e in lines]
     return _table(["Nome", "Long", "Short", "Net", "Gross", "Limite"], rows) + [""]
 

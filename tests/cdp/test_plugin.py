@@ -31,8 +31,8 @@ TESES = ROOT / "docs" / "cdp" / "teses"
 #: Versão do plugin e resumo das skills nessa versão. A instalação pelo marketplace do GitHub guarda
 #: uma cópia presa à ``version`` (docs/cdp/LOCAL.md): skills novas com a versão antiga nunca chegam
 #: às rotinas. Mudou uma skill ⇒ suba a ``version`` em plugin.json e atualize os dois valores.
-PLUGIN_VERSION = "1.2.0"
-SKILLS_SHA256 = "53dc4c7b7c8cb8579d48fd596d05ff1b33f795d5447580c0251d93a436c8a552"
+PLUGIN_VERSION = "1.2.1"
+SKILLS_SHA256 = "000606f2ddfa5b94b6b6eae399ddf71489dbbf5723888440e79acbf28c0717c8"
 
 
 def _skill_files() -> list[Path]:
@@ -340,9 +340,12 @@ def test_writer_skills_end_by_republishing_the_painel(name: str):
     assert 'action: "list"` com `scope: "files"`' in flat0
     assert flat0.count('`scope: "files"`') >= 2  # e de novo, se um arquivo mudou no meio
     assert "um arquivo mudou desde a listagem" in flat0
-    # página registrada como publicada só depois de publicar com sucesso (e commitada)
-    i_mark = body.index("uv run python -m cdp painel --publicado")
-    assert i_pub < i_mark
+    # página registrada como publicada só depois de publicar com sucesso (e commitada); antes
+    # disso, o registro só aparece no caso em que a versão viva já é a página atual
+    marks = [m.start() for m in re.finditer(r"uv run python -m cdp painel --publicado", body)]
+    assert marks and i_pub < marks[-1]
+    for early in (i for i in marks if i < i_pub):
+        assert "artifact.pagina_atual" in body[max(0, early - 120):early]
     assert "artifacts/painel/PAGINA_PUBLICADA.sha256" in flat0
     assert ('git commit -m "CDP: painel publicado" -- artifacts/painel/PAGINA_PUBLICADA.sha256'
             in flat0)

@@ -60,7 +60,7 @@ def _macro(wd: data.WeekData) -> None:
                             "Abstenção": "sim" if m.regime.startswith("indeterminado") else "não"}
                            for m in notes]))
     for i, m in enumerate(notes):
-        with st.expander(f"{m.scope} — stance {_STANCE.get(m.stance, m.stance)}",
+        with st.expander(f"{fmt.label(m.scope)} — stance {_STANCE.get(m.stance, m.stance)}",
                          icon=":material/public:", expanded=(i == 0)):
             st.markdown(f"{ui.IA_BADGE} · provedor {fmt.code(m.provider)} · "
                         f"prompt {fmt.code(m.prompt_version)}")
@@ -105,7 +105,7 @@ def _notes(state: AppState, wd: data.WeekData) -> None:
     st.markdown(f"{len(shown)} nota(s) {ui.IA_BADGE}")
     ui.table(summary, height=min(360, 36 * (len(summary) + 1)))
     for i, n in enumerate(shown[:40]):
-        title = (f"{n.issuer_id} · {_ROLE_PT.get(n.role, n.role)} · stance "
+        title = (f"{fmt.label(n.issuer_id)} · {_ROLE_PT.get(n.role, n.role)} · stance "
                  f"{_STANCE.get(n.stance, n.stance)} · confiança {fmt.pct(n.confidence, 0)}")
         with st.expander(title, icon=":material/smart_toy:"):
             st.markdown(f"{ui.IA_BADGE} · provedor {fmt.code(n.provider)} · horizonte "
@@ -224,7 +224,8 @@ def render(state: AppState) -> None:
     st.markdown(f"### Pesquisa IA {ui.IA_BADGE}")
     book = state.book
     weeks = [w for w in book.weeks if w.research is not None or w.pm_output is not None]
-    flags_kill = data.governance_flags(None, book.kill_switch)
+    kill = state.kill_switch  # lido do disco a cada execução (nunca do cache do livro)
+    flags_kill = data.governance_flags(None, kill)
     if not weeks:
         for _sev, text in flags_kill:
             st.error(fmt.escape_md(text), icon=":material/emergency:")
@@ -244,7 +245,7 @@ def render(state: AppState) -> None:
                 f"{len(pack.views) if pack else 0} visões"
                 + (f" · research_hash `{pack.research_hash()[:16]}…`" if pack else ""))
     ui.section("Governança")
-    flags = data.governance_flags(wd, book.kill_switch)
+    flags = data.governance_flags(wd, kill)
     if not flags:
         st.success("Sem sinais de governança: IA ativa, sem abstenções nem fallback.",
                    icon=":material/verified:")

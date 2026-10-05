@@ -99,16 +99,25 @@ def _kill_switch(state: AppState) -> None:
         st.success("Desligado: o CDP opera normalmente sob os gates do mandato.",
                    icon=":material/check_circle:")
     turn_on = not ks.active
-    with st.form("kill_switch_form", border=True):
+    act = "on" if turn_on else "off"
+    other = "off" if turn_on else "on"
+    # Chaves por ação: se o estado mudou entre abrir a página e enviar (outro operador ou a
+    # CLI), o formulário enviado não existe mais nesta execução e a intenção do operador nunca
+    # é invertida (ligar jamais vira desligar).
+    if st.session_state.get(f"ks_submit_{other}"):
+        st.error("Ação não executada: o estado do kill switch mudou desde que a página foi "
+                 "aberta (agora " + ("DESLIGADO" if turn_on else "LIGADO") + "). Confira o "
+                 "estado atual e repita, se ainda for o caso.", icon=":material/sync_problem:")
+    with st.form(f"kill_switch_form_{act}", border=True):
         reason = st.text_area("Motivo (obrigatório, mínimo de "
-                              f"{data.KILL_SWITCH_MIN_REASON} caracteres)", key="ks_reason")
-        by = st.text_input("Responsável", key="ks_by")
+                              f"{data.KILL_SWITCH_MIN_REASON} caracteres)", key=f"ks_reason_{act}")
+        by = st.text_input("Responsável", key=f"ks_by_{act}")
         confirmed = st.checkbox("Confirmo que quero "
                                 + ("LIGAR o kill switch (somente redução de risco)" if turn_on
-                                   else "DESLIGAR o kill switch"), key="ks_confirm")
+                                   else "DESLIGAR o kill switch"), key=f"ks_confirm_{act}")
         submitted = st.form_submit_button("Ligar KILL SWITCH" if turn_on
                                           else "Desligar KILL SWITCH",
-                                          type="primary", key="ks_submit",
+                                          type="primary", key=f"ks_submit_{act}",
                                           icon=":material/emergency:" if turn_on
                                           else ":material/power_settings_new:")
     if not submitted:
@@ -119,8 +128,9 @@ def _kill_switch(state: AppState) -> None:
         st.error("Ação não executada:\n\n" + "\n".join(f"- {fmt.escape_md(p)}" for p in problems))
         return
     try:
-        data.set_kill_switch(state.paths, state.cfg, turn_on, reason or "", by or "")
-    except Exception as exc:  # noqa: BLE001 - erro de disco/permissão é exibido ao operador
+        data.set_kill_switch(state.paths, state.cfg, turn_on, reason or "", by or "",
+                             expect_active=ks.active)
+    except Exception as exc:  # noqa: BLE001 - erro de disco/permissão/estado é exibido
         st.error(f"Falha ao gravar o kill switch: {fmt.escape_md(type(exc).__name__)}: "
                  f"{fmt.escape_md(exc)}")
         return

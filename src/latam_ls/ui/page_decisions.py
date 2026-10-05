@@ -27,7 +27,7 @@ def _decision_block(state: AppState, wd: data.WeekData) -> None:
         ui.section("Decisão autônoma")
         rows = [("Decisão", d.decision.value), ("Modo", d.mode.value), ("Assinada por", d.approver),
                 ("Mente", d.mind or fmt.NA), ("Decidida em", fmt.dt_local(d.decided_at, tz)),
-                ("Prazo do mandato", f"{state.cfg.fund.decision_deadline_local} (Brasília)"),
+                ("Prazo do mandato", data.decision_timing(d, state.cfg).label),
                 ("Convicção", str(d.conviction) if d.conviction else fmt.NA),
                 ("Falhas SOFT cientes", ", ".join(d.acknowledged_soft_checks) or "nenhuma"),
                 ("Proposta", f"{d.proposal_id} (v{p.version})" if p else d.proposal_id)]

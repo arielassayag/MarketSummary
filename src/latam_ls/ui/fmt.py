@@ -123,13 +123,21 @@ def escape_md(text: object) -> str:
 _UNESCAPED_DOLLAR = re.compile(r"(?<!\\)\$")
 _HEADING = re.compile(r"^(#{1,6})(\s)")
 _CODE_SPAN = re.compile(r"(`[^`]*`)")
+_AUTOLINK = re.compile(r"<((?:https?|ftp|mailto|javascript|data):)", re.IGNORECASE)
+
+
+def _defuse(text: str) -> str:
+    """Desarma links/imagens Markdown (``[x](url)``, ``![x](url)``, ``<http://…>``): os
+    relatórios do código não têm links; um arquivo alterado não carrega nada externo."""
+    return _AUTOLINK.sub(r"\\<\1", text.replace("](", "]\\("))
 
 
 def report_md(text: str, demote: int = 0) -> str:
     """Markdown gerado pelo código (relatórios, memo, comentário) pronto para ``st.markdown``.
 
-    Escapa ``$`` fora de trechos de código (evita que ``US$ 1,00`` vire fórmula LaTeX) e,
-    opcionalmente, rebaixa os títulos em ``demote`` níveis (limitado a ``######``).
+    Escapa ``$`` fora de trechos de código (evita que ``US$ 1,00`` vire fórmula LaTeX), desarma
+    links e imagens (nada externo é carregado nem clicável) e, opcionalmente, rebaixa os títulos
+    em ``demote`` níveis (limitado a ``######``).
     """
     out: list[str] = []
     fenced = False
@@ -142,13 +150,20 @@ def report_md(text: str, demote: int = 0) -> str:
             out.append(line)
             continue
         parts = _CODE_SPAN.split(line)
-        parts = [p if i % 2 else _UNESCAPED_DOLLAR.sub(r"\\$", p) for i, p in enumerate(parts)]
+        parts = [p if i % 2 else _defuse(_UNESCAPED_DOLLAR.sub(r"\\$", p))
+                 for i, p in enumerate(parts)]
         line = "".join(parts)
         if demote > 0:
             line = _HEADING.sub(lambda m: "#" * min(6, len(m.group(1)) + demote) + m.group(2),
                                 line)
         out.append(line)
     return "\n".join(out)
+
+
+def label(text: object) -> str:
+    """Rótulo de widget (expander, métrica, abas) com texto externo: os rótulos do Streamlit
+    interpretam Markdown (inclusive links e imagens), então o texto é escapado."""
+    return escape_md(text).replace("\n", " ")
 
 
 def code(text: object) -> str:

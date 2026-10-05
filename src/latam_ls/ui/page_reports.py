@@ -44,10 +44,15 @@ def render(state: AppState) -> None:
     rel = data.relative_to(rep.folder, state.paths.reports)
     c[2].caption(f"Pasta {fmt.code(rel)} · arquivos imutáveis gerados pelo código (números "
                  "formatados; textos de IA rotulados [IA]).")
+    active = data.html_active_content(html_text) if html_text is not None else []
     as_html = html_text is not None and st.toggle("Ver versão HTML (autocontida, sem scripts)",
                                                   key="rep_html")
+    if as_html and active:
+        st.error("HTML não exibido: o arquivo contém conteúdo ativo ou externo ("
+                 + fmt.escape_md(", ".join(active)) + "), o que um relatório gerado pelo código "
+                 "nunca tem. Exibindo a versão Markdown.", icon=":material/gpp_bad:")
     with st.container(border=True, height=1100):
-        if as_html and html_text is not None:
+        if as_html and html_text is not None and not active:
             components.html(html_text, height=1100, scrolling=True)
         elif md_text is not None:
             st.markdown(fmt.report_md(md_text, demote=1))

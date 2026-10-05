@@ -37,11 +37,20 @@ def _tiles(state: AppState) -> None:
     ui.kpi(c[0], "VaR 1d (99%)", fmt.pct(var1), fmt.max_status(var1, cfg.risk.var_1d_max))
     ui.kpi(c[1], "ES 1d (99%)", fmt.pct(es1), fmt.max_status(es1, cfg.risk.es_1d_max))
     ui.kpi(c[2], "VaR 1 semana (99%)", fmt.pct(pr.var_1w_99 if pr else None), "na decisão")
-    mdl = rk.max_days_to_liquidate if rk is not None else (
-        pr.max_days_to_liquidate if pr else None)
-    ui.kpi(c[3], "Máx. dias p/ liquidar", fmt.days(mdl),
-           fmt.max_status(mdl, cfg.liquidity.max_days_to_liquidate_long, fmt.days)
-           if fmt.is_num(mdl) else "n/d")
+    # Tetos distintos por lado (long 3 d, short 2 d): um único teto esconderia um short acima
+    # do limite dos shorts. Dias gravados por posição na proposta vigente.
+    if prop is not None and prop.positions:
+        by_side = data.liquidity_by_side(prop.positions, cfg)
+        lo, sh = by_side["LONG"], by_side["SHORT"]
+        ui.kpi(c[3], "Máx. dias p/ liquidar (L / S)",
+               f"{fmt.days(lo.max_days)} / {fmt.days(sh.max_days)}",
+               data.worst_liquidity_status(by_side),
+               help="Máximo por lado na proposta vigente vs. o teto do mandato de cada lado"
+                    + ("; registro do dia (todas as posições): "
+                       f"{fmt.days(rk.max_days_to_liquidate)}" if rk is not None else "") + ".")
+    else:
+        mdl = rk.max_days_to_liquidate if rk is not None else None
+        ui.kpi(c[3], "Máx. dias p/ liquidar", fmt.days(mdl), "sem proposta (teto por lado n/d)")
     liq1 = rk.pct_gross_liquid_1d if rk is not None else (
         pr.pct_nav_liquidated_1d if pr else None)
     ui.kpi(c[4], "Gross liquidável em 1 dia", fmt.pct(liq1),
@@ -122,6 +131,8 @@ def _exposures(state: AppState) -> None:
         if sub.empty:
             st.caption("Sem exposições a temas, commodities ou moedas gravadas.")
         else:
+            st.caption("Linhas da proposta vigente (ex-ante na decisão); o registro diário "
+                       "grava apenas país, setor e estilo.")
             show = sub.assign(status=[fmt.limit_status(n, lim).label
                                       for n, lim in zip(sub["net"], sub["limit"], strict=False)])
             ui.table(ui.formatted(show[["name", "net", "gross", "limit", "status"]], {
@@ -152,16 +163,18 @@ def _stress(state: AppState) -> None:
 def _liquidity(state: AppState) -> None:
     prop = state.book.live_proposal(state.track.latest)
     ui.section("Perfil de liquidez", ui.CALC_BADGE,
-               help="Dias para liquidar cada posição a "
-                    f"{fmt.pct(state.cfg.liquidity.participation_rate, 0)} do ADTV (gravado na "
-                    "proposta vigente).")
+               help="Dias para liquidar cada posição (gravados na proposta vigente) com a "
+                    "participação do mandato: longs a "
+                    f"{fmt.pct(state.cfg.liquidity.participation_rate, 0)} e shorts a "
+                    f"{fmt.pct(state.cfg.liquidity.short_participation_rate, 0)} do ADTV. "
+                    "Posições sem ADTV aparecem primeiro (liquidez desconhecida).")
     if prop is None or not prop.positions:
         st.caption("Sem posições na proposta vigente.")
         return
     st.plotly_chart(charts.bucket_bars(data.liquidity_buckets(prop.positions),
                                        "Fatia do gross por dias para liquidar"),
                     width="stretch", key="risk_liq")
-    rows = sorted(prop.positions, key=lambda p: -(p.days_to_liquidate or 0.0))[:10]
+    rows = data.least_liquid(prop.positions, 10)  # dias ausentes primeiro (nunca "0 dia")
     df = pd.DataFrame([{"Emissor": p.issuer_id, "Linha": p.execution_ticker,
                         "Lado": fmt.SIDE_PT.get(p.side.value, p.side.value),
                         "Peso": fmt.pct(p.weight, signed=True), "% ADTV": fmt.pct(p.pct_adtv),
@@ -182,10 +195,15 @@ def _squeeze(state: AppState) -> None:
     counts = df["bucket"].value_counts()
     alerted = data.squeeze_alerted(rec)
     c = st.columns(4)
-    n_high = rec.risk.squeeze_high_shorts if rec is not None else 0
-    ui.kpi(c[0], "HIGH no último fechamento", str(n_high),
-           fmt.Status("reavaliar/reduzir" if n_high else "nenhum", "red" if n_high else "green"),
-           help="Balde recalculado na rotina diária (registro do dia).")
+    if rec is None:
+        ui.kpi(c[0], "HIGH no último fechamento", fmt.NA, "sem registro diário",
+               help="Balde recalculado na rotina diária (registro do dia).")
+    else:
+        n_high = rec.risk.squeeze_high_shorts
+        ui.kpi(c[0], "HIGH no último fechamento", str(n_high),
+               fmt.Status("reavaliar/reduzir" if n_high else "nenhum",
+                          "red" if n_high else "green"),
+               help="Balde recalculado na rotina diária (registro do dia).")
     for col, b, color in zip(c[1:], ("HIGH", "MEDIUM", "LOW"), ("red", "orange", "green"),
                              strict=False):
         ui.kpi(col, f"{b} na decisão", str(int(counts.get(b, 0))),

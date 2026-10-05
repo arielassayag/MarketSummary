@@ -47,7 +47,7 @@ def header(state: AppState) -> None:
     """Cabeçalho comum: nome do fundo, natureza do track record e avisos de estado."""
     cfg = state.cfg
     rec = state.track.latest
-    week = state.book.live_week(rec)
+    week = state.book.latest  # semana de decisão mais recente (a mente que conduz a semana)
     mind = week.mind if week is not None else None
     last = fmt.date_br(rec.date) if rec is not None else "antes da inception"
     st.markdown(
@@ -62,6 +62,7 @@ def header(state: AppState) -> None:
         st.markdown("<div class='cdp-banner-sim'>DADOS SIMULADOS — artefatos sintéticos "
                     "carregados (não representam preços reais)</div>", unsafe_allow_html=True)
         st.caption("Sintéticos: " + fmt.escape_md(", ".join(state.synthetic[:6])))
+    integrity_banner(state)
     ks = state.kill_switch
     if ks.active:
         st.error(f"**KILL SWITCH LIGADO** — só operações que reduzem risco. Motivo: "
@@ -76,6 +77,21 @@ def header(state: AppState) -> None:
                f"vol-alvo {fmt.pct(cfg.risk.vol_target_annual, 0)} (banda "
                f"{fmt.pct(cfg.risk.vol_band_min, 0)}–{fmt.pct(cfg.risk.vol_band_max, 0)}) · "
                f"NAV inicial {fmt.usd_mm(cfg.fund.inception_nav_usd, 0)}.")
+
+
+def integrity_banner(state: AppState) -> None:
+    """Falhas de integridade detectadas na carga (registro adulterado, removido ou ilegível;
+    artefato do livro que não confere com a trilha): exibidas em todas as páginas."""
+    failures = state.track.integrity_failures + state.book.integrity_failures
+    if not failures:
+        return
+    lines = []
+    for r in failures:
+        first = "; ".join(r.messages[:3]) + (" …" if len(r.messages) > 3 else "")
+        lines.append(f"- **{fmt.escape_md(r.label)}**: {fmt.escape_md(first)}")
+    st.error("**FALHA DE INTEGRIDADE** — os números exibidos podem ter sido alterados fora do "
+             "pipeline. Detalhes em Track record › Verificar integridade e em Auditoria.\n\n"
+             + "\n".join(lines), icon=":material/gpp_bad:")
 
 
 def sidebar(state: AppState) -> None:

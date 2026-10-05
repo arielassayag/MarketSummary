@@ -88,21 +88,37 @@ def _commentary(state: AppState) -> None:
     ui.issues(list(com.issues), "Apontamentos do verificador do comentário")
 
 
+def _execution(wd: data.WeekData, rec: object) -> str:
+    """Situação de execução da decisão mais recente vs. o último registro diário."""
+    live = getattr(rec, "live_book_week", None)
+    if live == wd.week:
+        return f"em carteira (registro de {fmt.date_br(getattr(rec, 'date', None))})"
+    if wd.booked is not None:
+        return "efetivada (aguardando o primeiro registro diário)"
+    if wd.decision is not None:
+        return ("aguardando a execução no fechamento (MOC) de "
+                f"{fmt.date_br(wd.week)} — carteira anterior segue em vigor")
+    return "sem decisão gravada"
+
+
 def _decision(state: AppState) -> None:
     rec = state.track.latest
-    wd = state.book.live_week(rec) if state.book.weeks else None
-    ui.section("Decisão vigente", ui.CALC_BADGE)
+    wd = state.book.latest  # decisão mais recente (pode ainda não estar executada)
+    ui.section("Decisão mais recente", ui.CALC_BADGE)
     if wd is None or wd.proposal is None:
         st.caption("Nenhuma decisão semanal gravada ainda.")
         return
     p, d = wd.proposal, wd.decision
+    tz = state.cfg.fund.timezone
     rows = [
         ("Semana", fmt.date_br(wd.week)),
         ("Mente que conduziu", wd.mind or fmt.NA),
         ("Caminho", fmt.PATH_PT.get(wd.path_taken or "", wd.path_taken or fmt.NA)),
         ("Estado", wd.state or fmt.NA),
+        ("Execução", _execution(wd, rec)),
         ("Decisão", f"{d.decision.value} ({d.mode.value})" if d else "sem decisão"),
-        ("Decidida em", fmt.dt_local(d.decided_at, state.cfg.fund.timezone) if d else fmt.NA),
+        ("Decidida em", fmt.dt_local(d.decided_at, tz) if d else fmt.NA),
+        ("Prazo do mandato", data.decision_timing(d, state.cfg).label if d else fmt.NA),
         ("Vol ex-ante na decisão", fmt.pct(p.risk.ex_ante_vol)),
         ("Longs / shorts", f"{p.risk.n_long} / {p.risk.n_short}"),
         ("approval_hash", fmt.short_hash(d.approval_hash, 16) if d else fmt.NA),
@@ -128,8 +144,12 @@ def _events(state: AppState) -> None:
     if not events:
         st.caption("Sem eventos no calendário dos próximos dias.")
     for e in events:
-        st.markdown(f"**{fmt.escape_md(e.label)}** — {fmt.dt_local(e.when, tz)}  \n"
-                    f"{fmt.escape_md(e.note)}")
+        text = (f"**{fmt.escape_md(e.label)}** — {fmt.dt_local(e.when, tz)}  \n"
+                f"{fmt.escape_md(e.note)}")
+        if e.overdue:
+            st.error(text, icon=":material/alarm:")
+        else:
+            st.markdown(text)
 
 
 def _market(state: AppState) -> None:

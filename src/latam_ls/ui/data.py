@@ -1253,11 +1253,23 @@ class SideLiquidity:
 
     @property
     def status(self) -> fmt.Status:
+        tag = "L" if self.side == "LONG" else "S"
         if self.n == 0:
-            return fmt.Status("sem posições", "gray")
+            return fmt.Status(f"{tag}: sem posições", "gray")
         if self.n_missing:
-            return fmt.Status(f"{self.n_missing} sem ADTV (n/d)", "orange")
-        return fmt.max_status(self.max_days, self.limit, fmt.days)
+            return fmt.Status(f"{tag}: {self.n_missing} sem ADTV (n/d)", "orange")
+        st = fmt.max_status(self.max_days, self.limit, fmt.days)
+        return fmt.Status(f"{tag}: {st.label}", st.color)
+
+
+def worst_liquidity_status(by_side: dict[str, SideLiquidity]) -> fmt.Status:
+    """Pior estado entre os lados (vermelho > laranja > verde/cinza)."""
+    statuses = [x.status for x in by_side.values()]
+    for color in ("red", "orange"):
+        hit = [s for s in statuses if s.color == color]
+        if hit:
+            return fmt.Status(" · ".join(s.label for s in hit), color)
+    return fmt.Status(" · ".join(s.label for s in statuses), "green")
 
 
 def liquidity_by_side(positions: Sequence[PositionTarget], cfg: FundConfig
@@ -1462,6 +1474,7 @@ class Event:
     label: str
     when: datetime
     note: str = ""
+    overdue: bool = False
 
 
 def _at(d: date, hhmm: str, tz: ZoneInfo) -> datetime:
@@ -1487,7 +1500,8 @@ def next_events(now: datetime, cfg: FundConfig, decided_weeks: set[date] | None 
         deadline = _at(current, cfg.fund.decision_deadline_local, tz)
         if deadline <= local:
             events.append(Event("Decisão semanal ATRASADA", deadline,
-                                "prazo do mandato vencido sem decisão gravada no livro"))
+                                "prazo do mandato vencido sem decisão gravada no livro",
+                                overdue=True))
     for k in range(0, 8):
         first = first_session_of_week(monday + timedelta(weeks=k))
         if first is None or first < today or first in decided:

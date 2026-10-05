@@ -64,9 +64,15 @@ class AppState:
 
     # ------------------------------------------------------------------ impressões digitais
     @cached_property
+    def audit_fp(self) -> str:
+        # Conteúdo (não só tamanho/mtime): a trilha é pequena e é a âncora da integridade.
+        return data.fingerprint(self.paths.book / data.AUDIT_FILE, content=True)
+
+    @cached_property
     def track_fp(self) -> str:
+        # Inclui a trilha: a integridade do track record (verificada na carga) depende dela.
         b = self.paths.book
-        return data.fingerprint(b / data.TRACK_DIR, b / data.SHADOW_DIR)
+        return data.fingerprint(b / data.TRACK_DIR, b / data.SHADOW_DIR) + self.audit_fp
 
     @cached_property
     def reports_fp(self) -> str:
@@ -87,12 +93,11 @@ class AppState:
 
     @cached_property
     def book(self) -> data.BookData:
-        return _book(str(self.paths.book), data.fingerprint(self.paths.book))
+        return _book(str(self.paths.book), data.fingerprint(self.paths.book) + self.audit_fp)
 
     @cached_property
     def audit(self) -> data.AuditData:
-        return _audit(str(self.paths.book),
-                      data.fingerprint(self.paths.book / data.AUDIT_FILE))
+        return _audit(str(self.paths.book), self.audit_fp)
 
     @cached_property
     def reports(self) -> list[data.ReportInfo]:

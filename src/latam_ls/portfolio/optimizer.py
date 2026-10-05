@@ -872,7 +872,11 @@ def optimize(alpha: pd.Series, model: RiskModel, constraints: pd.DataFrame,
     ``alpha``: retorno residual esperado anual por emissor (já ortogonalizado). Emissor sem
     alpha (``NaN``/ausente) não abre posição: só pode reduzir/zerar posição existente.
     ``constraints``: saída de :func:`build_asset_constraints` (ou tabela equivalente com as
-    colunas obrigatórias). ``market_w``: pesos de mercado, usados para o beta implícito do
+    colunas obrigatórias). Coluna opcional ``max_trade_liq``: teto de AUMENTO por liquidez
+    (reduções até zero sempre permitidas); sem ela vale só ``|w − w₀| ≤ max_trade``.
+    Toda solução passa pelo reparo de complementaridade (sem perna comprada e vendida
+    simultâneas no mesmo emissor), de modo que o custo otimizado é o custo da ordem líquida
+    que ``trades.build_trades`` emite. ``market_w``: pesos de mercado, usados para o beta implícito do
     modelo quando ``constraints['beta']`` está ausente. ``overrides`` (do gestor, só apertam o
     mandato): ``vol_target`` (dentro da banda), ``gross_max``, ``gross_multiplier``,
     ``risk_aversion``, ``max_weekly_turnover``, ``exclude_issuers``, ``risk_target_mode``.

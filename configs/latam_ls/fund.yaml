@@ -29,17 +29,18 @@ risk:
   beta_max_abs: 0.05           # beta previsto vs. mercado LatAm
   gross_max: 2.5
   gross_min: 0.5
-  country_net_max_abs: 0.05
-  sector_net_max_abs: 0.05
+  country_net_max_abs: 0.02           # alpha puro: país neutro (long ≈ short em cada país)
+  sector_net_max_abs: 0.025          # setor neutro
   style_exposure_max_abs: 0.10          # fatores de estilo neutros (|z| <= 0,10)
   max_long_weight: 0.04
   max_short_weight: 0.025      # shorts menores: perda ilimitada e risco de squeeze
   min_position_weight: 0.002
   max_single_name_risk_share: 0.08
-  max_factor_risk_share: 0.30
+  max_factor_risk_share: 0.25          # ≥ 75% da variância deve ser idiossincrática (restrição no otimizador)
   risk_aversion: 1.0
   var_confidence: 0.99
   theme_net_max_abs: {state_owned: 0.01}  # estatais neutras (janela eleitoral)
+  country_gross_share_max: {BR: 0.70, MX: 0.35, CL: 0.15, PE: 0.12, CO: 0.10, AR: 0.10, LATAM: 0.10, PA: 0.05, UY: 0.05}
   event_windows:
     - {name: "Eleição Brasil 2026 (2º turno 25/out)", country: BR, start: "2026-10-05", end: "2026-10-26", vol_multiplier: 1.5}
   bias_prior: 1.10                     # risco de carteira otimizada é subestimado (USE4): alvo efetivo 5%/1,10

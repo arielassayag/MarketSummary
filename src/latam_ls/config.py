@@ -67,6 +67,8 @@ class RiskSection(_Frozen):
     var_confidence: float = Field(0.99, gt=0.5, lt=1)
     # Temas com neutralidade própria (ex.: estatais brasileiras durante a eleição).
     theme_net_max_abs: dict[str, float] = Field(default_factory=lambda: {"state_owned": 0.01})
+    country_gross_share_max: dict[str, float] = Field(default_factory=dict,
+                                                      description="Teto da fatia do gross por país")
     # Janelas de evento: multiplicador de vol para fatores país e risco específico (vol implícita >> realizada).
     event_windows: list[dict] = Field(default_factory=lambda: [
         {"name": "Eleição Brasil 2026 (2º turno 25/out)", "country": "BR", "start": "2026-10-05",

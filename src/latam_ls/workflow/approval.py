@@ -262,8 +262,11 @@ def _temporal_violations(proposal: Proposal, decided_at: datetime,
     if decided_at < proposal.created_at:
         reasons.append(f"Decisão datada de {decided_at.isoformat()}, anterior à criação da "
                        f"proposta ({proposal.created_at.isoformat()}).")
-    if co_signed_at is not None and co_signed_at < proposal.created_at:
-        reasons.append("Co-assinatura anterior à criação da proposta.")
+    if co_signed_at is not None:
+        if co_signed_at.tzinfo is None:
+            reasons.append("Co-assinatura sem fuso horário (horário ambíguo).")
+        elif co_signed_at < proposal.created_at:
+            reasons.append("Co-assinatura anterior à criação da proposta.")
     return reasons
 
 

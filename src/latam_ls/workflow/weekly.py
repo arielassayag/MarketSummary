@@ -254,8 +254,8 @@ def risk_summary(ctx: WeekContext, w: pd.Series) -> RiskSummary:
 
 
 def _effective_cfg_for_views(cfg: FundConfig) -> FundConfig:
-    """IC das visões de IA conforme a fase de adoção (research.llm_phase)."""
-    return cfg.with_overrides({"alpha": {"view_information_coefficient": cfg.research.llm_view_ic}})
+    """``apply_views`` já aplica min(teto, IC da fase) às visões de IA; nada a sobrescrever."""
+    return cfg
 
 
 def theme_checks(ctx: WeekContext, w: pd.Series) -> list:

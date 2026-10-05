@@ -372,7 +372,7 @@ class Book:
         path = self._proposal_path(week, k)
         if path.exists():
             raise FileExistsError(f"Proposta v{k} da semana {week} já existe (imutável).")
-        if self.load_booked(week) is not None:
+        if self._read_booked(week) is not None:
             raise ValueError(f"A semana {week} já foi efetivada; não aceita novas propostas.")
         expected = self.next_version(week)
         if k != expected:
@@ -479,7 +479,7 @@ class Book:
         path = self._decision_path(week, k)
         if path.exists():
             raise FileExistsError(f"A proposta v{k} da semana {week} já tem decisão (imutável).")
-        if self.load_booked(week) is not None:
+        if self._read_booked(week) is not None:
             raise ValueError(f"A semana {week} já foi efetivada.")
         latest = self.proposal_versions(week)[-1]
         if k != latest:
@@ -634,13 +634,30 @@ class Book:
             week=week)
         return path
 
-    def load_booked(self, week: date) -> BookEntry | None:
+    def _read_booked(self, week: date) -> BookEntry | None:
+        """Leitura crua de ``booked.json`` (sem conferir a trilha) para integridade/estado."""
         path = self.week_dir(week) / _BOOKED
         if not path.exists():
             return None
         return BookEntry.model_validate(_read_json(path))
 
+    def load_booked(self, week: date) -> BookEntry | None:
+        """Carteira efetivada da semana, conferida contra o evento ``BOOKED`` da trilha.
+
+        Levanta ``ValueError`` se o arquivo não confere (a marcação a mercado nunca usa uma
+        carteira alterada fora do livro).
+        """
+        entry = self._read_booked(week)
+        if entry is None:
+            return None
+        _, index = self._audit_state()
+        if sha256_obj(entry) not in index.get(("BOOKED", week), set()):
+            raise ValueError(f"booked.json da semana {week} não confere com a trilha de "
+                             "auditoria (arquivo alterado fora do livro).")
+        return entry
+
     def latest_booked(self) -> BookEntry | None:
+        """Booking da semana mais recente, conferido contra a trilha (ver :meth:`load_booked`)."""
         for week in reversed(self.list_weeks()):
             entry = self.load_booked(week)
             if entry is not None:
@@ -693,7 +710,7 @@ class Book:
             return ProposalState.BLOCKED
         try:
             decision = self._load_decision_file(week, version)
-            booked = self.load_booked(week)
+            booked = self._read_booked(week)
         except ValueError:
             return ProposalState.BLOCKED
         decision_ok = decision is not None and self._decision_valid(decision, proposal, index)
@@ -794,7 +811,7 @@ class Book:
 
         booked_events = index.get(("BOOKED", week), set())
         try:
-            entry = self.load_booked(week)
+            entry = self._read_booked(week)
         except ValueError as exc:
             return problems + [f"{week}: booking ilegível ({exc})."]
         booked_payloads: set[str] = set()

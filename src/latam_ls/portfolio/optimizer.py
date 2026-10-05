@@ -430,6 +430,17 @@ class _Settings:
     risk_target_mode: str = "cap"
 
 
+def _finite(name: str, value: object) -> float:
+    """Override numérico finito; NaN/inf passariam pelas comparações e chegariam ao solver."""
+    try:
+        v = float(value)  # type: ignore[arg-type]
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"Override '{name}' não numérico: {value!r}") from exc
+    if not np.isfinite(v):
+        raise ValueError(f"Override '{name}' não finito: {value!r}")
+    return v
+
+
 def _resolve_settings(cfg: FundConfig, overrides: dict | None, inception: bool) -> _Settings:
     rk = cfg.risk
     ov = dict(overrides or {})
@@ -437,6 +448,10 @@ def _resolve_settings(cfg: FundConfig, overrides: dict | None, inception: bool) 
     if unknown:
         raise ValueError(f"Overrides desconhecidos: {unknown}. Permitidos: "
                          f"{sorted(_ALLOWED_OVERRIDES)}")
+    for key in ("vol_target", "vol_target_annual", "gross_max", "gross_multiplier",
+                "risk_aversion", "max_weekly_turnover"):
+        if key in ov:
+            ov[key] = _finite(key, ov[key])
     notes: list[str] = []
     vt = ov.get("vol_target", ov.get("vol_target_annual", rk.vol_target_annual))
     vt = float(vt)
@@ -914,6 +929,10 @@ def optimize(alpha: pd.Series, model: RiskModel, constraints: pd.DataFrame,
     # Alpha: ausente ⇒ apenas redução/saída (nunca alpha zero silencioso para abrir posição).
     a = pd.to_numeric(alpha, errors="coerce")
     a.index = a.index.map(str)
+    inf_alpha = a.notna() & ~np.isfinite(a.to_numpy(dtype=float))
+    if inf_alpha.any():
+        raise ValueError(f"Alpha infinito (dado inválido, não ausente): "
+                         f"{list(a.index[inf_alpha])}")
     ignored = sorted(set(a.index) - set(cons.index))
     if ignored:
         notes.append(f"{len(ignored)} emissores com alpha fora da tabela de restrições "

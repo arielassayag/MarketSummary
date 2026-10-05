@@ -744,6 +744,18 @@ def test_mtm_on_synthetic_panel():
     assert all(np.isfinite([r.nav_usd, r.pnl_usd, r.gross, r.net]).all() for r in rows)
     assert sum(r.pnl_usd for r in rows) == pytest.approx(rows[-1].nav_usd - NAV)
     assert rows[0].gross == pytest.approx(0.10, abs=0.01)
+    # Dia 1 recalculado de forma independente: Σ n0·r (linha sem retorno não contribui),
+    # financiamento à taxa conhecida no booking e aluguel padrão (sem taxas informadas).
+    r1 = panel.line_returns.loc[expected_days[0], tickers].to_numpy(dtype=float)
+    n0 = np.array(weights) * NAV
+    eq1 = float(np.nansum(n0 * r1))
+    rate0 = float(md.rates["USD_3M"].loc[:pd.Timestamp(start)].dropna().iloc[-1])
+    borrow1 = -float(np.abs(n0[n0 < 0]).sum()) * 0.02 / 252
+    assert rows[0].financing_usd == pytest.approx(NAV * rate0 / 252)
+    assert rows[0].cost_usd == pytest.approx(borrow1)
+    assert rows[0].pnl_usd == pytest.approx(eq1 + NAV * rate0 / 252 + borrow1)
+    assert rows[0].net == pytest.approx(float((n0 * np.where(np.isfinite(r1), 1 + r1, 1)).sum())
+                                        / rows[0].nav_usd)
 
 
 # ==========================================================
@@ -1137,3 +1149,47 @@ def test_review_memo_macro_scope_cannot_inject_sections():
     assert len(headers) == 1
     assert not any(ln.startswith("- [x]") for ln in memo.splitlines())
     assert "<b>" not in memo
+
+
+def test_review_latest_booked_refuses_portfolio_edited_outside_book(tmp_path):
+    book = Book(tmp_path)
+    p = make_proposal()
+    book.save_proposal(p)
+    d = _approve(p)
+    book.save_decision(d)
+    book.save_booked(book_entry_from_proposal(p, d, booked_at=NOW), SNAP_H, CFG_H, RES_H)
+    assert book.latest_booked().proposal_id == p.proposal_id
+    path = book.week_dir(WEEK) / "booked.json"
+    data = json.loads(path.read_text(encoding="utf-8"))
+    data["positions"][0]["notional_usd"] *= 10
+    path.write_text(json.dumps(data, indent=2, sort_keys=True), encoding="utf-8")
+    with pytest.raises(ValueError, match="trilha"):
+        book.latest_booked()
+    assert book.proposal_state(WEEK, 1) == ProposalState.BLOCKED
+    assert not book.verify_integrity()[0]
+
+
+def test_review_ledger_edits_and_out_of_book_appends_detected(tmp_path):
+    book = Book(tmp_path)
+    rows = mark_to_market(_toy_booked(), _toy_returns(), date(2026, 10, 5), date(2026, 10, 7),
+                          10e6, 0.0504, pd.Series({"BBB": 0.0252}))
+    book.record_ledger(rows[:1], week=WEEK)
+    book.record_ledger(rows[1:], week=WEEK)
+    assert book.verify_integrity()[0]
+    extra = rows[-1].model_copy(update={"date": date(2026, 10, 8)})
+    book.ledger.append([extra])  # anexado sem passar pelo livro
+    ok, problems = book.verify_integrity()
+    assert not ok and any("sem evento" in pr for pr in problems)
+    text = book.ledger.path.read_text(encoding="utf-8").splitlines()
+    book.ledger.path.write_text("\n".join(text[:-1]).replace(
+        repr(rows[0].nav_usd), repr(rows[0].nav_usd + 1e6)) + "\n", encoding="utf-8")
+    ok, problems = book.verify_integrity()
+    assert not ok and any("ledger.csv não confere" in pr for pr in problems)
+
+
+def test_review_naive_cosign_timestamp_does_not_crash_verification(tmp_path):
+    p = make_proposal(soft_fail=True)
+    d = _approve(p, acknowledged_soft_checks=["factor_share"], co_signer=RISK)
+    naive = d.model_copy(update={"co_signed_at": datetime(2026, 10, 5, 13, 0)})
+    ok, reasons = verify_decision(naive, p, SNAP_H, CFG_H, RES_H)
+    assert not ok and any("fuso" in r for r in reasons)

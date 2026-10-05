@@ -430,8 +430,8 @@ def build_line_master(universe: Universe, cvm_fca: pd.DataFrame | None,
         else:
             share_class = "ADR" if lt == "ADR" else ("US" if lt == "US_LISTED" else None)
             sym = str(ticker).upper().strip()
-            if sym in sec_map.index and sec_map.loc[sym]:
-                cik = sec_map.loc[sym]
+            if sym in sec_map.index and _is_text(sec_map.loc[sym]):
+                cik = str(sec_map.loc[sym])
                 validated = True
                 vsource = "SEC"
             if lt == "ADR":
@@ -456,8 +456,13 @@ SECURITY_MASTER_COLUMNS = [
 ]
 
 
+def _is_text(v: object) -> bool:
+    """Verdadeiro só para texto não vazio (``None``/``NaN``/``pd.NA`` contam como ausentes)."""
+    return isinstance(v, str) and bool(v.strip())
+
+
 def _most_common(values: Iterable[str]) -> str | None:
-    vals = [v for v in values if v]
+    vals = [v for v in values if _is_text(v)]
     if not vals:
         return None
     s = pd.Series(vals).value_counts()
@@ -483,21 +488,21 @@ def build_security_master(universe: Universe, cvm_fca: pd.DataFrame | None,
         lines = lm[lm["issuer_id"] == iid]
         notes: list[str] = []
         primary = str(iss["primary_ticker"])
-        cnpjs = [c for c in lines["cnpj"].tolist() if c]
+        cnpjs = [c for c in lines["cnpj"].tolist() if _is_text(c)]
         cnpj = None
         if cnpjs:
             if len(set(cnpjs)) > 1:
                 prim_cnpj = lines.loc[primary, "cnpj"] if primary in lines.index else None
-                cnpj = prim_cnpj or _most_common(cnpjs)
+                cnpj = prim_cnpj if _is_text(prim_cnpj) else _most_common(cnpjs)
                 notes.append(f"CNPJs divergentes entre linhas: {sorted(set(cnpjs))}")
             else:
                 cnpj = cnpjs[0]
-        ciks = [c for c in lines["cik"].tolist() if c]
+        ciks = [c for c in lines["cik"].tolist() if _is_text(c)]
         cik = _most_common(ciks)
         if len(set(ciks)) > 1:
             notes.append(f"CIKs divergentes entre linhas: {sorted(set(ciks))}")
         classes = sorted({c for c in lines["share_class"].tolist()
-                          if c and c not in ("ADR", "US")})
+                          if _is_text(c) and c not in ("ADR", "US")})
         adr_lines = lines[lines["line_type"] == "ADR"]
         adr_ticker = None
         adr_ratio = float("nan")

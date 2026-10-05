@@ -52,6 +52,9 @@ class RiskModel:
 
     def align(self, w: pd.Series) -> pd.Series:
         """Reindexa pesos ao universo do modelo; nomes fora do modelo são erro (não zero silencioso)."""
+        if not np.isfinite(w.to_numpy(dtype=float)).all():
+            bad = sorted(map(str, w.index[~np.isfinite(w.to_numpy(dtype=float))]))
+            raise ValueError(f"Pesos não finitos (NaN/inf) não são zero: {bad}")
         w = w[w != 0]
         extra = sorted(set(w.index) - set(self.assets))
         if extra:

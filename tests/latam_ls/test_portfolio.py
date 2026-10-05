@@ -959,6 +959,9 @@ def test_drawdown_hard_does_not_ratchet_and_stop_out_caps_gross(env: Env, incept
     # gatilho soft inclusivo: drawdown exatamente no stop aciona a revisão
     edge = {c.check_id: c for c in _run(env, w, cons, drawdown=dds.soft_stop)}
     assert not edge["DRAWDOWN_SOFT"].passed
+    # drawdown informado como NaN não pode passar como "sem perda"
+    nan_dd = {c.check_id: c for c in _run(env, w, cons, drawdown=float("nan"))}
+    assert not nan_dd["DRAWDOWN_HARD"].passed and nan_dd["DRAWDOWN_HARD"].severity == Severity.HARD
 
 
 def test_build_trades_share_driven_notional_is_consistent() -> None:
@@ -989,3 +992,21 @@ def test_build_positions_short_participation(env: Env, targets, inception) -> No
             assert a.days_to_liquidate == pytest.approx(a.pct_adtv / 0.15)
         else:
             assert a.days_to_liquidate == pytest.approx(b.days_to_liquidate)
+
+
+def test_non_finite_overrides_and_alpha_are_rejected(env: Env) -> None:
+    """Bug: NaN em overrides passava pelas comparações (NaN > x é falso) e chegava ao solver."""
+    cons = _constraints(env)
+    for key in ("gross_max", "risk_aversion", "vol_target"):
+        with pytest.raises(ValueError, match="finito"):
+            optimize(env.alpha, env.model, cons, env.cost_model, env.cfg, NAV, None, True,
+                     overrides={key: float("nan")})
+    cur = pd.Series({env.special["cap"]: 0.005})
+    cw = _constraints(env, current=cur, inception=False)
+    with pytest.raises(ValueError, match="finito"):
+        optimize(env.alpha, env.model, cw, env.cost_model, env.cfg, NAV, cur, False,
+                 overrides={"max_weekly_turnover": float("nan")})
+    bad = env.alpha.copy()
+    bad.iloc[0] = np.inf
+    with pytest.raises(ValueError, match="infinito"):
+        optimize(bad, env.model, cons, env.cost_model, env.cfg, NAV, None, True)

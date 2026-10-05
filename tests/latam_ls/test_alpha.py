@@ -465,7 +465,8 @@ def test_build_alpha_grinold_scaling_and_contributions(alpha_res, model, cfg):
     cz = alpha_res.composite_z.dropna()
     assert cz.abs().max() <= cfg.alpha.winsor_z + 1e-12
     assert abs(cz.mean()) < 0.05 and abs(cz.std(ddof=0) - 1.0) < 0.05
-    expected = cfg.alpha.information_coefficient * model.specific_vol[cz.index] * cz
+    horizon = np.sqrt(52.0 / cfg.alpha.horizon_weeks)  # IC no horizonte H, anualizado
+    expected = cfg.alpha.information_coefficient * horizon * model.specific_vol[cz.index] * cz
     pd.testing.assert_series_equal(alpha_res.alpha_raw[cz.index], expected, check_names=False)
     total = alpha_res.contributions.sum(axis=1, min_count=1)
     np.testing.assert_allclose(total, alpha_res.alpha_raw, atol=1e-15, equal_nan=True)

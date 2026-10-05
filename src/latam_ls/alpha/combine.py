@@ -316,7 +316,10 @@ def build_alpha(
         raise ValueError(f"Emissores duplicados nos sinais: {dups}")
     acfg = cfg.alpha
     winsor = float(acfg.winsor_z)
-    ic = float(acfg.information_coefficient)
+    # IC medido no horizonte de ``horizon_weeks`` semanas ⇒ alpha anualizado
+    # = IC × σ_anual × √(52/H) × z  (Grinold com σ do horizonte, escalado para 1 ano).
+    horizon_scale = float(np.sqrt(52.0 / float(acfg.horizon_weeks)))
+    ic = float(acfg.information_coefficient) * horizon_scale
     notes: list[str] = []
     requested = dict(weights) if weights is not None else dict(acfg.signal_weights)
     weights_used = _resolve_weights(requested, list(signals_raw.columns), notes)

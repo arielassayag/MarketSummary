@@ -374,7 +374,14 @@ def run_compliance(
         + ("" if age >= 0 else " Snapshot POSTERIOR à semana da decisão (look-ahead).")))
 
     # ---------- drawdown ----------
-    if drawdown is not None:
+    if drawdown is not None and not np.isfinite(float(drawdown)):
+        # Drawdown informado mas ausente/não finito: stops não verificáveis (nunca "sem perda").
+        msg = f"Drawdown não finito ({drawdown}): stops de drawdown não verificáveis."
+        checks.append(_check("DRAWDOWN_SOFT", "Stop de drawdown (revisão)", False, SOFT, None,
+                             cfg.drawdown.soft_stop, msg))
+        checks.append(_check("DRAWDOWN_HARD", "Stop de drawdown (corte de gross)", False, HARD,
+                             None, cfg.drawdown.hard_stop, msg))
+    elif drawdown is not None:
         dd = -abs(float(drawdown))  # aceita 0,04 ou −0,04 como drawdown de 4%
         dds = cfg.drawdown
         # Gatilhos inclusivos (drawdown igual ao stop aciona), com a mesma tolerância.

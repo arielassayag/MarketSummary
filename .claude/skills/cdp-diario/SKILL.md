@@ -17,3 +17,8 @@ Em ambos os casos:
 - Valide com `uv run python -m cdp validate-daily --date AAAA-MM-DD` antes de
   `uv run python -m cdp daily publish --date AAAA-MM-DD` (a publicação é imutável) e rode
   `uv run python -m cdp verify` antes do commit.
+- Se `cdp agenda` listar a semana corrente em `teses_pendentes`, conclua a tese de investimento
+  antes do painel, como no roteiro semanal (`docs/cdp/TESE.md`; com `rascunho_adotado: true` no
+  `tese prepare`, `validate-tese` antes de escrever qualquer coisa); semanas anteriores, só relate.
+- Sempre rode `verify` antes do painel, mesmo se a tese falhou; push só se esse `verify` disser
+  `ÍNTEGRO`.

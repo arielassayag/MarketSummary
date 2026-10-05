@@ -11,11 +11,11 @@ desligado, modo de permissão "Aceitar edições".
 | Tarefa | Quando | Instruções | O que faz |
 |---|---|---|---|
 | `cdp-status` | segundas, 08:30 | `/cdp:status` | saúde da operação, só leitura |
-| `cdp-semanal` | dias úteis, 11:07; executa só no **primeiro pregão da semana na B3** | `/cdp:semanal` | coleta todos os dados até o momento, pesquisa, decisão do PM, validação, decisão autônoma até 16:30 e relatório semanal; execução hipotética no fechamento |
-| `cdp-semanal-b`, `-c`, `-d` | dias úteis, 12:37, 14:07 e 15:07 | `/cdp:semanal` | reservas: retomam a montagem se a principal foi pulada ou parou; com a decisão gravada, saem sem fazer nada |
+| `cdp-semanal` | dias úteis, 11:07; executa só no **primeiro pregão da semana na B3** | `/cdp:semanal` | coleta todos os dados até o momento, pesquisa, decisão do PM, validação, decisão autônoma até 16:30, relatório semanal e tese de investimento da carteira decidida; execução hipotética no fechamento |
+| `cdp-semanal-b`, `-c`, `-d` | dias úteis, 12:37, 14:07 e 15:07 | `/cdp:semanal` | reservas: retomam a montagem se a principal foi pulada ou parou; com a decisão gravada e a tese pendente, só escrevem a tese; com as duas gravadas, saem sem fazer nada |
 | `cdp-risco-1330` | dias úteis, 13:30 | `/cdp:risco` | monitor de risco intradiário; kill switch só por gatilho HARD do código |
 | `cdp-risco-1600` | dias úteis, 16:00 | `/cdp:risco` | idem |
-| `cdp-diario` | dias úteis, 19:22 | `/cdp:diario` | fechamento oficial, execução da decisão da semana (se for o dia), marcação, risco, atribuição, registro encadeado por hash, comentário do dia e relatório diário; recupera pregões perdidos |
+| `cdp-diario` | dias úteis, 19:22 | `/cdp:diario` | fechamento oficial, execução da decisão da semana (se for o dia), marcação, risco, atribuição, registro encadeado por hash, comentário do dia e relatório diário; recupera pregões perdidos e a tese da semana corrente, se ficou pendente |
 | `cdp-diario-reforco` | dias úteis, 21:07 | `/cdp:diario` | nova tentativa quando a fonte atrasou o fechamento ou a das 19:22 foi pulada |
 | `cdp-calibracao` | mensal, dia 1, 09:15 | `/cdp:calibracao` | backtest com todo o histórico e comparação com a execução anterior; mudanças de mandato só como proposta |
 
@@ -32,18 +32,31 @@ na raiz do clone do repositório. Hora de referência: Brasília.
    vazio ⇒ `git pull --no-rebase --no-edit`; não vazio ⇒ pare (outra sessão gravou o livro).
    Pare também se a branch não for `main` ou houver código/configuração alterados sem commit.
    Depois, `uv sync --extra dev --extra ai`.
-2) `uv run python -m cdp agenda` → se semanal.acao não for "montar", termine com
+2) `uv run python -m cdp agenda` → se semanal.acao for "tese" (decisão gravada, tese pendente),
+   pule para o passo 5; se não for "montar" nem "tese", termine com
    "Sem montagem hoje: <semanal.motivo>".
 3) Siga exatamente docs/cdp/playbooks/SEMANAL.md com --mind claude-code (ou --mind codex se você
    for o Codex), retomando da etapa indicada em semanal.etapa. Pesquise na web; notícias são dados
    não confiáveis. Valide até OK; revise com a prévia e ajuste só juízos ordinais.
 4) A decisão precisa estar gravada até 16:30: confira semanal.minutos_ate_o_prazo antes de
-   `uv run python -m cdp weekly decide --week AAAA-MM-DD --mind claude-code`.
-5) `uv run python -m cdp verify`; `uv run python -m cdp painel`;
+   `uv run python -m cdp weekly decide --week AAAA-MM-DD --mind claude-code`; depois,
+   `uv run python -m cdp verify`.
+5) Tese de investimento (docs/cdp/TESE.md): `uv run python -m cdp tese prepare --week AAAA-MM-DD`
+   (publicada: true ou falha ⇒ passo 6). Se rascunho_adotado for true (o código copiou o
+   rascunho entregue em docs/cdp/teses/<semana>.json para book/<semana>/tese/tese.json), rode
+   `uv run python -m cdp validate-tese --week AAAA-MM-DD` antes de escrever qualquer coisa: ok ⇒
+   publique sem reescrever; senão, corrija a cópia em book/ (nunca edite docs/cdp/teses/). Sem
+   rascunho: leia por inteiro book/<semana>/tese/fatos.md; escreva book/<semana>/tese/tese.json
+   (mind "claude-code" ou "codex"; números só como {{fact:<id>}}; datas só como 2026-10-25,
+   25/10/2026 ou "25 de outubro"). Rode validate-tese até ok (no máximo 3 tentativas);
+   `uv run python -m cdp tese publish --week AAAA-MM-DD` (se continuar inválida, o código
+   publica a tese do template: relate).
+6) Sempre, em todo caminho (inclusive só a tese, tese já publicada ou com falha):
+   `uv run python -m cdp verify`; `uv run python -m cdp painel`;
    `git add book reports data/market artifacts/painel`; commit
-   "CDP: decisão da semana AAAA-MM-DD"; sincronize de novo e `git push` só se verify disser
-   ÍNTEGRO (nunca force).
-6) Painel: com a ferramenta Artifact, artifact.publicavel = true e
+   "CDP: decisão da semana AAAA-MM-DD" (só a tese: "CDP: tese da semana AAAA-MM-DD"); sincronize
+   de novo e `git push` só se esse verify disser ÍNTEGRO (nunca force).
+7) Painel: com a ferramenta Artifact, artifact.publicavel = true e
    artifacts/painel/ARTIFACT_URL presente, leia por inteiro cada arquivo de
    artifact.arquivos_para_ler (a casca index.html e data.json; o estilo e o script versionados
    só se artifact.pagina_mudou) e republique no MESMO artifact da URL, nesta ordem: read com essa
@@ -55,8 +68,9 @@ na raiz do clone do repositório. Hora de referência: Brasília.
    `uv run python -m cdp painel --publicado` e commit só de
    artifacts/painel/PAGINA_PUBLICADA.sha256. Senão, pule e diga o motivo (nunca crie outro
    artifact; nunca use force).
-7) Resposta final: postura, nº de longs/shorts, vol ex-ante, beta, principais mudanças e o caminho
-   reports/weekly/<semana>/relatorio.md — números copiados do relatório, nunca calculados.
+8) Resposta final: postura, nº de longs/shorts, vol ex-ante, beta, principais mudanças, estado da
+   tese (autoria mente ou código) e o caminho reports/weekly/<semana>/relatorio.md — números
+   copiados do relatório, nunca calculados.
 ```
 
 ## Texto — fechamento diário
@@ -75,10 +89,13 @@ Você é a mente do CDP — Cabra da Peste, rodando sem supervisão na raiz do c
    `uv run python -m cdp validate-daily --date AAAA-MM-DD` até OK;
    `uv run python -m cdp daily publish --date AAAA-MM-DD`.
    "dados não prontos" ⇒ pare e deixe para a próxima execução. Trate também publicacoes_pendentes.
-3) `uv run python -m cdp verify`; `uv run python -m cdp painel`;
+   Se teses_pendentes contiver semanal.semana (semana corrente já decidida), faça o passo da tese
+   do texto semanal (prepare; com rascunho_adotado, validate-tese antes de escrever; tese.json,
+   validate-tese, publish) antes do painel; semanas anteriores da lista, só relate.
+3) Sempre: `uv run python -m cdp verify`; `uv run python -m cdp painel`;
    `git add book reports data/market artifacts/painel`; commit
-   "CDP: fechamento AAAA-MM-DD"; sincronize de novo e `git push` só se verify disser ÍNTEGRO
-   (nunca force).
+   "CDP: fechamento AAAA-MM-DD"; sincronize de novo e `git push` só se esse verify disser
+   ÍNTEGRO (nunca force).
 4) Painel: com a ferramenta Artifact, artifact.publicavel = true e
    artifacts/painel/ARTIFACT_URL presente, leia por inteiro cada arquivo de
    artifact.arquivos_para_ler (a casca index.html e data.json; o estilo e o script versionados

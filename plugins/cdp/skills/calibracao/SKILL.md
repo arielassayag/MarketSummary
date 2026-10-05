@@ -98,9 +98,11 @@ Contexto: `docs/cdp/METODOLOGIA.md` e a calibração-base em `reports/backtest/2
    `artifact.arquivos_para_ler` — sempre a casca `artifacts/painel/index.html` e
    `artifacts/painel/data.json`; o estilo e o script versionados (`painel-<versão>.css`/`.js`) só
    quando `artifact.pagina_mudou` for `true`. Chame `Artifact` com essa `url`, nesta ordem:
-   `action: "read"` (uma vez; se o `<meta name="cdp-page-sha256" content="…">` da página publicada —
-   ou `var PAGE_SHA` em páginas antigas — for diferente de `artifact.pagina_publicada` ou não
-   existir, **não publique**: outra sessão publicou uma página fora das rotinas; anote e siga);
+   `action: "read"` (uma vez; confira o `<meta name="cdp-page-sha256" content="…">` da página
+   publicada — ou `var PAGE_SHA` em páginas antigas: igual a `artifact.pagina_publicada`, siga;
+   igual a `artifact.pagina_atual`, registre com `uv run python -m cdp painel --publicado`, rode
+   `uv run python -m cdp painel` de novo e siga com o novo bloco `artifact`; outro valor ou
+   ausente, **não publique**: outra sessão publicou uma página fora das rotinas; anote e siga);
    `action: "list"` com `scope: "files"` (obrigatório: a ferramenta
    só substitui ou remove um arquivo publicado que a sessão leu pelo caminho, viu numa listagem
    ou publicou); e `action: "publish"` com `file_path` = `artifact.publicar.file_path` (a

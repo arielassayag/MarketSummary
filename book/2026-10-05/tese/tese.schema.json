@@ -1,0 +1,226 @@
+{
+  "$defs": {
+    "PosicaoTese": {
+      "additionalProperties": false,
+      "description": "Por que o nome está na carteira, o principal risco e o gatilho de revisão.",
+      "properties": {
+        "gatilho": {
+          "maxLength": 220,
+          "minLength": 1,
+          "title": "Gatilho",
+          "type": "string"
+        },
+        "issuer_id": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Issuer Id",
+          "type": "string"
+        },
+        "por_que": {
+          "maxLength": 450,
+          "minLength": 1,
+          "title": "Por Que",
+          "type": "string"
+        },
+        "risco": {
+          "maxLength": 220,
+          "minLength": 1,
+          "title": "Risco",
+          "type": "string"
+        }
+      },
+      "required": [
+        "issuer_id",
+        "por_que",
+        "risco",
+        "gatilho"
+      ],
+      "title": "PosicaoTese",
+      "type": "object"
+    },
+    "TemaTese": {
+      "additionalProperties": false,
+      "description": "Tema da carteira (grupo de nomes com a mesma lógica de investimento).",
+      "properties": {
+        "emissores": {
+          "description": "issuer_id detidos na semana.",
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20,
+          "minItems": 1,
+          "title": "Emissores",
+          "type": "array"
+        },
+        "lado": {
+          "enum": [
+            "long",
+            "short",
+            "long_short"
+          ],
+          "title": "Lado",
+          "type": "string"
+        },
+        "riscos": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Riscos",
+          "type": "string"
+        },
+        "tese": {
+          "maxLength": 1200,
+          "minLength": 1,
+          "title": "Tese",
+          "type": "string"
+        },
+        "titulo": {
+          "maxLength": 90,
+          "minLength": 1,
+          "title": "Titulo",
+          "type": "string"
+        }
+      },
+      "required": [
+        "titulo",
+        "lado",
+        "emissores",
+        "tese",
+        "riscos"
+      ],
+      "title": "TemaTese",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Tese de investimento da carteira da semana (pt-BR; números só como {{fact:<id>}}).",
+  "properties": {
+    "construcao": {
+      "maxLength": 2500,
+      "minLength": 1,
+      "title": "Construcao",
+      "type": "string"
+    },
+    "contexto": {
+      "maxLength": 2500,
+      "minLength": 1,
+      "title": "Contexto",
+      "type": "string"
+    },
+    "exposicoes": {
+      "maxLength": 2000,
+      "minLength": 1,
+      "title": "Exposicoes",
+      "type": "string"
+    },
+    "gatilhos": {
+      "items": {
+        "maxLength": 300,
+        "minLength": 1,
+        "type": "string"
+      },
+      "maxItems": 10,
+      "minItems": 1,
+      "title": "Gatilhos",
+      "type": "array"
+    },
+    "mind": {
+      "description": "Mente que escreveu a tese.",
+      "enum": [
+        "claude-code",
+        "codex",
+        "api",
+        "demo"
+      ],
+      "title": "Mind",
+      "type": "string"
+    },
+    "monitoramento": {
+      "maxLength": 1500,
+      "minLength": 1,
+      "title": "Monitoramento",
+      "type": "string"
+    },
+    "posicoes": {
+      "items": {
+        "$ref": "#/$defs/PosicaoTese"
+      },
+      "maxItems": 400,
+      "title": "Posicoes",
+      "type": "array"
+    },
+    "premortem": {
+      "maxLength": 1500,
+      "minLength": 1,
+      "title": "Premortem",
+      "type": "string"
+    },
+    "resumo": {
+      "maxLength": 1800,
+      "minLength": 1,
+      "title": "Resumo",
+      "type": "string"
+    },
+    "riscos": {
+      "items": {
+        "maxLength": 400,
+        "minLength": 1,
+        "type": "string"
+      },
+      "maxItems": 10,
+      "minItems": 1,
+      "title": "Riscos",
+      "type": "array"
+    },
+    "sensibilidade": {
+      "maxLength": 2000,
+      "minLength": 1,
+      "title": "Sensibilidade",
+      "type": "string"
+    },
+    "temas": {
+      "items": {
+        "$ref": "#/$defs/TemaTese"
+      },
+      "maxItems": 8,
+      "minItems": 1,
+      "title": "Temas",
+      "type": "array"
+    },
+    "titulo": {
+      "maxLength": 160,
+      "minLength": 10,
+      "title": "Titulo",
+      "type": "string"
+    },
+    "volatilidade": {
+      "maxLength": 2000,
+      "minLength": 1,
+      "title": "Volatilidade",
+      "type": "string"
+    },
+    "week": {
+      "description": "Semana da decisão (AAAA-MM-DD).",
+      "format": "date",
+      "title": "Week",
+      "type": "string"
+    }
+  },
+  "required": [
+    "mind",
+    "week",
+    "titulo",
+    "resumo",
+    "contexto",
+    "construcao",
+    "temas",
+    "exposicoes",
+    "sensibilidade",
+    "volatilidade",
+    "riscos",
+    "premortem",
+    "gatilhos",
+    "monitoramento"
+  ],
+  "title": "TeseOutput",
+  "type": "object"
+}

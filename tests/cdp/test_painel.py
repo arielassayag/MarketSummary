@@ -49,12 +49,14 @@ from cdp.workflow.painel_publicacao import (
     cabe,
     chosen_backtest,
     compactar,
+    compliance_relevante,
     dump_publicacao,
     expandir,
     max_line,
     partes,
     publicacao,
     report_path,
+    sem_nome_da_mente,
 )
 from cdp.workflow.runtime import Runtime
 
@@ -114,12 +116,35 @@ def _embedded(html: str) -> dict:
     return json.loads(found[0])
 
 
+_IT_KEY_RE = re.compile(r"(?:^|_)(?:sha256|hash|hashes|verified)$")
+
+
+def _sem_ti(x):
+    """O retrato completo como a publicação o traz: sem hashes, verificações contra a trilha,
+    mente e snapshot; o nome da mente nos textos vira "IA"."""
+    if isinstance(x, dict):
+        return {k: _sem_ti(v) for k, v in x.items()
+                if not (_IT_KEY_RE.search(k) or k in ("mind", "minds", "snapshot_id"))}
+    if isinstance(x, list):
+        return [_sem_ti(v) for v in x]
+    return sem_nome_da_mente(x) if isinstance(x, str) else x
+
+
+def _decisao_publicada(dec):
+    """A decisão como a publicação a traz: sem TI (:func:`_sem_ti`), sem ``co_sign_reasons``
+    (registro do processo) e sem o rótulo do processo ("Caminho: cdp.") no fim do racional."""
+    out = {k: v for k, v in _sem_ti(dec).items() if k != "co_sign_reasons"}
+    if isinstance(out.get("rationale"), str):
+        out["rationale"] = re.sub(r" Caminho: [\w-]+\.$", "", out["rationale"])
+    return out
+
+
 # ---------------------------------------------------------------- estrutura e conteúdo
 
 def test_all_sections_present(data):
     assert set(data) == SECTIONS
     meta = data["meta"]
-    assert meta["schema_version"] == "cdp-painel/2" and meta["profile"] == "completo"
+    assert meta["schema_version"] == "cdp-painel/3" and meta["profile"] == "completo"
     assert meta["fund_name"] == "CDP — Cabra da Peste"
     assert meta["generated_at"] == NOW.isoformat()
     assert len(meta["data_hash"]) == 64
@@ -850,9 +875,12 @@ def test_publication_numbers_equal_the_full_export(full6):
     assert pub["track_record"]["compare"] == full6["track_record"]["compare"]
     assert pub["track_record"]["stats"] == full6["track_record"]["stats"]
     w, w0 = pub["weeks"][-1], full6["weeks"][-1]
-    assert w["decision"] == w0["decision"] and w["pm_decision"] == w0["pm_decision"]
-    assert [c["value"] for c in w["proposal"]["compliance"]["checks"]] == [
-        c["value"] for c in w0["proposal"]["compliance"]["checks"]]
+    assert w["decision"] == _decisao_publicada(w0["decision"])
+    assert w["pm_decision"] == _sem_ti(w0["pm_decision"])
+    # compliance: as verificações publicadas (não triviais) são as do completo, na mesma ordem
+    checks0 = w0["proposal"]["compliance"]["checks"]
+    assert [(c["check_id"], c["value"]) for c in w["proposal"]["compliance"]["checks"]] == [
+        (c["check_id"], c["value"]) for c in checks0 if compliance_relevante(c)]
     assert w["proposal"]["summary"] == w0["proposal"]["summary"]
     pos0 = {p["issuer_id"]: p for p in w0["proposal"]["positions"]}
     for p in w["proposal"]["positions"]:
@@ -870,7 +898,7 @@ def test_publication_index_page_has_empty_data_and_fetch_fallback(tmp_path):
     for needle in ('var DATA_URL = "data.json"', 'window.fetch(DATA_URL, { cache: "no-store" })',
                    "Carregando o painel", "Não foi possível carregar data.json", "Tentar de novo",
                    "_colunas", "_partes", "_faltam", "_rep", "_igual", "function unrep",
-                   'var PAGE_SCHEMA = "cdp-painel/2"', 'var PAGE_SHA = "__CDP_PAGE_SHA256__"',
+                   'var PAGE_SCHEMA = "cdp-painel/3"', 'var PAGE_SHA = "__CDP_PAGE_SHA256__"',
                    "META.page_sha256 !== PAGE_SHA", "Página desatualizada",
                    # eixo x proporcional às datas quando meses consolidados precedem os pregões
                    "function timeScale", "timeX: ROLLUP.length > 0", "timeX: !!ns.zone",
@@ -879,6 +907,40 @@ def test_publication_index_page_has_empty_data_and_fetch_fallback(tmp_path):
     from cdp.workflow.painel import SCHEMA_VERSION
 
     assert f'var PAGE_SCHEMA = "{SCHEMA_VERSION}"' in template  # página e dados da mesma versão
+
+
+def test_template_pins_investor_text_fixes():
+    """Correções de leitura do investidor fixadas no template (sem TI, rótulos do código)."""
+    template = (Path(__file__).resolve().parents[2] / "src" / "cdp" / "workflow"
+                / "painel_template.html").read_text(encoding="utf-8")
+    for needle in ("Não foi possível carregar os dados do fundo", "var MIND_RE",
+                   "function scrubPath", '"Revisões de analistas"', "TN.signals",
+                   "function thGo", "function stickyBottom", "function ckAttn",
+                   "rows = arr(rows);", "opts.empty", "function thFlag", "function gapPT",
+                   "function btPlain", "Distância à meta do mandato",
+                   "Sensibilidade a commodities não medida nesta semana."):
+        assert needle in template, needle
+    # "rev" é revisões de analistas (nunca a reversão de curto prazo, desligada); a página não
+    # calcula "no limite" por conta própria (usa a utilização exportada pelo código)
+    assert '"Reversão de curto prazo"]' not in template
+    assert "atLim" not in template
+    # o detalhe técnico da falha de carga fica no console, nunca no título visto pelo investidor
+    assert 'bootShow("err", "Não foi possível carregar data.json"' not in template
+    m = re.search(r"var MIND_RE = /(.+?)/gi;", template)
+    assert m, "MIND_RE"
+    mind = re.compile(m.group(1), re.IGNORECASE)
+
+    def scrub(t: str) -> str:
+        return re.sub(r"^\s*[.;,]\s*", "", mind.sub("", t))
+
+    assert (scrub("Postura defensiva; regime neutro; mente claude-code. Primeira carteira")
+            == "Postura defensiva; regime neutro. Primeira carteira")
+    assert scrub("Postura defensiva; mente de IA. Carteira neutra.") == (
+        "Postura defensiva. Carteira neutra.")
+    for keep in ("Quant fortemente comprada com alpha composto", "Mercado inteiramente simulado;",
+                 "O risco vem principalmente do Brasil.", "carteira levemente comprada",
+                 "somente em dólar", "essencialmente de valor"):
+        assert scrub(keep) == keep, keep
 
 
 def test_publication_compact_forms_roundtrip():
@@ -1020,26 +1082,29 @@ def test_publication_level0_rules(full6):
     for n in r["notes"]:
         assert n["_truncado"] is True and len(n["thesis"]) <= lim.tese_chars
         assert n["thesis"].endswith("…")
-        assert len(n["catalysts"]) <= 3 and len(n["key_risks"]) <= 3 and len(n["evidence"]) <= 3
+        assert len(n["catalysts"]) <= lim.itens_nota and len(n["key_risks"]) <= lim.itens_nota
+        assert len(n["evidence"]) <= lim.urls_nota
         assert n["n_evidence"] == 11 and "bull_points" not in n
         assert all(e["url"].startswith("https://") for e in n["evidence"])
     assert {"issuer_id", "role", "stance", "confidence", "horizon_weeks", "squeeze_verdict"} == set(
         r["notes_table"][0])
     for m in r["macro"]:
-        assert len(m["summary"]) <= 1_200 and m["_truncado"] is True
-        assert max(len(m["key_events"]), len(m["risks"]), len(m["portfolio_implications"])) <= 5
+        assert len(m["summary"]) <= lim.resumo_macro_chars and m["_truncado"] is True
+        assert max(len(m["key_events"]), len(m["risks"]),
+                   len(m["portfolio_implications"])) <= lim.itens_macro
     assert all(len(c["commentary"]["markdown"]) <= 4_000 for c in out["daily_reports"])
     assert len(out["daily_reports"]) == 10 and all("report_markdown" not in x
                                                    for x in out["daily_reports"])
-    assert len(out["reports_index"]) == 320 and all(x["has_md"] and x["md_sha256"]
+    assert len(out["reports_index"]) == 320 and all(x["has_md"] and "md_sha256" not in x
                                                     for x in out["reports_index"])
     # o caminho não se repete em cada linha: a página o monta (reports_dir/kind/date/relatorio.md)
     assert all("path" not in x for x in out["reports_index"])
     assert out["meta"]["publication"]["reports_dir"] == "reports"
     assert report_path("reports", "daily", "2024-03-11") == "reports/daily/2024-03-11/relatorio.md"
-    assert len(out["track_record"]["records"]) == 90 and len(out["audit"]["events"]) <= 20
+    assert len(out["track_record"]["records"]) == 90 and "events" not in out["audit"]
     w = out["weeks"][-1]
-    assert "markdown" not in w["report"] and w["report"]["sha256"]
+    assert "markdown" not in w["report"] and "sha256" not in w["report"]
+    assert w["report"]["available"] is True and "path" not in w["report"]
     assert len(w["shadow"]["positions"]) <= 20
 
 
@@ -1051,16 +1116,22 @@ def test_publication_previous_week_is_slim_at_level_1(full6):
     assert old["detail"] == "completo" and old["detail_publicacao"] == "enxuta"
     assert "detail_publicacao" not in new
     w0 = full6["weeks"][0]
-    assert old["decision"] == w0["decision"] and old["pm_decision"] == w0["pm_decision"]
+    assert old["decision"] == _decisao_publicada(w0["decision"])
+    assert old["pm_decision"] == _sem_ti(w0["pm_decision"])
     assert "risk" not in old["proposal"] and all(
         c["passed"] is False for c in old["proposal"]["compliance"]["checks"])
     assert old["proposal"]["compliance"]["n"] == w0["proposal"]["compliance"]["n"]
     assert old["research"]["resumo"] is True and old["research"]["notes"] == []
-    assert new["proposal"]["compliance"]["n"] == len(new["proposal"]["compliance"]["checks"])
-    assert all("details" not in c for c in new["proposal"]["compliance"]["checks"]
+    comp = new["proposal"]["compliance"]
+    assert comp["n"] == len(comp["checks"]) + comp.get("n_omitidas", 0)
+    assert all(compliance_relevante(c) for c in comp["checks"])
+    assert all("details" not in c for c in comp["checks"]
                if c["passed"] is True)  # nível 1: sem o texto dos gates aprovados
-    assert any("details" in c for c in lvl0["weeks"][-1]["proposal"]["compliance"]["checks"]
-               if c["passed"] is True)
+    # nível 0: todo gate publicado traz o texto, exceto as verificações técnicas (não exibidas)
+    checks0 = lvl0["weeks"][-1]["proposal"]["compliance"]["checks"]
+    tech = {"WEIGHTS_VALID", "SYNTHETIC_DATA", "DATA_STALENESS"}
+    assert any(c["check_id"].split(":")[0] in tech for c in checks0)
+    assert all(("details" in c) is (c["check_id"].split(":")[0] not in tech) for c in checks0)
     # a semana vigente nunca repete o risco ex-ante (idêntico a risk.ex_ante)
     assert "risk" not in lvl0["weeks"][-1]["proposal"] and lvl0["risk"]["ex_ante"]
 
@@ -1070,10 +1141,11 @@ def test_publication_older_weeks_are_one_line_summaries(full6):
     old, new = pub["weeks"]
     assert old["detail"] == "resumo" and new["detail"] == "completo"
     assert set(old) <= {"week", "detail", "stage", "state", "executed", "path_taken",
-                        "shadow_verified", "inputs_verified", "decision", "pm_decision",
-                        "proposal", "performance", "report"}
+                        "decision", "pm_decision", "proposal", "performance", "report"}
     w0 = full6["weeks"][0]
-    assert old["decision"]["approval_hash"] == w0["decision"]["approval_hash"]
+    assert "thesis" not in old  # a tese só vai nas semanas completas
+    assert old["decision"]["decision"] == w0["decision"]["decision"]
+    assert old["decision"]["decided_at_local"] == w0["decision"]["decided_at_local"]
     assert old["proposal"]["summary"]["ex_ante_vol"] == w0["proposal"]["summary"]["ex_ante_vol"]
     assert old["pm_decision"]["posture_label"] == w0["pm_decision"]["posture_label"]
 
@@ -1220,9 +1292,11 @@ def test_publication_levels_are_pinned(full6):
     # o que sai antes do histórico: textos da pesquisa, detalhe das semanas anteriores, etc.
     w = out["weeks"][-1]
     assert w["detail"] == "completo" and w["pm_decision"]["views"]
-    assert w["proposal"]["positions"] and w["decision"]["approval_hash"]
+    assert w["proposal"]["positions"] and w["decision"]["decision"] == "APPROVE"
     cuts = {c["campo"] for c in out["meta"]["truncations"]}
-    assert {"weeks[].proposal.compliance.checks[].details", "weeks[].research.views"} <= cuts
+    assert {"weeks[].proposal.compliance.checks", "weeks[].research.views"} <= cuts
+    # a tese da semana vigente (o conteúdo mais valioso) só seria cortada a partir do nível 5
+    assert not any(c.startswith("weeks[].thesis.") for c in cuts)
 
 
 def test_ladder_cuts_low_value_content_before_daily_history():
@@ -1236,10 +1310,10 @@ def test_ladder_cuts_low_value_content_before_daily_history():
     assert (n1.detalhes_aprovadas, n1.visao_chars, n1.visoes_fora_carteira,
             n1.semana_anterior_detalhe) == (False, 0, False, False)
     assert (n1.pregoes, n1.comentarios, n1.notas_completas) == (n0.pregoes, n0.comentarios, True)
-    assert not n2.mandato_tabela and n2.backtests_execucoes < n0.backtests_execucoes
+    assert n2.backtests_execucoes < n0.backtests_execucoes
     assert (n2.pregoes, n2.comentarios) == (n0.pregoes, n0.comentarios)
-    keys = ("pregoes", "comentarios", "comentario_chars", "semanas_resumo", "auditoria",
-            "tese_chars", "resumo_macro_chars", "backtests_execucoes", "posicoes_sombra")
+    keys = ("pregoes", "comentarios", "comentario_chars", "semanas_resumo", "tese_chars",
+            "resumo_macro_chars", "backtests_execucoes", "posicoes_sombra")
     for a, b in zip(NIVEIS, NIVEIS[1:], strict=False):  # cada nível só aperta
         assert all(getattr(b, k) <= getattr(a, k) for k in keys)
 
@@ -1274,8 +1348,12 @@ def test_chosen_backtest_rule():
             {"id": "a/B", "variant": "B", "provenance": {"config_hash": "y"}},
             {"id": "a/C", "variant": "C", "provenance": {"config_hash": "z"}}]
     doc = [{"path": "a/CALIBRACAO.md", "markdown": "| **B** | ... \nA variante B foi escolhida."}]
-    assert chosen_backtest(runs, doc, "z") == ("a/C", "configuração vigente (config_hash)")
-    assert chosen_backtest(runs, doc, "nenhum")[0] == "a/B"
+    assert chosen_backtest(runs, doc, "z") == ("a/C", "configuração vigente do modelo")
+    # o critério publicado nunca cita caminho de arquivo: só a data da calibração, se houver
+    assert chosen_backtest(runs, doc, "nenhum") == ("a/B", "variante escolhida na calibração")
+    dated = [{**doc[0], "path": "2026-10-05/CALIBRACAO.md"}]
+    assert chosen_backtest(runs, dated, None) == (
+        "a/B", "variante escolhida na calibração de 05/10/2026")
     assert chosen_backtest(runs, [], None) == ("a/C", "execução mais recente")
     assert chosen_backtest([], doc, "z") == (None, None)
 
@@ -1302,7 +1380,7 @@ def test_publication_backtests_keep_metrics_and_the_chosen_curve(demo, tmp_path)
         warnings.simplefilter("ignore")
         full = painel_data(_rt(demo, reports), now=NOW)
     bt = expandir(publicacao(full))["backtests"]
-    assert bt["selected"]["id"] == "bt_b" and "CALIBRACAO.md" in bt["selected"]["criterio"]
+    assert bt["selected"] == {"id": "bt_b", "criterio": "variante escolhida na calibração"}
     runs = {r["id"]: r for r in bt["runs"]}
     full_runs = {r["id"]: r for r in full["backtests"]["runs"]}
     for rid, r in runs.items():
@@ -1317,7 +1395,10 @@ def test_publication_backtests_keep_metrics_and_the_chosen_curve(demo, tmp_path)
     assert b["notes"][:3] == ["limitação"] * 3 and len(b["notes"]) == 8 and b["n_notes"] == 11
     assert set(a) <= {"id", "label", "variant", "description", "overrides", "signal_weights",
                       "metrics", "is_synthetic", "n_notes"}
-    assert bt["documents"] == [{"path": "CALIBRACAO.md", "sha256": full["backtests"]["documents"][0]["sha256"]}]
+    # nota de calibração só com a data (sem caminho, texto nem SHA-256 na publicação)
+    assert bt["documents"] == [{"date": None}] and bt["n_documents"] == 1
+    assert full["backtests"]["documents"][0]["sha256"]  # o completo mantém
+    assert full["backtests"]["documents"][0]["path"] == "CALIBRACAO.md"
 
 
 def test_cli_painel_is_publishable_on_demo(demo, tmp_path, capsys):
@@ -1330,6 +1411,7 @@ def test_cli_painel_is_publishable_on_demo(demo, tmp_path, capsys):
     res = json.loads(capsys.readouterr().out)
     art = res["artifact"]
     assert art["publicavel"] is True and art["motivo"] == "ok" and art["pagina_mudou"] is True
+    assert art["pagina_atual"] == res["page_sha256"] == page_sha256()
     css, js = (out_dir / n for n in asset_names(page_sha256()))
     index, data_file = out_dir / "index.html", out_dir / "data.json"
     assert art["arquivos_para_ler"] == [index.as_posix(), css.as_posix(), js.as_posix(),
@@ -1364,3 +1446,527 @@ def test_cli_painel_is_publishable_on_demo(demo, tmp_path, capsys):
     assert third["pagina_publicada"] == marked["page_sha256"]
     assert third["linhas_max"] <= DATA_MAX_LINE
     assert main(["painel", "--out-dir", str(tmp_path / "nada"), "--publicado"]) == 2
+
+
+# ---------------------------------------------------------------- tese da carteira
+
+THESIS_SECTIONS = ("contexto", "construcao", "exposicoes", "sensibilidade", "volatilidade",
+                   "premortem", "monitoramento")
+
+
+def _thesis_rendered(week: str, positions: list[dict], *, why: int = 400, other: int = 200
+                     ) -> dict:
+    """Tese publicada no formato do painel (``weeks[].thesis`` sem ``available``), com textos no
+    tamanho realista e números tirados da proposta."""
+    rows = []
+    ordered = sorted(positions, key=lambda p: (-abs(p["weight"]), p["issuer_id"]))
+    for i, p in enumerate(ordered):
+        rows.append({
+            "iid": p["issuer_id"], "side": p["side"], "weight": p["weight"],
+            "role": "hedge" if i % 4 == 3 else "alpha", "sizing": "interior",
+            "alpha": p.get("alpha_annual"), "alpha_quant": p.get("alpha_annual"), "tilt": None,
+            "beta": p.get("beta"), "risk": p.get("risk_contribution"),
+            **{f"z_{s}": (p.get("alpha_z") if s == "mom" else None)
+               for s in ("mom", "val", "qual", "lowrisk", "rev")},
+            **{f"c_{s}": None for s in ("mom", "val", "qual", "lowrisk", "rev")},
+            "oil": None, "copper": None, "gold": None, "election": None, "next_earnings": None,
+            "r_stance": None, "r_conf": None, "r_squeeze": None, "pm_stance": None,
+            "pm_conv": None, "why_md": _txt(f"Por que {p['issuer_id']}", why),
+            "risk_md": _txt(f"Risco {p['issuer_id']}", other),
+            "trigger_md": _txt(f"Gatilho {p['issuer_id']}", other), "author": "mente",
+            "utilization": None if i % 5 == 4 else 0.25 + 0.05 * (i % 3)})
+    gross = sum(abs(p["weight"]) for p in positions)
+    return {
+        "week": week, "published_at": f"{week}T19:00:00+00:00", "as_of": week,
+        "prices_as_of": week, "authorship": "mente", "is_synthetic": True,
+        "title": "Carteira neutra com viés de qualidade (teste)",
+        "summary_md": _txt("Resumo da tese", 1_500),
+        "sections": [{"id": sid, "title": f"Seção {sid}", "md": _txt(sid, 1_500)}
+                     for sid in THESIS_SECTIONS],
+        "risks": [_txt(f"Risco {k}", 300) for k in range(4)],
+        "triggers": [_txt(f"Gatilho {k}", 250) for k in range(4)],
+        "themes": [{"title": f"Tema {k}", "side": "long_short",
+                    "issuers": [r["iid"] for r in rows[k::4]][:6], "md": _txt("Tema", 900),
+                    "risks_md": _txt("Riscos do tema", 400), "long": None, "short": None,
+                    "net": None, "gross": None, "risk_share": None, "alpha": None}
+                   for k in range(3)],
+        "positions": rows,
+        "numbers": {"summary": {"gross": gross, "n_long": sum(r["side"] == "LONG" for r in rows),
+                                "n_short": sum(r["side"] == "SHORT" for r in rows)},
+                    "signals": [{"code": s, "label": f"Sinal {s}", "net": 0.1 * k, "long": None,
+                                 "short": None} for k, s in enumerate(("mom", "val", "qual"))],
+                    "countries": [{"code": c, "label": c, "long": 0.05, "short": -0.04,
+                                   "net": 0.01, "gross": 0.09, "limit": 0.02,
+                                   "utilization": 0.5} for c in ("BR", "MX")],
+                    "stress": [{"code": f"cen_{k}", "label": f"Cenário {k}", "kind": "hipotetico",
+                                "pnl": None, "usd": None, "status": "n/d", "note": None}
+                               for k in range(5)]},
+        "calendar": [{"date": week, "label": "Resultado trimestral", "kind": "resultado",
+                      "issuers": [rows[0]["iid"]]}],
+        "notes": ["Sensibilidade a juros não é modelada."],
+        "disclaimer": "DADOS SIMULADOS — tese de teste.",
+    }
+
+
+def _publish_thesis(root: Path, week: str, rendered: dict, *, event: bool = True) -> Path:
+    """Grava ``tese/tese_publicada.json`` e ``tese.md`` como a publicação do código (com o evento
+    ``WEEKLY_THESIS`` na trilha, payload do contrato) numa CÓPIA do livro."""
+    from cdp.audit import AuditLog
+
+    book = root / "book"
+    dec = _rt(root).book.load_decision(date.fromisoformat(week))
+    tdir = book / week / "tese"
+    tdir.mkdir(exist_ok=True)
+    pub = {"week": week, "published_at": rendered["published_at"], "autoria": "mente",
+           "mind": "claude-code", "is_synthetic": True, "problems": [],
+           "hashes": {"proposal_hash": dec.proposal_hash, "approval_hash": dec.approval_hash},
+           "rendered": rendered}
+    (tdir / "tese_publicada.json").write_text(json.dumps(pub, ensure_ascii=False),
+                                              encoding="utf-8")
+    (tdir / "tese.md").write_text("# Tese da carteira\n\nDADOS SIMULADOS\n", encoding="utf-8")
+    if event:
+        def sha(f: Path) -> str:
+            return hashlib.sha256(f.read_bytes()).hexdigest()
+
+        AuditLog(book / "audit_log.jsonl").append(
+            "WEEKLY_THESIS", "CDP",
+            {"tese_publicada": sha(tdir / "tese_publicada.json"), "tese_md": sha(tdir / "tese.md"),
+             "proposal_hash": dec.proposal_hash, "approval_hash": dec.approval_hash,
+             "autoria": "mente"},
+            summary="Tese da carteira publicada.", week=date.fromisoformat(week))
+    return tdir
+
+
+def _week_positions(root: Path, week: str) -> list[dict]:
+    prop = _rt(root).book.load_proposal(date.fromisoformat(week))
+    return [p.model_dump(mode="json") for p in prop.positions]
+
+
+@pytest.fixture(scope="module")
+def thesis_book(demo, tmp_path_factory):
+    """Cópia do livro de demonstração com a tese publicada da semana (arquivo + evento)."""
+    root = tmp_path_factory.mktemp("painel_tese") / "livro"
+    shutil.copytree(demo, root)
+    week = "2024-03-04"
+    shutil.rmtree(root / "book" / week / "tese", ignore_errors=True)
+    _publish_thesis(root, week, _thesis_rendered(week, _week_positions(root, week)))
+    return root
+
+
+@pytest.fixture(scope="module")
+def thesis_data(thesis_book):
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        return painel_data(_rt(thesis_book), now=NOW)
+
+
+def test_thesis_is_exported_from_the_published_file(thesis_book, thesis_data, tmp_path):
+    """Só a tese PUBLICADA (``tese_publicada.json``, ancorada na trilha) vai ao painel: o
+    rascunho da mente nunca; arquivo adulterado ⇒ não verificado; corrompido ⇒ apontamento."""
+    week = "2024-03-04"
+    w = next(x for x in thesis_data["weeks"] if x["week"] == week)
+    th = w["thesis"]
+    rendered = json.loads((thesis_book / "book" / week / "tese" / "tese_publicada.json")
+                          .read_text(encoding="utf-8"))["rendered"]
+    assert th == {**clean(rendered), "available": True}
+    assert len(th["positions"]) == len(_week_positions(thesis_book, week))
+    assert [s["id"] for s in th["sections"]] == list(THESIS_SECTIONS)
+    assert "mind" not in th and "hashes" not in th  # só o bloco ``rendered``
+
+    def aux_msgs(d: dict) -> str:
+        return " ".join(next(c for c in d["status"]["integrity"]["checks"]
+                             if c["id"] == "auxiliares")["messages"])
+
+    # (a cópia do livro muda os caminhos gravados nos eventos dos relatórios: só a tese importa)
+    assert w["thesis_verified"] is True and "tese" not in aux_msgs(thesis_data)
+    assert f"tese de {date.fromisoformat(week):%d/%m/%Y}" in thesis_data["meta"]["synthetic_sources"]
+    assert thesis_data["issues"] == []
+
+    def export(root: Path) -> dict:
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            return next(x for x in painel_data(_rt(root), now=NOW)["weeks"] if x["week"] == week)
+
+    # rascunho da mente (tese.json) sem publicação: nada exportado
+    draft = tmp_path / "rascunho"
+    shutil.copytree(thesis_book, draft)
+    tdir = draft / "book" / week / "tese"
+    (tdir / "tese_publicada.json").unlink()
+    (tdir / "tese.json").write_text(json.dumps({"titulo": "rascunho da mente"}), encoding="utf-8")
+    wd = export(draft)
+    assert wd["thesis"] == {"available": False} and "thesis_verified" not in wd
+    # publicada e depois alterada: exportada, mas não confere com a trilha
+    tampered = tmp_path / "adulterada"
+    shutil.copytree(thesis_book, tampered)
+    path = tampered / "book" / week / "tese" / "tese_publicada.json"
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    raw["rendered"]["title"] = "Título trocado depois da publicação"
+    path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        d = painel_data(_rt(tampered), now=NOW)
+    wt = next(x for x in d["weeks"] if x["week"] == week)
+    assert wt["thesis"]["title"] == "Título trocado depois da publicação"
+    assert wt["thesis_verified"] is False and d["status"]["integrity"]["ok"] is False
+    assert f"{week}: tese publicada" in aux_msgs(d)
+    # corrompida: apontamento, nunca exceção
+    path.write_text("{não é json", encoding="utf-8")
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        d = painel_data(_rt(tampered), now=NOW)
+    assert next(x for x in d["weeks"] if x["week"] == week)["thesis"] == {"available": False}
+    assert any("tese" in i["scope"] for i in d["issues"])
+
+
+def test_thesis_absent_or_summary_week(demo, tmp_path):
+    """Sem tese publicada: ``{"available": false}`` na semana completa; semana resumida não traz
+    a chave."""
+    root = tmp_path / "sem_tese"
+    shutil.copytree(demo, root)
+    for tdir in (root / "book").glob("*/tese"):
+        shutil.rmtree(tdir)
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        full = painel_data(_rt(root), now=NOW)
+        summary = painel_data(_rt(root), now=NOW, full_weeks=0)
+    assert all(w["thesis"] == {"available": False} for w in full["weeks"])
+    assert all("thesis" not in w and "thesis_verified" not in w for w in summary["weeks"])
+    pub = expandir(publicacao(full))
+    assert all(w["thesis"] == {"available": False} for w in pub["weeks"])
+
+
+def test_unresolved_fact_placeholders_never_reach_the_panel(thesis_book, tmp_path):
+    """Texto da tese com ``{{fact:`` remanescente sai do painel (apontamento): em objetos vira
+    ``null``; em listas, o item sai."""
+    root = tmp_path / "marcadores"
+    shutil.copytree(thesis_book, root)
+    week = "2024-03-04"
+    path = root / "book" / week / "tese" / "tese_publicada.json"
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    r = raw["rendered"]
+    r["sections"][0]["md"] = "Beta de {{fact:tese.beta}} contra o limite."
+    r["risks"][1] = "Risco com {{ fact:tese.vol }} sem renderizar."
+    r["positions"][0]["why_md"] = "Peso {{fact:tese.X.peso}}."
+    n_risks = len(r["risks"])
+    path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        d = painel_data(_rt(root), now=NOW)
+    assert "{{fact:" not in to_json(d) and "fact:tese" not in to_json(d)
+    th = next(x for x in d["weeks"] if x["week"] == week)["thesis"]
+    assert th["available"] is True and th["sections"][0]["md"] is None
+    assert th["positions"][0]["why_md"] is None and len(th["risks"]) == n_risks - 1
+    assert any("marcador de fato" in i["message"] and "tese" in i["scope"]
+               for i in d["issues"])
+
+
+def test_issuer_names_cover_every_referenced_issuer(thesis_data):
+    """``meta.issuer_names``: nome de todo emissor citado (posições, sombra, visões, exclusões,
+    diário, pesquisa, mudanças, tese) — no completo e, filtrado, na publicação."""
+    from cdp.workflow.painel import referenced_issuers
+
+    names = thesis_data["meta"]["issuer_names"]
+    body = {k: v for k, v in thesis_data.items() if k != "meta"}
+    refs = referenced_issuers(body)
+    assert refs and refs == set(names)
+    assert all(isinstance(v, str) and v and v != k for k, v in names.items())
+    w = thesis_data["weeks"][-1]
+    cited = {r["iid"] for r in w["thesis"]["positions"]}
+    cited |= {i for t in w["thesis"]["themes"] for i in t["issuers"]}
+    cited |= {x["issuer_id"] for x in w["pm_decision"]["exclusions"]}
+    cited |= {x["issuer_id"] for x in w["pm_decision"]["views"]}
+    cited |= {x["issuer_id"] for x in w["research"]["notes"]}
+    cited |= {x["issuer_id"] for x in w["shadow"]["positions"]}
+    assert cited <= set(names)
+    pub = expandir(publicacao(thesis_data))
+    pub_names = pub["meta"]["issuer_names"]
+    assert set(pub_names) == referenced_issuers({k: v for k, v in pub.items() if k != "meta"})
+    assert all(pub_names[k] == names[k] for k in pub_names)
+    # sobreposição CDP × carteira de referência ("Só no CDP" / "Só na referência"): os nomes
+    # ficam mesmo quando a publicação corta as posições da referência (nível 8: nenhuma)
+    assert referenced_issuers({"overlap": {"only_shadow": ["A"], "only_cdp": ["B"]}}) == {"A", "B"}
+    big = copy.deepcopy(thesis_data)
+    wk = big["weeks"][-1]
+    wk["shadow"]["positions"].append({**copy.deepcopy(wk["shadow"]["positions"][0]),
+                                      "issuer_id": "SIM_SO_REF", "name": "Só na Referência SA"})
+    overlap = wk["shadow"]["comparison"]["overlap"]
+    overlap["only_shadow"] = [*overlap.get("only_shadow", []), "SIM_SO_REF"]
+    big["meta"]["issuer_names"]["SIM_SO_REF"] = "Só na Referência SA"
+    for nivel in (0, 8):
+        out = expandir(compactar(big, nivel))
+        ov_ids = {i for w in out["weeks"] if isinstance(w.get("shadow"), dict)
+                  for k in ("only_shadow", "only_cdp")
+                  for i in (((w["shadow"].get("comparison") or {}).get("overlap") or {})
+                            .get(k) or [])}
+        assert "SIM_SO_REF" in ov_ids and ov_ids <= set(out["meta"]["issuer_names"]), nivel
+    assert not any(p["issuer_id"] == "SIM_SO_REF" for p in out["weeks"][-1]["shadow"]["positions"])
+    assert out["meta"]["issuer_names"]["SIM_SO_REF"] == "Só na Referência SA"
+
+
+def _it_keys(obj, path: str = ""):
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            p = f"{path}.{k}"
+            if _IT_KEY_RE.search(k) or k in ("mind", "minds", "snapshot_id"):
+                yield p
+            yield from _it_keys(v, p)
+    elif isinstance(obj, list):
+        for v in obj:
+            yield from _it_keys(v, path + "[]")
+
+
+def test_publication_has_no_it_payload(thesis_data):
+    """Perfil publicado = investimento, não TI: sem hashes/SHA-256, verificações, mente,
+    snapshot, eventos da trilha, agenda, integridade detalhada, invariantes, ledger de IA,
+    tentativas, boleta de ordens nem apontamentos; os campos de protocolo de ``meta`` ficam."""
+    full = copy.deepcopy(thesis_data)
+    w0 = full["weeks"][-1]
+    w0["decision"]["rationale"] = ("Postura defensiva; regime neutro; mente claude-code [IA]. "
+                                   "Carteira neutra. Caminho: cdp-restricoes.")
+    w0["decision"]["journal"]["mental_state"] = "Sereno. Mente: codex"
+    pub = expandir(publicacao(full))
+    assert pub["meta"]["publication"]["nivel"] == 0
+    body = {k: v for k, v in pub.items() if k != "meta"}
+    assert not list(_it_keys(body))
+    text = dump_publicacao(body)
+    assert "claude-code" not in text and "codex" not in text.lower()
+    w = pub["weeks"][-1]
+    # a oração com o nome da mente sai inteira (nada de "mente de IA" pela metade na página)
+    assert w["decision"]["rationale"] == "Postura defensiva; regime neutro. Carteira neutra."
+    assert w["decision"]["journal"]["mental_state"] == "Sereno."
+    assert w0["decision"]["co_sign_reasons"] and "co_sign_reasons" not in w["decision"]
+    assert w["decision"]["acknowledged_soft_checks"] == w0["decision"]["acknowledged_soft_checks"]
+    assert pub["audit"] == {k: full["audit"][k] for k in ("exists", "chain_ok", "n_events")}
+    assert "agenda" not in pub["status"]
+    assert pub["status"]["integrity"] == {"ok": full["status"]["integrity"]["ok"]}
+    assert pub["issues"] == [] and "invariants" not in pub["meta"]
+    # mandato: só os blocos que a página lê (custos, tabela, agenda e adoção de IA ficam fora)
+    assert set(pub["meta"]["mandate"]) == {"risk", "liquidity", "drawdown", "squeeze",
+                                           "shorting", "alpha", "risk_model"}
+    for key in ("shorting", "alpha", "risk_model"):
+        assert pub["meta"]["mandate"][key] == full["meta"]["mandate"][key], key
+    it_week = {"ai_calls", "attempts", "briefing", "inputs", "issues", "input_issues",
+               "proposals", "decisions"}
+    for wk in pub["weeks"]:
+        assert not it_week & set(wk), wk["week"]
+        assert "trades" not in (wk.get("proposal") or {})
+    assert w["proposal"]["summary"] == w0["proposal"]["summary"]  # giro e custo agregados ficam
+    research = w["research"]
+    assert "provider" not in research and all("provider" not in n for n in research["notes"])
+    assert all("author" not in v for v in research["views"])
+    for r in pub["daily_reports"]:
+        assert "report_path" not in r and set(r["commentary"]) <= {"markdown", "source", "ai"}
+    assert all(set(x) <= {"kind", "date", "has_md"} for x in pub["reports_index"])
+    meta = pub["meta"]
+    assert meta["schema_version"] == "cdp-painel/3" and meta["profile"] == "publicacao"
+    for key in ("data_hash", "config_hash", "generated_at", "is_synthetic", "data_notice",
+                "publication", "truncations"):
+        assert key in meta, key
+    assert w["thesis"] == {**w0["thesis"]}  # a tese da semana vigente vai íntegra no nível 0
+    # campos novos da tese (sinais da carteira, utilização dos limites por linha) passam intactos
+    assert w["thesis"]["numbers"]["signals"] == w0["thesis"]["numbers"]["signals"]
+    assert [r["utilization"] for r in w["thesis"]["numbers"]["countries"]] == [
+        r["utilization"] for r in w0["thesis"]["numbers"]["countries"]]
+    assert all("utilization" in p for p in w["thesis"]["positions"])
+
+
+ADVERBIOS = ("Quant fortemente comprada; cenário inteiramente simulado, exposição principalmente "
+             "do Brasil e hedge somente em reais.")
+
+
+def test_mind_name_clause_is_removed_and_adverbs_untouched():
+    """Publicação: a oração com o nome da mente sai inteira, com o seu separador (nunca vira
+    "mente de IA", que a página não limpa direito); advérbios em "-mente" nunca mudam."""
+    cases = {
+        "Postura defensiva; regime neutro; mente claude-code. Primeira carteira do CDP.":
+            "Postura defensiva; regime neutro. Primeira carteira do CDP.",
+        "Postura defensiva; mente claude-code [IA]. Carteira neutra.":
+            "Postura defensiva. Carteira neutra.",
+        "Postura neutra, mente demo; regime neutro.": "Postura neutra; regime neutro.",
+        "Decisão autônoma do CDP · mente demo · paper trading.":
+            "Decisão autônoma do CDP · paper trading.",
+        "Postura neutra; mente api": "Postura neutra",
+        "Carteira neutra. Mente: codex. Fim.": "Carteira neutra. Fim.",
+        "Mente: codex": "",
+        "mente demo [IA]. Regime neutro.": "Regime neutro.",
+        "Briefing preparado pela mente demo.": "Briefing preparado pela IA.",
+        "Rodado via codex e claude-code.": "Rodado via IA e IA.",
+        "https://exemplo.com/mente-codex": "https://exemplo.com/mente-codex",
+    }
+    for raw, want in cases.items():
+        assert sem_nome_da_mente(raw) == want, raw
+    for text in (ADVERBIOS, "fortemente comprada", "inteiramente simulado", "principalmente do",
+                 "somente em", "somente demo e api", "Somente codexx", "mente aberta"):
+        assert sem_nome_da_mente(text) == text, text
+    mixed = "Quant fortemente comprada; mente codex. Somente em reais, principalmente do Brasil."
+    assert sem_nome_da_mente(mixed) == ("Quant fortemente comprada. Somente em reais, "
+                                        "principalmente do Brasil.")
+    assert "mente de IA" not in " ".join(sem_nome_da_mente(k) for k in cases)
+
+
+#: Textos de TI que nunca podem chegar ao ``data.json`` publicado (em qualquer ponto, inclusive
+#: ``meta``): caminhos de Markdown, verificação de integridade dos registros, hash, nome da mente
+#: (nem a forma "mente de IA") e o rótulo do processo de decisão.
+IT_NEEDLES = ('.md"', "integridade", "hash verificado", "mente de IA", "Caminho:",
+              "comentario.json", "claude-code", "codex")
+
+
+def test_publication_text_has_no_it_residue(thesis_data):
+    """O ``data.json`` publicado não carrega texto de TI que a página não mostra: alerta da
+    verificação de integridade, caminho/nome de arquivo das notas de calibração, detalhes das
+    verificações técnicas, ciência automática dos limites de alerta, proveniência do
+    comentário, nome da mente e o rótulo "Caminho:" do racional — sem tocar nos advérbios."""
+    full = copy.deepcopy(thesis_data)
+    w0 = full["weeks"][-1]
+    w0["decision"]["rationale"] = ("Postura defensiva; regime neutro; mente claude-code. "
+                                   "Primeira carteira. Caminho: cdp.")
+    w0["decision"]["co_sign_reasons"] = ["Ciência automática de GROSS_MIN (limite SOFT do "
+                                         "mandato; registrado no relatório)."]
+    view = w0["pm_decision"]["views"][0]
+    view["rationale"] = ADVERBIOS
+    checks = w0["proposal"]["compliance"]["checks"]
+    synth = next(c for c in checks if c["check_id"] == "SYNTHETIC_DATA")
+    synth["details"] = "Dados reais de snapshot imutável (hash verificado)."
+    full["status"]["alerts"].append(
+        {"severity": "error", "source": "integridade",
+         "text": "Verificação de integridade dos registros com falha: tese"})
+    rep = full["daily_reports"][0]
+    rep["commentary"]["markdown"] += ("\n\n_Autoria: mente codex [IA] (comentario.json "
+                                      "validado); números calculados por código._\n")
+    full["backtests"] = {"available": True, "runs": [
+        {"id": "2026-10-05/B", "variant": "B", "metrics": {"sharpe": 0.7}}], "documents": [
+        {"path": "2026-10-05/CALIBRACAO.md", "sha256": "0" * 64,
+         "markdown": "A variante B foi escolhida."}]}
+    pub = publicacao(full)
+    assert pub["meta"]["publication"]["nivel"] == 0
+    text = dump_publicacao(pub)
+    assert not [n for n in IT_NEEDLES if n in text], [n for n in IT_NEEDLES if n in text]
+    out = expandir(pub)
+    w = out["weeks"][-1]
+    assert w["decision"]["rationale"] == "Postura defensiva; regime neutro. Primeira carteira."
+    assert "co_sign_reasons" not in w["decision"]
+    assert next(v for v in w["pm_decision"]["views"]
+                if v["issuer_id"] == view["issuer_id"])["rationale"] == ADVERBIOS
+    pchecks = {c["check_id"]: c for c in w["proposal"]["compliance"]["checks"]}
+    assert "details" not in pchecks["SYNTHETIC_DATA"] and pchecks["SYNTHETIC_DATA"]["value"] == (
+        synth["value"])
+    assert not any(a.get("source") == "integridade" for a in out["status"]["alerts"])
+    assert out["status"]["alerts"] == [a for a in full["status"]["alerts"]
+                                       if a.get("source") != "integridade"]
+    md = out["daily_reports"][0]["commentary"]["markdown"]
+    orig = rep["commentary"]["markdown"]
+    kept = re.sub(r"\n{3,}", "\n\n", "\n".join(ln for ln in orig.split("\n")
+                                               if not ln.startswith("_Autoria:")))
+    assert "Autoria" in orig and "Autoria" not in md and md.rstrip() == kept.rstrip()
+    bt = out["backtests"]
+    assert bt["selected"] == {"id": "2026-10-05/B",
+                              "criterio": "variante escolhida na calibração de 05/10/2026"}
+    assert bt["documents"] == [{"date": "2026-10-05"}] and bt["n_documents"] == 1
+    # o completo (cópia local, operação) mantém tudo
+    assert full["status"]["alerts"][-1]["source"] == "integridade"
+
+
+def _template_mandate_paths() -> set[tuple[str, str]]:
+    """Caminhos ``(bloco, campo)`` de ``meta.mandate`` que a página lê: os apelidos
+    ``X = obj(MAND.<bloco>)`` e os acessos ``X.<campo>`` no template."""
+    from cdp.workflow.painel import DEFAULT_TEMPLATE
+
+    tpl = DEFAULT_TEMPLATE.read_text(encoding="utf-8")
+    alias = dict((a, b) for a, b in re.findall(r"\b(\w+)\s*=\s*obj\(MAND\.(\w+)\)", tpl))
+    assert re.search(r"\bMAND\s*=\s*obj\(META\.mandate\)", tpl) and alias
+    paths = {(b, "") for b in re.findall(r"\bMAND\.(\w+)", tpl)}
+    for a, block in alias.items():
+        paths |= {(block, f) for f in re.findall(rf"\b{a}\.(\w+)", tpl)}
+    return paths
+
+
+def test_publication_keeps_every_mandate_path_the_page_reads(data):
+    """Todo campo de ``meta.mandate`` que a página lê (aba "Mandato e metodologia", limites nos
+    gráficos) sobrevive à publicação, inclusive short, alpha e modelo de risco."""
+    paths = _template_mandate_paths()
+    want = {("shorting", "shortable_line_types"), ("shorting", "max_borrow_fee"),
+            ("shorting", "min_market_cap_short_usd"), ("alpha", "signal_weights"),
+            ("alpha", "horizon_weeks"), ("alpha", "max_view_tilt_z"),
+            ("risk_model", "history_days"), ("risk_model", "market_proxy")}
+    assert want <= paths
+    mand, pub = data["meta"]["mandate"], expandir(publicacao(data))["meta"]["mandate"]
+    present = [(b, f) for b, f in paths if b in mand and (not f or f in mand[b])]
+    assert want <= set(present)  # o fund.yaml traz todos os que a página espera
+    for block, field in present:
+        assert block in pub, block
+        if field:
+            assert pub[block][field] == mand[block][field], (block, field)
+
+
+def test_thesis_ladder_cuts_only_at_late_levels(thesis_data, full6):
+    """A tese da semana vigente só é cortada nos níveis finais (textos por nome encurtados no
+    nível 5, omitidos no 7; seções encurtadas no 7 e 8), sempre com registro em
+    ``meta.truncations``; fora da semana em foco vai só a manchete."""
+    th0 = thesis_data["weeks"][-1]["thesis"]
+
+    def thesis_cuts(out):
+        return {c["campo"] for c in out["meta"]["truncations"] if c["campo"].startswith(
+            "weeks[].thesis")}
+
+    for nivel in range(5):
+        out = expandir(compactar(thesis_data, nivel))
+        assert out["weeks"][-1]["thesis"] == th0, nivel
+        assert not thesis_cuts(out), nivel
+    out5 = expandir(compactar(thesis_data, 5))
+    th5 = out5["weeks"][-1]["thesis"]
+    lim5 = NIVEIS[5].tese_carteira_nome_chars
+    assert lim5 and all(len(p[k]) <= lim5 for p in th5["positions"]
+                        for k in ("why_md", "risk_md", "trigger_md"))
+    assert all(p["_truncado"] for p in th5["positions"])
+    assert [p["weight"] for p in th5["positions"]] == [p["weight"] for p in th0["positions"]]
+    assert th5["sections"] == th0["sections"] and th5["summary_md"] == th0["summary_md"]
+    assert "weeks[].thesis.positions[].why_md" in thesis_cuts(out5)
+    out7 = expandir(compactar(thesis_data, 7))
+    th7 = out7["weeks"][-1]["thesis"]
+    assert th7["_truncado"] is True and th7["positions"]
+    assert all("why_md" not in p and "risk_md" not in p for p in th7["positions"])
+    assert [p["beta"] for p in th7["positions"]] == [p["beta"] for p in th0["positions"]]
+    assert all(len(s["md"]) <= NIVEIS[7].tese_carteira_secao_chars for s in th7["sections"])
+    assert {"weeks[].thesis.positions[]", "weeks[].thesis.sections[].md"} <= thesis_cuts(out7)
+    th8 = expandir(compactar(thesis_data, 8))["weeks"][-1]["thesis"]
+    assert all(len(s["md"]) <= NIVEIS[8].tese_carteira_secao_chars for s in th8["sections"])
+    # escada: None = íntegro; cada nível só aperta e nada antes do nível 5
+    for key in ("tese_carteira_nome_chars", "tese_carteira_secao_chars"):
+        vals = [math.inf if getattr(lim, key) is None else getattr(lim, key) for lim in NIVEIS]
+        assert vals == sorted(vals, reverse=True) and all(v == math.inf for v in vals[:5]), key
+    # duas semanas completas com tese: só a da carteira vigente vai completa
+    big = copy.deepcopy(full6)
+    for w in big["weeks"]:
+        w["thesis"] = {**_thesis_rendered(w["week"], w["proposal"]["positions"]),
+                       "available": True}
+    weeks = expandir(compactar(big, 0))["weeks"]
+    old, new = weeks
+    assert new["thesis"] == big["weeks"][-1]["thesis"]
+    assert old["thesis"]["resumo"] is True and old["thesis"]["title"]
+    assert set(old["thesis"]) <= {"available", "week", "published_at", "authorship",
+                                  "is_synthetic", "title", "summary_md", "resumo"}
+
+
+def test_demo_with_thesis_still_publishes_at_level_0(full6):
+    """O livro de demonstração com a tese completa (textos no tamanho realista) nas duas semanas
+    continua no nível 0, com a tese da semana vigente íntegra."""
+    big = copy.deepcopy(full6)
+    for w in big["weeks"]:
+        w["thesis"] = {**_thesis_rendered(w["week"], w["proposal"]["positions"]),
+                       "available": True}
+    pub = publicacao(big)
+    _assert_budget(pub)
+    assert pub["meta"]["publication"]["nivel"] == 0
+    assert expandir(pub)["weeks"][-1]["thesis"] == big["weeks"][-1]["thesis"]
+
+
+def test_publication_layout_is_compact_and_lossless(full6):
+    """``data.json``: objetos pequenos numa linha e listas de escalares agrupadas — o mesmo
+    JSON (sem perda) em bem menos bytes que a indentação simples."""
+    pub = publicacao(full6)
+    text = dump_publicacao(pub)
+    assert json.loads(text) == pub and text.endswith("\n")
+    plain = json.dumps(pub, ensure_ascii=False, sort_keys=True, indent=1)
+    assert len(text) < 0.85 * len(plain) and max_line(text) <= DATA_MAX_LINE
+    with pytest.raises(ValueError):
+        dump_publicacao({"x": float("nan")})

@@ -13,9 +13,11 @@ uv run python -m cdp agenda
 
 `status` informa se hoje é o primeiro pregão da semana na B3, se a semana já tem decisão e o
 estado do kill switch. `agenda` decide pelo relógio de Brasília (independente do fuso do PC):
-`semanal.acao` = `montar` (com a `etapa` de onde retomar e `minutos_ate_o_prazo`), `aguardar`,
-`prazo_vencido` ou `nenhuma`. Se não for `montar`, encerre com um resumo (nada a fazer). No PC
-local, a skill `cdp:semanal` do plugin operacionaliza este roteiro (`docs/cdp/LOCAL.md`).
+`semanal.acao` = `montar` (com a `etapa` de onde retomar e `minutos_ate_o_prazo`), `tese` (decisão
+gravada, tese de investimento ainda não publicada: faça só as seções 5b e 6), `aguardar`,
+`prazo_vencido` ou `nenhuma`. Se não for `montar` nem `tese`, encerre com um resumo (nada a
+fazer). No PC local, a skill `cdp:semanal` do plugin operacionaliza este roteiro
+(`docs/cdp/LOCAL.md`).
 
 ## 1. Coleta e preparação (código)
 
@@ -79,11 +81,51 @@ aplicada pelo código.
 
 ```sh
 uv run python -m cdp weekly decide --week AAAA-MM-DD --mind claude-code   # ou codex
+uv run python -m cdp verify
 ```
 
 Otimiza, aplica gates (com fallback automático), grava a decisão autônoma com hash, a sombra
 só-quant e o relatório semanal (`reports/weekly/<semana>/`). A execução hipotética ocorre no
 fechamento de hoje, pela rotina diária.
+
+## 5b. Tese de investimento (código + mente)
+
+Depois da decisão gravada (sem o prazo das 16h30, que vale só para a decisão), escreva a tese de
+investimento da carteira decidida: por que cada nome e cada peso, exposições, sensibilidade a
+mercado, volatilidade e orçamento de risco, temas, riscos, premortem, gatilhos e calendário.
+Regras, esquema e diretrizes de redação: `docs/cdp/TESE.md`.
+
+```sh
+uv run python -m cdp tese prepare --week AAAA-MM-DD
+```
+
+O código monta em `book/<semana>/tese/` os fatos (`factbook.json`), as análises (`analise.json`),
+o briefing `fatos.md` e o schema `tese.schema.json`. Se a tese já foi publicada (`publicada: true`)
+ou o comando falhar, vá para a seção 6.
+
+**Rascunho entregue.** Uma tese escrita fora do clone das rotinas chega versionada em
+`docs/cdp/teses/<semana>.json` (`docs/cdp/TESE.md`, seção "Rascunho entregue fora do clone das
+rotinas"). Sem `tese.json` na semana, o `prepare` a copia para `book/<semana>/tese/tese.json` e
+devolve `rascunho_adotado: true` (`rascunho_entregue` traz o caminho). Nesse caso, rode
+`uv run python -m cdp validate-tese --week AAAA-MM-DD` **antes de escrever qualquer coisa**:
+`ok: true` ⇒ publique sem reescrever; `ok: false` ⇒ corrija `book/<semana>/tese/tese.json` a
+partir dos problemas, como abaixo. Nunca edite `docs/cdp/teses/` no clone das rotinas.
+
+Sem rascunho, leia `fatos.md` **por inteiro** e escreva `book/<semana>/tese/tese.json` conforme o
+schema (`mind` preenchido): título, resumo, contexto, construção, temas, exposições, sensibilidade,
+volatilidade, riscos, premortem, gatilhos, monitoramento e, por posição, `por_que`, `risco` e
+`gatilho` concisos. Números **apenas** como `{{fact:<id>}}` de `fatos.md`; datas só como
+2026-10-25, 25/10/2026 ou "25 de outubro" (nunca "25/10"); a tese explica a decisão gravada, não a
+altera.
+
+```sh
+uv run python -m cdp validate-tese --week AAAA-MM-DD
+uv run python -m cdp tese publish --week AAAA-MM-DD
+```
+
+Corrija os apontamentos de `validate-tese` e repita até `ok: true` (no máximo 3 tentativas). A
+publicação é imutável e grava o evento `WEEKLY_THESIS` na trilha; se `tese.json` continuar
+inválido, o código publica a tese do template (`autoria: "codigo"`) e você relata os problemas.
 
 ## 6. Publicação
 
@@ -93,12 +135,17 @@ uv run python -m cdp painel
 git add book reports data/market artifacts/painel && git commit -m "CDP: decisão da semana AAAA-MM-DD" && git push
 ```
 
-`painel` regenera o painel de operação e risco (`artifacts/painel/data.json`, a casca `index.html` e
-o estilo e o script versionados, só código); se o seu harness publica artifacts e a saída trouxer
-`artifact.publicavel: true`, leia por inteiro `artifact.arquivos_para_ler` e republique os dados no
-mesmo artifact cuja URL está em `artifacts/painel/ARTIFACT_URL` (ler a URL, listar os arquivos
-publicados e só então publicar `artifact.publicar`; ver `docs/cdp/LOCAL.md`, seção "Painel
-(artifact)").
+Rode o `verify` sempre antes do painel, em todo caminho (montagem completa, retomada só da tese,
+tese já publicada ou com falha): ele confere a trilha depois da última gravação. Decisão, tese e
+painel vão no mesmo commit (na retomada só da tese, a mensagem é "CDP: tese da semana
+AAAA-MM-DD"); faça push só se esse `verify` disse `ÍNTEGRO`. `painel` regenera o painel
+de gestão — carteira, tese de investimento, risco e exposições, performance — a partir do livro
+(`artifacts/painel/data.json`, a casca `index.html` e o estilo e o script versionados, só código).
+Se o seu harness publica artifacts e a saída trouxer `artifact.publicavel: true`, leia por inteiro
+`artifact.arquivos_para_ler` e republique os dados no mesmo artifact cuja URL está em
+`artifacts/painel/ARTIFACT_URL` (ler a URL, listar os arquivos publicados e só então publicar
+`artifact.publicar`; ver `docs/cdp/LOCAL.md`, seção "Painel (artifact)").
 
-Termine com um resumo curto: postura, nº de longs/shorts, vol ex-ante, principais mudanças e o
-link/caminho do relatório semanal. Não invente números: copie-os do relatório gerado.
+Termine com um resumo curto: postura, nº de longs/shorts, vol ex-ante, principais mudanças, o
+estado da tese (autoria `mente` ou `codigo`) e o link/caminho do relatório semanal. Não invente
+números: copie-os do relatório gerado.

@@ -6,6 +6,11 @@ Fluxo semanal (primeiro pregão da semana na B3):
     cdp validate --week D
     cdp weekly preview --week D --mind ...   (opcional: revisão pré-trade, não grava)
     cdp weekly decide --week D --mind ...
+    cdp tese prepare --week D                (fatos e briefing da tese da carteira decidida;
+                                              adota docs/cdp/teses/<D>.json se tese.json faltar)
+    (a mente escreve book/<D>/tese/tese.json)
+    cdp validate-tese --week D               (valida a tese sem publicar)
+    cdp tese publish --week D                (publica a tese; imutável)
 
 Fluxo diário (após o fechamento):
     cdp daily --date D
@@ -16,7 +21,7 @@ Fluxo diário (após o fechamento):
 Rotinas locais (plugin ``cdp`` do Claude Code; ver docs/cdp/LOCAL.md):
     cdp agenda                       (o que fazer agora: semana, prazos, fechamentos pendentes)
     cdp risk [--live] [--date D]     (monitor de risco; grava reports/risk/<D>/risco_<HHMM>.md)
-    cdp painel [--out-dir D] [--sem-local]  (painel de operação e risco: index.html + data.json)
+    cdp painel [--out-dir D] [--sem-local]  (painel de gestão: index.html + data.json)
     cdp painel --publicado           (registra a página publicada no artifact; só depois de publicar)
 
 Outros: status, verify, demo, backtest, fetch-base, kill-switch.
@@ -35,6 +40,7 @@ from . import SIMULATED_DATA_NOTICE
 DEFAULT_BOOK = Path("book")
 DEFAULT_MARKET = Path("data/market")
 DEFAULT_REPORTS = Path("reports")
+DEFAULT_TESES = Path("docs/cdp/teses")
 DEFAULT_UNIVERSE = Path("data/universe/latam_universe.csv")
 
 
@@ -158,6 +164,34 @@ def cmd_validate_daily(args: argparse.Namespace) -> int:
     return 0 if ok else 1
 
 
+def cmd_tese(args: argparse.Namespace) -> int:
+    """Tese de investimento da carteira decidida: ``prepare`` (fatos) ou ``publish``."""
+    from .workflow.runtime import Runtime
+
+    rt = Runtime.from_args(args)
+    week = _d(args.week)
+    try:
+        out = rt.thesis_publish(week) if args.action == "publish" else rt.thesis_prepare(week)
+    except (OSError, ValueError) as exc:  # já publicada, sem decisão ou arquivo ausente
+        print(f"Erro: {exc}", file=sys.stderr)
+        return 1
+    _print(out)
+    return 0
+
+
+def cmd_validate_tese(args: argparse.Namespace) -> int:
+    """Valida ``book/<semana>/tese/tese.json`` SEM publicar (``tese publish`` é imutável)."""
+    from .workflow.runtime import Runtime
+
+    try:
+        out = Runtime.from_args(args).validate_thesis(_d(args.week))
+    except (OSError, ValueError) as exc:
+        print(f"Erro: {exc}", file=sys.stderr)
+        return 1
+    _print(out)
+    return 0 if out["ok"] else 1
+
+
 def cmd_verify(args: argparse.Namespace) -> int:
     from .workflow.runtime import Runtime
 
@@ -224,7 +258,8 @@ def cmd_risk(args: argparse.Namespace) -> int:
 DEFAULT_PAINEL_DIR = Path("artifacts/painel")
 
 
-def painel_artifact_check(out_dir: Path, *, page_changed: bool) -> dict:
+def painel_artifact_check(out_dir: Path, *, page_changed: bool,
+                          page_version: str | None = None) -> dict:
     """O que a mente precisa ler por inteiro antes de publicar, se isso cabe no orçamento e o que
     publicar.
 
@@ -235,8 +270,10 @@ def painel_artifact_check(out_dir: Path, *, page_changed: bool) -> dict:
     no artifact. Publicável quando ``data.json`` tem até ``DATA_MAX_BYTES`` bytes e linhas de até
     ``DATA_MAX_LINE`` caracteres e os arquivos da página até ``PAGE_MAX_BYTES``/``PAGE_MAX_LINE``.
     Devolve também ``publicar`` (``file_path`` e ``files`` prontos para a ferramenta), a URL de
-    ``ARTIFACT_URL`` (``None`` se o arquivo não existe: não publique) e a versão da página
-    registrada como publicada (``pagina_publicada``)."""
+    ``ARTIFACT_URL`` (``None`` se o arquivo não existe: não publique), a versão da página
+    registrada como publicada (``pagina_publicada``) e a versão gerada agora (``pagina_atual``):
+    antes de publicar, a skill compara a página viva do artifact com essas duas e não publica se
+    ela for outra (página publicada fora das rotinas)."""
     from .workflow.painel import ASSET_RE, DATA_NAME, INDEX_NAME, URL_NAME, published_page_sha
     from .workflow.painel_publicacao import (
         DATA_MAX_BYTES,
@@ -250,7 +287,8 @@ def painel_artifact_check(out_dir: Path, *, page_changed: bool) -> dict:
               "pagina_bytes": PAGE_MAX_BYTES, "pagina_linha": PAGE_MAX_LINE}
     out = {"publicavel": False, "motivo": "", "arquivos_para_ler": [], "tamanho_dados": None,
            "linhas_max": None, "linhas_dados": None, "pagina_mudou": bool(page_changed),
-           "pagina_publicada": published_page_sha(out_dir), "url": None, "publicar": None,
+           "pagina_publicada": published_page_sha(out_dir), "pagina_atual": page_version,
+           "url": None, "publicar": None,
            "limites": limits}
     url_file = out_dir / URL_NAME
     try:
@@ -319,7 +357,8 @@ def cmd_painel(args: argparse.Namespace) -> int:
     rt = Runtime.from_args(args)
     out = write_painel(rt, out_dir, standalone=not args.sem_local)
     out = {**out, "artifact": painel_artifact_check(
-        out_dir, page_changed=bool(out.get("page_changed")))}
+        out_dir, page_changed=bool(out.get("page_changed")),
+        page_version=out.get("page_sha256"))}
     _print(out)
     return 0
 
@@ -351,6 +390,9 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--book", default=str(DEFAULT_BOOK))
     p.add_argument("--market", default=str(DEFAULT_MARKET))
     p.add_argument("--reports", default=str(DEFAULT_REPORTS))
+    p.add_argument("--teses", default=str(DEFAULT_TESES),
+                   help="pasta versionada dos rascunhos de tese escritos fora do clone da rotina "
+                        f"(<AAAA-MM-DD>.json; padrão: {DEFAULT_TESES.as_posix()})")
     sub = p.add_subparsers(dest="cmd", required=True)
 
     s = sub.add_parser("status", help="estado do fundo e do calendário")
@@ -398,6 +440,22 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--date", type=_d)
     s.set_defaults(func=cmd_validate_daily)
 
+    t = sub.add_parser("tese", help="tese de investimento da carteira decidida (números só do "
+                                    "código)")
+    tsub = t.add_subparsers(dest="action", required=True)
+    s = tsub.add_parser("prepare", help="gera fatos, análise e briefing da tese "
+                                        "(book/<semana>/tese/)")
+    s.add_argument("--week", required=True, help="semana da decisão (AAAA-MM-DD)")
+    s.set_defaults(func=cmd_tese)
+    s = tsub.add_parser("publish", help="publica a tese (mente ou automática); imutável")
+    s.add_argument("--week", required=True, help="semana da decisão (AAAA-MM-DD)")
+    s.set_defaults(func=cmd_tese)
+
+    s = sub.add_parser("validate-tese",
+                       help="valida o tese.json da semana sem publicar (publish é imutável)")
+    s.add_argument("--week", required=True, help="semana da decisão (AAAA-MM-DD)")
+    s.set_defaults(func=cmd_validate_tese)
+
     s = sub.add_parser("verify", help="verifica trilha de auditoria, track record e decisões")
     s.set_defaults(func=cmd_verify)
 
@@ -424,7 +482,7 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--out", default=None, help="pasta dos relatórios (padrão: <reports>/risk)")
     s.set_defaults(func=cmd_risk)
 
-    s = sub.add_parser("painel", help="painel de operação e risco para o artifact (só leitura)")
+    s = sub.add_parser("painel", help="painel de gestão do fundo para o artifact (só leitura)")
     s.add_argument("--out-dir", default=str(DEFAULT_PAINEL_DIR),
                    help="pasta de index.html, data.json e da cópia local "
                         f"(padrão: {DEFAULT_PAINEL_DIR.as_posix()})")

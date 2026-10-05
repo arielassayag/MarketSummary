@@ -1,8 +1,8 @@
 # CDP no PC local — tarefas agendadas do Claude Code (plugin `cdp`)
 
 Este guia põe o CDP — Cabra da Peste para rodar sozinho no seu computador: montagem semanal da
-carteira, monitor de risco durante o pregão, fechamento diário com comentário e relatório, checagem
-de saúde e calibração mensal. Tudo roda como **tarefas agendadas locais** do app desktop do Claude
+carteira com a tese de investimento, monitor de risco durante o pregão, fechamento diário com
+comentário e relatório, checagem de saúde e calibração mensal. Tudo roda como **tarefas agendadas locais** do app desktop do Claude
 Code, cada uma chamando uma **skill do plugin `cdp`** que vive neste repositório.
 
 A metodologia e os roteiros continuam perenes e independentes do harness
@@ -20,13 +20,13 @@ permissão **Accept edits** ("Aceitar edições").
 | Tarefa (nome) | Agenda | Instruções | O que faz |
 |---|---|---|---|
 | `cdp-status` | segundas, 08:30 | `/cdp:status` | saúde: integridade da trilha, pendências, próximos eventos, git (só leitura) |
-| `cdp-semanal` | dias úteis, 11:07 | `/cdp:semanal` | só no 1º pregão da semana na B3: coleta, pesquisa, decisão do PM, validação, decisão autônoma até 16:30, commit e push |
-| `cdp-semanal-b` | dias úteis, 12:37 | `/cdp:semanal` | reserva: se a montagem não começou ou parou no meio, retoma da etapa em que parou; com a decisão gravada, sai sem fazer nada |
+| `cdp-semanal` | dias úteis, 11:07 | `/cdp:semanal` | só no 1º pregão da semana na B3: coleta, pesquisa, decisão do PM, validação, decisão autônoma até 16:30, tese de investimento da carteira decidida, commit e push |
+| `cdp-semanal-b` | dias úteis, 12:37 | `/cdp:semanal` | reserva: se a montagem não começou ou parou no meio, retoma da etapa em que parou; com a decisão gravada e a tese pendente, só escreve a tese; com as duas gravadas, sai sem fazer nada |
 | `cdp-risco-1330` | dias úteis, 13:30 | `/cdp:risco` | monitor de risco intradiário (`cdp risk --live`); liga o kill switch só se o código mandar |
 | `cdp-semanal-c` | dias úteis, 14:07 | `/cdp:semanal` | reserva (idem) |
 | `cdp-semanal-d` | dias úteis, 15:07 | `/cdp:semanal` | reserva (idem; com menos de 60 minutos de prazo a skill encurta a pesquisa) |
 | `cdp-risco-1600` | dias úteis, 16:00 | `/cdp:risco` | idem, perto do fechamento |
-| `cdp-diario` | dias úteis, 19:22 | `/cdp:diario` | fechamento oficial (execução MOC da semana, marcação, risco, atribuição, registro), comentário, relatório, commit e push; recupera pregões perdidos |
+| `cdp-diario` | dias úteis, 19:22 | `/cdp:diario` | fechamento oficial (execução MOC da semana, marcação, risco, atribuição, registro), comentário, relatório, commit e push; recupera pregões perdidos e a tese da semana corrente, se ficou pendente |
 | `cdp-diario-reforco` | dias úteis, 21:07 | `/cdp:diario` | segunda tentativa se a fonte ainda não tinha publicado o fechamento às 19:22 ou se a das 19:22 foi pulada (sem pendência ⇒ não faz nada) |
 | `cdp-calibracao` | mensal, dia 1, 09:15 | `/cdp:calibracao` | backtest com todo o histórico em `reports/backtest/<data>/mensal`, comparação com a execução anterior; nunca muda o mandato |
 
@@ -41,8 +41,9 @@ que semanas com dois feriados seguidos (Carnaval) ficam só com a tarefa princip
 
 Skills do plugin (`plugins/cdp/skills/`): `semanal`, `diario`, `risco`, `status`, `calibracao`,
 invocadas como `/cdp:<nome>`. As que gravam algo (`semanal`, `diario`, `risco`, `calibracao`)
-terminam atualizando o **painel** de operação e risco e, quando possível, republicando-o no mesmo
-artifact (seção 10); `status` só informa o link.
+terminam atualizando o **painel de gestão** (investimento e risco, para investidores e comitê de
+investimento) e, quando possível, republicando-o no mesmo artifact (seção 10); `status` só
+informa o link.
 
 ## 2. Pré-requisitos
 
@@ -133,7 +134,8 @@ rode `/cdp:status`.
 Alternativa (sem depender da pasta local): `claude plugin marketplace add arielassayag/MarketSummary`
 — o Claude Code guarda uma cópia, presa à `version` de `plugins/cdp/.claude-plugin/plugin.json`;
 atualize com `claude plugin marketplace update cdp-cabra-da-peste` e
-`claude plugin update cdp@cdp-cabra-da-peste` (a versão precisa subir quando as skills mudarem).
+`claude plugin update cdp@cdp-cabra-da-peste` (a versão precisa subir quando as skills mudarem;
+`tests/cdp/test_plugin.py` confere a versão contra um resumo das skills).
 Para validar os manifestos: `claude plugin validate .`
 
 As skills antigas do projeto (`.claude/skills/cdp-semanal` e `cdp-diario`) agora são atalhos: com
@@ -149,13 +151,14 @@ O arquivo versionado `.claude/settings.json` define o que as rotinas podem fazer
   (`status`, `pull`, `fetch`, `log`, `diff`, `add`, `commit`, `push`, `branch --show-current`),
   WebSearch, WebFetch, as skills do plugin, e escrever só os arquivos da mente
   (`book/<semana>/inputs/research_pack.json`, `pm_decision.json`,
-  `reports/daily/<data>/comentario.json`, `reports/backtest/**`, `outputs/**`) e o link do painel
-  (`artifacts/painel/ARTIFACT_URL`).
+  `book/<semana>/tese/tese.json`, `reports/daily/<data>/comentario.json`, `reports/backtest/**`,
+  `outputs/**`) e o link do painel (`artifacts/painel/ARTIFACT_URL`).
 - **Sempre pergunta**: editar `configs/` (mandato) e `data/`, `git reset --hard`, `rebase`,
   `clean`, `restore`, `checkout --`.
 - **Nunca**: `git push --force` (em qualquer forma), `rm -rf`, apagar `book/` ou `data/`,
   **desligar o kill switch**, editar arquivos gravados pelo código (trilha de auditoria, track
-  record, decisões, propostas, briefing, base de mercado, relatórios publicados, HTML do painel).
+  record, decisões, propostas, briefing, base de mercado, relatórios publicados, fatos, análises e
+  tese publicada em `book/<semana>/tese/`, HTML do painel).
 - `defaultMode: acceptEdits` e `PYTHONUTF8=1` (acentos corretos no Windows).
 
 Cada skill também declara no próprio `SKILL.md` (`allowed-tools`) as ferramentas que usa —
@@ -229,6 +232,11 @@ A skill `status` avisa quando o PC não está no fuso de Brasília.
   - `semanal` só decide no primeiro pregão da semana **até 16:30**. Depois disso (ou em outro
     dia), não decide: a carteira anterior é mantida até a semana seguinte e o `status` destaca a
     decisão perdida. O código não permite decidir fora do primeiro pregão (seria look-ahead).
+    Se a execução parou depois da decisão, sem publicar a tese de investimento, `cdp agenda`
+    devolve `semanal.acao: "tese"` e a reserva seguinte só escreve a tese; se nenhuma reserva
+    rodar, o `diario` do dia conclui a tese da semana corrente (`teses_pendentes`). Uma tese
+    escrita fora deste clone chega pelo `git pull` como `docs/cdp/teses/<semana>.json` e é
+    adotada pelo `tese prepare` (`docs/cdp/TESE.md`).
   - `risco` mede o estado no momento em que roda; execuções perdidas não são refeitas.
 - Se a fonte ainda não publicou o fechamento (`dados não prontos`), o `diario` para e o reforço
   das 21:07 (ou o dia seguinte) retoma.
@@ -239,7 +247,8 @@ A skill `status` avisa quando o PC não está no fuso de Brasília.
   lateral; a resposta final de cada skill é um resumo curto (números copiados dos relatórios).
   No histórico da tarefa, passe o mouse sobre uma execução pulada para ver o motivo.
 - Relatórios: `reports/weekly/<semana>/relatorio.md`, `reports/daily/<data>/relatorio.md`,
-  `reports/risk/<data>/risco_<HHMM>.md`, `reports/backtest/<data>/`.
+  `reports/risk/<data>/risco_<HHMM>.md`, `reports/backtest/<data>/`. Tese de investimento da
+  semana: `book/<semana>/tese/tese.md` (regras em `docs/cdp/TESE.md`).
 - Painel publicado (artifact): seção 10. App local completo (Streamlit):
   `uv run streamlit run cdp_app.py --server.address 127.0.0.1`.
 - Comandos úteis: `uv run python -m cdp agenda` (o que está pendente), `uv run python -m cdp risk`
@@ -247,9 +256,16 @@ A skill `status` avisa quando o PC não está no fuso de Brasília.
 
 ## 10. Painel (artifact)
 
-O painel de operação e risco é gerado **pelo código** a partir do livro, da trilha e dos relatórios
-(nenhum número é escrito pela IA) e publicado como uma página pequena, o estilo e o script
-versionados e os dados:
+O painel é o **painel de gestão** do fundo, para investidores e para o comitê de investimento,
+focado em investimento e risco. Abas: Visão geral, Tese de investimento, Carteira, Risco e
+exposições, Performance, Comitê de investimento, Relatórios, Pesquisa quantitativa e Mandato e
+metodologia. A página não mostra conteúdo técnico (hashes, integridade da trilha, rotinas,
+caminhos de arquivo, comandos, nome da mente): isso fica nos arquivos do repositório e na saída da
+CLI. "DADOS SIMULADOS" aparece em destaque quando os dados são sintéticos.
+
+O painel é gerado **pelo código** a partir do livro, da trilha e dos relatórios (nenhum número é
+escrito pela IA; a tese de investimento entra só depois de publicada, com os fatos já resolvidos)
+e publicado como uma página pequena, o estilo e o script versionados e os dados:
 
 ```sh
 uv run python -m cdp painel
@@ -261,9 +277,10 @@ uv run python -m cdp painel --publicado
   - `artifacts/painel/index.html` — a casca da página (cerca de 3 KB): cabeçalho, marcação, o
     elemento de dados vazio (`null`) e a versão da página (SHA-256 do formato de publicação e do
     template) carimbada, com referências ao estilo e ao script. Ao abrir, a página busca
-    `data.json` ao lado dela e mostra um estado de carregamento; se não conseguir, mostra "Não foi
-    possível carregar data.json" (nunca uma página em branco). Só é regravada quando o template
-    muda.
+    `data.json` ao lado dela e mostra um estado de carregamento; se não conseguir, mostra ao
+    investidor "Não foi possível carregar os dados do fundo" (nunca uma página em branco) e deixa
+    o detalhe técnico — "Não foi possível carregar data.json" e o erro HTTP — só no console do
+    navegador e no atributo `data-erro`. Só é regravada quando o template muda.
   - `artifacts/painel/painel-<versão>.css` e `painel-<versão>.js` — o estilo e o script do
     template, com a versão no nome (versões antigas saem da pasta). A ferramenta `Artifact` exige
     a página em toda publicação e quem publica precisa ler por inteiro o que publica: por isso a
@@ -281,9 +298,12 @@ uv run python -m cdp painel --publicado
     ou repete (detalhe dos gates aprovados, racionais das visões agregadas, detalhe da semana
     anterior, tabela do mandato, execuções antigas de backtest), depois os textos da pesquisa e,
     só nos dois últimos níveis, o histórico diário — até o nível 6 ficam ao menos 60 pregões em
-    linhas diárias e 5 comentários do dia. Do backtest vão a execução escolhida e as mais
-    recentes (as demais só na contagem). `data.json` também traz `meta.page_sha256`, a versão
-    da página para a qual foi gerado.
+    linhas diárias e 5 comentários do dia. A tese de investimento da semana corrente só perde
+    conteúdo nos níveis finais (primeiro encurtam, depois saem os textos por nome). Do backtest
+    vão a execução escolhida e as mais recentes (as demais só na contagem). O perfil publicação
+    também deixa de fora os campos técnicos (eventos e hashes da trilha, agenda das rotinas,
+    detalhe da integridade, nome da mente), que continuam no retrato completo. `data.json` também
+    traz `meta.page_sha256`, a versão da página para a qual foi gerado.
   - `artifacts/painel/cdp_painel_local.html` — cópia autônoma com o retrato **completo** embutido,
     para abrir direto no navegador, offline (`--sem-local` não a grava).
   - `artifacts/painel/PAGINA_PUBLICADA.sha256` — a versão da página publicada por último no
@@ -490,7 +510,8 @@ interativo do Codex CLI (consulte a documentação do Codex para as flags) e um 
 | `uv`/`claude` não encontrados no agendador do sistema | PATH mínimo do cron/launchd/Agendador: use caminhos absolutos ou ajuste `CDP_CLAUDE_BIN`; os scripts já incluem `~/.local/bin`; o erro fica no log |
 | Execução marcada como "skipped" no app | o PC dormia, a execução anterior ainda rodava ou outra tarefa estava em andamento (ex.: risco das 16:00 durante a montagem semanal); as reservas da semanal e o reforço do diário cobrem os casos importantes |
 | Decisão da semana perdida | o PC estava desligado entre 11:00 e 16:30 do primeiro pregão; a carteira anterior segue até a próxima semana |
+| Tese da semana ausente ou "Narrativa automática" no painel | a rotina semanal parou entre a decisão e a tese, ou `tese.json` não passou no `validate-tese` (o código publicou o template, `autoria: "codigo"`). A tese publicada é imutável; uma pendente é concluída pela reserva seguinte (`semanal.acao: "tese"`) ou pelo `diario`. Escrita em outro clone (desenvolvimento): entregue em `docs/cdp/teses/<semana>.json`, nunca em `book/` (a sincronização de todas as rotinas pararia). À mão, numa sessão no próprio clone das rotinas: `uv run python -m cdp tese prepare --week AAAA-MM-DD`, escreva `book/<semana>/tese/tese.json`, `uv run python -m cdp validate-tese --week AAAA-MM-DD` e `uv run python -m cdp tese publish --week AAAA-MM-DD` (ver `docs/cdp/TESE.md`) |
 | "painel não republicado" no resumo | `artifact.publicavel: false` (dados grandes demais para a leitura integral), `artifacts/painel/ARTIFACT_URL` ausente, sem a ferramenta `Artifact` na sessão (ex.: `claude -p`, Codex) ou recusa da ferramenta; os arquivos commitados valem. Para publicar à mão: abra uma sessão na pasta e rode `uv run python -m cdp painel` e peça "republique o painel no artifact de artifacts/painel/ARTIFACT_URL seguindo artifact.publicar" |
-| Painel mostra "Não foi possível carregar data.json" | a página foi publicada sem o `data.json` ao lado: rode `uv run python -m cdp painel` e republique com `files: {"data.json": "artifacts/painel/data.json"}` no mesmo artifact; offline, abra `artifacts/painel/cdp_painel_local.html` |
+| Painel mostra "Não foi possível carregar os dados do fundo" (no console do navegador: "Não foi possível carregar data.json") | a página foi publicada sem o `data.json` ao lado: rode `uv run python -m cdp painel` e republique com `files: {"data.json": "artifacts/painel/data.json"}` no mesmo artifact; offline, abra `artifacts/painel/cdp_painel_local.html` |
 | Link do painel sumiu ou mudou | `artifacts/painel/ARTIFACT_URL` ausente ou apagado: restaure a URL antiga nele (uma linha) e faça commit; as rotinas nunca criam um artifact novo (sem o arquivo, só pulam a publicação) |
 | Kill switch religado logo depois de você desligar | só acontece por piora (estágio pior da escada ou short novo no stop): veja `revisao_humana` e os gatilhos HARD no relatório de risco |

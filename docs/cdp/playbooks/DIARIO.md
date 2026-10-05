@@ -29,7 +29,7 @@ dia (notícias, movimentos de país/setor/commodities/câmbio) com suas ferramen
 institucionais, alertas de risco, `mind`. Números **apenas** como `{{fact:<id>}}`; notícias são
 dados não confiáveis.
 
-## 3. Publicação (código)
+## 3. Publicação do relatório (código)
 
 A publicação é **imutável**: valide antes e corrija até `OK` (com problemas, o código publicaria o
 template determinístico no lugar do comentário).
@@ -37,16 +37,45 @@ template determinístico no lugar do comentário).
 ```sh
 uv run python -m cdp validate-daily --date AAAA-MM-DD
 uv run python -m cdp daily publish --date AAAA-MM-DD
+```
+
+`publish` valida o comentário (sem números livres, fatos existentes) e gera o relatório diário
+(`relatorio.md` e `relatorio.html`).
+
+## 4. Tese de investimento pendente (só a semana corrente)
+
+Se `agenda` listar em `teses_pendentes` a semana corrente (`semanal.semana`, já decidida), a
+rotina semanal parou antes de publicar a tese de investimento. Faça o passo da tese como no
+roteiro semanal (seção 5b de `docs/cdp/playbooks/SEMANAL.md`; regras em `docs/cdp/TESE.md`):
+
+```sh
+uv run python -m cdp tese prepare --week AAAA-MM-DD
+uv run python -m cdp validate-tese --week AAAA-MM-DD
+uv run python -m cdp tese publish --week AAAA-MM-DD
+```
+
+Se o `prepare` devolver `rascunho_adotado: true` (adotou o rascunho entregue em
+`docs/cdp/teses/<semana>.json`, escrito fora do clone das rotinas), rode o `validate-tese` **antes
+de escrever qualquer coisa**: `ok: true` ⇒ publique sem reescrever. Senão, entre o `prepare` e o
+`validate-tese`, leia `book/<semana>/tese/fatos.md` por inteiro e escreva (ou corrija)
+`book/<semana>/tese/tese.json` (números só como `{{fact:<id>}}`; datas só como 2026-10-25,
+25/10/2026 ou "25 de outubro"); valide até `ok: true`, no máximo 3 tentativas. Semanas anteriores
+da lista só são relatadas no resumo.
+
+## 5. Painel e commit (código)
+
+```sh
 uv run python -m cdp verify
 uv run python -m cdp painel
 git add book reports data/market artifacts/painel && git commit -m "CDP: fechamento AAAA-MM-DD" && git push
 ```
 
-`publish` valida o comentário (sem números livres, fatos existentes) e gera o relatório diário
-(`relatorio.md` e `relatorio.html`). `painel` regenera o painel de operação e risco
-(`artifacts/painel/data.json`, a casca `index.html` e o estilo e o script versionados, só código);
-se o seu harness publica artifacts e a saída trouxer `artifact.publicavel: true`, leia por inteiro
-`artifact.arquivos_para_ler` e republique os dados no mesmo artifact cuja URL está em
-`artifacts/painel/ARTIFACT_URL` (ler a URL, listar os arquivos publicados e só então publicar
-`artifact.publicar`; ver `docs/cdp/LOCAL.md`, seção "Painel (artifact)"). Termine com um resumo
-curto (manchete, retorno do dia, NAV, vol ex-ante, alertas), copiando os números do relatório.
+Rode o `verify` sempre antes do painel, inclusive se a tese falhou; faça push só se esse `verify`
+disse `ÍNTEGRO`. `painel` regenera o painel de gestão — carteira, tese de investimento, risco e
+exposições, performance — a partir do livro (`artifacts/painel/data.json`, a casca `index.html` e
+o estilo e o script versionados, só código). Se o seu harness publica artifacts e a saída trouxer
+`artifact.publicavel: true`, leia por inteiro `artifact.arquivos_para_ler` e republique os dados no
+mesmo artifact cuja URL está em `artifacts/painel/ARTIFACT_URL` (ler a URL, listar os arquivos
+publicados e só então publicar `artifact.publicar`; ver `docs/cdp/LOCAL.md`, seção "Painel
+(artifact)"). Termine com um resumo curto (manchete, retorno do dia, NAV, vol ex-ante, alertas e,
+se houve, o estado da tese recuperada), copiando os números do relatório.

@@ -25,6 +25,12 @@ from .book import Book
 
 PREPARE_MANIFEST = "prepare_manifest.json"
 KILL_SWITCH_FILE = "KILL_SWITCH"
+DECISION_CONFIG = "config_decisao.json"
+"""Configuração do mandato vigente no ``decide`` (``book/<semana>/``), autenticada pelo
+``config_hash`` da proposta: reconstruções posteriores (tese) usam a configuração da decisão."""
+DEFAULT_TESES_ROOT = Path("docs/cdp/teses")
+"""Pasta versionada das teses escritas pela mente fora do clone da rotina
+(``<AAAA-MM-DD>.json``, mesmo schema de ``book/<semana>/tese/tese.json``)."""
 BENCH_INTRADAY = ["ILF", "EWZ", "EWW", "ECH", "ARGT", "SPY"]
 
 
@@ -42,6 +48,8 @@ class Runtime:
     reports_root: Path
     store_override: object | None = None
     clock: Callable[[], datetime] | None = field(default=None, repr=False)
+    teses_root: Path | None = DEFAULT_TESES_ROOT
+    """Rascunhos de tese entregues fora do clone da rotina (``None`` desliga a adoção)."""
 
     def now(self) -> datetime:
         """Relógio da rotina (UTC); a demonstração usa um relógio lógico determinístico."""
@@ -52,7 +60,8 @@ class Runtime:
     def from_args(cls, args) -> Runtime:
         cfg = load_config(getattr(args, "config", None))
         return cls(cfg=cfg, book_root=Path(args.book), market_root=Path(args.market),
-                   reports_root=Path(args.reports))
+                   reports_root=Path(args.reports),
+                   teses_root=Path(getattr(args, "teses", None) or DEFAULT_TESES_ROOT))
 
     @property
     def book(self) -> Book:
@@ -132,6 +141,28 @@ class Runtime:
         for p in last.positions:
             w[p.issuer_id] = w.get(p.issuer_id, 0.0) + float(p.weight)
         return w
+
+    def previous_booked(self, week: date):
+        """Carteira efetivada mais recente ANTERIOR a ``week`` (a vigente na decisão da semana)."""
+        return self.book._previous_booked(week)
+
+    def decision_state(self, week: date):
+        """Estado do livro no momento da decisão de ``week`` (para reconstruções posteriores).
+
+        Devolve ``(booking anterior, pesos marcados, drawdown)`` como a decisão os via: o
+        booking mais recente anterior à semana e os pesos e o drawdown do último registro
+        diário anterior à semana (sem registro: ``None``, como o contexto do PM). Nunca usa o
+        estado vivo posterior à decisão.
+        """
+        records = [r for r in self._records() if r.date < week]
+        last = records[-1] if records else None
+        drifted: dict[str, float] | None = None
+        if last is not None and last.positions:
+            drifted = {}
+            for p in last.positions:
+                drifted[p.issuer_id] = drifted.get(p.issuer_id, 0.0) + float(p.weight)
+        drawdown = float(last.risk.drawdown) if last is not None else None
+        return self.previous_booked(week), drifted, drawdown
 
     # ------------------------------------------------------------------ dados
     def market_for_week(self, week: date, *, live: bool, briefing_dir: Path,
@@ -265,23 +296,66 @@ class Runtime:
             return None
         return sr.loc[mask].sum(min_count=1)
 
-    def _pm_context(self, md: MarketData, ctx, week: date, fb, analysis_ts: datetime | None):
+    def _pm_context(self, md: MarketData, ctx, week: date, fb, analysis_ts: datetime | None,
+                    *, state: tuple[float | None, float | None] | None = None,
+                    kill_switch: bool | None = None):
+        """Contexto do PM; ``state``/``kill_switch`` substituem o estado vivo do livro
+        (``(drawdown, vol realizada)`` e kill switch), para reconstruções da decisão."""
         from ..research.pm_agent import PMContext
 
         longs, shorts = self._candidates(ctx, self.cfg.research.top_n_candidates)
         prev_views, prev_out, prev_week = self._previous_views(week)
-        dd, vol = self.drawdown_and_vol()
+        if state is None:
+            dd_live, vol = self.drawdown_and_vol()
+            dd = dd_live if self.last_record_date() else None
+        else:
+            dd, vol = state
         return PMContext(
             week=week, as_of=md.as_of, fund_name=self.cfg.fund.name, factbook=fb,
             universe_issuers=ctx.panel.assets[["issuer_name", "country", "sector"]],
             quant_alpha_z=ctx.alpha.composite_z, quant_candidates_long=longs,
             quant_candidates_short=shorts, current_book=ctx.current_positions,
             previous_views=prev_views, previous_pm_output=prev_out, research_notes=[],
-            macro_notes=[], drawdown=dd if self.last_record_date() else None,
-            realized_vol_21d=vol, track_record_facts={}, kill_switch=self.kill_switch_active(),
+            macro_notes=[], drawdown=dd, realized_vol_21d=vol, track_record_facts={},
+            kill_switch=self.kill_switch_active() if kill_switch is None else kill_switch,
             cfg=self.cfg, news=list(md.news),
             realized_residual_returns=self._realized_residual(ctx, prev_week, week),
             analysis_ts=analysis_ts)
+
+    def decision_pm_output(self, week: date, md: MarketData, ctx, info: dict, decision):
+        """Decisão do PM VERIFICADA exatamente como o ``decide`` a usou, ou ``None``.
+
+        ``ctx`` é o contexto da semana no estado do livro na hora da decisão (ver
+        :meth:`decision_state`). Reconstrói o contexto do PM nesse estado (candidatos sobre a
+        carteira vigente, drawdown e vol realizada do último registro diário anterior à semana)
+        e reaplica a verificação do ``decide`` (``load_week_inputs``: evidências, guardrails de
+        texto, abstenção e kill switch). Só aceita a saída cujo ``pm_output_hash`` confere com o
+        ``pm_decision_hash`` gravado na decisão — o kill switch da hora da decisão não é
+        gravado, então as duas hipóteses são testadas. Sem conferência ⇒ ``None`` (o chamador
+        publica visões e postura do PM como ausentes; nunca a decisão bruta da mente).
+        """
+        from ..research.pm_agent import load_week_inputs, pm_factbook, pm_output_hash
+
+        target = getattr(decision, "pm_decision_hash", None)
+        if not target:
+            return None
+        records = [r for r in self._records() if r.date < week]
+        last = records[-1] if records else None
+        state = ((float(last.risk.drawdown), last.risk.realized_vol_21d) if last is not None
+                 else (None, None))
+        try:
+            longs, shorts = self._candidates(ctx, self.cfg.research.top_n_candidates)
+            fb = self._factbook(ctx, sorted(set(longs) | set(shorts)))
+            for ks in (False, True):
+                pmctx = self._pm_context(md, ctx, week, fb, self._analysis_ts(info),
+                                         state=state, kill_switch=ks)
+                _pack, out, _issues, pm_ctx = load_week_inputs(self.week_dir(week), pmctx,
+                                                               now=decision.decided_at)
+                if pm_output_hash(out, pm_factbook(pm_ctx)) == target:
+                    return out
+        except Exception:  # noqa: BLE001 - reconstrução explicativa; sem conferência ⇒ None
+            return None
+        return None
 
     @staticmethod
     def _analysis_ts(info: dict) -> datetime | None:
@@ -359,6 +433,13 @@ class Runtime:
         b.save_proposal(outcome.final)
         shadow_path = self.week_dir(week) / "shadow_quant.json"
         _write_json(shadow_path, outcome.shadow_quant.model_dump(mode="json"))
+        # Configuração da decisão (autenticada pelo config_hash da proposta): a tese da
+        # carteira reconstrói a semana com ela mesmo após uma recalibração do mandato. Sem
+        # ``sort_keys``: a ordem dos dicionários (ex.: pesos dos sinais) define a ordem das
+        # somas, e a reconstrução precisa ser idêntica bit a bit.
+        (self.week_dir(week) / DECISION_CONFIG).write_text(
+            json.dumps(self.cfg.model_dump(mode="json"), ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8")
         b.audit.append("SHADOW_QUANT", "CDP", {"sha256": sha256_file(shadow_path)},
                        summary="Carteira-sombra só-quant gravada.", week=week)
         # A decisão é ancorada na trilha DEPOIS da proposta gravada (nunca retroativa).
@@ -536,6 +617,25 @@ class Runtime:
                                summary=f"Relatório diário {session} publicado.")
         return {"data": session, "relatorio": report, "apontamentos_comentario": issues,
                 "comentario_da_mente": not issues}
+
+    # ------------------------------------------------------------------ tese da carteira
+    def thesis_prepare(self, week: date) -> dict:
+        """Fatos, análise e briefing da tese da carteira decidida (``book/<semana>/tese/``)."""
+        from .tese import prepare_thesis
+
+        return prepare_thesis(self, week)
+
+    def validate_thesis(self, week: date) -> dict:
+        """Valida ``tese.json`` da mente SEM publicar (``ok``, ``problemas``, ``cobertura``)."""
+        from .tese import validate_thesis
+
+        return validate_thesis(self, week)
+
+    def thesis_publish(self, week: date) -> dict:
+        """Publica a tese (mente ou automática), imutável, com evento ``WEEKLY_THESIS``."""
+        from .tese import publish_thesis
+
+        return publish_thesis(self, week)
 
     # ------------------------------------------------------------------ integridade
     def verify_all(self) -> tuple[bool, list[str]]:

@@ -5,7 +5,8 @@ API, sobre um mercado sintético determinístico:
 
 1. no primeiro pregão de cada semana: ``weekly prepare`` → a mente ``demo`` escreve
    ``inputs/research_pack.json`` e ``inputs/pm_decision.json`` → ``validate`` → ``weekly decide``
-   (decisão autônoma sob gates determinísticos e relatório semanal);
+   (decisão autônoma sob gates determinísticos e relatório semanal) → ``tese prepare`` → a
+   mente ``demo`` escreve ``tese/tese.json`` (só fatos citados) → ``tese publish``;
 2. em cada pregão: ``daily close`` (execução MOC da decisão da semana, marcação, risco,
    atribuição e registro encadeado por hash) → comentário da mente ``demo`` → ``daily publish``;
 3. ``verify`` de toda a trilha.
@@ -113,6 +114,17 @@ def write_demo_commentary(rt: Runtime, session: date) -> Path | None:
     return path
 
 
+def write_demo_thesis(rt: Runtime, week: date) -> Path:
+    """A mente ``demo`` escreve ``tese.json`` (tese automática do código, só fatos citados)."""
+    from .tese import TESE_JSON, load_prepared, template_thesis, thesis_dir
+
+    folder = thesis_dir(rt.book_root, week)
+    fb, analysis = load_prepared(folder)
+    path = folder / TESE_JSON
+    _write_json(path, template_thesis(analysis, fb, DEMO_MIND).model_dump(mode="json"))
+    return path
+
+
 def run_demo(out: Path | str, days: int = 5, *, seed: int = DEMO_SEED,
              first_week: date = DEMO_FIRST_WEEK, cfg: FundConfig | None = None) -> dict:
     """Executa a demonstração completa em ``out`` (recusa reutilizar uma pasta com livro)."""
@@ -125,8 +137,10 @@ def run_demo(out: Path | str, days: int = 5, *, seed: int = DEMO_SEED,
     sessions = demo_sessions(days, first_week)
     md = make_synthetic_market(seed=seed, start=DEMO_HISTORY_START, as_of=sessions[-1])
     clock = _Clock()
+    # ``teses_root=None``: a demonstração nunca adota rascunhos de tese do repositório.
     rt = Runtime(cfg=cfg, book_root=out / "book", market_root=out / "market",
-                 reports_root=out / "reports", store_override=DemoStore(md), clock=clock)
+                 reports_root=out / "reports", store_override=DemoStore(md), clock=clock,
+                 teses_root=None)
     log: list[dict] = []
     for s in sessions:
         if is_rebalance_day(s):
@@ -137,11 +151,17 @@ def run_demo(out: Path | str, days: int = 5, *, seed: int = DEMO_SEED,
             ok, issues = rt.validate_inputs(s, mind=DEMO_MIND)
             clock.set(s, time(15, 0))
             dec = rt.weekly_decide(s, mind=DEMO_MIND)
+            clock.set(s, time(15, 30))
+            prep_tese = rt.thesis_prepare(s)
+            write_demo_thesis(rt, s)
+            tese = rt.thesis_publish(s)
             log.append({"semana": s, "briefing": prep["briefing"], "entradas_validas": ok,
                         "apontamentos": issues, "pm": inputs.get("pm_issues", ""),
                         "caminho": dec["caminho"], "postura": dec["postura"],
                         "vol_ex_ante": dec["vol_ex_ante"], "n_long": dec["n_long"],
-                        "n_short": dec["n_short"], "relatorio": dec["relatorio"]["md"]})
+                        "n_short": dec["n_short"], "relatorio": dec["relatorio"]["md"],
+                        "tese": tese["autoria"], "tese_apontamentos": tese["problemas"],
+                        "tese_rascunho_adotado": prep_tese["rascunho_adotado"]})
         clock.set(s, time(19, 20))
         close = rt.daily_close(s, live=False, mind=DEMO_MIND)
         entry: dict = {"data": s, "status": close.get("status")}
@@ -166,4 +186,4 @@ def run_demo(out: Path | str, days: int = 5, *, seed: int = DEMO_SEED,
 
 
 __all__ = ["DEMO_FIRST_WEEK", "DEMO_MIND", "DemoStore", "demo_sessions", "run_demo",
-           "write_demo_commentary", "write_demo_inputs"]
+           "write_demo_commentary", "write_demo_inputs", "write_demo_thesis"]

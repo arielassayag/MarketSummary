@@ -26,6 +26,7 @@ from latam_ls.backtest.engine import (
     BacktestConfig,
     PointInTimeInputs,
     earliest_start,
+    primary_sessions,
     rebalance_dates,
     rf_daily_series,
     run_backtest,
@@ -408,10 +409,11 @@ def test_main_run_shapes_and_accounting(main_run, md):
     assert res.daily.index[0] == res.weekly.index[0] == pd.Timestamp(START)
     assert res.daily.index[-1] == pd.Timestamp(AS_OF)
     assert all(pd.Timestamp(i).dayofweek == 0 for i in res.weekly.index)
-    # Data de informação = pregão anterior ao rebalanceamento.
-    cal = md.close.index
+    # Data de informação = pregão anterior da B3 ao rebalanceamento (1º pregão da semana).
+    sess = primary_sessions(md, CFG)
+    assert list(res.weekly.index) == list(rebalance_dates(sess, START, AS_OF))
     for t, d in res.weekly["info_date"].items():
-        assert d == cal[cal.get_loc(t) - 1]
+        assert d == sess[sess < t][-1]
     d = res.daily
     ident = d["ret_gross"] - d["cost"] - d["borrow"] + d["financing"]
     np.testing.assert_allclose(d["ret_net"], ident, atol=1e-15)
@@ -434,10 +436,20 @@ def test_realized_pnl_is_previous_weights_times_returns(main_run, panel):
     assert res.daily.loc[t0, "gross"] == pytest.approx(float(w0.abs().sum()))
 
 
-def test_net_neutral_and_vol_within_target_every_rebalance(main_run):
+def test_net_neutral_and_vol_within_target_every_rebalance(main_run, panel):
     wk = main_run.weekly
     net_max = CFG.risk.net_exposure_max_abs
-    assert (wk["net"].abs() <= net_max + 1e-6).all()
+    # Nomes com mercado fechado no dia não negociam: ficam no peso derivado w0/(1 + R_t), e o
+    # líquido realizado difere do otimizado por −R_t·Σ w_congelados (exato, sem folga extra).
+    d = main_run.daily
+    for t in wk.index:
+        w = main_run.weights.loc[t]
+        frozen = panel.returns.loc[t, w.index].isna() & (w != 0)
+        pre = float(d.loc[t, "ret_net"] + d.loc[t, "cost"])
+        slack = abs(pre) * abs(float(w[frozen].sum()))
+        assert abs(wk.loc[t, "net"]) <= net_max + 1e-6 + slack, t
+        assert abs(float(w.sum())) <= net_max + 1e-6 + slack, t
+    assert (wk["n_frozen"] > 0).any()  # o cenário inclui o México fechado (29/01/2024)
     vt = wk["vol_target"].iloc[0]
     assert vt == pytest.approx(CFG.risk.vol_target_annual / CFG.risk.bias_prior)
     assert (wk["ex_ante_vol"] <= vt * (1 + 1e-4)).all()
@@ -447,7 +459,6 @@ def test_net_neutral_and_vol_within_target_every_rebalance(main_run):
     w = main_run.weights
     assert (w.max(axis=1) <= CFG.risk.max_long_weight + 1e-6).all()
     assert (w.min(axis=1) >= -CFG.risk.max_short_weight - 1e-6).all()
-    assert (w.sum(axis=1).abs() <= net_max + 1e-6).all()
 
 
 def test_costs_reduce_returns_in_engine(main_run):

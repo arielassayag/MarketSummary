@@ -984,3 +984,251 @@ def test_store_refuses_false_holiday_when_data_not_ready(tmp_path):
     assert market_is_open(date(2026, 10, 12), "BR") in (False, None)
     assert market_is_open(date(2026, 10, 12), "US") in (True, None)
     assert market_is_open(date(2026, 10, 12), "LATAM") is None
+
+
+# ======================================================================
+# Revisão adversarial: cada teste expõe um defeito encontrado na revisão
+# ======================================================================
+
+def test_zero_volume_is_missing_even_when_close_invalid():
+    idx = pd.DatetimeIndex(["2026-10-02"])
+    raw = yf_frame({"ZZZZ3.SA": pd.DataFrame({"Close": [-1.0], "Adj Close": [5.0],
+                                              "Volume": [0.0]}, index=idx)})
+    df, _ = yahoo.fetch_price_history(["ZZZZ3.SA"], date(2026, 10, 2), date(2026, 10, 2),
+                                      downloader=lambda **kw: raw, sleep=NO_SLEEP)
+    row = df.iloc[0]
+    assert math.isnan(row["close"]) and row["adj_close"] == 5.0
+    # volume 0 nunca vira "liquidez zero", mesmo sem close válido
+    assert math.isnan(row["volume"]) and row["volume_flag"] == yahoo.VOLUME_SUSPECT_FLAG
+
+
+def test_yahoo_short_interest_not_used_before_estimated_publication():
+    epoch = int(datetime(2026, 9, 30, tzinfo=UTC).timestamp())  # publicação ~2026-10-09
+    info = {"sharesShort": 1000, "shortPercentOfFloat": 0.05, "dateShortInterest": epoch,
+            "marketCap": 1e9, "currentPrice": 10.0}
+    assert yahoo.build_short_interest_row("NU", info, None, math.nan, date(2026, 10, 5)) is None
+    row = yahoo.build_short_interest_row("NU", info, None, math.nan, date(2026, 10, 9))
+    assert row is not None and row["publication_date"] == "2026-10-09"
+    # com FINRA disponível, a base de float do Yahoo ainda não publicada também é descartada
+    finra = {"shares_short": 900.0, "settlement_date": date(2026, 9, 15),
+             "publication_date": date(2026, 9, 24), "shares_short_prior": math.nan,
+             "avg_daily_volume": math.nan, "days_to_cover": 1.0}
+    row = yahoo.build_short_interest_row("NU", info, finra, math.nan, date(2026, 10, 5))
+    assert row["source"] == "FINRA" and math.isnan(row["float_base_yahoo"])
+    assert "yahoo_si_nao_publicado_descartado" in row["si_quality"]
+
+
+def test_news_rejects_non_http_links_and_doctype():
+    rss = RSS.replace("https://news.google.com/rss/articles/A1", "javascript:alert(1)")
+    items = news.parse_rss(rss)
+    assert all(i["link"].startswith("https://") for i in items)
+    assert "javascript:alert(1)" not in {i["link"] for i in items}
+    bomb = ('<?xml version="1.0"?><!DOCTYPE rss [<!ENTITY a "aaaaaaaaaa">'
+            '<!ENTITY b "&a;&a;&a;&a;&a;&a;&a;&a;&a;&a;">]>'
+            '<rss><channel><item><title>&b;</title><link>https://x</link>'
+            '<pubDate>Fri, 02 Oct 2026 15:00:00 GMT</pubDate></item></channel></rss>')
+    with pytest.raises(yahoo.FetchError):
+        news.parse_rss(bomb)
+
+
+def test_news_title_cannot_smuggle_fact_placeholders():
+    # duplamente codificado: o primeiro unescape (guardrails) deixa entidades, o segundo
+    # (sanitizador local) recriava "{{fact:...}}" — placeholder renderizável no memo
+    t = "Alta &amp;#123;&amp;#123;fact:BR_X.ret_1m_usd&amp;#125;&amp;#125; hoje"
+    assert "{{" not in news.sanitize_title(t) and "}}" not in news.sanitize_title(t)
+    assert "{{" not in news._local_sanitize("x {{fact:a}} y")
+
+
+def test_news_dedupe_keeps_distinct_items_with_symbol_only_titles():
+    t = datetime(2026, 10, 2, 12, tzinfo=UTC)
+    a = NewsItem(news_id="rss_a", issuer_ids=["A"], title="!!!", source="X", published_at=t)
+    b = NewsItem(news_id="rss_b", issuer_ids=["B"], title="???", source="X", published_at=t)
+    assert len(news.dedupe_news([a, b])) == 2
+
+
+def test_bdi_pagination_beyond_max_pages_is_an_error():
+    pages = [FakeResponse(200, _bdi_payload(OPEN_COLS, [[D, D, f"T{i}", "", "", "", "Total", 1,
+                                                         None, 1]], page_count=3))
+             for i in range(3)]
+    with pytest.raises(yahoo.FetchError):
+        b3_lending.fetch_bdi_table("BTBLendingOpenPosition", date(2026, 10, 2), max_pages=2,
+                                   session=FakeSession(pages), sleep=NO_SLEEP)
+
+
+def _edit_manifest(path: Path, fn) -> None:
+    data = json.loads(path.read_text(encoding="utf-8"))
+    fn(data)
+    path.write_text(json.dumps(data), encoding="utf-8")
+
+
+def test_manifest_paths_outside_snapshot_rejected(synthetic, tmp_path):
+    from latam_ls.hashing import sha256_file
+
+    write_snapshot(synthetic, tmp_path / "s")
+    evil = tmp_path / "evil.txt"
+    evil.write_text("fora do snapshot")
+    _edit_manifest(tmp_path / "s" / "manifest.json", lambda d: d["files"].append(
+        {"path": "../evil.txt", "sha256": sha256_file(evil), "rows": None, "description": ""}))
+    with pytest.raises(SnapshotIntegrityError):
+        load_snapshot(tmp_path / "s")
+
+
+def test_synthetic_flag_flip_in_manifest_detected(synthetic, tmp_path):
+    write_snapshot(synthetic, tmp_path / "s")
+
+    def flip(d):
+        d["is_synthetic"] = False
+        d["data_notice"] = "Dados reais"
+
+    _edit_manifest(tmp_path / "s" / "manifest.json", flip)
+    with pytest.raises(SnapshotIntegrityError):
+        load_snapshot(tmp_path / "s")
+
+
+def test_store_refuses_increment_without_fx_for_traded_lines(tmp_path):
+    from latam_ls.data.store import DataNotReadyError
+
+    mk = FakeMarket()
+    st = make_store(tmp_path, mk, at_close(date(2026, 10, 6)))
+    s5 = pd.Timestamp("2026-10-05")
+
+    def fx_no_brl_today(ccys, start, end):
+        df = mk.fx(ccys, start, end)
+        return df[~((df["date"] == s5) & (df["currency"] == "BRL"))]
+
+    def fx_down(*a):
+        raise RuntimeError("Yahoo FX fora do ar")
+
+    for fx in (fx_no_brl_today, fx_down):
+        with pytest.raises(DataNotReadyError):
+            st.append_daily(date(2026, 10, 5), fetchers=mk.fetchers(fx=fx))
+        assert not (st.daily_root / "2026-10-05").exists()
+    m = st.append_daily(date(2026, 10, 5), fetchers=mk.fetchers(fx=fx_no_brl_today),
+                        allow_incomplete=True)
+    assert any("Câmbio" in x and "BRL" in x for x in m.limitations)
+
+
+def test_store_drops_zero_volume_bars_on_official_holiday(tmp_path):
+    mk = FakeMarket()
+    hol = pd.Timestamp("2026-10-12")
+    mk.closed[hol] = {"CL"}
+    mk.calendar_closed[hol] = {"CL"}
+
+    def prices_with_fake_bar(tickers, start, end):
+        df, miss = mk.prices(tickers, start, end)
+        if "DDDD.SN" in tickers and pd.Timestamp(start) <= hol <= pd.Timestamp(end):
+            prev = df[(df["ticker"] == "DDDD.SN") & (df["date"] < hol)].iloc[-1]
+            fake = {"date": hol, "ticker": "DDDD.SN", "close": prev["close"],
+                    "adj_close": prev["adj_close"], "volume": np.nan,
+                    "volume_flag": yahoo.VOLUME_SUSPECT_FLAG}
+            df = pd.concat([df, pd.DataFrame([fake])], ignore_index=True)
+        return df, miss
+
+    st = make_store(tmp_path, mk, at_close(date(2026, 10, 13)))
+    st.fetchers = mk.fetchers(prices=prices_with_fake_bar)
+    made = {m.session_date: m for m in st.catch_up(date(2026, 10, 13))}
+    m12 = made[date(2026, 10, 12)]
+    assert "CL" in m12.markets_closed
+    assert any(n.startswith("barras_de_feriado_descartadas") for n in m12.notes)
+    assert pd.isna(st.load().close.loc["2026-10-12", "DDDD.SN"])
+
+
+def test_verify_chain_reports_corrupt_manifest_and_base_manifest_edit(tmp_path):
+    mk = FakeMarket()
+    st = make_store(tmp_path, mk, at_close(date(2026, 10, 6)))
+    st.append_daily(date(2026, 10, 5))
+    st.append_daily(date(2026, 10, 6))
+    h0 = st.load().manifest.content_hash()
+    # edição do manifesto da BASE (fora do content_hash do contrato) precisa ser detectada
+    base_m = st.base_dir / "manifest.json"
+    original = base_m.read_text(encoding="utf-8")
+    _edit_manifest(base_m, lambda d: d["limitations"].clear())
+    ok, problems = st.verify_chain()
+    assert not ok and any("manifesto da base" in p for p in problems)
+    assert st.load(verify=False).manifest.content_hash() != h0
+    base_m.write_text(original, encoding="utf-8")
+    assert st.verify_chain()[0] and st.load().manifest.content_hash() == h0
+    # manifesto corrompido: verify_chain relata (não explode)
+    (st.daily_root / "2026-10-06" / "manifest.json").write_text("{não é json", encoding="utf-8")
+    ok, problems = st.verify_chain()
+    assert not ok and any("2026-10-06" in p for p in problems)
+    with pytest.raises(SnapshotIntegrityError):
+        st.load()
+
+
+def test_store_lock_blocks_concurrent_writer_and_ignores_stale_staging(tmp_path):
+    from latam_ls.data.store import StoreLockedError
+
+    mk = FakeMarket()
+    st = make_store(tmp_path, mk, at_close(date(2026, 10, 6)))
+    other = MarketStore(st.root, fetchers=mk.fetchers(), cfg=FundConfig(),
+                        now=lambda: at_close(date(2026, 10, 6)), benchmarks=["SPY", "EWZ"],
+                        calendar=fake_calendar(mk), lock_timeout=0)
+    with st.write_lock():
+        with pytest.raises(StoreLockedError):
+            other.append_daily(date(2026, 10, 5))
+    assert not (st.daily_root / "2026-10-05").exists()
+    # staging órfão de um processo que caiu não é reutilizado nem bloqueia
+    stale = st.daily_root / ".2026-10-05.staging"
+    stale.mkdir(parents=True)
+    (stale / "lixo.txt").write_text("x")
+    m = other.append_daily(date(2026, 10, 5))
+    assert {f.path for f in m.files} >= {FILE_PRICES}
+    assert not (st.daily_root / "2026-10-05" / "lixo.txt").exists()
+    assert st.verify_chain()[0]
+
+
+def test_store_lending_dates_missed_by_transient_failure_are_retried(tmp_path):
+    mk = FakeMarket()
+    st = make_store(tmp_path, mk, at_close(date(2026, 10, 8)))
+    fail = {"on": True}
+
+    def flaky_lending(tickers, start, end, so_map):
+        df = mk.lending(tickers, start, end, so_map)
+        if fail["on"] and not df.empty:  # BDI falha só para 10-05 nesta coleta
+            df = df[df["date"] != pd.Timestamp("2026-10-05")]
+        return df
+
+    st.append_daily(date(2026, 10, 5))
+    st.append_daily(date(2026, 10, 6), fetchers=mk.fetchers(lending=lambda *a: pd.DataFrame()))
+    m7 = st.append_daily(date(2026, 10, 7), fetchers=mk.fetchers(lending=flaky_lending))
+    assert m7.lending_dates == [date(2026, 10, 6)]
+    assert any("2026-10-05" in x and "luguel" in x for x in m7.limitations)
+    fail["on"] = False
+    m8 = st.append_daily(date(2026, 10, 8), fetchers=mk.fetchers(lending=flaky_lending))
+    assert m8.lending_dates == [date(2026, 10, 5), date(2026, 10, 7)]  # 10-06 não é repetido
+    from latam_ls.data.store import IncrementTables  # noqa: F401  (API pública estável)
+    hist = pd.concat([pd.read_parquet(st.daily_root / d / "lending.parquet")
+                      for d in ("2026-10-05", "2026-10-06", "2026-10-07", "2026-10-08")])
+    assert not hist.duplicated(["date", "ticker"]).any()
+
+
+def test_store_auto_accepts_missing_market_after_grace_period(tmp_path):
+    from latam_ls.data.store import DataNotReadyError
+
+    mk = FakeMarket()
+    mk.closed[pd.Timestamp("2026-10-05")] = {"BR"}  # fonte nunca publica a B3 em 10-05
+    st = make_store(tmp_path, mk, at_close(date(2026, 10, 6)))
+    with pytest.raises(DataNotReadyError):
+        st.catch_up(date(2026, 10, 6))
+    later = MarketStore(st.root, fetchers=mk.fetchers(), cfg=FundConfig(),
+                        now=lambda: at_close(date(2026, 10, 9)), benchmarks=["SPY", "EWZ"],
+                        calendar=fake_calendar(mk))
+    made = later.catch_up(date(2026, 10, 9))
+    assert [m.session_date for m in made] == [date(2026, 10, d) for d in (5, 6, 7, 8, 9)]
+    m5 = made[0]
+    assert m5.markets_closed == ["BR"] and any("carência" in x for x in m5.limitations)
+
+
+def test_catch_up_refreshes_slow_data_on_first_session_of_week(tmp_path):
+    mk = FakeMarket()
+    mon = pd.Timestamp("2026-10-12")
+    mk.closed[mon] = {"BR", "CL", "MX", "US"}
+    mk.calendar_closed[mon] = {"BR", "CL", "MX", "US"}
+    mk.fx_closed.add(mon)  # segunda sem nenhum mercado: NoSessionError
+    st = make_store(tmp_path, mk, at_close(date(2026, 10, 13)))
+    made = {m.session_date: m for m in st.catch_up(date(2026, 10, 13))}
+    assert date(2026, 10, 12) not in made
+    assert made[date(2026, 10, 5)].slow_refreshed  # segunda normal
+    assert made[date(2026, 10, 13)].slow_refreshed  # 1º pregão da semana (segunda sem pregão)
+    assert not made[date(2026, 10, 6)].slow_refreshed

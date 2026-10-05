@@ -121,6 +121,38 @@ def _num(x: object) -> float | None:
     return v if math.isfinite(v) else None
 
 
+def _br(value: float, digits: int) -> str:
+    text = f"{abs(value):,.{digits}f}"
+    return text.replace(",", "\x00").replace(".", ",").replace("\x00", ".")
+
+
+def format_money(value: object, signed: bool = False) -> str:
+    """Valor em USD pt-BR: ``US$ 31.031``, ``US$ 100,13 mi``, ``US$ 1,25 bi``; ausente ⇒ n/d."""
+    v = _num(value)
+    if v is None:
+        return NA_TEXT
+    a = abs(v)
+    if a >= 1e9:
+        body = f"US$ {_br(a / 1e9, 2)} bi"
+    elif a >= 1e6:
+        body = f"US$ {_br(a / 1e6, 2)} mi"
+    else:
+        body = f"US$ {_br(a, 0)}"
+    if round(a) == 0:
+        return body
+    return ("-" if v < 0 else "+" if signed else "") + body
+
+
+def format_bps(fraction: object, signed: bool = True) -> str:
+    """Fração do NAV em pontos-base com uma casa (``0.00027`` ⇒ ``+2,7 bps``); ausente ⇒ n/d."""
+    v = _num(fraction)
+    if v is None:
+        return NA_TEXT
+    b = round(v * 1e4, 1)
+    sign = "+" if (b > 0 and signed) else "-" if b < 0 else ""
+    return f"{sign}{_br(b, 1)} bps"
+
+
 def slug(name: object) -> str:
     """Identificador seguro para ``fact_id`` (sem espaços; placeholders não aceitam espaço)."""
     text = _SLUG_RE.sub("_", str(name).strip()).strip("_")
@@ -165,10 +197,21 @@ class _Facts:
             signed: bool = False, issuer_id: str | None = None, inputs: Iterable[str] = (),
             formatted: str | None = None) -> None:
         v = _num(value)
+        if formatted is None and unit == "usd":
+            formatted = format_money(v, signed)
         self.facts[fact_id] = Fact(
             fact_id=fact_id, issuer_id=issuer_id, name=name, value=v, unit=unit,  # type: ignore[arg-type]
             formatted=formatted if formatted is not None else format_value(v, unit, signed),
             formula=formula, inputs=list(inputs))
+
+
+    def contrib(self, fact_id: str, name: str, fraction: object, formula: str, *,
+                issuer_id: str | None = None, inputs: Iterable[str] = ()) -> None:
+        """Contribuição em pontos-base do NAV de abertura (valor em bps)."""
+        f = _num(fraction)
+        self.add(fact_id, name, None if f is None else f * 1e4, "bps",
+                 formula + " (em bps do NAV de abertura)", issuer_id=issuer_id, inputs=inputs,
+                 formatted=format_bps(f))
 
 
 def _issuer_pnl(record: DailyRecord) -> dict[str, float]:
@@ -244,7 +287,7 @@ def build_daily_factbook(record: DailyRecord, prev_records: Iterable[DailyRecord
     b.add("day.ret", "Retorno do dia (USD)", record.ret, "pct",
           "P&L do dia / NAV de abertura", signed=True, inputs=["record.ret"])
     b.add("day.pnl_usd", "P&L do dia (USD)", record.pnl_usd, "usd",
-          "variação do NAV no dia (ações, custos, aluguel e financiamento)",
+          "variação do NAV no dia (ações, custos, aluguel e financiamento)", signed=True,
           inputs=["record.pnl_usd"])
     b.add("nav", "NAV de fechamento (USD)", record.nav_end_usd, "usd", "NAV de fechamento",
           inputs=["record.nav_end_usd"])
@@ -298,26 +341,29 @@ def build_daily_factbook(record: DailyRecord, prev_records: Iterable[DailyRecord
             continue
         contrib = (float(line.contribution) if line is not None
                    else (pnl / nav0 if pnl is not None else None))
-        b.add(f"attr.{name}", f"Contribuição {_COMPONENT_PT[name]} (% do NAV)", contrib, "pct",
-              f"P&L {_COMPONENT_PT[name]} / NAV de abertura; ausente ⇒ n/d", signed=True,
-              inputs=[f"record.pnl_components.{name}"])
+        b.contrib(f"attr.{name}", f"Contribuição {_COMPONENT_PT[name]}", contrib,
+                  f"P&L {_COMPONENT_PT[name]} / NAV de abertura; ausente ⇒ n/d",
+                  inputs=[f"record.pnl_components.{name}"])
         b.add(f"attr.{name}.pnl_usd", f"P&L {_COMPONENT_PT[name]} (USD)", pnl, "usd",
-              f"componente {name} do P&L do dia", inputs=[f"record.pnl_components.{name}"])
+              f"componente {name} do P&L do dia", signed=True,
+              inputs=[f"record.pnl_components.{name}"])
     for group, label in (("factor_group", "grupo de fatores"), ("country", "país"),
                          ("sector", "setor")):
         for a in sorted((x for x in record.attribution if x.group == group),
                         key=lambda x: x.name):
-            b.add(f"attr.{group}.{slug(a.name)}", f"Contribuição do {label} {a.name}",
-                  a.contribution, "pct", f"P&L do {label} / NAV de abertura", signed=True,
-                  inputs=[f"record.attribution[{group}:{a.name}]"])
+            b.contrib(f"attr.{group}.{slug(a.name)}", f"Contribuição do {label} {a.name}",
+                      a.contribution, f"P&L do {label} / NAV de abertura",
+                      inputs=[f"record.attribution[{group}:{a.name}]"])
     sides = _side_pnl(record)
     for side, key in (("LONG", "long"), ("SHORT", "short")):
         pnl = sides[side]
-        b.add(f"attr.{key}", f"Contribuição do lado {'comprado' if key == 'long' else 'vendido'}",
-              None if pnl is None else pnl / nav0, "pct", "P&L do lado / NAV de abertura",
-              signed=True, inputs=["record.attribution[side]"])
-        b.add(f"attr.{key}.pnl_usd", f"P&L do lado {'comprado' if key == 'long' else 'vendido'}",
-              pnl, "usd", "soma do P&L das posições do lado", inputs=["record.attribution[side]"])
+        label = "comprado" if key == "long" else "vendido"
+        b.contrib(f"attr.{key}", f"Contribuição do lado {label}",
+                  None if pnl is None else pnl / nav0, "P&L do lado / NAV de abertura",
+                  inputs=["record.attribution[side]"])
+        b.add(f"attr.{key}.pnl_usd", f"P&L do lado {label}", pnl, "usd",
+              "soma do P&L das posições do lado", signed=True,
+              inputs=["record.attribution[side]"])
 
     pnl_by_issuer = _issuer_pnl(record)
     tickers: dict[str, str] = {}
@@ -335,9 +381,9 @@ def build_daily_factbook(record: DailyRecord, prev_records: Iterable[DailyRecord
                   "texto: identificador do emissor (valor = posição no ranking)",
                   issuer_id=iid, formatted=name)
             b.add(f"top.{kind}.{k}.pnl", f"P&L do {k}º maior {label} (USD)", pnl, "usd",
-                  "P&L do emissor no dia", issuer_id=iid)
-            b.add(f"top.{kind}.{k}.contrib", f"Contribuição do {k}º maior {label}", pnl / nav0,
-                  "pct", "P&L do emissor / NAV de abertura", signed=True, issuer_id=iid)
+                  "P&L do emissor no dia", signed=True, issuer_id=iid)
+            b.contrib(f"top.{kind}.{k}.contrib", f"Contribuição do {k}º maior {label}",
+                      pnl / nav0, "P&L do emissor / NAV de abertura", issuer_id=iid)
 
     if cfg is not None:
         r = cfg.risk
@@ -401,12 +447,13 @@ def _template_output(fb: FactBook, mind: str = DEMO_MIND) -> DailyCommentaryOutp
     p2 = "".join(parts) + "."
     tops = [k for k in range(1, 4) if _has(fb, f"top.contrib.{k}.name")]
     if tops:
-        p2 += " Maiores contribuições: " + ", ".join(
-            f"{_ph(f'top.contrib.{k}.name')} ({_ph(f'top.contrib.{k}.pnl')})" for k in tops) + "."
+        p2 += " Maiores contribuições: " + "; ".join(
+            f"{_ph(f'top.contrib.{k}.name')}, com {_ph(f'top.contrib.{k}.pnl')}"
+            for k in tops) + "."
     bottoms = [k for k in range(1, 4) if _has(fb, f"top.detract.{k}.name")]
     if bottoms:
-        p2 += " Maiores detratores: " + ", ".join(
-            f"{_ph(f'top.detract.{k}.name')} ({_ph(f'top.detract.{k}.pnl')})"
+        p2 += " Maiores detratores: " + "; ".join(
+            f"{_ph(f'top.detract.{k}.name')}, com {_ph(f'top.detract.{k}.pnl')}"
             for k in bottoms) + "."
     countries = sorted((f for f in fb.facts if f.startswith("attr.country.")),
                        key=lambda f: (-abs(_value(fb, f) or 0.0), f))
@@ -765,6 +812,8 @@ __all__ = [
     "default_allowed_terms",
     "deterministic_commentary",
     "example_commentary",
+    "format_bps",
+    "format_money",
     "factbook_json",
     "load_commentary_file",
     "parse_commentary_file",

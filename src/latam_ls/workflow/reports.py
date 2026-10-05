@@ -42,10 +42,10 @@ from ..contracts import (
     ViewSource,
 )
 from ..hashing import sha256_file
-from ..research.commentary import period_returns
+from ..research.commentary import format_bps, format_money, period_returns
 from ..research.guardrails import PLACEHOLDER_RE, render_placeholders
 from ..research.pm_agent import POSTURE_PT, REGIME_PT, PMDecisionOutput
-from .memo import NA, fmt_date, fmt_num, fmt_pct, fmt_usd, fmt_usd_mm
+from .memo import NA, fmt_date, fmt_num, fmt_pct
 
 PAPER_TRADING_LABEL = "paper trading com preços reais"
 PAPER_TRADING_TEXT = ("Natureza: paper trading com preços reais — execução hipotética no "
@@ -128,7 +128,11 @@ def _pct(x: object, signed: bool = False, digits: int = 2) -> str:
 
 
 def _usd(x: object, signed: bool = False) -> str:
-    return fmt_usd(_f(x), 0, signed)
+    return format_money(_f(x), signed)
+
+
+def _bps(fraction: object) -> str:
+    return format_bps(_f(fraction))
 
 
 def _mult(x: object) -> str:
@@ -258,7 +262,7 @@ def sparkline_text(values: Sequence[float | None]) -> str:
 # ==========================================================
 
 def _md_cell(text: object) -> str:
-    return " ".join(str(text).split()).replace("|", "\\|")
+    return " ".join(str(text).split()).replace("|", "\\|").replace("<", "&lt;")
 
 
 def _md_safe(text: str) -> str:
@@ -273,10 +277,17 @@ def _md_table(headers: Sequence[str], rows: Sequence[Sequence[str]]) -> list[str
     return out
 
 
+def _notice_tail(notice: str) -> str:
+    """Aviso sem repetir "DADOS SIMULADOS" (o banner já o exibe)."""
+    tail = re.sub(rf"^\s*{re.escape(SIMULATED_DATA_NOTICE)}\s*[—–:-]?\s*", "", notice or "",
+                  flags=re.IGNORECASE).strip()
+    return tail or "dados sintéticos gerados por código; não representam preços reais."
+
+
 def to_markdown(doc: Document) -> str:
     L = [f"# {doc.title}", "", f"_{doc.subtitle}_", ""]
     if doc.synthetic:
-        L += [f"> **{SIMULATED_DATA_NOTICE}** — {doc.data_notice}", ""]
+        L += [f"> **{SIMULATED_DATA_NOTICE}** — {_notice_tail(doc.data_notice)}", ""]
     L += [f"- {x}" for x in doc.labels] + [""]
     if doc.kpis:
         L += _md_table(["Indicador", "Valor", "Referência"], [list(k) for k in doc.kpis]) + [""]
@@ -417,8 +428,8 @@ def to_html(doc: Document) -> str:
          f"<title>{_esc(doc.title)}</title><style>{_CSS}</style></head><body><main>",
          f"<h1>{_esc(doc.title)}</h1>", f'<p class="sub">{_esc(doc.subtitle)}</p>']
     if doc.synthetic:
-        H.append(f'<div class="banner">{_esc(SIMULATED_DATA_NOTICE)} — {_esc(doc.data_notice)}'
-                 "</div>")
+        H.append(f'<div class="banner">{_esc(SIMULATED_DATA_NOTICE)} — '
+                 f'{_esc(_notice_tail(doc.data_notice))}</div>')
     H.append('<ul class="labels">' + "".join(f"<li>{_esc(x)}</li>" for x in doc.labels)
              + "</ul>")
     if doc.kpis:
@@ -461,8 +472,7 @@ def to_html(doc: Document) -> str:
 
 def _attr_rows(lines: Iterable[Any], nav0: float) -> list[list[str]]:
     rows = sorted(lines, key=lambda a: (-abs(a.pnl_usd), a.name))
-    return [[str(a.name), _usd(a.pnl_usd, signed=True), _pct(a.contribution, signed=True)]
-            for a in rows]
+    return [[str(a.name), _usd(a.pnl_usd, signed=True), _bps(a.contribution)] for a in rows]
 
 
 def _issuer_pnl(record: DailyRecord) -> dict[str, float]:
@@ -491,7 +501,7 @@ def render_daily_report(record: DailyRecord, history: list[DailyRecord], comment
               f"Aviso de dados: {notice or NA}"]
     vol = _f(rk.ex_ante_vol)
     kpis = [
-        ("NAV", fmt_usd_mm(record.nav_end_usd), f"abertura {fmt_usd_mm(nav0)}"),
+        ("NAV", format_money(record.nav_end_usd), f"abertura {format_money(nav0)}"),
         ("Retorno do dia", _pct(record.ret, signed=True), f"P&L {_usd(record.pnl_usd, True)}"),
         ("Retorno no mês", _pct(periods["mtd"], signed=True), "composto (MTD)"),
         ("Retorno no ano", _pct(periods["ytd"], signed=True), "composto (YTD)"),
@@ -514,23 +524,22 @@ def render_daily_report(record: DailyRecord, history: list[DailyRecord], comment
 
     s = Section("Atribuição")
     comp = record.pnl_components
-    comp_rows = [[_COMPONENT_PT.get(k, k), _usd(comp[k], signed=True),
-                  _pct(comp[k] / nav0, signed=True)]
+    comp_rows = [[_COMPONENT_PT.get(k, k), _usd(comp[k], signed=True), _bps(comp[k] / nav0)]
                  for k in [*_COMPONENT_ORDER, *sorted(set(comp) - set(_COMPONENT_ORDER))]
                  if k in comp]
-    s.table(["Componente", "P&L (USD)", "% do NAV"], comp_rows, caption="Componentes do P&L")
+    s.table(["Componente", "P&L", "Contribuição"], comp_rows, caption="Componentes do P&L")
     for group in ("factor_group", "country", "sector", "side"):
         lines = [a for a in record.attribution if a.group == group]
-        s.table([_GROUP_PT[group], "P&L (USD)", "% do NAV"], _attr_rows(lines, nav0),
+        s.table([_GROUP_PT[group], "P&L", "Contribuição"], _attr_rows(lines, nav0),
                 caption=_GROUP_PT[group])
     pnl = _issuer_pnl(record)
     winners = sorted(((k, v) for k, v in pnl.items() if v > 0), key=lambda kv: (-kv[1], kv[0]))
     losers = sorted(((k, v) for k, v in pnl.items() if v < 0), key=lambda kv: (kv[1], kv[0]))
-    s.table(["Emissor", "P&L (USD)", "% do NAV"],
-            [[k, _usd(v, True), _pct(v / nav0, True)] for k, v in winners[:5]],
+    s.table(["Emissor", "P&L", "Contribuição"],
+            [[k, _usd(v, True), _bps(v / nav0)] for k, v in winners[:5]],
             caption="Cinco maiores contribuidores")
-    s.table(["Emissor", "P&L (USD)", "% do NAV"],
-            [[k, _usd(v, True), _pct(v / nav0, True)] for k, v in losers[:5]],
+    s.table(["Emissor", "P&L", "Contribuição"],
+            [[k, _usd(v, True), _bps(v / nav0)] for k, v in losers[:5]],
             caption="Cinco maiores detratores")
     sections.append(s)
 
@@ -557,9 +566,9 @@ def render_daily_report(record: DailyRecord, history: list[DailyRecord], comment
     dds = [r.risk.drawdown for r in chain]
     s.blocks.append(Block("svg", {
         "svg": sparkline_svg(navs, dates, title="NAV (USD) desde o início",
-                             fmt=lambda v: fmt_usd_mm(v)),
+                             fmt=lambda v: format_money(v)),
         "text": sparkline_text(navs),
-        "summary": f"NAV de {fmt_usd_mm(navs[0])} a {fmt_usd_mm(navs[-1])} "
+        "summary": f"NAV de {format_money(navs[0])} a {format_money(navs[-1])} "
                    f"({len(navs)} pregões)"}, caption="NAV"))
     s.blocks.append(Block("svg", {
         "svg": sparkline_svg(dds, dates, title="Drawdown desde o início",
@@ -628,7 +637,7 @@ def _agg_attr(records: Sequence[DailyRecord], group: str) -> list[list[str]]:
             if a.group == group:
                 acc[a.name] = acc.get(a.name, 0.0) + float(a.pnl_usd)
     rows = sorted(acc.items(), key=lambda kv: (-abs(kv[1]), kv[0]))
-    return [[k, _usd(v, True), _pct(v / nav0, True)] for k, v in rows]
+    return [[k, _usd(v, True), _bps(v / nav0)] for k, v in rows]
 
 
 def _week_components(records: Sequence[DailyRecord]) -> list[list[str]]:
@@ -641,8 +650,7 @@ def _week_components(records: Sequence[DailyRecord]) -> list[list[str]]:
             if _finite(v):
                 acc[k] = acc.get(k, 0.0) + float(v)
     keys = [k for k in _COMPONENT_ORDER if k in acc] + sorted(set(acc) - set(_COMPONENT_ORDER))
-    return [[_COMPONENT_PT.get(k, k), _usd(acc[k], True), _pct(acc[k] / nav0, True)]
-            for k in keys]
+    return [[_COMPONENT_PT.get(k, k), _usd(acc[k], True), _bps(acc[k] / nav0)] for k in keys]
 
 
 def _position_rows(positions: Sequence[PositionTarget], views: Mapping[str, View],
@@ -803,13 +811,13 @@ def render_weekly_report(week: date, proposal: Proposal, decision: Decision | No
         s.kv([("Período", f"{fmt_date(recs[0].date)} a {fmt_date(last.date)} ({len(recs)} pregões)"),
               ("Retorno da semana", _pct(growth - 1.0, True)),
               ("P&L da semana", _usd(sum(float(r.pnl_usd) for r in recs), True)),
-              ("NAV", f"{fmt_usd_mm(recs[0].nav_start_usd)} → {fmt_usd_mm(last.nav_end_usd)}"),
+              ("NAV", f"{format_money(recs[0].nav_start_usd)} → {format_money(last.nav_end_usd)}"),
               ("Vol ex-ante no fechamento", _pct(last.risk.ex_ante_vol)),
               ("Drawdown no fechamento", _pct(last.risk.drawdown))])
-        s.table(["Componente", "P&L (USD)", "% do NAV"], _week_components(recs),
+        s.table(["Componente", "P&L", "Contribuição"], _week_components(recs),
                 caption="Componentes do P&L na semana")
         for group in ("factor_group", "country", "sector", "side"):
-            s.table([_GROUP_PT[group], "P&L (USD)", "% do NAV"], _agg_attr(recs, group)[:TOP_N],
+            s.table([_GROUP_PT[group], "P&L", "Contribuição"], _agg_attr(recs, group)[:TOP_N],
                     caption=f"{_GROUP_PT[group]} — semana")
     else:
         s.p("Sem registros diários na semana anterior (inception ou primeira semana).")
@@ -953,8 +961,8 @@ def render_weekly_report(week: date, proposal: Proposal, decision: Decision | No
     s.table(["Cenário", "P&L (% do NAV)"], [[k, _pct(v, True)] for k, v in stress],
             caption="Testes de estresse (piores cenários)")
     fac = sorted(risk.factor_contributions.items(), key=lambda kv: (-abs(kv[1]), kv[0]))[:TOP_N]
-    s.table(["Fator", "Contribuição"], [[k, fmt_num(v, 6, True)] for k, v in fac],
-            caption="Contribuições fatoriais para a variância")
+    s.table(["Fator", "Fração da variância"], [[k, _pct(v, True)] for k, v in fac],
+            caption="Contribuições fatoriais para a variância (Euler)")
     top = sorted(risk.top_risk_contributors.items(), key=lambda kv: (-abs(kv[1]), kv[0]))[:TOP_N]
     s.table(["Emissor", "Fração da variância"], [[k, _pct(v, True)] for k, v in top],
             caption="Maiores contribuidores de risco")

@@ -29,7 +29,7 @@ import statistics
 import tempfile
 import urllib.parse
 from collections.abc import Iterable, Mapping, Sequence
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from datetime import UTC, date, datetime, time, timedelta
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Literal, get_args
@@ -1833,24 +1833,31 @@ def load_research_pack_file(path: Path | str, ctx: PMContext, *,
                     "rejeitada")
         return None
 
+    universe = valid_issuers(ctx)
+
     def prepared(items: Any, kind: str) -> list[Any]:
         kept: list[Any] = []
         for i, item in enumerate(items if isinstance(items, list) else []):
             if isinstance(item, dict):
-                label = f"{kind}[{i}] ({item.get('note_id', 'sem id')})"
-                problem = timing(item, label)
-                if problem:
-                    issues.append(problem)
+                label = f"{kind}[{i}] ({item.get('note_id', item.get('issuer_id', 'sem id'))})"
+                if kind in ("notes", "views") and str(item.get("issuer_id")) not in universe:
+                    issues.append(f"{label}: emissor fora do universo "
+                                  f"{item.get('issuer_id')!r} — rejeitada")
                     continue
-                item = dict(item)
-                if not item.get("provider"):
-                    item["provider"] = mind or "externo"
+                if kind != "views":
+                    problem = timing(item, label)
+                    if problem:
+                        issues.append(problem)
+                        continue
+                    item = dict(item)
+                    if not item.get("provider"):
+                        item["provider"] = mind or "externo"
             kept.append(item)
         return kept
 
     payload = {"notes": prepared(raw.get("notes"), "notes"),
                "macro": prepared(raw.get("macro"), "macro"),
-               "views": raw.get("views") if isinstance(raw.get("views"), list) else []}
+               "views": prepared(raw.get("views"), "views")}
     with tempfile.TemporaryDirectory() as td:
         tmp = Path(td) / RESEARCH_INPUT
         tmp.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
@@ -1858,6 +1865,38 @@ def load_research_pack_file(path: Path | str, ctx: PMContext, *,
                                                cfg=ctx.cfg, news=ctx.news)
     issues += load_issues
     return pack.model_copy(update={"mind": mind}), issues
+
+
+def with_research(ctx: PMContext, pack: ResearchPack) -> PMContext:
+    """Contexto com as notas/macro verificadas do pacote da semana (ids citáveis pelo PM)."""
+    notes = {n.note_id: n for n in ctx.research_notes}
+    for n in pack.notes:
+        notes.setdefault(n.note_id, n)
+    macro = {m.note_id: m for m in ctx.macro_notes}
+    for m in pack.macro:
+        macro.setdefault(m.note_id, m)
+    news = {n.news_id: n for n in ctx.news}
+    for n in pack.news:
+        news.setdefault(n.news_id, n)
+    return replace(ctx, research_notes=[notes[k] for k in sorted(notes)],
+                   macro_notes=[macro[k] for k in sorted(macro)],
+                   news=[news[k] for k in sorted(news)])
+
+
+def load_week_inputs(week_dir: Path | str, ctx: PMContext, *, now: datetime | None = None
+                     ) -> tuple[ResearchPack, PMDecisionOutput, list[str], PMContext]:
+    """Carrega (verificados) o pacote de pesquisa e a decisão do PM da semana para o ``decide``.
+
+    Devolve ``(pacote com mind, decisão do PM, problemas, contexto com a pesquisa)``. Arquivo
+    ausente ou inválido nunca interrompe: pesquisa vazia e/ou abstenção (só-quant).
+    """
+    inputs = _inputs_dir(Path(week_dir))
+    pack, issues = load_research_pack_file(inputs / RESEARCH_INPUT, ctx, now=now)
+    issues = [f"{RESEARCH_INPUT}: {i}" for i in issues]
+    pm_ctx = with_research(ctx, pack)
+    out, pm_issues = load_pm_decision_file(inputs / PM_INPUT, pm_ctx, mind=pack.mind)
+    issues += [f"{PM_INPUT}: {i}" for i in pm_issues]
+    return pack, out, issues, pm_ctx
 
 
 def _inputs_dir(week_dir: Path) -> Path:
@@ -1878,6 +1917,7 @@ def validate_inputs(week_dir: Path | str, ctx: PMContext, *, expected_mind: str 
     issues: list[str] = []
     minds: dict[str, str] = {}
     rp = inputs / RESEARCH_INPUT
+    pm_ctx = ctx
     if not rp.exists():
         issues.append(f"{RESEARCH_INPUT}: arquivo ausente ({rp.as_posix()})")
     else:
@@ -1885,12 +1925,13 @@ def validate_inputs(week_dir: Path | str, ctx: PMContext, *, expected_mind: str 
         issues += [f"{RESEARCH_INPUT}: {i}" for i in rp_issues]
         if pack.mind:
             minds[RESEARCH_INPUT] = pack.mind
+        pm_ctx = with_research(ctx, pack)
     pm = inputs / PM_INPUT
     if not pm.exists():
         issues.append(f"{PM_INPUT}: arquivo ausente ({pm.as_posix()})")
     else:
         raw, _ = _read_json(pm)
-        _, pm_issues = load_pm_decision_file(pm, ctx)
+        _, pm_issues = load_pm_decision_file(pm, pm_ctx)
         issues += [f"{PM_INPUT}: {i}" for i in pm_issues]
         declared = _declared_mind(raw)
         if declared:
@@ -2058,6 +2099,7 @@ __all__ = [
     "ladder_stage",
     "load_pm_decision_file",
     "load_research_pack_file",
+    "load_week_inputs",
     "pm_factbook",
     "pm_output_hash",
     "pm_output_to_views",
@@ -2072,5 +2114,6 @@ __all__ = [
     "to_bundle",
     "validate_inputs",
     "verify_pm_output",
+    "with_research",
     "write_briefing_bundle",
 ]

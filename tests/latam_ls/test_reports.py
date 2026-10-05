@@ -198,8 +198,12 @@ def test_daily_factbook_has_required_ids():
     assert fb.facts["fx.BRL.ret_1d"].formatted == "+1,00%"
     assert fb.facts["top.contrib.1.name"].formatted == "AAA (AAA3.SA)"
     assert fb.facts["top.detract.1.name"].formatted == "BBB (BBB4.SA)"
-    assert fb.facts["attr.specific"].value == pytest.approx(27_000.0 * r3.pnl_usd / 31_000.0
-                                                            / r3.nav_start_usd)
+    spec = 27_000.0 * r3.pnl_usd / 31_000.0 / r3.nav_start_usd
+    assert fb.facts["attr.specific"].unit == "bps"  # contribuições em pontos-base
+    assert fb.facts["attr.specific"].value == pytest.approx(spec * 1e4)
+    assert fb.facts["attr.specific"].formatted == "+2,7 bps"
+    assert fb.facts["nav"].formatted == "US$ 100,13 mi"
+    assert fb.facts["day.pnl_usd"].formatted == "+US$ 31.031"
     assert fb.as_of == r3.date and fb.is_synthetic
     for fid in fb.facts:
         assert " " not in fid  # placeholders não aceitam espaço
@@ -349,7 +353,9 @@ def test_daily_report_sections_labels_and_footer():
                       "Evolução desde o início", "Integridade"):
             assert title in text
     assert html.count("<svg") == 2 and "<script" not in html.lower()
-    assert "USD 100,1" in md  # NAV formatado por código
+    assert "US$ 100,13 mi" in md  # NAV formatado por código
+    assert "| Específico (alpha) | +US$ 27.027 | +2,7 bps |" in md  # contribuição em bps
+    assert "DADOS SIMULADOS — DADOS SIMULADOS" not in md + html
     pos_section = md.split("## Posições", 1)[1]
     assert pos_section.index("AAA3.SA") < pos_section.index("CCCADR") < \
         pos_section.index("BBB4.SA") < pos_section.index("DDD.MX")

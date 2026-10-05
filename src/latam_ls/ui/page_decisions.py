@@ -178,6 +178,21 @@ def render(state: AppState) -> None:
                        f"grava a decisão até {fmt.escape_md(state.cfg.fund.decision_deadline_local)} "
                        "(Brasília); a execução hipotética ocorre no fechamento.")
         return
+    ui.section("Semanas e mentes", ui.CALC_BADGE,
+               help="Cada semana é conduzida por uma mente intercambiável (claude-code ou codex); "
+                    "a metodologia e os gates são os mesmos.")
+    hist = pd.DataFrame([{
+        "Semana": fmt.date_br(w.week), "Mente": w.mind or fmt.NA,
+        "Caminho": fmt.PATH_PT.get(w.path_taken or "", w.path_taken or fmt.NA),
+        "Estado": w.state or fmt.NA,
+        "Decidida em": fmt.dt_local(w.decision.decided_at, state.cfg.fund.timezone)
+        if w.decision else fmt.NA,
+        "Vol ex-ante": fmt.pct(w.proposal.risk.ex_ante_vol) if w.proposal else fmt.NA,
+        "Longs / shorts": f"{w.proposal.risk.n_long} / {w.proposal.risk.n_short}"
+        if w.proposal else fmt.NA,
+        "approval_hash": fmt.short_hash(w.decision.approval_hash, 16) if w.decision else fmt.NA,
+    } for w in reversed(weeks)])
+    ui.table(hist, height=min(320, 36 * (len(hist) + 1)))
     options = [w.week for w in reversed(weeks)]
     week = st.selectbox("Semana", options, format_func=fmt.date_br, key="dec_week")
     wd = book.week(week) or weeks[-1]
@@ -192,7 +207,7 @@ def render(state: AppState) -> None:
         reports = [r for r in state.reports if r.kind == "weekly" and r.key == wd.week]
         text = data.read_text(reports[0].md) if reports else None
         if text:
-            st.caption(f"`{reports[0].md.as_posix()}` — números formatados pelo código; textos "
+            st.caption(f"{fmt.code(reports[0].md.as_posix())} — números formatados pelo código; textos "
                        "de IA rotulados [IA] no próprio relatório.")
             with st.container(border=True, height=900):
                 st.markdown(fmt.report_md(text, demote=2))

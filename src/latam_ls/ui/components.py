@@ -69,7 +69,7 @@ def header(state: AppState) -> None:
                  f"{fmt.escape_md(ks.created_at) or 'n/d'}", icon=":material/emergency:")
     if not state.config.from_file:
         st.warning("Mandato não carregado do arquivo "
-                   f"`{state.paths.config.as_posix()}`: exibindo os padrões do código "
+                   f"{fmt.code(state.paths.config.as_posix())}: exibindo os padrões do código "
                    f"({fmt.escape_md(state.config.error)}).", icon=":material/warning:")
     st.caption(f"Fundo 100% autônomo: o CDP decide sozinho sob gates determinísticos (sem botão "
                f"de aprovação). Mente da semana: **{fmt.escape_md(mind) or 'n/d'}** · "
@@ -94,7 +94,7 @@ def sidebar(state: AppState) -> None:
                    f"{fmt.escape_md(cfg.fund.daily_close_run_local)}.")
         with st.expander("Fontes de dados"):
             for label, path in state.paths.describe():
-                st.caption(f"{label}: `{path}`")
+                st.caption(f"{label}: {fmt.code(path)}")
             st.caption(f"Mandato (config_hash): `{state.config.config_hash[:16]}…`")
         if st.button("Atualizar dados", icon=":material/refresh:", key="cdp_refresh"):
             clear_caches()

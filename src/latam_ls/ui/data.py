@@ -59,7 +59,7 @@ COMPONENT_ORDER = ("equity", "factor", "specific", "costs", "borrow", "financing
 PERIOD_OPTIONS = ("Dia", "Semana", "MTD", "YTD", "ITD", "Personalizado")
 LIQUIDITY_BUCKETS = ((1.0, "≤ 1 dia"), (2.0, "1–2 dias"), (3.0, "2–3 dias"), (5.0, "3–5 dias"),
                      (float("inf"), "> 5 dias"))
-_SKIP_DIRS = frozenset({"raw", "__pycache__", ".git", "staging"})
+_SKIP_DIRS = frozenset({"raw", "__pycache__", ".git"})
 _PLACEHOLDER_RE = re.compile(r"\{\{\s*fact:([^}\s]+)\s*\}\}")
 _MIND_RE = re.compile(r"mente\s+([\w.-]+)\s*\[IA\]", re.IGNORECASE)
 
@@ -79,7 +79,6 @@ CDP_INVARIANTS = (
     "KILL SWITCH de emergência: com o arquivo book/KILL_SWITCH presente, só operações que reduzem "
     "risco são aceitas; ligar/desligar é auditado.",
 )
-
 
 
 # ==========================================================
@@ -1301,6 +1300,20 @@ class MarketContext:
     facts: list[tuple[str, str]] = field(default_factory=list)
     is_synthetic: bool = False
     error: str | None = None
+
+
+def market_is_synthetic(market_root: Path) -> bool:
+    """Leitura leve dos manifestos das bases (sem carregar preços) para o banner."""
+    base = Path(market_root) / "base"
+    if not base.is_dir():
+        return False
+    for manifest in base.glob("*/manifest.json"):
+        try:
+            if bool(read_json(manifest).get("is_synthetic")):
+                return True
+        except (OSError, ValueError, AttributeError):
+            continue
+    return False
 
 
 def load_market_context(market_root: Path) -> MarketContext:

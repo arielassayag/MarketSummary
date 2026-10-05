@@ -67,10 +67,13 @@ def _no_network(monkeypatch):
 
 
 def _zip(pattern: str) -> bytes:
+    """ZIP determinístico (data fixa nos membros): mesmos bytes ⇒ mesmo SHA-256."""
     buf = io.BytesIO()
     with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as zf:
         for p in sorted(CVM_FIX.glob(pattern)):
-            zf.writestr(p.name, p.read_bytes())
+            info = zipfile.ZipInfo(p.name, date_time=(2025, 1, 1, 0, 0, 0))
+            info.compress_type = zipfile.ZIP_DEFLATED
+            zf.writestr(info, p.read_bytes())
     return buf.getvalue()
 
 

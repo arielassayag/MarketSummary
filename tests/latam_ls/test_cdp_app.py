@@ -272,6 +272,27 @@ def test_fixture_book_is_consistent(fixture_book):
         assert r.ok, (r.label, r.messages)
 
 
+def test_light_loaders_on_fixture(fixture_book):
+    fb = fixture_book
+    assert data.market_is_synthetic(fb.market)
+    ctx = data.load_market_context(fb.market)
+    assert ctx.available and ctx.last_date == SESSIONS[-1] and ctx.facts
+    book = data.load_book(fb.book)
+    wk = book.week(W1)
+    assert wk is not None and wk.mind == MIND and wk.path_taken == "cdp"
+    assert wk.state == "BOOKED" and wk.shadow is not None and wk.llm_calls and wk.facts
+    assert not wk.issues and not book.issues
+    track = data.load_track(fb.book, fb.cfg)
+    assert [r.date for r in track.records] == list(SESSIONS) and not track.issues
+    assert len(track.shadow_records) == 3 and track.compare is not None
+    com = data.commentary_for(fb.reports, track.latest, track.history_until(track.latest),
+                              fb.cfg)
+    assert com is not None and com.ai and com.mind == MIND
+    reports = data.list_reports(fb.reports)
+    assert {(r.kind, r.key) for r in reports} == {("weekly", W1)} | {
+        ("daily", d) for d in SESSIONS}
+
+
 def test_main_app_navigation_with_fixture(fx_env):
     at = AppTest.from_file(str(REPO / "cdp_app.py"), default_timeout=TIMEOUT).run()
     _no_exceptions(at)

@@ -109,6 +109,22 @@ def load_quotes(path: Path, expected_sha256: str | None = None) -> tuple[pd.Data
     return df.drop(columns=["captured_at"]), captured
 
 
+def fresh_quotes(quotes: pd.DataFrame, session: date,
+                 tz: str = "America/Sao_Paulo") -> tuple[pd.DataFrame, list[str]]:
+    """Mantém só cotações com horário no dia ``session`` (fuso de Brasília).
+
+    Uma linha que ainda não negociou hoje devolve o último fechamento com o horário antigo; usá-lo
+    criaria um retorno zero falso na barra provisória. Sem horário ⇒ descartada também.
+    """
+    if quotes.empty:
+        return quotes, []
+    t = pd.to_datetime(quotes["time"], utc=True, errors="coerce")
+    local = t.dt.tz_convert(tz).dt.date
+    ok = local == session
+    stale = sorted(quotes.loc[~ok & quotes["price"].notna(), "symbol"].astype(str))
+    return quotes.loc[ok].copy(), stale
+
+
 def overlay_intraday(md: MarketData, session: date, quotes: pd.DataFrame,
                      captured_at: datetime, quotes_path: str = "",
                      quotes_sha256: str = "") -> MarketData:
@@ -122,6 +138,7 @@ def overlay_intraday(md: MarketData, session: date, quotes: pd.DataFrame,
         raise ValueError(f"A barra provisória ({session}) precisa ser posterior ao snapshot "
                          f"({md.as_of}).")
     ts = pd.Timestamp(session)
+    quotes, stale = fresh_quotes(quotes, session)
     lines = quotes[quotes["kind"] == "line"].set_index("symbol")["price"]
     fxq = quotes[quotes["kind"] == "fx"].set_index("symbol")["price"]
 
@@ -154,7 +171,9 @@ def overlay_intraday(md: MarketData, session: date, quotes: pd.DataFrame,
         "limitations": list(md.manifest.limitations) + [
             f"Barra intradiária PROVISÓRIA de {session.isoformat()} capturada em "
             f"{captured_at.astimezone(UTC).isoformat()} (preços atrasados da fonte; volume "
-            "parcial descartado)."],
+            "parcial descartado)."] + ([
+            f"Cotações sem negócio em {session.isoformat()} descartadas (ficam ausentes, nunca "
+            f"repetidas): {len(stale)} símbolo(s)."] if stale else []),
     })
     return replace(
         md, manifest=manifest, close=add_row(md.close, price), adj_close=add_row(md.adj_close, adj),

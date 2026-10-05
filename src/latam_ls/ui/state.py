@@ -111,7 +111,7 @@ class AppState:
     @cached_property
     def synthetic(self) -> list[str]:
         found = data.synthetic_artifacts(self.track, self.book)
-        if self.market.is_synthetic:
+        if data.market_is_synthetic(self.paths.market):
             found.append("base de mercado")
         return found
 

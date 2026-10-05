@@ -6,6 +6,11 @@ Fluxo semanal (primeiro pregão da semana na B3):
     cdp validate --week D
     cdp weekly preview --week D --mind ...   (opcional: revisão pré-trade, não grava)
     cdp weekly decide --week D --mind ...
+    cdp tese prepare --week D                (fatos e briefing da tese da carteira decidida;
+                                              adota docs/cdp/teses/<D>.json se tese.json faltar)
+    (a mente escreve book/<D>/tese/tese.json)
+    cdp validate-tese --week D               (valida a tese sem publicar)
+    cdp tese publish --week D                (publica a tese; imutável)
 
 Fluxo diário (após o fechamento):
     cdp daily --date D
@@ -16,7 +21,7 @@ Fluxo diário (após o fechamento):
 Rotinas locais (plugin ``cdp`` do Claude Code; ver docs/cdp/LOCAL.md):
     cdp agenda                       (o que fazer agora: semana, prazos, fechamentos pendentes)
     cdp risk [--live] [--date D]     (monitor de risco; grava reports/risk/<D>/risco_<HHMM>.md)
-    cdp painel [--out-dir D] [--sem-local]  (painel de operação e risco: index.html + data.json)
+    cdp painel [--out-dir D] [--sem-local]  (painel de gestão: index.html + data.json)
     cdp painel --publicado           (registra a página publicada no artifact; só depois de publicar)
 
 Outros: status, verify, demo, backtest, fetch-base, kill-switch.
@@ -35,6 +40,7 @@ from . import SIMULATED_DATA_NOTICE
 DEFAULT_BOOK = Path("book")
 DEFAULT_MARKET = Path("data/market")
 DEFAULT_REPORTS = Path("reports")
+DEFAULT_TESES = Path("docs/cdp/teses")
 DEFAULT_UNIVERSE = Path("data/universe/latam_universe.csv")
 
 
@@ -156,6 +162,34 @@ def cmd_validate_daily(args: argparse.Namespace) -> int:
     for i in issues:
         print(f"- {i}")
     return 0 if ok else 1
+
+
+def cmd_tese(args: argparse.Namespace) -> int:
+    """Tese de investimento da carteira decidida: ``prepare`` (fatos) ou ``publish``."""
+    from .workflow.runtime import Runtime
+
+    rt = Runtime.from_args(args)
+    week = _d(args.week)
+    try:
+        out = rt.thesis_publish(week) if args.action == "publish" else rt.thesis_prepare(week)
+    except (OSError, ValueError) as exc:  # já publicada, sem decisão ou arquivo ausente
+        print(f"Erro: {exc}", file=sys.stderr)
+        return 1
+    _print(out)
+    return 0
+
+
+def cmd_validate_tese(args: argparse.Namespace) -> int:
+    """Valida ``book/<semana>/tese/tese.json`` SEM publicar (``tese publish`` é imutável)."""
+    from .workflow.runtime import Runtime
+
+    try:
+        out = Runtime.from_args(args).validate_thesis(_d(args.week))
+    except (OSError, ValueError) as exc:
+        print(f"Erro: {exc}", file=sys.stderr)
+        return 1
+    _print(out)
+    return 0 if out["ok"] else 1
 
 
 def cmd_verify(args: argparse.Namespace) -> int:
@@ -351,6 +385,9 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--book", default=str(DEFAULT_BOOK))
     p.add_argument("--market", default=str(DEFAULT_MARKET))
     p.add_argument("--reports", default=str(DEFAULT_REPORTS))
+    p.add_argument("--teses", default=str(DEFAULT_TESES),
+                   help="pasta versionada dos rascunhos de tese escritos fora do clone da rotina "
+                        f"(<AAAA-MM-DD>.json; padrão: {DEFAULT_TESES.as_posix()})")
     sub = p.add_subparsers(dest="cmd", required=True)
 
     s = sub.add_parser("status", help="estado do fundo e do calendário")
@@ -398,6 +435,22 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--date", type=_d)
     s.set_defaults(func=cmd_validate_daily)
 
+    t = sub.add_parser("tese", help="tese de investimento da carteira decidida (números só do "
+                                    "código)")
+    tsub = t.add_subparsers(dest="action", required=True)
+    s = tsub.add_parser("prepare", help="gera fatos, análise e briefing da tese "
+                                        "(book/<semana>/tese/)")
+    s.add_argument("--week", required=True, help="semana da decisão (AAAA-MM-DD)")
+    s.set_defaults(func=cmd_tese)
+    s = tsub.add_parser("publish", help="publica a tese (mente ou automática); imutável")
+    s.add_argument("--week", required=True, help="semana da decisão (AAAA-MM-DD)")
+    s.set_defaults(func=cmd_tese)
+
+    s = sub.add_parser("validate-tese",
+                       help="valida o tese.json da semana sem publicar (publish é imutável)")
+    s.add_argument("--week", required=True, help="semana da decisão (AAAA-MM-DD)")
+    s.set_defaults(func=cmd_validate_tese)
+
     s = sub.add_parser("verify", help="verifica trilha de auditoria, track record e decisões")
     s.set_defaults(func=cmd_verify)
 
@@ -424,7 +477,7 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--out", default=None, help="pasta dos relatórios (padrão: <reports>/risk)")
     s.set_defaults(func=cmd_risk)
 
-    s = sub.add_parser("painel", help="painel de operação e risco para o artifact (só leitura)")
+    s = sub.add_parser("painel", help="painel de gestão do fundo para o artifact (só leitura)")
     s.add_argument("--out-dir", default=str(DEFAULT_PAINEL_DIR),
                    help="pasta de index.html, data.json e da cópia local "
                         f"(padrão: {DEFAULT_PAINEL_DIR.as_posix()})")

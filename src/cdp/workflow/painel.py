@@ -1,9 +1,9 @@
-"""Exportador determinístico do painel do CDP — Cabra da Peste (artifact HTML de operação e risco).
+"""Exportador determinístico do painel do CDP — Cabra da Peste (artifact HTML do fundo).
 
 O painel é um artifact republicado pelas rotinas após cada decisão semanal, fechamento diário e
-monitor de risco intradiário. Este módulo só LÊ os artefatos do fundo (livro, track record,
-relatórios, base de mercado, backtests) e monta um retrato JSON da operação; a página apenas
-formata e plota esses dados. Publicação (:func:`write_painel`):
+monitor de risco intradiário. Este módulo só LÊ os artefatos do fundo (livro, tese publicada da
+carteira, track record, relatórios, base de mercado, backtests) e monta um retrato JSON; a página
+apenas formata e plota esses dados. Publicação (:func:`write_painel`):
 
 - ``index.html``: casca pequena da página (cabeçalho, marcação, elemento de dados vazio ``null``
   e a versão da página carimbada) que referencia o estilo e o script do template em arquivos
@@ -63,7 +63,7 @@ from ..research.pm_agent import POSTURE_PT, REGIME_PT, STAGE_PT, ladder_stage
 from ..ui.fmt import PATH_PT
 from .memo import fmt_pct
 
-SCHEMA_VERSION = "cdp-painel/2"
+SCHEMA_VERSION = "cdp-painel/3"
 PLACEHOLDER = "__CDP_DATA__"
 DATA_ELEMENT = f'<script type="application/json" id="cdp-data">{PLACEHOLDER}</script>'
 EMPTY_DATA_ELEMENT = DATA_ELEMENT.replace(PLACEHOLDER, "null")
@@ -111,23 +111,72 @@ _MODEL_ID_RE = re.compile(
 _PROVENANCE_RE = re.compile(r"^_\s*(Autoria:.*?)\s*_\s*$", re.MULTILINE)
 _MIND_RE = re.compile(r"mente\s+([\w.-]+)\s*\[IA\]", re.IGNORECASE)
 _WEEK_DIR_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+#: Marcador ``{{fact:id}}`` que escapou da renderização (nunca pode chegar ao painel).
+_RAW_FACT_RE = re.compile(r"\{\{\s*fact\s*:")
+#: Tese da carteira (``book/<semana>/tese/``): só a versão PUBLICADA (imutável, ancorada na
+#: trilha pelo evento ``WEEKLY_THESIS``) é exportada; o rascunho ``tese.json`` da mente, nunca.
+THESIS_DIR = "tese"
+THESIS_FILE = "tese_publicada.json"
+THESIS_MD = "tese.md"
+THESIS_EVENT = "WEEKLY_THESIS"
+#: Chaves que citam emissores (``meta.issuer_names`` cobre todas): um id ou uma lista de ids
+#: (inclusive os nomes só no CDP / só na carteira quantitativa de referência, da sobreposição).
+_IID_KEYS = frozenset({"issuer_id", "iid"})
+_IID_LIST_KEYS = frozenset({"issuer_ids", "issuers", "only_shadow", "only_cdp"})
 
 PHASE_PT = {
-    "pre_inception": "Antes da inception: nenhuma carteira decidida ainda.",
-    "aguardando_decisao": "Semana em preparação: briefing/pesquisa gravados, aguardando a "
-                          "decisão autônoma.",
-    "decidida_aguardando_execucao": "Carteira decidida; execução no fechamento (MOC) pela "
-                                    "rotina diária.",
-    "bloqueada": "Decisão da semana bloqueada (falha de integridade ou de compliance HARD).",
-    "em_operacao": "Em operação: carteira efetivada e marcada diariamente.",
+    "pre_inception": "Antes do início: nenhuma carteira decidida ainda.",
+    "aguardando_decisao": "Semana em preparação: pesquisa em andamento, aguardando a decisão "
+                          "do comitê.",
+    "decidida_aguardando_execucao": "Carteira decidida; execução no leilão de fechamento.",
+    "bloqueada": "Decisão da semana suspensa: limite rígido do mandato ou verificação de dados "
+                 "não atendidos.",
+    "em_operacao": "Em operação: carteira executada e marcada diariamente.",
 }
 WEEK_STAGE_PT = {
-    "vazia": "sem artefatos", "preparada": "briefing preparado (dados congelados com hash)",
-    "entradas_gravadas": "pesquisa e decisão do PM gravadas pela mente; aguardando validação "
-                         "e decisão",
-    "decidida": "decisão autônoma gravada; execução no fechamento (MOC)",
-    "efetivada": "carteira efetivada (booked) e marcada diariamente",
+    "vazia": "sem carteira", "preparada": "dados da semana preparados",
+    "entradas_gravadas": "pesquisa e visão do gestor registradas; aguardando a decisão",
+    "decidida": "carteira decidida; execução no leilão de fechamento",
+    "efetivada": "carteira executada e marcada diariamente",
 }
+#: Textos dos alertas de status para o leitor (sem ids de verificação nem jargão técnico).
+PATH_ALERT_PT = {"cdp-restricoes": "somente as restrições da pesquisa e do gestor",
+                 "quant": "somente o modelo quantitativo", "manter": "carteira anterior mantida",
+                 "reduzir-risco": "somente redução de risco"}
+LIMIT_ALERT_PT = {
+    "GROSS_MIN": "exposição bruta mínima", "GROSS_MAX": "exposição bruta máxima",
+    "VOL_MIN": "volatilidade ex-ante mínima", "VOL_MAX": "volatilidade ex-ante máxima",
+    "VOL_TARGET": "distância à meta de volatilidade", "TURNOVER": "giro semanal",
+    "FACTOR_RISK_SHARE": "parcela fatorial do risco",
+    "SINGLE_NAME_RISK": "contribuição máxima de um nome ao risco",
+    "COUNTRY_GAP_STRESS": "perda em gap de país", "DRAWDOWN_SOFT": "nível de revisão do drawdown",
+    "SQUEEZE_MEDIUM_CAP": "teto do short com squeeze médio", "STYLE": "exposição ao estilo",
+    "COMMODITY": "sensibilidade a commodity", "EVENT": "exposição ao choque de evento",
+    "THEME_NET": "exposição líquida ao tema", "COUNTRY_NET": "exposição líquida por país",
+    "SECTOR_NET": "exposição líquida por setor", "NET_EXPOSURE": "exposição líquida",
+    "BETA": "beta previsto", "BORROW_FEE": "taxa de aluguel dos shorts",
+    "LIQ_DAYS_LONG": "prazo de liquidação dos longs",
+    "LIQ_DAYS_SHORT": "prazo de liquidação dos shorts",
+}
+
+
+def limit_label_pt(check_id: str) -> str:
+    """Rótulo pt-BR de uma verificação do mandato pelo id (``STYLE:size`` → estilo tamanho)."""
+    base, _, arg = str(check_id).partition(":")
+    label = LIMIT_ALERT_PT.get(base)
+    if label is None:
+        return base.replace("_", " ").lower()
+    if base == "STYLE":
+        arg = STYLE_PT.get(arg, arg).lower()
+    elif base == "COMMODITY":
+        arg = COMMODITY_PT.get(arg, arg)
+    elif base == "THEME_NET":
+        arg = THEME_PT.get(arg, arg)
+    elif base == "SECTOR_NET":
+        arg = SECTOR_PT.get(arg, arg)
+    elif base == "EVENT":
+        arg = ""
+    return f"{label} ({arg})" if arg else label
 BACKTEST_SIG_DIGITS = 8
 ATTRIBUTION_GROUPS = ("component", "factor_group", "factor", "country", "sector", "side",
                       "issuer")
@@ -612,16 +661,120 @@ def _track_section(rt: Any, cfg: FundConfig, book_exists: bool, issues: _Issues
 # Livro semanal
 # ==========================================================
 
-def _facts_from_briefing(week_dir: Path, issues: _Issues, scope: str) -> dict[str, str]:
+def _facts_from_briefing(week_dir: Path, issues: _Issues, scope: str,
+                         names: dict[str, str] | None = None) -> dict[str, str]:
+    """Fatos do briefing (``{id: formatado}``). Com ``names``, acrescenta nele os nomes dos
+    emissores do universo congelado no briefing (``issuers``)."""
     path = week_dir / "briefing" / "context.json"
     if not path.is_file():
         return {}
     raw = issues.attempt(f"{scope}: briefing/context.json", lambda: _read_json(path))
+    if names is not None and isinstance(raw, dict) and isinstance(raw.get("issuers"), dict):
+        for iid, info in raw["issuers"].items():
+            if isinstance(info, dict) and isinstance(info.get("name"), str) and info["name"]:
+                names[str(iid)] = info["name"]
     facts = raw.get("facts") if isinstance(raw, dict) else None
     if not isinstance(facts, dict):
         return {}
     return {str(k): str(v.get("formatted", "n/d")) for k, v in facts.items()
             if isinstance(v, dict)}
+
+
+def _without_raw_facts(x: Any, path: str, dropped: list[str]) -> Any:
+    """Cópia sem os textos que ainda trazem ``{{fact:...}}`` (falha da renderização em código):
+    em objetos o texto vira ``None``; em listas, sai. ``dropped`` recebe os caminhos."""
+    if isinstance(x, dict):
+        out: dict[str, Any] = {}
+        for k, v in x.items():
+            if isinstance(v, str) and _RAW_FACT_RE.search(v):
+                dropped.append(f"{path}.{k}")
+                out[k] = None
+            else:
+                out[k] = _without_raw_facts(v, f"{path}.{k}", dropped)
+        return out
+    if isinstance(x, list):
+        items = []
+        for i, v in enumerate(x):
+            if isinstance(v, str) and _RAW_FACT_RE.search(v):
+                dropped.append(f"{path}[{i}]")
+                continue
+            items.append(_without_raw_facts(v, f"{path}[{i}]", dropped))
+        return items
+    return x
+
+
+def _thesis_section(week_dir: Path, week: date, issues: _Issues) -> dict[str, Any]:
+    """Tese da carteira da semana: o bloco ``rendered`` de ``tese/tese_publicada.json`` (formato
+    do painel, ``{{fact:id}}`` já resolvidos pelo código) com ``available: true``. Sem tese
+    publicada — inclusive com só o rascunho ``tese.json`` da mente — ``{"available": false}``.
+    Texto com ``{{fact:`` remanescente sai (apontamento), nunca vai ao painel."""
+    path = week_dir / THESIS_DIR / THESIS_FILE
+    if not path.is_file():
+        return {"available": False}
+    raw = _read_json(path)
+    rendered = raw.get("rendered") if isinstance(raw, dict) else None
+    if not isinstance(rendered, dict):
+        raise ValueError(f"{THESIS_FILE} sem o bloco 'rendered'")
+    if str(rendered.get("week")) != week.isoformat():
+        raise ValueError(f"{THESIS_FILE} de outra semana ({rendered.get('week')!r})")
+    dropped: list[str] = []
+    out = _without_raw_facts(rendered, "thesis", dropped)
+    if dropped:
+        issues.add("tese publicada", f"{len(dropped)} texto(s) com marcador de fato não "
+                   "resolvido omitido(s): " + ", ".join(dropped[:5]))
+    out["available"] = True
+    return out
+
+
+def referenced_issuers(obj: Any) -> set[str]:
+    """Emissores citados em qualquer ponto do retrato: ``issuer_id``/``iid``, listas
+    ``issuer_ids``/``issuers``/``only_shadow``/``only_cdp`` e as linhas da atribuição por emissor
+    (``name`` = id)."""
+    found: set[str] = set()
+
+    def walk(x: Any) -> None:
+        if isinstance(x, dict):
+            for k, v in x.items():
+                if k in _IID_KEYS and isinstance(v, str):
+                    found.add(v)
+                elif k in _IID_LIST_KEYS and isinstance(v, list):
+                    found.update(s for s in v if isinstance(s, str))
+                else:
+                    if k == "issuer" and isinstance(v, list):
+                        found.update(r["name"] for r in v
+                                     if isinstance(r, dict) and isinstance(r.get("name"), str))
+                    walk(v)
+        elif isinstance(x, list):
+            for v in x:
+                walk(v)
+
+    walk(obj)
+    return found
+
+
+def _row_names(obj: Any, out: dict[str, str]) -> None:
+    """Nomes das linhas que trazem ``issuer_id`` e ``name`` (posições, sombra, contribuintes)."""
+    if isinstance(obj, dict):
+        iid, name = obj.get("issuer_id"), obj.get("name")
+        if isinstance(iid, str) and isinstance(name, str) and name:
+            out.setdefault(iid, name)
+        for v in obj.values():
+            _row_names(v, out)
+    elif isinstance(obj, list):
+        for v in obj:
+            _row_names(v, out)
+
+
+def _issuer_names(data: Mapping[str, Any], universe: Mapping[str, str]) -> dict[str, str]:
+    """``{issuer_id: nome}`` de todo emissor citado no retrato (a página nunca mostra o id cru):
+    nomes do universo congelado nos briefings (o mais recente prevalece) e, na falta, os das
+    linhas exportadas. Emissor sem nome conhecido fica de fora."""
+    known = dict(universe)
+    rows: dict[str, str] = {}
+    _row_names(data, rows)
+    for iid, name in rows.items():
+        known.setdefault(iid, name)
+    return {i: known[i] for i in sorted(referenced_issuers(data)) if known.get(i)}
 
 
 def _final_proposal(proposals: Sequence[Any], decisions: Mapping[int, Any], booked: Any):
@@ -1118,8 +1271,10 @@ def _week_performance(week: date, records: Sequence[Any], shadow: Sequence[Any]
 
 def _week_entry(rt: Any, cfg: FundConfig, book: Any, week: date, full: bool,
                 prev_final: Any, records: Sequence[Any], shadow_records: Sequence[Any],
-                issues: _Issues, notes_detail: bool = True) -> tuple[dict[str, Any], Any]:
-    """Uma semana do livro (``full`` ⇒ detalhe completo; senão resumo)."""
+                issues: _Issues, notes_detail: bool = True,
+                names: dict[str, str] | None = None) -> tuple[dict[str, Any], Any]:
+    """Uma semana do livro (``full`` ⇒ detalhe completo, com a tese publicada; senão resumo).
+    ``names`` recebe os nomes dos emissores do briefing das semanas completas."""
     from ..contracts import Proposal
     from ..hashing import sha256_obj
 
@@ -1146,7 +1301,8 @@ def _week_entry(rt: Any, cfg: FundConfig, book: Any, week: date, full: bool,
     if decision is not None and decision.proposal_id != final.proposal_id:
         decision = None
     needs_facts = full or (decision is not None and "{{" in decision.rationale)
-    facts = _facts_from_briefing(wdir, local, "briefing") if needs_facts else {}
+    facts = (_facts_from_briefing(wdir, local, "briefing", names if full else None)
+             if needs_facts else {})
     attempts = None
     if (wdir / "attempts.json").is_file():
         attempts = local.attempt("attempts.json", lambda: _read_json(wdir / "attempts.json"))
@@ -1243,6 +1399,10 @@ def _week_entry(rt: Any, cfg: FundConfig, book: Any, week: date, full: bool,
                        if md is not None else {"available": False})
     if md is None and full and final is not None and final.memo_markdown:
         entry["memo_markdown"] = final.memo_markdown
+    if full:
+        entry["thesis"] = local.attempt("tese publicada (tese/tese_publicada.json)",
+                                        lambda: _thesis_section(wdir, week, local),
+                                        {"available": False})
     entry["issues"] = local.items
     for it in local.items:
         issues.add(f"{scope}: {it['scope']}", it["message"])
@@ -1251,7 +1411,8 @@ def _week_entry(rt: Any, cfg: FundConfig, book: Any, week: date, full: bool,
 
 def _weeks_section(rt: Any, cfg: FundConfig, book: Any, records: Sequence[Any],
                    shadow_records: Sequence[Any], issues: _Issues, full_weeks: int,
-                   full_research_weeks: int = DEFAULT_FULL_RESEARCH_WEEKS
+                   full_research_weeks: int = DEFAULT_FULL_RESEARCH_WEEKS,
+                   names: dict[str, str] | None = None
                    ) -> tuple[list[dict[str, Any]], dict[date, Any]]:
     weeks = issues.attempt("Semanas do livro", book.list_weeks, []) if book is not None else []
     full_set = set(weeks[-full_weeks:]) if full_weeks > 0 else set()
@@ -1261,7 +1422,8 @@ def _weeks_section(rt: Any, cfg: FundConfig, book: Any, records: Sequence[Any],
     prev_final = None
     for week in weeks:
         entry, final = _week_entry(rt, cfg, book, week, week in full_set, prev_final, records,
-                                   shadow_records, issues, notes_detail=week in notes_set)
+                                   shadow_records, issues, notes_detail=week in notes_set,
+                                   names=names)
         finals[week] = final
         if final is not None:
             prev_final = final
@@ -2206,12 +2368,42 @@ def _report_payload_ok(folder: Path, hashes: set[str], extra: Mapping[str, Any] 
     return False
 
 
+def _thesis_payload_ok(folder: Path, hashes: set[str], decision: Mapping[str, Any] | None
+                       ) -> bool:
+    """Tese publicada (``tese_publicada.json`` + ``tese.md``) × payload do evento
+    ``WEEKLY_THESIS``: ``{"tese_publicada": sha256, "tese_md": sha256, "proposal_hash",
+    "approval_hash", "autoria"}``. Os hashes de vínculo vêm do próprio arquivo (``hashes``:
+    ``proposal``/``approval``) ou da decisão exportada. Arquivo publicado sem evento na trilha
+    não confere."""
+    from ..hashing import sha256_obj
+
+    if not hashes:
+        return False
+    try:
+        raw = _read_json(folder / THESIS_FILE)
+    except (OSError, ValueError):
+        return False
+    if not isinstance(raw, dict):
+        return False
+    base = {"tese_publicada": _sha256_file(folder / THESIS_FILE),
+            "tese_md": _sha256_file(folder / THESIS_MD), "autoria": raw.get("autoria")}
+    own = raw.get("hashes") if isinstance(raw.get("hashes"), dict) else {}
+    dec = decision or {}
+    for ph, ah in ((own.get("proposal"), own.get("approval")),
+                   (own.get("proposal_hash"), own.get("approval_hash")),
+                   (dec.get("proposal_hash"), dec.get("approval_hash"))):
+        if sha256_obj({**base, "proposal_hash": ph, "approval_hash": ah}) in hashes:
+            return True
+    return False
+
+
 def _aux_integrity(rt: Any, events: Sequence[Any], weeks: Sequence[dict[str, Any]],
                    daily_reports: Sequence[dict[str, Any]]) -> dict[str, Any]:
     """Artefatos exibidos pelo painel que ``Book.verify_integrity`` não cobre × a trilha:
     ``shadow_quant.json`` (evento ``SHADOW_QUANT``), ``inputs/*.json`` (``WEEKLY_INPUTS``),
-    relatório semanal (``WEEKLY_REPORT``) e diário (``DAILY_REPORT``). Marca cada seção com
-    ``verified`` (``True``/``False``/``None`` = sem âncora para conferir)."""
+    tese publicada (``WEEKLY_THESIS``, ``thesis_verified``), relatório semanal
+    (``WEEKLY_REPORT``) e diário (``DAILY_REPORT``). Marca cada seção com ``verified``
+    (``True``/``False``/``None`` = sem âncora para conferir)."""
     from ..hashing import sha256_obj
 
     by: dict[tuple[str, Any], set[str]] = {}
@@ -2250,6 +2442,12 @@ def _aux_integrity(rt: Any, events: Sequence[Any], weeks: Sequence[dict[str, Any
             w["pm_decision"]["verified"] = ok_in
         if isinstance(w.get("research"), dict) and w["research"].get("source") == "entradas":
             w["research"]["verified"] = ok_in
+        tdir = wdir / THESIS_DIR
+        if (tdir / THESIS_FILE).is_file():
+            ok_t = _thesis_payload_ok(tdir, by.get((THESIS_EVENT, week), set()),
+                                      w.get("decision") if isinstance(w.get("decision"), dict)
+                                      else None)
+            w["thesis_verified"] = note(ok_t, f"{week.isoformat()}: tese publicada")
         rep = w.get("report")
         if isinstance(rep, dict) and rep.get("available"):
             ok_r = _report_payload_ok(reports / "weekly" / week.isoformat(),
@@ -2276,7 +2474,8 @@ def _aux_integrity(rt: Any, events: Sequence[Any], weeks: Sequence[dict[str, Any
         msgs.append(f"{n_unknown} relatório(s) diário(s) sem conferência possível (evento com "
                     "apontamentos do comentário ou pasta movida).")
     return {"id": "auxiliares",
-            "label": "Artefatos auxiliares × trilha (sombra, entradas da mente, relatórios)",
+            "label": "Artefatos auxiliares × trilha (sombra, entradas da mente, tese, "
+                     "relatórios)",
             "ok": False if bad else True if n_ok else None, "messages": msgs}
 
 
@@ -2346,29 +2545,41 @@ def _status(rt: Any, cfg: FundConfig, now: datetime, weeks: Sequence[dict[str, A
     alerts: list[dict[str, str]] = []
     if kill.active:
         alerts.append({"severity": "error",
-                       "text": f"KILL SWITCH LIGADO: {kill.reason or 'motivo não informado'}"})
+                       "text": "Modo somente redução de risco ativo: "
+                               f"{kill.reason or 'motivo não informado'}"})
     if integrity.get("ok") is False:
         bad = [c["label"] for c in integrity.get("checks", []) if c["ok"] is False]
-        alerts.append({"severity": "error", "text": "Falha de integridade: " + ", ".join(bad)})
+        # Só do perfil completo (operação): o perfil publicado não mostra a verificação.
+        alerts.append({"severity": "error", "source": "integridade",
+                       "text": "Verificação de integridade dos registros com falha: "
+                               + ", ".join(bad)})
     for ev in events:
         if ev.overdue:
-            alerts.append({"severity": "error", "text": f"{ev.label}: {ev.note}"})
+            alerts.append({"severity": "error",
+                           "text": f"{ev.label.replace(' ATRASADA', '')} em atraso (prevista "
+                                   f"para {ev.when.astimezone(tz).strftime('%d/%m/%Y %H:%M')})."})
     if lw is not None:
         path = lw.get("path_taken")
         if path and path != "cdp":
             alerts.append({"severity": "warning",
-                           "text": f"Semana {latest_decided.strftime('%d/%m/%Y')}: caminho de "
-                                   f"fallback — {PATH_PT.get(path, path)}."})
+                           "text": f"Semana de {latest_decided.strftime('%d/%m/%Y')} decidida "
+                                   "por processo reduzido: "
+                                   f"{PATH_ALERT_PT.get(path, PATH_PT.get(path, path))}."})
         for issue in (lw.get("input_issues") or [])[:10]:
-            alerts.append({"severity": "warning", "text": f"Verificador de entradas: {issue}"})
+            alerts.append({"severity": "warning",
+                           "text": f"Pendência nos dados da decisão: {issue}"})
         soft = ((lw.get("proposal") or {}).get("summary") or {}).get("soft_failures") or []
         if soft:
+            labels = "; ".join(limit_label_pt(x) for x in soft)
             alerts.append({"severity": "warning",
-                           "text": "Limites SOFT reconhecidos na decisão: " + ", ".join(soft)})
+                           "text": ("Limites de alerta reconhecidos na decisão: " if len(soft) > 1
+                                    else "Limite de alerta reconhecido na decisão: ") + labels})
     for c in risk.get("limit_checks", []):
         if c["status"] in ("excesso", "alerta"):
             alerts.append({"severity": "error" if c["status"] == "excesso" else "warning",
-                           "text": f"Risco — {c['label']}: {c['status']}"
+                           "text": f"{c['label']}: "
+                                   + ("acima do limite" if c["status"] == "excesso"
+                                      else "em alerta")
                                    + (f" ({c['detail']})" if c.get("detail") else "")})
     if last is not None:
         # Alertas gravados pelo fechamento diário (liquidez por ponta, squeeze desde a decisão,
@@ -2395,7 +2606,7 @@ def _status(rt: Any, cfg: FundConfig, now: datetime, weeks: Sequence[dict[str, A
                         "created_at": kill.created_at, "error": kill.error},
         "last_record_date": last.date if last is not None else None,
         "nav_usd": nav,
-        "nav_source": "registro diário" if last is not None else "NAV inicial do mandato",
+        "nav_source": "fechamento diário" if last is not None else "PL inicial do mandato",
         "day_ret": last.ret if last is not None else None,
         "drawdown": dd, "realized_vol_21d": last.risk.realized_vol_21d if last else None,
         "ladder_stage": stage, "ladder_stage_label": STAGE_PT.get(stage, stage),
@@ -2426,6 +2637,8 @@ def _synthetic(records: Sequence[Any], shadow: Sequence[Any], weeks: Sequence[di
             notice = notice or p.get("data_notice")
         if (w.get("research") or {}).get("is_synthetic"):
             found.append(f"pesquisa de {w['week']:%d/%m/%Y}")
+        if (w.get("thesis") or {}).get("is_synthetic"):
+            found.append(f"tese de {w['week']:%d/%m/%Y}")
     if market.get("is_synthetic"):
         found.append("base de mercado")
     return bool(found), found, notice
@@ -2471,7 +2684,9 @@ def painel_data(rt: Any, *, now: datetime | None = None, profile: str = "complet
     Semanas mais antigas que as ``full_weeks`` mais recentes vêm resumidas; as notas por
     emissor da pesquisa só vêm nas ``full_research_weeks`` mais recentes. O monitor de risco
     traz as pastas das ``max_risk_runs`` datas mais recentes, com JSON/Markdown completos só
-    nas ``max_risk_full_runs`` execuções mais recentes (as demais, resumidas).
+    nas ``max_risk_full_runs`` execuções mais recentes (as demais, resumidas). Cada semana
+    completa traz a tese publicada da carteira (``weeks[].thesis``) e ``meta.issuer_names`` dá
+    o nome de todo emissor citado.
     """
     from ..ui.data import CDP_INVARIANTS, kill_switch_state
     from .painel_publicacao import PROFILES, publicacao
@@ -2493,8 +2708,10 @@ def painel_data(rt: Any, *, now: datetime | None = None, profile: str = "complet
 
         book = issues.attempt("Livro", lambda: Book(book_root, config=cfg))
     track, records, shadow_records = _track_section(rt, cfg, book_exists, issues)
+    universe_names: dict[str, str] = {}
     weeks, finals = _weeks_section(rt, cfg, book, records, shadow_records, issues,
-                                   full_weeks, full_research_weeks) if book is not None else ([], {})
+                                   full_weeks, full_research_weeks,
+                                   names=universe_names) if book is not None else ([], {})
     latest = _latest_day(records, shadow_records, finals, cfg)
     # Carteira vigente: a da semana do último registro; sem registro, a última decidida.
     live_week = records[-1].live_book_week if records else None
@@ -2558,6 +2775,7 @@ def painel_data(rt: Any, *, now: datetime | None = None, profile: str = "complet
         "backtests": backtests, "audit": audit, "issues": issues.items,
     }
     data = clean(data)
+    data["meta"]["issuer_names"] = clean(_issuer_names(data, universe_names))
     data["meta"]["data_hash"] = data_hash(data)
     if profile == "publicacao":
         return publicacao(data, reports_dir=_reports_label(rt), page_sha256=page_sha256())
@@ -2806,4 +3024,5 @@ __all__ = ["ASSET_PREFIX", "ASSET_RE", "DATA_ELEMENT", "DATA_NAME", "DEFAULT_OUT
            "PAGE_LAYOUT", "PAGE_SHA_PLACEHOLDER", "PLACEHOLDER", "SCHEMA_VERSION", "URL_NAME",
            "asset_names", "clean", "data_hash", "embed_json", "expandir", "mark_published",
            "page_assets", "page_sha256", "page_version", "painel_data", "published_page_sha",
-           "render_page", "render_painel", "scrub_text", "to_json", "write_painel"]
+           "referenced_issuers", "render_page", "render_painel", "scrub_text", "to_json",
+           "write_painel"]

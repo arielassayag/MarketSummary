@@ -53,8 +53,10 @@ Falha HARD de compliance ⇒ `BLOCKED` (não aprovável).
 | `backtest/` | Walk-forward semanal e métricas | `run_backtest`, `performance_metrics` |
 | `research/` | Camada GenAI multiagente + guardrails | `run_research`, provedores `demo/anthropic/openrouter/imported` |
 | `workflow/` | Pipeline semanal, aprovação, livro, ledger, memo | `WeeklyPipeline`, `Book` |
-| `workflow/agenda.py`, `workflow/risk_monitor.py` | Rotinas locais: agenda pelo relógio de Brasília (pendências, prazos) e monitor de risco intradiário/fechamento com ações determinísticas (`kill-switch:` só para gatilhos HARD) | `agenda`, `run_risk_monitor` |
-| `ui/` + `pm_app.py` | App Streamlit do gestor | `uv run streamlit run pm_app.py` |
+| `workflow/agenda.py`, `workflow/risk_monitor.py` | Rotinas locais: agenda pelo relógio de Brasília (pendências, prazos, teses pendentes) e monitor de risco intradiário/fechamento com ações determinísticas (`kill-switch:` só para gatilhos HARD) | `agenda`, `run_risk_monitor` |
+| `workflow/tese.py` | Tese de investimento semanal da carteira decidida: FactBook (`tese.*`) e análises calculadas pelo código, validação do texto da mente (`{{fact:id}}`), template determinístico e publicação imutável com evento `WEEKLY_THESIS` (`docs/cdp/TESE.md`) | `Runtime.thesis_prepare`, `validate_thesis`, `thesis_publish`; CLI `cdp tese prepare`, `cdp tese publish`, `cdp validate-tese` |
+| `workflow/painel.py`, `workflow/painel_publicacao.py`, `workflow/painel_template.html` | Painel de gestão (artifact) para investidores e comitê de investimento: retrato completo do livro, perfil de publicação enxuto (sem conteúdo técnico, dentro do limite de leitura integral) e a página com as abas de investimento e risco, incluindo a tese | `painel_data`, `write_painel`; CLI `cdp painel` |
+| `ui/` + `cdp_app.py` | App Streamlit local (leitura do livro) | `uv run streamlit run cdp_app.py` |
 
 ## 4. Contratos de dados em memória
 
@@ -150,6 +152,9 @@ Papéis (inspirados em TradingAgents / AlphaAgents / práticas de Man, Balyasny,
 4. **Analista de risco de short** — `ok/caution/veto` para cada short proposto.
 5. **Juiz bull × bear** para as maiores convicções.
 6. **Redator do memo** — texto com placeholders `{{fact:id}}` renderizados pelo código.
+7. **Redator da tese de investimento** (a mente, depois da decisão) — `book/<semana>/tese/tese.json`
+   com placeholders `{{fact:id}}` sobre o FactBook da carteira decidida; validado e publicado pelo
+   código (`docs/cdp/TESE.md`).
 
 Provedores: `demo` (regras determinísticas, offline), `anthropic` (SDK oficial; modelo via
 variável de ambiente), `openrouter`, `imported` (notas JSON produzidas por analistas/agentes
@@ -168,7 +173,14 @@ book/
   <semana>/decision.json           decisão humana + approval_hash
   <semana>/booked.json             carteira efetivada
   <semana>/memo.md, trades.csv, positions.csv
+  <semana>/tese/                   tese de investimento: factbook.json, fatos.md, analise.json,
+                                   tese.schema.json (código), tese.json (mente),
+                                   tese_publicada.json e tese.md (código, imutáveis)
 ```
+
+Uma tese escrita fora do clone das rotinas (único escritor de `book/`) é entregue como rascunho
+versionado em `docs/cdp/teses/<semana>.json`; o `tese prepare` das rotinas o copia para
+`book/<semana>/tese/tese.json` quando esse arquivo ainda não existe (`docs/cdp/TESE.md`).
 
 `approval_hash = sha256(proposal_hash | snapshot_hash | config_hash | research_hash | approver |
 decision | decided_at)`. Booking exige decisão `APPROVE` válida e recalcula todos os hashes.

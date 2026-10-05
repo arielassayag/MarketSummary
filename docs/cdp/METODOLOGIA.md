@@ -90,6 +90,13 @@ Papéis que a mente desempenha (na ordem):
    **exclusões** (no_long/no_short), **postura de risco** (`muito_defensiva` 3,5%, `defensiva`
    4%, `neutra` 5%, `ofensiva` 6% — sempre dentro da banda e sob a escada de drawdown), o racional,
    o que mudou na visão e o diário (tese, critério de invalidação e premortem das maiores posições).
+6. **Redator da tese de investimento** (depois da decisão gravada): explica a carteira decidida
+   como um todo para investidores e para o comitê de investimento — por que cada nome e cada
+   peso, exposições, sensibilidade a mercado, volatilidade e orçamento de risco, temas, riscos,
+   premortem, gatilhos de revisão e calendário. O código calcula todos os números e análises
+   (`cdp tese prepare`); a mente escreve só o texto, com `{{fact:id}}`; o código valida e publica
+   de forma imutável (`cdp tese publish`), com o template determinístico como rede de segurança.
+   A tese explica a decisão, não a altera. Regras e diretrizes: `docs/cdp/TESE.md`.
 
 Regras de decisão do PM (perenes):
 
@@ -135,8 +142,9 @@ placeholders) e relatório diário.
 |---|---|---|
 | Instruções do repositório | `CLAUDE.md` → este documento e os roteiros | `AGENTS.md` → este documento e os roteiros |
 | Roteiros | `.claude/skills/cdp-semanal`, `.claude/skills/cdp-diario` | mesmos arquivos em `docs/cdp/playbooks/` |
-| Entradas | `book/<semana>/briefing/` (briefing, contexto, schemas) | idem |
-| Saídas | `book/<semana>/inputs/*.json`, `reports/daily/<data>/comentario.json` | idem |
-| Validação e decisão | `uv run python -m cdp validate` / `weekly decide` | idem |
+| Entradas | `book/<semana>/briefing/` (briefing, contexto, schemas); para a tese, `book/<semana>/tese/fatos.md` e `tese.schema.json` | idem |
+| Saídas | `book/<semana>/inputs/*.json`, `book/<semana>/tese/tese.json`, `reports/daily/<data>/comentario.json` | idem |
+| Validação e decisão | `uv run python -m cdp validate` / `weekly decide`; tese: `validate-tese` / `tese publish` | idem |
 
-O campo `mind` em cada pacote de pesquisa, decisão e comentário registra quem conduziu.
+O campo `mind` em cada pacote de pesquisa, decisão, comentário e tese registra quem conduziu; o
+painel de gestão nunca exibe o nome da mente.

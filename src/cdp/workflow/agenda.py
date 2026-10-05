@@ -3,8 +3,10 @@
 Usada pelas skills do plugin ``cdp`` (tarefas agendadas no PC local) e pelo ``cdp agenda``: pelo
 relógio de Brasília (independente do fuso do PC), diz se hoje é o primeiro pregão da semana na
 B3, se a decisão já foi gravada, se a janela de pesquisa abriu e se o prazo de 16h30 venceu, quais
-fechamentos diários estão pendentes (inclusive de dias em que o PC estava desligado ou dormindo)
-e quais relatórios diários faltam publicar. Só calendário e arquivos — nenhum número de mercado.
+fechamentos diários estão pendentes (inclusive de dias em que o PC estava desligado ou dormindo),
+quais relatórios diários faltam publicar e quais semanas decididas ainda não têm a tese de
+investimento da carteira publicada (``acao: "tese"`` na semana corrente e ``teses_pendentes``).
+Só calendário e arquivos — nenhum número de mercado.
 """
 
 from __future__ import annotations
@@ -24,6 +26,8 @@ if TYPE_CHECKING:  # pragma: no cover
 DAILY_EXCHANGES = ("BVMF", "XNYS", "XMEX")
 #: Máximo de pregões listados como pendentes (acima disso, a rotina pede intervenção).
 MAX_PENDING = 30
+#: Semanas decididas mais recentes examinadas em ``teses_pendentes``.
+THESIS_WEEKS = 4
 
 
 def _at(d: date, hhmm: str, tz: ZoneInfo) -> datetime:
@@ -94,6 +98,7 @@ def pending_publications(rt: Runtime) -> list[dict[str, Any]]:
 
 def _weekly(rt: Runtime, local: datetime) -> dict[str, Any]:
     from .runtime import PREPARE_MANIFEST
+    from .tese import is_published, thesis_applicable
 
     cfg = rt.cfg
     tz = ZoneInfo(cfg.fund.timezone)
@@ -109,14 +114,22 @@ def _weekly(rt: Runtime, local: datetime) -> dict[str, Any]:
     decided = bool(rt.book.list_decisions(week))
     briefing = (wd / "briefing" / PREPARE_MANIFEST).exists()
     inputs = {n: (wd / "inputs" / n).exists() for n in ("research_pack.json", "pm_decision.json")}
+    thesis = is_published(rt.book_root, week)
     info.update({"decisao_gravada": decided, "briefing_preparado": briefing,
-                 "entradas_escritas": inputs})
+                 "entradas_escritas": inputs, "tese_publicada": thesis})
+    needs_thesis = decided and not thesis and thesis_applicable(rt.book, week)
+    pending_thesis = {"acao": "tese",
+                      "motivo": "decisão da semana gravada; a tese de investimento da carteira "
+                                "ainda não foi publicada (cdp tese prepare → tese.json → "
+                                "validate-tese → tese publish)"}
     start = _at(today, cfg.fund.weekly_research_start_local, tz)
     deadline = _at(today, cfg.fund.decision_deadline_local, tz)
     if week != today:
         info["acao"] = "nenhuma"
         if week > today:
             info["motivo"] = f"o primeiro pregão desta semana é {week}"
+        elif needs_thesis:
+            info.update(pending_thesis)
         elif decided:
             info["motivo"] = f"hoje não é o primeiro pregão da semana ({week}); decisão já gravada"
         else:
@@ -126,7 +139,9 @@ def _weekly(rt: Runtime, local: datetime) -> dict[str, Any]:
             info["decisao_perdida"] = True
         return info
     info["minutos_ate_o_prazo"] = int((deadline - local).total_seconds() // 60)
-    if decided:
+    if needs_thesis:
+        info.update(pending_thesis)
+    elif decided:
         info.update({"acao": "nenhuma", "motivo": "decisão da semana já gravada"})
     elif local >= deadline:
         info.update({"acao": "prazo_vencido", "decisao_perdida": True,
@@ -142,6 +157,19 @@ def _weekly(rt: Runtime, local: datetime) -> dict[str, Any]:
         info.update({"acao": "montar", "etapa": etapa,
                      "motivo": "primeiro pregão da semana, dentro da janela de decisão"})
     return info
+
+
+def pending_theses(rt: Runtime, limit: int = THESIS_WEEKS) -> list[date]:
+    """Semanas decididas (as ``limit`` mais recentes) com carteira nova e sem tese publicada."""
+    from .tese import is_published, thesis_applicable
+
+    try:
+        weeks = rt.book.list_weeks()
+    except OSError:
+        return []
+    decided = [w for w in weeks if rt.book.list_decisions(w)][-limit:]
+    return [w for w in decided
+            if not is_published(rt.book_root, w) and thesis_applicable(rt.book, w)]
 
 
 def _next_events(rt: Runtime, local: datetime, weekly: dict[str, Any]) -> list[dict[str, Any]]:
@@ -204,6 +232,7 @@ def agenda(rt: Runtime, now: datetime | None = None) -> dict[str, Any]:
         "fechamentos_pendentes_excedem_limite": len(closes) > MAX_PENDING,
         "horario_fechamento_diario": cfg.fund.daily_close_run_local,
         "publicacoes_pendentes": pubs,
+        "teses_pendentes": pending_theses(rt),
         "proximos_eventos": _next_events(rt, local, weekly),
     }
 
@@ -223,4 +252,4 @@ def validate_daily_commentary(rt: Runtime, session: date) -> tuple[bool, list[st
 
 
 __all__ = ["DAILY_EXCHANGES", "agenda", "b3_open_at", "is_close_session", "pending_closes",
-           "pending_publications", "validate_daily_commentary"]
+           "pending_publications", "pending_theses", "validate_daily_commentary"]

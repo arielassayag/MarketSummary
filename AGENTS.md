@@ -36,13 +36,19 @@ Quem conduz pesquisa, decisões de carteira e comentários é um agente de códi
 - Roteiro semanal (primeiro pregão da semana na B3, decisão até 16h30, execução no fechamento):
   `docs/cdp/playbooks/SEMANAL.md`
 - Roteiro diário (após o fechamento, 19h20): `docs/cdp/playbooks/DIARIO.md`
+- Tese de investimento da carteira decidida (semanal, depois da decisão): `docs/cdp/TESE.md`.
+  O livro (`book/`) tem um único escritor, o clone dedicado das rotinas: uma tese escrita fora
+  dele é entregue como rascunho versionado `docs/cdp/teses/<semana>.json` (mesmo schema de
+  `tese.json`), que o `tese prepare` das rotinas adota; nunca grave `book/` nem rode
+  `tese publish` fora desse clone.
 - Operação no PC local (tarefas agendadas do Claude Code + plugin `cdp` em `plugins/cdp/`, com as
   skills `semanal`, `diario`, `risco`, `status` e `calibracao`): `docs/cdp/LOCAL.md` e
   `docs/cdp/ROTINAS.md`. Os passos das skills valem para o Codex trocando `claude-code` por `codex`.
   Uma só mente por vez no mesmo livro (a trilha é encadeada por hash).
 - Registre sempre `mind: "codex"` ou `mind: "claude-code"` nos arquivos de entrada do CDP.
-- A mente escreve apenas JSON validado por schema (pesquisa, decisão do PM, comentário); todo número
-  é calculado pelo código e citado como `{{fact:id}}`.
+- A mente escreve apenas JSON validado por schema (pesquisa, decisão do PM, tese de investimento
+  `book/<semana>/tese/tese.json`, comentário); todo número é calculado pelo código e citado como
+  `{{fact:id}}`.
 
 ## Comandos
 
@@ -50,11 +56,12 @@ Quem conduz pesquisa, decisões de carteira e comentários é um agente de códi
 - **Demo offline (DADOS SIMULADOS)**: `uv run python -m cdp demo`
 - **Fechamento diário**: `uv run python -m cdp daily close --date AAAA-MM-DD --mind claude-code`, depois `validate-daily` e `daily publish`
 - **Rebalanceamento semanal**: `uv run python -m cdp weekly prepare --date AAAA-MM-DD --mind claude-code`, depois `validate`, `weekly preview` (opcional) e `weekly decide` (ver `docs/cdp/playbooks/SEMANAL.md`)
+- **Tese de investimento da semana** (depois de `weekly decide`): `uv run python -m cdp tese prepare --week AAAA-MM-DD`, a mente escreve `book/<semana>/tese/tese.json` (se o prepare adotou o rascunho `docs/cdp/teses/<semana>.json`, `rascunho_adotado: true`, valida antes de escrever), `uv run python -m cdp validate-tese --week AAAA-MM-DD` até ok e `uv run python -m cdp tese publish --week AAAA-MM-DD` (imutável; ver `docs/cdp/TESE.md`)
 - **App**: `uv run streamlit run cdp_app.py --server.address 127.0.0.1`
 - **Agenda das rotinas** (o que fazer agora, pelo relógio de Brasília; fechamentos pendentes): `uv run python -m cdp agenda`
 - **Monitor de risco**: `uv run python -m cdp risk` (último fechamento) ou `uv run python -m cdp risk --live` (intradiário); grava `reports/risk/<data>/risco_<HHMM>.md`
 - **Validar o comentário do dia sem publicar** (a publicação é imutável): `uv run python -m cdp validate-daily --date AAAA-MM-DD`
-- **Painel de operação e risco (artifact)**: `uv run python -m cdp painel` grava em `artifacts/painel/` a casca `index.html`, o estilo e o script versionados, `data.json` e a cópia local `cdp_painel_local.html` (só código); as rotinas fazem commit e republicam no mesmo artifact cuja URL está em `artifacts/painel/ARTIFACT_URL`, seguindo `artifact.publicar` (ver `docs/cdp/LOCAL.md`)
+- **Painel de gestão (artifact)** — investimento e risco, com a tese da semana, para investidores e comitê de investimento: `uv run python -m cdp painel` grava em `artifacts/painel/` a casca `index.html`, o estilo e o script versionados, `data.json` e a cópia local `cdp_painel_local.html` (só código); as rotinas fazem commit e republicam no mesmo artifact cuja URL está em `artifacts/painel/ARTIFACT_URL`, seguindo `artifact.publicar` (ver `docs/cdp/LOCAL.md`)
 
 ## Invariantes do CDP (substituem os itens 3 e 4 acima apenas para o CDP)
 

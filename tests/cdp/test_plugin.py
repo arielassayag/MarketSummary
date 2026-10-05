@@ -7,6 +7,7 @@ pela CLI real (``cdp.__main__.build_parser``) e que nenhum arquivo cita identifi
 
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import re
@@ -26,6 +27,12 @@ ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
 SKILL_NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 SCRIPTS = ["cdp_setup_local.sh", "cdp_setup_local.ps1", "cdp_run_task.sh", "cdp_run_task.ps1"]
 MODEL_RE = re.compile(r"(?i)\b(?:claude-(?:opus|sonnet|haiku)[\w.-]*|opus|sonnet|haiku|gpt-[\w.-]+)\b")
+TESES = ROOT / "docs" / "cdp" / "teses"
+#: Versão do plugin e resumo das skills nessa versão. A instalação pelo marketplace do GitHub guarda
+#: uma cópia presa à ``version`` (docs/cdp/LOCAL.md): skills novas com a versão antiga nunca chegam
+#: às rotinas. Mudou uma skill ⇒ suba a ``version`` em plugin.json e atualize os dois valores.
+PLUGIN_VERSION = "1.2.0"
+SKILLS_SHA256 = "53dc4c7b7c8cb8579d48fd596d05ff1b33f795d5447580c0251d93a436c8a552"
 
 
 def _skill_files() -> list[Path]:
@@ -39,8 +46,18 @@ def _project_skill_files() -> list[Path]:
 def _doc_files() -> list[Path]:
     docs = ROOT / "docs" / "cdp"
     return [*_skill_files(), *_project_skill_files(), PLUGIN / "README.md", docs / "LOCAL.md",
-            docs / "ROTINAS.md", *sorted((docs / "playbooks").glob("*.md")), ROOT / "AGENTS.md",
-            ROOT / "CLAUDE.md"]
+            docs / "ROTINAS.md", docs / "TESE.md", TESES / "README.md",
+            *sorted((docs / "playbooks").glob("*.md")), ROOT / "AGENTS.md", ROOT / "CLAUDE.md"]
+
+
+def _skills_digest() -> str:
+    """SHA-256 dos arquivos das skills do plugin (caminho + conteúdo, fins de linha LF)."""
+    h = hashlib.sha256()
+    files = [f for f in (PLUGIN / "skills").rglob("*") if f.is_file() and not f.name.startswith(".")]
+    for f in sorted(files, key=lambda f: f.relative_to(PLUGIN).as_posix()):
+        h.update(f.relative_to(PLUGIN).as_posix().encode("utf-8") + b"\0")
+        h.update(f.read_bytes().replace(b"\r\n", b"\n") + b"\0")
+    return h.hexdigest()
 
 
 def _frontmatter(path: Path) -> dict:
@@ -74,6 +91,18 @@ def test_plugin_manifest():
     for key in ("skills", "commands", "agents", "hooks"):
         assert key not in p  # diretórios padrão (skills/) — sem caminhos fora do plugin
     assert {d.name for d in (PLUGIN / "skills").iterdir() if d.is_dir()} == SKILLS
+
+
+def test_plugin_version_tracks_the_skills():
+    """A cópia em cache do marketplace do GitHub só é trocada quando a ``version`` sobe: skills
+    alteradas sem versão nova deixariam as rotinas com as instruções antigas (sem a tese)."""
+    p = json.loads((PLUGIN / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8"))
+    assert p["version"] == PLUGIN_VERSION
+    assert _skills_digest() == SKILLS_SHA256, (
+        "as skills do plugin mudaram: suba `version` em plugins/cdp/.claude-plugin/plugin.json e "
+        f"atualize PLUGIN_VERSION e SKILLS_SHA256 (novo resumo: {_skills_digest()})")
+    local = " ".join((ROOT / "docs" / "cdp" / "LOCAL.md").read_text(encoding="utf-8").split())
+    assert "a versão precisa subir quando as skills mudarem" in local
 
 
 @pytest.mark.parametrize("path", _skill_files(), ids=lambda p: p.parent.name)
@@ -164,7 +193,7 @@ def test_every_cli_command_in_skills_and_docs_parses():
             pytest.fail(f"{where}: a CLI rejeita `{cmd}`")
         seen.add(args.cmd)
     assert {"agenda", "risk", "validate-daily", "daily", "weekly", "validate", "verify",
-            "kill-switch", "backtest", "status", "painel"} <= seen
+            "kill-switch", "backtest", "status", "painel", "tese", "validate-tese"} <= seen
 
 
 def test_painel_command_defaults():
@@ -269,6 +298,9 @@ def test_skill_commands_cover_their_workflow():
                 for p in _skill_files()}
     assert "weekly prepare" in by_skill["semanal"] and "weekly decide" in by_skill["semanal"]
     assert "validate --week" in by_skill["semanal"]
+    for name in ("semanal", "diario"):  # tese da carteira decidida (diario: só a pendente)
+        for cmd in ("tese prepare --week", "validate-tese --week", "tese publish --week"):
+            assert cmd in by_skill[name], (name, cmd)
     assert "daily close" in by_skill["diario"] and "daily publish" in by_skill["diario"]
     assert "validate-daily" in by_skill["diario"]
     assert "risk --live" in by_skill["risco"] and "kill-switch on" in by_skill["risco"]
@@ -328,6 +360,157 @@ def test_writer_skills_end_by_republishing_the_painel(name: str):
     assert "não insista" in flat  # falha ou recusa da ferramenta não bloqueia a rotina
     tail = body[body.lower().rindex("resumo final"):]
     assert "painel" in tail.lower()
+
+
+def test_thesis_step_follows_the_decision_and_precedes_the_painel():
+    """Tese da carteira: depois de ``weekly decide`` + ``verify``, antes do painel e do commit; a
+    mente só escreve ``tese.json`` (números via ``{{fact:id}}``); retomada pela agenda."""
+    tese_json = "book/<semana>/tese/tese.json"
+    steps = ("uv run python -m cdp tese prepare --week", "uv run python -m cdp validate-tese --week",
+             "uv run python -m cdp tese publish --week", "uv run python -m cdp painel")
+    sem = (PLUGIN / "skills" / "semanal" / "SKILL.md").read_text(encoding="utf-8")
+    idx = [sem.index("uv run python -m cdp weekly decide --week"),
+           sem.index("uv run python -m cdp verify", sem.index("weekly decide --week")),
+           *(sem.index(s) for s in steps), sem.index('git commit -m "CDP: ')]
+    assert idx == sorted(idx), idx
+    flat = " ".join(sem.split())
+    assert re.search(r"Você só escreve .{0,200}" + re.escape(tese_json), flat)
+    assert "`tese` →" in flat and "docs/cdp/TESE.md" in flat and "fatos.md" in flat
+    assert "no máximo 3 tentativas" in flat and 'autoria: "codigo"' in flat
+    tail = sem[sem.lower().rindex("resumo final"):]
+    assert "tese" in tail.lower()
+    dia = (PLUGIN / "skills" / "diario" / "SKILL.md").read_text(encoding="utf-8")
+    idx = [dia.index("uv run python -m cdp daily publish"), *(dia.index(s) for s in steps),
+           dia.index('git commit -m "CDP: ')]
+    assert idx == sorted(idx), idx
+    flat = " ".join(dia.split())
+    assert "teses_pendentes" in flat and "semanal.semana" in flat
+    assert re.search(r"Você só escreve .{0,200}" + re.escape(tese_json), flat)
+    docs = ROOT / "docs" / "cdp"
+    for doc in ("playbooks/SEMANAL.md", "playbooks/DIARIO.md", "ROTINAS.md"):
+        text = (docs / doc).read_text(encoding="utf-8")
+        i_prep, i_val = text.index("tese prepare --week"), text.index("validate-tese --week")
+        assert i_prep < i_val < text.index("uv run python -m cdp painel"), doc
+    tese = " ".join((docs / "TESE.md").read_text(encoding="utf-8").split())
+    for needle in ("tese.json", "fatos.md", "factbook.json", "analise.json", "tese.schema.json",
+                   "tese_publicada.json", "tese.md", "WEEKLY_THESIS", "{{fact:", "DADOS SIMULADOS",
+                   "Tese de investimento", "autoria", "teses_pendentes"):
+        assert needle in tese, needle
+
+
+def _cmd_line_before(text: str, needle: str) -> str:
+    """Linha de comando ``uv run``/``git`` mais próxima antes da primeira ocorrência de ``needle``."""
+    head = text[:text.index(needle)]
+    lines = [ln.strip().strip("`;") for ln in head.splitlines()]
+    return next(ln for ln in reversed(lines) if ln.startswith(("uv run", "git ", "`uv run")))
+
+
+@pytest.mark.parametrize("name,step", [("semanal", "8"), ("diario", "6")])
+def test_verify_runs_right_before_the_painel_on_every_path(name: str, step: str):
+    """Todo caminho que chega ao painel (montagem, retomada só da tese, tese já publicada, prepare
+    ou publish com falha) passa por um ``verify`` logo antes dele, e é esse ``verify`` que libera o
+    push: na retomada só da tese não havia nenhum e o commit nunca saía."""
+    body = (PLUGIN / "skills" / name / "SKILL.md").read_text(encoding="utf-8")
+    flat = " ".join(body.split())
+    painel = "uv run python -m cdp painel"
+    assert _cmd_line_before(body, painel) == "uv run python -m cdp verify"
+    i_painel = body.index(painel)
+    assert body.rindex("uv run python -m cdp tese publish --week", 0, i_painel) < body.rindex(
+        "uv run python -m cdp verify", 0, i_painel)
+    heading = re.search(rf"^## {step}\. (.+)$", body, re.MULTILINE)
+    assert heading and "painel" in heading.group(1).lower(), heading
+    assert body.index(heading.group(0)) < i_painel < body.index(f"## {int(step) + 1}. ")
+    assert f"Push só se `verify` disse `ÍNTEGRO` no passo {step} desta execução" in flat
+    assert "o último, depois da tese" not in flat  # regra antiga: não existia na retomada
+    if name == "semanal":
+        assert "passos 7 (tese), 8 (integridade e painel), 9" in flat
+        assert "retomada só da tese, tese já publicada, `tese prepare` ou `tese publish` com falha" in flat
+        thesis = body[body.index("## 7. "):body.index("## 8. ")]
+        assert "uv run python -m cdp verify" not in thesis  # um só verify depois da tese: o do 8
+        assert "pule para o passo 9" not in flat and "siga para o passo 9" not in flat
+    else:
+        thesis = body[body.index("## 5. "):body.index("## 6. ")]
+        assert "siga para o passo 6" in thesis
+    for doc in ("playbooks/SEMANAL.md", "playbooks/DIARIO.md", "ROTINAS.md"):
+        text = (ROOT / "docs" / "cdp" / doc).read_text(encoding="utf-8")
+        i_pub = text.index("tese publish --week")
+        i_pnl = text.index(painel, i_pub)
+        assert text.rfind("uv run python -m cdp verify", 0, i_pnl) > i_pub, doc
+        assert "esse verify" in " ".join(text.split()).replace("`", ""), doc
+    for project in ("cdp-semanal", "cdp-diario"):
+        text = " ".join((ROOT / ".claude" / "skills" / project / "SKILL.md")
+                        .read_text(encoding="utf-8").split())
+        assert "verify" in text and "antes do painel" in text, project
+
+
+def test_thesis_handoff_draft_is_documented_and_adopted_before_writing():
+    """Tese escrita fora do clone das rotinas: entregue em ``docs/cdp/teses/<semana>.json`` (o livro
+    tem um só escritor); o ``tese prepare`` a adota e a mente valida antes de escrever."""
+    tese = " ".join((ROOT / "docs" / "cdp" / "TESE.md").read_text(encoding="utf-8").split())
+    assert "## 11. Rascunho entregue fora do clone das rotinas" in tese
+    for needle in ("docs/cdp/teses/<semana>.json", "rascunho_entregue", "rascunho_adotado",
+                   "byte a byte", "nunca sobrescreve", "nunca publica", "único escritor",
+                   'git diff --name-only "HEAD...@{u}" -- book data reports artifacts',
+                   "validate-tese` **primeiro**", "FactBook calculado pelo código **da própria",
+                   "docs/cdp/teses/README.md"):
+        assert needle in tese, needle
+    readme = " ".join((TESES / "README.md").read_text(encoding="utf-8").split())
+    for needle in ("`<semana>.json`", "rascunho_adotado", "validate-tese", "docs/cdp/TESE.md",
+                   "Nunca faça commit de `book/`"):
+        assert needle in readme, needle
+    drafts = sorted(TESES.glob("*.json"))
+    assert drafts  # a tese da semana 2026-10-05 viaja como rascunho entregue
+    for draft in drafts:
+        assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", draft.stem), draft.name
+        data = json.loads(draft.read_text(encoding="utf-8"))
+        assert data["week"] == draft.stem and data["mind"] in {"claude-code", "codex"}, draft.name
+        assert "{{fact:" in data["resumo"]
+    for name in ("semanal", "diario"):
+        body = (PLUGIN / "skills" / name / "SKILL.md").read_text(encoding="utf-8")
+        flat = " ".join(body.split())
+        i_prep = body.index("uv run python -m cdp tese prepare --week")
+        i_flag = body.index("rascunho_adotado: true", i_prep)
+        i_val = body.index("uv run python -m cdp validate-tese --week", i_prep)
+        i_write = body.index("Escreva `book/<semana>/tese/tese.json`", i_prep)
+        assert i_prep < i_flag < i_val < i_write, name  # valida o rascunho antes de escrever
+        assert "**antes de escrever qualquer coisa**" in flat and "não reescreva nada" in flat
+        assert "docs/cdp/teses/<semana>.json" in flat and "Nunca edite `docs/cdp/teses/`" in flat
+        assert "rascunho_entregue" in flat
+    for doc in ("playbooks/SEMANAL.md", "playbooks/DIARIO.md", "ROTINAS.md"):
+        text = " ".join((ROOT / "docs" / "cdp" / doc).read_text(encoding="utf-8").split())
+        assert "docs/cdp/teses/<semana>.json" in text and "rascunho_adotado" in text, doc
+        assert "antes de escrever qualquer coisa" in text.replace("**", ""), doc
+    for doc in ("AGENTS.md", "CLAUDE.md", ".claude/skills/cdp-semanal/SKILL.md",
+                "plugins/cdp/README.md", "docs/cdp/LOCAL.md"):
+        assert "docs/cdp/teses/<semana>.json" in (ROOT / doc).read_text(encoding="utf-8"), doc
+
+
+#: Datas aceitas pelo validador da tese (``guardrails._ALLOWED_NUMERIC_RES``), como documentadas.
+THESIS_DATES_OK = ("2026-10-25", "25/10/2026", "25 de outubro", "3T26", "1º")
+_BARE_DDMM = re.compile(r"(?<![\d/])\d{1,2}/\d{1,2}(?![\d/])")
+
+
+def test_thesis_docs_list_only_dates_the_validator_accepts():
+    """"25/10" não passa no ``validate-tese`` (o dia vira número livre): a documentação não pode
+    ensiná-lo, senão a mente gasta as 3 tentativas e a semana fica com o template do código."""
+    from cdp.research.guardrails import find_free_numbers
+
+    for ok in THESIS_DATES_OK:
+        assert find_free_numbers(f"Resultado em {ok}.") == [], ok
+    assert find_free_numbers("Resultado em 25/10.") == ["25"]
+    tese = (ROOT / "docs" / "cdp" / "TESE.md").read_text(encoding="utf-8")
+    flat = " ".join(tese.split())
+    for ok in THESIS_DATES_OK:
+        assert ok in flat, ok
+    files = [ROOT / "docs" / "cdp" / "TESE.md", TESES / "README.md",
+             PLUGIN / "skills" / "semanal" / "SKILL.md", PLUGIN / "skills" / "diario" / "SKILL.md",
+             *sorted((ROOT / "docs" / "cdp" / "playbooks").glob("*.md")),
+             ROOT / "docs" / "cdp" / "ROTINAS.md"]
+    for path in files:
+        text = " ".join(path.read_text(encoding="utf-8").split())
+        for m in _BARE_DDMM.finditer(text):
+            ctx = text[max(0, m.start() - 40):m.end() + 40]
+            assert "nunca" in ctx or "não" in ctx, (path.name, ctx)  # só como contraexemplo
 
 
 WRITER_SKILLS = PAINEL_SKILLS
@@ -516,6 +699,7 @@ def test_project_settings_permissions():
     a, k, d = _edit_rules(allow), _edit_rules(ask), _edit_rules(deny)
     for mind_file in ("book/2026-10-05/inputs/research_pack.json",
                       "book/2026-10-05/inputs/pm_decision.json",
+                      "book/2026-10-05/tese/tese.json",
                       "reports/daily/2026-10-05/comentario.json",
                       "reports/backtest/2026-11-02/CALIBRACAO_MENSAL.md", PAINEL_URL):
         assert _matches(a, mind_file) and not _matches(d, mind_file), mind_file
@@ -526,9 +710,15 @@ def test_project_settings_permissions():
                       "artifacts/painel/PAGINA_PUBLICADA.sha256"):
         assert _matches(d, generated) and not _matches(a, generated), generated
     assert not any(r == "Artifact" or r.startswith("Artifact(") for r in allow)
+    # Tese da carteira: a mente só edita tese.json; fatos, análises e a tese publicada são do código.
+    for generated in ("factbook.json", "fatos.md", "analise.json", "tese.schema.json",
+                      "tese_publicada.json", "tese.md"):
+        path = f"book/2026-10-05/tese/{generated}"
+        assert _matches(d, path) and not _matches(a, path), path
     for code_file in ("book/audit_log.jsonl", "book/KILL_SWITCH",
                       "book/track_record/records/2026-10-05.json",
                       "book/2026-10-05/decision_v1.json", "book/2026-10-05/proposal_v1.json",
+                      "book/2026-10-05/config_decisao.json",
                       "book/2026-10-05/booked.json", "book/2026-10-05/briefing/context.json",
                       "book/2026-10-05/research_pack_abc.json",
                       "data/market/base/2026-10-02/manifest.json",

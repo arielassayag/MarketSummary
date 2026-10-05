@@ -54,7 +54,8 @@ e das rotinas: `docs/cdp/METODOLOGIA.md` e `docs/cdp/LOCAL.md`.
 - **Integridade**: resultado de `verify` (`ÍNTEGRO` ou cada falha listada).
 - **Fundo**: último registro diário, NAV atual (`nav_atual_usd`), kill switch.
 - **Semana**: `semanal.semana`, decisão gravada?, `semanal.acao`/`motivo`; se `decisao_perdida`
-  for `true`, destaque.
+  for `true`, destaque. Tese de investimento: semanas em `teses_pendentes` (decididas sem tese
+  publicada; a da semana corrente é concluída pela skill `semanal` ou `diario`).
 - **Pendências**: `fechamentos_pendentes` e `publicacoes_pendentes` (rode a skill `diario`).
 - **Próximos eventos**: `proximos_eventos` (horários de Brasília).
 - **Relógio**: se `pc_menos_brasilia_horas` ≠ 0, avise que o PC não está no fuso de Brasília e que

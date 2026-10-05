@@ -872,7 +872,8 @@ class _RunState:
             stance = max(-2, min(2, analyst.stance + int(out.stance_change)))
             note = self._note(
                 nid, iid, "bull_bear_judge", calls, stance=stance, confidence=analyst.confidence,
-                thesis=out.rationale, bull_points=[d.text for d in sides["bull"]],
+                thesis=f"{analyst.thesis} Juiz bull × bear: {out.rationale}",
+                bull_points=[d.text for d in sides["bull"]],
                 bear_points=[d.text for d in sides["bear"]],
                 key_risks=problems + [f"Ajuste do juiz sobre a stance do analista: "
                                       f"{'sem mudança' if out.stance_change == 0 else 'um nível'}"],

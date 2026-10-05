@@ -60,6 +60,8 @@ EXTREME_MOVE = 0.35
 ARS_PARITY_TOLERANCE = 0.05
 PARITY_WINDOW = 20
 FX_FFILL_LIMIT = 3
+# Resolução canônica das datas = padrão do pandas instalado (us no pandas 3, ns no pandas 2).
+DATETIME_DTYPE = pd.bdate_range("2020-01-01", periods=1).dtype
 
 # Benchmarks/ETFs de referência (GXG não tem dados no Yahoo desde a troca para COLO).
 BENCHMARKS = ["ILF", "EWZ", "EWW", "ECH", "COLO", "EPU", "ARGT", "^BVSP", "^MXX", "^MERV",
@@ -204,7 +206,7 @@ def _ensure_columns(df: pd.DataFrame | None, cols: Sequence[str]) -> pd.DataFram
 
 def normalize_prices(df: pd.DataFrame | None) -> pd.DataFrame:
     df = _ensure_columns(df, PRICES_COLUMNS)
-    df["date"] = pd.to_datetime(df["date"]).astype("datetime64[ns]")
+    df["date"] = pd.to_datetime(df["date"]).astype(DATETIME_DTYPE)
     df["ticker"] = df["ticker"].astype(str)
     for c in ("close", "adj_close", "volume"):
         df[c] = pd.to_numeric(df[c], errors="coerce").astype(float)
@@ -214,7 +216,7 @@ def normalize_prices(df: pd.DataFrame | None) -> pd.DataFrame:
 
 def normalize_fx(df: pd.DataFrame | None) -> pd.DataFrame:
     df = _ensure_columns(df, FX_COLUMNS)
-    df["date"] = pd.to_datetime(df["date"]).astype("datetime64[ns]")
+    df["date"] = pd.to_datetime(df["date"]).astype(DATETIME_DTYPE)
     df["currency"] = df["currency"].astype(str).str.upper()
     df["usd_per_unit"] = pd.to_numeric(df["usd_per_unit"], errors="coerce").astype(float)
     df = df[(df["currency"] != "USD") & df["usd_per_unit"].notna() & (df["usd_per_unit"] > 0)]
@@ -223,7 +225,7 @@ def normalize_fx(df: pd.DataFrame | None) -> pd.DataFrame:
 
 def normalize_benchmarks(df: pd.DataFrame | None) -> pd.DataFrame:
     df = _ensure_columns(df, BENCHMARK_COLUMNS)
-    df["date"] = pd.to_datetime(df["date"]).astype("datetime64[ns]")
+    df["date"] = pd.to_datetime(df["date"]).astype(DATETIME_DTYPE)
     df["symbol"] = df["symbol"].astype(str)
     for c in ("close", "adj_close"):
         df[c] = pd.to_numeric(df[c], errors="coerce").astype(float)
@@ -233,7 +235,7 @@ def normalize_benchmarks(df: pd.DataFrame | None) -> pd.DataFrame:
 
 def normalize_rates(df: pd.DataFrame | None) -> pd.DataFrame:
     df = _ensure_columns(df, RATES_COLUMNS)
-    df["date"] = pd.to_datetime(df["date"]).astype("datetime64[ns]")
+    df["date"] = pd.to_datetime(df["date"]).astype(DATETIME_DTYPE)
     df["series"] = df["series"].astype(str)
     df["value"] = pd.to_numeric(df["value"], errors="coerce").astype(float)
     df["source"] = df["source"].where(df["source"].notna(), "").astype(str)
@@ -263,7 +265,7 @@ def normalize_indexed(df: pd.DataFrame | None, fields: Sequence[str]) -> pd.Data
 
 def normalize_lending_history(df: pd.DataFrame | None) -> pd.DataFrame:
     df = _ensure_columns(df, b3_lending.LENDING_LONG_COLUMNS)
-    df["date"] = pd.to_datetime(df["date"]).astype("datetime64[ns]")
+    df["date"] = pd.to_datetime(df["date"]).astype(DATETIME_DTYPE)
     df["ticker"] = df["ticker"].astype(str)
     for c in df.columns:
         if c in ("date", "ticker"):
@@ -293,7 +295,7 @@ def _write_parquet(df: pd.DataFrame, path: Path) -> int:
 def _read_parquet(path: Path) -> pd.DataFrame:
     df = pq.read_table(path).to_pandas()
     if "date" in df.columns:
-        df["date"] = pd.to_datetime(df["date"]).astype("datetime64[ns]")
+        df["date"] = pd.to_datetime(df["date"]).astype(DATETIME_DTYPE)
     return df
 
 
@@ -525,10 +527,10 @@ def read_tables(path: Path, verify: bool = True) -> SnapshotTables:
 
 def _pivot(df: pd.DataFrame, key: str, value: str) -> pd.DataFrame:
     if df.empty:
-        return pd.DataFrame(index=pd.DatetimeIndex([], dtype="datetime64[ns]"), dtype=float)
+        return pd.DataFrame(index=pd.DatetimeIndex([], dtype=DATETIME_DTYPE), dtype=float)
     wide = df.pivot(index="date", columns=key, values=value).sort_index()
     wide = wide.reindex(sorted(wide.columns), axis=1).astype(float)
-    wide.index = pd.DatetimeIndex(wide.index).astype("datetime64[ns]")
+    wide.index = pd.DatetimeIndex(wide.index).astype(DATETIME_DTYPE)
     wide.index.name = None
     wide.columns.name = None
     return wide

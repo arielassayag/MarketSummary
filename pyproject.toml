@@ -25,6 +25,9 @@ dependencies = [
     "exchange-calendars>=4.5",
 ]
 
+[project.scripts]
+cdp = "latam_ls.__main__:main"
+
 [project.optional-dependencies]
 gemini = [
     "google-genai>=0.1.1",

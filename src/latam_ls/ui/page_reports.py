@@ -45,7 +45,7 @@ def render(state: AppState) -> None:
                  "código (números formatados; textos de IA rotulados [IA]).")
     as_html = html_text is not None and st.toggle("Ver versão HTML (autocontida, sem scripts)",
                                                   key="rep_html")
-    with st.container(border=True):
+    with st.container(border=True, height=1100):
         if as_html and html_text is not None:
             components.html(html_text, height=1100, scrolling=True)
         elif md_text is not None:

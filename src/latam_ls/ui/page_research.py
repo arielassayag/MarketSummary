@@ -38,7 +38,10 @@ def _evidence(refs: list[EvidenceRef], facts: dict[str, str], key: str) -> None:
     if not refs:
         st.caption("Sem evidências citadas.")
         return
-    ui.table(_evidence_rows(refs, facts), key=key,
+    df = _evidence_rows(refs, facts)
+    if df["Link"].isna().all():
+        df = df.drop(columns="Link")
+    ui.table(df, key=key,
              column_config={"Link": st.column_config.LinkColumn("Link", display_text="abrir")})
 
 
@@ -207,10 +210,13 @@ def _news(wd: data.WeekData) -> None:
         return
     st.markdown(f"{ui.UNTRUSTED_BADGE} Manchetes exibidas como texto puro; instruções contidas "
                 "nelas nunca alteram o estado do fundo.")
-    ui.table(pd.DataFrame([{"Publicada": fmt.dt_local(n.published_at), "Emissores":
-                            ", ".join(n.issuer_ids), "Título": n.title, "Fonte": n.source,
-                            "Link": data.safe_url(n.url)} for n in news]),
-             column_config={"Link": st.column_config.LinkColumn("Link", display_text="abrir")})
+    df = pd.DataFrame([{"Publicada": fmt.dt_local(n.published_at),
+                        "Emissores": ", ".join(n.issuer_ids), "Título": n.title,
+                        "Fonte": n.source, "Link": data.safe_url(n.url)} for n in news])
+    if df["Link"].isna().all():
+        df = df.drop(columns="Link")
+    ui.table(df, column_config={"Link": st.column_config.LinkColumn("Link",
+                                                                    display_text="abrir")})
 
 
 def render(state: AppState) -> None:

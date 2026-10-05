@@ -92,6 +92,14 @@ class SqueezeSection(_Frozen):
     ret_1m_medium: float = 0.15
     ret_1m_high: float = 0.30
     free_float_mcap_low_usd: float = 1_000_000_000.0
+    # Calibração específica da B3 (BTC inclui arbitragem/ETF; taxa de aluguel é o sinal primário).
+    br_borrow_fee_medium: float = 0.05
+    br_borrow_fee_high: float = 0.15
+    br_btc_pct_float_medium: float = 0.15
+    br_btc_pct_float_high: float = 0.25
+    br_btc_dtc_medium: float = 10.0
+    br_btc_dtc_high: float = 20.0
+    adr_parity_tolerance: float = 0.03
     score_medium: float = Field(40.0, ge=0, le=100)
     score_high: float = Field(70.0, ge=0, le=100)
     medium_short_cap_multiplier: float = Field(0.5, ge=0, le=1)

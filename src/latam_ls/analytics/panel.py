@@ -82,6 +82,8 @@ def build_asset_panel(md: MarketData, cfg: FundConfig, as_of: date | None = None
         line_ret[tkr] = _line_usd_returns(md.adj_close[tkr], f)
         line_px_usd[tkr] = md.close[tkr] * f
         vol = md.volume[tkr] if tkr in md.volume.columns else pd.Series(np.nan, index=calendar)
+        # Volume zero com preço válido é dado ausente (ex.: Santiago no Yahoo), nunca liquidez zero.
+        vol = vol.where(vol > 0)
         line_tv_usd[tkr] = md.close[tkr] * vol * f
 
     line_returns = pd.DataFrame(line_ret).reindex(calendar)

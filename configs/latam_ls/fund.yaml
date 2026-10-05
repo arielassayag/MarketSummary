@@ -58,6 +58,14 @@ squeeze:
   ret_1m_medium: 0.15
   ret_1m_high: 0.30
   free_float_mcap_low_usd: 1000000000
+  # B3: taxa de aluguel é o sinal primário; saldo BTC inclui arbitragem/ETF (docs/research/06)
+  br_borrow_fee_medium: 0.05
+  br_borrow_fee_high: 0.15
+  br_btc_pct_float_medium: 0.15
+  br_btc_pct_float_high: 0.25
+  br_btc_dtc_medium: 10.0
+  br_btc_dtc_high: 20.0
+  adr_parity_tolerance: 0.03
   score_medium: 40
   score_high: 70
   medium_short_cap_multiplier: 0.5

@@ -193,12 +193,9 @@ def _group_block(
             f"{kind}: grupo agrupado com {n_other} emissor(es) < {min_names}; "
             "emissores sem fator de " + kind
         )
-    groups = [g for g in merged.dropna().unique().tolist()]
-    if order is not None:
-        groups = sorted(groups, key=lambda g: (g == other_label, order.index(g)
-                                               if g in order else len(order), g))
-    else:
-        groups = sorted(groups, key=lambda g: (g == other_label, g))
+    rank = {g: k for k, g in enumerate(order or [])}
+    groups = sorted(merged.dropna().unique().tolist(),
+                    key=lambda g: (g == other_label, rank.get(g, len(rank)), g))
     if len(groups) == 1:
         # Bloco com um único grupo é colinear com o mercado: descartado.
         notes.append(f"{kind}: apenas um grupo ({groups[0]}); bloco colinear com mercado removido")
@@ -207,8 +204,7 @@ def _group_block(
         groups = []
     names = {g: make_name(g) for g in groups}
     mapped = merged.map(lambda g: names.get(g) if isinstance(g, str) else None)
-    merged_out = [s for s in small if s not in groups] if small else []
-    return mapped, [names[g] for g in groups], merged_out, unassigned, notes
+    return mapped, [names[g] for g in groups], small, unassigned, notes
 
 
 def factor_structure(panel: AssetPanel, issuers: list[str], min_names: int) -> FactorStructure:
@@ -224,6 +220,16 @@ def factor_structure(panel: AssetPanel, issuers: list[str], min_names: int) -> F
     s_map, s_fac, s_merged, s_un, s_notes = _group_block(
         assets["sector"].astype(str), min_names, OTHER_SECTOR, sector_factor, GICS_SECTORS,
         "setor")
+    # Fator de setor com exatamente os mesmos membros de um fator de país é colinear com ele
+    # (regressão sem posto completo): o setor é removido e os membros ficam sem fator setorial.
+    c_sets = {frozenset(c_map.index[c_map == f]) for f in c_fac}
+    for f in list(s_fac):
+        members = frozenset(s_map.index[s_map == f])
+        if members in c_sets:
+            s_fac.remove(f)
+            s_map = s_map.where(s_map != f, None)
+            s_un = sorted(set(s_un) | set(members))
+            s_notes.append(f"setor: {f} tem os mesmos membros de um fator de país; removido")
     return FactorStructure(
         country=c_map, sector=s_map, country_factors=c_fac, sector_factors=s_fac,
         merged_countries=c_merged, merged_sectors=s_merged,
@@ -248,10 +254,10 @@ def _book_to_price_last(
     bp = pd.Series(np.nan, index=issuers, dtype=float)
     src = pd.Series("sem_dado", index=issuers, dtype=object)
     if md is None or md.fundamentals is None or md.fundamentals.empty:
-        return bp, src.where(False, "sem_marketdata")
+        return bp, pd.Series("sem_marketdata", index=issuers, dtype=object)
     fund = md.fundamentals
     if "price_to_book" not in fund.columns:
-        return bp, src.where(False, "sem_price_to_book")
+        return bp, pd.Series("sem_price_to_book", index=issuers, dtype=object)
     fx_last = fx_for_lines(md).ffill()
     fx_last = fx_last.iloc[-1] if len(fx_last) else pd.Series(dtype=float)
     lines = panel.lines
@@ -389,12 +395,12 @@ def _resvol(rets: np.ndarray, mkt: np.ndarray, pos: int, beta: np.ndarray,
     sl = _window(pos, RESVOL_WINDOW)
     y, m = rets[sl], mkt[sl]
     mask = np.isfinite(y) & np.isfinite(m)[:, None] & np.isfinite(beta)[None, :]
-    with np.errstate(invalid="ignore"):
-        e = np.where(mask, y - alpha[None, :] - beta[None, :] * m[:, None], np.nan)
-    n = mask.sum(axis=0)
+    n = mask.sum(axis=0).astype(float)
     with np.errstate(invalid="ignore", divide="ignore"):
-        sd = np.nanstd(np.where(mask, e, np.nan), axis=0, ddof=1) if e.size else np.full(
-            rets.shape[1], np.nan)
+        e = np.where(mask, y - alpha[None, :] - beta[None, :] * m[:, None], 0.0)
+        mean_e = e.sum(axis=0) / n
+        ss = np.where(mask, (e - mean_e) ** 2, 0.0).sum(axis=0)
+        sd = np.sqrt(ss / (n - 1.0))
     return np.where(n >= RESVOL_MIN_OBS, sd, np.nan)
 
 

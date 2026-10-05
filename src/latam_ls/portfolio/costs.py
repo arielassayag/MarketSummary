@@ -122,9 +122,10 @@ def _resolve_daily_vol(daily_vol: pd.Series, ids: pd.Index) -> tuple[pd.Series, 
 
 
 def _clean_str(s: pd.Series) -> pd.Series:
-    out = s.astype(object).where(s.notna(), None)
-    return out.map(lambda v: None if v is None or str(v).strip() in ("", "nan", "None")
-                   else str(v).strip())
+    """Texto limpo ou ``None`` (ausente); nunca string vazia ou 'nan'."""
+    vals = [v.strip() if isinstance(v, str) and v.strip() not in ("", "nan", "None") else None
+            for v in s.tolist()]
+    return pd.Series(vals, index=s.index, dtype=object)
 
 
 def _leg_frame(sides: pd.DataFrame, leg: str, ids: pd.Index) -> pd.DataFrame:
@@ -164,7 +165,7 @@ def _leg_params(leg_df: pd.DataFrame, panel_assets: pd.DataFrame, vol: pd.Series
     country = panel_assets["country"].reindex(ids) if "country" in panel_assets.columns \
         else pd.Series(np.nan, index=ids, dtype=object)
     market = pd.Series(
-        [listing_market(t) if t is not None else (c if isinstance(c, str) else "NA")
+        [listing_market(t) if isinstance(t, str) else (c if isinstance(c, str) else "NA")
          for t, c in zip(leg_df["ticker"], country, strict=True)],
         index=ids, dtype=object,
     )

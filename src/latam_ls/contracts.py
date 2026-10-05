@@ -433,6 +433,16 @@ class DecisionType(StrEnum):
     REJECT = "REJECT"
 
 
+class DecisionMode(StrEnum):
+    """AUTONOMOUS: decisão do PM autônomo CDP sob gates determinísticos. HUMAN: decisão humana."""
+
+    AUTONOMOUS = "AUTONOMOUS"
+    HUMAN = "HUMAN"
+
+
+AUTONOMOUS_DECIDER = "CDP — Cabra da Peste (PM autônomo)"
+
+
 FORBIDDEN_APPROVERS = {"", "system", "sistema", "ai", "ia", "llm", "bot", "auto", "claude", "demo"}
 
 
@@ -484,15 +494,23 @@ class Decision(_Model):
     co_sign_reasons: list[str] = Field(default_factory=list)
     journal: DecisionJournal | None = None
     audit_head_hash: str | None = Field(default=None, description="Topo da trilha de auditoria no momento da decisão")
+    mode: DecisionMode = DecisionMode.HUMAN
+    pm_decision_hash: str | None = Field(default=None, description="Hash da decisão estruturada do agente PM (modo autônomo)")
+    risk_gate_hash: str | None = Field(default=None, description="Hash do resultado dos gates determinísticos de risco")
 
     _tz = field_validator("decided_at")(classmethod(lambda cls, v: _require_tz(v)))
 
-    @field_validator("approver")
-    @classmethod
-    def _human(cls, v: str) -> str:
-        if v.strip().lower() in FORBIDDEN_APPROVERS:
-            raise ValueError("A aprovação exige um responsável humano identificado (sem autoaprovação).")
-        return v.strip()
+    @model_validator(mode="after")
+    def _decider(self) -> Decision:
+        name = self.approver.strip()
+        if self.mode == DecisionMode.HUMAN and name.lower() in FORBIDDEN_APPROVERS:
+            raise ValueError("Decisão humana exige um responsável identificado (sem autoaprovação disfarçada).")
+        if self.mode == DecisionMode.AUTONOMOUS:
+            if name != AUTONOMOUS_DECIDER:
+                raise ValueError(f"Decisões autônomas são assinadas por '{AUTONOMOUS_DECIDER}'.")
+            if self.decision == DecisionType.APPROVE and not (self.pm_decision_hash and self.risk_gate_hash):
+                raise ValueError("Decisão autônoma exige hashes da decisão do agente PM e dos gates de risco.")
+        return self
 
     @field_validator("co_signer")
     @classmethod

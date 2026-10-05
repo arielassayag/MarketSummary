@@ -423,10 +423,11 @@ def value(panel: AssetPanel, md: MarketData, model: RiskModel | None,
     px = last_close(md, sel["ticker"], as_of)["price"]
     same_ccy = sel["currency_match"].fillna(False).astype(bool)
     eps = f["trailing_eps"].where(same_ccy)
-    blocked = (~(f["trailing_pe"] > 0) & f["trailing_eps"].notna() & ~same_ccy)
+    blocked = ~(f["trailing_pe"] > 0) & f["trailing_eps"].notna() & ~same_ccy
     if blocked.any():
+        blocked_ids = blocked.index[blocked].tolist()
         notes.append(f"LPA não usado por moeda de cotação ≠ moeda do balanço em "
-                     f"{int(blocked.sum())} emissor(es): {_fmt_ids(blocked.index[blocked].tolist())}.")
+                     f"{len(blocked_ids)} emissor(es): {_fmt_ids(blocked_ids)}.")
     comps = {
         "earnings_yield": earnings_yield(f["trailing_pe"], eps, px),
         "book_to_price": _inverse_positive(f["price_to_book"]),

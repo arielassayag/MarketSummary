@@ -33,6 +33,7 @@ from ..contracts import (
     Side,
     ViewSource,
 )
+from .approval import co_sign_reasons
 
 NA = "n/d"
 TOP_N = 10
@@ -86,6 +87,11 @@ def fmt_pct(x: float | None, digits: int = 2, signed: bool = False) -> str:
 def fmt_usd_mm(x: float | None, digits: int = 2, signed: bool = False) -> str:
     """Valor em USD como milhões pt-BR (``1_500_000`` ⇒ ``USD 1,50 mm``); ausente ⇒ ``n/d``."""
     return f"USD {_br(float(x) / 1e6, digits, signed)} mm" if _finite(x) else NA
+
+
+def fmt_usd(x: float | None, digits: int = 0, signed: bool = False) -> str:
+    """Valor em USD por extenso pt-BR (``4000`` ⇒ ``USD 4.000``); ausente ⇒ ``n/d``."""
+    return f"USD {_br(float(x), digits, signed)}" if _finite(x) else NA
 
 
 def fmt_bps(x: float | None, digits: int = 1) -> str:
@@ -194,7 +200,10 @@ def _section_header(proposal: Proposal, cfg: FundConfig, state: ProposalState,
     out = [f"# {cfg.fund.name} — Proposta da semana de {fmt_date(proposal.week)} "
            f"(v{proposal.version})", ""]
     if synthetic:
-        notice = proposal.data_notice or SIMULATED_DATA_NOTICE
+        notice = proposal.data_notice or ""
+        if notice.upper().startswith(SIMULATED_DATA_NOTICE):
+            notice = notice[len(SIMULATED_DATA_NOTICE):].lstrip(" —-:")
+        notice = notice or "dados gerados por código para teste/demonstração."
         out += [f"> **{SIMULATED_DATA_NOTICE}** — {notice}",
                 "> Esta proposta NÃO usa preços reais e não deve embasar decisões de investimento.",
                 ""]
@@ -322,19 +331,23 @@ def _thesis_lines(positions: list[PositionTarget], notes: dict[str, ResearchNote
                   squeeze: dict[str, ResearchNote], fb: FactBook | None,
                   side: Side) -> list[str]:
     out: list[str] = []
+    without: list[str] = []
     for p in positions:
         note = notes.get(p.issuer_id)
+        sq = squeeze.get(p.issuer_id) if side == Side.SHORT else None
+        if note is None and (sq is None or sq.squeeze is None):
+            without.append(p.issuer_id)
+            continue
         out.append(f"- **{p.name} ({p.issuer_id})**")
-        if note is None:
-            out.append("  - _Sem nota de pesquisa para este emissor._")
-        else:
+        if note is not None:
             out.append(f"  - Tese _({_note_label(note)})_:")
             out.append(f"    > {render_research_text(note.thesis, fb)}")
-        sq = squeeze.get(p.issuer_id)
-        if side == Side.SHORT and sq is not None and sq.squeeze is not None:
+        if sq is not None and sq.squeeze is not None:
             out.append(f"  - Risco de short squeeze _({_note_label(sq)})_: "
                        f"**{sq.squeeze.verdict}** —")
             out.append(f"    > {render_research_text(sq.squeeze.rationale, fb)}")
+    if without:
+        out.append("- _Sem nota de pesquisa:_ " + ", ".join(without))
     return out
 
 
@@ -419,7 +432,7 @@ def _section_trades(proposal: Proposal) -> list[str]:
          + ", ".join(f"{k} {v}" for k, v in sorted(counts.items())) + ")"],
         ["Volume bruto negociado", f"{fmt_usd_mm(gross)} ({fmt_pct(gross / nav)} do NAV)"],
         ["Turnover (Σ|Δw|)", fmt_pct(turnover)],
-        ["Custo estimado", f"{fmt_usd_mm(cost_usd, 3)} "
+        ["Custo estimado", f"{fmt_usd(cost_usd)} "
          f"({fmt_bps(cost_usd / costed_gross * 1e4 if costed_gross > 0 else None)} do volume; "
          f"{fmt_pct(cost_usd / nav, 3)} do NAV)" if costed else NA],
         ["Maior % do ADTV", fmt_pct(max(pct_adtv), 1) if pct_adtv else NA],
@@ -465,7 +478,8 @@ def _section_research(pack: ResearchPack | None, fb: FactBook | None) -> list[st
             if _finite(v.max_abs_weight):
                 limits.append(f"|w| ≤ {fmt_pct(v.max_abs_weight)}")
             origin = "Gestor (PM)" if v.source == ViewSource.PM else "IA"
-            rows.append([v.issuer_id, origin, f"{v.score:+d}", fmt_pct(v.confidence, 0),
+            rows.append([v.issuer_id, origin, f"{v.score:+d}" if v.score else "0",
+                         fmt_pct(v.confidence, 0),
                          ", ".join(limits) or "—", v.author])
         out += ["### Visões aplicadas", ""]
         out += _table(["Emissor", "Origem", "Score", "Confiança", "Restrições", "Autor"], rows)
@@ -528,6 +542,11 @@ def _section_checklist(proposal: Proposal, pack: ResearchPack | None,
                      + ", ".join(sorted(h.currency for h in proposal.fx_hedges)) + ".")
     if proposal.optimizer.notes:
         items.append("Revisar observações/relaxamentos do otimizador.")
+    if not hard:
+        co_sign = co_sign_reasons(proposal)
+        if co_sign:
+            items.append("Obter co-assinatura independente de Risco/Compliance (quatro olhos): "
+                         + " ".join(co_sign))
     items.append("Aprovar ou rejeitar com justificativa — a decisão fica vinculada aos hashes de "
                  "snapshot, configuração, pesquisa e proposta.")
     return ["## Decisões pendentes do gestor", ""] + [f"- [ ] {i}" for i in items] + [""]
@@ -535,12 +554,13 @@ def _section_checklist(proposal: Proposal, pack: ResearchPack | None,
 
 def render_memo(proposal: Proposal, pack: ResearchPack | None = None,
                 factbook: FactBook | None = None, *, config: FundConfig | None = None,
-                state: ProposalState | None = None) -> str:
+                state: ProposalState | None = None, audit_head_hash: str | None = None) -> str:
     """Renderiza o memo Markdown (pt-BR) da proposta para o gestor.
 
     ``config`` fornece nome do fundo, meta e limites exibidos como referência (padrão: valores
     default do mandato). ``state`` permite informar o estado derivado do livro; sem ele, o
     estado é ``BLOCKED`` se houver falha HARD e ``IN_REVIEW`` caso contrário.
+    ``audit_head_hash`` (topo da trilha de auditoria) é impresso no rodapé quando informado.
     """
     cfg = config or FundConfig()
     synthetic = _is_synthetic(proposal, pack, factbook)
@@ -559,6 +579,8 @@ def render_memo(proposal: Proposal, pack: ResearchPack | None = None,
     footer = ("_Todos os números deste memo foram calculados e formatados por código a partir da "
               "proposta; textos de pesquisa são citados como fornecidos e rotulados pela origem._")
     parts += ["---", "", footer]
+    if audit_head_hash:
+        parts += ["", f"_Topo da trilha de auditoria na geração: `{audit_head_hash}`_"]
     if synthetic:
         parts += ["", f"**{SIMULATED_DATA_NOTICE}**"]
     return "\n".join(parts).rstrip() + "\n"

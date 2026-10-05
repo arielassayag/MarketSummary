@@ -18,6 +18,7 @@ Todas as contas são determinísticas; nenhum número vem de LLM.
 from __future__ import annotations
 
 import math
+import numbers
 from dataclasses import dataclass, field
 
 import numpy as np
@@ -41,6 +42,11 @@ MIN_IC_OBS = 3
 
 ORTHOGONALITY_TOL = 1e-8
 """Tolerância relativa usada apenas para reportar a qualidade numérica da ortogonalização."""
+
+MAX_WLS_WEIGHT_RATIO = 1e4
+"""Teto do peso WLS (1/σ²) relativo à mediana: equivale a um piso de σ específico de 1% da
+mediana. Evita que uma variância específica quase nula domine a regressão e destrua o posto
+numérico; quando aplicado, é registrado nas notas."""
 
 
 # ==========================================================
@@ -210,7 +216,8 @@ def _resolve_weights(
 ) -> dict[str, float]:
     """Valida e normaliza os pesos sobre os sinais disponíveis (soma 1)."""
     for name, w in requested.items():
-        if not isinstance(w, (int, float)) or not math.isfinite(float(w)) or float(w) < 0:
+        ok = isinstance(w, numbers.Real) and not isinstance(w, bool)
+        if not ok or not math.isfinite(float(w)) or float(w) < 0:
             raise ValueError(f"Peso inválido para o sinal '{name}': {w!r} (precisa ser ≥ 0).")
     missing = [s for s in requested if s not in available and requested[s] > 0]
     if missing:
@@ -324,7 +331,7 @@ def build_alpha(
     contrib_u = contrib_u.where(alpha_raw_u.notna(), axis=0)
 
     if acfg.orthogonalize_to_factors:
-        inv_var = 1.0 / spec_var.where(spec_var > 0)
+        inv_var = wls_weights(spec_var, notes)
         alpha_u, used, rank = _wls_residual(alpha_raw_u, model.exposures, inv_var)
         lost = universe[(alpha_raw_u.notna() & alpha_u.isna()).to_numpy(dtype=bool)].tolist()
         if lost:
@@ -369,6 +376,23 @@ def build_alpha(
     )
 
 
+def wls_weights(specific_var: pd.Series, notes: list[str] | None = None) -> pd.Series:
+    """Pesos da ortogonalização: ``1/σ²_específico``, limitados a ``MAX_WLS_WEIGHT_RATIO`` ×
+    mediana. Variância ausente ou não positiva ⇒ ``NaN`` (emissor não ortogonalizável)."""
+    var = pd.to_numeric(specific_var, errors="coerce").astype(float)
+    w = 1.0 / var.where(var > 0)
+    med = float(w.median()) if w.notna().any() else float("nan")
+    if med > 0:
+        cap = med * MAX_WLS_WEIGHT_RATIO
+        capped = w.index[(w > cap).to_numpy(dtype=bool)].tolist()
+        if capped and notes is not None:
+            notes.append(f"Peso WLS limitado a {MAX_WLS_WEIGHT_RATIO:g}× a mediana para "
+                         f"{len(capped)} emissor(es) com variância específica quase nula: "
+                         f"{_fmt_ids([str(i) for i in capped])}.")
+        w = w.clip(upper=cap)
+    return w
+
+
 def _orthogonality_notes(
     alpha_raw: pd.Series,
     alpha: pd.Series,
@@ -376,23 +400,31 @@ def _orthogonality_notes(
     weights: pd.Series,
     used: pd.Index,
 ) -> list[str]:
-    """Mede quanto do alpha bruto era fatorial e a precisão numérica de ``Bᵀ W α ≈ 0``."""
+    """Mede quanto do alpha bruto era fatorial e a precisão numérica de ``Bᵀ W α ≈ 0``.
+
+    A precisão é o maior cosseno, na métrica ``W``, entre o alpha puro e cada coluna de
+    exposição (invariante à escala de fatores e pesos).
+    """
     if len(used) == 0:
         return ["Ortogonalização sem emissores válidos."]
-    raw = alpha_raw.loc[used]
-    pure = alpha.loc[used]
-    var_raw = float((raw ** 2).sum())
-    removed = 1.0 - float((pure ** 2).sum()) / var_raw if var_raw > 0 else 0.0
-    X = exposures.reindex(used).astype(float)
-    X = X.loc[:, X.notna().all(axis=0)]
     w = weights.loc[used].to_numpy(dtype=float)
-    resid_exp = X.to_numpy().T @ (w * pure.to_numpy())
-    ref = np.abs(X.to_numpy()).T @ (w * np.abs(raw.to_numpy()))
-    rel = float(np.max(np.abs(resid_exp) / np.where(ref > 0, ref, 1.0))) if len(ref) else 0.0
-    msgs = [f"Ortogonalização WLS (pesos 1/σ²): {removed:.1%} da soma de quadrados do alpha "
+    raw = alpha_raw.loc[used].to_numpy(dtype=float)
+    pure = alpha.loc[used].to_numpy(dtype=float)
+    ss_raw = float(np.sum(w * raw ** 2))
+    removed = 1.0 - float(np.sum(w * pure ** 2)) / ss_raw if ss_raw > 0 else 0.0
+    X = exposures.reindex(used).astype(float)
+    X = X.loc[:, X.notna().all(axis=0)].to_numpy()
+    norm_x = np.sqrt((w[:, None] * X ** 2).sum(axis=0))
+    norm_a = float(np.sqrt(np.sum(w * pure ** 2)))
+    cos = 0.0
+    if X.shape[1] and norm_a > 0:
+        dots = np.abs(X.T @ (w * pure))
+        cos = float(np.max(np.where(norm_x > 0, dots / np.where(norm_x > 0, norm_x, 1.0), 0.0))
+                    / norm_a)
+    msgs = [f"Ortogonalização WLS (pesos 1/σ²): {removed:.1%} da variância ponderada do alpha "
             "bruto era explicada por fatores e foi removida."]
-    if rel > ORTHOGONALITY_TOL:
-        msgs.append(f"Aviso numérico: |Bᵀ W α| relativo máximo = {rel:.2e}.")
+    if cos > ORTHOGONALITY_TOL:
+        msgs.append(f"Aviso numérico: cosseno máximo entre alpha puro e fatores = {cos:.2e}.")
     return msgs
 
 

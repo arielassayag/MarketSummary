@@ -37,7 +37,7 @@ import pandas as pd
 
 from ..contracts import BookedPosition, BookEntry, LedgerRow
 from ..risk.types import TRADING_DAYS, RiskModel
-from .memo import fmt_pct, fmt_usd_mm
+from .memo import fmt_pct, fmt_usd
 
 LEDGER_COLUMNS: list[str] = list(LedgerRow.model_fields)
 _REQUIRED_FLOATS = ("nav_usd", "pnl_usd", "ret", "gross", "net")
@@ -197,7 +197,8 @@ def _factor_return_path(model: RiskModel, issuer_returns: pd.DataFrame | None,
                         dates: pd.DatetimeIndex) -> tuple[np.ndarray, list[str]]:
     """Matriz T×K de retornos fatoriais (linhas ``NaN`` quando indisponíveis) e a origem."""
     names = model.factor_names
-    fr = model.factor_returns.reindex(index=dates, columns=names).to_numpy(dtype=float)
+    fr = model.factor_returns.reindex(index=dates, columns=names).to_numpy(dtype=float,
+                                                                         copy=True)
     source = ["modelo" if np.isfinite(row).all() else "" for row in fr]
     if issuer_returns is not None:
         ir = issuer_returns.sort_index()
@@ -359,7 +360,7 @@ def mark_to_market(booked: BookEntry, line_returns: pd.DataFrame, start: date, e
                 raise ValueError("Custo de execução informado não é finito.")
             cost -= abs(float(execution_cost_usd))
             notes.append("custo de execução estimado debitado: "
-                         f"{fmt_usd_mm(abs(execution_cost_usd), 3)}")
+                         f"{fmt_usd(abs(execution_cost_usd))}")
 
         factor_pnl: float | None = None
         specific_pnl: float | None = None

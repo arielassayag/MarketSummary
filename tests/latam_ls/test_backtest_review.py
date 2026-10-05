@@ -173,13 +173,19 @@ def test_provenance_hashes_detect_tampering(mx_run, md):
 # ======================================================================
 
 def test_avg_turnover_excludes_actual_inception_after_hold_weeks(md):
-    # 26/06: < 10 elegíveis (mantém caixa); 03/07: inception real; 10/07: semana normal.
-    res = run_backtest(md, CFG, BacktestConfig(start=date(2023, 6, 26), end=date(2023, 7, 14),
+    # Início antes de haver modelo/elegíveis: semanas em caixa e só depois a montagem real.
+    res = run_backtest(md, CFG, BacktestConfig(start=date(2023, 6, 26), end=date(2023, 7, 21),
                                                risk_target_mode="cap"))
     wk = res.weekly
-    assert wk["status"].tolist() == ["manter:poucos_elegiveis", "ok", "ok"]
-    assert wk["turnover"].iloc[1] > 1.0  # montagem a partir do caixa
-    assert res.metrics["avg_turnover_weekly"] == pytest.approx(wk["turnover"].iloc[2])
+    assert wk["status"].iloc[0].startswith("manter:")
+    first_invested = wk.index[wk["gross"] > 0][0]
+    assert first_invested != wk.index[0]
+    assert wk.loc[first_invested, "turnover"] == pytest.approx(wk.loc[first_invested, "gross"])
+    after = wk.index > first_invested
+    assert after.any()
+    # A montagem (turnover = gross) não entra na média de turnover semanal.
+    assert res.metrics["avg_turnover_weekly"] == pytest.approx(wk.loc[after, "turnover"].mean())
+    assert wk.loc[first_invested, "turnover"] > res.metrics["avg_turnover_weekly"]
 
 
 def _toy_frames(n_nan_attr: int = 0):

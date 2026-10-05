@@ -499,8 +499,8 @@ def test_weekly_report_changes_and_shadow_comparison():
     assert "| CCC | Saída |" in carteira and "| DDD | Entrada |" in carteira
     assert "| EEE | Inversão |" in carteira and "EEEADR → EEE3.SA" in carteira
     assert "Turnover (Σ|Δw|)" in carteira.replace("\\|", "|")
-    assert "9,00%" in carteira  # 1% + 0,5% + 2% + 2% + 2% + 1,5% de turnover = 9%
-    assert "parcial" not in carteira or "CCC" not in [p for p in ("CCC",)]
+    assert "| 7,50% |" in carteira  # Σ|Δw| = 1% + 0,5% + 2% + 2% + 2%
+    assert "parcial" not in carteira  # todas as ordens desta carteira têm custo estimado
     sombra = md.split("## CDP vs sombra só-quant", 1)[1].split("## Diário de decisão", 1)[0]
     assert "Nomes em comum (mesmo lado) | 2 |" in sombra
     assert "Alpha esperado (a.a.) | 3,10% | 2,60% | +0,50%" in sombra

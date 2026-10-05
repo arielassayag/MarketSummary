@@ -135,9 +135,10 @@ def prepare_week(md: MarketData, cfg: FundConfig, week: date, *, nav: float | No
                  drawdown: float | None = None, themes: dict[str, list[str]] | None = None,
                  ) -> WeekContext:
     """Monta o contexto quantitativo da semana com dados até ``md.as_of`` (pregão anterior)."""
-    if md.as_of >= week:
-        raise ValueError(f"Snapshot {md.as_of} não é anterior à data de decisão {week}: "
-                         "a decisão de segunda usa dados até o pregão anterior.")
+    provisional = week in md.manifest.provisional_dates
+    if md.as_of > week or (md.as_of == week and not provisional):
+        raise ValueError(f"Snapshot {md.as_of} inválido para a decisão de {week}: a decisão usa "
+                         "dados até o momento da análise (pregão anterior + barra provisória do dia).")
     notes: list[str] = []
     panel = build_asset_panel(md, cfg)
     issuers = panel.eligible

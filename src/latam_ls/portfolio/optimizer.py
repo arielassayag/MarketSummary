@@ -17,6 +17,9 @@ Problema (pesos ``w`` em fração do NAV, separados em perna comprada ``l ≥ 0`
          |w − w₀| ≤ max_trade                 (dias de execução × participação × ADTV)
          Σ|w − w₀| ≤ turnover_max             (fora da inception)
 
+Meta de vol: por padrão é um teto (``risk_target_mode="cap"``); o modo ``"match"`` calibra a
+escala do alpha para que a carteira atinja a meta (ver :func:`optimize`).
+
 Duas passadas: posições com |w| < ``min_position_weight`` são fixadas em zero e o problema é
 resolvido de novo (até ``MAX_PASSES`` vezes). Se o problema for inviável, aplica-se a escada
 de relaxamento documentada (turnover → estilos ×2 → país/setor ×1,5 → beta ×2), sempre
@@ -61,8 +64,12 @@ _INFEASIBLE = {cp.INFEASIBLE, cp.INFEASIBLE_INACCURATE}
 
 _ALLOWED_OVERRIDES = {
     "vol_target", "vol_target_annual", "gross_max", "gross_multiplier", "risk_aversion",
-    "max_weekly_turnover", "exclude_issuers",
+    "max_weekly_turnover", "exclude_issuers", "risk_target_mode",
 }
+RISK_TARGET_MODES = ("cap", "match")
+MATCH_REL_TOL = 0.005        # "na meta": vol ≥ 99,5% da meta (o teto continua duro)
+MAX_ALPHA_SCALE = 64.0
+MATCH_BISECT_STEPS = 8
 
 RELAXATION_STEPS: tuple[tuple[str, str], ...] = (
     ("turnover", "Relaxamento 1: limite de turnover semanal removido"),
@@ -95,6 +102,7 @@ class OptimizationResult:
     factor_exposures: pd.Series = field(default_factory=lambda: pd.Series(dtype=float))
     vol_target: float = float("nan")
     passes: int = 1
+    alpha_scale: float = 1.0
 
 
 # ==========================================================
@@ -208,9 +216,11 @@ def _clean_current(current: pd.Series | None) -> pd.Series:
     cur = pd.to_numeric(current, errors="coerce")
     if cur.isna().any():
         raise ValueError("Pesos atuais com NaN: posição desconhecida não pode virar zero.")
+    cur = cur.astype(float)
+    cur.index = cur.index.map(str)
     if cur.index.duplicated().any():
         raise ValueError("Pesos atuais com emissores duplicados.")
-    return cur.astype(float)
+    return cur
 
 
 def _col(df: pd.DataFrame | None, name: str, idx: pd.Index, default: object = np.nan) -> pd.Series:
@@ -390,6 +400,7 @@ class _Settings:
     turnover_max: float | None
     exclude: tuple[str, ...]
     notes: tuple[str, ...]
+    risk_target_mode: str = "cap"
 
 
 def _resolve_settings(cfg: FundConfig, overrides: dict | None, inception: bool) -> _Settings:
@@ -428,7 +439,10 @@ def _resolve_settings(cfg: FundConfig, overrides: dict | None, inception: bool) 
     excl = tuple(sorted(map(str, ov.get("exclude_issuers", []) or [])))
     if excl:
         notes.append(f"Emissores excluídos pelo gestor (apenas saída): {', '.join(excl)}.")
-    return _Settings(vt, gross * mult, lam, turnover, excl, tuple(notes))
+    mode = str(ov.get("risk_target_mode", "cap"))
+    if mode not in RISK_TARGET_MODES:
+        raise ValueError(f"risk_target_mode inválido: {mode!r} (use {RISK_TARGET_MODES}).")
+    return _Settings(vt, gross * mult, lam, turnover, excl, tuple(notes), mode)
 
 
 @dataclass(frozen=True)
@@ -606,13 +620,16 @@ def _build_problem(alpha: pd.Series, model: RiskModel, cons: pd.DataFrame, cm: C
                              f"{list(s.index[~np.isfinite(s.to_numpy(dtype=float))])}")
 
     fee = pd.to_numeric(cons["borrow_fee"], errors="coerce")
-    # Aluguel ausente só é aceitável onde não há short possível nem legado a zerar.
-    short_relevant = (cons["max_short"] > 0) | (w0 < 0)
-    bad_fee = fee.isna() & short_relevant
+    new_short = cons["max_short"] > 0
+    bad_fee = fee.isna() & new_short
     if bad_fee.any():
         raise ValueError("Taxa de aluguel ausente para shorts possíveis: "
                          f"{list(fee.index[bad_fee])}")
-    fee = fee.where(short_relevant, 0.0)  # sem short possível: termo multiplica s ≡ 0
+    # Short legado sem taxa (aluguel não mais disponível): taxa máxima do mandato
+    # (conservador, incentiva a recompra). Sem short possível nem legado: s ≡ 0.
+    legacy = fee.isna() & (w0 < 0)
+    fee = fee.where(~legacy, cfg.shorting.max_borrow_fee)
+    fee = fee.where(new_short | (w0 < 0), 0.0)
 
     rk = cfg.risk
     return _Problem(
@@ -688,6 +705,52 @@ def _diag(status: str, solver: str, seconds: float, objective: float | None,
     )
 
 
+def _vol_of(p: _Problem, w: np.ndarray) -> float:
+    gw = p.G @ w
+    return float(np.sqrt(gw @ gw + np.sum((p.sd * w) ** 2)))
+
+
+def _match_vol_target(p: _Problem, relax: _Relax, base: _Outcome
+                      ) -> tuple[float, _Outcome, float, bool]:
+    """Menor κ ≥ 1 tal que o portfólio com alpha κ·α atinja a meta de vol (teto ativo).
+
+    Custos, aluguel e aversão a risco não mudam: escalar α equivale a reduzir proporcionalmente
+    a aversão a custo/risco relativa ao alpha. Retorna ``(κ, solução, segundos, atingiu)``.
+    Se a meta for inatingível até ``MAX_ALPHA_SCALE`` (capacidade de liquidez/aluguel), devolve
+    a solução de maior vol encontrada.
+    """
+    no_fix = np.zeros(len(p.ids), dtype=bool)
+    target = p.vol_target * (1 - MATCH_REL_TOL)
+    secs = 0.0
+    lo, best_lo = 1.0, base
+    hi: float | None = None
+    best_hi: _Outcome | None = None
+    k = 2.0
+    while k <= MAX_ALPHA_SCALE + TOL:
+        o = _solve(replace(p, alpha=p.alpha * k), relax, no_fix, no_fix)
+        secs += o.seconds
+        if o.w is None:
+            break
+        if _vol_of(p, o.w) >= target:
+            hi, best_hi = k, o
+            break
+        lo, best_lo = k, o
+        k *= 2.0
+    if hi is None or best_hi is None:
+        return lo, best_lo, secs, False
+    for _ in range(MATCH_BISECT_STEPS):
+        mid = float(np.sqrt(lo * hi))
+        o = _solve(replace(p, alpha=p.alpha * mid), relax, no_fix, no_fix)
+        secs += o.seconds
+        if o.w is None:
+            break
+        if _vol_of(p, o.w) >= target:
+            hi, best_hi = mid, o
+        else:
+            lo = mid
+    return hi, best_hi, secs, True
+
+
 def optimize(alpha: pd.Series, model: RiskModel, constraints: pd.DataFrame,
              cost_model: CostModel, cfg: FundConfig, nav: float,
              current: pd.Series | None = None, inception: bool = False,
@@ -701,7 +764,13 @@ def optimize(alpha: pd.Series, model: RiskModel, constraints: pd.DataFrame,
     colunas obrigatórias). ``market_w``: pesos de mercado, usados para o beta implícito do
     modelo quando ``constraints['beta']`` está ausente. ``overrides`` (do gestor, só apertam o
     mandato): ``vol_target`` (dentro da banda), ``gross_max``, ``gross_multiplier``,
-    ``risk_aversion``, ``max_weekly_turnover``, ``exclude_issuers``.
+    ``risk_aversion``, ``max_weekly_turnover``, ``exclude_issuers``, ``risk_target_mode``.
+
+    ``risk_target_mode``: ``"cap"`` (padrão) trata a meta de vol como teto — com alpha fraco
+    diante dos custos, a carteira fica abaixo da meta (a compliance alerta em ``VOL_MIN``).
+    ``"match"`` calibra o menor multiplicador κ ≥ 1 do alpha que faz o teto de vol ficar ativo
+    (equivale a reduzir a aversão a custo/risco relativa ao alpha); κ vai para
+    ``alpha_scale`` e para as notas, e ``expected_alpha`` continua usando o alpha original.
 
     Levanta :class:`OptimizationError` se nenhum degrau da escada de relaxamento tornar o
     problema viável (nunca devolve carteira zerada silenciosamente).
@@ -720,7 +789,6 @@ def optimize(alpha: pd.Series, model: RiskModel, constraints: pd.DataFrame,
     if cons.index.duplicated().any():
         raise ValueError("Restrições com emissores duplicados.")
     cur = _clean_current(current)
-    cur.index = cur.index.map(str)
     held_outside = sorted(set(cur.index[cur != 0]) - set(cons.index))
     if held_outside:
         raise ValueError(f"Posições atuais sem linha na tabela de restrições: {held_outside}")
@@ -761,10 +829,13 @@ def optimize(alpha: pd.Series, model: RiskModel, constraints: pd.DataFrame,
     excluded_pm = cons.index.isin(settings.exclude)
     for i in cons.index[excluded_pm]:
         extra_reasons[i].append("excluido_gestor")
-    block_new = no_alpha | pd.Series(excluded_pm, index=cons.index)
-    cons.loc[block_new, "max_long"] = 0.0
-    cons.loc[block_new, "max_short"] = 0.0
-    a_obj = a.where(~no_alpha, 0.0)  # termo irrelevante: posição só pode ir a zero
+    # Sem alpha: pode manter ou reduzir, nunca aumentar/abrir. Excluído pelo gestor: zera.
+    cons.loc[no_alpha, "max_long"] = np.minimum(cons.loc[no_alpha, "max_long"],
+                                                w0[no_alpha].clip(lower=0.0))
+    cons.loc[no_alpha, "max_short"] = np.minimum(cons.loc[no_alpha, "max_short"],
+                                                 (-w0[no_alpha]).clip(lower=0.0))
+    cons.loc[excluded_pm, ["max_long", "max_short"]] = 0.0
+    a_obj = a.where(~no_alpha, 0.0)  # sem retorno esperado: só risco e custo pesam
 
     # Beta: preferir a coluna; lacunas ⇒ beta implícito do modelo (com market_w) ou 1,0.
     if "beta" in cons.columns:
@@ -830,6 +901,22 @@ def optimize(alpha: pd.Series, model: RiskModel, constraints: pd.DataFrame,
     if outcome.errors:
         notes.append("Falhas de solver antes do sucesso: " + "; ".join(outcome.errors))
 
+    # ---------- modo "match": calibra a escala do alpha para atingir a meta de vol ----------
+    alpha_raw = p.alpha.copy()
+    kappa = 1.0
+    if settings.risk_target_mode == "match" and outcome.w is not None \
+            and _vol_of(p, outcome.w) < p.vol_target * (1 - MATCH_REL_TOL):
+        kappa, outcome, secs, reached = _match_vol_target(p, relax, outcome)
+        total_seconds += secs
+        p = replace(p, alpha=alpha_raw * kappa)
+        if reached:
+            notes.append(f"Modo 'match': alpha escalado em {kappa:.2f}x para atingir a meta de "
+                         f"vol (custos, aluguel e limites inalterados).")
+        else:
+            notes.append(f"Modo 'match': meta de vol inatingível até {MAX_ALPHA_SCALE:.0f}x "
+                         f"(capacidade de liquidez/aluguel); usado {kappa:.2f}x.")
+    assert outcome.w is not None
+
     # ---------- passadas de limpeza (posição mínima) ----------
     min_pos = cfg.risk.min_position_weight
     w = outcome.w
@@ -870,12 +957,11 @@ def optimize(alpha: pd.Series, model: RiskModel, constraints: pd.DataFrame,
     trades = weights - w0
     l1 = np.maximum(w, 0.0)
     s1 = np.maximum(-w, 0.0)
-    exp_alpha = float(p.alpha @ w)
+    exp_alpha = float(alpha_raw @ w)  # alpha original (sem a escala κ do modo "match")
     one_off = float(estimate_rebalance_costs(weights, w0, cost_model.reindex(cons.index)).sum())
     borrow = float(p.fee @ s1)
     cost_annual = p.amort * one_off + borrow
-    gw = p.G @ w
-    vol = float(np.sqrt(gw @ gw + np.sum((p.sd * w) ** 2)))
+    vol = _vol_of(p, w)
     if vol > p.vol_target * (1 + TOL) + TOL:
         notes.append(f"Vol ex-ante {vol:.4%} acima da meta {p.vol_target:.4%} "
                      "(imprecisão do solver).")
@@ -891,4 +977,5 @@ def optimize(alpha: pd.Series, model: RiskModel, constraints: pd.DataFrame,
         weights=weights, ex_ante_vol=vol, diagnostics=diag, relaxations=relaxations,
         expected_alpha=exp_alpha, expected_cost=one_off, borrow_cost_annual=borrow,
         trades=trades, factor_exposures=x, vol_target=p.vol_target, passes=passes,
+        alpha_scale=kappa,
     )

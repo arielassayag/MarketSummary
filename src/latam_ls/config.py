@@ -67,6 +67,10 @@ class RiskSection(_Frozen):
         {"name": "Eleição Brasil 2026 (2º turno 25/out)", "country": "BR", "start": "2026-10-05",
          "end": "2026-10-26", "vol_multiplier": 1.5},
     ])
+    bias_prior: float = Field(1.10, ge=1.0, description="Viés a priori do risco ex-ante de carteiras otimizadas")
+    bias_prior_weeks: int = Field(26, ge=0, description="Semanas de histórico antes de estimar o viés realizado")
+    var_1d_max: float = Field(0.010, gt=0)
+    es_1d_max: float = Field(0.0125, gt=0)
     country_stress_max_loss: float = Field(0.015, gt=0, description="Perda máxima por cenário de gap de país")
     country_gap_scenarios: dict[str, list[float]] = Field(default_factory=lambda: {
         "BR": [-0.10, 0.10], "MX": [-0.13], "CL": [-0.15], "PE": [-0.10], "CO": [-0.11], "AR": [-0.56, 0.41],

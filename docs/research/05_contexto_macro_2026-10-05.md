@@ -22,30 +22,31 @@
 > 1. Várias fontes primárias bloquearam a leitura automatizada: Bloomberg, CNBC, CNN, NPR, Poder360, White & Case, IBGE. Nesses casos, os números vêm de trechos de busca ou de reproduções em outros veículos.
 > 2. O orçamento de buscas da sessão acabou no meio da pesquisa. As datas de balanços do 3T26 **não foram confirmadas** e aparecem como padrão histórico **[K]/[I]**.
 > 3. Um trecho de busca afirmou um "resultado do 2º turno de 25/10" (Lula 50,90% × 49,10%). Esses números são do **2º turno de 2022**, contaminando o resultado da busca. **O 2º turno de 2026 ainda não aconteceu** (será em 2026-10-25).
+> 4. **Passe de verificação adversarial (2026-10-05):** as afirmações numéricas e datadas foram re-checadas contra fontes primárias quando acessíveis (JSON oficial do TSE, API SGS do BCB, Treasury, BLS, Fed, Banxico). Os trechos corrigidos estão marcados no texto e o resultado item a item está na seção **"Verificação independente"**, no fim. Itens sem confirmação independente estão marcados **[NÃO VERIFICADO]**.
 
 ---
 
 ## Sumário executivo
 
-1. **Brasil: Flávio Bolsonaro (PL) liderou o 1º turno, e há 2º turno em 25/out.** Com 100% das urnas apuradas, Flávio teve **47,03%** dos votos válidos (56,1 mi de votos) e Lula (PT) **45,16%** (53,9 mi). Votaram 78,92% dos eleitores. O resultado está **confirmado por várias fontes independentes** [1][2][4][5]. As pesquisas da véspera traziam Lula à frente (Datafolha/Quaest em 03/out: Lula 45–46% dos válidos, Flávio 42–45%), e Bloomberg e CNBC classificaram o resultado como surpresa. A direita ganhou peso no Senado, na Câmara e nos governos estaduais: Tarcísio foi reeleito em SP com 62,85%, e há 2º turno para governador em 6 a 7 estados [2][3]. **[F]/[S]**
+1. **Brasil: Flávio Bolsonaro (PL) liderou o 1º turno, e há 2º turno em 25/out.** Com 100% das urnas apuradas, Flávio teve **47,03%** dos votos válidos (56,1 mi de votos) e Lula (PT) **45,16%** (53,9 mi). Votaram 78,92% dos eleitores. O resultado está **confirmado no JSON oficial do TSE** [103] e por várias fontes independentes [1][2][4][5]. As pesquisas da véspera traziam Lula à frente (Datafolha/Quaest em 03/out: Lula 45–46% dos válidos, Flávio 42–45%), e Bloomberg e CNBC classificaram o resultado como surpresa. A direita ganhou peso no Senado, na Câmara e nos governos estaduais: Tarcísio foi reeleito em SP com **62,65%** (TSE, final; os 62,85% eram parciais), e há 2º turno para governador em **7 estados** (AC, AM, DF, ES, RJ, RN, TO) [103][2]. **[F]**
 2. **Reação esperada: rali de ativos brasileiros nesta segunda-feira.** Na noite de domingo, em negociação *overnight*, o EWZ subiu **+8,72% (US$ 41,52)** [9] e chegou a **+10,29% (US$ 42,12)** [2]. Ele havia fechado a sexta em US$ 38,19 [15]. A gestão da ASA espera "alta forte da bolsa, valorização do real e fechamento dos juros nominais e reais" [9]. Ressalva: a liquidez *overnight* é fina e a formação de preço real ocorre na abertura. **[F]/[S]**
-3. **O mercado entrou na eleição com risco de evento muito alto já precificado.** A vol implícita de 1 mês do EWZ estava em **~46%**, perto da máxima em 4 anos. A vol realizada estava em ~24%, e o spread implícita–realizada era o maior em 8 anos. O *open interest* em calls de EWZ chegou a **~US$ 20 bi** no início de setembro, o maior desde 2007 [14]. **[F]** Para um livro com vol-alvo de 5%, isso significa que **modelos de risco baseados só em covariância histórica subestimam o risco do Brasil até 26/out**. **[I]**
+3. **O mercado entrou na eleição com risco de evento muito alto já precificado.** A vol implícita de 1 mês do EWZ estava em **~46%**, perto da máxima em 4 anos. A vol realizada estava em ~24%, e o spread implícita–realizada era o maior em 8 anos. O *open interest* em calls de EWZ chegou a **~US$ 20 bi** no início de setembro, o maior desde 2007 [14]. **[S] [NÃO VERIFICADO]**: a fonte (blog OptionBeast) foi relida e diz exatamente isso, mas não houve confirmação independente (dados de opções da Cboe/OCC não acessíveis nesta sessão). Para um livro com vol-alvo de 5%, isso significa que **modelos de risco baseados só em covariância histórica subestimam o risco do Brasil até 26/out**. **[I]**
 4. **Brasil macro:**
    - Selic em **13,75%** depois do 5º corte seguido de 25 bp (16/set, unânime). O Copom manteve a porta aberta, mas pediu "serenidade e cautela" [17].
    - **Não há Copom em outubro.** As próximas reuniões são em **3–4/nov** e **8–9/dez** [20].
    - IPCA de agosto: −0,32% m/m e 4,22% em 12 meses (bônus de Itaipu) [21]. IPCA-15 de setembro: **+0,70%**, com 4,47% em 12 meses, perto do teto de 4,5% [22].
-   - Dívida bruta: **82,9% do PIB** em agosto, maior nível desde 2020 [23].
+   - Dívida bruta: **82,9% do PIB** em agosto (SGS 13762: 82,86%), o maior nível desde **mar/2021** (85,1%) [23][104].
    - O dólar fechou a sexta perto de **R$ 5,21–5,22** [10][32].
    - **[F]/[S]**
 5. **Global: regime "Fed voltando a subir, petróleo a US$ 100".**
    - O FOMC **subiu os juros em 25 bp para 3,75%–4,00%** em 16/set (12–0), a primeira alta desde 2023 [36]. A mediana do *dot plot* aponta mais uma alta em 2026 [38].
-   - O payroll de setembro veio fraco (+29 mil, desemprego 4,2%). A probabilidade de alta em outubro caiu para ~25–28% [40].
-   - O UST 10y bateu **5,34%**, o maior nível desde 2002, e fechou a sexta em 5,175%. O DXY está perto de ~102, a máxima em 17 meses [40].
-   - O Brent está em **~US$ 101–102** (+54% no ano) por causa das interrupções em Hormuz [42][10].
+   - O payroll de setembro veio fraco (+29 mil, desemprego 4,2%; julho revisado para −10 mil e agosto para +133 mil) [106]. A probabilidade de alta em outubro de ~25–28% (contra 70% uma semana antes) foi publicada **antes** do payroll [40]; a probabilidade pós-payroll **[NÃO VERIFICADO]**.
+   - O UST 10y bateu **5,34%** intradiário (01/out), o maior nível desde 2002 [40][108]. O fechamento oficial (Treasury CMT) foi **5,28% na sexta, 02/out**, e 5,29% em 30/set, o maior fechamento desde mai/2002 [105]. O DXY está perto de ~102, a máxima em 17 meses [40][108].
+   - O Brent está em **~US$ 101–103** por causa das interrupções em Hormuz [42][10][108]. A alta de **+54%** reportada pelo TE é a variação **em 12 meses**, não no ano (YTD) [42].
    - O VIX está baixo, em 15,31 [41].
    - **[F]/[S]**
 6. **Commodities muito dispersas:**
-   - **cobre** perto do recorde: LME a US$ 14.253,50/t em 01/out, com recorde de ~US$ 14.860–14.875/t em setembro. A greve em Escondida parou a mina desde 23/set [46].
+   - **cobre** perto do recorde: LME a US$ 14.253,50/t em 01/out, com recorde de ~US$ 14.860–14.875/t em setembro. Em **Escondida**, as operações pararam em 23/set depois da **morte de um terceirizado**, com retomada gradual a partir do dia seguinte. Os supervisores aprovaram com 95% a autorização de greve, mas a lei exige mediação antes de uma greve legal. **A mina não está parada por greve desde 23/set** [46].
    - **minério** fraco: US$ 91,35/t, −8,12% no mês, com Simandou entrando em produção [44][45].
    - **lítio** caindo: −22,5% no mês [48].
    - **petróleo** alto [42].
@@ -86,27 +87,27 @@
 
 ### 1.1 Eleições gerais, 1º turno (domingo, 2026-10-04)
 
-**Status de confirmação.** O resultado presidencial está **confirmado** por pelo menos quatro fontes independentes: Wikipedia citando o TSE [1], The Rio Times [2], Bloomberg [4] e CNBC [5]. Também bate com a cobertura ao vivo da InfoMoney [3]. A página oficial de resultados do TSE é um aplicativo JavaScript e não pôde ser lida diretamente. As diferenças entre fontes, com 100% apurado, são de **até 0,01 p.p.** (47,03 × 47,04; 45,16 × 45,15). Os números de 22h07 de 04/out (47,50 × 44,61, na InfoMoney) eram **parciais**. Os detalhes de Congresso e governadores vêm de 1 ou 2 fontes e estão **parcialmente confirmados**.
+**Status de confirmação.** O resultado presidencial está **confirmado na fonte primária**: o JSON oficial de resultados do TSE (eleição 6257, arquivo gerado em 05/10/2026 às 02h59, 100% das seções totalizadas) [103]. Também está confirmado por Wikipedia [1], The Rio Times [2], Bloomberg [4] e CNBC [5], e bate com a cobertura ao vivo da InfoMoney [3]. O Rio Times traz contagens de votos ligeiramente diferentes (56.104.049 e 53.876.219), mas os percentuais são iguais; **usar os números do TSE**. Os números de 22h07 de 04/out (47,50 × 44,61, na InfoMoney) eram **parciais**. Governadores, Senado e Câmara foram re-checados no JSON do TSE (eleição 6259) [103]. A Câmara ainda não tinha status final de eleitos em SP, MG e AM no momento da consulta.
 
-**Presidente** (votos válidos, 100% das urnas):
+**Presidente** (votos válidos, 100% das seções; TSE [103]):
 
 | Candidato | Partido | % válidos | Votos | Fonte | Evid. |
 |---|---|---|---|---|---|
-| Flávio Bolsonaro | PL | **47,03%** | 56.104.503 | [1] (TSE via Wikipedia); [2] | [F] |
-| Luiz Inácio Lula da Silva | PT | **45,16%** | 53.879.538 | [1]; [2] | [F] |
-| Augusto Cury | Avante | 2,89% | n/d | [2] | [S] |
-| Renan Santos | Missão | 2,24% | n/d | [2] | [S] |
-| Ronaldo Caiado | PSD | 2,18% | n/d | [2] | [S] |
-| Romeu Zema | Novo | 0,27% | n/d | [2] | [S] |
+| Flávio Bolsonaro | PL | **47,03%** | 56.104.503 | [103]; [1]; [2] | [F] |
+| Luiz Inácio Lula da Silva | PT | **45,16%** | 53.879.538 | [103]; [1]; [2] | [F] |
+| Augusto Cury | Avante | 2,89% | 3.448.569 | [103]; [2] | [F] |
+| Renan Santos | Missão | 2,24% | 2.675.887 | [103]; [2] | [F] |
+| Ronaldo Caiado | PSD | 2,18% | 2.605.148 | [103]; [2] | [F] |
+| Romeu Zema | Novo | 0,27% | 326.488 | [103]; [2] | [F] |
 
-- **Comparecimento:** 78,92% (abstenção de 21,08%) [2]. **[S]**
+- **Comparecimento:** 78,92% (125.275.835 eleitores), abstenção de 21,08% [103][2]. **[F]**
 - **2º turno:** **domingo, 2026-10-25**, entre Flávio Bolsonaro e Lula [1][2][5]. **[F]**
 - **Surpresa frente às pesquisas:** os últimos Datafolha e Quaest (publicados em 03/out) traziam Lula com 45% e 46% dos válidos e Flávio com 42% e 45% [trecho de busca citando Bloomberg/Wikipedia, [1][4]]. Bloomberg: *"a far better showing than investors were positioned for"* [4]. **[S]**
 - **Pesquisas de 2º turno anteriores ao 1º turno** (todas pré-04/out, já defasadas):
 
 | Instituto | Lula | Flávio | Fonte | Evid. |
 |---|---|---|---|---|
-| Datafolha | 47% | 45% | [14] | [S] |
+| Datafolha | 47% (a Forbes Brasil reporta **48%**) | 45% | [14]; [10] | [S] (fontes divergem) |
 | AtlasIntel | 47,7% | 47,4% | [14] | [S] |
 | Quaest (24–27/set) | 42% | 42% | [12] | [F] |
 | BTG/Nexus | 46% | 44% | [12] | [F] |
@@ -114,46 +115,46 @@
 - **Temas da campanha:** crime, corrupção e a relação com Trump [8]. **[S]**
 - **Falas:** Flávio declarou "a era do PT está terminando". Lula reconheceu o resultado "inesperado" [3] e disse ser "muito bom no mata-mata" (trecho do Observador, PT). **[F]/[S]**
 
-**Congresso** (parcial, 1 a 2 fontes):
-- **Câmara:** o PL elegeu **121** de 513 deputados [2]. **[S]**
-- **Senado:** 54 das 81 cadeiras estavam em disputa. O PL elegeu **16** senadores no pleito, segundo a InfoMoney às 22h07 [3]. O Rio Times projeta o PL com **28 de 81** cadeiras no total [2]. Michelle Bolsonaro e Bia Kicis foram eleitas pelo DF [3]. **[S]**
+**Congresso** (TSE [103], ainda incompleto na consulta):
+- **Câmara:** o Rio Times diz que o PL elegeu **121** de 513 deputados [2]. **[NÃO VERIFICADO]**: no JSON do TSE, o PL tinha **79 eleitos em 24 UFs**, e SP (70 cadeiras), MG (53) e AM (8) ainda estavam sem status de eleitos. O total de 121 é plausível, mas não foi confirmado.
+- **Senado:** 54 das 81 cadeiras estavam em disputa. O número de **16** senadores do PL (InfoMoney, 22h07 [3]) era **parcial**. No JSON do TSE, com 52 das 54 vagas definidas (faltava AM), o **PL elegeu 19 senadores**, seguido por PT (6) e MDB (6) [103]. **[F]** O Rio Times projeta o PL com **28 de 81** cadeiras no total [2]. **[NÃO VERIFICADO]** Michelle Bolsonaro (29,05%) e Bia Kicis (27,44%), ambas do PL, foram eleitas pelo DF [103][3]. **[F]**
 - **Leitura de mercado:** uma "onda de direita garantiu bancadas de peso no Congresso capazes de aprovar medidas de corte de gastos" [9]. **[F]**
 
-**Governadores** (InfoMoney, 22h07 [3]; o Rio Times fala em "recorde de 20 estados decididos no 1º turno" [2]):
+**Governadores** (TSE, final, 100% das seções [103]; os números de 22h07 da InfoMoney [3] eram parciais). Foram **20 estados decididos no 1º turno e 7 com 2º turno**, como diz o Rio Times [2]:
 
 | Estado | Resultado | Evid. |
 |---|---|---|
-| São Paulo | **Tarcísio de Freitas** (Republicanos), reeleito com 62,85% | [F] [3]; [S] [2] |
-| Minas Gerais | Cleitinho Azevedo (Republicanos), 55,41% | [F] [3] |
-| Rio Grande do Sul | Luciano Zucco (PL), 57,88% | [F] [3] |
-| Paraná | Sergio Moro (PL, segundo a fonte), 50,10% | [F] [3] |
-| Santa Catarina | Jorginho Mello (PL), 68,31% | [F] [3] |
-| Bahia | Jerônimo Rodrigues (PT), 55,19% | [F] [3] |
-| Ceará | Elmano de Freitas (PT), 52,94% | [F] [3] |
-| Pernambuco | Raquel Lyra (PSD), 53,28% | [F] [3] |
-| **Rio de Janeiro (2º turno)** | Douglas Ruas (PL, 49,31%) × Eduardo Paes (PSD, 42,72%) | [F] [3] |
-| **DF (2º turno)** | Celina Leão (PP, 49,93%) × Leandro Grass (PT, 34,48%) | [F] [3] |
-| **Outros 2º turnos** | ES, RN, AC e TO (o Rio Times fala em 7 estados no total) | [F] [3]; [S] [2] |
+| São Paulo | **Tarcísio de Freitas** (Republicanos), reeleito com **62,65%** (InfoMoney parcial: 62,85%) | [F] [103] |
+| Minas Gerais | Cleitinho Azevedo (Republicanos), 55,40% | [F] [103] |
+| Rio Grande do Sul | Luciano Zucco (PL), 58,05% | [F] [103] |
+| Paraná | Sergio Moro (PL), 50,10% | [F] [103] |
+| Santa Catarina | Jorginho Mello (PL), 68,98% | [F] [103] |
+| Bahia | Jerônimo Rodrigues (PT), 55,80% | [F] [103] |
+| Ceará | Elmano de Freitas (PT), 53,19% | [F] [103] |
+| Pernambuco | Raquel Lyra (PSD), 53,27% | [F] [103] |
+| **Rio de Janeiro (2º turno)** | Douglas Ruas (PL, **49,27%**) × Eduardo Paes (PSD, **42,76%**) | [F] [103] |
+| **DF (2º turno)** | Celina Leão (PP, 49,93%) × Leandro Grass (PT, **34,47%**) | [F] [103] |
+| **Outros 2º turnos** | ES: Pazolini (Republicanos, 49,65%) × Ferraço (MDB, 34,06%). RN: Allyson (União, 36,94%) × Cadu de Lula (PT, 36,16%). AC: Mailza Assis (PP, 49,76%) × Alan Rick (Republicanos, 32,27%). TO: Professora Dorinha (União, 45,52%) × Vicentinho Júnior (PSDB, 43,94%). **AM**: Omar Aziz (PSD, 40,63%) × Professora Maria do Carmo (PL, 24,49%), ainda sem status oficial no TSE, mas sem maioria absoluta. | [F] [103] |
 
 ### 1.2 Mercado na véspera e reação esperada
 
 **Fechamento de sexta, 2026-10-02:**
-- **Ibovespa** em **192.114,55 pts (+2,63%)**, o maior fechamento desde 22/abr (192.888,96) [10][11]. **[F]/[S]**
+- **Ibovespa** em **192.114,55 pts (+2,63%)**, o maior fechamento desde 22/abr (192.888,96) [10][11][108]. **[F]**
   - Volume de R$ 43,7 bi [10]. **[F]**
-  - Na semana, as fontes divergem: +4,71% [11] contra +5,81% [10]. O valor deve ser recalculado pela camada de dados.
+  - Na semana, as fontes divergem: +4,71% [11] contra +5,81% [10]. O script de verificação, rodado sobre a série de fechamentos do Yahoo Finance (25/set: 183.477; 02/out: 192.115), reproduz **+4,71%**, então o número da Forbes parece errado [108]. Mesmo assim, o FactBook deve recalcular o valor pela camada de dados.
 - **Dólar à vista** entre **R$ 5,2165 e R$ 5,2173**, dependendo da fonte [10][11]. Em 28/set o dólar havia batido R$ 5,2264, a máxima em 6 meses [12]. Em 05/out, o TradingEconomics mostra R$ 5,2139 [32]. **[F]**
 - **ADRs:** PBR em US$ 21,65 (+3,19%), VALE em US$ 13,76 (+2,30%), EWZ em US$ 38,19 (+2,83%) [15][16]. **[F]**
 - **Petrobras** subiu 2,81% (PN) e 3,25% (ON) com uma nova descoberta em águas profundas [10]. **[F]**
 - **Bancos:** Bradesco PN +3,64%, BB ON +3,04%, Itaú PN +1,54% [10]. **[F]**
-- **Setembro:** o Ibovespa fechou o mês em 186.340 pts, com alta de ~5% segundo a Nord [13]. A InfoMoney reportou +3,14% no mês e +13,57% no ano em 28/set [12]. As bases são diferentes, e o número deve ser recalculado. **[F]**
+- **Setembro:** o Ibovespa fechou o mês em 186.340 pts, com alta de ~5% segundo a Nord [13]. A InfoMoney reportou +3,14% no mês e +13,57% no ano em 28/set [12]. A divergência é só de data: o script de verificação sobre a série do Yahoo Finance reproduz os dois números (+3,14% até 28/set e cerca de +5,0% até 30/set) [108]. O FactBook deve recalcular. **[F]**
 - **Em 30/set**, o SMLL subiu 1,93%, e Itaú, BB e Bradesco subiram entre 4,1% e 4,7%. A Nord chamou o movimento de "trade eleitoral", ou seja, de posicionamento para uma vitória da oposição [13]. **[F]**
 
 **Reação ao resultado** (noite de domingo e pré-abertura de segunda):
-- **EWZ overnight:** +8,72% (US$ 41,52) [9] e +10,29% (US$ 42,12) [2], em horários diferentes. **ADRs no aftermarket:** PBR +5,08%, VALE +5% [3]. **[F]/[S]**
+- **EWZ overnight:** +8,72% (US$ 41,52) [9] e +10,29% (US$ 42,12) [2], em horários diferentes. Os dois números são coerentes com o fechamento de US$ 38,19. Na madrugada de segunda, o Yahoo Finance mostrava o EWZ em ~US$ 42,66–42,74 (+11,6% a +11,9%) e a PBR em ~US$ 24,00 (+10,9%) no pregão estendido. São retratos de horários diferentes e de liquidez fina [108]. **ADRs no aftermarket:** PBR +5,08%, VALE +5% [3]. **[F]/[S]**
 - **Bloomberg:** *"Brazilian assets are set to jump"*, com rali esperado em bolsa, real e juros [4]. **[S]**
 - **ASA (Felipe Balassiano):** "Esperamos alta forte da bolsa, valorização do real e fechamento dos juros nominais e reais" [9]. **[F]**
 - **Lógica do mercado:** o mercado aposta que Flávio herdará os votos de Cury, Renan Santos, Zema e Caiado e fará do ajuste fiscal uma prioridade [9]. **[F]** Isso é uma **expectativa**, não um fato sobre o 2º turno. **[I]**
-- **Opções:** o EWZ tinha vol implícita de 1 mês de ~46% contra realizada de ~24%. As calls fora do dinheiro mais negociadas são as de *strike* US$ 43 e US$ 45, com vencimento em 20/nov (~1,37 mi de contratos) [14]. **[F]**
+- **Opções:** o EWZ tinha vol implícita de 1 mês de ~46% contra realizada de ~24%. As calls fora do dinheiro mais negociadas são as de *strike* US$ 43 e US$ 45, com vencimento em 20/nov (~1,37 mi de contratos) [14]. **[S] [NÃO VERIFICADO]**: confere com a fonte, mas a fonte é única (blog), sem confirmação independente.
 
 **Cenários de valuation publicados** (pré-eleição, por regime fiscal e não por candidato) [29], todos **[F]**:
 
@@ -182,7 +183,7 @@
 
 ### 1.4 Fiscal
 
-- **Dívida bruta do governo geral:** **82,9% do PIB** em agosto (R$ 11,1 tri), o maior nível desde 2020, com alta de 0,3 p.p. no mês, puxada pelos juros nominais [23]. A CNBC (03/out) citou 81,9% "desde que Lula assumiu" [6], um número de outra data ou base. **[S]**
+- **Dívida bruta do governo geral:** **82,9% do PIB** em agosto (R$ 11,1 tri [NÃO VERIFICADO]), o maior nível desde **mar/2021** (85,1%), com alta de 0,3 p.p. no mês, puxada pelos juros nominais [23]. A série SGS 13762 do BCB confirma **82,86%** em agosto, contra 82,56% em julho [104]. **[F]** A CNBC (03/out) citou 81,9% "desde que Lula assumiu" [6], um número de outra data ou base. **[S]**
 - **Primário consolidado de agosto:** déficit de R$ 10 bi, melhor que o consenso Reuters de −R$ 15,7 bi [23]. **[S]**
 - **Arcabouço (LC 200/2023):**
   - meta de **superávit de 0,25% do PIB em 2026**, com banda de ±0,25 p.p. [24];
@@ -193,20 +194,20 @@
 
 ### 1.5 Política monetária
 
-- **Selic em 13,75%.** Corte de 25 bp em **16/set/2026**, unânime, o **5º corte seguido** de 25 bp desde **mar/2026**, somando 1,25 p.p. no ciclo [17]. **[F]**
+- **Selic em 13,75%.** Corte de 25 bp em **16/set/2026**, unânime, o **5º corte seguido** de 25 bp desde **mar/2026**, somando 1,25 p.p. no ciclo (de 15,00% para 13,75%) [17][104]. **[F]**
 - **Comunicado:** "A continuidade do ciclo de calibração [...] fica dependente da evolução do cenário". O texto fala em "significativo aumento da incerteza, desancoragem das expectativas e riscos elevados", que "demanda serenidade e cautela" [17]. **[F]**
 - **Ata (22/set):**
   - projeções de IPCA do Copom: **5,2% para 2026** (antes 5,1%) e **3,9% para 2027** (antes 3,8%), segundo a InfoMoney [18]. **[F]**
   - O Itaú lê que o BC "mantém em aberto" os próximos passos [18]. **[F]**
   - As projeções de economistas para a Selic no fim de 2026 vão de 13,00% a 13,75% [18]. **[F]**
 - **Focus (28/set):** Selic de **13,50%** no fim de 2026, **12,00%** no fim de 2027 e 10,50% no fim de 2028 [19]. Os dados de IPCA do Focus de 04/set (5,00% para 2026, câmbio de R$ 5,20) vêm só de trecho de busca. **[F]/[S]**
-- **Calendário do Copom 2026:** 27–28/jan, 17–18/mar, 28–29/abr, 16–17/jun, 4–5/ago, 15–16/set, **3–4/nov** e **8–9/dez** [20]. **Não há reunião em outubro.** **[S]**
+- **Calendário do Copom 2026:** 27–28/jan, 17–18/mar, 28–29/abr, 16–17/jun, 4–5/ago, 15–16/set, **3–4/nov** e **8–9/dez** [20]. **Não há reunião em outubro.** A série SGS 432 (Selic meta) do BCB mostra as mudanças em vigor em 19/mar, 30/abr, 18/jun, 06/ago e 17/set, o dia seguinte a cada reunião listada. A Selic de 13,75% aparece vigente até 04/nov, o que confirma a reunião de 3–4/nov e a ausência de reunião em outubro [104]. **[F]** A data de 8–9/dez não foi confirmada em fonte primária. **[S]**
 - **Atividade:** PIB do 2T26 de **+0,5% t/t** (1T26: +1,1%). Consumo das famílias de **−0,4%**. Inadimplência de **4,9%**, recorde [17]. **[F]**
 
 ### 1.6 Inflação
 
-- **IPCA de agosto/2026:** **−0,32% m/m**. Em 12 meses, caiu de 4,44% para **4,22%**. No ano, **3,11%**. A deflação veio do **bônus de Itaipu** na energia: administrados −1,25%, livres +0,02% [21]. **[S]**
-- **IPCA-15 de setembro/2026:** **+0,70% m/m**, acima do consenso de 0,53%. Em 12 meses, **4,47%**. Alimentação subiu 1,51% e habitação 2,07% [22]. **[S]**
+- **IPCA de agosto/2026:** **−0,32% m/m**. Em 12 meses, caiu de 4,44% para **4,22%** (confirmado nas séries SGS 433 e 13522 do BCB [104]). No ano, **3,11%**. A deflação veio do **bônus de Itaipu** na energia: administrados −1,25%, livres +0,02% [21]. **[F]** para m/m e 12 meses; **[S]** para o resto.
+- **IPCA-15 de setembro/2026:** **+0,70% m/m**, acima do consenso de 0,53%. Em 12 meses, **4,47%**. Alimentação subiu 1,51% e habitação 2,07% [22]. O m/m está confirmado na série SGS 7478 do BCB, e o script de verificação reproduz os 4,47% em 12 meses a partir da mesma série [104]. **[F]** para m/m e 12 meses; **[S]** para consenso e grupos.
 - **Meta:** contínua de **3,0% com tolerância de ±1,5 p.p.**, ou seja, teto de 4,5% [22]. **[S]**
 - **Leitura [I]:** a reversão do bônus de Itaipu e o petróleo a ~US$ 100 pressionam o IPCA de setembro, que sai em 09/out. Isso limita os cortes de juros no curto prazo e explica um Copom cauteloso.
 
@@ -222,7 +223,7 @@
 | **Petrobras** (PETR3/PETR4; ADRs PBR e PBR-A) | PETR4 com **+70,33% no ano** e +9,06% em setembro [30]. Está na cesta "Challenger" do Bradesco BBI [28] e na lista de "proteção em deterioração fiscal" [29]. Para analistas, "a eleição importa muito, mas disputa espaço com [...] o preço do petróleo" [30]. Nova descoberta em águas profundas [10]. | Nome com **momentum e crowding** muito altos e beta duplo (petróleo e eleição). Num livro neutro, o beta ao petróleo precisa de hedge. Há risco de reversão de momentum depois do evento. |
 | **Banco do Brasil** (BBAS3) | Possível privatização mencionada pela equipe de Flávio [27]. "Reagiu mais claramente ao componente eleitoral" [30]. **+11,62% em setembro**, +6,58% no ano [30]. Subiu nos 4 ciclos eleitorais de 2010 a 2022 [30]. Está na cesta Challenger [28]. | Provavelmente o **maior beta eleitoral individual** entre as large caps. Exposição binária em 25/out. O ADR (BDORY) é OTC e de baixa liquidez, então o local é preferível. |
 | **Axia Energia (ex-Eletrobras)** | Privatizada em 2022. O governo tem ~39,14% e golden share. Foi renomeada Axia Energia em 2025 [31]. Perdeu lugar para a Sabesp nas carteiras recomendadas de outubro [35]. | Menor beta eleitoral que o BB. Exposição maior a juros reais e preço de energia. Os tickers da B3 após a renomeação devem ser confirmados no cadastro de securities (historicamente ELET3/ELET6; ADR EBR) **[K]**. |
-| **Sabesp** (SBSP3; SBS) | Privatizada em 2024 **[K]**. Tarcísio foi reeleito em SP com 62,85% [3]. Está na cesta "All-Weather" do BBI [28] e entre os beneficiados por um fiscal positivo [29]. É uma das ações mais recomendadas de outubro [35]. | Continuidade regulatória em SP reduz o risco idiossincrático. Ação sensível a juros reais. Sozinha, não é uma aposta eleitoral federal. |
+| **Sabesp** (SBSP3; SBS) | Privatizada em 2024 **[K]**. Tarcísio foi reeleito em SP com 62,65% [103]. Está na cesta "All-Weather" do BBI [28] e entre os beneficiados por um fiscal positivo [29]. É uma das ações mais recomendadas de outubro [35]. | Continuidade regulatória em SP reduz o risco idiossincrático. Ação sensível a juros reais. Sozinha, não é uma aposta eleitoral federal. |
 | **Bancos privados** (Itaú, Bradesco, BTG, Nu, Inter) | Itaú está nas cestas Incumbent e All-Weather do BBI [28]. Os bancos subiram de 4% a 5% em 30/set [13]. | Itaú é o "*hedge* de qualidade" contra o BB num par que neutraliza o setor. Os bancos médios têm beta alto à curva. |
 | **Utilities e *bond proxies*** (CPFL, Equatorial, Taesa, Copasa) | Estão na cesta "Incumbent" do BBI, a de continuidade do governo [28]. | São sensíveis a juros reais. Num cenário de vitória de Flávio, o fechamento de juros também ajuda esses nomes, então a sensibilidade eleitoral líquida é ambígua. |
 | **Consumo doméstico, juros e *small caps*** (MRV, Grupo Mateus, Vamos, Hypera, RD Saúde, Petz/Cobasi) | Estão na cesta Challenger [28]. SMLL +1,93% em 30/set [13]. Consumo das famílias de −0,4% no 2T e inadimplência recorde [17]. | Têm alto beta à curva de juros. Há **risco de squeeze** nos shorts de *small caps* com alta taxa de aluguel durante o rali eleitoral. |
@@ -269,8 +270,8 @@
   - os EUA pedem **50% de conteúdo especificamente norte-americano** nos veículos, contra a regra regional atual de 75%;
   - há uma exigência trabalhista de 40% da produção a ≥ US$ 16/h;
   - na energia, há disputa sobre o acesso ao mercado elétrico. O México defende a prioridade da CFE, com mínimo estatal de 54%.
-- **Tarifas vigentes:** **50%** sobre aço e alumínio (Seção 232) e **25%** sobre autos e autopeças não conformes ao USMCA. O México propôs **5%–10%** para veículos norte-americanos sem conformidade total [66]. **[F]**
-- **Bloomberg (30/set):** o México está "cada vez mais confiante" num acordo para cortar as tarifas sobre aço, alumínio e veículos leves. Os dois lados querem um *framework* **antes das *midterms* dos EUA (03/nov)** [67]. **[S]**
+- **Tarifas vigentes:** **50%** sobre aço e alumínio (Seção 232) e **25%** sobre autos e autopeças não conformes ao USMCA. **[F]** O México teria proposto **5%–10%** para veículos norte-americanos sem conformidade total. **[NÃO VERIFICADO]**: o dado não aparece em [65] nem em [66] na releitura.
+- **Bloomberg (30/set):** o México está "cada vez mais confiante" num acordo para cortar as tarifas sobre aço, alumínio e veículos leves. Os dois lados querem um *framework* **antes das *midterms* dos EUA (03/nov)** [67]. **[S] [NÃO VERIFICADO]**: a página da Bloomberg retornou 403 e não houve fonte independente acessível.
 
 ### 2.4 Reforma judicial e Estado de Direito
 
@@ -293,10 +294,10 @@
   - **José Antonio Kast** tomou posse em **11/mar/2026**, depois de vencer em dez/2025 com 58%. O mandato vai até mar/2030. O ministro da Fazenda é **Jorge Quiroz** [77]. **[F]**
   - Aprovação: 57% no início, 42% em abril, 34% em junho e 35%–40% em agosto [77]. **[F]**
   - Medidas: corte de 3% nos orçamentos ministeriais (~US$ 6 bi), mudança no MEPCO (estabilização de combustíveis) e congelamento de tarifas de transporte em Santiago até dez/2026 [77]. **[F]**
-- **Reforma "Reconstrução Nacional":** aprovada pelo Congresso em **04/ago/2026**. Reduz o **IR corporativo de 27% para 23% até 2029** (25,5% em 2027, 24% em 2028). Fonte: trecho de busca de cobertura do Rio Times, URL exata não confirmada. **[S]**
+- **Reforma "Reconstrução Nacional":** aprovada pelo Congresso em **04/ago/2026**. Reduz o **IR corporativo de 27% para 23% até 2029** (25,5% em 2027, 24% em 2028). Fonte: trecho de busca de cobertura do Rio Times, URL exata não confirmada. **[S] [NÃO VERIFICADO]**: a página da Wikipedia sobre o governo Kast [77] não menciona a reforma.
 - **Orçamento 2027** (enviado em 30/set): gasto **+1,5%** sobre 2026, "a menor alta em pelo menos duas décadas", fora a pandemia. São mais de 90 tri de pesos (~US$ 92,5 bi a CLP 972,53) [78]. **[F]**
 - **BCCh:**
-  - **TPM em 4,50%**, mantida em **08/set/2026** por unanimidade [73][75]. **[S]/[F]**
+  - **TPM em 4,50%**, mantida em **08/set/2026** por unanimidade [73][75]. **[S]/[F]** Na releitura, o TE confirma o dado. O comunicado do BCCh bloqueou a leitura automatizada.
   - O IPoM de setembro cortou o PIB 2026 de 1,0%–1,75% para **0,25%–0,75%**. A inflação ficaria um pouco acima de 4% no fim de 2026 e convergiria a 3% no 2T27 [74]. **[S]**
   - IPC de agosto: **4,1%**, com subjacente de **3,3%** [75]. **[F]**
   - **Próxima RPM: 27/out/2026** [75]. **[S]**
@@ -304,10 +305,10 @@
 - **Cobre:**
   - o LME 3M bateu recorde em setembro: **~US$ 14.858,50/t em 10/set** (trecho de busca) ou US$ 14.875/t (Copper Weekly) [46]. O COMEX bateu **US$ 6,83/lb em 22/set** [46];
   - o LME fechou em **US$ 14.253,50/t em 01/out**, ~4% abaixo do recorde. Subiu ~30% em 12 meses e mais de 4% no 3T [46];
-  - o TradingEconomics mostra **US$ 6,55/lb** em 05/out, +30,9% no ano [47].
+  - o TradingEconomics mostra **US$ 6,55/lb** em 05/out [47]. A variação de **+30,6%–30,9%** que o TE reporta é **em 12 meses ("yearly")**, não no ano. Pela série COMEX front-month do Yahoo (HG=F; 31/12/2025: US$ 5,63/lb), a alta YTD é bem menor, perto de +17% segundo o script de verificação [108]. O FactBook deve recalcular.
   - **[F]**
 - **Oferta de cobre:**
-  - a **Escondida (BHP), maior mina do mundo, paralisou todas as operações em 23/set**. Os supervisores aprovaram greve com 95% [46];
+  - **CORRIGIDO:** a **Escondida (BHP)**, maior mina do mundo, parou as operações em 23/set depois da **morte de um terceirizado** e iniciou uma **retomada gradual no dia seguinte**. Os supervisores votaram com 95% pela **autorização** de greve, mas a mediação obrigatória vem antes de qualquer greve legal [46]. Não há greve em curso confirmada;
   - os trabalhadores de Centinela (Antofagasta) também votaram greve, e a produção chilena está no menor nível desde fev/2011 [47];
   - a Cochilco projeta produção chilena de 5,27 Mt em 2026 (−2,6%) [trecho em 46/47].
   - **[F]**
@@ -329,7 +330,7 @@
   - Apoio à **expansão de carvão e petróleo**, em contraste com o governo Petro [87]. **[F]**
   - O ministro da Fazenda é **Miguel Gómez** [83]. **[F]**
 - **Fiscal** [85], **[F]**:
-  - o Congresso aprovou o **Orçamento 2027 de COP 634,9 tri** (~US$ 206,6–206,7 bi), com **déficit projetado de 9,4%–9,5% do PIB**, financiado por dívida. O déficit projetado para **2026 é de 7,2% do PIB**;
+  - o **Orçamento (PGN) 2027 de COP 634,9 tri** (~US$ 206,7 bi, 29,9% do PIB) foi **reapresentado em 29/ago**, depois que o Congresso devolveu a versão inicial de COP 575,6 tri. Prevê **déficit de 9,4%–9,5% do PIB**, financiado por dívida. O déficit projetado para **2026 é de 7,2% do PIB**. **CORRIGIDO:** a fonte **não** confirma a aprovação final pelo Congresso (o prazo legal costuma ser 20/out) **[NÃO VERIFICADO]**;
   - o presidente do comitê da regra fiscal estima que seria preciso um **ajuste de ~4 p.p. do PIB em 12 a 18 meses** para voltar à regra em 2028;
   - o governo prepara uma "Ley de Rescate" (tributária e de gastos) para levar 2027 a ~7,2% (trecho de busca).
 - **BanRep:**

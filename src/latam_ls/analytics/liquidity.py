@@ -138,7 +138,8 @@ def liquidity_profile(weights: pd.Series, adtv_usd: pd.Series, nav: float, parti
 
     A soma de cada coluna ``pct_gross_<h>d`` é a fração do gross liquidável em ``h`` dias
     (ver :func:`liquidity_summary`). Nomes sem ADTV utilizável contribuem 0 (nada liquidável)
-    e têm ``days_to_liquidate = inf``. Pesos ``NaN`` são erro (não são tratados como zero).
+    e têm ``days_to_liquidate = inf``. Pesos ``NaN`` são erro (não são tratados como zero), e
+    nomes duplicados também (a capacidade diária do nome seria contada duas vezes).
     """
     p = _check_participation(participation)
     nav_v = _check_positive(nav, "NAV")
@@ -149,6 +150,9 @@ def liquidity_profile(weights: pd.Series, adtv_usd: pd.Series, nav: float, parti
         raise ValueError(f"Pesos ausentes (NaN) no perfil de liquidez: {bad}")
     if not np.isfinite(w).all():
         raise ValueError("Pesos não finitos no perfil de liquidez.")
+    if w.index.duplicated().any():
+        dups = sorted(map(str, set(w.index[w.index.duplicated()])))
+        raise ValueError(f"Nomes duplicados no perfil de liquidez (capacidade contada 2×): {dups}")
     w = w[w != 0.0]
     cols = ["weight", "side", "notional_usd", "adtv_usd", "adtv_missing", "days_to_liquidate",
             *[horizon_column(h) for h in hs]]

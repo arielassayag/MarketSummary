@@ -97,8 +97,13 @@ def run_compliance(
     squeeze: pd.DataFrame | None, panel_assets: pd.DataFrame, cfg: FundConfig, nav: float,
     current: pd.Series | None, inception: bool, snapshot_as_of: date, week: date,
     market_w: pd.Series | None, is_synthetic: bool, drawdown: float | None = None,
+    vol_target: float | None = None,
 ) -> list[ComplianceCheck]:
-    """Executa todas as checagens e devolve a lista em ordem estável."""
+    """Executa todas as checagens e devolve a lista em ordem estável.
+
+    ``vol_target``: meta efetiva da semana (override do gestor dentro da banda); padrão = config.
+    ``drawdown``: drawdown corrente do fundo (aceita 0,04 ou −0,04 para 4%).
+    """
     rk, liq, sh, sq = cfg.risk, cfg.liquidity, cfg.shorting, cfg.squeeze
     checks: list[ComplianceCheck] = []
     HARD, SOFT, INFO = Severity.HARD, Severity.SOFT, Severity.INFO
@@ -171,11 +176,12 @@ def run_compliance(
         vmin_ok, vmin_det = False, f"Risco não calculável: {risk_err}"
     checks.append(_check("VOL_MIN", "Volatilidade ex-ante mínima", vmin_ok, SOFT, vol,
                          rk.vol_band_min, vmin_det))
-    dist = vol - rk.vol_target_annual if parts is not None else float("nan")
+    target = rk.vol_target_annual if vol_target is None else float(vol_target)
+    dist = vol - target if parts is not None else float("nan")
     checks.append(_check(
         "VOL_TARGET", "Distância à meta de volatilidade",
-        parts is not None and abs(dist) <= VOL_TARGET_INFO_BAND, INFO, vol, rk.vol_target_annual,
-        (f"Vol ex-ante {_fmt_pct(vol)} vs. meta {_fmt_pct(rk.vol_target_annual)} "
+        parts is not None and abs(dist) <= VOL_TARGET_INFO_BAND, INFO, vol, target,
+        (f"Vol ex-ante {_fmt_pct(vol)} vs. meta {_fmt_pct(target)} "
          f"(diferença {dist * 100:+.2f} p.p.)." if parts is not None
          else f"Risco não calculável: {risk_err}")))
 

@@ -267,10 +267,18 @@ def test_other_local_markets_not_shortable(avail, panel, market):
     assert (sub["fee_source"] == FEE_SOURCE_NA).all()
 
 
+def _issuers_without_b3_floor(panel, md, cfg) -> set[str]:
+    """Emissores sem taxa B3 observada acima da GC dos EUA (ADR fica na GC pura)."""
+    rate = md.lending["lending_rate_annual"].astype(float)
+    floored = set(panel.lines.loc[rate.index[rate > cfg.shorting.gc_borrow_fee_us], "issuer_id"])
+    return set(panel.lines["issuer_id"]) - floored
+
+
 def test_regular_adrs_shortable_with_gc_estimate(avail, panel, md, cfg):
     usd = avail[avail["line_type"].isin(["ADR", "US_LISTED"])]
     si = md.short_interest["short_pct_float"].reindex(usd.index)
-    normal = usd[si < cfg.squeeze.si_pct_float_high]
+    no_floor = usd["issuer_id"].isin(_issuers_without_b3_floor(panel, md, cfg))
+    normal = usd[(si < cfg.squeeze.si_pct_float_high) & no_floor]
     assert len(normal) > 10
     assert normal["shortable"].all()
     assert (normal["borrow_fee_annual"] == cfg.shorting.gc_borrow_fee_us).all()
@@ -278,8 +286,10 @@ def test_regular_adrs_shortable_with_gc_estimate(avail, panel, md, cfg):
 
 
 def test_si_escalation_and_mcap_rules(panel, md, cfg):
+    no_floor = _issuers_without_b3_floor(panel, md, cfg)
     adrs = [t for t in _lines_where(panel, line_type="ADR")
-            if md.short_interest.loc[t, "short_pct_float"] < 0.15]
+            if md.short_interest.loc[t, "short_pct_float"] < 0.15
+            and panel.lines.loc[t, "issuer_id"] in no_floor]
     a_htb, a_special, a_small, a_nan_mcap, a_no_si = adrs[:5]
     si = md.short_interest.copy()
     si.loc[a_htb, "short_pct_float"] = 0.16
@@ -490,9 +500,11 @@ def test_hot_adr_is_high(sq, panel, hot_ticker):
     assert row["score_si"] == pytest.approx(100.0)
     assert row["score_dtc"] == pytest.approx(70 + 30 * (9 - 7) / 7)
     assert row["borrow_fee"] == pytest.approx(US_SPECIAL_FEE_ESTIMATE)
+    assert bool(row["borrow_fee_is_estimate"])
+    assert math.isnan(row["score_fee"])  # taxa estimada (derivada do SI) não conta em dobro
     assert row["bucket"] == "HIGH"
     assert row["squeeze_score"] >= 70.0
-    assert "GC_ESTIMATE_US(estimada)" in row["data_quality"]
+    assert "GC_ESTIMATE_US(estimada,fora_do_escore)" in row["data_quality"]
 
 
 def test_missing_si_is_nan_not_zero(sq, panel):
@@ -515,19 +527,18 @@ def test_br_days_to_cover_and_si_proxy(sq, panel, md, cfg):
     tkr = panel.lines.index[panel.lines["issuer_id"] == iid][0]
     avg_vol = md.volume[tkr].tail(cfg.liquidity.adv_window_days).mean()
     lent = float(md.lending.loc[tkr, "lent_shares"])
-    assert sq.loc[iid, "days_to_cover"] == pytest.approx(lent / avg_vol)
-    assert sq.loc[iid, "si_pct_float"] == pytest.approx(md.lending.loc[tkr, "lending_pct_shares"])
-    assert sq.loc[iid, "lending_pct_shares"] == pytest.approx(
-        md.lending.loc[tkr, "lending_pct_shares"])
-    assert sq.loc[iid, "borrow_fee"] == pytest.approx(md.lending.loc[tkr, "lending_rate_annual"])
-
-
-def test_si_proxy_takes_max_over_lines(sq, panel, md):
-    iid, local, adr = _br_issuer_with_adr(panel)
-    expected = max(md.short_interest.loc[adr, "short_pct_float"],
-                   md.lending.loc[local, "lending_pct_shares"])
-    assert sq.loc[iid, "si_pct_float"] == pytest.approx(expected)
-    assert "SI_US+BTC_B3" in sq.loc[iid, "data_quality"]
+    s = cfg.squeeze
+    row = sq.loc[iid]
+    assert row["days_to_cover"] == pytest.approx(lent / avg_vol)
+    assert row["score_dtc"] == pytest.approx(
+        _thr(lent / avg_vol, s.br_btc_dtc_medium, s.br_btc_dtc_high))
+    lend = float(md.lending.loc[tkr, "lending_pct_shares"])
+    assert row["si_pct_float"] == pytest.approx(lend / _float_frac(md, tkr))
+    assert row["lending_pct_shares"] == pytest.approx(lend)
+    fee = float(md.lending.loc[tkr, "lending_rate_annual"])
+    assert row["borrow_fee"] == pytest.approx(fee) and not bool(row["borrow_fee_is_estimate"])
+    assert row["score_fee"] == pytest.approx(
+        _thr(fee, s.br_borrow_fee_medium, s.br_borrow_fee_high))
 
 
 def test_momentum_and_vol_from_usd_returns(sq, panel):
@@ -671,7 +682,8 @@ def test_br_btc_invalid_float_falls_back_to_shares_base(panel, md, avail, cfg):
     fund.loc[tkr, "float_shares"] = 2.0 * float(fund.loc[tkr, "shares_outstanding"])  # PETR4
     t = squeeze_table(panel, replace(md, fundamentals=fund), avail, cfg)
     lend = float(md.lending.loc[tkr, "lending_pct_shares"])
-    assert t.loc[iid, "si_pct_float"] == pytest.approx(lend)
+    assert t.loc[iid, "si_pct_float"] == pytest.approx(lend)  # base em ações, sinalizada
+    assert math.isnan(t.loc[iid, "btc_pct_float"])  # sem free float confiável: não inventa
     assert "btc_base=acoes" in t.loc[iid, "data_quality"]
 
 
@@ -742,3 +754,10 @@ def test_si_driver_line_consistency(sq, panel, md, cfg):
     assert sq.loc[iid, "score_si"] == pytest.approx(max(sc_us, sc_br))
     assert sq.loc[iid, "si_pct_float"] == pytest.approx(si_us if sc_us >= sc_br else btc)
     assert "SI_US+BTC_B3" in sq.loc[iid, "data_quality"]
+
+
+def test_liquidity_profile_rejects_duplicate_names():
+    # Duas linhas do mesmo nome usariam a capacidade diária duas vezes (liquidez superestimada).
+    w = pd.Series([0.02, 0.02], index=["A", "A"])
+    with pytest.raises(ValueError):
+        liquidity_profile(w, pd.Series({"A": 15e6}), NAV, 0.2)

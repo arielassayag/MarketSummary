@@ -8,6 +8,10 @@ a) **ADR / US_LISTED** (mercado US): alugável se o tipo de linha estiver em
    interest (``short_pct_float``) é alto: >= ``squeeze.si_pct_float_high`` ⇒ 5% a.a. (hard to
    borrow); >= 2× esse nível ⇒ 15% a.a. ("special"), que excede ``max_borrow_fee`` no mandato
    padrão e, portanto, bloqueia o short. ``fee_source = GC_ESTIMATE_US`` (estimativa).
+   **Piso pela B3**: se o emissor tem taxa observada no BTC da B3 (linha local), a taxa estimada
+   da linha em USD é no mínimo a maior taxa observada localmente. ADR e ação local são
+   arbitrados via depositário, então um aluguel *special* na B3 não convive com GC no ADR; sem
+   o piso, o otimizador migraria o short para o ADR com custo subestimado.
 b) **Local Brasil** (``LOCAL_BR``): taxa observada no BTC da B3 (``lending.lending_rate_annual``,
    ``fee_source = B3_BTC``); sem taxa observada, só é alugável se o emissor tiver ADTV >= USD 10
    mi e market cap >= USD 1 bi (taxa GC estimada ``gc_borrow_fee_br``, ``GC_ESTIMATE_BR``);
@@ -89,24 +93,32 @@ def _fmt_pct(x: float) -> str:
     return f"{100.0 * x:.1f}%"
 
 
-def _line_fee(market: pd.Series, line_type: pd.Series, si: pd.Series, b3_rate: pd.Series,
-              issuer_adtv: pd.Series, issuer_mcap: pd.Series,
-              cfg: FundConfig) -> tuple[pd.Series, pd.Series]:
-    """Taxa anual de aluguel (observada ou estimada) e fonte por linha."""
+def _line_fee(market: pd.Series, line_type: pd.Series, issuer: pd.Series, si: pd.Series,
+              b3_rate: pd.Series, issuer_adtv: pd.Series, issuer_mcap: pd.Series,
+              cfg: FundConfig) -> tuple[pd.Series, pd.Series, pd.Series]:
+    """Taxa anual de aluguel (observada ou estimada), fonte e piso B3 aplicado, por linha.
+
+    O piso B3 vale para linhas em USD de emissores com taxa observada no BTC da B3: a taxa
+    estimada da linha em USD é ``max(estimativa por SI, maior taxa B3 observada do emissor)``.
+    """
     sc, sq = cfg.shorting, cfg.squeeze
     is_us = (market == "US") & line_type.isin(USD_LINE_TYPES)
     is_br = (market == "BR") & (line_type == "LOCAL")
     high = sq.si_pct_float_high
     with np.errstate(invalid="ignore"):
-        us_fee = np.select([si >= 2.0 * high, si >= high],
+        si_fee = np.select([si >= 2.0 * high, si >= high],
                            [US_SPECIAL_FEE_ESTIMATE, US_HTB_FEE_ESTIMATE],
                            default=sc.gc_borrow_fee_us)
-    us_fee = np.maximum(us_fee, sc.gc_borrow_fee_us)
+    si_fee = pd.Series(np.maximum(si_fee, sc.gc_borrow_fee_us), index=market.index, dtype=float)
+    b3_by_issuer = b3_rate.where(is_br).groupby(issuer).max()
+    b3_floor = issuer.map(b3_by_issuer).astype(float).where(is_us)
+    floor_applied = (b3_floor > si_fee).fillna(False).astype(bool)
+    us_fee = si_fee.where(~floor_applied, b3_floor)
     br_gc_ok = (issuer_adtv >= BR_GC_MIN_ADTV_USD) & (issuer_mcap >= BR_GC_MIN_MCAP_USD)
     has_b3 = b3_rate.notna()
     fee = np.select(
         [is_us, is_br & has_b3, is_br & br_gc_ok],
-        [us_fee, b3_rate.to_numpy(), sc.gc_borrow_fee_br],
+        [us_fee.to_numpy(), b3_rate.to_numpy(), sc.gc_borrow_fee_br],
         default=np.nan,
     )
     source = np.select(
@@ -115,7 +127,8 @@ def _line_fee(market: pd.Series, line_type: pd.Series, si: pd.Series, b3_rate: p
         default=FEE_SOURCE_NA,
     )
     idx = market.index
-    return pd.Series(fee, index=idx, dtype=float), pd.Series(source, index=idx, dtype=object)
+    return (pd.Series(fee, index=idx, dtype=float), pd.Series(source, index=idx, dtype=object),
+            floor_applied & is_us)
 
 
 def _block_reason(row: pd.Series, cfg: FundConfig) -> str:
@@ -139,9 +152,13 @@ def _block_reason(row: pd.Series, cfg: FundConfig) -> str:
         return REASON_BR_NO_LENDING
     if row["fee"] > sc.max_borrow_fee:
         est = " estimada" if row["fee_source"] in ESTIMATED_FEE_SOURCES else ""
-        si_note = (f" (short interest {_fmt_pct(row['si'])} do float)"
-                   if row["is_us"] and pd.notna(row["si"]) else "")
-        return (f"taxa de aluguel{est} {_fmt_pct(row['fee'])}{si_note} acima do máximo "
+        if row["b3_floor"]:
+            note = " (piso: taxa observada no BTC da B3 do mesmo emissor)"
+        elif row["is_us"] and pd.notna(row["si"]):
+            note = f" (short interest {_fmt_pct(row['si'])} do float)"
+        else:
+            note = ""
+        return (f"taxa de aluguel{est} {_fmt_pct(row['fee'])}{note} acima do máximo "
                 f"{_fmt_pct(sc.max_borrow_fee)}")
     return ""
 
@@ -154,6 +171,9 @@ def _ok_reason(row: pd.Series, cfg: FundConfig) -> str:
     if src == FEE_SOURCE_GC_BR:
         return (f"BTC B3 sem taxa observada; taxa GC estimada {_fmt_pct(row['fee'])} a.a. "
                 "(emissor líquido e de grande porte)")
+    if row["b3_floor"]:
+        return (f"{row['line_type']} alugável; taxa estimada {_fmt_pct(row['fee'])} a.a. "
+                "(piso: taxa observada no BTC da B3 do mesmo emissor, arbitragem ADR↔local)")
     if row["fee"] > cfg.shorting.gc_borrow_fee_us:
         return (f"{row['line_type']} alugável; taxa estimada {_fmt_pct(row['fee'])} a.a. elevada "
                 f"por short interest alto ({_fmt_pct(row['si'])} do float)")
@@ -185,7 +205,8 @@ def short_availability(panel: AssetPanel, md: MarketData, cfg: FundConfig) -> pd
     si = numeric_field(md.short_interest, "short_pct_float", idx)
     b3_rate = numeric_field(md.lending, "lending_rate_annual", idx)
 
-    fee, source = _line_fee(market, line_type, si, b3_rate, issuer_adtv, issuer_mcap, cfg)
+    fee, source, b3_floor = _line_fee(market, line_type, issuer, si, b3_rate, issuer_adtv,
+                                      issuer_mcap, cfg)
     is_us = (market == "US") & line_type.isin(USD_LINE_TYPES)
     is_br = (market == "BR") & (line_type == "LOCAL")
     allowed = set(sc.shortable_line_types)
@@ -195,7 +216,7 @@ def short_availability(panel: AssetPanel, md: MarketData, cfg: FundConfig) -> pd
         "has_data": lines["has_data"].fillna(False).astype(bool),
         "market": market, "line_type": line_type, "is_us": is_us, "is_br": is_br,
         "type_allowed": type_allowed, "mcap": issuer_mcap, "si": si, "fee": fee,
-        "fee_source": source,
+        "fee_source": source, "b3_floor": b3_floor,
     }, index=idx)
     block = work.apply(_block_reason, axis=1, cfg=cfg) if len(work) else pd.Series(dtype=object)
     shortable = block.eq("")

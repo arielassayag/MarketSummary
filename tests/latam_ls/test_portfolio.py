@@ -396,9 +396,35 @@ def test_optimizer_satisfies_every_constraint(env: Env, inception) -> None:
 
 
 def test_vol_close_to_target_with_strong_alpha(env: Env, inception) -> None:
-    res, _ = inception
+    res0, _ = inception
+    assert res0.ex_ante_vol <= env.cfg.risk.vol_target_annual + TOL
+    cons = _constraints(env)
+    strong = env.alpha * 4.0
+    res = optimize(strong, env.model, cons, env.cost_model, env.cfg, NAV, None, True,
+                   env.market_w)
     assert res.ex_ante_vol == pytest.approx(env.cfg.risk.vol_target_annual, abs=1e-4)
     assert "vol_target" in res.diagnostics.binding_constraints
+    _assert_feasible(res, cons, env, env.cfg)
+
+
+def test_match_mode_reaches_target_with_weak_alpha(env: Env) -> None:
+    cons = _constraints(env)
+    weak = env.alpha * 0.1
+    capped = optimize(weak, env.model, cons, env.cost_model, env.cfg, NAV, None, True,
+                      env.market_w)
+    assert capped.ex_ante_vol < 0.03          # custos dominam: abaixo da banda
+    assert capped.alpha_scale == 1.0
+    matched = optimize(weak, env.model, cons, env.cost_model, env.cfg, NAV, None, True,
+                       env.market_w, overrides={"risk_target_mode": "match"})
+    vt = env.cfg.risk.vol_target_annual
+    assert vt * 0.99 <= matched.ex_ante_vol <= vt + TOL
+    assert matched.alpha_scale > 1.0
+    assert any("Modo 'match'" in n for n in matched.diagnostics.notes)
+    assert matched.expected_alpha == pytest.approx(float((weak * matched.weights).sum()))
+    _assert_feasible(matched, cons, env, env.cfg)
+    with pytest.raises(ValueError, match="risk_target_mode"):
+        optimize(weak, env.model, cons, env.cost_model, env.cfg, NAV, None, True,
+                 overrides={"risk_target_mode": "auto"})
 
 
 def test_vol_target_override_inside_band(env: Env) -> None:
@@ -474,8 +500,10 @@ def test_relaxation_ladder_turnover_when_forced_exits(env: Env, inception) -> No
 def test_relaxation_ladder_country_sector_on_contradictory_inputs(env: Env) -> None:
     cons = _constraints(env, inception=False)
     assets = env.panel.assets
-    br = [i for i in cons.index if cons.loc[i, "country"] == "BR" and cons.loc[i, "can_long"]]
+    br = [i for i in cons.index if cons.loc[i, "country"] == "BR"
+          and cons.loc[i, "max_long"] >= 0.03 and i not in env.special.values()]
     stuck = br[:4]
+    assert len(stuck) == 4
     current = pd.Series(0.03, index=stuck)
     cons.loc[stuck, "max_trade"] = 0.0125       # só consegue reduzir até 1,75% cada
     cons.loc[stuck, "max_short"] = 0.0
@@ -505,14 +533,27 @@ def test_infeasible_beyond_ladder_raises(env: Env) -> None:
     assert "inviável" in exc.value.diagnostics.notes[-1]
 
 
-def test_missing_alpha_only_allows_exit(env: Env) -> None:
+def test_missing_alpha_only_allows_hold_or_reduce(env: Env) -> None:
     iid = env.special["cap"]
-    alpha = env.alpha.drop(iid)
+    new = env.special["no_short"]  # sem posição: sem alpha não pode abrir
+    alpha = env.alpha.drop([iid, new])
     current = pd.Series({iid: 0.005})
     cons = _constraints(env, current=current, inception=False)
     res = optimize(alpha, env.model, cons, env.cost_model, env.cfg, NAV, current, False)
     assert 0.0 <= res.weights[iid] <= 0.005 + TOL
-    assert res.diagnostics.n_excluded.get("alpha_ausente") == 1
+    assert res.weights[new] == 0.0
+    assert res.diagnostics.n_excluded.get("alpha_ausente") == 2
+
+
+def test_legacy_short_without_borrow_data_is_handled(env: Env) -> None:
+    no_line = env.sides.index[~env.sides["can_short"].astype(bool)
+                              & env.panel.assets["eligible"].reindex(env.sides.index)]
+    iid = no_line[0]  # sem linha alugável: short legado precisa ser recomprado
+    current = pd.Series({iid: -0.004})
+    cons = _constraints(env, current=current, inception=False)
+    assert np.isnan(cons.loc[iid, "borrow_fee"]) and cons.loc[iid, "max_short"] == 0.0
+    res = optimize(env.alpha, env.model, cons, env.cost_model, env.cfg, NAV, current, False)
+    assert res.weights[iid] >= -TOL  # short zerado (teto de short = 0)
 
 
 def test_risk_parts_match_model(env: Env, inception) -> None:
@@ -553,17 +594,23 @@ def test_compliance_passes_optimizer_output(env: Env, inception) -> None:
     assert all(c.details for c in checks)
     vt = next(c for c in checks if c.check_id == "VOL_TARGET")
     assert vt.passed and vt.limit == env.cfg.risk.vol_target_annual
+    vt6 = next(c for c in _run(env, res.weights, cons, vol_target=0.06)
+               if c.check_id == "VOL_TARGET")
+    assert vt6.limit == 0.06
 
 
 def test_compliance_flags_bad_portfolio(env: Env) -> None:
     cons = _constraints(env)
     sp = env.special
     assets = env.panel.assets
+    used = set(sp.values())
     illiquid = cons[cons["can_long"] & (cons["adtv_long_usd"] < 8e6)
-                    & ~cons.index.isin(sp.values())].index[0]
+                    & ~cons.index.isin(used)].index[0]
+    used.add(illiquid)
     not_shortable = cons[~cons["shortable"] & assets["eligible"]
-                         & ~cons.index.isin(sp.values())].index[0]
-    liquid = cons[(cons["adtv_long_usd"] > 50e6) & ~cons.index.isin(sp.values())].index[0]
+                         & ~cons.index.isin(used)].index[0]
+    used.add(not_shortable)
+    liquid = cons[(cons["adtv_long_usd"] > 50e6) & ~cons.index.isin(used)].index[0]
     w = pd.Series({
         liquid: 0.06,            # acima do teto de 4%
         illiquid: 0.039,         # dentro do teto, mas acima de 3 dias de liquidez
@@ -587,7 +634,7 @@ def test_compliance_flags_bad_portfolio(env: Env) -> None:
     assert sp["no_short"] in by_id["SHORT_NOT_ALLOWED"].details
 
     # alavancagem excessiva ⇒ vol e gross acima dos tetos
-    big = _run(env, w * 12, cons)
+    big = _run(env, w * 15, cons)  # gross 0,179 × 15 ≈ 2,7x
     failed_big = {c.check_id for c in hard_failures(big)}
     assert {"VOL_MAX", "GROSS_MAX"} <= failed_big
 

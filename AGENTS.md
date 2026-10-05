@@ -54,7 +54,7 @@ Quem conduz pesquisa, decisões de carteira e comentários é um agente de códi
 - **Agenda das rotinas** (o que fazer agora, pelo relógio de Brasília; fechamentos pendentes): `uv run python -m cdp agenda`
 - **Monitor de risco**: `uv run python -m cdp risk` (último fechamento) ou `uv run python -m cdp risk --live` (intradiário); grava `reports/risk/<data>/risco_<HHMM>.md`
 - **Validar o comentário do dia sem publicar** (a publicação é imutável): `uv run python -m cdp validate-daily --date AAAA-MM-DD`
-- **Painel de operação e risco (artifact)**: `uv run python -m cdp painel` grava `artifacts/painel/cdp_painel.html` (só código); as rotinas fazem commit dele e o republicam no mesmo artifact cuja URL está em `artifacts/painel/ARTIFACT_URL` (ver `docs/cdp/LOCAL.md`)
+- **Painel de operação e risco (artifact)**: `uv run python -m cdp painel` grava em `artifacts/painel/` a casca `index.html`, o estilo e o script versionados, `data.json` e a cópia local `cdp_painel_local.html` (só código); as rotinas fazem commit e republicam no mesmo artifact cuja URL está em `artifacts/painel/ARTIFACT_URL`, seguindo `artifact.publicar` (ver `docs/cdp/LOCAL.md`)
 
 ## Invariantes do CDP (substituem os itens 3 e 4 acima apenas para o CDP)
 

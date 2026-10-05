@@ -855,3 +855,98 @@ def test_final_universe_loads_and_is_consistent():
     petro = uni.lines_for("BR_PETROBRAS")
     assert {"PETR3.SA", "PETR4.SA", "PBR", "PBR-A"} <= set(petro.index)
     assert len(uni.issuers) >= 150 and len(lines) >= 200
+
+
+# ======================================================================
+# Degradação controlada das fontes
+# ======================================================================
+
+class RoutingSession:
+    """Sessão falsa que responde por trecho de URL (BDI por data/tabela)."""
+
+    def __init__(self, routes):
+        self.routes = routes
+        self.calls = []
+
+    def request(self, method, url, **kw):
+        self.calls.append(url)
+        for key, resp in self.routes.items():
+            if key in url:
+                return resp
+        return FakeResponse(200, _bdi_payload(OPEN_COLS, []))
+
+
+def test_b3_lending_range_skips_empty_days():
+    d1 = "2026-10-01T00:00:00"
+    routes = {
+        "BTBLendingOpenPosition/2026-10-01": FakeResponse(200, _bdi_payload(
+            OPEN_COLS, [[d1, d1, "PETR4", "X", "P", "PN", "Total", 100, None, 1.0]])),
+        "BTBLoanBalance/2026-10-01": FakeResponse(200, _bdi_payload(
+            LOAN_COLS, [[d1, d1, "PETR4", "X", "P", "Registro", 3, 50, .001, .002, .003, .001,
+                         .002, .003, 1, None, None]])),
+    }
+    sess = RoutingSession(routes)
+    df = b3_lending.fetch_b3_lending(["PETR4.SA", "AAA"], date(2026, 9, 30), date(2026, 10, 2),
+                                     session=sess, sleep=NO_SLEEP)
+    assert list(df["date"].dt.date) == [date(2026, 10, 1)]
+    assert df.iloc[0]["lending_rate_annual"] == pytest.approx(0.002)
+    latest = b3_lending.latest_lending(df, date(2026, 10, 2))
+    assert latest.loc["PETR4.SA", "lending_date"] == "2026-10-01"
+    assert b3_lending.latest_lending(df, date(2026, 9, 30)).empty  # nada antes do dado existir
+
+
+def test_short_interest_falls_back_to_yahoo_when_finra_down():
+    def finra_down(syms, d):
+        raise yahoo.FetchError("401")
+
+    info = {"sharesShort": 1000, "shortPercentOfFloat": 0.05, "shortRatio": 2.5,
+            "dateShortInterest": 1789430400, "marketCap": 1e9, "currentPrice": 10.0}
+    si = yahoo.fetch_short_interest(["NU"], as_of=date(2026, 10, 5),
+                                    ticker_factory=lambda s: FakeTicker(info),
+                                    finra_fetcher=finra_down, sleep=NO_SLEEP)
+    r = si.loc["NU"]
+    assert r["source"] == "YAHOO" and r["short_ratio_days"] == 2.5
+    assert r["short_interest_date"] == "2026-09-15"
+    # Yahoo com data de SI posterior ao as_of é descartado (sem look-ahead) => sem linha
+    si_old = yahoo.fetch_short_interest(["NU"], as_of=date(2026, 9, 1),
+                                        ticker_factory=lambda s: FakeTicker(info),
+                                        finra_fetcher=finra_down, sleep=NO_SLEEP)
+    assert si_old.empty
+
+
+def test_rates_fred_fallback_when_irx_missing():
+    rates = macro.fetch_rates(
+        date(2026, 10, 1), date(2026, 10, 2), downloader=lambda **kw: pd.DataFrame(),
+        sgs_fetcher=lambda c, a, b: pd.Series(dtype=float),
+        fred_fetcher=lambda sid, a, b: pd.Series([4.17], index=pd.to_datetime(["2026-10-01"])),
+        sleep=NO_SLEEP)
+    assert rates["series"].tolist() == ["USD_3M"] and rates["source"].iloc[0] == "FRED:DGS3MO"
+    assert rates["value"].iloc[0] == pytest.approx(0.0417)
+    with pytest.raises(yahoo.FetchError):
+        macro.fetch_rates(date(2026, 10, 1), date(2026, 10, 2),
+                          downloader=lambda **kw: pd.DataFrame(),
+                          sgs_fetcher=lambda c, a, b: pd.Series(dtype=float),
+                          fred_fetcher=lambda sid, a, b: pd.Series(dtype=float), sleep=NO_SLEEP)
+
+
+def test_news_all_queries_failing_raises_and_universe_queries(tmp_path):
+    uni = load_universe(write_universe(tmp_path / "u.csv"))
+    qs = news.queries_from_universe(uni)
+    by = {q.issuer_id: q for q in qs}
+    assert by["BR_AAA"].ticker == "AAAA3" and not by["BR_AAA"].us_listed
+    assert by["BR_CCC"].us_listed and by["BR_CCC"].ticker == "CCC"
+    assert by["CL_DDD"].locale[0] == "es-419"
+    with pytest.raises(yahoo.FetchError):
+        news.fetch_news(qs, date(2026, 10, 2), 14, session=FakeSession([FakeResponse(503)]),
+                        sleep=NO_SLEEP)
+
+
+def test_store_without_base_and_init_base_refuses_duplicates(tmp_path):
+    st = MarketStore(tmp_path / "empty")
+    assert st.dates() == []
+    with pytest.raises(FileNotFoundError):
+        st.load()
+    mk = FakeMarket()
+    st2 = make_store(tmp_path, mk, at_close(date(2026, 10, 5)))
+    with pytest.raises(FileExistsError):
+        st2.init_base(tmp_path / "snap" / BASE_AS_OF.isoformat())

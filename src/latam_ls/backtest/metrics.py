@@ -28,6 +28,9 @@ DEFAULT_VOL_WINDOW = 63
 EULER_MASCHERONI = 0.5772156649015329
 MIN_OBS_MOMENTS = 3
 """Mínimo de observações para assimetria/curtose (abaixo disso: ``NaN``)."""
+ZERO_STD = 1e-12
+"""Desvio por período abaixo disso é ruído de ponto flutuante (série constante): razões
+que dividem pelo desvio (Sharpe, Sortino, ICIR) ficam ``NaN``, nunca "infinitas"."""
 
 _NORMAL = NormalDist()
 
@@ -149,9 +152,10 @@ def performance_metrics(
     if len(exv) >= 2:
         sd_ex = float(np.std(exv, ddof=1))
         out["sharpe"] = _safe_div(float(np.mean(exv)), sd_ex) * math.sqrt(periods) \
-            if sd_ex > 0 else nan
+            if sd_ex > ZERO_STD else nan
         downside = float(np.sqrt(np.mean(np.minimum(exv, 0.0) ** 2)))
-        out["sortino"] = _safe_div(float(np.mean(exv)) * periods, downside * math.sqrt(periods))
+        out["sortino"] = (_safe_div(float(np.mean(exv)), downside) * math.sqrt(periods)
+                          if downside > ZERO_STD else nan)
 
     dd = drawdown_series(r)
     mdd = float(dd.min())
@@ -269,7 +273,7 @@ def ic_summary(ic: pd.DataFrame) -> pd.DataFrame:
         n = len(s)
         mean = float(s.mean()) if n else float("nan")
         std = float(s.std(ddof=1)) if n >= 2 else float("nan")
-        icir = _safe_div(mean, std) if n >= 2 and std > 0 else float("nan")
+        icir = _safe_div(mean, std) if n >= 2 and std > ZERO_STD else float("nan")
         t = icir * math.sqrt(n) if math.isfinite(icir) else float("nan")
         rows[str(col)] = {"n": float(n), "mean": mean, "std": std, "icir": icir, "t_stat": t,
                           "hit_rate": float((s > 0).mean()) if n else float("nan")}

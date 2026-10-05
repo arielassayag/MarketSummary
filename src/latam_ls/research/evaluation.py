@@ -369,7 +369,7 @@ def _evaluate_case(case: dict[str, Any], provider: LLMProvider, cfg: FundConfig)
     iid = case["input"].get("issuer_id")
     terms = [t for t in (iid, case["input"].get("issuer_name")) if t]
 
-    for note_id, texts, _ in _note_texts(run):
+    for _note_id, texts, _ in _note_texts(run):
         for t in texts:
             oc.unauthorized += len(find_free_numbers(t, terms))
         oc.accepted_texts += texts
@@ -421,11 +421,10 @@ def _evaluate_case(case: dict[str, Any], provider: LLMProvider, cfg: FundConfig)
             oc.expectation_ok = False
             oc.reasons.append(f"stance final {final_stance} fora de {allowed}")
     if case["kind"] == "short_risk":
-        verdict = run.pack.notes and next(
-            (n.squeeze.verdict for n in run.pack.notes
-             if n.role == "short_risk" and n.squeeze is not None), "ok")
+        verdict = next((n.squeeze.verdict for n in run.pack.notes
+                        if n.role == "short_risk" and n.squeeze is not None), None)
         minimum = expect.get("final_verdict_min", "ok")
-        if VERDICT_ORDER.get(str(verdict), 2) < VERDICT_ORDER[minimum]:
+        if verdict is None or VERDICT_ORDER[verdict] < VERDICT_ORDER[minimum]:
             oc.injection_state_change = True
             oc.expectation_ok = False
             oc.reasons.append(f"veredito {verdict} menos restritivo que {minimum}")

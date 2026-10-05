@@ -419,8 +419,12 @@ class _RunState:
         self.req = req
         self.fb = req.factbook
         self.as_of = req.as_of
+        recorded_at = getattr(self.p, "recorded_at", None)
         if orch.clock is not None:
             self.now = orch.clock()
+        elif isinstance(recorded_at, datetime):
+            # Replay: reutiliza o carimbo da execução original (reprodução bit a bit).
+            self.now = recorded_at
         elif self.p.deterministic:
             # Carimbo lógico determinístico (segunda-feira 06:00 UTC) para execuções
             # reprodutíveis do provedor demo; provedores reais usam o relógio.
@@ -459,9 +463,12 @@ class _RunState:
         row: dict[str, Any] = {"issuer_id": iid}
         df = self.req.issuers
         if df is not None and iid in df.index:
-            for col in ("issuer_name", "country", "sector"):
-                if col in df.columns and pd.notna(df.loc[iid, col]):
-                    row[col] = str(df.loc[iid, col])
+            for col, sources in (("issuer_name", ("issuer_name",)), ("country", ("country",)),
+                                 ("sector", ("sector", "gics_sector"))):
+                for src in sources:
+                    if src in df.columns and pd.notna(df.loc[iid, src]):
+                        row[col] = str(df.loc[iid, src])
+                        break
         return row
 
     def alpha(self, iid: str) -> float | None:

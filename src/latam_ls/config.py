@@ -64,6 +64,8 @@ class RiskSection(_Frozen):
     max_single_name_risk_share: float = Field(0.08, gt=0, description="Contribuição máxima de um nome para a variância total")
     max_factor_risk_share: float = Field(0.30, gt=0, description="Fração máxima da variância vinda de fatores (alerta)")
     risk_aversion: float = Field(1.0, ge=0, description="λ do termo de variância (regularização sob o teto de vol)")
+    risk_target_mode: Literal["cap", "match"] = Field(
+        "cap", description="cap: vol-alvo é teto; match: escala o alpha até usar o orçamento de vol")
     var_confidence: float = Field(0.99, gt=0.5, lt=1)
     # Temas com neutralidade própria (ex.: estatais brasileiras durante a eleição).
     theme_net_max_abs: dict[str, float] = Field(default_factory=lambda: {"state_owned": 0.01})

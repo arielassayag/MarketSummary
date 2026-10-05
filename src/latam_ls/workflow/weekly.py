@@ -65,8 +65,8 @@ from ..risk.types import STYLE_FACTORS, RiskModel
 from .memo import render_memo
 
 SYSTEM_CREATOR = "CDP — motor quantitativo"
-# O mandato tem vol-alvo: o otimizador escala o alpha (κ ≥ 1) até usar o orçamento de risco.
-MATCH = {"risk_target_mode": "match"}
+# O modo de meta de vol vem do mandato (risk.risk_target_mode); mantido vazio por compatibilidade.
+MATCH: dict = {}
 THEMES_PATH = "data/universe/themes.csv"
 
 
@@ -308,9 +308,10 @@ def build_proposal(ctx: WeekContext, *, views: list[View], overrides: dict | Non
     constraints = apply_liquidity_minimums(constraints, cfg, ctx.nav)
     vol_target = float(overrides.get("vol_target", cfg.risk.vol_target_annual))
     constraints = apply_specific_risk_caps(constraints, spec_vol, cfg, vol_target)
+    opt_overrides = {**overrides, "themes": ctx.themes} if ctx.themes else overrides
     result = optimize(alpha_adj, ctx.model, constraints, ctx.cost_model, cfg, ctx.nav,
                       current=current, inception=ctx.inception, market_w=ctx.market_w,
-                      overrides=overrides)
+                      overrides=opt_overrides)
     w = result.weights[result.weights.abs() > 0]
     checks = run_compliance(w, ctx.model, constraints, ctx.squeeze, ctx.panel.assets, cfg,
                             ctx.nav, current, ctx.inception, ctx.as_of, ctx.week, ctx.market_w,

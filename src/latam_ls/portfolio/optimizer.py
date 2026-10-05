@@ -74,7 +74,7 @@ _INFEASIBLE = {cp.INFEASIBLE, cp.INFEASIBLE_INACCURATE}
 
 _ALLOWED_OVERRIDES = {
     "vol_target", "vol_target_annual", "gross_max", "gross_multiplier", "risk_aversion",
-    "max_weekly_turnover", "exclude_issuers", "risk_target_mode",
+    "max_weekly_turnover", "exclude_issuers", "risk_target_mode", "themes",
 }
 RISK_TARGET_MODES = ("cap", "match")
 MATCH_REL_TOL = 0.005        # "na meta": vol ≥ 99,5% da meta (o teto continua duro)
@@ -428,6 +428,7 @@ class _Settings:
     exclude: tuple[str, ...]
     notes: tuple[str, ...]
     risk_target_mode: str = "cap"
+    themes: dict | None = None
 
 
 def _finite(name: str, value: object) -> float:
@@ -484,10 +485,14 @@ def _resolve_settings(cfg: FundConfig, overrides: dict | None, inception: bool) 
     excl = tuple(sorted(map(str, raw_excl)))
     if excl:
         notes.append(f"Emissores excluídos pelo gestor (apenas saída): {', '.join(excl)}.")
-    mode = str(ov.get("risk_target_mode", "cap"))
+    mode = str(ov.get("risk_target_mode", getattr(rk, "risk_target_mode", "cap")))
     if mode not in RISK_TARGET_MODES:
         raise ValueError(f"risk_target_mode inválido: {mode!r} (use {RISK_TARGET_MODES}).")
-    return _Settings(vt, gross * mult, lam, turnover, excl, tuple(notes), mode)
+    themes = ov.get("themes")
+    if themes is not None and not isinstance(themes, dict):
+        raise ValueError("themes precisa ser um dicionário tema -> lista de emissores.")
+    return _Settings(vt, gross * mult, lam, turnover, excl, tuple(notes), mode,
+                     {str(k): [str(x) for x in v] for k, v in (themes or {}).items()})
 
 
 @dataclass(frozen=True)
@@ -523,6 +528,11 @@ class _Problem:
     turnover_max: float | None
     lam: float
     amort: float
+    factor_vol_max: float | None = None   # ‖G w‖ ≤ √(fatia máx. de risco fatorial)·σ_alvo
+    theme_names: tuple[str, ...] = ()
+    themes: np.ndarray | None = None       # (T × n) indicadoras de tema (ex.: estatais)
+    theme_max: np.ndarray | None = None    # (T) limites de exposição líquida
+    country_share: np.ndarray | None = None  # (C) teto da fatia do gross por país (NaN = livre)
 
 
 @dataclass(frozen=True)
@@ -624,6 +634,19 @@ def _solve(p: _Problem, relax: _Relax, fixed_zero: np.ndarray,
     if p.styles.shape[0]:
         st = p.style_max * relax.style_mult
         cons += [p.styles @ w <= st, p.styles @ w >= -st]
+    # Alpha puro: risco fatorial limitado (≥ 1 − fatia da variância é idiossincrática).
+    if p.factor_vol_max is not None and p.G.shape[0]:
+        cons += [cp.norm(p.G @ w, 2) <= p.factor_vol_max]
+    # Temas (ex.: estatais) neutros — nunca relaxados.
+    if p.themes is not None and p.themes.shape[0]:
+        cons += [p.themes @ w <= p.theme_max, p.themes @ w >= -p.theme_max]
+    # Concentração do gross por país (linear nas pernas l, s).
+    if p.country_share is not None and p.countries.shape[0]:
+        gross_expr = cp.sum(lv + sv)
+        for k in range(p.countries.shape[0]):
+            share = p.country_share[k]
+            if np.isfinite(share):
+                cons += [p.countries[k] @ (lv + sv) <= share * gross_expr]
     cons += [cp.abs(w - p.w0) <= p.max_trade]
     if p.trade_liq is not None:
         # Aumentos limitados pela liquidez; reduzir até zero (saída) é sempre permitido.
@@ -736,6 +759,23 @@ def _build_problem(alpha: pd.Series, model: RiskModel, cons: pd.DataFrame, cm: C
         trade_liq = tl.clip(lower=0.0).to_numpy(dtype=float)
 
     rk = cfg.risk
+    share_max = float(getattr(rk, "max_factor_risk_share", 1.0))
+    factor_vol_max = (float(np.sqrt(share_max)) * settings.vol_target
+                      if 0 < share_max < 1 else None)
+    theme_names: list[str] = []
+    theme_rows: list[np.ndarray] = []
+    theme_lims: list[float] = []
+    for tname, members in sorted((settings.themes or {}).items()):
+        lim = getattr(rk, "theme_net_max_abs", {}).get(tname)
+        if lim is None:
+            continue
+        row = np.array([1.0 if i in set(members) else 0.0 for i in ids])
+        if row.any():
+            theme_names.append(tname)
+            theme_rows.append(row)
+            theme_lims.append(float(lim))
+    shares_cfg = getattr(rk, "country_gross_share_max", {}) or {}
+    country_share = np.array([float(shares_cfg.get(c, np.nan)) for c in c_names])
     return _Problem(
         ids=ids, alpha=alpha.to_numpy(dtype=float), w0=w0.to_numpy(dtype=float), G=G, sd=sd,
         beta=cons["beta"].to_numpy(dtype=float), style_names=style_names, styles=styles,
@@ -751,6 +791,10 @@ def _build_problem(alpha: pd.Series, model: RiskModel, cons: pd.DataFrame, cm: C
         style_max=rk.style_exposure_max_abs, country_max=rk.country_net_max_abs,
         sector_max=rk.sector_net_max_abs, turnover_max=settings.turnover_max,
         lam=settings.risk_aversion, amort=WEEKS_PER_YEAR / cfg.costs.amortization_weeks,
+        factor_vol_max=factor_vol_max, theme_names=tuple(theme_names),
+        themes=np.vstack(theme_rows) if theme_rows else None,
+        theme_max=np.array(theme_lims) if theme_lims else None,
+        country_share=country_share if np.isfinite(country_share).any() else None,
     )
 
 

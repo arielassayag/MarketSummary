@@ -729,6 +729,18 @@ def test_replay_reproduces_pack_and_never_regenerates(world: dict, tmp_path: Pat
     assert LLMCallLedger(ledger_dir).verify_raw()
 
 
+def test_replay_of_live_provider_reproduces_pack(world: dict, tmp_path: Path) -> None:
+    cfg, ids = world["cfg"], world["ids"]
+    live = ScriptedProvider(deterministic=False)  # 5 amostras por julgamento, relógio real
+    req = make_request(world, longs=ids[-3:], shorts=ids[:2])
+    original = run_research(req, live, cfg, ledger_path=str(tmp_path / "l"))
+    replay = ReplayProvider(tmp_path / "l")
+    assert replay.deterministic is False and replay.recorded_at == original.records[0].created_at
+    again = ResearchOrchestrator(replay, cfg).execute(req)
+    assert again.pack.research_hash() == original.pack.research_hash()
+    assert len(again.records) == len(original.records)
+
+
 # ==========================================================
 # Visões
 # ==========================================================

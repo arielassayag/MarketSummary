@@ -127,7 +127,7 @@ DEFAULT_MAX_AGE_DAYS = 540
 """Idade máxima (``as_of − period_end``) para um fundamento ainda ser usado (≈ 18 meses)."""
 DEFAULT_MAX_PRICE_AGE_DAYS = 7
 
-CVM_PARSER_VERSION = "1"
+CVM_PARSER_VERSION = "2"
 CVM_DOCS = ("ITR", "DFP")
 SEC_COMPANYFACTS_URL = "https://data.sec.gov/api/xbrl/companyfacts/CIK{cik}.json"
 SEC_ACCEPTED_FORMS = frozenset({
@@ -381,7 +381,7 @@ _STMT_USECOLS = {
             "DT_FIM_EXERC", "CD_CONTA", "DS_CONTA", "VL_CONTA"],
 }
 _STMT_ACCOUNTS = {
-    "DRE": re.compile(r"^3\.\d{2}(\.\d{2})?$"),
+    "DRE": re.compile(r"^3\.(\d{2}(\.\d{2})?|99\.01\.\d{2})$"),
     "BPA": re.compile(r"^1(\.01(\.0[12])?)?$"),
     "BPP": re.compile(r"^2\.\d{2}(\.\d{2})?$"),
 }
@@ -448,14 +448,15 @@ def _prepare_statement(tables: Mapping[str, pd.DataFrame], stmt: str) -> pd.Data
         df["kind"] = kind
         frames.append(df)
     cols = ["cnpj", "dt_refer", "versao", "kind", "dt_ini", "dt_fim", "cd", "ds", "value",
-            "currency"]
+            "raw_value", "currency"]
     if not frames:
         return pd.DataFrame(columns=cols)
     df = pd.concat(frames, ignore_index=True)
     scale = _norm_map(df["ESCALA_MOEDA"]).map(_SCALE)
     moeda = _norm_map(df["MOEDA"])
     currency = moeda.map(_CURRENCY).fillna(df["MOEDA"].fillna("").str.upper())
-    value = pd.to_numeric(df["VL_CONTA"], errors="coerce") * scale
+    raw_value = pd.to_numeric(df["VL_CONTA"], errors="coerce")
+    value = raw_value * scale
     out = pd.DataFrame({
         "cnpj": df["CNPJ_CIA"].astype(str).str.strip(),
         "dt_refer": pd.to_datetime(df["DT_REFER"], errors="coerce"),
@@ -467,6 +468,7 @@ def _prepare_statement(tables: Mapping[str, pd.DataFrame], stmt: str) -> pd.Data
         "cd": df["CD_CONTA"].astype(str).str.strip(),
         "ds": _norm_map(df["DS_CONTA"]),
         "value": value,
+        "raw_value": raw_value,  # sem ESCALA_MOEDA (o LPA é sempre R$ por ação)
         "currency": currency.replace("", np.nan),
     })
     out = out.dropna(subset=["dt_refer", "versao", "dt_fim", "value"])
@@ -584,8 +586,49 @@ def _balance_facts(bpa: pd.DataFrame, bpp: pd.DataFrame, fin: pd.DataFrame) -> p
     return pd.concat(facts, ignore_index=True)
 
 
-def _capital_facts(capital: pd.DataFrame) -> pd.DataFrame:
-    cols = ["cnpj", "dt_refer", "versao", "value"]
+SHARE_SCALE_BANDS = {"ok": (0.3, 3.0), "x1000": (300.0, 3000.0)}
+"""Faixas de ``LL ÷ LPA ÷ ações reportadas`` para validar a unidade de ``composicao_capital``."""
+
+
+def _implied_shares(dre: pd.DataFrame, ni_flows: pd.DataFrame) -> pd.DataFrame:
+    """Ações implícitas por documento = lucro atribuível ÷ LPA básico (mesmo período).
+
+    ``composicao_capital`` não informa a unidade e ~20% das companhias reportam em MILHARES
+    (verificado contra o LPA: Tupy, Tenda, Vale, Axia…). O LPA (``3.99.01.xx``, R$ por ação,
+    sem escala) permite checar a unidade dentro do próprio documento, sem olhar o futuro.
+    Usa o LPA da classe ON quando existe; senão o primeiro não nulo. Escolhe o fluxo de maior
+    duração (YTD/anual) com lucro e LPA de mesmo sinal.
+    """
+    key = ["cnpj", "dt_refer", "versao", "kind", "dt_ini", "dt_fim"]
+    out_cols = ["cnpj", "dt_refer", "versao", "implied_shares"]
+    if dre.empty or ni_flows.empty:
+        return pd.DataFrame(columns=out_cols)
+    eps = dre[dre["cd"].str.match(r"^3\.99\.01\.\d{2}$") & dre["raw_value"].ne(0)
+              & dre["raw_value"].notna()].copy()
+    if eps.empty:
+        return pd.DataFrame(columns=out_cols)
+    eps["is_on"] = eps["ds"].isin(["on", "ordinarias", "acoes ordinarias"]).astype(int)
+    eps = (eps.sort_values(key + ["is_on", "cd"], ascending=[True] * len(key) + [False, True])
+           .drop_duplicates(key, keep="first")[key + ["raw_value"]].rename(
+               columns={"raw_value": "eps"}))
+    ni = ni_flows.rename(columns={"period_start": "dt_ini", "period_end": "dt_fim"})
+    m = ni[key + ["value"]].merge(eps, on=key, how="inner")
+    m["implied_shares"] = m["value"] / m["eps"]
+    m = m[np.isfinite(m["implied_shares"]) & (m["implied_shares"] > 0)]
+    m["dur"] = (m["dt_fim"] - m["dt_ini"]).dt.days
+    m = m.sort_values(["cnpj", "dt_refer", "versao", "dur"]).drop_duplicates(
+        ["cnpj", "dt_refer", "versao"], keep="last")
+    return m[out_cols].reset_index(drop=True)
+
+
+def _capital_facts(capital: pd.DataFrame, implied: pd.DataFrame | None = None) -> pd.DataFrame:
+    """Ações em circulação = total − tesouraria, com checagem de unidade pelo LPA.
+
+    ``scale_check``: ``ok`` (unidade confirmada), ``x1000`` (reportado em milhares e
+    corrigido), ``divergente`` (fora das duas faixas: mantido como reportado) ou ``na`` (sem
+    LPA utilizável no documento; resolvido depois por herança de documentos anteriores).
+    """
+    cols = ["cnpj", "dt_refer", "versao", "value", "scale_check"]
     need = {"CNPJ_CIA", "DT_REFER", "VERSAO", "QT_ACAO_TOTAL_CAP_INTEGR", "QT_ACAO_TOTAL_TESOURO"}
     if capital is None or capital.empty or not need <= set(capital.columns):
         return pd.DataFrame(columns=cols)
@@ -599,7 +642,18 @@ def _capital_facts(capital: pd.DataFrame) -> pd.DataFrame:
     })
     out = out[(total > 0) & out["value"].gt(0)].dropna()
     out["versao"] = out["versao"].astype(int)
-    return out
+    if implied is None or implied.empty:
+        out["scale_check"] = "na"
+        return out[cols]
+    out = out.merge(implied, on=["cnpj", "dt_refer", "versao"], how="left")
+    ratio = out["implied_shares"] / out["value"]
+    lo_ok, hi_ok = SHARE_SCALE_BANDS["ok"]
+    lo_k, hi_k = SHARE_SCALE_BANDS["x1000"]
+    out["scale_check"] = np.select(
+        [ratio.isna(), ratio.between(lo_ok, hi_ok), ratio.between(lo_k, hi_k)],
+        ["na", "ok", "x1000"], default="divergente")
+    out.loc[out["scale_check"] == "x1000", "value"] *= 1000.0
+    return out[cols]
 
 
 def extract_cvm_facts(tables: Mapping[str, pd.DataFrame], doc: str) -> pd.DataFrame:
@@ -631,10 +685,11 @@ def extract_cvm_facts(tables: Mapping[str, pd.DataFrame], doc: str) -> pd.DataFr
     stocks = _balance_facts(bpa, bpp, fin).rename(columns={"dt_fim": "period_end"})
     stocks["period_start"] = pd.NaT
     stocks["source"] = f"cvm:{doc_l}:" + stocks["kind"].astype(str)
-    cap = _capital_facts(tables.get("capital", pd.DataFrame()))
+    ni_flows = flows[flows["metric"] == "net_income"]
+    cap = _capital_facts(tables.get("capital", pd.DataFrame()), _implied_shares(dre, ni_flows))
     cap = cap.assign(metric="shares_outstanding", period_start=pd.NaT,
                      period_end=cap["dt_refer"], currency=np.nan,
-                     source=f"cvm:{doc_l}:capital")
+                     source=f"cvm:{doc_l}:capital|unidade:" + cap["scale_check"].astype(str))
     parts = []
     for part in (flows, stocks, cap):
         if part.empty:
@@ -947,6 +1002,38 @@ def _coerce_pit(df: pd.DataFrame) -> pd.DataFrame:
     return out.reset_index(drop=True)
 
 
+def resolve_share_scale(raw: pd.DataFrame) -> pd.DataFrame:
+    """Resolve a unidade das ações CVM sem LPA utilizável (``unidade:na``) sem look-ahead.
+
+    Herda a unidade do documento VERIFICADO mais recente da mesma entidade com
+    ``period_end`` anterior (convenção de reporte da companhia); sem histórico verificado,
+    mantém o valor reportado. ``unidade:divergente`` nunca é alterado.
+    """
+    if raw.empty or "source" not in raw.columns:
+        return raw
+    is_sh = (raw["metric"] == "shares_outstanding") & raw["source"].astype(str).str.startswith(
+        "cvm:")
+    if not is_sh.any():
+        return raw
+    out = raw.copy()
+    sh = out[is_sh].copy()
+    sh["_check"] = sh["source"].astype(str).str.extract(r"\|unidade:(\w+)$")[0]
+    sh = sh.sort_values(["entity", "period_end", "received_date"])
+    verified = sh["_check"].where(sh["_check"].isin(["ok", "x1000"]))
+    sh["_inherit"] = verified.groupby(sh["entity"]).transform(lambda s: s.ffill().shift(1))
+    # documentos do mesmo period_end compartilham a verificação do próprio período quando há
+    same = verified.groupby([sh["entity"], sh["period_end"]]).transform("first")
+    sh["_inherit"] = same.where(same.notna(), sh["_inherit"])
+    fix = (sh["_check"] == "na") & (sh["_inherit"] == "x1000")
+    keep = (sh["_check"] == "na") & sh["_inherit"].isin(["ok"])
+    out.loc[fix[fix].index, "value"] = out.loc[fix[fix].index, "value"] * 1000.0
+    out.loc[fix[fix].index, "source"] = out.loc[fix[fix].index, "source"].str.replace(
+        "|unidade:na", "|unidade:x1000(herdada)", regex=False)
+    out.loc[keep[keep].index, "source"] = out.loc[keep[keep].index, "source"].str.replace(
+        "|unidade:na", "|unidade:ok(herdada)", regex=False)
+    return out
+
+
 def pit_from_raw_facts(raw: pd.DataFrame, entity_to_issuer: Mapping[str, str | Iterable[str]],
                        lag_bdays: int = DEFAULT_LAG_BDAYS) -> pd.DataFrame:
     """Converte fatos brutos em tabela PIT longa (``PIT_COLUMNS``).
@@ -965,7 +1052,7 @@ def pit_from_raw_facts(raw: pd.DataFrame, entity_to_issuer: Mapping[str, str | I
     if not mapping:
         return _empty_pit()
     mp = pd.DataFrame(mapping, columns=["entity", "issuer_id"]).drop_duplicates()
-    df = raw.copy()
+    df = resolve_share_scale(raw)
     df["entity"] = df["entity"].astype(str)
     df = df.merge(mp, on="entity", how="inner")
     if df.empty:

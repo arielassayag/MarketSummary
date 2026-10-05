@@ -38,6 +38,7 @@ risk:
   max_single_name_risk_share: 0.08
   max_factor_risk_share: 0.25          # ≥ 75% da variância deve ser idiossincrática (restrição no otimizador)
   risk_aversion: 1.0
+  risk_target_mode: match              # o mandato TEM vol-alvo: usa o orçamento de risco (κ ≥ 1)
   var_confidence: 0.99
   theme_net_max_abs: {state_owned: 0.01}  # estatais neutras (janela eleitoral)
   country_gross_share_max: {BR: 0.70, MX: 0.35, CL: 0.15, PE: 0.12, CO: 0.10, AR: 0.10, LATAM: 0.10, PA: 0.05, UY: 0.05}

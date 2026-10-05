@@ -19,7 +19,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from datetime import UTC, date, datetime
+from datetime import date, datetime
 from pathlib import Path
 
 from . import SIMULATED_DATA_NOTICE

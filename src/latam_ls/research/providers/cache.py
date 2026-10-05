@@ -193,6 +193,9 @@ class ReplayProvider(LLMProvider):
                  deterministic: bool | None = None) -> None:
         self.ledger = LLMCallLedger(ledger_dir)
         self._index = self.ledger.raw_index()
+        records = self.ledger.records()
+        self.recorded_at = records[0].created_at if records else None
+        """Carimbo da execução original (o orquestrador o reutiliza no replay)."""
         first = self._first_payload()
         self.name = name or (str(first.get("provider")) if first else "replay")
         self.model = model if model is not None else (first.get("configured_model")

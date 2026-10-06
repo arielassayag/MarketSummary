@@ -44,6 +44,7 @@ import gzip
 import hashlib
 import io
 import json
+import math
 import os
 import platform
 import shutil
@@ -55,6 +56,7 @@ from typing import Any
 
 import numpy as np
 import pandas as pd
+import yaml
 
 from .. import SIMULATED_DATA_NOTICE
 from ..audit import AuditLog
@@ -72,7 +74,8 @@ LIMIAR_REVISAO = 0.01
 """Variação do preço-alvo (|ΔTP|/TP) a partir da qual o evento é REVISAO e não REITERACAO."""
 RATINGS_CITAVEIS = ("Compra", "Neutro", "Venda")
 COLUNAS_MASCARADAS = ("preco_alvo", "upside", "etr", "pwr", "alpha", "alpha_rel", "alvo_otimista",
-                      "alvo_pessimista", "diff_consenso")
+                      "alvo_pessimista", "diff_consenso", "pwr_com_piso", "alpha_rel_estilo",
+                      "preco_alvo_ke_estatico")
 """Colunas sem valor citável quando o rating não é Compra, Neutro ou Venda ("Em revisão")."""
 
 
@@ -476,7 +479,10 @@ def gravar_snapshot(book: Path, ex: Execucao, dados: DadosPublicos, params: Para
             "data_notice": SIMULATED_DATA_NOTICE if ex.is_synthetic else AVISO_REAL,
             "contagens": {"emissores": len(ids), "com_alvo": n_alvo, "etfs": len(ex.etfs),
                           "por_rating": ex.distribuicao.get("distribuicao"),
-                          "alertas_distribuicao": ex.distribuicao.get("alertas_distribuicao")},
+                          "alertas_distribuicao": ex.distribuicao.get("alertas_distribuicao"),
+                          "estilo": ex.distribuicao.get("estilo"),
+                          "monitoramento": ex.distribuicao.get("monitoramento"),
+                          "premio_implicito_pais": ex.contexto.get("premio_implicito")},
             "livro_anterior": {"n_eventos": seq0, "head": head0},
             "reparos": reparos,
         })
@@ -619,15 +625,48 @@ def snapshot(root: Path, d: date) -> SnapshotCobertura:
 
 # ============================================================ verificação completa
 
+def versao_metodologia_atual(valuation: Path | str | None = None) -> str | None:
+    """Versão da metodologia que o código atual implementa: a da configuração do repositório
+    (``configs/cdp/valuation.yaml``, versionada junto com o código). ``None`` se ilegível."""
+    from .parametros import DEFAULT_VALUATION
+
+    try:
+        val = yaml.safe_load(Path(valuation or DEFAULT_VALUATION).read_text(encoding="utf-8")) or {}
+    except (OSError, yaml.YAMLError):
+        return None
+    v = val.get("versao")
+    return None if v is None else str(v)
+
+
+def _versao_snapshot(pasta: Path) -> str | None:
+    try:
+        val = yaml.safe_load((pasta / "configuracao" / "valuation.yaml").read_text(encoding="utf-8")) or {}
+    except (OSError, yaml.YAMLError):
+        return None
+    v = val.get("versao")
+    return None if v is None else str(v)
+
+
 def verificar(book: Path, params_por_snapshot: bool = True, recalcular: bool = True,
-              tolerancia: float = 1e-6, completo_todos: bool = True) -> tuple[bool, list[str]]:
+              tolerancia: float = 1e-6, completo_todos: bool = True,
+              versao_atual: str | None = None) -> tuple[bool, list[str]]:
     """Confere o livro, cada manifesto/selo/arquivo, a correspondência com a trilha do fundo, o
-    placar e (``recalcular``) refaz cada snapshot por completo a partir dos insumos arquivados
-    (``completo_todos=False``: só o mais recente por completo; dos anteriores, o preço-alvo do
-    caso-base)."""
+    placar e (``recalcular``) refaz cada snapshot por completo a partir dos insumos e da
+    configuração arquivados (``completo_todos=False``: só o mais recente por completo; dos
+    anteriores, o preço-alvo do caso-base).
+
+    Versionamento: o recálculo exige o código da mesma versão da metodologia. Snapshots gravados
+    com outra versão da configuração (``versao`` do ``valuation.yaml`` arquivado ≠ a do repositório,
+    ``versao_atual``) têm hashes, livro, selos, trilha e placar conferidos e o recálculo é indicado
+    como nota (não como falha): "metodologia X: recálculo exige o código da versão X (git <sha>)".
+    Toda mudança de metodologia sobe a ``versao``. ``params_por_snapshot``: sempre verdadeiro (cada
+    snapshot usa a própria configuração arquivada); mantido por compatibilidade."""
     from .placar import calcular_placar
 
+    _ = params_por_snapshot
     book = Path(book)
+    atual = versao_atual if versao_atual is not None else versao_metodologia_atual()
+    notas: list[str] = []
     ok, probs = verificar_livro(book)
     msgs: list[str] = [] if ok else list(probs)
     evs = eventos(book)
@@ -676,6 +715,13 @@ def verificar(book: Path, params_por_snapshot: bool = True, recalcular: bool = T
             msgs.append(f"{d}: placar.json não confere com o recálculo")
         n_prev, head_prev = n, head
         if recalcular:
+            v_snap = _versao_snapshot(pasta)
+            if atual is not None and v_snap is not None and v_snap != atual:
+                git = (snap.manifest.get("codigo") or {}).get("git")
+                notas.append(f"{d}: metodologia {v_snap}: recálculo exige o código da versão {v_snap}"
+                             + (f" (git {git})" if git else "") + f"; o código atual implementa a {atual} — "
+                             "hashes, livro, selo, trilha e placar conferidos")
+                continue
             completo = completo_todos or d == ds[-1]
             try:
                 msgs.extend(recalcular_snapshot(snap, tolerancia, completo=completo))
@@ -701,7 +747,9 @@ def verificar(book: Path, params_por_snapshot: bool = True, recalcular: bool = T
         elif vistos.get(h, 0) > 1:
             msgs.append(f"{d}: selo registrado mais de uma vez na trilha do fundo")
     ok_final = not msgs
-    return ok_final, msgs or ["Cobertura íntegra: livro, manifestos, arquivos, trilha, placar e modelos conferidos."]
+    if not ok_final:
+        return False, msgs + notas
+    return True, ["Cobertura íntegra: livro, manifestos, arquivos, trilha, placar e modelos conferidos."] + notas
 
 
 def _rel(a: float | None, b: float | None, tol: float) -> bool:
@@ -748,29 +796,57 @@ def recalcular_snapshot(snap: SnapshotCobertura, tolerancia: float = 1e-6, compl
             if not _rel(tp, tp_ok, tol):
                 msgs.append(f"{snap.as_of}: {iid} preço-alvo recalculado {tp} ≠ {tp_ok}")
         return msgs
-    ctx = montar_contexto(pacs, params)
+    ctx = montar_contexto(pacs, params, rf, rf_info.get("fonte") or {})
     if sha256_obj(_arr(ctx)) != sha256_obj(ctx_arq):
         msgs.append(f"{snap.as_of}: contexto transversal recalculado não confere com contexto.json")
     anterior = carregar_anterior(pasta.parent.parent, snap.as_of, excluir=snap.as_of)
     modelos, _, _ = modelar(pacs, ctx_arq, params, rf, rf_info.get("fonte") or {}, anterior,
                             list(snap.manifest.get("emissores", [])))
-    campos = ("preco_alvo", "upside", "etr", "pwr", "ke", "wacc", "alpha", "alpha_rel", "alvo_otimista",
+    campos = ("preco_alvo", "upside", "etr", "pwr", "pwr_com_piso", "p_patrimonio_zero", "ke", "ke_estatico",
+              "preco_alvo_ke_estatico", "wacc", "alpha", "alpha_rel", "alpha_rel_estilo", "alvo_otimista",
               "alvo_pessimista")
+    campos_cc = ("ke", "ke_sem_calibracao", "ke_estatico", "ke_implicito_pais", "kd", "wacc", "g", "beta",
+                 "delta_calibracao")
+    tabela = ler_tabela_snapshot(pasta)
     for iid, pub in publicados.items():
         r = pub.get("resumo") or {}
         m = modelos[iid]
+        cc = m.get("custo_capital") or {}
         novo = {"preco_alvo": m.get("tp"), "upside": m.get("upside"), "etr": m.get("etr"), "pwr": m.get("pwr"),
-                "ke": (m.get("custo_capital") or {}).get("ke"), "wacc": (m.get("custo_capital") or {}).get("wacc"),
-                "alpha": m.get("alpha"), "alpha_rel": m.get("alpha_rel"), "alvo_otimista": m.get("tp_otimista"),
+                "pwr_com_piso": m.get("pwr_com_piso"), "p_patrimonio_zero": m.get("p_patrimonio_zero"),
+                "ke": cc.get("ke"), "ke_estatico": cc.get("ke_estatico"), "preco_alvo_ke_estatico": m.get("tp_ke_estatico"),
+                "wacc": cc.get("wacc"), "alpha": m.get("alpha"), "alpha_rel": m.get("alpha_rel"),
+                "alpha_rel_estilo": m.get("alpha_rel_estilo"), "alvo_otimista": m.get("tp_otimista"),
                 "alvo_pessimista": m.get("tp_pessimista")}
         for c in campos:
             a, b = r.get(c), novo[c]
             b = None if b is None else float(_arr(float(b)))
             if not _rel(b, a, tol):
                 msgs.append(f"{snap.as_of}: {iid} {c} recalculado {b} ≠ {a}")
+        cc_pub = pub.get("custo_capital") or {}
+        for c in campos_cc:
+            a, b = cc_pub.get(c), cc.get(c)
+            b = None if b is None else float(_arr(float(b)))
+            if not _rel(b, None if a is None else float(a), tol):
+                msgs.append(f"{snap.as_of}: {iid} custo de capital {c} recalculado {b} ≠ {a}")
         for c in ("rating", "confianca", "incerteza"):
             if r.get(c) != m.get(c):
                 msgs.append(f"{snap.as_of}: {iid} {c} recalculado {m.get(c)} ≠ {r.get(c)}")
+        # a tabela pública (modelos.csv, a que o sinal lê) contra o recálculo
+        if tabela is not None and iid in tabela.index:
+            lt = tabela.loc[iid]
+            for c in ("preco_alvo", "upside", "etr", "pwr", "pwr_com_piso", "p_patrimonio_zero", "ke", "ke_estatico",
+                      "preco_alvo_ke_estatico", "alpha", "alpha_rel", "alpha_rel_estilo"):
+                if c not in lt.index:
+                    continue
+                a = lt[c]
+                a = None if a is None or (isinstance(a, float) and not math.isfinite(a)) else float(a)
+                b = None if novo[c] is None else float(_arr(float(novo[c])))
+                if not _rel(b, a, tol):
+                    msgs.append(f"{snap.as_of}: {iid} modelos.csv {c} {a} ≠ recalculado {b}")
+            for c in ("rating", "confianca"):
+                if c in lt.index and str(lt[c]) != str(m.get(c)):
+                    msgs.append(f"{snap.as_of}: {iid} modelos.csv {c} {lt[c]} ≠ recalculado {m.get(c)}")
     ins_etf_rel = "insumos/etfs.json.gz"
     if ins_etf_rel in snap.manifest.get("arquivos", {}):
         ins_etf = ler_pacotes(pasta, snap.manifest, "etfs")
@@ -784,6 +860,15 @@ def recalcular_snapshot(snap: SnapshotCobertura, tolerancia: float = 1e-6, compl
             if e.get("visao_ilf") != pub.get("visao_ilf"):
                 msgs.append(f"{snap.as_of}: {k} visão recalculada {e.get('visao_ilf')} ≠ {pub.get('visao_ilf')}")
     return msgs
+
+
+def ler_tabela_snapshot(pasta: Path) -> pd.DataFrame | None:
+    """``modelos.csv`` do snapshot indexado por emissor (``None`` se ausente)."""
+    p = Path(pasta) / "modelos.csv"
+    if not p.exists():
+        return None
+    t = pd.read_csv(p)
+    return t.set_index("issuer_id") if "issuer_id" in t.columns else None
 
 
 def carregar_anterior(book: Path, ate: date, excluir: date | None = None):

@@ -1,234 +1,234 @@
-issuer_id,arquetipo,industria_damodaran,moeda_demonstrativos,lambda,linha_valuation,fim_concessao,nota
-AR_ADECOAGRO,commodity,Food Processing,USD,1.0,,,
-AR_BBVA,banco,Bank (Money Center),ARS,1.0,,,
-AR_CAAP,concessao,Transportation,USD,1.0,,2038,aeroportos (concessão AA2000)
-AR_CEPU,utilidade_regulada,Utility (General),ARS,1.0,,,
-AR_CRESUD,holding,Food Processing,ARS,1.0,,,holding agro com controle da IRSA
-AR_GALICIA,banco,Bank (Money Center),ARS,1.0,,,
-AR_GLOBANT,corporativo,Software (System & Application),USD,1.0,,,
-AR_IRSA,imobiliario,Real Estate (Development),ARS,1.0,,,
-AR_LAR,commodity,Metals & Mining,USD,1.0,,,
-AR_LOMA,corporativo,Total Market,ARS,1.0,,,indústria 'Building Materials' fora da tabela curada: Total Market
-AR_MACRO,banco,Bank (Money Center),ARS,1.0,,,
-AR_PAMPA,utilidade_regulada,Power,USD,1.0,,,
-AR_SUPERVIELLE,banco,Banks (Regional),ARS,1.0,,,
-AR_TEO,corporativo,Telecom. Services,ARS,1.0,,,
-AR_TGS,commodity,Oil/Gas (Integrated),ARS,1.0,,,transporte regulado de gás + líquidos (líquidos dominam o ciclo)
-AR_YPF,commodity,Oil/Gas (Integrated),ARS,1.0,,,
-BR_3TENTOS,commodity,Food Processing,BRL,1.0,,,
-BR_ABC,banco,Banks (Regional),BRL,1.0,,,
-BR_AFYA,corporativo,Total Market,BRL,1.0,,,indústria 'Education & Training Services' fora da tabela curada: Total Market
-BR_ALLOS,imobiliario,Real Estate (Development),BRL,1.0,,,
-BR_ALPARGATAS,corporativo,Retail (General),BRL,1.0,,,
-BR_ALUPAR,utilidade_regulada,Power,BRL,1.0,,,indústria 'Utilities - Renewable' aproximada por 'Power'
-BR_AMBEV,corporativo,Beverage (Alcoholic),BRL,0.8,,,operações em América Latina e Canadá
-BR_ANIMA,corporativo,Total Market,BRL,1.0,,,indústria 'Education & Training Services' fora da tabela curada: Total Market
-BR_ASSAI,corporativo,Retail (Grocery and Food),BRL,1.0,,,indústria 'Grocery Stores' aproximada por 'Retail (Grocery and Food)'
-BR_AURA,commodity,Precious Metals,USD,1.0,,,
-BR_AUREN,utilidade_regulada,Power,BRL,1.0,,,indústria 'Utilities - Renewable' aproximada por 'Power'
-BR_AXIA,utilidade_regulada,Power,BRL,1.0,,,indústria 'Utilities - Renewable' aproximada por 'Power'
-BR_AZZAS,corporativo,Retail (General),BRL,1.0,,,
-BR_B3,corporativo,Brokerage & Investment Banking,BRL,1.0,,,bolsa (infraestrutura de mercado)
-BR_BANRISUL,banco,Banks (Regional),BRL,1.0,,,
-BR_BB,banco,Bank (Money Center),BRL,1.0,,,
-BR_BBSEG,seguradora,Financial Svcs. (Non-bank & Insurance),BRL,1.0,,,
-BR_BEMOBI,corporativo,Total Market,BRL,1.0,,,indústria 'Entertainment' fora da tabela curada: Total Market
-BR_BRADESCO,banco,Bank (Money Center),BRL,1.0,,,
-BR_BRADESPAR,holding,Metals & Mining,BRL,1.0,,,holding com participação na Vale
-BR_BRADSAUDE,seguradora,Financial Svcs. (Non-bank & Insurance),BRL,1.0,,,
-BR_BRASKEM,commodity,Total Market,BRL,1.0,,,indústria 'Chemicals' fora da tabela curada: Total Market
-BR_BRAVA,commodity,Oil/Gas (Production and Exploration),BRL,1.0,,,
-BR_BTG,banco,Brokerage & Investment Banking,BRL,1.0,,,
-BR_CBA,commodity,Metals & Mining,BRL,1.0,,,indústria 'Aluminum' aproximada por 'Metals & Mining'
-BR_CEA,corporativo,Retail (General),BRL,1.0,,,indústria 'Specialty Retail' aproximada por 'Retail (General)'
-BR_CEMIG,utilidade_regulada,Utility (General),BRL,1.0,,,
-BR_CMIN,commodity,Steel,BRL,1.0,,,
-BR_COGNA,corporativo,Total Market,BRL,1.0,,,indústria 'Education & Training Services' fora da tabela curada: Total Market
-BR_COMPASS,utilidade_regulada,Utility (General),BRL,1.0,,,indústria 'Utilities - Regulated Gas' aproximada por 'Utility (General)'
-BR_COPASA,utilidade_regulada,Utility (General),BRL,1.0,,,indústria 'Utilities - Regulated Water' aproximada por 'Utility (General)'
-BR_COPEL,utilidade_regulada,Utility (General),BRL,1.0,,,
-BR_COSAN,holding,Oil/Gas (Integrated),BRL,1.0,,,"holding (Rumo, Compass, Raízen, Moove); indústria 'Oil & Gas Refining & Marketing' aproximada por 'Oil/Gas (Integrated)'"
-BR_CPFL,utilidade_regulada,Utility (General),BRL,1.0,,,
-BR_CSN,commodity,Steel,BRL,1.0,,,
-BR_CURY,imobiliario,Real Estate (Development),BRL,1.0,,,incorporadora (valuation por PL e ROE)
-BR_CVC,corporativo,Total Market,BRL,1.0,,,indústria 'Travel Services' fora da tabela curada: Total Market
-BR_CXSEG,seguradora,Financial Svcs. (Non-bank & Insurance),BRL,1.0,,,
-BR_CYRELA,imobiliario,Real Estate (Development),BRL,1.0,,,incorporadora
-BR_DIRECIONAL,imobiliario,Real Estate (Development),BRL,1.0,,,incorporadora
-BR_ECORODOVIAS,concessao,Transportation,BRL,1.0,,,rodovias (carteira de concessões)
-BR_EMBRAER,corporativo,Total Market,BRL,0.5,,,indústria 'Aerospace & Defense' fora da tabela curada: Total Market; receita majoritariamente em dólar/exportação
-BR_ENERGISA,utilidade_regulada,Utility (General),BRL,1.0,,,
-BR_ENEVA,utilidade_regulada,Utility (General),BRL,1.0,,,indústria 'Utilities - Diversified' aproximada por 'Utility (General)'
-BR_ENGIE,utilidade_regulada,Power,BRL,1.0,,,indústria 'Utilities - Renewable' aproximada por 'Power'
-BR_EQUATORIAL,utilidade_regulada,Utility (General),BRL,1.0,,,
-BR_ERO,commodity,Metals & Mining,USD,1.0,,,
-BR_EZTEC,imobiliario,Real Estate (Development),BRL,1.0,,,incorporadora
-BR_FLEURY,corporativo,Total Market,BRL,1.0,,,indústria 'Diagnostics & Research' fora da tabela curada: Total Market
-BR_GERDAU,commodity,Steel,BRL,0.6,,,operações relevantes na América do Norte
-BR_GOAU,commodity,Steel,BRL,0.6,,,controla a Gerdau (América do Norte relevante)
-BR_GPA,corporativo,Retail (General),BRL,1.0,,,indústria 'Department Stores' aproximada por 'Retail (General)'
-BR_GPS,corporativo,Total Market,BRL,1.0,,,indústria 'Specialty Business Services' fora da tabela curada: Total Market
-BR_GRENDENE,corporativo,Retail (General),BRL,1.0,,,
-BR_HAPVIDA,corporativo,Total Market,BRL,1.0,,,operadora de saúde verticalizada
-BR_HYPERA,corporativo,Total Market,BRL,1.0,,,indústria 'Drug Manufacturers - Specialty & Generic' fora da tabela curada: Total Market
-BR_IGUATEMI,imobiliario,Real Estate (Development),BRL,1.0,,,
-BR_INTELBRAS,corporativo,Total Market,BRL,1.0,,,indústria 'Building Products & Equipment' fora da tabela curada: Total Market
-BR_INTER,banco,Banks (Regional),BRL,1.0,,,
-BR_IRB,seguradora,Financial Svcs. (Non-bank & Insurance),BRL,1.0,,,
-BR_ISAENERGIA,utilidade_regulada,Power,BRL,1.0,,,indústria 'Utilities - Independent Power Producers' aproximada por 'Power'
-BR_ITAU,banco,Bank (Money Center),BRL,1.0,,,
-BR_ITAUSA,holding,Bank (Money Center),BRL,1.0,,,holding do Itaú Unibanco
-BR_JBS,corporativo,Food Processing,USD,0.3,,,"receita majoritariamente fora do Brasil (EUA, Austrália)"
-BR_JHSF,imobiliario,Real Estate (Development),BRL,1.0,,,incorporadora e renda
-BR_KLABIN,commodity,Paper/Forest Products,BRL,1.0,,,
-BR_LOCALIZA,corporativo,Transportation,BRL,1.0,,,
-BR_LOCAWEB,corporativo,Software (System & Application),BRL,1.0,,,
-BR_LOGCP,imobiliario,Real Estate (Development),BRL,1.0,,,
-BR_MAGALU,corporativo,Retail (General),BRL,1.0,,,indústria 'Specialty Retail' aproximada por 'Retail (General)'
-BR_MARCOPOLO,corporativo,Total Market,BRL,1.0,,,indústria 'Farm & Heavy Construction Machinery' fora da tabela curada: Total Market
-BR_MATEUS,corporativo,Retail (General),BRL,1.0,,,indústria 'Department Stores' aproximada por 'Retail (General)'
-BR_MBRF,corporativo,Food Processing,BRL,1.0,,,
-BR_MDIAS,corporativo,Food Processing,BRL,1.0,,,
-BR_MILLS,corporativo,Transportation,BRL,1.0,,,
-BR_MINERVA,corporativo,Food Processing,BRL,1.0,,,
-BR_MOTIVA,concessao,Transportation,BRL,1.0,,,"rodovias, aeroportos e mobilidade (carteira de concessões)"
-BR_MOURADUBEUX,imobiliario,Real Estate (Development),BRL,1.0,,,incorporadora
-BR_MOVIDA,corporativo,Transportation,BRL,1.0,,,
-BR_MRV,imobiliario,Real Estate (Development),BRL,1.0,,,incorporadora
-BR_MULTIPLAN,imobiliario,Real Estate (Development),BRL,1.0,,,
-BR_NATURA,corporativo,Total Market,BRL,0.7,,,indústria 'Household & Personal Products' fora da tabela curada: Total Market; operações na América Latina hispânica
-BR_NU,banco,Bank (Money Center),USD,1.0,,,
-BR_ONCOCLINICAS,corporativo,Total Market,BRL,1.0,,,indústria 'Medical Care Facilities' fora da tabela curada: Total Market
-BR_ORIZON,corporativo,Total Market,BRL,1.0,,,indústria 'Waste Management' fora da tabela curada: Total Market
-BR_PAGS,banco,Software (System & Application),BRL,1.0,,,
-BR_PAGUEMENOS,corporativo,Retail (General),BRL,1.0,,,
-BR_PATRIA,corporativo,Brokerage & Investment Banking,USD,1.0,,,gestora de recursos
-BR_PETROBRAS,commodity,Oil/Gas (Integrated),BRL,1.0,,,
-BR_PETZCOBASI,corporativo,Retail (General),BRL,1.0,,,
-BR_PICPAY,banco,Software (System & Application),BRL,1.0,,,
-BR_PINE,banco,Banks (Regional),BRL,1.0,,,
-BR_PLANO,imobiliario,Real Estate (Development),BRL,1.0,,,incorporadora
-BR_PORTO,seguradora,Financial Svcs. (Non-bank & Insurance),BRL,1.0,,,
-BR_PRIO,commodity,Oil/Gas (Production and Exploration),BRL,1.0,,,
-BR_RAIADROGASIL,corporativo,Retail (General),BRL,1.0,,,
-BR_RANDON,corporativo,Total Market,BRL,1.0,,,indústria 'Farm & Heavy Construction Machinery' fora da tabela curada: Total Market
-BR_RECV,commodity,Oil/Gas (Production and Exploration),BRL,1.0,,,
-BR_REDEDOR,corporativo,Total Market,BRL,1.0,,,indústria 'Medical Care Facilities' fora da tabela curada: Total Market
-BR_RENNER,corporativo,Retail (General),BRL,1.0,,,indústria 'Department Stores' aproximada por 'Retail (General)'
-BR_RIACHUELO,corporativo,Retail (General),BRL,1.0,,,
-BR_RUMO,concessao,Transportation,BRL,1.0,,2058,ferrovia (concessões)
-BR_SABESP,utilidade_regulada,Utility (General),BRL,1.0,,,indústria 'Utilities - Regulated Water' aproximada por 'Utility (General)'
-BR_SANEPAR,utilidade_regulada,Utility (General),BRL,1.0,,,indústria 'Utilities - Regulated Water' aproximada por 'Utility (General)'
-BR_SANTANDER,banco,Bank (Money Center),BRL,1.0,,,
-BR_SAOMARTINHO,commodity,Food Processing,BRL,1.0,,,açúcar e etanol
-BR_SBF,corporativo,Retail (General),BRL,1.0,,,indústria 'Specialty Retail' aproximada por 'Retail (General)'
-BR_SER,corporativo,Total Market,BRL,1.0,,,indústria 'Education & Training Services' fora da tabela curada: Total Market
-BR_SIGMALITH,commodity,Metals & Mining,USD,1.0,,,
-BR_SIMPAR,corporativo,Transportation,BRL,1.0,,,
-BR_SLC,commodity,Food Processing,BRL,1.0,,,
-BR_SMARTFIT,corporativo,Total Market,BRL,1.0,,,indústria 'Leisure' fora da tabela curada: Total Market
-BR_STONE,banco,Software (System & Application),BRL,1.0,,,
-BR_SUZANO,commodity,Paper/Forest Products,BRL,0.8,,,exportadora (produção no Brasil)
-BR_TAESA,utilidade_regulada,Utility (General),BRL,1.0,,,
-BR_TENDA,imobiliario,Real Estate (Development),BRL,1.0,,,incorporadora
-BR_TIM,corporativo,Telecom. Services,BRL,1.0,,,
-BR_TOTVS,corporativo,Software (System & Application),BRL,1.0,,,
-BR_TUPY,corporativo,Total Market,BRL,0.5,,,indústria 'Metal Fabrication' fora da tabela curada: Total Market; receita externa relevante
-BR_ULTRAPAR,corporativo,Oil/Gas (Integrated),BRL,1.0,,,distribuição de combustíveis e logística; indústria 'Oil & Gas Refining & Marketing' aproximada por 'Oil/Gas (Integrated)'
-BR_UNIPAR,commodity,Total Market,BRL,1.0,,,indústria 'Chemicals' fora da tabela curada: Total Market
-BR_USIMINAS,commodity,Steel,BRL,1.0,,,
-BR_VALE,commodity,Metals & Mining,BRL,1.0,,,
-BR_VAMOS,corporativo,Transportation,BRL,1.0,,,
-BR_VIBRA,corporativo,Oil/Gas (Integrated),BRL,1.0,,,distribuição de combustíveis; indústria 'Specialty Retail' aproximada por 'Oil/Gas (Integrated)'
-BR_VIVARA,corporativo,Retail (General),BRL,1.0,,,
-BR_VIVO,corporativo,Telecom. Services,BRL,1.0,,,
-BR_VTEX,corporativo,Software (System & Application),USD,1.0,,,
-BR_VULCABRAS,corporativo,Retail (General),BRL,1.0,,,
-BR_WEG,corporativo,Total Market,BRL,0.6,,,indústria 'Electrical Equipment & Parts' fora da tabela curada: Total Market; receita externa relevante
-BR_XP,banco,Brokerage & Investment Banking,BRL,1.0,,,
-BR_YDUQS,corporativo,Total Market,BRL,1.0,,,indústria 'Education & Training Services' fora da tabela curada: Total Market
-CL_ANDINA,corporativo,Beverage (Soft),CLP,1.0,,,
-CL_BCHILE,banco,Bank (Money Center),CLP,1.0,,,
-CL_BCI,banco,Bank (Money Center),CLP,1.0,,,
-CL_BSAC,banco,Bank (Money Center),CLP,1.0,,,
-CL_CENCOMALLS,imobiliario,Real Estate (Development),CLP,1.0,,,
-CL_CENCOSUD,corporativo,Retail (General),CLP,0.7,,,"indústria 'Department Stores' aproximada por 'Retail (General)'; operações em Argentina, Brasil, Peru e EUA"
-CL_CMPC,commodity,Paper/Forest Products,USD,1.0,,,
-CL_COLBUN,utilidade_regulada,Utility (General),USD,1.0,,,
-CL_COPEC,corporativo,Oil/Gas (Integrated),USD,1.0,,,
-CL_ECL,utilidade_regulada,Utility (General),USD,1.0,,,
-CL_EISA,corporativo,Total Market,CLP,1.0,,,indústria 'Engineering & Construction' fora da tabela curada: Total Market
-CL_ENELAM,utilidade_regulada,Utility (General),USD,1.0,,,"distribuidoras em Brasil, Colômbia e Peru"
-CL_ENELCHILE,utilidade_regulada,Power,USD,1.0,,,indústria 'Utilities - Renewable' aproximada por 'Power'
-CL_FALABELLA,corporativo,Retail (General),CLP,0.8,,,indústria 'Department Stores' aproximada por 'Retail (General)'; operações em Peru e Colômbia
-CL_ITAU,banco,Bank (Money Center),CLP,1.0,,,
-CL_LATAM,corporativo,Air Transport,USD,0.6,,,operação regional e internacional
-CL_MALLPLAZA,imobiliario,Real Estate (Development),CLP,1.0,,,
-CL_PARAUCO,imobiliario,Real Estate (Development),CLP,1.0,,,
-CL_SQM,commodity,Metals & Mining,USD,1.0,,,
-CO_CEMARGOS,corporativo,Total Market,COP,1.0,,,indústria 'Building Materials' fora da tabela curada: Total Market
-CO_CIBEST,banco,Bank (Money Center),COP,1.0,,,
-CO_ECOPETROL,commodity,Oil/Gas (Integrated),COP,1.0,,,
-CO_GEOPARK,commodity,Oil/Gas (Production and Exploration),USD,1.0,,,
-CO_GRANTIERRA,commodity,Oil/Gas (Production and Exploration),USD,1.0,,,
-CO_GRUPOARGOS,holding,Total Market,COP,1.0,,,"holding (Cementos Argos, Celsia, Odinsa)"
-CO_ISA,utilidade_regulada,Utility (General),COP,1.0,,,
-CO_SURA,holding,Financial Svcs. (Non-bank & Insurance),COP,1.0,,,"holding (Sura AM, Grupo Cibest)"
-CO_TECNOGLASS,corporativo,Total Market,USD,1.0,,,indústria 'Building Materials' fora da tabela curada: Total Market
-LA_ARCOS,corporativo,Retail (General),USD,1.0,,,
-LA_BLADEX,banco,Banks (Regional),USD,1.0,,,
-LA_COPA,corporativo,Air Transport,USD,1.0,,,
-LA_DLOCAL,corporativo,Software (System & Application),USD,1.0,,,pagamentos transfronteiriços
-LA_FORTUNA,commodity,Precious Metals,USD,1.0,,,
-LA_LILA,corporativo,Telecom. Services,USD,1.0,,,
-LA_MELI,corporativo,Retail (General),USD,1.0,,,indústria 'Internet Retail' aproximada por 'Retail (General)'
-LA_MILLICOM,corporativo,Telecom. Services,USD,1.0,,,
-LA_PAAS,commodity,Precious Metals,USD,1.0,,,
-MX_AC,corporativo,Beverage (Soft),MXN,1.0,,,
-MX_AEROMEXICO,corporativo,Air Transport,USD,1.0,,,
-MX_ALPEK,commodity,Total Market,MXN,0.6,,,indústria 'Specialty Chemicals' fora da tabela curada: Total Market; operações nos EUA
-MX_ALSEA,corporativo,Retail (General),MXN,0.7,,,operações na Europa
-MX_AMX,corporativo,Telecom. Services,MXN,0.8,,,operações em vários países
-MX_ASUR,concessao,Transportation,MXN,1.0,,2048,aeroportos (concessão federal)
-MX_BAJIO,banco,Banks (Regional),MXN,1.0,,,
-MX_BANORTE,banco,Bank (Money Center),MXN,1.0,,,
-MX_BIMBO,corporativo,Food Processing,MXN,0.4,,,receita majoritariamente fora do México
-MX_BMV,corporativo,Brokerage & Investment Banking,MXN,1.0,,,bolsa (infraestrutura de mercado)
-MX_CARSO,corporativo,Total Market,MXN,1.0,,,indústria 'Conglomerates' fora da tabela curada: Total Market
-MX_CEMEX,corporativo,Total Market,USD,0.4,,,indústria 'Building Materials' fora da tabela curada: Total Market; receita majoritariamente fora do México
-MX_CHEDRAUI,corporativo,Retail (Grocery and Food),MXN,1.0,,,indústria 'Grocery Stores' aproximada por 'Retail (Grocery and Food)'
-MX_ENDEAVOUR,commodity,Precious Metals,USD,1.0,,,
-MX_FEMSA,corporativo,Retail (General),MXN,1.0,,,
-MX_FIBRAPL,imobiliario,Real Estate (Development),USD,1.0,,,
-MX_FIRSTMAJ,commodity,Precious Metals,USD,1.0,,,
-MX_FMTY,imobiliario,Real Estate (Development),MXN,1.0,,,FIBRA industrial/escritórios (rótulo setorial da fonte incorreto)
-MX_FUNO,imobiliario,Real Estate (Development),MXN,1.0,,,
-MX_GAP,concessao,Transportation,MXN,1.0,,2048,aeroportos (concessão federal)
-MX_GCC,corporativo,Total Market,USD,1.0,,,indústria 'Building Materials' fora da tabela curada: Total Market
-MX_GENOMMA,corporativo,Total Market,MXN,1.0,,,indústria 'Drug Manufacturers - Specialty & Generic' fora da tabela curada: Total Market
-MX_GENTERA,banco,Banks (Regional),MXN,1.0,,,indústria 'Credit Services' aproximada por 'Banks (Regional)'
-MX_GMEXICO,commodity,Metals & Mining,USD,1.0,,,
-MX_GRUMA,corporativo,Food Processing,USD,0.5,,,receita majoritariamente nos EUA
-MX_INBURSA,banco,Bank (Money Center),MXN,1.0,,,
-MX_KIMBER,corporativo,Total Market,MXN,1.0,,,indústria 'Household & Personal Products' fora da tabela curada: Total Market
-MX_KOF,corporativo,Beverage (Soft),MXN,1.0,,,
-MX_MEGACABLE,corporativo,Telecom. Services,MXN,1.0,,,
-MX_OMA,concessao,Transportation,MXN,1.0,,2048,aeroportos (concessão federal)
-MX_ORBIA,corporativo,Total Market,USD,0.4,,,indústria 'Conglomerates' fora da tabela curada: Total Market; operações globais
-MX_PENOLES,commodity,Metals & Mining,USD,1.0,,,
-MX_PINFRA,concessao,Transportation,MXN,1.0,,,rodovias (carteira de concessões)
-MX_QUALITAS,seguradora,Financial Svcs. (Non-bank & Insurance),MXN,1.0,,,
-MX_REGIONAL,banco,Banks (Regional),MXN,1.0,,,
-MX_SIGMA,corporativo,Food Processing,MXN,0.6,,,operações nos EUA e Europa
-MX_TELEVISA,corporativo,Telecom. Services,MXN,1.0,,,
-MX_TERNIUM,commodity,Steel,USD,1.0,,,"México, Argentina e Brasil"
-MX_VESTA,imobiliario,Real Estate (Development),USD,1.0,,,
-MX_VISTA,commodity,Oil/Gas (Production and Exploration),USD,1.0,,,
-MX_VOLARIS,corporativo,Air Transport,USD,1.0,,,
-MX_WALMEX,corporativo,Retail (Grocery and Food),MXN,1.0,,,indústria 'Discount Stores' aproximada por 'Retail (Grocery and Food)'
-PE_BVN,commodity,Precious Metals,USD,1.0,,,
-PE_CREDICORP,banco,Bank (Money Center),PEN,1.0,,,
-PE_HUDBAY,commodity,Metals & Mining,USD,1.0,,,
-PE_IFS,banco,Bank (Money Center),PEN,1.0,,,
-PE_NEXA,commodity,Metals & Mining,USD,1.0,,,
-PE_SCCO,commodity,Metals & Mining,USD,1.0,,,
+issuer_id,arquetipo,industria_damodaran,moeda_demonstrativos,lambda,linha_valuation,fim_concessao,nota,fim_concessao_fonte
+AR_ADECOAGRO,commodity,Food Processing,USD,1.0,,,,
+AR_BBVA,banco,Bank (Money Center),ARS,1.0,,,,
+AR_CAAP,concessao,Transportation,USD,1.0,,2038,aeroportos (concessão AA2000),"Corporación América Airports — Form 20-F (SEC), item 4: concessão da Aeropuertos Argentina 2000 prorrogada até 2038 (Decreto 1009/2021); https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&company=Corporacion+America+Airports&type=20-F"
+AR_CEPU,utilidade_regulada,Utility (General),ARS,1.0,,,,
+AR_CRESUD,holding,Food Processing,ARS,1.0,,,holding agro com controle da IRSA,
+AR_GALICIA,banco,Bank (Money Center),ARS,1.0,,,,
+AR_GLOBANT,corporativo,Software (System & Application),USD,1.0,,,,
+AR_IRSA,imobiliario,Real Estate (Development),ARS,1.0,,,,
+AR_LAR,commodity,Metals & Mining,USD,1.0,,,,
+AR_LOMA,corporativo,Total Market,ARS,1.0,,,indústria 'Building Materials' fora da tabela curada: Total Market,
+AR_MACRO,banco,Bank (Money Center),ARS,1.0,,,,
+AR_PAMPA,utilidade_regulada,Power,USD,1.0,,,,
+AR_SUPERVIELLE,banco,Banks (Regional),ARS,1.0,,,,
+AR_TEO,corporativo,Telecom. Services,ARS,1.0,,,,
+AR_TGS,commodity,Oil/Gas (Integrated),ARS,1.0,,,transporte regulado de gás + líquidos (líquidos dominam o ciclo),
+AR_YPF,commodity,Oil/Gas (Integrated),ARS,1.0,,,,
+BR_3TENTOS,commodity,Food Processing,BRL,1.0,,,,
+BR_ABC,banco,Banks (Regional),BRL,1.0,,,,
+BR_AFYA,corporativo,Total Market,BRL,1.0,,,indústria 'Education & Training Services' fora da tabela curada: Total Market,
+BR_ALLOS,imobiliario,Real Estate (Development),BRL,1.0,,,,
+BR_ALPARGATAS,corporativo,Retail (General),BRL,1.0,,,,
+BR_ALUPAR,utilidade_regulada,Power,BRL,1.0,,,indústria 'Utilities - Renewable' aproximada por 'Power',
+BR_AMBEV,corporativo,Beverage (Alcoholic),BRL,0.8,,,operações em América Latina e Canadá,
+BR_ANIMA,corporativo,Total Market,BRL,1.0,,,indústria 'Education & Training Services' fora da tabela curada: Total Market,
+BR_ASSAI,corporativo,Retail (Grocery and Food),BRL,1.0,,,indústria 'Grocery Stores' aproximada por 'Retail (Grocery and Food)',
+BR_AURA,commodity,Precious Metals,USD,1.0,,,,
+BR_AUREN,utilidade_regulada,Power,BRL,1.0,,,indústria 'Utilities - Renewable' aproximada por 'Power',
+BR_AXIA,utilidade_regulada,Power,BRL,1.0,,,indústria 'Utilities - Renewable' aproximada por 'Power',
+BR_AZZAS,corporativo,Retail (General),BRL,1.0,,,,
+BR_B3,corporativo,Brokerage & Investment Banking,BRL,1.0,,,bolsa (infraestrutura de mercado),
+BR_BANRISUL,banco,Banks (Regional),BRL,1.0,,,,
+BR_BB,banco,Bank (Money Center),BRL,1.0,,,,
+BR_BBSEG,seguradora,Financial Svcs. (Non-bank & Insurance),BRL,1.0,,,,
+BR_BEMOBI,corporativo,Total Market,BRL,1.0,,,indústria 'Entertainment' fora da tabela curada: Total Market,
+BR_BRADESCO,banco,Bank (Money Center),BRL,1.0,,,,
+BR_BRADESPAR,holding,Metals & Mining,BRL,1.0,,,holding com participação na Vale,
+BR_BRADSAUDE,seguradora,Financial Svcs. (Non-bank & Insurance),BRL,1.0,,,,
+BR_BRASKEM,commodity,Total Market,BRL,1.0,,,indústria 'Chemicals' fora da tabela curada: Total Market,
+BR_BRAVA,commodity,Oil/Gas (Production and Exploration),BRL,1.0,,,,
+BR_BTG,banco,Brokerage & Investment Banking,BRL,1.0,,,,
+BR_CBA,commodity,Metals & Mining,BRL,1.0,,,indústria 'Aluminum' aproximada por 'Metals & Mining',
+BR_CEA,corporativo,Retail (General),BRL,1.0,,,indústria 'Specialty Retail' aproximada por 'Retail (General)',
+BR_CEMIG,utilidade_regulada,Utility (General),BRL,1.0,,,,
+BR_CMIN,commodity,Steel,BRL,1.0,,,,
+BR_COGNA,corporativo,Total Market,BRL,1.0,,,indústria 'Education & Training Services' fora da tabela curada: Total Market,
+BR_COMPASS,utilidade_regulada,Utility (General),BRL,1.0,,,indústria 'Utilities - Regulated Gas' aproximada por 'Utility (General)',
+BR_COPASA,utilidade_regulada,Utility (General),BRL,1.0,,,indústria 'Utilities - Regulated Water' aproximada por 'Utility (General)',
+BR_COPEL,utilidade_regulada,Utility (General),BRL,1.0,,,,
+BR_COSAN,holding,Oil/Gas (Integrated),BRL,1.0,,,"holding (Rumo, Compass, Raízen, Moove); indústria 'Oil & Gas Refining & Marketing' aproximada por 'Oil/Gas (Integrated)'",
+BR_CPFL,utilidade_regulada,Utility (General),BRL,1.0,,,,
+BR_CSN,commodity,Steel,BRL,1.0,,,,
+BR_CURY,imobiliario,Real Estate (Development),BRL,1.0,,,incorporadora (valuation por PL e ROE),
+BR_CVC,corporativo,Total Market,BRL,1.0,,,indústria 'Travel Services' fora da tabela curada: Total Market,
+BR_CXSEG,seguradora,Financial Svcs. (Non-bank & Insurance),BRL,1.0,,,,
+BR_CYRELA,imobiliario,Real Estate (Development),BRL,1.0,,,incorporadora,
+BR_DIRECIONAL,imobiliario,Real Estate (Development),BRL,1.0,,,incorporadora,
+BR_ECORODOVIAS,concessao,Transportation,BRL,1.0,,,rodovias (carteira de concessões),
+BR_EMBRAER,corporativo,Total Market,BRL,0.5,,,indústria 'Aerospace & Defense' fora da tabela curada: Total Market; receita majoritariamente em dólar/exportação,
+BR_ENERGISA,utilidade_regulada,Utility (General),BRL,1.0,,,,
+BR_ENEVA,utilidade_regulada,Utility (General),BRL,1.0,,,indústria 'Utilities - Diversified' aproximada por 'Utility (General)',
+BR_ENGIE,utilidade_regulada,Power,BRL,1.0,,,indústria 'Utilities - Renewable' aproximada por 'Power',
+BR_EQUATORIAL,utilidade_regulada,Utility (General),BRL,1.0,,,,
+BR_ERO,commodity,Metals & Mining,USD,1.0,,,,
+BR_EZTEC,imobiliario,Real Estate (Development),BRL,1.0,,,incorporadora,
+BR_FLEURY,corporativo,Total Market,BRL,1.0,,,indústria 'Diagnostics & Research' fora da tabela curada: Total Market,
+BR_GERDAU,commodity,Steel,BRL,0.6,,,operações relevantes na América do Norte,
+BR_GOAU,holding,Steel,BRL,0.6,,,"holding da Gerdau (35,59% do capital, FRE 2026 v5); soma das partes",
+BR_GPA,corporativo,Retail (General),BRL,1.0,,,indústria 'Department Stores' aproximada por 'Retail (General)',
+BR_GPS,corporativo,Total Market,BRL,1.0,,,indústria 'Specialty Business Services' fora da tabela curada: Total Market,
+BR_GRENDENE,corporativo,Retail (General),BRL,1.0,,,,
+BR_HAPVIDA,corporativo,Total Market,BRL,1.0,,,operadora de saúde verticalizada,
+BR_HYPERA,corporativo,Total Market,BRL,1.0,,,indústria 'Drug Manufacturers - Specialty & Generic' fora da tabela curada: Total Market,
+BR_IGUATEMI,imobiliario,Real Estate (Development),BRL,1.0,,,,
+BR_INTELBRAS,corporativo,Total Market,BRL,1.0,,,indústria 'Building Products & Equipment' fora da tabela curada: Total Market,
+BR_INTER,banco,Banks (Regional),BRL,1.0,,,,
+BR_IRB,seguradora,Financial Svcs. (Non-bank & Insurance),BRL,1.0,,,,
+BR_ISAENERGIA,utilidade_regulada,Power,BRL,1.0,,,indústria 'Utilities - Independent Power Producers' aproximada por 'Power',
+BR_ITAU,banco,Bank (Money Center),BRL,1.0,,,,
+BR_ITAUSA,holding,Bank (Money Center),BRL,1.0,,,holding do Itaú Unibanco,
+BR_JBS,corporativo,Food Processing,USD,0.3,,,"receita majoritariamente fora do Brasil (EUA, Austrália)",
+BR_JHSF,imobiliario,Real Estate (Development),BRL,1.0,,,incorporadora e renda,
+BR_KLABIN,commodity,Paper/Forest Products,BRL,1.0,,,,
+BR_LOCALIZA,corporativo,Transportation,BRL,1.0,,,,
+BR_LOCAWEB,corporativo,Software (System & Application),BRL,1.0,,,,
+BR_LOGCP,imobiliario,Real Estate (Development),BRL,1.0,,,,
+BR_MAGALU,corporativo,Retail (General),BRL,1.0,,,indústria 'Specialty Retail' aproximada por 'Retail (General)',
+BR_MARCOPOLO,corporativo,Total Market,BRL,1.0,,,indústria 'Farm & Heavy Construction Machinery' fora da tabela curada: Total Market,
+BR_MATEUS,corporativo,Retail (General),BRL,1.0,,,indústria 'Department Stores' aproximada por 'Retail (General)',
+BR_MBRF,corporativo,Food Processing,BRL,1.0,,,,
+BR_MDIAS,corporativo,Food Processing,BRL,1.0,,,,
+BR_MILLS,corporativo,Transportation,BRL,1.0,,,,
+BR_MINERVA,corporativo,Food Processing,BRL,1.0,,,,
+BR_MOTIVA,concessao,Transportation,BRL,1.0,,,"rodovias, aeroportos e mobilidade (carteira de concessões)",
+BR_MOURADUBEUX,imobiliario,Real Estate (Development),BRL,1.0,,,incorporadora,
+BR_MOVIDA,corporativo,Transportation,BRL,1.0,,,,
+BR_MRV,imobiliario,Real Estate (Development),BRL,1.0,,,incorporadora,
+BR_MULTIPLAN,imobiliario,Real Estate (Development),BRL,1.0,,,,
+BR_NATURA,corporativo,Total Market,BRL,0.7,,,indústria 'Household & Personal Products' fora da tabela curada: Total Market; operações na América Latina hispânica,
+BR_NU,banco,Bank (Money Center),USD,1.0,,,,
+BR_ONCOCLINICAS,corporativo,Total Market,BRL,1.0,,,indústria 'Medical Care Facilities' fora da tabela curada: Total Market,
+BR_ORIZON,corporativo,Total Market,BRL,1.0,,,indústria 'Waste Management' fora da tabela curada: Total Market,
+BR_PAGS,banco,Software (System & Application),BRL,1.0,,,,
+BR_PAGUEMENOS,corporativo,Retail (General),BRL,1.0,,,,
+BR_PATRIA,corporativo,Brokerage & Investment Banking,USD,1.0,,,gestora de recursos,
+BR_PETROBRAS,commodity,Oil/Gas (Integrated),BRL,1.0,,,,
+BR_PETZCOBASI,corporativo,Retail (General),BRL,1.0,,,,
+BR_PICPAY,banco,Software (System & Application),BRL,1.0,,,,
+BR_PINE,banco,Banks (Regional),BRL,1.0,,,,
+BR_PLANO,imobiliario,Real Estate (Development),BRL,1.0,,,incorporadora,
+BR_PORTO,seguradora,Financial Svcs. (Non-bank & Insurance),BRL,1.0,,,,
+BR_PRIO,commodity,Oil/Gas (Production and Exploration),BRL,1.0,,,,
+BR_RAIADROGASIL,corporativo,Retail (General),BRL,1.0,,,,
+BR_RANDON,corporativo,Total Market,BRL,1.0,,,indústria 'Farm & Heavy Construction Machinery' fora da tabela curada: Total Market,
+BR_RECV,commodity,Oil/Gas (Production and Exploration),BRL,1.0,,,,
+BR_REDEDOR,corporativo,Total Market,BRL,1.0,,,indústria 'Medical Care Facilities' fora da tabela curada: Total Market,
+BR_RENNER,corporativo,Retail (General),BRL,1.0,,,indústria 'Department Stores' aproximada por 'Retail (General)',
+BR_RIACHUELO,corporativo,Retail (General),BRL,1.0,,,,
+BR_RUMO,concessao,Transportation,BRL,1.0,,2058,ferrovia (concessões),"Rumo — Formulário de Referência (CVM), descrição das concessões: o corredor Norte (Malha Norte até 2079) escoa a Santos pela Malha Paulista, prorrogada até 2058 (termo aditivo de 27/05/2020, ANTT); Malha Central até 2049; Malhas Sul e Oeste até 2027 e 2026 (premissa conservadora: o prazo do corredor principal); https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/FRE/DADOS/"
+BR_SABESP,utilidade_regulada,Utility (General),BRL,1.0,,,indústria 'Utilities - Regulated Water' aproximada por 'Utility (General)',
+BR_SANEPAR,utilidade_regulada,Utility (General),BRL,1.0,,,indústria 'Utilities - Regulated Water' aproximada por 'Utility (General)',
+BR_SANTANDER,banco,Bank (Money Center),BRL,1.0,,,,
+BR_SAOMARTINHO,commodity,Food Processing,BRL,1.0,,,açúcar e etanol,
+BR_SBF,corporativo,Retail (General),BRL,1.0,,,indústria 'Specialty Retail' aproximada por 'Retail (General)',
+BR_SER,corporativo,Total Market,BRL,1.0,,,indústria 'Education & Training Services' fora da tabela curada: Total Market,
+BR_SIGMALITH,commodity,Metals & Mining,USD,1.0,,,,
+BR_SIMPAR,holding,Transportation,BRL,1.0,,,"holding (Movida, Vamos, JSL, Automob; FRE 2026 v7); soma das partes",
+BR_SLC,commodity,Food Processing,BRL,1.0,,,,
+BR_SMARTFIT,corporativo,Total Market,BRL,1.0,,,indústria 'Leisure' fora da tabela curada: Total Market,
+BR_STONE,banco,Software (System & Application),BRL,1.0,,,,
+BR_SUZANO,commodity,Paper/Forest Products,BRL,0.8,,,exportadora (produção no Brasil),
+BR_TAESA,utilidade_regulada,Utility (General),BRL,1.0,,,,
+BR_TENDA,imobiliario,Real Estate (Development),BRL,1.0,,,incorporadora,
+BR_TIM,corporativo,Telecom. Services,BRL,1.0,,,,
+BR_TOTVS,corporativo,Software (System & Application),BRL,1.0,,,,
+BR_TUPY,corporativo,Total Market,BRL,0.5,,,indústria 'Metal Fabrication' fora da tabela curada: Total Market; receita externa relevante,
+BR_ULTRAPAR,corporativo,Oil/Gas (Integrated),BRL,1.0,,,distribuição de combustíveis e logística; indústria 'Oil & Gas Refining & Marketing' aproximada por 'Oil/Gas (Integrated)',
+BR_UNIPAR,commodity,Total Market,BRL,1.0,,,indústria 'Chemicals' fora da tabela curada: Total Market,
+BR_USIMINAS,commodity,Steel,BRL,1.0,,,,
+BR_VALE,commodity,Metals & Mining,BRL,1.0,,,,
+BR_VAMOS,corporativo,Transportation,BRL,1.0,,,,
+BR_VIBRA,corporativo,Oil/Gas (Integrated),BRL,1.0,,,distribuição de combustíveis; indústria 'Specialty Retail' aproximada por 'Oil/Gas (Integrated)',
+BR_VIVARA,corporativo,Retail (General),BRL,1.0,,,,
+BR_VIVO,corporativo,Telecom. Services,BRL,1.0,,,,
+BR_VTEX,corporativo,Software (System & Application),USD,1.0,,,,
+BR_VULCABRAS,corporativo,Retail (General),BRL,1.0,,,,
+BR_WEG,corporativo,Total Market,BRL,0.6,,,indústria 'Electrical Equipment & Parts' fora da tabela curada: Total Market; receita externa relevante,
+BR_XP,banco,Brokerage & Investment Banking,BRL,1.0,,,,
+BR_YDUQS,corporativo,Total Market,BRL,1.0,,,indústria 'Education & Training Services' fora da tabela curada: Total Market,
+CL_ANDINA,corporativo,Beverage (Soft),CLP,1.0,,,,
+CL_BCHILE,banco,Bank (Money Center),CLP,1.0,,,,
+CL_BCI,banco,Bank (Money Center),CLP,1.0,,,,
+CL_BSAC,banco,Bank (Money Center),CLP,1.0,,,,
+CL_CENCOMALLS,imobiliario,Real Estate (Development),CLP,1.0,,,,
+CL_CENCOSUD,corporativo,Retail (General),CLP,0.7,,,"indústria 'Department Stores' aproximada por 'Retail (General)'; operações em Argentina, Brasil, Peru e EUA",
+CL_CMPC,commodity,Paper/Forest Products,USD,1.0,,,,
+CL_COLBUN,utilidade_regulada,Utility (General),USD,1.0,,,,
+CL_COPEC,corporativo,Oil/Gas (Integrated),USD,1.0,,,,
+CL_ECL,utilidade_regulada,Utility (General),USD,1.0,,,,
+CL_EISA,corporativo,Total Market,CLP,1.0,,,indústria 'Engineering & Construction' fora da tabela curada: Total Market,
+CL_ENELAM,utilidade_regulada,Utility (General),USD,1.0,,,"distribuidoras em Brasil, Colômbia e Peru",
+CL_ENELCHILE,utilidade_regulada,Power,USD,1.0,,,indústria 'Utilities - Renewable' aproximada por 'Power',
+CL_FALABELLA,corporativo,Retail (General),CLP,0.8,,,indústria 'Department Stores' aproximada por 'Retail (General)'; operações em Peru e Colômbia,
+CL_ITAU,banco,Bank (Money Center),CLP,1.0,,,,
+CL_LATAM,corporativo,Air Transport,USD,0.6,,,operação regional e internacional,
+CL_MALLPLAZA,imobiliario,Real Estate (Development),CLP,1.0,,,,
+CL_PARAUCO,imobiliario,Real Estate (Development),CLP,1.0,,,,
+CL_SQM,commodity,Metals & Mining,USD,1.0,,,,
+CO_CEMARGOS,corporativo,Total Market,COP,1.0,,,indústria 'Building Materials' fora da tabela curada: Total Market,
+CO_CIBEST,banco,Bank (Money Center),COP,1.0,,,,
+CO_ECOPETROL,commodity,Oil/Gas (Integrated),COP,1.0,,,,
+CO_GEOPARK,commodity,Oil/Gas (Production and Exploration),USD,1.0,,,,
+CO_GRANTIERRA,commodity,Oil/Gas (Production and Exploration),USD,1.0,,,,
+CO_GRUPOARGOS,holding,Total Market,COP,1.0,,,"holding (Cementos Argos, Celsia, Odinsa)",
+CO_ISA,utilidade_regulada,Utility (General),COP,1.0,,,,
+CO_SURA,holding,Financial Svcs. (Non-bank & Insurance),COP,1.0,,,"holding (Sura AM, Grupo Cibest)",
+CO_TECNOGLASS,corporativo,Total Market,USD,1.0,,,indústria 'Building Materials' fora da tabela curada: Total Market,
+LA_ARCOS,corporativo,Retail (General),USD,1.0,,,,
+LA_BLADEX,banco,Banks (Regional),USD,1.0,,,,
+LA_COPA,corporativo,Air Transport,USD,1.0,,,,
+LA_DLOCAL,corporativo,Software (System & Application),USD,1.0,,,pagamentos transfronteiriços,
+LA_FORTUNA,commodity,Precious Metals,USD,1.0,,,,
+LA_LILA,corporativo,Telecom. Services,USD,1.0,,,,
+LA_MELI,corporativo,Retail (General),USD,1.0,,,indústria 'Internet Retail' aproximada por 'Retail (General)',
+LA_MILLICOM,corporativo,Telecom. Services,USD,1.0,,,,
+LA_PAAS,commodity,Precious Metals,USD,1.0,,,,
+MX_AC,corporativo,Beverage (Soft),MXN,1.0,,,,
+MX_AEROMEXICO,corporativo,Air Transport,USD,1.0,,,,
+MX_ALPEK,commodity,Total Market,MXN,0.6,,,indústria 'Specialty Chemicals' fora da tabela curada: Total Market; operações nos EUA,
+MX_ALSEA,corporativo,Retail (General),MXN,0.7,,,operações na Europa,
+MX_AMX,corporativo,Telecom. Services,MXN,0.8,,,operações em vários países,
+MX_ASUR,concessao,Transportation,MXN,1.0,,2048,aeroportos (concessão federal),"Grupo Aeroportuario del Sureste — Form 20-F (SEC), item 4: concessões federais dos aeroportos outorgadas em 1998 por 50 anos (até 2048); https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&company=Grupo+Aeroportuario+del+Sureste&type=20-F"
+MX_BAJIO,banco,Banks (Regional),MXN,1.0,,,,
+MX_BANORTE,banco,Bank (Money Center),MXN,1.0,,,,
+MX_BIMBO,corporativo,Food Processing,MXN,0.4,,,receita majoritariamente fora do México,
+MX_BMV,corporativo,Brokerage & Investment Banking,MXN,1.0,,,bolsa (infraestrutura de mercado),
+MX_CARSO,corporativo,Total Market,MXN,1.0,,,indústria 'Conglomerates' fora da tabela curada: Total Market,
+MX_CEMEX,corporativo,Total Market,USD,0.4,,,indústria 'Building Materials' fora da tabela curada: Total Market; receita majoritariamente fora do México,
+MX_CHEDRAUI,corporativo,Retail (Grocery and Food),MXN,1.0,,,indústria 'Grocery Stores' aproximada por 'Retail (Grocery and Food)',
+MX_ENDEAVOUR,commodity,Precious Metals,USD,1.0,,,,
+MX_FEMSA,corporativo,Retail (General),MXN,1.0,,,,
+MX_FIBRAPL,imobiliario,Real Estate (Development),USD,1.0,,,,
+MX_FIRSTMAJ,commodity,Precious Metals,USD,1.0,,,,
+MX_FMTY,imobiliario,Real Estate (Development),MXN,1.0,,,FIBRA industrial/escritórios (rótulo setorial da fonte incorreto),
+MX_FUNO,imobiliario,Real Estate (Development),MXN,1.0,,,,
+MX_GAP,concessao,Transportation,MXN,1.0,,2048,aeroportos (concessão federal),"Grupo Aeroportuario del Pacífico — Form 20-F (SEC), item 4: concessões federais dos aeroportos outorgadas em 1998 por 50 anos (até 2048); https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&company=Grupo+Aeroportuario+del+Pacifico&type=20-F"
+MX_GCC,corporativo,Total Market,USD,1.0,,,indústria 'Building Materials' fora da tabela curada: Total Market,
+MX_GENOMMA,corporativo,Total Market,MXN,1.0,,,indústria 'Drug Manufacturers - Specialty & Generic' fora da tabela curada: Total Market,
+MX_GENTERA,banco,Banks (Regional),MXN,1.0,,,indústria 'Credit Services' aproximada por 'Banks (Regional)',
+MX_GMEXICO,commodity,Metals & Mining,USD,1.0,,,,
+MX_GRUMA,corporativo,Food Processing,USD,0.5,,,receita majoritariamente nos EUA,
+MX_INBURSA,banco,Bank (Money Center),MXN,1.0,,,,
+MX_KIMBER,corporativo,Total Market,MXN,1.0,,,indústria 'Household & Personal Products' fora da tabela curada: Total Market,
+MX_KOF,corporativo,Beverage (Soft),MXN,1.0,,,,
+MX_MEGACABLE,corporativo,Telecom. Services,MXN,1.0,,,,
+MX_OMA,concessao,Transportation,MXN,1.0,,2048,aeroportos (concessão federal),"Grupo Aeroportuario del Centro Norte — Form 20-F (SEC), item 4: concessões federais dos aeroportos outorgadas em 1998 por 50 anos (até 2048); https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&company=Grupo+Aeroportuario+del+Centro+Norte&type=20-F"
+MX_ORBIA,corporativo,Total Market,USD,0.4,,,indústria 'Conglomerates' fora da tabela curada: Total Market; operações globais,
+MX_PENOLES,commodity,Metals & Mining,USD,1.0,,,,
+MX_PINFRA,concessao,Transportation,MXN,1.0,,,rodovias (carteira de concessões),
+MX_QUALITAS,seguradora,Financial Svcs. (Non-bank & Insurance),MXN,1.0,,,,
+MX_REGIONAL,banco,Banks (Regional),MXN,1.0,,,,
+MX_SIGMA,corporativo,Food Processing,MXN,0.6,,,operações nos EUA e Europa,
+MX_TELEVISA,corporativo,Telecom. Services,MXN,1.0,,,,
+MX_TERNIUM,commodity,Steel,USD,1.0,,,"México, Argentina e Brasil",
+MX_VESTA,imobiliario,Real Estate (Development),USD,1.0,,,,
+MX_VISTA,commodity,Oil/Gas (Production and Exploration),USD,1.0,,,,
+MX_VOLARIS,corporativo,Air Transport,USD,1.0,,,,
+MX_WALMEX,corporativo,Retail (Grocery and Food),MXN,1.0,,,indústria 'Discount Stores' aproximada por 'Retail (Grocery and Food)',
+PE_BVN,commodity,Precious Metals,USD,1.0,,,,
+PE_CREDICORP,banco,Bank (Money Center),PEN,1.0,,,,
+PE_HUDBAY,commodity,Metals & Mining,USD,1.0,,,,
+PE_IFS,banco,Bank (Money Center),PEN,1.0,,,,
+PE_NEXA,commodity,Metals & Mining,USD,1.0,,,,
+PE_SCCO,commodity,Metals & Mining,USD,1.0,,,,

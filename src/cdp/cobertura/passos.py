@@ -40,9 +40,11 @@ except Exception:  # pragma: no cover - usado só até a camada pública existir
 
 
 FONTES_VALIDAS = ("CVM", "SEC", "YAHOO", "BCB", "FRED", "B3", "ISHARES", "GLOBALX", "DAMODARAN",
-                  "SIMULADO", "CODIGO", "CONFIG")
+                  "RI", "SIMULADO", "CODIGO", "CONFIG")
 """``CODIGO``: valor derivado em código de outros insumos; ``CONFIG``: parâmetro datado e
-versionado em ``configs/cdp/valuation.yaml`` (cada um com sua fonte pública citada)."""
+versionado em ``configs/cdp/valuation.yaml`` (cada um com sua fonte pública citada); ``RI``:
+documento publicado pela própria companhia no site de relações com investidores (demonstrações,
+relatório trimestral), com endereço e data."""
 
 
 def _iso(x: object) -> str | None:

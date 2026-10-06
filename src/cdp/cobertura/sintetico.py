@@ -8,7 +8,8 @@ TTM, consenso, dividendos, composição de ETFs, eventos, taxas e free float. To
 
 Defeitos deliberados (exercitam os portões de qualidade): um emissor sem demonstrativos, um com
 patrimônio negativo, um ADR com consenso de LPA na moeda local (descasamento de moeda) e um
-preço-alvo de consenso por unidade errada (armadilha tipo KLBN4).
+preço-alvo de consenso por unidade errada (armadilha tipo KLBN4). Capital social "oficial"
+simulado para os emissores brasileiros (contagem conciliada em três fontes, portão G13c).
 """
 
 from __future__ import annotations
@@ -21,6 +22,7 @@ import pandas as pd
 
 from ..market import MarketData
 from .fontes import (
+    COLS_CAPITAL,
     COLS_CONSENSO,
     COLS_DEMONSTRATIVOS,
     COLS_DIVIDENDOS,
@@ -94,6 +96,7 @@ def dados_sinteticos(md: MarketData, as_of: date, issuer_ids: Sequence[str],
     div_rows: list[dict] = []
     eve_rows: list[dict] = []
     ff_rows: list[dict] = []
+    cap_rows: list[dict] = []
     stmt: dict[str, dict[str, float]] = {}
 
     for iid in all_ids:
@@ -149,6 +152,11 @@ def dados_sinteticos(md: MarketData, as_of: date, issuer_ids: Sequence[str],
                          "divida_liquida": divida * 0.6 + receita * 0.02,
                          "ativo_total": abs(pl) * 2.5 + divida, "resultado_financeiro": -divida * 0.08})
         stmt[iid] = base
+        if str(uni.issuers.loc[iid, "country"]) == "BR" and np.isfinite(shares):
+            cap_rows.append(dict(issuer_id=iid, cnpj=None, data_ref=f"{as_of.year}-12-31", versao=1,
+                                 data_publicacao=(as_of - timedelta(days=60)).isoformat(),
+                                 tipo_capital="Capital Integralizado", data_aprovacao=None, qtd_ordinarias=shares * 1.01,
+                                 qtd_preferenciais=0.0, qtd_total=shares * 1.01, url=None, sha256=None))
         if iid == sem_dem or iid not in ids:
             pass
         else:
@@ -282,7 +290,8 @@ def dados_sinteticos(md: MarketData, as_of: date, issuer_ids: Sequence[str],
         eventos=pd.DataFrame(eve_rows, columns=COLS_EVENTOS),
         taxas=pd.DataFrame(tax_rows, columns=COLS_TAXAS),
         free_float=pd.DataFrame(ff_rows, columns=COLS_FLOAT),
-        etfs=comp, origem=FONTE, raiz=None)
+        etfs=comp, origem=FONTE, raiz=None,
+        capital_oficial=pd.DataFrame(cap_rows, columns=COLS_CAPITAL))
 
 
 __all__ = ["dados_sinteticos"]

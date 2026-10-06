@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from cdp.cobertura.contexto import _regressao, montar_contexto, prever
+from cdp.cobertura.contexto import _regressao, montar_contexto, prever, prever_bruto
 from cdp.cobertura.fontes import coletar
 from cdp.cobertura.insumos import Demonstrativos, acoes_por_linha, preparar_emissor
 from cdp.cobertura.motor import executar, modelo_json
@@ -147,7 +147,13 @@ def test_regression_ignores_implausible_multiples():
     assert coef["roe"] == pytest.approx(8.0, abs=0.6)
     assert prever(reg, {"roe": 0.15, "g": 0.05, "beta_reg": 1.0, "payout": 0.4}, "BR") == pytest.approx(
         0.5 + 8 * 0.15, abs=0.3)
-    assert prever(reg, {"roe": 3.0, "g": 0.05, "beta_reg": 1.0, "payout": 0.4}, "BR") is None
+    # fundamentos extremos: o múltiplo previsto fica limitado ao P95 dos múltiplos da amostra (nunca a
+    # extrapolação linear de 24x); a previsão sem limite continua disponível para o modelo aberto
+    lo, hi = reg["faixa_amostra"]
+    extremo = {"roe": 3.0, "g": 0.05, "beta_reg": 1.0, "payout": 0.4}
+    assert prever_bruto(reg, extremo, "BR") > 20.0
+    assert prever(reg, extremo, "BR") == pytest.approx(hi)
+    assert prever(reg, {**extremo, "roe": -2.0}, "BR") == pytest.approx(lo)
 
 
 def test_demonstrativos_ttm_from_quarters_and_stale_items():

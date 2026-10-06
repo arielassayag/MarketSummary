@@ -7,7 +7,7 @@ patrimônio negativo, prazo nulo) levantam ``ValueError`` — o chamador registr
 
 | Função | Fórmula |
 |---|---|
-| :func:`rim_gls` | ``V0 = B0 + Σ_{t=1..T} (ROE_t − ke)·B_{t−1}/(1+ke)^t + (ROE_alvo − ke)·B_T/(ke·(1+ke)^T)`` |
+| :func:`rim_gls` | ``V0 = B0 + Σ_{t=1..T} (ROE_t − ke)·B_{t−1}/(1+ke)^t + (ROE_alvo − ke)·B_T/(ke·(1+ke)^T) + (ROE_T − ROE_alvo)·B_T·ω/((1+ke−ω)(1+ke)^T)``; caminho do ROE linear ou exponencial (``ROE_t = alvo + (ROE_2 − alvo)·ω^(t−2)``); termos reais com o patrimônio deflacionado |
 | :func:`pb_gordon` | ``P/B* = (ROE − g)/(ke − g)`` |
 | :func:`ddm_dois_estagios` | ``Σ_{t=1..n} DPS_t/(1+ke)^t + DPS_{n+1}/((ke − g)(1+ke)^n)`` |
 | :func:`fcff_tres_estagios` | anos 1–2 por direcionadores e reinvestimento observado, 3–10 com fade φ e reinvestimento convergindo a ``g/RONIC``; ``VT = NOPAT_{T+1}(1 − g/RONIC)/(WACC − g)`` |
@@ -50,6 +50,8 @@ class ResultadoRIM:
     roe: np.ndarray          # (T, n)
     b: np.ndarray            # (T+1, n)
     ri: np.ndarray           # (T, n)
+    pv_terminal_alvo: np.ndarray | float = 0.0     # parcela da perpetuidade ao ROE de convergência
+    pv_terminal_cauda: np.ndarray | float = 0.0    # parcela do desvio residual que continua decaindo (ω)
 
     @property
     def fracao_terminal(self) -> np.ndarray:
@@ -58,8 +60,10 @@ class ResultadoRIM:
             return np.where(tot != 0, self.pv_terminal / tot, np.nan)
 
 
-def caminho_roe(roe1: Arr, roe2: Arr, roe_alvo: Arr, anos: int) -> np.ndarray:
-    """ROE_1, ROE_2 do consenso e fade linear até ``roe_alvo`` no ano ``anos``."""
+def caminho_roe(roe1: Arr, roe2: Arr, roe_alvo: Arr, anos: int, omega: float | None = None) -> np.ndarray:
+    """ROE_1, ROE_2 do consenso; depois fade linear até ``roe_alvo`` no ano ``anos`` ou, com
+    ``omega``, decaimento exponencial ``ROE_t = alvo + (ROE_2 − alvo) × ω^(t−2)`` (persistência do
+    desvio por classe de estabilidade)."""
     r1, r2, ra = np.broadcast_arrays(_a(roe1), _a(roe2), _a(roe_alvo))
     out = []
     for t in range(1, anos + 1):
@@ -67,6 +71,8 @@ def caminho_roe(roe1: Arr, roe2: Arr, roe_alvo: Arr, anos: int) -> np.ndarray:
             out.append(r1)
         elif t == 2:
             out.append(r2)
+        elif omega is not None:
+            out.append(ra + (r2 - ra) * float(omega) ** (t - 2))
         else:
             frac = (t - 2) / (anos - 2)
             out.append(r2 + (ra - r2) * frac)
@@ -74,12 +80,21 @@ def caminho_roe(roe1: Arr, roe2: Arr, roe_alvo: Arr, anos: int) -> np.ndarray:
 
 
 def rim_gls(b0: Arr, roe1: Arr, roe2: Arr, roe_alvo: Arr, ke: Arr, payout: Arr,
-            anos: int = 12, payout_final: Arr | None = None) -> ResultadoRIM:
+            anos: int = 12, payout_final: Arr | None = None, omega: float | None = None,
+            inflacao: float = 0.0) -> ResultadoRIM:
     """Lucro residual (Gebhardt–Lee–Swaminathan) com lucro limpo ``B_t = B_{t−1}(1 + ROE_t(1 − k_t))``.
 
     ``payout_final`` (opcional): o payout converge linearmente, dos anos 3 a ``anos``, ao payout
     sustentável ``1 − g/ROE_alvo`` (reinvestimento coerente com o crescimento de longo prazo);
-    ausente ⇒ payout constante."""
+    ausente ⇒ payout constante.
+
+    Perpetuidade (patrimônio constante a partir de ``B_T``, convenção GLS): ao ROE de convergência,
+    ``(ROE_alvo − ke) × B_T ÷ (ke × (1 + ke)^T)``, mais — com o decaimento exponencial ``ω`` — o desvio
+    residual que continua decaindo, ``(ROE_T − ROE_alvo) × B_T × ω ÷ ((1 + ke − ω) × (1 + ke)^T)``.
+
+    ``inflacao`` (termos reais): ROE e ke reais (Fisher) e patrimônio real deflacionado,
+    ``B^r_t = B^r_{t−1} × (1 + ROE_nominal,t × (1 − k_t)) ÷ (1 + π)`` — o mesmo valor do modelo nominal
+    nos anos explícitos (o lucro retido nominal repõe a erosão inflacionária do patrimônio)."""
     b0 = _a(b0)
     if np.any(b0 <= 0):
         raise ValueError("Patrimônio por ação não positivo: lucro residual indisponível.")
@@ -91,7 +106,8 @@ def rim_gls(b0: Arr, roe1: Arr, roe2: Arr, roe_alvo: Arr, ke: Arr, payout: Arr,
     shape = np.broadcast_shapes(_a(roe1).shape, _a(roe2).shape, _a(roe_alvo).shape, ke.shape, b0.shape,
                                 k.shape, kf.shape)
     roe = caminho_roe(np.broadcast_to(_a(roe1), shape), np.broadcast_to(_a(roe2), shape),
-                      np.broadcast_to(_a(roe_alvo), shape), anos)
+                      np.broadcast_to(_a(roe_alvo), shape), anos, omega)
+    pi = float(inflacao)
     b = np.empty((anos + 1, *shape))
     b[0] = np.broadcast_to(b0, shape)
     ri = np.empty((anos, *shape))
@@ -101,12 +117,21 @@ def rim_gls(b0: Arr, roe1: Arr, roe2: Arr, roe_alvo: Arr, ke: Arr, payout: Arr,
         pv = pv + ri[t - 1] / (1 + ke) ** t
         # dividendos só sobre lucro positivo (prejuízo reduz o patrimônio integralmente)
         frac = 0.0 if t <= 2 else (t - 2) / (anos - 2)
-        k_t = np.where(roe[t - 1] > 0, k + (kf - k) * frac, 0.0)
-        b[t] = b[t - 1] * (1 + roe[t - 1] * (1 - k_t))
-    ri_term = (roe[-1] - ke) * b[-1]
-    pv_term = ri_term / (ke * (1 + ke) ** anos)
+        roe_nom = (1 + roe[t - 1]) * (1 + pi) - 1
+        k_t = np.where(roe_nom > 0, k + (kf - k) * frac, 0.0)
+        b[t] = b[t - 1] * (1 + roe_nom * (1 - k_t)) / (1 + pi)
+    ra = np.broadcast_to(_a(roe_alvo), shape)
+    disc_t = (1 + ke) ** anos
+    pv_alvo = (ra - ke) * b[-1] / (ke * disc_t)
+    if omega is not None:
+        w = float(omega)
+        pv_cauda = (roe[-1] - ra) * b[-1] * w / ((1 + ke - w) * disc_t)
+    else:
+        pv_cauda = np.zeros(shape) + (roe[-1] - ra) * b[-1] / (ke * disc_t)
+    pv_term = pv_alvo + pv_cauda
     valor = b[0] + pv + pv_term
-    return ResultadoRIM(valor=valor, pv_explicito=pv, pv_terminal=pv_term, roe=roe, b=b, ri=ri)
+    return ResultadoRIM(valor=valor, pv_explicito=pv, pv_terminal=pv_term, roe=roe, b=b, ri=ri,
+                        pv_terminal_alvo=pv_alvo, pv_terminal_cauda=pv_cauda)
 
 
 # ============================================================ múltiplos justificados (Gordon)
@@ -127,6 +152,12 @@ def pl_justificado(roe: Arr, ke: Arr, g: Arr, estrito: bool = True) -> np.ndarra
         raise ValueError("ROE sustentável não supera o crescimento: payout sustentável não positivo.")
     with np.errstate(divide="ignore", invalid="ignore"):
         return _mascara((1 - _a(g) / roe) / (_a(ke) - _a(g)), ok & ok2)
+
+
+def fator_h(g_curto: Arr, g: Arr, h: float) -> np.ndarray:
+    """Modelo H (Fuller & Hsia, 1984): fator ``1 + H × (g_c − g) ÷ (1 + g)`` sobre o múltiplo de
+    Gordon para um crescimento extraordinário ``g_c`` que decai linearmente em ``2H`` anos."""
+    return 1 + float(h) * (_a(g_curto) - _a(g)) / (1 + _a(g))
 
 
 # ============================================================ dividendos
@@ -212,20 +243,37 @@ def perfil_transitorio(anos: int, plenos: int = 3, zero_em: int = 5) -> np.ndarr
     return np.asarray(w, dtype=float)
 
 
-def fcff_tres_estagios(receita0: float, g1: float, g2: float, g_term: float, phi: float, margem: float,
+def perfil_runoff(n_anos: int, fracao: float | None) -> np.ndarray:
+    """Peso do encerramento de uma concessão por ano: 0 até o início do último ``fracao`` do prazo,
+    crescendo linearmente até 1 no último ano (crescimento real e reinvestimento líquido → 0)."""
+    w = np.zeros(n_anos)
+    if not fracao or n_anos < 3:
+        return w
+    k0 = n_anos - max(int(round(n_anos * float(fracao))), 1)
+    for t in range(k0 + 1, n_anos + 1):
+        w[t - 1] = (t - k0) / (n_anos - k0)
+    return w
+
+
+def fcff_tres_estagios(receita0: float, g1: float, g2: float, g_term: float, phi: float, margem: Arr,
                        imposto: float, roic0: float, wacc: float, anos: int = 10,
                        vida: int | None = None, reinvest_lim: tuple[float, float] = (-0.5, 0.95),
                        ronic_final: float | None = None, reinvest_obs: float | None = None,
-                       cenario: CenarioFCFF | None = None) -> ResultadoFCFF:
+                       cenario: CenarioFCFF | None = None, runoff_fracao: float | None = None,
+                       g_runoff: float = 0.0, ano_convergencia: int | None = None) -> ResultadoFCFF:
     """FCFF em três estágios (ou vida finita sem perpetuidade quando ``vida`` é dado).
 
     **Caso-base** (escalares): receita pelos direcionadores (anos 1–2) e fade geométrico φ até
-    ``g_term``; NOPAT = receita × margem × (1 − t). Reinvestimento ÷ NOPAT: nos anos 1–2 o
+    ``g_term``; NOPAT = receita × margem_t × (1 − t) (``margem`` escalar ou caminho anual, ex.: a
+    margem corrente revertendo à do ciclo nas commodities). Reinvestimento ÷ NOPAT: nos anos 1–2 o
     reinvestimento observado ``reinvest_obs`` (1 − (CFO − capex) ÷ NOPAT, quando publicado); dos
-    anos 3 a T converge linearmente para ``g_{t+1} ÷ RONIC_t``, com o RONIC convergindo de
+    anos 3 a ``ano_convergencia`` (padrão: T) converge linearmente para ``g_{t+1} ÷ RONIC_t`` (coerência
+    entre crescimento e reinvestimento), com o RONIC convergindo de
     ``roic0`` a ``ronic_final`` (padrão: WACC); sem reinvestimento observado, ``g_{t+1} ÷ RONIC_t``
     desde o ano 1. Limitado a ``reinvest_lim`` (anos limitados ficam em ``limite_atingido``).
-    Perpetuidade ``NOPAT_{T+1} × (1 − g ÷ RONIC_final) ÷ (WACC − g)``.
+    Perpetuidade ``NOPAT_{T+1} × (1 − g ÷ RONIC_final) ÷ (WACC − g)``. Vida finita (concessão):
+    sem perpetuidade e, com ``runoff_fracao``, no último terço do prazo o crescimento converge
+    linearmente a ``g_runoff`` (inflação: crescimento real zero) e o reinvestimento líquido a zero.
 
     **Cenário** (``cenario``, vetorizado): preserva a média do caso-base. A receita do cenário é
     a do caso-base × (1 + Σ desvios de crescimento ÷ (1 + g_base)) (aditiva, sem a convexidade
@@ -242,9 +290,13 @@ def fcff_tres_estagios(receita0: float, g1: float, g2: float, g_term: float, phi
         raise ValueError("Receita não positiva: fluxo de caixa indisponível.")
     receita0 = float(receita0)
     n_anos = anos if vida is None else vida
+    w_ro = perfil_runoff(n_anos, runoff_fracao if vida is not None else None)
     gb = caminho_crescimento(g1, g2, g_term, phi, max(n_anos, 2))[:n_anos].astype(float)
+    gb = gb * (1 - w_ro) + float(g_runoff) * w_ro
     rb = receita0 * np.cumprod(1 + gb)
-    nb = rb * float(margem) * (1 - imposto)
+    mg = np.broadcast_to(np.asarray(margem, dtype=float), (n_anos,)).astype(float) \
+        if np.ndim(margem) == 0 else np.asarray(margem, dtype=float)[:n_anos]
+    nb = rb * mg * (1 - imposto)
     rfin = wacc if ronic_final is None else max(float(ronic_final), wacc)
     t_idx = np.arange(1, n_anos + 1, dtype=float)
     frac = (t_idx - 1) / max(n_anos - 1, 1)
@@ -255,12 +307,14 @@ def fcff_tres_estagios(receita0: float, g1: float, g2: float, g_term: float, phi
     g_next[-1] = gb[-1] if vida is not None else float(g_term)
     rr_mod = g_next / ronic
     if reinvest_obs is not None and n_anos > 2:
-        w = np.clip((t_idx - 2) / (n_anos - 2), 0.0, 1.0)
+        n_conv = n_anos if ano_convergencia is None else max(min(int(ano_convergencia), n_anos), 3)
+        w = np.clip((t_idx - 2) / (n_conv - 2), 0.0, 1.0)
         rr_bruto = float(reinvest_obs) * (1 - w) + rr_mod * w
     elif reinvest_obs is not None:
         rr_bruto = np.full(n_anos, float(reinvest_obs))
     else:
         rr_bruto = rr_mod
+    rr_bruto = rr_bruto * (1 - w_ro)
     rr = np.clip(rr_bruto, reinvest_lim[0], reinvest_lim[1])
     limitados = tuple(int(t) for t, a, b in zip(t_idx, rr_bruto, rr, strict=True) if abs(a - b) > 1e-12)
     ib = nb * rr
@@ -288,6 +342,7 @@ def fcff_tres_estagios(receita0: float, g1: float, g2: float, g_term: float, phi
     gd = caminho_crescimento(np.broadcast_to(_a(c.g1), shape), np.broadcast_to(_a(c.g2), shape),
                              np.broadcast_to(gtd, shape), phi, max(n_anos, 2))[:n_anos]
     col = (slice(None),) + (None,) * len(shape)
+    gd = gd * (1 - w_ro)[col] + float(g_runoff) * w_ro[col]
     desvio = (gd - gb[col]) / (1 + gb[col])
     fator = np.maximum(1 + np.cumsum(desvio, axis=0), 0.0)
     rd = rb[col] * fator
@@ -295,7 +350,7 @@ def fcff_tres_estagios(receita0: float, g1: float, g2: float, g_term: float, phi
     mt = np.zeros((n_anos, *shape)) if c.d_margem_trans is None else np.broadcast_to(c.d_margem_trans, (n_anos, *shape))
     # NOPAT do cenário em primeira ordem: margem-base sobre a receita do cenário + choques de
     # margem sobre a receita-base (sem o termo cruzado, que deslocaria a média)
-    nd = rb[col] * (float(margem) * fator + dm + mt) * (1 - imposto)
+    nd = rb[col] * (mg[col] * fator + dm + mt) * (1 - imposto)
     d_r = rd - rb[col]
     if vida is None:
         d_r_next_ult = rd[-1] * (1 + np.broadcast_to(gtd, shape)) - rb[-1] * (1 + float(g_term))
@@ -303,7 +358,7 @@ def fcff_tres_estagios(receita0: float, g1: float, g2: float, g_term: float, phi
         d_r_next_ult = rd[-1] * (1 + gd[-1]) - rb[-1] * (1 + gb[-1])
     d_r_next = np.concatenate([d_r[1:], d_r_next_ult[None, ...]], axis=0)
     ronic_inc = np.maximum(ronic, wacc)
-    di = float(margem) * (1 - imposto) * (d_r_next - d_r) / ronic_inc[col]
+    di = mg[col] * (1 - imposto) * (d_r_next - d_r) / ronic_inc[col]
     idd = ib[col] + di
     fd = nd - idd
     wdb = np.broadcast_to(wd, shape)
@@ -357,10 +412,10 @@ def _bissecao(f, lo: float, hi: float, it: int = 200) -> float | None:
 
 
 def icc_gls(p0: float, b0: float, roe1: float, roe2: float, roe_alvo: float, payout: float,
-            anos: int = 12) -> float | None:
-    """TIR do lucro residual ao preço atual (GLS)."""
+            anos: int = 12, omega: float | None = None) -> float | None:
+    """TIR do lucro residual ao preço atual (GLS), com o mesmo caminho do ROE do modelo."""
     def f(k: float) -> float:
-        return float(rim_gls(b0, roe1, roe2, roe_alvo, k, payout, anos).valor) - p0
+        return float(rim_gls(b0, roe1, roe2, roe_alvo, k, payout, anos, omega=omega).valor) - p0
     try:
         return _bissecao(f, 0.005, 0.60)
     except ValueError:
@@ -415,6 +470,6 @@ def icc_claus_thomas(p0: float, b0: float, eps: list[float], payout: float, g_ri
 
 
 __all__ = ["CenarioFCFF", "ResultadoFCFF", "ResultadoRIM", "caminho_crescimento", "caminho_roe", "ddm_dois_estagios",
-           "fcff_tres_estagios", "icc_claus_thomas", "icc_gls", "icc_gode_mohanram", "icc_mpeg",
+           "fator_h", "fcff_tres_estagios", "perfil_runoff", "icc_claus_thomas", "icc_gls", "icc_gode_mohanram", "icc_mpeg",
            "icc_peg", "pb_gordon", "perfil_transitorio", "pl_justificado", "retorno_esperado", "rim_gls",
            "rolagem", "swanson"]

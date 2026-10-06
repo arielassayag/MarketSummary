@@ -35,6 +35,7 @@ import numpy as np
 import pandas as pd
 
 from ..market import MarketData
+from .custo_capital import erp_oficial
 from .fontes import DadosPublicos
 from .formato import inteiro, mult, num, operando, pct, preco, r6
 from .insumos import _serie_usd_semanal, fx_usd, vol_realizada
@@ -186,6 +187,23 @@ def insumos_etf(cfg: Mapping[str, Any], md: MarketData, dados: DadosPublicos, pa
     }
 
 
+def _elegivel_bu(m: Mapping[str, Any] | None, ec: Mapping[str, Any]) -> tuple[bool, str]:
+    """Posição entra no bottom-up pelo alvo da casa só com preço-alvo citável (Compra, Neutro ou Venda),
+    confiança A ou B e sem aviso de retorno extremo, patrimônio residual frágil ou demonstrações
+    defasadas (``etf.bu_excluir_avisos``); senão recebe o retorno top-down do ETF (imputada)."""
+    if m is None:
+        return False, "sem modelo da casa"
+    if not m.get("tem_alvo") or m.get("rating") in ("Em revisão", "Sem preço-alvo"):
+        return False, "emissor em revisão ou sem preço-alvo"
+    if m.get("confianca") not in ("A", "B"):
+        return False, f"alvo da casa com confiança {m.get('confianca')}: retorno top-down"
+    excl = set(ec.get("bu_excluir_avisos") or ["G11", "G16", "G19"])
+    av = sorted({p["codigo"] for p in m.get("portoes", []) if p.get("status") == "aviso"} & excl)
+    if av:
+        return False, f"alvo da casa com aviso {', '.join(av)}: retorno top-down"
+    return True, ""
+
+
 def calcular_etf(ins: Mapping[str, Any], params: ParametrosCobertura, pacotes: Mapping[str, Mapping[str, Any]],
                  modelos: Mapping[str, Mapping[str, Any]], rf_ust: float | None,
                  r_ilf: float | None = None) -> dict[str, Any]:
@@ -261,14 +279,15 @@ def calcular_etf(ins: Mapping[str, Any], params: ParametrosCobertura, pacotes: M
             w_ds += w
     pais_ke = pais if pais in cc["crp"] else "LATAM"
     rf = (rf_ust if rf_ust is not None else float(cc["rf_usd_reserva"])) - float(cc["spread_default_eua"])
-    k_usd = rf + float(cc["erp_maduro"]) + float(cc["crp"][pais_ke])
+    erp_etf, chave_erp = erp_oficial(cc)
+    k_usd = rf + erp_etf + float(cc["crp"][pais_ke])
     moeda_loc = {"BR": "BRL", "MX": "MXN", "CL": "CLP", "CO": "COP", "PE": "PEN", "AR": "ARS"}.get(pais, "USD")
     pi_loc = float(cc["inflacao_lp"].get(moeda_loc, cc["inflacao_lp"]["USD"]))
     pi_us = float(cc["inflacao_lp"]["USD"])
     phi = _fx_fator_12m(params, moeda_loc) / fx12_etf - 1
     reg.add("etf.ke", "Custo de capital do índice em dólar (β = 1)", "k = rf + ERP + CRP",
-            f"k = {pct(rf)} + {pct(cc['erp_maduro'])} + {pct(cc['crp'][pais_ke])}", k_usd, "%",
-            [params.fonte("damodaran_ctryprem")])
+            f"k = {pct(rf)} + {pct(erp_etf)} + {pct(cc['crp'][pais_ke])}", k_usd, "%",
+            [params.fonte(chave_erp), params.fonte("damodaran_ctryprem")])
     reg.add("etf.cambio", "Câmbio esperado (paridade de inflação relativa)",
             "φ = (1 + π_EUA)/(1 + π_local) − 1 (relativo à moeda do ETF)",
             f"φ = (1 + {pct(pi_us)}) / (1 + {pct(pi_loc)}) − 1", phi, "%", [params.fonte("damodaran_inflacao")])
@@ -350,7 +369,8 @@ def calcular_etf(ins: Mapping[str, Any], params: ParametrosCobertura, pacotes: M
             linha: dict[str, Any] = {"ticker_bruto": str(r.get("ticker_bruto")), "nome": str(r.get("nome") or ""),
                                      "issuer_id": iid if isinstance(iid, str) else None, "peso": r6(w)}
             m = modelos.get(iid) if isinstance(iid, str) else None
-            if m is not None and m.get("tem_alvo") and m.get("rating") not in ("Em revisão", "Sem preço-alvo"):
+            elegivel, motivo_ne = _elegivel_bu(m, ec)
+            if elegivel:
                 p = pacotes[iid]
                 pr = float(p["preco"])
                 u = float(m["tp"]) / pr - 1
@@ -367,10 +387,17 @@ def calcular_etf(ins: Mapping[str, Any], params: ParametrosCobertura, pacotes: M
                     w_street += w
             else:
                 motivo = ("posição sem mapeamento" if not isinstance(iid, str) else
-                          "emissor em revisão ou sem preço-alvo" if m is not None else "sem modelo da casa")
+                          motivo_ne if m is not None else "sem modelo da casa")
                 linha.update({"retorno": r6(r_td) if r_td is not None else None, "imputado": True, "motivo": motivo})
             linhas.append(linha)
         out["posicoes"] = linhas
+        # concentração: contribuição de cada posição com alvo da casa além do top-down, w × (r − R_TD)
+        lim_c = float(ec.get("concentracao_max", 0.05))
+        contrib = [(abs(float(x["peso"]) * (float(x["retorno"]) - r_td)), x) for x in linhas
+                   if not x.get("imputado") and x.get("retorno") is not None and r_td is not None]
+        if contrib:
+            cmax, xmax = max(contrib, key=lambda c: c[0])
+            out["concentracao_bu"] = {"emissor": xmax.get("issuer_id"), "contribuicao": r6(cmax), "limite": lim_c}
         if all(x.get("retorno") is not None for x in linhas):
             r_bu = agregar_bu([{"peso": float(x["peso"]), "retorno": float(x["retorno"])} for x in linhas],
                               caixa, ret_caixa, float(ins.get("ter") or 0.0))
@@ -378,8 +405,8 @@ def calcular_etf(ins: Mapping[str, Any], params: ParametrosCobertura, pacotes: M
                     "R_BU = Σ w_i × [(1 + u_i)(1 + φ_i) − 1 + y_i(1 + φ_i)] + c × r_caixa − TER",
                     f"R_BU = Σ das {inteiro(len(linhas))} posições + {pct(caixa)} × {pct(ret_caixa)} − "
                     f"{pct(ins.get('ter') or 0.0)}", r_bu, "%",
-                    premissas=f"peso coberto por modelos da casa {pct(cobertura)}; posições sem modelo recebem o "
-                              f"retorno top-down")
+                    premissas=f"peso coberto por alvos citáveis da casa (confiança A ou B, sem aviso de retorno extremo "
+                              f"ou patrimônio frágil) {pct(cobertura)}; as demais posições recebem o retorno top-down")
             if w_street > 0:
                 out["bottom_up_consenso"] = r6(ret_street / w_street)
         else:

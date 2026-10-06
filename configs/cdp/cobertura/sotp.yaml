@@ -1,35 +1,188 @@
-# Soma das partes das holdings (CDP). Participações em empresas listadas do universo, com a fonte
-# pública de cada fração (formulário de referência na CVM, 20-F na SEC ou site de RI). O desconto
-# aplicado é a mediana semanal de 5 anos de (1 − valor de mercado da holding / NAV calculado com
-# as mesmas participações); por construção, o método é invariante a um erro proporcional constante
-# na fração informada. "conferido: false" ⇒ fração a confirmar no documento-fonte (o modelo fica com
-# confiança C, sem Compra ou Venda). "desde: AAAA-MM-DD" (opcional, por holding) ⇒ a mediana do
-# desconto usa só o período desde a última mudança do conjunto de participações (mínimo de 52 semanas;
-# abaixo disso, desconto de reserva sinalizado).
-versao: "2026-10.1"
+# Soma das partes das holdings (CDP). Participações em empresas listadas do universo, cada fração
+# com o documento público de onde foi lida (Formulário de Referência na CVM, 6-K/20-F na SEC,
+# demonstrações ou relatório trimestral publicados pela companhia), as datas de referência e de
+# publicação e a conferência cruzada com o documento da investida quando existe.
+#
+# Método: desconto da holding = mediana semanal de 5 anos de (valor de mercado da holding ÷ NAV
+# com as mesmas participações). Por construção, o método é invariante a um erro proporcional
+# constante na fração; não é invariante a mudanças da composição ou da base acionária — por isso:
+# - "desde: AAAA-MM-DD" (por holding): a mediana usa só o período posterior à última mudança do
+#   conjunto de participações (curada, com a fonte);
+# - além disso, o código reinicia a janela na última variação > 5% das ações da holding fora de
+#   desdobramentos (série de ações das demonstrações), e abaixo de 52 semanas usa o desconto de
+#   reserva (sinalizado).
+#
+# "conferido: true" exige o endereço do documento e a data de publicação até a data do snapshot;
+# com todas as frações conferidas e ≥ 52 semanas de histórico, a holding pode ter confiança B.
+# "base": capital total (ações ordinárias + preferenciais) salvo indicação; participações
+# indiretas pela participação econômica (look-through) com a conta na nota.
+# Conferência cruzada (em código): "fracao_investida" é a posição acionária da holding no documento
+# da investida (Formulário de Referência, composição acionária, 6-K), com "documento_investida";
+# diferença acima de soma_partes.participacao_tolerancia (1 p.p., valuation.yaml) ⇒ participação não
+# conferida (holding com confiança C). Sem o documento da investida (participação abaixo de 5%, sem
+# posição divulgada), vale a conferência no documento da holding.
+versao: "2026-10.3"
 holdings:
   BR_ITAUSA:
     participacoes:
-      - {emissor: BR_ITAU, fracao: 0.372, conferido: false, url: "https://www.itausa.com.br/composicao-acionaria", documento: "Itaúsa — composição acionária (participação no capital total do Itaú Unibanco)"}
-      - {emissor: BR_ALPARGATAS, fracao: 0.295, conferido: false, url: "https://www.itausa.com.br/composicao-acionaria", documento: "Itaúsa — composição acionária"}
-      - {emissor: BR_MOTIVA, fracao: 0.103, conferido: false, url: "https://www.itausa.com.br/composicao-acionaria", documento: "Itaúsa — composição acionária"}
-    nota: "Ativos não listados (Dexco, Copa Energia, Aegea, NTS) fora do NAV; o desconto histórico usa a mesma definição."
+      - emissor: BR_ITAU
+        fracao: 0.3752
+        base: capital total (direta + via IUPAR)
+        fonte: CVM
+        documento: "Itaúsa — Formulário de Referência 2026 v2, item 9.1.c (participações em sociedades)"
+        url: "http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=159348"
+        data_referencia: "2026-07-03"
+        data_publicacao: "2026-07-03"
+        conferido: true
+        nota: "FRE do Itaú Unibanco (2026-10-02): direta 19,975% + IUPAR 26,346% × 66,532% = 37,50%"
+        fracao_investida: 0.3750
+        documento_investida: "Itaú Unibanco — Formulário de Referência (2026-10-02), posição acionária: direta 19,975% + IUPAR 26,346% × 66,532%"
+      - emissor: BR_ALPARGATAS
+        fracao: 0.3016
+        base: capital total
+        fonte: CVM
+        documento: "Itaúsa — Formulário de Referência 2026 v2, item 9.1.c"
+        url: "http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=159348"
+        data_referencia: "2026-07-03"
+        data_publicacao: "2026-07-03"
+        conferido: true
+        nota: "FRE da Alpargatas (2026-05-29): Itaúsa 29,942% do total"
+        fracao_investida: 0.29942
+        documento_investida: "Alpargatas — Formulário de Referência (2026-05-29), posição acionária"
+      - emissor: BR_MOTIVA
+        fracao: 0.1038
+        base: capital total
+        fonte: CVM
+        documento: "Itaúsa — Formulário de Referência 2026 v2, item 9.1.c"
+        url: "http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=159348"
+        data_referencia: "2026-07-03"
+        data_publicacao: "2026-07-03"
+        conferido: true
+        nota: "FRE da Motiva (2026-09-29): Itaúsa 10,330% das ordinárias; 9,363% do total em circulação"
+        fracao_investida: 0.10330
+        documento_investida: "Motiva — Formulário de Referência (2026-09-29), posição acionária (ações ordinárias, capital total)"
+    nota: "Ativos não listados (Dexco, Copa Energia, Aegea, NTS) e caixa líquido da holding fora do NAV; o desconto histórico usa a mesma definição."
   BR_BRADESPAR:
+    desde: "2021-12-20"   # redução de capital com entrega de ações da Vale aos acionistas (participação de ~6% para ~3,3%)
     participacoes:
-      - {emissor: BR_VALE, fracao: 0.046, conferido: false, url: "https://www.bradespar.com/participacoes", documento: "Bradespar — participação na Vale"}
+      - emissor: BR_VALE
+        fracao: 0.036
+        base: capital total
+        fonte: CVM
+        documento: "Bradespar — Formulário de Referência 2026 v2, item 9.1.c (participações em sociedades)"
+        url: "http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=160469"
+        data_referencia: "2026-08-12"
+        data_publicacao: "2026-08-12"
+        conferido: true
+        nota: "mesma fração no FRE 2025 v10 (Seq 157790); a Bradespar tem menos de 5% e não consta da posição acionária da Vale"
+    nota: "Janela desde 2021-12-20: entrega de ações da Vale em redução de capital aprovada em 2021-10-15 (fato relevante de 2021-09-15). Caixa líquido da holding fora do NAV."
   BR_COSAN:
     participacoes:
-      - {emissor: BR_RUMO, fracao: 0.30, conferido: false, url: "https://ri.cosan.com.br/estrutura-societaria", documento: "Cosan — estrutura societária"}
-      - {emissor: BR_COMPASS, fracao: 0.88, conferido: false, url: "https://ri.cosan.com.br/estrutura-societaria", documento: "Cosan — estrutura societária"}
-    nota: "Raízen (fora do universo), Moove e Radar fora do NAV; o desconto histórico usa a mesma definição."
+      - emissor: BR_RUMO
+        fracao: 0.3031
+        base: capital total (direta e indireta)
+        fonte: CVM
+        documento: "Cosan — Formulário de Referência 2026 v5, item 9.1.c"
+        url: "http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=161509"
+        data_referencia: "2026-09-29"
+        data_publicacao: "2026-09-29"
+        conferido: true
+        nota: "FRE da Rumo (2026-09-17): Cosan S.A. 20,326% direta; restante por sociedades controladas"
+      - emissor: BR_COMPASS
+        fracao: 0.5594
+        base: participação econômica (look-through)
+        fonte: CVM
+        documento: "Compass — Formulário de Referência 2026, item 15.1 (posição acionária): Cosan Dez 68,000%, Cosan S.A. 8,177%; Cosan Dez: Cosan S.A. 70,235% do total (100% das ordinárias)"
+        url: "http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=159136"
+        data_referencia: "2026-06-18"
+        data_publicacao: "2026-06-18"
+        conferido: true
+        nota: "8,177% + 68,000% × 70,235% = 55,94%; as preferenciais da Cosan Dez (Bradesco BBI e BTG, 14,882% cada) tratadas como capital de terceiros na investida, não como dívida da holding"
+        fracao_investida: 0.5594
+        documento_investida: "Compass — Formulário de Referência 2026, item 15.1 (posição acionária), look-through"
+    nota: "Raízen (fora do universo), Moove, Radar e caixa líquido fora do NAV. A base acionária da Cosan mudou em 2025 (aumento de capital): a janela é reiniciada pela série de ações."
+  BR_GOAU:
+    participacoes:
+      - emissor: BR_GERDAU
+        fracao: 0.3559
+        base: capital total
+        fonte: CVM
+        documento: "Metalúrgica Gerdau — Formulário de Referência 2026 v5, item 9.1.c"
+        url: "http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=161396"
+        data_referencia: "2026-09-20"
+        data_publicacao: "2026-09-20"
+        conferido: true
+        nota: "FRE da Gerdau (2026-09-20): Metalúrgica Gerdau 35,538% do total (98,044% das ordinárias)"
+        fracao_investida: 0.35538
+        documento_investida: "Gerdau — Formulário de Referência (2026-09-20), posição acionária"
+    nota: "Holding da Gerdau (sem operação própria relevante); a fração subiu de 33,44% (FRE 2025) com as recompras da Gerdau."
+  BR_SIMPAR:
+    participacoes:
+      - emissor: BR_MOVIDA
+        fracao: 0.6093
+        base: capital total
+        fonte: CVM
+        documento: "Simpar — Formulário de Referência 2026 v7, item 9.1.c"
+        url: "http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=161243"
+        data_referencia: "2026-09-04"
+        data_publicacao: "2026-09-04"
+        conferido: true
+        nota: "a posição acionária no FRE da Movida (2026-08-27) mostra Simpar com 53,705%: a conferência cruzada em código reprova (diferença acima de 1 p.p.)"
+        fracao_investida: 0.53705
+        documento_investida: "Movida — Formulário de Referência (2026-08-27), posição acionária"
+      - emissor: BR_VAMOS
+        fracao: 0.5679
+        base: capital total
+        fonte: CVM
+        documento: "Simpar — Formulário de Referência 2026 v7, item 9.1.c"
+        url: "http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=161243"
+        data_referencia: "2026-09-04"
+        data_publicacao: "2026-09-04"
+        conferido: true
+        nota: "a posição acionária no FRE da Vamos (2026-08-28) mostra Simpar com 51,163%: a conferência cruzada em código reprova (diferença acima de 1 p.p.)"
+        fracao_investida: 0.51163
+        documento_investida: "Vamos — Formulário de Referência (2026-08-28), posição acionária"
+    nota: "JSL (67,81%) e Automob (79,40%), listadas mas fora do universo coberto, e a dívida da holding fora do NAV; o desconto histórico usa a mesma definição."
   CO_GRUPOARGOS:
     participacoes:
-      - {emissor: CO_CEMARGOS, fracao: 0.57, conferido: false, url: "https://www.grupoargos.com/inversionistas", documento: "Grupo Argos — portafolio"}
-    nota: "Celsia, Odinsa e negócios imobiliários fora do NAV."
+      - emissor: CO_CEMARGOS
+        fracao: 0.553
+        base: derechos económicos (ações ordinárias)
+        fonte: RI
+        documento: "Grupo Argos — Reporte de resultados trimestrales 2T2026, Portafolio de inversiones (671.439.556 ações da Cementos Argos)"
+        url: "https://files.grupoargos.com/uploads-grupo-argos/2026/08/004.01.-Reporte-Resultados-Trimestrales-2Q2026.pdf"
+        data_referencia: "2026-06-30"
+        data_publicacao: "2026-08-31"
+        conferido: true
+        nota: "publicado em agosto de 2026 (data de publicação = limite superior); composição acionária da Cementos Argos em 2026-06-30: 55,3%"
+        fracao_investida: 0.553
+        documento_investida: "Cementos Argos — composição acionária em 2026-06-30"
+    nota: "Celsia (56,0%) e Odinsa (99,9%), fora do universo, e o negócio imobiliário fora do NAV; ações da holding de 869,5 mi para 681,8 mi em 2025 (recompra): janela reiniciada pela série de ações."
   CO_SURA:
     participacoes:
-      - {emissor: CO_CIBEST, fracao: 0.24, conferido: false, url: "https://www.gruposura.com/inversionistas", documento: "Grupo Sura — portafolio (participação no capital total)"}
-    nota: "Sura Asset Management (não listada) fora do NAV."
+      - emissor: CO_CIBEST
+        fracao: 0.2488
+        base: participação no total de ações emitidas (46,22% dos votos)
+        fonte: RI
+        documento: "Grupo Sura — Estados financieros separados em 30/06/2026, nota 9.1.2 (235.012.336 ações do Grupo Cibest)"
+        url: "https://www.gruposura.com/wp-content/uploads/2026/08/sura-grupo-estados-financieros-separados-2026-2T.pdf"
+        data_referencia: "2026-06-30"
+        data_publicacao: "2026-08-13"
+        conferido: true
+        nota: "24,65% em 2025-12-31 (aumento por recompras do Grupo Cibest)"
+    nota: "Sura Asset Management e Suramericana (não listadas) fora do NAV; ações em circulação de 395,1 mi (2025) para 327,7 mi (2026) após a permuta com o Grupo Nutresa: janela reiniciada pela série de ações."
   AR_CRESUD:
     participacoes:
-      - {emissor: AR_IRSA, fracao: 0.55, conferido: false, url: "https://www.cresud.com.ar/inversores", documento: "Cresud — participação na IRSA (20-F)"}
+      - emissor: AR_IRSA
+        fracao: 0.5344
+        base: capital líquido de ações em tesouraria
+        fonte: SEC
+        documento: "IRSA — Form 6-K (resultados de 9 meses até 2026-03-31): Cresud com 433.202.111 ações diretas"
+        url: "https://www.sec.gov/Archives/edgar/data/933267/000093326726000027/form6k.htm"
+        data_referencia: "2026-03-31"
+        data_publicacao: "2026-05-06"
+        conferido: true
+        nota: "51,61% em 2025-12-31 (exercício de warrants e recompras alteram a fração)"
+        fracao_investida: 0.5344
+        documento_investida: "IRSA — Form 6-K (2026-05-06), ações da Cresud ÷ ações em circulação"
+    nota: "Atividade agrícola própria fora do NAV; ações da Cresud aumentaram com o exercício de warrants: janela reiniciada pela série de ações."

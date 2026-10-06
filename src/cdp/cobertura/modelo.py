@@ -27,7 +27,15 @@ import numpy as np
 from scipy.stats import norm
 
 from . import metodos as M
-from .contexto import beta_pares, prever, roe_alvo, termos_previsao
+from .contexto import (
+    alvo_roe,
+    beta_pares,
+    fracao_exercicio,
+    prever,
+    prever_bruto,
+    reinvestimento_observado,
+    termos_previsao,
+)
 from .custo_capital import CustoCapital, calcular, real
 from .formato import contagem, inteiro, mult, num, operando, pct, pp, preco, r6, total
 from .parametros import NOME_METODO, ParametrosCobertura
@@ -40,6 +48,8 @@ STATUS_UNIDADES_PT = {
     "demonstrativos": "ações em circulação das demonstrações",
     "demonstrativos_em_unidades": "demonstrações já em unidades negociadas",
     "valor_de_mercado": "valor de mercado público ÷ fechamento",
+    "oficial": "capital social do Formulário de Referência",
+    "nao_conciliada": "contagem não conciliada entre as fontes",
 }
 ROTULO_REGRESSOR = {"roe": "ROE", "g": "g", "beta_reg": "β", "payout": "payout", "margem": "margem EBIT",
                     "alavancagem": "DL/EBITDA"}
@@ -98,6 +108,8 @@ class Avaliador:
         self.avisos: list[str] = list(pac.get("avisos", []))
         self.moeda = str(pac["moeda"])
         self.fontes = pac.get("fontes", {})
+        self.k_pl = f"t.{pac.get('item_patrimonio') or 'patrimonio_controladores'}"
+        self.k_luc = f"t.{pac.get('item_lucro') or 'lucro_liquido_controladores'}"
         self.fund = ctx.get("fundamentos", {}).get(pac["issuer_id"], {})
         self.setor_ctx = ctx.get("setores", {}).get(pac["setor"], {})
         self.univ_ctx = ctx.get("universo", {})
@@ -108,13 +120,19 @@ class Avaliador:
         if self.pac.get("d_e_mercado") is None:
             self.pac["d_e_pares"] = self.setor_ctx.get("d_e_mediana") or self.univ_ctx.get("d_e_mediana")
         bp, nbp, lista = beta_pares(ctx, pac["pais"], pac["setor"], int(params.sec("rating")["pares_min"]))
-        self.cc: CustoCapital = calcular(self.pac, params, rf_ust, rf_fonte, bp, nbp, self.reg, lista)
+        premio = (ctx.get("premio_implicito") or {}).get(pac["pais"])
+        cal = (ctx.get("calibracao_pais") or {}).get(pac["pais"])
+        self.cc: CustoCapital = calcular(self.pac, params, rf_ust, rf_fonte, bp, nbp, self.reg, lista,
+                                         premio_pais=premio, calibracao=cal)
         self.metodos: dict[str, dict[str, Any]] = {}
         self._estrito = True
         self._fcff_base: dict[str, M.ResultadoFCFF] = {}
         self._preparar_direcionadores()
 
     # ------------------------------------------------------------------ utilidades
+    def _sintetico(self) -> bool:
+        return (self.fontes.get("preco") or {}).get("fonte") == "SIMULADO" or "SIMULADO" in self.rotulo_consenso
+
     def _fonte(self, chave: str) -> list[dict[str, Any]]:
         f = self.fontes.get(chave)
         return [f] if f else []
@@ -145,24 +163,30 @@ class Avaliador:
                          self._fonte("fx_demonstrativos_para_modelo"))
         if p.get("unidades") is not None:
             apl = _f(p.get("acoes_por_linha")) or 1.0
+            ct = p.get("contagem") or {}
+            prem = f"origem: {STATUS_UNIDADES_PT.get(str(p.get('status_unidades')), '')}"
+            if ct.get("detalhe"):
+                prem += f"; conciliação: {ct['detalhe']}"
             self.reg.add("insumos.unidades", "Unidades em circulação da linha",
-                         "N = ações em circulação ÷ ações por unidade negociada",
+                         "N = ações em circulação ÷ ações por unidade negociada (contagem conciliada entre fontes)",
                          f"N = {contagem(float(p['unidades']) * apl)} ÷ {num(apl, 0)}", p["unidades"], "acoes",
-                         self._fonte("unidades"),
-                         premissas=f"origem: {STATUS_UNIDADES_PT.get(str(p.get('status_unidades')), '')}")
+                         self._fonte("unidades"), premissas=prem)
         if p.get("bvps") is not None:
-            if p.get("t.patrimonio_controladores") is not None and p.get("unidades"):
-                sub = f"B0 = {self._t(p.get('t.patrimonio_controladores'))} ÷ {contagem(p.get('unidades'))}"
+            if p.get(self.k_pl) is not None and p.get("unidades"):
+                sub = f"B0 = {self._t(p.get(self.k_pl))} ÷ {contagem(p.get('unidades'))}"
             else:
                 sub = "B0 = patrimônio por ação do retrato público (sem demonstração)"
             self.reg.add("insumos.bvps", "Patrimônio líquido por unidade (B0)",
                          "B0 = patrimônio dos controladores ÷ N", sub,
-                         p["bvps"], f"preco:{m}", self._fonte("t.patrimonio_controladores") or self._fonte("bvps"))
+                         p["bvps"], f"preco:{m}", self._fonte(self.k_pl) or self._fonte("bvps"),
+                         premissas=(None if self.k_pl == "t.patrimonio_controladores" else
+                                    "patrimônio líquido total: demonstrações sem a separação dos controladores na "
+                                    "data-base mais recente"))
         if p.get("eps_ttm") is not None:
             self.reg.add("insumos.eps_ttm", "Lucro por unidade dos últimos 12 meses",
                          "LPA_12m = lucro dos controladores (12 meses) ÷ N",
-                         f"LPA_12m = {self._t(p.get('t.lucro_liquido_controladores'))} ÷ {contagem(p.get('unidades'))}",
-                         p["eps_ttm"], f"preco:{m}", self._fonte("t.lucro_liquido_controladores"))
+                         f"LPA_12m = {self._t(p.get(self.k_luc))} ÷ {contagem(p.get('unidades'))}",
+                         p["eps_ttm"], f"preco:{m}", self._fonte(self.k_luc))
         for k, t, n in (("eps_fy1", "LPA de consenso (ano 1)", 1), ("eps_fy2", "LPA de consenso (ano 2)", 2)):
             if p.get(k) is not None:
                 self.reg.add(f"insumos.{k}", t, f"LPA_{n} = consenso público por unidade da linha",
@@ -199,8 +223,35 @@ class Avaliador:
             g_set, g_set_txt = _f(self.univ_ctx.get("g_mediana")), "mediana do universo"
         self.b0 = _f(p.get("bvps"))
         self.eps_ttm = _f(p.get("eps_ttm"))
-        eps1 = _f(p.get("eps_fy1"))
+        cal = bool(proj.get("calendarizacao", False))
+        self.f_ex = fracao_exercicio(p) if cal else None
+        f_ex = self.f_ex
+        fye = p.get("fim_exercicio_consenso") or p.get("fim_exercicio")
+        eps_fy1, eps_fy2 = _f(p.get("eps_fy1")), _f(p.get("eps_fy2"))
+        # consenso de LPA de poucos analistas não define o ROE dos anos 1–2: abaixo do mínimo, o lucro
+        # dos últimos 12 meses (sinalizado; confiança limitada)
+        self.n_eps = _f((p.get("consenso") or {}).get("n_eps"))
+        n_min_roe = int(self.params.sec("qualidade").get("analistas_min_roe", 2))
+        self.consenso_raso = eps_fy1 is not None and self.n_eps is not None and self.n_eps < n_min_roe
+        if self.consenso_raso and _f(p.get("eps_ttm")) is not None:
+            reg.nota("dir.consenso_raso", "Consenso de LPA com poucos analistas",
+                     f"LPA de consenso de {int(self.n_eps)} analista(s), abaixo do mínimo de {n_min_roe}: o ROE dos "
+                     "anos 1–2 parte do lucro dos últimos 12 meses (o consenso fica só como referência).")
+            self.avisos.append(f"consenso de LPA de {int(self.n_eps)} analista(s): ROE dos anos 1–2 pelo lucro de 12 meses")
+            eps_fy1 = eps_fy2 = None
+        eps1 = eps_fy1
         self.eps1_fonte = "consenso"
+        self.calendarizado = False
+        if eps_fy1 is not None and eps_fy2 is not None and f_ex is not None:
+            eps1 = (1 - f_ex) * eps_fy1 + f_ex * eps_fy2
+            self.calendarizado = True
+            self.eps1_fonte = "consenso calendarizado em 12 meses à frente"
+            reg.add("dir.lpa_12m", "LPA de consenso em 12 meses à frente (calendarização)",
+                    "LPA_1 = (1 − f) × LPA_FY1 + f × LPA_FY2; f = fração decorrida do exercício corrente",
+                    f"LPA_1 = (1 − {num(f_ex, 3)}) × {self._op(eps_fy1)} + {num(f_ex, 3)} × {self._op(eps_fy2)}",
+                    eps1, f"preco:{self.moeda}",
+                    premissas=(f"exercício anterior ao corrente encerrado em {fye}; f = dias decorridos até "
+                               f"{p.get('as_of')} ÷ 365, limitado a [0; 1]"))
         if eps1 is None and self.eps_ttm is not None:
             eps1 = self.eps_ttm
             self.eps1_fonte = "lucro dos últimos 12 meses (sem consenso)"
@@ -209,8 +260,23 @@ class Avaliador:
         # crescimento próprio (consenso de receita, senão histórico) encolhido para o setor
         g_cons = _f(p.get("g_receita_fy1"))
         g_hist = _f(p.get("g_receita_historico"))
+        g2c = _f(p.get("g_receita_fy2"))
         lim_txt = f"limitado a [{pct(lo_g, 0)}; {pct(hi_g, 0)}]"
-        if g_cons is not None:
+        g_rec_cal = None
+        if g_cons is not None and g2c is not None and f_ex is not None:
+            # receita de 12 meses à frente relativa à receita dos últimos 12 meses (a base das demonstrações)
+            r1n = (1 - f_ex) * (1 + g_cons) + f_ex * (1 + g_cons) * (1 + g2c)
+            g3 = 0.5 * (min(max(g2c, lo_g), hi_g) + cc.g)
+            r2n = (1 - f_ex) * (1 + g_cons) * (1 + g2c) + f_ex * (1 + g_cons) * (1 + g2c) * (1 + g3)
+            g_rec_cal = (r1n - 1, r2n / r1n - 1, g3, r1n, r2n)
+        if g_rec_cal is not None:
+            g1 = g_rec_cal[0]
+            sub1 = (f"g1 = mín(máx((1 − {num(f_ex, 3)}) × (1 + {_op_pct(g_cons)}) + {num(f_ex, 3)} × "
+                    f"(1 + {_op_pct(g_cons)}) × (1 + {_op_pct(g2c)}) − 1; {pct(lo_g, 0)}); {pct(hi_g, 0)})")
+            prem1 = (f"receita de consenso do exercício corrente = {pct(g_cons)} sobre a receita dos últimos 12 meses e "
+                     f"do exercício seguinte = {pct(g2c)} sobre a corrente ({self.rotulo_consenso}); receita dos 12 "
+                     f"meses à frente pela calendarização, {lim_txt}")
+        elif g_cons is not None:
             g1 = g_cons
             sub1 = f"g1 = mín(máx({pct(g_cons)}; {pct(lo_g, 0)}); {pct(hi_g, 0)})"
             prem1 = f"crescimento de consenso da receita do ano 1 ({self.rotulo_consenso}), {lim_txt}"
@@ -226,8 +292,12 @@ class Avaliador:
         else:
             g1, sub1, prem1 = None, "", ""
         g1 = None if g1 is None else min(max(g1, lo_g), hi_g)
-        g2c = _f(p.get("g_receita_fy2"))
-        if g2c is not None:
+        if g_rec_cal is not None:
+            g2 = min(max(g_rec_cal[1], lo_g), hi_g)
+            sub2 = f"g2 = mín(máx({num(g_rec_cal[4], 4)} ÷ {num(g_rec_cal[3], 4)} − 1; {pct(lo_g, 0)}); {pct(hi_g, 0)})"
+            prem2 = (f"receita dos 12 meses seguintes ÷ receita dos 12 meses à frente, com o exercício posterior "
+                     f"crescendo {pct(g_rec_cal[2])} (média do crescimento do exercício seguinte e de g)")
+        elif g2c is not None:
             g2 = min(max(g2c, lo_g), hi_g)
             sub2 = f"g2 = mín(máx({pct(g2c)}; {pct(lo_g, 0)}); {pct(hi_g, 0)})"
             prem2 = f"crescimento de consenso da receita do ano 2 ({self.rotulo_consenso})"
@@ -239,65 +309,68 @@ class Avaliador:
         else:
             g2, sub2, prem2 = None, "", ""
         self.g1, self.g2 = g1, g2
-        usa_g = not p.get("financeira") or _f(p.get("eps_fy2")) is None  # financeiras: só para LPA_2 sem consenso
+        usa_g = not p.get("financeira") or eps_fy2 is None  # financeiras: só para LPA_2 sem consenso
         if g1 is not None and usa_g:
             reg.add("dir.g1", "Crescimento da receita — ano 1", "g1 = crescimento próprio, limitado à faixa da projeção",
                     sub1, g1, "%", premissas=prem1)
             reg.add("dir.g2", "Crescimento da receita — ano 2",
-                    "g2 = consenso (ano 2) ou média de g1 com a mediana do setor", sub2, g2, "%", premissas=prem2)
-        # payout: dividendos pagos ÷ lucro (DFC, 12 meses); senão proventos ÷ LPA; senão o setor
-        divp, luc = _f(p.get("t.dividendos_pagos")), _f(p.get("t.lucro_liquido_controladores"))
-        if divp is not None and luc is not None and luc > 0:
-            pay = min(max(abs(divp) / luc, 0.0), 1.0)
-            pay_sub = f"k = mín({self._t(abs(divp))} ÷ {self._t(luc)}; 1)"
-            pay_prem = "dividendos pagos ÷ lucro dos controladores (12 meses)"
-        else:
-            pay = _f(self.fund.get("payout"))
-            dps_, eps_ref = _f(p.get("dps_12m")), (self.eps1 if self.eps1 is not None else self.eps_ttm)
-            pay_sub = (f"k = mín({self._p(dps_)} ÷ {self._p(eps_ref)}; 1)" if pay is not None and dps_ is not None
-                       and eps_ref else f"k = {pct(pay)}")
-            pay_prem = "proventos dos últimos 12 meses ÷ LPA de referência"
+                    "g2 = consenso (ano 2, calendarizado) ou média de g1 com a mediana do setor", sub2, g2, "%",
+                    premissas=prem2)
+        # payout dos acionistas do emissor (proventos por ação × N, nunca os dividendos consolidados da DFC,
+        # que incluem os pagos a não controladores de controladas): média de 3 anos; senão 12 meses
+        pay, pay_sub, pay_form, pay_prem, pay_fontes = self._payout()
         if pay is None:
             pay = _f(self.setor_ctx.get("payout_mediana")) or _f(self.univ_ctx.get("payout_mediana"))
             pay_sub, pay_prem = f"k = {pct(pay)}", "mediana do setor (payout próprio indisponível)"
+            pay_form, pay_fontes = "k = mediana do setor", []
         self.payout = pay
         if pay is not None:
-            reg.add("dir.payout", "Payout", "k = dividendos ÷ lucro, limitado a [0; 1]", pay_sub, pay, "%",
-                    self._fonte("t.dividendos_pagos"), premissas=pay_prem)
-        # ROE ano 1/2 e ROE de convergência
+            reg.add("dir.payout", "Payout", pay_form, pay_sub, pay, "%", pay_fontes, premissas=pay_prem)
+        # ROE ano 1/2 e ROE de convergência (persistência por classe de estabilidade)
         self.roe1 = self.roe2 = self.roe_alvo = None
+        self.omega = None
+        self.alvo_roe_info: dict[str, Any] | None = None
+        self.eps2 = None
         if self.b0 is not None and self.b0 > 0 and self.eps1 is not None and pay is not None:
             self.roe1 = self.eps1 / self.b0
             b1 = self.b0 + self.eps1 * (1 - (pay if self.eps1 > 0 else 0.0))
-            eps2 = _f(p.get("eps_fy2"))
+            eps2 = eps_fy2
+            if self.calendarizado and eps_fy1 is not None and eps_fy2 is not None:
+                g_fy2 = min(max(eps_fy2 / eps_fy1 - 1, lo_g), hi_g) if eps_fy1 > 0 else cc.g
+                eps_fy3 = eps_fy2 * (1 + 0.5 * (g_fy2 + cc.g))
+                eps2 = (1 - f_ex) * eps_fy2 + f_ex * eps_fy3
+                reg.add("dir.lpa_12m_2", "LPA do ano 2 (calendarizado)",
+                        "LPA_2 = (1 − f) × LPA_FY2 + f × LPA_FY3; LPA_FY3 = LPA_FY2 × (1 + (g_FY2 + g) ÷ 2)",
+                        f"LPA_2 = (1 − {num(f_ex, 3)}) × {self._op(eps_fy2)} + {num(f_ex, 3)} × {self._op(eps_fy3)}",
+                        eps2, f"preco:{self.moeda}",
+                        premissas=(f"g_FY2 = LPA_FY2 ÷ LPA_FY1 − 1 = {pct(g_fy2)} ({lim_txt}); g = {pct(cc.g)}; "
+                                   f"LPA_FY3 = {self._p(eps_fy2)} × (1 + ({pct(g_fy2)} + {pct(cc.g)}) ÷ 2)"))
             if eps2 is None and g2 is not None:
                 eps2 = self.eps1 * (1 + g2)
             self.eps2 = eps2
             self.roe2 = None if eps2 is None or b1 <= 0 else eps2 / b1
-            ra, ra_txt, comps = roe_alvo(self.ctx, p["pais"], p["setor"], _f(self.fund.get("roe_hist")))
-            ra_sub = ""
-            if comps:
-                expr = pct(comps[0][1])
-                for _, v, _n in comps[1:]:
-                    expr = f"0,5 × {'(' + expr + ')' if ' ' in expr else expr} + 0,5 × {pct(v)}"
-                ra_sub = f"ROE_alvo = {expr}"
-            ra_prem = "; ".join(f"{lab} {pct(v)}" + (f" ({n} emissores)" if n else "") for lab, v, n in comps)
-            if ra is None:
-                ra = _f(self.univ_ctx.get("roe_mediana"))
-                ra_txt, ra_sub, ra_prem = "mediana do universo", f"ROE_alvo = {pct(ra)}", "mediana do ROE do universo"
-            self.roe_alvo = ra
             reg.add("dir.roe1", "ROE do ano 1", "ROE_1 = LPA_1 ÷ B0",
                     f"ROE_1 = {self._p(self.eps1)} ÷ {self._p(self.b0)}", self.roe1, "%",
                     premissas=f"LPA_1: {self.eps1_fonte}")
             if self.roe2 is not None:
                 reg.add("dir.roe2", "ROE do ano 2", "ROE_2 = LPA_2 ÷ B1, B1 = B0 + LPA_1 × (1 − k)",
                         f"ROE_2 = {self._p(eps2)} ÷ {self._p(b1)}", self.roe2, "%")
-            if ra is not None:
-                reg.add("dir.roe_alvo", "ROE de convergência (ano 12)",
-                        "ROE_alvo = mediana setorial de longo prazo, encolhida para país × setor e para o histórico "
-                        "próprio", ra_sub, ra, "%", premissas=f"{ra_txt}: {ra_prem}")
+            # a norma de longo prazo do ROE (spread sobre o ke, estimado contra o ke sem a calibração de
+            # nível) não depende do ajuste de nível do país: ke sem a calibração + s + a
+            ke_norma = cc.ke_sem_calibracao if cc.ke_sem_calibracao is not None else cc.ke
+            info = alvo_roe(self.ctx, self.params, p["issuer_id"], p["pais"], p["setor"], p["arquetipo"],
+                            ke_norma, self.roe2)
+            if info is not None:
+                self._passos_alvo_roe(info)
+                self.roe_alvo, self.omega, self.alvo_roe_info = info["alvo"], info["omega"], info
+            else:
+                ra = _f(self.univ_ctx.get("roe_mediana"))
+                self.roe_alvo = ra
+                if ra is not None:
+                    reg.add("dir.roe_alvo", "ROE de convergência (sem norma setorial)", "ROE_alvo = mediana do universo",
+                            f"ROE_alvo = {pct(ra)}", ra, "%", premissas="mediana do ROE do universo")
         else:
-            self.eps2 = _f(p.get("eps_fy2"))
+            self.eps2 = eps_fy2
         self.payout_sust = None
         if self.roe_alvo is not None and self.roe_alvo > cc.g and pay is not None:
             self.payout_sust = min(max(1 - cc.g / self.roe_alvo, 0.0), 1.0)
@@ -307,7 +380,7 @@ class Avaliador:
         elif pay is not None:
             self.payout_sust = pay
         self.lpa_diverge = False
-        if self.eps1 is not None and self.eps_ttm is not None and self.eps1_fonte == "consenso":
+        if self.eps1 is not None and self.eps_ttm is not None and self.eps1_fonte != "lucro dos últimos 12 meses (sem consenso)":
             if (self.eps1 > 0) != (self.eps_ttm > 0) or (self.eps_ttm > 0 and not 0.2 <= self.eps1 / self.eps_ttm <= 5):
                 self.lpa_diverge = True
                 self.avisos.append("LPA de consenso diverge do lucro dos últimos 12 meses (sinal ou ordem de grandeza)")
@@ -341,7 +414,7 @@ class Avaliador:
         self.margem_sd = _f(self.fund.get("margem_sd"))
         ebit = _f(p.get("t.ebit"))
         nd = _f(p.get("divida_liquida"))
-        pl = _f(p.get("t.patrimonio_controladores"))
+        pl = _f(p.get(self.k_pl))
         self.roic0 = None
         if ebit is not None and pl is not None and nd is not None and pl + nd > 0:
             roic = ebit * (1 - cc.imposto) / (pl + nd)
@@ -351,19 +424,57 @@ class Avaliador:
                     "ROIC = EBIT × (1 − t) ÷ (patrimônio + dívida líquida), limitado a [0%; 60%]",
                     f"ROIC = mín(máx({self._t(ebit)} × (1 − {pct(cc.imposto)}) ÷ ({self._t(pl)} + "
                     f"{operando(self._t(nd))}); 0%); 60%)", self.roic0, "%", self._fonte("t.ebit"))
-        # reinvestimento observado (anos 1–2 do fluxo de caixa): 1 − (CFO − capex) ÷ NOPAT
+        # reinvestimento observado (anos 1–2 do fluxo de caixa): 1 − Σ(CFO − capex − arrendamentos) ÷ Σ NOPAT
         self.rr_obs = self.fcf_obs = None
+        self.rr_info = None
+        self.rr_contaminado = False
         cfo, capex = _f(p.get("t.cfo")), _f(p.get("t.capex"))
+        arr_pag = _f(p.get("t.arrendamentos_pagos"))
         if not p.get("financeira") and cfo is not None and capex is not None:
-            self.fcf_obs = cfo - abs(capex)
-            if ebit is not None and ebit > 0:
-                self.rr_obs = 1 - self.fcf_obs / (ebit * (1 - cc.imposto))
-                reg.add("dir.reinvestimento", "Reinvestimento observado (anos 1–2 do fluxo de caixa)",
-                        "RR_obs = 1 − (CFO − capex) ÷ (EBIT × (1 − t))",
-                        f"RR_obs = 1 − ({self._t(cfo)} − {self._t(abs(capex))}) ÷ ({self._t(ebit)} × "
-                        f"(1 − {pct(cc.imposto)}))", self.rr_obs, "%",
-                        self._fonte("t.cfo") + self._fonte("t.capex"),
-                        premissas="dos anos 3 a 10 o reinvestimento converge linearmente para g ÷ RONIC")
+            self.fcf_obs = cfo - abs(capex) - (abs(arr_pag) if arr_pag is not None else 0.0)
+        if not p.get("financeira"):
+            self.rr_info = reinvestimento_observado(p, cc.imposto, int(proj.get("reinvestimento_anos_observados", 3)))
+            if arr_pag is None and (_f(p.get("arrendamentos")) or 0.0) > 0:
+                self.lacunas.append({"insumo": "arrendamentos_pagos", "nome": "pagamentos de arrendamentos",
+                                     "motivo": "principal dos arrendamentos pago (DFC) não publicado na fonte: o fluxo "
+                                               "observado não desconta a reposição dos ativos arrendados"})
+        if self.rr_info is not None:
+            ri = self.rr_info
+            rr_min = float(self.params.sec("qualidade").get("rr_observado_min", -1.0))
+            com_arr = ri.get("arrendamentos") is not None
+            if ri["base"] == "12 meses":
+                sub_rr = (f"RR_obs = 1 − ({self._t(cfo)} − {self._t(abs(capex))}"
+                          + (f" − {self._t(ri['arrendamentos'])}" if com_arr else "")
+                          + f") ÷ ({self._t(ebit)} × (1 − {pct(cc.imposto)}))")
+                form_rr = ("RR_obs = 1 − (CFO − capex" + (" − arrendamentos pagos" if com_arr else "")
+                           + ") ÷ (EBIT × (1 − t)), últimos 12 meses")
+            else:
+                sub_rr = f"RR_obs = 1 − {self._t(ri['fcf'])} ÷ {self._t(ri['nopat'])}"
+                form_rr = ("RR_obs = 1 − Σ(CFO − capex" + (" − arrendamentos pagos" if com_arr else "")
+                           + ") ÷ Σ(EBIT × (1 − t)), últimos 3 exercícios")
+            arr_txt = (f"principal de arrendamentos pago (IFRS 16, DFC de financiamento) {self._t(ri['arrendamentos'])} "
+                       "descontado como reposição dos ativos arrendados; " if com_arr else
+                       "principal de arrendamentos pago não publicado em todos os períodos: não descontado; ")
+            reg.add("dir.reinvestimento", "Reinvestimento observado (anos 1–2 do fluxo de caixa)", form_rr, sub_rr,
+                    ri["rr"], "%", self._fonte("t.cfo") + self._fonte("t.capex") + self._fonte("t.arrendamentos_pagos"),
+                    premissas=("exercícios " + ", ".join(ri["anos"]) + "; " if ri["anos"] else "") + arr_txt
+                    + "dos anos 3 a 10 o reinvestimento converge linearmente para g ÷ RONIC")
+            self.rr_obs = ri["rr"]
+            if ri["rr"] < rr_min:
+                med = _f(self.setor_ctx.get("rr_mediana"))
+                med_txt = "mediana do setor"
+                if med is None:
+                    med, med_txt = _f(self.univ_ctx.get("rr_mediana")), "mediana do universo"
+                self.rr_contaminado = True
+                if med is not None:
+                    self.rr_obs = med
+                    reg.add("dir.reinvestimento_setor", "Reinvestimento dos anos 1–2 pela mediana do setor",
+                            f"RR_1,2 = {med_txt} (RR observado abaixo de {pct(rr_min, 0)})", f"RR_1,2 = {pct(med)}",
+                            med, "%", premissas=("CFO − capex acima de 2 × NOPAT: o fluxo operacional publicado inclui "
+                                                 "operações financeiras ou liberação pontual de capital de giro"))
+                    self.lacunas.append({"insumo": "reinvestimento", "nome": "reinvestimento observado",
+                                         "motivo": f"reinvestimento observado de {pct(ri['rr'], 0)} (CFO − capex acima de "
+                                                   f"2 × NOPAT): substituído pela {med_txt}"})
         if self.rr_obs is None and not p.get("financeira"):
             self.avisos.append("FCFF sem reinvestimento observado (CFO ou capex não publicados, ou EBIT não positivo): "
                                "reinvestimento = g ÷ RONIC desde o ano 1")
@@ -382,6 +493,147 @@ class Avaliador:
                     "RONIC = máx(WACC; (ROIC próprio + ROIC mediano do setor após IR) ÷ 2)",
                     f"RONIC = máx({pct(cc.wacc)}; {media})", self.ronic_final, "%",
                     premissas="ROIC próprio e mediana setorial do ROIC antes de IR × (1 − t)")
+
+    def _payout(self) -> tuple[float | None, str, str, str, list[dict[str, Any]]]:
+        """Payout aos acionistas do emissor (proventos por ação × N, nunca os dividendos consolidados da
+        DFC, que incluem os pagos a não controladores de controladas): mediana dos payouts anuais dos 3
+        últimos exercícios com lucro (``proventos por ação pagos no ano × N ÷ lucro dos controladores do
+        exercício``, cada um limitado a [0; 1]) — descarta o ano de uma distribuição extraordinária (venda
+        de ativos, reservas) e independe da data de pagamento; com menos de 2 anos, ``proventos de 12
+        meses × N ÷ lucro de 12 meses``; sem proventos por ação, os dividendos da DFC (sinalizado). A DFC
+        consolidada é conferida contra os proventos por ação (diferença > 25% ⇒ nota)."""
+        p = self.pac
+        u = _f(p.get("unidades"))
+        luc = _f(p.get(self.k_luc))
+        dfc = _f(p.get("t.dividendos_pagos"))
+        dps12 = _f(p.get("dps_12m"))
+        proventos = p.get("dps_fonte") == "proventos"
+        hist = ((p.get("historico") or {}).get("lucro_liquido_controladores") or {})
+        dpa = p.get("dps_anual") or {}
+        notas = []
+        if proventos and dfc is not None and dps12 and u and abs(abs(dfc) / (dps12 * u) - 1) > 0.25:
+            notas.append(f"dividendos pagos na DFC consolidada {self._t(abs(dfc))} contra proventos por ação × N "
+                         f"{self._t(dps12 * u)} ({pct(abs(dfc) / (dps12 * u) - 1, 0, True)}): a DFC consolidada inclui "
+                         "dividendos a não controladores de controladas e difere na data de pagamento; não usada")
+        fontes = self._fonte("dps_12m")
+        k12 = None if not proventos or dps12 is None or not u or luc is None or luc <= 0 else dps12 * u / luc
+        anuais = []
+        hist_dfc = ((p.get("historico") or {}).get("dividendos_pagos") or {})
+        if proventos and u:
+            for a in sorted(dpa):
+                la = _f(hist.get(a))
+                d = _f(dpa[a])
+                if la is None or la <= 0 or d is None:
+                    continue
+                if d > 0:
+                    anuais.append((a, min(max(d * u / la, 0.0), 1.0), f"{self._p(d)} × N ÷ {self._t(la)}"))
+                elif _f(hist_dfc.get(a)) is not None and abs(float(hist_dfc[a])) > 0:
+                    # sem proventos por ação no ano mas com dividendos pagos na DFC: lacuna da série de proventos;
+                    # vale a DFC do exercício (sinalizada: pode incluir não controladores)
+                    dv = abs(float(hist_dfc[a]))
+                    anuais.append((a, min(max(dv / la, 0.0), 1.0), f"DFC {self._t(dv)} ÷ {self._t(la)}"))
+                else:
+                    anuais.append((a, 0.0, f"sem proventos ÷ {self._t(la)}"))
+        if len(anuais) >= 2:
+            k = float(np.median([x[1] for x in anuais]))
+            lista = "; ".join(f"{pct(x[1])}" for x in anuais)
+            notas.insert(0, "anos " + ", ".join(f"{a}: {txt} = {pct(v)}" for a, v, txt in anuais)
+                         + "; payout de 12 meses = " + (pct(k12) if k12 is not None else "n/d (lucro de 12 meses não positivo)")
+                         + ("; ano sem proventos por ação e com dividendos na DFC usa a DFC do exercício (lacuna da série "
+                            "de proventos)" if any(t.startswith("DFC") for _, _, t in anuais) else ""))
+            return (k, f"k = mediana({lista})",
+                    "k = mediana dos payouts anuais dos 3 últimos exercícios com lucro (proventos por ação pagos no ano "
+                    "× N ÷ lucro dos controladores do exercício, cada um limitado a [0; 1])", "; ".join(notas), fontes)
+        if k12 is not None:
+            notas.insert(0, "menos de 2 exercícios com lucro e histórico de proventos completo")
+            return (min(max(k12, 0.0), 1.0), f"k = mín({self._p(dps12)} × {contagem(u)} ÷ {self._t(luc)}; 1)",
+                    "k = proventos por ação de 12 meses × N ÷ lucro dos controladores de 12 meses, limitado a [0; 1]",
+                    "; ".join(notas), fontes)
+        if not proventos and dfc is not None and luc is not None and luc > 0:
+            self.avisos.append("payout pelos dividendos pagos da DFC consolidada (sem histórico de proventos por "
+                               "ação): pode incluir dividendos a não controladores")
+            return (min(max(abs(dfc) / luc, 0.0), 1.0), f"k = mín({self._t(abs(dfc))} ÷ {self._t(luc)}; 1)",
+                    "k = dividendos pagos (DFC) ÷ lucro dos controladores (12 meses), limitado a [0; 1]",
+                    "sem proventos por ação: DFC consolidada, que pode incluir dividendos a não controladores",
+                    self._fonte("t.dividendos_pagos"))
+        pay = _f(self.fund.get("payout"))
+        if pay is None:
+            return None, "", "", "", []
+        dps_, eps_ref = _f(p.get("dps_12m")), (self.eps1 if self.eps1 is not None else self.eps_ttm)
+        sub = (f"k = mín({self._p(dps_)} ÷ {self._p(eps_ref)}; 1)" if dps_ is not None and eps_ref else f"k = {pct(pay)}")
+        return pay, sub, "k = proventos de 12 meses ÷ LPA de referência, limitado a [0; 1]", \
+            "lucro de 12 meses indisponível: LPA de referência", fontes
+
+    def _passos_alvo_roe(self, i: dict[str, Any]) -> None:
+        """Passos da norma de longo prazo e do ROE de convergência (persistência por classe)."""
+        reg, cc = self.reg, self.cc
+        ref = i["referencia"]
+        sim = " (DADOS SIMULADOS)" if self._sintetico() else ""
+        f_spread = prov_codigo("mediana de (ROE de 5 anos − ke sem a calibração) dos emissores cobertos da classe, "
+                               f"estimada nesta execução (contexto.json, normas_roe){sim}")
+        pp_ = self.ctx.get("persistencia_roe_painel") or {}
+        f_norm = (prov_codigo("persistência do desvio do ROE estimada nesta execução sobre o histórico arquivado dos "
+                              f"emissores cobertos (contexto.json, persistencia_roe_painel: {pp_.get('n_emissor_anos')} "
+                              f"emissor-anos, θ ≈ {num(pp_.get('theta'))}, ω ≈ {num(pp_.get('omega'))}); θ e ω por classe "
+                              f"são política da configuração{sim}"))
+        if i.get("pais_setor"):
+            ps = i["pais_setor"]
+            reg.add("dir.roe_spread", "Spread de longo prazo do ROE sobre o ke (classe de referência)",
+                    "s = (1 − w) × mediana(ROE_5a − ke) do setor + w × mediana(ROE_5a − ke) de país × setor",
+                    f"s = {num(1 - ps['peso'])} × {_op_pct(ref['spread'])} + {num(ps['peso'])} × {_op_pct(ps['spread'])}",
+                    i["spread"], "%", [f_spread],
+                    premissas=(f"{ref['rotulo']}: {ref['n']} emissores com ROE de 5 anos positivo; "
+                               f"{ps['rotulo']}: {ps['n']} emissores"))
+        else:
+            reg.add("dir.roe_spread", "Spread de longo prazo do ROE sobre o ke (classe de referência)",
+                    "s = mediana(ROE de 5 anos − ke) dos emissores lucrativos da classe",
+                    f"s = mediana de {ref['n']} emissores de {ref['rotulo']}", i["spread"], "%", [f_spread],
+                    premissas=("classe setor × arquétipo (≥ 8 emissores)" if ref["tipo"] == "setor_arquetipo"
+                               else "setor (classe setor × arquétipo com menos de 8 emissores)"))
+        po = i["porte"]
+        f_porte = (prov_codigo("inclinação de porte estimada nesta execução (Theil–Sen do ROE de 5 anos contra o "
+                               "log do patrimônio contábil em US$, dentro do setor; emissores cobertos"
+                               + (", DADOS SIMULADOS)" if self._sintetico() else ")")))
+        ic = po.get("ic95")
+        ic_txt = (f"; inclinação estimada {num(po.get('b_bruto'), 4)}, IC 95% [{num(ic[0], 4)}; {num(ic[1], 4)}], "
+                  f"{po.get('n')} emissores" if ic else "")
+        if po.get("delta_ln") is not None and po.get("b"):
+            reg.add("dir.roe_porte", "Ajuste de porte da norma",
+                    "a = mín(máx(b × (ln patrimônio em US$ − mediana do setor); −5 p.p.); 5 p.p.)",
+                    f"a = mín(máx({num(po['b'], 4)} × {operando(num(po['delta_ln'], 2))}; −5 p.p.); 5 p.p.)",
+                    po["ajuste"], "%", [f_porte],
+                    premissas="b = inclinação de Theil–Sen do ROE de 5 anos contra o log do patrimônio contábil "
+                              "em US$ dentro do setor, estimada nesta execução, significativa a 95% e limitada ao "
+                              "intervalo da configuração" + ic_txt)
+        elif po.get("significativa") is False and ic:
+            reg.nota("dir.roe_porte", "Ajuste de porte da norma",
+                     "Sem ajuste de porte: a inclinação do ROE de 5 anos contra o log do patrimônio contábil em US$ "
+                     f"não é significativa nesta execução{ic_txt} (o intervalo de 95% contém zero).")
+        k_txt = "ke sem a calibração de nível" if abs(i["ke"] - cc.ke) > 1e-12 else "ke"
+        reg.add("dir.roe_norma", "Norma de longo prazo do ROE", f"norma = {k_txt} + s + a",
+                f"norma = {pct(i['ke'])} + {_op_pct(i['spread'])} + {_op_pct(po['ajuste'])}", i["norma"], "%",
+                premissas=("a norma não depende do ajuste de nível do país: o spread s foi estimado contra o ke sem "
+                           "ele" if k_txt != "ke" else None))
+        cl_pt = {"estavel": "estável", "normal": "normal", "instavel": "instável"}[i["classe"]]
+        hist = f"ROE de 5 anos {pct(i['roe5'])}" if i.get("roe5") is not None else "sem ROE de 5 anos"
+        if i.get("rbar") is not None:
+            partes = [x for x in (i.get("roe5"), i.get("roe2")) if x is not None]
+            expr = " + ".join(_op_pct(x) for x in partes)
+            reg.add("dir.roe_proprio", "ROE próprio de referência (R̄)",
+                    "R̄ = média(ROE de 5 anos; ROE_2), limitado a [norma − 5 p.p.; norma + 15 p.p.]",
+                    f"R̄ = mín(máx(({expr}) ÷ {len(partes)}; {pct(i['norma'] + i['faixa'][0])}); "
+                    f"{pct(i['norma'] + i['faixa'][1])})", i["rbar_limitado"], "%",
+                    premissas=f"{hist}; desvio-padrão {pct(i.get('sigma'))}; {i['prejuizo']} exercício(s) com prejuízo")
+            reg.add("dir.roe_alvo", "ROE de convergência (persistência por classe)",
+                    "ROE_alvo = norma + θ × (R̄ − norma)",
+                    f"ROE_alvo = {pct(i['norma'])} + {num(i['theta'])} × ({pct(i['rbar_limitado'])} − {_op_pct(i['norma'])})",
+                    i["alvo"], "%", [f_norm],
+                    premissas=(f"classe {cl_pt} ({i['classe_motivo']}): θ = {num(i['theta'])} (fração permanente do "
+                               f"desvio), ω = {num(i['omega'])} (decaimento anual do caminho do ROE)"))
+        else:
+            reg.add("dir.roe_alvo", "ROE de convergência (sem histórico próprio)", "ROE_alvo = norma",
+                    f"ROE_alvo = {pct(i['norma'])}", i["alvo"], "%",
+                    premissas=f"sem ROE de 5 anos nem ROE do ano 2; classe {cl_pt}: ω = {num(i['omega'])}")
 
     # ------------------------------------------------------------------ 3. métodos
     def _ke(self, dr: Drivers) -> np.ndarray:
@@ -417,8 +669,9 @@ class Avaliador:
                 pi = cc.pi_local
                 kr = (1 + ke) / (1 + pi) - 1
                 return M.rim_gls(self.b0, real(r1, pi), real(r2, pi), real(ra, pi), kr, self.payout,
-                                 int(proj["anos_rim"]), self.payout_sust).valor
-            return M.rim_gls(self.b0, r1, r2, ra, ke, self.payout, int(proj["anos_rim"]), self.payout_sust).valor
+                                 int(proj["anos_rim"]), self.payout_sust, omega=self.omega, inflacao=pi).valor
+            return M.rim_gls(self.b0, r1, r2, ra, ke, self.payout, int(proj["anos_rim"]), self.payout_sust,
+                             omega=self.omega).valor
         if m == "pb_justificado":
             rs = self.roe_sust + d_rs
             return M.pb_gordon(rs, ke, g, self._estrito) * self.b0
@@ -427,14 +680,17 @@ class Avaliador:
             # derivada (resposta linear, média preservada); ke e g pela fórmula exata
             base = M.pl_justificado(self.roe_sust, ke, g, self._estrito)
             deriv = (g / self.roe_sust ** 2) / (ke - g)
-            return (base + deriv * d_rs) * self.eps1
+            h, gc = self._modelo_h()
+            fator = M.fator_h(np.maximum(gc, g), g, h) if h else 1.0
+            return (base + deriv * d_rs) * self.eps1 * fator
         if m in ("ddm", "ddm_real"):
             rs = self.roe_sust + d_rs
             g1 = np.clip(rs * (1 - self.payout), -0.05, 0.15)
             dps1 = self.eps1 * self.payout * (1 + d_rs / max(self.roe_sust, 1e-6))
             if m == "ddm_real":
                 pi = cc.pi_local
-                return M.ddm_dois_estagios(dps1, real(g1, pi), real(g, pi), (1 + ke) / (1 + pi) - 1,
+                # dividendo do ano 1 em moeda de hoje (deflacionado), descontado ao ke real
+                return M.ddm_dois_estagios(dps1 / (1 + pi), real(g1, pi), real(g, pi), (1 + ke) / (1 + pi) - 1,
                                            int(proj["anos_ddm"]), self._estrito)
             return M.ddm_dois_estagios(dps1, g1, g, ke, int(proj["anos_ddm"]), self._estrito)
         if m in ("fcff", "fcff_real", "fcff_vida_finita", "fcff_normalizado"):
@@ -449,12 +705,60 @@ class Avaliador:
         def __init__(self, res: M.ResultadoFCFF, eq: np.ndarray) -> None:
             self.res, self.ev_equity = res, eq
 
+    def _caminho_margem_ciclo(self, n_anos: int) -> np.ndarray | float:
+        """Commodities: margem EBIT corrente revertendo à margem mediana do ciclo com o mesmo perfil
+        do choque de preço (plena nos anos 1–3, linear até zero no ano 5, nenhuma na perpetuidade):
+        ``margem_t = margem_ciclo + (margem_corrente − margem_ciclo) × w_t``. Sem margem corrente,
+        a do ciclo em todos os anos."""
+        if self.margem is None or self.margem_hist is None:
+            return self.margem_hist if self.margem_hist is not None else self.margem
+        mc = self.params.sec("cenarios")["monte_carlo"]
+        w = M.perfil_transitorio(n_anos, int(mc.get("commodity_anos_plenos", 3)), int(mc.get("commodity_zero_em", 5)))
+        return self.margem_hist + (self.margem - self.margem_hist) * w
+
+    def _modelo_h(self) -> tuple[float, float]:
+        """``(H, g_curto)`` do P/L justificado com crescimento extraordinário (modelo H): H = metade
+        da duração equivalente do crescimento com persistência φ do setor (≤ ``h_max``); g_curto =
+        LPA_2 ÷ LPA_1 − 1 limitado a [g; ``g_curto_max``]."""
+        mh = self.params.sec("multiplo_h")
+        phi = float(self.params.valuation["fade_phi"].get(self.pac["setor"], 0.85))
+        h = min(float(mh["h_fator"]) / (1 - phi), float(mh["h_max"]))
+        e1, e2 = self.eps1, self.eps2
+        if e1 is None or e2 is None or e1 <= 0 or e2 <= 0:
+            return 0.0, self.cc.g
+        gc = min(max(e2 / e1 - 1, self.cc.g), float(mh["g_curto_max"]))
+        return h, gc
+
+    def _participacao_controladores(self) -> tuple[float, str]:
+        """Fração do valor do patrimônio dos controladores nos métodos pelo valor da firma.
+        ``proporcional``: PL dos controladores ÷ (PL dos controladores + minoritários), pelo balanço
+        (minoritários a valor proporcional ao do patrimônio); ``contabil`` ou sem PL positivo: 1 e
+        minoritários subtraídos pelo valor contábil (devolve fração ``None`` nesse caso)."""
+        mino = float(self.pac["minoritarios"])
+        pl = _f(self.pac.get(self.k_pl))
+        modo = str(self.params.valuation.get("minoritarios", "contabil"))
+        if modo == "proporcional" and pl is not None and pl > 0 and mino >= 0:
+            return pl / (pl + mino), "proporcional"
+        return 1.0, "contabil"
+
+    def _patrimonio(self, ev: np.ndarray) -> np.ndarray:
+        """Valor do patrimônio por unidade a partir do EV: ``(EV − DL) × fração dos controladores ÷ N``
+        (minoritários proporcionais) ou ``(EV − DL − minoritários contábeis) ÷ N``."""
+        nd = float(self.pac["divida_liquida"])
+        mino = float(self.pac["minoritarios"])
+        frac, modo = self._participacao_controladores()
+        if modo == "proporcional":
+            return (np.asarray(ev) - nd) * frac / float(self.pac["unidades"])
+        return (np.asarray(ev) - nd - mino) / float(self.pac["unidades"])
+
     def _fcff_args(self, m: str) -> dict[str, Any]:
         """Argumentos do caso-base do FCFF (escalares; termos reais no ``fcff_real``)."""
         cc = self.cc
         proj = self.params.sec("projecao")
         phi = float(self.params.valuation["fade_phi"].get(self.pac["setor"], 0.85))
-        margem = self.margem_hist if m == "fcff_normalizado" and self.margem_hist is not None else self.margem
+        margem = self.margem
+        if m == "fcff_normalizado" and self.margem_hist is not None:
+            margem = self._caminho_margem_ciclo(int(proj["anos_explicitos"]))
         spread = float(self.params.sec("perpetuidade")["spread_min_ke_g"])
         gt = min(cc.g, cc.wacc - spread)
         roic0 = self.roic0 if self.roic0 is not None else cc.wacc
@@ -464,11 +768,13 @@ class Avaliador:
         a = {"receita0": self.receita0, "g1": self.g1, "g2": self.g2, "g_term": gt, "phi": phi, "margem": margem,
              "imposto": cc.imposto, "roic0": roic0, "wacc": cc.wacc, "anos": int(proj["anos_explicitos"]),
              "vida": vida, "reinvest_lim": tuple(proj["reinvestimento_limites"]), "ronic_final": self.ronic_final,
-             "reinvest_obs": self.rr_obs}
+             "reinvest_obs": self.rr_obs,
+             "runoff_fracao": float(proj.get("concessao_fracao_final", 0.0)) if vida is not None else None,
+             "g_runoff": cc.pi_local, "ano_convergencia": proj.get("reinvestimento_convergencia_ano")}
         if m == "fcff_real":
             pi = cc.pi_local
             a.update({"g1": real(self.g1, pi), "g2": real(self.g2, pi), "g_term": real(gt, pi),
-                      "roic0": real(roic0, pi), "wacc": real(cc.wacc, pi),
+                      "roic0": real(roic0, pi), "wacc": real(cc.wacc, pi), "g_runoff": 0.0,
                       "ronic_final": None if self.ronic_final is None else real(self.ronic_final, pi)})
         return a
 
@@ -504,10 +810,7 @@ class Avaliador:
             cen = M.CenarioFCFF(g1=g1_n, g2=g2_n, g_term=gt_n, wacc=wacc_n,
                                 d_margem=np.asarray(dr.d_marg, dtype=float), d_margem_trans=trans)
             res = M.fcff_tres_estagios(**a, cenario=cen)
-        nd = float(self.pac["divida_liquida"])
-        mino = float(self.pac["minoritarios"])
-        eq = (res.ev - nd - mino) / float(self.pac["unidades"])
-        return self._F(res, eq)
+        return self._F(res, self._patrimonio(res.ev))
 
     def _regressao(self, m: str, dr: Drivers) -> np.ndarray:
         regs = self.ctx.get("regressoes", {})
@@ -530,8 +833,7 @@ class Avaliador:
         mult_ = base + coef.get("margem", 0.0) * np.asarray(dr.d_marg, dtype=float) \
             + coef.get("g", 0.0) * np.asarray(dr.d_cres, dtype=float)
         ev = mult_ * self.receita0
-        return (ev - float(self.pac["divida_liquida"]) - float(self.pac["minoritarios"])) \
-            / float(self.pac["unidades"])
+        return self._patrimonio(ev)
 
     # ------------------------------------------------------------------ disponibilidade + passos
     def preparar_metodos(self) -> None:
@@ -547,7 +849,8 @@ class Avaliador:
                     if not math.isfinite(v):
                         motivo = "valor não finito"
                     elif v <= 0:
-                        motivo = "valor do patrimônio não positivo"
+                        motivo = "valor do patrimônio não positivo (dissidência: conta na dispersão como zero)"
+                        info["valor_calculado"] = v
                     else:
                         info["valor"] = v
                 except (ValueError, ZeroDivisionError, TypeError) as exc:
@@ -565,6 +868,94 @@ class Avaliador:
                 info["valor"] = None
                 self.reg.nota(f"metodo.{m}", NOME_METODO[m], f"Indisponível: {motivo}.")
             self.metodos[m] = info
+        self._excluir_discrepante()
+
+    def _excluir_discrepante(self) -> None:
+        """Combinação robusta (G18): com ≥ ``metodo_discrepante_min`` métodos válidos, o método cujo valor
+        fica fora de [1/f; f] × a mediana dos DEMAIS (o mais distante, um por emissor) é LIMITADO à borda
+        do intervalo — nunca retirado: a combinação fica monótona no valor de cada método (um custo da
+        dívida maior nunca eleva o preço-alvo). Só quando os demais concordam (CV ≤
+        ``metodo_discrepante_cv_demais``) e o discrepante não está do lado do preço (dissidência a favor
+        do mercado nunca é limitada); senão o método fica como está. Em todos os casos a dissidência
+        conta na dispersão usada na confiança e no G11 (valores brutos; não positivos como zero)."""
+        self.discrepante = None
+        q = self.params.sec("qualidade")
+        f = float(q.get("metodo_discrepante_fator", 3.0))
+        n_min = int(q.get("metodo_discrepante_min", 3))
+        cv_dem = float(q.get("metodo_discrepante_cv_demais", 0.10))
+        val = {m: d["valor"] for m, d in self.metodos.items() if d.get("valor") is not None and d["peso"] > 0}
+        if len(val) < n_min:
+            return
+        piores = []
+        for m, v in val.items():
+            outros = [x for k, x in val.items() if k != m]
+            med = float(np.median(outros))
+            if med > 0:
+                r = v / med
+                if r > f or r < 1 / f:
+                    piores.append((abs(math.log(r)), m, r, med, outros))
+        if not piores:
+            return
+        _, m, r, med, outros = max(piores)
+        info = self.metodos[m]
+        v = info["valor"]
+        cv_o = float(np.std(outros, ddof=0) / np.mean(outros))
+        p0 = _f(self.pac.get("preco"))
+        lado_preco = p0 is not None and (v - med) * (p0 - med) > 0
+        limitar = cv_o <= cv_dem and not lado_preco
+        borda = med * f if r > f else med / f
+        self.discrepante = {"metodo": m, "valor": v, "razao": r, "mediana_demais": med, "fator": f,
+                            "cv_demais": cv_o, "lado_preco": bool(lado_preco), "limitado": bool(limitar),
+                            "valor_limitado": borda if limitar else None}
+        if limitar:
+            info["valor_bruto"], info["valor"], info["limitado"] = v, borda, True
+            motivo = (f"método discrepante: {self._p(v)} = {num(r, 2)} × a mediana dos demais ({self._p(med)}), fora de "
+                      f"[1/{num(f, 0)}; {num(f, 0)}], com os demais concordando (CV {pct(cv_o, 0)}): limitado a "
+                      f"{self._p(borda)} na combinação")
+            info["motivo_limite"] = motivo
+            self.reg.nota(f"metodo.{m}.discrepante", NOME_METODO[m], f"{motivo}.")
+        else:
+            why = ("do lado do preço (dissidência a favor do mercado)" if lado_preco
+                   else f"demais métodos sem consenso (CV {pct(cv_o, 0)} > {pct(cv_dem, 0)})")
+            self.reg.nota(f"metodo.{m}.discrepante", NOME_METODO[m],
+                          f"Método discrepante ({self._p(v)} = {num(r, 2)} × a mediana dos demais, {self._p(med)}) "
+                          f"mantido na média: {why}; a dispersão entre métodos reflete a dissidência.")
+
+    def _limitar_discrepante(self, vals: dict[str, np.ndarray]) -> dict[str, np.ndarray]:
+        """Aplica o limite do G18 por sorteio/ponto da grade: o método discrepante fica em
+        [mediana dos demais ÷ f; f × mediana dos demais] (monótono no valor do próprio método)."""
+        d = getattr(self, "discrepante", None)
+        if not d or not d.get("limitado") or d["metodo"] not in vals or len(vals) < 2:
+            return vals
+        m, f = d["metodo"], float(d["fator"])
+        outros = [np.asarray(vals[k], dtype=float) for k in vals if k != m]
+        shp = np.broadcast_shapes(*[o.shape for o in outros], np.asarray(vals[m]).shape)
+        med = np.median(np.stack([np.broadcast_to(o, shp) for o in outros]), axis=0)
+        out = dict(vals)
+        out[m] = np.clip(np.broadcast_to(np.asarray(vals[m], dtype=float), shp), med / f, med * f)
+        return out
+
+    def dispersao_todos(self) -> tuple[float | None, list[dict[str, Any]]]:
+        """CV entre TODOS os métodos calculados (valores brutos, inclusive o discrepante limitado; não
+        positivos como zero) e a lista de dissidências — usado na confiança e na corroboração do G11."""
+        vs, dis = [], []
+        for m, d in self.metodos.items():
+            if d["peso"] <= 0:
+                continue
+            if d.get("valor") is not None:
+                vb = d.get("valor_bruto", d["valor"])
+                vs.append(float(vb))
+                if d.get("limitado"):
+                    dis.append({"metodo": m, "tipo": "limitado", "valor": vb})
+            elif d.get("valor_calculado") is not None:
+                vs.append(0.0)
+                dis.append({"metodo": m, "tipo": "nao_positivo", "valor": d["valor_calculado"]})
+        dsc = getattr(self, "discrepante", None)
+        if dsc and not dsc.get("limitado"):
+            dis.append({"metodo": dsc["metodo"], "tipo": "mantido", "valor": dsc["valor"]})
+        if len(vs) < 2 or np.mean(vs) <= 0:
+            return None, dis
+        return float(np.std(vs, ddof=0) / np.mean(vs)), dis
 
     def _requisitos(self, m: str) -> str | None:
         p = self.pac
@@ -589,6 +980,12 @@ class Avaliador:
             if self.eps1 is None or self.eps1 <= 0 or self.payout is None or not self.payout or self.roe_sust is None:
                 return "LPA positivo, payout ou ROE sustentável indisponível"
             return None
+        q = self.params.sec("qualidade")
+        mg_max = float(q.get("margem_ebit_max", 1.0))
+        if (m.startswith("fcff") or m == "regressao_ev_receita") and self.margem is not None \
+                and self.margem > mg_max and p["arquetipo"] in ("holding", "imobiliario"):
+            return (f"margem EBIT de {pct(self.margem, 0)} acima de {pct(mg_max, 0)} (resultado de participações ou "
+                    "de propriedades para investimento no EBIT): método pelo valor da firma indisponível")
         if m.startswith("fcff"):
             if p["financeira"]:
                 return "fluxo de caixa da firma não se aplica a financeiras"
@@ -629,10 +1026,11 @@ class Avaliador:
                 return "participações sem preço ou não curadas"
             preco_ = _f(p.get("preco"))
             rm, ra = _f(sp.get("razao_mediana")), _f(sp.get("razao_atual"))
+            fator = _f((sp.get("visao_casa") or {}).get("fator")) or 1.0
             if preco_ is not None and rm is not None and ra:
-                self._sotp_base = preco_ * rm / ra
+                self._sotp_base = preco_ * rm / ra * fator
             elif _f(p.get("unidades")):
-                self._sotp_base = float(sp["nav"]) * (1 - float(sp["desconto_reserva"])) / float(p["unidades"])
+                self._sotp_base = float(sp["nav"]) * (1 - float(sp["desconto_reserva"])) / float(p["unidades"]) * fator
             else:
                 return "unidades da holding indisponíveis"
             return None
@@ -657,7 +1055,8 @@ class Avaliador:
             ke = cc.ke_real if realm else cc.ke
             r1, r2, ra = ((real(self.roe1, pi), real(self.roe2, pi), real(self.roe_alvo, pi)) if realm
                           else (self.roe1, self.roe2, self.roe_alvo))
-            res = M.rim_gls(self.b0, r1, r2, ra, ke, self.payout, int(proj["anos_rim"]), self.payout_sust)
+            res = M.rim_gls(self.b0, r1, r2, ra, ke, self.payout, int(proj["anos_rim"]), self.payout_sust,
+                            omega=self.omega, inflacao=pi if realm else 0.0)
             info["projecao"] = [{"ano": t, "roe": r6(float(res.roe[t - 1])), "b_inicio": r6(float(res.b[t - 1])),
                                  "lucro_residual": r6(float(res.ri[t - 1])),
                                  "vp": r6(float(res.ri[t - 1] / (1 + ke) ** t)),
@@ -669,14 +1068,35 @@ class Avaliador:
             info["fracao_terminal"] = r6(ft)
             sufixo = " (termos reais)" if realm else ""
             n = int(proj["anos_rim"])
+            b_t, roe_t = float(res.b[-1]), float(res.roe[-1])
+            disc = (1 + ke) ** n
+            if self.omega is not None:
+                form_t = (f"(ROE_alvo − ke) × B_{n} ÷ (ke × (1 + ke)^{n}) + (ROE_{n} − ROE_alvo) × B_{n} × ω ÷ "
+                          f"((1 + ke − ω) × (1 + ke)^{n})")
+                sub_t = (f"({pct(ra)} − {pct(ke)}) × {P(b_t)} ÷ ({pct(ke)} × {num(disc, 4)}) + ({pct(roe_t)} − {pct(ra)}) "
+                         f"× {P(b_t)} × {num(self.omega)} ÷ ((1 + {pct(ke)} − {num(self.omega)}) × {num(disc, 4)})")
+            else:
+                form_t = f"(ROE_alvo − ke) × B_{n} ÷ (ke × (1 + ke)^{n})"
+                sub_t = f"({pct(ra)} − {pct(ke)}) × {P(b_t)} ÷ ({pct(ke)} × {num(disc, 4)})"
+            reg.add(f"metodo.{m}.perpetuidade", nome + sufixo + ": perpetuidade (valor presente)", form_t, sub_t,
+                    float(res.pv_terminal), f"preco:{self.moeda}",
+                    premissas=(f"patrimônio constante a partir de B_{n} (convenção GLS); perpetuidade ao ROE de "
+                               f"convergência {pct(ra)}"
+                               + (f" mais o desvio residual de {pp(roe_t - ra, 1)} no ano {n} decaindo à razão ω = "
+                                  f"{num(self.omega)} ao ano" if self.omega is not None else "")
+                               + ("; patrimônio real deflacionado pela inflação (B_t = B_{t−1} × (1 + ROE nominal × "
+                                  f"(1 − k)) ÷ (1 + {pct(pi)}))" if realm else "")))
             reg.add(f"metodo.{m}", nome + sufixo,
-                    f"V0 = B0 + Σ_{{t=1..{n}}} (ROE_t − ke) × B_{{t−1}} ÷ (1 + ke)^t + (ROE_alvo − ke) × B_{n} ÷ "
-                    f"(ke × (1 + ke)^{n})",
+                    f"V0 = B0 + Σ_{{t=1..{n}}} (ROE_t − ke) × B_{{t−1}} ÷ (1 + ke)^t + perpetuidade",
                     f"V0 = {P(self.b0)} + {Op(float(res.pv_explicito))} + {Op(float(res.pv_terminal))}",
                     v, f"preco:{self.moeda}",
                     premissas=(f"parcelas: patrimônio por ação, valor presente do lucro residual dos anos 1–{n} e da "
-                               f"perpetuidade; ROE {pct(r1)} → {pct(r2)} → {pct(ra)} no ano {n}; ke {pct(ke)}; "
-                               f"payout {pct(self.payout)} → {pct(self.payout_sust)}"))
+                               f"perpetuidade; ROE {pct(r1)} → {pct(r2)} → "
+                               + (f"decaimento exponencial ao ROE de convergência {pct(ra)} "
+                                  f"(ROE_t = ROE_alvo + (ROE_2 − ROE_alvo) × {num(self.omega)}^(t−2); "
+                                  f"{pct(roe_t)} no ano {n})"
+                                  if self.omega is not None else f"{pct(ra)} no ano {n}")
+                               + f"; ke {pct(ke)}; payout {pct(self.payout)} → {pct(self.payout_sust)}"))
             return ft
         if m == "pb_justificado":
             pb = float(M.pb_gordon(self.roe_sust, cc.ke, cc.g))
@@ -686,14 +1106,27 @@ class Avaliador:
             return None
         if m == "multiplo_justificado":
             pe = float(M.pl_justificado(self.roe_sust, cc.ke, cc.g))
-            reg.add(f"metodo.{m}", nome, "V0 = LPA_1 × (1 − g ÷ ROE_sust) ÷ (ke − g)",
-                    f"V0 = {P(self.eps1)} × (1 − {pct(cc.g)} ÷ {pct(self.roe_sust)}) ÷ ({pct(cc.ke)} − {pct(cc.g)})",
-                    v, f"preco:{self.moeda}", premissas=f"P/L justificado = {mult(pe)}")
+            h, gc = self._modelo_h()
+            if h:
+                fh = float(M.fator_h(max(gc, cc.g), cc.g, h))
+                reg.add(f"metodo.{m}", nome,
+                        "V0 = LPA_1 × (1 − g ÷ ROE_sust) ÷ (ke − g) × (1 + H × (g_c − g) ÷ (1 + g))",
+                        f"V0 = {P(self.eps1)} × (1 − {pct(cc.g)} ÷ {pct(self.roe_sust)}) ÷ ({pct(cc.ke)} − {pct(cc.g)}) × "
+                        f"(1 + {num(h, 2)} × ({pct(gc)} − {pct(cc.g)}) ÷ (1 + {pct(cc.g)}))",
+                        v, f"preco:{self.moeda}",
+                        premissas=(f"P/L justificado em regime = {mult(pe)}; modelo H (Fuller e Hsia): fator "
+                                   f"{num(fh, 3)}, g_c = LPA_2 ÷ LPA_1 − 1 limitado a [g; "
+                                   f"{pct(self.params.sec('multiplo_h')['g_curto_max'], 0)}], H = mín(0,5 ÷ (1 − φ); 8) "
+                                   f"anos com φ do setor"))
+            else:
+                reg.add(f"metodo.{m}", nome, "V0 = LPA_1 × (1 − g ÷ ROE_sust) ÷ (ke − g)",
+                        f"V0 = {P(self.eps1)} × (1 − {pct(cc.g)} ÷ {pct(self.roe_sust)}) ÷ ({pct(cc.ke)} − {pct(cc.g)})",
+                        v, f"preco:{self.moeda}", premissas=f"P/L justificado = {mult(pe)}")
             return None
         if m in ("ddm", "ddm_real"):
             g1 = min(max(self.roe_sust * (1 - self.payout), -0.05), 0.15)
-            dps1 = self.eps1 * self.payout
             realm = m == "ddm_real"
+            dps1 = self.eps1 * self.payout / ((1 + cc.pi_local) if realm else 1.0)
             ke = cc.ke_real if realm else cc.ke
             gg = real(cc.g, cc.pi_local) if realm else cc.g
             g1r = real(g1, cc.pi_local) if realm else g1
@@ -708,8 +1141,9 @@ class Avaliador:
                     f"V0 = Σ_{{t=1..{n}}} DPS_1 × (1 + g1)^(t−1) ÷ (1 + ke)^t + DPS_{n + 1} ÷ ((ke − g) × (1 + ke)^{n})",
                     f"V0 = {P(pv1)} + {P(pvt)}", v, f"preco:{self.moeda}",
                     premissas=(f"parcelas: dividendos dos anos 1–{n} e perpetuidade, a valor presente; DPS_1 = "
-                               f"{P(dps1)} (LPA_1 × payout); g1 = ROE_sust × (1 − k) = {pct(g1r)}; g = {pct(gg)}; "
-                               f"ke = {pct(ke)}"))
+                               f"{P(dps1)} (LPA_1 × payout" + (f" ÷ (1 + {pct(cc.pi_local)}), em moeda de hoje"
+                                                                if realm else "") + f"); g1 = ROE_sust × (1 − k) = "
+                               f"{pct(g1r)}; g = {pct(gg)}; ke = {pct(ke)}"))
             return None
         if m.startswith("fcff"):
             f = self._fcff(m, Drivers())
@@ -728,16 +1162,18 @@ class Avaliador:
             info["reinvestimento_limitado_anos"] = list(res.limite_atingido)
             moe = self.moeda
             if m == "fcff_vida_finita":
-                desc = (f"sem perpetuidade; fluxos até {self.pac['fim_concessao']}" if self.pac.get("fim_concessao")
+                desc = (f"sem perpetuidade; fluxos até {int(self.pac['fim_concessao'])}" if self.pac.get("fim_concessao")
                         else "prazo de concessão não curado: carteira tratada como renovável (com perpetuidade)")
             elif m == "fcff_normalizado":
-                desc = ("margem EBIT mediana dos exercícios disponíveis" if self.margem_hist is not None
+                desc = (f"margem EBIT corrente {pct(self.margem)} revertendo à mediana do ciclo {pct(self.margem_hist)} "
+                        "(plena nos anos 1–3, linear até o ano 5; perpetuidade na margem do ciclo)"
+                        if self.margem_hist is not None and self.margem is not None
                         else "margem corrente (histórico de menos de 3 exercícios)")
             elif m == "fcff_real":
                 desc = "fluxos, WACC e crescimento em termos reais"
             else:
                 desc = "margem EBIT corrente"
-            mg = self.margem_hist if m == "fcff_normalizado" and self.margem_hist is not None else self.margem
+            mg = self.margem
             rr_txt = (f"reinvestimento observado {pct(self.rr_obs)} nos anos 1–2, convergindo a g ÷ RONIC"
                       if self.rr_obs is not None else "reinvestimento g ÷ RONIC desde o ano 1")
             lim_txt = ""
@@ -747,17 +1183,31 @@ class Avaliador:
                 lim_txt = f"; reinvestimento limitado a [{pct(lo, 0)}; {pct(hi, 0)}] do NOPAT nos anos {anos_l}"
                 self.avisos.append(f"{nome}: reinvestimento limitado a [{pct(lo, 0)}; {pct(hi, 0)}] do NOPAT "
                                    f"nos anos {anos_l}")
-            reg.add(f"metodo.{m}", nome,
-                    "EV = Σ FCFF_t ÷ (1 + WACC)^t + NOPAT_{T+1} × (1 − g ÷ RONIC) ÷ (WACC − g) ÷ (1 + WACC)^T; "
-                    "V0 = (EV − DL − minoritários) ÷ N",
-                    f"V0 = ({self._t(float(res.ev))} − {operando(self._t(self.pac['divida_liquida']))} − "
-                    f"{operando(self._t(self.pac['minoritarios']))}) ÷ {contagem(self.pac['unidades'])}",
-                    v, f"preco:{moe}",
+            frac, modo_mi = self._participacao_controladores()
+            if m == "fcff_vida_finita" and self.pac.get("fim_concessao"):
+                desc += ("; no último terço do prazo o crescimento real e o reinvestimento líquido convergem a zero "
+                         "(sem renovação nem indenização)")
+            if modo_mi == "proporcional":
+                form_v0 = ("EV = Σ FCFF_t ÷ (1 + WACC)^t + NOPAT_{T+1} × (1 − g ÷ RONIC) ÷ (WACC − g) ÷ (1 + WACC)^T; "
+                           "V0 = (EV − DL) × PL_ctrl ÷ (PL_ctrl + minoritários) ÷ N")
+                sub_v0 = (f"V0 = ({self._t(float(res.ev))} − {operando(self._t(self.pac['divida_liquida']))}) × "
+                          f"{pct(frac)} ÷ {contagem(self.pac['unidades'])}")
+                mi_txt = ("; minoritários a valor proporcional ao patrimônio (fração dos controladores = PL dos "
+                          f"controladores {self._t(self.pac.get(self.k_pl))} ÷ (PL dos controladores + "
+                          f"minoritários contábeis {self._t(self.pac['minoritarios'])}))")
+            else:
+                form_v0 = ("EV = Σ FCFF_t ÷ (1 + WACC)^t + NOPAT_{T+1} × (1 − g ÷ RONIC) ÷ (WACC − g) ÷ (1 + WACC)^T; "
+                           "V0 = (EV − DL − minoritários) ÷ N")
+                sub_v0 = (f"V0 = ({self._t(float(res.ev))} − {operando(self._t(self.pac['divida_liquida']))} − "
+                          f"{operando(self._t(self.pac['minoritarios']))}) ÷ {contagem(self.pac['unidades'])}")
+                mi_txt = ""
+            reg.add(f"metodo.{m}", nome, form_v0, sub_v0,
+                    v, f"preco:{moe}", self._fonte("fim_concessao") if m == "fcff_vida_finita" else [],
                     premissas=(f"EV = valor presente dos fluxos {self._t(float(res.pv_explicito))} + perpetuidade "
                                f"{self._t(float(res.pv_terminal))}; receita {self._t(self.receita0)}, g1 "
                                f"{pct(self.g1)}, g2 {pct(self.g2)}, margem {pct(mg)}, WACC {pct(self.cc.wacc)}, "
                                f"g {pct(self.cc.g)}, ROIC {pct(self.roic0)} → RONIC {pct(self.ronic_final)}; {rr_txt}"
-                               f"{lim_txt}; {desc}"))
+                               f"{lim_txt}; {desc}{mi_txt}"))
             return ft
         if m.startswith("regressao"):
             regs = self.ctx["regressoes"]
@@ -780,9 +1230,18 @@ class Avaliador:
             pais_txt = (f"efeito país de {self.pac['pais']} incluído" if self.pac["pais"] in r["efeitos"]
                         else f"{self.pac['pais']} é o país-base (efeito zero)" if self.pac["pais"] == r.get("pais_base")
                         else f"{self.pac['pais']} sem efeito próprio (menos de 2 observações)")
-            reg.add(f"metodo.{m}.multiplo", f"{nome}: múltiplo do emissor",
-                    f"{sigla} = a + {regs_txt} + efeito país (Huber, n = {r['n']}, R² = {num(r['r2'])})",
-                    f"{sigla} = {' + '.join(partes)}", mm, "x", premissas=pais_txt)
+            bruto = prever_bruto(r, self.fund, self.pac["pais"])
+            fa = r.get("faixa_amostra")
+            if fa and bruto is not None and abs(bruto - mm) > 1e-9:
+                reg.add(f"metodo.{m}.multiplo", f"{nome}: múltiplo do emissor (limitado à faixa da amostra)",
+                        f"{sigla} = mín(máx(a + {regs_txt} + efeito país; P5); P95) (Huber, n = {r['n']}, "
+                        f"R² = {num(r['r2'])})",
+                        f"{sigla} = mín(máx({' + '.join(partes)}; {mult(fa[0])}); {mult(fa[1])})", mm, "x",
+                        premissas=f"{pais_txt}; previsão sem limite {mult(bruto)}; P5–P95 dos múltiplos da amostra")
+            else:
+                reg.add(f"metodo.{m}.multiplo", f"{nome}: múltiplo do emissor",
+                        f"{sigla} = a + {regs_txt} + efeito país (Huber, n = {r['n']}, R² = {num(r['r2'])})",
+                        f"{sigla} = {' + '.join(partes)}", mm, "x", premissas=pais_txt)
             if m == "regressao_pb_roe":
                 sub = f"V0 = {mult(mm)} × {P(self.b0)}"
                 form = "V0 = P/VPA_reg × B0"
@@ -790,9 +1249,15 @@ class Avaliador:
                 sub = f"V0 = {mult(mm)} × {P(self.eps1)}"
                 form = "V0 = P/L_reg × LPA_1"
             else:
-                sub = (f"V0 = ({mult(mm)} × {self._t(self.receita0)} − {operando(self._t(self.pac['divida_liquida']))} − "
-                       f"{operando(self._t(self.pac['minoritarios']))}) ÷ {contagem(self.pac['unidades'])}")
-                form = "V0 = (EV/Receita_reg × receita − DL − minoritários) ÷ N"
+                frac, modo_mi = self._participacao_controladores()
+                if modo_mi == "proporcional":
+                    sub = (f"V0 = ({mult(mm)} × {self._t(self.receita0)} − {operando(self._t(self.pac['divida_liquida']))}) × "
+                           f"{pct(frac)} ÷ {contagem(self.pac['unidades'])}")
+                    form = "V0 = (EV/Receita_reg × receita − DL) × PL_ctrl ÷ (PL_ctrl + minoritários) ÷ N"
+                else:
+                    sub = (f"V0 = ({mult(mm)} × {self._t(self.receita0)} − {operando(self._t(self.pac['divida_liquida']))} − "
+                           f"{operando(self._t(self.pac['minoritarios']))}) ÷ {contagem(self.pac['unidades'])}")
+                    form = "V0 = (EV/Receita_reg × receita − DL − minoritários) ÷ N"
             reg.add(f"metodo.{m}", nome, form, sub, v, f"preco:{self.moeda}")
             return None
         if m == "soma_partes":
@@ -800,27 +1265,40 @@ class Avaliador:
             partes = "; ".join(f"{q['emissor']} {pct(q['fracao'], 1)} × {total(q['valor_mercado'], q['moeda'])}"
                                for q in sp["partes"] if "fracao" in q)
             janela = f"{sp['semanas']} semanas" + (f" desde {sp['desde']}" if sp.get("desde") else "")
+            vc = sp.get("visao_casa") or {}
+            fator = _f(vc.get("fator")) or 1.0
+            if vc:
+                reg.add(f"metodo.{m}.visao_casa", "Soma das partes: visão da casa sobre as participações",
+                        "fator = Σ participação a mercado × (V0 ÷ P0 da investida) ÷ Σ participação a mercado",
+                        "fator = " + " + ".join(f"{q['emissor']} {num(q['razao_v0_p0'], 3)}" for q in vc.get("partes", []))
+                        + " (ponderados pelo valor de mercado de cada participação)", fator, "x",
+                        premissas="; ".join(f"{q['emissor']}: {q['motivo']}" for q in vc.get("partes", []))
+                        + ". A holding herda a visão da casa sobre as investidas citáveis (A ou B); o desconto da "
+                          "holding reverte à mediana histórica à parte")
             if sp.get("razao_mediana") is not None:
                 reg.add(f"metodo.{m}", nome,
-                        "V0 = P0 × mediana(valor de mercado ÷ NAV) ÷ (valor de mercado ÷ NAV)_hoje",
-                        f"V0 = {P(self.pac['preco'])} × {num(sp['razao_mediana'], 3)} ÷ {num(sp['razao_atual'], 3)}",
+                        "V0 = P0 × mediana(valor de mercado ÷ NAV) ÷ (valor de mercado ÷ NAV)_hoje × fator da casa",
+                        f"V0 = {P(self.pac['preco'])} × {num(sp['razao_mediana'], 3)} ÷ {num(sp['razao_atual'], 3)} × "
+                        f"{num(fator, 3)}",
                         v, f"preco:{self.moeda}",
                         premissas=f"NAV = {total(sp['nav'], self.moeda)}: {partes}; mediana de {janela}")
             else:
-                reg.add(f"metodo.{m}", nome, "V0 = NAV × (1 − desconto de reserva) ÷ N",
+                reg.add(f"metodo.{m}", nome, "V0 = NAV × (1 − desconto de reserva) ÷ N × fator da casa",
                         f"V0 = {total(sp['nav'], self.moeda)} × (1 − {pct(sp['desconto_reserva'])}) ÷ "
-                        f"{contagem(self.pac['unidades'])}", v, f"preco:{self.moeda}",
+                        f"{contagem(self.pac['unidades'])} × {num(fator, 3)}", v, f"preco:{self.moeda}",
                         premissas=f"histórico insuficiente para a mediana ({janela}); {partes}")
             return None
         return None
 
     # ------------------------------------------------------------------ 4. combinação e rolagem
-    def combinar(self, vals: Mapping[str, np.ndarray]) -> np.ndarray | None:
+    def combinar(self, vals: Mapping[str, np.ndarray], piso: bool = True) -> np.ndarray | None:
         """Média ponderada pelos pesos do arquétipo; por sorteio, só os métodos com valor finito
         (pesos renormalizados); sorteio sem nenhum método válido ⇒ ``NaN``. Sem piso por
-        método: o piso de zero (responsabilidade limitada) vale só para o valor combinado."""
+        método: o piso de zero (responsabilidade limitada) vale só para o valor combinado e só
+        quando ``piso`` (o alpha usa a média sem piso; ver :meth:`_cenarios`)."""
         if not vals:
             return None
+        vals = self._limitar_discrepante(dict(vals))
         ms = list(vals)
         w = np.array([self.metodos[m]["peso"] for m in ms], dtype=float)
         if w.sum() <= 0:
@@ -831,7 +1309,7 @@ class Avaliador:
         tot = wv.sum(axis=0)
         with np.errstate(divide="ignore", invalid="ignore"):
             out = np.where(tot > 0, (wv * np.where(ok, v, 0.0)).sum(axis=0) / tot, np.nan)
-        return np.maximum(out, 0.0)
+        return np.maximum(out, 0.0) if piso else out
 
     def avaliar(self) -> dict[str, Any]:
         """Modelo completo do emissor (antes da etapa transversal de rating)."""
@@ -847,7 +1325,7 @@ class Avaliador:
             out["motivo_sem_alvo"] = motivo
             return self._saida(out)
         base = Drivers()
-        vals = {m: np.asarray(self._valor_metodo(m, base), dtype=float) for m in validos}
+        vals = self._limitar_discrepante({m: np.asarray(self._valor_metodo(m, base), dtype=float) for m in validos})
         tot = sum(self.metodos[m]["peso"] for m in validos)
         partes = " + ".join(f"{num(self.metodos[m]['peso'])} × {P(float(vals[m]))}" for m in validos)
         v0 = float(self.combinar(vals))
@@ -867,16 +1345,68 @@ class Avaliador:
         cv = float(np.std(vs, ddof=0) / np.mean(vs)) if len(vs) >= 2 else None
         if cv is not None:
             lista = "; ".join(P(x) for x in vs)
-            reg.add("alvo.cv", "Dispersão entre métodos", "CV = desvio-padrão(V_m) ÷ média(V_m)",
+            reg.add("alvo.cv", "Dispersão entre métodos (valores combinados)", "CV = desvio-padrão(V_m) ÷ média(V_m)",
                     f"CV = desvio-padrão({lista}) ÷ média({lista})", cv, "%")
+        cv_todos, dissid = self.dispersao_todos()
+        if dissid and cv_todos is not None:
+            brutos = [float(d.get("valor_bruto", d["valor"])) if d.get("valor") is not None else 0.0
+                      for d in self.metodos.values() if d["peso"] > 0 and (d.get("valor") is not None
+                                                                         or d.get("valor_calculado") is not None)]
+            lista = "; ".join(P(x) for x in brutos)
+            reg.add("alvo.cv_todos", "Dispersão entre todos os métodos calculados (com a dissidência)",
+                    "CV_todos = desvio-padrão(V_m brutos; não positivos como 0) ÷ média",
+                    f"CV_todos = desvio-padrão({lista}) ÷ média({lista})", cv_todos, "%",
+                    premissas="dissidência: " + "; ".join(
+                        f"{NOME_METODO[d['metodo']]} ({'limitado na combinação' if d['tipo'] == 'limitado' else 'valor do patrimônio não positivo' if d['tipo'] == 'nao_positivo' else 'discrepante mantido na média'})"
+                        for d in dissid) + "; é a dispersão usada na confiança e na corroboração do G11")
+        pesos = self.params.pesos(self.pac["arquetipo"])
+        principal = max(sorted(pesos), key=lambda k: pesos[k])
+        principal_dissidente = any(d["metodo"] == principal and d["tipo"] in ("limitado", "nao_positivo")
+                                   for d in dissid)
         out.update({"tem_alvo": True, "v0": v0, "tp": tp, "etr": etr, "upside": up, "cv": cv,
-                    "n_metodos": len(validos)})
+                    "cv_todos": cv_todos if dissid else cv, "dissidencia": dissid,
+                    "metodo_principal": principal, "principal_dissidente": bool(principal_dissidente),
+                    "n_metodos": len(validos), "n_metodos_calculados": len(validos) + sum(
+                        1 for d in dissid if d["tipo"] == "nao_positivo")})
         out.update(self._fcff_observado())
         out.update(self._cenarios(p0, tp, etr, validos))
+        out.update(self._tp_ke_estatico(p0, tp))
         out["sensibilidade"] = self._sensibilidade(p0)
         out["icc"] = self._icc(p0)
         out["reverso"] = self._reverso(p0)
         return self._saida(out)
+
+    def _tp_ke_estatico(self, p0: float, tp: float) -> dict[str, Any]:
+        """Sensibilidade: preço-alvo do caso-base com o ke do ERP estático (tabela semestral)."""
+        cc = self.cc
+        d = cc.ke_estatico - cc.ke
+        if abs(d) < 1e-12:
+            return {}
+        dr = Drivers(d_ke=d)
+        vals = {}
+        self._estrito = False
+        try:
+            for m in self.metodos_validos():
+                try:
+                    vals[m] = np.asarray(self._valor_metodo(m, dr), dtype=float)
+                except (ValueError, ZeroDivisionError):
+                    continue
+        finally:
+            self._estrito = True
+        v0 = self.combinar(vals) if vals else None
+        if v0 is None or not np.isfinite(float(v0)):
+            return {}
+        tpe = float(M.rolagem(v0, cc.ke_estatico, self.dps12))
+        self.reg.add("sensibilidade.ke_estatico", "Sensibilidade: preço-alvo com o ke do ERP estático",
+                     "TP12' = V0(ke') × (1 + ke') − DPS12",
+                     f"TP12' = {self._p(float(v0))} × (1 + {pct(cc.ke_estatico)}) − {self._p(self.dps12)}", tpe,
+                     f"preco:{self.moeda}",
+                     premissas=(f"ke' = {pct(cc.ke_estatico)} com ERP {pct(cc.erp_estatico)} (oficial {pct(cc.ke)} com "
+                                f"ERP {pct(cc.erp)}); sensibilidade de um fator: só o ERP muda, com o ajuste de nível do "
+                                f"país e a norma de ROE mantidos (numa reestimação completa o ajuste de nível "
+                                f"reabsorveria a maior parte do efeito); upside {pct(tpe / p0 - 1, 1, True)} contra "
+                                f"{pct(tp / p0 - 1, 1, True)}"))
+        return {"tp_ke_estatico": tpe, "upside_ke_estatico": tpe / p0 - 1}
 
     def _fcff_observado(self) -> dict[str, Any]:
         """FCFF do ano 1 do modelo contra o fluxo de caixa livre observado (CFO − capex)."""
@@ -886,8 +1416,11 @@ class Avaliador:
         res = self._fcff(ms[0], Drivers()).res
         fc1 = float(res.fcff[0])
         razao = None if self.fcf_obs is None or self.fcf_obs <= 0 else fc1 / self.fcf_obs
+        ri = self.rr_info or {}
         return {"fcff_ano1": fc1, "fcf_observado": self.fcf_obs, "fcff_ano1_vs_observado": razao,
-                "reinvestimento_limitado_anos": list(res.limite_atingido)}
+                "reinvestimento_limitado_anos": list(res.limite_atingido),
+                "rr_observado": ri.get("rr"), "rr_observado_base": ri.get("base"),
+                "rr_contaminado": bool(self.rr_contaminado)}
 
     # ------------------------------------------------------------------ 5. cenários
     def _cenarios(self, p0: float, tp: float, etr: float, validos: list[str]) -> dict[str, Any]:
@@ -920,15 +1453,21 @@ class Avaliador:
                     continue
         finally:
             self._estrito = True
-        v0 = self.combinar(vals)
+        v0_bruto = self.combinar(vals, piso=False)
         ke = self._ke(dr)
-        tps = np.asarray(M.rolagem(v0, ke, self.dps12), dtype=float)
-        ok = np.isfinite(tps)
-        tps = np.maximum(tps[ok], 0.0)
+        tps_bruto = np.asarray(M.rolagem(v0_bruto, ke, self.dps12), dtype=float)
+        ok = np.isfinite(tps_bruto)
+        p_zero = float(np.mean(np.asarray(v0_bruto)[ok] <= 0)) if ok.any() else None
+        rets_bruto = (tps_bruto[ok] + self.dps12) / p0 - 1
+        tps = np.maximum(tps_bruto[ok], 0.0)
         rets = (tps + self.dps12) / p0 - 1
         p10, p50, p90 = (float(x) for x in np.percentile(tps, [10, 50, 90]))
         r10, r50, r90 = (float(x) for x in np.percentile(rets, [10, 50, 90]))
-        pwr = float(np.mean(rets))
+        # α pela média SEM o piso de zero: os sorteios são incerteza de parâmetros em torno do caso-base,
+        # não valores terminais dos ativos; com o piso, a massa em zero inflaria a média (desigualdade de
+        # Jensen) em emissores alavancados. O retorno com responsabilidade limitada é exibido à parte.
+        pwr = float(np.mean(rets_bruto))
+        pwr_piso = float(np.mean(rets))
         alpha = pwr - self.cc.ke
         reg, P = self.reg, self._p
         reg.add("cenarios.mc", "Cenários: Monte Carlo dos direcionadores (mediana)",
@@ -941,9 +1480,15 @@ class Avaliador:
                 f"P50 dos {inteiro(len(tps))} preços-alvo simulados", p50, f"preco:{self.moeda}",
                 premissas=(f"P10 = {P(p10)}; P90 = {P(p90)}; preço-alvo do caso-base = {P(tp)}; sorteios "
                            "reprodutíveis com semente fixa por emissor e data"))
-        reg.add("cenarios.pwr", "Retorno ponderado por probabilidade (PWR)", "PWR = média de (TP^(k) + DPS12) ÷ P0 − 1",
-                f"PWR = média dos {inteiro(len(rets))} retornos simulados", pwr, "%",
-                premissas=f"retorno do caso-base (ETR) = {pct(etr)}; diferença = {pp(pwr - etr, 1)}")
+        reg.add("cenarios.pwr", "Retorno ponderado por probabilidade (PWR)",
+                "PWR = média de (V0^(k) × (1 + ke^(k)) − DPS12 + DPS12) ÷ P0 − 1, sem o piso de zero",
+                f"PWR = média dos {inteiro(len(rets_bruto))} retornos simulados", pwr, "%",
+                premissas=(f"retorno do caso-base (ETR) = {pct(etr)}; diferença = {pp(pwr - etr, 1)} (convexidade das "
+                           f"fórmulas); probabilidade de patrimônio não positivo nos sorteios = {pct(p_zero, 1)}"))
+        reg.add("cenarios.pwr_piso", "Retorno com responsabilidade limitada (exibido, não usado no alpha)",
+                "PWR_piso = média de (máx(TP^(k); 0) + DPS12) ÷ P0 − 1",
+                f"PWR_piso = média dos {inteiro(len(rets))} retornos simulados com piso de zero", pwr_piso, "%",
+                premissas=f"valor de opção do piso = {pp(pwr_piso - pwr, 1)} sobre o PWR")
         reg.add("cenarios.alpha", "Alpha de valuation", "α = PWR − ke", f"α = {_op_pct(pwr)} − {pct(self.cc.ke)}",
                 alpha, "%")
         vol = _f(self.pac.get("vol_12m"))
@@ -970,6 +1515,7 @@ class Avaliador:
         p_ke = float(np.mean(rets >= self.cc.ke))
         largura = (p90 - p10) / tp if tp else None
         return {"tp_pessimista": p10, "tp_mediana_mc": p50, "tp_otimista": p90, "pwr": pwr, "alpha": alpha,
+                "pwr_com_piso": pwr_piso, "p_patrimonio_zero": p_zero,
                 "ret_p10": r10, "ret_p50": r50, "ret_p90": r90, "udr": udr, "assimetria": skew,
                 "perda_esperada_cauda": es, "prob_modelo_supera_ke": p_ke,
                 "prob_mercado_otimista": pm_bull, "prob_mercado_pessimista": pm_bear,
@@ -1029,7 +1575,8 @@ class Avaliador:
     def _icc(self, p0: float) -> dict[str, Any]:
         out: dict[str, Any] = {}
         if None not in (self.b0, self.roe1, self.roe2, self.roe_alvo, self.payout) and self.b0 > 0:
-            out["gls"] = M.icc_gls(p0, self.b0, self.roe1, self.roe2, self.roe_alvo, self.payout)
+            out["gls"] = M.icc_gls(p0, self.b0, self.roe1, self.roe2, self.roe_alvo, self.payout,
+                                   omega=self.omega)
         if self.eps1 is not None and self.eps2 is not None:
             dps1 = (self.eps1 * self.payout) if self.payout is not None else 0.0
             out["mpeg"] = M.icc_mpeg(p0, self.eps1, self.eps2, dps1)
@@ -1082,7 +1629,17 @@ class Avaliador:
         out["eps_ttm"], out["roe1"] = self.eps_ttm, self.roe1
         out["roe_sust"], out["payout"] = self.roe_sust, self.payout
         out["lpa_diverge"] = bool(self.lpa_diverge)
+        out["n_eps"], out["consenso_raso"] = self.n_eps, bool(self.consenso_raso)
+        out["eps1_consenso"] = self.eps1_fonte != "lucro dos últimos 12 meses (sem consenso)"
         out["peso_patrimonial"] = self.peso_patrimonial()
+        out["eps2_modelo"], out["roe2"], out["roe_alvo"] = self.eps2, self.roe2, self.roe_alvo
+        out["fracao_exercicio"], out["calendarizado"] = self.f_ex, bool(self.calendarizado)
+        out["persistencia_roe"] = None if self.alvo_roe_info is None else {
+            k: (r6(v) if isinstance(v, float) else v) for k, v in self.alvo_roe_info.items()
+            if k not in ("referencia", "pais_setor", "porte")} | {
+            "referencia": self.alvo_roe_info.get("referencia"), "porte": self.alvo_roe_info.get("porte")}
+        out["margem"] = self.margem
+        out["metodo_discrepante"] = getattr(self, "discrepante", None)
         out["lacunas"] = self.lacunas + [{"insumo": f"metodo.{d['m']}", "nome": NOME_METODO[d["m"]],
                                           "motivo": d["motivo"]}
                                          for d in self.metodos.values() if d.get("motivo")]

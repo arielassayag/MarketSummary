@@ -56,6 +56,7 @@ class Arquetipo:
     linha_valuation: str | None
     fim_concessao: int | None
     nota: str
+    fim_concessao_fonte: str = ""
 
 
 @dataclass(frozen=True)
@@ -93,12 +94,20 @@ class ParametrosCobertura:
         return self.valuation[nome]
 
     def fonte(self, chave: str) -> dict[str, Any]:
+        """Proveniência de um insumo datado da configuração. Para fontes externas (Damodaran, FRED) o
+        valor é transcrito em ``valuation.yaml``: o ``sha256`` fica vazio (a planilha não é arquivada no
+        snapshot; o hash da configuração não é o do documento) e o documento diz de onde conferir."""
         f = dict(self.valuation.get("fontes", {}).get(chave, {}))
+        externa = chave.startswith(("damodaran", "fred"))
+        doc = f.get("documento")
+        if externa and doc:
+            doc = (f"{doc} — valor transcrito em configs/cdp/valuation.yaml (versão {self.versao}); planilha não "
+                   "arquivada no snapshot: conferir no endereço")
         return {"fonte": "DAMODARAN" if chave.startswith("damodaran") else (
             "FRED" if chave.startswith("fred") else "CONFIG"),
-            "url": f.get("url"), "documento": f.get("documento"),
+            "url": f.get("url"), "documento": doc,
             "data_publicacao": f.get("data_publicacao"), "data_coleta": None,
-            "sha256": self.arquivos.get("valuation.yaml")}
+            "sha256": None if externa else self.arquivos.get("valuation.yaml")}
 
     def fonte_config(self, descricao: str) -> dict[str, Any]:
         return {"fonte": "CONFIG", "url": None, "documento": f"configs/cdp/valuation.yaml — {descricao}",
@@ -123,8 +132,8 @@ def _opt_str(v: str | None) -> str | None:
 
 def _validar(val: dict[str, Any], arqs: dict[str, Arquetipo], betas: dict[str, BetaSetor]) -> None:
     faltam = [k for k in ("custo_capital", "perpetuidade", "fade_phi", "pesos_metodos", "projecao",
-                          "multiplos", "soma_partes", "cenarios", "sensibilidade", "rating",
-                          "qualidade", "etf", "alpha") if k not in val]
+                          "persistencia_roe", "multiplo_h", "multiplos", "minoritarios", "soma_partes",
+                          "cenarios", "sensibilidade", "rating", "qualidade", "etf", "alpha") if k not in val]
     if faltam:
         raise ValueError(f"valuation.yaml sem seções: {faltam}")
     for arq, pesos in val["pesos_metodos"].items():
@@ -169,7 +178,8 @@ def carregar_parametros(valuation: Path | str | None = None,
             moeda_demonstrativos=_opt_str(r.get("moeda_demonstrativos")),
             lambda_=float(r.get("lambda") or 1.0),
             linha_valuation=_opt_str(r.get("linha_valuation")),
-            fim_concessao=int(float(fim)) if fim else None, nota=(r.get("nota") or "").strip())
+            fim_concessao=int(float(fim)) if fim else None, nota=(r.get("nota") or "").strip(),
+            fim_concessao_fonte=(r.get("fim_concessao_fonte") or "").strip())
     unidades = {r["ticker"]: {"acoes_por_unidade": float(r["acoes_por_unidade"]),
                               "conferido": r.get("conferido", "").strip().lower() == "true",
                               "url": _opt_str(r.get("url")), "nota": (r.get("nota") or "").strip()}

@@ -173,7 +173,10 @@ def _resumo(pac: Mapping[str, Any], mod: Mapping[str, Any], as_of: date) -> dict
     eps1, b0 = mod.get("eps1"), mod.get("b0")
     out = {
         "preco": p0, "data_preco": pac.get("data_preco"), "preco_alvo": tp, "upside": mod.get("upside"),
-        "etr": mod.get("etr"), "pwr": mod.get("pwr"), "ke": mod.get("custo_capital", {}).get("ke"),
+        "etr": mod.get("etr"), "pwr": mod.get("pwr"), "pwr_com_piso": mod.get("pwr_com_piso"),
+        "p_patrimonio_zero": mod.get("p_patrimonio_zero"), "ke": mod.get("custo_capital", {}).get("ke"),
+        "ke_estatico": mod.get("custo_capital", {}).get("ke_estatico"), "preco_alvo_ke_estatico": mod.get("tp_ke_estatico"),
+        "alpha_rel_estilo": mod.get("alpha_rel_estilo"),
         "wacc": mod.get("custo_capital", {}).get("wacc"), "g": mod.get("custo_capital", {}).get("g"),
         "alpha": mod.get("alpha"), "alpha_rel": mod.get("alpha_rel"), "rating": mod.get("rating"),
         "rating_motivo": mod.get("rating_motivo"), "confianca": mod.get("confianca"),
@@ -195,10 +198,12 @@ def _resumo(pac: Mapping[str, Any], mod: Mapping[str, Any], as_of: date) -> dict
     m = str(pac.get("moeda"))
     fmt = {"preco": f"preco:{m}", "preco_alvo": f"preco:{m}", "alvo_otimista": f"preco:{m}",
            "alvo_pessimista": f"preco:{m}", "upside": "%", "etr": "%", "pwr": "%", "ke": "%", "wacc": "%", "g": "%",
+           "pwr_com_piso": "%", "p_patrimonio_zero": "prob", "ke_estatico": "%",
+           "preco_alvo_ke_estatico": f"preco:{m}", "alpha_rel_estilo": "%",
            "alpha": "%", "alpha_rel": "%", "cv_metodos": "%", "diff_consenso": "%", "prob_mercado_otimista": "prob",
            "prob_mercado_pessimista": "prob", "prob_modelo_supera_ke": "prob", "pl_fwd": "x", "pb": "x", "udr": "x"}
     out["texto"] = {k: valor(out[k], u) for k, u in fmt.items()}
-    for k in ("upside", "etr", "alpha", "alpha_rel", "diff_consenso"):
+    for k in ("upside", "etr", "alpha", "alpha_rel", "alpha_rel_estilo", "diff_consenso"):
         out["texto"][k] = pct(out[k], 2, True)
     return out
 
@@ -211,8 +216,8 @@ def executar(md: MarketData, dados: DadosPublicos, params: ParametrosCobertura, 
     if desconhecidos:
         raise KeyError(f"Emissores fora do universo: {desconhecidos}")
     pacotes = preparar(md, dados, params, ids, as_of)
-    ctx = montar_contexto(pacotes, params)
     rf, rf_data, rf_fonte = taxa_publica(dados, md, str(params.cc["rf_usd_serie"]), as_of)
+    ctx = montar_contexto(pacotes, params, rf, rf_fonte)
     modelos, regs, dist = modelar(pacotes, ctx, params, rf, rf_fonte, anterior, alvo_ids)
     for iid in ids:
         mod, pac = modelos[iid], pacotes[iid]
@@ -279,7 +284,12 @@ def modelar(pacotes: Mapping[str, dict[str, Any]], ctx: Mapping[str, Any], param
     alvo_ids = alvo_ids or ids
     modelos: dict[str, dict[str, Any]] = {}
     regs = {}
-    for iid in ids:
+    holdings = [i for i in ids if pacotes[i].get("arquetipo") == "holding"
+                and (pacotes[i].get("soma_partes") or {}).get("partes")]
+    for h in holdings:  # a visão da casa sobre as participações é refeita abaixo, a partir das investidas
+        pacotes[h]["soma_partes"].pop("visao_casa", None)
+
+    def um(iid: str) -> None:
         av = Avaliador(pacotes[iid], ctx, params, rf, rf_fonte)
         mod = av.avaliar()
         mod["portoes"] = portoes_emissor(pacotes[iid], mod, params)
@@ -300,17 +310,94 @@ def modelar(pacotes: Mapping[str, dict[str, Any]], ctx: Mapping[str, Any], param
                                        "detalhe": f"resíduo {pct(res)} do alvo (limite {pct(lim)})"})
         modelos[iid] = mod
         regs[iid] = av.reg
+
+    for iid in ids:
+        if iid not in holdings:
+            um(iid)
+    for h in holdings:
+        pacotes[h]["soma_partes"]["visao_casa"] = visao_casa(pacotes[h], pacotes, modelos, params)
+        um(h)
     portoes_transversais(modelos, pacotes, params)
     fixos = None
     if anterior and sorted(alvo_ids) != ids:
         fixos = {j: anterior.alphas.get(j) for j in ids if j not in set(alvo_ids) and j in anterior.ratings}
-    dist = aplicar(modelos, pacotes, params, anterior.ratings if anterior else None, regs, fixos)
+    regionais = {pa for pa, c in (ctx.get("calibracao_pais") or {}).items() if c.get("grupo") == "regional"}
+    dist = aplicar(modelos, pacotes, params, anterior.ratings if anterior else None, regs, fixos, regionais)
+    vies = vies_modelo(ctx, params)
+    dist["monitoramento"]["vies_modelo_pais"] = vies["paises"]
+    dist["alertas_distribuicao"] = list(dist.get("alertas_distribuicao") or []) + vies["alertas"]
     for iid in ids:
         mod, reg = modelos[iid], regs[iid]
         bl = bloqueios(mod["portoes"])
         txt = "; ".join(f"{p['codigo']} {p['nome']}: {p['status']} ({p['detalhe']})" for p in mod["portoes"])
         reg.nota("qualidade", "Portões de qualidade", txt + (f". Bloqueio: {', '.join(bl)}." if bl else "."))
     return modelos, regs, dist
+
+
+def visao_casa(pac_h: Mapping[str, Any], pacotes: Mapping[str, Mapping[str, Any]],
+               modelos: Mapping[str, Mapping[str, Any]], params: ParametrosCobertura) -> dict[str, Any]:
+    """Visão da casa sobre as participações listadas da holding: cada participação entra no NAV pelo
+    valor intrínseco da casa (``V0 ÷ P0`` da investida × valor de mercado da participação) quando o
+    modelo da investida é citável com confiança A ou B e sem aviso de retorno extremo, patrimônio
+    frágil ou demonstrações defasadas; senão, a valor de mercado. ``fator = NAV da casa ÷ NAV de
+    mercado`` multiplica o valor da soma das partes (o termo de reversão do desconto da holding fica
+    como está). Assim a holding e as investidas não publicam visões contraditórias sobre a mesma
+    exposição."""
+    from .qualidade import avisos as _avisos
+    from .qualidade import bloqueios as _bloqueios
+    from .rating import confianca as _confianca
+
+    excl = set(params.sec("soma_partes").get("visao_excluir_avisos") or ["G11", "G16", "G19"])
+    sp = pac_h.get("soma_partes") or {}
+    partes, nav_m, nav_c = [], 0.0, 0.0
+    for q in sp.get("partes") or []:
+        if "valor_participacao" not in q:
+            continue
+        sub = str(q["emissor"])
+        v = float(q["valor_participacao"])
+        m = modelos.get(sub)
+        p = pacotes.get(sub) or {}
+        razao, motivo = 1.0, "a valor de mercado"
+        if m is not None and m.get("tem_alvo") and _f(m.get("v0")) and _f(p.get("preco")):
+            conf, _ = _confianca(p, m, params)
+            av = set(_avisos(m.get("portoes", []))) & excl
+            if _bloqueios(m.get("portoes", [])):
+                motivo = "investida com portão bloqueante: a valor de mercado"
+            elif conf not in ("A", "B"):
+                motivo = f"investida com confiança {conf}: a valor de mercado"
+            elif av:
+                motivo = f"investida com aviso {', '.join(sorted(av))}: a valor de mercado"
+            else:
+                razao = float(m["v0"]) / float(p["preco"])
+                motivo = f"valor intrínseco da casa (V0 ÷ P0 = {razao:.3f})".replace(".", ",")
+        partes.append({"emissor": sub, "razao_v0_p0": r6(razao), "motivo": motivo})
+        nav_m += v
+        nav_c += v * razao
+    fator = nav_c / nav_m if nav_m > 0 else 1.0
+    return {"fator": r6(fator), "partes": partes}
+
+
+def vies_modelo(ctx: Mapping[str, Any], params: ParametrosCobertura) -> dict[str, Any]:
+    """Indicador de viés de nível do modelo por país (monitorado, nunca forçado): mediana de V0 ÷ P0
+    SEM o ajuste de nível e o próprio ajuste δ. A mediana de α por país é centrada por construção
+    quando δ não está no limite; o viés real dos fluxos da casa é este."""
+    mon = (params.sec("rating").get("monitoramento") or {})
+    lo, hi = (float(x) for x in mon.get("vies_v_p_faixa", [0.85, 1.15]))
+    out, alertas = {}, []
+    for pa, c in sorted((ctx.get("calibracao_pais") or {}).items()):
+        vp = _f(c.get("mediana_v_p_sem_calibracao"))
+        out[pa] = {"mediana_v_p_sem_ajuste": vp, "ajuste_delta": _f(c.get("delta")), "limitado": bool(c.get("limitado")),
+                   "grupo": c.get("grupo"), "n": c.get("n")}
+        if c.get("grupo") == "regional":
+            continue  # sem nível próprio estimável (menos de 8 emissores): exibido, sem alerta
+        rot = pa
+        if c.get("limitado"):
+            alertas.append(f"ajuste de nível do modelo em {rot} no limite ({pct(_f(c.get('delta')), 2, True)}): viés "
+                           "dos fluxos da casa não absorvido")
+        if vp is not None and not lo <= vp <= hi:
+            alertas.append(f"viés de nível do modelo em {rot}: mediana de V0 ÷ P0 sem o ajuste = {vp:.3f}".replace(".", ",")
+                           + f" (fora de {lo:.2f}–{hi:.2f})".replace(".", ","))
+    return {"paises": out, "alertas": alertas}
 
 
 def modelo_json(ex: Execucao, iid: str, params: ParametrosCobertura) -> dict[str, Any]:
@@ -325,14 +412,25 @@ def modelo_json(ex: Execucao, iid: str, params: ParametrosCobertura) -> dict[str
         "resumo": mod["resumo"], "alvos_linhas": mod.get("alvos_linhas", []),
         "insumos": pac.get("tabela_insumos", []), "lacunas": mod.get("lacunas", []), "avisos": mod.get("avisos", []),
         "custo_capital": mod.get("custo_capital"), "metodos": mod.get("metodos", []),
-        "cenarios": {k: mod.get(k) for k in ("tp_pessimista", "tp_mediana_mc", "tp_otimista", "pwr", "ret_p10",
+        "persistencia_roe": mod.get("persistencia_roe"),
+        "combinacao": {k: mod.get(k) for k in ("cv", "cv_todos", "dissidencia", "metodo_discrepante",
+                                               "metodo_principal", "principal_dissidente", "n_metodos")}
+        if mod.get("tem_alvo") else None,
+        "consenso_lpa": {"n_analistas": mod.get("n_eps"), "poucos_analistas": mod.get("consenso_raso"),
+                         "roe_pelo_consenso": mod.get("eps1_consenso"), "linhas": (pac.get("consenso") or {}).get(
+                             "n_eps_linhas")},
+        "contagem_acoes": pac.get("contagem"),
+        "cenarios": {k: mod.get(k) for k in ("tp_pessimista", "tp_mediana_mc", "tp_otimista", "pwr", "pwr_com_piso",
+                                             "p_patrimonio_zero", "ret_p10",
                                              "ret_p50", "ret_p90", "udr", "assimetria", "perda_esperada_cauda",
                                              "prob_modelo_supera_ke", "prob_mercado_otimista",
                                              "prob_mercado_pessimista", "largura_cenarios", "n_sorteios")}
         if mod.get("tem_alvo") else None,
         "sensibilidade": mod.get("sensibilidade"), "diagnosticos": {"icc": mod.get("icc"), "reverso": mod.get("reverso")},
         "fluxo_caixa_observado": {k: mod.get(k) for k in ("fcff_ano1", "fcf_observado", "fcff_ano1_vs_observado",
-                                                          "reinvestimento_limitado_anos")} if mod.get("fcff_ano1") is not None
+                                                          "reinvestimento_limitado_anos", "rr_observado",
+                                                          "rr_observado_base", "rr_contaminado")}
+        if mod.get("fcff_ano1") is not None
         else None,
         "pares": mod.get("pares"), "portoes": mod.get("portoes", []), "ponte": mod.get("ponte"),
         "passos": ex.registros[iid].passos,
@@ -348,10 +446,13 @@ def resumo_linha(ex: Execucao, iid: str) -> dict[str, Any]:
         "issuer_id": iid, "nome": pac["nome"], "pais": pac["pais"], "setor": pac["setor"],
         "arquetipo": pac["arquetipo"], "linha": pac["linha"], "moeda": pac["moeda"], "preco": r["preco"],
         "data_preco": r["data_preco"], "preco_alvo": r["preco_alvo"], "upside": r["upside"], "etr": r["etr"],
-        "pwr": r["pwr"], "ke": r["ke"], "wacc": r["wacc"], "alpha": r["alpha"], "alpha_rel": r["alpha_rel"],
+        "pwr": r["pwr"], "pwr_com_piso": r["pwr_com_piso"], "p_patrimonio_zero": r["p_patrimonio_zero"],
+        "ke": r["ke"], "ke_estatico": r["ke_estatico"], "preco_alvo_ke_estatico": r["preco_alvo_ke_estatico"],
+        "wacc": r["wacc"], "alpha": r["alpha"], "alpha_rel": r["alpha_rel"], "alpha_rel_estilo": r["alpha_rel_estilo"],
         "rating": r["rating"], "confianca": r["confianca"], "incerteza": r["incerteza"],
         "alvo_otimista": r["alvo_otimista"], "alvo_pessimista": r["alvo_pessimista"], "n_metodos": r["n_metodos"],
-        "cv_metodos": r["cv_metodos"], "consenso_alvo": (r["consenso"] or {}).get("alvo_medio"),
+        "cv_metodos": r["cv_metodos"], "cv_metodos_todos": mod.get("cv_todos"),
+        "n_analistas_lpa": mod.get("n_eps"), "consenso_alvo": (r["consenso"] or {}).get("alvo_medio"),
         "diff_consenso": r["diff_consenso"], "vol_12m": pac.get("vol_12m"),
         "portoes_bloqueio": ",".join(bloqueios(mod.get("portoes", []))),
         "motivo_sem_alvo": r["motivo_sem_alvo"],

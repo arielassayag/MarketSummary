@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import hashlib
 import io
+import re
 from collections.abc import Sequence
 from dataclasses import dataclass, field
 from datetime import date
@@ -34,6 +35,11 @@ COLS_ETF = ["ticker_bruto", "nome", "peso", "setor", "pais", "issuer_id", "fonte
 COLS_EVENTOS = ["issuer_id", "data", "tipo", "estimada", "fonte", "url"]
 COLS_TAXAS = ["serie", "data", "valor", "fonte"]
 COLS_FLOAT = ["issuer_id", "free_float_pct", "fonte", "data_ref"]
+COLS_ALERTAS = ["issuer_id", "tipo", "texto", "data", "item"]
+"""Alertas da camada pública (``attrs['qa']`` e ``attrs['moeda_trocada']`` dos demonstrativos)."""
+COLS_CAPITAL = ["issuer_id", "cnpj", "data_ref", "versao", "data_publicacao", "tipo_capital",
+                "data_aprovacao", "qtd_ordinarias", "qtd_preferenciais", "qtd_total", "url", "sha256"]
+"""Contagem oficial de ações (Formulário de Referência da CVM, capital social)."""
 
 
 class FontePublicaIndisponivel(RuntimeError):
@@ -53,11 +59,17 @@ class DadosPublicos:
     etfs: dict[str, pd.DataFrame | None] = field(default_factory=dict)
     origem: str = "PUBLICO"          # "PUBLICO" | "SIMULADO"
     raiz: str | None = None
+    alertas: pd.DataFrame = field(default_factory=lambda: pd.DataFrame(columns=COLS_ALERTAS))
+    capital_oficial: pd.DataFrame = field(default_factory=lambda: pd.DataFrame(columns=COLS_CAPITAL))
 
     def tabelas(self) -> dict[str, pd.DataFrame]:
         out = {"demonstrativos": self.demonstrativos, "consenso": self.consenso,
                "dividendos": self.dividendos, "eventos": self.eventos, "taxas": self.taxas,
                "free_float": self.free_float}
+        if not self.alertas.empty:
+            out["alertas_fonte"] = self.alertas
+        if not self.capital_oficial.empty:
+            out["capital_oficial"] = self.capital_oficial
         for etf, df in sorted(self.etfs.items()):
             if df is not None:
                 out[f"etf_{_slug(etf)}"] = df
@@ -108,6 +120,331 @@ def _pit(df: pd.DataFrame, col: str, as_of: date) -> pd.DataFrame:
     return df.loc[d.isna() | (d <= pd.Timestamp(as_of))].copy()
 
 
+_DATA_RE = re.compile(r"\d{4}-\d{2}-\d{2}")
+
+
+def alertas_de_attrs(attrs: dict | None) -> pd.DataFrame:
+    """``attrs`` dos demonstrativos (camada A1) → tabela de alertas por emissor.
+
+    ``qa``: textos ``"<emissor>: <alerta>"`` (saltos de magnitude, complementos descartados, capex
+    com classificação a conferir, contagens ausentes); ``moeda_trocada``: mudança da moeda de
+    apresentação (``{moeda, anteriores, desde, fatos_descartados}``). A data do alerta é a mais
+    recente citada no texto; o item, o primeiro item canônico citado."""
+    rows: list[dict] = []
+    attrs = attrs or {}
+    for s in attrs.get("qa") or []:
+        texto = str(s)
+        if ": " not in texto:
+            continue
+        iid, corpo = texto.split(": ", 1)
+        datas = _DATA_RE.findall(corpo)
+        item = next((w for w in re.findall(r"[a-z_]+", corpo) if w in ITENS_ALERTA), None)
+        if item is None and corpo.startswith(("ações", "acoes")):
+            item = "acoes_em_circulacao"
+        tipo = ("salto" if "salto de" in corpo else "descartado" if "descartad" in corpo
+                else "capex" if "saídas de investimento" in corpo else "moeda" if "moeda de apresenta" in corpo
+                else "contagem" if "ações" in corpo else "outro")
+        rows.append({"issuer_id": iid.strip(), "tipo": tipo, "texto": corpo.strip(),
+                     "data": max(datas) if datas else None, "item": item})
+    for iid, tr in sorted((attrs.get("moeda_trocada") or {}).items()):
+        rows.append({"issuer_id": str(iid), "tipo": "moeda_trocada",
+                     "texto": (f"moeda de apresentação {', '.join(tr.get('anteriores') or [])} → {tr.get('moeda')} "
+                               f"desde {tr.get('desde')} ({tr.get('fatos_descartados')} fatos na moeda anterior "
+                               "fora do histórico)"),
+                     "data": str(tr.get("desde")) if tr.get("desde") else None, "item": None})
+    return pd.DataFrame(rows, columns=COLS_ALERTAS).drop_duplicates().reset_index(drop=True)
+
+
+ITENS_ALERTA = ("receita", "ebit", "ebitda", "d_a", "capex", "cfo", "fcf", "caixa", "aplicacoes_cp",
+                "divida_bruta", "arrendamentos", "patrimonio_controladores", "patrimonio_liquido",
+                "lucro_liquido_controladores", "lucro_liquido", "participacao_minoritarios", "carteira_credito",
+                "acoes_em_circulacao", "acoes_emitidas", "dividendos_pagos", "ativo_total")
+
+
+TIPOS_CAPITAL = ("Capital Integralizado", "Capital Emitido", "Capital Subscrito")
+
+
+def capital_fre(conteudo: bytes, ano: int, cnpjs: set[str] | None = None) -> pd.DataFrame:
+    """Capital social do FRE (CVM): uma linha por (CNPJ, data de referência, versão, tipo), com a
+    quantidade total de ações e a data de recebimento da versão."""
+    import zipfile
+
+    with zipfile.ZipFile(io.BytesIO(conteudo)) as zf:
+        nomes = zf.namelist()
+        n_cap = next((n for n in nomes if n.endswith(f"capital_social_{ano}.csv")), None)
+        n_idx = next((n for n in nomes if n.endswith(f"fre_cia_aberta_{ano}.csv")), None)
+        if n_cap is None or n_idx is None:
+            return pd.DataFrame(columns=COLS_CAPITAL)
+        cap = pd.read_csv(io.BytesIO(zf.read(n_cap)), sep=";", encoding="latin1", dtype=str)
+        idx = pd.read_csv(io.BytesIO(zf.read(n_idx)), sep=";", encoding="latin1", dtype=str)
+    cap = cap[cap["Tipo_Capital"].isin(TIPOS_CAPITAL)].copy()
+    cap["cnpj"] = cap["CNPJ_Companhia"].astype(str).str.strip()
+    if cnpjs is not None:
+        cap = cap[cap["cnpj"].isin(cnpjs)]
+    idx = idx.rename(columns={"ID_DOC": "ID_Documento", "DT_RECEB": "data_publicacao", "LINK_DOC": "url"})
+    cap = cap.merge(idx[["ID_Documento", "data_publicacao", "url"]], on="ID_Documento", how="left")
+    out = pd.DataFrame({
+        "cnpj": cap["cnpj"], "data_ref": cap["Data_Referencia"], "versao": pd.to_numeric(cap["Versao"], errors="coerce"),
+        "data_publicacao": cap["data_publicacao"], "tipo_capital": cap["Tipo_Capital"],
+        "data_aprovacao": cap["Data_Autorizacao_Aprovacao"],
+        "qtd_ordinarias": pd.to_numeric(cap["Quantidade_Acoes_Ordinarias"], errors="coerce"),
+        "qtd_preferenciais": pd.to_numeric(cap["Quantidade_Acoes_Preferenciais"], errors="coerce"),
+        "qtd_total": pd.to_numeric(cap["Quantidade_Total_Acoes"], errors="coerce"), "url": cap["url"]})
+    return out[out["qtd_total"] > 0].reset_index(drop=True)
+
+
+def capital_oficial(issuer_ids: Sequence[str], as_of: date, raiz: Path | None) -> pd.DataFrame:
+    """Contagem oficial de ações dos emissores brasileiros pelo FRE arquivado pela camada pública
+    (sem rede): a versão mais recente recebida até ``as_of``; entre os tipos de capital, o maior
+    total (integralizado, emitido ou subscrito)."""
+    try:
+        from ..data import publico  # type: ignore[attr-defined]
+        from ..data.publico_arquivo import Arquivo  # type: ignore[attr-defined]
+    except Exception:  # pragma: no cover - depende da camada A1
+        return pd.DataFrame(columns=COLS_CAPITAL)
+    try:
+        mestre = publico.mestre_publico(as_of, offline=True, root=raiz)
+    except Exception:  # noqa: BLE001 - sem cadastro arquivado ⇒ sem contagem oficial
+        return pd.DataFrame(columns=COLS_CAPITAL)
+    cnpj_de = {str(i): str(mestre.loc[i, "cnpj"]) for i in issuer_ids
+               if i in mestre.index and isinstance(mestre.loc[i, "cnpj"], str) and mestre.loc[i, "cnpj"]}
+    if not cnpj_de:
+        return pd.DataFrame(columns=COLS_CAPITAL)
+    arq = Arquivo(raiz, offline=True)
+    partes = []
+    for ano in (as_of.year - 1, as_of.year):
+        reg = arq.buscar(f"CVM/FRE/fre_cia_aberta_{ano}.zip", ate=as_of)
+        if reg is None:
+            continue
+        f = capital_fre(arq.ler(reg), ano, set(cnpj_de.values()))
+        f["sha256"] = reg.sha256
+        partes.append(f)
+    if not partes:
+        return pd.DataFrame(columns=COLS_CAPITAL)
+    fre = pd.concat(partes, ignore_index=True)
+    fre = fre[pd.to_datetime(fre["data_publicacao"], errors="coerce") <= pd.Timestamp(as_of)]
+    fre = fre.sort_values(["cnpj", "data_ref", "versao", "qtd_total"], kind="mergesort")
+    ult = fre.groupby("cnpj").tail(1).set_index("cnpj")
+    rows = []
+    for iid, c in sorted(cnpj_de.items()):
+        if c in ult.index:
+            r = ult.loc[c]
+            rows.append({"issuer_id": iid, "cnpj": c, **{k: r[k] for k in COLS_CAPITAL if k in r.index
+                                                         and k not in ("issuer_id", "cnpj")}})
+    return pd.DataFrame(rows, columns=COLS_CAPITAL)
+
+
+# ============================================================ contas suplementares da CVM
+
+ITENS_SUPLEMENTARES = ("arrendamentos_pagos", "receita_construcao")
+"""Contas lidas pela cobertura diretamente dos ZIPs DFP/ITR arquivados (emissores com CNPJ):
+
+- ``arrendamentos_pagos``: −Σ das linhas de financiamento ``6.03.xx`` (em qualquer nível) da DFC com "arrendamento" na
+  descrição e valor ≤ 0, exceto juros, captações e recebimentos (principal dos passivos de
+  arrendamento do IFRS 16, que a DFC classifica como financiamento: o CFO − capex não o inclui);
+- ``receita_construcao``: Σ das linhas ``7.01.xx`` (em qualquer nível) da DVA com "constru" e "receit" (ou "ativos
+  próprios") na descrição — a receita de construção da infraestrutura de concessão (ICPC 01), que a
+  receita da DRE inclui e o consenso de receita não.
+
+Exercícios pela DFP; 12 meses pela identidade ``exercício + acumulado do ano − acumulado do mesmo
+período do ano anterior`` (ITR); conta não encontrada ⇒ item ausente (nunca zero)."""
+
+_RE_ARR = re.compile(r"arrendament")
+_RE_ARR_FORA = re.compile(r"juros|captac|recebid|recebiment|ingresso|sublocac|emprestimo|financiamento")
+_RE_CONSTR = re.compile(r"constru")
+_RE_CONSTR_REC = re.compile(r"receit|ativos? propri")
+_RE_CONSTR_FORA = re.compile(r"custo|gasto|insumo|materia|pessoal|servicos de terceiros")
+
+
+def _tabelas_cvm(conteudo: bytes, doc: str, ano: int, cnpjs: set[str]) -> dict[str, pd.DataFrame]:
+    """Índice e DFC/DVA (consolidado e individual, ``ORDEM_EXERC = ÚLTIMO``) de um ZIP DFP/ITR."""
+    import zipfile
+
+    from ..data.publico_cvm import USECOLS  # type: ignore[attr-defined]
+    from ..data.security_master import normalize_text, read_cvm_csv  # type: ignore[attr-defined]
+
+    pref = f"{doc.lower()}_cia_aberta_"
+    out: dict[str, pd.DataFrame] = {}
+    with zipfile.ZipFile(io.BytesIO(conteudo)) as zf:
+        nomes = {n.lower(): n for n in zf.namelist()}
+        n_idx = nomes.get(f"{pref}{ano}.csv")
+        idx = read_cvm_csv(zf.read(n_idx)) if n_idx else pd.DataFrame(
+            columns=["CNPJ_CIA", "DT_REFER", "VERSAO", "DT_RECEB", "LINK_DOC"])
+        out["index"] = idx[idx["CNPJ_CIA"].astype(str).str.strip().isin(cnpjs)].reset_index(drop=True)
+        for tab in ("DFC_MI", "DFC_MD", "DVA"):
+            cols = USECOLS[tab]
+            for kind in ("con", "ind"):
+                nome = nomes.get(f"{pref}{tab}_{kind}_{ano}.csv".lower())
+                if nome is None:
+                    out[f"{tab}_{kind}"] = pd.DataFrame(columns=cols)
+                    continue
+                df = read_cvm_csv(zf.read(nome), usecols=lambda c, cols=cols: c in cols)
+                for c in cols:
+                    if c not in df.columns:
+                        df[c] = pd.NA
+                df = df[df["CNPJ_CIA"].astype(str).str.strip().isin(cnpjs)]
+                ordem = df["ORDEM_EXERC"].fillna("").map(normalize_text)
+                out[f"{tab}_{kind}"] = df.loc[ordem == "ultimo", cols].reset_index(drop=True)
+    return out
+
+
+def _sem_ancestral(df: pd.DataFrame, key: list[str]) -> pd.DataFrame:
+    """Remove as linhas cuja conta-mãe também foi selecionada (sem dupla contagem pai/filha; a
+    posição da conta muda entre documentos da mesma companhia)."""
+    if df.empty:
+        return df
+    keep = []
+    for _, g in df.groupby(key, sort=False, dropna=False):
+        cds = set(g["cd"])
+        for i, cd in zip(g.index, g["cd"], strict=True):
+            partes = cd.split(".")
+            if not any(".".join(partes[:k]) in cds for k in range(1, len(partes))):
+                keep.append(i)
+    return df.loc[sorted(keep)]
+
+
+def _fatos_suplementares(tabs: dict[str, pd.DataFrame], doc: str) -> pd.DataFrame:
+    """Linhas ``(cnpj, versao, dt_refer, dt_ini, dt_fim, item, value, consolidado, recebido, url)``."""
+    from ..data.fundamentals_pit import _prepare_statement  # type: ignore[attr-defined]
+
+    idx = tabs.get("index", pd.DataFrame())
+    cols = ["cnpj", "dt_refer", "versao", "dt_ini", "dt_fim", "item", "value", "currency", "consolidado",
+            "recebido", "url", "doc"]
+    if idx is None or idx.empty:
+        return pd.DataFrame(columns=cols)
+    rec = pd.DataFrame({
+        "cnpj": idx["CNPJ_CIA"].astype(str).str.strip(),
+        "dt_refer": pd.to_datetime(idx["DT_REFER"], errors="coerce"),
+        "versao": pd.to_numeric(idx["VERSAO"], errors="coerce"),
+        "recebido": pd.to_datetime(idx["DT_RECEB"], errors="coerce"),
+        "url": idx["LINK_DOC"].astype(str) if "LINK_DOC" in idx.columns else None,
+    }).dropna(subset=["dt_refer", "versao", "recebido"]).drop_duplicates(["cnpj", "dt_refer", "versao"])
+    key = ["cnpj", "dt_refer", "versao", "kind", "dt_ini", "dt_fim"]
+    partes = []
+    dfc = pd.concat([_prepare_statement(tabs, "DFC_MI"), _prepare_statement(tabs, "DFC_MD")], ignore_index=True)
+    if not dfc.empty:
+        d = dfc.dropna(subset=["dt_ini"])
+        arr = _sem_ancestral(d[d["cd"].str.match(r"^6\.03(\.\d{2})+$") & d["ds"].str.contains(_RE_ARR)
+                               & ~d["ds"].str.contains(_RE_ARR_FORA) & (d["value"] <= 0)], key)
+        if not arr.empty:
+            g = arr.groupby(key, as_index=False, dropna=False).agg(value=("value", "sum"),
+                                                                    currency=("currency", "first"))
+            g["value"] = -g["value"]
+            partes.append(g.assign(item="arrendamentos_pagos"))
+    dva = _prepare_statement(tabs, "DVA")
+    if not dva.empty:
+        d = dva.dropna(subset=["dt_ini"])
+        con = _sem_ancestral(d[d["cd"].str.match(r"^7\.01(\.\d{2})+$") & d["ds"].str.contains(_RE_CONSTR)
+                               & d["ds"].str.contains(_RE_CONSTR_REC) & ~d["ds"].str.contains(_RE_CONSTR_FORA)
+                               & (d["value"] >= 0)], key)
+        if not con.empty:
+            g = con.groupby(key, as_index=False, dropna=False).agg(value=("value", "sum"),
+                                                                    currency=("currency", "first"))
+            partes.append(g.assign(item="receita_construcao"))
+    if not partes:
+        return pd.DataFrame(columns=cols)
+    f = pd.concat(partes, ignore_index=True)
+    f["versao"] = pd.to_numeric(f["versao"], errors="coerce")
+    f = f.merge(rec, on=["cnpj", "dt_refer", "versao"], how="inner")
+    f["consolidado"] = f["kind"].astype(str).eq("con")
+    f["doc"] = doc.upper()
+    return f[cols]
+
+
+def contas_suplementares_cvm(issuer_ids: Sequence[str], as_of: date, raiz: Path | None) -> pd.DataFrame:
+    """Itens ``ITENS_SUPLEMENTARES`` (exercícios e 12 meses) dos emissores com CNPJ, no formato dos
+    demonstrativos (``COLS_DEMONSTRATIVOS``), lidos dos ZIPs DFP/ITR arquivados pela camada pública
+    (sem rede), point-in-time (versão mais recente recebida até ``as_of``), consolidado quando há."""
+    vazio = pd.DataFrame(columns=COLS_DEMONSTRATIVOS)
+    try:
+        from ..data import publico  # type: ignore[attr-defined]
+        from ..data.publico_arquivo import Arquivo  # type: ignore[attr-defined]
+    except Exception:  # pragma: no cover - depende da camada A1
+        return vazio
+    try:
+        mestre = publico.mestre_publico(as_of, offline=True, root=raiz)
+    except Exception:  # noqa: BLE001 - sem cadastro arquivado ⇒ sem contas suplementares
+        return vazio
+    cnpj_de = {str(i): str(mestre.loc[i, "cnpj"]) for i in issuer_ids
+               if i in mestre.index and isinstance(mestre.loc[i, "cnpj"], str) and mestre.loc[i, "cnpj"]}
+    if not cnpj_de:
+        return vazio
+    cnpjs = set(cnpj_de.values())
+    arq = Arquivo(raiz, offline=True)
+    partes = []
+    for doc, anos in (("DFP", range(as_of.year - 4, as_of.year + 1)), ("ITR", range(as_of.year - 2, as_of.year + 1))):
+        for ano in anos:
+            reg = arq.buscar(f"CVM/{doc}/{doc.lower()}_cia_aberta_{ano}.zip", ate=as_of)
+            if reg is None:
+                continue
+            try:
+                f = _fatos_suplementares(_tabelas_cvm(arq.ler(reg), doc, ano, cnpjs), doc)
+            except Exception:  # noqa: BLE001 - ZIP com layout inesperado: itens ausentes
+                continue
+            f["sha256"] = reg.sha256
+            f["data_coleta"] = pd.Timestamp(reg.data_coleta)
+            partes.append(f)
+    if not partes:
+        return vazio
+    f = pd.concat(partes, ignore_index=True)
+    f = f[f["recebido"] <= pd.Timestamp(as_of)]
+    # versão mais recente por documento; consolidado quando o documento tem as duas bases
+    f = f.sort_values(["cnpj", "item", "dt_fim", "dt_ini", "consolidado", "recebido", "versao"], kind="mergesort")
+    f = f.drop_duplicates(["cnpj", "item", "doc", "dt_ini", "dt_fim"], keep="last")
+    rows: list[dict] = []
+    for (cnpj, item), g in f.groupby(["cnpj", "item"], sort=True):
+        dur = (g["dt_fim"] - g["dt_ini"]).dt.days
+        anual = g[(g["doc"] == "DFP") & dur.between(350, 380)].drop_duplicates("dt_fim", keep="last").set_index("dt_fim")
+        ytd = g[(g["doc"] == "ITR") & (g["dt_ini"].dt.month == 1) & (g["dt_ini"].dt.day == 1)].drop_duplicates(
+            "dt_fim", keep="last").set_index("dt_fim")
+        tab = "DVA" if item == "receita_construcao" else "DFC"
+        ultimo_anual = None
+        for e, r in anual.iterrows():
+            ultimo_anual = {"cnpj": cnpj, "item": item, "freq": "A", "period_end": e, "value": float(r["value"]),
+                            "consolidado": bool(r["consolidado"]), "recebido": r["recebido"], "url": r["url"],
+                               "sha256": r["sha256"], "currency": r["currency"], "data_coleta": r["data_coleta"],
+                            "documento": f"DFP {e.date()} v{int(r['versao'])} (CVM, contas da {tab})"}
+            rows.append(ultimo_anual)
+        fins = sorted(set(anual.index) | set(ytd.index))
+        if not fins:
+            continue
+        e = fins[-1]
+        if e in anual.index:
+            rows.append({**ultimo_anual, "freq": "TTM"} if ultimo_anual and ultimo_anual["period_end"] == e else {})
+            continue
+        fy = pd.Timestamp(year=e.year - 1, month=12, day=31)
+        prev = pd.Timestamp(e) - pd.DateOffset(years=1)
+        prev = prev + pd.offsets.MonthEnd(0)
+        if fy not in anual.index or prev not in ytd.index:
+            continue
+        a, y, yp = anual.loc[fy], ytd.loc[e], ytd.loc[prev]
+        rows.append({"cnpj": cnpj, "item": item, "freq": "TTM", "period_end": e,
+                     "value": float(a["value"]) + float(y["value"]) - float(yp["value"]),
+                     "consolidado": bool(a["consolidado"] and y["consolidado"] and yp["consolidado"]),
+                     "recebido": max(a["recebido"], y["recebido"]), "url": y["url"], "sha256": y["sha256"],
+                     "currency": y["currency"], "data_coleta": y["data_coleta"],
+                     "documento": (f"ITR {e.date()} v{int(y['versao'])} + DFP {fy.date()} − ITR {prev.date()} (CVM, "
+                                   f"12 meses pela identidade exercício + acumulado do ano − acumulado do ano anterior)")})
+    rows = [r for r in rows if r]
+    if not rows:
+        return vazio
+    x = pd.DataFrame(rows)
+    iss_de: dict[str, list[str]] = {}
+    for iid, c in cnpj_de.items():
+        iss_de.setdefault(c, []).append(iid)
+    x["issuer_id"] = x["cnpj"].map(iss_de)
+    x = x.explode("issuer_id")
+    out = pd.DataFrame({
+        "issuer_id": x["issuer_id"], "demonstrativo": x["item"].map({"arrendamentos_pagos": "DFC",
+                                                                     "receita_construcao": "DVA"}),
+        "freq": x["freq"], "period_end": pd.to_datetime(x["period_end"]), "item": x["item"],
+        "value": x["value"].astype(float), "currency": x["currency"].fillna("BRL"), "escala": 1,
+        "consolidado": x["consolidado"], "fonte": "CVM", "url": x["url"], "documento": x["documento"],
+        "data_publicacao": pd.to_datetime(x["recebido"]).dt.date, "sha256": x["sha256"],
+        "pit_estimado": False, "nota": None, "data_coleta": x["data_coleta"]})
+    return out.sort_values(["issuer_id", "item", "freq", "period_end"], kind="mergesort").reset_index(drop=True)
+
+
 def coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Sequence[str],
             etfs: Sequence[str], *, offline: bool = False, raiz: Path | None = None,
             seed: int = 7) -> DadosPublicos:
@@ -122,7 +459,13 @@ def coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Seq
         raise FontePublicaIndisponivel(
             "camada de dados públicos (cdp.data.publico) indisponível") from exc
     kw = {"offline": offline, "root": raiz}
-    dem = _garantir(publico.demonstrativos(list(issuer_ids), as_of, **kw), COLS_DEMONSTRATIVOS)
+    dem_bruto = publico.demonstrativos(list(issuer_ids), as_of, **kw)
+    alertas = alertas_de_attrs(getattr(dem_bruto, "attrs", None))
+    dem = _garantir(dem_bruto, COLS_DEMONSTRATIVOS)
+    br = [i for i in issuer_ids if i in md.universe.issuers.index and str(md.universe.issuers.loc[i, "country"]) == "BR"]
+    sup = contas_suplementares_cvm(br, as_of, raiz)
+    if not sup.empty:
+        dem = pd.concat([dem, sup[[c for c in sup.columns if c in dem.columns]]], ignore_index=True)
     con = _garantir(publico.consenso_publico(list(tickers), as_of, **kw), COLS_CONSENSO)
     div = _garantir(publico.dividendos(list(tickers), as_of, **kw), COLS_DIVIDENDOS)
     ini = date(as_of.year - 1, as_of.month, 1)
@@ -134,6 +477,8 @@ def coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Seq
     eve = _garantir(eve_df, COLS_EVENTOS)
     tax = _garantir(publico.taxas_publicas(as_of, **kw), COLS_TAXAS)
     ff = _garantir(publico.free_float(list(issuer_ids), as_of, **kw), COLS_FLOAT)
+    cap = capital_oficial([i for i in issuer_ids if i in md.universe.issuers.index
+                           and str(md.universe.issuers.loc[i, "country"]) == "BR"], as_of, raiz)
     comp: dict[str, pd.DataFrame | None] = {}
     for e in etfs:
         try:
@@ -144,9 +489,11 @@ def coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Seq
     return DadosPublicos(
         demonstrativos=_pit(dem, "data_publicacao", as_of), consenso=con,
         dividendos=_pit(div, "data_ex", as_of), eventos=eve, taxas=_pit(tax, "data", as_of),
-        free_float=ff, etfs=comp, origem="PUBLICO", raiz=None if raiz is None else str(raiz))
+        free_float=ff, etfs=comp, origem="PUBLICO", raiz=None if raiz is None else str(raiz),
+        alertas=alertas, capital_oficial=cap)
 
 
-__all__ = ["COLS_CONSENSO", "COLS_DEMONSTRATIVOS", "COLS_DIVIDENDOS", "COLS_ETF", "COLS_EVENTOS",
-           "COLS_FLOAT", "COLS_TAXAS", "DadosPublicos", "FontePublicaIndisponivel", "coletar",
+__all__ = ["COLS_ALERTAS", "COLS_CAPITAL", "ITENS_SUPLEMENTARES", "contas_suplementares_cvm", "COLS_CONSENSO", "COLS_DEMONSTRATIVOS", "COLS_DIVIDENDOS", "COLS_ETF", "COLS_EVENTOS",
+           "COLS_FLOAT", "COLS_TAXAS", "DadosPublicos", "FontePublicaIndisponivel", "alertas_de_attrs",
+           "capital_fre", "capital_oficial", "coletar",
            "csv_canonico", "sha256_tabela"]

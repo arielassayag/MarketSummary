@@ -25,9 +25,10 @@ def _pac(pais="BR", setor="Utilities", pit=True, moeda="ok"):
     return {"pais": pais, "setor": setor, "pit_ok": pit, "status_moeda": moeda}
 
 
-def _mod(alpha, largura=0.5, n=3, cv=0.10, portoes=None, tem=True):
+def _mod(alpha, largura=0.5, n=3, cv=0.10, portoes=None, tem=True, n_eps=6):
     return {"tem_alvo": tem, "alpha": alpha, "largura_cenarios": largura, "n_metodos": n, "cv": cv,
-            "portoes": portoes or [], "motivo_sem_alvo": None if tem else "nenhum método"}
+            "portoes": portoes or [], "motivo_sem_alvo": None if tem else "nenhum método",
+            "n_eps": n_eps, "eps1_consenso": True}
 
 
 def _universo(alphas, larguras=None, **kw):
@@ -111,6 +112,10 @@ def test_confidence_levels(params):
     hold = {**_pac(), "arquetipo": "holding", "soma_partes": {"conferido": False}}
     c, motivo = confianca(hold, _mod(0.0, n=3, cv=0.10), params)
     assert c == "C" and "não conferidas" in motivo
+    # confiança A exige consenso de LPA de ≥ 3 analistas definindo o ROE dos anos 1–2
+    c, motivo = confianca(_pac(), _mod(0.0, n=3, cv=0.10, n_eps=2), params)
+    assert c == "B" and "abaixo de 3" in motivo
+    assert confianca(_pac(), {**_mod(0.0, n=3, cv=0.10), "eps1_consenso": False}, params)[0] == "B"
 
 
 def test_peer_group_fallbacks():
@@ -191,18 +196,21 @@ def test_g13_blocks_unit_and_currency_traps(params):
     assert _g13(params, 20.0, 12.0, peso=0.3, diverge=True)["status"] == "ok"
 
 
-def test_g14_compares_year_one_fcff_with_observed_cash_flow(params):
+def test_g14_flags_cash_flow_contaminated_by_financial_operations(params):
+    """G14: reinvestimento observado (3 exercícios) abaixo de −100% do NOPAT (CFO − capex acima de 2 ×
+    NOPAT: recebíveis de cartão, banco cativo ou liberação pontual de capital de giro) ⇒ aviso; nos
+    demais casos o FCFF do ano 1 contra o fluxo observado é só exibido."""
     from cdp.cobertura.qualidade import portoes_emissor
 
     pac = {"as_of": "2026-10-08", "status_moeda": "ok", "defasagem_preco_dias": 0, "tem_demonstrativos": False}
     base = {"tem_alvo": True, "metodos": [{"valor": 1.0}], "tp": 10.0, "tp_otimista": 12.0, "tp_pessimista": 8.0,
-            "upside": 0.1, "pwr": 0.1}
-    st = {p["codigo"]: p["status"] for p in portoes_emissor(
-        pac, {**base, "fcff_ano1": 300.0, "fcf_observado": 100.0, "fcff_ano1_vs_observado": 3.0}, params)}
-    assert st["G14"] == "aviso"
-    st = {p["codigo"]: p["status"] for p in portoes_emissor(
-        pac, {**base, "fcff_ano1": 105.0, "fcf_observado": 100.0, "fcff_ano1_vs_observado": 1.05}, params)}
-    assert st["G14"] == "ok"
-    st = {p["codigo"]: p["status"] for p in portoes_emissor(
-        pac, {**base, "fcff_ano1": 50.0, "fcf_observado": -20.0, "fcff_ano1_vs_observado": None}, params)}
-    assert st["G14"] == "aviso"
+            "upside": 0.1, "etr": 0.12, "pwr": 0.1, "fcff_ano1": 300.0, "fcf_observado": 100.0,
+            "fcff_ano1_vs_observado": 3.0}
+    g = {p["codigo"]: p for p in portoes_emissor(pac, {**base, "rr_observado": -1.4,
+                                                        "rr_observado_base": "3 exercícios"}, params)}
+    assert g["G14"]["status"] == "aviso" and "mediana do setor" in g["G14"]["detalhe"]
+    g = {p["codigo"]: p for p in portoes_emissor(pac, {**base, "rr_observado": 0.35,
+                                                        "rr_observado_base": "3 exercícios"}, params)}
+    assert g["G14"]["status"] == "ok" and "3,00 ×" in g["G14"]["detalhe"]
+    # sem reinvestimento observado o portão não se aplica
+    assert "G14" not in {p["codigo"] for p in portoes_emissor(pac, base, params)}

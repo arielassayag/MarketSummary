@@ -149,6 +149,66 @@ def test_consistent_rewrite_of_inputs_is_caught_only_by_recompute(livro, tmp_pat
     assert not ok and any(iid in m for m in msgs)
 
 
+def _reescrever_modelo(book: Path, d: date, iid: str, mudar) -> None:
+    """Reescreve de forma consistente o modelo publicado e a linha do modelos.csv de ``iid`` (hashes do
+    manifesto, selo e trilha refeitos): só o recálculo pode detectar."""
+    pasta = book / "cobertura" / d.isoformat()
+    rel = f"modelos/{iid}.json"
+    mod = json.loads((pasta / rel).read_text(encoding="utf-8"))
+    mudar(mod["resumo"])
+    (pasta / rel).write_bytes(json.dumps(mod, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8"))
+    tab = pd.read_csv(pasta / "modelos.csv")
+    linha = tab["issuer_id"] == iid
+    for c in ("alpha_rel_estilo", "pwr_com_piso", "p_patrimonio_zero", "preco_alvo_ke_estatico", "ke_estatico"):
+        if c in tab.columns:
+            tab.loc[linha, c] = mod["resumo"][c]
+    tab.to_csv(pasta / "modelos.csv", index=False)
+    man = json.loads((pasta / "manifest.json").read_text(encoding="utf-8"))
+    for r in (rel, "modelos.csv"):
+        man["arquivos"][r] = sha256_file(pasta / r)
+    (pasta / "manifest.json").write_bytes(
+        (json.dumps(man, ensure_ascii=False, sort_keys=True, indent=1) + "\n").encode("utf-8"))
+    selo = json.loads((pasta / "selo.json").read_text(encoding="utf-8"))
+    selo["manifest_sha256"] = sha256_file(pasta / "manifest.json")
+    (pasta / "selo.json").write_bytes((json.dumps(selo, ensure_ascii=False, sort_keys=True, indent=1) + "\n")
+                                      .encode("utf-8"))
+    selo1 = json.loads((book / "cobertura" / D1.isoformat() / "selo.json").read_text(encoding="utf-8"))
+    _reescrever_trilha(book, [selo1, selo], [D1, D2])
+
+
+def test_consistent_rewrite_of_published_style_fields_is_caught_by_recompute(livro, tmp_path):
+    book = _copia(livro, tmp_path)
+    pasta = book / "cobertura" / D2.isoformat()
+    tab = pd.read_csv(pasta / "modelos.csv")
+    iid = str(tab.loc[tab["alpha_rel_estilo"].notna()].iloc[0]["issuer_id"])
+
+    def mudar(r: dict) -> None:
+        r["alpha_rel_estilo"] = (r["alpha_rel_estilo"] or 0) + 0.18
+        r["pwr_com_piso"] = 9.99
+        r["p_patrimonio_zero"] = 0.0
+        r["preco_alvo_ke_estatico"] = 1e6
+        r["ke_estatico"] = 0.01
+
+    _reescrever_modelo(book, D2, iid, mudar)
+    ok, msgs = verificar(book, recalcular=False)
+    assert ok, msgs
+    ok, msgs = verificar(book)
+    assert not ok
+    texto = " ".join(msgs)
+    for c in ("alpha_rel_estilo", "pwr_com_piso", "preco_alvo_ke_estatico", "ke_estatico"):
+        assert f"{iid} {c}" in texto or f"{iid} modelos.csv {c}" in texto, c
+
+
+def test_verify_is_methodology_version_aware(livro):
+    # snapshots gravados com outra versão da metodologia: hashes, livro, selos, trilha e placar conferidos e o
+    # recálculo indicado como nota (exige o código daquela versão), sem falhar
+    ok, msgs = verificar(livro, versao_atual="2026-09.9")
+    assert ok, msgs
+    assert any("recálculo exige o código da versão" in m for m in msgs)
+    ok, msgs = verificar(livro)
+    assert ok and not any("recálculo exige" in m for m in msgs)
+
+
 def test_interrupted_write_is_completed_from_the_sealed_snapshot(livro, tmp_path):
     book = _copia(livro, tmp_path)
     selo1 = json.loads((book / "cobertura" / D1.isoformat() / "selo.json").read_text(encoding="utf-8"))

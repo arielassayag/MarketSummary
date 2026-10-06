@@ -25,7 +25,26 @@ Regras:
   descartado.
 - **Crescimento**: financeiras não usam crescimento de receita (receita de intermediação não é
   comparável entre fontes); crescimento histórico fora de [−20%; +30%] (efeitos contábeis, como
-  receita de construção de concessões) fica ausente, com lacuna.
+  receita de construção de concessões) fica ausente, com lacuna. A receita de consenso é
+  convertida da sua própria moeda (``moeda_receita``) para a das demonstrações antes da razão.
+- **Contagem de ações conciliada**: demonstrações (÷ ações por unidade), valor de mercado público
+  ÷ fechamento e, no Brasil, o capital social do Formulário de Referência (CVM). Vale a contagem
+  sustentada por duas das três fontes a ±10% (preferência: demonstrações, depois a oficial);
+  sem par ⇒ portão G13c bloqueia. Sem a fonte oficial, demonstrações e mercado a ±25%; divergência
+  ⇒ contagem do mercado com aviso (confiança C). Nunca se reinterpreta a contagem das demonstrações
+  como unidades negociadas só porque o valor de mercado de uma fonte de dados a confirma.
+- **Em conferência na fonte**: uma linha de demonstrativo sem valor marcada "conferência:" pela
+  camada pública, mais recente que o último valor válido do item, torna o item ausente (lacuna
+  "em conferência na fonte"); o valor do período anterior nunca é usado em silêncio.
+- **Fluxos de 12 meses**: TTM publicado; senão soma dos 4 últimos trimestres consecutivos; senão
+  último exercício + trimestres do exercício corrente − os mesmos trimestres do exercício anterior.
+- **Consolidado × individual**: por (item, frequência, data-base) — o consolidado prevalece onde existe;
+  períodos só individuais entram, registrados na proveniência (nunca um consolidado mais antigo no
+  lugar de um individual mais recente); idade do último balanço e dos fluxos contra a data (G19).
+- **Consenso**: a linha de mais analistas de LPA (conferida contra a linha de valuation) e o número de
+  analistas; calendário do "ano 1" pelo encerramento do exercício do emissor.
+- **Proventos**: por ação, 12 meses e por ano-calendário (payout dos acionistas pela mediana anual).
+- **Receita de construção** (utilidades e concessões): fora da base quando reconcilia o consenso.
 """
 
 from __future__ import annotations
@@ -40,21 +59,23 @@ import pandas as pd
 
 from ..market import MarketData
 from .fontes import DadosPublicos
-from .formato import pct, r6
+from .formato import num, pct, r6
 from .parametros import Arquetipo, ParametrosCobertura, arquetipo_padrao
 from .passos import prov_codigo, prov_dict
 
 FLUXOS = ("receita", "lucro_bruto", "ebit", "ebitda", "d_a", "resultado_financeiro", "lucro_antes_ir",
           "ir_csll", "lucro_liquido", "lucro_liquido_controladores", "cfo", "capex", "fcf",
-          "dividendos_pagos", "recompras", "margem_financeira", "receita_servicos", "despesa_pdd")
+          "dividendos_pagos", "recompras", "margem_financeira", "receita_servicos", "despesa_pdd",
+          "arrendamentos_pagos", "receita_construcao")
 ESTOQUES = ("caixa", "aplicacoes_cp", "divida_bruta", "divida_liquida", "arrendamentos",
             "patrimonio_liquido", "patrimonio_controladores", "participacao_minoritarios",
             "ativo_total", "acoes_emitidas", "acoes_tesouraria", "acoes_em_circulacao",
             "provisao_credito", "carteira_credito")
 HIST_ITENS = ("receita", "ebit", "lucro_liquido_controladores", "patrimonio_controladores",
-              "acoes_em_circulacao")
+              "acoes_em_circulacao", "cfo", "capex", "arrendamentos_pagos", "dividendos_pagos")
 SEMANAS_ANO = 52
 DEFASAGEM_AVISO_DIAS = 100
+NOTA_CONFERENCIA = "conferência"
 LIMITES_G_HIST = (-0.20, 0.30)
 
 ROTULOS = {
@@ -65,6 +86,8 @@ ROTULOS = {
     "cfo": "fluxo de caixa das operações", "capex": "investimento em ativo fixo e intangível (capex)",
     "fcf": "fluxo de caixa livre", "dividendos_pagos": "dividendos e juros sobre capital pagos",
     "recompras": "recompra de ações", "margem_financeira": "margem financeira",
+    "arrendamentos_pagos": "pagamentos de arrendamentos (principal, DFC)",
+    "receita_construcao": "receita de construção da infraestrutura de concessão (DVA)",
     "receita_servicos": "receita de serviços", "despesa_pdd": "despesa de provisão para crédito",
     "caixa": "caixa e equivalentes", "aplicacoes_cp": "aplicações financeiras de curto prazo",
     "divida_bruta": "dívida bruta", "divida_liquida": "dívida líquida",
@@ -236,6 +259,8 @@ class Demonstrativos:
     def __init__(self, df: pd.DataFrame, issuer_id: str) -> None:
         d = df[df["issuer_id"] == issuer_id].copy() if not df.empty else df.copy()
         self.defasados: list[str] = []
+        self.em_conferencia: list[tuple[str, pd.Timestamp]] = []
+        self._conf: dict[str, pd.Timestamp] = {}
         if not d.empty:
             d["period_end"] = pd.to_datetime(d["period_end"], errors="coerce")
             d["value"] = pd.to_numeric(d["value"], errors="coerce")
@@ -243,11 +268,21 @@ class Demonstrativos:
                 esc = pd.to_numeric(d["escala"], errors="coerce").fillna(1.0)
                 d["value"] = d["value"] * esc
             if "consolidado" in d.columns:
+                # consolidado × individual por (item, frequência, data-base): o consolidado prevalece
+                # no período em que existe; períodos só com as demonstrações individuais (companhia
+                # que deixou de consolidar) entram como individuais, registradas na proveniência —
+                # nunca um consolidado mais antigo no lugar de um individual mais recente
                 cons = d["consolidado"].astype(str).str.lower().isin(["true", "1"])
-                if cons.any():
-                    d = d[cons]
+                d = d.assign(_cons=cons.values)
+                tem = d.groupby(["item", "freq", "period_end"], dropna=False)["_cons"].transform("any")
+                d = d[d["_cons"] | ~tem].drop(columns="_cons")
             if "demonstrativo" in d.columns:
                 d = d[d["demonstrativo"].astype(str) != "DFP_IND"]
+            if "nota" in d.columns:  # marcadores "em conferência na fonte" (valor ausente, nunca palpite)
+                marc = d[d["value"].isna() & d["period_end"].notna()
+                         & d["nota"].astype(str).str.startswith(NOTA_CONFERENCIA)]
+                for item, g in marc.groupby("item"):
+                    self._conf[str(item)] = g["period_end"].max()
             d = d.dropna(subset=["period_end", "value"])
             d = pd.concat([d, self._ttm_derivado(d)], ignore_index=True)
         self.df = d
@@ -256,23 +291,58 @@ class Demonstrativos:
 
     @staticmethod
     def _ttm_derivado(d: pd.DataFrame) -> pd.DataFrame:
+        """Fluxos de 12 meses derivados em código quando a fonte não traz o TTM mais recente:
+        (1) soma dos 4 últimos trimestres consecutivos; (2) senão, identidade ``anual + acumulado
+        do exercício corrente − acumulado do mesmo período do exercício anterior`` (trimestres do
+        exercício corrente consecutivos a partir do fim do último exercício e os mesmos trimestres
+        um ano antes, todos publicados)."""
         rows = []
         for item in FLUXOS:
-            q = d[(d["item"] == item) & (d["freq"] == "Q")].sort_values("period_end")
-            if len(q) < 4:
+            q = d[(d["item"] == item) & (d["freq"] == "Q")].drop_duplicates(
+                "period_end", keep="last").sort_values("period_end")
+            if q.empty:
                 continue
-            ult4 = q.drop_duplicates("period_end", keep="last").tail(4)
-            gaps = ult4["period_end"].diff().dropna().dt.days
-            if len(ult4) < 4 or not gaps.between(80, 100).all():
-                continue
-            fim = ult4["period_end"].iloc[-1]
             outros = d[(d["item"] == item) & d["freq"].isin(["TTM", "A"])]
-            if not outros.empty and outros["period_end"].max() >= fim:
+            ult_outros = outros["period_end"].max() if not outros.empty else None
+            if len(q) >= 4:
+                ult4 = q.tail(4)
+                gaps = ult4["period_end"].diff().dropna().dt.days
+                fim = ult4["period_end"].iloc[-1]
+                if gaps.between(80, 100).all():
+                    if ult_outros is None or ult_outros < fim:
+                        r = ult4.iloc[-1].to_dict()
+                        r.update({"freq": "TTM", "value": float(ult4["value"].sum()),
+                                  "documento": f"{r.get('documento') or ''} (soma dos 4 últimos trimestres)".strip(),
+                                  "data_publicacao": ult4["data_publicacao"].max()})
+                        rows.append(r)
+                    continue
+            a = d[(d["item"] == item) & (d["freq"] == "A")].sort_values("period_end")
+            if a.empty:
                 continue
-            r = ult4.iloc[-1].to_dict()
-            r.update({"freq": "TTM", "value": float(ult4["value"].sum()),
-                      "documento": f"{r.get('documento') or ''} (soma dos 4 últimos trimestres)".strip(),
-                      "data_publicacao": ult4["data_publicacao"].max()})
+            fye = a["period_end"].iloc[-1]
+            cur = q[q["period_end"] > fye]
+            if cur.empty:
+                continue
+            fim = cur["period_end"].iloc[-1]
+            if ult_outros is not None and ult_outros >= fim:
+                continue
+            esperado = [pd.Timestamp(fye) + pd.offsets.MonthEnd(3 * k) for k in range(1, len(cur) + 1)]
+            if [pd.Timestamp(x) for x in cur["period_end"]] != esperado:
+                continue
+            ant = []
+            for pe in cur["period_end"]:
+                m = q[(q["period_end"] - (pe - pd.DateOffset(years=1))).abs() <= pd.Timedelta(days=5)]
+                if m.empty:
+                    ant = None
+                    break
+                ant.append(float(m.iloc[-1]["value"]))
+            if ant is None:
+                continue
+            r = cur.iloc[-1].to_dict()
+            r.update({"freq": "TTM", "value": float(a["value"].iloc[-1]) + float(cur["value"].sum()) - sum(ant),
+                      "documento": (f"{r.get('documento') or ''} (anual + acumulado do exercício − acumulado do "
+                                    "mesmo período do exercício anterior)").strip(),
+                      "data_publicacao": max(cur["data_publicacao"].max(), a["data_publicacao"].iloc[-1])})
             rows.append(r)
         return pd.DataFrame(rows, columns=d.columns) if rows else d.iloc[0:0]
 
@@ -290,6 +360,11 @@ class Demonstrativos:
         sub = sub.assign(_p=sub["freq"].map(prio)).sort_values(
             ["period_end", "_p", "data_publicacao"], ascending=[True, False, True], kind="mergesort")
         row = sub.iloc[-1]
+        conf = self._conf.get(item)
+        if conf is not None and conf > row["period_end"]:
+            if (item, conf) not in self.em_conferencia:
+                self.em_conferencia.append((item, conf))
+            return None
         if self.ref is not None and (self.ref - row["period_end"]).days > self.DEFASAGEM_MAX_DIAS:
             self.defasados.append(f"{item} ({pd.Timestamp(row['period_end']).date()})")
             return None
@@ -329,6 +404,31 @@ class Demonstrativos:
                 out[int(r["period_end"].year)] = v
         return out
 
+    def anual_individual(self, item: str) -> set[int]:
+        """Exercícios cujo valor anual de ``item`` vem das demonstrações individuais (sem consolidadas)."""
+        if self.df.empty or "consolidado" not in self.df.columns:
+            return set()
+        sub = self.df[(self.df["item"] == item) & (self.df["freq"] == "A")]
+        ind = sub[~sub["consolidado"].astype(str).str.lower().isin(["true", "1"])]
+        return {int(pd.Timestamp(d).year) for d in ind["period_end"]}
+
+    def fim_exercicio(self) -> pd.Timestamp | None:
+        """Fim do último exercício publicado (demonstrações anuais dos itens de referência)."""
+        if self.df.empty:
+            return None
+        a = self.df[(self.df["freq"] == "A") & self.df["item"].isin(self.ITENS_REFERENCIA)]
+        return None if a.empty else pd.Timestamp(a["period_end"].max())
+
+    def serie_acoes(self) -> list[tuple[pd.Timestamp, float]]:
+        """Ações em circulação por data-base (todas as frequências; a última publicação por data)."""
+        if self.df.empty:
+            return []
+        s = self.df[self.df["item"] == "acoes_em_circulacao"].sort_values(["period_end", "data_publicacao"],
+                                                                       kind="mergesort")
+        s = s.drop_duplicates("period_end", keep="last")
+        return [(pd.Timestamp(r["period_end"]), float(r["value"])) for _, r in s.iterrows()
+                if _f(r["value"]) is not None and float(r["value"]) > 0]
+
     def moeda(self) -> str | None:
         if self.df.empty or "currency" not in self.df.columns:
             return None
@@ -336,6 +436,44 @@ class Demonstrativos:
         c = sub.sort_values("period_end")["currency"].dropna()
         c = c[c.astype(str).str.len() == 3]
         return str(c.iloc[-1]).upper() if len(c) else None
+
+
+def fim_exercicio_consenso(fye: pd.Timestamp | None, as_of: date, prazo_dias: int = 120
+                           ) -> tuple[pd.Timestamp | None, str | None]:
+    """Fim do exercício anterior ao "ano 1" do consenso: o último encerramento (mesmo mês do
+    exercício publicado) até ``as_of``. Se as demonstrações anuais desse exercício não estão no
+    arquivo e o prazo de entrega (``prazo_dias``) já passou, o calendário segue o encerramento esperado
+    (o consenso já rolou) e o atraso é sinalizado; dentro do prazo, o exercício recém-encerrado ainda é
+    o "ano 1" do consenso (calendário pelo último exercício publicado)."""
+    if fye is None:
+        return None, None
+    fye = pd.Timestamp(fye)
+    alvo = pd.Timestamp(year=as_of.year, month=fye.month, day=1) + pd.offsets.MonthEnd(0)
+    if alvo > pd.Timestamp(as_of):
+        alvo = pd.Timestamp(year=as_of.year - 1, month=fye.month, day=1) + pd.offsets.MonthEnd(0)
+    if fye >= alvo:
+        return fye, None
+    atraso = (pd.Timestamp(as_of) - alvo).days
+    if atraso <= prazo_dias:
+        return fye, None
+    return alvo, (f"demonstrações anuais do exercício encerrado em {alvo.date()} não encontradas no arquivo "
+                  f"público ({atraso} dias depois do encerramento; último exercício publicado {fye.date()}): "
+                  "calendário do consenso pelo encerramento esperado")
+
+
+def _mais_recente(itens: dict[str, float], periodos: dict[str, pd.Timestamp], preferido: str, alternativo: str,
+                  pk: _Pacote) -> tuple[float | None, str]:
+    """Item dos controladores, salvo quando o total (consolidado ou individual) tem data-base mais
+    recente — companhia sem consolidação no período (o individual não separa não controladores).
+    Devolve ``(valor, item usado)``."""
+    a, b = itens.get(preferido), itens.get(alternativo)
+    if a is None:
+        return b, alternativo
+    if b is not None and preferido in periodos and alternativo in periodos and periodos[alternativo] > periodos[preferido]:
+        pk.avisos.append(f"{rotulo(alternativo)} de {periodos[alternativo].date()} usado no lugar de "
+                         f"{rotulo(preferido)} de {periodos[preferido].date()} (data-base mais recente)")
+        return b, alternativo
+    return a, preferido
 
 
 def _bool(x: Any) -> bool:
@@ -350,9 +488,12 @@ def _prov_linha(row: pd.Series | None) -> dict[str, Any]:
     if row is None:
         return prov_codigo("sem linha de demonstrativo")
     freq = FREQ_PT.get(str(row.get("freq")), str(row.get("freq")))
+    base = ""
+    if "consolidado" in row.index and str(row.get("consolidado")).lower() in ("false", "0"):
+        base = "; demonstrações individuais (sem consolidadas no período)"
     out = prov_dict({"fonte": row.get("fonte"), "url": row.get("url"),
                      "documento": f"{documento_pt(row.get('documento'))} ({row.get('demonstrativo')}, "
-                                  f"{freq} até {pd.Timestamp(row['period_end']).date()})".strip(),
+                                  f"{freq} até {pd.Timestamp(row['period_end']).date()}{base})".strip(),
                      "data_publicacao": row.get("data_publicacao"), "data_coleta": row.get("data_coleta"),
                      "sha256": row.get("sha256")})
     out["data_estimada"] = _bool(row.get("pit_estimado"))
@@ -416,6 +557,118 @@ def escolher_linha(md: MarketData, params: ParametrosCobertura, issuer_id: str,
     return str(esc), motivo
 
 
+# ============================================================ contagem de ações conciliada (G13c)
+
+def _unidade_conferida(params: ParametrosCobertura, ticker: str) -> bool:
+    u = params.unidades.get(ticker)
+    return bool(u and u.get("conferido") and u.get("url"))
+
+
+def _capital_oficial(dados: DadosPublicos, issuer_id: str, sintetico: bool) -> dict[str, Any] | None:
+    cap = getattr(dados, "capital_oficial", None)
+    if cap is None or cap.empty:
+        return None
+    s = cap[cap["issuer_id"] == issuer_id]
+    if s.empty:
+        return None
+    r = s.iloc[-1]
+    q = _f(r.get("qtd_total"))
+    if q is None or q <= 0:
+        return None
+    return {"qtd_total": q, "data_ref": str(r.get("data_ref")), "versao": _f(r.get("versao")),
+            "data_publicacao": str(r.get("data_publicacao")), "tipo_capital": str(r.get("tipo_capital")),
+            "fonte": prov_dict({"fonte": "SIMULADO" if sintetico else "CVM",
+                                "url": None if sintetico else r.get("url"),
+                                "documento": ("capital social simulado (DADOS SIMULADOS)" if sintetico else
+                                              f"Formulário de Referência {str(r.get('data_ref'))[:4]} versão "
+                                              f"{int(_f(r.get('versao')) or 0)}: {r.get('tipo_capital')} (item 12.1)"),
+                                "data_publicacao": r.get("data_publicacao"), "data_coleta": None,
+                                "sha256": r.get("sha256")})}
+
+
+def _txt_n(x: float | None) -> str:
+    from .formato import contagem as _c
+
+    return _c(x) if x is not None else "n/d"
+
+
+def conciliar_contagem(acoes_dem: float | None, apl: float, c_mkt: float | None, oficial: dict[str, Any] | None,
+                       params: ParametrosCobertura, fonte_dem: dict[str, Any] | None, fonte_mkt: dict[str, Any],
+                       unidade_conferida: bool) -> tuple[float | None, str, dict[str, Any], dict[str, Any]]:
+    """Unidades em circulação da linha a partir de até três fontes independentes.
+
+    ``c_dem`` = ações das demonstrações ÷ ações por unidade; ``c_mkt`` = valor de mercado público ÷
+    fechamento; ``c_ofi`` = capital social do FRE (CVM) ÷ ações por unidade. Com a oficial: vale o
+    par a ±``contagem_tolerancia`` (preferência demonstrações, depois oficial); sem par ⇒ bloqueio.
+    Sem a oficial: demonstrações e mercado a ±``unidades_tolerancia`` ⇒ demonstrações; divergência ⇒
+    a contagem das demonstrações já em unidades negociadas só com composição da unidade conferida
+    na curadoria; senão a do mercado, com aviso (confiança C)."""
+    q = params.sec("qualidade")
+    tol3 = float(q.get("contagem_tolerancia", 0.10))
+    tol2 = float(q.get("unidades_tolerancia", 0.25))
+    c_dem = _div(acoes_dem, apl)
+    c_ofi = None if oficial is None else _div(oficial["qtd_total"], apl)
+    cands = {"demonstracoes": c_dem, "valor_de_mercado": c_mkt, "oficial": c_ofi}
+    info: dict[str, Any] = {"candidatos": {k: r6(v) for k, v in cands.items()}, "acoes_por_unidade": apl,
+                            "tolerancia": tol3 if c_ofi is not None else tol2, "avisos_pacote": []}
+    if oficial is not None:
+        info["oficial"] = {k: oficial[k] for k in ("data_ref", "versao", "data_publicacao", "tipo_capital")}
+
+    def perto(a: float | None, b: float | None, tol: float) -> bool:
+        return a is not None and b is not None and b > 0 and abs(a / b - 1) <= tol
+
+    fonte_ofi = None if oficial is None else oficial["fonte"]
+    lista = (f"demonstrações {_txt_n(c_dem)}, valor de mercado público ÷ fechamento {_txt_n(c_mkt)}"
+             + (f", Formulário de Referência {_txt_n(c_ofi)}" if oficial is not None else ""))
+
+    def fim(valor: float | None, status: str, origem: str, fonte: dict[str, Any] | None, detalhe: str,
+            portao: str) -> tuple[float | None, str, dict[str, Any], dict[str, Any]]:
+        info.update({"escolhida": r6(valor), "origem": origem, "status": portao, "detalhe": detalhe})
+        return valor, status, fonte or prov_codigo(origem), info
+
+    if c_ofi is not None:
+        if perto(c_dem, c_ofi, tol3):
+            par = "valor de mercado" if perto(c_dem, c_mkt, tol3) else "Formulário de Referência"
+            return fim(c_dem, "demonstrativos", "demonstrações", fonte_dem,
+                       f"demonstrações confirmadas pelo {par} ({lista})", "ok")
+        if perto(c_dem, c_mkt, tol3):
+            return fim(c_dem, "demonstrativos", "demonstrações", fonte_dem,
+                       f"demonstrações confirmadas pelo valor de mercado ({lista}); Formulário de Referência "
+                       "divergente", "ok")
+        if perto(c_mkt, c_ofi, tol3):
+            return fim(c_ofi, "oficial", "Formulário de Referência", fonte_ofi,
+                       f"demonstrações divergentes; Formulário de Referência confirmado pelo valor de mercado ({lista})",
+                       "ok")
+        valor = c_dem if c_dem is not None else c_ofi
+        return fim(valor, "nao_conciliada", "demonstrações" if c_dem is not None else "Formulário de Referência",
+                   fonte_dem if c_dem is not None else fonte_ofi,
+                   f"nenhum par de fontes a ±{pct(tol3, 0)}: {lista}", "bloqueio")
+    if c_dem is not None and c_mkt is not None:
+        if perto(c_dem, c_mkt, tol2):
+            return fim(c_dem, "demonstrativos", "demonstrações", fonte_dem,
+                       f"demonstrações confirmadas pelo valor de mercado a ±{pct(tol2, 0)} ({lista})", "ok")
+        alt = acoes_dem
+        if apl != 1.0 and unidade_conferida and perto(alt, c_mkt, tol2):
+            return fim(alt, "demonstrativos_em_unidades", "demonstrações (já em unidades negociadas)", fonte_dem,
+                       f"demonstrações já em unidades negociadas, composição da unidade conferida ({lista})", "ok")
+        info["avisos_pacote"].append(f"contagem das demonstrações diverge do valor de mercado público em "
+                                     f"{abs(c_dem / c_mkt - 1):.0%} sem fonte oficial: usada a do valor de mercado")
+        return fim(c_mkt, "valor_de_mercado", "valor de mercado público ÷ fechamento", fonte_mkt,
+                   f"duas fontes divergentes sem terceira oficial ({lista}): usada a do valor de mercado", "aviso")
+    if c_dem is not None:
+        return fim(c_dem, "demonstrativos", "demonstrações", fonte_dem,
+                   f"só a contagem das demonstrações ({lista})", "ok")
+    if c_mkt is not None:
+        if apl != 1.0 and not unidade_conferida:
+            return fim(c_mkt, "valor_de_mercado", "valor de mercado público ÷ fechamento", fonte_mkt,
+                       f"contagem das demonstrações indisponível e unidade negociada de {num(apl, 0)} ações sem "
+                       f"composição conferida: só a do valor de mercado ({lista})", "aviso")
+        return fim(c_mkt, "valor_de_mercado", "valor de mercado público ÷ fechamento", fonte_mkt,
+                   f"contagem das demonstrações indisponível: usada a do valor de mercado, sem divergência a "
+                   f"conciliar ({lista})", "ok")
+    return fim(None, "indisponivel", "indisponível", None, "nenhuma contagem de ações disponível", "bloqueio")
+
+
 # ============================================================ pacote de insumos
 
 class _Pacote:
@@ -470,7 +723,17 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
     pk.put("industria", beta_setor.industria)
     pk.put("financeira", bool(beta_setor.financeira or arq.arquetipo in ("banco", "seguradora")))
     pk.put("lambda", float(arq.lambda_))
-    pk.put("fim_concessao", arq.fim_concessao)
+    if arq.fim_concessao is not None:
+        doc, _, url = (arq.fim_concessao_fonte or "").rpartition("; ")
+        doc, url = (doc, url) if url.startswith("http") else (arq.fim_concessao_fonte, None)
+        pk.put("fim_concessao", arq.fim_concessao, {
+            "fonte": "CONFIG", "url": url, "documento": (f"prazo da concessão curado em configs/cdp/cobertura/"
+                                                         f"arquetipos.csv: {doc}" if doc else
+                                                         "prazo da concessão curado (sem documento citado)"),
+            "data_publicacao": None, "data_coleta": None, "sha256": params.arquivos.get("cobertura/arquetipos.csv")},
+            nome="Fim da concessão (ano)", unidade="n")
+    else:
+        pk.put("fim_concessao", None)
     pk.put("as_of", as_of.isoformat())
 
     dem = Demonstrativos(dados.demonstrativos, issuer_id)
@@ -541,32 +804,25 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
         elif emit is not None:
             acoes = emit
             pk.avisos.append("ações em tesouraria indisponíveis: usadas as ações emitidas")
-    unidades = _div(acoes, apl)
-    fonte_un = _prov_linha(row_acoes)
     mcap_pub = None
     if linha in md.fundamentals.index and "market_cap" in md.fundamentals.columns:
         mcap_pub = _f(md.fundamentals.loc[linha, "market_cap"])
-    impl = _div(mcap_pub, preco)
-    tol = float(params.sec("qualidade")["unidades_tolerancia"])
-    status_unid = "demonstrativos"
-    if unidades is not None and impl is not None and abs(unidades / impl - 1) > tol:
-        alt = _div(acoes, 1.0)
-        if alt is not None and abs(alt / impl - 1) <= tol:
-            unidades, status_unid = alt, "demonstrativos_em_unidades"
-        else:
-            pk.avisos.append(f"unidades dos demonstrativos divergem do valor de mercado público em "
-                             f"{abs(unidades / impl - 1):.0%}: unidades pelo valor de mercado")
-            unidades, status_unid = impl, "valor_de_mercado"
-            fonte_un = {**fonte_mkt, "documento": "valor de mercado público ÷ fechamento"}
-    elif unidades is None and impl is not None:
-        unidades, status_unid = impl, "valor_de_mercado"
-        fonte_un = {**fonte_mkt, "documento": "valor de mercado público ÷ fechamento"}
+    fonte_mkt_un = {**fonte_mkt, "documento": ("valor de mercado simulado ÷ fechamento (DADOS SIMULADOS)"
+                                               if md.is_synthetic else "valor de mercado público ÷ fechamento")}
+    oficial = _capital_oficial(dados, issuer_id, md.is_synthetic)
+    unidades, status_unid, fonte_un, contagem = conciliar_contagem(
+        acoes, apl, _div(mcap_pub, preco), oficial, params, _prov_linha(row_acoes) if row_acoes is not None
+        else None, fonte_mkt_un, _unidade_conferida(params, linha))
+    for a in contagem.get("avisos_pacote", []):
+        pk.avisos.append(a)
+    contagem.pop("avisos_pacote", None)
     if unidades is None:
-        pk.falta("unidades", "quantidade de ações indisponível (demonstrativos e valor de mercado)")
+        pk.falta("unidades", "quantidade de ações indisponível (demonstrativos, valor de mercado e fonte oficial)")
     else:
         pk.put("unidades", unidades, fonte_un, nome=f"Unidades em circulação ({linha})",
                unidade="acoes")
     pk.put("status_unidades", status_unid)
+    pk.put("contagem", contagem)
 
     # --- demonstrativos (convertidos para a moeda do modelo)
     tem_dem = not dem.vazio
@@ -598,6 +854,26 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
     for x in dem.defasados:
         it = x.split(" ")[0]
         pk.lacunas.append(lacuna(it, f"item defasado em relação ao último balanço: {rotulo(it)} {x[len(it):].strip()}"))
+    conf_lista = []
+    for it, dconf in dem.em_conferencia:
+        conf_lista.append({"item": it, "data": pd.Timestamp(dconf).date().isoformat()})
+        pk.lacunas.append(lacuna(it, f"em conferência na fonte em {pd.Timestamp(dconf).date().isoformat()}: valor "
+                                 "do período ausente na fonte pública (o período anterior não é usado)"))
+    pk.put("em_conferencia", conf_lista)
+    fye = dem.fim_exercicio()
+    pk.put("fim_exercicio", None if fye is None else fye.date().isoformat())
+    # calendário do consenso: o "ano 1" do consenso é o exercício corrente pelo mês de encerramento do
+    # emissor; demonstrações anuais atrasadas além do prazo de entrega não deslocam o calendário
+    fye_c, nota_fye = fim_exercicio_consenso(fye, as_of, int(params.sec("projecao").get("prazo_exercicio_dias", 120)))
+    pk.put("fim_exercicio_consenso", None if fye_c is None else fye_c.date().isoformat())
+    if nota_fye:
+        pk.avisos.append(nota_fye)
+        pk.lacunas.append(lacuna("demonstrativos", nota_fye))
+    al = dados.alertas
+    alertas_iid = [] if al is None or al.empty else [
+        {k: (None if (isinstance(v, float) and math.isnan(v)) else v) for k, v in r.items()}
+        for r in al[al["issuer_id"] == issuer_id][["tipo", "texto", "data", "item"]].to_dict("records")]
+    pk.put("alertas_fonte", alertas_iid)
     # mesma data-base: fluxos de 12 meses × último balanço
     estoque_ref = max((periodos[k] for k in ("patrimonio_controladores", "patrimonio_liquido") if k in periodos),
                       default=None)
@@ -612,14 +888,28 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
             pk.avisos.append(msg)
             pk.lacunas.append(lacuna("defasagem_fluxos", msg))
     pk.put("defasagem_fluxos_dias", defas_fluxos)
+    # idade das demonstrações contra a data do snapshot (portão G19)
+    pk.put("idade_balanco_dias", None if estoque_ref is None else int((pd.Timestamp(as_of) - estoque_ref).days))
+    pk.put("idade_fluxos_dias", None if fluxo_ref is None else int((pd.Timestamp(as_of) - fluxo_ref).days))
+    pk.put("data_balanco", None if estoque_ref is None else estoque_ref.date().isoformat())
+    pk.put("data_fluxos", None if fluxo_ref is None else fluxo_ref.date().isoformat())
     pk.put("receita_ano_anterior", _conv(dem.ttm_ano_anterior("receita"), fator))
     hist = {}
     for item in HIST_ITENS:
         a = dem.anual(item)
+        if item == "lucro_liquido_controladores":
+            # exercícios só com demonstrações individuais (sem não controladores): o lucro do exercício é o
+            # dos controladores
+            ind = dem.anual_individual("lucro_liquido")
+            for ano, v in dem.anual("lucro_liquido").items():
+                if ano not in a and ano in ind:
+                    a[ano] = v
         if a:
             f_item = 1.0 if item == "acoes_em_circulacao" else fator
             hist[item] = {str(k): r6(_conv(v, f_item)) for k, v in sorted(a.items())}
     pk.put("historico", hist)
+    if arq.arquetipo == "holding":
+        pk.put("serie_acoes", [[d.date().isoformat(), r6(v)] for d, v in dem.serie_acoes()])
     datas_pub = pd.to_datetime(dem.df["data_publicacao"], errors="coerce") if tem_dem else pd.Series(dtype="datetime64[ns]")
     est_col = dem.df["pit_estimado"].map(_bool) if tem_dem and "pit_estimado" in dem.df.columns else pd.Series(dtype=bool)
     pk.put("datas_estimadas", bool(estimados or (len(est_col) and est_col.any())))
@@ -628,8 +918,10 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
     pk.put("max_data_publicacao", None if datas_pub.dropna().empty else datas_pub.max().date().isoformat())
 
     # --- por ação (moeda do modelo, por unidade da linha)
-    pl_ctrl = itens.get("patrimonio_controladores", itens.get("patrimonio_liquido"))
-    lucro = itens.get("lucro_liquido_controladores", itens.get("lucro_liquido"))
+    pl_ctrl, k_pl = _mais_recente(itens, periodos, "patrimonio_controladores", "patrimonio_liquido", pk)
+    lucro, k_luc = _mais_recente(itens, periodos, "lucro_liquido_controladores", "lucro_liquido", pk)
+    pk.put("item_patrimonio", k_pl)
+    pk.put("item_lucro", k_luc)
     bvps = _div(pl_ctrl, unidades)
     eps_ttm = _div(lucro, unidades)
     fonte_yh = {"fonte": "SIMULADO" if md.is_synthetic else "YAHOO",
@@ -647,12 +939,12 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
     if bvps is None:
         pk.falta("bvps", "patrimônio por ação indisponível")
     else:
-        pk.put("bvps", bvps, pk.fontes.get("t.patrimonio_controladores", fonte_yh),
+        pk.put("bvps", bvps, pk.fontes.get(f"t.{k_pl}", fonte_yh),
                nome="Patrimônio por ação", unidade=f"preco:{moeda}")
     if eps_ttm is None:
         pk.falta("eps_ttm", "lucro dos últimos 12 meses indisponível")
     else:
-        pk.put("eps_ttm", eps_ttm, pk.fontes.get("t.lucro_liquido_controladores"),
+        pk.put("eps_ttm", eps_ttm, pk.fontes.get(f"t.{k_luc}"),
                nome="LPA últimos 12 meses", unidade=f"preco:{moeda}")
 
     # --- consenso público (Yahoo Finance)
@@ -770,29 +1062,95 @@ def _consenso(md: MarketData, dados: DadosPublicos, params: ParametrosCobertura,
     lines = md.universe.lines
     row = None
     tick = linha
+    linhas_n: list[list[Any]] = []
+
+    def fator_de(r: pd.Series, t: str) -> float | None:
+        """LPA por unidade da linha ``t`` na moeda das estimativas → por unidade da linha de valuation
+        na moeda dela (ações por linha e câmbio)."""
+        m_e = r.get("moeda_estimativas")
+        m_e = str(m_e).upper() if isinstance(m_e, str) and len(m_e) == 3 else str(lines.loc[t, "currency"]).upper()
+        fx_e, _ = fx_usd(md, m_e, as_of)
+        fx_m, _ = fx_usd(md, moeda, as_of)
+        if fx_e is None or fx_m is None:
+            return None
+        a_ln, _ = acoes_por_linha(md, params, issuer_id, linha)
+        a_tk, _ = acoes_por_linha(md, params, issuer_id, t)
+        return (fx_e / fx_m) * (a_ln / a_tk)
+
     if not con.empty:
-        sub = con[con["ticker"] == linha]
-        if sub.empty:
-            for t in md.universe.lines_for(issuer_id).index:
-                s2 = con[con["ticker"] == t]
-                if not s2.empty and _f(s2.iloc[-1].get("eps_fy1")) is not None:
-                    sub, tick = s2, str(t)
+        # a linha de valuation; outra linha do emissor (classe, ADR) só com mais analistas de LPA e LPA
+        # convertido (ações por linha e câmbio) a ±35% do da linha de valuation — a de mais analistas
+        # define o consenso sem trocar de emissor por erro de unidade; sem LPA na linha de valuation,
+        # a linha com mais analistas
+        cands = []
+        for t in md.universe.lines_for(issuer_id).index:
+            s2 = con[con["ticker"] == t]
+            if s2.empty:
+                continue
+            r2 = s2.iloc[-1]
+            n2 = _f(r2.get("n_analistas_eps"))
+            e2_ = _f(r2.get("eps_fy1"))
+            linhas_n.append([str(t), n2])
+            f2 = fator_de(r2, str(t)) if e2_ is not None else None
+            cands.append({"t": str(t), "row": r2, "n": n2 if n2 is not None else 0.0,
+                          "e1": None if e2_ is None or f2 is None else e2_ * f2})
+        v = next((c for c in cands if c["t"] == linha), None)
+        com_lpa = [c for c in cands if c["e1"] is not None]
+        if v is not None and v["e1"] is not None:
+            esc = v
+            for c in sorted(com_lpa, key=lambda c: (-c["n"], str(lines.loc[c["t"], "line_type"]) != "LOCAL", c["t"])):
+                if c["t"] != linha and c["n"] > v["n"] and v["e1"] and 0.65 <= c["e1"] / v["e1"] <= 1.35:
+                    esc = c
                     break
-        if not sub.empty:
-            row = sub.iloc[-1]
+        elif com_lpa:
+            esc = sorted(com_lpa, key=lambda c: (-c["n"], str(lines.loc[c["t"], "line_type"]) != "LOCAL", c["t"]))[0]
+        else:
+            esc = v if v is not None else (cands[0] if cands else None)
+        if esc is not None:
+            row, tick = esc["row"], esc["t"]
+    def _iso(x: Any) -> Any:
+        if x is None or (isinstance(x, float) and math.isnan(x)):
+            return None
+        return x.isoformat() if hasattr(x, "isoformat") else x
+
+    def _sha(x: Any) -> str | None:
+        return x if isinstance(x, str) and x else None
+
     fonte = {"fonte": "SIMULADO" if md.is_synthetic else "YAHOO",
              "url": None if md.is_synthetic else f"https://finance.yahoo.com/quote/{tick}/analysis",
-             "documento": "consenso simulado (DADOS SIMULADOS)" if md.is_synthetic else "consenso público Yahoo Finance",
+             "documento": ("consenso simulado (DADOS SIMULADOS)" if md.is_synthetic
+                           else "consenso público Yahoo Finance (arquivo de estimativas: LPA, receita e preços-alvo)"),
              "data_publicacao": None,
-             "data_coleta": None if row is None else (row.get("data_coleta").isoformat()
-                                                      if hasattr(row.get("data_coleta"), "isoformat")
-                                                      else row.get("data_coleta")),
-             "sha256": None}
+             "data_coleta": None if row is None else _iso(row.get("data_coleta")),
+             "sha256": None if row is None else _sha(row.get("sha256"))}
+    fonte_info = {**fonte, "url": None if md.is_synthetic else f"https://finance.yahoo.com/quote/{tick}",
+                  "documento": ("consenso simulado (DADOS SIMULADOS)" if md.is_synthetic
+                                else "consenso público Yahoo Finance (arquivo de cotação: recomendação média, "
+                                     "número de analistas e moeda de cotação)"),
+                  "data_coleta": None if row is None else _iso(row.get("data_coleta_info")),
+                  "sha256": None if row is None else _sha(row.get("sha256_info"))}
     if row is None:
         pk.falta("eps_fy1", "sem consenso público de LPA")
         pk.put("consenso", None)
         return
-    # conversão por paridade quando o consenso é de outra linha do emissor
+    # conversão por ações por linha e câmbio (moeda das estimativas → moeda da linha de valuation)
+    status = "ok"
+    m_est = row.get("moeda_estimativas")
+    m_est = str(m_est).upper() if isinstance(m_est, str) and len(m_est) == 3 else None
+    fator_lpa = fator_de(row, tick) if _f(row.get("eps_fy1")) is not None else 1.0
+    if fator_lpa is None:
+        pk.avisos.append(f"LPA de consenso em {m_est or tick} sem câmbio na base: descartado")
+        e1 = e2 = None
+        status = "cambio_indisponivel"
+    else:
+        e1 = _conv(_f(row.get("eps_fy1")), fator_lpa)
+        e2 = _conv(_f(row.get("eps_fy2")), fator_lpa)
+        if tick != linha:
+            pk.avisos.append(f"consenso de LPA da linha {tick} convertido para {linha} (ações por linha e câmbio)")
+        if m_est is not None and m_est != moeda:
+            status = "fx_corrigido"
+            pk.avisos.append(f"LPA de consenso em {m_est} convertido para {moeda}")
+    # preços-alvo de outra linha: paridade de ações por linha e câmbio da cotação
     fator_linha = 1.0
     if tick != linha:
         a_ln, _ = acoes_por_linha(md, params, issuer_id, linha)
@@ -800,26 +1158,6 @@ def _consenso(md: MarketData, dados: DadosPublicos, params: ParametrosCobertura,
         fx_a, _ = fx_usd(md, str(lines.loc[tick, "currency"]), as_of)
         fx_b, _ = fx_usd(md, moeda, as_of)
         fator_linha = None if fx_a is None or fx_b is None else (fx_a / fx_b) * (a_ln / a_tk)
-        pk.avisos.append(f"consenso da linha {tick} convertido por paridade para {linha}")
-    e1 = _conv(_f(row.get("eps_fy1")), fator_linha)
-    e2 = _conv(_f(row.get("eps_fy2")), fator_linha)
-    status = "ok"
-    # moeda das estimativas informada pela fonte (consenso de ADR costuma vir na moeda do balanço)
-    m_est = row.get("moeda_estimativas")
-    m_est = str(m_est).upper() if isinstance(m_est, str) and len(m_est) == 3 else None
-    m_lin = str(lines.loc[tick, "currency"]).upper()
-    if e1 is not None and m_est is not None and m_est != m_lin:
-        fx_e, _ = fx_usd(md, m_est, as_of)
-        fx_l, _ = fx_usd(md, moeda, as_of)
-        if fx_e is None or fx_l is None:
-            pk.avisos.append(f"LPA de consenso em {m_est} sem câmbio na base: descartado")
-            e1 = e2 = None
-            status = "cambio_indisponivel"
-        else:
-            f_est = fx_e / fx_l
-            e1, e2 = e1 * f_est, (None if e2 is None else e2 * f_est)
-            status = "fx_corrigido"
-            pk.avisos.append(f"LPA de consenso em {m_est} convertido para {moeda}")
     def plausivel(e: float | None) -> bool:
         """LPA coerente em moeda e unidade: contra o LPA dos demonstrativos (|razão| em [0,2; 5])
         ou, sem ele, rendimento |LPA|/P0 em [0,05%; 100%] (prejuízo e lucro baixo são plausíveis)."""
@@ -856,14 +1194,43 @@ def _consenso(md: MarketData, dados: DadosPublicos, params: ParametrosCobertura,
     rec = itens.get("receita")
     if pk.v.get("financeira"):  # receita de intermediação financeira não comparável entre fontes
         r1 = r2 = None
+    # moeda da receita de consenso (da própria tabela da fonte); sem ela, a do LPA; sem ela, a da cotação
+    m_rec = next((str(x).upper() for x in (row.get("moeda_receita"), row.get("moeda_estimativas"),
+                                           row.get("moeda_cotacao"))
+                  if isinstance(x, str) and len(x) == 3), None)
+    if r1 is not None and m_rec is not None and moeda_dem is not None and m_rec != moeda_dem:
+        fx_r, _ = fx_usd(md, m_rec, as_of)
+        fx_dm, _ = fx_usd(md, moeda_dem, as_of)
+        if fx_r is None or fx_dm is None:
+            pk.lacunas.append(lacuna("g_receita_fy1", f"receita de consenso em {m_rec} sem câmbio na base: "
+                                                      "crescimento de consenso não usado"))
+            r1 = r2 = None
+        else:
+            f_rec = fx_r / fx_dm
+            r1 = r1 * f_rec
+            r2 = None if r2 is None else r2 * f_rec
+            pk.avisos.append(f"receita de consenso em {m_rec} convertida para {moeda_dem} antes da razão com a receita "
+                             "das demonstrações")
     if r1 is not None and rec is not None and rec > 0:
-        rec_fin = rec / (pk.v.get("fator_moeda") or 1.0)
-        razao = r1 / rec_fin
-        if 0.5 <= razao <= 2.0:
+        fat = pk.v.get("fator_moeda") or 1.0
+        rec_fin = rec / fat
+        razao: float | None = r1 / rec_fin
+        if pk.v.get("arquetipo") in ("utilidade_regulada", "concessao") and not pk.v.get("financeira"):
+            razao = _receita_construcao(pk, params, itens, r1, rec, fat, razao)
+        if razao is None:
+            pass
+        elif 0.5 <= razao <= 2.0:
             g1 = razao - 1
+        else:
+            pk.lacunas.append(lacuna("g_receita_fy1", f"receita de consenso do ano 1 = {num(razao)}× a receita de 12 "
+                                                      "meses (fora de 0,5–2×): unidade, moeda ou perímetro "
+                                                      "diferentes; não usada"))
     g2 = None if r1 is None or r2 is None or r1 <= 0 or not (0.5 <= r2 / r1 <= 2.0) else r2 / r1 - 1
+    if pk.v.get("receita_consenso_rejeitada"):  # o conceito de receita do consenso não reconcilia com a base
+        g2 = None
     pk.put("g_receita_fy1", g1)
     pk.put("g_receita_fy2", g2)
+    pk.put("moeda_receita_consenso", m_rec)
     alvo = _conv(_f(row.get("alvo_medio")), fator_linha)
     cons = {
         "ticker": tick, "alvo_medio": r6(alvo), "alvo_mediano": r6(_conv(_f(row.get("alvo_mediano")), fator_linha)),
@@ -871,7 +1238,11 @@ def _consenso(md: MarketData, dados: DadosPublicos, params: ParametrosCobertura,
         "alvo_baixo": r6(_conv(_f(row.get("alvo_baixo")), fator_linha)),
         "n_alvo": _f(row.get("n_analistas_alvo")), "n_eps": _f(row.get("n_analistas_eps")),
         "recomendacao": r6(_f(row.get("recomendacao_media"))), "status_lpa": status,
+        "n_eps_linhas": sorted(linhas_n),
     }
+    if tick != linha:
+        pk.avisos.append(f"consenso de LPA da linha {tick} ({int(cons['n_eps'] or 0)} analistas), a de mais analistas "
+                         "entre as linhas do emissor")
     up = _div(alvo, preco)
     lims = params.sec("qualidade")["upside_limites"]
     cons["upside"] = None if up is None else r6(up - 1)
@@ -879,6 +1250,44 @@ def _consenso(md: MarketData, dados: DadosPublicos, params: ParametrosCobertura,
     if up is not None and not cons["plausivel"]:
         pk.avisos.append("preço-alvo de consenso fora da faixa plausível (provável unidade/moeda): não comparado")
     pk.put("consenso", cons, fonte)
+    pk.fontes["consenso_info"] = fonte_info
+
+
+def _receita_construcao(pk: _Pacote, params: ParametrosCobertura, itens: dict[str, float], r1: float, rec: float,
+                       fat: float, razao: float) -> float | None:
+    """Utilidades reguladas e concessões: a receita da DRE inclui a receita de construção da
+    infraestrutura (ICPC 01, margem ~zero) e o consenso de receita não. Com a receita de construção
+    da DVA (CVM), a base dos 12 meses passa a ser a receita sem ela quando isso reconcilia o consenso
+    (|crescimento| ≤ limite e menor que contra a receita total); sem essa reconciliação, crescimento de
+    consenso acima do limite em módulo não é usado. Devolve a razão consenso ÷ base (ou ``None``)."""
+    lim = float(params.sec("projecao").get("g1_consenso_concessao_max_abs", 0.15))
+    rc = itens.get("receita_construcao")
+    if rc is not None and 0 < rc < 0.6 * rec:
+        razao_ex = r1 / ((rec - rc) / fat)
+        if abs(razao_ex - 1) <= lim and abs(razao_ex - 1) < abs(razao - 1):
+            itens["receita_com_construcao"] = rec
+            itens["receita"] = rec - rc
+            pk.v["t.receita_com_construcao"] = r6(rec)
+            pk.fontes["t.receita_com_construcao"] = pk.fontes.get("t.receita", prov_codigo("receita da DRE"))
+            pk.put("t.receita", rec - rc, prov_codigo(
+                "receita de 12 meses da DRE − receita de construção da infraestrutura (DVA, ICPC 01)"),
+                nome="Receita sem a receita de construção (ICPC 01)", unidade=f"total:{pk.v.get('moeda')}")
+            pk.v["receita_ano_anterior"] = None
+            pk.lacunas.append(lacuna("g_receita_historico", "crescimento histórico da receita com a receita de "
+                                     "construção (não comparável com a base sem ela): não usado"))
+            pk.avisos.append(f"receita de construção de {num(rc / rec * 100, 0)}% da receita excluída da base "
+                             f"(consenso {num((razao - 1) * 100, 1)}% contra a receita total, {num((razao_ex - 1) * 100, 1)}% "
+                             "contra a receita sem construção)")
+            pk.put("receita_sem_construcao", True)
+            return razao_ex
+    if abs(razao - 1) > lim:
+        pk.v["receita_consenso_rejeitada"] = True
+        pk.lacunas.append(lacuna("g_receita_fy1", (
+            f"crescimento de consenso da receita de {num((razao - 1) * 100, 1)}% contra a receita de 12 meses, acima "
+            f"de {num(lim * 100, 0)}% em módulo numa concessão ou utilidade regulada (provável receita de construção "
+            "da infraestrutura na receita da DRE, sem reconciliação pela DVA): não usado")))
+        return None
+    return razao
 
 
 def _dividendos(md: MarketData, dados: DadosPublicos, pk: _Pacote, issuer_id: str, linha: str,
@@ -899,6 +1308,15 @@ def _dividendos(md: MarketData, dados: DadosPublicos, pk: _Pacote, issuer_id: st
             dps = float(vals.sum()) if len(vals) else 0.0
             pk.put("dps_12m", dps, fonte, nome="Dividendos por ação (12 meses)", unidade=f"preco:{moeda}")
             pk.put("dps_fonte", "proventos")
+            # proventos por ação pagos (data ex) em cada um dos 3 últimos anos-calendário completos (payout
+            # anual: a mediana dos 3 anos descarta o ano de uma distribuição extraordinária e independe da
+            # data de pagamento); só com histórico de proventos anterior ao primeiro ano (soma completa)
+            anos = range(as_of.year - 3, as_of.year)
+            vals_all = pd.to_numeric(sub["valor_por_acao"], errors="coerce")
+            if (dex < pd.Timestamp(year=anos[0], month=1, day=1)).any():
+                pk.put("dps_anual", {str(a): r6(float(vals_all[dex.dt.year == a].dropna().sum())) for a in anos})
+            else:
+                pk.put("dps_anual", None)
             return
     dp = itens.get("dividendos_pagos")
     if dp is not None and unidades:
@@ -912,14 +1330,75 @@ def _dividendos(md: MarketData, dados: DadosPublicos, pk: _Pacote, issuer_id: st
 
 # ============================================================ soma das partes (holdings)
 
+def _razao_ajuste(md: MarketData, ticker: str, d: pd.Timestamp) -> float | None:
+    """``fechamento ÷ fechamento ajustado`` na última data ≤ ``d`` (muda só com desdobramentos,
+    grupamentos, bonificações e proventos)."""
+    if ticker not in md.close.columns or ticker not in md.adj_close.columns:
+        return None
+    c = md.close[ticker].loc[:d].dropna()
+    a = md.adj_close[ticker].loc[:d].dropna()
+    if c.empty or a.empty or a.iloc[-1] <= 0:
+        return None
+    return float(c.iloc[-1] / a.iloc[-1])
+
+
+def desde_por_acoes(md: MarketData, ticker: str, serie: list[list[Any]], limite: float,
+                    as_of: date) -> tuple[str | None, str | None]:
+    """Última data-base em que as ações em circulação da holding mudaram mais que ``limite`` sem ser
+    desdobramento, grupamento ou bonificação (esses o preço ajustado absorve: a razão de ações vezes
+    a variação de ``fechamento ÷ ajustado`` fica em 1 ± 3%). Devolve ``(data, motivo)``."""
+    pontos = [(pd.Timestamp(d), float(v)) for d, v in serie if v and pd.Timestamp(d) <= pd.Timestamp(as_of)]
+    ult = None
+    for (d0, n0), (d1, n1) in zip(pontos, pontos[1:], strict=False):
+        r = n1 / n0
+        if abs(r - 1) <= limite:
+            continue
+        f0, f1 = _razao_ajuste(md, ticker, d0), _razao_ajuste(md, ticker, d1)
+        if f0 and f1 and abs(r * (f1 / f0) - 1) <= 0.03:
+            continue
+        ult = (d1, f"ações da holding de {n0 / 1e6:,.1f} mi para {n1 / 1e6:,.1f} mi entre {d0.date()} e {d1.date()}"
+               .replace(",", "\x00").replace(".", ",").replace("\x00", "."))
+    return (None, None) if ult is None else (ult[0].date().isoformat(), ult[1])
+
+
+def _participacao_conferida(p: dict[str, Any], as_of: date, meses: int = 15,
+                            tolerancia: float = 0.01) -> tuple[bool, str]:
+    """Fração conferida no documento-fonte: ``conferido`` na curadoria, endereço do documento, data
+    de publicação até ``as_of``, data de referência com no máximo ``meses`` de idade e, quando a
+    curadoria registra a posição acionária no documento da investida (``fracao_investida``), as
+    duas frações a no máximo ``tolerancia`` (``soma_partes.participacao_tolerancia``) uma da outra."""
+    if not p.get("conferido"):
+        return False, "fração não conferida no documento-fonte"
+    if not p.get("url"):
+        return False, "sem endereço do documento-fonte"
+    dp = p.get("data_publicacao")
+    if not dp or str(dp) > as_of.isoformat():
+        return False, "documento-fonte sem data de publicação até a data do snapshot"
+    dr = p.get("data_referencia")
+    if dr and (pd.Timestamp(as_of) - pd.Timestamp(str(dr))).days > meses * 31:
+        return False, f"documento-fonte com data de referência {dr} (mais de {meses} meses)"
+    fi = _f(p.get("fracao_investida"))
+    cruz = ""
+    if fi is not None:
+        dif = abs(float(p["fracao"]) - fi)
+        txt = (f"{pct(float(p['fracao']), 2)} no documento da holding contra {pct(fi, 2)} na posição acionária da "
+               f"investida ({p.get('documento_investida') or 'documento da investida'})")
+        if dif > tolerancia + 1e-12:
+            return False, f"conferência cruzada falhou: {txt}, diferença acima de {pct(tolerancia, 0)}"
+        cruz = f"; conferência cruzada: {txt}"
+    return True, f"conferida em {p.get('documento')} ({dp}){cruz}"
+
+
 def preparar_soma_partes(md: MarketData, params: ParametrosCobertura, pacote: dict[str, Any],
                          as_of: date) -> None:
     """Acrescenta ao pacote da holding o NAV de participações listadas e a razão histórica
     (valor de mercado da holding ÷ NAV) em base semanal, que dá o desconto da holding.
 
-    A janela da mediana começa na data ``desde`` da curadoria (última mudança do conjunto de
-    participações), quando informada: a mesma composição de hoje aplicada a um período em que a
-    holding tinha outras participações distorceria a razão histórica."""
+    A janela da mediana começa na última mudança do conjunto de participações (``desde`` da
+    curadoria) ou na última variação relevante das ações da holding fora de desdobramentos
+    (detectada em código pela série de ações das demonstrações): a composição de hoje aplicada a um
+    período com outra base acionária ou outras participações distorceria a razão histórica. Cada
+    fração cita o documento público (CVM FRE, 20-F na SEC, relatório anual) com as datas."""
     iid = pacote["issuer_id"]
     cfg = params.sotp.get("holdings", {}).get(iid)
     if not cfg:
@@ -953,12 +1432,16 @@ def preparar_soma_partes(md: MarketData, params: ParametrosCobertura, pacote: di
             partes.append({"emissor": sub, "motivo": "preço, valor de mercado ou câmbio indisponível"})
             continue
         valor = float(p["fracao"]) * mc * fx_s / fx_m
+        conf, conf_txt = _participacao_conferida(p, as_of, tolerancia=float(sp.get("participacao_tolerancia", 0.01)))
         partes.append({"emissor": sub, "linha": st, "fracao": r6(float(p["fracao"])),
+                       "base": p.get("base", "capital total"),
                        "valor_mercado": r6(mc), "moeda": ccy, "valor_participacao": r6(valor),
-                       "conferido": bool(p.get("conferido", False)),
-                       "fonte": {"fonte": "CONFIG", "url": p.get("url"), "documento": p.get("documento"),
-                                 "data_publicacao": None, "data_coleta": None,
-                                 "sha256": params.arquivos.get("cobertura/sotp.yaml")}})
+                       "conferido": conf, "conferido_texto": conf_txt,
+                       "fracao_investida": r6(_f(p.get("fracao_investida"))),
+                       "data_referencia": p.get("data_referencia"), "data_publicacao": p.get("data_publicacao"),
+                       "fonte": {"fonte": str(p.get("fonte") or "CONFIG"), "url": p.get("url"),
+                                 "documento": p.get("documento"), "data_publicacao": p.get("data_publicacao"),
+                                 "data_coleta": None, "sha256": params.arquivos.get("cobertura/sotp.yaml")}})
         s = _serie_usd_semanal(md, st, as_of)
         if not s.empty:
             series.append((s / s.iloc[-1]) * valor * fx_m)  # valor em USD ao longo do tempo
@@ -966,13 +1449,17 @@ def preparar_soma_partes(md: MarketData, params: ParametrosCobertura, pacote: di
     hs = _serie_usd_semanal(md, hold_line, as_of)
     razao_med = None
     n_sem = 0
+    desde_cfg = str(cfg["desde"]) if cfg.get("desde") else None
+    desde_acoes, motivo_acoes = desde_por_acoes(md, hold_line, pacote.get("serie_acoes") or [],
+                                                float(sp.get("mudanca_acoes_min", 0.05)), as_of)
+    desde = max([d for d in (desde_cfg, desde_acoes) if d], default=None)
     if ok and series and not hs.empty and mcap_h is not None and nav:
         nav_usd = pd.concat(series, axis=1).dropna().sum(axis=1)
         mh_usd = (hs / hs.iloc[-1]) * mcap_h * fx_m
         r = (mh_usd / nav_usd).dropna()
         r = r[r.index >= pd.Timestamp(as_of) - pd.DateOffset(years=int(sp["desconto_anos"]))]
-        if cfg.get("desde"):
-            r = r[r.index >= pd.Timestamp(str(cfg["desde"]))]
+        if desde:
+            r = r[r.index >= pd.Timestamp(desde)]
         n_sem = len(r)
         if n_sem >= int(sp["desconto_min_semanas"]):
             razao_med = float(r.median())
@@ -980,8 +1467,9 @@ def preparar_soma_partes(md: MarketData, params: ParametrosCobertura, pacote: di
         "partes": partes, "nav": r6(nav), "valor_mercado_holding": r6(mcap_h),
         "razao_atual": r6(_div(mcap_h, nav)), "razao_mediana": r6(razao_med), "semanas": n_sem,
         "desconto_reserva": float(sp["desconto_reserva"]), "nota": cfg.get("nota", ""),
-        "desde": None if not cfg.get("desde") else str(cfg["desde"]),
-        "conferido": all(p.get("conferido", False) for p in partes if "fracao" in p),
+        "desde": desde, "desde_curadoria": desde_cfg, "desde_acoes": desde_acoes,
+        "desde_acoes_motivo": motivo_acoes,
+        "conferido": bool(partes) and all(p.get("conferido", False) for p in partes if "fracao" in p),
     }
     if not ok:
         pacote["lacunas"].append(lacuna("soma_partes", "participação sem preço ou valor de mercado"))

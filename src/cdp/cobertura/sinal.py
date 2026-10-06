@@ -1,6 +1,7 @@
 """Sinal de valuation para o alpha — sombra (peso 0) até a promoção por IC realizado.
 
-- :func:`valuation_gap`: ``α_rel`` de cada emissor como z-score robusto (mediana/MAD) dentro de
+- :func:`valuation_gap`: ``α_rel_estilo`` (α relativo sem a exposição de estilo a P/VPA; sem ele,
+  ``α_rel``) de cada emissor como z-score robusto (mediana/MAD) dentro de
   país × setor (≥ 5 nomes; senão setor, senão universo), winsorizado em ±3; sem preço-alvo ou
   "Em revisão" ⇒ ``NaN`` (nunca zero). A ortogonalização aos fatores é a mesma dos demais sinais
   (feita pelo consumidor).
@@ -65,13 +66,21 @@ def z_por_grupo(tab: pd.DataFrame, col: str = "alpha_rel") -> pd.Series:
     return z.clip(-WINSOR_Z, WINSOR_Z)
 
 
+def coluna_sinal(tab: pd.DataFrame) -> str:
+    """``alpha_rel_estilo`` quando a tabela o traz (a construção é neutra a fatores: o α_rel bruto
+    só acrescentaria giro e exposição ao fator valor); senão ``alpha_rel``."""
+    if "alpha_rel_estilo" in tab.columns and tab["alpha_rel_estilo"].notna().any():
+        return "alpha_rel_estilo"
+    return "alpha_rel"
+
+
 def valuation_gap(snap: SnapshotCobertura) -> pd.Series:
     """``alpha_rel`` como z dentro de país × setor (winsorizado), indexado por ``issuer_id``;
     emissor sem preço-alvo fica ``NaN`` (nunca zero)."""
     tab = snap.estado()
     if tab.empty:
         return pd.Series(dtype=float, name="valuation_gap")
-    z = z_por_grupo(tab)
+    z = z_por_grupo(tab, coluna_sinal(tab))
     z.name = "valuation_gap"
     z.index.name = "issuer_id"
     return z
@@ -92,7 +101,7 @@ def alpha_cobertura(snap: SnapshotCobertura, sigma_especifica: pd.Series, params
     tab = snap.estado()
     if tab.empty:
         return pd.DataFrame(columns=["z", "m_incerteza", "m_confianca", "m_frescor", "sigma", "alpha"])
-    z = z_por_grupo(tab)
+    z = z_por_grupo(tab, coluna_sinal(tab))
     as_of = as_of or snap.as_of
     fr = a["frescor"]
     out = pd.DataFrame(index=tab.index)
@@ -108,4 +117,4 @@ def alpha_cobertura(snap: SnapshotCobertura, sigma_especifica: pd.Series, params
     return out
 
 
-__all__ = ["alpha_cobertura", "m_frescor", "valuation_gap", "z_por_grupo"]
+__all__ = ["alpha_cobertura", "coluna_sinal", "m_frescor", "valuation_gap", "z_por_grupo"]

@@ -76,7 +76,9 @@ def test_simulation_is_centred_on_the_house_case(run):
         if not m.get("tem_alvo") or not m.get("tp_pessimista"):
             continue  # piso de zero do patrimônio atingido: valor de opção legítimo
         p50.append(m["tp_mediana_mc"] / m["tp"] - 1)
-        gap.append(m["pwr"] - m["etr"])
+        # PWR sem o piso de zero (base do alpha) contra o caso-base: só convexidade, em proporção do
+        # valor (1 + ETR)
+        gap.append((m["pwr"] - m["etr"]) / (1 + m["etr"]))
     p50, gap = np.abs(np.array(p50)), np.abs(np.array(gap))
     assert len(p50) >= 30
     assert np.median(p50) <= 0.01 and p50.max() <= 0.05

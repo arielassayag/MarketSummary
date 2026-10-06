@@ -5,7 +5,7 @@
 fund:
   name: "CDP — Cabra da Peste"
   base_currency: USD
-  inception_date: "2026-10-05"
+  inception_date: "2026-10-09"           # carteira inaugural, ao preço de fechamento (sempre dia de montagem)
   inception_nav_usd: 100000000
   rebalance_weekday: MON
   manager_role: "Gestor (PM)"

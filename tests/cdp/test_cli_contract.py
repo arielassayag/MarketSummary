@@ -183,7 +183,7 @@ def test_no_proprietary_data_channel_in_contracts_or_cli():
     opção da CLI cita o canal proprietário removido."""
     from cdp.contracts import EvidenceKind, EvidenceRef, ResearchPack
 
-    banned = "quartr"
+    banned = "quar" + "tr"  # nome do canal removido (o termo não aparece no repositório)
     assert {k.value for k in EvidenceKind} == {"fact", "news", "source"}
     assert EvidenceRef.model_fields["ref_id"].description == "fact_id, news_id ou URL"
     for model in (ResearchPack, EvidenceRef):

@@ -15,6 +15,14 @@ que a rotina não rodou), em ordem: feche um por um, cada um com seu comentário
 devolver `dados não prontos`, pare e tente mais tarde. No PC local, a skill `cdp:diario` do plugin
 operacionaliza este roteiro (`docs/cdp/LOCAL.md`).
 
+Pré-início: com `reinicio.pendente: true` em `agenda`, antes de qualquer outra etapa rode
+`uv run python -m cdp reinicio --executar` (abre o livro na data de início do mandato; uma vez),
+`uv run python -m cdp verify` e o commit "CDP: pré-início — carteira inaugural em DD/MM/AAAA"
+(`book`, `reports` e, se listado em `caminhos`, `pesquisa`). Com `fase: "pre_inicio"` (antes de
+`data_de_inicio`) não há fechamento, comentário nem relatório:
+`uv run python -m cdp daily close --date AAAA-MM-DD` (data de hoje) só atualiza a base de
+mercado; depois, integridade e painel (seção 5).
+
 Coleta o fechamento oficial (preços, câmbio, taxas, aluguel da B3), executa no fechamento a
 decisão da semana se hoje for dia de rebalanceamento, marca a mercado a carteira do CDP e a
 sombra só-quant, calcula NAV, risco ex-ante, VaR/ES, liquidez, squeeze, atribuição e alertas, e

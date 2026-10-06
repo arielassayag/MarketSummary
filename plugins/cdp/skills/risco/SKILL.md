@@ -75,6 +75,10 @@ o código mandar, liga o kill switch. Contexto do mandato: `docs/cdp/METODOLOGIA
 uv run python -m cdp agenda
 ```
 
+Se `fase` for `"pre_inicio"` ou `reinicio.pendente` for `true`, **encerre** com "Sem
+monitoramento: pré-início — carteira inaugural em DD/MM/AAAA" (`data_de_inicio`): não há carteira
+a monitorar; nada a gravar nem a commitar (a rotina `diario` abre o livro na data de início).
+
 Se `pregao_b3_hoje` for `true`:
 
 ```sh
@@ -90,6 +94,8 @@ uv run python -m cdp risk
 O comando imprime o JSON e grava `reports/risk/<data>/risco_<HHMM>.md` e `.json` (caminhos em
 `relatorio`). `status: "sem registro"` significa que o track record ainda não começou (antes do
 primeiro fechamento com carteira); nesse caso só relate `decisao_pendente`, se houver.
+`status: "pré-início"` (antes da data de início, sem carteira): nada é gravado (`relatorio`
+nulo); encerre como acima.
 
 ## 2. Interpretar
 

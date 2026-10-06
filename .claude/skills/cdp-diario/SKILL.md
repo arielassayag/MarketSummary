@@ -12,6 +12,12 @@ Fonte única do procedimento:
 
 Em ambos os casos:
 
+- Se `cdp agenda` trouxer `reinicio.pendente: true`, antes de qualquer outra etapa rode
+  `uv run python -m cdp reinicio --executar`, `verify` (`ÍNTEGRO`) e o commit
+  "CDP: pré-início — carteira inaugural em DD/MM/AAAA" (`book`, `reports` e, se listado,
+  `pesquisa`). Com `fase: "pre_inicio"` não há fechamento nem relatório:
+  `uv run python -m cdp daily close --date AAAA-MM-DD` (data de hoje) só atualiza a base de
+  mercado; depois `verify` e painel.
 - Registre `mind: "claude-code"` no `comentario.json` (`codex` se for o Codex).
 - Números somente via `{{fact:<id>}}` de `facts.md`; tom sóbrio e institucional; sem recomendação.
 - Valide com `uv run python -m cdp validate-daily --date AAAA-MM-DD` antes de

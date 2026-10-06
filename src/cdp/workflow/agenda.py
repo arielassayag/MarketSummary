@@ -7,6 +7,12 @@ fechamentos diários estão pendentes (inclusive de dias em que o PC estava desl
 quais relatórios diários faltam publicar e quais semanas decididas ainda não têm a tese de
 investimento da carteira publicada (``acao: "tese"`` na semana corrente e ``teses_pendentes``).
 Só calendário e arquivos — nenhum número de mercado.
+
+Data de início do mandato (``fund.inception_date``): antes dela, com o livro vazio, a fase é
+``"pre_inicio"`` (``semanal.acao = "aguardar"``; sem fechamentos, relatórios nem monitor de
+risco); a data de início é sempre dia de montagem (carteira inaugural, mesmo numa sexta), depois
+vale a regra semanal. ``reinicio.pendente`` diz que o livro ainda tem chaves anteriores à data de
+início sem gênese: a rotina roda ``cdp reinicio --executar`` antes de qualquer outra etapa.
 """
 
 from __future__ import annotations
@@ -17,7 +23,7 @@ from zoneinfo import ZoneInfo
 
 import pandas as pd
 
-from ..calendar import _cal, first_session_of_week, is_session
+from ..calendar import _cal, chave_da_semana, is_session, proximas_montagens
 
 if TYPE_CHECKING:  # pragma: no cover
     from .runtime import Runtime
@@ -96,6 +102,15 @@ def pending_publications(rt: Runtime) -> list[dict[str, Any]]:
     return out
 
 
+def _sem_carteira(rt: Runtime, antes_de: date) -> bool:
+    """Nenhuma semana decidida antes de ``antes_de`` (o fundo ainda não tem carteira: a próxima
+    montagem é a carteira inaugural)."""
+    try:
+        return not any(rt.book.list_decisions(w) for w in rt.book.list_weeks() if w < antes_de)
+    except OSError:  # pragma: no cover - disco
+        return False
+
+
 def _weekly(rt: Runtime, local: datetime) -> dict[str, Any]:
     from .runtime import PREPARE_MANIFEST
     from .tese import is_published, thesis_applicable
@@ -103,7 +118,17 @@ def _weekly(rt: Runtime, local: datetime) -> dict[str, Any]:
     cfg = rt.cfg
     tz = ZoneInfo(cfg.fund.timezone)
     today = local.date()
-    week = first_session_of_week(today)
+    if rt.pre_inicio(today):
+        inicio = cfg.fund.inception_date
+        return {"semana": inicio, "hoje_e_dia_de_rebalanceamento": False,
+                "inicio_pesquisa": cfg.fund.weekly_research_start_local,
+                "prazo_decisao": cfg.fund.decision_deadline_local,
+                "decisao_gravada": False, "briefing_preparado": False,
+                "entradas_escritas": {"research_pack.json": False, "pm_decision.json": False},
+                "tese_publicada": False, "acao": "aguardar",
+                "motivo": (f"pré-início: carteira inaugural em {inicio:%d/%m/%Y}, ao preço de "
+                           "fechamento")}
+    week = chave_da_semana(today, cfg)
     info: dict[str, Any] = {"semana": week, "hoje_e_dia_de_rebalanceamento": week == today,
                             "inicio_pesquisa": cfg.fund.weekly_research_start_local,
                             "prazo_decisao": cfg.fund.decision_deadline_local}
@@ -124,18 +149,24 @@ def _weekly(rt: Runtime, local: datetime) -> dict[str, Any]:
                                 "validate-tese → tese publish)"}
     start = _at(today, cfg.fund.weekly_research_start_local, tz)
     deadline = _at(today, cfg.fund.decision_deadline_local, tz)
+    # Sem carteira anterior (nenhuma semana decidida antes desta), a montagem é a carteira
+    # inaugural — na data de início ou, se ela passou sem decisão, na próxima data de montagem.
+    inaugural = week >= cfg.fund.inception_date and _sem_carteira(rt, week)
+    mantida = ("fundo sem carteira até a próxima data de montagem" if inaugural
+               else "carteira anterior mantida até a próxima semana")
     if week != today:
         info["acao"] = "nenhuma"
         if week > today:
-            info["motivo"] = f"o primeiro pregão desta semana é {week}"
+            info["motivo"] = (f"a carteira inaugural é montada em {week}" if inaugural
+                              else f"o primeiro pregão desta semana é {week}")
         elif needs_thesis:
             info.update(pending_thesis)
         elif decided:
-            info["motivo"] = f"hoje não é o primeiro pregão da semana ({week}); decisão já gravada"
+            info["motivo"] = f"hoje não é o dia de montagem da semana ({week}); decisão já gravada"
         else:
-            info["motivo"] = (f"hoje não é o primeiro pregão da semana ({week}) e a semana NÃO "
-                              "teve decisão gravada: carteira anterior mantida até a próxima "
-                              "semana (o código não permite decidir fora do primeiro pregão)")
+            info["motivo"] = (f"hoje não é o dia de montagem da semana ({week}) e a semana NÃO "
+                              f"teve decisão gravada: {mantida} (o código não permite decidir "
+                              "fora do dia de montagem)")
             info["decisao_perdida"] = True
         return info
     info["minutos_ate_o_prazo"] = int((deadline - local).total_seconds() // 60)
@@ -146,8 +177,9 @@ def _weekly(rt: Runtime, local: datetime) -> dict[str, Any]:
     elif local >= deadline:
         info.update({"acao": "prazo_vencido", "decisao_perdida": True,
                      "motivo": (f"prazo de {cfg.fund.decision_deadline_local} vencido sem "
-                                "decisão: NÃO decidir (o fechamento seria conhecido); carteira "
-                                "anterior mantida até a próxima semana")})
+                                "decisão: NÃO decidir (o fechamento seria conhecido); "
+                                + ("carteira inaugural não montada, " if inaugural else "")
+                                + mantida)})
     elif local < start:
         info.update({"acao": "aguardar",
                      "motivo": f"a pesquisa começa às {cfg.fund.weekly_research_start_local}"})
@@ -155,7 +187,10 @@ def _weekly(rt: Runtime, local: datetime) -> dict[str, Any]:
         etapa = ("prepare" if not briefing else
                  "pesquisa" if not all(inputs.values()) else "validar_e_decidir")
         info.update({"acao": "montar", "etapa": etapa,
-                     "motivo": "primeiro pregão da semana, dentro da janela de decisão"})
+                     "motivo": ("carteira inaugural, dentro da janela de decisão" if inaugural
+                                else "primeiro pregão da semana, dentro da janela de decisão")})
+    if inaugural:
+        info["carteira_inaugural"] = True
     return info
 
 
@@ -177,20 +212,22 @@ def _next_events(rt: Runtime, local: datetime, weekly: dict[str, Any]) -> list[d
     tz = ZoneInfo(cfg.fund.timezone)
     today = local.date()
     events: list[dict[str, Any]] = []
-    monday = today - timedelta(days=today.weekday())
-    for k in range(0, 8):
-        first = first_session_of_week(monday + timedelta(weeks=k))
-        if first is None or first < today:
-            continue
+    pre = rt.pre_inicio(today)
+    # Antes da data de início, nenhum dia de montagem anterior a ela (mesmo se a data de início
+    # estiver a mais de uma semana).
+    for first in proximas_montagens(cfg.fund.inception_date if pre else today, cfg):
         deadline = _at(first, cfg.fund.decision_deadline_local, tz)
         if first == today and (weekly.get("decisao_gravada") or deadline <= local):
             continue
-        events.append({"evento": "decisão semanal (autônoma)", "quando": deadline,
+        inaugural = first >= cfg.fund.inception_date and _sem_carteira(rt, first)
+        events.append({"evento": ("carteira inaugural (decisão autônoma)" if inaugural
+                                  else "decisão semanal (autônoma)"), "quando": deadline,
                        "nota": f"pesquisa a partir de {cfg.fund.weekly_research_start_local}; "
                                "execução no fechamento (MOC)"})
         break
+    start = cfg.fund.inception_date if pre else today
     for k in range(0, 15):
-        d = today + timedelta(days=k)
+        d = start + timedelta(days=k)
         if not is_close_session(d):
             continue
         run = _at(d, cfg.fund.daily_close_run_local, tz)
@@ -211,6 +248,8 @@ def agenda(rt: Runtime, now: datetime | None = None) -> dict[str, Any]:
     pc = datetime.now().astimezone()
     pc_off = pc.utcoffset() or timedelta(0)
     brt_off = pc.astimezone(tz).utcoffset() or timedelta(0)
+    from .reinicio import situacao
+
     weekly = _weekly(rt, local)
     closes = pending_closes(rt, local)
     pubs = pending_publications(rt)
@@ -226,6 +265,9 @@ def agenda(rt: Runtime, now: datetime | None = None) -> dict[str, Any]:
         "pregao_b3_hoje": is_session(local.date(), "BVMF"),
         "b3_aberta_agora": b3_open_at(local),
         "kill_switch": rt.kill_switch_active(),
+        "fase": "pre_inicio" if rt.pre_inicio(local.date()) else "operacao",
+        "data_de_inicio": cfg.fund.inception_date,
+        "reinicio": situacao(rt),
         "ultimo_registro_diario": last[-1] if last else None,
         "semanal": weekly,
         "fechamentos_pendentes": closes[:MAX_PENDING],

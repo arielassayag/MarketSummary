@@ -19,6 +19,13 @@ gravada, tese de investimento ainda não publicada: faça só as seções 5b e 6
 fazer). No PC local, a skill `cdp:semanal` do plugin operacionaliza este roteiro
 (`docs/cdp/LOCAL.md`).
 
+A data de início do mandato (`data_de_inicio` em `agenda`) é sempre dia de montagem — a carteira
+inaugural, ao preço de fechamento, mesmo numa sexta —; depois dela vale a regra semanal. Antes
+dela (`fase: "pre_inicio"`), encerre: "Sem montagem hoje: pré-início". Com
+`reinicio.pendente: true`, rode antes o pré-início do roteiro diário (`cdp reinicio --executar`)
+e, se ele rodou nesta execução, publique antes de encerrar (integridade, painel, commit
+"CDP: pré-início AAAA-MM-DD" e push).
+
 ## 1. Coleta e preparação (código)
 
 ```sh

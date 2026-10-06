@@ -1,6 +1,6 @@
 ---
 name: semanal
-description: Montagem semanal da carteira do CDP — Cabra da Peste no primeiro pregão da semana na B3 (pesquisa a partir de 11h, decisão gravada até 16h30 de Brasília, execução hipotética no fechamento). Coleta os dados, pesquisa macro e emissores, escreve research_pack.json e pm_decision.json como a mente "claude-code", valida, decide pelo código, verifica, escreve a tese de investimento da carteira decidida (tese.json, só com fatos do código), atualiza o painel, faz commit e push e republica o painel no artifact. Sai sem fazer nada se hoje não for dia de montagem ou se a decisão e a tese já foram gravadas; retoma de onde parou se uma execução anterior foi interrompida (inclusive só a tese, quando a decisão já está gravada). Use na tarefa agendada semanal (e nas de reserva) ou quando pedirem a carteira ou a tese da semana do CDP.
+description: Montagem semanal da carteira do CDP — Cabra da Peste no primeiro pregão da semana na B3 ou na data de início do mandato (carteira inaugural) (pesquisa a partir de 11h, decisão gravada até 16h30 de Brasília, execução hipotética no fechamento). Coleta os dados, pesquisa macro e emissores, escreve research_pack.json e pm_decision.json como a mente "claude-code", valida, decide pelo código, verifica, escreve a tese de investimento da carteira decidida (tese.json, só com fatos do código), atualiza o painel, faz commit e push e republica o painel no artifact. Sai sem fazer nada se hoje não for dia de montagem ou se a decisão e a tese já foram gravadas; retoma de onde parou se uma execução anterior foi interrompida (inclusive só a tese, quando a decisão já está gravada). Use na tarefa agendada semanal (e nas de reserva) ou quando pedirem a carteira ou a tese da semana do CDP.
 argument-hint: "[sem argumentos]"
 allowed-tools:
   - Read
@@ -92,7 +92,26 @@ uv run python -m cdp agenda
 uv run python -m cdp status
 ```
 
-Leia `semanal.acao` em `agenda` (o código decide pelo relógio de Brasília, não pelo do PC):
+Antes de tudo, em `agenda`:
+
+- `reinicio.pendente: true` → o livro ainda não foi aberto na data de início do mandato. Rode
+  `uv run python -m cdp reinicio --executar`; se `executado` for `false` e `estado` não for
+  `iniciado`, **pare** e relate o `motivo`. Depois `uv run python -m cdp verify` (precisa dizer
+  `ÍNTEGRO`; senão, pare), commit com
+  `git add book reports` (mais `git add pesquisa` se `caminhos` tiver algum `pesquisa/…`) e
+  `git commit -m "CDP: pré-início — carteira inaugural em DD/MM/AAAA" -m "manifesto sha256: <lista_sha256>"`
+  (data de `carteira_inaugural`), e rode `agenda` de novo. Esse commit vai no push do passo 9
+  (na data de início, a montagem segue normalmente; antes dela, veja o item abaixo).
+- `fase: "pre_inicio"`:
+  - se o pré-início do item acima rodou **nesta execução**, faça os passos 8, 9 e 10
+    (integridade e painel; publicação com a mensagem `"CDP: pré-início AAAA-MM-DD"`, data de
+    hoje, e o push — que leva também o commit do pré-início; painel no artifact) e então
+    **encerre** com "Sem montagem hoje: pré-início — carteira inaugural em DD/MM/AAAA"
+    (`data_de_inicio`);
+  - senão, **encerre** já com essa mensagem. Nada a commitar (a rotina diária publica o painel).
+
+Leia `semanal.acao` em `agenda` (o código decide pelo relógio de Brasília, não pelo do PC). A
+data de início do mandato é sempre dia de montagem (carteira inaugural, mesmo numa sexta):
 
 - `nenhuma`, `aguardar` ou `prazo_vencido` → **encerre** com "Sem montagem hoje: <motivo>"
   (copie `semanal.motivo`). Nada a commitar.
@@ -257,7 +276,8 @@ git commit -m "CDP: decisão da semana AAAA-MM-DD"
 ```
 
 A decisão, a tese e o painel vão no mesmo commit. Na retomada só da tese (`semanal.acao` =
-`tese`), use a mensagem "CDP: tese da semana AAAA-MM-DD". Push só se `verify` disse `ÍNTEGRO`
+`tese`), use a mensagem "CDP: tese da semana AAAA-MM-DD"; em `fase: "pre_inicio"` (só depois do
+pré-início desta execução, passo 1), "CDP: pré-início AAAA-MM-DD". Push só se `verify` disse `ÍNTEGRO`
 no passo 8 desta execução e o `git fetch` funcionou: repita a sincronização (seção acima) e então
 rode `git push`. Se esse `verify` falhou, a sincronização falhou ou parou, ou o push foi
 rejeitado: não force; o commit fica local (a próxima rotina reconcilia) e você relata.
@@ -324,6 +344,9 @@ Republique o painel **no mesmo artifact** — a URL fica em `artifacts/painel/AR
    valendo).
 
 ## 11. Resumo final (vai para a notificação)
+
+Em `fase: "pre_inicio"`: "Sem montagem hoje: pré-início — carteira inaugural em DD/MM/AAAA"; se
+o pré-início rodou, `n_arquivos`, `lista_sha256`, integridade, commit/push e painel.
 
 Até 12 linhas, números **copiados** da saída do `weekly decide` e de
 `reports/weekly/<semana>/relatorio.md` (nunca calculados):

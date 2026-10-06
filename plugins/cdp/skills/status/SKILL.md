@@ -52,7 +52,10 @@ e das rotinas: `docs/cdp/METODOLOGIA.md` e `docs/cdp/LOCAL.md`.
 ## O que relatar (resumo final, até 12 linhas)
 
 - **Integridade**: resultado de `verify` (`ÍNTEGRO` ou cada falha listada).
-- **Fundo**: último registro diário, NAV atual (`nav_atual_usd`), kill switch.
+- **Fundo**: último registro diário, NAV atual (`nav_atual_usd`), kill switch. Com
+  `fase: "pre_inicio"`: "Pré-início: carteira inaugural em DD/MM/AAAA, ao preço de fechamento"
+  (`data_de_inicio`). Com `reinicio.pendente: true`, destaque: a rotina `diario` abre o livro na
+  data de início antes de qualquer outra etapa (`reinicio.motivo`).
 - **Semana**: `semanal.semana`, decisão gravada?, `semanal.acao`/`motivo`; se `decisao_perdida`
   for `true`, destaque. Tese de investimento: semanas em `teses_pendentes` (decididas sem tese
   publicada; a da semana corrente é concluída pela skill `semanal` ou `diario`).

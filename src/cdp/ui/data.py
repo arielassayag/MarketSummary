@@ -1511,8 +1511,11 @@ def _at(d: date, hhmm: str, tz: ZoneInfo) -> datetime:
 
 def next_events(now: datetime, cfg: FundConfig, decided_weeks: set[date] | None = None
                 ) -> list[Event]:
-    """Próxima decisão semanal (prazo do mandato) e próximo fechamento diário (horário local)."""
-    from ..calendar import first_session_of_week, is_session
+    """Próxima decisão semanal (prazo do mandato) e próximo fechamento diário (horário local).
+
+    A data de início do mandato é sempre dia de montagem (carteira inaugural); antes dela, sem
+    semana decidida, o próximo fechamento diário é o do início."""
+    from ..calendar import chave_da_semana, is_session, proximas_montagens
 
     tz = ZoneInfo(cfg.fund.timezone)
     local = now.astimezone(tz)
@@ -1520,8 +1523,7 @@ def next_events(now: datetime, cfg: FundConfig, decided_weeks: set[date] | None 
     decided = decided_weeks or set()
     events: list[Event] = []
 
-    monday = today - timedelta(days=today.weekday())
-    current = first_session_of_week(monday)
+    current = chave_da_semana(today, cfg)
     if (current is not None and current <= today and current not in decided
             and current >= cfg.fund.inception_date):
         deadline = _at(current, cfg.fund.decision_deadline_local, tz)
@@ -1529,20 +1531,25 @@ def next_events(now: datetime, cfg: FundConfig, decided_weeks: set[date] | None 
             events.append(Event("Decisão semanal ATRASADA", deadline,
                                 "prazo do mandato vencido sem decisão gravada no livro",
                                 overdue=True))
-    for k in range(0, 8):
-        first = first_session_of_week(monday + timedelta(weeks=k))
-        if first is None or first < today or first in decided:
+    # Antes da data de início, sem semana decidida, nada é montado antes dela.
+    start = (cfg.fund.inception_date if not decided and today < cfg.fund.inception_date
+             else today)
+    for first in proximas_montagens(start, cfg):
+        if first in decided:
             continue
         deadline = _at(first, cfg.fund.decision_deadline_local, tz)
         if deadline <= local:
             continue
+        # Sem semana decidida, a próxima montagem é a carteira inaugural.
+        inaugural = not decided and first >= cfg.fund.inception_date
         events.append(Event("Decisão semanal (autônoma)", deadline,
-                            f"pesquisa a partir de {cfg.fund.weekly_research_start_local}; "
+                            ("carteira inaugural; " if inaugural else "")
+                            + f"pesquisa a partir de {cfg.fund.weekly_research_start_local}; "
                             "execução no fechamento (MOC)"))
         break
 
     for k in range(0, 15):
-        d = today + timedelta(days=k)
+        d = start + timedelta(days=k)
         if not any(is_session(d, ex) for ex in ("BVMF", "XNYS", "XMEX")):
             continue
         run = _at(d, cfg.fund.daily_close_run_local, tz)

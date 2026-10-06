@@ -61,6 +61,7 @@ from .. import SIMULATED_DATA_NOTICE
 from ..config import FundConfig
 from ..research.pm_agent import POSTURE_PT, REGIME_PT, STAGE_PT, ladder_stage
 from ..ui.fmt import PATH_PT
+from .daily import REAL_DATA_SOURCES
 from .memo import fmt_pct
 
 SCHEMA_VERSION = "cdp-painel/3"
@@ -99,9 +100,10 @@ MAX_EVIDENCE_PER_NOTE = 8
 #: painel nunca acusar "excesso" num limite que o gate aprovou.
 LIMIT_TOL = 1e-6
 COMMENTARY_SECTION = "Comentário do dia"
-REAL_DATA_NOTICE = ("Dados reais de mercado; paper trading com execução hipotética no "
-                    "fechamento (MOC).")
-EMPTY_DATA_NOTICE = "Sem artefatos do fundo ainda (antes da inception)."
+# Fontes entre parênteses (o rodapé da página lê o primeiro parêntese como fontes de dados).
+REAL_DATA_NOTICE = (f"Dados reais de mercado ({REAL_DATA_SOURCES}); paper trading com execução "
+                    "hipotética no leilão de fechamento.")
+EMPTY_DATA_NOTICE = "Pré-início: o fundo ainda não tem carteira."
 
 _MODEL_KEYS = frozenset({"model", "models", "model_id", "model_name"})
 _MODEL_ID_RE = re.compile(
@@ -125,7 +127,8 @@ _IID_KEYS = frozenset({"issuer_id", "iid"})
 _IID_LIST_KEYS = frozenset({"issuer_ids", "issuers", "only_shadow", "only_cdp"})
 
 PHASE_PT = {
-    "pre_inception": "Antes do início: nenhuma carteira decidida ainda.",
+    "pre_inception": "Pré-início: carteira inaugural na data de início do mandato, ao preço de "
+                     "fechamento.",
     "aguardando_decisao": "Semana em preparação: pesquisa em andamento, aguardando a decisão "
                           "do comitê.",
     "decidida_aguardando_execucao": "Carteira decidida; execução no leilão de fechamento.",
@@ -2498,7 +2501,7 @@ def _market_info(rt: Any, issues: _Issues) -> dict[str, Any]:
     return {"available": True, "last_date": last, "is_synthetic": synthetic}
 
 
-_AGENDA_DROP = frozenset({"fuso_do_pc", "pc_menos_brasilia_horas"})
+_AGENDA_DROP = frozenset({"fuso_do_pc", "pc_menos_brasilia_horas", "reinicio"})
 
 
 def _agenda(rt: Any, now: datetime, book_exists: bool, issues: _Issues) -> dict[str, Any] | None:
@@ -2516,13 +2519,13 @@ def _agenda(rt: Any, now: datetime, book_exists: bool, issues: _Issues) -> dict[
 def _status(rt: Any, cfg: FundConfig, now: datetime, weeks: Sequence[dict[str, Any]],
             records: Sequence[Any], kill: Any, integrity: Mapping[str, Any],
             market: Mapping[str, Any], risk: Mapping[str, Any]) -> dict[str, Any]:
-    from ..calendar import is_rebalance_day, is_session, open_markets, week_id
+    from ..calendar import dia_de_montagem, is_session, open_markets, week_id
     from ..ui.data import next_events
 
     tz = ZoneInfo(cfg.fund.timezone)
     local = now.astimezone(tz)
     today = local.date()
-    current = week_id(today)
+    current = week_id(today, cfg)
     by_week = {w["week"]: w for w in weeks}
     cw = by_week.get(current)
     decided = {w["week"] for w in weeks if w["decisions"]}
@@ -2539,7 +2542,21 @@ def _status(rt: Any, cfg: FundConfig, now: datetime, weeks: Sequence[dict[str, A
         phase = "decidida_aguardando_execucao"
     else:
         phase = "em_operacao"
+    inicio = cfg.fund.inception_date
     events = next_events(now, cfg, decided)
+    inaugural: dict[str, Any] | None = None
+    phase_label = PHASE_PT[phase]
+    if phase == "pre_inception":
+        # Data da carteira inaugural: a data de início ou, se ela passou sem decisão, a próxima
+        # data de montagem (nunca uma data passada).
+        nxt = [e.when.astimezone(tz).date() for e in events
+               if not e.overdue and e.label.startswith("Decisão semanal")]
+        quando = inicio if today < inicio else (nxt[0] if nxt else None)
+        inaugural = {"date": quando, "convention": "ao preço de fechamento"}
+        phase_label = (f"Pré-início: carteira inaugural em {quando:%d/%m/%Y}, ao preço de "
+                       "fechamento." if quando is not None else
+                       "Pré-início: carteira inaugural na próxima data de montagem, ao preço de "
+                       "fechamento.")
     dd = float(last.risk.drawdown) if last is not None else None
     stage = ladder_stage(dd, cfg) if last is not None else "desconhecido"
     alerts: list[dict[str, str]] = []
@@ -2594,14 +2611,17 @@ def _status(rt: Any, cfg: FundConfig, now: datetime, weeks: Sequence[dict[str, A
         "today": today, "timezone": cfg.fund.timezone,
         "is_session_today": is_session(today, "BVMF"),
         "open_markets_today": open_markets(today),
-        "is_rebalance_day": is_rebalance_day(today), "current_week": current,
+        "is_rebalance_day": (dia_de_montagem(today, cfg)
+                             and not (phase == "pre_inception" and today < inicio)),
+        "current_week": current,
         "current_week_status": {
             "exists": cw is not None, "decided": bool(cw and cw["decisions"]),
             "executed": bool(cw and cw["executed"]),
             "decision_mode": ((cw or {}).get("decision") or {}).get("mode"),
             "path_taken": (cw or {}).get("path_taken"),
             "state": (cw or {}).get("state")},
-        "phase": phase, "phase_label": PHASE_PT[phase],
+        "phase": phase, "phase_label": phase_label,
+        "inaugural": inaugural,
         "kill_switch": {"active": kill.active, "reason": kill.reason, "by": kill.by,
                         "created_at": kill.created_at, "error": kill.error},
         "last_record_date": last.date if last is not None else None,
@@ -2645,7 +2665,8 @@ def _synthetic(records: Sequence[Any], shadow: Sequence[Any], weeks: Sequence[di
 
 
 def _data_notice(is_synth: bool, notice: str | None, records: Sequence[Any],
-                 weeks: Sequence[dict[str, Any]]) -> str:
+                 weeks: Sequence[dict[str, Any]], market: Mapping[str, Any] | None = None
+                 ) -> str:
     if is_synth:
         text = notice or "mercado sintético gerado por código."
         if SIMULATED_DATA_NOTICE not in text.upper():
@@ -2657,7 +2678,8 @@ def _data_notice(is_synth: bool, notice: str | None, records: Sequence[Any],
         p = w.get("proposal") or {}
         if p.get("data_notice"):
             return str(p["data_notice"])
-    return REAL_DATA_NOTICE if weeks else EMPTY_DATA_NOTICE
+    real_market = bool(market and market.get("available") and not market.get("is_synthetic"))
+    return REAL_DATA_NOTICE if weeks or real_market else EMPTY_DATA_NOTICE
 
 
 # ==========================================================
@@ -2747,7 +2769,7 @@ def painel_data(rt: Any, *, now: datetime | None = None, profile: str = "complet
         "generated_at": now.astimezone(UTC).isoformat(),
         "generated_at_local": now.astimezone(tz).isoformat(), "timezone": cfg.fund.timezone,
         "is_synthetic": is_synth, "synthetic_sources": sources,
-        "data_notice": _data_notice(is_synth, notice, records, weeks),
+        "data_notice": _data_notice(is_synth, notice, records, weeks, market),
         "simulated_label": SIMULATED_DATA_NOTICE if is_synth else None,
         "paper_trading_label": cfg.fund.track_record_type,
         "paper_trading_text": PAPER_TRADING_TEXT,

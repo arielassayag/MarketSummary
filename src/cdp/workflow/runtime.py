@@ -16,7 +16,7 @@ from pathlib import Path
 import pandas as pd
 
 from ..audit import AuditLog
-from ..calendar import first_session_of_week, is_rebalance_day, is_session, previous_session
+from ..calendar import chave_valida, is_rebalance_day, is_session, previous_session
 from ..config import FundConfig, load_config
 from ..contracts import ResearchPack
 from ..hashing import sha256_file, sha256_obj
@@ -116,6 +116,20 @@ class Runtime:
             return self.store.last_date()
         except Exception:  # noqa: BLE001
             return None
+
+    def pre_inicio(self, d: date) -> bool:
+        """``d`` antecede a data de início do mandato e o livro ainda não tem semana nem registro
+        diário (fundo sem carteira: sem marcação, relatório diário nem monitor de risco; nenhum
+        dia de montagem antes da data de início). Depende do livro, não só do calendário: a
+        demonstração e os testes rodam livros históricos com a configuração real."""
+        if d >= self.cfg.fund.inception_date:
+            return False
+        from .reinicio import chaves_vivas
+
+        try:
+            return not chaves_vivas(self)
+        except OSError:  # pragma: no cover - disco
+            return False
 
     def live_weeks(self) -> int:
         b = self.book
@@ -375,8 +389,10 @@ class Runtime:
     def weekly_prepare(self, week: date, *, mind: str, live: bool = True) -> dict:
         from ..research.pm_agent import write_briefing_bundle
 
-        if first_session_of_week(week) != week:
-            raise ValueError(f"{week} não é o primeiro pregão da semana na B3.")
+        if not chave_valida(week, self.cfg):
+            raise ValueError(f"{week} não é o primeiro pregão da semana na B3 nem a data de "
+                             "início do mandato.")
+        self.book.check_key(week)  # livro aberto na data de início: nada anterior a ela
         briefing = self.week_dir(week) / "briefing"
         if (briefing / PREPARE_MANIFEST).exists():
             raise FileExistsError(f"Briefing da semana {week} já existe (imutável): {briefing}")
@@ -568,6 +584,8 @@ class Runtime:
 
         if not any(is_session(session, ex) for ex in ("BVMF", "XNYS", "XMEX")):
             return {"data": session, "status": "sem pregão"}
+        if self.pre_inicio(session):
+            return self._daily_pre_inicio(session, live=live)
         store = self.store
         if live:
             from ..data.store import DataNotReadyError, StoreLockedError
@@ -597,6 +615,32 @@ class Runtime:
                 "alertas": list(rec.alerts), "fatos": {k: str(v) for k, v in paths.items()},
                 "proximo_passo": (f"escreva {out_dir / 'comentario.json'} e rode "
                                   f"`cdp daily publish --date {session}`")}
+
+    def _daily_pre_inicio(self, session: date, *, live: bool) -> dict:
+        """Antes da data de início (fundo sem carteira): sem marcação, registro nem relatório;
+        só o incremento da base de mercado (dados públicos) até ``session``, ancorado na trilha,
+        para a carteira inaugural partir de dados em dia."""
+        inicio = self.cfg.fund.inception_date
+        out: dict = {"data": session, "status": "pré-início",
+                     "motivo": (f"carteira inaugural em {inicio:%d/%m/%Y}, ao preço de "
+                                "fechamento; sem marcação nem relatório antes do início")}
+        if not live:
+            return out
+        from ..data.store import DataNotReadyError, StoreLockedError
+
+        store = self.store
+        try:
+            increments = store.catch_up(session)
+        except (DataNotReadyError, StoreLockedError) as exc:
+            out["dados_de_mercado"] = {"status": "não prontos", "motivo": str(exc),
+                                       "acao": "tente de novo em alguns minutos"}
+            return out
+        self._anchor_increments(increments)
+        out["dados_de_mercado"] = {
+            "status": "atualizados",
+            "incrementos": [inc.session_date for inc in increments or []],
+            "ultimo_pregao": store.last_date()}
+        return out
 
     def daily_publish(self, session: date) -> dict:
         """Valida o comentário da mente e publica o relatório diário (imutável)."""

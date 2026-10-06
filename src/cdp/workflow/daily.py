@@ -143,6 +143,9 @@ ENTRY_LOOKBACK_RECORDS = 260
 HOLD_STATUS = "hold"
 DAILY_ACTOR = "CDP — rotina diária"
 SHADOW_LABEL = "sombra só-quant"
+#: Fontes públicas da base de mercado, nomeadas entre parênteses no aviso de dados (o rodapé do
+#: painel as lê dali).
+REAL_DATA_SOURCES = "Yahoo Finance, B3, FINRA, BCB"
 SHADOW_BOOKED_EVENT = "BOOKED_SHADOW"
 SHADOW_PROPOSAL_EVENT = "SHADOW_PROPOSAL_SAVED"
 BOOK_SHADOW_FILE = "shadow_quant.json"
@@ -1419,8 +1422,8 @@ class DailyRunner:
             notice = (f"{SIMULATED_DATA_NOTICE} — mercado sintético gerado por código; "
                       "paper trading com execução hipotética no fechamento.")
         else:
-            notice = ("Dados reais de mercado; paper trading com execução hipotética no "
-                      "fechamento (MOC) e custos do modelo.")
+            notice = (f"Dados reais de mercado ({REAL_DATA_SOURCES}); paper trading com execução "
+                      "hipotética no leilão de fechamento e custos do modelo.")
         record = DailyRecord(
             date=ctx.date, fund_name=side.fund_name, track_record_type=side.track_type,
             nav_start_usd=marked.nav_start, nav_end_usd=nav_end, pnl_usd=pnl,

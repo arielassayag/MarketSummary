@@ -20,6 +20,11 @@ Em ambos os casos:
 - Rode `uv run python -m cdp validate --week AAAA-MM-DD --mind claude-code` (`--mind codex`
   se for o Codex) até `OK` antes de `weekly decide`.
 - Prazo: decisão gravada até 16h30 (Brasília); execução hipotética no fechamento do mesmo dia.
+- A data de início do mandato é sempre dia de montagem (carteira inaugural, mesmo numa sexta).
+  Antes dela (`fase: "pre_inicio"` em `cdp agenda`), encerre: "Sem montagem hoje: pré-início";
+  com `reinicio.pendente: true`, rode antes `uv run python -m cdp reinicio --executar` (como na
+  rotina diária) e, se ele rodou nesta execução, publique antes de encerrar: `verify`, painel,
+  commit "CDP: pré-início AAAA-MM-DD" e push.
 - Depois de `weekly decide` e `verify`, antes do painel e no mesmo commit, escreva a tese de
   investimento da carteira decidida (`docs/cdp/TESE.md`):
   `uv run python -m cdp tese prepare --week AAAA-MM-DD`, leia `fatos.md` por inteiro, escreva

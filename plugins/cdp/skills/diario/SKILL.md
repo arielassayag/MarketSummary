@@ -51,6 +51,8 @@ Argumento recebido (opcional): `$ARGUMENTS` — se for uma data AAAA-MM-DD, proc
   exigir algo fora da lista, pare e relate.
 - Nunca use `git push --force`, `rebase` nem `reset`. O único merge permitido é o
   `git pull --no-rebase --no-edit` da sincronização abaixo, quando o remoto não mexeu no livro.
+- `cdp reinicio --executar` só roda na condição da seção "Pré-início" (nunca com argumento de
+  data nem por iniciativa própria).
 
 ## Sincronização com o remoto (passo 0 e antes do push)
 
@@ -83,6 +85,11 @@ Argumento recebido (opcional): `$ARGUMENTS` — se for uma data AAAA-MM-DD, proc
 uv run python -m cdp agenda
 ```
 
+- `reinicio.pendente: true` → faça a seção **Pré-início** abaixo **antes de qualquer outra
+  etapa** e depois rode `agenda` de novo.
+- `fase: "pre_inicio"` (antes de `data_de_inicio`, livro sem carteira): não há fechamento,
+  comentário, tese nem relatório diário. Pule os passos 2 a 5 e faça os passos 6 a 9 (base de
+  mercado, integridade, painel, publicação com a mensagem do pré-início, artifact e resumo).
 - `fechamentos_pendentes`: pregões sem registro, em ordem (inclui dias em que o PC estava
   desligado; o de hoje só aparece depois de `horario_fechamento_diario`).
 - `publicacoes_pendentes`: registros sem `relatorio.md` (com `comentario_escrito`).
@@ -90,9 +97,40 @@ uv run python -m cdp agenda
   (`semanal.semana`, com `semanal.decisao_gravada: true`) é tratada aqui (passo 5); semanas
   anteriores da lista só são relatadas no resumo.
 - Se `fechamentos_pendentes_excedem_limite` for `true`, pare e peça intervenção no resumo.
-- Se as duas primeiras listas estiverem vazias e a tese da semana corrente não estiver pendente,
-  encerre: "Nada a fazer: último registro <data> publicado".
+- Fora do pré-início (`fase: "operacao"`): se as duas primeiras listas estiverem vazias e a tese
+  da semana corrente não estiver pendente, encerre: "Nada a fazer: último registro <data>
+  publicado". Em `fase: "pre_inicio"` as listas estão sempre vazias: siga para o passo 6.
 - Com argumento de data, processe só essa data (se estiver em uma das listas).
+
+## Pré-início (só com `reinicio.pendente: true`)
+
+O livro ainda tem registros anteriores à data de início do mandato (`data_de_inicio`): o código
+abre o livro na data de início — remove do livro vivo o conteúdo anterior, os relatórios dessa
+carteira e o material de pesquisa datado, e grava a gênese de uma trilha nova. Uma vez só.
+
+1. Rode:
+
+   ```sh
+   uv run python -m cdp reinicio --executar
+   ```
+
+   Anote `executado`, `estado`, `motivo`, `carteira_inaugural`, `n_arquivos`, `lista_sha256` e
+   `caminhos`. Se `executado` for `false` e `estado` não for `iniciado` (recusa: chave do livro
+   na data de início ou depois, área temporária de uma execução interrompida ou integridade com
+   falha), **pare** e relate o `motivo` — não rode nenhum outro passo que grave.
+2. `uv run python -m cdp verify` precisa dizer `ÍNTEGRO`; senão, pare e relate.
+3. Commit (a lista completa dos arquivos removidos não entra na árvore; a mensagem leva só o
+   sha256 dela):
+
+   ```sh
+   git add book reports
+   git add pesquisa
+   git commit -m "CDP: pré-início — carteira inaugural em DD/MM/AAAA" -m "manifesto sha256: <lista_sha256>"
+   ```
+
+   Use `carteira_inaugural` na mensagem. Rode `git add pesquisa` só se `caminhos` tiver algum
+   caminho `pesquisa/…`. O push segue no passo 7 (pela sincronização da seção acima).
+4. Rode `uv run python -m cdp agenda` de novo e siga pelo passo 1 (agora `fase: "pre_inicio"`).
 
 ## 2. Para cada data D de `fechamentos_pendentes`, em ordem
 
@@ -181,6 +219,17 @@ publicar a tese). Use essa semana em AAAA-MM-DD; regras e diretrizes de redaçã
 
 ## 6. Integridade e painel (código)
 
+Só em `fase: "pre_inicio"`, antes do `verify`, atualize uma vez a base de mercado (dados
+públicos; sem marcação, registro nem relatório):
+
+```sh
+uv run python -m cdp daily close --date AAAA-MM-DD
+```
+
+com a data de hoje (`agora_brasilia`). A saída traz `status: "pré-início"` e
+`dados_de_mercado.status`: `atualizados` (anote `ultimo_pregao`) ou `não prontos` (siga; a
+próxima rotina completa). `sem pregão`: siga.
+
 ```sh
 uv run python -m cdp verify
 uv run python -m cdp painel
@@ -204,6 +253,9 @@ passo do artifact). Se falhar, siga sem o painel e relate no resumo.
 git add book reports data/market artifacts/painel
 git commit -m "CDP: fechamento AAAA-MM-DD"
 ```
+
+Em `fase: "pre_inicio"`, a mensagem é `"CDP: pré-início AAAA-MM-DD"` (data de hoje); sem
+mudanças a commitar, siga sem commit (o commit do pré-início, se houve, também vai no push).
 
 Use a última data processada na mensagem (ou "CDP: fechamentos AAAA-MM-DD a AAAA-MM-DD"); a tese
 recuperada no passo 5 vai no mesmo commit. Push só se `verify` disse `ÍNTEGRO` no passo 6 desta
@@ -274,7 +326,11 @@ Republique o painel **no mesmo artifact** — a URL fica em `artifacts/painel/AR
 
 ## 9. Resumo final (vai para a notificação)
 
-Até 12 linhas para a última data publicada, números **copiados** de
+Em `fase: "pre_inicio"`: "Pré-início: carteira inaugural em <data>, ao preço de fechamento";
+se a seção Pré-início rodou, `n_arquivos` e `lista_sha256`; base de mercado (`ultimo_pregao` ou
+"não prontos"); integridade; commit/push; painel.
+
+Senão, até 12 linhas para a última data publicada, números **copiados** de
 `reports/daily/<data>/relatorio.md` (nunca calculados):
 
 - manchete do comentário; retorno do dia e acumulado (ITD); NAV;

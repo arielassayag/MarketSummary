@@ -40,3 +40,6 @@ data/market/**/.*.staging-*
 
 # CDP: logs das rotinas locais (scripts/cdp_run_task.*)
 logs/
+
+# CDP: área temporária do pré-início (cdp reinicio; removida ao terminar)
+.cdp_reinicio.tmp/

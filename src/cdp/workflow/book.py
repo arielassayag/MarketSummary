@@ -3,6 +3,7 @@
 Layout (``root`` = ``book/`` por padrão)::
 
     audit_log.jsonl                         trilha encadeada por hash (AuditLog)
+    genese.json                             gênese do livro (evento FUND_GENESIS; cdp reinicio)
     ledger.csv                              NAV diário (Ledger)
     KILL_SWITCH                             presente ⇒ só bookings que reduzem risco
     <semana>/research_pack_<hash12>.json    pacotes de pesquisa imutáveis (por hash)
@@ -88,6 +89,14 @@ _ARTIFACT_EVENTS = ("PROPOSAL_CREATED", "BOOKED", *_DECISION_EVENTS, *_RESEARCH_
 
 _Index = dict[tuple[str, date | None], set[str]]
 
+GENESIS_EVENT = "FUND_GENESIS"
+"""Primeiro evento da trilha de um livro aberto na data de início do mandato (``cdp reinicio``);
+o payload completo fica em :data:`GENESIS_FILE` (conferido contra o ``payload_hash``):
+``inception_date``, ``config_hash``, ``codigo`` (commit do código) e ``ancora_sha256`` (sha256 de
+``book/audit_log.jsonl`` nesse commit). Com a gênese, o livro não aceita semana anterior à data
+de início do mandato."""
+GENESIS_FILE = "genese.json"
+
 
 # ==========================================================
 # E/S auxiliar
@@ -153,12 +162,15 @@ def _parse_week(name: str) -> date | None:
         return None
 
 
-def _check_week(week: date) -> None:
-    from ..calendar import first_session_of_week
+def _check_week(week: date, config: FundConfig | None = None) -> None:
+    """Chave do livro: o primeiro pregão da semana na B3 ou, com ``config``, a data de início
+    do mandato (a carteira inaugural pode ser montada fora da regra semanal, ex.: numa sexta)."""
+    from ..calendar import chave_valida
 
-    if first_session_of_week(week) != week:
+    if not chave_valida(week, config):
         raise ValueError(f"A semana do livro precisa ser o primeiro pregão da semana na B3 "
-                         f"(segunda ou o próximo dia útil); recebido {week}.")
+                         f"(segunda ou o próximo dia útil) ou a data de início do mandato; "
+                         f"recebido {week}.")
 
 
 def _index_events(events: list[AuditEvent]) -> _Index:
@@ -301,7 +313,7 @@ class Book:
 
     def save_research_pack(self, pack: ResearchPack, actor: str | None = None) -> Path:
         """Grava o pacote (imutável por hash) e aponta ``research_pack.json`` para ele."""
-        _check_week(pack.week)
+        self.check_key(pack.week)
         h = pack.research_hash()
         path = self._research_file(pack.week, h)
         created = False
@@ -371,7 +383,7 @@ class Book:
         "DADOS SIMULADOS", inclusive quando o memo vem pronto em ``memo_markdown``.
         """
         week, k = proposal.week, proposal.version
-        _check_week(week)
+        self.check_key(week)
         path = self._proposal_path(week, k)
         if path.exists():
             raise FileExistsError(f"Proposta v{k} da semana {week} já existe (imutável).")
@@ -681,6 +693,51 @@ class Book:
                 week=week)
         return n
 
+    # ---------------------------------------------- gênese
+    def genesis(self) -> dict | None:
+        """Payload da gênese do livro (``genese.json``), ou ``None`` se o livro não tem gênese."""
+        path = self.root / GENESIS_FILE
+        if not path.exists():
+            return None
+        return _read_json(path)
+
+    def check_key(self, week: date) -> None:
+        """Chave válida para gravar no livro: :func:`_check_week` e, num livro aberto na data de
+        início (com gênese), nunca anterior a ela (a data de início do mandato configurada; sem
+        configuração, a da gênese)."""
+        _check_week(week, self.config)
+        gen = self.genesis()
+        if gen is None:
+            return
+        if self.config is not None:
+            inicio = self.config.fund.inception_date
+        else:
+            inicio = date.fromisoformat(str(gen.get("inception_date")))
+        if week < inicio:
+            raise ValueError(f"Livro aberto na data de início do mandato ({inicio}): a semana "
+                             f"{week} é anterior a ela.")
+
+
+    def _genesis_problems(self, events: list[AuditEvent]) -> list[str]:
+        """Gênese: no máximo um evento ``FUND_GENESIS``, sempre o primeiro da trilha, e o arquivo
+        ``genese.json`` com o payload exato desse evento (e vice-versa)."""
+        gen = [ev for ev in events if ev.event_type == GENESIS_EVENT]
+        path = self.root / GENESIS_FILE
+        if not gen:
+            return [f"{GENESIS_FILE} sem evento {GENESIS_EVENT} na trilha."] if path.exists() else []
+        problems: list[str] = []
+        if len(gen) > 1 or gen[0].seq != 0:
+            problems.append(f"Evento {GENESIS_EVENT} precisa ser único e o primeiro da trilha.")
+        if not path.exists():
+            return problems + [f"Evento {GENESIS_EVENT} sem o arquivo {GENESIS_FILE}."]
+        try:
+            payload = _read_json(path)
+        except ValueError as exc:
+            return problems + [f"{GENESIS_FILE} ilegível ({exc})."]
+        if sha256_obj(payload) != gen[0].payload_hash:
+            problems.append(f"{GENESIS_FILE} não confere com o evento {GENESIS_EVENT} da trilha.")
+        return problems
+
     # ---------------------------------------------- estado e integridade
     def _decision_is_intact(self, decision: Decision, proposal: Proposal) -> bool:
         """Consistência interna da decisão com a proposta gravada (sem hashes externos)."""
@@ -867,7 +924,8 @@ class Book:
 
         Detecta: edição ou remoção de eventos; pesquisa, proposta, decisão ou booking
         alterados, substituídos ou removidos; ponteiro de pesquisa redirecionado; decisões
-        inconsistentes com a proposta; e linhas do ledger alteradas ou anexadas fora do livro.
+        inconsistentes com a proposta; linhas do ledger alteradas ou anexadas fora do livro; e
+        gênese (``genese.json``) ausente, alterada ou fora do início da trilha.
         """
         problems: list[str] = []
         ok_chain, msg = self.audit.verify_chain()
@@ -879,4 +937,5 @@ class Book:
         for week in sorted(weeks):
             problems += self._week_problems(week, events, index)
         problems += self._ledger_problems(events)
+        problems += self._genesis_problems(events)
         return (not problems, problems)

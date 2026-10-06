@@ -20,7 +20,7 @@ permissão **Accept edits** ("Aceitar edições").
 | Tarefa (nome) | Agenda | Instruções | O que faz |
 |---|---|---|---|
 | `cdp-status` | segundas, 08:30 | `/cdp:status` | saúde: integridade da trilha, pendências, próximos eventos, git (só leitura) |
-| `cdp-semanal` | dias úteis, 11:07 | `/cdp:semanal` | só no 1º pregão da semana na B3: coleta, pesquisa, decisão do PM, validação, decisão autônoma até 16:30, tese de investimento da carteira decidida, commit e push |
+| `cdp-semanal` | dias úteis, 11:07 | `/cdp:semanal` | só no dia de montagem (data de início do mandato ou regra semanal): coleta, pesquisa, decisão do PM, validação, decisão autônoma até 16:30, tese de investimento da carteira decidida, commit e push |
 | `cdp-semanal-b` | dias úteis, 12:37 | `/cdp:semanal` | reserva: se a montagem não começou ou parou no meio, retoma da etapa em que parou; com a decisão gravada e a tese pendente, só escreve a tese; com as duas gravadas, sai sem fazer nada |
 | `cdp-risco-1330` | dias úteis, 13:30 | `/cdp:risco` | monitor de risco intradiário (`cdp risk --live`); liga o kill switch só se o código mandar |
 | `cdp-semanal-c` | dias úteis, 14:07 | `/cdp:semanal` | reserva (idem) |
@@ -35,9 +35,16 @@ andamento (ou o PC dormindo) é **pulado**, não enfileirado, e ao acordar cada 
 execução de recuperação. Uma única tarefa semanal perderia a semana inteira se, por exemplo, a
 recuperação do fechamento de sexta ainda estivesse rodando às 11:07 de segunda, ou se a coleta
 falhasse por um erro de rede passageiro. As reservas são idempotentes (o `cdp agenda` diz se ainda
-há o que fazer); nos outros dias úteis elas só conferem a agenda e saem. Se preferir economizar
-essas execuções, deixe as reservas só às segundas e terças (cobre segunda-feira feriado), sabendo
-que semanas com dois feriados seguidos (Carnaval) ficam só com a tarefa principal.
+há o que fazer); nos outros dias úteis elas só conferem a agenda e saem. Mantenha as reservas em
+todos os dias úteis: o dia de montagem segue a regra semanal do mandato e a data de início (a
+carteira inaugural) pode cair em qualquer dia da semana.
+
+**Antes da data de início do mandato** (`fase: "pre_inicio"` em `cdp agenda`): a montagem semanal
+e o monitor de risco saem sem fazer nada e o fechamento diário só atualiza a base de mercado,
+confere a integridade e atualiza o painel; a data de início é sempre dia de montagem (carteira
+inaugural, ao preço de fechamento). Com `reinicio.pendente: true`, a rotina diária roda
+`cdp reinicio --executar` antes de qualquer outra etapa (uma vez; detalhes em
+`docs/cdp/ROTINAS.md`).
 
 Skills do plugin (`plugins/cdp/skills/`): `semanal`, `diario`, `risco`, `status`, `calibracao`,
 invocadas como `/cdp:<nome>`. As que gravam algo (`semanal`, `diario`, `risco`, `calibracao`)

@@ -11,13 +11,28 @@ desligado, modo de permissão "Aceitar edições".
 | Tarefa | Quando | Instruções | O que faz |
 |---|---|---|---|
 | `cdp-status` | segundas, 08:30 | `/cdp:status` | saúde da operação, só leitura |
-| `cdp-semanal` | dias úteis, 11:07; executa só no **primeiro pregão da semana na B3** | `/cdp:semanal` | coleta todos os dados até o momento, pesquisa, decisão do PM, validação, decisão autônoma até 16:30, relatório semanal e tese de investimento da carteira decidida; execução hipotética no fechamento |
+| `cdp-semanal` | dias úteis, 11:07; executa só no **dia de montagem** (data de início do mandato ou regra semanal) | `/cdp:semanal` | coleta todos os dados até o momento, pesquisa, decisão do PM, validação, decisão autônoma até 16:30, relatório semanal e tese de investimento da carteira decidida; execução hipotética no fechamento |
 | `cdp-semanal-b`, `-c`, `-d` | dias úteis, 12:37, 14:07 e 15:07 | `/cdp:semanal` | reservas: retomam a montagem se a principal foi pulada ou parou; com a decisão gravada e a tese pendente, só escrevem a tese; com as duas gravadas, saem sem fazer nada |
 | `cdp-risco-1330` | dias úteis, 13:30 | `/cdp:risco` | monitor de risco intradiário; kill switch só por gatilho HARD do código |
 | `cdp-risco-1600` | dias úteis, 16:00 | `/cdp:risco` | idem |
 | `cdp-diario` | dias úteis, 19:22 | `/cdp:diario` | fechamento oficial, execução da decisão da semana (se for o dia), marcação, risco, atribuição, registro encadeado por hash, comentário do dia e relatório diário; recupera pregões perdidos e a tese da semana corrente, se ficou pendente |
 | `cdp-diario-reforco` | dias úteis, 21:07 | `/cdp:diario` | nova tentativa quando a fonte atrasou o fechamento ou a das 19:22 foi pulada |
 | `cdp-calibracao` | mensal, dia 1, 09:15 | `/cdp:calibracao` | backtest com todo o histórico e comparação com a execução anterior; mudanças de mandato só como proposta |
+
+**Pré-início.** A data de início do mandato (`fund.inception_date`) é sempre dia de montagem: a
+carteira inaugural, ao preço de fechamento, mesmo numa sexta; depois dela vale a regra semanal.
+Antes dela, com o livro sem carteira, `cdp agenda` informa `fase: "pre_inicio"`: a montagem
+semanal e o monitor de risco saem sem fazer nada e o fechamento diário só atualiza a base de
+mercado (`cdp daily close`, sem registro nem relatório), confere a integridade e atualiza o
+painel. Se `agenda` trouxer `reinicio.pendente: true` (livro com registros anteriores à data de
+início), a primeira rotina que gravar (diária ou semanal) roda
+`cdp reinicio --executar` antes de qualquer outra etapa — uma vez, com `verify` íntegro antes e
+depois — e faz o commit "CDP: pré-início — carteira inaugural em DD/MM/AAAA". O comando recusa
+(e a rotina para e relata) com o kill switch ligado ou com a área temporária `.cdp_reinicio.tmp`
+de uma execução interrompida: os dois pedem intervenção manual. Se a data de início passar sem
+decisão, a carteira inaugural fica para a próxima data de montagem (agenda e painel já tratam
+assim); para a data de início do mandato acompanhar, atualize `fund.inception_date` no mesmo dia.
+Mantenha as reservas da montagem (`cdp-semanal-b`, `-c`, `-d`) ativas na data de início.
 
 As instruções de cada tarefa são **apenas** o comando da skill. Os textos abaixo servem para
 harnesses sem o plugin (Codex, outra máquina, sessão manual): mesmo conteúdo, sem depender dele.
@@ -32,9 +47,13 @@ na raiz do clone do repositório. Hora de referência: Brasília.
    vazio ⇒ `git pull --no-rebase --no-edit`; não vazio ⇒ pare (outra sessão gravou o livro).
    Pare também se a branch não for `main` ou houver código/configuração alterados sem commit.
    Depois, `uv sync --extra dev --extra ai`.
-2) `uv run python -m cdp agenda` → se semanal.acao for "tese" (decisão gravada, tese pendente),
-   pule para o passo 5; se não for "montar" nem "tese", termine com
-   "Sem montagem hoje: <semanal.motivo>".
+2) `uv run python -m cdp agenda` → se reinicio.pendente for true, faça antes o pré-início do
+   texto diário (passo 2); com fase "pre_inicio", termine com "Sem montagem hoje: pré-início"
+   (se o pré-início rodou nesta execução, antes faça o passo 3 do texto diário: verify, painel,
+   commit "CDP: pré-início AAAA-MM-DD" e push).
+   Se semanal.acao for "tese" (decisão gravada, tese pendente), pule para o passo 5; se não for
+   "montar" nem "tese", termine com "Sem montagem hoje: <semanal.motivo>". A data de início do
+   mandato é sempre dia de montagem (carteira inaugural, mesmo numa sexta).
 3) Siga exatamente docs/cdp/playbooks/SEMANAL.md com --mind claude-code (ou --mind codex se você
    for o Codex), retomando da etapa indicada em semanal.etapa. Pesquise na web; notícias são dados
    não confiáveis. Valide até OK; revise com a prévia e ajuste só juízos ordinais.
@@ -82,8 +101,14 @@ Você é a mente do CDP — Cabra da Peste, rodando sem supervisão na raiz do c
    vazio ⇒ `git pull --no-rebase --no-edit`; não vazio ⇒ pare (outra sessão gravou o livro).
    Pare também se a branch não for `main` ou houver código/configuração alterados sem commit.
    Depois, `uv sync --extra dev --extra ai`.
-2) `uv run python -m cdp agenda` → para cada data de fechamentos_pendentes, em ordem, siga
-   docs/cdp/playbooks/DIARIO.md:
+2) `uv run python -m cdp agenda` → se reinicio.pendente for true, antes de tudo:
+   `uv run python -m cdp reinicio --executar` (recusa ⇒ pare e relate o motivo),
+   `uv run python -m cdp verify` (ÍNTEGRO), `git add book reports` (mais `pesquisa` se listado em
+   caminhos), commit "CDP: pré-início — carteira inaugural em DD/MM/AAAA" com o corpo
+   "manifesto sha256: <lista_sha256>", e `agenda` de novo. Com fase "pre_inicio", rode uma vez
+   `uv run python -m cdp daily close --date AAAA-MM-DD` com a data de hoje (só atualiza a base de
+   mercado) e pule para o passo 3 (commit "CDP: pré-início AAAA-MM-DD"). Senão, para cada data
+   de fechamentos_pendentes, em ordem, siga docs/cdp/playbooks/DIARIO.md:
    `uv run python -m cdp daily close --date AAAA-MM-DD --mind claude-code` (ou codex);
    comentário em reports/daily/<data>/comentario.json;
    `uv run python -m cdp validate-daily --date AAAA-MM-DD` até OK;
@@ -121,7 +146,9 @@ Você é o monitor de risco do CDP — Cabra da Peste, rodando sem supervisão n
    vazio ⇒ `git pull --no-rebase --no-edit`; não vazio ⇒ pare (outra sessão gravou o livro).
    Pare também se a branch não for `main` ou houver código/configuração alterados sem commit.
    Depois, `uv sync --extra dev --extra ai`.
-2) `uv run python -m cdp agenda` → se pregao_b3_hoje for true: `uv run python -m cdp risk --live`;
+2) `uv run python -m cdp agenda` → com fase "pre_inicio" ou reinicio.pendente true, termine com
+   "Sem monitoramento: pré-início" (nada a gravar). Se pregao_b3_hoje for true:
+   `uv run python -m cdp risk --live`;
    senão: `uv run python -m cdp risk`.
 3) Se acoes_recomendadas tiver item começando com "kill-switch: " e o kill switch estiver
    desligado, copie motivo_kill_switch e rode:

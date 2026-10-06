@@ -1905,6 +1905,8 @@ function plain(t) {
 }
 function firstCloseText() {
   if (ST.phase === "pre_inception" || !LIVEW) {
+    var INA = obj(ST.inaugural);
+    if (INA.date) return "Carteira inaugural em " + fdate(INA.date) + ", " + (INA.convention || "ao preço de fechamento") + "; composição, desempenho e decisões do comitê são publicados a partir dela.";
     return "O fundo ainda não tem carteira." + (WEEKLY_EVENT ? " A primeira decisão de investimento está prevista para " + fdate(WEEKLY_EVENT.when_local) + "." : "");
   }
   return "A carteira decidida em " + fdate(LIVEW.week) + " é executada no leilão de fechamento; cota, retorno e atribuição passam a ser publicados a partir do primeiro pregão após a execução.";
@@ -2161,7 +2163,7 @@ function perfStrip() {
     tile("Drawdown", pct(ST.drawdown), "máximo " + pct(first(per.max_drawdown, stats.max_drawdown))));
 }
 function thesisHighlight() {
-  if (!TH) return block("Tese de investimento", null, h("p", { class: "ink2" }, LIVEW ? "A tese da carteira desta semana ainda não foi publicada; a leitura do gestor está no Comitê de investimento." : "A tese de investimento é publicada após a primeira decisão do comitê."), LIVEW ? goTab("decisoes", "Comitê de investimento") : null);
+  if (!TH) return block("Tese de investimento", null, h("p", { class: "ink2" }, LIVEW ? "A tese da carteira desta semana ainda não foi publicada; a leitura do gestor está no Comitê de investimento." : obj(ST.inaugural).date ? "A tese de investimento é publicada com a carteira inaugural, em " + fdate(obj(ST.inaugural).date) + "." : "A tese de investimento é publicada após a primeira decisão do comitê."), LIVEW ? goTab("decisoes", "Comitê de investimento") : null);
   var b = h("button", { class: "btn btn-p", type: "button" }, "Ler a tese completa →");
   b.addEventListener("click", function () { showTab("tese"); window.scrollTo(0, 0); });
   return h("article", { class: "block th-hl" },
@@ -2214,8 +2216,8 @@ function eventsBox() {
   var b = h("button", { class: "go", type: "button" }, "Calendário completo na tese →");
   b.addEventListener("click", function () { showTab("tese"); thGo("calendario"); });
   return block("Próximos eventos", "próximas três semanas",
-    WEEKLY_EVENT ? kv([["Próxima decisão semanal", flocal(WEEKLY_EVENT.when_local)]]) : null,
-    cal.length ? h("ul", { class: "tl tl-c" }, cal.map(calItem)) : h("p", { class: "muted" }, TH ? "Sem datas da carteira no período." : "O calendário da carteira acompanha a tese da semana."),
+    WEEKLY_EVENT ? kv([[obj(ST.inaugural).date ? "Carteira inaugural" : "Próxima decisão semanal", flocal(WEEKLY_EVENT.when_local)]]) : null,
+    cal.length ? h("ul", { class: "tl tl-c" }, cal.map(calItem)) : h("p", { class: "muted" }, TH ? "Sem datas da carteira no período." : obj(ST.inaugural).date ? "Sem eventos de carteira antes da carteira inaugural." : "O calendário da carteira acompanha a tese da semana."),
     TH && arr(TH.calendar).length ? b : null);
 }
 function renderVisao(p) {
@@ -2591,6 +2593,12 @@ function renderTese(p) {
         has(ht.summary_md) ? tmd(ht.summary_md, "lead-md") : null,
         h("p", { class: "note" }, "Sem carteira nova não há nova tese; a leitura do gestor sobre a semana está no Comitê de investimento."),
         goTab("decisoes", "Comitê de investimento"))));
+    return;
+  }
+  if (!TH && !LIVEW && obj(ST.inaugural).date) {
+    p.appendChild(sec("Tese de investimento", null, h("div", { class: "block" },
+      h("p", { class: "lead" }, "A tese de investimento é publicada com a carteira inaugural, em " + fdate(obj(ST.inaugural).date) + "."),
+      h("p", { class: "note" }, "Ela explica por que cada nome está na carteira, o tamanho de cada posição, as exposições, a sensibilidade ao mercado e o orçamento de risco."))));
     return;
   }
   if (!TH) {
@@ -4139,7 +4147,7 @@ function renderMandato(p) {
 
   var sigs = Object.keys(sw).filter(function (k) { return isNum(sw[k]) && sw[k] > 0; }).map(function (k) { return (STYLE_PT[k] || k).toLowerCase() + " " + pct(sw[k], 0); });
   var steps = [
-    ["Decisão semanal", "A carteira é decidida uma vez por semana, no primeiro pregão da semana na B3, com dados até o pregão anterior, e executada no leilão de fechamento do mesmo dia. Entre as decisões, a carteira é acompanhada diariamente contra o mandato."],
+    ["Decisão semanal", obj(ST.inaugural).date ? "A carteira inaugural é decidida em " + fdate(obj(ST.inaugural).date) + " e executada no leilão de fechamento do mesmo dia; a partir daí, a carteira é decidida uma vez por semana, com dados até o pregão anterior, executada no leilão de fechamento do dia da decisão e acompanhada diariamente contra o mandato." : "A carteira é decidida uma vez por semana, no primeiro pregão da semana na B3, com dados até o pregão anterior, e executada no leilão de fechamento do mesmo dia. Entre as decisões, a carteira é acompanhada diariamente contra o mandato."],
     ["Alpha quantitativo", "Sinais padronizados por emissor" + (sigs.length ? " (" + sigs.join(", ") + ")" : "") + ", ortogonalizados aos fatores de risco" + (isNum(MAL.horizon_weeks) ? ", com horizonte de " + MAL.horizon_weeks + " semanas" : "") + "."],
     ["Pesquisa", "Pesquisa fundamental por emissor, análise de risco de short (squeeze e aluguel) e leitura macro por país, com apoio de IA. Visões da pesquisa e do gestor só inclinam o alpha dentro de um teto" + (isNum(MAL.max_view_tilt_z) ? " de " + fnum(MAL.max_view_tilt_z, 1) + " desvio-padrão" : "") + " e só restringem risco; nunca ampliam limites do mandato."],
     ["Modelo de risco", "Modelo fatorial com mercado, países, setores, estilos e commodities" + (isNum(MRM.history_days) ? ", estimado com " + int(MRM.history_days) + " pregões de histórico" : "") + (MRM.market_proxy ? " e o ETF " + MRM.market_proxy + " como referência de mercado" : "") + ". Mede volatilidade ex-ante, VaR, ES, contribuições ao risco e cenários de estresse."],

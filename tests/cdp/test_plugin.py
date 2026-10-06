@@ -31,8 +31,8 @@ TESES = ROOT / "docs" / "cdp" / "teses"
 #: Versão do plugin e resumo das skills nessa versão. A instalação pelo marketplace do GitHub guarda
 #: uma cópia presa à ``version`` (docs/cdp/LOCAL.md): skills novas com a versão antiga nunca chegam
 #: às rotinas. Mudou uma skill ⇒ suba a ``version`` em plugin.json e atualize os dois valores.
-PLUGIN_VERSION = "1.2.1"
-SKILLS_SHA256 = "000606f2ddfa5b94b6b6eae399ddf71489dbbf5723888440e79acbf28c0717c8"
+PLUGIN_VERSION = "1.3.0"
+SKILLS_SHA256 = "072eb2d2a73bce334230f689a238d16b5b27d05af9e6e4682660548061402646"
 
 
 def _skill_files() -> list[Path]:
@@ -330,7 +330,9 @@ def test_writer_skills_end_by_republishing_the_painel(name: str):
     assert "uv run python -m cdp painel" in cmds
     # Ordem: painel (código) → commit/push principal (inclui o HTML) → republicação no artifact.
     i_painel = body.index("uv run python -m cdp painel")
-    i_commit = body.index('git commit -m "CDP: ')
+    # O commit do pré-início (abertura do livro, antes de qualquer etapa) vem antes do painel;
+    # o commit principal é o primeiro depois dele.
+    i_commit = body.index('git commit -m "CDP: ', i_painel)
     i_read, i_pub = body.index('action: "read"'), body.index('action: "publish"')
     # read → list dos arquivos publicados → publish: a ferramenta só substitui um arquivo
     # publicado (data.json) que a sessão leu pelo caminho, viu numa listagem ou publicou.
@@ -381,7 +383,8 @@ def test_thesis_step_follows_the_decision_and_precedes_the_painel():
     sem = (PLUGIN / "skills" / "semanal" / "SKILL.md").read_text(encoding="utf-8")
     idx = [sem.index("uv run python -m cdp weekly decide --week"),
            sem.index("uv run python -m cdp verify", sem.index("weekly decide --week")),
-           *(sem.index(s) for s in steps), sem.index('git commit -m "CDP: ')]
+           *(sem.index(s) for s in steps),
+           sem.index('git commit -m "CDP: ', sem.index("uv run python -m cdp painel"))]
     assert idx == sorted(idx), idx
     flat = " ".join(sem.split())
     assert re.search(r"Você só escreve .{0,200}" + re.escape(tese_json), flat)
@@ -391,7 +394,7 @@ def test_thesis_step_follows_the_decision_and_precedes_the_painel():
     assert "tese" in tail.lower()
     dia = (PLUGIN / "skills" / "diario" / "SKILL.md").read_text(encoding="utf-8")
     idx = [dia.index("uv run python -m cdp daily publish"), *(dia.index(s) for s in steps),
-           dia.index('git commit -m "CDP: ')]
+           dia.index('git commit -m "CDP: ', dia.index("uv run python -m cdp painel"))]
     assert idx == sorted(idx), idx
     flat = " ".join(dia.split())
     assert "teses_pendentes" in flat and "semanal.semana" in flat
@@ -468,8 +471,7 @@ def test_thesis_handoff_draft_is_documented_and_adopted_before_writing():
     for needle in ("`<semana>.json`", "rascunho_adotado", "validate-tese", "docs/cdp/TESE.md",
                    "Nunca faça commit de `book/`"):
         assert needle in readme, needle
-    drafts = sorted(TESES.glob("*.json"))
-    assert drafts  # a tese da semana 2026-10-05 viaja como rascunho entregue
+    drafts = sorted(TESES.glob("*.json"))  # rascunhos entregues (pode não haver nenhum)
     for draft in drafts:
         assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", draft.stem), draft.name
         data = json.loads(draft.read_text(encoding="utf-8"))
@@ -786,3 +788,43 @@ def test_no_model_identifiers_in_local_operation_files():
         if path.is_file():
             hits = MODEL_RE.findall(path.read_bytes().decode("utf-8-sig"))
             assert not hits, f"{path}: {hits}"
+
+
+def test_pre_inception_in_the_writer_skills():
+    """Pré-início: com ``reinicio.pendente`` a rotina diária abre o livro na data de início antes
+    de qualquer outra etapa (recusa ⇒ parar), confere a integridade e faz o commit do pré-início
+    só com ``book``, ``reports`` e ``pesquisa``; antes da data de início a montagem e o risco
+    saem sem fazer nada."""
+    dia = (PLUGIN / "skills" / "diario" / "SKILL.md").read_text(encoding="utf-8")
+    flat = " ".join(dia.split())
+    i_agenda = dia.index("uv run python -m cdp agenda")
+    i_reset = dia.index("uv run python -m cdp reinicio --executar")
+    i_close = dia.index("uv run python -m cdp daily close --date")
+    assert i_agenda < i_reset < i_close
+    assert "**antes de qualquer outra etapa**" in flat and "**pare** e relate o `motivo`" in flat
+    assert ('git commit -m "CDP: pré-início — carteira inaugural em DD/MM/AAAA" -m "manifesto '
+            'sha256: <lista_sha256>"') in flat
+    assert "git add book reports" in flat and "`fase: \"pre_inicio\"`" in flat
+    # "Nada a fazer" só fora do pré-início (antes da data de início as listas estão sempre vazias
+    # e a rotina ainda precisa do verify, do painel, do push e do artifact).
+    assert re.search(r"Fora do pré-início \(`fase: \"operacao\"`\): se as duas primeiras listas"
+                     r".{0,160}Nada a fazer", flat)
+    # Pré-início: a base de mercado é atualizada (daily close sem registro) antes do verify.
+    i6 = dia.index("## 6. Integridade e painel")
+    i_mkt = dia.index("uv run python -m cdp daily close --date AAAA-MM-DD\n", i6)
+    assert i_mkt < dia.index("uv run python -m cdp verify", i6) < dia.index("## 7.")
+    sem = " ".join((PLUGIN / "skills" / "semanal" / "SKILL.md").read_text(encoding="utf-8").split())
+    assert "Sem montagem hoje: pré-início" in sem and "reinicio --executar" in sem
+    assert sem.index("reinicio --executar") < sem.index("weekly prepare --date")
+    # Pré-início feito pela montagem: publica (passos 8 a 10, com push) antes de encerrar.
+    assert "O push segue no passo 9" not in sem
+    assert re.search(r"pré-início do item acima rodou \*\*nesta execução\*\*, faça os passos 8, "
+                     r"9 e 10 .{0,200}\"CDP: pré-início AAAA-MM-DD\".{0,120}push", sem)
+    risco = " ".join((PLUGIN / "skills" / "risco" / "SKILL.md").read_text(encoding="utf-8").split())
+    assert "Sem monitoramento: pré-início" in risco
+    assert risco.index("pre_inicio") < risco.index("uv run python -m cdp risk --live")
+    for doc in ("docs/cdp/ROTINAS.md", "docs/cdp/LOCAL.md", "docs/cdp/playbooks/DIARIO.md",
+                "docs/cdp/playbooks/SEMANAL.md", ".claude/skills/cdp-diario/SKILL.md",
+                ".claude/skills/cdp-semanal/SKILL.md"):
+        text = (ROOT / doc).read_text(encoding="utf-8")
+        assert "pre_inicio" in text and "reinicio" in text, doc

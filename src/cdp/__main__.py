@@ -1,6 +1,7 @@
 """CLI do CDP — Cabra da Peste (interface comum para Claude Code e Codex).
 
-Fluxo semanal (primeiro pregão da semana na B3):
+Fluxo semanal (primeiro pregão da semana na B3; a carteira inaugural, na data de início do
+mandato):
     cdp weekly prepare --date D --mind claude-code|codex
     (a mente escreve book/<D>/inputs/research_pack.json e pm_decision.json)
     cdp validate --week D
@@ -24,8 +25,11 @@ Rotinas locais (plugin ``cdp`` do Claude Code; ver docs/cdp/LOCAL.md):
     cdp painel [--out-dir D] [--sem-local]  (painel de gestão: index.html + data.json)
     cdp painel --publicado           (registra a página publicada no artifact; só depois de publicar)
 
-Cobertura, notas, relatório semanal e pré-início (contrato registrado; respondem "em
-implementação" com código 2 até a entrega de cada módulo):
+Pré-início (uma vez, pela rotina, quando ``agenda`` informa ``reinicio.pendente``):
+    cdp reinicio [--executar] [--pesquisa DIR]   (sem --executar só mostra o plano, não grava)
+
+Cobertura, notas e relatório semanal (contrato registrado; respondem "em implementação" com
+código 2 até a entrega de cada módulo):
     cdp cobertura run --date D [--emissores IID,IID] [--offline]
     cdp cobertura verify
     cdp nota agenda [--date D]
@@ -34,7 +38,6 @@ implementação" com código 2 até a entrega de cada módulo):
     cdp nota publish --issuer IID --date D
     cdp weekly close-report --date D [--publish]
     cdp validate-weekly-report --date D
-    cdp reinicio [--executar]        (pré-início; sem --executar só mostra o plano, não grava)
 
 Outros: status, verify, demo, backtest, fetch-base, kill-switch.
 """
@@ -96,15 +99,16 @@ def _print(obj) -> None:
 
 
 def cmd_status(args: argparse.Namespace) -> int:
-    from .calendar import first_session_of_week, is_rebalance_day, open_markets
+    from .calendar import chave_da_semana, dia_de_montagem, open_markets
     from .workflow.runtime import Runtime
 
     d = args.date or _today_brt()
     rt = Runtime.from_args(args)
-    week = first_session_of_week(d)
+    week = chave_da_semana(d, rt.cfg)
     info = {
         "data": d, "pregao_b3": open_markets(d).get("BR"), "mercados_abertos": open_markets(d),
-        "dia_de_rebalanceamento": is_rebalance_day(d), "semana": week,
+        "dia_de_rebalanceamento": dia_de_montagem(d, rt.cfg) and not rt.pre_inicio(d),
+        "semana": week,
         "kill_switch": rt.kill_switch_active(),
         "decisao_da_semana": bool(week and rt.book.list_decisions(week)),
         "ultimo_registro_diario": rt.last_record_date(),
@@ -126,15 +130,32 @@ def cmd_fetch_base(args: argparse.Namespace) -> int:
     return 0
 
 
+def _reinicio_pendente(rt) -> str | None:
+    """Motivo, se o livro ainda espera o pré-início (``cdp reinicio --executar``)."""
+    from .workflow.reinicio import situacao
+
+    sit = situacao(rt)
+    return sit["motivo"] if sit["pendente"] else None
+
+
 def cmd_weekly_prepare(args: argparse.Namespace) -> int:
-    from .calendar import is_rebalance_day
+    from .calendar import dia_de_montagem
     from .workflow.runtime import Runtime
 
     d = args.date or _today_brt()
-    if not args.force and not is_rebalance_day(d):
-        print(f"{d} não é o primeiro pregão da semana na B3 — nada a fazer.")
-        return 0
     rt = Runtime.from_args(args)
+    pendente = _reinicio_pendente(rt)
+    if pendente:
+        print(f"Pré-início pendente: {pendente}.", file=sys.stderr)
+        return 1
+    if not args.force and (rt.pre_inicio(d) or not dia_de_montagem(d, rt.cfg)):
+        inicio = rt.cfg.fund.inception_date
+        if d < inicio:
+            print(f"Pré-início: carteira inaugural em {inicio:%d/%m/%Y}, ao preço de "
+                  "fechamento — nada a fazer.")
+        else:
+            print(f"{d} não é dia de montagem da carteira — nada a fazer.")
+        return 0
     out = rt.weekly_prepare(d, mind=args.mind, live=not args.offline)
     _print(out)
     return 0
@@ -178,6 +199,10 @@ def cmd_daily(args: argparse.Namespace) -> int:
 
     rt = Runtime.from_args(args)
     d = args.date or _today_brt()
+    pendente = _reinicio_pendente(rt) if args.action != "publish" else None
+    if pendente:
+        print(f"Pré-início pendente: {pendente}.", file=sys.stderr)
+        return 1
     if args.action == "publish":
         out = rt.daily_publish(d)
     else:
@@ -272,6 +297,7 @@ def cmd_agenda(args: argparse.Namespace) -> int:
 
 def cmd_risk(args: argparse.Namespace) -> int:
     from .workflow.risk_monitor import (
+        PRE_INICIO,
         RISK_DIRNAME,
         run_risk_monitor,
         summary_view,
@@ -281,9 +307,13 @@ def cmd_risk(args: argparse.Namespace) -> int:
 
     rt = Runtime.from_args(args)
     res = run_risk_monitor(rt, as_of=args.date, live=args.live)
+    view = summary_view(res)
+    if res.get("status") == PRE_INICIO:  # sem carteira: nada a monitorar nem a gravar
+        view["relatorio"] = None
+        _print(view)
+        return 0
     out_root = Path(args.out) if args.out else Path(args.reports) / RISK_DIRNAME
     paths = write_risk_report(res, out_root, rt.cfg)
-    view = summary_view(res)
     view["relatorio"] = paths
     _print(view)
     return 0
@@ -486,8 +516,12 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--emissores", type=_iids, default=None,
                    help="execução parcial: IID,IID (ex.: após resultados)")
     s.add_argument("--offline", action="store_true", help="sem coleta ao vivo")
+    s.add_argument("--raiz", default=None,
+                   help="raiz do arquivo de dados públicos (<raiz>/publico/...; padrão: data/)")
     s.set_defaults(func=cmd_cobertura)
     s = csub.add_parser("verify", help="confere o livro da cobertura, manifestos e placar")
+    s.add_argument("--sem-recalculo", action="store_true",
+                   help="só confere cadeia e arquivos (não refaz os preços-alvo)")
     s.set_defaults(func=cmd_cobertura)
 
     n = sub.add_parser("nota", help="notas de pesquisa por emissor (números só do código)")
@@ -511,10 +545,12 @@ def build_parser() -> argparse.ArgumentParser:
     s.set_defaults(func=cmd_validate_nota)
 
     s = sub.add_parser("reinicio",
-                       help="pré-início: arquiva o ensaio anterior à data de início e abre a trilha "
-                            "nova (uma vez; sem --executar só mostra o plano)")
+                       help="pré-início: abre o livro na data de início do mandato (uma vez; sem "
+                            "--executar só mostra o plano)")
     s.add_argument("--executar", action="store_true",
                    help="executa (sem a opção: simulação, nada é gravado)")
+    s.add_argument("--pesquisa", default="pesquisa",
+                   help="pasta do material de pesquisa da mente (padrão: pesquisa)")
     s.set_defaults(func=cmd_reinicio)
 
     s = sub.add_parser("verify", help="verifica trilha de auditoria, track record e decisões")

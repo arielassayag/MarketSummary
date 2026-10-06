@@ -6,7 +6,7 @@ rotinas: uma tese gravada em `book/` noutro clone pararia a sincronização de t
 um `tese publish` fora dele separaria a trilha encadeada por hash. Regras completas:
 `docs/cdp/TESE.md`, seção "Rascunho entregue fora do clone das rotinas".
 
-- **Nome**: `<semana>.json`, com a semana da decisão em AAAA-MM-DD (ex.: `2026-10-05.json`).
+- **Nome**: `<semana>.json`, com a semana da decisão em AAAA-MM-DD (ex.: `2026-10-16.json`).
 - **Conteúdo**: o mesmo schema de `book/<semana>/tese/tese.json` (`docs/cdp/TESE.md`, seção 6),
   com `week` igual ao nome do arquivo e `mind` de quem escreveu. Números só como `{{fact:id}}`;
   datas só como 2026-10-25, 25/10/2026 ou "25 de outubro".

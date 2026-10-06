@@ -38,7 +38,7 @@ import pandas as pd
 
 from .. import SIMULATED_DATA_NOTICE
 from ..audit import AuditLog
-from ..calendar import first_session_of_week, previous_session
+from ..calendar import chave_da_semana, previous_session
 from ..config import FundConfig
 from ..contracts import DailyPosition, DailyRecord, Proposal, Side
 from ..hashing import sha256_obj
@@ -53,6 +53,8 @@ if TYPE_CHECKING:  # pragma: no cover - só para tipos
 MIN_LIVE_COVERAGE = 0.95
 #: Pasta dos relatórios de risco dentro de ``reports/``.
 RISK_DIRNAME = "risk"
+#: ``status`` antes da data de início do mandato com o livro vazio (nada a monitorar nem gravar).
+PRE_INICIO = "pré-início"
 #: Ações recomendadas que ligam o kill switch começam com este prefixo (contrato com a skill).
 KILL_SWITCH_PREFIX = "kill-switch: "
 REVIEW_PREFIX = "revisar: "
@@ -635,7 +637,7 @@ def _kill_switch_info(rt: Runtime) -> dict:
 
 def _pending_decision(rt: Runtime, as_of: date) -> dict | None:
     """Decisão da semana gravada e ainda não efetivada (executa no fechamento, MOC)."""
-    week = first_session_of_week(as_of)
+    week = chave_da_semana(as_of, rt.cfg)
     if week is None or week > as_of:
         return None
     b = rt.book
@@ -695,6 +697,12 @@ def run_risk_monitor(rt: Runtime, *, as_of: date | None = None, live: bool = Fal
     }
     triggers: list[Trigger] = []
     limitations: list[str] = []
+    if rt.pre_inicio(as_of):
+        inicio = cfg.fund.inception_date
+        out.update({"status": PRE_INICIO, "aviso": "",
+                    "mensagem": (f"Carteira inaugural em {inicio:%d/%m/%Y}, ao preço de "
+                                 "fechamento; sem posições a monitorar.")})
+        return _finish(out, triggers, limitations, ks)
     track = rt.track()
     try:
         dates = [d for d in track.dates() if d <= as_of]
@@ -1041,6 +1049,6 @@ def summary_view(res: dict) -> dict:
     return out
 
 
-__all__ = ["KILL_SWITCH_PREFIX", "MIN_LIVE_COVERAGE", "RISK_DIRNAME", "Trigger", "drawdown_stage",
-           "render_risk_markdown", "risk_json", "run_risk_monitor", "squeeze_stop_checks",
+__all__ = ["KILL_SWITCH_PREFIX", "MIN_LIVE_COVERAGE", "PRE_INICIO", "RISK_DIRNAME", "Trigger",
+           "drawdown_stage", "render_risk_markdown", "risk_json", "run_risk_monitor", "squeeze_stop_checks",
            "summary_view", "write_risk_report"]

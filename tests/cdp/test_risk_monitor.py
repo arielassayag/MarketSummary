@@ -211,7 +211,10 @@ def test_stale_record_is_flagged(demo):
 
 
 def test_no_record_yet(tmp_path):
-    rt = _rt(tmp_path)
+    cfg = load_config()  # mandato já iniciado (data de início explícita): livro sem registro
+    cfg = cfg.model_copy(update={"fund": cfg.fund.model_copy(
+        update={"inception_date": date(2024, 3, 4)})})
+    rt = _rt(tmp_path, cfg=cfg)
     res = run_risk_monitor(rt, as_of=SESSION, live=True, now=_at(SESSION, 15),
                            fetch_quotes=lambda *a: pytest.fail("sem carteira: não busca cotações"))
     assert res["status"] == "sem registro"

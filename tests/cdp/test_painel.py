@@ -3,6 +3,7 @@ publicação em ``index.html`` + ``data.json`` (perfil ``publicacao``) e cópia 
 
 from __future__ import annotations
 
+import base64
 import copy
 import hashlib
 import json
@@ -941,6 +942,48 @@ def test_template_pins_investor_text_fixes():
                  "O risco vem principalmente do Brasil.", "carteira levemente comprada",
                  "somente em dólar", "essencialmente de valor"):
         assert scrub(keep) == keep, keep
+
+
+def test_template_carries_the_brand_identity():
+    """Identidade "Sertão em xilogravura" (docs/cdp/marca/IDENTIDADE.md): o estilo embute as
+    máscaras da marca exatamente como gravadas em docs/cdp/marca/ (geradas por
+    scripts/cdp_marca.py), pinta tudo por tokens nos três estados de tema (o escuro só na
+    tela), dá nome acessível ao logo e cabe no limite de publicação (bytes e linha)."""
+    root = Path(__file__).resolve().parents[2]
+    template = (root / "src" / "cdp" / "workflow" / "painel_template.html").read_text(
+        encoding="utf-8")
+    css = template[template.index("<style>") + len("<style>"):template.index("</style>")]
+    flat = css.replace("\\\n", "")  # continuação de string CSS (data URIs em várias linhas)
+    for name in ("marca_tinta.webp", "marca_sol.webp", "marca_cabra.webp"):
+        b64 = base64.b64encode((root / "docs" / "cdp" / "marca" / name).read_bytes()).decode()
+        assert f'url("data:image/webp;base64,{b64}")' in flat, name
+    assert css.count("/* >>> marca:") == 1 and css.count("/* <<< marca */") == 1
+    for token in ("--marca-tinta", "--marca-sol", "--marca-cabra", "--marca-proporcao",
+                  "--marca-proporcao-topo", "--orn-estrela", "--orn-horizonte", "--orn-chapada",
+                  "--orn-renda", "--orn-rachado", "--orn-ceu", "--grao", "--tinta", "--sol"):
+        assert f"var({token})" in css, token
+    # três estados: claro no :root, escuro do sistema (salvo escolha "clara") e escuro escolhido
+    assert ":root {\n  --bg: #f4efe5;" in css
+    assert ('@media screen and (prefers-color-scheme: dark) {\n'
+            '  :root:not([data-theme="light"]) {') in css
+    assert '@media screen {\n  :root[data-theme="dark"] {' in css
+    assert "@media print" in css and "@media (prefers-reduced-motion: reduce)" in css
+    assert "body {\n  margin: 0; background-color: var(--bg);" in css
+    assert ('<span class="brand-mark" id="brand-mark" role="img" '
+            'aria-label="CDP Asset Management — Cabra da Peste">') in template
+    assert "family=Cinzel" in template and "family=Alegreya" in template
+    assert "Source+Serif" not in template and "mask-composite" not in css
+    # filtro roda antes da máscara: sombra em peça recortada nunca aparece
+    assert "drop-shadow" not in css
+    # alto contraste (logo e emblema em CanvasText), navegador sem máscara e abas que rolam com
+    # a aba ativa fora do esmaecimento
+    assert "@media (forced-colors: active)" in css and "CanvasText" in css
+    assert "@supports not ((-webkit-mask-image: none) or (mask-image: none))" in css
+    assert "scroll-padding-inline" in css
+    for name, text in page_assets().items():
+        assert len(text.encode("utf-8")) <= PAGE_MAX_BYTES, name
+        assert max_line(text) <= PAGE_MAX_LINE, name
+        assert all(len(line) <= PAGE_MAX_LINE for line in text.splitlines()), name
 
 
 def test_publication_compact_forms_roundtrip():

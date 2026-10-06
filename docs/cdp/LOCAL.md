@@ -274,7 +274,7 @@ uv run python -m cdp painel --publicado
 ```
 
 - Saída em `artifacts/painel/` (versionada; vai em cada commit das rotinas):
-  - `artifacts/painel/index.html` — a casca da página (cerca de 3 KB): cabeçalho, marcação, o
+  - `artifacts/painel/index.html` — a casca da página (cerca de 3,5 KB): cabeçalho, marcação, o
     elemento de dados vazio (`null`) e a versão da página (SHA-256 do formato de publicação e do
     template) carimbada, com referências ao estilo e ao script. Ao abrir, a página busca
     `data.json` ao lado dela e mostra um estado de carregamento; se não conseguir, mostra ao
@@ -354,6 +354,13 @@ uv run python -m cdp painel --publicado
   página, se ela ainda não tiver sido registrada como publicada).
 - A pasta `artifacts/painel/` existe no repositório (com `.gitkeep`), então o `git add` das
   rotinas funciona mesmo quando o painel falha.
+- **Identidade visual.** O portal segue a identidade "Sertão em xilogravura" da marca (tinta de
+  xilogravura sobre papel de cal, o sol da marca só em ornamento, tema claro e escuro): guia em
+  `docs/cdp/marca/IDENTIDADE.md`. O logo entra no estilo como máscaras geradas de
+  `docs/cdp/marca/cdp-logo.png` por
+  `uv run --extra dev python scripts/cdp_marca.py --mascaras`; como qualquer mudança no
+  template, isso muda a versão da página e a próxima rotina republica a casca, o estilo e o
+  script.
 - O artifact é privado por padrão; compartilhar o link é decisão sua, no claude.ai.
 
 ## 11. Kill switch

@@ -29,6 +29,7 @@ from ..contracts import (
     TradeAction,
 )
 from ..universe import listing_market
+from .execucao import fechamentos_necessarios
 
 LOT_SIZE: dict[str, int] = {"BR": 100, "MX": 1, "CL": 1, "CO": 1, "PE": 1, "AR": 1, "US": 1}
 DEFAULT_LOT = 1
@@ -110,11 +111,17 @@ def build_positions(
     betas: pd.Series | None, nav: float, fx_last: pd.Series,
     participation: float = DEFAULT_PARTICIPATION,
     short_participation: float | None = None,
+    capacidade_fechamento: pd.Series | None = None,
 ) -> list[PositionTarget]:
     """Converte pesos por emissor em posições-alvo por linha de execução.
 
     ``days_to_liquidate`` usa ``participation`` nos longs e ``short_participation`` nos shorts
     (padrão: a mesma participação; o mandato usa ``short_participation_rate`` para shorts).
+    Com a execução no fechamento (seção ``execution``), o chamador passa
+    ``capacidade_fechamento`` (USD por fechamento por ticker, a capacidade de REDUÇÃO — lado
+    comprado da tabela de capacidade) e ``days_to_liquidate`` passa a ser o número de
+    FECHAMENTOS para zerar a posição (:func:`cdp.portfolio.execucao.fechamentos_necessarios`;
+    ``None`` sem capacidade conhecida ou com o mercado sem fechamento elegível).
     Erros explícitos: peso ``NaN``; short sem linha de short; long sem linha comprada nem
     linha primária; moeda da linha desconhecida. Ordenação: longs por peso decrescente,
     depois shorts do maior para o menor (empate por ``issuer_id``).
@@ -160,7 +167,10 @@ def build_positions(
         pct_adtv = abs(notional) / adtv if adtv else None
         part = participation if side == Side.LONG or short_participation is None \
             else short_participation
-        days = abs(notional) / (part * adtv) if adtv else None
+        if capacidade_fechamento is not None:
+            days = fechamentos_necessarios(notional, _opt(capacidade_fechamento, ticker) or 0.0)
+        else:
+            days = abs(notional) / (part * adtv) if adtv else None
 
         bucket = "NA"
         score = None
@@ -214,7 +224,9 @@ def _usd_per_share(t: PositionTarget | None, b: BookedPosition | None) -> float 
 def build_trades(
     targets: list[PositionTarget], current: list[BookedPosition] | None, nav: float,
     cost_bps: pd.Series | None = None, participation: float = DEFAULT_PARTICIPATION,
-    line_adtv: pd.Series | None = None,
+    line_adtv: pd.Series | None = None, *,
+    capacidade_long: pd.Series | None = None, capacidade_short: pd.Series | None = None,
+    congelados: frozenset[str] | set[str] | None = None,
 ) -> list[Trade]:
     """Ordens para levar a carteira atual às posições-alvo, linha a linha.
 
@@ -225,6 +237,11 @@ def build_trades(
       para BUY/COVER, negativo para SELL/SHORT).
     - ``cost_bps``: custo estimado em bps do valor negociado, indexado por ticker ou emissor.
     - ``line_adtv``: ADTV por ticker para linhas que só existem na carteira atual.
+    - Execução no fechamento (seção ``execution``): ``capacidade_long``/``capacidade_short``
+      (USD por fechamento por ticker; a de short vale só para ``SHORT``, que abre ou aumenta
+      vendido) tornam ``est_days`` o número de FECHAMENTOS para executar a ordem
+      (``None`` sem capacidade); ``congelados`` (emissores sem linha negociável no fechamento)
+      não geram ordem — as ações ficam como estão.
 
     Com quantidades conhecidas dos dois lados, a ordem segue a diferença de ações (deriva de
     preço sem mudança de quantidade não gera ordem) e o notional é ações × preço USD por ação
@@ -252,6 +269,8 @@ def build_trades(
         ref = t if t is not None else b
         assert ref is not None  # ticker vem da união das duas fontes
         issuer, currency = ref.issuer_id, ref.currency
+        if congelados and issuer in congelados:
+            continue
         new_w = t.weight if t is not None else 0.0  # sem alvo: linha deve ser zerada
         old_w = b.weight if b is not None else 0.0  # sem posição atual: nada a desfazer
         new_sh = (_signed_shares(t.shares, t.weight) if t is not None else 0)
@@ -298,11 +317,23 @@ def build_trades(
                 issuer_id=issuer, ticker=ticker, action=action, shares=sh,
                 notional_usd=notional, weight_change=float(dw),
                 pct_adtv=notional / adtv if adtv else None, est_cost_bps=cost,
-                est_days=notional / (participation * adtv) if adtv else None,
+                est_days=_est_days(action, ticker, notional, adtv, participation,
+                                   capacidade_long, capacidade_short),
                 currency=currency,
             ))
     trades.sort(key=lambda x: (x.issuer_id, _ACTION_ORDER[x.action], x.ticker))
     return trades
+
+
+def _est_days(action: TradeAction, ticker: str, notional: float, adtv: float | None,
+              participation: float, cap_long: pd.Series | None,
+              cap_short: pd.Series | None) -> float | None:
+    """Dias (ADTV × participação) ou, com a capacidade do fechamento, fechamentos."""
+    if cap_long is None and cap_short is None:
+        return notional / (participation * adtv) if adtv else None
+    caps = cap_short if action == TradeAction.SHORT else cap_long
+    return fechamentos_necessarios(notional, (_opt(caps, ticker) if caps is not None else None)
+                                   or 0.0)
 
 
 # ==========================================================

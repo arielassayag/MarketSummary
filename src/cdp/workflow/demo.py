@@ -3,12 +3,16 @@
 Roda o mesmo caminho operacional das rotinas reais (``Runtime``), sem internet e sem chaves de
 API, sobre um mercado sintético determinístico:
 
-1. no primeiro pregão de cada semana: ``weekly prepare`` → a mente ``demo`` escreve
-   ``inputs/research_pack.json`` e ``inputs/pm_decision.json`` → ``validate`` → ``weekly decide``
-   (decisão autônoma sob gates determinísticos e relatório semanal) → ``tese prepare`` → a
-   mente ``demo`` escreve ``tese/tese.json`` (só fatos citados) → ``tese publish``;
+1. no dia de montagem de cada semana (regra do mandato: o último pregão da semana na NYSE com
+   ``LAST_US_SESSION``; o primeiro pregão da B3 na regra legada): ``weekly prepare`` → a mente
+   ``demo`` escreve ``inputs/research_pack.json`` e ``inputs/pm_decision.json`` → ``validate`` →
+   ``weekly decide`` (decisão autônoma sob gates determinísticos e relatório da decisão) →
+   ``tese prepare`` → a mente ``demo`` escreve ``tese/tese.json`` (só fatos citados) →
+   ``tese publish``;
 2. em cada pregão: ``daily close`` (execução MOC da decisão da semana, marcação, risco,
    atribuição e registro encadeado por hash) → comentário da mente ``demo`` → ``daily publish``;
+   no dia de montagem, também o relatório semanal de resultado (``weekly close-report``, com o
+   comentário-modelo da mente ``demo``);
 3. ``verify`` de toda a trilha.
 
 Um relógio lógico (pregão às 11h e decisão às 15h de Brasília) torna a execução reprodutível.
@@ -23,7 +27,14 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 from .. import SIMULATED_DATA_NOTICE
-from ..calendar import first_session_of_week, is_rebalance_day, is_session
+from ..calendar import (
+    first_session_of_week,
+    is_data_session,
+    is_rebalance_day,
+    is_session,
+    rebalance_date_of_week,
+    regra,
+)
 from ..config import FundConfig, load_config
 from ..market import MarketData
 from .runtime import Runtime
@@ -67,17 +78,32 @@ class _Clock:
         return self.at
 
 
-def demo_sessions(days: int, first_week: date = DEMO_FIRST_WEEK) -> list[date]:
-    """``days`` pregões da B3 a partir do primeiro pregão da semana ``first_week``."""
+def demo_sessions(days: int, first_week: date = DEMO_FIRST_WEEK,
+                  cfg: FundConfig | None = None) -> list[date]:
+    """``days`` pregões a partir do dia de montagem da semana ``first_week``.
+
+    Regra legada (ou sem ``cfg``): pregões da B3 a partir do primeiro pregão da semana. Com
+    ``LAST_US_SESSION``: pregões de dados (B3 | NYSE | BMV) a partir do último pregão da
+    semana na NYSE (a primeira sessão da demonstração é a montagem da carteira)."""
     if days < 1:
         raise ValueError("A demonstração precisa de pelo menos um pregão.")
-    d = first_session_of_week(first_week)
+    nyse = regra(cfg) == "LAST_US_SESSION"
+    d = rebalance_date_of_week(first_week, cfg) if nyse else first_session_of_week(first_week)
+    assert d is not None
     out: list[date] = []
     while len(out) < days:
-        if is_session(d, "BVMF"):
+        if is_data_session(d) if nyse else is_session(d, "BVMF"):
             out.append(d)
         d = date.fromordinal(d.toordinal() + 1)
     return out
+
+
+def _montagem(s: date, cfg: FundConfig) -> bool:
+    """Dia de montagem da demonstração (regra semanal do mandato; a demonstração roda em datas
+    históricas, então a data de início do mandato não se aplica)."""
+    if regra(cfg) == "LAST_US_SESSION":
+        return rebalance_date_of_week(s, cfg) == s
+    return is_rebalance_day(s)
 
 
 def _write_json(path: Path, obj: object) -> None:
@@ -114,6 +140,30 @@ def write_demo_commentary(rt: Runtime, session: date) -> Path | None:
     return path
 
 
+def write_demo_weekly_commentary(rt: Runtime, d: date) -> Path:
+    """A mente ``demo`` escreve ``reports/semanal/<D>/comentario.json`` (modelo verificado)."""
+    from ..research.comentario_semanal import COMENTARIO_JSON, modelo_valido
+    from .relatorio_semanal import calcular_semana, factbook_semana, report_dir
+
+    dados = calcular_semana(rt, d)
+    fb = factbook_semana(dados)
+    out = modelo_valido(fb, dados["mudancas"], montagem=bool(dados["montagem"]), mind=DEMO_MIND)
+    path = report_dir(rt, d) / COMENTARIO_JSON
+    _write_json(path, out.model_dump(mode="json"))
+    return path
+
+
+def _weekly_close_report(rt: Runtime, d: date) -> dict:
+    from .relatorio_semanal import preparar, publicar
+
+    preparar(rt, d, mind=DEMO_MIND)
+    write_demo_weekly_commentary(rt, d)
+    pub = publicar(rt, d)
+    return {"md": pub["relatorio"]["md"], "tipo": pub["tipo"],
+            "comentario_da_mente": pub["comentario_da_mente"],
+            "apontamentos": pub["apontamentos_comentario"]}
+
+
 def write_demo_thesis(rt: Runtime, week: date) -> Path:
     """A mente ``demo`` escreve ``tese.json`` (tese automática do código, só fatos citados)."""
     from .tese import TESE_JSON, load_prepared, template_thesis, thesis_dir
@@ -134,7 +184,7 @@ def run_demo(out: Path | str, days: int = 5, *, seed: int = DEMO_SEED,
     if (out / "book").exists():
         raise FileExistsError(f"Já existe uma demonstração em {out}: use outra pasta (--out).")
     cfg = cfg or load_config()
-    sessions = demo_sessions(days, first_week)
+    sessions = demo_sessions(days, first_week, cfg)
     md = make_synthetic_market(seed=seed, start=DEMO_HISTORY_START, as_of=sessions[-1])
     clock = _Clock()
     # ``teses_root=None``: a demonstração nunca adota rascunhos de tese do repositório.
@@ -143,25 +193,34 @@ def run_demo(out: Path | str, days: int = 5, *, seed: int = DEMO_SEED,
                  teses_root=None)
     log: list[dict] = []
     for s in sessions:
-        if is_rebalance_day(s):
+        if _montagem(s, cfg):
             clock.set(s, time(11, 0))
             prep = rt.weekly_prepare(s, mind=DEMO_MIND, live=False)
             clock.set(s, time(12, 0))
             inputs = write_demo_inputs(rt, s)
             ok, issues = rt.validate_inputs(s, mind=DEMO_MIND)
-            clock.set(s, time(15, 0))
+            # Decisão às 15h00 ou no prazo efetivo, se anterior (fechamento antecipado nos EUA).
+            prazo = rt.decision_deadline(s).astimezone(BRT).time()
+            clock.set(s, min(time(15, 0), prazo))
             dec = rt.weekly_decide(s, mind=DEMO_MIND)
             clock.set(s, time(15, 30))
-            prep_tese = rt.thesis_prepare(s)
-            write_demo_thesis(rt, s)
-            tese = rt.thesis_publish(s)
-            log.append({"semana": s, "briefing": prep["briefing"], "entradas_validas": ok,
-                        "apontamentos": issues, "pm": inputs.get("pm_issues", ""),
-                        "caminho": dec["caminho"], "postura": dec["postura"],
-                        "vol_ex_ante": dec["vol_ex_ante"], "n_long": dec["n_long"],
-                        "n_short": dec["n_short"], "relatorio": dec["relatorio"]["md"],
-                        "tese": tese["autoria"], "tese_apontamentos": tese["problemas"],
-                        "tese_rascunho_adotado": prep_tese["rascunho_adotado"]})
+            step = {"semana": s, "briefing": prep["briefing"], "entradas_validas": ok,
+                    "apontamentos": issues, "pm": inputs.get("pm_issues", ""),
+                    "caminho": dec["caminho"], "postura": dec["postura"],
+                    "vol_ex_ante": dec["vol_ex_ante"], "n_long": dec["n_long"],
+                    "n_short": dec["n_short"], "relatorio": dec["relatorio"]["md"]}
+            from .tese import thesis_applicable
+
+            if thesis_applicable(rt.book, s):
+                prep_tese = rt.thesis_prepare(s)
+                write_demo_thesis(rt, s)
+                tese = rt.thesis_publish(s)
+                step.update({"tese": tese["autoria"], "tese_apontamentos": tese["problemas"],
+                             "tese_rascunho_adotado": prep_tese["rascunho_adotado"]})
+            else:  # semana de "manter": a tese vigente continua a da montagem
+                step.update({"tese": None, "tese_apontamentos": [],
+                             "tese_rascunho_adotado": False})
+            log.append(step)
         clock.set(s, time(19, 20))
         close = rt.daily_close(s, live=False, mind=DEMO_MIND)
         entry: dict = {"data": s, "status": close.get("status")}
@@ -171,6 +230,8 @@ def run_demo(out: Path | str, days: int = 5, *, seed: int = DEMO_SEED,
             entry.update({"nav_usd": close["nav_usd"], "retorno_dia": close["retorno_dia"],
                           "relatorio": pub["relatorio"]["md"],
                           "comentario_da_mente": pub["comentario_da_mente"]})
+            if cfg.execution is not None and _montagem(s, cfg) and rt.book.list_decisions(s):
+                entry["relatorio_semanal"] = _weekly_close_report(rt, s)
         log.append(entry)
     ok, msgs = rt.verify_all()
     last = rt.track().last()
@@ -186,4 +247,5 @@ def run_demo(out: Path | str, days: int = 5, *, seed: int = DEMO_SEED,
 
 
 __all__ = ["DEMO_FIRST_WEEK", "DEMO_MIND", "DemoStore", "demo_sessions", "run_demo",
-           "write_demo_commentary", "write_demo_inputs", "write_demo_thesis"]
+           "write_demo_commentary", "write_demo_inputs", "write_demo_thesis",
+           "write_demo_weekly_commentary"]

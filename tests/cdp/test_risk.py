@@ -823,3 +823,47 @@ def test_data_notice_without_marketdata(planted, planted_est):
     assert m.meta["data_notice"] == "DADOS SIMULADOS"
     real_like = dataclasses.replace(planted.panel, data_policy={"origem": "snapshot"})
     assert data_notice(real_like, None) is None
+
+
+def test_commodity_stress_uses_macro_betas_when_the_block_exists():
+    """"Commodities -15%": com o bloco macro, Brent e cobre caem 15% nos próprios fatores
+    (betas medidos de cada emissor), com propagação condicional; sem ele, fatores setoriais."""
+    from cdp.risk import stress as st
+
+    ids = ["A", "B"]
+    cols = ["market", "sector:Energy", "sector:Materials", "macro:BZ=F", "macro:HG=F"]
+    B = pd.DataFrame([[1.0, 1.0, 0.0, 0.8, 0.0], [1.0, 0.0, 1.0, 0.0, 0.5]], index=ids,
+                     columns=cols)
+    F = pd.DataFrame(np.diag([0.04, 0.01, 0.01, 0.09, 0.06]), index=cols, columns=cols)
+    groups = {"market": "market", "sector:Energy": "sector", "sector:Materials": "sector",
+              "macro:BZ=F": "macro", "macro:HG=F": "macro"}
+    model = RiskModel(as_of=date(2026, 10, 2), exposures=B, factor_cov=F,
+                      specific_var=pd.Series(0.09, index=ids),
+                      factor_returns=pd.DataFrame(), specific_returns=pd.DataFrame(),
+                      factor_groups=groups)
+    w = pd.Series({"A": 0.02, "B": -0.01})
+    mw = pd.Series({"A": 0.5, "B": 0.5})
+    res = st._commodity_shock(w, model, mw)
+    # Covariância diagonal: sem propagação; P&L = Σ w·β·(−15%) nos dois fatores macro.
+    assert res.pnl == pytest.approx(-0.15 * (0.02 * 0.8 - 0.01 * 0.5))
+    assert "Brent" in res.detail and "cobre" in res.detail
+    legacy = dataclasses.replace(
+        model, exposures=B[cols[:3]], factor_cov=F.loc[cols[:3], cols[:3]],
+        factor_groups={k: v for k, v in groups.items() if not k.startswith("macro:")})
+    assert "macro" not in st._commodity_shock(w, legacy, mw).detail
+
+
+def test_min_names_per_country_is_its_own_threshold():
+    """``risk_model.min_names_per_country``: mínimo próprio para países (``None`` = o de
+    setores); setores não mudam."""
+    from cdp.risk.exposures import factor_structure
+
+    md = make_synthetic_market(seed=5, start=date(2025, 6, 2), as_of=date(2026, 10, 2))
+    panel = build_asset_panel(md, FundConfig())
+    ids = list(panel.eligible)
+    same = factor_structure(panel, ids, 3)
+    assert factor_structure(panel, ids, 3, None).country_factors == same.country_factors
+    strict = factor_structure(panel, ids, 3, len(ids) + 1)
+    assert strict.country_factors == [] and strict.sector_factors == same.sector_factors
+    cfg = FundConfig().with_overrides({"risk_model": {"min_names_per_country": 10_000}})
+    assert cfg.risk_model.min_names_per_country == 10_000

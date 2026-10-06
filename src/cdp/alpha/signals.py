@@ -740,3 +740,29 @@ def compute_signals(
         "point_in_time": {n: SIGNALS[n].point_in_time for n in selected},
     }
     return out
+
+
+# ==========================================================
+# Sinal de valuation da cobertura (SOMBRA — fora do registro SIGNALS, peso 0)
+# ==========================================================
+
+def valuation_gap_sombra(snap, issuers: list[str]) -> pd.Series:
+    """``valuation_gap`` da cobertura (z de ``α_rel`` dentro de país × setor), reindexado aos
+    ``issuers`` da semana; ``NaN`` sem preço-alvo (nunca zero).
+
+    Sombra: não está em ``SIGNALS`` nem em ``alpha.signal_weights`` (peso 0,0) e não altera
+    nenhum alpha publicado. Promoção só por IC residual realizado (semanal, sem sobreposição,
+    ≥ 26 semanas, IC ≥ 0,01 e t de Newey–West ≥ 1,5), com rebaixamento automático. O upside bruto
+    do preço-alvo nunca entra no otimizador. ``snap``: snapshot vigente na decisão
+    (``cobertura.livro.ultimo_snapshot(book, as_of)``) ou ``None``."""
+    ids = list(dict.fromkeys(str(i) for i in issuers))
+    if snap is None:
+        return _empty(ids, "valuation_gap", ["sem snapshot da cobertura até a data"])
+    from ..cobertura.sinal import valuation_gap
+
+    z = valuation_gap(snap).reindex(ids).astype(float)
+    falt = [i for i in ids if not np.isfinite(z.get(i, np.nan))]
+    notes = [f"snapshot da cobertura de {snap.as_of.isoformat()} (sombra, peso 0)"]
+    if falt:
+        notes.append(f"{len(falt)} emissor(es) sem preço-alvo válido: {_fmt_ids(falt)}.")
+    return _with_notes(z, notes, "valuation_gap")

@@ -224,14 +224,19 @@ def _group_block(
     return mapped, [names[g] for g in groups], small, unassigned, notes
 
 
-def factor_structure(panel: AssetPanel, issuers: list[str], min_names: int) -> FactorStructure:
-    """Define os fatores de país e setor para ``issuers`` agrupando grupos pequenos."""
+def factor_structure(panel: AssetPanel, issuers: list[str], min_names: int,
+                     min_names_country: int | None = None) -> FactorStructure:
+    """Define os fatores de país e setor para ``issuers`` agrupando grupos pequenos.
+
+    ``min_names_country`` (``risk_model.min_names_per_country``): mínimo próprio para países;
+    ``None`` = o mesmo de setores (``min_names``)."""
     missing = sorted(set(issuers) - set(panel.assets.index))
     if missing:
         raise KeyError(f"Emissores fora do painel: {missing}")
     assets = panel.assets.loc[issuers]
     c_map, c_fac, c_merged, c_un, c_notes = _group_block(
-        assets["country"], min_names, OTHER_COUNTRY, country_factor, None, "país")
+        assets["country"], min_names if min_names_country is None else int(min_names_country),
+        OTHER_COUNTRY, country_factor, None, "país")
     s_map, s_fac, s_merged, s_un, s_notes = _group_block(
         assets["sector"], min_names, OTHER_SECTOR, sector_factor, GICS_SECTORS, "setor")
     # Fator de setor com exatamente os mesmos membros de um fator de país é colinear com ele
@@ -689,7 +694,8 @@ def exposure_matrix(
     Estilos sem nenhuma fonte de dados (ex.: ``value``/``fx_sens`` sem ``MarketData``) são
     omitidos e listados em ``attrs['meta']['dropped_styles']``.
     """
-    structure = factor_structure(panel, list(issuers), cfg.risk_model.min_names_per_sector)
+    structure = factor_structure(panel, list(issuers), cfg.risk_model.min_names_per_sector,
+                                 cfg.risk_model.min_names_per_country)
     styles = style_exposures(panel, md, cfg, date, list(issuers))
     meta = dict(styles.attrs.get("meta", {}))
     names = [s for s in STYLE_FACTORS if s in meta.get("available_styles", STYLE_FACTORS)]

@@ -26,5 +26,13 @@ Em ambos os casos:
 - Se `cdp agenda` listar a semana corrente em `teses_pendentes`, conclua a tese de investimento
   antes do painel, como no roteiro semanal (`docs/cdp/TESE.md`; com `rascunho_adotado: true` no
   `tese prepare`, `validate-tese` antes de escrever qualquer coisa); semanas anteriores, só relate.
+- Na noite do dia de montagem, com `relatorio_semanal.pendente: true` em `cdp agenda`:
+  `uv run python -m cdp weekly close-report --date AAAA-MM-DD`, leia
+  `reports/semanal/<data>/fatos.md`, escreva `reports/semanal/<data>/comentario.json` (mudanças da
+  carteira, resultado e atribuição da semana e desde o início; números só via `{{fact:<id>}}`),
+  `uv run python -m cdp validate-weekly-report --date AAAA-MM-DD` e
+  `uv run python -m cdp weekly close-report --date AAAA-MM-DD --publish`. Com
+  `cobertura.snapshot_pendente: true`: `uv run python -m cdp cobertura run --date AAAA-MM-DD`
+  (data de `cobertura.data`).
 - Sempre rode `verify` antes do painel, mesmo se a tese falhou; push só se esse `verify` disser
   `ÍNTEGRO`.

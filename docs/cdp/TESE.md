@@ -215,8 +215,11 @@ depois saem.
 ## 10. Rotinas e retomada
 
 - **Semanal** (`cdp:semanal`, `docs/cdp/playbooks/SEMANAL.md`): o passo da tese vem depois de
-  `weekly decide` e `verify` e antes de `cdp painel`, no mesmo commit da decisão. A tese não tem o
-  prazo das 16h30 (a decisão já foi gravada) e nunca atrasa a decisão.
+  `weekly decide` e `verify` e antes de `cdp painel`, no mesmo commit da decisão. A tese não está
+  sujeita ao **prazo efetivo** da decisão (`agenda.semanal.prazo_efetivo`: o teto de 15h00 de
+  Brasília ou, se anterior, o fechamento mais cedo entre NYSE, B3 e BMV menos 45 minutos — 14h15
+  nos fechamentos antecipados dos EUA; ver `docs/cdp/EXECUCAO.md`), porque a decisão já foi
+  gravada, e nunca atrasa a decisão.
 - **`verify` antes do painel, sempre**: semanal e diário rodam `uv run python -m cdp verify` logo
   antes de `cdp painel` em todo caminho — montagem completa, retomada só da tese, tese já
   publicada, `prepare` ou `publish` com falha. Esse `verify` confere a trilha depois da última

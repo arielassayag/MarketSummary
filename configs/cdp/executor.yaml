@@ -1,0 +1,13 @@
+# configs/cdp/executor.yaml — quem grava o livro (escritor único de book/, data/, reports/ e
+# artifacts/). Só um humano muda este arquivo, numa sessão de operador, seguindo
+# docs/cdp/AUTOMACAO.md ("Troca de executor"): `uv run python -m cdp executor transferir ...`.
+# O valor oficial é o deste arquivo em `main`; `cdp publicar` relê o de origin/main antes de
+# cada push. A identidade de cada ambiente é explícita (variável CDP_EXECUTOR ou o arquivo
+# ignorado `.cdp/local.yaml`), nunca adivinhada.
+versao: 1
+executor: local-pc     # local-pc | claude-cloud | github-actions | codex-cloud | gemini-actions | outro | nenhum
+harness: claude-code   # informativo: claude-code | codex | gemini | antigravity | copilot | cursor | outro
+desde: "2026-10-06T19:00:00-03:00"
+por: "Ariel Assayag"
+motivo: "Tarefas agendadas do Claude Code no PC local (clone dedicado às rotinas)."
+anterior: null

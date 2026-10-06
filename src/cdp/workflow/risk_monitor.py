@@ -38,7 +38,7 @@ import pandas as pd
 
 from .. import SIMULATED_DATA_NOTICE
 from ..audit import AuditLog
-from ..calendar import chave_da_semana, previous_session
+from ..calendar import chave_da_semana, previous_data_session, previous_session
 from ..config import FundConfig
 from ..contracts import DailyPosition, DailyRecord, Proposal, Side
 from ..hashing import sha256_obj
@@ -636,11 +636,16 @@ def _kill_switch_info(rt: Runtime) -> dict:
 
 
 def _pending_decision(rt: Runtime, as_of: date) -> dict | None:
-    """Decisão da semana gravada e ainda não efetivada (executa no fechamento, MOC)."""
-    week = chave_da_semana(as_of, rt.cfg)
+    """Decisão gravada e ainda não efetivada (executa no fechamento, MOC): o dia de montagem
+    decidido mais recente até ``as_of``, se ainda sem efetivação no livro."""
+    b = rt.book
+    try:
+        decided = [w for w in b.list_weeks() if w <= as_of and b.list_decisions(w)]
+    except (ValueError, OSError):
+        decided = []
+    week = decided[-1] if decided else chave_da_semana(as_of, rt.cfg)
     if week is None or week > as_of:
         return None
-    b = rt.book
     try:
         decisions = b.list_decisions(week)
         if not decisions or b.load_booked(week) is not None:
@@ -650,14 +655,51 @@ def _pending_decision(rt: Runtime, as_of: date) -> dict | None:
         prop = b.load_proposal(week, version)
     except (ValueError, OSError) as exc:
         return {"semana": week, "erro": _clip(str(exc), 300)}
+    from .daily import executable_in
+
     out: dict[str, Any] = {"semana": week, "decidida_em": dec.decided_at,
-                           "execucao": f"fechamento de {week} (MOC) pela rotina diária"}
+                           "execucao": f"fechamento de {week} (MOC) pela rotina diária",
+                           "executavel_no_pregao": executable_in(week, as_of, rt.cfg)}
     if prop is not None:
         r = prop.risk
         out.update({"vol_ex_ante": r.ex_ante_vol, "beta": r.beta, "gross": r.gross,
                     "net": r.net, "n_long": r.n_long, "n_short": r.n_short,
                     "falhas_hard": [c.check_id for c in prop.hard_failures],
                     "falhas_soft": [c.check_id for c in prop.soft_failures]})
+    return out
+
+
+def _velocity_triggers(rt: Runtime, history: list[DailyRecord],
+                       limitations: list[str]) -> list[Trigger]:
+    """Gatilhos de velocidade de perda e de evento societário (:mod:`cdp.risk.gatilhos`), ativos
+    com a metodologia de construção vigente (``optimizer.metodologia_ativa``: o kill switch é
+    só-redução, então um HARD aqui reduz risco). Legado: nenhum gatilho novo."""
+    try:
+        from ..portfolio.optimizer import metodologia_ativa
+        from ..risk import gatilhos
+    except ImportError:  # pragma: no cover - módulo ausente nesta versão
+        return []
+    if not metodologia_ativa(rt.cfg) or not history:
+        return []
+    out: list[Trigger] = []
+    rows = gatilhos.loss_velocity(list(reversed(history))[:gatilhos.WINDOW_5D + 1], rt.cfg)
+    rec = history[-1]
+    try:
+        md = rt.store.load(as_of=rec.date)
+    except Exception as exc:  # noqa: BLE001 - sem base de mercado: o detector não roda
+        md = None
+        limitations.append(f"Detector de evento societário sem base de mercado: "
+                           f"{_clip(str(exc), 160)}")
+    rows += gatilhos.price_jumps(rec, md)
+    for r in rows:
+        nivel = str(r.get("nivel", "INFO"))
+        if nivel not in ("HARD", "SOFT", "INFO"):
+            continue
+        acao = str(r.get("acao") or "")
+        if acao.startswith(KILL_SWITCH_PREFIX):
+            acao = acao[len(KILL_SWITCH_PREFIX):]
+        out.append(Trigger(nivel, str(r.get("codigo")), str(r.get("mensagem", "")),  # type: ignore[arg-type]
+                           acao))
     return out
 
 
@@ -746,7 +788,8 @@ def run_risk_monitor(rt: Runtime, *, as_of: date | None = None, live: bool = Fal
     if ks["ativo"]:
         triggers.append(Trigger("INFO", "kill_switch_ligado", f"Kill switch ligado: {ks.get('motivo')}",
                                 "só redução de risco até desligamento humano"))
-    prev_s = previous_session(as_of)
+    prev_s = (previous_data_session(as_of) if cfg.execution is not None
+              else previous_session(as_of))
     if rec.date < prev_s:
         triggers.append(Trigger("SOFT", "registro_defasado",
                                 f"Último registro diário é de {rec.date}; o pregão de {prev_s} "
@@ -754,6 +797,7 @@ def run_risk_monitor(rt: Runtime, *, as_of: date | None = None, live: bool = Fal
                                 "rodar o fechamento diário pendente (skill diario)"))
     triggers += _drawdown_triggers(rec.risk.drawdown, cfg, origem="no fechamento",
                                    sufixo="fechamento")
+    triggers += _velocity_triggers(rt, history_all, limitations)
     risk, t = _risk_block(rec, cfg)
     out["risco"] = risk
     triggers += t

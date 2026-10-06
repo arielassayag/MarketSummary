@@ -556,3 +556,200 @@ def render_facts_block(fb: FactBook, issuer_ids: Iterable[str], macro: bool = Tr
             continue
         lines.append(fact_line(fact))
     return "\n".join(lines)
+
+
+# ==========================================================
+# Fatos de valuation da cobertura (val.*, cob.*, evento.*, etf.*)
+# ==========================================================
+# Só entram no FactBook das semanas posteriores ao primeiro snapshot da cobertura (nunca
+# recalculados para semanas passadas): quem monta o FactBook da semana chama
+# ``com_fatos_valuation`` com o snapshot vigente na data. ``build_factbook`` não muda.
+
+VAL_RATING_CODIGO = {"Compra": 1.0, "Neutro": 0.0, "Venda": -1.0}
+VAL_CONFIANCA_CODIGO = {"A": 3.0, "B": 2.0, "C": 1.0, "Insuficiente": 0.0}
+
+
+def _val_preco(value: float | None, moeda: str | None) -> str:
+    from ..cobertura.formato import preco as _preco
+
+    return _preco(value, moeda)
+
+
+def fatos_valuation(modelo: Mapping, eventos_emissor: Iterable[Mapping] = (),
+                    as_of: date | None = None) -> dict[str, Fact]:
+    """Fatos ``val.<IID>.*``, ``cob.<IID>.*`` e ``evento.<IID>.*`` a partir do modelo aberto de um
+    emissor (``modelos/<IID>.json``) e dos eventos do livro da cobertura desse emissor.
+
+    Os valores vêm prontos do código da cobertura (nenhum cálculo novo além de diferenças de
+    datas e da variação entre alvos registrados); ausentes ficam ``None``/``n/d``."""
+    b = _Builder()
+    iid = str(modelo["issuer_id"])
+    k = f"val.{iid}"
+    r = modelo.get("resumo") or {}
+    moeda = modelo.get("moeda")
+    # point-in-time honesto: demonstrações publicadas até a data e sem datas de publicação estimadas
+    pit = bool(r.get("pit_ok")) if "pit_ok" in r else not any(
+        lac.get("insumo") == "demonstrativos" for lac in modelo.get("lacunas") or [])
+    data = str(modelo.get("as_of"))
+    src = [f"cobertura/{data}/modelos/{iid}.json"]
+    cc = modelo.get("custo_capital") or {}
+    rt = r.get("rating")
+    citavel = rt in ("Compra", "Neutro", "Venda") and r.get("preco_alvo") is not None
+    texto_sem = str(rt or NA_TEXT)  # "Em revisão" / "Sem preço-alvo": número não citável
+
+    def add(sufixo: str, nome: str, valor: float | None, unit: str, formula: str, signed: bool = False,
+            formatted: str | None = None, mascarar: bool = False) -> None:
+        if mascarar and not citavel:
+            valor, formatted = None, texto_sem
+        b.add(f"{k}.{sufixo}", iid, nome, valor, unit, formula, src, point_in_time=pit, signed=signed,
+              formatted=formatted)
+
+    add("preco", "Preço de referência da cobertura", r.get("preco"), "preco",
+        f"fechamento de {modelo.get('linha')} em {r.get('data_preco')}",
+        formatted=_val_preco(r.get("preco"), moeda))
+    add("preco_alvo", "Preço-alvo de 12 meses", r.get("preco_alvo"), "preco",
+        "TP12 = V0 × (1 + ke) − DPS12 (modelo aberto da cobertura)",
+        formatted=_val_preco(r.get("preco_alvo"), moeda), mascarar=True)
+    add("upside", "Potencial até o preço-alvo", r.get("upside"), "pct", "TP12 ÷ P0 − 1", signed=True, mascarar=True)
+    add("alvo_otimista", "Preço-alvo otimista (P90)", r.get("alvo_otimista"), "preco",
+        "percentil 90 do Monte Carlo dos direcionadores", formatted=_val_preco(r.get("alvo_otimista"), moeda),
+        mascarar=True)
+    add("alvo_pessimista", "Preço-alvo pessimista (P10)", r.get("alvo_pessimista"), "preco",
+        "percentil 10 do Monte Carlo dos direcionadores", formatted=_val_preco(r.get("alvo_pessimista"), moeda),
+        mascarar=True)
+    add("prob_otimista", "Probabilidade implícita pelo mercado de atingir o otimista",
+        r.get("prob_mercado_otimista"), "pct", "lognormal com drift ke e σ realizada de 12 meses", mascarar=True)
+    add("prob_pessimista", "Probabilidade implícita pelo mercado de cair ao pessimista",
+        r.get("prob_mercado_pessimista"), "pct", "lognormal com drift ke e σ realizada de 12 meses", mascarar=True)
+    add("ke", "Custo de capital próprio", r.get("ke"), "pct", "ke_USD = rf + β × ERP + λ × CRP, convertido "
+        "pela inflação relativa")
+    add("wacc", "Custo médio ponderado de capital", r.get("wacc"), "pct", "WACC = E/V × ke + D/V × kd × (1 − t)")
+    add("g", "Crescimento nominal na perpetuidade", r.get("g") if r.get("g") is not None else cc.get("g"), "pct",
+        "g = (1 + g_real)(1 + π) − 1, limitado")
+    add("etr", "Retorno total esperado em 12 meses", r.get("etr"), "pct", "(TP12 + DPS12) ÷ P0 − 1", signed=True,
+        mascarar=True)
+    add("alpha", "Alpha de valuation", r.get("alpha"), "pct", "PWR − ke (Monte Carlo dos direcionadores)",
+        signed=True, mascarar=True)
+    add("alpha_rel", "Alpha de valuation relativo aos pares", r.get("alpha_rel"), "pct",
+        "α − mediana(α dos pares de país × setor)", signed=True, mascarar=True)
+    add("rating_codigo", "Rating da cobertura (12 meses)", VAL_RATING_CODIGO.get(str(rt)), "score",
+        "Compra = 1, Neutro = 0, Venda = −1 (regra de α_rel por incerteza)", formatted=str(rt or NA_TEXT))
+    cf = r.get("confianca")
+    add("confianca_codigo", "Confiança do modelo", VAL_CONFIANCA_CODIGO.get(str(cf)), "score",
+        "A = 3, B = 2, C = 1, Insuficiente = 0", formatted=str(cf or NA_TEXT))
+    add("pl_fwd", "P/L à frente (consenso público)", r.get("pl_fwd"), "x", "P0 ÷ LPA de consenso do ano 1")
+    add("pb", "Preço sobre valor patrimonial", r.get("pb"), "x", "P0 ÷ patrimônio por ação")
+    add("cv_metodos", "Dispersão entre métodos (CV)", r.get("cv_metodos"), "pct", "desvio-padrão ÷ média dos V_m")
+    cons = r.get("consenso") or {}
+    add("consenso_alvo", "Preço-alvo médio do consenso público", cons.get("alvo_medio") if cons.get("plausivel")
+        else None, "preco", "consenso público Yahoo Finance (por unidade da linha)",
+        formatted=_val_preco(cons.get("alvo_medio") if cons.get("plausivel") else None, moeda))
+    add("diff_consenso", "Preço-alvo da casa contra o consenso", r.get("diff_consenso"), "pct",
+        "TP12 ÷ alvo médio do consenso − 1", signed=True, mascarar=True)
+    sens = modelo.get("sensibilidade") or {}
+    grade = sens.get("upside") or []
+    if grade and len(grade) == 5 and all(len(row) == 5 for row in grade):
+        for i, nome in ((0, "ke_menos_100bp"), (4, "ke_mais_100bp")):
+            add(f"sens.{nome}", f"Upside com ke {'−' if i == 0 else '+'}1 p.p.", grade[i][2], "pct",
+                "grade de sensibilidade do modelo aberto", signed=True, mascarar=True)
+    # histórico do livro
+    evs = sorted(eventos_emissor, key=lambda e: e.get("seq", 0))
+    alvos = [e for e in evs if (e.get("alvo") or {}).get("base") is not None]
+    c = f"cob.{iid}"
+    ant = alvos[-2] if len(alvos) >= 2 else None
+    ult = alvos[-1] if alvos else None
+    tp_ant = (ant.get("alvo") or {}).get("base") if ant else None
+    b.add(f"{c}.alvo_anterior", iid, "Preço-alvo anterior", tp_ant, "preco", "evento anterior do livro da cobertura",
+          src, formatted=_val_preco(tp_ant, moeda))
+    var = None if not tp_ant or ult is None else (ult["alvo"]["base"] / tp_ant - 1)
+    b.add(f"{c}.variacao_alvo", iid, "Variação do preço-alvo", var, "pct", "TP atual ÷ TP anterior − 1", src,
+          signed=True)
+    revs = [e for e in evs if e.get("tipo") in ("REVISAO", "MUDANCA_RATING")]
+    hoje = as_of or (date.fromisoformat(data) if data and data != "None" else None)
+    dias = None if not revs or hoje is None else float((hoje - date.fromisoformat(revs[-1]["as_of"])).days)
+    b.add(f"{c}.dias_desde_revisao", iid, "Dias desde a última revisão", dias, "days", "data − última revisão", src)
+    ini = next((e for e in evs if e.get("tipo") == "INICIACAO"), None)
+    p_ini = (ini.get("preco_ref") or {}).get("fechamento") if ini else None
+    fator = 1.0  # desdobramentos e grupamentos desde a iniciação (fatores registrados no livro)
+    if ini is not None:
+        for e in evs:
+            if e.get("seq", 0) > ini.get("seq", 0) and e.get("linha") == ini.get("linha"):
+                f = ((e.get("preco_ref") or {}).get("fator_split") or {}).get("valor")
+                fator *= float(f) if isinstance(f, (int, float)) and f > 0 else 1.0
+    linha_ok = ini is not None and ini.get("linha") == modelo.get("linha")
+    ret = None if not p_ini or r.get("preco") is None or not linha_ok else r["preco"] * fator / p_ini - 1
+    b.add(f"{c}.retorno_desde_inicio", iid, "Variação de preço desde o início da cobertura", ret, "pct",
+          "P0 × fator de desdobramentos ÷ preço na iniciação − 1 (mesma linha)", src, signed=True)
+    b.add(f"{c}.n_revisoes", iid, "Número de revisões do preço-alvo", float(len(revs)), "count",
+          "eventos REVISAO e MUDANCA_RATING no livro", src)
+    prox = r.get("proximo_resultado") or {}
+    e = f"evento.{iid}"
+    pd_ = prox.get("data")
+    dd = None if not pd_ or hoje is None else float((date.fromisoformat(pd_) - hoje).days)
+    b.add(f"{e}.proximo_resultado", iid, "Próxima divulgação de resultado" + (" (data estimada)" if prox.get("estimada") else ""),
+          dd, "days", "calendário público de eventos corporativos", src, formatted=pd_ or NA_TEXT)
+    b.add(f"{e}.dias_ate_resultado", iid, "Dias até a próxima divulgação", dd, "days", "data do evento − data", src)
+    return {fid: b.facts[fid] for fid in sorted(b.facts)}
+
+
+def fatos_etf(etf: Mapping) -> dict[str, Fact]:
+    """Fatos ``etf.<TICKER>.*`` do modelo do ETF (preço-alvo, retornos BU/TD, visão relativa)."""
+    b = _Builder()
+    t = str(etf.get("ticker", "")).split(".")[0]
+    k = f"etf.{t}"
+    src = [f"cobertura/{etf.get('as_of')}/etfs/{etf.get('iid')}.json"]
+    moeda = etf.get("moeda")
+    citavel = bool(etf.get("tem_alvo")) and etf.get("visao_ilf") != "Em revisão"
+    sem = "Em revisão" if etf.get("visao_ilf") == "Em revisão" else NA_TEXT
+
+    def v(x):
+        return x if citavel else None
+
+    b.add(f"{k}.preco_alvo", None, f"Preço-alvo de 12 meses do {t}", v(etf.get("preco_alvo")), "preco",
+          "TP_e = P_e × (1 + R_e − DY)", src,
+          formatted=_val_preco(etf.get("preco_alvo"), moeda) if citavel else sem)
+    b.add(f"{k}.retorno_esperado", None, f"Retorno esperado de 12 meses do {t}", v(etf.get("retorno_esperado")), "pct",
+          "R_e = ω × R_BU + (1 − ω) × R_TD", src, signed=True, formatted=None if citavel else sem)
+    b.add(f"{k}.r_bu", None, f"Retorno bottom-up do {t}", v(etf.get("r_bu")), "pct", "alvos da casa por posição", src,
+          signed=True, formatted=None if citavel else sem)
+    b.add(f"{k}.r_td", None, f"Retorno top-down do {t}", v(etf.get("r_td")), "pct", "P/L justificado e Grinold–Kroner",
+          src, signed=True, formatted=None if citavel else sem)
+    b.add(f"{k}.cobertura", None, f"Peso coberto por modelos da casa no {t}", etf.get("cobertura"), "pct",
+          "Σ pesos com preço-alvo da casa", src)
+    b.add(f"{k}.visao_ilf", None, f"Visão do {t} relativa ao ILF", etf.get("ir"), "ratio",
+          "IR = (R_e − R_ILF) ÷ TE", src, formatted=str(etf.get("visao_ilf") or NA_TEXT))
+    return {fid: b.facts[fid] for fid in sorted(b.facts)}
+
+
+def com_fatos_valuation(fb: FactBook, snap, issuer_ids: Iterable[str], incluir_etfs: bool = True) -> FactBook:
+    """Novo FactBook = ``fb`` + fatos de valuation do snapshot da cobertura para ``issuer_ids``.
+
+    Use apenas em semanas com ``snap.as_of <= fb.as_of`` (o snapshot vigente na decisão)."""
+    if snap is None:
+        return fb
+    if snap.as_of > fb.as_of:
+        raise ValueError("Snapshot da cobertura posterior ao FactBook (look-ahead).")
+    from ..cobertura.livro import eventos as _eventos
+
+    book = snap.pasta.parent.parent
+    evs = _eventos(book)
+    facts = dict(fb.facts)
+    estado = snap.estado()
+    for iid in sorted(set(issuer_ids)):
+        if iid not in estado.index:
+            continue
+        pasta = snap.pasta.parent / str(estado.loc[iid, "snapshot"])
+        p = pasta / "modelos" / f"{iid}.json"
+        if not p.exists():
+            continue
+        import json as _json
+
+        mod = _json.loads(p.read_text(encoding="utf-8"))
+        facts.update(fatos_valuation(mod, [e for e in evs if e.get("issuer_id") == iid
+                                           and date.fromisoformat(e["as_of"]) <= snap.as_of], fb.as_of))
+    if incluir_etfs:
+        for _, row in snap.etfs().iterrows() if not snap.etfs().empty else []:
+            e = snap.etf(str(row.name))
+            if e:
+                facts.update(fatos_etf(e))
+    return fb.model_copy(update={"facts": {k: facts[k] for k in sorted(facts)}})

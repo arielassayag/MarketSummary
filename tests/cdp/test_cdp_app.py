@@ -92,7 +92,7 @@ def build_fixture_book(root: Path) -> SimpleNamespace:
     from cdp.workflow.weekly import prepare_week, run_weekly_decision
 
     root.mkdir(parents=True, exist_ok=True)
-    cfg = load_config(REPO / "configs/cdp/fund.yaml").with_overrides(
+    cfg = load_config(REPO / "tests/cdp/fixtures/fund_legado.yaml").with_overrides(
         {"risk_model": {"history_days": 300}})
     cfg_path = root / "fund.yaml"
     cfg_path.write_text(yaml.safe_dump(cfg.model_dump(mode="json"), allow_unicode=True,

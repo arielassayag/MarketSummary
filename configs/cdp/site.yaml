@@ -1,0 +1,23 @@
+# configs/cdp/site.yaml — portal público do CDP (GitHub Pages, montado pelo GitHub Actions a partir
+# do repositório; `uv run python -m cdp site construir`). Textos em pt-BR institucional.
+versao: 1
+titulo: "CDP — Cabra da Peste · Carteira simulada long/short de ações da América Latina"
+titulo_curto: "CDP — Cabra da Peste"
+descricao: >-
+  Carteira simulada long/short de ações da América Latina, neutra em mercado e em dólares:
+  decisões, risco, resultados e modelos abertos, com dados públicos e trilha auditável.
+base_url: "https://arielassayag.github.io/MarketSummary"
+repositorio: arielassayag/MarketSummary
+indexar: true
+aviso_legal: >-
+  Carteira simulada (paper trading com preços reais) para fins de pesquisa e transparência
+  metodológica. Não é fundo registrado na CVM e não constitui oferta, solicitação ou recomendação
+  de investimento. Resultados simulados não garantem resultados futuros.
+licenca:                # pendente de decisão do titular (recomendado: Apache-2.0 + CC BY 4.0)
+  codigo: null
+  conteudo: null
+downloads:
+  risco_ultimas: 20     # datas mais recentes do monitor de risco publicadas para download
+og:
+  imagem: site/og.png
+  alt: "CDP — Cabra da Peste: carteira simulada long/short de ações da América Latina"

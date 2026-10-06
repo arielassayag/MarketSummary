@@ -33,7 +33,7 @@ from cdp.data.synthetic import make_synthetic_market
 from cdp.risk.event_scaling import apply_event_windows
 from cdp.risk.model import RiskModelEstimator
 
-CFG_PATH = Path(__file__).resolve().parents[2] / "configs" / "cdp" / "fund.yaml"
+CFG_PATH = Path(__file__).resolve().parent / "fixtures" / "fund_legado.yaml"
 CFG = load_config(CFG_PATH)
 B3_HOLIDAY_MONDAY = pd.Timestamp("2023-09-11")   # feriado só na B3 no mercado sintético
 MX_CLOSED_MONDAY = pd.Timestamp("2024-01-29")    # México fechado; B3 aberta

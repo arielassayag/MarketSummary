@@ -1,7 +1,13 @@
-# Roteiro semanal do CDP — montagem da carteira (primeiro pregão da semana na B3)
+# Roteiro semanal do CDP — montagem da carteira (último pregão da semana na NYSE)
 
-Vale para **Claude Code** e **Codex** (a "mente" do CDP). Siga exatamente; não pule etapas.
-Metodologia: `docs/cdp/METODOLOGIA.md`. Horário de Brasília. Prazo: decisão gravada até **16h30**.
+Vale para **Claude Code**, **Codex** ou qualquer outro harness (a "mente" do CDP). Siga
+exatamente; não pule etapas. Metodologia: `docs/cdp/METODOLOGIA.md`; tom: `docs/cdp/ESTILO.md`.
+Horário de Brasília. O dia de montagem é o último pregão da semana na NYSE (sexta-feira, ou o dia
+útil anterior em feriado nos EUA); a carteira é executada no leilão de fechamento desse dia.
+Prazo: decisão gravada antes do **prazo efetivo** (`semanal.prazo_efetivo` em `cdp agenda`: em
+geral 15h00; mais cedo nos fechamentos antecipados dos EUA). Sem assistente com acesso ao
+repositório, cada passo da mente pode ser feito em qualquer assistente de IA com
+`cdp mente pacote` (`docs/cdp/REPRODUZIR.md`).
 
 ## 0. Checagens
 
@@ -11,8 +17,8 @@ uv run python -m cdp status
 uv run python -m cdp agenda
 ```
 
-`status` informa se hoje é o primeiro pregão da semana na B3, se a semana já tem decisão e o
-estado do kill switch. `agenda` decide pelo relógio de Brasília (independente do fuso do PC):
+`status` informa se hoje é dia de montagem, se a semana já tem decisão e o estado do kill
+switch. `agenda` decide pelo relógio de Brasília (independente do fuso do PC):
 `semanal.acao` = `montar` (com a `etapa` de onde retomar e `minutos_ate_o_prazo`), `tese` (decisão
 gravada, tese de investimento ainda não publicada: faça só as seções 5b e 6), `aguardar`,
 `prazo_vencido` ou `nenhuma`. Se não for `montar` nem `tese`, encerre com um resumo (nada a
@@ -44,7 +50,13 @@ intradiária provisória** de hoje. Gera `book/<semana>/briefing/`:
 
 ## 2. Pesquisa (a mente)
 
-Leia `briefing.md`, `context.json` e `INSTRUCTIONS.md`. Use suas ferramentas de busca na web.
+Leia `briefing.md`, `context.json` e `INSTRUCTIONS.md`. Use suas ferramentas de busca na web,
+**só em fontes públicas** (CVM, SEC EDGAR, bolsas e reguladores da região, relações com
+investidores, bancos centrais, institutos de estatística, imprensa); nenhuma base paga, de acesso
+restrito ou conector proprietário. Ponto de partida por emissor: a nota de pesquisa publicada mais
+recente (`book/cobertura/notas/<IID>/<data>/nota.md`, com a ficha do modelo aberto da cobertura).
+Números só como `{{fact:<id>}}` existentes em `context.json`; cite fatos `val.<IID>.*` somente
+quando estiverem lá (a ficha da nota é leitura, não fato citável da semana).
 
 1. **Macro por país** (BR, MX, CL, CO, PE, AR) e global: regime, eventos da semana, riscos.
 2. **Cada candidato e cada posição atual**: notícias e fatos relevantes recentes (CVM/IPE, SEC 6-K,
@@ -92,12 +104,13 @@ uv run python -m cdp verify
 ```
 
 Otimiza, aplica gates (com fallback automático), grava a decisão autônoma com hash, a sombra
-só-quant e o relatório semanal (`reports/weekly/<semana>/`). A execução hipotética ocorre no
-fechamento de hoje, pela rotina diária.
+só-quant e o relatório da decisão (`reports/weekly/<semana>/`). A execução hipotética ocorre no
+leilão de fechamento de hoje; a rotina diária registra a execução e, na mesma noite, publica o
+relatório semanal de resultado (`reports/semanal/<semana>/`).
 
 ## 5b. Tese de investimento (código + mente)
 
-Depois da decisão gravada (sem o prazo das 16h30, que vale só para a decisão), escreva a tese de
+Depois da decisão gravada (sem o prazo efetivo, que vale só para a decisão), escreva a tese de
 investimento da carteira decidida: por que cada nome e cada peso, exposições, sensibilidade a
 mercado, volatilidade e orçamento de risco, temas, riscos, premortem, gatilhos e calendário.
 Regras, esquema e diretrizes de redação: `docs/cdp/TESE.md`.
@@ -139,8 +152,24 @@ inválido, o código publica a tese do template (`autoria: "codigo"`) e você re
 ```sh
 uv run python -m cdp verify
 uv run python -m cdp painel
-git add book reports data/market artifacts/painel && git commit -m "CDP: decisão da semana AAAA-MM-DD" && git push
+git add book reports data/market data/publico artifacts/painel
+git commit -m "CDP: decisão da semana AAAA-MM-DD"
 ```
+
+Push **só** se esse `verify` disse `ÍNTEGRO` (nunca encadeie o push aos comandos
+anteriores). Antes do push, sincronize com o remoto:
+
+```sh
+git fetch
+git status -sb
+```
+
+- Em dia ou só à frente (`ahead`): `git push`.
+- Atrás (`behind`): `git diff --name-only "HEAD...@{u}" -- book data reports artifacts`. Vazio
+  (o remoto só mudou código ou documentação) ⇒ `git pull --no-rebase --no-edit` e então
+  `git push`; não vazio ⇒ **não** faça push (outra máquina gravou o livro) e relate.
+- `verify` com falha, `fetch` com falha ou push recusado: não force (nunca `--force`, `rebase`
+  ou `reset`); o commit fica local e a próxima rotina reconcilia. Relate.
 
 Rode o `verify` sempre antes do painel, em todo caminho (montagem completa, retomada só da tese,
 tese já publicada ou com falha): ele confere a trilha depois da última gravação. Decisão, tese e

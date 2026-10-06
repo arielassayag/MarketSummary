@@ -39,6 +39,7 @@ from cdp.workflow.tese import (
 )
 from cdp.workflow.tese_analise import position_role, sizing_driver
 
+LEGACY = Path(__file__).resolve().parent / "fixtures" / "fund_legado.yaml"
 WEEK = DEMO_FIRST_WEEK
 DAYS = 2
 BRT = ZoneInfo("America/Sao_Paulo")
@@ -49,7 +50,7 @@ def demo(tmp_path_factory):
     out = tmp_path_factory.mktemp("cdp_tese_demo")
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        summary = run_demo(out, days=DAYS)
+        summary = run_demo(out, days=DAYS, cfg=load_config(LEGACY))
     return out, summary
 
 
@@ -64,7 +65,7 @@ def market():
 
 def _runtime(root: Path, market=None, teses: Path | None = None) -> Runtime:
     """Runtime da cópia; ``teses`` = pasta dos rascunhos entregues (padrão: inexistente)."""
-    return Runtime(load_config(), root / "book", root / "market", root / "reports",
+    return Runtime(load_config(LEGACY), root / "book", root / "market", root / "reports",
                    store_override=DemoStore(market) if market is not None else None,
                    clock=lambda: datetime(2024, 3, 4, 16, 0, tzinfo=BRT),
                    teses_root=teses if teses is not None else root / "teses")
@@ -467,7 +468,7 @@ def test_prepare_adopts_delivered_draft_only_when_absent(demo, market, tmp_path)
 
 
 def test_demo_never_adopts_repository_drafts(tmp_path, monkeypatch):
-    cfg = load_config()
+    cfg = load_config(LEGACY)
     drafts = tmp_path / "cwd" / "docs" / "cdp" / "teses"
     drafts.mkdir(parents=True)
     (drafts / f"{WEEK.isoformat()}.json").write_text('{"mind": "codex"}', encoding="utf-8")
@@ -499,7 +500,7 @@ def _decided_week(root: Path, market, *, mutate_pm=None, kill_switch: bool = Fal
     from cdp.workflow.demo import _Clock, write_demo_inputs
 
     clock = _Clock()
-    rt = Runtime(load_config(), root / "book", root / "market", root / "reports",
+    rt = Runtime(load_config(LEGACY), root / "book", root / "market", root / "reports",
                  store_override=DemoStore(market), clock=clock, teses_root=None)
     clock.set(WEEK, dtime(11, 0))
     rt.weekly_prepare(WEEK, mind="demo", live=False)
@@ -657,7 +658,7 @@ def test_config_drift_uses_decision_config_or_nulls_dependent_fields(demo, marke
     dst = _unpublished_copy(demo, tmp_path)
     snapshot = dst / "book" / WEEK.isoformat() / DECISION_CONFIG
     assert snapshot.is_file()  # gravado pelo decide
-    cfg = load_config()
+    cfg = load_config(LEGACY)
     weights = dict(cfg.alpha.signal_weights)
     weights.update(value=0.40, quality=0.0)
     recalibrated = cfg.with_overrides({"alpha": {"signal_weights": weights}})
@@ -710,7 +711,7 @@ def test_vol_target_sentence_only_credits_the_bias_prior_when_applied(demo):
     from cdp.workflow.tese import _vol_target_sentence
     from cdp.workflow.tese_analise import vol_target_basis
 
-    cfg = load_config()
+    cfg = load_config(LEGACY)
     rk = cfg.risk
     assert vol_target_basis(rk.vol_target_annual / rk.bias_prior, rk.vol_target_annual,
                             cfg) == "vies_postura"

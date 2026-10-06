@@ -1,0 +1,167 @@
+# Parâmetros de valuation da cobertura de ações e ETFs (CDP — Cabra da Peste).
+#
+# Separado de fund.yaml: mudar este arquivo não move aprovações de carteira. O sha256 do arquivo
+# (e de cada arquivo em configs/cdp/cobertura/) entra no manifesto de cada snapshot de cobertura.
+# Todos os valores abaixo são insumos públicos datados (com a fonte citada) ou regras de política
+# do modelo; nenhum é calculado aqui. Revisão semestral por commit (Damodaran publica em janeiro e
+# julho); a taxa livre de risco em dólar é lida diariamente da série pública (FRED DGS10).
+versao: "2026-10.1"
+horizonte_meses: 12
+
+fontes:
+  damodaran_ctryprem:
+    url: "https://pages.stern.nyu.edu/~adamodar/pc/datasets/ctrypremJuly26.xlsx"
+    documento: "Damodaran, Country Default Spreads and Risk Premiums (julho de 2026; spreads corrigidos em 2026-07-09)"
+    data_publicacao: "2026-07-01"
+  damodaran_erp_mensal:
+    url: "https://pages.stern.nyu.edu/~adamodar/pc/implprem/ERPbymonth.xlsx"
+    documento: "Damodaran, Implied ERP by month (linha de 2026-10-01)"
+    data_publicacao: "2026-10-01"
+  damodaran_inflacao:
+    url: "https://pages.stern.nyu.edu/~adamodar/pc/blog/DiffInflationRiskfree26.xlsx"
+    documento: "Damodaran, Inflation differential risk-free rates 2026 (inflação esperada 2026-31)"
+    data_publicacao: "2026-01-07"
+  damodaran_betas:
+    url: "https://pages.stern.nyu.edu/~adamodar/pc/datasets/betaGlobal.xls"
+    documento: "Damodaran, Betas by sector (Global), janeiro de 2026 — beta desalavancado corrigido por caixa"
+    data_publicacao: "2026-01-07"
+  damodaran_impostos:
+    url: "https://pages.stern.nyu.edu/~adamodar/pc/datasets/countrytaxrates.xls"
+    documento: "Damodaran, Corporate marginal tax rates by country (2025/26)"
+    data_publicacao: "2026-01-07"
+  fred_dgs10:
+    url: "https://fred.stlouisfed.org/series/DGS10"
+    documento: "FRED, Market Yield on U.S. Treasury Securities at 10-Year Constant Maturity (DGS10)"
+    data_publicacao: null
+
+custo_capital:
+  # ke_USD = (rf_UST10 − spread de default dos EUA) + β_aj × ERP + λ × CRP
+  erp_maduro: 0.0420              # prêmio de mercado maduro, ctrypremJuly26 (fonte damodaran_ctryprem)
+  modo_erp: estatico              # estatico (oficial) | contemporaneo (exibido como sensibilidade)
+  erp_contemporaneo: 0.0370       # ERPbymonth 2026-10-01: 3,92% (T12m, rf ajustado) − 0,22% (spread EUA)
+  rf_usd_serie: USD_10Y           # série pública (FRED DGS10) lida das taxas públicas
+  rf_usd_reserva: 0.0529          # UST 10a em 2026-10-01 (ERPbymonth), usado só se a série faltar
+  rf_usd_reserva_data: "2026-10-01"
+  spread_default_eua: 0.0022      # Aa1 (ctrypremJuly26)
+  # CRP por país pelo rating (Moody's moeda local) × volatilidade relativa 1,5545 (ctrypremJuly26).
+  # LATAM: CRP regional ponderado pelo PIB (América Central e do Sul), mesma planilha.
+  crp: {BR: 0.0310, MX: 0.0272, CL: 0.0105, CO: 0.0272, PE: 0.0198, AR: 0.0928, PA: 0.0272, UY: 0.0198, LATAM: 0.0384, US: 0.0}
+  # Spread de default soberano pelo rating (ctrypremJuly26): custo da dívida e diagnóstico.
+  spread_default_pais: {BR: 0.0199, MX: 0.0175, CL: 0.0067, CO: 0.0175, PE: 0.0127, AR: 0.0597, PA: 0.0175, UY: 0.0127, LATAM: 0.0247, US: 0.0022}
+  # Inflação esperada 2026-31 por moeda (DiffInflationRiskfree26); USD = EUA.
+  inflacao_lp: {USD: 0.0235, BRL: 0.0323, MXN: 0.0322, CLP: 0.0303, COP: 0.0392, PEN: 0.0205, ARS: 0.1303, UYU: 0.0442}
+  # Alíquota marginal de IR por país (Damodaran 2025/26).
+  imposto_marginal: {BR: 0.34, MX: 0.30, CL: 0.27, CO: 0.35, PE: 0.295, AR: 0.35, PA: 0.25, UY: 0.25, LATAM: 0.25, US: 0.21}
+  spread_credito_corporativo: 0.015   # política: kd = rf + spread país + spread corporativo
+  beta:
+    fonte: damodaran_global_2026_01
+    blume: [0.67, 0.33]           # β_aj = 0,67 × β + 0,33
+    limites: [0.5, 1.8]
+    financeiras: regressao_pares  # bancos/seguradoras: mediana dos betas de regressão dos pares (sem realavancar)
+    regressao_semanas: 104
+    regressao_min_semanas: 52
+    referencia: ILF               # ETF LatAm em USD (mesmo proxy de mercado do modelo de risco)
+  lambda_padrao: 1.0              # exceções (receita externa relevante) em configs/cdp/cobertura/arquetipos.csv
+
+perpetuidade:
+  g_real: 0.020                   # crescimento real de longo prazo (HOLT ~2,5%; política conservadora)
+  g_real_max: 0.025
+  spread_min_ke_g: 0.03           # ke − g ≥ 3 p.p.
+  g_menor_que_rf: true            # g ≤ rf local (Damodaran)
+
+# Persistência (fade) setorial do crescimento entre os anos 3 e 10 (φ por setor GICS).
+fade_phi: {Consumer Staples: 0.940, Consumer Discretionary: 0.905, Health Care: 0.894, Industrials: 0.887,
+           Utilities: 0.869, Communication Services: 0.861, Information Technology: 0.841,
+           Financials: 0.810, Materials: 0.800, Energy: 0.769, Real Estate: 0.869}
+
+pesos_metodos:
+  banco:              {rim: 0.5, pb_justificado: 0.3, regressao_pb_roe: 0.2}
+  seguradora:         {ddm: 0.4, rim: 0.4, regressao_pl: 0.2}
+  utilidade_regulada: {rim_real: 0.4, ddm_real: 0.2, fcff_real: 0.2, regressao_pb_roe: 0.2}
+  concessao:          {fcff_vida_finita: 0.7, rim: 0.3}
+  commodity:          {fcff_normalizado: 0.6, rim: 0.2, regressao_ev_receita: 0.2}
+  corporativo:        {fcff: 0.5, rim: 0.25, multiplo_justificado: 0.25}
+  imobiliario:        {rim: 0.6, regressao_pb_roe: 0.4}
+  holding:            {soma_partes: 1.0}   # participações não conferidas ⇒ confiança C (sem Compra/Venda)
+
+projecao:
+  anos_explicitos: 10             # FCFF: anos 1-2 por direcionadores, 3-10 com fade geométrico
+  anos_rim: 12                    # RIM (GLS): 12 anos com fade linear do ROE
+  anos_ddm: 5                     # DDM: estágio 1
+  crescimento_limites: [-0.20, 0.30]
+  encolhimento_crescimento: 0.5   # crescimento próprio encolhido 50% para a mediana do setor
+  payout_limites: [0.0, 1.0]
+  roic_limites: [0.0, 0.60]
+  reinvestimento_limites: [-0.50, 0.95]   # FCFF: anos 1–2 pelo reinvestimento observado 1 − (CFO − capex)/NOPAT
+  min_anos_ciclo: 3               # margem "ao longo do ciclo" (commodities) exige ≥ 3 exercícios
+
+multiplos:
+  min_observacoes: 12             # regressões transversais (Huber) exigem ≥ 12 emissores
+  huber_c: 1.345
+  pb_limites: [0.1, 15.0]
+  pl_limites: [2.0, 80.0]
+  ev_receita_limites: [0.1, 25.0]
+  r2_min: 0.25                    # regressão com R² abaixo do mínimo fica indisponível
+
+soma_partes:
+  desconto_anos: 5                # desconto da holding = mediana semanal de 5 anos (1 − valor de mercado/NAV)
+  desconto_min_semanas: 52
+  desconto_reserva: 0.20          # usado só sem histórico suficiente (sinalizado)
+
+cenarios:
+  monte_carlo:
+    n: 2000                       # sorteios por instrumento (semente = sha256(emissor|data))
+    sigma_ke: 0.005
+    sigma_g: 0.0025
+    sigma_roe: 0.03                 # transitório: anos 1–2, convergindo ao ROE de longo prazo
+    rho_crescimento_margem: 0.3
+    sigma_commodity: 0.20
+    sigma_crescimento_min: 0.03     # σ do crescimento = IQR setorial ÷ 1,349, limitado a [3%; 5%]
+    sigma_crescimento_max: 0.05     # (choque persistente: fade setorial φ até o ano 10)
+    sigma_margem_min: 0.01          # σ da margem = desvio histórico do emissor, limitado a [1%; 5%]
+    sigma_margem_max: 0.05
+    sigma_desconto_holding: 0.05
+    commodity_limite: 0.6           # choque de preço limitado a ±60% (simétrico)
+    commodity_anos_plenos: 3        # choque de commodity transitório: pleno nos anos 1–3,
+    commodity_zero_em: 5            # revertendo linearmente até zero no ano 5 (sem efeito na perpetuidade)
+  # Probabilidade implícita pelo mercado (exibição): lognormal com drift ke e σ realizada de 12 meses.
+  vol_janela_pregoes: 252
+  swanson: [0.3, 0.4, 0.3]        # reserva sem Monte Carlo: 0,3·P10 + 0,4·P50 + 0,3·P90
+
+sensibilidade: {ke_passos: [-0.01, -0.005, 0.0, 0.005, 0.01], g_passos: [-0.005, -0.0025, 0.0, 0.0025, 0.005],
+                roe_passos: [-0.03, -0.015, 0.0, 0.015, 0.03], commodity_passos: [-0.20, -0.10, 0.0, 0.10, 0.20]}
+
+rating:
+  escala: [Compra, Neutro, Venda]
+  pares_min: 5                    # país × setor; senão setor (LatAm); senão país; senão universo
+  limiar_alpha_rel: {Baixa: 0.08, Média: 0.10, Alta: 0.15, Muito alta: 0.20}
+  guarda_compra_alpha_min: 0.0    # Compra exige α ≥ 0 (retorno esperado ≥ ke)
+  guarda_venda_alpha_max: -0.05   # Venda exige α ≤ −5 p.p.
+  guarda_compra_etr_menos_ke_min: 0.0     # Compra exige, no caso-base, ETR ≥ ke
+  guarda_compra_upside_min: 0.0           # e upside positivo
+  guarda_venda_etr_menos_ke_max: -0.05    # Venda exige, no caso-base, ETR ≤ ke − 5 p.p.
+  histerese: 0.02
+  confianca_minima: B
+  distribuicao_monitorada: {Compra: [0.20, 0.40], Venda: [0.20, 0.40]}   # alerta, nunca forçada
+
+qualidade: {tv_aviso: 0.85, tv_bloqueio: 0.95, cv_metodos_c: 0.50, cv_metodos_a: 0.25, upside_limites: [-0.7, 2.0],
+            defasagem_max_dias: 5, pwr_max_abs: 0.60, largura_cenario: [0.5, 2.0], identidade_tolerancia: 0.02,
+            ponte_residuo_max: 0.005, unidades_tolerancia: 0.25,
+            pb_plausivel: [0.1, 15.0], roe1_max_abs: 1.0, peso_patrimonial_lpa: 0.5,
+            excecoes_insumos: [MX_KIMBER],          # patrimônio contábil reduzido por recompras (P/VPA alto legítimo)
+            fcff_observado_faixa: [0.5, 2.0], defasagem_fluxos_max_dias: 100, envelope_ke_tolerancia: 0.01,
+            etf_retorno_limites: [-0.5, 1.0], etf_pl_razao_limites: [0.6, 1.6]}
+
+etf: {kappa_consenso: 0.5, omega_bu: 0.5, cobertura_plena: 0.90, meia_vida_pl_anos: 3, kappa_crescimento: 0.7,
+      ir_limiar: 0.3, banda_z: 1.645, referencia: ILF, retencao_dividendos: {BR: 0.10, MX: 0.10, CL: 0.35, CO: 0.20, PE: 0.05, AR: 0.07}}
+
+# Tradução valuation → alpha (sombra, peso 0 até promoção por IC): α = IC·m_inc·m_conf·m_fresco·σ_esp·z
+alpha:
+  ic: 0.02
+  m_incerteza: {Baixa: 1.2, Média: 1.0, Alta: 0.7, Muito alta: 0.5}
+  m_confianca: {A: 1.0, B: 0.8, C: 0.5, Insuficiente: 0.0}
+  frescor: {pleno_dias: 30, meia_vida_dias: 60, zero_apos_dias: 105}
+  winsor_z: 3.0
+  promocao: {janela_semanas: 26, ic_min: 0.01, t_nw_min: 1.5}   # IC residual de 1 semana, sem sobreposição
+
+acompanhamento: {checkpoints_semanas: [1, 4, 8, 13, 26, 52], obsoleto_dias: 105, encerrado_dias: 210, n_min_exibir: 20, n_min_ranking: 30}

@@ -88,13 +88,14 @@ cat <<EOF
    worktree DESLIGADO, modo de permissão "Accept edits" (Aceitar edições), e crie:
      cdp-status          segundas 08:30     instruções: /cdp:status
      cdp-semanal         dias úteis 11:07   instruções: /cdp:semanal
-     cdp-semanal-b       dias úteis 12:37   instruções: /cdp:semanal   (reserva)
+     cdp-semanal-b       dias úteis 12:07   instruções: /cdp:semanal   (reserva)
+     cdp-semanal-c       dias úteis 13:07   instruções: /cdp:semanal   (reserva)
      cdp-risco-1330      dias úteis 13:30   instruções: /cdp:risco
-     cdp-semanal-c       dias úteis 14:07   instruções: /cdp:semanal   (reserva)
-     cdp-semanal-d       dias úteis 15:07   instruções: /cdp:semanal   (reserva)
+     cdp-semanal-d       dias úteis 14:07   instruções: /cdp:semanal   (reserva)
      cdp-risco-1600      dias úteis 16:00   instruções: /cdp:risco
      cdp-diario          dias úteis 19:22   instruções: /cdp:diario
      cdp-diario-reforco  dias úteis 21:07   instruções: /cdp:diario
+     cdp-cobertura       seg a qui 21:30    instruções: /cdp:cobertura
      cdp-calibracao      mensal, dia 1, 09:15  instruções: /cdp:calibracao
    Horários de Brasília: se o PC estiver em outro fuso, converta (campo
    pc_menos_brasilia_horas de 'uv run python -m cdp agenda').

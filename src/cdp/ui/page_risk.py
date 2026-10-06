@@ -25,7 +25,15 @@ def _tiles(state: AppState) -> None:
     ui.kpi(c[1], "Vol fatorial", fmt.pct(fvol), "componente sistemático")
     ui.kpi(c[2], "Vol específica", fmt.pct(svol), "alpha puro (idiossincrático)")
     share = pr.factor_risk_share if pr is not None else None
-    ui.kpi(c[3], "Fatia fatorial da variância", fmt.pct(share),
+    label = "Fatia fatorial da variância"
+    if prop is not None and isinstance(prop.overrides, dict):
+        from ..risk.idio import base_vinculante
+
+        basis = base_vinculante(prop.overrides.get("risco"))
+        if basis is not None:  # mesma base do limite: κ_F, modelo que vincula
+            share = basis["fatorial"]
+            label = f"Fatia fatorial ({basis['rotulo']}, κ_F)"
+    ui.kpi(c[3], label, fmt.pct(share),
            fmt.max_status(share, cfg.risk.max_factor_risk_share) if share is not None
            else "sem proposta")
     beta = rk.beta if rk is not None else (pr.beta if pr else None)
@@ -62,6 +70,28 @@ def _tiles(state: AppState) -> None:
         src.append(f"proposta {fmt.code(prop.proposal_id)} v{prop.version} "
                    f"(ex-ante na decisão de {fmt.date_br(prop.week)})")
     st.caption("Fontes: " + "; ".join(src) + f" {ui.CALC_BADGE}")
+
+
+def _idio(state: AppState) -> None:
+    """Fatia idiossincrática gravada na decisão vigente (modelo de decisão e base, κ_F)."""
+    rec = state.track.latest
+    prop = state.book.live_proposal(rec)
+    risco = (prop.overrides.get("risco") if prop is not None
+             and isinstance(prop.overrides, dict) else None)
+    if not isinstance(risco, dict):
+        return
+    kap = risco.get("kappa_f") if isinstance(risco.get("kappa_f"), dict) else {}
+    meta, piso = risco.get("meta_idio"), risco.get("piso_idio")
+    ref = (f"meta {fmt.pct(meta, 0)}, piso {fmt.pct(piso, 0)}" if meta is not None
+           and piso is not None else "")
+    c = st.columns(4)
+    ui.kpi(c[0], "Idiossincrático — modelo de decisão", fmt.pct(risco.get("idio_decisao")), ref)
+    ui.kpi(c[1], "Idiossincrático — modelo base", fmt.pct(risco.get("idio_base")),
+           "sem janelas de evento")
+    ui.kpi(c[2], "κ_F (2ª ordem)", fmt.num(kap.get("valor"), 2),
+           "inflação da variância fatorial")
+    ui.kpi(c[3], "Custo marginal da neutralidade", fmt.num(risco.get("custo_neutralidade_bp"), 1)
+           + " bp", "preço-sombra × limite, a.a.")
 
 
 def _factors(state: AppState) -> None:
@@ -256,6 +286,7 @@ def render(state: AppState) -> None:
                        "vigente; ambos ainda não existem.")
         return
     _tiles(state)
+    _idio(state)
     _factors(state)
     _exposures(state)
     left, right = st.columns(2)

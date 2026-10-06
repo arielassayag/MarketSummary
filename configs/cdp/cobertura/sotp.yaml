@@ -1,0 +1,35 @@
+# Soma das partes das holdings (CDP). Participações em empresas listadas do universo, com a fonte
+# pública de cada fração (formulário de referência na CVM, 20-F na SEC ou site de RI). O desconto
+# aplicado é a mediana semanal de 5 anos de (1 − valor de mercado da holding / NAV calculado com
+# as mesmas participações); por construção, o método é invariante a um erro proporcional constante
+# na fração informada. "conferido: false" ⇒ fração a confirmar no documento-fonte (o modelo fica com
+# confiança C, sem Compra ou Venda). "desde: AAAA-MM-DD" (opcional, por holding) ⇒ a mediana do
+# desconto usa só o período desde a última mudança do conjunto de participações (mínimo de 52 semanas;
+# abaixo disso, desconto de reserva sinalizado).
+versao: "2026-10.1"
+holdings:
+  BR_ITAUSA:
+    participacoes:
+      - {emissor: BR_ITAU, fracao: 0.372, conferido: false, url: "https://www.itausa.com.br/composicao-acionaria", documento: "Itaúsa — composição acionária (participação no capital total do Itaú Unibanco)"}
+      - {emissor: BR_ALPARGATAS, fracao: 0.295, conferido: false, url: "https://www.itausa.com.br/composicao-acionaria", documento: "Itaúsa — composição acionária"}
+      - {emissor: BR_MOTIVA, fracao: 0.103, conferido: false, url: "https://www.itausa.com.br/composicao-acionaria", documento: "Itaúsa — composição acionária"}
+    nota: "Ativos não listados (Dexco, Copa Energia, Aegea, NTS) fora do NAV; o desconto histórico usa a mesma definição."
+  BR_BRADESPAR:
+    participacoes:
+      - {emissor: BR_VALE, fracao: 0.046, conferido: false, url: "https://www.bradespar.com/participacoes", documento: "Bradespar — participação na Vale"}
+  BR_COSAN:
+    participacoes:
+      - {emissor: BR_RUMO, fracao: 0.30, conferido: false, url: "https://ri.cosan.com.br/estrutura-societaria", documento: "Cosan — estrutura societária"}
+      - {emissor: BR_COMPASS, fracao: 0.88, conferido: false, url: "https://ri.cosan.com.br/estrutura-societaria", documento: "Cosan — estrutura societária"}
+    nota: "Raízen (fora do universo), Moove e Radar fora do NAV; o desconto histórico usa a mesma definição."
+  CO_GRUPOARGOS:
+    participacoes:
+      - {emissor: CO_CEMARGOS, fracao: 0.57, conferido: false, url: "https://www.grupoargos.com/inversionistas", documento: "Grupo Argos — portafolio"}
+    nota: "Celsia, Odinsa e negócios imobiliários fora do NAV."
+  CO_SURA:
+    participacoes:
+      - {emissor: CO_CIBEST, fracao: 0.24, conferido: false, url: "https://www.gruposura.com/inversionistas", documento: "Grupo Sura — portafolio (participação no capital total)"}
+    nota: "Sura Asset Management (não listada) fora do NAV."
+  AR_CRESUD:
+    participacoes:
+      - {emissor: AR_IRSA, fracao: 0.55, conferido: false, url: "https://www.cresud.com.ar/inversores", documento: "Cresud — participação na IRSA (20-F)"}

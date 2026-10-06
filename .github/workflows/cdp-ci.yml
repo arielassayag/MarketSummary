@@ -1,0 +1,100 @@
+# .github/workflows/cdp-ci.yml — integração contínua do repositório (sem segredos, só leitura).
+#
+# qualidade: lint e a suíte de testes (offline, determinística).
+# operacao:  integridade do livro, agenda das rotinas, skills neutras em dia e o portal montado
+#            com a demonstração (DADOS SIMULADOS), disponível como artefato do workflow para
+#            revisão de mudanças visuais.
+name: cdp-ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "tests/**"
+      - "configs/**"
+      - "scripts/**"
+      - "plugins/**"
+      - ".claude/**"
+      - ".agents/**"
+      - ".gemini/**"
+      - "docs/**"
+      - "site/**"
+      - "AGENTS.md"
+      - "CLAUDE.md"
+      - "GEMINI.md"
+      - "pyproject.toml"
+      - "uv.lock"
+      - ".github/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cdp-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  qualidade:
+    name: Lint e testes
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Instalar uv e Python
+        uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          enable-cache: true
+          python-version: "3.12"
+      - name: Dependências
+        run: uv sync --frozen --extra dev --extra ai
+      - name: Lint
+        run: uv run ruff check .
+      - name: Testes
+        env:
+          TZ: America/Sao_Paulo
+          PYTHONUTF8: "1"
+        run: uv run pytest -q -p no:cacheprovider
+
+  operacao:
+    name: Livro, rotinas, skills e portal
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Instalar uv e Python
+        uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          enable-cache: true
+          python-version: "3.12"
+      - name: Dependências (sem extras)
+        run: uv sync --frozen --no-dev
+      - name: Integridade do livro
+        run: uv run --frozen --no-dev python -m cdp verify
+      - name: Agenda das rotinas
+        run: uv run --frozen --no-dev python -m cdp rotinas verificar
+      - name: Skills neutras em dia
+        run: uv run --frozen --no-dev python -m cdp skills verificar
+      - name: Portal da demonstração (DADOS SIMULADOS)
+        env:
+          TZ: America/Sao_Paulo
+          PYTHONUTF8: "1"
+        run: |
+          uv run --frozen --no-dev python -m cdp site construir --demo --saida _site_demo \
+            --base-url https://example.invalid/cdp
+          uv run --frozen --no-dev python -m cdp site conferir --saida _site_demo
+      - name: Guardar a prévia do portal
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: portal-demo
+          path: _site_demo
+          retention-days: 7

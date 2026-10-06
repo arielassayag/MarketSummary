@@ -39,7 +39,7 @@ _STANCE_LABEL = {2: "fortemente comprador", 1: "comprador", 0: "neutro", -1: "ve
                  -2: "fortemente vendedor"}
 _BUCKET_LABEL = {"HIGH": "alta", "MEDIUM": "média", "LOW": "baixa", "NA": "indeterminada"}
 _MATERIALITY_LABEL = {"high": "alta", "medium": "média", "low": "baixa"}
-_COUNTRY_BENCH = {"BR": "EWZ", "MX": "EWW", "CL": "ECH", "CO": "GXG", "PE": "EPU", "AR": "ARGT"}
+_COUNTRY_BENCH = {"BR": "EWZ", "MX": "EWW", "CL": "ECH", "CO": "COLO", "PE": "EPU", "AR": "ARGT"}
 _COUNTRY_RATE = {"BR": "SELIC"}
 
 _POSITIVE = (

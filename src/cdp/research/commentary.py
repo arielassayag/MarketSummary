@@ -49,11 +49,11 @@ from .pm_agent import (
     record_llm_call,
     text_problems,
 )
-from .prompts import format_news_block
+from .prompts import ESTILO_REGRAS, format_news_block
 from .providers.base import LLMProvider, LLMResult, error_result
 from .providers.cache import LLMCallLedger
 
-COMMENTARY_PROMPT_VERSION = "cdp-comentario-2026-10-05.1"
+COMMENTARY_PROMPT_VERSION = "cdp-comentario-2026-10-06.1"
 COMMENTARY_TASK = "commentary"
 COMMENTARY_ROLE = "commentary"
 FACTS_MD = "facts.md"
@@ -80,6 +80,7 @@ COMMENTARY_RULES: tuple[str, ...] = (
     "Sem URLs, HTML, links ou imagens no texto.",
     "Responda/escreva um único objeto JSON no schema DailyCommentaryOutput: headline, paragraphs "
     "(de dois a cinco), risk_flags e mind.",
+    *ESTILO_REGRAS,
 )
 
 _SLUG_RE = re.compile(r"[^\w.\-:]+")
@@ -582,12 +583,14 @@ def render_commentary(out: DailyCommentaryOutput, fb: FactBook, provenance: str)
     return "\n".join(lines).strip() + "\n"
 
 
+#: Linha de autoria do relatório diário (registro): identifica a mente com o rótulo [IA] para a
+#: auditoria e o aplicativo interno; o portal a omite. Sem nomes de arquivo nem jargão.
 def _provenance(mind: str) -> str:
     if mind == DEMO_MIND:
         return ("Autoria: modo demo (regras determinísticas); números calculados por código a "
-                "partir do FactBook do dia.")
-    return (f"Autoria: mente {mind} [IA]; números calculados por código a partir do FactBook "
-            "do dia.")
+                "partir dos dados do dia.")
+    return (f"Autoria: mente {mind} [IA]; números calculados por código a partir dos dados do "
+            "dia.")
 
 
 def _file_provenance(mind: str) -> str:
@@ -596,8 +599,8 @@ def _file_provenance(mind: str) -> str:
     O ``mind`` é declarado pelo próprio arquivo; um arquivo que se diz ``demo`` não pode se
     passar por texto determinístico do código.
     """
-    return (f"Autoria: mente {mind} [IA] ({COMMENTARY_JSON} validado); números calculados por "
-            "código a partir do FactBook do dia.")
+    return (f"Autoria: mente {mind} [IA], texto validado pelo código; números calculados por "
+            "código a partir dos dados do dia.")
 
 
 TEMPLATE_PROVENANCE = ("Autoria: template determinístico do CDP [Calculado]; o texto da mente não "
@@ -804,7 +807,7 @@ def render_facts_md(record: DailyRecord, fb: FactBook, comment_path: Path,
           f"1. Escreva `{comment_path.as_posix()}` conforme `{COMMENTARY_SCHEMA_JSON}`: "
           "`headline`, `paragraphs` (de dois a cinco), `risk_flags` e `mind`.",
           "2. Pesquise o contexto do dia (notícias, país, setor, commodities, câmbio) com as suas "
-          "ferramentas.",
+          "ferramentas, só em fontes públicas.",
           f"3. Publique: `uv run python -m cdp daily publish --date {d}`.", "",
           "## Regras invioláveis", ""]
     L += [f"{i}. {r}" for i, r in enumerate(COMMENTARY_RULES, start=1)]

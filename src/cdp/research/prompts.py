@@ -29,9 +29,51 @@ from .schemas import (
     ShortRiskOutput,
 )
 
-PROMPT_VERSION = "2026-10-05.1"
+PROMPT_VERSION = "2026-10-06.1"
 NEWS_TAG = "noticias_nao_confiaveis"
 NO_NEWS_TEXT = "(nenhuma notícia elegível no período)"
+
+# ==========================================================
+# Guia de estilo (fonte única no código; espelhado em docs/cdp/ESTILO.md)
+# ==========================================================
+
+ESTILO_VERSAO = "cdp-estilo-2026-10-06.1"
+ESTILO_DOC = "docs/cdp/ESTILO.md"
+ESTILO_TITULO = "Guia de estilo (docs/cdp/ESTILO.md)"
+ESTILO_REGRAS: tuple[str, ...] = (
+    "Leitor: investidor qualificado e experiente. Escreva como a carta de uma gestora ou o "
+    "relatório de research de primeira linha: português do Brasil, registro institucional, "
+    "frases diretas, voz ativa, um parágrafo por ideia.",
+    "Vocabulário técnico preciso e sem didatismo: vol ex-ante, beta, risco fatorial e "
+    "idiossincrático, IC, upside até o preço-alvo, EV/EBITDA, ke, prêmio de risco-país (CRP), "
+    "carry, duration. Não defina conceitos básicos nem explique o óbvio.",
+    "Sem tom promocional: nada de superlativos, adjetivos de venda (excelente, imperdível, "
+    "explosivo), promessas de retorno ou recomendações a terceiros.",
+    "Sem coloquialismos, gírias, interjeições, exclamações, perguntas retóricas ou emojis.",
+    "Sem jargão de tecnologia e sem bastidores: não mencione arquivos, formatos de dados, "
+    "hashes, commits, scripts, rotinas, ferramentas nem nomes de assistentes de IA; descreva "
+    "o processo em termos de investimento (modelo quantitativo, comitê, trilha de auditoria).",
+    "Separe fato de julgamento: fato só com {{fact:<id>}} ou fonte pública citada; julgamento "
+    "com convicção explícita e incerteza em termos ordinais (alta, média, baixa), sem previsões "
+    "pontuais que o código não calculou.",
+    "Cite fontes primárias públicas (CVM, SEC, B3, relações com investidores, bancos centrais, "
+    "institutos de estatística) pela instituição e pela data; as URLs vão só nos campos de fonte "
+    "ou evidência, nunca no texto.",
+    "Descreva a carteira, os modelos e a metodologia somente na forma vigente, sem histórico de "
+    "versões do processo.",
+    "Empresas pelo nome (Petrobras, Vale), nunca pelo identificador interno; tickers só quando "
+    "for preciso distinguir linhas. Datas como 2026-10-25, 25/10/2026 ou 25 de outubro; "
+    "trimestres como 3T26.",
+)
+"""Guia de estilo de toda saída da mente (tese, decisão do PM, pesquisa, notas por emissor,
+comentários diário e semanal) e dos textos de código para o investidor. Mudou o texto ⇒ mude
+``ESTILO_VERSAO`` e ``docs/cdp/ESTILO.md`` (``tests/cdp/test_style_guide.py`` confere)."""
+
+
+def estilo_bloco(numerar_a_partir: int = 1) -> str:
+    """O guia de estilo como lista numerada (para prompts e briefings)."""
+    return "\n".join(f"{i}. {r}" for i, r in enumerate(ESTILO_REGRAS, start=numerar_a_partir))
+
 
 SYSTEM_RULES = """\
 Você é um componente de pesquisa de um fundo long/short de ações latino-americanas (base USD, \
@@ -124,7 +166,8 @@ def system_prompt(role: str) -> str:
     if role not in ROLE_INSTRUCTIONS:
         raise KeyError(f"Papel de pesquisa desconhecido: {role}")
     schema = ROLE_SCHEMAS[role]
-    return (f"{SYSTEM_RULES}\n{ROLE_INSTRUCTIONS[role]}\n\n"
+    return (f"{SYSTEM_RULES}\n{ESTILO_TITULO.upper()}\n{estilo_bloco()}\n\n"
+            f"{ROLE_INSTRUCTIONS[role]}\n\n"
             f"SCHEMA JSON OBRIGATÓRIO ({schema.__name__}):\n{schema_json(schema)}\n"
             f"Versão do prompt: {PROMPT_VERSION}")
 

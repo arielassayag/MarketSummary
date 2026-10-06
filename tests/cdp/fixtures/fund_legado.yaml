@@ -1,0 +1,167 @@
+# Mandato com a regra legada (primeiro pregão da semana na B3, sem a seção execution), fixado
+# para os testes do fluxo legado: cópia do configs/cdp/fund.yaml anterior à ativação do
+# cronograma de sexta. O fluxo da NYSE é testado em test_calendar.py, test_execucao.py e
+# test_relatorio_semanal.py.
+# Mandato do fundo LatAm L/S — qualquer alteração muda o config_hash e invalida aprovações.
+# Valores calibrados com base em docs/research/03_construcao_long_short.md e
+# docs/research/04_estrutura_mercado_latam.md.
+
+fund:
+  name: "CDP — Cabra da Peste"
+  base_currency: USD
+  inception_date: "2026-10-09"           # carteira inaugural, ao preço de fechamento (sempre dia de montagem)
+  inception_nav_usd: 100000000
+  rebalance_weekday: MON
+  manager_role: "Gestor (PM)"
+  manager_name: "CDP — Cabra da Peste"
+  track_record_type: "paper trading com preços reais (execução hipotética no fechamento)"
+  timezone: America/Sao_Paulo
+  weekly_research_start_local: "11:00"   # segunda: pesquisa e decisão com dados até sexta
+  decision_deadline_local: "16:30"       # decisão gravada antes do call de fechamento da B3
+  execution_convention: "MOC: carteira decidida antes do fechamento de segunda com dados até sexta; executada pelo valor-alvo (peso × NAV) ao preço de fechamento de segunda de cada linha, com custos do modelo"
+  daily_close_run_local: "19:20"         # marcação, risco, atribuição, comentário e relatório
+  primary_calendar: BVMF                 # calendário oficial da B3 (exchange_calendars)
+  rebalance_rule: "primeiro pregão da semana na B3 (segunda ou o próximo dia útil)"
+  minds: [claude-code, codex]            # a "mente" do CDP: intercambiável, metodologia perene
+  use_all_available_data: true           # inclui intradiário e notícias até o momento da análise
+
+risk:
+  vol_target_annual: 0.05      # meta ex-ante
+  vol_band_min: 0.03           # abaixo: alerta (subutilização de risco)
+  vol_band_max: 0.07           # acima: bloqueio
+  net_exposure_max_abs: 0.01   # net neutral (tolerância operacional de 1% do NAV)
+  beta_max_abs: 0.05           # beta previsto vs. mercado LatAm
+  gross_max: 2.5
+  gross_min: 0.5
+  country_net_max_abs: 0.02           # alpha puro: país neutro (long ≈ short em cada país)
+  sector_net_max_abs: 0.025          # setor neutro
+  style_exposure_max_abs: 0.10          # fatores de estilo neutros (|z| <= 0,10)
+  max_long_weight: 0.04
+  max_short_weight: 0.025      # shorts menores: perda ilimitada e risco de squeeze
+  min_position_weight: 0.002
+  max_single_name_risk_share: 0.08
+  max_factor_risk_share: 0.25          # ≥ 75% da variância deve ser idiossincrática (restrição no otimizador)
+  risk_aversion: 1.0
+  risk_target_mode: match              # o mandato TEM vol-alvo: usa o orçamento de risco (κ ≥ 1)
+  var_confidence: 0.99
+  theme_net_max_abs: {state_owned: 0.01}  # estatais neutras (janela eleitoral)
+  country_gross_share_max: {BR: 0.70, MX: 0.35, CL: 0.15, PE: 0.12, CO: 0.10, AR: 0.10, LATAM: 0.10, PA: 0.05, UY: 0.05}
+  commodity_proxies: {oil: "BZ=F", copper: "HG=F", gold: "GC=F"}   # betas neutralizados à parte
+  commodity_beta_max_abs: 0.03         # 10% no Brent/cobre/ouro ⇒ ≤ 0,3% do NAV
+  event_windows:
+    # reaction_date: pregão de reação ao evento (1º pregão pós-1º turno). A reação residual de cada
+    # emissor nesse dia mede a exposição ao "fator eleição"; |Σ w·reação| ≤ reaction_exposure_max_abs.
+    - {name: "Eleição Brasil 2026 (2º turno 25/out)", country: BR, start: "2026-10-05", end: "2026-10-26", vol_multiplier: 1.5, reaction_date: "2026-10-05", reaction_exposure_max_abs: 0.0015}
+  bias_prior: 1.10                     # risco de carteira otimizada é subestimado (USE4): alvo efetivo 5%/1,10
+  bias_prior_weeks: 26
+  var_1d_max: 0.010                    # VaR 99% 1d
+  es_1d_max: 0.0125
+  country_stress_max_loss: 0.015       # perda máx. por cenário de gap de país (% NAV)
+  country_gap_scenarios: {BR: [-0.10, 0.10], MX: [-0.13], CL: [-0.15], PE: [-0.10], CO: [-0.11], AR: [-0.56, 0.41]}
+
+liquidity:
+  min_adtv_usd: 2000000
+  adv_window_days: 63
+  participation_rate: 0.20
+  max_days_to_liquidate_long: 3.0
+  max_days_to_liquidate_short: 2.0
+  max_trade_days_inception: 5.0
+  max_trade_days_weekly: 2.0
+  max_weekly_turnover: 0.30           # custo de 60%/sem (~4,7% a.a.) excederia o alpha esperado
+  min_adtv_long_usd: 5000000
+  min_adtv_short_usd: 10000000
+  short_participation_rate: 0.15       # shorts: 2 dias a 15% => <= 30% do ADTV
+  min_gross_liquid_3d: 0.80
+  min_gross_liquid_5d: 0.95
+
+shorting:
+  shortable_line_types: [ADR, US_LISTED, LOCAL_BR]
+  gc_borrow_fee_us: 0.003
+  gc_borrow_fee_br: 0.008
+  max_borrow_fee: 0.05                 # vermelho > 5% a.a. para shorts novos
+  min_market_cap_short_usd: 500000000
+
+squeeze:
+  si_pct_float_medium: 0.10            # ADRs: SI em equivalentes de ações / free float
+  si_pct_float_high: 0.20
+  days_to_cover_medium: 5.0
+  days_to_cover_high: 10.0
+  borrow_fee_medium: 0.03
+  borrow_fee_high: 0.08
+  ret_1m_medium: 0.15
+  ret_1m_high: 0.30
+  free_float_mcap_low_usd: 1000000000
+  # B3: taxa de aluguel é o sinal primário; saldo BTC inclui arbitragem/ETF (docs/research/06)
+  br_borrow_fee_medium: 0.05
+  br_borrow_fee_high: 0.15
+  br_btc_pct_float_medium: 0.15
+  br_btc_pct_float_high: 0.25
+  br_btc_dtc_medium: 10.0
+  br_btc_dtc_high: 20.0
+  adr_parity_tolerance: 0.03
+  free_float_min_pct: 0.20             # sem short abaixo disso (caso Ambipar)
+  controller_max_pct: 0.70
+  catalyst_block_sessions: 5           # sem short novo a <= 5 pregões de catalisador
+  stop_short_position_loss: 0.25       # stop de squeeze: corte de 50%
+  stop_short_nav_loss: 0.01
+  score_medium: 40
+  score_high: 70
+  medium_short_cap_multiplier: 0.5
+
+costs:
+  commission_bps: {US: 1.0, BR: 3.0, MX: 8.0, CL: 10.0, CO: 15.0, PE: 15.0, AR: 15.0}
+  half_spread_bps_by_tier: {T1: 4.0, T2: 8.0, T3: 15.0, T4: 25.0}
+  tier_adtv_breaks_usd: [50000000, 15000000, 5000000]
+  impact_coefficient: 0.6
+  fx_cost_bps: 3.0
+  amortization_weeks: 8
+
+alpha:
+  signal_weights:
+    residual_momentum: 0.25
+    short_term_reversal: 0.0    # calibração 2026-10-05: giro sem alpha líquido (reports/backtest/2026-10-05)
+    value: 0.20
+    quality: 0.15
+    low_risk: 0.10
+    analyst_revision: 0.15
+  information_coefficient: 0.04
+  winsor_z: 3.0
+  horizon_weeks: 8
+  orthogonalize_to_factors: true
+  view_information_coefficient: 0.03   # teto (adoção plena S3); efetivo vem de research.llm_phase
+  max_view_tilt_z: 1.5
+  view_sign_coherence: true          # visão final + ⇒ sem short; − ⇒ sem long (PM prevalece)
+
+drawdown:                    # escada a partir do pico (Millennium-style, escalada p/ vol 5%)
+  soft_stop: -0.025            # revisão de risco + corte de 25% do gross
+  soft_degross_multiplier: 0.75
+  hard_stop: -0.05             # corte de 50% do gross
+  degross_multiplier: 0.5
+  stop_out: -0.075             # gross mínimo + revisão completa do processo
+  stop_out_gross: 0.5
+
+risk_model:
+  history_days: 2000                     # todo o histórico disponível (desde 2019); EWMA pondera o recente
+  min_obs_days: 126
+  halflife_factor_vol: 84
+  halflife_factor_corr: 252
+  halflife_specific: 84
+  newey_west_lags: 3
+  specific_shrinkage: 0.3
+  min_names_per_sector: 5
+  market_proxy: ILF
+
+research:
+  provider: imported                     # pesquisa e decisão escritas pela mente (Claude Code / Codex)
+  top_n_candidates: 40
+  news_lookback_days: 14
+  llm_can_only_tighten: true
+  # Adoção gradual das visões de IA no alpha (shadow → produção). IC efetivo por fase;
+  # promoção exige IC realizado (S2: ICIR≥0,5 em ≥13 semanas; S3: t≥2 em ≥52 semanas) e
+  # rebaixamento automático se IC 13s < 0 com t ≤ -1,5 ou incidente de alucinação/look-ahead.
+  # Início em S1 (IC 0,01): a pesquisa influencia marginalmente desde a inception, com
+  # vetos de risco (no_short/no_long) sempre ativos.
+  llm_phase: S1
+  llm_view_ic_by_phase: {S0: 0.0, S1: 0.01, S2: 0.02, S3: 0.03}
+  samples_per_judgment: 5
+  min_sign_agreement: 0.8

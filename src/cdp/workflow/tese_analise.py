@@ -110,9 +110,10 @@ COUNTRY_PT = {"BR": "Brasil", "MX": "México", "CL": "Chile", "CO": "Colômbia",
               "OTHER": "Outros"}
 """Rótulos de país iguais aos do painel (``countryName``): o mesmo balde tem um único nome."""
 GROUP_CODE = {"market": "mercado", "country": "pais", "sector": "setor", "style": "estilo",
-              "specific": "especifico"}
+              "macro": "macro", "specific": "especifico"}
 GROUP_LABEL = {"mercado": "Mercado LatAm", "pais": "Países", "setor": "Setores",
-               "estilo": "Estilos", "especifico": "Específico (seleção de ações)"}
+               "estilo": "Estilos", "macro": "Macro (commodities e dólar)",
+               "especifico": "Específico (seleção de ações)"}
 ROLE_PT = {"alpha": "Geradora de alpha", "alpha_div": "Alpha que diversifica",
            "hedge": "Hedge / neutralidade"}
 SIZING_PT = {"interior": "Ótimo interior (sem teto ativo)", "teto_nome": "Teto de peso por nome",
@@ -258,6 +259,8 @@ def factor_label(name: str) -> tuple[str, str]:
         return f"País — {country_label(name[8:])}", "pais"
     if name.startswith("sector:"):
         return f"Setor — {sector_label(name[7:])}", "setor"
+    if name.startswith("macro:"):
+        return f"Macro — {name[6:]}", "macro"
     return f"Estilo — {style_label(name)}", "estilo"
 
 
@@ -522,7 +525,7 @@ def sizing_table(ti: ThesisInputs) -> SizingTable:
     """Tabela de limites por emissor exatamente como no ``build_proposal`` (sem otimizar)."""
     from ..alpha.views import apply_views
     from ..portfolio.optimizer import build_asset_constraints
-    from .weekly import apply_liquidity_minimums, apply_specific_risk_caps
+    from .weekly import construction_constraints
 
     ctx, cfg, p = ti.ctx, ti.cfg, ti.proposal
     vt = float(p.overrides.get("vol_target", cfg.risk.vol_target_annual))
@@ -530,7 +533,12 @@ def sizing_table(ti: ThesisInputs) -> SizingTable:
         return SizingTable(None, None, vt, None)
     try:
         spec_vol = ctx.model.specific_vol
-        adjusted, vcons, _log = apply_views(ctx.alpha.alpha, _week_views(ti), spec_vol, cfg)
+        wviews = _week_views(ti)
+        adjusted, vcons, _log = apply_views(ctx.alpha.alpha, wviews, spec_vol, cfg)
+        if cfg.alpha.reresidualize_after_views and wviews:
+            from ..alpha.combine import reresidualize
+
+            adjusted, _rlog = reresidualize(adjusted, ctx.model)
         stored = {t.issuer_id: _f(t.alpha_annual) for t in p.positions}
         mism = 0
         for iid, a in stored.items():
@@ -540,12 +548,12 @@ def sizing_table(ti: ThesisInputs) -> SizingTable:
                 mism += 1
         issuers = list(ctx.model.assets)
         current = ctx.current_w.reindex(issuers).fillna(0.0) if len(ctx.current_w) else None
-        c = build_asset_constraints(issuers, ctx.sides, ctx.squeeze, vcons, ctx.betas,
-                                    ctx.panel.assets, cfg, ctx.nav, current=current,
-                                    inception=ctx.inception)
-        pre = c.copy()
-        c = apply_liquidity_minimums(c, cfg, ctx.nav)
-        c = apply_specific_risk_caps(c, spec_vol, cfg, vt)
+        pre = build_asset_constraints(issuers, ctx.sides, ctx.squeeze, vcons, ctx.betas,
+                                      ctx.panel.assets, cfg, ctx.nav, current=current,
+                                      inception=ctx.inception)
+        # Mesmo pipeline da decisão (liquidez mínima, teto de risco específico, capacidade do
+        # fechamento, vetos de short e stops por nome).
+        c, _info = construction_constraints(ctx, vcons, vt)
         return SizingTable(c, pre, vt, mism == 0, mism)
     except Exception:  # noqa: BLE001 - dimensionamento é explicativo; nunca derruba a tese
         return SizingTable(None, None, vt, None)
@@ -1148,7 +1156,17 @@ def _reference(ti: ThesisInputs) -> dict[str, Any] | None:
             "names": int(ov["names_shadow"]), "common": int(ov["common_same_side"]),
             "active_share": _f(ov["active_share"]), "overlap": _f(ov["weight_overlap"]),
             "cost": _f(s.optimizer.expected_cost_annual), "beta": _f(s.risk.beta),
-            "factor_share": _f(s.risk.factor_risk_share)}
+            "factor_share": _factor_share(s)}
+
+
+def _factor_share(p: Proposal) -> float | None:
+    """Participação fatorial publicada: com a medida idiossincrática gravada
+    (``overrides["risco"]``), a base κ_F do modelo que vincula o gate — a mesma do limite do
+    mandato; sem ela, a do ``RiskSummary``."""
+    from ..risk.idio import base_vinculante
+
+    basis = base_vinculante(p.overrides.get("risco") if isinstance(p.overrides, dict) else None)
+    return _f(basis["fatorial"]) if basis is not None else _f(p.risk.factor_risk_share)
 
 
 def _currencies(p: Proposal) -> list[dict[str, Any]]:
@@ -1210,7 +1228,7 @@ def build_numbers(ti: ThesisInputs, positions: Sequence[Mapping[str, Any]], tabl
         "long": _f(rk.long_exposure), "short": _f(rk.short_exposure), "gross": gross,
         "net": _f(rk.net), "beta": _f(rk.beta), "beta_limit": float(cfg.risk.beta_max_abs),
         "vol": _f(rk.ex_ante_vol), "factor_vol": _f(rk.factor_vol),
-        "specific_vol": _f(rk.specific_vol), "factor_share": _f(rk.factor_risk_share),
+        "specific_vol": _f(rk.specific_vol), "factor_share": _factor_share(p),
         "var_1d": _f(rk.var_1d_99), "es_1d": _f(rk.es_1d_99), "var_1w": _f(rk.var_1w_99),
         "alpha": alpha, "cost": cost,
         "alpha_net": None if alpha is None or cost is None else alpha - cost,
@@ -1224,11 +1242,34 @@ def build_numbers(ti: ThesisInputs, positions: Sequence[Mapping[str, Any]], tabl
     sigma = [{"horizon": h, "label": lab, "pct": _mul(vol, math.sqrt(n / TRADING_DAYS)),
               "usd": _mul(_mul(vol, math.sqrt(n / TRADING_DAYS)), nav)}
              for h, lab, n in SIGMA_HORIZONS]
+    groups_used = ("market", "country", "sector", "style") \
+        + (("macro",) if "macro" in dec.by_group else ()) + ("specific",)
+    by_group: dict[str, Any] = dict(dec.by_group)
+    by_factor = dec.by_factor
+    from ..risk.idio import base_vinculante
+
+    basis = base_vinculante(p.overrides.get("risco") if isinstance(p.overrides, dict) else None)
+    if basis is not None:
+        # Mesma base dos gates e do limite: κ_F no bloco fatorial, modelo que vincula.
+        mdl = ctx.model_base if basis["modelo"] == "base" and ctx.model_base is not None \
+            else ctx.model
+        dec_b = risk_decomposition(ti.weights, mdl) if mdl is not ctx.model else dec
+        kap = (p.overrides["risco"].get("kappa_f") or {}).get("valor") \
+            if isinstance(p.overrides["risco"].get("kappa_f"), dict) else None
+        k = max(float(kap), 1.0) if isinstance(kap, (int, float)) else max(ctx.kappa_f, 1.0)
+        spec = float(dec_b.by_group.get("specific", float("nan")))
+        denom = k * (1.0 - spec) + spec
+        if math.isfinite(denom) and denom > 0:
+            by_factor = dec_b.by_factor * k / denom
+            by_group = {g: (k * float(v) / denom if g != "specific" else spec / denom)
+                        for g, v in dec_b.by_group.items()}
+            groups_used = ("market", "country", "sector", "style") \
+                + (("macro",) if "macro" in by_group else ()) + ("specific",)
     risk_groups = [{"group": GROUP_CODE[g], "label": GROUP_LABEL[GROUP_CODE[g]],
-                    "share": _f(dec.by_group.get(g)) if shares_ok else None}
-                   for g in ("market", "country", "sector", "style", "specific")]
+                    "share": _f(by_group.get(g)) if shares_ok else None}
+                   for g in groups_used]
     factors = []
-    for f, v in dec.by_factor.items():
+    for f, v in by_factor.items():
         label, group = factor_label(str(f))
         factors.append({"factor": str(f), "label": label, "group": group,
                         "share": _f(v) if shares_ok else None})

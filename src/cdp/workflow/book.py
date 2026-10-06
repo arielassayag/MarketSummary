@@ -39,8 +39,11 @@ import math
 import os
 import re
 import tempfile
+from collections.abc import Callable
 from datetime import UTC, date, datetime
 from pathlib import Path
+from typing import Any
+from zoneinfo import ZoneInfo
 
 import pandas as pd
 from pydantic import BaseModel
@@ -163,14 +166,16 @@ def _parse_week(name: str) -> date | None:
 
 
 def _check_week(week: date, config: FundConfig | None = None) -> None:
-    """Chave do livro: o primeiro pregão da semana na B3 ou, com ``config``, a data de início
-    do mandato (a carteira inaugural pode ser montada fora da regra semanal, ex.: numa sexta)."""
-    from ..calendar import chave_valida
+    """Chave do livro: o dia de montagem da regra semanal (com ``config`` em
+    ``LAST_US_SESSION``, o último pregão da semana na NYSE; sem ela, o primeiro pregão da semana
+    na B3) ou, com ``config``, a data de início do mandato (sempre dia de montagem)."""
+    from ..calendar import chave_valida, regra
 
     if not chave_valida(week, config):
-        raise ValueError(f"A semana do livro precisa ser o primeiro pregão da semana na B3 "
-                         f"(segunda ou o próximo dia útil) ou a data de início do mandato; "
-                         f"recebido {week}.")
+        rule = ("o último pregão da semana na NYSE" if regra(config) == "LAST_US_SESSION"
+                else "o primeiro pregão da semana na B3 (segunda ou o próximo dia útil)")
+        raise ValueError(f"A semana do livro precisa ser {rule} ou a data de início do "
+                         f"mandato; recebido {week}.")
 
 
 def _index_events(events: list[AuditEvent]) -> _Index:
@@ -259,6 +264,66 @@ def _booking_mismatches(entry: BookEntry, proposal: Proposal) -> list[str]:
     return reasons
 
 
+def _booking_mismatches_fechamento(entry: BookEntry, proposal: Proposal,
+                                   held: dict[tuple[str, str], int]) -> list[str]:
+    """Carteira efetivada com execução limitada pela capacidade do leilão (seção ``execution``).
+
+    Por linha ``(emissor, ticker)``: as ações efetivadas ficam ENTRE as ações detidas antes do
+    fechamento e as ações da ordem aprovada (``PositionTarget.shares``; linha fora da proposta ⇒
+    zero) — execução parcial, saldo de saída parcial e emissor congelado são válidos; qualquer
+    ação fora desse intervalo (linha não aprovada, sinal invertido, excesso sobre a ordem) não
+    é. NAV e nocional × peso conferidos como no booking integral."""
+    reasons: list[str] = []
+    nav = entry.nav_usd
+    nav_ok = math.isfinite(nav) and nav > 0
+    if not nav_ok:
+        reasons.append("NAV do booking inválido (não positivo ou não finito).")
+    elif abs(nav / proposal.nav_usd - 1.0) > BOOKING_NAV_TOLERANCE:
+        reasons.append(f"NAV do booking ({fmt_usd_mm(nav)}) difere do NAV de referência da "
+                       f"proposta ({fmt_usd_mm(proposal.nav_usd)}) além de "
+                       f"{fmt_pct(BOOKING_NAV_TOLERANCE, 0)}; conferir unidade.")
+    booked: dict[tuple[str, str], BookedPosition] = {}
+    for b in entry.positions:
+        key = (b.issuer_id, b.ticker)
+        if key in booked:
+            reasons.append(f"Linha {b.issuer_id}/{b.ticker} efetivada em duplicidade.")
+        booked[key] = b
+        if b.shares is None:
+            reasons.append(f"{b.issuer_id}/{b.ticker}: efetivação sem quantidade de ações.")
+        if nav_ok:
+            expected = abs(b.weight) * nav
+            if (not math.isfinite(b.notional_usd)
+                    or abs(abs(b.notional_usd) - expected) > BOOKING_WEIGHT_TOLERANCE * nav):
+                reasons.append(f"{b.issuer_id}: nocional {fmt_usd_mm(b.notional_usd)} "
+                               f"incompatível com |peso| × NAV ({fmt_usd_mm(expected)}).")
+    approved = {(p.issuer_id, p.execution_ticker): p for p in proposal.positions
+                if p.weight != 0}
+    for key in sorted(set(booked) | set(approved) | set(held)):
+        b = booked.get(key)
+        sb = int(b.shares) if b is not None and b.shares is not None else 0
+        s0 = int(held.get(key, 0))
+        a = approved.get(key)
+        tol = 0
+        if a is None:
+            st: int | None = 0
+        elif a.shares is not None:
+            st = int(a.shares)
+        elif b is not None and b.shares:
+            unit = abs(b.notional_usd) / abs(b.shares)
+            st = int(round(a.weight * nav / unit)) if unit > 0 and nav_ok else None
+            tol = max(1, int(abs(st or 0) * 0.01))
+        else:
+            st = None
+        if st is None:
+            continue
+        lo, hi = min(s0, st) - tol, max(s0, st) + tol
+        if not lo <= sb <= hi:
+            what = "linha não aprovada" if a is None and s0 == 0 else "ações efetivadas"
+            reasons.append(f"{key[0]}/{key[1]}: {what} ({sb}) fora do intervalo entre a posição "
+                           f"anterior ({s0}) e a ordem aprovada ({st}).")
+    return reasons
+
+
 # ==========================================================
 # Livro
 # ==========================================================
@@ -266,12 +331,19 @@ def _booking_mismatches(entry: BookEntry, proposal: Proposal) -> list[str]:
 class Book:
     """Armazenamento em arquivos das semanas: pesquisa, propostas, decisões e booking.
 
-    ``config`` (opcional) é usado apenas para rotular o memo (nome do fundo, meta e limites).
+    ``config`` (opcional) rotula o memo (nome do fundo, meta e limites) e, com a seção
+    ``execution``, define a conferência da efetivação no fechamento. ``mercado`` (opcional):
+    ``pregão -> MarketData`` para conferir cada efetivação contra a execução esperada no pregão
+    (:func:`cdp.portfolio.execucao.conferir_efetivacao`: capacidade pelo volume realizado,
+    mercado elegível, corte MOC, banda); sem ele, só o intervalo entre a posição anterior e a
+    ordem aprovada é conferido.
     """
 
-    def __init__(self, root: Path | str = "book", config: FundConfig | None = None) -> None:
+    def __init__(self, root: Path | str = "book", config: FundConfig | None = None,
+                 mercado: Callable[[date], Any] | None = None) -> None:
         self.root = Path(root)
         self.config = config
+        self.mercado = mercado
         self.root.mkdir(parents=True, exist_ok=True)
         self.audit = AuditLog(self.root / "audit_log.jsonl")
         self.ledger = Ledger(self.root / "ledger.csv")
@@ -567,8 +639,38 @@ class Book:
                     return entry
         return None
 
+    def holdings_before(self, week: date) -> dict[tuple[str, str], int]:
+        """Ações detidas antes do fechamento de ``week``: a efetivação anterior mais recente
+        (efetivações de "manter", sem posições, são puladas — a carteira segue a anterior)."""
+        for w in reversed(self.list_weeks()):
+            if w >= week:
+                continue
+            entry = self.load_booked(w)
+            if entry is None:
+                continue
+            if not entry.positions:
+                try:
+                    prop = self._find_proposal(w, entry.proposal_id)
+                except (ValueError, FileNotFoundError):
+                    prop = None
+                if prop is not None and prop.optimizer.status == "hold":
+                    continue
+            return {(p.issuer_id, p.ticker): int(p.shares or 0) for p in entry.positions}
+        return {}
+
     def _kill_switch_violations(self, entry: BookEntry) -> list[str]:
-        """Nomes que não são redução de uma posição do booking anterior (mesmo sinal, |w| ≤)."""
+        """Nomes que não são redução de uma posição do booking anterior (mesmo sinal, |w| ≤).
+        Com a seção ``execution`` a comparação é em AÇÕES por linha (a efetivação lista a
+        carteira resultante inteira, cujos pesos derivam com os preços)."""
+        if self.config is not None and self.config.execution is not None:
+            held = self.holdings_before(entry.week)
+            bad_l: set[str] = set()
+            for b in entry.positions:
+                s0 = held.get((b.issuer_id, b.ticker), 0)
+                sb = int(b.shares or 0)
+                if s0 == 0 or sb * s0 < 0 or abs(sb) > abs(s0):
+                    bad_l.add(b.issuer_id)
+            return sorted(bad_l)
         prev = self._previous_booked(entry.week)
         prev_w: dict[str, float] = {}
         for p in prev.positions if prev is not None else []:
@@ -611,7 +713,18 @@ class Book:
         if pending:
             raise ValueError(f"Há versões mais recentes não rejeitadas ({pending}); efetive a "
                              "versão vigente.")
-        mismatches = _booking_mismatches(entry, proposal)
+        if self.config is not None and self.config.execution is not None:
+            held = self.holdings_before(week)
+            mismatches = _booking_mismatches_fechamento(entry, proposal, held)
+            if not mismatches and self.mercado is not None:
+                from ..portfolio.execucao import conferir_efetivacao
+
+                sessao = entry.booked_at.astimezone(
+                    ZoneInfo(self.config.fund.timezone)).date()
+                mismatches = conferir_efetivacao(entry, proposal, decision.decided_at, held,
+                                                 self.mercado(sessao), self.config)
+        else:
+            mismatches = _booking_mismatches(entry, proposal)
         if mismatches:
             raise ValueError("Carteira efetivada difere da aprovada: " + " ".join(mismatches))
         if self.kill_switch_active():

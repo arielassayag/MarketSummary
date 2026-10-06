@@ -134,6 +134,8 @@ class RiskSection(_Frozen):
         "idio_share_goal": None, "idio_share_floor": None, "factor_risk_basis": "target",
         "factor_risk_aversion_multiplier": 0.0, "second_order_inflation": 1.0,
         "idio_gate_models": ("decisao",), "operational": None,
+        "second_order_inflation_mode": "config", "second_order_inflation_bounds": (1.2, 1.6),
+        "vol_floor_alpha_scaling": True,
     }
 
     vol_target_annual: float = Field(0.05, gt=0)
@@ -192,6 +194,20 @@ class RiskSection(_Frozen):
         ("decisao",), min_length=1, description="Modelos em que a fatia idiossincrática é exigida")
     operational: OperationalLimits | None = Field(
         None, description="Limites operacionais (None = só os limites do mandato)")
+    second_order_inflation_mode: Literal["config", "analytic"] = Field(
+        "config", description="κ_F: valor de configuração ou fórmula (1 − K/T_ef)⁻² limitada")
+    second_order_inflation_bounds: tuple[float, float] = Field(
+        (1.2, 1.6), description="Limites de κ_F no modo analítico")
+    vol_floor_alpha_scaling: bool = Field(
+        True, description="Modo match: escalar o alpha até o piso da banda de vol (legado)")
+
+    @field_validator("second_order_inflation_bounds")
+    @classmethod
+    def _kappa_bounds(cls, v: tuple[float, float]) -> tuple[float, float]:
+        lo, hi = float(v[0]), float(v[1])
+        if not (1.0 <= lo <= hi):
+            raise ValueError("second_order_inflation_bounds precisa de 1 ≤ mínimo ≤ máximo.")
+        return (lo, hi)
 
     @model_validator(mode="after")
     def _band(self) -> RiskSection:
@@ -233,6 +249,11 @@ class ShortingSection(_Frozen):
 
 
 class SqueezeSection(_Frozen):
+    LEGACY_DEFAULTS: ClassVar[Mapping[str, Any]] = {
+        "enforce_entry_blocks": False, "stop_scope": "book", "stop_escalation_count": 2,
+        "stop_escalation_sessions": 5,
+    }
+
     si_pct_float_medium: float = 0.05
     si_pct_float_high: float = 0.15
     days_to_cover_medium: float = 3.0
@@ -258,6 +279,15 @@ class SqueezeSection(_Frozen):
     score_medium: float = Field(40.0, ge=0, le=100)
     score_high: float = Field(70.0, ge=0, le=100)
     medium_short_cap_multiplier: float = Field(0.5, ge=0, le=1)
+    # --- Vetos de entrada e stop por nome (campos novos; valores legados em LEGACY_DEFAULTS).
+    enforce_entry_blocks: bool = Field(
+        False, description="Aplica no otimizador os vetos de short novo (resultado, free float)")
+    stop_scope: Literal["book", "name"] = Field(
+        "book", description="Stop de squeeze: livro inteiro (kill switch) ou corte de 50% do nome")
+    stop_escalation_count: int = Field(
+        2, ge=1, description="Stops de squeeze em shorts distintos que escalam para o kill switch")
+    stop_escalation_sessions: int = Field(
+        5, ge=1, description="Janela (pregões) da contagem de stops para escalar")
 
 
 class CostsSection(_Frozen):
@@ -274,6 +304,8 @@ class CostsSection(_Frozen):
 
 
 class AlphaSection(_Frozen):
+    LEGACY_DEFAULTS: ClassVar[Mapping[str, Any]] = {"reresidualize_after_views": False}
+
     signal_weights: dict[str, float] = Field(default_factory=lambda: {
         "residual_momentum": 0.25,
         "short_term_reversal": 0.15,
@@ -290,10 +322,14 @@ class AlphaSection(_Frozen):
     max_view_tilt_z: float = Field(1.5, ge=0)
     view_sign_coherence: bool = Field(
         False, description="Visão final positiva ⇒ sem short; negativa ⇒ sem long (só aperta)")
+    reresidualize_after_views: bool = Field(
+        False, description="Reortogonaliza o alpha aos fatores depois das inclinações das visões")
 
 
 class DrawdownSection(_Frozen):
     """Escada de drawdown (a partir do pico), escalada para vol-alvo de 5%."""
+
+    LEGACY_DEFAULTS: ClassVar[Mapping[str, Any]] = {"risk_reference": "mandate_gross"}
 
     soft_stop: float = Field(-0.025, lt=0, description="Revisão de risco obrigatória e corte de 25% do gross")
     soft_degross_multiplier: float = Field(0.75, gt=0, le=1)
@@ -301,11 +337,15 @@ class DrawdownSection(_Frozen):
     degross_multiplier: float = Field(0.5, gt=0, le=1)
     stop_out: float = Field(-0.075, lt=0, description="Gross mínimo e revisão completa do processo")
     stop_out_gross: float = Field(0.5, gt=0)
+    risk_reference: Literal["mandate_gross", "normal_book_vol"] = Field(
+        "mandate_gross", description="Base da escada: gross do mandato (legado) ou vol ex-ante "
+                                     "da mesma carteira resolvida no estágio normal")
 
 
 class RiskModelSection(_Frozen):
     LEGACY_DEFAULTS: ClassVar[Mapping[str, Any]] = {
         "macro_factors": (), "macro_beta_halflife": 126, "min_names_per_country": None,
+        "linked_groups": {},
     }
 
     history_days: int = Field(756, ge=120)
@@ -322,7 +362,24 @@ class RiskModelSection(_Frozen):
         (), description="Séries macro do bloco híbrido (ex.: BZ=F, HG=F, GC=F, DX-Y.NYB)")
     macro_beta_halflife: int = Field(126, ge=5, description="Meia-vida (pregões) dos betas macro")
     min_names_per_country: int | None = Field(
-        None, ge=1, description="Países com menos nomes são agregados (None = sem agregação)")
+        None, ge=1, description="Países com menos emissores são agregados em country:OTHER "
+                                "(None = o mesmo mínimo de min_names_per_sector)")
+    linked_groups: dict[str, list[str]] = Field(
+        default_factory=dict, description="Grupos de controle (holding/controlada): mesma aposta "
+                                          "econômica; peso de mesmo sinal ≤ teto por nome")
+
+    @field_validator("linked_groups")
+    @classmethod
+    def _linked_ok(cls, v: dict[str, list[str]]) -> dict[str, list[str]]:
+        seen: set[str] = set()
+        for name, members in v.items():
+            if len(members) < 2 or len(set(members)) != len(members):
+                raise ValueError(f"Grupo vinculado {name!r} precisa de ≥ 2 emissores distintos.")
+            dup = seen & set(members)
+            if dup:
+                raise ValueError(f"Emissor em mais de um grupo vinculado: {sorted(dup)}")
+            seen |= set(members)
+        return v
 
     @field_validator("macro_factors")
     @classmethod

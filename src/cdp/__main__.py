@@ -39,6 +39,11 @@ código 2 até a entrega de cada módulo):
     cdp weekly close-report --date D [--publish]
     cdp validate-weekly-report --date D
 
+Qualquer assistente de IA como mente (pacote markdown autocontido; o JSON devolvido é validado
+pelos comandos acima; nada é gravado no livro):
+    cdp mente pacote --etapa pesquisa|decisao|tese|nota|comentario-diario|comentario-semanal
+                     [--semana D | --data D | --emissor IID --data D] [--mente M] --saida ARQ.md
+
 Outros: status, verify, demo, backtest, fetch-base, kill-switch.
 """
 
@@ -53,6 +58,7 @@ from pathlib import Path
 
 from . import SIMULATED_DATA_NOTICE
 from .contracts import HARNESS_MINDS
+from .workflow.pacote import ETAPAS_PACOTE, MENTE_PADRAO
 from .workflow.painel_artifact import painel_artifact_check  # reexportado (skills/testes)
 
 DEFAULT_BOOK = Path("book")
@@ -165,7 +171,8 @@ def cmd_validate(args: argparse.Namespace) -> int:
     from .workflow.runtime import Runtime
 
     rt = Runtime.from_args(args)
-    ok, issues = rt.validate_inputs(_d(args.week), mind=args.mind)
+    ok, issues = rt.validate_inputs(_d(args.week), mind=args.mind,
+                                    so_pesquisa=bool(getattr(args, "so_pesquisa", False)))
     print("OK" if ok else "FALHOU")
     for i in issues:
         print(f"- {i}")
@@ -414,6 +421,13 @@ def cmd_validate_weekly_report(args: argparse.Namespace) -> int:
     return cmd_validate(args)
 
 
+def cmd_mente(args: argparse.Namespace) -> int:
+    """``cdp mente pacote`` (módulo :mod:`cdp.workflow.pacote`)."""
+    from .workflow.pacote import cmd_pacote
+
+    return cmd_pacote(args)
+
+
 def cmd_reinicio(args: argparse.Namespace) -> int:
     """Pré-início do fundo (módulo :mod:`cdp.workflow.reinicio`); sem ``--executar`` só mostra o
     plano e não grava nada."""
@@ -473,6 +487,8 @@ def build_parser() -> argparse.ArgumentParser:
     s = sub.add_parser("validate", help="valida os arquivos escritos pela mente")
     s.add_argument("--week", required=True)
     s.add_argument("--mind", choices=HARNESS_MINDS)
+    s.add_argument("--so-pesquisa", action="store_true",
+                   help="valida só research_pack.json (etapa de pesquisa, antes da decisão)")
     s.set_defaults(func=cmd_validate)
 
     s = sub.add_parser("daily", help="fechamento diário (close) ou publicação do relatório")
@@ -544,6 +560,21 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--date", type=_d, required=True, help="data da nota (AAAA-MM-DD)")
     s.set_defaults(func=cmd_validate_nota)
 
+    m = sub.add_parser("mente", help="passos da mente com qualquer assistente de IA")
+    msub = m.add_subparsers(dest="action", required=True)
+    s = msub.add_parser("pacote", help="exporta um pacote markdown autocontido (papel, regras, "
+                                       "fatos, schema, exemplo e validação) de uma etapa")
+    s.add_argument("--etapa", required=True, choices=ETAPAS_PACOTE)
+    s.add_argument("--semana", type=_d, default=None,
+                   help="semana (pesquisa, decisao, tese; AAAA-MM-DD)")
+    s.add_argument("--data", type=_d, default=None,
+                   help="data (nota, comentario-diario, comentario-semanal; AAAA-MM-DD)")
+    s.add_argument("--emissor", type=_iid, default=None, help="emissor da nota (IID)")
+    s.add_argument("--mente", choices=HARNESS_MINDS, default=MENTE_PADRAO,
+                   help=f"valor do campo mind no JSON (padrão: {MENTE_PADRAO})")
+    s.add_argument("--saida", required=True, help="arquivo .md do pacote (fora do livro)")
+    s.set_defaults(func=cmd_mente)
+
     s = sub.add_parser("reinicio",
                        help="pré-início: abre o livro na data de início do mandato (uma vez; sem "
                             "--executar só mostra o plano)")
@@ -595,6 +626,15 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--end")
     s.add_argument("--out", default="reports/backtest")
     s.set_defaults(func=cmd_backtest)
+
+    # Operação em qualquer harness (rotinas, executor, trava, estado, portal): docs/cdp/AUTOMACAO.md
+    from . import estado as _estado
+    from . import executor as _executor
+    from . import rotinas as _rotinas
+    from . import site as _site
+
+    for _mod in (_estado, _rotinas, _executor, _site):
+        _mod.registrar(sub)
     return p
 
 

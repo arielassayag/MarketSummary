@@ -2,29 +2,28 @@
 
 @AGENTS.md
 
-## CDP — Cabra da Peste
+## Só para o Claude Code
 
-Você pode ser a "mente" do CDP (alternando com o Codex). A metodologia é perene e não depende do harness:
+O manual é o `AGENTS.md` acima (vale para qualquer harness). Aqui, só o que é específico do
+Claude Code:
 
-- Metodologia: `docs/cdp/METODOLOGIA.md`
-- Roteiro semanal (primeiro pregão da semana na B3): `docs/cdp/playbooks/SEMANAL.md` — skill `cdp-semanal`
-- Roteiro diário (fechamento): `docs/cdp/playbooks/DIARIO.md` — skill `cdp-diario`
-- PC local: plugin `cdp` deste repositório (marketplace `cdp-cabra-da-peste`), skills
-  `/cdp:semanal`, `/cdp:diario`, `/cdp:risco`, `/cdp:status` e `/cdp:calibracao`, disparadas por
-  tarefas agendadas do app desktop — guia completo em `docs/cdp/LOCAL.md`. As skills do projeto
-  `cdp-semanal`/`cdp-diario` delegam para o plugin quando ele está instalado.
-- Tese de investimento da carteira decidida (depois de `weekly decide`, antes do painel):
-  `docs/cdp/TESE.md`. Você escreve só `book/<semana>/tese/tese.json`, com números apenas como
-  `{{fact:id}}` de `book/<semana>/tese/fatos.md`; o código valida (`validate-tese`) e publica
-  (`tese publish`, imutável). Fora do clone dedicado das rotinas (desenvolvimento), entregue a
-  tese como rascunho em `docs/cdp/teses/<semana>.json`; nunca grave `book/` nem publique ali.
-- Painel de gestão (artifact; investimento e risco, com a tese da semana, para investidores e
-  comitê de investimento): `uv run python -m cdp painel` → `artifacts/painel/` (casca
-  `index.html`, estilo e script versionados, `data.json` e a cópia local `cdp_painel_local.html`);
-  republique sempre no mesmo artifact cuja URL está em `artifacts/painel/ARTIFACT_URL` (nunca crie
-  outro), lendo por inteiro `artifact.arquivos_para_ler` e publicando `artifact.publicar`.
-- Rotinas sem supervisão: não pergunte; pare e explique no resumo. Nunca desligue o kill switch,
-  nunca force push, nunca edite arquivos gravados pelo código (`.claude/settings.json` bloqueia).
-
-Sempre registre `mind: "claude-code"` nos arquivos que escrever para o CDP. Nunca calcule números:
-use os fatos (`{{fact:id}}`) gerados pelo código.
+- Comece pela seção 1 do `AGENTS.md`: `uv run python -m cdp estado --formato md`. Use
+  `--mind claude-code` e `"mind": "claude-code"` nos arquivos que escrever para o CDP.
+- Skills: as skills neutras ficam em `.agents/skills/cdp-*` (geradas por
+  `uv run python -m cdp skills sincronizar`; não edite à mão). O plugin `cdp` (`plugins/cdp`,
+  marketplace `cdp-cabra-da-peste`) serve às tarefas agendadas do app desktop no PC local
+  (`docs/cdp/LOCAL.md`); o espelho das skills do projeto fica em `.claude/skills/`.
+- Rotina na nuvem (claude.ai/code): o plugin não existe ali; siga o prompt da rotina, a skill
+  do projeto e o roteiro. Nunca publique artifacts numa rotina; push só por `cdp publicar`
+  (ramo `main`, com `--trava` e `--execucao` do gate). O gate devolve os trailers de
+  procedência do commit, inclusive o link desta sessão.
+- Sessão interativa na nuvem: abra no ambiente Default (ou "CDP-dev"), nunca no "CDP" — esse
+  tem `CDP_EXECUTOR` e é só das rotinas; `cdp estado` avisa se a sessão estiver nele.
+- O painel no artifact (`artifacts/painel/ARTIFACT_URL`) é um espelho privado opcional, só em
+  sessão interativa; o portal público é o GitHub Pages (`docs/cdp/SITE.md`).
+- Tese escrita fora do clone das rotinas: rascunho em `docs/cdp/teses/<semana>.json`; nunca
+  grave `book/` nem publique fora do executor.
+- `.claude/settings.json` nega force push, apagar o livro, desligar o kill switch e editar
+  arquivos gravados pelo código; não contorne. Memórias do Claude não substituem o repositório:
+  fatos que outra sessão precisa saber vão para `docs/cdp/EM_ANDAMENTO.md` ou
+  `docs/cdp/DECISOES.md`.

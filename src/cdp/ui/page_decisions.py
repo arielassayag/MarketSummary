@@ -175,10 +175,11 @@ def render(state: AppState) -> None:
     weeks = [w for w in book.weeks if w.proposal is not None or w.decisions]
     if not weeks:
         ui.empty_state("Nenhuma decisão semanal ainda",
-                       "No primeiro pregão de cada semana na B3 o CDP pesquisa, decide sozinho e "
-                       "grava a decisão até "
+                       "No dia de montagem de cada semana "
+                       f"({fmt.escape_md(state.cfg.fund.rebalance_rule)}) o CDP pesquisa, decide "
+                       "sozinho e grava a decisão até "
                        f"{fmt.escape_md(state.cfg.fund.decision_deadline_local)} (Brasília); a "
-                       "execução hipotética ocorre no fechamento.")
+                       "execução hipotética ocorre no leilão de fechamento.")
         return
     ui.section("Semanas e mentes", ui.CALC_BADGE,
                help="Cada semana é conduzida por uma mente intercambiável (claude-code ou codex); "

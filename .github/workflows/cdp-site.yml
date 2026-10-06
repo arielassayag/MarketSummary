@@ -1,0 +1,148 @@
+# .github/workflows/cdp-site.yml — portal público do CDP no GitHub Pages.
+#
+# Monta o site a partir do repositório (`cdp site construir`: painel sem cortes, dados abertos com
+# SHA-256, manifesto ligado à versão do repositório) e publica pelo Pages. Não escreve no
+# repositório e não usa modelo de IA: o escritor único do livro continua sendo a rotina.
+# Configuração única: Settings → Pages → Source "GitHub Actions" (docs/cdp/SITE.md).
+name: cdp-site
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "book/**"
+      - "reports/**"
+      - "data/**"
+      - "configs/cdp/**"
+      - "src/cdp/**"
+      - "site/**"
+      - "docs/cdp/marca/**"
+      - "pyproject.toml"
+      - "uv.lock"
+      - ".github/workflows/cdp-site.yml"
+  schedule:
+    # Rede de segurança (UTC; Brasília = UTC-3): cobre pushes que não disparam workflows
+    # (feitos com GITHUB_TOKEN) e diffs grandes demais para o filtro de caminhos.
+    - cron: "41 23 * * 1-5"   # 20:41 de Brasília, depois do fechamento das 19:22
+    - cron: "41 2 * * 6"      # sexta, 23:41 de Brasília, depois do relatório semanal
+  workflow_dispatch:
+    inputs:
+      demo:
+        description: "Montar a DEMONSTRAÇÃO (DADOS SIMULADOS) só como artefato de prévia; nunca vai ao ar"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  construir:
+    name: Montar e conferir
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    outputs:
+      publicar: ${{ steps.montar.outputs.publicar }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Configurar Pages
+        id: pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+
+      - name: Instalar uv e Python
+        uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          enable-cache: true
+          python-version: "3.12"
+
+      - name: Dependências (sem extras)
+        run: uv sync --frozen --no-dev
+
+      - name: Montar o site
+        id: montar
+        env:
+          BASE_URL: ${{ steps.pages.outputs.base_url }}
+          DEMO: ${{ inputs.demo }}
+          NOINDEX: ${{ vars.CDP_PORTAL_NOINDEX }}
+          TZ: America/Sao_Paulo
+          PYTHONUTF8: "1"
+        run: |
+          args=(--saida _site --base-url "$BASE_URL" --commit "$GITHUB_SHA")
+          if [ "$DEMO" = "true" ]; then args+=(--demo); fi
+          if [ "$NOINDEX" = "1" ]; then args+=(--noindex); fi
+          set +e
+          uv run --frozen --no-dev python -m cdp site construir "${args[@]}"
+          rc=$?
+          set -e
+          if [ "$rc" -eq 3 ]; then
+            echo "::notice::livro aguardando a abertura na data de início: nada a publicar ainda"
+            echo "publicar=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [ "$rc" -ne 0 ]; then exit "$rc"; fi
+          uv run --frozen --no-dev python -m cdp site conferir --saida _site
+          echo "enviar=true" >> "$GITHUB_OUTPUT"
+          if [ "$DEMO" = "true" ]; then
+            # A demonstração nunca vai ao endereço público (os buscadores leem robots.txt só na
+            # raiz do domínio): fica como artefato "github-pages" desta execução, para prévia.
+            echo "::notice::demonstração montada só como artefato de prévia (não publicada)"
+            echo "publicar=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "publicar=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Enviar o site (Pages ou prévia)
+        if: steps.montar.outputs.enviar == 'true'
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: _site
+
+  publicar:
+    name: Publicar
+    needs: construir
+    if: needs.construir.outputs.publicar == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      pages: write      # publicar no GitHub Pages
+      id-token: write   # OIDC exigido por deploy-pages
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publicar no GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+
+  conferir-no-ar:
+    name: Conferir no ar
+    needs: publicar
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: A versão publicada é a deste commit
+        env:
+          URL: ${{ needs.publicar.outputs.page_url }}
+        run: |
+          for i in 1 2 3 4 5 6 7 8; do
+            got=$(curl -fsS -H 'Cache-Control: no-cache' "${URL}manifest.json?v=${GITHUB_SHA}" \
+              | python3 -c 'import json,sys; print(json.load(sys.stdin).get("source_commit"))') || got=""
+            if [ "$got" = "$GITHUB_SHA" ]; then
+              curl -fsS -o /dev/null "${URL}" && curl -fsS -o /dev/null "${URL}data.json" \
+                && curl -fsS -o /dev/null "${URL}dados/"
+              echo "portal no ar: ${URL} (versão ${GITHUB_SHA})"
+              exit 0
+            fi
+            sleep 15
+          done
+          echo "::error::o portal publicado não corresponde à versão ${GITHUB_SHA}"
+          exit 1

@@ -3,13 +3,13 @@
 #
 # Alternativa às tarefas agendadas do app desktop, para cron (Linux) ou launchd (macOS).
 # Uso:
-#   scripts/cdp_run_task.sh <semanal|diario|risco|status|calibracao> [argumentos da skill]
+#   scripts/cdp_run_task.sh <semanal|diario|cobertura|risco|status|calibracao> [argumentos da skill]
 # Variáveis opcionais:
 #   CDP_PERMISSION_MODE   modo de permissão do claude -p (padrão: acceptEdits)
 #   CDP_CLAUDE_ARGS       flags extras do claude (ex.: "--permission-prompts none")
 #   CDP_CLAUDE_BIN        caminho do executável claude (padrão: o do PATH)
-#   CDP_LOCK_WAIT_MIN     minutos esperando outra rotina terminar (padrão: 60 para semanal e
-#                         diario, 0 para as demais)
+#   CDP_LOCK_WAIT_MIN     minutos esperando outra rotina terminar (padrão: 60 para semanal,
+#                         diario e cobertura, 0 para as demais)
 #
 # Log: logs/cdp/<tarefa>_<AAAAmmdd_HHMMSS>.log. Uma trava em logs/cdp/.lock impede duas rotinas
 # ao mesmo tempo (o livro é encadeado por hash; execuções concorrentes divergiriam). Se a trava
@@ -23,8 +23,8 @@ set -uo pipefail
 
 TASK="${1:-}"
 case "$TASK" in
-  semanal|diario|risco|status|calibracao) shift ;;
-  *) echo "uso: $0 <semanal|diario|risco|status|calibracao> [argumentos]" >&2; exit 2 ;;
+  semanal|diario|cobertura|risco|status|calibracao) shift ;;
+  *) echo "uso: $0 <semanal|diario|cobertura|risco|status|calibracao> [argumentos]" >&2; exit 2 ;;
 esac
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -39,7 +39,7 @@ LOG="logs/cdp/${TASK}_$(date +%Y%m%d_%H%M%S).log"
 LOCK="logs/cdp/.lock"
 
 case "$TASK" in
-  semanal|diario) WAIT_MIN="${CDP_LOCK_WAIT_MIN:-60}" ;;
+  semanal|diario|cobertura) WAIT_MIN="${CDP_LOCK_WAIT_MIN:-60}" ;;
   *) WAIT_MIN="${CDP_LOCK_WAIT_MIN:-0}" ;;
 esac
 

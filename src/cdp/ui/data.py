@@ -75,8 +75,8 @@ CDP_INVARIANTS = (
     "fallback para restrições, só-quant ou manter a carteira.",
     "Tudo vinculado por hash: decisão, proposta, snapshot, mandato, pesquisa, decisão do PM e "
     "gates de risco; registros diários encadeados e trilha de auditoria append-only.",
-    "Sem look-ahead: a carteira da semana usa dados até o momento da análise e é executada no "
-    "fechamento (MOC) do primeiro pregão da semana na B3.",
+    "Sem look-ahead: a carteira da semana é decidida antes do fechamento do dia de montagem, "
+    "com dados até o momento da análise, e executada no leilão de fechamento (MOC) desse dia.",
     "Dados ausentes nunca viram zero; dados simulados carregam sempre 'DADOS SIMULADOS'.",
     "Notícias são conteúdo não confiável: instruções embutidas nunca alteram o estado do fundo.",
     "KILL SWITCH de emergência: com o arquivo book/KILL_SWITCH presente, só operações que reduzem "
@@ -1332,9 +1332,11 @@ def decision_timing(decision: Decision, cfg: FundConfig) -> fmt.Status:
     dt = decision.decided_at
     if dt.tzinfo is None:
         return fmt.Status("horário sem fuso: prazo não verificável", "orange")
+    from ..portfolio.execucao import prazo_efetivo
+
     tz = ZoneInfo(cfg.fund.timezone)
-    deadline = _at(decision.week, cfg.fund.decision_deadline_local, tz)
-    hhmm = cfg.fund.decision_deadline_local
+    deadline = prazo_efetivo(decision.week, cfg).astimezone(tz)
+    hhmm = f"{deadline:%H:%M}"
     if dt <= deadline:
         return fmt.Status(f"dentro do prazo ({hhmm} de {fmt.date_br(decision.week)})", "green")
     return fmt.Status(f"APÓS o prazo ({hhmm} de {fmt.date_br(decision.week)})", "red")
@@ -1516,6 +1518,7 @@ def next_events(now: datetime, cfg: FundConfig, decided_weeks: set[date] | None 
     A data de início do mandato é sempre dia de montagem (carteira inaugural); antes dela, sem
     semana decidida, o próximo fechamento diário é o do início."""
     from ..calendar import chave_da_semana, is_session, proximas_montagens
+    from ..portfolio.execucao import prazo_efetivo
 
     tz = ZoneInfo(cfg.fund.timezone)
     local = now.astimezone(tz)
@@ -1526,7 +1529,7 @@ def next_events(now: datetime, cfg: FundConfig, decided_weeks: set[date] | None 
     current = chave_da_semana(today, cfg)
     if (current is not None and current <= today and current not in decided
             and current >= cfg.fund.inception_date):
-        deadline = _at(current, cfg.fund.decision_deadline_local, tz)
+        deadline = prazo_efetivo(current, cfg).astimezone(tz)
         if deadline <= local:
             events.append(Event("Decisão semanal ATRASADA", deadline,
                                 "prazo do mandato vencido sem decisão gravada no livro",
@@ -1537,7 +1540,7 @@ def next_events(now: datetime, cfg: FundConfig, decided_weeks: set[date] | None 
     for first in proximas_montagens(start, cfg):
         if first in decided:
             continue
-        deadline = _at(first, cfg.fund.decision_deadline_local, tz)
+        deadline = prazo_efetivo(first, cfg).astimezone(tz)
         if deadline <= local:
             continue
         # Sem semana decidida, a próxima montagem é a carteira inaugural.

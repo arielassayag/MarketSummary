@@ -28,8 +28,9 @@ __pycache__/
 .DS_Store
 Thumbs.db
 
-# Agentes locais
-.agents/
+# Agentes locais (as skills neutras do CDP em .agents/skills/ são versionadas)
+.agents/*
+!.agents/skills/
 
 # Cache de dados abertos (CVM/SEC) baixados pelo módulo de fundamentos PIT
 data/cache/
@@ -43,3 +44,10 @@ logs/
 
 # CDP: área temporária do pré-início (cdp reinicio; removida ao terminar)
 .cdp_reinicio.tmp/
+
+# CDP: identidade do clone e registros das execuções (cdp executor registrar, cdp rotinas gate)
+.cdp/
+
+# CDP: portal montado localmente (cdp site construir; publicado só pelo GitHub Actions)
+_site/
+_site_demo/

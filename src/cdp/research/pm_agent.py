@@ -69,11 +69,13 @@ from .guardrails import (
     find_free_numbers,
     find_markup,
     is_injection_flagged,
+    public_host_problem,
     render_placeholders,
     sanitize_untrusted,
+    style_problems,
     text_format_issues,
 )
-from .prompts import format_news_block
+from .prompts import ESTILO_REGRAS, format_news_block
 from .providers.base import (
     LLMProvider,
     LLMResult,
@@ -89,7 +91,7 @@ from .providers.imported import load_imported_pack
 if TYPE_CHECKING:  # import tardio em ``to_bundle`` (evita carregar o otimizador)
     from ..workflow.weekly import PMDecisionBundle
 
-PM_PROMPT_VERSION = "cdp-pm-2026-10-05.1"
+PM_PROMPT_VERSION = "cdp-pm-2026-10-06.1"
 PM_SCHEMA_VERSION = "cdp-pm-schema-2026-10-05.1"
 PM_TASK = "pm"
 PM_ROLE = "pm"
@@ -127,12 +129,17 @@ NEUTRAL_TEXT = ("Texto omitido pelo verificador do CDP (números fora de placeho
                 "inexistentes ou conteúdo suspeito).")
 """Frase neutra que substitui qualquer texto reprovado pelos guardrails (sem algarismos)."""
 
-MindName = Literal["claude-code", "codex", "api", "demo"]
+MindName = Literal["claude-code", "codex", "api", "demo", "chatgpt", "gemini", "outro"]
+"""Mente que escreveu o arquivo: o harness das rotinas (``claude-code``, ``codex``), o provedor
+de API (``api``), a demonstração (``demo``) ou qualquer assistente com o pacote de
+``cdp mente pacote`` (``chatgpt``, ``gemini``, ``outro``). Sempre igual a
+``contracts.HARNESS_MINDS`` (a importação recusa listas divergentes)."""
 Regime = Literal["risk_on", "neutral", "risk_off"]
 Posture = Literal["muito_defensiva", "defensiva", "neutra", "ofensiva"]
 MIND_VALUES: tuple[str, ...] = get_args(MindName)
-if set(MIND_VALUES) != set(HARNESS_MINDS):  # pragma: no cover - coerência com contracts
-    raise RuntimeError("Lista de mentes divergente de contracts.HARNESS_MINDS.")
+if MIND_VALUES != tuple(HARNESS_MINDS):  # pragma: no cover - coerência com contracts
+    raise RuntimeError("Lista de mentes divergente de contracts.HARNESS_MINDS (mesmos membros, "
+                       "mesma ordem).")
 
 POSTURE_ORDER: tuple[str, ...] = ("muito_defensiva", "defensiva", "neutra", "ofensiva")
 POSTURE_MAP: dict[str, tuple[float | None, float]] = {
@@ -176,9 +183,10 @@ PM_RULES: tuple[str, ...] = (
     "gates determinísticos de risco têm a palavra final.",
     "Em janela de evento binário (eleições, decisões regulatórias) prefira postura defensiva e "
     "não abra shorts em nomes com catalisador próximo.",
-    "Use apenas emissores de valid_issuers e registre o campo mind (claude-code, codex, api ou "
-    "demo).",
+    "Use apenas emissores de valid_issuers e registre no campo mind a mente que conduziu a "
+    "semana (um dos valores de allowed_minds).",
     "Arquivos em JSON UTF-8, um único objeto por arquivo, sem comentários nem texto fora do JSON.",
+    *ESTILO_REGRAS,
 )
 
 
@@ -398,7 +406,8 @@ def url_evidence_problem(value: str) -> str | None:
     """Motivo para rejeitar uma URL citada como evidência (``None`` = aceita).
 
     A URL é dado NÃO confiável que segue para as visões, o hash da decisão e os relatórios:
-    precisa ser http(s) com domínio, sem credenciais, sem espaços/controle/marcação, com tamanho
+    precisa ser http(s) com domínio público (nunca IP literal, ``localhost``, rede local,
+    intranet ou domínio de teste), sem credenciais, sem espaços/controle/marcação, com tamanho
     limitado e sem padrões de injeção de instruções (inclusive percent-codificados).
     """
     raw = str(value)
@@ -412,7 +421,7 @@ def url_evidence_problem(value: str) -> str | None:
         return "credenciais/usuário embutidos no domínio"
     if detect_injection(raw):
         return "padrão de injeção de instruções"
-    return None
+    return public_host_problem(raw)
 
 
 def _fact(fact_id: str, name: str, value: object, unit: str, formula: str, *,
@@ -826,7 +835,11 @@ def text_problems(path: str, text: str, fb: FactBook, terms: Sequence[str] = (),
     """Problemas de um texto livre da mente (lista vazia = aprovado).
 
     Números fora de placeholders (inclusive por extenso), fatos inexistentes, fatos não citados
-    (quando ``cited`` é informado), marcação/URL/placeholder mal formado e injeção.
+    (quando ``cited`` é informado), marcação/URL/placeholder mal formado, injeção e o guia de
+    estilo (``docs/cdp/ESTILO.md``: jargão de tecnologia e nomes de assistentes, registro
+    coloquial, tom promocional, exclamação). Vale para todo texto da mente que chega ao
+    investidor: decisão do PM, tese, nota por emissor, comentários diário e semanal. As notas do
+    pacote de pesquisa (insumo interno) usam o validador do provedor importado, sem o guia.
     """
     out: list[str] = []
     nums = find_free_numbers(text, terms)
@@ -843,6 +856,7 @@ def text_problems(path: str, text: str, fb: FactBook, terms: Sequence[str] = (),
     inj = detect_injection(text)
     if inj:
         out.append(f"{path}: padrão de injeção de instruções {inj}")
+    out += style_problems(path, text)
     return out
 
 
@@ -980,8 +994,39 @@ def _apply_kill_switch(out: PMDecisionOutput, ctx: PMContext,
     return out.model_copy(update={"risk_posture": "muito_defensiva"})
 
 
+#: Fases de adoção das visões de IA em que uma troca de mente não entra direto (SOTA_GAP CR-3.5:
+#: uma mente nova começa no máximo em S1; visões de mentes diferentes nunca se somam).
+PHASES_INCUMBENT_ONLY: frozenset[str] = frozenset({"S2", "S3"})
+
+
+def incumbent_mind(ctx: PMContext) -> str | None:
+    """Mente incumbente: a que assinou a decisão anterior com visões (abstenção não conta)."""
+    prev = ctx.previous_pm_output
+    if prev is None or prev.abstain:
+        return None
+    return prev.mind
+
+
+def _apply_mind_governance(out: PMDecisionOutput, ctx: PMContext,
+                           issues: list[str]) -> PMDecisionOutput:
+    """Troca de mente com a fase de adoção acima de S1 ⇒ abstenção (só-quant).
+
+    O histórico de IC que levou a fase a S2/S3 é da mente incumbente; uma mente diferente
+    começa no máximo em S1 (o gestor rebaixa ``research.llm_phase`` para S1 ao trocar de
+    mente). Na fase S0/S1 (a vigente) nada muda."""
+    phase = ctx.cfg.research.llm_phase
+    inc = incumbent_mind(ctx)
+    if phase not in PHASES_INCUMBENT_ONLY or inc is None or out.mind == inc or out.abstain:
+        return out
+    issues.append(f"mente {out.mind!r} difere da incumbente {inc!r} com as visões de IA na fase "
+                  f"{phase}: decisão tratada como abstenção (só-quant). Uma mente nova começa "
+                  "no máximo em S1 — rebaixe research.llm_phase para S1 ao trocar de mente.")
+    return _normalize_abstain(out.model_copy(update={"abstain": True}), [])
+
+
 def _finalize(out: PMDecisionOutput, ctx: PMContext) -> tuple[PMDecisionOutput, list[str]]:
     verified, issues = verify_pm_output(out, ctx)
+    verified = _apply_mind_governance(verified, ctx, issues)
     return _apply_kill_switch(_normalize_abstain(verified, issues), ctx, issues), issues
 
 
@@ -1430,6 +1475,17 @@ def build_pm_briefing(ctx: PMContext) -> tuple[str, dict[str, Any]]:
     return md, _jsonable(context)
 
 
+def _deadline_text(ctx: PMContext) -> str:
+    """Prazo efetivo da decisão no dia de montagem (HH:MM em Brasília): a janela de execução
+    quando configurada; sem ela (legado), ``fund.decision_deadline_local``."""
+    try:
+        from ..portfolio.execucao import prazo_efetivo
+
+        return prazo_efetivo(ctx.week, ctx.cfg).astimezone(_tz(ctx.cfg)).strftime("%H:%M")
+    except Exception:  # noqa: BLE001 - calendário indisponível: o horário legado do mandato
+        return str(ctx.cfg.fund.decision_deadline_local)
+
+
 def render_instructions(ctx: PMContext, mind_hint: str | None, inputs_dir: Path,
                         briefing_dir: Path) -> str:
     """INSTRUCTIONS.md: passos exatos, regras invioláveis e nomes de arquivos."""
@@ -1446,15 +1502,17 @@ def render_instructions(ctx: PMContext, mind_hint: str | None, inputs_dir: Path,
     return f"""# INSTRUÇÕES — {ctx.fund_name} — semana {week}
 {synthetic}
 Mente esperada: **{mind}**. Metodologia perene: `docs/cdp/METODOLOGIA.md`; roteiro:
-`docs/cdp/playbooks/SEMANAL.md`. Prazo: decisão gravada até
-{ctx.cfg.fund.decision_deadline_local} (Brasília).
+`docs/cdp/playbooks/SEMANAL.md`. Prazo: decisão gravada até {_deadline_text(ctx)} (Brasília) —
+o prazo efetivo do dia de montagem; `cdp agenda` o mostra em `semanal.prazo_efetivo`.
 
 ## Passos (siga exatamente)
 
 1. Leia `{bd}/{BRIEFING_MD}`, `{bd}/{CONTEXT_JSON}` e este arquivo.
-2. Pesquise com as suas ferramentas: macro por país (BR, MX, CL, CO, PE, AR) e global; cada
+2. Pesquise com as suas ferramentas, só em fontes públicas (nenhuma base paga, de acesso
+   restrito ou conector proprietário): macro por país (BR, MX, CL, CO, PE, AR) e global; cada
    candidato e cada posição atual (fatos relevantes CVM/IPE, SEC 6-K, RI, notícias locais em
-   PT/ES); sentinela de squeeze para cada short (`ok`/`caution`/`veto`).
+   PT/ES; a nota de pesquisa publicada mais recente em `book/cobertura/notas/`); sentinela de
+   squeeze para cada short (`ok`/`caution`/`veto`).
 3. Escreva `{rp}` conforme `{bd}/{RESEARCH_SCHEMA_JSON}` (campo `mind`
    = `{mind_arg}`; notas com `created_at` com fuso e nunca posterior à análise).
 4. Escreva `{pm}` conforme `{bd}/{PM_SCHEMA_JSON}` (campo `mind` = `{mind_arg}`): regime,
@@ -2013,13 +2071,18 @@ def _inputs_dir(week_dir: Path) -> Path:
 
 
 def validate_inputs(week_dir: Path | str, ctx: PMContext, *, expected_mind: str | None = None,
-                    now: datetime | None = None) -> tuple[bool, list[str]]:
+                    now: datetime | None = None,
+                    only_research: bool = False) -> tuple[bool, list[str]]:
     """Valida ``inputs/research_pack.json`` e ``inputs/pm_decision.json`` da semana.
 
     Schema + guardrails nos dois arquivos (emissores desconhecidos, números livres, fatos e
     evidências inexistentes, datas posteriores à análise, injeção) e procedência ``mind`` ∈
-    {claude-code, codex, api, demo}, igual nos dois arquivos (e igual a ``expected_mind``, se
-    informado). ``ok`` só quando não há nenhum apontamento.
+    ``MIND_VALUES``, igual nos dois arquivos (e igual a ``expected_mind``, se informado). ``ok``
+    só quando não há nenhum apontamento.
+
+    ``only_research``: só o pacote de pesquisa (a etapa de pesquisa, antes da decisão existir).
+    Um pacote de pesquisa novo invalida a decisão gravada antes dele (as evidências da decisão
+    citam os ids da pesquisa): a decisão é refeita e validada depois, sem ``only_research``.
     """
     inputs = _inputs_dir(Path(week_dir))
     issues: list[str] = []
@@ -2035,7 +2098,9 @@ def validate_inputs(week_dir: Path | str, ctx: PMContext, *, expected_mind: str 
             minds[RESEARCH_INPUT] = pack.mind
         pm_ctx = with_research(ctx, pack)
     pm = inputs / PM_INPUT
-    if not pm.exists():
+    if only_research:
+        pass
+    elif not pm.exists():
         issues.append(f"{PM_INPUT}: arquivo ausente ({pm.as_posix()})")
     else:
         raw, _ = _read_json(pm)

@@ -16,7 +16,13 @@ from pathlib import Path
 import pandas as pd
 
 from ..audit import AuditLog
-from ..calendar import chave_valida, is_rebalance_day, is_session, previous_session
+from ..calendar import (
+    chave_valida,
+    is_rebalance_day,
+    is_session,
+    previous_data_session,
+    previous_session,
+)
 from ..config import FundConfig, load_config
 from ..contracts import ResearchPack
 from ..hashing import sha256_file, sha256_obj
@@ -200,8 +206,17 @@ class Runtime:
         )
 
         store = self.store
-        prev = previous_session(week)
         manifest_path = briefing_dir / PREPARE_MANIFEST
+        prev = self.information_session(week)
+        if not record and manifest_path.exists():
+            # A reconstrução usa o pregão de dados gravado no prepare (nunca recalcula).
+            try:
+                raw_prev = json.loads(manifest_path.read_text(encoding="utf-8")).get(
+                    "previous_session")
+                if raw_prev:
+                    prev = date.fromisoformat(str(raw_prev)[:10])
+            except (OSError, ValueError):
+                pass
         if record:
             if live:
                 self._anchor_increments(store.catch_up(prev))
@@ -242,6 +257,20 @@ class Runtime:
         if md.manifest.content_hash() != info["snapshot_hash"]:
             raise ValueError("Snapshot reconstruído difere do usado no briefing.")
         return md, info
+
+    def information_session(self, week: date) -> date:
+        """Pregão de dados anterior ao dia de montagem: com a seção ``execution``, o da união
+        B3 | NYSE | BMV (ex.: um feriado só na B3 continua sendo pregão de dados); legado: o
+        pregão anterior da B3."""
+        if self.cfg.execution is not None:
+            return previous_data_session(week)
+        return previous_session(week)
+
+    def decision_deadline(self, week: date) -> datetime:
+        """Prazo efetivo da decisão no dia de montagem ``week`` (Brasília)."""
+        from ..portfolio.execucao import prazo_efetivo
+
+        return prazo_efetivo(week, self.cfg)
 
     def _context(self, md: MarketData, week: date):
         from .weekly import prepare_week
@@ -390,8 +419,11 @@ class Runtime:
         from ..research.pm_agent import write_briefing_bundle
 
         if not chave_valida(week, self.cfg):
-            raise ValueError(f"{week} não é o primeiro pregão da semana na B3 nem a data de "
-                             "início do mandato.")
+            from ..calendar import regra
+
+            rule = ("o último pregão da semana na NYSE" if regra(self.cfg) == "LAST_US_SESSION"
+                    else "o primeiro pregão da semana na B3")
+            raise ValueError(f"{week} não é {rule} nem a data de início do mandato.")
         self.book.check_key(week)  # livro aberto na data de início: nada anterior a ela
         briefing = self.week_dir(week) / "briefing"
         if (briefing / PREPARE_MANIFEST).exists():
@@ -414,11 +446,13 @@ class Runtime:
                 "barra_provisoria": bool(info.get("live")),
                 "snapshot_hash": info["snapshot_hash"], "falhas_coleta": info.get("slow_failures", [])}
 
-    def validate_inputs(self, week: date, *, mind: str | None = None) -> tuple[bool, list[str]]:
+    def validate_inputs(self, week: date, *, mind: str | None = None,
+                        so_pesquisa: bool = False) -> tuple[bool, list[str]]:
         from ..research.pm_agent import validate_inputs
 
         _md, _info, _ctx, _fb, pmctx = self._week_state(week)
-        return validate_inputs(self.week_dir(week), pmctx, expected_mind=mind, now=self.now())
+        return validate_inputs(self.week_dir(week), pmctx, expected_mind=mind, now=self.now(),
+                               only_research=so_pesquisa)
 
     def weekly_decide(self, week: date, *, mind: str) -> dict:
         from ..research.pm_agent import load_week_inputs, pm_factbook, to_bundle
@@ -429,8 +463,21 @@ class Runtime:
         b = self.book
         if b.list_decisions(week):
             raise FileExistsError(f"A semana {week} já tem decisão gravada.")
+        # Um único instante para a decisão inteira: o prazo é conferido nele e ele é o
+        # ``decided_at``/``created_at`` da proposta e da decisão. A decisão é função só dos
+        # insumos disponíveis neste instante (dados da preparação e arquivos da mente); o cálculo
+        # posterior não usa informação nova, e o carimbo nunca passa do prazo conferido.
+        t_dec = self.now()
+        if self.cfg.execution is not None:
+            deadline = self.decision_deadline(week)
+            if t_dec > deadline:
+                raise ValueError(
+                    f"Prazo efetivo da decisão de {week} vencido "
+                    f"({deadline:%H:%M} de Brasília): a decisão não é "
+                    "gravada depois do prazo (o fechamento seria conhecido); a carteira vigente "
+                    "é mantida até o próximo dia de montagem.")
         _md, info, ctx, _fb, pmctx = self._week_state(week)
-        pack, out, issues, pm_ctx = load_week_inputs(self.week_dir(week), pmctx, now=self.now())
+        pack, out, issues, pm_ctx = load_week_inputs(self.week_dir(week), pmctx, now=t_dec)
         if out.mind != mind and not out.abstain:
             issues.append(f"mind declarado {out.mind!r} difere do informado {mind!r}")
         pack = pack.model_copy(update={"mind": out.mind or mind})
@@ -440,7 +487,7 @@ class Runtime:
                                       live_weeks=self.live_weeks(),
                                       kill_switch=self.kill_switch_active(),
                                       audit_head_hash=b.audit_head(),
-                                      decided_at=self.now(), created_at=self.now())
+                                      decided_at=t_dec, created_at=t_dec)
         inputs_dir = self.week_dir(week) / "inputs"
         b.audit.append("WEEKLY_INPUTS", pack.mind or mind,
                        {p.name: sha256_file(p) for p in sorted(inputs_dir.glob("*.json"))},
@@ -464,7 +511,7 @@ class Runtime:
             outcome.final, research_hash=outcome.research_hash,
             pm_decision_hash=d0.pm_decision_hash or bundle.pm_output_hash,
             rationale=d0.rationale, journal=d0.journal, conviction=d0.conviction,
-            decided_at=self.now(), audit_head_hash=b.audit_head(),
+            decided_at=t_dec, audit_head_hash=b.audit_head(),
         ).model_copy(update={"mind": pack.mind})
         b.save_decision(decision)
         _write_json(self.week_dir(week) / "attempts.json",
@@ -703,7 +750,76 @@ class Runtime:
             msgs += [f"dados: {m}" for m in (s_msgs or ["íntegros"])]
         except Exception as exc:  # noqa: BLE001
             msgs.append(f"dados: sem base de mercado ({exc.__class__.__name__})")
+        e_ok, e_msgs = self.verify_execucao(b)
+        ok &= e_ok
+        msgs += [f"execução: {m}" for m in e_msgs]
+        from .notas import published_notes, verify_notes
+
+        n_msgs = verify_notes(self)
+        ok &= not n_msgs
+        if n_msgs or published_notes(self.book_root):
+            msgs += [f"notas: {m}" for m in (n_msgs or ["íntegras"])]
         return bool(ok), msgs
+
+    def _config_da_decisao(self, week: date, proposal) -> FundConfig | None:
+        """Mandato que governou a decisão (e a efetivação) da semana: o atual se o hash confere;
+        senão o arquivado na semana (``config_decisao.json``) ou no histórico de mandatos,
+        autenticados pelo ``config_hash`` da proposta. ``None`` se indisponível."""
+        from ..config import archived_config, book_historico_dir, load_archived_config
+
+        if proposal.config_hash == self.cfg.config_hash():
+            return self.cfg
+        arq = load_archived_config(self.week_dir(week) / DECISION_CONFIG, proposal.config_hash)
+        if arq is None:
+            arq = archived_config(proposal.config_hash, book_historico_dir(self.book_root))
+        return arq.cfg if arq is not None else None
+
+    def verify_execucao(self, b: Book | None = None) -> tuple[bool, list[str]]:
+        """Confere cada efetivação com execução no fechamento contra a regra determinística
+        recalculada com os dados do pregão (:func:`cdp.portfolio.execucao.conferir_efetivacao`):
+        nenhuma linha acima da capacidade pelo volume realizado, nem em mercado sem fechamento
+        elegível, emissor congelado, depois do corte MOC ou abaixo da banda. Semanas sem a seção
+        ``execution`` no mandato da decisão ficam fora (regra anterior)."""
+        from ..portfolio.execucao import conferir_efetivacao
+
+        b = b or self.book
+        md: MarketData | None = None
+        n = 0
+        problems: list[str] = []
+        for w in b.list_weeks():
+            if not (self.week_dir(w) / "booked.json").exists():
+                continue
+            try:
+                entry = b.load_booked(w)
+            except ValueError:
+                continue  # integridade do arquivo já acusada pelo livro
+            if entry is None:
+                continue
+            prop = next((p for p in b.list_proposals(w)
+                         if p.proposal_id == entry.proposal_id), None)
+            if prop is None:
+                continue
+            cfg_w = self._config_da_decisao(w, prop)
+            if cfg_w is None or cfg_w.execution is None:
+                continue
+            dec = b.load_decision(w, prop.version)
+            if md is None:
+                try:
+                    md = self.store.load()
+                except Exception as exc:  # noqa: BLE001 - base ausente nesta cópia
+                    return True, [f"sem base de mercado para conferir as efetivações "
+                                  f"({exc.__class__.__name__})"]
+            found = conferir_efetivacao(entry, prop, dec.decided_at if dec else None,
+                                        b.holdings_before(w), md, cfg_w)
+            problems += [f"{w}: {m}" for m in found]
+            n += 1
+        if problems:
+            return False, problems
+        if n:
+            return True, [("1 efetivação conferida" if n == 1 else
+                           f"{n} efetivações conferidas")
+                          + " contra a execução esperada no fechamento"]
+        return True, []
 
     def run_backtest(self, start: date, end: date | None, out: Path) -> dict:
         from ..backtest.engine import BacktestConfig, run_backtest

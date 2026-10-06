@@ -341,3 +341,53 @@ def cost_bps_of_traded(t: pd.Series, costs: pd.Series) -> pd.Series:
     """Converte custo (fração do NAV) em bps do valor negociado; ``NaN`` onde não há negociação."""
     a = t.abs().reindex(costs.index)
     return (costs / a.where(a > 0)) * BPS
+
+
+# ==========================================================
+# Custo da execução no leilão de fechamento (seção ``execution``)
+# ==========================================================
+
+def custos_fechamento(trades: pd.DataFrame, cfg: FundConfig, *, spread_mult: float = 1.0,
+                      vol_mult: float = 1.0) -> pd.DataFrame:
+    """Custo por linha negociada no fechamento (USD e bps do nocional negociado).
+
+    ``trades`` (índice ``ticker``): ``notional_usd`` (|valor negociado|), ``adtv_usd`` (ADTV da
+    linha), ``sigma_d`` (σ diária do emissor), ``market`` (mercado de listagem), ``currency``,
+    ``categoria`` (``ADR``, ``US_STOCK``, país…), ``local_fechado`` (ADR negociado sem pregão
+    na bolsa local) e, opcional, ``flag``. Custo em bps::
+
+        meio spread (faixa de ADTV) × [closed_home_market_spread_mult se local fechado]
+        + comissão do mercado + câmbio (linha não USD)
+        + impact_coefficient · σ · √(nocional / ADTV) · close_impact_discount[categoria]
+
+    ``spread_mult``/``vol_mult`` aplicam o cenário de estresse (spreads e σ × 2). ADTV ou σ
+    ausentes nunca viram zero (o chamador informa o piso conservador e a ``flag``)."""
+    costs = cfg.costs
+    ex = cfg.execution
+    discount = dict(ex.close_impact_discount) if ex is not None else {}
+    home_mult = float(ex.closed_home_market_spread_mult) if ex is not None else 1.0
+    if trades.empty:
+        return pd.DataFrame(columns=["half_spread_bps", "commission_bps", "fx_bps",
+                                     "impact_bps", "total_bps", "cost_usd", "flags"])
+    adtv = pd.to_numeric(trades["adtv_usd"], errors="coerce")
+    tier = adtv_tier(adtv, costs.tier_adtv_breaks_usd)
+    worst_spread = max(costs.half_spread_bps_by_tier.values())
+    half = tier.map(lambda t: costs.half_spread_bps_by_tier.get(t, worst_spread)).astype(float)
+    closed = trades.get("local_fechado", pd.Series(False, index=trades.index)).fillna(
+        False).astype(bool)
+    half = half * np.where(closed, home_mult, 1.0) * spread_mult
+    worst_comm = max(costs.commission_bps.values())
+    comm = trades["market"].map(lambda m: costs.commission_bps.get(m, worst_comm)).astype(float)
+    fx = pd.Series(np.where(trades["currency"].astype(str) == "USD", 0.0, costs.fx_cost_bps),
+                   index=trades.index)
+    q = pd.to_numeric(trades["notional_usd"], errors="coerce").abs()
+    sig = pd.to_numeric(trades["sigma_d"], errors="coerce") * vol_mult
+    disc = trades["categoria"].map(lambda c: float(discount.get(c, 1.0))).astype(float)
+    impact = costs.impact_coefficient * sig * np.sqrt(q / adtv.where(adtv > 0)) * disc * BPS
+    total = half + comm + fx + impact
+    flags = trades.get("flag", pd.Series("", index=trades.index)).fillna("").astype(str)
+    flags = flags.where(total.notna(), flags + ";custo_indisponivel")
+    out = pd.DataFrame({"half_spread_bps": half, "commission_bps": comm, "fx_bps": fx,
+                        "impact_bps": impact, "total_bps": total,
+                        "cost_usd": (q * total / BPS), "flags": flags}, index=trades.index)
+    return out

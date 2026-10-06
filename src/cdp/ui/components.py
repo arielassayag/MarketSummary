@@ -105,8 +105,8 @@ def sidebar(state: AppState) -> None:
         else:
             st.success("KILL SWITCH desligado", icon=":material/check_circle:")
         st.caption("Decisão semanal até "
-                   f"{fmt.escape_md(cfg.fund.decision_deadline_local)} (Brasília) no primeiro "
-                   f"pregão da semana; fechamento diário às "
+                   f"{fmt.escape_md(cfg.fund.decision_deadline_local)} (Brasília) no dia de "
+                   f"montagem ({fmt.escape_md(cfg.fund.rebalance_rule)}); fechamento diário às "
                    f"{fmt.escape_md(cfg.fund.daily_close_run_local)}.")
         with st.expander("Fontes de dados"):
             for label, path in state.paths.describe():

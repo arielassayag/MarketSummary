@@ -9,8 +9,8 @@ Variáveis de ambiente opcionais:
   CDP_PERMISSION_MODE   modo de permissão do claude -p (padrão: acceptEdits)
   CDP_CLAUDE_ARGS       flags extras do claude (ex.: "--permission-prompts none")
   CDP_CLAUDE_BIN        caminho do executável claude (padrão: o do PATH)
-  CDP_LOCK_WAIT_MIN     minutos esperando outra rotina terminar (padrão: 60 para semanal e
-                        diario, 0 para as demais)
+  CDP_LOCK_WAIT_MIN     minutos esperando outra rotina terminar (padrão: 60 para semanal,
+                        diario e cobertura, 0 para as demais)
 
 Log: logs\cdp\<tarefa>_<AAAAmmdd_HHMMSS>.log. A trava logs\cdp\.lock impede duas rotinas ao mesmo
 tempo (o livro é encadeado por hash); se continuar ocupada depois da espera, a rotina não roda e o
@@ -21,7 +21,7 @@ skill relata o bloqueio no resumo).
 #>
 param(
     [Parameter(Mandatory = $true, Position = 0)]
-    [ValidateSet("semanal", "diario", "risco", "status", "calibracao")]
+    [ValidateSet("semanal", "diario", "cobertura", "risco", "status", "calibracao")]
     [string]$Task,
     [Parameter(ValueFromRemainingArguments = $true)]
     [string[]]$SkillArgs
@@ -44,7 +44,7 @@ function Log([string]$msg) { $msg | Out-File -FilePath $log -Append -Encoding ut
 
 $waitMin = 0
 if ($env:CDP_LOCK_WAIT_MIN) { $waitMin = [int]$env:CDP_LOCK_WAIT_MIN }
-elseif ($Task -in @("semanal", "diario")) { $waitMin = 60 }
+elseif ($Task -in @("semanal", "diario", "cobertura")) { $waitMin = 60 }
 
 # Trava órfã (processo morto) com mais de 6 horas é removida.
 if ((Test-Path $lock) -and ((Get-Item $lock).LastWriteTime -lt (Get-Date).AddHours(-6))) {

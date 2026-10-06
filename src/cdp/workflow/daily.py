@@ -3,24 +3,32 @@ alertas, gravando um ``DailyRecord`` imutável e encadeado por hash no track rec
 
 Convenção de execução (``fund.execution_convention``)
 -----------------------------------------------------
-A carteira da semana é decidida no primeiro pregão da semana na B3 (segunda, ou o próximo dia
-útil se for feriado) ANTES do fechamento, com dados até o pregão anterior, e executada no
-FECHAMENTO desse mesmo pregão (MOC). No pregão de decisão D a rotina diária:
+A carteira é decidida no dia de montagem D (último pregão da semana na NYSE, com a seção
+``execution``; o primeiro pregão da semana na B3 sem ela) ANTES do fechamento, com todos os
+dados disponíveis até o momento da análise, e executada no FECHAMENTO de D (MOC). Na rotina
+diária de D:
 
 1. apura o P&L do dia da carteira ANTIGA, do fechamento anterior ao fechamento de D — a carteira
    nova não participa do P&L de D;
-2. executa a carteira decidida no fechamento de D: nocional-alvo = peso × NAV(D) antes dos custos,
-   na linha de execução; ações = nocional / preço de fechamento local / câmbio (arredondadas à
-   unidade, meio para longe de zero); custos de transação do modelo de custos são debitados em D;
-3. grava o ``BookEntry`` (``booked_at`` = fechamento de D) e as posições de fim de dia do registro
-   passam a ser as da carteira NOVA (linhas encerradas aparecem com valor zero e o P&L do dia).
+2. executa a carteira decidida no fechamento de D. Com a seção ``execution``
+   (:mod:`cdp.portfolio.execucao`): as ordens são quantidades de ações fixadas na decisão
+   (``PositionTarget.shares``; sem ela, peso × NAV(D) ao fechamento), cada linha executa ao seu
+   fechamento OFICIAL limitada à capacidade do leilão e da janela pré-fechamento calculada com o
+   volume realizado no pregão; linha sem pregão (ou com fechamento antes do prazo mais a margem)
+   não negocia e o emissor mantém as ações; banda de não-negociação ``min_trade_weight``; a
+   parcela não executada não é carregada (a decisão seguinte parte da carteira efetiva). Sem a
+   seção: nocional-alvo = peso × NAV(D) ao preço de fechamento local e câmbio do dia. Custos do
+   modelo de custos são debitados em D;
+3. grava o ``BookEntry`` (``booked_at`` = fechamento oficial mais tardio entre as linhas
+   executadas) com a carteira resultante e as posições de fim de dia do registro passam a ser as
+   da carteira NOVA (linhas encerradas aparecem com valor zero e o P&L do dia).
 
 No primeiro registro (inception) não há carteira antiga: o NAV parte de
 ``fund.inception_nav_usd`` na abertura de D e o P&L do dia são apenas os custos.
 
-A decisão precisa ter sido gravada até o fechamento do pregão de execução (``decided_at``); uma
-decisão posterior ao fechamento só é executada no pregão seguinte, e nunca fora da própria
-semana (:func:`executable_in`). Decisões autônomas são conferidas com
+A decisão precisa ter sido gravada até o corte de ordens do fechamento (``decided_at``,
+:func:`decision_cutoff`) e só executa nos pregões de :func:`executable_in` (com ``execution``,
+fase 1: apenas o fechamento do próprio dia de montagem). Decisões autônomas são conferidas com
 :func:`~cdp.workflow.autonomy.verify_autonomous_decision`; humanas, com
 :func:`~cdp.workflow.approval.verify_decision` — sempre contra o mandato ATUAL. A efetivação
 é gravada pelo próprio livro (``Book.save_proposal``/``save_decision``/``save_booked``, que
@@ -100,6 +108,7 @@ from ..contracts import (
     DecisionMode,
     DecisionType,
     ExposureLine,
+    PositionTarget,
     Proposal,
     Side,
 )
@@ -245,15 +254,58 @@ class DailyRunResult:
 # ==========================================================
 
 def close_datetime(session: date, cfg: FundConfig) -> datetime:
-    """Horário (com fuso) do fechamento usado como ``booked_at`` da execução MOC."""
+    """Horário (com fuso) do fechamento do pregão para a execução MOC.
+
+    Com a seção ``execution``: o fechamento oficial mais tardio entre os mercados abertos
+    (limite superior do ``booked_at`` de cada efetivação, que usa o fechamento mais tardio entre
+    as linhas executadas). Legado: 17h de Brasília (:data:`MARKET_CLOSE_LOCAL`)."""
+    if cfg.execution is not None:
+        from ..portfolio.execucao import fechamento_mais_tardio, janela_execucao
+
+        late = fechamento_mais_tardio(janela_execucao(session, cfg))
+        if late is not None:
+            return late.astimezone(ZoneInfo(cfg.fund.timezone))
     return datetime.combine(session, MARKET_CLOSE_LOCAL, tzinfo=ZoneInfo(cfg.fund.timezone))
 
 
-def executable_in(week: date, session: date) -> bool:
-    """A decisão da semana ``week`` (primeiro pregão da B3 na semana) é executável no fechamento
-    de ``session``: mesmo calendário semanal e ``session`` ≥ ``week``."""
-    monday = week - timedelta(days=week.weekday())
-    return week <= session and monday == session - timedelta(days=session.weekday())
+def decision_cutoff(session: date, cfg: FundConfig) -> datetime:
+    """Horário-limite de ``decided_at`` para executar no fechamento de ``session``.
+
+    Com a seção ``execution``: o corte MOC mais tardio entre os mercados elegíveis (cada linha
+    ainda confere o corte do próprio mercado na execução). Legado: o fechamento das 17h."""
+    if cfg.execution is not None:
+        from ..portfolio.execucao import janela_execucao, mercados_elegiveis
+
+        j = janela_execucao(session, cfg)
+        elig = mercados_elegiveis(j, cfg)
+        cuts = [t for m, t in j.corte_moc.items() if elig.get(m, False)]
+        if cuts:
+            return max(cuts).astimezone(ZoneInfo(cfg.fund.timezone))
+        return j.prazo_decisao.astimezone(ZoneInfo(cfg.fund.timezone))
+    return close_datetime(session, cfg)
+
+
+def executable_in(week: date, session: date, cfg: FundConfig | None = None) -> bool:
+    """A decisão da semana ``week`` é executável no fechamento de ``session``.
+
+    Legado (sem ``cfg`` ou sem a seção ``execution``): mesma semana (seg–sex) e ``session`` ≥
+    ``week``. Com ``execution``: ``week`` ≤ ``session`` < próximo dia de montagem, limitado aos
+    ``execution.max_closes`` primeiros pregões de dados a partir de ``week`` (fase 1: só o
+    fechamento do próprio dia de montagem; uma efetivação perdida é refeita no mesmo fechamento)."""
+    if cfg is None or cfg.execution is None:
+        monday = week - timedelta(days=week.weekday())
+        return week <= session and monday == session - timedelta(days=session.weekday())
+    from ..calendar import is_data_session, next_rebalance_after
+
+    if session < week or session >= next_rebalance_after(week, cfg):
+        return False
+    n = 0
+    d = week
+    while d <= session:
+        if is_data_session(d):
+            n += 1
+        d += timedelta(days=1)
+    return 1 <= n <= cfg.execution.max_closes and is_data_session(session)
 
 
 def session_has_prices(md: MarketData, session: date) -> bool:
@@ -407,6 +459,11 @@ def _list(items: Iterable[str]) -> str:
     items = list(items)
     head = ", ".join(items[:_MAX_LISTED])
     return head + (f" (+{len(items) - _MAX_LISTED})" if len(items) > _MAX_LISTED else "")
+
+
+def _int_br(n: int) -> str:
+    """Inteiro com separador de milhar pt-BR (``196484`` ⇒ ``196.484``)."""
+    return f"{int(n):,}".replace(",", ".")
 
 
 def _round_shares(x: float) -> int:
@@ -738,9 +795,16 @@ class _Exec:
     shares: int
     price_local: float
     fx: float
+    value: float | None = None
+    """Valor de mercado já marcado (linha detida sem negociação no dia: mantém a marcação)."""
+    mic: str | None = None
+    traded: int = 0
+    """Ações negociadas no fechamento (com sinal; execução com capacidade)."""
 
     @property
     def mv(self) -> float:
+        if self.value is not None:
+            return self.value
         return self.shares * self.price_local * self.fx
 
 
@@ -847,6 +911,11 @@ class DailyRunner:
         self.shadow = _ShadowSide(cfg, shadow_track) if shadow_track is not None else None
         self._models: dict[date, RiskModel | None] = {}
         self._model_notes: dict[date, str] = {}
+        self._md_pregao: tuple[date, MarketData] | None = None
+        if cfg.execution is not None and getattr(book, "mercado", None) is None:
+            # O livro confere cada efetivação contra a execução esperada no pregão (capacidade
+            # pelo volume realizado, mercado elegível, corte MOC, banda).
+            book.mercado = self._mercado_conferencia
 
     @classmethod
     def from_root(cls, cfg: FundConfig, store: MarketSource, root: Path | str = "book",
@@ -959,8 +1028,8 @@ class DailyRunner:
             if last is not None and s <= last.date:
                 continue
             live = last.live_book_week if last is not None else None
-            close = close_datetime(s, self.cfg)
-            cands = [p for p in pend if executable_in(p.week, s)
+            close = decision_cutoff(s, self.cfg)
+            cands = [p for p in pend if executable_in(p.week, s, self.cfg)
                      and (live is None or p.week > live) and p.decision.decided_at <= close]
             p = max(cands, key=lambda x: x.week) if cands else None
             try:
@@ -1006,7 +1075,7 @@ class DailyRunner:
         marked = self._mark(ctx, prev, ref_prop)
         nav_pre = marked.nav_pre
         if plan.hold:
-            entry = self._build_hold_entry(ctx, plan, nav_pre)
+            entry = self._build_hold_entry(ctx, plan, nav_pre, marked)
         else:
             try:
                 execs, _ = self._size(ctx, plan, marked, nav_pre)
@@ -1044,7 +1113,15 @@ class DailyRunner:
         if not session_has_prices(md, session_date):
             raise NoSessionError(f"{session_date}: sem pregão (sem preços de fechamento no "
                                  "armazenamento de mercado).")
+        self._md_pregao = (session_date, md)
         return md
+
+    def _mercado_conferencia(self, session_date: date) -> MarketData:
+        """Dados do pregão para a conferência da efetivação no livro (reaproveita os do
+        próprio pregão quando já carregados)."""
+        if self._md_pregao is not None and self._md_pregao[0] == session_date:
+            return self._md_pregao[1]
+        return self.store.load(as_of=session_date).truncate(session_date)
 
     def context(self, session_date: date, md: MarketData | None = None,
                 prev: DailyRecord | None = None, *, need_models: bool = True) -> DailyContext:
@@ -1114,8 +1191,12 @@ class DailyRunner:
             raise ValueError(f"Proposta {proposal.proposal_id} não aprovada ({decision.decision}).")
         if decision.proposal_id != proposal.proposal_id or decision.week != proposal.week:
             raise ValueError("A decisão não pertence à proposta informada.")
-        close = close_datetime(session, self.cfg)
+        close = decision_cutoff(session, self.cfg)
         if decision.decided_at > close:
+            if self.cfg.execution is not None:
+                raise ValueError(f"Decisão gravada após o corte de ordens do fechamento de "
+                                 f"{session} ({decision.decided_at.isoformat()}): não executa "
+                                 "neste fechamento.")
             raise ValueError(f"Decisão gravada após o fechamento de {session} "
                              f"({decision.decided_at.isoformat()}): executa no pregão seguinte.")
         snap = decision.snapshot_hash if booked else (snapshot_hash_now or proposal.snapshot_hash)
@@ -1134,7 +1215,7 @@ class DailyRunner:
         return []
 
     def _check_week_window(self, session: date, week: date, prev: DailyRecord | None) -> None:
-        if not executable_in(week, session):
+        if not executable_in(week, session, self.cfg):
             raise ValueError(f"Decisão da semana {week} não é executável em {session} "
                              "(somente em pregões da própria semana).")
         if prev is not None and prev.live_book_week is not None and week <= prev.live_book_week:
@@ -1195,7 +1276,7 @@ class DailyRunner:
         refusals = refusals if refusals is not None else []
         live = prev.live_book_week if prev is not None else None
         weeks = [w for w in self.book.list_weeks()
-                 if executable_in(w, session) and (live is None or w > live)]
+                 if executable_in(w, session, self.cfg) and (live is None or w > live)]
         for w in sorted(weeks, reverse=True):
             try:
                 plan = self._discover_plan(session, w)
@@ -1209,6 +1290,7 @@ class DailyRunner:
 
     def _discover_plan(self, session: date, w: date) -> _Plan | None:
         close = close_datetime(session, self.cfg)
+        cutoff = decision_cutoff(session, self.cfg)
         entry = self.book.load_booked(w)
         if entry is not None:
             if entry.booked_at > close:
@@ -1229,7 +1311,7 @@ class DailyRunner:
         if (proposal is None or decision is None or decision.decision != DecisionType.APPROVE
                 or decision.proposal_id != proposal.proposal_id):
             return None
-        if decision.decided_at > close:
+        if decision.decided_at > cutoff:
             return None
         self._verify_decision(session, proposal, decision, None)
         return self._execute_plan(proposal, decision, None, "decisão")
@@ -1280,12 +1362,12 @@ class DailyRunner:
                 w for w in self.book.list_weeks()
                 if (self.book.week_dir(w) / BOOK_SHADOW_FILE).exists()}
             for w in sorted(weeks, reverse=True):
-                if executable_in(w, ctx.date) and (live is None or w > live):
+                if executable_in(w, ctx.date, self.cfg) and (live is None or w > live):
                     proposal = side.store.load_proposal(w) or book_shadow_proposal(self.book, w)
                     break
         if proposal is None or (live is not None and proposal.week <= live):
             return None
-        if not executable_in(proposal.week, ctx.date):
+        if not executable_in(proposal.week, ctx.date, self.cfg):
             raise ValueError(f"Proposta-sombra da semana {proposal.week} fora da janela.")
         if proposal.config_hash != self.cfg.config_hash():
             raise ValueError("Proposta-sombra com mandato diferente do atual.")
@@ -1365,7 +1447,7 @@ class DailyRunner:
             if plan.hold:
                 alerts.append(f"Decisão da semana {plan.week}: manter a carteira anterior "
                               "(sem negociação).")
-                entry = plan.entry or self._build_hold_entry(ctx, plan, nav_pre)
+                entry = plan.entry or self._build_hold_entry(ctx, plan, nav_pre, marked)
             else:
                 try:
                     execs, size_alerts = self._size(ctx, plan, marked, nav_pre)
@@ -1680,6 +1762,8 @@ class DailyRunner:
     # ------------------------------------------------------------------ execução
     def _size(self, ctx: DailyContext, plan: _Plan, marked: _Marked, nav_pre: float
               ) -> tuple[list[_Exec], list[str]]:
+        if self.cfg.execution is not None:
+            return self._size_fechamento(ctx, plan, marked, nav_pre)
         alerts: list[str] = []
         execs: list[_Exec] = []
         stale: list[str] = []
@@ -1721,6 +1805,197 @@ class DailyRunner:
             alerts.append(f"Posição menor que uma ação; executada 1 ação: {_list(min_lot)}.")
         return execs, alerts
 
+    def _size_fechamento(self, ctx: DailyContext, plan: _Plan, marked: _Marked, nav_pre: float
+                         ) -> tuple[list[_Exec], list[str]]:
+        """Ordens em ações executadas ao fechamento oficial com capacidade de leilão.
+
+        Ordem = ações-alvo (fixadas na decisão; sem elas, peso × NAV ao fechamento) − ações
+        detidas. A execução de cada linha segue a regra única
+        :func:`cdp.portfolio.execucao.preenchimentos_esperados` (a mesma da conferência do livro
+        e do ``cdp verify``): ``sinal × min(|ordem|, ⌊capacidade / preço⌋)`` com a capacidade
+        pelo volume do pregão; não negociam linha sem pregão elegível, sem fechamento oficial no
+        dia, decisão após o corte MOC do mercado ou ordem abaixo da banda ``min_trade_weight``;
+        emissor com linha detida sem negociação fica inteiro congelado. Linhas detidas sem
+        negociação mantêm a marcação do dia."""
+        from ..portfolio.execucao import OrdemLinha, janela_execucao, preenchimentos_esperados
+
+        cfg = self.cfg
+        ex = cfg.execution
+        assert ex is not None
+        janela = janela_execucao(ctx.date, cfg)
+        held: dict[tuple[str, str], _Line] = {}
+        for ln in marked.lines:
+            if ln.mv_end == 0 and not ln.shares:
+                continue
+            if ln.shares is None:
+                raise ValueError(f"Posição {ln.issuer_id}/{ln.ticker} sem quantidade de ações: "
+                                 "execução com capacidade impossível.")
+            held[(ln.issuer_id, ln.ticker)] = ln
+        pos_by: dict[tuple[str, str], PositionTarget] = {}
+        if plan.proposal is not None:
+            pos_by = {(p.issuer_id, p.execution_ticker): p for p in plan.proposal.positions
+                      if p.weight != 0}
+        targets: dict[tuple[str, str], tuple[float, str]] = {}
+        for issuer, ticker, weight, ccy in plan.targets():
+            if (issuer, ticker) in targets:
+                raise ValueError(f"Linha {issuer}/{ticker} duplicada na carteira a executar.")
+            if not _finite(weight):
+                raise ValueError(f"Peso não finito para {issuer}/{ticker}.")
+            targets[(issuer, ticker)] = (float(weight), ccy)
+        keys = sorted(set(targets) | set(held))
+        ordens: list[OrdemLinha] = []
+        quote: dict[tuple[str, str], tuple[str, float | None, float | None]] = {}
+        for iid, tk in keys:
+            ln = held.get((iid, tk))
+            s0 = int(round(float(ln.shares))) if ln is not None and ln.shares is not None else 0
+            tgt = targets.get((iid, tk))
+            currency = self._line_currency(ctx, tk, tgt[1] if tgt else (
+                ln.currency if ln is not None else "USD"))
+            px: float | None = None
+            if tk in ctx.md.close.columns and ctx.ts in ctx.md.close.index:
+                v = ctx.md.close.at[ctx.ts, tk]
+                px = float(v) if _finite(v) and float(v) > 0 else None
+            fx = self._fx_rate(ctx, currency)
+            if tgt is None:
+                st: int | None = 0
+            else:
+                pt = pos_by.get((iid, tk))
+                if pt is not None and pt.shares is not None:
+                    st = int(pt.shares)
+                elif px is not None and fx is not None:
+                    st = _round_shares(tgt[0] * nav_pre / (px * fx))
+                else:
+                    st = None
+            quote[(iid, tk)] = (currency, px, fx)
+            ordens.append(OrdemLinha(iid, tk, s0, st, px, fx))
+        decided_at = plan.decision.decided_at if plan.decision is not None else None
+        fills = preenchimentos_esperados(ordens, ctx.md, janela, cfg, nav_pre=nav_pre,
+                                         decidido_em=decided_at)
+        execs: list[_Exec] = []
+        partial: list[str] = []
+        frozen: dict[str, str] = {}
+        unmarketable: list[str] = []
+        late: list[str] = []
+        band: list[str] = []
+        no_px: list[str] = []
+        for f in fills:
+            key = (f.emissor, f.ticker)
+            ln = held.get(key)
+            currency, px, fx = quote[key]
+            if f.situacao == "congelado":
+                frozen.setdefault(f.emissor, f.motivo)
+            elif f.situacao == "sem_preco":
+                no_px.append(f.ticker)
+            elif f.situacao == "inelegivel":
+                unmarketable.append(f"{f.ticker} ({f.motivo})")
+            elif f.situacao == "apos_corte":
+                late.append(f.ticker)
+            elif f.situacao == "banda":
+                band.append(f.ticker)
+            elif f.situacao == "parcial":
+                partial.append(f"{f.ticker} ({_int_br(abs(f.executadas))}/"
+                               f"{_int_br(abs(f.ordem))})")
+            if f.executadas != 0:
+                assert px is not None and fx is not None
+                execs.append(_Exec(f.emissor, f.ticker, currency, f.detidas + f.executadas, px,
+                                   fx, mic=f.mic, traded=f.executadas))
+            elif ln is not None:
+                p_loc = ln.price_local if ln.price_local is not None else (px or 0.0)
+                rate = (ln.price_usd / ln.price_local
+                        if ln.price_usd is not None and ln.price_local else (fx or 0.0))
+                execs.append(_Exec(f.emissor, f.ticker, ln.currency, f.detidas, float(p_loc),
+                                   float(rate), value=ln.mv_end, mic=f.mic))
+        alerts: list[str] = []
+        if partial:
+            alerts.append("Execução limitada pela capacidade do leilão de fechamento (ações "
+                          f"executadas/ordenadas): {_list(partial)}.")
+        if frozen:
+            # Todo emissor detido sem negociação no fechamento (com ou sem ordem): as ações
+            # ficam como estão nesta montagem.
+            alerts.append("Emissores congelados (linha detida sem negociação no fechamento; "
+                          "ações mantidas): "
+                          f"{_list(f'{k}: {v}' for k, v in sorted(frozen.items()))}.")
+        if unmarketable:
+            alerts.append(f"Ordens sem mercado elegível no fechamento: {_list(unmarketable)}.")
+        if late:
+            alerts.append(f"Ordens após o corte MOC do mercado (não executadas): {_list(late)}.")
+        if band:
+            alerts.append("Ordens abaixo da banda de não-negociação "
+                          f"({fmt_pct(ex.min_trade_weight, 2)} do NAV): {_list(band)}.")
+        if no_px:
+            alerts.append("Sem fechamento oficial ou câmbio no pregão (ordem não executada): "
+                          f"{_list(no_px)}.")
+        return execs, alerts
+
+    def _costs_fechamento(self, ctx: DailyContext, execs: list[_Exec], nav_pre: float
+                          ) -> tuple[float, list[str]]:
+        """Custo (USD) das linhas negociadas no leilão (:func:`costs.custos_fechamento`)."""
+        from ..portfolio.costs import custos_fechamento
+
+        frame = self.custo_frame(ctx, [(e.issuer_id, e.ticker, e.currency, abs(e.traded) *
+                                        e.price_local * e.fx) for e in execs if e.traded != 0])
+        if frame.empty:
+            return 0.0, []
+        res = custos_fechamento(frame, self.cfg)
+        c = self.cfg.costs
+        default_bps = (max(c.half_spread_bps_by_tier.values()) + max(c.commission_bps.values())
+                       + c.fx_cost_bps)
+        miss = res["cost_usd"].isna()
+        if miss.any():
+            res.loc[miss, "cost_usd"] = frame.loc[miss, "notional_usd"] * default_bps / 1e4
+            res.loc[miss, "flags"] = res.loc[miss, "flags"] + ";bps_conservador"
+        alerts: list[str] = []
+        flagged = sorted(t for t, f in res["flags"].items() if f)
+        if flagged:
+            alerts.append("Custos com parâmetro conservador (ADTV ou volatilidade ausente): "
+                          f"{_list(flagged)}.")
+        return float(res["cost_usd"].sum()), alerts
+
+    def custo_frame(self, ctx: DailyContext,
+                    trades: Iterable[tuple[str, str, str, float]]) -> pd.DataFrame:
+        """Insumos do custo por linha negociada ``(emissor, ticker, moeda, nocional USD)``:
+        ADTV da linha, σ diária do emissor (63 pregões), mercado, categoria e mercado local
+        fechado (ADR negociado com a bolsa local sem pregão)."""
+        from ..calendar import MARKET_EXCHANGES, is_session
+        from ..portfolio.execucao import categoria_da_linha
+        from ..universe import listing_market
+
+        rows = list(trades)
+        if not rows:
+            return pd.DataFrame()
+        lines = ctx.panel.lines
+        assets = ctx.panel.assets
+        vol = ctx.panel.returns.loc[:ctx.ts].tail(63).std()
+        known = vol[vol > 0].dropna()
+        p90 = float(known.quantile(0.9)) if len(known) else float("nan")
+        out = []
+        for iid, tk, ccy, notional in rows:
+            adtv = (float(lines.at[tk, "adtv_usd"]) if tk in lines.index
+                    and _finite(lines.at[tk, "adtv_usd"]) and lines.at[tk, "adtv_usd"] > 0
+                    else float("nan"))
+            flag = ""
+            if not math.isfinite(adtv):
+                a2 = assets["adtv_usd"].get(iid) if "adtv_usd" in assets.columns else None
+                if a2 is not None and _finite(a2) and a2 > 0:
+                    adtv, flag = float(a2), "adtv_emissor"
+                else:
+                    adtv, flag = float(max(self.cfg.liquidity.min_adtv_usd, 1.0)), "adtv_minimo"
+            sd = vol.get(iid)
+            if sd is None or not _finite(sd) or sd <= 0:
+                sd, flag = p90, (flag + ";" if flag else "") + "vol_p90"
+            lt = lines.at[tk, "line_type"] if tk in lines.index else None
+            country = (str(assets.at[iid, "country"]) if iid in assets.index
+                       and "country" in assets.columns else "")
+            home = MARKET_EXCHANGES.get(country)
+            mkt = listing_market(tk)
+            local_closed = bool(mkt == "US" and home is not None and home != "XNYS"
+                                and not is_session(ctx.date, home))
+            out.append({"ticker": tk, "issuer_id": iid, "notional_usd": float(notional),
+                        "adtv_usd": adtv, "sigma_d": float(sd), "market": mkt,
+                        "currency": ccy, "categoria": categoria_da_linha(tk, lt),
+                        "local_fechado": local_closed, "flag": flag})
+        return pd.DataFrame(out).set_index("ticker")
+
     def _cost_model(self, ctx: DailyContext, nav: float) -> CostModel:
         key = ("cost_model", round(nav, 2))
         if key not in ctx.cache:
@@ -1743,6 +2018,8 @@ class DailyRunner:
     def _costs(self, ctx: DailyContext, old: list[_Line], execs: list[_Exec], nav_pre: float,
                plan: _Plan) -> tuple[float, list[str]]:
         """Custo (USD, positivo) de passar da carteira antiga (derivada) à executada."""
+        if self.cfg.execution is not None:
+            return self._costs_fechamento(ctx, execs, nav_pre)
         w_old: dict[tuple[str, str], float] = {(ln.issuer_id, ln.ticker): ln.mv_end / nav_pre
                                                for ln in old if ln.mv_end != 0}
         w_new: dict[tuple[str, str], float] = {(e.issuer_id, e.ticker): e.mv / nav_pre
@@ -1788,6 +2065,8 @@ class DailyRunner:
     def _build_entry(self, ctx: DailyContext, plan: _Plan, execs: list[_Exec], nav_pre: float,
                      cost_usd: float) -> BookEntry:
         nav_end = nav_pre - cost_usd
+        if self.cfg.execution is not None:
+            return self._build_entry_fechamento(ctx, plan, execs, nav_pre, cost_usd)
         note = (f"Execução hipotética MOC no fechamento de {ctx.date} (paper trading): "
                 f"nocional-alvo = peso × NAV antes dos custos ({fmt_usd_mm(nav_pre)}), ações pelo "
                 f"fechamento local e câmbio do dia; custos estimados {fmt_usd(cost_usd)}; NAV após "
@@ -1804,12 +2083,55 @@ class DailyRunner:
                          booked_at=close_datetime(ctx.date, self.cfg), nav_usd=nav_pre,
                          positions=positions, pricing_note=note)
 
-    def _build_hold_entry(self, ctx: DailyContext, plan: _Plan, nav_pre: float) -> BookEntry:
-        """Efetivação de "manter": sem posições-alvo (como no livro); a carteira segue derivando."""
+    def _build_entry_fechamento(self, ctx: DailyContext, plan: _Plan, execs: list[_Exec],
+                                nav_pre: float, cost_usd: float) -> BookEntry:
+        """Efetivação com capacidade: a carteira RESULTANTE (linhas negociadas, saldos de saídas
+        parciais e emissores congelados); ``booked_at`` = fechamento oficial mais tardio entre as
+        linhas negociadas."""
+        from ..portfolio.execucao import fechamento_execucao, janela_execucao
+
+        janela = janela_execucao(ctx.date, self.cfg)
+        traded = [e for e in execs if e.traded != 0]
+        at = fechamento_execucao(janela, {e.mic for e in traded if e.mic})
+        booked_at = (at.astimezone(ZoneInfo(self.cfg.fund.timezone)) if at is not None
+                     else close_datetime(ctx.date, self.cfg))
+        n_full = sum(1 for e in execs if e.traded != 0)
+        note = (f"Execução hipotética no leilão de fechamento de {ctx.date} (paper trading): "
+                "ordens em quantidade de ações fixadas na decisão, executadas ao fechamento "
+                "oficial de cada linha até a capacidade do leilão e da janela pré-fechamento "
+                f"(volume realizado do pregão); {n_full} "
+                f"{'linha negociada' if n_full == 1 else 'linhas negociadas'}; custos estimados "
+                f"{fmt_usd(cost_usd)}; NAV após custos {fmt_usd_mm(nav_pre - cost_usd)}.")
+        if self.shadow is not None and plan.source == "sombra":
+            note = "Carteira-sombra só-quant (contrafactual, sem decisão). " + note
+        positions = [
+            BookedPosition(issuer_id=e.issuer_id, ticker=e.ticker, weight=e.mv / nav_pre,
+                           notional_usd=e.mv, shares=e.shares, entry_price_local=e.price_local,
+                           currency=e.currency)
+            for e in execs if e.shares != 0]
+        return BookEntry(week=plan.week, proposal_id=plan.proposal_id,
+                         approval_hash=plan.approval_hash, booked_at=booked_at, nav_usd=nav_pre,
+                         positions=positions, pricing_note=note)
+
+    def _build_hold_entry(self, ctx: DailyContext, plan: _Plan, nav_pre: float,
+                          marked: _Marked | None = None) -> BookEntry:
+        """Efetivação de "manter" (sem negociação). Legado: sem posições-alvo (a carteira segue
+        derivando). Com a seção ``execution`` a efetivação lista a carteira detida (ações
+        inalteradas), como toda efetivação nesse regime: o livro sempre registra a carteira
+        após o fechamento."""
+        positions: list[BookedPosition] = []
+        if self.cfg.execution is not None and marked is not None:
+            for ln in marked.lines:
+                if not ln.shares or ln.mv_end == 0:
+                    continue
+                positions.append(BookedPosition(
+                    issuer_id=ln.issuer_id, ticker=ln.ticker, weight=ln.mv_end / nav_pre,
+                    notional_usd=ln.mv_end, shares=int(round(float(ln.shares))),
+                    entry_price_local=ln.price_local, currency=ln.currency))
         return BookEntry(week=plan.week, proposal_id=plan.proposal_id,
                          approval_hash=plan.approval_hash,
                          booked_at=close_datetime(ctx.date, self.cfg), nav_usd=nav_pre,
-                         positions=[],
+                         positions=positions,
                          pricing_note=(f"Manter a carteira anterior no fechamento de {ctx.date} "
                                        "(sem negociação, sem custos)."))
 
@@ -2065,9 +2387,9 @@ def _merge_execution(old: list[_Line], execs: list[_Exec]) -> list[_Line]:
             out.append(_Line(ln.issuer_id, ln.ticker, ln.currency, 0.0, ln.mv_start, ln.pnl,
                              ln.ret, ln.repriced, 0.0, ln.price_local, ln.price_usd))
         else:
+            px_usd = (e.price_local * e.fx if e.value is None else ln.price_usd)
             out.append(_Line(ln.issuer_id, ln.ticker, e.currency, float(e.shares), ln.mv_start,
-                             ln.pnl, ln.ret, ln.repriced, e.mv, e.price_local,
-                             e.price_local * e.fx))
+                             ln.pnl, ln.ret, ln.repriced, e.mv, e.price_local, px_usd))
     for e in execs:
         if (e.issuer_id, e.ticker) in new:
             out.append(_Line(e.issuer_id, e.ticker, e.currency, float(e.shares), 0.0, 0.0, 0.0,

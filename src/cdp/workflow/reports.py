@@ -773,6 +773,64 @@ def _expected_cost(p: Proposal) -> tuple[float | None, bool]:
     return total, partial
 
 
+_GRUPO_PT = {"mercado": "Mercado", "pais": "País", "setor": "Setor", "estilo": "Estilo",
+             "macro": "Macro (commodities e dólar)", "especifico": "Específico (idiossincrático)"}
+
+
+def _idio_section(s: Section, risco: dict) -> None:
+    """Fatia idiossincrática por modelo, κ_F, escada de drawdown e a variância por grupo
+    (números gravados pela decisão em ``overrides["risco"]``)."""
+    kap = risco.get("kappa_f") if isinstance(risco.get("kappa_f"), dict) else {}
+    meta, piso = _f(risco.get("meta_idio")), _f(risco.get("piso_idio"))
+    ref = (f" (meta {fmt_pct(meta, 0)}, piso {fmt_pct(piso, 0)})"
+           if meta is not None and piso is not None else "")
+    rows = [("Fatia idiossincrática — modelo de decisão", _pct(risco.get("idio_decisao")) + ref)]
+    if "base" in (risco.get("modelos_gate") or []):
+        rows.append(("Fatia idiossincrática — modelo base", _pct(risco.get("idio_base")) + ref))
+    if _f(kap.get("valor")) is not None:
+        rows.append(("Inflação de 2ª ordem do risco fatorial (κ_F)",
+                     fmt_num(_f(kap.get("valor")), 2)))
+    if _f(risco.get("custo_neutralidade_bp")) is not None:
+        rows.append(("Custo marginal da neutralidade (bp a.a.)",
+                     fmt_num(_f(risco.get("custo_neutralidade_bp")), 1)))
+    esc = risco.get("escada")
+    if isinstance(esc, dict) and _f(esc.get("sigma_teto")) is not None:
+        regra = esc.get("regra_vinculante") or "escada de drawdown"
+        escada_txt = (f"{fmt_num(_f(esc.get('multiplicador')), 2)} × "
+                      f"{_pct(esc.get('sigma_ref'))}")
+        rows.append(("Teto de vol pela escada de drawdown",
+                     f"{_pct(esc.get('sigma_teto'))} = {escada_txt}"
+                     if regra == "escada de drawdown" else
+                     f"{_pct(esc.get('sigma_teto'))} ({regra}; escada: {escada_txt})"))
+    s.kv(rows, caption="Risco idiossincrático da carteira decidida")
+    grupos = risco.get("por_grupo") if isinstance(risco.get("por_grupo"), dict) else {}
+    if grupos:
+        s.table(["Grupo", "Fração da variância"],
+                [[_GRUPO_PT.get(g, g), _pct(v)] for g, v in grupos.items()],
+                caption="Decomposição da variância ex-ante por grupo (modelo de decisão, κ_F "
+                        "no bloco fatorial)")
+
+
+def _factor_share(p: Proposal) -> float | None:
+    """Fração fatorial publicada: na base do gate (κ_F, modelo que vincula) quando a decisão
+    grava a medida idiossincrática; senão a do resumo de risco."""
+    from ..risk.idio import base_vinculante
+
+    basis = base_vinculante(p.overrides.get("risco") if isinstance(p.overrides, dict) else None)
+    return basis["fatorial"] if basis is not None else _f(p.risk.factor_risk_share)
+
+
+def _factor_share_row(p: Proposal, cfg: FundConfig) -> tuple[str, str]:
+    from ..risk.idio import base_vinculante
+
+    basis = base_vinculante(p.overrides.get("risco") if isinstance(p.overrides, dict) else None)
+    lim = fmt_pct(cfg.risk.max_factor_risk_share)
+    if basis is None:
+        return ("Fração de risco fatorial", f"{_pct(p.risk.factor_risk_share)} (máx. {lim})")
+    return ("Fração de risco fatorial", f"{_pct(basis['fatorial'])} com κ_F no "
+                                        f"{basis['rotulo']} (máx. {lim})")
+
+
 def _compare_rows(a: Proposal, b: Proposal) -> list[list[str]]:
     def row(label: str, x: Any, y: Any, f: Callable[[Any], str],
             diff: Callable[[Any], str] | None = None) -> list[str]:
@@ -790,7 +848,7 @@ def _compare_rows(a: Proposal, b: Proposal) -> list[list[str]]:
             lambda v: _pct(v, True)),
         row("Vol específica", ra.specific_vol, rb.specific_vol, lambda v: _pct(v),
             lambda v: _pct(v, True)),
-        row("Fração de risco fatorial", ra.factor_risk_share, rb.factor_risk_share,
+        row("Fração de risco fatorial", _factor_share(a), _factor_share(b),
             lambda v: _pct(v), lambda v: _pct(v, True)),
         row("Beta", ra.beta, rb.beta, lambda v: fmt_num(_f(v), 3, True)),
         row("Gross", ra.gross, rb.gross, lambda v: _pct(v), lambda v: _pct(v, True)),
@@ -1046,8 +1104,7 @@ def render_weekly_report(week: date, proposal: Proposal, decision: Decision | No
     s.kv([("Vol ex-ante", f"{_pct(vol)} ({_vol_status(vol, cfg)} {_band(cfg)})"),
           ("Vol-alvo aplicada", _pct(vt) if vt is not None else fmt_pct(cfg.risk.vol_target_annual)),
           ("Vol fatorial / específica", f"{_pct(risk.factor_vol)} / {_pct(risk.specific_vol)}"),
-          ("Fração de risco fatorial", f"{_pct(risk.factor_risk_share)} (máx. "
-                                       f"{fmt_pct(cfg.risk.max_factor_risk_share)})"),
+          _factor_share_row(proposal, cfg),
           ("Beta", fmt_num(_f(risk.beta), 3, True)),
           ("Long / short", f"{_pct(risk.long_exposure)} / {_pct(risk.short_exposure, True)}"),
           ("VaR / ES 1d (99%)", f"{_pct(risk.var_1d_99)} / {_pct(risk.es_1d_99)}"),
@@ -1055,6 +1112,9 @@ def render_weekly_report(week: date, proposal: Proposal, decision: Decision | No
           ("N efetivo", fmt_num(_f(risk.effective_n), 1)),
           ("Máx. dias para liquidar", fmt_num(_f(risk.max_days_to_liquidate), 1)),
           ("% do NAV liquidável em 1 dia", _pct(risk.pct_nav_liquidated_1d))])
+    risco = proposal.overrides.get("risco") if isinstance(proposal.overrides, dict) else None
+    if isinstance(risco, dict):
+        _idio_section(s, risco)
     exp_rows = [[e.group, e.name, _pct(e.long), _pct(e.short, True), _pct(e.net, True),
                  _pct(e.gross), _pct(e.limit) if e.limit is not None else NA]
                 for e in sorted(risk.exposures, key=lambda e: (e.group, -abs(e.net), e.name))]

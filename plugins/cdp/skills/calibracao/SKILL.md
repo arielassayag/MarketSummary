@@ -43,7 +43,7 @@ Contexto: `docs/cdp/METODOLOGIA.md` e a calibração-base em `reports/backtest/2
 
 1. Confirme a raiz do repositório e o clone dedicado: `git branch --show-current` = `main` e
    `git status --porcelain` sem arquivos rastreados alterados fora de `book/`, `reports/`,
-   `data/market/` e `artifacts/painel/` (senão, pare: "clone em desenvolvimento"). Sincronize:
+   `data/market/`, `data/publico/` e `artifacts/painel/` (senão, pare: "clone em desenvolvimento"). Sincronize:
    `git fetch` (se falhar, siga sem push no fim); `git status -sb`; se estiver atrás, rode
    `git diff --name-only "HEAD...@{u}" -- book data reports artifacts` — vazio ⇒
    `git pull --no-rebase --no-edit`; não vazio ⇒ pare (outra sessão gravou o livro). Depois,

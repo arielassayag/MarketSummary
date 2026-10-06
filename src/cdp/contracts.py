@@ -244,8 +244,10 @@ class View(_Model):
 
 #: Mentes (harness) aceitas: fonte única das opções ``--mind`` da CLI e da descrição de
 #: ``ResearchPack.mind``. Só ganha membros, e sempre junto com ``research.pm_agent.MindName`` (a
-#: importação de ``pm_agent`` recusa listas divergentes).
-HARNESS_MINDS = ("claude-code", "codex", "api", "demo")
+#: importação de ``pm_agent`` recusa listas divergentes). ``chatgpt``, ``gemini`` e ``outro``: o
+#: passo da mente feito em qualquer assistente com o pacote de ``cdp mente pacote`` e validado
+#: pela CLI (``ResearchPack.mind`` é ``str``: o dump dos artefatos gravados não muda).
+HARNESS_MINDS = ("claude-code", "codex", "api", "demo", "chatgpt", "gemini", "outro")
 
 
 class ResearchPack(_Model):

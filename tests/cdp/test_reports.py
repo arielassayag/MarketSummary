@@ -334,7 +334,8 @@ def test_load_commentary_file_routes(tmp_path):
     md, issues = load_commentary_file(tmp_path / "nao_existe.json", fb)
     assert TEMPLATE_PROVENANCE in md and "ausente" in issues[0]
     wrong_mind = tmp_path / "mind.json"
-    wrong_mind.write_text(json.dumps(commentary_payload(mind="outro")), encoding="utf-8")
+    wrong_mind.write_text(json.dumps(commentary_payload(mind="desconhecida")),
+                          encoding="utf-8")
     _, issues = load_commentary_file(wrong_mind, fb)
     assert any("mind" in i for i in issues)
 

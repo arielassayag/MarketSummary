@@ -40,6 +40,7 @@ from ..hashing import sha256_file
 from ..research.commentary import slug
 from ..research.factbook import NA_TEXT
 from ..research.pm_agent import MIND_VALUES, MindName
+from ..research.prompts import ESTILO_REGRAS
 from .tese_analise import (
     ROLE_PT,
     SIGNALS,
@@ -184,10 +185,12 @@ THESIS_RULES: tuple[str, ...] = (
     "hashes, rotinas nem nomes de modelos.",
     "Posições sem texto em posicoes recebem o texto automático do código: cobrir todas é o "
     "esperado.",
+    *ESTILO_REGRAS,
 )
 
 FIELD_GUIDE: tuple[tuple[str, str], ...] = (
-    ("mind, week", "mente ('claude-code' ou 'codex') e a semana da decisão (AAAA-MM-DD)"),
+    ("mind, week", "mente que escreveu a tese (" + ", ".join(f"'{m}'" for m in MIND_VALUES)
+     + ") e a semana da decisão (AAAA-MM-DD)"),
     ("titulo", f"manchete da tese, 10 a {MAX_TITULO}"),
     ("resumo", f"sumário executivo para o comitê (lista curta em Markdown), até {MAX_RESUMO}"),
     ("contexto", f"regime, postura de risco e por que o risco está onde está, até "

@@ -1,12 +1,16 @@
 """Agenda operacional do CDP — o que a rotina local deve fazer agora (determinístico).
 
 Usada pelas skills do plugin ``cdp`` (tarefas agendadas no PC local) e pelo ``cdp agenda``: pelo
-relógio de Brasília (independente do fuso do PC), diz se hoje é o primeiro pregão da semana na
-B3, se a decisão já foi gravada, se a janela de pesquisa abriu e se o prazo de 16h30 venceu, quais
-fechamentos diários estão pendentes (inclusive de dias em que o PC estava desligado ou dormindo),
-quais relatórios diários faltam publicar e quais semanas decididas ainda não têm a tese de
-investimento da carteira publicada (``acao: "tese"`` na semana corrente e ``teses_pendentes``).
-Só calendário e arquivos — nenhum número de mercado.
+relógio de Brasília (independente do fuso do PC), diz se hoje é o dia de montagem da semana (com
+``LAST_US_SESSION``, o último pregão da semana na NYSE), se a decisão já foi gravada, se a
+janela de pesquisa abriu e se o prazo EFETIVO venceu (``semanal.prazo_efetivo``: o teto local ou
+o fechamento mais cedo entre NYSE/B3/BMV menos a margem — 14h15 nos fechamentos antecipados dos
+EUA), quais mercados não negociam no dia, quais fechamentos diários estão pendentes (inclusive
+de dias em que o PC estava desligado ou dormindo), quais relatórios diários faltam publicar, se
+o relatório semanal de resultado da noite do dia de montagem está pendente
+(``relatorio_semanal``), se o retrato diário da cobertura está pendente (``cobertura``) e quais
+semanas decididas ainda não têm a tese de investimento da carteira publicada (``acao: "tese"``
+na semana corrente e ``teses_pendentes``). Só calendário e arquivos — nenhum número de mercado.
 
 Data de início do mandato (``fund.inception_date``): antes dela, com o livro vazio, a fase é
 ``"pre_inicio"`` (``semanal.acao = "aguardar"``; sem fechamentos, relatórios nem monitor de
@@ -23,7 +27,7 @@ from zoneinfo import ZoneInfo
 
 import pandas as pd
 
-from ..calendar import _cal, chave_da_semana, is_session, proximas_montagens
+from ..calendar import _cal, chave_da_semana, is_session, open_markets, proximas_montagens
 
 if TYPE_CHECKING:  # pragma: no cover
     from .runtime import Runtime
@@ -34,6 +38,10 @@ DAILY_EXCHANGES = ("BVMF", "XNYS", "XMEX")
 MAX_PENDING = 30
 #: Semanas decididas mais recentes examinadas em ``teses_pendentes``.
 THESIS_WEEKS = 4
+#: Gênese da cobertura (retrato do fechamento de quinta, véspera da carteira inaugural).
+COBERTURA_INICIO = date(2026, 10, 8)
+_WEEKDAYS_PT = ("segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira",
+                "sábado", "domingo")
 
 
 def _at(d: date, hhmm: str, tz: ZoneInfo) -> datetime:
@@ -120,21 +128,25 @@ def _weekly(rt: Runtime, local: datetime) -> dict[str, Any]:
     today = local.date()
     if rt.pre_inicio(today):
         inicio = cfg.fund.inception_date
-        return {"semana": inicio, "hoje_e_dia_de_rebalanceamento": False,
-                "inicio_pesquisa": cfg.fund.weekly_research_start_local,
-                "prazo_decisao": cfg.fund.decision_deadline_local,
-                "decisao_gravada": False, "briefing_preparado": False,
-                "entradas_escritas": {"research_pack.json": False, "pm_decision.json": False},
-                "tese_publicada": False, "acao": "aguardar",
-                "motivo": (f"pré-início: carteira inaugural em {inicio:%d/%m/%Y}, ao preço de "
-                           "fechamento")}
+        out = {"semana": inicio, "hoje_e_dia_de_rebalanceamento": False,
+               "inicio_pesquisa": cfg.fund.weekly_research_start_local,
+               "prazo_decisao": cfg.fund.decision_deadline_local,
+               "decisao_gravada": False, "briefing_preparado": False,
+               "entradas_escritas": {"research_pack.json": False, "pm_decision.json": False},
+               "tese_publicada": False, "acao": "aguardar",
+               "motivo": (f"pré-início: carteira inaugural em {inicio:%d/%m/%Y} "
+                          f"({_dia(inicio).split(',')[0]}), ao preço de fechamento")}
+        out.update(_janela_info(rt, inicio, local))
+        return out
     week = chave_da_semana(today, cfg)
     info: dict[str, Any] = {"semana": week, "hoje_e_dia_de_rebalanceamento": week == today,
                             "inicio_pesquisa": cfg.fund.weekly_research_start_local,
                             "prazo_decisao": cfg.fund.decision_deadline_local}
     if week is None:
-        info.update({"acao": "nenhuma", "motivo": "semana sem pregão na B3"})
+        info.update({"acao": "nenhuma", "motivo": "semana sem pregão no calendário de "
+                                                  "rebalanceamento"})
         return info
+    info.update(_janela_info(rt, week if week >= today else _proxima(rt, today), local))
     wd = rt.week_dir(week)
     decided = bool(rt.book.list_decisions(week))
     briefing = (wd / "briefing" / PREPARE_MANIFEST).exists()
@@ -148,7 +160,7 @@ def _weekly(rt: Runtime, local: datetime) -> dict[str, Any]:
                                 "ainda não foi publicada (cdp tese prepare → tese.json → "
                                 "validate-tese → tese publish)"}
     start = _at(today, cfg.fund.weekly_research_start_local, tz)
-    deadline = _at(today, cfg.fund.decision_deadline_local, tz)
+    deadline = rt.decision_deadline(today).astimezone(tz)
     # Sem carteira anterior (nenhuma semana decidida antes desta), a montagem é a carteira
     # inaugural — na data de início ou, se ela passou sem decisão, na próxima data de montagem.
     inaugural = week >= cfg.fund.inception_date and _sem_carteira(rt, week)
@@ -158,7 +170,7 @@ def _weekly(rt: Runtime, local: datetime) -> dict[str, Any]:
         info["acao"] = "nenhuma"
         if week > today:
             info["motivo"] = (f"a carteira inaugural é montada em {week}" if inaugural
-                              else f"o primeiro pregão desta semana é {week}")
+                              else f"a montagem desta semana é {_dia(week)}")
         elif needs_thesis:
             info.update(pending_thesis)
         elif decided:
@@ -176,7 +188,7 @@ def _weekly(rt: Runtime, local: datetime) -> dict[str, Any]:
         info.update({"acao": "nenhuma", "motivo": "decisão da semana já gravada"})
     elif local >= deadline:
         info.update({"acao": "prazo_vencido", "decisao_perdida": True,
-                     "motivo": (f"prazo de {cfg.fund.decision_deadline_local} vencido sem "
+                     "motivo": (f"prazo efetivo de {deadline:%H:%M} vencido sem "
                                 "decisão: NÃO decidir (o fechamento seria conhecido); "
                                 + ("carteira inaugural não montada, " if inaugural else "")
                                 + mantida)})
@@ -188,10 +200,135 @@ def _weekly(rt: Runtime, local: datetime) -> dict[str, Any]:
                  "pesquisa" if not all(inputs.values()) else "validar_e_decidir")
         info.update({"acao": "montar", "etapa": etapa,
                      "motivo": ("carteira inaugural, dentro da janela de decisão" if inaugural
-                                else "primeiro pregão da semana, dentro da janela de decisão")})
+                                else "dia de montagem da semana, dentro da janela de decisão")})
     if inaugural:
         info["carteira_inaugural"] = True
     return info
+
+
+def _dia(d: date) -> str:
+    return f"{_WEEKDAYS_PT[d.weekday()]}, {d:%d/%m}"
+
+
+def _proxima(rt: Runtime, today: date) -> date:
+    for d in proximas_montagens(today, rt.cfg):
+        return d
+    return today  # pragma: no cover - calendário sem pregão por semanas
+
+
+def _janela_info(rt: Runtime, dia: date, local: datetime) -> dict[str, Any]:
+    """Prazo efetivo, mercados fechados e fechamento antecipado do dia de montagem ``dia``."""
+    cfg = rt.cfg
+    tz = ZoneInfo(cfg.fund.timezone)
+    deadline = rt.decision_deadline(dia).astimezone(tz)
+    out: dict[str, Any] = {
+        "proximo_rebalanceamento": dia, "prazo_efetivo": deadline,
+        "mercados_fechados": sorted(m for m, ok in open_markets(dia).items() if not ok),
+        "fechamento_antecipado": False, "mercados_fechamento_antecipado": [],
+    }
+    if cfg.execution is not None:
+        from ..portfolio.execucao import MIC_NOME, janela_execucao, mics_antecipados
+
+        j = janela_execucao(dia, cfg)
+        # Sinal do dia: NYSE, B3 ou BMV fecham mais cedo (definem o prazo); fechamentos
+        # antecipados de outros mercados só reduzem a capacidade deles.
+        out["fechamento_antecipado"] = j.fechamento_antecipado
+        out["mercados_fechamento_antecipado"] = sorted(MIC_NOME.get(m, m)
+                                                       for m in mics_antecipados(j, cfg))
+    if dia == local.date():
+        out["minutos_ate_o_prazo"] = int((deadline - local).total_seconds() // 60)
+    return out
+
+
+#: Dias de montagem mais recentes examinados no relatório semanal pendente.
+WEEKLY_REPORT_LOOKBACK = 8
+
+
+def weekly_report_status(rt: Runtime, local: datetime) -> dict[str, Any]:
+    """Relatório semanal de resultado (noite de TODO dia de montagem da regra, com ou sem
+    decisão gravada — sem decisão, a carteira foi mantida e o relatório traz resultado,
+    atribuição e risco da semana).
+
+    Pendente quando algum dos dias de montagem mais recentes até hoje já tem o registro diário
+    do fechamento e ainda não tem ``reports/semanal/<data>/relatorio.md``; ``pendentes`` lista
+    todos (do mais antigo ao mais recente) e ``data`` é o mais antigo — nenhum relatório fica
+    para trás quando o seguinte é decidido. Só com a seção ``execution`` no mandato (o
+    relatório semanal pertence à execução no fechamento; na regra anterior nada é pendente)."""
+    from .relatorio_semanal import dia_de_relatorio, report_dir
+
+    out: dict[str, Any] = {"pendente": False, "data": None, "pendentes": []}
+    if rt.cfg.execution is None:
+        out["motivo"] = "relatório semanal de resultado ativado com a seção execution do mandato"
+        return out
+    try:
+        dates = [d for d in rt.track().dates() if d <= local.date()]
+        dias = [d for d in dates if dia_de_relatorio(rt, d)][-WEEKLY_REPORT_LOOKBACK:]
+    except OSError:  # pragma: no cover - disco
+        return out
+    if not dias:
+        return out
+    pend = [d for d in dias if not (report_dir(rt, d) / "relatorio.md").exists()]
+    w = pend[0] if pend else dias[-1]
+    folder = report_dir(rt, w)
+    out.update({"data": w, "registro_do_fechamento": True,
+                "publicado": (folder / "relatorio.md").exists(),
+                "decisao_gravada": bool(rt.book.list_decisions(w)),
+                "fatos": (folder / "fatos.md").exists(),
+                "comentario_escrito": (folder / "comentario.json").exists(),
+                "pendentes": pend})
+    out["pendente"] = bool(pend)
+    if out["pendente"]:
+        out["passos"] = (f"cdp weekly close-report --date {w} → comentario.json → "
+                         f"cdp validate-weekly-report --date {w} → "
+                         f"cdp weekly close-report --date {w} --publish")
+    return out
+
+
+def coverage_status(rt: Runtime, local: datetime) -> dict[str, Any]:
+    """Retrato diário da cobertura: pendente em dia útil ≥ 08/10/2026 (gênese: fechamento de
+    quinta) depois do horário da rotina diária, quando não há retrato da data e o comando
+    ``cdp cobertura run`` está disponível nesta versão."""
+    cfg = rt.cfg
+    tz = ZoneInfo(cfg.fund.timezone)
+    out: dict[str, Any] = {"snapshot_pendente": False, "data": None}
+    try:
+        import inspect
+
+        from ..cobertura import cli as cob_cli
+        from ..cobertura.livro import datas_snapshots
+
+        if "NotImplementedError" in inspect.getsource(cob_cli.cmd_run) or \
+                "em implementação" in inspect.getsource(cob_cli.cmd_run):
+            raise ImportError("stub")
+    except (ImportError, OSError, TypeError):
+        out["motivo"] = "comando de cobertura indisponível nesta versão"
+        return out
+    today = local.date()
+    alvo: date | None = None
+    d = today
+    for _ in range(10):
+        if d < COBERTURA_INICIO:
+            break
+        if is_close_session(d) and (d < today or local >= _at(today,
+                                                               cfg.fund.daily_close_run_local,
+                                                               tz)):
+            alvo = d
+            break
+        d -= timedelta(days=1)
+    if alvo is None:
+        out["motivo"] = (f"antes da gênese da cobertura ({COBERTURA_INICIO:%d/%m/%Y}, após o "
+                         "fechamento)" if today <= COBERTURA_INICIO else
+                         "nenhum pregão encerrado desde o último retrato")
+        return out
+    try:
+        feitos = set(datas_snapshots(rt.book_root))
+    except OSError:  # pragma: no cover - disco
+        feitos = set()
+    out["data"] = alvo
+    out["snapshot_pendente"] = alvo not in feitos
+    if out["snapshot_pendente"]:
+        out["passo"] = f"cdp cobertura run --date {alvo}"
+    return out
 
 
 def pending_theses(rt: Runtime, limit: int = THESIS_WEEKS) -> list[date]:
@@ -216,14 +353,19 @@ def _next_events(rt: Runtime, local: datetime, weekly: dict[str, Any]) -> list[d
     # Antes da data de início, nenhum dia de montagem anterior a ela (mesmo se a data de início
     # estiver a mais de uma semana).
     for first in proximas_montagens(cfg.fund.inception_date if pre else today, cfg):
-        deadline = _at(first, cfg.fund.decision_deadline_local, tz)
+        deadline = rt.decision_deadline(first).astimezone(tz)
         if first == today and (weekly.get("decisao_gravada") or deadline <= local):
             continue
         inaugural = first >= cfg.fund.inception_date and _sem_carteira(rt, first)
         events.append({"evento": ("carteira inaugural (decisão autônoma)" if inaugural
                                   else "decisão semanal (autônoma)"), "quando": deadline,
                        "nota": f"pesquisa a partir de {cfg.fund.weekly_research_start_local}; "
-                               "execução no fechamento (MOC)"})
+                               "execução no leilão de fechamento (MOC)"})
+        run = _at(first, cfg.fund.daily_close_run_local, tz)
+        if cfg.execution is not None and run > local:
+            events.append({"evento": "relatório semanal de resultado", "quando": run,
+                           "nota": "mudanças da carteira, resultado e atribuição da semana e "
+                                   "desde o início"})
         break
     start = cfg.fund.inception_date if pre else today
     for k in range(0, 15):
@@ -274,6 +416,8 @@ def agenda(rt: Runtime, now: datetime | None = None) -> dict[str, Any]:
         "fechamentos_pendentes_excedem_limite": len(closes) > MAX_PENDING,
         "horario_fechamento_diario": cfg.fund.daily_close_run_local,
         "publicacoes_pendentes": pubs,
+        "relatorio_semanal": weekly_report_status(rt, local),
+        "cobertura": coverage_status(rt, local),
         "teses_pendentes": pending_theses(rt),
         "proximos_eventos": _next_events(rt, local, weekly),
     }
@@ -293,5 +437,7 @@ def validate_daily_commentary(rt: Runtime, session: date) -> tuple[bool, list[st
     return not issues, list(issues)
 
 
-__all__ = ["DAILY_EXCHANGES", "agenda", "b3_open_at", "is_close_session", "pending_closes",
-           "pending_publications", "pending_theses", "validate_daily_commentary"]
+__all__ = ["COBERTURA_INICIO", "DAILY_EXCHANGES", "WEEKLY_REPORT_LOOKBACK", "agenda",
+           "b3_open_at", "coverage_status",
+           "is_close_session", "pending_closes", "pending_publications", "pending_theses",
+           "validate_daily_commentary", "weekly_report_status"]

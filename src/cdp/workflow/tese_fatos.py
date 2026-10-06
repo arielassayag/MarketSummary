@@ -147,16 +147,49 @@ def _portfolio_facts(b: _Facts, a: Mapping[str, Any], ti: ThesisInputs) -> None:
     b.add("tese.vol", "Volatilidade ex-ante anual", s["vol"], "pct", src)
     b.add("tese.vol_fatorial", "Volatilidade fatorial ex-ante", s["factor_vol"], "pct", src)
     b.add("tese.vol_especifica", "Volatilidade específica ex-ante", s["specific_vol"], "pct", src)
-    b.add("tese.risco_fatorial", "Participação fatorial na variância", s["factor_share"], "pct",
-          src)
-    # Complemento da participação fatorial GRAVADA: as duas sempre somam 100% (o recálculo
-    # por grupo pode faltar, ex.: mandato recalibrado depois da decisão).
-    fs = s["factor_share"]
-    b.add("tese.risco_especifico", "Participação específica na variância",
-          None if fs is None else 1.0 - fs, "pct",
-          "1 − participação fatorial gravada (variância específica / total)")
+    risco = (ti.proposal.overrides.get("risco")
+             if isinstance(ti.proposal.overrides, dict) else None)
+    from ..risk.idio import base_vinculante
+
+    basis = base_vinculante(risco)
+    if basis is not None:
+        # Mesma base dos gates (κ_F no bloco fatorial), no modelo que vincula (menor fatia
+        # idiossincrática entre decisão e base) — a mesma base do limite comparado.
+        rot = basis["rotulo"]
+        bsrc = (f"decisão aprovada (overrides.risco gravado; {rot}, κ_F no bloco fatorial)")
+        b.add("tese.risco_fatorial", f"Participação fatorial na variância ({rot}, com κ_F)",
+              basis["fatorial"], "pct", bsrc)
+        b.add("tese.risco_especifico", f"Participação específica na variância ({rot}, com κ_F)",
+              basis["idio"], "pct", bsrc)
+    else:
+        b.add("tese.risco_fatorial", "Participação fatorial na variância", s["factor_share"],
+              "pct", src)
+        # Complemento da participação fatorial GRAVADA: as duas sempre somam 100% (o recálculo
+        # por grupo pode faltar, ex.: mandato recalibrado depois da decisão).
+        fs = s["factor_share"]
+        b.add("tese.risco_especifico", "Participação específica na variância",
+              None if fs is None else 1.0 - fs, "pct",
+              "1 − participação fatorial gravada (variância específica / total)")
     b.add("tese.fator_limite", "Participação fatorial máxima do mandato",
-          rk.max_factor_risk_share, "pct", "risk.max_factor_risk_share")
+          rk.max_factor_risk_share, "pct", "risk.max_factor_risk_share"
+          + (" (com κ_F, em cada modelo do gate)" if basis is not None else ""))
+    if isinstance(risco, dict):
+        # Medida idiossincrática gravada na decisão (κ_F no bloco fatorial; gate duplo).
+        rsrc = "decisão aprovada (overrides.risco gravado)"
+        kap = risco.get("kappa_f") if isinstance(risco.get("kappa_f"), dict) else {}
+        grupos = risco.get("por_grupo") if isinstance(risco.get("por_grupo"), dict) else {}
+        b.add("tese.risco_idio_decisao", "Fatia idiossincrática da variância (modelo de decisão)",
+              risco.get("idio_decisao"), "pct", rsrc)
+        b.add("tese.risco_idio_base", "Fatia idiossincrática da variância (modelo base)",
+              risco.get("idio_base"), "pct", rsrc)
+        b.add("tese.risco_idio_meta", "Meta da fatia idiossincrática", risco.get("meta_idio"),
+              "pct", "risk.idio_share_goal")
+        b.add("tese.risco_idio_piso", "Piso da fatia idiossincrática", risco.get("piso_idio"),
+              "pct", "risk.idio_share_floor")
+        b.add("tese.kappa_f", "Inflação de 2ª ordem do risco fatorial (κ_F)", kap.get("valor"),
+              "ratio", rsrc, digits=2)
+        b.add("tese.risco_macro", "Participação do bloco macro na variância",
+              grupos.get("macro"), "pct", rsrc)
     vb = {r["step"]: r["value"] for r in n["vol_budget"]}
     for step, fid, name in (("mandato", "tese.vol_meta_mandato", "Meta de vol do mandato"),
                             ("postura", "tese.vol_meta_postura", "Meta de vol da postura"),

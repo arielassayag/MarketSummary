@@ -1,8 +1,10 @@
 # CDP no PC local — tarefas agendadas do Claude Code (plugin `cdp`)
 
 Este guia põe o CDP — Cabra da Peste para rodar sozinho no seu computador: montagem semanal da
-carteira com a tese de investimento, monitor de risco durante o pregão, fechamento diário com
-comentário e relatório, checagem de saúde e calibração mensal. Tudo roda como **tarefas agendadas locais** do app desktop do Claude
+carteira com a tese de investimento (último pregão da semana na NYSE, execução no leilão de
+fechamento), monitor de risco durante o pregão, fechamento diário com o comentário do resultado,
+relatório semanal com atribuição, notas de pesquisa por emissor, checagem de saúde e calibração
+mensal. Tudo roda como **tarefas agendadas locais** do app desktop do Claude
 Code, cada uma chamando uma **skill do plugin `cdp`** que vive neste repositório.
 
 A metodologia e os roteiros continuam perenes e independentes do harness
@@ -20,21 +22,22 @@ permissão **Accept edits** ("Aceitar edições").
 | Tarefa (nome) | Agenda | Instruções | O que faz |
 |---|---|---|---|
 | `cdp-status` | segundas, 08:30 | `/cdp:status` | saúde: integridade da trilha, pendências, próximos eventos, git (só leitura) |
-| `cdp-semanal` | dias úteis, 11:07 | `/cdp:semanal` | só no dia de montagem (data de início do mandato ou regra semanal): coleta, pesquisa, decisão do PM, validação, decisão autônoma até 16:30, tese de investimento da carteira decidida, commit e push |
-| `cdp-semanal-b` | dias úteis, 12:37 | `/cdp:semanal` | reserva: se a montagem não começou ou parou no meio, retoma da etapa em que parou; com a decisão gravada e a tese pendente, só escreve a tese; com as duas gravadas, sai sem fazer nada |
+| `cdp-semanal` | dias úteis, 11:07 | `/cdp:semanal` | só no dia de montagem (data de início do mandato ou último pregão da semana na NYSE): coleta, pesquisa, decisão do PM, validação, decisão autônoma antes do prazo efetivo (15:00; mais cedo nos fechamentos antecipados dos EUA), tese de investimento da carteira decidida, commit e push |
+| `cdp-semanal-b` | dias úteis, 12:07 | `/cdp:semanal` | reserva: se a montagem não começou ou parou no meio, retoma da etapa em que parou; com a decisão gravada e a tese pendente, só escreve a tese; com as duas gravadas, sai sem fazer nada |
+| `cdp-semanal-c` | dias úteis, 13:07 | `/cdp:semanal` | reserva (idem) |
 | `cdp-risco-1330` | dias úteis, 13:30 | `/cdp:risco` | monitor de risco intradiário (`cdp risk --live`); liga o kill switch só se o código mandar |
-| `cdp-semanal-c` | dias úteis, 14:07 | `/cdp:semanal` | reserva (idem) |
-| `cdp-semanal-d` | dias úteis, 15:07 | `/cdp:semanal` | reserva (idem; com menos de 60 minutos de prazo a skill encurta a pesquisa) |
+| `cdp-semanal-d` | dias úteis, 14:07 | `/cdp:semanal` | reserva (idem; com menos de 60 minutos de prazo a skill encurta a pesquisa) |
 | `cdp-risco-1600` | dias úteis, 16:00 | `/cdp:risco` | idem, perto do fechamento |
-| `cdp-diario` | dias úteis, 19:22 | `/cdp:diario` | fechamento oficial (execução MOC da semana, marcação, risco, atribuição, registro), comentário, relatório, commit e push; recupera pregões perdidos e a tese da semana corrente, se ficou pendente |
+| `cdp-diario` | dias úteis, 19:22 | `/cdp:diario` | fechamento oficial (execução no leilão de fechamento no dia de montagem, marcação, risco, atribuição, registro), comentário do resultado do dia, relatório, commit e push; na noite do dia de montagem, o relatório semanal (mudanças da carteira, resultado e atribuição da semana e desde o início); o retrato da cobertura quando pendente; recupera pregões perdidos e a tese da semana corrente, se ficou pendente |
 | `cdp-diario-reforco` | dias úteis, 21:07 | `/cdp:diario` | segunda tentativa se a fonte ainda não tinha publicado o fechamento às 19:22 ou se a das 19:22 foi pulada (sem pendência ⇒ não faz nada) |
+| `cdp-cobertura` | segunda a quinta, 21:30 | `/cdp:cobertura` | notas de pesquisa por emissor (até 12 por execução, na fila do código), só com fontes públicas e os fatos do modelo aberto da cobertura; commit e push |
 | `cdp-calibracao` | mensal, dia 1, 09:15 | `/cdp:calibracao` | backtest com todo o histórico em `reports/backtest/<data>/mensal`, comparação com a execução anterior; nunca muda o mandato |
 
 **Por que as reservas.** O app roda **uma tarefa por vez**: um disparo que encontra outra tarefa em
 andamento (ou o PC dormindo) é **pulado**, não enfileirado, e ao acordar cada tarefa ganha só uma
 execução de recuperação. Uma única tarefa semanal perderia a semana inteira se, por exemplo, a
-recuperação do fechamento de sexta ainda estivesse rodando às 11:07 de segunda, ou se a coleta
-falhasse por um erro de rede passageiro. As reservas são idempotentes (o `cdp agenda` diz se ainda
+recuperação de um fechamento pendente ainda estivesse rodando às 11:07 do dia de montagem, ou se
+a coleta falhasse por um erro de rede passageiro. As reservas são idempotentes (o `cdp agenda` diz se ainda
 há o que fazer); nos outros dias úteis elas só conferem a agenda e saem. Mantenha as reservas em
 todos os dias úteis: o dia de montagem segue a regra semanal do mandato e a data de início (a
 carteira inaugural) pode cair em qualquer dia da semana.
@@ -46,8 +49,18 @@ inaugural, ao preço de fechamento). Com `reinicio.pendente: true`, a rotina di�
 `cdp reinicio --executar` antes de qualquer outra etapa (uma vez; detalhes em
 `docs/cdp/ROTINAS.md`).
 
-Skills do plugin (`plugins/cdp/skills/`): `semanal`, `diario`, `risco`, `status`, `calibracao`,
-invocadas como `/cdp:<nome>`. As que gravam algo (`semanal`, `diario`, `risco`, `calibracao`)
+**Sexta-feira (dia de montagem).** 11:07: coleta de todos os dados até o momento, pesquisa e
+decisão antes do prazo efetivo (reservas às 12:07, 13:07 e 14:07); leilão de fechamento: execução
+hipotética da carteira nova, linha a linha, limitada à capacidade do leilão; 19:22 (reforço às
+21:07): registro do fechamento, comentário do resultado do dia, relatório semanal com o
+comentário das mudanças da carteira e a atribuição da semana e desde o início, e o retrato da
+cobertura. De segunda a quinta, às 21:30, as notas de pesquisa por emissor. Com o fim do horário
+de verão nos EUA (02/11/2026), NYSE e B3 passam a fechar às 18:00 de Brasília: os horários das
+rotinas continuam válidos.
+
+Skills do plugin (`plugins/cdp/skills/`): `semanal`, `diario`, `cobertura`, `risco`, `status`,
+`calibracao`, invocadas como `/cdp:<nome>`. As que gravam algo (`semanal`, `diario`, `cobertura`,
+`risco`, `calibracao`)
 terminam atualizando o **painel de gestão** (investimento e risco, para investidores e comitê de
 investimento) e, quando possível, republicando-o no mesmo artifact (seção 10); `status` só
 informa o link.
@@ -145,9 +158,9 @@ atualize com `claude plugin marketplace update cdp-cabra-da-peste` e
 `tests/cdp/test_plugin.py` confere a versão contra um resumo das skills).
 Para validar os manifestos: `claude plugin validate .`
 
-As skills antigas do projeto (`.claude/skills/cdp-semanal` e `cdp-diario`) agora são atalhos: com
-o plugin instalado, delegam para `cdp:semanal`/`cdp:diario`; sem ele (nuvem, Codex), seguem os
-roteiros em `docs/cdp/playbooks/`.
+As skills do projeto (`.claude/skills/cdp-semanal`, `cdp-diario` e `cdp-cobertura`) são atalhos:
+com o plugin instalado, delegam para `cdp:semanal`/`cdp:diario`/`cdp:cobertura`; sem ele (nuvem,
+Codex, outro harness), seguem os roteiros em `docs/cdp/playbooks/`.
 
 ## 5. Permissões para rodar sem supervisão
 
@@ -158,14 +171,18 @@ O arquivo versionado `.claude/settings.json` define o que as rotinas podem fazer
   (`status`, `pull`, `fetch`, `log`, `diff`, `add`, `commit`, `push`, `branch --show-current`),
   WebSearch, WebFetch, as skills do plugin, e escrever só os arquivos da mente
   (`book/<semana>/inputs/research_pack.json`, `pm_decision.json`,
-  `book/<semana>/tese/tese.json`, `reports/daily/<data>/comentario.json`, `reports/backtest/**`,
-  `outputs/**`) e o link do painel (`artifacts/painel/ARTIFACT_URL`).
+  `book/<semana>/tese/tese.json`, `reports/daily/<data>/comentario.json`,
+  `reports/semanal/<data>/comentario.json`, `book/cobertura/notas/<IID>/<data>/nota.json`,
+  `reports/backtest/**`, `outputs/**`) e o link do painel (`artifacts/painel/ARTIFACT_URL`).
 - **Sempre pergunta**: editar `configs/` (mandato) e `data/`, `git reset --hard`, `rebase`,
   `clean`, `restore`, `checkout --`.
 - **Nunca**: `git push --force` (em qualquer forma), `rm -rf`, apagar `book/` ou `data/`,
   **desligar o kill switch**, editar arquivos gravados pelo código (trilha de auditoria, track
-  record, decisões, propostas, briefing, base de mercado, relatórios publicados, fatos, análises e
-  tese publicada em `book/<semana>/tese/`, HTML do painel).
+  record, decisões, propostas, briefing, base de mercado e dados públicos arquivados, relatórios
+  publicados, fatos, análises e tese publicada em `book/<semana>/tese/`, livro, snapshots e
+  modelos da cobertura, fatos e notas publicadas em `book/cobertura/notas/`, HTML do painel).
+  Nenhuma regra de bloqueio cobre uma pasta inteira que contenha um arquivo da mente (o bloqueio
+  venceria a permissão).
 - `defaultMode: acceptEdits` e `PYTHONUTF8=1` (acentos corretos no Windows).
 
 Cada skill também declara no próprio `SKILL.md` (`allowed-tools`) as ferramentas que usa —
@@ -236,9 +253,11 @@ A skill `status` avisa quando o PC não está no fuso de Brasília.
   - `diario` processa **todos** os pregões pendentes, em ordem (`cdp agenda` →
     `fechamentos_pendentes`), com o comentário de cada data. Para recuperar à mão, rode
     `/cdp:diario` numa sessão na pasta do repositório (ou `/cdp:diario AAAA-MM-DD` para uma data).
-  - `semanal` só decide no primeiro pregão da semana **até 16:30**. Depois disso (ou em outro
-    dia), não decide: a carteira anterior é mantida até a semana seguinte e o `status` destaca a
-    decisão perdida. O código não permite decidir fora do primeiro pregão (seria look-ahead).
+  - `semanal` só decide no dia de montagem (último pregão da semana na NYSE) **antes do prazo
+    efetivo** (`semanal.prazo_efetivo`, em geral 15:00). Depois disso (ou em outro dia), não
+    decide: a carteira anterior é mantida até a semana seguinte e o `status` destaca a decisão
+    perdida. O código não permite decidir fora do dia de montagem nem depois do prazo (seria
+    look-ahead).
     Se a execução parou depois da decisão, sem publicar a tese de investimento, `cdp agenda`
     devolve `semanal.acao: "tese"` e a reserva seguinte só escreve a tese; se nenhuma reserva
     rodar, o `diario` do dia conclui a tese da semana corrente (`teses_pendentes`). Uma tese
@@ -253,8 +272,10 @@ A skill `status` avisa quando o PC não está no fuso de Brasília.
 - Cada disparo gera uma notificação do desktop e uma sessão na seção **Scheduled** da barra
   lateral; a resposta final de cada skill é um resumo curto (números copiados dos relatórios).
   No histórico da tarefa, passe o mouse sobre uma execução pulada para ver o motivo.
-- Relatórios: `reports/weekly/<semana>/relatorio.md`, `reports/daily/<data>/relatorio.md`,
-  `reports/risk/<data>/risco_<HHMM>.md`, `reports/backtest/<data>/`. Tese de investimento da
+- Relatórios: `reports/weekly/<semana>/relatorio.md` (decisão), `reports/semanal/<data>/relatorio.md`
+  (resultado semanal), `reports/daily/<data>/relatorio.md`, `reports/risk/<data>/risco_<HHMM>.md`,
+  `reports/backtest/<data>/`. Notas de pesquisa: `book/cobertura/notas/<IID>/<data>/nota.md`
+  (`docs/cdp/NOTAS.md`). Tese de investimento da
   semana: `book/<semana>/tese/tese.md` (regras em `docs/cdp/TESE.md`).
 - Painel publicado (artifact): seção 10. App local completo (Streamlit):
   `uv run streamlit run cdp_app.py --server.address 127.0.0.1`.
@@ -397,7 +418,7 @@ interface com `claude -p "/cdp:<skill>" --permission-mode acceptEdits`, gravando
 `logs/cdp/<tarefa>_<data_hora>.log` (pasta ignorada pelo git). Use **uma** das duas formas (app ou
 agendador do sistema), nunca as duas.
 
-- Trava contra execuções simultâneas: `semanal` e `diario` esperam até 60 minutos
+- Trava contra execuções simultâneas: `semanal`, `diario` e `cobertura` esperam até 60 minutos
   (`CDP_LOCK_WAIT_MIN`) que a rotina em andamento termine; as outras não esperam. Se a trava
   continuar ocupada, o script sai com código 75 (o agendador mostra a execução como não
   concluída) e não roda a skill.
@@ -419,13 +440,14 @@ os pregões pendentes.
 CRON_TZ=America/Sao_Paulo
 30 8 * * 1    /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh status
 7 11 * * 1-5  /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh semanal
-37 12 * * 1-5 /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh semanal
+7 12 * * 1-5  /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh semanal
+7 13 * * 1-5  /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh semanal
 30 13 * * 1-5 /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh risco
 7 14 * * 1-5  /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh semanal
-7 15 * * 1-5  /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh semanal
 0 16 * * 1-5  /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh risco
 22 19 * * 1-5 /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh diario
 7 21 * * 1-5  /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh diario
+30 21 * * 1-4 /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh cobertura
 15 9 1 * *    /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh calibracao
 ```
 
@@ -478,13 +500,14 @@ function Add-CdpTask([string]$name, [string]$task, [string[]]$days, [string]$at)
 }
 Add-CdpTask "status"     "status"  @("Monday") "08:30"
 Add-CdpTask "semanal"    "semanal" $weekdays "11:07"
-Add-CdpTask "semanal-b"  "semanal" $weekdays "12:37"
+Add-CdpTask "semanal-b"  "semanal" $weekdays "12:07"
+Add-CdpTask "semanal-c"  "semanal" $weekdays "13:07"
 Add-CdpTask "risco1330"  "risco"   $weekdays "13:30"
-Add-CdpTask "semanal-c"  "semanal" $weekdays "14:07"
-Add-CdpTask "semanal-d"  "semanal" $weekdays "15:07"
+Add-CdpTask "semanal-d"  "semanal" $weekdays "14:07"
 Add-CdpTask "risco1600"  "risco"   $weekdays "16:00"
 Add-CdpTask "diario"     "diario"  $weekdays "19:22"
 Add-CdpTask "diario2107" "diario"  $weekdays "21:07"
+Add-CdpTask "cobertura"  "cobertura" @("Monday", "Tuesday", "Wednesday", "Thursday") "21:30"
 ```
 
 A calibração mensal precisa do `schtasks` (o `New-ScheduledTaskTrigger` não tem gatilho mensal).
@@ -499,13 +522,24 @@ Set-ScheduledTask -TaskPath "\CDP\" -TaskName "calibracao" -Settings $settings |
 Confira com `Get-ScheduledTask -TaskPath "\CDP\"`; o resultado de cada execução aparece em "Último
 resultado" (75 = não iniciada porque outra rotina estava rodando) e no log em `logs\cdp\`.
 
-## 13. Codex como mente
+## 13. Codex ou qualquer assistente como mente
 
 O Codex lê `AGENTS.md` e segue a mesma metodologia e os mesmos roteiros. Os passos das skills em
 `plugins/cdp/skills/<skill>/SKILL.md` valem para ele trocando `claude-code` por `codex` (use
 `--mind codex` na CLI e `"mind": "codex"` nos JSON). Para agendar, use o agendador do sistema com o modo não
 interativo do Codex CLI (consulte a documentação do Codex para as flags) e um texto como os de
 `docs/cdp/ROTINAS.md`. Não ligue as duas mentes no mesmo livro ao mesmo tempo.
+
+Sem harness com acesso ao repositório, qualquer passo da mente (pesquisa, decisão do PM, tese,
+nota por emissor, comentários diário e semanal) pode ser feito em qualquer assistente — ChatGPT,
+Gemini, Claude ou outro: `cdp mente pacote` exporta um único markdown autocontido (papel, regras,
+guia de estilo, fatos do código, schema, esqueleto e o comando exato de validação), a pessoa cola
+no assistente, salva o JSON devolvido no caminho indicado e valida com a CLI
+(`--mind chatgpt`, `gemini` ou `outro`; detalhes em `docs/cdp/REPRODUZIR.md`):
+
+```sh
+uv run python -m cdp mente pacote --etapa tese --semana AAAA-MM-DD --mente chatgpt --saida /tmp/pacote_tese.md
+```
 
 ## 14. Solução de problemas
 
@@ -523,7 +557,7 @@ interativo do Codex CLI (consulte a documentação do Codex para as flags) e um 
 | Acentos estranhos / `UnicodeEncodeError` no Windows | `PYTHONUTF8=1` (já no `.claude/settings.json` e nos scripts); para o terminal, `chcp 65001` |
 | `uv`/`claude` não encontrados no agendador do sistema | PATH mínimo do cron/launchd/Agendador: use caminhos absolutos ou ajuste `CDP_CLAUDE_BIN`; os scripts já incluem `~/.local/bin`; o erro fica no log |
 | Execução marcada como "skipped" no app | o PC dormia, a execução anterior ainda rodava ou outra tarefa estava em andamento (ex.: risco das 16:00 durante a montagem semanal); as reservas da semanal e o reforço do diário cobrem os casos importantes |
-| Decisão da semana perdida | o PC estava desligado entre 11:00 e 16:30 do primeiro pregão; a carteira anterior segue até a próxima semana |
+| Decisão da semana perdida | o PC estava desligado entre 11:00 e o prazo efetivo (em geral 15:00) do dia de montagem; a carteira anterior segue até a próxima semana |
 | Tese da semana ausente ou "Narrativa automática" no painel | a rotina semanal parou entre a decisão e a tese, ou `tese.json` não passou no `validate-tese` (o código publicou o template, `autoria: "codigo"`). A tese publicada é imutável; uma pendente é concluída pela reserva seguinte (`semanal.acao: "tese"`) ou pelo `diario`. Escrita em outro clone (desenvolvimento): entregue em `docs/cdp/teses/<semana>.json`, nunca em `book/` (a sincronização de todas as rotinas pararia). À mão, numa sessão no próprio clone das rotinas: `uv run python -m cdp tese prepare --week AAAA-MM-DD`, escreva `book/<semana>/tese/tese.json`, `uv run python -m cdp validate-tese --week AAAA-MM-DD` e `uv run python -m cdp tese publish --week AAAA-MM-DD` (ver `docs/cdp/TESE.md`) |
 | "painel não republicado" no resumo | `artifact.publicavel: false` (dados grandes demais para a leitura integral), `artifacts/painel/ARTIFACT_URL` ausente, sem a ferramenta `Artifact` na sessão (ex.: `claude -p`, Codex) ou recusa da ferramenta; os arquivos commitados valem. Para publicar à mão: abra uma sessão na pasta e rode `uv run python -m cdp painel` e peça "republique o painel no artifact de artifacts/painel/ARTIFACT_URL seguindo artifact.publicar" |
 | Painel mostra "Não foi possível carregar os dados do fundo" (no console do navegador: "Não foi possível carregar data.json") | a página foi publicada sem o `data.json` ao lado: rode `uv run python -m cdp painel` e republique com `files: {"data.json": "artifacts/painel/data.json"}` no mesmo artifact; offline, abra `artifacts/painel/cdp_painel_local.html` |

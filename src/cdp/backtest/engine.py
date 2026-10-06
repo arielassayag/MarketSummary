@@ -10,11 +10,14 @@ Regras point-in-time (sem look-ahead):
 - O painel é montado UMA vez com todo o histórico; elegibilidade, ADTV (por linha e por emissor),
   número de observações e defasagem de preço são recalculados em cada data de informação ``d``
   com dados ``<= d`` (``panel.assets['eligible']`` é do fim da amostra e NÃO é usado).
-- Rebalanceamento no PRIMEIRO pregão da semana da bolsa primária (``fund.primary_calendar``,
-  B3), como ao vivo: segunda-feira feriado na B3 ⇒ terça. Os pregões da B3 são inferidos dos
-  dados (dias com fechamento em ao menos metade das linhas locais listadas).
+- Rebalanceamento como ao vivo (``fund.rebalance_weekday``): com ``LAST_US_SESSION``, no ÚLTIMO
+  pregão da semana na NYSE (pregões inferidos das linhas listadas nos EUA) e com informação até
+  o pregão de dados anterior (calendário completo de preços); na regra legada, no PRIMEIRO
+  pregão da semana da bolsa primária (``fund.primary_calendar``, B3; segunda-feira feriado na B3
+  ⇒ terça), com informação até o pregão anterior da B3. Os pregões de cada bolsa são inferidos
+  dos dados (dias com fechamento em ao menos metade das linhas listadas do mercado).
 - ``RiskModelEstimator`` é ajustado uma vez; no rebalanceamento ``t`` usa-se ``model_at(d)``, em
-  que ``d`` é o pregão anterior da B3 (sexta). Sinais: ``compute_signals(..., as_of=d,
+  que ``d`` é a data de informação. Sinais: ``compute_signals(..., as_of=d,
   pit_only=True)``. Dados posteriores ao fim do backtest e barras provisórias (intradiárias) não
   entram.
 - Short interest, aluguel B3 e escore de squeeze são retratos atuais (não PIT): só valem as
@@ -256,24 +259,39 @@ class BacktestResult:
 # ==========================================================
 
 def rebalance_dates(calendar: pd.DatetimeIndex, start: date | pd.Timestamp,
-                    end: date | pd.Timestamp | None = None) -> pd.DatetimeIndex:
-    """Primeiro pregão de cada semana do ``calendar`` (segunda; feriado ⇒ próximo pregão).
+                    end: date | pd.Timestamp | None = None,
+                    rule: str = "first") -> pd.DatetimeIndex:
+    """Dia de rebalanceamento de cada semana do ``calendar``: o primeiro pregão (``rule="first"``,
+    segunda; feriado ⇒ próximo pregão) ou o último (``rule="last"``, sexta; feriado ⇒ pregão
+    anterior).
 
-    O motor passa os pregões da bolsa primária (:func:`primary_sessions`). Só entram semanas
-    cujo primeiro pregão está em ``[start, end]``: início no meio da semana passa para a semana
-    seguinte.
+    O motor passa os pregões da bolsa de rebalanceamento (:func:`primary_sessions`). Só entram
+    semanas cujo dia de rebalanceamento está em ``[start, end]``.
     """
+    if rule not in ("first", "last"):
+        raise ValueError(f"Regra de rebalanceamento desconhecida: {rule!r}")
     cal = pd.DatetimeIndex(calendar).sort_values().unique()
     if cal.empty:
         return pd.DatetimeIndex([], name="date")
-    firsts = pd.Series(cal, index=cal).groupby(cal.to_period("W-SUN")).min()
+    grp = pd.Series(cal, index=cal).groupby(cal.to_period("W-SUN"))
+    firsts = grp.min() if rule == "first" else grp.max()
     out = pd.DatetimeIndex(firsts.to_numpy())
     lo = pd.Timestamp(start)
     hi = pd.Timestamp(end) if end is not None else cal[-1]
     return pd.DatetimeIndex(out[(out >= lo) & (out <= hi)], name="date")
 
 
-def primary_sessions(md: MarketData, cfg: FundConfig) -> pd.DatetimeIndex:
+def rebalance_rule(cfg: FundConfig) -> tuple[str, str]:
+    """``(regra, calendário)`` do backtest: ``("last", XNYS)`` com ``LAST_US_SESSION``;
+    ``("first", fund.primary_calendar)`` na regra legada."""
+    if cfg.fund.rebalance_weekday == "LAST_US_SESSION":
+        code = cfg.execution.rebalance_calendar if cfg.execution is not None else "XNYS"
+        return "last", str(code)
+    return "first", str(cfg.fund.primary_calendar)
+
+
+def primary_sessions(md: MarketData, cfg: FundConfig,
+                     calendar_code: str | None = None) -> pd.DatetimeIndex:
     """Pregões da bolsa primária (``fund.primary_calendar``, B3) inferidos dos dados de preço.
 
     Uma data do calendário de preços é pregão quando ao menos ``SESSION_MIN_SHARE`` das linhas
@@ -282,7 +300,8 @@ def primary_sessions(md: MarketData, cfg: FundConfig) -> pd.DatetimeIndex:
     primário, seguem o calendário completo de preços (sem informação de feriado).
     """
     cal = pd.DatetimeIndex(md.close.index).sort_values()
-    market = PRIMARY_MARKET_BY_CALENDAR.get(str(cfg.fund.primary_calendar).upper())
+    code = calendar_code or str(cfg.fund.primary_calendar)
+    market = PRIMARY_MARKET_BY_CALENDAR.get(code.upper())
     lines = md.universe.lines
     if market is None or "market" not in lines.columns:
         return cal
@@ -423,7 +442,8 @@ def earliest_start(md: MarketData, cfg: FundConfig) -> date:
     if len(cal) <= need + 1:
         raise ValueError(f"Histórico curto demais para o backtest ({len(cal)} pregões; "
                          f"são necessários mais de {need + 1}).")
-    reb = rebalance_dates(primary_sessions(md, cfg), cal[need + 1])
+    rule, code = rebalance_rule(cfg)
+    reb = rebalance_dates(primary_sessions(md, cfg, code), cal[need + 1], rule=rule)
     if reb.empty:
         raise ValueError("Sem segunda-feira disponível após o histórico mínimo.")
     return reb[0].date()
@@ -880,11 +900,14 @@ def run_backtest(md: MarketData, cfg: FundConfig, bt: BacktestConfig,
     if upto.empty:
         raise ValueError(f"Fim do backtest {bt.end} anterior ao início dos dados.")
     end_ts = upto[-1]  # último pregão <= fim pedido
-    # Rebalanceamento no 1º pregão da semana da B3; informação até o pregão anterior da B3.
-    sessions = primary_sessions(md, cfg)
+    # Regra legada: 1º pregão da semana da B3, informação até o pregão anterior da B3.
+    # LAST_US_SESSION: último pregão da semana na NYSE, informação até o pregão de dados anterior.
+    rule, code = rebalance_rule(cfg)
+    sessions = primary_sessions(md, cfg, code)
+    info_cal = cal if rule == "last" else sessions
     info_pos: dict[pd.Timestamp, int] = {}
-    for t in rebalance_dates(sessions, bt.start, end_ts):
-        prev = sessions[sessions < t]
+    for t in rebalance_dates(sessions, bt.start, end_ts, rule=rule):
+        prev = info_cal[info_cal < t]
         if len(prev):
             info_pos[t] = int(cal.get_loc(prev[-1]))
     reb = pd.DatetimeIndex(sorted(info_pos), name="date")
@@ -1140,9 +1163,13 @@ def _standard_notes(cfg: FundConfig, bt: BacktestConfig, vol_target: float,
         "Capitalização histórica = ações atuais × preço histórico (não point-in-time): afeta "
         "pesos WLS do modelo, estilo size, beta de mercado e mínimo de market cap para short. "
         "O estilo value (B/P) também usa o patrimônio do retrato atual.",
-        "Calendário: rebalanceamento no 1º pregão da semana da B3 (segunda; feriado na B3 ⇒ "
-        "pregão seguinte), com dados até o pregão anterior da B3 — mesma regra do pipeline ao "
-        "vivo; o P&L diário segue o calendário completo (ADRs negociam em feriados locais).",
+        ("Calendário: rebalanceamento no último pregão da semana na NYSE (sexta; feriado nos "
+         "EUA ⇒ pregão anterior), com dados até o pregão de dados anterior — mesma regra do "
+         "pipeline ao vivo; o P&L diário segue o calendário completo (ADRs negociam em feriados "
+         "locais)." if rebalance_rule(cfg)[0] == "last" else
+         "Calendário: rebalanceamento no 1º pregão da semana da B3 (segunda; feriado na B3 ⇒ "
+         "pregão seguinte), com dados até o pregão anterior da B3 — mesma regra do pipeline ao "
+         "vivo; o P&L diário segue o calendário completo (ADRs negociam em feriados locais)."),
         "Execução: decisão com dados até o pregão anterior; pesos novos valem do fechamento do "
         "dia de rebalanceamento (MOC); o retorno do dia acumula nos pesos anteriores. Nome com a "
         "linha primária sem preço no dia não é negociado (mercado fechado).",

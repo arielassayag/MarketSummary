@@ -10,6 +10,7 @@ import json
 import shutil
 import warnings
 from datetime import date, datetime
+from pathlib import Path
 from zoneinfo import ZoneInfo
 
 import numpy as np
@@ -28,6 +29,7 @@ from cdp.workflow.risk_monitor import (
 )
 from cdp.workflow.runtime import Runtime
 
+LEGACY = Path(__file__).resolve().parent / "fixtures" / "fund_legado.yaml"
 BRT = ZoneInfo("America/Sao_Paulo")
 LAST = date(2024, 3, 5)      # último pregão da demonstração (2 pregões a partir de 04/03)
 SESSION = date(2024, 3, 6)   # pregão "de hoje" no monitor intradiário
@@ -38,12 +40,12 @@ def demo(tmp_path_factory):
     out = tmp_path_factory.mktemp("cdp_risk_demo")
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        run_demo(out, days=2)
+        run_demo(out, days=2, cfg=load_config(LEGACY))
     return out
 
 
 def _rt(root, cfg=None, **kw) -> Runtime:
-    return Runtime(cfg or load_config(), root / "book", root / "market", root / "reports", **kw)
+    return Runtime(cfg or load_config(LEGACY), root / "book", root / "market", root / "reports", **kw)
 
 
 def _at(d: date, h: int, m: int = 0) -> datetime:
@@ -211,7 +213,7 @@ def test_stale_record_is_flagged(demo):
 
 
 def test_no_record_yet(tmp_path):
-    cfg = load_config()  # mandato já iniciado (data de início explícita): livro sem registro
+    cfg = load_config(LEGACY)  # mandato já iniciado (data de início explícita): livro sem registro
     cfg = cfg.model_copy(update={"fund": cfg.fund.model_copy(
         update={"inception_date": date(2024, 3, 4)})})
     rt = _rt(tmp_path, cfg=cfg)
@@ -235,7 +237,7 @@ def test_report_files_are_unique_and_flag_simulated_data(demo, tmp_path):
 
 
 def test_drawdown_stage_ladder():
-    cfg = load_config()
+    cfg = load_config(LEGACY)
     d = cfg.drawdown
     assert drawdown_stage(None, cfg) is None
     assert drawdown_stage(0.0, cfg) == "normal"
@@ -278,7 +280,7 @@ def test_agenda_pending_closes_respect_close_time(demo):
 
 
 def test_agenda_pending_publications_and_empty_book(demo, tmp_path):
-    rt = Runtime(load_config(), demo / "book", demo / "market", tmp_path / "reports")
+    rt = Runtime(load_config(LEGACY), demo / "book", demo / "market", tmp_path / "reports")
     pubs = agenda(rt, _at(SESSION, 12))["publicacoes_pendentes"]
     assert [p["data"] for p in pubs] == [date(2024, 3, 4), LAST]
     assert not any(p["comentario_escrito"] for p in pubs)
@@ -346,7 +348,7 @@ def test_cli_painel_on_demo_book(demo, tmp_path, capsys):
 
 def _low_squeeze_cfg():
     """Mandato com stop de squeeze minúsculo: todo short que perde desde a entrada aciona o stop."""
-    cfg = load_config()
+    cfg = load_config(LEGACY)
     return cfg.model_copy(update={"squeeze": cfg.squeeze.model_copy(
         update={"stop_short_position_loss": 1e-9})})
 
@@ -423,3 +425,19 @@ def test_squeeze_stop_text_says_what_the_code_does(demo):
     assert trig["acao"] == SQUEEZE_STOP_ACTION
     assert "gross × 0,5" in trig["acao"] and "não é automático" in trig["acao"]
     assert "livro inteiro" in trig["motivo"]
+
+
+def test_loss_velocity_triggers_are_wired_only_with_the_active_construction(demo):
+    """Gatilhos de velocidade de perda (``cdp.risk.gatilhos``) só com a metodologia de construção
+    ativa (kill switch só-redução); no mandato legado o monitor não muda."""
+    legacy = run_risk_monitor(_rt(demo), as_of=SESSION, now=_at(SESSION, 13, 30))
+    codes = {t["codigo"] for t in legacy["gatilhos"]}
+    assert "janela_incompleta" not in codes and "perda_diaria_extrema" not in codes
+    active_cfg = load_config(LEGACY).with_overrides({"risk": {"idio_share_goal": 0.9,
+                                                        "idio_share_floor": 0.85}})
+    active = run_risk_monitor(_rt(demo, cfg=active_cfg), as_of=SESSION,
+                              now=_at(SESSION, 13, 30))
+    by_code = {t["codigo"]: t for t in active["gatilhos"]}
+    assert by_code["janela_incompleta"]["nivel"] == "INFO"  # dois registros na demonstração
+    assert not _kill_actions(active)
+    assert any("evento societário" in x for x in active["limitacoes"])  # sem base de mercado

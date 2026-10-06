@@ -252,6 +252,37 @@ def _vol_status(vol: float, cfg: FundConfig) -> str:
     return "dentro da banda"
 
 
+_GRUPO_PT = {"mercado": "Mercado", "pais": "País", "setor": "Setor", "estilo": "Estilo",
+             "macro": "Macro (commodities e dólar)", "especifico": "Específico (idiossincrático)"}
+
+
+def _idio_rows(risco: dict) -> list[list[str]]:
+    """Linhas de risco idiossincrático gravadas na decisão (``overrides["risco"]``)."""
+    meta, piso = risco.get("meta_idio"), risco.get("piso_idio")
+    ref = (f"meta {fmt_pct(meta, 0)}; piso {fmt_pct(piso, 0)}" if _finite(meta)
+           and _finite(piso) else "")
+    kap = risco.get("kappa_f") if isinstance(risco.get("kappa_f"), dict) else {}
+    rows = [["Fatia idiossincrática — modelo de decisão",
+             fmt_pct(risco.get("idio_decisao")) if _finite(risco.get("idio_decisao")) else NA,
+             ref + " (com janelas de evento)"]]
+    if "base" in (risco.get("modelos_gate") or []):
+        rows.append(["Fatia idiossincrática — modelo base",
+                     fmt_pct(risco.get("idio_base")) if _finite(risco.get("idio_base")) else NA,
+                     ref + " (sem janelas de evento)"])
+    if _finite(kap.get("valor")):
+        rows.append(["Inflação de 2ª ordem do risco fatorial (κ_F)", fmt_num(kap["valor"], 2),
+                     "aplicada à variância fatorial na medida idiossincrática"])
+    esc = risco.get("escada")
+    if isinstance(esc, dict) and _finite(esc.get("sigma_teto")):
+        regra = esc.get("regra_vinculante") or "escada de drawdown"
+        ref_txt = (f"{fmt_num(esc.get('multiplicador'), 2)} × vol de referência "
+                   f"{fmt_pct(esc.get('sigma_ref'))}")
+        rows.append(["Teto de vol pela escada de drawdown", fmt_pct(esc["sigma_teto"]),
+                     ref_txt if regra == "escada de drawdown"
+                     else f"{regra} (escada: {ref_txt})"])
+    return rows
+
+
 def _section_risk(proposal: Proposal, cfg: FundConfig) -> list[str]:
     r = proposal.risk
     rk = cfg.risk
@@ -260,13 +291,22 @@ def _section_risk(proposal: Proposal, cfg: FundConfig) -> list[str]:
     def pct_usd(x: float) -> str:
         return f"{fmt_pct(x)} ({fmt_usd_mm(x * nav if _finite(x) else None)})"
 
+    risco = proposal.overrides.get("risco") if isinstance(proposal.overrides, dict) else None
+    from ..risk.idio import base_vinculante
+
+    basis = base_vinculante(risco)
+    if basis is not None:
+        # Mesma base do gate: κ_F no bloco fatorial, no modelo que vincula.
+        fref = (f"{fmt_pct(basis['fatorial'])} da variância com κ_F no {basis['rotulo']} "
+                f"(limite {fmt_pct(rk.max_factor_risk_share)})")
+    else:
+        fref = (f"{fmt_pct(r.factor_risk_share)} da variância (alerta acima de "
+                f"{fmt_pct(rk.max_factor_risk_share)})")
     rows = [
         ["Vol ex-ante (a.a.)", fmt_pct(r.ex_ante_vol),
          f"alvo {fmt_pct(rk.vol_target_annual)}; banda {fmt_pct(rk.vol_band_min)}–"
          f"{fmt_pct(rk.vol_band_max)} — {_vol_status(r.ex_ante_vol, cfg)}"],
-        ["Vol fatorial (a.a.)", fmt_pct(r.factor_vol),
-         f"{fmt_pct(r.factor_risk_share)} da variância (alerta acima de "
-         f"{fmt_pct(rk.max_factor_risk_share)})"],
+        ["Vol fatorial (a.a.)", fmt_pct(r.factor_vol), fref],
         ["Vol específica (a.a.)", fmt_pct(r.specific_vol), "fonte pretendida do retorno (alpha puro)"],
         ["Beta previsto", fmt_num(r.beta, 3), f"limite ±{fmt_num(rk.beta_max_abs, 3)}"],
         ["Gross (% NAV)", fmt_pct(r.gross),
@@ -284,7 +324,15 @@ def _section_risk(proposal: Proposal, cfg: FundConfig) -> list[str]:
         ["% NAV liquidável em 1 dia", fmt_pct(r.pct_nav_liquidated_1d),
          f"participação {fmt_pct(cfg.liquidity.participation_rate, 0)} do ADTV"],
     ]
+    if isinstance(risco, dict):
+        rows += _idio_rows(risco)
     out = ["## Resumo de risco", ""] + _table(["Métrica", "Valor", "Referência"], rows) + [""]
+    if isinstance(risco, dict) and isinstance(risco.get("por_grupo"), dict):
+        grows = [[_GRUPO_PT.get(g, g), fmt_pct(v) if _finite(v) else NA]
+                 for g, v in risco["por_grupo"].items()]
+        out += ["### Decomposição da variância ex-ante por grupo (modelo de decisão, κ_F no "
+                "bloco fatorial)", ""]
+        out += _table(["Grupo", "Fração da variância"], grows) + [""]
     if r.stress_tests:
         srows = [[k, fmt_pct(v, signed=True), fmt_usd_mm(v * nav if _finite(v) else None,
                                                         signed=True)]

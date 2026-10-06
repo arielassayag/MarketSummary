@@ -232,7 +232,10 @@ class RiskModelEstimator:
         self.issuers = ids
         rm = cfg.risk_model
         self.min_names = rm.min_names_per_sector
-        self.structure: FactorStructure = factor_structure(panel, ids, self.min_names)
+        self.min_names_country = (self.min_names if rm.min_names_per_country is None
+                                  else int(rm.min_names_per_country))
+        self.structure: FactorStructure = factor_structure(panel, ids, self.min_names,
+                                                           rm.min_names_per_country)
         self.inputs: StyleInputs = prepare_style_inputs(panel, md, cfg, ids)
         self.styles = [s for s in STYLE_FACTORS if s in self.inputs.available_styles]
         self.factors = ([MARKET_FACTOR] + self.structure.country_factors
@@ -298,7 +301,9 @@ class RiskModelEstimator:
         active[0] = True
         if len(self._dummy_idx):
             members = (xo[:, self._dummy_idx] != 0).sum(axis=0)
-            active[self._dummy_idx] = members >= self.min_names
+            mins = np.array([self.min_names_country] * len(self._country_idx)
+                            + [self.min_names] * len(self._sector_idx), dtype=float)
+            active[self._dummy_idx] = members >= mins
         if len(self._style_idx):
             xs = xo[:, self._style_idx]
             nonzero = (xs != 0).sum(axis=0)

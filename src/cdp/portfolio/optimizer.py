@@ -32,6 +32,33 @@ Duas passadas: posições com |w| < ``min_position_weight`` são fixadas em zero
 resolvido de novo (até ``MAX_PASSES`` vezes). Se o problema for inviável, aplica-se a escada
 de relaxamento documentada (turnover → estilos ×2 → país/setor ×1,5 → beta ×2), sempre
 registrada. Net exposure, teto de vol, limites por nome, squeeze e liquidez nunca são relaxados.
+
+Construção com limites operacionais (``risk.operational`` definido):
+
+- cada limite de neutralidade vale ``min(mandato, operacional)``; país operacional por rótulo
+  do painel (todo país, com ou sem fator próprio no modelo); a escada relaxa só o operacional e
+  NUNCA passa do mandato (turnover × 2, estilos × 2, país/setor × 1,5, beta × 2, depois todos no
+  teto do mandato); numa decisão de redução de risco (``vol_cap``/só redução) os tetos de vol e
+  de gross da redução sobem até o menor risco viável (nunca acima da meta da semana nem do gross
+  do mandato); fora da inception, dois degraus finais só reduzem posições (gross ≤ 50% e depois
+  ≤ 25% do atual, nunca abaixo das posições congeladas); persistindo a inviabilidade,
+  ``OptimizationError``;
+- emissores congelados (coluna ``congelado``: sem fechamento negociável) ficam em ``w = w⁰``,
+  prevalecendo sobre exclusão do gestor, falta de alpha e só-redução;
+- decisão só de redução com piso idiossincrático: o risco fatorial (κ_F, em cada modelo do gate)
+  não aumenta em relação à carteira atual (``factor_hold``);
+- teto de risco fatorial na carteira ATINGIDA (``risk.factor_risk_basis = "achieved"``):
+  ``‖√κ_F·G w‖ ≤ √(s/(1−s))·σ_esp(w)``, resolvido por ponto fixo (cada passo é convexo), em cada
+  modelo de ``risk.idio_gate_models`` (decisão com janelas de evento e base sem elas);
+  ``s = 1 − meta idiossincrática``; o piso nunca é relaxado (o ponto fixo aperta o orçamento
+  fatorial em vez de aceitar risco fatorial);
+- penalidade ``λ_F·‖√κ_F·G w‖²`` com ``λ_F = multiplicador × λ`` fora da busca de κ do modo
+  ``match`` (invariante à escala do alpha);
+- a formulação resolvida (termos do objetivo, cada restrição com limite, valor atingido, folga,
+  se vincula e o preço-sombra — zero quando não vincula —, os tetos de cada posição com a
+  origem, λ do mandato e efetivo, solver e versões) fica em
+  :attr:`OptimizationResult.formulacao`; as chaves das restrições são as mesmas de
+  ``binding_constraints``.
 """
 
 from __future__ import annotations
@@ -75,6 +102,7 @@ _INFEASIBLE = {cp.INFEASIBLE, cp.INFEASIBLE_INACCURATE}
 _ALLOWED_OVERRIDES = {
     "vol_target", "vol_target_annual", "gross_max", "gross_multiplier", "risk_aversion",
     "max_weekly_turnover", "exclude_issuers", "risk_target_mode", "themes", "exposure_limits",
+    "vol_cap", "reduce_only",
 }
 RISK_TARGET_MODES = ("cap", "match")
 MATCH_REL_TOL = 0.005        # "na meta": vol ≥ 99,5% da meta (o teto continua duro)
@@ -88,16 +116,89 @@ RELAXATION_STEPS: tuple[tuple[str, str], ...] = (
     ("country_sector", "Relaxamento 3: limites líquidos de país/setor multiplicados por 1,5"),
     ("beta", "Relaxamento 4: limite de beta multiplicado por 2"),
 )
+#: Escada com limites operacionais: relaxa só o operacional, nunca acima do mandato; os degraus
+#: de redução (fora da inception) só diminuem posições.
+OP_RELAXATION_STEPS: tuple[tuple[str, str], ...] = (
+    ("turnover", "Relaxamento 1: limite de giro semanal multiplicado por 2"),
+    ("style", "Relaxamento 2: limites operacionais de estilo × 2 (no máximo o mandato)"),
+    ("country_sector", "Relaxamento 3: limites operacionais de país e setor × 1,5 (no máximo o "
+                       "mandato)"),
+    ("beta", "Relaxamento 4: limite operacional de beta × 2 (no máximo o mandato)"),
+    ("mandate", "Relaxamento 5: limites operacionais no teto do mandato"),
+    ("risk_floor", "Redução de risco: tetos de vol e de gross no menor nível viável com as "
+                   "posições que não podem negociar e os limites do mandato"),
+    ("degross_50", "Redução 1: só redução de posições, gross até 50% do atual"),
+    ("degross_25", "Redução 2: só redução de posições, gross até 25% do atual"),
+)
+TURNOVER_RELAX_MULT = 2.0
+#: Ponto fixo do teto de risco fatorial na carteira atingida: iterações até a meta e iterações
+#: extras (com margem × ``FP_TIGHTEN``) enquanto o piso não for atendido.
+FP_GOAL_ITERS = 8
+FP_FLOOR_ITERS = 3
+FP_MARGIN = 0.99
+FP_TIGHTEN = 0.9
+FP_REL_TOL = 1e-3
+FP_NEUTRAL_CAP = 1e-7        # passo neutro em fatores (vol fatorial anual ≈ 0)
+SIG_DIGITS = 6
+
+#: Códigos determinísticos de falha (vão para a trilha de tentativas; nunca tempos de solver).
+ERRO_INVIAVEL = "INVIAVEL"
+ERRO_SOLVER = "SOLVER"
+ERRO_SEM_COBERTURA = "SEM_COBERTURA"
 
 
 class OptimizationError(RuntimeError):
-    """Falha da otimização (inviável após a escada de relaxamento ou erro de todos os solvers)."""
+    """Falha da otimização (inviável após a escada de relaxamento ou erro de todos os solvers).
+
+    ``codigo``: código determinístico (``INVIAVEL``, ``SOLVER``, ``SEM_COBERTURA``)."""
 
     def __init__(self, message: str, diagnostics: OptimizerDiagnostics | None = None,
-                 relaxations: list[str] | None = None) -> None:
+                 relaxations: list[str] | None = None, codigo: str = ERRO_INVIAVEL) -> None:
         super().__init__(message)
         self.diagnostics = diagnostics
         self.relaxations = relaxations or []
+        self.codigo = codigo
+
+
+def metodologia_ativa(cfg: FundConfig) -> bool:
+    """Construção com limites operacionais / risco fatorial na carteira atingida ativa.
+
+    Com ``False`` (mandato legado) o otimizador reproduz exatamente o comportamento anterior."""
+    rk = cfg.risk
+    return (rk.operational is not None or rk.factor_risk_basis == "achieved"
+            or rk.idio_share_goal is not None or rk.idio_share_floor is not None)
+
+
+def factor_share_goal(cfg: FundConfig) -> float | None:
+    """Fatia máxima da variância vinda de fatores na carteira atingida (``1 − meta idio``,
+    limitada por ``max_factor_risk_share``); ``None`` sem teto."""
+    rk = cfg.risk
+    s = float(rk.max_factor_risk_share)
+    if rk.idio_share_goal is not None:
+        s = min(s, 1.0 - float(rk.idio_share_goal))
+    return s if 0 < s < 1 else None
+
+
+def factor_share_floor(cfg: FundConfig) -> float | None:
+    """Fatia fatorial correspondente ao PISO idiossincrático (``1 − piso``); ``None`` sem piso."""
+    f = cfg.risk.idio_share_floor
+    return None if f is None else 1.0 - float(f)
+
+
+def sig(x: float | None, digits: int = SIG_DIGITS) -> float | None:
+    """Float puro arredondado a ``digits`` algarismos significativos (``None`` se não finito):
+    diagnósticos gravados em contratos com hash nunca levam tipos numpy nem NaN."""
+    if x is None:
+        return None
+    try:
+        v = float(x)
+    except (TypeError, ValueError):
+        return None
+    if not np.isfinite(v):
+        return None
+    if v == 0:
+        return 0.0
+    return float(f"{v:.{digits - 1}e}")
 
 
 @dataclass(frozen=True)
@@ -114,6 +215,15 @@ class OptimizationResult:
     vol_target: float = float("nan")
     passes: int = 1
     alpha_scale: float = 1.0
+    #: Formulação resolvida (objetivo, restrições com limite/valor/folga/preço-sombra); vazio no
+    #: mandato legado. Floats puros com 6 algarismos significativos.
+    formulacao: dict = field(default_factory=dict)
+    #: Fatia idiossincrática da variância por modelo de gate (``decisao``/``base``), κ_F incluso.
+    idio: dict = field(default_factory=dict)
+    kappa_f: float = 1.0
+    #: Linearização final do teto fatorial por modelo (por emissor): ponto de partida de uma
+    #: nova otimização da mesma semana (ex.: reparo de risco por nome).
+    ccp_lin: dict = field(default_factory=dict)
 
 
 # ==========================================================
@@ -431,6 +541,12 @@ class _Settings:
     risk_target_mode: str = "cap"
     themes: dict | None = None
     exposure_limits: dict | None = None
+    reduce_only: bool = False
+    #: Meta de vol antes do teto de redução de risco (``vol_cap``).
+    vol_target_base: float | None = None
+    #: Tetos de redução de risco (``vol_cap``/só redução) que podem subir até o menor risco
+    #: viável no último degrau antes da inviabilidade (nunca acima da meta da semana).
+    floor_caps: bool = False
 
 
 def _finite(name: str, value: object) -> float:
@@ -464,6 +580,20 @@ def _resolve_settings(cfg: FundConfig, overrides: dict | None, inception: bool) 
     if vt != rk.vol_target_annual:
         notes.append(f"Meta de vol ajustada pelo gestor: {vt:.2%} "
                      f"(config {rk.vol_target_annual:.2%}).")
+    vt_base = vt
+    if ov.get("vol_cap") is not None:
+        # Teto de risco que só aperta (escada de drawdown, redução de risco): pode ficar abaixo
+        # do piso da banda — a compliance registra VOL_MIN.
+        cap = _finite("vol_cap", ov["vol_cap"])
+        if cap <= 0:
+            raise ValueError("vol_cap precisa ser positivo.")
+        if cap < vt:
+            notes.append(f"Meta de vol limitada a {_pct_br(cap, 2)} pela redução de risco "
+                         f"(meta da semana {_pct_br(vt, 2)}).")
+            vt = cap
+    reduce_only = bool(ov.get("reduce_only", False))
+    if reduce_only:
+        notes.append("Só redução: nenhuma posição pode abrir ou aumentar nesta decisão.")
     gross = float(ov.get("gross_max", rk.gross_max))
     if gross > rk.gross_max + TOL or gross <= 0:
         raise ValueError(f"gross_max {gross} inválido: só pode apertar o mandato "
@@ -471,7 +601,10 @@ def _resolve_settings(cfg: FundConfig, overrides: dict | None, inception: bool) 
     mult = float(ov.get("gross_multiplier", 1.0))
     if not (0 < mult <= 1):
         raise ValueError("gross_multiplier precisa estar em (0, 1].")
-    if gross != rk.gross_max or mult != 1.0:
+    if reduce_only and (gross != rk.gross_max or mult != 1.0):
+        notes.append(f"Gross máximo efetivo: {f'{gross * mult:.2f}'.replace('.', ',')}x "
+                     "(redução de risco).")
+    elif gross != rk.gross_max or mult != 1.0:
         notes.append(f"Gross máximo efetivo: {gross * mult:.2f}x (override do gestor).")
     lam = float(ov.get("risk_aversion", rk.risk_aversion))
     if lam < 0:
@@ -503,7 +636,8 @@ def _resolve_settings(cfg: FundConfig, overrides: dict | None, inception: bool) 
                 raise ValueError(f"Limite negativo em exposure_limits[{k}].")
     return _Settings(vt, gross * mult, lam, turnover, excl, tuple(notes), mode,
                      {str(k): [str(x) for x in v] for k, v in (themes or {}).items()},
-                     limits)
+                     limits, reduce_only, vol_target_base=vt_base,
+                     floor_caps=bool(ov.get("vol_cap") is not None or reduce_only))
 
 
 @dataclass(frozen=True)
@@ -544,6 +678,62 @@ class _Problem:
     themes: np.ndarray | None = None       # (T × n) indicadoras de tema (ex.: estatais)
     theme_max: np.ndarray | None = None    # (T) limites de exposição líquida
     country_share: np.ndarray | None = None  # (C) teto da fatia do gross por país (NaN = livre)
+    # --- construção com limites operacionais (``None``/vazio = mandato legado) ---
+    op: _OpLimits | None = None
+    theme_op: np.ndarray | None = None     # (T) limite operacional por linha de tema (≤ mandato)
+    linked_names: tuple[str, ...] = ()
+    linked: np.ndarray | None = None       # (Lg × n) indicadoras dos grupos vinculados
+    linked_long: float = 0.0               # Σ pernas compradas do grupo ≤ teto por nome
+    linked_short: float = 0.0
+    factor_caps: tuple[_FactorCap, ...] = ()  # teto na carteira atingida, por modelo
+    GF: np.ndarray | None = None           # √κ_F·G (penalidade de risco fatorial)
+    lam_f: float = 0.0
+    w0_gross: float = 0.0
+    extended: bool = False                 # metodologia ativa: diagnósticos e duais
+    #: Gross das posições congeladas (sem fechamento negociável): ficam como estão, então os
+    #: degraus de redução nunca exigem gross abaixo delas.
+    pinned_gross: float = 0.0
+    gross_max_mandate: float = 0.0
+    #: Decisão só de redução com piso idiossincrático: o risco fatorial (κ_F, em cada modelo do
+    #: gate) não pode aumentar em relação à carteira atual — ``(nome, √κ_F·G, teto)``; ativo com
+    #: ``reduce_only`` (``hold_active``) e nos degraus de redução da escada.
+    factor_hold: tuple[tuple[str, np.ndarray, float], ...] = ()
+    hold_active: bool = False
+
+    def holds(self, relax: _Relax) -> tuple[tuple[str, np.ndarray, float], ...]:
+        return self.factor_hold if (self.hold_active or relax.degross < 1.0) else ()
+
+
+@dataclass(frozen=True)
+class _OpLimits:
+    """Limites operacionais (já ``min(mandato, operacional)``) do problema."""
+
+    beta: float
+    style: float
+    sector: float
+    country_names: list[str]
+    countries: np.ndarray        # (Co × n) indicadoras de país (rótulo do painel)
+    country_lims: np.ndarray     # (Co)
+
+
+@dataclass(frozen=True)
+class _FactorCap:
+    """Teto de risco fatorial do modelo ``nome`` (decisão ou base), ``G = √κ_F·Lᵀ Bᵀ``.
+
+    ``lin is None``: ``‖G w‖ ≤ cap`` (ponto de partida, base meta de vol). Com ``lin``:
+    ``‖G w‖ ≤ linᵀw``, a linearização (procedimento côncavo-convexo) de
+    ``√(s/(1−s))·σ_esp(w)`` em ``w_k``: ``lin = √(s/(1−s))·margem·D w_k/σ_esp(w_k)``. Como
+    ``linᵀw ≤ √(s/(1−s))·margem·σ_esp(w)`` (Cauchy–Schwarz), toda solução satisfaz a fatia
+    fatorial ≤ s exatamente, e a restrição escala com a carteira (sem encolhê-la)."""
+
+    nome: str
+    G: np.ndarray
+    sd: np.ndarray
+    cap: float
+    lin: np.ndarray | None = None
+
+    def limit_at(self, w: np.ndarray) -> float:
+        return float(self.lin @ w) if self.lin is not None else float(self.cap)
 
 
 @dataclass(frozen=True)
@@ -552,6 +742,8 @@ class _Relax:
     style_mult: float = 1.0
     group_mult: float = 1.0
     beta_mult: float = 1.0
+    mandate: bool = False        # limites operacionais no teto do mandato
+    degross: float = 1.0         # < 1: só redução e gross ≤ degross × gross atual
 
     def step(self, name: str) -> _Relax:
         if name == "turnover":
@@ -562,7 +754,64 @@ class _Relax:
             return replace(self, group_mult=1.5)
         if name == "beta":
             return replace(self, beta_mult=2.0)
+        if name == "mandate":
+            return replace(self, mandate=True)
+        if name == "degross_50":
+            return replace(self, mandate=True, degross=0.5)
+        if name == "degross_25":
+            return replace(self, mandate=True, degross=0.25)
         raise ValueError(name)
+
+
+@dataclass(frozen=True)
+class _Limits:
+    """Limites efetivos de um degrau da escada (o mandato é sempre o teto)."""
+
+    beta: float
+    style: float
+    country: float
+    sector: float
+    gross: float
+    turnover: float | None
+    op_country: np.ndarray | None
+    themes: np.ndarray | None
+    linked: bool
+
+
+def _limits(p: _Problem, relax: _Relax) -> _Limits:
+    op = p.op
+    if op is None:  # mandato legado: escada original (inclusive turnover removido)
+        beta = p.beta_max * relax.beta_mult
+        style = p.style_max * relax.style_mult
+        country = p.country_max * relax.group_mult
+        sector = p.sector_max * relax.group_mult
+        op_country = None
+        turnover = None if relax.turnover else p.turnover_max
+        themes = p.theme_max
+    else:
+        def eff(value: float, mult: float, mandate: float) -> float:
+            return mandate if relax.mandate else min(value * mult, mandate)
+
+        beta = eff(op.beta, relax.beta_mult, p.beta_max)
+        style = eff(op.style, relax.style_mult, p.style_max)
+        country = p.country_max
+        sector = eff(op.sector, relax.group_mult, p.sector_max)
+        op_country = np.array([eff(float(x), relax.group_mult, p.country_max)
+                               for x in op.country_lims], dtype=float)
+        turnover = p.turnover_max
+        if turnover is not None and relax.turnover:
+            turnover = turnover * TURNOVER_RELAX_MULT
+        themes = p.theme_max
+        if p.theme_max is not None and p.theme_op is not None and not relax.mandate:
+            themes = np.minimum(p.theme_max, p.theme_op)
+    gross = p.gross_max
+    if relax.degross < 1.0 and p.w0_gross > 0:
+        gross = min(gross, max(relax.degross * p.w0_gross, p.pinned_gross * (1 + 1e-6)))
+        if turnover is not None:
+            # Reduzir proporcionalmente exige giro (1 − d)·gross atual: só redução de risco.
+            turnover = max(turnover, (1.0 - relax.degross) * p.w0_gross * (1 + 1e-6))
+    linked = p.linked is not None and p.op is not None and not relax.mandate
+    return _Limits(beta, style, country, sector, gross, turnover, op_country, themes, linked)
 
 
 @dataclass(frozen=True)
@@ -578,6 +827,7 @@ class _Outcome:
     short_leg: np.ndarray | None = None
     box_repaired: int = 0         # emissores com pernas l e s simultâneas reparados
     box_unresolved: int = 0       # pernas simultâneas que o reparo não conseguiu eliminar
+    duals: dict | None = None     # preço-sombra por restrição nomeada (só metodologia ativa)
 
 
 def _indicator(labels: pd.Series) -> tuple[list[str], np.ndarray]:
@@ -592,10 +842,34 @@ def _available_solvers() -> list[str]:
     return [s for s in SOLVER_ORDER if s in installed]
 
 
+def _duals(named: dict[str, tuple[list, list[str] | None]]) -> dict[str, float]:
+    """Preço-sombra (|dual|, unidades do objetivo por unidade do limite) de cada restrição
+    nomeada; restrições bilaterais somam os dois lados (só um é ativo)."""
+    out: dict[str, float] = {}
+    for key, (cons, rows) in named.items():
+        vals = []
+        for c in cons:
+            dv = c.dual_value
+            if dv is None:
+                vals = []
+                break
+            vals.append(np.abs(np.atleast_1d(np.asarray(dv, dtype=float))))
+        if not vals:
+            continue
+        tot = np.sum(vals, axis=0)
+        if rows is None:
+            out[key] = float(np.sum(tot))
+        else:
+            for name, v in zip(rows, tot, strict=False):
+                out[f"{key}:{name}"] = float(v)
+    return out
+
+
 def _solve(p: _Problem, relax: _Relax, fixed_zero: np.ndarray,
            reduce_only: np.ndarray, zero_long: np.ndarray | None = None,
            zero_short: np.ndarray | None = None) -> _Outcome:
     n = len(p.ids)
+    lim = _limits(p, relax)
     l0 = np.maximum(p.w0, 0.0)
     s0 = np.maximum(-p.w0, 0.0)
     ub_l = p.max_long.copy()
@@ -608,6 +882,9 @@ def _solve(p: _Problem, relax: _Relax, fixed_zero: np.ndarray,
         ub_s[zero_short] = 0.0
     ub_l[reduce_only] = np.minimum(ub_l[reduce_only], l0[reduce_only])
     ub_s[reduce_only] = np.minimum(ub_s[reduce_only], s0[reduce_only])
+    if relax.degross < 1.0:  # degraus de redução: nenhuma posição abre ou aumenta
+        ub_l = np.minimum(ub_l, l0)
+        ub_s = np.minimum(ub_s, s0)
     # Posições acima do teto (ou já zeradas) só podem diminuir; nunca aumentar.
     ub_l = np.maximum(ub_l, 0.0)
     ub_s = np.maximum(ub_s, 0.0)
@@ -628,43 +905,67 @@ def _solve(p: _Problem, relax: _Relax, fixed_zero: np.ndarray,
         risk = cp.sum_squares(sw)
         risk_vec = sw
     objective = p.alpha @ w - p.amort * cost - p.fee @ sv - p.lam * risk
+    if p.GF is not None and p.lam_f > 0 and p.GF.shape[0]:
+        # Penalidade de risco fatorial (κ_F-inflado), fora da busca de κ do modo "match".
+        objective = objective - p.lam_f * cp.sum_squares(p.GF @ w)
 
-    cons = [lv <= ub_l, sv <= ub_s]
+    named: dict[str, tuple[list, list[str] | None]] = {}
+
+    def add(key: str, items: list, rows: list[str] | None = None) -> None:
+        named[key] = (items, rows)
+        cons.extend(items)
+
+    cons: list = [lv <= ub_l, sv <= ub_s]
     net = cp.sum(w)
-    cons += [net <= p.net_max, net >= -p.net_max]
-    bmax = p.beta_max * relax.beta_mult
-    cons += [p.beta @ w <= bmax, p.beta @ w >= -bmax]
-    cons += [cp.norm(risk_vec, 2) <= p.vol_target]
-    cons += [cp.sum(lv + sv) <= p.gross_max]
+    add("net_exposure", [net <= p.net_max, net >= -p.net_max])
+    bmax = lim.beta
+    add("beta", [p.beta @ w <= bmax, p.beta @ w >= -bmax])
+    add("vol_target", [cp.norm(risk_vec, 2) <= p.vol_target])
+    add("gross", [cp.sum(lv + sv) <= lim.gross])
     if p.countries.shape[0]:
-        cm = p.country_max * relax.group_mult
-        cons += [p.countries @ w <= cm, p.countries @ w >= -cm]
+        cm = lim.country
+        add("country", [p.countries @ w <= cm, p.countries @ w >= -cm], p.country_names)
     if p.sectors.shape[0]:
-        sm = p.sector_max * relax.group_mult
-        cons += [p.sectors @ w <= sm, p.sectors @ w >= -sm]
+        sm = lim.sector
+        add("sector", [p.sectors @ w <= sm, p.sectors @ w >= -sm], p.sector_names)
     if p.styles.shape[0]:
-        st = p.style_max * relax.style_mult
-        cons += [p.styles @ w <= st, p.styles @ w >= -st]
+        st = lim.style
+        add("style", [p.styles @ w <= st, p.styles @ w >= -st], p.style_names)
     # Alpha puro: risco fatorial limitado (≥ 1 − fatia da variância é idiossincrática).
     if p.factor_vol_max is not None and p.G.shape[0]:
-        cons += [cp.norm(p.G @ w, 2) <= p.factor_vol_max]
+        add("factor_risk", [cp.norm(p.G @ w, 2) <= p.factor_vol_max])
     # Temas (ex.: estatais) neutros — nunca relaxados.
     if p.themes is not None and p.themes.shape[0]:
-        cons += [p.themes @ w <= p.theme_max, p.themes @ w >= -p.theme_max]
+        tm = lim.themes
+        add("theme", [p.themes @ w <= tm, p.themes @ w >= -tm], list(p.theme_names))
     # Concentração do gross por país (linear nas pernas l, s).
     if p.country_share is not None and p.countries.shape[0]:
         gross_expr = cp.sum(lv + sv)
         for k in range(p.countries.shape[0]):
             share = p.country_share[k]
             if np.isfinite(share):
-                cons += [p.countries[k] @ (lv + sv) <= share * gross_expr]
+                add(f"country_share:{p.country_names[k]}",
+                    [p.countries[k] @ (lv + sv) <= share * gross_expr])
     cons += [cp.abs(w - p.w0) <= p.max_trade]
     if p.trade_liq is not None:
         # Aumentos limitados pela liquidez; reduzir até zero (saída) é sempre permitido.
         cons += [w <= np.maximum(p.w0 + p.trade_liq, 0.0),
                  w >= np.minimum(p.w0 - p.trade_liq, 0.0)]
-    if p.turnover_max is not None and not relax.turnover:
-        cons += [cp.sum(cp.abs(w - p.w0)) <= p.turnover_max]
+    if lim.turnover is not None:
+        add("turnover", [cp.sum(cp.abs(w - p.w0)) <= lim.turnover])
+    # --- metodologia com limites operacionais (ausente no mandato legado) ---
+    if lim.op_country is not None and p.op is not None and p.op.countries.shape[0]:
+        oc = lim.op_country
+        add("op_country", [p.op.countries @ w <= oc, p.op.countries @ w >= -oc],
+            list(p.op.country_names))
+    for fc in p.factor_caps:
+        rhs = fc.lin @ w if fc.lin is not None else fc.cap
+        add(f"factor_risk:{fc.nome}", [cp.norm(fc.G @ w, 2) <= rhs])
+    for nome, Gh, cap_h in p.holds(relax):
+        add(f"factor_hold:{nome}", [cp.norm(Gh @ w, 2) <= cap_h])
+    if lim.linked and p.linked is not None:
+        add("linked_long", [p.linked @ lv <= p.linked_long], list(p.linked_names))
+        add("linked_short", [p.linked @ sv <= p.linked_short], list(p.linked_names))
 
     prob = cp.Problem(cp.Maximize(objective), cons)
     errors: list[str] = []
@@ -679,10 +980,21 @@ def _solve(p: _Problem, relax: _Relax, fixed_zero: np.ndarray,
         if status in _OK and lv.value is not None and sv.value is not None:
             lval = np.maximum(np.asarray(lv.value, dtype=float), 0.0)
             sval = np.maximum(np.asarray(sv.value, dtype=float), 0.0)
+            if p.extended:
+                # Solução imprecisa pode violar a caixa por ~1e-7 (ex.: short ínfimo num nome
+                # sem aluguel): projeta nas cotas, que são exatas por construção. Nome sem
+                # negociação possível (teto de negociação zero) fica exatamente na posição atual.
+                lval = np.minimum(lval, ub_l)
+                sval = np.minimum(sval, ub_s)
+                pinned = p.max_trade <= 0
+                if np.any(pinned):
+                    lval[pinned] = l0[pinned]
+                    sval[pinned] = s0[pinned]
             wv = lval - sval
             wv[np.abs(wv) < WEIGHT_NOISE] = 0.0
+            duals = _duals(named) if p.extended else None
             return _Outcome(status, solver, time.perf_counter() - t0, wv,
-                            float(prob.value), False, tuple(errors), lval, sval)
+                            float(prob.value), False, tuple(errors), lval, sval, duals=duals)
         if status in _INFEASIBLE:
             return _Outcome(status, solver, time.perf_counter() - t0, None, None, True,
                             tuple(errors))
@@ -727,14 +1039,51 @@ def _solve_clean(p: _Problem, relax: _Relax, fixed_zero: np.ndarray,
     return replace(out, seconds=seconds, box_repaired=repaired, box_unresolved=unresolved)
 
 
-def _build_problem(alpha: pd.Series, model: RiskModel, cons: pd.DataFrame, cm: CostModel,
-                   cfg: FundConfig, settings: _Settings, w0: pd.Series) -> _Problem:
-    ids = list(cons.index)
+def _factor_root(model: RiskModel, ids: list[str]) -> tuple[np.ndarray, np.ndarray]:
+    """``(G, √D)`` do modelo para ``ids``: ``‖G w‖² = wᵀBFBᵀw``."""
     factors = model.factor_names
     B = model.exposures.loc[ids, factors]
     L = psd_factor_root(model.factor_cov.loc[factors, factors])
     G = L.T @ B.to_numpy(dtype=float).T
     sd = np.sqrt(model.specific_var.loc[ids].to_numpy(dtype=float))
+    return G, sd
+
+
+def _op_limits(cfg: FundConfig, country_names: list[str], countries: np.ndarray
+               ) -> _OpLimits | None:
+    """Limites operacionais (``min(mandato, operacional)``). País: uma linha por país do painel
+    (os mesmos grupos do limite do mandato), com o limite do país ou o de ``"*"`` para os não
+    listados — inclusive países sem fator próprio no modelo de risco (poucos emissores)."""
+    op = cfg.risk.operational
+    if op is None:
+        return None
+    rk = cfg.risk
+    names: list[str] = []
+    rows: list[np.ndarray] = []
+    lims: list[float] = []
+    for code, row in zip(country_names, countries, strict=True):
+        lim = op.country_net_limit(str(code))
+        if lim is None or not np.any(row):
+            continue
+        names.append(str(code))
+        rows.append(np.asarray(row, dtype=float))
+        lims.append(min(float(lim), rk.country_net_max_abs))
+    n = countries.shape[1] if countries.ndim == 2 else 0
+    return _OpLimits(
+        beta=min(op.beta, rk.beta_max_abs), style=min(op.style, rk.style_exposure_max_abs),
+        sector=min(op.sector_net, rk.sector_net_max_abs), country_names=names,
+        countries=np.vstack(rows) if rows else np.zeros((0, n)),
+        country_lims=np.array(lims, dtype=float))
+
+
+def _build_problem(alpha: pd.Series, model: RiskModel, cons: pd.DataFrame, cm: CostModel,
+                   cfg: FundConfig, settings: _Settings, w0: pd.Series, *,
+                   model_base: RiskModel | None = None, kappa: float = 1.0,
+                   pinned_gross: float = 0.0) -> _Problem:
+    ids = list(cons.index)
+    factors = model.factor_names
+    B = model.exposures.loc[ids, factors]
+    G, sd = _factor_root(model, ids)
 
     style_names = model.factors_in_group("style") or [f for f in STYLE_FACTORS if f in factors]
     styles = B[style_names].to_numpy(dtype=float).T if style_names else np.zeros((0, len(ids)))
@@ -770,9 +1119,42 @@ def _build_problem(alpha: pd.Series, model: RiskModel, cons: pd.DataFrame, cm: C
         trade_liq = tl.clip(lower=0.0).to_numpy(dtype=float)
 
     rk = cfg.risk
+    extended = metodologia_ativa(cfg)
     share_max = float(getattr(rk, "max_factor_risk_share", 1.0))
     factor_vol_max = (float(np.sqrt(share_max)) * settings.vol_target
                       if 0 < share_max < 1 else None)
+    factor_caps: list[_FactorCap] = []
+    if rk.factor_risk_basis == "achieved":
+        # Teto na carteira ATINGIDA (ponto fixo em ``optimize``); ponto de partida = fatia s
+        # da meta de vol, já com a inflação de 2ª ordem κ_F.
+        factor_vol_max = None
+        s = factor_share_goal(cfg)
+        if s is not None and G.shape[0]:
+            root_k = float(np.sqrt(max(kappa, 1.0)))
+            start = float(np.sqrt(s)) * settings.vol_target
+            for nome in rk.idio_gate_models:
+                if nome == "decisao":
+                    factor_caps.append(_FactorCap("decisao", root_k * G, sd, start))
+                elif model_base is not None:
+                    Gb, sdb = _factor_root(model_base, ids)
+                    factor_caps.append(_FactorCap("base", root_k * Gb, sdb, start))
+    factor_hold: list[tuple[str, np.ndarray, float]] = []
+    w0v = w0.to_numpy(dtype=float)
+    if extended and rk.idio_share_floor is not None and G.shape[0] and np.any(w0v != 0):
+        root_k = float(np.sqrt(max(kappa, 1.0)))
+        for nome in rk.idio_gate_models:
+            Gm = G if nome == "decisao" else (_factor_root(model_base, ids)[0]
+                                              if model_base is not None else None)
+            if Gm is None:
+                continue
+            Gk = root_k * Gm
+            factor_hold.append((nome, Gk, float(np.linalg.norm(Gk @ w0v))
+                                * (1 + FACTOR_HOLD_MARGIN)))
+    GF = None
+    lam_f = 0.0
+    if rk.factor_risk_aversion_multiplier > 0 and G.shape[0]:
+        GF = float(np.sqrt(max(kappa, 1.0))) * G
+        lam_f = float(rk.factor_risk_aversion_multiplier) * settings.risk_aversion
     theme_names: list[str] = []
     theme_rows: list[np.ndarray] = []
     theme_lims: list[float] = []
@@ -795,6 +1177,25 @@ def _build_problem(alpha: pd.Series, model: RiskModel, cons: pd.DataFrame, cm: C
             theme_lims.append(float(spec["limit"]))
     shares_cfg = getattr(rk, "country_gross_share_max", {}) or {}
     country_share = np.array([float(shares_cfg.get(c, np.nan)) for c in c_names])
+    op = _op_limits(cfg, c_names, c_mat)
+    theme_op = None
+    if op is not None and theme_names and rk.operational is not None:
+        # Sensibilidade a commodities: operacional ≤ mandato; demais linhas = limite próprio.
+        theme_op = np.array([min(lim, rk.operational.commodity_beta)
+                             if name.startswith("commodity:") else lim
+                             for name, lim in zip(theme_names, theme_lims, strict=True)])
+    linked_names: list[str] = []
+    linked_rows: list[np.ndarray] = []
+    if op is not None:
+        pos = {i: k for k, i in enumerate(ids)}
+        for gname, members in sorted(cfg.risk_model.linked_groups.items()):
+            row = np.zeros(len(ids))
+            for m in members:
+                if m in pos:
+                    row[pos[m]] = 1.0
+            if row.sum() >= 2:
+                linked_names.append(gname)
+                linked_rows.append(row)
     return _Problem(
         ids=ids, alpha=alpha.to_numpy(dtype=float), w0=w0.to_numpy(dtype=float), G=G, sd=sd,
         beta=cons["beta"].to_numpy(dtype=float), style_names=style_names, styles=styles,
@@ -814,35 +1215,24 @@ def _build_problem(alpha: pd.Series, model: RiskModel, cons: pd.DataFrame, cm: C
         themes=np.vstack(theme_rows) if theme_rows else None,
         theme_max=np.array(theme_lims) if theme_lims else None,
         country_share=country_share if np.isfinite(country_share).any() else None,
+        op=op, theme_op=theme_op, linked_names=tuple(linked_names),
+        linked=np.vstack(linked_rows) if linked_rows else None,
+        linked_long=float(rk.max_long_weight), linked_short=float(rk.max_short_weight),
+        factor_caps=tuple(factor_caps), GF=GF, lam_f=lam_f,
+        w0_gross=float(np.abs(w0.to_numpy(dtype=float)).sum()), extended=extended,
+        pinned_gross=float(pinned_gross), gross_max_mandate=float(rk.gross_max),
+        factor_hold=tuple(factor_hold), hold_active=bool(settings.reduce_only),
     )
 
 
-def _binding(p: _Problem, relax: _Relax, w: np.ndarray) -> list[str]:
+def _rel_binding(limit: float, value: float) -> bool:
+    return limit > TOL and (limit - abs(value)) / limit < BINDING_REL_SLACK
+
+
+def _binding_per_name(p: _Problem, w: np.ndarray) -> list[str]:
+    """Tetos por nome ativos (``max_long``/``max_short``/``max_trade``/``max_trade_liq``)."""
     out: list[str] = []
-
-    def rel(limit: float, value: float) -> bool:
-        return limit > TOL and (limit - abs(value)) / limit < BINDING_REL_SLACK
-
-    if rel(p.net_max, float(w.sum())):
-        out.append("net_exposure")
-    if rel(p.beta_max * relax.beta_mult, float(p.beta @ w)):
-        out.append("beta")
-    vol = float(np.sqrt(np.sum((p.G @ w) ** 2) + np.sum((p.sd * w) ** 2)))
-    if rel(p.vol_target, vol):
-        out.append("vol_target")
-    if rel(p.gross_max, float(np.abs(w).sum())):
-        out.append("gross")
-    if p.turnover_max is not None and not relax.turnover \
-            and rel(p.turnover_max, float(np.abs(w - p.w0).sum())):
-        out.append("turnover")
-    for names, mat, lim, prefix in (
-        (p.country_names, p.countries, p.country_max * relax.group_mult, "country"),
-        (p.sector_names, p.sectors, p.sector_max * relax.group_mult, "sector"),
-        (p.style_names, p.styles, p.style_max * relax.style_mult, "style"),
-    ):
-        if mat.shape[0]:
-            vals = mat @ w
-            out += [f"{prefix}:{g}" for g, v in zip(names, vals, strict=True) if rel(lim, v)]
+    rel = _rel_binding
     for i, iid in enumerate(p.ids):
         if w[i] > 0 and rel(p.max_long[i], w[i]):
             out.append(f"max_long:{iid}")
@@ -857,6 +1247,38 @@ def _binding(p: _Problem, relax: _Relax, w: np.ndarray) -> list[str]:
             if gap / p.trade_liq[i] < BINDING_REL_SLACK:
                 out.append(f"max_trade_liq:{iid}")
     return out
+
+
+def _binding(p: _Problem, relax: _Relax, w: np.ndarray,
+             formulacao: dict | None = None) -> list[str]:
+    """Restrições ativas na solução. Com a metodologia ativa, as agregadas são exatamente as
+    linhas ``vinculante`` da formulação publicada (mesmas chaves); depois, os tetos por nome."""
+    if p.extended and formulacao is not None:
+        rows = formulacao.get("restricoes") or []
+        return [str(r["chave"]) for r in rows if r.get("vinculante")] + _binding_per_name(p, w)
+    out: list[str] = []
+    rel = _rel_binding
+    lim = _limits(p, relax)
+    if rel(p.net_max, float(w.sum())):
+        out.append("net_exposure")
+    if rel(lim.beta, float(p.beta @ w)):
+        out.append("beta")
+    vol = float(np.sqrt(np.sum((p.G @ w) ** 2) + np.sum((p.sd * w) ** 2)))
+    if rel(p.vol_target, vol):
+        out.append("vol_target")
+    if rel(lim.gross, float(np.abs(w).sum())):
+        out.append("gross")
+    if lim.turnover is not None and rel(lim.turnover, float(np.abs(w - p.w0).sum())):
+        out.append("turnover")
+    for names, mat, glim, prefix in (
+        (p.country_names, p.countries, lim.country, "country"),
+        (p.sector_names, p.sectors, lim.sector, "sector"),
+        (p.style_names, p.styles, lim.style, "style"),
+    ):
+        if mat.shape[0]:
+            vals = mat @ w
+            out += [f"{prefix}:{g}" for g, v in zip(names, vals, strict=True) if rel(glim, v)]
+    return out + _binding_per_name(p, w)
 
 
 def _reason_counts(reasons: pd.Series) -> dict[str, int]:
@@ -877,6 +1299,47 @@ def _diag(status: str, solver: str, seconds: float, objective: float | None,
         binding_constraints=binding, n_candidates=n_candidates, n_excluded=n_excluded,
         notes=notes,
     )
+
+
+#: Folga relativa sobre o menor risco viável: o conjunto viável precisa de interior (com folga
+#: mínima o ponto interior do solver degenera e a solução sai imprecisa).
+RISK_FLOOR_MARGIN = 0.01
+#: Folga relativa do "risco fatorial não aumenta" (norma) numa decisão só de redução.
+FACTOR_HOLD_MARGIN = 1e-3
+
+
+def _risk_floor(p: _Problem, relax: _Relax, vol_ceiling: float) -> tuple[_Problem, dict] | None:
+    """Menor risco viável sob todos os demais limites (tetos por nome, só redução, posições
+    congeladas, neutralidades do degrau): os tetos de REDUÇÃO de risco (vol e gross abaixo da
+    meta e do mandato, e o teto fatorial de partida) sobem até esse ponto, que passa a ser
+    viável. Nunca acima de ``vol_ceiling`` (a meta da semana) nem do gross do mandato;
+    ``None`` se nem isso for viável."""
+    big = max(10.0 * vol_ceiling, 1.0)
+    probe = replace(p, alpha=np.zeros_like(p.alpha), fee=np.zeros_like(p.fee), amort=0.0,
+                    lam=1e3, lam_f=0.0, vol_target=big,
+                    gross_max=max(p.gross_max_mandate, p.gross_max), factor_caps=(),
+                    factor_vol_max=None)
+    no_fix = np.zeros(len(p.ids), dtype=bool)
+    out = _solve_clean(probe, relax, no_fix, no_fix)
+    if out.w is None:
+        return None
+    wm = out.w
+    vmin = _vol_of(p, wm) * (1 + RISK_FLOOR_MARGIN)
+    gmin = float(np.abs(wm).sum()) * (1 + RISK_FLOOR_MARGIN)
+    if vmin > vol_ceiling * (1 + TOL) or gmin > max(p.gross_max_mandate, p.gross_max) + TOL:
+        return None
+    vt = max(p.vol_target, vmin)
+    ratio = vt / p.vol_target if p.vol_target > 0 else 1.0
+    caps = tuple(replace(fc, cap=max(fc.cap * ratio,
+                                     float(np.linalg.norm(fc.G @ wm)) * (1 + RISK_FLOOR_MARGIN)))
+                 if fc.lin is None else fc for fc in p.factor_caps)
+    fvm = p.factor_vol_max
+    if fvm is not None and p.G.shape[0]:
+        fvm = max(fvm * ratio, float(np.linalg.norm(p.G @ wm)) * (1 + RISK_FLOOR_MARGIN))
+    info = {"vol_antes": p.vol_target, "vol_depois": vt, "gross_antes": p.gross_max,
+            "gross_depois": max(p.gross_max, gmin)}
+    return replace(p, vol_target=vt, gross_max=max(p.gross_max, gmin), factor_caps=caps,
+                   factor_vol_max=fvm), info
 
 
 def _vol_of(p: _Problem, w: np.ndarray) -> float:
@@ -931,10 +1394,378 @@ def _match_vol_target(p: _Problem, relax: _Relax, base: _Outcome, *, scale: str 
     return hi, best_hi, secs, True
 
 
+def _cost_numeric(p: _Problem, w: np.ndarray) -> float:
+    """Custo pontual do modelo (linear + impacto 3/2) da ordem líquida ``w − w₀``, por perna."""
+    l0, s0 = np.maximum(p.w0, 0.0), np.maximum(-p.w0, 0.0)
+    dl = np.abs(np.maximum(w, 0.0) - l0)
+    ds = np.abs(np.maximum(-w, 0.0) - s0)
+    return float(p.lin_l @ dl + p.k_l @ dl ** IMPACT_EXPONENT
+                 + p.lin_s @ ds + p.k_s @ ds ** IMPACT_EXPONENT)
+
+
+def _shares(caps: Sequence[_FactorCap], w: np.ndarray) -> dict[str, float]:
+    """Fatia fatorial (κ_F incluso) da variância por modelo; ``NaN`` sem risco."""
+    out: dict[str, float] = {}
+    for fc in caps:
+        fv = float(np.sum((fc.G @ w) ** 2)) if fc.G.shape[0] else 0.0
+        sv = float(np.sum((fc.sd * w) ** 2))
+        out[fc.nome] = fv / (fv + sv) if fv + sv > 0 else float("nan")
+    return out
+
+
+def _linearized(fc: _FactorCap, at: np.ndarray, ratio: float, margin: float) -> _FactorCap:
+    spec = float(np.linalg.norm(fc.sd * at))
+    if not spec > 0:
+        return fc
+    return replace(fc, lin=ratio * margin * (fc.sd ** 2) * at / spec)
+
+
+def _achieved_fixed_point(p: _Problem, relax: _Relax, fixed: np.ndarray, outcome: _Outcome,
+                          s_goal: float, s_floor: float | None, *, warm: bool = False
+                          ) -> tuple[_Problem, _Outcome, float, list[str], dict]:
+    """Teto de risco fatorial na carteira ATINGIDA (ponto fixo + procedimento côncavo-convexo).
+
+    A restrição ``√κ_F·‖G w‖ ≤ √(s/(1−s))·σ_esp(w)`` não é convexa (norma ≤ norma).
+
+    1. Se a solução de partida viola a fatia, um passo NEUTRO EM FATORES (``‖G w‖ ≈ 0`` em cada
+       modelo de gate; convexo e de fatia zero): um ponto viável de onde partir, que não depende
+       do tamanho da solução de partida.
+    2. A partir de uma solução que cumpre a fatia, passos com o lado direito LINEARIZADO na
+       própria solução (tangente exata, aproximação interna — ver :class:`_FactorCap`): a solução
+       atual continua viável, o objetivo não diminui e a restrição escala com a carteira (sem a
+       espiral de encolhimento do teto absoluto). Até ``FP_GOAL_ITERS`` passos ou até o objetivo
+       estabilizar.
+    3. Se a fatia ainda passar do PISO, até ``FP_FLOOR_ITERS`` passos de teto absoluto apertado
+       × ``FP_TIGHTEN`` — o piso nunca é relaxado: o orçamento fatorial encolhe."""
+    ratio = float(np.sqrt(s_goal / (1.0 - s_goal)))
+    no_fix = np.zeros(len(p.ids), dtype=bool)
+    secs = 0.0
+    notes: list[str] = []
+    steps = floor_steps = 0
+    assert outcome.w is not None
+    w = outcome.w
+
+    def worst_share(pp: _Problem, ww: np.ndarray) -> float:
+        sh = _shares(pp.factor_caps, ww)
+        vals = [v for v in sh.values() if np.isfinite(v)]
+        return max(vals) if vals else float("nan")
+
+    def absolute(pp: _Problem, ww: np.ndarray, margin: float) -> _Problem:
+        caps = tuple(replace(fc, lin=None,
+                             cap=ratio * margin * float(np.linalg.norm(fc.sd * ww)))
+                     for fc in pp.factor_caps)
+        return replace(pp, factor_caps=caps)
+
+    def run(pp: _Problem) -> _Outcome | None:
+        nonlocal secs
+        o = _solve_clean(pp, relax, fixed, no_fix)
+        secs += o.seconds
+        return o if o.w is not None else None
+
+    ws = worst_share(p, w)
+    if not warm and ws > s_goal * (1 + FP_REL_TOL):
+        p2 = replace(p, factor_caps=tuple(replace(fc, lin=None, cap=FP_NEUTRAL_CAP)
+                                          for fc in p.factor_caps))
+        o2 = run(p2)
+        steps += 1
+        if o2 is None:
+            notes.append("Teto de risco fatorial: passo inviável; mantida a solução anterior.")
+        else:
+            p, outcome, w = p2, o2, o2.w
+    prev_obj = outcome.objective
+    while steps < FP_GOAL_ITERS:
+        ws = worst_share(p, w)
+        if not (np.isfinite(ws) and ws <= s_goal * (1 + FP_REL_TOL)):
+            break  # tangente só a partir de um ponto viável
+        caps = tuple(_linearized(fc, w, ratio, 1.0) for fc in p.factor_caps)
+        p2 = replace(p, factor_caps=caps)
+        o2 = run(p2)
+        steps += 1
+        if o2 is None:
+            break
+        p, outcome, w = p2, o2, o2.w
+        obj = o2.objective
+        if prev_obj is not None and obj is not None \
+                and obj - prev_obj <= 1e-4 * max(abs(prev_obj), 1e-6):
+            break
+        prev_obj = obj
+    while s_floor is not None and floor_steps < FP_FLOOR_ITERS:
+        ws = worst_share(p, w)
+        if not ws > s_floor * (1 + FP_REL_TOL):
+            break
+        floor_steps += 1
+        p2 = absolute(p, w, FP_MARGIN * FP_TIGHTEN ** floor_steps)
+        o2 = run(p2)
+        if o2 is None:
+            break
+        p, outcome, w = p2, o2, o2.w
+    final = _shares(p.factor_caps, w)
+    idio_txt = ", ".join(f"{MODEL_PT.get(k, k)} {_pct_br(1 - v)}" for k, v in final.items()
+                         if np.isfinite(v))
+    notes.append(f"Teto de risco fatorial na carteira atingida (fatia fatorial máxima "
+                 f"{_pct_br(s_goal, 0)}): {steps + floor_steps} passo(s)"
+                 + (f"; fatia idiossincrática: {idio_txt}." if idio_txt else "."))
+    info = {"passos": steps + floor_steps, "passos_piso": floor_steps,
+            "tetos": {fc.nome: fc.limit_at(w) for fc in p.factor_caps}}
+    return p, outcome, secs, notes, info
+
+
+#: Modelos do gate idiossincrático (rótulo público).
+MODEL_PT = {"decisao": "modelo de decisão", "base": "modelo base"}
+#: Preço-sombra abaixo disto é resíduo do ponto interior (restrição não vinculante): 0.
+DUAL_TOL = 1e-6
+#: Folga abaixo disto (em módulo) é tolerância de viabilidade do solver: 0.
+FOLGA_TOL = 1e-6
+
+_EXPR = {
+    "net_exposure": ("Exposição líquida", "|Σ wᵢ| ≤ limite"),
+    "beta": ("Beta previsto vs. mercado LatAm", "|Σ βᵢ·wᵢ| ≤ limite"),
+    "vol_target": ("Volatilidade ex-ante", "√(wᵀ(B F Bᵀ + D) w) ≤ meta"),
+    "gross": ("Exposição bruta", "Σ |wᵢ| ≤ limite"),
+    "country": ("Exposição líquida do país {g}", "|Σ wᵢ (i ∈ {g})| ≤ limite do mandato"),
+    "op_country": ("Exposição líquida do país {g} (limite operacional)",
+                   "|Σ wᵢ (i ∈ {g})| ≤ limite operacional"),
+    "sector": ("Exposição líquida do setor {g}", "|Σ wᵢ (i ∈ {g})| ≤ limite"),
+    "style": ("Exposição ao estilo {g}", "|Σ xᵢ,{g}·wᵢ| ≤ limite (desvios-padrão × NAV)"),
+    "theme": ("Exposição: {g}", "|Σ eᵢ·wᵢ| ≤ limite"),
+    "country_share": ("Fatia do gross no país {g}", "Σ |wᵢ| (i ∈ {g}) ≤ fatia × gross"),
+    "turnover": ("Giro semanal", "Σ |wᵢ − wᵢ⁰| ≤ limite"),
+    "factor_risk": ("Risco fatorial (teto pela meta de vol)", "‖G w‖ ≤ √s·σ*"),
+    "factor_cap": ("Risco fatorial na carteira atingida — {g}",
+                   "√κ_F·‖G w‖ ≤ √(s/(1−s))·σ_esp(w)"),
+    "factor_hold": ("Risco fatorial não aumenta (decisão só de redução) — {g}",
+                    "√κ_F·‖G w‖ ≤ √κ_F·‖G w⁰‖"),
+    "linked_long": ("Grupo de controle {g} — pernas compradas",
+                    "Σ wᵢ⁺ (i ∈ {g}) ≤ teto por nome (long)"),
+    "linked_short": ("Grupo de controle {g} — pernas vendidas",
+                     "Σ wᵢ⁻ (i ∈ {g}) ≤ teto por nome (short)"),
+}
+
+
+def _versoes() -> dict[str, str | None]:
+    """Versões do numpy, do cvxpy e dos solvers (registradas com os números do solver, que
+    reproduzem por tolerância, não bit a bit)."""
+    from importlib import metadata
+
+    out: dict[str, str | None] = {"numpy": np.__version__, "cvxpy": cp.__version__}
+    for pkg in ("clarabel", "scs", "ecos"):
+        try:
+            out[pkg] = metadata.version(pkg)
+        except metadata.PackageNotFoundError:
+            out[pkg] = None
+    return out
+
+
+def _per_name_bounds(p: _Problem, w: np.ndarray, origins: dict[str, np.ndarray] | None
+                     ) -> dict[str, dict]:
+    """Dimensionamento por posição: tetos do lado, teto de negociação, qual vincula e a origem
+    do teto (``mandato``, ``liquidez``, ``visao``, ``squeeze``, ``adtv_minimo``,
+    ``risco_especifico``, ``capacidade_fechamento``, ``veto_short``, ``stop_squeeze``,
+    ``risco_por_nome``, ``congelado``, ``sem_alpha``, ``excluido_gestor``, ``so_reducao``)."""
+    per = set(_binding_per_name(p, w))
+    org = origins or {}
+    out: dict[str, dict] = {}
+    for i, iid in enumerate(p.ids):
+        wi = float(w[i])
+        trade_cap = float(p.trade_liq[i]) if p.trade_liq is not None else float(p.max_trade[i])
+        vinc: str | None = None
+        if f"max_long:{iid}" in per:
+            vinc = "long"
+        elif f"max_short:{iid}" in per:
+            vinc = "short"
+        elif f"max_trade:{iid}" in per or f"max_trade_liq:{iid}" in per:
+            vinc = "negociacao"
+        if wi == 0 and vinc is None:
+            continue
+        side = vinc if vinc in ("long", "short") else ("long" if wi > 0 else "short")
+        key = "origem_negociacao" if vinc == "negociacao" else f"origem_{side}"
+        arr = org.get(key)
+        origem = str(arr[i]) if arr is not None and str(arr[i]) else None
+        out[iid] = {"peso": sig(wi), "teto_long": sig(float(p.max_long[i])),
+                    "teto_short": sig(float(p.max_short[i])), "teto_negociacao": sig(trade_cap),
+                    "vinculante": vinc, "origem": origem}
+    return out
+
+
+def _formulacao(p: _Problem, relax: _Relax, w: np.ndarray, duals: dict | None, *,
+                alpha_raw: np.ndarray, alpha_scale: float, kappa: float,
+                relaxations: list[str], idio: dict[str, float], lam_mandate: float,
+                match_reached: bool | None, solver: str,
+                origins: dict[str, np.ndarray] | None = None) -> dict:
+    """Formulação resolvida como dados (texto em pt-BR, números do código): termos do objetivo
+    e cada restrição com limite, valor atingido, folga, se vincula e o preço-sombra
+    (``custo_bp_1pct`` = ganho do objetivo, em bp a.a. do NAV, se o limite afrouxasse 1%).
+
+    Complementaridade: restrição que não vincula tem preço-sombra 0 (o resíduo do ponto
+    interior não é publicado); folga abaixo da tolerância de viabilidade é 0. As chaves são as
+    mesmas da lista de restrições ativas (``binding_constraints``)."""
+    lim = _limits(p, relax)
+    duals = duals or {}
+    rows: list[dict] = []
+
+    def add(key: str, group: str, limit: float | None, value: float, label: str = "") -> None:
+        nome, expr = _EXPR[group]
+        nome = nome.format(g=label)
+        expr = expr.format(g=label)
+        folga = None if limit is None else float(limit) - abs(float(value))
+        if folga is not None and abs(folga) < FOLGA_TOL:
+            folga = 0.0
+        vinc = bool(limit is not None and limit > TOL
+                    and (float(limit) - abs(float(value))) / float(limit) < BINDING_REL_SLACK)
+        dual = duals.get(key)
+        if dual is not None and (not vinc or abs(dual) < DUAL_TOL):
+            dual = 0.0
+        rows.append({
+            "chave": key, "nome": nome, "expressao": expr, "limite": sig(limit),
+            "valor": sig(value), "folga": sig(folga), "vinculante": vinc,
+            "preco_sombra": sig(dual),
+            "custo_bp_1pct": (sig(dual * abs(float(limit)) * 100.0)
+                              if dual is not None and limit is not None else None),
+        })
+
+    l1, s1 = np.maximum(w, 0.0), np.maximum(-w, 0.0)
+    add("net_exposure", "net_exposure", p.net_max, float(w.sum()))
+    add("beta", "beta", lim.beta, float(p.beta @ w))
+    add("vol_target", "vol_target", p.vol_target, _vol_of(p, w))
+    add("gross", "gross", lim.gross, float(np.abs(w).sum()))
+    for names, mat, glim, key in ((p.country_names, p.countries, lim.country, "country"),
+                                  (p.sector_names, p.sectors, lim.sector, "sector"),
+                                  (p.style_names, p.styles, lim.style, "style")):
+        if mat.shape[0]:
+            for g, v in zip(names, mat @ w, strict=True):
+                add(f"{key}:{g}", key, glim, float(v), str(g))
+    if lim.op_country is not None and p.op is not None and p.op.countries.shape[0]:
+        for g, v, cl in zip(p.op.country_names, p.op.countries @ w, lim.op_country, strict=True):
+            add(f"op_country:{g}", "op_country", float(cl), float(v), str(g))
+    if p.themes is not None and lim.themes is not None and p.themes.shape[0]:
+        for t, v, tl in zip(p.theme_names, p.themes @ w, lim.themes, strict=True):
+            add(f"theme:{t}", "theme", float(tl), float(v), str(t))
+    if p.country_share is not None and p.countries.shape[0]:
+        gross = float(np.abs(w).sum())
+        for k, g in enumerate(p.country_names):
+            share = p.country_share[k]
+            if np.isfinite(share):
+                add(f"country_share:{g}", "country_share", float(share) * gross,
+                    float(p.countries[k] @ (l1 + s1)), str(g))
+    if lim.turnover is not None:
+        add("turnover", "turnover", lim.turnover, float(np.abs(w - p.w0).sum()))
+    if p.factor_vol_max is not None and p.G.shape[0]:
+        add("factor_risk", "factor_risk", p.factor_vol_max, float(np.linalg.norm(p.G @ w)))
+    for fc in p.factor_caps:
+        add(f"factor_risk:{fc.nome}", "factor_cap", fc.limit_at(w),
+            float(np.linalg.norm(fc.G @ w)), MODEL_PT.get(fc.nome, fc.nome))
+    for nome, Gh, cap_h in p.holds(relax):
+        add(f"factor_hold:{nome}", "factor_hold", cap_h, float(np.linalg.norm(Gh @ w)),
+            MODEL_PT.get(nome, nome))
+    if lim.linked and p.linked is not None:
+        for g, a, b in zip(p.linked_names, p.linked @ l1, p.linked @ s1, strict=True):
+            add(f"linked_long:{g}", "linked_long", p.linked_long, float(a), str(g))
+            add(f"linked_short:{g}", "linked_short", p.linked_short, float(b), str(g))
+
+    def at_cap(cap: np.ndarray, val: np.ndarray) -> int:
+        ok = cap > TOL
+        return int(np.sum(ok & ((cap - val) / np.where(ok, cap, 1.0) < BINDING_REL_SLACK)))
+
+    dw = np.abs(w - p.w0)
+    por_nome = {
+        "n_long": int((w > 0).sum()), "n_short": int((w < 0).sum()),
+        "n_no_teto_long": at_cap(p.max_long, l1) if len(w) else 0,
+        "n_no_teto_short": at_cap(p.max_short, s1) if len(w) else 0,
+        "n_no_teto_negociacao": int(np.sum((dw > TOL) & (p.max_trade > TOL)
+                                           & ((p.max_trade - dw) / np.where(
+                                               p.max_trade > TOL, p.max_trade, 1.0)
+                                              < BINDING_REL_SLACK))),
+        "n_vetados_long": int(np.sum(p.max_long <= TOL)),
+        "n_vetados_short": int(np.sum(p.max_short <= TOL)),
+    }
+    cost = _cost_numeric(p, w)
+    fvar = float(np.sum((p.G @ w) ** 2)) if p.G.shape[0] else 0.0
+    svar = float(np.sum((p.sd * w) ** 2))
+    pen_f = (float(p.lam_f * np.sum((p.GF @ w) ** 2))
+             if p.GF is not None and p.lam_f > 0 and p.GF.shape[0] else 0.0)
+    termos = [
+        {"nome": "Alpha esperado (a.a.)", "expressao": "αᵀw",
+         "coeficiente": sig(alpha_scale), "valor": sig(float(alpha_raw @ w))},
+        {"nome": "Custo de negociação amortizado", "expressao": "(52/H)·custo(w − w⁰)",
+         "coeficiente": sig(p.amort), "valor": sig(p.amort * cost)},
+        {"nome": "Aluguel dos shorts (a.a.)", "expressao": "taxaᵀ·w⁻",
+         "coeficiente": 1.0, "valor": sig(float(p.fee @ s1))},
+        {"nome": "Aversão a risco", "expressao": "λ·wᵀ(B F Bᵀ + D) w",
+         "coeficiente": sig(p.lam), "valor": sig(p.lam * (fvar + svar))},
+    ]
+    if pen_f:
+        termos.append({"nome": "Penalidade de risco fatorial", "expressao": "λ_F·κ_F·wᵀB F Bᵀw",
+                       "coeficiente": sig(p.lam_f), "valor": sig(pen_f)})
+    divisor = (lam_mandate / p.lam) if p.lam > 0 and lam_mandate > 0 else None
+    return {
+        "objetivo": {
+            "expressao": "max αᵀw − (52/H)·custo(w − w⁰) − taxaᵀw⁻ − λ·wᵀΣw"
+                         + (" − λ_F·κ_F·wᵀBFBᵀw" if pen_f else ""),
+            "termos": termos},
+        "restricoes": rows,
+        "por_nome": por_nome,
+        "limites_por_nome": _per_name_bounds(p, w, origins),
+        "parametros": {
+            "lambda_mandato": sig(lam_mandate), "lambda_efetivo": sig(p.lam),
+            "divisor_aversao": sig(divisor), "divisor_maximo": sig(MAX_ALPHA_SCALE),
+            "meta_vol_atingida": match_reached,
+            "lambda_f": sig(p.lam_f), "kappa_f": sig(kappa),
+            "amortizacao_semanas": sig(WEEKS_PER_YEAR / p.amort) if p.amort else None,
+            "escala_alpha": sig(alpha_scale), "meta_vol": sig(p.vol_target),
+            "degraus_escada": list(relaxations),
+            "idio": {k: sig(v) for k, v in idio.items()},
+            "solver": solver, "versoes": _versoes(),
+        },
+    }
+
+
+def _pct_br(x: float, digits: int = 1) -> str:
+    """Percentual em pt-BR (vírgula decimal) para notas geradas pelo código."""
+    return f"{x * 100:.{digits}f}%".replace(".", ",")
+
+
+def _vol_shortfall(p: _Problem, w: np.ndarray, *, lam_mandate: float, exp_alpha: float,
+                   one_off: float, band_min: float) -> tuple[str, dict]:
+    """Motivo, calculado na solução, de a vol ex-ante ficar abaixo do piso da banda:
+    ``capacidade`` (maioria das posições no teto por nome ou de negociação) ou ``custo_alpha``
+    (alpha esperado contra o custo de montagem amortizado, com a aversão a risco já no limite
+    da busca)."""
+    per = _binding_per_name(p, w)
+    n_pos = int(np.sum(w != 0))
+    n_cap = sum(1 for b in per if b.startswith(("max_long:", "max_short:")))
+    n_trade = sum(1 for b in per if b.startswith("max_trade"))
+    cost = p.amort * one_off
+    ratio = cost / exp_alpha if exp_alpha > 0 else None
+    divisor = lam_mandate / p.lam if p.lam > 0 and lam_mandate > 0 else None
+    saturated = divisor is not None and divisor >= MAX_ALPHA_SCALE * (1 - 1e-9)
+    capacity = n_pos > 0 and (n_cap + n_trade) >= 0.5 * n_pos
+    vol = _vol_of(p, w)
+    if capacity:
+        motivo = "capacidade"
+        txt = (f"{n_cap} de {n_pos} posições no teto por nome e {n_trade} no limite de "
+               "negociação")
+    else:
+        motivo = "custo_alpha"
+        txt = ("alpha esperado limitado pelos custos de montagem"
+               + (f" (custo amortizado = {_pct_br(ratio, 0)} do alpha esperado)"
+                  if ratio is not None else "")
+               + (f", aversão a risco já dividida pelo máximo da busca "
+                  f"({MAX_ALPHA_SCALE:.0f}×)" if saturated else "")
+               + f"; {n_cap} de {n_pos} posições no teto por nome")
+    note = (f"Vol ex-ante {_pct_br(vol, 2)} abaixo do piso da banda ({_pct_br(band_min, 0)}): "
+            f"{txt}; alpha não escalado.")
+    info = {"motivo": motivo, "posicoes": n_pos, "no_teto_nome": n_cap,
+            "no_teto_negociacao": n_trade, "custo_sobre_alpha": sig(ratio),
+            "aversao_no_limite": bool(saturated)}
+    return note, info
+
+
 def optimize(alpha: pd.Series, model: RiskModel, constraints: pd.DataFrame,
              cost_model: CostModel, cfg: FundConfig, nav: float,
              current: pd.Series | None = None, inception: bool = False,
-             market_w: pd.Series | None = None, overrides: dict | None = None,
+             market_w: pd.Series | None = None, overrides: dict | None = None, *,
+             model_base: RiskModel | None = None, kappa_f: float | None = None,
+             ccp_warm: dict | None = None,
              ) -> OptimizationResult:
     """Resolve a carteira-alvo da semana (pesos por emissor, fração do NAV).
 
@@ -948,17 +1779,24 @@ def optimize(alpha: pd.Series, model: RiskModel, constraints: pd.DataFrame,
     que ``trades.build_trades`` emite. ``market_w``: pesos de mercado, usados para o beta implícito do
     modelo quando ``constraints['beta']`` está ausente. ``overrides`` (do gestor, só apertam o
     mandato): ``vol_target`` (dentro da banda), ``gross_max``, ``gross_multiplier``,
-    ``risk_aversion``, ``max_weekly_turnover``, ``exclude_issuers``, ``risk_target_mode``.
+    ``risk_aversion``, ``max_weekly_turnover``, ``exclude_issuers``, ``risk_target_mode``,
+    ``vol_cap`` (teto de risco que só aperta, pode ficar abaixo da banda) e ``reduce_only``.
 
     ``risk_target_mode``: ``"cap"`` (padrão) trata a meta de vol como teto — com alpha fraco
     diante dos custos, a carteira fica abaixo da meta (a compliance alerta em ``VOL_MIN``).
     ``"match"`` calibra o menor κ ≥ 1 tal que a aversão a risco λ/κ faça o teto de vol ficar
     ativo (equivale a escalar alpha, custos e aluguel juntos: a troca alpha × custo é
     preservada); κ vai para ``alpha_scale`` e para as notas, e ``expected_alpha`` usa o alpha
-    original.
+    original. Com ``risk.vol_floor_alpha_scaling = False`` o alpha nunca é escalado para
+    alcançar o piso da banda (a vol abaixo do piso fica registrada em ``VOL_MIN``).
 
-    Levanta :class:`OptimizationError` se nenhum degrau da escada de relaxamento tornar o
-    problema viável (nunca devolve carteira zerada silenciosamente).
+    ``model_base``: modelo sem as janelas de evento (gate idiossincrático ``base``);
+    ``kappa_f``: inflação de 2ª ordem da covariância fatorial (padrão: :func:`risk.idio.kappa_f`);
+    ``ccp_warm``: linearização do teto fatorial de uma otimização anterior da mesma semana
+    (``OptimizationResult.ccp_lin``), usada como ponto de partida.
+
+    Levanta :class:`OptimizationError` (com ``codigo`` determinístico) se nenhum degrau da escada
+    de relaxamento tornar o problema viável (nunca devolve carteira zerada silenciosamente).
     """
     if not nav > 0:
         raise ValueError("NAV precisa ser positivo.")
@@ -987,11 +1825,21 @@ def optimize(alpha: pd.Series, model: RiskModel, constraints: pd.DataFrame,
         if vals.isna().any():
             raise ValueError(f"Coluna '{col}' com NaN: {list(vals.index[vals.isna()])}")
         cons[col] = vals.clip(lower=0.0)
+    # Origem dos tetos (dimensionamento publicado): os ajustes abaixo marcam o que apertam.
+    track = metodologia_ativa(cfg) and "origem_long" in cons.columns
+    before_l, before_s = cons["max_long"].copy(), cons["max_short"].copy()
+    if settings.reduce_only:
+        cons["max_long"] = np.minimum(cons["max_long"], w0.clip(lower=0.0))
+        cons["max_short"] = np.minimum(cons["max_short"], (-w0).clip(lower=0.0))
 
     # Cobertura do modelo de risco.
     B_ok = model.exposures.reindex(cons.index)[model.factor_names].notna().all(axis=1)
     D = pd.to_numeric(model.specific_var.reindex(cons.index), errors="coerce")
     in_model = B_ok & D.notna() & (D >= 0)
+    if model_base is not None:
+        Bb = model_base.exposures.reindex(cons.index)[model_base.factor_names].notna().all(axis=1)
+        Db = pd.to_numeric(model_base.specific_var.reindex(cons.index), errors="coerce")
+        in_model = in_model & Bb & Db.notna() & (Db >= 0)
     outside = list(cons.index[~in_model])
     held_bad = [i for i in outside if w0[i] != 0]
     if held_bad:
@@ -1024,6 +1872,31 @@ def optimize(alpha: pd.Series, model: RiskModel, constraints: pd.DataFrame,
     cons.loc[no_alpha, "max_short"] = np.minimum(cons.loc[no_alpha, "max_short"],
                                                  (-w0[no_alpha]).clip(lower=0.0))
     cons.loc[excluded_pm, ["max_long", "max_short"]] = 0.0
+    pinned_gross = 0.0
+    if "congelado" in cons.columns:
+        # Sem fechamento negociável na janela: a posição fica exatamente como está (prevalece
+        # sobre exclusão do gestor, falta de alpha e só-redução, que esperam o próximo pregão).
+        frozen = cons["congelado"].map(lambda v: isinstance(v, str) and v != "").astype(bool)
+        if frozen.any():
+            cons.loc[frozen, "max_long"] = w0[frozen].clip(lower=0.0)
+            cons.loc[frozen, "max_short"] = (-w0[frozen]).clip(lower=0.0)
+            cons.loc[frozen, "max_trade"] = 0.0
+            if "max_trade_liq" in cons.columns:
+                cons.loc[frozen, "max_trade_liq"] = 0.0
+            for i in cons.index[frozen]:
+                extra_reasons[i].append("congelado")
+            pinned_gross = float(w0[frozen].abs().sum())
+    if track:
+        for side, before in (("long", before_l), ("short", before_s)):
+            col = f"origem_{side}"
+            now = cons[f"max_{side}"]
+            for mask, tok in ((settings.reduce_only, "so_reducao"), (no_alpha, "sem_alpha"),
+                              (excluded_pm, "excluido_gestor")):
+                if isinstance(mask, bool):
+                    mask = pd.Series(mask, index=cons.index)
+                m = pd.Series(np.asarray(mask, dtype=bool), index=cons.index) \
+                    & (now < before - 1e-12)
+                cons.loc[m, col] = tok
     a_obj = a.where(~no_alpha, 0.0)  # sem retorno esperado: só risco e custo pesam
 
     # Beta: preferir a coluna; lacunas ⇒ beta implícito do modelo (com market_w) ou 1,0.
@@ -1053,9 +1926,30 @@ def optimize(alpha: pd.Series, model: RiskModel, constraints: pd.DataFrame,
 
     work = cons.loc[in_model]
     if work.empty:
-        raise OptimizationError("Nenhum emissor com cobertura do modelo de risco.")
+        raise OptimizationError("Nenhum emissor com cobertura do modelo de risco.",
+                                codigo=ERRO_SEM_COBERTURA)
+    rk = cfg.risk
+    kappa = 1.0
+    if rk.factor_risk_basis == "achieved" or rk.factor_risk_aversion_multiplier > 0:
+        if kappa_f is None:
+            from ..risk.idio import kappa_f as _kappa_f
+            kappa = float(_kappa_f(model, cfg)[0])
+        else:
+            kappa = float(kappa_f)
     p = _build_problem(a_obj.loc[work.index], model, work, cost_model, cfg, settings,
-                       w0.loc[work.index])
+                       w0.loc[work.index], model_base=model_base, kappa=kappa,
+                       pinned_gross=pinned_gross)
+    warm = False
+    if ccp_warm and p.factor_caps:
+        caps = []
+        for fc in p.factor_caps:
+            lin = ccp_warm.get(fc.nome)
+            if isinstance(lin, pd.Series):
+                caps.append(replace(fc, lin=lin.reindex(p.ids).fillna(0.0).to_numpy(float)))
+                warm = True
+            else:
+                caps.append(fc)
+        p = replace(p, factor_caps=tuple(caps))
     n = len(p.ids)
     n_candidates = int(((work["max_long"] > 0) | (work["max_short"] > 0)).sum())
     if n_candidates == 0:
@@ -1068,15 +1962,34 @@ def optimize(alpha: pd.Series, model: RiskModel, constraints: pd.DataFrame,
     no_fix = np.zeros(n, dtype=bool)
     outcome = _solve_clean(p, relax, no_fix, no_fix)
     total_seconds += outcome.seconds
-    steps = [s for s in RELAXATION_STEPS if not (s[0] == "turnover" and p.turnover_max is None)]
+    if p.op is None:
+        steps = [s for s in RELAXATION_STEPS
+                 if not (s[0] == "turnover" and p.turnover_max is None)]
+    else:
+        can_reduce = (not inception) and p.w0_gross > 0
+        steps = [s for s in OP_RELAXATION_STEPS
+                 if not (s[0] == "turnover" and p.turnover_max is None)
+                 and not (s[0].startswith("degross") and not can_reduce)
+                 and not (s[0] == "risk_floor" and not settings.floor_caps)]
     step_iter = iter(steps)
     while outcome.infeasible:
         nxt = next(step_iter, None)
         if nxt is None:
             break
-        relax = relax.step(nxt[0])
-        relaxations.append(nxt[0])
-        notes.append(nxt[1])
+        if nxt[0] == "risk_floor":
+            ceiling = float(settings.vol_target_base or settings.vol_target)
+            got = _risk_floor(p, relax, ceiling)
+            if got is None:
+                continue
+            p, finfo = got
+            relaxations.append(nxt[0])
+            gross_txt = f"{finfo['gross_depois']:.2f}".replace(".", ",")
+            notes.append(f"{nxt[1]}: vol até {_pct_br(finfo['vol_depois'], 2)} (teto "
+                         f"{_pct_br(finfo['vol_antes'], 2)}), gross até {gross_txt}x.")
+        else:
+            relax = relax.step(nxt[0])
+            relaxations.append(nxt[0])
+            notes.append(nxt[1])
         outcome = _solve_clean(p, relax, no_fix, no_fix)
         total_seconds += outcome.seconds
     if outcome.w is None:
@@ -1084,7 +1997,8 @@ def optimize(alpha: pd.Series, model: RiskModel, constraints: pd.DataFrame,
                   else "erro em todos os solvers: " + "; ".join(outcome.errors))
         diag = _diag(outcome.status, outcome.solver, total_seconds, None, None, None, [],
                      n_candidates, n_excluded, notes + [f"Otimização falhou: {reason}."])
-        raise OptimizationError(f"Otimização falhou: {reason}.", diag, relaxations)
+        raise OptimizationError(f"Otimização falhou: {reason}.", diag, relaxations,
+                                codigo=ERRO_INVIAVEL if outcome.infeasible else ERRO_SOLVER)
     if outcome.status == cp.OPTIMAL_INACCURATE:
         notes.append(f"Solver {outcome.solver} retornou solução imprecisa (optimal_inaccurate).")
     if outcome.errors:
@@ -1092,31 +2006,45 @@ def optimize(alpha: pd.Series, model: RiskModel, constraints: pd.DataFrame,
 
     # ---------- modo "match": calibra a escala do alpha para atingir a meta de vol ----------
     alpha_raw = p.alpha.copy()
-    kappa = 1.0
+    kappa_m = 1.0
+    alpha_mult = 1.0
+    match_reached: bool | None = None
+    if settings.risk_target_mode == "match" and outcome.w is not None:
+        match_reached = True
     if settings.risk_target_mode == "match" and outcome.w is not None \
             and _vol_of(p, outcome.w) < p.vol_target * (1 - MATCH_REL_TOL):
-        kappa, outcome, secs, reached = _match_vol_target(p, relax, outcome)
+        kappa_m, outcome, secs, reached = _match_vol_target(p, relax, outcome)
+        match_reached = bool(reached)
         total_seconds += secs
-        p = replace(p, lam=p.lam / kappa)
+        p = replace(p, lam=p.lam / kappa_m)
         if reached:
-            notes.append(f"Modo 'match': aversão a risco dividida por {kappa:.2f} para atingir a "
-                         "meta de vol (troca alpha × custo, aluguel e limites inalterados).")
+            notes.append(f"Modo 'match': aversão a risco dividida por {kappa_m:.2f} para atingir "
+                         "a meta de vol (troca alpha × custo, aluguel e limites inalterados).")
+        elif p.extended:
+            notes.append(f"Modo 'match': meta de vol não atingida com a aversão a risco dividida "
+                         f"por até {MAX_ALPHA_SCALE:.0f} (limite da busca); divisor usado "
+                         f"{f'{kappa_m:.2f}'.replace('.', ',')}.")
         else:
             notes.append(f"Modo 'match': meta de vol inatingível só reduzindo a aversão a risco "
                          f"(alpha líquido de custos insuficiente ou capacidade de liquidez/"
-                         f"aluguel); usado {kappa:.2f}x.")
+                         f"aluguel); usado {kappa_m:.2f}x.")
             floor = min(float(cfg.risk.vol_band_min) * (1 + FLOOR_MARGIN), p.vol_target)
             if _vol_of(p, outcome.w) < floor * (1 - MATCH_REL_TOL):
-                # Piso da banda do mandato: escala o alpha só até a vol mínima (nunca além).
-                k2, out2, secs2, reached2 = _match_vol_target(p, relax, outcome, scale="alpha",
-                                                              target_vol=floor)
-                total_seconds += secs2
-                outcome = out2
-                p = replace(p, alpha=p.alpha * k2)
-                kappa *= k2
-                notes.append(f"Modo 'match': alpha escalado em {k2:.2f}x só para atingir o piso "
-                             f"da banda de vol com margem ({floor:.2%})"
-                             + ("." if reached2 else " — piso inatingível (capacidade)."))
+                if cfg.risk.vol_floor_alpha_scaling:
+                    # Piso da banda do mandato: escala o alpha só até a vol mínima (nunca além).
+                    k2, out2, secs2, reached2 = _match_vol_target(p, relax, outcome,
+                                                                  scale="alpha",
+                                                                  target_vol=floor)
+                    total_seconds += secs2
+                    outcome = out2
+                    p = replace(p, alpha=p.alpha * k2)
+                    kappa_m *= k2
+                    alpha_mult = k2
+                    notes.append(f"Modo 'match': alpha escalado em {k2:.2f}x só para atingir o "
+                                 f"piso da banda de vol com margem ({floor:.2%})"
+                                 + ("." if reached2 else " — piso inatingível (capacidade)."))
+                # Sem escala do alpha: o motivo (capacidade ou custo × alpha) é medido na solução
+                # final, abaixo.
     assert outcome.w is not None
 
     # ---------- passadas de limpeza (posição mínima) ----------
@@ -1146,6 +2074,19 @@ def optimize(alpha: pd.Series, model: RiskModel, constraints: pd.DataFrame,
         fixed = trial_fixed
         outcome = out2
         w = out2.w
+
+    # ---------- teto de risco fatorial na carteira atingida (ponto fixo) ----------
+    s_goal = factor_share_goal(cfg)
+    s_floor = factor_share_floor(cfg)
+    fp_info: dict = {}
+    if p.factor_caps and s_goal is not None:
+        p, outcome, secs, fp_notes, fp_info = _achieved_fixed_point(p, relax, fixed, outcome,
+                                                                    s_goal, s_floor, warm=warm)
+        total_seconds += secs
+        notes.extend(fp_notes)
+        assert outcome.w is not None
+        w = outcome.w
+
     residual = (np.abs(w) > 0) & (np.abs(w) < min_pos)
     if residual.any():
         notes.append(f"{int(residual.sum())} posições abaixo do mínimo de {min_pos:.2%} "
@@ -1174,17 +2115,55 @@ def optimize(alpha: pd.Series, model: RiskModel, constraints: pd.DataFrame,
     if vol > p.vol_target * (1 + TOL) + TOL:
         notes.append(f"Vol ex-ante {vol:.4%} acima da meta {p.vol_target:.4%} "
                      "(imprecisão do solver).")
-    binding = _binding(p, relax, w)
     x = pd.Series(model.exposures.loc[p.ids, model.factor_names].to_numpy().T @ w,
                   index=model.factor_names)
+    idio: dict[str, float] = {}
+    formulacao: dict = {}
+    if p.extended:
+        caps = list(p.factor_caps)
+        if not caps:
+            root_k = float(np.sqrt(max(kappa, 1.0)))
+            caps = [_FactorCap("decisao", root_k * p.G, p.sd, float("inf"))]
+            if model_base is not None and "base" in rk.idio_gate_models:
+                Gb, sdb = _factor_root(model_base, p.ids)
+                caps.append(_FactorCap("base", root_k * Gb, sdb, float("inf")))
+        idio = {k: 1.0 - v for k, v in _shares(caps, w).items() if np.isfinite(v)}
+        origins = None
+        if track:
+            origins = {col: cons.loc[p.ids, col].fillna("").astype(str).to_numpy()
+                       for col in ("origem_long", "origem_short", "origem_negociacao")
+                       if col in cons.columns}
+        formulacao = _formulacao(p, relax, w, outcome.duals, alpha_raw=alpha_raw,
+                                 alpha_scale=alpha_mult, kappa=kappa, relaxations=relaxations,
+                                 idio=idio, lam_mandate=settings.risk_aversion,
+                                 match_reached=match_reached, solver=outcome.solver,
+                                 origins=origins)
+        if fp_info:
+            formulacao["parametros"]["ponto_fixo"] = {
+                "passos": fp_info["passos"], "passos_piso": fp_info["passos_piso"],
+                "tetos": {k: sig(v) for k, v in fp_info["tetos"].items()}}
+    binding = _binding(p, relax, w, formulacao if p.extended else None)
     notes.append(f"Perna comprada {l1.sum():.2%}, vendida {s1.sum():.2%}; "
                  f"custo pontual {one_off * 1e4:.1f} bps do NAV; "
                  f"aluguel {borrow * 1e4:.1f} bps a.a.")
+    if settings.risk_target_mode == "match" and not cfg.risk.vol_floor_alpha_scaling \
+            and vol < rk.vol_band_min - TOL and p.vol_target >= rk.vol_band_min - TOL \
+            and not any(r.startswith(("degross", "risk_floor")) for r in relaxations):
+        # Meta dentro da banda e não alcançada (teto de redução de risco abaixo do piso ou degrau
+        # de redução já têm a própria nota).
+        short_note, short_info = _vol_shortfall(p, w, lam_mandate=settings.risk_aversion,
+                                                exp_alpha=exp_alpha, one_off=one_off,
+                                                band_min=float(rk.vol_band_min))
+        notes.append(short_note)
+        if formulacao:
+            formulacao["parametros"]["vol_abaixo_do_piso"] = short_info
     diag = _diag(outcome.status, outcome.solver, total_seconds, outcome.objective, exp_alpha,
                  cost_annual, binding, n_candidates, n_excluded, notes)
     return OptimizationResult(
         weights=weights, ex_ante_vol=vol, diagnostics=diag, relaxations=relaxations,
         expected_alpha=exp_alpha, expected_cost=one_off, borrow_cost_annual=borrow,
         trades=trades, factor_exposures=x, vol_target=p.vol_target, passes=passes,
-        alpha_scale=kappa,
+        alpha_scale=kappa_m, formulacao=formulacao, idio=idio, kappa_f=kappa,
+        ccp_lin={fc.nome: pd.Series(fc.lin, index=p.ids) for fc in p.factor_caps
+                 if fc.lin is not None},
     )

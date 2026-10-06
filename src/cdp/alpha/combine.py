@@ -443,6 +443,27 @@ def build_alpha(
     )
 
 
+def reresidualize(alpha: pd.Series, model: RiskModel) -> tuple[pd.Series, list[str]]:
+    """Reortogonaliza aos fatores um alpha já inclinado pelas visões (a inclinação não é
+    ortogonal): resíduo WLS (pesos 1/σ² limitados) nos emissores com alpha; emissor sem alpha
+    continua ``NaN`` (nunca zero). Devolve o alpha puro e o diagnóstico de ortogonalidade."""
+    notes: list[str] = []
+    a = pd.to_numeric(alpha, errors="coerce").astype(float)
+    if a.notna().sum() == 0:
+        return a, ["Reortogonalização após as visões: sem alpha válido."]
+    inv_var = wls_weights(model.specific_var.reindex(a.index), notes)
+    res, used, _rank = _wls_residual(a, model.exposures, inv_var)
+    lost = a.notna() & res.isna()
+    out = res.where(~lost, np.nan)
+    notes.extend(f"Após as visões: {m}" for m in
+                 _orthogonality_notes(a, res, model.exposures, inv_var, used))
+    if lost.any():
+        notes.append(f"Reortogonalização após as visões: {int(lost.sum())} emissor(es) sem "
+                     "exposições completas ficaram sem alpha.")
+    out.name = alpha.name
+    return out, notes
+
+
 def wls_weights(specific_var: pd.Series, notes: list[str] | None = None) -> pd.Series:
     """Pesos da ortogonalização: ``1/σ²_específico``, limitados a ``MAX_WLS_WEIGHT_RATIO`` ×
     mediana. Variância ausente ou não positiva ⇒ ``NaN`` (emissor não ortogonalizável)."""

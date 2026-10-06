@@ -90,16 +90,18 @@ def risk_decomposition(w: pd.Series, model: RiskModel) -> RiskDecomposition:
         asset_contrib = (wa * sigma_w).loc[held] / total_var
         mctr = sigma_w / sigma
         factor_share = factor_var / total_var
+        groups = GROUPS + (("macro",) if "macro" in model.factor_groups.values() else ())
         by_group = {g: float(by_factor[[f for f in by_factor.index
                                          if model.factor_groups.get(f) == g]].sum())
-                    for g in GROUPS}
+                    for g in groups}
         by_group["specific"] = specific_var / total_var
     else:
         by_factor = pd.Series(np.nan, index=x.index)
         asset_contrib = pd.Series(np.nan, index=held, dtype=float)
         mctr = pd.Series(np.nan, index=B.index)
         factor_share = np.nan
-        by_group = {g: np.nan for g in (*GROUPS, "specific")}
+        groups = GROUPS + (("macro",) if "macro" in model.factor_groups.values() else ())
+        by_group = {g: np.nan for g in (*groups, "specific")}
     return RiskDecomposition(
         total_vol=sigma,
         factor_vol=float(np.sqrt(max(factor_var, 0.0))),

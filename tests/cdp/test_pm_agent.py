@@ -212,7 +212,7 @@ def test_schema_requires_mind_and_exports_enum(tmp_path):
     pm_schema = json.loads(paths["pm_decision.schema.json"].read_text(encoding="utf-8"))
     rp_schema = json.loads(paths["research_pack.schema.json"].read_text(encoding="utf-8"))
     assert set(pm_schema["properties"]["mind"]["enum"]) == {"claude-code", "codex", "api",
-                                                            "demo"}
+                                                            "demo", "chatgpt", "gemini", "outro"}
     assert "mind" in rp_schema["required"]
     assert {"notes", "macro", "views"} <= set(rp_schema["properties"])
 

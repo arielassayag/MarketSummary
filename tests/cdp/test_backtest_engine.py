@@ -44,7 +44,7 @@ from cdp.config import load_config
 from cdp.data.synthetic import make_synthetic_market
 from cdp.portfolio.optimizer import OptimizationError
 
-CFG_PATH = Path(__file__).resolve().parents[2] / "configs" / "cdp" / "fund.yaml"
+CFG_PATH = Path(__file__).resolve().parent / "fixtures" / "fund_legado.yaml"
 CFG = load_config(CFG_PATH)
 START = date(2023, 12, 4)
 AS_OF = date(2024, 2, 23)
@@ -274,6 +274,18 @@ def test_rebalance_dates_first_trading_day_of_week():
     assert pd.Timestamp("2024-01-01") not in reb  # início no meio da semana: próxima semana
     assert list(reb) == [pd.Timestamp(x) for x in
                          ("2024-01-08", "2024-01-16", "2024-01-22", "2024-01-29")]
+
+
+def test_rebalance_dates_last_trading_day_of_week_for_the_nyse_rule():
+    from test_calendar import ativado
+
+    cal = pd.bdate_range("2024-03-18", "2024-04-05").drop(pd.Timestamp("2024-03-29"))
+    reb = rebalance_dates(cal, date(2024, 3, 18), date(2024, 4, 5), rule="last")
+    assert list(reb) == [pd.Timestamp(x) for x in ("2024-03-22", "2024-03-28", "2024-04-05")]
+    assert eng.rebalance_rule(ativado()) == ("last", "XNYS")
+    assert eng.rebalance_rule(CFG) == ("first", "BVMF")
+    with pytest.raises(ValueError):
+        rebalance_dates(cal, date(2024, 3, 18), rule="meio")
 
 
 def test_rf_daily_uses_previous_day_rate(md):

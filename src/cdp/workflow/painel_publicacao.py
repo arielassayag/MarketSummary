@@ -41,6 +41,8 @@ from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import asdict, dataclass, replace
 from typing import Any
 
+from ..contracts import HARNESS_MINDS
+
 PROFILES = ("publicacao", "completo")
 #: Orçamento do ``data.json`` publicado (bytes UTF-8 e caracteres por linha).
 DATA_MAX_BYTES = 260_000
@@ -1396,8 +1398,12 @@ _IT_KEYS = frozenset({"mind", "minds", "snapshot_id"})
 #: [IA]", "Mente: codex"): no perfil publicado a oração inteira sai — a página fala de gestão,
 #: não de ferramentas. O ``\b`` antes de "mente" preserva os advérbios ("somente em",
 #: "fortemente comprada", "principalmente do", "inteiramente simulado").
-_MIND_NAMES = r"(?i:claude-code|codex)"
-_ANY_MIND = r"(?i:claude-code|codex|demo|api)"
+#: Todas as mentes de ``HARNESS_MINDS``; soltas no texto, só os nomes de assistentes (``demo``,
+#: ``api`` e ``outro`` só saem depois de "mente").
+_MIND_NAMES = "(?i:" + "|".join(re.escape(m) for m in sorted(
+    (m for m in HARNESS_MINDS if m not in ("api", "demo", "outro")), key=len, reverse=True)) + ")"
+_ANY_MIND = "(?i:" + "|".join(re.escape(m) for m in sorted(HARNESS_MINDS, key=len,
+                                                           reverse=True)) + ")"
 _MIND_CLAUSE_RE = re.compile(
     rf"(?P<sep>[ \t]*[;,·][ \t]*|[ \t]*)\b[Mm]ente(?::[ \t]*|[ \t]+){_ANY_MIND}\b"
     rf"(?:[ \t]*\[IA\])?(?P<end>[ \t]*[.;,·])?(?P<ws>[ \t]*)")

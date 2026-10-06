@@ -439,9 +439,131 @@ _MARKUP_RES: tuple[tuple[str, re.Pattern[str]], ...] = (
     ("referencia_markdown", _P(r"(?m)^\s*\[[^\]\n]+\]:\s*\S+")),
     ("url", _P(r"(?i)\b(?:https?|ftp|file|javascript|data|vbscript|mailto)\s*:|\bwww\.")),
     ("html", _P(r"<(?:/?[A-Za-z][\w:-]*(?:\s[^<>]*)?/?>|!--)")),
+    # Emojis e pictogramas (texto para investidores qualificados; docs/cdp/ESTILO.md).
+    ("emoji", _P("[☀-➿⬀-⯿️\U0001f000-\U0001faff]")),
 )
 """Marcação proibida em texto livre de modelo: links/imagens (exfiltração ao renderizar),
-URLs e HTML. Fontes externas entram só como evidência (``EvidenceRef``), nunca no texto."""
+URLs, HTML e emojis. Fontes externas entram só como evidência (``EvidenceRef``), nunca no texto."""
+
+# ==========================================================
+# Guia de estilo (docs/cdp/ESTILO.md): vocabulário vetado em texto para o investidor
+# ==========================================================
+
+STYLE_AI_NAMES: tuple[str, ...] = (
+    "chatgpt", "gemini", "claude", "codex", "copilot", "openai", "gpt", "anthropic",
+)
+"""Nomes de assistentes e fornecedores de IA (inclusive as mentes de ``HARNESS_MINDS``): casam
+também em formas hifenizadas (nome da mente com hífen, nome seguido de versão)."""
+STYLE_IT_TERMS: tuple[str, ...] = (
+    "json", "hash", "sha256", "sha-256", "commit", "pipeline", "script", "prompt", "llm",
+    "endpoint", "backend", "frontend", "deploy", "python", "dataframe", "parquet", "mcp",
+    "github", *STYLE_AI_NAMES,
+)
+"""Jargão de tecnologia e nomes de assistentes: nunca em texto lido pelo investidor (o processo
+é descrito em termos de investimento; ``pipeline`` de projetos/lançamentos vira "carteira de
+projetos")."""
+STYLE_CASUAL_TERMS: tuple[str, ...] = (
+    "galera", "tipo assim", "show de bola", "bombando", "bombou", "bombar", "to the moon",
+    "kkk", "haha", "rsrs", "pra", "tá", "né", "vc", "blz",
+)
+"""Coloquialismos e gírias (o registro é institucional)."""
+STYLE_HYPE_TERMS: tuple[str, ...] = (
+    "imperdível", "imperdivel", "incrível", "incrivel", "sensacional", "espetacular",
+    "fantástico", "fantastico", "explosivo", "explosiva", "foguete", "retorno garantido",
+    "lucro garantido", "dinheiro fácil", "oportunidade única", "não perca",
+)
+"""Adjetivos promocionais e promessas (sem hype; nada de retorno garantido)."""
+
+
+def _alts(terms: Iterable[str]) -> str:
+    return "|".join(re.escape(t) for t in sorted(terms, key=len, reverse=True))
+
+
+def _term_re(terms: Iterable[str]) -> re.Pattern[str]:
+    return _P(rf"(?i)(?<![\w-])(?:{_alts(terms)})(?![\w-])")
+
+
+def _tech_re() -> re.Pattern[str]:
+    """Jargão com fronteira estrita (hífen conta como parte da palavra) e nomes de assistentes
+    com fronteira só de letra/dígito: o nome seguido de hífen e versão também casa."""
+    tech = [t for t in STYLE_IT_TERMS if t not in STYLE_AI_NAMES]
+    return _P(rf"(?i)(?:(?<![\w-])(?:{_alts(tech)})(?![\w-])"
+              rf"|(?<!\w)(?:{_alts(STYLE_AI_NAMES)})(?!\w))")
+
+
+_STYLE_RES: tuple[tuple[str, re.Pattern[str]], ...] = (
+    ("jargão de tecnologia", _tech_re()),
+    ("registro coloquial", _term_re(STYLE_CASUAL_TERMS)),
+    ("tom promocional", _term_re(STYLE_HYPE_TERMS)),
+    ("exclamação", _P(r"!(?!\[)")),
+)
+
+
+def style_issues(text: str) -> list[str]:
+    """Violações do guia de estilo (``docs/cdp/ESTILO.md``) num texto para o investidor:
+    ``["<categoria>: <termos>"]`` (vazio = conforme). Emojis entram em
+    :func:`text_format_issues`."""
+    if not isinstance(text, str) or not text:
+        return []
+    s = PLACEHOLDER_RE.sub(" ", text)
+    out: list[str] = []
+    for name, rx in _STYLE_RES:
+        hits = list(dict.fromkeys(m.group(0).lower() for m in rx.finditer(s)))
+        if hits:
+            out.append(f"{name}: {hits}")
+    return out
+
+
+def style_problems(path: str, text: str) -> list[str]:
+    """:func:`style_issues` com o caminho do campo (formato dos demais apontamentos)."""
+    return [f"{path}: fora do guia de estilo ({i})" for i in style_issues(text)]
+
+
+#: Sufixos de nomes de host que não são públicos (rede local, intranet, testes, exemplos).
+PRIVATE_HOST_SUFFIXES: tuple[str, ...] = (
+    ".local", ".localhost", ".internal", ".intranet", ".lan", ".home", ".corp", ".private",
+    ".test", ".example", ".invalid", ".arpa",
+)
+
+
+def url_host(url: str) -> str | None:
+    """Host (minúsculo, sem ponto final) de uma URL; ``None`` se não houver ou for ilegível."""
+    import urllib.parse
+
+    try:
+        host = urllib.parse.urlparse(str(url).strip()).hostname
+    except ValueError:
+        return None
+    return host.lower().rstrip(".") if host else None
+
+
+def public_host_problem(url: str) -> str | None:
+    """Motivo para recusar o host de uma URL citada como fonte pública (``None`` = aceito):
+    endereço IP literal (público ou não), ``localhost``, nome sem domínio (rótulo único) ou
+    sufixo de rede local/intranet/teste (:data:`PRIVATE_HOST_SUFFIXES`). Uma fonte pública
+    se abre por um nome de domínio na internet."""
+    import ipaddress
+
+    host = url_host(url)
+    if not host:
+        return "URL sem host"
+    try:
+        ipaddress.ip_address(host.strip("[]"))
+    except ValueError:
+        pass
+    else:
+        return "endereço IP no lugar de um domínio público"
+    if host == "localhost" or "." not in host:
+        return "host sem domínio público"
+    if host.endswith(PRIVATE_HOST_SUFFIXES):
+        return "domínio de rede local, intranet ou teste"
+    return None
+
+
+def host_in(url: str, domains: Iterable[str]) -> bool:
+    """O host de ``url`` é um dos ``domains`` ou subdomínio de um deles."""
+    host = url_host(url)
+    return bool(host) and any(host == d or host.endswith("." + d) for d in domains)
 
 
 def find_markup(text: str) -> list[str]:

@@ -22,7 +22,7 @@ from cdp.__main__ import build_parser
 ROOT = Path(__file__).resolve().parents[2]
 MARKETPLACE = ROOT / ".claude-plugin" / "marketplace.json"
 PLUGIN = ROOT / "plugins" / "cdp"
-SKILLS = {"semanal", "diario", "risco", "status", "calibracao"}
+SKILLS = {"semanal", "diario", "cobertura", "risco", "status", "calibracao"}
 ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
 SKILL_NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 SCRIPTS = ["cdp_setup_local.sh", "cdp_setup_local.ps1", "cdp_run_task.sh", "cdp_run_task.ps1"]
@@ -31,8 +31,8 @@ TESES = ROOT / "docs" / "cdp" / "teses"
 #: Versão do plugin e resumo das skills nessa versão. A instalação pelo marketplace do GitHub guarda
 #: uma cópia presa à ``version`` (docs/cdp/LOCAL.md): skills novas com a versão antiga nunca chegam
 #: às rotinas. Mudou uma skill ⇒ suba a ``version`` em plugin.json e atualize os dois valores.
-PLUGIN_VERSION = "1.3.0"
-SKILLS_SHA256 = "072eb2d2a73bce334230f689a238d16b5b27d05af9e6e4682660548061402646"
+PLUGIN_VERSION = "1.4.0"
+SKILLS_SHA256 = "7c577c23da5586810f9ccd4ab0ab359136e5dada26e498197102ccefd4950fce"
 
 
 def _skill_files() -> list[Path]:
@@ -46,7 +46,8 @@ def _project_skill_files() -> list[Path]:
 def _doc_files() -> list[Path]:
     docs = ROOT / "docs" / "cdp"
     return [*_skill_files(), *_project_skill_files(), PLUGIN / "README.md", docs / "LOCAL.md",
-            docs / "ROTINAS.md", docs / "TESE.md", TESES / "README.md",
+            docs / "ROTINAS.md", docs / "TESE.md", TESES / "README.md", docs / "NOTAS.md",
+            docs / "notas" / "README.md", docs / "ESTILO.md", docs / "REPRODUZIR.md",
             *sorted((docs / "playbooks").glob("*.md")), ROOT / "AGENTS.md", ROOT / "CLAUDE.md"]
 
 
@@ -128,7 +129,7 @@ def test_skills_use_claude_code_mind_only():
 
 def test_project_skills_delegate_to_plugin():
     files = {p.parent.name: p for p in _project_skill_files()}
-    assert set(files) == {"cdp-semanal", "cdp-diario"}
+    assert set(files) == {"cdp-semanal", "cdp-diario", "cdp-cobertura"}
     for name, path in files.items():
         fm = _frontmatter(path)
         assert fm["name"] == name and fm["description"]
@@ -193,7 +194,8 @@ def test_every_cli_command_in_skills_and_docs_parses():
             pytest.fail(f"{where}: a CLI rejeita `{cmd}`")
         seen.add(args.cmd)
     assert {"agenda", "risk", "validate-daily", "daily", "weekly", "validate", "verify",
-            "kill-switch", "backtest", "status", "painel", "tese", "validate-tese"} <= seen
+            "kill-switch", "backtest", "status", "painel", "tese", "validate-tese", "nota",
+            "validate-nota", "mente", "cobertura", "validate-weekly-report"} <= seen
 
 
 def test_painel_command_defaults():
@@ -310,11 +312,17 @@ def test_skill_commands_cover_their_workflow():
     assert "kill-switch off" not in " ".join(by_skill.values())
     assert "verify" in by_skill["status"] and "agenda" in by_skill["status"]
     assert "backtest" in by_skill["calibracao"]
+    for cmd in ("nota agenda", "nota prepare --issuer", "validate-nota --issuer",
+                "nota publish --issuer", "verify"):
+        assert cmd in by_skill["cobertura"], cmd
+    for cmd in ("weekly close-report --date", "validate-weekly-report --date",
+                "--publish", "cobertura run --date"):
+        assert cmd in by_skill["diario"], cmd
     for name in SKILLS:
         assert "agenda" in by_skill[name] or name == "calibracao" and "backtest" in by_skill[name]
 
 
-PAINEL_SKILLS = ("semanal", "diario", "risco", "calibracao")
+PAINEL_SKILLS = ("semanal", "diario", "cobertura", "risco", "calibracao")
 PAINEL_HTML = "artifacts/painel/index.html"
 PAINEL_DATA = "artifacts/painel/data.json"
 PAINEL_PUBLISH = ('`file_path` = `artifact.publicar.file_path`', '`files` = `artifact.publicar.files`')
@@ -418,7 +426,7 @@ def _cmd_line_before(text: str, needle: str) -> str:
     return next(ln for ln in reversed(lines) if ln.startswith(("uv run", "git ", "`uv run")))
 
 
-@pytest.mark.parametrize("name,step", [("semanal", "8"), ("diario", "6")])
+@pytest.mark.parametrize("name,step", [("semanal", "8"), ("diario", "7")])
 def test_verify_runs_right_before_the_painel_on_every_path(name: str, step: str):
     """Todo caminho que chega ao painel (montagem, retomada só da tese, tese já publicada, prepare
     ou publish com falha) passa por um ``verify`` logo antes dele, e é esse ``verify`` que libera o
@@ -582,7 +590,7 @@ def test_run_task_scripts_wait_for_the_lock_and_report_skips():
     for script in ("cdp_run_task.sh", "cdp_run_task.ps1"):
         text = (ROOT / "scripts" / script).read_bytes().decode("utf-8-sig")
         assert "CDP_LOCK_WAIT_MIN" in text and "exit 75" in text, script
-        assert "semanal" in text and "diario" in text
+        assert "semanal" in text and "diario" in text and "cobertura" in text
     ps1 = (ROOT / "scripts" / "cdp_run_task.ps1").read_bytes().decode("utf-8-sig")
     assert "[Console]::OutputEncoding = [System.Text.Encoding]::UTF8" in ps1
     assert re.search(r"try \{\s*& \$claude", ps1) and "CommandNotFoundException" in ps1
@@ -602,8 +610,9 @@ def test_project_semanal_validates_with_mind():
 def test_local_guide_schedules_backups_and_is_honest_about_prompts():
     local = (ROOT / "docs" / "cdp" / "LOCAL.md").read_text(encoding="utf-8")
     flat = " ".join(local.split())
-    for needle in ("cdp-semanal-b", "cdp-semanal-c", "cdp-semanal-d", "12:37", "14:07", "15:07",
-                   "cdp-diario-reforco", "21:07", "uma tarefa por vez", "últimos 7 dias",
+    for needle in ("cdp-semanal-b", "cdp-semanal-c", "cdp-semanal-d", "12:07", "13:07", "14:07",
+                   "cdp-diario-reforco", "21:07", "cdp-cobertura", "21:30", "uma tarefa por vez",
+                   "últimos 7 dias", "último pregão da semana na NYSE", "prazo efetivo",
                    "Register-ScheduledTask", "-AllowStartIfOnBatteries",
                    "-DontStopIfGoingOnBatteries", "-StartWhenAvailable", "-WindowStyle Hidden",
                    "feche e reabra o app", "git pull --no-rebase --no-edit", "clone dedicado",
@@ -615,7 +624,7 @@ def test_local_guide_schedules_backups_and_is_honest_about_prompts():
     for script in ("cdp_setup_local.sh", "cdp_setup_local.ps1"):
         text = (ROOT / "scripts" / script).read_bytes().decode("utf-8-sig")
         for task in ("cdp-semanal-b", "cdp-semanal-c", "cdp-semanal-d", "cdp-diario-reforco",
-                     "cdp-calibracao", "cdp-status"):
+                     "cdp-cobertura", "cdp-calibracao", "cdp-status"):
             assert task in text, (script, task)
         assert "feche e reabra o app do Claude" in text, script
 
@@ -713,6 +722,8 @@ def test_project_settings_permissions():
                       "book/2026-10-05/inputs/pm_decision.json",
                       "book/2026-10-05/tese/tese.json",
                       "reports/daily/2026-10-05/comentario.json",
+                      "reports/semanal/2026-10-09/comentario.json",
+                      "book/cobertura/notas/BR_VALE/2026-10-15/nota.json",
                       "reports/backtest/2026-11-02/CALIBRACAO_MENSAL.md", PAINEL_URL):
         assert _matches(a, mind_file) and not _matches(d, mind_file), mind_file
     # O painel é gerado pelo código; a ferramenta Artifact só vale dentro das skills.
@@ -737,8 +748,26 @@ def test_project_settings_permissions():
                       "reports/daily/2026-10-05/relatorio.md",
                       "reports/daily/2026-10-05/facts.md",
                       "reports/weekly/2026-10-05/relatorio.md",
-                      "reports/risk/2026-10-05/risco_1330.md"):
+                      "reports/risk/2026-10-05/risco_1330.md",
+                      "reports/semanal/2026-10-09/relatorio.md",
+                      "reports/semanal/2026-10-09/fatos.md",
+                      "reports/semanal/2026-10-09/factbook.json",
+                      "reports/semanal/2026-10-09/comentario.schema.json",
+                      "book/cobertura/livro.jsonl",
+                      "book/cobertura/2026-10-09/manifest.json",
+                      "book/cobertura/2026-10-09/selo.json",
+                      "book/cobertura/2026-10-09/modelos.csv",
+                      "book/cobertura/2026-10-09/modelos/BR_VALE.json",
+                      "book/cobertura/2026-10-09/insumos/emissores.json.gz",
+                      "data/publico/cvm/dfp_2025.zip"):
         assert _matches(d, code_file), code_file
+    # Notas de pesquisa: a mente só edita nota.json; o resto é do código.
+    for generated in ("fatos.md", "factbook.json", "contexto.json", "nota.schema.json",
+                      "nota_publicada.json", "nota.md"):
+        path = f"book/cobertura/notas/BR_VALE/2026-10-15/{generated}"
+        assert _matches(d, path) and not _matches(a, path), path
+    assert "Skill(cdp:cobertura)" in allow and "Skill(cdp-cobertura)" in allow
+    assert not any(r.startswith("mcp__") or r.startswith("Mcp") for r in allow + ask + deny)
     assert _matches(k, "configs/cdp/fund.yaml") and not _matches(a, "configs/cdp/fund.yaml")
     assert s["env"]["PYTHONUTF8"] == "1"
 
@@ -773,7 +802,8 @@ def test_repo_files_for_local_operation():
         assert line in attrs
     local = (ROOT / "docs" / "cdp" / "LOCAL.md").read_text(encoding="utf-8")
     for needle in ("claude plugin marketplace add", "claude plugin install cdp@cdp-cabra-da-peste",
-                   "/cdp:semanal", "/cdp:diario", "/cdp:risco", "/cdp:status", "/cdp:calibracao",
+                   "/cdp:semanal", "/cdp:diario", "/cdp:cobertura", "/cdp:risco", "/cdp:status",
+                   "/cdp:calibracao",
                    "11:07", "13:30", "16:00", "19:22", "Worktree", "pc_menos_brasilia_horas",
                    "kill-switch off", "cron", "launchd", "schtasks", "Register-ScheduledTask",
                    "--mind codex"):
@@ -808,11 +838,14 @@ def test_pre_inception_in_the_writer_skills():
     # "Nada a fazer" só fora do pré-início (antes da data de início as listas estão sempre vazias
     # e a rotina ainda precisa do verify, do painel, do push e do artifact).
     assert re.search(r"Fora do pré-início \(`fase: \"operacao\"`\): se as duas primeiras listas"
-                     r".{0,160}Nada a fazer", flat)
-    # Pré-início: a base de mercado é atualizada (daily close sem registro) antes do verify.
-    i6 = dia.index("## 6. Integridade e painel")
+                     r".{0,260}Nada a fazer", flat)
+    # Pré-início: a base de mercado é atualizada (daily close sem registro) antes do retrato da
+    # cobertura (gênese na véspera da carteira inaugural) e do verify.
+    i6 = dia.index("## 6. ")
+    i7 = dia.index("## 7. Integridade e painel")
     i_mkt = dia.index("uv run python -m cdp daily close --date AAAA-MM-DD\n", i6)
-    assert i_mkt < dia.index("uv run python -m cdp verify", i6) < dia.index("## 7.")
+    assert i_mkt < dia.index("uv run python -m cdp cobertura run --date", i6) < i7
+    assert i7 < dia.index("uv run python -m cdp verify", i7) < dia.index("## 8.")
     sem = " ".join((PLUGIN / "skills" / "semanal" / "SKILL.md").read_text(encoding="utf-8").split())
     assert "Sem montagem hoje: pré-início" in sem and "reinicio --executar" in sem
     assert sem.index("reinicio --executar") < sem.index("weekly prepare --date")
@@ -828,3 +861,226 @@ def test_pre_inception_in_the_writer_skills():
                 ".claude/skills/cdp-semanal/SKILL.md"):
         text = (ROOT / doc).read_text(encoding="utf-8")
         assert "pre_inicio" in text and "reinicio" in text, doc
+
+
+# ----------------------------------------------------------------------------- sexta-feira e cobertura
+
+
+def test_rebalance_on_the_last_nyse_session_with_the_effective_deadline():
+    """Montagem no último pregão da semana na NYSE; prazo efetivo do código (nunca 16h30); reservas
+    antes do prazo."""
+    old = re.compile(r"16h30|16:30|12:37|15:07|primeiro pregão da semana na B3")
+    files = [PLUGIN / "skills" / n / "SKILL.md" for n in ("semanal", "diario", "status")]
+    files += [*_project_skill_files(), PLUGIN / "README.md", ROOT / "docs" / "cdp" / "ROTINAS.md",
+              ROOT / "docs" / "cdp" / "LOCAL.md", *sorted((ROOT / "docs" / "cdp" /
+                                                         "playbooks").glob("*.md"))]
+    for path in files:
+        hits = old.findall(path.read_text(encoding="utf-8"))
+        assert not hits, (path.name, hits)
+    sem = " ".join((PLUGIN / "skills" / "semanal" / "SKILL.md").read_text(encoding="utf-8").split())
+    assert "último pregão da semana na NYSE" in sem and "`semanal.prazo_efetivo`" in sem
+    assert "12:07, 13:07, 14:07" in sem and "leilão de fechamento" in sem
+    for doc in ("ROTINAS.md", "LOCAL.md", "playbooks/SEMANAL.md"):
+        text = " ".join((ROOT / "docs" / "cdp" / doc).read_text(encoding="utf-8").split())
+        assert "último pregão da semana na NYSE" in text and "prazo efetivo" in text, doc
+
+
+def test_friday_night_weekly_report_and_coverage_snapshot_in_the_daily_routine():
+    """Noite do dia de montagem: relatório semanal (mudanças da carteira, resultado e atribuição
+    da semana e desde o início) quando a agenda pede, e o retrato da cobertura, depois dos
+    fechamentos e antes do verify e do painel."""
+    dia = (PLUGIN / "skills" / "diario" / "SKILL.md").read_text(encoding="utf-8")
+    flat = " ".join(dia.split())
+    i6 = dia.index("## 6. ")
+    order = [dia.index("uv run python -m cdp daily publish --date"),
+             dia.index("uv run python -m cdp tese publish --week"),
+             dia.index("uv run python -m cdp weekly close-report --date AAAA-MM-DD\n", i6),
+             dia.index("uv run python -m cdp validate-weekly-report --date", i6),
+             dia.index("uv run python -m cdp weekly close-report --date AAAA-MM-DD --publish", i6),
+             dia.index("uv run python -m cdp cobertura run --date", i6),
+             dia.index("uv run python -m cdp verify", i6), dia.index("uv run python -m cdp painel")]
+    assert order == sorted(order), order
+    for needle in ("relatorio_semanal.pendente", "relatorio_semanal.data",
+                   "cobertura.snapshot_pendente", "cobertura.data",
+                   "reports/semanal/<data>/comentario.json", "desde o início",
+                   "mudanças da carteira", "docs/cdp/ESTILO.md"):
+        assert needle in flat, needle
+    assert re.search(r"Você só escreve .{0,120}reports/semanal/<data>/comentario\.json", flat)
+    for doc in ("playbooks/DIARIO.md", "ROTINAS.md"):
+        text = (ROOT / "docs" / "cdp" / doc).read_text(encoding="utf-8")
+        assert "weekly close-report --date" in text and "cobertura run --date" in text, doc
+        assert text.index("weekly close-report --date") < text.index("--publish")
+
+
+def test_cobertura_skill_writes_only_notes_from_public_sources():
+    path = PLUGIN / "skills" / "cobertura" / "SKILL.md"
+    body = path.read_text(encoding="utf-8")
+    flat = " ".join(body.split())
+    tools = _frontmatter(path)["allowed-tools"]
+    assert {"WebSearch", "WebFetch"} <= set(tools)
+    order = [body.index("uv run python -m cdp nota agenda"),
+             body.index("uv run python -m cdp nota prepare --issuer IID"),
+             body.index("uv run python -m cdp validate-nota --issuer IID --date AAAA-MM-DD"),
+             body.index("uv run python -m cdp nota publish --issuer IID --date AAAA-MM-DD"),
+             body.index("uv run python -m cdp verify"), body.index("uv run python -m cdp painel")]
+    assert order == sorted(order), order
+    assert re.search(r"Você só escreve `book/cobertura/notas/<IID>/<data>/nota\.json`", flat)
+    for needle in ("**Só fontes públicas**", "CVM", "SEC EDGAR", "relações com investidores",
+                   "Nenhuma base paga", "**dados não confiáveis**", "docs/cdp/ESTILO.md",
+                   "docs/cdp/NOTAS.md", "rascunho_adotado: true", "**antes de escrever qualquer coisa**",
+                   "Nunca edite `docs/cdp/notas/`", 'autoria: "codigo"', "no máximo 3 tentativas",
+                   "limite_por_execucao", "00:30"):
+        assert needle in flat, needle
+    project = (ROOT / ".claude" / "skills" / "cdp-cobertura" / "SKILL.md").read_text(encoding="utf-8")
+    assert "cdp:cobertura" in project and "docs/cdp/playbooks/COBERTURA.md" in project
+    playbook = (ROOT / "docs" / "cdp" / "playbooks" / "COBERTURA.md").read_text(encoding="utf-8")
+    assert "esse `verify`" in playbook and "docs/cdp/notas/<IID>/<data>.json" in playbook
+    notas = " ".join((ROOT / "docs" / "cdp" / "NOTAS.md").read_text(encoding="utf-8").split())
+    for needle in ("COVERAGE_NOTE", "nota_publicada.json", "nota.md", "fatos.md", "{{fact:",
+                   "rascunho_adotado", "val.<IID>", "fonte primária", "look-ahead",
+                   "DADOS SIMULADOS", "cdp mente pacote"):
+        assert needle in notas, needle
+
+
+def test_no_skill_or_setting_depends_on_a_proprietary_tool():
+    for path in [*_skill_files(), *_project_skill_files()]:
+        tools = _frontmatter(path).get("allowed-tools", [])
+        assert not any(t.startswith("mcp__") for t in tools), (path, tools)
+    removed = "quar" + "tr"  # canal proprietário removido (o termo não aparece no repositório)
+    roots = [ROOT / d for d in ("src", "docs", "plugins", ".claude", "scripts", "tests", "configs",
+                                ".claude-plugin")]
+    files = [p for r in roots if r.exists() for p in r.rglob("*")
+             if p.is_file() and p.suffix in {".py", ".md", ".json", ".yaml", ".yml", ".csv", ".sh",
+                                             ".ps1", ".toml", ".txt", ".html", ".js", ".css"}]
+    files += [ROOT / n for n in ("AGENTS.md", "CLAUDE.md", "README.md", "pyproject.toml",
+                                 ".gitignore") if (ROOT / n).is_file()]
+    hits = [str(p.relative_to(ROOT)) for p in files
+            if removed in p.read_bytes().decode("utf-8", "ignore").lower()]
+    assert hits == []
+
+
+def test_reproduction_guide_covers_audit_recompute_and_any_ai():
+    text = (ROOT / "docs" / "cdp" / "REPRODUZIR.md").read_text(encoding="utf-8")
+    flat = " ".join(text.split())
+    for needle in ("git clone https://github.com/arielassayag/MarketSummary.git", "uv sync",
+                   "uv run python -m cdp verify", "uv run python -m cdp cobertura verify",
+                   "weekly preview --week", "mente pacote --etapa", "validate-nota",
+                   "validate-tese", "uv.lock", "tolerância", "1e-5", "fetch-base",
+                   "cobertura run --date", "CVM", "SEC EDGAR", "Banco Central do Brasil",
+                   "Damodaran", "ChatGPT", "Gemini", "## English summary", "DADOS SIMULADOS"):
+        assert needle in flat, needle
+    from cdp.workflow.pacote import ETAPAS_PACOTE
+
+    assert all(f"--etapa {e}" in flat or f"{e}|" in flat or f"|{e}" in flat
+               for e in ETAPAS_PACOTE)
+    # documento para o investidor: sem bastidores de reprocessamento nem carteira anterior
+    for banned in ("reinicio", "pré-início", "ensaio", "rebuild", "segunda-feira, 05"):
+        assert banned not in text.lower(), banned
+    estilo = (ROOT / "docs" / "cdp" / "ESTILO.md").read_text(encoding="utf-8")
+    assert "cdp-estilo-" in estilo and "investidor qualificado" in estilo
+
+
+def test_settings_never_deny_a_mind_editable_file():
+    """Bloqueio vence permissão: nenhuma regra de bloqueio pode cobrir um arquivo da mente."""
+    s = json.loads((ROOT / ".claude" / "settings.json").read_text(encoding="utf-8"))
+    deny = _edit_rules(s["permissions"]["deny"])
+    samples = {"*": "2026-10-09", "**": "x/y.md"}
+    for rule in s["permissions"]["allow"]:
+        if not (rule.startswith("Edit(") and rule.endswith(")")):
+            continue
+        path = rule[6:-1]
+        concrete = re.sub(r"\*\*|\*", lambda m: samples[m.group(0)], path)
+        assert not _matches(deny, concrete), (rule, concrete)
+
+
+def test_settings_deny_every_code_written_coverage_file(tmp_path):
+    """Todo arquivo que o retrato da cobertura grava no livro é bloqueado para a mente (o único
+    arquivo editável da cobertura é ``nota.json``)."""
+    import warnings
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+
+    from cdp.config import load_config
+    from cdp.data.synthetic import make_synthetic_market
+    from cdp.workflow.demo import (
+        DEMO_FIRST_WEEK,
+        DEMO_HISTORY_START,
+        DEMO_SEED,
+        DemoStore,
+        demo_sessions,
+        run_demo,
+    )
+    from cdp.workflow.runtime import Runtime
+
+    try:
+        from cdp.cobertura.demo import gerar
+    except ImportError as exc:  # pragma: no cover - motor da cobertura ausente
+        pytest.skip(f"cobertura indisponível: {exc!r}")
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        run_demo(tmp_path, days=1)
+    market = make_synthetic_market(seed=DEMO_SEED, start=DEMO_HISTORY_START,
+                                   as_of=demo_sessions(1)[-1])
+    rt = Runtime(load_config(), tmp_path / "book", tmp_path / "market", tmp_path / "reports",
+                 store_override=DemoStore(market), teses_root=None,
+                 clock=lambda: datetime(2024, 3, 4, 21, 30, tzinfo=ZoneInfo("America/Sao_Paulo")))
+    gerar(rt, [DEMO_FIRST_WEEK])
+    written = sorted(p.relative_to(tmp_path).as_posix()
+                     for p in (tmp_path / "book" / "cobertura").rglob("*") if p.is_file())
+    assert written, "o retrato sintético não gravou nada"
+    s = json.loads((ROOT / ".claude" / "settings.json").read_text(encoding="utf-8"))
+    deny = _edit_rules(s["permissions"]["deny"])
+    allow = _edit_rules(s["permissions"]["allow"])
+    for rel in written:
+        assert _matches(deny, rel), f"arquivo do código sem bloqueio: {rel}"
+        assert not _matches(allow, rel), rel
+
+
+def test_commits_cover_every_path_the_routine_writes():
+    """Quem roda o retrato da cobertura (arquivo público bruto em ``data/publico/``) inclui a
+    pasta no ``git add``; a guarda do clone aceita a pasta como do livro."""
+    docs = [PLUGIN / "skills" / "diario" / "SKILL.md", PLUGIN / "skills" / "semanal" / "SKILL.md",
+            ROOT / "docs" / "cdp" / "playbooks" / "DIARIO.md",
+            ROOT / "docs" / "cdp" / "playbooks" / "SEMANAL.md", ROOT / "docs" / "cdp" / "ROTINAS.md"]
+    for path in docs:
+        text = path.read_text(encoding="utf-8")
+        adds = re.findall(r"git add book reports[^\n`]*", text)
+        assert adds, path
+        if "cobertura run" in text:
+            assert all("data/publico" in a for a in adds if "data/market" in a), (path, adds)
+    for name in WRITER_SKILLS:
+        flat = " ".join((PLUGIN / "skills" / name / "SKILL.md").read_text(encoding="utf-8").split())
+        if "git status --porcelain" in flat:
+            assert "`data/publico/`" in flat, name
+
+
+def test_playbooks_never_chain_the_push():
+    """Roteiros dos outros harnesses: o push nunca vem encadeado ao commit (só depois do
+    ``verify`` íntegro e da sincronização)."""
+    for path in sorted((ROOT / "docs" / "cdp" / "playbooks").glob("*.md")):
+        text = path.read_text(encoding="utf-8")
+        assert "&& git push" not in text and "; git push" not in text, path
+        if "git commit" in text and "git push" in text:
+            flat = " ".join(text.split())
+            assert "Push **só** se esse `verify`" in flat and SYNC_DIFF in text, path
+            assert "git pull --no-rebase --no-edit" in text, path
+    cob = (ROOT / "docs" / "cdp" / "playbooks" / "COBERTURA.md").read_text(encoding="utf-8")
+    assert '`"codex"` no Codex' in cob and "data_nota" in cob
+
+
+def test_coverage_texts_match_the_queue_order():
+    """Skill, roteiro, especificação e código descrevem a mesma ordem da fila de notas."""
+    from cdp.workflow import notas
+
+    assert notas.GRUPOS_FILA == ("rascunho", "pos_resultado", "vencida", "nota_automatica")
+    for path in (PLUGIN / "skills" / "cobertura" / "SKILL.md",
+                 ROOT / "docs" / "cdp" / "playbooks" / "COBERTURA.md",
+                 ROOT / "docs" / "cdp" / "NOTAS.md"):
+        flat = " ".join(path.read_text(encoding="utf-8").split())
+        i = [flat.index(w) for w in ("rascunhos entregues", "pós-resultado", "vencidas",
+                                     "automática do código")]
+        assert i == sorted(i), path
+    doc = " ".join((notas.__doc__ or "").split())
+    assert doc.index("rascunhos entregues") < doc.index("pós-resultado") < doc.index("SLA")
+    skill = (PLUGIN / "skills" / "cobertura" / "SKILL.md").read_text(encoding="utf-8")
+    assert "<nota_anterior.data>/nota.md" in skill and "caminho em `contexto.json`" not in skill

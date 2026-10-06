@@ -10,6 +10,9 @@ Todos os resultados são P&L em fração do NAV (negativo = perda), calculados e
   ``E[f_resto | f_choque = s] = F_rs F_ss⁻¹ s`` (escala-invariante, usa a covariância do
   modelo). O tamanho do choque é calibrado para que a carteira de referência (ex.: Brasil
   ponderado por capitalização) tenha o retorno-alvo do cenário.
+- Commodities: com o bloco macro no modelo, Brent e cobre −15% nos próprios fatores macro
+  (betas medidos de cada emissor) e propagação condicional; sem ele, choque calibrado nos
+  fatores setoriais de Energia e Materiais.
 - Idiossincráticos: squeeze (+30% nos 5 maiores shorts) e quebra (−30% nos 5 maiores longs).
 """
 
@@ -175,6 +178,29 @@ def _hypothetical(
                         f"choque {detail}; referência {target:+.0%} (cap-weighted)")
 
 
+#: Fatores do bloco macro chocados no cenário de commodities (Brent e cobre).
+COMMODITY_MACRO = ("macro:BZ=F", "macro:HG=F")
+COMMODITY_MACRO_PT = {"macro:BZ=F": "Brent", "macro:HG=F": "cobre"}
+
+
+def _commodity_shock(w: pd.Series, model: RiskModel, market_w: pd.Series) -> StressResult:
+    """"Commodities -15%": com o bloco macro no modelo, Brent e cobre caem 15% (os próprios
+    fatores; betas medidos de cada emissor) com propagação condicional pela covariância
+    conjunta; sem o bloco, choque calibrado nos fatores setoriais de Energia e Materiais."""
+    name = "Commodities -15%"
+    macro = [f for f in COMMODITY_MACRO if f in model.factor_names]
+    if not macro:
+        return _hypothetical(name, w, model, market_w,
+                             [sector_factor("Energy"), sector_factor("Materials")],
+                             COMMODITY_SHOCK)
+    shocks = {f: COMMODITY_SHOCK for f in macro}
+    pnl = factor_shock_pnl(w, model, shocks)
+    detail = ", ".join(f"{COMMODITY_MACRO_PT.get(f, f)} {COMMODITY_SHOCK:+.0%}" for f in macro)
+    return StressResult(name, "hipotético", pnl, "ok",
+                        f"choque {detail} nos fatores macro (betas de cada emissor), demais "
+                        "fatores pela propagação condicional")
+
+
 def _momentum_crash(w: pd.Series, model: RiskModel) -> StressResult:
     name = "Momentum crash -3σ"
     if "momentum" not in model.factor_names:
@@ -222,9 +248,7 @@ def stress_report(
     results.append(_hypothetical("México -15%", w, model, market_w, [mx], COUNTRY_SHOCK))
     results.append(_hypothetical("Mercado LatAm -20%", w, model, market_w, [MARKET_FACTOR],
                                  MARKET_SHOCK, ref_members=list(model.assets)))
-    results.append(_hypothetical(
-        "Commodities -15%", w, model, market_w,
-        [sector_factor("Energy"), sector_factor("Materials")], COMMODITY_SHOCK))
+    results.append(_commodity_shock(w, model, market_w))
     results.append(_momentum_crash(w, model))
     results.extend(_idiosyncratic(w, model))
     df = pd.DataFrame([r.__dict__ for r in results]).set_index("name")

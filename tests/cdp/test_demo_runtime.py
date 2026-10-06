@@ -5,12 +5,16 @@ from __future__ import annotations
 import json
 import warnings
 from datetime import date
+from pathlib import Path
 
 import pytest
 
+from cdp.config import load_config
 from cdp.contracts import DecisionMode
 from cdp.workflow.demo import demo_sessions, run_demo
 from cdp.workflow.runtime import Runtime
+
+LEGACY = Path(__file__).resolve().parent / "fixtures" / "fund_legado.yaml"
 
 
 @pytest.fixture(scope="module")
@@ -18,7 +22,7 @@ def demo(tmp_path_factory):
     out = tmp_path_factory.mktemp("cdp_demo")
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        summary = run_demo(out, days=2)
+        summary = run_demo(out, days=2, cfg=load_config(LEGACY))
     return out, summary
 
 
@@ -44,9 +48,7 @@ def test_demo_runs_weekly_and_daily_cycle(demo):
 
 def test_demo_decision_is_autonomous_and_verifiable(demo):
     out, _ = demo
-    from cdp.config import load_config
-
-    rt = Runtime(load_config(), out / "book", out / "market", out / "reports")
+    rt = Runtime(load_config(LEGACY), out / "book", out / "market", out / "reports")
     week = date(2024, 3, 4)
     assert rt.book.list_decisions(week)
     d = rt.book.load_decision(week)
@@ -67,3 +69,11 @@ def test_demo_refuses_existing_book(demo):
     out, _ = demo
     with pytest.raises(FileExistsError):
         run_demo(out, days=1)
+
+
+def test_demo_sessions_follow_the_nyse_rule_when_active():
+    from test_calendar import ativado
+
+    s = demo_sessions(3, date(2024, 3, 4), ativado())
+    assert s == [date(2024, 3, 8), date(2024, 3, 11), date(2024, 3, 12)]
+    assert demo_sessions(2, date(2024, 3, 25), ativado())[0] == date(2024, 3, 28)  # Sexta Santa

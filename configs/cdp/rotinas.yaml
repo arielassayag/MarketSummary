@@ -1,0 +1,169 @@
+# configs/cdp/rotinas.yaml — agenda das rotinas do CDP (fonte única, neutra quanto ao harness).
+#
+# Horários de Brasília (America/Sao_Paulo; sem horário de verão desde 2019). `cron` (Brasília) e
+# `cron_utc` são redundantes de propósito (leitura humana × agendadores em UTC); o teste
+# tests/cdp/test_rotinas.py prova que concordam, inclusive quando a hora vira o dia em UTC.
+# Modelos só por nível (`forte`/`leve`); identificadores concretos de modelo entram na exportação
+# (`--modelo forte=<id>`), nunca aqui.
+#
+# Mudou algo aqui ⇒ `uv run python -m cdp rotinas verificar`, `uv run python -m cdp skills
+# sincronizar` e recrie as rotinas no executor (`uv run python -m cdp rotinas exportar --alvo <alvo>`).
+versao: 1
+fuso: America/Sao_Paulo
+repositorio: arielassayag/MarketSummary
+ramo: main
+padroes:
+  timeout_min: 60          # duração máxima esperada (agendadores com limite usam este valor)
+  atraso_max_min: 90       # guarda contra execução atrasada (ex.: recuperação horas depois)
+  trava_ttl_min: 45        # validade da trava distribuída sem renovação
+  concorrencia: exclusiva  # exclusiva = trava única dos escritores; compartilhada = só arquivos
+                           # novos em pastas mescláveis (reports/risk, reports/backtest)
+  escreve_livro: true
+  publicacao: agente       # agente | executor (GitHub Actions: a IA não recebe credencial de push)
+  modelo: forte
+  alvos: [claude-routines, claude-desktop, github-actions, cron, launchd, windows]
+tarefas:
+  cdp-status:
+    descricao: Saúde da operação, pendências e próximos eventos (só leitura).
+    playbook: docs/cdp/playbooks/STATUS.md
+    skill: cdp-status
+    plugin: /cdp:status
+    hora: "08:30"
+    dias: [seg]
+    cron: "30 8 * * 1"
+    cron_utc: "30 11 * * 1"
+    gate: sempre
+    escreve_livro: false
+    concorrencia: compartilhada
+    caminhos: []
+    timeout_min: 15
+    atraso_max_min: 240
+    modelo: leve
+  cdp-semanal:
+    descricao: >-
+      Montagem da carteira no último pregão da semana na NYSE (decisão até o prazo efetivo,
+      execução no leilão de fechamento) e tese de investimento da carteira decidida; carteira
+      inaugural na data de início do mandato.
+    playbook: docs/cdp/playbooks/SEMANAL.md
+    skill: cdp-semanal
+    plugin: /cdp:semanal
+    hora: "11:07"
+    dias: [seg, ter, qua, qui, sex]
+    cron: "7 11 * * 1-5"
+    cron_utc: "7 14 * * 1-5"
+    reservas:
+      cdp-semanal-b: {hora: "12:07", cron: "7 12 * * 1-5", cron_utc: "7 15 * * 1-5"}
+      cdp-semanal-c: {hora: "13:07", cron: "7 13 * * 1-5", cron_utc: "7 16 * * 1-5"}
+      cdp-semanal-d: {hora: "14:07", cron: "7 14 * * 1-5", cron_utc: "7 17 * * 1-5"}
+    gate: semanal
+    caminhos: [book, reports, data/market, data/publico, artifacts/painel, pesquisa]
+    timeout_min: 240
+    atraso_max_min: 230
+    trava_ttl_min: 60
+  cdp-risco-1330:
+    descricao: Monitor de risco intradiário; liga o kill switch só por gatilho HARD do código.
+    playbook: docs/cdp/playbooks/RISCO.md
+    skill: cdp-risco
+    plugin: /cdp:risco
+    hora: "13:30"
+    dias: [seg, ter, qua, qui, sex]
+    cron: "30 13 * * 1-5"
+    cron_utc: "30 16 * * 1-5"
+    gate: risco
+    concorrencia: compartilhada      # só arquivos novos em reports/risk/<data>/ (mescláveis)
+    caminhos: [reports/risk]
+    # Kill switch ligado pela rotina: o arquivo e o evento na trilha só são publicados com a
+    # trava exclusiva (`cdp publicar` espera até 10 min; sem ela, ficam retidos e relatados).
+    caminhos_exclusivos: [book/KILL_SWITCH, book/audit_log.jsonl]
+    espera_trava_min: 10
+    timeout_min: 30
+    atraso_max_min: 45
+    modelo: leve
+  cdp-risco-1603:
+    # idem, perto do fechamento (:03 evita a fila de disparos em hora cheia)
+    herda: cdp-risco-1330
+    hora: "16:03"
+    cron: "3 16 * * 1-5"
+    cron_utc: "3 19 * * 1-5"
+  cdp-diario:
+    descricao: >-
+      Fechamento diário (marcação, execução no leilão de fechamento no dia de montagem, risco,
+      atribuição, registro encadeado, comentário e relatório); na noite do dia de montagem,
+      relatório semanal de resultado; retrato diário da cobertura quando pendente.
+    playbook: docs/cdp/playbooks/DIARIO.md
+    skill: cdp-diario
+    plugin: /cdp:diario
+    hora: "19:22"
+    dias: [seg, ter, qua, qui, sex]
+    cron: "22 19 * * 1-5"
+    cron_utc: "22 22 * * 1-5"
+    reservas:
+      cdp-diario-reforco: {hora: "21:07", cron: "7 21 * * 1-5", cron_utc: "7 0 * * 2-6"}
+      cdp-diario-sabado: {hora: "10:07", dias: [sab], cron: "7 10 * * 6", cron_utc: "7 13 * * 6"}
+    gate: diario
+    caminhos: [book, reports, data/market, data/publico, artifacts/painel, pesquisa]
+    timeout_min: 150
+    atraso_max_min: 4320             # recupera pregões perdidos (a agenda lista todos)
+  cdp-cobertura:
+    descricao: >-
+      Notas de pesquisa por emissor a partir de fontes públicas (fila determinística do código,
+      até 12 emissores por execução).
+    playbook: docs/cdp/playbooks/COBERTURA.md
+    skill: cdp-cobertura
+    plugin: /cdp:cobertura
+    hora: "22:37"                    # depois do reforço das 21:07 (na nuvem, máquinas separadas)
+    dias: [seg, ter, qua, qui]
+    cron: "37 22 * * 1-4"
+    cron_utc: "37 1 * * 2-5"
+    gate: cobertura
+    caminhos: [book/cobertura, book/audit_log.jsonl, pesquisa]   # rascunhos em docs/cdp/notas só são lidos
+    timeout_min: 180
+    atraso_max_min: 240
+  cdp-calibracao:
+    descricao: >-
+      Backtest mensal com todo o histórico e comparação com a execução anterior (nunca muda o
+      mandato; mudanças só como proposta para revisão humana).
+    playbook: docs/cdp/playbooks/CALIBRACAO.md
+    skill: cdp-calibracao
+    plugin: /cdp:calibracao
+    hora: "09:15"
+    dia_do_mes: 1
+    cron: "15 9 1 * *"
+    cron_utc: "15 12 1 * *"
+    gate: calibracao
+    pre_comando: "uv run python -m cdp backtest --start 2021-01-04 --out reports/backtest/{hoje}/mensal"
+    pre_se_ausente: "reports/backtest/{hoje}/mensal/metrics.json"
+    concorrencia: compartilhada
+    caminhos: [reports/backtest]
+    timeout_min: 240
+    atraso_max_min: 1440
+    modelo: leve
+# Domínios públicos usados pelo código e pela pesquisa (opção de rede "Personalizada" dos
+# ambientes de nuvem; a opção "Total" dispensa a lista). Nenhuma base paga.
+rede:
+  - github.com
+  - pypi.org
+  - files.pythonhosted.org
+  - dados.cvm.gov.br
+  - www.rad.cvm.gov.br
+  - www.sec.gov
+  - data.sec.gov
+  - efts.sec.gov
+  - www.b3.com.br
+  - arquivos.b3.com.br
+  - sistemaswebb3-listados.b3.com.br
+  - api.bcb.gov.br
+  - olinda.bcb.gov.br
+  - www.bcb.gov.br
+  - www.banxico.org.mx
+  - www.inegi.org.mx
+  - www.ibge.gov.br
+  - fred.stlouisfed.org
+  - finance.yahoo.com
+  - query1.finance.yahoo.com
+  - query2.finance.yahoo.com
+  - pages.stern.nyu.edu
+  - www.ishares.com
+  - assets.globalxetfs.com
+  - api.finra.org
+  - news.google.com

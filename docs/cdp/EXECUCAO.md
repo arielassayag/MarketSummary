@@ -53,9 +53,11 @@ prazo = min( teto de 15h00 (Brasília),
 
 - 09/10/2026: 15h00. 27/11/2026 e 24/12/2026 (NYSE fecha às 13h00 de Nova York = 15h00 de
   Brasília): 14h15. O dia só é "de fechamento antecipado" quando NYSE, B3 ou BMV (os mercados
-  que definem o prazo) fecham mais cedo; o fechamento antecipado de outro mercado (ex.: Buenos
-  Aires em 31/12/2026, Santiago em 25/03/2027) não muda o prazo e só reduz a capacidade desse
-  mercado (§5).
+  que definem o prazo) fecham mais cedo; o fechamento antecipado de outro mercado não muda o
+  prazo. Esse mercado executa com a capacidade reduzida (× `early_close_multiplier`, §5) só se
+  ainda fechar em `prazo + 45 min` ou depois; se fechar antes, não executa nesse dia — é o caso
+  de Buenos Aires em 31/12/2026 (13h00 de Brasília) e de Santiago em 25/03/2027 (13h30 de
+  Brasília), ambos antes de 15h45: posições detidas nesses mercados ficam congeladas (§6).
 - Um mercado só executa no fechamento do dia se estiver aberto, tiver horário oficial
   conferido e fechar em `prazo + 45 min` ou depois (corte de ordens posterior ao prazo). Com o
   teto de 15h00, Santiago (16h00 locais = 16h00 de Brasília em outubro) é elegível; em
@@ -118,6 +120,24 @@ capacidade.
 `fechamentos_necessarios(nocional, capacidade)` = nocional / capacidade (sem capacidade, não
 definido).
 
+**Liquidez em fechamentos.** Com a execução só no leilão, a liquidez de cada posição é medida
+em **fechamentos para zerá-la** à capacidade estrutural de redução da linha (a mesma fórmula num
+pregão regular — `janela_regular` —, sem o multiplicador de short, porque zerar um short é uma
+compra). Os limites do mandato `liquidity.max_days_to_liquidate_long` (3) e `_short` (2) contam
+fechamentos: entram como teto de posição na construção (origem "liquidez"), na compliance
+(`LIQ_DAYS_LONG`/`LIQ_DAYS_SHORT`, bloqueiam), no registro diário (`max_days_to_liquidate` e a
+fração do gross liquidável em 1 fechamento), no monitor de risco, no memorando, no relatório
+semanal e no app interno ("Fechamentos p/ liquidar"). Volume desconhecido ⇒ liquidez
+desconhecida (reprova; nunca liquidez imediata). Um feriado no mercado da linha não muda essa
+medida (é estrutural); o dia de montagem usa a capacidade do próprio dia.
+
+**Dimensionamento para o PL de US$ 1,0 mi.** Com o PL inicial de US$ 1,0 mi, o teto de 4% por nome são
+US$ 40 mil: cabe em um fechamento de qualquer linha com ADV acima de cerca de US$ 1,2 mi. Os
+limites relativos (fechamentos para liquidar, capacidade do dia, participação no ADTV) é que
+dimensionam a posição; os pisos absolutos de ADTV ficam como filtros de qualidade —
+US$ 1 mi na elegibilidade, US$ 2 mi na linha comprada e US$ 5 mi na linha vendida (aluguel,
+recall e squeeze pioram com a iliquidez).
+
 ## 6. Mercados fechados, congelamento e roteamento por ADR
 
 - Linha cujo mercado não tem pregão elegível (fechado, horário não conferido ou fechamento antes
@@ -143,8 +163,24 @@ definido).
   ex.: `PETR4F`) — `cdp.portfolio.trades.order_legs`; a posição é uma só, marcada ao fechamento
   oficial da linha. Com PL de US$ 1,0 mi, arredondar ao lote de 100 distorceria posições pequenas
   em até meio lote (até ~US$ 640 numa posição mínima de US$ 2 mil).
-- Ordens abaixo de 0,05% do NAV (`min_trade_weight`) não são enviadas, salvo o encerramento de
-  uma posição.
+- Na BMV o lote é 1 título, mas só ordens de 100 títulos (5, com preço acima de MXN 200) formam
+  preço; o resto é um "pico", executado ao último preço registrado — numa ordem ao fechamento, o
+  próprio fechamento (Reglamento Interior da BMV:
+  https://www.bmv.com.mx/docs-pub/MARCO_NORMATIVO/CTEN_MNRST/REGLAMENTO%20INTERIOR%20BMV%20VIGENTE-20250303.pdf ;
+  glossário: https://blog.bmv.com.mx/glossary/lote/ ;
+  exemplo de corretora: https://www.actinver.com/minisitioSEF/ayuda/sef/Preguntas_Frecuentes_BMV/lote_100_acciones_5_cuando_la_.htm).
+  Em Santiago, na BVC, na BVL, na BYMA e nos EUA não há lote padrão: 1 ação. Ação cara (ex.:
+  MELI, cerca de 0,19% do NAV por ação com PL de US$ 1 mi) é arredondada à ação inteira mais
+  próxima; o maior erro de arredondamento e as posições que não chegam a uma ação ficam na
+  proposta (`overrides.arredondamento`) e no memorando.
+- **Banda de não-negociação**: ordens abaixo de 0,10% do NAV (`min_trade_weight`, US$ 1 mil) não
+  são enviadas, salvo o encerramento de uma posição. Em cada mercado, a banda sobe até o nocional
+  em que o custo fixo mínimo das ordens da linha cai a 10 bps (`max_fixed_cost_bps`): cerca de
+  US$ 3,5 mil por ordem na BMV (US$ 7 mil quando a ordem tem lote padrão e pico, que pagam dois
+  mínimos), US$ 22 mil na BVC e US$ 28 mil em Santiago. A posição mínima por nome é o maior entre
+  0,2% do NAV e a banda do mercado da linha com o número máximo de ordens da linha (duas na B3 e
+  na BMV, uma nos demais; `cdp.portfolio.trades.max_order_legs`): na BMV, US$ 7 mil. Assim, uma
+  posição nova decidida nunca fica abaixo da banda que a execução aplica no fechamento.
 - Ordem posterior ao corte de ordens do mercado não executa.
 - `booked_at` = fechamento oficial mais tardio entre as linhas negociadas; a efetivação lista a
   carteira resultante (linhas negociadas, saldos de saídas parciais e emissores congelados).
@@ -157,9 +193,38 @@ definido).
 - Na decisão, o prazo é conferido num único instante, que é também o horário gravado da
   proposta e da decisão: a decisão nunca é registrada depois do prazo efetivo.
 - Custo por linha negociada, em bps do valor negociado: meio spread pela faixa de ADTV (× 1,5 na
-  ADR com a bolsa local fechada) + comissão do mercado + câmbio (3 bps fora do dólar) + impacto
-  raiz quadrada `0,6 · σ_diária · √(Q / ADTV)` × desconto de leilão (0,6 em EUA, ADR, BR, MX e
-  CL; 1,0 nos demais).
+  ADR com a bolsa local fechada) + o maior entre a comissão do mercado e o **mínimo por ordem**
+  (× número de ordens: lote padrão + fracionário ou pico contam duas) + câmbio (3 bps fora do
+  dólar) + impacto raiz quadrada `0,6 · σ_diária · √(Q / ADTV)` × desconto de leilão (0,6 em EUA,
+  ADR, BR, MX e CL; 1,0 nos demais). O mesmo piso entra no custo estimado de cada ordem da
+  proposta; o otimizador continua com a curva convexa (custo fixo não é convexo e entra pela banda
+  e pela posição mínima).
+
+**Mínimo por ordem (`costs.min_order_cost_usd`), de tabelas públicas:**
+
+| Mercado | Mínimo (USD) | Base pública |
+|---|---|---|
+| EUA (ações e ADRs) | 1,00 | corretora global de acesso direto, plano fixo: US$ 0,005 por ação, mínimo de US$ 1,00 por ordem, tarifas incluídas — https://www.interactivebrokers.com/en/pricing/commissions-stocks.php |
+| B3 | 0,00 | tarifas da B3 ad valorem (negociação 0,005% + liquidação 0,025% para os demais investidores), sem mínimo por ordem; já no custo em bps — https://b3.com.br/data/files/15/32/93/72/68E289100A29E189AC094EA8/Tarifacao_Produtos_Renda_Variavel_V2_PT_.pdf |
+| BMV | 3,50 | 0,10% do valor com mínimo de MXN 60 por ordem na mesma corretora global (≈ US$ 3,3 a MXN 18,1 por dólar), arredondado para cima — https://brokerchooser.com/invest-long-term/diversification/mexican-stocks-at-interactive-brokers |
+| Santiago | 28,00 | direitos de bolsa com mínimo de 0,5 UF por operação, mais IVA de 19%, e tarifa fixa de corretora (ex.: CLP 3.500 + IVA) — https://www.rankia.cl/blog/analisis-ipsa/1585223-bolsa-santiago-que-como-invertir-ella ; https://www.rankia.cl/blog/corredores-bolsa/7016987-costos-totales-invertir-chile-comisiones-derechos-iva |
+| BVC | 22,00 | comissão mínima de COP 60 mil + IVA nas comissionistas de maior porte (COP 20 mil a 100 mil) — https://www.larepublica.co/finanzas/estas-son-las-tarifas-que-cobran-las-comisionistas-de-bolsa-por-transar-acciones-2959659 |
+| BVL e BYMA | 25,00 | sem tabela pública padronizada: estimativa conservadora (os emissores desses países negociam pela ADR) |
+
+Os valores são aproximações em dólar de tabelas em moeda local; uma mudança relevante de câmbio
+ou de tabela entra no mandato com nova data. Mercado sem valor na tabela usa o maior mínimo
+configurado (conservador).
+
+**Hedge cambial.** A carteira é neutra por país, então a exposição cambial líquida por moeda é
+pequena. Acima de 1% do NAV, o hedge sugerido usa contratos inteiros de minicontratos de bolsa:
+BRL no Futuro Míni de Taxa de Câmbio de Reais por Dólar Comercial da B3 (WDO, US$ 10 mil por
+contrato — https://www.b3.com.br/pt_br/produtos-e-servicos/negociacao/moedas/futuro-mini-de-taxa-de-cambio-de-reais-por-dolar-comercial.htm),
+MXN no mini futuro do dólar da MexDer (US$ 1 mil; o contrato padrão é de US$ 10 mil —
+https://www.bmv.com.mx/docs-pub/SALA_PRENSA/CTEN_BOLE/Nuevo%20Contrato%20Mini%20Futuro%20D%C3%B3lar%2028.05.25.pdf)
+e COP no mini futuro TRM da BVC (US$ 5 mil; o padrão é de US$ 50 mil). O número de contratos é a
+exposição dividida pelo tamanho do contrato, arredondada; o resíduo fica divulgado. CLP, PEN e
+ARS ficam sem hedge, com a exposição divulgada: não há futuro de bolsa acessível de tamanho
+compatível, e o NDF exige nocional mínimo muito acima do PL.
 
 ## 8. Implementation shortfall (execução em papel)
 
@@ -228,3 +293,69 @@ uv run python -m cdp agenda            # dia de montagem, prazo efetivo, mercado
 uv run --extra dev pytest tests/cdp/test_calendar.py tests/cdp/test_execucao.py tests/cdp/test_relatorio_semanal.py -q
 uv run python -m cdp verify            # trilha, livro, track record e base de mercado
 ```
+
+## 12. Kill switch: procedimento do operador
+
+- **Ligar** (rotina de risco, por recomendação do código, ou operador):
+  `uv run python -m cdp kill-switch on --reason "<motivo>" --by "<quem>"`. O comando grava
+  `book/KILL_SWITCH`, o evento na trilha e um **pedido mesclável** em
+  `reports/risk/<data>/kill_switch_<HHMM>.yaml`. Se a rotina não tiver a trava exclusiva do livro
+  (clones separados na nuvem, outra rotina gravando), `cdp publicar` publica o pedido e retém o
+  livro; a próxima execução exclusiva (`weekly prepare`, `weekly decide` ou `daily close`)
+  aplica o pedido antes de qualquer decisão. `cdp agenda` lista os pedidos ainda não aplicados
+  (`kill_switch_pedidos`); `uv run python -m cdp kill-switch aplicar-pedidos` aplica-os à mão
+  numa execução exclusiva. Um pedido anterior a um desligamento humano fica só registrado.
+- **Desligar** (só um humano, em qualquer app): abra um **terminal próprio** — não o terminal de
+  um agente de IA (Claude Code, Codex, Gemini), não uma rotina, não o CI — no clone do executor,
+  revise a condição no relatório de risco e rode
+  `uv run python -m cdp kill-switch off --reason "<revisão em pelo menos 10 caracteres>" --by "<seu nome>"`.
+  O comando recusa sem terminal interativo, com variáveis de rotina, CI ou agente
+  (`CDP_EXECUTOR`, `CDP_TRAVA_ID`, `CI`, `GITHUB_ACTIONS`, `CLAUDECODE`, `CODEX_SANDBOX`,
+  `GEMINI_CLI` e afins) e pede que o motivo seja digitado de novo. Depois:
+  `uv run python -m cdp verify` e `cdp publicar` (ou commit e push manual do `book/` pelo
+  operador, seguindo `docs/cdp/AUTOMACAO.md`). A condição revisada não religa o kill switch; só
+  uma piora: estágio pior da escada de drawdown, perda diária extrema num registro de fechamento
+  posterior ao revisado ou short novo em stop (outro emissor ou outro preço médio de entrada; a
+  escalada de squeeze é revisada short a short, nunca só pelo emissor).
+- **Revisar um stop de squeeze por nome** (só um humano, como no desligamento): depois de um stop
+  num fechamento, o emissor não pode ficar comprado até revisão humana — o relatório de risco
+  lista os emissores nessa situação (`squeeze.vetos_compra`, gatilho
+  `stop_squeeze_compra_vedada`). Revise o caso e rode, no mesmo terminal próprio,
+  `uv run python -m cdp kill-switch revisar-squeeze --emissor "<emissor>" --reason "<revisão em pelo menos 10 caracteres>" --by "<seu nome>"`.
+  O comando tem as mesmas recusas do desligamento, grava o evento `SQUEEZE_REVISADO` na trilha
+  e libera o veto de compra dos stops até o último registro diário; um stop posterior reabre o
+  veto. O corte à metade do short continua (é regra do código). Revisões gravadas depois da
+  preparação de uma semana valem a partir da semana seguinte. Depois: `verify` e publicação, como
+  acima.
+
+## 13. Rotinas no app de IA (passo a passo)
+
+As etapas deste documento rodam dentro do app de IA de quem opera, pelo agendador do próprio app;
+o prompt de cada tarefa é gerado pelo código (`cdp rotinas exportar`) e é o mesmo em qualquer
+app, e o código decide prazo, capacidade, execução e publicação — o resultado é idêntico em
+qualquer um. O GitHub Actions só roda a integração contínua e publica o portal, nunca a IA.
+
+1. **Claude Code (o nosso)** — rotinas na nuvem em claude.ai/code: ambiente "CDP" com rede total e
+   as variáveis `CDP_EXECUTOR=claude-cloud` (identidade do ambiente; sem ela toda rotina para no
+   gate com "identidade deste ambiente desconhecida") e `CDP_HARNESS=claude-code`; gere os blocos
+   com `uv run python -m cdp rotinas exportar --alvo claude-routines --formato md` e crie uma
+   rotina por bloco (Routines → New routine → Cloud), desligada até a troca de executor. Reserva:
+   tarefas agendadas do app desktop (`docs/cdp/LOCAL.md`).
+2. **Codex** — num clone e numa conta dedicados, registre a identidade uma vez com
+   `uv run python -m cdp executor registrar --como local-pc --harness codex`; no
+   `~/.codex/config.toml` dessa conta, acesso total (o roteiro sincroniza, faz commit e push),
+   aprovação "never" e `CDP_HARNESS = "codex"`; tarefas agendadas do app desktop com os blocos de
+   `uv run python -m cdp rotinas exportar --alvo codex --formato md`. Roda com o computador ligado
+   e o app aberto.
+3. **Gemini** — clone e conta dedicados, com a identidade registrada uma vez:
+   `uv run python -m cdp executor registrar --como local-pc --harness antigravity` (Antigravity)
+   ou `--harness gemini` (Gemini CLI), e `CDP_HARNESS` com o mesmo nome no ambiente das tarefas
+   (as linhas geradas para o agendador do sistema já o passam com `--harness`). Antigravity:
+   tarefas agendadas do app (`uv run python -m cdp rotinas exportar --alvo gemini --formato md`)
+   ou `agy` pelo agendador do sistema
+   (`uv run python -m cdp rotinas exportar --alvo cron --harness agy`); Gemini CLI com chave paga:
+   `uv run python -m cdp rotinas exportar --alvo cron --harness gemini`.
+
+Horários do dia de montagem: pesquisa a partir das 11h07, tarefas de reserva às 12h07, 13h07 e
+14h07 (todas antes do prazo efetivo), fechamento diário às 19h22 com reserva às 21h07. Detalhes,
+limites de cada app e solução de problemas: `docs/cdp/AUTOMACAO.md`.

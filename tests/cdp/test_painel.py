@@ -16,9 +16,11 @@ from pathlib import Path
 
 import pytest
 
-from cdp.config import load_config
+from cdp.config import FundConfig, load_config
 from cdp.workflow.painel import (
+    COBERTURA_MARKER,
     DATA_ELEMENT,
+    DEFAULT_TEMPLATE,
     EMPTY_DATA_ELEMENT,
     MARKER_NAME,
     PAGE_LAYOUT,
@@ -28,6 +30,8 @@ from cdp.workflow.painel import (
     clean,
     embed_json,
     mark_published,
+    module_names,
+    modulos,
     page_assets,
     page_sha256,
     page_version,
@@ -47,6 +51,8 @@ from cdp.workflow.painel_publicacao import (
     PAGE_MAX_BYTES,
     PAGE_MAX_LINE,
     PREGOES_MINIMOS,
+    SITE_ORCAMENTO_BYTES,
+    SITE_SEMANAS_COMPLETAS,
     cabe,
     chosen_backtest,
     compactar,
@@ -58,18 +64,29 @@ from cdp.workflow.painel_publicacao import (
     publicacao,
     report_path,
     sem_nome_da_mente,
+    site,
 )
 from cdp.workflow.runtime import Runtime
 
 NOW = datetime(2024, 3, 5, 22, 30, tzinfo=UTC)
+# Livros de demonstração com a regra semanal legada (primeiro pregão da semana na B3): os testes
+# de renderização usam datas fixas (semana 2024-03-04); o cronograma de sexta (NYSE) é testado em
+# test_calendar.py, test_execucao.py, test_relatorio_semanal.py e test_reinicio.py.
+LEGACY = Path(__file__).resolve().parent / "fixtures" / "fund_legado.yaml"
 SECTIONS = {"meta", "status", "track_record", "latest_day", "risk", "weeks", "daily_reports",
-            "reports_index", "risk_monitor", "backtests", "audit", "issues"}
+            "reports_index", "risk_monitor", "backtests", "audit", "modelo", "issues"}
+
+
+def _assets(version: str) -> list[str]:
+    """Nomes publicados da página numa versão: estilo, script e módulos (nessa ordem)."""
+    return [*asset_names(version), *module_names(version).values()]
 MALICIOUS = "</script><script>alert(1)</script><!-- ]]>"
 _DATA_RE = re.compile(r'<script type="application/json" id="cdp-data">(.*?)</script>', re.S)
 
 
-def _rt(root: Path, reports: Path | None = None) -> Runtime:
-    return Runtime(load_config(), root / "book", root / "market", reports or root / "reports")
+def _rt(root: Path, reports: Path | None = None, cfg: FundConfig | None = None) -> Runtime:
+    return Runtime(cfg or load_config(LEGACY), root / "book", root / "market",
+                   reports or root / "reports")
 
 
 @pytest.fixture(scope="module")
@@ -79,7 +96,7 @@ def demo(tmp_path_factory):
     out = tmp_path_factory.mktemp("painel_demo")
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        run_demo(out, days=2)
+        run_demo(out, days=2, cfg=load_config(LEGACY))
     return out
 
 
@@ -326,9 +343,9 @@ def test_write_painel_files(demo, tmp_path, data):
     assert res["local_sha256"] == hashlib.sha256(local.read_bytes()).hexdigest()
     assert res["data_bytes"] <= DATA_MAX_BYTES and res["data_max_line"] <= DATA_MAX_LINE
     assert res["index_bytes"] <= PAGE_MAX_BYTES and res["index_max_line"] <= PAGE_MAX_LINE
-    # estilo e script versionados ao lado da casca
-    css, js = asset_names(version)
-    assert [a["path"] for a in res["assets"]] == [(out / css).as_posix(), (out / js).as_posix()]
+    # estilo, script e módulos versionados ao lado da casca
+    assert [a["path"] for a in res["assets"]] == [(out / n).as_posix() for n in _assets(version)]
+    assert "modelo" in modulos() and len(res["assets"]) == 2 + len(modulos())
     for a in res["assets"]:
         raw = Path(a["path"]).read_bytes()
         assert a["bytes"] == len(raw) <= PAGE_MAX_BYTES and a["max_line"] <= PAGE_MAX_LINE
@@ -341,7 +358,10 @@ def test_page_is_a_small_shell_with_versioned_assets():
     template (com a versão carimbada) — a cópia local continua com tudo embutido."""
     page, assets, version = render_page(), page_assets(), page_sha256()
     css, js = asset_names(version)
-    assert list(assets) == [css, js] and css == f"painel-{version[:16]}.css"
+    assert list(assets) == _assets(version) and css == f"painel-{version[:16]}.css"
+    for nome, arq in module_names(version).items():  # módulos: só sob demanda, nunca na casca
+        assert arq == f"painel-{version[:16]}-{nome}.js" and arq not in page
+        assert assets[arq] == modulos()[nome] and "</script" not in assets[arq].lower()
     assert f'<link rel="stylesheet" href="{css}">' in page and f'<script src="{js}"></script>' in page
     assert f'<meta name="cdp-page-sha256" content="{version}">' in page
     assert "<style>" not in page and "<script>" not in page  # sem estilo/script embutidos
@@ -351,8 +371,10 @@ def test_page_is_a_small_shell_with_versioned_assets():
                 / "painel_template.html").read_text(encoding="utf-8")
     assert assets[css].strip() in template and "var DATA_URL" in assets[js]
     assert assets[js].strip() in template.replace(PAGE_SHA_PLACEHOLDER, version)
-    # a versão cobre o formato de publicação: mudar o formato obriga a republicar a página
-    assert version == hashlib.sha256(f"{PAGE_LAYOUT}\n{template}".encode()).hexdigest()
+    # a versão cobre o formato de publicação, o template e os módulos: mudar qualquer um deles
+    # obriga a republicar a página
+    corpo = "".join(f"\n{n}\n{t}" for n, t in sorted(modulos().items()))
+    assert version == hashlib.sha256(f"{PAGE_LAYOUT}\n{template}{corpo}".encode()).hexdigest()
     assert version != hashlib.sha256(template.encode()).hexdigest()
 
 
@@ -397,9 +419,9 @@ def test_page_change_stays_pending_until_published(demo, tmp_path):
                 for _ in range(3)]
         assert [r["index_written"] for r in runs] == [True, False, False]
         # estilo e script da versão anterior saem da pasta; ficam só os da versão nova
-        assert sorted(runs[0]["assets_removed"]) == sorted(asset_names(old))
+        assert sorted(runs[0]["assets_removed"]) == sorted(_assets(old))
         assert sorted(p.name for p in out.glob("painel-*")) == sorted(
-            asset_names(page_sha256(new_template)))
+            _assets(page_sha256(new_template)))
         assert all(r["page_changed"] is True for r in runs)
         assert all(r["published_page_sha256"] == old != r["page_sha256"] for r in runs)
         assert runs[0]["page_sha256"] == page_sha256(new_template)
@@ -425,7 +447,7 @@ def test_template_requires_single_placeholder(tmp_path, data):
 
 def test_empty_book_before_inception(tmp_path):
     root = tmp_path / "nada"
-    d = painel_data(_rt(root), now=datetime(2026, 10, 5, 12, 0, tzinfo=UTC))
+    d = painel_data(_rt(root, cfg=load_config()), now=datetime(2026, 10, 5, 12, 0, tzinfo=UTC))
     assert set(d) == SECTIONS
     assert d["weeks"] == [] and d["latest_day"] is None
     assert d["track_record"]["exists"] is False
@@ -473,8 +495,8 @@ def test_decided_week_not_yet_executed(tmp_path):
     week = date(2024, 3, 4)
     md = make_synthetic_market(seed=7, start=DEMO_HISTORY_START, as_of=week)
     clock = _Clock()
-    rt = Runtime(load_config(), tmp_path / "book", tmp_path / "market", tmp_path / "reports",
-                 store_override=DemoStore(md), clock=clock)
+    rt = Runtime(load_config(LEGACY), tmp_path / "book", tmp_path / "market",
+                 tmp_path / "reports", store_override=DemoStore(md), clock=clock)
     now = datetime(2024, 3, 4, 18, 0, tzinfo=UTC)
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
@@ -719,7 +741,8 @@ def test_latest_day_alerts_and_anchor(demo, data):
 
 
 def test_integrity_is_not_ok_without_checks(tmp_path):
-    d = painel_data(_rt(tmp_path / "nada"), now=datetime(2026, 10, 5, 12, 0, tzinfo=UTC))
+    d = painel_data(_rt(tmp_path / "nada", cfg=load_config()),
+                    now=datetime(2026, 10, 5, 12, 0, tzinfo=UTC))
     assert d["status"]["integrity"]["ok"] is None
     assert not any("integridade" in a["text"].lower() for a in d["status"]["alerts"])
 
@@ -803,7 +826,7 @@ def demo6(tmp_path_factory):
     out = tmp_path_factory.mktemp("painel_demo6")
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        run_demo(out, days=6)
+        run_demo(out, days=6, cfg=load_config(LEGACY))
     return out
 
 
@@ -873,7 +896,10 @@ def test_publication_numbers_equal_the_full_export(full6):
         assert (r["nav_end"], r["ret"], r["pnl"]) == (r0["nav_end"], r0["ret"], r0["pnl"])
         assert r["pnl_components"] == r0["pnl_components"]
         assert r["risk"]["drawdown"] == r0["risk"]["drawdown"]
-    assert pub["track_record"]["compare"] == full6["track_record"]["compare"]
+    # carteira de referência (sombra): nunca publicada — nem a série, nem a comparação
+    assert full6["track_record"]["compare"] and full6["track_record"]["shadow"]["exists"]
+    assert "compare" not in pub["track_record"] and "shadow" not in pub["track_record"]
+    assert "nav_shadow" not in pub["track_record"]["anchor"]
     assert pub["track_record"]["stats"] == full6["track_record"]["stats"]
     w, w0 = pub["weeks"][-1], full6["weeks"][-1]
     assert w["decision"] == _decisao_publicada(w0["decision"])
@@ -886,7 +912,8 @@ def test_publication_numbers_equal_the_full_export(full6):
     pos0 = {p["issuer_id"]: p for p in w0["proposal"]["positions"]}
     for p in w["proposal"]["positions"]:
         assert all(p[k] == pos0[p["issuer_id"]][k] for k in p), p["issuer_id"]
-    assert w["shadow"]["comparison"]["metrics"] == w0["shadow"]["comparison"]["metrics"]
+    assert w0["shadow"]["comparison"]["metrics"] and "shadow" not in w
+    assert not {"shadow_ret", "shadow_n_days", "value_added"} & set(w["performance"] or {})
 
 
 def test_publication_index_page_has_empty_data_and_fetch_fallback(tmp_path):
@@ -944,11 +971,22 @@ def test_template_pins_investor_text_fixes():
         assert scrub(keep) == keep, keep
 
 
+def _cdp_marca():
+    import importlib.util
+
+    path = Path(__file__).resolve().parents[2] / "scripts" / "cdp_marca.py"
+    spec = importlib.util.spec_from_file_location("cdp_marca_teste", path)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
 def test_template_carries_the_brand_identity():
-    """Identidade "Sertão em xilogravura" (docs/cdp/marca/IDENTIDADE.md): o estilo embute as
-    máscaras da marca exatamente como gravadas em docs/cdp/marca/ (geradas por
-    scripts/cdp_marca.py), pinta tudo por tokens nos três estados de tema (o escuro só na
-    tela), dá nome acessível ao logo e cabe no limite de publicação (bytes e linha)."""
+    """Identidade "Sertão em xilogravura", forma "Chapada" (docs/cdp/marca/IDENTIDADE.md): o
+    estilo embute as máscaras da marca exatamente como gravadas em docs/cdp/marca/ e os onze
+    ornamentos da chapada exatamente como o gerador de scripts/cdp_marca.py os produz, pinta tudo
+    por tokens nos três estados de tema (o escuro só na tela), dá nome acessível ao logo e cabe no
+    limite de publicação (bytes e linha)."""
     root = Path(__file__).resolve().parents[2]
     template = (root / "src" / "cdp" / "workflow" / "painel_template.html").read_text(
         encoding="utf-8")
@@ -960,8 +998,21 @@ def test_template_carries_the_brand_identity():
     assert css.count("/* >>> marca:") == 1 and css.count("/* <<< marca */") == 1
     for token in ("--marca-tinta", "--marca-sol", "--marca-cabra", "--marca-proporcao",
                   "--marca-proporcao-topo", "--orn-estrela", "--orn-horizonte", "--orn-chapada",
-                  "--orn-renda", "--orn-rachado", "--orn-ceu", "--grao", "--tinta", "--sol"):
+                  "--orn-renda", "--orn-rachado", "--orn-ceu", "--grao", "--tinta", "--sol",
+                  # camada "Chapada": curvas de nível, pincelada, goivas, estratos, nicho, sela
+                  "--orn-curva", "--orn-traco", "--orn-ilha", "--orn-curvas", "--orn-risco",
+                  "--orn-goiva-e", "--orn-goiva-d", "--orn-gv", "--orn-sela", "--orn-sela-fio",
+                  "--orn-pesponto", "--estrato", "--curva", "--anel", "--argila", "--relevo",
+                  "--forma-a", "--forma-b", "--folha", "--seixo-g"):
         assert f"var({token})" in css, token
+    # ornamentos da chapada: exatamente os do gerador (sementes fixas), um por linha no :root
+    marca = _cdp_marca()
+    assert marca.verificar_ornamentos() == [] and marca.verificar(marca.bloco_css()) == []
+    for token, valor in marca.gerar_ornamentos().items():
+        assert css.count(f"\n  {token}: {valor};\n") == 1, token
+    # tokens da chapada nos três estados (claro no :root; escuro do sistema e escolhido)
+    assert css.count("--estrato: #ebe2d0;") == 1 and css.count("--estrato: #201a14;") == 2
+    assert "/* ========== chapada: a forma do sertão sobre a grade de dados ==========" in css
     # três estados: claro no :root, escuro do sistema (salvo escolha "clara") e escuro escolhido
     assert ":root {\n  --bg: #f4efe5;" in css
     assert ('@media screen and (prefers-color-scheme: dark) {\n'
@@ -980,6 +1031,7 @@ def test_template_carries_the_brand_identity():
     assert "@media (forced-colors: active)" in css and "CanvasText" in css
     assert "@supports not ((-webkit-mask-image: none) or (mask-image: none))" in css
     assert "scroll-padding-inline" in css
+    assert ".th-hl.th-hl {" in css and ".panel > section.sec:nth-of-type(even)" in css
     for name, text in page_assets().items():
         assert len(text.encode("utf-8")) <= PAGE_MAX_BYTES, name
         assert max_line(text) <= PAGE_MAX_LINE, name
@@ -1148,7 +1200,7 @@ def test_publication_level0_rules(full6):
     w = out["weeks"][-1]
     assert "markdown" not in w["report"] and "sha256" not in w["report"]
     assert w["report"]["available"] is True and "path" not in w["report"]
-    assert len(w["shadow"]["positions"]) <= 20
+    assert "shadow" not in w
 
 
 def test_publication_previous_week_is_slim_at_level_1(full6):
@@ -1356,7 +1408,7 @@ def test_ladder_cuts_low_value_content_before_daily_history():
     assert n2.backtests_execucoes < n0.backtests_execucoes
     assert (n2.pregoes, n2.comentarios) == (n0.pregoes, n0.comentarios)
     keys = ("pregoes", "comentarios", "comentario_chars", "semanas_resumo", "tese_chars",
-            "resumo_macro_chars", "backtests_execucoes", "posicoes_sombra")
+            "resumo_macro_chars", "backtests_execucoes")
     for a, b in zip(NIVEIS, NIVEIS[1:], strict=False):  # cada nível só aperta
         assert all(getattr(b, k) <= getattr(a, k) for k in keys)
 
@@ -1455,15 +1507,19 @@ def test_cli_painel_is_publishable_on_demo(demo, tmp_path, capsys):
     art = res["artifact"]
     assert art["publicavel"] is True and art["motivo"] == "ok" and art["pagina_mudou"] is True
     assert art["pagina_atual"] == res["page_sha256"] == page_sha256()
-    css, js = (out_dir / n for n in asset_names(page_sha256()))
+    pagina = [out_dir / n for n in sorted(_assets(page_sha256()))]
     index, data_file = out_dir / "index.html", out_dir / "data.json"
-    assert art["arquivos_para_ler"] == [index.as_posix(), css.as_posix(), js.as_posix(),
-                                        data_file.as_posix()]
+    cob = sorted(out_dir.glob("cobertura*.json"))
+    assert cob and art["cobertura_mudou"] is True and art["cobertura_arquivos"] == [
+        c.name for c in cob] and art["cobertura_removidos"] == []
+    assert art["arquivos_para_ler"] == ([index.as_posix()] + [a.as_posix() for a in pagina]
+                                        + [data_file.as_posix()] + [c.as_posix() for c in cob])
     # a ferramenta exige a página (a casca) em toda publicação; com a página nova, vão também o
-    # estilo e o script versionados
+    # estilo, o script e os módulos versionados; os dados da cobertura vão quando mudam
     assert art["publicar"] == {"file_path": index.as_posix(),
-                               "files": {css.name: css.as_posix(), js.name: js.as_posix(),
-                                         "data.json": data_file.as_posix()}}
+                               "files": {**{a.name: a.as_posix() for a in pagina},
+                                         "data.json": data_file.as_posix(),
+                                         **{c.name: c.as_posix() for c in cob}}}
     assert art["tamanho_dados"] == data_file.stat().st_size <= DATA_MAX_BYTES
     assert art["linhas_max"] <= PAGE_MAX_LINE and art["url"] is None
     (out_dir / "ARTIFACT_URL").write_text("https://claude.ai/artifact/exemplo\n", encoding="utf-8")
@@ -1478,10 +1534,13 @@ def test_cli_painel_is_publishable_on_demo(demo, tmp_path, capsys):
     assert main(["painel", "--out-dir", str(out_dir), "--publicado"]) == 0
     marked = json.loads(capsys.readouterr().out)["pagina_publicada"]
     assert marked["mudou"] is True and marked["marcador"] == (out_dir / MARKER_NAME).as_posix()
+    assert marked["marcador_cobertura"] == (out_dir / COBERTURA_MARKER).as_posix()
+    assert marked["cobertura_arquivos"] == [c.name for c in cob]
     assert main(base + ["painel", "--out-dir", str(out_dir), "--sem-local"]) == 0
     third = json.loads(capsys.readouterr().out)["artifact"]
     assert third["pagina_mudou"] is False and third["publicavel"] is True
-    # página já publicada: só a casca (pequena) e os dados são lidos e publicados
+    # página e cobertura já publicadas: só a casca (pequena) e os dados são lidos e publicados
+    assert third["cobertura_mudou"] is False
     assert third["arquivos_para_ler"] == [index.as_posix(), data_file.as_posix()]
     assert third["publicar"] == {"file_path": index.as_posix(),
                                  "files": {"data.json": data_file.as_posix()}}
@@ -1719,31 +1778,22 @@ def test_issuer_names_cover_every_referenced_issuer(thesis_data):
     cited |= {x["issuer_id"] for x in w["pm_decision"]["exclusions"]}
     cited |= {x["issuer_id"] for x in w["pm_decision"]["views"]}
     cited |= {x["issuer_id"] for x in w["research"]["notes"]}
-    cited |= {x["issuer_id"] for x in w["shadow"]["positions"]}
     assert cited <= set(names)
     pub = expandir(publicacao(thesis_data))
     pub_names = pub["meta"]["issuer_names"]
     assert set(pub_names) == referenced_issuers({k: v for k, v in pub.items() if k != "meta"})
     assert all(pub_names[k] == names[k] for k in pub_names)
-    # sobreposição CDP × carteira de referência ("Só no CDP" / "Só na referência"): os nomes
-    # ficam mesmo quando a publicação corta as posições da referência (nível 8: nenhuma)
-    assert referenced_issuers({"overlap": {"only_shadow": ["A"], "only_cdp": ["B"]}}) == {"A", "B"}
+    # carteira de referência (sombra): fora da publicação, inclusive os nomes só dela
     big = copy.deepcopy(thesis_data)
     wk = big["weeks"][-1]
     wk["shadow"]["positions"].append({**copy.deepcopy(wk["shadow"]["positions"][0]),
                                       "issuer_id": "SIM_SO_REF", "name": "Só na Referência SA"})
-    overlap = wk["shadow"]["comparison"]["overlap"]
-    overlap["only_shadow"] = [*overlap.get("only_shadow", []), "SIM_SO_REF"]
     big["meta"]["issuer_names"]["SIM_SO_REF"] = "Só na Referência SA"
     for nivel in (0, 8):
         out = expandir(compactar(big, nivel))
-        ov_ids = {i for w in out["weeks"] if isinstance(w.get("shadow"), dict)
-                  for k in ("only_shadow", "only_cdp")
-                  for i in (((w["shadow"].get("comparison") or {}).get("overlap") or {})
-                            .get(k) or [])}
-        assert "SIM_SO_REF" in ov_ids and ov_ids <= set(out["meta"]["issuer_names"]), nivel
-    assert not any(p["issuer_id"] == "SIM_SO_REF" for p in out["weeks"][-1]["shadow"]["positions"])
-    assert out["meta"]["issuer_names"]["SIM_SO_REF"] == "Só na Referência SA"
+        assert not any("shadow" in w for w in out["weeks"]), nivel
+        assert "SIM_SO_REF" not in out["meta"]["issuer_names"], nivel
+    assert "SIM_SO_REF" not in expandir(site(big))["meta"]["issuer_names"]
 
 
 def _it_keys(obj, path: str = ""):
@@ -1783,9 +1833,13 @@ def test_publication_has_no_it_payload(thesis_data):
     assert "agenda" not in pub["status"]
     assert pub["status"]["integrity"] == {"ok": full["status"]["integrity"]["ok"]}
     assert pub["issues"] == [] and "invariants" not in pub["meta"]
-    # mandato: só os blocos que a página lê (custos, tabela, agenda e adoção de IA ficam fora)
+    # mandato: só os blocos que a página lê (custos e a tabela ficam fora); cronograma sem os
+    # nomes das mentes e adoção de IA (fase vigente) sem o fornecedor
     assert set(pub["meta"]["mandate"]) == {"risk", "liquidity", "drawdown", "squeeze",
-                                           "shorting", "alpha", "risk_model"}
+                                           "shorting", "alpha", "risk_model", "schedule",
+                                           "execution", "ai_adoption"}
+    assert "minds" not in pub["meta"]["mandate"]["schedule"]
+    assert "provider" not in pub["meta"]["mandate"]["ai_adoption"]
     for key in ("shorting", "alpha", "risk_model"):
         assert pub["meta"]["mandate"][key] == full["meta"]["mandate"][key], key
     it_week = {"ai_calls", "attempts", "briefing", "inputs", "issues", "input_issues",
@@ -1799,7 +1853,7 @@ def test_publication_has_no_it_payload(thesis_data):
     assert all("author" not in v for v in research["views"])
     for r in pub["daily_reports"]:
         assert "report_path" not in r and set(r["commentary"]) <= {"markdown", "source", "ai"}
-    assert all(set(x) <= {"kind", "date", "has_md"} for x in pub["reports_index"])
+    assert all(set(x) <= {"kind", "date", "has_md", "has_html"} for x in pub["reports_index"])
     meta = pub["meta"]
     assert meta["schema_version"] == "cdp-painel/3" and meta["profile"] == "publicacao"
     for key in ("data_hash", "config_hash", "generated_at", "is_synthetic", "data_notice",
@@ -1883,7 +1937,9 @@ def test_publication_text_has_no_it_residue(thesis_data):
     pub = publicacao(full)
     assert pub["meta"]["publication"]["nivel"] == 0
     text = dump_publicacao(pub)
-    assert not [n for n in IT_NEEDLES if n in text], [n for n in IT_NEEDLES if n in text]
+    # link fixo para um documento do repositório público (auditoria e reprodução) não é caminho
+    sem_links = re.sub(r'"https://github\.com/[^"]*"', '""', text)
+    assert not [n for n in IT_NEEDLES if n in sem_links], [n for n in IT_NEEDLES if n in sem_links]
     out = expandir(pub)
     w = out["weeks"][-1]
     assert w["decision"]["rationale"] == "Postura defensiva; regime neutro. Primeira carteira."
@@ -1911,12 +1967,16 @@ def test_publication_text_has_no_it_residue(thesis_data):
 
 def _template_mandate_paths() -> set[tuple[str, str]]:
     """Caminhos ``(bloco, campo)`` de ``meta.mandate`` que a página lê: os apelidos
-    ``X = obj(MAND.<bloco>)`` e os acessos ``X.<campo>`` no template."""
+    ``X = obj(MAND.<bloco>)`` e os acessos ``X.<campo>`` no template e nos módulos (o Mandato é
+    montado pelo módulo do modelo aberto)."""
     from cdp.workflow.painel import DEFAULT_TEMPLATE
 
-    tpl = DEFAULT_TEMPLATE.read_text(encoding="utf-8")
-    alias = dict((a, b) for a, b in re.findall(r"\b(\w+)\s*=\s*obj\(MAND\.(\w+)\)", tpl))
-    assert re.search(r"\bMAND\s*=\s*obj\(META\.mandate\)", tpl) and alias
+    base = DEFAULT_TEMPLATE.read_text(encoding="utf-8")
+    assert re.search(r"\bMAND\s*=\s*obj\(META\.mandate\)", base)
+    tpl = base + "\n".join(modulos().values())
+    alias = dict((a, b) for a, b in re.findall(r"\b(\w+)\s*=\s*(?:U\.)?obj\(MAND\.(\w+)\)",
+                                               tpl))
+    assert alias
     paths = {(b, "") for b in re.findall(r"\bMAND\.(\w+)", tpl)}
     for a, block in alias.items():
         paths |= {(block, f) for f in re.findall(rf"\b{a}\.(\w+)", tpl)}
@@ -1927,10 +1987,11 @@ def test_publication_keeps_every_mandate_path_the_page_reads(data):
     """Todo campo de ``meta.mandate`` que a página lê (aba "Mandato e metodologia", limites nos
     gráficos) sobrevive à publicação, inclusive short, alpha e modelo de risco."""
     paths = _template_mandate_paths()
+    # sinais do alpha e modelo de risco: o texto do "Processo de investimento" vem de Python
+    # (modelo.metodologia.processo); a página só lê os limites
     want = {("shorting", "shortable_line_types"), ("shorting", "max_borrow_fee"),
-            ("shorting", "min_market_cap_short_usd"), ("alpha", "signal_weights"),
-            ("alpha", "horizon_weeks"), ("alpha", "max_view_tilt_z"),
-            ("risk_model", "history_days"), ("risk_model", "market_proxy")}
+            ("shorting", "min_market_cap_short_usd"), ("alpha", "horizon_weeks"),
+            ("risk", "vol_target_annual"), ("drawdown", "soft_stop")}
     assert want <= paths
     mand, pub = data["meta"]["mandate"], expandir(publicacao(data))["meta"]["mandate"]
     present = [(b, f) for b, f in paths if b in mand and (not f or f in mand[b])]
@@ -2013,3 +2074,518 @@ def test_publication_layout_is_compact_and_lossless(full6):
     assert len(text) < 0.85 * len(plain) and max_line(text) <= DATA_MAX_LINE
     with pytest.raises(ValueError):
         dump_publicacao({"x": float("nan")})
+
+
+# ---------------------------------------------------------------- módulos, cobertura e modelo aberto
+
+def test_core_script_loads_modules_on_demand():
+    """Aba "Cobertura de ativos" depois da Carteira e módulos sob demanda: o script central cria
+    o elemento de script (o template nunca traz um ``<script`` literal a mais), carrega
+    ``painel-<versão>-<nome>.js`` na primeira abertura e chama
+    ``window.CDP_COBERTURA.render(container, {meta, tema, navegar})``; endereços ``#cobertura`` e
+    ``#cobertura:<emissor>``; aviso ao investidor se o módulo não carregar; o script central
+    fica dentro do orçamento."""
+    from cdp.workflow.painel import DEFAULT_TEMPLATE
+
+    tpl = DEFAULT_TEMPLATE.read_text(encoding="utf-8")
+    # elementos de script do template: dados, duas bibliotecas de CDN e o script da página
+    assert tpl.count("<script") == 4 and tpl.count("<script>") == 1
+    assets = page_assets()
+    version = page_sha256()
+    js = assets[asset_names(version)[1]]
+    assert 'document.createElement("script")' in js
+    assert '"painel-" + PAGE_SHA.slice(0, 16) + "-" + nome + ".js"' in js
+    assert 'var MOD_GLOBAL = { cobertura: "CDP_COBERTURA", modelo: "CDP_MODELO" }' in js
+    assert 'C.render(p, { meta: META, tema: temaAtual(), navegar: navegar, alvo: COB_ALVO' in js
+    assert "Não foi possível carregar a cobertura" in js
+    tabs = re.findall(r'\["(\w+)", "([^"]+)", render\w+\]', js)
+    ids = [t[0] for t in tabs]
+    assert len(tabs) == 10 and ids.index("cobertura") == ids.index("carteira") + 1
+    assert ("cobertura", "Cobertura de ativos") in tabs
+    assert 'id="p-cobertura" role="tabpanel" aria-labelledby="t-cobertura"' in tpl
+    assert 'navegar("cobertura:" + iid)' in js and "function hashParts()" in js
+    assert 'var TAB_ALIAS = { auditoria: "mandato" };' in js
+    # cada aba da carteira tem o aviso único do pré-início
+    for fn in ("renderTese", "renderCarteira", "renderRisco", "renderAtribuicao",
+               "renderDecisoes", "renderRelatorios"):
+        assert re.search(rf"function {fn}\(p\) {{\n  if \(aguardaInaugural\(p, ", js), fn
+    # módulo do modelo aberto: as quatro partes; nenhuma conta com os números
+    mod = modulos()["modelo"]
+    assert "window.CDP_MODELO = { mandato: mandato, risco: risco, carteira: carteira, comite: " \
+           "comite };" in mod
+    assert 's.id = "auditoria"' in mod
+    assert not re.search(r"\.(?:valor|limite|folga|peso|alpha)\s*[-+*/]", mod)
+    for name, text in assets.items():
+        assert len(text.encode("utf-8")) <= PAGE_MAX_BYTES and max_line(text) <= PAGE_MAX_LINE, name
+    assert len(js.encode("utf-8")) <= 250_000  # folga para o script central: código novo vai em módulo
+
+
+#: Proposta com a formulação e o risco gravados pela decisão (``Proposal.overrides``), no
+#: formato da construção com risco idiossincrático (amostra reduzida).
+OVERRIDES_AMOSTRA = {
+    "label": "cdp", "vol_target": 0.045,
+    "risco": {"kappa_f": {"valor": 1.45, "fonte": "config"}, "meta_idio": 0.9, "piso_idio": 0.85,
+              "idio_decisao": 0.945, "idio_base": 0.9, "vol_ex_ante": 0.0154,
+              "vol_fatorial": 0.003, "vol_especifica": 0.0151,
+              "por_grupo": {"mercado": 0.002, "pais": 0.008, "setor": 0.004, "estilo": 0.026,
+                            "macro": 0.015, "especifico": 0.945},
+              "por_grupo_base": {"mercado": 0.002, "pais": 0.012, "setor": 0.008, "estilo": 0.049,
+                                 "macro": 0.027, "especifico": 0.9},
+              "modelo_vinculante": "base", "custo_neutralidade_bp": 3.85,
+              "vinculantes": ["theme:state_owned"]},
+    "formulacao": {
+        "objetivo": {"expressao": "max αᵀw − λ·wᵀΣw", "termos": [
+            {"nome": "Alpha esperado (a.a.)", "expressao": "αᵀw", "coeficiente": 1.0,
+             "valor": 0.0079}]},
+        "restricoes": [
+            {"chave": "net_exposure", "nome": "Exposição líquida", "expressao": "|Σ wᵢ| ≤ limite",
+             "limite": 0.01, "valor": 0.0066, "folga": 0.0034, "vinculante": False,
+             "preco_sombra": 0.0, "custo_bp_1pct": 0.0},
+            {"chave": "sector:Consumer Staples", "nome": "Exposição líquida do setor: Consumo básico",
+             "expressao": "|Σ wᵢ (i ∈ Consumer Staples)| ≤ limite", "limite": 0.015,
+             "valor": 0.015, "folga": 0.0, "vinculante": True, "preco_sombra": 0.0073,
+             "custo_bp_1pct": 0.011},
+            {"chave": "style:momentum", "nome": "Exposição ao estilo: Momentum",
+             "expressao": "|Σ xᵢ,momentum·wᵢ| ≤ limite (desvios-padrão × NAV)", "limite": 0.05,
+             "valor": -0.034, "folga": 0.016, "vinculante": False, "preco_sombra": 0.0,
+             "custo_bp_1pct": 0.0}],
+        "limites_por_nome": {"BR_X": {"peso": 0.02, "teto_long": 0.02, "teto_short": 0.015,
+                                      "teto_negociacao": 0.03, "vinculante": "long",
+                                      "origem": "capacidade_fechamento"}},
+        "parametros": {"lambda_mandato": 1.0, "lambda_efetivo": 0.0156, "divisor_aversao": 64.0,
+                       "lambda_f": 5.0, "kappa_f": 1.45, "amortizacao_semanas": 8.0,
+                       "meta_vol": 0.045, "idio": {"decisao": 0.945, "base": 0.9},
+                       "solver": "CLARABEL", "versoes": {"clarabel": "0.11.1", "cvxpy": "1.9.3"}},
+        "modelo_risco": {"data": "2026-10-09", "n_emissores": 231, "n_fatores": 30,
+                         "fatores_por_grupo": {"pais": ["country:BR"], "estilo": ["momentum"]},
+                         "meia_vida_vol_fatores": 84, "meia_vida_correlacao": 252,
+                         "meia_vida_especifico": 84, "newey_west": 3, "historico_pregoes": 2000,
+                         "encolhimento_especifico": 0.3, "proxy_mercado": "ILF"},
+        "por_nome": {"n_long": 1, "n_short": 0}},
+    "construcao": {"capacidade_fechamento": {"sessao": "2026-10-09", "congelados": {
+        "CO_ISA": "mercado local sem negociação no fechamento de 09/10/2026 (BVC)"}},
+        "vetos_short": {"BR_Y": "bloqueio_free_float"}, "vetos_short_dados_ausentes": 3},
+    "historico_sombra": {"x": 1},
+}
+
+
+def _proposta_amostra():
+    from types import SimpleNamespace
+
+    pos = SimpleNamespace(issuer_id="BR_X", name="Empresa X", weight=0.02, alpha_annual=0.03,
+                          alpha_z=1.2, risk_contribution=0.05)
+    trade = SimpleNamespace(issuer_id="BR_X", weight_change=0.02, est_days=0.4, pct_adtv=0.001)
+    return SimpleNamespace(week=date(2026, 10, 9), overrides=copy.deepcopy(OVERRIDES_AMOSTRA),
+                           positions=[pos], trades=[trade])
+
+
+def test_open_portfolio_model_texts_come_from_python(data):
+    """Modelo aberto da carteira: metodologia vigente, formulação (cada restrição com limite,
+    valor, folga, se vincula e o custo), risco por grupo nos dois modelos e o dimensionamento por
+    posição — todos os números já em texto pt-BR (a página só exibe), sem jargão de TI e com
+    links fixos para o repositório público."""
+    from cdp.workflow import painel as P
+
+    prop = _proposta_amostra()
+    f = P._formulacao(prop)
+    rows = {r["chave"]: r for g in f["grupos"] for r in g["restricoes"]}
+    cs = rows["sector:Consumer Staples"]
+    assert cs["vinculante"] and cs["limite_texto"] == "1,50%" and cs["folga_texto"] == "0,00%"
+    assert cs["custo_texto"] == "0,01 bp a.a." and "Consumo básico" in cs["expressao"]
+    assert rows["net_exposure"]["custo_texto"] == "—"
+    assert rows["style:momentum"]["valor_texto"] == "−0,034"
+    assert "momentum" in rows["style:momentum"]["expressao"]
+    assert "NAV" not in rows["style:momentum"]["expressao"]
+    assert f["n_restricoes"] == 3 and f["n_vinculantes"] == 1
+    assert any(p["texto"] == "otimizador Clarabel (versões fixadas no repositório)"
+               for p in f["parametros"])
+    assert not any(re.search(r"cvxpy|numpy|\d+\.\d+\.\d+", p["texto"]) for p in f["parametros"])
+    r = P._risco_modelo(prop, [], None, load_config(), P._Issues())
+    g = {x["grupo"]: x for x in r["grupos"]}
+    assert g["especifico"]["decisao_texto"] == "94,5%" and g["especifico"]["barra_decisao"] is None
+    assert g["estilo"]["barra_base"] == "100.00%" and r["kappa_texto"] == "1,45"
+    assert r["vinculante_texto"] == "modelo base" and r["meta_texto"] == "90%"
+    c = P._carteira_modelo(prop, {"BR_X": "Empresa X"})
+    x = c["posicoes"][0]
+    assert x["vinculante"] and "capacidade do leilão de fechamento" in x["dimensionamento"]
+    assert x["uso_capacidade_texto"] == "40,0%" and x["fechamentos_texto"] == "1"
+    assert c["congelados"][0]["issuer_id"] == "CO_ISA" and c["vetos_sem_dado"] == 3
+    m = data["modelo"]
+    assert set(m) >= {"metodologia", "auditoria", "risco", "formulacao", "carteira"}
+    au = m["auditoria"]
+    assert re.fullmatch(r"Registro íntegro — \d+ eventos? conferidos?", au["resultado"])
+    urls = [x["url"] for k in ("documentos", "configuracao", "codigo") for x in au[k]]
+    assert all(u.startswith("https://github.com/arielassayag/MarketSummary/") for u in urls)
+    assert P.REPO_URL + "/blob/main/docs/cdp/REPRODUZIR.md" in urls
+    texto = json.dumps(m, ensure_ascii=False)
+    for proibido in ("hash", "JSON", "commit", "pipeline", "artifact"):
+        assert proibido.lower() not in texto.lower(), proibido
+    mt = m["metodologia"]
+    # demonstração com o mandato anterior à ativação: sem o cronograma recorrente
+    assert mt["ativa"] is False and mt["cronograma"]["nota"]
+    assert not {x["rotulo"] for x in mt["cronograma"]["itens"]} & {
+        "Dia de montagem", "Prazo da decisão", "Execução"}
+    assert mt["ia"]["fase"] == load_config().research.llm_phase
+    assert all(fn["url"].startswith("https://") for fn in mt["fontes"])
+
+
+def test_site_profile_keeps_what_the_artifact_cuts(data):
+    """Perfil ``site`` (portal público): trilha (eventos), ordens, todas as verificações, colunas
+    completas das posições, teses e a formulação completa da decisão; o artifact leva só os
+    ajustes escalares e o risco da decisão. Nos dois, nada de carteira-sombra/histórico nas
+    escolhas da decisão."""
+    full = copy.deepcopy(data)
+    w = full["weeks"][-1]
+    w["proposal"]["overrides"] = copy.deepcopy(OVERRIDES_AMOSTRA)
+    sit, pub = expandir(site(full)), expandir(publicacao(full))
+    assert sit["meta"]["profile"] == "site" and pub["meta"]["profile"] == "publicacao"
+    assert sit["audit"]["events"] and "events" not in pub["audit"]
+    assert all(set(e) <= {"seq", "ts", "ts_local", "event_type", "actor", "summary", "week"}
+               for e in sit["audit"]["events"])
+    ws, wp = sit["weeks"][-1], pub["weeks"][-1]
+    assert "trades" in ws["proposal"] and "trades" not in wp["proposal"]
+    assert len(ws["proposal"]["compliance"]["checks"]) == len(w["proposal"]["compliance"]["checks"])
+    assert set(ws["proposal"]["overrides"]) == set(OVERRIDES_AMOSTRA) - {"historico_sombra"}
+    assert set(wp["proposal"]["overrides"]) == {"label", "vol_target", "risco"}
+    assert ws["proposal"]["overrides"]["formulacao"] == OVERRIDES_AMOSTRA["formulacao"]
+    keep = {"alpha_z", "beta", "squeeze_score", "days_to_liquidate", "pct_adtv"}
+    for wk in sit["weeks"]:
+        for pos in (wk.get("proposal") or {}).get("positions") or []:
+            assert keep <= set(pos), wk["week"]
+    assert sit["modelo"]["metodologia"] == data["modelo"]["metodologia"]
+    assert sit["modelo"]["auditoria"] == pub["modelo"]["auditoria"]
+    lim = sit["meta"]["publication"]["limites"]
+    assert lim["perfil"] == "site" and lim["semanas_completas"] == SITE_SEMANAS_COMPLETAS
+    assert sit["meta"]["publication"]["max_linha"] is None
+    assert sit["meta"]["publication"]["max_bytes"] == SITE_ORCAMENTO_BYTES
+
+
+def test_artifact_budget_cuts_formulation_to_binding_rows():
+    """Nos níveis finais do artifact, a formulação fica com as restrições que vinculam ou estão
+    perto do limite (as demais entram na contagem por grupo); no portal, completa."""
+    from cdp.workflow import painel as P
+    from cdp.workflow.painel_publicacao import _Cortes, _modelo_pub, limites, limites_site
+
+    m = {"formulacao": P._formulacao(_proposta_amostra())}
+    cortes = _Cortes()
+    out = _modelo_pub(m, limites(4), cortes)
+    rows = [r["chave"] for g in out["formulacao"]["grupos"] for r in g["restricoes"]]
+    assert rows == ["sector:Consumer Staples"]  # só a que vincula (as demais longe do limite)
+    assert out["formulacao"]["restricoes_resumidas"] is True and cortes.lista()
+    assert _modelo_pub(m, limites_site(), _Cortes()) is m
+    assert out["formulacao"]["n_exibidas"] == 1 == sum(
+        g["n_exibidas"] for g in out["formulacao"]["grupos"])
+
+
+# ---------------------------------------------------------------- correções da revisão (C1)
+
+def _cfg_ativado():
+    """Mandato com a metodologia da carteira inaugural (montagem no último pregão da semana na
+    NYSE e execução no leilão de fechamento) sobre o fund.yaml do repositório."""
+    import yaml
+
+    from cdp.config import FundConfig
+
+    raw = yaml.safe_load(Path("configs/cdp/fund.yaml").read_text(encoding="utf-8"))
+    raw["fund"]["rebalance_weekday"] = "LAST_US_SESSION"
+    raw["fund"]["rebalance_rule"] = ("último pregão da semana na NYSE (sexta-feira ou, com "
+                                     "feriado nos EUA, o pregão anterior)")
+    raw.setdefault("execution", {})
+    raw.setdefault("drawdown", {})["risk_reference"] = "normal_book_vol"
+    return FundConfig.model_validate(raw)
+
+
+def _textos(x):
+    if isinstance(x, dict):
+        for v in x.values():
+            yield from _textos(v)
+    elif isinstance(x, list):
+        for v in x:
+            yield from _textos(v)
+    elif isinstance(x, str):
+        yield x
+
+
+def test_pre_inception_never_publishes_the_previous_schedule(tmp_path):
+    """Pré-início com o mandato anterior à ativação: nenhum texto publicado fala de segunda-feira
+    (nem o cronograma recorrente, nem a convenção de execução, nem o mandato); o bloco da
+    carteira inaugural traz a data e a execução no leilão de fechamento do dia. Com a metodologia
+    ativada, o cronograma completo e o prazo da carteira inaugural."""
+    from cdp.workflow import painel as P
+
+    cfg = load_config()
+    assert not P.metodologia_ativada(cfg) or cfg.fund.rebalance_weekday == "LAST_US_SESSION"
+    rt = Runtime(cfg, tmp_path / "book", tmp_path / "market", tmp_path / "reports")
+    full = painel_data(rt, now=datetime(2026, 10, 6, 22, 0, tzinfo=UTC))
+    mt = full["modelo"]["metodologia"]
+    ina = {x["rotulo"]: x["texto"] for x in mt["inaugural"]}
+    assert ina["Carteira inaugural"].startswith(f"{cfg.fund.inception_date:%d/%m/%Y}")
+    assert "leilão de fechamento do dia" in ina["Carteira inaugural"]
+    if not P.metodologia_ativada(cfg):
+        assert mt["ativa"] is False and mt["cronograma"]["proximas_datas"] == []
+        for perfil in (site(full), publicacao(full)):
+            textos = list(_textos(expandir(perfil)))
+            assert textos and not [t for t in textos if re.search(r"\bsegunda\b", t, re.I)]
+            assert not any("Fração fatorial" in t for t in textos)
+    ativo = P._metodologia(_cfg_ativado(), date(2026, 10, 6), {"date": date(2026, 10, 9)})
+    rot = {x["rotulo"] for x in ativo["cronograma"]["itens"]}
+    assert ativo["ativa"] is True and {"Dia de montagem", "Prazo da decisão", "Execução"} <= rot
+    assert all("sexta-feira" in d for d in ativo["cronograma"]["proximas_datas"])
+    ina = {x["rotulo"]: x["texto"] for x in ativo["inaugural"]}
+    assert ina["Prazo da decisão"].startswith("15:00 (Brasília) em 09/10/2026")
+    assert not [t for t in _textos(ativo) if re.search(r"\bsegunda\b", t, re.I)]
+    # o horário do prazo na Visão geral só aparece com a metodologia ativada
+    assert 'g(D, "modelo.metodologia.ativa") === false ? fdate(WEEKLY_EVENT.when_local)' in \
+        DEFAULT_TEMPLATE.read_text(encoding="utf-8")
+
+
+def test_loss_control_policy_is_one_text_in_every_tab():
+    """Controle de perdas: a escada sobre a volatilidade (mandato ativado) ou sobre a exposição
+    bruta (mandato anterior), com o multiplicador do stop-out calculado em Python
+    (``drawdown.stage_multiplier``); a aba Risco e o Mandato leem a mesma lista."""
+    from cdp.risk.drawdown import stage_multiplier
+    from cdp.workflow import painel as P
+
+    vol, _ref = P._controle_perdas(_cfg_ativado())
+    assert [x["nivel"] for x in vol] == ["Normal", "Nível 1 · revisão", "Nível 2 · redução",
+                                          "Nível 3 · stop-out"]
+    m3 = stage_multiplier("stop_out", _cfg_ativado())
+    assert f"limitada a {m3:.2f}".replace(".", ",") in vol[3]["acao"] and "reta que zera" in vol[3]["acao"]
+    assert all("exposição bruta ×" not in x["acao"] for x in vol)
+    cfg = load_config()
+    if cfg.drawdown.risk_reference != "normal_book_vol":
+        gross, _ = P._controle_perdas(cfg)
+        assert "exposição bruta ×" in gross[1]["acao"]
+    tpl = DEFAULT_TEMPLATE.read_text(encoding="utf-8")
+    assert 'arr(g(D, "modelo.metodologia.controle_perdas"))' in tpl
+    assert '"exposição bruta × "' not in tpl and "exposição bruta reduzida a" not in tpl
+    assert "MT.controle_perdas" in modulos()["modelo"]
+
+
+def test_factor_and_constraint_labels_come_from_python(data):
+    """Rótulos de fatores (``macro:BZ=F`` ⇒ "Petróleo Brent") e de restrições (``vol_target``,
+    ``op_country:CL``, ``country_share:BR``, ``theme:evento:BR:2026-10-05``) montados em Python:
+    nenhum código interno chega à página."""
+    from cdp.workflow import painel as P
+
+    rot = data["meta"]["rotulos"]
+    assert rot["fatores"] and set(rot) == {"fatores", "restricoes"}
+    assert P._fator_rotulo("macro:BZ=F") == "Petróleo Brent"
+    assert P._fator_rotulo("macro:DX-Y.NYB") == "Índice do dólar"
+    assert P._fator_rotulo("country:LATAM") == "Regional (América Latina)"
+    fake = {"meta": {"issuer_names": {"BR_X": "Empresa X"}}}
+    nomes = {c: P._restricao_pt(c, fake) for c in (
+        "vol_target", "op_country:CL", "country_share:BR", "theme:evento:BR:2026-10-05",
+        "max_long:BR_X", "factor_risk:decisao", "linked_long:itau", "theme:commodity:gold")}
+    assert nomes["vol_target"] == "meta de volatilidade"
+    assert nomes["op_country:CL"] == "líquido de Chile (limite operacional)"
+    assert nomes["theme:evento:BR:2026-10-05"] == "evento em Brasil (05/10/2026)"
+    assert nomes["max_long:BR_X"] == "teto do long — Empresa X"
+    for v in [*rot["fatores"].values(), *rot["restricoes"].values(), *nomes.values()]:
+        assert not re.search(r"\w:\w|_|=F|\bgross\b", v), v
+    tpl = DEFAULT_TEMPLATE.read_text(encoding="utf-8")
+    assert 'var L = rotulo("fatores", f);' in tpl and 'var L = rotulo("restricoes", c);' in tpl
+
+
+def test_deep_link_opens_the_requested_card_from_another_tab():
+    """``#cobertura:<emissor>`` vindo de outra aba (ou do botão "Ficha do ativo") abre o ativo
+    pedido mesmo com a aba da cobertura já montada — a ficha anterior nunca fica sob o endereço
+    novo."""
+    tpl = DEFAULT_TEMPLATE.read_text(encoding="utf-8")
+    i = tpl.index('window.addEventListener("hashchange"')
+    corpo = tpl[i:tpl.index("});", i)]
+    assert "var montada = !!RENDERED.cobertura, outra = tabId(q.id) !== ACTIVE;" in corpo
+    assert "if (outra) showTab(q.id, !TAB_ALIAS[q.id]);" in corpo
+    assert ('if (q.id === "cobertura" && q.arg && montada && window.CDP_COBERTURA && '
+            "window.CDP_COBERTURA.abrir) window.CDP_COBERTURA.abrir(q.arg);") in corpo
+    assert "else if (tabId(q.id) !== ACTIVE)" not in corpo
+
+
+def test_reference_portfolio_results_are_never_published(data):
+    """Resultados da carteira de referência (sombra/desafiante) não saem em perfil publicado
+    nenhum: nem chaves, nem eventos da trilha, nem os quadros da página."""
+    pubs = {"site": expandir(site(data)), "publicacao": expandir(publicacao(data))}
+    assert data["weeks"][-1]["shadow"] and data["track_record"]["shadow"]["exists"]
+    for nome, pub in pubs.items():
+        chaves = set(_keys(pub))
+        ruins = [k for k in chaves if re.search(r"shadow|sombra", str(k), re.I)
+                 and str(k) != "preco_sombra"]
+        assert not ruins, (nome, ruins)
+        assert "value_added" not in json.dumps(pub)
+        assert "shadow_records" not in pub["meta"]["counts"]
+        tipos = set(pub["audit"].get("by_type") or {}) | {
+            e.get("event_type") for e in pub["audit"].get("events") or []}
+        assert not [t for t in tipos if t and re.search("SHADOW|SOMBRA", t)], nome
+    tpl = DEFAULT_TEMPLATE.read_text(encoding="utf-8")
+    for velho in ("shadowSection", "nav_shadow", "value_added", "ret_shadow",
+                  "Carteira quantitativa de referência"):
+        assert velho not in tpl, velho
+
+
+def test_site_profile_stays_bounded_over_two_years(full6):
+    """Portal público com ~2 anos (100 semanas, 500 pregões) e 3.000 eventos da trilha: o ``data.json``
+    fica dentro do orçamento do portal, com as semanas mais recentes em detalhe e as anteriores
+    resumidas (o detalhe completo segue nos dados abertos)."""
+    y = _year_full(full6, n_days=500, n_weeks=104, n_comm=200)
+    for w in y["weeks"]:
+        w["detail"] = "completo"
+    ev = (y["audit"].get("events") or [{"seq": 0, "ts": "2024-01-01T00:00:00+00:00",
+                                       "event_type": "DAILY_RECORD", "actor": "cdp",
+                                       "summary": "x"}])[0]
+    y["audit"]["events"] = [{**ev, "seq": i, "summary": f"evento {i}"} for i in range(3_000)]
+    pub = site(y)
+    texto = dump_publicacao(pub)
+    assert len(texto.encode("utf-8")) <= SITE_ORCAMENTO_BYTES
+    out = expandir(pub)
+    detalhe = [w for w in out["weeks"] if w.get("detail") != "resumo"]
+    assert len(detalhe) == SITE_SEMANAS_COMPLETAS and len(out["weeks"]) == len(y["weeks"]) >= 100
+    assert len(out["audit"]["events"]) == 500 and out["audit"]["events"][-1]["seq"] == 2_999
+    assert out["audit"]["trilha_completa"] == "dados/livro/audit_log.jsonl"
+    assert len(out["daily_reports"]) == 60 and len(out["reports_index"]) == len(y["reports_index"])
+    assert len(out["track_record"]["records"]) == 500
+
+
+def test_sizing_table_uses_the_trade_cap_and_names_every_origin():
+    """Dimensionamento: posição no teto de negociação mostra o teto da ordem (não o do lado) e
+    toda origem de teto tem nome pt-BR (token desconhecido vira "outro limite")."""
+    from types import SimpleNamespace
+
+    from cdp.workflow import painel as P
+
+    for tok in ("adtv_minimo", "veto_short", "stop_squeeze", "elegibilidade", "sem_alpha",
+                "excluido_gestor", "so_reducao", "mandato", "liquidez", "visao", "squeeze",
+                "risco_especifico", "risco_por_nome", "capacidade_fechamento", "congelado"):
+        assert "_" not in P.ORIGEM_TETO_PT[tok] and not P.ORIGEM_TETO_PT[tok].startswith("teto")
+    prop = _proposta_amostra()
+    lpn = prop.overrides["formulacao"]["limites_por_nome"]
+    lpn["BR_X"].update({"vinculante": "negociacao", "origem": "capacidade_fechamento"})
+    x = P._carteira_modelo(prop, {"BR_X": "Empresa X"})["posicoes"][0]
+    assert x["teto_negociacao"] is True and x["teto_texto"] == "3,00%"
+    assert x["dimensionamento"].startswith("No teto de negociação (capacidade do leilão")
+    lpn["BR_X"].update({"vinculante": "short", "origem": "token_novo"})
+    prop.positions[0] = SimpleNamespace(**{**vars(prop.positions[0]), "weight": -0.015})
+    x = P._carteira_modelo(prop, {"BR_X": "Empresa X"})["posicoes"][0]
+    assert x["origem_texto"] == "outro limite" and "token" not in x["dimensionamento"]
+
+
+def test_vol_target_chain_and_pinned_audit_links():
+    """A meta da semana é explicada passo a passo (mandato → postura → viés a priori), com as
+    mesmas funções da decisão; os links de auditoria ficam fixados na versão publicada."""
+    from cdp.workflow import painel as P
+
+    cfg = load_config()
+    prop = _proposta_amostra()
+    prop.overrides["vol_target"] = 0.04 / cfg.risk.bias_prior
+    prop.overrides["gross_max"] = 0.8 * cfg.risk.gross_max
+    cad = {x["rotulo"]: x["texto"] for x in P._cadeia_meta(cfg, prop, "defensiva", -0.001)}
+    meta = cad["Meta de volatilidade da semana"]
+    assert "mandato 5,00%" in meta and "postura defensiva 4,00%" in meta and "÷ 1,10" in meta
+    assert meta.endswith("= 3,64%")
+    assert cad["Exposição bruta máxima da semana"].startswith("200% do PL (postura defensiva: 0,80")
+    au = P._auditoria({"exists": True, "chain_ok": True, "n_events": 3}, {"ok": True},
+                      versao="abc1234def5678")
+    urls = [x["url"] for k in ("documentos", "configuracao", "codigo") for x in au[k]]
+    assert all("/abc1234def5678/" in u for u in urls) and "/main/" not in "".join(urls)
+    assert "abc1234def56" in au["passos"][0]["texto"] and au["versao"] == "abc1234def56"
+    texto = json.dumps(au, ensure_ascii=False)
+    for proibido in ("Clone", "SHA-256", "commit", "sincronize"):
+        assert proibido not in texto
+    assert "/blob/main/" in P._auditoria({}, {})["documentos"][0]["url"]
+
+
+def test_public_sources_are_one_list():
+    """Fontes públicas: a lista do Mandato, a do catálogo de dados abertos e o rodapé são a
+    mesma (inclui a FINRA, do escore de squeeze)."""
+    from cdp import site as S
+    from cdp.workflow import painel as P
+
+    assert list(S.FONTES_PUBLICAS) == [(n, u) for n, u, _d, _c in P.FONTES_PUBLICAS_PT]
+    assert "FINRA" in P.FONTES_RODAPE and all(c in P.FONTES_RODAPE for *_x, c in P.FONTES_PUBLICAS_PT)
+
+
+def test_mirror_coverage_only_when_it_fits_the_read_budget(demo, tmp_path):
+    """Espelho privado: a leitura integral tem um teto total; a cobertura que mudou só vai inteira
+    quando cabe (senão nada dela vai e o marcador não registra nada), e o que vai é exatamente o
+    que ``--publicado`` registra."""
+    from cdp.workflow.painel_artifact import (
+        ORCAMENTO_LEITURA,
+        painel_artifact_check,
+        plano_cobertura,
+    )
+
+    out_dir = tmp_path / "painel"
+    res = write_painel(_rt(demo), out_dir, now=NOW, standalone=False)
+    art = painel_artifact_check(out_dir, page_changed=True, page_version=res["page_sha256"])
+    assert art["publicavel"] and art["bytes_para_ler"] <= ORCAMENTO_LEITURA
+    linha = json.dumps({"x": "a" * 900}) + "\n"
+    for k in range(1, 51):  # retrato novo: 50 fragmentos de ~220 KB (≈ 11 MB)
+        (out_dir / f"cobertura-modelo-{k}.json").write_text(linha * 240, encoding="utf-8")
+    plano = plano_cobertura(out_dir, page_changed=True)
+    assert plano["mudou"] and not plano["incluida"] and len(plano["arquivos"]) >= 50
+    art = painel_artifact_check(out_dir, page_changed=True, page_version=res["page_sha256"])
+    assert art["publicavel"] is True and art["cobertura_incluida"] is False
+    assert len(art["cobertura_pendentes"]) >= 50 and art["cobertura_arquivos"] == []
+    assert not any(re.fullmatch(r"cobertura.*\.json", Path(p).name) for p in art["arquivos_para_ler"])
+    assert not any(n.startswith("cobertura") for n in art["publicar"]["files"])
+    assert art["bytes_para_ler"] <= ORCAMENTO_LEITURA and "portal público" in art["cobertura_motivo"]
+    marcado = mark_published(out_dir)
+    assert marcado["cobertura_incluida"] is False and not (out_dir / COBERTURA_MARKER).exists()
+    # pequeno o bastante (só o índice muda): vai inteiro e fica registrado
+    for k in range(1, 51):
+        (out_dir / f"cobertura-modelo-{k}.json").unlink()
+    art = painel_artifact_check(out_dir, page_changed=False, page_version=res["page_sha256"])
+    assert art["cobertura_incluida"] is True and art["cobertura_arquivos"] == ["cobertura.json"]
+    assert (out_dir / "cobertura.json").as_posix() in art["arquivos_para_ler"]
+    marcado = mark_published(out_dir)
+    assert marcado["cobertura_incluida"] is True and (out_dir / COBERTURA_MARKER).is_file()
+    assert painel_artifact_check(out_dir, page_changed=False)["cobertura_mudou"] is False
+    tpl = DEFAULT_TEMPLATE.read_text(encoding="utf-8")
+    assert 'window.fetch("cobertura.json", { method: "HEAD", cache: "no-store" })' in tpl
+
+
+@pytest.fixture(scope="module")
+def livro_cobertura(tmp_path_factory):
+    """Livro com um retrato da cobertura (motor real, mercado sintético, sem rede)."""
+    from cdp.cobertura.cli import executar_snapshot
+    from cdp.cobertura.parametros import carregar_parametros
+    from cdp.data.synthetic import make_synthetic_market
+    from cdp.workflow.demo import DemoStore
+
+    d = date(2026, 10, 8)
+    store = DemoStore(make_synthetic_market(seed=7, as_of=d))
+    root = tmp_path_factory.mktemp("cobertura_painel")
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        executar_snapshot(root / "book", store.load(d), d, offline=True,
+                          params=carregar_parametros(), codigo={"git": None},
+                          agora=datetime(2026, 10, 8, 23, tzinfo=UTC))
+    return root, store
+
+
+def test_broken_coverage_ledger_never_aborts_the_portal(livro_cobertura, tmp_path):
+    """Registro da cobertura truncado (rotina interrompida): o painel e o site continuam
+    publicados; a aba fica "em verificação" (``meta.coverage.disponivel`` falso) e
+    ``cobertura.json`` sai com o aviso institucional."""
+    from cdp.workflow.painel import arquivos_cobertura
+
+    origem, store = livro_cobertura
+    root = tmp_path / "quebrado"
+    shutil.copytree(origem / "book", root / "book")
+    livro = root / "book" / "cobertura" / "livro.jsonl"
+    linhas = livro.read_text(encoding="utf-8").splitlines(keepends=True)
+    assert len(linhas) > 1
+    livro.write_text("".join(linhas[:-1]), encoding="utf-8")
+    rt = Runtime(load_config(), root / "book", root / "market", root / "reports",
+                 store_override=store)
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        res = write_painel(rt, root / "painel", now=NOW, standalone=False)
+        erros: list[str] = []
+        cob = arquivos_cobertura(rt, perfil="site", erros=erros)
+    data = expandir(json.loads((root / "painel" / "data.json").read_text(encoding="utf-8")))
+    assert data["meta"]["coverage"]["disponivel"] is False
+    assert data["meta"]["coverage"]["estado"] == "em_verificacao"
+    assert res["cobertura_erro"] and erros and list(cob) == ["cobertura.json"]
+    assert json.loads(cob["cobertura.json"])["meta"]["estado"] == "em_verificacao"
+    assert (root / "painel" / "index.html").is_file()
+    assert "A cobertura está em conferência" in DEFAULT_TEMPLATE.read_text(encoding="utf-8")

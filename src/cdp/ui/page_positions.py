@@ -77,14 +77,15 @@ def render(state: AppState) -> None:
         "day_pnl_usd": lambda v: fmt.usd(v, 0, True),
         "day_return_usd": lambda v: fmt.pct(v, signed=True),
         "squeeze_score": lambda v: fmt.num(v, 1), "borrow_fee_annual": fmt.pct,
-        "days_to_liquidate": fmt.days,
+        "days_to_liquidate": fmt.liq(state.cfg),
     }).rename(columns={
         "issuer_id": "Emissor", "name": "Nome", "ticker": "Linha", "line_type": "Tipo",
         "currency": "Moeda", "side": "Lado", "country": "País", "sector": "Setor",
         "weight": "Peso", "market_value_usd": "Valor de mercado", "day_pnl_usd": "P&L do dia",
         "day_return_usd": "Retorno do dia", "repriced": "Reprecificada",
         "squeeze_bucket": "Squeeze", "squeeze_score": "Escore", "borrow_fee_annual": "Aluguel",
-        "days_to_liquidate": "Dias p/ liquidar"}), height=min(640, 36 * (len(show) + 1)))
+        "days_to_liquidate": fmt.liq_label(state.cfg)}),
+        height=min(640, 36 * (len(show) + 1)))
 
     ui.section("Histórico por emissor", ui.CALC_BADGE)
     current = list(dict.fromkeys(df["issuer_id"]))

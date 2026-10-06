@@ -78,7 +78,8 @@ def test_built_site_passes_the_checks(site_sintetico):
                 "marca/marca_tinta.webp"):
         assert (site_sintetico / rel).is_file(), rel
     assert len(list(site_sintetico.glob("painel-*.css"))) == 1
-    assert len(list(site_sintetico.glob("painel-*.js"))) == 1
+    # script central (os módulos sob demanda são painel-<versão>-<nome>.js)
+    assert len([p for p in site_sintetico.glob("painel-*.js") if p.stem.count("-") == 1]) == 1
 
 
 def test_index_is_a_complete_document(site_sintetico):
@@ -145,10 +146,15 @@ def test_open_data_are_exact_copies_without_shadow_results(demo, site_sintetico)
 
 
 def test_page_data_is_uncut():
+    """Sem os cortes de texto e de colunas do artifact; o que cresce com o tempo fica limitado
+    (as semanas recentes em detalhe; o resto segue nos dados abertos)."""
+    from cdp.workflow import painel_publicacao as pp
+
     lim = st.limites_site()
-    assert lim.posicoes_sombra == 0
-    assert lim.pregoes >= st.GRANDE and lim.comentarios >= st.GRANDE
-    assert lim.semanas_completas >= st.GRANDE and lim.notas_completas is True
+    assert lim.perfil == "site" and lim.notas_completas is True and lim.tese_chars >= st.GRANDE
+    assert lim.semanas_completas == pp.SITE_SEMANAS_COMPLETAS and lim.semanas_resumo >= st.GRANDE
+    assert lim.pregoes == pp.SITE_PREGOES and lim.comentarios == pp.SITE_COMENTARIOS
+    assert lim.eventos_auditoria == pp.SITE_EVENTOS_AUDITORIA
 
 
 def test_build_is_deterministic_and_read_only(demo, tmp_path):

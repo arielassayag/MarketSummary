@@ -412,7 +412,9 @@ def test_intraday_hard_seen_before_the_off_stays_reviewed(demo, tmp_path):
 
 
 def test_squeeze_stop_text_says_what_the_code_does(demo):
-    from cdp.workflow.risk_monitor import SQUEEZE_STOP_ACTION
+    """Regra anterior (``squeeze.stop_scope = "book"``, mandato legado): o stop escala para o
+    livro inteiro e o texto diz isso."""
+    from cdp.workflow.risk_monitor import SQUEEZE_STOP_ACTION_LIVRO as SQUEEZE_STOP_ACTION
 
     rt = _rt(demo)
     rec = rt.track().last()
@@ -441,3 +443,359 @@ def test_loss_velocity_triggers_are_wired_only_with_the_active_construction(demo
     assert by_code["janela_incompleta"]["nivel"] == "INFO"  # dois registros na demonstração
     assert not _kill_actions(active)
     assert any("evento societário" in x for x in active["limitacoes"])  # sem base de mercado
+
+
+# ----------------------------------------------------------------------------- stop por nome
+
+
+def _per_name_cfg():
+    return load_config(LEGACY).with_overrides({"squeeze": {"stop_scope": "name"}})
+
+
+def _shorts(rt):
+    rec = rt.track().last()
+    return sorted((p for p in rec.positions if p.market_value_usd < 0),
+                  key=lambda p: p.market_value_usd)
+
+
+def test_per_name_squeeze_stop_is_soft_and_cut_by_code(demo):
+    """Regra por nome (metodologia vigente): stop isolado é SOFT; no intradiário é aviso
+    antecipado (o corte e o veto valem a partir de um fechamento em stop); nenhum kill switch."""
+    from cdp.workflow.risk_monitor import SQUEEZE_STOP_ACTION_INTRADIARIO
+
+    rt = _rt(demo, cfg=_per_name_cfg())
+    short = _shorts(rt)[0]
+    res = run_risk_monitor(rt, as_of=SESSION, live=True, now=_at(SESSION, 15),
+                           fetch_quotes=_quotes(rt, mult=lambda p: 1.6 if p.ticker == short.ticker
+                                                else 1.0))
+    trig = next(t for t in res["gatilhos"]
+                if t["codigo"] == f"stop_squeeze_posicao_{short.ticker}")
+    assert trig["nivel"] == "SOFT" and trig["acao"] == SQUEEZE_STOP_ACTION_INTRADIARIO
+    assert "fechamento" in trig["acao"] and "dois shorts distintos" in trig["acao"]
+    assert res["squeeze"]["regra"] == "por nome"
+    assert res["squeeze"]["escalada"]["escalada"] is False
+    assert res["squeeze"]["vetos_compra"] == []      # nenhum stop em fechamento
+    assert not _kill_actions(res)
+
+
+def test_per_name_close_stop_promises_the_cut_and_lists_the_long_veto(demo):
+    """Stop num fechamento (regra por nome): o gatilho promete o corte do código e o relatório
+    lista o emissor com compra vedada até revisão humana (INFO, com o comando de revisão)."""
+    from cdp.workflow.risk_monitor import SQUEEZE_STOP_ACTION, SQUEEZE_VETO_CODE
+
+    cfg = _per_name_cfg().with_overrides({"squeeze": {"stop_short_position_loss": 1e-9}})
+    rt = _rt(demo, cfg=cfg)
+    res = run_risk_monitor(rt, as_of=SESSION, now=_at(SESSION, 13, 30))
+    hit = [s for s in res["squeeze"]["stops_fechamento"] if s["stop_posicao"]]
+    if not hit:
+        pytest.skip("livro sintético sem short com perda desde a entrada")
+    by_code = {t["codigo"]: t for t in res["gatilhos"]}
+    trig = by_code[f"stop_squeeze_posicao_{hit[0]['ticker']}"]
+    assert trig["nivel"] == "SOFT" and trig["acao"] == SQUEEZE_STOP_ACTION
+    assert "uma vez por episódio" in trig["acao"]
+    vetos = {v["emissor"] for v in res["squeeze"]["vetos_compra"]}
+    assert {str(s["emissor"]) for s in hit} <= vetos
+    veto = by_code[SQUEEZE_VETO_CODE]
+    assert veto["nivel"] == "INFO" and "revisar-squeeze" in veto["acao"]
+
+
+def test_two_distinct_stops_escalate_to_the_book_kill_switch(demo, tmp_path):
+    """Dois shorts distintos em stop dentro de 5 pregões ⇒ HARD (kill switch do livro); depois
+    do desligamento humano, a mesma dupla não religa — um terceiro short em stop, sim."""
+    from cdp.workflow.risk_monitor import SQUEEZE_ESCALATION_ACTION, SQUEEZE_ESCALATION_CODE
+
+    root = tmp_path / "copia"
+    shutil.copytree(demo, root)
+    rt = _rt(root, cfg=_per_name_cfg())
+    shorts = _shorts(rt)
+    if len(shorts) < 3:
+        pytest.skip("livro sintético com menos de três shorts")
+    two = {shorts[0].ticker, shorts[1].ticker}
+    res = run_risk_monitor(rt, as_of=SESSION, live=True, now=_at(SESSION, 15),
+                           fetch_quotes=_quotes(rt, mult=lambda p: 1.6 if p.ticker in two
+                                                else 1.0))
+    esc = {t["codigo"]: t for t in res["gatilhos"]}[SQUEEZE_ESCALATION_CODE]
+    assert esc["nivel"] == "HARD" and esc["acao"] == SQUEEZE_ESCALATION_ACTION
+    assert set(res["squeeze"]["escalada"]["emissores_em_stop"]) == {
+        shorts[0].issuer_id, shorts[1].issuer_id}
+    assert len(_kill_actions(res)) == 1 and "ESCALADA DE SQUEEZE" in res["motivo_kill_switch"]
+    write_risk_report(res, root / "reports" / "risk", rt.cfg)
+    rt.set_kill_switch(True, res["motivo_kill_switch"], "CDP — rotina de risco (teste)")
+    rt.set_kill_switch(False, "revisado: dois shorts em stop aceitos", "humano (teste)")
+    again = run_risk_monitor(rt, as_of=SESSION, live=True, now=_at(SESSION, 16),
+                             fetch_quotes=_quotes(rt, mult=lambda p: 1.6 if p.ticker in two
+                                                  else 1.0))
+    assert {t["codigo"]: t["nivel"] for t in again["gatilhos"]}[SQUEEZE_ESCALATION_CODE] == "SOFT"
+    assert not _kill_actions(again)
+    three = two | {shorts[2].ticker}
+    worse = run_risk_monitor(rt, as_of=SESSION, live=True, now=_at(SESSION, 16, 5),
+                             fetch_quotes=_quotes(rt, mult=lambda p: 1.6 if p.ticker in three
+                                                  else 1.0))
+    assert {t["codigo"]: t["nivel"] for t in worse["gatilhos"]}[SQUEEZE_ESCALATION_CODE] == "HARD"
+    assert len(_kill_actions(worse)) == 1
+
+
+def test_runtime_passes_name_stops_to_the_weekly_context(demo):
+    """``Runtime.squeeze_stops`` (regra por nome): episódios de stop nos registros anteriores ao
+    dia de montagem, com corte pendente e veto de compra; regra do livro inteiro ⇒ nenhum."""
+    legacy = _rt(demo)
+    assert legacy.squeeze_stops(date(2024, 3, 11)) == {}
+    cfg = _per_name_cfg().with_overrides({"squeeze": {"stop_short_position_loss": 1e-9}})
+    rt = _rt(demo, cfg=cfg)
+    stops = rt.squeeze_stops(date(2024, 3, 11))
+    held_short = {p.issuer_id for r in rt.track().records() for p in r.positions
+                  if p.market_value_usd < 0}
+    assert set(stops) <= held_short
+    for spec in stops.values():
+        assert spec["veto_compra"] and spec["fracao_maxima_short"] == pytest.approx(0.5)
+    assert rt.squeeze_stops(date(2024, 3, 4)) == {}   # sem registro anterior ao dia
+
+
+def test_cli_squeeze_review_is_human_only_and_lifts_the_long_veto(demo, tmp_path, capsys,
+                                                                  monkeypatch):
+    """``kill-switch revisar-squeeze``: recusado em rotina, CI ou agente; com operador humano,
+    grava ``SQUEEZE_REVISADO`` na trilha e libera o veto de compra (o corte continua). Revisão
+    gravada depois da preparação de uma semana não muda a reconstrução dessa semana."""
+    import sys as _sys
+
+    import yaml
+
+    from cdp.__main__ import CONTEXTO_NAO_HUMANO, main
+
+    root = tmp_path / "copia"
+    shutil.copytree(demo, root)
+    raw = yaml.safe_load(LEGACY.read_text(encoding="utf-8"))
+    raw.setdefault("squeeze", {}).update({"stop_scope": "name",
+                                          "stop_short_position_loss": 1e-9})
+    cfg_path = tmp_path / "fund_nome.yaml"
+    cfg_path.write_text(yaml.safe_dump(raw, allow_unicode=True), encoding="utf-8")
+    rt = Runtime(load_config(cfg_path), root / "book", root / "market", root / "reports")
+    week = date(2024, 3, 11)
+    stops = rt.squeeze_stops(week)
+    if not stops:
+        pytest.skip("livro sintético sem short com perda desde a entrada")
+    iid = sorted(stops)[0]
+    base = ["--config", str(cfg_path), "--book", str(root / "book"), "--market",
+            str(root / "market"), "--reports", str(root / "reports")]
+    cmd = base + ["kill-switch", "revisar-squeeze", "--emissor", iid, "--reason",
+                  "revisado: squeeze técnico, sem fato novo", "--by", "Ana"]
+    monkeypatch.setenv("CLAUDECODE", "1")
+    assert main(cmd) == 2 and "agente" in capsys.readouterr().err
+    for var in CONTEXTO_NAO_HUMANO:
+        monkeypatch.delenv(var, raising=False)
+
+    class _Tty:
+        def __init__(self, stream):
+            self._s = stream
+
+        def isatty(self):
+            return True
+
+        def __getattr__(self, name):
+            return getattr(self._s, name)
+
+    monkeypatch.setattr(_sys, "stdin", _Tty(_sys.stdin))
+    monkeypatch.setattr(_sys, "stdout", _Tty(_sys.stdout))
+    monkeypatch.setattr("builtins.input",
+                        lambda _p="": "revisado: squeeze técnico, sem fato novo")
+    assert main(cmd) == 0
+    out = json.loads(capsys.readouterr().out)["revisao_squeeze"]
+    assert out["emissor"] == iid and out["registro_base"] == LAST.isoformat()
+    after = rt.squeeze_stops(week)
+    assert iid not in after or not after[iid]["veto_compra"]
+    assert after.get(iid, {}).get("fracao_maxima_short") == stops[iid]["fracao_maxima_short"] \
+        or iid not in after
+    assert main(cmd) == 2 and "aguardando revisão" in capsys.readouterr().err   # nada pendente
+    # Revisão depois da preparação da semana: a reconstrução dessa semana não muda.
+    rt.book.audit.append("WEEKLY_PREPARED", "teste", {"x": 1}, summary="teste", week=week)
+    other = sorted(set(stops) - {iid})
+    if other:
+        rt.review_squeeze(other[0], "revisado depois do prepare", "Ana")
+        assert rt.squeeze_stops(week)[other[0]]["veto_compra"]
+        assert rt.squeeze_reviews()[other[0]] == LAST
+
+
+def test_loss_velocity_hard_seen_by_a_human_is_not_re_armed_on_the_same_record(
+        demo, tmp_path, monkeypatch):
+    """Perda diária extrema (HARD) revisada por humano: a próxima rotina de risco sobre o mesmo
+    registro-base não religa o kill switch; só um registro de fechamento posterior religa."""
+    from cdp.risk import gatilhos
+    from cdp.workflow import risk_monitor as rm
+
+    root = tmp_path / "copia"
+    shutil.copytree(demo, root)
+    cfg = load_config(LEGACY).with_overrides({"risk": {"idio_share_goal": 0.9,
+                                                       "idio_share_floor": 0.85}})
+    rt = _rt(root, cfg=cfg)
+
+    def extreme(records_desc, _cfg):
+        d = records_desc[0].date
+        return [{"nivel": "HARD", "codigo": "perda_diaria_extrema",
+                 "mensagem": f"Perda diária extrema em {d}: -1,20%",
+                 "acao": gatilhos.KILL_SWITCH_PREFIX + f"perda diária extrema em {d}"}]
+
+    monkeypatch.setattr(gatilhos, "loss_velocity", extreme)
+    first = run_risk_monitor(rt, as_of=SESSION, now=_at(SESSION, 13, 30))
+    assert {t["codigo"]: t["nivel"] for t in first["gatilhos"]}["perda_diaria_extrema"] == "HARD"
+    assert _kill_actions(first)
+    write_risk_report(first, root / "reports" / "risk", cfg)
+    rt.set_kill_switch(True, first["motivo_kill_switch"], "CDP — rotina de risco (teste)")
+    rt.set_kill_switch(False, "revisado: perda explicada por evento conhecido", "humano (teste)")
+    again = run_risk_monitor(rt, as_of=SESSION, now=_at(SESSION, 16, 3))
+    assert {t["codigo"]: t["nivel"] for t in again["gatilhos"]}["perda_diaria_extrema"] == "SOFT"
+    assert not _kill_actions(again)
+    assert "perda_diaria_extrema" in again["revisao_humana"]["codigos_rebaixados"]
+    # Registro de fechamento posterior ao revisado: religa.
+    hard = rm.Trigger("HARD", "perda_diaria_extrema", "perda", "kill-switch")
+    review = {"desligado_em": "x", "por": "humano", "registro_base": LAST,
+              "estagio_revisado": "normal", "codigos_rebaixados": [], "_entradas": {}}
+    assert rm._apply_review([hard], review, {}, registro=LAST)[0].nivel == "SOFT"
+    assert rm._apply_review([hard], review, {}, registro=SESSION)[0].nivel == "HARD"
+
+
+def test_reviewed_squeeze_escalation_is_keyed_by_short_and_entry_price():
+    """Escalada revisada para X e Y a preço médio 50: um novo episódio dos mesmos emissores com
+    outro preço médio de entrada é risco novo e volta a ser HARD."""
+    from cdp.workflow import risk_monitor as rm
+
+    esc = rm.Trigger("HARD", rm.SQUEEZE_ESCALATION_CODE, "escalada", "kill-switch")
+    review = {"desligado_em": "x", "por": "humano", "registro_base": LAST,
+              "estagio_revisado": "normal", "codigos_rebaixados": [], "_entradas": {},
+              "_shorts_em_stop": {"X": {50.0}, "Y": {50.0}}}
+    same = rm._apply_review([esc], dict(review, codigos_rebaixados=[]), {},
+                            {"X": [50.0], "Y": [50.0]})
+    assert same[0].nivel == "SOFT"
+    new = rm._apply_review([esc], dict(review, codigos_rebaixados=[]), {},
+                           {"X": [65.0], "Y": [50.0]})
+    assert new[0].nivel == "HARD"
+    assert rm._apply_review([esc], dict(review, codigos_rebaixados=[]), {}, {})[0].nivel == "HARD"
+
+
+def test_idio_three_way_block_with_the_active_construction(demo):
+    """Fatia idiossincrática por três medidas no monitor (metodologia vigente): ex-ante do
+    registro e medidas de 63 pregões ausentes com amostra curta (nunca zero)."""
+    legacy = run_risk_monitor(_rt(demo), as_of=SESSION, now=_at(SESSION, 13, 30))
+    assert "idio" not in legacy
+    cfg = load_config(LEGACY).with_overrides({"risk": {"idio_share_goal": 0.9,
+                                                       "idio_share_floor": 0.85}})
+    res = run_risk_monitor(_rt(demo, cfg=cfg), as_of=SESSION, now=_at(SESSION, 13, 30))
+    idio = res["idio"]
+    assert idio["data"] == LAST.isoformat() and idio["piso"] == 0.85
+    assert idio["ex_ante"] is not None and 0.0 < idio["ex_ante"] <= 1.0
+    assert idio["realizada_63d"] is None and idio["sem_modelo_63d"] is None
+    assert "Fatia idiossincrática (três medidas)" in render_risk_markdown(res, cfg)
+
+
+# ----------------------------------------------------------------------------- pedidos de kill switch
+
+
+def test_kill_switch_request_is_applied_by_the_next_exclusive_run(demo, tmp_path):
+    """Kill switch ligado num clone sem a trava (livro retido): o pedido mesclável em
+    ``reports/risk/<data>/`` liga o kill switch na próxima execução exclusiva, uma vez."""
+    root = tmp_path / "copia"
+    shutil.copytree(demo, root)
+    vm = _rt(root)
+    pedido = vm.request_kill_switch("Monitor de risco (código): teste de pedido", "risco (teste)")
+    path = Path(pedido["arquivo"])
+    assert path.parent.parent == root / "reports" / "risk" and path.name.startswith("kill_switch_")
+    pend = vm.kill_switch_requests()
+    assert [r["sha256"] for r in pend] == [pedido["sha256"]] and not pend[0]["superado"]
+    assert agenda(vm, _at(SESSION, 12))["kill_switch_pedidos"][0]["arquivo"] == pedido["arquivo"]
+    assert not vm.kill_switch_active()
+    done = vm.apply_kill_switch_requests()
+    assert done == [{"arquivo": pedido["arquivo"], "efeito": "aplicado"}]
+    assert vm.kill_switch_active() and vm.kill_switch_requests() == []
+    assert vm.apply_kill_switch_requests() == []
+    ok, _msgs = vm.book.verify_integrity()
+    assert ok
+
+
+def test_kill_switch_request_before_a_human_off_is_superseded(demo, tmp_path):
+    root = tmp_path / "copia"
+    shutil.copytree(demo, root)
+    rt = _rt(root)
+    rt.request_kill_switch("Monitor de risco (código): pedido antigo", "risco (teste)")
+    rt.set_kill_switch(True, "ligado pelo operador", "humano (teste)")
+    rt.set_kill_switch(False, "revisado pelo operador", "humano (teste)")
+    pend = rt.kill_switch_requests()
+    assert len(pend) == 1 and pend[0]["superado"]
+    assert rt.apply_kill_switch_requests()[0]["efeito"].startswith("superado")
+    assert not rt.kill_switch_active() and rt.kill_switch_requests() == []
+
+
+def test_cli_kill_switch_on_marks_its_request_and_off_refuses_without_a_human(
+        demo, tmp_path, capsys, monkeypatch):
+    from cdp.__main__ import main
+
+    root = tmp_path / "copia"
+    shutil.copytree(demo, root)
+    base = ["--config", str(LEGACY), "--book", str(root / "book"), "--market",
+            str(root / "market"), "--reports", str(root / "reports")]
+    assert main(base + ["kill-switch", "on", "--reason", "gatilho HARD do monitor (teste)",
+                        "--by", "CDP — rotina de risco"]) == 0
+    out = json.loads(capsys.readouterr().out)
+    assert out["kill_switch"] == "on" and Path(out["pedido"]).is_file()
+    rt = _rt(root)
+    assert rt.kill_switch_active() and rt.kill_switch_requests() == []
+    # Rotina, CI ou agente de IA: recusado, com o motivo.
+    monkeypatch.setenv("CLAUDECODE", "1")
+    assert main(base + ["kill-switch", "off", "--reason", "revisado pelo gestor",
+                        "--by", "Ana"]) == 2
+    assert "agente" in capsys.readouterr().err and rt.kill_switch_active()
+    # Sem terminal interativo (pytest): recusado mesmo sem as variáveis.
+    for var in ("CLAUDECODE", "CDP_EXECUTOR", "CI", "GITHUB_ACTIONS", "CODEX_SANDBOX",
+                "GEMINI_CLI", "CDP_ENSAIO", "CDP_TRAVA_ID", "CDP_EXECUCAO", "CDP_ROTINA",
+                "CLAUDE_CODE_REMOTE", "CLAUDE_CODE_REMOTE_SESSION_ID",
+                "CODEX_SANDBOX_NETWORK_DISABLED"):
+        monkeypatch.delenv(var, raising=False)
+    assert main(base + ["kill-switch", "off", "--reason", "revisado pelo gestor",
+                        "--by", "Ana"]) == 2
+    assert "terminal interativo" in capsys.readouterr().err and rt.kill_switch_active()
+
+
+def test_cli_kill_switch_off_with_an_interactive_operator(demo, tmp_path, capsys, monkeypatch):
+    """Operador humano num terminal: o motivo digitado de novo precisa conferir."""
+    import sys as _sys
+
+    from cdp.__main__ import CONTEXTO_NAO_HUMANO, main
+
+    root = tmp_path / "copia"
+    shutil.copytree(demo, root)
+    rt = _rt(root)
+    rt.set_kill_switch(True, "ligado para o teste", "teste")
+    for var in CONTEXTO_NAO_HUMANO:
+        monkeypatch.delenv(var, raising=False)
+
+    class _Tty:
+        def __init__(self, stream):
+            self._s = stream
+
+        def isatty(self):
+            return True
+
+        def __getattr__(self, name):
+            return getattr(self._s, name)
+
+    monkeypatch.setattr(_sys, "stdin", _Tty(_sys.stdin))
+    monkeypatch.setattr(_sys, "stdout", _Tty(_sys.stdout))
+    base = ["--config", str(LEGACY), "--book", str(root / "book"), "--market",
+            str(root / "market"), "--reports", str(root / "reports")]
+    monkeypatch.setattr("builtins.input", lambda _p="": "outro motivo")
+    assert main(base + ["kill-switch", "off", "--reason", "revisado pelo gestor",
+                        "--by", "Ana"]) == 2
+    assert rt.kill_switch_active()
+    assert main(base + ["kill-switch", "off", "--reason", "revisado pelo gestor",
+                        "--by", "CDP — rotina"]) == 2      # rotina nunca é o autor
+    monkeypatch.setattr("builtins.input", lambda _p="": "revisado  pelo gestor")
+    assert main(base + ["kill-switch", "off", "--reason", "revisado pelo gestor",
+                        "--by", "Ana"]) == 0
+    assert not rt.kill_switch_active()
+
+
+def test_agenda_reports_the_market_store_last_session(demo):
+    from cdp.data.synthetic import make_synthetic_market
+
+    md = make_synthetic_market(seed=DEMO_SEED, start=DEMO_HISTORY_START, as_of=LAST)
+    rt = _rt(demo, store_override=DemoStore(md))
+    assert agenda(rt, _at(SESSION, 12))["base_ultimo_pregao"] == LAST
+    assert agenda(_rt(demo), _at(SESSION, 12))["base_ultimo_pregao"] is None  # sem base

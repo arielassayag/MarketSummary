@@ -19,7 +19,7 @@ padroes:
   concorrencia: exclusiva  # exclusiva = trava única dos escritores; compartilhada = só arquivos
                            # novos em pastas mescláveis (reports/risk, reports/backtest)
   escreve_livro: true
-  publicacao: agente       # agente | executor (GitHub Actions: a IA não recebe credencial de push)
+  publicacao: agente       # agente | executor (o script de rotina faz o git fora do sandbox do app)
   modelo: forte
   alvos: [claude-routines, claude-desktop, github-actions, cron, launchd, windows]
 tarefas:

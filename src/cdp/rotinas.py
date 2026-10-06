@@ -48,7 +48,7 @@ PUBLICACOES = ("agente", "executor")
 MODELOS = ("forte", "leve")
 ALVOS_AGENDA = ("claude-routines", "claude-desktop", "github-actions", "cron", "launchd",
                 "windows")
-ALVOS = (*ALVOS_AGENDA, "codex", "gemini-actions", "markdown", "json")
+ALVOS = (*ALVOS_AGENDA, "codex", "gemini", "gemini-actions", "markdown", "json")
 HARNESSES = ("claude", "codex", "gemini", "agy", "custom")
 #: Nomes de identidade (``CDP_HARNESS``) aceitos onde se escolhe o harness do script de rotina.
 HARNESS_ALIASES = {"claude-code": "claude", "antigravity": "agy", "outro": "custom"}
@@ -873,11 +873,18 @@ def prompt(rot: Rotinas, tarefa_id: str, *, harness: str = "claude",
     roteiro = (f"Siga {t.playbook} do início ao fim (skill {t.skill} em .agents/skills/ ou "
                ".claude/skills/)" + (f", com --mind {mente}." if t.grava else "."))
     if t.grava:
-        roteiro += (" Onde o roteiro mandar sincronizar, fazer commit ou push, use "
-                    + ("o passo de publicação deste texto" if pub == "agente" and not ensaio
-                       else "nada (o executor publica)" if pub == "executor"
-                       else "nada (ensaio)")
-                    + "; onde mandar republicar o painel no artifact, pule.")
+        # A sincronização no meio do roteiro (ex.: a montagem logo antes do `weekly decide`, para
+        # receber pedidos de kill switch publicados por outro clone) é da mente no modo agente;
+        # no modo executor, o .git é só de leitura e quem sincroniza é o script.
+        roteiro += ((" Onde o roteiro mandar sincronizar, fazer commit ou push, use nada (o "
+                     "executor publica)") if pub == "executor"
+                    else (" A entrada do roteiro já foi feita acima; no meio dele, rode "
+                          "`uv run python -m cdp sincronizar --executar` só onde ele mandar"
+                          + (" (antes do `weekly decide`)" if t.gate == "semanal" else "")
+                          + "; onde mandar fazer commit ou push, use "
+                          + ("o passo de publicação deste texto" if not ensaio
+                             else "nada (ensaio)"))) \
+            + "; onde mandar republicar o painel no artifact, pule."
     else:
         roteiro += " Não grave arquivos, não faça commit nem push."
     if trava:
@@ -988,7 +995,9 @@ def exportar_claude_desktop(rot: Rotinas) -> str:
         if "claude-desktop" not in t.alvos:
             continue
         instr = t.plugin or f"/{t.skill}"
-        linhas.append(f"| `{t.id}` | `{instr}` (ou `/{t.skill}`) | {t.quando()} |")
+        # O id da tarefa vai junto: o gate confere o horário da tarefa certa (reservas e o
+        # risco das 16:03 têm o mesmo roteiro, mas não o mesmo horário).
+        linhas.append(f"| `{t.id}` | `{instr} {t.id}` (ou `/{t.skill} {t.id}`) | {t.quando()} |")
     return "\n".join(linhas) + "\n"
 
 
@@ -1304,16 +1313,82 @@ def rrule(t: Tarefa) -> str:
     return f"RRULE:FREQ=WEEKLY;BYDAY={dias};BYHOUR={c.hora};BYMINUTE={c.minuto}"
 
 
-def exportar_codex(rot: Rotinas) -> dict[str, Any]:
-    """Codex: o sandbox ``workspace-write`` deixa ``.git`` só de leitura, então a mente nunca
-    publica. Pelo plano (``codex login`` na máquina): agendador do sistema chamando
-    ``scripts/cdp_rotina.sh --harness codex``, que faz gate, trava, sincronização e publicação
-    fora do sandbox. Na nuvem: GitHub Actions com chave de API (``CODEX_API_KEY``)."""
-    return {"cron_pelo_plano": exportar_cron(rot, harness="codex"),
-            "github_actions_com_chave": exportar_github_actions(rot, harness="codex"),
-            "observacao": ("As automações do app do Codex rodam num sandbox sem push: use o "
-                           "agendador do sistema com scripts/cdp_rotina.sh (docs/cdp/AUTOMACAO.md, "
-                           "seção 4).")}
+#: Preparação comum das tarefas agendadas dentro do app (Codex e Antigravity), no PC.
+_PREPARO_APP = (
+    "Clone dedicado às rotinas, na main, com a identidade registrada uma vez: "
+    "`uv run python -m cdp executor registrar --como local-pc --harness {harness}`.",
+    "O executor designado em configs/cdp/executor.yaml precisa ser `local-pc` (uma só mente "
+    "grava o livro; desligue as rotinas de qualquer outro app antes de ligar estas).",
+    "O PC precisa conseguir fazer push em main e no ramo `cdp-trava` (a trava distribuída "
+    "falha fechada: sem ela, o escritor exclusivo não roda).",
+    "App aberto e computador acordado nos horários (as tarefas rodam na máquina).",
+)
+
+
+def exportar_codex(rot: Rotinas, *, ensaio: bool = False) -> dict[str, Any]:
+    """Codex — automações do app (caminho principal no Codex): uma automação por tarefa, no
+    projeto do clone dedicado, em modo **Local** (sem worktree: a identidade do executor,
+    ``.cdp/local.yaml``, fica no clone) e com **Acesso total** (rede para as fontes públicas e
+    escrita em ``.git`` para a trava e a publicação, ambas feitas pelo código). O prompt é o
+    mesmo texto neutro das outras rotinas, com ``--mind codex``. Alternativa sem acesso total:
+    o agendador do sistema chamando ``scripts/cdp_rotina.sh --harness codex`` (o script faz
+    gate, trava, sincronização e publicação fora do sandbox)."""
+    automacoes = [{"nome": nome_rotina(t), "tarefa": t.id, "quando": t.quando(),
+                   "agenda": rrule(t), "projeto": "raiz do clone dedicado às rotinas",
+                   "modo": "Local (sem worktree)", "permissoes": "Acesso total",
+                   "prompt": prompt(rot, t.id, harness="codex", ensaio=ensaio)}
+                  for t in rot.tarefas.values()]
+    return {"automacoes_do_app": automacoes,
+            "preparacao": [p.format(harness="codex") for p in _PREPARO_APP]
+            + ["`~/.codex/config.toml` da conta dedicada (nunca no repositório): "
+               '`sandbox_mode = "danger-full-access"`, `approval_policy = "never"` e, em '
+               '`[shell_environment_policy]`, `inherit = "all"` e '
+               '`set = { CDP_HARNESS = "codex", TZ = "America/Sao_Paulo", PYTHONUTF8 = "1" }` '
+               "(as variáveis só entram pela tabela `set`).",
+               "`codex login` com a conta do plano (ChatGPT) no próprio app; o projeto é a "
+               "pasta do clone, sem worktree."],
+            "alternativa_agendador_do_sistema": exportar_cron(rot, harness="codex"),
+            "limites": ("As automações do app rodam no PC (app aberto e máquina acordada); as "
+                        "tarefas agendadas da web não acessam o repositório e o Codex Cloud não "
+                        "agenda tarefas. Acesso total dispensa aprovações: use só numa conta e "
+                        "num clone dedicados (docs/cdp/AUTOMACAO.md, seção 5).")}
+
+
+def exportar_gemini(rot: Rotinas, *, harness: str = "agy", ensaio: bool = False
+                    ) -> dict[str, Any]:
+    """Gemini — o mesmo prompt de cada tarefa (``--mind gemini``) para as tarefas agendadas do
+    app Antigravity (cron no horário do PC em Brasília; experimental) e, a melhor opção pelo
+    plano, o ``agy`` sem interface pelo agendador do sistema (``scripts/cdp_rotina.sh --harness
+    agy``, em ``alternativa_agendador_do_sistema``). O Gemini CLI sem interface exige chave
+    paga desde 18/06/2026 (``harness="gemini"``)."""
+    h = harness if harness in ("agy", "gemini") else "agy"
+    tarefas = [{"nome": nome_rotina(t), "tarefa": t.id, "quando": t.quando(),
+                "agenda": t.cron, "fuso": rot.fuso,
+                "prompt": prompt(rot, t.id, harness=h, ensaio=ensaio)}
+               for t in rot.tarefas.values()]
+    nome_h = "antigravity" if h == "agy" else "gemini"
+    return {"tarefas_agendadas": tarefas,
+            "preparacao": [p.format(harness=nome_h) for p in _PREPARO_APP]
+            + ["Login uma vez, de forma interativa, com a conta Google do plano (app ou `agy`); "
+               "no app, o projeto do clone com permissão para rodar comandos no terminal e "
+               "acessar a rede sem perguntar."],
+            "alternativa_agendador_do_sistema": exportar_cron(rot, harness=h),
+            "limites": ("As tarefas agendadas do Antigravity rodam no PC (app aberto e máquina "
+                        "acordada), são experimentais e usam um modelo fixo (Flash): use-as só "
+                        "para cdp-status e o risco; a montagem, o fechamento, as notas e a "
+                        "calibração ficam no agy pelo agendador do sistema (cada tarefa em um só "
+                        "agendador). O Jules agenda só com cadência diária ou semanal e entrega "
+                        "por pull request, sem horário exato: não serve aos escritores do livro "
+                        "(docs/cdp/AUTOMACAO.md, seção 6).")}
+
+
+def _blocos_md(itens: Sequence[Mapping[str, Any]]) -> str:
+    """Um bloco por tarefa (nome, quando, agenda e o prompt a colar no app)."""
+    partes = []
+    for i in itens:
+        partes.append(f"## {i['nome']}\n\n- quando: {i['quando']}\n- agenda: `{i['agenda']}`\n\n"
+                      f"```text\n{i['prompt']}```\n")
+    return "\n".join(partes)
 
 
 # ==========================================================================================
@@ -1543,7 +1618,7 @@ def cmd_prompt(args: argparse.Namespace) -> int:
     rot = _carregar(args)
     if args.modo == "plugin":
         t = rot.tarefa(args.tarefa)
-        print(t.plugin or f"/{t.skill}")
+        print(f"{t.plugin or '/' + t.skill} {t.id}")  # com o id: o gate confere o horário certo
         return 0
     if args.modo == "skill":
         print(f"/{rot.tarefa(args.tarefa).skill} {args.tarefa}")
@@ -1633,8 +1708,20 @@ def cmd_exportar(args: argparse.Namespace) -> int:
     elif alvo in ("github-actions", "gemini-actions"):
         h = args.harness or ("gemini" if alvo == "gemini-actions" else None)
         texto = exportar_github_actions(rot, harness=h)
-    elif alvo == "codex":
-        texto = json.dumps(exportar_codex(rot), ensure_ascii=False, indent=2) + "\n"
+    elif alvo in ("codex", "gemini"):
+        # Tarefas agendadas dentro do app (Codex: automações; Gemini: Antigravity).
+        if alvo == "codex":
+            spec = exportar_codex(rot, ensaio=args.ensaio)
+            itens = spec["automacoes_do_app"]
+        else:
+            spec = exportar_gemini(rot, harness=harness_do_runner(args.harness or "agy"),
+                                   ensaio=args.ensaio)
+            itens = spec["tarefas_agendadas"]
+        if args.formato == "md":
+            prep = "\n".join(f"- {p}" for p in spec["preparacao"])
+            texto = f"# Preparação\n\n{prep}\n\nLimites: {spec['limites']}\n\n" + _blocos_md(itens)
+        else:
+            texto = json.dumps(spec, ensure_ascii=False, indent=2) + "\n"
     elif alvo == "cron":
         texto = exportar_cron(rot, harness=harness, utc=args.utc)
     elif alvo == "launchd":
@@ -1748,8 +1835,10 @@ def registrar(sub: argparse._SubParsersAction) -> None:
     s.add_argument("--execucao", required=True)
     s.add_argument("--agora", type=_aware, default=None)
     s.set_defaults(func=cmd_conferir)
-    s = rsub.add_parser("exportar", help="agendadores: nuvem do Claude, desktop, GitHub "
-                                         "Actions, Codex, cron, launchd, Windows")
+    s = rsub.add_parser("exportar", help="agendadores: rotinas na nuvem do Claude, app desktop, "
+                                         "automações do app do Codex, tarefas agendadas do "
+                                         "Antigravity (gemini), cron, launchd, Windows e, como "
+                                         "apêndice opcional, GitHub Actions")
     _comuns(s)
     s.add_argument("--alvo", choices=ALVOS, required=True)
     s.add_argument("--harness", choices=(*HARNESSES, *HARNESS_ALIASES), default=None)
@@ -1778,6 +1867,7 @@ def registrar(sub: argparse._SubParsersAction) -> None:
 
 __all__ = ["ALVOS", "CAMINHOS_DO_LIVRO", "ContextoGate", "Cron", "Decisao", "ErroRotinas",
            "GATES", "Rotinas", "Tarefa", "avaliar", "avaliar_gate", "carregar",
-           "exportar_claude_routines", "exportar_github_actions", "exportar_markdown",
+           "exportar_claude_routines", "exportar_codex", "exportar_gemini",
+           "exportar_github_actions", "exportar_markdown",
            "gerar_skills", "mente_do_harness", "prompt", "registrar", "sincronizar_skills",
            "verificar"]

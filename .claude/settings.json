@@ -2,7 +2,9 @@
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "env": {
     "PYTHONUTF8": "1",
-    "PYTHONIOENCODING": "utf-8"
+    "PYTHONIOENCODING": "utf-8",
+    "BASH_DEFAULT_TIMEOUT_MS": "600000",
+    "BASH_MAX_TIMEOUT_MS": "1800000"
   },
   "permissions": {
     "defaultMode": "acceptEdits",
@@ -13,13 +15,9 @@
       "Bash(uv run pytest *)",
       "Bash(uv run ruff check *)",
       "Bash(git status *)",
-      "Bash(git pull *)",
       "Bash(git fetch *)",
       "Bash(git log *)",
       "Bash(git diff *)",
-      "Bash(git add *)",
-      "Bash(git commit *)",
-      "Bash(git push *)",
       "Bash(git branch --show-current)",
       "Bash(git rev-parse *)",
       "WebSearch",
@@ -33,15 +31,32 @@
       "Edit(/reports/backtest/**)",
       "Edit(/outputs/**)",
       "Edit(/artifacts/painel/ARTIFACT_URL)",
-      "Skill(cdp:semanal)",
-      "Skill(cdp:diario)",
-      "Skill(cdp:risco)",
-      "Skill(cdp:status)",
-      "Skill(cdp:calibracao)",
-      "Skill(cdp:cobertura)",
+      "Skill(cdp-retomar)",
+      "Skill(cdp-retomar *)",
       "Skill(cdp-semanal)",
+      "Skill(cdp-semanal *)",
       "Skill(cdp-diario)",
-      "Skill(cdp-cobertura)"
+      "Skill(cdp-diario *)",
+      "Skill(cdp-cobertura)",
+      "Skill(cdp-cobertura *)",
+      "Skill(cdp-risco)",
+      "Skill(cdp-risco *)",
+      "Skill(cdp-status)",
+      "Skill(cdp-status *)",
+      "Skill(cdp-calibracao)",
+      "Skill(cdp-calibracao *)",
+      "Skill(cdp:semanal)",
+      "Skill(cdp:semanal *)",
+      "Skill(cdp:diario)",
+      "Skill(cdp:diario *)",
+      "Skill(cdp:cobertura)",
+      "Skill(cdp:cobertura *)",
+      "Skill(cdp:risco)",
+      "Skill(cdp:risco *)",
+      "Skill(cdp:status)",
+      "Skill(cdp:status *)",
+      "Skill(cdp:calibracao)",
+      "Skill(cdp:calibracao *)"
     ],
     "ask": [
       "Edit(/configs/**)",
@@ -50,7 +65,22 @@
       "Bash(git rebase *)",
       "Bash(git clean *)",
       "Bash(git restore *)",
-      "Bash(git checkout -- *)"
+      "Bash(git checkout -- *)",
+      "Bash(uv run python -m cdp executor transferir*)",
+      "Bash(uv run python -m cdp executor registrar*)",
+      "Bash(uv run python -m cdp trava adquirir*)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push)",
+      "Bash(git push *)",
+      "Bash(git pull)",
+      "Bash(git pull *)",
+      "Bash(git merge *)",
+      "Bash(uv run cdp executor transferir*)",
+      "Bash(uv run cdp executor registrar*)",
+      "Bash(uv run cdp trava adquirir*)",
+      "Bash(uv run python -m cdp * --sem-trava*)",
+      "Bash(uv run cdp * --sem-trava*)"
     ],
     "deny": [
       "Bash(git push --force*)",
@@ -120,7 +150,13 @@
       "Edit(/artifacts/painel/data.json)",
       "Edit(/artifacts/painel/PAGINA_PUBLICADA.sha256)",
       "Edit(/artifacts/painel/*.css)",
-      "Edit(/artifacts/painel/*.js)"
+      "Edit(/artifacts/painel/*.js)",
+      "Bash(git push --no-verify*)",
+      "Bash(git push * --no-verify*)",
+      "Bash(git commit --no-verify*)",
+      "Bash(git commit * --no-verify*)",
+      "Edit(/configs/cdp/executor.yaml)",
+      "Edit(/.cdp/**)"
     ]
   }
 }

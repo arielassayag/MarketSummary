@@ -114,6 +114,22 @@ def fmt_days(x: float | None, digits: int = 1) -> str:
     return f"{_br(float(x), digits)} d" if _finite(x) else NA
 
 
+def fmt_closes(x: float | None, digits: int = 1) -> str:
+    """Fechamentos (leilões de fechamento) para liquidar ou executar: ``1,5 fech.``."""
+    return f"{_br(float(x), digits)} fech." if _finite(x) else NA
+
+
+def liquidity_unit(cfg: FundConfig | None) -> str:
+    """Unidade dos limites de liquidez do mandato: ``"fechamentos"`` com a execução no leilão
+    de fechamento (seção ``execution``), senão ``"dias"`` (pregões a uma participação do ADTV;
+    regra anterior)."""
+    return "fechamentos" if cfg is not None and cfg.execution is not None else "dias"
+
+
+def fmt_liquidity(x: float | None, cfg: FundConfig | None, digits: int = 1) -> str:
+    return fmt_closes(x, digits) if liquidity_unit(cfg) == "fechamentos" else fmt_days(x, digits)
+
+
 def fmt_date(d: date | datetime) -> str:
     """Data ``dd/mm/aaaa``; horários com fuso são convertidos para UTC antes de rotular."""
     if isinstance(d, datetime):
@@ -326,11 +342,7 @@ def _section_risk(proposal: Proposal, cfg: FundConfig) -> list[str]:
         ["ES 1d 99%", pct_usd(r.es_1d_99), ""],
         ["VaR 1 semana 99%", pct_usd(r.var_1w_99), ""],
         ["N efetivo", fmt_num(r.effective_n, 1), "diversificação (1/Σw² normalizado)"],
-        ["Máx. dias para liquidar", fmt_days(r.max_days_to_liquidate),
-         f"long ≤ {fmt_days(cfg.liquidity.max_days_to_liquidate_long)}; short ≤ "
-         f"{fmt_days(cfg.liquidity.max_days_to_liquidate_short)}"],
-        ["% NAV liquidável em 1 dia", fmt_pct(r.pct_nav_liquidated_1d),
-         f"participação {fmt_pct(cfg.liquidity.participation_rate, 0)} do ADTV"],
+        *_liquidity_rows(r, cfg),
     ]
     if isinstance(risco, dict):
         rows += _idio_rows(risco)
@@ -488,7 +500,7 @@ def _section_fx(proposal: Proposal) -> list[str]:
     return out + _table(["Moeda", "Exposição", "Hedge", "Instrumento", "Racional"], rows) + [""]
 
 
-def _section_trades(proposal: Proposal) -> list[str]:
+def _section_trades(proposal: Proposal, cfg: FundConfig | None = None) -> list[str]:
     trades = proposal.trades
     out = ["## Ordens", ""]
     if not trades:
@@ -512,17 +524,63 @@ def _section_trades(proposal: Proposal) -> list[str]:
          f"({fmt_bps(cost_usd / costed_gross * 1e4 if costed_gross > 0 else None)} do volume; "
          f"{fmt_pct(cost_usd / nav, 3)} do NAV)" if costed else NA],
         ["Maior % do ADTV", fmt_pct(max(pct_adtv), 1) if pct_adtv else NA],
-        ["Maior prazo estimado de execução", fmt_days(max(days)) if days else NA],
+        ["Maior prazo estimado de execução", fmt_liquidity(max(days), cfg) if days else NA],
     ]
     odd = _odd_lot_orders(trades)
     if odd is not None:
         rows.append(["Ordens na B3 com perna no fracionário (sufixo F)",
                      f"{odd[0]} de {odd[1]}"])
+    picos = _pico_orders(proposal)
+    if picos is not None:
+        rows.append(["Ordens na BMV com perna em pico (abaixo do lote que forma preço)",
+                     f"{picos[0]} de {picos[1]}"])
+    rr = proposal.overrides.get("arredondamento") if isinstance(proposal.overrides, dict) \
+        else None
+    if isinstance(rr, dict) and rr.get("linha_maior_erro"):
+        rows.append(["Maior erro do arredondamento a ações inteiras",
+                     f"{fmt_pct(rr.get('maior_erro_pct_nav'), 3, signed=True)} do NAV "
+                     f"({rr['linha_maior_erro']}); soma "
+                     f"{fmt_pct(rr.get('soma_erros_pct_nav'), 3)}"])
+        if rr.get("sem_uma_acao"):
+            rows.append(["Posições abaixo de uma ação (sem ordem)",
+                         ", ".join(map(str, rr["sem_uma_acao"]))])
     out += _table(["Item", "Valor"], rows) + [""]
     if missing:
         out += [f"_{missing} ordem(ns) sem estimativa de custo — excluídas da soma de custos "
                 "(não tratadas como custo zero)._", ""]
     return out
+
+
+def _pico_orders(proposal: Proposal) -> tuple[int, int] | None:
+    """(ordens com perna em pico, ordens em linhas da BMV); ``None`` sem ordem na BMV."""
+    from ..portfolio.trades import order_legs_detail
+    from ..universe import listing_market
+
+    px = {p.execution_ticker: p.price_local for p in proposal.positions}
+    eligible = [t for t in proposal.trades if listing_market(t.ticker) == "MX"]
+    if not eligible:
+        return None
+    n = sum(1 for t in eligible if t.shares and any(
+        kind == "pico" for _tk, _q, kind in order_legs_detail(t.ticker, int(t.shares),
+                                                               px.get(t.ticker))))
+    return n, len(eligible)
+
+
+def _liquidity_rows(r, cfg: FundConfig) -> list[list[str]]:
+    """Liquidez da carteira na unidade do mandato (fechamentos com a execução no leilão de
+    fechamento; dias a uma participação do ADTV na regra anterior)."""
+    liq = cfg.liquidity
+    if liquidity_unit(cfg) == "fechamentos":
+        return [["Máx. fechamentos para liquidar", fmt_closes(r.max_days_to_liquidate),
+                 f"long ≤ {fmt_closes(liq.max_days_to_liquidate_long)}; short ≤ "
+                 f"{fmt_closes(liq.max_days_to_liquidate_short)}"],
+                ["% do gross liquidável em 1 fechamento", fmt_pct(r.pct_nav_liquidated_1d),
+                 "capacidade estrutural do leilão e da janela pré-fechamento"]]
+    return [["Máx. dias para liquidar", fmt_days(r.max_days_to_liquidate),
+             f"long ≤ {fmt_days(liq.max_days_to_liquidate_long)}; short ≤ "
+             f"{fmt_days(liq.max_days_to_liquidate_short)}"],
+            ["% NAV liquidável em 1 dia", fmt_pct(r.pct_nav_liquidated_1d),
+             f"participação {fmt_pct(liq.participation_rate, 0)} do ADTV"]]
 
 
 def _odd_lot_orders(trades: list[Trade]) -> tuple[int, int] | None:
@@ -666,7 +724,7 @@ def render_memo(proposal: Proposal, pack: ResearchPack | None = None,
     parts += _section_positions(proposal, pack, factbook)
     parts += _section_exposures(proposal)
     parts += _section_fx(proposal)
-    parts += _section_trades(proposal)
+    parts += _section_trades(proposal, cfg)
     parts += _section_research(pack, factbook)
     parts += _section_optimizer(proposal)
     parts += _section_checklist(proposal, pack, cfg)

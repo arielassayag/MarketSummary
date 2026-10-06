@@ -188,6 +188,26 @@ fi
 
 PRE="$(uv run python -m cdp rotinas pre --tarefa "$TAREFA" 2>/dev/null | tail -n 1)"
 if [ -n "$PRE" ] && [ "$SECO" -eq 0 ]; then
+  if [ "$PUBLICACAO" = "agente" ] && [ "$SEM_GATE" -eq 0 ] && [ "$GRAVA" = "True" ] \
+     && [ "$(campo "$GATE" 'd.get("exclusiva")')" = "False" ]; then
+    # Registra a execução ANTES do pré-comando (tarefa compartilhada, sem trava): o retrato que
+    # `cdp publicar` compara fica sem o resultado do pré-comando (ex.: o backtest da calibração),
+    # que então sai na publicação. O gate da mente reutiliza esta execução (CDP_EXECUCAO).
+    REG="logs/cdp/${RUN}.registro.json"
+    # shellcheck disable=SC2086
+    uv run python -m cdp rotinas gate --tarefa "$TAREFA" $MANUAL $ENSAIO >"$REG"
+    RC=$?
+    if [ "$RC" -eq 10 ]; then
+      log "sem execução: $(campo "$REG" 'd.get("motivo")')"
+      exit 0
+    elif [ "$RC" -ne 0 ]; then
+      log "gate com erro de configuração (código $RC)"
+      exit 78
+    fi
+    CDP_EXECUCAO="$(campo "$REG" 'd.get("execucao")')"
+    export CDP_EXECUCAO
+    log "execução $CDP_EXECUCAO registrada antes do pré-comando (o gate da mente a reutiliza)"
+  fi
   case "$PRE" in
     "uv run python -m cdp "*) log "pré-comando: $PRE"; bash -c "$PRE" || log "pré-comando falhou (código $?)" ;;
     *) log "pré-comando recusado (não é um comando do cdp): $PRE" ;;

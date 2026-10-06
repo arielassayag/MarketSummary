@@ -7,17 +7,17 @@ fund:
   base_currency: USD
   inception_date: "2026-10-09"           # carteira inaugural, ao preço de fechamento (sempre dia de montagem)
   inception_nav_usd: 1000000             # PL inicial de US$ 1,0 mi (com US$ 100 mi a carteira esbarrava na liquidez de um único fechamento)
-  rebalance_weekday: MON
+  rebalance_weekday: LAST_US_SESSION    # último pregão da semana na NYSE
   manager_role: "Gestor (PM)"
   manager_name: "CDP — Cabra da Peste"
   track_record_type: "paper trading com preços reais (execução hipotética no fechamento)"
   timezone: America/Sao_Paulo
-  weekly_research_start_local: "11:00"   # segunda: pesquisa e decisão com dados até sexta
-  decision_deadline_local: "16:30"       # decisão gravada antes do call de fechamento da B3
-  execution_convention: "MOC: carteira decidida antes do fechamento de segunda com dados até sexta; executada pelo valor-alvo (peso × NAV) ao preço de fechamento de segunda de cada linha, com custos do modelo"
+  weekly_research_start_local: "11:00"   # dia de montagem: pesquisa e decisão com dados até o momento da análise
+  decision_deadline_local: "15:00"       # teto; o prazo efetivo também respeita o fechamento mais cedo − 45 min
+  execution_convention: "Decisão antes do fechamento do dia de montagem, com todos os dados disponíveis até o momento da análise; ordens em quantidade de ações; execução ao preço oficial de fechamento de cada linha (MOC), limitada à capacidade do leilão e da janela pré-fechamento; linha sem pregão no dia não negocia e o emissor mantém a posição"
   daily_close_run_local: "19:20"         # marcação, risco, atribuição, comentário e relatório
   primary_calendar: BVMF                 # calendário oficial da B3 (exchange_calendars)
-  rebalance_rule: "primeiro pregão da semana na B3 (segunda ou o próximo dia útil)"
+  rebalance_rule: "último pregão da semana na NYSE (sexta-feira ou, com feriado nos EUA, o pregão anterior)"
   minds: [claude-code, codex]            # a "mente" do CDP: intercambiável, metodologia perene
   use_all_available_data: true           # inclui intradiário e notícias até o momento da análise
 
@@ -36,7 +36,21 @@ risk:
   max_short_weight: 0.025      # shorts menores: perda ilimitada e risco de squeeze
   min_position_weight: 0.002
   max_single_name_risk_share: 0.08
-  max_factor_risk_share: 0.25          # ≥ 75% da variância deve ser idiossincrática (restrição no otimizador)
+  max_factor_risk_share: 0.10          # fatia fatorial máxima na carteira ATINGIDA (κ_F incluso)
+  idio_share_goal: 0.90                # meta idiossincrática (alerta) — modelos de decisão e base
+  idio_share_floor: 0.85               # piso idiossincrático (bloqueia; nunca relaxado)
+  factor_risk_basis: achieved          # teto fatorial sobre a carteira atingida, não a meta de vol
+  factor_risk_aversion_multiplier: 5.0 # λ_F = 5·λ (fora da busca de κ do modo match)
+  second_order_inflation: 1.45         # κ_F (razão realizada/prevista em carteiras otimizadas)
+  second_order_inflation_mode: config  # o modo analítico fica para a validação
+  idio_gate_models: [decisao, base]    # com e sem janelas de evento
+  vol_floor_alpha_scaling: false       # nunca escalar o alpha para alcançar o piso da banda
+  operational:                         # limites operacionais = min(mandato, operacional)
+    beta: 0.02
+    style: 0.05
+    sector_net: 0.015
+    country_net: {BR: 0.01, MX: 0.01, "*": 0.005}   # demais países: ±0,5% cada
+    commodity_beta: 0.01
   risk_aversion: 1.0
   risk_target_mode: match              # o mandato TEM vol-alvo: usa o orçamento de risco (κ ≥ 1)
   var_confidence: 0.99
@@ -56,16 +70,19 @@ risk:
   country_gap_scenarios: {BR: [-0.10, 0.10], MX: [-0.13], CL: [-0.15], PE: [-0.10], CO: [-0.11], AR: [-0.56, 0.41]}
 
 liquidity:
-  min_adtv_usd: 2000000
+  # Com PL de US$ 1,0 mi, o tamanho é limitado pela liquidez RELATIVA (fechamentos para liquidar,
+  # capacidade do leilão, participação no ADTV); os pisos absolutos são filtros de qualidade de
+  # spread, formação de preço e, nos shorts, de aluguel e risco de recall/squeeze.
+  min_adtv_usd: 1000000
   adv_window_days: 63
   participation_rate: 0.20
-  max_days_to_liquidate_long: 3.0
+  max_days_to_liquidate_long: 3.0      # em fechamentos (leilão + janela pré-fechamento)
   max_days_to_liquidate_short: 2.0
   max_trade_days_inception: 5.0
   max_trade_days_weekly: 2.0
   max_weekly_turnover: 0.30           # custo de 60%/sem (~4,7% a.a.) excederia o alpha esperado
-  min_adtv_long_usd: 5000000
-  min_adtv_short_usd: 10000000
+  min_adtv_long_usd: 2000000           # long: teto de 4% = US$ 40 mil ≤ 2% do ADTV mínimo
+  min_adtv_short_usd: 5000000          # short (mais estrito): 2,5% = US$ 25 mil ≤ 0,5% do ADTV mínimo
   short_participation_rate: 0.15       # shorts: 2 dias a 15% => <= 30% do ADTV
   min_gross_liquid_3d: 0.80
   min_gross_liquid_5d: 0.95
@@ -103,6 +120,8 @@ squeeze:
   score_medium: 40
   score_high: 70
   medium_short_cap_multiplier: 0.5
+  enforce_entry_blocks: true           # sem short novo: resultado ≤ 5 pregões; free float < 20%
+  stop_scope: name                     # stop por nome: short cortado à metade, sem compra do emissor até revisão
 
 costs:
   commission_bps: {US: 1.0, BR: 3.0, MX: 8.0, CL: 10.0, CO: 15.0, PE: 15.0, AR: 15.0}
@@ -111,6 +130,16 @@ costs:
   impact_coefficient: 0.6
   fx_cost_bps: 3.0
   amortization_weeks: 8
+  # Custo mínimo por ordem (USD), piso da comissão + tarifas em tabelas públicas; substitui a
+  # comissão variável quando maior. Lote padrão + fracionário (B3) ou pico (BMV) contam 2 ordens.
+  min_order_cost_usd:
+    US: 1.0     # tabela pública de corretora global de acesso direto (plano fixo): US$ 0,005/ação, mínimo US$ 1,00 por ordem, tarifas incluídas
+    BR: 0.0     # B3: emolumentos 0,005% + liquidação 0,025% ad valorem, sem mínimo por ordem (no custo em bps)
+    MX: 3.5     # BMV: 0,10% com mínimo de MXN 60 por ordem (≈ US$ 3,3 a 18,1 MXN/USD), arredondado para cima
+    CL: 28.0    # Santiago: direitos de bolsa com mínimo de 0,5 UF + IVA (≈ US$ 24) e tarifa fixa da corretora (≈ US$ 4)
+    CO: 22.0    # BVC: comissão mínima de COP 60 mil + IVA (≈ US$ 22) nas comissionistas de maior porte
+    PE: 25.0    # BVL: sem tabela pública padronizada — estimativa conservadora (execução via ADR)
+    AR: 25.0    # BYMA: sem tabela pública padronizada — estimativa conservadora (execução via ADR)
 
 alpha:
   signal_weights:
@@ -127,6 +156,7 @@ alpha:
   view_information_coefficient: 0.03   # teto (adoção plena S3); efetivo vem de research.llm_phase
   max_view_tilt_z: 1.5
   view_sign_coherence: true          # visão final + ⇒ sem short; − ⇒ sem long (PM prevalece)
+  reresidualize_after_views: true    # alpha reortogonalizado após as inclinações das visões
 
 drawdown:                    # escada a partir do pico (Millennium-style, escalada p/ vol 5%)
   soft_stop: -0.025            # revisão de risco + corte de 25% do gross
@@ -135,6 +165,7 @@ drawdown:                    # escada a partir do pico (Millennium-style, escala
   degross_multiplier: 0.5
   stop_out: -0.075             # gross mínimo + revisão completa do processo
   stop_out_gross: 0.5
+  risk_reference: normal_book_vol   # escada sobre a vol da mesma carteira no estágio normal (m·σ_ref)
 
 risk_model:
   history_days: 2000                     # todo o histórico disponível (desde 2019); EWMA pondera o recente
@@ -146,6 +177,12 @@ risk_model:
   specific_shrinkage: 0.3
   min_names_per_sector: 5
   market_proxy: ILF
+  macro_factors: [BZ=F, HG=F, GC=F, DX-Y.NYB]   # bloco macro (betas dos resíduos, meia-vida 126)
+  linked_groups:                         # holding/controlada: mesma aposta (teto de um nome por lado)
+    gerdau: [BR_GOAU, BR_GERDAU]
+    itau: [BR_ITAUSA, BR_ITAU]
+    csn: [BR_CSN, BR_CMIN]
+    vale: [BR_BRADESPAR, BR_VALE]
 
 research:
   provider: imported                     # pesquisa e decisão escritas pela mente (Claude Code / Codex)
@@ -161,3 +198,35 @@ research:
   llm_view_ic_by_phase: {S0: 0.0, S1: 0.01, S2: 0.02, S3: 0.03}
   samples_per_judgment: 5
   min_sign_agreement: 0.8
+
+execution:
+  rebalance_calendar: XNYS
+  decision_deadline_cap_local: "15:00"   # Brasília
+  decision_buffer_minutes: 45            # prazo efetivo = min(15:00, fechamento mais cedo NYSE/B3/BMV − 45 min)
+  close_times:                           # horários oficiais (fuso de cada mercado); fechamentos antecipados vêm do calendário
+    XNYS: {tz: America/New_York, close: "16:00", moc_cutoff: "15:50"}   # NYSE: MOC/LOC até 15:50 ET
+    XNAS: {tz: America/New_York, close: "16:00", moc_cutoff: "15:55"}   # Nasdaq Closing Cross: MOC até 15:55 ET
+    ARCX: {tz: America/New_York, close: "16:00", moc_cutoff: "15:59"}   # NYSE Arca: congelamento 15:59–16:00 ET
+    BVMF: {tz: America/New_York, close: "16:00", moc_cutoff: "15:55"}   # B3 alinhada a Nova York: call 16:55–17:00 BRT (17:55–18:00 a partir de 02/11)
+    XMEX: {tz: America/New_York, close: "16:00", moc_cutoff: "15:40"}   # BMV: ordens ao fechamento até 13:40 (CDMX, horário de verão nos EUA); PPP 13:40–14:00
+    XSGO: {tz: America/Santiago, close: "16:00", moc_cutoff: "15:45"}   # Bolsa de Santiago: pregão 09:30–16:00; sessão de fechamento de 15 min (inferência conservadora)
+    XBOG: {tz: America/New_York, close: "16:00", moc_cutoff: "15:55"}   # BVC alinhada a Nova York: leilão de fechamento 14:55–15:00 Bogotá (verão nos EUA)
+    XLIM: {tz: America/New_York, close: "16:00", moc_cutoff: "15:52"}   # BVL alinhada a Nova York: leilão de fechamento 14:52–15:00 Lima (verão nos EUA)
+    XBUE: {tz: America/Argentina/Buenos_Aires, close: "17:00", moc_cutoff: "16:57"}   # BYMA: leilão de fechamento 16:57–17:00
+  capacity:
+    adv_statistic: p25
+    adv_window_days: 20
+    auction_participation: 0.10          # teto absoluto 0,15
+    preclose_participation: 0.10
+    preclose_volume_share: 0.25
+    auction_share: {US_STOCK: 0.10, ADR: 0.06, ETF_US: 0.01, BR: 0.08, MX: 0.10, CL: 0.10, CO: 0.05, PE: 0.05, AR: 0.05}
+    short_multiplier: 0.75
+    early_close_multiplier: 0.5
+  min_trade_weight: 0.001                # banda de não-negociação: 0,10% do NAV (US$ 1 mil; a metade da posição mínima)
+  max_fixed_cost_bps: 10                 # ordem só sai se o custo fixo mínimo ≤ 10 bps do nocional (banda por mercado)
+  local_closed_policy: adr_if_eligible_else_freeze
+  early_close_mode: capacity_half
+  max_closes: 1                          # um leilão por dia de montagem
+  fill_volume_source: realized_daily
+  close_impact_discount: {US_STOCK: 0.6, ADR: 0.6, BR: 0.6, MX: 0.6, CL: 0.6, ETF_US: 1.0, CO: 1.0, PE: 1.0, AR: 1.0}
+  closed_home_market_spread_mult: 1.5

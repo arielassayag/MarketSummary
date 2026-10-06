@@ -3,18 +3,32 @@
 - A carteira é otimizada por EMISSOR; aqui cada peso vira uma posição numa linha negociável:
   long ⇒ ``long_ticker`` (linha de maior liquidez); short ⇒ ``short_ticker`` (linha alugável).
 - Quantidades em ações são arredondadas ao menor incremento negociável da linha
-  (:func:`share_increment`) e são **assinadas** (negativas para short). Na B3 o incremento é 1
-  ação: o lote padrão (100) negocia no código da linha e o resto (1–99) no mercado fracionário,
-  código com sufixo ``F`` (``PETR4`` → ``PETR4F``; :func:`order_legs`). Com PL pequeno, um lote
-  de 100 ações vale da ordem da posição mínima do mandato (``risk.min_position_weight`` × NAV) e
-  arredondar ao lote distorceria o peso em até meio lote. EUA e demais mercados: 1 ação. A
-  posição é uma só (a ação do fracionário é a mesma); booking e marcação seguem por
-  ``execution_ticker``, ao fechamento oficial da linha.
-  Preço/câmbio ausentes ⇒ quantidade ``None`` (nunca 0).
+  (:func:`share_increment`: 1 ação em todos os mercados da carteira) e são **assinadas**
+  (negativas para short). Regras de lote das bolsas (:func:`order_legs_detail`):
+
+  * **B3**: lote padrão de 100 ações no código da linha e o resto (1–99) no mercado
+    fracionário, código com sufixo ``F`` (``PETR4`` → ``PETR4F``);
+  * **BMV**: o lote é 1 título, mas só ordens de 100 títulos (5, com preço acima de MXN 200)
+    formam preço; quantidades menores são "picos", executados ao último preço registrado —
+    numa ordem ao fechamento, o próprio fechamento (Reglamento Interior da BMV e glossário);
+  * **Santiago, BVC, BVL, BYMA e EUA**: 1 ação, sem lote padrão.
+
+  Com PL pequeno, um lote de 100 ações vale da ordem da posição mínima do mandato
+  (``risk.min_position_weight`` × NAV): arredondar ao lote distorceria o peso em até meio lote.
+  A posição é uma só (fracionário e pico são a mesma ação); booking e marcação seguem por
+  ``execution_ticker``, ao fechamento oficial da linha. Ação muito cara (ex.: MELI, cerca de
+  0,19% do NAV por ação com PL de US$ 1 mi) é arredondada à ação inteira mais próxima; o erro de
+  arredondamento e as posições que não chegam a uma ação ficam registrados
+  (:func:`rounding_report`). Preço/câmbio ausentes ⇒ quantidade ``None`` (nunca 0).
 - Ordens comparam alvo × posição atual por TICKER: troca de linha de execução fecha a linha
   antiga e abre a nova.
 - Hedge cambial: exposição econômica por moeda "de origem" do emissor (ADRs também carregam
-  o câmbio local no preço em USD), sugerindo NDF quando |exposição| > limiar × NAV.
+  o câmbio local no preço em USD). Regra anterior: NDF quando |exposição| > limiar × NAV. Com a
+  execução no fechamento (PL pequeno), :func:`fx_hedges` com ``futuros=True`` dimensiona o hedge
+  em contratos inteiros de minicontratos de bolsa — BRL no mini dólar da B3 (WDO, US$ 10 mil),
+  MXN no mini futuro do dólar da MexDer (US$ 1 mil), COP no mini futuro TRM da BVC (US$ 5 mil) —
+  e deixa CLP, PEN e ARS sem hedge, com a exposição divulgada (sem futuro listado acessível de
+  tamanho compatível; NDF exige nocional mínimo muito acima do PL).
 """
 
 from __future__ import annotations
@@ -40,6 +54,11 @@ from .execucao import fechamentos_necessarios
 
 LOT_SIZE: dict[str, int] = {"BR": 100, "MX": 1, "CL": 1, "CO": 1, "PE": 1, "AR": 1, "US": 1}
 """Lote padrão do mercado de listagem (B3: 100 ações no mercado à vista de lote padrão)."""
+#: BMV: ordens que formam preço têm no mínimo 100 títulos (5 com preço acima de MXN 200);
+#: abaixo disso são "picos", executados ao último preço registrado (Reglamento Interior da BMV).
+BMV_PRICE_LOT = 100
+BMV_PRICE_LOT_HIGH = 5
+BMV_HIGH_PRICE_MXN = 200.0
 DEFAULT_LOT = 1
 ODD_LOT_SUFFIX: dict[str, str] = {"BR": "F"}
 """Mercados com livro de lote fracionário e o sufixo do código de negociação (B3: 1 a 99 ações,
@@ -54,6 +73,23 @@ COUNTRY_CURRENCY: dict[str, str] = {
 HEDGE_INSTRUMENT: dict[str, str] = {"MXN": "Forward 1M (entregável)"}
 DEFAULT_HEDGE_INSTRUMENT = "NDF 1M"
 NO_HEDGE_INSTRUMENT = "sem hedge (abaixo do limiar)"
+#: Minicontratos de bolsa por moeda (PL pequeno): ``(instrumento, tamanho em USD)``. Fontes
+#: públicas: B3, especificação do Futuro Míni de Taxa de Câmbio de Reais por Dólar Comercial
+#: (WDO, US$ 10.000); MexDer, Futuro "mini" del dólar (US$ 1.000; o padrão DA é de US$ 10.000);
+#: BVC, Futuro mini TRM (TRS, US$ 5.000; o padrão é de US$ 50.000).
+HEDGE_FUTURES: dict[str, tuple[str, float]] = {
+    "BRL": ("Futuro míni de dólar B3 (WDO, US$ 10 mil por contrato)", 10_000.0),
+    "MXN": ("Futuro mini do dólar MexDer (US$ 1 mil por contrato)", 1_000.0),
+    "COP": ("Futuro mini TRM BVC (US$ 5 mil por contrato)", 5_000.0),
+}
+#: Moedas sem minicontrato listado acessível: exposição mantida e divulgada.
+UNHEDGED_REASON: dict[str, str] = {
+    "CLP": "sem futuro de bolsa de tamanho compatível; NDF exige nocional mínimo muito acima do "
+           "PL: exposição mantida e divulgada",
+    "PEN": "sem futuro de bolsa acessível; exposição mantida e divulgada",
+    "ARS": "acesso offshore restrito ao mercado de câmbio argentino; exposição mantida e "
+           "divulgada",
+}
 
 _ACTION_ORDER = {TradeAction.SELL: 0, TradeAction.COVER: 1, TradeAction.BUY: 2,
                  TradeAction.SHORT: 3}
@@ -104,6 +140,86 @@ def order_legs(ticker: str, shares: int) -> list[tuple[str, int]]:
     if odd_part:
         legs.append((odd_ticker, sign * odd_part))
     return legs
+
+
+def price_setting_lot(ticker: str, price_local: float | None = None) -> int:
+    """Quantidade mínima que forma preço no livro principal da linha: B3 100; BMV 100 (5 com
+    preço acima de MXN 200; sem preço, 100 — conservador); demais mercados 1."""
+    market = listing_market(ticker)
+    if market == "MX":
+        if price_local is not None and math.isfinite(float(price_local)) \
+                and float(price_local) > BMV_HIGH_PRICE_MXN:
+            return BMV_PRICE_LOT_HIGH
+        return BMV_PRICE_LOT
+    return lot_size(ticker)
+
+
+def order_legs_detail(ticker: str, shares: int, price_local: float | None = None
+                      ) -> list[tuple[str, int, str]]:
+    """Pernas de execução ``(código, ações assinadas, livro)`` de uma ordem: ``livro`` é
+    ``lote_padrao`` (múltiplos do lote que forma preço), ``fracionario`` (B3, código com sufixo
+    ``F``), ``pico`` (BMV, mesma série, ao último preço registrado) ou ``unica`` (mercados sem
+    lote). Ordem zero ⇒ nenhuma perna."""
+    q = int(shares)
+    if q == 0:
+        return []
+    market = listing_market(ticker)
+    lot = price_setting_lot(ticker, price_local)
+    if lot <= 1:
+        return [(ticker, q, "unica")]
+    sign = 1 if q > 0 else -1
+    round_part = (abs(q) // lot) * lot
+    rest = abs(q) - round_part
+    legs: list[tuple[str, int, str]] = []
+    if round_part:
+        legs.append((ticker, sign * round_part, "lote_padrao"))
+    if rest:
+        odd = odd_lot_ticker(ticker)
+        if market in ODD_LOT_SUFFIX and odd is not None:
+            legs.append((odd, sign * rest, "fracionario"))
+        else:
+            legs.append((ticker, sign * rest, "pico"))
+    return legs
+
+
+def max_order_legs(ticker: str) -> int:
+    """Número máximo de ordens de uma linha para qualquer quantidade: 2 onde há lote que forma
+    preço maior que 1 (B3: lote padrão + fracionário; BMV: lote padrão + pico, conservador sem
+    preço), 1 nos demais mercados. A posição mínima da construção usa a banda com esse número
+    de ordens, para nunca ficar abaixo da banda da execução (:func:`n_orders`)."""
+    return 2 if price_setting_lot(ticker) > 1 else 1
+
+
+def n_orders(ticker: str, shares: int | None, price_local: float | None = None) -> int:
+    """Ordens enviadas para executar ``shares`` (cada perna paga o mínimo por ordem); 1 sem
+    quantidade conhecida."""
+    if shares is None:
+        return 1
+    return max(len(order_legs_detail(ticker, int(shares), price_local)), 1)
+
+
+def rounding_report(targets: list[PositionTarget], nav: float, fx_last: pd.Series
+                    ) -> dict[str, object]:
+    """Erro do arredondamento a ações inteiras nas posições-alvo (fração do NAV): maior erro
+    absoluto (com a linha), soma dos erros absolutos e posições que não chegam a uma ação
+    (ficam sem ordem). Ação cara com PL pequeno (ex.: MELI) aparece aqui, nunca escondida."""
+    fx = pd.to_numeric(fx_last, errors="coerce")
+    worst, worst_tk, total = 0.0, None, 0.0
+    zero: list[str] = []
+    for t in targets:
+        if t.shares is None or t.price_local is None or not nav > 0:
+            continue
+        rate = 1.0 if t.currency == "USD" else _opt(fx, t.currency)
+        if rate is None or not rate > 0:
+            continue
+        err = (abs(int(t.shares)) * float(t.price_local) * rate - abs(t.notional_usd)) / nav
+        total += abs(err)
+        if abs(err) > abs(worst):
+            worst, worst_tk = err, t.execution_ticker
+        if int(t.shares) == 0 and t.weight != 0:
+            zero.append(t.execution_ticker)
+    return {"maior_erro_pct_nav": worst, "linha_maior_erro": worst_tk,
+            "soma_erros_pct_nav": total, "sem_uma_acao": sorted(zero)}
 
 
 def round_to_lot(quantity: float, lot: int) -> int:
@@ -396,13 +512,18 @@ def home_currency(country: str) -> str:
 
 
 def fx_hedges(targets: list[PositionTarget], nav: float,
-              threshold: float = 0.01) -> list[FxHedge]:
-    """Exposição cambial econômica líquida por moeda e sugestão de hedge (NDF = −exposição).
+              threshold: float = 0.01, *, futuros: bool = False) -> list[FxHedge]:
+    """Exposição cambial econômica líquida por moeda e sugestão de hedge.
 
     A exposição soma os pesos de TODAS as linhas do emissor (local e ADR), pois o preço em USD
     do ADR acompanha o câmbio local. Moedas com |exposição| ≤ ``threshold`` × NAV são
     reportadas com hedge zero. A justificativa informa o caixa necessário na moeda de
     liquidação das linhas locais (compras consomem moeda local; vendas a descoberto geram).
+
+    ``futuros=False`` (regra anterior): NDF/termo de −exposição. ``futuros=True`` (PL pequeno,
+    execução no fechamento): contratos INTEIROS do minicontrato de bolsa da moeda
+    (:data:`HEDGE_FUTURES`; ``round(|exposição| / tamanho)``, o resíduo fica divulgado) ou sem
+    hedge onde não há minicontrato acessível (:data:`UNHEDGED_REASON`).
     """
     if not nav > 0:
         raise ValueError("NAV precisa ser positivo.")
@@ -422,6 +543,10 @@ def fx_hedges(targets: list[PositionTarget], nav: float,
         exp = exposure.get(ccy, 0.0)  # sem posição na moeda: exposição nula
         hedge_on = abs(exp) > threshold * nav
         hedge = -exp if hedge_on else 0.0
+        if futuros:
+            out.append(_futures_hedge(ccy, exp, nav, threshold, local_buy.get(ccy, 0.0),
+                                      local_short.get(ccy, 0.0)))
+            continue
         buy = local_buy.get(ccy, 0.0)
         short = local_short.get(ccy, 0.0)
         cash = buy - short
@@ -446,6 +571,51 @@ def fx_hedges(targets: list[PositionTarget], nav: float,
             rationale=rationale,
         ))
     return out
+
+
+def _futures_hedge(ccy: str, exp: float, nav: float, threshold: float, buy: float,
+                   short: float) -> FxHedge:
+    """Hedge em contratos inteiros do minicontrato de bolsa (ou exposição mantida); valores
+    em formato pt-BR."""
+
+    def usd(x: float, signed: bool = False) -> str:
+        txt = f"{x:+,.0f}" if signed else f"{x:,.0f}"
+        return "USD " + txt.replace(",", ".")
+
+    def pct(x: float, signed: bool = False) -> str:
+        return (f"{x:+.2%}" if signed else f"{x:.2%}").replace(".", ",")
+
+    above = abs(exp) > threshold * nav
+    spec = HEDGE_FUTURES.get(ccy)
+    hedge = 0.0
+    if not above:
+        instrument = NO_HEDGE_INSTRUMENT
+        what = f"Dentro do limiar de {pct(threshold)}: sem hedge."
+    elif spec is None:
+        instrument = "sem hedge (exposição mantida e divulgada)"
+        what = (f"Acima do limiar de {pct(threshold)}, "
+                + UNHEDGED_REASON.get(ccy, "sem minicontrato de bolsa acessível; exposição "
+                                           "mantida e divulgada") + ".")
+    else:
+        name, size = spec
+        n = int(round(abs(exp) / size))
+        hedge = -math.copysign(n * size, exp) if n else 0.0
+        instrument = name if n else f"{name}: exposição menor que meio contrato, sem hedge"
+        side = "vender" if exp > 0 else "comprar"
+        what = (f"Acima do limiar de {pct(threshold)}: {side} {n} "
+                f"{'contrato' if n == 1 else 'contratos'} de {usd(size)} ({usd(abs(hedge))}); "
+                f"resíduo sem hedge {usd(exp + hedge, True)} "
+                f"({pct((exp + hedge) / nav, True)} do NAV).")
+    cash = buy - short
+    rationale = (
+        f"Exposição econômica líquida em {ccy}: {pct(exp / nav, True)} do NAV ({usd(exp)}), "
+        "somando linhas locais e ADRs. " + what + " "
+        + f"Liquidação local: compras {usd(buy)}, shorts {usd(short)}; "
+        + (f"necessidade líquida de comprar {ccy} à vista ≈ {usd(cash)}." if cash > 0 else
+           f"excedente líquido em {ccy} ≈ {usd(-cash)} (garantias/conversão)." if cash < 0
+           else "sem necessidade líquida de caixa local."))
+    return FxHedge(currency=ccy, exposure_usd=float(exp), hedge_notional_usd=float(hedge),
+                   instrument=instrument, rationale=rationale)
 
 
 def positions_frame(targets: list[PositionTarget]) -> pd.DataFrame:

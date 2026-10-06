@@ -1,8 +1,12 @@
-"""CLI do CDP — Cabra da Peste (interface comum para Claude Code e Codex).
+"""CLI do CDP — Cabra da Peste (interface comum a qualquer harness: Claude Code, Codex, Gemini CLI).
 
-Fluxo semanal (primeiro pregão da semana na B3; a carteira inaugural, na data de início do
-mandato):
-    cdp weekly prepare --date D --mind claude-code|codex
+Fluxo semanal (dia de montagem: o último pregão da semana na NYSE — sexta-feira ou, com feriado
+nos EUA, o pregão anterior; a carteira inaugural, na data de início do mandato). Pesquisa a partir
+das 11h de Brasília com todos os dados disponíveis até o momento da análise; decisão gravada até o
+prazo efetivo (15h ou o fechamento mais cedo entre NYSE, B3 e BMV menos 45 minutos); execução ao
+preço oficial de fechamento de cada linha (MOC), limitada à capacidade do leilão, pela rotina
+diária da mesma noite:
+    cdp weekly prepare --date D --mind claude-code|codex|gemini|outro
     (a mente escreve book/<D>/inputs/research_pack.json e pm_decision.json)
     cdp validate --week D
     cdp weekly preview --week D --mind ...   (opcional: revisão pré-trade, não grava)
@@ -13,31 +17,42 @@ mandato):
     cdp validate-tese --week D               (valida a tese sem publicar)
     cdp tese publish --week D                (publica a tese; imutável)
 
-Fluxo diário (após o fechamento):
+Fluxo diário (após o fechamento; no dia de montagem, também a execução MOC da decisão):
     cdp daily --date D
     (a mente escreve reports/daily/<D>/comentario.json)
     cdp validate-daily --date D             (valida o comentário sem publicar)
     cdp daily publish --date D
+Noite do dia de montagem — relatório semanal de resultado:
+    cdp weekly close-report --date D [--publish]
+    cdp validate-weekly-report --date D
 
-Rotinas locais (plugin ``cdp`` do Claude Code; ver docs/cdp/LOCAL.md):
-    cdp agenda                       (o que fazer agora: semana, prazos, fechamentos pendentes)
+Rotinas agendadas (no app de IA: Claude Code, Codex ou Gemini; ver docs/cdp/AUTOMACAO.md):
+    cdp agenda                       (o que fazer agora: semana, prazos, fechamentos pendentes,
+                                      base de mercado, pedidos de kill switch)
     cdp risk [--live] [--date D]     (monitor de risco; grava reports/risk/<D>/risco_<HHMM>.md)
     cdp painel [--out-dir D] [--sem-local]  (painel de gestão: index.html + data.json)
     cdp painel --publicado           (registra a página publicada no artifact; só depois de publicar)
 
+Kill switch (só redução de risco; docs/cdp/EXECUCAO.md, "Kill switch: procedimento do operador"):
+    cdp kill-switch on --reason "..." --by "..."   (liga e grava o pedido mesclável em
+                                                    reports/risk/<D>/kill_switch_<HHMM>.yaml)
+    cdp kill-switch aplicar-pedidos                (aplica pedidos pendentes; execução exclusiva)
+    cdp kill-switch off --reason "..." --by "..."  (só humano, em terminal interativo próprio;
+                                                    recusado em rotina, CI ou agente de IA)
+    cdp kill-switch revisar-squeeze --emissor IID --reason "..." --by "..."
+                                                   (só humano: revisão do stop de squeeze por
+                                                    nome; libera o veto de compra do emissor)
+
 Pré-início (uma vez, pela rotina, quando ``agenda`` informa ``reinicio.pendente``):
     cdp reinicio [--executar] [--pesquisa DIR]   (sem --executar só mostra o plano, não grava)
 
-Cobertura, notas e relatório semanal (contrato registrado; respondem "em implementação" com
-código 2 até a entrega de cada módulo):
+Cobertura e notas de pesquisa (números só do código):
     cdp cobertura run --date D [--emissores IID,IID] [--offline]
     cdp cobertura verify
     cdp nota agenda [--date D]
     cdp nota prepare --issuer IID [--date D]
     cdp validate-nota --issuer IID --date D
     cdp nota publish --issuer IID --date D
-    cdp weekly close-report --date D [--publish]
-    cdp validate-weekly-report --date D
 
 Qualquer assistente de IA como mente (pacote markdown autocontido; o JSON devolvido é validado
 pelos comandos acima; nada é gravado no livro):
@@ -269,6 +284,45 @@ def cmd_verify(args: argparse.Namespace) -> int:
     return 0 if ok else 1
 
 
+#: Variáveis que indicam rotina, CI ou sessão de agente de IA (Claude Code, Codex, Gemini CLI):
+#: nesses contextos ninguém desliga o kill switch — só um humano, num terminal interativo.
+CONTEXTO_NAO_HUMANO = ("CDP_EXECUTOR", "CDP_TRAVA_ID", "CDP_EXECUCAO", "CDP_ROTINA", "CDP_ENSAIO",
+                       "CI", "GITHUB_ACTIONS", "CLAUDECODE", "CLAUDE_CODE_REMOTE",
+                       "CLAUDE_CODE_REMOTE_SESSION_ID", "CODEX_SANDBOX",
+                       "CODEX_SANDBOX_NETWORK_DISABLED", "GEMINI_CLI")
+
+
+def _desligamento_humano(args: argparse.Namespace,
+                         acao: str = "desliga o kill switch") -> str | None:
+    """Motivo da recusa do ``kill-switch off`` e do ``kill-switch revisar-squeeze`` (``None`` =
+    operador humano confirmado).
+
+    Vale em qualquer harness: rotinas, CI e agentes de IA rodam sem terminal interativo (ou com
+    as variáveis de :data:`CONTEXTO_NAO_HUMANO`); o operador digita de novo o motivo."""
+    import os
+
+    ctx = [k for k in CONTEXTO_NAO_HUMANO if os.environ.get(k)]
+    if ctx:
+        return (f"recusado: contexto de rotina, CI ou agente ({', '.join(ctx)}). Só um humano "
+                f"{acao}, num terminal próprio (docs/cdp/EXECUCAO.md, "
+                "\"Kill switch: procedimento do operador\").")
+    if not (sys.stdin.isatty() and sys.stdout.isatty()):
+        return (f"recusado: sem terminal interativo. Só um humano {acao}, num "
+                "terminal próprio (docs/cdp/EXECUCAO.md, \"Kill switch: procedimento do "
+                "operador\").")
+    if len((args.reason or "").strip()) < 10 or args.by.strip().lower() in ("", "operador") \
+            or args.by.strip().upper().startswith("CDP"):
+        return ("informe --by com o seu nome e --reason com pelo menos 10 caracteres "
+                "(a revisão que justifica o desligamento).")
+    try:
+        typed = input("Digite de novo o motivo para confirmar: ")
+    except EOFError:
+        return "recusado: confirmação não digitada."
+    if " ".join(typed.split()) != " ".join(args.reason.split()):
+        return "recusado: o motivo digitado não confere."
+    return None
+
+
 def cmd_kill_switch(args: argparse.Namespace) -> int:
     from .workflow.runtime import Runtime
 
@@ -277,10 +331,37 @@ def cmd_kill_switch(args: argparse.Namespace) -> int:
         if not args.reason or len(args.reason) < 10:
             print("Informe --reason com pelo menos 10 caracteres.", file=sys.stderr)
             return 2
+        # Pedido mesclável primeiro (reports/risk/<data>/kill_switch_<HHMM>.yaml): se o livro
+        # ficar retido sem a trava exclusiva, a próxima execução exclusiva aplica o pedido.
+        pedido = rt.request_kill_switch(args.reason, args.by)
         rt.set_kill_switch(True, args.reason, args.by)
-    else:
-        rt.set_kill_switch(False, args.reason or "desligado", args.by)
-    print(f"Kill switch: {args.state}")
+        rt.mark_kill_switch_request(pedido["sha256"], "aplicado", args.by)
+        _print({"kill_switch": "on", "pedido": pedido["arquivo"]})
+        return 0
+    if args.state == "aplicar-pedidos":
+        _print({"aplicados": rt.apply_kill_switch_requests(),
+                "kill_switch": rt.kill_switch_active()})
+        return 0
+    if args.state == "revisar-squeeze":
+        if not args.emissor:
+            print("Informe --emissor.", file=sys.stderr)
+            return 2
+        recusa = _desligamento_humano(args, "revisa um stop de squeeze")
+        if recusa:
+            print(recusa, file=sys.stderr)
+            return 2
+        try:
+            _print({"revisao_squeeze": rt.review_squeeze(args.emissor, args.reason, args.by)})
+        except ValueError as exc:
+            print(str(exc), file=sys.stderr)
+            return 2
+        return 0
+    recusa = _desligamento_humano(args)
+    if recusa:
+        print(recusa, file=sys.stderr)
+        return 2
+    rt.set_kill_switch(False, args.reason, args.by)
+    print("Kill switch: off")
     return 0
 
 
@@ -587,10 +668,17 @@ def build_parser() -> argparse.ArgumentParser:
     s = sub.add_parser("verify", help="verifica trilha de auditoria, track record e decisões")
     s.set_defaults(func=cmd_verify)
 
-    s = sub.add_parser("kill-switch", help="liga/desliga o kill switch (só redução de risco)")
-    s.add_argument("state", choices=["on", "off"])
-    s.add_argument("--reason", default="")
-    s.add_argument("--by", default="operador")
+    s = sub.add_parser("kill-switch",
+                       help="liga o kill switch (só redução de risco); desligar é só para humano "
+                            "em terminal interativo")
+    s.add_argument("state", choices=["on", "off", "aplicar-pedidos", "revisar-squeeze"],
+                   help="on: liga (grava também o pedido em reports/risk/<data>/); off: só humano, "
+                        "terminal interativo, motivo digitado de novo; aplicar-pedidos: aplica no "
+                        "livro os pedidos pendentes (execução exclusiva); revisar-squeeze: só "
+                        "humano, libera o veto de compra do emissor após stop de squeeze")
+    s.add_argument("--emissor", default="", help="emissor revisado (revisar-squeeze)")
+    s.add_argument("--reason", default="", help="motivo (pelo menos 10 caracteres)")
+    s.add_argument("--by", default="operador", help="quem liga ou desliga")
     s.set_defaults(func=cmd_kill_switch)
 
     s = sub.add_parser("demo", help="demonstração offline completa (DADOS SIMULADOS)")

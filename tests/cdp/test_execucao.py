@@ -378,3 +378,71 @@ def test_trade_list_counts_closes_and_skips_frozen_issuers():
                             capacidade_short=pd.Series(dtype=float))
     assert all(t.est_days is None for t in none_cap)
     assert [t.ticker for t in build_trades(targets, None, 1e8, congelados={"B"})] == ["AAA"]
+
+
+def test_fixed_cost_band_per_market(md, cfg):
+    """Com mínimo por ordem e ``max_fixed_cost_bps``, a banda sobe por mercado: uma ordem de
+    US$ 2 mil executa nos EUA (banda de 0,10% do NAV = US$ 1 mil) e não na BMV (mínimo de
+    US$ 3,5 a 10 bps ⇒ US$ 3,5 mil); encerrar uma posição é sempre permitido."""
+    small = cfg.with_overrides({
+        "costs": {"min_order_cost_usd": {"US": 1.0, "BR": 0.0, "MX": 3.5}},
+        "execution": {"min_trade_weight": 0.001, "max_fixed_cost_bps": 10.0}})
+    lines = md.universe.lines
+    us = next(t for t in lines.index if t.endswith("ADR"))
+    mx = next(t for t in lines.index if t.endswith(".MX"))
+    j = janela_execucao(FRI, small)
+    ts = pd.Timestamp(FRI)
+    px_us, px_mx = float(md.close.at[ts, us]), float(md.close.at[ts, mx])
+    fx_mx = 0.05  # USD por MXN (o teste só usa o nocional em USD)
+    q_us = max(int(2_000 / px_us), 1)
+    q_mx = max(int(2_000 / (px_mx * fx_mx)), 1)
+    out = preenchimentos_esperados(
+        [OrdemLinha("U", us, 0, q_us, px_us, 1.0), OrdemLinha("M", mx, 0, q_mx, px_mx, fx_mx),
+         OrdemLinha("M2", mx, q_mx, 0, px_mx, fx_mx)],
+        md, j, small, nav_pre=1e6, decidido_em=None)
+    by = {f.emissor: f for f in out}
+    assert by["U"].situacao in ("executada", "parcial")
+    assert by["M"].situacao == "banda"
+    assert by["M2"].situacao != "banda"          # encerramento: nunca barrado pela banda
+    # sem max_fixed_cost_bps (regra da seção execution anterior): só min_trade_weight
+    base = preenchimentos_esperados([OrdemLinha("M", mx, 0, q_mx, px_mx, fx_mx)], md, j,
+                                    cfg, nav_pre=1e6, decidido_em=None)
+    assert base[0].situacao != "banda"
+
+
+def test_liquidity_limit_counts_closes_in_compliance():
+    """Execução só no fechamento: ``LIQ_DAYS_*`` conta fechamentos à capacidade estrutural da
+    linha (coluna ``cap_liquidez_*``); capacidade desconhecida reprova."""
+    from cdp.portfolio.compliance import run_compliance
+    from cdp.risk.types import RiskModel
+
+    cfg = ativado()
+    ids = ["A", "B"]
+    cons = pd.DataFrame({
+        "can_long": [True, False], "can_short": [False, True], "max_long": [0.04, 0.0],
+        "max_short": [0.0, 0.025], "max_trade": [0.04, 0.025], "borrow_fee": [np.nan, 0.01],
+        "beta": [1.0, 1.0], "country": ["BR", "BR"], "sector": ["X", "X"], "reasons": ["", ""],
+        "shortable": [False, True], "adtv_long_usd": [5e6, np.nan],
+        "adtv_short_usd": [np.nan, 5e6], "cap_liquidez_long": [0.01, 0.0],
+        "cap_liquidez_short": [0.0, 0.004]}, index=ids)
+    w = pd.Series({"A": 0.02, "B": -0.01})
+    assets = pd.DataFrame({"country": ["BR", "BR"], "sector": ["X", "X"],
+                           "adtv_usd": [5e6, 5e6]}, index=ids)
+    B = pd.DataFrame({"market": [1.0, 1.0]}, index=ids)
+    model = RiskModel(as_of=date(2026, 10, 9), exposures=B,
+                      factor_cov=pd.DataFrame([[0.04]], index=["market"], columns=["market"]),
+                      specific_var=pd.Series([0.09, 0.09], index=ids),
+                      factor_returns=pd.DataFrame(), specific_returns=pd.DataFrame(),
+                      factor_groups={"market": "market"})
+    checks = {c.check_id: c for c in run_compliance(
+        w, model, cons, None, assets, cfg, 1e6, None, True, date(2026, 10, 8),
+        date(2026, 10, 9), None, True)}
+    lo, sh = checks["LIQ_DAYS_LONG"], checks["LIQ_DAYS_SHORT"]
+    assert lo.passed and lo.value == pytest.approx(2.0) and "fechamentos" in lo.name.lower()
+    assert not sh.passed and sh.value == pytest.approx(2.5)          # 0,01 / 0,004 > 2
+    unknown = cons.copy()
+    unknown.loc["A", "cap_liquidez_long"] = 0.0
+    chk = {c.check_id: c for c in run_compliance(
+        w, model, unknown, None, assets, cfg, 1e6, None, True, date(2026, 10, 8),
+        date(2026, 10, 9), None, True)}["LIQ_DAYS_LONG"]
+    assert not chk.passed and "sem volume" in chk.details

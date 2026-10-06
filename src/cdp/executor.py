@@ -14,8 +14,9 @@ sincronização e publicação (``git``) feitas por código.
 - ``cdp sincronizar`` — classifica as mudanças do remoto (seguir, pull, parar, reavaliar) e, com
   ``--executar``, faz o merge sem reescrever nada.
 - ``cdp publicar`` — verify → executor (relido de origin/main) → trava confirmada (escritores
-  exclusivos; ``caminhos_exclusivos`` das compartilhadas) → ``git add`` só do que ESTA execução
-  gravou desde o retrato do gate → commit com trailers de procedência → sincronizar → trava
+  exclusivos; ``caminhos_exclusivos`` das compartilhadas) → ``git add`` do que ESTA execução
+  gravou desde o retrato do gate (escritor exclusivo: também o que uma execução anterior deste
+  clone gravou e não publicou) → commit com trailers de procedência → sincronizar → trava
   confirmada de novo → ``git push origin HEAD:main`` (nunca ``--force``).
 - ``cdp entrega`` — pacote do que a mente gravou, do job da IA (sem escrita) ao job publicador
   do GitHub Actions; a importação só aceita arquivos comuns dentro dos caminhos da tarefa.
@@ -683,9 +684,12 @@ def publicar(raiz: Path | str, tarefa: Tarefa, mensagem: str, *, rt: Any = None,
              ) -> tuple[int, dict[str, Any]]:
     """Publica o que ESTA execução gravou nos caminhos da tarefa (ver docstring do módulo).
 
-    - Só entra o que mudou desde o retrato do gate (``instantaneo`` no registro da execução);
-      sem registro (ex.: entrega importada no GitHub Actions), tudo o que difere de ``HEAD``
-      nos caminhos da tarefa.
+    - Tarefa compartilhada: só entra o que mudou desde o retrato do gate (``instantaneo`` no
+      registro da execução). Escritor exclusivo: tudo o que difere de ``HEAD`` nos caminhos da
+      tarefa — o que já diferia no gate é gravação de uma execução anterior deste clone que não
+      publicou (``anteriores`` na saída) e da qual esta execução retomou. Sem registro (ex.:
+      entrega importada no GitHub Actions), tudo o que difere de ``HEAD`` nos caminhos da
+      tarefa.
     - Escritor exclusivo: exige a trava distribuída (``trava``, ``CDP_TRAVA_ID`` ou a do
       registro da execução), confirmada antes do commit e de novo antes do push; sem ela, nada
       é publicado (``TRAVA_AUSENTE``). ``sem_trava`` é só para sessão de operador.
@@ -729,8 +733,24 @@ def publicar(raiz: Path | str, tarefa: Tarefa, mensagem: str, *, rt: Any = None,
     exec_id = reg_id or env.get("CDP_EXECUCAO") or str(uuid.uuid4())
     atual = estado_dos_caminhos(raiz, todos)
     antes = (reg or {}).get("instantaneo")
-    if isinstance(antes, dict):
+    if isinstance(antes, dict) and tarefa.exclusiva:
+        # Escritor exclusivo (trava única do livro): o que já diferia de HEAD no gate é gravação
+        # de uma execução anterior deste clone que não chegou a publicar (interrompida, ou kill
+        # switch retido pelo risco). A execução atual retoma a partir dela (a agenda lê o livro
+        # local), então ela sai junto, com a trava — senão a trilha publicada citaria arquivos
+        # que não foram publicados.
+        delta = sorted(atual)
+        out["anteriores"] = sorted(p for p, h in atual.items() if antes.get(p, "") == h)
+        out["base"] = "tudo o que difere da versão local nos caminhos da tarefa (escritor exclusivo)"
+    elif isinstance(antes, dict):
         delta = sorted(p for p, h in atual.items() if p not in antes or antes[p] != h)
+        # Pastas só de arquivos novos da própria tarefa (relatórios de risco, backtests): o que
+        # uma execução anterior desta tarefa gravou ali e não publicou sai junto.
+        anteriores = sorted(p for p in atual if p not in delta and p.startswith(LIVRO_MESCLAVEL)
+                            and _no_livro(p, tarefa.caminhos))
+        if anteriores:
+            delta = sorted({*delta, *anteriores})
+            out["anteriores"] = anteriores
         out["base"] = "retrato do gate desta execução"
     else:
         delta = sorted(atual)
@@ -790,7 +810,10 @@ def _publicar_delta(raiz: Path, tarefa: Tarefa, mensagem: str, out: dict[str, An
         if a.returncode:
             out["motivo"] = "git add falhou: " + " ".join((a.stdout + a.stderr).split())[:300]
             return FALHA, out
-        texto = mensagem.rstrip() + "\n\n" + "\n".join(
+        anteriores = [p for p in out.get("anteriores") or [] if p in delta]
+        corpo = (f"Inclui {len(anteriores)} arquivo(s) gravado(s) por execução anterior deste "
+                 "clone e ainda não publicado(s).\n\n" if anteriores else "")
+        texto = mensagem.rstrip() + "\n\n" + corpo + "\n".join(
             trailers(tarefa.id, identidade(raiz, env), exec_id, env, mente)) + "\n"
         c = git([*_identidade_commit(raiz), "commit", "--quiet", "-m", texto,
                  "--pathspec-from-file=-", "--pathspec-file-nul"], raiz, entrada=spec)

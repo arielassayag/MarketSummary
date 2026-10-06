@@ -34,7 +34,7 @@ import sys
 import tempfile
 import warnings
 from collections.abc import Iterable, Mapping
-from dataclasses import dataclass, fields, replace
+from dataclasses import dataclass
 from datetime import UTC, date, datetime
 from pathlib import Path
 from typing import Any
@@ -82,15 +82,18 @@ FORMATOS = {
     ".gz": ("gz", "application/gzip", "Arquivo compactado (gzip)"),
     ".pdf": ("pdf", "application/pdf", "Documento (PDF)"),
 }
+#: Fontes públicas (nome, endereço): as mesmas de ``cdp.workflow.painel.FONTES_PUBLICAS_PT``
+#: (lista da aba "Mandato e metodologia"; teste confere).
 FONTES_PUBLICAS = (
     ("CVM — dados abertos (DFP, ITR, FRE, IPE)", "https://dados.cvm.gov.br"),
-    ("SEC EDGAR (filings e XBRL)", "https://www.sec.gov/edgar"),
+    ("SEC EDGAR (documentos protocolados e XBRL)", "https://www.sec.gov/edgar"),
     ("B3 — dados públicos", "https://www.b3.com.br"),
     ("Banco Central do Brasil (SGS)", "https://www.bcb.gov.br"),
     ("Banxico e INEGI", "https://www.banxico.org.mx"),
     ("FRED (Federal Reserve Bank of St. Louis)", "https://fred.stlouisfed.org"),
     ("Damodaran Online (NYU Stern)", "https://pages.stern.nyu.edu/~adamodar/"),
     ("Yahoo Finance (cotações e consenso público)", "https://finance.yahoo.com"),
+    ("FINRA — posições vendidas consolidadas (short interest)", "https://api.finra.org"),
 )
 
 
@@ -197,21 +200,12 @@ def _base_path(base_url: str) -> str:
 
 
 def limites_site() -> Any:
-    """Limites do nível 0 do artifact com todas as contagens e textos liberados (o Pages não
-    tem o teto de 260 KB): só os resultados da carteira-sombra ficam de fora."""
-    from .workflow.painel_publicacao import NIVEIS
+    """Limites do perfil ``site`` do painel (o Pages não tem o teto de 260 KB do artifact; o que
+    cresce com o tempo fica limitado e segue íntegro nos dados abertos): ver
+    :func:`cdp.workflow.painel_publicacao.limites_site`."""
+    from .workflow.painel_publicacao import limites_site as limites
 
-    base = NIVEIS[0]
-    mudancas: dict[str, Any] = {}
-    for f in fields(base):
-        v = getattr(base, f.name)
-        if isinstance(v, bool):
-            mudancas[f.name] = True
-        elif isinstance(v, int):
-            mudancas[f.name] = GRANDE
-    if "posicoes_sombra" in mudancas:
-        mudancas["posicoes_sombra"] = 0
-    return replace(base, **mudancas)
+    return limites()
 
 
 def backtests_vigentes(rt: Any) -> tuple[list[str], list[str]]:
@@ -243,12 +237,13 @@ def backtests_vigentes(rt: Any) -> tuple[list[str], list[str]]:
     return vigentes, fora
 
 
-def dados_do_painel(rt: Any, agora: datetime, reports_dir: str = "dados/relatorios"
-                    ) -> dict[str, Any]:
-    """``data.json`` do portal: o painel completo com os limites do artifact liberados (trilha
-    e monitor de risco inteiros) e só os backtests da metodologia em vigor."""
+def dados_do_painel(rt: Any, agora: datetime, reports_dir: str = "dados/relatorios",
+                    commit: str | None = None) -> dict[str, Any]:
+    """``data.json`` do portal: o painel no perfil ``site`` (sem os cortes do artifact) e só os
+    backtests da metodologia em vigor. ``commit``: versão do código desta publicação (os links
+    de "Auditoria e reprodução" ficam fixados nela)."""
     from .workflow.painel import page_sha256, painel_data
-    from .workflow.painel_publicacao import publicacao
+    from .workflow.painel_publicacao import site
 
     vigentes, fora = backtests_vigentes(rt)
     with tempfile.TemporaryDirectory(prefix="cdp_site_bt_") as tmp:
@@ -260,9 +255,9 @@ def dados_do_painel(rt: Any, agora: datetime, reports_dir: str = "dados/relatori
                 shutil.copytree(Path(rt.reports_root) / "backtest" / nome, bt_root / nome)
         full = painel_data(rt, now=agora, profile="completo", max_daily_reports=GRANDE,
                            full_weeks=GRANDE, full_research_weeks=GRANDE, max_risk_runs=GRANDE,
-                           max_risk_full_runs=GRANDE, audit_tail=GRANDE, backtest_root=bt_root)
-    return publicacao(full, reports_dir=reports_dir, niveis=(limites_site(),),
-                      page_sha256=page_sha256())
+                           max_risk_full_runs=GRANDE, audit_tail=GRANDE, backtest_root=bt_root,
+                           versao=commit)
+    return site(full, reports_dir=reports_dir, page_sha256=page_sha256())
 
 
 # ==========================================================================================
@@ -672,28 +667,33 @@ def _rodape_painel(cfg: Mapping[str, Any], commit: str | None, agora: datetime) 
               f'</a> — código aberto na versão do repositório <code>{esc(ver)}</code>'
               if commit else
               f'<a href="https://github.com/{esc(repo)}">Código e metodologia</a> — código aberto')
+    # Mesma linguagem do portal (Chapada): título com pincelada e curva de nível, laje de taipa
+    # e o aviso com a goiva do sol — classes da folha de estilo do painel.
     return f"""<section class="site-auditoria" aria-labelledby="site-auditoria-t">
 <style>
-.site-auditoria{{background:var(--surface-2,#efe8db);color:var(--ink,#1d1611);border-top:1px solid var(--line,#d8ccb8);margin-top:40px;padding:28px 0 30px}}
-.site-auditoria h2{{font:700 1.1rem/1.2 var(--font-display,Georgia,serif);letter-spacing:.05em;margin:0 0 8px}}
-.site-auditoria p{{margin:6px 0;max-width:72rem;color:var(--ink-2,#4a3e33)}}
-.site-auditoria ul{{margin:10px 0;padding-left:1.1rem}}
-.site-auditoria li{{margin:4px 0}}
-.site-auditoria a{{color:var(--accent,#2b4596)}}
-.site-auditoria .site-aviso{{font:.95rem/1.55 var(--font-serif,Georgia,serif);border-left:3px solid var(--sol,#b9692f);padding-left:12px;margin-top:14px}}
-.site-auditoria .site-meta{{font-size:.82rem;color:var(--muted,#685a4b)}}
+.site-auditoria{{margin:8px 0 0;padding:0 0 32px}}
+.site-auditoria .sec{{margin:0}}
+.site-auditoria .block{{display:grid;gap:10px}}
+.site-auditoria .lk{{display:grid;gap:6px}}
+.site-auditoria .lk li{{display:block}}
+.site-auditoria .comment{{margin:4px 0 0;font:.95rem/1.55 var(--font-serif,Georgia,serif);color:var(--ink-2,#4a3e33)}}
+.site-auditoria .prose,.site-auditoria .note{{margin:0}}
 </style>
 <div class="wrap">
-<h2 id="site-auditoria-t">Transparência e auditoria</h2>
-<p>Todos os números deste portal são calculados por código aberto a partir de dados públicos e
-podem ser conferidos por qualquer pessoa, arquivo por arquivo.</p>
-<ul>
-<li><a href="dados/">Dados abertos e auditoria</a> — livro, relatórios, modelos, mandato e trilha de auditoria, com código de verificação (SHA-256) de cada arquivo</li>
+<section class="sec">
+<div class="sec-h"><h2 id="site-auditoria-t">Transparência e auditoria</h2></div>
+<div class="block">
+<p class="prose">Todos os números deste portal são calculados por código aberto a partir de dados
+públicos e podem ser conferidos por qualquer pessoa, arquivo por arquivo.</p>
+<ul class="lk">
+<li><a href="dados/">Dados abertos e auditoria</a></li>
 <li>{codigo}</li>
-<li><a href="manifest.json">Manifesto da publicação</a> e <a href="SHA256SUMS">somas de verificação</a></li>
+<li><a href="manifest.json">Manifesto da publicação</a> e <a href="SHA256SUMS">códigos de verificação</a></li>
 </ul>
-<p class="site-aviso">{esc(cfg["aviso_legal"])}</p>
-<p class="site-meta">Publicado em {agora.astimezone(FUSO):%d/%m/%Y %H:%M} (Brasília){" · versão do repositório " + esc(ver) if ver else ""}</p>
+<p class="comment site-aviso">{esc(cfg["aviso_legal"])}</p>
+<p class="note">Publicado em {agora.astimezone(FUSO):%d/%m/%Y %H:%M} (Brasília){" · versão do repositório " + esc(ver) if ver else ""}</p>
+</div>
+</section>
 </div>
 </section>
 """
@@ -939,7 +939,7 @@ def _preparar_saida(saida: Path, raiz: Path) -> None:
 
 def construir(rt: Any, op: Opcoes) -> dict[str, Any]:
     """Monta o site em ``op.saida`` (ver docstring do módulo). Devolve o resumo."""
-    from .workflow.painel import page_assets, render_page
+    from .workflow.painel import arquivos_cobertura, page_assets, render_page
     from .workflow.painel_publicacao import dump_publicacao
 
     raiz = Path(op.raiz)
@@ -983,13 +983,15 @@ def construir(rt: Any, op: Opcoes) -> dict[str, Any]:
         _preparar_saida(saida, raiz)
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
-            dados = dados_do_painel(rt, agora)
+            dados = dados_do_painel(rt, agora, commit=commit)
         meta = dados.get("meta") or {}
         demo = op.demo or bool(meta.get("is_synthetic"))
         indexar = bool(cfg.get("indexar", True)) and not op.noindex and not demo
-        # 1) painel: dados, estilo e script versionados, página completa
+        # 1) painel: dados, estilo, script e módulos versionados, dados da cobertura, página
         _gravar(saida / "data.json", dump_publicacao(dados))
         for nome, texto in page_assets().items():
+            _gravar(saida / nome, texto)
+        for nome, texto in arquivos_cobertura(rt, perfil="site", painel=dados).items():
             _gravar(saida / nome, texto)
         estaticos = raiz / ESTATICOS
         if estaticos.is_dir():

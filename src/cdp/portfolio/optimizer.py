@@ -85,7 +85,16 @@ BOX_TOL = 1e-7               # perna "aberta" para o reparo de complementaridade
 MAX_BOX_REPAIRS = 6
 WEEKS_PER_YEAR = 52.0
 PSD_EIG_FLOOR = 1e-14
-SOLVER_ORDER: tuple[str, ...] = ("CLARABEL", "SCS", "ECOS")
+#: Cadeia de solvers: CLARABEL (ponto interior, cones de potência nativos) → ECOS (se instalado)
+#: → SCS (primeira ordem, mais lento e robusto). Solução "optimal_inaccurate" só é aceita com a
+#: viabilidade primal conferida (``INACCURATE_MAX_VIOLATION``); senão o próximo solver tenta.
+SOLVER_ORDER: tuple[str, ...] = ("CLARABEL", "ECOS", "SCS")
+#: Violação primal máxima (fração do NAV) para aceitar uma solução imprecisa: 1e-7 do NAV
+#: = US$ 0,10 em US$ 1 mi.
+INACCURATE_MAX_VIOLATION = 1e-7
+#: Violação primal (fração do NAV) a partir da qual uma solução imprecisa é tratada como
+#: inviável: 1e-4 do NAV, mil vezes a tolerância de aceitação.
+INACCURATE_INFEASIBLE_VIOLATION = 1e-4
 # Tolerâncias compatíveis com a escala do problema: o objetivo é fração do NAV ao ano
 # (~1e-3), então 1e-7 de gap absoluto ≈ 0,001 bp. A viabilidade fica estrita (1e-8).
 SOLVER_OPTIONS: dict[str, dict] = {
@@ -970,6 +979,28 @@ def _solve(p: _Problem, relax: _Relax, fixed_zero: np.ndarray,
     prob = cp.Problem(cp.Maximize(objective), cons)
     errors: list[str] = []
     t0 = time.perf_counter()
+    fallback: _Outcome | None = None
+    far_off = False
+
+    def outcome_of(status: str, solver: str) -> _Outcome:
+        lval = np.maximum(np.asarray(lv.value, dtype=float), 0.0)
+        sval = np.maximum(np.asarray(sv.value, dtype=float), 0.0)
+        if p.extended:
+            # Solução imprecisa pode violar a caixa por ~1e-7 (ex.: short ínfimo num nome
+            # sem aluguel): projeta nas cotas, que são exatas por construção. Nome sem
+            # negociação possível (teto de negociação zero) fica exatamente na posição atual.
+            lval = np.minimum(lval, ub_l)
+            sval = np.minimum(sval, ub_s)
+            pinned = p.max_trade <= 0
+            if np.any(pinned):
+                lval[pinned] = l0[pinned]
+                sval[pinned] = s0[pinned]
+        wv = lval - sval
+        wv[np.abs(wv) < WEIGHT_NOISE] = 0.0
+        duals = _duals(named) if p.extended else None
+        return _Outcome(status, solver, time.perf_counter() - t0, wv,
+                        float(prob.value), False, tuple(errors), lval, sval, duals=duals)
+
     for solver in _available_solvers():
         try:
             prob.solve(solver=solver, **SOLVER_OPTIONS.get(solver, {}))
@@ -978,29 +1009,48 @@ def _solve(p: _Problem, relax: _Relax, fixed_zero: np.ndarray,
             continue
         status = prob.status
         if status in _OK and lv.value is not None and sv.value is not None:
-            lval = np.maximum(np.asarray(lv.value, dtype=float), 0.0)
-            sval = np.maximum(np.asarray(sv.value, dtype=float), 0.0)
-            if p.extended:
-                # Solução imprecisa pode violar a caixa por ~1e-7 (ex.: short ínfimo num nome
-                # sem aluguel): projeta nas cotas, que são exatas por construção. Nome sem
-                # negociação possível (teto de negociação zero) fica exatamente na posição atual.
-                lval = np.minimum(lval, ub_l)
-                sval = np.minimum(sval, ub_s)
-                pinned = p.max_trade <= 0
-                if np.any(pinned):
-                    lval[pinned] = l0[pinned]
-                    sval[pinned] = s0[pinned]
-            wv = lval - sval
-            wv[np.abs(wv) < WEIGHT_NOISE] = 0.0
-            duals = _duals(named) if p.extended else None
-            return _Outcome(status, solver, time.perf_counter() - t0, wv,
-                            float(prob.value), False, tuple(errors), lval, sval, duals=duals)
+            viol = _max_violation(cons) if (p.extended and status == cp.OPTIMAL_INACCURATE) \
+                else 0.0
+            if viol > INACCURATE_MAX_VIOLATION:
+                # Imprecisa só é aceita com a viabilidade primal conferida em código; fora da
+                # tolerância, o próximo solver da cadeia tenta, e ela fica como último recurso.
+                # Violação grosseira = problema na prática inviável (o ponto interior parou longe
+                # do conjunto viável): vale como inviável, e a escada de relaxamento segue.
+                if viol > INACCURATE_INFEASIBLE_VIOLATION:
+                    far_off = True
+                elif fallback is None:
+                    fallback = outcome_of(status, solver)
+                errors.append(f"{solver}: solução imprecisa fora da tolerância de viabilidade")
+                continue
+            return outcome_of(status, solver)
         if status in _INFEASIBLE:
             return _Outcome(status, solver, time.perf_counter() - t0, None, None, True,
                             tuple(errors))
         errors.append(f"{solver}: status {status}")
+    if fallback is not None:
+        return replace(fallback, seconds=time.perf_counter() - t0, errors=tuple(errors))
+    if far_off:
+        return _Outcome(cp.INFEASIBLE_INACCURATE, ",".join(_available_solvers()),
+                        time.perf_counter() - t0, None, None, True, tuple(errors))
     return _Outcome("solver_error", ",".join(_available_solvers()),
                     time.perf_counter() - t0, None, None, False, tuple(errors))
+
+
+def _max_violation(cons: Sequence) -> float:
+    """Maior violação primal entre as restrições (fração do NAV; ``inf`` se não mensurável)."""
+    worst = 0.0
+    for c in cons:
+        try:
+            v = c.violation()
+        except (ValueError, TypeError, AttributeError):  # pragma: no cover - sem valor
+            return float("inf")
+        arr = np.atleast_1d(np.asarray(v, dtype=float))
+        if arr.size:
+            m = float(np.nanmax(np.abs(arr)))
+            if not np.isfinite(m):
+                return float("inf")
+            worst = max(worst, m)
+    return worst
 
 
 def _solve_clean(p: _Problem, relax: _Relax, fixed_zero: np.ndarray,
@@ -1340,6 +1390,50 @@ def _risk_floor(p: _Problem, relax: _Relax, vol_ceiling: float) -> tuple[_Proble
             "gross_depois": max(p.gross_max, gmin)}
     return replace(p, vol_target=vt, gross_max=max(p.gross_max, gmin), factor_caps=caps,
                    factor_vol_max=fvm), info
+
+
+#: Perda máxima de utilidade (alpha − custos − aluguel − penalidade de risco) aceita numa
+#: passada de posição mínima; acima disso a passada é recusada (ver ``optimize``).
+CLEANUP_MAX_UTILITY_LOSS = 0.5
+
+
+def _min_position_vectors(cons: pd.DataFrame, ids: list[str], min_pos: float
+                          ) -> tuple[np.ndarray, np.ndarray]:
+    """Posição mínima por emissor e lado: o mínimo do mandato ou, com as colunas
+    ``posicao_minima_long``/``posicao_minima_short`` (banda de custo fixo do mercado da linha),
+    o maior dos dois. Sem as colunas, o mínimo escalar do mandato (regra anterior)."""
+    out = []
+    for side in ("long", "short"):
+        col = f"posicao_minima_{side}"
+        if col in cons.columns:
+            v = pd.to_numeric(cons[col].reindex(ids), errors="coerce").fillna(min_pos)
+            out.append(np.maximum(v.to_numpy(dtype=float), float(min_pos)))
+        else:
+            out.append(np.full(len(ids), float(min_pos)))
+    return out[0], out[1]
+
+
+def _n_names(w: np.ndarray | None) -> int:
+    return 0 if w is None else int(np.count_nonzero(np.abs(w) > WEIGHT_NOISE))
+
+
+def _bp_br(x: float | None) -> str:
+    """Utilidade (fração do NAV ao ano) em pontos-base, formato pt-BR."""
+    if x is None or not np.isfinite(x):
+        return "n/d"
+    return f"{x * 1e4:.2f}".replace(".", ",") + " bp"
+
+
+def _cleanup_destroys(before: _Outcome, after: _Outcome) -> bool:
+    """A passada de posição mínima esvazia a carteira ou destrói a maior parte da utilidade."""
+    if after.w is None or before.w is None:
+        return False
+    if _n_names(before.w) > 0 and _n_names(after.w) == 0:
+        return True
+    u0, u1 = before.objective, after.objective
+    if u0 is None or u1 is None or not (np.isfinite(u0) and np.isfinite(u1)) or u0 <= 0:
+        return False
+    return u1 < (1.0 - CLEANUP_MAX_UTILITY_LOSS) * u0
 
 
 def _vol_of(p: _Problem, w: np.ndarray) -> float:
@@ -2049,11 +2143,13 @@ def optimize(alpha: pd.Series, model: RiskModel, constraints: pd.DataFrame,
 
     # ---------- passadas de limpeza (posição mínima) ----------
     min_pos = cfg.risk.min_position_weight
+    min_l, min_s = _min_position_vectors(work, p.ids, min_pos)
     w = outcome.w
     fixed = np.zeros(n, dtype=bool)
     passes = 1
     while min_pos > 0 and passes < MAX_PASSES:
-        tiny = (np.abs(w) < min_pos) & ~fixed
+        # Zero conta como pequeno (fica fixo em zero), como na regra anterior.
+        tiny = (((w >= 0) & (w < min_l)) | ((w < 0) & (-w < min_s))) & ~fixed
         if not np.any(tiny & (w != 0)):
             break
         trial_fixed = fixed | tiny
@@ -2070,6 +2166,17 @@ def optimize(alpha: pd.Series, model: RiskModel, constraints: pd.DataFrame,
                 break
             notes.append("Posições residuais mantidas só para redução (necessárias à saída).")
             trial_fixed = fixed_wo_held
+        if p.extended and _cleanup_destroys(outcome, out2):
+            # A passada de posição mínima é uma heurística (a restrição "zero ou ≥ mínimo" não é
+            # convexa): com uma carteira toda pequena (limitada pela capacidade), zerar os nomes
+            # pequenos pode esvaziar a carteira inteira — as neutralidades deixam de ter
+            # contrapartida. Nunca troca uma carteira por outra que perca a maior parte da
+            # utilidade: mantém a anterior, com as posições residuais registradas.
+            notes.append("Passada de posição mínima recusada: zerar os nomes abaixo do mínimo "
+                         f"levaria a utilidade de {_bp_br(outcome.objective)} para "
+                         f"{_bp_br(out2.objective)} ao ano ({_n_names(out2.w)} nomes); mantida a "
+                         "solução anterior, com posições residuais.")
+            break
         passes += 1
         fixed = trial_fixed
         outcome = out2
@@ -2087,10 +2194,11 @@ def optimize(alpha: pd.Series, model: RiskModel, constraints: pd.DataFrame,
         assert outcome.w is not None
         w = outcome.w
 
-    residual = (np.abs(w) > 0) & (np.abs(w) < min_pos)
+    residual = ((w > 0) & (w < min_l)) | ((w < 0) & (-w < min_s))
     if residual.any():
         notes.append(f"{int(residual.sum())} posições abaixo do mínimo de {min_pos:.2%} "
-                     "permaneceram (saída gradual ou limite de passadas).")
+                     "(ou da posição mínima pelo custo fixo do mercado) permaneceram (saída "
+                     "gradual, limite de passadas ou passada recusada).")
     notes.append(f"Passadas de otimização: {passes}.")
     if outcome.box_repaired:
         notes.append(f"Reparo de complementaridade: {outcome.box_repaired} emissores tinham "

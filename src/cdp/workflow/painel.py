@@ -1,16 +1,24 @@
-"""Exportador determinístico do painel do CDP — Cabra da Peste (artifact HTML do fundo).
+"""Exportador determinístico do painel do CDP — Cabra da Peste (portal do fundo).
 
-O painel é um artifact republicado pelas rotinas após cada decisão semanal, fechamento diário e
-monitor de risco intradiário. Este módulo só LÊ os artefatos do fundo (livro, tese publicada da
-carteira, track record, relatórios, base de mercado, backtests) e monta um retrato JSON; a página
-apenas formata e plota esses dados. Publicação (:func:`write_painel`):
+O portal principal é o site público (:mod:`cdp.site`, perfil ``site``); o artifact do claude.ai
+é um espelho privado opcional (perfil ``publicacao``). Este módulo só LÊ os registros do fundo
+(livro, tese publicada da carteira, track record, relatórios, base de mercado, backtests) e monta
+um retrato de dados; a página apenas formata e plota esses dados. O modelo aberto da carteira
+(``modelo``: metodologia vigente, formulação resolvida da decisão, risco idiossincrático,
+dimensionamento e execução por posição, auditoria e reprodução) chega já em texto pt-BR montado
+aqui. Publicação (:func:`write_painel`):
 
 - ``index.html``: casca pequena da página (cabeçalho, marcação, elemento de dados vazio ``null``
   e a versão da página carimbada) que referencia o estilo e o script do template em arquivos
-  versionados ``painel-<versão>.css`` e ``painel-<versão>.js``. A ferramenta Artifact exige a
-  página em toda publicação, e quem publica precisa ler por inteiro o que publica: a casca é
-  pequena, e os arquivos versionados só vão junto quando a página muda (os já publicados ficam
-  no artifact). Só é regravado quando o template muda; a página busca ``data.json`` ao lado dela.
+  versionados ``painel-<versão>.css`` e ``painel-<versão>.js``; os módulos carregados sob demanda
+  (``painel-<versão>-modelo.js``, ``painel-<versão>-cobertura.js``) vão ao lado. Quem publica no
+  artifact precisa ler por inteiro o que publica: a casca é pequena, e os arquivos versionados só
+  vão junto quando a página muda (os já publicados ficam). Só é regravado quando o template muda;
+  a página busca ``data.json`` ao lado dela.
+- ``cobertura*.json``: dados da aba "Cobertura de ativos" (:mod:`cdp.workflow.painel_cobertura`),
+  republicados no artifact só quando mudam e só quando cabem inteiros no orçamento de leitura da
+  publicação (:func:`cdp.workflow.painel_artifact.plano_cobertura`; ``COBERTURA_PUBLICADA.json``).
+  Falha no registro da cobertura nunca derruba o painel: a aba fica "em verificação".
 - ``data.json``: perfil ``publicacao`` (:mod:`cdp.workflow.painel_publicacao`), JSON indentado
   que cabe na leitura integral exigida de quem publica (≤ 260 KB, linhas ≤ 1.500 caracteres),
   com a versão da página para a qual foi gerado (``meta.page_sha256``).
@@ -73,12 +81,23 @@ EMPTY_DATA_ELEMENT = DATA_ELEMENT.replace(PLACEHOLDER, "null")
 PAGE_SHA_PLACEHOLDER = "__CDP_PAGE_SHA256__"
 PAGE_SHA_RE = re.compile(r'(?:var PAGE_SHA = "|<meta name="cdp-page-sha256" content=")'
                          r'([0-9a-f]{64})"')
-#: Formato da publicação (casca + estilo e script versionados). Entra na versão da página: mudar o
-#: formato obriga a republicar a página mesmo com o template igual.
-PAGE_LAYOUT = "cdp-painel-casca/1"
-#: Arquivos versionados da página: ``painel-<16 primeiros hex da versão>.css``/``.js``.
+#: Formato da publicação (casca + estilo, script e módulos versionados). Entra na versão da
+#: página: mudar o formato obriga a republicar a página mesmo com o template igual.
+PAGE_LAYOUT = "cdp-painel-casca/2"
+#: Arquivos versionados da página: ``painel-<16 primeiros hex da versão>.css``/``.js`` e os
+#: módulos carregados sob demanda ``painel-<16 hex>-<nome>.js``.
 ASSET_PREFIX = "painel-"
-ASSET_RE = re.compile(r"painel-[0-9a-f]{16}\.(?:css|js)")
+ASSET_RE = re.compile(r"painel-[0-9a-f]{16}(?:-(?:cobertura|modelo))?\.(?:css|js)")
+#: Módulos da página carregados sob demanda (nome → fonte ao lado deste arquivo): a aba
+#: "Cobertura de ativos" e o modelo aberto da carteira (Mandato, Risco, Carteira, Comitê). A
+#: página cria o elemento de script na primeira abertura da aba; a cópia local os embute. Módulo
+#: ausente no código fica fora da versão e da publicação (a aba mostra o aviso de indisponível).
+MODULOS = {"cobertura": "painel_cobertura.js", "modelo": "painel_modelo.js"}
+MODULOS_DIR = Path(__file__).parent
+#: Arquivos de dados da aba de cobertura (gerados por :mod:`cdp.workflow.painel_cobertura`),
+#: soltos ao lado de ``index.html``, e o marcador local da última publicação deles no artifact.
+COBERTURA_RE = re.compile(r"cobertura(?:-[a-z0-9-]+)?\.json")
+COBERTURA_MARKER = "COBERTURA_PUBLICADA.json"
 DEFAULT_TEMPLATE = Path(__file__).with_name("painel_template.html")
 DEFAULT_OUT_DIR = Path("artifacts/painel")
 INDEX_NAME = "index.html"
@@ -390,15 +409,21 @@ def _mandate(cfg: FundConfig) -> dict[str, Any]:
             "max_view_tilt_z": cfg.alpha.max_view_tilt_z,
             "view_sign_coherence": cfg.alpha.view_sign_coherence,
         },
+        # Sem a metodologia ativada, o cronograma recorrente e a convenção de execução da
+        # configuração anterior não são publicados (só a data da carteira inaugural).
         "schedule": {
             "timezone": cfg.fund.timezone, "primary_calendar": cfg.fund.primary_calendar,
-            "rebalance_rule": cfg.fund.rebalance_rule,
             "weekly_research_start_local": cfg.fund.weekly_research_start_local,
-            "decision_deadline_local": cfg.fund.decision_deadline_local,
             "daily_close_run_local": cfg.fund.daily_close_run_local,
-            "execution_convention": cfg.fund.execution_convention,
             "minds": list(cfg.fund.minds),
+            **({"rebalance_rule": cfg.fund.rebalance_rule,
+                "rebalance_weekday": cfg.fund.rebalance_weekday,
+                "decision_deadline_local": cfg.fund.decision_deadline_local,
+                "execution_convention": cfg.fund.execution_convention}
+               if metodologia_ativada(cfg) else {}),
         },
+        "execution": (cfg.execution.model_dump(mode="json") if cfg.execution is not None
+                      else None),
         "table": _mandate_table(cfg),
     }
 
@@ -418,7 +443,7 @@ def _mandate_table(cfg: FundConfig) -> list[dict[str, Any]]:
         ("risco", "style_exposure_max_abs", "Exposição por estilo (|z × NAV|)",
          rk.style_exposure_max_abs, "x"),
         ("risco", "theme_net_max_abs", "Net por tema", dict(rk.theme_net_max_abs), "pct"),
-        ("risco", "country_gross_share_max", "Fatia máxima do gross por país",
+        ("risco", "country_gross_share_max", "Fatia máxima da exposição bruta por país",
          dict(rk.country_gross_share_max), "pct"),
         ("risco", "commodity_beta_max_abs", "Sensibilidade a commodity (|Σ w·β|)",
          rk.commodity_beta_max_abs, "pct"),
@@ -450,9 +475,9 @@ def _mandate_table(cfg: FundConfig) -> list[dict[str, Any]]:
         ("liquidez", "max_days_to_liquidate_short", "Dias para liquidar (short)",
          lq.max_days_to_liquidate_short, "days"),
         ("liquidez", "max_weekly_turnover", "Giro semanal máximo", lq.max_weekly_turnover, "pct"),
-        ("liquidez", "min_gross_liquid_3d", "Gross liquidável em 3 dias (mín.)",
+        ("liquidez", "min_gross_liquid_3d", "Exposição bruta liquidável em 3 dias (mín.)",
          lq.min_gross_liquid_3d, "pct"),
-        ("liquidez", "min_gross_liquid_5d", "Gross liquidável em 5 dias (mín.)",
+        ("liquidez", "min_gross_liquid_5d", "Exposição bruta liquidável em 5 dias (mín.)",
          lq.min_gross_liquid_5d, "pct"),
         ("short", "max_borrow_fee", "Taxa de aluguel máxima (a.a.)", sh.max_borrow_fee, "pct"),
         ("short", "min_market_cap_short_usd", "Market cap mínimo para short (USD)",
@@ -473,11 +498,11 @@ def _mandate_table(cfg: FundConfig) -> list[dict[str, Any]]:
          sq.stop_short_position_loss, "pct"),
         ("squeeze", "stop_short_nav_loss", "Stop de perda do short em % do NAV",
          sq.stop_short_nav_loss, "pct"),
-        ("drawdown", "soft_stop", "Stop suave (revisão; gross × multiplicador)",
+        ("drawdown", "soft_stop", "Stop suave (revisão; exposição bruta × multiplicador)",
          [dd.soft_stop, dd.soft_degross_multiplier], "pct"),
-        ("drawdown", "hard_stop", "Stop duro (gross × multiplicador)",
+        ("drawdown", "hard_stop", "Stop duro (exposição bruta × multiplicador)",
          [dd.hard_stop, dd.degross_multiplier], "pct"),
-        ("drawdown", "stop_out", "Stop-out (gross mínimo)", [dd.stop_out, dd.stop_out_gross],
+        ("drawdown", "stop_out", "Stop-out (exposição bruta mínima)", [dd.stop_out, dd.stop_out_gross],
          "pct"),
         ("ia", "llm_phase", "Fase de adoção das visões de IA", cfg.research.llm_phase, "text"),
         ("ia", "llm_view_ic", "IC efetivo das visões de IA", cfg.research.llm_view_ic, "ratio"),
@@ -1688,7 +1713,7 @@ def _limit_checks(cfg: FundConfig, rec: Any | None, proposal: Any | None) -> lis
                 worst_name, worst_ratio, worst_val = e.name, ratio, share
         if worst_name is not None:
             # Sem gate de compliance (só restrição do otimizador): nunca "excesso".
-            checks.append(_check("country_gross_share", "Fatia do gross por país (pior)", basis,
+            checks.append(_check("country_gross_share", "Fatia da exposição bruta por país (pior)", basis,
                                  worst_val, shares[worst_name], "pct",
                                  _over(worst_ratio, 1.0, daily=daily, hard=False),
                                  f"{worst_name}: {_util_txt(worst_ratio)} do limite",
@@ -1722,7 +1747,7 @@ def _limit_checks(cfg: FundConfig, rec: Any | None, proposal: Any | None) -> lis
                              "count", "alerta" if n_high > 0 else "ok",
                              "reavaliar/reduzir no próximo rebalanceamento" if n_high else ""))
         liq = _num(rec.risk.pct_gross_liquid_1d)
-        checks.append(_check("liquidez_1d", "Gross liquidável em 1 dia", d_basis, liq, None,
+        checks.append(_check("liquidez_1d", "Exposição bruta liquidável em 1 dia", d_basis, liq, None,
                              "pct", "info" if liq is not None else "n/d",
                              "registro diário (participação dos longs no ADTV agregado do "
                              "emissor); pisos de 3 e 5 dias abaixo"))
@@ -1782,7 +1807,7 @@ def _limit_checks(cfg: FundConfig, rec: Any | None, proposal: Any | None) -> lis
         for h, cid, floor in ((3, "liquidez_3d", lq.min_gross_liquid_3d),
                               (5, "liquidez_5d", lq.min_gross_liquid_5d)):
             v = liq[f"liquid_{h}d"]
-            checks.append(_check(cid, f"Gross liquidável em {h} dias (piso)", p_basis, v, floor,
+            checks.append(_check(cid, f"Exposição bruta liquidável em {h} dias (piso)", p_basis, v, floor,
                                  "pct", _under(v, floor, daily=False),
                                  "participação do mandato por ponta"
                                  + (f"; {liq['n_missing_adtv']} posição(ões) sem ADTV ⇒ n/d"
@@ -2683,6 +2708,1100 @@ def _data_notice(is_synth: bool, notice: str | None, records: Sequence[Any],
 
 
 # ==========================================================
+# Modelo aberto da carteira (metodologia, risco, formulação, dimensionamento, auditoria)
+# ==========================================================
+
+#: Repositório público (código, metodologia, configuração e registros) e portal principal.
+#: ``configs/cdp/site.yaml`` traz os mesmos endereços (teste confere).
+REPO = "arielassayag/MarketSummary"
+REPO_URL = f"https://github.com/{REPO}"
+PORTAL_URL = "https://arielassayag.github.io/MarketSummary/"
+#: Documentos e módulos citados em "Auditoria e reprodução" (caminho no repositório, rótulo,
+#: o que contém): no portal, links fixados na versão do código que gerou a publicação; no espelho
+#: privado (sem versão conhecida), no ramo principal.
+DOCS_AUDITORIA = (
+    ("docs/cdp/REPRODUZIR.md", "Auditoria e reprodução",
+     "conferir os registros, recalcular modelos e decisões e refazer os passos da IA com "
+     "qualquer assistente"),
+    ("docs/cdp/METODOLOGIA.md", "Metodologia de gestão",
+     "alpha, modelo de risco, construção, limites e controle de perdas"),
+    ("docs/cdp/COBERTURA.md", "Metodologia de avaliação",
+     "modelos abertos de valuation, preço-alvo de 12 meses, rating e placar"),
+    ("docs/cdp/EXECUCAO.md", "Cronograma e execução",
+     "dia de montagem, prazo da decisão, leilão de fechamento e capacidade"),
+    ("docs/cdp/REPLICAR.md", "Replicar a operação", "operar uma cópia própria do processo"),
+    ("docs/cdp/SITE.md", "Portal e dados abertos", "o que é publicado e como conferir"),
+)
+CONFIG_AUDITORIA = (
+    ("configs/cdp/fund.yaml", "Mandato do fundo", "limites, custos, calendário e execução"),
+    ("configs/cdp/valuation.yaml", "Parâmetros de valuation",
+     "taxa livre de risco, prêmios de risco e parâmetros dos modelos de cobertura"),
+)
+CODIGO_AUDITORIA = (
+    ("src/cdp/alpha", "Sinais de alpha", "fatores padronizados e combinação"),
+    ("src/cdp/risk/model.py", "Modelo de risco", "fatores, meias-vidas e risco específico"),
+    ("src/cdp/risk/idio.py", "Risco idiossincrático", "decomposição e inflação de 2ª ordem κ_F"),
+    ("src/cdp/portfolio/optimizer.py", "Otimizador", "objetivo, restrições e custo de cada "
+     "restrição"),
+    ("src/cdp/portfolio/compliance.py", "Verificações de conformidade",
+     "limites rígidos e de alerta da carteira"),
+    ("src/cdp/portfolio/execucao.py", "Execução no fechamento",
+     "capacidade do leilão e mercados fechados"),
+    ("src/cdp/risk/limites.py", "Vetos e stops", "vetos de short e stops por nome"),
+    ("src/cdp/cobertura", "Modelos de cobertura", "valuation, preço-alvo e rating"),
+    ("src/cdp/audit.py", "Trilha de auditoria", "eventos encadeados e verificação"),
+)
+#: Fontes públicas de dados (nome, endereço, uso, nome curto do rodapé): as mesmas do catálogo de
+#: dados abertos do portal (``cdp.site.FONTES_PUBLICAS`` deriva desta lista).
+FONTES_PUBLICAS_PT = (
+    ("CVM — dados abertos (DFP, ITR, FRE, IPE)", "https://dados.cvm.gov.br",
+     "demonstrações financeiras, formulários e fatos relevantes de emissores brasileiros", "CVM"),
+    ("SEC EDGAR (documentos protocolados e XBRL)", "https://www.sec.gov/edgar",
+     "demonstrações de emissores com registro nos EUA (20-F, 40-F, 10-K)", "SEC EDGAR"),
+    ("B3 — dados públicos", "https://www.b3.com.br", "calendário, aluguel de ações e negociação",
+     "B3"),
+    ("Banco Central do Brasil (SGS)", "https://www.bcb.gov.br", "juros, inflação e câmbio",
+     "Banco Central do Brasil"),
+    ("Banxico e INEGI", "https://www.banxico.org.mx", "juros, inflação e câmbio do México",
+     "Banxico e INEGI"),
+    ("FRED (Federal Reserve Bank of St. Louis)", "https://fred.stlouisfed.org",
+     "juros dos Treasuries e séries macroeconômicas dos EUA", "FRED"),
+    ("Damodaran Online (NYU Stern)", "https://pages.stern.nyu.edu/~adamodar/",
+     "prêmio de risco de mercado, risco-país e betas setoriais", "Damodaran"),
+    ("Yahoo Finance (cotações e consenso público)", "https://finance.yahoo.com",
+     "preços, volumes, câmbio, composição de ETFs e consenso público de analistas",
+     "Yahoo Finance"),
+    ("FINRA — posições vendidas consolidadas (short interest)", "https://api.finra.org",
+     "posições vendidas de ações negociadas nos EUA, usadas no escore de squeeze e nos vetos "
+     "de short", "FINRA"),
+)
+#: Rodapé do portal: as mesmas fontes, pelo nome curto.
+FONTES_RODAPE = ", ".join(f[3] for f in FONTES_PUBLICAS_PT)
+PAIS_PT = {"AR": "Argentina", "BR": "Brasil", "CL": "Chile", "CO": "Colômbia", "MX": "México",
+           "PE": "Peru", "UY": "Uruguai", "PA": "Panamá", "US": "Estados Unidos",
+           "LATAM": "regional (América Latina)", "*": "demais países"}
+GRUPO_IDIO_PT = {"mercado": "Mercado", "pais": "Países", "setor": "Setores", "estilo": "Estilos",
+                 "macro": "Commodities e dólar", "especifico": "Específico (idiossincrático)"}
+MODELO_RISCO_PT = {"decisao": "modelo de decisão", "base": "modelo base"}
+#: Origem do teto que limita cada posição (tokens de ``weekly.construction_constraints`` e
+#: ``optimizer._per_name_bounds``), como locução nominal: a página mostra "no teto" ao lado.
+ORIGEM_TETO_PT = {
+    "mandato": "peso máximo do mandato", "risco_por_nome": "risco por nome",
+    "risco_especifico": "risco específico", "capacidade_fechamento":
+    "capacidade do leilão de fechamento", "liquidez": "liquidez", "visao": "visão da pesquisa",
+    "squeeze": "risco de squeeze", "congelado": "mercado local sem pregão",
+    "adtv_minimo": "volume médio diário mínimo", "veto_short": "veto de short",
+    "stop_squeeze": "stop de squeeze", "elegibilidade": "elegibilidade (linha, aluguel ou porte)",
+    "sem_alpha": "sem alpha", "excluido_gestor": "exclusão pelo gestor",
+    "so_reducao": "modo somente redução de risco", "negociacao": "capacidade de negociação"}
+ORIGEM_OUTRA = "outro limite"
+GRUPO_RESTRICAO = (
+    ("net_exposure", "total", "Exposição e risco da carteira"),
+    ("beta", "total", None), ("vol_target", "total", None), ("gross", "total", None),
+    ("op_country:", "pais_op", "Países — limite operacional"),
+    ("country_share:", "pais_fatia", "Concentração da exposição bruta por país"),
+    ("country:", "pais", "Países — limite do mandato"),
+    ("sector:", "setor", "Setores"), ("style:", "estilo", "Estilos (fatores)"),
+    ("theme:", "tema", "Temas, commodities e eventos"),
+    ("factor_risk:", "fatorial", "Risco fatorial"),
+    ("linked_", "controle", "Grupos de controle"),
+)
+_FORMULA_UNIDADE_X = ("beta", "style:")
+
+
+def _grupo_restricao(chave: str) -> tuple[str, str]:
+    titulos = {g: t for _, g, t in GRUPO_RESTRICAO if t}
+    for prefixo, grupo, _t in GRUPO_RESTRICAO:
+        if chave == prefixo or chave.startswith(prefixo):
+            return grupo, titulos[grupo]
+    return "outras", "Outras restrições"
+
+
+def _fx(x: Any, chave: str) -> str:
+    """Limite/valor de uma restrição no formato da sua unidade (texto pt-BR)."""
+    from ..cobertura import formato as fm
+
+    if any(chave == p or chave.startswith(p) for p in _FORMULA_UNIDADE_X):
+        return fm.num(x, 3)
+    return fm.pct(x, 2)
+
+
+def _lista_pt(itens: Sequence[str]) -> str:
+    itens = [str(i) for i in itens if i]
+    if len(itens) <= 1:
+        return "".join(itens)
+    return ", ".join(itens[:-1]) + " e " + itens[-1]
+
+
+DIAS_PT = ("segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira",
+           "sábado", "domingo")
+#: Sinais do alpha quantitativo (chaves de ``alpha.signal_weights``).
+SINAL_PT = {"residual_momentum": "momentum residual", "short_term_reversal":
+            "reversão de curto prazo", "value": "valor", "quality": "qualidade",
+            "low_risk": "baixo risco", "analyst_revision": "revisões de analistas",
+            "valuation_gap": "valuation da cobertura", "valuation": "valuation da cobertura"}
+SOLVER_PT = {"CLARABEL": "Clarabel", "SCS": "SCS", "ECOS": "ECOS", "OSQP": "OSQP"}
+
+
+def metodologia_ativada(cfg: FundConfig) -> bool:
+    """A configuração já traz a metodologia da carteira inaugural: dia de montagem no último
+    pregão da semana na NYSE, execução no leilão de fechamento (bloco ``execution``) e data de
+    início num dia de montagem dessa regra. Antes disso (configuração anterior à ativação), o
+    portal não publica o cronograma recorrente, a convenção de execução nem a fração fatorial
+    da configuração anterior — só a data da carteira inaugural."""
+    from ..calendar import is_rebalance_day, regra
+
+    if cfg.execution is None or regra(cfg) != "LAST_US_SESSION":
+        return False
+    try:
+        return bool(is_rebalance_day(cfg.fund.inception_date, cfg))
+    except Exception:  # noqa: BLE001 - calendário indisponível: não afirma o cronograma
+        return False
+
+
+def _pais_pt(c: Any) -> str:
+    return PAIS_PT.get(str(c), str(c))
+
+
+def _controle_perdas(cfg: FundConfig) -> tuple[list[dict[str, str]], str]:
+    """Escada de controle de perdas (nível, tom, gatilho e ação) e a referência da escada, da
+    configuração e de :mod:`cdp.risk.drawdown` (o mesmo texto no Mandato e na aba Risco)."""
+    from ..cobertura import formato as fm
+    from ..risk.drawdown import d_max, stage_multiplier
+
+    dd = cfg.drawdown
+    linhas = [{"nivel": "Normal", "tom": "ok", "gatilho": f"acima de {fm.pct(dd.soft_stop, 1)}",
+               "acao": "gestão normal"}]
+    if dd.risk_reference == "normal_book_vol":
+        m1, m2, m3 = (stage_multiplier(s, cfg) for s in ("soft_stop", "hard_stop", "stop_out"))
+        reta = d_max(cfg)
+        linhas += [
+            {"nivel": "Nível 1 · revisão", "tom": "warn", "gatilho": fm.pct(dd.soft_stop, 1),
+             "acao": f"revisão da carteira; volatilidade ex-ante limitada a {fm.num(m1, 2)} × a "
+                     "da carteira resolvida no estágio normal"},
+            {"nivel": "Nível 2 · redução", "tom": "crit", "gatilho": fm.pct(dd.hard_stop, 1),
+             "acao": f"volatilidade ex-ante limitada a {fm.num(m2, 2)} × a do estágio normal"},
+            {"nivel": "Nível 3 · stop-out", "tom": "crit", "gatilho": fm.pct(dd.stop_out, 1),
+             "acao": f"volatilidade ex-ante limitada a {fm.num(m3, 2)} × a do estágio normal"
+                     + (f" (reta que zera o risco em {fm.pct(-reta, 1)})"
+                        if math.isfinite(reta) else "") + " e revisão completa do processo"},
+        ]
+        ref = ("a escada limita a volatilidade ex-ante a um múltiplo da volatilidade da mesma "
+               "carteira resolvida no estágio normal; o risco volta sozinho quando o drawdown "
+               "se recupera")
+    else:
+        linhas += [
+            {"nivel": "Nível 1 · revisão", "tom": "warn", "gatilho": fm.pct(dd.soft_stop, 1),
+             "acao": "revisão da carteira; exposição bruta × "
+                     f"{fm.num(dd.soft_degross_multiplier, 2)}"},
+            {"nivel": "Nível 2 · redução", "tom": "crit", "gatilho": fm.pct(dd.hard_stop, 1),
+             "acao": f"exposição bruta × {fm.num(dd.degross_multiplier, 2)}"},
+            {"nivel": "Nível 3 · stop-out", "tom": "crit", "gatilho": fm.pct(dd.stop_out, 1),
+             "acao": f"exposição bruta reduzida a {fm.pct(dd.stop_out_gross, 0)} do PL e "
+                     "revisão completa do processo"},
+        ]
+        ref = "a escada reduz a exposição bruta do mandato"
+    return linhas, ref
+
+
+def _metodologia(cfg: FundConfig, hoje: date, inaugural: Mapping[str, Any] | None = None
+                 ) -> dict[str, Any]:
+    """Metodologia vigente em texto pt-BR (cronograma, construção, gestão de risco, processo,
+    fontes e adoção de IA), montada só da configuração, do calendário e do código: nunca cita
+    mudanças. ``inaugural`` (``status.inaugural``): data da carteira inaugural no pré-início.
+    Sem a metodologia ativada (:func:`metodologia_ativada`), o cronograma recorrente sai e fica
+    só a data da carteira inaugural."""
+    from ..calendar import resumo_cronograma
+    from ..cobertura import formato as fm
+    from ..research.pm_agent import POSTURE_MAP
+    from ..risk import gatilhos as gt
+
+    rk, lq, sq, ex = cfg.risk, cfg.liquidity, cfg.squeeze, cfg.execution
+    op = rk.operational
+    tz = ZoneInfo(cfg.fund.timezone)
+    ativa = metodologia_ativada(cfg)
+    cron: dict[str, Any] = {}
+    if ativa:
+        try:
+            cron = resumo_cronograma(cfg, hoje)
+        except Exception:  # noqa: BLE001 - calendário indisponível: só os textos da configuração
+            cron = {}
+    datas = [d for d in cron.get("proximas_datas") or [] if isinstance(d, date)]
+    cronograma: list[dict[str, str]] = []
+    if ativa:
+        cronograma.append({"rotulo": "Dia de montagem", "texto": cfg.fund.rebalance_rule[:1].upper()
+                           + cfg.fund.rebalance_rule[1:] + "."})
+    cronograma.append({"rotulo": "Pesquisa e decisão", "texto": (
+        f"Início às {cfg.fund.weekly_research_start_local} (Brasília) do dia de montagem"
+        + (", com todos os dados disponíveis até o momento da análise"
+           if cfg.fund.use_all_available_data else "") + ".")})
+    if ativa and ex is not None:
+        cronograma.append({"rotulo": "Prazo da decisão", "texto": (
+            f"{ex.decision_deadline_cap_local} (Brasília) ou {ex.decision_buffer_minutes} minutos "
+            "antes do fechamento mais cedo entre NYSE, B3 e BMV, o que vier primeiro; depois do "
+            "prazo, a decisão não é gravada e a carteira vigente é mantida.")})
+        cronograma.append({"rotulo": "Execução", "texto": (
+            "Ordens em quantidade de ações, executadas ao preço oficial de fechamento de cada "
+            "linha, limitadas à capacidade do leilão de fechamento e da janela anterior a ele.")})
+        cp = ex.capacity
+        estat = {"p25": "o percentil 25", "p50": "a mediana", "mean": "a média"}[cp.adv_statistic]
+        cronograma.append({"rotulo": "Capacidade no fechamento", "texto": (
+            f"Por linha, até {fm.pct(cp.auction_participation, 0)} do volume esperado do leilão "
+            f"de fechamento e {fm.pct(cp.preclose_participation, 0)} da janela pré-fechamento "
+            f"({fm.pct(cp.preclose_volume_share, 0)} do volume do dia), sobre {estat} do "
+            f"volume diário de {cp.adv_window_days} pregões; shorts com "
+            f"{fm.pct(cp.short_multiplier, 0)} dessa capacidade e dias de fechamento antecipado "
+            f"com {fm.pct(cp.early_close_multiplier, 0)}. Volume desconhecido não negocia.")})
+        politica = ("a linha local não negocia e o emissor negocia pelo ADR elegível; sem ADR "
+                    "elegível, mantém a posição"
+                    if ex.local_closed_policy == "adr_if_eligible_else_freeze"
+                    else "a linha local não negocia e o emissor mantém a posição")
+        cronograma.append({"rotulo": "Mercado local fechado",
+                           "texto": f"Sem pregão no mercado local no dia de montagem, {politica} "
+                                    "até o próximo fechamento negociável."})
+        cronograma.append({"rotulo": "Ordens mínimas", "texto": (
+            f"Ajustes abaixo de {fm.pct(ex.min_trade_weight, 2)} do PL não são enviados "
+            "(banda de não negociação).")})
+    cronograma.append({"rotulo": "Fechamento diário", "texto": (
+        f"Marcação a mercado, risco, atribuição e relatório às {cfg.fund.daily_close_run_local} "
+        "(Brasília), em todo pregão.")})
+    proximas = [f"{d:%d/%m/%Y} ({DIAS_PT[d.weekday()]})" for d in datas]
+    fechamentos = []
+    for mic, quando in sorted((cron.get("fechamentos") or {}).items(),
+                              key=lambda kv: (kv[1], kv[0])):
+        from ..portfolio.execucao import MIC_NOME
+
+        fechamentos.append({"mercado": MIC_NOME.get(mic, mic),
+                            "texto": quando.astimezone(tz).strftime("%H:%M")})
+    prazo = cron.get("prazo_decisao")
+    cron_out = {
+        "itens": cronograma, "proximas_datas": proximas,
+        "proxima": (f"{datas[0]:%d/%m/%Y}" if datas else None),
+        "prazo_proxima": (prazo.astimezone(tz).strftime("%H:%M") if isinstance(prazo, datetime)
+                          else None),
+        "fechamentos": fechamentos,
+        "mercados_fechados": [str(m) for m in cron.get("mercados_fechados") or []],
+        "nota": None if ativa else ("O cronograma semanal das montagens é publicado com a "
+                                    "carteira inaugural."),
+    }
+    # --- carteira inaugural (pré-início): data, prazo e execução no leilão do dia
+    inaug: list[dict[str, str]] = []
+    d_ina = (inaugural or {}).get("date")
+    if isinstance(d_ina, str):
+        try:
+            d_ina = date.fromisoformat(d_ina[:10])
+        except ValueError:
+            d_ina = None
+    if isinstance(d_ina, date):
+        inaug.append({"rotulo": "Carteira inaugural", "texto": (
+            f"{d_ina:%d/%m/%Y} ({DIAS_PT[d_ina.weekday()]}), executada no leilão de fechamento "
+            "do dia.")})
+        if ativa:
+            try:
+                from ..portfolio.execucao import prazo_efetivo
+
+                pz = prazo_efetivo(d_ina, cfg).astimezone(tz)
+                inaug.append({"rotulo": "Prazo da decisão", "texto": (
+                    f"{pz:%H:%M} (Brasília) em {d_ina:%d/%m/%Y}: o menor entre "
+                    f"{ex.decision_deadline_cap_local} e {ex.decision_buffer_minutes} minutos "
+                    "antes do fechamento mais cedo entre NYSE, B3 e BMV.")})
+            except Exception:  # noqa: BLE001 - calendário indisponível: sem o prazo
+                pass
+
+    # --- construção
+    def lim(mand: float | None, oper: float | None, fmt) -> str:
+        if oper is not None and mand is not None and oper < mand:
+            return f"{fmt(oper)} (operacional; mandato {fmt(mand)})"
+        return fmt(mand)
+
+    def p2(v: Any) -> str:
+        return fm.pct(v, 1)
+
+    def x3(v: Any) -> str:
+        return fm.num(v, 2)
+
+    camadas = [
+        {"rotulo": "Mercado", "texto": f"Exposição líquida até {fm.pct(rk.net_exposure_max_abs, 1)} "
+         f"do PL e beta previsto contra o mercado latino-americano até "
+         f"{lim(rk.beta_max_abs, op.beta if op else None, x3)}."},
+        {"rotulo": "Países", "texto": "Exposição líquida por país até " + (
+            _lista_pt([f"{fm.pct(v, 1)} ({_pais_pt(k)})"
+                       for k, v in sorted(op.country_net.items(), key=lambda kv: kv[0] == '*')])
+            + f" no limite operacional; mandato {fm.pct(rk.country_net_max_abs, 1)}"
+            if op else fm.pct(rk.country_net_max_abs, 1)) + "."},
+        {"rotulo": "Setores", "texto": "Exposição líquida por setor até "
+         f"{lim(rk.sector_net_max_abs, op.sector_net if op else None, p2)}."},
+        {"rotulo": "Estilos", "texto": "Beta, tamanho, momentum, volatilidade residual, valor, "
+         "liquidez e sensibilidade cambial, cada um até "
+         f"{lim(rk.style_exposure_max_abs, op.style if op else None, x3)} desvio-padrão × PL."},
+        {"rotulo": "Temas e commodities", "texto": (
+            ("Estatais até " + _lista_pt([fm.pct(v, 1) for v in rk.theme_net_max_abs.values()])
+             + "; " if rk.theme_net_max_abs else "")
+            + "sensibilidade a cada commodity (Σ peso × beta) até "
+            + lim(rk.commodity_beta_max_abs, op.commodity_beta if op else None, p2) + ".")},
+    ]
+    if cfg.risk_model.macro_factors:
+        camadas.append({"rotulo": "Commodities e dólar no modelo de risco", "texto": (
+            "Petróleo, cobre, ouro e o índice do dólar entram como fatores do modelo de risco "
+            f"(betas com meia-vida de {cfg.risk_model.macro_beta_halflife} pregões).")})
+    for w in rk.event_windows or []:
+        if w.get("reaction_exposure_max_abs") is not None:
+            camadas.append({"rotulo": "Janela de evento", "texto": (
+                f"{w.get('name')}: volatilidade do país × {fm.num(w.get('vol_multiplier'), 1)} "
+                "e exposição à reação residual do evento até "
+                f"{fm.pct(w.get('reaction_exposure_max_abs'), 2)} do PL.")})
+    if cfg.risk.country_gross_share_max:
+        camadas.append({"rotulo": "Concentração por país", "texto": (
+            "Fatia máxima da exposição bruta: " + _lista_pt(
+                [f"{_pais_pt(k)} {fm.pct(v, 0)}"
+                 for k, v in cfg.risk.country_gross_share_max.items()]) + ".")})
+    meta, piso = rk.idio_share_goal, rk.idio_share_floor
+    kappa = rk.second_order_inflation
+    modelos = [{"decisao": "de decisão", "base": "base"}.get(m, m) for m in rk.idio_gate_models]
+    idio_txt = (
+        f"Meta de pelo menos {fm.pct(meta, 0)} da variância ex-ante vinda do risco específico de "
+        f"cada empresa, com piso de {fm.pct(piso, 0)} que nunca é relaxado, medido "
+        + ("nos modelos " if len(modelos) > 1 else "no modelo ") + _lista_pt(modelos)
+        + f", com a covariância fatorial inflada por κ_F = {fm.num(kappa, 2)}."
+        if meta is not None and piso is not None else None)
+    kappa_txt = (
+        f"κ_F = {fm.num(kappa, 2)}: multiplica a covariância dos fatores na medida "
+        "idiossincrática e no teto de risco fatorial, para compensar o erro de estimação dos "
+        "fatores que o otimizador tende a explorar"
+        + (" (fórmula (1 − K/T)⁻² limitada a "
+           f"{fm.num(rk.second_order_inflation_bounds[0], 2)}–"
+           f"{fm.num(rk.second_order_inflation_bounds[1], 2)})"
+           if rk.second_order_inflation_mode == "analytic" else " (valor do mandato)") + ".")
+    lam_f = rk.factor_risk_aversion_multiplier
+    objetivo = ("max αᵀw − (52/H)·custo(w − w⁰) − taxaᵀw⁻ − λ·wᵀΣw"
+                + (" − λ_F·κ_F·wᵀBFBᵀw" if lam_f > 0 else ""))
+    posturas = [(k, v) for k, v in POSTURE_MAP.items()]
+    postura_txt = "; ".join(
+        f"{POSTURE_PT.get(k, k)}: {fm.pct(v[0], 1) if v[0] is not None else 'meta do mandato'}"
+        f" com até {fm.pct(v[1], 0)} da exposição bruta do mandato" for k, v in posturas)
+    construcao = [
+        {"rotulo": "Objetivo", "texto": (
+            f"{objetivo}: alpha esperado líquido do custo de negociação amortizado em "
+            f"H = {fm.num(cfg.costs.amortization_weeks, 0)} semanas, do aluguel dos shorts e da "
+            "aversão a risco" + (f", com penalidade extra no risco fatorial (λ_F = "
+                                 f"{fm.num(lam_f, 0)} × λ)" if lam_f > 0 else "") + ".")},
+        {"rotulo": "Volatilidade", "texto": (
+            f"Meta ex-ante de {fm.pct(rk.vol_target_annual, 1)} a.a. dentro da banda "
+            f"{fm.pct(rk.vol_band_min, 0)}–{fm.pct(rk.vol_band_max, 0)}; o alpha nunca é "
+            "ampliado para alcançar a banda." if not rk.vol_floor_alpha_scaling else
+            f"Meta ex-ante de {fm.pct(rk.vol_target_annual, 1)} a.a. dentro da banda "
+            f"{fm.pct(rk.vol_band_min, 0)}–{fm.pct(rk.vol_band_max, 0)}.")},
+        {"rotulo": "Meta de risco da semana", "texto": (
+            "Parte da meta do mandato e da postura do gestor (" + postura_txt + "); nas "
+            f"primeiras {rk.bias_prior_weeks} semanas é dividida pelo viés a priori de "
+            f"{fm.num(rk.bias_prior, 2)} do risco ex-ante de carteiras otimizadas; fica sempre "
+            "dentro da banda. A conta da semana vigente está na formulação da decisão.")},
+    ]
+    if idio_txt:  # meta e piso de risco específico (com a inflação κ_F que os mede)
+        construcao += [{"rotulo": "Risco idiossincrático", "texto": idio_txt},
+                       {"rotulo": "Inflação de 2ª ordem", "texto": kappa_txt}]
+    construcao += [
+        {"rotulo": "Dimensionamento", "texto": (
+            "O peso de cada nome sai do ótimo do objetivo: cresce com o alpha e cai com a "
+            "variância residual (aproximadamente o alpha dividido pela variância residual) e com "
+            "o custo, limitado pelo menor "
+            f"teto — peso do mandato ({fm.pct(rk.max_long_weight, 1)} long, "
+            f"{fm.pct(rk.max_short_weight, 1)} short), contribuição de um nome ao risco "
+            f"(até {fm.pct(rk.max_single_name_risk_share, 0)} da variância), capacidade do "
+            "fechamento, squeeze e visões da pesquisa; posições abaixo de "
+            f"{fm.pct(rk.min_position_weight, 1)} do PL não entram.")},
+    ]
+    if op is not None:
+        construcao.append({"rotulo": "Limites operacionais e mandato", "texto": (
+            "O otimizador usa o menor entre o limite operacional e o do mandato. Se a carteira "
+            "não for viável, os limites operacionais afrouxam até os do mandato (giro até o "
+            "dobro); persistindo, a exposição bruta cai à metade e depois a um quarto. O piso "
+            "idiossincrático nunca é relaxado.")})
+    tabela_limites = []
+    if op is not None:
+        tabela_limites = [
+            {"limite": "Beta previsto", "operacional": fm.num(op.beta, 2),
+             "mandato": fm.num(rk.beta_max_abs, 2)},
+            {"limite": "Estilo (desvio-padrão × PL)", "operacional": fm.num(op.style, 2),
+             "mandato": fm.num(rk.style_exposure_max_abs, 2)},
+            {"limite": "Líquido por setor", "operacional": fm.pct(op.sector_net, 1),
+             "mandato": fm.pct(rk.sector_net_max_abs, 1)},
+            {"limite": "Commodity (Σ peso × beta)", "operacional": fm.pct(op.commodity_beta, 1),
+             "mandato": fm.pct(rk.commodity_beta_max_abs, 1)},
+        ] + [{"limite": f"Líquido por país ({_pais_pt(k)})",
+              "operacional": fm.pct(v, 1), "mandato": fm.pct(rk.country_net_max_abs, 1)}
+             for k, v in sorted(op.country_net.items(), key=lambda kv: kv[0] == "*")]
+
+    # --- gestão de risco
+    perdas, ref = _controle_perdas(cfg)
+    stop_txt = (
+        f"Short com perda de {fm.pct(sq.stop_short_position_loss, 0)} desde a entrada ou de "
+        f"{fm.pct(sq.stop_short_nav_loss, 1)} do PL é cortado à metade no rebalanceamento "
+        "seguinte e o emissor não pode ficar comprado até revisão; "
+        f"{sq.stop_escalation_count} shorts distintos em stop em {sq.stop_escalation_sessions} "
+        "pregões acionam o modo somente redução de risco."
+        if sq.stop_scope == "name" else
+        f"Short com perda de {fm.pct(sq.stop_short_position_loss, 0)} desde a entrada ou de "
+        f"{fm.pct(sq.stop_short_nav_loss, 1)} do PL aciona o modo somente redução de risco.")
+    vetos = [f"aluguel acima de {fm.pct(cfg.shorting.max_borrow_fee, 0)} a.a.",
+             f"valor de mercado abaixo de {fm.total(cfg.shorting.min_market_cap_short_usd, 'USD')}",
+             "escore de squeeze alto (squeeze médio ou sem dado: teto do nome × "
+             f"{fm.num(sq.medium_short_cap_multiplier, 2)})"]
+    if sq.enforce_entry_blocks:
+        vetos += [f"divulgação de resultado em até {sq.catalyst_block_sessions} pregões",
+                  f"free float abaixo de {fm.pct(sq.free_float_min_pct, 0)} (desconhecido em "
+                  f"empresa abaixo de {fm.total(sq.free_float_mcap_low_usd, 'USD')}: vetado)"]
+    gatilhos = (
+        f"Perda do dia abaixo de −{fm.num(gt.SOFT_1D_SIGMAS, 0)}σ diário (alerta) ou de "
+        f"−{fm.num(gt.HARD_1D_SIGMAS, 0)}σ / {fm.pct(gt.ABS_HARD_1D, 1)} do PL (redução de "
+        f"risco); perda de {gt.WINDOW_5D} pregões abaixo de −{fm.num(gt.SOFT_5D_SIGMAS, 0)}σ ou "
+        f"de {fm.pct(gt.ABS_SOFT_5D, 1)} (alerta); σ diário sobre o risco efetivamente tomado, "
+        f"entre {fm.pct(gt.SIGMA_FLOOR, 0)} e {fm.pct(gt.SIGMA_CAP, 0)} a.a.")
+    gestao = [
+        {"rotulo": "Controle de perdas", "texto": "Drawdown a partir do pico — "
+         + "; ".join(f"{x['gatilho']}: {x['acao']}" for x in perdas[1:]) + f". Referência: {ref}."},
+        {"rotulo": "Stops de squeeze", "texto": stop_txt},
+        {"rotulo": "Modo somente redução de risco", "texto": (
+            "Acionado por perda extrema, stops ou decisão do gestor: nenhum nome cresce, a vol "
+            "ex-ante e a exposição bruta ficam no máximo na metade das da carteira atual, e o "
+            "piso idiossincrático vale para a carteira reduzida.")},
+        {"rotulo": "Gatilhos diários", "texto": gatilhos},
+        {"rotulo": "Estresse e cauda", "texto": (
+            f"VaR e ES de 1 dia (99%) até {fm.pct(rk.var_1d_max, 2)} e "
+            f"{fm.pct(rk.es_1d_max, 2)} do PL; perda em gap de país até "
+            f"{fm.pct(rk.country_stress_max_loss, 1)} do PL (cenários: "
+            + _lista_pt([f"{_pais_pt(k)} " + " / ".join(fm.pct(v, 0, True) for v in vs)
+                         for k, vs in rk.country_gap_scenarios.items()]) + ").")},
+        {"rotulo": "Liquidez", "texto": (
+            f"Long até {fm.num(lq.max_days_to_liquidate_long, 0)} e short até "
+            f"{fm.num(lq.max_days_to_liquidate_short, 0)} pregões para zerar a "
+            f"{fm.pct(lq.participation_rate, 0)} e {fm.pct(lq.short_participation_rate, 0)} do "
+            f"volume médio; pelo menos {fm.pct(lq.min_gross_liquid_3d, 0)} da exposição bruta "
+            "liquidável em 3 pregões; giro semanal até "
+            f"{fm.pct(lq.max_weekly_turnover, 0)} do PL.")},
+        {"rotulo": "Vetos de short", "texto": "Sem short novo com " + _lista_pt(vetos) + "."},
+    ]
+    # --- processo de investimento
+    al, rm = cfg.alpha, cfg.risk_model
+    pesos = {k: float(v) for k, v in al.signal_weights.items() if v and float(v) > 0}
+    soma = sum(pesos.values())
+    sinais = [f"{SINAL_PT.get(k, k.replace('_', ' '))} {fm.pct(v / soma, 0)}"
+              for k, v in sorted(pesos.items(), key=lambda kv: (-kv[1], kv[0]))] if soma else []
+    peso_val = float(al.signal_weights.get("valuation_gap") or al.signal_weights.get("valuation")
+                     or 0.0)
+    processo = [
+        {"rotulo": "Alpha quantitativo", "texto": (
+            "Sinais padronizados por emissor"
+            + (" — " + _lista_pt(sinais) + " (pesos relativos, renormalizados em cada emissor "
+               "entre os sinais disponíveis) —" if sinais else "")
+            + " ortogonalizados aos fatores de risco, com horizonte de "
+            f"{fm.num(al.horizon_weeks, 0)} semanas.")},
+        {"rotulo": "Pesquisa", "texto": (
+            "Pesquisa fundamental por emissor, análise de risco de short (squeeze e aluguel) e "
+            "leitura macro por país, com fontes públicas. Visões da pesquisa e do gestor só "
+            f"inclinam o alpha dentro de um teto de {fm.num(al.max_view_tilt_z, 1)} "
+            "desvio-padrão e só restringem risco; nunca ampliam limites do mandato.")},
+        {"rotulo": "Cobertura e rating", "texto": (
+            "O rating de 12 meses da cobertura é uma opinião de valuation e não dimensiona "
+            "posições: a carteira é construída pelo alpha quantitativo neutro. O sinal de "
+            "valuation só passa a compor o alpha depois de validado pelo poder de previsão "
+            f"realizado (peso atual: {fm.pct(peso_val / soma if soma else 0.0, 0)}).")},
+        {"rotulo": "Modelo de risco", "texto": (
+            "Modelo fatorial com mercado, países, setores, estilos"
+            + (", commodities e dólar" if rm.macro_factors else "")
+            + f", estimado com {fm.inteiro(rm.history_days)} pregões de histórico e o ETF "
+            f"{rm.market_proxy} como referência de mercado. Mede volatilidade ex-ante, VaR, ES, "
+            "contribuições ao risco e cenários de estresse.")},
+        {"rotulo": "Execução e custos", "texto": (
+            "Ordens no leilão de fechamento de cada mercado; custos estimados com corretagem por "
+            "mercado, meio spread por faixa de liquidez e impacto de mercado.")},
+    ]
+    rs = cfg.research
+    fase = {"S0": "registradas sem efeito na carteira", "S1": "peso pequeno no alpha",
+            "S2": "peso intermediário no alpha", "S3": "peso pleno no alpha"}.get(rs.llm_phase, "")
+    ia = {"fase": rs.llm_phase, "texto": (
+        f"Fase {rs.llm_phase} de adoção das visões da IA ({fase}): IC efetivo de "
+        f"{fm.num(rs.llm_view_ic, 2)}, contra {fm.num(cfg.alpha.information_coefficient, 2)} do "
+        f"alpha quantitativo; inclinação máxima de {fm.num(cfg.alpha.max_view_tilt_z, 1)} "
+        "desvio-padrão; cada juízo exige "
+        f"{rs.samples_per_judgment} amostras com {fm.pct(rs.min_sign_agreement, 0)} de "
+        "concordância de sinal" + ("; a IA só restringe risco, nunca amplia limites"
+                                   if rs.llm_can_only_tighten else "") + "."),
+        "fases": [{"fase": k, "texto": fm.num(v, 2)}
+                  for k, v in sorted(rs.llm_view_ic_by_phase.items())]}
+    processo.append({"rotulo": "Adoção de IA", "texto": ia["texto"]})
+    return {
+        "ativa": ativa, "cronograma": cron_out, "inaugural": inaug,
+        "neutralizacao": camadas, "construcao": construcao,
+        "limites": tabela_limites, "gestao_risco": gestao, "controle_perdas": perdas,
+        "processo": processo, "ia": ia,
+        "fontes": [{"nome": n, "url": u, "uso": d} for n, u, d, _c in FONTES_PUBLICAS_PT],
+    }
+
+
+def _txt_bp(x: Any) -> str:
+    from ..cobertura import formato as fm
+
+    return f"{fm.num(x, 2)} bp" if x is not None else NA_TXT
+
+
+NA_TXT = "n/d"
+
+
+def _risco_modelo(prop: Any, records: Sequence[Any], md: Any, cfg: FundConfig,
+                  issues: _Issues) -> dict[str, Any] | None:
+    """Risco idiossincrático da decisão vigente (decomposição por grupo nos modelos de decisão e
+    base, κ_F, meta e piso), parâmetros do modelo de risco e a série diária monitorada."""
+    from ..cobertura import formato as fm
+
+    ov = dict(prop.overrides) if prop is not None and isinstance(prop.overrides, dict) else {}
+    rs = ov.get("risco") if isinstance(ov.get("risco"), dict) else None
+    form = ov.get("formulacao") if isinstance(ov.get("formulacao"), dict) else {}
+    mr = form.get("modelo_risco") if isinstance(form.get("modelo_risco"), dict) else None
+    serie = None
+    if records:
+        try:
+            from ..risk.idio import serie_idio
+
+            s = serie_idio(records, md, cfg)
+            if s.get("datas"):
+                serie = {"datas": s["datas"], "ex_ante": s["ex_ante"],
+                         "realizada_63d": s["realizada_63d"], "sem_modelo_63d": s["sem_modelo_63d"],
+                         "janela": s.get("janela")}
+        except Exception as exc:  # noqa: BLE001 - série é complementar
+            issues.add("Série idiossincrática", f"{type(exc).__name__}: {exc}")
+    if rs is None and mr is None and serie is None:
+        return None
+    out: dict[str, Any] = {"disponivel": rs is not None, "serie": serie}
+    if rs is not None:
+        grupos = []
+        pg, pb = rs.get("por_grupo") or {}, rs.get("por_grupo_base") or {}
+        fatores = [abs(v) for g in GRUPO_IDIO_PT if g != "especifico"
+                   for v in (_num(pg.get(g)), _num(pb.get(g))) if v is not None]
+        escala = max(fatores) if fatores and max(fatores) > 0 else None
+
+        def barra(v: Any, g: str) -> str | None:
+            # Largura da barra (texto CSS): fatores comuns na escala do maior grupo fatorial;
+            # o específico, sem barra (a parte restante da variância).
+            x = _num(v)
+            if g == "especifico" or x is None or escala is None:
+                return None
+            return f"{min(abs(x) / escala, 1.0) * 100:.2f}%"
+
+        for g in ("mercado", "pais", "setor", "estilo", "macro", "especifico"):
+            if g not in pg and g not in pb:
+                continue
+            grupos.append({"grupo": g, "rotulo": GRUPO_IDIO_PT[g],
+                           "decisao": _num(pg.get(g)), "decisao_texto": fm.pct(pg.get(g), 1),
+                           "base": _num(pb.get(g)), "base_texto": fm.pct(pb.get(g), 1),
+                           "barra_decisao": barra(pg.get(g), g), "barra_base": barra(pb.get(g), g)})
+        kap = rs.get("kappa_f") if isinstance(rs.get("kappa_f"), dict) else {"valor": rs.get("kappa_f")}
+        vinc = rs.get("modelo_vinculante")
+        out.update({
+            "grupos": grupos,
+            "idio_decisao_texto": fm.pct(rs.get("idio_decisao"), 1),
+            "idio_base_texto": fm.pct(rs.get("idio_base"), 1),
+            "meta_texto": fm.pct(rs.get("meta_idio"), 0), "piso_texto": fm.pct(rs.get("piso_idio"), 0),
+            "meta": _num(rs.get("meta_idio")), "piso": _num(rs.get("piso_idio")),
+            "kappa_texto": fm.num(kap.get("valor"), 2),
+            "kappa_fonte": {"config": "valor do mandato", "analitico": "fórmula analítica",
+                            "analytic": "fórmula analítica"}.get(str(kap.get("fonte")),
+                                                                  kap.get("fonte")),
+            "vinculante_texto": MODELO_RISCO_PT.get(str(vinc)) if vinc else None,
+            "vol_texto": fm.pct(rs.get("vol_ex_ante"), 2),
+            "vol_fatorial_texto": fm.pct(rs.get("vol_fatorial"), 2),
+            "vol_especifica_texto": fm.pct(rs.get("vol_especifica"), 2),
+            "custo_neutralidade_texto": (f"{fm.num(rs.get('custo_neutralidade_bp'), 1)} bp a.a."
+                                         if rs.get("custo_neutralidade_bp") is not None else NA_TXT),
+        })
+    if mr is not None:
+        fpg = mr.get("fatores_por_grupo") or {}
+        rot = {"mercado": "Mercado", "pais": "Países", "setor": "Setores", "estilo": "Estilos",
+               "macro": "Commodities e dólar"}
+        out["fatores"] = [{"grupo": rot.get(g, g), "n": len(fs),
+                           "texto": ", ".join(_fator_pt(f) for f in fs)}
+                          for g, fs in fpg.items() if isinstance(fs, list)]
+        janelas = [f"{j.get('nome')} (× {fm.num(j.get('multiplicador'), 1)})"
+                   for j in mr.get("janelas_evento") or [] if isinstance(j, dict)]
+        out["parametros"] = [
+            {"rotulo": "Data do modelo", "texto": _fdate_pt(mr.get("data"))},
+            {"rotulo": "Emissores e fatores", "texto": f"{fm.inteiro(mr.get('n_emissores'))} "
+             f"emissores, {fm.inteiro(mr.get('n_fatores'))} fatores"},
+            {"rotulo": "Histórico", "texto": f"{fm.inteiro(mr.get('historico_pregoes'))} pregões"},
+            {"rotulo": "Meia-vida da volatilidade dos fatores",
+             "texto": f"{fm.inteiro(mr.get('meia_vida_vol_fatores'))} pregões"},
+            {"rotulo": "Meia-vida das correlações",
+             "texto": f"{fm.inteiro(mr.get('meia_vida_correlacao'))} pregões"},
+            {"rotulo": "Meia-vida do risco específico",
+             "texto": f"{fm.inteiro(mr.get('meia_vida_especifico'))} pregões"},
+            {"rotulo": "Correção de autocorrelação (Newey-West)",
+             "texto": f"{fm.inteiro(mr.get('newey_west'))} defasagens"},
+            {"rotulo": "Encolhimento do risco específico",
+             "texto": fm.pct(mr.get("encolhimento_especifico"), 0)},
+            {"rotulo": "Referência de mercado", "texto": str(mr.get("proxy_mercado") or NA_TXT)},
+        ]
+        if mr.get("meia_vida_betas_macro") is not None:
+            out["parametros"].append({"rotulo": "Meia-vida dos betas de commodities e dólar",
+                                      "texto": f"{fm.inteiro(mr.get('meia_vida_betas_macro'))} "
+                                               "pregões"})
+        if janelas:
+            out["parametros"].append({"rotulo": "Janelas de evento",
+                                      "texto": "; ".join(janelas)})
+    return out
+
+
+_FATOR_PT = {"market": "Mercado", "beta": "Beta", "size": "Tamanho", "momentum": "Momentum",
+             "resvol": "Vol residual", "value": "Valor", "liquidity": "Liquidez",
+             "fx_sens": "Sensibilidade cambial", "BZ=F": "Petróleo Brent", "HG=F": "Cobre",
+             "GC=F": "Ouro", "DX-Y.NYB": "Índice do dólar"}
+
+
+def _fator_pt(f: str) -> str:
+    grp, _, nome = str(f).partition(":")
+    if not nome:
+        return _FATOR_PT.get(grp, grp)
+    if grp == "country":
+        return {"AR": "Argentina", "BR": "Brasil", "CL": "Chile", "CO": "Colômbia",
+                "MX": "México", "PE": "Peru", "LATAM": "Regional"}.get(nome, nome)
+    if grp == "sector":
+        return SECTOR_PT.get(nome, nome)
+    return _FATOR_PT.get(nome, nome)
+
+
+def _fdate_pt(s: Any) -> str:
+    m = re.match(r"^(\d{4})-(\d{2})-(\d{2})", str(s or ""))
+    return f"{m.group(3)}/{m.group(2)}/{m.group(1)}" if m else NA_TXT
+
+
+_ESTILO_EXPR = {"beta": "beta", "size": "tamanho", "momentum": "momentum", "resvol": "vol residual",
+                "value": "valor", "liquidity": "liquidez", "fx_sens": "câmbio"}
+
+
+def _expr_pt(t: Any) -> Any:
+    """Nomes e expressões das restrições em pt-BR (setores e estilos pelo rótulo do portal; PL
+    no lugar de NAV)."""
+    if not isinstance(t, str):
+        return t
+    t = re.sub(r"(∈ )([A-Za-z][A-Za-z ]+?)(\))", lambda m: m.group(1) + SECTOR_PT.get(m.group(2),
+                                                                                  m.group(2))
+               + m.group(3), t)
+    t = re.sub(r"(xᵢ,)([a-z_]+)", lambda m: m.group(1) + _ESTILO_EXPR.get(m.group(2), m.group(2)), t)
+    # países pelo nome; grupos de controle pela palavra "grupo" (a chave interna não aparece)
+    t = re.sub(r"(∈ )(AR|BR|CL|CO|MX|PE|UY|PA|US|LATAM)(\))", lambda m: m.group(1)
+               + _pais_pt(m.group(2)) + m.group(3), t)
+    t = re.sub(r"(∈ )([a-z][a-z0-9_]*)(\))", r"\1grupo\3", t)
+    t = re.sub(r" \((?:value|size|momentum|beta)\)", "", t)
+    return (t.replace(" vs. mercado LatAm", " contra o mercado latino-americano")
+            .replace("Fatia do gross", "Fatia da exposição bruta")
+            .replace("× gross", "× exposição bruta").replace("do gross", "da exposição bruta")
+            .replace("× NAV", "× PL").replace("NAV", "PL"))
+
+
+def _custo_txt(custo: Any) -> str:
+    """Custo da restrição em bp a.a. do PL (por 1% de folga no limite); abaixo de 0,01 bp
+    aparece como "< 0,01 bp a.a." (vincula, mas quase não custa)."""
+    from ..cobertura import formato as fm
+
+    x = _num(custo)
+    if x is None:
+        return NA_TXT
+    if 0 < abs(x) < 0.005:
+        return "< 0,01 bp a.a."
+    return f"{fm.num(x, 2)} bp a.a."
+
+
+def _formulacao(prop: Any) -> dict[str, Any] | None:
+    """Formulação resolvida da decisão vigente: objetivo (termos com coeficiente e valor) e cada
+    restrição com limite, valor atingido, folga, se vincula e o custo da restrição (preço-sombra
+    em bp a.a. do PL por 1% de folga no limite), em texto pt-BR."""
+    from ..cobertura import formato as fm
+
+    ov = dict(prop.overrides) if prop is not None and isinstance(prop.overrides, dict) else {}
+    f = ov.get("formulacao")
+    if not isinstance(f, dict):
+        return None
+    obj = f.get("objetivo") or {}
+    termos = [{"nome": t.get("nome"), "expressao": t.get("expressao"),
+               "coeficiente_texto": fm.num(t.get("coeficiente"), 4),
+               "valor_texto": fm.pct(t.get("valor"), 3)}
+              for t in obj.get("termos") or [] if isinstance(t, dict)]
+    grupos: dict[str, dict[str, Any]] = {}
+    n_vinc = 0
+    for r in f.get("restricoes") or []:
+        if not isinstance(r, dict):
+            continue
+        chave = str(r.get("chave") or "")
+        g, titulo = _grupo_restricao(chave)
+        vinc = bool(r.get("vinculante"))
+        n_vinc += vinc
+        custo = r.get("custo_bp_1pct")
+        grupos.setdefault(g, {"grupo": g, "titulo": titulo, "restricoes": []})["restricoes"].append({
+            "chave": chave, "nome": _expr_pt(r.get("nome")), "expressao": _expr_pt(r.get("expressao")),
+            "limite_texto": _fx(r.get("limite"), chave), "valor_texto": _fx(r.get("valor"), chave),
+            "folga_texto": _fx(r.get("folga"), chave), "vinculante": vinc,
+            "custo_texto": _custo_txt(custo) if vinc else "—",
+            "uso": _num(abs(float(r["valor"])) / abs(float(r["limite"])))
+            if _num(r.get("valor")) is not None and _num(r.get("limite")) else None})
+    ordem = [g for _, g, _ in GRUPO_RESTRICAO] + ["outras"]
+    lista = [grupos[g] for g in dict.fromkeys(ordem) if g in grupos]
+    for g in lista:
+        g["n"] = len(g["restricoes"])
+        g["n_vinculantes"] = sum(1 for r in g["restricoes"] if r["vinculante"])
+    par = f.get("parametros") or {}
+    solver = str(par.get("solver") or "")
+    resolv = (f"otimizador {SOLVER_PT.get(solver.upper(), solver)} (versões fixadas no "
+              "repositório)" if solver else NA_TXT)
+    vabp = par.get("vol_abaixo_do_piso") if isinstance(par.get("vol_abaixo_do_piso"), dict) else None
+    parametros = [
+        {"rotulo": "Aversão a risco (λ)", "texto": (
+            f"{fm.num(par.get('lambda_efetivo'), 4)} na resolução (mandato "
+            f"{fm.num(par.get('lambda_mandato'), 2)} ÷ {fm.num(par.get('divisor_aversao'), 0)} "
+            "para alcançar a meta de volatilidade)")
+         if par.get("divisor_aversao") not in (None, 1, 1.0) else fm.num(par.get("lambda_mandato"), 2)},
+        {"rotulo": "Penalidade de risco fatorial (λ_F)", "texto": fm.num(par.get("lambda_f"), 2)},
+        {"rotulo": "Inflação de 2ª ordem (κ_F)", "texto": fm.num(par.get("kappa_f"), 2)},
+        {"rotulo": "Amortização do custo (H)", "texto": f"{fm.num(par.get('amortizacao_semanas'), 0)} semanas"},
+        {"rotulo": "Meta de volatilidade", "texto": fm.pct(par.get("meta_vol"), 2)
+         + ("" if par.get("meta_vol_atingida") is not False else " (não atingida)")},
+        {"rotulo": "Resolução numérica", "texto": resolv},
+    ]
+    if isinstance(par.get("idio"), dict):
+        parametros.insert(3, {"rotulo": "Fatia idiossincrática atingida", "texto": "; ".join(
+            f"{MODELO_RISCO_PT.get(k, k)} {fm.pct(v, 1)}" for k, v in par["idio"].items())})
+    if par.get("degraus_escada"):
+        parametros.append({"rotulo": "Degraus de viabilidade usados",
+                           "texto": ", ".join(str(x) for x in par["degraus_escada"])})
+    nota_vol = None
+    if vabp:
+        motivo = {"custo_alpha": "o custo de negociação consome parte relevante do alpha esperado",
+                  "capacidade": "a capacidade do leilão de fechamento limita as posições"}.get(
+            str(vabp.get("motivo")), str(vabp.get("motivo") or ""))
+        nota_vol = (f"Volatilidade abaixo do piso da banda: {motivo} (custo/alpha "
+                    f"{fm.pct(vabp.get('custo_sobre_alpha'), 0)}; {fm.inteiro(vabp.get('no_teto_nome'))} "
+                    f"de {fm.inteiro(vabp.get('posicoes'))} posições no teto do nome e "
+                    f"{fm.inteiro(vabp.get('no_teto_negociacao'))} no teto de negociação).")
+    pn = f.get("por_nome") if isinstance(f.get("por_nome"), dict) else {}
+    return {
+        "expressao": obj.get("expressao"), "termos": termos, "grupos": lista,
+        "n_restricoes": sum(g["n"] for g in lista), "n_vinculantes": n_vinc,
+        "parametros": parametros, "nota_vol": nota_vol,
+        "contagens": [{"rotulo": r, "texto": fm.inteiro(pn.get(k))} for r, k in (
+            ("Posições long", "n_long"), ("Posições short", "n_short"),
+            ("Long no teto", "n_no_teto_long"), ("Short no teto", "n_no_teto_short"),
+            ("No teto de negociação", "n_no_teto_negociacao"),
+            ("Vetados para long", "n_vetados_long"), ("Vetados para short", "n_vetados_short"))
+            if pn.get(k) is not None],
+    }
+
+
+def _carteira_modelo(prop: Any, names: Mapping[str, str]) -> dict[str, Any] | None:
+    """Dimensionamento e execução por posição da decisão vigente: alpha, tetos (long, short,
+    negociação) e a origem do teto que vincula, contribuição ao risco, uso da capacidade do
+    leilão de fechamento, fechamentos necessários e emissores congelados."""
+    from ..cobertura import formato as fm
+
+    if prop is None:
+        return None
+    ov = dict(prop.overrides) if isinstance(prop.overrides, dict) else {}
+    form = ov.get("formulacao") if isinstance(ov.get("formulacao"), dict) else {}
+    cons = ov.get("construcao") if isinstance(ov.get("construcao"), dict) else {}
+    lpn = form.get("limites_por_nome") if isinstance(form.get("limites_por_nome"), dict) else {}
+    trades = {t.issuer_id: t for t in prop.trades}
+    cap = cons.get("capacidade_fechamento") if isinstance(cons.get("capacidade_fechamento"), dict) else {}
+    congelados = cap.get("congelados") if isinstance(cap.get("congelados"), dict) else {}
+    linhas = []
+    for p in sorted(prop.positions, key=lambda t: (-abs(t.weight), t.issuer_id)):
+        lim = lpn.get(p.issuer_id) if isinstance(lpn.get(p.issuer_id), dict) else {}
+        tr = trades.get(p.issuer_id)
+        lado = "long" if p.weight > 0 else "short"
+        vinc = lim.get("vinculante")
+        negociacao = vinc == "negociacao"
+        teto = _num(lim.get("teto_negociacao" if negociacao else f"teto_{lado}"))
+        org = lim.get("origem")
+        origem = ORIGEM_TETO_PT.get(str(org), ORIGEM_OUTRA) if org else None
+        if negociacao:
+            dim = (f"No teto de negociação ({origem or 'capacidade do fechamento'}): ordem de até "
+                   f"{fm.pct(teto, 2)} do PL nesta montagem.")
+        elif vinc:
+            dim = f"No teto ({origem or ORIGEM_OUTRA}): {fm.pct(teto, 2)} do PL."
+        elif teto is not None:
+            dim = (f"Ótimo abaixo do teto: {fm.pct(abs(p.weight), 2)} de {fm.pct(teto, 2)} "
+                   f"({origem or ORIGEM_OUTRA}).")
+        else:
+            dim = "Ótimo do objetivo (sem teto registrado)."
+        # Com a execução no fechamento, ``est_days`` da ordem é o número de FECHAMENTOS que ela
+        # consome (fração da capacidade de um leilão); sem capacidade, fica ausente.
+        fech = _num(tr.est_days) if tr is not None else None
+        linhas.append({
+            "issuer_id": p.issuer_id, "nome": names.get(p.issuer_id) or p.name, "lado": lado,
+            "peso_texto": fm.pct(p.weight, 2, True), "alpha_texto": fm.pct(p.alpha_annual, 2, True),
+            "z_texto": fm.num(p.alpha_z, 2, True),
+            "risco_texto": fm.pct(p.risk_contribution, 1),
+            "teto_texto": fm.pct(teto, 2), "origem_texto": origem or NA_TXT,
+            "vinculante": bool(vinc), "teto_negociacao": negociacao, "dimensionamento": dim,
+            "ordem_texto": fm.pct(tr.weight_change, 2, True) if tr is not None else "—",
+            "uso_capacidade_texto": fm.pct(fech, 1) if fech is not None else "—",
+            "fechamentos_texto": (fm.inteiro(max(1, math.ceil(fech - 1e-9))) if fech else
+                                  "—"),
+            "participacao_texto": fm.pct(tr.pct_adtv, 2) if tr is not None else "—",
+            "congelado": congelados.get(p.issuer_id)})
+    vetos = cons.get("vetos_short") if isinstance(cons.get("vetos_short"), dict) else {}
+    vet_pt = {"bloqueio_free_float": "free float abaixo do mínimo",
+              "bloqueio_resultado": "divulgação de resultado próxima",
+              "bloqueio_catalisador": "divulgação de resultado próxima"}
+    sess = cap.get("sessao")
+    return {
+        "posicoes": linhas, "n_posicoes": len(linhas),
+        "sessao_texto": _fdate_pt(sess) if sess else None,
+        "congelados": [{"issuer_id": k, "nome": names.get(k) or k, "motivo": v}
+                       for k, v in sorted(congelados.items())],
+        "fechamento_antecipado": bool(cap.get("fechamento_antecipado")),
+        "vetos_short": [{"issuer_id": k, "nome": names.get(k) or k,
+                         "motivo": vet_pt.get(str(v), str(v).replace("_", " "))}
+                        for k, v in sorted(vetos.items())],
+        "vetos_sem_dado": cons.get("vetos_short_dados_ausentes"),
+        "stops": [{"issuer_id": k, "nome": names.get(k) or k} for k in
+                  sorted((cons.get("stops_squeeze") or {}) if isinstance(cons.get("stops_squeeze"), dict) else {})],
+    }
+
+
+_VERSAO_RE = re.compile(r"[0-9a-f]{7,40}")
+
+
+def _auditoria(audit: Mapping[str, Any], integrity: Mapping[str, Any],
+               versao: str | None = None) -> dict[str, Any]:
+    """Seção "Auditoria e reprodução": resultado da verificação em linguagem de investidor, o que
+    é publicado, como conferir, links para o repositório público e o roteiro de reprodução com
+    qualquer assistente de IA. ``versao`` (versão do código que gerou a publicação, só no
+    portal): os links ficam fixados nela; sem ela (espelho privado), apontam para o ramo
+    principal."""
+    n = audit.get("n_events")
+    ok = bool(audit.get("exists")) and audit.get("chain_ok") is True and integrity.get("ok") is not False
+    if ok:
+        res = (f"Registro íntegro — {n} evento{'s' if n != 1 else ''} conferido{'s' if n != 1 else ''}"
+               if n else "Registro íntegro")
+    elif audit.get("exists") and (audit.get("chain_ok") is False or integrity.get("ok") is False):
+        res = "Divergência na conferência do registro"
+    else:
+        res = "Registro ainda não aberto"
+    ref = versao if isinstance(versao, str) and _VERSAO_RE.fullmatch(versao) else None
+    blob = f"{REPO_URL}/blob/{ref or 'main'}/"
+    tree = f"{REPO_URL}/tree/{ref or 'main'}/"
+
+    def link(caminho: str, rotulo: str, desc: str) -> dict[str, str]:
+        base = blob if "." in caminho.rsplit("/", 1)[-1] else tree
+        return {"rotulo": rotulo, "url": base + caminho, "texto": desc}
+
+    versao_txt = (f"Obtenha a versão {ref[:12]} do código — a que gerou esta publicação — e as "
+                  "mesmas versões das bibliotecas usadas nas decisões; a versão de cada decisão "
+                  "também fica registrada no livro." if ref else
+                  "Obtenha a mesma versão do código e das bibliotecas usadas nas decisões; a "
+                  "versão de cada decisão fica registrada no livro.")
+    return {
+        "resultado": res, "integro": ok, "n_eventos": n,
+        "versao": ref[:12] if ref else None,
+        "publicado": [
+            "Carteira, ordens e decisões de cada semana, com a formulação resolvida do otimizador.",
+            "Registro diário encadeado: valor da cota, retorno, risco e atribuição.",
+            "Tese de investimento, relatórios e notas de pesquisa, com os fatos calculados pelo "
+            "código.",
+            "Modelos abertos de cobertura: insumos públicos com fonte e data, fórmulas com os "
+            "valores substituídos e preços-alvo de 12 meses.",
+            "Mandato, parâmetros dos modelos e a trilha de auditoria encadeada.",
+        ],
+        "passos": [
+            {"titulo": "Obtenha a mesma versão", "texto": versao_txt},
+            {"titulo": "Confira os registros", "texto": (
+                "A verificação refaz a cadeia de eventos da trilha, os registros diários e os "
+                "códigos de verificação de cada arquivo publicado.")},
+            {"titulo": "Recalcule modelos e decisões", "texto": (
+                "Os modelos de cobertura são recalculados a partir dos insumos públicos arquivados "
+                "(diferença relativa de até 0,001%); a decisão de cada semana é refeita sobre a "
+                "versão do código da decisão (diferença de até 1 ponto-base por posição).")},
+            {"titulo": "Refaça os passos da IA", "texto": (
+                "Cada etapa da IA é exportada como um pacote autossuficiente (fatos, esquema e "
+                "regras) que pode ser usado em qualquer assistente de IA por assinatura; a "
+                "resposta é validada pelos mesmos validadores do processo.")},
+        ],
+        "documentos": [link(*d) for d in DOCS_AUDITORIA],
+        "configuracao": [link(*d) for d in CONFIG_AUDITORIA],
+        "codigo": [link(*d) for d in CODIGO_AUDITORIA],
+        "repositorio": REPO_URL + (f"/tree/{ref}" if ref else ""), "portal": PORTAL_URL,
+        "dados_abertos": PORTAL_URL + "dados/",
+    }
+
+
+def _cadeia_meta(cfg: FundConfig, prop: Any, posture: str | None, drawdown: float | None
+                 ) -> list[dict[str, str]]:
+    """Como a meta de volatilidade e a exposição bruta máxima da decisão vigente foram obtidas
+    (mandato → postura → viés a priori), com as mesmas funções da decisão
+    (:func:`cdp.research.pm_agent.posture_limits`,
+    :func:`cdp.workflow.tese_analise.vol_target_basis`)."""
+    from ..cobertura import formato as fm
+    from ..research.pm_agent import POSTURE_MAP, posture_limits
+    from .tese_analise import vol_target_basis
+
+    ov = dict(prop.overrides) if prop is not None and isinstance(prop.overrides, dict) else {}
+    applied, gross = _num(ov.get("vol_target")), _num(ov.get("gross_max"))
+    if applied is None:
+        return []
+    rk = cfg.risk
+    lim = None
+    if posture in POSTURE_MAP:
+        try:
+            lim = posture_limits(str(posture), cfg, drawdown)
+        except ValueError:
+            lim = None
+    post_vol = lim.vol_target if lim is not None else None
+    basis = vol_target_basis(applied, post_vol, cfg)
+    passos = [f"mandato {fm.pct(rk.vol_target_annual, 2)}"]
+    if lim is not None:
+        passos.append(f"postura {POSTURE_PT.get(lim.effective, lim.effective)} "
+                      f"{fm.pct(lim.vol_target, 2)}")
+    if basis in ("vies_postura", "vies_mandato"):
+        passos.append(f"÷ {fm.num(rk.bias_prior, 2)} (viés a priori nas primeiras "
+                      f"{rk.bias_prior_weeks} semanas)")
+    txt = " → ".join(passos) + f" = {fm.pct(applied, 2)}"
+    if basis == "piso":
+        txt = f"{fm.pct(applied, 2)}: piso da banda do mandato"
+    elif basis == "outro":
+        txt += " (ajustada pelos controles de risco da semana)"
+    out = [{"rotulo": "Meta de volatilidade da semana", "texto": txt}]
+    if gross is not None:
+        share = POSTURE_MAP.get(lim.effective, (None, None))[1] if lim is not None else None
+        out.append({"rotulo": "Exposição bruta máxima da semana", "texto": (
+            f"{fm.pct(gross, 0)} do PL"
+            + (f" (postura {POSTURE_PT.get(lim.effective, lim.effective)}: {fm.num(share, 2)} × "
+               f"{fm.pct(rk.gross_max, 0)} do mandato)"
+               if share is not None and abs(share * rk.gross_max - gross) < 1e-6 else ""))})
+    return out
+
+
+def _modelo_aberto(rt: Any, cfg: FundConfig, live: Any, records: Sequence[Any],
+                   audit: Mapping[str, Any], integrity: Mapping[str, Any], now: datetime,
+                   names: Mapping[str, str], issues: _Issues, *,
+                   weeks: Sequence[Mapping[str, Any]] = (),
+                   inaugural: Mapping[str, Any] | None = None,
+                   versao: str | None = None) -> dict[str, Any]:
+    """Modelo aberto da carteira (aba Mandato e metodologia, Risco, Carteira e Comitê): textos e
+    números em pt-BR montados aqui; a página só exibe."""
+    tz = ZoneInfo(cfg.fund.timezone)
+    hoje = now.astimezone(tz).date()
+    md = None
+    if records:
+        try:
+            md = rt.store.load(as_of=records[-1].date)
+        except Exception:  # noqa: BLE001 - base indisponível: a série "sem modelo" fica n/d
+            md = None
+    out: dict[str, Any] = {
+        "metodologia": _metodologia(cfg, hoje, inaugural),
+        "auditoria": _auditoria(audit, integrity, versao),
+        "risco": None, "formulacao": None, "carteira": None,
+        "semana": getattr(live, "week", None),
+    }
+    if live is not None:
+        out["risco"] = _risco_modelo(live, records, md, cfg, issues)
+        out["formulacao"] = _formulacao(live)
+        out["carteira"] = _carteira_modelo(live, names)
+        if out["formulacao"] is not None:
+            semana = next((w for w in weeks if w.get("week") == live.week), None) or {}
+            pm = semana.get("pm_decision") if isinstance(semana.get("pm_decision"), dict) else {}
+            antes = [r for r in records if r.date < live.week]
+            dd = _num(antes[-1].risk.drawdown) if antes else None
+            try:
+                cadeia = _cadeia_meta(cfg, live, pm.get("risk_posture"), dd)
+            except Exception as exc:  # noqa: BLE001 - a conta da meta é complementar
+                issues.add("Meta de risco da semana", f"{type(exc).__name__}: {exc}")
+                cadeia = []
+            out["formulacao"]["parametros"] = cadeia + out["formulacao"]["parametros"]
+    return out
+
+
+def _rotulos(data: Mapping[str, Any]) -> dict[str, dict[str, str]]:
+    """Rótulos pt-BR dos códigos de fator e de restrição citados no retrato (a página mostra o
+    rótulo; o código nunca aparece): ``fatores`` (``factor``) e ``restricoes`` (restrições que
+    vinculam na solução de cada semana)."""
+    fatores: set[str] = set()
+    restricoes: set[str] = set()
+
+    def walk(x: Any) -> None:
+        if isinstance(x, dict):
+            for k, v in x.items():
+                if k == "factor" and isinstance(v, str):
+                    fatores.add(v)
+                elif k == "binding_constraints" and isinstance(v, list):
+                    restricoes.update(str(c) for c in v)
+                else:
+                    walk(v)
+        elif isinstance(x, list):
+            for v in x:
+                walk(v)
+
+    walk({k: v for k, v in data.items() if k != "meta"})
+    form = (data.get("modelo") or {}).get("formulacao") or {}
+    nomes = {str(r.get("chave")): str(r.get("nome")) for g in form.get("grupos") or []
+             for r in g.get("restricoes") or [] if r.get("chave") and r.get("nome")}
+    return {"fatores": {f: _fator_rotulo(f) for f in sorted(fatores)},
+            "restricoes": {c: nomes.get(c) or _restricao_pt(c, data) for c in sorted(restricoes)}}
+
+
+def _fator_rotulo(f: str) -> str:
+    """Rótulo de um fator do modelo de risco ou da atribuição (``country:BR`` ⇒ "Brasil",
+    ``macro:BZ=F`` ⇒ "Petróleo Brent", ``commodity:oil`` ⇒ "Commodity: petróleo")."""
+    grp, _, nome = str(f).partition(":")
+    if nome and grp == "commodity":
+        return f"Commodity: {COMMODITY_PT.get(nome, nome.replace('_', ' '))}"
+    if nome and grp in ("theme", "tema"):
+        return f"Tema: {THEME_PT.get(nome, nome.replace('_', ' '))}"
+    if nome and grp == "country":
+        return "Regional (América Latina)" if nome == "LATAM" else _pais_pt(nome)
+    return _fator_pt(f)
+
+
+def _restricao_pt(c: str, data: Mapping[str, Any]) -> str:
+    """Nome pt-BR de uma restrição do otimizador pela chave (``country_share:BR``,
+    ``op_country:CL``, ``max_long:<emissor>``, ``theme:evento:BR:2026-10-05``...)."""
+    nomes = (data.get("meta") or {}).get("issuer_names") or {}
+    simples = {"net_exposure": "exposição líquida do mandato", "gross": "exposição bruta máxima",
+               "gross_min": "exposição bruta mínima", "beta": "beta previsto",
+               "turnover": "giro semanal", "vol": "meta de volatilidade",
+               "vol_target": "meta de volatilidade", "factor_risk": "teto de risco fatorial",
+               "idio": "piso de risco específico"}
+    k, _, v = str(c).partition(":")
+    if not v:
+        return simples.get(k, k.replace("_", " "))
+    if k in ("max_long", "max_short", "max_trade", "max_trade_liq"):
+        lado = {"max_long": "teto do long", "max_short": "teto do short",
+                "max_trade": "teto de negociação", "max_trade_liq": "teto de negociação"}[k]
+        return f"{lado} — {nomes.get(v) or v}"
+    if k == "country":
+        return f"líquido de {_pais_pt(v)} (mandato)"
+    if k == "op_country":
+        return f"líquido de {_pais_pt(v)} (limite operacional)"
+    if k == "country_share":
+        return f"fatia da exposição bruta — {_pais_pt(v)}"
+    if k == "sector":
+        return f"líquido do setor {SECTOR_PT.get(v, v)}"
+    if k == "style":
+        return f"estilo {STYLE_PT.get(v, v).lower()}"
+    if k in ("theme", "tema"):
+        g2, _, r2 = v.partition(":")
+        if g2 == "commodity":
+            return f"commodity {COMMODITY_PT.get(r2, r2)}"
+        if g2 == "evento":
+            pais, _, dia = r2.partition(":")
+            return f"evento em {_pais_pt(pais)}" + (f" ({_fdate_pt(dia)})" if dia else "")
+        return f"tema {THEME_PT.get(v, v.replace('_', ' '))}"
+    if k == "commodity":
+        return f"commodity {COMMODITY_PT.get(v, v)}"
+    if k.startswith("factor_risk") or k.startswith("factor_hold"):
+        return f"risco fatorial — {_fator_rotulo(v)}"
+    if k.startswith("linked"):
+        return f"grupo de controle — {v.replace('_', ' ')}"
+    return f"{k.replace('_', ' ')} — {v.replace('_', ' ')}"
+
+
+# ==========================================================
 # API pública
 # ==========================================================
 
@@ -2693,7 +3812,8 @@ def painel_data(rt: Any, *, now: datetime | None = None, profile: str = "complet
                 full_research_weeks: int = DEFAULT_FULL_RESEARCH_WEEKS,
                 audit_tail: int = DEFAULT_AUDIT_TAIL,
                 max_risk_runs: int = DEFAULT_MAX_RISK_RUNS,
-                max_risk_full_runs: int = DEFAULT_RISK_FULL_RUNS) -> dict[str, Any]:
+                max_risk_full_runs: int = DEFAULT_RISK_FULL_RUNS,
+                versao: str | None = None) -> dict[str, Any]:
     """Retrato JSON determinístico da operação do CDP (somente leitura).
 
     ``profile="completo"`` (padrão): o retrato inteiro (cópia local e app). ``"publicacao"``:
@@ -2708,10 +3828,11 @@ def painel_data(rt: Any, *, now: datetime | None = None, profile: str = "complet
     traz as pastas das ``max_risk_runs`` datas mais recentes, com JSON/Markdown completos só
     nas ``max_risk_full_runs`` execuções mais recentes (as demais, resumidas). Cada semana
     completa traz a tese publicada da carteira (``weeks[].thesis``) e ``meta.issuer_names`` dá
-    o nome de todo emissor citado.
+    o nome de todo emissor citado. ``versao``: versão do código que gera a publicação do portal
+    (os links de "Auditoria e reprodução" ficam fixados nela; sem ela, no ramo principal).
     """
     from ..ui.data import CDP_INVARIANTS, kill_switch_state
-    from .painel_publicacao import PROFILES, publicacao
+    from .painel_publicacao import PROFILES, publicacao, site
     from .reports import PAPER_TRADING_TEXT
 
     if profile not in PROFILES:
@@ -2776,6 +3897,8 @@ def painel_data(rt: Any, *, now: datetime | None = None, profile: str = "complet
         "base_currency": cfg.fund.base_currency, "inception_date": cfg.fund.inception_date,
         "inception_nav_usd": cfg.fund.inception_nav_usd, "manager": cfg.fund.manager_name,
         "config_hash": cfg.config_hash(), "mandate": _mandate(cfg),
+        "data_sources": None if is_synth else FONTES_RODAPE,
+        "coverage": _coverage_meta(rt, issues),
         "invariants": list(CDP_INVARIANTS),
         "market": market,
         "counts": {"weeks": len(weeks), "daily_records": len(records),
@@ -2789,19 +3912,165 @@ def painel_data(rt: Any, *, now: datetime | None = None, profile: str = "complet
                           "audit_tail": audit_tail, "max_risk_runs": max_risk_runs,
                           "max_risk_full_runs": max_risk_full_runs},
     }
+    modelo = _modelo_aberto(rt, cfg, live, records, audit, integrity, now,
+                            universe_names, issues, weeks=weeks,
+                            inaugural=status.get("inaugural"), versao=versao)
     data = {
         "meta": meta, "status": status, "track_record": track, "latest_day": latest,
         "risk": risk, "weeks": weeks, "daily_reports": daily_reports,
         "reports_index": reports_index,
         "risk_monitor": _risk_monitor(rt, issues, max_risk_runs, max_risk_full_runs),
-        "backtests": backtests, "audit": audit, "issues": issues.items,
+        "backtests": backtests, "audit": audit, "modelo": modelo, "issues": issues.items,
     }
     data = clean(data)
     data["meta"]["issuer_names"] = clean(_issuer_names(data, universe_names))
+    data["meta"]["rotulos"] = clean(_rotulos(data))
     data["meta"]["data_hash"] = data_hash(data)
     if profile == "publicacao":
         return publicacao(data, reports_dir=_reports_label(rt), page_sha256=page_sha256())
+    if profile == "site":
+        return site(data, page_sha256=page_sha256())
     return data
+
+
+# ==========================================================
+# Cobertura de ativos (dados da aba, gerados por painel_cobertura)
+# ==========================================================
+
+def _painel_cobertura() -> Any:
+    """O módulo dos dados da aba "Cobertura de ativos" (:mod:`cdp.workflow.painel_cobertura`),
+    ou ``None`` se ainda não existir no código."""
+    try:
+        from . import painel_cobertura
+    except ImportError:
+        return None
+    return painel_cobertura
+
+
+def _coverage_meta(rt: Any, issues: _Issues) -> dict[str, Any] | None:
+    """Resumo da cobertura para ``meta.coverage`` (≤ 300 B): a página só mostra a aba com dados
+    e os botões "Ficha do ativo" quando ``disponivel``. Vem de ``painel_cobertura.resumo(rt)``;
+    sem ele, da existência de um retrato em ``<livro>/cobertura/<data>/``. O registro da
+    cobertura é conferido (cadeia e selo, como na leitura dos modelos): com divergência, a aba
+    fica indisponível (``estado = "em_verificacao"``) e o resto do portal segue publicado."""
+    pc = _painel_cobertura()
+    if pc is None:
+        return None
+    fn = getattr(pc, "resumo", None)
+    if callable(fn):
+        try:
+            r = fn(rt)
+        except Exception as exc:  # noqa: BLE001 - cobertura é complementar ao painel
+            issues.add("Cobertura", f"{type(exc).__name__}: {exc}")
+            return {"disponivel": False, "estado": "em_verificacao"}
+        if not isinstance(r, dict):
+            return None
+        out = dict(r, disponivel=bool(r.get("disponivel", True)))
+    else:
+        base = Path(rt.book_root) / "cobertura"
+        datas = (sorted(p.name for p in base.iterdir() if p.is_dir() and _WEEK_DIR_RE.match(p.name))
+                 if base.is_dir() else [])
+        if not datas:
+            return None
+        out = {"disponivel": True, "as_of": datas[-1]}
+    if out.get("disponivel"):
+        problema = _registro_cobertura_divergente(Path(rt.book_root))
+        if problema:
+            issues.add("Cobertura", problema)
+            out = {"disponivel": False, "estado": "em_verificacao", "as_of": out.get("as_of")}
+    return clean(out)
+
+
+def _registro_cobertura_divergente(book: Path) -> str | None:
+    """Problema na cadeia ou no selo do registro da cobertura (``None`` se íntegro) — a mesma
+    conferência de ``cobertura.livro.ultimo_snapshot``, sem ler os modelos."""
+    try:
+        from ..cobertura import livro as L
+
+        ok, probs = L.verificar_livro(book)
+        if not ok:
+            return "; ".join(probs)
+        ok_s, msg = L.selado(book)
+        return None if ok_s else msg
+    except Exception as exc:  # noqa: BLE001 - registro ilegível
+        return f"{type(exc).__name__}: {exc}"
+
+
+def _cobertura_em_verificacao(pc: Any) -> dict[str, str]:
+    """``cobertura.json`` institucional (sem modelos) quando o registro da cobertura não pôde
+    ser lido ou conferido: estado ``"em_verificacao"``."""
+    from .painel_publicacao import dump_publicacao
+
+    base = pc.exportar(None)
+    try:
+        nome = getattr(pc, "ARQUIVO", "cobertura.json")
+        obj = json.loads(base[nome])
+        obj["meta"]["estado"] = "em_verificacao"
+        obj["meta"].pop("data_hash", None)
+        obj["meta"]["data_hash"] = data_hash(obj)
+        return {nome: dump_publicacao(obj)}
+    except Exception:  # noqa: BLE001 - forma inesperada: o aviso "sem cobertura" do módulo
+        return dict(base)
+
+
+def arquivos_cobertura(rt: Any, *, perfil: str = "publicacao",
+                       painel: Mapping[str, Any] | None = None,
+                       erros: list[str] | None = None) -> dict[str, str]:
+    """Arquivos de dados da aba "Cobertura de ativos" (``{nome: texto}``; nomes
+    ``cobertura*.json``), exportados por :mod:`cdp.workflow.painel_cobertura` a partir do livro da
+    cobertura, dos fechamentos da base de mercado e da carteira vigente (``painel``: retrato do
+    painel). ``perfil="publicacao"``: cada arquivo ≤ 260 KB e linhas ≤ 1.500 (cortes
+    progressivos de ``cobertura.json``); ``"site"``: sem cortes. Sem o módulo, vazio; sem retrato
+    de cobertura, só ``cobertura.json`` com o aviso institucional. Falha na leitura ou na
+    conferência do registro da cobertura nunca derruba o portal: sai só ``cobertura.json`` com o
+    estado ``"em_verificacao"`` e a mensagem vai para ``erros``."""
+    pc = _painel_cobertura()
+    if pc is None:
+        return {}
+    md = None
+    try:
+        last = rt.store_last_date()
+        md = rt.store.load(as_of=last) if last is not None else None
+    except Exception:  # noqa: BLE001 - sem base: preços dos próprios retratos
+        md = None
+    try:
+        ent = pc.carregar(Path(rt.book_root), md=md, carteira=pc.carteira_do_painel(painel),
+                          repositorio=REPO, page_sha256=page_sha256())
+        if perfil == "site":
+            sem = 10**9
+            out = pc.exportar(ent, niveis=(pc.Limites(revisoes=sem, etf_top=sem, ic_semanas=sem),))
+        else:
+            out = pc.exportar(ent)
+    except Exception as exc:  # noqa: BLE001 - cobertura é complementar ao portal
+        if erros is not None:
+            erros.append(f"{type(exc).__name__}: {exc}")
+        out = _cobertura_em_verificacao(pc)
+    bad = sorted(k for k in out if not COBERTURA_RE.fullmatch(str(k)))
+    if bad:
+        raise ValueError("arquivos de cobertura com nome fora do padrão cobertura*.json: "
+                         + ", ".join(bad))
+    return {str(k): str(v) for k, v in sorted(out.items())}
+
+
+def cobertura_publicada(out_dir: Path | str = DEFAULT_OUT_DIR) -> dict[str, str]:
+    """``{arquivo: sha256}`` dos dados da cobertura publicados por último no artifact
+    (``COBERTURA_PUBLICADA.json``; vazio se ainda não houve publicação)."""
+    try:
+        raw = json.loads((Path(out_dir) / COBERTURA_MARKER).read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+    arqs = raw.get("arquivos") if isinstance(raw, dict) else None
+    return {str(k): str(v) for k, v in (arqs or {}).items()
+            if COBERTURA_RE.fullmatch(str(k)) and re.fullmatch(r"[0-9a-f]{64}", str(v))}
+
+
+def cobertura_local(out_dir: Path | str = DEFAULT_OUT_DIR) -> dict[str, str]:
+    """``{arquivo: sha256}`` dos dados da cobertura gravados agora na pasta do painel."""
+    out = Path(out_dir)
+    if not out.is_dir():
+        return {}
+    return {p.name: _sha256_file(p) or "" for p in sorted(out.glob("cobertura*.json"))
+            if COBERTURA_RE.fullmatch(p.name)}
 
 
 def _reports_label(rt: Any) -> str:
@@ -2820,14 +4089,32 @@ def _template(template_path: Path | str | None) -> str:
     return template
 
 
-def _version(template: str) -> str:
-    return hashlib.sha256(f"{PAGE_LAYOUT}\n{template}".encode()).hexdigest()
+def modulos() -> dict[str, str]:
+    """Fontes dos módulos da página presentes no código (``{nome: texto}``, ordem fixa). Um
+    módulo nunca contém o fechamento literal do elemento de script (vai embutido na cópia
+    local)."""
+    out = {}
+    for nome, arq in MODULOS.items():
+        path = MODULOS_DIR / arq
+        if not path.is_file():
+            continue
+        texto = path.read_text(encoding="utf-8")
+        if "</script" in texto.lower():
+            raise ValueError(f"{arq}: o módulo não pode conter o fechamento do elemento de script")
+        out[nome] = texto.strip("\n") + "\n"
+    return out
+
+
+def _version(template: str, mods: Mapping[str, str] | None = None) -> str:
+    mods = modulos() if mods is None else mods
+    corpo = "".join(f"\n{nome}\n{texto}" for nome, texto in sorted(mods.items()))
+    return hashlib.sha256(f"{PAGE_LAYOUT}\n{template}{corpo}".encode()).hexdigest()
 
 
 def page_sha256(template_path: Path | str | None = None) -> str:
-    """Versão da página: SHA-256 do formato de publicação (``PAGE_LAYOUT``) e do template — muda
-    só quando um dos dois muda. Vai carimbada no ``index.html``, no script versionado, na cópia
-    local e em ``data.json`` (``meta.page_sha256``)."""
+    """Versão da página: SHA-256 do formato de publicação (``PAGE_LAYOUT``), do template e dos
+    módulos (:func:`modulos`) — muda só quando um deles muda. Vai carimbada no ``index.html``, no
+    script versionado, na cópia local e em ``data.json`` (``meta.page_sha256``)."""
     return _version(_template(template_path))
 
 
@@ -2838,17 +4125,33 @@ def _split_template(template_path: Path | str | None) -> tuple[str, str]:
     return head.replace(PAGE_SHA_PLACEHOLDER, sha), tail.replace(PAGE_SHA_PLACEHOLDER, sha)
 
 
-def render_painel(data: Mapping[str, Any], template_path: Path | str | None = None) -> str:
-    """Injeta o JSON do painel no template (no elemento ``<script id="cdp-data">``)."""
+def render_painel(data: Mapping[str, Any], template_path: Path | str | None = None,
+                  arquivos: Mapping[str, Any] | None = None) -> str:
+    """Injeta o JSON do painel no template (no elemento ``<script id="cdp-data">``), com os
+    módulos da página embutidos antes dele e, opcionalmente, os ``arquivos`` de dados da
+    cobertura (``{nome: texto JSON}``) num elemento
+    ``<script type="application/json" id="cdp-cobertura-dados">`` com ``{arquivo: dados}`` (o
+    mesmo de ``painel_cobertura.embutir``) — a cópia local abre offline, sem buscar nada."""
     head, tail = _split_template(template_path)
+    mods = "".join(f"<script>\n{texto}</script>\n" for _n, texto in sorted(modulos().items()))
+    extras = ""
+    if arquivos:
+        dados = {n: json.loads(t) if isinstance(t, str) else t for n, t in sorted(arquivos.items())}
+        extras = (f'<script type="application/json" id="cdp-cobertura-dados">{embed_json(dados)}'
+                  "</script>\n")
     element = DATA_ELEMENT.replace(PLACEHOLDER, embed_json(data))
-    return head + element + tail
+    return head + mods + extras + element + tail
 
 
 def asset_names(version: str) -> tuple[str, str]:
     """Nomes do estilo e do script versionados de uma versão da página."""
     stem = f"{ASSET_PREFIX}{version[:16]}"
     return f"{stem}.css", f"{stem}.js"
+
+
+def module_names(version: str) -> dict[str, str]:
+    """Nome versionado de cada módulo presente (``painel-<16 hex>-<nome>.js``)."""
+    return {nome: f"{ASSET_PREFIX}{version[:16]}-{nome}.js" for nome in modulos()}
 
 
 def _page_parts(template_path: Path | str | None) -> dict[str, str]:
@@ -2872,10 +4175,15 @@ def _page_parts(template_path: Path | str | None) -> dict[str, str]:
 
 
 def page_assets(template_path: Path | str | None = None) -> dict[str, str]:
-    """Estilo e script da página, versionados (``painel-<versão>.css``/``.js``)."""
+    """Estilo, script e módulos da página, versionados (``painel-<versão>.css``/``.js`` e
+    ``painel-<versão>-<nome>.js``)."""
     parts = _page_parts(template_path)
-    css_name, js_name = asset_names(page_sha256(template_path))
-    return {css_name: parts["css"], js_name: parts["js"]}
+    version = page_sha256(template_path)
+    css_name, js_name = asset_names(version)
+    out = {css_name: parts["css"], js_name: parts["js"]}
+    mods = modulos()
+    out.update({module_names(version)[nome]: texto for nome, texto in mods.items()})
+    return out
 
 
 def render_page(template_path: Path | str | None = None) -> str:
@@ -2908,7 +4216,12 @@ def published_page_sha(out_dir: Path | str = DEFAULT_OUT_DIR) -> str | None:
 def mark_published(out_dir: Path | str = DEFAULT_OUT_DIR) -> dict[str, Any]:
     """Registra que o ``index.html`` atual foi publicado no artifact: grava a versão carimbada
     nele em ``PAGINA_PUBLICADA.sha256``. Chamado (``cdp painel --publicado``) só depois de uma
-    publicação bem-sucedida que incluiu a página; até lá ``page_changed`` continua verdadeiro."""
+    publicação bem-sucedida que incluiu a página; até lá ``page_changed`` continua verdadeiro.
+    Os dados da cobertura só são registrados (``COBERTURA_PUBLICADA.json``) quando a checagem
+    os incluiu na publicação (:func:`cdp.workflow.painel_artifact.plano_cobertura`, refeito
+    aqui com a mesma pasta); senão o marcador fica como estava."""
+    from .painel_artifact import plano_cobertura
+
     out = Path(out_dir)
     index = out / INDEX_NAME
     try:
@@ -2920,11 +4233,21 @@ def mark_published(out_dir: Path | str = DEFAULT_OUT_DIR) -> dict[str, Any]:
         raise ValueError(f"{index.as_posix()} sem a versão da página (var PAGE_SHA): rode "
                          "`cdp painel` de novo")
     before = published_page_sha(out)
+    plano = plano_cobertura(out, page_changed=before != sha)
     marker = out / MARKER_NAME
     if before != sha:
         _write_atomic(marker, sha + "\n")
+    # Dados da cobertura: só o que a checagem incluiu na publicação (o conjunto inteiro da pasta).
+    cob_antes = cobertura_publicada(out)
+    cob = cobertura_local(out) if plano["incluida"] else cob_antes
+    cob_marker = out / COBERTURA_MARKER
+    if plano["incluida"] and (cob != cob_antes or (cob and not cob_marker.is_file())):
+        _write_atomic(cob_marker, json.dumps({"arquivos": cob}, ensure_ascii=False, indent=1,
+                                             sort_keys=True) + "\n")
     return {"marcador": marker.as_posix(), "page_sha256": sha, "anterior": before,
-            "mudou": before != sha}
+            "mudou": before != sha, "marcador_cobertura": cob_marker.as_posix(),
+            "cobertura_incluida": plano["incluida"], "cobertura_motivo": plano["motivo"],
+            "cobertura_mudou": cob != cob_antes, "cobertura_arquivos": sorted(cob)}
 
 
 STANDALONE_HEAD = ('<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">'
@@ -2979,6 +4302,8 @@ def write_painel(rt: Any, out_dir: Path | str = DEFAULT_OUT_DIR, *, standalone: 
     version = page_sha256(template_path)
     pub = publicacao(full, reports_dir=_reports_label(rt), page_sha256=version)
     out = Path(out_dir)
+    erros_cob: list[str] = []
+    cob = arquivos_cobertura(rt, perfil="publicacao", painel=full, erros=erros_cob)
     page = render_page(template_path)
     index = out / INDEX_NAME
     index_written = _sha256_file(index) != hashlib.sha256(page.encode("utf-8")).hexdigest()
@@ -2996,6 +4321,16 @@ def write_painel(rt: Any, out_dir: Path | str = DEFAULT_OUT_DIR, *, standalone: 
         if ASSET_RE.fullmatch(old_asset.name) and old_asset.name not in assets:
             old_asset.unlink()
             removed.append(old_asset.name)
+    cob_info, cob_removed = [], []
+    for name, texto in cob.items():
+        path = out / name
+        if _sha256_file(path) != hashlib.sha256(texto.encode("utf-8")).hexdigest():
+            _write_atomic(path, texto)
+        cob_info.append(_file_info(path, texto))
+    for old in sorted(out.glob("cobertura*.json")):
+        if COBERTURA_RE.fullmatch(old.name) and old.name not in cob:
+            old.unlink()
+            cob_removed.append(old.name)
     published = published_page_sha(out)
     page_changed = published != version
     text = dump_publicacao(pub)
@@ -3010,6 +4345,9 @@ def write_painel(rt: Any, out_dir: Path | str = DEFAULT_OUT_DIR, *, standalone: 
         "assets": [{"path": a["path"], "bytes": a["bytes"], "sha256": a["sha256"],
                     "max_line": a["max_line"]} for a in asset_info],
         "assets_removed": removed,
+        "cobertura": [{"path": a["path"], "bytes": a["bytes"], "sha256": a["sha256"],
+                       "max_line": a["max_line"]} for a in cob_info],
+        "cobertura_removidos": cob_removed, "cobertura_erro": "; ".join(erros_cob) or None,
         "data_path": data_info["path"], "data_bytes": data_info["bytes"],
         "data_sha256": data_info["sha256"], "data_max_line": data_info["max_line"],
         "data_lines": data_info["lines"], "data_hash": pmeta["data_hash"],
@@ -3020,7 +4358,7 @@ def write_painel(rt: Any, out_dir: Path | str = DEFAULT_OUT_DIR, *, standalone: 
         "local_path": None, "local_bytes": None, "local_sha256": None,
     }
     if standalone:
-        local = STANDALONE_HEAD + render_painel(full, template_path) + STANDALONE_TAIL
+        local = STANDALONE_HEAD + render_painel(full, template_path, cob) + STANDALONE_TAIL
         lp = out / LOCAL_NAME
         _write_atomic(lp, local)
         info = _file_info(lp, local)
@@ -3044,7 +4382,8 @@ def expandir(x: Any) -> Any:
 __all__ = ["ASSET_PREFIX", "ASSET_RE", "DATA_ELEMENT", "DATA_NAME", "DEFAULT_OUT_DIR",
            "DEFAULT_TEMPLATE", "EMPTY_DATA_ELEMENT", "INDEX_NAME", "LOCAL_NAME", "MARKER_NAME",
            "PAGE_LAYOUT", "PAGE_SHA_PLACEHOLDER", "PLACEHOLDER", "SCHEMA_VERSION", "URL_NAME",
-           "asset_names", "clean", "data_hash", "embed_json", "expandir", "mark_published",
-           "page_assets", "page_sha256", "page_version", "painel_data", "published_page_sha",
-           "referenced_issuers", "render_page", "render_painel", "scrub_text", "to_json",
-           "write_painel"]
+           "COBERTURA_MARKER", "COBERTURA_RE", "MODULOS", "arquivos_cobertura", "asset_names",
+           "clean", "cobertura_local", "cobertura_publicada", "data_hash", "embed_json",
+           "expandir", "mark_published", "module_names", "modulos", "page_assets", "page_sha256",
+           "page_version", "painel_data", "published_page_sha", "referenced_issuers",
+           "render_page", "render_painel", "scrub_text", "to_json", "write_painel"]

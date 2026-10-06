@@ -1077,3 +1077,158 @@ def test_non_finite_overrides_and_alpha_are_rejected(env: Env) -> None:
     bad.iloc[0] = np.inf
     with pytest.raises(ValueError, match="infinito"):
         optimize(bad, env.model, cons, env.cost_model, env.cfg, NAV, None, True)
+
+
+# ==========================================================
+# PL pequeno: lotes da BMV, custo mínimo por ordem, hedge em minicontratos, arredondamento
+# ==========================================================
+
+SMALL_ACTIVE = {
+    "costs": {"min_order_cost_usd": {"US": 1.0, "BR": 0.0, "MX": 3.5, "CL": 28.0, "CO": 22.0,
+                                     "PE": 25.0, "AR": 25.0}},
+    "execution": {"min_trade_weight": 0.001, "max_fixed_cost_bps": 10.0},
+}
+
+
+def test_bmv_price_setting_lot_and_picos() -> None:
+    """BMV: só ordens de 100 títulos (5 acima de MXN 200) formam preço; o resto é pico, na mesma
+    série. B3: lote padrão + fracionário (sufixo F). Santiago e EUA: 1 ação."""
+    from cdp.portfolio.trades import n_orders, order_legs_detail, price_setting_lot
+
+    assert price_setting_lot("WALMEX.MX", 60.0) == 100
+    assert price_setting_lot("PE&OLES.MX", 890.0) == 5
+    assert price_setting_lot("WALMEX.MX") == 100            # sem preço: conservador
+    assert order_legs_detail("WALMEX.MX", 1234, 60.0) == [
+        ("WALMEX.MX", 1200, "lote_padrao"), ("WALMEX.MX", 34, "pico")]
+    assert order_legs_detail("PE&OLES.MX", -23, 890.0) == [
+        ("PE&OLES.MX", -20, "lote_padrao"), ("PE&OLES.MX", -3, "pico")]
+    assert order_legs_detail("PETR4.SA", 1234) == [
+        ("PETR4.SA", 1200, "lote_padrao"), ("PETR4F.SA", 34, "fracionario")]
+    assert order_legs_detail("BCI.SN", 7) == [("BCI.SN", 7, "unica")]
+    assert order_legs_detail("MELI", -2) == [("MELI", -2, "unica")]
+    assert n_orders("WALMEX.MX", 1234, 60.0) == 2 and n_orders("WALMEX.MX", 1200, 60.0) == 1
+    assert n_orders("MELI", None) == 1
+    for q in (1, 99, 100, 101, 12345, -7, -250):
+        assert sum(n for _, n, _k in order_legs_detail("GMEXICOB.MX", q, 80.0)) == q
+
+
+def test_min_order_cost_floors_the_commission_and_sets_the_band() -> None:
+    from cdp.portfolio.costs import banda_minima_usd, comissao_efetiva_bps, minimo_por_ordem_usd
+
+    legacy = FundConfig()
+    assert minimo_por_ordem_usd("US", legacy) == 0.0
+    assert banda_minima_usd("US", legacy, 1e6) == 0.0          # sem a seção execution
+    cfg = FundConfig().with_overrides(SMALL_ACTIVE)
+    assert minimo_por_ordem_usd("MX", cfg) == 3.5
+    assert minimo_por_ordem_usd("ZZ", cfg) == 28.0              # sem valor: o maior (conservador)
+    # US$ 1 mínimo numa ordem de US$ 500 = 20 bps (> 1 bp da comissão variável)
+    assert comissao_efetiva_bps("US", 500.0, cfg) == pytest.approx(20.0)
+    assert comissao_efetiva_bps("US", 1e6, cfg) == pytest.approx(1.0)
+    assert comissao_efetiva_bps("MX", 10_000.0, cfg, n_ordens=2) == pytest.approx(8.0)
+    assert comissao_efetiva_bps("US", 0.0, cfg) is None
+    nav = 1_000_000.0
+    assert banda_minima_usd("US", cfg, nav) == pytest.approx(1_000.0)   # 0,10% do NAV
+    assert banda_minima_usd("BR", cfg, nav) == pytest.approx(1_000.0)
+    assert banda_minima_usd("MX", cfg, nav) == pytest.approx(3_500.0)
+    assert banda_minima_usd("MX", cfg, nav, n_ordens=2) == pytest.approx(7_000.0)
+    assert banda_minima_usd("CL", cfg, nav) == pytest.approx(28_000.0)
+
+
+def test_construction_minimum_position_covers_the_execution_band() -> None:
+    """BMV: lote padrão + pico pagam dois mínimos por ordem, então a execução aplica a banda de
+    duas ordens a uma quantidade fora do lote; a posição mínima da construção usa o número
+    máximo de ordens da linha e nunca fica abaixo dessa banda (posição nova decidida nunca
+    recusada no fechamento por "banda")."""
+    from types import SimpleNamespace
+
+    from cdp.portfolio.execucao import _banda_usd
+    from cdp.portfolio.trades import max_order_legs, n_orders
+    from cdp.workflow.weekly import _fixed_cost_min_position
+
+    cfg = FundConfig().with_overrides(SMALL_ACTIVE)
+    nav = 1_000_000.0
+    assert max_order_legs("WALMEX.MX") == 2 and max_order_legs("PETR4.SA") == 2
+    assert max_order_legs("BCI.SN") == 1 and max_order_legs("MELI") == 1
+    sides = pd.DataFrame({"long_ticker": ["WALMEX.MX", "BCI.SN", "MELI"],
+                          "short_ticker": ["WALMEX.MX", "BCI.SN", np.nan]},
+                         index=["MX1", "CL1", "US1"])
+    ctx = SimpleNamespace(cfg=cfg, sides=sides, nav=nav)
+    c = _fixed_cost_min_position(ctx, pd.DataFrame(index=sides.index))
+    assert c.at["MX1", "posicao_minima_long"] == pytest.approx(0.007)   # US$ 7 mil
+    assert c.at["CL1", "posicao_minima_long"] == pytest.approx(0.028)
+    assert c.at["US1", "posicao_minima_long"] == pytest.approx(0.001)
+    # Posição mínima de WALMEX (MXN 50, US$ 0,055): 2.545 ações = lote padrão + pico.
+    px, fx = 50.0, 0.055
+    shares = round(c.at["MX1", "posicao_minima_long"] * nav / (px * fx))
+    assert n_orders("WALMEX.MX", shares, px) == 2
+    assert shares * px * fx >= _banda_usd("WALMEX.MX", shares, px, cfg, nav) - px * fx
+
+
+def test_closing_costs_apply_the_per_order_floor() -> None:
+    from cdp.portfolio.costs import custos_fechamento
+
+    cfg = FundConfig().with_overrides({**SMALL_ACTIVE, "execution": {
+        **SMALL_ACTIVE["execution"]}})
+    frame = pd.DataFrame({
+        "notional_usd": [2_000.0, 2_000.0, 2_000.0], "adtv_usd": [20e6, 20e6, 20e6],
+        "sigma_d": [0.02, 0.02, 0.02], "market": ["US", "MX", "CL"],
+        "currency": ["USD", "MXN", "CLP"], "categoria": ["US_STOCK", "MX", "CL"],
+        "local_fechado": [False, False, False], "n_ordens": [1, 2, 1]},
+        index=["AAA", "BBB.MX", "CCC.SN"])
+    res = custos_fechamento(frame, cfg)
+    assert res.at["AAA", "commission_bps"] == pytest.approx(5.0)          # 1 / 2.000
+    assert res.at["BBB.MX", "commission_bps"] == pytest.approx(35.0)      # 2 × 3,5 / 2.000
+    assert res.at["CCC.SN", "commission_bps"] == pytest.approx(140.0)     # 28 / 2.000
+    legacy = custos_fechamento(frame, FundConfig().with_overrides(
+        {"execution": {"min_trade_weight": 0.0005}}))
+    assert legacy.at["AAA", "commission_bps"] == pytest.approx(1.0)       # sem mínimo
+
+
+def test_fx_hedge_in_whole_mini_futures_on_a_small_book() -> None:
+    """PL pequeno: hedge em contratos inteiros de minicontratos (WDO, mini dólar MexDer, mini
+    TRM); CLP sem hedge, divulgado; abaixo do limiar, nada."""
+    nav = 1_000_000.0
+
+    def pt(iid, ticker, w, country, ccy):
+        return PositionTarget(
+            issuer_id=iid, name=iid, country=country, sector="Financials",
+            side=Side.LONG if w > 0 else Side.SHORT, weight=w, notional_usd=w * nav,
+            execution_ticker=ticker, line_type=LineType.LOCAL, currency=ccy, shares=1,
+            adtv_usd=20e6)
+
+    targets = [pt("A", "A.SA", 0.024, "BR", "BRL"), pt("C", "C.MX", -0.0137, "MX", "MXN"),
+               pt("E", "E.SN", -0.02, "CL", "CLP"), pt("G", "G.CL", 0.004, "CO", "COP")]
+    hedges = {h.currency: h for h in fx_hedges(targets, nav, threshold=0.01, futuros=True)}
+    brl = hedges["BRL"]
+    assert brl.hedge_notional_usd == pytest.approx(-20_000.0)      # 2 WDO de US$ 10 mil
+    assert "WDO" in brl.instrument and "resíduo sem hedge" in brl.rationale
+    mxn = hedges["MXN"]
+    assert mxn.hedge_notional_usd == pytest.approx(14_000.0)       # 14 minis de US$ 1 mil
+    assert "MexDer" in mxn.instrument
+    clp = hedges["CLP"]
+    assert clp.hedge_notional_usd == 0.0 and "sem hedge" in clp.instrument
+    assert "divulgada" in clp.rationale
+    assert hedges["COP"].hedge_notional_usd == 0.0                 # abaixo do limiar
+    assert "NDF" not in " ".join(h.instrument for h in hedges.values())
+
+
+def test_rounding_report_flags_expensive_shares() -> None:
+    """Ação cara com PL pequeno (MELI ≈ 0,19% do NAV por ação): erro de arredondamento e posição
+    abaixo de uma ação registrados."""
+    from cdp.portfolio.trades import rounding_report
+
+    nav = 1_000_000.0
+    fx = pd.Series({"USD": 1.0})
+
+    def pt(iid, ticker, w, px):
+        return PositionTarget(
+            issuer_id=iid, name=iid, country="AR", sector="Consumer Discretionary",
+            side=Side.LONG, weight=w, notional_usd=w * nav, execution_ticker=ticker,
+            line_type=LineType.US_LISTED, currency="USD", price_local=px,
+            shares=round_to_lot(w * nav / px, 1), adtv_usd=500e6)
+
+    rep = rounding_report([pt("AR_MELI", "MELI", 0.0215, 1860.0),
+                           pt("AR_X", "XYZ", 0.0008, 1860.0)], nav, fx)
+    assert rep["linha_maior_erro"] in ("MELI", "XYZ")
+    assert abs(rep["maior_erro_pct_nav"]) <= 0.5 * 1860.0 / nav + 1e-12
+    assert rep["sem_uma_acao"] == ["XYZ"]

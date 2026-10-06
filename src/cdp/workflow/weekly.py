@@ -1,9 +1,17 @@
-"""Pipeline semanal autônomo do CDP — Cabra da Peste (segunda-feira, antes do fechamento).
+"""Pipeline semanal autônomo do CDP — Cabra da Peste (dia de montagem, antes do fechamento).
+
+Dia de montagem: o último pregão da semana na NYSE (sexta-feira ou, com feriado nos EUA, o pregão
+anterior; ``fund.rebalance_weekday = LAST_US_SESSION``) e, uma vez, a data de início do mandato.
+A decisão é gravada até o prazo efetivo (``portfolio.execucao.prazo_efetivo``) e executada ao
+preço oficial de fechamento de cada linha (MOC), limitada à capacidade do leilão e da janela
+pré-fechamento (``docs/cdp/EXECUCAO.md``). Sem a seção ``execution`` vale a regra anterior
+(primeiro pregão da semana na B3), mantida só para reproduzir decisões arquivadas.
 
 Sequência (todas as contas em código determinístico):
 
-1. ``prepare_week``: dados até o pregão anterior (sexta), painel em USD, modelo de risco
-   (com escala de janela de evento), sinais, alpha puro, aluguel/squeeze, custos e livro atual.
+1. ``prepare_week``: dados até o pregão de dados anterior (união B3 | NYSE | BMV) mais a barra
+   provisória do dia, painel em USD, modelo de risco (com escala de janela de evento), sinais,
+   alpha puro, aluguel/squeeze, custos, capacidade de fechamento e livro atual.
 2. ``build_proposal``: visões → alpha ajustado → limites por emissor → otimizador (vol-alvo) →
    compliance → posições/ordens/hedges → resumo de risco → memo.
 3. ``run_weekly_decision``: carteira-sombra só-quant + carteira do CDP (pesquisa de IA + decisão do
@@ -17,6 +25,7 @@ from __future__ import annotations
 from collections.abc import Mapping
 from dataclasses import dataclass, field
 from datetime import UTC, date, datetime
+from typing import Any
 
 import numpy as np
 import pandas as pd
@@ -56,7 +65,7 @@ from ..portfolio.optimizer import (
     portfolio_risk_parts,
     sig,
 )
-from ..portfolio.trades import build_positions, build_trades, fx_hedges
+from ..portfolio.trades import build_positions, build_trades, fx_hedges, rounding_report
 from ..risk.analytics import (
     effective_n,
     historical_var_es,
@@ -112,7 +121,7 @@ class WeekContext:
     kappa_f: float = 1.0                         # inflação de 2ª ordem do bloco fatorial
     kappa_info: dict = field(default_factory=dict)
     current_entry: BookEntry | None = None
-    squeeze_stops: dict[str, str] = field(default_factory=dict)   # emissor -> motivo
+    squeeze_stops: dict[str, Any] = field(default_factory=dict)   # emissor -> corte/veto
     entry_blocks: pd.DataFrame | None = None     # vetos de short novo (risk.limites)
     commodity_imputed: dict[str, list[str]] = field(default_factory=dict)
     #: Janela, capacidades e emissores congelados do pregão de execução (calculados uma vez
@@ -244,12 +253,13 @@ def prepare_week(md: MarketData, cfg: FundConfig, week: date, *, nav: float | No
                  current_entry: BookEntry | None = None,
                  current_drifted_w: dict[str, float] | None = None,
                  drawdown: float | None = None, themes: dict[str, list[str]] | None = None,
-                 squeeze_stops: Mapping[str, str] | None = None,
+                 squeeze_stops: Mapping[str, Any] | None = None,
                  ) -> WeekContext:
     """Monta o contexto quantitativo da semana com dados até ``md.as_of`` (pregão anterior).
 
-    ``squeeze_stops``: shorts em stop de squeeze (``risk.limites.stops_de_squeeze``), aplicados
-    por nome quando ``squeeze.stop_scope = "name"``."""
+    ``squeeze_stops``: stop de squeeze por nome a aplicar (``risk.limites.acoes_de_squeeze``:
+    corte pendente à metade das ações do stop e veto de compra até revisão humana), quando
+    ``squeeze.stop_scope = "name"``."""
     provisional = week in md.manifest.provisional_dates
     if md.as_of > week or (md.as_of == week and not provisional):
         raise ValueError(f"Snapshot {md.as_of} inválido para a decisão de {week}: a decisão usa "
@@ -393,6 +403,23 @@ def _portfolio_beta(ctx: WeekContext, w: pd.Series) -> float:
     return float(b.fillna(1.0) @ w)
 
 
+def closes_to_liquidate(ctx: WeekContext, w: pd.Series) -> pd.Series | None:
+    """Fechamentos para zerar cada posição (|w|·NAV / capacidade estrutural de redução por
+    fechamento da linha do lado, pregão regular); ``NaN`` sem volume conhecido. ``None`` sem a
+    execução no fechamento (regra anterior: dias a uma participação do ADTV)."""
+    ex = _execution(ctx)
+    if not ex or not ex.get("disponivel") or "cap_liquidez" not in ex:
+        return None
+    caps = ex["cap_liquidez"]
+    out = {}
+    for iid, wt in w.items():
+        col = "long_ticker" if wt > 0 else "short_ticker"
+        t = ctx.sides[col].get(iid) if col in ctx.sides.columns else None
+        cap = float(caps.get(t)) if isinstance(t, str) and t in caps.index else float("nan")
+        out[iid] = abs(float(wt)) * ctx.nav / cap if np.isfinite(cap) and cap > 0 else np.nan
+    return pd.Series(out, dtype=float)
+
+
 def risk_summary(ctx: WeekContext, w: pd.Series) -> RiskSummary:
     cfg, model = ctx.cfg, ctx.model
     w = w[w != 0]
@@ -407,6 +434,14 @@ def risk_summary(ctx: WeekContext, w: pd.Series) -> RiskSummary:
     prof = liquidity_profile(w, adtv, ctx.nav, cfg.liquidity.participation_rate)
     summ = liquidity_summary(prof)
     pct_1d = float(summ.loc[1.0, "gross"]) if 1.0 in summ.index else float("nan")
+    max_liq = float(prof["days_to_liquidate"].max()) if len(prof) else 0.0
+    closes = closes_to_liquidate(ctx, w)
+    if closes is not None:
+        # Execução só no leilão de fechamento: liquidez em FECHAMENTOS à capacidade estrutural.
+        max_liq = float(closes.max()) if len(closes) and closes.notna().all() else (
+            float("nan") if len(closes) else 0.0)
+        g = float(w.abs().sum())
+        pct_1d = (float(w.abs()[closes <= 1.0 + 1e-9].sum()) / g) if g > 0 else float("nan")
     stress = {k: float(v) for k, v in stress_tests(w, ctx.panel, model, ctx.market_w).items()}
     stress.update(country_gap_stress(w, ctx.panel.assets, cfg))
     by_factor = dec.by_factor.sort_values(key=lambda s: -s.abs())
@@ -420,7 +455,7 @@ def risk_summary(ctx: WeekContext, w: pd.Series) -> RiskSummary:
         n_short=int((w < 0).sum()),
         var_1d_99=float(np.nanmax([var1, hvar1])), es_1d_99=float(np.nanmax([es1, hes1])),
         var_1w_99=float(var5), effective_n=float(effective_n(w)),
-        max_days_to_liquidate=float(prof["days_to_liquidate"].max()) if len(prof) else 0.0,
+        max_days_to_liquidate=max_liq,
         pct_nav_liquidated_1d=pct_1d,
         exposures=_exposure_lines(w, ctx.panel.assets, model, cfg, ctx.themes)
         + _commodity_lines(w, ctx.commodity_betas, cfg),
@@ -520,13 +555,18 @@ def _execution(ctx: WeekContext) -> dict | None:
                                                        lado="long")
             cap_s = execucao.capacidade_fechamento_usd(ctx.panel.lines, ctx.md, janela, cfg,
                                                        lado="short")
+            # Liquidez ESTRUTURAL (pregão regular, capacidade de redução: venda do long ou
+            # recompra do short): unidade dos limites de liquidez do mandato em fechamentos.
+            cap_liq = execucao.capacidade_fechamento_usd(
+                ctx.panel.lines, ctx.md, execucao.janela_regular(ctx.week, cfg), cfg,
+                lado="long")
             frozen = execucao.emissores_congelados(ctx.sides, ctx.current_entry, janela, cfg)
         except NotImplementedError:
             ctx.execucao_cache = {"disponivel": False,
                                   "motivo": "capacidade de fechamento indisponível nesta versão"}
         else:
             ctx.execucao_cache = {"disponivel": True, "janela": janela, "cap_long": cap_l,
-                                  "cap_short": cap_s,
+                                  "cap_short": cap_s, "cap_liquidez": cap_liq,
                                   "congelados": {str(k): str(v) or "sem_fechamento"
                                                  for k, v in sorted(frozen.items())}}
     return ctx.execucao_cache
@@ -569,6 +609,9 @@ def _capacity_caps(ctx: WeekContext, c: pd.DataFrame, ex: dict) -> pd.DataFrame:
     cs = cap_for("short_ticker", ex["cap_short"]) / nav
     c["cap_fechamento_long"] = cl
     c["cap_fechamento_short"] = cs
+    if "cap_liquidez" in ex:
+        c["cap_liquidez_long"] = cap_for("long_ticker", ex["cap_liquidez"]) / nav
+        c["cap_liquidez_short"] = cap_for("short_ticker", ex["cap_liquidez"]) / nav
     c["max_long"] = np.minimum(c["max_long"].astype(float), cur.clip(lower=0.0) + cl)
     c["max_short"] = np.minimum(c["max_short"].astype(float), (-cur).clip(lower=0.0) + cs)
     liq = np.maximum(cl, cs)
@@ -579,6 +622,53 @@ def _capacity_caps(ctx: WeekContext, c: pd.DataFrame, ex: dict) -> pd.DataFrame:
     c["max_trade"] = np.maximum(liq, cur.abs())
     c["can_long"] = c["max_long"] > 0
     c["can_short"] = c["max_short"] > 0
+    return c
+
+
+def _closes_liquidity_caps(ctx: WeekContext, c: pd.DataFrame) -> pd.DataFrame:
+    """Limite de liquidez do mandato em FECHAMENTOS (execução só no leilão de fechamento):
+    posição comprada ≤ ``max_days_to_liquidate_long`` × capacidade estrutural de redução por
+    fechamento da linha comprada; vendida ≤ ``max_days_to_liquidate_short`` × a da linha vendida
+    (pregão regular; volume desconhecido ⇒ 0). Só aperta; acima do limite, a posição só pode
+    diminuir."""
+    if "cap_liquidez_long" not in c.columns:
+        return c
+    c = c.copy()
+    liq = ctx.cfg.liquidity
+    lim_l = liq.max_days_to_liquidate_long * pd.to_numeric(c["cap_liquidez_long"],
+                                                           errors="coerce").fillna(0.0)
+    lim_s = liq.max_days_to_liquidate_short * pd.to_numeric(c["cap_liquidez_short"],
+                                                            errors="coerce").fillna(0.0)
+    c["max_long"] = np.minimum(c["max_long"].astype(float), lim_l)
+    c["max_short"] = np.minimum(c["max_short"].astype(float), lim_s)
+    c["can_long"] = c["max_long"] > 0
+    c["can_short"] = c["max_short"] > 0
+    return c
+
+
+def _fixed_cost_min_position(ctx: WeekContext, c: pd.DataFrame) -> pd.DataFrame:
+    """Posição mínima por emissor e lado pela banda de custo fixo (:func:`cdp.portfolio.costs.
+    banda_minima_usd`): uma posição menor que a menor ordem que vale a pena enviar no mercado da
+    linha nunca seria aberta. A banda é a do número máximo de ordens da linha
+    (:func:`cdp.portfolio.trades.max_order_legs`: na BMV, lote padrão + pico pagam dois mínimos),
+    a mesma que a execução aplica a uma quantidade fora do lote — nunca menor que ela. Colunas
+    ``posicao_minima_long``/``posicao_minima_short`` (fração do NAV), usadas pelas passadas de
+    posição mínima do otimizador (o máximo com ``risk.min_position_weight``)."""
+    from ..portfolio.costs import banda_minima_usd
+    from ..portfolio.trades import max_order_legs
+    from ..universe import listing_market
+
+    cfg = ctx.cfg
+    if cfg.execution is None or not cfg.costs.min_order_cost_usd:
+        return c
+    c = c.copy()
+    sides = ctx.sides.reindex(c.index)
+    for side in ("long", "short"):
+        col = f"{side}_ticker"
+        tickers = sides[col] if col in sides.columns else pd.Series(np.nan, index=c.index)
+        c[f"posicao_minima_{side}"] = [
+            banda_minima_usd(listing_market(t), cfg, ctx.nav, max_order_legs(t)) / ctx.nav
+            if isinstance(t, str) else float(cfg.risk.min_position_weight) for t in tickers]
     return c
 
 
@@ -694,6 +784,9 @@ def construction_constraints(ctx: WeekContext, view_cons: pd.DataFrame | None,
         if ex.get("disponivel"):
             prev = c
             c = _mark_origin(prev, _capacity_caps(ctx, c, ex), "capacidade_fechamento")
+            prev = c
+            c = _mark_origin(prev, _closes_liquidity_caps(ctx, c), "liquidez")
+            c = _fixed_cost_min_position(ctx, c)
             janela = ex["janela"]
             info["capacidade"] = {
                 "disponivel": True, "sessao": ctx.week.isoformat(),
@@ -872,7 +965,8 @@ def build_proposal(ctx: WeekContext, *, views: list[View], overrides: dict | Non
         ctx.alpha.composite_z, view_scores, None, ctx.betas, ctx.nav, fx_last,
         participation=cfg.liquidity.participation_rate,
         short_participation=cfg.liquidity.short_participation_rate,
-        capacidade_fechamento=ex_cap["cap_long"] if ex_cap else None)
+        capacidade_fechamento=(ex_cap.get("cap_liquidez", ex_cap["cap_long"]) if ex_cap
+                               else None))
     dec_contrib = risk_decomposition(w, ctx.model).asset_contrib if len(w) else pd.Series()
     positions = [p.model_copy(update={"risk_contribution": float(dec_contrib.get(p.issuer_id))})
                  if p.issuer_id in dec_contrib.index else p for p in positions]
@@ -886,7 +980,10 @@ def build_proposal(ctx: WeekContext, *, views: list[View], overrides: dict | Non
                           capacidade_long=ex_cap["cap_long"] if ex_cap else None,
                           capacidade_short=ex_cap["cap_short"] if ex_cap else None,
                           congelados=set(ex_cap["congelados"]) if ex_cap else None)
-    hedges = fx_hedges(positions, ctx.nav)
+    executa_fechamento = cfg.execution is not None
+    if cfg.costs.min_order_cost_usd:
+        trades = apply_min_order_costs(trades, positions, cfg)
+    hedges = fx_hedges(positions, ctx.nav, futuros=executa_fechamento)
     diag = result.diagnostics
     notes = (list(diag.notes) + list(ctx.notes) + list(extra_notes or [])
              + [f"[visões] {x}" for x in vlog] + [f"[risco por nome] {x}" for x in repair_log])
@@ -895,6 +992,13 @@ def build_proposal(ctx: WeekContext, *, views: list[View], overrides: dict | Non
     recorded: dict = {"label": label, **overrides}
     if extended:
         recorded.update(_open_model_overrides(ctx, w, result, cinfo, risk_extra))
+    if executa_fechamento:
+        rr = rounding_report(positions, ctx.nav, fx_last)
+        recorded["arredondamento"] = {
+            "maior_erro_pct_nav": sig(float(rr["maior_erro_pct_nav"])),
+            "linha_maior_erro": rr["linha_maior_erro"],
+            "soma_erros_pct_nav": sig(float(rr["soma_erros_pct_nav"])),
+            "sem_uma_acao": list(rr["sem_uma_acao"])}
     proposal = Proposal(
         proposal_id=f"CDP-{week_id}-{label}", week=ctx.week, version=version,
         created_at=created_at or datetime.now(UTC), created_by=SYSTEM_CREATOR, nav_usd=ctx.nav,
@@ -910,6 +1014,30 @@ def build_proposal(ctx: WeekContext, *, views: list[View], overrides: dict | Non
     proposal = proposal.model_copy(update={"memo_markdown": memo})
     return ProposalBuild(proposal=proposal, result=result, constraints=constraints,
                          alpha_used=alpha_adj, view_log=vlog)
+
+
+def apply_min_order_costs(trades: list, positions: list, cfg: FundConfig) -> list:
+    """Custo estimado de cada ordem com o piso por ordem das tabelas públicas
+    (``costs.min_order_cost_usd``): a comissão variável dá lugar a ``n_ordens × mínimo /
+    nocional`` quando este é maior (lote padrão + fracionário/pico contam duas ordens)."""
+    from ..portfolio.costs import comissao_efetiva_bps
+    from ..portfolio.trades import n_orders
+    from ..universe import listing_market
+
+    px = {p.execution_ticker: p.price_local for p in positions}
+    worst = max(cfg.costs.commission_bps.values())
+    out = []
+    for t in trades:
+        mkt = listing_market(t.ticker)
+        eff = comissao_efetiva_bps(mkt, t.notional_usd, cfg,
+                                   n_orders(t.ticker, t.shares, px.get(t.ticker)))
+        if eff is None or t.est_cost_bps is None or not np.isfinite(t.est_cost_bps):
+            out.append(t)
+            continue
+        extra = max(0.0, eff - float(cfg.costs.commission_bps.get(mkt, worst)))
+        out.append(t.model_copy(update={"est_cost_bps": float(t.est_cost_bps) + extra})
+                   if extra > 0 else t)
+    return out
 
 
 def _open_model_overrides(ctx: WeekContext, w: pd.Series, result: OptimizationResult,

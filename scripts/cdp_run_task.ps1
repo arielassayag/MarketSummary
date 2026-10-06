@@ -1,110 +1,58 @@
 ﻿<#
-CDP — Cabra da Peste: executa uma skill do plugin `cdp` sem interface (`claude -p`).
+CDP — Cabra da Peste: atalho do Claude Code com o plugin `cdp` para o Agendador de Tarefas do
+Windows.
 
-Alternativa às tarefas agendadas do app desktop, para o Agendador de Tarefas do Windows.
 Uso:
-  powershell -NoProfile -ExecutionPolicy Bypass -File scripts\cdp_run_task.ps1 diario
-  powershell -NoProfile -ExecutionPolicy Bypass -File scripts\cdp_run_task.ps1 diario 2026-10-05
-Variáveis de ambiente opcionais:
-  CDP_PERMISSION_MODE   modo de permissão do claude -p (padrão: acceptEdits)
-  CDP_CLAUDE_ARGS       flags extras do claude (ex.: "--permission-prompts none")
-  CDP_CLAUDE_BIN        caminho do executável claude (padrão: o do PATH)
-  CDP_LOCK_WAIT_MIN     minutos esperando outra rotina terminar (padrão: 60 para semanal,
-                        diario e cobertura, 0 para as demais)
-
-Log: logs\cdp\<tarefa>_<AAAAmmdd_HHMMSS>.log. A trava logs\cdp\.lock impede duas rotinas ao mesmo
-tempo (o livro é encadeado por hash); se continuar ocupada depois da espera, a rotina não roda e o
-script sai com código 75 (o Agendador mostra a execução como não concluída). Na calibração, o
-backtest roda aqui antes da skill (no modo -p, uma tarefa em segundo plano morre quando a resposta
-termina). Permissões: .claude\settings.json (no modo -p, o que não estiver liberado é negado e a
-skill relata o bloqueio no resumo).
+  powershell -NoProfile -ExecutionPolicy Bypass -File scripts\cdp_run_task.ps1 diario cdp-diario-reforco
+Equivale a:
+  scripts\cdp_rotina.ps1 <tarefa> -Harness claude -ModoPrompt plugin [opções]
+O script de rotina faz tudo: trava local com espera em CDP_LOCK_WAIT_MIN (saída 75 se continuar
+ocupada), uv sync, prévia do gate sem chamar o modelo, backtest da calibração antes da skill,
+`claude -p "/cdp:<skill> <tarefa>"`, liberação da trava distribuída e log em logs\cdp\. Prefira
+passar a tarefa: sem ela, este atalho escolhe a da família pelo horário de Brasília (agendas
+antigas, de uma linha por skill). Opções repassadas: -Ensaio, -Manual, -Seco.
 #>
 param(
     [Parameter(Mandatory = $true, Position = 0)]
     [ValidateSet("semanal", "diario", "cobertura", "risco", "status", "calibracao")]
-    [string]$Task,
-    [Parameter(ValueFromRemainingArguments = $true)]
-    [string[]]$SkillArgs
+    [string]$Skill,
+    [Parameter(Position = 1)]
+    [string]$Tarefa = "",
+    [switch]$Ensaio,
+    [switch]$Manual,
+    [switch]$Seco
 )
-$Root = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
-Set-Location $Root
-$env:PYTHONUTF8 = "1"
-$env:PYTHONIOENCODING = "utf-8"
-# Saída UTF-8 dos comandos nativos (claude, uv) lida como UTF-8, não pela página de código OEM.
 try { [Console]::OutputEncoding = [System.Text.Encoding]::UTF8 } catch { }
 $OutputEncoding = [System.Text.Encoding]::UTF8
-$env:Path = "$env:USERPROFILE\.local\bin;$env:Path"
 
-$logDir = Join-Path $Root "logs\cdp"
-New-Item -ItemType Directory -Force -Path $logDir | Out-Null
-$stamp = Get-Date -Format "yyyyMMdd_HHmmss"
-$log = Join-Path $logDir "${Task}_$stamp.log"
-$lock = Join-Path $logDir ".lock"
-function Log([string]$msg) { $msg | Out-File -FilePath $log -Append -Encoding utf8 }
-
-$waitMin = 0
-if ($env:CDP_LOCK_WAIT_MIN) { $waitMin = [int]$env:CDP_LOCK_WAIT_MIN }
-elseif ($Task -in @("semanal", "diario", "cobertura")) { $waitMin = 60 }
-
-# Trava órfã (processo morto) com mais de 6 horas é removida.
-if ((Test-Path $lock) -and ((Get-Item $lock).LastWriteTime -lt (Get-Date).AddHours(-6))) {
-    Remove-Item $lock -Recurse -Force -ErrorAction SilentlyContinue
-}
-$deadline = (Get-Date).AddMinutes($waitMin)
-$locked = $false
-while (-not $locked) {
-    try {
-        New-Item -ItemType Directory -Path $lock -ErrorAction Stop | Out-Null
-        $locked = $true
-    } catch {
-        if ((Get-Date) -ge $deadline) { break }
-        Start-Sleep -Seconds 30
-    }
-}
-if (-not $locked) {
-    Log "$(Get-Date -Format s) outra rotina do CDP em execução ($lock) após $waitMin min de espera: $Task não iniciada."
-    exit 75
-}
-
-$rc = 1
-try {
-    Log "== CDP — rotina $Task — início $(Get-Date -Format o)"
-    if ($Task -eq "calibracao") {
-        $today = $null
-        try {
-            $today = (& uv run python -c "from datetime import datetime; from zoneinfo import ZoneInfo; print(datetime.now(ZoneInfo('America/Sao_Paulo')).date())" 2>$null |
-                Select-Object -Last 1)
-        } catch { Log "== uv indisponível: $($_.Exception.Message)" }
-        $out = "reports/backtest/$today/mensal"
-        if (-not $today) {
-            Log "== não foi possível obter a data de Brasília: a skill decide sobre o backtest"
-        } elseif ((Test-Path "reports/backtest/$today/CALIBRACAO_MENSAL.md") -or (Test-Path "$out/metrics.json")) {
-            Log "== backtest mensal de $today já existe em $out"
-        } else {
-            Log "== backtest mensal (antes da skill) em $out — início $(Get-Date -Format o)"
-            try {
-                & uv run python -m cdp backtest --start 2021-01-04 --out $out 2>&1 |
-                    Out-File -FilePath $log -Append -Encoding utf8
-                Log "== backtest — fim $(Get-Date -Format o) — código $LASTEXITCODE"
-            } catch { Log "== backtest falhou: $($_.Exception.Message)" }
+if (-not $Tarefa) {
+    $agora = [System.TimeZoneInfo]::ConvertTimeBySystemTimeZoneId([DateTime]::UtcNow, "E. South America Standard Time")
+    $hhmm = [int]$agora.ToString("HHmm")
+    switch ($Skill) {
+        "semanal" {
+            if ($hhmm -lt 1207) { $Tarefa = "cdp-semanal" }
+            elseif ($hhmm -lt 1307) { $Tarefa = "cdp-semanal-b" }
+            elseif ($hhmm -lt 1407) { $Tarefa = "cdp-semanal-c" }
+            else { $Tarefa = "cdp-semanal-d" }
         }
+        "diario" {
+            if ($agora.DayOfWeek -eq [DayOfWeek]::Saturday) { $Tarefa = "cdp-diario-sabado" }
+            elseif ($hhmm -ge 2107 -or $hhmm -lt 1000) { $Tarefa = "cdp-diario-reforco" }
+            else { $Tarefa = "cdp-diario" }
+        }
+        "risco" { $Tarefa = if ($hhmm -ge 1603) { "cdp-risco-1603" } else { "cdp-risco-1330" } }
+        default { $Tarefa = "cdp-$Skill" }
     }
-    $claude = if ($env:CDP_CLAUDE_BIN) { $env:CDP_CLAUDE_BIN } else { "claude" }
-    $mode = if ($env:CDP_PERMISSION_MODE) { $env:CDP_PERMISSION_MODE } else { "acceptEdits" }
-    $prompt = ("/cdp:$Task " + ($SkillArgs -join " ")).Trim()
-    $extra = @()
-    if ($env:CDP_CLAUDE_ARGS) { $extra = @($env:CDP_CLAUDE_ARGS -split "\s+" | Where-Object { $_ }) }
-    try {
-        & $claude -p $prompt --permission-mode $mode --output-format text @extra 2>&1 |
-            Out-File -FilePath $log -Append -Encoding utf8
-        $rc = $LASTEXITCODE
-    } catch {
-        # Ex.: claude fora do PATH (CommandNotFoundException) — vai para o log, não para o console.
-        Log "== erro ao executar '$claude': $($_.Exception.Message)"
-        $rc = 1
-    }
-    Log "== fim $(Get-Date -Format o) — código $rc"
-} finally {
-    Remove-Item $lock -Recurse -Force -ErrorAction SilentlyContinue
 }
-exit $rc
+if ($Tarefa -ne "cdp-$Skill" -and -not $Tarefa.StartsWith("cdp-$Skill-")) {
+    Write-Error "a tarefa $Tarefa não é da skill $Skill"
+    exit 2
+}
+
+$extra = @{}   # splatting por tabela: os switches chegam como switches
+if ($Ensaio) { $extra["Ensaio"] = $true }
+if ($Manual) { $extra["Manual"] = $true }
+if ($Seco) { $extra["Seco"] = $true }
+$rotina = Join-Path $PSScriptRoot "cdp_rotina.ps1"
+& $rotina $Tarefa -Harness claude -ModoPrompt plugin @extra
+exit $LASTEXITCODE

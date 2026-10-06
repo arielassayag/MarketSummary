@@ -12,8 +12,10 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from datetime import UTC, date, datetime
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import pandas as pd
+import yaml
 
 from ..audit import AuditLog
 from ..calendar import (
@@ -31,6 +33,15 @@ from .book import Book
 
 PREPARE_MANIFEST = "prepare_manifest.json"
 KILL_SWITCH_FILE = "KILL_SWITCH"
+#: Pedido de kill switch (arquivo novo, mesclável): ``reports/risk/<data>/kill_switch_<HHMM>.yaml``
+#: (conteúdo JSON, que também é YAML válido; a extensão o mantém fora da lista de execuções do
+#: monitor, que são ``risco_<HHMM>.json``/``.md``). Quem liga o kill switch sem a trava exclusiva
+#: (rotina de risco num clone separado) deixa o pedido publicado; a próxima execução exclusiva
+#: (semanal ou diária) o aplica no livro.
+KILL_SWITCH_REQUEST_PREFIX = "kill_switch_"
+KILL_SWITCH_REQUEST_SUFFIX = ".yaml"
+KILL_SWITCH_REQUEST_EVENT = "KILL_SWITCH_PEDIDO"
+RISK_REPORTS_DIR = "risk"
 DECISION_CONFIG = "config_decisao.json"
 """Configuração do mandato vigente no ``decide`` (``book/<semana>/``), autenticada pelo
 ``config_hash`` da proposta: reconstruções posteriores (tese) usam a configuração da decisão."""
@@ -38,6 +49,7 @@ DEFAULT_TESES_ROOT = Path("docs/cdp/teses")
 """Pasta versionada das teses escritas pela mente fora do clone da rotina
 (``<AAAA-MM-DD>.json``, mesmo schema de ``book/<semana>/tese/tese.json``)."""
 BENCH_INTRADAY = ["ILF", "EWZ", "EWW", "ECH", "ARGT", "SPY"]
+_BRT = ZoneInfo("America/Sao_Paulo")
 
 
 def _write_json(path: Path, obj) -> None:
@@ -102,6 +114,85 @@ class Runtime:
             path.unlink()
         audit.append("KILL_SWITCH_ON" if on else "KILL_SWITCH_OFF", by, payload,
                      summary=f"Kill switch {'ligado' if on else 'desligado'}: {reason}")
+
+    # ------------------------------------------------------------------ pedidos de kill switch
+    def request_kill_switch(self, reason: str, by: str) -> dict:
+        """Grava o pedido de kill switch (arquivo novo, nunca sobrescrito) em
+        ``reports/risk/<data de Brasília>/kill_switch_<HHMM>.yaml`` e devolve
+        ``{"arquivo", "sha256", "pedido"}``. Arquivo novo é mesclável: sai na publicação da
+        rotina compartilhada mesmo quando o livro (``book/KILL_SWITCH`` e a trilha) fica retido
+        por falta da trava exclusiva."""
+        local = self.now().astimezone(_BRT)
+        folder = self.reports_root / RISK_REPORTS_DIR / local.date().isoformat()
+        folder.mkdir(parents=True, exist_ok=True)
+        pedido = {"tipo": "ligar", "reason": reason, "by": by,
+                  "at": self.now().isoformat(), "versao": 1}
+        stem = f"{KILL_SWITCH_REQUEST_PREFIX}{local:%H%M}"
+        k = 1
+        while (folder / f"{stem}{KILL_SWITCH_REQUEST_SUFFIX}").exists():
+            k += 1
+            stem = f"{KILL_SWITCH_REQUEST_PREFIX}{local:%H%M}_{k}"
+        path = folder / f"{stem}{KILL_SWITCH_REQUEST_SUFFIX}"
+        text = json.dumps(pedido, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        with path.open("x", encoding="utf-8", newline="\n") as f:
+            f.write(text)
+        return {"arquivo": path.as_posix(), "sha256": sha256_file(path), "pedido": pedido}
+
+    def mark_kill_switch_request(self, sha: str, efeito: str, by: str) -> None:
+        """Registra na trilha que o pedido ``sha`` foi tratado (``efeito``: aplicado, já ligado ou
+        superado por desligamento humano). O payload é só o hash do pedido, então qualquer clone
+        reconhece o pedido como tratado pela trilha encadeada."""
+        AuditLog(self.book_root / "audit_log.jsonl").append(
+            KILL_SWITCH_REQUEST_EVENT, by, {"pedido_sha256": sha},
+            summary=f"Pedido de kill switch {sha[:12]}: {efeito}.")
+
+    def kill_switch_requests(self) -> list[dict]:
+        """Pedidos de kill switch ainda não tratados no livro (do mais antigo ao mais recente):
+        ``{"arquivo", "sha256", "pedido", "superado"}``. ``superado``: um humano desligou o kill
+        switch depois do pedido (a decisão humana prevalece; o pedido só é registrado)."""
+        root = self.reports_root / RISK_REPORTS_DIR
+        if not root.is_dir():
+            return []
+        events = AuditLog(self.book_root / "audit_log.jsonl").events() \
+            if (self.book_root / "audit_log.jsonl").is_file() else []
+        handled = {e.payload_hash for e in events if e.event_type == KILL_SWITCH_REQUEST_EVENT}
+        offs = [e.ts for e in events if e.event_type == "KILL_SWITCH_OFF"]
+        last_off = max(offs) if offs else None
+        out: list[dict] = []
+        for path in sorted(root.glob(f"*/{KILL_SWITCH_REQUEST_PREFIX}*{KILL_SWITCH_REQUEST_SUFFIX}")):
+            sha = sha256_file(path)
+            if sha256_obj({"pedido_sha256": sha}) in handled:
+                continue
+            try:
+                pedido = yaml.safe_load(path.read_text(encoding="utf-8"))
+                at = datetime.fromisoformat(str(pedido["at"]))
+                reason = str(pedido["reason"])
+            except (OSError, ValueError, KeyError, TypeError, yaml.YAMLError):
+                continue  # ilegível: nunca liga nada por arquivo inválido
+            if pedido.get("tipo") != "ligar" or at.tzinfo is None:
+                continue
+            out.append({"arquivo": path.as_posix(), "sha256": sha, "pedido": pedido,
+                        "motivo": reason, "em": at,
+                        "superado": bool(last_off is not None and last_off >= at)})
+        return sorted(out, key=lambda r: r["em"])
+
+    def apply_kill_switch_requests(self) -> list[dict]:
+        """Aplica no livro os pedidos de kill switch pendentes (só em execução exclusiva: semanal,
+        diária). Pedido posterior ao último desligamento humano liga o kill switch (se ainda
+        desligado) com o motivo do pedido; todo pedido tratado fica registrado na trilha."""
+        done: list[dict] = []
+        for r in self.kill_switch_requests():
+            by = str(r["pedido"].get("by") or "CDP — pedido de kill switch")
+            if r["superado"]:
+                efeito = "superado por desligamento humano posterior"
+            elif self.kill_switch_active():
+                efeito = "kill switch já ligado"
+            else:
+                self.set_kill_switch(True, f"{r['motivo']} (pedido {Path(r['arquivo']).name})", by)
+                efeito = "aplicado"
+            self.mark_kill_switch_request(r["sha256"], efeito, by)
+            done.append({"arquivo": r["arquivo"], "efeito": efeito})
+        return done
 
     def last_record_date(self) -> date | None:
         try:
@@ -279,7 +370,75 @@ class Runtime:
         dd, _vol = self.drawdown_and_vol()
         return prepare_week(md, self.cfg, week, nav=self.current_nav(),
                             current_entry=b.latest_booked(),
-                            current_drifted_w=self.current_drifted_weights(), drawdown=dd)
+                            current_drifted_w=self.current_drifted_weights(), drawdown=dd,
+                            squeeze_stops=self.squeeze_stops(week))
+
+    def squeeze_stops(self, week: date) -> dict[str, dict]:
+        """Stop de squeeze por nome a aplicar na montagem de ``week`` (:func:`cdp.risk.limites.
+        acoes_de_squeeze`): episódios de stop em TODOS os registros diários anteriores ao dia de
+        montagem (a mesma regra do monitor de risco), com o corte à metade ainda pendente e o
+        veto de compra dos emissores sem revisão humana. Só registros encadeados e revisões
+        anteriores à preparação da semana: a reconstrução da decisão não muda depois. Regra do
+        livro inteiro (legado) ou sem registro: nenhum."""
+        if self.cfg.squeeze.stop_scope != "name":
+            return {}
+        recs = [r for r in self._records() if r.date < week]
+        if not recs:
+            return {}
+        from ..risk.limites import acoes_de_squeeze, episodios_de_squeeze
+
+        eps = episodios_de_squeeze(recs, self.cfg)
+        return acoes_de_squeeze(eps, self.squeeze_reviews(week)) if eps else {}
+
+    def squeeze_reviews(self, week: date | None = None) -> dict[str, date]:
+        """Revisões humanas de stop de squeeze na trilha (emissor → registro-base revisado). Com
+        ``week``: só as gravadas antes da preparação dessa semana (``WEEKLY_PREPARED``)."""
+        from ..risk.limites import revisoes_de_squeeze
+
+        path = self.book_root / "audit_log.jsonl"
+        if not path.is_file():
+            return {}
+        try:
+            events = AuditLog(path).events()
+        except (OSError, ValueError):
+            return {}
+        if week is not None:
+            cut = next((i for i, e in enumerate(events)
+                        if e.event_type == "WEEKLY_PREPARED" and e.week == week), len(events))
+            events = events[:cut]
+        dates = {sha256_obj(r.record_hash): r.date for r in self._records()}
+        return revisoes_de_squeeze(events, dates)
+
+    def review_squeeze(self, issuer: str, reason: str, by: str) -> dict:
+        """Revisão humana do stop de squeeze por nome de ``issuer``: libera o veto de compra dos
+        episódios de stop até o último registro diário (um stop posterior reabre o veto). Grava
+        o evento :data:`cdp.risk.limites.SQUEEZE_REVIEW_EVENT` na trilha; o corte à metade
+        pendente continua (é regra do código, não da revisão)."""
+        from ..risk.limites import (
+            SQUEEZE_REVIEW_EVENT,
+            SQUEEZE_REVIEW_SUMMARY,
+            episodios_de_squeeze,
+            revisado,
+        )
+
+        if self.cfg.squeeze.stop_scope != "name":
+            raise ValueError("Revisão de stop de squeeze só existe com a regra por nome "
+                             "(squeeze.stop_scope = name).")
+        recs = self._records()
+        revs = self.squeeze_reviews()
+        pend = [e for e in episodios_de_squeeze(recs, self.cfg)
+                if e.emissor == issuer and not revisado(e, revs)]
+        if not pend:
+            raise ValueError(f"{issuer} não tem stop de squeeze aguardando revisão humana.")
+        payload = {"emissor": issuer, "motivo": reason, "por": by, "em": self.now().isoformat(),
+                   "registro_base": recs[-1].date.isoformat(),
+                   "episodios": [{"ticker": e.ticker, "data_stop": e.data_stop.isoformat(),
+                                  "preco_medio_entrada": e.preco_medio_entrada}
+                                 for e in pend]}
+        self.book.audit.append(
+            SQUEEZE_REVIEW_EVENT, by, payload,
+            summary=SQUEEZE_REVIEW_SUMMARY.format(emissor=issuer, motivo=" ".join(reason.split())))
+        return payload
 
     def _candidates(self, ctx, n: int) -> tuple[list[str], list[str]]:
         a = ctx.alpha.alpha.dropna()
@@ -428,6 +587,7 @@ class Runtime:
         briefing = self.week_dir(week) / "briefing"
         if (briefing / PREPARE_MANIFEST).exists():
             raise FileExistsError(f"Briefing da semana {week} já existe (imutável): {briefing}")
+        pedidos = self.apply_kill_switch_requests()
         md, info = self.market_for_week(week, live=live, briefing_dir=briefing, record=True)
         ctx = self._context(md, week)
         longs, shorts = self._candidates(ctx, self.cfg.research.top_n_candidates)
@@ -444,7 +604,8 @@ class Runtime:
                 "candidatos_long": len(longs), "candidatos_short": len(shorts),
                 "emissores_elegiveis": int(ctx.panel.assets["eligible"].sum()),
                 "barra_provisoria": bool(info.get("live")),
-                "snapshot_hash": info["snapshot_hash"], "falhas_coleta": info.get("slow_failures", [])}
+                "snapshot_hash": info["snapshot_hash"], "falhas_coleta": info.get("slow_failures", []),
+                **({"kill_switch_pedidos": pedidos} if pedidos else {})}
 
     def validate_inputs(self, week: date, *, mind: str | None = None,
                         so_pesquisa: bool = False) -> tuple[bool, list[str]]:
@@ -476,6 +637,9 @@ class Runtime:
                     f"({deadline:%H:%M} de Brasília): a decisão não é "
                     "gravada depois do prazo (o fechamento seria conhecido); a carteira vigente "
                     "é mantida até o próximo dia de montagem.")
+        # Pedidos de kill switch publicados por rotinas sem a trava (ex.: risco na nuvem) valem
+        # antes da decisão: kill switch ligado ⇒ só redução de risco.
+        pedidos = self.apply_kill_switch_requests()
         _md, info, ctx, _fb, pmctx = self._week_state(week)
         pack, out, issues, pm_ctx = load_week_inputs(self.week_dir(week), pmctx, now=t_dec)
         if out.mind != mind and not out.abstain:
@@ -541,7 +705,8 @@ class Runtime:
                 "falhas_soft": [c.check_id for c in p.soft_failures],
                 "apontamentos_entrada": issues, "relatorio": report,
                 "analise": info.get("captured_at") or info.get("prepared_at"),
-                "execucao": f"fechamento de {week} (MOC) pela rotina diária"}
+                "execucao": f"fechamento de {week} (MOC) pela rotina diária",
+                **({"kill_switch_pedidos": pedidos} if pedidos else {})}
 
     def weekly_preview(self, week: date, *, mind: str) -> dict:
         """Prévia do livro da semana SEM gravar nada (revisão pré-trade da mente).
@@ -631,8 +796,10 @@ class Runtime:
 
         if not any(is_session(session, ex) for ex in ("BVMF", "XNYS", "XMEX")):
             return {"data": session, "status": "sem pregão"}
+        pedidos = self.apply_kill_switch_requests()
         if self.pre_inicio(session):
-            return self._daily_pre_inicio(session, live=live)
+            out = self._daily_pre_inicio(session, live=live)
+            return {**out, "kill_switch_pedidos": pedidos} if pedidos else out
         store = self.store
         if live:
             from ..data.store import DataNotReadyError, StoreLockedError
@@ -661,7 +828,8 @@ class Runtime:
                 "efetivacao": (res.booked.proposal_id if res.booked is not None else None),
                 "alertas": list(rec.alerts), "fatos": {k: str(v) for k, v in paths.items()},
                 "proximo_passo": (f"escreva {out_dir / 'comentario.json'} e rode "
-                                  f"`cdp daily publish --date {session}`")}
+                                  f"`cdp daily publish --date {session}`"),
+                **({"kill_switch_pedidos": pedidos} if pedidos else {})}
 
     def _daily_pre_inicio(self, session: date, *, live: bool) -> dict:
         """Antes da data de início (fundo sem carteira): sem marcação, registro nem relatório;
@@ -700,8 +868,11 @@ class Runtime:
         fb, history = self._daily_factbook(session, rec)
         out_dir = self.daily_dir(session)
         comment_md, issues = load_commentary_file(out_dir / COMMENTARY_JSON, fb, record=rec)
+        from .risk_monitor import idio_monitor
+
+        idio, _t = idio_monitor(self, [*history, rec], [])
         md_txt, html = render_daily_report(rec, history, comment_md, self.cfg.fund.name,
-                                           cfg=self.cfg)
+                                           cfg=self.cfg, idio=idio)
         report = write_report_files(out_dir, md_txt, html)
         self.book.audit.append("DAILY_REPORT", "CDP", {**report, "record": rec.record_hash,
                                                        "commentary_issues": issues},

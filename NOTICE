@@ -1,0 +1,26 @@
+CDP — Cabra da Peste e app Fechamento
+Copyright 2026 Ariel Assayag
+
+Este repositório contém software licenciado sob a Apache License 2.0 (arquivo LICENSE). Quem
+redistribuir o código, modificado ou não, deve manter este aviso e o arquivo LICENSE.
+
+Marca reservada — fora da Apache License 2.0 e da CC BY 4.0
+-----------------------------------------------------------
+
+O nome "CDP — Cabra da Peste", o logotipo e as ilustrações não são licenciados, inclusive
+quando embutidos no código:
+
+  - o bloco entre os marcadores ">>> marca" e "<<< marca" de
+    src/cdp/workflow/painel_template.html (máscaras do logotipo em base64);
+  - os arquivos de docs/cdp/marca/;
+  - os ícones e a imagem de compartilhamento do portal: site/favicon.svg,
+    site/apple-touch-icon.png e site/og.png.
+
+O programa scripts/cdp_marca.py é código (Apache-2.0); as imagens que ele gera a partir de
+docs/cdp/marca/cdp-logo.png são marca reservada. Um espelho não modificado do portal pode
+manter a marca nas condições de LICENSE-docs (seção 2a); qualquer outra cópia usa nome e
+identidade próprios (docs/cdp/REPLICAR.md).
+
+Textos e conteúdos do CDP: Creative Commons Atribuição 4.0 Internacional (LICENSE-docs).
+Dados de terceiros (CVM, SEC, B3, bancos centrais, emissores, Yahoo Finance, notícias):
+termos de cada fonte.

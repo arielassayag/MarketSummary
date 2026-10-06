@@ -178,7 +178,7 @@ class _Custos:
         self._runner: Any = None
         self._ctx: Any = None
 
-    def frame(self, trades: Sequence[tuple[str, str, str, float]]) -> pd.DataFrame:
+    def frame(self, trades: Sequence[tuple]) -> pd.DataFrame:
         if self._ctx is None:
             self._runner = self.rt._runner()
             self._ctx = self._runner.context(self.d, self.md.truncate(self.d), None,
@@ -274,7 +274,8 @@ def analise_execucao(rt: Runtime, d: date, md: MarketData, rec: DailyRecord,
         try:
             custos = custos or _Custos(rt, d, md)
             frame = custos.frame([(ln["emissor"], ln["ticker"], ln["moeda"],
-                                   abs(ln["executadas"]) * ln["preco_fechamento"] * ln["fx"])
+                                   abs(ln["executadas"]) * ln["preco_fechamento"] * ln["fx"],
+                                   ln["executadas"], ln["preco_fechamento"])
                                   for ln in traded])
             res = custos_fechamento(frame, cfg)
             for ln in traded:

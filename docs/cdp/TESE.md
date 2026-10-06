@@ -1,7 +1,9 @@
 # CDP — Tese de investimento da carteira (semanal)
 
-> Documento perene, válido para **Claude Code** e **Codex**. Metodologia: `docs/cdp/METODOLOGIA.md`;
-> roteiro da semana: `docs/cdp/playbooks/SEMANAL.md`. Todo número da tese vem do código.
+> Documento perene, válido para qualquer app de IA — **Claude Code** (o que usamos), **Codex**,
+> **Gemini** (Antigravity ou Gemini CLI) ou outro. Metodologia: `docs/cdp/METODOLOGIA.md`;
+> roteiro da semana: `docs/cdp/playbooks/SEMANAL.md`; rotinas em cada app: seção 10 e
+> `docs/cdp/AUTOMACAO.md`. Todo número da tese vem do código.
 
 ## 1. O que é
 
@@ -44,7 +46,8 @@ saindo só do código. A tese descreve as posições do fundo e não é recomend
   - grava os fatos citáveis (`factbook.json`), as análises estruturadas (`analise.json`), o
     briefing da mente (`fatos.md`) e o schema da saída (`tese.schema.json`);
   - valida o texto da mente, resolve os `{{fact:id}}` e publica a tese de forma imutável.
-- **Mente** (Claude Code ou Codex): escreve apenas `book/<semana>/tese/tese.json` (fora do clone
+- **Mente** (Claude Code, Codex, Gemini ou outro app de IA): escreve apenas
+  `book/<semana>/tese/tese.json` (fora do clone
   das rotinas, o rascunho `docs/cdp/teses/<semana>.json`, seção 11), com juízo qualitativo e
   números só como `{{fact:id}}` presentes em `fatos.md`. Nunca calcula, arredonda ou compara
   números por conta própria.
@@ -91,7 +94,8 @@ uv run python -m cdp tese publish --week AAAA-MM-DD
 2. Com `rascunho_adotado: true`, a mente roda `validate-tese` **antes de escrever qualquer coisa**:
    `ok: true` ⇒ vai direto ao publish; `ok: false` ⇒ corrige `tese.json` a partir dos problemas
    (passo 3). Sem rascunho, lê `fatos.md` **por inteiro** (em partes, se for longo) e
-   `tese.schema.json`, e escreve `tese.json` com `"mind": "claude-code"` (ou `"codex"`).
+   `tese.schema.json`, e escreve `tese.json` com `"mind"` do app que conduz a etapa
+   (`"claude-code"`, `"codex"`, `"gemini"` ou `"outro"`).
 3. `validate-tese` confere `tese.json` sem publicar nada. Saída: `ok`, `problemas` e `cobertura`
    (`posicoes_com_texto`, `posicoes_total`, `faltando`). Corrija e repita até `ok: true`, no máximo
    3 tentativas.
@@ -113,7 +117,7 @@ uv run python -m cdp tese publish --week AAAA-MM-DD
 
 | Campo | Limite | Conteúdo |
 |---|---|---|
-| `mind` | `claude-code`, `codex`, `api` ou `demo` | quem escreveu |
+| `mind` | `claude-code`, `codex`, `gemini`, `chatgpt`, `outro`, `api` ou `demo` | quem escreveu |
 | `week` | igual à semana | AAAA-MM-DD |
 | `titulo` | 10 a 160 caracteres | manchete da tese da carteira |
 | `resumo` | até 1.800 | resumo executivo (Markdown simples: negrito, listas) |
@@ -214,8 +218,9 @@ depois saem.
 
 ## 10. Rotinas e retomada
 
-- **Semanal** (`cdp:semanal`, `docs/cdp/playbooks/SEMANAL.md`): o passo da tese vem depois de
-  `weekly decide` e `verify` e antes de `cdp painel`, no mesmo commit da decisão. A tese não está
+- **Semanal** (rotina `cdp-semanal`, roteiro `docs/cdp/playbooks/SEMANAL.md`): o passo da tese
+  vem depois de `weekly decide` e `verify` e antes de `cdp painel`, na mesma publicação da
+  decisão (`cdp publicar`). A tese não está
   sujeita ao **prazo efetivo** da decisão (`agenda.semanal.prazo_efetivo`: o teto de 15h00 de
   Brasília ou, se anterior, o fechamento mais cedo entre NYSE, B3 e BMV menos 45 minutos — 14h15
   nos fechamentos antecipados dos EUA; ver `docs/cdp/EXECUCAO.md`), porque a decisão já foi
@@ -236,13 +241,36 @@ depois saem.
   investimento" mostra que a tese da semana em que a carteira foi montada continua valendo.
 - **Demo** (`uv run python -m cdp demo`): cada semana decidida publica uma tese determinística
   (`mind: "demo"`, só fatos citados), com "DADOS SIMULADOS".
+- **Onde a rotina roda**: no agendador do próprio app de IA, com o prompt gerado pelo código (o
+  mesmo texto em qualquer app). Passo a passo:
+  1. **Claude Code (o nosso)**: rotinas na nuvem em claude.ai/code, ambiente "CDP" com rede total e
+     as variáveis `CDP_EXECUTOR=claude-cloud` (identidade do ambiente: sem ela toda rotina para no
+     gate com "identidade deste ambiente desconhecida") e `CDP_HARNESS=claude-code`; blocos de
+     `uv run python -m cdp rotinas exportar --alvo claude-routines --formato md`, uma rotina por
+     bloco. Reserva local: tarefas agendadas do app desktop (`docs/cdp/LOCAL.md`).
+  2. **Codex**: num clone e numa conta dedicados, registre a identidade uma vez com
+     `uv run python -m cdp executor registrar --como local-pc --harness codex`; no
+     `~/.codex/config.toml` dessa conta, acesso total (rede e escrita em `.git`, para sincronizar,
+     fazer commit e push), aprovação "never" e `CDP_HARNESS = "codex"`; tarefas agendadas do app
+     desktop com os blocos de `uv run python -m cdp rotinas exportar --alvo codex --formato md`.
+  3. **Gemini**: clone e conta dedicados, com a identidade registrada uma vez —
+     `uv run python -m cdp executor registrar --como local-pc --harness antigravity` (Antigravity)
+     ou `--harness gemini` (Gemini CLI) — e `CDP_HARNESS` com o mesmo nome no ambiente das tarefas
+     (as linhas geradas para o agendador do sistema já o passam com `--harness`). Antigravity:
+     tarefas agendadas do app (`uv run python -m cdp rotinas exportar --alvo gemini --formato md`)
+     ou `agy` pelo agendador do sistema
+     (`uv run python -m cdp rotinas exportar --alvo cron --harness agy`); Gemini CLI com chave
+     paga: `uv run python -m cdp rotinas exportar --alvo cron --harness gemini`.
+
+  O GitHub Actions só roda a integração contínua e publica o portal; nunca a etapa de IA. Limites
+  e solução de problemas de cada app: `docs/cdp/AUTOMACAO.md`.
 
 ## 11. Rascunho entregue fora do clone das rotinas
 
 **Por quê.** O livro oficial (`book/`) tem um único escritor: o clone dedicado das rotinas. A
-sincronização de toda rotina que grava interrompe a execução quando o remoto mudou `book/`,
-`data/`, `reports/` ou `artifacts/` (`git diff --name-only "HEAD...@{u}" -- book data reports
-artifacts` não vazio).
+sincronização de toda rotina que grava (`uv run python -m cdp sincronizar --executar`) interrompe
+a execução quando o remoto mudou `book/`, `data/` (inclusive `data/publico/`), `reports/`,
+`artifacts/` ou `pesquisa/`.
 Uma tese gravada em `book/<semana>/tese/` noutro clone (desenvolvimento, sessão manual) e enviada
 ao GitHub pararia semanal, diário, risco e calibração; um `tese publish` fora do clone das rotinas
 gravaria `WEEKLY_THESIS` numa cópia da trilha que o clone das rotinas não tem, e as duas cadeias
@@ -270,9 +298,9 @@ documentação, não livro, então a sincronização segue. A pasta é `docs/cdp
    corrige `book/<semana>/tese/tese.json` a partir dos `problemas` (no máximo 3 tentativas, como
    sempre) e publica; se continuar inválido, o publish cai no template do código
    (`autoria: "codigo"`).
-4. `validate-tese` e `tese publish` não mudam. A rotina nunca edita `docs/cdp/teses/` (um arquivo
-   rastreado alterado fora de `book/`, `reports/`, `data/market/` e `artifacts/painel/` faz as
-   rotinas seguintes pararem): corrige só a cópia em `book/`.
+4. `validate-tese` e `tese publish` não mudam. A rotina nunca edita `docs/cdp/teses/` (`cdp
+   publicar` só publica os caminhos da tarefa — `book/`, `reports/`, `data/` e afins — e recusa
+   arquivos fora deles): corrige só a cópia em `book/`.
 
 **Como escrever um rascunho** (fora do clone das rotinas, com a `main` em dia — a decisão da
 semana já gravada e enviada pelas rotinas): rode o `prepare` numa **cópia** do livro e dos

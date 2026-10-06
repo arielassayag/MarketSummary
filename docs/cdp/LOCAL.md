@@ -1,86 +1,40 @@
-# CDP no PC local — tarefas agendadas do Claude Code (plugin `cdp`)
+# CDP no PC local — o clone dedicado às rotinas (Claude Code, Codex ou Antigravity)
 
-Este guia põe o CDP — Cabra da Peste para rodar sozinho no seu computador: montagem semanal da
-carteira com a tese de investimento (último pregão da semana na NYSE, execução no leilão de
-fechamento), monitor de risco durante o pregão, fechamento diário com o comentário do resultado,
-relatório semanal com atribuição, notas de pesquisa por emissor, checagem de saúde e calibração
-mensal. Tudo roda como **tarefas agendadas locais** do app desktop do Claude
-Code, cada uma chamando uma **skill do plugin `cdp`** que vive neste repositório.
+Este guia põe as rotinas do CDP — Cabra da Peste para rodar no seu computador, dentro do app de
+IA: o **app desktop do Claude Code** (executor atual e, depois da troca para a nuvem, reserva
+quente), as **tarefas agendadas do app do Codex** ou o **Antigravity** (Gemini). O que roda e
+quando: `docs/cdp/ROTINAS.md`; nuvem do Claude Code e detalhes de cada app:
+`docs/cdp/AUTOMACAO.md`. Em qualquer app, o procedimento é o mesmo roteiro neutro
+(`docs/cdp/playbooks/`) e todo número vem do código.
 
-A metodologia e os roteiros continuam perenes e independentes do harness
-(`docs/cdp/METODOLOGIA.md`, `docs/cdp/playbooks/`). O plugin só operacionaliza esses roteiros no
-PC local: sincroniza o git, decide pelo relógio de Brasília o que fazer (`cdp agenda`), recupera
-dias perdidos e publica (commit e push). Todo número continua vindo do código.
+## 1. Como funciona no PC
 
-## 1. O que roda e quando
-
-Horários de Brasília (`America/Sao_Paulo`). As skills checam o calendário da B3 no código e saem
-sem fazer nada quando não é dia: por isso as tarefas podem rodar em todos os dias úteis. Todas
-usam a **mesma pasta** (a raiz do clone dedicado, seção 3), **worktree desligado** e o modo de
-permissão **Accept edits** ("Aceitar edições").
-
-| Tarefa (nome) | Agenda | Instruções | O que faz |
-|---|---|---|---|
-| `cdp-status` | segundas, 08:30 | `/cdp:status` | saúde: integridade da trilha, pendências, próximos eventos, git (só leitura) |
-| `cdp-semanal` | dias úteis, 11:07 | `/cdp:semanal` | só no dia de montagem (data de início do mandato ou último pregão da semana na NYSE): coleta, pesquisa, decisão do PM, validação, decisão autônoma antes do prazo efetivo (15:00; mais cedo nos fechamentos antecipados dos EUA), tese de investimento da carteira decidida, commit e push |
-| `cdp-semanal-b` | dias úteis, 12:07 | `/cdp:semanal` | reserva: se a montagem não começou ou parou no meio, retoma da etapa em que parou; com a decisão gravada e a tese pendente, só escreve a tese; com as duas gravadas, sai sem fazer nada |
-| `cdp-semanal-c` | dias úteis, 13:07 | `/cdp:semanal` | reserva (idem) |
-| `cdp-risco-1330` | dias úteis, 13:30 | `/cdp:risco` | monitor de risco intradiário (`cdp risk --live`); liga o kill switch só se o código mandar |
-| `cdp-semanal-d` | dias úteis, 14:07 | `/cdp:semanal` | reserva (idem; com menos de 60 minutos de prazo a skill encurta a pesquisa) |
-| `cdp-risco-1600` | dias úteis, 16:00 | `/cdp:risco` | idem, perto do fechamento |
-| `cdp-diario` | dias úteis, 19:22 | `/cdp:diario` | fechamento oficial (execução no leilão de fechamento no dia de montagem, marcação, risco, atribuição, registro), comentário do resultado do dia, relatório, commit e push; na noite do dia de montagem, o relatório semanal (mudanças da carteira, resultado e atribuição da semana e desde o início); o retrato da cobertura quando pendente; recupera pregões perdidos e a tese da semana corrente, se ficou pendente |
-| `cdp-diario-reforco` | dias úteis, 21:07 | `/cdp:diario` | segunda tentativa se a fonte ainda não tinha publicado o fechamento às 19:22 ou se a das 19:22 foi pulada (sem pendência ⇒ não faz nada) |
-| `cdp-cobertura` | segunda a quinta, 21:30 | `/cdp:cobertura` | notas de pesquisa por emissor (até 12 por execução, na fila do código), só com fontes públicas e os fatos do modelo aberto da cobertura; commit e push |
-| `cdp-calibracao` | mensal, dia 1, 09:15 | `/cdp:calibracao` | backtest com todo o histórico em `reports/backtest/<data>/mensal`, comparação com a execução anterior; nunca muda o mandato |
-
-**Por que as reservas.** O app roda **uma tarefa por vez**: um disparo que encontra outra tarefa em
-andamento (ou o PC dormindo) é **pulado**, não enfileirado, e ao acordar cada tarefa ganha só uma
-execução de recuperação. Uma única tarefa semanal perderia a semana inteira se, por exemplo, a
-recuperação de um fechamento pendente ainda estivesse rodando às 11:07 do dia de montagem, ou se
-a coleta falhasse por um erro de rede passageiro. As reservas são idempotentes (o `cdp agenda` diz se ainda
-há o que fazer); nos outros dias úteis elas só conferem a agenda e saem. Mantenha as reservas em
-todos os dias úteis: o dia de montagem segue a regra semanal do mandato e a data de início (a
-carteira inaugural) pode cair em qualquer dia da semana.
-
-**Antes da data de início do mandato** (`fase: "pre_inicio"` em `cdp agenda`): a montagem semanal
-e o monitor de risco saem sem fazer nada e o fechamento diário só atualiza a base de mercado,
-confere a integridade e atualiza o painel; a data de início é sempre dia de montagem (carteira
-inaugural, ao preço de fechamento). Com `reinicio.pendente: true`, a rotina diária roda
-`cdp reinicio --executar` antes de qualquer outra etapa (uma vez; detalhes em
-`docs/cdp/ROTINAS.md`).
-
-**Sexta-feira (dia de montagem).** 11:07: coleta de todos os dados até o momento, pesquisa e
-decisão antes do prazo efetivo (reservas às 12:07, 13:07 e 14:07); leilão de fechamento: execução
-hipotética da carteira nova, linha a linha, limitada à capacidade do leilão; 19:22 (reforço às
-21:07): registro do fechamento, comentário do resultado do dia, relatório semanal com o
-comentário das mudanças da carteira e a atribuição da semana e desde o início, e o retrato da
-cobertura. De segunda a quinta, às 21:30, as notas de pesquisa por emissor. Com o fim do horário
-de verão nos EUA (02/11/2026), NYSE e B3 passam a fechar às 18:00 de Brasília: os horários das
-rotinas continuam válidos.
-
-Skills do plugin (`plugins/cdp/skills/`): `semanal`, `diario`, `cobertura`, `risco`, `status`,
-`calibracao`, invocadas como `/cdp:<nome>`. As que gravam algo (`semanal`, `diario`, `cobertura`,
-`risco`, `calibracao`)
-terminam atualizando o **painel de gestão** (investimento e risco, para investidores e comitê de
-investimento) e, quando possível, republicando-o no mesmo artifact (seção 10); `status` só
-informa o link.
+- Um **clone dedicado às rotinas**, na `main`, separado do clone em que você desenvolve. A
+  identidade desse clone fica em `.cdp/local.yaml` (ignorado pelo git), gravada uma vez por
+  `uv run python -m cdp executor registrar --como local-pc --harness claude-code` (ou
+  `--harness codex` / `--harness antigravity`, conforme o app).
+- Só o executor designado em `configs/cdp/executor.yaml` grava o livro; se ele não for
+  `local-pc`, as rotinas do PC saem no gate sem gravar nada. Ligue as rotinas de **um** app por
+  vez.
+- Cada execução: gate (há o que fazer? sou o executor? trava distribuída) →
+  `cdp sincronizar` → roteiro → `cdp publicar` (commit do que a execução gravou — e do que uma
+  execução anterior interrompida deixou no clone — e push em `main`) → `cdp trava liberar`.
+  Nenhuma skill roda `git` que grave: quem faz commit e push é o código.
+- A trava distribuída é o ramo `cdp-trava` no GitHub e **falha fechada**: sem conseguir fazer
+  push nesse ramo, um escritor exclusivo (montagem, fechamento, notas) não roda. O PC precisa
+  poder fazer push em `main` **e** em `cdp-trava`.
 
 ## 2. Pré-requisitos
 
-- **Git** (no Windows: Git for Windows, que inclui o Git Bash usado pelo Claude Code).
-- **uv** (gerenciador de Python): o script de preparação instala pelo instalador oficial se faltar.
-- **Claude Code**: app desktop (as tarefas agendadas locais ficam na aba **Code → Routines**) e o
-  CLI `claude` no PATH (para instalar o plugin pela linha de comando). Faça login uma vez.
-- **Acesso de escrita ao GitHub** para o `git push` das rotinas: `gh auth login`, chave SSH ou o
-  gerenciador de credenciais do Git (Windows). Teste com `git push --dry-run`.
-- Computador **ligado e acordado** nos horários (veja a seção 8).
+- **Git** (no Windows, Git for Windows, que inclui o Git Bash usado pelo Claude Code).
+- **uv**: o script de preparação instala pelo instalador oficial se faltar.
+- O app escolhido, logado com a conta do seu plano: Claude Code (app desktop e o CLI `claude`
+  no PATH, para instalar o plugin), Codex (app desktop) ou Antigravity (app ou CLI `agy`).
+- **Acesso de escrita ao GitHub** (`gh auth login`, chave SSH ou o gerenciador de credenciais do
+  Git) com push em `main` e no ramo `cdp-trava`. O script de preparação testa os dois (seção 3).
+- Computador **ligado e acordado** nos horários (seção 8).
 
 ## 3. Clonar e preparar
-
-Use um **clone dedicado às rotinas**, na `main`, separado do clone em que você desenvolve. As
-skills que gravam param logo no início se a branch não for `main` ou se houver código ou
-configuração alterados sem commit (o registro do dia seria calculado com código não commitado e
-publicado fora da `main`).
 
 macOS/Linux:
 
@@ -102,10 +56,16 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts\cdp_setup_local.ps1
 
 O script confere o git, instala o uv se faltar, roda `uv sync --extra dev --extra ai`, mostra
 `cdp status` e `cdp agenda`, roda `cdp verify` (precisa dizer `ÍNTEGRO`), um teste offline com
-DADOS SIMULADOS, testa o push (`--dry-run`), registra o marketplace e instala o plugin. Nada no
-livro, na trilha ou nos dados é alterado. **Se o script instalou o uv, feche e reabra o app do
-Claude** depois: o PATH novo só vale para processos novos, e as tarefas agendadas herdam o
-ambiente do app.
+DADOS SIMULADOS, testa o push em `main` (`git push --dry-run`) e faz um **push real no ramo
+`cdp-trava`**: adquire a trava distribuída por 1 minuto, em nome da tarefa só de leitura
+`cdp-status`, e a libera em seguida. Rode-o fora dos horários das rotinas (uma rotina que
+dispare nesse instante encontra a trava ocupada e é pulada); para só ler a trava, use
+`CDP_SKIP_TRAVA_TESTE=1` (Windows: `-SkipTravaTeste`). Depois, **registra a identidade do
+clone** (`cdp executor registrar --como local-pc`; harness pela variável `CDP_HARNESS`, padrão
+`claude-code`) e, com o Claude Code, registra o marketplace e instala o plugin. Nada no livro, na
+trilha ou nos dados é alterado; no GitHub, só o ramo `cdp-trava` recebe os dois commits do teste.
+**Se o script instalou o uv, feche e reabra o app do Claude** (ou do Codex/Antigravity): o PATH
+novo só vale para processos novos.
 
 Comandos equivalentes, à mão:
 
@@ -114,31 +74,24 @@ uv sync --extra dev --extra ai
 uv run python -m cdp status
 uv run python -m cdp agenda
 uv run python -m cdp verify
+uv run python -m cdp trava adquirir --tarefa cdp-status --ttl 1
+uv run python -m cdp trava liberar --id <id da saída anterior>
+uv run python -m cdp executor registrar --como local-pc --harness claude-code
+uv run python -m cdp executor mostrar
 uv run pytest tests/cdp/test_demo_runtime.py -q
 ```
 
-**Sincronização com o GitHub (feita pelas skills).** No início e antes de cada push, as skills
-rodam `git fetch` e comparam com o remoto:
+> **Fins de linha (Windows).** Os arquivos de `book/`, `data/` e `reports/` têm hash na trilha.
+> O `.gitattributes` desliga a conversão de fim de linha nessas pastas; se você clonou antes dele
+> existir e o `verify` falhar, clone de novo.
 
-- remoto igual ou só o local à frente ⇒ seguem;
-- remoto à frente só com código/documentação (nada em `book/`, `data/`, `reports/` ou
-  `artifacts/`) ⇒ `git pull --no-rebase --no-edit` (merge que não reescreve commits locais; os
-  bytes do livro não mudam e a trilha continua íntegra) e seguem — um PR de documentação
-  mesclado no GitHub durante a montagem semanal não trava as rotinas;
-- remoto com mudanças no livro ⇒ param (outra máquina ou sessão gravou o livro);
-- `git fetch` falhou (rede, token expirado) ⇒ seguem localmente, sem push, e relatam; a próxima
-  rotina com rede envia os commits retidos.
+## 4. Claude Code: plugin `cdp` e skills do projeto
 
-> **Fins de linha (Windows).** Os arquivos de `book/`, `data/` e `reports/` têm hash na trilha de
-> auditoria. O `.gitattributes` do repositório desliga a conversão automática de fim de linha
-> nessas pastas. Se você clonou antes dele existir e o `verify` falhar, clone de novo.
-
-## 4. Instalar o plugin `cdp`
-
-O repositório é também um **marketplace** (`.claude-plugin/marketplace.json`, nome
-`cdp-cabra-da-peste`) com um plugin (`plugins/cdp`). Registre o marketplace apontando para a
-pasta do clone — um plugin de marketplace local é carregado direto da pasta (sem cópia em cache),
-então cada `git pull` das rotinas já traz a versão nova na sessão seguinte:
+As skills do projeto (`.claude/skills/cdp-*`, geradas de `configs/cdp/rotinas.yaml`) já estão no
+clone e bastam: `/cdp-diario cdp-diario`. O plugin `cdp` (`plugins/cdp`) é a mesma entrada e
+saída da execução, empacotada para o app desktop, com as ferramentas pré-aprovadas
+(`allowed-tools`). Para instalá-lo, registre o marketplace apontando para a pasta do clone (o
+plugin é carregado direto da pasta, então cada sincronização das rotinas já traz a versão nova):
 
 ```sh
 claude plugin marketplace add /caminho/para/MarketSummary-rotinas
@@ -146,260 +99,201 @@ claude plugin install cdp@cdp-cabra-da-peste
 claude plugin list
 ```
 
-No Windows, use o caminho da pasta (ex.: `C:\Users\voce\MarketSummary-rotinas`). Dentro de uma
-sessão do Claude Code, o equivalente é `/plugin marketplace add <pasta>` e
-`/plugin install cdp@cdp-cabra-da-peste`. Para conferir, abra uma sessão na pasta do repositório e
-rode `/cdp:status`.
-
-Alternativa (sem depender da pasta local): `claude plugin marketplace add arielassayag/MarketSummary`
-— o Claude Code guarda uma cópia, presa à `version` de `plugins/cdp/.claude-plugin/plugin.json`;
-atualize com `claude plugin marketplace update cdp-cabra-da-peste` e
-`claude plugin update cdp@cdp-cabra-da-peste` (a versão precisa subir quando as skills mudarem;
-`tests/cdp/test_plugin.py` confere a versão contra um resumo das skills).
+Dentro de uma sessão do Claude Code: `/plugin marketplace add <pasta>` e
+`/plugin install cdp@cdp-cabra-da-peste`. Alternativa sem a pasta local:
+`claude plugin marketplace add arielassayag/MarketSummary` — o Claude Code guarda uma cópia
+presa à `version` de `plugins/cdp/.claude-plugin/plugin.json`, por isso a versão precisa subir
+quando as skills mudarem (`tests/cdp/test_plugin.py` confere); atualize com
+`claude plugin marketplace update cdp-cabra-da-peste` e `claude plugin update cdp@cdp-cabra-da-peste`.
 Para validar os manifestos: `claude plugin validate .`
 
-As skills do projeto (`.claude/skills/cdp-semanal`, `cdp-diario` e `cdp-cobertura`) são atalhos:
-com o plugin instalado, delegam para `cdp:semanal`/`cdp:diario`/`cdp:cobertura`; sem ele (nuvem,
-Codex, outro harness), seguem os roteiros em `docs/cdp/playbooks/`.
+## 5. Claude Code: permissões para rodar sem supervisão
 
-## 5. Permissões para rodar sem supervisão
+O `.claude/settings.json` versionado define o que as rotinas fazem sem perguntar:
 
-O arquivo versionado `.claude/settings.json` define o que as rotinas podem fazer sem perguntar:
+- **Permitido**: `uv sync`, os subcomandos da CLI do CDP via `uv run` (exceto os da lista
+  abaixo), `uv run pytest`, `uv run ruff check`, o git só de leitura (`git status`, `git log`,
+  `git diff`, `git fetch`, `git rev-parse`), WebSearch, WebFetch, as skills do CDP
+  (`Skill(cdp-diario)`, `Skill(cdp-diario *)`, `Skill(cdp:diario *)` e assim por diante) e
+  escrever só os arquivos da mente (`research_pack.json`, `pm_decision.json`, `tese.json`,
+  `comentario.json` do dia e da semana, `nota.json`, `reports/backtest/**`, `outputs/**`).
+- **Sempre pergunta**: editar `configs/` e `data/`; `cdp executor transferir`,
+  `cdp executor registrar` e `cdp trava adquirir` (decisões humanas) e qualquer comando do CDP com
+  `--sem-trava` (só operador), nas duas formas (`uv run python -m cdp …` e `uv run cdp …`); o git
+  que grava — `git add`, `git commit`, `git push`, `git pull`, `git merge` — e `git reset --hard`,
+  `rebase`, `clean`, `restore`. Quem sincroniza e publica é o código (`cdp sincronizar` e
+  `cdp publicar` rodam o git por dentro, com executor, trava, `verify` e escopo conferidos): numa
+  rotina, um desses comandos deixa a tarefa parada no app ou é negado no `claude -p`; numa sessão
+  de desenvolvimento, você aprova à mão.
+- **Nunca**: `git push --force` em qualquer forma, `git push --no-verify`,
+  `git commit --no-verify`, `rm -rf`, **desligar o kill switch**, editar
+  `configs/cdp/executor.yaml` ou `.cdp/**` e editar arquivos gravados pelo código (trilha, track
+  record, decisões, briefing, base de mercado, dados públicos arquivados, relatórios
+  publicados, fatos, teses e notas publicadas, livro da cobertura, painel). Nenhuma regra de
+  bloqueio cobre um arquivo da mente (o bloqueio venceria a permissão).
+- `defaultMode: acceptEdits`, `PYTHONUTF8=1` (acentos corretos no Windows) e os limites do Bash,
+  iguais no app, no CLI e na nuvem: `BASH_DEFAULT_TIMEOUT_MS=600000` (10 minutos por comando, em
+  vez de 2) e `BASH_MAX_TIMEOUT_MS=1800000` (até 30 minutos quando o roteiro pede um limite maior,
+  como o `cdp publicar` do risco, que espera a trava por até 10 minutos).
 
-- **Permitido**: `uv sync`, todos os subcomandos da CLI do CDP via `uv run` (exceto desligar o
-  kill switch), `uv run pytest`, `uv run ruff check`, git
-  (`status`, `pull`, `fetch`, `log`, `diff`, `add`, `commit`, `push`, `branch --show-current`),
-  WebSearch, WebFetch, as skills do plugin, e escrever só os arquivos da mente
-  (`book/<semana>/inputs/research_pack.json`, `pm_decision.json`,
-  `book/<semana>/tese/tese.json`, `reports/daily/<data>/comentario.json`,
-  `reports/semanal/<data>/comentario.json`, `book/cobertura/notas/<IID>/<data>/nota.json`,
-  `reports/backtest/**`, `outputs/**`) e o link do painel (`artifacts/painel/ARTIFACT_URL`).
-- **Sempre pergunta**: editar `configs/` (mandato) e `data/`, `git reset --hard`, `rebase`,
-  `clean`, `restore`, `checkout --`.
-- **Nunca**: `git push --force` (em qualquer forma), `rm -rf`, apagar `book/` ou `data/`,
-  **desligar o kill switch**, editar arquivos gravados pelo código (trilha de auditoria, track
-  record, decisões, propostas, briefing, base de mercado e dados públicos arquivados, relatórios
-  publicados, fatos, análises e tese publicada em `book/<semana>/tese/`, livro, snapshots e
-  modelos da cobertura, fatos e notas publicadas em `book/cobertura/notas/`, HTML do painel).
-  Nenhuma regra de bloqueio cobre uma pasta inteira que contenha um arquivo da mente (o bloqueio
-  venceria a permissão).
-- `defaultMode: acceptEdits` e `PYTHONUTF8=1` (acentos corretos no Windows).
+**O que ainda pode parar uma tarefa.** "Aceitar edições" só aprova edições de arquivos e
+comandos simples de sistema de arquivos; qualquer outro comando fora das regras pede aprovação e,
+no app, a tarefa **fica parada esperando você** — e, como o app roda uma tarefa por vez, as
+seguintes são puladas. O modo que nega em vez de perguntar (`dontAsk`) só existe no CLI, não no
+app. Por isso os roteiros só usam a CLI do CDP e leitura de arquivos (nada de
+`python -c`, `jq`, `sleep` ou laços de espera). Abra a pasta uma vez no Claude Code e aceite a
+confiança na pasta: sem isso as regras do projeto não valem.
 
-Cada skill também declara no próprio `SKILL.md` (`allowed-tools`) as ferramentas que usa —
-inclusive a ferramenta `Artifact`, que republica o painel —, pré-aprovadas enquanto a skill roda.
-A ferramenta `Artifact` não entra no `.claude/settings.json` do projeto de propósito: fora das
-skills, publicar ou apagar artifacts continua pedindo confirmação.
+## 6. Claude Code: criar as tarefas agendadas (app desktop)
 
-**O que ainda pode parar uma tarefa.** "Accept edits" só aprova sozinho edições de arquivos e
-comandos simples de sistema de arquivos (`mkdir`, `touch`, `mv`, `cp`); qualquer outro comando
-fora das regras acima pede aprovação, e no app a tarefa **fica parada esperando você** — e, como o
-app roda uma tarefa por vez, as seguintes são puladas enquanto ela estiver aberta. O modo que nega
-em vez de perguntar (`dontAsk`) só existe no CLI, não no app. Por isso as skills só usam os
-comandos liberados (nada de `python -c`, `jq`, `sleep` ou laços de espera) e param, relatando,
-quando precisariam de outro. Se uma tarefa aparecer parada na barra lateral, responda ao pedido
-("always allow" só se o comando for seguro) e avise o mantenedor para ajustar a skill.
+A tabela pronta, com a instrução de cada tarefa:
 
-Abra a pasta uma vez no Claude Code e aceite a confiança na pasta ("trust"): sem isso as regras do
-projeto não valem e a tarefa agendada não pode ser salva.
+```sh
+uv run python -m cdp rotinas exportar --alvo claude-desktop
+```
 
-## 6. Criar as tarefas agendadas (app desktop)
+Na aba **Code**: **Routines** → **New routine** → **Local**, uma por linha:
 
-Na aba **Code**, clique em **Routines** → **New routine** → **Local** e preencha, para cada linha
-da tabela da seção 1:
+- **Name**: o id da tarefa (ex.: `cdp-diario-reforco`).
+- **Instructions**: o comando da skill **com o id da tarefa** — `/cdp-diario cdp-diario-reforco`
+  (skill do projeto) ou `/cdp:diario cdp-diario-reforco` (plugin). O gate confere o horário da
+  tarefa certa: sem o id, uma reserva ou o risco das 16:03 seriam tomados pela tarefa principal.
+- **Permission mode**: "Aceitar edições" (`acceptEdits`). **Folder**: a raiz do clone dedicado.
+  **Worktree**: desligado (a identidade, a trava e o livro são do clone).
+- **Schedule**: o horário da tabela (dias úteis, semanal ou sábado). Para `cdp-cobertura`
+  (segunda a quinta) e `cdp-calibracao` (dia 1 de cada mês), peça numa sessão do app: "agende a
+  tarefa cdp-calibracao para o dia 1 de cada mês às 09:15".
 
-- **Name**: o nome da tabela (ex.: `cdp-diario`).
-- **Description**: a coluna "O que faz".
-- **Instructions**: exatamente `/cdp:<skill>` (ex.: `/cdp:diario`). Se preferir texto livre:
-  "Use a skill cdp:diario do plugin cdp; rotina agendada sem supervisão."
-- **Permission mode**: **Accept edits** ("Aceitar edições", `acceptEdits`).
-- **Model**: deixe o padrão.
-- **Folder**: a raiz do clone dedicado (`MarketSummary-rotinas`).
-- **Worktree**: **desligado** (as rotinas precisam gravar e publicar no próprio clone, na `main`).
-- **Schedule**: `Weekdays` com a hora da tabela; `Weekly` (segunda) para o status. Para a
-  calibração mensal, peça numa sessão do desktop: "agende a tarefa cdp-calibracao para o dia 1 de
-  cada mês às 09:15".
+Depois, **Run now** em `cdp-status` e acompanhe; um pedido de permissão aparece na sessão (escolha
+"always allow" só para comandos seguros). O app roda **uma tarefa por vez**: um disparo que
+encontra outra em andamento (ou o PC dormindo) é pulado; por isso existem as reservas da
+montagem (`cdp-semanal-b`, `cdp-semanal-c`, `cdp-semanal-d` às 12:07, 13:07 e 14:07), o reforço
+do fechamento (`cdp-diario-reforco`, 21:07) e a repescagem de sábado (`cdp-diario-sabado`,
+10:07). **Antes de ligar as tarefas locais, desligue as rotinas do CDP em qualquer outro app**
+(nuvem do Claude Code, Codex, Antigravity).
 
-Depois de criar, clique em **Run now** em `cdp-status` e em `cdp-risco-1330` (o risco também
-publica) e acompanhe: se aparecer algum pedido de permissão — por exemplo, da ferramenta
-`Artifact` —, escolha "always allow"; as próximas execuções daquela tarefa não perguntam. As
-aprovações ficam no painel **Always allowed** de cada tarefa. As tarefas ficam em
-`~/.claude/scheduled-tasks/<nome>/SKILL.md` (o corpo é o texto das instruções; agenda, pasta e
-modo ficam no app).
+## 7. Codex ou Antigravity no PC
 
-**Antes de ligar as tarefas locais, desative as rotinas do CDP na nuvem** (claude.ai/code →
-Routines), se existirem. Duas mentes gravando o mesmo livro divergem: as skills param quando o
-remoto mudou o livro, e o dia fica sem rotina.
+O mesmo clone serve a qualquer app, um por vez. Passo a passo:
 
-## 7. Fuso horário
+- **Codex** (tarefas agendadas do app, com acesso total numa conta e num clone dedicados):
+  `docs/cdp/ROTINAS.md`, seção 5. Prompts prontos:
+  `uv run python -m cdp rotinas exportar --alvo codex --formato md`.
+- **Antigravity** (`agy` pelo agendador do sistema, a melhor opção pelo plano Google; ou as
+  tarefas agendadas do app, experimentais): `docs/cdp/ROTINAS.md`, seção 6.
+  `uv run python -m cdp rotinas exportar --alvo cron --harness agy`.
 
-O app agenda pelo **relógio do PC**; o mandato é em Brasília. As skills decidem pelo relógio de
-Brasília (calculado no código, independente do fuso do PC), mas os **disparos** dependem do fuso
-do PC. Rode `uv run python -m cdp agenda` e veja `pc_menos_brasilia_horas`:
-
-- `0` → use os horários da tabela.
-- outro valor `h` → some `h` horas a cada horário (ex.: PC em Lisboa no inverno europeu, `h = 3`:
-  19:22 → 22:22). Atenção ao horário de verão do PC (o Brasil não tem).
-
-A skill `status` avisa quando o PC não está no fuso de Brasília.
+Em todos, `"mind"` é o nome do app (`codex`, `gemini`), a identidade do clone é registrada com o
+`--harness` certo e as tarefas agendadas usam a pasta do projeto, nunca um worktree.
 
 ## 8. PC dormindo ou desligado
 
-- As tarefas só disparam com o **app aberto e o PC acordado**. Ative **Settings → This computer →
-  System → Keep computer awake** (fechar a tampa do notebook ainda faz o PC dormir).
-- Ao abrir o app ou acordar o PC, o app verifica as execuções perdidas nos últimos 7 dias e faz
-  **uma** execução de recuperação por tarefa, a do horário perdido mais recente nesse período;
-  as mais antigas são descartadas. Como as tarefas rodam uma por vez, recuperações que coincidem
-  disputam a vez (daí as reservas da seção 1). As skills foram feitas para isso:
-  - `diario` processa **todos** os pregões pendentes, em ordem (`cdp agenda` →
-    `fechamentos_pendentes`), com o comentário de cada data. Para recuperar à mão, rode
-    `/cdp:diario` numa sessão na pasta do repositório (ou `/cdp:diario AAAA-MM-DD` para uma data).
-  - `semanal` só decide no dia de montagem (último pregão da semana na NYSE) **antes do prazo
-    efetivo** (`semanal.prazo_efetivo`, em geral 15:00). Depois disso (ou em outro dia), não
-    decide: a carteira anterior é mantida até a semana seguinte e o `status` destaca a decisão
-    perdida. O código não permite decidir fora do dia de montagem nem depois do prazo (seria
-    look-ahead).
-    Se a execução parou depois da decisão, sem publicar a tese de investimento, `cdp agenda`
-    devolve `semanal.acao: "tese"` e a reserva seguinte só escreve a tese; se nenhuma reserva
-    rodar, o `diario` do dia conclui a tese da semana corrente (`teses_pendentes`). Uma tese
-    escrita fora deste clone chega pelo `git pull` como `docs/cdp/teses/<semana>.json` e é
-    adotada pelo `tese prepare` (`docs/cdp/TESE.md`).
-  - `risco` mede o estado no momento em que roda; execuções perdidas não são refeitas.
-- Se a fonte ainda não publicou o fechamento (`dados não prontos`), o `diario` para e o reforço
-  das 21:07 (ou o dia seguinte) retoma.
+- As tarefas só disparam com o **app aberto e o PC acordado**. No Claude Code, ative **Settings
+  → This computer → System → Keep computer awake** (fechar a tampa ainda faz o PC dormir).
+- Ao acordar, o app do Claude Code faz **uma** execução de recuperação por tarefa (a do horário
+  perdido mais recente nos últimos 7 dias). O gate recusa disparos muito atrasados para a
+  montagem e o risco (`atraso_max_min` em `configs/cdp/rotinas.yaml`); o fechamento aceita até 3
+  dias de atraso e processa **todos** os pregões pendentes, em ordem.
+- A montagem só decide no dia de montagem (último pregão da semana na NYSE) **antes do prazo
+  efetivo**; depois, a carteira anterior é mantida e o estado destaca a decisão perdida. Se a
+  execução parou depois da decisão, a reserva seguinte ou o fechamento do dia conclui a tese.
+- `dados não prontos` no fechamento: o reforço das 21:07, a repescagem de sábado ou o dia
+  seguinte retomam.
 
-## 9. Acompanhamento e notificações
+## 9. Fuso horário
 
-- Cada disparo gera uma notificação do desktop e uma sessão na seção **Scheduled** da barra
-  lateral; a resposta final de cada skill é um resumo curto (números copiados dos relatórios).
-  No histórico da tarefa, passe o mouse sobre uma execução pulada para ver o motivo.
-- Relatórios: `reports/weekly/<semana>/relatorio.md` (decisão), `reports/semanal/<data>/relatorio.md`
-  (resultado semanal), `reports/daily/<data>/relatorio.md`, `reports/risk/<data>/risco_<HHMM>.md`,
-  `reports/backtest/<data>/`. Notas de pesquisa: `book/cobertura/notas/<IID>/<data>/nota.md`
-  (`docs/cdp/NOTAS.md`). Tese de investimento da
-  semana: `book/<semana>/tese/tese.md` (regras em `docs/cdp/TESE.md`).
-- Painel publicado (artifact): seção 10. App local completo (Streamlit):
-  `uv run streamlit run cdp_app.py --server.address 127.0.0.1`.
-- Comandos úteis: `uv run python -m cdp agenda` (o que está pendente), `uv run python -m cdp risk`
-  (risco do último fechamento), `uv run python -m cdp risk --live` (intradiário), `uv run python -m cdp verify`.
+Os apps agendam pelo **relógio do PC**; o mandato é em Brasília. O código decide pelo relógio de
+Brasília, mas os **disparos** dependem do fuso do PC. Rode `uv run python -m cdp agenda` e veja
+`pc_menos_brasilia_horas`: `0` → use os horários da tabela; outro valor `h` → some `h` horas a
+cada horário (atenção ao horário de verão do PC; o Brasil não tem).
 
 ## 10. Painel (artifact)
 
-O painel é o **painel de gestão** do fundo, para investidores e para o comitê de investimento,
-focado em investimento e risco. Abas: Visão geral, Tese de investimento, Carteira, Risco e
-exposições, Performance, Comitê de investimento, Relatórios, Pesquisa quantitativa e Mandato e
-metodologia. A página não mostra conteúdo técnico (hashes, integridade da trilha, rotinas,
-caminhos de arquivo, comandos, nome da mente): isso fica nos arquivos do repositório e na saída da
-CLI. "DADOS SIMULADOS" aparece em destaque quando os dados são sintéticos.
+O **portal público** é o site no GitHub Pages, montado pelo GitHub Actions a partir do livro a
+cada push em `main` (`docs/cdp/SITE.md`). A montagem e o fechamento também regeneram
+`artifacts/painel/` com `uv run python -m cdp painel --sem-local` (só código; vai no commit da
+rotina): `artifacts/painel/data.json` (perfil de publicação: no máximo 260 KB e linhas de até
+1.500 caracteres, com os cortes listados em `meta.truncations`), a casca
+`artifacts/painel/index.html` e o estilo e o script versionados
+(`artifacts/painel/painel-<versão>.css` e `.js`). A cópia autônoma
+`artifacts/painel/cdp_painel_local.html` só é gravada sem `--sem-local`, para abrir offline.
 
-O painel é gerado **pelo código** a partir do livro, da trilha e dos relatórios (nenhum número é
-escrito pela IA; a tese de investimento entra só depois de publicada, com os fatos já resolvidos)
-e publicado como uma página pequena, o estilo e o script versionados e os dados:
+**Nenhuma rotina sem supervisão publica artifacts** (na nuvem, a publicação com arquivos de apoio
+pede confirmação e a rotina ficaria parada; os outros apps não têm a ferramenta). O artifact
+privado do claude.ai é só um **espelho opcional**, feito a pedido do operador numa **sessão
+interativa do Claude**, com a ferramenta `Artifact`, seguindo os passos abaixo. A página publicada
+compara a sua versão com `meta.page_sha256` dos dados e avisa "Página desatualizada" quando
+diferem; se mostrar "Não foi possível carregar os dados do fundo", republique-a com o `data.json`
+ao lado. Identidade visual: `docs/cdp/marca/IDENTIDADE.md`.
+
+### 10.1 Gerar o painel (código)
+
+Num clone em dia com `main` (o das rotinas serve):
 
 ```sh
-uv run python -m cdp painel
 uv run python -m cdp painel --sem-local
+```
+
+O comando só lê o livro, a trilha e os relatórios e grava `artifacts/painel/` (`data.json`, a
+casca `index.html`, o estilo e o script versionados `painel-<versão>.css`/`.js`). Anote o bloco
+`artifact`: `publicavel`, `motivo`, `arquivos_para_ler`, `pagina_mudou`, `pagina_publicada`,
+`pagina_atual`, `publicar` e `url`.
+
+- `artifact.publicavel: false` ⇒ **não leia nem publique** nada (a ferramenta exige ler por
+  inteiro o que for publicado); relate `artifact.motivo`.
+- Sem `artifacts/painel/ARTIFACT_URL` (`artifact.url` nulo) ⇒ **não publique**: o artifact é
+  criado uma única vez, pelo operador, e o link fica nesse arquivo. Este roteiro nunca cria um
+  artifact novo.
+
+### 10.2 Ler o que será publicado
+
+Leia por inteiro cada arquivo de `artifact.arquivos_para_ler`: sempre a casca
+`artifacts/painel/index.html` e `artifacts/painel/data.json`; com `artifact.pagina_mudou: true`,
+também o estilo e o script versionados. Leia em partes até a última linha. São gerados pelo
+código: não os edite.
+
+### 10.3 Publicar no mesmo artifact
+
+Chame `Artifact` com a `url` de `artifacts/painel/ARTIFACT_URL`, nesta ordem:
+
+1. `action: "read"` (uma vez). Confira a versão da página publicada, o valor de
+   `<meta name="cdp-page-sha256" content="…">`:
+   - igual a `artifact.pagina_publicada` ⇒ siga;
+   - igual a `artifact.pagina_atual` (a página desta versão já foi publicada por outra sessão,
+     sem o registro) ⇒ rode `uv run python -m cdp painel --publicado`, depois
+     `uv run python -m cdp painel --sem-local` de novo, leia o que o novo
+     `artifact.arquivos_para_ler` pedir e siga com o novo `artifact.publicar`;
+   - outro valor ou ausente ⇒ **não publique**: outra sessão publicou uma página fora deste
+     roteiro (por exemplo, uma reformulação em andamento) e republicar a desfaria. Relate.
+2. `action: "list"` com `scope: "files"` — obrigatório: a ferramenta só substitui ou remove um
+   arquivo publicado que a sessão leu pelo caminho, viu numa listagem ou publicou.
+3. `action: "publish"` com `file_path` = `artifact.publicar.file_path` (a casca: a ferramenta
+   exige a página em toda publicação) e `files` = `artifact.publicar.files`. Com
+   `artifact.pagina_mudou: true`, acrescente em `files`, com valor `null`, cada `painel-*.css` ou
+   `painel-*.js` da listagem que não esteja em `artifact.publicar.files` (remove a versão antiga).
+
+Recusa porque um arquivo mudou desde a listagem: repita o `list` com `scope: "files"` uma vez e
+publique uma única vez. Recusa por conflito na página: gere o painel de novo, leia o que for
+pedido, repita o `list` e publique uma única vez. Nunca use `force`; falha ou recusa: não insista,
+relate.
+
+### 10.4 Registrar a página publicada
+
+Só depois de uma publicação bem-sucedida com `artifact.pagina_mudou: true`:
+
+```sh
 uv run python -m cdp painel --publicado
 ```
 
-- Saída em `artifacts/painel/` (versionada; vai em cada commit das rotinas):
-  - `artifacts/painel/index.html` — a casca da página (cerca de 3,5 KB): cabeçalho, marcação, o
-    elemento de dados vazio (`null`) e a versão da página (SHA-256 do formato de publicação e do
-    template) carimbada, com referências ao estilo e ao script. Ao abrir, a página busca
-    `data.json` ao lado dela e mostra um estado de carregamento; se não conseguir, mostra ao
-    investidor "Não foi possível carregar os dados do fundo" (nunca uma página em branco) e deixa
-    o detalhe técnico — "Não foi possível carregar data.json" e o erro HTTP — só no console do
-    navegador e no atributo `data-erro`. Só é regravada quando o template muda.
-  - `artifacts/painel/painel-<versão>.css` e `painel-<versão>.js` — o estilo e o script do
-    template, com a versão no nome (versões antigas saem da pasta). A ferramenta `Artifact` exige
-    a página em toda publicação e quem publica precisa ler por inteiro o que publica: por isso a
-    página publicada a cada rotina é só a casca, e estes dois arquivos só vão junto quando a
-    página muda (os já publicados continuam no artifact).
-  - `artifacts/painel/data.json` — os dados publicados, no perfil **publicação**: JSON indentado
-    com no máximo 260 KB e linhas de até 1.500 caracteres, para caber na leitura integral que a
-    ferramenta de publicação exige. Mesmos números do retrato completo (nunca arredondados);
-    textos longos terminam em "…" (`"_truncado": true`), históricos antigos viram resumos (meses
-    consolidados no track record, semanas antigas em uma linha) e tudo o que foi cortado fica em
-    `meta.truncations`. Formas sem perda que a página desfaz: tabelas em colunas (`_colunas`),
-    colunas repetitivas em corridas (`_rep`), textos muito longos em partes (`_partes`) e
-    períodos idênticos a outro (`_igual`). Se o retrato não couber, níveis progressivos de corte
-    são aplicados até caber (`meta.publication.nivel`): primeiro o que a página quase não mostra
-    ou repete (detalhe dos gates aprovados, racionais das visões agregadas, detalhe da semana
-    anterior, tabela do mandato, execuções antigas de backtest), depois os textos da pesquisa e,
-    só nos dois últimos níveis, o histórico diário — até o nível 6 ficam ao menos 60 pregões em
-    linhas diárias e 5 comentários do dia. A tese de investimento da semana corrente só perde
-    conteúdo nos níveis finais (primeiro encurtam, depois saem os textos por nome). Do backtest
-    vão a execução escolhida e as mais recentes (as demais só na contagem). O perfil publicação
-    também deixa de fora os campos técnicos (eventos e hashes da trilha, agenda das rotinas,
-    detalhe da integridade, nome da mente), que continuam no retrato completo. `data.json` também
-    traz `meta.page_sha256`, a versão da página para a qual foi gerado.
-  - `artifacts/painel/cdp_painel_local.html` — cópia autônoma com o retrato **completo** embutido,
-    para abrir direto no navegador, offline (`--sem-local` não a grava).
-  - `artifacts/painel/PAGINA_PUBLICADA.sha256` — a versão da página publicada por último no
-    artifact. É gravado por `uv run python -m cdp painel --publicado` (que não gera nada) **só
-    depois** de uma publicação bem-sucedida com a página nova (casca, estilo e script).
-- O comando só lê o livro, a trilha e os relatórios (grava apenas esses arquivos) e imprime, em
-  JSON, caminhos, tamanhos, SHA-256, maior linha, `data_hash`, `page_changed`, `index_written`
-  e o bloco `artifact`: `publicavel`, `motivo`, `arquivos_para_ler`, `tamanho_dados`,
-  `linhas_max`, `pagina_mudou`, `pagina_publicada`, `url` e `publicar` (`file_path` e `files`
-  prontos para a ferramenta).
-- **Página publicada × página local.** `pagina_mudou` compara a versão atual da página com
-  `PAGINA_PUBLICADA.sha256` — não com o `index.html` local. Assim, se o template mudar e o
-  `index.html` novo for gerado e commitado por quem não publica (você conferindo a saída, o
-  Codex, uma execução sem a ferramenta `Artifact`, uma publicação recusada), `pagina_mudou`
-  continua `true` em todas as rotinas seguintes até a página ser de fato publicada e registrada.
-  A página publicada também compara a sua versão com `meta.page_sha256` dos dados e mostra
-  "Página desatualizada" no topo quando diferem (ou quando o esquema dos dados é outro).
-- **Link fixo**: a URL do artifact fica em `artifacts/painel/ARTIFACT_URL` (uma linha,
-  versionada). O artifact é criado uma única vez, fora das rotinas, com a casca (`index.html`)
-  publicada junto do estilo, do script e do `data.json` (`files`); quem o cria grava
-  `ARTIFACT_URL` e roda `uv run python -m cdp painel --publicado`. As skills `semanal`, `diario`,
-  `risco` e `calibracao`, no fim de cada execução, geram o painel, fazem o commit e o
-  **republicam no mesmo artifact** com a ferramenta `Artifact`: leem por inteiro cada arquivo de
-  `artifact.arquivos_para_ler` (a casca e `data.json`; o estilo e o script só quando
-  `pagina_mudou` é `true`) e, com a `url` do arquivo, fazem nesta ordem um `read`, um `list` com
-  `scope: "files"` e o `publish` com `artifact.publicar` (`file_path` = a casca, exigida em toda
-  publicação; `files` = `data.json` e, com a página nova, o estilo e o script — as versões
-  antigas desses dois saem com `null`). A listagem é obrigatória: a ferramenta só substitui ou
-  remove um arquivo publicado que a sessão leu pelo caminho, viu numa listagem ou publicou (o
-  `read` da URL devolve a página, não os outros arquivos). Se a recusa disser que um arquivo
-  mudou desde a listagem (outra rotina publicou no meio), a skill lista de novo e publica uma
-  única vez; nunca usa `force`. Depois de uma publicação com a página nova, a skill roda
-  `cdp painel --publicado` e faz um commit só do marcador. Antes de publicar, a skill confere a
-  versão da página viva (o `<meta name="cdp-page-sha256">` devolvido pelo `read`) contra
-  `artifact.pagina_publicada`: se outra sessão publicou uma página fora das rotinas (por exemplo,
-  uma reformulação do painel em andamento), a rotina não publica para não desfazê-la e diz isso
-  no resumo; a página nova volta a ser publicada pelas rotinas depois que o template dela chegar
-  à `main` e for registrado com `cdp painel --publicado`. Nunca criam um artifact novo: sem
-  `artifacts/painel/ARTIFACT_URL`, pulam a publicação e dizem isso no resumo.
-- **Tamanho.** A ferramenta de publicação exige que a mente leia por inteiro cada arquivo
-  publicado. Com `artifact.publicavel: false` (dados acima de 260 KB ou linha acima de 1.500
-  caracteres; página acima de 260 KB ou linha acima de 2.000 caracteres, quando ela mudou), as
-  skills não leem nem publicam nada (não gastam contexto) e relatam o `motivo`.
-- A skill `status` só informa a URL e a data do último commit de `data.json`.
-- Sem a ferramenta `Artifact` na sessão (agendador do sistema com `claude -p`, Codex) ou se a
-  ferramenta recusar/falhar, a skill pula a republicação e diz isso no resumo — os arquivos
-  commitados continuam valendo e a próxima rotina com a ferramenta publica a versão nova (com a
-  página, se ela ainda não tiver sido registrada como publicada).
-- A pasta `artifacts/painel/` existe no repositório (com `.gitkeep`), então o `git add` das
-  rotinas funciona mesmo quando o painel falha.
-- **Identidade visual.** O portal segue a identidade "Sertão em xilogravura" da marca (tinta de
-  xilogravura sobre papel de cal, o sol da marca só em ornamento, tema claro e escuro): guia em
-  `docs/cdp/marca/IDENTIDADE.md`. O logo entra no estilo como máscaras geradas de
-  `docs/cdp/marca/cdp-logo.png` por
-  `uv run --extra dev python scripts/cdp_marca.py --mascaras`; como qualquer mudança no
-  template, isso muda a versão da página e a próxima rotina republica a casca, o estilo e o
-  script.
-- O artifact é privado por padrão; compartilhar o link é decisão sua, no claude.ai.
+O registro (`artifacts/painel/PAGINA_PUBLICADA.sha256`) vale para este clone e só serve a este
+roteiro. Não faça commit dele à mão: quem grava o livro e o painel no repositório é a rotina
+(`cdp publicar`); numa sessão de desenvolvimento, nunca faça commit de `artifacts/`.
 
 ## 11. Kill switch
 
-- A skill `risco` liga o kill switch **somente** quando `cdp risk` traz uma ação
-  `kill-switch: <motivo>` — gatilhos HARD do mandato (escada de drawdown em `hard_stop`/`stop_out`,
-  stops de squeeze). O motivo é o texto do código.
-- O kill switch só bloqueia risco novo (redução continua permitida) e nunca afrouxa limites. O
-  stop de squeeze de um short escala para o livro inteiro: só redução e, no rebalanceamento
-  seguinte, carteira reconstruída com gross × 0,5 (o corte de 50% daquele nome não é automático;
-  revise-o). Regra em `docs/cdp/METODOLOGIA.md`, seção 7.
+- A rotina de risco liga o kill switch **somente** quando o código traz uma ação
+  `kill-switch: <motivo>` (gatilhos HARD: escada de drawdown, stops de squeeze). Ele só bloqueia
+  risco novo e nunca afrouxa limites (`docs/cdp/METODOLOGIA.md`, seção 7).
 - **Só um humano desliga**, no terminal, depois de revisar:
 
   ```sh
@@ -407,159 +301,82 @@ uv run python -m cdp painel --publicado
   ```
 
   As regras do projeto impedem o Claude de rodar esse comando. Depois do desligamento, o monitor
-  não religa o kill switch pela mesma condição que você revisou (ela aparece como SOFT "já
-  revisado por humano", com o bloco `revisao_humana` no relatório); só uma piora religa — estágio
-  pior da escada de drawdown ou um short novo no stop.
+  não religa pela mesma condição revisada (bloco `revisao_humana`); só uma piora religa.
 
-## 12. Sem o app aberto: agendador do sistema (alternativa)
+## 12. Sem o app aberto: agendador do sistema
 
-`scripts/cdp_run_task.sh` (macOS/Linux) e `scripts/cdp_run_task.ps1` (Windows) rodam uma skill sem
-interface com `claude -p "/cdp:<skill>" --permission-mode acceptEdits`, gravando o log em
-`logs/cdp/<tarefa>_<data_hora>.log` (pasta ignorada pelo git). Use **uma** das duas formas (app ou
-agendador do sistema), nunca as duas.
+`scripts/cdp_rotina.sh <tarefa> --harness claude|codex|gemini|agy` (Windows:
+`scripts\cdp_rotina.ps1`) roda uma tarefa sem interface: trava local, `uv sync`, prévia do gate
+(sem trabalho, nenhuma chamada de modelo), pré-comando (backtest da calibração, que no modo sem
+interface não pode ficar em segundo plano; a execução é registrada antes dele, para o backtest
+sair na publicação), o app com o prompt da tarefa, liberação da trava e conferência de
+progresso; log em `logs/cdp/` (ignorado pelo git). O atalho do Claude Code com o
+plugin é `scripts/cdp_run_task.sh <skill> <tarefa>` (Windows: `scripts\cdp_run_task.ps1`): chama
+o script de rotina com `--modo-prompt plugin` (`/cdp:<skill> <tarefa>`).
 
-- Trava contra execuções simultâneas: `semanal`, `diario` e `cobertura` esperam até 60 minutos
-  (`CDP_LOCK_WAIT_MIN`) que a rotina em andamento termine; as outras não esperam. Se a trava
-  continuar ocupada, o script sai com código 75 (o agendador mostra a execução como não
-  concluída) e não roda a skill.
-- Calibração: o script roda o backtest (`reports/backtest/<hoje>/mensal`) **antes** de chamar a
-  skill — no modo `-p`, uma tarefa em segundo plano morre quando a resposta termina.
-- O `claude` precisa estar logado no usuário que roda o agendador (ou com `ANTHROPIC_API_KEY`).
-  Não use `--bare`: ele não carrega plugins nem skills.
-- No modo `-p` ninguém aprova pedidos: o que não estiver liberado no `.claude/settings.json` é
-  negado e a skill relata no resumo. `CDP_CLAUDE_ARGS="--permission-prompts none"` deixa isso
-  explícito.
-- O painel (seção 10) é sempre gerado e commitado; a republicação no artifact só acontece se a
-  ferramenta `Artifact` estiver disponível nessa execução — senão a skill pula e relata no log.
-
-**Linux (cron)** — `crontab -e` (com `CRON_TZ`, se o seu cron suportar; senão, converta os
-horários). O cron não recupera execuções perdidas com o PC desligado; o `diario` seguinte processa
-os pregões pendentes.
-
-```text
-CRON_TZ=America/Sao_Paulo
-30 8 * * 1    /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh status
-7 11 * * 1-5  /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh semanal
-7 12 * * 1-5  /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh semanal
-7 13 * * 1-5  /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh semanal
-30 13 * * 1-5 /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh risco
-7 14 * * 1-5  /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh semanal
-0 16 * * 1-5  /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh risco
-22 19 * * 1-5 /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh diario
-7 21 * * 1-5  /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh diario
-30 21 * * 1-4 /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh cobertura
-15 9 1 * *    /caminho/MarketSummary-rotinas/scripts/cdp_run_task.sh calibracao
-```
-
-**macOS (launchd)** — um arquivo por tarefa em `~/Library/LaunchAgents/` (horário local do Mac),
-com os mesmos horários da tabela do cron. Exemplo do fechamento diário, `com.cdp.diario.plist`:
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-  <key>Label</key><string>com.cdp.diario</string>
-  <key>ProgramArguments</key>
-  <array>
-    <string>/bin/bash</string>
-    <string>/Users/voce/MarketSummary-rotinas/scripts/cdp_run_task.sh</string>
-    <string>diario</string>
-  </array>
-  <key>StartCalendarInterval</key>
-  <array>
-    <dict><key>Weekday</key><integer>1</integer><key>Hour</key><integer>19</integer><key>Minute</key><integer>22</integer></dict>
-    <dict><key>Weekday</key><integer>2</integer><key>Hour</key><integer>19</integer><key>Minute</key><integer>22</integer></dict>
-    <dict><key>Weekday</key><integer>3</integer><key>Hour</key><integer>19</integer><key>Minute</key><integer>22</integer></dict>
-    <dict><key>Weekday</key><integer>4</integer><key>Hour</key><integer>19</integer><key>Minute</key><integer>22</integer></dict>
-    <dict><key>Weekday</key><integer>5</integer><key>Hour</key><integer>19</integer><key>Minute</key><integer>22</integer></dict>
-  </array>
-</dict>
-</plist>
-```
-
-Carregue com `launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.cdp.diario.plist`
-(o launchd roda tarefas perdidas durante o sono quando o Mac acorda).
-
-**Windows (Agendador de Tarefas)** — no PowerShell (sem administrador), ajuste `$repo` e rode o
-bloco. As tarefas rodam com a sua sessão do Windows aberta (como o app), em janela oculta, também
-na bateria, e são recuperadas assim que possível quando o horário foi perdido:
-
-```powershell
-$repo = "C:\Users\voce\MarketSummary-rotinas"   # pasta do clone (pode ter espaços)
-$script = Join-Path $repo "scripts\cdp_run_task.ps1"
-$settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries `
-    -StartWhenAvailable -ExecutionTimeLimit (New-TimeSpan -Hours 6) -MultipleInstances IgnoreNew
-$weekdays = "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"
-function Add-CdpTask([string]$name, [string]$task, [string[]]$days, [string]$at) {
-    $action = New-ScheduledTaskAction -Execute "powershell.exe" -WorkingDirectory $repo `
-        -Argument "-NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File `"$script`" $task"
-    $trigger = New-ScheduledTaskTrigger -Weekly -DaysOfWeek $days -At $at
-    Register-ScheduledTask -TaskPath "\CDP\" -TaskName $name -Action $action -Trigger $trigger `
-        -Settings $settings -Force | Out-Null
-}
-Add-CdpTask "status"     "status"  @("Monday") "08:30"
-Add-CdpTask "semanal"    "semanal" $weekdays "11:07"
-Add-CdpTask "semanal-b"  "semanal" $weekdays "12:07"
-Add-CdpTask "semanal-c"  "semanal" $weekdays "13:07"
-Add-CdpTask "risco1330"  "risco"   $weekdays "13:30"
-Add-CdpTask "semanal-d"  "semanal" $weekdays "14:07"
-Add-CdpTask "risco1600"  "risco"   $weekdays "16:00"
-Add-CdpTask "diario"     "diario"  $weekdays "19:22"
-Add-CdpTask "diario2107" "diario"  $weekdays "21:07"
-Add-CdpTask "cobertura"  "cobertura" @("Monday", "Tuesday", "Wednesday", "Thursday") "21:30"
-```
-
-A calibração mensal precisa do `schtasks` (o `New-ScheduledTaskTrigger` não tem gatilho mensal).
-Escreva o caminho do clone por extenso (o `--%` repassa a linha sem interpretar variáveis) e depois
-aplique as mesmas configurações:
-
-```powershell
-schtasks --% /Create /TN "CDP\calibracao" /SC MONTHLY /D 1 /ST 09:15 /TR "powershell.exe -NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File \"C:\Users\voce\MarketSummary-rotinas\scripts\cdp_run_task.ps1\" calibracao"
-Set-ScheduledTask -TaskPath "\CDP\" -TaskName "calibracao" -Settings $settings | Out-Null
-```
-
-Confira com `Get-ScheduledTask -TaskPath "\CDP\"`; o resultado de cada execução aparece em "Último
-resultado" (75 = não iniciada porque outra rotina estava rodando) e no log em `logs\cdp\`.
-
-## 13. Codex ou qualquer assistente como mente
-
-O Codex lê `AGENTS.md` e segue a mesma metodologia e os mesmos roteiros. Os passos das skills em
-`plugins/cdp/skills/<skill>/SKILL.md` valem para ele trocando `claude-code` por `codex` (use
-`--mind codex` na CLI e `"mind": "codex"` nos JSON). Para agendar, use o agendador do sistema com o modo não
-interativo do Codex CLI (consulte a documentação do Codex para as flags) e um texto como os de
-`docs/cdp/ROTINAS.md`. Não ligue as duas mentes no mesmo livro ao mesmo tempo.
-
-Sem harness com acesso ao repositório, qualquer passo da mente (pesquisa, decisão do PM, tese,
-nota por emissor, comentários diário e semanal) pode ser feito em qualquer assistente — ChatGPT,
-Gemini, Claude ou outro: `cdp mente pacote` exporta um único markdown autocontido (papel, regras,
-guia de estilo, fatos do código, schema, esqueleto e o comando exato de validação), a pessoa cola
-no assistente, salva o JSON devolvido no caminho indicado e valida com a CLI
-(`--mind chatgpt`, `gemini` ou `outro`; detalhes em `docs/cdp/REPRODUZIR.md`):
+As linhas prontas para cada agendador (com o `--harness` do seu app):
 
 ```sh
-uv run python -m cdp mente pacote --etapa tese --semana AAAA-MM-DD --mente chatgpt --saida /tmp/pacote_tese.md
+uv run python -m cdp rotinas exportar --alvo cron --harness claude
+uv run python -m cdp rotinas exportar --alvo launchd --harness claude --saida ~/Library/LaunchAgents
+uv run python -m cdp rotinas exportar --alvo windows --harness claude
 ```
+
+O bloco do Windows usa `Register-ScheduledTask` com `-AllowStartIfOnBatteries`,
+`-DontStopIfGoingOnBatteries` e `-StartWhenAvailable`, em janela oculta (`-WindowStyle Hidden`),
+e o `schtasks` para a calibração mensal. Cada tarefa fica em **um** só agendador (o app ou o
+do sistema), nunca nos dois; o normal é tudo num lugar só. A exceção documentada é o
+Antigravity, cujas tarefas agendadas no app têm modelo fixo e servem só às leves (`cdp-status` e
+o risco), com as demais no `agy` pelo agendador do sistema (`docs/cdp/ROTINAS.md`, seção 6).
+Trava local: as rotinas que gravam esperam até 60 minutos
+(`CDP_LOCK_WAIT_MIN`) a anterior terminar; depois, o script sai com código 75. No modo sem
+interface ninguém aprova pedidos: o que não estiver liberado no `.claude/settings.json` é negado
+e a rotina relata. Não use `--bare` (não carrega plugins nem skills).
+
+## 13. Troca de executor
+
+Para levar a operação do PC para a nuvem (ou de volta), siga `docs/cdp/AUTOMACAO.md`, seção 13:
+janela segura (`uv run python -m cdp executor janela`), desligar as tarefas do PC, transferir o
+executor numa sessão de operador e ligar as rotinas do novo app. O PC fica como reserva quente,
+com as tarefas desligadas.
 
 ## 14. Solução de problemas
 
 | Sintoma | Causa provável e correção |
 |---|---|
-| `/cdp:diario` desconhecido na tarefa | plugin não instalado/ativado: `claude plugin list`; repita a seção 4; confira se a tarefa usa a pasta do clone |
-| `uv: command not found` nas tarefas do app | o app foi aberto antes da instalação do uv: feche e reabra o app (o PATH novo só vale para processos novos) |
-| Tarefa parada esperando aprovação | um comando fora das regras (seção 5): responda ao pedido na sessão parada, use "Accept edits" e, no Run now, "always allow" só para comandos seguros |
-| "clone em desenvolvimento" no resumo | a pasta da tarefa não está na `main` ou tem código/configuração alterados sem commit: use um clone dedicado às rotinas (seção 3) |
-| "sem sincronizar" ou push não feito | `git fetch` falhou (rede, token) ou `verify` não disse `ÍNTEGRO`: o commit ficou local; a próxima rotina com rede e trilha íntegra envia. Confira com `git status -sb` |
-| Rotina parou: "outra máquina ou sessão gravou o livro" | o remoto tem commits em `book/`, `data/`, `reports/` ou `artifacts/` que o clone não tem — duas mentes ou dois clones gravando. Não faça merge/rebase do livro (a trilha é encadeada por hash): mantenha uma só mente; se os commits locais ainda não foram enviados e o remoto é o livro oficial, guarde-os (`git branch backup-AAAA-MM-DD`) e só então alinhe o clone com o remoto, com revisão humana |
-| Push rejeitado com o remoto à frente só em código/docs | a sincronização seguinte faz `git pull --no-rebase --no-edit` e envia; à mão: `git fetch`, `git diff --name-only "HEAD...@{u}" -- book data reports artifacts` (vazio) e `git pull --no-rebase --no-edit && git push` |
-| `dados não prontos` no fechamento | a fonte ainda não publicou o fechamento; o reforço das 21:07 ou o dia seguinte recupera |
+| "Sem execução: este ambiente não é o executor designado" | o clone não tem identidade (`.cdp/local.yaml`) ou o executor em `configs/cdp/executor.yaml` é outro: `uv run python -m cdp executor mostrar`; registre com `cdp executor registrar` (seção 3) |
+| "trava distribuída indisponível" | o PC não consegue fazer push no ramo `cdp-trava` (rede, credencial) ou outra execução segura a trava: confira com `uv run python -m cdp trava ver`; a reserva seguinte tenta de novo |
+| "execução atrasada" no gate | o disparo veio muito depois do horário (PC dormindo): é o esperado; numa sessão de operador use `--manual` |
+| `/cdp:diario` desconhecido | plugin não instalado: `claude plugin list` e a seção 4; ou use a skill do projeto `/cdp-diario cdp-diario` |
+| `uv: command not found` nas tarefas do app | o app foi aberto antes da instalação do uv: feche e reabra o app |
+| Tarefa parada esperando aprovação | um comando fora das regras (seção 5): responda na sessão parada e avise o mantenedor para ajustar o roteiro |
+| `sincronizar` parou: "clone com código ou configuração alterados" | a pasta da tarefa não é um clone dedicado limpo: use um clone só para as rotinas |
+| `sincronizar` parou: "outra sessão gravou o livro no remoto" | duas mentes ou dois clones gravando: mantenha um só executor; não faça merge nem rebase do livro (a trilha é encadeada por hash) |
+| `publicar` sem push | `verify` falhou, sem rede ou a trava se perdeu: o commit ficou no clone e a próxima rotina reconcilia; confira com `git status -sb` |
+| `publicar` com código 6 (`retidos`) | o risco ligou o kill switch enquanto outra execução segurava a trava: o relatório e o pedido de kill switch (`reports/risk/<data>/kill_switch_<HHMM>.yaml`) saíram; `book/KILL_SWITCH` e o evento da trilha ficaram no clone. A próxima montagem ou fechamento aplica o pedido (em outro clone, como na nuvem) ou publica o que ficou (neste clone, campo `anteriores` do `cdp publicar`) |
+| `git status` mostra arquivos em `book/`, `reports/` ou `data/` sem nenhuma rotina rodando | uma execução gravou e não chegou a publicar (PC dormiu, app fechado, tempo esgotado) ou o kill switch ficou retido. A próxima montagem ou fechamento retoma e publica tudo junto (`anteriores`); a rotina de notas para e deixa para o fechamento. Para publicar antes: "Gravações de uma execução interrompida", abaixo |
+| `dados não prontos` no fechamento | a fonte ainda não publicou o fechamento; o reforço, a repescagem ou o dia seguinte recuperam |
 | `verify` acusa hash divergente após clonar no Windows | fins de linha convertidos: confira o `.gitattributes` e clone de novo |
-| Acentos estranhos / `UnicodeEncodeError` no Windows | `PYTHONUTF8=1` (já no `.claude/settings.json` e nos scripts); para o terminal, `chcp 65001` |
-| `uv`/`claude` não encontrados no agendador do sistema | PATH mínimo do cron/launchd/Agendador: use caminhos absolutos ou ajuste `CDP_CLAUDE_BIN`; os scripts já incluem `~/.local/bin`; o erro fica no log |
-| Execução marcada como "skipped" no app | o PC dormia, a execução anterior ainda rodava ou outra tarefa estava em andamento (ex.: risco das 16:00 durante a montagem semanal); as reservas da semanal e o reforço do diário cobrem os casos importantes |
-| Decisão da semana perdida | o PC estava desligado entre 11:00 e o prazo efetivo (em geral 15:00) do dia de montagem; a carteira anterior segue até a próxima semana |
-| Tese da semana ausente ou "Narrativa automática" no painel | a rotina semanal parou entre a decisão e a tese, ou `tese.json` não passou no `validate-tese` (o código publicou o template, `autoria: "codigo"`). A tese publicada é imutável; uma pendente é concluída pela reserva seguinte (`semanal.acao: "tese"`) ou pelo `diario`. Escrita em outro clone (desenvolvimento): entregue em `docs/cdp/teses/<semana>.json`, nunca em `book/` (a sincronização de todas as rotinas pararia). À mão, numa sessão no próprio clone das rotinas: `uv run python -m cdp tese prepare --week AAAA-MM-DD`, escreva `book/<semana>/tese/tese.json`, `uv run python -m cdp validate-tese --week AAAA-MM-DD` e `uv run python -m cdp tese publish --week AAAA-MM-DD` (ver `docs/cdp/TESE.md`) |
-| "painel não republicado" no resumo | `artifact.publicavel: false` (dados grandes demais para a leitura integral), `artifacts/painel/ARTIFACT_URL` ausente, sem a ferramenta `Artifact` na sessão (ex.: `claude -p`, Codex) ou recusa da ferramenta; os arquivos commitados valem. Para publicar à mão: abra uma sessão na pasta e rode `uv run python -m cdp painel` e peça "republique o painel no artifact de artifacts/painel/ARTIFACT_URL seguindo artifact.publicar" |
-| Painel mostra "Não foi possível carregar os dados do fundo" (no console do navegador: "Não foi possível carregar data.json") | a página foi publicada sem o `data.json` ao lado: rode `uv run python -m cdp painel` e republique com `files: {"data.json": "artifacts/painel/data.json"}` no mesmo artifact; offline, abra `artifacts/painel/cdp_painel_local.html` |
-| Link do painel sumiu ou mudou | `artifacts/painel/ARTIFACT_URL` ausente ou apagado: restaure a URL antiga nele (uma linha) e faça commit; as rotinas nunca criam um artifact novo (sem o arquivo, só pulam a publicação) |
-| Kill switch religado logo depois de você desligar | só acontece por piora (estágio pior da escada ou short novo no stop): veja `revisao_humana` e os gatilhos HARD no relatório de risco |
+| Acentos estranhos no Windows | `PYTHONUTF8=1` (já no `.claude/settings.json` e nos scripts); no terminal, `chcp 65001` |
+| Decisão da semana perdida | o PC estava desligado entre 11:00 e o prazo efetivo do dia de montagem; a carteira anterior segue até a próxima semana |
+| Tese da semana com o texto automático | `tese.json` não passou no `validate-tese` (o código publicou o template, `autoria: "codigo"`); a tese publicada é imutável. Escrita fora do clone das rotinas: entregue em `docs/cdp/teses/<semana>.json`, nunca em `book/` (`docs/cdp/TESE.md`) |
+| Kill switch religado logo depois de você desligar | só acontece por piora: veja `revisao_humana` e os gatilhos HARD no relatório de risco |
+
+### Gravações de uma execução interrompida
+
+As rotinas publicam sozinhas o que uma execução interrompida deixou no clone (a próxima montagem
+ou fechamento, com a trava). Para publicar antes, numa sessão de operador **no clone das
+rotinas** e fora dos horários delas:
+
+```sh
+git status --short
+uv run python -m cdp verify
+uv run python -m cdp trava adquirir --tarefa cdp-diario
+uv run python -m cdp publicar --tarefa cdp-diario --mensagem "CDP: publica gravações de execução interrompida" --execucao operador-AAAA-MM-DD --trava <id da trava>
+uv run python -m cdp trava liberar --id <id da trava>
+```
+
+`verify` precisa dizer `ÍNTEGRO`; senão, não publique e investigue com
+`uv run python -m cdp estado --formato md`. Uma `--execucao` sem registro faz o `cdp publicar`
+levar tudo o que difere da versão local nos caminhos do fechamento (que cobrem todo o livro). No
+Claude Code, `trava adquirir` pede a sua aprovação.

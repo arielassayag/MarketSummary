@@ -28,6 +28,12 @@ Etapas (todas reproduzíveis a partir de ``cdp-logo.png``):
 3. **Template** (``--template``, ou junto com ``--mascaras``): troca o bloco entre os marcadores
    ``>>> marca`` e ``<<< marca`` no ``<style>`` de ``src/cdp/workflow/painel_template.html``.
 
+4. **Ornamentos da camada "Chapada"** (``--ornamentos``; só biblioteca padrão): onze máscaras SVG
+   monocromáticas — curva de nível e pincelada de sol do título, olho e lances das curvas de
+   nível entre seções, fio riscado à mão, goivas da aba ativa, goiva vertical, recorte, fio e
+   pesponto da sela. Seis saem de um gerador com sementes fixas; cinco são desenhos fixos. A
+   opção regrava o valor de cada token no ``:root`` da camada; ``--check`` confere os dois blocos.
+
 Só ``--mascaras`` regrava as máscaras de ``docs/cdp/marca/``, e sempre junto com o bloco no
 template (o teste confere o template byte a byte contra elas); ``--template`` grava só o bloco.
 Sem essas opções o script só lê as máscaras gravadas: imprime o bloco, confere ou faz a prévia.
@@ -38,6 +44,7 @@ Uso::
     uv run --extra dev python scripts/cdp_marca.py --check                 # o template está em dia?
     uv run --extra dev python scripts/cdp_marca.py --previa DIR            # PNG claro/escuro p/ revisão
     uv run --extra dev python scripts/cdp_marca.py --template              # bloco → template
+    uv run --extra dev python scripts/cdp_marca.py --ornamentos            # ornamentos → template
     uv run --extra dev python scripts/cdp_marca.py --mascaras              # logo → máscaras → template
 
 Mudar o template muda a versão da página (SHA-256): a próxima rotina republica a casca, o
@@ -238,6 +245,194 @@ def verificar(bloco: str) -> list[str]:
     return erros
 
 
+# ------------------------------------------------------------------------------- ornamentos
+# Camada "Chapada" do portal: máscaras SVG monocromáticas (a cor vem do fundo do pseudoelemento,
+# por token). Seis são geradas abaixo com sementes fixas (reprodutíveis byte a byte); cinco são
+# desenhos fixos. Os esticáveis usam preserveAspectRatio='none': a espessura vem da altura da
+# camada, nunca do comprimento. Guia: docs/cdp/marca/IDENTIDADE.md §5.
+ORDEM_ORNAMENTOS = ("--orn-curva", "--orn-traco", "--orn-ilha", "--orn-curvas", "--orn-risco",
+                    "--orn-goiva-e", "--orn-goiva-d", "--orn-gv", "--orn-sela", "--orn-sela-fio",
+                    "--orn-pesponto")
+_SVG = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {w} {h}'"
+#: Desenhos fixos: olho e lances das curvas de nível entre seções, recorte e fio do assento da
+#: sela e a curva do pesponto (os pontos vêm do fundo, em px fixos).
+ORNAMENTOS_FIXOS = {
+    "--orn-ilha": _SVG.format(w=400, h=40) + " fill='none' stroke='#000' stroke-width='1.1'>"
+    "<path stroke-opacity='.6' d='M0 10C60 10 110 10 138 9C168 7 178 3 200 3S232 7 262 9 340 10 "
+    "400 10M0 30C60 30 110 30 138 31C168 33 178 37 200 37S232 33 262 31 340 30 400 30'/><path d="
+    "'M0 20C80 20 118 20 142 20C163 20 172 10.5 200 10.5S237 20 258 20 320 20 400 20M142 20C163 "
+    "20 172 29.5 200 29.5S237 20 258 20'/></svg>",
+    "--orn-curvas": _SVG.format(w=600, h=40) + " preserveAspectRatio='none' fill='none' "
+    "stroke='#000' stroke-width='1.1'><path stroke-opacity='.6' d='M0 10C120 9.2 240 10.8 360 "
+    "10.2S520 9.6 600 10M0 30C100 30.7 260 29.3 380 29.9S530 30.4 600 30'/><path d='M0 20C150 "
+    "20.8 300 19.2 450 19.8S560 20.2 600 20'/></svg>",
+    "--orn-sela": _SVG.format(w=200, h=12) + " preserveAspectRatio='none'><path d='M0 0C55 9 145 "
+    "9 200 0V12H0Z'/></svg>",
+    "--orn-sela-fio": _SVG.format(w=200, h=12) + " preserveAspectRatio='none'><path d='M0 .7C55 "
+    "9.7 145 9.7 200 .7' fill='none' stroke='#000' stroke-width='1.2'/></svg>",
+    "--orn-pesponto": _SVG.format(w=200, h=18) + " preserveAspectRatio='none'><path d='M0 "
+    "5.5C55 14.5 145 14.5 200 5.5' fill='none' stroke='#000' stroke-width='1.1'/></svg>",
+}
+
+
+def _uri_svg(svg: str) -> str:
+    s = svg.replace("<", "%3C").replace(">", "%3E").replace("#", "%23").replace('"', "'")
+    return f'url("data:image/svg+xml,{s}")'
+
+
+def _f(v: float) -> str:
+    s = f"{v:.1f}".rstrip("0").rstrip(".")
+    if s.startswith("0."):
+        s = s[1:]
+    elif s.startswith("-0."):
+        s = "-" + s[2:]
+    return s if s not in ("", "-") else "0"
+
+
+def _fita(xs, topo, base) -> str:
+    """Contorno fechado de uma fita: a borda de cima da esquerda para a direita e a de baixo de
+    volta."""
+    cima = " ".join(f"{_f(x)} {_f(y)}" for x, y in zip(xs, topo, strict=True))
+    baixo = " ".join(f"{_f(x)} {_f(y)}" for x, y in zip(reversed(xs), reversed(base), strict=True))
+    return f"M{cima} L{baixo}Z"
+
+
+def _ruido(n: int, semente: int, amp: float, k: int = 3) -> list[float]:
+    """Ruído suave e reprodutível (média móvel de uniformes com semente fixa)."""
+    import random
+
+    r = random.Random(semente)
+    bruto = [r.uniform(-1, 1) for _ in range(n + 2 * k)]
+    return [amp * sum(bruto[i:i + 2 * k + 1]) / (2 * k + 1) * 1.8 for i in range(n)]
+
+
+def gerar_ornamentos() -> dict[str, str]:
+    """Os onze ornamentos da camada "Chapada" (``token → url("data:...")``), na ordem de
+    :data:`ORDEM_ORNAMENTOS`. Determinístico: sementes fixas, só biblioteca padrão."""
+    import math
+
+    orn: dict[str, str] = {}
+    esticado = " preserveAspectRatio='none'><path d='{d}'/></svg>"
+    # pincelada de sol (300×16): cabeça cheia, corpo que sobe com o pulso e cerdas que se abrem
+    w = 300
+
+    def eixo(x):
+        t = x / w
+        return 8.7 - 2.0 * t + 0.3 * math.sin(t * 6.5)
+
+    def meia(x):
+        return 5.0 - 1.6 * (x / w) + 0.3 * math.sin(math.pi * min(x, 118) / 118)
+
+    xs = [0, 1.5, 4, 8, 13, 20, 32, 48, 66, 86, 104, 118]
+    rz = _ruido(len(xs), 7, 0.4, 1)
+    topo, base = [], []
+    for i, x in enumerate(xs):
+        hh = meia(x) * math.sqrt(max(0.0, 1 - ((13 - x) / 13.4) ** 2)) + 0.3 if x < 13 else meia(x)
+        topo.append(eixo(x) - hh + rz[i] * 0.45)
+        base.append(eixo(x) + hh * 1.04 + rz[i] * 0.3)
+    partes = [_fita(xs, topo, base)]
+    for pos, fim, esp in ((-0.7, 300, 0.34), (-0.2, 236, 0.3), (0.27, 282, 0.3), (0.74, 214, 0.27)):
+        sx = [108 + (fim - 108) * j / 9 for j in range(10)]
+        ys = [eixo(x) + meia(x) * pos for x in sx]
+        ts = [meia(x) * esp * (1 - ((x - 108) / (fim - 108)) ** 1.6) + 0.05 for x in sx]
+        partes.append(_fita(sx, [y - t for y, t in zip(ys, ts, strict=True)],
+                            [y + t for y, t in zip(ys, ts, strict=True)]))
+    orn["--orn-traco"] = _uri_svg(_SVG.format(w=300, h=16) + esticado.format(d="".join(partes)))
+    # curva de nível do título (1200×10): fio que engrossa depois da pincelada e some à direita
+    xs = [0, 40, 90, 150, 220, 300, 390, 480, 580, 680, 780, 880, 980, 1080, 1150, 1200]
+    topo, base = [], []
+    for x in xs:
+        t = x / 1200
+        c = 6.0 + 0.55 * math.sin(t * 5.1 + 0.6) + 0.25 * math.sin(t * 13.3)
+        hh = min(0.12 + 0.82 * math.exp(-((t - 0.3) / 0.2) ** 2) + 0.42 * (1 - t) ** 2, 0.95)
+        topo.append(c - hh)
+        base.append(c + hh)
+    orn["--orn-curva"] = _uri_svg(_SVG.format(w=1200, h=10)
+                                  + esticado.format(d=_fita(xs, topo, base)))
+    # fio riscado à mão (ladrilho periódico 640×4): espessura e linha de base oscilam < 1 px
+    xs = [640 * i / 20 for i in range(21)]
+    topo, base = [], []
+    for x in xs:
+        a = 2 * math.pi * x / 640
+        c = 2.0 + 0.32 * math.sin(a) + 0.18 * math.sin(3 * a + 1.1) + 0.1 * math.sin(5 * a + 0.3)
+        hh = 0.5 + 0.16 * math.sin(2 * a + 0.7) + 0.08 * math.sin(7 * a)
+        topo.append(c - hh)
+        base.append(c + hh)
+    orn["--orn-risco"] = _uri_svg(_SVG.format(w=640, h=4) + esticado.format(d=_fita(xs, topo, base)))
+    # goivas da aba ativa (500×50): grossas junto da estrela, cauda afilada; a direita é o espelho
+    xs = [0, 30, 70, 120, 180, 240, 300, 350, 395, 430, 455, 472, 484, 492, 497, 500]
+    rz = _ruido(len(xs), 11, 1.6, 1)
+    topo, base = [], []
+    for i, x in enumerate(xs):
+        t = x / 500
+        c = 25 + 3.5 * math.sin(t * 4.2 + 0.4) + rz[i]
+        if t < 0.94:
+            hh = 2 + 21 * (t / 0.94) ** 1.6
+        else:  # ataque curto: arredondado, levemente lascado
+            hh = 23 * math.sqrt(max(0.0, 1 - ((t - 0.94) / 0.06) ** 2)) + 1
+        topo.append(c - hh)
+        base.append(c + hh * 0.92)
+    orn["--orn-goiva-e"] = _uri_svg(_SVG.format(w=500, h=50)
+                                    + esticado.format(d=_fita(xs, topo, base)))
+    orn["--orn-goiva-d"] = _uri_svg(_SVG.format(w=500, h=50)
+                                    + esticado.format(d=_fita([500 - x for x in xs], topo, base)))
+    # goiva vertical (12×600): ataque em cima, cauda embaixo (citação, comentário, carregamento)
+    ys = [0, 3, 8, 16, 40, 90, 160, 240, 320, 400, 470, 530, 570, 592, 600]
+    rz = _ruido(len(ys), 5, 0.5, 1)
+    esq, dir_ = [], []
+    for i, y in enumerate(ys):
+        t = y / 600
+        c = 6 + 0.6 * math.sin(t * 5) + rz[i]
+        larg = (5.2 * math.sqrt(max(0.0, 1 - ((0.03 - t) / 0.032) ** 2)) + 0.3 if t < 0.03
+                else 5.4 * (1 - t) ** 0.55 + 0.25)
+        esq.append(c - larg)
+        dir_.append(c + larg * 0.9)
+    pe = " ".join(f"{_f(x)} {_f(y)}" for x, y in zip(esq, ys, strict=True))
+    pd_ = " ".join(f"{_f(x)} {_f(y)}" for x, y in zip(reversed(dir_), reversed(ys), strict=True))
+    orn["--orn-gv"] = _uri_svg(_SVG.format(w=12, h=600) + esticado.format(d=f"M{pe} L{pd_}Z"))
+    orn.update({k: _uri_svg(v) for k, v in ORNAMENTOS_FIXOS.items()})
+    return {k: orn[k] for k in ORDEM_ORNAMENTOS}
+
+
+def linhas_ornamentos() -> str:
+    """As onze linhas de token (``  --orn-x: url(...);``) do ``:root`` da camada "Chapada"."""
+    return "\n".join(f"  {k}: {v};" for k, v in gerar_ornamentos().items())
+
+
+def _ornamentos_do_template(texto: str) -> dict[str, str]:
+    return {m.group(1): m.group(2) for m in re.finditer(
+        r"^  (--orn-(?:curva|traco|ilha|curvas|risco|goiva-e|goiva-d|gv|sela|sela-fio|pesponto)): "
+        r"(url\(\"data:image/svg\+xml,[^\n]*\"\));$", texto, re.MULTILINE)}
+
+
+def gravar_ornamentos() -> bool:
+    """Troca, no template, o valor de cada ornamento da camada pelo gerado (devolve se mudou)."""
+    texto = _template_texto()
+    novo = texto
+    for k, v in gerar_ornamentos().items():
+        novo, n = re.subn(rf"^  {re.escape(k)}: url\(\"data:image/svg\+xml,[^\n]*\"\);$",
+                          lambda _m, k=k, v=v: f"  {k}: {v};", novo, flags=re.MULTILINE)
+        if n != 1:
+            raise SystemExit(f"{TEMPLATE}: esperado 1 token {k} na camada, achado(s) {n}")
+    if novo == texto:
+        return False
+    TEMPLATE.write_text(novo, encoding="utf-8", newline="\n")
+    return True
+
+
+def verificar_ornamentos() -> list[str]:
+    """Os ornamentos do template conferem com o gerador (vazio = ok)."""
+    atuais = _ornamentos_do_template(_template_texto())
+    erros = []
+    for k, v in gerar_ornamentos().items():
+        if k not in atuais:
+            erros.append(f"template sem o ornamento {k}")
+        elif atuais[k] != v:
+            erros.append(f"ornamento {k} difere do gerador (rode scripts/cdp_marca.py "
+                         "--ornamentos)")
+    return erros
+
+
 # ------------------------------------------------------------------------------- prévia
 def previa(destino: Path) -> list[Path]:
     """Composições da marca pelas máscaras, nas cores dos dois temas (para revisão)."""
@@ -266,18 +461,27 @@ def main(argv: list[str] | None = None) -> int:
                    help="regrava as três máscaras em docs/cdp/marca/ a partir de cdp-logo.png e o "
                         "bloco no template (máscaras e template andam juntos)")
     p.add_argument("--template", action="store_true", help="grava o bloco no template")
+    p.add_argument("--ornamentos", action="store_true",
+                   help="grava no template os ornamentos da camada \"Chapada\" (gerador com "
+                        "sementes fixas)")
     p.add_argument("--check", action="store_true", help="confere o template (não grava nada)")
     p.add_argument("--previa", type=Path,
                    help="pasta para as composições PNG de revisão (só lê as máscaras)")
     a = p.parse_args(argv)
-    if a.check and (a.mascaras or a.template):
-        p.error("--check só confere: não combina com --mascaras nem --template")
+    if a.check and (a.mascaras or a.template or a.ornamentos):
+        p.error("--check só confere: não combina com --mascaras, --template nem --ornamentos")
 
     if a.check:
-        erros = verificar(bloco_css())
+        erros = verificar(bloco_css()) + verificar_ornamentos()
         for e in erros:
             print(e, file=sys.stderr)
         return 1 if erros else 0
+    if a.ornamentos:
+        mudou = gravar_ornamentos()
+        print(f"/* ornamentos: template {'atualizado' if mudou else 'já estava em dia'} */",
+              file=sys.stderr)
+        if not (a.mascaras or a.template):
+            return 0
     topo = None
     if a.mascaras:
         geo = gerar_mascaras()

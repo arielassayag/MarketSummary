@@ -1,4 +1,12 @@
-"""Perfil ``publicacao`` do painel do CDP: o retrato publicado no artifact (``data.json``).
+"""Perfis ``publicacao`` e ``site`` do painel do CDP: o retrato publicado (``data.json``).
+
+O portal principal é o site público (GitHub Pages, :mod:`cdp.site`): perfil ``site``, sem os
+cortes de texto e de colunas do artifact — trilha de auditoria recente, notas de calibração,
+colunas completas das posições, ordens, todas as verificações de conformidade, pontos a favor e
+contra da pesquisa, teses e a formulação completa das decisões —, com o que cresce com o tempo
+limitado (:func:`limites_site`; o resto segue nos dados abertos). O artifact é um espelho privado
+opcional com o orçamento abaixo (perfil ``publicacao``). Nos dois perfis, os resultados da
+carteira de referência (sombra/desafiante) nunca são publicados.
 
 Quem publica o artifact precisa ler TODO o arquivo publicado antes (leitura em partes de até 2.000
 linhas; linhas acima de 2.000 caracteres são cortadas na leitura). O perfil ``completo``
@@ -43,7 +51,7 @@ from typing import Any
 
 from ..contracts import HARNESS_MINDS
 
-PROFILES = ("publicacao", "completo")
+PROFILES = ("publicacao", "completo", "site")
 #: Orçamento do ``data.json`` publicado (bytes UTF-8 e caracteres por linha).
 DATA_MAX_BYTES = 260_000
 DATA_MAX_LINE = 1_500
@@ -102,7 +110,6 @@ class Limites:
     #: notas de calibração (as mais recentes): as demais só entram na contagem.
     backtests_execucoes: int = 6
     backtests_documentos: int = 12
-    posicoes_sombra: int = 20
     notas_otimizador: int = 8
     #: Hedge cambial sugerido (NDFs) da semana mais recente.
     hedge_cambial: bool = True
@@ -130,6 +137,15 @@ class Limites:
     #: os números) — e textos das seções e dos temas (``None`` = íntegros).
     tese_carteira_nome_chars: int | None = None
     tese_carteira_secao_chars: int | None = None
+    #: Formulação da decisão no modelo aberto (``modelo.formulacao``): todas as restrições ou só
+    #: as que vinculam e as perto do limite (as demais entram na contagem por grupo).
+    restricoes_completas: bool = True
+    #: Eventos da trilha de auditoria publicados no portal (os mais recentes; a trilha inteira
+    #: vai aos dados abertos em ``dados/livro/audit_log.jsonl``). Só no perfil ``site``.
+    eventos_auditoria: int = 0
+    #: ``"publicacao"`` (artifact, com orçamento) ou ``"site"`` (portal público: sem os cortes de
+    #: tamanho do artifact; ver :func:`site`).
+    perfil: str = "publicacao"
 
 
 def _nivel(base: Limites, **changes: Any) -> Limites:
@@ -155,18 +171,18 @@ _N2 = _nivel(_N1, semanas_completas=1, resumo_macro_chars=600,
              backtests_documentos=6, notas_backtest=4, atribuicao_extremos=6,
              execucoes_risco=5, periodos=("itd", "mtd", "semana", "dia"))
 _N3 = _nivel(_N2, notas_completas=False, visoes_pesquisa=False, resumo_macro_chars=300,
+             restricoes_completas=False,
              itens_macro=0, hedge_cambial=False, compliance_relevantes=False,
              posicoes_detalhe=False, texto_pm_chars=800, periodos=("itd", "semana", "dia"),
              atribuicao_extremos=5, pregoes=75, comentarios=7, semanas_resumo=8,
-             indice_relatorios=90, monitor_markdown=False, posicoes_sombra=10,
-             backtests_execucoes=2)
+             indice_relatorios=90, monitor_markdown=False, backtests_execucoes=2)
 _N4 = _nivel(_N3, tabela_notas=False, diario_decisao=False, texto_pm_chars=500, comentarios=6,
              comentario_chars=3_500, pregoes=66, periodos=("itd", "dia"), semanas_resumo=6,
              indice_relatorios=60, backtests_execucoes=1, backtests_documentos=3,
              monitor_posicoes=False, notas_otimizador=2)
 # A partir do nível 5, depois dos textos da pesquisa e do PM, a tese da carteira encurta.
 _N5 = _nivel(_N4, texto_pm_chars=300, comentarios=COMENTARIOS_MINIMOS, comentario_chars=3_000,
-             pregoes=PREGOES_MINIMOS, semanas_resumo=4, indice_relatorios=40, posicoes_sombra=5,
+             pregoes=PREGOES_MINIMOS, semanas_resumo=4, indice_relatorios=40,
              execucoes_risco=3, resumo_macro_chars=150, tese_carteira_nome_chars=200)
 _N6 = _nivel(_N5, texto_pm_chars=200, comentario_chars=2_000, semanas_resumo=2,
              indice_relatorios=20, execucoes_risco=2, backtests_execucoes=0,
@@ -178,7 +194,7 @@ _N7 = _nivel(_N6, pregoes=40, comentarios=3, comentario_chars=1_500, texto_pm_ch
              indice_relatorios=10, tese_carteira_nome_chars=0, tese_carteira_secao_chars=1_200)
 _N8 = _nivel(_N7, pregoes=21, comentarios=2, comentario_chars=1_000, semanas_resumo=0,
              indice_relatorios=0, execucoes_risco=1, noticias=0, atribuicao_extremos=3,
-             posicoes_sombra=0, tese_carteira_secao_chars=700)
+             tese_carteira_secao_chars=700)
 
 #: Níveis progressivos, do mais fiel ao mais compacto: o primeiro que cabe no orçamento é o
 #: publicado (``meta.publication.nivel``); os cortes de cada um ficam em ``meta.truncations``.
@@ -512,23 +528,19 @@ def _compound(values: Iterable[Any]) -> float | None:
     return comp(values)
 
 
-def _rollup(older: Sequence[Mapping[str, Any]], compare: Sequence[Mapping[str, Any]]
-            ) -> list[dict[str, Any]]:
+def _rollup(older: Sequence[Mapping[str, Any]]) -> list[dict[str, Any]]:
     """Pregões antigos agregados por mês (em código): NAV no fim do mês, retorno composto do mês,
-    média da vol ex-ante dos dias com valor, drawdown no fim do mês e a comparação com a sombra
-    no último dia do mês. Dia sem retorno ⇒ retorno do mês ``None`` (nunca zero)."""
+    média da vol ex-ante dos dias com valor e drawdown no fim do mês. Dia sem retorno ⇒ retorno
+    do mês ``None`` (nunca zero)."""
     months: dict[str, list[Mapping[str, Any]]] = {}
     for r in older:
         months.setdefault(str(r.get("date"))[:7], []).append(r)
-    cmp_by_date = {str(c.get("date")): c for c in compare}
     out = []
     for month in sorted(months):
         rs = months[month]
         last = rs[-1]
         vols = [v for r in rs if (v := _num((r.get("risk") or {}).get("ex_ante_vol"))) is not None]
         pnls = [_num(r.get("pnl")) for r in rs]
-        c = next((cmp_by_date[str(r.get("date"))] for r in reversed(rs)
-                  if str(r.get("date")) in cmp_by_date), None)
         out.append({
             "month": month, "first_date": rs[0].get("date"), "date": last.get("date"),
             "n_days": len(rs), "nav_start": rs[0].get("nav_start"), "nav_end": last.get("nav_end"),
@@ -537,8 +549,6 @@ def _rollup(older: Sequence[Mapping[str, Any]], compare: Sequence[Mapping[str, A
             else None,
             "ex_ante_vol_avg": sum(vols) / len(vols) if vols else None, "n_vol": len(vols),
             "drawdown": (last.get("risk") or {}).get("drawdown"),
-            "nav_shadow": c.get("nav_shadow") if c else None,
-            "cum_value_added": c.get("cum_value_added") if c else None,
         })
     return out
 
@@ -585,21 +595,18 @@ def _track(tr: Mapping[str, Any], lim: Limites, cortes: _Cortes, book: set[str]
                    "campos omitidos: " + ", ".join(shown) if shown else "campos de TI omitidos",
                    len(kept))
     out["records"] = rows
-    kept_dates = {str(r.get("date")) for r in kept}
-    cmp = list(tr.get("compare") or [])
-    out["compare"] = [c for c in cmp if str(c.get("date")) in kept_dates]
-    out["rollup"] = _rollup(older, [c for c in cmp if str(c.get("date")) not in kept_dates])
+    out["rollup"] = _rollup(older)
     if older:
         cortes.add("track_record.records", f"pregões além dos {n} mais recentes agregados por "
                    "mês em track_record.rollup", len(older))
     out["rows_limit"] = n
-    shadow = dict(tr.get("shadow") or {})
-    if shadow.get("records"):
-        cortes.add("track_record.shadow.records",
-                   "omitido (a comparação diária está em track_record.compare)",
-                   len(shadow["records"]))
-    shadow.pop("records", None)
-    out["shadow"] = shadow
+    # Carteira de referência (sombra/desafiante): nunca publicada (fica no livro e na cópia
+    # local) — nem a série, nem a comparação diária, nem a âncora.
+    if any([out.pop(k, None) for k in ("shadow", "compare")]):
+        cortes.add("carteira de referência (track_record)", "omitidos (resultados da carteira "
+                   "de referência não são publicados)")
+    if isinstance(out.get("anchor"), dict):
+        out["anchor"] = {k: v for k, v in out["anchor"].items() if k != "nav_shadow"}
     periods: dict[str, Any] = {}
     seen: dict[str, str] = {}
     for key, p in (tr.get("periods") or {}).items():
@@ -637,7 +644,7 @@ def _latest(ld: Mapping[str, Any] | None, lim: Limites, cortes: _Cortes) -> Any:
           "omitido (idêntico a risk.daily.exposures)")
     out["risk"] = risk
     _drop(out, "shadow", cortes, "latest_day",
-          "omitido (a comparação diária está em track_record.compare)")
+          "omitido (resultados da carteira de referência não são publicados)")
     if not lim.posicoes_detalhe and out.get("positions"):
         out["positions"] = [{k: v for k, v in p.items() if k not in LD_DETAIL_ONLY}
                             for p in out["positions"]]
@@ -666,7 +673,7 @@ SUMMARY_DECISION_KEYS = ("decision", "mode", "conviction", "approver", "decided_
                          "deadline_local", "on_time", "acknowledged_soft_checks")
 SUMMARY_PM_KEYS = ("risk_posture", "posture_label", "regime", "regime_label")
 SUMMARY_PROPOSAL_KEYS = ("n_long", "n_short", "ex_ante_vol", "gross", "net", "beta")
-SUMMARY_PERF_KEYS = ("n_days", "ret", "value_added")
+SUMMARY_PERF_KEYS = ("n_days", "ret")
 #: Pesquisa publicada: sem fornecedor/mente (``provider``, ``author``), snapshot nem hashes.
 RESEARCH_HEAD_KEYS = ("source", "is_synthetic", "counts")
 NOTE_KEYS = ("issuer_id", "role", "stance", "confidence", "horizon_weeks", "thesis",
@@ -706,7 +713,9 @@ def _note_pub(n: Mapping[str, Any], lim: Limites, cortes: _Cortes) -> dict[str, 
         out["squeeze"] = sq
     out["evidence"] = _urls(n.get("evidence"), lim.urls_nota)
     for key in ("bull_points", "bear_points"):
-        if n.get(key):
+        if lim.perfil == "site" and n.get(key):
+            out[key] = list(n[key])
+        elif n.get(key):
             cortes.add(f"{campo}.{key}", "omitido na publicação")
     return out
 
@@ -759,8 +768,11 @@ def _research_pub(r: Any, w: Mapping[str, Any], lim: Limites, cortes: _Cortes, *
     pm = w.get("pm_decision") or {}
     pm_ids = ({v.get("issuer_id") for v in (pm.get("views") or [])}
               if pm.get("valid") is not False else set())
-    full_ids = (book & pm_ids) if lim.notas_completas and full_notes else set()
     notes = list(r.get("notes") or [])
+    full_ids = (book & pm_ids) if lim.notas_completas and full_notes else set()
+    if lim.perfil == "site":  # portal: todas as notas completas na semana em foco (as demais
+        # semanas em detalhe trazem a tabela; as notas inteiras ficam nos dados abertos)
+        full_ids = {n.get("issuer_id") for n in notes} if full_notes else set()
     out["notes"] = [_note_pub(n, lim, cortes) for n in notes if n.get("issuer_id") in full_ids]
     table = []
     for n in notes:
@@ -810,31 +822,26 @@ def _research_pub(r: Any, w: Mapping[str, Any], lim: Limites, cortes: _Cortes, *
     return out
 
 
-def _shadow_pub(s: Any, w: Mapping[str, Any], lim: Limites, cortes: _Cortes) -> Any:
-    if not isinstance(s, dict):
-        return s
-    out = dict(s)
-    _drop(out, "risk", cortes, "weeks[].shadow",
-          "omitido (a comparação CDP × sombra está em weeks[].shadow.comparison)")
-    cmp = dict(out.get("comparison") or {})
-    _cut_list(cmp, "weight_diffs", lim.posicoes_sombra, cortes, "weeks[].shadow.comparison")
-    cmp.pop(TRUNC_FLAG, None)
-    out["comparison"] = cmp
-    cdp: dict[str, float] = {}
-    for p in (w.get("proposal") or {}).get("positions") or []:
-        cdp[p.get("issuer_id")] = cdp.get(p.get("issuer_id"), 0.0) + float(p.get("weight") or 0.0)
-    sh: dict[str, float] = {}
-    for p in out.get("positions") or []:
-        sh[p.get("issuer_id")] = sh.get(p.get("issuer_id"), 0.0) + float(p.get("weight") or 0.0)
-    positions = sorted(out.get("positions") or [], key=lambda p: (
-        -abs(cdp.get(p.get("issuer_id"), 0.0) - sh.get(p.get("issuer_id"), 0.0)),
-        str(p.get("issuer_id"))))
-    if len(positions) > lim.posicoes_sombra:
-        cortes.add("weeks[].shadow.positions",
-                   f"só as {lim.posicoes_sombra} maiores diferenças de peso vs. o CDP",
-                   len(positions) - lim.posicoes_sombra)
-    out["positions"] = positions[:lim.posicoes_sombra]
-    return out
+#: Desempenho da semana sem a comparação com a carteira de referência.
+PERF_REFERENCIA = ("shadow_n_days", "shadow_ret", "value_added")
+
+
+def _sem_referencia(w: dict[str, Any], cortes: _Cortes) -> None:
+    """Tira da semana os resultados da carteira de referência (sombra/desafiante): a comparação,
+    o desempenho relativo e a tabela de referência dos números da tese."""
+    regra = "omitidos (resultados da carteira de referência não são publicados)"
+    tirou = w.pop("shadow", None) is not None
+    perf = w.get("performance")
+    if isinstance(perf, dict) and any(k in perf for k in PERF_REFERENCIA):
+        w["performance"] = {k: v for k, v in perf.items() if k not in PERF_REFERENCIA}
+        tirou = True
+    th = w.get("thesis")
+    nums = th.get("numbers") if isinstance(th, dict) else None
+    if isinstance(nums, dict) and "reference" in nums:
+        w["thesis"] = {**th, "numbers": {k: v for k, v in nums.items() if k != "reference"}}
+        tirou = True
+    if tirou:
+        cortes.add("carteira de referência (weeks[])", regra)
 
 
 def _report_pub(rep: Any, cortes: _Cortes) -> Any:
@@ -873,12 +880,20 @@ def _compliance_pub(comp: Mapping[str, Any], lim: Limites, cortes: _Cortes, *,
                     detail: bool) -> dict[str, Any]:
     """Gates de compliance: as contagens sempre; as verificações não triviais
     (:func:`compliance_relevante`) com ``compliance_relevantes`` e ``detail``, senão só as
-    reprovadas; ``details`` das aprovadas só com ``detalhes_aprovadas``; as verificações
-    técnicas (:data:`CHECKS_TECNICOS`) nunca trazem ``details``."""
+    reprovadas (no perfil ``site``, todas); ``details`` das aprovadas só com
+    ``detalhes_aprovadas``; as verificações técnicas (:data:`CHECKS_TECNICOS`) nunca trazem
+    ``details``."""
     out = dict(comp)
     campo = "weeks[].proposal.compliance.checks"
-    keep = compliance_relevante if lim.compliance_relevantes and detail else (
-        lambda c: c.get("passed") is False)
+    def reprovada(c: Mapping[str, Any]) -> bool:
+        return c.get("passed") is False
+
+    def todas(c: Mapping[str, Any]) -> bool:
+        return True
+
+    keep = compliance_relevante if lim.compliance_relevantes and detail else reprovada
+    if lim.perfil == "site":
+        keep = todas
     checks, n_out = [], 0
     for c in comp.get("checks") or []:
         if not keep(c):
@@ -918,7 +933,7 @@ def _week_full(w: Mapping[str, Any], lim: Limites, cortes: _Cortes, *, latest: b
     for key in WEEK_IT_KEYS:
         _drop(out, key, cortes, "weeks[]", "omitido na publicação (TI: fica no livro e na cópia "
               "local)")
-    out["shadow"] = _shadow_pub(w.get("shadow"), w, lim, cortes)
+    _sem_referencia(out, cortes)
     out["research"] = _research_pub(w.get("research"), w, lim, cortes, full_notes=full_notes,
                                     detail=detail)
     if not detail:
@@ -933,15 +948,18 @@ def _week_full(w: Mapping[str, Any], lim: Limites, cortes: _Cortes, *, latest: b
                                      for p in prop["positions"]]
                 cortes.add("weeks[].proposal.positions[]", "omitidos (não exibidos): "
                            + ", ".join(unused), len(prop["positions"]))
-        if not positions_source and prop.get("positions"):
+        if not positions_source and prop.get("positions") and lim.perfil != "site":
             extra = sorted({k for p in prop["positions"] for k in p} - set(SLIM_POSITION_KEYS))
             prop["positions"] = [_pick(p, SLIM_POSITION_KEYS) for p in prop["positions"]]
             if extra:
                 cortes.add("weeks[].proposal.positions[]", "só as colunas exibidas (a tabela de "
                            "posições usa a marcação diária): omitidos " + ", ".join(extra),
                            len(prop["positions"]))
-        _drop(prop, "trades", cortes, "weeks[].proposal",
-              "omitido (boleta de ordens; giro e custo em weeks[].proposal.summary)")
+        if lim.perfil != "site":
+            _drop(prop, "trades", cortes, "weeks[].proposal",
+                  "omitido (boleta de ordens; giro e custo em weeks[].proposal.summary)")
+        if isinstance(prop.get("overrides"), dict):
+            prop["overrides"] = _overrides_pub(prop["overrides"], lim, cortes)
         if not (lim.hedge_cambial and latest):
             _drop(prop, "fx_hedges", cortes, "weeks[].proposal",
                   "omitido (só a semana mais recente traz o hedge)")
@@ -972,7 +990,8 @@ def _week_full(w: Mapping[str, Any], lim: Limites, cortes: _Cortes, *, latest: b
     if out.get("memo_markdown"):
         _cut_field(out, "memo_markdown", lim.comentario_chars, cortes, "weeks[]")
     if "thesis" in out:
-        out["thesis"] = _thesis_pub(w.get("thesis"), lim, cortes, focus=full_notes)
+        out["thesis"] = _thesis_pub(w.get("thesis"), lim, cortes,
+                                    focus=full_notes or lim.perfil == "site")
     return out
 
 
@@ -1190,7 +1209,7 @@ def _reports(daily: Sequence[Mapping[str, Any]], index: Sequence[Mapping[str, An
     # Índice: tipo e data; o caminho é sempre
     # ``<meta.publication.reports_dir>/<kind>/<date>/relatorio.md`` (``has_md``) e a página o
     # monta (:func:`report_path`), sem repeti-lo em cada linha.
-    idx = [_pick(r, ("kind", "date", "has_md")) for r in index]
+    idx = [_pick(r, ("kind", "date", "has_md", "has_html")) for r in index]
     if lim.indice_relatorios is not None and len(idx) > lim.indice_relatorios:
         idx = sorted(idx, key=lambda r: (str(r.get("date")), str(r.get("kind"))),
                      reverse=True)[:lim.indice_relatorios]
@@ -1287,6 +1306,16 @@ def chosen_backtest(runs: Sequence[Mapping[str, Any]], documents: Sequence[Mappi
     return str(runs[-1].get("id")), "execução mais recente"
 
 
+#: Nota de calendário do motor de backtest (``metrics.json``) da metodologia publicada.
+CALENDARIO_PUBLICADO = "Calendário: rebalanceamento no último pregão da semana na NYSE"
+
+
+def _calendario_anterior(run: Mapping[str, Any]) -> bool:
+    """A execução traz a nota de calendário de outra regra de montagem (anterior à publicada)."""
+    cal = [str(n) for n in run.get("notes") or [] if str(n).startswith("Calendário:")]
+    return bool(cal) and not all(n.startswith(CALENDARIO_PUBLICADO) for n in cal)
+
+
 def _backtests(bt: Mapping[str, Any], config_hash: str | None, lim: Limites, cortes: _Cortes
                ) -> dict[str, Any]:
     """Execuções de backtest: a escolhida/vigente (curva de fim de mês, resumo do IC e notas) e
@@ -1296,6 +1325,13 @@ def _backtests(bt: Mapping[str, Any], config_hash: str | None, lim: Limites, cor
     só com a data (sem caminho, texto nem SHA-256)."""
     out = dict(bt)
     all_runs = list(bt.get("runs") or [])
+    # Só backtests do calendário da metodologia publicada (montagem no último pregão da semana
+    # na NYSE): calibrações de um calendário anterior ficam no repositório, fora do portal.
+    antigos = [r for r in all_runs if _calendario_anterior(r)]
+    if antigos:
+        all_runs = [r for r in all_runs if not _calendario_anterior(r)]
+        cortes.add("backtests.runs", "omitidas as calibrações de um calendário de montagem "
+                   "anterior (ficam em reports/backtest)", len(antigos))
     all_docs = list(bt.get("documents") or [])
     chosen, why = chosen_backtest(all_runs, all_docs, config_hash)
     others = [r for r in all_runs if str(r.get("id")) != chosen]
@@ -1349,7 +1385,12 @@ def _backtests(bt: Mapping[str, Any], config_hash: str | None, lim: Limites, cor
         new_runs.append(x)
     out["runs"] = new_runs
     out["selected"] = {"id": chosen, "criterio": why} if chosen else None
-    # Notas de calibração: só a data (o caminho e o Markdown ficam em reports/backtest).
+    # Notas de calibração: só a data no artifact (o caminho e o Markdown ficam em
+    # reports/backtest); com o texto no portal (perfil site).
+    if lim.perfil == "site":
+        out["documents"] = [{"date": _doc_date(d.get("path")), "markdown": d.get("markdown")}
+                            for d in docs]
+        return out
     out["documents"] = [{"date": _doc_date(d.get("path"))} for d in docs]
     if docs:
         cortes.add("backtests.documents[]", "só a data da nota de calibração (caminho e texto "
@@ -1360,16 +1401,112 @@ def _backtests(bt: Mapping[str, Any], config_hash: str | None, lim: Limites, cor
 #: Trilha de auditoria publicada: só se existe, se a cadeia confere e o nº de eventos.
 AUDIT_KEYS = ("exists", "chain_ok", "n_events")
 #: Blocos do mandato (``meta.mandate``) que a página lê — limites de risco, liquidez, drawdown,
-#: squeeze e short, sinais do alpha e o modelo de risco (aba "Mandato e metodologia"). Os demais
-#: (custos, tabela, agenda das rotinas, adoção de IA) ficam em fund.yaml e na cópia local.
-MANDATE_KEYS = ("risk", "liquidity", "drawdown", "squeeze", "shorting", "alpha", "risk_model")
+#: squeeze e short, sinais do alpha, modelo de risco, cronograma, execução no fechamento e a fase
+#: vigente de adoção de IA (aba "Mandato e metodologia"). Os demais (custos e a tabela) ficam em
+#: fund.yaml e na cópia local; os nomes das mentes nunca são publicados.
+MANDATE_KEYS = ("risk", "liquidity", "drawdown", "squeeze", "shorting", "alpha", "risk_model",
+                "schedule", "execution", "ai_adoption")
 
 
-def _audit(audit: Mapping[str, Any], cortes: _Cortes) -> dict[str, Any]:
+#: Campos de cada evento da trilha publicados no portal (os códigos de verificação de cada evento
+#: ficam em ``dados/livro/audit_log.jsonl``, conferidos pela publicação).
+AUDIT_EVENT_KEYS = ("seq", "ts", "ts_local", "event_type", "actor", "summary", "week")
+
+
+#: Tipos de evento da carteira de referência (sombra/desafiante): fora de qualquer publicação.
+_TIPO_REFERENCIA = re.compile(r"SHADOW|SOMBRA|CHALLENGER|DESAFIANTE", re.IGNORECASE)
+
+
+def _audit(audit: Mapping[str, Any], cortes: _Cortes, lim: Limites | None = None
+           ) -> dict[str, Any]:
     out = _pick(audit, AUDIT_KEYS)
+    if lim is not None and lim.perfil == "site":
+        out["first_ts"], out["last_ts"] = audit.get("first_ts"), audit.get("last_ts")
+        bt = audit.get("by_type")
+        out["by_type"] = ({k: v for k, v in bt.items() if not _TIPO_REFERENCIA.search(str(k))}
+                          if isinstance(bt, dict) else bt)
+        evs = [_pick(e, AUDIT_EVENT_KEYS) for e in audit.get("events") or []
+               if not _TIPO_REFERENCIA.search(str(e.get("event_type") or ""))]
+        n = max(lim.eventos_auditoria, 0)
+        if len(evs) > n:
+            cortes.add("audit.events", f"só os {n} eventos mais recentes (a trilha inteira fica "
+                       "nos dados abertos, em dados/livro/audit_log.jsonl)", len(evs) - n)
+            evs = evs[-n:] if n else []
+        out["events"] = evs
+        out["trilha_completa"] = "dados/livro/audit_log.jsonl"
+        return out
     if audit.get("events"):
         cortes.add("audit.events", "omitido (TI: a trilha fica no livro e na cópia local)",
                    len(audit["events"]))
+    return out
+
+
+#: Chaves de ``Proposal.overrides`` publicadas no artifact (o resto da formulação da decisão vai
+#: ao portal e, já em texto, a ``modelo``): só os ajustes escalares e a decomposição do risco.
+OVERRIDES_PUBLICACAO = ("label", "vol_target", "gross_max", "vol_cap", "risk_target_mode",
+                        "reduce_only", "risco")
+#: Nunca publicadas, em perfil nenhum: resultados da carteira-sombra/desafiante e histórico de
+#: mudanças (o portal mostra só a metodologia vigente; o histórico fica no livro).
+_OVERRIDES_EXCLUIDAS = re.compile(r"sombra|shadow|challenger|desafiante|(?:^|_)(?:historico|history)"
+                                  r"(?:_\w+)?$(?<!_pregoes)|mudancas|changelog")
+#: O preço-sombra de cada restrição (custo da restrição) é publicado: não é a carteira-sombra.
+_OVERRIDES_PERMITIDAS = frozenset({"preco_sombra"})
+
+
+def _overrides_pub(ov: Mapping[str, Any], lim: Limites, cortes: _Cortes) -> dict[str, Any]:
+    """Ajustes e diagnósticos gravados na decisão. Lista negra nos dois perfis (sombra e
+    histórico de mudanças, em qualquer nível); no artifact, também a lista branca
+    :data:`OVERRIDES_PUBLICACAO` (a formulação completa, ~30 KB, fica no portal)."""
+    def limpa(x: Any) -> Any:
+        if isinstance(x, dict):
+            return {k: limpa(v) for k, v in x.items()
+                    if k in _OVERRIDES_PERMITIDAS or not _OVERRIDES_EXCLUIDAS.search(str(k))}
+        if isinstance(x, list):
+            return [limpa(v) for v in x]
+        return x
+
+    out = limpa(dict(ov))
+    if len(out) < len(ov):
+        cortes.add("weeks[].proposal.overrides", "omitidos (carteira-sombra e histórico ficam no "
+                   "livro)", len(ov) - len(out))
+    if lim.perfil != "site":
+        extra = sorted(k for k in out if k not in OVERRIDES_PUBLICACAO)
+        for k in extra:
+            out.pop(k)
+        if extra:
+            cortes.add("weeks[].proposal.overrides", "só os ajustes escalares e a decomposição "
+                       "do risco (formulação completa no portal e em modelo): omitidos "
+                       + ", ".join(extra), len(extra))
+    return out
+
+
+def _modelo_pub(m: Any, lim: Limites, cortes: _Cortes) -> Any:
+    """Modelo aberto da carteira: íntegro no portal; no artifact, os níveis finais deixam na
+    formulação só as restrições que vinculam ou estão a menos de 15% do limite (as demais entram
+    na contagem por grupo)."""
+    if not isinstance(m, dict) or lim.restricoes_completas:
+        return m
+    out = dict(m)
+    f = out.get("formulacao")
+    if isinstance(f, dict):
+        f = dict(f)
+        grupos, n_out = [], 0
+        for g in f.get("grupos") or []:
+            g = dict(g)
+            rs = [r for r in g.get("restricoes") or []
+                  if r.get("vinculante") or (r.get("uso") or 0) >= PERTO_DO_LIMITE]
+            n_out += len(g.get("restricoes") or []) - len(rs)
+            g["restricoes"] = rs
+            g["omitidas"] = g.get("n", len(rs)) - len(rs)
+            g["n_exibidas"] = len(rs)
+            grupos.append(g)
+        f["grupos"] = grupos
+        f["restricoes_resumidas"] = True
+        f["n_exibidas"] = sum(g["n_exibidas"] for g in grupos)
+        if n_out:
+            cortes.add("modelo.formulacao.grupos[].restricoes", "só as que vinculam ou estão "
+                       "perto do limite (formulação completa no portal)", n_out)
+        out["formulacao"] = f
     return out
 
 
@@ -1493,7 +1630,8 @@ def _compactar(full: Mapping[str, Any], lim: Limites, nivel: int, reports_dir: s
     d["risk_monitor"] = _monitor(d.get("risk_monitor") or {}, lim, cortes)
     meta = dict(d.get("meta") or {})
     d["backtests"] = _backtests(d.get("backtests") or {}, meta.get("config_hash"), lim, cortes)
-    d["audit"] = _audit(d.get("audit") or {}, cortes)
+    d["audit"] = _audit(d.get("audit") or {}, cortes, lim)
+    d["modelo"] = _modelo_pub(d.get("modelo"), lim, cortes)
     d["status"] = _status_pub(d.get("status"), cortes)
     if d.get("issues"):
         cortes.add("issues", "omitido (TI: apontamentos de leitura ficam na cópia local)",
@@ -1510,6 +1648,11 @@ def _compactar(full: Mapping[str, Any], lim: Limites, nivel: int, reports_dir: s
     mandate = dict(meta.get("mandate") or {})
     for key in sorted(set(mandate) - set(MANDATE_KEYS)):
         _drop(mandate, key, cortes, "meta.mandate", "omitido (não exibido; está em fund.yaml)")
+    if isinstance(mandate.get("schedule"), dict) and "minds" in mandate["schedule"]:
+        mandate["schedule"] = {k: v for k, v in mandate["schedule"].items() if k != "minds"}
+    if isinstance(mandate.get("ai_adoption"), dict):
+        mandate["ai_adoption"] = {k: v for k, v in mandate["ai_adoption"].items()
+                                  if k != "provider"}
     meta["mandate"] = mandate
     if isinstance(meta.get("issuer_names"), dict):
         # Só os emissores ainda citados depois dos cortes.
@@ -1518,18 +1661,22 @@ def _compactar(full: Mapping[str, Any], lim: Limites, nivel: int, reports_dir: s
         meta["issuer_names"] = {k: v for k, v in names.items() if k in refs}
         cortes.add("meta.issuer_names", "só os emissores citados na publicação",
                    len(names) - len(meta["issuer_names"]))
-    meta["profile"] = "publicacao"
+    meta["profile"] = lim.perfil
     #: Versão da página (SHA-256 do template) para a qual estes dados foram gerados: a página
     #: publicada compara com a sua e avisa "Página desatualizada" quando diferem.
     meta["page_sha256"] = page_sha256
     meta["export_limits"] = {
-        "profile": "publicacao", "max_daily_reports": lim.comentarios,
+        "profile": lim.perfil, "max_daily_reports": lim.comentarios,
         "full_weeks": lim.semanas_completas, "track_rows": lim.pregoes,
         "max_risk_runs": lim.execucoes_risco,
         "completo": (full.get("meta") or {}).get("export_limits")}
+    if isinstance(meta.get("counts"), dict) and "shadow_records" in meta["counts"]:
+        meta["counts"] = {k: v for k, v in meta["counts"].items() if k != "shadow_records"}
+    site_ = lim.perfil == "site"
     meta["publication"] = {
-        "nivel": nivel, "niveis": len(NIVEIS), "limites": asdict(lim),
-        "max_bytes": DATA_MAX_BYTES, "max_linha": DATA_MAX_LINE, "reports_dir": reports_dir,
+        "nivel": nivel, "niveis": 1 if site_ else len(NIVEIS), "limites": asdict(lim),
+        "max_bytes": SITE_ORCAMENTO_BYTES if site_ else DATA_MAX_BYTES,
+        "max_linha": None if site_ else DATA_MAX_LINE, "reports_dir": reports_dir,
         "data_hash_completo": (full.get("meta") or {}).get("data_hash"),
         "formato": "JSON indentado (objetos pequenos numa linha, listas de escalares em linhas "
                    "agrupadas); {\"_colunas\": ..., \"_n\": N} = tabela em colunas, "
@@ -1552,14 +1699,66 @@ def publicacao(full: Mapping[str, Any], *, reports_dir: str = "reports",
     (:data:`DATA_MAX_BYTES`, :data:`DATA_MAX_LINE`); se nenhum couber, devolve o mais compacto
     (a CLI então diz ``publicavel: false``). ``page_sha256``: versão da página (SHA-256 do
     template) gravada em ``meta.page_sha256``."""
-    if (full.get("meta") or {}).get("profile") == "publicacao":
-        raise ValueError("o retrato já está no perfil de publicação")
+    if (full.get("meta") or {}).get("profile") in ("publicacao", "site"):
+        raise ValueError("o retrato já está num perfil de publicação")
     out: dict[str, Any] = {}
     for nivel, lim in enumerate(niveis):
         out = _compactar(full, lim, nivel, reports_dir, page_sha256)
         if cabe(dump_publicacao(out)):
             return out
     return out
+
+
+#: Valor "sem teto" das contagens do perfil ``site``.
+SEM_TETO = 10**9
+#: Perfil ``site``: o ``data.json`` do portal é lido inteiro antes da primeira pintura (também no
+#: celular), então cresce de forma limitada — as semanas mais recentes em detalhe, dois anos de
+#: pregões em linhas diárias, os relatórios diários recentes com o comentário e os eventos
+#: recentes da trilha. Nada se perde: o detalhe de cada semana anterior, todos os relatórios e a
+#: trilha inteira são publicados como dados abertos (``dados/``), com os links na página.
+SITE_SEMANAS_COMPLETAS = 8
+SITE_PREGOES = 520
+SITE_COMENTARIOS = 60
+SITE_EXECUCOES_RISCO = 30
+SITE_EVENTOS_AUDITORIA = 500
+#: Orçamento de referência do ``data.json`` do portal (teste com 104 semanas e 500 pregões).
+SITE_ORCAMENTO_BYTES = 3_000_000
+
+
+def limites_site() -> Limites:
+    """Limites do portal público: os do nível 0 sem os cortes de texto e de colunas do artifact
+    (tudo o que é texto ou contagem pequena fica íntegro) e as contagens que crescem com o tempo
+    limitadas (:data:`SITE_SEMANAS_COMPLETAS` e afins); perfil ``site``."""
+    from dataclasses import fields
+
+    base = NIVEIS[0]
+    mudancas: dict[str, Any] = {
+        "perfil": "site", "semanas_completas": SITE_SEMANAS_COMPLETAS,
+        "pregoes": SITE_PREGOES, "comentarios": SITE_COMENTARIOS,
+        "execucoes_risco": SITE_EXECUCOES_RISCO, "eventos_auditoria": SITE_EVENTOS_AUDITORIA}
+    for f in fields(base):
+        v = getattr(base, f.name)
+        if f.name in mudancas:
+            continue
+        if isinstance(v, bool):
+            mudancas[f.name] = True
+        elif isinstance(v, int):
+            mudancas[f.name] = SEM_TETO
+    return replace(base, **mudancas)
+
+
+def site(full: Mapping[str, Any], *, reports_dir: str = "dados/relatorios",
+         page_sha256: str | None = None) -> dict[str, Any]:
+    """Retrato do portal público (perfil ``site``): o completo sem os cortes de texto e de
+    colunas do artifact — ficam a trilha de auditoria recente, as notas de calibração, todas as
+    colunas das posições, as ordens, todas as verificações de conformidade, os pontos a favor e
+    contra da pesquisa, as teses das semanas em detalhe e a formulação completa da decisão. Saem
+    os campos de TI, os resultados da carteira de referência (sombra/desafiante) e o histórico de
+    mudanças; o que cresce com o tempo fica limitado (:func:`limites_site`) e segue íntegro nos
+    dados abertos."""
+    if (full.get("meta") or {}).get("profile") in ("publicacao", "site"):
+        raise ValueError("o retrato já está num perfil de publicação")
+    return _compactar(full, limites_site(), 0, reports_dir, page_sha256)
 
 
 def compactar(full: Mapping[str, Any], nivel: int = 0, *, reports_dir: str = "reports",
@@ -1574,6 +1773,8 @@ def limites(nivel: int = 0, **changes: Any) -> Limites:
 
 
 __all__ = ["COMENTARIOS_MINIMOS", "DATA_MAX_BYTES", "DATA_MAX_LINE", "NIVEIS", "PAGE_MAX_BYTES",
+           "SITE_ORCAMENTO_BYTES", "SITE_SEMANAS_COMPLETAS",
            "PAGE_MAX_LINE", "PERTO_DO_LIMITE", "PREGOES_MINIMOS", "PROFILES", "Limites", "cabe",
            "chosen_backtest", "compactar", "compliance_relevante", "dump_publicacao", "expandir",
-           "limites", "max_line", "partes", "publicacao", "report_path", "sem_nome_da_mente"]
+           "limites", "limites_site", "max_line", "partes", "publicacao", "report_path",
+           "sem_nome_da_mente", "site"]

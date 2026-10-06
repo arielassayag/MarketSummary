@@ -126,8 +126,11 @@ proprietário: qualquer pessoa consegue abrir cada fonte citada.
 
 ## 7. Rotina, rascunhos e qualquer assistente
 
-- Rotina `cdp-cobertura` (skill `cdp:cobertura`): segunda a quinta, 21:30 de Brasília, até 12
-  emissores por execução (`docs/cdp/ROTINAS.md`).
+- Rotina `cdp-cobertura`: segunda a quinta, 22:37 de Brasília, até 12 emissores por execução,
+  no app de IA de quem opera (Claude Code, Codex ou Gemini; `docs/cdp/ROTINAS.md`). O
+  procedimento é o roteiro neutro `docs/cdp/playbooks/COBERTURA.md`, o mesmo em qualquer app; as
+  skills `cdp-cobertura` (`.claude/skills/`, `.agents/skills/`) e `/cdp:cobertura` (plugin) só
+  fazem a entrada e a saída da execução.
 - Nota escrita fora do clone das rotinas: rascunho em `docs/cdp/notas/<IID>/<data>.json`
   (`docs/cdp/notas/README.md`).
 - Qualquer assistente de IA: `cdp mente pacote --etapa nota` exporta o pacote autocontido

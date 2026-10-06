@@ -11,7 +11,8 @@ o assistente usado.
 Este guia mostra como (1) verificar a integridade de tudo o que foi publicado, (2) recalcular os
 modelos e a decisão da carteira a partir dos insumos arquivados, (3) coletar de novo os dados
 públicos e (4) refazer cada passo da inteligência artificial com qualquer assistente — ChatGPT,
-Gemini, Claude ou outro.
+Gemini, Claude ou outro. Para conferir o portal publicado contra o repositório, veja a seção 8;
+para operar a sua própria cópia do fundo, `docs/cdp/REPLICAR.md`.
 
 ## 1. O que é verificável
 
@@ -215,35 +216,11 @@ coleta nova pode diferir em bytes; compare valores com tolerância e confira dat
 Nenhum dado pago, de acesso restrito ou de conector proprietário entra em qualquer modelo ou
 texto do fundo.
 
----
+## 8. Conferir o portal e operar a sua cópia
 
-## English summary
-
-**Audit and reproduction.** CDP — Cabra da Peste is fully auditable by anyone. Code, mandate
-configuration, archived market data and public inputs, coverage models, decisions, daily records,
-reports and the hash-chained audit trail live in the public repository. Every published number is
-computed by tested code from public data; the AI only writes structured text that cites those
-numbers and passes the same validators whichever assistant is used.
-
-1. **Set up:** clone the repository, `uv sync --extra dev` (library versions pinned in `uv.lock`).
-2. **Exact verification:** `cdp verify` checks the audit chain, decisions, daily records and the
-   market data store; `cdp cobertura verify --sem-recalculo` checks the coverage ledger and
-   manifests; `cdp nota agenda` reports research-note integrity. Everything is SHA-256 chained.
-3. **Recompute with tolerance:** `cdp cobertura verify` recomputes every 12-month price target from
-   the archived public inputs (1e-5 relative tolerance; seeded Monte Carlo). The weekly decision
-   is recomputed with `cdp weekly preview` on a checkout of the decision commit, compared with the
-   approved proposal at a reference tolerance of 1 bp of NAV per position and 1e-4 relative on
-   risk metrics. Recomputed floats are compared by tolerance, never by hash.
-4. **Any AI as the mind:** `cdp mente pacote --etapa {pesquisa|decisao|tese|nota|comentario-diario|comentario-semanal}`
-   exports one self-contained markdown package (role, rules, style guide, code-computed facts,
-   JSON Schema, example skeleton, exact validation command, estimated token count). Paste or
-   attach it in ChatGPT, Gemini, Claude or any assistant (weekly packages need a large context
-   window), save the returned JSON at the indicated path and run the validation command; errors
-   are precise and can be pasted back. Research is validated alone (`validate --so-pesquisa`)
-   and the decision is redone after it.
-5. **Re-fetch public data:** `cdp fetch-base` and `cdp cobertura run` into separate folders;
-   vendor revisions may change bytes, so compare values with tolerance and check publication
-   dates (no input published after the model date).
-6. **Sources:** Yahoo Finance (yfinance), CVM open data and RAD, SEC EDGAR, B3, FINRA, Banco
-   Central do Brasil, Banxico, FRED, ETF issuers' holdings files, Damodaran Online, public news
-   feeds. No paid, restricted or proprietary data enters any model or text.
+- **O portal publicado corresponde ao repositório?** O site traz `manifest.json` (com o commit de
+  origem, `source_commit`) e `SHA256SUMS` com o sha256 de cada arquivo publicado. O passo a passo
+  está em `docs/cdp/SITE.md`, seção "Conferir uma publicação".
+- **Operar a sua própria cópia** — fork, configuração, escolha do app de IA (Claude Code, Codex,
+  Gemini ou outro), agenda das rotinas e portal próprio: `docs/cdp/REPLICAR.md`. As rotinas rodam
+  dentro do app de IA, com o mesmo roteiro em qualquer um (`docs/cdp/ROTINAS.md`).

@@ -34,6 +34,12 @@
   --horizonte: #1d1611; --chao: #fffdf8; --chao-line: #1d1611; --mast-sep: #d3c4ab;
   --foot-bg: #1d1611; --sel-bg: #1d1611; --sel-ink: #fbf7ef;
   --grao: var(--grao-claro);
+  /* chapada (forma e ornamento, nunca dado): estrato da página, curva de nível, anel e sombra da cal, argila, costura */
+  --estrato: #ebe2d0; --curva: #bba983; --anel: rgba(120, 86, 52, 0.13); --costura: #cfba96; --argila: #eedac1; --mancha: rgba(185, 105, 47, 0.045);
+  --relevo: 0 0 0 1px var(--anel), 0 1px 0 rgba(150, 108, 66, 0.1), 0 14px 26px -20px rgba(86, 58, 30, 0.34);
+  --relevo-leve: 0 0 0 1px var(--anel), 0 3px 8px -6px rgba(86, 58, 30, 0.3);
+  --fundo: inset 0 1px 2px rgba(110, 74, 40, 0.12), inset 0 0 0 1px rgba(120, 86, 52, 0.07);
+  --nicho: inset 0 24px 28px -26px rgba(120, 76, 36, 0.2);
   --font-display: "Cinzel", "Trajan Pro", "Cormorant SC", "Times New Roman", Georgia, serif;
   --font-serif: "Alegreya", "Source Serif 4", "Iowan Old Style", Georgia, Cambria, "Times New Roman", serif;
   --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -61,6 +67,11 @@
     --horizonte: #0a0807; --chao: #0d0b09; --chao-line: #2c241d; --mast-sep: #3d3229;
     --foot-bg: #261d16; --sel-bg: #efe6d5; --sel-ink: #12100d;
     --grao: var(--grao-escuro);
+    --estrato: #201a14; --curva: #5f4f3f; --anel: rgba(239, 230, 213, 0.08); --costura: #5f4d3a; --argila: #3a2a1d; --mancha: rgba(233, 160, 67, 0.03);
+    --relevo: inset 0 1px 0 rgba(255, 236, 210, 0.035), 0 0 0 1px var(--anel), 0 1px 0 rgba(0, 0, 0, 0.4), 0 16px 30px -20px rgba(0, 0, 0, 0.85);
+    --relevo-leve: 0 0 0 1px var(--anel), 0 3px 8px -6px rgba(0, 0, 0, 0.7);
+    --fundo: inset 0 1px 3px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(239, 230, 213, 0.045);
+    --nicho: inset 0 24px 28px -26px rgba(0, 0, 0, 0.45);
     color-scheme: dark;
   }
 }
@@ -83,6 +94,11 @@
     --horizonte: #0a0807; --chao: #0d0b09; --chao-line: #2c241d; --mast-sep: #3d3229;
     --foot-bg: #261d16; --sel-bg: #efe6d5; --sel-ink: #12100d;
     --grao: var(--grao-escuro);
+    --estrato: #201a14; --curva: #5f4f3f; --anel: rgba(239, 230, 213, 0.08); --costura: #5f4d3a; --argila: #3a2a1d; --mancha: rgba(233, 160, 67, 0.03);
+    --relevo: inset 0 1px 0 rgba(255, 236, 210, 0.035), 0 0 0 1px var(--anel), 0 1px 0 rgba(0, 0, 0, 0.4), 0 16px 30px -20px rgba(0, 0, 0, 0.85);
+    --relevo-leve: 0 0 0 1px var(--anel), 0 3px 8px -6px rgba(0, 0, 0, 0.7);
+    --fundo: inset 0 1px 3px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(239, 230, 213, 0.045);
+    --nicho: inset 0 24px 28px -26px rgba(0, 0, 0, 0.45);
     color-scheme: dark;
   }
 }
@@ -99,7 +115,8 @@ body {
 ::selection { background: var(--sol); color: var(--on-sol); }
 a { color: var(--accent); text-underline-offset: 2px; }
 a:hover { color: var(--accent-2); }
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+a:focus-visible { border-radius: 3px; }
 button, input, select { font: inherit; color: inherit; }
 code, .mono { font-family: var(--font-mono); font-size: 0.9em; }
 h1, h2, h3, h4 { margin: 0; text-wrap: balance; }
@@ -738,23 +755,9 @@ details.mini > summary { cursor: pointer; color: var(--accent); font-size: 13px;
 .th-notes { display: grid; gap: 8px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12.5px; max-width: 110ch; }
 .th-notes h3 { font-size: 13px; color: var(--ink-2); }
 .th-notes .list { font-size: 12.5px; }
-/* visão geral: o destaque da tese é a capa de um folheto de cordel — moldura dupla de tinta
-   aberta no topo para a estrela (só gradientes, sem remendo de fundo) */
-.th-hl {
-  position: relative; border: 0; padding: 30px 30px 26px;
-  background:
-    linear-gradient(var(--filete), var(--filete)) left top / calc(50% - 21px) 2px no-repeat,
-    linear-gradient(var(--filete), var(--filete)) right top / calc(50% - 21px) 2px no-repeat,
-    linear-gradient(var(--filete), var(--filete)) left bottom / 100% 2px no-repeat,
-    linear-gradient(var(--filete), var(--filete)) left top / 2px 100% no-repeat,
-    linear-gradient(var(--filete), var(--filete)) right top / 2px 100% no-repeat,
-    linear-gradient(var(--filete), var(--filete)) left 6px top 6px / calc(50% - 27px) 1px no-repeat,
-    linear-gradient(var(--filete), var(--filete)) right 6px top 6px / calc(50% - 27px) 1px no-repeat,
-    linear-gradient(var(--filete), var(--filete)) left 6px bottom 6px / calc(100% - 12px) 1px no-repeat,
-    linear-gradient(var(--filete), var(--filete)) left 6px top 6px / 1px calc(100% - 12px) no-repeat,
-    linear-gradient(var(--filete), var(--filete)) right 6px top 6px / 1px calc(100% - 12px) no-repeat,
-    var(--surface);
-}
+/* visão geral: o destaque da tese é um nicho de parede caiada (arco, barrado de argila e a estrela
+   como fecho): ver a camada "chapada" */
+.th-hl { position: relative; border: 0; padding: 30px 30px 26px; background: var(--surface); }
 .th-hl::before { content: ""; position: absolute; top: -10px; left: 50%; width: 24px; height: 24px; margin-left: -12px; }
 .th-hl-t { font: 700 25px/1.2 var(--font-serif); max-width: 44ch; }
 .btn-p { background: var(--sel-bg); border-color: var(--sel-bg); color: var(--sel-ink); font-weight: 600; letter-spacing: 0.01em; }
@@ -855,6 +858,352 @@ details.mini > summary { cursor: pointer; color: var(--accent); font-size: 13px;
   .foot-in { padding-bottom: 170px; }
   .foot-in::before, .foot-in::after { width: 176px; margin-left: -88px; bottom: 36px; }
 }
+/* ========== chapada: a forma do sertão sobre a grade de dados ==========
+   A página desce como um corte da chapada do Araripe: estratos de terra separados por curvas de nível.
+   Painéis = lajes de taipa caiada (anel quente, sombra curta, cantos de mão espelhados); indicadores =
+   selas; selos = seixos; capa da tese = nicho com barrado de argila. Da xilogravura: goiva e capitular.
+   Dados não entram: só a ponta do valor das barras é arredondada e a grade dos gráficos é falhada. */
+:root {
+  /* cantos de mão: uma família, espelhada entre vizinhos (nunca um canto diferente por peça) */
+  --forma-a: 26px 16px 28px 18px / 22px 24px 18px 26px;
+  --forma-b: 16px 26px 18px 28px / 24px 22px 26px 18px;
+  --forma-c: 18px 12px 16px 12px / 14px 12px 16px 12px;
+  --folha: 24px 9px 24px 9px / 20px 9px 20px 9px;
+  --seixo-1: 11px 8px 10px 7px / 9px 11px 8px 10px;
+  --seixo-2: 8px 11px 7px 10px / 11px 9px 10px 8px;
+  --seixo-g: 15px 11px 14px 10px / 13px 15px 11px 14px;
+  /* ornamentos da chapada: máscaras SVG monocromáticas (a cor vem do fundo do pseudo) */
+  --orn-curva: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 10' preserveAspectRatio='none'%3E%3Cpath d='M0 5.7 40 5.8 90 6 150 5.9 220 5.8 300 5.5 390 5.2 480 5.1 580 5.5 680 5.7 780 5.6 880 5.2 980 5.1 1080 5.2 1150 5.5 1200 5.7 L1200 6 1150 5.8 1080 5.5 980 5.3 880 5.6 780 6 680 6.4 580 6.7 480 7 390 7.1 300 7.4 220 7.7 150 7.6 90 7.4 40 7.1 0 6.9Z'/%3E%3C/svg%3E");
+  --orn-traco: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 16' preserveAspectRatio='none'%3E%3Cpath d='M0 7.1 1.5 5.7 4 4.6 8 3.6 13 3.5 20 3.5 32 3.4 48 3.5 66 3.4 86 3.5 104 3.5 118 3.7 L118 12.6 104 12.8 86 13.2 66 13.6 48 13.8 32 13.8 20 13.9 13 13.9 8 13.8 4 12.8 1.5 11.6 0 10.2ZM108 3.5 129.3 3.4 150.7 3.4 172 3.3 193.3 3.3 214.7 3.4 236 3.6 257.3 3.8 278.7 4.1 300 4.3 L300 4.4 278.7 4.6 257.3 4.7 236 4.9 214.7 5.1 193.3 5.4 172 5.7 150.7 6.1 129.3 6.4 108 6.6ZM108 5.9 122.2 5.8 136.4 5.8 150.7 5.7 164.9 5.7 179.1 5.7 193.3 5.7 207.6 5.8 221.8 5.9 236 6.1 L236 6.2 221.8 6.4 207.6 6.7 193.3 7 179.1 7.3 164.9 7.6 150.7 7.9 136.4 8.2 122.2 8.5 108 8.7ZM108 8 127.3 7.8 146.7 7.6 166 7.5 185.3 7.4 204.7 7.3 224 7.3 243.3 7.4 262.7 7.5 282 7.7 L282 7.8 262.7 8 243.3 8.2 224 8.5 204.7 8.9 185.3 9.2 166 9.6 146.7 10.1 127.3 10.4 108 10.8ZM108 10.3 119.8 10.1 131.6 10 143.3 9.9 155.1 9.8 166.9 9.8 178.7 9.7 190.4 9.7 202.2 9.7 214 9.8 L214 9.9 202.2 10.2 190.4 10.5 178.7 10.9 166.9 11.2 155.1 11.6 143.3 11.9 131.6 12.2 119.8 12.5 108 12.8Z'/%3E%3C/svg%3E");
+  --orn-ilha: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 40' fill='none' stroke='%23000' stroke-width='1.1'%3E%3Cpath stroke-opacity='.6' d='M0 10C60 10 110 10 138 9C168 7 178 3 200 3S232 7 262 9 340 10 400 10M0 30C60 30 110 30 138 31C168 33 178 37 200 37S232 33 262 31 340 30 400 30'/%3E%3Cpath d='M0 20C80 20 118 20 142 20C163 20 172 10.5 200 10.5S237 20 258 20 320 20 400 20M142 20C163 20 172 29.5 200 29.5S237 20 258 20'/%3E%3C/svg%3E");
+  --orn-curvas: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 40' preserveAspectRatio='none' fill='none' stroke='%23000' stroke-width='1.1'%3E%3Cpath stroke-opacity='.6' d='M0 10C120 9.2 240 10.8 360 10.2S520 9.6 600 10M0 30C100 30.7 260 29.3 380 29.9S530 30.4 600 30'/%3E%3Cpath d='M0 20C150 20.8 300 19.2 450 19.8S560 20.2 600 20'/%3E%3C/svg%3E");
+  --orn-risco: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 4' preserveAspectRatio='none'%3E%3Cpath d='M0 1.6 32 1.6 64 1.6 96 1.4 128 1.6 160 2 192 2 224 2 256 2 288 1.6 320 1.2 352 1.1 384 1.1 416 1.4 448 1.4 480 1.2 512 1.3 544 1.3 576 1.2 608 1.4 640 1.6 L640 2.8 608 2.3 576 2.1 544 2 512 1.9 480 2.1 448 2.3 416 2.5 384 2.5 352 2.2 320 2.4 288 2.7 256 2.7 224 2.7 192 2.7 160 2.7 128 2.7 96 2.6 64 2.8 32 3.1 0 2.8Z'/%3E%3C/svg%3E");
+  --orn-goiva-e: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 50' preserveAspectRatio='none'%3E%3Cpath d='M0 25.2 30 25.7 70 25.7 120 24.2 180 21.4 240 17.7 300 13.2 350 10 395 5.2 430 1.5 455 -2 472 -2.8 484 .4 492 5 497 10.9 500 21.5 L500 23.4 497 32.1 492 36.9 484 41.4 472 43.2 455 40.2 430 40.3 395 39.6 350 39 300 36.7 240 35.3 180 33.9 120 32.6 70 31.4 30 30.1 0 29Z'/%3E%3C/svg%3E");
+  --orn-goiva-d: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 50' preserveAspectRatio='none'%3E%3Cpath d='M500 25.2 470 25.7 430 25.7 380 24.2 320 21.4 260 17.7 200 13.2 150 10 105 5.2 70 1.5 45 -2 28 -2.8 16 .4 8 5 3 10.9 0 21.5 L0 23.4 3 32.1 8 36.9 16 41.4 28 43.2 45 40.2 70 40.3 105 39.6 150 39 200 36.7 260 35.3 320 33.9 380 32.6 430 31.4 470 30.1 500 29Z'/%3E%3C/svg%3E");
+  --orn-gv: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 600' preserveAspectRatio='none'%3E%3Cpath d='M4.3 0 3.1 3 1.9 8 1.3 16 .9 40 1.2 90 1.7 160 2.6 240 3.1 320 2.8 400 3 470 3.1 530 4 570 4.6 592 5 600 L5.4 600 6 592 6.4 570 6.7 530 7.9 470 8.9 400 10.3 320 10.8 240 10.9 160 11 90 11.2 40 11.7 16 10.9 8 9.8 3 8.3 0Z'/%3E%3C/svg%3E");
+  --orn-sela: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'%3E%3Cpath d='M0 0C55 9 145 9 200 0V12H0Z'/%3E%3C/svg%3E");
+  --orn-sela-fio: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'%3E%3Cpath d='M0 .7C55 9.7 145 9.7 200 .7' fill='none' stroke='%23000' stroke-width='1.2'/%3E%3C/svg%3E");
+  --orn-pesponto: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 18' preserveAspectRatio='none'%3E%3Cpath d='M0 5.5C55 14.5 145 14.5 200 5.5' fill='none' stroke='%23000' stroke-width='1.1'/%3E%3C/svg%3E");
+}
+
+/* ---------- ritmo: estratos e curvas de nível ---------- */
+main.wrap { padding-block: 38px 56px; }
+.panel { --vao: 72px; }
+.sec { gap: 18px; }
+.cols, .cols-2, .cols-3 { gap: 22px; }
+.stack { gap: 20px; }
+.cards { gap: 18px; }
+.kpis { gap: 14px; }
+/* a navegação da tese não pede o vão inteiro (fica colada ao corpo da tese) */
+.panel > .tnav { margin-top: -34px; align-self: start; }
+.panel > .tnav + .sec { margin-top: -26px; }
+/* estratos: as seções pares descem num tom de terra de borda a borda (tinta de border-image fora da
+   caixa não gera rolagem) e esfumam até a curva de nível */
+.panel > section.sec:nth-of-type(even) {
+  border-image: linear-gradient(#0000, var(--estrato) 30px, var(--estrato) calc(100% - 30px), #0000) fill 0 / 0 / 36px 100vw;
+}
+/* entre seções: três curvas de nível que se abrem num olho em volta da estrela */
+.panel > .sec + .sec::before {
+  top: calc(var(--vao) / -2 - 20px); left: 0; width: 100%; height: 40px; transform: none;
+  background: linear-gradient(90deg, #0000, var(--curva) 18%, var(--curva) 82%, #0000);
+  -webkit-mask: var(--orn-ilha) center / 400px 40px no-repeat, var(--orn-curvas) left center / calc(50% - 199px) 40px no-repeat, var(--orn-curvas) right center / calc(50% - 199px) 40px no-repeat;
+  mask: var(--orn-ilha) center / 400px 40px no-repeat, var(--orn-curvas) left center / calc(50% - 199px) 40px no-repeat, var(--orn-curvas) right center / calc(50% - 199px) 40px no-repeat;
+}
+.panel > .sec + .sec::after { top: calc(var(--vao) / -2 - 6.5px); width: 13px; height: 13px; margin-left: -6.5px; }
+
+/* título de seção: pincelada de sol sob o começo do título, sobre uma curva de nível que engrossa e some */
+.sec-h { position: relative; background: none; padding-bottom: 17px; }
+.sec-h::before, .sec-h::after { content: ""; position: absolute; left: 0; pointer-events: none; }
+.sec-h::after {
+  right: 0; bottom: 0; height: 10px; background: var(--filete);
+  -webkit-mask: var(--orn-curva) 0 0 / 100% 100% no-repeat; mask: var(--orn-curva) 0 0 / 100% 100% no-repeat;
+}
+.sec-h::before {
+  z-index: 1; left: -3px; bottom: 3px; width: clamp(150px, 22%, 240px); height: 11px; background: var(--sol);
+  -webkit-mask: var(--orn-traco) 0 0 / 100% 100% no-repeat; mask: var(--orn-traco) 0 0 / 100% 100% no-repeat;
+}
+
+/* ---------- abas: o chão termina num fio riscado à mão; a aba ativa leva duas goivas de sol ---------- */
+.tabs { border-bottom: 0; box-shadow: 0 10px 18px -16px var(--tip-shadow); }
+.tabs::before {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -1.5px; height: 4px; z-index: 1; pointer-events: none; background: var(--chao-line);
+  -webkit-mask: var(--orn-risco) 0 0 / 640px 4px repeat-x; mask: var(--orn-risco) 0 0 / 640px 4px repeat-x;
+}
+.tabs.sim::before { display: none; }
+.tab { isolation: isolate; }
+.tab::before { content: ""; position: absolute; pointer-events: none; }
+/* passar o mouse: um seixo claro atrás do rótulo */
+.tab:not([aria-selected="true"])::before {
+  inset: 9px 1px 10px; z-index: -1; border-radius: 46% 54% 50% 50% / 58% 46% 54% 42%; transition: background-color 0.15s;
+}
+.tab:not([aria-selected="true"]):hover::before { background: var(--surface-2); }
+.tab[aria-selected="true"] { background: none; }
+.tab[aria-selected="true"]::before {
+  left: 7px; right: 7px; bottom: 4px; height: 4px; background: var(--sol);
+  -webkit-mask: var(--orn-goiva-e) 0 0 / calc(50% - 10px) 100% no-repeat, var(--orn-goiva-d) 100% 0 / calc(50% - 10px) 100% no-repeat;
+  mask: var(--orn-goiva-e) 0 0 / calc(50% - 10px) 100% no-repeat, var(--orn-goiva-d) 100% 0 / calc(50% - 10px) 100% no-repeat;
+}
+.tab[aria-selected="true"]::after { bottom: 0; width: 12px; height: 12px; margin-left: -6px; }
+
+/* ---------- lajes de taipa caiada: sem fio; anel quente, sombra curta, canto de mão ---------- */
+.block {
+  border: 0; border-radius: var(--forma-a); box-shadow: var(--relevo); padding: 24px 26px 26px;
+}
+.block:nth-child(even) { border-radius: var(--forma-b); }
+.block-h { position: relative; border-bottom: 0; padding-bottom: 11px; }
+.block-h::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 4px; pointer-events: none;
+  background: linear-gradient(90deg, var(--line), var(--line) 45%, var(--grid) 80%, #0000);
+  -webkit-mask: var(--orn-risco) 0 0 / 640px 4px repeat-x; mask: var(--orn-risco) 0 0 / 640px 4px repeat-x;
+}
+/* cartões e recolhíveis: corte de folha (dois cantos largos em diagonal) */
+.card, details.fold { border: 0; border-radius: var(--folha); box-shadow: var(--relevo); }
+.card { padding: 18px 20px 20px; }
+.worst .card { border-top: 0; box-shadow: inset 0 3px 0 var(--crit-mark), var(--relevo); }
+.empty { border: 0; border-radius: var(--folha); background: var(--surface-3); box-shadow: var(--fundo); }
+/* vazio dentro de uma laje: só a nota, sem caixa (uma caixa rebaixada pareceria um campo de formulário) */
+:is(.block, .card, .fold) .empty { background: none; box-shadow: none; border-radius: 0; padding: 2px 0 0; color: var(--muted); font-style: italic; }
+/* faixas de sol: goiva vertical (ataque em cima, cauda embaixo) */
+.comment, .boot { position: relative; border: 0; border-radius: var(--folha); box-shadow: var(--relevo); padding-left: 26px; }
+.comment::before, .boot::before, .md blockquote::before {
+  content: ""; position: absolute; left: 10px; top: 12px; bottom: 12px; width: 4px; background: var(--sol); pointer-events: none;
+  -webkit-mask: var(--orn-gv) 0 0 / 100% 100% no-repeat; mask: var(--orn-gv) 0 0 / 100% 100% no-repeat;
+}
+.boot.err::before { background: var(--crit-mark); }
+
+/* ---------- selas: indicadores com o assento côncavo; o pesponto só acompanha o assento ---------- */
+.tile {
+  position: relative; border: 0; border-radius: 22px 22px 16px 16px / 16px 16px 14px 14px; padding: 22px 16px 15px;
+  box-shadow: inset 1px 0 0 var(--anel), inset -1px 0 0 var(--anel), inset 0 -1px 0 var(--anel);
+  -webkit-mask: var(--orn-sela) 0 0 / 100% 12px no-repeat, linear-gradient(#000 0 0) 0 11px / 100% calc(100% - 11px) no-repeat;
+  mask: var(--orn-sela) 0 0 / 100% 12px no-repeat, linear-gradient(#000 0 0) 0 11px / 100% calc(100% - 11px) no-repeat;
+}
+.tile::before, .tile::after { content: ""; position: absolute; left: 0; right: 0; top: 0; pointer-events: none; }
+.tile::before { height: 12px; background: var(--anel); -webkit-mask: var(--orn-sela-fio) 0 0 / 100% 100% no-repeat; mask: var(--orn-sela-fio) 0 0 / 100% 100% no-repeat; }
+/* pesponto: a máscara dá a curva (esticada com a sela); os pontos vêm do fundo, em px fixos, então o
+   ponto tem o mesmo tamanho em qualquer largura de indicador */
+.tile::after {
+  height: 18px; background: repeating-linear-gradient(90deg, var(--costura) 0 3px, #0000 3px 5.6px) 16px 0 / calc(100% - 32px) 100% no-repeat;
+  -webkit-mask: var(--orn-pesponto) 0 0 / 100% 100% no-repeat; mask: var(--orn-pesponto) 0 0 / 100% 100% no-repeat;
+}
+/* indicador dentro de uma laje: pedra assentada na parede (rebaixada, sem sela) */
+.block .tile { -webkit-mask: none; mask: none; background: var(--surface-3); box-shadow: var(--fundo); border-radius: var(--seixo-g); padding: 14px 16px; }
+.block .tile::before, .block .tile::after { content: none; }
+.trio > div { border-bottom: 0; background: linear-gradient(90deg, var(--grid), var(--grid) 70%, #0000) left bottom / 100% 1px no-repeat; }
+.trio > div:last-child { background: none; }
+.mm, .th-notes { border-top: 0; background: linear-gradient(90deg, var(--line), var(--grid) 60%, #0000) left top / 100% 1px no-repeat; }
+
+/* ---------- tabelas: a faixa do cabeçalho é um seixo com o fio de tinta; o miolo continua reto ---------- */
+.scroll { border: 0; border-radius: var(--forma-c); box-shadow: var(--relevo); }
+:is(.block, .card, .fold) .scroll { box-shadow: none; background: none; border-radius: 13px 11px 11px 13px / 11px 13px 13px 11px; }
+.tbl { border-collapse: separate; border-spacing: 0; }
+.scroll > .tbl { margin: 6px; width: calc(100% - 12px); }
+:is(.block, .card, .fold) .scroll > .tbl { margin: 0; width: 100%; }
+/* o fio de tinta sob o cabeçalho é um fundo de 1 px: o raio das pontas o recolhe (fio por dentro do seixo) */
+.tbl th, .tbl th.sticky { border-bottom: 0; background-image: linear-gradient(var(--ink-2), var(--ink-2)); background-size: 100% 1px; background-position: 0 100%; background-repeat: no-repeat; }
+.tbl thead th:first-child { border-radius: 12px 0 0 10px / 14px 0 0 12px; background-position: 12px 100%; background-size: calc(100% - 12px) 1px; }
+.tbl thead th:last-child { border-radius: 0 10px 12px 0 / 0 12px 14px 0; background-size: calc(100% - 12px) 1px; }
+.tbl thead th:only-child { background-size: calc(100% - 24px) 1px; }
+.md table { border-collapse: separate; border-spacing: 0; }
+.md th, .md td { border: 0; }
+.md td { border-top: 1px solid var(--grid); }
+.md tbody tr:first-child > td { border-top: 0; }
+.md th { background-image: linear-gradient(var(--ink-2), var(--ink-2)); background-size: 100% 1px; background-position: 0 100%; background-repeat: no-repeat; }
+.md th:first-child { border-radius: 11px 0 0 9px / 12px 0 0 10px; background-position: 11px 100%; background-size: calc(100% - 11px) 1px; }
+.md th:last-child { border-radius: 0 9px 11px 0 / 0 10px 12px 0; background-size: calc(100% - 11px) 1px; }
+
+/* ---------- selos: seixos de rio (pontas de tamanhos diferentes, nunca a cápsula de régua) ---------- */
+.pill, .chip, .side, .sq, .kc, .nchip, .stance, .pillbtn { border-radius: var(--seixo-1); }
+:is(.pill, .chip, .side, .sq, .kc, .nchip, .stance):nth-child(even) { border-radius: var(--seixo-2); }
+.pill { padding: 1px 9px; }
+.side { padding: 0 7px; }
+.chip, .nchip { border-color: transparent; background: var(--surface-2); }
+.nchip { padding: 1px 10px; }
+.nchip.thc { border-radius: 12px 16px 13px 10px / 11px 13px 15px 12px; }
+/* "LS" (long-short) não é ".ls" (a borboleta): em modo quirks a classe não diferencia caixa */
+:is(.side, .nchip).LS { position: static; min-width: 0; height: auto; }
+:is(.side, .nchip).LS::before { content: none; }
+.sim-tag { border-radius: 13px 9px 14px 10px / 11px 14px 9px 13px; padding-inline: 14px; }
+.tip { border-color: var(--line); border-radius: 12px 10px 13px 9px / 10px 13px 9px 12px; box-shadow: 0 1px 3px var(--tip-shadow), 0 12px 26px -10px var(--tip-shadow); }
+
+/* destaques: conta de barro na cor do estado, no lugar da borda reta */
+.alerts > li { position: relative; border-left: 0; padding-left: 22px; border-radius: var(--seixo-g); }
+.alerts > li::before {
+  content: ""; position: absolute; left: 9px; top: 9px; bottom: 9px; width: 4px; border-radius: 3px 4px 3px 4px / 6px; background: var(--line);
+}
+.alerts > li.t-crit::before { background: var(--crit-mark); }
+.alerts > li.t-warn::before { background: var(--warn-mark); }
+.alerts > li.t-info::before { background: var(--info); }
+.alerts > li.t-ok::before { background: var(--ok); }
+.block .alerts > li { border-bottom: 0; border-radius: 0; }
+.block .alerts > li::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 4px; pointer-events: none;
+  background: linear-gradient(90deg, var(--line), var(--grid) 70%, #0000);
+  -webkit-mask: var(--orn-risco) 0 0 / 640px 4px repeat-x; mask: var(--orn-risco) 0 0 / 640px 4px repeat-x;
+}
+.block .alerts > li:last-child::after { content: none; }
+
+/* ---------- controles: seixos; o escolhido continua o carimbo de tinta ---------- */
+.field select, .field input { border-radius: 11px 9px 12px 10px / 10px 12px 9px 11px; padding: 6px 10px; }
+.seg { justify-self: start; max-width: 100%; border: 0; gap: 2px; padding: 3px; background: var(--surface-2); border-radius: 15px 12px 14px 13px / 14px 13px 15px 12px; box-shadow: var(--fundo); }
+.seg button { border-right: 0; border-radius: var(--seixo-g); padding: 5px 13px; }
+.seg button[aria-pressed="true"] { box-shadow: var(--relevo-leve); }
+.btn { border-radius: var(--seixo-g); padding: 6px 15px; }
+.tnav { gap: 8px; border-bottom: 0; background-image: linear-gradient(90deg, var(--line), var(--line) 50%, #0000), var(--grao); background-size: 100% 1px, auto; background-position: left bottom, 0 0; background-repeat: no-repeat, repeat; }
+.tnav-b { border-color: transparent; background: var(--surface); border-radius: var(--seixo-g); padding: 3px 13px; box-shadow: var(--relevo-leve); }
+.tnav-b:nth-child(even) { border-radius: 11px 15px 10px 14px / 15px 13px 14px 11px; }
+.tnav-b:hover { border-color: var(--accent); }
+.tnav-b.on { box-shadow: none; }
+.wk, .repitem { border-color: transparent; border-radius: var(--seixo-g); box-shadow: var(--relevo-leve); }
+.wk[aria-pressed="true"], .repitem[aria-pressed="true"] { border-color: var(--ink); }
+
+/* ---------- narrativa ---------- */
+/* capitular de xilogravura: bloco de tinta com os cantos entalhados (meia-lua de goiva) */
+.md.lead-md > p:first-child::first-letter {
+  padding: 0.14em 0.15em 0.08em;
+  background:
+    radial-gradient(circle at 0 0, #0000 4px, var(--tinta) 4.5px) 0 0 / 51% 51% no-repeat,
+    radial-gradient(circle at 100% 0, #0000 4px, var(--tinta) 4.5px) 100% 0 / 51% 51% no-repeat,
+    radial-gradient(circle at 0 100%, #0000 4px, var(--tinta) 4.5px) 0 100% / 51% 51% no-repeat,
+    radial-gradient(circle at 100% 100%, #0000 4px, var(--tinta) 4.5px) 100% 100% / 51% 51% no-repeat;
+}
+.md blockquote { position: relative; border-left: 0; padding-left: 26px; border-radius: 6px 18px 20px 6px / 6px 15px 18px 6px; }
+.md code { border-radius: 5px 6px 5px 4px; }
+.md pre { border-radius: 12px 15px 11px 13px; }
+.md hr { width: min(260px, 70%); background: linear-gradient(90deg, #0000, var(--curva) 30%, var(--curva) calc(50% - 10px), var(--sol) 0 calc(50% + 10px), var(--curva) 0 70%, #0000);
+  -webkit-mask: var(--orn-estrela) center / 15px 15px no-repeat, linear-gradient(#000 0 0) center / 100% 1px no-repeat;
+  mask: var(--orn-estrela) center / 15px 15px no-repeat, linear-gradient(#000 0 0) center / 100% 1px no-repeat; }
+
+/* ---------- capa da tese (visão geral): nicho de parede caiada, arco abatido, barrado de argila e a
+   estrela como fecho do arco ---------- */
+.th-hl.th-hl {
+  padding: 60px 40px 34px; background: var(--surface); border-radius: 50% 50% 28px 22px / 56px 56px 24px 20px;
+  box-shadow: inset 0 0 0 9px var(--surface), inset 0 0 0 13px var(--argila), var(--nicho), var(--relevo);
+}
+.th-hl::before { top: -11px; z-index: 1; width: 22px; height: 22px; margin-left: -11px; }
+
+/* ---------- gráficos (só o cromo): ponta arredondada do lado do valor, base reta no eixo ---------- */
+.bf { border-radius: 0 5px 5px 0; }
+.bf.n { border-radius: 5px 0 0 5px; }
+.ls-l { border-radius: 0 6px 6px 0; }
+.ls-s { border-radius: 6px 0 0 6px; }
+.shares-bar { border-radius: 13px; }
+.lad-track { border-radius: 12px; }
+.ladder.mini .lad-track { border-radius: 5px; }
+.fn-b { border-radius: 11px; }
+.legend i.sq2, .shares-key i, .ls-key i { border-radius: 50%; }
+.ls-key i.n, .ls-key i.lim { border-radius: 0; }
+.chart .vb { rx: 2.5px; ry: 2.5px; }
+/* grade dos gráficos: régua de mão (pequenas levantadas da pena), na cor da grade */
+.chart .gridl { stroke-dasharray: 34 2 13 1.5 47 2.5 21 1.5; stroke-linecap: round; }
+
+/* ---------- chapada: celular ---------- */
+@media (max-width: 640px) {
+  .panel { --vao: 56px; }
+  main.wrap { padding-block: 28px 40px; }
+  .panel > .tnav { margin-top: -22px; }
+  .panel > .tnav + .sec { margin-top: -22px; }
+  .panel > section.sec:nth-of-type(even) { border-image-outset: 28px 100vw; }
+  .block { padding: 18px 16px 20px; border-radius: 22px 14px 24px 16px / 18px 20px 16px 22px; }
+  .block:nth-child(even) { border-radius: 14px 22px 16px 24px / 20px 18px 22px 16px; }
+  .th-hl.th-hl {
+    padding: 44px 20px 26px; border-radius: 50% 50% 22px 18px / 30px 30px 20px 18px;
+    box-shadow: inset 0 0 0 7px var(--surface), inset 0 0 0 10px var(--argila), var(--nicho), var(--relevo);
+  }
+  .tile { padding: 21px 14px 13px; }
+  .block .tile { padding: 12px 14px; }
+  .sec-h::before { width: 150px; }
+  .scroll.stackable { box-shadow: none; }
+  .scroll.stackable > .tbl { margin: 0; width: 100%; }
+  .tbl.stackable tr { border: 0; padding: 11px 14px; border-radius: var(--forma-a); background: var(--surface); box-shadow: var(--relevo-leve); margin-bottom: 10px; }
+  .tbl.stackable tr:nth-child(even) { border-radius: var(--forma-b); }
+  .tbl.stackable tr.grp { box-shadow: none; background: none; border-radius: 0; padding: 6px 0 0; }
+  .tbl.stackable tr.st-crit { border-left: 0; box-shadow: inset 3px 0 0 var(--crit-mark), var(--relevo-leve); }
+  .tbl.stackable tr.st-warn { border-left: 0; box-shadow: inset 3px 0 0 var(--warn-mark), var(--relevo-leve); }
+  .tbl.stackable tr.st-info { border-left: 0; box-shadow: inset 3px 0 0 var(--info), var(--relevo-leve); }
+  /* dentro de uma laje: pedras assentadas (rebaixadas), nada de contorno dentro de contorno */
+  :is(.block, .card, .fold) .tbl.stackable tr { background: var(--surface-3); box-shadow: var(--fundo); border-radius: 16px 11px 15px 10px / 13px 15px 11px 14px; }
+  :is(.block, .card, .fold) .tbl.stackable tr.grp { background: none; box-shadow: none; }
+  :is(.block, .card, .fold) .tbl.stackable tr.st-crit { box-shadow: inset 3px 0 0 var(--crit-mark), var(--fundo); }
+  :is(.block, .card, .fold) .tbl.stackable tr.st-warn { box-shadow: inset 3px 0 0 var(--warn-mark), var(--fundo); }
+  :is(.block, .card, .fold) .tbl.stackable tr.st-info { box-shadow: inset 3px 0 0 var(--info), var(--fundo); }
+}
+/* sem máscara CSS: nada de ornamento recortado; filetes simples no lugar */
+@supports not ((-webkit-mask-image: none) or (mask-image: none)) {
+  .sec-h::before, .sec-h::after, .tabs::before, .tile::before, .tile::after, .tab[aria-selected="true"]::before, .block-h::after,
+  .block .alerts > li::after, .comment::before, .boot::before, .md blockquote::before { display: none; }
+  .sec-h { border-bottom: 1px solid var(--filete); }
+  .tabs { border-bottom: 1px solid var(--chao-line); }
+  .block-h { border-bottom: 1px solid var(--grid); }
+  .tab[aria-selected="true"] { box-shadow: inset 0 -2px 0 var(--sol); }
+  .md blockquote, .comment, .boot { box-shadow: inset 3px 0 0 var(--sol); }
+}
+@media (forced-colors: active) {
+  .block, .card, .tile, details.fold, .boot, .comment, .scroll, .wk, .repitem, .seg, .tnav-b, .alerts > li, .tbl.stackable tr, .empty { border: 1px solid CanvasText; }
+  :is(.block, .card, .fold) .scroll, .block .tile { border-color: GrayText; }
+  .tile { -webkit-mask: none; mask: none; }
+  .sec-h::before, .tile::before, .tile::after, .tabs::before, .tab::before, .block-h::after, .block .alerts > li::after,
+  .comment::before, .boot::before, .md blockquote::before { display: none; }
+  .sec-h::after { forced-color-adjust: none; background: CanvasText; }
+  .tabs { border-bottom: 1px solid CanvasText; }
+  .panel > section.sec:nth-of-type(even) { border-image: none; }
+}
+@media print {
+  .panel > section.sec:nth-of-type(even) { border-image: none; }
+  .block, .card, .tile, details.fold, .scroll, .comment, .wk, .repitem, .tnav-b { box-shadow: none; border: 0.75pt solid #d8ccb8; }
+  :is(.block, .card, details.fold) .scroll, .block .tile { border: 0; }
+  .worst .card { box-shadow: inset 0 3px 0 var(--crit-mark); }
+  .tile { -webkit-mask: none; mask: none; border-radius: 12px; }
+  .tile::before, .tile::after { display: none; }
+  .th-hl.th-hl { box-shadow: inset 0 0 0 9px #ffffff, inset 0 0 0 12px #ead7bf; border: 0.75pt solid #d8ccb8; }
+  .th-hl::before { top: 1px; }
+  /* achata a máscara numa camada só no PDF (sem o filete na borda da caixa, como na marca) */
+  .sec-h::before, .sec-h::after, .block-h::after, .md blockquote::before { filter: opacity(1); }
+  .sec-h::before, .sec-h::after, .block-h::after, .alerts > li::before, .md blockquote::before, .tbl th, .md th {
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+}
+/* ========== fim de chapada ========== */
+/* ---------- modelo aberto, auditoria e pré-início (partes montadas pelos módulos sob demanda) ---------- */
+.slot[aria-busy="true"] { min-height: 96px; }
+.block.pre { max-width: 860px; }
+.pre .lead { margin: 0 0 8px; font-weight: 600; }
+.pre-go { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 16px; }
+.foot-links { margin-top: 12px; font-size: 13.5px; }
+.foot-links a { color: inherit; text-underline-offset: 3px; }
+ul.lk, ul.lst, ol.lst { margin: 0; padding-left: 1.2em; display: grid; gap: 8px; }
+ul.lk, ul.chips { list-style: none; padding-left: 0; margin: 0; }
+ul.lk li { display: grid; gap: 2px; }
+ul.lk-2 { grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 10px 28px; }
+.lk-s { color: var(--muted); font-size: 13px; }
+ol.lst li::marker { color: var(--sol-ink); font-weight: 600; }
+.audit-top { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; }
+.audit-top .prose { margin: 0; }
+.idio-g { display: grid; gap: 8px; }
+.idio-r { display: grid; grid-template-columns: minmax(104px, 1.15fr) 1fr 1fr; gap: 12px; align-items: center; font-size: 14px; }
+.idio-h { color: var(--muted); font-size: 11.5px; letter-spacing: 0.05em; text-transform: uppercase; }
+.idio-r > span { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.idio-t { display: block; flex: 1 1 auto; max-width: 140px; height: 10px; }
+.idio-b { display: block; height: 10px; min-width: 2px; background: var(--c2); border-radius: 0 5px 5px 0; }
+.idio-b.b2 { background: var(--c4); }
+.idio-r b { font-variant-numeric: tabular-nums; font-weight: 600; white-space: nowrap; }
+.idio-e { padding-top: 8px; background: linear-gradient(90deg, var(--grid), var(--grid) 70%, #0000) left top / 100% 1px no-repeat; }
+.formula { margin: 0 0 12px; }
+.formula code { font: 500 14px/1.6 var(--font-mono); white-space: normal; overflow-wrap: anywhere; }
+.tbl td code { white-space: normal; overflow-wrap: anywhere; font-size: 12.5px; }
+.mais { margin-top: 10px; }
+/* tabela empilhada (celular): a 1ª célula é o título da pedra, sem a coluna fixa da tabela larga */
+@media (max-width: 640px) {
+  .tbl.stackable td.sticky, .tbl.stackable tbody tr:hover > td.sticky { position: static; background: none; min-width: 0; max-width: none; z-index: auto; }
+}
+@media print {
+  .tbl.dim { font-size: 7.5pt; }
+  .tbl.dim th, .tbl.dim td { padding: 3px 4px; white-space: normal; }
+  .tbl.dim td.sticky { position: static; min-width: 0; max-width: none; }
+  .mais { display: none; }
+}
+@media (forced-colors: active) { .idio-b { forced-color-adjust: none; background: CanvasText; } }
+@media print { .idio-b { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
   .boot-bar::after { left: 0; width: 100%; opacity: 0.6; }
@@ -913,7 +1262,7 @@ details.mini > summary { cursor: pointer; color: var(--accent); font-size: 13px;
   .sec-h { break-after: avoid; }
   a { color: inherit; text-decoration: none; }
   .brand-mark::before, .brand-mark::after, .sec-h, .sec-h h2::before, .eyebrow::before, .md ul > li::before,
-  .th-hl, .th-hl::before, .tile, .scroll, .sim-band, .sim-tag, .pill, .side, .bf, .ls-l, .ls-s, .shares-bar > span, .lad-seg {
+  .th-hl, .th-hl::before, .tile, .scroll, .sec-h::before, .sec-h::after, .sim-band, .sim-tag, .pill, .side, .bf, .ls-l, .ls-s, .shares-bar > span, .lad-seg {
     -webkit-print-color-adjust: exact; print-color-adjust: exact;
   }
   @page { margin: 14mm 12mm; }
@@ -1036,6 +1385,7 @@ UClmxeUGwg6AcVhMUyb+AMw46K8x6KJqR8Hfj3LHPiyNnW7CpKulxa/VL/nNlq+aeolzrjEVs0z9InIA
   <section class="panel" id="p-visao" role="tabpanel" aria-labelledby="t-visao"></section>
   <section class="panel" id="p-tese" role="tabpanel" aria-labelledby="t-tese" hidden></section>
   <section class="panel" id="p-carteira" role="tabpanel" aria-labelledby="t-carteira" hidden></section>
+  <section class="panel" id="p-cobertura" role="tabpanel" aria-labelledby="t-cobertura" hidden></section>
   <section class="panel" id="p-risco" role="tabpanel" aria-labelledby="t-risco" hidden></section>
   <section class="panel" id="p-atribuicao" role="tabpanel" aria-labelledby="t-atribuicao" hidden></section>
   <section class="panel" id="p-decisoes" role="tabpanel" aria-labelledby="t-decisoes" hidden></section>
@@ -1065,6 +1415,24 @@ var PAGE_SCHEMA = "cdp-painel/3";
 /* versão desta página (SHA-256 do template), carimbada por cdp.workflow.painel ao gravar */
 var PAGE_SHA = "__CDP_PAGE_SHA256__";
 var DATA_URL = "data.json";
+/* módulos da página carregados sob demanda, versionados como o script (painel-<versão>-<nome>.js,
+   ao lado da página): cobertura de ativos e modelo aberto da carteira. A cópia local os traz
+   embutidos (o global já existe). Retorno sempre assíncrono: quem chama já inseriu o marcador. */
+var MOD_GLOBAL = { cobertura: "CDP_COBERTURA", modelo: "CDP_MODELO" }, MODS = {};
+function modulo(nome, pronto, falha) {
+  var gl = MOD_GLOBAL[nome], m = MODS[nome];
+  if (window[gl]) { setTimeout(function () { pronto(window[gl]); }, 0); return; }
+  if (!m) {
+    m = MODS[nome] = { ok: [], err: [] };
+    var el = document.createElement("script");
+    el.src = "painel-" + PAGE_SHA.slice(0, 16) + "-" + nome + ".js";
+    el.onload = function () { MODS[nome] = null; var x = window[gl]; (x ? m.ok : m.err).forEach(function (f) { f(x); }); };
+    el.onerror = function () { MODS[nome] = null; if (el.parentNode) el.parentNode.removeChild(el); m.err.forEach(function (f) { f(); }); };
+    document.head.appendChild(el);
+  }
+  m.ok.push(pronto);
+  if (falha) m.err.push(falha);
+}
 /* tema escolhido pelo leitor (Clara/Escura) aplicado já ao abrir, antes de os dados chegarem: o
    carregamento não aparece no tema do sistema para depois virar (start() reaplica a mesma escolha) */
 try {
@@ -1230,7 +1598,8 @@ var LEVEL_PT = { HARD: "limite rígido", SOFT: "alerta", INFO: "indicador" };
 var EXCL_PT = {
   sem_linha_short: "sem linha alugável para short", squeeze_alto: "risco de squeeze alto", squeeze_medio_teto: "squeeze médio (teto reduzido)",
   squeeze_na_teto: "squeeze sem dado (teto reduzido)", visao_no_long: "pesquisa/gestor: sem long", visao_no_short: "pesquisa/gestor: sem short",
-  visao_teto_peso: "pesquisa/gestor: teto de peso", sem_adtv: "sem liquidez medida", adtv_baixo: "liquidez abaixo do mínimo", aluguel_alto: "aluguel acima do teto"
+  visao_teto_peso: "pesquisa/gestor: teto de peso", sem_adtv: "sem liquidez medida", adtv_baixo: "liquidez abaixo do mínimo", aluguel_alto: "aluguel acima do teto",
+  bloqueio_free_float: "free float abaixo do mínimo (venda vetada)", bloqueio_resultado: "resultado próximo (venda vetada)", bloqueio_catalisador: "resultado próximo (venda vetada)"
 };
 var COUNTRY_PT = { AR: "Argentina", BR: "Brasil", CL: "Chile", CO: "Colômbia", MX: "México", PE: "Peru", UY: "Uruguai", PA: "Panamá", US: "Estados Unidos", LATAM: "Regional (América Latina)", OTHER: "Outros" };
 function plural(n, one, many) { return int(n) + " " + (n === 1 ? one : many); }
@@ -1267,7 +1636,11 @@ function gapPT(t) {
 }
 /* rótulo do cenário de estresse (Risco e exposições) */
 function stressLbl(s) { return gapPT(ptNums(s.scenario || s.label)); }
+/* rótulos pt-BR de fatores e restrições montados em Python (meta.rotulos); os mapas abaixo só cobrem retratos antigos */
+function rotulo(tipo, c) { var m = obj(g(D, "meta.rotulos." + tipo)); return has(c) && has(m[c]) ? m[c] : null; }
 function constraintName(c) {
+  var L = rotulo("restricoes", c);
+  if (L) return L;
   var s = String(c || ""), i = s.indexOf(":");
   if (i < 0) return { net_exposure: "net do mandato", gross: "gross", beta: "beta", turnover: "giro", vol: "vol-alvo" }[s] || s.replace(/_/g, " ");
   var k = s.slice(0, i), v = s.slice(i + 1);
@@ -1296,6 +1669,8 @@ function expoName(group, name) {
 }
 function factorName(f) {
   if (!has(f)) return NA;
+  var L = rotulo("fatores", f);
+  if (L) return L;
   var s = String(f), i = s.indexOf(":");
   if (i > 0) {
     var k = s.slice(0, i), v = s.slice(i + 1);
@@ -1864,7 +2239,7 @@ var BT = obj(D.backtests);
 var MAND = obj(META.mandate), MR = obj(MAND.risk), MLQ = obj(MAND.liquidity), MDD = obj(MAND.drawdown), MSQ = obj(MAND.squeeze);
 var MSH = obj(MAND.shorting), MAL = obj(MAND.alpha), MRM = obj(MAND.risk_model);
 /* perfil publicado: históricos antigos consolidados e textos resumidos */
-var PUB = META.profile === "publicacao", PUBM = obj(META.publication);
+var PUB = META.profile === "publicacao" || META.profile === "site", PUBM = obj(META.publication);
 var ROLLUP = arr(TR.rollup), ROLLDATES = {};
 ROLLUP.forEach(function (r) { if (r && r.date) ROLLDATES[r.date] = 1; });
 function truncMark(o, what) { return o && o._truncado ? h("p", { class: "trunc" }, (what || "Texto") + " resumido nesta versão do portal.") : null; }
@@ -1885,7 +2260,7 @@ var NAMES = {};
 var INAMES = obj(META.issuer_names);
 Object.keys(INAMES).forEach(function (k) { if (has(INAMES[k])) NAMES[k] = INAMES[k]; });
 function addNames(list, idk, nk) { arr(list).forEach(function (p) { var k = p && p[idk || "issuer_id"]; if (k && p[nk || "name"] && !NAMES[k]) NAMES[k] = p[nk || "name"]; }); }
-WEEKS.forEach(function (w) { if (w.proposal) addNames(w.proposal.positions); if (w.shadow) addNames(w.shadow.positions); addNames(w.changes_vs_previous); });
+WEEKS.forEach(function (w) { if (w.proposal) addNames(w.proposal.positions); addNames(w.changes_vs_previous); });
 if (LD) addNames(LD.positions);
 addNames(RK.squeeze_shorts); addNames(g(RK, "ex_ante.top_risk_contributors"));
 function prettyId(id) {
@@ -1965,7 +2340,7 @@ function renderHeader() {
 }
 function renderFoot() {
   var notice = META.data_notice || "", m = /\(([^)]+)\)/.exec(notice);
-  var srcTxt = META.is_synthetic ? "Fontes de dados: simuladas (demonstração)." : m ? "Fontes de dados de mercado: " + m[1] + "." : notice;
+  var srcTxt = META.is_synthetic ? "Fontes de dados: simuladas (demonstração)." : META.data_sources ? "Fontes públicas de dados: " + META.data_sources + "." : m ? "Fontes de dados de mercado: " + m[1] + "." : notice;
   var theme = h("div", { class: "seg", role: "group", "aria-label": "Aparência" });
   [["", "Automática"], ["light", "Clara"], ["dark", "Escura"]].forEach(function (o) {
     var b = h("button", { type: "button", "aria-pressed": (lsGet("tema") || "") === o[0] ? "true" : "false" }, o[1]);
@@ -1986,6 +2361,7 @@ function renderFoot() {
     h("div", { class: "foot-side" },
       h("p", null, h("b", null, META.fund_name || "CDP — Cabra da Peste")),
       kv([["Início", fdate(META.inception_date)], ["PL inicial", usd(META.inception_nav_usd)], ["Moeda base", META.base_currency]]),
+      h("p", { class: "foot-links" }, h("a", { href: "#auditoria" }, "Auditoria e reprodução"), " · ", h("a", { href: "#mandato" }, "Metodologia")),
       h("div", { class: "field" }, "Aparência", theme))));
 }
 function setTheme(t) { try { if (t) document.documentElement.setAttribute("data-theme", t); else document.documentElement.removeAttribute("data-theme"); } catch (e) { /* sem DOM */ } }
@@ -2054,31 +2430,19 @@ function decisionCard(w, noLink) {
 /* o racional gravado pode trazer o nome da ferramenta de IA ("; mente claude-code", "mente de IA"):
    sai da leitura. Só a palavra inteira "mente" seguida de um nome conhecido — advérbios como
    "fortemente comprada", "inteiramente simulado" e "somente em" ficam intactos. */
-var MIND_RE = /[ \t]*[;,]?[ \t]*\bmente[ \t]+(?:claude-code|codex|api|demo|de[ \t]+IA)\b(?:[ \t]*\[IA\])?/gi;
+var MIND_RE = /[ \t]*[;,]?[ \t]*\bmente[ \t]+(?:claude-code|codex|chatgpt|gemini|outro|api|demo|de[ \t]+IA)\b(?:[ \t]*\[IA\])?/gi;
 function scrubMind(t) { return has(t) ? String(t).replace(MIND_RE, "").replace(/^\s*[.;,]\s*/, "") : t; }
 /* "Caminho: cdp." (rota interna da decisão) não é leitura de investimento */
 function scrubPath(t) { return has(t) ? String(t).replace(/[ \t]*\bCaminho:[ \t]*[\w-]+\.?/g, "").replace(/^[ \t]+/, "") : t; }
 /* âncora da inception (exportada): NAV de abertura do 1º registro, para o 1º dia ter segmento */
 function navSeries() {
-  var cmp = arr(TR.compare), recs = arr(TR.records), an = TR.anchor ? obj(TR.anchor) : null;
+  var recs = arr(TR.records), an = TR.anchor ? obj(TR.anchor) : null;
   var lab0 = an ? ["início"] : [];
   /* publicação: meses consolidados (fim de mês) antes dos pregões em linhas diárias */
   var ru = ROLLUP, ruLab = ru.map(function (r) { return r.date; });
   var zone = ru.length ? { from: 0, to: lab0.length + ru.length - 1, label: "meses consolidados (fim de mês)" } : null;
-  if (cmp.length) {
-    return {
-      zone: zone,
-      labels: lab0.concat(ruLab, cmp.map(function (r) { return r.date; })),
-      series: [
-        { name: "Referência quantitativa", color: "var(--shadow)", values: (an ? [an.nav_shadow] : []).concat(ru.map(function (r) { return r.nav_shadow; }), cmp.map(function (r) { return r.nav_shadow; })) },
-        { name: "CDP", color: "var(--accent)", width: 2.5, values: (an ? [an.nav_cdp] : []).concat(ru.map(function (r) { return r.nav_end; }), cmp.map(function (r) { return r.nav_cdp; })) }
-      ], rows: cmp
-    };
-  }
-  if (recs.length || ru.length) {
-    return { zone: zone, labels: lab0.concat(ruLab, recs.map(function (r) { return r.date; })), series: [{ name: "CDP", color: "var(--accent)", values: (an ? [an.nav_cdp] : []).concat(ru.map(function (r) { return r.nav_end; }), recs.map(function (r) { return r.nav_end; })) }], rows: null };
-  }
-  return null;
+  if (!recs.length && !ru.length) return null;
+  return { zone: zone, labels: lab0.concat(ruLab, recs.map(function (r) { return r.date; })), series: [{ name: "CDP", color: "var(--accent)", width: 2.5, values: (an ? [an.nav_cdp] : []).concat(ru.map(function (r) { return r.nav_end; }), recs.map(function (r) { return r.nav_end; })) }], rows: recs.length ? recs : null };
 }
 function rollupTable() {
   if (!ROLLUP.length) return null;
@@ -2094,7 +2458,7 @@ function rollupTable() {
 }
 function tipDate(s) { return s === "início" ? "Início (PL de abertura)" : fdate(s); }
 function statsTable() {
-  var a = obj(TR.stats), b = obj(g(TR, "shadow.stats"));
+  var a = obj(TR.stats);
   var rows = [
     ["Retorno desde o início", "since_inception_return", function (v) { return spct(v); }], ["Retorno anualizado", "annualized_return", function (v) { return spct(v); }],
     ["Volatilidade anualizada", "annualized_vol", function (v) { return pct(v); }], ["Índice de Sharpe", "sharpe", function (v) { return fnum(v, 2); }],
@@ -2108,8 +2472,7 @@ function statsTable() {
   ];
   var t = table([
     { label: "Indicador", render: function (r) { return r[0]; } },
-    { label: "CDP", num: true, render: function (r) { var v = a[r[1]]; return v === undefined || v === null ? NA : r[2](v, a); } },
-    { label: "Referência quantitativa", num: true, render: function (r) { var v = b[r[1]]; return v === undefined || v === null ? NA : r[2](v, b); } }
+    { label: "CDP", num: true, render: function (r) { var v = a[r[1]]; return v === undefined || v === null ? NA : r[2](v, a); } }
   ], rows);
   return h("div", { class: "stack" }, t, a.annualization_note ? note(a.annualization_note) : null);
 }
@@ -2162,7 +2525,19 @@ function perfStrip() {
     tile("Vol realizada", pct(rv), isNum(ST.realized_vol_21d) ? "anualizada, 21 pregões" : "anualizada, desde o início"),
     tile("Drawdown", pct(ST.drawdown), "máximo " + pct(first(per.max_drawdown, stats.max_drawdown))));
 }
+/* pré-início: como a carteira inaugural será montada (textos da metodologia vigente, de Python) */
+function preMetodo() {
+  var MT = obj(g(D, "modelo.metodologia")), it = arr(g(MT, "cronograma.itens")), cs = arr(MT.construcao);
+  function pick(list, r) { return list.filter(function (x) { return x.rotulo === r; })[0]; }
+  /* data, prazo e execução da carteira inaugural (de Python, do calendário e do mandato); depois, a construção */
+  var rows = arr(MT.inaugural).concat([pick(it, "Capacidade no fechamento"), pick(cs, "Risco idiossincrático"), pick(cs, "Dimensionamento")]).filter(Boolean);
+  if (!rows.length) return null;
+  var au = h("a", { class: "go", href: "#auditoria" }, "Auditoria e reprodução →");
+  return block("Como a carteira inaugural é montada", "metodologia vigente", kv(rows.map(function (x) { return [x.rotulo, x.texto]; })),
+    h("div", { class: "pre-go" }, goTab("mandato", "Metodologia completa"), COV ? goTab("cobertura", "Cobertura de ativos") : null, au));
+}
 function thesisHighlight() {
+  if (PRE) return preMetodo();
   if (!TH) return block("Tese de investimento", null, h("p", { class: "ink2" }, LIVEW ? "A tese da carteira desta semana ainda não foi publicada; a leitura do gestor está no Comitê de investimento." : obj(ST.inaugural).date ? "A tese de investimento é publicada com a carteira inaugural, em " + fdate(obj(ST.inaugural).date) + "." : "A tese de investimento é publicada após a primeira decisão do comitê."), LIVEW ? goTab("decisoes", "Comitê de investimento") : null);
   var b = h("button", { class: "btn btn-p", type: "button" }, "Ler a tese completa →");
   b.addEventListener("click", function () { showTab("tese"); window.scrollTo(0, 0); });
@@ -2216,7 +2591,8 @@ function eventsBox() {
   var b = h("button", { class: "go", type: "button" }, "Calendário completo na tese →");
   b.addEventListener("click", function () { showTab("tese"); thGo("calendario"); });
   return block("Próximos eventos", "próximas três semanas",
-    WEEKLY_EVENT ? kv([[obj(ST.inaugural).date ? "Carteira inaugural" : "Próxima decisão semanal", flocal(WEEKLY_EVENT.when_local)]]) : null,
+    /* sem a metodologia ativada no mandato, o horário do prazo não é publicado (só a data) */
+    WEEKLY_EVENT ? kv([[obj(ST.inaugural).date ? "Carteira inaugural" : "Próxima decisão semanal", g(D, "modelo.metodologia.ativa") === false ? fdate(WEEKLY_EVENT.when_local) : flocal(WEEKLY_EVENT.when_local)]]) : null,
     cal.length ? h("ul", { class: "tl tl-c" }, cal.map(calItem)) : h("p", { class: "muted" }, TH ? "Sem datas da carteira no período." : obj(ST.inaugural).date ? "Sem eventos de carteira antes da carteira inaugural." : "O calendário da carteira acompanha a tese da semana."),
     TH && arr(TH.calendar).length ? b : null);
 }
@@ -2228,10 +2604,10 @@ function renderVisao(p) {
 
   var ns = navSeries();
   if (!ns) return;
-  var navBlock = block("Evolução do patrimônio", "CDP × referência quantitativa, US$" + (ROLLUP.length ? " · meses antigos no fim do mês (faixa sombreada)" : ""));
+  var navBlock = block("Evolução do patrimônio", "US$" + (ROLLUP.length ? " · meses antigos no fim do mês (faixa sombreada)" : ""));
   navBlock.appendChild(chart(function (el) {
     lineChart(el, {
-      labels: ns.labels, series: ns.series, height: 260, legendLast: true, legendReverse: true, title: "Patrimônio do CDP e da referência quantitativa", tipX: rollTip,
+      labels: ns.labels, series: ns.series, height: 260, legendLast: true, legendReverse: true, title: "Patrimônio do CDP", tipX: rollTip,
       timeX: !!ns.zone, zone: ns.zone,
       yFmt: function (v) { return usd(v); }, tipFmt: function (v) { return usdFull(v); },
       refs: isNum(META.inception_nav_usd) ? [{ y: META.inception_nav_usd, label: "PL inicial " + usd(META.inception_nav_usd) }] : []
@@ -2241,17 +2617,13 @@ function renderVisao(p) {
     navBlock.appendChild(h("details", { class: "mini" }, h("summary", null, "Ver os dados do gráfico"),
       table([
         { label: "Data", get: function (r) { return r.date; }, render: function (r) { return fdate(r.date); } },
-        { label: "PL CDP", num: true, render: function (r) { return usdFull(r.nav_cdp); } },
-        { label: "PL referência", num: true, render: function (r) { return usdFull(r.nav_shadow); } },
-        { label: "Ret. CDP", num: true, render: function (r) { return signed(spct(r.ret_cdp), r.ret_cdp); } },
-        { label: "Ret. referência", num: true, render: function (r) { return signed(spct(r.ret_shadow), r.ret_shadow); } },
-        { label: "Valor adicionado (dia)", num: true, render: function (r) { return bps(r.value_added); } },
-        { label: "Acumulado", num: true, render: function (r) { return signed(spct(r.cum_value_added), r.cum_value_added); } }
+        { label: "PL", num: true, render: function (r) { return usdFull(r.nav_end); } },
+        { label: "Retorno do dia", num: true, render: function (r) { return signed(spct(r.ret), r.ret); } }
       ], ns.rows.slice().reverse(), { tall: true })));
   }
   var rt0 = rollupTable();
   if (rt0) navBlock.appendChild(rt0);
-  p.appendChild(sec("Desempenho", "CDP × carteira quantitativa de referência", h("div", { class: "cols" }, navBlock, block("Histórico de desempenho", null, TR.exists ? statsTable() : empty(firstCloseText())))));
+  p.appendChild(sec("Desempenho", "patrimônio e indicadores do fundo", h("div", { class: "cols" }, navBlock, block("Histórico de desempenho", null, TR.exists ? statsTable() : empty(firstCloseText())))));
   var mt = monthlyTable();
   if (mt) p.appendChild(sec("Retornos mensais", "compostos por mês e no ano", mt));
 }
@@ -2461,7 +2833,7 @@ function tDetail(x) {
   return h("div", { class: "td-grid" },
     h("div", { class: "stack td-txt" }, tx("Por que está na carteira", x.why_md), tx("Principal risco", x.risk_md), tx("Gatilho de revisão", x.trigger_md),
       !has(x.why_md) && !has(x.risk_md) && !has(x.trigger_md) ? h("p", { class: "muted" }, "O texto desta posição não acompanha esta versão do portal.") : null,
-      truncMark(x, "Texto"), x.author === "codigo" && (has(x.why_md) || has(x.risk_md) || has(x.trigger_md)) ? h("p", { class: "note" }, "Texto automático, montado a partir dos números do modelo.") : null),
+      truncMark(x, "Texto"), x.author === "codigo" && (has(x.why_md) || has(x.risk_md) || has(x.trigger_md)) ? h("p", { class: "note" }, "Texto automático, montado a partir dos números do modelo.") : null, fichaBtn(x.iid)),
     h("div", { class: "card" }, h("h4", null, "Alpha esperado " + spct(x.alpha) + " a.a."),
       barList(sig, { fmt: function (v) { return spct(v); }, diverging: true }),
       note("Contribuição de cada sinal ao alpha (a.a.); modelo quantitativo puro " + spct(x.alpha_quant) + ".")),
@@ -2583,6 +2955,7 @@ function heldThesis() {
   return prev.length ? prev[prev.length - 1] : { week: null, thesis: null };
 }
 function renderTese(p) {
+  if (aguardaInaugural(p, "Tese de investimento", "A tese é publicada com a carteira inaugural: por que cada nome está na carteira, o tamanho de cada posição, as exposições, a sensibilidade ao mercado e o orçamento de risco.")) return;
   var held = !TH ? heldThesis() : null;
   if (held) {
     var ht = obj(held.thesis);
@@ -2593,12 +2966,6 @@ function renderTese(p) {
         has(ht.summary_md) ? tmd(ht.summary_md, "lead-md") : null,
         h("p", { class: "note" }, "Sem carteira nova não há nova tese; a leitura do gestor sobre a semana está no Comitê de investimento."),
         goTab("decisoes", "Comitê de investimento"))));
-    return;
-  }
-  if (!TH && !LIVEW && obj(ST.inaugural).date) {
-    p.appendChild(sec("Tese de investimento", null, h("div", { class: "block" },
-      h("p", { class: "lead" }, "A tese de investimento é publicada com a carteira inaugural, em " + fdate(obj(ST.inaugural).date) + "."),
-      h("p", { class: "note" }, "Ela explica por que cada nome está na carteira, o tamanho de cada posição, as exposições, a sensibilidade ao mercado e o orçamento de risco."))));
     return;
   }
   if (!TH) {
@@ -2627,27 +2994,22 @@ function renderTese(p) {
   var th = arr(TH.themes);
   if (th.length) body.push(tsec("temas", "Temas da carteira", plural(th.length, "tema", "temas") + " · nomes com o peso na carteira (compra em verde-azulado, venda em cobre)", h("div", { class: "cards wide" }, th.map(themeCard))));
 
-  var fu = obj(TN.funnel), cs = thSec("construcao"), ref = obj(TN.reference), lq = obj(TN.liquidity), vbl = arr(TN.vol_budget);
+  var fu = obj(TN.funnel), cs = thSec("construcao"), lq = obj(TN.liquidity), vbl = arr(TN.vol_budget);
   function liqTxt(s) { s = obj(s); return pct(s.d1, 0) + " em 1 dia · " + pct(s.d3, 0) + " em 3 dias · maior prazo " + days(s.max_days); }
   body.push(tsec("construcao", "Construção e dimensionamento", "do universo à carteira final e ao tamanho de cada posição",
     tprose(cs),
     h("div", { class: "cols-2" },
       block("Funil de seleção", "nº de emissores", funnel(fu),
         arr(fu.exclusions).length ? h("div", { class: "stack", style: "gap:8px" }, h("h4", null, "Motivos de exclusão"),
-          barList(arr(fu.exclusions).map(function (x) { return { label: tt(x.label) || EXCL_PT[x.code] || x.code, value: x.n }; }), { fmt: function (v) { return int(v); }, diverging: false, color: "var(--shadow)" }),
+          barList(arr(fu.exclusions).map(function (x) { return { label: (x.label !== x.code && tt(x.label)) || cap1(EXCL_PT[x.code] || String(x.code).replace(/_/g, " ")), value: x.n }; }), { fmt: function (v) { return int(v); }, diverging: false, color: "var(--shadow)" }),
           note("Um emissor pode ser excluído por mais de um motivo, ou só de uma das pontas.")) : null),
       block("Orçamento de volatilidade", "da meta do mandato à volatilidade atingida (a.a.)",
         vbl.length ? chart(function (el) { volSteps(el, vbl); }, 240) : empty("Sem dados do orçamento de risco."),
         vbl.length ? h("ol", { class: "vb-notes" }, vbl.map(function (s) { return h("li", null, h("b", null, (s.label || VB_PT[s.step] || s.step) + " " + pct(s.value)), s.note ? " · " + tt(s.note) : ""); })) : null)),
-    h("div", { class: "cols-2" },
+    h("div", { class: "cols-3" },
       block("O que limita cada posição", "nº de posições por fator de dimensionamento", countBars("sizing", SIZING_PT, ["interior", "teto_nome", "teto_risco", "teto_visao", "liquidez", "squeeze", "aluguel", "indeterminado"])),
       block("Papel das posições", "nº de posições por papel na carteira", countBars("role", ROLE_T, ["alpha", "alpha_div", "hedge"]),
         note("Geradora de alpha: alpha a favor da ponta e risco somado à carteira. Alpha que diversifica: alpha a favor e risco que reduz a variância. Hedge: alpha neutro ou contra, mantida para neutralizar exposições.")),
-      block("Carteira quantitativa de referência", "o que o modelo montaria sem pesquisa e gestor", kv([
-        ["Alpha esperado a.a.", "CDP " + spct(TS.alpha) + " · referência " + spct(ref.alpha)],
-        ["Vol ex-ante", "CDP " + pct(TS.vol) + " · referência " + pct(ref.vol)],
-        ["Nomes", int(ref.names) + " na referência · " + int(ref.common) + " em comum"],
-        ["Active share", pct(ref.active_share, 1)], ["Sobreposição de pesos", pct(ref.overlap, 1)]])),
       block("Liquidez", "parcela de cada ponta liquidável no prazo", kv([["Longs", liqTxt(lq.long)], ["Shorts", liqTxt(lq.short)]]),
         note("A " + pct(MLQ.participation_rate, 0) + " (long) e " + pct(MLQ.short_participation_rate, 0) + " (short) do volume médio diário.")))));
 
@@ -2833,6 +3195,8 @@ function journalCard(j, title) {
     isNum(j.probability_correct) ? ["Probabilidade de acerto", pct(j.probability_correct, 0)] : null
   ]));
 }
+var MCART = {};
+arr(g(D, "modelo.carteira.posicoes")).forEach(function (x) { MCART[x.issuer_id] = x; });
 function positionDetail(r) {
   var g1 = kv([
     ["Instrumento", h("span", null, h("code", null, tk(r.ticker) || NA), " · " + (LINE_PT[r.line_type] || r.line_type || NA) + " · " + (r.currency || NA))],
@@ -2841,7 +3205,9 @@ function positionDetail(r) {
     ["Preço local", fnum(r.price_local, 2)], isNum(r.price_usd) ? ["Preço em US$", fnum(r.price_usd, 2)] : null, ["Quantidade", int(r.shares)],
     ["Volume médio diário (ADTV)", usd(r.adtv)], ["Beta", fnum(r.beta, 2)], isNum(r.alpha_annual) ? ["Alpha esperado a.a. (modelo)", spct(r.alpha_annual)] : null
   ]);
-  var parts = [h("div", { class: "card" }, h("h4", null, "Posição e liquidez"), g1)];
+  var parts = [h("div", { class: "card" }, h("h4", null, "Posição e liquidez"), g1, fichaBtn(r.issuer_id))];
+  var mc = MCART[r.issuer_id];
+  if (mc) parts.push(h("div", { class: "card" }, h("h4", null, "Dimensionamento e execução"), kv([["Tamanho", mc.dimensionamento], ["Alpha esperado a.a.", mc.alpha_texto], ["Ordem da semana", mc.ordem_texto], ["Capacidade do fechamento usada", mc.uso_capacidade_texto], ["Fechamentos", mc.fechamentos_texto]]), mc.congelado ? note(mc.congelado) : null));
   arr(PM_VIEWS[r.issuer_id]).forEach(function (v) {
     parts.push(h("div", { class: "card" }, h("div", { class: "card-h" }, h("h4", null, "Visão do gestor"), h("span", { class: "chips" }, stanceTag(v.stance), chip("convicção " + (v.conviction || NA) + "/5"), isNum(v.horizon_weeks) ? chip(v.horizon_weeks + " sem.") : null)),
       md(prose(v.rationale), "sm"), evidenceList(v.evidence)));
@@ -2862,6 +3228,7 @@ function positionDetail(r) {
   return h("div", { class: "detail-grid" }, parts);
 }
 function renderCarteira(p) {
+  if (aguardaInaugural(p, "Carteira", "Composição, pesos, dimensionamento e execução de cada posição no leilão de fechamento são publicados a partir da carteira inaugural.")) return;
   var model = positionModel(), rows = model.rows;
   if (!rows.length) { p.appendChild(sec("Carteira", null, empty(firstCloseText()))); return; }
   var basisTxt = model.basis === "daily"
@@ -2997,6 +3364,7 @@ function renderCarteira(p) {
   redraw();
   p.appendChild(sec("Posições", (model.basis === "daily" ? "fechamento de " + fdate(LD.date) : "carteira decidida") + " · clique numa linha para ver a tese, a visão do gestor e a pesquisa", ctrl, holder,
     note("Contribuição ao risco = participação de cada nome na variância ex-ante da carteira. Squeeze: escore de risco de recompra forçada do short (médio ≥ " + fnum(MSQ.score_medium, 0) + ", alto ≥ " + fnum(MSQ.score_high, 0) + "). Visão do gestor: −2 a +2; “—” = neutro.")));
+  if (g(D, "modelo.carteira.posicoes")) p.appendChild(slot("carteira", "carteira"));
 
   /* 10 maiores por |peso| + mudanças */
   var top = rows.slice().sort(function (a, b) { return Math.abs(b.weight || 0) - Math.abs(a.weight || 0); }).slice(0, 10).map(function (r) {
@@ -3165,6 +3533,7 @@ function stressKind(s) {
   return /\(|\b(19|20)\d{2}\b/.test(n) ? "historico" : "hipotetico";
 }
 function renderRisco(p) {
+  if (aguardaInaugural(p, "Risco e exposições", "Exposições, decomposição do risco entre fatores e risco específico, testes de estresse e liquidez são publicados a partir da carteira inaugural; o modelo de risco e os limites estão em Mandato e metodologia.")) return;
   var ex = RK.ex_ante ? obj(RK.ex_ante) : null, dl = RK.daily ? obj(RK.daily) : null;
   var bases = [];
   if (dl && arr(dl.exposures).length) bases.push(["daily", "Fechamento de " + fdate(RK.as_of_date), dl.exposures]);
@@ -3226,6 +3595,7 @@ function renderRisco(p) {
         block("Fatores", "participação de cada fator na variância", barList(fc, { fmt: function (v) { return pct(v, 2); }, empty: "Sem contribuições fatoriais." }))),
       block("Maiores contribuições por nome", "participação na variância · limite por nome " + pct(MR.max_single_name_risk_share, 0),
         barList(trc, { fmt: function (v) { return pct(v, 1); }, refs: [{ value: MR.max_single_name_risk_share, label: "limite por nome " + pct(MR.max_single_name_risk_share, 0) }], color: "var(--accent)", empty: "Sem contribuições por nome." }))));
+    p.appendChild(slot("risco", "risco"));
 
     /* 4. estresse */
     var st = arr(ex && ex.stress_tests);
@@ -3327,16 +3697,12 @@ function renderRisco(p) {
   var recs = arr(TR.records);
   var ladB = block("Política de controle de perdas", "níveis de drawdown do mandato",
     ladderViz(ST.drawdown, MDD, g(TR, "stats.max_drawdown")) || empty("Níveis não configurados."),
+    /* níveis, gatilhos e ações em texto de Python (o mesmo de Mandato e metodologia) */
     table([
-      { label: "Nível", render: function (r) { return pill(r[0], r[3]); } },
-      { label: "Gatilho (drawdown)", num: true, render: function (r) { return r[1]; } },
-      { label: "Ação prevista", cls: "wrapcell", render: function (r) { return r[2]; } }
-    ], [
-      ["Normal", "acima de " + pct(MDD.soft_stop, 1), "gestão normal", "ok"],
-      ["Nível 1 · revisão", pct(MDD.soft_stop, 1), "revisão da carteira; exposição bruta × " + fnum(MDD.soft_degross_multiplier, 2), "warn"],
-      ["Nível 2 · redução", pct(MDD.hard_stop, 1), "exposição bruta × " + fnum(MDD.degross_multiplier, 2), "crit"],
-      ["Nível 3 · stop-out", pct(MDD.stop_out, 1), "exposição bruta reduzida a " + pct(MDD.stop_out_gross, 0) + " do PL", "crit"]
-    ], { stack: true }),
+      { label: "Nível", render: function (r) { return pill(r.nivel, r.tom); } },
+      { label: "Gatilho (drawdown)", num: true, render: function (r) { return r.gatilho; } },
+      { label: "Ação prevista", cls: "wrapcell", render: function (r) { return r.acao; } }
+    ], arr(g(D, "modelo.metodologia.controle_perdas")), { stack: true, empty: "Níveis não configurados." }),
     note(isNum(ST.drawdown) ? "Drawdown atual " + pct(ST.drawdown) + (stageLabel(ST.ladder_stage) ? " · " + stageLabel(ST.ladder_stage) : "") + ", medido contra o pico do PL." : "Sem histórico de cota ainda: o drawdown passa a ser medido a partir do primeiro pregão executado."));
   var ddChart = recs.length + ROLLUP.length >= 2 ? block("Drawdown diário", "% do PL, com os gatilhos de revisão e de redução" + (ROLLUP.length ? " · meses antigos no fim do mês (faixa sombreada)" : ""),
     chart(function (el) {
@@ -3524,6 +3890,7 @@ function renderPeriod(P, box) {
     block("Por emissor", "8 maiores contribuições e 8 maiores detrações", attrBars(a.issuer, "issuer", 8))));
 }
 function renderAtribuicao(p) {
+  if (aguardaInaugural(p, "Performance", "Valor da cota, retorno e atribuição do resultado a fatores, países, setores e nomes são publicados a partir do primeiro fechamento após a carteira inaugural.")) return;
   var periods = obj(TR.periods);
   var keys = PERIOD_ORDER.filter(function (k) { return periods[k]; });
   if (!keys.length && LD && LD.attribution) {
@@ -3576,49 +3943,6 @@ function renderAtribuicao(p) {
 }
 
 /* ====================================================================== Comitê de investimento */
-function metricFmt(v, unit) {
-  if (unit === "pct") return pct(v);
-  if (unit === "x") return fnum(v, 3, false);
-  if (unit === "count") return int(v);
-  if (unit === "days") return days(v);
-  return isNum(v) ? fnum(v, 3) : NA;
-}
-function diffFmt(v, unit) {
-  if (unit === "pct") return isNum(v) ? fnum(v * 100, 2, true) + " p.p." : NA;
-  if (unit === "x") return fnum(v, 3, true);
-  if (unit === "count") return fnum(v, 0, true);
-  if (unit === "days") return fnum(v, 2, true) + " d";
-  return fnum(v, 3, true);
-}
-function nameChips(ids) { return arr(ids).length ? h("span", { class: "chips" }, ids.map(function (x) { return chip(nm(x)); })) : "nenhum"; }
-function shadowSection(w) {
-  var s = w.shadow, T = "CDP × carteira quantitativa de referência";
-  if (!s || s.omitido) return fold(T, "não disponível nesta semana", false, empty("A comparação com a carteira quantitativa de referência não acompanha esta semana nesta versão do portal."));
-  var c = obj(s.comparison), ov = obj(c.overlap);
-  var mt = table([
-    { label: "Métrica", render: function (m) { return m.label || m.key; } },
-    { label: "CDP", num: true, render: function (m) { return metricFmt(m.cdp, m.unit); } },
-    { label: "Referência", num: true, render: function (m) { return metricFmt(m.shadow, m.unit); } },
-    { label: "Diferença", num: true, render: function (m) { return diffFmt(m.diff, m.unit); } }
-  ], arr(c.metrics));
-  var wd = table([
-    { label: "Emissor", get: function (r) { return nm(r.issuer_id); } },
-    { label: "Peso CDP", num: true, get: function (r) { return r.w_cdp; }, render: function (r) { return wOrOut(r.w_cdp); } },
-    { label: "Peso referência", num: true, get: function (r) { return r.w_shadow; }, render: function (r) { return wOrOut(r.w_shadow); } },
-    { label: "Diferença", num: true, title: "peso CDP − peso da referência (fora da carteira conta como zero)", get: function (r) { return r.diff; }, render: function (r) { return bps(r.diff); } }
-  ], arr(c.weight_diffs), { sortable: true, tall: true });
-  return fold(T, "o que a pesquisa e o gestor mudaram em relação ao modelo quantitativo puro", false,
-    h("div", { class: "cols-2" },
-      h("div", { class: "stack" }, mt, kv([
-        ["Nomes (CDP / referência)", int(ov.names_cdp) + " / " + int(ov.names_shadow)],
-        ["Em comum, mesmo lado", int(ov.common_same_side)],
-        ["Sobreposição de pesos", pct(ov.weight_overlap, 1)],
-        ["Active share", pct(ov.active_share, 1)],
-        ["Só no CDP", nameChips(ov.only_cdp)],
-        ["Só na referência", nameChips(ov.only_shadow)]
-      ])),
-      h("div", { class: "stack" }, h("h4", null, "Maiores diferenças de peso"), wd)));
-}
 function researchSection(w) {
   var r = w.research;
   if (!r) return fold("Pesquisa da semana", "sem pesquisa registrada", false, empty("Sem pesquisa registrada para esta semana."));
@@ -3702,8 +4026,8 @@ function weekSummaryDetail(w) {
         h("div", { class: "kpis" },
           tile("Posições", int(sm.n_long) + " long · " + int(sm.n_short) + " short", "vol ex-ante " + pct(sm.ex_ante_vol)),
           tile("Bruta / líquida", pct(sm.gross, 1), "líquida " + spct(sm.net) + " · beta " + xnum(sm.beta)),
-          tile("Semana", perf ? signed(spct(perf.ret), perf.ret) : NA, perf ? "valor adicionado " + spct(perf.value_added) + " · " + plural(perf.n_days, "pregão", "pregões") : (w.executed ? "sem histórico" : "não executada"))))),
-    note("Semana anterior em versão resumida nesta versão do portal."));
+          tile("Semana", perf ? signed(spct(perf.ret), perf.ret) : NA, perf ? plural(perf.n_days, "pregão", "pregões") : (w.executed ? "sem histórico" : "não executada"))))),
+    META.profile === "site" ? h("p", { class: "note" }, "Semana anterior em versão resumida; o registro completo da semana — proposta, decisão, pesquisa e tese — está nos ", h("a", { href: "dados/" }, "dados abertos"), ".") : note("Semana anterior em versão resumida nesta versão do portal."));
 }
 /* dimensionamento do diário: a "vol-alvo" gravada é a meta da POSTURA (antes do viés a priori);
    a meta aplicada na semana (exportada) vem ao lado, para não haver duas "metas" sem nome */
@@ -3742,9 +4066,7 @@ function weekDetail(w) {
   box.appendChild(h("div", { class: "cols" }, decB,
     block("Desempenho da semana", perf ? fdate(perf.first_date) + " a " + fdate(perf.last_date) : null,
       perf ? h("div", { class: "kpis" },
-        tile("CDP", signed(spct(perf.ret), perf.ret), usdFull(perf.pnl_usd, true) + " · " + plural(perf.n_days, "pregão", "pregões")),
-        tile("Referência quantitativa", signed(spct(perf.shadow_ret), perf.shadow_ret), plural(perf.shadow_n_days, "pregão", "pregões")),
-        tile("Valor adicionado", signed(spct(perf.value_added), perf.value_added), "CDP − referência")) : empty(w.executed ? "Sem histórico desta carteira ainda." : "Carteira ainda não executada."))));
+        tile("CDP", signed(spct(perf.ret), perf.ret), usdFull(perf.pnl_usd, true) + " · " + plural(perf.n_days, "pregão", "pregões"))) : empty(w.executed ? "Sem histórico desta carteira ainda." : "Carteira ainda não executada."))));
   if (prop) {
     box.appendChild(h("div", { class: "kpis" },
       tile("Posições", int(sm.n_positions), int(sm.n_long) + " long · " + int(sm.n_short) + " short"),
@@ -3803,11 +4125,11 @@ function weekDetail(w) {
     }
     box.appendChild(fold("Construção da carteira", "do universo à carteira final", false, cParts));
   }
-  box.appendChild(shadowSection(w));
   box.appendChild(researchSection(w));
   return box;
 }
 function renderDecisoes(p) {
+  if (aguardaInaugural(p, "Comitê de investimento", "A leitura do gestor, a decisão e a formulação resolvida do otimizador — cada restrição com o seu limite, o valor atingido, a folga e o custo — são publicadas a partir da decisão inaugural.")) return;
   if (!WEEKS.length) { p.appendChild(sec("Comitê de investimento", null, empty(firstCloseText()))); return; }
   var desc = WEEKS.slice().reverse();
   var saved = lsGet("week");
@@ -3826,12 +4148,13 @@ function renderDecisoes(p) {
     var b = h("button", { class: "wk", type: "button", id: "wk-" + w.week, "data-week": w.week, "aria-pressed": w.week === cur ? "true" : "false" },
       h("b", null, fdate(w.week)),
       h("span", null, pill(WEEK_STAGE[w.stage] || w.stage || NA, WEEK_STAGE_TONE[w.stage] || "na")),
-      h("span", null, perf ? "semana " + spct(perf.ret) + " · valor adic. " + spct(perf.value_added) : (w.executed ? "sem histórico" : "não executada")));
+      h("span", null, perf ? "semana " + spct(perf.ret) : (w.executed ? "sem histórico" : "não executada")));
     b.addEventListener("click", function () { sel(w.week); });
     strip.appendChild(b);
   });
   p.appendChild(sec("Comitê de investimento", "leitura do gestor, decisão e pesquisa de cada semana", desc.length > 1 ? strip : null, holder));
   holder.appendChild(weekDetail(WBY[cur]));
+  if (g(D, "modelo.formulacao")) p.appendChild(slot("decisoes", "comite"));
 }
 
 /* ====================================================================== Relatórios */
@@ -3849,6 +4172,7 @@ function repMd(t) {
   return prose(out.join("\n")).replace(/sombra só-quant/g, "carteira quantitativa de referência").replace(/\bsombra\b/g, "referência quantitativa").replace(/ · · /g, " · ");
 }
 function renderRelatorios(p) {
+  if (aguardaInaugural(p, "Relatórios", "Relatórios diários, semanais e da decisão são publicados a partir da carteira inaugural.")) return;
   var items = [];
   WEEKS.slice().reverse().forEach(function (w) {
     var r = obj(w.report);
@@ -3884,7 +4208,13 @@ function renderRelatorios(p) {
         h("div", { class: "card-h" }, h("h3", null, "Comentário do dia"), h("span", { class: "muted" }, c.ai ? "Comentário da gestão (IA)" : "Comentário automático")),
         md(repMd(c.markdown)), truncMark(c, "Comentário")));
     }
-    if (it.notExported) view.appendChild(empty("Este relatório não acompanha esta versão do portal."));
+    /* portal público: o texto completo está nos dados abertos (mesma publicação) */
+    var full = !has(it.md) && META.profile === "site" ? RIDX.filter(function (r) { return r.kind === it.kind && r.date === it.date && r.has_md; })[0] : null;
+    if (full) {
+      var rp = reportPath(full);
+      view.appendChild(block(null, null, h("p", { class: "prose" }, it.kind === "weekly" ? "O relatório completo da semana — decisão, carteira, risco e pesquisa — está publicado nos dados abertos do portal." : "O relatório completo do dia está publicado nos dados abertos do portal."),
+        h("div", { class: "pre-go" }, h("a", { class: "go", href: full.has_html ? rp.replace(/\.md$/, ".html") : rp }, "Ler o relatório completo →"), full.has_html ? h("a", { class: "go", href: rp, download: "" }, "Baixar em Markdown") : null)));
+    } else if (it.notExported) view.appendChild(empty("Este relatório não acompanha esta versão do portal."));
     else if (!has(it.md) && PUB) view.appendChild(empty("O texto completo do relatório não acompanha esta versão do portal. " + (it.kind === "weekly" ? "A decisão da semana está em Comitê de investimento." : "O comentário do dia aparece acima quando disponível.")));
     else if (!has(it.md)) view.appendChild(empty("Relatório resumido: o texto completo acompanha só os relatórios mais recentes."));
     else view.appendChild(block(null, null, md(repMd(it.md))));
@@ -4090,103 +4420,105 @@ function drawRun(r, box) {
 /* ====================================================================== Mandato e metodologia */
 function rng(a, b, f) { return isNum(a) && isNum(b) ? f(a) + " – " + f(b) : NA; }
 function pm0(v) { return isNum(v) ? "±" + pct(v) : NA; }
-function mandTable(title, rows) {
-  rows = rows.filter(function (r) { return r && r[1] !== undefined; });
-  return h("div", { class: "card" }, h("h3", null, title), kv(rows.map(function (r) { return [r[0], r[1] === null || r[1] === "" ? NA : r[1]]; })));
+function renderMandato(p) { p.appendChild(slot("mandato", "mandato")); }
+
+/* ====================================================================== módulos e pré-início */
+/* componentes e formatos da página para os módulos (mesma linguagem visual; números já vêm prontos) */
+var UI = window.CDP_PAINEL = {
+  D: D, META: META, ST: ST, M: obj(D.modelo), MAND: MAND, h: h, S: S, add: add, sec: sec, block: block, fold: fold, table: table,
+  kv: kv, tile: tile, pill: pill, chip: chip, md: md, txt: txt, empty: empty, note: note, extLink: extLink, chart: chart,
+  lineChart: lineChart, barList: barList, sharesBar: sharesBar, nm: nm, tk: tk, fdate: fdate, pct: pct, spct: spct, fnum: fnum,
+  int: int, usd: usd, usdFull: usdFull, days: days, sideTag: sideTag, countryName: countryName, sectorName: sectorName,
+  plain: plain, goTab: goTab, eventWindows: eventWindows, isNum: isNum, has: has, arr: arr, obj: obj, NA: NA,
+  THEME_PT: THEME_PT, LINE_PT: LINE_PT, STYLE_PT: STYLE_PT, SERIES_COLORS: SERIES_COLORS, navegar: navegar
+};
+/* marcador de uma parte do modelo aberto: as seções do módulo entram no lugar dele, como filhas do painel */
+function slot(tab, parte) {
+  var el = h("div", { class: "slot", "aria-busy": "true" });
+  modulo("modelo", function (M) {
+    var prev = CUR;
+    CUR = tab;
+    try { [].concat(M[parte](UI) || []).forEach(function (x) { if (x && el.parentNode) el.parentNode.insertBefore(x, el); }); } catch (e) {
+      if (el.parentNode) el.parentNode.insertBefore(empty("Não foi possível montar esta seção agora. Recarregue a página."), el);
+      if (window.console) console.error(e);
+    }
+    CUR = prev;
+    if (el.parentNode) el.parentNode.removeChild(el);
+    if (ACTIVE === tab) { drawCharts(tab, true); irAncora(); }
+  }, function () { el.removeAttribute("aria-busy"); el.appendChild(empty("Não foi possível carregar esta seção agora. Recarregue a página em alguns instantes.")); });
+  return el;
 }
-function renderMandato(p) {
-  var gsm = obj(MR.country_gross_share_max), th = obj(MR.theme_net_max_abs), sw = obj(MAL.signal_weights);
-  var hasMand = Object.keys(MR).length > 0;
-  var cards = hasMand ? h("div", { class: "cards wide" },
-    mandTable("Risco e exposição", [
-      ["Volatilidade-alvo ex-ante (a.a.)", pct(MR.vol_target_annual)],
-      ["Banda de volatilidade", rng(MR.vol_band_min, MR.vol_band_max, function (v) { return pct(v, 0); })],
-      ["Exposição líquida", pm0(MR.net_exposure_max_abs) + " do PL"],
-      ["Beta para o mercado", isNum(MR.beta_max_abs) ? "±" + fnum(MR.beta_max_abs, 2) : NA],
-      ["Exposição bruta", rng(MR.gross_min, MR.gross_max, function (v) { return pct(v, 0); }) + " do PL"],
-      ["Líquido por país / por setor", pm0(MR.country_net_max_abs) + " / " + pm0(MR.sector_net_max_abs)],
-      ["Estilos (fatores)", isNum(MR.style_exposure_max_abs) ? "±" + fnum(MR.style_exposure_max_abs, 2) + " desvio-padrão × PL" : NA],
-      Object.keys(th).length ? ["Temas", Object.keys(th).map(function (k) { return (THEME_PT[k] || k) + " " + pm0(th[k]); }).join(" · ")] : null,
-      ["Commodities (Σ peso × beta)", pm0(MR.commodity_beta_max_abs)],
-      ["Peso por nome (long / short)", pct(MR.max_long_weight) + " / " + pct(MR.max_short_weight) + (isNum(MR.min_position_weight) ? " · mínimo " + pct(MR.min_position_weight) : "")],
-      ["Contribuição de um nome ao risco", "até " + pct(MR.max_single_name_risk_share, 0) + " da variância"],
-      ["Parcela fatorial do risco", "até " + pct(MR.max_factor_risk_share, 0) + " da variância"],
-      ["VaR / ES 1 dia (99%)", pct(MR.var_1d_max) + " / " + pct(MR.es_1d_max) + " do PL"],
-      ["Perda máxima em gap de país", pct(MR.country_stress_max_loss) + " do PL"],
-      Object.keys(gsm).length ? ["Fatia máxima da exposição bruta por país", Object.keys(gsm).map(function (k) { return countryName(k) + " " + pct(gsm[k], 0); }).join(" · ")] : null
-    ]),
-    mandTable("Liquidez", [
-      ["Participação no volume diário", "long " + pct(MLQ.participation_rate, 0) + " · short " + pct(MLQ.short_participation_rate, 0)],
-      ["Prazo máximo para liquidar", "long " + days(MLQ.max_days_to_liquidate_long) + " · short " + days(MLQ.max_days_to_liquidate_short)],
-      ["Exposição bruta liquidável", "≥ " + pct(MLQ.min_gross_liquid_3d, 0) + " em 3 dias · ≥ " + pct(MLQ.min_gross_liquid_5d, 0) + " em 5 dias"],
-      ["Volume médio diário mínimo", "long " + usd(MLQ.min_adtv_long_usd) + " · short " + usd(MLQ.min_adtv_short_usd)],
-      ["Giro semanal máximo", pct(MLQ.max_weekly_turnover, 0) + " do PL"],
-      ["Janela do volume médio", isNum(MLQ.adv_window_days) ? MLQ.adv_window_days + " pregões" : NA]
-    ]),
-    mandTable("Short e aluguel", [
-      ["Instrumentos com short permitido", arr(MSH.shortable_line_types).map(function (x) { return LINE_PT[x] || x; }).join(", ") || NA],
-      ["Aluguel máximo", pct(MSH.max_borrow_fee) + " a.a."],
-      ["Valor de mercado mínimo para short", usd(MSH.min_market_cap_short_usd)]
-    ]),
-    mandTable("Risco de squeeze", [
-      ["Escore (médio / alto)", fnum(MSQ.score_medium, 0) + " / " + fnum(MSQ.score_high, 0)],
-      ["Short interest, % do free float", pct(MSQ.si_pct_float_medium, 0) + " / " + pct(MSQ.si_pct_float_high, 0)],
-      ["Dias para cobrir", fnum(MSQ.days_to_cover_medium, 0) + " / " + fnum(MSQ.days_to_cover_high, 0)],
-      ["Aluguel (médio / alto)", pct(MSQ.borrow_fee_medium, 0) + " / " + pct(MSQ.borrow_fee_high, 0) + (isNum(MSQ.br_borrow_fee_medium) ? " · B3 " + pct(MSQ.br_borrow_fee_medium, 0) + " / " + pct(MSQ.br_borrow_fee_high, 0) : "")],
-      ["Squeeze alto", "short vedado"],
-      ["Squeeze médio ou sem dado", isNum(MSQ.medium_short_cap_multiplier) ? "teto do nome × " + fnum(MSQ.medium_short_cap_multiplier, 2) : NA],
-      ["Stops do short", pct(MSQ.stop_short_position_loss, 0) + " de perda desde a entrada (corta metade) ou " + pct(MSQ.stop_short_nav_loss, 1) + " do PL"]
-    ]),
-    mandTable("Política de controle de perdas", [
-      ["Nível 1 · revisão", "drawdown de " + pct(MDD.soft_stop, 1) + ": revisão da carteira e exposição bruta × " + fnum(MDD.soft_degross_multiplier, 2)],
-      ["Nível 2 · redução", "drawdown de " + pct(MDD.hard_stop, 1) + ": exposição bruta × " + fnum(MDD.degross_multiplier, 2)],
-      ["Nível 3 · stop-out", "drawdown de " + pct(MDD.stop_out, 1) + ": exposição bruta reduzida a " + pct(MDD.stop_out_gross, 0) + " do PL"],
-      ["Referência", "pico do patrimônio desde o início"]
-    ])) : empty("Os limites do mandato não acompanham esta versão do portal; os aplicados à carteira aparecem em Risco e exposições.");
-  p.appendChild(sec("Mandato", "limites de investimento e de risco do fundo", cards, eventWindows()));
-
-  var sigs = Object.keys(sw).filter(function (k) { return isNum(sw[k]) && sw[k] > 0; }).map(function (k) { return (STYLE_PT[k] || k).toLowerCase() + " " + pct(sw[k], 0); });
-  var steps = [
-    ["Decisão semanal", obj(ST.inaugural).date ? "A carteira inaugural é decidida em " + fdate(obj(ST.inaugural).date) + " e executada no leilão de fechamento do mesmo dia; a partir daí, a carteira é decidida uma vez por semana, com dados até o pregão anterior, executada no leilão de fechamento do dia da decisão e acompanhada diariamente contra o mandato." : "A carteira é decidida uma vez por semana, no primeiro pregão da semana na B3, com dados até o pregão anterior, e executada no leilão de fechamento do mesmo dia. Entre as decisões, a carteira é acompanhada diariamente contra o mandato."],
-    ["Alpha quantitativo", "Sinais padronizados por emissor" + (sigs.length ? " (" + sigs.join(", ") + ")" : "") + ", ortogonalizados aos fatores de risco" + (isNum(MAL.horizon_weeks) ? ", com horizonte de " + MAL.horizon_weeks + " semanas" : "") + "."],
-    ["Pesquisa", "Pesquisa fundamental por emissor, análise de risco de short (squeeze e aluguel) e leitura macro por país, com apoio de IA. Visões da pesquisa e do gestor só inclinam o alpha dentro de um teto" + (isNum(MAL.max_view_tilt_z) ? " de " + fnum(MAL.max_view_tilt_z, 1) + " desvio-padrão" : "") + " e só restringem risco; nunca ampliam limites do mandato."],
-    ["Modelo de risco", "Modelo fatorial com mercado, países, setores, estilos e commodities" + (isNum(MRM.history_days) ? ", estimado com " + int(MRM.history_days) + " pregões de histórico" : "") + (MRM.market_proxy ? " e o ETF " + MRM.market_proxy + " como referência de mercado" : "") + ". Mede volatilidade ex-ante, VaR, ES, contribuições ao risco e cenários de estresse."],
-    ["Otimização", "Maximiza o alpha esperado líquido de custos de transação e de aluguel, sujeito a todos os limites do mandato, buscando a volatilidade-alvo dentro da banda. Uma carteira que viole limite rígido não é executada."],
-    ["Execução e custos", "Ordens no leilão de fechamento; custos estimados com corretagem por mercado, meio spread por faixa de liquidez e impacto de mercado."]
-  ];
-  p.appendChild(sec("Processo de investimento", null, h("div", { class: "cards wide" }, steps.map(function (s) { return h("div", { class: "card" }, h("h3", null, s[0]), h("p", { class: "prose" }, s[1])); }))));
-
-  p.appendChild(sec("Natureza do histórico", null, h("div", { class: "cols-2" },
-    block(null, null, h("p", { class: "prose" }, plain(META.paper_trading_text) || "Carteira simulada (paper trading)."), META.is_synthetic ? h("p", null, pill("DADOS SIMULADOS", "sim")) : null),
-    block(null, null, kv([["Início", fdate(META.inception_date)], ["PL inicial", usdFull(META.inception_nav_usd)], ["Gestor", META.manager], ["Moeda base", META.base_currency]])))));
-
-  var gl = [
-    ["Exposição bruta (gross)", "Soma dos valores absolutos das posições long e short, em % do PL."],
-    ["Exposição líquida (net)", "Longs menos shorts, em % do PL. Perto de zero = carteira neutra em mercado."],
-    ["Beta", "Sensibilidade prevista da carteira a um movimento do mercado latino-americano."],
-    ["Volatilidade ex-ante", "Volatilidade anual prevista pelo modelo de risco para a carteira atual."],
-    ["VaR (99%)", "Perda que só deve ser superada em 1% dos dias, segundo o modelo."],
-    ["ES (99%)", "Perda média nos dias que superam o VaR (expected shortfall)."],
-    ["Drawdown", "Queda do patrimônio desde o pico anterior."],
-    ["Contribuição ao risco", "Parcela da variância da carteira atribuída a um nome ou fator."],
-    ["Risco fatorial × específico", "Parte da variância explicada por fatores comuns (mercado, país, setor, estilo) × parte própria de cada empresa."],
-    ["Squeeze", "Alta forçada de uma ação com muitos vendidos, que obriga a recompra dos shorts."],
-    ["ADTV", "Volume financeiro médio diário negociado; base para os prazos de liquidação."],
-    ["Active share", "Quanto a carteira difere da carteira quantitativa de referência (0% = idêntica)."],
-    ["Sinal quantitativo (z)", "Escore padronizado do modelo para o emissor; positivo favorece long."],
-    ["Referência quantitativa", "Carteira que o modelo montaria sem a pesquisa e o gestor; mede o valor adicionado por eles."],
-    ["Leilão de fechamento", "Negociação no preço de fechamento do pregão, usada para executar a carteira."]
-  ];
-  p.appendChild(sec("Glossário", null, h("div", { class: "block" }, kv(gl))));
+var ANCORA = null, COB_ALVO = null;
+function irAncora() {
+  var el = ANCORA && $(ANCORA);
+  if (!el) return;
+  ANCORA = null;
+  try { el.scrollIntoView({ block: "start" }); } catch (e) { el.scrollIntoView(); }
+}
+function navegar(dest) { try { location.hash = "#" + String(dest || "visao"); } catch (e) { showTab(String(dest || "visao").split(":")[0]); } }
+var COV = obj(META.coverage).disponivel === true;
+function fichaBtn(iid) {
+  if (!COV || !iid) return null;
+  var b = h("button", { class: "go", type: "button" }, "Ficha do ativo →");
+  b.addEventListener("click", function (ev) { ev.stopPropagation(); navegar("cobertura:" + iid); });
+  return b;
+}
+function temaAtual() {
+  var t = document.documentElement.getAttribute("data-theme");
+  if (t) return t === "dark" ? "escuro" : "claro";
+  return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "escuro" : "claro";
+}
+function cobAviso(p, texto, link) {
+  p.appendChild(sec("Cobertura de ativos", null, h("div", { class: "block pre" }, h("p", { class: "lead" }, "Modelos abertos e preços-alvo de 12 meses para as ações e ETFs do universo."), h("p", { class: "prose" }, texto), link ? h("div", { class: "pre-go" }, extLink(link, "Cobertura no portal público →")) : null)));
+}
+function renderCobertura(p) {
+  if (!COV) { cobAviso(p, obj(META.coverage).estado === "em_verificacao" ? "A cobertura está em conferência e volta a ser publicada assim que o registro dos modelos for verificado." : "A cobertura é publicada a partir do primeiro retrato dos modelos, com os insumos públicos, as fórmulas com os valores substituídos e o histórico de acertos de cada ativo."); return; }
+  var wait = h("div", { class: "boot", role: "status" }, h("h2", null, "Carregando a cobertura…"), h("div", { class: "boot-bar", "aria-hidden": "true" }), h("p", null, "Modelos, preços-alvo e histórico de acertos dos ativos cobertos."));
+  p.appendChild(wait);
+  /* espelho privado: a cobertura só vai quando cabe na leitura de quem publica; sem ela, o aviso aponta o portal público */
+  var temDados = META.profile === "publicacao" && window.fetch ? window.fetch("cobertura.json", { method: "HEAD", cache: "no-store" }).then(function (r) { return r.status !== 404; }, function () { return true; }) : Promise.resolve(true);
+  temDados.then(function (ok) {
+    if (ok) return carregaCob(p, wait);
+    if (wait.parentNode) p.removeChild(wait);
+    cobAviso(p, "Nesta cópia do portal a cobertura não acompanha a publicação; os modelos abertos, os preços-alvo e o histórico de acertos estão no portal público.", obj(g(D, "modelo.auditoria")).portal ? obj(g(D, "modelo.auditoria")).portal + "#cobertura" + (COB_ALVO ? ":" + COB_ALVO : "") : null);
+  });
+}
+function carregaCob(p, wait) {
+  modulo("cobertura", function (C) {
+    if (wait.parentNode) p.removeChild(wait);
+    var prev = CUR;
+    CUR = "cobertura";
+    try { C.render(p, { meta: META, tema: temaAtual(), navegar: navegar, alvo: COB_ALVO, ui: UI }); } catch (e) {
+      p.appendChild(empty("Não foi possível carregar a cobertura agora. Recarregue a página."));
+      if (window.console) console.error(e);
+    }
+    CUR = prev;
+    if (ACTIVE === "cobertura") drawCharts("cobertura", true);
+  }, function () {
+    p.textContent = "";
+    p.appendChild(sec("Cobertura de ativos", null, empty("Não foi possível carregar a cobertura agora. Recarregue a página em alguns instantes.")));
+  });
+}
+/* pré-início: um só aviso institucional por aba da carteira, até a carteira inaugural */
+var PRE = ST.phase === "pre_inception" && !LIVEW;
+function aguardaInaugural(p, titulo, texto) {
+  if (!PRE) return false;
+  var INA = obj(ST.inaugural);
+  p.appendChild(sec(titulo, null, h("div", { class: "block pre" },
+    h("p", { class: "lead" }, INA.date ? "Carteira inaugural em " + fdate(INA.date) + ", " + (INA.convention || "ao preço de fechamento") + "." : "A carteira inaugural é montada na próxima data de montagem."),
+    h("p", { class: "prose" }, texto),
+    h("div", { class: "pre-go" }, goTab("mandato", "Mandato e metodologia"), COV ? goTab("cobertura", "Cobertura de ativos") : null))));
+  return true;
 }
 
 /* ====================================================================== abas e início */
 var TABS = [
-  ["visao", "Visão geral", renderVisao], ["tese", "Tese de investimento", renderTese], ["carteira", "Carteira", renderCarteira],
-  ["risco", "Risco e exposições", renderRisco], ["atribuicao", "Performance", renderAtribuicao], ["decisoes", "Comitê de investimento", renderDecisoes],
+  ["visao", "Visão geral", renderVisao], ["tese", "Tese", renderTese], ["carteira", "Carteira", renderCarteira],
+  ["cobertura", "Cobertura de ativos", renderCobertura],
+  ["risco", "Risco", renderRisco], ["atribuicao", "Performance", renderAtribuicao], ["decisoes", "Comitê", renderDecisoes],
   ["relatorios", "Relatórios", renderRelatorios], ["backtest", "Pesquisa quantitativa", renderBacktest], ["mandato", "Mandato e metodologia", renderMandato]
 ];
-/* aba antiga (Auditoria) e ids desconhecidos */
+/* âncoras dentro de abas (#auditoria abre "Auditoria e reprodução" no Mandato) e ids desconhecidos */
 var TAB_ALIAS = { auditoria: "mandato" };
 var RENDERED = {};
 function tabIds() { return TABS.map(function (t) { return t[0]; }); }
@@ -4213,8 +4545,19 @@ function showTab(id, fromHash) {
     CUR = null;
   }
   drawCharts(id, false);
+  irAncora();
   lsSet("tab", id);
   if (!fromHash) { try { history.replaceState(null, "", "#" + id); } catch (e) { /* sem histórico */ } }
+}
+/* #aba, #aba:argumento (#cobertura:<emissor>) e #auditoria (âncora no Mandato) */
+function hashParts() {
+  var raw = (location.hash || "").replace(/^#/, ""), i = raw.indexOf(":"), arg = i < 0 ? null : raw.slice(i + 1);
+  try { arg = arg && decodeURIComponent(arg); } catch (e) { /* argumento inválido */ }
+  return { id: i < 0 ? raw : raw.slice(0, i), arg: arg };
+}
+function prepHash(q) {
+  if (q.id === "cobertura") COB_ALVO = q.arg || null;
+  if (TAB_ALIAS[q.id]) ANCORA = q.id;
 }
 function initTabs() {
   var tl = $("tablist");
@@ -4230,12 +4573,18 @@ function initTabs() {
     });
     tl.appendChild(b);
   });
-  var fromHash = (location.hash || "").replace(/^#/, "");
-  var known = !!fromHash && (tabIds().indexOf(fromHash) >= 0 || !!TAB_ALIAS[fromHash]);
-  showTab(known ? fromHash : (lsGet("tab") || "visao"), known && !TAB_ALIAS[fromHash]);
+  var hp = hashParts(), known = !!hp.id && (tabIds().indexOf(hp.id) >= 0 || !!TAB_ALIAS[hp.id]);
+  if (known) prepHash(hp);
+  showTab(known ? hp.id : (lsGet("tab") || "visao"), known && !TAB_ALIAS[hp.id]);
   window.addEventListener("hashchange", function () {
-    var id = (location.hash || "").replace(/^#/, "");
-    if ((tabIds().indexOf(id) >= 0 || TAB_ALIAS[id]) && tabId(id) !== ACTIVE) showTab(id, !TAB_ALIAS[id]);
+    var q = hashParts();
+    if (!(tabIds().indexOf(q.id) >= 0 || TAB_ALIAS[q.id])) return;
+    prepHash(q);
+    /* ficha pedida por endereço (#cobertura:<emissor>): com a aba já montada, abre o ativo pedido em qualquer caso (vindo de outra aba ou da própria) */
+    var montada = !!RENDERED.cobertura, outra = tabId(q.id) !== ACTIVE;
+    if (outra) showTab(q.id, !TAB_ALIAS[q.id]);
+    if (q.id === "cobertura" && q.arg && montada && window.CDP_COBERTURA && window.CDP_COBERTURA.abrir) window.CDP_COBERTURA.abrir(q.arg);
+    else if (!outra) irAncora();
   });
   var rt = null;
   window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(function () { if (ACTIVE) drawCharts(ACTIVE, false); }, 160); });

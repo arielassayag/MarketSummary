@@ -88,6 +88,29 @@ def days(x: object, digits: int = 1) -> str:
     return NA if v is None else f"{fmt_num(v, digits)} d"
 
 
+def closes(x: object, digits: int = 1) -> str:
+    """Leilões de fechamento (unidade de liquidez com a execução no fechamento)."""
+    v = _f(x)
+    return NA if v is None else f"{fmt_num(v, digits)} fech."
+
+
+def closes_mode(cfg: object) -> bool:
+    """Liquidez em fechamentos: mandato com a execução no leilão de fechamento (``execution``)."""
+    return getattr(cfg, "execution", None) is not None
+
+
+def liq(cfg: object):
+    """Formatador da liquidez na unidade do mandato (fechamentos ou dias)."""
+    return closes if closes_mode(cfg) else days
+
+
+def liq_label(cfg: object, short: bool = True) -> str:
+    """Rótulo da coluna de liquidez: "Fechamentos p/ liquidar" ou "Dias p/ liquidar"."""
+    if closes_mode(cfg):
+        return "Fechamentos p/ liquidar" if short else "fechamentos para liquidar"
+    return "Dias p/ liquidar" if short else "dias para liquidar"
+
+
 def short_hash(h: str | None, n: int = 12) -> str:
     return f"{h[:n]}…" if h else NA
 

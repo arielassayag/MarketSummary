@@ -118,15 +118,15 @@ def _compliance(wd: data.WeekData) -> None:
              height=min(640, 36 * (len(df) + 1)))
 
 
-def _orders(wd: data.WeekData) -> None:
+def _orders(wd: data.WeekData, cfg=None) -> None:
     p = wd.proposal
     assert p is not None
     ui.section("Ordens (execução no fechamento — MOC)", ui.CALC_BADGE)
     if p.trades:
-        ui.table(data.trades_frame(p), height=min(520, 36 * (len(p.trades) + 1)))
+        ui.table(data.trades_frame(p, cfg), height=min(520, 36 * (len(p.trades) + 1)))
     else:
         st.caption("Sem ordens nesta semana.")
-    ui.section("Hedges cambiais (NDF)", ui.CALC_BADGE)
+    ui.section("Hedges cambiais", ui.CALC_BADGE)
     if p.fx_hedges:
         ui.table(data.hedges_frame(p))
     else:
@@ -222,7 +222,7 @@ def render(state: AppState) -> None:
     with tabs[2]:
         _compliance(wd)
     with tabs[3]:
-        _orders(wd)
+        _orders(wd, state.cfg)
     with tabs[4]:
         _shadow(wd)
     with tabs[5]:

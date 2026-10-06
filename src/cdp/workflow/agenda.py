@@ -10,7 +10,10 @@ de dias em que o PC estava desligado ou dormindo), quais relatórios diários fa
 o relatório semanal de resultado da noite do dia de montagem está pendente
 (``relatorio_semanal``), se o retrato diário da cobertura está pendente (``cobertura``) e quais
 semanas decididas ainda não têm a tese de investimento da carteira publicada (``acao: "tese"``
-na semana corrente e ``teses_pendentes``). Só calendário e arquivos — nenhum número de mercado.
+na semana corrente e ``teses_pendentes``), o último pregão da base de mercado
+(``base_ultimo_pregao``) e os pedidos de kill switch publicados por rotinas sem a trava exclusiva
+e ainda não aplicados no livro (``kill_switch_pedidos``). Só calendário e arquivos — nenhum
+número de mercado.
 
 Data de início do mandato (``fund.inception_date``): antes dela, com o livro vazio, a fase é
 ``"pre_inicio"`` (``semanal.acao = "aguardar"``; sem fechamentos, relatórios nem monitor de
@@ -407,10 +410,12 @@ def agenda(rt: Runtime, now: datetime | None = None) -> dict[str, Any]:
         "pregao_b3_hoje": is_session(local.date(), "BVMF"),
         "b3_aberta_agora": b3_open_at(local),
         "kill_switch": rt.kill_switch_active(),
+        "kill_switch_pedidos": _kill_switch_requests(rt),
         "fase": "pre_inicio" if rt.pre_inicio(local.date()) else "operacao",
         "data_de_inicio": cfg.fund.inception_date,
         "reinicio": situacao(rt),
         "ultimo_registro_diario": last[-1] if last else None,
+        "base_ultimo_pregao": _store_last(rt),
         "semanal": weekly,
         "fechamentos_pendentes": closes[:MAX_PENDING],
         "fechamentos_pendentes_excedem_limite": len(closes) > MAX_PENDING,
@@ -421,6 +426,29 @@ def agenda(rt: Runtime, now: datetime | None = None) -> dict[str, Any]:
         "teses_pendentes": pending_theses(rt),
         "proximos_eventos": _next_events(rt, local, weekly),
     }
+
+
+def _store_last(rt: Runtime) -> date | None:
+    """Último pregão gravado na base de mercado (dados públicos); ``None`` sem base legível. Gate
+    da rotina diária no pré-início: base defasada ⇒ atualizar antes da carteira inaugural."""
+    try:
+        v = rt.store_last_date()
+    except Exception:  # noqa: BLE001 - base ausente ou ilegível
+        return None
+    if isinstance(v, datetime):
+        return v.date()
+    return v if isinstance(v, date) else None
+
+
+def _kill_switch_requests(rt: Runtime) -> list[dict[str, Any]]:
+    """Pedidos de kill switch publicados (``reports/risk/<data>/kill_switch_<HHMM>.yaml``) ainda
+    não aplicados no livro: a próxima execução exclusiva (semanal ou diária) os aplica."""
+    try:
+        reqs = rt.kill_switch_requests()
+    except (OSError, ValueError):
+        return []
+    return [{"arquivo": r["arquivo"], "em": r["em"], "motivo": r["motivo"],
+             "superado": r["superado"]} for r in reqs]
 
 
 def validate_daily_commentary(rt: Runtime, session: date) -> tuple[bool, list[str]]:

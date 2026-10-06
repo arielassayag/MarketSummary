@@ -47,22 +47,28 @@ def _tiles(state: AppState) -> None:
     ui.kpi(c[2], "VaR 1 semana (99%)", fmt.pct(pr.var_1w_99 if pr else None), "na decisão")
     # Tetos distintos por lado (long 3 d, short 2 d): um único teto esconderia um short acima
     # do limite dos shorts. Dias gravados por posição na proposta vigente.
+    fliq = fmt.liq(cfg)
+    unit = "fechamentos" if fmt.closes_mode(cfg) else "dias"
     if prop is not None and prop.positions:
         by_side = data.liquidity_by_side(prop.positions, cfg)
         lo, sh = by_side["LONG"], by_side["SHORT"]
-        ui.kpi(c[3], "Máx. dias p/ liquidar (L / S)",
-               f"{fmt.days(lo.max_days)} / {fmt.days(sh.max_days)}",
+        ui.kpi(c[3], f"Máx. {unit} p/ liquidar (L / S)",
+               f"{fliq(lo.max_days)} / {fliq(sh.max_days)}",
                data.worst_liquidity_status(by_side),
                help="Máximo por lado na proposta vigente vs. o teto do mandato de cada lado"
                     + ("; registro do dia (todas as posições): "
-                       f"{fmt.days(rk.max_days_to_liquidate)}" if rk is not None else "") + ".")
+                       f"{fliq(rk.max_days_to_liquidate)}" if rk is not None else "") + ".")
     else:
         mdl = rk.max_days_to_liquidate if rk is not None else None
-        ui.kpi(c[3], "Máx. dias p/ liquidar", fmt.days(mdl), "sem proposta (teto por lado n/d)")
+        ui.kpi(c[3], f"Máx. {unit} p/ liquidar", fliq(mdl), "sem proposta (teto por lado n/d)")
     liq1 = rk.pct_gross_liquid_1d if rk is not None else (
         pr.pct_nav_liquidated_1d if pr else None)
-    ui.kpi(c[4], "Gross liquidável em 1 dia", fmt.pct(liq1),
-           f"participação {fmt.pct(cfg.liquidity.participation_rate, 0)} do ADTV")
+    if fmt.closes_mode(cfg):
+        ui.kpi(c[4], "Gross liquidável em 1 fechamento", fmt.pct(liq1),
+               "capacidade estrutural do leilão e da janela pré-fechamento")
+    else:
+        ui.kpi(c[4], "Gross liquidável em 1 dia", fmt.pct(liq1),
+               f"participação {fmt.pct(cfg.liquidity.participation_rate, 0)} do ADTV")
     src = []
     if rec is not None:
         src.append(f"registro diário de {fmt.date_br(rec.date)} (carteira derivada no dia)")
@@ -198,23 +204,30 @@ def _stress(state: AppState) -> None:
 
 def _liquidity(state: AppState) -> None:
     prop = state.book.live_proposal(state.track.latest)
-    ui.section("Perfil de liquidez", ui.CALC_BADGE,
-               help="Dias para liquidar cada posição (gravados na proposta vigente) com a "
+    cfg = state.cfg
+    if fmt.closes_mode(cfg):
+        help_txt = ("Fechamentos para zerar cada posição (gravados na proposta vigente) à "
+                    "capacidade estrutural de redução do leilão e da janela pré-fechamento da "
+                    "linha. Posições sem volume conhecido aparecem primeiro (liquidez "
+                    "desconhecida).")
+    else:
+        help_txt = ("Dias para liquidar cada posição (gravados na proposta vigente) com a "
                     "participação do mandato: longs a "
-                    f"{fmt.pct(state.cfg.liquidity.participation_rate, 0)} e shorts a "
-                    f"{fmt.pct(state.cfg.liquidity.short_participation_rate, 0)} do ADTV. "
+                    f"{fmt.pct(cfg.liquidity.participation_rate, 0)} e shorts a "
+                    f"{fmt.pct(cfg.liquidity.short_participation_rate, 0)} do ADTV. "
                     "Posições sem ADTV aparecem primeiro (liquidez desconhecida).")
+    ui.section("Perfil de liquidez", ui.CALC_BADGE, help=help_txt)
     if prop is None or not prop.positions:
         st.caption("Sem posições na proposta vigente.")
         return
-    st.plotly_chart(charts.bucket_bars(data.liquidity_buckets(prop.positions),
-                                       "Fatia do gross por dias para liquidar"),
+    st.plotly_chart(charts.bucket_bars(data.liquidity_buckets(prop.positions, cfg),
+                                       f"Fatia do gross por {fmt.liq_label(cfg, short=False)}"),
                     width="stretch", key="risk_liq")
-    rows = data.least_liquid(prop.positions, 10)  # dias ausentes primeiro (nunca "0 dia")
+    rows = data.least_liquid(prop.positions, 10)  # ausentes primeiro (nunca "0")
     df = pd.DataFrame([{"Emissor": p.issuer_id, "Linha": p.execution_ticker,
                         "Lado": fmt.SIDE_PT.get(p.side.value, p.side.value),
                         "Peso": fmt.pct(p.weight, signed=True), "% ADTV": fmt.pct(p.pct_adtv),
-                        "Dias p/ liquidar": fmt.days(p.days_to_liquidate)} for p in rows])
+                        fmt.liq_label(cfg): fmt.liq(cfg)(p.days_to_liquidate)} for p in rows])
     ui.table(df)
 
 
@@ -248,11 +261,12 @@ def _squeeze(state: AppState) -> None:
                           for i in df["issuer_id"]])
     ui.table(ui.formatted(df, {
         "weight": lambda v: fmt.pct(v, signed=True), "score": lambda v: fmt.num(v, 1),
-        "borrow_fee": fmt.pct, "days_to_liquidate": fmt.days,
+        "borrow_fee": fmt.pct, "days_to_liquidate": fmt.liq(state.cfg),
     }).rename(columns={"issuer_id": "Emissor", "name": "Nome", "ticker": "Linha",
                        "weight": "Peso", "bucket": "Balde na decisão", "score": "Escore",
                        "alert": "Último fechamento",
-                       "borrow_fee": "Aluguel a.a.", "days_to_liquidate": "Dias p/ liquidar"}))
+                       "borrow_fee": "Aluguel a.a.",
+                       "days_to_liquidate": fmt.liq_label(state.cfg)}))
 
 
 def _fx(state: AppState) -> None:

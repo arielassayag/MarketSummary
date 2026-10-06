@@ -1,8 +1,8 @@
 {
   "name": "cdp",
   "displayName": "CDP — Cabra da Peste",
-  "version": "1.4.0",
-  "description": "Rotinas do CDP — Cabra da Peste (fundo long/short LatAm autônomo, paper trading com preços reais): montagem semanal da carteira no último pregão da semana na NYSE, fechamento diário com comentário do resultado, relatório semanal com atribuição, notas de pesquisa por emissor só com fontes públicas, monitor de risco intradiário, saúde da trilha e calibração mensal. Todos os números vêm do código (CLI `cdp`); a mente escreve apenas JSON validado por schema, e qualquer assistente de IA pode fazer cada passo com `cdp mente pacote`.",
+  "version": "1.5.0",
+  "description": "Rotinas do CDP — Cabra da Peste (fundo long/short LatAm autônomo, paper trading com preços reais) no Claude Code: montagem semanal da carteira no último pregão da semana na NYSE, fechamento diário com comentário, relatórios semanais de resultado, notas de pesquisa por emissor só com fontes públicas, monitor de risco, saúde da operação e calibração mensal. Cada skill só faz a entrada (gate, trava, sincronização) e a saída (publicação pelo código) da execução e segue o roteiro neutro em docs/cdp/playbooks/ — o mesmo do Codex, do Gemini e de qualquer outro harness. Todos os números vêm do código (CLI `cdp`); a mente escreve apenas JSON validado por schema.",
   "author": {
     "name": "CDP — Cabra da Peste",
     "url": "https://github.com/arielassayag/MarketSummary"
@@ -17,6 +17,7 @@
     "risco",
     "cobertura",
     "notas-de-pesquisa",
-    "dados-publicos"
+    "dados-publicos",
+    "agnostico-ao-harness"
   ]
 }

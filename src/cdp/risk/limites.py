@@ -11,8 +11,12 @@
   candidatas do emissor são avaliadas (uma estimativa larga nunca desloca uma data confirmada).
   ``controller_max_pct`` não tem fonte pública estruturada: registrado como ``sem_fonte``.
   Cobrir (reduzir) um short é sempre permitido.
-- **Stop de squeeze por nome** (``squeeze.stop_scope = "name"``): o short em stop é cortado à
-  metade (``max_short = 0,5·|w⁰|``) e o nome não pode ficar comprado até a revisão humana.
+- **Stop de squeeze por nome** (``squeeze.stop_scope = "name"``): episódio de stop por short
+  (emissor, ticker e preço médio de entrada) a partir de um fechamento em stop. No
+  rebalanceamento seguinte o short fica limitado à metade das ações do fechamento do stop — uma
+  vez por episódio (pendente enquanto não executado, sempre contra as ações do stop, nunca em
+  cascata) — e, desde o stop, o emissor não pode ficar comprado até uma revisão humana registrada
+  na trilha (evento :data:`SQUEEZE_REVIEW_EVENT`), mesmo com o short já zerado.
 - **Grupos de controle** (``risk_model.linked_groups``): holding e controlada são a mesma aposta
   econômica; o peso de mesmo sinal do grupo não passa do teto por nome (limite operacional).
 
@@ -24,7 +28,9 @@ sempre offline (só arquivos já arquivados), para a decisão ser reproduzível.
 from __future__ import annotations
 
 import math
+import re
 from collections.abc import Iterable, Mapping, Sequence
+from dataclasses import dataclass
 from datetime import date, timedelta
 from typing import TYPE_CHECKING, Any
 
@@ -332,28 +338,185 @@ def apply_short_entry_blocks(constraints: pd.DataFrame, blocks: pd.DataFrame
     return c, applied
 
 
-def apply_squeeze_name_stops(constraints: pd.DataFrame, stops: Mapping[str, str]
+def apply_squeeze_name_stops(constraints: pd.DataFrame, stops: Mapping[str, Any]
                              ) -> tuple[pd.DataFrame, dict[str, str]]:
-    """Stop de squeeze por nome: short cortado à metade e sem posição comprada no emissor."""
+    """Stop de squeeze por nome nos limites por emissor.
+
+    ``stops``: emissor → especificação de :func:`acoes_de_squeeze` (``motivo``,
+    ``fracao_maxima_short`` = teto do short como fração de ``|w⁰|``, ou ``None`` sem corte, e
+    ``veto_compra``) ou, na forma simples, só o motivo (corte à metade de ``|w⁰|`` e veto de
+    compra, aplicados apenas a quem está vendido). Devolve as restrições e ``{emissor: motivo}``
+    do que foi aplicado."""
     c = constraints.copy()
     cur = pd.to_numeric(c.get("current", pd.Series(0.0, index=c.index)),
                         errors="coerce").fillna(0.0)
     applied: dict[str, str] = {}
-    for iid, motivo in sorted(stops.items()):
+    for iid, spec in sorted(stops.items()):
         if iid not in c.index:
             continue
         w0 = float(cur.get(iid, 0.0))
-        if w0 >= 0:
+        if isinstance(spec, Mapping):
+            motivo = str(spec.get("motivo", ""))
+            frac = spec.get("fracao_maxima_short")
+            veto = bool(spec.get("veto_compra"))
+        else:
+            if w0 >= 0:
+                continue
+            motivo, frac, veto = str(spec), 0.5, True
+        acted = False
+        if frac is not None and w0 < 0:
+            c.at[iid, "max_short"] = min(float(c.at[iid, "max_short"]),
+                                         max(float(frac), 0.0) * abs(w0))
+            acted = True
+        if veto:
+            c.at[iid, "max_long"] = 0.0
+            acted = True
+        if not acted:
             continue
-        c.at[iid, "max_short"] = min(float(c.at[iid, "max_short"]), 0.5 * abs(w0))
-        c.at[iid, "max_long"] = 0.0
         if "reasons" in c.columns:
             c.at[iid, "reasons"] = ";".join(x for x in (str(c.at[iid, "reasons"]),
                                                         "stop_squeeze_nome") if x)
-        applied[str(iid)] = str(motivo)
+        applied[str(iid)] = motivo
     if "can_long" in c.columns:
         c["can_long"] = c["max_long"] > 0
     return c, applied
+
+
+#: Evento da trilha de auditoria com a revisão humana de um stop de squeeze por nome (libera o
+#: veto de compra dos episódios até o registro-base da revisão). O emissor vai no resumo do
+#: evento (parte do hash encadeado): ``... [<emissor>]: <motivo>``.
+SQUEEZE_REVIEW_EVENT = "SQUEEZE_REVISADO"
+SQUEEZE_REVIEW_SUMMARY = "Stop de squeeze revisado por humano [{emissor}]: {motivo}"
+_REVIEW_ISSUER = re.compile(r"^Stop de squeeze revisado por humano \[([^\]]+)\]:")
+#: Corte à metade concluído quando as ações do short ficam até ``0,5 × (1 + tolerância)`` das
+#: ações do stop, mais a folga de arredondamento (lote ímpar da BMV de 5 ações acima de MXN 200).
+CORTE_TOLERANCIA = 0.05
+CORTE_FOLGA_ACOES = 5.0
+
+
+@dataclass(frozen=True)
+class EpisodioSqueeze:
+    """Episódio de stop de squeeze de um short: do primeiro fechamento em stop (com o mesmo preço
+    médio de entrada) em diante. ``acoes_atuais`` = |ações| no último registro (0 = short
+    zerado); ``cortado_em`` = primeiro fechamento posterior com o corte à metade concluído."""
+
+    emissor: str
+    ticker: str
+    preco_medio_entrada: float
+    data_stop: date
+    acoes_no_stop: float
+    motivo: str
+    acoes_atuais: float
+    cortado_em: date | None
+    encerrado_em: date | None
+
+    @property
+    def corte_pendente(self) -> bool:
+        return self.cortado_em is None and self.encerrado_em is None and self.acoes_atuais > 0
+
+
+def _corte_feito(acoes: float, acoes_no_stop: float) -> bool:
+    return acoes <= 0.5 * acoes_no_stop * (1.0 + CORTE_TOLERANCIA) + CORTE_FOLGA_ACOES
+
+
+def episodios_de_squeeze(records_asc: Sequence[DailyRecord], cfg: FundConfig
+                         ) -> list[EpisodioSqueeze]:
+    """Episódios de stop de squeeze por nome nos registros diários encadeados (do mais antigo
+    para o mais recente), com a mesma regra do monitor e do fechamento diário: perda desde a
+    entrada ≥ ``stop_short_position_loss`` ou ≥ ``stop_short_nav_loss`` do NAV num fechamento.
+    Um episódio é identificado por emissor, ticker e preço médio de entrada: o mesmo short ainda
+    em stop depois do corte (o preço médio não muda ao reduzir) continua no mesmo episódio; um
+    aumento do short (novo preço médio) que volte ao stop abre outro."""
+    from ..workflow.risk_monitor import _short_rows, squeeze_stop_checks
+
+    recs = list(records_asc)
+    eps: list[dict[str, Any]] = []
+    for k, rec in enumerate(recs):
+        rows = _short_rows(rec)
+        held = {str(r["ticker"]): abs(float(r["acoes"])) for r in rows
+                if r["acoes"] is not None and float(r["acoes"]) < 0}
+        for e in eps:
+            if e["encerrado_em"] is not None or rec.date <= e["data_stop"]:
+                continue
+            a = held.get(e["ticker"], 0.0)
+            e["acoes_atuais"] = a
+            if a <= 0:
+                e["encerrado_em"] = rec.date
+            if e["cortado_em"] is None and _corte_feito(a, e["acoes_no_stop"]):
+                e["cortado_em"] = rec.date
+        if not rows:
+            continue
+        hist = (recs[j] for j in range(k - 1, -1, -1))
+        for s in squeeze_stop_checks(cfg, rows, hist, rec.nav_end_usd):
+            if not (s.get("stop_posicao") or s.get("stop_nav")):
+                continue
+            iid, tk, avg = str(s["emissor"]), str(s["ticker"]), float(s["preco_medio_entrada"])
+            if any(e["emissor"] == iid and e["ticker"] == tk and e["encerrado_em"] is None
+                   and math.isclose(e["preco_medio_entrada"], avg, rel_tol=1e-9, abs_tol=1e-12)
+                   for e in eps):
+                continue
+            why = "perda desde a entrada" if s.get("stop_posicao") else "perda em % do NAV"
+            eps.append({"emissor": iid, "ticker": tk, "preco_medio_entrada": avg,
+                        "data_stop": rec.date, "acoes_no_stop": held.get(tk, 0.0),
+                        "motivo": f"stop de squeeze ({why}) em {tk} no fechamento de "
+                                  f"{rec.date:%d/%m/%Y}",
+                        "acoes_atuais": held.get(tk, 0.0), "cortado_em": None,
+                        "encerrado_em": None})
+    return [EpisodioSqueeze(**e) for e in eps]
+
+
+def revisoes_de_squeeze(events: Sequence[Any], record_dates: Mapping[str, date]
+                        ) -> dict[str, date]:
+    """Revisões humanas de stop de squeeze na trilha de auditoria: emissor → registro-base mais
+    recente revisado (o último registro diário já ancorado na trilha quando veio a revisão).
+    ``record_dates``: ``payload_hash`` do evento do registro diário → data do registro."""
+    from ..workflow.track_record import DAILY_RECORD_EVENT
+
+    base: date | None = None
+    out: dict[str, date] = {}
+    for e in events:
+        if e.event_type == DAILY_RECORD_EVENT:
+            d = record_dates.get(e.payload_hash)
+            if d is not None and (base is None or d > base):
+                base = d
+        elif e.event_type == SQUEEZE_REVIEW_EVENT and base is not None:
+            m = _REVIEW_ISSUER.match(str(e.summary or ""))
+            if m:
+                iid = m.group(1)
+                out[iid] = max(out.get(iid, base), base)
+    return out
+
+
+def revisado(e: EpisodioSqueeze, revisoes: Mapping[str, date]) -> bool:
+    """O veto de compra do episódio já foi liberado por revisão humana?"""
+    base = revisoes.get(e.emissor)
+    return base is not None and e.data_stop <= base
+
+
+def acoes_de_squeeze(episodios: Iterable[EpisodioSqueeze], revisoes: Mapping[str, date]
+                     ) -> dict[str, dict[str, Any]]:
+    """O que a construção aplica por emissor (:func:`apply_squeeze_name_stops`): corte pendente
+    (``fracao_maxima_short`` = ``0,5 × ações no stop ÷ ações atuais`` de ``|w⁰|``, isto é, metade
+    das ações do stop) e veto de compra enquanto algum episódio do emissor não foi revisado."""
+    out: dict[str, dict[str, Any]] = {}
+    for e in episodios:
+        pend, veto = e.corte_pendente, not revisado(e, revisoes)
+        if not (pend or veto):
+            continue
+        spec = out.setdefault(e.emissor, {"motivo": "", "fracao_maxima_short": None,
+                                          "veto_compra": False})
+        partes = [e.motivo]
+        if pend:
+            frac = min(1.0, 0.5 * e.acoes_no_stop / e.acoes_atuais)
+            cur = spec["fracao_maxima_short"]
+            spec["fracao_maxima_short"] = frac if cur is None else min(cur, frac)
+            partes.append("short limitado à metade das ações do stop")
+        if veto:
+            spec["veto_compra"] = True
+            partes.append("compra vedada até revisão humana")
+        spec["motivo"] = "; ".join(x for x in (spec["motivo"], ": ".join(
+            [partes[0], ", ".join(partes[1:])])) if x)
+    return out
 
 
 def stops_de_squeeze(records_desc: Sequence[DailyRecord], cfg: FundConfig,
@@ -409,7 +572,9 @@ def linked_group_exposures(w: pd.Series, cfg: FundConfig) -> dict[str, dict[str,
     return out
 
 
-__all__ = ["BLOCK_COLUMNS", "apply_short_entry_blocks", "apply_squeeze_name_stops",
-           "catalyst_window_days", "earnings_calendar", "escalar_para_kill_switch",
-           "free_float_table", "linked_group_exposures", "short_entry_blocks",
-           "stops_de_squeeze"]
+__all__ = ["BLOCK_COLUMNS", "CORTE_FOLGA_ACOES", "CORTE_TOLERANCIA", "SQUEEZE_REVIEW_EVENT",
+           "SQUEEZE_REVIEW_SUMMARY", "EpisodioSqueeze", "acoes_de_squeeze",
+           "apply_short_entry_blocks", "apply_squeeze_name_stops", "catalyst_window_days",
+           "earnings_calendar", "episodios_de_squeeze", "escalar_para_kill_switch",
+           "free_float_table", "linked_group_exposures", "revisado", "revisoes_de_squeeze",
+           "short_entry_blocks", "stops_de_squeeze"]

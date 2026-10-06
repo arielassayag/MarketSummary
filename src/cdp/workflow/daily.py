@@ -129,7 +129,7 @@ from .approval import verify_decision
 from .autonomy import verify_autonomous_decision
 from .book import Book, dump_json
 from .ledger import DEFAULT_BORROW_FEE_ANNUAL, cross_sectional_factor_returns
-from .memo import fmt_days, fmt_num, fmt_pct, fmt_usd, fmt_usd_mm
+from .memo import fmt_closes, fmt_days, fmt_num, fmt_pct, fmt_usd, fmt_usd_mm
 from .track_record import (
     GENESIS_RECORD_HASH,
     REALIZED_VOL_WINDOWS,
@@ -490,6 +490,31 @@ def _meta_hash(model: RiskModel) -> str:
         return sha256_text(repr(sorted((str(k), repr(v)) for k, v in model.meta.items())))
 
 
+def drawdown_stage_action(stage: str, cfg: FundConfig) -> str:
+    """Ação que o mandato exige em cada estágio da escada de drawdown, exatamente como o código a
+    aplica: com ``drawdown.risk_reference = "normal_book_vol"`` (metodologia vigente), teto da vol
+    ex-ante em ``m·σ_ref`` (``m`` = 75%/50%/25% da vol da mesma carteira no estágio normal); no
+    mandato legado, corte do gross."""
+    d = cfg.drawdown
+    if d.risk_reference == "normal_book_vol":
+        from ..risk.drawdown import stage_multiplier
+
+        cap = (f"vol ex-ante limitada a {fmt_pct(stage_multiplier(stage, cfg))} da vol da mesma "
+               "carteira no estágio normal (m·σ_ref)")
+        if stage == "stop_out":
+            return f"{cap} e revisão completa do processo"
+        if stage == "hard_stop":
+            return cap
+        return f"revisão de risco obrigatória e {cap} no próximo rebalanceamento"
+    if stage == "stop_out":
+        return (f"reduzir o gross a {fmt_pct(d.stop_out_gross)} do NAV e revisão completa do "
+                "processo")
+    if stage == "hard_stop":
+        return f"cortar o gross para {fmt_pct(d.degross_multiplier)} do atual"
+    return ("revisão de risco obrigatória e corte do gross para "
+            f"{fmt_pct(d.soft_degross_multiplier)} do atual")
+
+
 def risk_alerts(cfg: FundConfig, risk: DailyRisk, has_positions: bool = True) -> list[str]:
     """Alertas de mandato sobre o risco do dia: banda de vol ex-ante, net, beta e escada de
     drawdown (com a ação exigida)."""
@@ -514,15 +539,13 @@ def risk_alerts(cfg: FundConfig, risk: DailyRisk, has_positions: bool = True) ->
     dd = risk.drawdown
     if dd <= dd_cfg.stop_out:
         out.append(f"STOP-OUT: drawdown {fmt_pct(dd)} atingiu {fmt_pct(dd_cfg.stop_out)} — "
-                   f"reduzir o gross a {fmt_pct(dd_cfg.stop_out_gross)} do NAV e revisão completa "
-                   "do processo.")
+                   f"{drawdown_stage_action('stop_out', cfg)}.")
     elif dd <= dd_cfg.hard_stop:
         out.append(f"HARD STOP: drawdown {fmt_pct(dd)} atingiu {fmt_pct(dd_cfg.hard_stop)} — "
-                   f"cortar o gross para {fmt_pct(dd_cfg.degross_multiplier)} do atual.")
+                   f"{drawdown_stage_action('hard_stop', cfg)}.")
     elif dd <= dd_cfg.soft_stop:
         out.append(f"SOFT STOP: drawdown {fmt_pct(dd)} atingiu {fmt_pct(dd_cfg.soft_stop)} — "
-                   "revisão de risco obrigatória e corte do gross para "
-                   f"{fmt_pct(dd_cfg.soft_degross_multiplier)} do atual.")
+                   f"{drawdown_stage_action('soft_stop', cfg)}.")
     return out
 
 
@@ -1920,8 +1943,10 @@ class DailyRunner:
         if late:
             alerts.append(f"Ordens após o corte MOC do mercado (não executadas): {_list(late)}.")
         if band:
+            extra = (" ou do custo fixo mínimo por ordem do mercado"
+                     if ex.max_fixed_cost_bps and self.cfg.costs.min_order_cost_usd else "")
             alerts.append("Ordens abaixo da banda de não-negociação "
-                          f"({fmt_pct(ex.min_trade_weight, 2)} do NAV): {_list(band)}.")
+                          f"({fmt_pct(ex.min_trade_weight, 2)} do NAV{extra}): {_list(band)}.")
         if no_px:
             alerts.append("Sem fechamento oficial ou câmbio no pregão (ordem não executada): "
                           f"{_list(no_px)}.")
@@ -1933,7 +1958,8 @@ class DailyRunner:
         from ..portfolio.costs import custos_fechamento
 
         frame = self.custo_frame(ctx, [(e.issuer_id, e.ticker, e.currency, abs(e.traded) *
-                                        e.price_local * e.fx) for e in execs if e.traded != 0])
+                                        e.price_local * e.fx, e.traded, e.price_local)
+                                       for e in execs if e.traded != 0])
         if frame.empty:
             return 0.0, []
         res = custos_fechamento(frame, self.cfg)
@@ -1952,12 +1978,14 @@ class DailyRunner:
         return float(res["cost_usd"].sum()), alerts
 
     def custo_frame(self, ctx: DailyContext,
-                    trades: Iterable[tuple[str, str, str, float]]) -> pd.DataFrame:
-        """Insumos do custo por linha negociada ``(emissor, ticker, moeda, nocional USD)``:
-        ADTV da linha, σ diária do emissor (63 pregões), mercado, categoria e mercado local
-        fechado (ADR negociado com a bolsa local sem pregão)."""
+                    trades: Iterable[tuple]) -> pd.DataFrame:
+        """Insumos do custo por linha negociada ``(emissor, ticker, moeda, nocional USD[, ações,
+        preço local])``: ADTV da linha, σ diária do emissor (63 pregões), mercado, categoria,
+        mercado local fechado (ADR negociado com a bolsa local sem pregão) e ordens enviadas
+        (lote padrão + fracionário/pico contam duas; sem ações informadas, uma)."""
         from ..calendar import MARKET_EXCHANGES, is_session
         from ..portfolio.execucao import categoria_da_linha
+        from ..portfolio.trades import n_orders
         from ..universe import listing_market
 
         rows = list(trades)
@@ -1969,7 +1997,9 @@ class DailyRunner:
         known = vol[vol > 0].dropna()
         p90 = float(known.quantile(0.9)) if len(known) else float("nan")
         out = []
-        for iid, tk, ccy, notional in rows:
+        for row in rows:
+            iid, tk, ccy, notional = row[:4]
+            n_ord = n_orders(tk, int(row[4]), row[5]) if len(row) >= 6 and row[4] else 1
             adtv = (float(lines.at[tk, "adtv_usd"]) if tk in lines.index
                     and _finite(lines.at[tk, "adtv_usd"]) and lines.at[tk, "adtv_usd"] > 0
                     else float("nan"))
@@ -1993,7 +2023,7 @@ class DailyRunner:
             out.append({"ticker": tk, "issuer_id": iid, "notional_usd": float(notional),
                         "adtv_usd": adtv, "sigma_d": float(sd), "market": mkt,
                         "currency": ccy, "categoria": categoria_da_linha(tk, lt),
-                        "local_fechado": local_closed, "flag": flag})
+                        "local_fechado": local_closed, "flag": flag, "n_ordens": n_ord})
         return pd.DataFrame(out).set_index("ticker")
 
     def _cost_model(self, ctx: DailyContext, nav: float) -> CostModel:
@@ -2216,7 +2246,20 @@ class DailyRunner:
         drawdown = nav_end / nav_peak - 1.0
 
         max_days = pct_1d = None
-        if not w.empty:
+        closes = self._closes_by_issuer(ctx, positions) if not w.empty else None
+        if closes is not None:
+            # Execução só no leilão de fechamento: liquidez em FECHAMENTOS à capacidade
+            # estrutural de redução (pregão regular) da linha detida.
+            vals = [closes.get(i) for i in w.index]
+            if all(v is not None for v in vals):
+                max_days = float(max(vals)) if vals else None
+                g = float(w.abs().sum())
+                pct_1d = (float(sum(abs(float(w[i])) for i, v in zip(w.index, vals, strict=True)
+                                    if v <= 1.0 + 1e-9)) / g) if g > 0 else None
+            else:
+                alerts.append("Volume indisponível para alguma posição: fechamentos para "
+                              "liquidar indeterminados.")
+        elif not w.empty:
             prof = liquidity_profile(w, ctx.panel.assets["adtv_usd"], nav_end,
                                      cfg.liquidity.participation_rate)
             days = prof["days_to_liquidate"].astype(float)
@@ -2255,6 +2298,38 @@ class DailyRunner:
                               f"±{lim}.")
         return risk, alerts
 
+    def _closes_by_issuer(self, ctx: DailyContext, positions: list[DailyPosition]
+                          ) -> dict[str, float | None] | None:
+        """Fechamentos para zerar cada emissor detido: |valor de mercado| / capacidade
+        estrutural de redução por fechamento das linhas detidas (pregão regular, ADV P25 dos 20
+        pregões anteriores; :func:`cdp.portfolio.execucao.capacidade_fechamento_usd`). ``None``
+        sem a seção ``execution`` (regra anterior: dias a uma participação do ADTV); valor
+        ``None`` por emissor sem volume conhecido (nunca liquidez imediata)."""
+        cfg = self.cfg
+        if cfg.execution is None:
+            return None
+        held = [p for p in positions if p.market_value_usd != 0]
+        tickers = sorted({p.ticker for p in held})
+        key = ("cap_liquidez", tuple(tickers))
+        if key not in ctx.cache:
+            from ..portfolio.execucao import capacidade_fechamento_usd, janela_regular
+
+            lines = ctx.panel.lines.reindex(tickers)
+            try:
+                ctx.cache[key] = capacidade_fechamento_usd(
+                    lines, ctx.md, janela_regular(ctx.date, cfg), cfg, lado="long")
+            except (ValueError, KeyError) as exc:
+                ctx.notes.append(f"Capacidade de fechamento indisponível: {exc}")
+                ctx.cache[key] = pd.Series(dtype=float)
+        caps: pd.Series = ctx.cache[key]
+        mv: dict[str, float] = {}
+        cap: dict[str, float] = {}
+        for p in held:
+            mv[p.issuer_id] = mv.get(p.issuer_id, 0.0) + p.market_value_usd
+            c = caps.get(p.ticker)
+            cap[p.issuer_id] = cap.get(p.issuer_id, 0.0) + (float(c) if _finite(c) else 0.0)
+        return {i: (abs(v) / cap[i] if cap.get(i, 0.0) > 0 else None) for i, v in mv.items()}
+
     def _group_exposures(self, ctx: DailyContext, w: pd.Series) -> list[ExposureLine]:
         if w.empty:
             return []
@@ -2292,7 +2367,17 @@ class DailyRunner:
         for p in held:
             by_issuer[p.issuer_id] = by_issuer.get(p.issuer_id, 0.0) + p.market_value_usd
         illiquid: list[str] = []
+        closes = self._closes_by_issuer(ctx, positions)
         for iid, mv in sorted(by_issuer.items()):
+            if closes is not None:
+                limit = (cfg.liquidity.max_days_to_liquidate_long if mv > 0
+                         else cfg.liquidity.max_days_to_liquidate_short)
+                n = closes.get(iid)
+                if n is None:
+                    illiquid.append(f"{iid} (volume indisponível)")
+                elif n > limit + 1e-9:
+                    illiquid.append(f"{iid} ({fmt_closes(n)} > {fmt_closes(limit)})")
+                continue
             a = adtv.get(iid, np.nan)
             if mv > 0:
                 rate = cfg.liquidity.participation_rate
@@ -2327,6 +2412,13 @@ class DailyRunner:
             current = {p.ticker: (float(p.shares), float(p.price_local)) for p in shorts
                        if p.shares is not None and p.price_local is not None}
             entries = short_entry_prices(side.track.iter_records(reverse=True), current)
+            # Regra por nome (metodologia vigente): o código limita o short à metade das ações do
+            # stop no rebalanceamento seguinte, uma vez por episódio, e veda a compra do emissor
+            # até revisão humana; regra do livro inteiro (legado): o mandato pede o corte de 50%.
+            stop_effect = ("o código limita o short à metade das ações do stop no "
+                           "rebalanceamento seguinte (uma vez por episódio) e veda a compra do "
+                           "emissor até revisão humana."
+                           if cfg.squeeze.stop_scope == "name" else "cortar 50% da posição.")
             for p in shorts:
                 avg = entries.get(p.ticker)
                 if avg is None or p.price_local is None or p.shares is None:
@@ -2337,11 +2429,11 @@ class DailyRunner:
                 if loss >= cfg.squeeze.stop_short_position_loss:
                     limit = fmt_pct(cfg.squeeze.stop_short_position_loss)
                     alerts.append(f"STOP DE SQUEEZE: short {p.ticker} perde {fmt_pct(loss)} desde "
-                                  f"a entrada (limite {limit}): cortar 50% da posição.")
+                                  f"a entrada (limite {limit}): {stop_effect}")
                 if fx is not None and loss_usd / nav_end >= cfg.squeeze.stop_short_nav_loss:
                     alerts.append(f"STOP DE SQUEEZE: short {p.ticker} perde "
                                   f"{fmt_pct(loss_usd / nav_end)} do NAV desde a entrada (limite "
-                                  f"{fmt_pct(cfg.squeeze.stop_short_nav_loss)}): cortar 50%.")
+                                  f"{fmt_pct(cfg.squeeze.stop_short_nav_loss)}): {stop_effect}")
         missing = sorted(set(ctx.md.manifest.missing_tickers) & {p.ticker for p in held})
         if missing:
             alerts.append(f"Linhas da carteira ausentes na coleta de dados: {_list(missing)}.")

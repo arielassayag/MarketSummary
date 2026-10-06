@@ -291,6 +291,8 @@ class SqueezeSection(_Frozen):
 
 
 class CostsSection(_Frozen):
+    LEGACY_DEFAULTS: ClassVar[Mapping[str, Any]] = {"min_order_cost_usd": {}}
+
     commission_bps: dict[str, float] = Field(default_factory=lambda: {
         "US": 1.0, "BR": 3.0, "MX": 8.0, "CL": 10.0, "CO": 15.0, "PE": 15.0, "AR": 15.0,
     })
@@ -301,6 +303,19 @@ class CostsSection(_Frozen):
     impact_coefficient: float = Field(0.6, ge=0, description="Coeficiente do impacto raiz quadrada (× σ diária)")
     fx_cost_bps: float = Field(3.0, ge=0)
     amortization_weeks: float = Field(8.0, gt=0, description="Horizonte de amortização do custo no objetivo")
+    # --- Custo mínimo por ordem (campo novo; legado {} = sem mínimo; docs/cdp/EXECUCAO.md §7).
+    min_order_cost_usd: dict[str, float] = Field(
+        default_factory=dict,
+        description="Custo mínimo por ordem (USD) por mercado de listagem: piso da comissão + "
+                    "tarifa da bolsa em tabelas públicas; ausente = sem mínimo")
+
+    @field_validator("min_order_cost_usd")
+    @classmethod
+    def _min_cost_ok(cls, v: dict[str, float]) -> dict[str, float]:
+        bad = {k: x for k, x in v.items() if not (x >= 0)}
+        if bad:
+            raise ValueError(f"Custo mínimo por ordem negativo ou inválido: {bad}")
+        return v
 
 
 class AlphaSection(_Frozen):
@@ -495,6 +510,8 @@ class ExecutionSection(_Frozen):
     (primeiro pregão da B3, execução sem teto de leilão). Os padrões abaixo são os da proposta de
     metodologia; quem ativa a regra nova escreve a seção em ``fund.yaml``."""
 
+    LEGACY_DEFAULTS: ClassVar[Mapping[str, Any]] = {"max_fixed_cost_bps": None}
+
     rebalance_calendar: Literal["XNYS", "BVMF"] = "XNYS"
     decision_deadline_cap_local: str = Field("15:00", description="Teto do prazo (HH:MM, Brasília)")
     decision_buffer_minutes: int = Field(45, ge=0, le=240,
@@ -513,6 +530,10 @@ class ExecutionSection(_Frozen):
         "PE": 1.0, "AR": 1.0,
     }, description="Multiplicador do impacto raiz quadrada executando no leilão")
     closed_home_market_spread_mult: float = Field(1.5, ge=1.0)
+    # --- Banda de custo fixo (campo novo; legado None = só ``min_trade_weight``).
+    max_fixed_cost_bps: float | None = Field(
+        None, gt=0, description="Custo fixo mínimo da ordem ≤ este valor (bps do nocional): "
+                                "banda por mercado = mínimo por ordem / limite")
 
     @field_validator("decision_deadline_cap_local")
     @classmethod

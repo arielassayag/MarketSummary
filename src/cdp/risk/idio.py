@@ -15,7 +15,12 @@ Gravação sem mudar contratos com hash: a decisão guarda ``Proposal.overrides[
 
 Monitoramento (:func:`serie_idio`): ex-ante diário (``DailyRisk.factor_vol``/``specific_vol``),
 realizado em 63 pregões (x-sigma-rho ``cov(r_S, r_p)/var(r_p)`` a partir do P&L específico
-diário) e sem modelo (``1 − R²`` dos retornos diários do fundo contra ETFs e commodities).
+diário) e sem modelo (``1 − R²`` AJUSTADO pelos graus de liberdade, dos retornos diários do fundo
+contra ETFs e commodities). Com 11 regressores e no máximo 63 observações, o ``1 − R²`` bruto de
+um fundo 100% idiossincrático fica perto de ``1 − k/(n − 1)`` (≈ 82% com n = 63): o ajuste
+``(1 − R²)·(n − 1)/(n − k − 1)`` remove esse viés, a medida só é publicada com pelo menos
+:data:`MIN_GL_SEM_MODELO` graus de liberdade no resíduo e vem com a banda de amostragem sob a
+hipótese nula (:func:`banda_sem_modelo`).
 """
 
 from __future__ import annotations
@@ -44,6 +49,10 @@ REGRESSORES_SEM_MODELO = ("ILF", "EWZ", "EWW", "ECH", "EPU", "COLO", "ARGT", "BZ
                           "GC=F", "DX-Y.NYB")
 JANELA_REALIZADA = 63
 MIN_OBS_REALIZADA = 21
+#: Graus de liberdade mínimos do resíduo (n − k − 1) para publicar a medida sem modelo.
+MIN_GL_SEM_MODELO = 30
+#: Quantil unilateral de 95% da normal: abaixo do piso só conta fora da banda de amostragem.
+Z_BANDA_SEM_MODELO = 1.645
 KURTOSIS_CLIP = (3.0, 8.0)
 SIG_DIGITS = 6
 
@@ -305,27 +314,52 @@ def _x_sigma_rho(r_s: np.ndarray, r_p: np.ndarray) -> float:
     return float(np.cov(a, b, ddof=1)[0, 1] / var_p)
 
 
-def _one_minus_r2(y: pd.Series, X: pd.DataFrame) -> float:
+def _regressao_sem_modelo(y: pd.Series, X: pd.DataFrame) -> tuple[float, int, int]:
+    """``(1 − R²_aj, n, k)`` dos retornos do fundo contra os regressores (``nan`` com menos de
+    :data:`MIN_GL_SEM_MODELO` graus de liberdade no resíduo). ``1 − R²_aj = (1 − R²)·(n − 1)/
+    (n − k − 1)``, limitado a [0, 1]: sem viés para um fundo sem exposição aos regressores."""
     df = pd.concat([y.rename("_y"), X], axis=1).dropna()
-    k = X.shape[1]
-    if len(df) < max(MIN_OBS_REALIZADA, 2 * k + 5) or k == 0:
-        return float("nan")
+    k, n = X.shape[1], len(df)
+    if k == 0 or n - k - 1 < MIN_GL_SEM_MODELO:
+        return float("nan"), n, k
     yy = df["_y"].to_numpy(dtype=float)
-    xx = np.column_stack([np.ones(len(df)), df.drop(columns="_y").to_numpy(dtype=float)])
+    xx = np.column_stack([np.ones(n), df.drop(columns="_y").to_numpy(dtype=float)])
     coef, *_ = np.linalg.lstsq(xx, yy, rcond=None)
     resid = yy - xx @ coef
     tss = float(np.sum((yy - yy.mean()) ** 2))
-    return float(np.sum(resid ** 2) / tss) if tss > 0 else float("nan")
+    if not tss > 0:
+        return float("nan"), n, k
+    adj = float(np.sum(resid ** 2) / tss) * (n - 1) / (n - k - 1)
+    return min(max(adj, 0.0), 1.0), n, k
+
+
+def _one_minus_r2(y: pd.Series, X: pd.DataFrame) -> float:
+    """``1 − R²`` ajustado (:func:`_regressao_sem_modelo`)."""
+    return _regressao_sem_modelo(y, X)[0]
+
+
+def banda_sem_modelo(n: int, k: int) -> float | None:
+    """Desvio-padrão de amostragem de ``1 − R²_aj`` sob a hipótese nula (fundo sem exposição aos
+    ``k`` regressores, ``n`` observações): ``R² ~ Beta(k/2, (n − k − 1)/2)``, escalado por
+    ``(n − 1)/(n − k − 1)``. ``None`` sem graus de liberdade suficientes."""
+    if k <= 0 or n - k - 1 < MIN_GL_SEM_MODELO:
+        return None
+    a, b = k / 2.0, (n - k - 1) / 2.0
+    var = a * b / ((a + b) ** 2 * (a + b + 1.0))
+    return math.sqrt(var) * (n - 1) / (n - k - 1)
 
 
 def serie_idio(records: Sequence[DailyRecord], md: MarketData, cfg: FundConfig) -> dict[str, Any]:
     """Série diária da fatia idiossincrática por três medidas: ex-ante (``DailyRisk.factor_vol``
     e ``specific_vol`` já gravados, com κ_F de configuração), realizada em 63 pregões (x-sigma-rho
-    ``σ_S·ρ(r_S, r_p)/σ_p``) e sem modelo (``1 − R²`` dos retornos diários do fundo contra ILF,
-    EWZ, EWW, ECH, EPU, COLO, ARGT, BZ=F, HG=F, GC=F e DX-Y.NYB); ausente fica ``None``."""
+    ``σ_S·ρ(r_S, r_p)/σ_p``) e sem modelo (``1 − R²`` ajustado dos retornos diários do fundo
+    contra ILF, EWZ, EWW, ECH, EPU, COLO, ARGT, BZ=F, HG=F, GC=F e DX-Y.NYB, com a banda de
+    amostragem sob a nula em ``sem_modelo_banda``); ausente fica ``None``."""
     df = _records_frame(records)
     out: dict[str, Any] = {"datas": [], "ex_ante": [], "realizada_63d": [], "sem_modelo_63d": [],
+                           "sem_modelo_banda": [], "sem_modelo_obs": [],
                            "janela": JANELA_REALIZADA, "regressores": [],
+                           "sem_modelo_ajustado": True,
                            "kappa_f": _sig(cfg.risk.second_order_inflation)}
     if df.empty:
         return out
@@ -343,16 +377,20 @@ def serie_idio(records: Sequence[DailyRecord], md: MarketData, cfg: FundConfig) 
         win = df.iloc[max(0, i + 1 - JANELA_REALIZADA): i + 1]
         real = _x_sigma_rho(win["specific"].to_numpy(dtype=float),
                             win["ret"].to_numpy(dtype=float))
-        free = (_one_minus_r2(win["ret"], rets.reindex(win.index)) if cols
-                else float("nan"))
+        free, n_obs, k_reg = (_regressao_sem_modelo(win["ret"], rets.reindex(win.index))
+                              if cols else (float("nan"), 0, 0))
+        band = banda_sem_modelo(n_obs, k_reg) if math.isfinite(free) else None
         out["datas"].append(d.date().isoformat())
         out["ex_ante"].append(ex)
         out["realizada_63d"].append(_sig(real))
         out["sem_modelo_63d"].append(_sig(free))
+        out["sem_modelo_banda"].append(_sig(band) if band is not None else None)
+        out["sem_modelo_obs"].append(int(n_obs) if math.isfinite(free) else None)
     return out
 
 
-__all__ = ["CHAVE_RISCO", "GRUPOS_IDIO", "REGRESSORES_SEM_MODELO", "base_vinculante",
+__all__ = ["CHAVE_RISCO", "GRUPOS_IDIO", "MIN_GL_SEM_MODELO", "REGRESSORES_SEM_MODELO",
+           "Z_BANDA_SEM_MODELO", "banda_sem_modelo", "base_vinculante",
            "decomposicao_decisao", "ewma_kurtosis", "fatia_idio", "kappa_f", "kappa_formula",
            "modelo_vinculante", "parametros_modelo", "por_grupo", "risco_da_decisao",
            "serie_idio"]

@@ -534,9 +534,13 @@ def _issuer_pnl(record: DailyRecord) -> dict[str, float]:
 
 def render_daily_report(record: DailyRecord, history: list[DailyRecord], commentary_md: str,
                         fund_name: str, *, cfg: FundConfig | None = None,
-                        squeeze_buckets: Mapping[str, str] | None = None) -> tuple[str, str]:
+                        squeeze_buckets: Mapping[str, str] | None = None,
+                        idio: Mapping[str, Any] | None = None) -> tuple[str, str]:
     """Relatório diário (Markdown, HTML): KPIs, comentário, atribuição, posições, alertas,
     evolução do NAV/drawdown desde o início e rodapé de integridade.
+
+    ``idio``: fatia idiossincrática por três medidas (bloco de
+    :func:`cdp.workflow.risk_monitor.idio_monitor`), exibida como indicador quando presente.
 
     O rodapé recalcula o ``record_hash`` de cada registro e confere os elos da cadeia; registro
     adulterado ou cadeia quebrada aparecem em destaque (nunca como "íntegro"). ``cfg`` ausente ⇒
@@ -572,6 +576,10 @@ def render_daily_report(record: DailyRecord, history: list[DailyRecord], comment
         ("Drawdown", _pct(rk.drawdown), f"escada: {_stage(_f(rk.drawdown), cfg)}"),
         ("Vol realizada 21d", _pct(rk.realized_vol_21d), "anualizada"),
     ]
+    if idio:
+        kpis.append(("Fatia idiossincrática", _pct(idio.get("ex_ante"), digits=1),
+                     f"ex-ante · realizada 63d {_pct(idio.get('realizada_63d'), digits=1)} · "
+                     f"sem modelo {_pct(idio.get('sem_modelo_63d'), digits=1)}"))
     sections: list[Section] = []
 
     ai_comment = f"[{AI_LABEL}]" in (commentary_md or "")
@@ -759,6 +767,16 @@ def _position_rows(positions: Sequence[PositionTarget], views: Mapping[str, View
                      fmt_num(_f(p.alpha_z), 2, signed=True),
                      f"{p.view_score:+d}" if p.view_score is not None else "—", rationale])
     return rows
+
+
+def _liquidity_kv(risk: Any, cfg: FundConfig) -> list[tuple[str, str]]:
+    """Liquidez da carteira na unidade do mandato: fechamentos (capacidade estrutural do leilão)
+    com a execução no fechamento; dias a uma participação do ADTV na regra anterior."""
+    if cfg.execution is not None:
+        return [("Máx. fechamentos para liquidar", fmt_num(_f(risk.max_days_to_liquidate), 1)),
+                ("% do gross liquidável em 1 fechamento", _pct(risk.pct_nav_liquidated_1d))]
+    return [("Máx. dias para liquidar", fmt_num(_f(risk.max_days_to_liquidate), 1)),
+            ("% do NAV liquidável em 1 dia", _pct(risk.pct_nav_liquidated_1d))]
 
 
 def _expected_cost(p: Proposal) -> tuple[float | None, bool]:
@@ -1088,7 +1106,9 @@ def render_weekly_report(week: date, proposal: Proposal, decision: Decision | No
                    key=lambda p: (-abs(p.weight), p.issuer_id))
     shorts = sorted((p for p in proposal.positions if p.side == Side.SHORT),
                     key=lambda p: (-abs(p.weight), p.issuer_id))
-    headers = ["Emissor", "Nome", "País", "Setor", "Peso", "Nocional", "Linha", "Dias p/ liquidar",
+    liq_header = ("Fechamentos p/ liquidar" if cfg.execution is not None
+                  else "Dias p/ liquidar")
+    headers = ["Emissor", "Nome", "País", "Setor", "Peso", "Nocional", "Linha", liq_header,
                "Squeeze", "alpha z", "Visão", "Racional [IA]"]
     pm_rat = ({v.issuer_id: v.rationale for v in pm.views}
               if pm is not None and not pm.abstain else {})
@@ -1110,8 +1130,7 @@ def render_weekly_report(week: date, proposal: Proposal, decision: Decision | No
           ("VaR / ES 1d (99%)", f"{_pct(risk.var_1d_99)} / {_pct(risk.es_1d_99)}"),
           ("VaR 1 semana (99%)", _pct(risk.var_1w_99)),
           ("N efetivo", fmt_num(_f(risk.effective_n), 1)),
-          ("Máx. dias para liquidar", fmt_num(_f(risk.max_days_to_liquidate), 1)),
-          ("% do NAV liquidável em 1 dia", _pct(risk.pct_nav_liquidated_1d))])
+          *_liquidity_kv(risk, cfg)])
     risco = proposal.overrides.get("risco") if isinstance(proposal.overrides, dict) else None
     if isinstance(risco, dict):
         _idio_section(s, risco)

@@ -1,9 +1,10 @@
 # CDP — Cabra da Peste · Metodologia de Investimento (documento perene)
 
-> Este documento é a "mente" institucional do CDP. Ele vale igualmente para **Claude Code** e
-> **Codex**: os harnesses podem mudar; o processo, as regras e a metodologia não. Qualquer
-> mudança aqui é uma mudança de mandato/processo, deve vir por commit revisável e altera os
-> hashes das decisões seguintes.
+> Este documento é a "mente" institucional do CDP. Ele vale igualmente para qualquer app de IA —
+> **Claude Code** (o que usamos), **Codex**, **Gemini** (Antigravity ou Gemini CLI) ou outro: o
+> app pode mudar; o processo, as regras e a metodologia não, porque todo número, limite e gate é
+> código. Qualquer mudança aqui é uma mudança de mandato/processo, deve vir por commit revisável
+> e altera os hashes das decisões seguintes. Como agendar as rotinas em cada app: seção 9.
 
 ## 1. Mandato
 
@@ -21,7 +22,8 @@
 1. **Alpha puro.** O retorno esperado vem do risco **específico** de cada emissor. Exposições a
    país, setor, estilos (beta, tamanho, momentum, vol residual, valor, liquidez, sensibilidade
    cambial) e temas (estatais) são neutralizadas pelo otimizador.
-2. **Centauro.** A mente (Claude Code ou Codex) faz o que modelos de linguagem fazem bem: ler,
+2. **Centauro.** A mente (Claude Code, Codex, Gemini ou outro app de IA) faz o que modelos de
+   linguagem fazem bem: ler,
    pesquisar, comparar evidências, julgar qualitativamente e explicar. O código faz o que só
    código deve fazer: calcular, otimizar, medir risco, checar limites e registrar.
 3. **Liquidez e short squeeze são restrições, não notas de rodapé.** Perda no short é ilimitada:
@@ -144,12 +146,25 @@ Os limites operacionais são checados como alerta; a sensibilidade a commodities
 alerta enquanto os betas vierem de regressões por nome, com o beta ausente imputado pela
 mediana do setor na restrição e na checagem (nunca contribuição zero).
 
-**Tetos por nome**: long ≤ 4% e short ≤ 2,5% do NAV; liquidez a 20% do ADTV (3 pregões no long,
-2 no short, shorts a 15% do ADTV; ADTV mínimo de US$ 5 mi no long e US$ 10 mi no short); risco
-específico `|w_i|·σ_esp,i ≤ √8%·σ*` e, se um nome ainda responder por mais de 8% da variância
-(Euler), o teto do lado é reduzido e a carteira reotimizada; holding e controlada (Gerdau e
-Metalúrgica Gerdau, Itaú e Itaúsa, CSN e CSN Mineração, Vale e Bradespar) somam no máximo o teto
-de um nome por lado; participação máxima de cada país no gross.
+**Tetos por nome**: long ≤ 4% e short ≤ 2,5% do NAV; risco específico
+`|w_i|·σ_esp,i ≤ √8%·σ*` e, se um nome ainda responder por mais de 8% da variância (Euler), o teto
+do lado é reduzido e a carteira reotimizada; holding e controlada (Gerdau e Metalúrgica Gerdau,
+Itaú e Itaúsa, CSN e CSN Mineração, Vale e Bradespar) somam no máximo o teto de um nome por lado;
+participação máxima de cada país no gross.
+
+**Liquidez — relativa à posição, contada em fechamentos.** A execução é só no leilão de
+fechamento; por isso o limite de liquidez do mandato conta **fechamentos**: a posição comprada
+cabe em até 3 fechamentos e a vendida em até 2, à capacidade estrutural de redução da linha
+(leilão + janela pré-fechamento de um pregão regular, cerca de 3,3% do ADV numa ação da B3;
+`docs/cdp/EXECUCAO.md` §5). O mesmo limite vale na construção, na compliance (bloqueia), no
+registro diário, no monitor de risco e nos relatórios. Cada aumento de posição também cabe na
+capacidade do fechamento do dia, e a participação de 20% do ADTV (15% nos shorts) segue como teto
+adicional. Com PL de US$ 1,0 mi esses limites relativos é que dimensionam a posição (o teto de 4%
+são US$ 40 mil). Os pisos **absolutos** de ADTV ficam só como filtros de qualidade: **US$ 1 mi**
+para a elegibilidade (formação de preço), **US$ 2 mi** na linha comprada (spread e profundidade)
+e **US$ 5 mi** na linha vendida — mais estrito porque o aluguel, o risco de recall e o de squeeze
+pioram com a iliquidez. Pisos absolutos mais altos excluiriam emissores líquidos o bastante para o
+tamanho das posições, sem ganho de risco.
 
 **Shorts**: só linhas alugáveis, aluguel ≤ 5% a.a., valor de mercado ≥ US$ 500 mi; squeeze ALTO
 proíbe o short e MÉDIO (ou sem dado) reduz o teto à metade. **Vetos de short novo ou aumentado**:
@@ -167,6 +182,20 @@ linha negociável no fechamento do dia fica exatamente como está nessa decisão
 os demais limites por nome: um corte pedido para ele (stop de squeeze, reparo de risco por nome,
 exclusão do gestor) é registrado como pendente para o rebalanceamento seguinte. Giro semanal
 ≤ 30% do NAV fora da montagem inicial (alerta; até 60% no degrau de relaxamento).
+
+**Custos fixos e lotes (PL pequeno).** Cada ordem paga ao menos o mínimo por ordem das tabelas
+públicas do mercado (US$ 1,00 nos EUA; MXN 60 na BMV; 0,5 UF de direitos de bolsa mais a tarifa da
+corretora em Santiago; COP 60 mil na BVC; na B3 as tarifas são ad valorem, sem mínimo). Custo fixo
+não é convexo e não entra no otimizador; entra em três lugares, todos em código: (i) a banda de
+não-negociação é de 0,10% do NAV e, em cada mercado, a ordem só é enviada se o custo fixo mínimo
+for de no máximo 10 bps do nocional (US$ 1 mil nos EUA e na B3, cerca de US$ 3,5 mil na BMV e
+US$ 28 mil em Santiago) — encerrar uma posição é sempre permitido; (ii) a posição mínima por nome
+é o maior entre 0,2% do NAV e essa banda do mercado da linha; (iii) o custo estimado e o debitado
+de cada ordem usam o maior entre a comissão variável e o mínimo por ordem. Quantidades são ações
+inteiras: na B3 a ordem se divide em lote padrão (100) e fracionário; na BMV, em lotes que formam
+preço (100 títulos, ou 5 acima de MXN 200) e "pico" executado ao último preço; nos demais
+mercados, 1 ação. O erro do arredondamento (relevante em ações caras, como MELI, cerca de 0,19%
+do NAV por ação) e as posições que não chegam a uma ação ficam registrados na proposta.
 
 ### 4.4 Inviabilidade e escada de relaxamento
 
@@ -195,7 +224,19 @@ variância por grupo (mercado, país, setor, estilo, macro, específico) em cada
 marginal da neutralidade (preço-sombra × limite das restrições de neutralidade que vinculam, em
 bp a.a.). A tese e o memorando publicam a participação fatorial nessa mesma base (κ_F, modelo
 que vincula), a mesma do limite. O registro diário guarda a vol fatorial e a específica ex-ante
-de cada dia.
+de cada dia, e a fatia idiossincrática é monitorada todo dia por três medidas independentes:
+**ex-ante** (vol fatorial e específica do registro do dia, com κ_F), **realizada** em 63 pregões
+(x-sigma-rho: a parte da variância do retorno do fundo explicada pelo P&L específico) e **sem
+modelo** (1 − R² ajustado pelos graus de liberdade, `(1 − R²)·(n − 1)/(n − k − 1)`, dos retornos
+diários do fundo contra os onze regressores: ETFs de país e de região, petróleo, cobre, ouro e
+dólar). O ajuste é necessário: com onze regressores e até 63 pregões, o 1 − R² bruto de um fundo
+sem nenhuma exposição a eles fica perto de 82%, abaixo do piso só por construção. A medida sem
+modelo só é publicada com pelo menos 30 graus de liberdade no resíduo e vem com o desvio de
+amostragem sob a hipótese de exposição nula. Ex-ante abaixo do piso gera alerta no monitor de
+risco; a realizada abaixo do piso é informativa (amostra curta); a sem modelo só é sinalizada
+abaixo do piso menos a margem unilateral de 95% da amostragem — sinal de exposição que o modelo
+ex-ante não capta, para revisão do modelo. As três aparecem no relatório diário e no monitor
+(`cdp risk`).
 
 ### 4.6 Gestão de risco
 
@@ -205,8 +246,19 @@ de cada dia.
   `σ_ref` = vol da mesma carteira resolvida no estágio normal; sem ela, a vol da carteira atual e,
   sem carteira, a meta de vol da semana. Sem memória: o risco volta conforme o drawdown se
   recupera. Com o kill switch ligado vale o mais restritivo dos dois tetos, nunca o produto.
-- **Stop de squeeze**: short com perda de 25% desde a entrada ou de 1% do NAV gera alerta de
-  bloqueio do monitor diário, que liga o kill switch (abaixo) até revisão humana do nome.
+- **Stop de squeeze por nome**: short com perda de 25% desde a entrada ou de 1% do NAV num
+  fechamento (registro diário) abre um episódio de stop, identificado pelo short e pelo preço
+  médio de entrada. No rebalanceamento seguinte, o código limita o short à metade das ações que
+  ele tinha no fechamento do stop, uma vez por episódio: o mesmo short ainda em stop depois do
+  corte (o preço médio não muda ao reduzir) não é cortado de novo, e um stop atingido no meio da
+  semana vale mesmo que o preço recue até a véspera da montagem. Sem fechamento negociável no dia
+  ou com execução parcial, o corte fica pendente para o rebalanceamento seguinte, sempre contra
+  as ações do stop. Desde o stop, o emissor não pode ficar comprado até revisão humana registrada
+  na trilha de auditoria (`cdp kill-switch revisar-squeeze`, só humano, em terminal interativo —
+  `docs/cdp/EXECUCAO.md` §12), mesmo depois de o short ser zerado; um stop posterior à revisão
+  reabre o veto. O monitor intradiário antecipa o aviso; o corte e o veto valem a partir de um
+  fechamento em stop. Dois shorts distintos em stop dentro de 5 pregões acionam o kill switch do
+  livro.
 - **Velocidade de perda** (monitor diário), com `σ_d = clip(max(σ_ex-ante,κ, σ_realizada,21d),
   2%, 5%)/√252`: perda diária ≤ −3σ_d·√n (alerta), ≤ −5σ_d·√n ou ≤ −1% do NAV (kill switch);
   perda em 5 registros ≤ −3σ_d·√5 ou ≤ −2% (alerta). `n` = pregões de informação contidos no
@@ -222,8 +274,21 @@ de cada dia.
   histórico de 504 pregões.
 - **Kill switch** (`book/KILL_SWITCH`): enquanto ligado, a decisão seguinte só reduz posições,
   com vol ex-ante e gross de no máximo metade dos da carteira atual e giro do mandato; posições
-  sem fechamento negociável no dia ficam como estão e a redução recai sobre as demais. Só um
-  humano o desliga, e a condição revisada não o religa (só uma piora).
+  sem fechamento negociável no dia ficam como estão e a redução recai sobre as demais. Ligar grava
+  também um pedido mesclável (`reports/risk/<data>/kill_switch_<HHMM>.yaml`): se a rotina de risco
+  não tiver a trava exclusiva do livro (outra rotina gravando, clones separados na nuvem), a
+  próxima execução exclusiva (semanal ou diária) aplica o pedido antes de qualquer decisão. Só um
+  humano o desliga, num terminal interativo próprio — o comando recusa rotinas, CI e agentes de IA
+  em qualquer app (procedimento em `docs/cdp/EXECUCAO.md` §12) — e a condição revisada não o
+  religa: só uma piora (estágio pior da escada, perda diária extrema num registro de fechamento
+  posterior ao revisado ou short novo em stop, com outro emissor ou outro preço médio de
+  entrada).
+- **Câmbio**: a carteira é neutra por país, então a exposição cambial líquida é pequena; acima de
+  1% do NAV numa moeda, o hedge sugerido é dimensionado em contratos inteiros de minicontratos de
+  bolsa — mini dólar da B3 (WDO, US$ 10 mil) para BRL, mini futuro do dólar da MexDer (US$ 1 mil)
+  para MXN e mini futuro TRM da BVC (US$ 5 mil) para COP. CLP, PEN e ARS ficam sem hedge, com a
+  exposição divulgada: não há futuro listado acessível de tamanho compatível, e o NDF exige
+  nocional mínimo muito acima do PL.
 - **Gates de compliance** (HARD bloqueia, SOFT registra, INFO informa) com valor medido, limite e
   detalhe em cada checagem; nunca afrouxados pela mente.
 
@@ -291,22 +356,72 @@ placeholders) e relatório diário.
   snapshot, mandato, pesquisa, decisão do PM e gates de risco; registra a mente que conduziu.
 - Kill switch: `book/KILL_SWITCH` (só redução de risco, seção 4.6); degradação automática para
   só-quant em falha de dados ou da camada de IA (> 5% de notas reprovadas, injeção confirmada).
-- Monitor de risco (`cdp risk`, código): escada de drawdown, stops de squeeze, velocidade de
-  perda e eventos societários (seção 4.6). Gatilhos HARD recomendam ligar o kill switch;
-  depois que um humano o desliga, a condição revisada não o religa (só uma piora).
+- Monitor de risco (`cdp risk`, código): escada de drawdown, stops de squeeze por nome e a sua
+  escalada, velocidade de perda, eventos societários, liquidez em fechamentos e fatia
+  idiossincrática pelas três medidas (seções 4.5 e 4.6). Gatilhos HARD recomendam ligar o kill
+  switch; depois que um humano o desliga, a condição revisada não o religa (só uma piora).
 - Avaliação contínua: IC das visões da mente vs. resíduo realizado, IC do quant, carteira-sombra
-  só-quant, calibração (Brier) e comparação **entre mentes** (Claude Code × Codex) — mesma régua.
+  só-quant, calibração (Brier) e comparação **entre mentes** (Claude Code, Codex, Gemini ou outra)
+  — mesma régua.
 - Nenhuma alegação de valor agregado da IA antes de 26 semanas de track record.
 
 ## 8. Intercambialidade da mente
 
-| Item | Claude Code | Codex |
-|---|---|---|
-| Instruções do repositório | `CLAUDE.md` → este documento e os roteiros | `AGENTS.md` → este documento e os roteiros |
-| Roteiros | `.claude/skills/cdp-semanal`, `.claude/skills/cdp-diario` | mesmos arquivos em `docs/cdp/playbooks/` |
-| Entradas | `book/<semana>/briefing/` (briefing, contexto, schemas); para a tese, `book/<semana>/tese/fatos.md` e `tese.schema.json` | idem |
-| Saídas | `book/<semana>/inputs/*.json`, `book/<semana>/tese/tese.json`, `reports/daily/<data>/comentario.json` | idem |
-| Validação e decisão | `uv run python -m cdp validate` / `weekly decide`; tese: `validate-tese` / `tese publish` | idem |
+| Item | Claude Code (o nosso) | Codex | Gemini (Antigravity ou Gemini CLI) |
+|---|---|---|---|
+| Instruções do repositório | `CLAUDE.md` → `AGENTS.md`, este documento e os roteiros | `AGENTS.md` | `GEMINI.md` e `.gemini/settings.json` → `AGENTS.md` |
+| Roteiros | skills `.claude/skills/cdp-*` (espelho das skills abertas) → `docs/cdp/playbooks/` | skills abertas `.agents/skills/cdp-*` → `docs/cdp/playbooks/` | idem Codex |
+| Entradas | `book/<semana>/briefing/` (briefing, contexto, schemas); para a tese, `book/<semana>/tese/fatos.md` e `tese.schema.json` | idem | idem |
+| Saídas | `book/<semana>/inputs/*.json`, `book/<semana>/tese/tese.json`, `reports/daily/<data>/comentario.json` | idem | idem |
+| Validação e decisão | `uv run python -m cdp validate` / `weekly decide`; tese: `validate-tese` / `tese publish` | idem | idem |
+| `--mind` | `claude-code` | `codex` | `gemini` |
 
-O campo `mind` em cada pacote de pesquisa, decisão, comentário e tese registra quem conduziu; o
-painel de gestão nunca exibe o nome da mente.
+Qualquer outro assistente (inclusive um chat sem acesso ao repositório) faz os passos da mente
+com `cdp mente pacote` (pacote markdown autocontido) e devolve o JSON, validado pelos mesmos
+comandos (`docs/cdp/REPRODUZIR.md`). O campo `mind` em cada pacote de pesquisa, decisão,
+comentário e tese registra quem conduziu; o painel de gestão nunca exibe o nome da mente.
+
+## 9. Onde as rotinas rodam — dentro do app de IA
+
+O caminho principal das rotinas (semanal, diária, risco, cobertura, calibração, estado) é o
+**agendador do próprio app de IA**, com o plano de quem opera. O prompt de cada tarefa é gerado
+pelo código e é o mesmo texto em qualquer app; gate, trava, sincronização e publicação são
+comandos da CLI, então o resultado é idêntico em qualquer um deles. O GitHub Actions só roda a
+integração contínua determinística e publica o portal — nunca a etapa de IA. Guia completo,
+limites de cada app e solução de problemas: `docs/cdp/AUTOMACAO.md`.
+
+**Claude Code (o nosso; rotinas na nuvem em claude.ai/code)**
+
+1. Conecte o app GitHub do Claude ao repositório e crie o ambiente **CDP** (rede total;
+   variáveis `CDP_EXECUTOR=claude-cloud`, `CDP_HARNESS=claude-code`, `TZ=America/Sao_Paulo`).
+2. Gere as rotinas: `uv run python -m cdp rotinas exportar --alvo claude-routines --formato md`.
+3. Em claude.ai/code → Routines → New routine → Cloud: uma rotina por bloco gerado (nome,
+   repositório, ambiente CDP, agenda em UTC e o prompt colado), criadas desligadas.
+4. Valide com "Run now" numa tarefa sem pendência e ligue as rotinas só na troca de executor.
+   Reserva local: tarefas agendadas do app desktop (`docs/cdp/LOCAL.md`).
+
+**Codex (tarefas agendadas do app)**
+
+1. Numa conta do sistema dedicada, clone o repositório, rode `uv sync --extra dev --extra ai` e
+   registre o clone: `uv run python -m cdp executor registrar --como local-pc --harness codex`.
+2. Em `~/.codex/config.toml` dessa conta: acesso total (rede e escrita em `.git`, para o roteiro
+   sincronizar, fazer commit e push), aprovação "never" e `CDP_HARNESS = "codex"` no ambiente.
+3. Gere as tarefas: `uv run python -m cdp rotinas exportar --alvo codex --formato md`; crie uma
+   tarefa agendada por bloco na pasta do projeto. Limite: roda só com o computador ligado e o app
+   aberto; a nuvem do Codex não agenda tarefas.
+
+**Gemini (Antigravity ou Gemini CLI)**
+
+1. Clone e conta dedicados, como no Codex, e a identidade registrada uma vez:
+   `uv run python -m cdp executor registrar --como local-pc --harness antigravity` (Antigravity)
+   ou `--harness gemini` (Gemini CLI), com `CDP_HARNESS` do mesmo nome no ambiente das tarefas
+   (as linhas geradas para o agendador do sistema já o passam com `--harness`).
+2. Antigravity (plano Google): tarefas agendadas do app com
+   `uv run python -m cdp rotinas exportar --alvo gemini --formato md`, ou o `agy` pelo agendador
+   do sistema com `uv run python -m cdp rotinas exportar --alvo cron --harness agy` (melhor opção
+   para as tarefas fortes). Gemini CLI exige chave paga:
+   `uv run python -m cdp rotinas exportar --alvo cron --harness gemini`.
+3. O Jules não serve de executor (sem horário exato e entrega por pull request).
+
+Em qualquer app, ligue as rotinas em um só por vez: só o executor designado em
+`configs/cdp/executor.yaml` grava o livro; os demais saem no gate sem gravar nada.

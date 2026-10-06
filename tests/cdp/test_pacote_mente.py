@@ -32,6 +32,9 @@ W = DEMO_FIRST_WEEK
 WS = W.isoformat()
 IID = "SIM001"
 BRT = ZoneInfo("America/Sao_Paulo")
+#: Mandato fixo dos testes (datas de demonstração em segundas-feiras): a regra de montagem
+#: de `configs/cdp/fund.yaml` pode mudar sem mexer nestes testes.
+LEGACY = Path(__file__).resolve().parent / "fixtures" / "fund_legado.yaml"
 
 
 @pytest.fixture(scope="module")
@@ -39,7 +42,7 @@ def demo(tmp_path_factory):
     out = tmp_path_factory.mktemp("cdp_pacote_demo")
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        run_demo(out, days=1)
+        run_demo(out, days=1, cfg=load_config(LEGACY))
     return out
 
 
@@ -61,14 +64,14 @@ def copia(demo, tmp_path) -> Path:
 
 
 def _rt(root: Path, market) -> Runtime:
-    return Runtime(load_config(), root / "book", root / "market", root / "reports",
+    return Runtime(load_config(LEGACY), root / "book", root / "market", root / "reports",
                    store_override=DemoStore(market),
                    clock=lambda: datetime(2024, 3, 4, 21, 30, tzinfo=BRT), teses_root=None)
 
 
 def _base(root: Path) -> list[str]:
-    return ["--book", str(root / "book"), "--reports", str(root / "reports"),
-            "--market", str(root / "market")]
+    return ["--config", str(LEGACY), "--book", str(root / "book"), "--reports",
+            str(root / "reports"), "--market", str(root / "market")]
 
 
 def _pacote(root: Path, capsys, *args: str) -> tuple[str, dict]:
@@ -94,7 +97,8 @@ def _example(md: str) -> dict:
 def _run_validation(cmd: str, capsys) -> tuple[int, str]:
     argv = shlex.split(cmd)
     assert argv[:5] == ["uv", "run", "python", "-m", "cdp"], cmd
-    rc = main(argv[5:])
+    extra = [] if "--config" in argv else ["--config", str(LEGACY)]
+    rc = main(extra + argv[5:])
     out = capsys.readouterr()
     return rc, out.out + out.err
 
@@ -396,7 +400,7 @@ def test_instructions_show_the_effective_deadline():
 
     from cdp.research.pm_agent import _deadline_text
 
-    legado = load_config()
+    legado = load_config(LEGACY)
     if legado.execution is None:
         assert _deadline_text(SimpleNamespace(week=date(2026, 10, 9), cfg=legado)) == \
             legado.fund.decision_deadline_local
@@ -419,7 +423,7 @@ def test_mind_swap_above_s1_is_treated_as_abstention(copia):
     out = PMDecisionOutput.model_validate({**raw, "mind": "gemini"})
     assert out.views and not out.abstain
     prev = PMDecisionOutput.model_validate({**raw, "mind": "claude-code"})
-    base = load_config()
+    base = load_config(LEGACY)
     for phase, swapped in (("S1", False), ("S2", True), ("S3", True)):
         cfg = base.with_overrides({"research": {"llm_phase": phase}})
         issues: list[str] = []

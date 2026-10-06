@@ -1,7 +1,7 @@
 ---
 name: calibracao
-description: Calibração mensal do núcleo quantitativo do CDP — Cabra da Peste — roda o backtest walk-forward com todo o histórico em reports/backtest/<data>/mensal (ou aproveita o que o agendador do sistema já rodou), compara as métricas lado a lado com a execução anterior (números copiados de metrics.json) e propõe, só no resumo, eventuais mudanças de mandato para revisão humana. Nunca altera a configuração. Atualiza o painel, faz commit e push e republica o painel no artifact. Use na tarefa agendada mensal ou quando pedirem a recalibração do CDP.
-argument-hint: "[sem argumentos]"
+description: "Calibração mensal do núcleo quantitativo do CDP — Cabra da Peste (dia 1, 9h15 de Brasília): backtest walk-forward com todo o histórico em reports/backtest/<data>/mensal (ou o que o script de rotina já rodou), comparação lado a lado com a execução anterior (números copiados de metrics.json) e propostas de mudança de mandato só para revisão humana; nunca altera a configuração. Entrada e saída da execução no Claude Code; o procedimento é o roteiro neutro docs/cdp/playbooks/CALIBRACAO.md. Use na tarefa agendada cdp-calibracao ou quando pedirem a recalibração do CDP."
+argument-hint: "[tarefa agendada: cdp-calibracao]"
 allowed-tools:
   - Read
   - Write
@@ -9,117 +9,55 @@ allowed-tools:
   - Glob
   - Bash(uv sync *)
   - Bash(uv run python -m cdp *)
-  - Bash(git branch --show-current)
   - Bash(git status *)
-  - Bash(git fetch *)
-  - Bash(git pull --no-rebase --no-edit)
   - Bash(git log *)
-  - Bash(git diff *)
-  - Bash(git add *)
-  - Bash(git commit *)
-  - Bash(git push)
-  - Artifact
 ---
 
-# CDP — calibração mensal (rotina local)
+# CDP — calibração mensal (Claude Code)
 
-Rotina sem supervisão: não faça perguntas; se algo bloquear, pare e explique no resumo. O
-backtest é **código** (`src/cdp/backtest/`); você executa, lê `metrics.json` e escreve um resumo.
-Contexto: `docs/cdp/METODOLOGIA.md` e a calibração-base em `reports/backtest/2026-10-05/CALIBRACAO.md`.
+Você é a **mente** do CDP — Cabra da Peste. Rotina sem supervisão: não faça perguntas; se algo
+bloquear, pare e explique no resumo final. O procedimento é o roteiro
+`docs/cdp/playbooks/CALIBRACAO.md` — o mesmo em qualquer harness (Claude Code, Codex, Gemini); esta
+skill só faz a entrada e a saída da execução no Claude Code (app desktop, CLI ou sessão interativa).
+Metodologia: `docs/cdp/METODOLOGIA.md`; manual do agente: `AGENTS.md`.
 
-## Regras invioláveis
+Argumento (`$ARGUMENTS`): o id da tarefa agendada que disparou você (`cdp-calibracao`); sem
+argumento, `cdp-calibracao`. Fora do horário agendado (pedido do operador), acrescente `--manual` ao
+gate.
 
-- **Nunca altere** `configs/cdp/fund.yaml` nem código: mudanças de mandato são só **propostas** no
-  resumo, para decisão humana (qualquer mudança altera o `config_hash` e precisa ser auditada).
-- Números **copiados** de `metrics.json`; apresente valores lado a lado, sem calcular diferenças.
-- O backtest usa só sinais point-in-time; a camada de IA e a escada de drawdown não entram.
-- **Só os comandos deste roteiro** (os de `allowed-tools`). Para ler saídas, use `Read`/`Grep`/
-  `Glob`; nunca rode `python -c`, `jq`, `sleep` nem laços de espera (um pedido de permissão deixa a
-  tarefa parada e o app pula as rotinas seguintes).
-- Nunca use `git push --force`, `rebase` nem `reset`. O único merge permitido é o
-  `git pull --no-rebase --no-edit` da sincronização, quando o remoto não mexeu no livro.
+## Regras desta skill
+
+- Mente `claude-code`: `--mind claude-code` na CLI, `"mind": "claude-code"` nos JSON e
+  `--mente claude-code` na publicação.
+- Rode o gate **uma vez só** por execução (passo 2); nunca de novo dentro do roteiro.
+- **Modo executor:** se o prompt disser que a agenda, a trava, a sincronização e a publicação são do
+  executor (script de rotina ou workflow), faça só o passo 4 e o resumo — nenhum gate,
+  `cdp sincronizar`, `cdp publicar`, `cdp trava` nem `git` que grave.
+- Nenhum comando `git` que grave (commit, push, pull, merge): a sincronização e a publicação são só
+  por `cdp sincronizar` e `cdp publicar`.
+- **Só os comandos das `allowed-tools`**; para ler saídas, use `Read`/`Grep` nos arquivos gravados
+  pelo código. Nunca `python -c`, `jq`, `sleep` nem laços de espera: um pedido de permissão deixa a
+  tarefa parada e o app pula as rotinas seguintes. Se um passo exigir outra coisa, pare e relate.
+- Nunca publique artifacts numa rotina. O espelho privado do painel no claude.ai é só a pedido do
+  operador, numa sessão interativa (`docs/cdp/LOCAL.md`, seção 10).
+- Nunca desligue o kill switch; nunca use `--force`.
+- O backtest leva mais que o limite de um comando: rode-o em segundo plano (Bash com
+  `run_in_background`) e **encerre o turno sem esperar** — a notificação de término reabre a sessão;
+  então siga do passo 3 do roteiro. Sem interface (`claude -p`), uma tarefa em segundo plano morre
+  quando a resposta termina: por isso o script de rotina (`scripts/cdp_rotina.sh`, chamado por
+  `scripts/cdp_run_task.sh`) registra a execução e só então roda o backtest, antes da skill. O
+  gate do passo 2 devolve essa mesma `execucao` (variável `CDP_EXECUCAO`), e `cdp publicar` leva
+  a pasta `mensal/` junto com o resumo.
 
 ## Passos
 
-1. Confirme a raiz do repositório e o clone dedicado: `git branch --show-current` = `main` e
-   `git status --porcelain` sem arquivos rastreados alterados fora de `book/`, `reports/`,
-   `data/market/`, `data/publico/` e `artifacts/painel/` (senão, pare: "clone em desenvolvimento"). Sincronize:
-   `git fetch` (se falhar, siga sem push no fim); `git status -sb`; se estiver atrás, rode
-   `git diff --name-only "HEAD...@{u}" -- book data reports artifacts` — vazio ⇒
-   `git pull --no-rebase --no-edit`; não vazio ⇒ pare (outra sessão gravou o livro). Depois,
-   `uv sync --extra dev --extra ai`.
-2. Hoje (Brasília) = campo `agora_brasilia` de `uv run python -m cdp agenda`. Com `Glob`, veja
-   `reports/backtest/AAAA-MM-DD/` de hoje:
-   - `CALIBRACAO_MENSAL.md` existe → encerre: "Calibração de hoje já feita".
-   - `mensal/metrics.json` existe (o agendador do sistema roda o backtest antes, ou uma execução
-     anterior foi interrompida depois dele) → pule o passo 3.
-3. Backtest com todo o histórico desde o primeiro rebalanceamento viável usado na calibração-base:
-
-   ```sh
-   uv run python -m cdp backtest --start 2021-01-04 --out reports/backtest/AAAA-MM-DD/mensal
-   ```
-
-   Leva mais que o tempo-limite de um comando: rode-o em segundo plano (Bash com
-   `run_in_background`) e **encerre o turno sem esperar** — nada de `sleep`, laços ou consultas
-   repetidas. A notificação de término reabre a sessão; então siga do passo 4. Nunca rode dois
-   backtests ao mesmo tempo. Se falhar, pare e relate a mensagem. (Sem interface, com `claude -p`,
-   uma tarefa em segundo plano morre quando a resposta termina: por isso `scripts/cdp_run_task.*
-   calibracao` roda o backtest antes de chamar a skill.)
-
-4. Execução anterior: a pasta `reports/backtest/*/mensal/` mais recente antes de hoje; se não
-   houver, a variante escolhida em `reports/backtest/2026-10-05/CALIBRACAO.md` (pasta indicada lá).
-5. Escreva `reports/backtest/AAAA-MM-DD/CALIBRACAO_MENSAL.md` (pt-BR) com:
-   - período, nº de rebalanceamentos e a pasta de comparação;
-   - tabela lado a lado (atual × anterior), valores copiados de `metrics.json`: retorno a.a.,
-     vol a.a., Sharpe (excesso e bruto), max drawdown, custos a.a., giro semanal, P&L específico
-     e fatorial a.a., PSR, Sharpe deflacionado, % do tempo com vol na banda, IC médio por sinal;
-   - leitura qualitativa (estabilidade dos sinais, custos, risco) e **propostas** de mudança, se
-     houver, marcadas como "para revisão humana — não aplicadas".
-6. Integridade e painel (código; o painel inclui os backtests):
-   `uv run python -m cdp verify` e `uv run python -m cdp painel` (grava `artifacts/painel/data.json`,
-   a casca `index.html`, o estilo e o script versionados — só quando o template muda — e a cópia
-   local; anote o bloco `artifact`). Se o painel falhar, siga sem ele.
-7. Publicação:
-
-   ```sh
-   git add reports/backtest artifacts/painel
-   git commit -m "CDP: calibração mensal AAAA-MM-DD" -- reports/backtest artifacts/painel
-   ```
-
-   Push só se `verify` disse `ÍNTEGRO` e o `git fetch` funcionou: repita a sincronização do passo 1
-   e então rode `git push`. Se não, ou se o push for rejeitado: não force; relate.
-
-8. Painel no artifact, **no mesmo artifact** (URL em `artifacts/painel/ARTIFACT_URL`, também em
-   `artifact.url`; a rotina nunca cria um artifact novo): sem a ferramenta `Artifact` nesta sessão,
-   pule e anote no resumo. Se `cdp painel` falhou ou trouxe `artifact.publicavel: false`, não
-   leia nem publique nada; anote o `artifact.motivo`. Sem `artifacts/painel/ARTIFACT_URL`
-   (`artifact.url` nulo), não publique e anote "sem ARTIFACT_URL". Com `publicavel: true`: leia por
-   inteiro, com `Read` (em partes com `offset`/`limit`, até a última linha), cada arquivo de
-   `artifact.arquivos_para_ler` — sempre a casca `artifacts/painel/index.html` e
-   `artifacts/painel/data.json`; o estilo e o script versionados (`painel-<versão>.css`/`.js`) só
-   quando `artifact.pagina_mudou` for `true`. Chame `Artifact` com essa `url`, nesta ordem:
-   `action: "read"` (uma vez; confira o `<meta name="cdp-page-sha256" content="…">` da página
-   publicada — ou `var PAGE_SHA` em páginas antigas: igual a `artifact.pagina_publicada`, siga;
-   igual a `artifact.pagina_atual`, registre com `uv run python -m cdp painel --publicado`, rode
-   `uv run python -m cdp painel` de novo e siga com o novo bloco `artifact`; outro valor ou
-   ausente, **não publique**: outra sessão publicou uma página fora das rotinas; anote e siga);
-   `action: "list"` com `scope: "files"` (obrigatório: a ferramenta
-   só substitui ou remove um arquivo publicado que a sessão leu pelo caminho, viu numa listagem
-   ou publicou); e `action: "publish"` com `file_path` = `artifact.publicar.file_path` (a
-   ferramenta exige a página em toda publicação) e `files` = `artifact.publicar.files`; com
-   `pagina_mudou: true`, acrescente em `files`, com valor `null`, cada `painel-*.css`/`painel-*.js`
-   da listagem que não esteja em `artifact.publicar.files`. Se a recusa disser que um arquivo
-   mudou desde a listagem, repita o `list` com `scope: "files"` uma vez e publique uma única vez.
-   Recusa por conflito na página: rode `uv run python -m cdp painel` de novo, leia o que
-   `artifact.arquivos_para_ler` pedir, repita o `list` e publique uma única vez; nunca use
-   `force`. Só depois de uma publicação bem-sucedida com `pagina_mudou: true`:
-   `uv run python -m cdp painel --publicado`,
-   `git add artifacts/painel/PAGINA_PUBLICADA.sha256` e
-   `git commit -m "CDP: painel publicado" -- artifacts/painel/PAGINA_PUBLICADA.sha256` (sem esse
-   registro, `pagina_mudou` continua `true` e a próxima rotina publica a página de novo). Falha
-   ou recusa: não insista; relate.
-
-## Resumo final (até 10 linhas)
-
-Pasta do resultado; principais métricas atuais × anteriores (copiadas); propostas para revisão
-humana (ou "nenhuma"); estado do commit/push; painel (URL republicada ou o motivo de não ter sido).
+1. `uv sync --frozen --extra dev --extra ai`
+2. `uv run python -m cdp rotinas gate --tarefa <tarefa>` — `executar: false` ⇒ responda "Sem
+   execução: <motivo>" e encerre. Guarde `execucao`.
+3. `uv run python -m cdp sincronizar --executar` — `acao: "parar"` ⇒ encerre relatando o `motivo`.
+4. Siga `docs/cdp/playbooks/CALIBRACAO.md` do passo 1 ao passo 4, com `--mind claude-code`.
+5. Publique uma vez (passo 5 do roteiro):
+   `uv run python -m cdp publicar --tarefa <tarefa> --mensagem "CDP: calibração mensal AAAA-MM-DD" --execucao <execucao> --mente claude-code`
+   (mensagem conforme o roteiro). Leia `push` e `motivo`; sem push, relate — nunca outro caminho.
+6. Resumo final: o do roteiro, em pt-BR institucional (`docs/cdp/ESTILO.md`), com números copiados
+   dos relatórios e das saídas da CLI (nunca calculados).

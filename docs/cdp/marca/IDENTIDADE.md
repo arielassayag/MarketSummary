@@ -1,8 +1,9 @@
-# Identidade visual do CDP — "Sertão em xilogravura"
+# Identidade visual do CDP — "Sertão em xilogravura", forma "Chapada"
 
-Guia da marca no portal do fundo (o painel publicado como artifact, gerado de
-`src/cdp/workflow/painel_template.html`). Vale para quem mexer no template, no estilo ou nos
-arquivos desta pasta.
+Guia da marca no portal do fundo: o site público (portal principal, `cdp site construir`) e o
+espelho privado opcional, ambos gerados de `src/cdp/workflow/painel_template.html` e dos módulos
+carregados sob demanda (`painel_modelo.js`, `painel_cobertura.js`). Vale para quem mexer no
+template, no estilo, nos módulos ou nos arquivos desta pasta.
 
 | Arquivo | O que é |
 |---|---|
@@ -10,7 +11,7 @@ arquivos desta pasta.
 | `marca_tinta.webp` | Máscara alfa da tinta: letras, cabra, mandacaru, chapada, ASSET MANAGEMENT (960 × 596). |
 | `marca_sol.webp` | Máscara alfa da cor especial: o sol listrado e a estrela da régua (960 × 596). |
 | `marca_cabra.webp` | Máscara alfa da cabeça da cabra, com o chifre inteiro (120 × 98): o emblema das abas. |
-| `../../../scripts/cdp_marca.py` | Regera as três máscaras a partir de `cdp-logo.png` e o bloco CSS do template. |
+| `../../../scripts/cdp_marca.py` | Regera as três máscaras a partir de `cdp-logo.png`, o bloco CSS da marca e os onze ornamentos da camada "Chapada" (gerador com sementes fixas). |
 
 ## 1. Conceito
 
@@ -29,6 +30,31 @@ A terra do Ceará fica nas bordas da página, nunca no meio dos dados:
 A área de dados fica limpa, sóbria e densa, para alocadores. **Claro** é "cal a pino" (padrão).
 **Escuro** é "a matriz invertida": tinta de osso sobre carvão, como na composição escura da marca,
 com o sol mais quente.
+
+### 1.1 Forma: a chapada
+
+O miolo da página não é uma grade de caixas de 1 px: desce como **um corte da chapada do
+Araripe**. A forma vem do sertão cearense; os dados continuam retos.
+
+| Ideia do sertão (Ceará) | Vira | Onde |
+|---|---|---|
+| Estratos da chapada | Seções pares num tom de terra (`--estrato`) de borda a borda, bordas esfumadas | `section.sec:nth-of-type(even)` |
+| Curvas de nível | Três curvas que se abrem num olho em volta da estrela, entre seções; sob cada título, uma curva que engrossa e some | `.sec + .sec::before`, `.sec-h::after` |
+| Pincelada de sol | Traço de pincel seco (cabeça cheia, cerdas que se abrem) sob o começo do título | `.sec-h::before` |
+| Taipa caiada | Painéis sem fio: anel quente de 1 px + sombra curta; cantos de mão de **uma** família, espelhados entre vizinhos | `.block`, `.scroll` |
+| Folha de carnaúba | Corte de folha (dois cantos largos em diagonal) | `.card`, `details.fold`, `.comment`, `.boot`, `.empty` |
+| Sela de vaqueiro | Indicador com assento côncavo; fio do assento e pesponto **só** na curva do assento | `.tile` (fora de laje) |
+| Pedra assentada | Indicador dentro de laje: pedra rebaixada (sem sela) | `.block .tile` |
+| Seixo de rio | Selos, botões, campos, segmentado, índice da tese, semanas, relatórios | `--seixo-*` |
+| Nicho de parede (oratório) | Capa da tese: arco abatido, barrado de argila pintado, estrela como fecho | `.th-hl` |
+| Barro | Conta de barro na cor do estado nos destaques; seixo claro ao passar o mouse na aba | `.alerts > li::before`, `.tab:hover::before` |
+| Goiva (xilogravura) | Duas goivas de sol espelhadas na aba ativa; goiva vertical em citação, comentário e carregamento; capitular com cantos entalhados | `.tab[aria-selected]::before`, `--orn-gv`, `::first-letter` |
+| Régua de mão | Fio riscado à mão (espessura e linha de base oscilam < 1 px) na borda das abas, sob `.block-h` e entre destaques; grade dos gráficos falhada | `--orn-risco`, `stroke-dasharray` |
+
+**Dados intactos.** Linhas de tabela retas de 1 px em `--grid`, números tabulares, cabeçalho
+fixo, colunas, eixos, limites, escalas e cores de dados não mudam. Nos gráficos só muda o cromo: a
+ponta **do lado do valor** das barras é arredondada (a base fica reta no eixo; borboleta reta no
+centro), colunas com `rx: 2.5px`, grade em traço falhado na cor da grade.
 
 ## 2. A marca no portal
 
@@ -146,6 +172,17 @@ impressão só clareia papel, céu e rodapé), sem uma terceira cópia da paleta
 |  | `--foot-bg` | `#1d1611` | `#261d16` |
 |  | `--sel-bg` / `--sel-ink` | `#1d1611` / `#fbf7ef` | `#efe6d5` / `#12100d` |
 |  | `--grao` | grão claro | grão escuro |
+| Chapada (forma e ornamento, nunca dado) | `--estrato` (seção par) | `#ebe2d0` | `#201a14` |
+|  | `--curva` (curvas de nível) | `#bba983` | `#5f4f3f` |
+|  | `--anel` (anel da cal) | `rgba(120, 86, 52, 0.13)` | `rgba(239, 230, 213, 0.08)` |
+|  | `--costura` (pesponto da sela) | `#cfba96` | `#5f4d3a` |
+|  | `--argila` (barrado do nicho) | `#eedac1` | `#3a2a1d` |
+|  | `--relevo` / `--relevo-leve` | anel + sombra curta | anel + sombra funda |
+|  | `--fundo` (pedra rebaixada) / `--nicho` | sombras internas | sombras internas |
+
+Forma (sem tema, no `:root` da camada): `--forma-a` e o espelho `--forma-b` (lajes vizinhas),
+`--forma-c` (tabelas), `--folha` (cartões e recolhíveis), `--seixo-1`, `--seixo-2` e `--seixo-g`
+(selos, botões, campos e pedras).
 
 **Rodapé** (contracapa de tinta nos dois temas; tokens redefinidos no próprio `.foot`):
 `--ink #f1e8d6`, `--ink-2 #d6c9b1`, `--muted #b3a58e`, `--line #4d4034`, `--surface #2b2219`,
@@ -226,13 +263,16 @@ gradientes CSS. Ficam embutidos no fim do `<style>` do template; nenhuma imagem 
 |---|---|---|
 | Céu de goiva: riscos horizontais, mais densos perto do horizonte (as listras do sol) | `.mast::before`, 56 px de baixo do cabeçalho | `--ceu-risco`; período de 1.600 px |
 | Horizonte de xilogravura: chapada do Araripe com estrias, mandacaru-candelabro (não saguaro), xique-xique, caatinga e chão riscado | `.mast::after` | 48 px (36 no celular); vinheta centrada na coluna, o chão segue liso até as bordas |
-| Estrela de 8 pontas (proporção da régua do logo) | títulos de seção, sobrancelhas, marcadores de lista, linha do tempo, `hr`, capa do destaque, aba ativa, renda, carimbo de dados simulados | 11–24 px, `--sol` |
-| Régua com estrela (a do logo) | aba ativa: dois filetes de 2 px e uma estrela de 12 px | `--sol`; não muda a largura da aba |
-| Filete de tipografia (grosso 2 px + fino 1 px) | sob cada `.sec-h` | `--filete` |
-| Filete de prelo (2 px) | topo das tabelas (`.scroll`) e dos indicadores (`.tile`); filete de tinta sob `th` | `--filete`, `--ink-2` |
-| Capa de folheto de cordel: moldura dupla (2 + 1 px, 6 px de vão) aberta no topo para uma estrela de 24 px | `.th-hl` (destaque da Visão geral) | só gradientes |
-| Capitular de xilogravura | primeira letra da abertura da tese | bloco de `--tinta`, letra de papel |
-| Renda de bilro: bico com losango e picô, duas corridas com vão para a estrela | entre seções (`.panel > .sec + .sec`) | 344 × 14 px, `--renda`; estrela de 15 px `--sol`; centradas no vão entre seções (`--vao`: 36 px, 28 no celular) |
+| Estrela de 8 pontas (proporção da régua do logo) | títulos de seção, sobrancelhas, marcadores de lista, linha do tempo, `hr`, fecho do nicho, aba ativa, olho das curvas de nível, carimbo de dados simulados | 11–24 px, `--sol` |
+| Goivas da aba ativa (`--orn-goiva-e`, `--orn-goiva-d`): grossas junto da estrela de 12 px, cauda afilada | `.tab[aria-selected]::before` | 4 px, `--sol`; contraste sol/chão 4,03 (claro) e 8,96 (escuro) |
+| Fio riscado à mão (`--orn-risco`, ladrilho 640 × 4) | borda das abas, sob `.block-h`, entre destaques | `--chao-line`; `--line` → `--grid` |
+| Pincelada de sol (`--orn-traco`, 300 × 16 esticado) + curva de nível (`--orn-curva`, 1200 × 10) | sob cada `.sec-h` | `clamp(150px, 22%, 240px)` × 11 px em `--sol`; curva em `--filete` |
+| Curvas de nível com olho (`--orn-ilha` 400 × 40 e `--orn-curvas` nas laterais) | entre seções (`.panel > .sec + .sec`) | `--curva`, estrela de 13 px; vão `--vao` de 72 px (56 no celular) |
+| Estratos | seções pares | `--estrato` em `border-image` (tinta fora da caixa não gera rolagem) |
+| Sela (`--orn-sela`, `--orn-sela-fio`, `--orn-pesponto`) | indicadores fora de laje | pontos do pesponto em px fixos (fundo); a máscara dá a curva |
+| Nicho de parede caiada: arco abatido, barrado de argila de 4 px, estrela como fecho | `.th-hl` (destaque da Visão geral) | `--argila`, `--nicho` |
+| Goiva vertical (`--orn-gv`, 12 × 600 esticado) | citação, comentário, carregamento | 4 px, `--sol` (`--crit-mark` no erro) |
+| Capitular de xilogravura com cantos entalhados | primeira letra da abertura da tese | bloco de `--tinta`, letra de papel |
 | Pesponto (costura de couro tracejada) | linha do tempo `.tl` | 2 px tracejado `--line` |
 | Chapada do rodapé (paredão entalhado, mandacaru, rachaduras) | `.foot::before`, subindo do papel | 90 px (68 no celular), `--foot-bg` |
 | Sol listrado nascendo atrás da chapada | `.foot::after` | disco de 72 px (54 no celular) |
@@ -241,7 +281,15 @@ gradientes CSS. Ficam embutidos no fim do `<style>` do template; nenhuma imagem 
 | Cabeça da cabra | `.tabs-in::before` | máscara `marca_cabra.webp`; a barra de abas tem a altura final (50 px, 46 no celular) desde o carregamento |
 
 Sem sombra nem `filter` em peça recortada por máscara: o filtro roda antes da máscara e a sombra
-some (a "borda quente" do horizonte e da chapada no escuro nunca apareceu e saiu do estilo).
+some (a "borda quente" do horizonte e da chapada no escuro nunca apareceu e saiu do estilo). A
+sela usa só sombras internas.
+
+Os onze ornamentos da chapada ficam no `:root` da camada, um por linha, e saem de
+`scripts/cdp_marca.py --ornamentos` (seis gerados com sementes fixas, cinco desenhos fixos); os
+esticáveis usam `preserveAspectRatio='none'`, então a espessura vem da altura da camada, nunca do
+comprimento. Sem máscara CSS (`@supports not`), voltam os filetes simples de 1 px; em alto
+contraste (`forced-colors`), lajes, cartões, selas, tabelas e seixos ganham borda `CanvasText` e
+os ornamentos somem.
 
 O `html` (a tela fora da página na rolagem elástica do Mac e do iPhone) é o `--ceu-1` do topo do
 cabeçalho: puxar no topo não mostra uma faixa de tinta sobre a cal. O rodapé vazio (carregando ou
@@ -254,6 +302,8 @@ a contracapa aparece inteira, com a chapada e o sol.
 `--shadow` é a série de referência quantitativa; `--c1`…`--c6` as séries categóricas; `--div-pos`
 / `--div-neg` o divergente; `--long` / `--short` a borboleta e as barras de posição; `--band` a
 banda de volatilidade; `--grid` / `--line` grade e eixos. **`--sol` nunca entra num gráfico.**
+O modelo aberto (decomposição do risco por grupo nos modelos de decisão e base) usa `--c2` e
+`--c4`; os módulos sob demanda usam só os tokens e componentes do template.
 
 ## 7. Cores semânticas
 
@@ -280,6 +330,11 @@ cabeçalho ganha filete de tinta de 2 px e a marca encolhe para 200 px; o rodap�
 filete de tinta no topo. Marca, estrelas, filetes, capa do destaque, indicadores, tabelas e
 selos usam `print-color-adjust: exact`.
 
+- **Chapada no papel:** sem estrato e sem sombras; lajes, cartões, selas, tabelas e seixos com fio
+  de 0,75 pt `#d8ccb8`; sela sem máscara (raio 12 px); nicho com barrado `#ead7bf` e a estrela
+  dentro da caixa; pincelada, curva, fio riscado, contas e goivas com `print-color-adjust: exact`
+  e `filter: opacity(1)` nos pseudos mascarados.
+
 - **Grades viram blocos** no papel (`.panel`, `.sec`, `.cols*`, `.stack`): um bloco com
   `break-inside: avoid` que pula de página empurra o resto; numa grade, o Chromium não cresce o
   contêiner e o rodapé branco cobria o fim da seção (os últimos eventos da Visão geral).
@@ -294,16 +349,30 @@ selos usam `print-color-adjust: exact`.
 **Faça**
 
 - Use o sol só em ornamento e em "onde você está" (aba ativa, estrela, régua).
+- Um título = pincelada de sol + uma curva de nível; entre seções, as curvas com o olho.
+- Painel = laje de cal sem fio, cantos de uma família, espelhados entre vizinhos; indicadores de
+  uma fila todos iguais.
+- Dado nunca recebe forma orgânica: só a ponta do valor das barras e a grade falhada.
 - Use o anil em tudo o que é clicável e na série do CDP.
 - Mantenha a Cinzel em textos curtos sem algarismos; sobrancelhas, indicadores e tabelas ficam
   em Plex.
-- Um filete de tipografia por seção e uma capa de folheto por página (`.th-hl`).
+- Uma capa em nicho por página (`.th-hl`).
 - Área de dados sem textura além do grão do papel.
 - DADOS SIMULADOS sempre à vista: faixa, faixa sob as abas e selos.
-- Teste os dois temas, 375/390 px, 1.120–1.440 px e a impressão. Com a Plex, as nove abas e o
-  emblema cabem a partir de ~1.270 px (recuo das abas de 10 px, 8 px até 1.320 px); abaixo disso,
-  ou com a fonte de reserva (Google Fonts bloqueado), as abas rolam com as bordas esmaecidas, e o
-  `scroll-padding` deixa a aba ativa ou focada fora do esmaecimento.
+- Teste os dois temas, 375/390 px, 1.120–1.440 px e a impressão. Com a Plex, as dez abas
+  (Visão geral, Tese, Carteira, Cobertura de ativos, Risco, Performance, Comitê, Relatórios,
+  Pesquisa quantitativa, Mandato e metodologia) e o emblema cabem a partir de ~1.200 px; abaixo
+  disso, ou com a fonte de reserva (Google Fonts bloqueado), as abas rolam com as bordas
+  esmaecidas, e o `scroll-padding` deixa a aba ativa ou focada fora do esmaecimento. Os títulos
+  longos ficam nas seções ("Tese de investimento", "Risco e exposições", "Comitê de
+  investimento").
+- No celular, tabela larga vira pilha de pedras assentadas: a primeira célula é o título da pedra,
+  de borda a borda (sem a coluna fixa da tabela larga, que deixaria uma caixa clara no assento);
+  listas longas começam pelas primeiras linhas, com um seixo "Ver as N …" para o resto, e os
+  recolhíveis longos começam fechados.
+- Faixa "Transparência e auditoria" do portal público e qualquer bloco novo fora do painel usam
+  as mesmas classes (`.sec`, `.sec-h`, `.block`, `.comment`): pincelada e curva no título, laje
+  de taipa e a goiva do sol no aviso — nunca um retângulo chapado com fio reto.
 
 **Não faça**
 
@@ -311,7 +380,8 @@ selos usam `print-color-adjust: exact`.
 - Cinzel em números, datas, abas, cabeçalhos de tabela ou rótulos de indicador.
 - Pôr do sol brilhando atrás do logo, céu estrelado ou clichês de deserto (saguaro, caubói,
   Texas/México).
-- Ornamento dentro de tabelas e gráficos.
+- Ornamento dentro de tabelas e gráficos; linha de tabela riscada à mão (dá degrau por célula).
+- Pesponto ou costura em toda peça (caixa dentro de caixa): só na curva da sela.
 - Repetir o horizonte nas bordas: é uma vinheta centrada.
 - `mask-composite`, `backdrop-filter`, `:has()` ou recortes ajustados a pixel: ornamentos escalam
   por porcentagem ou `contain`.
@@ -328,13 +398,17 @@ selos usam `print-color-adjust: exact`.
   `--check` confere o template e `--previa DIR` grava composições PNG nos dois temas para revisão.
   O Pillow (com WebP) está no extra `dev`. Os parâmetros (limiar do halo, separação tinta × sol
   pela cor, folga, recorte da cabra) estão no topo do script.
-- **Ornamentos:** ficam embutidos no template (fim do `<style>`); não dependem da marca.
+- **Ornamentos:** os da marca (céu, horizonte, chapada do rodapé, estrela) ficam embutidos no
+  template; os onze da camada "Chapada" saem de `scripts/cdp_marca.py --ornamentos` (o script
+  troca o valor de cada token no `:root` da camada; `--check` confere marca e ornamentos).
 - **Teste:** `tests/cdp/test_painel.py::test_template_carries_the_brand_identity` exige que o
-  template traga exatamente as máscaras desta pasta, os tokens e os três estados de tema, o nome
-  acessível do logo e o estilo e o script dentro do limite de publicação (≤ 260 KB, linhas ≤
-  2.000 caracteres).
+  template traga exatamente as máscaras desta pasta e os ornamentos do gerador, os tokens da marca
+  e da chapada nos três estados de tema, o nome acessível do logo e o estilo, o script e os
+  módulos dentro do limite de publicação (≤ 260 KB, linhas ≤ 2.000 caracteres).
 - **Orçamento:** máscaras ≈ 48 KB (tinta 39 KB, sol 4,8 KB, cabra 4,3 KB), ≈ 64 KB em base64;
-  estilo publicado ≈ 164 KB; script ≈ 244 KB (uma única linha nova: o tema salvo aplicado antes de
-  os dados chegarem).
-- Mudar o template muda a versão da página: a próxima rotina republica a casca, o estilo e o
-  script do painel (ver `docs/cdp/LOCAL.md`, §10).
+  estilo publicado ≈ 192 KB (camada "Chapada" ≈ 26 KB, ornamentos 4,6 KB); script central ≈
+  245 KB; código novo de exibição vai para módulos carregados sob demanda
+  (`painel-<versão>-modelo.js` ≈ 24 KB, `painel-<versão>-cobertura.js`), nunca para o script
+  central.
+- Mudar o template ou um módulo muda a versão da página: a próxima publicação leva a casca, o
+  estilo, o script e os módulos (ver `docs/cdp/SITE.md` e `docs/cdp/LOCAL.md`, §10).

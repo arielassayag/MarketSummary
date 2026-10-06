@@ -38,6 +38,9 @@ from cdp.workflow.runtime import Runtime
 D = DEMO_FIRST_WEEK
 IID = "SIM001"
 BRT = ZoneInfo("America/Sao_Paulo")
+#: Mandato fixo dos testes (datas de demonstração em segundas-feiras): a regra de montagem
+#: de `configs/cdp/fund.yaml` pode mudar sem mexer nestes testes.
+LEGACY = Path(__file__).resolve().parent / "fixtures" / "fund_legado.yaml"
 
 
 @pytest.fixture(scope="module")
@@ -45,7 +48,7 @@ def demo(tmp_path_factory):
     out = tmp_path_factory.mktemp("cdp_notas_demo")
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        run_demo(out, days=1)
+        run_demo(out, days=1, cfg=load_config(LEGACY))
     return out
 
 
@@ -67,7 +70,7 @@ def _copy(demo: Path, tmp_path: Path) -> Path:
 
 def _rt(root: Path, market, at: datetime | None = None) -> Runtime:
     clock = at or datetime(2024, 3, 4, 21, 30, tzinfo=BRT)
-    return Runtime(load_config(), root / "book", root / "market", root / "reports",
+    return Runtime(load_config(LEGACY), root / "book", root / "market", root / "reports",
                    store_override=DemoStore(market), clock=lambda: clock,
                    teses_root=root / "teses")
 

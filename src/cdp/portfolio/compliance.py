@@ -351,6 +351,26 @@ def run_compliance(
         ("SHORT", shorts, "adtv_short_usd", liq.max_days_to_liquidate_short,
          liq.short_participation_rate),
     ):
+        label = "comprada" if side == "LONG" else "vendida"
+        cap_col = f"cap_liquidez_{side.lower()}"
+        if cap_col in cons.columns:
+            # Execução só no leilão de fechamento: o limite do mandato conta FECHAMENTOS — a
+            # posição sobre a capacidade estrutural de redução por fechamento da linha (pregão
+            # regular). Capacidade desconhecida (0) ⇒ NaN ⇒ reprova (nunca liquidez imediata).
+            cap = pd.to_numeric(cons[cap_col].reindex(sel.index), errors="coerce")
+            closes = sel.abs() / cap.where(cap > 0)
+            bad = closes[~(closes <= lim * (1 + TOL) + TOL)]
+            worst = (float(closes.max()) if closes.notna().any()
+                     else (0.0 if sel.empty else float("nan")))
+            checks.append(_check(
+                f"LIQ_DAYS_{side}", f"Fechamentos para liquidar (ponta {label})", bad.empty,
+                HARD, worst, lim,
+                (f"Máximo de {worst:.2f} fechamentos à capacidade estrutural do leilão "
+                 f"(limite {lim:.1f})." if bad.empty else
+                 f"Nomes acima de {lim:.1f} fechamentos à capacidade do leilão (ou sem volume "
+                 f"conhecido): "
+                 f"{_offenders(closes.reindex(bad.index), fmt=lambda v: f'{v:.2f}')}.")))
+            continue
         if col in cons.columns:
             # ADTV da linha de execução; ausente ⇒ NaN ⇒ reprova (nunca o agregado do emissor,
             # que soma todas as linhas e superestimaria a liquidez da linha).
@@ -363,7 +383,6 @@ def run_compliance(
         days = sel.abs() * nav / (part * adtv)
         bad_days = days[~(days <= lim * (1 + TOL) + TOL)]  # NaN (sem ADTV) reprova
         worst = float(days.max()) if days.notna().any() else (0.0 if sel.empty else float("nan"))
-        label = "comprada" if side == "LONG" else "vendida"
         checks.append(_check(
             f"LIQ_DAYS_{side}", f"Dias para liquidar (ponta {label})", bad_days.empty, HARD, worst,
             lim, (f"Máximo {worst:.2f} dias a {part:.0%} do ADTV (limite {lim:.1f}).{src}"

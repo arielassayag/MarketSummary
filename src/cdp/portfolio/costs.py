@@ -21,10 +21,19 @@ Dados ausentes nunca viram zero:
 - Volatilidade diária ausente ⇒ percentil 90 da seção transversal (conservador), sinalizado.
 - Mercado sem comissão configurada ⇒ maior comissão configurada (conservador), sinalizado.
 - Moeda da linha ausente ⇒ inferida pelo mercado de listagem (US ⇒ USD; demais ⇒ cobra FX).
+
+Custo mínimo por ordem (``costs.min_order_cost_usd``, por mercado de listagem): tabelas públicas
+de corretagem e de bolsa têm piso por ordem (ex.: US$ 1,00 por ordem nos EUA; MXN 60 na BMV;
+0,5 UF de direitos de bolsa em Santiago). O piso substitui a comissão variável quando é maior:
+``comissão efetiva = max(comissão_bps, n_ordens · mínimo_USD / nocional)``. Ele não entra no
+otimizador (custo fixo não é convexo): entra na banda de não-negociação por mercado
+(:func:`banda_minima_usd`), na posição mínima por emissor e no custo estimado e debitado de
+cada ordem. Sem mínimo configurado (mandato anterior) nada muda.
 """
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 from typing import Literal
 
@@ -354,10 +363,11 @@ def custos_fechamento(trades: pd.DataFrame, cfg: FundConfig, *, spread_mult: flo
     ``trades`` (índice ``ticker``): ``notional_usd`` (|valor negociado|), ``adtv_usd`` (ADTV da
     linha), ``sigma_d`` (σ diária do emissor), ``market`` (mercado de listagem), ``currency``,
     ``categoria`` (``ADR``, ``US_STOCK``, país…), ``local_fechado`` (ADR negociado sem pregão
-    na bolsa local) e, opcional, ``flag``. Custo em bps::
+    na bolsa local) e, opcionais, ``flag`` e ``n_ordens`` (ordens enviadas para a linha: lote
+    padrão + fracionário/pico contam duas). Custo em bps::
 
         meio spread (faixa de ADTV) × [closed_home_market_spread_mult se local fechado]
-        + comissão do mercado + câmbio (linha não USD)
+        + max(comissão do mercado, n_ordens × mínimo por ordem / nocional) + câmbio (não USD)
         + impact_coefficient · σ · √(nocional / ADTV) · close_impact_discount[categoria]
 
     ``spread_mult``/``vol_mult`` aplicam o cenário de estresse (spreads e σ × 2). ADTV ou σ
@@ -381,6 +391,14 @@ def custos_fechamento(trades: pd.DataFrame, cfg: FundConfig, *, spread_mult: flo
     fx = pd.Series(np.where(trades["currency"].astype(str) == "USD", 0.0, costs.fx_cost_bps),
                    index=trades.index)
     q = pd.to_numeric(trades["notional_usd"], errors="coerce").abs()
+    if costs.min_order_cost_usd:
+        # Piso por ordem (tabelas públicas): substitui a comissão variável quando maior; uma
+        # ordem por perna (lote padrão + fracionário/pico contam duas).
+        n_ord = pd.to_numeric(trades.get("n_ordens", pd.Series(1, index=trades.index)),
+                              errors="coerce").fillna(1).clip(lower=1)
+        floor = pd.Series([minimo_por_ordem_usd(str(m), cfg) for m in trades["market"]],
+                          index=trades.index) * n_ord / q.where(q > 0) * BPS
+        comm = np.maximum(comm, floor.fillna(0.0))
     sig = pd.to_numeric(trades["sigma_d"], errors="coerce") * vol_mult
     disc = trades["categoria"].map(lambda c: float(discount.get(c, 1.0))).astype(float)
     impact = costs.impact_coefficient * sig * np.sqrt(q / adtv.where(adtv > 0)) * disc * BPS
@@ -391,3 +409,45 @@ def custos_fechamento(trades: pd.DataFrame, cfg: FundConfig, *, spread_mult: flo
                         "impact_bps": impact, "total_bps": total,
                         "cost_usd": (q * total / BPS), "flags": flags}, index=trades.index)
     return out
+
+
+# ==========================================================
+# Custo mínimo por ordem e banda de custo fixo
+# ==========================================================
+
+def minimo_por_ordem_usd(market: str, cfg: FundConfig) -> float:
+    """Custo mínimo (USD) de UMA ordem no mercado de listagem ``market``: piso da comissão e
+    das tarifas de bolsa das tabelas públicas (``costs.min_order_cost_usd``). Mercado sem valor
+    configurado com algum mínimo no mandato ⇒ o maior mínimo configurado (conservador);
+    mandato sem mínimos ⇒ 0."""
+    table = cfg.costs.min_order_cost_usd
+    if not table:
+        return 0.0
+    return float(table.get(market, max(table.values())))
+
+
+def comissao_efetiva_bps(market: str, notional_usd: float, cfg: FundConfig,
+                         n_ordens: int = 1) -> float | None:
+    """Comissão + tarifas efetivas em bps do nocional: o maior entre a comissão variável do
+    mercado e ``n_ordens`` × mínimo por ordem; ``None`` sem nocional."""
+    q = abs(float(notional_usd))
+    if not q > 0 or not math.isfinite(q):
+        return None
+    worst = max(cfg.costs.commission_bps.values())
+    comm = float(cfg.costs.commission_bps.get(market, worst))
+    floor = max(int(n_ordens), 1) * minimo_por_ordem_usd(market, cfg) / q * BPS
+    return max(comm, floor)
+
+
+def banda_minima_usd(market: str, cfg: FundConfig, nav: float, n_ordens: int = 1) -> float:
+    """Menor ordem (USD) que vale a pena enviar no mercado: o maior entre a banda do mandato
+    (``execution.min_trade_weight`` × NAV) e o nocional em que o custo fixo mínimo cai a
+    ``execution.max_fixed_cost_bps`` do nocional. Sem a seção ``execution``: 0."""
+    ex = cfg.execution
+    if ex is None:
+        return 0.0
+    band = float(ex.min_trade_weight) * float(nav)
+    if ex.max_fixed_cost_bps:
+        fixed = max(int(n_ordens), 1) * minimo_por_ordem_usd(market, cfg)
+        band = max(band, fixed / (float(ex.max_fixed_cost_bps) / BPS))
+    return band

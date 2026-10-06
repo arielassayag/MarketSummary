@@ -22,16 +22,72 @@ artifact do claude.ai continua como espelho privado opcional, nunca publicado po
 
 ## O que o portal publica
 
-- **Painel** (`index.html` + `data.json`): o painel de gestão do fundo com os limites de tamanho
-  do artifact liberados (todas as semanas, pregões, comentários, a trilha de auditoria e o
-  monitor de risco inteiros); resultados da carteira-sombra ficam de fora. O painel ainda omite
-  alguns campos técnicos por nome (escore e beta por posição, ordens da proposta, controles de
-  conformidade triviais, pontos de pesquisa a favor e contra, eventos da trilha); todos estão
-  nos arquivos de `dados/` (livro, propostas, decisões e `audit_log.jsonl`). Os modelos de
-  cobertura e a reprodução ainda não têm aba própria no painel: ficam em `dados/livro/cobertura/`
-  e na página de dados abertos.
+- **Painel** (`index.html` + `data.json` no perfil `site`, mais os módulos e os dados da
+  cobertura): o portal principal do fundo, sem os cortes de texto e de colunas do espelho
+  privado — a trilha de auditoria recente, o monitor de risco, as notas de calibração, todas as
+  colunas das posições (sinal, beta, escore de squeeze, prazo de liquidação, participação no
+  volume), as ordens, todas as verificações de conformidade, os pontos a favor e contra da
+  pesquisa, as teses e a formulação completa de cada decisão. Ficam de fora os campos técnicos
+  (códigos de verificação, nomes das ferramentas de IA), os **resultados da carteira de
+  referência** (sombra/desafiante: série, comparação diária, desempenho relativo, quadros e
+  eventos da trilha) e o histórico de mudanças de metodologia; o custo de cada restrição
+  (preço-sombra) é publicado.
+- **Tamanho do `data.json`** (lido inteiro antes da primeira pintura, também no celular): o que
+  cresce com o tempo fica limitado — as 8 semanas mais recentes em detalhe (as anteriores numa
+  linha, com o link para o registro completo nos dados abertos), dois anos de pregões em linhas
+  diárias (os meses anteriores consolidados no fim do mês), os 60 relatórios diários mais
+  recentes com o comentário (todos os relatórios no índice, com o texto completo em
+  `dados/relatorios/`), os 500 eventos mais recentes da trilha (a trilha inteira em
+  `dados/livro/audit_log.jsonl`) e as notas por emissor completas só na semana da carteira
+  vigente. Orçamento de referência: 3 MB com dois anos de operação (teste).
+- **Abas** (dez): Visão geral · Tese · Carteira · Cobertura de ativos · Risco · Performance ·
+  Comitê · Relatórios · Pesquisa quantitativa · Mandato e metodologia. Endereços diretos:
+  `#<aba>`, `#cobertura:<emissor>` (ficha do ativo, ex.: `#cobertura:BR_VALE`) e `#auditoria`
+  (seção "Auditoria e reprodução" do Mandato).
+- **Modelo aberto da carteira**, montado em Python (`modelo` em `data.json`; a página só exibe):
+  - *Mandato e metodologia*: cronograma (dia de montagem, prazo da decisão, leilão de fechamento,
+    capacidade por linha, mercados fechados, fechamentos oficiais do próximo dia de montagem),
+    construção (neutralização em camadas, meta de risco específico e piso, κ_F, objetivo,
+    dimensionamento, limites operacionais e do mandato), gestão de risco (escada de drawdown,
+    stops de squeeze, modo somente redução de risco, gatilhos diários, estresse, liquidez, vetos
+    de short), fontes públicas com links, fase vigente de adoção de IA e a seção **Auditoria e
+    reprodução** (resultado da verificação — "Registro íntegro — N eventos conferidos" —, o que é
+    publicado, como conferir, os arquivos da semana para baixar — carteira, ordens, decisão,
+    proposta com a formulação, tese, verificação da publicação, mandato, trilha e códigos de
+    verificação, lidos do catálogo `dados/datapackage.json` —, links para os documentos, a
+    configuração e os módulos do código no repositório público **fixados na versão que gerou a
+    publicação** e o roteiro de reprodução com qualquer assistente de IA);
+  - *Antes da ativação do mandato* (configuração com o cronograma anterior): o portal publica só
+    a data da carteira inaugural, executada no leilão de fechamento do dia — nada do cronograma
+    recorrente, da convenção de execução nem da fração fatorial da configuração anterior, e
+    nenhum backtest de outro calendário de montagem;
+  - *Controle de perdas*: os níveis, gatilhos e ações em um só texto de Python, o mesmo no Mandato
+    e na aba Risco (escada sobre a volatilidade ex-ante com o mandato ativado);
+  - *Risco*: decomposição da variância por grupo nos modelos de decisão e base, κ_F, meta e piso,
+    custo da neutralização, série diária do risco específico (ex-ante, realizado e sem modelo) e os
+    parâmetros e fatores do modelo de risco;
+  - *Carteira*: dimensionamento e execução por posição (alpha, sinal, contribuição ao risco, teto
+    que limita e a sua origem, ordem, capacidade do fechamento usada, fechamentos), emissores sem
+    pregão local e vetos de short;
+  - *Comitê*: a formulação resolvida do otimizador — objetivo com cada termo, parâmetros da
+    resolução (com a conta da meta de volatilidade da semana: mandato → postura → viés a priori)
+    e cada restrição com limite, valor atingido, folga, se vincula e o **custo da restrição**
+    (preço-sombra em pontos-base por ano do PL por 1% de folga no limite); os grupos abrem com as
+    restrições que vinculam e um botão para o grupo inteiro (no celular, todos fechados);
+  - rótulos de fatores e restrições em pt-BR montados em Python (`meta.rotulos`): nenhum código
+    interno aparece na página.
+- **Cobertura de ativos**: aba carregada sob demanda (`painel-<versão>-cobertura.js`) que lê os
+  arquivos `cobertura*.json` ao lado da página — universo, tabela de cobertura, ficha do ativo
+  com o modelo aberto (memória de cálculo, insumos com fonte e data, cenários, sensibilidade),
+  histórico de acertos e metodologia de avaliação.
+- **Antes da carteira inaugural**: cada aba da carteira mostra um aviso institucional com a data
+  da carteira inaugural; Mandato e metodologia, Cobertura de ativos e Pesquisa quantitativa já
+  ficam completos.
+- **Relatórios**: o índice traz todos; o texto completo de cada relatório abre a partir da aba
+  ("Ler o relatório completo"), direto dos dados abertos da mesma publicação.
 - **Backtests**: só os da metodologia em vigor (calendário de rebalanceamento atual de
-  `configs/cdp/fund.yaml`); calibrações de metodologia substituída ficam só no repositório.
+  `configs/cdp/fund.yaml`, e nunca o de montagem na segunda-feira); calibrações de metodologia
+  substituída ficam só no repositório.
 - **Dados abertos e auditoria** (`dados/`): cópias fiéis dos arquivos do livro, dos relatórios,
   dos modelos de cobertura e do mandato — nada é recalculado na montagem do site —, com tamanho e
   código de verificação (SHA-256) de cada arquivo, link para a origem no repositório na mesma
@@ -83,9 +139,30 @@ origem de cada arquivo. Para recalcular etapas da mente em qualquer assistente:
 
 - `configs/cdp/fund.yaml` com o calendário vigente (sem comentários de calendários antigos) e a
   calibração da metodologia em vigor em `reports/backtest/` — senão a aba de backtest sai vazia.
-- Perfil "site" do painel (sem os cortes técnicos por nome) e as abas de cobertura e de
-  auditoria e reprodução: enquanto não existirem, o portal mostra o painel com os limites
-  liberados e aponta para `dados/`.
+- Nada mais do painel: o perfil `site`, a aba de cobertura e a seção de auditoria e reprodução
+  já são montados pelo `cdp site construir`.
+
+## Página e módulos
+
+A página é uma casca pequena (`index.html`, < 8 KB) que referencia o estilo e o script
+versionados (`painel-<versão>.css`/`.js`) e busca `data.json` ao lado dela. Código novo de
+exibição nunca entra no script central (orçamento de 260 KB): vai para módulos carregados sob
+demanda na primeira abertura da aba, com o mesmo carimbo de versão — `painel-<versão>-modelo.js`
+(modelo aberto da carteira) e `painel-<versão>-cobertura.js` (aba de cobertura). A versão é o
+SHA-256 do formato de publicação, do template e dos módulos: mudar qualquer um deles republica a
+página inteira.
+
+O espelho privado opcional (artifact do claude.ai) usa o perfil `publicacao`, com o orçamento de
+leitura integral de quem publica (cada arquivo ≤ 260 KB e linhas ≤ 1.500 caracteres nos dados):
+a formulação completa da decisão fica só no portal (o espelho leva a decomposição do risco e os
+ajustes escalares da decisão e, nos níveis finais, só as restrições que vinculam ou estão perto
+do limite, com a contagem das exibidas). Tudo o que vai ao espelho numa publicação é lido por
+inteiro, com teto total de 1 MB (`painel_artifact.ORCAMENTO_LEITURA`). Os dados da cobertura que
+mudaram vão inteiros só quando cabem nesse teto junto com o resto da publicação; senão nada da
+cobertura vai (o espelho mantém a última cobertura publicada, ou mostra o aviso que aponta o
+portal público) e o marcador local `COBERTURA_PUBLICADA.json` só registra o que de fato foi
+publicado (`cdp painel --publicado` refaz a mesma conta). Falha no registro da cobertura nunca
+derruba o painel nem o portal: a aba fica "em conferência" e o resto segue publicado.
 
 ## Montar e conferir localmente
 

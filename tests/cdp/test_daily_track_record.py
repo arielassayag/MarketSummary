@@ -420,6 +420,28 @@ def test_risk_alerts_vol_band_net_beta_and_drawdown_ladder():
     assert risk_alerts(CFG, risk(ex_ante_vol=0.0), has_positions=False) == []
 
 
+def test_drawdown_texts_follow_the_ladder_mode_the_code_applies():
+    """Escada sobre a vol ex-ante (metodologia vigente): o alerta do registro e o gatilho do
+    monitor dizem o teto de vol (m·σ_ref), nunca um corte de gross que o código não aplica."""
+    from cdp.workflow.daily import drawdown_stage_action
+    from cdp.workflow.risk_monitor import _drawdown_triggers
+
+    vol = CFG.with_overrides({"drawdown": {"risk_reference": "normal_book_vol"}})
+    base = dict(ex_ante_vol=0.05, beta=0.0, gross=1.0, net=0.0, long_exposure=0.5,
+                short_exposure=-0.5, n_long=10, n_short=10)
+    for dd, label, m in ((-0.03, "SOFT STOP", "75,00%"), (-0.06, "HARD STOP", "50,00%"),
+                         (-0.08, "STOP-OUT", "25,00%")):
+        alert = risk_alerts(vol, DailyRisk(drawdown=dd, **base))
+        assert len(alert) == 1 and alert[0].startswith(label)
+        assert f"vol ex-ante limitada a {m}" in alert[0] and "gross" not in alert[0]
+        trig = _drawdown_triggers(dd, vol, origem="no fechamento", sufixo="fechamento")[0]
+        assert f"vol ex-ante limitada a {m}" in trig.motivo and "gross" not in trig.motivo
+        assert "gross" not in trig.acao
+    assert "revisão completa" in drawdown_stage_action("stop_out", vol)
+    legacy = _drawdown_triggers(-0.06, CFG, origem="no fechamento", sufixo="fechamento")[0]
+    assert "cortar o gross para 50,00% do atual" in legacy.motivo and legacy.nivel == "HARD"
+
+
 def test_short_entry_prices_average_cost_within_spell():
     def rec(shares: float | None, px: float) -> DailyRecord:
         positions = [] if shares is None else [DailyPosition(

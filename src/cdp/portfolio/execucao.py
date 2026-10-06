@@ -636,7 +636,8 @@ def preenchimentos_esperados(ordens: Sequence[OrdemLinha], md: MarketData,
     Ordem = alvo − detidas. Não negociam: emissor com linha DETIDA num mercado sem fechamento
     elegível (congelado inteiro, nenhuma linha dele), linha em mercado inelegível, sem fechamento
     oficial ou câmbio no pregão, decisão depois do corte MOC do mercado, ordem abaixo da banda
-    ``min_trade_weight`` (salvo o encerramento da posição). As demais executam
+    (``min_trade_weight`` e, com ``max_fixed_cost_bps``, o custo fixo mínimo por ordem do
+    mercado; salvo o encerramento da posição). As demais executam
     ``sinal × min(|ordem|, ⌊capacidade / preço USD⌋)`` com a capacidade da linha pelo volume
     ``fill_volume_source`` (realizado no pregão)."""
     ex = _execution(cfg)
@@ -682,7 +683,8 @@ def preenchimentos_esperados(ordens: Sequence[OrdemLinha], md: MarketData,
               and decidido_em > janela.corte_moc[m_res]):
             out.append(Preenchimento(**base, situacao="apos_corte",
                                      motivo="decisão posterior ao corte de ordens do mercado"))
-        elif o.alvo != 0 and abs(order) * px * fx / nav_pre < ex.min_trade_weight:
+        elif o.alvo != 0 and abs(order) * px * fx < _banda_usd(o.ticker, order, px, cfg,
+                                                               nav_pre):
             out.append(Preenchimento(**base, situacao="banda",
                                      motivo="abaixo da banda de não-negociação"))
         else:
@@ -693,6 +695,20 @@ def preenchimentos_esperados(ordens: Sequence[OrdemLinha], md: MarketData,
                                      situacao="executada" if fill == order else "parcial",
                                      capacidade_usd=cap))
     return out
+
+
+def _banda_usd(ticker: str, ordem: int, preco_local: float, cfg: FundConfig,
+               nav_pre: float) -> float:
+    """Menor ordem executada (USD): ``min_trade_weight`` × NAV e, com
+    ``execution.max_fixed_cost_bps``, o nocional em que o custo mínimo das ordens da linha
+    (lote padrão + fracionário/pico contam duas) cai a esse limite
+    (:func:`cdp.portfolio.costs.banda_minima_usd`)."""
+    from ..universe import listing_market
+    from .costs import banda_minima_usd
+    from .trades import n_orders
+
+    return banda_minima_usd(listing_market(ticker), cfg, nav_pre,
+                            n_orders(ticker, ordem, preco_local))
 
 
 def conferir_efetivacao(entry: BookEntry, proposal: Proposal, decidido_em: datetime | None,

@@ -11,15 +11,30 @@ EM CÓDIGO:
 - com ``live=True``: cotações do momento (atrasadas pela fonte) → P&L intradiário por posição e
   total contra o último fechamento, em USD com o câmbio do momento, NAV e drawdown estimados.
 
-Gatilhos HARD do mandato (stop de drawdown ``hard_stop``/``stop_out`` e stops de squeeze) geram a
-ação determinística ``kill-switch: <motivo>``. O kill switch só bloqueia risco novo (redução
-continua permitida) e nunca afrouxa limites. Depois que um humano o desliga (``KILL_SWITCH_OFF`` na
-trilha de auditoria), a condição que ele já revisou não o religa: só uma piora (estágio pior da
-escada ou short novo no stop) volta a ser HARD; o resto vira SOFT "já revisado por humano".
-O stop de squeeze escala para o livro inteiro (o corte de 50% de um short específico não é
-automático): ver :data:`SQUEEZE_STOP_ACTION`. Ausente continua ausente: cotação sem negócio hoje,
-câmbio indisponível ou ADTV desconhecido nunca viram zero. O monitor não altera livro, trilha nem
-dados; grava apenas o relatório em ``reports/risk/<data>/risco_<HHMM>.md`` (e o ``.json``).
+Gatilhos HARD do mandato (stop de drawdown ``hard_stop``/``stop_out``, velocidade de perda e
+escalada de squeeze) geram a ação determinística ``kill-switch: <motivo>``. O kill switch só
+bloqueia risco novo (redução continua permitida) e nunca afrouxa limites. Depois que um humano o
+desliga (``KILL_SWITCH_OFF`` na trilha de auditoria), a condição que ele já revisou não o religa:
+só uma piora (estágio pior da escada, perda extrema num registro de fechamento posterior ao
+revisado ou short novo no stop) volta a ser HARD; o resto vira SOFT "já revisado por humano".
+
+Stop de squeeze, regra por nome (``squeeze.stop_scope = "name"``, metodologia vigente): o stop de
+um short num fechamento é SOFT e abre um episódio (:func:`cdp.risk.limites.episodios_de_squeeze`)
+— o código limita o short à metade das ações do stop no rebalanceamento seguinte, uma vez por
+episódio, e veda a compra do emissor até revisão humana registrada na trilha
+(:data:`SQUEEZE_STOP_ACTION`; ``cdp kill-switch revisar-squeeze``); o relatório lista os vetos que
+aguardam revisão (``squeeze.vetos_compra``). No intradiário o stop é aviso antecipado
+(:data:`SQUEEZE_STOP_ACTION_INTRADIARIO`). ``stop_escalation_count`` shorts distintos em stop
+dentro de ``stop_escalation_sessions`` pregões escalam para o kill switch do livro (HARD,
+:data:`SQUEEZE_ESCALATION_ACTION`). Regra anterior (``"book"``): todo stop escala para o livro
+inteiro (:data:`SQUEEZE_STOP_ACTION_LIVRO`).
+
+Fatia idiossincrática monitorada por três medidas (:func:`cdp.risk.idio.serie_idio`): ex-ante
+diária, realizada em 63 pregões e sem modelo (1 − R² ajustado), no bloco ``idio`` do relatório.
+
+Ausente continua ausente: cotação sem negócio hoje, câmbio indisponível ou ADTV desconhecido nunca
+viram zero. O monitor não altera livro, trilha nem dados; grava apenas o relatório em
+``reports/risk/<data>/risco_<HHMM>.md`` (e o ``.json``).
 """
 
 from __future__ import annotations
@@ -42,8 +57,8 @@ from ..calendar import chave_da_semana, previous_data_session, previous_session
 from ..config import FundConfig
 from ..contracts import DailyPosition, DailyRecord, Proposal, Side
 from ..hashing import sha256_obj
-from .daily import short_entry_prices
-from .memo import fmt_days, fmt_num, fmt_pct, fmt_usd, fmt_usd_mm
+from .daily import drawdown_stage_action, short_entry_prices
+from .memo import fmt_closes, fmt_days, fmt_num, fmt_pct, fmt_usd, fmt_usd_mm
 from .track_record import DAILY_RECORD_EVENT
 
 if TYPE_CHECKING:  # pragma: no cover - só para tipos
@@ -123,21 +138,18 @@ def _drawdown_triggers(dd: float | None, cfg: FundConfig, *, origem: str, sufixo
     if stage in (None, "normal"):
         return []
     d = cfg.drawdown
-    if stage == "stop_out":
-        motivo = (f"STOP-OUT {origem}: drawdown {fmt_pct(dd)} atingiu {fmt_pct(d.stop_out)} — "
-                  f"mandato exige gross de {fmt_pct(d.stop_out_gross)} do NAV e revisão completa "
-                  "do processo")
-    elif stage == "hard_stop":
-        motivo = (f"HARD STOP {origem}: drawdown {fmt_pct(dd)} atingiu {fmt_pct(d.hard_stop)} — "
-                  f"mandato exige cortar o gross para {fmt_pct(d.degross_multiplier)} do atual")
-    else:
-        motivo = (f"SOFT STOP {origem}: drawdown {fmt_pct(dd)} atingiu {fmt_pct(d.soft_stop)} — "
-                  "revisão de risco obrigatória e corte do gross para "
-                  f"{fmt_pct(d.soft_degross_multiplier)} do atual no próximo rebalanceamento")
+    limiar = {"stop_out": d.stop_out, "hard_stop": d.hard_stop, "soft_stop": d.soft_stop}[stage]
+    exige = drawdown_stage_action(stage, cfg)
+    if stage == "soft_stop" and d.risk_reference != "normal_book_vol":
+        exige += " no próximo rebalanceamento"
+    motivo = (f"{STAGE_LABEL[stage]} {origem}: drawdown {fmt_pct(dd)} atingiu {fmt_pct(limiar)} — "
+              f"mandato exige {exige}")
     if nota:
         motivo = f"{motivo} ({nota})"
     hard = stage in ("hard_stop", "stop_out") and hard_allowed
-    acao = ("ligar o kill switch (só redução de risco) até revisão humana; o corte do gross é "
+    corte = ("o teto de vol da escada" if d.risk_reference == "normal_book_vol"
+             else "o corte do gross")
+    acao = (f"ligar o kill switch (só redução de risco) até revisão humana; {corte} é "
             "aplicado pelo código no próximo rebalanceamento" if hard else
             "revisão de risco; o código aplica a escada no próximo rebalanceamento")
     return [Trigger("HARD" if hard else "SOFT", f"drawdown_{stage}_{sufixo}", motivo, acao)]
@@ -203,37 +215,155 @@ def squeeze_stop_checks(cfg: FundConfig, shorts: list[dict], history: Iterable[D
     return out
 
 
-#: O que o código realmente faz com um stop de squeeze. O corte de 50% de um short específico
-#: ainda não é automático: o stop escala para o livro inteiro (kill switch ⇒ só redução de risco;
-#: no rebalanceamento seguinte a carteira é reconstruída no caminho ``reduzir-risco``, com gross
-#: × 0,5). Regra registrada em ``docs/cdp/METODOLOGIA.md`` (seção 7).
+#: O que o código faz com um stop de squeeze num fechamento, com a regra por nome
+#: (``squeeze.stop_scope = "name"``, metodologia vigente; ``docs/cdp/METODOLOGIA.md`` §4.6): o
+#: short fica limitado à metade das ações do stop no rebalanceamento seguinte, uma vez por
+#: episódio, e o emissor não pode ficar comprado até revisão humana registrada (o otimizador
+#: aplica, ``risk.limites.acoes_de_squeeze``); sem fechamento negociável nesse dia, o corte fica
+#: pendente. Um stop isolado não liga o kill switch: só a escalada
+#: (:data:`SQUEEZE_ESCALATION_ACTION`).
 SQUEEZE_STOP_ACTION = (
+    "o código corta este short à metade no próximo rebalanceamento (uma vez por episódio) e o "
+    "emissor não pode ficar comprado até revisão humana registrada (sem fechamento negociável no "
+    "dia, o corte fica pendente); stop isolado não liga o kill switch — dois shorts distintos em "
+    "stop dentro de 5 pregões, sim")
+#: Mesmo short ainda em stop depois do corte (preço médio de entrada inalterado): o corte não se
+#: repete; o veto de compra segue até a revisão humana.
+SQUEEZE_STOP_ACTION_CORTADO = (
+    "corte à metade já feito neste episódio (mesmo preço médio de entrada: não se repete); o "
+    "emissor segue sem poder ficar comprado até revisão humana registrada; dois shorts distintos "
+    "em stop dentro de 5 pregões ligam o kill switch")
+#: Stop visto só nas cotações do momento: o corte e o veto valem a partir de um fechamento em
+#: stop (registro diário encadeado); a escalada já conta o pregão de hoje.
+SQUEEZE_STOP_ACTION_INTRADIARIO = (
+    "aviso antecipado: o corte à metade e o veto de compra valem se o short estiver em stop num "
+    "fechamento (registro diário); dois shorts distintos em stop dentro de 5 pregões ligam o kill "
+    "switch")
+#: Código do gatilho INFO com os emissores de compra vedada até revisão humana.
+SQUEEZE_VETO_CODE = "stop_squeeze_compra_vedada"
+#: Escalada da regra por nome: ``squeeze.stop_escalation_count`` shorts distintos em stop dentro
+#: de ``squeeze.stop_escalation_sessions`` pregões (assinatura de desmonte coletivo) ⇒ HARD.
+SQUEEZE_ESCALATION_ACTION = (
+    "ligar o kill switch: o livro inteiro fica só-redução até revisão humana e cada short em stop "
+    "é cortado à metade pelo código no próximo rebalanceamento")
+#: Regra anterior (``squeeze.stop_scope = "book"``): o stop escala para o livro inteiro (kill
+#: switch ⇒ só redução de risco; no rebalanceamento seguinte a carteira é reconstruída no caminho
+#: ``reduzir-risco``, com gross × 0,5) e o corte de 50% do short não é automático.
+SQUEEZE_STOP_ACTION_LIVRO = (
     "ligar o kill switch: o livro inteiro fica só-redução e, no próximo rebalanceamento, o código "
     "reconstrói a carteira com gross × 0,5 (caminho reduzir-risco); o corte de 50% deste short "
     "não é automático — revisão humana do nome")
+#: Código do gatilho de escalada (HARD) da regra por nome.
+SQUEEZE_ESCALATION_CODE = "stop_squeeze_escalada"
 
 
-def _squeeze_triggers(cfg: FundConfig, stops: list[dict], origem: str) -> list[Trigger]:
+def _per_name(cfg: FundConfig) -> bool:
+    return cfg.squeeze.stop_scope == "name"
+
+
+def _squeeze_triggers(cfg: FundConfig, stops: list[dict], origem: str, *,
+                      intradiario: bool = False,
+                      cortados: dict[str, list[float]] | None = None) -> list[Trigger]:
+    """Um gatilho por stop acionado: HARD com a regra do livro inteiro (legado); SOFT com a regra
+    por nome (o corte é do código; a escalada vem de :func:`_squeeze_escalation`). ``cortados``:
+    ticker → preços médios de entrada dos episódios cujo corte já foi feito."""
     out: list[Trigger] = []
     sq = cfg.squeeze
     for s in stops:
+        if not _per_name(cfg):
+            nivel, acao = "HARD", SQUEEZE_STOP_ACTION_LIVRO
+            efeito = ("mandato pede cortar 50% do short; o código escala para o livro inteiro "
+                      "(só redução, gross × 0,5 no rebalanceamento)")
+        elif intradiario:
+            nivel, acao = "SOFT", SQUEEZE_STOP_ACTION_INTRADIARIO
+            efeito = ("o corte à metade e o veto de compra valem se o stop se confirmar num "
+                      "fechamento")
+        elif _num(s.get("preco_medio_entrada")) is not None and _same_entry(
+                float(s["preco_medio_entrada"]), (cortados or {}).get(str(s["ticker"]), ())):
+            nivel, acao = "SOFT", SQUEEZE_STOP_ACTION_CORTADO
+            efeito = ("corte à metade já feito neste episódio; compra do emissor vedada até "
+                      "revisão humana")
+        else:
+            nivel, acao = "SOFT", SQUEEZE_STOP_ACTION
+            efeito = ("o código corta o short à metade no próximo rebalanceamento e veda a "
+                      "compra do emissor até revisão humana")
         if s["stop_posicao"]:
             out.append(Trigger(
-                "HARD", f"stop_squeeze_posicao_{s['ticker']}",
+                nivel, f"stop_squeeze_posicao_{s['ticker']}",
                 f"STOP DE SQUEEZE {origem}: short {s['ticker']} ({s['emissor']}) perde "
                 f"{fmt_pct(s['perda_desde_entrada'])} desde a entrada (limite "
-                f"{fmt_pct(sq.stop_short_position_loss)}) — mandato pede cortar 50% do short; "
-                "o código escala para o livro inteiro (só redução, gross × 0,5 no rebalanceamento)",
-                SQUEEZE_STOP_ACTION))
+                f"{fmt_pct(sq.stop_short_position_loss)}) — {efeito}", acao))
         if s["stop_nav"]:
             out.append(Trigger(
-                "HARD", f"stop_squeeze_nav_{s['ticker']}",
+                nivel, f"stop_squeeze_nav_{s['ticker']}",
                 f"STOP DE SQUEEZE {origem}: short {s['ticker']} ({s['emissor']}) perde "
                 f"{fmt_pct(s['perda_pct_nav'])} do NAV desde a entrada (limite "
-                f"{fmt_pct(sq.stop_short_nav_loss)}) — mandato pede cortar 50% do short; "
-                "o código escala para o livro inteiro (só redução, gross × 0,5 no rebalanceamento)",
-                SQUEEZE_STOP_ACTION))
+                f"{fmt_pct(sq.stop_short_nav_loss)}) — {efeito}", acao))
     return out
+
+
+def _short_rows(rec: DailyRecord) -> list[dict]:
+    return [{"ticker": p.ticker, "emissor": p.issuer_id, "acoes": p.shares,
+             "preco_local": p.price_local, "fx": _fx_from_position(p)}
+            for p in rec.positions if p.market_value_usd < 0]
+
+
+def squeeze_stop_hits(cfg: FundConfig, history_asc: list[DailyRecord]
+                      ) -> dict[str, list[tuple[date, float]]]:
+    """Fechamentos (dentro da janela de escalada) em que cada emissor short estava em stop de
+    squeeze, com o preço médio de entrada do short acionado — a mesma regra do monitor e do
+    fechamento diário. ``history_asc``: registros do mais antigo para o mais recente."""
+    n = cfg.squeeze.stop_escalation_sessions
+    out: dict[str, list[tuple[date, float]]] = {}
+    for k in range(max(0, len(history_asc) - n), len(history_asc)):
+        rec = history_asc[k]
+        before = list(reversed(history_asc[:k]))
+        for s in squeeze_stop_checks(cfg, _short_rows(rec), before, rec.nav_end_usd):
+            if s["stop_posicao"] or s["stop_nav"]:
+                out.setdefault(str(s["emissor"]), []).append(
+                    (rec.date, float(s["preco_medio_entrada"])))
+    return out
+
+
+def squeeze_stop_history(cfg: FundConfig, history_asc: list[DailyRecord]) -> dict[str, list[date]]:
+    """Datas de fechamento (dentro da janela de escalada) em que cada emissor short estava em stop
+    de squeeze (:func:`squeeze_stop_hits` sem o preço de entrada)."""
+    return {i: [d for d, _ in hits] for i, hits in squeeze_stop_hits(cfg, history_asc).items()}
+
+
+def _squeeze_escalation(cfg: FundConfig, history_asc: list[DailyRecord], live_stops: list[dict],
+                        today: date | None) -> tuple[Trigger | None, dict]:
+    """Escalada da regra por nome ao kill switch do livro (:func:`risk.limites.
+    escalar_para_kill_switch`): shorts distintos em stop nos últimos pregões fechados e, com
+    cotações do momento, no pregão de hoje. ``info["entradas"]``: emissor → preços médios de
+    entrada dos shorts em stop na janela (o episódio de cada short, usado na revisão humana)."""
+    from ..risk.limites import escalar_para_kill_switch
+
+    sq = cfg.squeeze
+    hits = squeeze_stop_hits(cfg, history_asc)
+    sessions = [r.date for r in history_asc]
+    live_hit = [s for s in live_stops if s.get("stop_posicao") or s.get("stop_nav")]
+    if today is not None and live_hit:
+        if not sessions or sessions[-1] < today:
+            sessions = [*sessions, today]
+        for s in live_hit:
+            hits.setdefault(str(s["emissor"]), []).append(
+                (today, float(s["preco_medio_entrada"])))
+    dates = {i: [d for d, _ in hs] for i, hs in hits.items()}
+    janela = sorted(sessions)[-sq.stop_escalation_sessions:]
+    em_stop = sorted(i for i, ds in dates.items() if any(d in janela for d in ds))
+    entradas = {i: sorted({a for d, a in hits[i] if d in janela}) for i in em_stop}
+    info = {"emissores_em_stop": em_stop, "entradas": entradas,
+            "pregoes_na_janela": len(janela), "limite": sq.stop_escalation_count,
+            "janela_pregoes": sq.stop_escalation_sessions, "escalada": False}
+    if not escalar_para_kill_switch(dates, sessions, cfg):
+        return None, info
+    info["escalada"] = True
+    motivo = (f"ESCALADA DE SQUEEZE: {len(em_stop)} shorts distintos em stop nos últimos "
+              f"{len(janela)} pregões ({', '.join(em_stop)}; limite "
+              f"{sq.stop_escalation_count} em {sq.stop_escalation_sessions}) — assinatura de "
+              "desmonte coletivo: o livro inteiro passa a só-redução")
+    return Trigger("HARD", SQUEEZE_ESCALATION_CODE, motivo, SQUEEZE_ESCALATION_ACTION), info
 
 
 # ----------------------------------------------------------------------------- revisão humana
@@ -267,17 +397,19 @@ def _parse_ts(value: object) -> datetime | None:
 
 
 def _reported_before(risk_root: Path, base_date: date, off_ts: datetime
-                     ) -> tuple[int, dict[str, set[float]]]:
+                     ) -> tuple[int, dict[str, set[float]], dict[str, set[float]]]:
     """Gatilhos que os relatórios de risco já mostravam ao humano antes do desligamento.
 
     Considera só relatórios calculados sobre o mesmo registro-base (``base.registro``) e gerados até
     ``off_ts``: os HARD e os já rebaixados por revisão anterior. Devolve o pior estágio da escada de
-    drawdown visto e os códigos de squeeze com o preço médio de entrada de cada short.
+    drawdown visto, os códigos de squeeze com o preço médio de entrada de cada short e, de uma
+    escalada de squeeze já mostrada, os shorts em stop (emissor → preços médios de entrada).
     """
     rank = 0
     codes: dict[str, set[float]] = {}
+    escalated: dict[str, set[float]] = {}
     if not risk_root.is_dir():
-        return rank, codes
+        return rank, codes, escalated
     for folder in sorted(p for p in risk_root.iterdir() if p.is_dir()):
         try:
             if date.fromisoformat(folder.name) < base_date:
@@ -305,19 +437,26 @@ def _reported_before(risk_root: Path, base_date: date, off_ts: datetime
                 m = _DRAWDOWN_CODE.match(code)
                 if m:
                     rank = max(rank, STAGE_RANK[m.group(1)])
+                elif code == SQUEEZE_ESCALATION_CODE:
+                    ent = (sq.get("escalada") or {}).get("entradas") or {}
+                    for iid, avgs in (ent.items() if isinstance(ent, dict) else ()):
+                        vals = {v for v in (_num(x) for x in (avgs or [])) if v is not None}
+                        escalated.setdefault(str(iid), set()).update(vals)
                 elif code in entries:
                     codes.setdefault(code, set()).add(entries[code])
-    return rank, codes
+    return rank, codes, escalated
 
 
 def _human_review(rt: Runtime, cfg: FundConfig, history: list[DailyRecord]) -> dict | None:
     """O que um humano já revisou ao desligar o kill switch pela última vez (``None`` se nunca).
 
     Base: o último registro diário já gravado na trilha quando veio o ``KILL_SWITCH_OFF`` (ordem
-    da trilha de auditoria encadeada). Revisado = estágio da escada de drawdown e stops de squeeze
-    desse registro, mais os gatilhos HARD dos relatórios de risco sobre esse mesmo registro gerados
-    até o desligamento. Só uma piora religa o kill switch: estágio pior da escada ou short novo no
-    stop (ou o mesmo short com outro preço médio de entrada, isto é, risco novo).
+    da trilha de auditoria encadeada). Revisado = estágio da escada de drawdown, gatilhos de
+    velocidade de perda e stops de squeeze desse registro, mais os gatilhos HARD dos relatórios de
+    risco sobre esse mesmo registro gerados até o desligamento. Só uma piora religa o kill switch:
+    estágio pior da escada, velocidade de perda num registro posterior ou short novo no stop (ou
+    o mesmo short com outro preço médio de entrada, isto é, risco novo — vale também para a
+    escalada de squeeze, revisada por short e preço médio de entrada, nunca só pelo emissor).
     """
     path = rt.book_root / "audit_log.jsonl"
     if not path.is_file():
@@ -347,11 +486,23 @@ def _human_review(rt: Runtime, cfg: FundConfig, history: list[DailyRecord]) -> d
                "preco_local": p.price_local, "fx": _fx_from_position(p)}
               for p in base.positions if p.market_value_usd < 0]
     before = [r for r in reversed(history) if r.date < base.date]
-    codes = {k: {v} for k, v in
-             _squeeze_codes(squeeze_stop_checks(cfg, shorts, before, base.nav_end_usd)).items()}
-    rep_rank, rep_codes = _reported_before(rt.reports_root / RISK_DIRNAME, base.date, off.ts)
+    checks = squeeze_stop_checks(cfg, shorts, before, base.nav_end_usd)
+    codes = {k: {v} for k, v in _squeeze_codes(checks).items()}
+    rep_rank, rep_codes, rep_escalated = _reported_before(rt.reports_root / RISK_DIRNAME,
+                                                          base.date, off.ts)
     for k, v in rep_codes.items():
         codes.setdefault(k, set()).update(v)
+    pairs: dict[str, set[float]] = {}
+    for c in checks:
+        if c["stop_posicao"] or c["stop_nav"]:
+            pairs.setdefault(str(c["emissor"]), set()).add(float(c["preco_medio_entrada"]))
+    if _per_name(cfg):
+        upto = [r for r in history if r.date <= base.date]
+        for iid, hs in squeeze_stop_hits(cfg, upto).items():
+            pairs.setdefault(iid, set()).update(a for _, a in hs)
+    for iid, avgs in rep_escalated.items():
+        pairs.setdefault(iid, set()).update(avgs)
+    review["_shorts_em_stop"] = pairs
     rank = max(rank, rep_rank)
     review["estagio_revisado"] = next(s for s, r in STAGE_RANK.items() if r == rank)
     review["codigos_revisados"] = sorted(codes)
@@ -359,9 +510,22 @@ def _human_review(rt: Runtime, cfg: FundConfig, history: list[DailyRecord]) -> d
     return review
 
 
-def _apply_review(triggers: list[Trigger], review: dict | None, entries: dict[str, float]
-                  ) -> list[Trigger]:
-    """Rebaixa a SOFT os gatilhos HARD que o humano já revisou e que não pioraram."""
+#: Gatilhos HARD calculados só sobre o registro de fechamento (velocidade de perda): revisados
+#: quando o registro não é posterior ao registro-base da revisão humana.
+_REGISTRO_HARD_CODES = frozenset({"perda_diaria_extrema"})
+
+
+def _same_entry(a: float, xs: Iterable[float]) -> bool:
+    return any(math.isclose(a, x, rel_tol=1e-9, abs_tol=1e-12) for x in xs)
+
+
+def _apply_review(triggers: list[Trigger], review: dict | None, entries: dict[str, float],
+                  escalated: dict[str, Iterable[float]] | None = None,
+                  registro: date | None = None) -> list[Trigger]:
+    """Rebaixa a SOFT os gatilhos HARD que o humano já revisou e que não pioraram: a escalada de
+    squeeze só volta a ser HARD com um short novo em stop (outro emissor ou outro preço médio de
+    entrada); a velocidade de perda, só num registro de fechamento posterior ao registro-base
+    (``registro`` é a data do registro sobre o qual os gatilhos de velocidade foram calculados)."""
     if review is None:
         return triggers
     rank = STAGE_RANK[review["estagio_revisado"]]
@@ -375,11 +539,18 @@ def _apply_review(triggers: list[Trigger], review: dict | None, entries: dict[st
             m = _DRAWDOWN_CODE.match(t.codigo)
             if m:
                 reviewed = STAGE_RANK[m.group(1)] <= rank
+            elif t.codigo == SQUEEZE_ESCALATION_CODE:
+                seen_pairs: dict[str, set[float]] = review.get("_shorts_em_stop", {})
+                cur = {str(i): list(a) for i, a in (escalated or {}).items()}
+                reviewed = bool(cur) and all(
+                    avgs and all(_same_entry(float(a), seen_pairs.get(i, ())) for a in avgs)
+                    for i, avgs in cur.items())
+            elif t.codigo in _REGISTRO_HARD_CODES:
+                base = review.get("registro_base")
+                reviewed = base is not None and registro is not None and registro <= base
             elif _SQUEEZE_CODE.match(t.codigo):
                 avg = entries.get(t.codigo)
-                reviewed = avg is not None and any(
-                    math.isclose(avg, x, rel_tol=1e-9, abs_tol=1e-12)
-                    for x in seen.get(t.codigo, ()))
+                reviewed = avg is not None and _same_entry(avg, seen.get(t.codigo, ()))
         if not reviewed:
             out.append(t)
             continue
@@ -491,30 +662,51 @@ def _liquidity_block(rec: DailyRecord, proposal: Proposal | None, cfg: FundConfi
             continue
         mv[p.issuer_id] = mv.get(p.issuer_id, 0.0) + p.market_value_usd
         ticker.setdefault(p.issuer_id, p.ticker)
+    closes_mode = cfg.execution is not None
+    # Com a execução no fechamento, a unidade é o FECHAMENTO: capacidade estrutural por
+    # fechamento implícita na decisão vigente (nocional-alvo / fechamentos para zerar).
+    cap: dict[str, float] = {}
+    if closes_mode and proposal is not None:
+        for p in proposal.positions:
+            d, n = _num(p.days_to_liquidate), _num(p.notional_usd)
+            if d is not None and d > 0 and n is not None and n != 0:
+                cap[p.issuer_id] = cap.get(p.issuer_id, 0.0) + abs(n) / d
     over, missing = [], []
     for iid, v in sorted(mv.items()):
-        a = adtv.get(iid)
         long_side = v > 0
-        rate = liq.participation_rate if long_side else liq.short_participation_rate
         limit = liq.max_days_to_liquidate_long if long_side else liq.max_days_to_liquidate_short
-        if a is None or a <= 0:
-            missing.append(iid)
-            continue
-        days = abs(v) / (rate * a)
+        if closes_mode:
+            c = cap.get(iid)
+            if c is None or c <= 0:
+                missing.append(iid)
+                continue
+            days = abs(v) / c
+        else:
+            a = adtv.get(iid)
+            rate = liq.participation_rate if long_side else liq.short_participation_rate
+            if a is None or a <= 0:
+                missing.append(iid)
+                continue
+            days = abs(v) / (rate * a)
         if days > limit + 1e-9:
             over.append({"emissor": iid, "ticker": ticker[iid],
                          "lado": "LONG" if long_side else "SHORT", "dias": days,
                          "limite": limit})
+    unidade = "fechamentos" if closes_mode else "dias"
     block = {"max_dias_para_liquidar": _num(rec.risk.max_days_to_liquidate),
              "pct_gross_liquido_1d": _num(rec.risk.pct_gross_liquid_1d),
+             "unidade": unidade,
              "posicoes_acima_do_limite": over, "sem_adtv": missing,
-             "fonte_adtv": "ADTV gravado na decisão da semana vigente" if proposal else None}
+             "fonte_adtv": ("capacidade de fechamento gravada na decisão da semana vigente"
+                            if closes_mode else "ADTV gravado na decisão da semana vigente")
+             if proposal else None}
     t: list[Trigger] = []
+    fmt = fmt_closes if closes_mode else fmt_days
     if over:
-        names = ", ".join(f"{o['emissor']} ({fmt_days(o['dias'])} > {fmt_days(o['limite'])})"
+        names = ", ".join(f"{o['emissor']} ({fmt(o['dias'])} > {fmt(o['limite'])})"
                           for o in over)
         t.append(Trigger("SOFT", "liquidez_acima_do_limite",
-                         _clip(f"Posições acima do limite de dias para liquidar: {names}"),
+                         _clip(f"Posições acima do limite de {unidade} para liquidar: {names}"),
                          "reduzir no próximo rebalanceamento"))
     if missing:
         t.append(Trigger("INFO", "liquidez_sem_adtv",
@@ -703,6 +895,67 @@ def _velocity_triggers(rt: Runtime, history: list[DailyRecord],
     return out
 
 
+def idio_monitor(rt: Runtime, history_asc: list[DailyRecord], limitations: list[str]
+                 ) -> tuple[dict | None, list[Trigger]]:
+    """Fatia idiossincrática do livro por três medidas (:func:`cdp.risk.idio.serie_idio`), no
+    último fechamento: ex-ante diária (vol fatorial e específica do registro, com κ_F), realizada
+    em 63 pregões (x-sigma-rho do P&L específico) e sem modelo (1 − R² ajustado dos retornos do
+    fundo contra ETFs de país e commodities). Só com a metodologia de construção vigente; ausente
+    fica ``None`` (nunca zero). Ex-ante abaixo do piso do mandato ⇒ SOFT (o piso é HARD na
+    decisão); realizada abaixo do piso ⇒ INFO (amostra curta e ruidosa); sem modelo ⇒ INFO só
+    abaixo do piso menos a banda de amostragem unilateral de 95% (sob a nula)."""
+    from ..portfolio.optimizer import metodologia_ativa
+    from ..risk.idio import JANELA_REALIZADA, Z_BANDA_SEM_MODELO, serie_idio
+
+    cfg = rt.cfg
+    if not metodologia_ativa(cfg) or not history_asc:
+        return None, []
+    recs = history_asc[-JANELA_REALIZADA:]
+    try:
+        md = rt.store.load(as_of=recs[-1].date)
+    except Exception as exc:  # noqa: BLE001 - sem base de mercado: só a medida ex-ante
+        md = None
+        limitations.append("Fatia idiossincrática sem modelo indisponível (base de mercado: "
+                           f"{_clip(str(exc), 160)}).")
+    serie = serie_idio(recs, md, cfg)
+    if not serie["datas"]:
+        return None, []
+    goal, floor = cfg.risk.idio_share_goal, cfg.risk.idio_share_floor
+    block = {"data": serie["datas"][-1], "ex_ante": serie["ex_ante"][-1],
+             "realizada_63d": serie["realizada_63d"][-1],
+             "sem_modelo_63d": serie["sem_modelo_63d"][-1],
+             "sem_modelo_banda": serie["sem_modelo_banda"][-1],
+             "sem_modelo_obs": serie["sem_modelo_obs"][-1], "meta": goal, "piso": floor,
+             "kappa_f": serie["kappa_f"], "janela_pregoes": serie["janela"],
+             "registros": len(recs), "regressores": serie["regressores"]}
+    t: list[Trigger] = []
+    ex = _num(block["ex_ante"])
+    if floor is not None and ex is not None and ex < floor - 1e-9:
+        t.append(Trigger("SOFT", "idio_ex_ante_abaixo_do_piso",
+                         f"Fatia idiossincrática ex-ante {fmt_pct(ex, 1)} abaixo do piso "
+                         f"{fmt_pct(floor, 0)} (κ_F {fmt_num(_num(block['kappa_f']), 2)})",
+                         "reduzir o risco fatorial no próximo rebalanceamento (o piso é HARD "
+                         "na decisão)"))
+    v = _num(block["realizada_63d"])
+    if floor is not None and v is not None and v < floor - 1e-9:
+        t.append(Trigger("INFO", "idio_realizada_63d_abaixo_do_piso",
+                         f"Fatia idiossincrática realizada (63 pregões) {fmt_pct(v, 1)} abaixo "
+                         f"do piso {fmt_pct(floor, 0)}",
+                         "acompanhar: medida realizada com amostra curta; a decisão usa o "
+                         "modelo ex-ante"))
+    v, band = _num(block["sem_modelo_63d"]), _num(block["sem_modelo_banda"])
+    if floor is not None and v is not None and band is not None \
+            and v < floor - Z_BANDA_SEM_MODELO * band - 1e-9:
+        t.append(Trigger("INFO", "idio_sem_modelo_63d_abaixo_do_piso",
+                         f"Fatia idiossincrática sem modelo (1 − R² ajustado, "
+                         f"{block['sem_modelo_obs']} pregões) {fmt_pct(v, 1)} abaixo do piso "
+                         f"{fmt_pct(floor, 0)} além da margem de amostragem unilateral de 95% "
+                         f"({fmt_pct(Z_BANDA_SEM_MODELO * band, 1)})",
+                         "revisar o modelo de risco: exposição a ETFs de país e commodities que "
+                         "o modelo ex-ante não capta; a decisão usa o modelo ex-ante"))
+    return block, t
+
+
 def _live_proposal(rt: Runtime, rec: DailyRecord) -> tuple[Proposal | None, list[str]]:
     notes: list[str] = []
     if rec.live_book_week is None:
@@ -801,6 +1054,10 @@ def run_risk_monitor(rt: Runtime, *, as_of: date | None = None, live: bool = Fal
     risk, t = _risk_block(rec, cfg)
     out["risco"] = risk
     triggers += t
+    idio, t = idio_monitor(rt, history_all, limitations)
+    if idio is not None:
+        out["idio"] = idio
+    triggers += t
     rows, over, t = _exposures_block(rec)
     out["exposicoes"] = rows
     out["exposicoes_acima_do_limite"] = over
@@ -868,20 +1125,67 @@ def run_risk_monitor(rt: Runtime, *, as_of: date | None = None, live: bool = Fal
         elif quotes is not None:
             limitations.append("A fonte não devolveu cotações intradiárias.")
     out["squeeze"] = {"shorts_high": high, "n_high_no_fechamento": rec.risk.squeeze_high_shorts,
-                      "stops_fechamento": stops, "stops_intradiario": live_stops}
-    triggers += _squeeze_triggers(cfg, stops, "no fechamento")
+                      "stops_fechamento": stops, "stops_intradiario": live_stops,
+                      "regra": "por nome" if _per_name(cfg) else "livro inteiro"}
+    cortados: dict[str, list[float]] = {}
+    if _per_name(cfg):
+        vetos, cortados, t = _squeeze_name_state(rt, cfg, history_all)
+        out["squeeze"]["vetos_compra"] = vetos
+        triggers += t
+    triggers += _squeeze_triggers(cfg, stops, "no fechamento", cortados=cortados)
     closed_hits = {s["ticker"] for s in stops if s["stop_posicao"] or s["stop_nav"]}
     triggers += _squeeze_triggers(cfg, [s for s in live_stops if s["ticker"] not in closed_hits],
-                                  "intradiário")
+                                  "intradiário", intradiario=True)
+    escalated: dict[str, list[float]] = {}
+    if _per_name(cfg):
+        esc, esc_info = _squeeze_escalation(cfg, history_all, live_stops,
+                                            as_of if live_stops else None)
+        out["squeeze"]["escalada"] = esc_info
+        escalated = dict(esc_info["entradas"])
+        if esc is not None:
+            triggers.append(esc)
     out["alertas_do_registro"] = list(rec.alerts)
     if not ks["ativo"]:
         # Kill switch desligado por humano: condição já revisada não o religa; só piora religa.
         review = _human_review(rt, cfg, history_all)
         entries = {**_squeeze_codes(live_stops), **_squeeze_codes(stops)}
-        triggers = _apply_review(triggers, review, entries)
+        triggers = _apply_review(triggers, review, entries, escalated, registro=rec.date)
         if review is not None:
             out["revisao_humana"] = {k: v for k, v in review.items() if not k.startswith("_")}
     return _finish(out, triggers, limitations, ks)
+
+
+def _squeeze_name_state(rt: Runtime, cfg: FundConfig, history_asc: list[DailyRecord]
+                        ) -> tuple[list[dict], dict[str, list[float]], list[Trigger]]:
+    """Estado do stop de squeeze por nome nos registros encadeados (:func:`cdp.risk.limites.
+    episodios_de_squeeze`): emissores de compra vedada até revisão humana (com o corte ainda
+    pendente ou não), episódios já cortados (ticker → preços médios de entrada) e o gatilho INFO
+    com os vetos que aguardam revisão."""
+    from ..risk.limites import episodios_de_squeeze, revisado
+
+    eps = episodios_de_squeeze(history_asc, cfg)
+    if not eps:
+        return [], {}, []
+    revs = rt.squeeze_reviews()
+    cortados: dict[str, list[float]] = {}
+    for e in eps:
+        if e.cortado_em is not None and e.encerrado_em is None:
+            cortados.setdefault(e.ticker, []).append(e.preco_medio_entrada)
+    vetos = [{"emissor": e.emissor, "ticker": e.ticker, "data_stop": e.data_stop,
+              "preco_medio_entrada": e.preco_medio_entrada, "acoes_no_stop": e.acoes_no_stop,
+              "acoes_atuais": e.acoes_atuais, "corte_pendente": e.corte_pendente,
+              "cortado_em": e.cortado_em}
+             for e in eps if not revisado(e, revs)]
+    t: list[Trigger] = []
+    if vetos:
+        nomes = sorted({(v["emissor"], v["data_stop"]) for v in vetos})
+        lista = ", ".join(f"{i} (stop em {d:%d/%m/%Y})" for i, d in nomes)
+        t.append(Trigger(
+            "INFO", SQUEEZE_VETO_CODE,
+            f"Compra vedada até revisão humana (stop de squeeze por nome): {lista}",
+            "revisão humana num terminal próprio: cdp kill-switch revisar-squeeze --emissor "
+            "<emissor> --reason <motivo> --by <nome> (docs/cdp/EXECUCAO.md §12)"))
+    return vetos, cortados, t
 
 
 def _finish(out: dict, triggers: list[Trigger], limitations: list[str], ks: dict) -> dict:
@@ -982,6 +1286,17 @@ def render_risk_markdown(res: dict, cfg: FundConfig) -> str:
           f"{_pct(rk['es_1d_99'])} (limite {_pct(rk['es_limite'])})",
           f"- Vol realizada 21d: {_pct(rk['vol_realizada_21d'])}; 63d: "
           f"{_pct(rk['vol_realizada_63d'])}"]
+    idio = res.get("idio")
+    if idio:
+        L += ["", "## Fatia idiossincrática (três medidas)", "",
+              f"- Ex-ante (κ_F {fmt_num(_num(idio.get('kappa_f')), 2)}): "
+              f"{_pct(idio.get('ex_ante'))}; realizada em {idio.get('janela_pregoes')} pregões: "
+              f"{_pct(idio.get('realizada_63d'))}; sem modelo (1 − R² ajustado): "
+              f"{_pct(idio.get('sem_modelo_63d'))}"
+              + (f" (desvio de amostragem sob a nula {_pct(idio.get('sem_modelo_banda'))})"
+                 if _num(idio.get("sem_modelo_banda")) is not None else ""),
+              f"- Meta {_pct(idio.get('meta'))}; piso {_pct(idio.get('piso'))}; registros na "
+              f"janela: {idio.get('registros')}"]
     lv = res.get("intradiario")
     if lv:
         L += ["", "## Intradiário (estimado, cotações atrasadas da fonte)", "",
@@ -1012,12 +1327,17 @@ def render_risk_markdown(res: dict, cfg: FundConfig) -> str:
                      f"{fmt_num(e['net'], 3, True) if style else _pct(e['net'], True)} | "
                      f"±{fmt_num(e['limite'], 3) if style else _pct(e['limite'])} |")
     liq = res["liquidez"]
+    closes_mode = liq.get("unidade") == "fechamentos"
+    fmt = fmt_closes if closes_mode else fmt_days
     L += ["", "## Liquidez", "",
-          f"- Máximo de dias para liquidar: {fmt_days(liq['max_dias_para_liquidar'])}; gross "
-          f"liquidável em 1 dia: {_pct(liq['pct_gross_liquido_1d'])}"]
+          (f"- Máximo de fechamentos para liquidar: {fmt(liq['max_dias_para_liquidar'])}; "
+           f"gross liquidável em 1 fechamento: {_pct(liq['pct_gross_liquido_1d'])}"
+           if closes_mode else
+           f"- Máximo de dias para liquidar: {fmt(liq['max_dias_para_liquidar'])}; gross "
+           f"liquidável em 1 dia: {_pct(liq['pct_gross_liquido_1d'])}")]
     for o in liq["posicoes_acima_do_limite"]:
-        L.append(f"- {o['emissor']} ({o['ticker']}, {o['lado']}): {fmt_days(o['dias'])} > "
-                 f"{fmt_days(o['limite'])}")
+        L.append(f"- {o['emissor']} ({o['ticker']}, {o['lado']}): {fmt(o['dias'])} > "
+                 f"{fmt(o['limite'])}")
     if liq["sem_adtv"]:
         L.append(f"- ADTV indisponível: {', '.join(liq['sem_adtv'])}")
     sq = res["squeeze"]
@@ -1032,6 +1352,13 @@ def render_risk_markdown(res: dict, cfg: FundConfig) -> str:
             flag = " **STOP**" if s["stop_posicao"] or s["stop_nav"] else ""
             L.append(f"- Short {s['ticker']} ({label}): {_pct(s['perda_desde_entrada'], True)} "
                      f"desde a entrada; {_pct(s['perda_pct_nav'], True)} do NAV{flag}")
+    for v in sq.get("vetos_compra") or []:
+        d = v.get("data_stop")
+        d_txt = d.strftime("%d/%m/%Y") if isinstance(d, date) else str(d)
+        corte = ("corte à metade pendente" if v.get("corte_pendente") else
+                 "short zerado" if not v.get("acoes_atuais") else "corte à metade feito")
+        L.append(f"- Compra vedada até revisão humana: {v['emissor']} ({v['ticker']}, stop em "
+                 f"{d_txt}; {corte})")
     if res["alertas_do_registro"]:
         L += ["", "## Alertas do registro de fechamento", ""]
         L += [f"- {a}" for a in res["alertas_do_registro"]]
@@ -1089,10 +1416,15 @@ def summary_view(res: dict) -> dict:
         out["squeeze"] = {"shorts_high": sq["shorts_high"],
                           "n_high_no_fechamento": sq["n_high_no_fechamento"],
                           "stops_acionados": hit,
-                          "shorts_verificados": len(sq["stops_fechamento"])}
+                          "shorts_verificados": len(sq["stops_fechamento"]),
+                          "vetos_compra": sq.get("vetos_compra", [])}
     return out
 
 
-__all__ = ["KILL_SWITCH_PREFIX", "MIN_LIVE_COVERAGE", "PRE_INICIO", "RISK_DIRNAME", "Trigger",
-           "drawdown_stage", "render_risk_markdown", "risk_json", "run_risk_monitor", "squeeze_stop_checks",
-           "summary_view", "write_risk_report"]
+__all__ = ["KILL_SWITCH_PREFIX", "MIN_LIVE_COVERAGE", "PRE_INICIO", "RISK_DIRNAME",
+           "SQUEEZE_ESCALATION_ACTION", "SQUEEZE_ESCALATION_CODE", "SQUEEZE_STOP_ACTION",
+           "SQUEEZE_STOP_ACTION_CORTADO", "SQUEEZE_STOP_ACTION_INTRADIARIO",
+           "SQUEEZE_STOP_ACTION_LIVRO", "SQUEEZE_VETO_CODE", "Trigger", "drawdown_stage",
+           "idio_monitor", "render_risk_markdown", "risk_json", "run_risk_monitor",
+           "squeeze_stop_checks", "squeeze_stop_history", "squeeze_stop_hits", "summary_view",
+           "write_risk_report"]

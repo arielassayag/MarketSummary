@@ -409,3 +409,21 @@ def test_decided_at_is_the_instant_the_deadline_was_checked(cfg, tmp_path):
     assert dec.decided_at.astimezone(BRT).time() == time(14, 59, 30)
     assert dec.decided_at <= rt.decision_deadline(W1)
     assert prop.created_at == dec.decided_at
+
+
+def test_daily_liquidity_counts_closes_at_structural_capacity(demo, cfg):
+    """Com a execução no fechamento, o registro diário mede a liquidez em FECHAMENTOS para zerar
+    cada emissor (capacidade estrutural de redução por fechamento da linha detida), não em dias
+    a 20% do ADTV; o monitor de risco usa a mesma unidade."""
+    from cdp.workflow.risk_monitor import run_risk_monitor
+
+    out, _summary = demo
+    rt = _rt(out, cfg)                       # mesmo mercado sintético da demonstração
+    rec = rt.track().get(W1)
+    runner = rt._runner()
+    ctx = runner.context(W1, rt.store.load(as_of=W1), None, need_models=False)
+    closes = runner._closes_by_issuer(ctx, list(rec.positions))
+    assert closes and all(v is not None and v > 0 for v in closes.values())
+    assert rec.risk.max_days_to_liquidate == pytest.approx(max(closes.values()))
+    res = run_risk_monitor(rt, as_of=W1, now=datetime.combine(W1, time(21, 0), tzinfo=BRT))
+    assert res["liquidez"]["unidade"] == "fechamentos"

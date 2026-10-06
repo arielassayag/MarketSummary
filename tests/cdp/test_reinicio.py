@@ -46,17 +46,27 @@ from cdp.workflow.risk_monitor import PRE_INICIO, run_risk_monitor
 from cdp.workflow.runtime import Runtime
 
 ROOT = Path(__file__).resolve().parents[2]
+FUND = ROOT / "configs" / "cdp" / "fund.yaml"
+# Mandato com a regra legada (primeiro pregão da semana na B3): o livro de demonstração e a
+# mecânica do pré-início (plano, execução, guardas) usam datas fixas (semana 2024-03-04).
+LEGADO = Path(__file__).resolve().parent / "fixtures" / "fund_legado.yaml"
 BRT = ZoneInfo("America/Sao_Paulo")
 INICIO = date(2026, 10, 9)  # sexta-feira
 WEEK = date(2024, 3, 4)
 
 
-def _cfg(inicio: date = INICIO) -> FundConfig:
-    """Configuração real com a data de início dada e a regra semanal legada (primeiro pregão da
-    semana na B3), para as datas esperadas não dependerem da regra em vigor."""
-    cfg = load_config()
+def _cfg(inicio: date = INICIO, fonte: Path = FUND) -> FundConfig:
+    """Mandato de ``fonte`` com a data de início dada. Padrão: o mandato ATIVADO do repositório
+    (montagem no último pregão da semana na NYSE, prazo efetivo das 15:00)."""
+    cfg = load_config(fonte)
     return cfg.model_copy(update={"fund": cfg.fund.model_copy(
-        update={"inception_date": inicio, "rebalance_weekday": "MON"})})
+        update={"inception_date": inicio})})
+
+
+def _legado(inicio: date = INICIO) -> FundConfig:
+    """Mandato legado (:data:`LEGADO`) com a data de início dada, para as datas esperadas da
+    mecânica não dependerem da regra em vigor."""
+    return _cfg(inicio, LEGADO)
 
 
 def _at(d: date, h: int, m: int = 0) -> datetime:
@@ -64,7 +74,7 @@ def _at(d: date, h: int, m: int = 0) -> datetime:
 
 
 def _rt(root: Path, cfg: FundConfig | None = None, **kw) -> Runtime:
-    return Runtime(cfg or _cfg(), root / "book", root / "market", root / "reports",
+    return Runtime(cfg or _legado(), root / "book", root / "market", root / "reports",
                    teses_root=None, **kw)
 
 
@@ -78,7 +88,7 @@ def demo(tmp_path_factory):
     out = tmp_path_factory.mktemp("cdp_reinicio_demo")
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        run_demo(out, days=2)
+        run_demo(out, days=2, cfg=load_config(LEGADO))
     # Material de pesquisa datado, risco datado e pesquisa de metodologia (mantida).
     (out / "pesquisa" / "2024-03-04").mkdir(parents=True)
     (out / "pesquisa" / "2024-03-04" / "notas.json").write_text('{"x": 1}\n', encoding="utf-8")
@@ -140,7 +150,7 @@ def test_manifest_hash_is_independent_of_cwd(copia, tmp_path, monkeypatch):
 
 def test_cli_dry_run_prints_plan_without_writing(copia, monkeypatch, capsys):
     cfg_path = copia.parent / "fund_inicio.yaml"
-    _write_cfg(cfg_path, INICIO)
+    _write_cfg(cfg_path, INICIO, LEGADO)
     monkeypatch.chdir(copia)
     before = _tree(copia)
     rc = main(["--config", str(cfg_path), "reinicio"])
@@ -152,10 +162,10 @@ def test_cli_dry_run_prints_plan_without_writing(copia, monkeypatch, capsys):
     assert _tree(copia) == before
 
 
-def _write_cfg(path: Path, inicio: date) -> None:
+def _write_cfg(path: Path, inicio: date, fonte: Path = FUND) -> None:
     import yaml
 
-    raw = yaml.safe_load((ROOT / "configs" / "cdp" / "fund.yaml").read_text(encoding="utf-8"))
+    raw = yaml.safe_load(fonte.read_text(encoding="utf-8"))
     raw["fund"]["inception_date"] = inicio.isoformat()
     path.write_text(yaml.safe_dump(raw, allow_unicode=True, sort_keys=False), encoding="utf-8")
 
@@ -221,7 +231,7 @@ def test_genesis_tampering_is_detected(copia):
 
 
 def test_guard_refuses_live_key_on_or_after_inception(copia):
-    rt = _rt(copia, cfg=_cfg(date(2024, 3, 5)))  # registro de 05/03 = data de início
+    rt = _rt(copia, cfg=_legado(date(2024, 3, 5)))  # registro de 05/03 = data de início
     before = _tree(copia)
     p = plano(rt, copia / "pesquisa")
     assert p.estado == "conflito" and p.chaves_posteriores == [date(2024, 3, 5)]
@@ -268,7 +278,7 @@ def test_guard_refuses_while_kill_switch_is_on(copia, capsys):
     a = agenda(rt, _at(date(2026, 10, 6), 19, 30))
     assert a["kill_switch"] is True and a["reinicio"]["pendente"] is True
     cfg_path = copia.parent / "fund_inicio.yaml"
-    _write_cfg(cfg_path, INICIO)
+    _write_cfg(cfg_path, INICIO, LEGADO)
     base = ["--book", str(copia / "book"), "--market", str(copia / "market"),
             "--reports", str(copia / "reports")]
     assert main(["--config", str(cfg_path), *base, "reinicio", "--executar"]) == 1
@@ -326,7 +336,7 @@ def test_hard_kill_leftover_is_detected_everywhere(copia, capsys, n_movidos):
     assert code == 1 and out["executado"] is False and "execução interrompida" in out["motivo"]
     assert agenda(rt, _at(date(2026, 10, 6), 19, 30))["reinicio"]["pendente"] is True
     cfg_path = copia.parent / "fund_inicio.yaml"
-    _write_cfg(cfg_path, INICIO)
+    _write_cfg(cfg_path, INICIO, LEGADO)
     base = ["--book", str(copia / "book"), "--market", str(copia / "market"),
             "--reports", str(copia / "reports")]
     assert main(["--config", str(cfg_path), *base, "daily", "--date", "2026-10-06",
@@ -365,7 +375,9 @@ def test_empty_book_has_nothing_to_do(tmp_path):
 
 
 def test_inception_date_is_always_an_assembly_day_even_on_friday():
-    cfg = _cfg()
+    """Data de início fora da regra semanal (sexta na regra legada de segunda): ainda assim, dia
+    de montagem e chave válida do livro."""
+    cfg = _legado()
     assert dia_de_montagem(INICIO, cfg) and not dia_de_montagem(date(2026, 10, 5), cfg)
     assert chave_da_semana(date(2026, 10, 6), cfg) == INICIO == week_id(date(2026, 10, 6), cfg)
     assert chave_valida(INICIO, cfg) and not chave_valida(date(2026, 10, 8), cfg)
@@ -381,11 +393,11 @@ def test_inception_date_is_always_an_assembly_day_even_on_friday():
 
 def test_friday_inception_runs_end_to_end(tmp_path):
     """Carteira inaugural numa sexta (mercado sintético): prepare, decide e execução no
-    fechamento do mesmo dia; a chave do livro é a sexta."""
+    fechamento do mesmo dia; a chave do livro é a sexta (mesmo na regra legada de segunda)."""
     from cdp.data.synthetic import make_synthetic_market
 
     friday = date(2024, 3, 8)
-    cfg = _cfg(friday)
+    cfg = _legado(friday)
     md = make_synthetic_market(seed=DEMO_SEED, start=DEMO_HISTORY_START, as_of=friday)
     clock = {"now": _at(friday, 11)}
     rt = _rt(tmp_path, cfg=cfg, store_override=DemoStore(md),
@@ -428,16 +440,22 @@ def _iniciado(tmp_path: Path, inicio: date = INICIO, **kw) -> Runtime:
 
 
 def test_agenda_before_inception(tmp_path):
+    """Mandato ativado: a carteira inaugural é decidida na sexta 09/10 até o prazo efetivo das
+    15:00 (teto local; o fechamento mais cedo entre NYSE/B3/BMV − 45 min é 16:15)."""
     rt = _iniciado(tmp_path)
+    assert rt.cfg.fund.rebalance_weekday == "LAST_US_SESSION"
     a = agenda(rt, _at(date(2026, 10, 6), 19, 30))
     assert a["fase"] == "pre_inicio" and a["data_de_inicio"] == INICIO
     assert a["reinicio"] == {"pendente": False, "motivo": None}
     assert a["semanal"]["acao"] == "aguardar" and a["semanal"]["semana"] == INICIO
-    assert a["semanal"]["motivo"].startswith("pré-início: carteira inaugural em 09/10/2026")
+    assert a["semanal"]["motivo"].startswith("pré-início: carteira inaugural em 09/10/2026 "
+                                             "(sexta-feira)")
+    assert a["semanal"]["proximo_rebalanceamento"] == INICIO
+    assert a["semanal"]["prazo_efetivo"] == _at(INICIO, 15, 0)
     assert a["fechamentos_pendentes"] == [] and a["publicacoes_pendentes"] == []
     first = a["proximos_eventos"][0]
     assert first["evento"].startswith("carteira inaugural")
-    assert first["quando"] == _at(INICIO, 16, 30)
+    assert first["quando"] == _at(INICIO, 15, 0)
     assert all(e["quando"].date() >= INICIO for e in a["proximos_eventos"])
 
 
@@ -447,9 +465,10 @@ def test_agenda_on_inception_friday(tmp_path):
     assert early["fase"] == "operacao" and early["semanal"]["acao"] == "aguardar"
     a = agenda(rt, _at(INICIO, 11, 7))["semanal"]
     assert a["acao"] == "montar" and a["etapa"] == "prepare" and a["semana"] == INICIO
-    assert a["minutos_ate_o_prazo"] == 323  # 11:07 → 16:30
-    late = agenda(rt, _at(INICIO, 16, 31))["semanal"]
-    assert late["acao"] == "prazo_vencido"
+    assert a["minutos_ate_o_prazo"] == 233  # 11:07 → 15:00 (prazo efetivo)
+    assert agenda(rt, _at(INICIO, 14, 59))["semanal"]["acao"] == "montar"
+    late = agenda(rt, _at(INICIO, 15, 0))["semanal"]
+    assert late["acao"] == "prazo_vencido" and "prazo efetivo de 15:00" in late["motivo"]
 
 
 def test_agenda_flags_pending_reset(copia):
@@ -481,7 +500,7 @@ def test_cli_refuses_assembly_and_close_while_reset_pending(copia, capsys):
     base = ["--book", str(copia / "book"), "--market", str(copia / "market"),
             "--reports", str(copia / "reports")]
     cfg_path = copia.parent / "fund_inicio.yaml"
-    _write_cfg(cfg_path, INICIO)
+    _write_cfg(cfg_path, INICIO, LEGADO)
     before = _tree(copia / "book")
     assert main(["--config", str(cfg_path), *base, "weekly", "prepare", "--date", "2026-10-09",
                  "--mind", "claude-code", "--offline"]) == 1
@@ -509,7 +528,7 @@ def test_painel_pre_inception_page(tmp_path):
     assert st["current_week"] == "2026-10-09" and st["is_rebalance_day"] is False
     ev = st["next_events"]
     assert ev[0]["label"].startswith("Decisão semanal") and ev[0]["when_local"].startswith(
-        "2026-10-09T16:30")
+        "2026-10-09T15:00")
     assert all(e["when_local"] >= "2026-10-09" for e in ev) and not any(e["overdue"] for e in ev)
     assert "reinicio" not in (st["agenda"] or {}) and st["agenda"]["fase"] == "pre_inicio"
     assert d["weeks"] == [] and d["latest_day"] is None and d["daily_reports"] == []
@@ -553,7 +572,7 @@ def test_inception_more_than_a_week_away(tmp_path, capsys):
 
     inicio = date(2026, 10, 23)
     rt = _iniciado(tmp_path, inicio)
-    regular = date(2026, 10, 13)  # dia da regra semanal antes do início (12/10 é feriado)
+    regular = date(2026, 10, 9)  # regra semanal (último pregão da semana na NYSE) antes do início
     assert dia_de_montagem(regular, rt.cfg)  # calendário puro: regra semanal
     a = agenda(rt, _at(date(2026, 10, 7), 19, 30))
     assert a["fase"] == "pre_inicio" and a["semanal"]["acao"] == "aguardar"
@@ -575,7 +594,7 @@ def test_inception_more_than_a_week_away(tmp_path, capsys):
     assert "Pré-início" in capsys.readouterr().out
     assert main([*base, "status", "--date", regular.isoformat()]) == 0
     assert json.loads(capsys.readouterr().out)["dia_de_rebalanceamento"] is False
-    for week in (regular, date(2026, 10, 5)):  # nem com --force (nem a segunda anterior)
+    for week in (regular, date(2026, 10, 16)):  # nem com --force (nem a última sexta antes)
         with pytest.raises(ValueError, match="anterior"):
             main([*base, "weekly", "prepare", "--date", week.isoformat(), "--mind",
                   "claude-code", "--offline", "--force"])

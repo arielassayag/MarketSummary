@@ -172,6 +172,96 @@ def test_squeeze_name_stop_halves_the_short_and_forbids_longs():
     assert applied == {"S": "stop"}                     # long não é afetado por stop de short
 
 
+NAME_CFG = CFG.with_overrides({"squeeze": {"stop_scope": "name"}})
+
+
+def _short_rec(d: date, px: float, shares: float = -200.0) -> DailyRecord:
+    """Registro com um short em X (ticker XX, USD) ao preço ``px``; ``shares=0`` = zerado."""
+    nav = 1_000_000.0
+    pos = []
+    if shares:
+        mv = shares * px
+        pos.append(DailyPosition(issuer_id="X", ticker="XX", currency="USD", side=Side.SHORT,
+                                 shares=shares, price_local=px, price_usd=px,
+                                 market_value_usd=mv, weight=mv / nav, day_pnl_usd=0.0))
+    return DailyRecord(date=d, fund_name="CDP", track_record_type="paper", nav_start_usd=nav,
+                       nav_end_usd=nav, pnl_usd=0.0, ret=0.0, positions=pos,
+                       risk=DailyRisk(gross=0.03, net=-0.03, long_exposure=0.0,
+                                      short_exposure=-0.03, n_long=0, n_short=len(pos)),
+                       is_synthetic=True, data_notice="DADOS SIMULADOS",
+                       prev_record_hash="0" * 64)
+
+
+# Entrada na sexta a 100; stop na terça (130 = +30%); o preço recua a 120 na quinta (+20%).
+_WEEK = [_short_rec(date(2026, 10, 9), 100.0), _short_rec(date(2026, 10, 12), 110.0),
+         _short_rec(date(2026, 10, 13), 130.0), _short_rec(date(2026, 10, 14), 125.0),
+         _short_rec(date(2026, 10, 15), 120.0)]
+
+
+def test_mid_week_squeeze_stop_is_cut_at_the_next_rebalance():
+    """Stop atingido no meio da semana vale na montagem mesmo com o preço já abaixo do stop na
+    véspera: corte à metade das ações do stop e compra vedada até revisão humana."""
+    eps = limites.episodios_de_squeeze(_WEEK, NAME_CFG)
+    assert len(eps) == 1 and eps[0].data_stop == date(2026, 10, 13)
+    assert eps[0].acoes_no_stop == 200.0 and eps[0].corte_pendente
+    spec = limites.acoes_de_squeeze(eps, {})["X"]
+    assert spec["fracao_maxima_short"] == pytest.approx(0.5) and spec["veto_compra"]
+    assert "13/10/2026" in spec["motivo"] and "revisão humana" in spec["motivo"]
+
+
+def test_squeeze_cut_happens_once_per_episode_and_partial_fills_stay_pending():
+    """Depois do corte, o mesmo short ainda em stop (mesmo preço médio de entrada) não é cortado
+    de novo; execução parcial deixa o corte pendente, sempre contra as ações do stop."""
+    cut = _WEEK + [_short_rec(date(2026, 10, 16), 131.0, -100.0),
+                   _short_rec(date(2026, 10, 22), 131.0, -100.0)]
+    eps = limites.episodios_de_squeeze(cut, NAME_CFG)
+    assert len(eps) == 1 and eps[0].cortado_em == date(2026, 10, 16)
+    spec = limites.acoes_de_squeeze(eps, {})["X"]
+    assert spec["fracao_maxima_short"] is None and spec["veto_compra"]
+    partial = _WEEK + [_short_rec(date(2026, 10, 16), 131.0, -150.0)]
+    spec = limites.acoes_de_squeeze(limites.episodios_de_squeeze(partial, NAME_CFG), {})["X"]
+    assert spec["fracao_maxima_short"] == pytest.approx(100.0 / 150.0)   # alvo: 100 ações
+
+
+def test_squeeze_long_veto_survives_the_cover_until_a_human_review():
+    """Short zerado: o veto de compra continua até a revisão humana; um stop posterior à
+    revisão reabre o veto."""
+    closed = _WEEK + [_short_rec(date(2026, 10, 16), 131.0, 0.0)]
+    eps = limites.episodios_de_squeeze(closed, NAME_CFG)
+    assert eps[0].encerrado_em == date(2026, 10, 16) and not eps[0].corte_pendente
+    spec = limites.acoes_de_squeeze(eps, {})
+    cons = pd.DataFrame({"max_long": 0.04, "max_short": 0.025, "current": [0.0], "reasons": "",
+                         "can_long": True}, index=["X"])
+    c, applied = limites.apply_squeeze_name_stops(cons, spec)
+    assert c.loc["X", "max_long"] == 0.0 and not bool(c.loc["X", "can_long"])
+    assert c.loc["X", "max_short"] == pytest.approx(0.025) and "X" in applied
+    assert limites.acoes_de_squeeze(eps, {"X": date(2026, 10, 16)}) == {}
+    reopened = closed + [_short_rec(date(2026, 10, 23), 100.0),
+                         _short_rec(date(2026, 10, 26), 130.0)]
+    eps = limites.episodios_de_squeeze(reopened, NAME_CFG)
+    assert [e.data_stop for e in eps] == [date(2026, 10, 13), date(2026, 10, 26)]
+    assert limites.acoes_de_squeeze(eps, {"X": date(2026, 10, 16)})["X"]["veto_compra"]
+
+
+def test_squeeze_reviews_come_from_the_audit_chain():
+    """Revisão humana na trilha: o registro-base é o último registro diário ancorado antes dela."""
+    from types import SimpleNamespace
+
+    from cdp.workflow.track_record import DAILY_RECORD_EVENT
+
+    def ev(kind, h="", summary=""):
+        return SimpleNamespace(event_type=kind, payload_hash=h, summary=summary)
+
+    events = [ev(DAILY_RECORD_EVENT, "h1"), ev(limites.SQUEEZE_REVIEW_EVENT, summary=(
+        limites.SQUEEZE_REVIEW_SUMMARY.format(emissor="X", motivo="revisado pelo gestor"))),
+        ev(DAILY_RECORD_EVENT, "h2"),
+        ev(limites.SQUEEZE_REVIEW_EVENT, summary="Stop de squeeze revisado por humano [Y]: ok")]
+    out = limites.revisoes_de_squeeze(events, {"h1": date(2026, 10, 15),
+                                               "h2": date(2026, 10, 16)})
+    assert out == {"X": date(2026, 10, 15), "Y": date(2026, 10, 16)}
+    assert limites.revisoes_de_squeeze(events[1:2], {}) == {}   # sem registro: nada revisado
+
+
 def test_escalation_requires_two_stops_in_five_sessions():
     sessions = [date(2026, 10, d) for d in (12, 13, 14, 15, 16, 19, 20)]
     one = {"A": [date(2026, 10, 19)]}
@@ -372,6 +462,28 @@ def test_serie_idio_three_measures():
     assert out["realizada_63d"][0] is None and out["realizada_63d"][-1] == pytest.approx(0.9)
     assert out["sem_modelo_63d"][-1] is None or 0.0 <= out["sem_modelo_63d"][-1] <= 1.0
     assert idio.serie_idio([], md, CFG)["datas"] == []
+
+
+def test_model_free_idio_is_unbiased_under_the_null():
+    """Fundo sem exposição aos 11 regressores: o 1 − R² bruto ficaria perto de 1 − k/(n − 1)
+    (≈ 82% com n = 63, abaixo do piso só por construção); o ajustado fica perto de 100%, e o
+    alerta (piso menos a margem de 95%) quase nunca dispara. Sem 30 graus de liberdade, ausente."""
+    rng = np.random.default_rng(7)
+    k = len(idio.REGRESSORES_SEM_MODELO)
+    vals = []
+    for _ in range(300):
+        X = pd.DataFrame(rng.standard_normal((63, k)) * 0.01,
+                         columns=list(idio.REGRESSORES_SEM_MODELO))
+        y = pd.Series(rng.standard_normal(63) * 0.003)
+        vals.append(idio._one_minus_r2(y, X))
+    v = np.array(vals)
+    assert v.mean() > 0.93 and (v >= 0).all() and (v <= 1).all()
+    band = idio.banda_sem_modelo(63, k)
+    assert band == pytest.approx(0.0824, abs=2e-3)
+    assert (v < 0.85 - idio.Z_BANDA_SEM_MODELO * band).mean() < 0.02
+    X = pd.DataFrame(rng.standard_normal((41, k)), columns=list(idio.REGRESSORES_SEM_MODELO))
+    assert math.isnan(idio._one_minus_r2(pd.Series(rng.standard_normal(41)), X))   # gl = 29
+    assert idio.banda_sem_modelo(41, k) is None
 
 
 # ----------------------------------------------------------------------------- bloco macro

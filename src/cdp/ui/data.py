@@ -62,6 +62,10 @@ COMPONENT_ORDER = ("equity", "factor", "specific", "costs", "borrow", "financing
 PERIOD_OPTIONS = ("Dia", "Semana", "MTD", "YTD", "ITD", "Personalizado")
 LIQUIDITY_BUCKETS = ((1.0, "≤ 1 dia"), (2.0, "1–2 dias"), (3.0, "2–3 dias"), (5.0, "3–5 dias"),
                      (float("inf"), "> 5 dias"))
+#: Faixas com a execução no leilão de fechamento (liquidez em fechamentos).
+LIQUIDITY_BUCKETS_CLOSES = ((1.0, "≤ 1 fechamento"), (2.0, "1–2 fechamentos"),
+                            (3.0, "2–3 fechamentos"), (5.0, "3–5 fechamentos"),
+                            (float("inf"), "> 5 fechamentos"))
 _SKIP_DIRS = frozenset({"raw", "__pycache__", ".git"})
 _PLACEHOLDER_RE = re.compile(r"\{\{\s*fact:([^}\s]+)\s*\}\}")
 _MIND_RE = re.compile(r"mente\s+([\w.-]+)\s*\[IA\]", re.IGNORECASE)
@@ -1213,16 +1217,20 @@ def proposal_comparison(cdp: Proposal, shadow: Proposal) -> pd.DataFrame:
     return pd.DataFrame(rows, columns=["Indicador", "CDP", "Sombra só-quant"])
 
 
-def trades_frame(p: Proposal) -> pd.DataFrame:
+def trades_frame(p: Proposal, cfg: FundConfig | None = None) -> pd.DataFrame:
+    """Ordens da proposta; o prazo de execução vem em fechamentos com a execução no leilão de
+    fechamento (``cfg.execution``) e em dias na regra anterior."""
+    col = "Fechamentos" if fmt.closes_mode(cfg) else "Dias"
+    f = fmt.liq(cfg)
     rows = [{"Emissor": t.issuer_id, "Ticker": t.ticker, "Ação": t.action.value,
              "Ações": t.shares, "Nocional": fmt.usd_mm(t.notional_usd, 2, True),
              "Δ peso": fmt.pct(t.weight_change, 2, True), "% ADTV": fmt.pct(t.pct_adtv),
              "Custo est.": fmt.num(t.est_cost_bps, 1) + " bps" if fmt.is_num(t.est_cost_bps)
              else fmt.NA,
-             "Dias": fmt.days(t.est_days), "Moeda": t.currency}
+             col: f(t.est_days), "Moeda": t.currency}
             for t in sorted(p.trades, key=lambda t: (-abs(t.notional_usd), t.issuer_id))]
     return pd.DataFrame(rows, columns=["Emissor", "Ticker", "Ação", "Ações", "Nocional",
-                                       "Δ peso", "% ADTV", "Custo est.", "Dias", "Moeda"])
+                                       "Δ peso", "% ADTV", "Custo est.", col, "Moeda"])
 
 
 def hedges_frame(p: Proposal) -> pd.DataFrame:
@@ -1253,14 +1261,17 @@ def stress_frame(stress: dict[str, float]) -> pd.DataFrame:
     return df.sort_values(["_na", "value", "Cenário"]).drop(columns="_na").reset_index(drop=True)
 
 
-def liquidity_buckets(positions: Sequence[PositionTarget]) -> pd.DataFrame:
-    """Fatia do gross por faixa de dias para liquidar (dias gravados na proposta)."""
+def liquidity_buckets(positions: Sequence[PositionTarget], cfg: FundConfig | None = None
+                      ) -> pd.DataFrame:
+    """Fatia do gross por faixa de liquidez gravada na proposta: fechamentos com a execução no
+    leilão de fechamento (``cfg.execution``), dias na regra anterior."""
+    buckets = LIQUIDITY_BUCKETS_CLOSES if fmt.closes_mode(cfg) else LIQUIDITY_BUCKETS
     total = sum(abs(float(p.weight)) for p in positions)
-    acc: dict[str, list[float]] = {label: [0.0, 0] for _, label in LIQUIDITY_BUCKETS}
+    acc: dict[str, list[float]] = {label: [0.0, 0] for _, label in buckets}
     acc["n/d"] = [0.0, 0]
     for p in positions:
         d = _finite(p.days_to_liquidate)
-        label = "n/d" if d is None else next(lb for ub, lb in LIQUIDITY_BUCKETS if d <= ub)
+        label = "n/d" if d is None else next(lb for ub, lb in buckets if d <= ub)
         acc[label][0] += abs(float(p.weight))
         acc[label][1] += 1
     rows = [{"Faixa": k, "gross_share": (v[0] / total) if total > 0 else None, "n": int(v[1])}
@@ -1277,6 +1288,7 @@ class SideLiquidity:
     limit: float
     n: int
     n_missing: int
+    closes: bool = False     # unidade: fechamentos (execução no leilão) ou dias
 
     @property
     def status(self) -> fmt.Status:
@@ -1284,8 +1296,9 @@ class SideLiquidity:
         if self.n == 0:
             return fmt.Status(f"{tag}: sem posições", "gray")
         if self.n_missing:
-            return fmt.Status(f"{tag}: {self.n_missing} sem ADTV (n/d)", "orange")
-        st = fmt.max_status(self.max_days, self.limit, fmt.days)
+            return fmt.Status(f"{tag}: {self.n_missing} sem "
+                              f"{'volume' if self.closes else 'ADTV'} (n/d)", "orange")
+        st = fmt.max_status(self.max_days, self.limit, fmt.closes if self.closes else fmt.days)
         return fmt.Status(f"{tag}: {st.label}", st.color)
 
 
@@ -1301,7 +1314,8 @@ def worst_liquidity_status(by_side: dict[str, SideLiquidity]) -> fmt.Status:
 
 def liquidity_by_side(positions: Sequence[PositionTarget], cfg: FundConfig
                       ) -> dict[str, SideLiquidity]:
-    """Máx. de dias para liquidar por lado com o teto de cada lado (long 3 d; short 2 d).
+    """Máx. de dias (ou fechamentos, com a execução no leilão) para liquidar por lado com o
+    teto de cada lado (long 3; short 2).
 
     Um único teto para a carteira inteira esconderia um short acima do limite dos shorts.
     Ausente continua ausente (contado em ``n_missing``), nunca zero.
@@ -1313,7 +1327,7 @@ def liquidity_by_side(positions: Sequence[PositionTarget], cfg: FundConfig
         ps = [p for p in positions if p.side.value == side]
         vals = [v for p in ps if (v := _finite(p.days_to_liquidate)) is not None]
         out[side] = SideLiquidity(side, max(vals) if vals else None, float(lim), len(ps),
-                                  len(ps) - len(vals))
+                                  len(ps) - len(vals), fmt.closes_mode(cfg))
     return out
 
 

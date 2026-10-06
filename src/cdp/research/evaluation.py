@@ -139,8 +139,8 @@ class ViewTracker:
         """Grava os retornos residuais realizados da semana (``NaN`` é ignorado, nunca zero).
 
         ``week`` é a semana em que os sinais foram gravados; ``residual_returns`` são os
-        retornos residuais do período de carteira que COMEÇA nessa segunda-feira (gravados só
-        depois do fim do período).
+        retornos residuais do período de carteira que COMEÇA no fechamento desse dia de montagem
+        (gravados só depois do fim do período).
         """
         rows = []
         for iid, val in sorted(residual_returns.items(), key=lambda kv: str(kv[0])):

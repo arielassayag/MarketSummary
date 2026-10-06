@@ -403,7 +403,8 @@ def test_publish_refuses_an_exclusive_writer_without_the_lock(repos):
     _gate(a, DIARIO, "e-ok", trava=outra)
     (a / "book/w2.json").write_text("{}")
     code, out = ex.publicar(a, DIARIO, "CDP: w", rt=_RT(), env=ENV_PC, execucao="e-ok")
-    assert code == ex.OK and out["push"] and out["arquivos"] == ["book/w2.json"]
+    assert code == ex.OK and out["push"] and out["arquivos"] == ["book/w.json", "book/w2.json"]
+    assert out["anteriores"] == ["book/w.json"]  # a gravação recusada antes sai junto, com a trava
     # operador, explicitamente: sem trava
     (a / "book/v.json").write_text("{}")
     code, out = ex.publicar(a, DIARIO, "CDP: v", rt=_RT(), env=ENV_PC, sem_trava=True,
@@ -444,15 +445,50 @@ def test_risk_publishes_only_its_files_while_a_writer_holds_the_lock(repos):
     assert ex.trava_ler(a)[0]["estado"] == "livre"
 
 
-def test_publish_ignores_files_that_were_already_dirty_at_the_gate(repos):
+def test_shared_task_publishes_only_its_files_and_leftovers_of_its_new_files_folder(repos):
+    """Tarefa compartilhada (risco): o que ESTA execução gravou e o que uma execução anterior da
+    tarefa deixou na pasta só de arquivos novos (``reports/risk/``); a trilha alterada antes do
+    gate (outra execução em andamento neste clone) fica para o escritor exclusivo."""
     _, a, _ = repos
+    (a / "reports/risk/2026-10-08").mkdir(parents=True)
+    (a / "reports/risk/2026-10-08/risco_1603.md").write_text("caiu antes de publicar")
+    (a / "book/audit_log.jsonl").write_text("{}\n{\"semanal\": 1}\n")
+    _gate(a, RISCO, "r1")
+    (a / "reports/risk/2026-10-09").mkdir(parents=True)
+    (a / "reports/risk/2026-10-09/risco_1330.md").write_text("risco")
+    code, out = ex.publicar(a, RISCO, "CDP: risco", rt=_RT(), env=ENV_PC, execucao="r1",
+                            esperar_min=0)
+    assert code == ex.OK and out["push"], out
+    assert out["arquivos"] == ["reports/risk/2026-10-08/risco_1603.md",
+                               "reports/risk/2026-10-09/risco_1330.md"]
+    assert out["anteriores"] == ["reports/risk/2026-10-08/risco_1603.md"]
+    assert _git(a, "status", "--porcelain") == "M book/audit_log.jsonl"
+
+
+def test_exclusive_writer_publishes_what_an_interrupted_run_left_in_the_clone(repos):
+    """Clone persistente (PC): o fechamento grava o registro e a trilha e cai antes de publicar;
+    o reforço retoma (a agenda lê o livro local) e publica tudo junto — senão a trilha publicada
+    citaria um registro que não está no remoto."""
+    _, a, _ = repos
+    (a / "book/track_record").mkdir(parents=True)
+    (a / "book/track_record/2026-10-13.json").write_text("{\"nav\": 1}\n")
+    (a / "book/audit_log.jsonl").write_text("{}\n{\"DAILY_RECORD\": 1}\n")
+    (a / "book/KILL_SWITCH").write_text("retido pelo risco")
     trava = ex.trava_adquirir(a, DIARIO, env=ENV_PC)["id"]
-    (a / "book/de_outra_execucao.json").write_text("{}")
-    _gate(a, DIARIO, "e1", trava=trava)
-    (a / "book/desta.json").write_text("{}")
-    code, out = ex.publicar(a, DIARIO, "CDP: d", rt=_RT(), env=ENV_PC, execucao="e1")
-    assert code == ex.OK and out["arquivos"] == ["book/desta.json"]
-    assert "?? book/de_outra_execucao.json" in _git(a, "status", "--porcelain")
+    _gate(a, DIARIO, "reforco", trava=trava)
+    (a / "reports/daily/2026-10-13").mkdir(parents=True)
+    (a / "reports/daily/2026-10-13/relatorio.md").write_text("relatório")
+    (a / "book/audit_log.jsonl").write_text("{}\n{\"DAILY_RECORD\": 1}\n{\"REPORT\": 1}\n")
+    code, out = ex.publicar(a, DIARIO, "CDP: fechamento 2026-10-13", rt=_RT(), env=ENV_PC,
+                            execucao="reforco")
+    assert code == ex.OK and out["push"], out
+    assert out["arquivos"] == ["book/KILL_SWITCH", "book/audit_log.jsonl",
+                               "book/track_record/2026-10-13.json",
+                               "reports/daily/2026-10-13/relatorio.md"]
+    assert out["anteriores"] == ["book/KILL_SWITCH", "book/track_record/2026-10-13.json"]
+    assert _git(a, "status", "--porcelain") == ""
+    assert "Inclui 2 arquivo(s) gravado(s) por execução anterior" in _git(a, "log", "-1",
+                                                                          "--format=%B")
 
 
 def test_publish_reports_git_failures(repos):

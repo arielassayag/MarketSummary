@@ -637,3 +637,44 @@ def test_close_capacity_check_is_per_leg(env, solved):
         w * 0.5, env["model"], c, env["squeeze"], env["assets"], cfg, NAV, w, False, AS_OF,
         WEEK, env["market_w"], True, model_base=env["base"], kappa_f=1.45)}
     assert red["TRADE_CLOSE_CAPACITY"].passed
+
+
+# ----------------------------------------------------------------------------- robustez
+
+
+def test_min_position_cleanup_never_empties_a_capacity_bound_book(env):
+    """Regressão (demonstração sintética, 08/03/2024): com todos os tetos por nome abaixo da
+    posição mínima (carteira limitada pela capacidade), as passadas de posição mínima zeravam
+    os nomes pequenos, as neutralidades perdiam a contrapartida e a carteira saía vazia. A
+    passada que esvazia a carteira (ou destrói a maior parte da utilidade) é recusada."""
+    cfg = env["active"]
+    cons = _cons(env, cfg)
+    cap = 0.5 * cfg.risk.min_position_weight
+    cons["max_long"] = np.minimum(cons["max_long"], cap)
+    cons["max_short"] = np.minimum(cons["max_short"], cap)
+    res, _ = _opt(env, cfg, cons=cons)
+    w = res.weights
+    assert int((w.abs() > 0).sum()) >= 10
+    assert res.expected_alpha > 0
+    assert any("Passada de posição mínima recusada" in n for n in res.diagnostics.notes)
+    assert abs(float(w.sum())) <= cfg.risk.net_exposure_max_abs + TOL
+
+
+def test_inaccurate_solution_is_accepted_only_when_primal_feasible():
+    """Cadeia de solvers: ``optimal_inaccurate`` com violação primal acima da tolerância passa ao
+    próximo solver; a violação é medida em código (fração do NAV)."""
+    import cvxpy as cp
+
+    from cdp.portfolio.optimizer import (
+        INACCURATE_MAX_VIOLATION,
+        SOLVER_ORDER,
+        _max_violation,
+    )
+
+    assert SOLVER_ORDER[0] == "CLARABEL" and "SCS" in SOLVER_ORDER
+    x = cp.Variable(3)
+    cons = [x <= 1.0, cp.sum(x) == 1.0]
+    x.value = np.array([0.5, 0.5, 0.0])
+    assert _max_violation(cons) == 0.0
+    x.value = np.array([1.0 + 1e-6, 0.0, 0.0])
+    assert _max_violation(cons) > INACCURATE_MAX_VIOLATION

@@ -139,6 +139,19 @@ try {
     }
     $pre = (& uv run python -m cdp rotinas pre --tarefa $Tarefa | Select-Object -Last 1)
     if ($pre -and -not $Seco) {
+        if ($Publicacao -eq "agente" -and -not $SemGate -and $grava -and -not [bool]$gate.exclusiva) {
+            # Registra a execução ANTES do pré-comando (tarefa compartilhada, sem trava): o retrato
+            # que `cdp publicar` compara fica sem o resultado do pré-comando (ex.: o backtest da
+            # calibração), que então sai na publicação. O gate da mente reutiliza esta execução.
+            $regFile = Join-Path $logDir "$run.registro.json"
+            & uv run python -m cdp rotinas gate --tarefa $Tarefa @extra | Out-File -FilePath $regFile -Encoding utf8
+            $rcReg = $LASTEXITCODE
+            $reg = LerJson $regFile
+            if ($rcReg -eq 10) { Log "sem execução: $($reg.motivo)"; exit 0 }
+            elseif ($rcReg -ne 0) { Log "gate com erro de configuração (código $rcReg)"; exit 78 }
+            $env:CDP_EXECUCAO = "$($reg.execucao)"
+            Log "execução $($env:CDP_EXECUCAO) registrada antes do pré-comando (o gate da mente a reutiliza)"
+        }
         if ($pre -like "uv run python -m cdp *") {
             Log "pré-comando: $pre"
             $partes = $pre.Split(" ")

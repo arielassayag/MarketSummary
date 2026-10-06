@@ -128,3 +128,62 @@ uv run ruff check .
 ```
 
 Os testes usam respostas controladas para dependências externas. Testes locais não comprovam disponibilidade futura das APIs ou de uma conta nova.
+
+## CDP — Cabra da Peste
+
+O repositório também abriga o **CDP — Cabra da Peste** (pacote `src/cdp`): uma carteira
+simulada long/short de ações da América Latina (paper trading com preços reais, base em dólar,
+neutra em mercado), conduzida por um agente de IA sob gates determinísticos. Só dados públicos;
+todo número sai de código testado; todo modelo é aberto e auditável; a trilha do livro é
+encadeada por hash. A carteira inaugural é montada em 09/10/2026, no leilão de fechamento.
+
+- **Comece por** [`AGENTS.md`](AGENTS.md) (seção "CDP"): é o manual de qualquer app de IA
+  (Claude Code, Codex, Gemini ou outro) e de qualquer pessoa. Primeiro comando:
+  `uv run python -m cdp estado --formato md`.
+- **Portal público:** https://arielassayag.github.io/MarketSummary/ (carteira, risco,
+  resultados, modelos abertos e dados para download com SHA-256).
+- **Metodologia e operação:** [`docs/cdp/METODOLOGIA.md`](docs/cdp/METODOLOGIA.md),
+  [`docs/cdp/EXECUCAO.md`](docs/cdp/EXECUCAO.md), [`docs/cdp/COBERTURA.md`](docs/cdp/COBERTURA.md),
+  [`docs/cdp/ARQUITETURA.md`](docs/cdp/ARQUITETURA.md).
+- **Auditar e recalcular:** [`docs/cdp/REPRODUZIR.md`](docs/cdp/REPRODUZIR.md). **Rodar a sua
+  cópia:** [`docs/cdp/REPLICAR.md`](docs/cdp/REPLICAR.md). **Agendar as rotinas no app de IA:**
+  [`docs/cdp/AUTOMACAO.md`](docs/cdp/AUTOMACAO.md).
+- Demonstração offline (DADOS SIMULADOS): `uv run python -m cdp demo`. Testes:
+  `uv run pytest tests/cdp -q`.
+
+### Licenças
+
+- **Escopo:** `LICENSE` vale para todo o código do repositório — o CDP (`src/cdp`) e o app
+  Fechamento (`src/fechamento`, `app.py`); `LICENSE-docs` vale só para os textos e conteúdos do
+  CDP, inclusive a parte "CDP" do `AGENTS.md`; os textos do app Fechamento (a parte inicial
+  deste README, `docs/` fora de `docs/cdp/` e o bloco do Fechamento no `AGENTS.md`) não entram
+  na CC BY 4.0.
+- **Código** (programas, scripts, modelos de página e testes): Apache License 2.0 —
+  [`LICENSE`](LICENSE) (texto oficial em inglês, que é o texto juridicamente válido), com os
+  avisos de [`NOTICE`](NOTICE).
+- **Documentação, metodologia e conteúdos do CDP** (textos, roteiros, teses, notas, relatórios
+  e dados derivados): Creative Commons Atribuição 4.0 Internacional (CC BY 4.0) —
+  [`LICENSE-docs`](LICENSE-docs), com o texto legal oficial em português.
+- **Marca reservada:** o nome "CDP — Cabra da Peste", o logotipo e as ilustrações não são
+  licenciados — `docs/cdp/marca/`, os ícones do portal em `site/` e o bloco da marca embutido em
+  `src/cdp/workflow/painel_template.html` (entre os marcadores `>>> marca` e `<<< marca`, gerado
+  por `scripts/cdp_marca.py`). Um espelho não modificado do portal pode manter a marca, sem
+  indexação por buscadores; qualquer outra cópia usa nome e identidade próprios
+  ([`docs/cdp/REPLICAR.md`](docs/cdp/REPLICAR.md)).
+- **Dados de terceiros** (CVM, SEC, B3, bancos centrais, emissores, Yahoo Finance, notícias)
+  seguem os termos de cada fonte.
+
+Copyright 2026 Ariel Assayag.
+
+### Aviso legal
+
+O CDP é uma carteira simulada (paper trading com preços reais), mantida para pesquisa e
+transparência metodológica. Não há oferta, distribuição ou captação de recursos, nem gestão de
+recursos de terceiros: o CDP não é fundo de investimento constituído nos termos da Resolução
+CVM nº 175/2022 nem registrado na CVM, e os termos "fundo", "gestão" e "PL" descrevem apenas a
+carteira simulada. Ratings, preços-alvo e notas por emissor são produzidos automaticamente por
+modelos quantitativos internos de código aberto e por um agente de IA sob regras
+determinísticas, para transparência metodológica; não são elaborados por analista de valores
+mobiliários nos termos da Resolução CVM nº 20/2021 e não consideram objetivos, situação
+financeira ou necessidades de qualquer investidor. Resultados simulados não garantem resultados
+futuros.

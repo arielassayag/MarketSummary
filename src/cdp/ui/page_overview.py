@@ -176,8 +176,8 @@ def render(state: AppState) -> None:
             "Track record ainda não iniciado",
             f"O primeiro registro diário é gravado no fechamento do pregão de execução da "
             f"primeira carteira decidida (inception prevista: "
-            f"{fmt.date_br(state.cfg.fund.inception_date)}, NAV "
-            f"{fmt.usd_mm(state.cfg.fund.inception_nav_usd, 0)}). Os indicadores aparecem "
+            f"{fmt.date_br(state.cfg.fund.inception_date)}, PL inicial "
+            f"{fmt.usd_mm(state.cfg.fund.inception_nav_usd, 1)}). Os indicadores aparecem "
             "aqui assim que o pipeline diário gravar o primeiro `DailyRecord`.")
         left, right = st.columns([3, 2])
         with left:

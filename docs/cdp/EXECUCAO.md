@@ -138,6 +138,11 @@ definido).
 - Ordem por linha = ações-alvo da decisão − ações detidas; execução =
   `sinal × min(|ordem|, ⌊capacidade / preço⌋)`, ao **fechamento oficial do próprio pregão** —
   nunca a um preço defasado, nunca ao preço de outra linha.
+- Ações-alvo arredondadas à ação inteira. Na B3 a ordem é dividida em lote padrão (múltiplos de
+  100 ações, no código da linha) e mercado fracionário (1 a 99 ações, código com sufixo `F`,
+  ex.: `PETR4F`) — `cdp.portfolio.trades.order_legs`; a posição é uma só, marcada ao fechamento
+  oficial da linha. Com PL de US$ 1,0 mi, arredondar ao lote de 100 distorceria posições pequenas
+  em até meio lote (até ~US$ 640 numa posição mínima de US$ 2 mil).
 - Ordens abaixo de 0,05% do NAV (`min_trade_weight`) não são enviadas, salvo o encerramento de
   uma posição.
 - Ordem posterior ao corte de ordens do mercado não executa.

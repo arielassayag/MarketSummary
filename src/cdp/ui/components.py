@@ -76,7 +76,7 @@ def header(state: AppState) -> None:
                f"de aprovação). Mente da semana: **{fmt.escape_md(mind) or 'n/d'}** · "
                f"vol-alvo {fmt.pct(cfg.risk.vol_target_annual, 0)} (banda "
                f"{fmt.pct(cfg.risk.vol_band_min, 0)}–{fmt.pct(cfg.risk.vol_band_max, 0)}) · "
-               f"NAV inicial {fmt.usd_mm(cfg.fund.inception_nav_usd, 0)}.")
+               f"PL inicial {fmt.usd_mm(cfg.fund.inception_nav_usd, 1)}.")
 
 
 def integrity_banner(state: AppState) -> None:

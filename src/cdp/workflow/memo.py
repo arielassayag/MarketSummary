@@ -32,6 +32,7 @@ from ..contracts import (
     ResearchPack,
     Severity,
     Side,
+    Trade,
     ViewSource,
 )
 from .approval import co_sign_reasons
@@ -89,8 +90,15 @@ def fmt_pct(x: float | None, digits: int = 2, signed: bool = False) -> str:
 
 
 def fmt_usd_mm(x: float | None, digits: int = 2, signed: bool = False) -> str:
-    """Valor em USD como milhões pt-BR (``1_500_000`` ⇒ ``USD 1,50 mm``); ausente ⇒ ``n/d``."""
-    return f"USD {_br(float(x) / 1e6, digits, signed)} mm" if _finite(x) else NA
+    """Valor em USD como milhões pt-BR (``1_500_000`` ⇒ ``USD 1,50 mm``); abaixo de US$ 1 mi, em
+    milhares (``32_830`` ⇒ ``USD 32,8 mil``: com PL pequeno, posições e P&L não viram
+    ``USD 0,03 mm``); ausente ⇒ ``n/d``."""
+    if not _finite(x):
+        return NA
+    v = float(x)
+    if 0 < abs(v) < 1e6:
+        return f"USD {_br(v / 1e3, 1, signed)} mil"
+    return f"USD {_br(v / 1e6, digits, signed)} mm"
 
 
 def fmt_usd(x: float | None, digits: int = 0, signed: bool = False) -> str:
@@ -506,11 +514,28 @@ def _section_trades(proposal: Proposal) -> list[str]:
         ["Maior % do ADTV", fmt_pct(max(pct_adtv), 1) if pct_adtv else NA],
         ["Maior prazo estimado de execução", fmt_days(max(days)) if days else NA],
     ]
+    odd = _odd_lot_orders(trades)
+    if odd is not None:
+        rows.append(["Ordens na B3 com perna no fracionário (sufixo F)",
+                     f"{odd[0]} de {odd[1]}"])
     out += _table(["Item", "Valor"], rows) + [""]
     if missing:
         out += [f"_{missing} ordem(ns) sem estimativa de custo — excluídas da soma de custos "
                 "(não tratadas como custo zero)._", ""]
     return out
+
+
+def _odd_lot_orders(trades: list[Trade]) -> tuple[int, int] | None:
+    """(ordens com perna no mercado fracionário, ordens em linhas com fracionário); ``None`` sem
+    ordem em mercado com livro fracionário (B3)."""
+    from ..portfolio.trades import odd_lot_ticker, order_legs
+
+    eligible = [t for t in trades if odd_lot_ticker(t.ticker) is not None]
+    if not eligible:
+        return None
+    n = sum(1 for t in eligible if t.shares
+            and any(tk != t.ticker for tk, _ in order_legs(t.ticker, int(t.shares))))
+    return n, len(eligible)
 
 
 def _section_research(pack: ResearchPack | None, fb: FactBook | None) -> list[str]:

@@ -2,8 +2,15 @@
 
 - A carteira é otimizada por EMISSOR; aqui cada peso vira uma posição numa linha negociável:
   long ⇒ ``long_ticker`` (linha de maior liquidez); short ⇒ ``short_ticker`` (linha alugável).
-- Quantidades em ações são arredondadas ao lote padrão do mercado (B3: 100; demais: 1) e são
-  **assinadas** (negativas para short). Preço/câmbio ausentes ⇒ quantidade ``None`` (nunca 0).
+- Quantidades em ações são arredondadas ao menor incremento negociável da linha
+  (:func:`share_increment`) e são **assinadas** (negativas para short). Na B3 o incremento é 1
+  ação: o lote padrão (100) negocia no código da linha e o resto (1–99) no mercado fracionário,
+  código com sufixo ``F`` (``PETR4`` → ``PETR4F``; :func:`order_legs`). Com PL pequeno, um lote
+  de 100 ações vale da ordem da posição mínima do mandato (``risk.min_position_weight`` × NAV) e
+  arredondar ao lote distorceria o peso em até meio lote. EUA e demais mercados: 1 ação. A
+  posição é uma só (a ação do fracionário é a mesma); booking e marcação seguem por
+  ``execution_ticker``, ao fechamento oficial da linha.
+  Preço/câmbio ausentes ⇒ quantidade ``None`` (nunca 0).
 - Ordens comparam alvo × posição atual por TICKER: troca de linha de execução fecha a linha
   antiga e abre a nova.
 - Hedge cambial: exposição econômica por moeda "de origem" do emissor (ADRs também carregam
@@ -32,7 +39,12 @@ from ..universe import listing_market
 from .execucao import fechamentos_necessarios
 
 LOT_SIZE: dict[str, int] = {"BR": 100, "MX": 1, "CL": 1, "CO": 1, "PE": 1, "AR": 1, "US": 1}
+"""Lote padrão do mercado de listagem (B3: 100 ações no mercado à vista de lote padrão)."""
 DEFAULT_LOT = 1
+ODD_LOT_SUFFIX: dict[str, str] = {"BR": "F"}
+"""Mercados com livro de lote fracionário e o sufixo do código de negociação (B3: 1 a 99 ações,
+``PETR4F``; mesma ação da linha). Nesses mercados a quantidade-alvo é arredondada a 1 ação e a
+ordem é dividida em lote padrão + fracionário (:func:`order_legs`)."""
 DEFAULT_PARTICIPATION = LiquiditySection().participation_rate
 WEIGHT_EPS = 1e-9
 
@@ -54,6 +66,44 @@ _ACTION_ORDER = {TradeAction.SELL: 0, TradeAction.COVER: 1, TradeAction.BUY: 2,
 def lot_size(ticker: str) -> int:
     """Lote padrão do mercado de listagem do ticker (B3 = 100; demais = 1)."""
     return LOT_SIZE.get(listing_market(ticker), DEFAULT_LOT)
+
+
+def share_increment(ticker: str) -> int:
+    """Menor quantidade negociável da linha: 1 ação onde há mercado fracionário (B3) ou o lote
+    padrão é 1; nos demais casos, o lote padrão."""
+    market = listing_market(ticker)
+    return 1 if market in ODD_LOT_SUFFIX else LOT_SIZE.get(market, DEFAULT_LOT)
+
+
+def odd_lot_ticker(ticker: str) -> str | None:
+    """Código do mercado fracionário da linha (``PETR4.SA`` → ``PETR4F.SA``); ``None`` se o
+    mercado não tem livro fracionário."""
+    suffix = ODD_LOT_SUFFIX.get(listing_market(ticker))
+    if suffix is None:
+        return None
+    base, dot, exchange = ticker.partition(".")
+    return f"{base}{suffix}{dot}{exchange}"
+
+
+def order_legs(ticker: str, shares: int) -> list[tuple[str, int]]:
+    """Pernas de execução de uma ordem de ``shares`` ações (o sinal é preservado): múltiplos do
+    lote padrão no código da linha e o resto no mercado fracionário (B3: ``1.234`` ações de
+    ``PETR4.SA`` ⇒ ``[("PETR4.SA", 1200), ("PETR4F.SA", 34)]``). Sem livro fracionário (ou lote
+    1), uma única perna; ordem zero, nenhuma."""
+    q = int(shares)
+    if q == 0:
+        return []
+    lot = lot_size(ticker)
+    odd_ticker = odd_lot_ticker(ticker)
+    if odd_ticker is None or lot <= 1:
+        return [(ticker, q)]
+    sign = 1 if q > 0 else -1
+    round_part = (abs(q) // lot) * lot
+    odd_part = abs(q) - round_part
+    legs = [(ticker, sign * round_part)] if round_part else []
+    if odd_part:
+        legs.append((odd_ticker, sign * odd_part))
+    return legs
 
 
 def round_to_lot(quantity: float, lot: int) -> int:
@@ -158,7 +208,7 @@ def build_positions(
         rate = 1.0 if currency == "USD" else _opt(fx, currency)
         shares = None
         if price is not None and price > 0 and rate is not None and rate > 0:
-            shares = round_to_lot(notional / (price * rate), lot_size(ticker))
+            shares = round_to_lot(notional / (price * rate), share_increment(ticker))
 
         adtv = _opt(srow, f"adtv_{leg}_usd") if not srow.empty else None
         if adtv is None and not lrow.empty:

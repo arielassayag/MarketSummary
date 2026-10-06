@@ -1,6 +1,6 @@
 # LatAm L/S — Arquitetura do Gestor de Carteira com IA
 
-> Fundo long/short de ações latino-americanas, base USD, capital inicial USD 100 milhões,
+> Fundo long/short de ações latino-americanas, base USD, PL inicial de US$ 1,0 mi,
 > **net neutral**, volatilidade-alvo ex-ante de **5% a.a. (banda 3%–7%)**, rebalanceamento
 > **semanal (segunda-feira)** com decisão final do gestor humano.
 

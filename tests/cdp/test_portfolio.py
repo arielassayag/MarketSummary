@@ -49,7 +49,10 @@ from cdp.portfolio.trades import (
     build_trades,
     fx_hedges,
     lot_size,
+    odd_lot_ticker,
+    order_legs,
     round_to_lot,
+    share_increment,
 )
 from cdp.risk.types import STYLE_FACTORS, RiskModel, country_factor, sector_factor
 
@@ -705,6 +708,55 @@ def test_round_to_lot_and_lot_size() -> None:
     assert round_to_lot(49.0, 100) == 0
 
 
+def test_share_increment_uses_b3_odd_lot_market() -> None:
+    """B3: lote padrão de 100 ações, mas incremento de 1 ação via mercado fracionário (código
+    com sufixo F); EUA e demais mercados: 1 ação."""
+    assert share_increment("PETR4.SA") == 1 and lot_size("PETR4.SA") == 100
+    assert share_increment("MELI") == 1 and share_increment("WALMEX.MX") == 1
+    assert odd_lot_ticker("PETR4.SA") == "PETR4F.SA"
+    assert odd_lot_ticker("ALUP11.SA") == "ALUP11F.SA"
+    assert odd_lot_ticker("MELI") is None and odd_lot_ticker("WALMEX.MX") is None
+
+
+def test_order_legs_split_round_and_odd_lots() -> None:
+    assert order_legs("PETR4.SA", 1234) == [("PETR4.SA", 1200), ("PETR4F.SA", 34)]
+    assert order_legs("PETR4.SA", -1234) == [("PETR4.SA", -1200), ("PETR4F.SA", -34)]
+    assert order_legs("PETR4.SA", 1200) == [("PETR4.SA", 1200)]
+    assert order_legs("PETR4.SA", 99) == [("PETR4F.SA", 99)]
+    assert order_legs("PETR4.SA", 0) == []
+    assert order_legs("MELI", -3) == [("MELI", -3)]
+    for q in (1, 99, 100, 101, 12345, -7, -250):
+        legs = order_legs("VALE3.SA", q)
+        assert sum(n for _, n in legs) == q                      # nada se perde na divisão
+        assert all(n * q > 0 for _, n in legs)                   # sinal preservado
+        assert all(abs(n) % 100 == 0 for tk, n in legs if tk == "VALE3.SA")
+        assert all(abs(n) < 100 for tk, n in legs if tk == "VALE3F.SA")
+
+
+def test_build_positions_small_nav_sizes_b3_to_the_share() -> None:
+    """PL pequeno: um lote de 100 ações de uma linha B3 cara vale mais que a posição; o lote
+    padrão zeraria (ou dobraria) o peso, o fracionário acerta à ação."""
+    nav = 1_000_000.0
+    w = 0.002                                     # posição mínima do mandato: US$ 2 mil
+    price_brl, brl_usd = 300.0, 0.18              # 100 ações ≈ US$ 5,4 mil > US$ 2 mil
+    sides = pd.DataFrame({"long_ticker": ["HIGH3.SA"], "long_line_type": ["LOCAL"],
+                          "long_currency": ["BRL"], "adtv_long_usd": [20e6]},
+                         index=pd.Index(["BR_HIGH"], name="issuer_id"))
+    lines = pd.DataFrame({"line_type": ["LOCAL"], "currency": ["BRL"],
+                          "last_price_local": [price_brl], "adtv_usd": [20e6]},
+                         index=["HIGH3.SA"])
+    assets = pd.DataFrame({"issuer_name": ["High"], "country": ["BR"], "sector": ["Utilities"],
+                           "primary_ticker": ["HIGH3.SA"]},
+                          index=pd.Index(["BR_HIGH"], name="issuer_id"))
+    (t,) = build_positions(pd.Series({"BR_HIGH": w}), sides, lines, assets, None, None, None,
+                           None, None, None, nav, pd.Series({"BRL": brl_usd}))
+    px_usd = price_brl * brl_usd
+    assert t.shares == round(w * nav / px_usd) == 37
+    assert abs(t.shares * px_usd / t.notional_usd - 1) <= px_usd / 2 / t.notional_usd
+    assert round_to_lot(w * nav / px_usd, lot_size("HIGH3.SA")) == 0  # o lote padrão zeraria
+    assert order_legs(t.execution_ticker, t.shares) == [("HIGH3F.SA", 37)]
+
+
 def test_build_positions_lots_lines_and_metadata(env: Env, targets, inception) -> None:
     res, _ = inception
     assert len(targets) == int((res.weights != 0).sum())
@@ -721,10 +773,9 @@ def test_build_positions_lots_lines_and_metadata(env: Env, targets, inception) -
         assert np.sign(t.shares) == np.sign(t.weight)
         line = env.panel.lines.loc[t.execution_ticker]
         fx = 1.0 if t.currency == "USD" else float(env.md.fx[t.currency].iloc[-1])
-        lot = 100 if t.execution_ticker.endswith(".SA") else 1
-        assert t.shares % lot == 0
+        step = 1  # B3: fracionário (1 ação); EUA e demais mercados: 1 ação
         assert abs(t.shares * line["last_price_local"] * fx - t.notional_usd) <= (
-            lot * line["last_price_local"] * fx / 2 + 1e-6)
+            step * line["last_price_local"] * fx / 2 + 1e-6)
         assert t.pct_adtv == pytest.approx(abs(t.notional_usd) / t.adtv_usd)
         assert t.days_to_liquidate == pytest.approx(t.pct_adtv / 0.20)
         if t.side == Side.SHORT:

@@ -816,6 +816,21 @@ def test_memo_blocked_and_real_data():
     assert "SUBSTITUÍDA" in memo2
 
 
+def test_memo_counts_b3_orders_with_odd_lot_leg():
+    """Ordens na B3 fora do múltiplo de 100 ações têm perna no fracionário (sufixo F)."""
+    label = "Ordens na B3 com perna no fracionário (sufixo F)"
+    assert label not in render_memo(make_proposal())  # sem linha B3: linha omitida
+    b3 = [Trade(issuer_id="SIM001", ticker="AAAA3.SA", action=TradeAction.BUY, shares=1234,
+                notional_usd=12_340.0, weight_change=0.01234, est_cost_bps=10.0,
+                currency="BRL"),
+          Trade(issuer_id="SIM013", ticker="BBBB4.SA", action=TradeAction.SHORT, shares=500,
+                notional_usd=5_000.0, weight_change=-0.005, est_cost_bps=10.0, currency="BRL"),
+          Trade(issuer_id="SIM002", ticker="T002", action=TradeAction.BUY, shares=7,
+                notional_usd=7_000.0, weight_change=0.007, est_cost_bps=10.0, currency="USD")]
+    memo = render_memo(make_proposal().model_copy(update={"trades": b3}))
+    assert f"| {label} | 1 de 2 |" in memo
+
+
 def test_number_formatting_helpers():
     assert fmt_usd(1_234_567.8) == "USD 1.234.568"
     assert fmt_pct(0.0512) == "5,12%"
@@ -823,6 +838,10 @@ def test_number_formatting_helpers():
     assert fmt_pct(0.01, signed=True) == "+1,00%"
     assert fmt_usd_mm(1_500_000) == "USD 1,50 mm"
     assert fmt_usd_mm(1_234_567_890) == "USD 1.234,57 mm"
+    assert fmt_usd_mm(1_000_000, 1) == "USD 1,0 mm"          # PL inicial do mandato
+    assert fmt_usd_mm(32_830) == "USD 32,8 mil"              # posição com PL pequeno
+    assert fmt_usd_mm(-1_234.5, 3, signed=True) == "USD -1,2 mil"
+    assert fmt_usd_mm(1_500, signed=True) == "USD +1,5 mil"
     assert fmt_pct(None) == "n/d" and fmt_pct(float("nan")) == "n/d"
     assert fmt_usd_mm(float("inf")) == "n/d"
 

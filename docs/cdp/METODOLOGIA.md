@@ -7,7 +7,8 @@
 
 ## 1. Mandato
 
-- Fundo long/short de ações da América Latina, base **USD**, capital inicial **US$ 100 milhões**.
+- Fundo long/short de ações da América Latina, base **USD**, PL inicial de **US$ 1,0 mi**
+  (`fund.inception_nav_usd`).
 - **Net neutral** (|Σw| ≤ 1% do NAV) e **beta neutro** (|β| ≤ 0,05) contra o mercado LatAm.
 - **Volatilidade-alvo ex-ante de 5% a.a.**, banda permitida **3%–7%**; enquanto o track record tiver
   menos de 26 semanas, a meta efetiva é dividida pelo viés a priori de 1,10 (carteiras otimizadas

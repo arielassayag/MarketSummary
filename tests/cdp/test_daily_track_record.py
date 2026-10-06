@@ -73,12 +73,15 @@ from cdp.workflow.track_record import (
     write_exclusive,
 )
 
-CFG = FundConfig().with_overrides({"risk_model": {"history_days": 250}})
+NAV0 = 100_000_000.0
+# Mandato explícito do cenário (PL inicial fixado aqui, não herdado do padrão do código): as
+# propostas montadas à mão abaixo usam NAV0 como NAV de referência.
+CFG = FundConfig().with_overrides({"risk_model": {"history_days": 250},
+                                   "fund": {"inception_nav_usd": NAV0}})
 START, END = date(2025, 1, 2), date(2026, 10, 16)
 W1, W2 = date(2026, 10, 5), date(2026, 10, 13)  # 12/10 é feriado na B3: semana 2 começa na terça
 BLANK_DAY = date(2026, 10, 7)
 BLANK_TICKER = "SBR02.SA"
-NAV0 = 100_000_000.0
 TOL = 1e-6
 
 

@@ -76,7 +76,7 @@ class FundSection(_Frozen):
     name: str = "CDP — Cabra da Peste"
     base_currency: Literal["USD"] = "USD"
     inception_date: date = date(2026, 10, 5)
-    inception_nav_usd: float = Field(100_000_000.0, gt=0)
+    inception_nav_usd: float = Field(1_000_000.0, gt=0, description="PL inicial (USD)")
     # MON: primeiro pregão da semana na B3 (legado). LAST_US_SESSION: último pregão da semana na
     # NYSE (exige a seção ``execution``). Campo existente: só ganha membros, nunca sai do dump.
     rebalance_weekday: Literal["MON", "LAST_US_SESSION"] = "MON"

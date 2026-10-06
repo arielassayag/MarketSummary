@@ -7,7 +7,11 @@ vinculado à aprovação passa por estes contratos.
 Convenções:
 - Pesos (``weight``) são frações do NAV em USD; positivo = comprado, negativo = vendido.
 - Taxas e retornos são decimais (0.05 = 5%).
-- Datas de semana (``week``) são sempre a segunda-feira da decisão.
+- Datas de semana (``week``) são a chave do livro: a data de montagem da carteira (na regra
+  legada ``MON``, o primeiro pregão da semana na B3; na regra ``LAST_US_SESSION``, o último pregão
+  da semana na NYSE).
+- Contratos gravados com hash só ganham membros de Enum/Literal (ou validações que não mudam o
+  dump): um campo novo, mesmo com padrão, muda o ``model_dump`` dos artefatos já gravados.
 """
 
 from __future__ import annotations
@@ -122,7 +126,9 @@ class Fact(_Model):
     issuer_id: str | None = None
     name: str
     value: float | None = Field(..., description="None quando o dado está ausente (nunca vira zero)")
-    unit: Literal["pct", "x", "usd", "usd_mm", "days", "score", "bps", "ratio", "z", "count"]
+    # "preco": preço na moeda da linha (a moeda vai no ``formatted``, ex.: "R$ 45,20").
+    unit: Literal["pct", "x", "usd", "usd_mm", "days", "score", "bps", "ratio", "z", "count",
+                  "preco"]
     formatted: str
     formula: str
     inputs: list[str] = Field(default_factory=list)
@@ -236,6 +242,9 @@ class View(_Model):
     note_ids: list[str] = Field(default_factory=list)
 
 
+#: Mentes (harness) aceitas: fonte única das opções ``--mind`` da CLI e da descrição de
+#: ``ResearchPack.mind``. Só ganha membros, e sempre junto com ``research.pm_agent.MindName`` (a
+#: importação de ``pm_agent`` recusa listas divergentes).
 HARNESS_MINDS = ("claude-code", "codex", "api", "demo")
 
 
@@ -243,7 +252,8 @@ class ResearchPack(_Model):
     week: date
     snapshot_id: str
     provider: str
-    mind: str | None = Field(default=None, description="Mente que conduziu a pesquisa: claude-code | codex | api | demo")
+    mind: str | None = Field(default=None, description="Mente que conduziu a pesquisa: "
+                             + " | ".join(HARNESS_MINDS))
     notes: list[ResearchNote] = Field(default_factory=list)
     macro: list[MacroNote] = Field(default_factory=list)
     views: list[View] = Field(default_factory=list)

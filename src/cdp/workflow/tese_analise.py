@@ -13,10 +13,11 @@ via ``{{fact:id}}``. Regras:
   participação fatorial). Divergência ⇒ os valores GRAVADOS prevalecem nos campos gravados e uma
   nota de código registra a diferença (deriva de código ou de configuração).
 - **Configuração da decisão.** O contexto é reconstruído com a configuração vigente no
-  ``decide`` (``book/<semana>/config_decisao.json``, aceita só se o ``config_hash`` conferir com
-  o da proposta). Sem ela e com o mandato recalibrado, o que dependeria da configuração atual
-  (alpha quantitativo, visões, sinais, dimensionamento, grupos e fatores de risco) sai ``None``
-  com nota explícita — nunca é atribuído às visões.
+  ``decide`` (``book/<semana>/config_decisao.json``; na falta dela, o mandato arquivado
+  ``configs/cdp/historico/<config_hash>.json``), aceita só se o hash do JSON bruto conferir com o
+  ``config_hash`` da proposta (:func:`decision_config`). Sem ela e com o mandato recalibrado, o
+  que dependeria da configuração atual (alpha quantitativo, visões, sinais, dimensionamento,
+  grupos e fatores de risco) sai ``None`` com nota explícita — nunca é atribuído às visões.
 - **Decisão do PM verificada.** Visões, diário e postura do PM vêm da saída VERIFICADA que o
   ``decide`` usou (:meth:`Runtime.decision_pm_output`, conferida pelo ``pm_decision_hash``),
   nunca do ``pm_decision.json`` bruto; sem conferência ⇒ ausentes, com nota.
@@ -70,7 +71,7 @@ from ..contracts import Decision, DecisionType, Proposal, ResearchNote, Research
 from ..risk.types import TRADING_DAYS
 
 if TYPE_CHECKING:  # pragma: no cover
-    from ..config import FundConfig
+    from ..config import ConfigDecisao, FundConfig
     from ..research.pm_agent import PMDecisionOutput
     from .runtime import Runtime
     from .weekly import WeekContext
@@ -357,19 +358,25 @@ def _briefing_facts(week_dir: Path) -> dict[str, str]:
             if isinstance(v, dict)}
 
 
-def decision_config(week_dir: Path, config_hash: str) -> FundConfig | None:
-    """Configuração gravada pelo ``decide`` se o seu hash conferir com o da proposta."""
-    from ..config import FundConfig
+def decision_config(week_dir: Path, config_hash: str, *,
+                    historico: Path | None = None) -> ConfigDecisao | None:
+    """Configuração vigente no ``decide`` da semana, autenticada pelo ``config_hash`` da proposta.
+
+    Ordem: ``book/<semana>/config_decisao.json`` → ``configs/cdp/historico/<config_hash>.json``
+    do repositório que contém o livro (:func:`cdp.config.book_historico_dir`; ``historico``
+    substitui a pasta). O hash do JSON BRUTO é conferido ANTES da validação
+    (:func:`cdp.config.load_archived_config`), então campos acrescentados ao esquema depois da
+    decisão não tornam o arquivo "divergente". Quem compara com um hash gravado usa
+    ``ConfigDecisao.hash``; ``None`` se nenhuma fonte confere."""
+    from ..config import archived_config, book_historico_dir, load_archived_config
     from .runtime import DECISION_CONFIG
 
-    path = week_dir / DECISION_CONFIG
-    if not path.is_file():
-        return None
-    try:
-        cfg = FundConfig.model_validate(json.loads(path.read_text(encoding="utf-8")))
-    except (OSError, ValueError):
-        return None
-    return cfg if cfg.config_hash() == config_hash else None
+    found = load_archived_config(week_dir / DECISION_CONFIG, config_hash)
+    if found is not None:
+        return found
+    return archived_config(config_hash,
+                           historico if historico is not None
+                           else book_historico_dir(week_dir.parent))
 
 
 def _load_shadow(week_dir: Path) -> Proposal | None:
@@ -405,7 +412,7 @@ def load_inputs(rt: Runtime, week: date) -> ThesisInputs:
     if rt.cfg.config_hash() != p.config_hash:
         archived = decision_config(wdir, p.config_hash)
         if archived is not None:
-            cfg = archived
+            cfg = archived.cfg
         else:
             drift = True
             notes.append("O mandato foi recalibrado depois da decisão e a configuração da época "

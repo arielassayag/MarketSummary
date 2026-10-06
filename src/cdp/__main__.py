@@ -24,6 +24,18 @@ Rotinas locais (plugin ``cdp`` do Claude Code; ver docs/cdp/LOCAL.md):
     cdp painel [--out-dir D] [--sem-local]  (painel de gestão: index.html + data.json)
     cdp painel --publicado           (registra a página publicada no artifact; só depois de publicar)
 
+Cobertura, notas, relatório semanal e pré-início (contrato registrado; respondem "em
+implementação" com código 2 até a entrega de cada módulo):
+    cdp cobertura run --date D [--emissores IID,IID] [--offline]
+    cdp cobertura verify
+    cdp nota agenda [--date D]
+    cdp nota prepare --issuer IID [--date D]
+    cdp validate-nota --issuer IID --date D
+    cdp nota publish --issuer IID --date D
+    cdp weekly close-report --date D [--publish]
+    cdp validate-weekly-report --date D
+    cdp reinicio [--executar]        (pré-início; sem --executar só mostra o plano, não grava)
+
 Outros: status, verify, demo, backtest, fetch-base, kill-switch.
 """
 
@@ -31,11 +43,14 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from datetime import date, datetime
 from pathlib import Path
 
 from . import SIMULATED_DATA_NOTICE
+from .contracts import HARNESS_MINDS
+from .workflow.painel_artifact import painel_artifact_check  # reexportado (skills/testes)
 
 DEFAULT_BOOK = Path("book")
 DEFAULT_MARKET = Path("data/market")
@@ -46,6 +61,25 @@ DEFAULT_UNIVERSE = Path("data/universe/latam_universe.csv")
 
 def _d(s: str) -> date:
     return date.fromisoformat(s)
+
+
+# Identificador de emissor/instrumento (ex.: BR_VALE, ETF_EWZ, SIM001): também vira caminho
+# (``book/cobertura/notas/<IID>/``), então só maiúsculas, dígitos e "_".
+_IID_RE = re.compile(r"[A-Z][A-Z0-9_]{1,63}")
+
+
+def _iid(s: str) -> str:
+    if not _IID_RE.fullmatch(s):
+        raise argparse.ArgumentTypeError(f"identificador de emissor inválido: {s!r}")
+    return s
+
+
+def _iids(s: str) -> tuple[str, ...]:
+    """Lista ``IID,IID`` (sem vazios nem repetidos) em ordem."""
+    out = tuple(_iid(x.strip()) for x in s.split(","))
+    if len(set(out)) != len(out):
+        raise argparse.ArgumentTypeError(f"emissor repetido em {s!r}")
+    return out
 
 
 def _today_brt() -> date:
@@ -258,80 +292,6 @@ def cmd_risk(args: argparse.Namespace) -> int:
 DEFAULT_PAINEL_DIR = Path("artifacts/painel")
 
 
-def painel_artifact_check(out_dir: Path, *, page_changed: bool,
-                          page_version: str | None = None) -> dict:
-    """O que a mente precisa ler por inteiro antes de publicar, se isso cabe no orçamento e o que
-    publicar.
-
-    A ferramenta Artifact exige a página (``file_path``) em toda publicação: ``index.html`` (a
-    casca, pequena) e ``data.json`` são lidos e publicados sempre; o estilo e o script versionados
-    (``painel-<versão>.css``/``.js``) só quando a página mudou em relação à última PUBLICADA
-    (``page_changed``, ver :func:`cdp.workflow.painel.mark_published`) — os já publicados ficam
-    no artifact. Publicável quando ``data.json`` tem até ``DATA_MAX_BYTES`` bytes e linhas de até
-    ``DATA_MAX_LINE`` caracteres e os arquivos da página até ``PAGE_MAX_BYTES``/``PAGE_MAX_LINE``.
-    Devolve também ``publicar`` (``file_path`` e ``files`` prontos para a ferramenta), a URL de
-    ``ARTIFACT_URL`` (``None`` se o arquivo não existe: não publique), a versão da página
-    registrada como publicada (``pagina_publicada``) e a versão gerada agora (``pagina_atual``):
-    antes de publicar, a skill compara a página viva do artifact com essas duas e não publica se
-    ela for outra (página publicada fora das rotinas)."""
-    from .workflow.painel import ASSET_RE, DATA_NAME, INDEX_NAME, URL_NAME, published_page_sha
-    from .workflow.painel_publicacao import (
-        DATA_MAX_BYTES,
-        DATA_MAX_LINE,
-        PAGE_MAX_BYTES,
-        PAGE_MAX_LINE,
-        max_line,
-    )
-
-    limits = {"dados_bytes": DATA_MAX_BYTES, "dados_linha": DATA_MAX_LINE,
-              "pagina_bytes": PAGE_MAX_BYTES, "pagina_linha": PAGE_MAX_LINE}
-    out = {"publicavel": False, "motivo": "", "arquivos_para_ler": [], "tamanho_dados": None,
-           "linhas_max": None, "linhas_dados": None, "pagina_mudou": bool(page_changed),
-           "pagina_publicada": published_page_sha(out_dir), "pagina_atual": page_version,
-           "url": None, "publicar": None,
-           "limites": limits}
-    url_file = out_dir / URL_NAME
-    try:
-        url = url_file.read_text(encoding="utf-8").strip() if url_file.is_file() else ""
-    except OSError:
-        url = ""
-    out["url"] = url or None
-    assets = sorted(p for p in out_dir.glob("painel-*") if ASSET_RE.fullmatch(p.name))
-    if page_changed and len(assets) != 2:
-        out["motivo"] = (f"estilo e script da página ausentes em {out_dir.as_posix()}: rode "
-                         "`cdp painel` de novo")
-        return out
-    files = [(out_dir / INDEX_NAME, PAGE_MAX_BYTES, PAGE_MAX_LINE)]
-    files += [(a, PAGE_MAX_BYTES, PAGE_MAX_LINE) for a in assets] if page_changed else []
-    files.append((out_dir / DATA_NAME, DATA_MAX_BYTES, DATA_MAX_LINE))
-    problems, longest = [], 0
-    for path, max_bytes, max_len in files:
-        try:
-            raw = path.read_bytes()
-        except OSError as exc:
-            out["motivo"] = f"{path.name} ilegível: {exc.__class__.__name__}"
-            return out
-        text = raw.decode("utf-8", errors="replace")
-        line = max_line(text)
-        longest = max(longest, line)
-        if path.name == DATA_NAME:
-            out["tamanho_dados"] = len(raw)
-            out["linhas_dados"] = text.count("\n")
-        if len(raw) > max_bytes:
-            problems.append(f"{path.name} com {len(raw)} bytes (limite {max_bytes})")
-        if line > max_len:
-            problems.append(f"{path.name} com linha de {line} caracteres (limite {max_len})")
-        out["arquivos_para_ler"].append(path.as_posix())
-    out["linhas_max"] = longest
-    out["publicavel"] = not problems
-    out["motivo"] = ("grande demais para a leitura integral exigida antes de publicar: "
-                     + "; ".join(problems)) if problems else "ok"
-    if not problems:
-        out["publicar"] = {"file_path": (out_dir / INDEX_NAME).as_posix(),
-                           "files": {p.name: p.as_posix() for p, _, _ in files[1:]}}
-    return out
-
-
 def cmd_painel(args: argparse.Namespace) -> int:
     """Grava o painel do artifact (casca ``index.html``, estilo e script versionados,
     ``data.json`` e a cópia local); só lê o livro, a trilha e os relatórios.
@@ -381,6 +341,57 @@ def cmd_backtest(args: argparse.Namespace) -> int:
     return 0
 
 
+# ----------------------------------------------------------------------------- comandos novos
+# Registrados com os argumentos finais (contrato da CLI). Cada handler importa sob demanda a
+# função do módulo dono, que responde "em implementação" (código 2) até a entrega.
+
+
+def cmd_cobertura(args: argparse.Namespace) -> int:
+    """``cdp cobertura run|verify`` (módulo :mod:`cdp.cobertura.cli`)."""
+    from .cobertura import cli
+
+    handler = {"run": cli.cmd_run, "verify": cli.cmd_verify}[args.action]
+    return handler(args)
+
+
+def cmd_nota(args: argparse.Namespace) -> int:
+    """``cdp nota agenda|prepare|publish`` (módulo :mod:`cdp.workflow.notas`)."""
+    from .workflow import notas
+
+    handler = {"agenda": notas.cmd_agenda, "prepare": notas.cmd_prepare,
+               "publish": notas.cmd_publish}[args.action]
+    return handler(args)
+
+
+def cmd_validate_nota(args: argparse.Namespace) -> int:
+    """Valida ``nota.json`` do emissor SEM publicar (``nota publish`` é imutável)."""
+    from .workflow.notas import cmd_validate
+
+    return cmd_validate(args)
+
+
+def cmd_weekly_close_report(args: argparse.Namespace) -> int:
+    """Relatório semanal de resultado (módulo :mod:`cdp.workflow.relatorio_semanal`)."""
+    from .workflow.relatorio_semanal import cmd_close_report
+
+    return cmd_close_report(args)
+
+
+def cmd_validate_weekly_report(args: argparse.Namespace) -> int:
+    """Valida ``reports/semanal/<D>/comentario.json`` SEM publicar."""
+    from .workflow.relatorio_semanal import cmd_validate
+
+    return cmd_validate(args)
+
+
+def cmd_reinicio(args: argparse.Namespace) -> int:
+    """Pré-início do fundo (módulo :mod:`cdp.workflow.reinicio`); sem ``--executar`` só mostra o
+    plano e não grava nada."""
+    from .workflow.reinicio import cmd_reinicio as handler
+
+    return handler(args)
+
+
 # ----------------------------------------------------------------------------- parser
 
 
@@ -409,30 +420,36 @@ def build_parser() -> argparse.ArgumentParser:
     wsub = w.add_subparsers(dest="action", required=True)
     s = wsub.add_parser("prepare", help="coleta todos os dados até agora e gera o briefing")
     s.add_argument("--date", type=_d)
-    s.add_argument("--mind", choices=["claude-code", "codex", "api", "demo"], required=True)
+    s.add_argument("--mind", choices=HARNESS_MINDS, required=True)
     s.add_argument("--force", action="store_true", help="ignora a regra do primeiro pregão")
     s.add_argument("--offline", action="store_true", help="sem barra intradiária/coleta ao vivo")
     s.set_defaults(func=cmd_weekly_prepare)
     s = wsub.add_parser("preview", help="prévia pré-trade do livro (não grava nada)")
     s.add_argument("--week", required=True)
-    s.add_argument("--mind", choices=["claude-code", "codex", "api", "demo"], required=True)
+    s.add_argument("--mind", choices=HARNESS_MINDS, required=True)
     s.add_argument("--out", help="grava a prévia completa (JSON) neste caminho")
     s.set_defaults(func=cmd_weekly_preview)
     s = wsub.add_parser("decide", help="valida, otimiza, aplica gates e decide (autônomo)")
     s.add_argument("--week", required=True)
-    s.add_argument("--mind", choices=["claude-code", "codex", "api", "demo"], required=True)
+    s.add_argument("--mind", choices=HARNESS_MINDS, required=True)
     s.set_defaults(func=cmd_weekly_decide)
+    s = wsub.add_parser("close-report",
+                        help="relatório semanal de resultado após o fechamento do rebalanceamento")
+    s.add_argument("--date", type=_d, required=True, help="pregão do rebalanceamento (AAAA-MM-DD)")
+    s.add_argument("--publish", action="store_true",
+                   help="publica o relatório (comentário da mente ou modelo de código); imutável")
+    s.set_defaults(func=cmd_weekly_close_report)
 
     s = sub.add_parser("validate", help="valida os arquivos escritos pela mente")
     s.add_argument("--week", required=True)
-    s.add_argument("--mind", choices=["claude-code", "codex", "api", "demo"])
+    s.add_argument("--mind", choices=HARNESS_MINDS)
     s.set_defaults(func=cmd_validate)
 
     s = sub.add_parser("daily", help="fechamento diário (close) ou publicação do relatório")
     s.add_argument("action", nargs="?", default="close", choices=["close", "publish"])
     s.add_argument("--date", type=_d)
     s.add_argument("--offline", action="store_true")
-    s.add_argument("--mind", choices=["claude-code", "codex", "api", "demo"])
+    s.add_argument("--mind", choices=HARNESS_MINDS)
     s.set_defaults(func=cmd_daily)
 
     s = sub.add_parser("validate-daily",
@@ -455,6 +472,50 @@ def build_parser() -> argparse.ArgumentParser:
                        help="valida o tese.json da semana sem publicar (publish é imutável)")
     s.add_argument("--week", required=True, help="semana da decisão (AAAA-MM-DD)")
     s.set_defaults(func=cmd_validate_tese)
+
+    s = sub.add_parser("validate-weekly-report",
+                       help="valida o comentario.json do relatório semanal sem publicar")
+    s.add_argument("--date", type=_d, required=True, help="pregão do rebalanceamento (AAAA-MM-DD)")
+    s.set_defaults(func=cmd_validate_weekly_report)
+
+    c = sub.add_parser("cobertura", help="cobertura de ações e ETFs: modelos e preços-alvo de 12 "
+                                         "meses (números só do código)")
+    csub = c.add_subparsers(dest="action", required=True)
+    s = csub.add_parser("run", help="snapshot de cobertura do dia (book/cobertura/<D>/)")
+    s.add_argument("--date", type=_d, required=True, help="pregão de referência (AAAA-MM-DD)")
+    s.add_argument("--emissores", type=_iids, default=None,
+                   help="execução parcial: IID,IID (ex.: após resultados)")
+    s.add_argument("--offline", action="store_true", help="sem coleta ao vivo")
+    s.set_defaults(func=cmd_cobertura)
+    s = csub.add_parser("verify", help="confere o livro da cobertura, manifestos e placar")
+    s.set_defaults(func=cmd_cobertura)
+
+    n = sub.add_parser("nota", help="notas de pesquisa por emissor (números só do código)")
+    nsub = n.add_subparsers(dest="action", required=True)
+    s = nsub.add_parser("agenda", help="fila determinística de notas a escrever")
+    s.add_argument("--date", type=_d, default=None, help="data de referência (padrão: hoje)")
+    s.set_defaults(func=cmd_nota)
+    s = nsub.add_parser("prepare", help="gera fatos e briefing da nota do emissor")
+    s.add_argument("--issuer", type=_iid, required=True, help="emissor (IID)")
+    s.add_argument("--date", type=_d, default=None, help="data da nota (padrão: hoje)")
+    s.set_defaults(func=cmd_nota)
+    s = nsub.add_parser("publish", help="publica a nota do emissor (mente ou modelo); imutável")
+    s.add_argument("--issuer", type=_iid, required=True, help="emissor (IID)")
+    s.add_argument("--date", type=_d, required=True, help="data da nota (AAAA-MM-DD)")
+    s.set_defaults(func=cmd_nota)
+
+    s = sub.add_parser("validate-nota",
+                       help="valida o nota.json do emissor sem publicar (publish é imutável)")
+    s.add_argument("--issuer", type=_iid, required=True, help="emissor (IID)")
+    s.add_argument("--date", type=_d, required=True, help="data da nota (AAAA-MM-DD)")
+    s.set_defaults(func=cmd_validate_nota)
+
+    s = sub.add_parser("reinicio",
+                       help="pré-início: arquiva o ensaio anterior à data de início e abre a trilha "
+                            "nova (uma vez; sem --executar só mostra o plano)")
+    s.add_argument("--executar", action="store_true",
+                   help="executa (sem a opção: simulação, nada é gravado)")
+    s.set_defaults(func=cmd_reinicio)
 
     s = sub.add_parser("verify", help="verifica trilha de auditoria, track record e decisões")
     s.set_defaults(func=cmd_verify)

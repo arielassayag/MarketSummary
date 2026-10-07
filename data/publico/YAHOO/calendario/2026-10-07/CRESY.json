@@ -1,0 +1,97 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2006-11-10",
+   "eps_estimado": 0.06,
+   "eps_reportado": 0.08
+  },
+  {
+   "data": "2007-02-12",
+   "eps_estimado": 0.06,
+   "eps_reportado": 0.05
+  },
+  {
+   "data": "2007-05-14",
+   "eps_estimado": 0.09,
+   "eps_reportado": 0.06
+  },
+  {
+   "data": "2007-07-31",
+   "eps_estimado": 0.09,
+   "eps_reportado": 0.01
+  },
+  {
+   "data": "2009-12-30",
+   "eps_estimado": 0.09,
+   "eps_reportado": null
+  },
+  {
+   "data": "2011-11-11",
+   "eps_estimado": 0.08,
+   "eps_reportado": null
+  },
+  {
+   "data": "2013-02-19",
+   "eps_estimado": 0.18,
+   "eps_reportado": 0.27
+  },
+  {
+   "data": "2013-05-17",
+   "eps_estimado": 0.06,
+   "eps_reportado": 0.07
+  },
+  {
+   "data": "2013-11-11",
+   "eps_estimado": 0.14,
+   "eps_reportado": -0.33
+  },
+  {
+   "data": "2014-02-11",
+   "eps_estimado": -0.09,
+   "eps_reportado": -0.59
+  },
+  {
+   "data": "2014-05-12",
+   "eps_estimado": -1.46,
+   "eps_reportado": -0.01
+  },
+  {
+   "data": "2014-09-08",
+   "eps_estimado": 0.3,
+   "eps_reportado": -1.29
+  },
+  {
+   "data": "2014-11-11",
+   "eps_estimado": -0.28,
+   "eps_reportado": -0.29
+  },
+  {
+   "data": "2015-02-10",
+   "eps_estimado": -0.24,
+   "eps_reportado": -0.5
+  },
+  {
+   "data": "2015-09-07",
+   "eps_estimado": 0.68,
+   "eps_reportado": 1.28
+  },
+  {
+   "data": "2015-11-12",
+   "eps_estimado": 0.16,
+   "eps_reportado": -0.61
+  },
+  {
+   "data": "2026-11-10",
+   "eps_estimado": null,
+   "eps_reportado": null
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "CRESY",
+ "url": "https://finance.yahoo.com/quote/CRESY"
+}

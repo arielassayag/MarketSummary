@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 11.63,
+  "high": 17.0,
+  "low": 14.72,
+  "mean": 15.86,
+  "median": 15.86
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": null,
+   "currency": "USD",
+   "growth": null,
+   "high": null,
+   "low": null,
+   "numberOfAnalysts": null,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 0.162,
+   "currency": "USD",
+   "growth": 0.218,
+   "high": 0.162,
+   "low": 0.162,
+   "numberOfAnalysts": 1.0,
+   "yearAgoEps": 0.133
+  },
+  "0q": {
+   "avg": null,
+   "currency": "USD",
+   "growth": null,
+   "high": null,
+   "low": null,
+   "numberOfAnalysts": null,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": 0.133,
+   "currency": "USD",
+   "growth": -0.2557,
+   "high": 0.133,
+   "low": 0.133,
+   "numberOfAnalysts": 1.0,
+   "yearAgoEps": 0.17869
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "ARS",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 1887318000000,
+   "currency": "ARS",
+   "growth": 0.1902,
+   "high": 1887318000000,
+   "low": 1887318000000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 1585672000000.0
+  },
+  "0q": {
+   "avg": 0,
+   "currency": "ARS",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "0y": {
+   "avg": 1585672000000,
+   "currency": "ARS",
+   "growth": 0.1496,
+   "high": 1585672000000,
+   "low": 1585672000000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 1379363000000.0
+  }
+ },
+ "ticker": "CRESY",
+ "url": "https://finance.yahoo.com/quote/CRESY"
+}

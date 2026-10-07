@@ -1,0 +1,137 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2020-07-28",
+   "eps_estimado": 3.74,
+   "eps_reportado": 1.4
+  },
+  {
+   "data": "2020-10-27",
+   "eps_estimado": 20.71,
+   "eps_reportado": 27.4
+  },
+  {
+   "data": "2021-02-24",
+   "eps_estimado": 50.28,
+   "eps_reportado": 51.7
+  },
+  {
+   "data": "2021-04-29",
+   "eps_estimado": 42.85,
+   "eps_reportado": 44.5
+  },
+  {
+   "data": "2021-07-27",
+   "eps_estimado": 3.74,
+   "eps_reportado": 1.6
+  },
+  {
+   "data": "2021-10-26",
+   "eps_estimado": 27.8,
+   "eps_reportado": 41.6
+  },
+  {
+   "data": "2022-02-22",
+   "eps_estimado": 54.65,
+   "eps_reportado": 75.7
+  },
+  {
+   "data": "2022-04-26",
+   "eps_estimado": 45.22,
+   "eps_reportado": 34.9
+  },
+  {
+   "data": "2022-07-27",
+   "eps_estimado": 22.25,
+   "eps_reportado": 28.26
+  },
+  {
+   "data": "2022-10-25",
+   "eps_estimado": 30.95,
+   "eps_reportado": 37.63
+  },
+  {
+   "data": "2023-01-30",
+   "eps_estimado": 57.13,
+   "eps_reportado": 47.7
+  },
+  {
+   "data": "2023-04-25",
+   "eps_estimado": 52.45,
+   "eps_reportado": 45.8
+  },
+  {
+   "data": "2023-07-28",
+   "eps_estimado": 16.44,
+   "eps_reportado": 13.49
+  },
+  {
+   "data": "2023-10-31",
+   "eps_estimado": 39.27,
+   "eps_reportado": 70.51
+  },
+  {
+   "data": "2024-01-30",
+   "eps_estimado": 58.7,
+   "eps_reportado": 85.3
+  },
+  {
+   "data": "2024-04-30",
+   "eps_estimado": 61.39,
+   "eps_reportado": 78.37
+  },
+  {
+   "data": "2024-07-30",
+   "eps_estimado": 29.07,
+   "eps_reportado": 27.23
+  },
+  {
+   "data": "2024-10-29",
+   "eps_estimado": 41.07,
+   "eps_reportado": 46.42
+  },
+  {
+   "data": "2025-01-28",
+   "eps_estimado": 88.09,
+   "eps_reportado": 104.2
+  },
+  {
+   "data": "2025-04-30",
+   "eps_estimado": 79.01,
+   "eps_reportado": 83.7
+  },
+  {
+   "data": "2025-07-30",
+   "eps_estimado": 36.18,
+   "eps_reportado": 39.3
+  },
+  {
+   "data": "2025-10-29",
+   "eps_estimado": 48.27,
+   "eps_reportado": 60.4
+  },
+  {
+   "data": "2026-01-27",
+   "eps_estimado": 98.57,
+   "eps_reportado": 109.0
+  },
+  {
+   "data": "2026-04-29",
+   "eps_estimado": 88.81,
+   "eps_reportado": 105.0
+  },
+  {
+   "data": "2026-07-29",
+   "eps_estimado": 46.84,
+   "eps_reportado": 39.0
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "ANDINA-B.SN",
+ "url": "https://finance.yahoo.com/quote/ANDINA-B.SN"
+}

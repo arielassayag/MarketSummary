@@ -1,0 +1,13 @@
+# ETFs latino-americanos cobertos (CDP). Composição: arquivos públicos do emissor do ETF
+# (iShares latest-holdings.csv, Global X, B3 carteira do índice). TER: página pública do produto.
+versao: "2026-10.1"
+referencia: ILF
+etfs:
+  - {ticker: ILF, nome: "iShares Latin America 40 ETF", indice: "S&P Latin America 40", emissor: ISHARES, moeda: USD, pais: LATAM, ter: 0.0047, url: "https://www.ishares.com/us/products/239761/ishares-latin-america-40-etf"}
+  - {ticker: EWZ, nome: "iShares MSCI Brazil ETF", indice: "MSCI Brazil 25/50", emissor: ISHARES, moeda: USD, pais: BR, ter: 0.0059, url: "https://www.ishares.com/us/products/239612/ishares-msci-brazil-capped-etf"}
+  - {ticker: EWW, nome: "iShares MSCI Mexico ETF", indice: "MSCI Mexico IMI 25/50", emissor: ISHARES, moeda: USD, pais: MX, ter: 0.0050, url: "https://www.ishares.com/us/products/239670/ishares-msci-mexico-capped-etf"}
+  - {ticker: ECH, nome: "iShares MSCI Chile ETF", indice: "MSCI Chile IMI 25/50", emissor: ISHARES, moeda: USD, pais: CL, ter: 0.0059, url: "https://www.ishares.com/us/products/239618/ishares-msci-chile-capped-etf"}
+  - {ticker: EPU, nome: "iShares MSCI Peru and Global Exposure ETF", indice: "MSCI All Peru Capped", emissor: ISHARES, moeda: USD, pais: PE, ter: 0.0059, url: "https://www.ishares.com/us/products/239606/ishares-msci-all-peru-capped-etf"}
+  - {ticker: COLO, nome: "Global X MSCI Colombia ETF", indice: "MSCI All Colombia Select 25/50", emissor: GLOBALX, moeda: USD, pais: CO, ter: 0.0062, url: "https://www.globalxetfs.com/funds/colo/"}
+  - {ticker: ARGT, nome: "Global X MSCI Argentina ETF", indice: "MSCI All Argentina 25/50", emissor: GLOBALX, moeda: USD, pais: AR, ter: 0.0059, url: "https://www.globalxetfs.com/funds/argt/"}
+  - {ticker: BOVA11.SA, nome: "iShares Ibovespa Fundo de Índice", indice: "Ibovespa", emissor: B3, moeda: BRL, pais: BR, ter: 0.0010, url: "https://www.blackrock.com/br/products/251816/ishares-ibovespa-fundo-de-ndice-fund"}

@@ -1,0 +1,107 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2021-11-08",
+   "eps_estimado": 0.16,
+   "eps_reportado": 0.2
+  },
+  {
+   "data": "2022-02-17",
+   "eps_estimado": 0.46,
+   "eps_reportado": 0.47
+  },
+  {
+   "data": "2022-05-05",
+   "eps_estimado": 0.34,
+   "eps_reportado": 0.17
+  },
+  {
+   "data": "2022-09-02",
+   "eps_estimado": 0.22,
+   "eps_reportado": 0.24
+  },
+  {
+   "data": "2022-11-07",
+   "eps_estimado": 0.42,
+   "eps_reportado": 0.37
+  },
+  {
+   "data": "2023-02-09",
+   "eps_estimado": 0.46,
+   "eps_reportado": 0.42
+  },
+  {
+   "data": "2023-08-14",
+   "eps_estimado": 0.14,
+   "eps_reportado": 0.16
+  },
+  {
+   "data": "2023-11-06",
+   "eps_estimado": 0.28,
+   "eps_reportado": 0.35
+  },
+  {
+   "data": "2024-02-20",
+   "eps_estimado": 0.42,
+   "eps_reportado": 0.43
+  },
+  {
+   "data": "2024-05-08",
+   "eps_estimado": 0.15,
+   "eps_reportado": 0.31
+  },
+  {
+   "data": "2024-08-12",
+   "eps_estimado": 0.09,
+   "eps_reportado": 0.29
+  },
+  {
+   "data": "2024-11-11",
+   "eps_estimado": 0.2,
+   "eps_reportado": 0.64
+  },
+  {
+   "data": "2025-02-24",
+   "eps_estimado": 0.41,
+   "eps_reportado": 0.28
+  },
+  {
+   "data": "2025-05-08",
+   "eps_estimado": 0.28,
+   "eps_reportado": 0.22
+  },
+  {
+   "data": "2025-08-14",
+   "eps_estimado": 0.14,
+   "eps_reportado": 0.21
+  },
+  {
+   "data": "2025-11-13",
+   "eps_estimado": 0.35,
+   "eps_reportado": 0.55
+  },
+  {
+   "data": "2026-03-05",
+   "eps_estimado": 0.3,
+   "eps_reportado": 0.36
+  },
+  {
+   "data": "2026-05-28",
+   "eps_estimado": 0.31,
+   "eps_reportado": 0.46
+  },
+  {
+   "data": "2026-08-13",
+   "eps_estimado": 0.14,
+   "eps_reportado": 0.41
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "TTEN3.SA",
+ "url": "https://finance.yahoo.com/quote/TTEN3.SA"
+}

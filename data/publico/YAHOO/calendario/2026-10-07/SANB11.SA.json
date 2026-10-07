@@ -1,0 +1,137 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2019-07-24",
+   "eps_estimado": 0.94,
+   "eps_reportado": 0.96
+  },
+  {
+   "data": "2019-10-30",
+   "eps_estimado": 0.95,
+   "eps_reportado": 0.97
+  },
+  {
+   "data": "2020-01-29",
+   "eps_estimado": 1.02,
+   "eps_reportado": 0.98
+  },
+  {
+   "data": "2020-04-28",
+   "eps_estimado": 0.93,
+   "eps_reportado": 0.95
+  },
+  {
+   "data": "2020-07-29",
+   "eps_estimado": 0.57,
+   "eps_reportado": 2.27
+  },
+  {
+   "data": "2020-10-27",
+   "eps_estimado": 0.79,
+   "eps_reportado": 1.03
+  },
+  {
+   "data": "2021-02-03",
+   "eps_estimado": 0.97,
+   "eps_reportado": 1.04
+  },
+  {
+   "data": "2021-04-28",
+   "eps_estimado": 1.0,
+   "eps_reportado": 0.91
+  },
+  {
+   "data": "2021-07-28",
+   "eps_estimado": 1.04,
+   "eps_reportado": 1.48
+  },
+  {
+   "data": "2021-10-27",
+   "eps_estimado": 1.08,
+   "eps_reportado": 2.29
+  },
+  {
+   "data": "2022-02-02",
+   "eps_estimado": 1.1,
+   "eps_reportado": 0.46
+  },
+  {
+   "data": "2022-04-26",
+   "eps_estimado": 1.07,
+   "eps_reportado": 0.56
+  },
+  {
+   "data": "2022-08-31",
+   "eps_estimado": 1.07,
+   "eps_reportado": 0.36
+  },
+  {
+   "data": "2022-10-26",
+   "eps_estimado": 1.0,
+   "eps_reportado": 0.28
+  },
+  {
+   "data": "2023-02-28",
+   "eps_estimado": 0.72,
+   "eps_reportado": 2.5
+  },
+  {
+   "data": "2023-04-25",
+   "eps_estimado": 0.51,
+   "eps_reportado": 0.56
+  },
+  {
+   "data": "2023-07-26",
+   "eps_estimado": 0.65,
+   "eps_reportado": 0.6
+  },
+  {
+   "data": "2023-10-25",
+   "eps_estimado": 0.74,
+   "eps_reportado": 0.72
+  },
+  {
+   "data": "2024-02-20",
+   "eps_estimado": 0.75,
+   "eps_reportado": 0.59
+  },
+  {
+   "data": "2025-02-05",
+   "eps_estimado": 0.99,
+   "eps_reportado": 1.03
+  },
+  {
+   "data": "2025-04-30",
+   "eps_estimado": 1.01,
+   "eps_reportado": 1.03
+  },
+  {
+   "data": "2025-07-30",
+   "eps_estimado": 0.97,
+   "eps_reportado": 0.96
+  },
+  {
+   "data": "2026-02-04",
+   "eps_estimado": 1.08,
+   "eps_reportado": 1.1
+  },
+  {
+   "data": "2026-04-29",
+   "eps_estimado": 1.06,
+   "eps_reportado": 1.01
+  },
+  {
+   "data": "2026-07-29",
+   "eps_estimado": 0.96,
+   "eps_reportado": 0.81
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "SANB11.SA",
+ "url": "https://finance.yahoo.com/quote/SANB11.SA"
+}

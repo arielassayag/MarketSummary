@@ -1,0 +1,137 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2020-02-25",
+   "eps_estimado": 11.39,
+   "eps_reportado": 6.33
+  },
+  {
+   "data": "2020-05-12",
+   "eps_estimado": 10.38,
+   "eps_reportado": 11.54
+  },
+  {
+   "data": "2020-08-25",
+   "eps_estimado": -4.14,
+   "eps_reportado": -8.66
+  },
+  {
+   "data": "2020-11-10",
+   "eps_estimado": -0.84,
+   "eps_reportado": -0.97
+  },
+  {
+   "data": "2021-02-23",
+   "eps_estimado": 4.13,
+   "eps_reportado": 4.34
+  },
+  {
+   "data": "2021-05-11",
+   "eps_estimado": 3.71,
+   "eps_reportado": 5.15
+  },
+  {
+   "data": "2021-09-01",
+   "eps_estimado": 3.85,
+   "eps_reportado": 1.39
+  },
+  {
+   "data": "2021-11-10",
+   "eps_estimado": 9.48,
+   "eps_reportado": 10.12
+  },
+  {
+   "data": "2022-03-02",
+   "eps_estimado": 18.84,
+   "eps_reportado": 7.09
+  },
+  {
+   "data": "2022-05-11",
+   "eps_estimado": 12.49,
+   "eps_reportado": 10.86
+  },
+  {
+   "data": "2022-08-31",
+   "eps_estimado": 13.81,
+   "eps_reportado": 7.05
+  },
+  {
+   "data": "2022-11-09",
+   "eps_estimado": 6.8,
+   "eps_reportado": 9.3
+  },
+  {
+   "data": "2023-05-10",
+   "eps_estimado": 26.79,
+   "eps_reportado": 39.07
+  },
+  {
+   "data": "2023-09-02",
+   "eps_estimado": 24.86,
+   "eps_reportado": 85.28
+  },
+  {
+   "data": "2024-02-28",
+   "eps_estimado": 30.44,
+   "eps_reportado": 41.98
+  },
+  {
+   "data": "2024-05-07",
+   "eps_estimado": 28.24,
+   "eps_reportado": 27.62
+  },
+  {
+   "data": "2024-08-27",
+   "eps_estimado": 33.47,
+   "eps_reportado": 61.73
+  },
+  {
+   "data": "2024-11-12",
+   "eps_estimado": 28.45,
+   "eps_reportado": 30.59
+  },
+  {
+   "data": "2025-03-03",
+   "eps_estimado": 35.11,
+   "eps_reportado": 41.25
+  },
+  {
+   "data": "2025-05-06",
+   "eps_estimado": 33.27,
+   "eps_reportado": 32.2
+  },
+  {
+   "data": "2025-08-05",
+   "eps_estimado": 40.35,
+   "eps_reportado": 192.49
+  },
+  {
+   "data": "2025-11-06",
+   "eps_estimado": 35.66,
+   "eps_reportado": 37.16
+  },
+  {
+   "data": "2026-02-26",
+   "eps_estimado": 38.81,
+   "eps_reportado": 39.92
+  },
+  {
+   "data": "2026-05-06",
+   "eps_estimado": 43.4,
+   "eps_reportado": 38.81
+  },
+  {
+   "data": "2026-08-05",
+   "eps_estimado": 45.26,
+   "eps_reportado": 33.52
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "MALLPLAZA.SN",
+ "url": "https://finance.yahoo.com/quote/MALLPLAZA.SN"
+}

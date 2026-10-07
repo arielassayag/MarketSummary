@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 6.35,
+  "high": 12.0,
+  "low": 6.0,
+  "mean": 8.43846,
+  "median": 7.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.37341,
+   "currency": "BRL",
+   "growth": 4.0756,
+   "high": 0.59585,
+   "low": 0.23,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.07357
+  },
+  "+1y": {
+   "avg": 1.71,
+   "currency": "BRL",
+   "growth": 0.1712,
+   "high": 2.12,
+   "low": 1.3,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 1.46
+  },
+  "0q": {
+   "avg": 0.237,
+   "currency": "BRL",
+   "growth": 0.535,
+   "high": 0.2923,
+   "low": 0.15,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.1544
+  },
+  "0y": {
+   "avg": 1.46,
+   "currency": "BRL",
+   "growth": 1.9467999,
+   "high": 1.46,
+   "low": 1.46,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": -1.542
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 2812629670,
+   "currency": "BRL",
+   "growth": -0.074200004,
+   "high": 2986406340,
+   "low": 2638853000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 3038091000
+  },
+  "+1y": {
+   "avg": 11976828270,
+   "currency": "BRL",
+   "growth": 0.0273,
+   "high": 12600000000,
+   "low": 10668410000,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 11658581540
+  },
+  "0q": {
+   "avg": 2859998930,
+   "currency": "BRL",
+   "growth": -0.0056,
+   "high": 3016000000,
+   "low": 2500362000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 2876115000
+  },
+  "0y": {
+   "avg": 11658581540,
+   "currency": "BRL",
+   "growth": 0.069,
+   "high": 11978525870,
+   "low": 10914931000,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 10906236000
+  }
+ },
+ "ticker": "MRVE3.SA",
+ "url": "https://finance.yahoo.com/quote/MRVE3.SA"
+}

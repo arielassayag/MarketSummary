@@ -1,0 +1,97 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2022-08-15",
+   "eps_estimado": null,
+   "eps_reportado": null
+  },
+  {
+   "data": "2022-11-08",
+   "eps_estimado": null,
+   "eps_reportado": -0.01
+  },
+  {
+   "data": "2023-05-09",
+   "eps_estimado": 0.01,
+   "eps_reportado": 0.01
+  },
+  {
+   "data": "2023-08-14",
+   "eps_estimado": 0.02,
+   "eps_reportado": 0.02
+  },
+  {
+   "data": "2023-11-06",
+   "eps_estimado": 0.05,
+   "eps_reportado": 0.05
+  },
+  {
+   "data": "2024-02-07",
+   "eps_estimado": 0.07,
+   "eps_reportado": 0.08
+  },
+  {
+   "data": "2024-05-09",
+   "eps_estimado": 0.08,
+   "eps_reportado": 0.08
+  },
+  {
+   "data": "2024-08-07",
+   "eps_estimado": 0.09,
+   "eps_reportado": 0.08
+  },
+  {
+   "data": "2024-11-14",
+   "eps_estimado": 0.1,
+   "eps_reportado": 0.09
+  },
+  {
+   "data": "2025-02-06",
+   "eps_estimado": 0.11,
+   "eps_reportado": 0.11
+  },
+  {
+   "data": "2025-05-12",
+   "eps_estimado": 0.12,
+   "eps_reportado": 0.12
+  },
+  {
+   "data": "2025-08-06",
+   "eps_estimado": 0.13,
+   "eps_reportado": 0.13
+  },
+  {
+   "data": "2025-11-13",
+   "eps_estimado": 0.15,
+   "eps_reportado": 0.14
+  },
+  {
+   "data": "2026-02-11",
+   "eps_estimado": 0.16,
+   "eps_reportado": 0.16
+  },
+  {
+   "data": "2026-05-07",
+   "eps_estimado": 0.17,
+   "eps_reportado": 0.18
+  },
+  {
+   "data": "2026-08-05",
+   "eps_estimado": 0.19,
+   "eps_reportado": 0.18
+  },
+  {
+   "data": "2026-11-12",
+   "eps_estimado": 0.19,
+   "eps_reportado": null
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "INTR",
+ "url": "https://finance.yahoo.com/quote/INTR"
+}

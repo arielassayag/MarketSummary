@@ -1,0 +1,137 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2020-10-28",
+   "eps_estimado": 0.01,
+   "eps_reportado": -0.1
+  },
+  {
+   "data": "2021-02-11",
+   "eps_estimado": null,
+   "eps_reportado": null
+  },
+  {
+   "data": "2021-04-29",
+   "eps_estimado": 0.02,
+   "eps_reportado": 0.04
+  },
+  {
+   "data": "2021-07-28",
+   "eps_estimado": 0.01,
+   "eps_reportado": 0.01
+  },
+  {
+   "data": "2021-10-28",
+   "eps_estimado": 0.04,
+   "eps_reportado": -0.02
+  },
+  {
+   "data": "2022-02-10",
+   "eps_estimado": 0.07,
+   "eps_reportado": 0.02
+  },
+  {
+   "data": "2022-04-28",
+   "eps_estimado": 0.01,
+   "eps_reportado": 0.01
+  },
+  {
+   "data": "2022-07-28",
+   "eps_estimado": 0.01,
+   "eps_reportado": 0.02
+  },
+  {
+   "data": "2022-10-27",
+   "eps_estimado": 0.02,
+   "eps_reportado": 0.03
+  },
+  {
+   "data": "2023-02-13",
+   "eps_estimado": 0.01,
+   "eps_reportado": -0.01
+  },
+  {
+   "data": "2023-05-02",
+   "eps_estimado": 0.07,
+   "eps_reportado": 0.02
+  },
+  {
+   "data": "2023-07-27",
+   "eps_estimado": 0.01,
+   "eps_reportado": 0.02
+  },
+  {
+   "data": "2023-10-26",
+   "eps_estimado": 0.01,
+   "eps_reportado": 0.01
+  },
+  {
+   "data": "2024-02-08",
+   "eps_estimado": 0.02,
+   "eps_reportado": -0.03
+  },
+  {
+   "data": "2024-04-25",
+   "eps_estimado": 0.01,
+   "eps_reportado": 0.02
+  },
+  {
+   "data": "2024-07-25",
+   "eps_estimado": 0.02,
+   "eps_reportado": 0.02
+  },
+  {
+   "data": "2024-10-28",
+   "eps_estimado": 0.02,
+   "eps_reportado": 0.03
+  },
+  {
+   "data": "2025-02-06",
+   "eps_estimado": 0.03,
+   "eps_reportado": null
+  },
+  {
+   "data": "2025-04-28",
+   "eps_estimado": 0.01,
+   "eps_reportado": 0.05
+  },
+  {
+   "data": "2025-07-24",
+   "eps_estimado": 0.02,
+   "eps_reportado": 0.02
+  },
+  {
+   "data": "2025-10-28",
+   "eps_estimado": 0.02,
+   "eps_reportado": 0.02
+  },
+  {
+   "data": "2026-02-05",
+   "eps_estimado": 0.04,
+   "eps_reportado": -0.02
+  },
+  {
+   "data": "2026-04-23",
+   "eps_estimado": 0.02,
+   "eps_reportado": 0.02
+  },
+  {
+   "data": "2026-07-23",
+   "eps_estimado": 0.03,
+   "eps_reportado": 0.02
+  },
+  {
+   "data": "2026-10-26",
+   "eps_estimado": 0.03,
+   "eps_reportado": null
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "CEMEXCPO.MX",
+ "url": "https://finance.yahoo.com/quote/CEMEXCPO.MX"
+}

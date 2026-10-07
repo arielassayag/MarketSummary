@@ -1,0 +1,48 @@
+{
+ "as_of": "2026-10-07",
+ "distribuicao_ratings": {
+  "Compra": 34,
+  "Em revisão": 30,
+  "Neutro": 134,
+  "Sem preço-alvo": 3,
+  "Venda": 32
+ },
+ "em_maturacao": true,
+ "erro_abs_mediano": null,
+ "exibir_ranking": false,
+ "exibir_taxas": false,
+ "ic_resumo": null,
+ "ic_semanal": [],
+ "metodo": "amostragem semanal dos preços de referência registrados no livro, reescalados por desdobramentos; IC entre snapshots completos consecutivos contra o retorno total em dólar menos a média do grupo país × setor",
+ "n_previsoes": 200,
+ "n_vencidas": 0,
+ "obsoletos": 0,
+ "primeiro_vencimento": "2027-10-07",
+ "referencias_literatura": {
+  "erro_abs": [
+   0.36,
+   0.45
+  ],
+  "tpmet12": [
+   0.24,
+   0.38
+  ],
+  "tpmetany": [
+   0.45,
+   0.64
+  ]
+ },
+ "tempo_ate_alvo_km": [],
+ "tpmet12": {
+  "ic90": null,
+  "k": 0,
+  "n": 0,
+  "taxa": null
+ },
+ "tpmetany": {
+  "ic90": null,
+  "k": 0,
+  "n": 0,
+  "taxa": null
+ }
+}

@@ -1,0 +1,137 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2019-08-13",
+   "eps_estimado": 75.0,
+   "eps_reportado": 28.69
+  },
+  {
+   "data": "2019-11-12",
+   "eps_estimado": 17.36,
+   "eps_reportado": 19.13
+  },
+  {
+   "data": "2020-02-22",
+   "eps_estimado": 137.34,
+   "eps_reportado": 29.59
+  },
+  {
+   "data": "2020-08-05",
+   "eps_estimado": -59.7,
+   "eps_reportado": 11.73
+  },
+  {
+   "data": "2020-11-11",
+   "eps_estimado": 42.21,
+   "eps_reportado": 48.16
+  },
+  {
+   "data": "2021-03-24",
+   "eps_estimado": 89.51,
+   "eps_reportado": 6.07
+  },
+  {
+   "data": "2021-05-10",
+   "eps_estimado": 1.82,
+   "eps_reportado": 48.03
+  },
+  {
+   "data": "2021-08-09",
+   "eps_estimado": 61.78,
+   "eps_reportado": 139.54
+  },
+  {
+   "data": "2021-11-08",
+   "eps_estimado": 96.01,
+   "eps_reportado": 85.01
+  },
+  {
+   "data": "2022-02-18",
+   "eps_estimado": 84.68,
+   "eps_reportado": 95.76
+  },
+  {
+   "data": "2022-08-08",
+   "eps_estimado": 101.71,
+   "eps_reportado": 4.68
+  },
+  {
+   "data": "2022-11-08",
+   "eps_estimado": 83.51,
+   "eps_reportado": 49.54
+  },
+  {
+   "data": "2023-02-21",
+   "eps_estimado": 92.46,
+   "eps_reportado": 49.0
+  },
+  {
+   "data": "2023-05-09",
+   "eps_estimado": 35.46,
+   "eps_reportado": 87.14
+  },
+  {
+   "data": "2023-08-08",
+   "eps_estimado": 31.23,
+   "eps_reportado": 92.27
+  },
+  {
+   "data": "2023-11-08",
+   "eps_estimado": 80.87,
+   "eps_reportado": 195.65
+  },
+  {
+   "data": "2024-02-21",
+   "eps_estimado": 125.85,
+   "eps_reportado": 171.19
+  },
+  {
+   "data": "2024-05-15",
+   "eps_estimado": 105.2,
+   "eps_reportado": 47.38
+  },
+  {
+   "data": "2024-08-09",
+   "eps_estimado": 128.44,
+   "eps_reportado": 85.88
+  },
+  {
+   "data": "2024-11-08",
+   "eps_estimado": 96.37,
+   "eps_reportado": 86.4
+  },
+  {
+   "data": "2025-11-12",
+   "eps_estimado": 107.85,
+   "eps_reportado": 170.83
+  },
+  {
+   "data": "2026-02-19",
+   "eps_estimado": 122.32,
+   "eps_reportado": 17.43
+  },
+  {
+   "data": "2026-05-12",
+   "eps_estimado": 111.72,
+   "eps_reportado": 77.26
+  },
+  {
+   "data": "2026-08-12",
+   "eps_estimado": 117.93,
+   "eps_reportado": 126.7
+  },
+  {
+   "data": "2026-11-12",
+   "eps_estimado": 104.91,
+   "eps_reportado": null
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "CEMARGOS.CL",
+ "url": "https://finance.yahoo.com/quote/CEMARGOS.CL"
+}

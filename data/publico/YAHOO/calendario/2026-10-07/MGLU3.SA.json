@@ -1,0 +1,137 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2020-08-17",
+   "eps_estimado": -0.21,
+   "eps_reportado": -0.09
+  },
+  {
+   "data": "2020-11-09",
+   "eps_estimado": 0.15,
+   "eps_reportado": 0.31
+  },
+  {
+   "data": "2021-03-08",
+   "eps_estimado": 0.3,
+   "eps_reportado": 0.34
+  },
+  {
+   "data": "2021-05-13",
+   "eps_estimado": 0.07,
+   "eps_reportado": 0.12
+  },
+  {
+   "data": "2021-08-12",
+   "eps_estimado": 0.09,
+   "eps_reportado": 0.14
+  },
+  {
+   "data": "2021-11-11",
+   "eps_estimado": 0.05,
+   "eps_reportado": 0.21
+  },
+  {
+   "data": "2022-03-14",
+   "eps_estimado": -0.01,
+   "eps_reportado": 0.12
+  },
+  {
+   "data": "2022-05-16",
+   "eps_estimado": -0.12,
+   "eps_reportado": -0.23
+  },
+  {
+   "data": "2022-08-11",
+   "eps_estimado": -0.14,
+   "eps_reportado": null
+  },
+  {
+   "data": "2022-11-10",
+   "eps_estimado": -0.18,
+   "eps_reportado": -0.19
+  },
+  {
+   "data": "2023-03-10",
+   "eps_estimado": -0.14,
+   "eps_reportado": -0.3
+  },
+  {
+   "data": "2023-06-01",
+   "eps_estimado": -0.28,
+   "eps_reportado": -0.56
+  },
+  {
+   "data": "2023-08-14",
+   "eps_estimado": -0.33,
+   "eps_reportado": -0.43
+  },
+  {
+   "data": "2023-11-13",
+   "eps_estimado": -0.23,
+   "eps_reportado": 0.47
+  },
+  {
+   "data": "2024-05-09",
+   "eps_estimado": 0.04,
+   "eps_reportado": 0.04
+  },
+  {
+   "data": "2024-08-08",
+   "eps_estimado": -0.01,
+   "eps_reportado": 0.03
+  },
+  {
+   "data": "2024-11-07",
+   "eps_estimado": 0.06,
+   "eps_reportado": 0.13
+  },
+  {
+   "data": "2025-03-13",
+   "eps_estimado": 0.22,
+   "eps_reportado": 0.18
+  },
+  {
+   "data": "2025-05-08",
+   "eps_estimado": 0.09,
+   "eps_reportado": 0.01
+  },
+  {
+   "data": "2025-08-07",
+   "eps_estimado": 0.01,
+   "eps_reportado": -0.03
+  },
+  {
+   "data": "2025-11-06",
+   "eps_estimado": 0.04,
+   "eps_reportado": 0.03
+  },
+  {
+   "data": "2026-03-12",
+   "eps_estimado": 0.17,
+   "eps_reportado": 0.16
+  },
+  {
+   "data": "2026-05-07",
+   "eps_estimado": -0.05,
+   "eps_reportado": -0.07
+  },
+  {
+   "data": "2026-08-06",
+   "eps_estimado": -0.03,
+   "eps_reportado": -0.09
+  },
+  {
+   "data": "2026-11-05",
+   "eps_estimado": 0.09,
+   "eps_reportado": null
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "MGLU3.SA",
+ "url": "https://finance.yahoo.com/quote/MGLU3.SA"
+}

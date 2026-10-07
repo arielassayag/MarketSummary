@@ -1,0 +1,357 @@
+{
+  "schema": "cdp.resultado_evidencias/v1",
+  "documentos": [
+    {
+      "issuer_id": "MX_PINFRA",
+      "url": "https://cdn.investorcloud.net/pinfra/InformacionFinanciera/EstadosFinancieros/EEFF_2025.pdf",
+      "sha256": "bd1944d5083343c063288bc55864a9fa1c67b8c5d39f78bc357f2e2f5664b76b",
+      "provas": [
+        {
+          "pagina": 13,
+          "papel": "inclusao_ebit",
+          "ancoras": [
+            "Notas a los estados financieros consolidados",
+            "Infraestructura Portuaria Mexicana",
+            "la utilidad proveniente de dicha venta de acciones se aprecia en los Estados Financieros Consolidados dentro del rubro “Otros ingresos - Neto”",
+            "el 16 de noviembre de 2024",
+            "Terminal Investment Limited Holding S.A.",
+            "venta de la totalidad de las acciones de IPM"
+          ],
+          "data_regex": "El (\\d{1,2}) de ([a-z]+) de (\\d{4}) se cumplieron"
+        },
+        {
+          "pagina": 85,
+          "papel": "operacoes_continuadas",
+          "ancoras": [
+            "32. Activos disponibles para la venta",
+            "no se considera como operación discontinuada",
+            "Infraestructura Portuaria Mexicana"
+          ]
+        }
+      ],
+      "tabelas": [
+        {
+          "pagina": 8,
+          "ancoras": [
+            "Promotora y Operadora de Infraestructura, S. A. B. de C. V. y Subsidiarias",
+            "Estados consolidados de resultados",
+            "Por los años que terminaron el 31 de diciembre de 2025, 2024 y 2023",
+            "(En miles de pesos)"
+          ],
+          "cabecalho": "Notas 2025 2024 2023",
+          "colunas": [
+            {
+              "inicio": "2025-01-01",
+              "fim": "2025-12-31",
+              "freq": "A"
+            },
+            {
+              "inicio": "2024-01-01",
+              "fim": "2024-12-31",
+              "freq": "A"
+            },
+            {
+              "inicio": "2023-01-01",
+              "fim": "2023-12-31",
+              "freq": "A"
+            }
+          ],
+          "moeda": "MXN",
+          "escala": 1000,
+          "itens": [
+            {
+              "item": "receita",
+              "rotulos": [
+                "Concesiones",
+                "Venta de materiales",
+                "Construcción"
+              ],
+              "coeficiente": 1,
+              "fim_busca": "Costo de:"
+            },
+            {
+              "item": "ebit",
+              "rotulos": [
+                "Utilidad de operación"
+              ],
+              "coeficiente": 1
+            },
+            {
+              "item": "lucro_bruto",
+              "rotulos": [
+                "Utilidad bruta"
+              ],
+              "coeficiente": 1
+            },
+            {
+              "item": "despesas_operacionais",
+              "rotulos": [
+                "Gastos de operación 35"
+              ],
+              "coeficiente": 1
+            },
+            {
+              "item": "outros_ingressos",
+              "rotulos": [
+                "Otros ingresos - neto"
+              ],
+              "coeficiente": -1
+            }
+          ],
+          "fim_tabela": "Gastos financieros"
+        },
+        {
+          "pagina": 11,
+          "ancoras": [
+            "Promotora y Operadora de Infraestructura, S. A. B. de C. V. y Subsidiarias",
+            "Estados consolidados de flujos de efectivo",
+            "Por los años que terminaron el 31 de diciembre de 2025, 2024 y 2023",
+            "(En miles de pesos)"
+          ],
+          "cabecalho": "2025 2024 2023",
+          "colunas": [
+            {
+              "inicio": "2025-01-01",
+              "fim": "2025-12-31",
+              "freq": "A"
+            },
+            {
+              "inicio": "2024-01-01",
+              "fim": "2024-12-31",
+              "freq": "A"
+            },
+            {
+              "inicio": "2023-01-01",
+              "fim": "2023-12-31",
+              "freq": "A"
+            }
+          ],
+          "moeda": "MXN",
+          "escala": 1000,
+          "itens": [
+            {
+              "item": "d_a_dfc",
+              "rotulos": [
+                "Depreciación y amortización"
+              ],
+              "coeficiente": 1
+            },
+            {
+              "item": "ganho_alienacao_controle",
+              "rotulos": [
+                "Utilidad en venta de acciones de subsidiarias"
+              ],
+              "coeficiente": -1
+            },
+            {
+              "item": "cfo",
+              "rotulos": [
+                "Flujos netos de efectivo generados por actividades de operación"
+              ],
+              "coeficiente": 1
+            },
+            {
+              "item": "capex",
+              "rotulos": [
+                "Adquisición de inmuebles, maquinaria y equipo y propiedades de inversión",
+                "Inversión en concesiones"
+              ],
+              "coeficiente": -1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "issuer_id": "MX_PINFRA",
+      "url": "https://cdn.investorcloud.net/pinfra/InformacionFinanciera/InformesTrimestrales/2026-07-2T26Reporte.pdf",
+      "sha256": "d104b0ea67d197302dfdd5f3c36284b5c63bb1abe4d509631a310a0339118398",
+      "publicacao": {
+        "pagina": 2,
+        "texto": "Ciudad de México, 23 de julio de 2026.",
+        "disponivel_desde": "2026-07-24T05:59:59+00:00",
+        "tipo": "data_declarada_fim_dia_America_Mexico_City"
+      },
+      "tabelas": [
+        {
+          "pagina": 25,
+          "ancoras": [
+            "Promotora y Operadora de Infraestructura, S.A.B. de C.V.",
+            "Consolidado",
+            "Moneda: MXN",
+            "[310000] Estado de resultados"
+          ],
+          "cabecalho": "Concepto Trimestre Año Actual 2026-04-01 - 2026- 06-30 Acumulado Año Actual 2026-01-01 - 2026- 06-30 Trimestre Año Anterior 2025-04-01 - 2025- 06-30 Acumulado Año Anterior 2025-01-01 - 2025- 06-30",
+          "colunas": [
+            {
+              "inicio": "2026-04-01",
+              "fim": "2026-06-30",
+              "freq": "Q"
+            },
+            {
+              "inicio": "2026-01-01",
+              "fim": "2026-06-30",
+              "freq": "H1"
+            },
+            {
+              "inicio": "2025-04-01",
+              "fim": "2025-06-30",
+              "freq": "Q"
+            },
+            {
+              "inicio": "2025-01-01",
+              "fim": "2025-06-30",
+              "freq": "H1"
+            }
+          ],
+          "moeda": "MXN",
+          "escala": 1,
+          "itens": [
+            {
+              "item": "receita",
+              "rotulos": [
+                "Ingresos"
+              ],
+              "coeficiente": 1
+            },
+            {
+              "item": "ebit",
+              "rotulos": [
+                "Utilidad (pérdida) de operación"
+              ],
+              "coeficiente": 1
+            }
+          ]
+        },
+        {
+          "pagina": 38,
+          "ancoras": [
+            "Promotora y Operadora de Infraestructura, S.A.B. de C.V.",
+            "Consolidado",
+            "Moneda: MXN",
+            "[700003] Datos informativos- Estado de resultados 12 meses"
+          ],
+          "cabecalho": "Concepto Año Actual 2025-07-01 - 2026-06-30 Año Anterior 2024-07-01 - 2025-06-30",
+          "colunas": [
+            {
+              "inicio": "2025-07-01",
+              "fim": "2026-06-30",
+              "freq": "TTM"
+            },
+            {
+              "inicio": "2024-07-01",
+              "fim": "2025-06-30",
+              "freq": "TTM"
+            }
+          ],
+          "moeda": "MXN",
+          "escala": 1,
+          "itens": [
+            {
+              "item": "receita",
+              "rotulos": [
+                "Ingresos"
+              ],
+              "coeficiente": 1
+            },
+            {
+              "item": "ebit",
+              "rotulos": [
+                "Utilidad (pérdida) de operación"
+              ],
+              "coeficiente": 1
+            },
+            {
+              "item": "d_a",
+              "rotulos": [
+                "Depreciación y amortización operativa"
+              ],
+              "coeficiente": 1,
+              "conceito": "depreciacao_amortizacao_operacional"
+            }
+          ]
+        },
+        {
+          "pagina": 28,
+          "ancoras": [
+            "Promotora y Operadora de Infraestructura, S.A.B. de C.V.",
+            "Consolidado",
+            "Moneda: MXN",
+            "[520000] Estado de flujos de efectivo, método indirecto"
+          ],
+          "cabecalho": "Concepto Acumulado Año Actual 2026-01-01 - 2026-06- 30 Acumulado Año Anterior 2025-01-01 - 2025-06- 30",
+          "colunas": [
+            {
+              "inicio": "2026-01-01",
+              "fim": "2026-06-30",
+              "freq": "H1"
+            },
+            {
+              "inicio": "2025-01-01",
+              "fim": "2025-06-30",
+              "freq": "H1"
+            }
+          ],
+          "moeda": "MXN",
+          "escala": 1,
+          "itens": [
+            {
+              "item": "d_a_dfc",
+              "rotulos": [
+                "+ Gastos de depreciación y amortización"
+              ],
+              "coeficiente": 1
+            },
+            {
+              "item": "cfo",
+              "rotulos": [
+                "Flujos de efectivo netos procedentes de (utilizados en) actividades de operación"
+              ],
+              "coeficiente": 1
+            }
+          ],
+          "fim_tabela": "Flujos de efectivo procedentes de (utilizados en) actividades de inversión [sinopsis]"
+        }
+      ]
+    }
+  ],
+  "pontes_subtotal": [
+    {
+      "documento_id": "bd1944d5083343c063288bc55864a9fa1c67b8c5d39f78bc357f2e2f5664b76b",
+      "total": "ebit",
+      "componentes": {
+        "lucro_bruto": 1,
+        "despesas_operacionais": -1,
+        "outros_ingressos": 1
+      }
+    }
+  ],
+  "eventos": [
+    {
+      "issuer_id": "MX_PINFRA",
+      "tipo": "alienacao_controle",
+      "identidade": {
+        "entidade": "Promotora y Operadora de Infraestructura, S.A.B. de C.V.",
+        "objeto": "totalidade das ações Infraestructura Portuaria Mexicana S.A. de C.V.",
+        "contraparte": "Terminal Investment Limited Holding S.A.",
+        "contrato": "2024-11-16"
+      },
+      "medida_item": "ganho_alienacao_controle",
+      "documentos_prova": [
+        "bd1944d5083343c063288bc55864a9fa1c67b8c5d39f78bc357f2e2f5664b76b"
+      ],
+      "papeis_prova": [
+        "inclusao_ebit",
+        "operacoes_continuadas"
+      ],
+      "medida_documentos": [
+        "bd1944d5083343c063288bc55864a9fa1c67b8c5d39f78bc357f2e2f5664b76b"
+      ],
+      "medida_periodo": {
+        "inicio": "2025-01-01",
+        "fim": "2025-12-31",
+        "freq": "A"
+      }
+    }
+  ]
+}

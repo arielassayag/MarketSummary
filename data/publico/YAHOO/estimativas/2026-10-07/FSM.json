@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 10.12,
+  "high": 14.5,
+  "low": 14.5,
+  "mean": 14.5,
+  "median": 14.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.42387,
+   "currency": "USD",
+   "growth": 0.84290004,
+   "high": 0.61161,
+   "low": 0.32,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.23
+  },
+  "+1y": {
+   "avg": 1.71602,
+   "currency": "USD",
+   "growth": 0.23629999,
+   "high": 1.9941,
+   "low": 1.49,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 1.38806
+  },
+  "0q": {
+   "avg": 0.37994,
+   "currency": "USD",
+   "growth": 1.2349,
+   "high": 0.56982,
+   "low": 0.26,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.17
+  },
+  "0y": {
+   "avg": 1.38806,
+   "currency": "USD",
+   "growth": 1.1031,
+   "high": 1.79226,
+   "low": 1.19,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.66
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "USD",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 0,
+   "currency": "USD",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "0q": {
+   "avg": 0,
+   "currency": "USD",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "0y": {
+   "avg": 756600000,
+   "currency": "USD",
+   "growth": -0.2011,
+   "high": 756600000,
+   "low": 756600000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 947059000.0
+  }
+ },
+ "ticker": "FSM",
+ "url": "https://finance.yahoo.com/quote/FSM"
+}

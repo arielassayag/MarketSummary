@@ -1,0 +1,42 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2018-03-07",
+   "eps_estimado": 0.2,
+   "eps_reportado": 0.2
+  },
+  {
+   "data": "2018-05-08",
+   "eps_estimado": 0.22,
+   "eps_reportado": 0.14
+  },
+  {
+   "data": "2025-10-30",
+   "eps_estimado": 0.56,
+   "eps_reportado": 0.6
+  },
+  {
+   "data": "2026-03-04",
+   "eps_estimado": 0.51,
+   "eps_reportado": 0.58
+  },
+  {
+   "data": "2026-05-05",
+   "eps_estimado": 0.28,
+   "eps_reportado": 0.27
+  },
+  {
+   "data": "2026-08-04",
+   "eps_estimado": 0.48,
+   "eps_reportado": 0.46
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "VULC3.SA",
+ "url": "https://finance.yahoo.com/quote/VULC3.SA"
+}

@@ -1,0 +1,17 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2026-08-13",
+   "eps_estimado": 0.59,
+   "eps_reportado": 0.32
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "PASS3.SA",
+ "url": "https://finance.yahoo.com/quote/PASS3.SA"
+}

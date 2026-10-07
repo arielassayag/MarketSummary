@@ -1,0 +1,27 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2026-06-03",
+   "eps_estimado": 1.13,
+   "eps_reportado": 1.31
+  },
+  {
+   "data": "2026-08-24",
+   "eps_estimado": 1.93,
+   "eps_reportado": 2.2
+  },
+  {
+   "data": "2026-11-12",
+   "eps_estimado": 2.05,
+   "eps_reportado": null
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "PICS",
+ "url": "https://finance.yahoo.com/quote/PICS"
+}

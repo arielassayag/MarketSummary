@@ -1,0 +1,137 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2014-07-29",
+   "eps_estimado": 0.02,
+   "eps_reportado": 0.02
+  },
+  {
+   "data": "2014-10-31",
+   "eps_estimado": 0.03,
+   "eps_reportado": 0.04
+  },
+  {
+   "data": "2015-01-28",
+   "eps_estimado": 0.02,
+   "eps_reportado": null
+  },
+  {
+   "data": "2015-04-29",
+   "eps_estimado": 0.02,
+   "eps_reportado": 0.03
+  },
+  {
+   "data": "2015-07-29",
+   "eps_estimado": 0.02,
+   "eps_reportado": 0.02
+  },
+  {
+   "data": "2015-10-29",
+   "eps_estimado": 0.02,
+   "eps_reportado": 0.03
+  },
+  {
+   "data": "2016-01-27",
+   "eps_estimado": 0.08,
+   "eps_reportado": 0.02
+  },
+  {
+   "data": "2016-04-26",
+   "eps_estimado": 0.16,
+   "eps_reportado": 0.2
+  },
+  {
+   "data": "2016-07-27",
+   "eps_estimado": 0.02,
+   "eps_reportado": 0.02
+  },
+  {
+   "data": "2016-10-26",
+   "eps_estimado": 0.01,
+   "eps_reportado": 0.03
+  },
+  {
+   "data": "2017-02-02",
+   "eps_estimado": 0.01,
+   "eps_reportado": null
+  },
+  {
+   "data": "2017-04-26",
+   "eps_estimado": 0.02,
+   "eps_reportado": 0.02
+  },
+  {
+   "data": "2017-07-27",
+   "eps_estimado": 0.02,
+   "eps_reportado": 0.03
+  },
+  {
+   "data": "2017-11-02",
+   "eps_estimado": 0.02,
+   "eps_reportado": 0.02
+  },
+  {
+   "data": "2018-01-31",
+   "eps_estimado": 0.03,
+   "eps_reportado": 0.02
+  },
+  {
+   "data": "2018-04-25",
+   "eps_estimado": 0.03,
+   "eps_reportado": 0.04
+  },
+  {
+   "data": "2018-08-02",
+   "eps_estimado": 0.03,
+   "eps_reportado": 0.04
+  },
+  {
+   "data": "2018-11-01",
+   "eps_estimado": 0.04,
+   "eps_reportado": 0.04
+  },
+  {
+   "data": "2019-01-31",
+   "eps_estimado": 0.04,
+   "eps_reportado": 0.03
+  },
+  {
+   "data": "2019-07-31",
+   "eps_estimado": 0.05,
+   "eps_reportado": 0.04
+  },
+  {
+   "data": "2025-04-30",
+   "eps_estimado": 0.04,
+   "eps_reportado": 0.07
+  },
+  {
+   "data": "2025-07-30",
+   "eps_estimado": 0.06,
+   "eps_reportado": 0.1
+  },
+  {
+   "data": "2025-10-29",
+   "eps_estimado": 0.05,
+   "eps_reportado": 0.02
+  },
+  {
+   "data": "2026-01-29",
+   "eps_estimado": 0.06,
+   "eps_reportado": 0.01
+  },
+  {
+   "data": "2026-04-29",
+   "eps_estimado": 0.06,
+   "eps_reportado": 0.11
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "ECL.SN",
+ "url": "https://finance.yahoo.com/quote/ECL.SN"
+}

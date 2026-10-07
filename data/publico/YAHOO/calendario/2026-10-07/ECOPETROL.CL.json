@@ -1,0 +1,137 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2020-08-13",
+   "eps_estimado": 7.16,
+   "eps_reportado": -23.59
+  },
+  {
+   "data": "2020-11-13",
+   "eps_estimado": 30.88,
+   "eps_reportado": 22.55
+  },
+  {
+   "data": "2021-04-09",
+   "eps_estimado": 39.02,
+   "eps_reportado": 29.38
+  },
+  {
+   "data": "2021-05-10",
+   "eps_estimado": 44.69,
+   "eps_reportado": 75.05
+  },
+  {
+   "data": "2021-08-11",
+   "eps_estimado": 96.05,
+   "eps_reportado": 90.6
+  },
+  {
+   "data": "2021-11-11",
+   "eps_estimado": 126.87,
+   "eps_reportado": 92.6
+  },
+  {
+   "data": "2022-03-18",
+   "eps_estimado": 113.43,
+   "eps_reportado": 147.79
+  },
+  {
+   "data": "2022-08-17",
+   "eps_estimado": 202.96,
+   "eps_reportado": 254.6
+  },
+  {
+   "data": "2022-11-09",
+   "eps_estimado": 260.15,
+   "eps_reportado": 231.4
+  },
+  {
+   "data": "2023-03-29",
+   "eps_estimado": 194.13,
+   "eps_reportado": 123.14
+  },
+  {
+   "data": "2023-05-13",
+   "eps_estimado": 130.95,
+   "eps_reportado": 137.7
+  },
+  {
+   "data": "2023-08-11",
+   "eps_estimado": 1531.36,
+   "eps_reportado": 99.4
+  },
+  {
+   "data": "2024-01-09",
+   "eps_estimado": 2902.54,
+   "eps_reportado": 123.69
+  },
+  {
+   "data": "2024-04-18",
+   "eps_estimado": 122.29,
+   "eps_reportado": 182.92
+  },
+  {
+   "data": "2024-05-08",
+   "eps_estimado": 149.02,
+   "eps_reportado": 97.6
+  },
+  {
+   "data": "2024-08-14",
+   "eps_estimado": 138.52,
+   "eps_reportado": 82.1
+  },
+  {
+   "data": "2024-11-15",
+   "eps_estimado": 133.85,
+   "eps_reportado": 88.8
+  },
+  {
+   "data": "2025-03-05",
+   "eps_estimado": 77.05,
+   "eps_reportado": 77.86
+  },
+  {
+   "data": "2025-05-09",
+   "eps_estimado": 81.21,
+   "eps_reportado": 76.0
+  },
+  {
+   "data": "2025-08-14",
+   "eps_estimado": 91.35,
+   "eps_reportado": 44.1
+  },
+  {
+   "data": "2025-11-13",
+   "eps_estimado": 68.47,
+   "eps_reportado": 62.3
+  },
+  {
+   "data": "2026-03-04",
+   "eps_estimado": 47.02,
+   "eps_reportado": 36.7
+  },
+  {
+   "data": "2026-05-15",
+   "eps_estimado": 60.81,
+   "eps_reportado": 70.2
+  },
+  {
+   "data": "2026-08-05",
+   "eps_estimado": 122.84,
+   "eps_reportado": 147.5
+  },
+  {
+   "data": "2026-11-12",
+   "eps_estimado": 89.31,
+   "eps_reportado": null
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "ECOPETROL.CL",
+ "url": "https://finance.yahoo.com/quote/ECOPETROL.CL"
+}

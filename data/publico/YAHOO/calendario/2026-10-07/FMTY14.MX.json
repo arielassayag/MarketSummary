@@ -1,0 +1,67 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2024-02-14",
+   "eps_estimado": 0.25,
+   "eps_reportado": -0.23
+  },
+  {
+   "data": "2024-04-25",
+   "eps_estimado": 0.19,
+   "eps_reportado": 0.12
+  },
+  {
+   "data": "2024-07-24",
+   "eps_estimado": 0.21,
+   "eps_reportado": 0.85
+  },
+  {
+   "data": "2024-10-23",
+   "eps_estimado": 0.21,
+   "eps_reportado": 1.26
+  },
+  {
+   "data": "2025-02-19",
+   "eps_estimado": 0.24,
+   "eps_reportado": 0.78
+  },
+  {
+   "data": "2025-04-23",
+   "eps_estimado": 0.24,
+   "eps_reportado": 0.51
+  },
+  {
+   "data": "2025-07-23",
+   "eps_estimado": 0.22,
+   "eps_reportado": -0.58
+  },
+  {
+   "data": "2025-10-22",
+   "eps_estimado": 0.22,
+   "eps_reportado": -0.21
+  },
+  {
+   "data": "2026-02-18",
+   "eps_estimado": 0.2,
+   "eps_reportado": 0.35
+  },
+  {
+   "data": "2026-04-30",
+   "eps_estimado": 0.23,
+   "eps_reportado": 0.22
+  },
+  {
+   "data": "2026-07-31",
+   "eps_estimado": 0.21,
+   "eps_reportado": 0.37
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "FMTY14.MX",
+ "url": "https://finance.yahoo.com/quote/FMTY14.MX"
+}

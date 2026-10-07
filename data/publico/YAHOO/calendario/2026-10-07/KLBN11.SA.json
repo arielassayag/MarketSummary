@@ -1,0 +1,137 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2020-08-05",
+   "eps_estimado": 0.55,
+   "eps_reportado": -0.36
+  },
+  {
+   "data": "2020-10-26",
+   "eps_estimado": -0.2,
+   "eps_reportado": -0.16
+  },
+  {
+   "data": "2021-02-10",
+   "eps_estimado": 1.06,
+   "eps_reportado": 1.12
+  },
+  {
+   "data": "2021-05-11",
+   "eps_estimado": -0.43,
+   "eps_reportado": 0.29
+  },
+  {
+   "data": "2021-08-10",
+   "eps_estimado": 0.52,
+   "eps_reportado": 0.54
+  },
+  {
+   "data": "2021-10-27",
+   "eps_estimado": 0.04,
+   "eps_reportado": 0.18
+  },
+  {
+   "data": "2022-02-10",
+   "eps_estimado": 0.51,
+   "eps_reportado": 0.73
+  },
+  {
+   "data": "2022-05-04",
+   "eps_estimado": 1.33,
+   "eps_reportado": 0.81
+  },
+  {
+   "data": "2022-07-27",
+   "eps_estimado": 0.47,
+   "eps_reportado": 0.17
+  },
+  {
+   "data": "2022-10-27",
+   "eps_estimado": 1.04,
+   "eps_reportado": 1.57
+  },
+  {
+   "data": "2023-02-08",
+   "eps_estimado": 0.71,
+   "eps_reportado": 0.66
+  },
+  {
+   "data": "2023-05-03",
+   "eps_estimado": 0.68,
+   "eps_reportado": 0.95
+  },
+  {
+   "data": "2023-08-02",
+   "eps_estimado": 0.74,
+   "eps_reportado": 0.52
+  },
+  {
+   "data": "2023-10-25",
+   "eps_estimado": 0.47,
+   "eps_reportado": 0.21
+  },
+  {
+   "data": "2024-02-07",
+   "eps_estimado": 0.52,
+   "eps_reportado": 0.52
+  },
+  {
+   "data": "2024-04-25",
+   "eps_estimado": 0.46,
+   "eps_reportado": 0.35
+  },
+  {
+   "data": "2024-07-30",
+   "eps_estimado": 0.64,
+   "eps_reportado": 0.2
+  },
+  {
+   "data": "2024-11-04",
+   "eps_estimado": 0.72,
+   "eps_reportado": 0.79
+  },
+  {
+   "data": "2025-02-26",
+   "eps_estimado": 0.45,
+   "eps_reportado": 0.32
+  },
+  {
+   "data": "2025-05-07",
+   "eps_estimado": 0.49,
+   "eps_reportado": 0.33
+  },
+  {
+   "data": "2025-08-05",
+   "eps_estimado": 0.23,
+   "eps_reportado": 0.47
+  },
+  {
+   "data": "2025-11-04",
+   "eps_estimado": 0.51,
+   "eps_reportado": 0.28
+  },
+  {
+   "data": "2026-02-11",
+   "eps_estimado": -0.08,
+   "eps_reportado": 0.06
+  },
+  {
+   "data": "2026-05-06",
+   "eps_estimado": 0.61,
+   "eps_reportado": -0.43
+  },
+  {
+   "data": "2026-08-05",
+   "eps_estimado": 0.34,
+   "eps_reportado": 0.23
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "KLBN11.SA",
+ "url": "https://finance.yahoo.com/quote/KLBN11.SA"
+}

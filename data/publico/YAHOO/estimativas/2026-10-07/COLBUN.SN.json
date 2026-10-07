@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 150.0,
+  "high": 172.23535,
+  "low": 151.68456,
+  "mean": 161.95995,
+  "median": 160.00273
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": null,
+   "currency": "USD",
+   "growth": null,
+   "high": null,
+   "low": null,
+   "numberOfAnalysts": null,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 0.01732,
+   "currency": "USD",
+   "growth": 0.732,
+   "high": 0.02,
+   "low": 0.013,
+   "numberOfAnalysts": 4.0,
+   "yearAgoEps": 0.01
+  },
+  "0q": {
+   "avg": null,
+   "currency": "USD",
+   "growth": null,
+   "high": null,
+   "low": null,
+   "numberOfAnalysts": null,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": 0.01,
+   "currency": "USD",
+   "growth": -0.0637,
+   "high": 0.01,
+   "low": 0.01,
+   "numberOfAnalysts": 2.0,
+   "yearAgoEps": 0.01068
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "USD",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 1790569340,
+   "currency": "USD",
+   "growth": 0.0659,
+   "high": 1853000000,
+   "low": 1714000000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 1679844440.0
+  },
+  "0q": {
+   "avg": 0,
+   "currency": "USD",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "0y": {
+   "avg": 1679844440,
+   "currency": "USD",
+   "growth": 0.052800003,
+   "high": 1769000000,
+   "low": 1564377750,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 1595600000.0
+  }
+ },
+ "ticker": "COLBUN.SN",
+ "url": "https://finance.yahoo.com/quote/COLBUN.SN"
+}

@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 13.99,
+  "high": 23.0,
+  "low": 21.0,
+  "mean": 21.86667,
+  "median": 21.6
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": null,
+   "currency": "USD",
+   "growth": null,
+   "high": null,
+   "low": null,
+   "numberOfAnalysts": null,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 0.259,
+   "currency": "USD",
+   "growth": 1.1405001,
+   "high": 0.259,
+   "low": 0.259,
+   "numberOfAnalysts": 1.0,
+   "yearAgoEps": 0.121
+  },
+  "0q": {
+   "avg": null,
+   "currency": "USD",
+   "growth": null,
+   "high": null,
+   "low": null,
+   "numberOfAnalysts": null,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": 0.121,
+   "currency": "USD",
+   "growth": null,
+   "high": 0.121,
+   "low": 0.121,
+   "numberOfAnalysts": 1.0,
+   "yearAgoEps": null
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "ARS",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 613643000000,
+   "currency": "ARS",
+   "growth": 0.0238,
+   "high": 613643000000,
+   "low": 613643000000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 599395000000.0
+  },
+  "0q": {
+   "avg": 0,
+   "currency": "ARS",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "0y": {
+   "avg": 599395000000,
+   "currency": "ARS",
+   "growth": -0.0885,
+   "high": 599395000000,
+   "low": 599395000000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 657599000000.0
+  }
+ },
+ "ticker": "IRS",
+ "url": "https://finance.yahoo.com/quote/IRS"
+}

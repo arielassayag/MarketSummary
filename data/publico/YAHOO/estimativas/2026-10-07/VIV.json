@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 12.71,
+  "high": 19.79213,
+  "low": 13.300121,
+  "mean": 15.437873,
+  "median": 14.954185
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1.581,
+   "currency": "BRL",
+   "growth": 0.3398,
+   "high": 1.581,
+   "low": 1.581,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 1.18
+  },
+  "+1y": {
+   "avg": 5.38475,
+   "currency": "BRL",
+   "growth": 0.13229999,
+   "high": 6.22,
+   "low": 3.11,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 4.75567
+  },
+  "0q": {
+   "avg": 1.441,
+   "currency": "BRL",
+   "growth": null,
+   "high": 1.441,
+   "low": 1.441,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": 4.75567,
+   "currency": "BRL",
+   "growth": 0.2449,
+   "high": 4.974,
+   "low": 4.509,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 3.82
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 16653510760,
+   "currency": "BRL",
+   "growth": 0.0668,
+   "high": 16873000000,
+   "low": 16514452020,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 15611000000
+  },
+  "+1y": {
+   "avg": 67149037730,
+   "currency": "BRL",
+   "growth": 0.054,
+   "high": 68611000000,
+   "low": 64049193540,
+   "numberOfAnalysts": 15,
+   "yearAgoRevenue": 63708831420
+  },
+  "0q": {
+   "avg": 15966560390,
+   "currency": "BRL",
+   "growth": 0.0681,
+   "high": 16049000000,
+   "low": 15929068000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 14949000000
+  },
+  "0y": {
+   "avg": 63708831420,
+   "currency": "BRL",
+   "growth": 0.069,
+   "high": 64136419190,
+   "low": 63338854270,
+   "numberOfAnalysts": 15,
+   "yearAgoRevenue": 59595000000
+  }
+ },
+ "ticker": "VIV",
+ "url": "https://finance.yahoo.com/quote/VIV"
+}

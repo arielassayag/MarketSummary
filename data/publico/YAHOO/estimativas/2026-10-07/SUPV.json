@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 7.14,
+  "high": 15.0,
+  "low": 10.0,
+  "mean": 12.3598,
+  "median": 12.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.3147,
+   "currency": "USD",
+   "growth": 2.9814003,
+   "high": 0.33,
+   "low": 0.29939,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": -0.15883
+  },
+  "+1y": {
+   "avg": 1.22702,
+   "currency": "USD",
+   "growth": 1.0234,
+   "high": 1.29272,
+   "low": 1.18,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.6064
+  },
+  "0q": {
+   "avg": 0.25106,
+   "currency": "USD",
+   "growth": 1.6312,
+   "high": 0.27,
+   "low": 0.23212,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": -0.39772
+  },
+  "0y": {
+   "avg": 0.6064,
+   "currency": "USD",
+   "growth": 2.5342999,
+   "high": 0.62279,
+   "low": 0.59,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": -0.39523
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 346244559940,
+   "currency": "ARS",
+   "growth": 0.1266,
+   "high": 350098000000,
+   "low": 342391119870,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 307331700000
+  },
+  "+1y": {
+   "avg": 1714319799500,
+   "currency": "ARS",
+   "growth": 0.2223,
+   "high": 2168828000000,
+   "low": 1409664654000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 1402513784240
+  },
+  "0q": {
+   "avg": 327140415040,
+   "currency": "ARS",
+   "growth": 1.1936,
+   "high": 335388000000,
+   "low": 318892830070,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 149134000000
+  },
+  "0y": {
+   "avg": 1402513784240,
+   "currency": "ARS",
+   "growth": 0.3045,
+   "high": 1496492000000,
+   "low": 1293196110650,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 1075121200000
+  }
+ },
+ "ticker": "SUPV",
+ "url": "https://finance.yahoo.com/quote/SUPV"
+}

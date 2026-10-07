@@ -1,0 +1,137 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2020-02-27",
+   "eps_estimado": 0.78,
+   "eps_reportado": 0.7
+  },
+  {
+   "data": "2020-05-11",
+   "eps_estimado": -0.4,
+   "eps_reportado": -4.1
+  },
+  {
+   "data": "2020-08-05",
+   "eps_estimado": -0.7,
+   "eps_reportado": -1.1
+  },
+  {
+   "data": "2020-11-03",
+   "eps_estimado": -0.85,
+   "eps_reportado": -2.9
+  },
+  {
+   "data": "2021-02-25",
+   "eps_estimado": -0.35,
+   "eps_reportado": -0.57
+  },
+  {
+   "data": "2021-05-05",
+   "eps_estimado": 0.2,
+   "eps_reportado": -1.0
+  },
+  {
+   "data": "2021-08-04",
+   "eps_estimado": -0.5,
+   "eps_reportado": -0.5
+  },
+  {
+   "data": "2021-11-01",
+   "eps_estimado": 0.5,
+   "eps_reportado": 1.0
+  },
+  {
+   "data": "2022-02-22",
+   "eps_estimado": 0.25,
+   "eps_reportado": 1.7
+  },
+  {
+   "data": "2022-05-03",
+   "eps_estimado": 0.7,
+   "eps_reportado": 0.4
+  },
+  {
+   "data": "2022-08-08",
+   "eps_estimado": 0.5,
+   "eps_reportado": 1.4
+  },
+  {
+   "data": "2022-11-01",
+   "eps_estimado": 1.25,
+   "eps_reportado": 1.0
+  },
+  {
+   "data": "2023-02-22",
+   "eps_estimado": 0.4,
+   "eps_reportado": 0.9
+  },
+  {
+   "data": "2023-08-01",
+   "eps_estimado": -0.6,
+   "eps_reportado": -0.33
+  },
+  {
+   "data": "2023-10-31",
+   "eps_estimado": -0.45,
+   "eps_reportado": 0.2
+  },
+  {
+   "data": "2024-02-20",
+   "eps_estimado": -0.13,
+   "eps_reportado": 0.23
+  },
+  {
+   "data": "2024-07-31",
+   "eps_estimado": 0.23,
+   "eps_reportado": 1.16
+  },
+  {
+   "data": "2024-11-04",
+   "eps_estimado": 0.14,
+   "eps_reportado": 0.04
+  },
+  {
+   "data": "2025-02-24",
+   "eps_estimado": 0.03,
+   "eps_reportado": -0.85
+  },
+  {
+   "data": "2025-05-02",
+   "eps_estimado": -0.23,
+   "eps_reportado": -0.54
+  },
+  {
+   "data": "2025-07-30",
+   "eps_estimado": -0.43,
+   "eps_reportado": -0.36
+  },
+  {
+   "data": "2026-03-03",
+   "eps_estimado": -0.16,
+   "eps_reportado": -4.0
+  },
+  {
+   "data": "2026-05-07",
+   "eps_estimado": -1.32,
+   "eps_reportado": -3.38
+  },
+  {
+   "data": "2026-08-05",
+   "eps_estimado": 0.34,
+   "eps_reportado": 0.7
+  },
+  {
+   "data": "2026-11-05",
+   "eps_estimado": 0.3,
+   "eps_reportado": null
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "GTE",
+ "url": "https://finance.yahoo.com/quote/GTE"
+}

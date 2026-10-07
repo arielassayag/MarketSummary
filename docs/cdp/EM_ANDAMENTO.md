@@ -5,7 +5,7 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-Última atualização: 2026-10-07, 08:55, Brasília — lote `.8` validado tecnicamente, integração pendente. **Comece por
+Última atualização: 2026-10-07, 09:12, Brasília — lote `.8` integrado, P0 científico aberto. **Comece por
 `docs/cdp/PASSAGEM_CODEX.md`**: ligar as rotinas no Codex, P0 de desenvolvimento antes do
 retrato-gênese da cobertura (qua 07/10, 19:22) e cronograma até a carteira inaugural (sex 09/10).
 
@@ -16,8 +16,12 @@ retrato-gênese da cobertura (qua 07/10, 19:22) e cronograma até a carteira ina
   os 351 arquivos congelados continuavam iguais, assim como os 79 arquivos operacionais,
   cinco arquivos locais do Fechamento e mandato. Conferência independente confirmou
   os 351 hashes e os 189 arquivos da fonte física 8-5. A metodologia é `2026-10.8`;
-  8-5 identifica uma cópia física, não uma nova versão metodológica. Ainda não houve
-  commit, sincronização do executor ou confirmação de CI/portal deste lote.
+  8-5 identifica uma cópia física, não uma nova versão metodológica. Código `44fa149`
+  integrado por fast-forward, enviado ao GitHub e sincronizado no executor pelo comando
+  canônico; identidade, integridade e estado verdes. O portal desse código foi confirmado
+  no ar (manifesto, três rotas HTTP e valuation iguais ao executor). Às 09:11, a CI
+  37617785317 ainda estava nos testes; o job de livro/rotinas/skills/portal havia passado.
+  Registro documental posterior não altera o núcleo testado nem os bytes operacionais.
 - Os ensaios finais dessa fonte concluíram 233 empresas/oito ETFs e 23 pregões/cinco
   montagens/94 etapas. Os CSVs de modelos e ETFs são iguais aos da fonte temporal anterior;
   JSONs de cobertura diferem somente nos instantes de conhecimento e hashes derivados.
@@ -42,7 +46,8 @@ retrato-gênese da cobertura (qua 07/10, 19:22) e cronograma até a carteira ina
   23 pregões, cinco montagens e 94 etapas; a comparação somente leitura com a fonte 7
   encontrou posições, propostas, custos, P&L, risco e atribuição exatamente iguais.
   Os quatro livros `.4`–`.7` foram verificados integralmente sem alterar seus bytes.
-  São ensaios privados retrospectivos; o executor oficial permanece na metodologia `.6`.
+  São ensaios privados retrospectivos. O executor oficial recebeu o código `.8`, conservando
+  o livro em pré-início; nenhum desses ensaios foi adotado como operação oficial.
 - A suíte ampla 4 terminou: 2.475 aprovados, 32 falhas, um erro, 16 pulados e um xfail;
   os 349 hashes de origem permaneceram intactos. As fixtures agora reabrem/copiam mercado
   físico com o livro; 109 casos distintos passaram em validações privadas, conservando
@@ -62,7 +67,7 @@ retrato-gênese da cobertura (qua 07/10, 19:22) e cronograma até a carteira ina
   preservando `main` e os arquivos oficiais. Fixtures Git agora são isoladas e a descoberta
   Git fica limitada à raiz informada por chamada. Revisão independente de cinco regressões
   locais, incluindo raiz normal, bare, worktree e ambiente intacto, passou. Guardas e três
-  regressões portáveis foram transpostas para DEV; o executor ainda não recebeu esse lote.
+  regressões portáveis foram transpostas, validadas na ampla 5 e integradas no executor.
 
 - Próximo lote após `.6`, em desenvolvimento: correção macro diária com modelos base/evento
   sobre posições efetivas, atribuição macro observada antes da regressão estrutural e sidecar
@@ -91,7 +96,7 @@ retrato-gênese da cobertura (qua 07/10, 19:22) e cronograma até a carteira ina
   histórica preservada. Revisão independente do reparo passou, incluindo painel sem override
   e recusas por remoção de preços/adulteração de FX. A fixture da avaliação foi corrigida
   para reabrir essa mesma fonte física: 23 testes passaram, preservando todas as asserções;
-  revisão independente confirmou a custódia. Lote ainda não integrado.
+  revisão independente confirmou a custódia. Lote agora integrado, com ampla 5 verde.
 - Ponte `.7` de EBIT após ajustes evidenciados: contrato explícito com fonte, período e
   disponibilidade; valores reportados preservados, sem imposto/EPS imputados. Quatro bordas gerais de
   extração/período/captura corrigidas, 193 focais verdes e revisão independente concluída.
@@ -114,15 +119,15 @@ retrato-gênese da cobertura (qua 07/10, 19:22) e cronograma até a carteira ina
   execução ligou documento, ajuste, fatos e SHADOW à montagem, com reserva idempotente e
   livro íntegro. Esse episódio testa mecanismos; não constitui evidência contábil real.
   A ponte e os ensaios `.7` permanecem históricos. Os ensaios reais da fonte temporal 8.4
-  concluíram; a suíte ampla 5 após os reparos delimitados passou; produção permanece `.6`.
+  concluíram; a suíte ampla 5 após os reparos delimitados passou e o executor recebeu `.8`.
 - As 12 automações foram conferidas novamente: ativas, projeto atual, modo local, executor
   interno `.cdp/rotinas`. Nomes em seis famílias (operação, carteira, risco, fechamento,
   pesquisa, modelos), reservas explícitas e prompts que consultam o procedimento vigente
   pelo código. Agenda local em `.cdp/AGENDAS.md`; entregas em `.cdp/TAREFAS.md`. Horários,
   modelos e preferências de notificação preservados. Primeiro disparo ainda não observado.
 - Ramo científico `codex/cdp-modelos-completos`, checkout `.cdp/desenvolvimento`, dentro do
-  projeto. O executor continua em `main`; mudanças só serão integradas após suíte e Ruff
-  verdes. As cinco alterações locais anteriores do Fechamento permanecem na raiz.
+  projeto. O executor continua em `main`; o lote foi integrado após suíte e Ruff verdes.
+  As cinco alterações locais anteriores do Fechamento permanecem na raiz, com os mesmos hashes.
 - Consenso: os bytes arquivados da Orbia declaram USD. A regra anterior converteu USD para
   MXN duas vezes porque a primeira conversão não enquadrava o LPA numa faixa contra o lucro
   realizado. A política `declaracao_fonte` aplica somente moeda declarada, paridade e câmbio;

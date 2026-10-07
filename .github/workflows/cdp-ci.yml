@@ -22,12 +22,13 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
-      - name: Conferir fonte5cb preservada
+      - name: Conferir fonte5cb e reparo exato do teste
         shell: bash
         run: |
           mkdir -p .cdp/validacoes/ci-diagnostico-892
           git rev-parse HEAD > .cdp/validacoes/ci-diagnostico-892/head.txt
-          git diff --exit-code 5cb2d4ab8c250b3289dc90fb4e655637335a0aec -- src tests configs pyproject.toml uv.lock
+          git diff --exit-code 5cb2d4ab8c250b3289dc90fb4e655637335a0aec -- src tests configs pyproject.toml uv.lock ':(exclude)tests/cdp/test_contrato_custos_integridade.py'
+          printf '%s\n' '125e6ec003f95cfc0ce540f4c9174130ed5ddd89a151d1c7e0af669103d83d01  tests/cdp/test_contrato_custos_integridade.py' | sha256sum --check --strict
           sha256sum tests/cdp/test_contrato_custos_integridade.py tests/cdp/fixtures/custo_minimo_reserva.json uv.lock > .cdp/validacoes/ci-diagnostico-892/fonte-sha256.txt
       - name: Instalar uv e Python
         uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
@@ -58,7 +59,7 @@ jobs:
               "data_notice": "DADOS SIMULADOS: episódio natural de teste; não é operação/publicação"
           }, ensure_ascii=False, indent=2))
           PY
-      - name: Único teste natural original
+      - name: Teste natural com oráculo das ordens executadas
         shell: bash
         run: |
           set -o pipefail

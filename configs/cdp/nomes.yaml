@@ -1,0 +1,48 @@
+# configs/cdp/nomes.yaml — nomes canônicos dos emissores, com a grafia oficial (acentos e til),
+# para todo texto lido pelo investidor (portal, relatórios, notas, tese).
+#
+# O universo (data/universe/latam_universe.csv) guarda os nomes em ASCII, como vêm das fontes de
+# mercado; este arquivo os substitui ao carregar o universo (cdp.universe.universe_from_frame).
+# Só nomes: identificadores, tickers e números não mudam. Emissor ausente daqui mantém o nome do
+# universo. Mudança por commit revisável (sessão de desenvolvimento).
+versao: 1
+nomes:
+  AR_CAAP: Corporación América Airports
+  AR_PAMPA: Pampa Energía
+  BR_ANIMA: Ânima Educação
+  BR_ASSAI: Assaí Atacadista
+  BR_B3: B3
+  BR_BRADSAUDE: Bradesco Saúde
+  BR_CBA: Companhia Brasileira de Alumínio
+  BR_CMIN: CSN Mineração
+  BR_COMPASS: Compass Gás e Energia
+  BR_CSN: CSN Siderúrgica Nacional
+  BR_GOAU: Metalúrgica Gerdau
+  BR_GPA: GPA (Pão de Açúcar)
+  BR_GPS: GPS Participações
+  BR_ITAU: Itaú Unibanco
+  BR_ITAUSA: Itaúsa
+  BR_NATURA: Natura Cosméticos
+  BR_ONCOCLINICAS: Oncoclínicas
+  BR_RECV: PetroRecôncavo
+  BR_REDEDOR: Rede D'Or São Luiz
+  BR_SAOMARTINHO: São Martinho
+  BR_SLC: SLC Agrícola
+  BR_VIVO: Telefônica Brasil (Vivo)
+  CL_BCI: Banco de Crédito e Inversiones
+  CL_COLBUN: Colbún
+  CL_ECL: Engie Energía Chile
+  CL_EISA: Echeverría Izquierdo
+  CL_ENELAM: Enel Américas
+  CL_ITAU: Banco Itaú Chile
+  CO_ISA: Interconexión Eléctrica (ISA)
+  MX_AEROMEXICO: Grupo Aeroméxico
+  MX_AMX: América Móvil
+  MX_BAJIO: Banco del Bajío
+  MX_GAP: Grupo Aeroportuario del Pacífico
+  MX_GMEXICO: Grupo México
+  MX_KIMBER: Kimberly-Clark de México
+  MX_PENOLES: Industrias Peñoles
+  MX_QUALITAS: Quálitas
+  MX_VESTA: Corporación Inmobiliaria Vesta
+  MX_WALMEX: Walmart de México

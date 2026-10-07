@@ -571,7 +571,7 @@ def test_fresh_reader_with_only_agents_md_knows_what_to_do():
         assert agulha in nunca, agulha
     # onde agendar: dentro do app de IA; GitHub Actions só CI e portal
     for agulha in ("--alvo claude-routines", "--harness codex", "--harness gemini",
-                   "nunca é a etapa de IA do caminho principal"):
+                   "nunca roda a etapa de IA das rotinas"):
         assert agulha in flat, agulha
     for inv in ("Números só em código", "Só dados públicos", "Modelos abertos",
                 "Escritor único e trava", "Tom e idioma"):

@@ -125,6 +125,36 @@ def fresh_quotes(quotes: pd.DataFrame, session: date,
     return quotes.loc[ok].copy(), stale
 
 
+MIN_FRESH_LINE_SHARE = 0.5
+"""Fração mínima de linhas com cotação do dia para a barra provisória valer."""
+
+
+def intraday_collection_failure(quotes: pd.DataFrame, session: date,
+                                currencies: list[str] | None = None) -> str | None:
+    """Motivo pelo qual a coleta intradiária NÃO serve para a barra provisória (ou ``None``).
+
+    Rede ou fonte fora devolvem cotações vazias; sobrepor uma barra vazia apagaria o pregão
+    do modelo de risco. Exige câmbio do dia para toda moeda e cotação do dia para ao menos
+    metade das linhas; senão a análise usa o fechamento do pregão anterior (sem barra
+    provisória) e a falha fica registrada como falha de coleta.
+    """
+    fresh, _stale = fresh_quotes(quotes, session)
+    fresh = fresh[fresh["price"].notna()] if not fresh.empty else fresh
+    n_lines = int((quotes["kind"] == "line").sum()) if not quotes.empty else 0
+    n_fresh = int((fresh["kind"] == "line").sum()) if not fresh.empty else 0
+    fx_ok = set(fresh.loc[fresh["kind"] == "fx", "symbol"].astype(str)) if not fresh.empty else set()
+    fx_missing = sorted(c for c in (currencies or []) if c != "USD" and c not in fx_ok)
+    motivos = []
+    if n_lines and n_fresh < MIN_FRESH_LINE_SHARE * n_lines:
+        motivos.append(f"{n_fresh} de {n_lines} linhas com cotação do dia")
+    if fx_missing:
+        motivos.append("câmbio do dia ausente para " + ", ".join(fx_missing))
+    if not motivos:
+        return None
+    return ("Cotações intradiárias: falha de coleta (" + "; ".join(motivos) + "); a análise "
+            "usa o fechamento do pregão anterior, sem barra provisória.")
+
+
 def overlay_intraday(md: MarketData, session: date, quotes: pd.DataFrame,
                      captured_at: datetime, quotes_path: str = "",
                      quotes_sha256: str = "") -> MarketData:

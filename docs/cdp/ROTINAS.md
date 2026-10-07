@@ -85,7 +85,7 @@ local). Quando o app protege `.git` no sandbox, `scripts/cdp_rotina.sh` faz os p
 fora e o prompt avisa a mente (modo executor). As tarefas de leitura (`cdp-status`) e as
 compartilhadas (risco, calibração) não pegam a trava.
 
-## 3. Claude Code — rotinas na nuvem (principal; a nossa escolha)
+## 3. Claude Code — rotinas na nuvem
 
 Passo a passo completo em `docs/cdp/AUTOMACAO.md`, seção 3:
 
@@ -108,7 +108,7 @@ A nuvem não instala plugins: as rotinas usam as skills do projeto (`.claude/ski
 prompt gerado. Rotinas sem supervisão **nunca publicam artifacts**: o portal público é o site no
 GitHub Pages, montado pelo GitHub Actions a cada push (`docs/cdp/SITE.md`).
 
-## 4. Claude Code — app desktop (reserva local)
+## 4. Claude Code — app desktop
 
 No PC, com o app aberto: `docs/cdp/LOCAL.md`. Tabela das tarefas, com a instrução de cada uma
 (o comando da skill **com o id da tarefa**, para o gate conferir o horário certo):
@@ -117,7 +117,7 @@ No PC, com o app aberto: `docs/cdp/LOCAL.md`. Tabela das tarefas, com a instruç
 uv run python -m cdp rotinas exportar --alvo claude-desktop
 ```
 
-## 5. Codex — tarefas agendadas do app (passo a passo)
+## 5. Codex — tarefas agendadas do app (o app das rotinas; passo a passo)
 
 As tarefas agendadas do app desktop do Codex rodam no seu computador, com o app aberto, e herdam
 o sandbox padrão. Para sincronizar, fazer commit e push pelo código, o Codex precisa de rede e
@@ -208,7 +208,7 @@ regenere as duas com `uv run python -m cdp skills sincronizar --claude`.
 ## 8. GitHub Actions: só integração contínua e portal
 
 O GitHub Actions roda a integração contínua (`cdp-ci.yml`) e publica o portal (`cdp-site.yml`),
-sem IA. Rodar a mente no Actions é só uma alternativa opcional, fora do caminho principal
+sem IA. Rodar a mente no Actions é só uma alternativa opcional
 (`docs/cdp/AUTOMACAO.md`, apêndice A).
 
 ## 9. Sem app com acesso ao repositório

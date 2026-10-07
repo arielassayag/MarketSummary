@@ -44,6 +44,10 @@ from .schemas import (
 
 VERIFIER_PREFIX = "VERIFICADOR:"
 INJECTION_FLAG_PREFIX = "injecao:"
+#: Título externo retido na entrada (``data/news.py``): o texto com padrão de instrução nunca é
+#: gravado; fica só este marcador com as marcas ``injecao:*``. Todo consumidor que passa o título
+#: por :func:`sanitize_untrusted` o recebe marcado como injeção (e o descarta).
+QUARENTENA_PREFIX = "[SUSPEITA — manchete retida"
 UNKNOWN_FACT_TEXT = "[fato inexistente]"
 DEFAULT_MAX_LEN = 500
 BASE64_MIN_REMOVE = 81
@@ -53,8 +57,14 @@ BASE64_MIN_SCAN = 16
 KILL_SWITCH_ISSUE_RATE = 0.05
 """Fração de notas com falha em gate determinístico que desliga a IA (docs/research/07 §6.6)."""
 
+FORMULARIOS_SEC: tuple[str, ...] = (
+    "10-K", "10-Q", "8-K", "20-F", "40-F", "6-K", "F-1", "F-3", "S-1", "13D", "13G",
+    "SC 13D", "SC 13G",
+)
+"""Nomes de formulários da SEC com algarismos: identificadores, não números livres — valem em
+todo texto da mente (nota, pesquisa da semana, decisão do PM, tese, comentários)."""
 DEFAULT_ALLOWED_TERMS: tuple[str, ...] = ("COVID-19", "Covid-19", "S&P 500", "Nasdaq-100",
-                                          "IPCA-15")
+                                          "IPCA-15", *FORMULARIOS_SEC)
 
 # ==========================================================
 # Normalização e padrões de injeção
@@ -341,6 +351,8 @@ def sanitize_untrusted(text: object, max_len: int = DEFAULT_MAX_LEN) -> tuple[st
             flags.add("truncado")
             s = s[: max(0, max_len - 1)].rstrip() + "…"
         flags.update(f"{INJECTION_FLAG_PREFIX}{name}" for name in injections)
+        if s.startswith(QUARENTENA_PREFIX):
+            flags.add(f"{INJECTION_FLAG_PREFIX}quarentena")
         return s, sorted(flags)
     except Exception:  # noqa: BLE001
         return "", [f"{INJECTION_FLAG_PREFIX}erro_sanitizacao"]
@@ -419,7 +431,8 @@ def find_free_numbers(text: str, allowed_terms: Iterable[str] = ()) -> list[str]
     s = PLACEHOLDER_RE.sub(" ", text)
     for term in sorted({*DEFAULT_ALLOWED_TERMS, *allowed_terms}, key=len, reverse=True):
         if term and any(ch.isdigit() for ch in term):
-            s = re.sub(re.escape(term), " ", s, flags=re.IGNORECASE)
+            # Termo inteiro (nunca o "8-K" dentro de "18-K", que deixaria o "1" passar).
+            s = re.sub(rf"(?<![\w]){re.escape(term)}(?![\w])", " ", s, flags=re.IGNORECASE)
     for rx in _ALLOWED_NUMERIC_RES:
         s = rx.sub(" ", s)
     found: list[str] = []
@@ -603,6 +616,26 @@ def check_placeholders(text: str, factbook: FactBook) -> list[str]:
     return [fid for fid in extract_fact_ids(text) if fid not in factbook.facts]
 
 
+_FRASE_RE = re.compile(r"(?<=[.!?;])\s+|\n+")
+_DOLAR_RE = re.compile(r"\bem\s+d[oó]lar(?:es)?\b|\bem\s+USD\b|\bdolarizad[oa]s?\b|"
+                       r"\bem\s+moeda\s+americana\b", re.IGNORECASE)
+
+
+def currency_claim_issues(path: str, text: str, factbook: FactBook) -> list[str]:
+    """Texto que chama de "em dólares" um fato medido em moeda local (ex.: o Ibovespa, cotado em
+    reais): erro factual. Confere frase a frase os fatos citados cuja unidade, no nome do fato,
+    é "moeda local"."""
+    issues: list[str] = []
+    for frase in _FRASE_RE.split(text or ""):
+        if not _DOLAR_RE.search(frase):
+            continue
+        locais = [fid for fid in extract_fact_ids(frase)
+                  if fid in factbook.facts and "moeda local" in factbook.facts[fid].name]
+        if locais:
+            issues.append(f"{path}: fato em moeda local descrito como em dólares {locais}")
+    return issues
+
+
 def render_placeholders(text: str, factbook: FactBook, mark_calculated: bool = False) -> str:
     """Substitui ``{{fact:id}}`` pelo valor formatado; id inexistente ⇒ ``[fato inexistente]``.
 
@@ -659,6 +692,7 @@ def _text_issues(path: str, text: str, factbook: FactBook, *, cited: set[str] | 
         if uncited:
             issues.append(f"{path}: fato usado no texto sem citação como evidência {uncited}")
     issues += text_format_issues(path, text)
+    issues += currency_claim_issues(path, text, factbook)
     inj = detect_injection(text)
     if inj:
         issues.append(f"{path}: padrão de injeção na saída do modelo {inj}")

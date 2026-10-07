@@ -32,7 +32,7 @@ from pydantic import BaseModel, ConfigDict, Field, ValidationError
 from .. import SIMULATED_DATA_NOTICE
 from ..config import FundConfig
 from ..contracts import DailyRecord, Fact, FactBook, NewsItem
-from .factbook import NA_TEXT, format_value, level_returns
+from .factbook import NA_TEXT, benchmark_unit, format_value, level_returns
 from .guardrails import is_injection_flagged, render_placeholders, sanitize_untrusted
 from .pm_agent import (
     API_MIND,
@@ -238,32 +238,6 @@ def _side_pnl(record: DailyRecord) -> dict[str, float | None]:
     for p in record.positions:
         acc[p.side.value] += float(p.day_pnl_usd)
     return {"LONG": acc["LONG"], "SHORT": acc["SHORT"]}
-
-
-#: Moeda de cotação dos índices locais e dos sufixos de bolsa do Yahoo (retorno sem conversão).
-_INDEX_CCY = {"^BVSP": "BRL", "^MXX": "MXN", "^MERV": "ARS", "^IPSA": "CLP", "^COLCAP": "COP",
-              "^SPBLPGPT": "PEN"}
-_SUFFIX_CCY = {".SA": "BRL", ".MX": "MXN", ".SN": "CLP", ".BA": "ARS", ".CL": "COP", ".LM": "PEN"}
-#: Indicadores cujo "retorno" é variação de nível (não um preço em moeda).
-_LEVEL_INDICATORS = {"^VIX", "DX-Y.NYB"}
-
-
-def benchmark_unit(symbol: str) -> str:
-    """Em que unidade está o retorno de um benchmark: o código só mede a variação do nível ou do
-    preço como cotado, sem conversão cambial. ETFs listados nos EUA ⇒ USD; índices locais e
-    linhas locais ⇒ moeda local; futuros ⇒ contrato cotado em USD; VIX e índice do dólar ⇒
-    nível do índice."""
-    if symbol in _LEVEL_INDICATORS:
-        return "variação do nível do índice"
-    if symbol.endswith("=F"):
-        return "futuro cotado em USD"
-    ccy = _INDEX_CCY.get(symbol) or next(
-        (c for suffix, c in _SUFFIX_CCY.items() if symbol.endswith(suffix)), None)
-    if ccy:
-        return f"em {ccy}, moeda local"
-    if symbol.startswith("^"):
-        return "nível do índice, moeda local"
-    return "USD"
 
 
 def build_market_day_facts(benchmarks: pd.DataFrame | None, fx: pd.DataFrame | None,
@@ -583,13 +557,16 @@ def render_commentary(out: DailyCommentaryOutput, fb: FactBook, provenance: str)
     return "\n".join(lines).strip() + "\n"
 
 
-#: Linha de autoria do relatório diário (registro): identifica a mente com o rótulo [IA] para a
-#: auditoria e o aplicativo interno; o portal a omite. Sem nomes de arquivo nem jargão.
+#: Linha de autoria do relatório diário: texto da IA rotulado [IA], sem o nome do app (o campo
+#: ``mind`` do comentário e a trilha registram quem escreveu). Sem nomes de arquivo nem jargão.
+AUTORIA_IA = "app de IA da gestão"
+
+
 def _provenance(mind: str) -> str:
     if mind == DEMO_MIND:
         return ("Autoria: modo demo (regras determinísticas); números calculados por código a "
                 "partir dos dados do dia.")
-    return (f"Autoria: mente {mind} [IA]; números calculados por código a partir dos dados do "
+    return (f"Autoria: {AUTORIA_IA} [IA]; números calculados por código a partir dos dados do "
             "dia.")
 
 
@@ -599,7 +576,7 @@ def _file_provenance(mind: str) -> str:
     O ``mind`` é declarado pelo próprio arquivo; um arquivo que se diz ``demo`` não pode se
     passar por texto determinístico do código.
     """
-    return (f"Autoria: mente {mind} [IA], texto validado pelo código; números calculados por "
+    return (f"Autoria: {AUTORIA_IA} [IA], texto validado pelo código; números calculados por "
             "código a partir dos dados do dia.")
 
 
@@ -748,7 +725,8 @@ def parse_commentary_file(path: Path | str) -> tuple[DailyCommentaryOutput | Non
 
 
 def load_commentary_file(path: Path | str, fb: FactBook, *, record: DailyRecord | None = None,
-                         allowed_terms: Iterable[str] | None = None) -> tuple[str, list[str]]:
+                         allowed_terms: Iterable[str] | None = None,
+                         expected_mind: str | None = None) -> tuple[str, list[str]]:
     """Rota importada: valida ``comentario.json`` da mente e devolve ``(markdown, problemas)``.
 
     Qualquer problema (ausente, JSON/schema inválido, número livre, fato inexistente, marcação,
@@ -760,6 +738,10 @@ def load_commentary_file(path: Path | str, fb: FactBook, *, record: DailyRecord 
             "Comentário da mente não publicado: usado o template determinístico."]
     terms = list(allowed_terms) if allowed_terms is not None else default_allowed_terms(fb, record)
     problems = verify_commentary(out, fb, terms)
+    from ..contracts import mente_divergente
+
+    if (divergente := mente_divergente(out.mind, expected_mind)):
+        problems = [divergente, *problems]
     if problems:
         return deterministic_commentary(record, fb), problems + [
             "Comentário da mente não publicado: usado o template determinístico."]
@@ -796,7 +778,9 @@ def render_facts_md(record: DailyRecord, fb: FactBook, comment_path: Path,
                     mind_hint: str | None = None) -> str:
     """``facts.md``: números do dia (ids citáveis), alertas, regras e o arquivo a escrever."""
     d = record.date.isoformat()
-    mind = mind_hint or "claude-code | codex"
+    from ..contracts import mente_exemplo
+
+    mind = mente_exemplo(mind_hint)
     L = [f"# Fatos do dia — {record.fund_name} — {d}", ""]
     if record.is_synthetic:
         L += [f"> **{SIMULATED_DATA_NOTICE}** — {record.data_notice}", ""]
@@ -823,7 +807,7 @@ def render_facts_md(record: DailyRecord, fb: FactBook, comment_path: Path,
     L += ["", "## Alertas do sistema [Calculado]", ""]
     L += [f"- {a}" for a in record.alerts] or ["- Nenhum alerta."]
     L += ["", f"## Exemplo mínimo de `{COMMENTARY_JSON}` (ilustrativo)", "", "```json",
-          json.dumps(example_commentary(fb, mind_hint or "claude-code"), ensure_ascii=False,
+          json.dumps(example_commentary(fb, mind), ensure_ascii=False,
                      indent=2), "```", ""]
     return "\n".join(L)
 

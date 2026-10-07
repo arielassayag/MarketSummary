@@ -18,7 +18,7 @@ fund:
   daily_close_run_local: "19:20"         # marcação, risco, atribuição, comentário e relatório
   primary_calendar: BVMF                 # calendário oficial da B3 (exchange_calendars)
   rebalance_rule: "último pregão da semana na NYSE (sexta-feira ou, com feriado nos EUA, o pregão anterior)"
-  minds: [claude-code, codex]            # a "mente" do CDP: intercambiável, metodologia perene
+  minds: [claude-code, codex]            # apps de IA aceitos como mente (intercambiáveis); metodologia perene
   use_all_available_data: true           # inclui intradiário e notícias até o momento da análise
 
 risk:
@@ -144,7 +144,7 @@ costs:
 alpha:
   signal_weights:
     residual_momentum: 0.25
-    short_term_reversal: 0.0    # calibração 2026-10-05: giro sem alpha líquido (reports/backtest/2026-10-05)
+    short_term_reversal: 0.0    # desligada: giro sem alpha líquido no estudo de calibração de outubro de 2026
     value: 0.20
     quality: 0.15
     low_risk: 0.10
@@ -158,12 +158,12 @@ alpha:
   view_sign_coherence: true          # visão final + ⇒ sem short; − ⇒ sem long (PM prevalece)
   reresidualize_after_views: true    # alpha reortogonalizado após as inclinações das visões
 
-drawdown:                    # escada a partir do pico (Millennium-style, escalada p/ vol 5%)
-  soft_stop: -0.025            # revisão de risco + corte de 25% do gross
+drawdown:                    # controle de perdas a partir do pico (níveis calibrados para vol de 5%)
+  soft_stop: -0.025            # nível 1: revisão da carteira e risco limitado pelo multiplicador do nível
   soft_degross_multiplier: 0.75
-  hard_stop: -0.05             # corte de 50% do gross
+  hard_stop: -0.05             # nível 2: redução de risco
   degross_multiplier: 0.5
-  stop_out: -0.075             # gross mínimo + revisão completa do processo
+  stop_out: -0.075             # nível 3: stop-out e revisão completa do processo
   stop_out_gross: 0.5
   risk_reference: normal_book_vol   # escada sobre a vol da mesma carteira no estágio normal (m·σ_ref)
 
@@ -185,7 +185,7 @@ risk_model:
     vale: [BR_BRADESPAR, BR_VALE]
 
 research:
-  provider: imported                     # pesquisa e decisão escritas pela mente (Claude Code / Codex)
+  provider: imported                     # pesquisa e decisão escritas pela mente (app de IA da gestão)
   top_n_candidates: 40
   news_lookback_days: 14
   llm_can_only_tighten: true

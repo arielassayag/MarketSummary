@@ -1319,7 +1319,12 @@ class Avaliador:
         validos = self.metodos_validos()
         out: dict[str, Any] = {"tem_alvo": False}
         if not validos or p0 is None or self.dps12 is None:
-            motivo = ("nenhum método com insumos suficientes" if not validos else
+            # Sem método válido, o motivo diz por quê, método a método (ex.: banco que publica só
+            # em IFRS sem o patrimônio dos controladores no XBRL público).
+            faltas = "; ".join(f"{i['nome']}: {i['motivo']}" for i in self.metodos.values()
+                               if i.get("motivo"))
+            motivo = (("nenhum método com insumos suficientes" + (f" ({faltas})" if faltas else ""))
+                      if not validos else
                       "preço indisponível" if p0 is None else "dividendo esperado indisponível")
             reg.nota("alvo", "Preço-alvo de 12 meses", f"Sem preço-alvo: {motivo}.")
             out["motivo_sem_alvo"] = motivo
@@ -1496,8 +1501,13 @@ class Avaliador:
         if vol is not None and vol > 0:
             dy = self.dps12 / p0
             mu = self.cc.ke - dy
-            pm_bull = float(1 - norm.cdf((math.log(p90 / p0) - (mu - vol * vol / 2)) / vol)) if p90 > 0 else None
-            pm_bear = float(norm.cdf((math.log(p10 / p0) - (mu - vol * vol / 2)) / vol)) if p10 > 0 else None
+            # Só quando a faixa de cenários envolve o preço (P10 ≤ P0 ≤ P90): com o cenário adverso
+            # acima do preço (ou o favorável abaixo), a "probabilidade implícita" perde o sentido.
+            envolve = p10 <= p0 <= p90
+            pm_bull = (float(1 - norm.cdf((math.log(p90 / p0) - (mu - vol * vol / 2)) / vol))
+                       if p90 > 0 and envolve else None)
+            pm_bear = (float(norm.cdf((math.log(p10 / p0) - (mu - vol * vol / 2)) / vol))
+                       if p10 > 0 and envolve else None)
             drift = f"({pct(self.cc.ke)} − {pct(dy)} − {pct(vol)}² ÷ 2)"
             if pm_bull is not None:
                 reg.add("cenarios.prob_mercado", "Probabilidade implícita pelo mercado (otimista)",

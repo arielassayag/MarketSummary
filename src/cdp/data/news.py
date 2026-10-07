@@ -94,6 +94,40 @@ def clean_issuer_name(name: str) -> str:
     return _WS_RE.sub(" ", re.sub(r"\([^)]*\)", " ", name)).strip()
 
 
+#: Palavras genéricas de razão social: sozinhas não identificam o emissor numa manchete.
+_GENERICAS = frozenset({
+    "grupo", "group", "empresas", "empresa", "banco", "bank", "financiero", "financeira",
+    "holding", "holdings", "inc", "corp", "corporacion", "companhia", "compania", "cia", "de",
+    "do", "da", "dos", "das", "del", "la", "las", "los", "el", "the", "and", "energia", "brasil",
+    "mexico", "chile", "colombia", "peru", "argentina", "america", "americas", "latin", "latam",
+    "internacional", "participacoes", "investimentos", "investments", "industrias",
+    "industrial", "comercial", "servicios", "servicos", "sistemas", "resources", "minerals",
+    "mining", "energy", "seguros", "seguridade", "capital", "fibra", "nacional", "airlines",
+    "airports", "aeroportuario", "sur", "norte", "centro", "pacifico", "sureste", "digital",
+})
+
+
+def _norm_palavras(texto: str) -> str:
+    t = unicodedata.normalize("NFKD", str(texto or "").lower())
+    t = "".join(ch for ch in t if not unicodedata.combining(ch))
+    return " " + re.sub(r"[^a-z0-9]+", " ", t).strip() + " "
+
+
+def titulo_relevante(titulo: str, query: NewsQuery) -> bool:
+    """A manchete cita o emissor? Nome completo, uma palavra distintiva do nome (fora as
+    genéricas de razão social e de país) ou o ticker. Sem isso, a busca devolveu ruído
+    (esporte, outra empresa homônima de país, acidente sem relação)."""
+    t = _norm_palavras(titulo)
+    nome = _norm_palavras(clean_issuer_name(query.issuer_name))
+    if nome.strip() and nome in t:
+        return True
+    tokens = [w for w in nome.split() if len(w) >= 3 and w not in _GENERICAS]
+    if any(f" {w} " in t for w in tokens):
+        return True
+    tk = _norm_palavras(query.ticker).strip()
+    return bool(tk) and f" {tk} " in t
+
+
 def news_id_for(link: str) -> str:
     return "rss_" + hashlib.sha256(link.strip().encode("utf-8")).hexdigest()[:12]
 
@@ -141,6 +175,38 @@ def _resolve_sanitizer() -> Callable[[str], str]:
 def sanitize_title(text: str) -> str:
     """Sanitiza um título não confiável (guardrails do pacote quando disponível)."""
     return _resolve_sanitizer()(text)
+
+
+def injection_marks(text: str) -> list[str]:
+    """Marcas ``injecao:*`` de um texto externo (vazio = nenhum padrão de instrução)."""
+    try:
+        mod = importlib.import_module("..research.guardrails", package=__package__)
+        found = mod.detect_injection(str(text or ""))
+        prefix = mod.INJECTION_FLAG_PREFIX
+    except Exception:  # noqa: BLE001 - guardrail indisponível: nunca derruba a coleta
+        return []
+    return sorted(f"{prefix}{name}" for name in found)
+
+
+def quarantine_text(marks: Sequence[str]) -> str:
+    """Marcador que substitui um título com padrão de instrução (o texto nunca é gravado)."""
+    try:
+        mod = importlib.import_module("..research.guardrails", package=__package__)
+        prefix = mod.QUARENTENA_PREFIX
+    except Exception:  # noqa: BLE001
+        prefix = "[SUSPEITA — manchete retida"
+    return f"{prefix}: padrão de instrução ({', '.join(marks)})]"
+
+
+def triage_title(text: str, sanitizer: Callable[[str], str] | None = None
+                 ) -> tuple[str, list[str]]:
+    """``(título a gravar, marcas)``: título com padrão de instrução vai para a quarentena — o
+    texto é trocado pelo marcador com as marcas ``injecao:*`` (gravado em ``news.jsonl`` e
+    visível no briefing); nunca chega à mente nem é evidência válida."""
+    marks = injection_marks(text)
+    if marks:
+        return quarantine_text(marks), marks
+    return (sanitizer or _resolve_sanitizer())(text), []
 
 
 def queries_from_universe(universe: Universe, issuer_ids: Iterable[str] | None = None
@@ -244,11 +310,19 @@ def fetch_issuer_news(query: NewsQuery, as_of: date, lookback_days: int, *,
     for it in parse_rss(resp.content):
         if not (lo <= it["published_at"] <= hi):
             continue
-        title = san(it["title"])
+        title, marks = triage_title(it["title"], san)
         if not title:
             continue
+        if not marks and not titulo_relevante(it["title"], query):
+            continue  # ruído da busca (a manchete não cita o emissor); suspeitas ficam registradas
+        source, smarks = triage_title(it["source"], san)
+        if smarks and not marks:
+            title = quarantine_text(smarks)
+        if marks or smarks:
+            log.warning("Notícia em quarentena (%s): %s", query.issuer_id,
+                        ", ".join(sorted({*marks, *smarks})))
         out.append(NewsItem(news_id=news_id_for(it["link"]), issuer_ids=[query.issuer_id],
-                            title=title, source=san(it["source"])[:120], url=it["link"],
+                            title=title, source=source[:120], url=it["link"],
                             published_at=it["published_at"], language=lang, is_synthetic=False))
     return out
 

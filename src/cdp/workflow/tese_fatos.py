@@ -525,8 +525,18 @@ def _caps_text(caps: Mapping[str, Any] | None) -> str:
     if not caps:
         return "tabela de limites indisponível"
     parts = [f"efetivo {fmt(caps.get('efetivo'), 'pct')}"]
-    parts += [f"{label} {fmt(caps.get(key), 'pct')}" for key, label in CAP_PT
-              if caps.get(key) is not None]
+    teto = _num(caps.get("teto_nome"))
+    folgados = []
+    for key, label in CAP_PT:
+        v = _num(caps.get(key))
+        if v is None:
+            continue
+        if key != "teto_nome" and teto is not None and v > teto:
+            folgados.append(label)  # acima do teto do mandato: não restringe (ex.: liquidez)
+            continue
+        parts.append(f"{label} {fmt(v, 'pct')}")
+    if folgados:
+        parts.append("não restringem (acima do teto do mandato): " + ", ".join(folgados))
     mult = _num(caps.get("squeeze_mult"))
     if mult is not None and mult < 1:
         parts.append(f"multiplicador de squeeze {_br(mult, 2)}")

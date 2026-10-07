@@ -952,6 +952,15 @@ def commentary_for(reports_root: Path, record: DailyRecord, history: Sequence[Da
         section = extract_section(report, COMMENTARY_SECTION)
         if section:
             ai, mind = _commentary_meta(section)
+            if ai and mind is None:
+                # O texto publicado não nomeia o app de IA ("app de IA da gestão"): a mente vem
+                # do campo ``mind`` do comentário arquivado ao lado do relatório.
+                try:
+                    raw = json.loads((folder / "comentario.json").read_text(encoding="utf-8"))
+                    mind = str(raw.get("mind")) if isinstance(raw, dict) and raw.get("mind") \
+                        else None
+                except (OSError, ValueError):
+                    mind = None
             return Commentary(section, "relatório diário publicado", ai, mind)
     path = folder / "comentario.json"
     if not path.is_file():

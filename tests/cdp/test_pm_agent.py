@@ -533,12 +533,15 @@ def test_examples_are_valid_and_validate_inputs_ok(tmp_path):
     ResearchPackFile.model_validate(example_research_pack(ctx))
     week_dir = tmp_path / WEEK.isoformat()
     _write_inputs(week_dir, ctx)
-    ok, issues = validate_inputs(week_dir, ctx, expected_mind="claude-code", now=NOW)
+    from cdp.contracts import mente_exemplo
+
+    # os exemplos usam a mente da execução (CDP_HARNESS; sem ela, o app das rotinas)
+    ok, issues = validate_inputs(week_dir, ctx, expected_mind=mente_exemplo(), now=NOW)
     assert ok, issues
     pack, rp_issues = load_research_pack_file(week_dir / "inputs" / "research_pack.json", ctx,
                                               now=NOW)
-    assert rp_issues == [] and pack.mind == "claude-code"
-    assert pack.notes[0].provider == "imported:claude-code"
+    assert rp_issues == [] and pack.mind == mente_exemplo()
+    assert pack.notes[0].provider == f"imported:{mente_exemplo()}"
 
 
 def test_validate_inputs_reports_actionable_issues(tmp_path):
@@ -757,7 +760,9 @@ def test_pm_views_may_cite_research_note_ids_from_the_week(tmp_path):
     ok, issues = validate_inputs(tmp_path / "w", ctx, now=NOW)
     assert ok, issues
     pack, out, load_issues, pm_ctx = load_week_inputs(tmp_path / "w", ctx, now=NOW)
-    assert load_issues == [] and pack.mind == "claude-code"
+    from cdp.contracts import mente_exemplo
+
+    assert load_issues == [] and pack.mind == mente_exemplo()
     assert out.views[0].evidence_ids == [note_id]
     assert [n.note_id for n in pm_ctx.research_notes] == [note_id]
     empty_pack, fallback, issues2, _ = load_week_inputs(tmp_path / "nada", ctx, now=NOW)
@@ -813,7 +818,7 @@ def test_demo_pm_end_to_end_with_weekly_pipeline():
         ELECTION_WEEK, final, outcome.decision, out, None, [], bundle.views, [],
         outcome.shadow_quant, cfg.fund.name, factbook=pfb, cfg=cfg, attempts=outcome.attempts,
         path_taken=outcome.path_taken)
-    assert "CDP vs sombra só-quant" in md_txt and "mente demo" in md_txt
+    assert "CDP × carteira-sombra do modelo quantitativo" in md_txt and "mente demo" not in md_txt
     assert "DADOS SIMULADOS" in html and "{{fact:" not in md_txt
 
 

@@ -5,7 +5,7 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-Última atualização: 2026-10-06, terça-feira (sessão de integração da documentação, Claude Code).
+Última atualização: 2026-10-06, terça-feira (correções do ensaio geral com o Codex como executor).
 
 ## Como continuar (qualquer app)
 
@@ -32,6 +32,42 @@ motivo: `docs/cdp/DECISOES.md`.
 | Integração contínua | `.github/workflows/cdp-ci.yml` (lint, testes, integridade, rotinas, skills, portal da demonstração) | — |
 | Documentação | `AGENTS.md` como fonte única, arquitetura, automação dentro do app de IA, teste de consistência; licenças (Apache-2.0 + CC BY 4.0, confirmadas pelo titular em 06/10/2026) e aviso legal | `docs/cdp/ARQUITETURA.md`, `tests/cdp/test_docs_consistencia.py` |
 | Cronograma e construção (no ramo de integração, aguardando o commit) | stop de squeeze por nome, série de risco idiossincrático no monitor, kill switch desligado só por humano num terminal interativo, pedido de kill switch mesclável (`reports/risk/<data>/kill_switch_<HHMM>.yaml`, aplicado pela execução exclusiva seguinte ou por `cdp kill-switch aplicar-pedidos`; a agenda lista os pendentes) | `docs/cdp/EXECUCAO.md`, `docs/cdp/METODOLOGIA.md` |
+
+## Correções do ensaio geral (06/10/2026, Codex como executor)
+
+Feitas no código, nos roteiros e nas skills (suíte `tests/cdp` e ruff verdes):
+
+- `weekly prepare` monta o briefing numa área temporária e promove de uma vez; falha no meio não
+  trava a semana (briefing parcial antigo é afastado); cotação intradiária vazia é falha de coleta
+  (análise no fechamento anterior); a agenda só conta briefing completo.
+- Kill switch: `kill-switch off` exige a senha do operador (hash fora do repositório;
+  `cdp kill-switch senha`), e `CDP_HARNESS`/`CODEX_*`/`ANTIGRAVITY_*` contam como contexto de
+  agente; kill switch antes da carteira inaugural sai como status estruturado; prazo vencido no
+  `weekly decide` sai como JSON (`prazo_vencido`), com texto próprio da inaugural.
+- Modo ensaio: `CDP_AGORA` (relógio do cenário), `CDP_ENSAIO_SUBSTITUTO=1` (substituto de dados
+  rotulado) e commit local com o trailer `CDP-Ensaio` (um clone com ensaio nunca publica).
+- Mente: os validadores e as publicações recusam `mind` diferente da execução (`--mind` ou
+  `CDP_HARNESS`), salvo rascunho entregue; exemplos com a mente da execução; o Codex é o app das
+  rotinas (`configs/cdp/executor.yaml`, documentação neutra); `CDP_EXECUTOR` inválido é recusado.
+- Dados: brutos volumosos da CVM e da SEC fora do git (índice versionado); portal publica só o
+  último retrato completo da cobertura; BDI com tempo-limite curto e parada após 3 datas com
+  falha; manchetes com padrão de instrução vão para a quarentena; filtro de relevância de notícias.
+- Texto ao investidor: relatórios semanal e diário em pt-BR (nomes de empresas, rótulos, horário
+  de Brasília, sem o nome do app); avisos técnicos de dados numa frase só; VOL_TARGET contra a meta
+  aplicada; "(USD)" só nos benchmarks cotados em dólar e validador que recusa "em dólares" para
+  fato em moeda local; nomes com acento (`configs/cdp/nomes.yaml`); portão G20 de plausibilidade
+  do alvo (consenso, cenários, margem do G11); ADR com o alvo da própria classe (PBR ← PETR3).
+
+Pendências que dependem do titular ou do commit (não são código):
+
+- `git rm -r --cached artifacts/painel` mantendo `.gitkeep` (a pasta passou a ser ignorada; o HTML
+  antigo com a fonte proprietária removida ainda está versionado) e decidir o histórico público
+  antes de 09/10 (commits da rodada anterior e da calibração: ramo novo ou aceitar).
+- Logotipo e imagem de compartilhamento com "ASSET MANAGEMENT" (arte da marca) e
+  `fund.minds` (valor do mandato, entra no hash da configuração da gênese).
+- Fora do escopo desta passagem: páginas estáticas por ativo (SEO), identidade visual dos
+  relatórios HTML e da página de dados, gráfico de potencial no celular, tabela anual do lucro
+  residual na memória de cálculo e arquivo das planilhas Damodaran no retrato.
 
 ## Frentes em andamento (2026-10-06)
 
@@ -85,10 +121,11 @@ motivo: `docs/cdp/DECISOES.md`.
 - Tarefas agendadas do Codex e do Antigravity rodam no computador (app aberto); o Antigravity
   usa um modelo fixo nas tarefas agendadas e a sua documentação pública ainda é escassa —
   ensaiar antes de confiar.
-- `artifacts/painel/cdp_painel_local.html` (cerca de 2,3 MB) ainda é versionado (as rotinas não
-  o regravam mais: `cdp painel --sem-local`) e traz texto de pesquisa anterior à data de início;
-  sai da árvore só no clone do executor (`git rm --cached`), e até lá é a única exceção nominal
-  do teste de termos proibidos.
+- `artifacts/painel/` passou a ser ignorada pelo git (cópia local do painel); o
+  `cdp_painel_local.html` antigo (cerca de 2,3 MB, texto de pesquisa anterior à data de início)
+  ainda é versionado até o `git rm -r --cached artifacts/painel` do commit, e até lá é a única
+  exceção nominal do teste de termos proibidos. `cdp site conferir` falha se um termo vedado
+  aparecer em qualquer arquivo do portal.
 - **Licenças confirmadas pelo titular em 06/10/2026**: `LICENSE` (Apache-2.0, todo o código do
   repositório, inclusive o app Fechamento), `LICENSE-docs` (CC BY 4.0, textos e conteúdos do
   CDP) e `NOTICE` (marca reservada) — ver `docs/cdp/DECISOES.md`.

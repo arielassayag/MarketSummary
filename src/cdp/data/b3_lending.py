@@ -45,6 +45,12 @@ OPEN_POSITION_TABLE = "BTBLendingOpenPosition"
 LOAN_BALANCE_TABLE = "BTBLoanBalance"
 MAX_TAKE = 1000
 MAX_PAGES = 60
+BDI_TIMEOUT_S = 20.0
+"""Tempo máximo por requisição ao BDI (o BDI fora do ar respondia só no tempo-limite de 60 s,
+por tentativa e por data, e o ``weekly prepare`` passava de 14 min)."""
+BDI_RETRIES = 1
+MAX_FALHAS_SEGUIDAS = 3
+"""Datas seguidas com falha de rede/HTTP que interrompem a coleta (fonte fora do ar)."""
 B3_SOURCE = "B3/BDI"
 LENDING_EXTRA_FIELDS = [
     "b3_ticker", "lending_rate_min", "lending_rate_max", "contracts_day", "shares_lent_day",
@@ -77,7 +83,8 @@ def fetch_bdi_table(table: str, session_date: date, *, session: Any | None = Non
     while page <= max_pages:
         url = BDI_TABLE_URL.format(table=table, d=session_date.isoformat(), page=page, take=take)
         resp = http_request("POST", url, session=session, json={},
-                            headers={"Content-Type": "application/json"}, sleep=sleep, timeout=60)
+                            headers={"Content-Type": "application/json"}, sleep=sleep,
+                            timeout=BDI_TIMEOUT_S, retries=BDI_RETRIES)
         if resp.status_code != 200:
             raise FetchError(f"BDI {table} {session_date}: HTTP {resp.status_code}")
         payload = resp.json() or {}
@@ -237,18 +244,22 @@ def fetch_b3_lending_day(session_date: date, *, tickers: Sequence[str] | None = 
 
 def fetch_b3_lending(tickers: Sequence[str], start: date, end: date, *,
                      shares_outstanding: Mapping[str, float] | None = None,
-                     session: Any | None = None, sleep: Sleeper = time.sleep) -> pd.DataFrame:
+                     session: Any | None = None, sleep: Sleeper = time.sleep,
+                     max_falhas_seguidas: int = MAX_FALHAS_SEGUIDAS) -> pd.DataFrame:
     """Histórico longo ``[date, ticker, LENDING_FIELDS..., extras]`` entre ``start`` e ``end``.
 
     Percorre os dias úteis (seg–sex); datas sem dados (feriado, fora da janela D-21 ou ainda não
-    publicadas) são puladas. Se TODAS as requisições falharem por erro HTTP/rede, levanta
-    ``RuntimeError`` (fonte indisponível) — nunca devolve valores inventados.
+    publicadas) são puladas. ``max_falhas_seguidas`` datas seguidas com erro HTTP/rede
+    interrompem a coleta (fonte fora do ar: nunca minutos de tempo-limite por data). Sem nenhum
+    dado e com falhas, levanta ``RuntimeError`` (fonte indisponível) — nunca devolve valores
+    inventados; com dados parciais, as falhas ficam em ``df.attrs["falhas"]``.
     """
     br = [t for t in tickers if yahoo_to_b3(t)]
     if not br or start > end:
         return empty_lending_long()
     frames: list[pd.DataFrame] = []
     errors: list[str] = []
+    seguidas = 0
     days = pd.bdate_range(start, end)
     for ts in days:
         d = ts.date()
@@ -258,20 +269,28 @@ def fetch_b3_lending(tickers: Sequence[str], start: date, end: date, *,
         except (FetchError, ValueError, KeyError) as exc:
             errors.append(f"{d}: {exc}")
             log.warning("BDI indisponível em %s: %r", d, exc)
+            seguidas += 1
+            if seguidas >= max_falhas_seguidas:
+                errors.append(f"coleta interrompida após {seguidas} datas seguidas com falha")
+                break
             continue
+        seguidas = 0
         if day.empty:
             continue
         day = day.reset_index()
         day.insert(0, "date", pd.Timestamp(d))
         frames.append(day)
-    if errors and len(errors) == len(days):
+    if errors and not frames:
         raise RuntimeError("Fonte de aluguel B3 (BDI) indisponível: " + "; ".join(errors[:3]))
     if not frames:
         return empty_lending_long()
     df = pd.concat(frames, ignore_index=True)
     df["date"] = pd.to_datetime(df["date"])
     df = df[LENDING_LONG_COLUMNS + sorted(c for c in df.columns if c not in LENDING_LONG_COLUMNS)]
-    return _coerce_lending_types(df.sort_values(["date", "ticker"]).reset_index(drop=True))
+    out = _coerce_lending_types(df.sort_values(["date", "ticker"]).reset_index(drop=True))
+    if errors:
+        out.attrs["falhas"] = list(errors)
+    return out
 
 
 def latest_lending(long_df: pd.DataFrame, as_of: date | None = None) -> pd.DataFrame:

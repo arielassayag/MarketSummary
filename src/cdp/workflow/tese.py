@@ -353,14 +353,27 @@ def parse_thesis_file(path: Path) -> tuple[TeseOutput | None, list[str]]:
         return None, _validation_issues(exc)
 
 
-def load_thesis_file(path: Path, fb: FactBook, analysis: Mapping[str, Any]
-                     ) -> tuple[TeseOutput | None, list[str]]:
-    """Tese da mente validada (schema + guardrails) ou ``None`` com os problemas."""
+def load_thesis_file(path: Path, fb: FactBook, analysis: Mapping[str, Any], *,
+                     expected_mind: str | None = None) -> tuple[TeseOutput | None, list[str]]:
+    """Tese da mente validada (schema + guardrails + mente da execução) ou ``None`` com os
+    problemas."""
+    from ..contracts import mente_divergente
+
     out, issues = parse_thesis_file(path)
     if out is None:
         return None, issues
     problems = verify_thesis(out, fb, analysis)
+    if (divergente := mente_divergente(out.mind, expected_mind)):
+        problems = [divergente, *problems]
     return (None, problems) if problems else (out, [])
+
+
+def _mente_esperada(rt: Runtime, week: date) -> str | None:
+    """Mente que a tese deve declarar (rascunho entregue mantém a de quem o escreveu)."""
+    fn = getattr(rt, "mente_esperada", None)
+    if fn is None:
+        return None
+    return fn(thesis_dir(rt.book_root, week) / TESE_JSON, handoff_path(rt, week))
 
 
 # ==========================================================
@@ -583,7 +596,7 @@ def template_thesis(analysis: Mapping[str, Any], fb: FactBook,
                  else "com risco fatorial relevante"))
     worst = next((r for r in n["stress"] if r["pnl"] is not None), None)
     resumo = (f"Carteira long/short da semana de {week} com {ph('tese.n_long')} compras e "
-              f"{ph('tese.n_short')} vendas: gross de {ph('tese.gross')}, net de "
+              f"{ph('tese.n_short')} vendas: exposição bruta de {ph('tese.gross')}, líquida de "
               f"{ph('tese.net')} e beta previsto de {ph('tese.beta')} contra o mercado LatAm.\n\n"
               f"- **Risco:** vol ex-ante de {ph('tese.vol')} ao ano, com "
               f"{ph('tese.risco_especifico')} da variância em risco específico; um desvio-padrão "
@@ -642,7 +655,7 @@ def template_thesis(analysis: Mapping[str, Any], fb: FactBook,
                 + ("abaixo da meta aplicada: o alpha líquido de custos não sustentou mais risco "
                    "sob as neutralidades e os tetos por nome." if below else
                    "em linha com a meta aplicada."))
-    cons.append(f" As dez maiores posições somam {ph('tese.top10_gross')} do gross e o número "
+    cons.append(f" As dez maiores posições somam {ph('tese.top10_gross')} da exposição bruta e o número "
                 f"efetivo de posições é {ph('tese.n_efetivo')}. O giro de {ph('tese.giro')} "
                 f"custa {ph('tese.custo_execucao_bps')} do valor negociado e o aluguel médio dos "
                 f"shorts é de {ph('tese.aluguel_medio')} ao ano.")
@@ -881,9 +894,12 @@ def _event_words(label: str, terms: Sequence[str]) -> str:
 
 
 def example_thesis(analysis: Mapping[str, Any], fb: FactBook,
-                   mind: str = "claude-code") -> dict[str, Any]:
-    """Exemplo mínimo e válido de ``tese.json`` (um tema e uma posição; ilustrativo)."""
-    out = template_thesis(analysis, fb, mind)
+                   mind: str | None = None) -> dict[str, Any]:
+    """Exemplo mínimo e válido de ``tese.json`` (um tema e uma posição; ilustrativo), com a
+    mente desta execução (``CDP_HARNESS``)."""
+    from ..contracts import mente_exemplo
+
+    out = template_thesis(analysis, fb, mente_exemplo(mind))
     data = out.model_dump(mode="json")
     data.update({"temas": data["temas"][:1], "posicoes": data["posicoes"][:1],
                  "riscos": data["riscos"][:2], "gatilhos": data["gatilhos"][:2]})
@@ -1049,11 +1065,11 @@ def render_markdown(rendered: Mapping[str, Any], analysis: Mapping[str, Any]) ->
           f"preços até {R['prices_as_of']} · publicada em {R['published_at']}_", "",
           f"## {R['title']}", "", R["summary_md"], "", "## Números-chave", ""]
     L += _md_table(["Indicador", "Valor"], [
-        ("NAV", fmt(s["nav_usd"], "usd")),
+        ("PL", fmt(s["nav_usd"], "usd")),
         ("Posições (compras / vendas)", f"{fmt(s['n_long'], 'count')} / "
                                         f"{fmt(s['n_short'], 'count')}"),
         ("Exposição comprada / vendida", f"{_pct(s['long'])} / {_pct(s['short'], True)}"),
-        ("Gross / net", f"{_pct(s['gross'])} / {_pct(s['net'], True)}"),
+        ("Exposição bruta / líquida", f"{_pct(s['gross'])} / {_pct(s['net'], True)}"),
         ("Beta previsto (limite)", f"{fmt(s['beta'], 'ratio', signed=True, digits=3)} "
                                    f"(±{fmt(s['beta_limit'], 'ratio', digits=3)})"),
         ("Vol ex-ante (fatorial / específica)", f"{_pct(s['vol'])} ({_pct(s['factor_vol'])} / "
@@ -1066,7 +1082,7 @@ def render_markdown(rendered: Mapping[str, Any], analysis: Mapping[str, Any]) ->
                                                     f"{_pct(s['alpha_net'], True)}"),
         ("Número efetivo de posições", fmt(s["effective_n"], "ratio", digits=1)),
         ("Giro da semana", _pct(s["turnover"])),
-        ("Dez maiores posições (% do gross)", _pct(s["top10_gross"])),
+        ("Dez maiores posições (% da exposição bruta)", _pct(s["top10_gross"])),
     ])
     for sec in R["sections"][:2]:
         L += [f"## {sec['title']}", "", sec["md"], ""]
@@ -1088,7 +1104,7 @@ def render_markdown(rendered: Mapping[str, Any], analysis: Mapping[str, Any]) ->
         for t in R["themes"]:
             L += [f"### {t['title']} ({side_pt.get(t['side'], t['side'])})", "",
                   f"_Nomes:_ {', '.join(names.get(i, i) for i in t['issuers'])}. "
-                  f"_Net_ {_pct(t['net'], True)}, _gross_ {_pct(t['gross'])}, participação no "
+                  f"_Líquida_ {_pct(t['net'], True)}, _bruta_ {_pct(t['gross'])}, participação no "
                   f"risco {_pct(t['risk_share'], True)}, contribuição ao alpha "
                   f"{_pct(t['alpha'], True)}.", "", t["md"], "", f"**Riscos:** {t['risks_md']}",
                   ""]
@@ -1331,7 +1347,8 @@ def validate_thesis(rt: Runtime, week: date) -> dict[str, Any]:
     path = thesis_dir(rt.book_root, week) / TESE_JSON
     out, issues = parse_thesis_file(path)
     if out is not None:
-        issues = verify_thesis(out, fb, analysis)
+        _ok, issues = load_thesis_file(path, fb, analysis,
+                                       expected_mind=_mente_esperada(rt, week))
     return {"ok": not issues, "problemas": issues, "cobertura": coverage(out, analysis)}
 
 
@@ -1362,13 +1379,14 @@ def _fresh_prepared(rt: Runtime, week: date) -> tuple[FactBook, dict[str, Any], 
 
 
 def _compose(fb: FactBook, analysis: Mapping[str, Any], tese_path: Path, decision: Any, *,
-             week: date, published_at: str) -> tuple[str, str, str, list[str]]:
+             week: date, published_at: str,
+             expected_mind: str | None = None) -> tuple[str, str, str, list[str]]:
     """``(tese_publicada.json, tese.md, autoria, problemas)`` — determinístico dado o instante
     de publicação (a retomada de uma publicação incompleta recompõe e compara byte a byte)."""
     from ..hashing import sha256_text
 
     template = template_thesis(analysis, fb)
-    out, problems = load_thesis_file(tese_path, fb, analysis)
+    out, problems = load_thesis_file(tese_path, fb, analysis, expected_mind=expected_mind)
     if out is None:
         authorship, mind, used = "codigo", None, template
         problems = problems + ["Tese da mente não publicada: usada a tese automática do código."]
@@ -1431,7 +1449,7 @@ def _resume_publication(rt: Runtime, week: date, decision: Any) -> dict[str, Any
     analysis, fb, _texts = _build_prepared(rt, week)  # em memória: nada é regravado
     doc_text, markdown, authorship2, problems = _compose(
         fb, analysis, folder / TESE_JSON, decision, week=week,
-        published_at=str(doc.get("published_at")))
+        published_at=str(doc.get("published_at")), expected_mind=_mente_esperada(rt, week))
     if pub.read_text(encoding="utf-8") != doc_text or authorship2 != authorship or (
             md_path.exists() and md_path.read_text(encoding="utf-8") != markdown):
         raise ValueError(f"Publicação incompleta da tese de {week}: os arquivos existentes não "
@@ -1471,7 +1489,8 @@ def publish_thesis(rt: Runtime, week: date) -> dict[str, Any]:
         return _resume_publication(rt, week, d)
     fb, analysis, prep_notes = _fresh_prepared(rt, week)
     doc_text, markdown, authorship, problems = _compose(
-        fb, analysis, folder / TESE_JSON, d, week=week, published_at=rt.now().isoformat())
+        fb, analysis, folder / TESE_JSON, d, week=week, published_at=rt.now().isoformat(),
+        expected_mind=_mente_esperada(rt, week))
     _write_exclusive(pub, doc_text)
     try:
         _write_exclusive(md_path, markdown)

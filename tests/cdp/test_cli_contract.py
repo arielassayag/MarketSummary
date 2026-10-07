@@ -204,7 +204,10 @@ def test_mind_choices_come_from_harness_minds():
             if "--mind" in a.option_strings:
                 found.append(path)
                 assert tuple(a.choices) == HARNESS_MINDS, path
-    assert sorted(found) == [("daily",), ("validate",), ("weekly", "decide"),
+    assert sorted(found) == [("daily",), ("nota", "publish"), ("tese", "publish"),
+                             ("validate",), ("validate-daily",), ("validate-nota",),
+                             ("validate-tese",), ("validate-weekly-report",),
+                             ("weekly", "decide"),
                              ("weekly", "prepare"), ("weekly", "preview")]
     desc = ResearchPack.model_fields["mind"].description
     assert all(m in desc for m in HARNESS_MINDS)

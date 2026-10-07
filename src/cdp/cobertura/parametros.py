@@ -101,8 +101,8 @@ class ParametrosCobertura:
         externa = chave.startswith(("damodaran", "fred"))
         doc = f.get("documento")
         if externa and doc:
-            doc = (f"{doc} — valor transcrito em configs/cdp/valuation.yaml (versão {self.versao}); planilha não "
-                   "arquivada no snapshot: conferir no endereço")
+            doc = (f"{doc} — valor transcrito na configuração pública da cobertura (valuation.yaml, "
+                   "nos dados abertos); conferir no endereço da fonte")
         return {"fonte": "DAMODARAN" if chave.startswith("damodaran") else (
             "FRED" if chave.startswith("fred") else "CONFIG"),
             "url": f.get("url"), "documento": doc,

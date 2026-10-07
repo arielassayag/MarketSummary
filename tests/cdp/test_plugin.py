@@ -47,7 +47,7 @@ TESES = ROOT / "docs" / "cdp" / "teses"
 #: Versão do plugin e resumo das skills nessa versão. A instalação pelo marketplace do GitHub guarda
 #: uma cópia presa à ``version`` (docs/cdp/LOCAL.md): skills novas com a versão antiga nunca chegam
 #: às rotinas. Mudou uma skill ⇒ suba a ``version`` em plugin.json e atualize os dois valores.
-PLUGIN_VERSION = "1.5.0"
+PLUGIN_VERSION = "1.5.1"
 SKILLS_SHA256 = "a895f67b38c22b1405bd034ecf9974227cde92f14a9cbdc1c3614a8967ee8a3d"
 #: Roteiro de cada skill do plugin e a família de tarefas de ``configs/cdp/rotinas.yaml``.
 ROTEIRO = {"semanal": "SEMANAL.md", "diario": "DIARIO.md", "cobertura": "COBERTURA.md",
@@ -772,13 +772,14 @@ def test_rotinas_table_is_the_generated_one():
 
 
 def test_guides_teach_every_app_step_by_step():
-    """Claude Code (rotinas na nuvem, a nossa escolha), Codex e Gemini (Antigravity), passo a
-    passo, com os prompts gerados pelo código; GitHub Actions só para CI e portal."""
+    """Codex (o app das rotinas), Claude Code (rotinas na nuvem ou app desktop) e Gemini
+    (Antigravity), passo a passo, com os prompts gerados pelo código; GitHub Actions só para CI
+    e portal."""
     rot = _ler(DOCS / "ROTINAS.md")
     flat = _plano(rot)
-    for titulo in ("## 3. Claude Code — rotinas na nuvem (principal; a nossa escolha)",
-                   "## 4. Claude Code — app desktop (reserva local)",
-                   "## 5. Codex — tarefas agendadas do app (passo a passo)",
+    for titulo in ("## 3. Claude Code — rotinas na nuvem",
+                   "## 4. Claude Code — app desktop",
+                   "## 5. Codex — tarefas agendadas do app (o app das rotinas; passo a passo)",
                    "## 6. Gemini — Antigravity (passo a passo)",
                    "## 8. GitHub Actions: só integração contínua e portal"):
         assert titulo in rot, titulo

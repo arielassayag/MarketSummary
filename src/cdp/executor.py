@@ -194,7 +194,16 @@ def identidade(raiz: Path | str, env: Mapping[str, str] | None = None) -> dict[s
     base = {"harness": harness, "harness_registrado": None,
             "ambiente_detectado": detectar_ambiente(env)}
     if env.get("CDP_EXECUTOR"):
-        return {"executor": env["CDP_EXECUTOR"], "origem": "CDP_EXECUTOR", **base}
+        valor = str(env["CDP_EXECUTOR"]).strip()
+        if valor not in EXECUTORES or valor == "nenhum":
+            # Valor fora da lista (ex.: o nome do app, "codex"): identidade inválida, nunca
+            # aceita em silêncio — e nunca cai para .cdp/local.yaml (a variável tem precedência).
+            return {"executor": "desconhecido", "origem": "CDP_EXECUTOR",
+                    "invalido": valor, **base,
+                    "aviso": (f"CDP_EXECUTOR={valor!r} não é um executor válido "
+                              f"({', '.join(e for e in EXECUTORES if e != 'nenhum')}); a "
+                              "variável tem precedência sobre .cdp/local.yaml")}
+        return {"executor": valor, "origem": "CDP_EXECUTOR", **base}
     path = Path(raiz) / LOCAL_YAML
     if path.is_file():
         try:
@@ -219,6 +228,8 @@ def verificar(raiz: Path | str, tarefa: Tarefa | None = None, *,
                             "harness": ident["harness"], "origem": ident["origem"],
                             "ambiente_detectado": ident["ambiente_detectado"],
                             "sou_o_executor": False, "motivo": None}
+    if ident.get("aviso"):
+        info["aviso"] = ident["aviso"]
     try:
         cfg = carregar_executor(raiz)
     except ErroExecutor as exc:
@@ -248,8 +259,9 @@ def verificar(raiz: Path | str, tarefa: Tarefa | None = None, *,
         info["motivo"] = "executor pausado (nenhum): ninguém grava o livro agora"
         return PAUSADO, info
     if ident["executor"] == "desconhecido":
-        info["motivo"] = ("identidade deste ambiente desconhecida: defina CDP_EXECUTOR ou rode "
-                          "`cdp executor registrar --como <executor>` no clone das rotinas")
+        info["motivo"] = ident.get("aviso") or (
+            "identidade deste ambiente desconhecida: defina CDP_EXECUTOR ou rode "
+            "`cdp executor registrar --como <executor>` no clone das rotinas")
         return IDENTIDADE_DESCONHECIDA, info
     if not info["sou_o_executor"]:
         info["motivo"] = (f"o executor designado é {cfg['executor']}; este ambiente é "
@@ -259,7 +271,16 @@ def verificar(raiz: Path | str, tarefa: Tarefa | None = None, *,
     return OK, info
 
 
+#: Variáveis com o identificador da sessão/conversa do app de IA, por ordem de preferência
+#: (``CDP_SESSAO`` vale para qualquer app ou script de rotina que a defina).
+SESSAO_VARS = ("CDP_SESSAO", "CODEX_THREAD_ID", "CODEX_SESSION_ID", "ANTIGRAVITY_SESSION_ID",
+               "CLAUDE_CODE_SESSION_ID")
+
+
 def sessao_url(env: Mapping[str, str] | None = None) -> str | None:
+    """Endereço ou identificador da sessão que gravou (trailer ``CDP-Sessao``): rotina na nuvem
+    do Claude Code ou GitHub Actions (URL); nos apps locais (Codex, Antigravity, Claude Code
+    desktop), o identificador da conversa quando o app o exporta; ``None`` se não houver."""
     env = os.environ if env is None else env
     sid = env.get("CLAUDE_CODE_REMOTE_SESSION_ID")
     if sid:
@@ -267,6 +288,10 @@ def sessao_url(env: Mapping[str, str] | None = None) -> str | None:
     if env.get("GITHUB_RUN_ID") and env.get("GITHUB_REPOSITORY"):
         server = env.get("GITHUB_SERVER_URL", "https://github.com")
         return f"{server}/{env['GITHUB_REPOSITORY']}/actions/runs/{env['GITHUB_RUN_ID']}"
+    for var in SESSAO_VARS:
+        valor = (env.get(var) or "").strip()
+        if valor:
+            return valor if var == "CDP_SESSAO" else f"{var.split('_')[0].lower()}:{valor}"
     return None
 
 
@@ -668,6 +693,24 @@ def estado_dos_caminhos(raiz: Path | str, caminhos: Sequence[str]) -> dict[str, 
     return {n: hashes.get(n) for n in sorted(set(nomes))}
 
 
+TRAILER_ENSAIO = "CDP-Ensaio"
+
+
+def commits_de_ensaio(raiz: Path | str, remoto: str) -> list[str]:
+    """Commits locais (ainda não no remoto) gravados em ensaio — nunca podem ser publicados."""
+    r = git(["log", "--format=%H%x00%B%x1e", f"{remoto}..HEAD"], raiz)
+    if r.returncode:
+        return []
+    out = []
+    for bloco in r.stdout.split("\x1e"):
+        if "\0" not in bloco:
+            continue
+        sha, corpo = bloco.split("\0", 1)
+        if any(ln.strip().startswith(f"{TRAILER_ENSAIO}:") for ln in corpo.splitlines()):
+            out.append(sha.strip()[:12])
+    return out
+
+
 def _confirmar_trava(raiz: Path, trava_id: str | None, env: Mapping[str, str]
                      ) -> dict[str, Any]:
     """A trava ainda é desta execução? (renova por compare-and-swap: prova e estende)."""
@@ -702,9 +745,12 @@ def publicar(raiz: Path | str, tarefa: Tarefa, mensagem: str, *, rt: Any = None,
     raiz = Path(raiz)
     out: dict[str, Any] = {"tarefa": tarefa.id, "commit": None, "push": False, "motivo": "",
                            "arquivos": [], "retidos": [], "trava": None}
-    if _em_ensaio(env):
-        out["motivo"] = "ensaio: nada é publicado"
-        return OK, out
+    ensaio = _em_ensaio(env)
+    if ensaio:
+        # Ensaio: commit local (trailer ``CDP-Ensaio``), nunca push nem trava — a rotina
+        # seguinte do ensaio encontra o livro em dia; nada sai do clone.
+        sem_push, sem_trava = True, True
+        out["ensaio"] = True
     if not tarefa.grava:
         out["motivo"] = "tarefa só de leitura: nada a publicar"
         return CONFIG, out
@@ -713,7 +759,7 @@ def publicar(raiz: Path | str, tarefa: Tarefa, mensagem: str, *, rt: Any = None,
         return CONFIG, out
     code, info = verificar(raiz, tarefa, env=env, remoto=not sem_push)
     out["executor"] = info
-    if code != OK:
+    if code != OK and not ensaio:
         out["motivo"] = info.get("motivo") or "este ambiente não é o executor"
         return code, out
     todos = tuple(tarefa.caminhos) + tuple(tarefa.caminhos_exclusivos)
@@ -814,7 +860,8 @@ def _publicar_delta(raiz: Path, tarefa: Tarefa, mensagem: str, out: dict[str, An
         corpo = (f"Inclui {len(anteriores)} arquivo(s) gravado(s) por execução anterior deste "
                  "clone e ainda não publicado(s).\n\n" if anteriores else "")
         texto = mensagem.rstrip() + "\n\n" + corpo + "\n".join(
-            trailers(tarefa.id, identidade(raiz, env), exec_id, env, mente)) + "\n"
+            trailers(tarefa.id, identidade(raiz, env), exec_id, env, mente)
+            + ([f"{TRAILER_ENSAIO}: sim"] if out.get("ensaio") else [])) + "\n"
         c = git([*_identidade_commit(raiz), "commit", "--quiet", "-m", texto,
                  "--pathspec-from-file=-", "--pathspec-file-nul"], raiz, entrada=spec)
         if c.returncode:
@@ -825,9 +872,16 @@ def _publicar_delta(raiz: Path, tarefa: Tarefa, mensagem: str, out: dict[str, An
         out["motivo"] = "verify falhou: commit local, sem push (" + "; ".join(msgs[:3]) + ")"
         return FALHA, out
     if sem_push:
-        out["motivo"] = "sem push (--sem-push)"
+        out["motivo"] = ("ensaio: commit local, sem push (nada é publicado)" if out.get("ensaio")
+                         else "sem push (--sem-push)")
         return parcial, out
     remoto = f"{REMOTO}/{ramo}"
+    ensaios = commits_de_ensaio(raiz, remoto)
+    if ensaios:
+        out.update({"motivo": ("commits de ensaio neste clone (trailer CDP-Ensaio): nunca são "
+                               "publicados; use um clone limpo para as rotinas reais"),
+                    "commits_de_ensaio": ensaios})
+        return FORA_DO_ESCOPO, out
     for tentativa in range(2):
         s = sincronizar(raiz, executar=True, env=env, ramo=ramo)
         out["sincronizar"] = {k: s[k] for k in ("acao", "motivo")}

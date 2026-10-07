@@ -138,7 +138,11 @@ news.jsonl               NewsItem por linha (conteúdo NÃO confiável)
 
 A pasta de destino precisa ser nova (nunca sobrescreve). `load_snapshot` recalcula todos os
 hashes e falha em divergência. Os arquivos públicos brutos da cobertura ficam em
-`data/publico/<FONTE>/...`, com índice append-only e SHA-256 de cada coleta.
+`data/publico/<FONTE>/...`, com índice append-only e SHA-256 de cada coleta. Os brutos
+volumosos que a fonte regrava todo dia (pacotes anuais DFP, ITR, FRE, FCA e calendário do IPE da
+CVM; `companyfacts` da SEC) ficam só no clone das rotinas, fora do git: o índice (URL, tamanho,
+SHA-256) é versionado e os extratos usados por emissor vão no retrato da cobertura
+(`book/cobertura/<data>/insumos/`), que é o que `cdp cobertura verify` recalcula.
 
 ## 5. Motor quantitativo (resumo)
 

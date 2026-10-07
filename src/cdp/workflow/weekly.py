@@ -951,9 +951,12 @@ def build_proposal(ctx: WeekContext, *, views: list[View], overrides: dict | Non
             str(r).startswith("degross") for r in result.relaxations)
         comp_kw = {"model_base": ctx.model_base, "kappa_f": ctx.kappa_f,
                    "drawdown_ref_vol": drawdown_ref_vol, "reduce_only": reduce_only}
+    # VOL_TARGET (indicador) compara com a meta APLICADA na semana (postura e viés a priori),
+    # não com a meta-base do mandato: atingir a meta aplicada nunca aparece como "falha".
     checks = run_compliance(w, ctx.model, constraints, ctx.squeeze, ctx.panel.assets, cfg,
                             ctx.nav, current, ctx.inception, ctx.as_of, ctx.week, ctx.market_w,
-                            ctx.is_synthetic, drawdown=ctx.drawdown, **comp_kw)
+                            ctx.is_synthetic, vol_target=vol_target, drawdown=ctx.drawdown,
+                            **comp_kw)
     checks = list(checks) + theme_checks(ctx, w)
     summary = risk_summary(ctx, w)
     fx_last = fx_for_lines(ctx.md).ffill().iloc[-1]

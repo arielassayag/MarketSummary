@@ -380,7 +380,8 @@ def _rel_repo(p: Path, raiz_repo: Path) -> str | None:
 
 
 def coletar_dados(rt: Any, raiz_repo: Path, *, risco_ultimas: int = 20,
-                  desde_o_inicio: bool = True) -> list[tuple[Path, Arquivo]]:
+                  desde_o_inicio: bool = True,
+                  retratos_completos: int = 1) -> list[tuple[Path, Arquivo]]:
     """``[(origem no disco, Arquivo)]`` publicáveis (cópias fiéis; ver docstring do módulo).
     ``desde_o_inicio``: nada com data anterior a ``fund.inception_date`` (desligado só na
     demonstração, cujo histórico sintético é anterior)."""
@@ -393,12 +394,22 @@ def coletar_dados(rt: Any, raiz_repo: Path, *, risco_ultimas: int = 20,
                                descricao=_descricao(destino))))
 
     semanas_decididas: list[str] = []
+    # Retratos da cobertura: o mais recente vai completo; os anteriores, só os arquivos da raiz do
+    # retrato (manifesto, selo, resumos) — modelos e insumos completos (~18 MB por retrato) ficam
+    # no repositório, com o mesmo SHA-256. Sem isso o portal passaria do limite do Pages.
+    datas_cob = sorted({q.relative_to(book).parts[1] for q in _arquivos_de(book / "cobertura")
+                        if len(q.relative_to(book).parts) > 2
+                        and _DATA_RE.match(q.relative_to(book).parts[1])})
+    completos = set(datas_cob[-retratos_completos:]) if retratos_completos > 0 else set()
     for p in _arquivos_de(book):
         rel = p.relative_to(book).as_posix()
         partes = tuple(rel.split("/"))
         if p.name in EXCLUIR_NOMES or p.name.startswith(".") or _sombra(rel):
             continue
         if partes[0] == "cobertura":
+            if (len(partes) > 3 and _DATA_RE.match(partes[1])
+                    and partes[1] not in completos):
+                continue  # retrato antigo: só a raiz do retrato vai ao portal
             add(p, f"dados/livro/{rel}", "cobertura")
             continue
         if _anterior(partes, inicio):
@@ -454,6 +465,29 @@ def coletar_dados(rt: Any, raiz_repo: Path, *, risco_ultimas: int = 20,
     return out
 
 
+#: Dicionário de dados (pt-BR) das colunas dos arquivos CSV publicados (carteira, ordens,
+#: registros): vai em ``description`` de cada campo do ``datapackage.json``. Os nomes das colunas
+#: seguem o código (estáveis para programas); o significado fica aqui.
+DICIONARIO_CSV: dict[str, str] = {
+    "issuer_id": "Identificador interno do emissor (país_nome)", "name": "Nome da empresa",
+    "country": "País (código ISO de duas letras; LATAM = regional)",
+    "sector": "Setor (classificação GICS, em inglês)", "side": "Lado: LONG = comprada, SHORT = vendida",
+    "weight": "Peso no PL (fração; negativo = vendida)", "notional_usd": "Nocional em US$",
+    "execution_ticker": "Ticker da linha negociada", "line_type": "Tipo da linha (LOCAL, ADR, US_LISTED)",
+    "currency": "Moeda da linha", "price_local": "Preço na moeda da linha",
+    "shares": "Quantidade de ações (ou ADRs)", "adtv_usd": "Volume médio diário negociado em US$",
+    "pct_adtv": "Fração do volume médio diário", "days_to_liquidate": "Pregões para liquidar a posição",
+    "squeeze_score": "Escore de risco de squeeze (shorts)", "squeeze_bucket": "Faixa de risco de squeeze",
+    "borrow_fee_annual": "Taxa de aluguel anual (fração)", "alpha_annual": "Alpha esperado anual (fração)",
+    "alpha_z": "Sinal quantitativo composto (escore z)", "view_score": "Visão da pesquisa/gestor (−2 a +2)",
+    "risk_contribution": "Contribuição para a variância ex-ante (fração)", "beta": "Beta previsto ao mercado LatAm",
+    "data_notice": "Aviso sobre a origem dos dados", "ticker": "Ticker",
+    "action": "Ordem: BUY = compra, SELL = venda, SHORT = venda a descoberto, COVER = recompra",
+    "weight_change": "Variação de peso no PL (fração)", "est_cost_bps": "Custo estimado (pontos-base do negociado)",
+    "est_days": "Pregões estimados para executar", "date": "Data (AAAA-MM-DD)",
+}
+
+
 def _esquema_csv(texto: str) -> dict[str, Any] | None:
     try:
         leitor = csv.reader(io.StringIO(texto))
@@ -478,7 +512,10 @@ def _esquema_csv(texto: str) -> dict[str, Any] | None:
     campos = []
     for nome, ts in zip(cab, tipos, strict=False):
         tipo = next(iter(ts)) if len(ts) == 1 else "string" if ts else "any"
-        campos.append({"name": nome, "type": tipo})
+        campo = {"name": nome, "type": tipo}
+        if nome in DICIONARIO_CSV:
+            campo["description"] = DICIONARIO_CSV[nome]
+        campos.append(campo)
     return {"fields": campos, "missingValues": [""]}
 
 
@@ -660,9 +697,16 @@ def _separar_fragmento(frag: str) -> tuple[list[str], str]:
     return cab, frag[i:]
 
 
+def _versao(cfg: Mapping[str, Any], commit: str | None) -> str:
+    ver = (commit or "")[:10]
+    if ver and cfg.get("versao_local"):
+        return f"{ver} (versão local não publicada: há gravações do livro fora do repositório)"
+    return ver
+
+
 def _rodape_painel(cfg: Mapping[str, Any], commit: str | None, agora: datetime) -> str:
     repo = cfg["repositorio"]
-    ver = (commit or "")[:10]
+    ver = _versao(cfg, commit)
     codigo = (f'<a href="https://github.com/{esc(repo)}/tree/{esc(commit)}">Código e metodologia'
               f'</a> — código aberto na versão do repositório <code>{esc(ver)}</code>'
               if commit else
@@ -757,7 +801,7 @@ def _pagina(cfg: Mapping[str, Any], *, titulo: str, descricao: str, canonico: st
     sim = (f'<div class="sim" role="note">{SIMULATED_DATA_NOTICE} — demonstração com mercado '
            "sintético; não é a carteira do fundo.</div>\n" if demo else "")
     mast = (f'<header class="mast"><div class="mast-in" style="max-width:1180px;margin:0 auto">'
-            f'<a class="marca" href="{raiz_rel or "./"}" aria-label="CDP Asset Management — '
+            f'<a class="marca" href="{raiz_rel or "./"}" aria-label="CDP — '
             f'Cabra da Peste"><span class="marca-img" role="img" aria-hidden="true"><i class="t">'
             f'</i><i class="s"></i></span>'
             f'<span><b>CABRA DA PESTE</b><small>Carteira simulada long/short · ações da América '
@@ -804,7 +848,7 @@ def pagina_dados(cfg: Mapping[str, Any], arquivos: list[Arquivo], *, commit: str
                  agora: datetime, demo: bool, indexar: bool, verificacao: Mapping[str, Any],
                  tem_og: bool, n_eventos: int | None = None) -> str:
     repo = cfg["repositorio"]
-    ver = (commit or "")[:10]
+    ver = _versao(cfg, commit)
     total = sum(a.bytes_ for a in arquivos)
     ref = commit or "main"
     por_grupo: dict[str, list[Arquivo]] = {}
@@ -947,6 +991,13 @@ def construir(rt: Any, op: Opcoes) -> dict[str, Any]:
     if op.base_url:
         cfg["base_url"] = op.base_url.rstrip("/")
     commit = op.commit or _git(["rev-parse", "HEAD"], raiz) or None
+    # Livro com gravações ainda não publicadas (montagem local): o carimbo nunca finge ser a
+    # versão do repositório — diz "versão local não publicada" (o Actions monta de árvore limpa).
+    if not op.commit and not op.demo:
+        from .rotinas import CAMINHOS_DO_LIVRO
+
+        cfg["versao_local"] = bool(_git(["status", "--porcelain", "--", *CAMINHOS_DO_LIVRO],
+                                        raiz))
     agora = op.agora or _instante_do_commit(raiz) or datetime.now(UTC)
     if agora.tzinfo is None:
         agora = agora.replace(tzinfo=FUSO)
@@ -1104,7 +1155,7 @@ def datapackage(cfg: Mapping[str, Any], arquivos: list[Arquivo], saida: Path, *,
                 r["schema"] = esquema
         recursos.append(r)
     titulo = f"{cfg['titulo_curto']} — dados abertos"
-    desc = ("Arquivos do fundo simulado (paper trading com preços reais) para auditoria: "
+    desc = ("Arquivos da carteira simulada com preços reais, para auditoria: "
             "cópias fiéis do livro, dos relatórios e da configuração do repositório público.")
     palavras = ["carteira simulada", "long/short", "América Latina", "dados abertos"]
     if demo:
@@ -1166,6 +1217,12 @@ def _refs_locais(path: Path, saida: Path) -> list[str]:
         if not destino.exists():
             faltas.append(ref)
     return faltas
+
+
+#: Termos que nunca vão ao ar (só dados públicos; nenhuma ferramenta proprietária): a
+#: conferência do site falha se aparecerem em qualquer arquivo de texto publicado.
+VEDADOS_NO_PORTAL = ("quar" + "tr", "dalo" + "opa", "fact" + "set", "capital" + " iq",
+                     "refini" + "tiv", "bloomberg" + " terminal", "econo" + "matica")
 
 
 def conferir(saida: Path | str) -> list[str]:
@@ -1237,6 +1294,19 @@ def conferir(saida: Path | str) -> list[str]:
     og = re.search(r'property="og:image" content="([^"]+)"', idx)
     if og and not og.group(1).startswith(("https://", "http://")):
         out.append("og:image precisa ser endereço absoluto")
+    # Nada vedado no que vai ao ar: ferramentas e bases proprietárias (só dados públicos).
+    vedados = re.compile("|".join(VEDADOS_NO_PORTAL), re.IGNORECASE)
+    for p in sorted(saida.rglob("*")):
+        if p.is_file() and p.suffix.lower() in (".html", ".json", ".md", ".csv", ".txt", ".yaml",
+                                                ".yml", ".xml", ".js", ".css", ".jsonl"):
+            try:
+                texto = p.read_text(encoding="utf-8")
+            except (UnicodeDecodeError, OSError):
+                continue
+            m = vedados.search(texto)
+            if m:
+                out.append(f"{p.relative_to(saida).as_posix()}: termo vedado no portal "
+                           f"({m.group(0)!r})")
     simulado = bool(man.get("dados_simulados"))
     for nome in ("index.html", "404.html", "dados/index.html"):
         txt = (saida / nome).read_text(encoding="utf-8")
@@ -1279,7 +1349,7 @@ p{font:400 27px/1.35 "Alegreya",serif;margin:0 0 14px;color:#4a3e33}
 <p>Carteira simulada long/short de ações da América Latina, neutra em mercado, em dólares.</p>
 <p>Decisões, risco e modelos abertos, com dados públicos e trilha auditável.</p></div>
 <div class="selo"><span>Dados públicos</span><span class="sol">Não é oferta</span></div>
-<div class="rodape">Paper trading com preços reais · portal aberto</div>
+<div class="rodape">Carteira simulada com preços reais · portal aberto</div>
 </body></html>"""
 
 _ICONE_HTML = """<!doctype html><html><head><meta charset="utf-8"><style>

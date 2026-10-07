@@ -319,7 +319,8 @@ def reparar_pendencias(book: Path, audit: bool = True, agora: datetime | None = 
         if sha256_obj(selo) not in hashes:
             trilha.append("COVERAGE_SNAPSHOT", "CDP", selo,
                           summary=f"Cobertura {d.isoformat()}: {selo['n_instrumentos']} instrumentos, "
-                                  f"{selo['n_com_alvo']} com preço-alvo", ts=agora)
+                                  f"{selo['n_com_alvo']} com preço-alvo calculado (citável ou em "
+                                  "revisão)", ts=agora)
             feitos.append(f"{d}: evento COVERAGE_SNAPSHOT acrescentado à trilha do fundo")
     return feitos
 
@@ -501,7 +502,8 @@ def gravar_snapshot(book: Path, ex: Execucao, dados: DadosPublicos, params: Para
     if audit:
         AuditLog(Path(book) / "audit_log.jsonl").append(
             "COVERAGE_SNAPSHOT", "CDP", selo,
-            summary=f"Cobertura {d.isoformat()}: {selo['n_instrumentos']} instrumentos, {n_alvo} com preço-alvo",
+            summary=(f"Cobertura {d.isoformat()}: {selo['n_instrumentos']} instrumentos, {n_alvo} com "
+                     "preço-alvo calculado (citável ou em revisão)"),
             ts=agora)
     return {"pasta": str(destino), "manifest_sha256": msha, "selo": selo, "n_eventos": len(novos),
             "reparos": reparos}

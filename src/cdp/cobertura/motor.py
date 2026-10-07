@@ -109,6 +109,42 @@ def tp_deterministico(pac: Mapping[str, Any], ctx: Mapping[str, Any], params: Pa
     return float(M.rolagem(v0, av.cc.ke, av.dps12))
 
 
+_CLASSE_PT = {"on": "ON", "ordinaria": "ON", "ordinárias": "ON", "ordinarias": "ON",
+              "ordinária": "ON", "pn": "PN", "preferencial": "PN", "preferenciais": "PN",
+              "unit": "UNIT", "units": "UNIT"}
+
+
+def _classe(texto: str) -> str | None:
+    return _CLASSE_PT.get(str(texto).strip().lower())
+
+
+def classe_da_linha(lines: pd.DataFrame, ticker: str) -> str | None:
+    """Classe da ação (ON, PN, UNIT) de uma linha, pela curadoria do universo (``notes``).
+
+    Linha local: "classe ON"/"classe preferencial". ADR ou listagem externa: a razão declarada
+    para o próprio ticker ("PBR=2 ON, PBR-A=2 PN", "CIB = 4 preferenciais"). Sem a indicação,
+    ``None`` (a classe não é inferida)."""
+    import re
+
+    notas = str(lines.loc[ticker].get("notes", "") or "")
+    if str(lines.loc[ticker, "line_type"]) == "LOCAL":
+        m = re.search(r"classe\s+(\w+)", notas, flags=re.IGNORECASE)
+        return _classe(m.group(1)) if m else None
+    sym = re.escape(str(ticker))
+    m = re.search(rf"(?<![\w-]){sym}\s*=\s*\d+(?:[.,]\d+)?\s+(\w+)", notas, flags=re.IGNORECASE)
+    return _classe(m.group(1)) if m else None
+
+
+def linha_local_da_classe(lines: pd.DataFrame, ticker: str) -> str | None:
+    """Linha local da mesma classe da linha externa ``ticker`` (ex.: PBR → PETR3), ou ``None``."""
+    cls = classe_da_linha(lines, ticker)
+    if cls is None:
+        return None
+    locais = [t for t in lines.index if str(lines.loc[t, "line_type"]) == "LOCAL"
+              and classe_da_linha(lines, t) == cls]
+    return sorted(locais)[0] if len(locais) == 1 else None
+
+
 def _alvos_linhas(md: MarketData, params: ParametrosCobertura, pac: Mapping[str, Any], mod: Mapping[str, Any],
                   as_of: date) -> list[dict[str, Any]]:
     """Preço-alvo de cada linha do emissor a partir do alvo da linha de valuation.
@@ -116,8 +152,10 @@ def _alvos_linhas(md: MarketData, params: ParametrosCobertura, pac: Mapping[str,
     - mesma moeda (outra classe ou unidade): ``TP × (preço da linha ÷ preço da linha de
       valuation)`` — a razão de preços corrente entre as classes é mantida (o modelo não projeta o
       prêmio ou desconto entre classes);
-    - outra moeda (ADR, listagem estrangeira): ``TP × (câmbio esperado em 12 meses pela inflação
-      relativa) × (ações por linha)``."""
+    - outra moeda (ADR, listagem estrangeira): ``TP da classe subjacente × (câmbio esperado em 12
+      meses pela inflação relativa) × (ações por linha)``. A classe subjacente vem da curadoria do
+      universo (ex.: PBR = 2 ON ⇒ alvo da PETR3; PBR-A = 2 PN ⇒ alvo da PETR4): emissor com dois
+      ADRs de classes diferentes nunca recebe o mesmo alvo nos dois."""
     from .insumos import acoes_por_linha
 
     if not mod.get("tem_alvo"):
@@ -145,9 +183,17 @@ def _alvos_linhas(md: MarketData, params: ParametrosCobertura, pac: Mapping[str,
             a_l, _ = acoes_por_linha(md, params, pac["issuer_id"], t)
             f_v = fx_v * (1 + pi_us) / (1 + float(infl.get(pac["moeda"], pi_us)))
             f_l = fx_l * (1 + pi_us) / (1 + float(infl.get(ccy, pi_us)))
-            tp = float(mod["tp"]) * (f_v / f_l) * (a_l / a_v)
-            conv = (f"TP × câmbio {pac['moeda']}→{ccy} esperado em 12 meses (paridade de inflação) × "
-                    f"ações por linha ({a_l:g} ÷ {a_v:g})")
+            base, origem = float(mod["tp"]), "TP"
+            lines = md.universe.lines_for(pac["issuer_id"])
+            u = linha_local_da_classe(lines, t)
+            if u is not None and u != lv and str(lines.loc[u, "currency"]) == pac["moeda"] and p_v:
+                p_u, _du = ultimo_preco(md, u, as_of)
+                if p_u is not None:
+                    base = float(mod["tp"]) * (p_u / p_v)
+                    origem = f"alvo de {u} (classe subjacente: TP × preço de {u} ÷ preço de {lv})"
+            tp = base * (f_v / f_l) * (a_l / a_v)
+            conv = (f"{origem} × câmbio {pac['moeda']}→{ccy} esperado em 12 meses (paridade de "
+                    f"inflação) × ações por linha ({a_l:g} ÷ {a_v:g})")
         out.append({"ticker": t, "tipo": str(ln["line_type"]), "moeda": ccy, "preco": r6(p),
                     "data_preco": d.isoformat() if d else None, "preco_alvo": r6(tp), "upside": r6(tp / p - 1),
                     "preco_texto": preco(p, ccy), "preco_alvo_texto": preco(tp, ccy),

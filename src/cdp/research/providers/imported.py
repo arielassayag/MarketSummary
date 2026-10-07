@@ -43,6 +43,7 @@ from ...contracts import (
 from ...hashing import sha256_obj
 from ..guardrails import (
     check_placeholders,
+    currency_claim_issues,
     detect_injection,
     extract_fact_ids,
     find_free_numbers,
@@ -87,6 +88,7 @@ def _text_problems(label: str, text: str, fb: FactBook, issuer_id: str | None,
     if uncited:
         out.append(f"{label}: fato usado sem citação como evidência {uncited}")
     out += text_format_issues(label, text)
+    out += currency_claim_issues(label, text, fb)
     inj = detect_injection(text)
     if inj:
         out.append(f"{label}: padrão de injeção {inj}")

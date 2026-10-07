@@ -64,6 +64,7 @@ from ..hashing import combine_hashes, sha256_obj, sha256_text
 from .factbook import NA_TEXT, format_multiple, format_pct, format_value
 from .guardrails import (
     check_placeholders,
+    currency_claim_issues,
     detect_injection,
     extract_fact_ids,
     find_free_numbers,
@@ -152,8 +153,8 @@ POSTURE_MAP: dict[str, tuple[float | None, float]] = {
 
 LADDER_STAGES = ("normal", "soft_stop", "hard_stop", "stop_out", "desconhecido")
 
-REGIME_PT = {"risk_on": "de apetite a risco (risk-on)", "neutral": "neutro",
-             "risk_off": "de aversão a risco (risk-off)"}
+REGIME_PT = {"risk_on": "de apetite a risco", "neutral": "neutro",
+             "risk_off": "de aversão a risco"}
 POSTURE_PT = {"muito_defensiva": "muito defensiva", "defensiva": "defensiva", "neutra": "neutra",
               "ofensiva": "ofensiva"}
 STANCE_PT = {2: "fortemente comprada", 1: "comprada", 0: "neutra", -1: "vendida",
@@ -276,7 +277,9 @@ class ResearchNoteInput(_Strict):
     key_risks: list[str] = Field(default_factory=list)
     squeeze: SqueezeAssessment | None = None
     evidence: list[EvidenceRef] = Field(default_factory=list)
-    created_at: datetime = Field(..., description="Com fuso horário; não posterior à análise.")
+    created_at: datetime = Field(..., description=(
+        "Com fuso horário; data não posterior à data da análise (use o horário real da escrita "
+        "no mesmo dia; nunca um carimbo retroativo)."))
     is_synthetic: bool = False
 
 
@@ -361,6 +364,8 @@ class PMContext:
     news: list[NewsItem] = field(default_factory=list)
     realized_residual_returns: pd.Series | None = None
     analysis_ts: datetime | None = None
+    last_complete_session: date | None = None
+    """Último pregão completo quando ``as_of`` é uma barra intradiária provisória."""
 
     @property
     def is_synthetic(self) -> bool:
@@ -853,6 +858,7 @@ def text_problems(path: str, text: str, fb: FactBook, terms: Sequence[str] = (),
         if uncited:
             out.append(f"{path}: fato usado no texto sem citação em evidence_ids {uncited}")
     out += text_format_issues(path, text)
+    out += currency_claim_issues(path, text, fb)
     inj = detect_injection(text)
     if inj:
         out.append(f"{path}: padrão de injeção de instruções {inj}")
@@ -1141,8 +1147,11 @@ def _example_issuer(ctx: PMContext, fb: FactBook) -> tuple[str, str | None]:
     return "EMISSOR", None
 
 
-def example_pm_decision(ctx: PMContext, mind: str = "claude-code") -> dict[str, Any]:
+def example_pm_decision(ctx: PMContext, mind: str | None = None) -> dict[str, Any]:
     """Exemplo mínimo e válido de ``pm_decision.json`` (ilustrativo; não copie a decisão)."""
+    from ..contracts import mente_exemplo
+
+    mind = mente_exemplo(mind)
     fb = pm_factbook(ctx)
     iid, fid = _example_issuer(ctx, fb)
     evidence = [fid] if fid else ["cdp.drawdown"]
@@ -1165,8 +1174,12 @@ def example_pm_decision(ctx: PMContext, mind: str = "claude-code") -> dict[str, 
     }
 
 
-def example_research_pack(ctx: PMContext, mind: str = "claude-code") -> dict[str, Any]:
-    """Exemplo mínimo e válido de ``research_pack.json`` (ilustrativo)."""
+def example_research_pack(ctx: PMContext, mind: str | None = None) -> dict[str, Any]:
+    """Exemplo mínimo e válido de ``research_pack.json`` (ilustrativo; ``mind`` padrão: a mente
+    desta execução)."""
+    from ..contracts import mente_exemplo
+
+    mind = mente_exemplo(mind)
     fb = pm_factbook(ctx)
     iid, fid = _example_issuer(ctx, fb)
     moment = analysis_moment(ctx)
@@ -1192,7 +1205,9 @@ def example_research_pack(ctx: PMContext, mind: str = "claude-code") -> dict[str
         "macro": [{
             "note_id": f"{ctx.week.isoformat()}-BR-macro", "scope": "BR", "stance": 0,
             "regime": "neutro", "summary": "Resumo macro sem números livres.",
-            "key_events": [], "risks": ["Risco fiscal."], "portfolio_implications": [],
+            "key_events": [{"description": "Reunião do Copom", "expected_date": None,
+                            "direction": "uncertain"}],
+            "risks": ["Risco fiscal."], "portfolio_implications": [],
             "evidence": [{"kind": "source", "ref_id": "https://www.bcb.gov.br",
                           "note": "fonte consultada (exemplo)"}],
             "provider": mind, "created_at": stamp,
@@ -1252,7 +1267,10 @@ def build_pm_briefing(ctx: PMContext) -> tuple[str, dict[str, Any]]:
     if synthetic:
         L += [f"> **{SIMULATED_DATA_NOTICE}** — {notice}", ""]
     L += [
-        f"- Data de referência (último pregão completo): {ctx.as_of.isoformat()}",
+        (f"- Dados até: barra provisória de {ctx.as_of.isoformat()} (cotações do momento da "
+         f"análise); último pregão completo: {ctx.last_complete_session.isoformat()}"
+         if ctx.last_complete_session is not None
+         else f"- Data de referência (último pregão completo): {ctx.as_of.isoformat()}"),
         f"- Data da análise: {adate.isoformat()}"
         + (f" ({moment.isoformat()})" if moment is not None else ""),
         f"- Snapshot: `{fb.snapshot_id}` · FactBook `{fb.factbook_hash()[:16]}`",
@@ -1342,8 +1360,13 @@ def build_pm_briefing(ctx: PMContext) -> tuple[str, dict[str, Any]]:
     L += ["", "## 4. Candidatos do modelo quantitativo (código)", "",
           "Ids dos fatos: `<emissor>.alpha_z`, `.squeeze_score`, `.si_pct_float`, "
           "`.days_to_cover`, `.borrow_fee`, `.adtv_usd_mm`, `.ret_1m_usd`, `.vol_3m`."]
-    cand_table("Longs (maior alpha)", longs)
-    cand_table("Shorts (menor alpha, alugáveis)", shorts)
+    L += ["", "Seleção do código: os maiores (longs) e os menores (shorts, só alugáveis) alphas "
+          "puros — o alpha ortogonal às exposições fatoriais, que o otimizador usa — mais as "
+          "posições atuais. A coluna `alpha z` é o escore composto bruto, ANTES da "
+          "ortogonalização: um nome pode entrar como long com `alpha z` negativo (ou como short "
+          "com positivo) porque o alpha puro tem o sinal oposto ao da exposição fatorial."]
+    cand_table("Candidatos a long — maiores alphas puros (e posições atuais)", longs)
+    cand_table("Candidatos a short — menores alphas puros, alugáveis (e posições atuais)", shorts)
 
     L += ["", "## 5. Pesquisa da semana [IA]", ""]
     notes = sorted(ctx.research_notes, key=lambda n: (n.issuer_id, n.role, n.note_id))
@@ -1489,8 +1512,10 @@ def _deadline_text(ctx: PMContext) -> str:
 def render_instructions(ctx: PMContext, mind_hint: str | None, inputs_dir: Path,
                         briefing_dir: Path) -> str:
     """INSTRUCTIONS.md: passos exatos, regras invioláveis e nomes de arquivos."""
-    mind = mind_hint or "claude-code | codex"
-    mind_arg = mind_hint or "claude-code"
+    from ..contracts import mente_exemplo
+
+    mind_arg = mente_exemplo(mind_hint)
+    mind = mind_hint or mind_arg
     week = ctx.week.isoformat()
     rp = (inputs_dir / RESEARCH_INPUT).as_posix()
     pm = (inputs_dir / PM_INPUT).as_posix()
@@ -1514,11 +1539,13 @@ o prazo efetivo do dia de montagem; `cdp agenda` o mostra em `semanal.prazo_efet
    PT/ES; a nota de pesquisa publicada mais recente em `book/cobertura/notas/`); sentinela de
    squeeze para cada short (`ok`/`caution`/`veto`).
 3. Escreva `{rp}` conforme `{bd}/{RESEARCH_SCHEMA_JSON}` (campo `mind`
-   = `{mind_arg}`; notas com `created_at` com fuso e nunca posterior à análise).
+   = `{mind_arg}`; `created_at` com fuso e o horário real da escrita — a data não pode passar
+   da data da análise; nunca use carimbo retroativo; `key_events` da macro são objetos
+   `{{"description", "expected_date", "direction"}}`, como no exemplo).
 4. Escreva `{pm}` conforme `{bd}/{PM_SCHEMA_JSON}` (campo `mind` = `{mind_arg}`): regime,
    postura de risco, visões, exclusões, o que mudou, avaliação da semana anterior e diário.
 5. Opcional: liste as fontes consultadas em `{src}` (URL, data, o que foi usado).
-6. Valide e corrija até `OK`:
+6. Valide e corrija até `"ok": true` (saída JSON com `ok` e `problemas`):
 
    ```sh
    uv run python -m cdp validate --week {week}
@@ -1578,16 +1605,20 @@ def export_schemas(out_dir: Path | str, *, overwrite: bool = False) -> dict[str,
 
 
 def write_briefing_bundle(ctx: PMContext, out_dir: Path | str, mind_hint: str | None = None, *,
-                          overwrite: bool = False) -> dict[str, Path]:
+                          overwrite: bool = False,
+                          final_dir: Path | str | None = None) -> dict[str, Path]:
     """Gera ``book/<semana>/briefing/``: briefing.md, context.json, schemas e INSTRUCTIONS.md.
 
     Determinístico para o mesmo contexto; reexecução com conteúdo idêntico é aceita, conteúdo
     diferente exige ``overwrite=True``. ``mind_hint`` ∈ {claude-code, codex, api, demo}.
+    ``final_dir``: pasta definitiva quando ``out_dir`` é uma área temporária promovida depois
+    (os caminhos citados nas instruções são os definitivos).
     """
     if mind_hint is not None and mind_hint not in MIND_VALUES:
         raise ValueError(f"mind inválido: {mind_hint!r} (use {', '.join(MIND_VALUES)}).")
     out_dir = Path(out_dir)
-    inputs_dir = out_dir.parent / INPUTS_DIRNAME
+    shown_dir = Path(final_dir) if final_dir is not None else out_dir
+    inputs_dir = shown_dir.parent / INPUTS_DIRNAME
     md, context = build_pm_briefing(ctx)
     context = {**context, "mind_hint": mind_hint, "output_files": {
         "research_pack": (inputs_dir / RESEARCH_INPUT).as_posix(),
@@ -1598,7 +1629,7 @@ def write_briefing_bundle(ctx: PMContext, out_dir: Path | str, mind_hint: str | 
         CONTEXT_JSON: _dump_json(context),
         RESEARCH_SCHEMA_JSON: _schema_text(ResearchPackFile),
         PM_SCHEMA_JSON: _schema_text(PMDecisionOutput),
-        INSTRUCTIONS_MD: render_instructions(ctx, mind_hint, inputs_dir, out_dir),
+        INSTRUCTIONS_MD: render_instructions(ctx, mind_hint, inputs_dir, shown_dir),
     }
     return _write_files(out_dir, texts, overwrite)
 
@@ -2234,7 +2265,7 @@ def to_bundle(out: PMDecisionOutput, cfg: FundConfig, drawdown: float | None, *,
     conviction = (int(math.floor(statistics.median(convictions) + 0.5)) if convictions
                   else None)
     rationale = _truncate(f"Postura {POSTURE_PT[limits.effective]}; regime "
-                          f"{REGIME_PT[out.regime]}; mente {out.mind}. "
+                          f"{REGIME_PT[out.regime]}. "
                           + _render(out.market_view, factbook), BUNDLE_RATIONALE_CHARS)
     return PMDecisionBundle(
         views=views,

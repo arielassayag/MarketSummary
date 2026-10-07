@@ -248,6 +248,36 @@ class View(_Model):
 #: passo da mente feito em qualquer assistente com o pacote de ``cdp mente pacote`` e validado
 #: pela CLI (``ResearchPack.mind`` é ``str``: o dump dos artefatos gravados não muda).
 HARNESS_MINDS = ("claude-code", "codex", "api", "demo", "chatgpt", "gemini", "outro")
+#: Mente registrada por harness de rotina (``CDP_HARNESS``): o nome que vai no campo ``mind``.
+MENTES_DO_HARNESS = {"claude": "claude-code", "claude-code": "claude-code", "codex": "codex",
+                     "gemini": "gemini", "agy": "gemini", "antigravity": "gemini"}
+
+
+def mente_do_ambiente(env=None) -> str | None:
+    """Mente desta execução pelo ``CDP_HARNESS`` do ambiente (``None`` sem harness declarado)."""
+    import os
+
+    h = ((os.environ if env is None else env).get("CDP_HARNESS") or "").strip().lower()
+    if not h:
+        return None
+    return MENTES_DO_HARNESS.get(h, "outro")
+
+
+def mente_exemplo(hint: str | None = None) -> str:
+    """Mente dos exemplos gerados para a mente: a da execução (``--mind``/``CDP_HARNESS``);
+    sem nenhuma, ``codex`` (o app das rotinas)."""
+    return hint or mente_do_ambiente() or "codex"
+
+
+def mente_divergente(declarada: str | None, esperada: str | None) -> str | None:
+    """Problema quando o ``mind`` do arquivo difere da mente da execução (``None`` = confere).
+
+    Sem mente esperada (demonstração, sessão sem harness declarado) não há o que conferir."""
+    if not esperada or declarada == esperada:
+        return None
+    return (f'mind declarado "{declarada}" difere da mente desta execução "{esperada}" '
+            "(--mind ou CDP_HARNESS): o campo registra quem escreveu o arquivo; use a mente do "
+            "gate")
 
 
 class ResearchPack(_Model):

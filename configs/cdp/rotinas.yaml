@@ -59,7 +59,9 @@ tarefas:
     caminhos: [book, reports, data/market, data/publico, artifacts/painel, pesquisa]
     timeout_min: 240
     atraso_max_min: 230
-    trava_ttl_min: 60
+    # Menor que o intervalo entre reservas (60 min) menos a folga de relógio: a trava de uma
+    # execução que morreu sem renovar vence antes da reserva seguinte (`rotinas verificar`).
+    trava_ttl_min: 50
   cdp-risco-1330:
     descricao: Monitor de risco intradiário; liga o kill switch só por gatilho HARD do código.
     playbook: docs/cdp/playbooks/RISCO.md

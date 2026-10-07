@@ -139,7 +139,7 @@ def confianca(pac: Mapping[str, Any], mod: Mapping[str, Any], params: Parametros
         limites_b.append(f"método principal do arquétipo dissidente ({mod.get('metodo_principal')})")
     if n >= 3 and pac.get("pit_ok") and pac.get("status_moeda") == "ok" and cv is not None \
             and cv <= float(q["cv_metodos_a"]) and not av and pac["pais"] != "AR" and holding_ok and not limites_b:
-        return "A", f"{n} métodos, CV {pct(cv, 0)}, insumos point-in-time, consenso de {int(n_eps)} analistas"
+        return "A", f"{n} métodos, CV {pct(cv, 0)}, insumos point-in-time, consenso de LPA de {int(n_eps)} analistas"
     if n <= 1 and not holding_b:
         motivos.append("método único" if not holding else
                        "holding sem 52 semanas de histórico do desconto com a composição atual")

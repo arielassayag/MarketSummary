@@ -23,6 +23,13 @@ Regras:
 - **Offline**: nenhuma rede; só o que está no arquivo (ou nada — ausência nunca vira zero).
 - **Online**: reaproveita uma coleta recente (``max_idade_dias``) e, se não houver, baixa,
   arquiva e devolve. Falha de rede com versão arquivada ⇒ usa a versão arquivada (registrado).
+- **Fora do git**: os arquivos brutos volumosos e regraváveis pela fonte (pacotes anuais da
+  CVM — DFP, ITR, FRE, FCA, calendário do IPE — e o ``companyfacts`` da SEC) ficam só no clone
+  das rotinas (``.gitignore``): a CVM regrava esses pacotes todo dia, e versioná-los faria o
+  repositório público crescer dezenas de MB por coleta. O índice (com SHA-256, URL e tamanho)
+  continua versionado, e os extratos usados por emissor ficam no retrato da cobertura
+  (``book/cobertura/<data>/insumos``). Num clone sem o arquivo bruto, a coleta registrada vale
+  como ausente: online, baixa de novo; offline, devolve ``None`` (com registro em ``falhas``).
 """
 
 from __future__ import annotations
@@ -185,6 +192,19 @@ class Arquivo:
         return None
 
     # ------------------------------------------------------------------ leitura/escrita
+    def disponivel(self, reg: RegistroArquivo | None) -> bool:
+        """O arquivo bruto da coleta está neste clone? (brutos volumosos ficam fora do git)."""
+        return reg is not None and (self.base / reg.caminho).is_file()
+
+    def _local(self, reg: RegistroArquivo | None) -> RegistroArquivo | None:
+        """``reg`` se o bruto está em disco; senão ``None`` (registrado em ``falhas``)."""
+        if reg is None or self.disponivel(reg):
+            return reg
+        with self._lock:
+            self.falhas.append(f"{reg.chave}: coleta de {reg.data_coleta.date().isoformat()} "
+                               "sem o arquivo bruto neste clone (fora do git)")
+        return None
+
     def ler(self, reg: RegistroArquivo) -> bytes:
         p = self.base / reg.caminho
         if not p.exists():
@@ -283,8 +303,8 @@ class Arquivo:
           ``validar`` ANTES de ser arquivado (resposta inválida nunca entra). Falha de rede com
           versão arquivada ⇒ versão arquivada (falha registrada em ``falhas``).
         """
-        exato = self.buscar(chave, ate)
-        ultimo = None if instantaneo else self.buscar(chave)
+        exato = self._local(self.buscar(chave, ate))
+        ultimo = None if instantaneo else self._local(self.buscar(chave))
         agora = self._agora()
         hoje = data_local(agora)
         if self.offline or (instantaneo and ate < hoje):

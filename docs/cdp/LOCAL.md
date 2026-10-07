@@ -211,8 +211,8 @@ cada horário (atenção ao horário de verão do PC; o Brasil não tem).
 
 O **portal público** é o site no GitHub Pages, montado pelo GitHub Actions a partir do livro a
 cada push em `main` (`docs/cdp/SITE.md`). A montagem e o fechamento também regeneram
-`artifacts/painel/` com `uv run python -m cdp painel --sem-local` (só código; vai no commit da
-rotina): `artifacts/painel/data.json` (perfil de publicação: no máximo 260 KB e linhas de até
+`artifacts/painel/` com `uv run python -m cdp painel --sem-local` (só código; a pasta fica fora
+do git — cópia local, nunca no repositório público): `artifacts/painel/data.json` (perfil de publicação: no máximo 260 KB e linhas de até
 1.500 caracteres, com os cortes listados em `meta.truncations`), a casca
 `artifacts/painel/index.html` e o estilo e o script versionados
 (`artifacts/painel/painel-<versão>.css` e `.js`). A cópia autônoma

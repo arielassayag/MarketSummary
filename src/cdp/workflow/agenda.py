@@ -123,7 +123,7 @@ def _sem_carteira(rt: Runtime, antes_de: date) -> bool:
 
 
 def _weekly(rt: Runtime, local: datetime) -> dict[str, Any]:
-    from .runtime import PREPARE_MANIFEST
+    from .runtime import briefing_completo
     from .tese import is_published, thesis_applicable
 
     cfg = rt.cfg
@@ -152,11 +152,16 @@ def _weekly(rt: Runtime, local: datetime) -> dict[str, Any]:
     info.update(_janela_info(rt, week if week >= today else _proxima(rt, today), local))
     wd = rt.week_dir(week)
     decided = bool(rt.book.list_decisions(week))
-    briefing = (wd / "briefing" / PREPARE_MANIFEST).exists()
+    # Briefing pronto = manifesto, briefing.md e context.json (um briefing parcial, deixado por
+    # uma falha no meio do ``prepare``, não conta: o próximo ``prepare`` o afasta e refaz).
+    briefing = briefing_completo(wd / "briefing")
+    incompleto = (wd / "briefing").exists() and not briefing
     inputs = {n: (wd / "inputs" / n).exists() for n in ("research_pack.json", "pm_decision.json")}
     thesis = is_published(rt.book_root, week)
     info.update({"decisao_gravada": decided, "briefing_preparado": briefing,
                  "entradas_escritas": inputs, "tese_publicada": thesis})
+    if incompleto:
+        info["briefing_incompleto"] = True
     needs_thesis = decided and not thesis and thesis_applicable(rt.book, week)
     pending_thesis = {"acao": "tese",
                       "motivo": "decisão da semana gravada; a tese de investimento da carteira "
@@ -461,7 +466,9 @@ def validate_daily_commentary(rt: Runtime, session: date) -> tuple[bool, list[st
         return False, [f"sem registro diário em {session}: rode `cdp daily close --date "
                        f"{session}` antes"]
     fb, _history = rt._daily_factbook(session, rec)
-    _md, issues = load_commentary_file(rt.daily_dir(session) / COMMENTARY_JSON, fb, record=rec)
+    esperada = getattr(rt, "mente_esperada", lambda *a, **k: None)()
+    _md, issues = load_commentary_file(rt.daily_dir(session) / COMMENTARY_JSON, fb, record=rec,
+                                       expected_mind=esperada)
     return not issues, list(issues)
 
 

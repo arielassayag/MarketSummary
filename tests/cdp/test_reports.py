@@ -285,7 +285,7 @@ def test_llm_commentary_rendered_by_code(tmp_path):
     md, issues = daily_commentary(FakeProvider(commentary_payload()), record, fb, ledger=ledger)
     assert issues == []
     assert fb.facts["day.ret"].formatted in md and fb.facts["nav"].formatted in md
-    assert "mente api [IA]" in md and "{{fact:" not in md
+    assert "app de IA da gestão [IA]" in md and "{{fact:" not in md and "mente api" not in md
     rec = ledger.records()[0]
     assert rec.role == "commentary" and rec.parse_ok and rec.validation_issues == []
 
@@ -326,7 +326,7 @@ def test_load_commentary_file_routes(tmp_path):
     good = tmp_path / COMMENTARY_JSON
     good.write_text(json.dumps(commentary_payload(mind="codex")), encoding="utf-8")
     md, issues = load_commentary_file(good, fb, record=record)
-    assert issues == [] and "mente codex [IA]" in md
+    assert issues == [] and "app de IA da gestão [IA]" in md and "codex" not in md
     bad = tmp_path / "bad.json"
     bad.write_text(json.dumps(commentary_payload(headline="Alta de 2%")), encoding="utf-8")
     md, issues = load_commentary_file(bad, fb, record=record)
@@ -368,7 +368,7 @@ def test_daily_report_sections_labels_and_footer():
     md, html = render_daily_report(r3, [r1, r2], deterministic_commentary(r3, fb), FUND,
                                    cfg=CFG, squeeze_buckets={"CCC": "MEDIUM"})
     for text in (md, html):
-        assert "paper trading com preços reais" in text
+        assert "carteira simulada com preços reais" in text
         assert "DADOS SIMULADOS" in text
         assert r3.record_hash in text and r3.prev_record_hash in text
         assert "f" * 64 in text  # hash de insumo
@@ -382,7 +382,7 @@ def test_daily_report_sections_labels_and_footer():
     pos_section = md.split("## Posições", 1)[1]
     assert pos_section.index("AAA3.SA") < pos_section.index("CCCADR") < \
         pos_section.index("BBB4.SA") < pos_section.index("DDD.MX")
-    assert "MEDIUM" in pos_section and "não (sem negociação)" in pos_section
+    assert "médio" in pos_section and "não (sem negociação)" in pos_section
     assert "Cinco maiores contribuidores" in md
 
 
@@ -401,7 +401,7 @@ def test_daily_report_real_data_has_no_simulated_banner():
     r1, r2, r3 = make_chain(synthetic=False)
     md, html = render_daily_report(r3, [r1, r2], "Comentário.", FUND, cfg=CFG)
     assert "DADOS SIMULADOS" not in md and "DADOS SIMULADOS" not in html
-    assert "paper trading com preços reais" in md
+    assert "carteira simulada com preços reais" in md
 
 
 # ==========================================================
@@ -509,38 +509,43 @@ def test_weekly_report_has_mandatory_sections_and_labels():
     md, html = _weekly()
     for title in ("Decisão da semana (autônoma)", "Racional", "Avaliação da semana anterior",
                   "O que mudou na visão", "O que mudou na carteira", "Carteira", "Risco",
-                  "Compliance", "CDP vs sombra só-quant", "Diário de decisão", "Integridade"):
+                  "Controles do mandato", "CDP × carteira-sombra do modelo quantitativo",
+                  "Diário de decisão", "Integridade"):
         assert f"## {title}" in md, title
         assert title in html
-    assert "Mente que conduziu a semana: claude-code" in md
+    # o nome do app de IA nunca aparece no texto ao investidor
+    assert "claude-code" not in md and "Mente que conduziu" not in md
+    assert "app de IA da gestão" in md
     assert "[IA]" in md and 'class="badge ia"' in html
-    assert "paper trading com preços reais" in md and "DADOS SIMULADOS" in md
+    assert "carteira simulada com preços reais" in md and "DADOS SIMULADOS" in md
     assert "DADOS SIMULADOS" in html
     assert "p" * 64 in md and "s" * 64 in md  # hashes de integridade
-    assert "COUNTRY_GAP_STRESS" in md and "Sequência de fallback" in md
+    assert "COUNTRY_GAP_STRESS" not in md and "perda em gap de país" in md.lower()
+    assert "Tentativas da decisão, na ordem" in md
     assert "<script" not in html.lower() and "&lt;script&gt;" in html
 
 
 def test_weekly_report_changes_and_shadow_comparison():
     md, _ = _weekly()
     carteira = md.split("## O que mudou na carteira", 1)[1].split("## Carteira", 1)[0]
-    assert "| AAA | Aumento |" in carteira and "| BBB | Redução |" in carteira
-    assert "| CCC | Saída |" in carteira and "| DDD | Entrada |" in carteira
-    assert "| EEE | Inversão |" in carteira and "EEEADR → EEE3.SA" in carteira
-    assert "Turnover (Σ|Δw|)" in carteira.replace("\\|", "|")
+    assert "| Nome AAA | Aumento |" in carteira and "| Nome BBB | Redução |" in carteira
+    assert "| Nome CCC | Saída |" in carteira and "| Nome DDD | Entrada |" in carteira
+    assert "| Nome EEE | Inversão |" in carteira and "EEEADR → EEE3.SA" in carteira
+    assert "Giro (soma das variações de peso)" in carteira
     assert "| 7,50% |" in carteira  # Σ|Δw| = 1% + 0,5% + 2% + 2% + 2%
     assert "parcial" not in carteira  # todas as ordens desta carteira têm custo estimado
-    sombra = md.split("## CDP vs sombra só-quant", 1)[1].split("## Diário de decisão", 1)[0]
+    sombra = md.split("## CDP × carteira-sombra do modelo quantitativo", 1)[1].split(
+        "## Diário de decisão", 1)[0]
     assert "Nomes em comum (mesmo lado) | 2 |" in sombra
     assert "Alpha esperado (a.a.) | 3,10% | 2,60% | +0,50%" in sombra
     visao = md.split("## O que mudou na visão", 1)[1].split("## O que mudou na carteira", 1)[0]
-    assert "| AAA |" in visao and "nova" in visao and "encerrada" in visao and "stance ↑" in visao
+    assert "| Nome AAA |" in visao and "nova" in visao and "encerrada" in visao and "stance ↑" in visao
     avaliacao = md.split("## Avaliação da semana anterior", 1)[1].split("## O que mudou", 1)[0]
-    assert "resíduo -1,50%" in avaliacao and "| CCC | -1 | pm | 0,60 | resíduo -1,50% | sim |" \
+    assert "resíduo -1,50%" in avaliacao and "| Nome CCC | -1 | gestor | 0,60 | resíduo -1,50% | sim |" \
         in avaliacao
     # sem resíduo: mede-se o retorno total da ação (direção), não o sinal do P&L
-    assert "| BBB | +1 | pm | 0,40 | retorno total USD -" in avaliacao
-    assert "| BBB | +1 | pm | 0,40 | P&L" not in avaliacao
+    assert "| Nome BBB | +1 | gestor | 0,40 | retorno total USD -" in avaliacao
+    assert "| Nome BBB | +1 | gestor | 0,40 | P&L" not in avaliacao
 
 
 def test_weekly_report_renders_or_marks_placeholders():
@@ -708,7 +713,7 @@ def test_commentary_file_route_is_always_labelled_ia(tmp_path):
     path = tmp_path / COMMENTARY_JSON
     path.write_text(json.dumps(commentary_payload(mind="demo")), encoding="utf-8")
     md, issues = load_commentary_file(path, fb, record=record)
-    assert issues == [] and "mente demo [IA]" in md and "modo demo" not in md
+    assert issues == [] and "app de IA da gestão [IA]" in md and "modo demo" not in md
 
 
 def test_daily_report_labels_ai_commentary():

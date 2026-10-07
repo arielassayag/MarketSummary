@@ -156,6 +156,8 @@ function kv(rows) {
   return dl;
 }
 var TOM_PILL = { compra: "cv-rt-compra", venda: "cv-rt-venda", neutro: "k-na", revisao: "k-warn", sem: "k-na", ref: "k-info" };
+/* Neutro com confiança C: o alvo é publicado, mas a confiança não sustenta Compra nem Venda */
+function ratingTxt(u) { return u && u.rating === "Neutro" && u.confianca === "C" ? "Neutro (confiança C)" : (u ? u.rating : ""); }
 function ratingPill(r, tom) { return h("span", { class: "pill " + (TOM_PILL[tom] || "k-na") }, txt(r)); }
 function legenda(itens) {
   return h("div", { class: "legend" }, itens.map(function (it) { return h("span", null, h("i", { class: it[0] }), it[1]); }));
@@ -368,7 +370,7 @@ function distribuicao(V) {
     each(L.pontos, function (p) {
       var u = BY[p.i] || {};
       var m = marca(q, p.x, p.y, "cv-dot r-" + p.r + (p.c ? " cv-in" : "") + (p.f ? " cv-clip" : ""),
-        [txt(u.nome) + " (" + txt(u.ticker) + ")", "Rating: " + txt(u.rating), "Potencial: " + txt(u.upside_texto), u.carteira ? "Na carteira: " + u.carteira : null].filter(Boolean));
+        [txt(u.nome) + " (" + txt(u.ticker) + ")", "Rating: " + txt(ratingTxt(u)), "Potencial: " + txt(u.upside_texto), u.carteira ? "Na carteira: " + u.carteira : null].filter(Boolean));
       m.addEventListener("click", function () { abrir(p.i); });
     });
     host.appendChild(q.box);
@@ -391,7 +393,7 @@ function dispersao(V) {
   each(V.pontos, function (p) {
     var u = BY[p.i] || {};
     var m = marca(q, p.x, p.y, "cv-dot s" + p.s + " r-" + p.r + (p.c ? " cv-in" : "") + (p.f ? " cv-clip" : ""),
-      [txt(u.nome) + " (" + txt(u.ticker) + ")", "Gestão: " + txt(u.upside_texto), "Consenso: " + txt(p.ct) + " (" + txt(u.consenso_n) + " analistas)", "Rating: " + txt(u.rating)]);
+      [txt(u.nome) + " (" + txt(u.ticker) + ")", "Gestão: " + txt(u.upside_texto), "Consenso: " + txt(p.ct) + " (" + txt(u.consenso_n) + " analistas de preço-alvo)", "Rating: " + txt(u.rating)]);
     m.addEventListener("click", function () { abrir(p.i); });
   });
   add(b, [q.box,
@@ -428,12 +430,12 @@ var COLS = [
   }, cls: "sticky" },
   { t: "País", k: "pais_nome", sort: "pais_nome" },
   { t: "Setor", k: "setor_nome", sort: "setor_nome", cls: "cv-wrap cv-mo" },
-  { t: "Rating", k: "rating", sort: "rating", render: function (u) { return ratingPill(u.rating, u.rating_tom); } },
+  { t: "Rating", k: "rating", sort: "rating", render: function (u) { return ratingPill(ratingTxt(u), u.rating_tom); } },
   { t: "Preço", num: true, render: function (u) { var p = PRECO[u.iid]; return p ? p.pt : u.preco_texto; } },
   { t: "Preço-alvo", num: true, sort: "alvo", render: function (u) { return u.citavel ? u.alvo_texto : h("span", { class: "muted" }, u.alvo_texto); } },
   { t: "Potencial", num: true, sort: "potencial", render: function (u) { var p = PRECO[u.iid]; var t = p && has(p.u) ? p.ut : u.upside_texto; return h("span", { class: sinal(p && has(p.u) ? p.u : u.upside) }, t); } },
   { t: "Retorno esperado", num: true, sort: "etr", k: "etr_texto", cls: "cv-mo cv-xl" },
-  { t: "ke", num: true, sort: "ke", k: "ke_texto", cls: "cv-mo cv-xl" },
+  { t: "Custo de capital (ke)", num: true, sort: "ke", k: "ke_texto", cls: "cv-mo cv-xl" },
   { t: "Confiança · incerteza", sort: "confianca", cls: "cv-mo", render: function (u) { return has(u.confianca) ? [u.confianca, has(u.incerteza) ? " · " + String(u.incerteza).toLowerCase() : ""].join("") : NA; } },
   { t: "Frente ao consenso", num: true, sort: "vs_consenso", render: function (u) { return h("span", { class: sinal(u.vs_consenso) }, u.vs_consenso_texto); } }
 ];
@@ -465,8 +467,19 @@ function secTabela(M) {
     UNI.forEach(function (u) { var v = u[campo]; if (has(v) && !vistos[v]) { vistos[v] = 1; out.push(v); } });
     return out.sort(function (a, b) { return String(a).localeCompare(String(b), "pt-BR"); });
   }
+  /* rating das ações e visão dos ETFs em grupos separados ("Neutro" × "Neutra") */
+  function opcoesRating() {
+    var acoes = {}, etfs = {};
+    UNI.forEach(function (u) { if (has(u.rating)) (u.tipo === "etf" ? etfs : acoes)[u.rating] = 1; });
+    function grupo(rot, o, pref) {
+      var ks = Object.keys(o).sort(function (a, b) { return a.localeCompare(b, "pt-BR"); });
+      return ks.length ? h("optgroup", { label: rot }, ks.map(function (v) { return h("option", { value: [pref, v].join("") }, v); })) : null;
+    }
+    return [grupo("Rating das ações", acoes, "acao:"), grupo("Visão dos ETFs frente ao ILF", etfs, "etf:")].filter(Boolean);
+  }
   function select(rotulo, campo, chave) {
-    var sel = h("select", { "aria-label": rotulo }, h("option", { value: "" }, "Todos"), opcoes(campo).map(function (v) { return h("option", { value: v }, v); }));
+    var itens = campo === "rating" ? opcoesRating() : opcoes(campo).map(function (v) { return h("option", { value: v }, v); });
+    var sel = h("select", { "aria-label": rotulo }, h("option", { value: "" }, "Todos"), itens);
     sel.addEventListener("change", function () { estado[chave] = sel.value; estado.todos = false; desenhar(); });
     return h("label", { class: "field" }, rotulo, sel);
   }
@@ -500,7 +513,7 @@ function secTabela(M) {
   function passa(u) {
     if (estado.pais && u.pais_nome !== estado.pais) return false;
     if (estado.setor && u.setor_nome !== estado.setor) return false;
-    if (estado.rating && u.rating !== estado.rating) return false;
+    if (estado.rating && [u.tipo === "etf" ? "etf" : "acao", u.rating].join(":") !== estado.rating) return false;
     if (estado.carteira && !u.carteira) return false;
     if (estado.busca && (String(u.nome) + " " + String(u.ticker)).toLowerCase().indexOf(estado.busca) < 0) return false;
     return true;
@@ -597,7 +610,7 @@ function ficha(corpo, u, m, hs) {
   var p = PRECO[u.iid];
   cab.appendChild(h("div", { class: "cv-fh" },
     h("div", null, h("h3", { class: "cv-fh-t" }, m.nome), h("p", { class: "cv-fh-s" }, [txt(m.ticker), txt(m.pais), txt(m.setor), txt(m.arquetipo)].join(" · "))),
-    h("div", { class: "chips" }, ratingPill(m.rating, m.rating_tom), m.rating_desde ? h("span", { class: "chip" }, "desde " + m.rating_desde) : null, u.carteira ? h("span", { class: "side " + (u.carteira === "Long" ? "L" : "S") }, "Na carteira: " + u.carteira) : null)));
+    h("div", { class: "chips" }, ratingPill(ratingTxt(m), m.rating_tom), m.rating_desde ? h("span", { class: "chip" }, "desde " + m.rating_desde) : null, u.carteira ? h("span", { class: "side " + (u.carteira === "Long" ? "L" : "S") }, "Na carteira: " + u.carteira) : null)));
   var kp = h("div", { class: "kpis cv-fk" },
     tile("Preço", p ? p.pt : u.preco_texto, p ? "fechamento de " + dataBR(p.d) : "fechamento de " + dataBR(u.preco_data)),
     tile("Preço-alvo", u.alvo_texto, u.vencimento ? "12 meses · vence em " + dataBR(u.vencimento) : (u.citavel ? null : "sem preço-alvo citável")),
@@ -751,7 +764,7 @@ function posicaoEtf(p) {
     h("span", { class: "num" }, p.peso), h("span", { class: cls }, p.u));
 }
 function etfFicha(m) {
-  var b = block("Carteira subjacente", m.n_posicoes + " posições; retorno esperado de cada uma pelos modelos da casa");
+  var b = block("Carteira subjacente", m.n_posicoes + " posições; retorno esperado de cada uma em " + txt(m.moeda) + ", pelo preço-alvo citável da casa ou, sem ele, pelo retorno do índice");
   var lista = h("div", { class: "cv-lt" });
   each(m.posicoes, function (p) { lista.appendChild(posicaoEtf(p)); });
   add(b, [kv(m.agregados), lista, leitura("comprimento da barra proporcional ao peso no ETF; cor e número à direita: retorno esperado da posição (verde, positivo; vermelho, negativo); tracejado = posição sem modelo da casa (retorno imputado pelo índice).", m.n_posicoes, m.as_of)]);
@@ -931,8 +944,8 @@ function secEtfs(M) {
     cards.appendChild(h("div", { class: "card" },
       h("div", { class: "card-h" }, h("b", null, e.ticker + " · " + e.nome), ratingPill(e.visao, e.tom)),
       kv([{ t: "Preço · preço-alvo", v: e.preco + " · " + e.alvo }, { t: "Potencial · retorno esperado", v: e.upside + " · " + e.retorno },
-        { t: "Pelas posições · pelo índice", v: e.bu + " · " + e.td }, { t: "Cobertura pelos modelos da casa", v: e.cobertura }, { t: "Erro de acompanhamento frente ao ILF", v: e.te_ilf }]),
-      arr(e.top).length ? h("div", null, h("p", { class: "src" }, "Maiores posições (de " + e.n_posicoes + "): peso e retorno esperado pela casa"), lt) : null,
+        { t: "Pelas posições · pelo índice", v: e.bu + " · " + e.td }, { t: "Cobertura pelos modelos da casa", v: e.cobertura }, { t: "Erro de acompanhamento frente ao ILF", v: e.ticker === "ILF" ? "— (referência)" : e.te_ilf }]),
+      arr(e.top).length ? h("div", null, h("p", { class: "src" }, "Maiores posições (de " + e.n_posicoes + "): peso e retorno esperado em " + txt(e.moeda || "USD") + " — pelo preço-alvo citável da casa; tracejado = sem alvo citável (Em revisão, confiança C ou fora da cobertura), retorno do índice"), lt) : null,
       arr(e.avisos).length ? note(e.avisos.join("; ") + ".") : null, bt));
   });
   s.appendChild(cards);

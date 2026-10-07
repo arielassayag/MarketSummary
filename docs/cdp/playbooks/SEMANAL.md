@@ -140,7 +140,8 @@ invalidação, premortem). Toda afirmação com evidência; a mente nunca define
 uv run python -m cdp validate --week AAAA-MM-DD --mind <mente>
 ```
 
-Corrija e repita até `OK`. Com menos de 20 minutos para o prazo e ainda `FALHOU`, reescreva
+A saída é JSON (`ok` e `problemas`, como em todos os validadores). Corrija e repita até
+`"ok": true`. Com menos de 20 minutos para o prazo e ainda `"ok": false`, reescreva
 `pm_decision.json` como abstenção (`abstain: true`, sem visões) e valide de novo: o código decide
 pela carteira só-quant.
 

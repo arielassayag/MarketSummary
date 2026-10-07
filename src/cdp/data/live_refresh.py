@@ -63,6 +63,8 @@ def fetch_slow_refresh(md: MarketData, as_of: date, *, lookback_days: int = 14,
             shares = md.fundamentals["shares_outstanding"].dropna().to_dict()
         long_df = b3_lending.fetch_b3_lending(br, as_of - timedelta(days=10), as_of,
                                               shares_outstanding=shares)
+        if long_df.attrs.get("falhas"):
+            failures.append("aluguel B3 (parcial): " + "; ".join(long_df.attrs["falhas"][-2:]))
         lend = b3_lending.latest_lending(long_df, as_of)
     except Exception as exc:  # noqa: BLE001
         failures.append(f"aluguel B3: {exc}")

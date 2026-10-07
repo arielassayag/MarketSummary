@@ -1353,7 +1353,7 @@ UClmxeUGwg6AcVhMUyb+AMw46K8x6KJqR8Hfj3LHPiyNnW7CpKulxa/VL/nNlq+aeolzrjEVs0z9InIA
 <header class="mast" id="mast">
   <div class="wrap mast-in">
     <div class="brand">
-      <span class="brand-mark" id="brand-mark" role="img" aria-label="CDP Asset Management — Cabra da Peste">CDP</span>
+      <span class="brand-mark" id="brand-mark" role="img" aria-label="CDP — Cabra da Peste">CDP</span>
       <div class="brand-txt">
         <h1 class="brand-name" id="brand-name">Cabra da Peste</h1>
         <p class="brand-sub" id="brand-sub">Long/short de ações da América Latina · neutro em mercado · base USD</p>
@@ -2073,6 +2073,8 @@ function lineChart(el, cfg) {
   arr(cfg.refs).forEach(function (r) { if (isNum(r.y) && r.fit !== false) { lo = Math.min(lo, r.y); hi = Math.max(hi, r.y); } });
   if (cfg.band && isNum(cfg.band.lo) && isNum(cfg.band.hi)) { lo = Math.min(lo, cfg.band.lo); hi = Math.max(hi, cfg.band.hi); }
   if (cfg.zero) { lo = Math.min(lo, 0); hi = Math.max(hi, 0); }
+  /* faixa mínima do eixo (ex.: ±1% do PL): poucos pontos colados não viram uma "queda íngreme" */
+  if (isNum(cfg.minRange) && hi - lo < cfg.minRange) { var mid = (hi + lo) / 2; lo = mid - cfg.minRange / 2; hi = mid + cfg.minRange / 2; }
   var t = niceTicks(lo, hi, cfg.ticks || 4);
   var yFmt = cfg.yFmt || function (v) { return fnum(v); };
   var xFmt = cfg.xFmt || fdshort;
@@ -2354,7 +2356,7 @@ function renderFoot() {
   add($("foot"), h("div", { class: "wrap foot-in" },
     h("div", { class: "disc" },
       h("h2", null, "Informações importantes"),
-      h("p", null, plain(META.paper_trading_text) || "Carteira simulada (paper trading) com preços reais e execução hipotética no leilão de fechamento, com custos estimados; não representa resultado de fundo real nem oferta de investimento."),
+      h("p", null, plain(META.paper_trading_text) || "Carteira simulada com preços reais e execução hipotética no leilão de fechamento, com custos estimados; não representa resultado de fundo real nem oferta de investimento."),
       h("p", null, "Retornos, riscos, pesos e contribuições são calculados por modelos quantitativos determinísticos da gestão. Textos de pesquisa e de comentário podem ser elaborados com apoio de IA e citam apenas números calculados por esses modelos. Dado ausente aparece como “n/d”, nunca como zero. Rentabilidade passada não é garantia de resultados futuros."),
       META.is_synthetic ? h("p", null, h("b", null, "DADOS SIMULADOS: "), "mercado e carteira sintéticos, só para demonstração.") : null,
       h("p", { class: "src" }, srcTxt)),
@@ -2371,7 +2373,7 @@ setTheme(lsGet("tema") || "");
 /* nomes das verificações de conformidade (para os códigos reconhecidos na decisão) */
 var GATE_NAME = {};
 arr(g(LIVEP, "compliance.checks")).forEach(function (c) { if (c.check_id && c.name) GATE_NAME[c.check_id] = ptLabel(c.name); });
-GATE_NAME.VOL_TARGET = "Distância à meta do mandato";
+GATE_NAME.VOL_TARGET = "Distância à meta de volatilidade da semana";
 function gateName(id) { return GATE_NAME[id] || { GROSS_MIN: "Exposição bruta mínima", SINGLE_NAME_RISK: "Contribuição máxima de um nome ao risco" }[id] || ptLabel(String(id).replace(/_/g, " ").toLowerCase()); }
 function checkTxt(c) {
   var t = c.label + ": " + fmtUnit(c.value, c.unit) + " (limite " + fmtLimit(c) + ")";
@@ -2393,8 +2395,13 @@ function highlights(expos, basis) {
   if (drift.length) it("warn", "Alerta", (basis === "daily" ? "Exposições acima do limite pela variação de preços desde a decisão (reequilibradas no próximo rebalanceamento): " : "Exposições acima de limite de alerta: ") + drift.map(expoTxt).join("; ") + ".");
   var ack = arr(g(LIVEW, "decision.acknowledged_soft_checks"));
   if (ack.length) it("info", "Reconhecido", "Limites de alerta reconhecidos pelo comitê na decisão de " + fdate(LIVEW.week) + ": " + ack.map(gateName).join("; ") + ".");
-  var la = LD ? arr(LD.alerts) : [];
+  var laAll = LD ? arr(LD.alerts) : [];
+  /* limitações técnicas de dados (fonte, ajuste de preço, paridade...): uma frase só ao investidor;
+     o detalhe fica no registro diário, nos dados abertos */
+  var la = laAll.filter(function (a) { return String(a).indexOf("Limitação de dados") !== 0; });
+  var nLim = laAll.length - la.length;
   if (la.length) it("warn", "Fechamento", h("span", null, "Ocorrências no fechamento de " + fdate(LD.date) + ":", h("ul", { class: "list" }, la.map(function (a) { return h("li", null, ptLabel(plain(a))); }))));
+  if (nLim) it("info", "Dados", nLim + (nLim === 1 ? " aviso técnico" : " avisos técnicos") + " de qualidade de dados da fonte pública no fechamento de " + fdate(LD.date) + ", sem efeito na execução nem na marcação; o detalhe está no registro diário, nos dados abertos.");
   if (!CHECKS.length) it("na", "Sem carteira", "Sem carteira vigente: nada a comparar com o mandato.");
   else if (!items.some(function (x) { return x.tone === "crit" || x.tone === "warn"; })) it("ok", "Mandato", "Todos os limites do mandato dentro do permitido na base atual.");
   return items;
@@ -2503,11 +2510,11 @@ function factsBox() {
     ["Banda de volatilidade", rng(MR.vol_band_min, MR.vol_band_max, function (v) { return pct(v, 0); })],
     ["Exposição líquida · beta", pm0(MR.net_exposure_max_abs) + " · ±" + fnum(MR.beta_max_abs, 2)],
     ["Exposição bruta", rng(MR.gross_min, MR.gross_max, function (v) { return pct(v, 0); }) + " do PL"],
-    ["Posições", has(nL) || has(nS) ? int(nL) + " long · " + int(nS) + " short" : "sem carteira"],
+    ["Posições", has(nL) || has(nS) ? int(nL) + " compradas · " + int(nS) + " vendidas" : "sem carteira"],
     ["Liquidez da carteira", isNum(lq3) ? pct(lq3, 0) + " do bruto em 3 dias" : NA],
     ["Horizonte", isNum(hz) ? fnum(hz, 0) + " semanas" : NA],
     ["Gestor", META.manager],
-    ["Natureza", META.is_synthetic ? h("span", null, pill("DADOS SIMULADOS", "sim"), " demonstração") : "paper trading com preços reais"]
+    ["Natureza", META.is_synthetic ? h("span", null, pill("DADOS SIMULADOS", "sim"), " demonstração") : "carteira simulada com preços reais"]
   ]));
 }
 function perfStrip() {
@@ -2610,9 +2617,11 @@ function renderVisao(p) {
       labels: ns.labels, series: ns.series, height: 260, legendLast: true, legendReverse: true, title: "Patrimônio do CDP", tipX: rollTip,
       timeX: !!ns.zone, zone: ns.zone,
       yFmt: function (v) { return usd(v); }, tipFmt: function (v) { return usdFull(v); },
+      minRange: isNum(META.inception_nav_usd) ? 0.02 * META.inception_nav_usd : null,
       refs: isNum(META.inception_nav_usd) ? [{ y: META.inception_nav_usd, label: "PL inicial " + usd(META.inception_nav_usd) }] : []
     });
   }, 280));
+  if (arr(TR.records).length && arr(TR.records).length <= 5) navBlock.appendChild(note("No dia de início, o resultado reflete só os custos de execução da montagem: as posições entram ao preço de fechamento, que também as marca."));
   if (ns.rows) {
     navBlock.appendChild(h("details", { class: "mini" }, h("summary", null, "Ver os dados do gráfico"),
       table([
@@ -2763,7 +2772,7 @@ function vbRows() { var o = {}; arr(TN.vol_budget).forEach(function (s) { if (s 
 function teseKpis() {
   var vb = vbRows();
   return h("div", { class: "kpis th-kpis" },
-    tile("Posições", h("span", null, int(TS.n_long), h("small", null, " long"), " ", int(TS.n_short), h("small", null, " short")), "nº efetivo de posições " + fnum(TS.effective_n, 1)),
+    tile("Posições", h("span", null, int(TS.n_long), h("small", null, " compradas"), " ", int(TS.n_short), h("small", null, " vendidas")), "nº efetivo de posições " + fnum(TS.effective_n, 1)),
     tile("Bruta / líquida", h("span", null, pct(TS.gross, 1), h("small", null, " / " + spct(TS.net))), "long " + pct(TS.long, 1) + " · short " + pct(TS.short, 1)),
     tile("Beta previsto", xnum(TS.beta), isNum(TS.beta_limit) ? "limite ±" + fnum(TS.beta_limit, 2) : null),
     tile("Vol ex-ante", pct(TS.vol), "meta aplicada " + pct(vb.aplicada ? vb.aplicada.value : null) + (vb.mandato ? " · mandato " + pct(vb.mandato.value) : "")),
@@ -2774,7 +2783,7 @@ function teseKpis() {
 function funnel(fu) {
   var U = fu.universe;
   if (!isNum(U) || !(U > 0)) return empty("Sem dados do funil de seleção.");
-  return h("div", { class: "fn" }, [["Universo elegível", fu.universe, "f0"], ["Candidatos (limite de compra ou venda)", fu.candidates, "f1"], ["Carteira final", fu.final, "f2", int(fu.long) + " long · " + int(fu.short) + " short"]].map(function (r) {
+  return h("div", { class: "fn" }, [["Universo elegível", fu.universe, "f0"], ["Candidatos (limite de compra ou venda)", fu.candidates, "f1"], ["Carteira final", fu.final, "f2", int(fu.long) + " compradas · " + int(fu.short) + " vendidas"]].map(function (r) {
     return h("div", { class: "fn-r" }, h("div", { class: "bl" }, r[0], r[3] ? h("small", null, r[3]) : null),
       h("div", { class: "fn-t" }, isNum(r[1]) ? h("span", { class: "fn-b " + r[2], style: "width:" + (Math.min(1, r[1] / U) * 100).toFixed(1) + "%" }) : null), h("div", { class: "bv" }, h("b", null, int(r[1]))));
   }));
@@ -3753,14 +3762,12 @@ function ckFmt(c, v) {
   if (!isNum(v)) return NA;
   return u === "x" ? fnum(v, 3, true) : u === "days" ? days(v) : u === "count" ? int(v) : pct(v);
 }
-/* VOL_TARGET compara a vol ex-ante com a meta do MANDATO; a meta aplicada na semana (postura e viés
-   a priori) aparece ao lado. Indicadores (INFO) só informam: nunca contam como "pedem atenção". */
-function ckName(c) { return String(c.check_id) === "VOL_TARGET" ? "Distância à meta do mandato" : ptLabel(c.name || c.check_id); }
+/* VOL_TARGET compara a vol ex-ante com a meta APLICADA na semana (postura e viés a priori; o limite
+   do indicador). Indicadores (INFO) só informam: nunca contam como "pedem atenção". */
+function ckName(c) { return String(c.check_id) === "VOL_TARGET" ? "Distância à meta de volatilidade da semana" : ptLabel(c.name || c.check_id); }
 function ckAttn(c) { return c.passed === false && c.severity !== "INFO"; }
 function ckDetail(c) {
-  var t = ptLabel(ptNums(c.details || "")), vt = volTarget(LIVEW);
-  if (String(c.check_id) === "VOL_TARGET" && isNum(vt)) t = (t ? t.replace(/\.\s*$/, "") + " · " : "") + "meta aplicada na semana " + pct(vt) + ".";
-  return t;
+  return ptLabel(ptNums(c.details || ""));
 }
 function complianceFold() {
   var cp = obj(g(LIVEP, "compliance"));
@@ -3890,14 +3897,14 @@ function renderPeriod(P, box) {
     block("Por emissor", "8 maiores contribuições e 8 maiores detrações", attrBars(a.issuer, "issuer", 8))));
 }
 function renderAtribuicao(p) {
-  if (aguardaInaugural(p, "Performance", "Valor da cota, retorno e atribuição do resultado a fatores, países, setores e nomes são publicados a partir do primeiro fechamento após a carteira inaugural.")) return;
+  if (aguardaInaugural(p, "Desempenho", "Valor da cota, retorno e atribuição do resultado a fatores, países, setores e nomes são publicados a partir do primeiro fechamento após a carteira inaugural.")) return;
   var periods = obj(TR.periods);
   var keys = PERIOD_ORDER.filter(function (k) { return periods[k]; });
   if (!keys.length && LD && LD.attribution) {
     periods = { dia: { label: "Dia", start: LD.date, end: LD.date, n_days: 1, ret: LD.ret, pnl_usd: LD.pnl, components: Object.keys(obj(LD.pnl_components)).map(function (k) { return { key: k, pnl_usd: LD.pnl_components[k], contribution: null }; }), attribution: LD.attribution } };
     keys = ["dia"];
   }
-  if (!keys.length) { p.appendChild(sec("Performance", null, empty(firstCloseText()))); return; }
+  if (!keys.length) { p.appendChild(sec("Desempenho", null, empty(firstCloseText()))); return; }
   var saved = lsGet("attr-period");
   var cur = keys.indexOf(saved) >= 0 ? saved : (keys.indexOf("itd") >= 0 ? "itd" : keys[0]);
   var seg = h("div", { class: "seg", role: "group", "aria-label": "Período" });
@@ -3912,10 +3919,12 @@ function renderAtribuicao(p) {
     seg.appendChild(b);
   });
   renderPeriod(periods[cur], box);
-  p.appendChild(sec("Performance e atribuição", "contribuição de cada dia = resultado ÷ PL de abertura, somada no período", seg, box));
+  p.appendChild(sec("Desempenho e atribuição", "contribuição de cada dia = resultado ÷ PL de abertura, somada no período", seg, box));
 
   var recs = arr(TR.records);
-  if (recs.length) {
+  /* sem resultado fatorial nem específico (ex.: só o dia inaugural, com custos): sem gráfico de zeros */
+  var temComp = recs.some(function (r) { return [g(r, "pnl_components.factor"), g(r, "pnl_components.specific")].some(function (v) { return isNum(v) && Math.abs(v) >= 0.5; }); });
+  if (recs.length && temComp) {
     p.appendChild(sec("Resultado diário: fatorial × específico", "US$ por pregão (componentes do resultado das ações)" + (ROLLUP.length ? " · últimos " + plural(recs.length, "pregão", "pregões") : ""),
       block(null, null, chart(function (el) {
         colChart(el, {
@@ -4024,7 +4033,7 @@ function weekSummaryDetail(w) {
     h("div", { class: "cols" }, decisionCard(w, true),
       block("Carteira e desempenho", null,
         h("div", { class: "kpis" },
-          tile("Posições", int(sm.n_long) + " long · " + int(sm.n_short) + " short", "vol ex-ante " + pct(sm.ex_ante_vol)),
+          tile("Posições", int(sm.n_long) + " compradas · " + int(sm.n_short) + " vendidas", "vol ex-ante " + pct(sm.ex_ante_vol)),
           tile("Bruta / líquida", pct(sm.gross, 1), "líquida " + spct(sm.net) + " · beta " + xnum(sm.beta)),
           tile("Semana", perf ? signed(spct(perf.ret), perf.ret) : NA, perf ? plural(perf.n_days, "pregão", "pregões") : (w.executed ? "sem histórico" : "não executada"))))),
     META.profile === "site" ? h("p", { class: "note" }, "Semana anterior em versão resumida; o registro completo da semana — proposta, decisão, pesquisa e tese — está nos ", h("a", { href: "dados/" }, "dados abertos"), ".") : note("Semana anterior em versão resumida nesta versão do portal."));
@@ -4069,7 +4078,7 @@ function weekDetail(w) {
         tile("CDP", signed(spct(perf.ret), perf.ret), usdFull(perf.pnl_usd, true) + " · " + plural(perf.n_days, "pregão", "pregões"))) : empty(w.executed ? "Sem histórico desta carteira ainda." : "Carteira ainda não executada."))));
   if (prop) {
     box.appendChild(h("div", { class: "kpis" },
-      tile("Posições", int(sm.n_positions), int(sm.n_long) + " long · " + int(sm.n_short) + " short"),
+      tile("Posições", int(sm.n_positions), int(sm.n_long) + " compradas · " + int(sm.n_short) + " vendidas"),
       tile("Vol ex-ante", pct(sm.ex_ante_vol), "VaR 1 dia " + pct(sm.var_1d_99)),
       tile("Bruta / líquida", pct(sm.gross, 1), "líquida " + spct(sm.net) + " · beta " + xnum(sm.beta)),
       tile("Alpha esperado a.a.", pct(sm.expected_alpha_annual), "custo esperado " + pct(sm.expected_cost_annual) + " a.a."),
@@ -4213,7 +4222,7 @@ function renderRelatorios(p) {
     if (full) {
       var rp = reportPath(full);
       view.appendChild(block(null, null, h("p", { class: "prose" }, it.kind === "weekly" ? "O relatório completo da semana — decisão, carteira, risco e pesquisa — está publicado nos dados abertos do portal." : "O relatório completo do dia está publicado nos dados abertos do portal."),
-        h("div", { class: "pre-go" }, h("a", { class: "go", href: full.has_html ? rp.replace(/\.md$/, ".html") : rp }, "Ler o relatório completo →"), full.has_html ? h("a", { class: "go", href: rp, download: "" }, "Baixar em Markdown") : null)));
+        h("div", { class: "pre-go" }, h("a", { class: "go", href: full.has_html ? rp.replace(/\.md$/, ".html") : rp }, "Ler o relatório completo →"), full.has_html ? h("a", { class: "go", href: rp, download: "" }, "Baixar (texto)") : null)));
     } else if (it.notExported) view.appendChild(empty("Este relatório não acompanha esta versão do portal."));
     else if (!has(it.md) && PUB) view.appendChild(empty("O texto completo do relatório não acompanha esta versão do portal. " + (it.kind === "weekly" ? "A decisão da semana está em Comitê de investimento." : "O comentário do dia aparece acima quando disponível.")));
     else if (!has(it.md)) view.appendChild(empty("Relatório resumido: o texto completo acompanha só os relatórios mais recentes."));
@@ -4281,7 +4290,7 @@ function btPlain(n) {
 function renderBacktest(p) {
   var runs = arr(BT.runs);
   if (!BT.available || !runs.length) {
-    p.appendChild(sec("Pesquisa quantitativa", null, empty("Nenhum estudo histórico do modelo quantitativo disponível. Os estudos medem só o núcleo quantitativo: a camada de pesquisa assistida por IA não pode ser testada honestamente em dados passados.")));
+    p.appendChild(sec("Pesquisa quantitativa", null, empty("O estudo histórico do modelo quantitativo com o calendário de rebalanceamento vigente é publicado aqui na primeira calibração mensal (dia 1 de cada mês), com métricas, intervalos de confiança e as variantes testadas — inclusive a reversão de curto prazo, hoje com peso zero porque o giro que ela exige não deixou alpha líquido de custos. Os estudos medem só o núcleo quantitativo: a camada de pesquisa assistida por IA não pode ser testada honestamente em dados passados.")));
     return;
   }
   var color = {};
@@ -4515,7 +4524,7 @@ function aguardaInaugural(p, titulo, texto) {
 var TABS = [
   ["visao", "Visão geral", renderVisao], ["tese", "Tese", renderTese], ["carteira", "Carteira", renderCarteira],
   ["cobertura", "Cobertura de ativos", renderCobertura],
-  ["risco", "Risco", renderRisco], ["atribuicao", "Performance", renderAtribuicao], ["decisoes", "Comitê", renderDecisoes],
+  ["risco", "Risco", renderRisco], ["atribuicao", "Desempenho", renderAtribuicao], ["decisoes", "Comitê", renderDecisoes],
   ["relatorios", "Relatórios", renderRelatorios], ["backtest", "Pesquisa quantitativa", renderBacktest], ["mandato", "Mandato e metodologia", renderMandato]
 ];
 /* âncoras dentro de abas (#auditoria abre "Auditoria e reprodução" no Mandato) e ids desconhecidos */

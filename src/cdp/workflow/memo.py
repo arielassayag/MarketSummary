@@ -190,18 +190,27 @@ def _is_pm_note(note: ResearchNote) -> bool:
     return note.role == "pm" and _is_pm_provider(note.provider)
 
 
+def _provedor(provider: str) -> str:
+    """Rótulo do provedor: a mente (``imported:<app>``) aparece como o app de IA da gestão — o
+    nome do app fica no campo ``mind`` do pacote e na trilha, não no texto ao investidor."""
+    p = str(provider or "")
+    if p.startswith("imported"):
+        return "app de IA da gestão"
+    return _inline(p)
+
+
 def _note_label(note: ResearchNote) -> str:
     if _is_pm_note(note):
         return f"Gestor (PM) — {_inline(note.provider)}"
     model = f", modelo {_inline(note.model)}" if note.model else ""
-    return f"gerado por IA — provedor {_inline(note.provider)}{model}, papel {note.role}"
+    return f"gerado por IA — {_provedor(note.provider)}{model}, papel {note.role}"
 
 
 def _macro_label(note: MacroNote) -> str:
     if _is_pm_provider(note.provider):
         return f"Gestor (PM) — {_inline(note.provider)}"
     model = f", modelo {_inline(note.model)}" if note.model else ""
-    return f"gerado por IA — provedor {_inline(note.provider)}{model}"
+    return f"gerado por IA — {_provedor(note.provider)}{model}"
 
 
 def _best_notes(pack: ResearchPack | None) -> dict[str, ResearchNote]:
@@ -601,7 +610,7 @@ def _section_research(pack: ResearchPack | None, fb: FactBook | None) -> list[st
     if pack is None:
         return out + ["_Pacote de pesquisa não disponível para este memo._", ""]
     n_ai = sum(1 for n in pack.notes if not _is_pm_note(n))
-    out += [f"Provedor: {_inline(pack.provider)}; {len(pack.notes)} nota(s) por emissor "
+    out += [f"Provedor: {_provedor(pack.provider)}; {len(pack.notes)} nota(s) por emissor "
             f"({n_ai} geradas por IA), {len(pack.macro)} nota(s) macro, "
             f"{len(pack.views)} visão(ões).", ""]
     if pack.news:

@@ -452,8 +452,8 @@ def test_placeholder_in_source_fields_is_rejected_and_never_blocks_publication(
     folder = N.nota_dir(rt.book_root, IID, D)
     real = N.load_note_file
 
-    def leaky(path, fb_, ctx_):
-        nota, problems = real(path, fb_, ctx_)
+    def leaky(path, fb_, ctx_, **kw):
+        nota, problems = real(path, fb_, ctx_, **kw)
         return (nota.model_copy(update={"governanca": "Controle {{ indefinido"}), problems)
 
     monkeypatch.setattr(N, "load_note_file", leaky)
@@ -606,3 +606,27 @@ def test_skeleton_plus_one_official_primary_source_is_valid_for_a_real_issuer():
                       "titulo": "Formulário de referência", "publicado_em": "2026-10-01",
                       "url": "https://www.rad.cvm.gov.br/ENET/frmConsultaExternaCVM.aspx"}]
     assert verify_nota(NotaEmpresa.model_validate(raw), fb, ctx) == []
+
+
+def test_note_mind_must_match_the_routine_mind_unless_it_is_a_delivered_draft(demo, market,
+                                                                             tmp_path):
+    """Numa rotina do Codex (``expected_mind`` = codex), nota com outra mente é recusada; um
+    rascunho entregue por outra sessão (copiado byte a byte) mantém a mente de quem escreveu."""
+    root = _copy(demo, tmp_path)
+    rt = _rt(root, market)
+    N.write_demo_note(rt, IID, D)                       # mind "demo"
+    rt.expected_mind = "codex"
+    out = N.validate_note(rt, IID, D)
+    assert out["ok"] is False and any("mind declarado" in p for p in out["problemas"])
+    folder = N.nota_dir(rt.book_root, IID, D)
+    from unittest import mock
+
+    # O rascunho entregue é idêntico ao nota.json: adotado, mantém a mente de quem o escreveu.
+    with mock.patch.object(N, "handoff_path", lambda _rt, _i, _d: folder / N.NOTA_JSON):
+        assert N.validate_note(rt, IID, D)["ok"] is True
+    rt.expected_mind = "demo"
+    assert N.validate_note(rt, IID, D)["ok"] is True
+    pub_rt = _rt(root, market)
+    pub_rt.expected_mind = "codex"
+    pub = N.publish_note(pub_rt, IID, D)
+    assert pub["autoria"] == "codigo" and any("mind declarado" in p for p in pub["problemas"])

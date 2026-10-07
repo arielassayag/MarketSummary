@@ -35,9 +35,23 @@ Thumbs.db
 # Cache de dados abertos (CVM/SEC) baixados pelo módulo de fundamentos PIT
 data/cache/
 
+# CDP: brutos volumosos do arquivo público, regravados pela fonte a cada dia (pacotes anuais da
+# CVM e companyfacts da SEC): ficam só no clone das rotinas. O índice (data/publico/indice.jsonl,
+# com SHA-256 e URL) é versionado e os extratos usados ficam no retrato da cobertura
+# (book/cobertura/<data>/insumos). Ver src/cdp/data/publico_arquivo.py.
+data/publico/CVM/DFP/
+data/publico/CVM/ITR/
+data/publico/CVM/FRE/
+data/publico/CVM/FCA/
+data/publico/CVM/IPE_calendario/
+data/publico/SEC/companyfacts/
+
 # CDP: trava e staging do armazenamento de mercado
 data/market/.write.lock
 data/market/**/.*.staging-*
+
+# CDP: área temporária do briefing semanal (promovida de uma vez) e briefings parciais afastados
+book/**/.briefing.*
 
 # CDP: logs das rotinas locais (scripts/cdp_run_task.*)
 logs/
@@ -51,3 +65,8 @@ logs/
 # CDP: portal montado localmente (cdp site construir; publicado só pelo GitHub Actions)
 _site/
 _site_demo/
+
+# CDP: cópia local do painel (cdp painel) e o link do espelho privado — nunca no repositório
+# público (o portal é montado do livro). Só a pasta fica versionada.
+artifacts/painel/*
+!artifacts/painel/.gitkeep

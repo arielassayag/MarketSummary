@@ -179,17 +179,16 @@ def test_rule_texts_have_no_bare_day_month_dates():
 
 
 def test_daily_authorship_line_has_no_file_name_or_jargon():
-    """A linha de autoria do relatório diário identifica a mente ([IA]) sem nome de arquivo nem
-    jargão; o único termo fora do guia é o nome da mente (omitido no portal)."""
+    """A linha de autoria do relatório diário rotula o texto da IA ([IA]) sem nome de arquivo,
+    jargão nem o nome do app (o campo ``mind`` e a trilha registram quem escreveu)."""
     for mind in ("claude-code", "codex", "gemini", "chatgpt", "outro"):
         line = commentary._file_provenance(mind)
-        assert f"mente {mind} [IA]" in line
+        assert "app de IA da gestão [IA]" in line and mind not in line
         assert "json" not in line.lower() and "factbook" not in line.lower()
-        rest = line.replace(f"mente {mind}", "mente")
-        assert style_issues(rest) == [], (mind, style_issues(rest))
+        assert style_issues(line) == [], (mind, style_issues(line))
     from cdp.ui.data import _commentary_meta
 
-    assert _commentary_meta(commentary._file_provenance("gemini")) == (True, "gemini")
+    assert _commentary_meta(commentary._file_provenance("gemini"))[0] is True
 
 
 def _vocab_rows() -> list[tuple[str, str]]:

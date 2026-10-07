@@ -40,7 +40,7 @@ Leia, nesta ordem: **incidentes** (severidade alta primeiro), **fase** do fundo,
 
 - Rodar uma rotina fora do horário (só no executor): o roteiro da tarefa, com
   `uv run python -m cdp rotinas gate --tarefa cdp-diario --manual --adquirir`.
-- Configurar as rotinas no Claude Code (nuvem, nossa escolha), no Codex ou no Gemini, passo a
+- Configurar as rotinas no Codex (o app das rotinas), no Claude Code ou no Gemini, passo a
   passo: `docs/cdp/ROTINAS.md`; PC local: `docs/cdp/LOCAL.md`.
 - Trocar o executor (por exemplo, do PC para a nuvem): `docs/cdp/AUTOMACAO.md`, seção "Troca de
   executor"; confira a janela com `uv run python -m cdp executor janela`.

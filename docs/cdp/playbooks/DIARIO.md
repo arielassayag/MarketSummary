@@ -137,9 +137,9 @@ registro diário encadeado por hash. Leia `status` na saída:
 3. Escreva `reports/daily/D/comentario.json`: manchete, 2 a 5 parágrafos sóbrios e
    institucionais, alertas de risco e `mind`. Números só como `{{fact:<id>}}` existentes em
    `facts.md`.
-4. Valide (não grava nada) e corrija até `OK`; depois de 3 correções ainda com `FALHOU`, publique
-   assim mesmo (o código usa o texto determinístico, só com fatos) e relate os apontamentos — o
-   dia não fica sem relatório:
+4. Valide (não grava nada; saída JSON com `ok` e `problemas`) e corrija até `"ok": true`;
+   depois de 3 correções ainda com `"ok": false`, publique assim mesmo (o código usa o texto
+   determinístico, só com fatos) e relate os apontamentos — o dia não fica sem relatório:
 
    ```sh
    uv run python -m cdp validate-daily --date AAAA-MM-DD
@@ -184,7 +184,9 @@ uv run python -m cdp daily close --date AAAA-MM-DD
 ```
 
 A saída traz `status: "pré-início"` e `dados_de_mercado.status`: `atualizados` (anote
-`ultimo_pregao`) ou `não prontos` (siga; a próxima rotina completa). `sem pregão`: siga.
+`ultimo_pregao`), `sem pregões novos` (a base já estava em dia ou o fechamento do dia ainda não
+saiu: anote `ultimo_pregao` e o `motivo`; a próxima rotina completa) ou `não prontos` (siga; a
+próxima rotina completa). `sem pregão`: siga.
 
 Rode `uv run python -m cdp agenda` de novo e veja:
 
@@ -229,8 +231,9 @@ uv run python -m cdp painel --sem-local
 Rode os dois sempre, qualquer que tenha sido o resultado dos passos anteriores (inclusive com a
 tese recusada ou com falha): esse `verify` confere a trilha depois da última gravação desta
 execução, e `cdp publicar` o repete antes do push. `painel --sem-local` regenera
-`artifacts/painel/` a partir do livro (só código). Anote o resultado do `verify` e siga mesmo se o
-painel falhar. O portal público é montado pelo GitHub Actions a partir do que for publicado.
+`artifacts/painel/` a partir do livro (só código; a pasta fica fora do git — é a cópia local do
+painel, nunca publicada). Anote o resultado do `verify` e siga mesmo se o painel falhar. O portal
+público é montado pelo GitHub Actions a partir do que for publicado.
 
 ## 8. Publicação (uma vez por execução)
 
@@ -242,8 +245,11 @@ uv run python -m cdp publicar --tarefa cdp-diario --mensagem "CDP: fechamento AA
 uv run python -m cdp trava liberar --id <trava.id>
 ```
 
-- `--tarefa`: a tarefa que disparou a execução. Mensagem: a última data processada (ou
-  "CDP: fechamentos AAAA-MM-DD a AAAA-MM-DD"); em `fase: "pre_inicio"`,
+- `--tarefa`: a tarefa que disparou a execução. Mensagem: a última data **registrada** (ou
+  "CDP: fechamentos AAAA-MM-DD a AAAA-MM-DD"); sem registro nesta execução (`dados não prontos`,
+  `sem pregão`, kill switch), descreva o que foi gravado — "CDP: base de mercado AAAA-MM-DD" ou
+  "CDP: cobertura AAAA-MM-DD" — e, sem nada gravado, `cdp publicar` responde "nada a publicar";
+  em `fase: "pre_inicio"`,
   "CDP: pré-início AAAA-MM-DD" (data de hoje), ou a mensagem do pré-início (seção acima) se ele
   rodou nesta execução. A tese recuperada, os relatórios semanais e o retrato da cobertura vão no
   mesmo commit.

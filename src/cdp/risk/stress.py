@@ -40,7 +40,7 @@ HISTORICAL_SCENARIOS: dict[str, tuple[date, date]] = {
     "Eleição Brasil out/2022 (2º turno)": (date(2022, 10, 28), date(2022, 11, 11)),
     "Eleição México jun/2024": (date(2024, 5, 31), date(2024, 6, 12)),
     "Choque fiscal BRL dez/2024": (date(2024, 11, 26), date(2024, 12, 18)),
-    "Tarifas EUA abr/2025 (Liberation Day)": (date(2025, 4, 2), date(2025, 4, 8)),
+    "Tarifas dos EUA (abr/2025)": (date(2025, 4, 2), date(2025, 4, 8)),
 }
 
 COUNTRY_SHOCK = -0.15

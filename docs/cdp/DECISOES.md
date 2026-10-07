@@ -181,3 +181,15 @@ regular (`docs/cdp/AUTOMACAO.md`, seção 13).
 - Portal indexado por buscadores (padrão: sim, com aviso legal fixo; depende da revisão
   jurídica acima) e domínio próprio (padrão: não; endereço do GitHub Pages).
 - Identificadores de modelo dos níveis `forte` e `leve` em cada app (nunca no repositório).
+
+## 2026-10-06 · O Codex roda as rotinas
+
+Contexto: escolha do titular entre os apps documentados, depois do ensaio geral com o Codex como
+executor; revê a escolha "rotinas na nuvem do Claude Code" da entrada "Rotinas dentro do app de
+IA". → Decisão: as rotinas rodam nas tarefas agendadas do app do Codex, num clone dedicado do PC
+local, com acesso total (`configs/cdp/executor.yaml`: `local-pc`, harness `codex`); o Claude
+Code e o Gemini seguem documentados como alternativas, sem mudança de processo. →
+Consequências: prompts com `uv run python -m cdp rotinas exportar --alvo codex --formato md`; a
+mente registrada nos JSON é a do gate (`codex`), conferida pelos validadores; o desligamento do
+kill switch exige a senha do operador (o Codex com acesso total não exporta variáveis de
+sandbox).

@@ -1500,7 +1500,9 @@ def taxa_publica(dados: DadosPublicos, md: MarketData, serie: str, as_of: date) 
             return _f(r["valor"]), r["data"].date().isoformat(), {
                 "fonte": "SIMULADO" if sim else fonte.split(":")[0],
                 "url": "https://fred.stlouisfed.org/series/DGS10" if serie == "USD_10Y" and not sim else None,
-                "documento": f"série simulada {serie} (DADOS SIMULADOS)" if sim else f"série pública {serie}",
+                "documento": (f"série simulada {serie} (DADOS SIMULADOS)" if sim else
+                              "Tesouro americano de 10 anos (FRED, série DGS10)" if serie == "USD_10Y"
+                              else f"série pública {serie}"),
                 "data_publicacao": r["data"].date().isoformat(), "data_coleta": None, "sha256": None}
     if serie in md.rates.columns:
         s = md.rates[serie].loc[:pd.Timestamp(as_of)].dropna()

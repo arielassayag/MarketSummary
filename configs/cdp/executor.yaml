@@ -6,8 +6,8 @@
 # ignorado `.cdp/local.yaml`), nunca adivinhada.
 versao: 1
 executor: local-pc     # local-pc | claude-cloud | github-actions | codex-cloud | gemini-actions | outro | nenhum
-harness: claude-code   # informativo: claude-code | codex | gemini | antigravity | copilot | cursor | outro
+harness: codex         # informativo: claude-code | codex | gemini | antigravity | copilot | cursor | outro
 desde: "2026-10-06T19:00:00-03:00"
 por: "Ariel Assayag"
-motivo: "Tarefas agendadas do Claude Code no PC local (clone dedicado às rotinas)."
+motivo: "Tarefas agendadas do app do Codex no PC local (clone dedicado às rotinas, acesso total)."
 anterior: null

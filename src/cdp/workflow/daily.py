@@ -363,6 +363,30 @@ def clean_text(text: object, max_len: int = MAX_ALERT_TEXT) -> str:
     return one if len(one) <= max_len else one[:max_len - 1].rstrip() + "…"
 
 
+DATA_LIMITATION_PREFIX = "Limitação de dados:"
+"""Prefixo dos alertas técnicos de qualidade de dados gravados no registro diário."""
+
+
+def split_data_limitations(alerts: Iterable[str]) -> tuple[list[str], list[str]]:
+    """``(alertas ao investidor, limitações técnicas de dados)``. As limitações (fonte, ajuste
+    de preço, hash, paridade, câmbio defasado...) ficam na trilha e nos dados abertos; o texto
+    ao investidor mostra só um resumo (:func:`data_limitations_summary`)."""
+    investor: list[str] = []
+    tech: list[str] = []
+    for a in alerts:
+        (tech if str(a).startswith(DATA_LIMITATION_PREFIX) else investor).append(str(a))
+    return investor, tech
+
+
+def data_limitations_summary(n: int) -> str | None:
+    """Uma frase para o investidor sobre ``n`` avisos técnicos de dados (``None`` se zero)."""
+    if n <= 0:
+        return None
+    return (f"{n} aviso{'s' if n != 1 else ''} técnico{'s' if n != 1 else ''} de qualidade de "
+            "dados da fonte pública, sem efeito na execução nem na marcação; o detalhe está no "
+            "registro diário, nos dados abertos.")
+
+
 def session_limitations(md: MarketData, session: date) -> list[str]:
     """Limitações de dados relevantes para o pregão: as da base (sem data) e as do incremento do
     próprio dia (``"[AAAA-MM-DD] ..."`` no ``MarketStore``); as de outros dias e a linha de
@@ -1011,6 +1035,14 @@ class DailyRunner:
             if main_res.commit is not None:
                 main_res.commit()
         except ExecutionRefused as exc:
+            if prev is None and plan is not None:
+                # Carteira inaugural recusada (ex.: KILL_SWITCH ligado — só reduções, e não há
+                # posição a reduzir): o fundo segue sem carteira (zerado); nada é negociado nem
+                # registrado. A recusa sai estruturada, nunca como erro cru.
+                raise NoBookError(
+                    f"Execução da carteira inaugural (semana {plan.week}) RECUSADA no fechamento "
+                    f"de {session_date}: {clean_text(exc, 600)} O fundo segue sem carteira "
+                    "(zerado, sem negociação) até a próxima data de montagem.") from exc
             if prev is None or plan is None:
                 raise
             refused = (f"Execução da decisão da semana {plan.week} RECUSADA no fechamento de "
@@ -1512,7 +1544,7 @@ class DailyRunner:
                                         marked.nav_start, prev)
         alerts += risk_alerts_
         alerts += self._position_alerts(ctx, side, positions, nav_end, ref_prop)
-        alerts += [f"Limitação de dados: {lim}"
+        alerts += [f"{DATA_LIMITATION_PREFIX} {lim}"
                    for lim in session_limitations(ctx.md, ctx.date)]
         alerts += ctx.notes
         if prev is None and ctx.date != cfg.fund.inception_date:

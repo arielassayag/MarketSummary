@@ -316,19 +316,32 @@ def _return_facts(b: _Builder, iid: str, daily: pd.Series, as_of: date) -> None:
     )
 
 
+#: Faixas de plausibilidade dos indicadores da fonte de mercado (fora delas o fato fica n/d, com
+#: o motivo na fórmula — nunca zero): P/L acima de 100 é lucro deprimido ou erro da fonte; beta
+#: negativo de uma ação de commodity ou acima de 3 é ruído da regressão da fonte.
+PLAUSIVEL = {"pe": (0.0, 100.0), "pb": (0.0, 30.0), "beta": (0.0, 3.0)}
+
+
+def _g(x: float) -> str:
+    return f"{x:g}".replace(".", ",")
+
+
 def _fundamental_facts(b: _Builder, iid: str, md: MarketData, as_of: date) -> None:
     tkr = _fundamental_line(md, iid)
     src = f"fundamentals[{tkr}]" if tkr else "fundamentals[sem linha]"
     note = "retrato atual do snapshot (não point-in-time)"
 
     pe = _fund_value(md, tkr, "trailing_pe")
-    b.add(f"{iid}.pe_trailing", iid, "P/L (lucro dos últimos 12 meses)",
-          pe if (pe is not None and pe > 0) else None, "x",
-          f"trailing_pe da fonte; valores não positivos ⇒ n/d; {note}",
-          [f"{src}.trailing_pe"], point_in_time=False)
+    lo, hi = PLAUSIVEL["pe"]
+    b.add(f"{iid}.pe_trailing", iid, "P/L (lucro dos últimos 12 meses, fonte de mercado)",
+          pe if (pe is not None and lo < pe <= hi) else None, "x",
+          f"trailing_pe da fonte; fora de ({_g(lo)}; {_g(hi)}] ⇒ n/d (lucro deprimido ou erro da "
+          f"fonte); {note}", [f"{src}.trailing_pe"], point_in_time=False)
     pb = _fund_value(md, tkr, "price_to_book")
-    b.add(f"{iid}.pb", iid, "Preço / valor patrimonial", pb if (pb is not None and pb > 0) else None,
-          "x", f"price_to_book da fonte; valores não positivos ⇒ n/d; {note}",
+    lo, hi = PLAUSIVEL["pb"]
+    b.add(f"{iid}.pb", iid, "Preço / valor patrimonial (fonte de mercado)",
+          pb if (pb is not None and lo < pb <= hi) else None,
+          "x", f"price_to_book da fonte; fora de ({_g(lo)}; {_g(hi)}] ⇒ n/d; {note}",
           [f"{src}.price_to_book"], point_in_time=False)
     b.add(f"{iid}.roe", iid, "Retorno sobre o patrimônio (ROE)",
           _fund_value(md, tkr, "return_on_equity"), "pct",
@@ -403,6 +416,32 @@ def _squeeze_facts(b: _Builder, iid: str, squeeze: pd.DataFrame | None) -> None:
           "(analytics.squeeze)", [f"{src}.squeeze_score"], point_in_time=pit)
 
 
+#: Moeda de cotação dos índices locais e dos sufixos de bolsa do Yahoo (retorno sem conversão).
+_INDEX_CCY = {"^BVSP": "BRL", "^MXX": "MXN", "^MERV": "ARS", "^IPSA": "CLP", "^COLCAP": "COP",
+              "^SPBLPGPT": "PEN"}
+_SUFFIX_CCY = {".SA": "BRL", ".MX": "MXN", ".SN": "CLP", ".BA": "ARS", ".CL": "COP", ".LM": "PEN"}
+#: Indicadores cujo "retorno" é variação de nível (não um preço em moeda).
+_LEVEL_INDICATORS = {"^VIX", "DX-Y.NYB"}
+
+
+def benchmark_unit(symbol: str) -> str:
+    """Em que unidade está o retorno de um benchmark: o código só mede a variação do nível ou do
+    preço como cotado, sem conversão cambial. ETFs listados nos EUA ⇒ USD; índices locais e
+    linhas locais ⇒ moeda local; futuros ⇒ contrato cotado em USD; VIX e índice do dólar ⇒
+    nível do índice."""
+    if symbol in _LEVEL_INDICATORS:
+        return "variação do nível do índice"
+    if symbol.endswith("=F"):
+        return "futuro cotado em USD"
+    ccy = _INDEX_CCY.get(symbol) or next(
+        (c for suffix, c in _SUFFIX_CCY.items() if symbol.endswith(suffix)), None)
+    if ccy:
+        return f"em {ccy}, moeda local"
+    if symbol.startswith("^"):
+        return "nível do índice, moeda local"
+    return "USD"
+
+
 def _macro_facts(b: _Builder, md: MarketData, as_of: date, currencies: list[str]) -> None:
     fx = _upto(md.fx, as_of)
     for ccy in currencies:
@@ -421,15 +460,18 @@ def _macro_facts(b: _Builder, md: MarketData, as_of: date, currencies: list[str]
     for sym in sorted(str(c) for c in bench.columns):
         daily = level_returns(bench[sym])
         value, n, w, start, end = compound_window(daily, RETURN_WINDOWS["1m"])
-        b.add(f"bench.{sym}.ret_1m", None, f"Retorno de 1 mês de {sym} (USD)", value, "pct",
+        unit = benchmark_unit(sym)
+        b.add(f"bench.{sym}.ret_1m", None, f"Retorno de 1 mês de {sym} ({unit})", value, "pct",
               f"variação composta do fechamento de {sym} nos últimos {RETURN_WINDOWS['1m']} "
-              f"pregões até {as_of.isoformat()}; {_coverage_text(n, w)}",
+              f"pregões até {as_of.isoformat()}, como cotado ({unit}; sem conversão cambial); "
+              f"{_coverage_text(n, w)}",
               [f"benchmarks[{sym}]", f"janela={start}..{end}"], signed=True)
         ytd = daily[daily.index.year == as_of.year]
         value, n, w, start, end = compound_window(ytd, len(ytd)) if len(ytd) else (
             None, 0, 0, "", "")
-        b.add(f"bench.{sym}.ret_ytd", None, f"Retorno de {sym} no ano (USD)", value, "pct",
-              f"variação composta do fechamento de {sym} de {as_of.year} até {as_of.isoformat()}; "
+        b.add(f"bench.{sym}.ret_ytd", None, f"Retorno de {sym} no ano ({unit})", value, "pct",
+              f"variação composta do fechamento de {sym} de {as_of.year} até {as_of.isoformat()}, "
+              f"como cotado ({unit}; sem conversão cambial); "
               f"{_coverage_text(n, w) if w else 'sem pregões no ano'}",
               [f"benchmarks[{sym}]", f"janela={start}..{end}"], signed=True)
     rates = _upto(md.rates, as_of)
@@ -479,7 +521,10 @@ def build_factbook(panel: AssetPanel, md: MarketData, issuers: list[str],
                   ["risk_model.beta"])
         else:
             tkr = _fundamental_line(md, iid)
-            b.add(f"{iid}.beta", iid, "Beta da fonte de dados", _fund_value(md, tkr, "beta"),
+            bf = _fund_value(md, tkr, "beta")
+            lo, hi = PLAUSIVEL["beta"]
+            b.add(f"{iid}.beta", iid, "Beta da fonte de dados",
+                  bf if (bf is not None and lo <= bf <= hi) else None,
                   "ratio", "beta reportado pela fonte de fundamentos; retrato atual (não PIT)",
                   [f"fundamentals[{tkr}].beta"], point_in_time=False)
 

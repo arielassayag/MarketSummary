@@ -307,7 +307,11 @@ def test_prompts_follow_the_envelope(tid: str, harness: str):
     t = ROT.tarefa(tid)
     p = ro.prompt(ROT, tid, harness=harness)
     assert f"--tarefa {tid}" in p and "AGENTS.md" in p and t.playbook in p
-    assert "nunca use --force" in p and "não confiáveis" in p and "nunca publique artifacts" in p
+    assert "nunca use --force" in p and "não confiáveis" in p
+    if harness == "claude":
+        assert "nunca publique artifacts" in p and ".claude/skills/" in p
+    else:  # Codex, Gemini, Antigravity: nada do Claude (artifact, .claude/) no prompt
+        assert "artifact" not in p and ".claude/" not in p and ".agents/skills/" in p
     if t.exclusiva:
         assert "--adquirir" in p and "trava liberar" in p and "trava renovar" in p
     if t.grava:
@@ -322,8 +326,8 @@ def test_prompts_follow_the_envelope(tid: str, harness: str):
 
 def test_prompt_variants():
     ens = ro.prompt(ROT, "cdp-diario", ensaio=True)
-    assert "ENSAIO" in ens and "--ensaio" in ens and "cdp publicar --tarefa" not in ens
-    assert "trava liberar" not in ens
+    assert "ENSAIO" in ens and "--ensaio" in ens and "commit local" in ens
+    assert "trava liberar" not in ens and "--trava" not in ens   # ensaio nunca toca a trava
     exe = ro.prompt(ROT, "cdp-diario", harness="codex", publicacao="executor")
     assert "não rode `cdp rotinas gate`" in exe and "--mind codex" in exe
     assert "cdp publicar --tarefa" not in exe and "uv sync" not in exe
@@ -671,7 +675,8 @@ PC = {"CDP_EXECUTOR": "local-pc", "CDP_HARNESS": "claude-code"}
 
 def test_gate_lock_is_fail_closed_exclusive_and_reentrant(dois_clones):
     a, b = dois_clones
-    code, out = _avaliar(a, "cdp-semanal", "2026-10-09T11:08:00", PC, ag=MONTAR, adquirir=True)
+    # a principal (11:07) adquire a trava às 11:30 (validade de 50 min: até 12:20)
+    code, out = _avaliar(a, "cdp-semanal", "2026-10-09T11:30:00", PC, ag=MONTAR, adquirir=True)
     assert code == ro.EXIT_EXECUTAR and out["trava"]["estado"] == "adquirida"
     tid = out["trava"]["id"]
     reg = json.loads((a / ".cdp/execucoes" / f"{out['execucao']}.json").read_text())
@@ -685,7 +690,7 @@ def test_gate_lock_is_fail_closed_exclusive_and_reentrant(dois_clones):
                          registrar=False)
     assert code == ro.EXIT_PULAR and "em andamento" in out["motivo"]
     # reentrada: a mesma execução (CDP_TRAVA_ID) roda o gate de novo e continua com a trava
-    code, out = _avaliar(b, "cdp-semanal", "2026-10-09T11:20:00", {**PC, "CDP_TRAVA_ID": tid},
+    code, out = _avaliar(b, "cdp-semanal", "2026-10-09T11:40:00", {**PC, "CDP_TRAVA_ID": tid},
                          ag=MONTAR, adquirir=True)
     assert code == ro.EXIT_EXECUTAR and out["trava"]["id"] == tid and out["trava"]["reentrada"]
     # tarefas compartilhadas não disputam a trava no gate

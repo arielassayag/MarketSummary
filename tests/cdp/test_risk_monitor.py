@@ -560,7 +560,7 @@ def test_cli_squeeze_review_is_human_only_and_lifts_the_long_veto(demo, tmp_path
 
     import yaml
 
-    from cdp.__main__ import CONTEXTO_NAO_HUMANO, main
+    from cdp.__main__ import main
 
     root = tmp_path / "copia"
     shutil.copytree(demo, root)
@@ -581,8 +581,7 @@ def test_cli_squeeze_review_is_human_only_and_lifts_the_long_veto(demo, tmp_path
                   "revisado: squeeze técnico, sem fato novo", "--by", "Ana"]
     monkeypatch.setenv("CLAUDECODE", "1")
     assert main(cmd) == 2 and "agente" in capsys.readouterr().err
-    for var in CONTEXTO_NAO_HUMANO:
-        monkeypatch.delenv(var, raising=False)
+    _sem_contexto_de_agente(monkeypatch)
 
     class _Tty:
         def __init__(self, stream):
@@ -598,6 +597,7 @@ def test_cli_squeeze_review_is_human_only_and_lifts_the_long_veto(demo, tmp_path
     monkeypatch.setattr(_sys, "stdout", _Tty(_sys.stdout))
     monkeypatch.setattr("builtins.input",
                         lambda _p="": "revisado: squeeze técnico, sem fato novo")
+    _senha_do_operador(monkeypatch, tmp_path)
     assert main(cmd) == 0
     out = json.loads(capsys.readouterr().out)["revisao_squeeze"]
     assert out["emissor"] == iid and out["registro_base"] == LAST.isoformat()
@@ -743,11 +743,7 @@ def test_cli_kill_switch_on_marks_its_request_and_off_refuses_without_a_human(
                         "--by", "Ana"]) == 2
     assert "agente" in capsys.readouterr().err and rt.kill_switch_active()
     # Sem terminal interativo (pytest): recusado mesmo sem as variáveis.
-    for var in ("CLAUDECODE", "CDP_EXECUTOR", "CI", "GITHUB_ACTIONS", "CODEX_SANDBOX",
-                "GEMINI_CLI", "CDP_ENSAIO", "CDP_TRAVA_ID", "CDP_EXECUCAO", "CDP_ROTINA",
-                "CLAUDE_CODE_REMOTE", "CLAUDE_CODE_REMOTE_SESSION_ID",
-                "CODEX_SANDBOX_NETWORK_DISABLED"):
-        monkeypatch.delenv(var, raising=False)
+    _sem_contexto_de_agente(monkeypatch)
     assert main(base + ["kill-switch", "off", "--reason", "revisado pelo gestor",
                         "--by", "Ana"]) == 2
     assert "terminal interativo" in capsys.readouterr().err and rt.kill_switch_active()
@@ -757,14 +753,13 @@ def test_cli_kill_switch_off_with_an_interactive_operator(demo, tmp_path, capsys
     """Operador humano num terminal: o motivo digitado de novo precisa conferir."""
     import sys as _sys
 
-    from cdp.__main__ import CONTEXTO_NAO_HUMANO, main
+    from cdp.__main__ import main
 
     root = tmp_path / "copia"
     shutil.copytree(demo, root)
     rt = _rt(root)
     rt.set_kill_switch(True, "ligado para o teste", "teste")
-    for var in CONTEXTO_NAO_HUMANO:
-        monkeypatch.delenv(var, raising=False)
+    _sem_contexto_de_agente(monkeypatch)
 
     class _Tty:
         def __init__(self, stream):
@@ -780,16 +775,73 @@ def test_cli_kill_switch_off_with_an_interactive_operator(demo, tmp_path, capsys
     monkeypatch.setattr(_sys, "stdout", _Tty(_sys.stdout))
     base = ["--config", str(LEGACY), "--book", str(root / "book"), "--market",
             str(root / "market"), "--reports", str(root / "reports")]
+    off = base + ["kill-switch", "off", "--reason", "revisado pelo gestor", "--by", "Ana"]
     monkeypatch.setattr("builtins.input", lambda _p="": "outro motivo")
-    assert main(base + ["kill-switch", "off", "--reason", "revisado pelo gestor",
-                        "--by", "Ana"]) == 2
+    assert main(off) == 2
     assert rt.kill_switch_active()
     assert main(base + ["kill-switch", "off", "--reason", "revisado pelo gestor",
                         "--by", "CDP — rotina"]) == 2      # rotina nunca é o autor
     monkeypatch.setattr("builtins.input", lambda _p="": "revisado  pelo gestor")
-    assert main(base + ["kill-switch", "off", "--reason", "revisado pelo gestor",
-                        "--by", "Ana"]) == 0
+    # Sem a senha do operador definida (fora do repositório): recusado.
+    monkeypatch.setenv("XDG_CONFIG_HOME", str(tmp_path / "cfg_vazio"))
+    assert main(off) == 2 and "senha do operador" in capsys.readouterr().err
+    assert rt.kill_switch_active()
+    # Um agente com pseudoterminal chega ao pedido da senha, mas não a tem.
+    _senha_do_operador(monkeypatch, tmp_path, digitada="chute de agente")
+    assert main(off) == 2 and "não confere" in capsys.readouterr().err
+    assert rt.kill_switch_active()
+    _senha_do_operador(monkeypatch, tmp_path)
+    assert main(off) == 0
     assert not rt.kill_switch_active()
+
+
+SENHA_TESTE = "senha do operador de teste"
+
+
+def _sem_contexto_de_agente(monkeypatch) -> None:
+    """Remove as variáveis de rotina/CI/agente (inclusive as de prefixo, ex.: ``CODEX_*``)."""
+    import os
+
+    from cdp.__main__ import _contexto_nao_humano
+
+    for var in _contexto_nao_humano(dict(os.environ)):
+        monkeypatch.delenv(var, raising=False)
+
+
+def _senha_do_operador(monkeypatch, tmp_path, digitada: str = SENHA_TESTE) -> None:
+    """Senha do operador definida fora do repositório (pasta de teste) e digitada no terminal."""
+    from cdp import operador
+
+    monkeypatch.setenv("XDG_CONFIG_HOME", str(tmp_path / "cfg_operador"))
+    if not operador.configurado():
+        operador.definir(SENHA_TESTE)
+    monkeypatch.setattr("getpass.getpass", lambda _p="": digitada)
+
+
+def test_kill_switch_off_guard_sees_codex_and_harness_contexts(monkeypatch):
+    """Codex com acesso total não exporta as variáveis de sandbox: ``CDP_HARNESS`` (ambiente
+    de toda rotina) e os prefixos dos apps de IA bastam para recusar."""
+    from cdp.__main__ import CONTEXTO_NAO_HUMANO, _contexto_nao_humano
+
+    env = {"PATH": "/usr/bin", "CODEX_HOME": "/Users/x/.codex"}
+    assert _contexto_nao_humano(env) == []
+    assert _contexto_nao_humano({**env, "CDP_HARNESS": "codex"}) == ["CDP_HARNESS"]
+    assert _contexto_nao_humano({**env, "CODEX_QUALQUER": "1"}) == ["CODEX_QUALQUER"]
+    assert _contexto_nao_humano({**env, "ANTIGRAVITY_SESSAO": "x"}) == ["ANTIGRAVITY_SESSAO"]
+    assert "CDP_HARNESS" in CONTEXTO_NAO_HUMANO
+
+
+def test_operator_passphrase_is_stored_only_as_a_salted_hash(tmp_path, monkeypatch):
+    from cdp import operador
+
+    monkeypatch.setenv("XDG_CONFIG_HOME", str(tmp_path))
+    assert not operador.configurado() and not operador.conferir("qualquer coisa")
+    with pytest.raises(ValueError):
+        operador.definir("curta")
+    path = operador.definir(SENHA_TESTE)
+    assert path == tmp_path / "cdp" / "operador.json"
+    assert SENHA_TESTE not in path.read_text(encoding="utf-8")
+    assert operador.conferir(SENHA_TESTE) and not operador.conferir(SENHA_TESTE + "x")
 
 
 def test_agenda_reports_the_market_store_last_session(demo):

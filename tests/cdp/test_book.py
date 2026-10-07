@@ -787,7 +787,7 @@ def test_memo_contents_synthetic():
     # Texto de pesquisa: HTML removido, fatos resolvidos pelo código, rótulos de origem.
     assert "<script>" not in memo and "alert(" not in memo and "<b>" not in memo
     assert "forte" in memo and "+3,20%" in memo and "[fato indisponível: NAO.EXISTE]" in memo
-    assert "gerado por IA — provedor demo" in memo
+    assert "gerado por IA — demo" in memo
     assert "Gestor (PM) — gestor" in memo and "Convicção do gestor na 02." in memo
     assert "**caution**" in memo and "<i>" not in memo
     assert "aperto fiscal" in memo and "<em>" not in memo
@@ -1154,7 +1154,7 @@ def test_review_memo_ai_note_claiming_pm_role_is_labelled_ai():
     pack = pack.model_copy(update={"notes": list(pack.notes) + [impostor]})
     memo = render_memo(make_proposal(), pack, _factbook())
     assert "Gestor (PM) — anthropic" not in memo
-    assert "gerado por IA — provedor anthropic" in memo
+    assert "gerado por IA — anthropic" in memo
     assert "Gestor (PM) — gestor" in memo
 
 

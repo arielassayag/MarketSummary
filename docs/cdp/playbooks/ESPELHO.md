@@ -12,7 +12,8 @@ privado do claude.ai é só um **espelho opcional** do painel, para quem opera.
 - Só a pedido do operador, numa **sessão interativa do Claude** (Claude Code ou claude.ai) com a
   ferramenta `Artifact`. Em outro harness, não há espelho: o painel é o portal público.
 - O artifact é criado uma única vez, pelo operador, e o link fica em
-  `artifacts/painel/ARTIFACT_URL`; este roteiro nunca cria um artifact novo.
+  `artifacts/painel/ARTIFACT_URL` (arquivo local do clone do operador, fora do git como toda a
+  pasta `artifacts/painel/`); este roteiro nunca cria um artifact novo.
 - Os arquivos do painel são gravados pelo código: leia-os, nunca os edite. Numa sessão de
   desenvolvimento, nunca faça commit de `artifacts/`.
 

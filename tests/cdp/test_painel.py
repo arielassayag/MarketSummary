@@ -732,9 +732,16 @@ def test_latest_day_alerts_and_anchor(demo, data):
     rt = _rt(demo)
     records = rt.track().records()
     last = records[-1]
+    from cdp.workflow.daily import split_data_limitations
+
     texts = [a["text"] for a in data["status"]["alerts"] if a.get("source") == "fechamento"]
-    assert len(texts) == len(last.alerts)
-    assert all(any(a in t for t in texts) for a in last.alerts)
+    investidor, tecnicos = split_data_limitations(last.alerts)
+    # alertas ao investidor um a um; limitações técnicas de dados numa frase só
+    assert len(texts) == len(investidor) + (1 if tecnicos else 0)
+    assert all(any(a in t for t in texts) for a in investidor)
+    assert not any("Limitação de dados" in t for t in texts)
+    if tecnicos:
+        assert any("avisos técnicos" in t or "aviso técnico" in t for t in texts)
     anchor = data["track_record"]["anchor"]
     assert anchor["nav_cdp"] == records[0].nav_start_usd
     assert anchor["date"] == records[0].date.isoformat()
@@ -945,7 +952,7 @@ def test_template_pins_investor_text_fixes():
                    "function scrubPath", '"Revisões de analistas"', "TN.signals",
                    "function thGo", "function stickyBottom", "function ckAttn",
                    "rows = arr(rows);", "opts.empty", "function thFlag", "function gapPT",
-                   "function btPlain", "Distância à meta do mandato",
+                   "function btPlain", "Distância à meta de volatilidade da semana",
                    "Sensibilidade a commodities não medida nesta semana."):
         assert needle in template, needle
     # "rev" é revisões de analistas (nunca a reversão de curto prazo, desligada); a página não
@@ -1021,7 +1028,7 @@ def test_template_carries_the_brand_identity():
     assert "@media print" in css and "@media (prefers-reduced-motion: reduce)" in css
     assert "body {\n  margin: 0; background-color: var(--bg);" in css
     assert ('<span class="brand-mark" id="brand-mark" role="img" '
-            'aria-label="CDP Asset Management — Cabra da Peste">') in template
+            'aria-label="CDP — Cabra da Peste">') in template
     assert "family=Cinzel" in template and "family=Alegreya" in template
     assert "Source+Serif" not in template and "mask-composite" not in css
     # filtro roda antes da máscara: sombra em peça recortada nunca aparece

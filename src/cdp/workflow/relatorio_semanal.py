@@ -820,9 +820,12 @@ def render_relatorio(dados: Mapping[str, Any], fb: FactBook, texto: Mapping[str,
     mud = dados["mudancas"]
     if mud:
         rac = texto["mudancas_carteira"]
-        s.table(["Emissor", "Mudança", "Peso antes", "Peso depois", "Δ peso", "Alpha (z)",
-                 "Execução", "Racional"],
-                [[m["emissor"], _TIPO_PT[m["tipo"]], _pct(m["antes"], True),
+        from .rotulos import nome, nomes_do_universo
+
+        nomes = nomes_do_universo()
+        s.table(["Empresa", "Mudança", "Peso antes", "Peso depois", "Δ peso",
+                 "Sinal quant. (z)", "Execução", "Racional"],
+                [[nome(m["emissor"], nomes), _TIPO_PT[m["tipo"]], _pct(m["antes"], True),
                   _pct(m["depois"], True), _pct(m["delta"], True),
                   _num(m.get("alpha_z"), 2, True),
                   _pct(m.get("execucao"), digits=0), rac.get(m["emissor"], "—")]
@@ -952,7 +955,7 @@ def render_relatorio(dados: Mapping[str, Any], fb: FactBook, texto: Mapping[str,
         secs.append(s)
 
     s = Section("Integridade")
-    prov = (f"Autoria do texto: mente {texto.get('mind')} [IA], validado; números calculados "
+    prov = ("Autoria do texto: app de IA da gestão [IA], validado; números calculados "
             "pelo código." if da_mente else
             "Autoria do texto: modelo determinístico do CDP [Calculado].")
     s.kv([("Registro diário do fechamento", str(dados.get("registro") or "n/d")),
@@ -1020,7 +1023,12 @@ def validar(rt: Runtime, d: date) -> tuple[bool, list[str]]:
     out, issues = parse_comentario(report_dir(rt, d) / COMENTARIO_JSON)
     if out is None:
         return False, issues
+    from ..contracts import mente_divergente
+
     probs = verificar_comentario(out, fb, dados["mudancas"])
+    esperada = getattr(rt, "mente_esperada", lambda *a, **k: None)()
+    if (divergente := mente_divergente(out.mind, esperada)):
+        probs = [divergente, *probs]
     return not probs, probs
 
 
@@ -1040,8 +1048,9 @@ def publicar(rt: Runtime, d: date) -> dict[str, Any]:
     dados = calcular_semana(rt, d)
     fb = factbook_semana(dados)
     write_inputs(folder, fb, dados)
-    out, da_mente, issues = carregar_comentario(folder / COMENTARIO_JSON, fb, dados["mudancas"],
-                                                montagem=dados["montagem"])
+    out, da_mente, issues = carregar_comentario(
+        folder / COMENTARIO_JSON, fb, dados["mudancas"], montagem=dados["montagem"],
+        mente_esperada=getattr(rt, "mente_esperada", lambda *a, **k: None)())
     texto = render_comentario(out, fb)
     md_txt, html = render_relatorio(dados, fb, texto, da_mente=da_mente, problemas=issues,
                                     cfg=rt.cfg)
@@ -1087,7 +1096,7 @@ def cmd_validate(args: argparse.Namespace) -> int:
     except (ValueError, FileNotFoundError) as exc:
         print(f"cdp validate-weekly-report: {exc}", file=sys.stderr)
         return 1
-    _json({"data": args.date, "valido": ok, "problemas": issues})
+    _json({"data": args.date, "ok": ok, "problemas": issues})
     return 0 if ok else 1
 
 

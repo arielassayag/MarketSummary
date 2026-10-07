@@ -9,6 +9,7 @@ apareçam como ativos "independentes" e gerem falsa diversificação ou falsa ar
 from __future__ import annotations
 
 from dataclasses import dataclass
+from functools import lru_cache
 from pathlib import Path
 
 import pandas as pd
@@ -67,11 +68,33 @@ def _parse_bool(v) -> bool:
     return str(v).strip().lower() in {"true", "1", "yes", "sim", "y"}
 
 
+NOMES_CANONICOS = Path(__file__).resolve().parents[2] / "configs" / "cdp" / "nomes.yaml"
+"""Nomes oficiais com acentos (``configs/cdp/nomes.yaml``) aplicados ao carregar o universo."""
+
+
+@lru_cache(maxsize=4)
+def nomes_canonicos(path: str | None = None) -> dict[str, str]:
+    """``{emissor: nome com a grafia oficial}`` (vazio sem o arquivo)."""
+    import yaml
+
+    p = Path(path) if path else NOMES_CANONICOS
+    try:
+        raw = yaml.safe_load(p.read_text(encoding="utf-8")) or {}
+    except (OSError, yaml.YAMLError):
+        return {}
+    nomes = raw.get("nomes") if isinstance(raw, dict) else None
+    return {str(k): str(v) for k, v in (nomes or {}).items() if v}
+
+
 def universe_from_frame(df: pd.DataFrame, source_sha256: str = "") -> Universe:
     missing = [c for c in REQUIRED_COLUMNS if c not in df.columns]
     if missing:
         raise ValueError(f"Universo sem colunas obrigatórias: {missing}")
     df = df.copy()
+    canon = nomes_canonicos()
+    if canon:
+        iid = df["issuer_id"].astype(str).str.strip()
+        df["issuer_name"] = [canon.get(i, n) for i, n in zip(iid, df["issuer_name"], strict=True)]
     df["yahoo_ticker"] = df["yahoo_ticker"].astype(str).str.strip()
     df["issuer_id"] = df["issuer_id"].astype(str).str.strip()
     if df["yahoo_ticker"].duplicated().any():

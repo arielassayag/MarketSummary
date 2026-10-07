@@ -1,7 +1,7 @@
 # CDP — Tese de investimento da carteira (semanal)
 
-> Documento perene, válido para qualquer app de IA — **Claude Code** (o que usamos), **Codex**,
-> **Gemini** (Antigravity ou Gemini CLI) ou outro. Metodologia: `docs/cdp/METODOLOGIA.md`;
+> Documento perene, válido para qualquer app de IA — **Codex**, **Claude Code**, **Gemini**
+> (Antigravity ou Gemini CLI) ou outro. Metodologia: `docs/cdp/METODOLOGIA.md`;
 > roteiro da semana: `docs/cdp/playbooks/SEMANAL.md`; rotinas em cada app: seção 10 e
 > `docs/cdp/AUTOMACAO.md`. Todo número da tese vem do código.
 
@@ -243,7 +243,7 @@ depois saem.
   (`mind: "demo"`, só fatos citados), com "DADOS SIMULADOS".
 - **Onde a rotina roda**: no agendador do próprio app de IA, com o prompt gerado pelo código (o
   mesmo texto em qualquer app). Passo a passo:
-  1. **Claude Code (o nosso)**: rotinas na nuvem em claude.ai/code, ambiente "CDP" com rede total e
+  1. **Claude Code**: rotinas na nuvem em claude.ai/code, ambiente "CDP" com rede total e
      as variáveis `CDP_EXECUTOR=claude-cloud` (identidade do ambiente: sem ela toda rotina para no
      gate com "identidade deste ambiente desconhecida") e `CDP_HARNESS=claude-code`; blocos de
      `uv run python -m cdp rotinas exportar --alvo claude-routines --formato md`, uma rotina por

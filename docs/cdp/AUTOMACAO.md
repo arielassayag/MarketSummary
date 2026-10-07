@@ -1,14 +1,15 @@
 # Automação do CDP — rotinas dentro do app de IA (Claude Code, Codex, Gemini)
 
 As rotinas do CDP rodam **dentro do app de IA** de quem opera, com a capacidade do próprio plano:
-o app agenda, abre o repositório, lê `AGENTS.md` e segue o roteiro da tarefa. No nosso caso, o
-app é o **Claude Code** (rotinas na nuvem em claude.ai/code); este guia também ensina, passo a
-passo, a fazer o mesmo no **Codex** e no **Gemini** (Antigravity e Gemini CLI). O projeto se
+o app agenda, abre o repositório, lê `AGENTS.md` e segue o roteiro da tarefa. O app escolhido
+pelo titular é o **Codex** (tarefas agendadas do app desktop num clone dedicado, seção 5); este
+guia ensina, passo a passo, a fazer o mesmo no **Claude Code** (rotinas na nuvem ou app desktop)
+e no **Gemini** (Antigravity e Gemini CLI). O projeto se
 comporta igual em qualquer um deles, porque o que decide é o código: o gate (agir agora?), a
 trava (uma execução por vez), a sincronização e a publicação são comandos da CLI, e o prompt de
 cada tarefa sai pronto de `cdp rotinas`.
 
-**GitHub Actions não roda a IA no caminho principal**: só faz a integração contínua
+**GitHub Actions não roda a IA das rotinas**: só faz a integração contínua
 (`cdp-ci.yml`) e publica o portal (`cdp-site.yml`). Quem quiser, mesmo assim, rodar a IA no
 Actions encontra o desenho no apêndice A (opcional).
 
@@ -51,15 +52,18 @@ das rotinas: `docs/cdp/ROTINAS.md`. Portal público: `docs/cdp/SITE.md`.
   de Brasília (sem horário de verão); em UTC, some 3 h — 21:07 de Brasília vira terça a sábado
   em UTC.
 - **O que mudou**: cada commit de rotina leva os trailers `CDP-Tarefa`, `CDP-Executor`,
-  `CDP-Harness`, `CDP-Execucao` e `CDP-Sessao`; `uv run python -m cdp estado` lê esse histórico.
+  `CDP-Harness` e `CDP-Execucao`, e `CDP-Sessao` quando o app expõe a sessão (URL da rotina na
+  nuvem ou do GitHub Actions; nos apps locais, o identificador da conversa quando o app o exporta
+  — `CODEX_THREAD_ID`, por exemplo — ou `CDP_SESSAO` definido pelo script de rotina; sem isso, o
+  trailer é omitido); `uv run python -m cdp estado` lê esse histórico.
 
 ## 2. Qual opção escolher (outubro de 2026)
 
 | App e recurso | Onde roda | Agenda | Usa o plano? | Publica (push em `main`)? | Veredito |
 |---|---|---|---|---|---|
-| **Claude Code — rotinas na nuvem** (claude.ai/code) | nuvem da Anthropic, máquina nova a cada execução | cron em UTC (intervalo mínimo de 1 h) | **sim** | sim (com a sua identidade no GitHub) | **principal — a nossa escolha** (seção 3) |
-| Claude Code — tarefas agendadas do app desktop | o seu computador (app aberto) | horário local | sim | sim | reserva local (seção 4) |
-| **Codex — tarefas agendadas do app** (desktop) | o seu computador (app aberto) | diária, semanal ou RRULE | **sim** | sim, com acesso total num clone dedicado | **melhor opção no Codex** (seção 5) |
+| **Codex — tarefas agendadas do app** (desktop) | o seu computador (app aberto) | diária, semanal ou RRULE | **sim** | sim, com acesso total num clone dedicado | **a escolha do titular** (seção 5) |
+| **Claude Code — rotinas na nuvem** (claude.ai/code) | nuvem da Anthropic, máquina nova a cada execução | cron em UTC (intervalo mínimo de 1 h) | **sim** | sim (com a sua identidade no GitHub) | melhor opção no Claude Code (seção 3) |
+| Claude Code — tarefas agendadas do app desktop | o seu computador (app aberto) | horário local | sim | sim | alternativa local no Claude Code (seção 4) |
 | Codex — tarefas agendadas da web | nuvem | sim | sim | não: não acessa o repositório | não serve |
 | Codex Cloud (tarefas) | nuvem | **sem agenda** | sim | por pull request | só sob demanda (desenvolvimento) |
 | Codex CLI (`codex exec`) + agendador do sistema | o seu computador | cron, launchd ou Windows | sim (`codex login`) | sim (o script publica fora do sandbox) | alternativa no Codex (seção 5.3) |
@@ -75,7 +79,7 @@ O conhecimento não depende do app: `AGENTS.md` (canônico), roteiros neutros,
 (espelho em `.claude/skills/`). `CLAUDE.md`, `GEMINI.md` e `.gemini/settings.json` só apontam
 para eles.
 
-## 3. Claude Code — rotinas na nuvem (caminho principal)
+## 3. Claude Code — rotinas na nuvem
 
 **Passo 1 — pré-requisitos.** Plano com rotinas (Pro, Max, Team ou Enterprise; recurso em
 prévia). App GitHub do Claude conectado ao repositório: sem a conexão, as execuções são
@@ -348,7 +352,7 @@ progresso. Dois modos de publicação:
   monta o portal a partir do repositório com `cdp site construir`, confere e publica no GitHub
   Pages. Não usa IA e não grava no repositório (`docs/cdp/SITE.md`).
 
-Nenhum workflow roda a mente no caminho principal. O workflow com IA gerado por
+Nenhum workflow roda a mente nas rotinas. O workflow com IA gerado por
 `--alvo github-actions` existe só como alternativa opcional, desarmada (apêndice A).
 
 ## 9. Monitoramento
@@ -381,9 +385,15 @@ Nenhum workflow roda a mente no caminho principal. O workflow com IA gerado por
 ## 10. Falhas, reservas e recuperação
 
 - **Montagem**: reservas às 12:07, 13:07 e 14:07 retomam se a principal parou (a trava impede
-  duas ao mesmo tempo; uma trava abandonada expira em 60 min — a renovação usa a validade da
-  tarefa e nunca a encurta). Passado o prazo efetivo sem decisão, o código não decide: a
-  carteira anterior é mantida (`decisao_perdida` na agenda).
+  duas ao mesmo tempo; uma trava abandonada sem renovação expira em 50 min, antes da reserva
+  seguinte — `cdp rotinas verificar` recusa validade que alcance a próxima reserva —, e a
+  renovação usa a validade da tarefa e nunca a encurta). Passado o prazo efetivo sem decisão, o
+  código não decide: a carteira anterior é mantida — na carteira inaugural, o fundo segue sem
+  carteira (`decisao_perdida` na agenda; `weekly decide` devolve `status: "prazo_vencido"`).
+- **Prepare interrompido** (rede, fonte, modelo): o briefing é montado numa área temporária e
+  promovido de uma vez só no fim, então nada parcial fica para trás e a reserva seguinte refaz
+  o `weekly prepare`. Cotação intradiária vazia é falha de coleta (a análise usa o fechamento
+  anterior, sem barra provisória, e a falha aparece em `falhas_coleta`).
 - **Trava inacessível** (GitHub fora do ar, disputa): o escritor exclusivo **não executa**
   (falha fechada); a reserva seguinte tenta de novo. Só uma sessão de operador,
   explicitamente, usa `--sem-trava` (no gate e em `cdp publicar`).
@@ -439,8 +449,22 @@ capacidade do plano (na sexta, uma montagem completa a mais): no dia de uma mont
 confira o uso antes das 11:07 e, se a janela estiver apertada, desligue o ensaio
 `cdp-semanal*`. Além do prompt, o código garante: com `CDP_ENSAIO=1`, o gate instala um gancho
 `pre-push` que recusa todo push enquanto essa variável estiver no ambiente, `cdp trava` não
-grava nada no remoto e `cdp publicar` não publica. A opção `--ensaio` sozinha só muda o prompt.
-Compare: terminou no prazo, validadores ok, transcrição limpa.
+grava nada no remoto e `cdp publicar` faz só o **commit local** (com o trailer
+`CDP-Ensaio: sim`, sem trava e sem push) — a rotina seguinte do ensaio encontra o livro em dia,
+como numa semana real. Um clone com commits de ensaio nunca publica fora do ensaio
+(`cdp publicar` recusa o push): o ensaio usa sempre um clone próprio. A opção `--ensaio` sozinha
+só muda o prompt. Compare: terminou no prazo, validadores ok, transcrição limpa.
+
+**Ensaio nas datas de um cenário** (ex.: a semana da carteira inaugural, antes dela), só com
+`CDP_ENSAIO=1` — fora do ensaio a CLI recusa estas variáveis:
+
+- `CDP_AGORA=2026-10-09T11:07` (ISO; sem fuso = Brasília): o relógio de toda a CLI (gate, agenda,
+  fechamento, cobertura, notas, semanal, trilha) parte desse instante e anda junto com o tempo
+  real;
+- `CDP_ENSAIO_SUBSTITUTO=1`: substituto de dados rotulado — pregões ainda inexistentes recebem a
+  última barra real de cada série (preços, câmbio, índices, aluguel, juros) com a data pedida;
+  cada lote é anunciado na saída de erro como `[ensaio] SUBSTITUTO` e o retorno desses dias é
+  nulo. A coleta pública (notícias, CVM, SEC, RI) continua ao vivo.
 
 **Troca** (≤ 10 min; volta pelo mesmo caminho):
 
@@ -484,7 +508,7 @@ Compare: terminou no prazo, validadores ok, transcrição limpa.
 
 ## Apêndice A (opcional) — IA no GitHub Actions
 
-Não é o caminho principal nem o recomendado: só para quem não pode manter um app de IA
+Não é o recomendado: só para quem não pode manter um app de IA
 agendado. O workflow gerado por
 `uv run python -m cdp rotinas exportar --alvo github-actions --saida .github/workflows/cdp-rotinas.yml`
 fica **desarmado** até a variável de repositório `CDP_ROTINAS_ATIVAS=1` e exige a troca de

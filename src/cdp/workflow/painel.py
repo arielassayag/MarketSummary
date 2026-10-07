@@ -118,9 +118,13 @@ MAX_EVIDENCE_PER_NOTE = 8
 #: Tolerância dos limites: a mesma dos gates de compliance (``portfolio.compliance.TOL``), para o
 #: painel nunca acusar "excesso" num limite que o gate aprovou.
 LIMIT_TOL = 1e-6
+MIN_PREGOES_ANUALIZAR = 63
+"""Pregões mínimos para o portal mostrar retorno e vol anualizados e Sharpe."""
+MIN_PREGOES_MELHOR_DIA = 5
+"""Pregões mínimos para o portal destacar melhor e pior dia."""
 COMMENTARY_SECTION = "Comentário do dia"
 # Fontes entre parênteses (o rodapé da página lê o primeiro parêntese como fontes de dados).
-REAL_DATA_NOTICE = (f"Dados reais de mercado ({REAL_DATA_SOURCES}); paper trading com execução "
+REAL_DATA_NOTICE = (f"Dados reais de mercado ({REAL_DATA_SOURCES}); carteira simulada com execução "
                     "hipotética no leilão de fechamento.")
 EMPTY_DATA_NOTICE = "Pré-início: o fundo ainda não tem carteira."
 
@@ -505,7 +509,8 @@ def _mandate_table(cfg: FundConfig) -> list[dict[str, Any]]:
         ("drawdown", "stop_out", "Stop-out (exposição bruta mínima)", [dd.stop_out, dd.stop_out_gross],
          "pct"),
         ("ia", "llm_phase", "Fase de adoção das visões de IA", cfg.research.llm_phase, "text"),
-        ("ia", "llm_view_ic", "IC efetivo das visões de IA", cfg.research.llm_view_ic, "ratio"),
+        ("ia", "llm_view_ic", "Coeficiente de informação (IC) efetivo das visões de IA",
+         cfg.research.llm_view_ic, "ratio"),
         ("ia", "llm_can_only_tighten", "IA só aperta (nunca afrouxa)",
          cfg.research.llm_can_only_tighten, "bool"),
     ]
@@ -569,6 +574,14 @@ def _stats(tr: Any, cfg: FundConfig, issues: _Issues, label: str) -> dict[str, A
     for key in ("best_day", "worst_day"):
         v = out.get(key)
         out[key] = {"date": v[0], "ret": v[1]} if v else None
+    n = int(out.get("n_days") or 0)
+    if n < MIN_PREGOES_ANUALIZAR:
+        # Anualizar poucos pregões não informa (ex.: um dia de custos vira −25% a.a.).
+        out.update({"annualized_return": None, "annualized_vol": None, "sharpe": None,
+                    "annualization_note": (f"Retorno e volatilidade anualizados e Sharpe a partir "
+                                           f"de {MIN_PREGOES_ANUALIZAR} pregões (hoje: {n}).")})
+    if n < MIN_PREGOES_MELHOR_DIA:
+        out.update({"best_day": None, "worst_day": None})
     band = out.get("vol_band")
     out["vol_band"] = list(band) if band else None
     return out
@@ -2625,11 +2638,18 @@ def _status(rt: Any, cfg: FundConfig, now: datetime, weeks: Sequence[dict[str, A
                                    + (f" ({c['detail']})" if c.get("detail") else "")})
     if last is not None:
         # Alertas gravados pelo fechamento diário (liquidez por ponta, squeeze desde a decisão,
-        # stops do short, ADTV ausente, limitações de dados): o texto do código, um a um.
-        for a in last.alerts:
-            alerts.append({"severity": "info" if str(a).startswith("Limitação de dados")
-                           else "warning", "source": "fechamento",
+        # stops do short, ADTV ausente): o texto do código, um a um. As limitações técnicas de
+        # dados viram uma frase só (o detalhe fica no registro diário, nos dados abertos).
+        from .daily import data_limitations_summary, split_data_limitations
+
+        investor_alerts, tech = split_data_limitations(last.alerts)
+        for a in investor_alerts:
+            alerts.append({"severity": "warning", "source": "fechamento",
                            "text": f"Fechamento de {last.date.strftime('%d/%m/%Y')}: {a}"})
+        resumo = data_limitations_summary(len(tech))
+        if resumo:
+            alerts.append({"severity": "info", "source": "fechamento",
+                           "text": f"Fechamento de {last.date.strftime('%d/%m/%Y')}: {resumo}"})
     nav = float(last.nav_end_usd) if last is not None else float(cfg.fund.inception_nav_usd)
     return {
         "now_utc": now.astimezone(UTC).isoformat(), "now_local": local.isoformat(),
@@ -2740,7 +2760,7 @@ CONFIG_AUDITORIA = (
 CODIGO_AUDITORIA = (
     ("src/cdp/alpha", "Sinais de alpha", "fatores padronizados e combinação"),
     ("src/cdp/risk/model.py", "Modelo de risco", "fatores, meias-vidas e risco específico"),
-    ("src/cdp/risk/idio.py", "Risco idiossincrático", "decomposição e inflação de 2ª ordem κ_F"),
+    ("src/cdp/risk/idio.py", "Risco idiossincrático", "decomposição e inflação de 2ª ordem κF"),
     ("src/cdp/portfolio/optimizer.py", "Otimizador", "objetivo, restrições e custo de cada "
      "restrição"),
     ("src/cdp/portfolio/compliance.py", "Verificações de conformidade",
@@ -3062,10 +3082,10 @@ def _metodologia(cfg: FundConfig, hoje: date, inaugural: Mapping[str, Any] | Non
         f"Meta de pelo menos {fm.pct(meta, 0)} da variância ex-ante vinda do risco específico de "
         f"cada empresa, com piso de {fm.pct(piso, 0)} que nunca é relaxado, medido "
         + ("nos modelos " if len(modelos) > 1 else "no modelo ") + _lista_pt(modelos)
-        + f", com a covariância fatorial inflada por κ_F = {fm.num(kappa, 2)}."
+        + f", com a covariância fatorial inflada por κF = {fm.num(kappa, 2)}."
         if meta is not None and piso is not None else None)
     kappa_txt = (
-        f"κ_F = {fm.num(kappa, 2)}: multiplica a covariância dos fatores na medida "
+        f"κF = {fm.num(kappa, 2)}: multiplica a covariância dos fatores na medida "
         "idiossincrática e no teto de risco fatorial, para compensar o erro de estimação dos "
         "fatores que o otimizador tende a explorar"
         + (" (fórmula (1 − K/T)⁻² limitada a "
@@ -3074,7 +3094,7 @@ def _metodologia(cfg: FundConfig, hoje: date, inaugural: Mapping[str, Any] | Non
            if rk.second_order_inflation_mode == "analytic" else " (valor do mandato)") + ".")
     lam_f = rk.factor_risk_aversion_multiplier
     objetivo = ("max αᵀw − (52/H)·custo(w − w⁰) − taxaᵀw⁻ − λ·wᵀΣw"
-                + (" − λ_F·κ_F·wᵀBFBᵀw" if lam_f > 0 else ""))
+                + (" − λF·κF·wᵀBFBᵀw" if lam_f > 0 else ""))
     posturas = [(k, v) for k, v in POSTURE_MAP.items()]
     postura_txt = "; ".join(
         f"{POSTURE_PT.get(k, k)}: {fm.pct(v[0], 1) if v[0] is not None else 'meta do mandato'}"
@@ -3083,7 +3103,7 @@ def _metodologia(cfg: FundConfig, hoje: date, inaugural: Mapping[str, Any] | Non
         {"rotulo": "Objetivo", "texto": (
             f"{objetivo}: alpha esperado líquido do custo de negociação amortizado em "
             f"H = {fm.num(cfg.costs.amortization_weeks, 0)} semanas, do aluguel dos shorts e da "
-            "aversão a risco" + (f", com penalidade extra no risco fatorial (λ_F = "
+            "aversão a risco" + (f", com penalidade extra no risco fatorial (λF = "
                                  f"{fm.num(lam_f, 0)} × λ)" if lam_f > 0 else "") + ".")},
         {"rotulo": "Volatilidade", "texto": (
             f"Meta ex-ante de {fm.pct(rk.vol_target_annual, 1)} a.a. dentro da banda "
@@ -3097,7 +3117,7 @@ def _metodologia(cfg: FundConfig, hoje: date, inaugural: Mapping[str, Any] | Non
             f"{fm.num(rk.bias_prior, 2)} do risco ex-ante de carteiras otimizadas; fica sempre "
             "dentro da banda. A conta da semana vigente está na formulação da decisão.")},
     ]
-    if idio_txt:  # meta e piso de risco específico (com a inflação κ_F que os mede)
+    if idio_txt:  # meta e piso de risco específico (com a inflação κF que os mede)
         construcao += [{"rotulo": "Risco idiossincrático", "texto": idio_txt},
                        {"rotulo": "Inflação de 2ª ordem", "texto": kappa_txt}]
     construcao += [
@@ -3192,8 +3212,9 @@ def _metodologia(cfg: FundConfig, hoje: date, inaugural: Mapping[str, Any] | Non
     processo = [
         {"rotulo": "Alpha quantitativo", "texto": (
             "Sinais padronizados por emissor"
-            + (" — " + _lista_pt(sinais) + " (pesos relativos, renormalizados em cada emissor "
-               "entre os sinais disponíveis) —" if sinais else "")
+            + (" — " + _lista_pt(sinais) + " (pesos relativos arredondados, cuja soma pode "
+               "diferir de 100%; renormalizados em cada emissor entre os sinais disponíveis) —"
+               if sinais else "")
             + " ortogonalizados aos fatores de risco, com horizonte de "
             f"{fm.num(al.horizon_weeks, 0)} semanas.")},
         {"rotulo": "Pesquisa", "texto": (
@@ -3211,7 +3232,20 @@ def _metodologia(cfg: FundConfig, hoje: date, inaugural: Mapping[str, Any] | Non
             + (", commodities e dólar" if rm.macro_factors else "")
             + f", estimado com {fm.inteiro(rm.history_days)} pregões de histórico e o ETF "
             f"{rm.market_proxy} como referência de mercado. Mede volatilidade ex-ante, VaR, ES, "
-            "contribuições ao risco e cenários de estresse.")},
+            "contribuições ao risco e cenários de estresse. Parâmetros: meias-vidas de "
+            f"{fm.inteiro(rm.halflife_factor_vol)} pregões (volatilidade dos fatores), "
+            f"{fm.inteiro(rm.halflife_factor_corr)} (correlações) e "
+            f"{fm.inteiro(rm.halflife_specific)} (risco específico); Newey–West com "
+            f"{fm.inteiro(rm.newey_west_lags)} defasagens; encolhimento do risco específico de "
+            f"{fm.num(rm.specific_shrinkage, 1)}; setor com menos de "
+            f"{fm.inteiro(rm.min_names_per_sector)} nomes agrupado; "
+            + (f"{len(rm.linked_groups)} grupos de holding e controlada tratados como a mesma "
+               "aposta; " if rm.linked_groups else "")
+            + ("a escala do alpha (κ) é calibrada a cada semana para a carteira atingir a meta de "
+               "volatilidade da semana, com a aversão a risco (λ) do mandato; "
+               if cfg.risk.risk_target_mode == "match" else
+               "a meta de volatilidade é um teto, com a aversão a risco (λ) do mandato; ")
+            + f"fatores com penalidade adicional de {fm.num(cfg.risk.factor_risk_aversion_multiplier, 1)} × λ.")},
         {"rotulo": "Execução e custos", "texto": (
             "Ordens no leilão de fechamento de cada mercado; custos estimados com corretagem por "
             "mercado, meio spread por faixa de liquidez e impacto de mercado.")},
@@ -3220,7 +3254,8 @@ def _metodologia(cfg: FundConfig, hoje: date, inaugural: Mapping[str, Any] | Non
     fase = {"S0": "registradas sem efeito na carteira", "S1": "peso pequeno no alpha",
             "S2": "peso intermediário no alpha", "S3": "peso pleno no alpha"}.get(rs.llm_phase, "")
     ia = {"fase": rs.llm_phase, "texto": (
-        f"Fase {rs.llm_phase} de adoção das visões da IA ({fase}): IC efetivo de "
+        f"Fase {rs.llm_phase} de adoção das visões da IA ({fase}): coeficiente de informação "
+        f"(IC, a correlação entre a visão e o retorno seguinte) efetivo de "
         f"{fm.num(rs.llm_view_ic, 2)}, contra {fm.num(cfg.alpha.information_coefficient, 2)} do "
         f"alpha quantitativo; inclinação máxima de {fm.num(cfg.alpha.max_view_tilt_z, 1)} "
         "desvio-padrão; cada juízo exige "
@@ -3251,7 +3286,7 @@ NA_TXT = "n/d"
 def _risco_modelo(prop: Any, records: Sequence[Any], md: Any, cfg: FundConfig,
                   issues: _Issues) -> dict[str, Any] | None:
     """Risco idiossincrático da decisão vigente (decomposição por grupo nos modelos de decisão e
-    base, κ_F, meta e piso), parâmetros do modelo de risco e a série diária monitorada."""
+    base, κF, meta e piso), parâmetros do modelo de risco e a série diária monitorada."""
     from ..cobertura import formato as fm
 
     ov = dict(prop.overrides) if prop is not None and isinstance(prop.overrides, dict) else {}
@@ -3362,7 +3397,7 @@ def _fator_pt(f: str) -> str:
         return _FATOR_PT.get(grp, grp)
     if grp == "country":
         return {"AR": "Argentina", "BR": "Brasil", "CL": "Chile", "CO": "Colômbia",
-                "MX": "México", "PE": "Peru", "LATAM": "Regional"}.get(nome, nome)
+                "MX": "México", "PE": "Peru", "LATAM": "Regional (América Latina)"}.get(nome, nome)
     if grp == "sector":
         return SECTOR_PT.get(nome, nome)
     return _FATOR_PT.get(nome, nome)
@@ -3458,8 +3493,8 @@ def _formulacao(prop: Any) -> dict[str, Any] | None:
             f"{fm.num(par.get('lambda_mandato'), 2)} ÷ {fm.num(par.get('divisor_aversao'), 0)} "
             "para alcançar a meta de volatilidade)")
          if par.get("divisor_aversao") not in (None, 1, 1.0) else fm.num(par.get("lambda_mandato"), 2)},
-        {"rotulo": "Penalidade de risco fatorial (λ_F)", "texto": fm.num(par.get("lambda_f"), 2)},
-        {"rotulo": "Inflação de 2ª ordem (κ_F)", "texto": fm.num(par.get("kappa_f"), 2)},
+        {"rotulo": "Penalidade de risco fatorial (λF)", "texto": fm.num(par.get("lambda_f"), 2)},
+        {"rotulo": "Inflação de 2ª ordem (κF)", "texto": fm.num(par.get("kappa_f"), 2)},
         {"rotulo": "Amortização do custo (H)", "texto": f"{fm.num(par.get('amortizacao_semanas'), 0)} semanas"},
         {"rotulo": "Meta de volatilidade", "texto": fm.pct(par.get("meta_vol"), 2)
          + ("" if par.get("meta_vol_atingida") is not False else " (não atingida)")},

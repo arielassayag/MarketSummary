@@ -22,7 +22,7 @@ para operar a sua própria cópia do fundo, `docs/cdp/REPLICAR.md`.
 | Decisões semanais (proposta, decisão, configuração do mandato vigente) | `book/<semana>/` | `cdp verify` (hashes contra a trilha); recálculo na seção 4.2 |
 | Registros diários e track record | `book/track_record/` | `cdp verify` (cadeia de registros) |
 | Base de mercado (preços, volumes, câmbio, fundamentos; base e incrementos diários) | `data/market/` | `cdp verify` (manifesto e sha256 de cada arquivo) |
-| Insumos públicos dos modelos (demonstrações da CVM e da SEC, consenso público, composição de ETFs, juros) | `data/publico/` e `book/cobertura/<data>/insumos/` | `cdp cobertura verify` |
+| Insumos públicos dos modelos (demonstrações da CVM e da SEC, consenso público, composição de ETFs, juros) | `book/cobertura/<data>/insumos/` (extratos usados) e `data/publico/` (índice com URL e SHA-256 de cada coleta; os pacotes anuais da CVM e o `companyfacts` da SEC ficam fora do git — baixe-os da URL do índice) | `cdp cobertura verify` |
 | Modelos de cobertura e preços-alvo de 12 meses | `book/cobertura/<data>/` e o livro `book/cobertura/livro.jsonl` | `cdp cobertura verify` (recalcula cada preço-alvo) |
 | Tese de investimento, notas de pesquisa, comentários diário e semanal | `book/<semana>/tese/`, `book/cobertura/notas/`, `reports/` | sha256 na trilha; validadores da seção 5 |
 | Configuração do mandato e da valuation | `configs/cdp/` e `configs/cdp/historico/<hash>.json` | hash da configuração em cada decisão |

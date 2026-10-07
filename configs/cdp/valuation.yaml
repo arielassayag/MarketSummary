@@ -68,7 +68,7 @@ custo_capital:
   # mesmo sinal (decisão registrada em commit). Fonte do método: Damodaran, "Equity Risk Premiums
   # (ERP): Determinants, Estimation and Implications" (edição 2026), seção de prêmio implícito.
   premio_implicito_pais:
-    kappa: 0.0                    # peso no ke oficial (política, 2026-10-06)
+    kappa: 0.0                    # peso no ke oficial (política)
     limite: 0.01                  # |δ| ≤ 1 p.p. (política)
     n_min: 8                      # mínimo de emissores do país no agregado (política)
     anos: 5                       # anos explícitos do modelo de dois estágios (Damodaran)
@@ -77,7 +77,7 @@ custo_capital:
   # premissas da casa — o mesmo conceito do prêmio implícito de Damodaran (taxa que iguala o valor
   # presente dos fluxos esperados ao preço), aplicado aos fluxos do modelo e à mediana dos emissores
   # cobertos. A carteira é neutra a país e o rating é relativo a país × setor: o nível do país não é
-  # uma aposta da casa. Limitado a ±1,5 p.p. (política, 2026-10-06); o ke sem a calibração e o ke com
+  # uma aposta da casa. Limitado a ±1,5 p.p. (política); o ke sem a calibração e o ke com
   # o ERP estático ficam como sensibilidades exibidas.
   # É um ajuste do NÍVEL DOS FLUXOS DO MODELO (viés da casa), não um prêmio de risco: a mediana de
   # V0 ÷ P0 sem o ajuste é o indicador de viés monitorado (rating.monitoramento.vies_v_p_faixa). A
@@ -166,13 +166,13 @@ projecao:
   reinvestimento_anos_observados: 3       # RR observado = 1 − Σ(CFO − capex) ÷ Σ NOPAT dos 3 últimos exercícios
                                           # (suaviza capital de giro; Damodaran, "Investment Valuation", cap. 10); sem 3 anos, 12 meses
   concessao_fracao_final: 0.333           # concessões: último terço do prazo com crescimento real e reinvestimento
-                                          # líquido convergindo a zero (política, 2026-10-06: sem renovação nem indenização)
+                                          # líquido convergindo a zero (política: sem renovação nem indenização)
   min_anos_ciclo: 3               # margem "ao longo do ciclo" (commodities) exige ≥ 3 exercícios
   # Calendarização do consenso (12 meses à frente): o "ano 1" do consenso é o exercício corrente,
   # já decorrido em fração f na data do snapshot. LPA_12m = (1 − f) × LPA_FY1 + f × LPA_FY2;
   # LPA do ano 2 = (1 − f) × LPA_FY2 + f × LPA_FY3, com LPA_FY3 = LPA_FY2 × (1 + (g_FY2 + g) ÷ 2).
   # Mesma regra para a receita de consenso. Prática padrão de calendarização (Damodaran,
-  # "Investment Valuation", cap. 7; consenso "NTM" de provedores de mercado). Política, 2026-10-06.
+  # "Investment Valuation", cap. 7; consenso "NTM" de provedores de mercado). Política.
   calendarizacao: true             # vale para o modelo, o contexto transversal e o prêmio implícito
   prazo_exercicio_dias: 120        # calendário do consenso: demonstrações anuais ausentes 120 dias depois do encerramento ⇒ consenso já rolou (sinalizado)
   g1_consenso_concessao_max_abs: 0.15   # utilidades/concessões: |crescimento de consenso da receita| acima disso sem reconciliação pela receita de construção (DVA) ⇒ não usado
@@ -185,7 +185,7 @@ projecao:
 # ROE de 5 anos contra o log do valor de mercado dentro do setor, estimada a cada execução).
 # Alvo do emissor = norma + θ × (R̄ − norma), R̄ = média do ROE de 5 anos e do ROE do ano 2; o
 # caminho do ROE decai exponencialmente de ROE_2 ao alvo com fator ω por classe de estabilidade.
-# Evidência (fonte painel_publico_roe, 2026-10-06): decaimento ρ_k = θ + (1 − θ)ω^k com θ ≈ 0,25
+# Evidência (fonte painel_publico_roe): decaimento ρ_k = θ + (1 − θ)ω^k com θ ≈ 0,25
 # e ω ≈ 0,6–0,7 no conjunto; emissores do quintil superior e estáveis retêm 0,93 do desvio em 2
 # anos. Literatura: Fama & French (2000, J. Business 73(2)), reversão ≈ 38% ao ano; Dechow, Hutton
 # & Sloan (1999, JAE 26), ω ≈ 0,62; Nissim & Penman (2001, RAST 6), spreads convergem sem zerar.
@@ -196,7 +196,7 @@ persistencia_roe:
   excluir_paises: [AR]            # ROE nominal em ARS (IAS 29) fora da norma
   # Ajuste de porte: Theil–Sen do ROE de 5 anos contra o log do PATRIMÔNIO CONTÁBIL em US$ (nunca o
   # valor de mercado, que traria o próprio preço de volta à norma), estimado a cada execução e só
-  # aplicado quando o IC de 95% exclui zero (política, 2026-10-06).
+  # aplicado quando o IC de 95% exclui zero (política).
   tamanho_variavel: ln_pl_usd
   tamanho_limite: 0.05            # ajuste de porte limitado a ±5 p.p.
   tamanho_inclinacao_limites: [0.0, 0.04]
@@ -210,7 +210,7 @@ persistencia_roe:
 # P/L justificado com crescimento extraordinário de curto prazo (modelo H de Fuller & Hsia, 1984,
 # Financial Analysts Journal 40(5)): P/L* × [1 + H × (g_c − g) ÷ (1 + g)], g_c = LPA_2 ÷ LPA_1 − 1
 # limitado a [g; 25%], H = metade da duração equivalente do crescimento com persistência φ do setor
-# (0,5 ÷ (1 − φ)), no máximo 8 anos. Política conservadora (meia duração), 2026-10-06.
+# (0,5 ÷ (1 − φ)), no máximo 8 anos. Política conservadora (meia duração).
 multiplo_h:
   h_fator: 0.5
   h_max: 8.0
@@ -223,21 +223,21 @@ multiplos:
   pl_limites: [2.0, 80.0]
   ev_receita_limites: [0.1, 25.0]
   r2_min: 0.25                    # regressão com R² abaixo do mínimo fica indisponível
-  faixa_percentis: [5, 95]        # múltiplo previsto limitado ao P5–P95 da amostra (política, 2026-10-06)
+  faixa_percentis: [5, 95]        # múltiplo previsto limitado ao P5–P95 da amostra (política)
 
 # Participação de não controladores nos métodos pelo valor da firma: proporcional ao valor do
 # patrimônio, (EV − DL) × minoritários contábeis ÷ (PL dos controladores + minoritários contábeis)
-# (Damodaran, "Investment Valuation", cap. 16: valor de mercado estimado pelo P/VPA). Política, 2026-10-06.
+# (Damodaran, "Investment Valuation", cap. 16: valor de mercado estimado pelo P/VPA). Política.
 minoritarios: proporcional        # proporcional | contabil
 
 soma_partes:
   desconto_anos: 5                # desconto da holding = mediana semanal de 5 anos (1 − valor de mercado/NAV)
   desconto_min_semanas: 52
   desconto_reserva: 0.20          # usado só sem histórico suficiente (sinalizado)
-  mudanca_acoes_min: 0.05         # variação > 5% nas ações da holding (fora de desdobramento) reinicia a janela (política, 2026-10-06)
+  mudanca_acoes_min: 0.05         # variação > 5% nas ações da holding (fora de desdobramento) reinicia a janela (política)
   participacao_tolerancia: 0.01   # conferência cruzada em código: fração da holding × posição acionária no documento da investida (fracao_investida em sotp.yaml) ≤ 1 p.p.
   # Visão da casa: participação a valor intrínseco da casa (V0 ÷ P0 da investida) quando o modelo da
-  # investida é citável com confiança A/B e sem estes avisos; senão a valor de mercado (política, 2026-10-06).
+  # investida é citável com confiança A/B e sem estes avisos; senão a valor de mercado (política).
   visao_excluir_avisos: [G11, G16, G19]
 
 cenarios:
@@ -278,15 +278,15 @@ rating:
   # Exposição de estilo explícita: a cada execução, b̂ = inclinação de Theil–Sen de α_rel contra
   # Δln(P/VPA) (desvio da mediana do grupo de pares); α_rel_estilo = α_rel − b̂ × Δln(P/VPA).
   # Compra/Venda exigem α_rel além de ±τ E α_rel_estilo além de ±τ × fracao_limiar (nenhum rating
-  # publicado é só uma aposta em P/VPA). Política, 2026-10-06.
+  # publicado é só uma aposta em P/VPA). Política.
   estilo: {dupla_condicao: true, fracao_limiar: 0.5, n_min: 30}
-  pares_excluir_avisos: [G11, G16, G19]   # extremo corroborado, patrimônio residual frágil e demonstrações defasadas fora da mediana dos pares (política, 2026-10-06)
+  pares_excluir_avisos: [G11, G16, G19]   # extremo corroborado, patrimônio residual frágil e demonstrações defasadas fora da mediana dos pares (política)
   avisos_limitam_b: [G15, G18]    # data-base dos fluxos e método discrepante limitado ou mantido: até B (C se a dispersão entre todos os métodos passar de 50%)
   # alertas, nunca forçados: a mediana de α por país é centrada por construção pelo ajuste de nível;
   # o viés do modelo é a mediana de V0 ÷ P0 SEM o ajuste (fora da faixa ⇒ alerta) e o ajuste no limite
   monitoramento: {alpha_pais_max_abs: 0.05, em_revisao_max: 0.08, confianca_c_max: 0.35, vies_v_p_faixa: [0.85, 1.15]}
 
-# Portões de qualidade (política do modelo, revisão 2026-10-06; ver docs/cdp/COBERTURA.md §7).
+# Portões de qualidade (política do modelo; ver docs/cdp/COBERTURA.md §7).
 qualidade:
   tv_aviso: 0.85
   tv_bloqueio: 0.95
@@ -325,18 +325,21 @@ qualidade:
   metodo_discrepante_fator: 3.0   # G18: com ≥ 3 métodos, valor fora de [1/3; 3] × a mediana dos demais é LIMITADO à borda (combinação monótona; aviso)
   metodo_discrepante_min: 3
   metodo_discrepante_cv_demais: 0.10   # G18: só limita com os demais concordando (CV ≤ 10%) e o discrepante fora do lado do preço
-  analistas_min_a: 3              # confiança A exige consenso de LPA de ≥ 3 analistas (política, 2026-10-06)
+  analistas_min_a: 3              # confiança A exige consenso de LPA de ≥ 3 analistas (política)
   analistas_min_roe: 2            # abaixo de 2 analistas o ROE dos anos 1–2 parte do lucro de 12 meses
   idade_aviso_dias: 300           # G19: balanço ou fluxos de 12 meses com mais de ~10 meses na data ⇒ aviso (confiança C)
   idade_bloqueio_dias: 550        # G19: mais de ~18 meses ⇒ bloqueio
   qa_janela_dias: 400             # G17: alerta da fonte sobre período usado (até ~13 meses antes do último balanço)
+  g20_consenso_folga: 0.25        # G20: alvo > 1,25 × maior alvo (ou < 0,75 × menor) do consenso ⇒ confiança C
+  g20_consenso_n_min: 3           # G20: só com consenso de ≥ 3 analistas de preço-alvo
+  g20_g11_margem: 0.95            # G20: G11 aprovado com |ln(1 + ETR)| ≥ 95% do limite ⇒ confiança C
   moeda_trocada_min_anos: 3       # G17: menos de 3 exercícios na moeda nova ⇒ insumos históricos ausentes
   etf_retorno_limites: [-0.5, 1.0]
   etf_pl_razao_limites: [0.6, 1.6]
 
 # Bottom-up dos ETFs só com alvos citáveis da casa, confiança A/B e sem os avisos de bu_excluir_avisos
 # (as demais posições recebem o top-down); E5: nenhuma posição contribui mais que concentracao_max ao
-# R_BU além do top-down (aviso). Política, 2026-10-06.
+# R_BU além do top-down (aviso). Política.
 etf: {kappa_consenso: 0.5, omega_bu: 0.5, cobertura_plena: 0.90, meia_vida_pl_anos: 3, kappa_crescimento: 0.7,
       ir_limiar: 0.3, banda_z: 1.645, referencia: ILF, bu_excluir_avisos: [G11, G16, G19], concentracao_max: 0.05,
       retencao_dividendos: {BR: 0.10, MX: 0.10, CL: 0.35, CO: 0.20, PE: 0.05, AR: 0.07}}

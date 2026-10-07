@@ -17,7 +17,7 @@ Exceção: se o prompt da rotina disser que a agenda, a trava e a publicação s
 1. `uv sync --frozen --extra dev --extra ai`
 2. `uv run python -m cdp rotinas gate --tarefa <a tarefa que disparou você; padrão cdp-risco-1330>` (fora do horário agendado, acrescente `--manual`). `executar: false` ⇒ responda "Sem execução: <motivo>" e encerre (nunca rode o gate duas vezes). Guarde `execucao` e `mente`.
 3. `uv run python -m cdp sincronizar --executar`; `acao: "parar"` ⇒ encerre relatando.
-4. Siga `docs/cdp/playbooks/RISCO.md` do início ao fim com `--mind <mente>` (`mente` do gate; se vier `null`, o nome do seu harness — `AGENTS.md`, seção 8). Onde o roteiro mandar fazer commit/push, use o passo seguinte; republicar artifact só em sessão interativa do Claude.
+4. Siga `docs/cdp/playbooks/RISCO.md` do início ao fim com `--mind <mente>` (`mente` do gate; se vier `null`, o nome do seu harness — `AGENTS.md`, seção 8). Onde o roteiro mandar fazer commit/push, use o passo seguinte.
 5. Publique só com `uv run python -m cdp publicar --tarefa <tarefa> --mensagem "CDP: <mensagem do roteiro>" --execucao <execucao> --mente <mente>`; se não publicar, relate (nunca outro caminho).
 6. Resumo final em pt-BR institucional (`docs/cdp/ESTILO.md`), com números copiados dos relatórios gerados.
 

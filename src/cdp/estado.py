@@ -98,7 +98,15 @@ def ultimas_execucoes(raiz: Path, rot: Rotinas | None, n: int = 10,
     ``cdp publicar``). Para os com tarefa, indica se ficaram dentro dos caminhos dela."""
     ref = f"{ex.REMOTO}/main" if ex.git(["rev-parse", "--verify", "--quiet",
                                          f"{ex.REMOTO}/main"], raiz).returncode == 0 else "HEAD"
-    r = ex.git(["log", f"-n{limite}", "--name-only", "--format=%x1e%H%x1f%cI%x1f%B%x1f", ref],
+    # Só a operação a partir do pré-início (o commit que gravou ``book/genese.json``): rodadas
+    # anteriores à gênese não são execuções do mandato vigente.
+    genese = ex.git(["log", "--diff-filter=A", "--format=%H", "-n1", ref, "--",
+                     "book/genese.json"], raiz).stdout.strip()
+    faixa = ref
+    if genese and ex.git(["rev-parse", "--verify", "--quiet", f"{genese}^"],
+                         raiz).returncode == 0:
+        faixa = f"{genese}^..{ref}"
+    r = ex.git(["log", f"-n{limite}", "--name-only", "--format=%x1e%H%x1f%cI%x1f%B%x1f", faixa],
                raiz)
     out: list[dict[str, Any]] = []
     for bloco in r.stdout.split("\x1e"):
@@ -364,14 +372,16 @@ def playbook_sugerido(rot: Rotinas, ag: Mapping[str, Any], ctx: Any, local: date
     if not candidatos:
         return None
     quando, _, t, dec = min(candidatos, key=lambda c: (c[0], c[1]))
-    if info_ex.get("sou_o_executor"):
-        condicao = ("rotina agendada: rode a skill da tarefa; sessão de operador: só a pedido da "
-                    "pessoa (AGENTS.md, seção 1)")
-    else:
-        condicao = (f"só no executor designado ({info_ex.get('designado')}); aqui, somente "
-                    "leitura")
     return {"tarefa": t.id, "playbook": t.playbook, "motivo": dec.motivo,
-            "proximo_disparo": quando.isoformat(timespec="minutes"), "condicao": condicao}
+            "proximo_disparo": quando.isoformat(timespec="minutes"),
+            "condicao": _condicao(info_ex)}
+
+
+def _condicao(info_ex: Mapping[str, Any]) -> str:
+    if info_ex.get("sou_o_executor"):
+        return ("rotina agendada: rode a skill da tarefa; sessão de operador: só a pedido da "
+                "pessoa (AGENTS.md, seção 1)")
+    return f"só no executor designado ({info_ex.get('designado')}); aqui, somente leitura"
 
 
 def estado(rt: Any, raiz: Path | str = ".", *, agora: datetime | None = None,
@@ -433,8 +443,18 @@ def estado(rt: Any, raiz: Path | str = ".", *, agora: datetime | None = None,
                 except Exception as exc:  # noqa: BLE001 - previsão é informativa
                     item.update({"vai_agir": None, "motivo": f"{exc.__class__.__name__}"})
             prox.append(item)
-        sugerido = playbook_sugerido(rot, ag, contexto_do_runtime(rt, agora), local,
-                                     info_ex) or sugerido
+        # Próximo passo = a próxima rotina agendada que de fato vai agir (gate avaliado no
+        # instante do disparo, com a agenda daquele instante); sem previsão, a de disparo mais
+        # próximo entre as que têm trabalho agora.
+        agir = next((x for x in prox if x.get("vai_agir")), None)
+        if agir is not None:
+            t = rot.tarefas[agir["tarefa"]]
+            sugerido = {"tarefa": t.id, "playbook": t.playbook, "motivo": agir.get("motivo"),
+                        "proximo_disparo": agir["quando"],
+                        "condicao": _condicao(info_ex)}
+        else:
+            sugerido = playbook_sugerido(rot, ag, contexto_do_runtime(rt, agora), local,
+                                         info_ex) or sugerido
     pre = _reinicio_pendente(ag)
     avisos = []
     if ex.detectar_ambiente(env) == "claude-cloud" and info_ex.get("sou_o_executor"):

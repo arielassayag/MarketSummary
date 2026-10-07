@@ -8,6 +8,8 @@ o mesmo ``MarketData`` a partir desses arquivos e falha se qualquer hash divergi
 from __future__ import annotations
 
 import json
+import os
+import shutil
 from collections.abc import Callable
 from dataclasses import dataclass, field
 from datetime import UTC, date, datetime
@@ -52,6 +54,50 @@ BENCH_INTRADAY = ["ILF", "EWZ", "EWW", "ECH", "ARGT", "SPY"]
 _BRT = ZoneInfo("America/Sao_Paulo")
 
 
+class RecusaEstruturada(ValueError):
+    """Recusa prevista de uma etapa (ex.: prazo vencido): a CLI a devolve como JSON
+    (``status``/``motivo``), nunca como erro cru."""
+
+    def __init__(self, status: str, motivo: str, **extra) -> None:
+        super().__init__(motivo)
+        self.status = status
+        self.motivo = motivo
+        self.extra = extra
+
+    def as_dict(self) -> dict:
+        return {"status": self.status, "motivo": self.motivo, **self.extra}
+
+
+def briefing_completo(briefing_dir: Path) -> bool:
+    """Briefing promovido por inteiro: manifesto, ``briefing.md`` e ``context.json``."""
+    return all((Path(briefing_dir) / n).exists()
+               for n in (PREPARE_MANIFEST, "briefing.md", "context.json"))
+
+
+def _afastar_briefing_incompleto(briefing_dir: Path) -> Path | None:
+    """Afasta (renomeia, nunca apaga) um briefing parcial deixado por uma versão antiga.
+
+    Versões anteriores gravavam o manifesto antes de terminar; uma falha no meio deixava a
+    pasta parcial e travava a semana. A pasta vai para ``.briefing.incompleto-<carimbo>``
+    (ignorada pelo git) e o ``prepare`` recomeça do zero.
+    """
+    briefing_dir = Path(briefing_dir)
+    if not briefing_dir.exists() or briefing_completo(briefing_dir):
+        return None
+    stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%S")
+    dest = briefing_dir.parent / f".briefing.incompleto-{stamp}"
+    os.replace(briefing_dir, dest)
+    return dest
+
+
+def _ultimo_pregao_completo(md: MarketData) -> date | None:
+    """Pregão completo anterior quando ``md.as_of`` é barra provisória (senão ``None``)."""
+    if md.as_of not in set(md.manifest.provisional_dates or []):
+        return None
+    anteriores = [d.date() for d in md.close.index if d.date() < md.as_of]
+    return max(anteriores) if anteriores else None
+
+
 def _write_json(path: Path, obj) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(obj, ensure_ascii=False, indent=2, sort_keys=True, default=str),
@@ -68,6 +114,9 @@ class Runtime:
     clock: Callable[[], datetime] | None = field(default=None, repr=False)
     teses_root: Path | None = DEFAULT_TESES_ROOT
     """Rascunhos de tese entregues fora do clone da rotina (``None`` desliga a adoção)."""
+    expected_mind: str | None = None
+    """Mente desta execução (``--mind`` ou ``CDP_HARNESS``): os validadores recusam arquivos da
+    mente com outro ``mind`` (``None`` = sem conferência, ex.: demonstração)."""
 
     def now(self) -> datetime:
         """Relógio da rotina (UTC); a demonstração usa um relógio lógico determinístico."""
@@ -76,10 +125,28 @@ class Runtime:
     # ------------------------------------------------------------------ fábrica
     @classmethod
     def from_args(cls, args) -> Runtime:
+        from ..contracts import mente_do_ambiente
+
         cfg = load_config(getattr(args, "config", None))
         return cls(cfg=cfg, book_root=Path(args.book), market_root=Path(args.market),
                    reports_root=Path(args.reports),
-                   teses_root=Path(getattr(args, "teses", None) or DEFAULT_TESES_ROOT))
+                   teses_root=Path(getattr(args, "teses", None) or DEFAULT_TESES_ROOT),
+                   expected_mind=getattr(args, "mind", None) or mente_do_ambiente())
+
+    def mente_esperada(self, arquivo: Path | None = None,
+                       rascunho: Path | None = None) -> str | None:
+        """Mente que o arquivo da mente deve declarar nesta execução. Rascunho entregue por
+        outra sessão (copiado byte a byte para ``arquivo``) mantém a mente de quem o escreveu."""
+        if self.expected_mind is None:
+            return None
+        try:
+            if (rascunho is not None and arquivo is not None and Path(rascunho).is_file()
+                    and Path(arquivo).is_file()
+                    and Path(rascunho).read_bytes() == Path(arquivo).read_bytes()):
+                return None
+        except OSError:
+            pass
+        return self.expected_mind
 
     @property
     def book(self) -> Book:
@@ -285,6 +352,7 @@ class Runtime:
         """
         from ..data.intraday import (
             fetch_intraday_quotes,
+            intraday_collection_failure,
             load_quotes,
             overlay_intraday,
             save_quotes,
@@ -322,13 +390,21 @@ class Runtime:
                 quotes = fetch_intraday_quotes(lines, md.universe.currencies, BENCH_INTRADAY)
                 qpath = briefing_dir / "intraday_quotes.parquet"
                 qsha = save_quotes(quotes, qpath, captured)
-                md = overlay_intraday(md, week, quotes, captured, "briefing/intraday_quotes.parquet",
-                                      qsha)
+                falha_intradia = intraday_collection_failure(quotes, week, md.universe.currencies)
+                if falha_intradia is None:
+                    md = overlay_intraday(md, week, quotes, captured,
+                                          "briefing/intraday_quotes.parquet", qsha)
                 slow = fetch_slow_refresh(md, week, lookback_days=self.cfg.research.news_lookback_days)
                 shashes = save_slow_refresh(slow, briefing_dir / "live")
                 md = overlay_slow_refresh(md, slow, shashes, captured, "briefing/live")
+                failures = list(slow.failures)
+                if falha_intradia is not None:
+                    # Falha de coleta (rede ou fonte fora): a análise usa o fechamento do pregão
+                    # anterior, sem barra provisória — nunca uma barra vazia que derrube o risco.
+                    failures.insert(0, falha_intradia)
                 info.update({"captured_at": captured, "intraday_sha256": qsha,
-                             "slow_hashes": shashes, "slow_failures": slow.failures,
+                             "intraday": falha_intradia is None,
+                             "slow_hashes": shashes, "slow_failures": failures,
                              "n_quotes": int(quotes["price"].notna().sum())})
             info["snapshot_hash"] = md.manifest.content_hash()
             _write_json(manifest_path, info)
@@ -341,8 +417,9 @@ class Runtime:
             captured = datetime.fromisoformat(str(info["captured_at"]))
             quotes, _ = load_quotes(briefing_dir / "intraday_quotes.parquet",
                                     info["intraday_sha256"])
-            md = overlay_intraday(md, week, quotes, captured, "briefing/intraday_quotes.parquet",
-                                  info["intraday_sha256"])
+            if info.get("intraday", True):
+                md = overlay_intraday(md, week, quotes, captured,
+                                      "briefing/intraday_quotes.parquet", info["intraday_sha256"])
             slow = load_slow_refresh(briefing_dir / "live", info["slow_hashes"])
             md = overlay_slow_refresh(md, slow, info["slow_hashes"], captured, "briefing/live")
         if md.manifest.content_hash() != info["snapshot_hash"]:
@@ -522,7 +599,7 @@ class Runtime:
             kill_switch=self.kill_switch_active() if kill_switch is None else kill_switch,
             cfg=self.cfg, news=list(md.news),
             realized_residual_returns=self._realized_residual(ctx, prev_week, week),
-            analysis_ts=analysis_ts)
+            analysis_ts=analysis_ts, last_complete_session=_ultimo_pregao_completo(md))
 
     def decision_pm_output(self, week: date, md: MarketData, ctx, info: dict, decision):
         """Decisão do PM VERIFICADA exatamente como o ``decide`` a usou, ou ``None``.
@@ -585,15 +662,29 @@ class Runtime:
             raise ValueError(f"{week} não é {rule} nem a data de início do mandato.")
         self.book.check_key(week)  # livro aberto na data de início: nada anterior a ela
         briefing = self.week_dir(week) / "briefing"
-        if (briefing / PREPARE_MANIFEST).exists():
+        if briefing_completo(briefing):
             raise FileExistsError(f"Briefing da semana {week} já existe (imutável): {briefing}")
+        if self.book.list_decisions(week):
+            raise FileExistsError(f"A semana {week} já tem decisão gravada.")
+        retomado = _afastar_briefing_incompleto(briefing)
         pedidos = self.apply_kill_switch_requests()
-        md, info = self.market_for_week(week, live=live, briefing_dir=briefing, record=True)
-        ctx = self._context(md, week)
-        longs, shorts = self._candidates(ctx, self.cfg.research.top_n_candidates)
-        fb = self._factbook(ctx, sorted(set(longs) | set(shorts)))
-        pmctx = self._pm_context(md, ctx, week, fb, self._analysis_ts(info))
-        paths = write_briefing_bundle(pmctx, briefing, mind_hint=mind)
+        # O briefing é montado numa área temporária e promovido de uma vez só no fim: uma falha
+        # no meio (rede, fonte, modelo) não deixa briefing parcial que trave a semana.
+        staging = briefing.parent / f".briefing.staging-{os.getpid()}"
+        if staging.exists():
+            shutil.rmtree(staging)
+        try:
+            md, info = self.market_for_week(week, live=live, briefing_dir=staging, record=True)
+            ctx = self._context(md, week)
+            longs, shorts = self._candidates(ctx, self.cfg.research.top_n_candidates)
+            fb = self._factbook(ctx, sorted(set(longs) | set(shorts)))
+            pmctx = self._pm_context(md, ctx, week, fb, self._analysis_ts(info))
+            staged = write_briefing_bundle(pmctx, staging, mind_hint=mind, final_dir=briefing)
+            os.replace(staging, briefing)
+        except BaseException:
+            shutil.rmtree(staging, ignore_errors=True)
+            raise
+        paths = {k: briefing / v.name for k, v in staged.items()}
         (self.week_dir(week) / "inputs").mkdir(parents=True, exist_ok=True)
         self.book.audit.append("WEEKLY_PREPARED", mind, info,
                                summary=f"Briefing da semana {week} preparado pela mente {mind}.",
@@ -603,8 +694,9 @@ class Runtime:
                 "entradas": str(self.week_dir(week) / "inputs"),
                 "candidatos_long": len(longs), "candidatos_short": len(shorts),
                 "emissores_elegiveis": int(ctx.panel.assets["eligible"].sum()),
-                "barra_provisoria": bool(info.get("live")),
+                "barra_provisoria": bool(info.get("live")) and bool(info.get("intraday", True)),
                 "snapshot_hash": info["snapshot_hash"], "falhas_coleta": info.get("slow_failures", []),
+                **({"briefing_incompleto_afastado": str(retomado)} if retomado else {}),
                 **({"kill_switch_pedidos": pedidos} if pedidos else {})}
 
     def validate_inputs(self, week: date, *, mind: str | None = None,
@@ -632,11 +724,17 @@ class Runtime:
         if self.cfg.execution is not None:
             deadline = self.decision_deadline(week)
             if t_dec > deadline:
-                raise ValueError(
+                inaugural = b.latest_booked() is None
+                mantida = ("o fundo segue sem carteira (carteira inaugural não montada) até a "
+                           "próxima data de montagem" if inaugural
+                           else "a carteira vigente é mantida até o próximo dia de montagem")
+                raise RecusaEstruturada(
+                    "prazo_vencido",
                     f"Prazo efetivo da decisão de {week} vencido "
-                    f"({deadline:%H:%M} de Brasília): a decisão não é "
-                    "gravada depois do prazo (o fechamento seria conhecido); a carteira vigente "
-                    "é mantida até o próximo dia de montagem.")
+                    f"({deadline.astimezone(_BRT):%H:%M} de Brasília): a decisão não é gravada "
+                    f"depois do prazo (o fechamento seria conhecido); {mantida}.",
+                    semana=week, decisao_perdida=True, carteira_inaugural=inaugural,
+                    acao="nenhuma: não decidir; registrar o motivo no resumo da rotina")
         # Pedidos de kill switch publicados por rotinas sem a trava (ex.: risco na nuvem) valem
         # antes da decisão: kill switch ligado ⇒ só redução de risco.
         pedidos = self.apply_kill_switch_requests()
@@ -816,7 +914,15 @@ class Runtime:
         except NoSessionError as exc:
             return {"data": session, "status": "sem pregão", "motivo": str(exc)}
         except NoBookError as exc:
-            return {"data": session, "status": "sem carteira efetivada", "motivo": str(exc)}
+            out = {"data": session, "status": "sem carteira efetivada", "motivo": str(exc)}
+            if self.kill_switch_active():
+                # Kill switch ligado antes da primeira efetivação: só reduções são permitidas e
+                # não há posição a reduzir — a montagem fica bloqueada (fundo zerado).
+                out.update({"status": "efetivação bloqueada pelo kill switch",
+                            "kill_switch": True,
+                            "acao": ("nada a negociar: o fundo segue sem carteira até um humano "
+                                     "revisar e desligar o kill switch (docs/cdp/EXECUCAO.md)")})
+            return {**out, "kill_switch_pedidos": pedidos} if pedidos else out
         rec = res.record
         fb, _history = self._daily_factbook(session, rec, store)
         out_dir = self.daily_dir(session)
@@ -851,10 +957,16 @@ class Runtime:
                                        "acao": "tente de novo em alguns minutos"}
             return out
         self._anchor_increments(increments)
+        novos = [inc.session_date for inc in increments or []]
+        ultimo = store.last_date()
         out["dados_de_mercado"] = {
-            "status": "atualizados",
-            "incrementos": [inc.session_date for inc in increments or []],
-            "ultimo_pregao": store.last_date()}
+            "status": "atualizados" if novos else "sem pregões novos",
+            "incrementos": novos, "ultimo_pregao": ultimo}
+        if not novos and ultimo is not None and ultimo < session:
+            out["dados_de_mercado"]["motivo"] = (
+                f"a base termina em {ultimo}: o fechamento de {session} ainda não foi gravado "
+                "(corte do fechamento oficial não alcançado ou fonte sem o pregão); a próxima "
+                "rotina diária tenta de novo")
         return out
 
     def daily_publish(self, session: date) -> dict:
@@ -867,7 +979,8 @@ class Runtime:
             raise ValueError(f"Sem registro diário em {session}: rode `cdp daily close` antes.")
         fb, history = self._daily_factbook(session, rec)
         out_dir = self.daily_dir(session)
-        comment_md, issues = load_commentary_file(out_dir / COMMENTARY_JSON, fb, record=rec)
+        comment_md, issues = load_commentary_file(out_dir / COMMENTARY_JSON, fb, record=rec,
+                                                  expected_mind=self.mente_esperada())
         from .risk_monitor import idio_monitor
 
         idio, _t = idio_monitor(self, [*history, rec], [])

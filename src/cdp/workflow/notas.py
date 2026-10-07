@@ -360,9 +360,11 @@ def load_prepared(folder: Path) -> tuple[FactBook, ContextoNota]:
     return fb, ctx
 
 
-def load_note_file(path: Path, fb: FactBook, ctx: ContextoNota
-                   ) -> tuple[NotaEmpresa | None, list[str]]:
-    """``nota.json`` validado (schema + guardrails); ausente ou inválido ⇒ ``(None, problemas)``."""
+def load_note_file(path: Path, fb: FactBook, ctx: ContextoNota, *,
+                   expected_mind: str | None = None) -> tuple[NotaEmpresa | None, list[str]]:
+    """``nota.json`` validado (schema + guardrails + mente da execução); ausente ou inválido ⇒
+    ``(None, problemas)``."""
+    from ..contracts import mente_divergente
     from ..research.notas import parse_nota, verify_nota
 
     if not path.is_file():
@@ -375,7 +377,17 @@ def load_note_file(path: Path, fb: FactBook, ctx: ContextoNota
     if nota is None:
         return None, issues
     issues = verify_nota(nota, fb, ctx)
+    if (divergente := mente_divergente(nota.mind, expected_mind)):
+        issues = [divergente, *issues]
     return (None, issues) if issues else (nota, [])
+
+
+def _mente_esperada(rt: Runtime, issuer_id: str, d: date) -> str | None:
+    """Mente que a nota deve declarar (rascunho entregue mantém a de quem o escreveu)."""
+    fn = getattr(rt, "mente_esperada", None)
+    if fn is None:
+        return None
+    return fn(nota_dir(rt.book_root, issuer_id, d) / NOTA_JSON, handoff_path(rt, issuer_id, d))
 
 
 def validate_note(rt: Runtime, issuer_id: str, d: date) -> dict[str, Any]:
@@ -389,7 +401,8 @@ def validate_note(rt: Runtime, issuer_id: str, d: date) -> dict[str, Any]:
                                     f"{folder.as_posix()}.")
         prepare_note(rt, issuer_id, d)
     fb, ctx = load_prepared(folder)
-    nota, issues = load_note_file(folder / NOTA_JSON, fb, ctx)
+    nota, issues = load_note_file(folder / NOTA_JSON, fb, ctx,
+                                  expected_mind=_mente_esperada(rt, issuer_id, d))
     return {"ok": nota is not None, "problemas": issues, "nota_path":
             (folder / NOTA_JSON).as_posix(),
             "tipo_esperado": "iniciacao" if ctx.nota_anterior is None else "atualizacao"}
@@ -399,8 +412,8 @@ def validate_note(rt: Runtime, issuer_id: str, d: date) -> dict[str, Any]:
 # Publicação
 # ==========================================================
 
-def _compose(fb: FactBook, ctx: ContextoNota, nota_path: Path, *, published_at: str
-             ) -> tuple[str, str, str, list[str], str | None]:
+def _compose(fb: FactBook, ctx: ContextoNota, nota_path: Path, *, published_at: str,
+             expected_mind: str | None = None) -> tuple[str, str, str, list[str], str | None]:
     """``(nota_publicada.json, nota.md, autoria, problemas, mind)`` — determinístico dado o
     instante de publicação."""
     from ..research.notas import (
@@ -410,7 +423,7 @@ def _compose(fb: FactBook, ctx: ContextoNota, nota_path: Path, *, published_at: 
         template_nota,
     )
 
-    nota, problems = load_note_file(nota_path, fb, ctx)
+    nota, problems = load_note_file(nota_path, fb, ctx, expected_mind=expected_mind)
     fallback = "Nota da mente não publicada: usada a nota automática do código."
     if nota is None:
         autoria, used, mind, modelo = "codigo", template_nota(fb, ctx), None, None
@@ -481,7 +494,8 @@ def publish_note(rt: Runtime, issuer_id: str, d: date) -> dict[str, Any]:
     if missing and (draft := handoff_path(rt, issuer_id, d)) is not None:
         _copy_exclusive(draft, folder / NOTA_JSON)
     doc, markdown, autoria, problems, mind = _compose(
-        fb, ctx, folder / NOTA_JSON, published_at=rt.now().isoformat())
+        fb, ctx, folder / NOTA_JSON, published_at=rt.now().isoformat(),
+        expected_mind=_mente_esperada(rt, issuer_id, d))
     _write_exclusive(pub, doc)
     try:
         _write_exclusive(md_path, markdown)
@@ -515,7 +529,8 @@ def _resume(rt: Runtime, issuer_id: str, d: date) -> dict[str, Any]:
         raise done
     fb, ctx, _texts = _build_prepared(rt, issuer_id, d)
     text, markdown, autoria2, problems, mind = _compose(
-        fb, ctx, folder / NOTA_JSON, published_at=str(doc.get("published_at")))
+        fb, ctx, folder / NOTA_JSON, published_at=str(doc.get("published_at")),
+        expected_mind=_mente_esperada(rt, issuer_id, d))
     if pub.read_text(encoding="utf-8") != text or autoria2 != autoria or (
             md_path.exists() and md_path.read_text(encoding="utf-8") != markdown):
         raise ValueError(f"Publicação incompleta da nota de {issuer_id} em {d}: os arquivos "

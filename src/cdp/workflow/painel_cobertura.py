@@ -104,7 +104,7 @@ VISOES_ETF = ("Positiva", "Neutra", "Negativa", "Em revisão", "Referência")
 ORDEM_INCERTEZA = {"Baixa": 1, "Média": 2, "Alta": 3, "Muito alta": 4}
 PAISES = {"AR": "Argentina", "BR": "Brasil", "CL": "Chile", "CO": "Colômbia", "MX": "México",
           "PE": "Peru", "UY": "Uruguai", "PA": "Panamá", "US": "Estados Unidos",
-          "LATAM": "Regional", "LA": "Regional"}
+          "LATAM": "Regional (América Latina)", "LA": "Regional (América Latina)"}
 SETORES = {"Financials": "Financeiro", "Energy": "Energia", "Materials": "Materiais",
            "Utilities": "Utilidades públicas", "Industrials": "Industriais",
            "Consumer Discretionary": "Consumo discricionário", "Consumer Staples": "Consumo básico",
@@ -148,7 +148,7 @@ COLUNAS_PROJECAO = (("receita", "Receita"), ("crescimento", "Crescimento"),
                     ("lucro", "Lucro"), ("lpa", "LPA"), ("dividendos", "Dividendos"),
                     ("patrimonio", "Patrimônio"), ("lucro_residual", "Lucro residual"),
                     ("fator_desconto", "Fator de desconto"), ("vp", "Valor presente"))
-CUSTO_CAPITAL = (("rf", "Taxa livre de risco (Tesouro americano de 10 anos)", "%"),
+CUSTO_CAPITAL = (("rf", "Taxa livre de risco em dólar (Tesouro americano de 10 anos − spread de default dos EUA)", "%"),
                  ("erp", "Prêmio de risco de mercado (ERP)", "%"),
                  ("crp", "Prêmio de risco do país (CRP)", "%"), ("lam", "Exposição ao risco do país (λ)", "n"),
                  ("beta", "β ajustado", "n"), ("ke_usd", "ke em dólar", "%"),
@@ -697,9 +697,9 @@ def _kpis(ent: Entrada, uni: Sequence[Mapping[str, Any]], cont: Mapping[str, Any
     out = [
         {"label": "Instrumentos cobertos", "value": f"{cont['instruments']}",
          "sub": f"{cont['stocks']} ações · {cont['etfs']} ETFs"},
-        {"label": "Com preço-alvo", "value": f"{cont['with_target']}",
-         "sub": (f"de {cont['stocks']} ações · {por['Em revisão']} em revisão · "
-                 f"{por['Sem preço-alvo']} sem preço-alvo")},
+        {"label": "Com preço-alvo citável", "value": f"{cont['with_target']}",
+         "sub": (f"de {cont['stocks']} ações (Compra, Neutro ou Venda) · {por['Em revisão']} em "
+                 f"revisão (alvo calculado, não citável) · {por['Sem preço-alvo']} sem preço-alvo")},
         {"label": "Ratings", "value": f"{por['Compra']} · {por['Neutro']} · {por['Venda']}",
          "sub": "Compra · Neutro · Venda", "mix": [
              {"rating": r, "tom": TOM_RATING[r], "n": por[r]} for r in RATINGS if por[r]]},
@@ -855,13 +855,21 @@ def _etf_pub(k: str, e: Mapping[str, Any], n_top: int, nomes: Mapping[str, str] 
     posicoes = sorted((p for p in e.get("posicoes") or [] if _num(p.get("peso")) is not None),
                       key=lambda p: (-float(p["peso"]), str(p.get("nome"))))
     pmax = float(posicoes[0]["peso"]) if posicoes else 1.0
+    from collections import Counter
+
+    # Emissor com duas classes na carteira do ETF (ON e PN): o nome leva o ticker da classe.
+    repetidos = {i for i, n in Counter(str(p.get("issuer_id")) for p in posicoes
+                                       if p.get("issuer_id")).items() if n > 1}
     top = []
     for p in posicoes[:n_top]:
         ptx = p.get("texto") or {}
         # retorno esperado da posição (preço, proventos e câmbio); sem ele, o potencial de preço
         u = _num(p.get("retorno") if p.get("retorno") is not None else p.get("u"))
         iid = str(p.get("issuer_id")) if p.get("issuer_id") else None
-        top.append({"t": nomes.get(iid) if iid in nomes else _nome_posicao(p.get("nome") or p.get("ticker_bruto")),
+        nome_p = nomes.get(iid) if iid in nomes else _nome_posicao(p.get("nome") or p.get("ticker_bruto"))
+        if iid in repetidos and p.get("ticker_bruto"):
+            nome_p = f"{nome_p} ({_ticker(p.get('ticker_bruto'))})"
+        top.append({"t": nome_p,
                     "peso": ptx.get("peso") or pct(_num(p.get("peso")), 2),
                     "w": round(float(p["peso"]) / pmax * 100, 2) if pmax > 0 else 0.0,
                     "u": (ptx.get("retorno") if p.get("retorno") is not None else ptx.get("u")) or pct(u, 1, True),
@@ -870,6 +878,7 @@ def _etf_pub(k: str, e: Mapping[str, Any], n_top: int, nomes: Mapping[str, str] 
     citavel = bool(e.get("tem_alvo")) and visao in VISOES_CITAVEIS
     return {
         "iid": k, "ticker": _ticker(e.get("ticker")), "nome": str(e.get("nome") or k),
+        "moeda": str(e.get("moeda") or "USD"),
         "indice": e.get("indice"), "visao": visao, "tom": TOM_RATING.get(visao, "sem"),
         "preco": tx.get("preco") or NA, "alvo": (tx.get("preco_alvo") or NA) if citavel else visao,
         "upside": (tx.get("upside") or NA) if citavel else NA,
@@ -1218,10 +1227,14 @@ def _metodologia(ent: Entrada, uni: Sequence[Mapping[str, Any]], compacta: bool)
          "t": (f"α relativo aos pares (país × setor) acima do limiar da classe de incerteza ({lim_t}); "
                f"α ≥ {pct(_num(rcfg.get('guarda_compra_alpha_min')) or 0.0, 0)}, retorno esperado do caso-base ≥ ke "
                f"e potencial positivo; confiança mínima {rcfg.get('confianca_minima', 'B')}.")},
-        {"r": "Neutro", "tom": "neutro", "t": "Demais casos com preço-alvo citável."},
+        {"r": "Neutro", "tom": "neutro",
+         "t": ("Demais casos com preço-alvo citável — inclusive potencial elevado (positivo ou "
+               "negativo) com confiança C: o alvo é publicado, mas a confiança não sustenta Compra "
+               "nem Venda (aparece como \"Neutro (confiança C)\").")},
         {"r": "Venda", "tom": "venda",
          "t": (f"α relativo abaixo do limiar negativo; α ≤ {pct(_num(rcfg.get('guarda_venda_alpha_max')), 0)} e "
-               f"retorno esperado do caso-base ≤ ke {pp(_num(rcfg.get('guarda_venda_etr_menos_ke_max')), 0)}.")},
+               f"retorno esperado do caso-base ≤ ke {pp(_num(rcfg.get('guarda_venda_etr_menos_ke_max')), 0)}; "
+               f"confiança mínima {rcfg.get('confianca_minima', 'B')}.")},
         {"r": "Em revisão", "tom": "revisao",
          "t": "Portão de qualidade bloqueante em aberto: o modelo segue público para auditoria, mas o preço-alvo não é citado."},
         {"r": "Sem preço-alvo", "tom": "sem", "t": "Insumos insuficientes para qualquer método válido; as lacunas ficam listadas."},
@@ -1459,7 +1472,7 @@ def _historico(ent: Entrada, u: Mapping[str, Any], evs: Sequence[Mapping[str, An
         if ca is not None and cb is not None:
             cons_atual = {"x": X(degraus[-1][0]), "y": Y(ca), "h": _c(Y(cb) - Y(ca)),
                           "t": f"Consenso público em {_data(degraus[-1][0])}: {preco(cb, moeda)} a {preco(ca, moeda)}"
-                               + (f" (média {preco(_num(cu.get('alvo_medio')), moeda)}, {int(_num(cu.get('n_alvo')) or 0)} analistas)"
+                               + (f" (média {preco(_num(cu.get('alvo_medio')), moeda)}, {int(_num(cu.get('n_alvo')) or 0)} analistas de preço-alvo)"
                                   if _num(cu.get("alvo_medio")) is not None else "")}
     faixas_pub = [{**{k: v for k, v in f.items() if k != "_fim"}, "rot": 1 if f["w"] >= 10 else None}
                   for f in faixas if f["tom"] in ("compra", "venda", "revisao")]
@@ -1576,7 +1589,7 @@ def _football(m: Mapping[str, Any], u: Mapping[str, Any], ent: Entrada, ticker: 
     if cons.get("plausivel") and _num(cons.get("alvo_baixo")) is not None and _num(cons.get("alvo_alto")) is not None:
         a, b = float(cons["alvo_baixo"]), float(cons["alvo_alto"])
         vals += [a, b]
-        linhas.append({"r": "Consenso público", "s": f"mínimo – máximo · {int(_num(cons.get('n_alvo')) or 0)} analistas",
+        linhas.append({"r": "Consenso público", "s": f"mínimo – máximo · {int(_num(cons.get('n_alvo')) or 0)} analistas de preço-alvo",
                        "a": a, "b": b, "v": _num(cons.get("alvo_medio")),
                        "t": f"{preco(a, moeda)} – {preco(b, moeda)}", "k": "consenso"})
     # só até a data dos preços do retrato (o fragmento não muda com os fechamentos seguintes)
@@ -1723,7 +1736,7 @@ def _modelo_acao(ent: Entrada, u: Mapping[str, Any], nomes: Mapping[str, str]) -
         ("Custo de capital próprio (ke)", u["ke_texto"]),
         ("Retorno ponderado pelos cenários", tx.get("pwr") if cit else NA),
         ("Confiança", f"{u['confianca'] or NA}" + (f" · {_pt(res.get('confianca_motivo'))}" if res.get("confianca_motivo") else "")),
-        ("Consenso público", f"{preco(_num(cons.get('alvo_medio')), moeda)} · {int(_num(cons.get('n_alvo')) or 0)} analistas"
+        ("Consenso público", f"{preco(_num(cons.get('alvo_medio')), moeda)} · {int(_num(cons.get('n_alvo')) or 0)} analistas de preço-alvo"
          if cons_ok else NA),
         ("P/L projetado · P/VPA", f"{tx.get('pl_fwd') or NA} · {tx.get('pb') or NA}"),
     ]

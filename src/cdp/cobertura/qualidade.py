@@ -23,6 +23,7 @@
 | G18 | métodos coerentes: com ≥ 3 métodos, o que ficar fora de [1/3; 3] × a mediana dos demais (o mais distante) é limitado à borda (demais com CV ≤ 10%, fora do lado do preço) ou mantido; limita a B | aviso |
 | G19 | demonstrações recentes: último balanço ou fluxos de 12 meses com mais de 300 dias na data ⇒ aviso; mais de 550 ⇒ bloqueio | aviso / bloqueio |
 | G17 | alertas da fonte pública sobre os períodos e itens usados (item em conferência, salto de magnitude ou classificação de capex a conferir, troca recente de moeda de apresentação) | aviso / informativo |
+| G20 | plausibilidade do alvo: preço-alvo mais de 25% além do maior (ou aquém do menor) alvo do consenso público com ≥ 3 analistas; faixa de cenários (P10–P90) inteira do mesmo lado do preço; ou G11 aprovado a menos de 5% do limite ⇒ confiança C (sem Compra nem Venda) | aviso |
 
 "Informativo": exibido no modelo aberto, sem efeito na confiança nem no rating. "Aviso": rebaixa a
 confiança para C (sem Compra ou Venda), salvo os que só limitam a B (G15, G18; ``rating.avisos_limitam_b``).
@@ -133,7 +134,7 @@ def portoes_emissor(pac: Mapping[str, Any], mod: Mapping[str, Any], params: Para
     d = pac.get("defasagem_preco_dias")
     ok12 = None if d is None else d <= int(q["defasagem_max_dias"])
     out.append(_portao("G12", "Preço atualizado", ok12, "bloqueio",
-                       f"{int(d)} pregão(ões) de defasagem" if d is not None else "sem preço"))
+                       (f"{int(d)} pregão de defasagem" if int(d) == 1 else f"{int(d)} pregões de defasagem") if d is not None else "sem preço"))
     # G13 plausibilidade dos insumos por ação (armadilha de unidade/moeda)
     if tem:
         out.append(_g13(pac, mod, params))
@@ -199,7 +200,57 @@ def portoes_emissor(pac: Mapping[str, Any], mod: Mapping[str, Any], params: Para
                                "nenhum método fora de [1/3; 3] × a mediana dos demais"))
     # G19 demonstrações recentes (idade do último balanço e dos fluxos de 12 meses contra a data)
     out.append(_g19(pac, params))
+    # G20 plausibilidade do alvo frente ao consenso, aos cenários e à margem do G11
+    if tem:
+        out.append(_g20(pac, mod, params))
     return out
+
+
+def _g20(pac: Mapping[str, Any], mod: Mapping[str, Any], params: ParametrosCobertura) -> dict[str, Any]:
+    """Alvo implausível sem bloquear: limita a confiança a C (o rating vira Neutro).
+
+    - consenso público plausível com ≥ ``g20_consenso_n_min`` analistas: alvo mais de
+      ``g20_consenso_folga`` acima do maior alvo (ou abaixo do menor) do consenso;
+    - faixa de cenários inteira do mesmo lado do preço (P10 acima do preço num alvo acima dele;
+      P90 abaixo do preço num alvo abaixo dele): o modelo não admite o preço atual nem no cenário
+      adverso;
+    - G11 aprovado por margem estreita (``|ln(1 + ETR)|`` acima de ``g20_g11_margem`` do limite)."""
+    q = params.sec("qualidade")
+    tp, p0 = _f(mod.get("tp")), _f(pac.get("preco"))
+    if tp is None or p0 is None or p0 <= 0:
+        return _portao("G20", "Plausibilidade do alvo", None, "aviso", "sem alvo ou preço")
+    motivos: list[str] = []
+    c = pac.get("consenso") or {}
+    folga = float(q.get("g20_consenso_folga", 0.25))
+    n_min = int(q.get("g20_consenso_n_min", 3))
+    n_alvo = _f(c.get("n_alvo"))
+    if c.get("plausivel") and n_alvo is not None and n_alvo >= n_min:
+        alto, baixo = _f(c.get("alvo_alto")), _f(c.get("alvo_baixo"))
+        if alto and tp > alto * (1 + folga):
+            motivos.append(f"alvo {pct(tp / alto - 1, 0, True)} acima do maior alvo do consenso "
+                           f"({int(n_alvo)} analistas de preço-alvo)")
+        if baixo and tp < baixo * (1 - folga):
+            motivos.append(f"alvo {pct(tp / baixo - 1, 0, True)} abaixo do menor alvo do consenso "
+                           f"({int(n_alvo)} analistas de preço-alvo)")
+    p10, p90 = _f(mod.get("tp_pessimista")), _f(mod.get("tp_otimista"))
+    if tp > p0 and p10 is not None and p10 > p0:
+        motivos.append("cenário pessimista (P10) acima do preço")
+    if tp < p0 and p90 is not None and p90 < p0:
+        motivos.append("cenário otimista (P90) abaixo do preço")
+    etr = _f(mod.get("etr"))
+    if etr is not None and etr > -1:
+        x = abs(math.log1p(etr))
+        lo_a, hi_a = (float(v) for v in q["extremo_aviso"])
+        lim_a = max(abs(math.log1p(lo_a)), abs(math.log1p(hi_a)))
+        margem = float(q.get("g20_g11_margem", 0.95))
+        if margem * lim_a <= x <= lim_a:
+            motivos.append(f"retorno do caso-base a menos de {pct(1 - margem, 0)} do limite do G11 "
+                           f"(|ln(1 + ETR)| = {num(x)} contra {num(lim_a)})")
+    if motivos:
+        return _portao("G20", "Plausibilidade do alvo", False, "aviso",
+                       "; ".join(motivos) + " ⇒ confiança C (sem Compra nem Venda)")
+    return _portao("G20", "Plausibilidade do alvo", True, "aviso",
+                   "alvo dentro da faixa do consenso, cenários envolvem o preço e G11 com folga")
 
 
 def _valores_calculados(mod: Mapping[str, Any]) -> list[float]:

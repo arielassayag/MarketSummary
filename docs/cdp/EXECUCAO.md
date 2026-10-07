@@ -310,8 +310,13 @@ uv run python -m cdp verify            # trilha, livro, track record e base de m
   revise a condição no relatório de risco e rode
   `uv run python -m cdp kill-switch off --reason "<revisão em pelo menos 10 caracteres>" --by "<seu nome>"`.
   O comando recusa sem terminal interativo, com variáveis de rotina, CI ou agente
-  (`CDP_EXECUTOR`, `CDP_TRAVA_ID`, `CI`, `GITHUB_ACTIONS`, `CLAUDECODE`, `CODEX_SANDBOX`,
-  `GEMINI_CLI` e afins) e pede que o motivo seja digitado de novo. Depois:
+  (`CDP_EXECUTOR`, `CDP_HARNESS`, `CDP_TRAVA_ID`, `CI`, `GITHUB_ACTIONS`, `CLAUDECODE`,
+  `CODEX_*`, `GEMINI_CLI`, `ANTIGRAVITY_*` e afins), pede que o motivo seja digitado de novo e
+  exige a **senha do operador** — confirmação fora de banda: um agente com acesso total e
+  pseudoterminal chega no máximo ao pedido da senha, que só o humano conhece. A senha é definida
+  uma vez, no mesmo terminal próprio, com `uv run python -m cdp kill-switch senha` (trocá-la
+  exige a atual); fica só o hash PBKDF2 com sal em `~/.config/cdp/operador.json`, fora do
+  repositório. Nunca entregue a senha a um app de IA nem a grave em arquivo do clone. Depois:
   `uv run python -m cdp verify` e `cdp publicar` (ou commit e push manual do `book/` pelo
   operador, seguindo `docs/cdp/AUTOMACAO.md`). A condição revisada não religa o kill switch; só
   uma piora: estágio pior da escada de drawdown, perda diária extrema num registro de fechamento
@@ -335,7 +340,7 @@ o prompt de cada tarefa é gerado pelo código (`cdp rotinas exportar`) e é o m
 app, e o código decide prazo, capacidade, execução e publicação — o resultado é idêntico em
 qualquer um. O GitHub Actions só roda a integração contínua e publica o portal, nunca a IA.
 
-1. **Claude Code (o nosso)** — rotinas na nuvem em claude.ai/code: ambiente "CDP" com rede total e
+1. **Claude Code** — rotinas na nuvem em claude.ai/code: ambiente "CDP" com rede total e
    as variáveis `CDP_EXECUTOR=claude-cloud` (identidade do ambiente; sem ela toda rotina para no
    gate com "identidade deste ambiente desconhecida") e `CDP_HARNESS=claude-code`; gere os blocos
    com `uv run python -m cdp rotinas exportar --alvo claude-routines --formato md` e crie uma

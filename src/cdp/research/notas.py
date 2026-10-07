@@ -26,7 +26,13 @@ from pydantic import BaseModel, ConfigDict, Field
 from .. import SIMULATED_DATA_NOTICE
 from ..contracts import FactBook
 from .factbook import NA_TEXT
-from .guardrails import PLACEHOLDER_RE, extract_fact_ids, host_in, render_placeholders
+from .guardrails import (
+    FORMULARIOS_SEC,
+    PLACEHOLDER_RE,
+    extract_fact_ids,
+    host_in,
+    render_placeholders,
+)
 from .pm_agent import MIND_VALUES, MindName, text_problems, url_evidence_problem
 from .prompts import ESTILO_REGRAS
 
@@ -80,11 +86,9 @@ subdomínio dele): reguladores federais e de mercado (CVM, agências e BCB sob `
 FINRA; CNBV; CMF; Superfinanciera; SMV; CNV) e as bolsas da região e dos EUA. O rótulo da mente
 não basta: fora da lista, a fonte vale como ``imprensa``/``outro`` (e não como primária). Páginas
 de relações com investidores variam por emissor e não têm lista."""
-FORMULARIOS_REGULATORIOS: tuple[str, ...] = (
-    "10-K", "10-Q", "8-K", "20-F", "40-F", "6-K", "F-1", "F-3", "S-1", "13D", "13G",
-    "SC 13D", "SC 13G",
-)
-"""Nomes de formulários (SEC) com algarismos que não são números livres no texto da nota."""
+FORMULARIOS_REGULATORIOS: tuple[str, ...] = FORMULARIOS_SEC
+"""Nomes de formulários (SEC) com algarismos que não são números livres no texto da nota (a
+mesma lista de todos os validadores: ``research.guardrails.FORMULARIOS_SEC``)."""
 
 TIPO_PT = {"iniciacao": "Iniciação de cobertura", "atualizacao": "Atualização",
            "pos_resultado": "Pós-resultado", "evento": "Evento"}
@@ -891,7 +895,9 @@ def render_fatos_md(fb: FactBook, ctx: ContextoNota, *, nota_path: str, schema_n
     aviso = aviso_exemplo(ctx)
     if aviso:
         L += [aviso, ""]
-    L += ["```json", json.dumps(example_nota(fb, ctx, "claude-code"), ensure_ascii=False,
+    from ..contracts import mente_exemplo
+
+    L += ["```json", json.dumps(example_nota(fb, ctx, mente_exemplo()), ensure_ascii=False,
                                 indent=2), "```", ""]
     return "\n".join(L)
 

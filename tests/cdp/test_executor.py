@@ -281,13 +281,29 @@ def test_publish_commits_only_task_paths_with_trailers_and_pushes_main(repos, mo
     assert code == ex.OK and out["motivo"] == "nada a publicar"
 
 
+def test_publish_in_ensaio_commits_locally_and_never_pushes(repos):
+    """Ensaio: commit local com o trailer ``CDP-Ensaio`` (a rotina seguinte encontra o livro em
+    dia), nunca push nem trava; um clone com commits de ensaio nunca publica fora do ensaio."""
+    remoto, a, _ = repos
+    (a / "book/x.json").write_text("{}")
+    ens = {"CDP_ENSAIO": "1", "CDP_HARNESS": "codex"}   # nem precisa ser o executor
+    code, out = ex.publicar(a, DIARIO, "CDP: ensaio", rt=_RT(), env=ens)
+    assert code == ex.OK and out["commit"] and out["push"] is False and out["ensaio"]
+    assert "ensaio" in out["motivo"]
+    assert "CDP-Ensaio: sim" in _git(a, "log", "-1", "--format=%B")
+    assert _git(a, "status", "--porcelain") == ""
+    assert _git(Path(remoto), "log", "-1", "--format=%s", "main") == "inicial"
+    (a / "book/y.json").write_text("{}")
+    code, out = ex.publicar(a, DIARIO, "CDP: real", rt=_RT(), env=ENV_PC, sem_trava=True)
+    assert code == ex.FORA_DO_ESCOPO and out["push"] is False and out["commits_de_ensaio"]
+    assert _git(Path(remoto), "log", "-1", "--format=%s", "main") == "inicial"
+
+
 def test_publish_guards(repos):
     _, a, _ = repos
     (a / "book/x.json").write_text("{}")
     assert ex.publicar(a, DIARIO, "sem prefixo", rt=_RT(), env=ENV_PC)[0] == ex.CONFIG
     assert ex.publicar(a, STATUS, "CDP: x", rt=_RT(), env=ENV_PC)[0] == ex.CONFIG
-    code, out = ex.publicar(a, DIARIO, "CDP: x", rt=_RT(), env={"CDP_ENSAIO": "1", **ENV_PC})
-    assert code == ex.OK and out["commit"] is None and "ensaio" in out["motivo"]
     code, out = ex.publicar(a, DIARIO, "CDP: x", rt=_RT(), env={"CDP_EXECUTOR": "claude-cloud"})
     assert code == ex.OUTRO_EXECUTOR and out["commit"] is None
     # arquivo de código já preparado (staged) fora dos caminhos da tarefa: nada é publicado
@@ -503,12 +519,12 @@ def test_publish_reports_git_failures(repos):
 def test_renewal_never_shortens_the_weekly_lock(repos):
     _, a, _ = repos
     t = ex.trava_adquirir(a, SEMANAL, agora=T0, env=ENV_PC)
-    assert ex._dt(t["expira"]) == T0 + timedelta(minutes=60)
+    assert ex._dt(t["expira"]) == T0 + timedelta(minutes=50)
     r = ex.trava_renovar(a, t["id"], agora=T0 + timedelta(minutes=1), env=ENV_PC)
-    assert ex._dt(r["expira"]) == T0 + timedelta(minutes=61)  # TTL da tarefa (60), não 45
+    assert ex._dt(r["expira"]) == T0 + timedelta(minutes=51)  # TTL da tarefa (50), não 45
     r = ex.trava_renovar(a, t["id"], ttl_min=5, agora=T0 + timedelta(minutes=2), env=ENV_PC)
-    assert ex._dt(r["expira"]) == T0 + timedelta(minutes=61)  # nunca encolhe
-    assert ex.ttl_da_tarefa(a, "cdp-semanal-b") == 60
+    assert ex._dt(r["expira"]) == T0 + timedelta(minutes=51)  # nunca encolhe
+    assert ex.ttl_da_tarefa(a, "cdp-semanal-b") == 50
 
 
 def test_sync_merges_note_and_thesis_drafts_from_development(repos):
@@ -561,3 +577,18 @@ def test_delivery_package_roundtrip_and_refusals(repos, tmp_path):
         assert code == ex.FORA_DO_ESCOPO, (nome, out)
     assert (b / "src/codigo.py").read_text() == "x = 1\n"
     assert not (b.parent / "fora.txt").exists()
+
+
+def test_invalid_cdp_executor_value_is_refused_not_silently_accepted(tmp_path):
+    """``CDP_EXECUTOR=codex`` (o nome do app, não um executor) deixa a identidade inválida, com
+    aviso; e a variável tem precedência sobre ``.cdp/local.yaml``."""
+    (tmp_path / ".cdp").mkdir()
+    (tmp_path / ".cdp/local.yaml").write_text("executor: local-pc\n")
+    ident = ex.identidade(tmp_path, {"CDP_EXECUTOR": "codex"})
+    assert ident["executor"] == "desconhecido" and ident["invalido"] == "codex"
+    assert "precedência" in ident["aviso"]
+    (tmp_path / "configs/cdp").mkdir(parents=True)
+    (tmp_path / "configs/cdp/executor.yaml").write_text(_executor_yaml("local-pc"))
+    code, info = ex.verificar(tmp_path, DIARIO, env={"CDP_EXECUTOR": "codex"})
+    assert code == ex.IDENTIDADE_DESCONHECIDA and "não é um executor válido" in info["motivo"]
+    assert ex.verificar(tmp_path, DIARIO, env={})[0] == ex.OK   # sem a variável: local.yaml

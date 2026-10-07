@@ -1,8 +1,7 @@
 # CDP — Cabra da Peste · Metodologia de Investimento (documento perene)
 
 > Este documento é a "mente" institucional do CDP. Ele vale igualmente para qualquer app de IA —
-> **Claude Code** (o que usamos), **Codex**, **Gemini** (Antigravity ou Gemini CLI) ou outro: o
-> app pode mudar; o processo, as regras e a metodologia não, porque todo número, limite e gate é
+> **Codex**, **Claude Code**, **Gemini** (Antigravity ou Gemini CLI) ou outro: o app pode mudar; o processo, as regras e a metodologia não, porque todo número, limite e gate é
 > código. Qualquer mudança aqui é uma mudança de mandato/processo, deve vir por commit revisável
 > e altera os hashes das decisões seguintes. Como agendar as rotinas em cada app: seção 9.
 
@@ -367,7 +366,7 @@ placeholders) e relatório diário.
 
 ## 8. Intercambialidade da mente
 
-| Item | Claude Code (o nosso) | Codex | Gemini (Antigravity ou Gemini CLI) |
+| Item | Claude Code | Codex (o app das rotinas) | Gemini (Antigravity ou Gemini CLI) |
 |---|---|---|---|
 | Instruções do repositório | `CLAUDE.md` → `AGENTS.md`, este documento e os roteiros | `AGENTS.md` | `GEMINI.md` e `.gemini/settings.json` → `AGENTS.md` |
 | Roteiros | skills `.claude/skills/cdp-*` (espelho das skills abertas) → `docs/cdp/playbooks/` | skills abertas `.agents/skills/cdp-*` → `docs/cdp/playbooks/` | idem Codex |
@@ -383,14 +382,14 @@ comentário e tese registra quem conduziu; o painel de gestão nunca exibe o nom
 
 ## 9. Onde as rotinas rodam — dentro do app de IA
 
-O caminho principal das rotinas (semanal, diária, risco, cobertura, calibração, estado) é o
+As rotinas (semanal, diária, risco, cobertura, calibração, estado) rodam no
 **agendador do próprio app de IA**, com o plano de quem opera. O prompt de cada tarefa é gerado
 pelo código e é o mesmo texto em qualquer app; gate, trava, sincronização e publicação são
 comandos da CLI, então o resultado é idêntico em qualquer um deles. O GitHub Actions só roda a
 integração contínua determinística e publica o portal — nunca a etapa de IA. Guia completo,
 limites de cada app e solução de problemas: `docs/cdp/AUTOMACAO.md`.
 
-**Claude Code (o nosso; rotinas na nuvem em claude.ai/code)**
+**Claude Code (rotinas na nuvem em claude.ai/code)**
 
 1. Conecte o app GitHub do Claude ao repositório e crie o ambiente **CDP** (rede total;
    variáveis `CDP_EXECUTOR=claude-cloud`, `CDP_HARNESS=claude-code`, `TZ=America/Sao_Paulo`).

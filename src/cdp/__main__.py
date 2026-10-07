@@ -37,8 +37,11 @@ Kill switch (só redução de risco; docs/cdp/EXECUCAO.md, "Kill switch: procedi
     cdp kill-switch on --reason "..." --by "..."   (liga e grava o pedido mesclável em
                                                     reports/risk/<D>/kill_switch_<HHMM>.yaml)
     cdp kill-switch aplicar-pedidos                (aplica pedidos pendentes; execução exclusiva)
-    cdp kill-switch off --reason "..." --by "..."  (só humano, em terminal interativo próprio;
-                                                    recusado em rotina, CI ou agente de IA)
+    cdp kill-switch off --reason "..." --by "..."  (só humano, em terminal interativo próprio,
+                                                    com a senha do operador; recusado em rotina,
+                                                    CI ou agente de IA)
+    cdp kill-switch senha                          (só humano: define a senha do operador; hash
+                                                    fora do repositório)
     cdp kill-switch revisar-squeeze --emissor IID --reason "..." --by "..."
                                                    (só humano: revisão do stop de squeeze por
                                                     nome; libera o veto de compra do emissor)
@@ -188,9 +191,8 @@ def cmd_validate(args: argparse.Namespace) -> int:
     rt = Runtime.from_args(args)
     ok, issues = rt.validate_inputs(_d(args.week), mind=args.mind,
                                     so_pesquisa=bool(getattr(args, "so_pesquisa", False)))
-    print("OK" if ok else "FALHOU")
-    for i in issues:
-        print(f"- {i}")
+    # Contrato único dos validadores: JSON com "ok" e "problemas" (código 0 válido, 1 não).
+    _print({"semana": _d(args.week), "ok": ok, "problemas": list(issues)})
     return 0 if ok else 1
 
 
@@ -238,10 +240,9 @@ def cmd_validate_daily(args: argparse.Namespace) -> int:
     from .workflow.agenda import validate_daily_commentary
     from .workflow.runtime import Runtime
 
-    ok, issues = validate_daily_commentary(Runtime.from_args(args), args.date or _today_brt())
-    print("OK" if ok else "FALHOU")
-    for i in issues:
-        print(f"- {i}")
+    d = args.date or _today_brt()
+    ok, issues = validate_daily_commentary(Runtime.from_args(args), d)
+    _print({"data": d, "ok": ok, "problemas": list(issues)})
     return 0 if ok else 1
 
 
@@ -284,12 +285,32 @@ def cmd_verify(args: argparse.Namespace) -> int:
     return 0 if ok else 1
 
 
-#: Variáveis que indicam rotina, CI ou sessão de agente de IA (Claude Code, Codex, Gemini CLI):
-#: nesses contextos ninguém desliga o kill switch — só um humano, num terminal interativo.
+#: Variáveis que indicam rotina, CI ou sessão de agente de IA (Claude Code, Codex, Gemini CLI,
+#: Antigravity): nesses contextos ninguém desliga o kill switch — só um humano, num terminal
+#: próprio. ``CDP_HARNESS`` é definido no ambiente de toda rotina (tabela ``set`` do Codex,
+#: ambiente das rotinas na nuvem, scripts de agendamento).
 CONTEXTO_NAO_HUMANO = ("CDP_EXECUTOR", "CDP_TRAVA_ID", "CDP_EXECUCAO", "CDP_ROTINA", "CDP_ENSAIO",
-                       "CI", "GITHUB_ACTIONS", "CLAUDECODE", "CLAUDE_CODE_REMOTE",
-                       "CLAUDE_CODE_REMOTE_SESSION_ID", "CODEX_SANDBOX",
-                       "CODEX_SANDBOX_NETWORK_DISABLED", "GEMINI_CLI")
+                       "CDP_HARNESS", "CI", "GITHUB_ACTIONS", "CLAUDECODE", "CLAUDE_CODE_REMOTE",
+                       "CLAUDE_CODE_REMOTE_SESSION_ID", "CLAUDE_CODE_ENTRYPOINT",
+                       "CODEX_SANDBOX", "CODEX_SANDBOX_NETWORK_DISABLED",
+                       "CODEX_MANAGED_BY_NPM", "CODEX_THREAD_ID", "CODEX_CI", "GEMINI_CLI",
+                       "ANTIGRAVITY_AGENT", "CURSOR_AGENT")
+#: Prefixos de variáveis exportadas por apps de IA aos comandos que executam (a lista exata muda
+#: entre versões). ``CODEX_HOME`` é configuração do próprio usuário e não conta. (O Claude Code
+#: sempre exporta ``CLAUDECODE``; ``CLAUDE_CODE_*`` também aparece no perfil de quem usa o app.)
+PREFIXOS_NAO_HUMANOS = ("CODEX_", "ANTIGRAVITY_")
+_NAO_SAO_AGENTE = frozenset({"CODEX_HOME"})
+
+
+def _contexto_nao_humano(env=None) -> list[str]:
+    """Variáveis presentes que indicam rotina, CI ou agente de IA (vazio = possível humano)."""
+    import os
+
+    env = os.environ if env is None else env
+    achadas = [k for k in CONTEXTO_NAO_HUMANO if env.get(k)]
+    achadas += sorted(k for k in env if k.startswith(PREFIXOS_NAO_HUMANOS)
+                      and k not in _NAO_SAO_AGENTE and k not in achadas and env.get(k))
+    return achadas
 
 
 def _desligamento_humano(args: argparse.Namespace,
@@ -298,10 +319,13 @@ def _desligamento_humano(args: argparse.Namespace,
     operador humano confirmado).
 
     Vale em qualquer harness: rotinas, CI e agentes de IA rodam sem terminal interativo (ou com
-    as variáveis de :data:`CONTEXTO_NAO_HUMANO`); o operador digita de novo o motivo."""
-    import os
+    as variáveis de :data:`CONTEXTO_NAO_HUMANO`); o operador digita de novo o motivo e, como
+    confirmação fora de banda, a senha do operador (:mod:`cdp.operador`: segredo que só o humano
+    conhece, guardado fora do repositório como hash). Um agente com pseudoterminal chega no
+    máximo ao pedido da senha — e não a tem."""
+    from . import operador
 
-    ctx = [k for k in CONTEXTO_NAO_HUMANO if os.environ.get(k)]
+    ctx = _contexto_nao_humano()
     if ctx:
         return (f"recusado: contexto de rotina, CI ou agente ({', '.join(ctx)}). Só um humano "
                 f"{acao}, num terminal próprio (docs/cdp/EXECUCAO.md, "
@@ -320,7 +344,51 @@ def _desligamento_humano(args: argparse.Namespace,
         return "recusado: confirmação não digitada."
     if " ".join(typed.split()) != " ".join(args.reason.split()):
         return "recusado: o motivo digitado não confere."
+    if not operador.configurado():
+        return ("recusado: senha do operador não definida. O humano define a senha uma vez, num "
+                "terminal próprio: `uv run python -m cdp kill-switch senha` (hash guardado fora "
+                f"do repositório, em {operador.caminho_segredo()}).")
+    try:
+        senha = operador.pedir_senha()
+    except (EOFError, KeyboardInterrupt):
+        return "recusado: senha do operador não digitada."
+    if not operador.conferir(senha):
+        return "recusado: a senha do operador não confere."
     return None
+
+
+def _definir_senha_operador() -> int:
+    """``kill-switch senha``: define (ou troca) a senha do operador — só humano, em terminal."""
+    from . import operador
+
+    ctx = _contexto_nao_humano()
+    if ctx:
+        print(f"recusado: contexto de rotina, CI ou agente ({', '.join(ctx)}). Só um humano "
+              "define a senha do operador, num terminal próprio.", file=sys.stderr)
+        return 2
+    if not (sys.stdin.isatty() and sys.stdout.isatty()):
+        print("recusado: sem terminal interativo.", file=sys.stderr)
+        return 2
+    try:
+        if operador.configurado() and not operador.conferir(
+                operador.pedir_senha("Senha atual do operador: ")):
+            print("recusado: a senha atual não confere.", file=sys.stderr)
+            return 2
+        nova = operador.pedir_senha(
+            f"Nova senha do operador (mínimo {operador.TAMANHO_MINIMO} caracteres): ")
+        if operador.pedir_senha("Repita a nova senha: ") != nova:
+            print("recusado: as senhas não conferem.", file=sys.stderr)
+            return 2
+        path = operador.definir(nova)
+    except (EOFError, KeyboardInterrupt):
+        print("recusado: senha não digitada.", file=sys.stderr)
+        return 2
+    except ValueError as exc:
+        print(f"recusado: {exc}", file=sys.stderr)
+        return 2
+    _print({"senha_do_operador": "definida", "arquivo": str(path),
+            "aviso": "guarde a senha fora do repositório; nunca a entregue a um app de IA"})
+    return 0
 
 
 def cmd_kill_switch(args: argparse.Namespace) -> int:
@@ -338,6 +406,8 @@ def cmd_kill_switch(args: argparse.Namespace) -> int:
         rt.mark_kill_switch_request(pedido["sha256"], "aplicado", args.by)
         _print({"kill_switch": "on", "pedido": pedido["arquivo"]})
         return 0
+    if args.state == "senha":
+        return _definir_senha_operador()
     if args.state == "aplicar-pedidos":
         _print({"aplicados": rt.apply_kill_switch_requests(),
                 "kill_switch": rt.kill_switch_active()})
@@ -582,6 +652,9 @@ def build_parser() -> argparse.ArgumentParser:
     s = sub.add_parser("validate-daily",
                        help="valida o comentario.json do dia sem publicar (publish é imutável)")
     s.add_argument("--date", type=_d)
+    s.add_argument("--mind", choices=HARNESS_MINDS, default=None,
+                   help="mente desta execução (padrão: a do CDP_HARNESS); o arquivo da mente "
+                        "precisa declarar a mesma")
     s.set_defaults(func=cmd_validate_daily)
 
     t = sub.add_parser("tese", help="tese de investimento da carteira decidida (números só do "
@@ -593,16 +666,25 @@ def build_parser() -> argparse.ArgumentParser:
     s.set_defaults(func=cmd_tese)
     s = tsub.add_parser("publish", help="publica a tese (mente ou automática); imutável")
     s.add_argument("--week", required=True, help="semana da decisão (AAAA-MM-DD)")
+    s.add_argument("--mind", choices=HARNESS_MINDS, default=None,
+                   help="mente desta execução (padrão: a do CDP_HARNESS); o arquivo da mente "
+                        "precisa declarar a mesma")
     s.set_defaults(func=cmd_tese)
 
     s = sub.add_parser("validate-tese",
                        help="valida o tese.json da semana sem publicar (publish é imutável)")
     s.add_argument("--week", required=True, help="semana da decisão (AAAA-MM-DD)")
+    s.add_argument("--mind", choices=HARNESS_MINDS, default=None,
+                   help="mente desta execução (padrão: a do CDP_HARNESS); o arquivo da mente "
+                        "precisa declarar a mesma")
     s.set_defaults(func=cmd_validate_tese)
 
     s = sub.add_parser("validate-weekly-report",
                        help="valida o comentario.json do relatório semanal sem publicar")
     s.add_argument("--date", type=_d, required=True, help="pregão do rebalanceamento (AAAA-MM-DD)")
+    s.add_argument("--mind", choices=HARNESS_MINDS, default=None,
+                   help="mente desta execução (padrão: a do CDP_HARNESS); o arquivo da mente "
+                        "precisa declarar a mesma")
     s.set_defaults(func=cmd_validate_weekly_report)
 
     c = sub.add_parser("cobertura", help="cobertura de ações e ETFs: modelos e preços-alvo de 12 "
@@ -633,12 +715,18 @@ def build_parser() -> argparse.ArgumentParser:
     s = nsub.add_parser("publish", help="publica a nota do emissor (mente ou modelo); imutável")
     s.add_argument("--issuer", type=_iid, required=True, help="emissor (IID)")
     s.add_argument("--date", type=_d, required=True, help="data da nota (AAAA-MM-DD)")
+    s.add_argument("--mind", choices=HARNESS_MINDS, default=None,
+                   help="mente desta execução (padrão: a do CDP_HARNESS); o arquivo da mente "
+                        "precisa declarar a mesma")
     s.set_defaults(func=cmd_nota)
 
     s = sub.add_parser("validate-nota",
                        help="valida o nota.json do emissor sem publicar (publish é imutável)")
     s.add_argument("--issuer", type=_iid, required=True, help="emissor (IID)")
     s.add_argument("--date", type=_d, required=True, help="data da nota (AAAA-MM-DD)")
+    s.add_argument("--mind", choices=HARNESS_MINDS, default=None,
+                   help="mente desta execução (padrão: a do CDP_HARNESS); o arquivo da mente "
+                        "precisa declarar a mesma")
     s.set_defaults(func=cmd_validate_nota)
 
     m = sub.add_parser("mente", help="passos da mente com qualquer assistente de IA")
@@ -671,11 +759,13 @@ def build_parser() -> argparse.ArgumentParser:
     s = sub.add_parser("kill-switch",
                        help="liga o kill switch (só redução de risco); desligar é só para humano "
                             "em terminal interativo")
-    s.add_argument("state", choices=["on", "off", "aplicar-pedidos", "revisar-squeeze"],
+    s.add_argument("state", choices=["on", "off", "aplicar-pedidos", "revisar-squeeze", "senha"],
                    help="on: liga (grava também o pedido em reports/risk/<data>/); off: só humano, "
-                        "terminal interativo, motivo digitado de novo; aplicar-pedidos: aplica no "
-                        "livro os pedidos pendentes (execução exclusiva); revisar-squeeze: só "
-                        "humano, libera o veto de compra do emissor após stop de squeeze")
+                        "terminal interativo, motivo digitado de novo e senha do operador; "
+                        "aplicar-pedidos: aplica no livro os pedidos pendentes (execução "
+                        "exclusiva); revisar-squeeze: só humano, libera o veto de compra do "
+                        "emissor após stop de squeeze; senha: define a senha do operador (só "
+                        "humano; hash fora do repositório)")
     s.add_argument("--emissor", default="", help="emissor revisado (revisar-squeeze)")
     s.add_argument("--reason", default="", help="motivo (pelo menos 10 caracteres)")
     s.add_argument("--by", default="operador", help="quem liga ou desliga")
@@ -740,7 +830,22 @@ def _utf8_stdio() -> None:
 def main(argv: list[str] | None = None) -> int:
     _utf8_stdio()
     args = build_parser().parse_args(argv)
-    return int(args.func(args) or 0)
+    from .ensaio import ErroEnsaio, ativar
+    from .workflow.runtime import RecusaEstruturada
+
+    try:
+        ativar()  # relógio do cenário / substituto de dados: só com CDP_ENSAIO=1
+    except ErroEnsaio as exc:
+        print(f"cdp: {exc}", file=sys.stderr)
+        return 2
+
+    try:
+        return int(args.func(args) or 0)
+    except RecusaEstruturada as exc:
+        # Recusa prevista (ex.: prazo vencido): saída estruturada, nunca traceback.
+        _print(exc.as_dict())
+        print(f"cdp: {exc.status}: {exc.motivo}", file=sys.stderr)
+        return 2
 
 
 if __name__ == "__main__":

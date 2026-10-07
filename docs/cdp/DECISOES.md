@@ -435,3 +435,73 @@ P0, cuja confiança C permanece 43,78%, nem certifica eficácia econômica, PIT 
 Provas delimitadas de atraso e dados ausentes não substituem os casos ainda abertos.
 Giro, capital por classe e RI por captura observada continuam protótipos privados; associação
 de entidade a IID e disponibilidade precisam estar autenticadas antes do consumo operacional.
+
+## 2026-10-07 · Barra provisória na composição e no booking histórico
+
+Contexto: a composição do MarketStore reconstruía o manifesto sem os marcadores de barra
+provisória e permitia concluir um fechamento indevido no driver. O primeiro reparo conservou
+as marcas, mas transportava o carimbo de uma barra futura para a visão histórica parcial.
+→ Decisão: conservar todas as datas provisórias elegíveis; sem mapa de horário por data,
+qualquer corte da lista original deixa o carimbo único desconhecido na visão composta.
+A visão completa conserva o horário literal e o manifesto bruto/SHA permanecem na custódia.
+A conformidade de cada booking exige fechamento oficial no vintage do próprio pregão; uma
+marca futura não reinterpreta o booking anterior. → Consequências: fechamento provisório
+recusa MOC e NAV, inclusive na manutenção da carteira; decisão já selada não é reescrita.
+Testes portáveis devem criar suas próprias fontes/livros e demonstrar as falhas antigas com
+as mesmas asserções. Drivers novos e revisão independente delimitam o aceite; integração
+ainda depende de suíte ampla e Ruff. Metodologia financeira, mandato e gates permanecem.
+
+## 2026-10-07 · Confirmação documental de escala não encerra diagnóstico econômico
+
+Contexto: a heurística descartou as aplicações reportadas pela Intelbras como erro de escala;
+reextração independente dos formatos do mesmo filing confirmou o saldo e sua unidade.
+→ Decisão: uma futura confirmação documental deve ligar entidade, conta, base, competência,
+unidade e bytes autenticados no corte antes de resolver somente o descarte de escala.
+Concordância dos formatos não certifica primeira publicação/PIT nem equivale a corroboradores
+econômicos independentes. → Consequências: movimentação não reconciliada e mensuração
+conflitante permanecem explícitas; aplicações já incluídas em caixa não são somadas novamente.
+O contrato é privado, sem implementação ou alteração de modelos/confiança/gates nesta decisão.
+
+## 2026-10-07 · Limite da CI compatível com a suíte completa
+
+Contexto: o runner público cancelou a CI após 45 minutos, com último progresso em 58% e
+sem resultado final. → Decisão: ampliar o limite a 90 minutos, manter os mesmos testes e
+gravação de JUnit/tempos com artefato para conferência. → Consequências: cancelamento permanece
+resultado incompleto; aprovação requer término e resultado integral. A alteração ainda em
+DEV segue no próximo lote, sem diminuir casos nem transformar aprovação local em remota.
+
+## 2026-10-07 · Mente explícita nos comandos de tese e nota
+
+Contexto: a suíte completa em `CDP_HARNESS=codex` recusou exemplos de outras mentes,
+pois instruções do pacote omitiam o argumento aceito pela CLI e herdavam o ambiente.
+→ Decisão: comandos gerados de validação e publicação carregam a mesma mente escolhida
+para o exemplo. Fixtures com outro autor também o declaram explicitamente; testes
+exercitam ambientes distintos, mantendo a comparação de autoria. → Consequências:
+`--mind` explícito continua prioritário, mente divergente continua recusada e nenhum
+rascunho recebe autoria do ambiente por conveniência. A CI usa o harness Codex para
+exercitar essa situação. Ampla 6 permanece falha; focais privados e revisão delimitada
+não substituem nova suíte completa antes da integração.
+
+## 2026-10-07 · Espera opcional da própria janela de rotina
+
+Contexto: uma chamada nativa entrou poucos minutos antes do horário nominal e o gate
+recusou corretamente o slot anterior. Origem automática/Run Now não foi certificada.
+→ Decisão: `--aguardar-horario` aguarda somente o próximo cron da própria tarefa hoje,
+em até 300 segundos, antes de construir Runtime, avaliar, adquirir ou registrar.
+Depois da espera, configuração e relógio são novos; o gate é avaliado uma vez, com
+as guardas existentes. Sem flag/fora desse recorte, comportamento ordinário preservado.
+→ Consequências: nenhum horário, tolerância, TTL, mandato ou RRULE muda. Interrupção
+da espera recusa sem efeitos; interrupção posterior mantém propagação original.
+Prompts com publicação pelo agente usam a flag; manual/executor permanecem iguais.
+Plugin 1.5.3 e testes portáveis foram revisados; transposição literal ao DEV, integração
+depende da suíte ampla. Não certifica pontualidade nem prontidão financeira.
+
+## 2026-10-07 · Aceite técnico após a ampla 7
+
+A suíte completa com harness Codex concluiu verde: 2.628 aprovados, 16 pulados e
+um xfail em 2.645 casos, sem falhas ou erros; 629 arquivos preservados durante o
+teste e Ruff completo aprovado. → Decisão: integrar normalmente o lote de barras
+provisórias, mente explícita e espera da própria rotina. Este registro documental
+posterior não altera código ou configuração testados. Conferir identidade e livro
+após sincronizar o executor. → Limite: o aceite é técnico; não promove protótipos
+RI/custos, não certifica disparo pontual e não encerra P0, E1 integral, PIT/E2 ou carteira.

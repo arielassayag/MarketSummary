@@ -22,7 +22,7 @@ skill só faz a entrada e a saída da execução no Claude Code (app desktop, CL
 Metodologia: `docs/cdp/METODOLOGIA.md`; manual do agente: `AGENTS.md`.
 
 Argumento (`$ARGUMENTS`): o id da tarefa agendada que disparou você (`cdp-calibracao`); sem
-argumento, `cdp-calibracao`. Fora do horário agendado (pedido do operador), acrescente `--manual` ao
+argumento, `cdp-calibracao`. Fora do horário agendado (pedido do operador), substitua `--aguardar-horario` por `--manual` no
 gate.
 
 ## Regras desta skill
@@ -52,7 +52,7 @@ gate.
 ## Passos
 
 1. `uv sync --frozen --extra dev --extra ai`
-2. `uv run python -m cdp rotinas gate --tarefa <tarefa>` — `executar: false` ⇒ responda "Sem
+2. `uv run python -m cdp rotinas gate --tarefa <tarefa> --aguardar-horario` — `executar: false` ⇒ responda "Sem
    execução: <motivo>" e encerre. Guarde `execucao`.
 3. `uv run python -m cdp sincronizar --executar` — `acao: "parar"` ⇒ encerre relatando o `motivo`.
 4. Siga `docs/cdp/playbooks/CALIBRACAO.md` do passo 1 ao passo 4, com `--mind claude-code`.

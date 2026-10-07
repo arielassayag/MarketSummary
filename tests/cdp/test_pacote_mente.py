@@ -124,10 +124,13 @@ def _assert_self_contained(md: str, info: dict, mente: str) -> None:
 # ----------------------------------------------------------------------------- ida e volta
 
 
-def test_tese_round_trip(copia, capsys):
+@pytest.mark.parametrize("harness", ["codex", "claude-code", "gemini"])
+def test_tese_round_trip(copia, capsys, harness, monkeypatch):
+    monkeypatch.setenv("CDP_HARNESS", harness)
     md, info = _pacote(copia, capsys, "tese", "--semana", WS, "--mente", "chatgpt")
     _assert_self_contained(md, info, "chatgpt")
     assert info["salvar_json_em"].endswith(f"book/{WS}/tese/tese.json")
+    assert "--mind chatgpt" in info["validacao"] and "--mind chatgpt" in info["publicacao"]
     resposta = _example(md)
     assert resposta["mind"] == "chatgpt" and resposta["week"] == WS
     Path(info["salvar_json_em"]).write_text(json.dumps(resposta, ensure_ascii=False),
@@ -150,12 +153,15 @@ def test_tese_round_trip(copia, capsys):
     assert "resumo: fato inexistente no FactBook ['nao.existe']" in problemas
 
 
-def test_nota_round_trip(copia, market, capsys):
+@pytest.mark.parametrize("harness", ["codex", "claude-code", "gemini"])
+def test_nota_round_trip(copia, market, capsys, harness, monkeypatch):
+    monkeypatch.setenv("CDP_HARNESS", harness)
     N.prepare_note(_rt(copia, market), IID, W)
     md, info = _pacote(copia, capsys, "nota", "--emissor", IID, "--data", WS,
                        "--mente", "gemini")
     _assert_self_contained(md, info, "gemini")
     assert "Fontes públicas sugeridas" in md and "https://dados.cvm.gov.br/" in md
+    assert "--mind gemini" in info["validacao"] and "--mind gemini" in info["publicacao"]
     resposta = _example(md)
     assert resposta["mind"] == "gemini" and resposta["issuer_id"] == IID
     path = Path(info["salvar_json_em"])

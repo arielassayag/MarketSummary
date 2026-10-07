@@ -221,12 +221,15 @@ def test_validation_rejects_invalid_theses(demo, mutate, needle):
     assert problems and any(needle in p for p in problems), problems
 
 
-def test_cli_validate_tese_exit_codes(demo, tmp_path, capsys):
+@pytest.mark.parametrize("ambiente", ["codex", "claude-code", "gemini"])
+def test_cli_validate_tese_exit_codes(demo, tmp_path, capsys, monkeypatch, ambiente):
+    monkeypatch.setenv("CDP_HARNESS", ambiente)
     from cdp.__main__ import main
 
     dst = _unpublished_copy(demo, tmp_path)
     args = ["--book", str(dst / "book"), "--market", str(dst / "market"), "--reports",
-            str(dst / "reports"), "validate-tese", "--week", WEEK.isoformat()]
+            str(dst / "reports"), "validate-tese", "--week", WEEK.isoformat(),
+            "--mind", "claude-code"]
     assert main(args) == 1
     out = json.loads(capsys.readouterr().out)
     assert out["ok"] is False and set(out) == {"ok", "problemas", "cobertura"}

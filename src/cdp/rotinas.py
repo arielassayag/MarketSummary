@@ -23,8 +23,10 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import re
 import sys
+import time as clock_time
 import uuid
 from collections.abc import Callable, Iterator, Mapping, Sequence
 from dataclasses import dataclass, field, replace
@@ -876,6 +878,8 @@ def prompt(rot: Rotinas, tarefa_id: str, *, harness: str = "claude",
         gate += " --ensaio"
     if manual:
         gate += " --manual"
+    else:
+        gate += " --aguardar-horario"
     if pub == "executor":
         passos.append(AVISO_EXECUTOR)
     else:
@@ -1448,7 +1452,8 @@ def _skill_familia(rot: Rotinas, skill: str, tarefas: Sequence[Tarefa]) -> str:
     guarda = ("Guarde `trava.id`, `execucao` e `mente`." if t0.exclusiva
               else "Guarde `execucao` e `mente`." if t0.grava else "")
     passos.append(f"`uv run python -m cdp rotinas gate --tarefa <a tarefa que disparou você; "
-                  f"padrão {padrao}>{adq}` (fora do horário agendado, acrescente `--manual`). "
+                  f"padrão {padrao}>{adq} --aguardar-horario` (na sessão de operador fora do horário, "
+                  "substitua `--aguardar-horario` por `--manual`). "
                   '`executar: false` ⇒ responda "Sem execução: <motivo>" e encerre (nunca rode o '
                   f"gate duas vezes). {guarda}".rstrip())
     if t0.grava:
@@ -1601,6 +1606,68 @@ def cmd_verificar(args: argparse.Namespace) -> int:
     return 0 if not problemas else 1
 
 
+ESPERA_HORARIO_MAX_S = 5 * 60
+
+
+class ErroEsperaHorario(RuntimeError):
+    """Espera interrompida/clock inválido: nenhum gate, trava ou registro autorizado."""
+
+
+def _clock_aware(value: datetime) -> datetime:
+    if not isinstance(value, datetime) or value.tzinfo is None or value.utcoffset() is None:
+        raise ErroEsperaHorario("relógio da espera precisa de instante com fuso")
+    return value
+
+
+def aguardar_horario(rot: Rotinas, tarefa_id: str, *, clock: Callable[[], datetime],
+                     monotonic: Callable[[], float] | None = None,
+                     sleep: Callable[[float], None] | None = None,
+                     informar: Callable[[str], None] | None = None) -> dict[str, Any] | None:
+    """Opt-in: só a próxima ocorrência da própria tarefa, hoje e em até cinco minutos.
+
+    Função sem Runtime, agenda, identidade, registro ou trava. Observa clocks após cada
+    espera de no máximo um segundo; rollback/interrupção/limite abortam antes do gate.
+    Fora do recorte retorna None sem sleep, mantendo o gate ordinário.
+    """
+    tarefa = rot.tarefa(tarefa_id)
+    inicio = _clock_aware(clock())
+    alvo = Cron.ler(tarefa.cron).proximo(inicio, rot.tz)
+    if (alvo is None or alvo.date() != inicio.astimezone(rot.tz).date()
+            or not 0 < (alvo - inicio).total_seconds() <= ESPERA_HORARIO_MAX_S):
+        return None
+    monotonic = monotonic or clock_time.monotonic
+    sleep = sleep or clock_time.sleep
+    mono_inicio = monotonic()
+    if not math.isfinite(mono_inicio):
+        raise ErroEsperaHorario("relógio monotônico inválido")
+    if informar:
+        informar(f"Aguardando {tarefa.id} até {alvo.isoformat()} "
+                 "(máximo 5 min; sem avaliar gate, registrar execução ou adquirir trava).")
+    agora, mono_anterior = inicio, mono_inicio
+    while True:
+        mono = monotonic()
+        if not math.isfinite(mono) or mono < mono_anterior:
+            raise ErroEsperaHorario("relógio monotônico inválido ou regressivo")
+        decorrido = mono - mono_inicio
+        if decorrido > ESPERA_HORARIO_MAX_S:
+            raise ErroEsperaHorario("limite monotônico de 5 min excedido antes do gate")
+        restante = (alvo - agora).total_seconds()
+        if restante <= 0:
+            return {"tarefa": tarefa.id, "inicio": inicio.isoformat(),
+                    "agendada_para": alvo.isoformat(), "fim": agora.isoformat(),
+                    "segundos_monotonicos": decorrido}
+        if decorrido >= ESPERA_HORARIO_MAX_S:
+            raise ErroEsperaHorario("horário nominal não alcançado em 5 min monotônicos")
+        try:
+            sleep(min(1.0, restante, ESPERA_HORARIO_MAX_S - decorrido))
+        except Exception as exc:
+            raise ErroEsperaHorario(f"falha durante espera: {exc}") from exc
+        atualizado = _clock_aware(clock())
+        if atualizado < agora:
+            raise ErroEsperaHorario("relógio civil regrediu durante a espera")
+        agora, mono_anterior = atualizado, mono
+
+
 def cmd_gate(args: argparse.Namespace) -> int:
     from .workflow.runtime import Runtime
 
@@ -1610,13 +1677,50 @@ def cmd_gate(args: argparse.Namespace) -> int:
     except ErroRotinas as exc:
         print(f"Erro: {exc}", file=sys.stderr)
         return EXIT_CONFIG
-    rt = Runtime.from_args(args)
-    agora = _agora(args)
-    manual = args.manual or getattr(args, "agora", None) is not None
-    code, out = avaliar(rot, args.tarefa, rt=rt, agora=agora, raiz=Path(args.raiz),
-                        manual=manual, ensaio=args.ensaio, adquirir=args.adquirir,
-                        sem_trava=args.sem_trava, trava_id=args.trava_id,
-                        registrar=not args.previa)
+    espera = None
+    erro_espera = None
+    if getattr(args, "aguardar_horario", False):
+        if args.manual or getattr(args, "agora", None) is not None:
+            print("Erro: --aguardar-horario requer relógio real, sem --manual ou --agora", file=sys.stderr)
+            return EXIT_CONFIG
+        try:
+            espera = aguardar_horario(rot, args.tarefa, clock=lambda: _agora(args),
+                                     informar=lambda msg: print(msg, file=sys.stderr, flush=True))
+            if espera:
+                # Nenhum Runtime/gate usa o retrato anterior à espera.
+                rot = _carregar(args)
+                rot.tarefa(args.tarefa)
+                fresco = _clock_aware(_agora(args))
+                if fresco < datetime.fromisoformat(espera["fim"]):
+                    raise ErroEsperaHorario("relógio civil regrediu antes do gate")
+        except ErroRotinas as exc:
+            print(f"Erro: {exc}", file=sys.stderr)
+            return EXIT_CONFIG
+        except (ErroEsperaHorario, KeyboardInterrupt) as exc:
+            erro_espera = str(exc) or "interrompida"
+    if erro_espera is None:
+        # Fora da espera, inclusive sem flag, preserva a construção e propagação
+        # de erros/interrupções do comando vigente. Não encobre trava já adquirida.
+        rt = Runtime.from_args(args)
+        agora = _agora(args)
+        if espera:
+            try:
+                if _clock_aware(agora) < datetime.fromisoformat(espera["fim"]):
+                    raise ErroEsperaHorario("relógio civil regrediu antes da avaliação")
+            except ErroEsperaHorario as exc:
+                erro_espera = str(exc)
+    if erro_espera is not None:
+        code, out = EXIT_PULAR, {"tarefa": args.tarefa, "executar": False,
+            "motivo": f"espera de horário abortada: {erro_espera}",
+            "itens": [], "trava": None, "execucao": None, "mente": None, "trailers": []}
+    else:
+        manual = args.manual or getattr(args, "agora", None) is not None
+        code, out = avaliar(rot, args.tarefa, rt=rt, agora=agora, raiz=Path(args.raiz),
+                            manual=manual, ensaio=args.ensaio, adquirir=args.adquirir,
+                            sem_trava=args.sem_trava, trava_id=args.trava_id,
+                            registrar=not args.previa)
+        if espera:
+            out["espera_horario"] = espera
     if args.formato == "github":
         tr = out.get("trava") or {}
         print(f"executar={'true' if out['executar'] else 'false'}")
@@ -1810,6 +1914,8 @@ def registrar(sub: argparse._SubParsersAction) -> None:
     s = rsub.add_parser("gate", help="esta execução deve agir agora? (0 = sim, 10 = não)")
     _comuns(s)
     s.add_argument("--tarefa", required=True)
+    s.add_argument("--aguardar-horario", action="store_true",
+                   help="aguarda próxima ocorrência da própria tarefa hoje, em até 5 min, antes do gate")
     s.add_argument("--adquirir", action="store_true",
                    help="adquire a trava distribuída (escritores exclusivos)")
     s.add_argument("--agora", type=_aware, default=None,

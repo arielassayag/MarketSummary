@@ -26,7 +26,7 @@ execução no Claude Code (app desktop, CLI ou sessão interativa). Metodologia:
 
 Argumento (`$ARGUMENTS`): o id da tarefa agendada que disparou você (`cdp-diario`,
 `cdp-diario-reforco` ou `cdp-diario-sabado`); sem argumento, `cdp-diario`. Fora do horário agendado
-(pedido do operador), acrescente `--manual` ao gate.
+(pedido do operador), substitua `--aguardar-horario` por `--manual` no gate.
 
 ## Regras desta skill
 
@@ -48,7 +48,7 @@ Argumento (`$ARGUMENTS`): o id da tarefa agendada que disparou você (`cdp-diari
 ## Passos
 
 1. `uv sync --frozen --extra dev --extra ai`
-2. `uv run python -m cdp rotinas gate --tarefa <tarefa> --adquirir` — `executar: false` ⇒ responda
+2. `uv run python -m cdp rotinas gate --tarefa <tarefa> --adquirir --aguardar-horario` — `executar: false` ⇒ responda
    "Sem execução: <motivo>" e encerre. Guarde `trava.id` e `execucao`.
 3. `uv run python -m cdp sincronizar --executar` — `acao: "parar"` ⇒ rode
    `uv run python -m cdp trava liberar --id <trava.id>` e encerre relatando o `motivo`.

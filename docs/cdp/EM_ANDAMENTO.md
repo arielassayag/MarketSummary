@@ -5,9 +5,149 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-Última atualização: 2026-10-07, 09:12, Brasília — lote `.8` integrado, P0 científico aberto. **Comece por
+Última atualização: 2026-10-07, 12:54, Brasília — ampla 7 verde; lote técnico validado para integração, P0 científico aberto. **Comece por
 `docs/cdp/PASSAGEM_CODEX.md`**: ligar as rotinas no Codex, P0 de desenvolvimento antes do
 retrato-gênese da cobertura (qua 07/10, 19:22) e cronograma até a carteira inaugural (sex 09/10).
+
+## Resultado integral do lote técnico — 07/10/2026, 12:54 Brasília
+
+- Ampla 7 concluiu com código 0: 2.645 casos, 2.628 aprovados, 16 pulados e um
+  xfail, zero falhas ou erros. Harness Codex, São Paulo e UTF-8 explícitos. Os 629
+  arquivos testados ficaram intactos do início ao terminal. Ruff completo passou.
+  Resultado: `.cdp/validacoes/20261007-integracao-10/suite-cdp-ampla-7-conclusao.json`;
+  JUnit SHA-256 `ff3f595655b46300f2fd0cb330bf7050a552277c04467f9d0436ce5bae823e52`.
+- Lote: composição preserva marcadores de barras provisórias e verifica o vintage
+  do booking; comandos de tese/nota declaram a mente; espera opcional antecede o
+  único gate da própria rotina. Skills e plugin 1.5.3 acompanham o procedimento.
+  CI conserva toda a suíte, com 90 minutos, harness Codex e relatório JUnit.
+- Custódia após o terminal confirmou os 79 arquivos operacionais, as cinco alterações
+  locais do Fechamento e o mandato nos três checkouts. Este registro altera somente
+  documentação após os testes; código, fixtures e configuração testados são os mesmos.
+  A integração normal e a sincronização do executor precisam confirmar os hashes
+  efetivos, identidade e integridade; não usar force push.
+- As 12 automações permanecem ativas, mesmos IDs, seis famílias, projeto atual
+  AInotes e executor interno. Releitura de 12:29 aprovou 120 critérios. Duas chamadas
+  chegaram antes do nominal, sem efeito operacional; origem e pontualidade não
+  certificadas. Quadro local: `.cdp/AGENDAS.md` e `.cdp/TAREFAS.md`.
+- Consumidor RI v3 recebeu revisão ordinária independente, 39 focais e oito próprios,
+  paridade integral .4–.8 e nova cadeia/reabertura. Continua privado, restrito a AMX,
+  com publicação/recebimento desconhecidos e PIT falso. Magnitude documental tem
+  conferência independente delimitada: saldo Intelbras e 16 identidades confirmados;
+  autoridade operacional ausente e derivador com múltiplas publicações None pendente.
+- Uma auditoria financeira da reserva sintética identificou conflito do mínimo por
+  ordem no pico mexicano. Reparo prospectivo autenticado segue privado, fora deste
+  lote. P0 mantém C 102/233 = 43,78%, acima de 35%; E1 integral, PIT/E2 e carteira
+  inaugural continuam sem aceite. Testes técnicos verdes não encerram esses gates.
+
+## Espera revisada e validação integral — 07/10/2026, 12:04 Brasília
+
+- Espera opcional `--aguardar-horario` revisada independentemente: 128 focais v1,
+  nove casos próprios, 127 do anexo e 42 portáveis em cópia relocada verdes. São
+  rodadas sobrepostas, não somadas. Patch de 22 caminhos transposto literalmente;
+  somente rotinas.py no núcleo, skills/espelhos/plugin 1.5.3 e regressão portátil.
+  Os testes portáveis usam o checkout corrente, sem origem histórica privada.
+- Somente o próximo cron da própria tarefa hoje em até cinco minutos é aguardado.
+  Não há Runtime/agenda/gate/trava/registro antecipados; configuração e relógio são
+  relidos depois, com uma avaliação. Horários/tolerâncias/mandato/RRULE iguais.
+  Prompts ativos consultam o procedimento canônico; nenhuma automação foi copiada.
+- Revisão do adapter RI v2 terminou com 20 ordinários independentes, reabertura e
+  paridade literal; consumo por contexto/modelos segue em novo protótipo privado.
+  Reserva inaugural tem parecer delimitado concluído, sem aceite E1 global.
+- Main/executor continuam fd8e29a. Fonte seguinte e suíte ampla 7 serão congeladas
+  após Ruff; não integrar este lote antes do resultado completo. C 43,78% e P0,
+  PIT/E2/E1 global/carteira inaugural continuam pendentes.
+
+## Próximo lote e conferência das rotinas — 07/10/2026, 11:34 Brasília
+
+- A ampla 6 terminou com código 1: 2.597 casos, 2.577 aprovados, três falhas, 16
+  pulados e um xfail, zero erros. Os 355 arquivos testados ficaram intactos durante a
+  execução; mandato, 79 arquivos operacionais e cinco alterações locais do Fechamento
+  preservados. Não recebeu aceite técnico. As falhas são de mente esperada, não do reparo
+  provisório: instruções de pacote omitiram `--mind` e uma fixture CLI criou tese
+  `claude-code` sem declarar essa mente no comando, em ambiente `CDP_HARNESS=codex`.
+- Depois do terminal, o pacote foi corrigido com quatro argumentos de mente explícita,
+  validado em 23 focais privados e revisão independente de 84 combinações puras;
+  transposição literal para DEV. A fixture de tese explicita o autor no subcomando,
+  exercita três ambientes e passou o módulo completo de 44 casos em fonte privada;
+  também transposta literalmente. A primeira tentativa privada dessa fixture colocou
+  o argumento no nível errado da CLI; falha preservada, posição corrigida na segunda.
+  Nenhuma guarda de autoria relaxada. A CI em DEV passa a exercitar `CDP_HARNESS=codex`,
+  com limite de 90 minutos e JUnit. Nova ampla e Ruff ainda necessários antes de integrar.
+- As 12 automações continuam ativas, mesmos IDs e projeto, seis famílias e executor
+  interno; nova releitura fez 120 verificações. Chamada nativa às 11:04:29, antes do
+  nominal 11:07, foi recusada com código 10 sem trava/publicação/manual. A origem do
+  disparo e pontualidade não estão certificadas. Espera curta opcional em CLI está em
+  protótipo privado: nenhuma agenda, tolerância ou prompt ativo foi alterado.
+- Reserva inaugural privada terminou 27 testes, decisão natural e episódio de recusa A
+  seguido de reabertura e recuperação B; revisão independente em fechamento. RI AMX v4
+  teve conferência financeira independente de seis fatos e 42 casos ordinários;
+  adapter privado v2 tem 20 testes e paridade de 233 pacotes nas versões `.4`–`.8`,
+  em revisão independente. Nenhum adapter foi transposto nem liberou P0/PIT/modelos.
+- Mecanismo documental privado de magnitude passou 38 casos sintéticos/ordinários.
+  Reextração real Intelbras conserva o saldo de 10 mil reais, mas autoridade operacional,
+  variação reconciliada e classificação permanecem abertas. Sem promoção de confiança.
+- Quadro simplificado: `.cdp/TAREFAS.md`; conclusão e transposições em
+  `.cdp/validacoes/20261007-integracao-9/`. Main e executor continuam `fd8e29a`.
+
+## Rotinas internas e novos controles — 07/10/2026, manhã
+
+- As 12 automações foram relidas nativamente no Codex, sem IDs novos: projeto atual
+  AInotes na seção CDP, modo Local, executor interno `.cdp/rotinas`, seis famílias
+  funcionais e nomes explícitos de reservas. Agenda, modelos e preferências de notificação
+  foram preservados. Os prompts consultam `cdp rotinas prompt` e seguem o protocolo
+  canônico; gate sem pendência encerra normalmente. A primeira execução real do agendador
+  continua não observada. A movimentação da conversa real na barra lateral não foi confirmada.
+- `44fa149` é o código integrado; `fd8e29a` acrescentou o registro documental e foi
+  sincronizado nos três checkouts. O portal atual foi verificado no ar para `fd8e29a`,
+  com manifesto, três rotas e valuation iguais ao executor. A CI de `44fa149` foi cancelada
+  por concorrência após esse registro; a CI 37619400335 de `fd8e29a` foi cancelada pelo
+  limite de 45 minutos, com último progresso de 58% e livro/rotinas/skills/portal aprovados.
+  A anotação oficial e o log foram preservados; não há resultado completo remoto. Em DEV,
+  o limite passa a 90 minutos e a mesma suíte gera JUnit/tempos, com upload do relatório.
+  Essa alteração ainda não foi integrada nem executada remotamente.
+- Novo caso E1 de barra provisória na segunda montagem encontrou defeito na fonte física
+  8-5: `MarketStore.load` reconstruía o manifesto sem a marca e o driver completava
+  indevidamente o fechamento. Episódio original, falha e bytes preservados. Reparo privado
+  v1 conserva marcadores e verifica o próprio vintage do booking; 16 focais e dois drivers
+  concluídos, com seis diários normais economicamente iguais e contrafactual incompleto
+  recusado antes de MOC/NAV. A proposta natural era manutenção; havia 25 posições prévias,
+  sete B3 e 18 US. Nenhuma nova ordem foi fabricada. Revisão independente confirmou a
+  recusa, mas encontrou horário da barra futura em visão parcial. V2 separado foi validado em
+  fonte própria: marcador elegível permanece e o carimbo global fica desconhecido quando
+  a visão corta qualquer data original. Os mesmos 17 portáveis mostraram 10 falhas na origem,
+  quatro no v1 e zero no v2. Revisão independente conferiu 788 arquivos, paridade econômica,
+  24 visões e quatro recusas com carimbo ausente, sem novo achado material. Os dois módulos
+  e um teste portável foram transpostos literalmente para DEV; Ruff e focais verdes. A suíte
+  ampla 6 é a próxima validação. Main/executor ainda não receberam o reparo; captura intraday,
+  ordem nova impedida e E1 integral seguem abertos.
+- RI privado v2 fechou identidade estrutural AMX/master, mas a revisão reproduziu alteração
+  da custódia financeira após autenticação, permitindo declarar horário de coleta falso.
+  V2 e o probe foram congelados como bloqueio. V3 privado recebeu custódia financeira
+  fixa, passou 78 focais e reextraiu os mesmos seis saldos; a revisão confirmou duas falhas
+  remanescentes de identidade: troca pública do master/rótulo aceita AMX como outro emissor;
+  troca pública do hash de configuração aceita coleta SEC falsa sob a âncora original.
+  Nenhuma antecipação global foi demonstrada, pois o master posterior domina o corte.
+  V4 privado separado fixa também master/identidade, passou 131 focais e reextraiu os seis
+  saldos com captura/raízes preservadas. A ferramenta interrompeu duas tentativas de revisão;
+  nova conferência contábil independente está em curso. O adapter até o modelo continua
+  desenho, sem transposição. Primeira publicação permanece desconhecida e captura atual
+  não é PIT histórico.
+- Intelbras: reextração independente do CSV/XML/PDF/XLSX e PDF RI original confirmou
+  saldo consolidado de aplicações de R$ 10 mil em 30/06/2026, com 16 identidades contábeis
+  fechadas. A afirmação categórica de erro de escala era falso positivo dessa heurística.
+  A nota documenta resgate da garantia Khomp, mas não reconcilia toda a movimentação;
+  R$ 270 mil permanecem sem atribuição. A mensuração diverge entre plano de contas e nota;
+  aplicações já incluídas em caixa não podem ser somadas novamente. Contrato privado de
+  confirmação documental preparado, sem implementação, preenchimento, promoção de
+  confiança ou alteração de gate. Formatos/hosts do mesmo filing não viram corroboradores
+  econômicos independentes; publicação inicial/PIT não foram certificados.
+- Quadro local e evidências: `.cdp/AGENDAS.md`, `.cdp/TAREFAS.md`,
+  `.cdp/ensaios/20261007-provisorio-segunda-montagem-reparo-v1/EVIDENCIAS.md` e
+  `.cdp/validacoes/20261007-auditoria/{E1_PROVISORIO_REPARO_REVISAO,
+  RI_CAPTURA_OBSERVADA_V2_REVISAO,INTELBRAS_APLICACOES_REVISAO}/EVIDENCIAS.md`.
+  A leitura de 12:58 UTC confirmou os 189 arquivos de núcleo nos três checkouts, os
+  79 arquivos operacionais do executor, cinco arquivos locais do Fechamento e mandato
+  intactos. P0, E1/E2 e primeira carteira continuam pendentes.
 
 ## Desenvolvimento científico e agendas — 07/10/2026, madrugada
 

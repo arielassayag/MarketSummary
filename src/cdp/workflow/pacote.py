@@ -261,8 +261,8 @@ def _tese(rt: Runtime, semana: date, mente: str) -> Pacote:
         etapa="tese", alvo=f"semana {w}", mente=mente, papel=papel,
         regras=_sem_estilo(THESIS_RULES), fatos_titulo="Fatos e dossiês da tese (código)",
         fatos=fatos, schema=schema, exemplo=exemplo, saida_json=folder / TESE_JSON,
-        validacao=f"{_cli(rt)} validate-tese --week {w}",
-        publicacao=f"{_cli(rt)} tese publish --week {w}", is_synthetic=bool(fb.is_synthetic),
+        validacao=f"{_cli(rt)} validate-tese --week {w} --mind {mente}",
+        publicacao=f"{_cli(rt)} tese publish --week {w} --mind {mente}", is_synthetic=bool(fb.is_synthetic),
         origem=tuple((p.as_posix(), _sha(p)) for p in (folder / FATOS_MD, folder / SCHEMA_JSON,
                                                         folder / FACTBOOK_JSON)))
 
@@ -290,8 +290,8 @@ def _nota(rt: Runtime, emissor: str, d: date, mente: str) -> Pacote:
         etapa="nota", alvo=f"{ctx.nome} ({emissor}), {d.isoformat()}", mente=mente, papel=papel,
         regras=_sem_estilo(NOTE_RULES), fatos_titulo="Fatos e briefing da nota (código)",
         fatos=fatos, schema=schema, exemplo=_com_mente(example_nota(fb, ctx, mente), mente),
-        saida_json=folder / NOTA_JSON, validacao=f"{_cli(rt)} validate-nota {args}",
-        publicacao=f"{_cli(rt)} nota publish {args}", is_synthetic=ctx.is_synthetic,
+        saida_json=folder / NOTA_JSON, validacao=f"{_cli(rt)} validate-nota {args} --mind {mente}",
+        publicacao=f"{_cli(rt)} nota publish {args} --mind {mente}", is_synthetic=ctx.is_synthetic,
         origem=tuple((p.as_posix(), _sha(p)) for p in (folder / FATOS_MD, folder / SCHEMA_JSON,
                                                         folder / FACTBOOK_JSON)),
         exemplo_aviso=aviso_exemplo(ctx))

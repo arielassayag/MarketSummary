@@ -21,7 +21,7 @@ execução no Claude Code (app desktop, CLI ou sessão interativa). Metodologia:
 `docs/cdp/METODOLOGIA.md`; manual do agente: `AGENTS.md`.
 
 Argumento (`$ARGUMENTS`): o id da tarefa agendada que disparou você (`cdp-status`); sem argumento,
-`cdp-status`. Fora do horário agendado (pedido do operador), acrescente `--manual` ao gate.
+`cdp-status`. Fora do horário agendado (pedido do operador), substitua `--aguardar-horario` por `--manual` no gate.
 
 ## Regras desta skill
 
@@ -37,7 +37,7 @@ Argumento (`$ARGUMENTS`): o id da tarefa agendada que disparou você (`cdp-statu
 ## Passos
 
 1. `uv sync --frozen --extra dev --extra ai`
-2. `uv run python -m cdp rotinas gate --tarefa <tarefa>` — `executar: false` ⇒ responda "Sem
+2. `uv run python -m cdp rotinas gate --tarefa <tarefa> --aguardar-horario` — `executar: false` ⇒ responda "Sem
    execução: <motivo>" e encerre.
 3. Siga `docs/cdp/playbooks/STATUS.md` (passo 1), sem gravar nada.
 4. Resumo final: o da seção 2 do roteiro, em pt-BR institucional (`docs/cdp/ESTILO.md`), com números

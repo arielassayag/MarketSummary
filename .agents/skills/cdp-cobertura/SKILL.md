@@ -15,7 +15,7 @@ Rotina sem supervisão: não pergunte; se algo impedir, pare e explique no resum
 Exceção: se o prompt da rotina disser que a agenda, a trava e a publicação são do executor (script de rotina ou workflow), faça só o roteiro (passo 4) e o resumo; não rode gate, `cdp sincronizar`, `cdp publicar`, `cdp trava` nem `git` que grave.
 
 1. `uv sync --frozen --extra dev --extra ai`
-2. `uv run python -m cdp rotinas gate --tarefa <a tarefa que disparou você; padrão cdp-cobertura> --adquirir` (fora do horário agendado, acrescente `--manual`). `executar: false` ⇒ responda "Sem execução: <motivo>" e encerre (nunca rode o gate duas vezes). Guarde `trava.id`, `execucao` e `mente`.
+2. `uv run python -m cdp rotinas gate --tarefa <a tarefa que disparou você; padrão cdp-cobertura> --adquirir --aguardar-horario` (na sessão de operador fora do horário, substitua `--aguardar-horario` por `--manual`). `executar: false` ⇒ responda "Sem execução: <motivo>" e encerre (nunca rode o gate duas vezes). Guarde `trava.id`, `execucao` e `mente`.
 3. `uv run python -m cdp sincronizar --executar`; `acao: "parar"` ⇒ libere a trava e encerre relatando.
 4. Siga `docs/cdp/playbooks/COBERTURA.md` do início ao fim com `--mind <mente>` (`mente` do gate; se vier `null`, o nome do seu harness — `AGENTS.md`, seção 8). Onde o roteiro mandar fazer commit/push, use o passo seguinte. Renove a trava ao fim de cada etapa longa: `uv run python -m cdp trava renovar --id <trava.id>`.
 5. Publique só com `uv run python -m cdp publicar --tarefa <tarefa> --mensagem "CDP: <mensagem do roteiro>" --execucao <execucao> --trava <trava.id> --mente <mente>`; se não publicar, relate (nunca outro caminho).

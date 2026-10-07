@@ -627,7 +627,15 @@ class MarketStore:
             created_at=created, universe_sha256=bt.manifest.universe_sha256, files=files,
             sources=sources, limitations=limitations,
             missing_tickers=list(bt.manifest.missing_tickers),
-            is_synthetic=bt.manifest.is_synthetic, data_notice=bt.manifest.data_notice)
+            is_synthetic=bt.manifest.is_synthetic, data_notice=bt.manifest.data_notice,
+            # Compor a base não transforma uma barra provisória em fechamento oficial.
+            # Sem carimbo por data, o horário global só pertence à visão que conserva
+            # todas as datas marcadas; uma visão parcial não o atribui à barra escolhida.
+            provisional_dates=[d for d in bt.manifest.provisional_dates if d <= eff],
+            provisional_as_of=(bt.manifest.provisional_as_of
+                               if bt.manifest.provisional_dates
+                               and all(d <= eff for d in bt.manifest.provisional_dates)
+                               else None))
         return assemble_market_data(manifest, bt.universe, prices, fx, bench, rates, fundamentals,
                                     short_interest, lending, items)
 

@@ -40,7 +40,8 @@ jobs:
   qualidade:
     name: Lint e testes
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    # A suíte completa excedeu 45 minutos no runner público; manter todos os casos.
+    timeout-minutes: 90
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -58,10 +59,19 @@ jobs:
         run: uv run ruff check .
       - name: Testes
         env:
+          CDP_HARNESS: codex
           TZ: America/Sao_Paulo
           PYTHONUTF8: "1"
         # Só a suíte do CDP: o app "fechamento" (raiz do repositório) é outro projeto, com CI própria.
-        run: uv run pytest tests/cdp -q -p no:cacheprovider
+        run: uv run pytest tests/cdp -q -p no:cacheprovider --junitxml=.cdp/validacoes/ci-junit.xml --durations=20
+      - name: Guardar relatório dos testes
+        if: ${{ always() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: testes-cdp
+          path: .cdp/validacoes/ci-junit.xml
+          retention-days: 7
+          if-no-files-found: warn
 
   operacao:
     name: Livro, rotinas, skills e portal

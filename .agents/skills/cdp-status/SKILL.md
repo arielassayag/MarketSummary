@@ -15,7 +15,7 @@ Rotina sem supervisão: não pergunte; se algo impedir, pare e explique no resum
 Exceção: se o prompt da rotina disser que a agenda, a trava e a publicação são do executor (script de rotina ou workflow), faça só o roteiro (passo 3) e o resumo; não rode gate, `cdp sincronizar`, `cdp publicar`, `cdp trava` nem `git` que grave.
 
 1. `uv sync --frozen --extra dev --extra ai`
-2. `uv run python -m cdp rotinas gate --tarefa <a tarefa que disparou você; padrão cdp-status>` (fora do horário agendado, acrescente `--manual`). `executar: false` ⇒ responda "Sem execução: <motivo>" e encerre (nunca rode o gate duas vezes).
+2. `uv run python -m cdp rotinas gate --tarefa <a tarefa que disparou você; padrão cdp-status> --aguardar-horario` (na sessão de operador fora do horário, substitua `--aguardar-horario` por `--manual`). `executar: false` ⇒ responda "Sem execução: <motivo>" e encerre (nunca rode o gate duas vezes).
 3. Siga `docs/cdp/playbooks/STATUS.md` do início ao fim com `--mind <mente>` (`mente` do gate; se vier `null`, o nome do seu harness — `AGENTS.md`, seção 8). Não grave arquivos, não faça commit nem push.
 4. Resumo final em pt-BR institucional (`docs/cdp/ESTILO.md`), com números copiados dos relatórios gerados.
 

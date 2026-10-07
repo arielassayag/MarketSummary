@@ -1305,6 +1305,10 @@ class Runtime:
             try:
                 # Universo/moeda/linha pertencem ao vintage do próprio pregão, além de preços.
                 md = self.store.load(as_of=session)
+                if session in set(md.manifest.provisional_dates):
+                    problems.append(f"{w}: efetivação no pregão {session} sem fechamento "
+                                    "oficial (barra intradiária provisória)")
+                    continue
                 found = conferir_efetivacao(entry, prop, dec.decided_at if dec else None,
                                             b.holdings_before(w), md, cfg_w)
             except Exception as exc:  # noqa: BLE001 - fonte/contexto indisponível não é conforme

@@ -1116,4 +1116,7 @@ class Book:
             problems += self._week_problems(week, events, index)
         problems += self._ledger_problems(events)
         problems += self._genesis_problems(events)
+        from .avaliacao import verify
+
+        problems += [f"avaliação: {m}" for m in verify(self)]
         return (not problems, problems)

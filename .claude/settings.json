@@ -101,6 +101,8 @@
       "Bash(uv run cdp kill-switch off*)",
       "Edit(/book/KILL_SWITCH)",
       "Edit(/book/audit_log.jsonl)",
+      "Edit(/book/avaliacao_manifest.json)",
+      "Edit(/book/*/avaliacao/**)",
       "Edit(/book/track_record/**)",
       "Edit(/book/track_record_shadow/**)",
       "Edit(/book/*/briefing/**)",

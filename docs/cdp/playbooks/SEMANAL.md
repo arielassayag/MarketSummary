@@ -287,6 +287,11 @@ nunca tente outro caminho. Libere a trava **sempre**, mesmo em falha.
 
 ## 11. Resumo final
 
+`weekly decide` sela automaticamente os sinais e a base da avaliação antes da otimização.
+Se houver retomada após uma decisão gravada, reconcilia apenas os anexos, sem nova decisão
+ou ordem. A mente não edita `book/<semana>/avaliacao/`. Para conferir maturidade e autoria,
+`uv run python -m cdp avaliacao status`; nenhuma estatística futura é preenchida na inauguração.
+
 Até 12 linhas, números **copiados** da saída do `weekly decide` e de
 `reports/weekly/<semana>/relatorio.md`: modelos da cobertura (retrato gravado no passo 2.1 e a
 data, ou o motivo de não ter havido atualização); semana, caminho (`cdp`, só-quant ou anterior), postura,

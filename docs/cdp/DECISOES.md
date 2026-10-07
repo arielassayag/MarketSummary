@@ -313,3 +313,46 @@ sombra, distinta de fluxo operacional observado. → Consequências: metodologia
 2026-10.5, lacuna explícita quando a identidade não fecha; principal pago não é capex;
 observação e projeção teórica são distinguidas. Política antiga preservada por parâmetros
 arquivados; mandato e portões não são afrouxados.
+
+## 2026-10-07 · G17 conforme dependências econômicas comprovadas
+
+Contexto: alertas de magnitude em capex/D&A podiam limitar a confiança de modelos financeiros
+que não usam esses itens. → Decisão: na metodologia `2026-10.6`, certificar a independência
+pelo conjunto de métodos configurados e reportados, inclusive dissidentes, custo de capital,
+contexto e participações externas; casos desconhecidos conservam a severidade histórica.
+→ Consequências: alerta bruto preservado, classificação informativa com razão e caminhos
+arquivados. Parâmetros sem a chave nova conservam o recálculo anterior. O ensaio isolado
+preservou os números dos 233 modelos e elevou seis casos de C para B; a elegibilidade A/B
+altera legitimamente o bottom-up de seis ETFs, confirmada por contrafactual. Os critérios
+quantitativos P0 continuam abertos; não há quota usada para escolher emissores ou resultados.
+
+## 2026-10-07 · Semântica contábil antes de compor receitas
+
+Contexto: receita bruta e resultado líquido de seguros podem ocupar a mesma conta 3.01 da
+CVM. A composição de quatro trimestres entre esses conceitos gerou receita economicamente
+incomparável. → Decisão: manter valor/rubrica publicados, identificar o resultado líquido
+pela identidade das filhas oficiais e segregar as séries; a guarda de compatibilidade vale
+no provedor e no consumidor. → Consequências: Q reportados preservados, Q/TTM mistos recusados,
+fallback homogêneo com período/publicação/hash originais e alerta explícito. Comparativas
+reexpressas e imposto não são imputados; a correção de fonte não presume aprovação do modelo.
+
+## 2026-10-07 · Margem de fluxos comparáveis
+
+Contexto: o fallback de receita homogênea podia terminar em exercício diferente do EBIT corrente.
+→ Decisão: certificar janela de 12 meses, moeda/base e proveniência antes de formar margem no
+contexto e no modelo. Pares anuais conservam o mínimo histórico de três; margem corrente ausente
+não recebe fallback parcial da histórica no FCFF normalizado. → Consequências: valores reportados
+preservados, razões incompatíveis ausentes com fontes/motivo. A/TTM com mesmo fim certificado são
+compatíveis. A política nova exige chave explícita; parâmetros arquivados sem ela ficam iguais.
+A guarda não constitui normalização de eventos, imposto ou perímetro econômico entre exercícios.
+
+## 2026-10-07 · Avaliação prospectiva por mente e canal
+
+Contexto: o tracker antigo não era alimentado pelo ciclo operacional nem separava autoria.
+→ Decisão: runtime sela sinais, entradas brutas e base antes da otimização; decisão os ancora,
+fechamento futuro resolve com fontes autenticadas. Autoria ausente/externa permanece diagnóstico,
+fora do IC confirmado; quant não tem informação incremental contra si próprio. → Consequências:
+reconciliação idempotente sem outra ordem/decisão, ausência de preço/FX/macro mantém null, leitura
+por CLI e recomendação de fase sem escrita no mandato. Probabilidade/evento/horizonte explícitos
+são pré-condição do Brier; convicção ordinal não os substitui. Livros antigos não são preenchidos
+retroativamente. A avaliação sintética confirma mecanismos, sem demonstrar mérito econômico.

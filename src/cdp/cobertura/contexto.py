@@ -129,7 +129,8 @@ def reinvestimento_observado(p: Mapping[str, Any], imposto: float, anos: int = 3
 
 
 def fundamentos(p: Mapping[str, Any], lim_g: tuple[float, float] = LIMITES_G,
-                anos_roe: int = 5, calendarizar: bool = True) -> dict[str, float | None]:
+                anos_roe: int = 5, calendarizar: bool = True,
+                margem_fluxos_metodo: str | None = None) -> dict[str, Any]:
     """Razões correntes do emissor a partir do pacote (moeda do modelo; nosso preço). Com
     ``calendarizar`` (``projecao.calendarizacao``), o LPA de consenso entra em 12 meses à frente
     (``(1 − f) × FY1 + f × FY2``), como no modelo."""
@@ -152,9 +153,19 @@ def fundamentos(p: Mapping[str, Any], lim_g: tuple[float, float] = LIMITES_G,
         roe = eps1 / bvps
     rhist = roe_historico(p, anos_roe)
     roe_hist = rhist["mediana"]
-    margem = None if rec is None or ebit is None or rec <= 0 else ebit / rec
-    rh, eh = hist.get("receita", {}), hist.get("ebit", {})
-    ms = [eh[a] / rh[a] for a in sorted(set(rh) & set(eh)) if rh[a] and rh[a] > 0]
+    margem_fluxos = None
+    if margem_fluxos_metodo is not None:
+        from .margens import METODO, margens_alinhadas
+
+        if margem_fluxos_metodo != METODO:
+            raise ValueError(f"Método de margem dos fluxos desconhecido: {margem_fluxos_metodo!r}")
+        margem_fluxos = margens_alinhadas(p)
+        margem = margem_fluxos["corrente"]["margem"]
+        ms = [r["margem"] for r in margem_fluxos["historico"].values() if r["margem"] is not None]
+    else:
+        margem = None if rec is None or ebit is None or rec <= 0 else ebit / rec
+        rh, eh = hist.get("receita", {}), hist.get("ebit", {})
+        ms = [eh[a] / rh[a] for a in sorted(set(rh) & set(eh)) if rh[a] and rh[a] > 0]
     margem_hist = float(np.median(ms)) if len(ms) >= 3 else None
     margem_sd = float(np.std(ms, ddof=1)) if len(ms) >= 3 else None
     if p.get("financeira"):
@@ -185,12 +196,15 @@ def fundamentos(p: Mapping[str, Any], lim_g: tuple[float, float] = LIMITES_G,
     # porte pelo patrimônio contábil em dólar (nunca pelo valor de mercado, que carrega o próprio preço)
     pl_porte = g(f"t.{p.get('item_patrimonio') or 'patrimonio_controladores'}")
     pl_usd = None if pl_porte is None or fx is None or pl_porte <= 0 else pl_porte * fx
-    return {"roe": roe, "roe_hist": roe_hist, "roe_hist_sigma": rhist["sigma"],
+    out = {"roe": roe, "roe_hist": roe_hist, "roe_hist_sigma": rhist["sigma"],
             "roe_hist_prejuizo": rhist["prejuizo"], "roe_hist_n": rhist["n"], "margem": margem, "margem_hist": margem_hist,
             "margem_sd": margem_sd, "g": gr, "g_eps": g_eps, "payout": payout, "pb": pb, "pe": pe,
             "ev_receita": ev_rec, "alavancagem": alav, "d_e": g("d_e_mercado"), "roic_pre": roic_pre,
             "beta_reg": g("beta_regressao"), "ln_mcap_usd": None if mcap_usd is None else float(np.log(mcap_usd)),
             "ln_pl_usd": None if pl_usd is None else float(np.log(pl_usd))}
+    if margem_fluxos is not None:
+        out["margem_fluxos"] = margem_fluxos
+    return out
 
 
 def huber(x: np.ndarray, y: np.ndarray, c: float = 1.345, it: int = 50) -> tuple[np.ndarray, float]:
@@ -290,7 +304,8 @@ def montar_contexto(pacotes: Mapping[str, Mapping[str, Any]], params: Parametros
     linhas = []
     for iid in sorted(pacotes):
         p = pacotes[iid]
-        f = fundamentos(p, lim_g, anos_roe, cal)  # type: ignore[arg-type]
+        f = fundamentos(p, lim_g, anos_roe, cal,
+                        params.sec("qualidade").get("margem_fluxos_metodo"))  # type: ignore[arg-type]
         cc_ = params.cc
         imp = float(cc_["imposto_marginal"].get(p["pais"], cc_["imposto_marginal"]["LATAM"]))
         rr = None if p["financeira"] else reinvestimento_observado(

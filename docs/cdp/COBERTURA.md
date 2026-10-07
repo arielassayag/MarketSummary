@@ -111,6 +111,31 @@ contábeis, como receita de construção de concessões) não é usado.
   apresentação) entram arquivados no snapshot (`insumos/alertas_fonte`) e alimentam o portão G17.
   Emissor que trocou a moeda de apresentação fica só com os exercícios na moeda nova (os insumos
   históricos ficam ausentes abaixo de 3 exercícios).
+  Desde `2026-10.6`, capex/D&A são informativos quando o conjunto de métodos financeiros,
+  inclusive dissidentes e dependências do custo de capital/contexto, comprova que esses itens
+  não alimentam os cálculos. A prova e o motivo ficam no G17 junto de todos os alertas originais.
+  Dependência desconhecida, FCFF, EV/Receita ou custo de dívida/WACC conservam a severidade.
+  Parâmetros arquivados sem `alertas_fonte_metodo` conservam a política histórica.
+- **Comparabilidade de receitas**: a conta CVM 3.01 conserva o valor e a rubrica publicados.
+  Uma composição conciliada de receitas e despesas de seguros identifica resultado líquido
+  de seguros; esse conceito e receita bruta ficam em séries distintas. Q/TTM derivados
+  exigem conceitos compatíveis, inclusive no consumidor dos insumos. A última base homogênea
+  de 12 meses pode ser usada como fallback com data, publicação e hash originais, nota e alerta
+  de comparabilidade. Comparativas reexpressas ausentes permanecem como lacuna; o fallback
+  não recebe a data do trimestre recusado. Séries históricas sem marcador mantêm o recálculo anterior.
+  Marcador explícito desconhecido não autoriza derivação. Na série identificada, a publicação de
+  Q/TTM derivados é a mais recente de todos os componentes, inclusive reapresentações de
+  trimestres anteriores; os componentes preservam valor, sinal, período, URL e hash.
+- **Margem EBIT comparável**: desde `2026-10.6`, receita e EBIT precisam demonstrar a mesma
+  janela de 12 meses, moeda da fonte e base consolidada/individual. A e TTM com o mesmo fim
+  certificado de 12 meses são compatíveis; uma anual anterior não completa o EBIT corrente.
+  Os valores reportados permanecem arquivados; a razão incompatível fica ausente, com motivo
+  e ambas as fontes no modelo. A guarda precede contexto, regressão EV/Receita e projeção.
+  Pares históricos também exigem exercício/período, moeda/base e vínculo da proveniência ao
+  valor convertido. A mediana/volatilidade de ciclo conserva o mínimo de três pares válidos;
+  esses pares não certificam recorrência nem homogeneidade do perímetro entre exercícios.
+  Margem corrente ausente não é substituída silenciosamente pela histórica no FCFF normalizado.
+  Parâmetros arquivados sem `margem_fluxos_metodo` mantêm os cálculos e a exportação históricos.
 - **Inflação**: a do modelo é a esperada de longo prazo de Damodaran (configuração datada); a série
   pública IPCA de 12 meses não é usada — se vier a ser, a chave point-in-time é a data de
   disponibilidade (fim do mês de referência + 12 dias), como a camada pública já a data.
@@ -369,7 +394,8 @@ a comparação anterior por CFO); G15 fluxos e balanço na mesma
 data-base (aviso, limita a B); **G16** probabilidade de patrimônio não positivo nos sorteios < 10%
 (aviso); **G17** alertas da fonte pública sobre os períodos e itens usados (item em conferência,
 salto de magnitude em item central, troca recente da moeda de apresentação: aviso; demais alertas
-informativos); **G18** métodos coerentes (método discrepante limitado à borda ou mantido; aviso,
+informativos; capex/D&A comprovadamente sem dependência nos métodos financeiros conhecidos
+também são informativos, com prova arquivada desde `2026-10.6`); **G18** métodos coerentes (método discrepante limitado à borda ou mantido; aviso,
 limita a B); **G19** demonstrações recentes (último balanço ou fluxos de 12 meses com mais de 300 dias
 na data: aviso; mais de 550 dias: bloqueio); **G20** plausibilidade do alvo, com revisão analítica
 sem ancorar a visão da casa no consenso.

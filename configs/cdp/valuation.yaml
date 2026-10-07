@@ -5,7 +5,7 @@
 # Todos os valores abaixo são insumos públicos datados (com a fonte citada) ou regras de política
 # do modelo; nenhum é calculado aqui. Revisão semestral por commit (Damodaran publica em janeiro e
 # julho); a taxa livre de risco em dólar é lida diariamente da série pública (FRED DGS10).
-versao: "2026-10.5"
+versao: "2026-10.6"
 horizonte_meses: 12
 
 fontes:
@@ -298,6 +298,13 @@ rating:
 
 # Portões de qualidade (política do modelo; ver docs/cdp/COBERTURA.md §7).
 qualidade:
+  # A pertinência de capex/D&A depende dos métodos calculados e dos insumos transitivos.
+  # Alertas sem dependência comprovada ficam informativos; linhagem desconhecida conserva
+  # a severidade anterior. Sem a chave, parâmetros históricos preservam G17 de .4/.5.
+  alertas_fonte_metodo: dependencias_efetivas
+  # Uma margem corrente exige numerador e denominador de mesma janela, moeda e base.
+  # A ausência da chave conserva os modelos arquivados anteriores.
+  margem_fluxos_metodo: periodo_moeda_base
   tv_aviso: 0.85
   tv_bloqueio: 0.95
   cv_metodos_c: 0.50

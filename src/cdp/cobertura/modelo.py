@@ -412,6 +412,32 @@ class Avaliador:
         self.margem = _f(self.fund.get("margem"))
         self.margem_hist = _f(self.fund.get("margem_hist"))
         self.margem_sd = _f(self.fund.get("margem_sd"))
+        self.margem_fluxos = self.fund.get("margem_fluxos")
+        if self.params.sec("qualidade").get("margem_fluxos_metodo") is not None:
+            # A mesma guarda precede o contexto/calibração. Também fecha o caminho direto
+            # do Avaliador quando recebe um contexto antigo sem o diagnóstico da política.
+            from .margens import margens_alinhadas
+
+            self.margem_fluxos = margens_alinhadas(p)
+            corrente = self.margem_fluxos["corrente"]
+            self.margem = corrente["margem"]
+            hist_validos = [r["margem"] for r in self.margem_fluxos["historico"].values()
+                            if r["margem"] is not None]
+            self.margem_hist = float(np.median(hist_validos)) if len(hist_validos) >= 3 else None
+            self.margem_sd = float(np.std(hist_validos, ddof=1)) if len(hist_validos) >= 3 else None
+            # Regressões usam self.fund. Nunca recuperam a razão antiga de um contexto
+            # recebido sem a política ou preparado antes da mudança dos insumos.
+            self.fund = {**self.fund, "margem": self.margem, "margem_hist": self.margem_hist,
+                         "margem_sd": self.margem_sd, "margem_fluxos": self.margem_fluxos}
+            if corrente["status"] != "comparavel":
+                self.lacunas.append({"insumo": "margem", "nome": "margem EBIT comparável",
+                                     "motivo": corrente["motivo"]})
+                reg.nota("dir.margem_comparabilidade", "Margem EBIT indisponível",
+                         corrente["motivo"], [r["fonte"] for r in corrente["insumos"].values() if r["fonte"]])
+            recusados = [a for a, r in self.margem_fluxos["historico"].items() if r["margem"] is None]
+            if recusados:
+                self.lacunas.append({"insumo": "margem_historica", "nome": "margem EBIT histórica comparável",
+                                     "motivo": "pares anuais sem alinhamento/proveniência: " + ", ".join(recusados)})
         ebit = _f(p.get("t.ebit"))
         nd = _f(p.get("divida_liquida"))
         pl = _f(p.get(self.k_pl))
@@ -1736,6 +1762,8 @@ class Avaliador:
             if k not in ("referencia", "pais_setor", "porte")} | {
             "referencia": self.alvo_roe_info.get("referencia"), "porte": self.alvo_roe_info.get("porte")}
         out["margem"] = self.margem
+        if self.params.sec("qualidade").get("margem_fluxos_metodo") is not None:
+            out["margem_fluxos"] = self.margem_fluxos
         out["metodo_discrepante"] = getattr(self, "discrepante", None)
         out["lacunas"] = self.lacunas + [{"insumo": f"metodo.{d['m']}", "nome": NOME_METODO[d["m"]],
                                           "motivo": d["motivo"]}

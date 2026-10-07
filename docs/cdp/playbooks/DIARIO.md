@@ -308,6 +308,12 @@ uv run python -m cdp trava liberar --id <trava.id>
 
 ## 9. Resumo final
 
+`daily close` resolve automaticamente coortes maduras com fontes autenticadas. A retomada
+de um fechamento já registrado reconcilia esses anexos sem repetir MOC ou registro diário.
+`cdp verify` informa coortes imaturas ou pendentes; `cdp avaliacao status` detalha a situação.
+Pendência não é outcome zero nem prova de valor agregado. As métricas por mente são lidas
+com `cdp avaliacao ic --mind <mente> --canal mente_final`, sem mudar a fase do mandato.
+
 Em `fase: "pre_inicio"`: "Pré-início: carteira inaugural em <data>, ao preço de fechamento"; se a
 abertura do livro rodou, `n_arquivos` e `lista_sha256`; base de mercado (`ultimo_pregao` ou "não
 prontos"); retrato da cobertura; integridade; publicação.

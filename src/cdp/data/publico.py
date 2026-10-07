@@ -791,6 +791,9 @@ def demonstrativos(issuer_ids: Sequence[str], as_of: date, *, offline: bool = Fa
     trocas: dict[str, dict] = {}
     partes = []
     if not sel.empty:
+        for alerta in sel.attrs.get("incompatibilidades_fluxos", []):
+            for iid in ent_iss.get(alerta["entidade"], []):
+                qa.append(f"{iid}: {alerta['motivo']}")
         for ent, t in (sel.attrs.get("moeda_trocada") or {}).items():
             for iid in ent_iss.get(ent, []):
                 trocas[iid] = t
@@ -803,6 +806,8 @@ def demonstrativos(issuer_ids: Sequence[str], as_of: date, *, offline: bool = Fa
         partes.append(sel)
     for iid, f in compl_frames.items():
         s2 = selecionar_pit(f.drop(columns=["data_coleta"]), as_of)
+        for alerta in s2.attrs.get("incompatibilidades_fluxos", []):
+            qa.append(f"{iid}: {alerta['motivo']}")
         coleta.update(f.groupby("sha256")["data_coleta"].first().to_dict())
         if s2.empty or not partes:
             continue

@@ -482,6 +482,8 @@ def modelo_json(ex: Execucao, iid: str, params: ParametrosCobertura) -> dict[str
         "pares": mod.get("pares"), "portoes": mod.get("portoes", []), "ponte": mod.get("ponte"),
         "passos": ex.registros[iid].passos,
     }
+    if "margem_fluxos" in mod:
+        out["diagnosticos"]["margem_fluxos"] = mod["margem_fluxos"]
     return arredondar(out)
 
 

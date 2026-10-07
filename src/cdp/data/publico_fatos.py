@@ -19,14 +19,17 @@ bruto de origem). Em ``as_of``:
    em datas avulsas (abertura IFRS 16, entidade antes de reorganização, data de capa) não
    viram período.
 
-``data_publicacao`` de uma linha derivada = publicação do documento do próprio ``period_end``
-(o mais recente dos documentos usados). Derivados calculados por código: ``ebitda = ebit + d_a``,
+Com semântica explícita, ``data_publicacao`` de Q/TTM derivados é a máxima dos componentes
+efetivamente usados, cujas datas, valores, coeficientes e fontes são preservados em ``nota``.
+Sem metadado semântico, mantém-se a publicação histórica do documento de ``period_end``.
+Derivados calculados por código: ``ebitda = ebit + d_a``,
 ``fcf = cfo − capex``, ``divida_liquida = divida_bruta − caixa − aplicacoes_cp`` (aplicações
 ausentes ⇒ só caixa, com nota). Componente ausente ⇒ derivado ausente (nunca zero).
 """
 
 from __future__ import annotations
 
+import json
 import math
 from datetime import date
 
@@ -34,7 +37,7 @@ import numpy as np
 import pandas as pd
 
 from .fundamentals_pit import _QUARTER_DAYS as _QUARTER_DIAS
-from .fundamentals_pit import _quarter_value, _ttm_value
+from .fundamentals_pit import _match_end, _months_back, _quarter_value, _ttm_value
 
 FLUXOS = frozenset({
     "receita", "lucro_bruto", "ebit", "ebitda", "d_a", "resultado_financeiro", "lucro_antes_ir",
@@ -59,13 +62,23 @@ def _texto(v) -> str | None:
     return str(v) or None
 
 
+def _semantica(v) -> str | None:
+    texto = _texto(v)
+    return (texto.strip() or None) if texto is not None else None
+
+
 def _meta(row) -> dict:
+    semantica = _semantica(getattr(row, "semantica_fluxo", None))
+    rubrica = _texto(getattr(row, "rubrica_reportada", None))
+    nota = _texto(getattr(row, "nota", None))
+    if semantica and semantica != "receita_dre":
+        nota = _juntar(nota, f"semantica_fluxo={semantica}; rubrica reportada: {rubrica}")
     return {
         "demonstrativo": row.demonstrativo, "currency": row.currency,
         "consolidado": bool(row.consolidado), "fonte": row.fonte, "url": row.url,
         "documento": row.documento, "data_publicacao": row.received_date, "sha256": row.sha256,
         "pit_estimado": bool(getattr(row, "pit_estimado", False)),
-        "nota": _texto(getattr(row, "nota", None)),
+        "nota": nota, "semantica_fluxo": semantica, "rubrica_reportada": rubrica,
     }
 
 
@@ -130,9 +143,10 @@ def selecionar_pit(fatos: pd.DataFrame, as_of: date) -> pd.DataFrame:
     oficiais = set(f.loc[f["fonte"].isin(["CVM", "SEC", "RI"]), "entidade"]) \
         if "fonte" in f.columns else set()
     linhas: list[dict] = []
+    incompatibilidades: list[dict] = []
     for (ent, item), g in f.groupby(["entidade", "item"], sort=True):
         if item in FLUXOS:
-            linhas.extend(_fluxo(ent, item, g))
+            linhas.extend(_fluxo(ent, item, g, incompatibilidades))
         elif ent in oficiais:
             linhas.extend(_saldo(ent, item, g, datas.get(ent, set()), anuais.get(ent, set())))
         else:
@@ -141,6 +155,7 @@ def selecionar_pit(fatos: pd.DataFrame, as_of: date) -> pd.DataFrame:
     if out.empty:
         vazio = pd.DataFrame(columns=SAIDA_COLUNAS)
         vazio.attrs["moeda_trocada"] = trocas
+        vazio.attrs["incompatibilidades_fluxos"] = incompatibilidades
         return vazio
     out = pd.concat([out, _derivados(out)], ignore_index=True)
     out["escala"] = 1
@@ -151,6 +166,7 @@ def selecionar_pit(fatos: pd.DataFrame, as_of: date) -> pd.DataFrame:
            .sort_values(["entidade", "item", "freq", "period_end"], kind="stable")
            .reset_index(drop=True))
     out.attrs["moeda_trocada"] = trocas
+    out.attrs["incompatibilidades_fluxos"] = incompatibilidades
     return out
 
 
@@ -172,7 +188,108 @@ def _juntar(*notas: str | None) -> str | None:
     return "; ".join(vistas) or None
 
 
-def _fluxo(ent: str, item: str, g: pd.DataFrame) -> list[dict]:
+def _fluxo(ent: str, item: str, g: pd.DataFrame,
+           incompatibilidades: list[dict] | None = None) -> list[dict]:
+    """Composição só entre fatos de mesma semântica, quando a fonte a identifica.
+
+    Documentos antigos sem o campo preservam o caminho histórico. Quando aparece uma quebra
+    comprovada de conceito, valores reportados ficam nas suas próprias séries e nenhuma
+    diferença de acumulados, soma de quatro Q ou identidade anual+H1−H1 cruza a quebra.
+    """
+    if "semantica_fluxo" not in g:
+        return _fluxo_compativel(ent, item, g)
+    if g["semantica_fluxo"].map(_semantica).isna().all():
+        return _fluxo_compativel(ent, item, g)  # metadado efetivamente ausente: legado
+    # Reapresentação é escolhida antes da segregação: não ressuscita uma versão superada.
+    atual = g.drop_duplicates(["period_start", "period_end"], keep="last").copy()
+    semanticas = atual["semantica_fluxo"].map(_semantica).fillna("nao_informada")
+    conhecidas = {"receita_dre", "resultado_liquido_seguros"}
+    if semanticas.nunique() == 1 and semanticas.iloc[0] in conhecidas:
+        return _fluxo_compativel(ent, item, atual, proveniencia=True)
+    out = [r for conceito, grupo in atual.groupby(semanticas, sort=True)
+           for r in _fluxo_compativel(ent, item, grupo, derivar=conceito in conhecidas, proveniencia=True)]
+    # O consumidor também deriva TTM. O marcador precisa sobreviver no canônico ``nota``
+    # de todos os componentes, inclusive a receita antiga, sem depender de attrs opcionais.
+    for r in out:
+        conceito = r.get("semantica_fluxo") or "nao_informada"
+        marcador = f"semantica_fluxo={conceito}"
+        if marcador not in (r.get("nota") or ""):
+            r["nota"] = _juntar(r.get("nota"), marcador,
+                                 f"rubrica reportada: {r.get('rubrica_reportada')}")
+    chaves = {(r["freq"], r["period_end"]) for r in out}
+    recusadas = [r for r in _fluxo_compativel(ent, item, atual)
+                if r["freq"] in ("Q", "TTM") and (r["freq"], r["period_end"]) not in chaves]
+    if not recusadas:
+        return out
+    conceitos = ", ".join(sorted(set(semanticas)))
+    datas = ", ".join(sorted({pd.Timestamp(r["period_end"]).date().isoformat() for r in recusadas}))
+    motivo = (f"comparabilidade: {item} Q/TTM não composto entre semânticas incompatíveis ou indeterminadas "
+              f"({conceitos}); períodos recusados: {datas}; valores reportados preservados")
+    if incompatibilidades is not None:
+        incompatibilidades.append({"entidade": ent, "item": item, "motivo": motivo})
+    # A última base homogênea continua com suas datas e fonte originais; a nota torna a
+    # lacuna atual visível até para consumidores que não transportam attrs do DataFrame.
+    ttms = [r for r in out if r["freq"] == "TTM"]
+    fallback = max((r["period_end"] for r in ttms), default=None)
+    for r in out:
+        if r["freq"] == "TTM" and r["period_end"] == fallback:
+            r["nota"] = _juntar(r.get("nota"), motivo,
+                                 "fallback: última base de 12 meses homogênea; não representa o período recusado")
+    return out
+
+
+def _componentes_q(by_end: dict, e: date) -> list[tuple[date, date, float]]:
+    """Períodos reais escolhidos pelo mesmo algoritmo de ``_quarter_value``."""
+    flows = by_end.get(e, {})
+    diretos = [s for s in flows if _QUARTER_DIAS[0] <= (e - s).days + 1 <= _QUARTER_DIAS[1]]
+    if diretos:
+        return [(min(diretos, key=lambda s: abs((e - s).days + 1 - 91)), e, 1.0)]
+    for s in sorted(flows):
+        if not _QUARTER_DIAS[1] < (e - s).days + 1 <= _ANUAL[1]:
+            continue
+        prev = _match_end(by_end, _months_back(e, 3))
+        if prev is not None and s in by_end[prev] and math.isfinite(by_end[prev][s]):
+            return [(s, e, 1.0), (s, prev, -1.0)]
+    return []
+
+
+def _componentes_ttm(by_end: dict, e: date, how: str) -> list[tuple[date, date, float]]:
+    if how == "12m":
+        anuais = [s for s in by_end[e] if _ANUAL[0] <= (e - s).days + 1 <= _ANUAL[1]]
+        return [(min(anuais, key=lambda s: abs((e - s).days + 1 - 365)), e, 1.0)]
+    if how != "4q":
+        return []
+    partes = []
+    for k in range(4):
+        fim = e if k == 0 else _match_end(by_end, _months_back(e, 3 * k))
+        if fim is None or not (q := _componentes_q(by_end, fim)):
+            return []
+        partes.extend(q)
+    return partes
+
+
+def _meta_componentes(item: str, by_end: dict, metas: dict,
+                      partes: list[tuple[date, date, float]]) -> dict:
+    ms = [metas[(s, e)] for s, e, _ in partes]
+    m0 = ms[0]
+    bases = {m["consolidado"] for m in ms}
+    nota_base = "base mista: componentes individuais e consolidados" if len(bases) > 1 else None
+    componentes = [{"item": item, "period_start": s.isoformat(), "period_end": e.isoformat(),
+                    "valor": by_end[e][s], "coeficiente": coef,
+                    "currency": m["currency"], "consolidado": m["consolidado"],
+                    "fonte": {"fonte": m["fonte"], "url": m["url"], "documento": m["documento"],
+                              "sha256": m["sha256"],
+                              "data_publicacao": pd.Timestamp(m["data_publicacao"]).date().isoformat()}}
+                   for (s, e, coef), m in zip(partes, ms, strict=True)]
+    nota = ("componentes_fluxo=" + json.dumps(componentes, ensure_ascii=False)
+            if len(partes) > 1 else None)
+    return {**m0, "data_publicacao": max(m["data_publicacao"] for m in ms),
+            "consolidado": all(m["consolidado"] for m in ms),
+            "nota": _juntar(m0.get("nota"), nota_base, nota)}
+
+
+def _fluxo_compativel(ent: str, item: str, g: pd.DataFrame, *, derivar: bool = True,
+                      proveniencia: bool = False) -> list[dict]:
     g = g.dropna(subset=["period_start", "period_end"])
     by_end: dict[date, dict[date, float]] = {}
     meta_end: dict[date, dict] = {}
@@ -196,16 +313,21 @@ def _fluxo(ent: str, item: str, g: pd.DataFrame) -> list[dict]:
                         "period_end": pd.Timestamp(e), "value": min(anual)[1],
                         **meta_anual.get(e, meta_end[e])})
         q = _quarter_value(by_end, e)
-        if math.isfinite(q):
-            direto = any(_QUARTER_DIAS[0] <= (e - s0).days + 1 <= _QUARTER_DIAS[1]
-                         for s0 in flows)
+        direto = any(_QUARTER_DIAS[0] <= (e - s0).days + 1 <= _QUARTER_DIAS[1]
+                     for s0 in flows)
+        if math.isfinite(q) and (derivar or direto):
             cons, nota_base = _base_janela(meta_end, e, 1 if direto else 100)
+            meta_q = {**meta_end[e], "consolidado": cons,
+                      "nota": _juntar(meta_end[e].get("nota"), nota_base)}
+            if proveniencia:
+                meta_q = _meta_componentes(item, by_end, meta_periodo, _componentes_q(by_end, e))
             out.append({"entidade": ent, "item": item, "freq": "Q",
-                        "period_end": pd.Timestamp(e), "value": q,
-                        **{**meta_end[e], "consolidado": cons,
-                           "nota": _juntar(meta_end[e].get("nota"), nota_base)}})
+                        "period_end": pd.Timestamp(e), "value": q, **meta_q})
         t, how = _ttm_value(by_end, e)
+        if not derivar and how != "12m":
+            continue  # conceito indeterminado: preserva somente valores reportados
         componentes = None
+        periodos_componentes = []
         if not math.isfinite(t):
             # Um semestre atual e o comparativo, com o exercício imediatamente anterior,
             # determinam 12 meses sem fornecer nenhum trimestre discreto. Exige períodos
@@ -228,6 +350,7 @@ def _fluxo(ent: str, item: str, g: pd.DataFrame) -> list[dict]:
                     continue  # base mista não representa nem consolidado nem individual
                 t = atual + anual_prev - comparativo
                 how = "semestre"
+                periodos_componentes = [(s, e, 1.0), (s_prev, fim_anual, 1.0), (s_prev, e_prev, -1.0)]
                 break
         if math.isfinite(t):
             meta_ttm = meta_end[e]
@@ -241,10 +364,13 @@ def _fluxo(ent: str, item: str, g: pd.DataFrame) -> list[dict]:
                             max(m["data_publicacao"] for m in componentes)}
             else:
                 cons, nota_base = _base_janela(meta_end, e, 1 if how == "12m" else 370)
+            meta_ttm = {**meta_ttm, "consolidado": cons,
+                        "nota": _juntar(meta_ttm.get("nota"), nota_base)}
+            if proveniencia:
+                partes = periodos_componentes or _componentes_ttm(by_end, e, how)
+                meta_ttm = _meta_componentes(item, by_end, meta_periodo, partes)
             out.append({"entidade": ent, "item": item, "freq": "TTM",
-                        "period_end": pd.Timestamp(e), "value": t,
-                        **{**meta_ttm, "consolidado": cons,
-                           "nota": _juntar(meta_ttm.get("nota"), nota_base)}})
+                        "period_end": pd.Timestamp(e), "value": t, **meta_ttm})
     return out
 
 

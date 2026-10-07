@@ -316,6 +316,16 @@ class Demonstrativos:
         def compativeis(linhas: list[pd.Series]) -> bool:
             moedas = {str(r.get("currency")) for r in linhas}
             bases = {_base_linha(r) for r in linhas}
+            conceitos = [set(re.findall(r"semantica_fluxo=([^;\s]*)", str(r.get("nota", ""))))
+                         for r in linhas]
+            if any(conceitos):
+                # Uma quebra comprovada no provedor não pode ser recomposta aqui. Exige
+                # conceito conhecido em cada componente; sem marcadores mantém o legado.
+                if any(len(c) != 1 for c in conceitos):
+                    return False
+                unicos = set.union(*conceitos)
+                if len(unicos) != 1 or not unicos <= {"receita_dre", "resultado_liquido_seguros"}:
+                    return False
             return len(moedas) == 1 and bool(re.fullmatch(r"[A-Z]{3}", next(iter(moedas)))) and len(bases) == 1 \
                 and next(iter(bases)) in ("consolidado", "individual")
 
@@ -549,6 +559,9 @@ def _prov_linha(row: pd.Series | None, *, detalhar_fluxos: bool = False) -> dict
     out["data_estimada"] = _bool(row.get("pit_estimado"))
     if detalhar_fluxos and isinstance(row.get("componentes_fluxo"), str):
         out["componentes_fluxo"] = json.loads(row["componentes_fluxo"])
+    elif detalhar_fluxos and "componentes_fluxo=" in str(row.get("nota", "")):
+        texto = str(row["nota"]).split("componentes_fluxo=", 1)[1]
+        out["componentes_fluxo"], _ = json.JSONDecoder().raw_decode(texto)
     return out
 
 
@@ -885,6 +898,8 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
     periodos: dict[str, pd.Timestamp] = {}
     bases_fluxos = {}
     moedas_fluxos = {}
+    detalhar_fluxos = (params.sec("projecao").get("reinvestimento_metodo") is not None
+                       or params.sec("qualidade").get("margem_fluxos_metodo") is not None)
     estimados = False
     for item in FLUXOS + ESTOQUES:
         if item in ("acoes_emitidas", "acoes_tesouraria", "acoes_em_circulacao"):
@@ -902,7 +917,7 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
             periodos[item] = pd.Timestamp(row["period_end"])
             bases_fluxos[item] = _base_linha(row)
             moedas_fluxos[item] = row.get("currency")
-        prov = _prov_linha(row, detalhar_fluxos=params.sec("projecao").get("reinvestimento_metodo") is not None)
+        prov = _prov_linha(row, detalhar_fluxos=detalhar_fluxos)
         estimados = estimados or bool(prov.get("data_estimada"))
         pk.put(f"t.{item}", vv, prov, nome=rotulo(item), unidade=f"total:{moeda}", periodo=per)
         if prov.get("data_estimada"):
@@ -976,7 +991,7 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
             hist_bases[item] = {str(ano): _base_linha(r) for ano, r in linhas.items()}
             hist_moedas[item] = {str(ano): r.get("currency") for ano, r in linhas.items()}
     pk.put("historico", hist)
-    if params.sec("projecao").get("reinvestimento_metodo") is not None:
+    if detalhar_fluxos:
         pk.put("historico_fontes", hist_fontes)
         pk.put("historico_periodos", hist_periodos)
         pk.put("historico_bases", hist_bases)

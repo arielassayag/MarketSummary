@@ -1,0 +1,66 @@
+{
+  "descricao": "Trechos reais de CSVs públicos CVM; não são dados simulados. Apenas DRE 3.01 e filhas diretas e respectivos índices de publicação, sem alteração de valores ou descrições. Os testes simulados são separados.",
+  "cnpj": "05.197.443/0001-38",
+  "fontes": [
+    {
+      "doc": "DFP",
+      "ano": 2025,
+      "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2025.zip",
+      "sha256_zip": "d7aec54e7c67998e4cd3ef94c463ab247f09a6baaa2254878d1e431f28130e2a",
+      "trechos": [
+        {
+          "arquivo": "dfp_cia_aberta_2025_index.csv",
+          "membro": "dfp_cia_aberta_2025.csv",
+          "sha256": "6bf32e3548f37d168d669bf17353f38c0aaa30c752c76c36cfb83970905886fb",
+          "linhas": 1
+        },
+        {
+          "arquivo": "dfp_cia_aberta_2025_dre.csv",
+          "membro": "dfp_cia_aberta_DRE_con_2025.csv",
+          "sha256": "6b2ae684964f05a499f2136aad345da6833c458df0e61de89c572ef2f46a3c58",
+          "linhas": 3
+        }
+      ]
+    },
+    {
+      "doc": "ITR",
+      "ano": 2025,
+      "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/ITR/DADOS/itr_cia_aberta_2025.zip",
+      "sha256_zip": "efe754841bed9eac2a3138c92a187060842c1746845e9471749be5c91819dc51",
+      "trechos": [
+        {
+          "arquivo": "itr_cia_aberta_2025_index.csv",
+          "membro": "itr_cia_aberta_2025.csv",
+          "sha256": "841162c05df17129bbf1cbbeb6b3615d4539c47f2e1a292da341b88d3ad86c99",
+          "linhas": 3
+        },
+        {
+          "arquivo": "itr_cia_aberta_2025_dre.csv",
+          "membro": "itr_cia_aberta_DRE_con_2025.csv",
+          "sha256": "e9416109f1fbf0398a77977e2fc00852f9f167ea1d289333b4d180dab35c2a5b",
+          "linhas": 18
+        }
+      ]
+    },
+    {
+      "doc": "ITR",
+      "ano": 2026,
+      "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/ITR/DADOS/itr_cia_aberta_2026.zip",
+      "sha256_zip": "0e1ef74291d2143e7bb55247b01c8bbd94995d995536f70f0d19de1d79d7e38c",
+      "trechos": [
+        {
+          "arquivo": "itr_cia_aberta_2026_index.csv",
+          "membro": "itr_cia_aberta_2026.csv",
+          "sha256": "db7e23f47b8eb46bb79aac165dc79bbaa9e865c7722016051be6fee0093395f8",
+          "linhas": 2
+        },
+        {
+          "arquivo": "itr_cia_aberta_2026_dre.csv",
+          "membro": "itr_cia_aberta_DRE_con_2026.csv",
+          "sha256": "92087292ef6b00e30f6d80a36676bb249113ac56784467946d2bc6fa91183b4c",
+          "linhas": 12
+        }
+      ]
+    }
+  ]
+}

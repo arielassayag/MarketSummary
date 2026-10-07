@@ -240,6 +240,107 @@ class ViewTracker:
 # Golden set
 # ==========================================================
 
+class AuthenticatedViewTracker(ViewTracker):
+    """Projeção somente leitura dos anexos autenticados; nunca mistura mentes/canais.
+
+    O tracker JSONL legado continua compatível. A série nova só usa coortes pré-registradas
+    maduras e verificadas; dados simulados são opt-in para diagnóstico e não promovem fase.
+    """
+
+    def __init__(self, book_root: str | Path, *, mind: str, channel: str = "mente_final",
+                 include_synthetic: bool = False, track=None, market_root: Path | None = None) -> None:
+        if channel not in {"quant", "pesquisa_ai", "mente_final"}:
+            raise ValueError("canal de avaliação desconhecido")
+        self.book_root = Path(book_root)
+        self.mind, self.channel = mind, channel
+        self.include_synthetic = include_synthetic
+        self.track, self.market_root = track, market_root
+
+    def append_week(self, *args, **kwargs):
+        raise ValueError("sinais autenticados só pelo runtime, antes da decisão")
+
+    def record_outcomes(self, *args, **kwargs):
+        raise ValueError("outcomes autenticados só pelo fechamento determinístico")
+
+    def _frame(self) -> pd.DataFrame:
+        from ..workflow.avaliacao import (
+            FOLDER,
+            OUTCOME_FILE,
+            SIGNALS_EVENT,
+            SIGNALS_FILE,
+            Cohort,
+            Outcome,
+            verify,
+        )
+        from ..workflow.book import Book
+
+        book = Book(self.book_root)
+        valid, errors = book.verify_integrity()
+        errors += verify(book, self.track, self.market_root)
+        if self.track is not None:
+            track_valid, track_errors = self.track.verify()
+            if not track_valid:
+                errors += [f"fechamento: {e}" for e in track_errors]
+        valid &= not errors
+        if not valid:
+            raise ValueError("avaliação não autenticada: " + "; ".join(errors))
+        seals = {e.week: e.ts for e in book.audit.events() if e.event_type == SIGNALS_EVENT}
+        rows = []
+        for path in sorted(self.book_root.glob(f"*/{FOLDER}/{SIGNALS_FILE}")):
+            c = Cohort.model_validate_json(path.read_text(encoding="utf-8"))
+            op = path.parent / OUTCOME_FILE
+            if not c.is_synthetic and (self.track is None or self.market_root is None):
+                raise ValueError("avaliação não autenticada: contexto de fechamento/mercado ausente")
+            if c.mind != self.mind or not c.prospective or seals[c.week] > c.deadline or not op.exists() or (
+                    c.is_synthetic and not self.include_synthetic):
+                continue
+            o = Outcome.model_validate_json(op.read_text(encoding="utf-8"))
+            quant = {s.issuer_id: s.score for s in c.signals if s.channel == "quant"}
+            selected = {s.issuer_id: s.score for s in c.signals if s.channel == self.channel and
+                        (self.channel == "quant" or s.confirmed_mind == self.mind)}
+            if self.channel != "quant" and not any(v is not None for v in selected.values()):
+                continue
+            for iid in sorted(set(quant) | set(selected)):
+                rows.append({"kind": "signal", "week": str(c.week), "issuer_id": iid,
+                             "ai_score": selected.get(iid), "alpha_z": quant.get(iid)})
+            rows += [{"kind": "outcome", "week": str(c.week), "issuer_id": i,
+                      "residual_return": v} for i, v in o.residual_returns.items() if v is not None]
+        return pd.DataFrame(rows, columns=["kind", "week", "issuer_id", "ai_score", "alpha_z",
+                                           "residual_return"])
+
+    def ic_history(self) -> pd.DataFrame:
+        hist = super().ic_history()
+        hist["mind"], hist["channel"] = self.mind, self.channel
+        frame = self._frame()
+        counts = {}
+        if not frame.empty:
+            signals = frame[frame["kind"] == "signal"].set_index(["week", "issuer_id"])
+            outcomes = frame[frame["kind"] == "outcome"].set_index(["week", "issuer_id"])
+            pairs = signals[["ai_score", "alpha_z"]].join(outcomes[["residual_return"]]).dropna()
+            counts = pairs.groupby(level="week").size().to_dict()
+            for idx, row in hist.iterrows():
+                key = str(row["week"])
+                match = pairs.xs(key) if key in counts else pd.DataFrame()
+                # Só os mesmos pares válidos para regressão e IC. Resíduo puramente de
+                # arredondamento de uma cópia linear do quant não é informação incremental.
+                resid = (_residualize(match["ai_score"], match["alpha_z"])
+                         if len(match) else pd.Series(dtype=float))
+                scale = max(1., float(np.linalg.norm(match["ai_score"]))) if len(match) else 1.
+                informative = len(resid) and np.linalg.norm(resid) > 64 * np.finfo(float).eps * scale
+                hist.loc[idx, "ic_incremental"] = (spearman(resid, match["residual_return"])
+                                                    if informative else float("nan"))
+        hist["n_incremental"] = [int(counts.get(str(w), 0)) for w in hist["week"]]
+        if self.channel == "quant":
+            hist[["ic_ai", "ic_incremental", "hit_rate"]] = float("nan")
+            hist[["n", "n_incremental"]] = 0
+        return hist
+
+    def phase_gate(self, cfg: FundConfig) -> tuple[str, str]:
+        if self.include_synthetic or self.channel == "quant":
+            return cfg.research.llm_phase, "Manter fase: diagnóstico sintético/quant não promove mente."
+        return super().phase_gate(cfg)
+
+
 def load_golden_cases(path: str | Path | None = None) -> list[dict[str, Any]]:
     p = Path(path) if path else DEFAULT_GOLDEN_PATH
     return [json.loads(line) for line in p.read_text(encoding="utf-8").splitlines()

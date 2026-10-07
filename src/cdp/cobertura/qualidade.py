@@ -469,6 +469,12 @@ def rotulo_item(item: str) -> str:
 
 
 def _g17(pac: Mapping[str, Any], mod: Mapping[str, Any], params: ParametrosCobertura) -> dict[str, Any]:
+    if params.sec("qualidade").get("alertas_fonte_metodo") == "dependencias_efetivas":
+        return _g17_efetivo(pac, mod, params)
+    return _g17_historico(pac, mod, params)
+
+
+def _g17_historico(pac: Mapping[str, Any], mod: Mapping[str, Any], params: ParametrosCobertura) -> dict[str, Any]:
     """Alertas da fonte pública sobre os períodos e itens usados pelo modelo."""
     q = params.sec("qualidade")
     janela = int(q.get("qa_janela_dias", 400))
@@ -500,6 +506,70 @@ def _g17(pac: Mapping[str, Any], mod: Mapping[str, Any], params: ParametrosCober
         return _portao("G17", "Alertas da fonte pública", False, "informativo",
                        f"{len(infos)} alerta(s) da fonte fora dos períodos ou itens usados; ex.: {infos[0]}")
     return _portao("G17", "Alertas da fonte pública", True, "aviso", "sem alertas da fonte sobre os períodos usados")
+
+
+def _g17_efetivo(pac: Mapping[str, Any], mod: Mapping[str, Any], params: ParametrosCobertura) -> dict[str, Any]:
+    """Mesmos limiares históricos; só capex/D&A com independência demonstrada viram informativos."""
+    from .dependencias import ITENS_CERTIFICAVEIS, dependencia_fluxos_financeiros
+
+    q = params.sec("qualidade")
+    janela = int(q.get("qa_janela_dias", 400))
+    nucleo = {"receita", "ebit", "lucro_liquido_controladores", "lucro_liquido", "patrimonio_controladores",
+              "patrimonio_liquido", "cfo", "capex", "d_a", "divida_bruta", "acoes_em_circulacao"}
+    ref = pac.get("max_data_publicacao") or pac.get("as_of")
+    prova = dependencia_fluxos_financeiros(pac, mod, params)
+    avisos, infos, avaliados = [], [], []
+
+    def registrar(origem: str, alerta: Mapping[str, Any], txt: str, aviso: bool) -> None:
+        item = alerta.get("item")
+        certificavel = item in ITENS_CERTIFICAVEIS
+        sem_uso = certificavel and prova["classificacao"] == "nao_usado"
+        motivo = prova["motivo"] if certificavel else "regra histórica conservada para este item"
+        caminhos = prova["caminhos"] if certificavel else ["G17 → núcleo e janela históricos"]
+        if aviso and sem_uso:
+            aviso = False
+            txt += "; informativo: " + motivo
+        (avisos if aviso else infos).append(txt)
+        avaliados.append({"origem": origem, "alerta": dict(alerta),
+                          "status": "aviso" if aviso else "informativo", "motivo": motivo,
+                          "dependencia": prova["classificacao"] if certificavel else "conservada",
+                          "caminhos": caminhos})
+
+    for c in pac.get("em_conferencia") or []:
+        registrar("em_conferencia", c,
+                  f"{rotulo_item(c['item'])} em conferência na fonte em {c['data']} (valor do período ausente)", True)
+    for a in pac.get("alertas_fonte") or []:
+        tipo, txt, d, item = a.get("tipo"), str(a.get("texto")), a.get("data"), a.get("item")
+        recente = bool(d and ref and (date.fromisoformat(str(ref)[:10]) - date.fromisoformat(str(d)[:10])).days <= janela)
+        if tipo == "moeda_trocada":
+            n = len((pac.get("historico") or {}).get("receita") or {})
+            aviso = n < int(q.get("moeda_trocada_min_anos", 3))
+            if aviso:
+                txt += f": {n} exercício(s) na moeda nova; insumos históricos indisponíveis"
+        else:
+            aviso = recente and item in nucleo and tipo == "salto"
+            if aviso:
+                txt = f"salto de magnitude a conferir na fonte: {txt}"
+        # Troca da moeda de apresentação continua sendo uma guarda global, mesmo se o
+        # fornecedor associar o evento a uma linha de capex/D&A.
+        if tipo == "moeda_trocada":
+            (avisos if aviso else infos).append(txt)
+            avaliados.append({"origem": "alertas_fonte", "alerta": dict(a),
+                              "status": "aviso" if aviso else "informativo",
+                              "dependencia": "conservada", "motivo": "guarda histórica da moeda de apresentação",
+                              "caminhos": ["moeda de apresentação → comparabilidade dos insumos históricos"]})
+        else:
+            registrar("alertas_fonte", a, txt, aviso)
+    if avisos:
+        portao = _portao("G17", "Alertas da fonte pública", False, "aviso",
+                         "; ".join(avisos[:4]) + (f" (e mais {len(avisos) - 4})" if len(avisos) > 4 else ""))
+    elif infos:
+        portao = _portao("G17", "Alertas da fonte pública", False, "informativo",
+                         f"{len(infos)} alerta(s) da fonte fora dos períodos ou itens usados; ex.: {infos[0]}")
+    else:
+        portao = _portao("G17", "Alertas da fonte pública", True, "aviso",
+                         "sem alertas da fonte sobre os períodos usados")
+    return {**portao, "dependencias_fluxos": prova, "avaliacao_alertas": avaliados}
 
 
 def _g13(pac: Mapping[str, Any], mod: Mapping[str, Any], params: ParametrosCobertura) -> dict[str, Any]:

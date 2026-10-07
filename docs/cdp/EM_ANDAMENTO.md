@@ -25,7 +25,7 @@ retrato-gênese da cobertura (qua 07/10, 19:22) e cronograma até a carteira ina
   valor distante do realizado sinaliza revisão analítica. Moeda desconhecida fica ausente.
   Ensaio de unidades em `.cdp/ensaios/20261007-consenso`; testes de conversão única, ausência,
   segundo exercício e preservação da política histórica passaram.
-- Metodologia `2026-10.5` implementada no ramo: reinvestimento não alavancado pela identidade de capital
+- Metodologia `2026-10.5` integrada em `main` e no executor, commit `f317709`: reinvestimento não alavancado pela identidade de capital
   investido, com arrendamentos capitalizados e componentes publicados, alinhados em período,
   moeda e base de consolidação, inclusive dentro das identidades TTM. Principal
   de dívida não é nova aquisição de ativo. Adições ROU, D&A restituída na DFC e capital de
@@ -68,12 +68,35 @@ retrato-gênese da cobertura (qua 07/10, 19:22) e cronograma até a carteira ina
   Compra 37 (18,50%) e Venda 31 (15,50%) passam; C 107/233 (45,92%) e revisão 30/233
   (12,88%) ainda falham. Aceite científico permanece aberto: analisar causas por emissor;
   não se afrouxam portões, limites ou mandato para atingir quotas. Não é livro oficial.
-- Próximas causas confirmadas para correção: G17 pode penalizar capex/D&A sem dependência
-  nos métodos financeiros efetivamente usados; Hapvida mudou a rubrica de receita do ITR
-  IFRS 17 contra a DFP anterior, e uma identidade de quatro trimestres pode misturar essas
-  bases. Os probes e documentos primários ficam na auditoria de 07/10. Isso não autoriza
-  mudar severidades ou corrigir números para caber em uma faixa; exigir regressão e novo
-  ensaio isolado. A Hapvida continua bloqueada no retrato atual.
+- Lote `2026-10.6` em validação, ainda sem integração: G17 passa a distinguir capex/D&A
+  comprovadamente sem dependência nos métodos financeiros conhecidos. Os alertas originais
+  e a prova ficam arquivados; estruturas desconhecidas conservam a severidade. Revisão
+  independente e focais passaram. Ensaio com os pacotes .5 exatos em
+  `20261007-g17-dependencias/resultado`: 71.037 campos econômicos dos 233 modelos idênticos,
+  seis C→B; Compra 19,00%, Venda 17,00%, C 43,35% e revisão 12,88%. P0 segue aberto.
+  Seis ETFs mudam pela elegibilidade A/B no bottom-up; top-down permanece igual, e o
+  contrafactual com classificações anteriores reproduz os oito ETFs. Sem mudança de mandato.
+- Comparabilidade da receita, publicação e margem — lote .6 congelado, integração pendente:
+  conceitos explícitos desconhecidos não permitem derivação; composição identificada registra
+  publicação máxima e a trilha de todos os componentes. Receita/EBIT só formam margem quando
+  demonstram a mesma janela de 12 meses, moeda e base. Valores originais preservados;
+  incompatibilidade corrente/histórica fica ausente com diagnóstico. Não certifica recorrência
+  ou homogeneidade do perímetro entre exercícios. Focais e revisão independentes passaram.
+  Ensaio completo `20261007-modelos-completos-6-final`: 233 empresas, oito ETFs, 181 fontes congeladas,
+  recálculo integral íntegro. Compra 39 (19,40%), Venda 37 (18,41%), C 102/233 (43,78%) e revisão 29/233 (12,45%). Compra/Venda passam; C/revisão ainda falham.
+  Preços de 06/10, fontes conhecidas em 07/10, modelos em 07/10; sombra, nunca retrato oficial retroativo.
+  O primeiro ensaio de fontes foi preservado como provisório, com bordas corrigidas depois.
+- Pré-registro por mente/canal concluído em código, integração pendente: autoria observada,
+  sinais/base ancorados antes da otimização, vínculo à decisão e outcomes futuros autenticados.
+  `cdp avaliacao status` e `cdp avaliacao ic --mind codex` é somente leitura; recomendação não muda fase/mandato. Brier ausente,
+  N=0, sem converter ordinais. 145 focais do runtime e 217 da revisão independente passaram;
+  três testes CLI passaram. Ensaio Friday→Friday com mandato intacto: livro íntegro/idempotente,
+  primeiro outcome sem resíduos válidos por ausência dos quatro macros; segunda coorte imatura.
+  Probes de identidade são DADOS SIMULADOS, sem evidência de eficácia ou promoção de fase.
+- Compatibilidade final .6: recálculos integrais explícitos .4 e .5 passaram com as configurações
+  arquivadas; 233 empresas e oito ETFs em cada ensaio, arquivos históricos preservados.
+  Suíte ampla final .6: 2.325 passaram, 17 pulados/xfail, zero falhas/erros;
+  Ruff, documentação, rotinas e skills verdes. Integração pendente.
 
 ## Retomada no Codex — 06/10/2026, noite
 
@@ -331,3 +354,16 @@ Pendências que dependem do titular ou do commit (não são código):
   (`src/cdp/research/commentary.py`), a etiqueta do app (`src/cdp/ui/components.py`) e o
   `track_record_type` padrão (`src/cdp/config.py`, entra no hash do mandato: só com decisão do
   titular). Os relatórios já traduzem na renderização.
+
+## Próximo lote confirmado — após .6
+
+A pesquisa de DFC em `PONTE_GIRO_OPERACIONAL_PLANO.md` fecha contabilmente os períodos de
+Petrobras/WEG, mas o giro comercial identificado é parcial; não habilita ΔWC/FCFF. Próxima
+ponte preservará itens incluídos/excluídos/pendentes, impostos/financiamento e natureza do caixa.
+O contrato de EBIT não recorrente permanece em pesquisa separada, sem imposto/EPS imputados.
+
+A revisão de paridade encontrou omissão confirmada do bloco macro em `DailyRunner._model_at`,
+com reflexos nos consumidores de risco e atribuição; a ampliação já existe na preparação
+semanal e no kernel do backtest. A próxima correção do motor diário exige base/decisão,
+retornos macro observados, corte temporal e compatibilidade verificados, sem alterar mandato.
+O replay completo de MOC/commodities/stops permanece em plano, além dessa correção prioritária.

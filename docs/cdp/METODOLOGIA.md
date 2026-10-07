@@ -364,6 +364,40 @@ placeholders) e relatório diário.
   — mesma régua.
 - Nenhuma alegação de valor agregado da IA antes de 26 semanas de track record.
 
+O runtime registra sinais por canal (`quant`, `pesquisa_ai`, `mente_final`) antes da otimização
+e os ancora à decisão por hash. A base residual, as linhas, os calendários e a exigência dos
+fatores macro ficam congelados nessa coorte. O fechamento só resolve o horizonte após a
+última sessão prevista, com mercado e registro diário autenticados. Ausência de preço, FX,
+exposição/fator obrigatório ou autoria mantém o resultado indisponível, com motivo.
+
+O nome do executor não comprova autoria das entradas: o IC por mente exige `mind` explícito
+no payload original e autor/provedor compatível. Entradas sem essa prova ficam arquivadas
+para diagnóstico, fora da série confirmada. Visões PM autônomas e humanas conservam a
+distinção. Neutralidade explícita vale zero; abstenção e veto puro não criam previsão neutra.
+Convicção/confiança ordinal não são probabilidade. Brier permanece ausente, N=0, até existir
+forecast explícito com evento e horizonte definidos. O canal quant não tem IC incremental
+contra si mesmo; arredondamento de uma cópia linear não constitui sinal incremental.
+
+Leitura operacional, sem gravação ou mudança do mandato:
+
+```sh
+uv run python -m cdp avaliacao status
+uv run python -m cdp avaliacao ic --mind codex --canal mente_final
+```
+
+`--simulados` inclui **DADOS SIMULADOS** somente para diagnóstico; essa amostra não promove
+a fase. O relatório mantém separadas fase vigente e recomendada. `phase_gate` recomenda
+S0→S1 após 13 semanas/ICIR ≥ 0,5; S1→S2 após 26 semanas/t incremental ≥ 1,5; S2→S3 após
+52 semanas/t incremental ≥ 2. Rebaixamento é recomendação se o IC das últimas 13 semanas
+for negativo e t ≤ −1,5; nenhuma dessas leituras escreve `fund.yaml`. O IC normativo da fase
+vigente continua sendo parâmetro autorizado, sem representar desempenho realizado.
+
+Os anexos `book/<semana>/avaliacao/{sinais,vinculo,outcome}.json` e o marco
+`book/avaliacao_manifest.json` são escritos somente pelo código. Retomadas reconciliam
+anexos faltantes sem repetir decisão/MOC; conteúdo divergente é recusado. Livros anteriores
+ao marco não recebem previsões retroativas. O início verdadeiro do acompanhamento fica
+explícito; a implementação não produz 26 semanas de evidência antes da inauguração.
+
 ## 8. Intercambialidade da mente
 
 | Item | Claude Code | Codex (o app das rotinas) | Gemini (Antigravity ou Gemini CLI) |

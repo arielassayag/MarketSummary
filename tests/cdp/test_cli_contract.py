@@ -204,7 +204,8 @@ def test_mind_choices_come_from_harness_minds():
             if "--mind" in a.option_strings:
                 found.append(path)
                 assert tuple(a.choices) == HARNESS_MINDS, path
-    assert sorted(found) == [("cobertura", "revisao-mensal", "publicar"),
+    assert sorted(found) == [("avaliacao", "ic"),
+                             ("cobertura", "revisao-mensal", "publicar"),
                              ("cobertura", "revisao-mensal", "validar"),
                              ("daily",), ("nota", "publish"), ("tese", "publish"),
                              ("validate",), ("validate-daily",), ("validate-nota",),

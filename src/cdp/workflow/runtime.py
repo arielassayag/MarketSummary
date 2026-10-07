@@ -728,12 +728,23 @@ class Runtime:
     def weekly_decide(self, week: date, *, mind: str) -> dict:
         from ..research.pm_agent import load_week_inputs, pm_factbook, to_bundle
         from .autonomy import make_autonomous_decision
+        from .avaliacao import BINDING_FILE, FOLDER, bind, preregister
         from .reports import render_weekly_report, write_report_files
         from .weekly import run_weekly_decision
 
         b = self.book
+        if self.expected_mind is not None and self.expected_mind != mind:
+            raise RecusaEstruturada("mind_divergente", "mente solicitada difere do harness", semana=week)
         if b.list_decisions(week):
-            raise FileExistsError(f"A semana {week} já tem decisão gravada.")
+            # Reconciliar anexos depois de uma queda não produz outra decisão/ordem.
+            decision = b.load_decision(week)
+            binding_path = self.week_dir(week) / FOLDER / BINDING_FILE
+            previous_path = (json.loads(binding_path.read_text(encoding="utf-8"))["path_taken"]
+                             if binding_path.exists() else "recuperado")
+            bind(b, decision, path_taken=previous_path, now=self.now())
+            return {"semana": week, "status": "já decidido", "decisao": decision.approval_hash,
+                    "mente": decision.mind,
+                    "acao": "avaliação reconciliada; nenhuma nova decisão ou execução"}
         # Um único instante para a decisão inteira: o prazo é conferido nele e ele é o
         # ``decided_at``/``created_at`` da proposta e da decisão. A decisão é função só dos
         # insumos disponíveis neste instante (dados da preparação e arquivos da mente); o cálculo
@@ -758,11 +769,25 @@ class Runtime:
         pedidos = self.apply_kill_switch_requests()
         _md, info, ctx, _fb, pmctx = self._week_state(week)
         pack, out, issues, pm_ctx = load_week_inputs(self.week_dir(week), pmctx, now=t_dec)
-        if out.mind != mind and not out.abstain:
-            issues.append(f"mind declarado {out.mind!r} difere do informado {mind!r}")
-        pack = pack.model_copy(update={"mind": out.mind or mind})
+        from .avaliacao import input_authorship
+
+        try:
+            input_authorship(self.week_dir(week), mind)
+        except ValueError as exc:
+            raise RecusaEstruturada("mind_divergente", str(exc), semana=week) from exc
+        if out.abstain and out.mind != mind:
+            # A saída gerada pelo código em falha de IA tem a mente do executor; entradas
+            # originais permanecem intactas e sua identidade é arquivada no pré-registro.
+            from ..research.pm_agent import fallback_pm_output
+
+            out = fallback_pm_output(mind)
+        elif out.mind != mind:
+            raise RecusaEstruturada("mind_divergente", "mente da decisão não confere", semana=week)
+        pack = pack.model_copy(update={"mind": pack.mind or mind})
         pfb = pm_factbook(pm_ctx)
         bundle = to_bundle(out, self.cfg, pm_ctx.drawdown, factbook=pfb)
+        cohort = preregister(b, ctx, pack, bundle, mind=mind, cutoff=t_dec, now=self.now(),
+                             deadline=self.decision_deadline(week), clock=self.now)
         outcome = run_weekly_decision(ctx, pack, bundle, version=b.next_version(week),
                                       live_weeks=self.live_weeks(),
                                       kill_switch=self.kill_switch_active(),
@@ -794,6 +819,7 @@ class Runtime:
             decided_at=t_dec, audit_head_hash=b.audit_head(),
         ).model_copy(update={"mind": pack.mind})
         b.save_decision(decision)
+        bind(b, decision, path_taken=outcome.path_taken, now=self.now())
         _write_json(self.week_dir(week) / "attempts.json",
                     {"path": outcome.path_taken, "attempts": outcome.attempts,
                      "input_issues": issues})
@@ -822,6 +848,9 @@ class Runtime:
                 "apontamentos_entrada": issues, "relatorio": report,
                 "analise": info.get("captured_at") or info.get("prepared_at"),
                 "execucao": f"fechamento de {week} (MOC) pela rotina diária",
+                "avaliacao": {"coorte": sha256_obj(cohort), "fim": cohort.end,
+                              "prospectiva": cohort.prospective,
+                              "autoria_observada": cohort.original_minds},
                 **({"kill_switch_pedidos": pedidos} if pedidos else {})}
 
     def weekly_preview(self, week: date, *, mind: str) -> dict:
@@ -910,6 +939,7 @@ class Runtime:
         (``reports/daily/<data>/facts.md``); a publicação vem depois (``daily publish``).
         """
         from ..research.commentary import factbook_json, write_daily_commentary_inputs
+        from .avaliacao import resolve
         from .daily import NoBookError, NoSessionError
 
         if not any(is_session(session, ex) for ex in ("BVMF", "XNYS", "XMEX")):
@@ -938,6 +968,8 @@ class Runtime:
             lapso = self._lapso_do_dia(session)
             if lapso:
                 out["efetivacao_recusada"] = lapso
+            out["avaliacao_encerrada"] = resolve(self.book, runner.track, store.load,
+                                                  session=session, now=self.now())
             return {**out, "kill_switch_pedidos": pedidos} if pedidos else out
         try:
             res = runner.run_session(session)
@@ -954,6 +986,8 @@ class Runtime:
                                      "revisar e desligar o kill switch (docs/cdp/EXECUCAO.md)")})
             return {**out, "kill_switch_pedidos": pedidos} if pedidos else out
         rec = res.record
+        evaluation_closed = resolve(self.book, runner.track, store.load,
+                                    session=session, now=self.now())
         fb, _history = self._daily_factbook(session, rec, store)
         out_dir = self.daily_dir(session)
         out_dir.mkdir(parents=True, exist_ok=True)
@@ -964,6 +998,7 @@ class Runtime:
             "motivo": res.lapsed.get("motivo"), "decisao_caducada": True,
             "regra": res.lapsed.get("regra")}} if res.lapsed else {})
         return {"data": session, "status": "registrado", "registro": rec.record_hash,
+                "avaliacao_encerrada": evaluation_closed,
                 "nav_usd": rec.nav_end_usd, "retorno_dia": rec.ret,
                 "efetivacao": (res.booked.proposal_id if res.booked is not None else None),
                 **recusa,
@@ -1096,7 +1131,34 @@ class Runtime:
         ok &= not rev_msgs
         if rev_msgs or listar_revisoes(self.book_root):
             msgs += [f"revisões mensais: {m}" for m in (rev_msgs or ["íntegras"])]
+        from .avaliacao import ENABLE_FILE, status, verify
+
+        if (self.book_root / ENABLE_FILE).exists():
+            evaluation_problems = verify(b, self.track(), self.market_root)
+            ok &= not evaluation_problems
+            msgs += [f"avaliação das mentes: {m}" for m in (evaluation_problems or ["íntegra"])]
+            if not evaluation_problems:
+                msgs += [f"avaliação das mentes: {r['semana']} — {r['estado']} (fim {r['fim']})"
+                         for r in status(b, self.track(), now=self.now()) if r["estado"] != "resolvida"]
         return bool(ok), msgs
+
+    def evaluation_status(self) -> list[dict]:
+        """Pendências somente leitura; recusa livro sem integridade antes de informar status."""
+        from .avaliacao import status
+
+        valid, errors = self.book.verify_integrity()
+        if not valid:
+            raise ValueError("avaliação não autenticada: " + "; ".join(errors))
+        return status(self.book, self.track(), now=self.now())
+
+    def evaluation_history(self, *, mind: str, channel: str = "mente_final",
+                           include_synthetic: bool = False) -> pd.DataFrame:
+        """Leitura por mente/canal, sem escrita ou mudança de fase/mandato."""
+        from ..research.evaluation import AuthenticatedViewTracker
+
+        return AuthenticatedViewTracker(self.book_root, mind=mind, channel=channel,
+                                        include_synthetic=include_synthetic, track=self.track(),
+                                        market_root=self.market_root).ic_history()
 
     def _config_da_decisao(self, week: date, proposal) -> FundConfig | None:
         """Mandato que governou a decisão (e a efetivação) da semana: o atual se o hash confere;

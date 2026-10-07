@@ -288,6 +288,38 @@ def cmd_verify(args: argparse.Namespace) -> int:
     return 0 if ok else 1
 
 
+def cmd_avaliacao(args: argparse.Namespace) -> int:
+    """Lê coortes verificadas; não grava métricas, probabilidades ou fase do fundo."""
+    from .research.evaluation import AuthenticatedViewTracker
+    from .workflow.runtime import Runtime
+
+    try:
+        rt = Runtime.from_args(args)
+        if args.action == "status":
+            ok, errors = rt.verify_all()
+            if not ok:
+                raise ValueError("avaliação não autenticada: " + "; ".join(errors))
+            _print({"coortes": rt.evaluation_status()})
+            return 0
+        tracker = AuthenticatedViewTracker(rt.book_root, mind=args.mind, channel=args.canal,
+                                          include_synthetic=args.simulados, track=rt.track(),
+                                          market_root=rt.market_root)
+        hist = tracker.ic_history()
+        phase, reason = tracker.phase_gate(rt.cfg)
+        # Pandas converte NaN estatístico a null: a saída pública nunca inventa um zero.
+        rows = json.loads(hist.to_json(orient="records", date_format="iso"))
+        _print({"mente": args.mind, "canal": args.canal, "historico": rows,
+                "dados": "DADOS SIMULADOS: diagnóstico" if args.simulados else "coortes reais verificadas",
+                "fase_vigente": rt.cfg.research.llm_phase, "fase_recomendada": phase,
+                "motivo_fase": reason,
+                "brier": {"valor": None, "n": 0,
+                          "motivo": "probabilidade, evento e horizonte explícitos ainda não registrados"}})
+        return 0
+    except (OSError, ValueError) as exc:
+        print(f"Erro: {exc}", file=sys.stderr)
+        return 1
+
+
 #: Variáveis que indicam rotina, CI ou sessão de agente de IA (Claude Code, Codex, Gemini CLI,
 #: Antigravity): nesses contextos ninguém desliga o kill switch — só um humano, num terminal
 #: próprio. ``CDP_HARNESS`` é definido no ambiente de toda rotina (tabela ``set`` do Codex,
@@ -778,6 +810,16 @@ def build_parser() -> argparse.ArgumentParser:
 
     s = sub.add_parser("verify", help="verifica trilha de auditoria, track record e decisões")
     s.set_defaults(func=cmd_verify)
+
+    s = sub.add_parser("avaliacao", help="avaliação autenticada por mente e canal, somente leitura")
+    asub = s.add_subparsers(dest="action", required=True)
+    a = asub.add_parser("status", help="maturidade e pendências das coortes verificadas")
+    a.set_defaults(func=cmd_avaliacao)
+    a = asub.add_parser("ic", help="IC, amostra e recomendação de fase; não altera o mandato")
+    a.add_argument("--mind", choices=HARNESS_MINDS, required=True, help="mente cujas coortes serão lidas")
+    a.add_argument("--canal", choices=["quant", "pesquisa_ai", "mente_final"], default="mente_final")
+    a.add_argument("--simulados", action="store_true", help="inclui DADOS SIMULADOS para diagnóstico")
+    a.set_defaults(func=cmd_avaliacao)
 
     s = sub.add_parser("kill-switch",
                        help="liga o kill switch (só redução de risco); desligar é só para humano "

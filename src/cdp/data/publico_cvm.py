@@ -217,7 +217,8 @@ def _itens_dre(dre: pd.DataFrame, fin: pd.DataFrame) -> list[pd.DataFrame]:
     d["financial"] = _flag_financial(d, fin)
     K = _K_FLUXO
     l1 = d[d["level"] == 1]
-    out = [_item(_primeira(d[d["cd"] == "3.01"], K), "receita", "DRE", K)]
+    receita = _primeira(d[d["cd"] == "3.01"], K)
+    out = [_receita_reportada(d, receita, K)]
     nf1 = l1[~l1["financial"]]
     out.append(_item(_primeira(nf1[nf1["ds"].str.contains("resultado bruto")], K),
                      "lucro_bruto", "DRE", K))
@@ -273,6 +274,61 @@ def _itens_dre(dre: pd.DataFrame, fin: pd.DataFrame) -> list[pd.DataFrame]:
             serv = serv.sort_values(K + ["_abs", "cd"]).drop_duplicates(K, keep="first")
             out.append(_item(serv, "receita_servicos", "DRE", K))
     return out
+
+
+def _receita_reportada(d: pd.DataFrame, receita: pd.DataFrame,
+                       key: list[str]) -> pd.DataFrame:
+    """Preserva 3.01; identifica resultado líquido de seguros pela composição publicada.
+
+    O código CVM da conta não prova comparabilidade. Receita de seguros menos despesa de
+    seguros dentro da própria 3.01, conciliada ao subtotal, é resultado líquido, não vendas.
+    Não remapeia a receita de seguros filha nem identifica um emissor pelo nome/ano.
+    """
+    out = _item(receita, "receita", "DRE", key)
+    out["semantica_fluxo"] = "receita_dre"
+    out["rubrica_reportada"] = (receita.get("rubrica_reportada", receita["ds"])
+                               .reindex(out.index).map(lambda s: f"3.01: {s}"))
+    if receita.empty:
+        return out
+    filhas = d[d["cd"].str.match(r"^3\.01\.\d+$")]
+    for idx, row in receita.iterrows():
+        filhos = filhas
+        for k in key:
+            filhos = filhos[filhos[k].eq(row[k])]
+        seguro = filhos["ds"].str.contains(r"(?:seguro|resseguro)", regex=True)
+        ingresos = seguro & filhos["ds"].str.contains(r"receit|ingress") & filhos["value"].gt(0)
+        despesas = seguro & filhos["ds"].str.contains(r"despes|custo|gasto") & filhos["value"].lt(0)
+        if not (ingresos.any() and despesas.any()):
+            continue
+        # As filhas diretas publicadas precisam explicar o subtotal; não pressupõe sinal.
+        conciliado = np.isclose(float(filhos["value"].sum()), float(row["value"]),
+                               rtol=1e-10, atol=1e-6)
+        out.at[idx, "semantica_fluxo"] = ("resultado_liquido_seguros" if conciliado
+                                          else "seguros_composicao_nao_conciliada")
+    return out
+
+
+def _rubricas_dre(dre: pd.DataFrame, tabelas: dict[str, pd.DataFrame]) -> pd.DataFrame:
+    """Descrição literal da fonte, alinhada à linha que o preparador selecionou."""
+    rubricas = []
+    for kind in ("con", "ind"):
+        raw = tabelas.get(f"DRE_{kind}")
+        if raw is None or raw.empty:
+            continue
+        rubricas.append(pd.DataFrame({
+            "cnpj": raw["CNPJ_CIA"].astype(str).str.strip(),
+            "dt_refer": pd.to_datetime(raw["DT_REFER"], errors="coerce"),
+            "versao": pd.to_numeric(raw["VERSAO"], errors="coerce"), "kind": kind,
+            "dt_ini": pd.to_datetime(raw["DT_INI_EXERC"], errors="coerce"),
+            "dt_fim": pd.to_datetime(raw["DT_FIM_EXERC"], errors="coerce"),
+            "cd": raw["CD_CONTA"].astype(str).str.strip(),
+            "rubrica_reportada": raw["DS_CONTA"],
+        }))
+    if dre.empty or not rubricas:
+        return dre
+    key = _K_FLUXO + ["cd"]
+    labels = pd.concat(rubricas, ignore_index=True).drop_duplicates(key, keep="last")
+    return dre.merge(labels, on=key, how="left", validate="many_to_one")
 
 
 _RE_CAPEX_VERBO = (r"^\(?(?:aquisi|adic|compra|investiment|aplicac|pagamento|gastos|desembolso|"
@@ -509,7 +565,7 @@ def fatos_cvm(tabelas: dict[str, pd.DataFrame], doc: str) -> pd.DataFrame:
     }).dropna(subset=["dt_refer", "versao", "received_date"])
     rec["versao"] = rec["versao"].astype(int)
     rec = rec.sort_values("received_date").drop_duplicates(["cnpj", "dt_refer", "versao"])
-    dre = _prepare_statement(tabelas, "DRE")
+    dre = _rubricas_dre(_prepare_statement(tabelas, "DRE"), tabelas)
     bpa = _prepare_statement(tabelas, "BPA")
     bpp = _prepare_statement(tabelas, "BPP")
     dfc = pd.concat([_prepare_statement(tabelas, "DFC_MI"),
@@ -571,7 +627,10 @@ def fatos_cvm(tabelas: dict[str, pd.DataFrame], doc: str) -> pd.DataFrame:
         "consolidado": f["kind"].astype(str).eq("con"),
         "anual": doc_u == "DFP",
     })
-    return _com_qa(out[FATO_COLUNAS].reset_index(drop=True), qa_capex, doc_u)
+    opcionais = [c for c in ("semantica_fluxo", "rubrica_reportada") if c in f.columns]
+    for c in opcionais:
+        out[c] = f[c]
+    return _com_qa(out[FATO_COLUNAS + opcionais].reset_index(drop=True), qa_capex, doc_u)
 
 
 def _com_qa(df: pd.DataFrame, qa: list[dict], doc: str) -> pd.DataFrame:

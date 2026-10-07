@@ -80,6 +80,7 @@ em modo `AUTONOMOUS`, com as falhas SOFT registradas como cientes.
 | `config.py` | mandato e limites (`configs/cdp/fund.yaml`), hash da configuração | `load_config()`, `FundConfig.config_hash()`; CLI `cdp status` (fundo e calendário) |
 | `contracts.py` | artefatos persistidos (Pydantic): proposta, decisão, pesquisa, visões, registros | `Proposal`, `Decision`, `ResearchNote`, `View`, `HARNESS_MINDS` |
 | `hashing.py`, `audit.py` | hash canônico e trilha encadeada (`book/audit_log.jsonl`) | `sha256_obj`, `AuditLog.append/verify_chain` |
+| `workflow/avaliacao.py`, `research/evaluation.py` | sinais/base residual pré-registrados, autoria observada, vínculo à decisão, maturidade e outcomes autenticados; IC separado por mente/canal, fase somente recomendada | CLI `cdp avaliacao status`, `cdp avaliacao ic --mind codex --canal mente_final`; anexos escritos só pelo runtime; Brier ausente sem forecast probabilístico |
 | `calendar.py` | calendários de pregão e regra de montagem (último pregão da semana na NYSE; data de início) | dias de montagem, pregões de dados |
 | `universe.py`, `market.py` | emissores e linhas (local/ADR); contêiner `MarketData` | `load_universe()`, `MarketData.truncate()` |
 | `data/` | coleta, snapshot imutável, base diária, barra intradiária provisória, dados lentos ao vivo | `build_snapshot`, `load_snapshot`, `intraday`, `live_refresh`, `store`; CLI `cdp fetch-base` |

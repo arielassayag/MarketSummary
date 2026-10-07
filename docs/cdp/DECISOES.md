@@ -647,3 +647,17 @@ e revisão30/233=12,88%); a sombra8.5 permanece separada. Auditoria26 comprova a
  documental de28 hashes de curadoria sem provar erro financeiro; correção prospectiva privada
 não promove confiança ou reescreve históricos. E1/PIT/E2 e senha humana não são liberados por
 um resultado técnico verde. Recibos em `.cdp/validacoes/20261007-integracao-12/`.
+
+## 2026-10-07 · Comparação AST compatível com Python3.12/3.13 preserva referência literal
+
+Contexto: a CI37700592662 de a5f terminou failure, uma asserção entre161 casos: ast.dump3.12
+inclui keywords=[] omitido pelo dump3.13 que originou AST_ORIGINAL.json. O teste original
+reproduz a mesma falha em3.12 e passa em3.13. → Decisão: representar a árvore recursivamente
+no teste, omitindo somente campos opcionais vazios de modo compatível com a referência
+existente. Não usar substituição textual, eval ou referência regenerada do candidato. Os
+três módulos financeiros e golden permanecem byte literais. Revisão não autora confirmou
+136 renderizações e igualdade com ast.dump3.13,13 pares próprios e cinco mutações reais
+detectadas. → Consequências: integrar apenas teste e passagem de bastão para retry da CI
+completa, sem mudar Python/pins/solver/custos/gates. A falha anterior/JUnit ficam congelados,
+e sucesso local não vira sucesso remoto. O delta prospectivo de curadoria permanece separado
+em DEV, sujeito à suíte ampla; E1 caso10 favorável é delimitado e não libera P0/PIT/E2/carteira.

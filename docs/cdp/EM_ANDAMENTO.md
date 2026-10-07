@@ -5,9 +5,40 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-Última atualização: 2026-10-07, 20:05, Brasília — ampla9 local verde; retrato oficial0f887cd; integração técnica em andamento e P0 aberto. **Comece por
+Última atualização: 2026-10-07, 20:36, Brasília — lote12 integrado; CI remota falhou no teste AST; reparo somente de teste e proveniência prospectiva em DEV; P0 aberto. **Comece por
 `docs/cdp/PASSAGEM_CODEX.md`**: rotinas no Codex, P0 de desenvolvimento e cronograma até a
 carteira inaugural de 09/10. Índice interno: `.cdp/README.md` e `.cdp/TAREFAS.md`.
+
+## Lote12 integrado e reparo da comparação AST — 07/10/2026, 20:36 Brasília
+
+- ROOT/DEV/executor/origin/main chegaram normalmente a5f8318, preservando literalmente
+  book/data do commit oficial0f887cd. Integridade, identidade Codex e agenda passaram;
+  Pages37700592759 success, manifesto HTTP no commit integrado. Ampla9 local permanece
+ 2872 aprovações,16 pulados e um xfail, sem falhas/erros.
+- CI37700592662 terminou failure:161 casos,160 aprovados e uma falha, zero erros.
+  O teste AST usava referência3.13, mas ast.dump3.12 inclui campos opcionais vazios.
+  Original reproduziu vermelho3.12/verde3.13; SRC financeiro e golden permanecem
+  byte literais. Diagnóstico/JUnit preservados em
+  `.cdp/validacoes/20261007-auditoria/CI_37700592662_AST_DIAGNOSTICO`.
+  Renderer estrutural somente no teste passou ambas versões; revisão independente
+  confrontou136 renderizações,13 pares semânticos e cinco mutações financeiras reais.
+  Integração normal desse teste/documentação para nova CI; nenhum sucesso remoto presumido.
+- Proveniência de curadoria recebeu revisão favorável146 focais em a5f. Correção do
+  patch acrescenta só o cabeçalho Git do teste novo; quatro arquivos transpostos
+  literalmente ao DEV. Dez focais passaram, sem falhas/erros/pulos; ampla posterior
+  ainda necessária. Os28 pacotes/contexto/seis modelos/memórias preservaram cifras;
+  seis modelos históricos completos ficaram byte idênticos. Curadoria não autentica
+  bytes primários não capturados, nem promove confiança ou reinterpreta históricos.
+  Recibos novos em `.cdp/validacoes/20261007-integracao-13`.
+- Episódio E1 de squeeze recebeu revisão delimitada ao caso10 na fonte5cb:11 registros,
+  três montagens,48 passos,21 focais próprios e oráculo70 linhas/100 ordens. Volume
+  ausente0/264, terceiro stop natural e binding de risco ausente em sete registros
+  permanecem explícitos. Matriz antiga preservada; adendo prospectivo
+  `.cdp/validacoes/20261007-auditoria/E1_ADENDO_SQUEEZE_EPISODIO_20261007.md`.
+- CVM persistente v1 continua bloqueado. V2 nova tem236 controles do autor e revisão
+  não autora em conclusão; nenhuma transposição operacional ou autoridade humana.
+  P0 oficial continua C100/233=42,92% e revisão30/233=12,88%; E1 integral/PIT/E2,
+  senha humana e carteira inaugural continuam abertos.
 
 ## Ampla9, publicação oficial e candidatos privados — 07/10/2026, 20:05 Brasília
 

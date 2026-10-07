@@ -259,10 +259,39 @@ def test_cache_revalida_backing_bytes_antes_de_consumir(pair, tmp_path):
     assert source.reextrair() == r
 
 
+def _dump_ast_portatil(node):
+    """Preserva o AST de referência, omitindo campos opcionais vazios em 3.12/3.13."""
+    if isinstance(node, ast.AST):
+        fields = []
+        for name, value in ast.iter_fields(node):
+            if value is None and getattr(type(node), name, ...) is None:
+                continue
+            if (value is None or value == []) and not isinstance(node, (ast.Constant, ast.MatchSingleton)):
+                continue
+            fields.append(f'{name}={_dump_ast_portatil(value)}')
+        return f'{type(node).__name__}({", ".join(fields)})'
+    if isinstance(node, list):
+        return f'[{", ".join(_dump_ast_portatil(value) for value in node)}]'
+    return repr(node)
+
+
+@pytest.mark.parametrize('left,right', [
+    ('x = a + b', 'x = a - b'),
+    ('if x: raise ValueError()', 'if not x: raise ValueError()'),
+    ('f(x=1)', 'f()'),
+    ('x = "keywords=[]"', 'x = ""'),
+    ('x = None', 'x = 0'),
+    ('x = None', 'x = False'),
+    ('f(a,b)', 'f(b,a)'),
+])
+def test_ast_portatil_preserva_diferencas_semanticas(left, right):
+    assert _dump_ast_portatil(ast.parse(left)) != _dump_ast_portatil(ast.parse(right))
+
+
 def test_ast_numerico_guardas_e_ponte_literais():
     expected = json.loads((FONTE / 'tests/fixtures/cdp/atribuicao/AST_ORIGINAL.json').read_text())
     def dump(n):
-        return ast.dump(n, include_attributes=False)
+        return _dump_ast_portatil(n)
     model = ast.parse((FONTE / 'src/cdp/cobertura/modelo.py').read_text())
     cl = next(n for n in model.body if isinstance(n,ast.ClassDef) and n.name=='Avaliador')
     methods = {n.name:n for n in cl.body if isinstance(n,ast.FunctionDef)}

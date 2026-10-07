@@ -987,7 +987,17 @@ def build_proposal(ctx: WeekContext, *, views: list[View], overrides: dict | Non
                           capacidade_short=ex_cap["cap_short"] if ex_cap else None,
                           congelados=set(ex_cap["congelados"]) if ex_cap else None)
     executa_fechamento = cfg.execution is not None
-    if cfg.costs.min_order_cost_usd:
+    planned_costs = None
+    if executa_fechamento:
+        from .estimativa_custos import estimate, included_commissions
+
+        ts = pd.Timestamp(ctx.as_of)
+        prices = ctx.md.close.loc[ts] if ts in ctx.md.close.index else pd.Series(dtype=float)
+        trades, planned_costs = estimate(trades, cfg, prices=prices,
+                                         as_of=ctx.as_of, snapshot_hash=ctx.snapshot_hash,
+                                         base_commissions=included_commissions(
+                                             w.reindex(issuers).fillna(0.0), current, ctx.cost_model))
+    elif cfg.costs.min_order_cost_usd:
         trades = apply_min_order_costs(trades, positions, cfg)
     hedges = fx_hedges(positions, ctx.nav, futuros=executa_fechamento)
     diag = result.diagnostics
@@ -999,6 +1009,16 @@ def build_proposal(ctx: WeekContext, *, views: list[View], overrides: dict | Non
     if extended:
         recorded.update(_open_model_overrides(ctx, w, result, cinfo, risk_extra))
     if executa_fechamento:
+        from .contrato_custos import PROPOSAL_KEY, stamp
+
+        if PROPOSAL_KEY in recorded:
+            raise ValueError("contrato de custos é reservado ao gerador prospectivo")
+        recorded[PROPOSAL_KEY] = stamp()  # Antes do hash/aprovação; nunca retroativo.
+        from .estimativa_custos import PLANNED_KEY
+
+        if PLANNED_KEY in recorded:
+            raise ValueError("estimativa por ordens é reservada ao gerador prospectivo")
+        recorded[PLANNED_KEY] = planned_costs
         rr = rounding_report(positions, ctx.nav, fx_last)
         recorded["arredondamento"] = {
             "maior_erro_pct_nav": sig(float(rr["maior_erro_pct_nav"])),
@@ -1024,9 +1044,11 @@ def build_proposal(ctx: WeekContext, *, views: list[View], overrides: dict | Non
 
 
 def apply_min_order_costs(trades: list, positions: list, cfg: FundConfig) -> list:
-    """Custo estimado de cada ordem com o piso por ordem das tabelas públicas
-    (``costs.min_order_cost_usd``): a comissão variável dá lugar a ``n_ordens × mínimo /
-    nocional`` quando este é maior (lote padrão + fracionário/pico contam duas ordens)."""
+    """Estimativa agregada por linha: max(variável da linha, n_ordens × mínimo).
+
+    Essa aproximação não certifica pisos individuais. O contrato prospectivo da proposta
+    declara que a efetivação cobra cada perna real; o solver/banda permanecem inalterados.
+    """
     from ..portfolio.costs import comissao_efetiva_bps
     from ..portfolio.trades import n_orders
     from ..universe import listing_market

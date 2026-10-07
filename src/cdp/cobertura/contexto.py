@@ -294,9 +294,12 @@ def termos_previsao(reg: Mapping[str, Any], f: Mapping[str, Any], pais: str) -> 
 
 
 def montar_contexto(pacotes: Mapping[str, Mapping[str, Any]], params: ParametrosCobertura,
-                    rf_ust: float | None = None, rf_fonte: dict[str, Any] | None = None) -> dict[str, Any]:
+                    rf_ust: float | None = None, rf_fonte: dict[str, Any] | None = None, *,
+                    ri_fornecedor=None, conhecimento_ate=None) -> dict[str, Any]:
     """Contexto transversal da execução (ver docstring do módulo). ``rf_ust``: UST 10 anos da data
     (o mesmo do modelo), usado no custo de capital de cada emissor que ancora as normas de ROE."""
+    from .ri_consumo import selar_contexto, validar_conjunto
+    validar_conjunto(pacotes, params, fornecedor=ri_fornecedor, conhecimento_ate=conhecimento_ate)
     from .resultado import ativo, visao
     if ativo(params):
         pacotes = {iid: visao(p, params) for iid, p in pacotes.items()}
@@ -397,7 +400,9 @@ def montar_contexto(pacotes: Mapping[str, Mapping[str, Any]], params: Parametros
     ctx["premio_implicito"] = premio_implicito(pacotes, linhas, kes, params, rf_ust)
     ctx["fundamentos"] = {r["iid"]: {k: r6(v) if isinstance(v, float) else v for k, v in r.items()
                                      if k not in ("iid",)} for r in linhas}
-    ctx["calibracao_pais"] = calibrar_nivel_pais(pacotes, ctx, params, rf_ust, rf_fonte)
+    ctx["calibracao_pais"] = calibrar_nivel_pais(pacotes, ctx, params, rf_ust, rf_fonte,
+                                                ri_fornecedor=ri_fornecedor, conhecimento_ate=conhecimento_ate)
+    ctx = selar_contexto(ctx, pacotes, params, fornecedor=ri_fornecedor, conhecimento_ate=conhecimento_ate)
     if ativo(params):
         ctx["visoes_resultado"] = {iid: p["visao_resultado"]["visao_sha256"] for iid, p in pacotes.items()}
         from .resultado import _canon, hash_obj
@@ -406,13 +411,15 @@ def montar_contexto(pacotes: Mapping[str, Mapping[str, Any]], params: Parametros
 
 
 def _razoes_v_p(pacotes: Mapping[str, Mapping[str, Any]], ctx: Mapping[str, Any], params: ParametrosCobertura,
-                rf_ust: float | None, rf_fonte: dict[str, Any] | None, ids_alvo: list[str], grade: np.ndarray
-                ) -> tuple[list[str], np.ndarray]:
+                rf_ust: float | None, rf_fonte: dict[str, Any] | None, ids_alvo: list[str], grade: np.ndarray,
+                *, ri_fornecedor=None, conhecimento_ate=None) -> tuple[list[str], np.ndarray]:
     """``V0 ÷ P0`` do caso-base de cada emissor de ``ids_alvo`` com preço-alvo (holdings entram com o
     valor da soma das partes, que não depende do ke) para cada deslocamento ``δ`` da grade (em dólar,
     convertido ao ke local pelo diferencial de inflação)."""
     from .modelo import Avaliador, Drivers
     from .resultado import assinar_contexto
+    from .ri_consumo import selar_contexto
+    ctx = selar_contexto(ctx, pacotes, params, fornecedor=ri_fornecedor, conhecimento_ate=conhecimento_ate)
     ctx = assinar_contexto(ctx, pacotes, params)
 
     ids, linhas = [], []
@@ -424,7 +431,8 @@ def _razoes_v_p(pacotes: Mapping[str, Mapping[str, Any]], ctx: Mapping[str, Any]
         if isinstance(sp, Mapping) and "visao_casa" in sp:  # a calibração usa o NAV a mercado
             p = {**p, "soma_partes": {k: v for k, v in sp.items() if k != "visao_casa"}}
         try:
-            av = Avaliador(p, ctx, params, rf_ust, rf_fonte or {})
+            av = Avaliador(p, ctx, params, rf_ust, rf_fonte or {},
+                           ri_fornecedor=ri_fornecedor, conhecimento_ate=conhecimento_ate)
             av.preparar_metodos()
             validos = av.metodos_validos()
             if not validos or av.dps12 is None:
@@ -453,7 +461,8 @@ def _razoes_v_p(pacotes: Mapping[str, Mapping[str, Any]], ctx: Mapping[str, Any]
 
 
 def calibrar_nivel_pais(pacotes: Mapping[str, Mapping[str, Any]], ctx: dict[str, Any], params: ParametrosCobertura,
-                        rf_ust: float | None, rf_fonte: dict[str, Any] | None) -> dict[str, Any]:
+                        rf_ust: float | None, rf_fonte: dict[str, Any] | None, *,
+                        ri_fornecedor=None, conhecimento_ate=None) -> dict[str, Any]:
     """Ajuste de nível do modelo por país: ``δ`` (deslocamento do ke em dólar) que faz a mediana de
     ``V0 ÷ P0`` dos emissores do país com preço-alvo igual a 1 com as premissas da casa, limitado a
     ``±limite``. É o viés de nível dos fluxos do modelo no país (o mercado é tomado como apreçado na
@@ -479,7 +488,8 @@ def calibrar_nivel_pais(pacotes: Mapping[str, Mapping[str, Any]], ctx: dict[str,
     estado: dict[str, dict[str, Any]] = {}
     for pa in sorted({str(p["pais"]) for p in pacotes.values()}):
         ids, r = _razoes_v_p(pacotes, ctx, params, rf_ust, rf_fonte,
-                             [i for i in sorted(pacotes) if str(pacotes[i]["pais"]) == pa], grade)
+                             [i for i in sorted(pacotes) if str(pacotes[i]["pais"]) == pa], grade,
+                             ri_fornecedor=ri_fornecedor, conhecimento_ate=conhecimento_ate)
         if len(ids) >= n_min:
             grupos[pa] = ids
             med = np.median(r, axis=0)
@@ -513,7 +523,8 @@ def calibrar_nivel_pais(pacotes: Mapping[str, Mapping[str, Any]], ctx: dict[str,
         ctx["calibracao_pais"] = publicar()
         for g in pend:
             e = estado[g]
-            med = np.median(_razoes_v_p(pacotes, ctx, params, rf_ust, rf_fonte, grupos[g], grade)[1], axis=0)
+            med = np.median(_razoes_v_p(pacotes, ctx, params, rf_ust, rf_fonte, grupos[g], grade,
+                                         ri_fornecedor=ri_fornecedor, conhecimento_ate=conhecimento_ate)[1], axis=0)
             e["curva"], e["med"], e["passadas"] = med, float(med[i0]), e["passadas"] + 1
             e["convergiu"] = abs(e["med"] - 1) <= tol
     out = publicar()

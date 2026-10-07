@@ -901,6 +901,11 @@ def _expected_cost(p: Proposal) -> tuple[float | None, bool]:
             partial = True
     if not p.trades:
         return 0.0, False
+    if partial and not any(_finite(t.est_cost_bps) for t in p.trades):
+        from .contrato_custos import STAMP, descriptor
+
+        if descriptor(p) == STAMP:
+            return None, True
     return total, partial
 
 

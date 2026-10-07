@@ -99,18 +99,26 @@ class Avaliador:
     """Constrói o modelo aberto de um emissor (ver docstring do módulo)."""
 
     def __init__(self, pac: Mapping[str, Any], ctx: Mapping[str, Any], params: ParametrosCobertura,
-                 rf_ust: float | None, rf_fonte: dict[str, Any]) -> None:
+                 rf_ust: float | None, rf_fonte: dict[str, Any], *,
+                 ri_fornecedor=None, conhecimento_ate=None) -> None:
+        from .ri_consumo import validar_contexto as validar_ri
+        validar_ri(pac, ctx, params, fornecedor=ri_fornecedor, conhecimento_ate=conhecimento_ate)
         from .resultado import validar_contexto
         pac = validar_contexto(pac, ctx, params)
         self.pac = dict(pac)
         self.ctx = ctx
         self.params = params
+        self.ri_fornecedor = ri_fornecedor
+        self.conhecimento_ate = conhecimento_ate
         self.reg = Registro()
         self.lacunas: list[dict[str, str]] = list(pac.get("lacunas", []))
         self.avisos: list[str] = list(pac.get("avisos", []))
         self.moeda = str(pac["moeda"])
         self.fontes = pac.get("fontes", {})
         self.k_pl = f"t.{pac.get('item_patrimonio') or 'patrimonio_controladores'}"
+        from .ri_consumo import aplicavel as ri_aplicavel
+        if ri_aplicavel(params, pac) and pac["ri_observada"]["selecao"]:
+            self.k_pl = "t.patrimonio_controladores"
         self.k_luc = f"t.{pac.get('item_lucro') or 'lucro_liquido_controladores'}"
         self.fund = ctx.get("fundamentos", {}).get(pac["issuer_id"], {})
         self.setor_ctx = ctx.get("setores", {}).get(pac["setor"], {})
@@ -151,6 +159,12 @@ class Avaliador:
     # ------------------------------------------------------------------ 1. insumos
     def _registrar_insumos(self) -> None:
         p, m = self.pac, self.moeda
+        from .ri_consumo import aplicavel as ri_aplicavel
+        if ri_aplicavel(self.params, self.pac):
+            self.reg.nota("insumos.ri_observada", "Saldos RI e conceitos patrimoniais",
+                          "PL atribuível, PL total e não controladores são conceitos separados. "
+                          "B0 usa o atribuível; o regime de NCI vem da configuração. "
+                          "Disponibilidade por captura observada: publicação desconhecida, sem certificação PIT.")
         if "visao_resultado" in p:
             d = p["visao_resultado"]["diagnostico"]["corrente"]
             self.reg.nota("insumos.escopo_resultado", "Escopo dos ajustes evidenciados",
@@ -842,6 +856,11 @@ class Avaliador:
         mino = float(self.pac["minoritarios"])
         pl = _f(self.pac.get(self.k_pl))
         modo = str(self.params.valuation.get("minoritarios", "contabil"))
+        from .ri_consumo import aplicavel as ri_aplicavel
+        if ri_aplicavel(self.params, self.pac) and modo == "proporcional":
+            pl = _f(self.pac.get("t.patrimonio_controladores"))
+            if pl is None or pl <= 0 or mino < 0:
+                raise ValueError("RI: proporção de não controladores indisponível; PL total não substitui atribuível")
         if modo == "proporcional" and pl is not None and pl > 0 and mino >= 0:
             return pl / (pl + mino), "proporcional"
         return 1.0, "contabil"
@@ -1085,6 +1104,12 @@ class Avaliador:
             if self.eps1 is None or self.eps1 <= 0 or self.payout is None or not self.payout or self.roe_sust is None:
                 return "LPA positivo, payout ou ROE sustentável indisponível"
             return None
+        from .ri_consumo import aplicavel as ri_aplicavel
+        if ((m.startswith("fcff") or m == "regressao_ev_receita") and ri_aplicavel(self.params, self.pac)
+                and self.params.valuation.get("minoritarios") == "proporcional"
+                and (_f(p.get("t.patrimonio_controladores")) is None
+                     or _f(p.get("t.patrimonio_controladores")) <= 0)):
+            return "PL atribuível indisponível para NCI proporcional; PL total não o substitui"
         q = self.params.sec("qualidade")
         mg_max = float(q.get("margem_ebit_max", 1.0))
         if (m.startswith("fcff") or m == "regressao_ev_receita") and self.margem is not None \
@@ -1783,6 +1808,10 @@ class Avaliador:
         out["metodo_discrepante"] = getattr(self, "discrepante", None)
         if "visao_resultado" in self.pac:
             out["visao_resultado"] = self.pac["visao_resultado"]
+        from .ri_consumo import aplicavel as ri_aplicavel
+        from .ri_consumo import traco_modelo
+        if ri_aplicavel(self.params, self.pac):
+            out["ri_observada"] = traco_modelo(self.pac, self.params)
         out["lacunas"] = self.lacunas + [{"insumo": f"metodo.{d['m']}", "nome": NOME_METODO[d["m"]],
                                           "motivo": d["motivo"]}
                                          for d in self.metodos.values() if d.get("motivo")]

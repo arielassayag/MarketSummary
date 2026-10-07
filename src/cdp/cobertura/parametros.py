@@ -137,6 +137,8 @@ def _validar(val: dict[str, Any], arqs: dict[str, Arquetipo], betas: dict[str, B
     if faltam:
         raise ValueError(f"valuation.yaml sem seções: {faltam}")
     q = val["qualidade"]
+    if q.get("ri_disponibilidade_metodo") not in (None, "captura_observada_identidade"):
+        raise ValueError("qualidade.ri_disponibilidade_metodo desconhecido")
     if "alertas_fonte_metodo" in q and q["alertas_fonte_metodo"] != "dependencias_efetivas":
         raise ValueError("qualidade.alertas_fonte_metodo desconhecido: " + str(q["alertas_fonte_metodo"]))
     if "margem_fluxos_metodo" in q and q["margem_fluxos_metodo"] != "periodo_moeda_base":

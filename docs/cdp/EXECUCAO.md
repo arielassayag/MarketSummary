@@ -193,12 +193,19 @@ recall e squeeze pioram com a iliquidez).
 - Na decisão, o prazo é conferido num único instante, que é também o horário gravado da
   proposta e da decisão: a decisão nunca é registrada depois do prazo efetivo.
 - Custo por linha negociada, em bps do valor negociado: meio spread pela faixa de ADTV (× 1,5 na
-  ADR com a bolsa local fechada) + o maior entre a comissão do mercado e o **mínimo por ordem**
-  (× número de ordens: lote padrão + fracionário ou pico contam duas) + câmbio (3 bps fora do
+  ADR com a bolsa local fechada) + comissão das ordens individuais + câmbio (3 bps fora do
   dólar) + impacto raiz quadrada `0,6 · σ_diária · √(Q / ADTV)` × desconto de leilão (0,6 em EUA,
-  ADR, BR, MX e CL; 1,0 nos demais). O mesmo piso entra no custo estimado de cada ordem da
-  proposta; o otimizador continua com a curva convexa (custo fixo não é convexo e entra pela banda
-  e pela posição mínima).
+  ADR, BR, MX e CL; 1,0 nos demais). Para cada ordem, a comissão em USD é o maior entre sua
+  comissão variável e o mínimo do mercado. A comissão da linha soma esses valores e os divide
+  pelo nocional total, convertendo para bps. Lote padrão e fracionário ou pico pagam seus
+  próprios mínimos; uma ordem pequena não divide o mínimo com a ordem padrão.
+- A estimativa da proposta decompõe as quantidades planejadas com o preço local corrente.
+  Substitui somente a comissão já incluída na mesma base de custos pela soma por ordem;
+  spread, impacto e câmbio dessa base permanecem. O débito usa as quantidades efetivamente
+  preenchidas e preço/câmbio do fechamento. A previsão não certifica o débito futuro.
+  Estimativa ausente continua indisponível; com cobertura parcial, apresenta somente o subtotal
+  conhecido e identifica a limitação. O otimizador continua com a curva convexa (custo fixo
+  não é convexo e entra pela banda e pela posição mínima).
 
 **Mínimo por ordem (`costs.min_order_cost_usd`), de tabelas públicas:**
 

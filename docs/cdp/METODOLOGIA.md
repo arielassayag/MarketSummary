@@ -190,8 +190,10 @@ não-negociação é de 0,10% do NAV e, em cada mercado, a ordem só é enviada 
 for de no máximo 10 bps do nocional (US$ 1 mil nos EUA e na B3, cerca de US$ 3,5 mil na BMV e
 US$ 28 mil em Santiago) — encerrar uma posição é sempre permitido; (ii) a posição mínima por nome
 é o maior entre 0,2% do NAV e essa banda do mercado da linha; (iii) o custo estimado e o debitado
-de cada ordem usam o maior entre a comissão variável e o mínimo por ordem. Quantidades são ações
-inteiras: na B3 a ordem se divide em lote padrão (100) e fracionário; na BMV, em lotes que formam
+de cada ordem usam o maior entre a comissão variável e o mínimo por ordem; a comissão da linha
+é a soma dessas ordens. A estimativa usa quantidades planejadas e o preço corrente, enquanto o
+débito usa o preenchimento e o fechamento efetivos. Dados indisponíveis não recebem custo zero;
+um subtotal conhecido é identificado como parcial. Quantidades são ações inteiras: na B3 a ordem se divide em lote padrão (100) e fracionário; na BMV, em lotes que formam
 preço (100 títulos, ou 5 acima de MXN 200) e "pico" executado ao último preço; nos demais
 mercados, 1 ação. O erro do arredondamento (relevante em ações caras, como MELI, cerca de 0,19%
 do NAV por ação) e as posições que não chegam a uma ação ficam registrados na proposta.

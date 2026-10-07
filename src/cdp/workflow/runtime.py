@@ -1212,6 +1212,11 @@ class Runtime:
             msgs += [f"dados: {m}" for m in (s_msgs or ["íntegros"])]
         except Exception as exc:  # noqa: BLE001
             msgs.append(f"dados: sem base de mercado ({exc.__class__.__name__})")
+        from .contrato_custos import verify as verify_execution_costs
+
+        cost_problems = verify_execution_costs(self)
+        ok &= not cost_problems
+        msgs += [f"custos da execução: {m}" for m in (cost_problems or ["íntegros; legado sem estampa preservado"])]
         e_ok, e_msgs = self.verify_execucao(b)
         ok &= e_ok
         msgs += [f"execução: {m}" for m in e_msgs]

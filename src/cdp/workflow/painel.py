@@ -1002,6 +1002,12 @@ def _proposal_summary(p: Any) -> dict[str, Any]:
             partial = True
         else:
             total_cost += abs(float(t.notional_usd)) * bps / 1e4
+    reported_cost = total_cost if p.trades else 0.0
+    if partial and not any(_num(t.est_cost_bps) is not None for t in p.trades):
+        from .contrato_custos import STAMP, descriptor
+
+        if descriptor(p) == STAMP:
+            reported_cost = None
     return {
         "n_positions": len(p.positions), "n_long": p.risk.n_long, "n_short": p.risk.n_short,
         "gross": p.risk.gross, "net": p.risk.net, "beta": p.risk.beta,
@@ -1010,7 +1016,7 @@ def _proposal_summary(p: Any) -> dict[str, Any]:
         "expected_cost_annual": p.optimizer.expected_cost_annual,
         "n_trades": len(p.trades),
         "turnover": sum(abs(float(t.weight_change)) for t in p.trades) if p.trades else 0.0,
-        "trade_cost_usd": total_cost if p.trades else 0.0,
+        "trade_cost_usd": reported_cost,
         "trade_cost_partial": partial,
         "hard_failures": [c.check_id for c in p.hard_failures],
         "soft_failures": [c.check_id for c in p.soft_failures],

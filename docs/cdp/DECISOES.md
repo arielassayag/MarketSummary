@@ -505,3 +505,71 @@ provisórias, mente explícita e espera da própria rotina. Este registro docume
 posterior não altera código ou configuração testados. Conferir identidade e livro
 após sincronizar o executor. → Limite: o aceite é técnico; não promove protótipos
 RI/custos, não certifica disparo pontual e não encerra P0, E1 integral, PIT/E2 ou carteira.
+
+## 2026-10-07 · Identificação explícita da D&A restituída na DFC
+
+Contexto: o adapter Yahoo identificava a rubrica da DFC, mas a camada de fatos publicava
+apenas o item genérico `d_a`, impedindo o consumidor de reconhecer `d_a_dfc`. A revisão
+financeira encontrou sete raw que demonstram o problema, sem erro aritmético de FCFF.
+→ Decisão: preservar literalmente o item genérico e seus consumidores; acrescentar
+`d_a_dfc` somente da rubrica explicitamente extraída da DFC e aprovada nos filtros
+existentes. DRE não completa DFC, dado ausente não vira zero e publicação estimada
+permanece estimada. → Consequências: o alias não altera fórmula, não certifica por si
+só restituição primária completa ou identidade FCFF e não elimina falta de Δgiro/ROU.
+AURA conserva a seleção defasada e a prioridade legada dos rótulos. Revisão independente,
+oráculo Decimal e regressão portátil delimitam o reparo; transposição em DEV depende de
+nova validação integral e integração. Mandato, metodologia `2026-10.8` e gates mantidos.
+
+## 2026-10-07 · Resultado remoto do lote 887f744
+
+CI remota dos dois jobs concluída com sucesso; JUnit efetivamente baixado confirma
+2.645 casos sem falhas ou erros, 17 skipped incluindo xfail. O aceite técnico refere-se
+somente ao commit testado e seus arquivos, com recibos da integração 11. Não transfere
+esse resultado para novos candidatos privados ou transpostos ao DEV, nem encerra
+P0/E1 integral/PIT/E2 ou libera publicação/carteira inaugural.
+
+## 2026-10-07 · Comissão por ordem planejada e preenchida; ausência preservada
+
+Contexto: o pico mexicano podia compartilhar indevidamente o mínimo com a ordem padrão.
+A correção financeira v2 e os leitores receberam revisão independente delimitada.
+→ Decisão: decompor as ordens e somar, em cada uma, o maior entre comissão variável e piso.
+Na previsão, substituir apenas a comissão efetivamente incluída na mesma base; no débito,
+usar preenchimentos, preços, câmbio e mandato arquivados do pregão. O contrato prospectivo
+é incorporado antes do hash/aprovação. Ausência literal v0 e descritor histórico v1 conservam
+suas fórmulas e selos; não se reestampa uma proposta antiga. → Consequências: previsão v2
+integralmente indisponível continua None/n/d; zero explícito e ausência de ordens continuam
+zero, previsão mista conserva subtotal e indicação parcial. Solver, mandato e gates não mudam.
+Transposição em DEV com 201 focais e Ruff verdes ainda depende de ampla/integração. Não libera
+P0/E1 integral/PIT/E2 nem autoriza carteira ou publicação fora do fluxo canônico.
+
+## 2026-10-07 · API RI opt-in e guarda ETF vazia
+
+Contexto: modelos do universo misto precisam consumir somente fatos reextraídos com
+autoridade externa, identidade, moeda e corte explícitos. A API anterior deixava o caminho
+vazio de ETF ignorar parte das guardas. → Decisão: validar também a entrada vazia, manter
+o default sem opt-in literal e exigir fornecedor tipado ligado à autoridade externa no
+opt-in. Publicação/recebimento desconhecidos permanecem nulos e PIT falso. → Consequências:
+API v2 e anexo portátil revisados foram transpostos ao DEV, com 44 focais e Ruff verdes.
+A coleta/gravação/reprodução normal permanece privada; metadados do livro não podem ser
+autoridade de si mesmos. Ampla e integração ainda pendentes. Não muda metodologia,
+mandato, gates ou limite P0 e não libera carteira inaugural.
+
+## 2026-10-07 · Aceite técnico delimitado após a ampla 8
+
+A ampla local concluiu 2.801 casos: 2.784 aprovados, 16 pulados, um xfail e zero falhas/
+erros; 652 arquivos permaneceram intactos e Ruff completo passou. → Decisão: integrar
+normalmente o lote revisado de custos por ordem/leitores, Yahoo D&A DFC e API RI opt-in,
+sem force push e preservando estado operacional. Este registro posterior altera somente
+documentação; fonte, fixtures e configuração testados são os mesmos. → Limite: ligação
+RI ao fluxo normal, CVM nativo prospectivo, atribuição por estágios, CI deste novo commit,
+P0/E1 integral/PIT/E2 e carteira inaugural não recebem aceite desta suíte técnica.
+
+## 2026-10-07 · Limite estrutural não substitui recebimento prospectivo da autoridade
+
+O CVM nativo v2 privado recusa criação futura e disponibilidade anterior à completude
+local. A revisão independente confirmou o reparo estrutural R1, mas a entrega externa do
+digest é posterior ao limite físico. → Decisão: manter o candidato privado; integração
+prospectiva exige handoff tipado externo, SHA fixado e recebimento autenticado como
+dependência temporal. Nenhum horário de arquivo, captura ou entrega se torna publicação
+financeira. → Consequências: origens locais e ausência de certificado entre hosts ficam
+explícitas; PIT falso, pub/received nulos, residual e classificação não são promovidos.

@@ -406,6 +406,13 @@ def fatos_yahoo(doc: dict, *, data_coleta: date, financeira: bool,
                              strict=True)], index=out.index[da])
         ruim = ref.notna() & (out.loc[da, "value"] < RAZAO_MIN_DA_CAPEX * ref)
         out = out.drop(index=ruim[ruim].index)
+    # A D&A restituída na DFC tem contrato próprio para o reinvestimento FCFF.
+    # Mantém o item d_a consumido pelo EBITDA e acrescenta somente o fluxo
+    # explicitamente extraído da DFC, após os mesmos controles de qualidade.
+    da_dfc = out[(out["item"] == "d_a") & (out["demonstrativo"] == "DFC")].copy()
+    if not da_dfc.empty:
+        da_dfc["item"] = "d_a_dfc"
+        out = pd.concat([out, da_dfc], ignore_index=True)
     return out.reset_index(drop=True)
 
 

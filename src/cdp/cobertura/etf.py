@@ -145,9 +145,13 @@ def _registros(df: pd.DataFrame) -> list[dict[str, Any]]:
 
 
 def insumos_etf(cfg: Mapping[str, Any], md: MarketData, dados: DadosPublicos, params: ParametrosCobertura,
-                pacotes: Mapping[str, Mapping[str, Any]], as_of: date) -> dict[str, Any]:
+                pacotes: Mapping[str, Mapping[str, Any]], as_of: date, *,
+                ri_fornecedor=None, conhecimento_ate=None) -> dict[str, Any]:
     """Pacote de insumos do ETF (tudo o que :func:`calcular_etf` usa além dos pacotes e modelos
     dos emissores), arquivado no snapshot."""
+    from .ri_consumo import validar_conjunto
+
+    validar_conjunto(pacotes, params, fornecedor=ri_fornecedor, conhecimento_ate=conhecimento_ate)
     ec = params.sec("etf")
     t = str(cfg["ticker"])
     moeda = str(cfg.get("moeda", "USD"))
@@ -211,8 +215,12 @@ def _elegivel_bu(m: Mapping[str, Any] | None, ec: Mapping[str, Any]) -> tuple[bo
 
 def calcular_etf(ins: Mapping[str, Any], params: ParametrosCobertura, pacotes: Mapping[str, Mapping[str, Any]],
                  modelos: Mapping[str, Mapping[str, Any]], rf_ust: float | None,
-                 r_ilf: float | None = None) -> dict[str, Any]:
+                 r_ilf: float | None = None, *, ri_fornecedor=None, conhecimento_ate=None) -> dict[str, Any]:
     """Modelo do ETF a partir do pacote de insumos (função pura; ver docstring do módulo)."""
+    from .ri_consumo import validar_modelos_etf
+
+    validar_modelos_etf(pacotes, modelos, params, fornecedor=ri_fornecedor,
+                       conhecimento_ate=conhecimento_ate)
     ec = params.sec("etf")
     cc = params.cc
     reg = Registro()
@@ -484,22 +492,30 @@ def calcular_etf(ins: Mapping[str, Any], params: ParametrosCobertura, pacotes: M
 
 def avaliar_etf(cfg: Mapping[str, Any], md: MarketData, dados: DadosPublicos, params: ParametrosCobertura,
                 pacotes: Mapping[str, Mapping[str, Any]], modelos: Mapping[str, Mapping[str, Any]],
-                rf_ust: float | None, as_of: date, r_ilf: float | None = None) -> dict[str, Any]:
+                rf_ust: float | None, as_of: date, r_ilf: float | None = None, *,
+                ri_fornecedor=None, conhecimento_ate=None) -> dict[str, Any]:
     """Insumos do ETF a partir do mercado + :func:`calcular_etf`."""
-    ins = insumos_etf(cfg, md, dados, params, pacotes, as_of)
-    return calcular_etf(ins, params, pacotes, modelos, rf_ust, r_ilf)
+    ins = insumos_etf(cfg, md, dados, params, pacotes, as_of,
+                     ri_fornecedor=ri_fornecedor, conhecimento_ate=conhecimento_ate)
+    return calcular_etf(ins, params, pacotes, modelos, rf_ust, r_ilf,
+                        ri_fornecedor=ri_fornecedor, conhecimento_ate=conhecimento_ate)
 
 
 def calcular_etfs(insumos: Mapping[str, Mapping[str, Any]], params: ParametrosCobertura,
                   pacotes: Mapping[str, Mapping[str, Any]], modelos: Mapping[str, Mapping[str, Any]],
-                  rf_ust: float | None) -> dict[str, dict[str, Any]]:
+                  rf_ust: float | None, *, ri_fornecedor=None, conhecimento_ate=None) -> dict[str, dict[str, Any]]:
     """Todos os ETFs a partir dos pacotes de insumos (a referência ILF primeiro)."""
+    from .ri_consumo import validar_modelos_etf
+
+    validar_modelos_etf(pacotes, modelos, params, fornecedor=ri_fornecedor,
+                       conhecimento_ate=conhecimento_ate)
     ref = str(params.sec("etf")["referencia"])
     ordem = sorted(insumos.values(), key=lambda c: (c["ticker"] != ref, c["ticker"]))
     out: dict[str, dict[str, Any]] = {}
     r_ilf = None
     for ins in ordem:
-        e = calcular_etf(ins, params, pacotes, modelos, rf_ust, r_ilf)
+        e = calcular_etf(ins, params, pacotes, modelos, rf_ust, r_ilf,
+                         ri_fornecedor=ri_fornecedor, conhecimento_ate=conhecimento_ate)
         if ins["ticker"] == ref and e.get("tem_alvo") and e.get("visao_ilf") != "Em revisão":
             r_ilf = float(e["retorno_esperado"])
         out[e["iid"]] = e
@@ -508,15 +524,22 @@ def calcular_etfs(insumos: Mapping[str, Mapping[str, Any]], params: ParametrosCo
 
 def avaliar_etfs(md: MarketData, dados: DadosPublicos, params: ParametrosCobertura,
                  pacotes: Mapping[str, Mapping[str, Any]], modelos: Mapping[str, Mapping[str, Any]],
-                 rf_ust: float | None, as_of: date) -> tuple[dict[str, dict[str, Any]], dict[str, dict[str, Any]]]:
+                 rf_ust: float | None, as_of: date, *, ri_fornecedor=None,
+                 conhecimento_ate=None) -> tuple[dict[str, dict[str, Any]], dict[str, dict[str, Any]]]:
     """``(modelos dos ETFs, pacotes de insumos dos ETFs)`` por ``iid``."""
+    from .ri_consumo import validar_modelos_etf
+
+    validar_modelos_etf(pacotes, modelos, params, fornecedor=ri_fornecedor,
+                       conhecimento_ate=conhecimento_ate)
     cfgs = [c for c in params.etfs.get("etfs", []) if c["ticker"] in md.benchmarks.columns]
     insumos = {}
     for c in cfgs:
-        ins = insumos_etf(c, md, dados, params, pacotes, as_of)
+        ins = insumos_etf(c, md, dados, params, pacotes, as_of,
+                         ri_fornecedor=ri_fornecedor, conhecimento_ate=conhecimento_ate)
         insumos[ins["iid"]] = ins
     _ = fx_usd
-    return calcular_etfs(insumos, params, pacotes, modelos, rf_ust), insumos
+    return calcular_etfs(insumos, params, pacotes, modelos, rf_ust,
+                         ri_fornecedor=ri_fornecedor, conhecimento_ate=conhecimento_ate), insumos
 
 
 __all__ = ["agregar_bu", "avaliar_etf", "avaliar_etfs", "calcular_etf", "calcular_etfs", "grinold_kroner",

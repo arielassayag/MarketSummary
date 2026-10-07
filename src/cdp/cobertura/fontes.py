@@ -18,6 +18,7 @@ from collections.abc import Sequence
 from dataclasses import dataclass, field, replace
 from datetime import date, datetime
 from pathlib import Path
+from typing import Any
 
 import numpy as np
 import pandas as pd
@@ -65,6 +66,9 @@ class DadosPublicos:
 
     resultado_evidencias: pd.DataFrame = field(default_factory=pd.DataFrame)
     corte_temporal: dict[str, str] | None = None
+    ri_observados: pd.DataFrame | None = None
+    ri_evidencias: pd.DataFrame | None = None
+    ri_contexto: Any = None
 
     def tabelas(self) -> dict[str, pd.DataFrame]:
         out = {"demonstrativos": self.demonstrativos, "consenso": self.consenso,
@@ -78,6 +82,10 @@ class DadosPublicos:
             out["resultado_evidencias"] = self.resultado_evidencias
         if self.corte_temporal is not None:
             out["corte_temporal"] = pd.DataFrame([self.corte_temporal])
+        if self.ri_observados is not None:
+            out["ri_observados"] = self.ri_observados
+        if self.ri_evidencias is not None:
+            out["ri_evidencias"] = self.ri_evidencias
         for etf, df in sorted(self.etfs.items()):
             if df is not None:
                 out[f"etf_{_slug(etf)}"] = df
@@ -597,17 +605,32 @@ def _coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Se
 
 def coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Sequence[str],
             etfs: Sequence[str], *, offline: bool = False, raiz: Path | None = None,
-            seed: int = 7, params=None, conhecimento_ate: datetime | None = None) -> DadosPublicos:
+            seed: int = 7, params=None, conhecimento_ate: datetime | None = None,
+            ri_contexto=None) -> DadosPublicos:
     """Política nova sela corte exato em todos os arquivos; ausência conserva seleção legada."""
+    from .ri_observada import ativo as ri_ativo
     from .temporal import ativo as temporal_ativo
+    ri = params is not None and ri_ativo(params)
+    if ri:
+        from ..data.ri_captura.adapter import autenticar, coletar_observados
+        autenticar(ri_contexto, md)
+        if not temporal_ativo(params) or conhecimento_ate is None:
+            raise ValueError("RI observado exige corte temporal explícito")
+
+    def complementar(dados):
+        if not ri:
+            return dados
+        tabela, evidencias = coletar_observados(md, ri_contexto, conhecimento_ate)
+        return replace(dados, ri_observados=tabela, ri_evidencias=evidencias, ri_contexto=ri_contexto)
+
     opcoes = dict(offline=offline, raiz=raiz, seed=seed, params=params, conhecimento_ate=conhecimento_ate)
     if params is not None and temporal_ativo(params):
         if conhecimento_ate is None:
             raise ValueError("Coleta temporal exige instante explícito de conhecimento.")
         from ..data.publico_arquivo import corte_de_conhecimento
         with corte_de_conhecimento(conhecimento_ate):
-            return _coletar(md, as_of, issuer_ids, tickers, etfs, **opcoes)
-    return _coletar(md, as_of, issuer_ids, tickers, etfs, **opcoes)
+            return complementar(_coletar(md, as_of, issuer_ids, tickers, etfs, **opcoes))
+    return complementar(_coletar(md, as_of, issuer_ids, tickers, etfs, **opcoes))
 
 
 __all__ = ["COLS_ALERTAS", "COLS_CAPITAL", "ITENS_SUPLEMENTARES", "contas_suplementares_cvm", "COLS_CONSENSO", "COLS_DEMONSTRATIVOS", "COLS_DIVIDENDOS", "COLS_ETF", "COLS_EVENTOS",

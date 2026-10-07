@@ -1234,6 +1234,14 @@ class DailyRunner:
         for tr in [self.track] + ([self.shadow.track] if self.shadow else []):
             problems += [f"[risco diário] {m}" for m in verify(
                 tr, market_loader=self.store.load, market_root=getattr(self.store, "root", None))]
+        from types import SimpleNamespace
+
+        from .contrato_custos import verify as verify_costs
+
+        facade = SimpleNamespace(cfg=self.cfg, book=self.book, store=self.store,
+                                 track=lambda shadow=False: self.shadow.track if shadow else self.track)
+        problems += [f"[custos da execução] {m}" for m in verify_costs(
+            facade, include_shadow=self.shadow is not None)]
         return (not problems, problems)
 
     # ------------------------------------------------------------------ contexto
@@ -1676,6 +1684,25 @@ class DailyRunner:
                             and MARKER in prev.input_hashes else None)
         diagnostic = build(ctx, cfg, positions, nav_end, model_prev, md_prev,
                            previous_sources=previous_sources)
+        if plan is not None:
+            from .contrato_custos import (
+                CURRENT,
+                DIAGNOSTIC_KEY,
+                RECORD_MARKER,
+                contract,
+                digest,
+                payload,
+            )
+
+            if contract(plan.proposal) == CURRENT:
+                cost_diagnostic = ctx.cache.get("execution_costs", {}).get(plan.proposal.proposal_id)
+                if cost_diagnostic is None:
+                    if not plan.hold:
+                        raise ValueError("cálculo prospectivo de custos ausente")
+                    cost_diagnostic = payload(pd.DataFrame(), pd.DataFrame(), plan.proposal,
+                                              cfg, ctx.date, 0.0)
+                diagnostic[DIAGNOSTIC_KEY] = cost_diagnostic
+                hashes[RECORD_MARKER] = digest(cost_diagnostic)
         hashes[MARKER] = sha256_text(text(diagnostic))
         if diagnostic["binding"] is None and any(p.market_value_usd for p in positions):
             alerts.append("Risco diário base/evento incompleto: fatia idiossincrática vinculante "
@@ -2144,43 +2171,68 @@ class DailyRunner:
                           f"{_list(no_px)}.")
         return execs, alerts
 
-    def _costs_fechamento(self, ctx: DailyContext, execs: list[_Exec], nav_pre: float
-                          ) -> tuple[float, list[str]]:
-        """Custo (USD) das linhas negociadas no leilão (:func:`costs.custos_fechamento`)."""
+    def _closing_cost_calculation(self, ctx: DailyContext, trades: Iterable[tuple],
+                                  proposal: Proposal | None = None
+                                  ) -> tuple[pd.DataFrame, pd.DataFrame, float]:
+        """Mesmas faixas/impacto/FX; contrato da proposta escolhe o piso da comissão."""
         from ..portfolio.costs import custos_fechamento
+        from .contrato_custos import CURRENT, contract
 
-        frame = self.custo_frame(ctx, [(e.issuer_id, e.ticker, e.currency, abs(e.traded) *
-                                        e.price_local * e.fx, e.traded, e.price_local)
-                                       for e in execs if e.traded != 0])
+        chosen = contract(proposal)
+        frame = self.custo_frame(ctx, trades, contrato=chosen)
         if frame.empty:
-            return 0.0, []
+            return frame, pd.DataFrame(), 0.0
         res = custos_fechamento(frame, self.cfg)
         c = self.cfg.costs
         default_bps = (max(c.half_spread_bps_by_tier.values()) + max(c.commission_bps.values())
                        + c.fx_cost_bps)
         miss = res["cost_usd"].isna()
         if miss.any():
-            res.loc[miss, "cost_usd"] = frame.loc[miss, "notional_usd"] * default_bps / 1e4
+            fallback = frame.loc[miss, "notional_usd"] * default_bps / 1e4
+            if chosen == CURRENT:
+                # Conservador declarado preserva ao menos a comissão por ordem conhecida;
+                # não converte sigma/ADTV ausente em observação zero.
+                commission = frame.loc[miss, "notional_usd"] * res.loc[miss, "commission_bps"] / 1e4
+                fallback += np.maximum(commission - frame.loc[miss, "notional_usd"] *
+                                       max(c.commission_bps.values()) / 1e4, 0.0)
+            res.loc[miss, "cost_usd"] = fallback
             res.loc[miss, "flags"] = res.loc[miss, "flags"] + ";bps_conservador"
+        return frame, res, float(res["cost_usd"].sum())
+
+    def _costs_fechamento(self, ctx: DailyContext, execs: list[_Exec], nav_pre: float,
+                          proposal: Proposal | None = None) -> tuple[float, list[str]]:
+        from .contrato_custos import CURRENT, contract, payload
+
+        frame, res, total = self._closing_cost_calculation(ctx, [
+            (e.issuer_id, e.ticker, e.currency, abs(e.traded) * e.price_local * e.fx,
+             e.traded, e.price_local) for e in execs if e.traded != 0], proposal)
+        if contract(proposal) == CURRENT:
+            ctx.cache.setdefault("execution_costs", {})[proposal.proposal_id] = payload(
+                frame, res, proposal, self.cfg, ctx.date, total)
         alerts: list[str] = []
-        flagged = sorted(t for t, f in res["flags"].items() if f)
+        flagged = sorted(t for t, f in res["flags"].items() if f) if not res.empty else []
         if flagged:
             alerts.append("Custos com parâmetro conservador (ADTV ou volatilidade ausente): "
                           f"{_list(flagged)}.")
-        return float(res["cost_usd"].sum()), alerts
+        return total, alerts
 
-    def custo_frame(self, ctx: DailyContext,
-                    trades: Iterable[tuple]) -> pd.DataFrame:
+    def custo_frame(self, ctx: DailyContext, trades: Iterable[tuple], *,
+                    contrato: str = "aggregate_line/v0") -> pd.DataFrame:
         """Insumos do custo por linha negociada ``(emissor, ticker, moeda, nocional USD[, ações,
         preço local])``: ADTV da linha, σ diária do emissor (63 pregões), mercado, categoria,
         mercado local fechado (ADR negociado com a bolsa local sem pregão) e ordens enviadas
         (lote padrão + fracionário/pico contam duas; sem ações informadas, uma)."""
         from ..calendar import MARKET_EXCHANGES, is_session
         from ..portfolio.execucao import categoria_da_linha
-        from ..portfolio.trades import n_orders
+        from ..portfolio.trades import n_orders, order_legs_detail
         from ..universe import listing_market
+        from .contrato_custos import CURRENT, LEGACY
 
+        if contrato not in (CURRENT, LEGACY):
+            raise ValueError("contrato de custos desconhecido")
         rows = list(trades)
+        if contrato == CURRENT:
+            rows.sort(key=lambda row: row[1])  # Ordem canônica do cálculo prospectivo/reprodução.
         if not rows:
             return pd.DataFrame()
         lines = ctx.panel.lines
@@ -2212,10 +2264,21 @@ class DailyRunner:
             mkt = listing_market(tk)
             local_closed = bool(mkt == "US" and home is not None and home != "XNYS"
                                 and not is_session(ctx.date, home))
-            out.append({"ticker": tk, "issuer_id": iid, "notional_usd": float(notional),
-                        "adtv_usd": adtv, "sigma_d": float(sd), "market": mkt,
-                        "currency": ccy, "categoria": categoria_da_linha(tk, lt),
-                        "local_fechado": local_closed, "flag": flag, "n_ordens": n_ord})
+            item = {"ticker": tk, "issuer_id": iid, "notional_usd": float(notional),
+                    "adtv_usd": adtv, "sigma_d": float(sd), "market": mkt,
+                    "currency": ccy, "categoria": categoria_da_linha(tk, lt),
+                    "local_fechado": local_closed, "flag": flag, "n_ordens": n_ord}
+            if contrato == CURRENT:
+                if len(row) < 6 or not isinstance(row[4], (int, np.integer)) or row[4] == 0:
+                    raise ValueError("ações executadas ausentes no custo por ordem")
+                parts = order_legs_detail(tk, int(row[4]), row[5])
+                item.update({"contrato_comissao": CURRENT, "acoes_executadas": int(row[4]),
+                             "preco_local": float(row[5]),
+                             "nocionais_ordens_usd": [abs(q) * float(notional) / abs(int(row[4]))
+                                                      for _, q, _ in parts],
+                             "ordens": [{"ticker": ticker, "acoes": q, "livro": kind}
+                                        for ticker, q, kind in parts]})
+            out.append(item)
         return pd.DataFrame(out).set_index("ticker")
 
     def _cost_model(self, ctx: DailyContext, nav: float) -> CostModel:
@@ -2241,7 +2304,7 @@ class DailyRunner:
                plan: _Plan) -> tuple[float, list[str]]:
         """Custo (USD, positivo) de passar da carteira antiga (derivada) à executada."""
         if self.cfg.execution is not None:
-            return self._costs_fechamento(ctx, execs, nav_pre)
+            return self._costs_fechamento(ctx, execs, nav_pre, plan.proposal)
         w_old: dict[tuple[str, str], float] = {(ln.issuer_id, ln.ticker): ln.mv_end / nav_pre
                                                for ln in old if ln.mv_end != 0}
         w_new: dict[tuple[str, str], float] = {(e.issuer_id, e.ticker): e.mv / nav_pre

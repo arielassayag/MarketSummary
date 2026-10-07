@@ -5,9 +5,99 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-Última atualização: 2026-10-07, 12:54, Brasília — ampla 7 verde; lote técnico validado para integração, P0 científico aberto. **Comece por
-`docs/cdp/PASSAGEM_CODEX.md`**: ligar as rotinas no Codex, P0 de desenvolvimento antes do
-retrato-gênese da cobertura (qua 07/10, 19:22) e cronograma até a carteira inaugural (sex 09/10).
+Última atualização: 2026-10-07, 16:54, Brasília — ampla 8 local concluída; integração normal do lote técnico em andamento e P0 aberto. **Comece por
+`docs/cdp/PASSAGEM_CODEX.md`**: rotinas no Codex, P0 de desenvolvimento e cronograma até a
+carteira inaugural de 09/10. Índice interno: `.cdp/README.md` e `.cdp/TAREFAS.md`.
+
+## Lote técnico após a ampla 8 — 07/10/2026, 16:54 Brasília
+
+- A ampla 8 local concluiu com código 0: 2.801 casos, 2.784 aprovados, 16 pulados e um
+  xfail, zero falhas/erros. Duração JUnit 2.727,653 s; harness Codex, São Paulo e UTF-8.
+  Os 652 arquivos testados permaneceram intactos. Ruff completo passou antes da execução.
+  Recibo: `.cdp/validacoes/20261007-integracao-11/AMPLA8_TERMINAL.json`.
+- O lote reúne custos por ordem v2 e leitores que preservam ausência, alias Yahoo D&A da
+  DFC e API RI opt-in/guarda ETF vazia. Revisões e focais estão no registro da integração 11.
+  Integração normal em main, push sem force, sincronização do executor e CI remota ainda
+  precisam concluir; resultado remoto de 887f744 não se transfere a este lote.
+- Este registro altera somente documentação após o terminal. Fonte, fixtures, configuração,
+  fórmulas, mandato e gates testados permanecem iguais. Executor79, ROOT5, fund3 e TOMLs12
+  passaram a conferência de custódia. Não houve escrita operacional.
+- Seis chamadas nativas foram observadas: Risco aguardou efetivamente 13:30 e 16:03,
+  com um gate por chamada. O pré-início encerrou sem trava/publicação; origem automática/
+  manual continua desconhecida. As 12 tarefas mantêm IDs e horários, seis famílias,
+  projeto atual AInotes e executor interno `.cdp/rotinas`.
+- Ligação RI à coleta/gravação/reprodução normais continua em cópia privada. Novo episódio
+  233/8 contou C101/233=43,34763948497854%, com corte de captura observado, ainda em
+  verificação integral e inventário causal. Não substitui a fonte oficial nem o C100 de
+  outra coleta. A atribuição entre retratos permanece indisponível, com motivo explícito;
+  estágios derivados autenticados são outra frente privada, sem relaxar guarda primária.
+- CVM nativo v2 recebeu parecer independente favorável somente ao reparo estrutural local
+  R1: 69 portáteis, 43 checks próprios e duas provas causais. A entrega do digest ocorre
+  depois do limite estrutural; o consumo prospectivo ainda exige handoff externo tipado,
+  recebimento autenticado e inclusão da entrega na disponibilidade. Não transpor como
+  produção. Publicação/recebimento financeiros nulos, PIT falso e residual/classificação
+  documental permanecem. Parecer: `.cdp/validacoes/20261007-auditoria/CVM_NATIVO_V2_REVISAO/PARECER.md`.
+- P0 oficial permanece C102/233=43,78%, acima de 35%. E1 integral, PIT, E2 e carteira
+  inaugural continuam abertos. Ampla verde é aceite técnico delimitado, não financeiro.
+
+## Próximo lote em DEV — 07/10/2026, 15:42 Brasília
+
+- Main/executor continuam `887f744`, CI remota verde do lote anterior. As 12 automações,
+  executor79, ROOT5 e os três mandatos permanecem preservados; nenhuma gravação operacional.
+- Custos financeiros v2 receberam revisão independente delimitada: 139 casos ordinários,
+  três episódios naturais e oráculo Decimal. A apresentação de ausência integral como zero
+  foi reparada em anexo separado, com 13 portáteis e 21 próprios independentes, preservando
+  os leitores v0/v1, zero explícito, vazio e subtotal misto. Transposição literal de 14 paths
+  apenas ao DEV, sem alterar fonte histórica ou propostas aprovadas.
+- Custos mais Yahoo: 201 focais passaram, Ruff completo verde, 637 arquivos intactos durante
+  a rodada. A primeira invocação apontava um módulo inexistente e executou zero casos; o
+  diagnóstico RC4 foi preservado separado. O resultado válido está em
+  `.cdp/validacoes/20261007-integracao-11/FOCAIS_CUSTOS_YAHOO.json`.
+- RI misto v2 e o anexo portátil receberam revisão independente favorável delimitada:
+  44 portáteis e 26 próprios verdes; mesma cadeia 233/8 e guarda de ETF vazio. Transposição
+  literal de 22 paths ao DEV, com 44 focais e Ruff completo verdes; 652 arquivos preservados
+  durante a rodada. Recibo: `.cdp/validacoes/20261007-integracao-11/FOCAIS_RI.json`.
+  A autoridade externa ainda precisa alcançar coleta, gravação e reprodução normais; essa
+  ligação permanece em cópia privada e não foi incluída na transposição da API.
+- CVM nativo privado: 44 focais do autor; revisão independente reextraiu documentos e identificou
+  aceitação de catálogo criado após o corte. V1 fica bloqueado e congelado. Exige nova versão
+  com máximo de criação e dependências, disponibilidade conservadora e nova revisão.
+  Publicação/recebimento nulos, PIT falso, classificação e residual documental pendentes.
+- Ampla integrada e sincronização ainda necessárias. P0 oficial C102/233=43,78% permanece
+  acima35%; E1 integral/PIT/E2/carteira inaugural não recebem aceite deste lote.
+
+## Executor integrado e próximo lote — 07/10/2026, 14:34 Brasília
+
+- Main/executor em `887f744`, após integração normal e sincronização. Ampla 7 local:
+  2.628 aprovados, 16 pulados e um xfail; CI remota dos dois jobs concluída verde,
+  JUnit baixado com 2.645 casos, zero falhas/erros e 17 skipped (inclui xfail).
+  Recibos: `.cdp/validacoes/20261007-integracao-11/CI_887_TERMINAL.json` e
+  `CI_887_JUNIT.json`. Não confundir esse lote com os candidatos seguintes.
+- Cinco chamadas nativas observadas. A quarta aguardou efetivamente 192,2286 s até
+  13:30, com um gate; a quinta entrou após 14:07 e avaliou às 14:08:55, sem espera.
+  Saídas normais de pré-início, sem trava, registro ou publicação. Origem automática/
+  manual desconhecida. As 12 automações, IDs, horários e arquivos estão preservados.
+- Revisão independente dos avisos P0 identificou perda do identificador D&A da DFC
+  no adapter Yahoo. Reparo de sete linhas mantém literalmente os fatos legados e
+  adiciona `d_a_dfc` apenas ao valor explicitamente extraído da DFC, após os mesmos
+  filtros. Treze testes do autor, 89 herdados, nove próprios e oráculo Decimal dos
+  sete raw/62 aliases passaram. Anexo portátil reproduziu seis falhas na versão
+  anterior e passou nove no candidato. Transposição somente ao DEV, com 98 focais
+  verdes e Ruff; nova ampla e integração ainda pendentes. AURA segue defasada;
+  Δgiro/ROU ausentes, rubricas da DRE e publicação estimada não foram promovidas.
+- Custo por ordem v2 congelado e privado, 151 casos distintos; revisão independente
+  em andamento. Estimativa planejada e débito preenchido são contratos explícitos,
+  incorporados antes do hash, com versões v0/v1 seladas preservadas.
+- Consumidor RI do universo misto em fechamento de provas e ainda sem revisão final/
+  transposição. Suporte temporal de magnitude v2 passou 82 casos do autor e 40 próprios
+  independentes; referências CVM/FCA/universo nativas de Intelbras foram preparadas,
+  mas adapter nativo continua em desenvolvimento. Publicação/recebimento desconhecidos
+  permanecem nulos, disponibilidade observada conservadora e PIT falso.
+- Fonte real 8-5 continua C102/233 = 43,78%, acima de 35%; a nova composição privada
+  não substitui livro oficial nem encerra P0/E1 integral/PIT/E2/carteira inaugural.
+  A metodologia financeira permanece `2026-10.8`; mandato e gates não mudaram.
+  Quadro e recibos: `.cdp/TAREFAS.md`, `.cdp/AGENDAS.md` e
+  `.cdp/validacoes/20261007-integracao-11/INTEGRACAO.md`.
 
 ## Resultado integral do lote técnico — 07/10/2026, 12:54 Brasília
 

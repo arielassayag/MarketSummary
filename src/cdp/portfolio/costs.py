@@ -367,8 +367,14 @@ def custos_fechamento(trades: pd.DataFrame, cfg: FundConfig, *, spread_mult: flo
     padrão + fracionário/pico contam duas). Custo em bps::
 
         meio spread (faixa de ADTV) × [closed_home_market_spread_mult se local fechado]
-        + max(comissão do mercado, n_ordens × mínimo por ordem / nocional) + câmbio (não USD)
+        + comissão + câmbio (não USD)
         + impact_coefficient · σ · √(nocional / ADTV) · close_impact_discount[categoria]
+
+    Sem estampa, a comissão conserva a aproximação histórica
+    ``max(variável da linha, n_ordens × mínimo)``. Com ``contrato_comissao`` prospectivo,
+    exige ``nocionais_ordens_usd`` das pernas efetivas e soma ``max(variável, mínimo)``
+    por ordem. Este cálculo puro é condicional aos insumos; a autenticação/reextração está
+    no diário e no verificador, vinculados à proposta aprovada.
 
     ``spread_mult``/``vol_mult`` aplicam o cenário de estresse (spreads e σ × 2). ADTV ou σ
     ausentes nunca viram zero (o chamador informa o piso conservador e a ``flag``)."""
@@ -392,13 +398,42 @@ def custos_fechamento(trades: pd.DataFrame, cfg: FundConfig, *, spread_mult: flo
                    index=trades.index)
     q = pd.to_numeric(trades["notional_usd"], errors="coerce").abs()
     if costs.min_order_cost_usd:
-        # Piso por ordem (tabelas públicas): substitui a comissão variável quando maior; uma
-        # ordem por perna (lote padrão + fracionário/pico contam duas).
+        # Aproximação agregada histórica: máximo entre variável da linha e soma dos pisos.
+        # O contrato prospectivo explícito abaixo calcula os pisos individuais reais.
         n_ord = pd.to_numeric(trades.get("n_ordens", pd.Series(1, index=trades.index)),
                               errors="coerce").fillna(1).clip(lower=1)
         floor = pd.Series([minimo_por_ordem_usd(str(m), cfg) for m in trades["market"]],
                           index=trades.index) * n_ord / q.where(q > 0) * BPS
         comm = np.maximum(comm, floor.fillna(0.0))
+    # Contrato prospectivo explícito: o agregado legado não certifica mínimos individuais.
+    if "contrato_comissao" in trades.columns:
+        from ..workflow.contrato_custos import CURRENT, LEGACY
+
+        for ticker, row in trades.iterrows():
+            chosen = row["contrato_comissao"]
+            if chosen == LEGACY:
+                continue
+            if chosen != CURRENT:
+                raise ValueError("contrato de comissão desconhecido ou malformado")
+            amounts = row.get("nocionais_ordens_usd")
+            if not isinstance(amounts, (list, tuple)) or not amounts:
+                raise ValueError("nocionais individuais ausentes no contrato por ordem")
+            if any(isinstance(x, bool) or not isinstance(x, (int, float))
+                   or not math.isfinite(float(x)) or float(x) <= 0 for x in amounts):
+                raise ValueError("nocional individual não positivo ou não finito")
+            if not math.isfinite(float(q.at[ticker])) or not math.isclose(
+                    sum(amounts), float(q.at[ticker]), rel_tol=1e-12, abs_tol=1e-8):
+                raise ValueError("nocionais individuais não fecham o nocional da linha")
+            if len(amounts) != row.get("n_ordens"):
+                raise ValueError("decomposição não fecha o número de ordens")
+            rate = costs.commission_bps.get(row["market"], worst_comm) / BPS
+            minimum = minimo_por_ordem_usd(str(row["market"]), cfg)
+            variable_parts = [float(amount) * rate for amount in amounts]
+            # Ramos economicamente iguais conservam a aritmética/bytes antigos.
+            if all(x >= minimum for x in variable_parts) or all(x <= minimum for x in variable_parts):
+                continue
+            commission_usd = sum(max(x, minimum) for x in variable_parts)
+            comm.at[ticker] = commission_usd / float(q.at[ticker]) * BPS
     sig = pd.to_numeric(trades["sigma_d"], errors="coerce") * vol_mult
     disc = trades["categoria"].map(lambda c: float(discount.get(c, 1.0))).astype(float)
     impact = costs.impact_coefficient * sig * np.sqrt(q / adtv.where(adtv > 0)) * disc * BPS
@@ -428,8 +463,10 @@ def minimo_por_ordem_usd(market: str, cfg: FundConfig) -> float:
 
 def comissao_efetiva_bps(market: str, notional_usd: float, cfg: FundConfig,
                          n_ordens: int = 1) -> float | None:
-    """Comissão + tarifas efetivas em bps do nocional: o maior entre a comissão variável do
-    mercado e ``n_ordens`` × mínimo por ordem; ``None`` sem nocional."""
+    """Estimativa agregada em bps: maior entre variável da linha e soma dos pisos.
+
+    Não certifica mínimos das pernas individualmente; ``None`` sem nocional.
+    """
     q = abs(float(notional_usd))
     if not q > 0 or not math.isfinite(q):
         return None

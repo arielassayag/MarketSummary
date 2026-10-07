@@ -173,17 +173,22 @@ def _int_br(n: object) -> str:
 class _Custos:
     """Contexto de custo do pregão ``d`` (painel do dia), montado uma vez por relatório."""
 
-    def __init__(self, rt: Runtime, d: date, md: MarketData) -> None:
-        self.rt, self.d, self.md = rt, d, md
+    def __init__(self, rt: Runtime, d: date, md: MarketData, cfg=None) -> None:
+        self.rt, self.d, self.md, self.cfg = rt, d, md, cfg
         self._runner: Any = None
         self._ctx: Any = None
 
-    def frame(self, trades: Sequence[tuple]) -> pd.DataFrame:
+    def frame(self, trades: Sequence[tuple], *, contrato: str = "aggregate_line/v0") -> pd.DataFrame:
         if self._ctx is None:
-            self._runner = self.rt._runner()
+            if self.cfg is None:
+                self._runner = self.rt._runner()
+            else:
+                from .daily import DailyRunner
+
+                self._runner = DailyRunner(self.cfg, self.rt.store, self.rt.book, self.rt.track())
             self._ctx = self._runner.context(self.d, self.md.truncate(self.d), None,
                                              need_models=False)
-        return self._runner.custo_frame(self._ctx, trades)
+        return self._runner.custo_frame(self._ctx, trades, contrato=contrato)
 
 
 def analise_execucao(rt: Runtime, d: date, md: MarketData, rec: DailyRecord,
@@ -204,8 +209,18 @@ def analise_execucao(rt: Runtime, d: date, md: MarketData, rec: DailyRecord,
         motivo_inelegivel,
         shortfall,
     )
+    from .contrato_custos import CURRENT, contract, verify_record
 
+    chosen = contract(proposal)
     cfg = rt.cfg
+    if chosen == CURRENT:
+        errors = verify_record(rt, rt.track(), rec, prev, proposal)
+        if errors:
+            raise ValueError("custo da execução não autenticado: " + "; ".join(errors))
+        cfg = rt._config_da_decisao(proposal.week, proposal)
+        if cfg is None:
+            raise ValueError("mandato autenticado do custo da execução ausente")
+        custos = _Custos(rt, d, md, cfg)
     before, after = _lines(prev), _lines(rec)
     nav_pre = _nav_pre(rec)
     hold = proposal is None or entry is None or proposal.optimizer.status == "hold"
@@ -273,10 +288,11 @@ def analise_execucao(rt: Runtime, d: date, md: MarketData, rec: DailyRecord,
     if traded:
         try:
             custos = custos or _Custos(rt, d, md)
-            frame = custos.frame([(ln["emissor"], ln["ticker"], ln["moeda"],
-                                   abs(ln["executadas"]) * ln["preco_fechamento"] * ln["fx"],
-                                   ln["executadas"], ln["preco_fechamento"])
-                                  for ln in traded])
+            trade_rows = [(ln["emissor"], ln["ticker"], ln["moeda"],
+                           abs(ln["executadas"]) * ln["preco_fechamento"] * ln["fx"],
+                           ln["executadas"], ln["preco_fechamento"]) for ln in traded]
+            frame = (custos.frame(trade_rows, contrato=chosen) if chosen == CURRENT
+                     else custos.frame(trade_rows))
             res = custos_fechamento(frame, cfg)
             for ln in traded:
                 v = _f(res["cost_usd"].get(ln["ticker"]))

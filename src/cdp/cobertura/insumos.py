@@ -557,6 +557,11 @@ def _prov_linha(row: pd.Series | None, *, detalhar_fluxos: bool = False, detalha
                      "data_publicacao": pub, "data_coleta": row.get("data_coleta"),
                      "sha256": row.get("sha256")})
     out["data_estimada"] = _bool(row.get("pit_estimado"))
+    if str(row.get("fonte")) == "RI_OBSERVADA":
+        out.update({k: row.get(k) for k in ("fato_id", "identity_binding_sha256", "disponivel_desde",
+                                          "coluna", "lexema", "quantum", "locator", "received_date")})
+        out["data_coleta"] = row.get("data_coleta")
+        out["modo_disponibilidade"] = "captura_observada_publicacao_desconhecida"
     if detalhar_fluxos and isinstance(row.get("componentes_fluxo"), str):
         out["componentes_fluxo"] = json.loads(row["componentes_fluxo"])
     elif detalhar_fluxos and "componentes_fluxo=" in str(row.get("nota", "")):
@@ -786,6 +791,13 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
     if temporal_ativo(params) and dados.corte_temporal is not None:
         corte = validar_corte(dados.corte_temporal)
         as_of = date.fromisoformat(corte["data_modelo"])
+    from .ri_observada import ativo as ri_ativo
+    if ri_ativo(params) and corte is not None:
+        from ..data.ri_captura.adapter import autenticar
+
+        contexto_ri = autenticar(dados.ri_contexto, md)
+        if issuer_id == contexto_ri.document.issuer_id:
+            md = md.truncate(date.fromisoformat(corte["base_preco"]))
     uni = md.universe
     iss = uni.issuers.loc[issuer_id]
     pais = str(iss["country"])
@@ -821,7 +833,9 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
     detalhar_resultados = resultado_ativo(params)
     if detalhar_resultados and not dados.resultado_evidencias.empty:
         pk.put("resultado_evidencias", str(dados.resultado_evidencias.iloc[0]["catalogo_json"]))
-    dem = Demonstrativos(dados.demonstrativos, issuer_id)
+    from .ri_observada import selecionar_demonstrativos
+    dem_selecionados, ri_trace = selecionar_demonstrativos(md, dados, params, issuer_id)
+    dem = Demonstrativos(dem_selecionados, issuer_id)
     moeda_dem = dem.moeda() or arq.moeda_demonstrativos
     if moeda_dem is None:
         prim = str(iss["primary_ticker"])
@@ -1039,13 +1053,18 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
     pk.put("item_patrimonio", k_pl)
     pk.put("item_lucro", k_luc)
     bvps = _div(pl_ctrl, unidades)
+    ri_conflito_patrimonio = ri_trace is not None and any(
+        d["estado"] == "conflito" and d["item"] in ("patrimonio_controladores", "patrimonio_liquido")
+        and d["freq"] == "Q" for d in ri_trace["selecao"])
+    if ri_conflito_patrimonio:
+        bvps = None
     eps_ttm = _div(lucro, unidades)
     fonte_yh = {"fonte": "SIMULADO" if md.is_synthetic else "YAHOO",
                 "url": None if md.is_synthetic else f"https://finance.yahoo.com/quote/{linha}/key-statistics",
                 "documento": ("retrato simulado (DADOS SIMULADOS)" if md.is_synthetic
                               else "retrato público Yahoo Finance (não point-in-time)"), "data_publicacao": None,
                 "data_coleta": md.manifest.created_at.isoformat(), "sha256": None}
-    if bvps is None and linha in md.fundamentals.index and moeda_dem == moeda:
+    if bvps is None and not ri_conflito_patrimonio and linha in md.fundamentals.index and moeda_dem == moeda:
         bv = _f(md.fundamentals.loc[linha].get("book_value"))
         if bv is not None:
             bvps = bv
@@ -1096,9 +1115,12 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
         pk.put("minoritarios", mino, pk.fontes.get("t.participacao_minoritarios"))
     else:
         plt, plc = itens.get("patrimonio_liquido"), itens.get("patrimonio_controladores")
+        ri_conflito_minoritarios = ri_trace is not None and any(
+            d["estado"] == "conflito" and d["item"] == "participacao_minoritarios" and d["freq"] == "Q"
+            for d in ri_trace["selecao"])
         mesma_data = ("patrimonio_liquido" in periodos and "patrimonio_controladores" in periodos
                       and periodos["patrimonio_liquido"] == periodos["patrimonio_controladores"])
-        if plt is not None and plc is not None and mesma_data and plt - plc >= 0:
+        if plt is not None and plc is not None and mesma_data and plt - plc >= 0 and not ri_conflito_minoritarios:
             pk.put("minoritarios", plt - plc, prov_codigo("patrimônio líquido total − patrimônio dos controladores "
                                                           "(mesmo balanço)"),
                    nome="Participação de não controladores (derivada)", unidade=f"total:{moeda}")
@@ -1167,7 +1189,8 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
     pk.put("lacunas", list(pk.lacunas))
     pk.put("fontes", dict(sorted(pk.fontes.items())))
     pk.put("tabela_insumos", list(pk.tabela))
-    return pk.v
+    from .ri_observada import finalizar_pacote
+    return finalizar_pacote(pk.v, ri_trace)
 
 
 def _consenso(md: MarketData, dados: DadosPublicos, params: ParametrosCobertura, pk: _Pacote,

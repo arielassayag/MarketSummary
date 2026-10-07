@@ -94,9 +94,11 @@ class Execucao:
 
 
 def tp_deterministico(pac: Mapping[str, Any], ctx: Mapping[str, Any], params: ParametrosCobertura,
-                      rf: float | None, rf_fonte: dict[str, Any] | None = None) -> float | None:
+                      rf: float | None, rf_fonte: dict[str, Any] | None = None, *,
+                      ri_fornecedor=None, conhecimento_ate=None) -> float | None:
     """Preço-alvo do caso-base (sem Monte Carlo) — usado pela ponte e pela verificação."""
-    av = Avaliador(pac, ctx, params, rf, rf_fonte or {})
+    av = Avaliador(pac, ctx, params, rf, rf_fonte or {},
+                   ri_fornecedor=ri_fornecedor, conhecimento_ate=conhecimento_ate)
     av.preparar_metodos()
     validos = av.metodos_validos()
     p0 = pac.get("preco")
@@ -255,7 +257,8 @@ def _resumo(pac: Mapping[str, Any], mod: Mapping[str, Any], as_of: date) -> dict
 
 
 def executar(md: MarketData, dados: DadosPublicos, params: ParametrosCobertura, as_of: date,
-             emissores: Iterable[str] | None = None, anterior: Anterior | None = None) -> Execucao:
+             emissores: Iterable[str] | None = None, anterior: Anterior | None = None, *,
+             ri_fornecedor=None, conhecimento_ate=None) -> Execucao:
     ids = sorted(str(i) for i in md.universe.issuers.index)
     alvo_ids = sorted(set(emissores)) if emissores else ids
     desconhecidos = [i for i in alvo_ids if i not in ids]
@@ -266,22 +269,41 @@ def executar(md: MarketData, dados: DadosPublicos, params: ParametrosCobertura, 
     if temporal_ativo(params) and dados.corte_temporal is not None:
         validar_corte(dados.corte_temporal)
         as_of = date.fromisoformat(dados.corte_temporal["data_modelo"])
+    from .ri_consumo import _corte, emissores_autorizados
+    from .ri_observada import ativo as ri_ativo
+    if not ri_ativo(params) and (dados.ri_observados is not None or dados.ri_evidencias is not None):
+        raise ValueError("RI consumo: tabelas observadas exigem a política explícita")
+    if ri_ativo(params):
+        cut = _corte(params, ri_fornecedor, conhecimento_ate)
+        if ri_fornecedor.md is not md or ri_fornecedor.dados is not dados:
+            raise ValueError("RI consumo: executar exige o próprio fornecedor dos insumos")
     pacotes = preparar(md, dados, params, ids, as_of)
     from .resultado import ativo, visao
     if ativo(params):
         pacotes = {iid: visao(p, params) for iid, p in pacotes.items()}
     rf, rf_data, rf_fonte = taxa_publica(dados, md, str(params.cc["rf_usd_serie"]), as_of)
-    ctx = montar_contexto(pacotes, params, rf, rf_fonte)
-    modelos, regs, dist = modelar(pacotes, ctx, params, rf, rf_fonte, anterior, alvo_ids)
+    ctx = montar_contexto(pacotes, params, rf, rf_fonte,
+                          ri_fornecedor=ri_fornecedor, conhecimento_ate=conhecimento_ate)
+    modelos, regs, dist = modelar(pacotes, ctx, params, rf, rf_fonte, anterior, alvo_ids,
+                                 ri_fornecedor=ri_fornecedor, conhecimento_ate=conhecimento_ate)
     for iid in ids:
         mod, pac = modelos[iid], pacotes[iid]
-        mod["alvos_linhas"] = _alvos_linhas(md, params, pac, mod, as_of)
+        md_linha = (md.truncate(date.fromisoformat(cut["base_preco"]))
+                    if ri_ativo(params) and iid in emissores_autorizados(ri_fornecedor) else md)
+        mod["alvos_linhas"] = _alvos_linhas(md_linha, params, pac, mod, as_of)
         mod["resumo"] = _resumo(pac, mod, as_of)
-    etfs, ins_etf = avaliar_etfs(md, dados, params, pacotes, modelos, rf, as_of)
+    etfs, ins_etf = avaliar_etfs(md, dados, params, pacotes, modelos, rf, as_of,
+                                ri_fornecedor=ri_fornecedor, conhecimento_ate=conhecimento_ate)
+    referencias = referencias_preco(md, pacotes, anterior, as_of)
+    if ri_ativo(params):
+        vinculados = emissores_autorizados(ri_fornecedor)
+        referencias.update(referencias_preco(
+            md.truncate(date.fromisoformat(cut["base_preco"])),
+            {iid: pac for iid, pac in pacotes.items() if iid in vinculados}, anterior, as_of))
     return Execucao(as_of=as_of, pacotes=pacotes, contexto=ctx, modelos=modelos, etfs=etfs,
                     rf={"valor": rf, "data": rf_data, "fonte": rf_fonte}, distribuicao=dist,
                     is_synthetic=bool(md.is_synthetic), emissores=alvo_ids, registros=regs,
-                    insumos_etf=ins_etf, referencias=referencias_preco(md, pacotes, anterior, as_of))
+                    insumos_etf=ins_etf, referencias=referencias)
 
 
 def _ultimo(df, t: str, d: date) -> float | None:
@@ -331,9 +353,15 @@ def referencias_preco(md: MarketData, pacotes: Mapping[str, Mapping[str, Any]], 
 
 def modelar(pacotes: Mapping[str, dict[str, Any]], ctx: Mapping[str, Any], params: ParametrosCobertura,
             rf: float | None, rf_fonte: dict[str, Any], anterior: Anterior | None = None,
-            alvo_ids: list[str] | None = None) -> tuple[dict[str, dict[str, Any]], dict[str, Any], dict[str, Any]]:
+            alvo_ids: list[str] | None = None, *, ri_fornecedor=None, conhecimento_ate=None
+            ) -> tuple[dict[str, dict[str, Any]], dict[str, Any], dict[str, Any]]:
     """Modelos, portões e rating de todos os emissores a partir dos pacotes e do contexto
     (função pura: é o que ``cobertura verify`` refaz a partir dos insumos arquivados)."""
+    from .ri_consumo import validar_conjunto
+    from .ri_consumo import validar_contexto as validar_ri
+    validar_conjunto(pacotes, params, fornecedor=ri_fornecedor, conhecimento_ate=conhecimento_ate)
+    for p in pacotes.values():
+        validar_ri(p, ctx, params, fornecedor=ri_fornecedor, conhecimento_ate=conhecimento_ate)
     from .resultado import ativo, validar_contexto
     if ativo(params):
         pacotes = {iid: validar_contexto(p, ctx, params) for iid, p in pacotes.items()}
@@ -347,7 +375,8 @@ def modelar(pacotes: Mapping[str, dict[str, Any]], ctx: Mapping[str, Any], param
         pacotes[h]["soma_partes"].pop("visao_casa", None)
 
     def um(iid: str) -> None:
-        av = Avaliador(pacotes[iid], ctx, params, rf, rf_fonte)
+        av = Avaliador(pacotes[iid], ctx, params, rf, rf_fonte,
+                       ri_fornecedor=ri_fornecedor, conhecimento_ate=conhecimento_ate)
         mod = av.avaliar()
         mod["portoes"] = portoes_emissor(pacotes[iid], mod, params)
         mod["ponte"] = None
@@ -356,7 +385,8 @@ def modelar(pacotes: Mapping[str, dict[str, Any]], ctx: Mapping[str, Any], param
             try:
                 mod["ponte"] = ponte(
                     anterior.alvos[iid], pac_a, pacotes[iid], ctx_a, ctx, rf_a, rf,
-                    float(mod["tp"]), lambda p, c, r: tp_deterministico(p, c, params, r))
+                    float(mod["tp"]), lambda p, c, r: tp_deterministico(p, c, params, r,
+                        ri_fornecedor=ri_fornecedor, conhecimento_ate=conhecimento_ate))
             except Exception as exc:  # ponte é diagnóstico: nunca derruba o modelo
                 mod["ponte"] = {"componentes": None, "nota": f"ponte indisponível: {type(exc).__name__}"}
             res = (mod["ponte"] or {}).get("residuo_relativo")
@@ -457,9 +487,12 @@ def vies_modelo(ctx: Mapping[str, Any], params: ParametrosCobertura) -> dict[str
     return {"paises": out, "alertas": alertas}
 
 
-def modelo_json(ex: Execucao, iid: str, params: ParametrosCobertura) -> dict[str, Any]:
+def modelo_json(ex: Execucao, iid: str, params: ParametrosCobertura, *,
+                ri_fornecedor=None, conhecimento_ate=None) -> dict[str, Any]:
     """JSON completo e aberto do modelo de um emissor (o que a página exibe)."""
     pac, mod = ex.pacotes[iid], ex.modelos[iid]
+    from .ri_consumo import validar_saida
+    validar_saida(mod, pac, ex.contexto, params, fornecedor=ri_fornecedor, conhecimento_ate=conhecimento_ate)
     aviso = SIMULATED_DATA_NOTICE if ex.is_synthetic else AVISO_REAL
     out = {
         "schema": SCHEMA_MODELO, "issuer_id": iid, "nome": pac["nome"], "pais": pac["pais"], "setor": pac["setor"],
@@ -497,6 +530,8 @@ def modelo_json(ex: Execucao, iid: str, params: ParametrosCobertura) -> dict[str
         out["corte_temporal"] = pac["corte_temporal"]
     if "visao_resultado" in mod:
         out["diagnosticos"]["visao_resultado"] = mod["visao_resultado"]
+    if "ri_observada" in mod:
+        out["diagnosticos"]["ri_observada"] = mod["ri_observada"]
     if "margem_fluxos" in mod:
         out["diagnosticos"]["margem_fluxos"] = mod["margem_fluxos"]
     return arredondar(out)

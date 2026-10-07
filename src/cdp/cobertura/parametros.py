@@ -136,6 +136,15 @@ def _validar(val: dict[str, Any], arqs: dict[str, Arquetipo], betas: dict[str, B
                           "cenarios", "sensibilidade", "rating", "qualidade", "etf", "alpha") if k not in val]
     if faltam:
         raise ValueError(f"valuation.yaml sem seções: {faltam}")
+    unidade_metodo = val.get("consenso", {}).get("unidade_metodo")
+    if unidade_metodo not in (None, "declaracao_fonte"):
+        raise ValueError(f"Método de unidade do consenso desconhecido: {unidade_metodo!r}")
+    reinvestimento_metodo = val["projecao"].get("reinvestimento_metodo")
+    if reinvestimento_metodo not in (None, "capitalizacao_arrendamentos"):
+        raise ValueError(f"Método de reinvestimento desconhecido: {reinvestimento_metodo!r}")
+    reinvestimento_regime = val["projecao"].get("reinvestimento_regime")
+    if reinvestimento_regime not in (None, "recente", "suavizado"):
+        raise ValueError(f"Regime de reinvestimento desconhecido: {reinvestimento_regime!r}")
     for arq, pesos in val["pesos_metodos"].items():
         if arq not in ARQUETIPOS:
             raise ValueError(f"Arquétipo desconhecido em pesos_metodos: {arq}")

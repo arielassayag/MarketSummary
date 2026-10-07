@@ -428,13 +428,16 @@ class Avaliador:
         self.rr_obs = self.fcf_obs = None
         self.rr_info = None
         self.rr_contaminado = False
+        self.rr_metodo = proj.get("reinvestimento_metodo")
         cfo, capex = _f(p.get("t.cfo")), _f(p.get("t.capex"))
         arr_pag = _f(p.get("t.arrendamentos_pagos"))
-        if not p.get("financeira") and cfo is not None and capex is not None:
+        if self.rr_metodo is None and not p.get("financeira") and cfo is not None and capex is not None:
             self.fcf_obs = cfo - abs(capex) - (abs(arr_pag) if arr_pag is not None else 0.0)
         if not p.get("financeira"):
-            self.rr_info = reinvestimento_observado(p, cc.imposto, int(proj.get("reinvestimento_anos_observados", 3)))
-            if arr_pag is None and (_f(p.get("arrendamentos")) or 0.0) > 0:
+            self.rr_info = reinvestimento_observado(
+                p, cc.imposto, int(proj.get("reinvestimento_anos_observados", 3)),
+                metodo=self.rr_metodo, regime=str(proj.get("reinvestimento_regime", "recente")))
+            if self.rr_metodo is None and arr_pag is None and (_f(p.get("arrendamentos")) or 0.0) > 0:
                 self.lacunas.append({"insumo": "arrendamentos_pagos", "nome": "pagamentos de arrendamentos",
                                      "motivo": "principal dos arrendamentos pago (DFC) não publicado na fonte: o fluxo "
                                                "observado não desconta a reposição dos ativos arrendados"})
@@ -442,23 +445,27 @@ class Avaliador:
             ri = self.rr_info
             rr_min = float(self.params.sec("qualidade").get("rr_observado_min", -1.0))
             com_arr = ri.get("arrendamentos") is not None
-            if ri["base"] == "12 meses":
+            if self.rr_metodo == "capitalizacao_arrendamentos":
+                self.fcf_obs = ri["fcf"]
+                self._passos_reinvestimento_capitalizado(ri)
+            elif ri["base"] == "12 meses":
                 sub_rr = (f"RR_obs = 1 − ({self._t(cfo)} − {self._t(abs(capex))}"
                           + (f" − {self._t(ri['arrendamentos'])}" if com_arr else "")
                           + f") ÷ ({self._t(ebit)} × (1 − {pct(cc.imposto)}))")
                 form_rr = ("RR_obs = 1 − (CFO − capex" + (" − arrendamentos pagos" if com_arr else "")
                            + ") ÷ (EBIT × (1 − t)), últimos 12 meses")
-            else:
+            elif self.rr_metodo is None:
                 sub_rr = f"RR_obs = 1 − {self._t(ri['fcf'])} ÷ {self._t(ri['nopat'])}"
                 form_rr = ("RR_obs = 1 − Σ(CFO − capex" + (" − arrendamentos pagos" if com_arr else "")
                            + ") ÷ Σ(EBIT × (1 − t)), últimos 3 exercícios")
-            arr_txt = (f"principal de arrendamentos pago (IFRS 16, DFC de financiamento) {self._t(ri['arrendamentos'])} "
-                       "descontado como reposição dos ativos arrendados; " if com_arr else
-                       "principal de arrendamentos pago não publicado em todos os períodos: não descontado; ")
-            reg.add("dir.reinvestimento", "Reinvestimento observado (anos 1–2 do fluxo de caixa)", form_rr, sub_rr,
-                    ri["rr"], "%", self._fonte("t.cfo") + self._fonte("t.capex") + self._fonte("t.arrendamentos_pagos"),
-                    premissas=("exercícios " + ", ".join(ri["anos"]) + "; " if ri["anos"] else "") + arr_txt
-                    + "dos anos 3 a 10 o reinvestimento converge linearmente para g ÷ RONIC")
+            if self.rr_metodo is None:
+                arr_txt = (f"principal de arrendamentos pago (IFRS 16, DFC de financiamento) {self._t(ri['arrendamentos'])} "
+                           "descontado como reposição dos ativos arrendados; " if com_arr else
+                           "principal de arrendamentos pago não publicado em todos os períodos: não descontado; ")
+                reg.add("dir.reinvestimento", "Reinvestimento observado (anos 1–2 do fluxo de caixa)", form_rr, sub_rr,
+                        ri["rr"], "%", self._fonte("t.cfo") + self._fonte("t.capex") + self._fonte("t.arrendamentos_pagos"),
+                        premissas=("exercícios " + ", ".join(ri["anos"]) + "; " if ri["anos"] else "") + arr_txt
+                        + "dos anos 3 a 10 o reinvestimento converge linearmente para g ÷ RONIC")
             self.rr_obs = ri["rr"]
             if ri["rr"] < rr_min:
                 med = _f(self.setor_ctx.get("rr_mediana"))
@@ -471,13 +478,26 @@ class Avaliador:
                     reg.add("dir.reinvestimento_setor", "Reinvestimento dos anos 1–2 pela mediana do setor",
                             f"RR_1,2 = {med_txt} (RR observado abaixo de {pct(rr_min, 0)})", f"RR_1,2 = {pct(med)}",
                             med, "%", premissas=("CFO − capex acima de 2 × NOPAT: o fluxo operacional publicado inclui "
-                                                 "operações financeiras ou liberação pontual de capital de giro"))
+                                                 "operações financeiras ou liberação pontual de capital de giro"
+                                                 if self.rr_metodo is None else
+                                                 "reinvestimento líquido excepcionalmente negativo: mediana de "
+                                                 "observações com a mesma identidade de capital investido"))
                     self.lacunas.append({"insumo": "reinvestimento", "nome": "reinvestimento observado",
-                                         "motivo": f"reinvestimento observado de {pct(ri['rr'], 0)} (CFO − capex acima de "
-                                                   f"2 × NOPAT): substituído pela {med_txt}"})
+                                         "motivo": (f"reinvestimento observado de {pct(ri['rr'], 0)} "
+                                                   + ("(CFO − capex acima de 2 × NOPAT)" if self.rr_metodo is None
+                                                      else "(investimento líquido negativo na identidade de capital investido)")
+                                                   + f": substituído pela {med_txt}")})
         if self.rr_obs is None and not p.get("financeira"):
-            self.avisos.append("FCFF sem reinvestimento observado (CFO ou capex não publicados, ou EBIT não positivo): "
-                               "reinvestimento = g ÷ RONIC desde o ano 1")
+            if self.rr_metodo == "capitalizacao_arrendamentos":
+                motivo = ("FCFF sem identidade observada completa de EBIT, capex, depreciação da DFC, variação "
+                          "do capital de giro operacional e adições de direitos de uso no mesmo período, "
+                          "base contábil e moeda: "
+                          "reinvestimento projetado por g ÷ RONIC, sem substituir ausência por zero")
+                self.avisos.append(motivo)
+                self.lacunas.append({"insumo": "reinvestimento", "nome": "reinvestimento observado", "motivo": motivo})
+            else:
+                self.avisos.append("FCFF sem reinvestimento observado (CFO ou capex não publicados, ou EBIT não positivo): "
+                                   "reinvestimento = g ÷ RONIC desde o ano 1")
         # RONIC de longo prazo: média do ROIC próprio com a mediana do setor, nunca abaixo do WACC
         self.ronic_final = None
         if cc.wacc is not None:
@@ -493,6 +513,49 @@ class Avaliador:
                     "RONIC = máx(WACC; (ROIC próprio + ROIC mediano do setor após IR) ÷ 2)",
                     f"RONIC = máx({pct(cc.wacc)}; {media})", self.ronic_final, "%",
                     premissas="ROIC próprio e mediana setorial do ROIC antes de IR × (1 − t)")
+
+    def _passos_reinvestimento_capitalizado(self, ri: dict[str, Any]) -> None:
+        """Ponte de capital investido, com as fontes dos períodos usados e os termos abertos."""
+        from .reinvestimento import COMPONENTES
+
+        hfontes = self.pac.get("historico_fontes") or {}
+        fontes = []
+        for k in COMPONENTES:
+            if ri["anos"]:
+                fontes.extend(f for a in ri["anos"] if (f := (hfontes.get(k) or {}).get(a)))
+            else:
+                fontes.extend(self._fonte(f"t.{k}"))
+        fontes = [g for f in fontes for g in [f, *(x["fonte"] for x in f.get("componentes_fluxo", []))]]
+        periodo = ", ".join(ri["anos"]) if ri["anos"] else str(ri.get("periodo"))
+        self.reg.add("dir.investimento_liquido", "Reinvestimento líquido no capital operacional",
+                     "I = capex + adições de direitos de uso − depreciação da DFC + variação do capital de giro operacional",
+                     f"I = {self._t(ri['capex'])} + {self._t(ri['adicoes_direito_uso'])} − {self._t(ri['d_a'])} "
+                     f"+ {operando(self._t(ri['variacao_capital_giro']))}", ri["reinvestimento"],
+                     f"total:{self.moeda}", fontes,
+                     premissas=(f"período: {periodo}; arrendamentos capitalizados no EBIT, capital investido, "
+                                "dívida e WACC; principal pago não é capex; juros pertencem ao financiamento"))
+        self.reg.add("dir.fcff_observado", "Fluxo de caixa não alavancado observado",
+                     "FCFF = NOPAT − I", f"FCFF = {self._t(ri['nopat'])} − {operando(self._t(ri['reinvestimento']))}",
+                     ri["fcf"], f"total:{self.moeda}", fontes,
+                     premissas="NOPAT = EBIT × (1 − alíquota marginal); o CFO reportado não substitui essa identidade")
+        self.reg.add("dir.reinvestimento", "Reinvestimento observado (anos 1–2 do fluxo de caixa)",
+                     "RR = I ÷ NOPAT", f"RR = {self._t(ri['reinvestimento'])} ÷ {self._t(ri['nopat'])}",
+                     ri["rr"], "%", fontes,
+                     premissas=(f"{ri['base']}, regime {ri['regime']}; dos anos 3 a 10 converge para g ÷ RONIC; "
+                                "ausências e datas-base diferentes não fecham a identidade"))
+        if ri.get("rr_historico") is not None:
+            historica = ri["ponte_historica"]
+            fs_hist = [f for k in COMPONENTES for a in ri["anos_historico"]
+                       if (f := (hfontes.get(k) or {}).get(a))]
+            self.reg.add("dir.reinvestimento_historico", "Sensibilidade: reinvestimento histórico",
+                         "RR_hist = Σ I ÷ Σ NOPAT",
+                         f"RR_hist = {self._t(historica['reinvestimento'])} ÷ {self._t(historica['nopat'])}",
+                         ri["rr_historico"], "%", fs_hist, premissas=("exercícios " + ", ".join(ri["anos_historico"])
+                         + "; média histórica exibida para comparar regimes, sem definir os fluxos projetados"))
+        if ri.get("componentes_12m_incompletos"):
+            self.lacunas.append({"insumo": "reinvestimento_12m", "nome": "ponte dos últimos 12 meses",
+                                 "motivo": f"componentes de 12 meses incompletos ou com datas diferentes; usada a "
+                                           f"última observação completa ({periodo}), sem misturar períodos, bases e moedas"})
 
     def _payout(self) -> tuple[float | None, str, str, str, list[dict[str, Any]]]:
         """Payout aos acionistas do emissor (proventos por ação × N, nunca os dividendos consolidados da
@@ -1414,7 +1477,7 @@ class Avaliador:
         return {"tp_ke_estatico": tpe, "upside_ke_estatico": tpe / p0 - 1}
 
     def _fcff_observado(self) -> dict[str, Any]:
-        """FCFF do ano 1 do modelo contra o fluxo de caixa livre observado (CFO − capex)."""
+        """Ano 1 contra a identidade observada definida pelos parâmetros arquivados do retrato."""
         ms = [m for m in self.metodos_validos() if m.startswith("fcff")]
         if not ms:
             return {}
@@ -1425,7 +1488,9 @@ class Avaliador:
         return {"fcff_ano1": fc1, "fcf_observado": self.fcf_obs, "fcff_ano1_vs_observado": razao,
                 "reinvestimento_limitado_anos": list(res.limite_atingido),
                 "rr_observado": ri.get("rr"), "rr_observado_base": ri.get("base"),
-                "rr_contaminado": bool(self.rr_contaminado)}
+                "rr_contaminado": bool(self.rr_contaminado),
+                **({"reinvestimento_metodo": self.rr_metodo,
+                    "reinvestimento_observado": dict(ri)} if self.rr_metodo is not None else {})}
 
     # ------------------------------------------------------------------ 5. cenários
     def _cenarios(self, p0: float, tp: float, etr: float, validos: list[str]) -> dict[str, Any]:

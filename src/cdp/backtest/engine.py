@@ -2,8 +2,9 @@
 
 Sinais de LLM não podem ser testados honestamente dentro da janela de treino dos modelos
 (docs/research/02): o backtest mede apenas o processo quantitativo — painel em USD, modelo de
-risco, sinais point-in-time, alpha puro, limites por emissor e otimizador em modo de vol-alvo —
-exatamente como o pipeline semanal ao vivo (``workflow/weekly.py``), mas sem visões de IA.
+risco, sinais point-in-time, alpha puro, limites por emissor e otimizador em modo de vol-alvo.
+Usa o núcleo de risco do pipeline semanal ao vivo (``workflow/weekly.py``), sem visões de IA;
+a execução histórica é simplificada, com limitações explícitas nas notas do resultado.
 
 Regras point-in-time (sem look-ahead):
 
@@ -17,7 +18,9 @@ Regras point-in-time (sem look-ahead):
   ⇒ terça), com informação até o pregão anterior da B3. Os pregões de cada bolsa são inferidos
   dos dados (dias com fechamento em ao menos metade das linhas listadas do mercado).
 - ``RiskModelEstimator`` é ajustado uma vez; no rebalanceamento ``t`` usa-se ``model_at(d)``, em
-  que ``d`` é a data de informação. Sinais: ``compute_signals(..., as_of=d,
+  que ``d`` é a data de informação. Fatores macro são estimados com séries até ``d``; esse
+  modelo base é preservado para o gate idiossincrático, e janelas de evento só alteram o
+  modelo de decisão. Sinais: ``compute_signals(..., as_of=d,
   pit_only=True)``. Dados posteriores ao fim do backtest e barras provisórias (intradiárias) não
   entram.
 - Short interest, aluguel B3 e escore de squeeze são retratos atuais (não PIT): só valem as
@@ -68,11 +71,14 @@ from ..portfolio.costs import CostModel, build_cost_model, estimate_rebalance_co
 from ..portfolio.optimizer import (
     RISK_TARGET_MODES,
     build_asset_constraints,
+    metodologia_ativa,
     model_implied_betas,
     optimize,
 )
 from ..risk.event_scaling import active_event_windows, apply_event_windows
 from ..risk.exposures import historical_mcap, market_weights
+from ..risk.idio import fatia_idio, kappa_f
+from ..risk.macro import augment_with_macro, macro_factor, macro_returns
 from ..risk.model import MIN_FACTOR_OBS, RiskModelEstimator
 from ..risk.types import TRADING_DAYS, RiskModel
 from .metrics import deflated_sharpe_ratio, ic_summary, performance_metrics
@@ -103,7 +109,9 @@ DAILY_COLUMNS = ["ret_net", "ret_gross", "cost", "borrow", "financing", "factor_
                  "specific_pnl", "nav", "gross", "net", "rebalance"]
 WEEKLY_COLUMNS = ["info_date", "status", "ex_ante_vol", "vol_target", "gross", "net", "beta",
                   "n_long", "n_short", "turnover", "cost", "expected_alpha", "alpha_scale",
-                  "relaxations", "n_eligible", "n_alpha", "n_frozen", "event_window"]
+                  "relaxations", "n_eligible", "n_alpha", "n_frozen", "event_window",
+                  "ex_ante_vol_base", "idio_decisao", "idio_base", "kappa_f", "kappa_source",
+                  "idio_share_goal", "idio_share_floor", "macro_factors", "macro_missing"]
 COMPOSITE_IC = "composite"
 
 ProgressFn = Callable[[int, int, str], None]
@@ -225,10 +233,12 @@ class BacktestResult:
 
     - ``daily``: ``ret_net``, ``ret_gross``, ``cost``, ``borrow``, ``financing`` (frações do NAV
       do dia anterior), ``factor_pnl``, ``specific_pnl`` (``NaN`` em dias sem regressão
-      fatorial), ``nav`` (USD), ``gross``/``net`` (após o fechamento) e ``rebalance``.
+      fatorial ou com retorno macro ausente), ``nav`` (USD), ``gross``/``net`` (após o
+      fechamento) e ``rebalance``.
     - ``weekly`` (por data de rebalanceamento): ``ex_ante_vol``, ``gross``, ``net``, ``beta``,
       ``n_long``, ``n_short``, ``turnover`` (executado), ``expected_alpha``, ``status``,
-      ``relaxations`` e diagnósticos.
+      ``relaxations`` e diagnósticos. Inclui vol base, fatia idiossincrática por modelo,
+      κ_F/meta/piso e fatores macro usados/ausentes; sem gate ativo a fatia permanece ausente.
     - ``weights``: pesos-alvo por data de rebalanceamento × emissor (0 = sem posição).
     - ``ic``: IC de Spearman por data × sinal (z do sinal em ``d`` contra a soma dos retornos
       específicos da semana seguinte); coluna ``composite`` = alpha puro.
@@ -651,15 +661,22 @@ def _freeze_untradable(cons: pd.DataFrame, frozen: frozenset[str], current: pd.S
     return c, len(idx)
 
 
-def _held_stats(model: RiskModel | None, w: pd.Series, betas: pd.Series | None) -> dict:
+def _held_stats(model: RiskModel | None, w: pd.Series, betas: pd.Series | None, *,
+                model_base: RiskModel | None = None, kappa: float | None = None) -> dict:
     out = {"ex_ante_vol": float("nan"), "beta": float("nan")}
     w = w[w != 0]
     if model is None:
         return out
     if w.empty:
-        return {"ex_ante_vol": 0.0, "beta": 0.0}
+        out["beta"] = 0.0
     try:
         out["ex_ante_vol"] = model.portfolio_vol(w)
+        if model_base is not None:
+            out["ex_ante_vol_base"] = model_base.portfolio_vol(w)
+        if kappa is not None:
+            out["idio_decisao"] = fatia_idio(w, model, kappa)["idio"]
+            if model_base is not None:
+                out["idio_base"] = fatia_idio(w, model_base, kappa)["idio"]
     except KeyError:
         pass
     if betas is not None and set(w.index) <= set(betas.index):
@@ -679,14 +696,27 @@ def _decide(ctx: _Context, t: pd.Timestamp, pos_d: int, w_cur: pd.Series, nav: f
     held = w_cur[w_cur != 0]
 
     try:
-        model = ctx.est.model_at(d)
+        model_base = ctx.est.model_at(d)
     except ValueError as exc:
         record.update(_held_stats(None, held, None))
         return _Decision("manter:sem_modelo", record=record,
                          notes=[f"{t.date()}: modelo de risco indisponível ({exc})."])
     windows = active_event_windows(cfg, t.date())
-    model = apply_event_windows(model, panel.assets["country"], cfg, t.date())
+    model_base = augment_with_macro(model_base, ctx.md, cfg, panel)
+    model = apply_event_windows(model_base, panel.assets["country"], cfg, t.date())
     record["event_window"] = "; ".join(str(w.get("name", w.get("country"))) for w in windows)
+    mac = model_base.meta.get("macro", {})
+    record["macro_factors"] = "; ".join(mac.get("fatores", []))
+    record["macro_missing"] = "; ".join(mac.get("ausentes", []))
+    kappa = None
+    if metodologia_ativa(cfg):
+        kappa, kinfo = kappa_f(model_base, cfg)
+        record.update({"kappa_f": kappa, "kappa_source": kinfo["fonte"],
+                       "idio_share_goal": cfg.risk.idio_share_goal,
+                       "idio_share_floor": cfg.risk.idio_share_floor})
+
+    def held_stats(betas: pd.Series | None) -> dict:
+        return _held_stats(model, held, betas, model_base=model_base, kappa=kappa)
 
     assets = ctx.pit.assets_at(pos_d)
     in_model = set(model.assets)
@@ -697,11 +727,11 @@ def _decide(ctx: _Context, t: pd.Timestamp, pos_d: int, w_cur: pd.Series, nav: f
         mkt_w = market_weights(panel, model.assets, date=d)
         betas = model_implied_betas(model, mkt_w)
     except ValueError as exc:
-        record.update(_held_stats(model, held, None))
+        record.update(held_stats(None))
         return _Decision("manter:sem_pesos_de_mercado", record=record, model=model,
                          notes=[f"{t.date()}: pesos de mercado indisponíveis ({exc})."])
     if len(eligible) < MIN_ELIGIBLE:
-        record.update(_held_stats(model, held, betas))
+        record.update(held_stats(betas))
         return _Decision("manter:poucos_elegiveis", record=record, model=model,
                          notes=[f"{t.date()}: {len(eligible)} emissores elegíveis "
                                 f"(< {MIN_ELIGIBLE}); carteira mantida."])
@@ -712,12 +742,12 @@ def _decide(ctx: _Context, t: pd.Timestamp, pos_d: int, w_cur: pd.Series, nav: f
         alpha = build_alpha(signals, model, cfg, weights=ctx.signal_weights,
                             sector=panel.assets["sector"])
     except ValueError as exc:
-        record.update(_held_stats(model, held, betas))
+        record.update(held_stats(betas))
         return _Decision("manter:sem_alpha", record=record, model=model,
                          notes=[f"{t.date()}: alpha indisponível ({exc})."])
     record["n_alpha"] = len(alpha.included)
     if not alpha.included:
-        record.update(_held_stats(model, held, betas))
+        record.update(held_stats(betas))
         return _Decision("manter:sem_alpha", record=record, model=model,
                          signal_z=alpha.signal_z, alpha=alpha.alpha,
                          notes=[f"{t.date()}: nenhum emissor com alpha definido."])
@@ -742,9 +772,10 @@ def _decide(ctx: _Context, t: pd.Timestamp, pos_d: int, w_cur: pd.Series, nav: f
         with warnings.catch_warnings():
             warnings.filterwarnings("ignore", message=INACCURATE_WARNING, category=UserWarning)
             res = optimize(alpha.alpha, model, cons, cost_model, cfg, nav, current=current,
-                           inception=inception, market_w=mkt_w, overrides=overrides)
+                           inception=inception, market_w=mkt_w, overrides=overrides,
+                           model_base=model_base, kappa_f=kappa)
     except Exception as exc:  # noqa: BLE001 - qualquer falha do otimizador mantém a carteira
-        record.update(_held_stats(model, held, betas))
+        record.update(held_stats(betas))
         relax = getattr(exc, "relaxations", None) or []
         record["relaxations"] = "; ".join(relax)
         return _Decision("manter:falha_otimizador", record=record, model=model,
@@ -753,6 +784,7 @@ def _decide(ctx: _Context, t: pd.Timestamp, pos_d: int, w_cur: pd.Series, nav: f
                          notes=[f"{t.date()}: otimização falhou ({type(exc).__name__}: {exc}); "
                                 "carteira anterior mantida."])
     w = res.weights[res.weights != 0]
+    record.update(_held_stats(model, w, betas, model_base=model_base, kappa=kappa))
     record.update({
         "ex_ante_vol": res.ex_ante_vol,
         "expected_alpha": res.expected_alpha,
@@ -943,6 +975,14 @@ def run_backtest(md: MarketData, cfg: FundConfig, bt: BacktestConfig,
     ok_rows = np.asarray(cal.isin(f_ok.index))
     fmat_all = f_ok.reindex(cal).to_numpy(dtype=float)
     fmat_all = np.where(ok_rows[:, None], np.nan_to_num(fmat_all, nan=0.0), np.nan)
+    # Fatores transversais inativos em uma regressão válida contam zero (convenção do
+    # estimator). Macro usa retornos exógenos do próprio dia; ausência continua NaN.
+    # A lista global só indexa atribuição/IC ex-post: inclusão e betas do modelo de decisão
+    # são ajustados por augment_with_macro até a data de informação de cada semana.
+    mret = macro_returns(md, list(cfg.risk_model.macro_factors), cal)
+    if len(mret.columns):
+        est_factors.extend(macro_factor(s) for s in mret.columns)
+        fmat_all = np.column_stack([fmat_all, mret.to_numpy(dtype=float)])
 
     rf = rf_daily_series(md, cal) if bt.include_financing else None
     if bt.include_financing and rf is None:
@@ -1114,7 +1154,8 @@ def run_backtest(md: MarketData, cfg: FundConfig, bt: BacktestConfig,
         notes.append(f"{n_rf_missing} dia(s) sem taxa {RATE_SERIES} conhecida: juros do caixa 0 "
                      "nesses dias.")
     if n_attr_missing:
-        notes.append(f"{n_attr_missing} dia(s) sem atribuição fatorial (regressão do dia pulada): "
+        notes.append(f"{n_attr_missing} dia(s) sem atribuição fatorial (regressão ou retorno "
+                     "macro do dia ausente): "
                      "fator/específico ausentes (NaN) e fora da média anualizada.")
     if n_fee_imputed:
         notes.append(f"{n_fee_imputed} short(s) sem taxa de aluguel: usada a taxa máxima do "
@@ -1188,7 +1229,12 @@ def _standard_notes(cfg: FundConfig, bt: BacktestConfig, vol_target: float,
         "Escada de drawdown do mandato não é aplicada no backtest (gross não é reduzido após "
         "perdas).",
         "Atribuição: fator = Σ x_k f_k com exposições do rebalanceamento e retornos fatoriais "
-        "estimados no próprio dia (ex-post); retornos de fatores inativos no dia contam 0.",
+        "estimados no próprio dia (ex-post); retornos de fatores transversais inativos no dia "
+        "contam 0. Fatores macro usam o retorno do ativo no dia; ausência conserva NaN.",
+        "Risco: bloco macro e modelo base estimados até a data de informação; janelas de evento "
+        "aplicadas somente ao modelo de decisão. Gates específicos seguem os modelos "
+        "configurados e "
+        "κ_F calculado na base, como no pipeline vivo.",
         f"Modelo de risco: {len(est.issuers)} emissores no universo de estimação, exposições "
         f"recalculadas a cada {est.refresh_days} pregões.",
     ]

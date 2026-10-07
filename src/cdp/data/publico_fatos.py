@@ -39,6 +39,8 @@ from .fundamentals_pit import _quarter_value, _ttm_value
 FLUXOS = frozenset({
     "receita", "lucro_bruto", "ebit", "ebitda", "d_a", "resultado_financeiro", "lucro_antes_ir",
     "ir_csll", "lucro_liquido", "lucro_liquido_controladores", "cfo", "capex", "fcf",
+    "d_a_dfc", "adicoes_direito_uso", "depreciacao_direito_uso",
+    "variacao_capital_giro_operacional", "juros_pagos_operacionais",
     "dividendos_pagos", "arrendamentos_pagos", "recompras", "margem_financeira", "receita_servicos", "despesa_pdd",
 })
 
@@ -125,7 +127,7 @@ def selecionar_pit(fatos: pd.DataFrame, as_of: date) -> pd.DataFrame:
     f = f.sort_values(["entidade", "item", "received_date", "version", "period_end"],
                       kind="stable")
     datas, anuais = _datas_base(f)
-    oficiais = set(f.loc[f["fonte"].isin(["CVM", "SEC"]), "entidade"]) \
+    oficiais = set(f.loc[f["fonte"].isin(["CVM", "SEC", "RI"]), "entidade"]) \
         if "fonte" in f.columns else set()
     linhas: list[dict] = []
     for (ent, item), g in f.groupby(["entidade", "item"], sort=True):
@@ -175,10 +177,12 @@ def _fluxo(ent: str, item: str, g: pd.DataFrame) -> list[dict]:
     by_end: dict[date, dict[date, float]] = {}
     meta_end: dict[date, dict] = {}
     meta_anual: dict[date, dict] = {}
+    meta_periodo: dict[tuple[date, date], dict] = {}
     for row in g.itertuples(index=False):
         s, e = row.period_start.date(), row.period_end.date()
         by_end.setdefault(e, {})[s] = float(row.value)
         meta_end[e] = _meta(row)  # ordenado por publicação ⇒ o último é o mais recente
+        meta_periodo[(s, e)] = _meta(row)
         dur = (e - s).days + 1
         if _ANUAL[0] <= dur <= _ANUAL[1]:
             meta_anual[e] = _meta(row)
@@ -201,12 +205,46 @@ def _fluxo(ent: str, item: str, g: pd.DataFrame) -> list[dict]:
                         **{**meta_end[e], "consolidado": cons,
                            "nota": _juntar(meta_end[e].get("nota"), nota_base)}})
         t, how = _ttm_value(by_end, e)
+        componentes = None
+        if not math.isfinite(t):
+            # Um semestre atual e o comparativo, com o exercício imediatamente anterior,
+            # determinam 12 meses sem fornecer nenhum trimestre discreto. Exige períodos
+            # exatamente alinhados e preserva as três origens na nota.
+            for s, atual in flows.items():
+                if not 170 <= (e - s).days + 1 <= 195:
+                    continue
+                s_prev = (pd.Timestamp(s) - pd.DateOffset(years=1)).date()
+                e_prev = (pd.Timestamp(e) - pd.DateOffset(years=1)).date()
+                fim_anual = (pd.Timestamp(s) - pd.Timedelta(days=1)).date()
+                anual_prev = by_end.get(fim_anual, {}).get(s_prev)
+                comparativo = by_end.get(e_prev, {}).get(s_prev)
+                if anual_prev is None or comparativo is None or not \
+                        _ANUAL[0] <= (fim_anual - s_prev).days + 1 <= _ANUAL[1]:
+                    continue
+                componentes = [meta_periodo[(s, e)], meta_periodo[(s_prev, fim_anual)],
+                               meta_periodo[(s_prev, e_prev)]]
+                if len({m["consolidado"] for m in componentes}) != 1:
+                    componentes = None
+                    continue  # base mista não representa nem consolidado nem individual
+                t = atual + anual_prev - comparativo
+                how = "semestre"
+                break
         if math.isfinite(t):
-            cons, nota_base = _base_janela(meta_end, e, 1 if how == "12m" else 370)
+            meta_ttm = meta_end[e]
+            if componentes:
+                cons = all(m["consolidado"] for m in componentes)
+                origens = " + ".join(f"{m['documento']} (sha256 {m['sha256']}; {m['url']})"
+                                     for m in componentes)
+                nota_base = "TTM semestral = semestre atual + anual anterior − semestre " \
+                            "comparativo; componentes: " + origens
+                meta_ttm = {**meta_ttm, "data_publicacao":
+                            max(m["data_publicacao"] for m in componentes)}
+            else:
+                cons, nota_base = _base_janela(meta_end, e, 1 if how == "12m" else 370)
             out.append({"entidade": ent, "item": item, "freq": "TTM",
                         "period_end": pd.Timestamp(e), "value": t,
-                        **{**meta_end[e], "consolidado": cons,
-                           "nota": _juntar(meta_end[e].get("nota"), nota_base)}})
+                        **{**meta_ttm, "consolidado": cons,
+                           "nota": _juntar(meta_ttm.get("nota"), nota_base)}})
     return out
 
 

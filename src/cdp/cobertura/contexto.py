@@ -91,13 +91,22 @@ def roe_historico(p: Mapping[str, Any], anos_max: int = 5) -> dict[str, Any]:
             "n": len(rs), "serie": [[a, r6(r)] for a, r in pares]}
 
 
-def reinvestimento_observado(p: Mapping[str, Any], imposto: float, anos: int = 3) -> dict[str, Any] | None:
-    """Reinvestimento observado ÷ NOPAT: ``1 − Σ(CFO − capex − arrendamentos) ÷ Σ(EBIT × (1 − t))`` nos
-    ``anos`` últimos exercícios publicados (suaviza o capital de giro); sem eles, nos últimos 12 meses.
-    ``arrendamentos`` = principal dos passivos de arrendamento pago (IFRS 16: financiamento na DFC; a
-    reposição dos ativos arrendados não passa pelo capex), quando publicado em todos os períodos usados;
-    sem ele, o fluxo não o desconta (``arrendamentos`` ``None``, sinalizado no modelo). ``None`` sem
-    EBIT positivo ou sem CFO e capex."""
+def reinvestimento_observado(p: Mapping[str, Any], imposto: float, anos: int = 3, *,
+                            metodo: str | None = None, regime: str = "recente") -> dict[str, Any] | None:
+    """Política selecionada pelos parâmetros arquivados de cada retrato.
+
+    ``capitalizacao_arrendamentos`` usa a identidade de capital operacional (capex + adições ROU
+    − D&A da DFC + ΔWC operacional) e exige componentes publicados no mesmo período. Sem a chave,
+    preserva a fórmula histórica ``1 − Σ(CFO − capex − pagamentos de arrendamentos) ÷ Σ NOPAT``.
+    A rubrica genérica de pagamentos da política histórica não certifica principal isolado.
+    """
+    if metodo == "capitalizacao_arrendamentos":
+        from .reinvestimento import reinvestimento_capitalizado
+
+        return reinvestimento_capitalizado(p, imposto, anos, regime)
+    if metodo is not None:
+        raise ValueError(f"Método de reinvestimento desconhecido: {metodo}.")
+    # Política histórica: permanece idêntica para recálculos dos retratos anteriores à 2026-10.5.
     hist = p.get("historico") or {}
     cfo, capex, ebit = (hist.get(k) or {} for k in ("cfo", "capex", "ebit"))
     arr = hist.get("arrendamentos_pagos") or {}
@@ -284,7 +293,9 @@ def montar_contexto(pacotes: Mapping[str, Mapping[str, Any]], params: Parametros
         f = fundamentos(p, lim_g, anos_roe, cal)  # type: ignore[arg-type]
         cc_ = params.cc
         imp = float(cc_["imposto_marginal"].get(p["pais"], cc_["imposto_marginal"]["LATAM"]))
-        rr = None if p["financeira"] else reinvestimento_observado(p, imp, int(proj.get("reinvestimento_anos_observados", 3)))
+        rr = None if p["financeira"] else reinvestimento_observado(
+            p, imp, int(proj.get("reinvestimento_anos_observados", 3)),
+            metodo=proj.get("reinvestimento_metodo"), regime=str(proj.get("reinvestimento_regime", "recente")))
         linhas.append({"iid": iid, "pais": p["pais"], "setor": p["setor"], "arquetipo": p.get("arquetipo"),
                        "financeira": bool(p["financeira"]), **f, "rr_obs": None if rr is None else rr["rr"]})
     setores: dict[str, Any] = {}

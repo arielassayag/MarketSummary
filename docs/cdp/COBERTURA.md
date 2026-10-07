@@ -78,6 +78,9 @@ contábeis, como receita de construção de concessões) não é usado.
   arquivo de cotação (hash e data de coleta de cada um). Entre as linhas do emissor (classes, ADR),
   vale a de consenso de LPA com mais analistas quando o seu LPA convertido (ações por linha e câmbio da
   moeda das estimativas) fica a ±35% do da linha de valuation; o número de analistas é registrado.
+  A moeda declarada no arquivo de LPA define uma única conversão, com paridade entre as linhas.
+  Moeda ausente deixa o LPA ausente; uma razão extrema contra o lucro realizado sinaliza revisão
+  das premissas, sem reinterpretar moeda ou unidade para enquadrar o valor numa faixa.
   Consenso de LPA de menos de 2 analistas não define o ROE dos anos 1–2 (vale o lucro de 12 meses,
   sinalizado) e confiança A exige ≥ 3 analistas. O consenso é **calendarizado em 12 meses à
   frente** (no modelo, no contexto transversal e no prêmio implícito): com f = fração decorrida do
@@ -213,11 +216,18 @@ corroboração do G11.
   convergência geométrica do crescimento (persistência setorial φ); margem EBIT corrente; nas
   commodities, a margem corrente reverte à mediana do ciclo com o mesmo perfil do choque de preço
   (plena nos anos 1–3, linear até o ano 5, perpetuidade na margem do ciclo). Reinvestimento ancorado no
-  observado: nos anos 1–2, `1 − Σ(CFO − capex) ÷ Σ(EBIT × (1 − t))` dos 3 últimos exercícios (12
-  meses sem eles), com o **principal de arrendamentos pago** (IFRS 16: na DFC de financiamento; a
-  reposição dos ativos arrendados não passa pelo capex) descontado do fluxo quando publicado em todos
-  os períodos (contas da DFC da CVM; sem ele, lacuna); abaixo de −100% (CFO com operações financeiras,
-  como recebíveis de cartão ou banco cativo) vale a mediana do setor, com aviso G14; dos anos 3 a 10, convergência
+  observado pela identidade não alavancada `FCFF = NOPAT + D&A − capex − Δgiro operacional −
+  adições de direitos de uso`. D&A é a restituição total publicada na DFC; a depreciação ROU
+  das notas não é adicionada novamente. Os componentes precisam corresponder à mesma
+  frequência, encerramento, moeda de apresentação e base contábil homogênea. Metadados
+  ausentes ou inválidos e um TTM com bases mistas impedem a identidade observada. Δgiro exige
+  rubrica identificada; diferenças de NCWC entre balanços ficam como sensibilidade em sombra,
+  pois podem conter câmbio, aquisições e mudanças de perímetro. Nos anos 1–2, a taxa é
+  `(capex + adições de direitos de uso − D&A + Δgiro operacional) ÷ NOPAT` dos 12 meses recentes
+  completos, ou do último exercício completo com a defasagem indicada. A média de três exercícios
+  fica como diagnóstico do regime; sem identidade completa, a observação permanece ausente e
+  a projeção teórica `g ÷ RONIC` leva lacuna explícita. A dívida e o WACC já incorporam os
+  arrendamentos: principal pago não é investimento e não é descontado novamente. Dos anos 3 a 10, convergência
   linear para `g ÷ RONIC`, com o RONIC convergindo do ROIC corrente ao retorno de longo prazo
   (média do ROIC próprio e do setor, nunca abaixo do WACC); limitado a [−50%; 95%] do NOPAT, com
   os anos limitados sinalizados. Perpetuidade pelo direcionador de valor
@@ -226,7 +236,8 @@ corroboração do G11.
   indenização); `V0 = (EV − dívida líquida) × PL dos controladores ÷ (PL dos controladores +
   minoritários) ÷ ações` — participação de não controladores a valor proporcional ao do patrimônio,
   não pelo valor contábil. O modelo aberto mostra o FCFF do ano 1 contra o fluxo de caixa livre
-  observado.
+  observado quando essa identidade está completa. As políticas são versionadas nos parâmetros;
+  o recálculo de retratos anteriores usa a configuração arquivada de cada retrato.
 - **Múltiplos de regressão**: regressões transversais robustas (Huber) com efeito fixo de país,
   `P/VPA ~ ROE + g + β + payout`, `P/L ~ g + payout + β`, `EV/Receita ~ margem + g + alavancagem`;
   regressores limitados à faixa da projeção; múltiplo previsto limitado ao P5–P95 dos múltiplos da
@@ -334,7 +345,7 @@ corroboração do G11.
 ## 7. Portões de qualidade
 
 G1 identidade PL = controladores + minoritários (aviso; EBITDA = EBIT + D&A e FCF = CFO − capex são
-informativos, porque o modelo parte do EBIT e de CFO − capex); G2 nenhum insumo publicado depois da
+informativos, sem definir a identidade não alavancada do FCFF); G2 nenhum insumo publicado depois da
 data (bloqueio); G3 valor finito; G4 ke no envelope P10–P90 dos demais emissores do país × setor, ± 1
 p.p. (informativo); G5 valor terminal ≤ 85% (aviso; acima de 95% o método é excluído); G6 otimista ≥
 base ≥ pessimista (bloqueio); G7 resíduo da ponte ≤ 0,5% (aviso; avaliado antes do rating); G8
@@ -350,7 +361,11 @@ coerente com o lucro de 12 meses quando métodos patrimoniais pesam mais de 50% 
 LPA de consenso ÷ preço ≤ 50% nos anos 1 e 2, ROE do ano 2 ≤ 100% em módulo e margem EBIT ≤ 100% fora
 de holdings e imobiliárias (bloqueio); **G13c** contagem de ações conciliada (bloqueio sem par entre
 três fontes; aviso quando só duas divergem); **G14** reinvestimento observado acima de −100% do NOPAT
-(aviso abaixo; o FCFF do ano 1 contra o fluxo observado é exibido); G15 fluxos e balanço na mesma
+(aviso abaixo; o FCFF do ano 1 é confrontado com a identidade observada de NOPAT, D&A,
+capex, variação de capital de giro operacional e adições de direitos de uso, quando todos
+os componentes publicados estão completos e alinhados por frequência, encerramento, base
+contábil e moeda; parâmetros históricos preservam
+a comparação anterior por CFO); G15 fluxos e balanço na mesma
 data-base (aviso, limita a B); **G16** probabilidade de patrimônio não positivo nos sorteios < 10%
 (aviso); **G17** alertas da fonte pública sobre os períodos e itens usados (item em conferência,
 salto de magnitude em item central, troca recente da moeda de apresentação: aviso; demais alertas

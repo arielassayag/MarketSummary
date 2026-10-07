@@ -3,6 +3,8 @@
 
 from __future__ import annotations
 
+from copy import deepcopy
+
 import pytest
 
 import cdp.cobertura.rating as R
@@ -196,21 +198,33 @@ def test_g13_blocks_unit_and_currency_traps(params):
     assert _g13(params, 20.0, 12.0, peso=0.3, diverge=True)["status"] == "ok"
 
 
-def test_g14_flags_cash_flow_contaminated_by_financial_operations(params):
-    """G14: reinvestimento observado (3 exercícios) abaixo de −100% do NOPAT (CFO − capex acima de 2 ×
-    NOPAT: recebíveis de cartão, banco cativo ou liberação pontual de capital de giro) ⇒ aviso; nos
-    demais casos o FCFF do ano 1 contra o fluxo observado é só exibido."""
+@pytest.mark.parametrize("capitalizado", [False, True], ids=["historico", "capitalizado"])
+def test_g14_flags_cash_flow_contaminated_by_financial_operations(params, capitalizado):
+    """DADOS SIMULADOS: RR abaixo de −100% continua aviso em ambas as políticas.
+
+    O texto identifica a observação usada (CFO histórico ou identidade capitalizada),
+    sem mudar a severidade. Nos demais casos a razão FCFF/observado é informativa.
+    """
     from cdp.cobertura.qualidade import portoes_emissor
 
+    params = deepcopy(params)
+    if not capitalizado:
+        params.valuation["projecao"].pop("reinvestimento_metodo", None)
+    periodo = "12 meses" if capitalizado else "3 exercícios"
+    mediana = ("mediana de observações setoriais com a mesma identidade de capital investido"
+               if capitalizado else "mediana do setor")
+    fluxo = ("fluxo observado pela identidade de capital investido"
+             if capitalizado else "(CFO − capex) dos últimos 12 meses")
     pac = {"as_of": "2026-10-08", "status_moeda": "ok", "defasagem_preco_dias": 0, "tem_demonstrativos": False}
     base = {"tem_alvo": True, "metodos": [{"valor": 1.0}], "tp": 10.0, "tp_otimista": 12.0, "tp_pessimista": 8.0,
             "upside": 0.1, "etr": 0.12, "pwr": 0.1, "fcff_ano1": 300.0, "fcf_observado": 100.0,
             "fcff_ano1_vs_observado": 3.0}
     g = {p["codigo"]: p for p in portoes_emissor(pac, {**base, "rr_observado": -1.4,
-                                                        "rr_observado_base": "3 exercícios"}, params)}
-    assert g["G14"]["status"] == "aviso" and "mediana do setor" in g["G14"]["detalhe"]
+                                                        "rr_observado_base": periodo}, params)}
+    assert g["G14"]["status"] == "aviso"
+    assert mediana in g["G14"]["detalhe"] and fluxo in g["G14"]["detalhe"]
     g = {p["codigo"]: p for p in portoes_emissor(pac, {**base, "rr_observado": 0.35,
-                                                        "rr_observado_base": "3 exercícios"}, params)}
+                                                        "rr_observado_base": periodo}, params)}
     assert g["G14"]["status"] == "ok" and "3,00 ×" in g["G14"]["detalhe"]
     # sem reinvestimento observado o portão não se aplica
     assert "G14" not in {p["codigo"] for p in portoes_emissor(pac, base, params)}

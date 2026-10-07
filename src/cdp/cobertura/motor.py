@@ -42,7 +42,7 @@ from .qualidade import bloqueios, portoes_emissor, portoes_transversais
 from .rating import aplicar
 
 SCHEMA_MODELO = "cdp.cobertura.modelo/v1"
-AVISO_REAL = "dados públicos (CVM, SEC, Yahoo Finance, BCB, FRED, Damodaran)"
+AVISO_REAL = "dados públicos (CVM, SEC, RI, Yahoo Finance, BCB, FRED, Damodaran)"
 
 
 def arredondar(obj: Any) -> Any:

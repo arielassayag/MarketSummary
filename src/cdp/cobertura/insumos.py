@@ -49,7 +49,9 @@ Regras:
 
 from __future__ import annotations
 
+import json
 import math
+import re
 from collections.abc import Iterable, Sequence
 from datetime import date
 from typing import Any
@@ -66,13 +68,16 @@ from .passos import prov_codigo, prov_dict
 FLUXOS = ("receita", "lucro_bruto", "ebit", "ebitda", "d_a", "resultado_financeiro", "lucro_antes_ir",
           "ir_csll", "lucro_liquido", "lucro_liquido_controladores", "cfo", "capex", "fcf",
           "dividendos_pagos", "recompras", "margem_financeira", "receita_servicos", "despesa_pdd",
-          "arrendamentos_pagos", "receita_construcao")
+          "arrendamentos_pagos", "receita_construcao", "adicoes_direito_uso", "depreciacao_direito_uso",
+          "d_a_dfc", "variacao_capital_giro_operacional", "juros_pagos_operacionais")
 ESTOQUES = ("caixa", "aplicacoes_cp", "divida_bruta", "divida_liquida", "arrendamentos",
             "patrimonio_liquido", "patrimonio_controladores", "participacao_minoritarios",
             "ativo_total", "acoes_emitidas", "acoes_tesouraria", "acoes_em_circulacao",
             "provisao_credito", "carteira_credito")
 HIST_ITENS = ("receita", "ebit", "lucro_liquido_controladores", "patrimonio_controladores",
-              "acoes_em_circulacao", "cfo", "capex", "arrendamentos_pagos", "dividendos_pagos")
+              "acoes_em_circulacao", "cfo", "capex", "arrendamentos_pagos", "dividendos_pagos",
+              "adicoes_direito_uso", "depreciacao_direito_uso", "d_a_dfc",
+              "variacao_capital_giro_operacional", "arrendamentos")
 SEMANAS_ANO = 52
 DEFASAGEM_AVISO_DIAS = 100
 NOTA_CONFERENCIA = "conferência"
@@ -86,7 +91,12 @@ ROTULOS = {
     "cfo": "fluxo de caixa das operações", "capex": "investimento em ativo fixo e intangível (capex)",
     "fcf": "fluxo de caixa livre", "dividendos_pagos": "dividendos e juros sobre capital pagos",
     "recompras": "recompra de ações", "margem_financeira": "margem financeira",
-    "arrendamentos_pagos": "pagamentos de arrendamentos (principal, DFC)",
+    "arrendamentos_pagos": "pagamentos de passivos de arrendamento (DFC)",
+    "adicoes_direito_uso": "adições de ativos de direito de uso",
+    "depreciacao_direito_uso": "depreciação de ativos de direito de uso",
+    "d_a_dfc": "depreciação e amortização restituídas na DFC",
+    "variacao_capital_giro_operacional": "variação do capital de giro operacional (uso de caixa positivo)",
+    "juros_pagos_operacionais": "juros pagos nas atividades operacionais",
     "receita_construcao": "receita de construção da infraestrutura de concessão (DVA)",
     "receita_servicos": "receita de serviços", "despesa_pdd": "despesa de provisão para crédito",
     "caixa": "caixa e equivalentes", "aplicacoes_cp": "aplicações financeiras de curto prazo",
@@ -263,6 +273,7 @@ class Demonstrativos:
         self._conf: dict[str, pd.Timestamp] = {}
         if not d.empty:
             d["period_end"] = pd.to_datetime(d["period_end"], errors="coerce")
+            d["data_publicacao"] = pd.to_datetime(d["data_publicacao"], errors="coerce")
             d["value"] = pd.to_numeric(d["value"], errors="coerce")
             if "escala" in d.columns:
                 esc = pd.to_numeric(d["escala"], errors="coerce").fillna(1.0)
@@ -296,6 +307,18 @@ class Demonstrativos:
         do exercício corrente − acumulado do mesmo período do exercício anterior`` (trimestres do
         exercício corrente consecutivos a partir do fim do último exercício e os mesmos trimestres
         um ano antes, todos publicados)."""
+        def componentes(linhas: list[tuple[pd.Series, float]]) -> str:
+            return json.dumps([{"item": str(r["item"]), "freq": str(r["freq"]),
+                                "period_end": pd.Timestamp(r["period_end"]).date().isoformat(),
+                                "valor": float(r["value"]), "coeficiente": sinal,
+                                "fonte": _prov_linha(r)} for r, sinal in linhas], ensure_ascii=False)
+
+        def compativeis(linhas: list[pd.Series]) -> bool:
+            moedas = {str(r.get("currency")) for r in linhas}
+            bases = {_base_linha(r) for r in linhas}
+            return len(moedas) == 1 and bool(re.fullmatch(r"[A-Z]{3}", next(iter(moedas)))) and len(bases) == 1 \
+                and next(iter(bases)) in ("consolidado", "individual")
+
         rows = []
         for item in FLUXOS:
             q = d[(d["item"] == item) & (d["freq"] == "Q")].drop_duplicates(
@@ -309,11 +332,12 @@ class Demonstrativos:
                 gaps = ult4["period_end"].diff().dropna().dt.days
                 fim = ult4["period_end"].iloc[-1]
                 if gaps.between(80, 100).all():
-                    if ult_outros is None or ult_outros < fim:
+                    if (ult_outros is None or ult_outros < fim) and compativeis([rr for _, rr in ult4.iterrows()]):
                         r = ult4.iloc[-1].to_dict()
                         r.update({"freq": "TTM", "value": float(ult4["value"].sum()),
                                   "documento": f"{r.get('documento') or ''} (soma dos 4 últimos trimestres)".strip(),
-                                  "data_publicacao": ult4["data_publicacao"].max()})
+                                  "data_publicacao": ult4["data_publicacao"].max(),
+                                  "componentes_fluxo": componentes([(rr, 1.0) for _, rr in ult4.iterrows()])})
                         rows.append(r)
                     continue
             a = d[(d["item"] == item) & (d["freq"] == "A")].sort_values("period_end")
@@ -330,21 +354,29 @@ class Demonstrativos:
             if [pd.Timestamp(x) for x in cur["period_end"]] != esperado:
                 continue
             ant = []
+            linhas_ant = []
             for pe in cur["period_end"]:
                 m = q[(q["period_end"] - (pe - pd.DateOffset(years=1))).abs() <= pd.Timedelta(days=5)]
                 if m.empty:
                     ant = None
                     break
                 ant.append(float(m.iloc[-1]["value"]))
+                linhas_ant.append(m.iloc[-1])
             if ant is None:
+                continue
+            participantes = [a.iloc[-1], *(rr for _, rr in cur.iterrows()), *linhas_ant]
+            if not compativeis(participantes):
                 continue
             r = cur.iloc[-1].to_dict()
             r.update({"freq": "TTM", "value": float(a["value"].iloc[-1]) + float(cur["value"].sum()) - sum(ant),
                       "documento": (f"{r.get('documento') or ''} (anual + acumulado do exercício − acumulado do "
                                     "mesmo período do exercício anterior)").strip(),
-                      "data_publicacao": max(cur["data_publicacao"].max(), a["data_publicacao"].iloc[-1])})
+                      "data_publicacao": max(pd.Timestamp(rr["data_publicacao"]) for rr in participantes),
+                      "componentes_fluxo": componentes([(a.iloc[-1], 1.0)] + [(rr, 1.0) for _, rr in cur.iterrows()]
+                                                        + [(rr, -1.0) for rr in linhas_ant])})
             rows.append(r)
-        return pd.DataFrame(rows, columns=d.columns) if rows else d.iloc[0:0]
+        return pd.DataFrame(rows, columns=[*d.columns, "componentes_fluxo"] if "componentes_fluxo" not in d else d.columns) \
+            if rows else d.iloc[0:0]
 
     @property
     def vazio(self) -> bool:
@@ -392,17 +424,24 @@ class Demonstrativos:
                     return _f(prev.iloc[-1]["value"])
         return None
 
-    def anual(self, item: str) -> dict[int, float]:
+    def linhas_anuais(self, item: str) -> dict[int, pd.Series]:
+        """As linhas exatas que formam o histórico anual, após a preferência de consolidação.
+
+        Havendo mais de um encerramento no ano civil, prevalecem o último encerramento e,
+        no empate, a última publicação. Valor, período e proveniência usam a mesma seleção.
+        """
         if self.df.empty:
             return {}
         sub = self.df[(self.df["item"] == item) & (self.df["freq"] == "A")].sort_values(
             ["period_end", "data_publicacao"], kind="mergesort")
-        out: dict[int, float] = {}
+        out: dict[int, pd.Series] = {}
         for _, r in sub.iterrows():
-            v = _f(r["value"])
-            if v is not None:
-                out[int(r["period_end"].year)] = v
+            if _f(r["value"]) is not None:
+                out[int(r["period_end"].year)] = r
         return out
+
+    def anual(self, item: str) -> dict[int, float]:
+        return {ano: float(r["value"]) for ano, r in self.linhas_anuais(item).items()}
 
     def anual_individual(self, item: str) -> set[int]:
         """Exercícios cujo valor anual de ``item`` vem das demonstrações individuais (sem consolidadas)."""
@@ -484,19 +523,32 @@ def _bool(x: Any) -> bool:
     return bool(x)
 
 
-def _prov_linha(row: pd.Series | None) -> dict[str, Any]:
+def _base_linha(row: pd.Series) -> str | None:
+    # O normalizador histórico sinaliza base mista com consolidado=False. Isso não certifica
+    # demonstrações individuais homogêneas e não pode fechar a identidade nova de FCFF.
+    if "base mista" in str(row.get("nota", "")).lower():
+        return None
+    b = str(row.get("consolidado")).lower()
+    return "consolidado" if b in ("true", "1") else "individual" if b in ("false", "0") else None
+
+
+def _prov_linha(row: pd.Series | None, *, detalhar_fluxos: bool = False) -> dict[str, Any]:
     if row is None:
         return prov_codigo("sem linha de demonstrativo")
     freq = FREQ_PT.get(str(row.get("freq")), str(row.get("freq")))
     base = ""
     if "consolidado" in row.index and str(row.get("consolidado")).lower() in ("false", "0"):
         base = "; demonstrações individuais (sem consolidadas no período)"
+    pub = row.get("data_publicacao")
+    pub = pd.Timestamp(pub).date() if pd.notna(pub) else None
     out = prov_dict({"fonte": row.get("fonte"), "url": row.get("url"),
                      "documento": f"{documento_pt(row.get('documento'))} ({row.get('demonstrativo')}, "
                                   f"{freq} até {pd.Timestamp(row['period_end']).date()}{base})".strip(),
-                     "data_publicacao": row.get("data_publicacao"), "data_coleta": row.get("data_coleta"),
+                     "data_publicacao": pub, "data_coleta": row.get("data_coleta"),
                      "sha256": row.get("sha256")})
     out["data_estimada"] = _bool(row.get("pit_estimado"))
+    if detalhar_fluxos and isinstance(row.get("componentes_fluxo"), str):
+        out["componentes_fluxo"] = json.loads(row["componentes_fluxo"])
     return out
 
 
@@ -831,6 +883,8 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
         pk.lacunas.append(lacuna("demonstrativos", "sem demonstrativos públicos até a data"))
     itens = {}
     periodos: dict[str, pd.Timestamp] = {}
+    bases_fluxos = {}
+    moedas_fluxos = {}
     estimados = False
     for item in FLUXOS + ESTOQUES:
         if item in ("acoes_emitidas", "acoes_tesouraria", "acoes_em_circulacao"):
@@ -846,7 +900,9 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
         itens[item] = vv
         if row is not None:
             periodos[item] = pd.Timestamp(row["period_end"])
-        prov = _prov_linha(row)
+            bases_fluxos[item] = _base_linha(row)
+            moedas_fluxos[item] = row.get("currency")
+        prov = _prov_linha(row, detalhar_fluxos=params.sec("projecao").get("reinvestimento_metodo") is not None)
         estimados = estimados or bool(prov.get("data_estimada"))
         pk.put(f"t.{item}", vv, prov, nome=rotulo(item), unidade=f"total:{moeda}", periodo=per)
         if prov.get("data_estimada"):
@@ -895,19 +951,41 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
     pk.put("data_fluxos", None if fluxo_ref is None else fluxo_ref.date().isoformat())
     pk.put("receita_ano_anterior", _conv(dem.ttm_ano_anterior("receita"), fator))
     hist = {}
+    hist_fontes = {}
+    hist_periodos = {}
+    hist_bases = {}
+    hist_moedas = {}
     for item in HIST_ITENS:
-        a = dem.anual(item)
+        linhas = dem.linhas_anuais(item)
         if item == "lucro_liquido_controladores":
             # exercícios só com demonstrações individuais (sem não controladores): o lucro do exercício é o
             # dos controladores
             ind = dem.anual_individual("lucro_liquido")
-            for ano, v in dem.anual("lucro_liquido").items():
-                if ano not in a and ano in ind:
-                    a[ano] = v
-        if a:
+            for ano, row in dem.linhas_anuais("lucro_liquido").items():
+                if ano not in linhas and ano in ind:
+                    linhas[ano] = row
+        if linhas:
             f_item = 1.0 if item == "acoes_em_circulacao" else fator
-            hist[item] = {str(k): r6(_conv(v, f_item)) for k, v in sorted(a.items())}
+            hist[item] = {str(ano): r6(_conv(float(r["value"]), f_item)) for ano, r in sorted(linhas.items())}
+            hist_fontes[item] = {str(ano): {**_prov_linha(r), "item_fonte": str(r["item"]),
+                                 "moeda_fonte": str(r.get("currency")), "valor_fonte": float(r["value"]),
+                                 "fator_moeda": f_item, "valor_modelo": hist[item][str(ano)]}
+                                 for ano, r in linhas.items()}
+            hist_periodos[item] = {str(ano): f"A|{pd.Timestamp(r['period_end']).date().isoformat()}"
+                                   for ano, r in linhas.items()}
+            hist_bases[item] = {str(ano): _base_linha(r) for ano, r in linhas.items()}
+            hist_moedas[item] = {str(ano): r.get("currency") for ano, r in linhas.items()}
     pk.put("historico", hist)
+    if params.sec("projecao").get("reinvestimento_metodo") is not None:
+        pk.put("historico_fontes", hist_fontes)
+        pk.put("historico_periodos", hist_periodos)
+        pk.put("historico_bases", hist_bases)
+        pk.put("historico_moedas", hist_moedas)
+        pk.put("bases_fluxos", {k: v for k, v in bases_fluxos.items() if k in FLUXOS})
+        pk.put("moedas_fluxos", {k: v for k, v in moedas_fluxos.items() if k in FLUXOS})
+        pk.put("periodos_fluxos", {str(r["id"])[2:]: str(r["periodo"])
+                                  for r in pk.tabela if str(r.get("id", "")).startswith("t.")
+                                  and str(r["id"])[2:] in FLUXOS and r.get("periodo")})
     if arq.arquetipo == "holding":
         pk.put("serie_acoes", [[d.date().isoformat(), r6(v)] for d, v in dem.serie_acoes()])
     datas_pub = pd.to_datetime(dem.df["data_publicacao"], errors="coerce") if tem_dem else pd.Series(dtype="datetime64[ns]")
@@ -1063,11 +1141,14 @@ def _consenso(md: MarketData, dados: DadosPublicos, params: ParametrosCobertura,
     row = None
     tick = linha
     linhas_n: list[list[Any]] = []
+    unidades_declaradas = params.valuation.get("consenso", {}).get("unidade_metodo") == "declaracao_fonte"
 
     def fator_de(r: pd.Series, t: str) -> float | None:
         """LPA por unidade da linha ``t`` na moeda das estimativas → por unidade da linha de valuation
         na moeda dela (ações por linha e câmbio)."""
         m_e = r.get("moeda_estimativas")
+        if unidades_declaradas and not (isinstance(m_e, str) and len(m_e) == 3):
+            return None
         m_e = str(m_e).upper() if isinstance(m_e, str) and len(m_e) == 3 else str(lines.loc[t, "currency"]).upper()
         fx_e, _ = fx_usd(md, m_e, as_of)
         fx_m, _ = fx_usd(md, moeda, as_of)
@@ -1137,11 +1218,16 @@ def _consenso(md: MarketData, dados: DadosPublicos, params: ParametrosCobertura,
     status = "ok"
     m_est = row.get("moeda_estimativas")
     m_est = str(m_est).upper() if isinstance(m_est, str) and len(m_est) == 3 else None
-    fator_lpa = fator_de(row, tick) if _f(row.get("eps_fy1")) is not None else 1.0
+    tem_lpa = _f(row.get("eps_fy1")) is not None or (unidades_declaradas and _f(row.get("eps_fy2")) is not None)
+    fator_lpa = fator_de(row, tick) if tem_lpa else 1.0
     if fator_lpa is None:
-        pk.avisos.append(f"LPA de consenso em {m_est or tick} sem câmbio na base: descartado")
         e1 = e2 = None
-        status = "cambio_indisponivel"
+        if unidades_declaradas and m_est is None:
+            status = "moeda_indeterminada"
+            pk.avisos.append("moeda do LPA de consenso ausente na fonte: não inferida da cotação ou dos demonstrativos")
+        else:
+            status = "cambio_indisponivel"
+            pk.avisos.append(f"LPA de consenso em {m_est or tick} sem câmbio na base: descartado")
     else:
         e1 = _conv(_f(row.get("eps_fy1")), fator_lpa)
         e2 = _conv(_f(row.get("eps_fy2")), fator_lpa)
@@ -1167,7 +1253,14 @@ def _consenso(md: MarketData, dados: DadosPublicos, params: ParametrosCobertura,
             return 0.2 <= abs(e / eps_ttm) <= 5.0
         return 0.0005 <= abs(e) / preco <= 1.0
 
-    if e1 is not None and not plausivel(e1):
+    if unidades_declaradas:
+        # A recuperação de um prejuízo pode gerar uma razão extrema entre LPA previsto e
+        # realizado. Essa razão não demonstra outra moeda/unidade e nunca autoriza uma
+        # segunda conversão. A declaração da fonte, o câmbio e a paridade da linha definem
+        # a unidade; os portões de qualidade continuam avaliando o resultado econômico.
+        if any(e is not None and not plausivel(e) for e in (e1, e2)):
+            pk.avisos.append("LPA de consenso distante do lucro realizado: revisar premissas; moeda e unidade declaradas preservadas")
+    elif e1 is not None and not plausivel(e1):
         # unidade diferente (LPA por ação local num ADR, ou por ADR numa linha local) ou moeda
         a_ln, _ = acoes_por_linha(md, params, issuer_id, linha)
         fx_d, _ = fx_usd(md, moeda_dem, as_of) if moeda_dem else (None, None)
@@ -1240,6 +1333,9 @@ def _consenso(md: MarketData, dados: DadosPublicos, params: ParametrosCobertura,
         "recomendacao": r6(_f(row.get("recomendacao_media"))), "status_lpa": status,
         "n_eps_linhas": sorted(linhas_n),
     }
+    if unidades_declaradas:
+        cons.update({"moeda_lpa": m_est, "fator_lpa": r6(fator_lpa),
+                     "unidade_metodo": "declaracao_fonte"})
     if tick != linha:
         pk.avisos.append(f"consenso de LPA da linha {tick} ({int(cons['n_eps'] or 0)} analistas), a de mais analistas "
                          "entre as linhas do emissor")

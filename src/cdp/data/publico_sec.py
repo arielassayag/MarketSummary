@@ -44,11 +44,53 @@ URL_TICKERS = "https://www.sec.gov/files/company_tickers_exchange.json"
 URL_EFTS = "https://efts.sec.gov/LATEST/search-index?keysTyped={q}"
 URL_SUBMISSIONS = "https://data.sec.gov/submissions/CIK{cik}.json"
 CATALOGO_RI = Path(__file__).resolve().parents[3] / "configs/cdp/sec_ri_xbrl.json"
+CATALOGO_CLASSES = Path(__file__).resolve().parents[3] / "configs/cdp/sec_classes_acoes.json"
+CATALOGO_FLUXOS = Path(__file__).resolve().parents[3] / "configs/cdp/sec_fluxos_html.json"
 FORMULARIOS = frozenset({
     "10-K", "10-K/A", "10-KT", "10-Q", "10-Q/A", "20-F", "20-F/A", "40-F", "40-F/A",
     "6-K", "6-K/A", "8-K",
 })
 ANUAIS = frozenset({"10-K", "10-K/A", "10-KT", "20-F", "20-F/A", "40-F", "40-F/A"})
+
+
+def documentos_fluxos_sec(cik10: str, as_of: date) -> list[dict]:
+    """Notas sem XBRL catalogadas, com datas/entidade conferidas em submissions."""
+    if not CATALOGO_FLUXOS.exists():
+        return []
+    catalogo = json.loads(CATALOGO_FLUXOS.read_text(encoding="utf-8"))
+    if catalogo.get("schema") != "cdp.sec_fluxos_html/v1":
+        raise ValueError("catálogo de notas SEC: schema desconhecido")
+    return [d for d in catalogo["documentos"] if d["cik"] == cik10
+            and date.fromisoformat(d["filed"]) <= as_of]
+
+
+def fatos_fluxos_documento(conteudo: bytes, entidade: str, catalogado: dict,
+                           arquivamento: dict) -> pd.DataFrame:
+    """Exige SHA e metadados do documento primário oficial; não infere data pelo nome."""
+    from .publico_fluxos import fatos_fluxos_html
+
+    if hashlib.sha256(conteudo).hexdigest() != catalogado["sha256"]:
+        raise ValueError("notas SEC: SHA-256 diferente do catálogo")
+    for chave in ("accn", "form", "documento"):
+        if str(arquivamento[chave]) != catalogado[chave]:
+            raise ValueError("notas SEC: metadados de arquivamento divergentes")
+    for chave in ("filed", "period_end"):
+        if pd.Timestamp(arquivamento[chave]) != pd.Timestamp(catalogado[chave]):
+            raise ValueError("notas SEC: datas de arquivamento divergentes")
+    url = url_filing(catalogado["cik"], catalogado["accn"]) + catalogado["documento"]
+    if catalogado["url"] != url or arquivamento["url"] != url:
+        raise ValueError("notas SEC: URL fora do documento primário do CIK")
+    fatos = fatos_fluxos_html(conteudo, entidade, documento=catalogado["documento"], url=url,
+                             data_publicacao=date.fromisoformat(catalogado["filed"]),
+                             data_referencia=date.fromisoformat(catalogado["period_end"]))
+    f = pd.DataFrame(fatos, columns=[*FATO_COLUNAS, "nota"])
+    if not f.empty:
+        f["period_start"] = pd.to_datetime(f["period_start"])
+        f["period_end"] = pd.to_datetime(f["period_end"])
+        f["received_date"] = pd.to_datetime(f["received_date"])
+        f["anual"] = (f["period_end"] - f["period_start"]).dt.days.add(1).between(350, 380)
+        f["pit_estimado"] = False
+    return f
 
 _I, _U, _D = "ifrs-full", "us-gaap", "dei"
 
@@ -68,6 +110,11 @@ TAGS: dict[str, list[tuple[tuple[str, str], ...]]] = {
              (_I, "AmortisationIntangibleAssetsOtherThanGoodwill")),
             ((_I, "DepreciationPropertyPlantAndEquipment"),),
             ((_I, "DepreciationAmortisationAndImpairmentLossReversalOfImpairmentLossRecognisedInProfitOrLoss"),)],
+    "d_a_dfc": [((_I, "AdjustmentsForDepreciationAndAmortisationExpense"),),
+                 ((_I, "AdjustmentsForDepreciationExpense"), (_I, "AdjustmentsForAmortisationExpense"))],
+    "adicoes_direito_uso": [((_I, "AdditionsToRightofuseAssets"),)],
+    "depreciacao_direito_uso": [((_I, "DepreciationRightofuseAssets"),)],
+    "juros_pagos_operacionais": [((_I, "InterestPaidClassifiedAsOperatingActivities"),)],
     "resultado_financeiro": [((_I, "FinanceIncomeCost"),),
                              ((_U, "InterestIncomeExpenseNonoperatingNet"),)],
     "lucro_antes_ir": [
@@ -141,15 +188,20 @@ TAGS: dict[str, list[tuple[tuple[str, str], ...]]] = {
 FLUXO_SEC = frozenset({
     "receita", "lucro_bruto", "ebit", "d_a", "resultado_financeiro", "lucro_antes_ir", "ir_csll",
     "lucro_liquido", "lucro_liquido_controladores", "cfo", "capex", "dividendos_pagos",
+    "d_a_dfc", "adicoes_direito_uso", "depreciacao_direito_uso",
+    "variacao_capital_giro_operacional", "juros_pagos_operacionais",
     "recompras", "margem_financeira", "receita_servicos", "despesa_pdd",
     "arrendamentos_pagos",
 })
 ACOES = frozenset({"acoes_emitidas", "acoes_tesouraria", "acoes_em_circulacao"})
 NEGAR = frozenset({"ir_csll", "despesa_pdd"})
-MODULO = frozenset({"d_a", "capex", "dividendos_pagos", "recompras", "provisao_credito",
+MODULO = frozenset({"d_a", "depreciacao_direito_uso",
+                   "juros_pagos_operacionais", "capex", "dividendos_pagos", "recompras", "provisao_credito",
                    "arrendamentos_pagos"})
 DEMONSTRATIVO = {i: ("DFC" if i in {"cfo", "capex", "dividendos_pagos", "recompras",
                                    "arrendamentos_pagos"}
+                     | {"d_a_dfc", "adicoes_direito_uso", "depreciacao_direito_uso",
+                        "variacao_capital_giro_operacional", "juros_pagos_operacionais"}
                      else "DRE" if i in FLUXO_SEC else "BP") for i in TAGS}
 MAIOR_TOTAL = frozenset({"receita", "divida_bruta"})
 """Itens em que a tag "de maior prioridade" às vezes é um fato parcial (nota explicativa,
@@ -180,6 +232,41 @@ def url_filing(cik10: str, accn: str | None) -> str | None:
 
 
 ARQUIVAMENTOS_COLUNAS = ["accn", "form", "filed", "period_end", "documento", "url", "xbrl"]
+
+
+def instancia_sec(conteudo: bytes, cik10: str, arquivamento: Mapping) -> str | None:
+    """Instância extraída que corresponde ao documento principal no índice oficial SEC.
+
+    O HTML inline e o XML extraído são recursos distintos: a SEC pode recusar um e fornecer
+    o outro. Nunca escolhe o primeiro XML do diretório (pode ser um linkbase ou outro anexo),
+    nem fabrica a existência de um recurso por convenção de nome. A origem e o tamanho
+    declarados no índice são conferidos antes de retornar o endereço público.
+    """
+    obj = json.loads(conteudo)
+    diretorio = obj.get("directory") if isinstance(obj, dict) else None
+    base = url_filing(cik10, arquivamento.get("accn"))
+    if not base or not isinstance(diretorio, dict) or not isinstance(diretorio.get("item"), list):
+        raise ValueError("Índice do documento SEC com formato inesperado")
+    if str(diretorio.get("name", "")).rstrip("/") != urlparse(base).path.rstrip("/"):
+        raise ValueError("Índice do documento SEC pertence a outro CIK ou accession")
+    principal = str(arquivamento.get("documento", ""))
+    p = PurePosixPath(principal)
+    if p.name != principal or p.suffix.lower() not in {".htm", ".html", ".xhtml"}:
+        return None
+    esperado = p.stem + "_" + p.suffix[1:] + ".xml"
+    encontrados = [i for i in diretorio["item"] if isinstance(i, dict)
+                   and i.get("name") == esperado]
+    if len(encontrados) > 1:
+        raise ValueError("Instância XBRL duplicada no índice do documento SEC")
+    if not encontrados:
+        return None
+    try:
+        tamanho = int(encontrados[0]["size"])
+    except (KeyError, ValueError, TypeError) as exc:
+        raise ValueError("Tamanho da instância XBRL SEC ausente ou inválido") from exc
+    if not 0 < tamanho <= 50_000_000:
+        raise ValueError("Instância XBRL SEC vazia ou acima do limite")
+    return base + esperado
 
 
 def documento_ri(cik10: str, arquivamento: Mapping) -> dict | None:
@@ -341,6 +428,62 @@ def _local(tag: str) -> str:
     return tag.rsplit("}", 1)[-1].rsplit(":", 1)[-1].lower()
 
 
+def _classes_acoes(conteudo: bytes, cik10: str, arquivamento: Mapping) -> Mapping | None:
+    """Classes da capa conferidas em documento específico; não generaliza nomes de classes.
+
+    Somar apenas as classes observadas não prova que a lista esteja completa. O catálogo
+    liga a enumeração integral da capa aos bytes, entidade, accession e datas do documento.
+    Um documento novo ainda não conferido permanece sem essa soma, nunca recebe um palpite.
+    """
+    if not CATALOGO_CLASSES.is_file():
+        return None
+    obj = json.loads(CATALOGO_CLASSES.read_text(encoding="utf-8"))
+    if obj.get("schema") != "cdp.sec_classes_acoes/v1":
+        raise ValueError("Catálogo de classes SEC com schema inesperado")
+    for d in obj.get("documentos", []):
+        if d.get("cik") != cik10 or d.get("accn") != arquivamento.get("accn"):
+            continue
+        for campo in ("form", "filed", "period_end", "documento_sec"):
+            origem = arquivamento.get("documento" if campo == "documento_sec" else campo)
+            esperado = str(origem)[:10] if campo in {"filed", "period_end"} else origem
+            if origem is None or d.get(campo) != esperado:
+                raise ValueError(f"Catálogo de classes SEC diverge do documento: {campo}")
+        membros = d.get("membros")
+        if not isinstance(membros, list) or not membros or len(membros) != len(set(membros)) \
+                or d.get("eixo") not in {"ifrs-full:ClassesOfShareCapitalAxis", "srt:StatementClassOfStockAxis"}:
+            raise ValueError("Enumeração de classes SEC incompleta ou inválida")
+        if hashlib.sha256(conteudo).hexdigest() != d.get("sha256"):
+            # HTML inline e XML extraído têm bytes diferentes; só o conferido pode somar.
+            return None
+        return d
+    return None
+
+
+def documentos_classes_sec(arquivos: pd.DataFrame, cik10: str) -> pd.DataFrame:
+    """Capa curada também é lida quando Companyfacts já contém o núcleo financeiro.
+
+    Companyfacts pode omitir dimensões DEI das classes e oferecer uma tag IFRS de
+    capital emitido com nome 'outstanding'. Só os bytes curados permitem a soma da capa.
+    """
+    if not CATALOGO_CLASSES.is_file():
+        return arquivos.iloc[:0]
+    catalogo = json.loads(CATALOGO_CLASSES.read_text(encoding="utf-8"))
+    if catalogo.get("schema") != "cdp.sec_classes_acoes/v1":
+        raise ValueError("Catálogo de classes SEC com schema inesperado")
+    accns = {d["accn"] for d in catalogo["documentos"] if d["cik"] == cik10}
+    return arquivos[arquivos["accn"].isin(accns)]
+
+
+def ciks_classes_sec() -> frozenset[str]:
+    """Entidades com enumeração de classes conferida, para complemento do capital CVM."""
+    if not CATALOGO_CLASSES.is_file():
+        return frozenset()
+    catalogo = json.loads(CATALOGO_CLASSES.read_text(encoding="utf-8"))
+    if catalogo.get("schema") != "cdp.sec_classes_acoes/v1":
+        raise ValueError("Catálogo de classes SEC com schema inesperado")
+    return frozenset(d["cik"] for d in catalogo["documentos"])
+
+
 def companyfacts_documento(conteudo: bytes, cik10: str, arquivamento: Mapping) -> dict:
     """XBRL/inline do arquivo oficial em estrutura companyfacts: só totais sem dimensões,
     tags IFRS/US-GAAP/DEI, unidades explícitas e transformações numéricas conhecidas.
@@ -355,21 +498,28 @@ def companyfacts_documento(conteudo: bytes, cik10: str, arquivamento: Mapping) -
         parser = _CapturaInline()
         parser.feed(conteudo.decode("utf-8-sig"))
         nodes = [n for root in parser.nodes for n in root.iter()]
+    classes = _classes_acoes(conteudo, cik10, arquivamento)
     contexts, units = {}, {}
     for n in nodes:
         local = _local(n.tag)
         if local == "context":
             descendants = list(n.iter())
-            if any(_local(x.tag) in {"explicitmember", "typedmember"} for x in descendants):
-                continue
+            dims = [x for x in descendants if _local(x.tag) in {"explicitmember", "typedmember"}]
+            classe = None
+            if dims:
+                if not classes or len(dims) != 1 or _local(dims[0].tag) != "explicitmember" \
+                        or dims[0].get("dimension") != classes["eixo"] \
+                        or dims[0].text not in classes["membros"]:
+                    continue
+                classe = dims[0].text
             campos = {_local(x.tag): (x.text or "").strip() for x in descendants}
             if format_cik(campos.get("identifier")) != cik10:
                 continue
             end = campos.get("instant") or campos.get("enddate")
             if not end:
                 continue
-            contexts[n.get("id")] = {"end": end, **({"start": campos["startdate"]}
-                                                       if campos.get("startdate") else {})}
+            contexts[n.get("id")] = {"end": end, "classe": classe,
+                                     **({"start": campos["startdate"]} if campos.get("startdate") else {})}
         elif local == "unit":
             measures = [(x.text or "").strip().rsplit(":", 1)[-1]
                         for x in n.iter() if _local(x.tag) == "measure"]
@@ -377,6 +527,7 @@ def companyfacts_documento(conteudo: bytes, cik10: str, arquivamento: Mapping) -
                 units[n.get("id")] = measures[0]
     facts: dict = {}
     grouped: dict[tuple, set[float]] = {}
+    contagens: dict[str, dict[str, set[float]]] = {}
     for n in nodes:
         attrs = {k.lower(): v for k, v in n.attrib.items()}
         context = contexts.get(attrs.get("contextref"))
@@ -399,6 +550,9 @@ def companyfacts_documento(conteudo: bytes, cik10: str, arquivamento: Mapping) -
             continue
         if tax not in {_I, _U, _D}:
             continue
+        if context["classe"] and (tax != _D or tag != "EntityCommonStockSharesOutstanding"
+                                  or unit != "shares" or context.get("start")):
+            continue
         raw = "".join(n.itertext()).replace("\u00a0", "").strip()
         fmt = attrs.get("format", "").rsplit(":", 1)[-1].replace("-", "").lower()
         if fmt in {"numdotdecimal", "numdotdecimalin"}:
@@ -417,6 +571,9 @@ def companyfacts_documento(conteudo: bytes, cik10: str, arquivamento: Mapping) -
             continue
         if not math.isfinite(val):
             continue
+        if context["classe"]:
+            contagens.setdefault(context["end"], {}).setdefault(context["classe"], set()).add(val)
+            continue
         key = (tax, tag, unit, context.get("start"), context["end"])
         grouped.setdefault(key, set()).add(val)
     for (tax, tag, unit, start, end), vals in grouped.items():
@@ -427,9 +584,25 @@ def companyfacts_documento(conteudo: bytes, cik10: str, arquivamento: Mapping) -
         if start:
             entry["start"] = start
         facts.setdefault(tax, {}).setdefault(tag, {"units": {}})["units"].setdefault(unit, []).append(entry)
+    notas_acoes = {}
+    for end, por_classe in contagens.items():
+        if set(por_classe) != set(classes["membros"]) \
+                or any(len(v) != 1 or next(iter(v)) <= 0 for v in por_classe.values()):
+            continue
+        valores = {m: next(iter(por_classe[m])) for m in classes["membros"]}
+        entrada = {"val": sum(valores.values()), "end": end, "filed": str(arquivamento["filed"])[:10],
+                   "form": arquivamento["form"], "accn": arquivamento["accn"]}
+        fatos_acao = facts.setdefault(_D, {}).setdefault("EntityCommonStockSharesOutstanding", {"units": {}})
+        # Se o próprio documento também traz total, a igualdade é obrigatória.
+        anteriores = fatos_acao["units"].setdefault("shares", [])
+        if any(e["end"] == end and e["val"] != entrada["val"] for e in anteriores):
+            continue
+        anteriores.append(entrada)
+        notas_acoes[end] = "classes completas da capa: " + " + ".join(
+            f"{m}={v:.15g}" for m, v in valores.items()) + f" = {entrada['val']:.15g} ações"
     if not facts:
         raise ValueError("Documento SEC sem fatos XBRL canônicos consolidados legíveis.")
-    return {"cik": int(cik10), "facts": facts}
+    return {"cik": int(cik10), "facts": facts, "notas_acoes": notas_acoes}
 
 
 def arquivos_sec(facts: Mapping) -> tuple[dict[str, str], dict[str, pd.Timestamp]]:
@@ -571,6 +744,9 @@ def fatos_sec(companyfacts: Mapping) -> pd.DataFrame:
             k = (r["end"], r["filed"], r["accn"])
             if is_sh and k in capa.index and pd.notna(capa.loc[k]) and capa.loc[k] != r["end"]:
                 nota = f"contagem na data da capa ({pd.Timestamp(capa.loc[k]).date().isoformat()})"
+            nota_classes = (companyfacts.get("notas_acoes") or {}).get(r["end"].date().isoformat())
+            if item == "acoes_em_circulacao" and nota_classes:
+                nota = f"{nota}; {nota_classes}" if nota else nota_classes
             rows.append({
                 "entidade": cik, "demonstrativo": DEMONSTRATIVO[item], "item": item,
                 "period_start": start, "period_end": r["end"], "value": v,
@@ -710,5 +886,5 @@ __all__ = [
     "ANUAIS", "ARQUIVAMENTOS_COLUNAS", "FATO_SEC_COLUNAS", "TAGS", "URL_COMPANYFACTS",
     "URL_EFTS", "URL_SUBMISSIONS", "URL_TICKERS", "arquivamentos_sec", "arquivos_sec",
     "companyfacts_documento", "documentos_pendentes", "fatos_sec", "parse_company_tickers", "parse_efts", "sec_ticker",
-    "url_filing", "validar_companyfacts", "validar_efts", "validar_submissions",
+    "instancia_sec", "url_filing", "validar_companyfacts", "validar_efts", "validar_submissions",
 ]

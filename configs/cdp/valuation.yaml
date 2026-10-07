@@ -5,7 +5,7 @@
 # Todos os valores abaixo são insumos públicos datados (com a fonte citada) ou regras de política
 # do modelo; nenhum é calculado aqui. Revisão semestral por commit (Damodaran publica em janeiro e
 # julho); a taxa livre de risco em dólar é lida diariamente da série pública (FRED DGS10).
-versao: "2026-10.4"
+versao: "2026-10.5"
 horizonte_meses: 12
 
 fontes:
@@ -154,6 +154,12 @@ pesos_metodos:
   imobiliario:        {rim: 0.6, regressao_pb_roe: 0.4}
   holding:            {soma_partes: 1.0}   # participações não conferidas ⇒ confiança C (sem Compra/Venda)
 
+consenso:
+  # A moeda declarada no arquivo de estimativas e a paridade da linha determinam uma
+  # única conversão. LPA distante do realizado é sinal analítico, nunca prova de outra
+  # unidade. Sem moeda declarada, LPA ausente; parâmetros históricos preservam a regra anterior.
+  unidade_metodo: declaracao_fonte
+
 projecao:
   anos_explicitos: 10             # FCFF: anos 1-2 por direcionadores, 3-10 com fade geométrico
   anos_rim: 12                    # RIM (GLS): 12 anos com fade linear do ROE
@@ -162,9 +168,13 @@ projecao:
   encolhimento_crescimento: 0.5   # crescimento próprio encolhido 50% para a mediana do setor
   payout_limites: [0.0, 1.0]
   roic_limites: [0.0, 0.60]
-  reinvestimento_limites: [-0.50, 0.95]   # FCFF: anos 1–2 pelo reinvestimento observado 1 − (CFO − capex)/NOPAT
-  reinvestimento_anos_observados: 3       # RR observado = 1 − Σ(CFO − capex) ÷ Σ NOPAT dos 3 últimos exercícios
-                                          # (suaviza capital de giro; Damodaran, "Investment Valuation", cap. 10); sem 3 anos, 12 meses
+  reinvestimento_limites: [-0.50, 0.95]
+  reinvestimento_metodo: capitalizacao_arrendamentos
+  reinvestimento_regime: recente
+  # RR = (capex + adições de direitos de uso − D&A da DFC + Δgiro operacional) ÷ NOPAT.
+  # Componentes alinhados e publicados; 12 meses recentes, ou último exercício completo.
+  # Principal de dívida/arrendamentos não é subtraído novamente. Ausência nunca vira zero.
+  reinvestimento_anos_observados: 3       # média histórica apenas diagnóstica no regime recente
   concessao_fracao_final: 0.333           # concessões: último terço do prazo com crescimento real e reinvestimento
                                           # líquido convergindo a zero (política: sem renovação nem indenização)
   min_anos_ciclo: 3               # margem "ao longo do ciclo" (commodities) exige ≥ 3 exercícios

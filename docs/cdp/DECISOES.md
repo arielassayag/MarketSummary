@@ -278,3 +278,38 @@ mostra uma premissa material de reinvestimento e uma conciliação incompleta de
 nenhum cenário é truncado para forçar cruzamento do preço. → Consequências: próximas revisões
 partem das evidências por emissor; não se alteram severidades, mandato ou dados para atingir
 as metas de distribuição. Ensaios permanecem separados do livro oficial.
+
+## 2026-10-07 · Agendas independentes e procedimento canônico consultado no disparo
+
+Contexto: o titular pediu pesquisa e organização das tarefas agendadas no Codex. A
+[documentação oficial](https://learn.chatgpt.com/docs/automations?surface=app) orienta manter
+ações duráveis em skills. → Decisão: organizar os nomes em seis famílias, com reservas
+explícitas, e consultar `cdp rotinas prompt` em cada disparo. Manter os 12 IDs e agendas
+existentes: a documentação não garante que uma nova reserva da mesma automação se inicie
+enquanto sua execução anterior ainda trabalha. → Consequências: instalação conferida,
+sem cópias adicionais; agenda canônica continua em `rotinas.yaml`. O primeiro disparo é
+uma verificação operacional pendente, distinta da configuração salva.
+
+## 2026-10-07 · Unidade de consenso pela declaração da fonte
+
+Contexto: Orbia teve LPA declarado em USD convertido duas vezes para MXN pela heurística
+de plausibilidade. Recuperação de prejuízo pode gerar uma razão extrema contra o lucro
+realizado sem implicar erro de moeda. → Decisão: uma única conversão pela moeda declarada,
+paridade de ações e câmbio; sem declaração, preservar ausência. A distância do realizado
+é sinal de revisão, não autorização para alterar unidade. → Consequências: política nova
+versionada, intermediários no modelo e testes de regressão; parâmetros históricos sem
+a chave nova conservam seu recálculo. Portões de plausibilidade econômica permanecem.
+
+## 2026-10-07 · Identidade não alavancada e arrendamentos capitalizados
+
+Contexto: CFO menos capex/principal pode misturar juros, impostos, capital de giro e
+aquisições de direitos de uso, enquanto arrendamentos já entram na dívida e no WACC.
+→ Decisão: observar `FCFF = NOPAT + D&A − capex − Δgiro operacional − adições ROU`, com
+componentes publicados no mesmo período, moeda e base de consolidação, inclusive dentro
+do TTM; usar o período recente completo, com histórico
+como diagnóstico. A [definição de capital de giro de Damodaran](https://pages.stern.nyu.edu/~adamodar/New_Home_Page/valquestions/noncashwc.htm)
+exclui caixa e dívida; diferença de balanços sem conciliação de câmbio/perímetro fica em
+sombra, distinta de fluxo operacional observado. → Consequências: metodologia implementada
+2026-10.5, lacuna explícita quando a identidade não fecha; principal pago não é capex;
+observação e projeção teórica são distinguidas. Política antiga preservada por parâmetros
+arquivados; mandato e portões não são afrouxados.

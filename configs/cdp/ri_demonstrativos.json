@@ -1,0 +1,479 @@
+{
+  "schema": "cdp.ri_demonstrativos/v1",
+  "nota": "Estrutura curada de documentos oficiais; nenhum valor numérico de demonstração é transcrito. Páginas físicas base 1. Publicação conferida no próprio documento da URL pública. CBFIs em circulação são unidades, com escala explicitada na linha. Traço não é zero.",
+  "documentos": [
+    {
+      "issuer_id": "MX_FMTY",
+      "documento": "2025-4T25-Reporte.pdf",
+      "entidade_documento": "Fideicomiso identificado con el número F/2157",
+      "pagina_ri": "https://www.fibramty.com/es/inversionistas/hub?tab=reportes-bmv",
+      "url": "https://cdn.investorcloud.net/fibramty/InformacionFinanciera/ReportesTrimestrales/Reportes/2025-4T25-Reporte.pdf",
+      "sha256": "5a7330fcfc8e4bf2e33a5c38342157bc026b59010056640ab25a264c97acec3c",
+      "data_publicacao": "2026-02-18",
+      "publicacao_no_documento": {
+        "pagina": 3,
+        "texto": "18 de febrero de 202 6"
+      },
+      "tabelas": [
+        {
+          "pagina": 51,
+          "demonstrativo": "BPA",
+          "ancoras": [
+            "Estados consolidados de posición financiera",
+            "Cifras expresadas en miles de pesos mexicanos ($)"
+          ],
+          "colunas": [
+            {
+              "rotulo": "2025",
+              "fim": "2025-12-31"
+            },
+            {
+              "rotulo": "2024",
+              "fim": "2024-12-31"
+            }
+          ],
+          "cabecalho_colunas": "Al 31 de diciembre de 2025 Al 31 de diciembre de 2024",
+          "itens": {
+            "caixa": {
+              "rotulos": [
+                "Efectivo y equivalentes de efectivo"
+              ],
+              "sinal": "original"
+            },
+            "ativo_total": {
+              "rotulos": [
+                "Total del activo"
+              ],
+              "sinal": "original"
+            },
+            "divida_bruta": {
+              "rotulos": [
+                "Préstamos bancarios corto plazo",
+                "Préstamos bancarios y bursátil de largo plazo"
+              ],
+              "sinal": "original"
+            },
+            "arrendamentos": {
+              "rotulos": [
+                "Pasivo por arrendamiento",
+                "Pasivo por arrendamiento a largo plazo"
+              ],
+              "sinal": "original"
+            },
+            "patrimonio_liquido": {
+              "rotulos": [
+                "Total del patrimonio de los fideicomitentes"
+              ],
+              "sinal": "original"
+            }
+          },
+          "escala": 1000,
+          "moeda": "MXN"
+        },
+        {
+          "pagina": 52,
+          "demonstrativo": "DRE",
+          "ancoras": [
+            "Estados consolidados de utilidad integral",
+            "Cifras expresadas en miles de pesos mexicanos ($)"
+          ],
+          "colunas": [
+            {
+              "rotulo": "2025",
+              "fim": "2025-12-31",
+              "inicio": "2025-01-01"
+            },
+            {
+              "rotulo": "2024",
+              "fim": "2024-12-31",
+              "inicio": "2024-01-01"
+            }
+          ],
+          "cabecalho_colunas": "2025 2024",
+          "itens": {
+            "receita": {
+              "rotulos": [
+                "Ingresos totales"
+              ],
+              "sinal": "original"
+            },
+            "lucro_antes_ir": {
+              "rotulos": [
+                "Utilidad antes de impuestos a la utilidad"
+              ],
+              "sinal": "original"
+            },
+            "ir_csll": {
+              "rotulos": [
+                "Impuestos a la utilidad"
+              ],
+              "sinal": "despesa"
+            },
+            "lucro_liquido": {
+              "rotulos": [
+                "Utilidad neta consolidada"
+              ],
+              "sinal": "original"
+            }
+          },
+          "escala": 1000,
+          "moeda": "MXN",
+          "fim_tabela": "Otros componentes de la utilidad integral:"
+        },
+        {
+          "pagina": 54,
+          "demonstrativo": "DFC",
+          "ancoras": [
+            "Estados consolidados de flujos de efectivo",
+            "Cifras expresadas en miles de pesos mexicanos ($)"
+          ],
+          "colunas": [
+            {
+              "rotulo": "2025",
+              "fim": "2025-12-31",
+              "inicio": "2025-01-01"
+            },
+            {
+              "rotulo": "2024",
+              "fim": "2024-12-31",
+              "inicio": "2024-01-01"
+            }
+          ],
+          "cabecalho_colunas": "2025 2024",
+          "itens": {
+            "cfo": {
+              "rotulos": [
+                "Flujo neto de efectivo generado en las actividades de operación"
+              ],
+              "sinal": "original"
+            },
+            "d_a_dfc": {
+              "rotulos": [
+                "Depreciación y amortización"
+              ],
+              "sinal": "modulo"
+            },
+            "d_a": {
+              "rotulos": [
+                "Depreciación y amortización"
+              ],
+              "sinal": "modulo"
+            },
+            "capex": {
+              "rotulos": [
+                "Adquisición de mobiliario y equipo de oficina",
+                "Adquisición de propiedades de inversión"
+              ],
+              "sinal": "modulo"
+            },
+            "arrendamentos_pagos": {
+              "rotulos": [
+                "Pago de pasivos por arrendamientos"
+              ],
+              "sinal": "modulo"
+            },
+            "dividendos_pagos": {
+              "rotulos": [
+                "Distribuciones pagadas a tenedores de CBFIs"
+              ],
+              "sinal": "modulo"
+            },
+            "recompras": {
+              "rotulos": [
+                "Recompra de CBFIs"
+              ],
+              "sinal": "modulo"
+            }
+          },
+          "escala": 1000,
+          "moeda": "MXN"
+        },
+        {
+          "pagina": 30,
+          "demonstrativo": "BPA",
+          "ancoras": [
+            "Distribución por CBFI",
+            "CBFIs en circulación (en miles)",
+            "Calculado sobre el número de CBFIs en circulación a la fecha de reporte del periodo correspondiente."
+          ],
+          "colunas": [
+            {
+              "rotulo": "4T25",
+              "fim": "2025-12-31"
+            },
+            {
+              "rotulo": "3T25",
+              "fim": "2025-09-30"
+            },
+            {
+              "rotulo": "2T25",
+              "fim": "2025-06-30"
+            },
+            {
+              "rotulo": "1T25",
+              "fim": "2025-03-31"
+            },
+            {
+              "rotulo": "4T24",
+              "fim": "2024-12-31"
+            }
+          ],
+          "cabecalho_colunas": "4T25 3T25 2T25 1T25 4T24",
+          "itens": {
+            "acoes_em_circulacao": {
+              "rotulos": [
+                "CBFIs en circulación (en miles)"
+              ],
+              "sinal": "original"
+            }
+          },
+          "escala": 1000,
+          "moeda": null,
+          "tipo": "capital"
+        }
+      ]
+    },
+    {
+      "issuer_id": "MX_FMTY",
+      "documento": "2026-2T26-Reporte_.pdf",
+      "entidade_documento": "Fideicomiso identificado con el número F/2157",
+      "pagina_ri": "https://www.fibramty.com/es/inversionistas/hub?tab=reportes-bmv",
+      "url": "https://cdn.investorcloud.net/fibramty/InformacionFinanciera/ReportesTrimestrales/Reportes/2026-2T26-Reporte_.pdf",
+      "sha256": "550965aebca49ebdddc224642019bfb1dd6457839310c4a1fc2fc33dd0b5c30b",
+      "data_publicacao": "2026-07-31",
+      "publicacao_no_documento": {
+        "pagina": 3,
+        "texto": "31 de julio de 2026"
+      },
+      "tabelas": [
+        {
+          "pagina": 57,
+          "demonstrativo": "BPA",
+          "ancoras": [
+            "Estados consolidados condensados de posición financiera no auditados",
+            "Cifras expresadas en miles de pesos mexicanos ($)"
+          ],
+          "colunas": [
+            {
+              "rotulo": "30 de junio de 2026",
+              "fim": "2026-06-30"
+            },
+            {
+              "rotulo": "31 de diciembre de 2025",
+              "fim": "2025-12-31"
+            }
+          ],
+          "cabecalho_colunas": "Al 30 de junio de 2026 Al 31 de diciembre de 2025",
+          "itens": {
+            "caixa": {
+              "rotulos": [
+                "Efectivo y equivalentes de efectivo"
+              ],
+              "sinal": "original"
+            },
+            "ativo_total": {
+              "rotulos": [
+                "Total del activo"
+              ],
+              "sinal": "original"
+            },
+            "divida_bruta": {
+              "rotulos": [
+                "Préstamos bancarios corto plazo",
+                "Préstamos bancarios y bursátil de largo plazo"
+              ],
+              "sinal": "original"
+            },
+            "arrendamentos": {
+              "rotulos": [
+                "Pasivo por arrendamiento",
+                "Pasivo por arrendamiento a largo plazo"
+              ],
+              "sinal": "original"
+            },
+            "patrimonio_liquido": {
+              "rotulos": [
+                "Total del patrimonio"
+              ],
+              "sinal": "original"
+            },
+            "participacao_minoritarios": {
+              "rotulos": [
+                "Participación no controladora"
+              ],
+              "sinal": "original"
+            }
+          },
+          "escala": 1000,
+          "moeda": "MXN"
+        },
+        {
+          "pagina": 58,
+          "demonstrativo": "DRE",
+          "ancoras": [
+            "Estados consolidados condensados de utilidad integral no auditados",
+            "Cifras expresadas en miles de pesos mexicanos ($)"
+          ],
+          "colunas": [
+            {
+              "rotulo": "2026",
+              "fim": "2026-06-30",
+              "inicio": "2026-01-01"
+            },
+            {
+              "rotulo": "2025",
+              "fim": "2025-06-30",
+              "inicio": "2025-01-01"
+            }
+          ],
+          "cabecalho_colunas": "Junio 2026 Junio 2025",
+          "itens": {
+            "receita": {
+              "rotulos": [
+                "Ingresos totales"
+              ],
+              "sinal": "original"
+            },
+            "lucro_antes_ir": {
+              "rotulos": [
+                "Utilidad (pérdida) antes de impuestos a la utilidad"
+              ],
+              "sinal": "original"
+            },
+            "ir_csll": {
+              "rotulos": [
+                "Impuestos a la utilidad"
+              ],
+              "sinal": "despesa"
+            },
+            "lucro_liquido": {
+              "rotulos": [
+                "Utilidad (pérdida) neta consolidada"
+              ],
+              "sinal": "original"
+            },
+            "lucro_liquido_controladores": {
+              "rotulos": [
+                "Participación controladora"
+              ],
+              "sinal": "original"
+            }
+          },
+          "escala": 1000,
+          "moeda": "MXN",
+          "fim_tabela": "Otros componentes de la utilidad integral:"
+        },
+        {
+          "pagina": 60,
+          "demonstrativo": "DFC",
+          "ancoras": [
+            "Estados consolidados condensados de flujos de efectivo no auditados",
+            "Cifras expresadas en miles de pesos mexicanos ($)"
+          ],
+          "colunas": [
+            {
+              "rotulo": "2026",
+              "fim": "2026-06-30",
+              "inicio": "2026-01-01"
+            },
+            {
+              "rotulo": "2025",
+              "fim": "2025-06-30",
+              "inicio": "2025-01-01"
+            }
+          ],
+          "cabecalho_colunas": "Junio 2026 Junio 2025",
+          "itens": {
+            "cfo": {
+              "rotulos": [
+                "Flujo neto de efectivo generado en las actividades de operación"
+              ],
+              "sinal": "original"
+            },
+            "d_a_dfc": {
+              "rotulos": [
+                "Depreciación y amortización"
+              ],
+              "sinal": "modulo"
+            },
+            "d_a": {
+              "rotulos": [
+                "Depreciación y amortización"
+              ],
+              "sinal": "modulo"
+            },
+            "capex": {
+              "rotulos": [
+                "Adquisición de propiedades de inversión"
+              ],
+              "sinal": "modulo"
+            },
+            "arrendamentos_pagos": {
+              "rotulos": [
+                "Pago de pasivos por arrendamientos"
+              ],
+              "sinal": "modulo"
+            },
+            "dividendos_pagos": {
+              "rotulos": [
+                "Distribuciones pagadas a tenedores de CBFIs"
+              ],
+              "sinal": "modulo"
+            },
+            "recompras": {
+              "rotulos": [
+                "Recursos pagados por recompra de CBFIs"
+              ],
+              "sinal": "modulo"
+            }
+          },
+          "escala": 1000,
+          "moeda": "MXN"
+        },
+        {
+          "pagina": 36,
+          "demonstrativo": "BPA",
+          "ancoras": [
+            "Distribución por CBFI",
+            "CBFIs en circulación (en miles)",
+            "Calculado sobre el número de CBFIs en circulación a la fecha de reporte del periodo correspondiente."
+          ],
+          "colunas": [
+            {
+              "rotulo": "2T26",
+              "fim": "2026-06-30"
+            },
+            {
+              "rotulo": "1T26",
+              "fim": "2026-03-31"
+            },
+            {
+              "rotulo": "4T25",
+              "fim": "2025-12-31"
+            },
+            {
+              "rotulo": "3T25",
+              "fim": "2025-09-30"
+            },
+            {
+              "rotulo": "2T25",
+              "fim": "2025-06-30"
+            }
+          ],
+          "cabecalho_colunas": "2T26 1T26 4T25 3T25 2T25",
+          "itens": {
+            "acoes_em_circulacao": {
+              "rotulos": [
+                "CBFIs en circulación (en miles)"
+              ],
+              "sinal": "original"
+            }
+          },
+          "escala": 1000,
+          "moeda": null,
+          "tipo": "capital"
+        }
+      ]
+    }
+  ]
+}

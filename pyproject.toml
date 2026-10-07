@@ -23,6 +23,7 @@ dependencies = [
     "pyarrow>=16",
     "plotly>=5.22",
     "exchange-calendars>=4.5",
+    "pypdf>=6,<7",
 ]
 
 [project.scripts]

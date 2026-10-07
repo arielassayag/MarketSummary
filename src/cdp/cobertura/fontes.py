@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import hashlib
 import io
+import json
 import re
 from collections.abc import Sequence
 from dataclasses import dataclass, field
@@ -236,15 +237,19 @@ def capital_oficial(issuer_ids: Sequence[str], as_of: date, raiz: Path | None) -
 
 # ============================================================ contas suplementares da CVM
 
-ITENS_SUPLEMENTARES = ("arrendamentos_pagos", "receita_construcao")
+ITENS_SUPLEMENTARES = ("arrendamentos_pagos", "receita_construcao", "d_a_dfc", "variacao_capital_giro_operacional")
 """Contas lidas pela cobertura diretamente dos ZIPs DFP/ITR arquivados (emissores com CNPJ):
 
 - ``arrendamentos_pagos``: −Σ das linhas de financiamento ``6.03.xx`` (em qualquer nível) da DFC com "arrendamento" na
-  descrição e valor ≤ 0, exceto juros, captações e recebimentos (principal dos passivos de
-  arrendamento do IFRS 16, que a DFC classifica como financiamento: o CFO − capex não o inclui);
+  descrição e valor ≤ 0, exceto juros, captações e recebimentos. A rubrica genérica não certifica
+  principal isolado; fica somente na reprodução da política histórica, nunca como investimento
+  na política de capitalização de arrendamentos;
 - ``receita_construcao``: Σ das linhas ``7.01.xx`` (em qualquer nível) da DVA com "constru" e "receit" (ou "ativos
   próprios") na descrição — a receita de construção da infraestrutura de concessão (ICPC 01), que a
   receita da DRE inclui e o consenso de receita não.
+- ``d_a_dfc``: restituição de depreciação, amortização e exaustão explicitamente publicada na DFC;
+- ``variacao_capital_giro_operacional``: rubrica explicitamente de capital de giro, com utilização
+  de caixa positiva. Variações genéricas de ativos/passivos e diferenças de balanços não a substituem.
 
 Exercícios pela DFP; 12 meses pela identidade ``exercício + acumulado do ano − acumulado do mesmo
 período do ano anterior`` (ITR); conta não encontrada ⇒ item ausente (nunca zero)."""
@@ -254,6 +259,9 @@ _RE_ARR_FORA = re.compile(r"juros|captac|recebid|recebiment|ingresso|sublocac|em
 _RE_CONSTR = re.compile(r"constru")
 _RE_CONSTR_REC = re.compile(r"receit|ativos? propri")
 _RE_CONSTR_FORA = re.compile(r"custo|gasto|insumo|materia|pessoal|servicos de terceiros")
+_RE_DA_DFC = re.compile(r"depreciac|amortizac|exaust|deplec")
+_RE_DA_FORA = re.compile(r"juros|financ|divida|emprest|arrendamento.*pag|principal|impairment|perda.*recuper")
+_RE_GIRO = re.compile(r"variac.*capital de giro|capital de giro.*variac")
 
 
 def _tabelas_cvm(conteudo: bytes, doc: str, ano: int, cnpjs: set[str]) -> dict[str, pd.DataFrame]:
@@ -331,6 +339,22 @@ def _fatos_suplementares(tabs: dict[str, pd.DataFrame], doc: str) -> pd.DataFram
                                                                     currency=("currency", "first"))
             g["value"] = -g["value"]
             partes.append(g.assign(item="arrendamentos_pagos"))
+        da = _sem_ancestral(d[d["cd"].str.match(r"^6\.01(\.\d{2})+$")
+                              & d["ds"].str.contains(_RE_DA_DFC) & ~d["ds"].str.contains(_RE_DA_FORA)
+                              & (d["value"] >= 0)], key)
+        if not da.empty:
+            g = da.groupby(key, as_index=False, dropna=False).agg(value=("value", "sum"),
+                                                                   currency=("currency", "first"))
+            partes.append(g.assign(item="d_a_dfc"))
+        # Só a rubrica explicitamente de capital de giro; uma linha genérica de variações de
+        # ativos/passivos pode incluir dívida, pensões e provisões de desmantelamento.
+        giro = _sem_ancestral(d[d["cd"].str.match(r"^6\.01(\.\d{2})+$")
+                                & d["ds"].str.contains(_RE_GIRO)], key)
+        if not giro.empty:
+            g = giro.groupby(key, as_index=False, dropna=False).agg(value=("value", "sum"),
+                                                                     currency=("currency", "first"))
+            g["value"] = -g["value"]  # contrato: utilização de caixa é investimento positivo
+            partes.append(g.assign(item="variacao_capital_giro_operacional"))
     dva = _prepare_statement(tabs, "DVA")
     if not dva.empty:
         d = dva.dropna(subset=["dt_ini"])
@@ -418,11 +442,23 @@ def contas_suplementares_cvm(issuer_ids: Sequence[str], as_of: date, raiz: Path 
         if fy not in anual.index or prev not in ytd.index:
             continue
         a, y, yp = anual.loc[fy], ytd.loc[e], ytd.loc[prev]
+        moedas = {str(r["currency"]) for r in (a, y, yp)}
+        bases = {bool(r["consolidado"]) for r in (a, y, yp)}
+        if len(moedas) != 1 or not re.fullmatch(r"[A-Z]{3}", next(iter(moedas))) or len(bases) != 1:
+            continue  # uma soma entre moedas/bases contábeis diferentes não é TTM observado
+        componentes = json.dumps([{"item": item, "freq": freq, "period_end": fim.date().isoformat(),
+                        "valor": float(r["value"]), "coeficiente": sinal,
+                        "fonte": {"fonte": "CVM", "url": r["url"], "sha256": r["sha256"],
+                                  "data_publicacao": pd.Timestamp(r["recebido"]).date().isoformat(),
+                                  "data_coleta": str(r["data_coleta"]), "documento": f"{doc} {fim.date()} v{int(r['versao'])}"}}
+                        for r, fim, freq, sinal, doc in [(a, fy, "A", 1, "DFP"), (y, e, "YTD", 1, "ITR"),
+                                                       (yp, prev, "YTD", -1, "ITR")]], ensure_ascii=False)
         rows.append({"cnpj": cnpj, "item": item, "freq": "TTM", "period_end": e,
                      "value": float(a["value"]) + float(y["value"]) - float(yp["value"]),
                      "consolidado": bool(a["consolidado"] and y["consolidado"] and yp["consolidado"]),
-                     "recebido": max(a["recebido"], y["recebido"]), "url": y["url"], "sha256": y["sha256"],
+                     "recebido": max(a["recebido"], y["recebido"], yp["recebido"]), "url": y["url"], "sha256": y["sha256"],
                      "currency": y["currency"], "data_coleta": y["data_coleta"],
+                     "componentes_fluxo": componentes,
                      "documento": (f"ITR {e.date()} v{int(y['versao'])} + DFP {fy.date()} − ITR {prev.date()} (CVM, "
                                    f"12 meses pela identidade exercício + acumulado do ano − acumulado do ano anterior)")})
     rows = [r for r in rows if r]
@@ -436,12 +472,16 @@ def contas_suplementares_cvm(issuer_ids: Sequence[str], as_of: date, raiz: Path 
     x = x.explode("issuer_id")
     out = pd.DataFrame({
         "issuer_id": x["issuer_id"], "demonstrativo": x["item"].map({"arrendamentos_pagos": "DFC",
-                                                                     "receita_construcao": "DVA"}),
+                                                                     "receita_construcao": "DVA",
+                                                                     "d_a_dfc": "DFC",
+                                                                     "variacao_capital_giro_operacional": "DFC"}),
         "freq": x["freq"], "period_end": pd.to_datetime(x["period_end"]), "item": x["item"],
         "value": x["value"].astype(float), "currency": x["currency"].fillna("BRL"), "escala": 1,
         "consolidado": x["consolidado"], "fonte": "CVM", "url": x["url"], "documento": x["documento"],
         "data_publicacao": pd.to_datetime(x["recebido"]).dt.date, "sha256": x["sha256"],
         "pit_estimado": False, "nota": None, "data_coleta": x["data_coleta"]})
+    if "componentes_fluxo" in x:
+        out["componentes_fluxo"] = x["componentes_fluxo"]
     return out.sort_values(["issuer_id", "item", "freq", "period_end"], kind="mergesort").reset_index(drop=True)
 
 

@@ -52,7 +52,7 @@ DEFAULT_RAIZ = Path("data")
 PASTA_ARQUIVO = "publico"
 INDICE = "indice.jsonl"
 
-FONTES = ("CVM", "SEC", "YAHOO", "BCB", "FRED", "B3", "ISHARES", "GLOBALX", "DAMODARAN",
+FONTES = ("CVM", "SEC", "RI", "YAHOO", "BCB", "FRED", "B3", "ISHARES", "GLOBALX", "DAMODARAN",
           "BANXICO", "SIMULADO")
 
 _CHAVE_RE = re.compile(r"^[A-Z][A-Z0-9]*(/[A-Za-z0-9_.=\-]+)+$")

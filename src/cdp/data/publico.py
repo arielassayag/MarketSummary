@@ -41,6 +41,7 @@ import pandas as pd
 from ..universe import Universe, load_universe
 from . import publico_cvm as cvm
 from . import publico_etf as etfm
+from . import publico_ri as ri_pdf
 from . import publico_sec as sec
 from . import publico_taxas as tx
 from . import publico_yahoo as yh
@@ -64,12 +65,14 @@ logger = logging.getLogger(__name__)
 
 HttpGet = Callable[[str, dict], bytes]
 
-FONTES_PUBLICAS = ("CVM", "SEC", "YAHOO", "BCB", "FRED", "B3", "ISHARES", "GLOBALX",
+FONTES_PUBLICAS = ("CVM", "SEC", "RI", "YAHOO", "BCB", "FRED", "B3", "ISHARES", "GLOBALX",
                    "DAMODARAN", "SIMULADO")
 
 CANONICAL_ITEMS: tuple[str, ...] = (
     "receita", "lucro_bruto", "ebit", "ebitda", "d_a", "resultado_financeiro", "lucro_antes_ir",
     "ir_csll", "lucro_liquido", "lucro_liquido_controladores", "cfo", "capex", "fcf",
+    "d_a_dfc", "adicoes_direito_uso", "depreciacao_direito_uso",
+    "variacao_capital_giro_operacional", "juros_pagos_operacionais",
     "dividendos_pagos", "recompras", "caixa", "aplicacoes_cp", "divida_bruta", "divida_liquida",
     "arrendamentos", "arrendamentos_pagos", "patrimonio_liquido", "patrimonio_controladores",
     "participacao_minoritarios", "ativo_total", "acoes_emitidas", "acoes_tesouraria",
@@ -524,6 +527,79 @@ def demonstrativos(issuer_ids: Sequence[str], as_of: date, *, offline: bool = Fa
         com_cvm = set().union(*[set(f["entidade"]) for f in frames]) if frames else set()
         cobertos |= {i for i, c in cnpj_de.items() if c in com_cvm}
 
+    # ---- Notas SEC complementares: períodos e documento primário conferidos no
+    # histórico oficial, inclusive 6-K sem XBRL. Mesma entidade do balanço principal.
+    for iid in pedidos:
+        cik_notas = format_cik(sm.loc[iid, "cik"]) if iid in sm.index else None
+        catalogados = sec.documentos_fluxos_sec(cik_notas, as_of) if cik_notas else []
+        if not catalogados:
+            continue
+        historico = _arquivamentos_sec(arq, cik_notas, as_of, date(as_of.year - anos, 1, 1), http_get)
+        entidade = cnpj_de[iid] if iid in cobertos and iid in cnpj_de else cik_notas
+        for doc_notas in catalogados:
+            oficial = historico[historico["accn"] == doc_notas["accn"]]
+            if len(oficial) != 1:
+                arq.falhas.append(f"SEC ({iid}): nota catalogada sem arquivamento oficial conferido")
+                continue
+            r_notas = oficial.iloc[0].to_dict()
+            try:
+                got_notas = arq.obter(f"SEC/notas/{cik_notas}/{doc_notas['accn']}/{doc_notas['documento']}",
+                                     "SEC", doc_notas["url"],
+                                     lambda u=doc_notas["url"]: _sec_get(u, http_get, None, SEC_LIMITER),
+                                     ate=as_of, max_idade_dias=3650.0,
+                                     validar=lambda c, d=doc_notas, r=r_notas, e=entidade:
+                                     sec.fatos_fluxos_documento(c, e, d, r))
+                if got_notas:
+                    f_notas = sec.fatos_fluxos_documento(got_notas[1], entidade, doc_notas, r_notas)
+                    if not f_notas.empty:
+                        f_notas["fonte"] = "SEC"
+                        f_notas["sha256"] = got_notas[0].sha256
+                        f_notas["data_coleta"] = pd.Timestamp(got_notas[0].data_coleta)
+                        frames.append(f_notas)
+                        if iid not in ent_iss.get(entidade, []):
+                            ent_iss.setdefault(entidade, []).append(iid)
+            except ValueError as exc:
+                arq.falhas.append(f"SEC ({iid}): nota complementar recusada ({exc})")
+
+    # ---- Classes SEC também para emissor coberto pela CVM. Só complementa contagens
+    # da data efetivamente observada, na entidade cadastral do balanço CVM; não troca
+    # moeda/demonstrações nem transporta a contagem anual para um trimestre posterior.
+    ciks_classes = sec.ciks_classes_sec()
+    for iid in sorted(cobertos):
+        cik_capital = format_cik(sm.loc[iid, "cik"])
+        if iid not in cnpj_de or cik_capital not in ciks_classes:
+            continue
+        historico = _arquivamentos_sec(arq, cik_capital, as_of, date(as_of.year - anos, 1, 1), http_get)
+        for r_capital in sec.documentos_classes_sec(historico, cik_capital).to_dict("records"):
+            prefixo = f"SEC/filings/{cik_capital}/{r_capital['accn']}/"
+            indice_url = sec.url_filing(cik_capital, r_capital["accn"]) + "index.json"
+            indice = arq.obter(prefixo + "index.json", "SEC", indice_url,
+                               lambda u=indice_url: _sec_get(u, http_get, None, SEC_LIMITER),
+                               ate=as_of, max_idade_dias=3650.0,
+                               validar=lambda c, r=r_capital, k=cik_capital: sec.instancia_sec(c, k, r))
+            xml_url = sec.instancia_sec(indice[1], cik_capital, r_capital) if indice else None
+            if not xml_url:
+                continue
+            try:
+                documento = arq.obter(prefixo + xml_url.rsplit("/", 1)[-1], "SEC", xml_url,
+                                      lambda u=xml_url: _sec_get(u, http_get, None, SEC_LIMITER),
+                                      ate=as_of, max_idade_dias=3650.0,
+                                      validar=lambda c, r=r_capital, k=cik_capital:
+                                      sec.companyfacts_documento(c, k, r))
+                if documento:
+                    f_capital = sec.fatos_sec(sec.companyfacts_documento(documento[1], cik_capital, r_capital))
+                    f_capital = f_capital[f_capital["item"].isin(sec.ACOES)
+                                            & f_capital["nota"].fillna("").str.contains("classes completas da capa")].copy()
+                    if not f_capital.empty:
+                        f_capital["entidade"] = cnpj_de[iid]
+                        f_capital["fonte"] = "SEC"
+                        f_capital["sha256"] = documento[0].sha256
+                        f_capital["data_coleta"] = pd.Timestamp(documento[0].data_coleta)
+                        f_capital["url"] = xml_url
+                        frames.append(f_capital)
+            except ValueError as exc:
+                arq.falhas.append(f"SEC ({iid}): classes complementares recusadas ({exc})")
+
     # ---- SEC
     cik_de = {i: format_cik(sm.loc[i, "cik"]) for i in pedidos
               if i not in cobertos and i in sm.index and isinstance(sm.loc[i, "cik"], str)}
@@ -557,20 +633,38 @@ def demonstrativos(issuer_ids: Sequence[str], as_of: date, *, offline: bool = Fa
         # O Companyfacts pode omitir o arquivo mais recente. Só o XBRL do próprio documento
         # fornece os números; a data do arquivamento não é tratada como balanço novo.
         alvo = sec.documentos_pendentes(arquivos, f, as_of)
+        classes_capa = sec.documentos_classes_sec(arquivos, cik10)
+        if not classes_capa.empty:
+            alvo = pd.concat([alvo, classes_capa], ignore_index=True).drop_duplicates("accn")
         for r in alvo.to_dict("records"):
-            chave = f"SEC/filings/{cik10}/{r['accn']}/{r['documento']}"
-            documento = arq.obter(chave, "SEC", r["url"],
-                                  lambda u=r["url"]: _sec_get(u, http_get, None, SEC_LIMITER),
-                                  ate=as_of, max_idade_dias=3650.0,
-                                  validar=lambda c, r=r: sec.companyfacts_documento(c, cik10, r) and None)
-            if documento:
-                cf = sec.companyfacts_documento(documento[1], cik10, r)
-                direto = sec.fatos_sec(cf)
-                add_sec(direto, documento[0], r["url"])
-                # HTTP 200 e fatos da capa não provam que o documento contém o balanço.
-                nucleo = direto[direto["period_end"] <= r["period_end"]]
-                if sec.documentos_pendentes(pd.DataFrame([r]), nucleo, as_of).empty:
-                    continue
+            prefixo = f"SEC/filings/{cik10}/{r['accn']}/"
+            indice_url = sec.url_filing(cik10, r["accn"]) + "index.json"
+            indice = arq.obter(prefixo + "index.json", "SEC", indice_url,
+                               lambda u=indice_url: _sec_get(u, http_get, None, SEC_LIMITER),
+                               ate=as_of, max_idade_dias=3650.0,
+                               validar=lambda c, r=r: sec.instancia_sec(c, cik10, r) and None)
+            instancia_url = sec.instancia_sec(indice[1], cik10, r) if indice else None
+            # XML extraído antes do HTML inline: recursos oficiais distintos, não espelhos
+            # inventados. Em ambos o parser confere entidade, período, unidade e contexto.
+            urls = ([instancia_url] if instancia_url else []) + [r["url"]]
+            completo = False
+            for documento_url in urls:
+                nome = documento_url.rsplit("/", 1)[-1]
+                documento = arq.obter(prefixo + nome, "SEC", documento_url,
+                                      lambda u=documento_url: _sec_get(u, http_get, None, SEC_LIMITER),
+                                      ate=as_of, max_idade_dias=3650.0,
+                                      validar=lambda c, r=r: sec.companyfacts_documento(c, cik10, r) and None)
+                if documento:
+                    cf = sec.companyfacts_documento(documento[1], cik10, r)
+                    direto = sec.fatos_sec(cf)
+                    add_sec(direto, documento[0], documento_url)
+                    # HTTP 200 e fatos da capa não provam que o documento contém o balanço.
+                    nucleo = direto[direto["period_end"] <= r["period_end"]]
+                    if sec.documentos_pendentes(pd.DataFrame([r]), nucleo, as_of).empty:
+                        completo = True
+                        break
+            if completo:
+                continue
             try:
                 ri = sec.documento_ri(cik10, r)
                 if ri:
@@ -611,6 +705,30 @@ def demonstrativos(issuer_ids: Sequence[str], as_of: date, *, offline: bool = Fa
         ent_iss.setdefault(cik10, []).append(iid)
         frames.append(f)
         cobertos.add(iid)
+
+    # ---- RI: documentos oficiais sem cobertura CVM/SEC suficiente. O catálogo não
+    # contém valores; a estrutura e os bytes são conferidos antes da leitura do PDF.
+    for iid in pedidos:
+        if iid in cobertos:
+            continue
+        partes_ri = []
+        for doc_ri in ri_pdf.documentos_ri(iid, as_of):
+            url_ri = doc_ri["url"]
+            got_ri = arq.obter(f"RI/demonstrativos/{iid}/{doc_ri['documento']}", "RI", url_ri,
+                               _baixar(http_get, url_ri), ate=as_of, max_idade_dias=3650.0,
+                               validar=lambda c, d=doc_ri: ri_pdf.fatos_pdf_ri(c, d, as_of=as_of))
+            if got_ri:
+                f_ri = ri_pdf.fatos_pdf_ri(got_ri[1], doc_ri, as_of=as_of)
+                if not f_ri.empty:
+                    f_ri["fonte"] = "RI"
+                    f_ri["sha256"] = got_ri[0].sha256
+                    f_ri["data_coleta"] = pd.Timestamp(got_ri[0].data_coleta)
+                    partes_ri.append(f_ri)
+        if partes_ri:
+            f_ri = pd.concat(partes_ri, ignore_index=True)
+            ent_iss.setdefault("RI:" + iid, []).append(iid)
+            frames.append(f_ri)
+            cobertos.add(iid)
 
     # ---- Yahoo (sem CVM/SEC; e complemento trimestral)
     alvo_yh = [i for i in pedidos if i not in cobertos]

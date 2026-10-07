@@ -2,7 +2,7 @@
 
 | Portão | Regra | Efeito |
 |---|---|---|
-| G1 | identidade PL = controladores + minoritários (aviso); EBITDA = EBIT + D&A e FCF = CFO − capex (informativo: o modelo usa EBIT e CFO − capex diretamente) | aviso / informativo |
+| G1 | identidade PL = controladores + minoritários (aviso); EBITDA = EBIT + D&A e FCF = CFO − capex são informativos e não definem a identidade do FCFF | aviso / informativo |
 | G2 | nenhum insumo publicado depois da data do snapshot | bloqueio |
 | G3 | valor intrínseco e preço-alvo finitos | sem alvo |
 | G4 | ke dentro do envelope P10–P90 dos demais emissores do país × setor (± 1 p.p.) | informativo |
@@ -17,7 +17,7 @@
 | G13 | insumos por ação plausíveis (P/VPA em [0,1; 15], ROE_1 em módulo ≤ 100%, LPA de consenso coerente com o lucro de 12 meses quando métodos patrimoniais pesam > 50%) — armadilha de unidade/moeda | bloqueio |
 | G13b | consenso e margens plausíveis: LPA ÷ preço ≤ 50% nos anos 1 e 2, ROE_2 em módulo ≤ 100%, margem EBIT ≤ 100% (fora holdings e imobiliárias) | bloqueio |
 | G13c | contagem de ações conciliada: duas de três fontes (demonstrações, valor de mercado público, Formulário de Referência da CVM) a ±10%; sem a oficial, divergência entre duas fontes ⇒ aviso | bloqueio / aviso |
-| G14 | reinvestimento observado (3 exercícios) acima de −100% do NOPAT; abaixo (CFO com operações financeiras) ⇒ aviso e mediana do setor nos anos 1–2; FCFF do ano 1 contra o fluxo observado e anos limitados exibidos | aviso / informativo |
+| G14 | reinvestimento observado pela identidade dos parâmetros acima de −100% do NOPAT; abaixo ⇒ aviso e mediana do setor nos anos 1–2; FCFF do ano 1 contra o fluxo observado e anos limitados exibidos | aviso / informativo |
 | G15 | fluxos de 12 meses e balanço na mesma data-base (defasagem ≤ 100 dias) | aviso |
 | G16 | patrimônio residual robusto: P(valor do patrimônio ≤ 0) nos sorteios < 10% | aviso |
 | G18 | métodos coerentes: com ≥ 3 métodos, o que ficar fora de [1/3; 3] × a mediana dos demais (o mais distante) é limitado à borda (demais com CV ≤ 10%, fora do lado do preço) ou mantido; limita a B | aviso |
@@ -140,23 +140,28 @@ def portoes_emissor(pac: Mapping[str, Any], mod: Mapping[str, Any], params: Para
         out.append(_g13(pac, mod, params))
         out.append(_g13b(pac, mod, params))
     out.append(_g13c(pac))
-    # G14 reinvestimento observado (CFO contaminado por operações financeiras) e FCFF do ano 1
+    # G14 reinvestimento observado e FCFF do ano 1 (identidade dos parâmetros do retrato)
     fc1 = _f(mod.get("fcff_ano1"))
     rr = _f(mod.get("rr_observado"))
     lim_anos = [a for a in (mod.get("reinvestimento_limitado_anos") or []) if a <= 2]
     if tem and fc1 is not None and rr is not None:
         rr_min = float(q.get("rr_observado_min", -1.0))
         razao = _f(mod.get("fcff_ano1_vs_observado"))
+        capitalizado = params.sec("projecao").get("reinvestimento_metodo") == "capitalizacao_arrendamentos"
+        base_fluxo = "fluxo observado pela identidade de capital investido" if capitalizado else "(CFO − capex) dos últimos 12 meses"
+        sem_fluxo = "fluxo observado não positivo" if capitalizado else "CFO − capex não positivo"
         det = (f"reinvestimento observado {pct(rr, 0)} do NOPAT ({mod.get('rr_observado_base') or 'n/d'}); "
-               f"FCFF do ano 1 = " + (f"{num(razao)} × (CFO − capex) dos últimos 12 meses" if razao is not None
-                                      else "n/d (CFO − capex não positivo)"))
+               f"FCFF do ano 1 = " + (f"{num(razao)} × {base_fluxo}" if razao is not None
+                                      else f"n/d ({sem_fluxo})"))
         if lim_anos:
             det += f"; reinvestimento limitado nos anos {', '.join(str(a) for a in lim_anos)}"
         if rr < rr_min:
+            origem = ("reinvestimento líquido excepcionalmente negativo; anos 1–2 pela mediana de observações "
+                      "setoriais com a mesma identidade de capital investido" if capitalizado else
+                      "CFO − capex acima de 2 × NOPAT (operações financeiras ou liberação pontual de capital "
+                      "de giro no CFO); anos 1–2 pela mediana do setor")
             out.append(_portao("G14", "Reinvestimento observado plausível", False, "aviso",
-                               det + f"; abaixo de {pct(rr_min, 0)}: CFO − capex acima de 2 × NOPAT (operações "
-                                     "financeiras ou liberação pontual de capital de giro no CFO); anos 1–2 pela "
-                                     "mediana do setor"))
+                               det + f"; abaixo de {pct(rr_min, 0)}: {origem}"))
         else:
             out.append(_portao("G14", "Reinvestimento observado plausível", True, "aviso", det))
     # G15 mesma data-base de fluxos e balanço

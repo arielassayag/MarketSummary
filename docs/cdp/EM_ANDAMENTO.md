@@ -5,9 +5,75 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-Última atualização: 2026-10-06, terça-feira, noite — passagem para o Codex. **Comece por
+Última atualização: 2026-10-07, quarta-feira, madrugada — validação científica em curso. **Comece por
 `docs/cdp/PASSAGEM_CODEX.md`**: ligar as rotinas no Codex, P0 de desenvolvimento antes do
 retrato-gênese da cobertura (qua 07/10, 19:22) e cronograma até a carteira inaugural (sex 09/10).
+
+## Desenvolvimento científico e agendas — 07/10/2026, madrugada
+
+- As 12 automações foram conferidas novamente: ativas, projeto atual, modo local, executor
+  interno `.cdp/rotinas`. Nomes em seis famílias (operação, carteira, risco, fechamento,
+  pesquisa, modelos), reservas explícitas e prompts que consultam o procedimento vigente
+  pelo código. Agenda local em `.cdp/AGENDAS.md`; entregas em `.cdp/TAREFAS.md`. Horários,
+  modelos e preferências de notificação preservados. Primeiro disparo ainda não observado.
+- Ramo científico `codex/cdp-modelos-completos`, checkout `.cdp/desenvolvimento`, dentro do
+  projeto. O executor continua em `main`; mudanças só serão integradas após suíte e Ruff
+  verdes. As cinco alterações locais anteriores do Fechamento permanecem na raiz.
+- Consenso: os bytes arquivados da Orbia declaram USD. A regra anterior converteu USD para
+  MXN duas vezes porque a primeira conversão não enquadrava o LPA numa faixa contra o lucro
+  realizado. A política `declaracao_fonte` aplica somente moeda declarada, paridade e câmbio;
+  valor distante do realizado sinaliza revisão analítica. Moeda desconhecida fica ausente.
+  Ensaio de unidades em `.cdp/ensaios/20261007-consenso`; testes de conversão única, ausência,
+  segundo exercício e preservação da política histórica passaram.
+- Metodologia `2026-10.5` implementada no ramo: reinvestimento não alavancado pela identidade de capital
+  investido, com arrendamentos capitalizados e componentes publicados, alinhados em período,
+  moeda e base de consolidação, inclusive dentro das identidades TTM. Principal
+  de dívida não é nova aquisição de ativo. Adições ROU, D&A restituída na DFC e capital de
+  giro precisam da própria fonte; falta de componente leva lacuna e projeção teórica explícita.
+  A média histórica é diagnóstico; a observação recente completa define os anos iniciais.
+  Parâmetros arquivados sem as chaves novas mantêm a política anterior: o recálculo integral
+  do ensaio .4 passou também com o código novo em conferência explícita de compatibilidade.
+- Fontes SEC: índice oficial permite localizar a instância XML do documento principal,
+  mesmo quando o HTML recebe 403. Capturados núcleos financeiros de 2025 para sete nomes
+  defasados. Classes da capa só se somam com enumeração completa curada, CIK/accession/datas
+  e hash; nenhum contexto financeiro dimensional é admitido por essa exceção. Fibra Mty tem
+  parser do PDF oficial com datas publicadas e BP/DRE/DFC/CBFIs, sem valores financeiros
+  transcritos no catálogo. Os testes de fontes e de ausência/zero passaram. JBS conserva
+  divergências nas fontes da mesma N.V.: FRE aprovado em 2025 não confirma junho/2026; capa,
+  nota e tags inline diferem em definição/data/escala. A soma mecânica da capa não comprova
+  conciliação independente. Evidência em `20261007-fontes/JBS_CONCILIACAO.md`.
+- Evidência nova em `.cdp/ensaios/20261007-fontes/cache-real` registra re-arquivo de bytes
+  oficiais com horário UTC real. Um cache de ensaio com relógio fixo futuro foi identificado,
+  preservado e excluído da evidência real. Insumos capturados em 07/10 não são retrodatados
+  para gerar um retrato PIT de 06/10; análise com preços de 06/10 é sombra explicitamente
+  datada. Nenhum desses arquivos foi adotado no livro oficial.
+- Auditoria independente em `.cdp/validacoes/20261007-auditoria/REQUISITOS.md`: 132 focais e
+  recálculo 233 empresas/oito ETFs passaram no baseline congelado. Foram confirmadas lacunas
+  de backtest (macro/segundo modelo/efetivação MOC histórica), integração operacional do IC
+  por mente e definição de Brier. Macro, modelo-base, modelo de decisão, atribuição e IC
+  foram integrados: 55 testes focados e ensaio real com 23 datas, seis decisões e 233
+  identidades passaram. A semana truncada gera decisão extra em 06/10; o ensaio não comprova
+  calendário/execução MOC, histórico integralmente PIT ou mérito estatístico. Demais lacunas
+  permanecem na matriz. Relatório em `20261007-backtest-integracao/RELATORIO.md`.
+- Revisão independente corrigiu quatro defeitos estruturais (bases entre componentes,
+  datas nulas, sinal de adições ROU e bases internas do TTM); 92 testes focados finais
+  passaram. Prova de compatibilidade integral .4 repetida depois das guardas finais, em
+  `.cdp/validacoes/20261007-compatibilidade-congelada.json`. Suíte completa final passou:
+  2.177 testes, 17 pulados/xfail, sem falha/erro; Ruff, documentação, rotinas e skills verdes.
+  O teste G14 foi corrigido para conferir os textos de ambas as políticas, com severidade
+  preservada. Evidência em `.cdp/validacoes/20261007-suite-cdp-final.xml`.
+- Novo ensaio completo `.cdp/ensaios/20261007-modelos-sombra`: 233 empresas e oito ETFs,
+  preços de 06/10 e fontes capturadas em 07/10, datas separadas, código/configuração selados.
+  Livro, arquivos, trilha e modelos passaram no recálculo integral. Dos 200 publicáveis,
+  Compra 37 (18,50%) e Venda 31 (15,50%) passam; C 107/233 (45,92%) e revisão 30/233
+  (12,88%) ainda falham. Aceite científico permanece aberto: analisar causas por emissor;
+  não se afrouxam portões, limites ou mandato para atingir quotas. Não é livro oficial.
+- Próximas causas confirmadas para correção: G17 pode penalizar capex/D&A sem dependência
+  nos métodos financeiros efetivamente usados; Hapvida mudou a rubrica de receita do ITR
+  IFRS 17 contra a DFP anterior, e uma identidade de quatro trimestres pode misturar essas
+  bases. Os probes e documentos primários ficam na auditoria de 07/10. Isso não autoriza
+  mudar severidades ou corrigir números para caber em uma faixa; exigir regressão e novo
+  ensaio isolado. A Hapvida continua bloqueada no retrato atual.
 
 ## Retomada no Codex — 06/10/2026, noite
 

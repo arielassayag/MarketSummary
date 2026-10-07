@@ -21,7 +21,9 @@ retrato-gênese da cobertura (qua 07/10, 19:22) e cronograma até a carteira ina
   As agendas persistidas das 12 automações conferem com a exportação canônica. O primeiro
   disparo agendado ainda deve ser observado; criação da tarefa não prova sua execução.
 - **Organização local:** `.cdp/LEIA-ME.md` mapeia a instalação e `.cdp/TAREFAS.md`
-  organiza as agendas e entregas. A conversa está na seção CDP da barra lateral do Codex. O checkout principal recebeu o
+  organiza as agendas e entregas. O projeto das rotinas está na seção CDP da barra lateral do
+  Codex. A conversa foi nomeada "CDP — rotinas internas e validação P0"; o app ainda associa
+  sua movimentação a uma chave provisória, sem confirmar a posição da conversa real. O checkout principal recebeu o
   CDP de `origin/main`, preservando as cinco alterações locais do Fechamento (GDELT), com
   backup em `.cdp/backups/` e stash preservado. Conflitos foram reconciliados mantendo as
   invariantes novas de dados e o código local; os nove testes do coletor passaram.

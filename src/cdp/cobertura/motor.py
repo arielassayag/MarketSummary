@@ -470,7 +470,8 @@ def modelo_json(ex: Execucao, iid: str, params: ParametrosCobertura) -> dict[str
                                              "p_patrimonio_zero", "ret_p10",
                                              "ret_p50", "ret_p90", "udr", "assimetria", "perda_esperada_cauda",
                                              "prob_modelo_supera_ke", "prob_mercado_otimista",
-                                             "prob_mercado_pessimista", "largura_cenarios", "n_sorteios")}
+                                             "prob_mercado_pessimista", "largura_cenarios", "n_sorteios",
+                                             "diagnostico_cenarios")}
         if mod.get("tem_alvo") else None,
         "sensibilidade": mod.get("sensibilidade"), "diagnosticos": {"icc": mod.get("icc"), "reverso": mod.get("reverso")},
         "fluxo_caixa_observado": {k: mod.get(k) for k in ("fcff_ano1", "fcf_observado", "fcff_ano1_vs_observado",

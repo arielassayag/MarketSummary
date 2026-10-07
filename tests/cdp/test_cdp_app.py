@@ -301,7 +301,8 @@ def test_main_app_navigation_with_fixture(fx_env):
     at = AppTest.from_file(str(REPO / "cdp_app.py"), default_timeout=TIMEOUT).run()
     _no_exceptions(at)
     text = _texts(at)
-    assert BANNER in text and "paper trading com preços reais" in text
+    assert BANNER in text and "carteira simulada com preços reais" in text
+    assert "paper trading" not in text.lower()
     last = fx_env.records[-1]
     assert any(m.value == fmt.usd_mm(last.nav_end_usd) for m in at.metric)
 

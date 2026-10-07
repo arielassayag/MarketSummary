@@ -307,7 +307,37 @@ function montar(root) {
   root.appendChild(FICHA);
   root.appendChild(acertos(M));
   root.appendChild(secEtfs(M));
+  root.appendChild(revisaoMensal());
   root.appendChild(metodologia(M));
+}
+
+function revisaoMensal() {
+  var s = sec("cv-revisao-mensal", "Revisão mensal da cobertura", "último dia de montagem do mês");
+  var itens = arr(obj(D.monthly_reviews).itens);
+  if (!itens.length) {
+    s.appendChild(empty("A primeira revisão aprofundada será publicada após o último dia de montagem do mês."));
+    return s;
+  }
+  each(itens, function (it) {
+    var corpo = h("div", null, note(txt(it.resumo)));
+    var detalhe = fold("Revisão de " + dataBR(it.data), it.automatica ? "fatos calculados pelo código" : "leitura da gestão", false, corpo);
+    var carregando = false, pronta = false;
+    detalhe.addEventListener("toggle", function () {
+      if (!detalhe.open || carregando || pronta) return;
+      carregando = true;
+      corpo.setAttribute("aria-busy", "true");
+      carregar(it.file).then(function (doc) {
+        corpo.textContent = "";
+        corpo.appendChild(CTX.ui && CTX.ui.md ? CTX.ui.md(doc.markdown) : h("pre", { class: "md-plain" }, txt(doc.markdown)));
+        pronta = true;
+      }, function () {
+        corpo.textContent = "";
+        corpo.appendChild(empty("Não foi possível carregar esta revisão. Feche e abra para tentar novamente."));
+      }).then(function () { carregando = false; corpo.removeAttribute("aria-busy"); });
+    });
+    s.appendChild(detalhe);
+  });
+  return s;
 }
 
 /* ---------------------------------------------------------------- 1. resumo */

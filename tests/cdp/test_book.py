@@ -800,7 +800,7 @@ def test_memo_contents_synthetic():
     sim14 = next(x.name for x in p.positions if x.issuer_id == "SIM014")
     assert f"{sim14} (médio)" in memo and "MEDIUM" not in memo
     assert "- [ ] Decidir sobre os hedges cambiais sugeridos: BRL." in memo
-    assert "1 ordem(ns) sem estimativa de custo" in memo
+    assert "1 ordem sem estimativa de custo — excluída" in memo
     assert "4,90%" in memo and "dentro da banda" in memo
     assert "EM REVISÃO" in memo
     assert "Obter co-assinatura independente" in memo and "factor_share" not in memo
@@ -1222,9 +1222,9 @@ def test_review_naive_cosign_timestamp_does_not_crash_verification(tmp_path):
 def test_memo_never_names_the_ai_app_or_provider():
     pack = make_pack()
     v = pack.views[0].model_copy(update={"author": "imported:codex"})
-    nota = _note("SIM001", "fundamental", "Tese.", provider="imported:codex")
+    nota = _note("SIM001", "fundamental", "Tese preparada pela mente codex.", provider="imported:codex")
     pack = pack.model_copy(update={"views": [v], "notes": [nota], "provider": "imported"})
-    memo = render_memo(make_proposal(), pack, _factbook())
+    proposta = make_proposal().model_copy(update={"created_by": "imported:codex"})
+    memo = render_memo(proposta, pack, _factbook())
     assert "codex" not in memo.lower() and "imported" not in memo
     assert "| pesquisa da gestão |" in memo and "pesquisa da gestão (IA)" in memo
-

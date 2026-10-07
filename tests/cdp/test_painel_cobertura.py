@@ -79,7 +79,7 @@ def test_esquema_e_dados_simulados_na_demonstracao(arquivos_demo, mercado):
     assert m["schema_version"] == PC.SCHEMA and m["simulated_label"] == SIM
     assert m["as_of"] == D2.isoformat() and m["estado"] == "publicado"
     assert set(c) == {"meta", "kpis", "universe", "aggregates", "etfs", "track_record", "revisions",
-                      "methodology"}
+                      "methodology", "monthly_reviews"}
     ids = sorted(mercado.md.universe.issuers.index)
     acoes = [u["iid"] for u in c["universe"] if u["tipo"] == "acao"]
     assert acoes == ids  # uma linha por emissor, nunca omitida

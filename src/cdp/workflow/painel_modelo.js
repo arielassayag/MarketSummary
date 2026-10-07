@@ -145,7 +145,7 @@ function mandato(U) {
   if (U.arr(MT.fontes).length) out.push(U.sec("Fontes de dados", "somente fontes públicas; cada insumo traz fonte, data de publicação e data de coleta", U.block(null, null, links(U, MT.fontes))));
 
   out.push(U.sec("Natureza do histórico", null, h("div", { class: "cols-2" },
-    U.block(null, null, h("p", { class: "prose" }, U.plain(META.paper_trading_text) || "Carteira simulada (paper trading)."), META.is_synthetic ? h("p", null, U.pill("DADOS SIMULADOS", "sim")) : null),
+    U.block(null, null, h("p", { class: "prose" }, U.plain(META.paper_trading_text) || "Carteira simulada com preços reais."), META.is_synthetic ? h("p", null, U.pill("DADOS SIMULADOS", "sim")) : null),
     U.block(null, null, U.kv([["Início", U.fdate(META.inception_date)], ["PL inicial", U.usdFull(META.inception_nav_usd)], ["Gestor", META.manager], ["Moeda base", META.base_currency]])))));
 
   if (AU.resultado) {

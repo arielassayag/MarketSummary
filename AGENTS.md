@@ -114,7 +114,8 @@ Substituem os itens 3 e 4 da seção do Fechamento apenas para o CDP.
 `book/<semana>/inputs/research_pack.json` e `pm_decision.json` (montagem),
 `book/<semana>/tese/tese.json` (tese), `reports/daily/<data>/comentario.json` (fechamento),
 `reports/semanal/<data>/comentario.json` (relatório semanal) e
-`book/cobertura/notas/<IID>/<data>/nota.json` (notas de cobertura) — sempre com o campo
+`book/cobertura/notas/<IID>/<data>/nota.json` (notas de cobertura) e
+`book/cobertura/revisoes/<data>/revisao.json` (revisão mensal da cobertura) — sempre com o campo
 `"mind"` (seção 8).
 
 ## 4. Rotinas (fonte única: `configs/cdp/rotinas.yaml`)

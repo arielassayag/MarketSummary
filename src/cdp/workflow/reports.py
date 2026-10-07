@@ -1318,7 +1318,7 @@ def render_weekly_report(week: date, proposal: Proposal, decision: Decision | No
               ("dentro" if c.passed else "fora") if c.severity != Severity.INFO
               else ("na meta" if c.passed else "informativo"),
               R.detalhe(c.details, nomes)] for c in checks],
-            caption=(f"{len(fora)} controle(s) fora do limite" if fora
+            caption=(f"{R.contagem(len(fora), 'controle', 'controles')} fora do limite" if fora
                      else "Todos os controles obrigatórios e de alerta dentro do limite"))
     s.kv([("Caminho tomado", path),
           ("Controles obrigatórios fora do limite",

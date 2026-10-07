@@ -70,8 +70,10 @@ ARQUIVO = "cobertura.json"
 ARQUIVO_PRECOS = "cobertura-precos.json"
 PREFIXO_HISTORICO = "cobertura-hist-"
 PREFIXO_MODELO = "cobertura-modelo-"
+PREFIXO_REVISAO = "cobertura-revisao-"
+SCHEMA_REVISAO = "cdp-cobertura-revisao/1"
 #: Todos os arquivos de dados da aba (os fragmentos numerados mudam de quantidade com o universo).
-ARQUIVO_RE = re.compile(r"cobertura(?:-precos|-hist-\d+|-modelo-\d+)?\.json")
+ARQUIVO_RE = re.compile(r"cobertura(?:-precos|-hist-\d+|-modelo-\d+|-revisao-\d{8})?\.json")
 #: Registro local da última publicação dos arquivos da aba (nome → SHA-256); nunca publicado.
 MARCADOR = "COBERTURA_PUBLICADA.json"
 #: Fonte do módulo da página (carregado sob demanda pela casca; nunca dentro do script principal).
@@ -201,6 +203,7 @@ class Entrada:
     precos_ate: str | None = None
     versao_codigo: str | None = None
     versao: str | None = None
+    revisoes_mensais: list[dict[str, Any]] = field(default_factory=list)
 
 
 _VERSAO_RE = re.compile(r"[0-9a-f]{7,40}")
@@ -244,6 +247,7 @@ def carregar(book: Path | str, *, ate: date | None = None, md: Any = None,
     import yaml
 
     from ..cobertura import livro as L
+    from ..cobertura.revisao import carregar_revisao, listar_revisoes, verificar_revisoes
 
     book = Path(book)
     datas = L.datas_snapshots(book)
@@ -286,6 +290,17 @@ def carregar(book: Path | str, *, ate: date | None = None, md: Any = None,
                   configuracao=configuracao or {}, repositorio=repositorio, page_sha256=page_sha256,
                   precos_ate=str(man.get("prices_as_of") or "") or None,
                   versao_codigo=_ref((man.get("codigo") or {}).get("git")), versao=_ref(versao))
+    datas_revisao = listar_revisoes(book)
+    if datas_revisao:
+        problemas = verificar_revisoes(book)
+        if problemas:
+            raise L.LivroErro("Revisão mensal em conferência: " + "; ".join(problemas))
+        for d in datas_revisao:
+            if ate is not None and d > ate:
+                continue
+            revisao = carregar_revisao(book, d)
+            if revisao is not None:
+                ent.revisoes_mensais.append(revisao)
     if md is not None:
         _mercado(ent, md)
     return ent
@@ -1243,9 +1258,9 @@ def _metodologia(ent: Entrada, uni: Sequence[Mapping[str, Any]], compacta: bool)
     out: dict[str, Any] = {
         "horizonte": f"{int(cfg.get('horizonte_meses') or 12)} meses a partir da data do retrato",
         "versao": cfg.get("versao"),
-        "cadencia": ("Retrato completo uma vez por semana, depois do fechamento do último pregão da semana; "
-                     "revisões parciais após a divulgação de resultados. O retrato de uma data alimenta só "
-                     "a decisão seguinte."),
+        "cadencia": ("Retrato completo em cada dia de montagem, antes da decisão, com o fechamento anterior; "
+                     "revisão aprofundada no último dia de montagem do mês e atualizações por resultados "
+                     "ou eventos macro relevantes. Cada decisão usa os modelos atualizados antes dela."),
         "rating": rating,
         "histerese": pp(_num(rcfg.get("histerese")), 0, False) if rcfg.get("histerese") is not None else None,
         "arquetipos": arq,
@@ -1882,7 +1897,8 @@ def _modelo_etf(ent: Entrada, u: Mapping[str, Any], nomes: Mapping[str, str]) ->
     ag = e.get("agregados") or {}
     pub = _etf_pub(u["iid"], e, 10_000, nomes)
     cit = u["citavel"]
-    cab = [("Preço", f"{u['preco_texto']} · {_data(u['preco_data'])}"),
+    cab = [("Índice de referência", e.get("indice") or NA),
+           ("Preço", f"{u['preco_texto']} · {_data(u['preco_data'])}"),
            ("Preço-alvo (12 meses)", u["alvo_texto"]), ("Potencial", u["upside_texto"]),
            ("Retorno esperado", u["etr_texto"]), ("Visão frente ao ILF", u["rating"]),
            ("Retorno pelas posições (modelos da casa)", tx.get("r_bu") or NA),
@@ -1896,7 +1912,8 @@ def _modelo_etf(ent: Entrada, u: Mapping[str, Any], nomes: Mapping[str, str]) ->
              ("Cobertura do LPA", pct(_num(ag.get("cobertura_lpa")), 0))] if ag else []
     return {
         "iid": u["iid"], "nome": u["nome"], "ticker": u["ticker"], "tipo": "etf", "pais": u["pais_nome"],
-        "setor": "ETF", "arquetipo": e.get("indice") or "ETF", "moeda": u["moeda"], "as_of": e.get("as_of"),
+        "setor": "ETF", "indice": e.get("indice"), "arquetipo": e.get("indice") or "ETF",
+        "moeda": u["moeda"], "as_of": e.get("as_of"),
         "rating": u["rating"], "rating_tom": u["rating_tom"], "citavel": cit,
         "rating_desde": _data(u["rating_desde"]) if u["rating_desde"] else None, "rating_motivo": pub["metodo"],
         "cabecalho": [{"t": a, "v": b} for a, b in cab], "agregados": [{"t": a, "v": b} for a, b in agreg],
@@ -2029,6 +2046,20 @@ def exportar(ent: Entrada | None, *, niveis: Sequence[Limites] = NIVEIS,
                  for u in uni]
     mods = _fragmentos(mod_itens, PREFIXO_MODELO, SCHEMA_MODELO, meta_base, "modelos")
     arquivos: dict[str, str] = {}
+    mensais: list[dict[str, Any]] = []
+    for rev in reversed(ent.revisoes_mensais):
+        d = rev["data"]
+        nome = f"{PREFIXO_REVISAO}{d:%Y%m%d}.json"
+        doc = rev["publicada"]
+        sim = bool(doc.get("is_synthetic"))
+        corpo = {"meta": {"schema_version": SCHEMA_REVISAO, "as_of": d.isoformat(),
+                          "is_synthetic": sim,
+                          "data_notice": SIMULATED_DATA_NOTICE if sim else AVISO_REAL},
+                 "markdown": rev["markdown"]}
+        arquivos[nome] = _texto(_carimbo(_sem_ti(corpo, [0])))
+        mensais.append({"data": d.isoformat(), "file": nome,
+                        "resumo": (doc.get("rendered") or {}).get("resumo"),
+                        "automatica": doc.get("autoria") != "mente"})
     idx_h = {i: k for k, (_, iids, _) in enumerate(hist, start=1) for i in iids}
     idx_m = {i: k for k, (_, iids, _) in enumerate(mods, start=1) for i in iids}
     files: dict[str, Any] = {"historico": [], "modelos": []}
@@ -2090,6 +2121,7 @@ def exportar(ent: Entrada | None, *, niveis: Sequence[Limites] = NIVEIS,
             "etfs": etfs_pub,
             "track_record": _placar(ent, lim.ic_semanas),
             "revisions": rev,
+            "monthly_reviews": {"itens": mensais},
             "methodology": _metodologia(ent, uni, not lim.metodologia_completa),
         }
         if not lim.metodologia_completa:

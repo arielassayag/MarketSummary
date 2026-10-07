@@ -175,6 +175,11 @@ def insumos_etf(cfg: Mapping[str, Any], md: MarketData, dados: DadosPublicos, pa
     return {
         "schema": "cdp.cobertura.etf_insumos/v1", "ticker": t, "iid": f"ETF_{t.split('.')[0]}",
         "nome": cfg.get("nome"), "indice": cfg.get("indice"), "moeda": moeda, "pais": str(cfg.get("pais", "LATAM")),
+        "fonte_indice": {"fonte": "SIMULADO" if simulado else "CONFIG", "url": None if simulado else cfg.get("url"),
+                         "documento": "índice de referência do ETF (DADOS SIMULADOS)" if simulado else
+                         "índice de referência declarado pelo emissor; transcrito em configs/cdp/cobertura/etfs.yaml",
+                         "data_publicacao": None, "data_coleta": None,
+                         "sha256": params.arquivos.get("cobertura/etfs.yaml")},
         "ter": _f(cfg.get("ter")) or 0.0, "as_of": as_of.isoformat(), "preco": r6(p0),
         "data_preco": d0.isoformat() if d0 else None, "vol_12m": r6(vol_realizada(md, t, as_of, 252)),
         "te_ilf": None if t == ref else r6(_te_ir(md, t, ref, as_of)), "taxa_caixa": r6(rcx),
@@ -216,6 +221,8 @@ def calcular_etf(ins: Mapping[str, Any], params: ParametrosCobertura, pacotes: M
     out: dict[str, Any] = {"schema": "cdp.cobertura.etf/v1", "ticker": t, "iid": ins["iid"], "nome": ins.get("nome"),
                            "indice": ins.get("indice"), "moeda": moeda, "pais": pais, "as_of": ins["as_of"],
                            "preco": p0, "data_preco": ins.get("data_preco"), "lacunas": [], "avisos": []}
+    reg.nota("etf.indice", "Índice de referência", str(ins.get("indice") or "índice não informado"),
+             [ins["fonte_indice"]] if ins.get("fonte_indice") else [])
     if p0 is None:
         out["lacunas"].append({"insumo": "preco", "nome": "preço do ETF", "motivo": "sem preço do ETF na base"})
         out["tem_alvo"] = False

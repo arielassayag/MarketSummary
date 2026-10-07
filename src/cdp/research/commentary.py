@@ -65,7 +65,7 @@ MAX_PARAGRAPH = 1500
 MAX_FLAG = 300
 MAX_FLAGS = 10
 MAX_NEWS = 30
-PAPER_TRADING_LABEL = "paper trading com preços reais"
+PAPER_TRADING_LABEL = "carteira simulada com preços reais"
 FUND_TZ = ZoneInfo(FundConfig().fund.timezone)
 """Fuso do fundo (Brasília): o dia de uma notícia é o dia local do pregão da B3."""
 
@@ -599,7 +599,7 @@ def commentary_system_prompt() -> str:
     schema = json.dumps(DailyCommentaryOutput.model_json_schema(), ensure_ascii=False,
                         sort_keys=True, separators=(",", ":"))
     return ("Você escreve o comentário diário do CDP — Cabra da Peste, fundo long/short de ações "
-            "latino-americanas (paper trading com preços reais). Os números já foram calculados "
+            "latino-americanas (carteira simulada com preços reais). Os números já foram calculados "
             "por código e estão na lista de FATOS.\n\nREGRAS INVIOLÁVEIS\n" + rules +
             "\n\nmind deve ser \"api\".\nSCHEMA JSON OBRIGATÓRIO (DailyCommentaryOutput):\n"
             + schema + f"\nVersão do prompt: {COMMENTARY_PROMPT_VERSION}")

@@ -20,9 +20,18 @@
 
 from __future__ import annotations
 
+import hashlib
+import io
 import json
 import math
+import re
+import zipfile
 from collections.abc import Mapping
+from datetime import date
+from html.parser import HTMLParser
+from pathlib import Path, PurePosixPath
+from urllib.parse import urlparse
+from xml.etree import ElementTree as ET
 
 import pandas as pd
 
@@ -33,6 +42,8 @@ from .security_master import format_cik
 URL_COMPANYFACTS = "https://data.sec.gov/api/xbrl/companyfacts/CIK{cik}.json"
 URL_TICKERS = "https://www.sec.gov/files/company_tickers_exchange.json"
 URL_EFTS = "https://efts.sec.gov/LATEST/search-index?keysTyped={q}"
+URL_SUBMISSIONS = "https://data.sec.gov/submissions/CIK{cik}.json"
+CATALOGO_RI = Path(__file__).resolve().parents[3] / "configs/cdp/sec_ri_xbrl.json"
 FORMULARIOS = frozenset({
     "10-K", "10-K/A", "10-KT", "10-Q", "10-Q/A", "20-F", "20-F/A", "40-F", "40-F/A",
     "6-K", "6-K/A", "8-K",
@@ -98,6 +109,8 @@ TAGS: dict[str, list[tuple[tuple[str, str], ...]]] = {
                       ((_I, "CurrentLeaseLiabilities"), (_I, "NoncurrentLeaseLiabilities")),
                       ((_U, "OperatingLeaseLiability"), (_U, "FinanceLeaseLiability")),
                       ((_U, "OperatingLeaseLiability"),)],
+    "arrendamentos_pagos": [((_I, "PaymentsOfLeaseLiabilitiesClassifiedAsFinancingActivities"),),
+                            ((_U, "FinanceLeasePrincipalPayments"),)],
     "patrimonio_liquido": [((_I, "Equity"),),
                            ((_U, "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest"),),
                            ((_U, "StockholdersEquity"),)],
@@ -105,8 +118,11 @@ TAGS: dict[str, list[tuple[tuple[str, str], ...]]] = {
                                  ((_U, "StockholdersEquity"),)],
     "participacao_minoritarios": [((_I, "NoncontrollingInterests"),), ((_U, "MinorityInterest"),)],
     "ativo_total": [((_I, "Assets"),), ((_U, "Assets"),)],
-    "acoes_emitidas": [((_I, "NumberOfSharesIssued"),), ((_U, "CommonStockSharesIssued"),)],
-    "acoes_tesouraria": [((_U, "TreasuryStockShares"),), ((_U, "TreasuryStockCommonShares"),)],
+    "acoes_emitidas": [((_I, "NumberOfSharesIssued"),),
+                       ((_I, "NumberOfSharesIssuedAndFullyPaid"),),
+                       ((_U, "CommonStockSharesIssued"),)],
+    "acoes_tesouraria": [((_I, "TreasuryShares"),), ((_U, "TreasuryStockShares"),),
+                         ((_U, "TreasuryStockCommonShares"),)],
     "acoes_em_circulacao": [((_D, "EntityCommonStockSharesOutstanding"),),
                             ((_I, "NumberOfSharesOutstanding"),),
                             ((_U, "CommonStockSharesOutstanding"),)],
@@ -126,11 +142,14 @@ FLUXO_SEC = frozenset({
     "receita", "lucro_bruto", "ebit", "d_a", "resultado_financeiro", "lucro_antes_ir", "ir_csll",
     "lucro_liquido", "lucro_liquido_controladores", "cfo", "capex", "dividendos_pagos",
     "recompras", "margem_financeira", "receita_servicos", "despesa_pdd",
+    "arrendamentos_pagos",
 })
 ACOES = frozenset({"acoes_emitidas", "acoes_tesouraria", "acoes_em_circulacao"})
 NEGAR = frozenset({"ir_csll", "despesa_pdd"})
-MODULO = frozenset({"d_a", "capex", "dividendos_pagos", "recompras", "provisao_credito"})
-DEMONSTRATIVO = {i: ("DFC" if i in {"cfo", "capex", "dividendos_pagos", "recompras"}
+MODULO = frozenset({"d_a", "capex", "dividendos_pagos", "recompras", "provisao_credito",
+                   "arrendamentos_pagos"})
+DEMONSTRATIVO = {i: ("DFC" if i in {"cfo", "capex", "dividendos_pagos", "recompras",
+                                   "arrendamentos_pagos"}
                      else "DRE" if i in FLUXO_SEC else "BP") for i in TAGS}
 MAIOR_TOTAL = frozenset({"receita", "divida_bruta"})
 """Itens em que a tag "de maior prioridade" às vezes é um fato parcial (nota explicativa,
@@ -158,6 +177,259 @@ def url_filing(cik10: str, accn: str | None) -> str | None:
         return None
     return (f"https://www.sec.gov/Archives/edgar/data/{int(cik10)}/"
             f"{str(accn).replace('-', '')}/")
+
+
+ARQUIVAMENTOS_COLUNAS = ["accn", "form", "filed", "period_end", "documento", "url", "xbrl"]
+
+
+def documento_ri(cik10: str, arquivamento: Mapping) -> dict | None:
+    """Espelho público curado, vinculado ao arquivo efetivamente encontrado em submissions.
+    Datas do catálogo nunca criam uma publicação: accession, formulário e ambas as datas
+    devem conferir com o histórico SEC conhecido no corte da coleta.
+    """
+    if not CATALOGO_RI.is_file():
+        return None
+    obj = json.loads(CATALOGO_RI.read_text(encoding="utf-8"))
+    if not isinstance(obj, dict) or obj.get("schema") != "cdp.sec_ri_xbrl/v1" or not isinstance(obj.get("documentos"), list):
+        raise ValueError("catálogo RI XBRL com schema inesperado")
+    for d in obj["documentos"]:
+        if not isinstance(d, dict):
+            raise ValueError("documento RI XBRL deve ser objeto")
+        if d.get("cik") != cik10 or d.get("accn") != arquivamento.get("accn"):
+            continue
+        for campo in ("form", "filed", "period_end", "documento_sec"):
+            origem = arquivamento.get("documento" if campo == "documento_sec" else campo)
+            esperado = str(origem) if campo in {"form", "documento_sec"} else pd.Timestamp(origem).date().isoformat()
+            if d.get(campo) != esperado:
+                raise ValueError(f"catálogo RI diverge de submissions: {campo}")
+        for campo in ("url", "pagina_ri"):
+            u = urlparse(str(d.get(campo, "")))
+            if u.scheme != "https" or not u.netloc or u.username or u.password:
+                raise ValueError(f"URL RI inválida: {campo}")
+        membro = str(d.get("membro_zip", ""))
+        if membro and (PurePosixPath(membro).is_absolute() or ".." in PurePosixPath(membro).parts
+                       or not membro.lower().endswith((".xml", ".htm", ".html", ".xhtml"))):
+            raise ValueError("membro ZIP RI inválido")
+        if not re.fullmatch(r"[0-9a-f]{64}", str(d.get("sha256", ""))):
+            raise ValueError("SHA-256 RI ausente ou inválido")
+        return d
+    return None
+
+
+def companyfacts_ri(conteudo: bytes, cik10: str, arquivamento: Mapping, documento: Mapping) -> dict:
+    """Lê bytes públicos conferidos, sem extrair ZIP no disco ou escolher um XML por palpite."""
+    if hashlib.sha256(conteudo).hexdigest() != documento["sha256"]:
+        raise ValueError("SHA-256 do documento RI não confere com o catálogo")
+    membro = documento.get("membro_zip")
+    if membro:
+        try:
+            with zipfile.ZipFile(io.BytesIO(conteudo)) as z:
+                if z.namelist().count(membro) != 1 or z.getinfo(membro).file_size > 50_000_000:
+                    raise ValueError("membro XBRL RI ausente, duplicado ou acima do limite")
+                conteudo = z.read(membro)
+        except (zipfile.BadZipFile, KeyError, RuntimeError) as exc:
+            raise ValueError("ZIP RI ilegível") from exc
+    return companyfacts_documento(conteudo, cik10, arquivamento)
+
+
+def validar_submissions(conteudo: bytes, cik10: str | None = None) -> dict:
+    """Histórico oficial; rejeita respostas de erro e vetores desalinhados."""
+    obj = json.loads(conteudo)
+    if not isinstance(obj, dict):
+        raise ValueError("Histórico da SEC com formato inesperado.")
+    if cik10 and obj.get("cik") and format_cik(obj["cik"]) != cik10:
+        raise ValueError("Histórico da SEC recebido para outro CIK.")
+    rec = (obj.get("filings") or {}).get("recent", obj)
+    campos = ["accessionNumber", "form", "filingDate", "reportDate", "primaryDocument"]
+    if any(not isinstance(rec.get(c), list) for c in campos):
+        raise ValueError("Histórico da SEC sem vetores de arquivamentos.")
+    if len({len(rec[c]) for c in campos}) != 1:
+        raise ValueError("Histórico da SEC com vetores desalinhados.")
+    return obj
+
+
+def arquivamentos_sec(submissions: Mapping, cik10: str, as_of: date) -> pd.DataFrame:
+    """Datas oficiais 20-F/6-K e variantes; um arquivamento não prova resultado por si só."""
+    rec = (submissions.get("filings") or {}).get("recent", submissions)
+    rows = []
+    forms = {"20-F", "20-F/A", "6-K", "6-K/A", "40-F", "40-F/A", "10-K", "10-Q"}
+    for i, form in enumerate(rec.get("form") or []):
+        if form not in forms:
+            continue
+        accn = rec["accessionNumber"][i]
+        doc = str(rec["primaryDocument"][i])
+        filed = pd.to_datetime(rec["filingDate"][i], errors="coerce")
+        fim = pd.to_datetime(rec["reportDate"][i], errors="coerce")
+        if pd.isna(filed) or filed.date() > as_of or not re.fullmatch(r"\d{10}-\d{2}-\d{6}", accn):
+            continue
+        if not doc or PurePosixPath(doc).name != doc or "?" in doc or "#" in doc:
+            continue
+        flags = rec.get("isXBRL") or []
+        rows.append({"accn": accn, "form": form, "filed": filed, "period_end": fim,
+                     "documento": doc, "url": f"{url_filing(cik10, accn)}{doc}",
+                     "xbrl": i < len(flags) and str(flags[i]) == "1"})
+    out = pd.DataFrame(rows, columns=ARQUIVAMENTOS_COLUNAS)
+    return out.sort_values(["filed", "accn"], ascending=False).reset_index(drop=True)
+
+
+def documentos_pendentes(arquivos: pd.DataFrame, fatos: pd.DataFrame, as_of: date) -> pd.DataFrame:
+    """Documentos XBRL recentes sem núcleo de demonstrações na própria data-base.
+    Uma contagem da capa ou um comparativo avulso não representa o balanço do arquivamento.
+    """
+    alvo = arquivos[arquivos["xbrl"] & arquivos["period_end"].notna()
+                    & (arquivos["period_end"] <= pd.Timestamp(as_of))].copy()
+    nucleo = fatos[fatos["item"].isin({"receita", "lucro_liquido", "lucro_liquido_controladores",
+                                      "ativo_total", "patrimonio_liquido", "patrimonio_controladores"})
+                   & (fatos["received_date"] <= pd.Timestamp(as_of))].copy()
+    conhecidos = set()
+    if not nucleo.empty:
+        nucleo["accn"] = nucleo["documento"].str.extract(r"(\d{10}-\d{2}-\d{6})", expand=False)
+        for (accn, fim), g in nucleo.groupby(["accn", "period_end"]):
+            itens = set(g["item"])
+            if "ativo_total" in itens and itens & {"lucro_liquido", "lucro_liquido_controladores"} \
+                    and itens & {"receita", "patrimonio_liquido", "patrimonio_controladores"}:
+                conhecidos.add((accn, fim))
+        ult = nucleo["period_end"].max()
+        anuais = nucleo[nucleo["anual"].astype(bool)]
+        ult_anual = anuais["period_end"].max() if not anuais.empty else pd.NaT
+        recentes = (alvo["period_end"] >= ult) | (alvo["form"].isin(ANUAIS)
+                     & (pd.isna(ult_anual) | (alvo["period_end"] >= ult_anual)))
+        alvo = alvo[recentes]
+    cobertos = [(r.accn, r.period_end) in conhecidos for r in alvo.itertuples(index=False)]
+    return alvo.loc[[not v for v in cobertos]].drop_duplicates(["form", "period_end"]).head(4)
+
+
+class _CapturaInline(HTMLParser):
+    """Lê recursos e fatos inline sem executar HTML nem resolver entidades externas."""
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.nodes: list[ET.Element] = []
+        self.stack: list[ET.Element] = []
+
+    def handle_starttag(self, tag, attrs):
+        if not self.stack and tag.rsplit(":", 1)[-1] not in {"context", "unit", "nonfraction"}:
+            return
+        node = ET.Element(tag, dict(attrs))
+        if self.stack:
+            self.stack[-1].append(node)
+        else:
+            self.nodes.append(node)
+        if tag not in {"br", "hr", "img", "input", "meta", "link"}:
+            self.stack.append(node)
+
+    def handle_startendtag(self, tag, attrs):
+        self.handle_starttag(tag, attrs)
+        self.handle_endtag(tag)
+
+    def handle_endtag(self, tag):
+        for i in range(len(self.stack) - 1, -1, -1):
+            if self.stack[i].tag == tag:
+                del self.stack[i:]
+                break
+
+    def handle_data(self, data):
+        if self.stack:
+            node = self.stack[-1]
+            if len(node):
+                node[-1].tail = (node[-1].tail or "") + data
+            else:
+                node.text = (node.text or "") + data
+
+
+def _local(tag: str) -> str:
+    return tag.rsplit("}", 1)[-1].rsplit(":", 1)[-1].lower()
+
+
+def companyfacts_documento(conteudo: bytes, cik10: str, arquivamento: Mapping) -> dict:
+    """XBRL/inline do arquivo oficial em estrutura companyfacts: só totais sem dimensões,
+    tags IFRS/US-GAAP/DEI, unidades explícitas e transformações numéricas conhecidas.
+
+    Taxonomia própria, dimensão de segmento, escala desconhecida, duplicata contraditória e
+    fato nulo ficam ausentes. ``filed`` vem do histórico SEC, nunca da data-base do balanço.
+    """
+    try:
+        root = ET.fromstring(conteudo)
+        nodes = list(root.iter())
+    except ET.ParseError:
+        parser = _CapturaInline()
+        parser.feed(conteudo.decode("utf-8-sig"))
+        nodes = [n for root in parser.nodes for n in root.iter()]
+    contexts, units = {}, {}
+    for n in nodes:
+        local = _local(n.tag)
+        if local == "context":
+            descendants = list(n.iter())
+            if any(_local(x.tag) in {"explicitmember", "typedmember"} for x in descendants):
+                continue
+            campos = {_local(x.tag): (x.text or "").strip() for x in descendants}
+            if format_cik(campos.get("identifier")) != cik10:
+                continue
+            end = campos.get("instant") or campos.get("enddate")
+            if not end:
+                continue
+            contexts[n.get("id")] = {"end": end, **({"start": campos["startdate"]}
+                                                       if campos.get("startdate") else {})}
+        elif local == "unit":
+            measures = [(x.text or "").strip().rsplit(":", 1)[-1]
+                        for x in n.iter() if _local(x.tag) == "measure"]
+            if len(measures) == 1 and (measures[0] == "shares" or _CCY_UNIT.fullmatch(measures[0])):
+                units[n.get("id")] = measures[0]
+    facts: dict = {}
+    grouped: dict[tuple, set[float]] = {}
+    for n in nodes:
+        attrs = {k.lower(): v for k, v in n.attrib.items()}
+        context = contexts.get(attrs.get("contextref"))
+        unit = units.get(attrs.get("unitref"))
+        if not context or not unit or any(_local(k) == "nil" and str(v).lower() in {"true", "1"}
+                                         for k, v in attrs.items()):
+            continue
+        fim_report = arquivamento.get("period_end")
+        if unit != "shares" and fim_report is not None and pd.Timestamp(context["end"]) > pd.Timestamp(fim_report):
+            continue
+        name = attrs.get("name", n.tag)
+        if name.startswith("{"):
+            ns, tag = name[1:].split("}", 1)
+            tax = "ifrs-full" if "ifrs.org" in ns else "us-gaap" if "/us-gaap/" in ns else "dei"
+            if tax == "dei" and "/dei/" not in ns:
+                continue
+        elif ":" in name:
+            tax, tag = name.split(":", 1)
+        else:
+            continue
+        if tax not in {_I, _U, _D}:
+            continue
+        raw = "".join(n.itertext()).replace("\u00a0", "").strip()
+        fmt = attrs.get("format", "").rsplit(":", 1)[-1].replace("-", "").lower()
+        if fmt in {"numdotdecimal", "numdotdecimalin"}:
+            raw = raw.replace(",", "").replace(" ", "")
+        elif fmt == "numcommadecimal":
+            raw = raw.replace(".", "").replace(" ", "").replace(",", ".")
+        elif fmt in {"zerodash", "numdash"} and raw in {"-", "—", "–"}:
+            raw = "0"
+        elif fmt:
+            continue
+        try:
+            val = float(raw) * 10 ** int(attrs.get("scale", "0"))
+            if attrs.get("sign") == "-":
+                val = -val
+        except (ValueError, OverflowError):
+            continue
+        if not math.isfinite(val):
+            continue
+        key = (tax, tag, unit, context.get("start"), context["end"])
+        grouped.setdefault(key, set()).add(val)
+    for (tax, tag, unit, start, end), vals in grouped.items():
+        if len(vals) != 1:
+            continue
+        entry = {"val": next(iter(vals)), "end": end, "filed": str(arquivamento["filed"])[:10],
+                 "form": arquivamento["form"], "accn": arquivamento["accn"]}
+        if start:
+            entry["start"] = start
+        facts.setdefault(tax, {}).setdefault(tag, {"units": {}})["units"].setdefault(unit, []).append(entry)
+    if not facts:
+        raise ValueError("Documento SEC sem fatos XBRL canônicos consolidados legíveis.")
+    return {"cik": int(cik10), "facts": facts}
 
 
 def arquivos_sec(facts: Mapping) -> tuple[dict[str, str], dict[str, pd.Timestamp]]:
@@ -235,6 +507,8 @@ def fatos_sec(companyfacts: Mapping) -> pd.DataFrame:
     facts = companyfacts.get("facts", {}) if companyfacts else {}
     cik = format_cik(companyfacts.get("cik")) if companyfacts else None
     moeda_arq, data_base = arquivos_sec(facts)
+    forms = {e["accn"]: e.get("form", "") for tax in facts.values() for node in tax.values()
+             for entries in (node.get("units") or {}).values() for e in entries if e.get("accn")}
     rows: list[dict] = []
     for item, cands in TAGS.items():
         is_sh = item in ACOES
@@ -251,7 +525,7 @@ def fatos_sec(companyfacts: Mapping) -> pd.DataFrame:
             if not is_sh:  # só a moeda de apresentação do próprio arquivo
                 df = df[df["unit"] == df["accn"].map(moeda_arq)]
             if "form" not in df.columns:
-                df = df.assign(form="")
+                df = df.assign(form=df["accn"].map(forms).fillna(""))
             df = df[df["form"].fillna("").isin(FORMULARIOS) | (df["form"].fillna("") == "")]
             if flow:
                 dur = (df["end"] - df["start"]).dt.days + 1
@@ -313,7 +587,29 @@ def fatos_sec(companyfacts: Mapping) -> pd.DataFrame:
     out = pd.DataFrame(rows, columns=FATO_SEC_COLUNAS)
     for c in ("period_start", "period_end", "received_date"):
         out[c] = pd.to_datetime(out[c])
-    return _receita_plausivel(out)
+    return _acoes_plausiveis(_receita_plausivel(out))
+
+
+def _acoes_plausiveis(f: pd.DataFrame) -> pd.DataFrame:
+    """Uma parcela de ações emitidas menor que o total em circulação não é um total.
+    Mantém a contagem observada em circulação e registra o conflito; não infere ações faltantes.
+    """
+    emit = f[f["item"] == "acoes_emitidas"]
+    circ = f[f["item"] == "acoes_em_circulacao"]
+    if emit.empty or circ.empty:
+        return f
+    chaves = ["entidade", "period_end", "received_date"]
+    comp = emit.reset_index().merge(circ[chaves + ["value"]], on=chaves, suffixes=("", "_circ"))
+    ruins = comp.loc[comp["value"] < comp["value_circ"], "index"]
+    if ruins.empty:
+        return f
+    out = f.drop(index=ruins).copy()
+    bases = {tuple(r) for r in f.loc[ruins, chaves].itertuples(index=False, name=None)}
+    for idx, r in out[out["item"] == "acoes_em_circulacao"].iterrows():
+        if tuple(r[c] for c in chaves) in bases:
+            aviso = "contagem emitida parcial menor que o total em circulação: descartada"
+            out.loc[idx, "nota"] = f"{r['nota']}; {aviso}" if pd.notna(r["nota"]) else aviso
+    return out.reset_index(drop=True)
 
 
 def _receita_plausivel(f: pd.DataFrame) -> pd.DataFrame:
@@ -411,7 +707,8 @@ def validar_efts(conteudo: bytes) -> None:
 
 
 __all__ = [
-    "ANUAIS", "FATO_SEC_COLUNAS", "TAGS", "URL_COMPANYFACTS", "URL_EFTS", "URL_TICKERS",
-    "arquivos_sec", "fatos_sec", "parse_company_tickers", "parse_efts", "sec_ticker",
-    "url_filing", "validar_companyfacts", "validar_efts",
+    "ANUAIS", "ARQUIVAMENTOS_COLUNAS", "FATO_SEC_COLUNAS", "TAGS", "URL_COMPANYFACTS",
+    "URL_EFTS", "URL_SUBMISSIONS", "URL_TICKERS", "arquivamentos_sec", "arquivos_sec",
+    "companyfacts_documento", "documentos_pendentes", "fatos_sec", "parse_company_tickers", "parse_efts", "sec_ticker",
+    "url_filing", "validar_companyfacts", "validar_efts", "validar_submissions",
 ]

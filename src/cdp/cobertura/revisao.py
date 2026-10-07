@@ -1445,9 +1445,14 @@ def verificar_revisoes(book_root: Path | str) -> list[str]:
         pasta = pasta_revisao(book_root, d)
         try:
             doc = json.loads((pasta / PUBLICADA_JSON).read_text(encoding="utf-8"))
+            if not isinstance(doc, dict):
+                raise ValueError("a revisão publicada deve ser um objeto JSON")
+            retrato = doc.get("retrato")
+            if not isinstance(retrato, dict):
+                raise ValueError("o retrato da revisão publicada deve ser um objeto JSON")
             payload = {"data": d.isoformat(), "revisao_publicada": sha256_file(pasta / PUBLICADA_JSON),
                        "revisao_md": sha256_file(pasta / REVISAO_MD),
-                       "retrato": (doc.get("retrato") or {}).get("data"),
+                       "retrato": retrato.get("data"),
                        "autoria": doc.get("autoria")}
         except (OSError, ValueError) as exc:
             probs.append(f"revisão {d}: arquivos ilegíveis ({exc.__class__.__name__})")

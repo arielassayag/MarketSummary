@@ -448,7 +448,7 @@ UNIVERSE_ROWS = [
     ("CL_DDD", "Delta SA", "CL", "Utilities", "LOCAL", "DDDD.SN", "BCS", "CLP", "", True, ""),
     ("BR_EEE", "Épsilon SA", "BR", "Industrials", "LOCAL", "EEEE3.SA", "B3", "BRL", "", True, ""),
 ]
-FX_LEVEL = {"BRL": 5.0, "MXN": 18.0, "CLP": 950.0}
+FX_LEVEL = {"BRL": 5.0, "MXN": 18.0, "CLP": 950.0, "PEN": 3.6, "UYU": 40.0, "CAD": 1.4}
 TICKER_MARKET = {"AAAA3.SA": "BR", "AAA": "US", "BBBB.MX": "MX", "CCC": "US", "DDDD.SN": "CL",
                  "EEEE3.SA": "BR"}
 
@@ -592,6 +592,7 @@ def test_build_snapshot_with_fake_sources(tmp_path):
     md = load_snapshot(out)
     assert md.close.index.max() == pd.Timestamp(BASE_AS_OF)
     assert md.fx["USD"].eq(1.0).all()
+    assert {"PEN", "UYU", "CAD"}.issubset(md.fx.columns)
     assert set(md.lending.index) == {"AAAA3.SA", "EEEE3.SA"}
     assert md.lending.loc["AAAA3.SA", "lending_date"] == "2026-10-01"  # BDI em D+1
     assert all(n.published_at.date() <= BASE_AS_OF for n in md.news)  # futuro excluído
@@ -617,6 +618,27 @@ def test_optional_source_failure_recorded_as_limitation(tmp_path):
     assert "Notícias indisponíveis" in text and "Short interest indisponível" in text
     md = load_snapshot(out)
     assert md.lending.empty and md.short_interest.empty and md.news == ()
+
+
+def test_cambio_de_balancos_opcional_preserva_exigencia_das_linhas(tmp_path):
+    """Moedas extras não diluem o limite das moedas necessárias à conversão dos preços."""
+    mk = FakeMarket()
+
+    def sem_extras(ccys, start, end):
+        df = mk.fx(ccys, start, end)
+        return df[~df["currency"].isin(["PEN", "UYU", "CAD"])]
+
+    out = build_fake_base(tmp_path, mk, fx=sem_extras)
+    assert any("Câmbio de demonstrações ausente" in x for x in read_manifest(out).limitations)
+    assert "PEN" not in load_snapshot(out).fx.columns
+
+    def sem_brl(ccys, start, end):
+        df = mk.fx(ccys, start, end)
+        return df[df["currency"] != "BRL"]
+
+    with pytest.raises(SnapshotError, match="Câmbio ausente"):
+        build_snapshot(tmp_path / "universe.csv", tmp_path / "sem_brl", BASE_AS_OF,
+                       fetchers=mk.fetchers(fx=sem_brl), now=FIXED_NOW)
 
 
 def test_required_source_failure_raises(tmp_path):
@@ -690,6 +712,8 @@ def test_store_append_load_and_refusals(tmp_path):
         st.append_daily(date(2026, 10, 5))  # mesmo pregão duas vezes
     m2 = st.append_daily(date(2026, 10, 6))
     assert m2.prev_manifest_hash == m1.manifest_hash
+    fx = st.load(date(2026, 10, 6)).fx
+    assert fx.loc[pd.Timestamp("2026-10-06"), ["PEN", "UYU", "CAD"]].notna().all()
     with pytest.raises(ValueError, match="não fechou"):
         st.append_daily(date(2026, 10, 7))
     assert st.dates() == [BASE_AS_OF, date(2026, 10, 5), date(2026, 10, 6)]

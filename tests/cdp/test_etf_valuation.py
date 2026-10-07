@@ -4,12 +4,14 @@ composição e testes de ouro (Safra, Grinold–Kroner). DADOS SIMULADOS, sem re
 from __future__ import annotations
 
 from datetime import date
+from types import SimpleNamespace
 
 import pytest
 
 from cdp.cobertura.etf import (
     agregar_bu,
     avaliar_etf,
+    calcular_etf,
     calcular_etfs,
     grinold_kroner,
     payout_sustentavel,
@@ -60,8 +62,36 @@ def test_etfs_have_targets_coverage_and_imputation_flags(run):
         assert e["omega_bu"] == pytest.approx(omega, rel=1e-5)
         assert e["retorno_esperado"] == pytest.approx(omega * e["r_bu"] + (1 - omega) * e["r_td"], abs=2e-6)
         assert e["passos"] and all(p["substituicao"] for p in e["passos"])
+        cfg = next(c for c in params.etfs["etfs"] if c["ticker"] == e["ticker"])
+        assert e["indice"] == cfg["indice"]
+        assert next(p for p in e["passos"] if p["id"] == "etf.indice")["substituicao"] == cfg["indice"]
     assert ex.etfs["ETF_ILF"]["visao_ilf"] == "Referência"
     assert ex.etfs["ETF_EWZ"]["visao_ilf"] in ("Positiva", "Neutra", "Negativa")
+
+
+def test_indice_de_referencia_visivel_nos_oito_modelos_sem_preco():
+    from cdp.workflow import painel_cobertura as pc
+
+    params = carregar_parametros()
+    assert len(params.etfs["etfs"]) == 8
+    for cfg in params.etfs["etfs"]:
+        iid = "ETF_" + cfg["ticker"].split(".")[0]
+        ins = {**cfg, "iid": iid, "as_of": D.isoformat(), "preco": None,
+               "fonte_indice": {"fonte": "CONFIG", "url": cfg["url"],
+                                "documento": "índice de referência declarado pelo emissor",
+                                "sha256": params.arquivos["cobertura/etfs.yaml"]}}
+        e = calcular_etf(ins, params, {}, {}, 0.045)
+        assert e["tem_alvo"] is False and e["indice"] == cfg["indice"]
+        assert e["passos"][0]["fontes"][0]["url"] == cfg["url"]
+        u = {"iid": iid, "citavel": False, "preco_texto": "n/d", "preco_data": None,
+             "alvo_texto": "Sem preço-alvo", "upside_texto": "n/d", "etr_texto": "n/d",
+             "rating": "Em revisão", "nome": cfg["nome"], "ticker": cfg["ticker"],
+             "pais_nome": cfg["pais"], "moeda": cfg["moeda"], "rating_tom": "sem",
+             "rating_desde": None, "data_modelo": D.isoformat()}
+        ficha = pc._modelo_etf(SimpleNamespace(etfs={iid: e}), u, {})
+        assert ficha["indice"] == cfg["indice"]
+        assert ficha["cabecalho"][0] == {"t": "Índice de referência", "v": cfg["indice"]}
+        assert ficha["passos"] and ficha["lacunas"]  # modelo visível mesmo sem alvo citável
 
 
 def test_without_public_holdings_bottom_up_is_unavailable(run):

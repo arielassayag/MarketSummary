@@ -9,6 +9,7 @@
   "permissions": {
     "defaultMode": "acceptEdits",
     "allow": [
+      "Edit(/book/cobertura/revisoes/*/revisao.json)",
       "Bash(uv sync *)",
       "Bash(uv run python -m cdp *)",
       "Bash(uv run cdp *)",
@@ -128,6 +129,12 @@
       "Edit(/book/cobertura/*/placar.json)",
       "Edit(/book/cobertura/*/eventos.jsonl)",
       "Edit(/book/cobertura/publico/**)",
+      "Edit(/book/cobertura/revisoes/*/fatos.md)",
+      "Edit(/book/cobertura/revisoes/*/factbook.json)",
+      "Edit(/book/cobertura/revisoes/*/pacote.json)",
+      "Edit(/book/cobertura/revisoes/*/revisao.schema.json)",
+      "Edit(/book/cobertura/revisoes/*/revisao_publicada.json)",
+      "Edit(/book/cobertura/revisoes/*/revisao.md)",
       "Edit(/book/cobertura/notas/*/*/fatos.md)",
       "Edit(/book/cobertura/notas/*/*/factbook.json)",
       "Edit(/book/cobertura/notas/*/*/contexto.json)",

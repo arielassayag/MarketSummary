@@ -43,6 +43,7 @@ from zoneinfo import ZoneInfo
 import yaml
 
 from . import SIMULATED_DATA_NOTICE
+from .noticias import VEDADOS_NO_PORTAL
 
 SITE_PADRAO = Path("configs/cdp/site.yaml")
 ESTATICOS = Path("site")
@@ -1226,24 +1227,24 @@ def _refs_locais(path: Path, saida: Path) -> list[str]:
 #: — exceto dentro de conteúdo de terceiros citado como dado (manchete e veículo das notícias
 #: públicas coletadas, ``*news.jsonl``): a imprensa cita essas casas ("…, aponta <casa>") e
 #: uma manchete nunca derruba a publicação do dia.
-VEDADOS_NO_PORTAL = ("quar" + "tr", "dalo" + "opa", "fact" + "set", "capital" + " iq",
-                     "refini" + "tiv", "bloomberg" + " terminal", "econo" + "matica")
 #: Caracteres de contexto da manchete (antes do termo) que identificam a citação de terceiros.
 CONTEXTO_TERCEIROS = 24
 
 
-def _normalizado(texto: str) -> str:
-    """Texto comparável entre formatos (HTML, JSON, Markdown): entidades e escapes ``\\uXXXX``
-    desfeitos, minúsculas e só letras e dígitos."""
+def _sem_escapes(texto: str) -> str:
+    """Entidades HTML e escapes de JSON desfeitos, preservando a pontuação dos endereços."""
     t = html.unescape(texto)
     t = re.sub(r"\\u([0-9a-fA-F]{4})", lambda m: chr(int(m.group(1), 16)), t)
-    return re.sub(r"[\W_]+", "", t.lower())
+    return t.replace(r"\/", "/")
 
 
-def _citacoes_de_terceiros(saida: Path, vedados: re.Pattern[str]) -> list[str]:
-    """Trechos normalizados (termo vedado + contexto) das manchetes e veículos das notícias
-    publicadas — conteúdo de terceiros, isento da conferência de termos vedados."""
-    trechos: set[str] = set()
+def _normalizado(texto: str) -> str:
+    """Texto comparável entre formatos: minúsculas e só letras e dígitos."""
+    return re.sub(r"[\W_]+", "", _sem_escapes(texto).lower())
+
+
+def _noticias_de_terceiros(saida: Path) -> Iterable[dict[str, Any]]:
+    """Notícias brutas copiadas para os dados de auditoria, sem alterar seus arquivos."""
     for p in sorted(saida.rglob("*news.jsonl")):
         try:
             linhas = p.read_text(encoding="utf-8").splitlines()
@@ -1254,27 +1255,49 @@ def _citacoes_de_terceiros(saida: Path, vedados: re.Pattern[str]) -> list[str]:
                 item = json.loads(linha)
             except ValueError:
                 continue
-            if not isinstance(item, dict):
-                continue
-            for campo in ("title", "source"):
-                txt = str(item.get(campo) or "")
-                for m in vedados.finditer(txt):
-                    ini = m.start() - CONTEXTO_TERCEIROS
-                    trecho = (txt[ini:m.end()] if ini >= 0
-                              else txt[m.start():m.end() + CONTEXTO_TERCEIROS])
-                    n = _normalizado(trecho)
-                    if len(n) >= len(_normalizado(m.group(0))) + 8:  # contexto que identifica
-                        trechos.add(n)
+            if isinstance(item, dict):
+                yield item
+
+
+def _citacoes_de_terceiros(saida: Path, vedados: re.Pattern[str]) -> list[str]:
+    """Trechos normalizados (termo vedado + contexto) das manchetes e veículos das notícias
+    publicadas — conteúdo de terceiros, isento da conferência de termos vedados."""
+    trechos: set[str] = set()
+    for item in _noticias_de_terceiros(saida):
+        for campo in ("title", "source"):
+            txt = str(item.get(campo) or "")
+            for m in vedados.finditer(txt):
+                ini = m.start() - CONTEXTO_TERCEIROS
+                trecho = (txt[ini:m.end()] if ini >= 0
+                          else txt[m.start():m.end() + CONTEXTO_TERCEIROS])
+                n = _normalizado(trecho)
+                if len(n) >= len(_normalizado(m.group(0))) + 8:  # contexto que identifica
+                    trechos.add(n)
     return sorted(trechos, key=len, reverse=True)
 
 
+def _urls_de_terceiros(saida: Path) -> list[str]:
+    """Endereços públicos vinculados às notícias brutas, mesmo após neutralizar a manchete."""
+    from .ui.data import safe_url
+
+    urls = {url for item in _noticias_de_terceiros(saida)
+            if isinstance(item.get("url"), str) and (url := safe_url(item["url"]))}
+    return sorted(urls, key=len, reverse=True)
+
+
 def termos_vedados(texto: str, vedados: re.Pattern[str], terceiros: Iterable[str] = (),
-                   *, so_terceiros: bool = False) -> str | None:
+                   *, so_terceiros: bool = False, urls_terceiros: Iterable[str] = ()
+                   ) -> str | None:
     """Primeiro termo vedado no texto da casa (``None`` se não houver). ``terceiros``: citações
     de manchetes (ver :func:`_citacoes_de_terceiros`), descontadas antes da busca;
-    ``so_terceiros``: o arquivo inteiro é conteúdo de terceiros (notícias coletadas)."""
+    ``so_terceiros``: o arquivo inteiro é conteúdo de terceiros (notícias coletadas).
+    ``urls_terceiros``: só os endereços completos das notícias, nunca a prosa ao redor."""
     if so_terceiros:
         return None
+    texto = _sem_escapes(texto)
+    for url in urls_terceiros:
+        # O limite impede isentar outro endereço cujo início coincida com o da notícia.
+        texto = re.sub(re.escape(url) + r"(?=$|[\s\"'<>{}\[\]),])", "", texto)
     terceiros = tuple(terceiros)
     folga = 4 * CONTEXTO_TERCEIROS  # escapes de HTML/JSON alongam o texto bruto
     for m in vedados.finditer(texto):
@@ -1357,6 +1380,7 @@ def conferir(saida: Path | str) -> list[str]:
     # públicos). Manchetes de terceiros citadas como dado ficam isentas (VEDADOS_NO_PORTAL).
     vedados = re.compile("|".join(VEDADOS_NO_PORTAL), re.IGNORECASE)
     terceiros = _citacoes_de_terceiros(saida, vedados)
+    urls_terceiros = _urls_de_terceiros(saida)
     for p in sorted(saida.rglob("*")):
         if p.is_file() and p.suffix.lower() in (".html", ".json", ".md", ".csv", ".txt", ".yaml",
                                                 ".yml", ".xml", ".js", ".css", ".jsonl"):
@@ -1365,7 +1389,8 @@ def conferir(saida: Path | str) -> list[str]:
             except (UnicodeDecodeError, OSError):
                 continue
             achado = termos_vedados(texto, vedados, terceiros,
-                                    so_terceiros=p.name.endswith("news.jsonl"))
+                                    so_terceiros=p.name.endswith("news.jsonl"),
+                                    urls_terceiros=urls_terceiros)
             if achado:
                 out.append(f"{p.relative_to(saida).as_posix()}: termo vedado no portal "
                            f"({achado!r})")

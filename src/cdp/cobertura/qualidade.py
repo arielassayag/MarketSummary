@@ -23,7 +23,7 @@
 | G18 | métodos coerentes: com ≥ 3 métodos, o que ficar fora de [1/3; 3] × a mediana dos demais (o mais distante) é limitado à borda (demais com CV ≤ 10%, fora do lado do preço) ou mantido; limita a B | aviso |
 | G19 | demonstrações recentes: último balanço ou fluxos de 12 meses com mais de 300 dias na data ⇒ aviso; mais de 550 ⇒ bloqueio | aviso / bloqueio |
 | G17 | alertas da fonte pública sobre os períodos e itens usados (item em conferência, salto de magnitude ou classificação de capex a conferir, troca recente de moeda de apresentação) | aviso / informativo |
-| G20 | plausibilidade do alvo: preço-alvo mais de 25% além do maior (ou aquém do menor) alvo do consenso público com ≥ 3 analistas; faixa de cenários (P10–P90) inteira do mesmo lado do preço; ou G11 aprovado a menos de 5% do limite ⇒ confiança C (sem Compra nem Venda) | aviso |
+| G20 | divergência do consenso ou margem estreita do G11: revisão informativa quando corroboradas por ≥ 2 métodos brutos do mesmo lado com CV ≤ 50%, aviso sem corroboração; faixa unilateral só avisa com falha comprovada dos insumos ou da simulação | informativo / aviso |
 
 "Informativo": exibido no modelo aberto, sem efeito na confiança nem no rating. "Aviso": rebaixa a
 confiança para C (sem Compra ou Venda), salvo os que só limitam a B (G15, G18; ``rating.avisos_limitam_b``).
@@ -202,11 +202,82 @@ def portoes_emissor(pac: Mapping[str, Any], mod: Mapping[str, Any], params: Para
     out.append(_g19(pac, params))
     # G20 plausibilidade do alvo frente ao consenso, aos cenários e à margem do G11
     if tem:
-        out.append(_g20(pac, mod, params))
+        out.append(_g20(pac, mod, params, portoes=out))
     return out
 
 
-def _g20(pac: Mapping[str, Any], mod: Mapping[str, Any], params: ParametrosCobertura) -> dict[str, Any]:
+def _g20(pac: Mapping[str, Any], mod: Mapping[str, Any], params: ParametrosCobertura,
+         *, portoes: list[dict[str, Any]] | None = None) -> dict[str, Any]:
+    """Sinal de revisão analítica, sem ancorar a visão da casa no consenso ou no preço.
+
+    Os valores brutos de todos os métodos calculados (inclusive dissidentes) determinam a
+    corroboração. Cenário unilateral não é erro: exige falha dos insumos ou da simulação para
+    rebaixar a confiança. Configurações históricas mantêm a regra original no recálculo."""
+    q = params.sec("qualidade")
+    if "g20_corroboracao_metodos_min" not in q:
+        return _g20_legado(pac, mod, params)
+    tp, p0 = _f(mod.get("tp")), _f(pac.get("preco"))
+    if tp is None or p0 is None or p0 <= 0:
+        return _portao("G20", "Plausibilidade do alvo", None, "aviso", "sem alvo ou preço")
+    distintos = {str(m.get("m", i)): m for i, m in enumerate(mod.get("metodos", []))}
+    vals = _valores_calculados({"metodos": list(distintos.values())})
+    media = float(np.mean(vals)) if vals else None
+    cv = float(np.std(vals) / abs(media)) if media else None
+    lado = 1 if tp > p0 else -1 if tp < p0 else 0
+    n_min = int(q["g20_corroboracao_metodos_min"])
+    cv_max = float(q.get("g20_corroboracao_cv_max", 0.5))
+    alinhados = sum((v - p0) * lado > 0 for v in vals)
+    corroborado = (lado != 0 and alinhados >= n_min and cv is not None and cv <= cv_max)
+    corrob = (f"{len(vals)} métodos brutos calculados; CV {pct(cv, 0)}; "
+              + (f"{alinhados} métodos do mesmo lado do preço" if corroborado else "sem corroboração suficiente"))
+    revisoes: list[str] = []
+    motivos: list[str] = []
+    c = pac.get("consenso") or {}
+    folga = float(q.get("g20_consenso_folga", 0.25))
+    n_alvo = _f(c.get("n_alvo"))
+    if c.get("plausivel") and n_alvo is not None and n_alvo >= int(q.get("g20_consenso_n_min", 3)):
+        alto, baixo = _f(c.get("alvo_alto")), _f(c.get("alvo_baixo"))
+        if alto and tp > alto * (1 + folga):
+            revisoes.append(f"alvo {pct(tp / alto - 1, 0, True)} acima do maior alvo do consenso "
+                            f"({int(n_alvo)} analistas de preço-alvo)")
+        if baixo and tp < baixo * (1 - folga):
+            revisoes.append(f"alvo {pct(tp / baixo - 1, 0, True)} abaixo do menor alvo do consenso "
+                            f"({int(n_alvo)} analistas de preço-alvo)")
+    etr = _f(mod.get("etr"))
+    if etr is not None and etr > -1:
+        x = abs(math.log1p(etr))
+        lim = max(abs(math.log1p(float(v))) for v in q["extremo_aviso"])
+        margem = float(q.get("g20_g11_margem", 0.95))
+        if margem * lim <= x <= lim:
+            revisoes.append(f"retorno do caso-base a menos de {pct(1 - margem, 0)} do limite do G11 "
+                            f"(|ln(1 + ETR)| = {num(x)} contra {num(lim)})")
+    if revisoes and not corroborado:
+        motivos.extend(revisoes)
+    p10, p90 = _f(mod.get("tp_pessimista")), _f(mod.get("tp_otimista"))
+    unilateral = ((tp > p0 and p10 is not None and p10 > p0)
+                  or (tp < p0 and p90 is not None and p90 < p0))
+    if unilateral:
+        falhas = [p["codigo"] for p in portoes or []
+                  if p["codigo"] in {"G1", "G8", "G13", "G13b", "G13c", "G14", "G17"}
+                  and p["status"] == "bloqueio"]
+        diag = mod.get("diagnostico_cenarios") or {}
+        erros = list(diag.get("falhas") or [])
+        if falhas or erros:
+            motivos.append("faixa de cenários unilateral com falha comprovada: "
+                           + "; ".join(falhas + erros))
+        else:
+            revisoes.append("faixa de cenários unilateral sem falha comprovada dos insumos ou da simulação; "
+                            "a posição do preço não invalida o cenário")
+    if motivos:
+        return _portao("G20", "Plausibilidade do alvo", False, "aviso",
+                       "; ".join(motivos) + f"; {corrob} ⇒ confiança C (sem Compra nem Venda)")
+    if revisoes:
+        return _portao("G20", "Plausibilidade do alvo", False, "informativo",
+                       "; ".join(revisoes) + f"; {corrob}; revisão analítica, sem rebaixamento automático")
+    return _portao("G20", "Plausibilidade do alvo", True, "aviso", "sem sinal adicional de revisão analítica")
+
+
+def _g20_legado(pac: Mapping[str, Any], mod: Mapping[str, Any], params: ParametrosCobertura) -> dict[str, Any]:
     """Alvo implausível sem bloquear: limita a confiança a C (o rating vira Neutro).
 
     - consenso público plausível com ≥ ``g20_consenso_n_min`` analistas: alvo mais de

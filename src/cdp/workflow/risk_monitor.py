@@ -57,6 +57,7 @@ from ..calendar import chave_da_semana, previous_data_session, previous_session
 from ..config import FundConfig
 from ..contracts import DailyPosition, DailyRecord, Proposal, Side
 from ..hashing import sha256_obj
+from . import rotulos as R
 from .daily import drawdown_stage_action, short_entry_prices
 from .memo import fmt_closes, fmt_days, fmt_num, fmt_pct, fmt_usd, fmt_usd_mm
 from .track_record import DAILY_RECORD_EVENT
@@ -1227,7 +1228,7 @@ def render_risk_markdown(res: dict, cfg: FundConfig) -> str:
     hhmm = gen.strftime("%H:%M") if isinstance(gen, datetime) else str(gen)
     L: list[str] = [f"# Risco — {res['fundo']} — {res['data']} {hhmm} (Brasília)", ""]
     if res.get("aviso"):
-        L += [f"> {res['aviso']}", ""]
+        L += [f"> {R.aviso(res['aviso'])}", ""]
     L += [f"- Modo: {res['modo']}", f"- Status: {res['status']}"]
     ks = res["kill_switch"]
     L.append("- Kill switch: " + (f"**LIGADO** — {ks.get('motivo')}" if ks.get("ativo")
@@ -1368,9 +1369,9 @@ def render_risk_markdown(res: dict, cfg: FundConfig) -> str:
 def _limitations_md(res: dict) -> list[str]:
     out = ["", "## Limitações", ""]
     lim = list(res.get("limitacoes") or [])
-    out += [f"- {x}" for x in lim] or ["- nenhuma"]
+    out += [f"- {R.aviso(x)}" for x in lim] or ["- nenhuma"]
     out += ["", "_Relatório gerado por código (`cdp risk`); nenhum número foi calculado por IA. "
-            "Paper trading: o kill switch só bloqueia risco novo e nunca afrouxa limites._"]
+            "Carteira simulada: o kill switch só bloqueia risco novo e nunca afrouxa limites._"]
     return out
 
 

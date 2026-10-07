@@ -5,7 +5,7 @@
 # Todos os valores abaixo são insumos públicos datados (com a fonte citada) ou regras de política
 # do modelo; nenhum é calculado aqui. Revisão semestral por commit (Damodaran publica em janeiro e
 # julho); a taxa livre de risco em dólar é lida diariamente da série pública (FRED DGS10).
-versao: "2026-10.3"
+versao: "2026-10.4"
 horizonte_meses: 12
 
 fontes:
@@ -274,7 +274,7 @@ rating:
   guarda_venda_etr_menos_ke_max: -0.05    # Venda exige, no caso-base, ETR ≤ ke − 5 p.p.
   histerese: 0.02
   confianca_minima: B
-  distribuicao_monitorada: {Compra: [0.20, 0.40], Venda: [0.20, 0.40]}   # alerta, nunca forçada
+  distribuicao_monitorada: {Compra: [0.15, 0.35], Venda: [0.15, 0.35]}   # aceite monitorado, nunca forçado
   # Exposição de estilo explícita: a cada execução, b̂ = inclinação de Theil–Sen de α_rel contra
   # Δln(P/VPA) (desvio da mediana do grupo de pares); α_rel_estilo = α_rel − b̂ × Δln(P/VPA).
   # Compra/Venda exigem α_rel além de ±τ E α_rel_estilo além de ±τ × fracao_limiar (nenhum rating
@@ -284,7 +284,7 @@ rating:
   avisos_limitam_b: [G15, G18]    # data-base dos fluxos e método discrepante limitado ou mantido: até B (C se a dispersão entre todos os métodos passar de 50%)
   # alertas, nunca forçados: a mediana de α por país é centrada por construção pelo ajuste de nível;
   # o viés do modelo é a mediana de V0 ÷ P0 SEM o ajuste (fora da faixa ⇒ alerta) e o ajuste no limite
-  monitoramento: {alpha_pais_max_abs: 0.05, em_revisao_max: 0.08, confianca_c_max: 0.35, vies_v_p_faixa: [0.85, 1.15]}
+  monitoramento: {alpha_pais_max_abs: 0.05, em_revisao_max: 0.12, confianca_c_max: 0.35, vies_v_p_faixa: [0.85, 1.15]}
 
 # Portões de qualidade (política do modelo; ver docs/cdp/COBERTURA.md §7).
 qualidade:
@@ -330,9 +330,12 @@ qualidade:
   idade_aviso_dias: 300           # G19: balanço ou fluxos de 12 meses com mais de ~10 meses na data ⇒ aviso (confiança C)
   idade_bloqueio_dias: 550        # G19: mais de ~18 meses ⇒ bloqueio
   qa_janela_dias: 400             # G17: alerta da fonte sobre período usado (até ~13 meses antes do último balanço)
-  g20_consenso_folga: 0.25        # G20: alvo > 1,25 × maior alvo (ou < 0,75 × menor) do consenso ⇒ confiança C
+  g20_consenso_folga: 0.25        # G20: divergência do consenso ⇒ revisão; C só sem corroboração
   g20_consenso_n_min: 3           # G20: só com consenso de ≥ 3 analistas de preço-alvo
-  g20_g11_margem: 0.95            # G20: G11 aprovado com |ln(1 + ETR)| ≥ 95% do limite ⇒ confiança C
+  g20_g11_margem: 0.95            # G20: margem estreita do G11 ⇒ revisão; C só sem corroboração
+  g20_corroboracao_metodos_min: 2 # métodos brutos distintos do mesmo lado; dissidentes entram no CV
+  g20_corroboracao_cv_max: 0.50   # dispersão recalculada, inclusive valores limitados e dissidentes
+  g20_cenarios_base_tolerancia: 1.0e-6 # cenário de choque zero deve reproduzir o caso-base
   moeda_trocada_min_anos: 3       # G17: menos de 3 exercícios na moeda nova ⇒ insumos históricos ausentes
   etf_retorno_limites: [-0.5, 1.0]
   etf_pl_razao_limites: [0.6, 1.6]

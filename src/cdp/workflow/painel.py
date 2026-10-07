@@ -67,6 +67,7 @@ from pydantic import BaseModel
 
 from .. import SIMULATED_DATA_NOTICE
 from ..config import FundConfig
+from ..noticias import neutralizar_citacao
 from ..research.pm_agent import POSTURE_PT, REGIME_PT, STAGE_PT, ladder_stage
 from ..ui.fmt import PATH_PT
 from .daily import REAL_DATA_SOURCES
@@ -1235,7 +1236,10 @@ def _research_section(pack: Any, facts: Mapping[str, str], *, full: bool,
     } for v in sorted(pack.views, key=lambda v: (v.issuer_id,
                                                  str(getattr(v.source, "value", v.source))))]
     out["news"] = [{
-        "news_id": x.news_id, "title": x.title, "source": x.source, "url": _safe_url(x.url),
+        "news_id": x.news_id, "title": neutralizar_citacao(x.title),
+        "source": neutralizar_citacao(x.source), "url": _safe_url(x.url),
+        "citacao_neutralizada": (neutralizar_citacao(x.title) != x.title
+                                or neutralizar_citacao(x.source) != x.source),
         "published_at": x.published_at, "issuer_ids": list(x.issuer_ids),
         "is_synthetic": x.is_synthetic,
     } for x in sorted(news, key=lambda x: (x.published_at, x.news_id), reverse=True)]
@@ -1481,6 +1485,7 @@ def _latest_day(records: Sequence[Any], shadow_records: Sequence[Any],
     if not records:
         return None
     from ..research.commentary import period_returns
+    from . import rotulos as R
 
     rec = records[-1]
     history = list(records[:-1])
@@ -1525,7 +1530,7 @@ def _latest_day(records: Sequence[Any], shadow_records: Sequence[Any],
         "live_book_week": rec.live_book_week, "approval_hash": rec.approval_hash,
         "record_hash": rec.record_hash, "prev_record_hash": rec.prev_record_hash,
         "input_hashes": dict(rec.input_hashes), "is_synthetic": rec.is_synthetic,
-        "data_notice": rec.data_notice, "track_record_type": rec.track_record_type,
+        "data_notice": R.aviso(rec.data_notice), "track_record_type": R.aviso(rec.track_record_type),
         "shadow": _record_compact(shadow_same) if shadow_same is not None else None,
     }
 
@@ -2712,17 +2717,19 @@ def _synthetic(records: Sequence[Any], shadow: Sequence[Any], weeks: Sequence[di
 def _data_notice(is_synth: bool, notice: str | None, records: Sequence[Any],
                  weeks: Sequence[dict[str, Any]], market: Mapping[str, Any] | None = None
                  ) -> str:
+    from . import rotulos as R
+
     if is_synth:
         text = notice or "mercado sintético gerado por código."
         if SIMULATED_DATA_NOTICE not in text.upper():
             text = f"{SIMULATED_DATA_NOTICE} — {text}"
-        return text
+        return R.aviso(text)
     if records:
-        return records[-1].data_notice or REAL_DATA_NOTICE
+        return R.aviso(records[-1].data_notice or REAL_DATA_NOTICE)
     for w in reversed(weeks):
         p = w.get("proposal") or {}
         if p.get("data_notice"):
-            return str(p["data_notice"])
+            return R.aviso(p["data_notice"])
     real_market = bool(market and market.get("available") and not market.get("is_synthetic"))
     return REAL_DATA_NOTICE if weeks or real_market else EMPTY_DATA_NOTICE
 
@@ -3867,6 +3874,7 @@ def painel_data(rt: Any, *, now: datetime | None = None, profile: str = "complet
     (os links de "Auditoria e reprodução" ficam fixados nela; sem ela, no ramo principal).
     """
     from ..ui.data import CDP_INVARIANTS, kill_switch_state
+    from . import rotulos as R
     from .painel_publicacao import PROFILES, publicacao, site
     from .reports import PAPER_TRADING_TEXT
 
@@ -3927,7 +3935,7 @@ def painel_data(rt: Any, *, now: datetime | None = None, profile: str = "complet
         "is_synthetic": is_synth, "synthetic_sources": sources,
         "data_notice": _data_notice(is_synth, notice, records, weeks, market),
         "simulated_label": SIMULATED_DATA_NOTICE if is_synth else None,
-        "paper_trading_label": cfg.fund.track_record_type,
+        "paper_trading_label": R.aviso(cfg.fund.track_record_type),
         "paper_trading_text": PAPER_TRADING_TEXT,
         "base_currency": cfg.fund.base_currency, "inception_date": cfg.fund.inception_date,
         "inception_nav_usd": cfg.fund.inception_nav_usd, "manager": cfg.fund.manager_name,

@@ -1449,6 +1449,7 @@ class Avaliador:
             d_razao=float(mc["sigma_desconto_holding"]) * z[6],
         )
         vals = {}
+        falhas_cenarios: list[str] = []
         self._estrito = False
         try:
             for m in validos:
@@ -1462,6 +1463,26 @@ class Avaliador:
         ke = self._ke(dr)
         tps_bruto = np.asarray(M.rolagem(v0_bruto, ke, self.dps12), dtype=float)
         ok = np.isfinite(tps_bruto)
+        diagnostico = None
+        if "g20_corroboracao_metodos_min" in self.params.sec("qualidade"):
+            faltantes = sorted(set(validos) - set(vals))
+            if faltantes:
+                falhas_cenarios.append("métodos do caso-base ausentes na simulação: " + ", ".join(faltantes))
+            nao_finitos = {m: int(np.count_nonzero(~np.isfinite(v))) for m, v in vals.items()
+                          if not np.isfinite(v).all()}
+            if nao_finitos:
+                falhas_cenarios.append("métodos com sorteios não finitos: "
+                                      + "; ".join(f"{m}: {qt}" for m, qt in sorted(nao_finitos.items())))
+            # Choque zero deve reproduzir o caso-base, com os mesmos métodos e pesos. O diagnóstico
+            # não depende de onde o preço de mercado fica dentro da faixa de cenários.
+            base = {m: np.asarray(self._valor_metodo(m, Drivers()), dtype=float) for m in validos}
+            tp_zero = float(M.rolagem(self.combinar(base), self.cc.ke, self.dps12))
+            erro_base = abs(tp_zero - tp) / max(abs(tp), 1e-12)
+            if erro_base > float(self.params.sec("qualidade")["g20_cenarios_base_tolerancia"]):
+                falhas_cenarios.append("choque zero não reproduz o preço-alvo do caso-base")
+            diagnostico = {"falhas": falhas_cenarios, "metodos_esperados": list(validos),
+                           "metodos_usados": sorted(vals), "sorteios_finitos": int(ok.sum()),
+                           "sorteios_total": n, "erro_reproducao_base": erro_base}
         p_zero = float(np.mean(np.asarray(v0_bruto)[ok] <= 0)) if ok.any() else None
         rets_bruto = (tps_bruto[ok] + self.dps12) / p0 - 1
         tps = np.maximum(tps_bruto[ok], 0.0)
@@ -1529,7 +1550,8 @@ class Avaliador:
                 "ret_p10": r10, "ret_p50": r50, "ret_p90": r90, "udr": udr, "assimetria": skew,
                 "perda_esperada_cauda": es, "prob_modelo_supera_ke": p_ke,
                 "prob_mercado_otimista": pm_bull, "prob_mercado_pessimista": pm_bear,
-                "largura_cenarios": largura, "n_sorteios": int(len(tps))}
+                "largura_cenarios": largura, "n_sorteios": int(len(tps)),
+                **({"diagnostico_cenarios": diagnostico} if diagnostico is not None else {})}
 
     # ------------------------------------------------------------------ 6. sensibilidade
     def _grade(self, linhas: list[float], colunas: list[float], fl, fc) -> list[list[float | None]]:

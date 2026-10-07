@@ -10,10 +10,14 @@ determinístico e testado a partir de dados públicos; a camada de linguagem nun
   EWZ, EWW, ECH, EPU, COLO, ARGT e BOVA11.
 - **Horizonte**: preço-alvo de 12 meses a partir do fechamento de referência, com vencimento
   registrado no livro.
-- **Calendário**: execução completa nas noites dos pregões de rebalanceamento (depois do
-  fechamento) e execuções parciais por emissor em até dois pregões depois de cada divulgação de
-  resultados. O snapshot da data `D` alimenta somente a decisão seguinte. Primeiro snapshot: fechamento
-  de quinta-feira, 2026-10-08.
+- **Calendário**: retrato-gênese no fechamento de quarta-feira, 2026-10-07. Em cada dia de
+  montagem da carteira, atualização completa **antes da decisão**, com a base até o fechamento
+  anterior; a decisão, a tese e o portal usam esses modelos atualizados. No último dia de
+  montagem de cada mês, revisão aprofundada na rotina diária da noite (`cdp cobertura
+  revisao-mensal preparar|validar|publicar --date D`), publicada na seção "Revisão mensal da
+  cobertura" do portal. Resultados publicados depois do último modelo acionam atualização
+  parcial por emissor no fechamento seguinte; eventos macro de alto impacto acionam retrato
+  completo no primeiro fechamento que reagiu (`configs/cdp/cobertura/eventos_macro.yaml`).
 - **Moeda**: cada emissor é avaliado na moeda da linha cotada na moeda das demonstrações
   (a ação local, em regra); os alvos das demais linhas (ADR, outras classes) derivam desse alvo
   pela inflação relativa esperada e pela quantidade de ações por linha. Emissores argentinos são
@@ -34,6 +38,17 @@ determinístico e testado a partir de dados públicos; a camada de linguagem nun
 | Composição de ETFs | arquivos públicos iShares, Global X e B3 | por data de referência |
 | Calendário de resultados | CVM (IPE, calendário de eventos corporativos), SEC, Yahoo | data estimada sinalizada |
 | Preços e câmbio | base de mercado do fundo (fechamentos oficiais) | sempre o nosso fechamento, nunca múltiplos prontos |
+
+Quando um documento SEC pendente está indisponível ou contém só fatos da capa, a coleta pode
+usar seu XBRL publicado no RI oficial, conforme `configs/cdp/sec_ri_xbrl.json` (schema
+`cdp.sec_ri_xbrl/v1`). O catálogo declara CIK, accession, formulário, documento SEC, data de
+arquivamento, data-base, página do RI, URL, SHA-256 e, para ZIP, o membro XML exato. CIK e
+metadados precisam conferir com SEC submissions no corte; o ZIP bruto fica arquivado com
+proveniência e data de coleta. A leitura admite apenas tags padrão e totais sem dimensões,
+não cria períodos pela data da capa e exclui fatos monetários posteriores à data-base. O
+catálogo inicial cobre o 20-F de 2025 da Supervielle; os demais documentos indisponíveis
+preservam o dado anterior e o diagnóstico da falha. Nenhuma data do catálogo substitui o
+histórico SEC, e os resultados são reproduzíveis pelo cache offline.
 
 Todo arquivo público baixado é arquivado com SHA-256; cada insumo de cada modelo carrega
 fonte, endereço, documento, data de publicação (marcada como "data estimada" quando a fonte não
@@ -291,11 +306,12 @@ corroboração do G11.
   menos de 3 analistas limitam a B).
 - Numa execução parcial (após resultados), os pares não reavaliados entram na mediana dos pares
   com o α publicado no último snapshot que os cobriu.
-- A distribuição de ratings é monitorada (faixas de 20–40% para Compra e Venda) e nunca forçada.
+- A distribuição de ratings é monitorada (faixas de 15–35% para Compra e Venda entre os nomes
+  publicáveis) e nunca forçada.
   Indicadores de calibração no manifesto: mediana de α por país (alerta fora de ±5 p.p.; centrada por
   construção quando o ajuste de nível não está no limite), o viés de nível do modelo por país (mediana
   de V0 ÷ P0 sem o ajuste, alerta fora de 0,85–1,15, e o ajuste no limite), fração "Em revisão" (alerta
-  acima de 8%), fração com confiança C (alerta acima de 35%) e a exposição de estilo.
+  acima de 12%), fração com confiança C (alerta acima de 35%) e a exposição de estilo.
 - ETFs: retorno esperado combinado (bottom-up pelos alvos da casa + top-down por P/L justificado
   e Grinold–Kroner) e visão relativa ao ILF por `IR = (R_e − R_ILF)/TE` (±0,3). No bottom-up entram só
   os alvos citáveis da casa com confiança A ou B e sem aviso de retorno extremo (G11), patrimônio frágil
@@ -305,6 +321,12 @@ corroboração do G11.
   do índice usa o payout sustentável `b = 1 − g/ROE_índice` (lucro e patrimônio agregados das
   posições), limitado a [0,6; 1,6] × o P/L corrente; num índice em regime estacionário a reversão
   do P/L é nula. Portão bloqueante ⇒ visão "Em revisão".
+  A ficha e a memória de cálculo identificam explicitamente o índice de referência, com fonte
+  pública e configuração arquivada: BOVA11 — Ibovespa; EWZ — MSCI Brazil 25/50; EWW — MSCI Mexico
+  IMI 25/50; ECH — MSCI Chile IMI 25/50; EPU — MSCI All Peru Capped; COLO — MSCI All Colombia
+  Select 25/50; ARGT — MSCI All Argentina 25/50; ILF — S&P Latin America 40. O modelo do índice
+  aparece pelos fundamentos agregados e pelo retorno top-down; o preço-alvo é expresso na cota
+  do ETF que o acompanha. Fichas em revisão ou sem preço-alvo continuam visíveis com as lacunas.
 - Linhas do mesmo emissor na mesma moeda (outras classes ou units) recebem o alvo pela razão
   corrente de preços entre as classes; linhas em outra moeda, pelo câmbio esperado em 12 meses
   (paridade de inflação) e pela quantidade de ações por linha.
@@ -334,7 +356,28 @@ data-base (aviso, limita a B); **G16** probabilidade de patrimônio não positiv
 salto de magnitude em item central, troca recente da moeda de apresentação: aviso; demais alertas
 informativos); **G18** métodos coerentes (método discrepante limitado à borda ou mantido; aviso,
 limita a B); **G19** demonstrações recentes (último balanço ou fluxos de 12 meses com mais de 300 dias
-na data: aviso; mais de 550 dias: bloqueio).
+na data: aviso; mais de 550 dias: bloqueio); **G20** plausibilidade do alvo, com revisão analítica
+sem ancorar a visão da casa no consenso.
+
+No G20, alvo mais de 25% além do maior ou aquém do menor alvo do consenso público de pelo menos
+3 analistas, ou retorno a menos de 5% do limite do G11, é sinal de revisão. Havendo pelo menos
+2 métodos distintos do mesmo lado do preço que o alvo e coeficiente de variação ≤ 50% entre
+**todos os valores brutos calculados**, o sinal é informativo e não rebaixa a confiança. Sem essa
+corroboração, é aviso e limita a C. Valores limitados na combinação e métodos não positivos
+continuam no cálculo da dispersão; repetir um método não conta como outra corroboração.
+
+P10 acima do preço ou P90 abaixo dele, isoladamente, não torna um cenário implausível. A faixa
+unilateral gera aviso somente com bloqueio dos insumos (G1, G8, G13, G13b, G13c ou G14) ou falha
+comprovada da simulação: método do caso-base omitido, sorteio não finito ou choque zero que não
+reproduz o alvo. O diagnóstico é gravado no modelo aberto. Os percentis não são deslocados para
+envolver o preço. Avisos de conferência, como salto de magnitude (G17) ou contagem disponível de
+uma fonte (G13c), continuam em seus próprios portões e não comprovam erro do cenário. As
+configurações anteriores preservam sua regra no recálculo histórico.
+
+No retrato real, monitoram-se Compra e Venda, cada uma entre 15% e 35% dos nomes publicáveis,
+confiança C até 35% e Em revisão até 12% do universo de empresas, com motivos por emissor. São
+critérios de validação, jamais cotas impostas aos ratings; teste sintético não comprova a
+distribuição de um retrato real.
 Bloqueio ⇒ "Em revisão": o preço-alvo existe no modelo aberto para auditoria, mas não é publicado na
 tabela, não é citável nos fatos da pesquisa e não entra no placar; o motivo publicado cita o portão e
 o número que o disparou.

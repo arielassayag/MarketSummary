@@ -1090,6 +1090,12 @@ class Runtime:
         ok &= not n_msgs
         if n_msgs or published_notes(self.book_root):
             msgs += [f"notas: {m}" for m in (n_msgs or ["íntegras"])]
+        from ..cobertura.revisao import listar_revisoes, verificar_revisoes
+
+        rev_msgs = verificar_revisoes(self.book_root)
+        ok &= not rev_msgs
+        if rev_msgs or listar_revisoes(self.book_root):
+            msgs += [f"revisões mensais: {m}" for m in (rev_msgs or ["íntegras"])]
         return bool(ok), msgs
 
     def _config_da_decisao(self, week: date, proposal) -> FundConfig | None:

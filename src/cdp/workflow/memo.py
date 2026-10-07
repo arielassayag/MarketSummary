@@ -175,7 +175,9 @@ def render_research_text(text: str, factbook: FactBook | None = None) -> str:
             return factbook.facts[fid].formatted
         return f"[fato indisponível: {fid}]"
 
-    return _WS_RE.sub(" ", _FACT_RE.sub(_sub, strip_html(text))).strip()
+    from .painel_publicacao import sem_nome_da_mente
+
+    return _WS_RE.sub(" ", sem_nome_da_mente(_FACT_RE.sub(_sub, strip_html(text)))).strip()
 
 
 def _inline(text: object) -> str:
@@ -289,7 +291,7 @@ def _section_header(proposal: Proposal, cfg: FundConfig, state: ProposalState,
     out += _table(["Campo", "Valor"], [
         ["Estado", f"**{_STATE_LABEL[state]}**"],
         ["Proposta", f"{proposal.proposal_id} (versão {proposal.version})"],
-        ["Criada em / por", f"{quando(proposal.created_at)} — {proposal.created_by}"],
+        ["Criada em / por", f"{quando(proposal.created_at)} — {_provedor(proposal.created_by)}"],
         ["PL de referência", fmt_usd_mm(proposal.nav_usd)],
         ["Retrato dos dados de mercado",
          f"{proposal.snapshot_id} — {_short_hash(proposal.snapshot_hash)}"],
@@ -442,8 +444,8 @@ def _section_compliance(proposal: Proposal) -> list[str]:
     n_fail = sum(not c.passed and c.severity != Severity.INFO for c in checks)
     nomes = _nomes(proposal)
     out = ["## Controles do mandato", "",
-           f"{len(checks)} controles; {n_fail} fora do limite "
-           f"({len(proposal.hard_failures)} obrigatório(s), {len(proposal.soft_failures)} de "
+           f"{R.contagem(len(checks), 'controle', 'controles')}; {n_fail} fora do limite "
+           f"({R.contagem(len(proposal.hard_failures), 'obrigatório', 'obrigatórios')}, {len(proposal.soft_failures)} de "
            "alerta).", ""]
     rows = [[("fora" if not c.passed else "dentro") if c.severity != Severity.INFO
              else ("informativo" if not c.passed else "na meta"),
@@ -628,8 +630,11 @@ def _section_trades(proposal: Proposal, cfg: FundConfig | None = None) -> list[s
                          ", ".join(map(str, rr["sem_uma_acao"]))])
     out += _table(["Item", "Valor"], rows) + [""]
     if missing:
-        out += [f"_{missing} ordem(ns) sem estimativa de custo — excluídas da soma de custos "
-                "(não tratadas como custo zero)._", ""]
+        from .rotulos import contagem
+
+        concordancia = "excluída" if missing == 1 else "excluídas"
+        out += [f"_{contagem(missing, 'ordem', 'ordens')} sem estimativa de custo — {concordancia} "
+                "da soma de custos (custo ausente)._", ""]
     return out
 
 
@@ -679,15 +684,17 @@ def _odd_lot_orders(trades: list[Trade]) -> tuple[int, int] | None:
 
 
 def _section_research(pack: ResearchPack | None, fb: FactBook | None) -> list[str]:
+    from .rotulos import contagem
+
     out = ["## Pesquisa e visões", ""]
     if pack is None:
         return out + ["_Pacote de pesquisa não disponível para este memo._", ""]
     n_ai = sum(1 for n in pack.notes if not _is_pm_note(n))
-    out += [f"Autoria: {_provedor(pack.provider)}; {len(pack.notes)} nota(s) por empresa "
-            f"({n_ai} com apoio de IA), {len(pack.macro)} nota(s) macro, "
-            f"{len(pack.views)} visão(ões).", ""]
+    out += [f"Autoria: {_provedor(pack.provider)}; {contagem(len(pack.notes), 'nota', 'notas')} por empresa "
+            f"({n_ai} com apoio de IA), {contagem(len(pack.macro), 'nota macro', 'notas macro')}, "
+            f"{contagem(len(pack.views), 'visão', 'visões')}.", ""]
     if pack.news:
-        out += [f"{len(pack.news)} manchete(s) considerada(s) — conteúdo NÃO confiável, não "
+        out += [f"{contagem(len(pack.news), 'manchete considerada', 'manchetes consideradas')} — conteúdo NÃO confiável, não "
                 "reproduzido neste memo.", ""]
     if pack.macro:
         out += ["### Notas macro", ""]
@@ -762,7 +769,8 @@ def _nota_otimizador(nota: str, nomes: dict[str, str]) -> str:
     t = re.sub(r"\binclinação AI\b", "inclinação da pesquisa", t)
     t = re.sub(r"\binclinação PM\b", "inclinação do gestor", t)
     t = re.sub(r"\bvisão do gestor substitui a inclinação de (\d+) visão\(ões\) de IA",
-               r"visão do gestor substitui a inclinação de \1 visão(ões) da pesquisa", t)
+               lambda m: "visão do gestor substitui a inclinação de "
+               + R.contagem(int(m.group(1)), "visão", "visões") + " da pesquisa", t)
     t = t.replace("pesquisa de IA + decisão do agente PM", "pesquisa e decisão da gestão")
     t = t.replace("override do gestor", "definido pelo gestor")
     t = re.sub(r"\bGross máximo\b", "Exposição bruta máxima", t)
@@ -824,12 +832,11 @@ def _section_checklist(proposal: Proposal, pack: ResearchPack | None,
     if pack is not None:
         n_ai = sum(1 for n in pack.notes if not _is_pm_note(n))
         if n_ai:
-            items.append(f"Revisar as {n_ai} nota(s) da pesquisa com apoio de IA (citadas como "
-                         "fornecidas).")
+            items.append(f"Revisar {R.contagem(n_ai, 'nota', 'notas')} da pesquisa com apoio de IA.")
         n_restr = sum(1 for v in pack.views if v.source == ViewSource.AI
                       and (v.no_short or v.no_long or v.max_abs_weight is not None))
         if n_restr:
-            items.append(f"Validar {n_restr} restrição(ões) propostas pela pesquisa "
+            items.append(f"Validar {R.contagem(n_restr, 'restrição proposta', 'restrições propostas')} pela pesquisa "
                          "(sem venda / sem compra / teto de peso).")
     if proposal.fx_hedges:
         items.append("Decidir sobre os hedges cambiais sugeridos: "
@@ -860,7 +867,8 @@ def _co_sign_pt(reason: str, proposal: Proposal, nomes: dict[str, str]) -> str:
                  for p in proposal.positions
                  if p.side == Side.SHORT and p.squeeze_bucket in ("MEDIUM", "HIGH")
                  and (p.issuer_id in new_shorts or not proposal.trades)]
-        return "Nova(s) posição(ões) vendida(s) com risco de squeeze: " + ", ".join(risky) + "."
+        rotulo = "Nova posição vendida" if len(risky) == 1 else "Novas posições vendidas"
+        return rotulo + " com risco de squeeze: " + ", ".join(risky) + "."
     return R.detalhe(reason, nomes)
 
 

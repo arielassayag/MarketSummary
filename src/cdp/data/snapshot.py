@@ -70,6 +70,8 @@ BENCHMARKS = ["ILF", "EWZ", "EWW", "ECH", "COLO", "EPU", "ARGT", "^BVSP", "^MXX"
               "BOVA11.SA", "SPY", "EEM"]
 # Indicadores de mercado para contexto/risco (futuros "front": saltos de rolagem possíveis).
 MARKET_INDICATORS = ["^VIX", "DX-Y.NYB", "HG=F", "CL=F", "BZ=F", "GC=F", "SI=F"]
+MOEDAS_DEMONSTRACOES = frozenset({"PEN", "UYU", "CAD"})
+"""Moedas de balanços de emissores cotados em USD; ausência é limitação da cobertura."""
 
 FILE_MANIFEST = "manifest.json"
 FILE_UNIVERSE = "universe.csv"
@@ -918,19 +920,24 @@ def build_snapshot(universe_path: Path, out_dir: Path, as_of: date, start: date 
                         "barras com data > as_of descartadas."))
 
     # 2) Câmbio (obrigatório)
-    ccys = sorted(c for c in uni.currencies if c != "USD")
+    obrigatorias = set(uni.currencies) - {"USD"}
+    ccys = sorted(obrigatorias | MOEDAS_DEMONSTRACOES)
     try:
         fx = normalize_fx(f.fx(ccys, start, as_of))
     except Exception as exc:
         raise SnapshotError(f"Fonte obrigatória de câmbio falhou: {exc!r}") from exc
     fx = fx[fx["currency"].isin(ccys) & (fx["date"] <= ts_end) & (fx["date"] >= pd.Timestamp(start))]
-    missing_ccy = sorted(set(ccys) - set(fx["currency"]))
-    if ccys and len(missing_ccy) > REQUIRED_FAILURE_THRESHOLD * len(ccys):
+    missing_ccy = sorted(obrigatorias - set(fx["currency"]))
+    if obrigatorias and len(missing_ccy) > REQUIRED_FAILURE_THRESHOLD * len(obrigatorias):
         raise SnapshotError(f"Câmbio ausente para {missing_ccy} (> {REQUIRED_FAILURE_THRESHOLD:.0%}).")
     if missing_ccy:
         affected = sorted(t for t in tickers if lines.loc[t, "currency"] in missing_ccy)
         limitations.append(f"Câmbio ausente para {', '.join(missing_ccy)}: linhas sem conversão "
                            f"para USD: {', '.join(affected)}.")
+    missing_dem = sorted(MOEDAS_DEMONSTRACOES - obrigatorias - set(fx["currency"]))
+    if missing_dem:
+        limitations.append("Câmbio de demonstrações ausente para: " + ", ".join(missing_dem)
+                           + "; modelos sem conversão desses balanços para USD.")
     sources.append(_src("yahoo_fx", "Yahoo Finance — câmbio <CCY>=X (invertido: USD por unidade)",
                         "https://query1.finance.yahoo.com/v8/finance/chart/", ["usd_per_unit"],
                         clock(), True, "Barras em Europe/London normalizadas para a data."))

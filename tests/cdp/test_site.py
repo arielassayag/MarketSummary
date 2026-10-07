@@ -419,3 +419,72 @@ def test_banned_terms_spare_third_party_headlines_but_not_house_text(site_sintet
     assert "termo vedado" not in "\n".join(st.conferir(s))
     (pasta / "nota.md").write_text(casa, encoding="utf-8")
     assert f"nota.md: termo vedado no portal ('{casa_de_dados}')" in "\n".join(st.conferir(s))
+
+
+def test_news_display_neutralizes_paid_names_and_preserves_raw_evidence():
+    """O título público neutraliza a citação; objeto original, URL e hash da pesquisa permanecem."""
+    from types import SimpleNamespace
+
+    from cdp.contracts import NewsItem
+    from cdp.hashing import sha256_obj
+    from cdp.workflow.painel import _research_section
+
+    nome = "Econo" + "matica"
+    noticia = NewsItem(news_id="rss_1", title=f"Lucros crescem, aponta {nome}",
+                       source="Veículo público", url="https://example.com/noticia",
+                       published_at=datetime(2026, 10, 7, 12, tzinfo=BRT))
+    bruto = noticia.model_dump(mode="json")
+    original_hash = sha256_obj(bruto)
+    pack = SimpleNamespace(notes=[], macro=[], views=[], news=[noticia], mind="codex")
+    publicadas = _research_section(pack, {}, full=True)["news"]
+    assert publicadas[0]["title"] == "Lucros crescem, aponta fonte externa"
+    assert publicadas[0]["citacao_neutralizada"] is True
+    assert publicadas[0]["url"] == noticia.url
+    assert noticia.title.endswith(nome) and sha256_obj(noticia.model_dump(mode="json")) == original_hash
+    limpa = noticia.model_copy(update={"title": "Lucros crescem"})
+    pack.news = [limpa]
+    assert _research_section(pack, {}, full=True)["news"][0]["citacao_neutralizada"] is False
+
+
+def test_neutralized_news_keep_the_verified_public_url(site_sintetico, tmp_path):
+    """O slug da notícia não é prosa da casa; a isenção exige o endereço bruto completo."""
+    from types import SimpleNamespace
+
+    from cdp.contracts import NewsItem
+    from cdp.hashing import sha256_obj
+    from cdp.workflow.painel import _research_section, to_json
+
+    s = tmp_path / "s"
+    shutil.copytree(site_sintetico, s)
+    nome = "Econo" + "matica"
+    url = f"https://veiculo-publico.test/{nome.lower()}-bancos?ano=2024&n=1"
+    noticia = NewsItem(news_id="rss_1", title=f"Bancos lideram lucros do trimestre, aponta {nome}",
+                       source="Veículo público", url=url,
+                       published_at=datetime(2024, 3, 4, 10, tzinfo=BRT))
+    bruto = noticia.model_dump(mode="json")
+    original_hash = sha256_obj(bruto)
+    pasta = s / "dados/livro/2024-03-04/briefing/live"
+    pasta.mkdir(parents=True, exist_ok=True)
+    raw_path = pasta / "news.jsonl"
+    raw_bytes = (json.dumps(bruto, ensure_ascii=False) + "\n").encode("utf-8")
+    raw_path.write_bytes(raw_bytes)
+    pack = SimpleNamespace(notes=[], macro=[], views=[], news=[noticia], mind="codex")
+    publicadas = _research_section(pack, {}, full=True)["news"]
+    assert publicadas[0]["title"].endswith("fonte externa")
+    assert publicadas[0]["url"] == url
+    publicadas_json = to_json(publicadas)
+    (s / "noticias.json").write_text(publicadas_json, encoding="utf-8")
+    vedados = re.compile("|".join(st.VEDADOS_NO_PORTAL), re.IGNORECASE)
+    terceiros = st._citacoes_de_terceiros(s, vedados)
+    urls = st._urls_de_terceiros(s)
+    assert url in urls
+    for texto in (publicadas_json, f'<a href="{html.escape(url)}">Ler notícia</a>',
+                  publicadas_json.replace("/", r"\/")):
+        assert st.termos_vedados(texto, vedados, terceiros, urls_terceiros=urls) is None
+    assert "termo vedado" not in "\n".join(st.conferir(s))
+    assert raw_path.read_bytes() == raw_bytes
+    assert sha256_obj(noticia.model_dump(mode="json")) == original_hash
+    casa = f"Fonte da {nome}. {url}"
+    assert st.termos_vedados(casa, vedados, terceiros, urls_terceiros=urls) == nome
+    assert st.termos_vedados(json.dumps({"url": url + "0"}), vedados,
+                            urls_terceiros=urls) == nome.lower()

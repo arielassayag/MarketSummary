@@ -13,6 +13,7 @@ from typing import Any
 import pandas as pd
 import streamlit as st
 
+from ..workflow import rotulos as R
 from . import fmt
 from .state import AppState, clear_caches
 
@@ -47,12 +48,10 @@ def header(state: AppState) -> None:
     """Cabeçalho comum: nome do fundo, natureza do track record e avisos de estado."""
     cfg = state.cfg
     rec = state.track.latest
-    week = state.book.latest  # semana de decisão mais recente (a mente que conduz a semana)
-    mind = week.mind if week is not None else None
     last = fmt.date_br(rec.date) if rec is not None else "antes da inception"
     st.markdown(
         f"<div class='cdp-header'><div><span class='cdp-title'>CDP — Cabra da Peste</span>"
-        f"<span class='cdp-tag'>paper trading com preços reais</span>"
+        f"<span class='cdp-tag'>carteira simulada com preços reais</span>"
         f"<span class='cdp-tag'>Long/short LatAm · USD · net neutral</span></div>"
         f"<div class='cdp-sub'>Último fechamento: {last}</div></div>",
         unsafe_allow_html=True)
@@ -73,7 +72,7 @@ def header(state: AppState) -> None:
                    f"{fmt.code(state.paths.config.as_posix())}: exibindo os padrões do código "
                    f"({fmt.escape_md(state.config.error)}).", icon=":material/warning:")
     st.caption(f"Fundo 100% autônomo: o CDP decide sozinho sob gates determinísticos (sem botão "
-               f"de aprovação). Mente da semana: **{fmt.escape_md(mind) or 'n/d'}** · "
+               "de aprovação). Autoria: **a gestão** · "
                f"vol-alvo {fmt.pct(cfg.risk.vol_target_annual, 0)} (banda "
                f"{fmt.pct(cfg.risk.vol_band_min, 0)}–{fmt.pct(cfg.risk.vol_band_max, 0)}) · "
                f"PL inicial {fmt.usd_mm(cfg.fund.inception_nav_usd, 1)}.")
@@ -98,7 +97,7 @@ def sidebar(state: AppState) -> None:
     cfg = state.cfg
     with st.sidebar:
         st.markdown("**CDP — Cabra da Peste**")
-        st.caption(f"{fmt.escape_md(cfg.fund.track_record_type)}")
+        st.caption(f"{fmt.escape_md(R.aviso(cfg.fund.track_record_type))}")
         ks = state.kill_switch
         if ks.active:
             st.error("KILL SWITCH LIGADO", icon=":material/emergency:")

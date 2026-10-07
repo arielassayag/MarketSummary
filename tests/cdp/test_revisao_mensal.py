@@ -295,6 +295,74 @@ def test_code_text_is_published_when_the_research_is_missing(base, market, tmp_p
     assert R.verificar_revisoes(rt.book_root) == []
 
 
+@pytest.mark.parametrize("alteracao", ("texto", "json", "retrato_lista", "retrato_texto", "retrato_nulo", "ausente"))
+def test_verify_cli_detects_monthly_review_tampering(base, market, tmp_path, capsys, monkeypatch,
+                                                   alteracao):
+    """A verificação geral e a CLI recusam revisão mensal com texto alterado após o selo."""
+    from cdp.__main__ import main
+
+    root = _copia(base, tmp_path)
+    rt = _rt(root, market)
+    R.publicar(rt, D2)
+    ok, msgs = rt.verify_all()
+    assert ok and "revisões mensais: íntegras" in msgs
+    monkeypatch.setattr(Runtime, "from_args", lambda args: rt)
+    assert main(["verify"]) == 0
+    capsys.readouterr()
+    pasta = R.pasta_revisao(rt.book_root, D2)
+    if alteracao == "texto":
+        md = pasta / R.REVISAO_MD
+        md.write_text(md.read_text(encoding="utf-8") + "\nTexto alterado.\n", encoding="utf-8")
+    elif alteracao == "json":
+        (pasta / R.PUBLICADA_JSON).write_text("null", encoding="utf-8")
+    elif alteracao.startswith("retrato_"):
+        publicada = pasta / R.PUBLICADA_JSON
+        doc = json.loads(publicada.read_text(encoding="utf-8"))
+        doc["retrato"] = {"retrato_lista": ["corrompido"], "retrato_texto": "corrompido",
+                          "retrato_nulo": None}[alteracao]
+        publicada.write_text(json.dumps(doc, ensure_ascii=False), encoding="utf-8")
+    else:
+        (pasta / R.PUBLICADA_JSON).unlink()
+    ok, msgs = rt.verify_all()
+    assert not ok and any("revisões mensais:" in m for m in msgs)
+    if alteracao.startswith("retrato_"):
+        from cdp.cobertura.livro import LivroErro
+        from cdp.workflow.painel_cobertura import carregar
+
+        with pytest.raises(LivroErro, match="Revisão mensal em conferência"):
+            carregar(rt.book_root)
+    assert main(["verify"]) == 1
+    assert "FALHA DE INTEGRIDADE" in capsys.readouterr().out
+
+
+def test_portal_loads_sealed_monthly_review_without_authorship_identifiers(base, market, tmp_path):
+    """O portal lê a revisão selada por data, exporta seu texto completo e recusa adulteração."""
+    from cdp.workflow import painel_cobertura as PC
+    from cdp.workflow.painel_publicacao import expandir
+
+    root = _copia(base, tmp_path)
+    rt = _rt(root, market)
+    R.publicar(rt, D2)
+    ent = PC.carregar(rt.book_root)
+    arquivos = PC.exportar(ent)
+    assert PC.conferir(arquivos) == []
+    doc = expandir(json.loads(arquivos[PC.ARQUIVO]))
+    itens = doc["monthly_reviews"]["itens"]
+    assert len(itens) == 1 and itens[0]["data"] == D2.isoformat()
+    revisao = expandir(json.loads(arquivos[itens[0]["file"]]))
+    assert revisao["markdown"] == R.carregar_revisao(rt.book_root, D2)["markdown"]
+    assert revisao["meta"]["data_notice"] == "DADOS SIMULADOS"
+    assert not {"mind", "modelo_ia", "hashes", "autoria"} & set(revisao)
+    anterior = expandir(json.loads(PC.exportar(PC.carregar(rt.book_root, ate=D1))[PC.ARQUIVO]))
+    assert anterior["monthly_reviews"]["itens"] == []
+    md = R.pasta_revisao(rt.book_root, D2) / R.REVISAO_MD
+    md.write_text("Texto adulterado.", encoding="utf-8")
+    from cdp.cobertura.livro import LivroErro
+
+    with pytest.raises(LivroErro, match="Revisão mensal em conferência"):
+        PC.carregar(rt.book_root)
+
+
 def test_dates_without_look_ahead_and_forward_only(base, market, tmp_path):
     root = _copia(base, tmp_path)
     cedo = _rt(root, market, at=datetime(2024, 3, 8, 21, 0, tzinfo=BRT))

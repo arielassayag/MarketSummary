@@ -101,7 +101,7 @@ STRESS_KIND_PT = {"historico": "Histórico", "hipotetico": "Hipotético",
                   "idiossincratico": "Idiossincrático", "gap": "Gap de país"}
 CALENDAR_KIND_PT = {"resultado": "Resultado", "catalisador": "Catalisador", "macro": "Macro",
                     "evento": "Evento"}
-DISCLAIMER = ("Natureza: carteira em paper trading com preços reais — execução hipotética no "
+DISCLAIMER = ("Natureza: carteira simulada com preços reais — execução hipotética no "
               "leilão de fechamento, com custos estimados pelo modelo; não representa resultado "
               "de fundo real nem oferta ou recomendação de investimento. Todos os números foram "
               "calculados por código a partir dos dados da semana; a narrativa apenas os cita.")

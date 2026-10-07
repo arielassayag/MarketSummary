@@ -39,7 +39,7 @@ from .fundamentals_pit import _quarter_value, _ttm_value
 FLUXOS = frozenset({
     "receita", "lucro_bruto", "ebit", "ebitda", "d_a", "resultado_financeiro", "lucro_antes_ir",
     "ir_csll", "lucro_liquido", "lucro_liquido_controladores", "cfo", "capex", "fcf",
-    "dividendos_pagos", "recompras", "margem_financeira", "receita_servicos", "despesa_pdd",
+    "dividendos_pagos", "arrendamentos_pagos", "recompras", "margem_financeira", "receita_servicos", "despesa_pdd",
 })
 
 SAIDA_COLUNAS = [

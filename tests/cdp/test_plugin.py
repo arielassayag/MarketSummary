@@ -1095,7 +1095,14 @@ def test_monthly_review_file_of_the_mind_is_never_denied():
     bloqueio o cobre; os arquivos do pacote são do código."""
     s = json.loads((ROOT / ".claude" / "settings.json").read_text(encoding="utf-8"))
     deny = _edit_rules(s["permissions"]["deny"])
+    allow = _edit_rules(s["permissions"]["allow"])
     assert not _matches(deny, "book/cobertura/revisoes/2026-10-30/revisao.json")
+    assert _matches(allow, "book/cobertura/revisoes/2026-10-30/revisao.json")
+    from cdp.cobertura.revisao import PREPARADOS, PUBLICADA_JSON, REVISAO_MD
+
+    for nome in (*PREPARADOS, PUBLICADA_JSON, REVISAO_MD):
+        path = f"book/cobertura/revisoes/2026-10-30/{nome}"
+        assert _matches(deny, path) and not _matches(allow, path), path
     dia = _plano(_ler(PLAYBOOKS / "DIARIO.md"))
     assert re.search(r"Você só escreve .{0,400}book/cobertura/revisoes/<data>/revisao\.json", dia)
 

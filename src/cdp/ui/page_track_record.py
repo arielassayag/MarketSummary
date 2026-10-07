@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
+from ..workflow import rotulos as R
 from . import charts, data, fmt
 from . import components as ui
 from .state import AppState
@@ -114,7 +115,7 @@ def render(state: AppState) -> None:
     st.markdown("### Track record diário")
     track = state.track
     ui.issues(track.issues)
-    st.caption(f"{fmt.escape_md(state.cfg.fund.track_record_type)} · NAV em USD · retornos "
+    st.caption(f"{fmt.escape_md(R.aviso(state.cfg.fund.track_record_type))} · NAV em USD · retornos "
                "diários do NAV de abertura ao de fechamento.")
     if track.empty:
         ui.empty_state("Sem registros diários",

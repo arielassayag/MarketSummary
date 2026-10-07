@@ -4024,7 +4024,7 @@ function researchSection(w) {
     h("h4", null, "Notas por emissor"), notesBox,
     h("h4", null, "Visões consolidadas da pesquisa"), viewsT,
     news.length ? h("div", null, h("h4", null, "Notícias consultadas (fonte externa, só referência)"), list(news, function (n) {
-      return h("span", null, fbrt(n.published_at) + " · " + (n.source || "") + " · ", extLink(n.url, n.title || "notícia"), n.is_synthetic ? " (simulada)" : "");
+      return h("span", null, fbrt(n.published_at) + " · " + (n.source || "") + " · ", extLink(n.url, n.title || "notícia"), n.citacao_neutralizada ? " (nome de fonte omitido)" : "", n.is_synthetic ? " (simulada)" : "");
     })) : null);
 }
 function weekSummaryDetail(w) {

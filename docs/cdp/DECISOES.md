@@ -233,3 +233,48 @@ gravado de cada fonte que falhou e o `weekly prepare` devolve um aviso legível 
 com a rede fora, `weekly prepare --offline` monta o briefing só com a base gravada. →
 Consequências: a preparação da sexta não depende da rede para terminar; ausente nunca vira zero
 nem substitui um valor gravado.
+
+
+## 2026-10-06 · Instalação das rotinas dentro do projeto atual do Codex
+
+Contexto: o titular pediu que todas as tarefas fossem vinculadas ao projeto atual e que o
+clone fosse trazido para uma pasta interna. → Decisão: as 12 automações do Codex pertencem ao
+projeto atual; executam exclusivamente no clone `.cdp/rotinas`, em `main`, sem worktree.
+O clone tem identidade `local-pc`, harness `codex`; o checkout de desenvolvimento permanece
+sem identidade de executor. → Consequências: a pasta interna fica fora do versionamento;
+identidade, dependências e prompts foram reconferidos após a mudança; as agendas continuam
+vindo de `configs/cdp/rotinas.yaml`. Conta separada do sistema operacional não foi criada.
+
+## 2026-10-06 · Plausibilidade do alvo por corroboração, metodologia 2026-10.4
+
+Contexto: P0 da passagem para o Codex, para evitar que divergência do consenso force a visão
+da casa a Neutro. → Decisão: consenso divergente e margem estreita do G11 são sinais para
+revisão analítica; rebaixam confiança só sem pelo menos dois métodos brutos distintos do
+mesmo lado do preço e coeficiente de variação de todos os métodos calculados de no máximo
+0,5. Faixa de cenários unilateral só rebaixa quando há inconsistência comprovada de insumos
+ou da simulação. → Consequências: diagnóstico aberto dos cenários, parâmetros na versão
+2026-10.4; percentis não são truncados para envolver o preço de mercado. As metas de
+composição da distribuição são critérios de conferência do retrato real, nunca cotas de
+ratings nem justificativa para fabricar insumos. Nenhum parâmetro do mandato foi afrouxado.
+
+
+## 2026-10-06 · RI público quando o XBRL da SEC está indisponível
+
+Contexto: Companyfacts de emissores estrangeiros pode conter apenas contagens da capa, e
+SEC Archives pode recusar acesso a documentos financeiros com HTTP 403. → Decisão: usar
+catálogo público de documentos XBRL/ZIP do RI oficial, cruzado com CIK, accession,
+formulário e datas de SEC submissions, com SHA-256 conferido. O primeiro documento curado
+é o 20-F de 2025 da Supervielle. Capa DEI, data de arquivamento ou balanço comparativo isolado
+não comprovam atualização financeira. → Consequências: fonte alternativa reprodutível,
+bytes brutos arquivados e ausência preservada quando não existe documento verificável;
+nenhuma leitura de PDF vira número inferido, nem valores são preenchidos por meta de rating.
+
+## 2026-10-06 · Aceite técnico e científico da cobertura são distintos
+
+Contexto: o retrato real .4 com RI bruto e PEN/UYU/CAD é íntegro no recálculo, mas ainda
+falha nos critérios de confiança C e Em revisão da passagem. → Decisão: registrar o P0
+científico como pendente, mesmo com integrações técnicas testadas. A análise de Petrobras
+mostra uma premissa material de reinvestimento e uma conciliação incompleta de arrendamentos;
+nenhum cenário é truncado para forçar cruzamento do preço. → Consequências: próximas revisões
+partem das evidências por emissor; não se alteram severidades, mandato ou dados para atingir
+as metas de distribuição. Ensaios permanecem separados do livro oficial.

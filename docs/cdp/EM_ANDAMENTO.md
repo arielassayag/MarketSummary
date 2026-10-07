@@ -9,6 +9,59 @@ motivo: `docs/cdp/DECISOES.md`.
 `docs/cdp/PASSAGEM_CODEX.md`**: ligar as rotinas no Codex, P0 de desenvolvimento antes do
 retrato-gênese da cobertura (qua 07/10, 19:22) e cronograma até a carteira inaugural (sex 09/10).
 
+## Retomada no Codex — 06/10/2026, noite
+
+- **Rotinas ligadas:** 12 automações locais ativas no projeto atual do Codex. Por instrução
+  expressa do titular, o clone das rotinas fica dentro deste projeto, em `.cdp/rotinas`, com
+  `main` e identidade `local-pc`/`codex`. Os prompts usam explicitamente esse clone e as
+  variáveis `CDP_HARNESS`, `TZ` e `PYTHONUTF8`; o checkout principal não é executor.
+- **Infraestrutura conferida:** `executor verificar` retorna 0; livro íntegro, kill switch
+  desligado, trava livre; push simulado autorizado para `main` e `cdp-trava`; ruleset 24618259
+  ativo. Gates semanal e de risco sem pendência/fora da janela retornaram `executar: false`.
+  As agendas persistidas das 12 automações conferem com a exportação canônica. O primeiro
+  disparo agendado ainda deve ser observado; criação da tarefa não prova sua execução.
+- **Organização local:** `.cdp/LEIA-ME.md` mapeia a instalação e `.cdp/TAREFAS.md`
+  organiza as agendas e entregas. A conversa está na seção CDP da barra lateral do Codex. O checkout principal recebeu o
+  CDP de `origin/main`, preservando as cinco alterações locais do Fechamento (GDELT), com
+  backup em `.cdp/backups/` e stash preservado. Conflitos foram reconciliados mantendo as
+  invariantes novas de dados e o código local; os nove testes do coletor passaram.
+- **Painel fora do versionamento:** commit `621f3a3` remove apenas o índice Git da cópia local;
+  `.gitkeep` e os arquivos físicos do executor foram preservados. Incorporado neste lote P0.
+- **Correções técnicas P0 implementadas e validadas:** a suíte completa `tests/cdp` e o Ruff
+  passaram; inspeção visual e verificações de rotinas, skills e documentação também passaram.
+  G20 com corroboração independente,
+  diagnóstico de cenários e metodologia `2026-10.4`; SEC submissions e XBRL/inline documental
+  com datas oficiais e preservação de dados anteriores; alternativa XBRL/ZIP do RI oficial
+  da Supervielle, vinculada ao arquivamento SEC, datas e SHA-256; séries PEN/UYU/CAD; contagem de ações
+  e principal de arrendamentos; índice de referência na ficha de todos os ETFs; revisão
+  mensal na integridade geral e no portal; permissões de `revisao.json`; cadência nova;
+  nomes institucionais, plurais e notícias neutralizadas só na apresentação pública.
+- **Ensaio real reproduzido, aceite científico ainda aberto:** retrato de 06/10 com método
+  `2026-10.4`, câmbio suplementar e ZIP bruto de RI; 233 empresas e oito ETFs. Livro, arquivos,
+  trilha e modelos passaram no recálculo integral. Compra 36/191 = 18,85% e Venda 32/191 =
+  16,75% dos publicáveis passam 15–35%; C 114/233 = 48,93% e Em revisão 38/233 = 16,31%
+  falham nos máximos de 35% e 12%. Números vêm dos arquivos gerados pelo código do ensaio.
+  O P0 não está concluído só porque a integridade e os testes técnicos estão verdes.
+- **Próxima frente científica:** as 38 revisões se dividem por prioridade em oito balanços
+  defasados, oito bloqueios de insumos e 22 limites de saída. Confiança C exige revisão dos
+  métodos, dispersão, peso terminal e fontes por emissor; não apagar portões para atingir
+  metas. Supervielle tem balanço/fluxos de 31/12/2025, mas continua em revisão por LPA de
+  consenso incoerente com lucro observado negativo. Petrobras exige conciliar pagamentos
+  de arrendamentos (principal/juros/direitos de uso) e a suavização de reinvestimento frente
+  ao plano atual; cenário unilateral e reprodução numérica não aprovam essas premissas.
+  JBS continua com contagens não conciliadas; Telecom Argentina sem contagem recente;
+  Volaris sem principal correspondente ao período mais recente. SEC Archives 403 nos demais
+  arquivos fica registrado; nunca substituir ausência por número arbitrário.
+- **Evidências locais:** `.cdp/validacoes/` guarda logs, conferências e previews;
+  `.cdp/ensaios/` guarda retratos e fontes de reprodução. A validação visual confirmou índices
+  de referência de ARGT e BOVA11 e alvo citável oculto para ativo em revisão. Nenhum ensaio
+  foi adotado no livro oficial, nenhuma carteira foi decidida ou publicada nesta sessão.
+- **Passo humano e disponibilidade:** a senha do operador ainda não estava definida na
+  conferência; o titular deve usar `cdp kill-switch senha` num terminal próprio, fora de apps
+  de IA. Não foi criada conta separada do sistema operacional: usa-se a instalação atual do
+  Codex. App aberto e PC acordado continuam necessários. Primeiro disparo agendado ainda
+  não observado.
+
 ## Como continuar (qualquer app)
 
 1. `uv sync --extra dev --extra ai` e `uv run python -m cdp estado --formato md` (fase do fundo,
@@ -33,7 +86,7 @@ retrato-gênese da cobertura (qua 07/10, 19:22) e cronograma até a carteira ina
 | Portal público | `cdp site construir/conferir`, `.github/workflows/cdp-site.yml` (GitHub Pages) | `docs/cdp/SITE.md` |
 | Integração contínua | `.github/workflows/cdp-ci.yml` (lint, testes, integridade, rotinas, skills, portal da demonstração) | — |
 | Documentação | `AGENTS.md` como fonte única, arquitetura, automação dentro do app de IA, teste de consistência; licenças (Apache-2.0 + CC BY 4.0, confirmadas pelo titular em 06/10/2026) e aviso legal | `docs/cdp/ARQUITETURA.md`, `tests/cdp/test_docs_consistencia.py` |
-| Cronograma e construção (no ramo de integração, aguardando o commit) | stop de squeeze por nome, série de risco idiossincrático no monitor, kill switch desligado só por humano num terminal interativo, pedido de kill switch mesclável (`reports/risk/<data>/kill_switch_<HHMM>.yaml`, aplicado pela execução exclusiva seguinte ou por `cdp kill-switch aplicar-pedidos`; a agenda lista os pendentes) | `docs/cdp/EXECUCAO.md`, `docs/cdp/METODOLOGIA.md` |
+| Cronograma e construção | stop de squeeze por nome, série de risco idiossincrático no monitor, kill switch desligado só por humano num terminal interativo, pedido de kill switch mesclável (`reports/risk/<data>/kill_switch_<HHMM>.yaml`, aplicado pela execução exclusiva seguinte ou por `cdp kill-switch aplicar-pedidos`; a agenda lista os pendentes) | `docs/cdp/EXECUCAO.md`, `docs/cdp/METODOLOGIA.md` |
 
 ## Correções do ensaio geral (06/10/2026, Codex como executor)
 
@@ -86,9 +139,9 @@ Robustez para a carteira inaugural (mesma data, sobre as correções acima):
 
 Pendências que dependem do titular ou do commit (não são código):
 
-- `git rm -r --cached artifacts/painel` mantendo `.gitkeep` (a pasta passou a ser ignorada; o HTML
-  antigo do painel local ainda está versionado) e decidir o histórico público de commits anterior
-  à data de início (manter ou publicar um ramo novo) antes de 09/10.
+- Decidir o histórico público de commits anterior à data de início (manter ou publicar um ramo
+  novo) antes de 09/10. O painel local já saiu do versionamento, preservando `.gitkeep` e os
+  arquivos físicos.
 - **Senha do operador no PC do Codex**, num terminal próprio, antes de 09/10:
   `uv run python -m cdp kill-switch senha`. Sem ela, ninguém desliga o kill switch.
 - Logotipo e imagem de compartilhamento com "ASSET MANAGEMENT" (arte da marca) e
@@ -139,12 +192,10 @@ Pendências que dependem do titular ou do commit (não são código):
   pedido (`reports/risk/<data>/kill_switch_<HHMM>.yaml`) saem na hora, mas o kill switch só entra
   no livro na execução exclusiva seguinte (montagem ou fechamento), que aplica os pedidos
   pendentes antes de gravar qualquer coisa.
-- `artifacts/painel/` passou a ser ignorada pelo git (cópia local do painel); o
-  `cdp_painel_local.html` antigo (cerca de 2,3 MB, texto de pesquisa anterior à data de início)
-  ainda é versionado até o `git rm -r --cached artifacts/painel` do commit, e até lá é a única
-  exceção nominal do teste de termos proibidos. `cdp site conferir` falha se um termo vedado
-  aparecer no texto da casa de qualquer arquivo do portal (manchetes de terceiros citadas como
-  dado ficam isentas).
+- `artifacts/painel/` é ignorada pelo git (cópia local do painel), mantendo só `.gitkeep`
+  versionado; o HTML antigo foi preservado no disco do executor. `cdp site conferir` falha se
+  um termo vedado aparecer no texto da casa de qualquer arquivo do portal. Notícias públicas
+  neutralizam nomes de fontes vedadas na apresentação; dados brutos e hashes são preservados.
 - **Licenças confirmadas pelo titular em 06/10/2026**: `LICENSE` (Apache-2.0, todo o código do
   repositório, inclusive o app Fechamento), `LICENSE-docs` (CC BY 4.0, textos e conteúdos do
   CDP) e `NOTICE` (marca reservada) — ver `docs/cdp/DECISOES.md`.

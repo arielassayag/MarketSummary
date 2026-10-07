@@ -71,7 +71,7 @@ CANONICAL_ITEMS: tuple[str, ...] = (
     "receita", "lucro_bruto", "ebit", "ebitda", "d_a", "resultado_financeiro", "lucro_antes_ir",
     "ir_csll", "lucro_liquido", "lucro_liquido_controladores", "cfo", "capex", "fcf",
     "dividendos_pagos", "recompras", "caixa", "aplicacoes_cp", "divida_bruta", "divida_liquida",
-    "arrendamentos", "patrimonio_liquido", "patrimonio_controladores",
+    "arrendamentos", "arrendamentos_pagos", "patrimonio_liquido", "patrimonio_controladores",
     "participacao_minoritarios", "ativo_total", "acoes_emitidas", "acoes_tesouraria",
     "acoes_em_circulacao", "provisao_credito", "carteira_credito", "margem_financeira",
     "receita_servicos", "despesa_pdd",
@@ -231,6 +231,35 @@ def _validar_yahoo(c: bytes) -> None:
 
 def _validar_tickers_sec(c: bytes) -> None:
     sec.parse_company_tickers(c)
+
+
+def _arquivamentos_sec(arq: Arquivo, cik10: str, ref: date, desde: date,
+                       http_get: HttpGet | None) -> pd.DataFrame:
+    """Histórico oficial arquivado, inclusive páginas antigas que intersectam a janela."""
+    url = sec.URL_SUBMISSIONS.format(cik=cik10)
+    got = arq.obter(f"SEC/submissions/CIK{cik10}.json", "SEC", url,
+                    lambda: _sec_get(url, http_get, None, SEC_LIMITER), ate=ref,
+                    max_idade_dias=1.0, validar=lambda c: sec.validar_submissions(c, cik10) and None)
+    if got is None:
+        return pd.DataFrame(columns=sec.ARQUIVAMENTOS_COLUNAS)
+    obj = sec.validar_submissions(got[1], cik10)
+    frames = [sec.arquivamentos_sec(obj, cik10, ref)]
+    for page in (obj.get("filings") or {}).get("files") or []:
+        nome = str(page.get("name", ""))
+        if not re.fullmatch(r"CIK\d{10}-submissions-\d+\.json", nome):
+            continue
+        inicio = pd.to_datetime(page.get("filingFrom"), errors="coerce")
+        fim = pd.to_datetime(page.get("filingTo"), errors="coerce")
+        if pd.isna(inicio) or pd.isna(fim) or fim.date() < desde or inicio.date() > ref:
+            continue
+        page_url = f"https://data.sec.gov/submissions/{nome}"
+        older = arq.obter(f"SEC/submissions/{nome}", "SEC", page_url,
+                         lambda u=page_url: _sec_get(u, http_get, None, SEC_LIMITER), ate=ref,
+                         max_idade_dias=30.0, validar=lambda c: sec.validar_submissions(c) and None)
+        if older:
+            frames.append(sec.arquivamentos_sec(sec.validar_submissions(older[1]), cik10, ref))
+    out = pd.concat(frames, ignore_index=True).drop_duplicates("accn")
+    return out[out["filed"] >= pd.Timestamp(desde)].sort_values("filed", ascending=False)
 
 
 def _validar_banxico(c: bytes) -> None:
@@ -507,11 +536,64 @@ def demonstrativos(issuer_ids: Sequence[str], as_of: date, *, offline: bool = Fa
                         lambda: _sec_get(url, http_get, None, SEC_LIMITER), ate=as_of,
                         max_idade_dias=1.0,
                         validar=lambda c: sec.validar_companyfacts(c, cik10) and None)
-        if got is None:
+        partes = []
+
+        def add_sec(fatos: pd.DataFrame, reg: RegistroArquivo, fonte_url: str) -> None:
+            if fatos.empty:
+                return
+            fatos = fatos.copy()
+            fatos["fonte"] = "SEC"
+            fatos["sha256"] = reg.sha256
+            fatos["data_coleta"] = pd.Timestamp(reg.data_coleta)
+            if fonte_url != url:
+                fatos["url"] = fonte_url
+            partes.append(fatos)
+
+        if got:
+            add_sec(sec.fatos_sec(sec.validar_companyfacts(got[1], cik10)), got[0], url)
+        f = pd.concat(partes, ignore_index=True) if partes else pd.DataFrame(
+            columns=sec.FATO_SEC_COLUNAS)
+        arquivos = _arquivamentos_sec(arq, cik10, as_of, date(as_of.year - anos, 1, 1), http_get)
+        # O Companyfacts pode omitir o arquivo mais recente. Só o XBRL do próprio documento
+        # fornece os números; a data do arquivamento não é tratada como balanço novo.
+        alvo = sec.documentos_pendentes(arquivos, f, as_of)
+        for r in alvo.to_dict("records"):
+            chave = f"SEC/filings/{cik10}/{r['accn']}/{r['documento']}"
+            documento = arq.obter(chave, "SEC", r["url"],
+                                  lambda u=r["url"]: _sec_get(u, http_get, None, SEC_LIMITER),
+                                  ate=as_of, max_idade_dias=3650.0,
+                                  validar=lambda c, r=r: sec.companyfacts_documento(c, cik10, r) and None)
+            if documento:
+                cf = sec.companyfacts_documento(documento[1], cik10, r)
+                direto = sec.fatos_sec(cf)
+                add_sec(direto, documento[0], r["url"])
+                # HTTP 200 e fatos da capa não provam que o documento contém o balanço.
+                nucleo = direto[direto["period_end"] <= r["period_end"]]
+                if sec.documentos_pendentes(pd.DataFrame([r]), nucleo, as_of).empty:
+                    continue
+            try:
+                ri = sec.documento_ri(cik10, r)
+                if ri:
+                    extensao = "zip" if ri.get("membro_zip") else "xml"
+                    espelho = arq.obter(f"SEC/RI/{cik10}/{r['accn']}/documento.{extensao}",
+                                        "SEC", ri["url"], _baixar(http_get, ri["url"]),
+                                        ate=as_of, max_idade_dias=3650.0,
+                                        validar=lambda c, r=r, ri=ri: sec.companyfacts_ri(c, cik10, r, ri) and None)
+                    if espelho:
+                        cf = sec.companyfacts_ri(espelho[1], cik10, r, ri)
+                        fonte_url = ri["url"] + ("#" + ri["membro_zip"] if ri.get("membro_zip") else "")
+                        espelhado = sec.fatos_sec(cf)
+                        add_sec(espelhado, espelho[0], fonte_url)
+                        nucleo = espelhado[espelhado["period_end"] <= r["period_end"]]
+                        if sec.documentos_pendentes(pd.DataFrame([r]), nucleo, as_of).empty:
+                            continue
+            except ValueError as exc:
+                arq.falhas.append(f"SEC CIK {cik10} ({iid}): espelho RI recusado ({exc})")
+            arq.falhas.append(f"SEC CIK {cik10} ({iid}): {r['form']} {r['accn']} "
+                              "não forneceu núcleo financeiro na data-base; dado anterior preservado")
+        if not partes:
             return None
-        f = sec.fatos_sec(sec.validar_companyfacts(got[1], cik10))
-        if f.empty:
-            return None
+        f = pd.concat(partes, ignore_index=True)
         lucro = f[f["item"].isin(["lucro_liquido", "lucro_liquido_controladores"])
                   & f["anual"].astype(bool) & (f["received_date"] <= pd.Timestamp(as_of))]
         if lucro["period_end"].nunique() < 2:
@@ -519,9 +601,6 @@ def demonstrativos(issuer_ids: Sequence[str], as_of: date, *, offline: bool = Fa
             arq.falhas.append(f"SEC CIK {cik10} ({iid}): menos de 2 exercícios de lucro no "
                               "XBRL; demonstrações do Yahoo Finance usadas")
             return None
-        f["fonte"] = "SEC"
-        f["sha256"] = got[0].sha256
-        f["data_coleta"] = pd.Timestamp(got[0].data_coleta)
         return f
 
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as ex:
@@ -1279,7 +1358,7 @@ def taxas_publicas(as_of: date, *, offline: bool = False, root: Path | None = No
 # Eventos corporativos
 # ======================================================================
 
-_PRIO_EVENTO = {"CVM_CAL": 0, "CVM": 1, "YAHOO": 2, "IMPUTADA": 3}
+_PRIO_EVENTO = {"CVM_CAL": 0, "CVM": 1, "SEC": 1, "YAHOO": 2, "IMPUTADA": 3}
 
 
 def _indice_zip(conteudo: bytes, doc: str, ano: int) -> pd.DataFrame:
@@ -1420,6 +1499,24 @@ def eventos_corporativos(issuer_ids: Sequence[str], desde: date, ate: date, *,
                                 add(iid, e["data"], e["tipo"], False, "CVM", url,
                                     f"CVM calendário de eventos corporativos ({e['rotulo']})",
                                     "CVM_CAL")
+
+    # SEC: datas oficiais de arquivamento de demonstrações. Um 6-K sem XBRL pode tratar
+    # de tráfego, dividendos ou governança: nunca o rotula automaticamente como resultado.
+    for iid in pedidos:
+        cik = format_cik(sm.loc[iid, "cik"]) if iid in sm.index else None
+        if not cik or iid in cnpj_de:
+            continue
+        arquivos = _arquivamentos_sec(arq, cik, ref, date(desde.year - 2, 1, 1), http_get)
+        financeiros = arquivos[arquivos["period_end"].notna()
+                               & (arquivos["period_end"] <= pd.Timestamp(ref))
+                               & (arquivos["form"].isin(sec.ANUAIS) | arquivos["xbrl"])]
+        for r in financeiros.itertuples(index=False):
+            d = r.filed.date()
+            historico.setdefault(iid, []).append(d)
+            conhece(iid, d)
+            if desde <= d <= ate:
+                add(iid, d, "resultado", False, "SEC", r.url,
+                    f"SEC arquivamento {r.form} {r.accn} (referência {r.period_end.date()})", "SEC")
 
     # Yahoo (todos; complementa o Brasil)
     def um_yh(iid: str) -> list[dict]:

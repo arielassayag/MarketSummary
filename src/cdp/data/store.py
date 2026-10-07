@@ -86,6 +86,7 @@ from .snapshot import (
     FILE_RATES,
     FILE_SHORT_INTEREST,
     MARKET_INDICATORS,
+    MOEDAS_DEMONSTRACOES,
     Fetchers,
     SnapshotIntegrityError,
     SnapshotTables,
@@ -854,7 +855,7 @@ class MarketStore:
                                f"{n_late}.")
 
         # Câmbio (obrigatório para as moedas das linhas negociadas), benchmarks e taxas.
-        ccys = sorted(c for c in uni.currencies if c != "USD")
+        ccys = sorted((set(uni.currencies) | MOEDAS_DEMONSTRACOES) - {"USD"})
         fx_error = ""
         try:
             fx_day = normalize_fx(f.fx(ccys, start_w, session_date))

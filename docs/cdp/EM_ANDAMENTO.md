@@ -68,7 +68,7 @@ retrato-gênese da cobertura (qua 07/10, 19:22) e cronograma até a carteira ina
   Compra 37 (18,50%) e Venda 31 (15,50%) passam; C 107/233 (45,92%) e revisão 30/233
   (12,88%) ainda falham. Aceite científico permanece aberto: analisar causas por emissor;
   não se afrouxam portões, limites ou mandato para atingir quotas. Não é livro oficial.
-- Lote `2026-10.6` em validação, ainda sem integração: G17 passa a distinguir capex/D&A
+- Lote `2026-10.6` integrado em `main` e no executor, commit `b78d725`: G17 passa a distinguir capex/D&A
   comprovadamente sem dependência nos métodos financeiros conhecidos. Os alertas originais
   e a prova ficam arquivados; estruturas desconhecidas conservam a severidade. Revisão
   independente e focais passaram. Ensaio com os pacotes .5 exatos em
@@ -76,7 +76,7 @@ retrato-gênese da cobertura (qua 07/10, 19:22) e cronograma até a carteira ina
   seis C→B; Compra 19,00%, Venda 17,00%, C 43,35% e revisão 12,88%. P0 segue aberto.
   Seis ETFs mudam pela elegibilidade A/B no bottom-up; top-down permanece igual, e o
   contrafactual com classificações anteriores reproduz os oito ETFs. Sem mudança de mandato.
-- Comparabilidade da receita, publicação e margem — lote .6 congelado, integração pendente:
+- Comparabilidade da receita, publicação e margem — lote .6 congelado e integrado:
   conceitos explícitos desconhecidos não permitem derivação; composição identificada registra
   publicação máxima e a trilha de todos os componentes. Receita/EBIT só formam margem quando
   demonstram a mesma janela de 12 meses, moeda e base. Valores originais preservados;
@@ -86,7 +86,7 @@ retrato-gênese da cobertura (qua 07/10, 19:22) e cronograma até a carteira ina
   recálculo integral íntegro. Compra 39 (19,40%), Venda 37 (18,41%), C 102/233 (43,78%) e revisão 29/233 (12,45%). Compra/Venda passam; C/revisão ainda falham.
   Preços de 06/10, fontes conhecidas em 07/10, modelos em 07/10; sombra, nunca retrato oficial retroativo.
   O primeiro ensaio de fontes foi preservado como provisório, com bordas corrigidas depois.
-- Pré-registro por mente/canal concluído em código, integração pendente: autoria observada,
+- Pré-registro por mente/canal integrado: autoria observada,
   sinais/base ancorados antes da otimização, vínculo à decisão e outcomes futuros autenticados.
   `cdp avaliacao status` e `cdp avaliacao ic --mind codex` é somente leitura; recomendação não muda fase/mandato. Brier ausente,
   N=0, sem converter ordinais. 145 focais do runtime e 217 da revisão independente passaram;
@@ -96,7 +96,10 @@ retrato-gênese da cobertura (qua 07/10, 19:22) e cronograma até a carteira ina
 - Compatibilidade final .6: recálculos integrais explícitos .4 e .5 passaram com as configurações
   arquivadas; 233 empresas e oito ETFs em cada ensaio, arquivos históricos preservados.
   Suíte ampla final .6: 2.325 passaram, 17 pulados/xfail, zero falhas/erros;
-  Ruff, documentação, rotinas e skills verdes. Integração pendente.
+  Ruff, documentação, rotinas e skills verdes. Integração em `main` e no executor por fast-forward;
+  181 fontes iguais ao ensaio final, 79 arquivos operacionais/locais e os cinco arquivos de trabalho
+  do Fechamento preservados por SHA-256, mandato intacto. Executor íntegro e sem trava.
+  CI `37577281595` e portal `37577281613` em execução; publicação no ar ainda pendente desta conferência.
 
 ## Retomada no Codex — 06/10/2026, noite
 

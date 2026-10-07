@@ -1,0 +1,137 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2020-03-03",
+   "eps_estimado": 0.23,
+   "eps_reportado": 0.5
+  },
+  {
+   "data": "2020-06-29",
+   "eps_estimado": 0.37,
+   "eps_reportado": -1.44
+  },
+  {
+   "data": "2020-08-12",
+   "eps_estimado": -0.63,
+   "eps_reportado": -0.57
+  },
+  {
+   "data": "2021-03-04",
+   "eps_estimado": 0.48,
+   "eps_reportado": 0.6
+  },
+  {
+   "data": "2021-08-05",
+   "eps_estimado": 0.31,
+   "eps_reportado": 0.22
+  },
+  {
+   "data": "2021-11-11",
+   "eps_estimado": 0.64,
+   "eps_reportado": 0.86
+  },
+  {
+   "data": "2022-03-29",
+   "eps_estimado": 0.55,
+   "eps_reportado": 0.54
+  },
+  {
+   "data": "2022-05-12",
+   "eps_estimado": 0.73,
+   "eps_reportado": 0.53
+  },
+  {
+   "data": "2022-08-04",
+   "eps_estimado": 0.96,
+   "eps_reportado": 1.32
+  },
+  {
+   "data": "2022-11-07",
+   "eps_estimado": 1.48,
+   "eps_reportado": 1.69
+  },
+  {
+   "data": "2023-03-27",
+   "eps_estimado": 0.92,
+   "eps_reportado": 0.61
+  },
+  {
+   "data": "2023-05-10",
+   "eps_estimado": 0.9,
+   "eps_reportado": 0.98
+  },
+  {
+   "data": "2023-08-14",
+   "eps_estimado": 1.12,
+   "eps_reportado": 0.73
+  },
+  {
+   "data": "2023-11-13",
+   "eps_estimado": 1.18,
+   "eps_reportado": 1.11
+  },
+  {
+   "data": "2024-03-20",
+   "eps_estimado": 0.75,
+   "eps_reportado": 1.18
+  },
+  {
+   "data": "2024-05-14",
+   "eps_estimado": 0.84,
+   "eps_reportado": 0.14
+  },
+  {
+   "data": "2024-08-13",
+   "eps_estimado": 0.42,
+   "eps_reportado": 0.22
+  },
+  {
+   "data": "2024-11-13",
+   "eps_estimado": 1.08,
+   "eps_reportado": 0.45
+  },
+  {
+   "data": "2025-03-27",
+   "eps_estimado": 0.86,
+   "eps_reportado": -0.79
+  },
+  {
+   "data": "2025-05-14",
+   "eps_estimado": 0.59,
+   "eps_reportado": 0.18
+  },
+  {
+   "data": "2025-08-13",
+   "eps_estimado": 0.97,
+   "eps_reportado": 0.28
+  },
+  {
+   "data": "2025-11-06",
+   "eps_estimado": 0.13,
+   "eps_reportado": 0.01
+  },
+  {
+   "data": "2026-03-19",
+   "eps_estimado": 0.08,
+   "eps_reportado": -2.12
+  },
+  {
+   "data": "2026-05-14",
+   "eps_estimado": -0.45,
+   "eps_reportado": -0.39
+  },
+  {
+   "data": "2026-08-06",
+   "eps_estimado": 0.3,
+   "eps_reportado": 0.18
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "TUPY3.SA",
+ "url": "https://finance.yahoo.com/quote/TUPY3.SA"
+}

@@ -1,0 +1,52 @@
+{
+ "analyst_price_targets": {
+  "current": 1.23,
+  "high": 1.5,
+  "low": 0.8,
+  "mean": 1.15,
+  "median": 1.15
+ },
+ "earnings_estimate": null,
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 11279890780,
+   "currency": "BRL",
+   "growth": -0.0108,
+   "high": 11611634000,
+   "low": 10741245300,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 11403163000
+  },
+  "+1y": {
+   "avg": 46531385130,
+   "currency": "BRL",
+   "growth": 0.039100002,
+   "high": 50172138880,
+   "low": 43253000000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 44779646300
+  },
+  "0q": {
+   "avg": 10975598700,
+   "currency": "BRL",
+   "growth": -0.0694,
+   "high": 12208393200,
+   "low": 9990000000,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 11793868000
+  },
+  "0y": {
+   "avg": 44779646300,
+   "currency": "BRL",
+   "growth": -0.0004,
+   "high": 46981000000,
+   "low": 43038000000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 44797946000
+  }
+ },
+ "ticker": "SID",
+ "url": "https://finance.yahoo.com/quote/SID"
+}

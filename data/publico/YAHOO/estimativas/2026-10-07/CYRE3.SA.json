@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 33.0,
+  "high": 41.0,
+  "low": 28.0,
+  "mean": 35.83077,
+  "median": 37.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1.15,
+   "currency": "BRL",
+   "growth": -0.2675,
+   "high": 1.17,
+   "low": 1.13,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 1.57
+  },
+  "+1y": {
+   "avg": 5.19945,
+   "currency": "BRL",
+   "growth": 0.2168,
+   "high": 5.7,
+   "low": 4.63,
+   "numberOfAnalysts": 11,
+   "yearAgoEps": 4.27317
+  },
+  "0q": {
+   "avg": 1.185,
+   "currency": "BRL",
+   "growth": -0.2861,
+   "high": 1.26,
+   "low": 1.11,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 1.66
+  },
+  "0y": {
+   "avg": 4.27317,
+   "currency": "BRL",
+   "growth": -0.1749,
+   "high": 4.7,
+   "low": 3.86,
+   "numberOfAnalysts": 9,
+   "yearAgoEps": 5.17868
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 2802773820,
+   "currency": "BRL",
+   "growth": -0.1336,
+   "high": 3018924520,
+   "low": 2560417000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 3235000000
+  },
+  "+1y": {
+   "avg": 11779314850,
+   "currency": "BRL",
+   "growth": 0.1587,
+   "high": 12715000000,
+   "low": 10660974060,
+   "numberOfAnalysts": 12,
+   "yearAgoRevenue": 10166264500
+  },
+  "0q": {
+   "avg": 2782396390,
+   "currency": "BRL",
+   "growth": 0.3075,
+   "high": 2986878310,
+   "low": 2498639000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 2128000000
+  },
+  "0y": {
+   "avg": 10166264500,
+   "currency": "BRL",
+   "growth": 0.0789,
+   "high": 10511706830,
+   "low": 9564056000,
+   "numberOfAnalysts": 12,
+   "yearAgoRevenue": 9423000000
+  }
+ },
+ "ticker": "CYRE3.SA",
+ "url": "https://finance.yahoo.com/quote/CYRE3.SA"
+}

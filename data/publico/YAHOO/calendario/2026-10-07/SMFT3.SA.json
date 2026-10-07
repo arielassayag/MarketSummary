@@ -1,0 +1,72 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2023-11-08",
+   "eps_estimado": 0.19,
+   "eps_reportado": 0.1
+  },
+  {
+   "data": "2024-03-14",
+   "eps_estimado": 0.26,
+   "eps_reportado": 1.13
+  },
+  {
+   "data": "2024-05-09",
+   "eps_estimado": 0.21,
+   "eps_reportado": 0.18
+  },
+  {
+   "data": "2024-08-08",
+   "eps_estimado": 0.24,
+   "eps_reportado": 0.24
+  },
+  {
+   "data": "2024-11-07",
+   "eps_estimado": 0.23,
+   "eps_reportado": 0.2
+  },
+  {
+   "data": "2025-03-13",
+   "eps_estimado": 0.37,
+   "eps_reportado": 0.32
+  },
+  {
+   "data": "2025-05-08",
+   "eps_estimado": 0.26,
+   "eps_reportado": 0.23
+  },
+  {
+   "data": "2025-08-07",
+   "eps_estimado": 0.26,
+   "eps_reportado": 0.31
+  },
+  {
+   "data": "2025-11-06",
+   "eps_estimado": 0.3,
+   "eps_reportado": 0.28
+  },
+  {
+   "data": "2026-03-11",
+   "eps_estimado": 0.55,
+   "eps_reportado": 0.39
+  },
+  {
+   "data": "2026-05-06",
+   "eps_estimado": 0.29,
+   "eps_reportado": 0.32
+  },
+  {
+   "data": "2026-08-05",
+   "eps_estimado": 0.39,
+   "eps_reportado": 0.28
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "SMFT3.SA",
+ "url": "https://finance.yahoo.com/quote/SMFT3.SA"
+}

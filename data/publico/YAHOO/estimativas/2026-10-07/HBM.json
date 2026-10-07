@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 25.87,
+  "high": 43.0,
+  "low": 30.0,
+  "mean": 35.01833,
+  "median": 33.75
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.41339,
+   "currency": "USD",
+   "growth": 0.879,
+   "high": 0.52,
+   "low": 0.28,
+   "numberOfAnalysts": 12,
+   "yearAgoEps": 0.22
+  },
+  "+1y": {
+   "avg": 1.99889,
+   "currency": "USD",
+   "growth": 0.3635,
+   "high": 2.66,
+   "low": 1.38,
+   "numberOfAnalysts": 16,
+   "yearAgoEps": 1.46598
+  },
+  "0q": {
+   "avg": 0.38571,
+   "currency": "USD",
+   "growth": 11.856999,
+   "high": 0.47326,
+   "low": 0.26,
+   "numberOfAnalysts": 11,
+   "yearAgoEps": 0.03
+  },
+  "0y": {
+   "avg": 1.46598,
+   "currency": "USD",
+   "growth": 1.1880001,
+   "high": 1.66,
+   "low": 1.21,
+   "numberOfAnalysts": 16,
+   "yearAgoEps": 0.67
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 798373060,
+   "currency": "USD",
+   "growth": 0.08930001,
+   "high": 839566000,
+   "low": 730705000,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 732900000
+  },
+  "+1y": {
+   "avg": 3378265720,
+   "currency": "USD",
+   "growth": 0.15,
+   "high": 3817000000,
+   "low": 2914900000,
+   "numberOfAnalysts": 20,
+   "yearAgoRevenue": 2937536960
+  },
+  "0q": {
+   "avg": 762923350,
+   "currency": "USD",
+   "growth": 1.1999,
+   "high": 879000000,
+   "low": 697842970,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 346800000
+  },
+  "0y": {
+   "avg": 2937536960,
+   "currency": "USD",
+   "growth": 0.32860002,
+   "high": 3101000000,
+   "low": 2792900000,
+   "numberOfAnalysts": 20,
+   "yearAgoRevenue": 2211000000
+  }
+ },
+ "ticker": "HBM",
+ "url": "https://finance.yahoo.com/quote/HBM"
+}

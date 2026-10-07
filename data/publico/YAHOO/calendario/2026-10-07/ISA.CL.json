@@ -1,0 +1,42 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2010-05-07",
+   "eps_estimado": 96.9,
+   "eps_reportado": 70.84
+  },
+  {
+   "data": "2010-08-04",
+   "eps_estimado": 93.7,
+   "eps_reportado": 257.74
+  },
+  {
+   "data": "2010-11-02",
+   "eps_estimado": 107.13,
+   "eps_reportado": 106.48
+  },
+  {
+   "data": "2011-02-28",
+   "eps_estimado": 78.59,
+   "eps_reportado": 47.13
+  },
+  {
+   "data": "2011-05-04",
+   "eps_estimado": 115.42,
+   "eps_reportado": 144.97
+  },
+  {
+   "data": "2026-11-02",
+   "eps_estimado": null,
+   "eps_reportado": null
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "ISA.CL",
+ "url": "https://finance.yahoo.com/quote/ISA.CL"
+}

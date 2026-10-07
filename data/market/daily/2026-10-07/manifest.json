@@ -1,0 +1,108 @@
+{
+  "kind": "daily_increment",
+  "session_date": "2026-10-07",
+  "created_at": "2026-10-07T22:26:03.593522Z",
+  "base_as_of": "2026-10-02",
+  "base_content_hash": "ec1e53241d99de22f2f6deb06749e9d80b3d43864de3a1d931eb3e94c8d40455",
+  "base_manifest_sha256": "6bf7cc5b57e0a1eb5bd73080fb213eab399c7b04359ae68b2f75dc93a185d263",
+  "prev_manifest_hash": "d79bc38fe509298f8831523671a09d3c4435b5f42b29cf8f836714fb4b331f15",
+  "universe_sha256": "a8f28ee5d20395a6e245c50ebb635eb56ada88922c01876351278cb99f5a29db",
+  "files": [
+    {
+      "path": "benchmarks.parquet",
+      "sha256": "a09a0389cbb60de925ece763ede88550bddf661c2752a2ab51001875b87381d4",
+      "rows": 20,
+      "description": "Benchmarks do pregão"
+    },
+    {
+      "path": "fx.parquet",
+      "sha256": "09759805b0b3b53475b6578870e9244b54e6c28635a819df2201915b286b7503",
+      "rows": 8,
+      "description": "Câmbio do pregão (USD por unidade)"
+    },
+    {
+      "path": "lending.parquet",
+      "sha256": "7419959a19f068c34344de8024d1c88acd1b9617878911b18e24141e78ffa129",
+      "rows": 0,
+      "description": "Aluguel B3/BTC (longo) dos pregões ainda não gravados"
+    },
+    {
+      "path": "prices.parquet",
+      "sha256": "13b577385a4ee80bc2f62fe1b0cde4c2eec3741e8dba246ca4666b02b91140d4",
+      "rows": 281,
+      "description": "Preços do pregão (+ barra anterior da mesma coleta para encadear retorno total)"
+    },
+    {
+      "path": "qa.json",
+      "sha256": "6be05df267bb7893487be179f6ebdbe5f7783bda56d142bba2ef1b3c748da27c",
+      "rows": null,
+      "description": "QA do incremento: revisões, paridade ADR, mercados fechados"
+    },
+    {
+      "path": "rates.parquet",
+      "sha256": "7b8bf5e5fb39d0f85c5911621edb28a10615a07b24a405a3e4958e952fca9442",
+      "rows": 2,
+      "description": "Taxas do pregão (decimal anual)"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "yahoo_prices",
+      "name": "Yahoo Finance — barras diárias (janela)",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-10-07T22:25:36.054218Z",
+      "point_in_time": true,
+      "notes": ""
+    },
+    {
+      "source_id": "yahoo_fx",
+      "name": "Yahoo Finance — câmbio",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-10-07T22:25:36.982373Z",
+      "point_in_time": true,
+      "notes": ""
+    },
+    {
+      "source_id": "yahoo_benchmarks",
+      "name": "Yahoo Finance — benchmarks",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-10-07T22:25:37.994218Z",
+      "point_in_time": true,
+      "notes": ""
+    },
+    {
+      "source_id": "rates",
+      "name": "BCB SGS 432 + Yahoo ^IRX",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-10-07T22:25:38.862845Z",
+      "point_in_time": true,
+      "notes": ""
+    }
+  ],
+  "limitations": [
+    "Revisões de fechamento do Yahoo em datas anteriores NÃO aplicadas (53): AC.MX@2026-10-05 (0.9995), ALPEKA.MX@2026-10-05 (1.0048), ALSEA.MX@2026-10-05 (0.9998), AMXB.MX@2026-10-05 (0.9985), ANDINA-B.SN@2026-10-05 (0.9592), ASURB.MX@2026-10-05 (0.9966), BBAJIOO.MX@2026-10-05 (0.9990), BCI.SN@2026-10-05 (1.0092), BOLSAA.MX@2026-10-05 (0.9969), BSANTANDER.SN@2026-10-05 (1.0230), CEMEXCPO.MX@2026-10-05 (1.0012), CENCOMALLS.SN@2026-10-05 (1.0238), CENCOSUD.SN@2026-10-05 (1.0885), CHDRAUIB.MX@2026-10-05 (1.0014), CHILE.SN@2026-10-05 (1.0308), CMPC.SN@2026-10-05 (0.9629), COLBUN.SN@2026-10-05 (1.0068), COPEC.SN@2026-10-05 (1.0047), ECL.SN@2026-10-05 (0.9892), EISA.SN@2026.",
+    "Revisões de volume em datas anteriores NÃO aplicadas: 271.",
+    "Aluguel B3 indisponível: RuntimeError('Fonte de aluguel B3 (BDI) indisponível: 2026-10-05: Falha de rede em POST https://arquivos.b3.com.br/bdi/table/BTBLendingOpenPosition/2026-10-05/2026-10-05/1/1000: ReadTimeout(ReadTimeoutError(\"HTTPSConnectionPool(host=\\'arquivos.b3.com.br\\', port=443): Read timed out. (read timeout=20.0)\")); 2026-10-06: BDI BTBLendingOpenPosition 2026-10-06: HTTP 502; 2026-10-07: BDI BTBLendingOpenPosition 2026-10-07: HTTP 502').",
+    "Aluguel B3 (BDI) ausente para pregões já fechados: 2026-10-05, 2026-10-06 (nova tentativa nos próximos incrementos enquanto estiverem na janela D-21).",
+    "QA paridade ADR: SID vs CSNA3.SA desvio -3.5% no pregão (mediana -3.6%; tolerância 3%)."
+  ],
+  "notes": [],
+  "markets_traded": [
+    "AR",
+    "BR",
+    "CL",
+    "CO",
+    "MX",
+    "US"
+  ],
+  "markets_closed": [],
+  "slow_refreshed": [],
+  "lending_dates": [],
+  "is_synthetic": false,
+  "data_notice": "Dados reais de fontes públicas gratuitas (Yahoo, FINRA, B3/BDI, BCB, Google News); uso de pesquisa — não é feed licenciado.",
+  "manifest_hash": "250185c1dab51ffd610eb6d68b885e7245a069e379d5209d23fbe076347c5d79"
+}

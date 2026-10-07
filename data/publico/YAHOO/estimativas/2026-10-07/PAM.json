@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 80.12,
+  "high": 160.0,
+  "low": 100.0,
+  "mean": 121.09091,
+  "median": 118.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1.55197,
+   "currency": "USD",
+   "growth": -0.4827,
+   "high": 1.92591,
+   "low": 1.16,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 3.0
+  },
+  "+1y": {
+   "avg": 11.73638,
+   "currency": "USD",
+   "growth": 0.105299994,
+   "high": 15.7,
+   "low": 8.49,
+   "numberOfAnalysts": 9,
+   "yearAgoEps": 10.61794
+  },
+  "0q": {
+   "avg": 2.49852,
+   "currency": "USD",
+   "growth": 0.24209999,
+   "high": 3.05556,
+   "low": 1.8,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 2.01157
+  },
+  "0y": {
+   "avg": 10.61794,
+   "currency": "USD",
+   "growth": 0.5388,
+   "high": 13.42147,
+   "low": 8.17,
+   "numberOfAnalysts": 9,
+   "yearAgoEps": 6.9
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 1134383935500,
+   "currency": "ARS",
+   "growth": 0.59360003,
+   "high": 1295590000000,
+   "low": 973177871000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 711828000000
+  },
+  "+1y": {
+   "avg": 4530299874490,
+   "currency": "ARS",
+   "growth": 0.14029999,
+   "high": 6363652687630,
+   "low": 3707742698000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 3972987751510
+  },
+  "0q": {
+   "avg": 1265109448000,
+   "currency": "ARS",
+   "growth": 0.5881,
+   "high": 1401487000000,
+   "low": 1128731896000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 796635000000
+  },
+  "0y": {
+   "avg": 3972987751510,
+   "currency": "ARS",
+   "growth": 0.4163,
+   "high": 4570571567000,
+   "low": 3172566800000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 2805192000000
+  }
+ },
+ "ticker": "PAM",
+ "url": "https://finance.yahoo.com/quote/PAM"
+}

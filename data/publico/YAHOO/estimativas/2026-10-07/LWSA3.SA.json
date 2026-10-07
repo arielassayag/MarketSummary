@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 5.04,
+  "high": 7.0,
+  "low": 5.0,
+  "mean": 5.79,
+  "median": 6.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.14601,
+   "currency": "BRL",
+   "growth": 0.16530001,
+   "high": 0.14601,
+   "low": 0.14601,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.1253
+  },
+  "+1y": {
+   "avg": 0.36019,
+   "currency": "BRL",
+   "growth": -0.024300002,
+   "high": 0.41038,
+   "low": 0.31,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.36916
+  },
+  "0q": {
+   "avg": 0.0747,
+   "currency": "BRL",
+   "growth": -0.2733,
+   "high": 0.0747,
+   "low": 0.0747,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.1028
+  },
+  "0y": {
+   "avg": 0.36916,
+   "currency": "BRL",
+   "growth": -0.0058,
+   "high": 0.43,
+   "low": 0.27,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.3713
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 409603200,
+   "currency": "BRL",
+   "growth": 0.073699996,
+   "high": 411206400,
+   "low": 408000000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 381500000
+  },
+  "+1y": {
+   "avg": 1706657780,
+   "currency": "BRL",
+   "growth": 0.078600004,
+   "high": 1748000000,
+   "low": 1655031840,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 1582333810
+  },
+  "0q": {
+   "avg": 392288720,
+   "currency": "BRL",
+   "growth": 0.0126,
+   "high": 394577440,
+   "low": 390000000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 387405000
+  },
+  "0y": {
+   "avg": 1582333810,
+   "currency": "BRL",
+   "growth": 0.063,
+   "high": 1794000000,
+   "low": 1535947360,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 1488500000
+  }
+ },
+ "ticker": "LWSA3.SA",
+ "url": "https://finance.yahoo.com/quote/LWSA3.SA"
+}

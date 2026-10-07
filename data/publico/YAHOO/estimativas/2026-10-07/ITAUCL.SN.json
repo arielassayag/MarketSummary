@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 22957.0,
+  "high": 27600.0,
+  "low": 24000.0,
+  "mean": 25387.428,
+  "median": 25000.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 563.3808,
+   "currency": "CLP",
+   "growth": 0.0888,
+   "high": 567.5716,
+   "low": 559.19,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 517.4276
+  },
+  "+1y": {
+   "avg": 2336.4197,
+   "currency": "CLP",
+   "growth": 0.24209999,
+   "high": 2396.709,
+   "low": 2294.3,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 1880.9663
+  },
+  "0q": {
+   "avg": 516.6483,
+   "currency": "CLP",
+   "growth": null,
+   "high": 569.18,
+   "low": 464.1166,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": 1880.9663,
+   "currency": "CLP",
+   "growth": -0.0539,
+   "high": 1986.24,
+   "low": 1767.1,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 1988.0746
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 417392689100,
+   "currency": "CLP",
+   "growth": -0.0069999998,
+   "high": 427000000000,
+   "low": 407785378190,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 420348000000
+  },
+  "+1y": {
+   "avg": 1800962830240,
+   "currency": "CLP",
+   "growth": 0.1122,
+   "high": 1994000000000,
+   "low": 1682605731540,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 1619294422360
+  },
+  "0q": {
+   "avg": 380956452370,
+   "currency": "CLP",
+   "growth": -0.0766,
+   "high": 396000000000,
+   "low": 365912904740,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 412539000000
+  },
+  "0y": {
+   "avg": 1619294422360,
+   "currency": "CLP",
+   "growth": 0.2142,
+   "high": 1704000000000,
+   "low": 1550189282930,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 1333578000000
+  }
+ },
+ "ticker": "ITAUCL.SN",
+ "url": "https://finance.yahoo.com/quote/ITAUCL.SN"
+}

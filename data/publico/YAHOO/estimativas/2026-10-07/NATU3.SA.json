@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 7.35,
+  "high": 13.5,
+  "low": 8.0,
+  "mean": 10.10714,
+  "median": 10.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.29479,
+   "currency": "BRL",
+   "growth": 1.3822999,
+   "high": 0.29479,
+   "low": 0.29479,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": -0.771
+  },
+  "+1y": {
+   "avg": 0.94444,
+   "currency": "BRL",
+   "growth": 1.5359,
+   "high": 1.07,
+   "low": 0.89502,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 0.37243
+  },
+  "0q": {
+   "avg": 0.13683,
+   "currency": "BRL",
+   "growth": 2.6998,
+   "high": 0.13683,
+   "low": 0.13683,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": -0.0805
+  },
+  "0y": {
+   "avg": 0.37243,
+   "currency": "BRL",
+   "growth": 0.42310002,
+   "high": 0.68,
+   "low": 0.2,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 0.2617
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 6310885260,
+   "currency": "BRL",
+   "growth": 0.48049998,
+   "high": 6405111520,
+   "low": 6216659000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 4262580000
+  },
+  "+1y": {
+   "avg": 22920430090,
+   "currency": "BRL",
+   "growth": 0.0519,
+   "high": 25614000000,
+   "low": 21656000000,
+   "numberOfAnalysts": 13,
+   "yearAgoRevenue": 21789352450
+  },
+  "0q": {
+   "avg": 5034560360,
+   "currency": "BRL",
+   "growth": -0.0307,
+   "high": 5098895000,
+   "low": 4970225710,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 5194075000
+  },
+  "0y": {
+   "avg": 21789352450,
+   "currency": "BRL",
+   "growth": -0.0016,
+   "high": 23785000000,
+   "low": 20887000000,
+   "numberOfAnalysts": 13,
+   "yearAgoRevenue": 21823488000
+  }
+ },
+ "ticker": "NATU3.SA",
+ "url": "https://finance.yahoo.com/quote/NATU3.SA"
+}

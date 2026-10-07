@@ -1,0 +1,32 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2025-08-13",
+   "eps_estimado": 0.03,
+   "eps_reportado": 0.09
+  },
+  {
+   "data": "2026-03-27",
+   "eps_estimado": 0.05,
+   "eps_reportado": 0.09
+  },
+  {
+   "data": "2026-05-07",
+   "eps_estimado": 0.04,
+   "eps_reportado": 0.06
+  },
+  {
+   "data": "2026-08-13",
+   "eps_estimado": 0.08,
+   "eps_reportado": 0.08
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "AUAU3.SA",
+ "url": "https://finance.yahoo.com/quote/AUAU3.SA"
+}

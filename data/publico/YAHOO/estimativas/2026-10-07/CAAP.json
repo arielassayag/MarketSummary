@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 24.78,
+  "high": 36.0,
+  "low": 27.4,
+  "mean": 32.4,
+  "median": 32.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.53591,
+   "currency": "USD",
+   "growth": -0.17549999,
+   "high": 0.59488,
+   "low": 0.47694,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.65
+  },
+  "+1y": {
+   "avg": 2.26507,
+   "currency": "USD",
+   "growth": 0.1821,
+   "high": 2.46,
+   "low": 2.07,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 1.91608
+  },
+  "0q": {
+   "avg": 0.56985,
+   "currency": "USD",
+   "growth": 0.676,
+   "high": 0.60988,
+   "low": 0.52982,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.34
+  },
+  "0y": {
+   "avg": 1.91608,
+   "currency": "USD",
+   "growth": 0.2523,
+   "high": 2.11,
+   "low": 1.79,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 1.53
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 528000000,
+   "currency": "USD",
+   "growth": -0.0319,
+   "high": 528000000,
+   "low": 528000000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 545400000
+  },
+  "+1y": {
+   "avg": 2260942590,
+   "currency": "USD",
+   "growth": 0.0922,
+   "high": 2367100000,
+   "low": 2209000000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 2070170090
+  },
+  "0q": {
+   "avg": 541000000,
+   "currency": "USD",
+   "growth": 0.0167,
+   "high": 541000000,
+   "low": 541000000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 532100000
+  },
+  "0y": {
+   "avg": 2070170090,
+   "currency": "USD",
+   "growth": 0.0551,
+   "high": 2244000000,
+   "low": 1796000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 1962100000
+  }
+ },
+ "ticker": "CAAP",
+ "url": "https://finance.yahoo.com/quote/CAAP"
+}

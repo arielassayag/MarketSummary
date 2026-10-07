@@ -1,0 +1,137 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2021-01-26",
+   "eps_estimado": 0.08,
+   "eps_reportado": 0.16
+  },
+  {
+   "data": "2021-04-27",
+   "eps_estimado": 0.1,
+   "eps_reportado": 0.14
+  },
+  {
+   "data": "2021-07-27",
+   "eps_estimado": 0.13,
+   "eps_reportado": 0.13
+  },
+  {
+   "data": "2021-10-27",
+   "eps_estimado": 0.13,
+   "eps_reportado": 0.11
+  },
+  {
+   "data": "2022-02-01",
+   "eps_estimado": 0.13,
+   "eps_reportado": 0.12
+  },
+  {
+   "data": "2022-05-02",
+   "eps_estimado": 0.12,
+   "eps_reportado": 0.13
+  },
+  {
+   "data": "2022-07-27",
+   "eps_estimado": 0.11,
+   "eps_reportado": 0.08
+  },
+  {
+   "data": "2022-10-27",
+   "eps_estimado": 0.07,
+   "eps_reportado": 0.08
+  },
+  {
+   "data": "2023-02-03",
+   "eps_estimado": 0.09,
+   "eps_reportado": 0.13
+  },
+  {
+   "data": "2023-04-29",
+   "eps_estimado": 0.11,
+   "eps_reportado": 0.14
+  },
+  {
+   "data": "2023-07-27",
+   "eps_estimado": 0.09,
+   "eps_reportado": 0.11
+  },
+  {
+   "data": "2023-10-24",
+   "eps_estimado": 0.09,
+   "eps_reportado": 0.09
+  },
+  {
+   "data": "2024-02-02",
+   "eps_estimado": 0.08,
+   "eps_reportado": 0.1
+  },
+  {
+   "data": "2024-04-25",
+   "eps_estimado": 0.09,
+   "eps_reportado": 0.12
+  },
+  {
+   "data": "2024-07-22",
+   "eps_estimado": 0.11,
+   "eps_reportado": 0.14
+  },
+  {
+   "data": "2024-10-22",
+   "eps_estimado": 0.12,
+   "eps_reportado": 0.11
+  },
+  {
+   "data": "2025-02-11",
+   "eps_estimado": 0.12,
+   "eps_reportado": 0.09
+  },
+  {
+   "data": "2025-04-24",
+   "eps_estimado": 0.12,
+   "eps_reportado": 0.14
+  },
+  {
+   "data": "2025-07-28",
+   "eps_estimado": 0.12,
+   "eps_reportado": 0.16
+  },
+  {
+   "data": "2025-10-28",
+   "eps_estimado": 0.14,
+   "eps_reportado": 0.17
+  },
+  {
+   "data": "2026-01-27",
+   "eps_estimado": 0.16,
+   "eps_reportado": 0.18
+  },
+  {
+   "data": "2026-02-11",
+   "eps_estimado": 0.17,
+   "eps_reportado": null
+  },
+  {
+   "data": "2026-04-29",
+   "eps_estimado": 0.2,
+   "eps_reportado": 0.22
+  },
+  {
+   "data": "2026-07-21",
+   "eps_estimado": 0.22,
+   "eps_reportado": 0.86
+  },
+  {
+   "data": "2026-10-20",
+   "eps_estimado": 0.22,
+   "eps_reportado": null
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "GMEXICOB.MX",
+ "url": "https://finance.yahoo.com/quote/GMEXICOB.MX"
+}

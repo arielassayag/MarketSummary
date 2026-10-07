@@ -1,0 +1,137 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2019-11-13",
+   "eps_estimado": 0.11,
+   "eps_reportado": 0.14
+  },
+  {
+   "data": "2020-03-05",
+   "eps_estimado": 0.18,
+   "eps_reportado": 0.37
+  },
+  {
+   "data": "2020-08-19",
+   "eps_estimado": -1.09,
+   "eps_reportado": -0.89
+  },
+  {
+   "data": "2020-11-06",
+   "eps_estimado": -0.81,
+   "eps_reportado": -0.87
+  },
+  {
+   "data": "2021-03-10",
+   "eps_estimado": -0.95,
+   "eps_reportado": -1.59
+  },
+  {
+   "data": "2021-05-06",
+   "eps_estimado": -0.79,
+   "eps_reportado": -0.71
+  },
+  {
+   "data": "2021-08-10",
+   "eps_estimado": -0.61,
+   "eps_reportado": -1.27
+  },
+  {
+   "data": "2021-11-10",
+   "eps_estimado": -0.87,
+   "eps_reportado": -1.14
+  },
+  {
+   "data": "2022-03-09",
+   "eps_estimado": -0.66,
+   "eps_reportado": -4.54
+  },
+  {
+   "data": "2022-05-11",
+   "eps_estimado": -0.36,
+   "eps_reportado": -0.63
+  },
+  {
+   "data": "2022-08-10",
+   "eps_estimado": -0.52,
+   "eps_reportado": -0.86
+  },
+  {
+   "data": "2023-03-10",
+   "eps_estimado": null,
+   "eps_reportado": 1.99
+  },
+  {
+   "data": "2023-08-02",
+   "eps_estimado": 0.2,
+   "eps_reportado": null
+  },
+  {
+   "data": "2023-10-30",
+   "eps_estimado": null,
+   "eps_reportado": null
+  },
+  {
+   "data": "2024-02-22",
+   "eps_estimado": null,
+   "eps_reportado": null
+  },
+  {
+   "data": "2024-05-03",
+   "eps_estimado": null,
+   "eps_reportado": null
+  },
+  {
+   "data": "2024-08-07",
+   "eps_estimado": null,
+   "eps_reportado": null
+  },
+  {
+   "data": "2024-11-06",
+   "eps_estimado": null,
+   "eps_reportado": null
+  },
+  {
+   "data": "2025-01-31",
+   "eps_estimado": null,
+   "eps_reportado": null
+  },
+  {
+   "data": "2025-04-28",
+   "eps_estimado": null,
+   "eps_reportado": null
+  },
+  {
+   "data": "2025-07-29",
+   "eps_estimado": null,
+   "eps_reportado": null
+  },
+  {
+   "data": "2025-11-17",
+   "eps_estimado": null,
+   "eps_reportado": null
+  },
+  {
+   "data": "2026-02-03",
+   "eps_estimado": null,
+   "eps_reportado": null
+  },
+  {
+   "data": "2026-05-05",
+   "eps_estimado": null,
+   "eps_reportado": null
+  },
+  {
+   "data": "2026-08-04",
+   "eps_estimado": null,
+   "eps_reportado": null
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "LTM.SN",
+ "url": "https://finance.yahoo.com/quote/LTM.SN"
+}

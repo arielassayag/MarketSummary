@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 22.34,
+  "high": 38.0,
+  "low": 25.0,
+  "mean": 31.11538,
+  "median": 30.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.47829,
+   "currency": "BRL",
+   "growth": 0.2219,
+   "high": 0.53,
+   "low": 0.43358,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.39142
+  },
+  "+1y": {
+   "avg": 2.0103,
+   "currency": "BRL",
+   "growth": 0.3382,
+   "high": 2.22,
+   "low": 1.91,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 1.50223
+  },
+  "0q": {
+   "avg": 0.37237,
+   "currency": "BRL",
+   "growth": 0.3346,
+   "high": 0.3924,
+   "low": 0.35,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.27901
+  },
+  "0y": {
+   "avg": 1.50223,
+   "currency": "BRL",
+   "growth": 0.2524,
+   "high": 1.59,
+   "low": 1.43114,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 1.1995
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 2433669970,
+   "currency": "BRL",
+   "growth": 0.2492,
+   "high": 2460081360,
+   "low": 2397537550,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 1948200000
+  },
+  "+1y": {
+   "avg": 10796037200,
+   "currency": "BRL",
+   "growth": 0.204,
+   "high": 11273363930,
+   "low": 10369000000,
+   "numberOfAnalysts": 12,
+   "yearAgoRevenue": 8966578240
+  },
+  "0q": {
+   "avg": 2265910670,
+   "currency": "BRL",
+   "growth": 0.24219999,
+   "high": 2282756270,
+   "low": 2245023750,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 1824155000
+  },
+  "0y": {
+   "avg": 8966578240,
+   "currency": "BRL",
+   "growth": 0.2382,
+   "high": 9076443970,
+   "low": 8837000000,
+   "numberOfAnalysts": 12,
+   "yearAgoRevenue": 7241700000
+  }
+ },
+ "ticker": "SMFT3.SA",
+ "url": "https://finance.yahoo.com/quote/SMFT3.SA"
+}

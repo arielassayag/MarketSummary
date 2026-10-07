@@ -1,0 +1,122 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2021-03-10",
+   "eps_estimado": 0.31,
+   "eps_reportado": 0.86
+  },
+  {
+   "data": "2021-05-07",
+   "eps_estimado": 0.33,
+   "eps_reportado": 0.31
+  },
+  {
+   "data": "2021-08-11",
+   "eps_estimado": 0.38,
+   "eps_reportado": 0.58
+  },
+  {
+   "data": "2021-11-10",
+   "eps_estimado": 0.54,
+   "eps_reportado": 0.59
+  },
+  {
+   "data": "2022-02-24",
+   "eps_estimado": 0.6,
+   "eps_reportado": 0.49
+  },
+  {
+   "data": "2022-05-06",
+   "eps_estimado": 0.52,
+   "eps_reportado": 0.47
+  },
+  {
+   "data": "2022-08-04",
+   "eps_estimado": 0.45,
+   "eps_reportado": 0.23
+  },
+  {
+   "data": "2022-11-10",
+   "eps_estimado": 0.26,
+   "eps_reportado": 0.05
+  },
+  {
+   "data": "2023-03-07",
+   "eps_estimado": 0.27,
+   "eps_reportado": 0.41
+  },
+  {
+   "data": "2023-08-10",
+   "eps_estimado": 0.4,
+   "eps_reportado": -0.85
+  },
+  {
+   "data": "2023-11-08",
+   "eps_estimado": 0.38,
+   "eps_reportado": -0.33
+  },
+  {
+   "data": "2024-03-27",
+   "eps_estimado": 0.26,
+   "eps_reportado": -0.91
+  },
+  {
+   "data": "2024-05-10",
+   "eps_estimado": 0.22,
+   "eps_reportado": 0.02
+  },
+  {
+   "data": "2024-08-08",
+   "eps_estimado": 0.32,
+   "eps_reportado": 0.08
+  },
+  {
+   "data": "2024-11-12",
+   "eps_estimado": 0.44,
+   "eps_reportado": 0.14
+  },
+  {
+   "data": "2025-03-26",
+   "eps_estimado": 0.39,
+   "eps_reportado": -0.44
+  },
+  {
+   "data": "2025-05-08",
+   "eps_estimado": null,
+   "eps_reportado": 0.06
+  },
+  {
+   "data": "2025-08-12",
+   "eps_estimado": -0.24,
+   "eps_reportado": -0.16
+  },
+  {
+   "data": "2025-11-12",
+   "eps_estimado": -0.06,
+   "eps_reportado": -0.41
+  },
+  {
+   "data": "2026-03-31",
+   "eps_estimado": -0.34,
+   "eps_reportado": 0.78
+  },
+  {
+   "data": "2026-05-08",
+   "eps_estimado": -0.36,
+   "eps_reportado": -0.42
+  },
+  {
+   "data": "2026-08-13",
+   "eps_estimado": -0.07,
+   "eps_reportado": -0.14
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "SIMH3.SA",
+ "url": "https://finance.yahoo.com/quote/SIMH3.SA"
+}

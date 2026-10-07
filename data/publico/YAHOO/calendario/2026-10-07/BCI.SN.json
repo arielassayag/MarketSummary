@@ -1,0 +1,137 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2020-08-05",
+   "eps_estimado": 334.03,
+   "eps_reportado": 283.32
+  },
+  {
+   "data": "2020-10-09",
+   "eps_estimado": 328.2,
+   "eps_reportado": 299.04
+  },
+  {
+   "data": "2021-01-26",
+   "eps_estimado": 451.64,
+   "eps_reportado": 569.97
+  },
+  {
+   "data": "2021-04-30",
+   "eps_estimado": 476.36,
+   "eps_reportado": 781.56
+  },
+  {
+   "data": "2021-07-30",
+   "eps_estimado": 616.14,
+   "eps_reportado": 644.14
+  },
+  {
+   "data": "2021-10-30",
+   "eps_estimado": 564.24,
+   "eps_reportado": 649.6
+  },
+  {
+   "data": "2022-01-31",
+   "eps_estimado": 587.47,
+   "eps_reportado": 848.41
+  },
+  {
+   "data": "2022-05-14",
+   "eps_estimado": 839.65,
+   "eps_reportado": 1088.94
+  },
+  {
+   "data": "2022-08-02",
+   "eps_estimado": 900.72,
+   "eps_reportado": 1224.75
+  },
+  {
+   "data": "2022-11-08",
+   "eps_estimado": 1015.37,
+   "eps_reportado": 1076.62
+  },
+  {
+   "data": "2023-02-28",
+   "eps_estimado": 1012.49,
+   "eps_reportado": 1436.38
+  },
+  {
+   "data": "2023-05-01",
+   "eps_estimado": 890.3,
+   "eps_reportado": 896.74
+  },
+  {
+   "data": "2023-09-08",
+   "eps_estimado": 848.93,
+   "eps_reportado": 1196.0
+  },
+  {
+   "data": "2023-10-30",
+   "eps_estimado": 741.35,
+   "eps_reportado": 1094.0
+  },
+  {
+   "data": "2024-03-26",
+   "eps_estimado": 801.25,
+   "eps_reportado": 453.0
+  },
+  {
+   "data": "2024-04-30",
+   "eps_estimado": 786.64,
+   "eps_reportado": 949.0
+  },
+  {
+   "data": "2024-08-17",
+   "eps_estimado": 929.88,
+   "eps_reportado": 976.0
+  },
+  {
+   "data": "2025-02-28",
+   "eps_estimado": 771.58,
+   "eps_reportado": 780.0
+  },
+  {
+   "data": "2025-04-30",
+   "eps_estimado": 1091.32,
+   "eps_reportado": 1251.0
+  },
+  {
+   "data": "2025-08-09",
+   "eps_estimado": 1047.3,
+   "eps_reportado": 1186.0
+  },
+  {
+   "data": "2025-10-30",
+   "eps_estimado": 1054.37,
+   "eps_reportado": 1072.0
+  },
+  {
+   "data": "2026-02-24",
+   "eps_estimado": 1035.29,
+   "eps_reportado": 1047.0
+  },
+  {
+   "data": "2026-05-01",
+   "eps_estimado": 1138.03,
+   "eps_reportado": 1317.63
+  },
+  {
+   "data": "2026-07-30",
+   "eps_estimado": 1525.27,
+   "eps_reportado": 1632.0
+  },
+  {
+   "data": "2026-10-30",
+   "eps_estimado": 1189.97,
+   "eps_reportado": null
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "BCI.SN",
+ "url": "https://finance.yahoo.com/quote/BCI.SN"
+}

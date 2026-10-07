@@ -1,0 +1,137 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2020-07-29",
+   "eps_estimado": null,
+   "eps_reportado": 0.01
+  },
+  {
+   "data": "2020-10-28",
+   "eps_estimado": 0.03,
+   "eps_reportado": 0.04
+  },
+  {
+   "data": "2021-02-24",
+   "eps_estimado": null,
+   "eps_reportado": 0.03
+  },
+  {
+   "data": "2021-04-28",
+   "eps_estimado": 0.05,
+   "eps_reportado": 0.08
+  },
+  {
+   "data": "2021-07-28",
+   "eps_estimado": 0.09,
+   "eps_reportado": 0.11
+  },
+  {
+   "data": "2021-10-27",
+   "eps_estimado": 0.08,
+   "eps_reportado": 0.11
+  },
+  {
+   "data": "2022-02-23",
+   "eps_estimado": 0.08,
+   "eps_reportado": 0.07
+  },
+  {
+   "data": "2022-04-27",
+   "eps_estimado": 0.06,
+   "eps_reportado": 0.14
+  },
+  {
+   "data": "2022-07-27",
+   "eps_estimado": 0.1,
+   "eps_reportado": 0.14
+  },
+  {
+   "data": "2022-10-26",
+   "eps_estimado": 0.07,
+   "eps_reportado": 0.04
+  },
+  {
+   "data": "2023-02-23",
+   "eps_estimado": 0.01,
+   "eps_reportado": -0.02
+  },
+  {
+   "data": "2023-04-26",
+   "eps_estimado": 0.05,
+   "eps_reportado": 0.03
+  },
+  {
+   "data": "2023-07-26",
+   "eps_estimado": 0.07,
+   "eps_reportado": null
+  },
+  {
+   "data": "2023-10-26",
+   "eps_estimado": 0.06,
+   "eps_reportado": 0.04
+  },
+  {
+   "data": "2024-02-21",
+   "eps_estimado": null,
+   "eps_reportado": -0.04
+  },
+  {
+   "data": "2024-04-25",
+   "eps_estimado": 0.01,
+   "eps_reportado": -0.04
+  },
+  {
+   "data": "2024-07-24",
+   "eps_estimado": 0.02,
+   "eps_reportado": 0.1
+  },
+  {
+   "data": "2024-10-24",
+   "eps_estimado": 0.02,
+   "eps_reportado": 0.05
+  },
+  {
+   "data": "2025-02-20",
+   "eps_estimado": -0.01,
+   "eps_reportado": -0.03
+  },
+  {
+   "data": "2025-04-24",
+   "eps_estimado": null,
+   "eps_reportado": null
+  },
+  {
+   "data": "2025-10-22",
+   "eps_estimado": -0.02,
+   "eps_reportado": -0.06
+  },
+  {
+   "data": "2026-02-24",
+   "eps_estimado": -0.02,
+   "eps_reportado": -0.07
+  },
+  {
+   "data": "2026-04-28",
+   "eps_estimado": 0.01,
+   "eps_reportado": -0.02
+  },
+  {
+   "data": "2026-07-22",
+   "eps_estimado": 0.03,
+   "eps_reportado": 0.01
+  },
+  {
+   "data": "2026-10-27",
+   "eps_estimado": 0.01,
+   "eps_reportado": null
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "ORBIA.MX",
+ "url": "https://finance.yahoo.com/quote/ORBIA.MX"
+}

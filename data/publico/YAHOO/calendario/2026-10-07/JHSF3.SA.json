@@ -1,0 +1,137 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2014-11-17",
+   "eps_estimado": 0.02,
+   "eps_reportado": 0.03
+  },
+  {
+   "data": "2015-03-12",
+   "eps_estimado": 0.01,
+   "eps_reportado": 0.01
+  },
+  {
+   "data": "2015-08-13",
+   "eps_estimado": null,
+   "eps_reportado": 0.03
+  },
+  {
+   "data": "2015-11-12",
+   "eps_estimado": null,
+   "eps_reportado": -0.02
+  },
+  {
+   "data": "2021-02-18",
+   "eps_estimado": 0.23,
+   "eps_reportado": 0.29
+  },
+  {
+   "data": "2021-05-06",
+   "eps_estimado": 0.26,
+   "eps_reportado": 0.29
+  },
+  {
+   "data": "2021-08-05",
+   "eps_estimado": 0.39,
+   "eps_reportado": 0.5
+  },
+  {
+   "data": "2021-11-04",
+   "eps_estimado": 0.25,
+   "eps_reportado": 0.32
+  },
+  {
+   "data": "2022-02-24",
+   "eps_estimado": 0.29,
+   "eps_reportado": 0.39
+  },
+  {
+   "data": "2022-08-12",
+   "eps_estimado": 0.25,
+   "eps_reportado": 0.3
+  },
+  {
+   "data": "2022-11-11",
+   "eps_estimado": 0.24,
+   "eps_reportado": 0.23
+  },
+  {
+   "data": "2023-03-17",
+   "eps_estimado": 0.1,
+   "eps_reportado": 0.1
+  },
+  {
+   "data": "2023-05-16",
+   "eps_estimado": 0.27,
+   "eps_reportado": 0.13
+  },
+  {
+   "data": "2023-08-15",
+   "eps_estimado": 0.15,
+   "eps_reportado": 0.16
+  },
+  {
+   "data": "2023-11-14",
+   "eps_estimado": 0.09,
+   "eps_reportado": 0.12
+  },
+  {
+   "data": "2024-03-26",
+   "eps_estimado": 0.08,
+   "eps_reportado": 0.13
+  },
+  {
+   "data": "2024-05-15",
+   "eps_estimado": 0.09,
+   "eps_reportado": 0.2
+  },
+  {
+   "data": "2024-08-14",
+   "eps_estimado": 0.22,
+   "eps_reportado": 0.25
+  },
+  {
+   "data": "2024-11-14",
+   "eps_estimado": 0.17,
+   "eps_reportado": 0.26
+  },
+  {
+   "data": "2025-03-28",
+   "eps_estimado": 0.21,
+   "eps_reportado": 0.22
+  },
+  {
+   "data": "2025-05-15",
+   "eps_estimado": 0.05,
+   "eps_reportado": 0.17
+  },
+  {
+   "data": "2025-08-15",
+   "eps_estimado": 0.13,
+   "eps_reportado": 0.69
+  },
+  {
+   "data": "2025-11-14",
+   "eps_estimado": 0.13,
+   "eps_reportado": 0.43
+  },
+  {
+   "data": "2026-03-31",
+   "eps_estimado": 0.1,
+   "eps_reportado": 1.48
+  },
+  {
+   "data": "2026-08-14",
+   "eps_estimado": 0.03,
+   "eps_reportado": 0.65
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "JHSF3.SA",
+ "url": "https://finance.yahoo.com/quote/JHSF3.SA"
+}

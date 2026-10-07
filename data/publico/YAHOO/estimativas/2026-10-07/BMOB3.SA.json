@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 30.92,
+  "high": 36.0,
+  "low": 24.0,
+  "mean": 32.66667,
+  "median": 35.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.73457,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0.73457,
+   "low": 0.73457,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 2.435,
+   "currency": "BRL",
+   "growth": 0.17629999,
+   "high": 2.63,
+   "low": 2.24,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 2.07
+  },
+  "0q": {
+   "avg": 0.60597,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0.60597,
+   "low": 0.60597,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": 2.07,
+   "currency": "BRL",
+   "growth": -0.039100002,
+   "high": 2.09,
+   "low": 2.05,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 2.1543
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 249929330,
+   "currency": "BRL",
+   "growth": 0.2547,
+   "high": 249929330,
+   "low": 249929330,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 199200000
+  },
+  "+1y": {
+   "avg": 1044145030,
+   "currency": "BRL",
+   "growth": 0.1567,
+   "high": 1099800000,
+   "low": 916000000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 902660420
+  },
+  "0q": {
+   "avg": 237683330,
+   "currency": "BRL",
+   "growth": 0.2676,
+   "high": 237683330,
+   "low": 237683330,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 187500000
+  },
+  "0y": {
+   "avg": 902660420,
+   "currency": "BRL",
+   "growth": 0.2386,
+   "high": 940900000,
+   "low": 814000000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 728800000
+  }
+ },
+ "ticker": "BMOB3.SA",
+ "url": "https://finance.yahoo.com/quote/BMOB3.SA"
+}

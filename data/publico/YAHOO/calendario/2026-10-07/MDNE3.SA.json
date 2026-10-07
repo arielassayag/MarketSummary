@@ -1,0 +1,67 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2020-08-14",
+   "eps_estimado": -0.04,
+   "eps_reportado": 0.05
+  },
+  {
+   "data": "2020-11-12",
+   "eps_estimado": -0.02,
+   "eps_reportado": 0.19
+  },
+  {
+   "data": "2021-03-11",
+   "eps_estimado": 0.21,
+   "eps_reportado": 0.09
+  },
+  {
+   "data": "2021-05-12",
+   "eps_estimado": 0.13,
+   "eps_reportado": 0.13
+  },
+  {
+   "data": "2021-08-11",
+   "eps_estimado": 0.15,
+   "eps_reportado": 0.3
+  },
+  {
+   "data": "2021-11-10",
+   "eps_estimado": 0.32,
+   "eps_reportado": 0.3
+  },
+  {
+   "data": "2022-03-09",
+   "eps_estimado": 0.33,
+   "eps_reportado": 0.17
+  },
+  {
+   "data": "2025-11-12",
+   "eps_estimado": 1.35,
+   "eps_reportado": 1.39
+  },
+  {
+   "data": "2026-03-11",
+   "eps_estimado": 1.22,
+   "eps_reportado": 1.32
+  },
+  {
+   "data": "2026-05-06",
+   "eps_estimado": 1.47,
+   "eps_reportado": 1.58
+  },
+  {
+   "data": "2026-08-12",
+   "eps_estimado": 1.61,
+   "eps_reportado": 1.76
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "MDNE3.SA",
+ "url": "https://finance.yahoo.com/quote/MDNE3.SA"
+}

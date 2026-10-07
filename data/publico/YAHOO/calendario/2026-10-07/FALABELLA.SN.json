@@ -1,0 +1,137 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2020-05-13",
+   "eps_estimado": 19.0,
+   "eps_reportado": 10.0
+  },
+  {
+   "data": "2020-08-25",
+   "eps_estimado": -48.5,
+   "eps_reportado": -50.0
+  },
+  {
+   "data": "2020-11-10",
+   "eps_estimado": 9.0,
+   "eps_reportado": 2.0
+  },
+  {
+   "data": "2021-02-24",
+   "eps_estimado": 39.36,
+   "eps_reportado": 48.0
+  },
+  {
+   "data": "2021-05-12",
+   "eps_estimado": 39.84,
+   "eps_reportado": 50.0
+  },
+  {
+   "data": "2021-08-31",
+   "eps_estimado": 41.76,
+   "eps_reportado": 60.0
+  },
+  {
+   "data": "2021-11-10",
+   "eps_estimado": 47.22,
+   "eps_reportado": 72.0
+  },
+  {
+   "data": "2022-03-02",
+   "eps_estimado": 67.0,
+   "eps_reportado": 78.0
+  },
+  {
+   "data": "2022-05-10",
+   "eps_estimado": 33.0,
+   "eps_reportado": 30.0
+  },
+  {
+   "data": "2022-08-30",
+   "eps_estimado": 34.0,
+   "eps_reportado": 20.0
+  },
+  {
+   "data": "2022-11-08",
+   "eps_estimado": 6.71,
+   "eps_reportado": -10.0
+  },
+  {
+   "data": "2023-05-09",
+   "eps_estimado": -22.0,
+   "eps_reportado": -20.0
+  },
+  {
+   "data": "2023-08-29",
+   "eps_estimado": -7.78,
+   "eps_reportado": 18.0
+  },
+  {
+   "data": "2023-11-14",
+   "eps_estimado": -4.98,
+   "eps_reportado": -2.0
+  },
+  {
+   "data": "2024-02-27",
+   "eps_estimado": 17.7,
+   "eps_reportado": 28.0
+  },
+  {
+   "data": "2024-05-07",
+   "eps_estimado": -3.29,
+   "eps_reportado": 23.0
+  },
+  {
+   "data": "2024-08-27",
+   "eps_estimado": 28.0,
+   "eps_reportado": 46.0
+  },
+  {
+   "data": "2024-11-12",
+   "eps_estimado": 29.04,
+   "eps_reportado": 35.0
+  },
+  {
+   "data": "2025-02-26",
+   "eps_estimado": 70.64,
+   "eps_reportado": 88.0
+  },
+  {
+   "data": "2025-05-07",
+   "eps_estimado": 54.58,
+   "eps_reportado": 77.0
+  },
+  {
+   "data": "2025-08-13",
+   "eps_estimado": 71.91,
+   "eps_reportado": 145.0
+  },
+  {
+   "data": "2025-11-12",
+   "eps_estimado": 56.78,
+   "eps_reportado": 64.0
+  },
+  {
+   "data": "2026-02-26",
+   "eps_estimado": 91.6,
+   "eps_reportado": 251.0
+  },
+  {
+   "data": "2026-08-11",
+   "eps_estimado": 73.31,
+   "eps_reportado": 121.0
+  },
+  {
+   "data": "2026-11-10",
+   "eps_estimado": 59.21,
+   "eps_reportado": null
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "FALABELLA.SN",
+ "url": "https://finance.yahoo.com/quote/FALABELLA.SN"
+}

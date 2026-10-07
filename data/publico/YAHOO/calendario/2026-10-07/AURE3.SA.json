@@ -1,0 +1,102 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2022-05-13",
+   "eps_estimado": 0.11,
+   "eps_reportado": null
+  },
+  {
+   "data": "2022-08-11",
+   "eps_estimado": 0.09,
+   "eps_reportado": 0.06
+  },
+  {
+   "data": "2022-10-26",
+   "eps_estimado": 0.19,
+   "eps_reportado": 0.23
+  },
+  {
+   "data": "2023-02-16",
+   "eps_estimado": 0.14,
+   "eps_reportado": 2.19
+  },
+  {
+   "data": "2023-05-04",
+   "eps_estimado": 0.16,
+   "eps_reportado": 0.19
+  },
+  {
+   "data": "2023-08-02",
+   "eps_estimado": 0.21,
+   "eps_reportado": 0.15
+  },
+  {
+   "data": "2023-10-31",
+   "eps_estimado": 0.21,
+   "eps_reportado": -1.14
+  },
+  {
+   "data": "2024-02-07",
+   "eps_estimado": 0.16,
+   "eps_reportado": 0.06
+  },
+  {
+   "data": "2024-05-07",
+   "eps_estimado": 0.1,
+   "eps_reportado": 0.1
+  },
+  {
+   "data": "2024-08-01",
+   "eps_estimado": 0.11,
+   "eps_reportado": 0.1
+  },
+  {
+   "data": "2024-10-30",
+   "eps_estimado": 0.14,
+   "eps_reportado": 0.11
+  },
+  {
+   "data": "2025-02-24",
+   "eps_estimado": -0.02,
+   "eps_reportado": -0.09
+  },
+  {
+   "data": "2025-05-07",
+   "eps_estimado": -0.17,
+   "eps_reportado": 0.02
+  },
+  {
+   "data": "2025-08-07",
+   "eps_estimado": -0.21,
+   "eps_reportado": -0.29
+  },
+  {
+   "data": "2025-11-13",
+   "eps_estimado": 0.05,
+   "eps_reportado": -0.39
+  },
+  {
+   "data": "2026-03-04",
+   "eps_estimado": -0.21,
+   "eps_reportado": 0.08
+  },
+  {
+   "data": "2026-05-06",
+   "eps_estimado": -0.07,
+   "eps_reportado": -0.05
+  },
+  {
+   "data": "2026-08-05",
+   "eps_estimado": -0.11,
+   "eps_reportado": -0.35
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "AURE3.SA",
+ "url": "https://finance.yahoo.com/quote/AURE3.SA"
+}

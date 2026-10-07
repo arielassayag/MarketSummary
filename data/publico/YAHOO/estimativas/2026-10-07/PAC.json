@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 201.41,
+  "high": 277.0,
+  "low": 225.0,
+  "mean": 254.4857,
+  "median": 263.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 2.56,
+   "currency": "USD",
+   "growth": 0.24200001,
+   "high": 2.56,
+   "low": 2.56,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 2.06118
+  },
+  "+1y": {
+   "avg": 12.665,
+   "currency": "USD",
+   "growth": 0.1129,
+   "high": 14.5,
+   "low": 10.83,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 11.38
+  },
+  "0q": {
+   "avg": 2.47,
+   "currency": "USD",
+   "growth": -0.14840001,
+   "high": 2.47,
+   "low": 2.47,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 2.90026
+  },
+  "0y": {
+   "avg": 11.38,
+   "currency": "USD",
+   "growth": -0.011,
+   "high": 12.5,
+   "low": 10.26,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 11.50682
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 11984126910,
+   "currency": "MXN",
+   "growth": 0.21120001,
+   "high": 13352416650,
+   "low": 11224544760,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 9894778000
+  },
+  "+1y": {
+   "avg": 51690287920,
+   "currency": "MXN",
+   "growth": 0.105,
+   "high": 56004584310,
+   "low": 48605700000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 46778645540
+  },
+  "0q": {
+   "avg": 11216288930,
+   "currency": "MXN",
+   "growth": 0.1712,
+   "high": 11756000000,
+   "low": 10596862820,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 9576583000
+  },
+  "0y": {
+   "avg": 46778645540,
+   "currency": "MXN",
+   "growth": 0.1297,
+   "high": 48730929270,
+   "low": 44631620150,
+   "numberOfAnalysts": 12,
+   "yearAgoRevenue": 41408540000
+  }
+ },
+ "ticker": "PAC",
+ "url": "https://finance.yahoo.com/quote/PAC"
+}

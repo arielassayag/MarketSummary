@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 20.27,
+  "high": 25.0,
+  "low": 15.0,
+  "mean": 20.74,
+  "median": 21.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.94412,
+   "currency": "BRL",
+   "growth": -0.261,
+   "high": 0.94412,
+   "low": 0.94412,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 1.2775
+  },
+  "+1y": {
+   "avg": 1.93,
+   "currency": "BRL",
+   "growth": 0.61509997,
+   "high": 2.22,
+   "low": 1.57,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 1.195
+  },
+  "0q": {
+   "avg": 0.67531,
+   "currency": "BRL",
+   "growth": 0.2578,
+   "high": 0.67531,
+   "low": 0.67531,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.53691
+  },
+  "0y": {
+   "avg": 1.195,
+   "currency": "BRL",
+   "growth": -0.527,
+   "high": 1.28,
+   "low": 1.11,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 2.5264
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 1834736880,
+   "currency": "BRL",
+   "growth": 0.1523,
+   "high": 1857796710,
+   "low": 1811677050,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 1592302000
+  },
+  "+1y": {
+   "avg": 8012357810,
+   "currency": "BRL",
+   "growth": 0.109799996,
+   "high": 8730000000,
+   "low": 7341182250,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 7219625470
+  },
+  "0q": {
+   "avg": 1502669000,
+   "currency": "BRL",
+   "growth": -0.1357,
+   "high": 1591497940,
+   "low": 1413840070,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 1738644000
+  },
+  "0y": {
+   "avg": 7219625470,
+   "currency": "BRL",
+   "growth": -0.028499998,
+   "high": 7827000000,
+   "low": 6939536840,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 7431765000
+  }
+ },
+ "ticker": "SMTO3.SA",
+ "url": "https://finance.yahoo.com/quote/SMTO3.SA"
+}

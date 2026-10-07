@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 6.37,
+  "high": 7.6,
+  "low": 6.28,
+  "mean": 6.736,
+  "median": 6.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.076,
+   "currency": "USD",
+   "growth": -0.27879998,
+   "high": 0.076,
+   "low": 0.076,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.10538
+  },
+  "+1y": {
+   "avg": 0.432,
+   "currency": "USD",
+   "growth": 0.2769,
+   "high": 0.432,
+   "low": 0.432,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.33833
+  },
+  "0q": {
+   "avg": 0.072,
+   "currency": "USD",
+   "growth": 0.0511,
+   "high": 0.072,
+   "low": 0.072,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.0685
+  },
+  "0y": {
+   "avg": 0.33833,
+   "currency": "USD",
+   "growth": -0.0341,
+   "high": 0.38166,
+   "low": 0.295,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.35027
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 6407654910,
+   "currency": "BRL",
+   "growth": 0.1277,
+   "high": 6494000000,
+   "low": 6321309820,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 5682000000
+  },
+  "+1y": {
+   "avg": 30001758710,
+   "currency": "BRL",
+   "growth": 0.19209999,
+   "high": 33018000000,
+   "low": 28529400000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 25168175980
+  },
+  "0q": {
+   "avg": 6126889220,
+   "currency": "BRL",
+   "growth": 0.1205,
+   "high": 6155000000,
+   "low": 6107000000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 5468000000
+  },
+  "0y": {
+   "avg": 25168175980,
+   "currency": "BRL",
+   "growth": 0.133,
+   "high": 26199000000,
+   "low": 24191000000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 22213000000
+  }
+ },
+ "ticker": "SBS",
+ "url": "https://finance.yahoo.com/quote/SBS"
+}

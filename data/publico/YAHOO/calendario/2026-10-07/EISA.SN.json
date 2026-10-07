@@ -1,0 +1,11 @@
+{
+ "calendar": null,
+ "earnings_dates": [],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "EISA.SN",
+ "url": "https://finance.yahoo.com/quote/EISA.SN"
+}

@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 8.32,
+  "high": 17.0,
+  "low": 14.0,
+  "mean": 15.5,
+  "median": 15.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.43542,
+   "currency": "USD",
+   "growth": 20.771002,
+   "high": 0.43542,
+   "low": 0.43542,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.02
+  },
+  "+1y": {
+   "avg": 1.21,
+   "currency": "USD",
+   "growth": 0.669,
+   "high": 1.55,
+   "low": 0.87,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.725
+  },
+  "0q": {
+   "avg": 0.32186,
+   "currency": "USD",
+   "growth": 33.186,
+   "high": 0.32186,
+   "low": 0.32186,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": -0.01
+  },
+  "0y": {
+   "avg": 0.725,
+   "currency": "USD",
+   "growth": 37.25,
+   "high": 1.13,
+   "low": 0.4,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": -0.02
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 268720450,
+   "currency": "CAD",
+   "growth": 0.138,
+   "high": 282749850,
+   "low": 254691050,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 236132330
+  },
+  "+1y": {
+   "avg": 1457358540,
+   "currency": "CAD",
+   "growth": 0.2326,
+   "high": 2207172000,
+   "low": 1056358300,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 1182344440
+  },
+  "0q": {
+   "avg": 262545720,
+   "currency": "CAD",
+   "growth": 0.3064,
+   "high": 274565510,
+   "low": 250525930,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 200964650
+  },
+  "0y": {
+   "avg": 1182344440,
+   "currency": "CAD",
+   "growth": 0.9968,
+   "high": 1493170000,
+   "low": 1084825000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 592109350
+  }
+ },
+ "ticker": "EXK",
+ "url": "https://finance.yahoo.com/quote/EXK"
+}

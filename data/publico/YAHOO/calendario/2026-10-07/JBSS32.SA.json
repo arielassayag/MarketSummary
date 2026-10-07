@@ -1,0 +1,32 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2025-08-13",
+   "eps_estimado": 2.59,
+   "eps_reportado": 1.54
+  },
+  {
+   "data": "2025-11-13",
+   "eps_estimado": 2.88,
+   "eps_reportado": 2.87
+  },
+  {
+   "data": "2026-03-25",
+   "eps_estimado": 2.85,
+   "eps_reportado": 3.07
+  },
+  {
+   "data": "2026-08-10",
+   "eps_estimado": 1.6,
+   "eps_reportado": 1.02
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "JBSS32.SA",
+ "url": "https://finance.yahoo.com/quote/JBSS32.SA"
+}

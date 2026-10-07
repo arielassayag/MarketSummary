@@ -1,0 +1,137 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2020-10-16",
+   "eps_estimado": 0.42,
+   "eps_reportado": 0.44
+  },
+  {
+   "data": "2021-01-21",
+   "eps_estimado": 0.46,
+   "eps_reportado": 0.52
+  },
+  {
+   "data": "2021-04-23",
+   "eps_estimado": 0.53,
+   "eps_reportado": 0.52
+  },
+  {
+   "data": "2021-07-22",
+   "eps_estimado": 0.44,
+   "eps_reportado": 0.4
+  },
+  {
+   "data": "2021-10-21",
+   "eps_estimado": 0.34,
+   "eps_reportado": 0.29
+  },
+  {
+   "data": "2022-01-20",
+   "eps_estimado": 0.33,
+   "eps_reportado": 0.26
+  },
+  {
+   "data": "2022-04-21",
+   "eps_estimado": 0.4,
+   "eps_reportado": 0.36
+  },
+  {
+   "data": "2022-07-21",
+   "eps_estimado": 0.41,
+   "eps_reportado": 0.38
+  },
+  {
+   "data": "2022-10-20",
+   "eps_estimado": 0.4,
+   "eps_reportado": 0.4
+  },
+  {
+   "data": "2023-01-19",
+   "eps_estimado": 0.41,
+   "eps_reportado": 0.47
+  },
+  {
+   "data": "2023-04-20",
+   "eps_estimado": 0.47,
+   "eps_reportado": 0.52
+  },
+  {
+   "data": "2023-07-20",
+   "eps_estimado": 0.53,
+   "eps_reportado": 0.59
+  },
+  {
+   "data": "2023-10-20",
+   "eps_estimado": 0.55,
+   "eps_reportado": 0.54
+  },
+  {
+   "data": "2024-01-18",
+   "eps_estimado": 0.58,
+   "eps_reportado": 0.63
+  },
+  {
+   "data": "2024-04-19",
+   "eps_estimado": 0.66,
+   "eps_reportado": 0.68
+  },
+  {
+   "data": "2024-07-18",
+   "eps_estimado": 0.67,
+   "eps_reportado": 0.69
+  },
+  {
+   "data": "2024-10-17",
+   "eps_estimado": 0.6,
+   "eps_reportado": 0.59
+  },
+  {
+   "data": "2025-02-12",
+   "eps_estimado": 0.59,
+   "eps_reportado": 0.59
+  },
+  {
+   "data": "2025-04-24",
+   "eps_estimado": 0.6,
+   "eps_reportado": 0.6
+  },
+  {
+   "data": "2025-07-17",
+   "eps_estimado": 0.63,
+   "eps_reportado": 0.62
+  },
+  {
+   "data": "2025-10-23",
+   "eps_estimado": 0.6,
+   "eps_reportado": 0.56
+  },
+  {
+   "data": "2026-01-22",
+   "eps_estimado": 0.65,
+   "eps_reportado": 0.73
+  },
+  {
+   "data": "2026-04-21",
+   "eps_estimado": 0.68,
+   "eps_reportado": 0.68
+  },
+  {
+   "data": "2026-07-21",
+   "eps_estimado": 0.69,
+   "eps_reportado": 0.68
+  },
+  {
+   "data": "2026-10-20",
+   "eps_estimado": 0.62,
+   "eps_reportado": null
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "KIMBERA.MX",
+ "url": "https://finance.yahoo.com/quote/KIMBERA.MX"
+}

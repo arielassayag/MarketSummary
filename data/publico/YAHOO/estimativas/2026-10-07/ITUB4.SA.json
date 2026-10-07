@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 49.11,
+  "high": 60.0,
+  "low": 30.5,
+  "mean": 48.61538,
+  "median": 50.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1.21074,
+   "currency": "BRL",
+   "growth": 0.1392,
+   "high": 1.22,
+   "low": 1.2,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 1.0628
+  },
+  "+1y": {
+   "avg": 5.0542,
+   "currency": "BRL",
+   "growth": 0.098400004,
+   "high": 5.21,
+   "low": 4.93,
+   "numberOfAnalysts": 10,
+   "yearAgoEps": 4.6015
+  },
+  "0q": {
+   "avg": 1.14269,
+   "currency": "BRL",
+   "growth": 0.0774,
+   "high": 1.14644,
+   "low": 1.14,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 1.06058
+  },
+  "0y": {
+   "avg": 4.6015,
+   "currency": "BRL",
+   "growth": 0.0892,
+   "high": 4.68,
+   "low": 4.55,
+   "numberOfAnalysts": 10,
+   "yearAgoEps": 4.2246
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 50662303400,
+   "currency": "BRL",
+   "growth": 0.0652,
+   "high": 51173000000,
+   "low": 50005721210,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 47560000000
+  },
+  "+1y": {
+   "avg": 207112668380,
+   "currency": "BRL",
+   "growth": 0.0729,
+   "high": 212889000000,
+   "low": 193847000000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 193036506650
+  },
+  "0q": {
+   "avg": 48637772600,
+   "currency": "BRL",
+   "growth": 0.044499997,
+   "high": 48700402520,
+   "low": 48516000000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 46567000000
+  },
+  "0y": {
+   "avg": 193036506650,
+   "currency": "BRL",
+   "growth": 0.0469,
+   "high": 197119000000,
+   "low": 183004000000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 184393000000
+  }
+ },
+ "ticker": "ITUB4.SA",
+ "url": "https://finance.yahoo.com/quote/ITUB4.SA"
+}

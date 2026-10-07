@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 136.27,
+  "high": 205.0,
+  "low": 152.0,
+  "mean": 178.73334,
+  "median": 185.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 4.80994,
+   "currency": "USD",
+   "growth": 0.1507,
+   "high": 5.26111,
+   "low": 4.2,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 4.18
+  },
+  "+1y": {
+   "avg": 19.07102,
+   "currency": "USD",
+   "growth": 0.1506,
+   "high": 21.1,
+   "low": 17.3,
+   "numberOfAnalysts": 9,
+   "yearAgoEps": 16.57534
+  },
+  "0q": {
+   "avg": 4.27177,
+   "currency": "USD",
+   "growth": 0.0171,
+   "high": 5.33291,
+   "low": 3.6,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 4.2
+  },
+  "0y": {
+   "avg": 16.57534,
+   "currency": "USD",
+   "growth": 0.018099999,
+   "high": 18.01,
+   "low": 14.68,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 16.28
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 1182787610,
+   "currency": "USD",
+   "growth": 0.2284,
+   "high": 1221926000,
+   "low": 1151430810,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 962888000
+  },
+  "+1y": {
+   "avg": 4700595930,
+   "currency": "USD",
+   "growth": 0.064,
+   "high": 4889200000,
+   "low": 4360000000,
+   "numberOfAnalysts": 15,
+   "yearAgoRevenue": 4418009310
+  },
+  "0q": {
+   "avg": 1171942860,
+   "currency": "USD",
+   "growth": 0.2834,
+   "high": 1194231000,
+   "low": 1146106000,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 913149000
+  },
+  "0y": {
+   "avg": 4418009310,
+   "currency": "USD",
+   "growth": 0.2212,
+   "high": 4527900000,
+   "low": 4003000000,
+   "numberOfAnalysts": 15,
+   "yearAgoRevenue": 3617822000
+  }
+ },
+ "ticker": "CPA",
+ "url": "https://finance.yahoo.com/quote/CPA"
+}

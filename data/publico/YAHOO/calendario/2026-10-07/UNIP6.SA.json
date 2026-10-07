@@ -1,0 +1,92 @@
+{
+ "calendar": null,
+ "earnings_dates": [
+  {
+   "data": "2005-11-11",
+   "eps_estimado": 0.31,
+   "eps_reportado": 0.22
+  },
+  {
+   "data": "2006-03-17",
+   "eps_estimado": 0.2,
+   "eps_reportado": 0.23
+  },
+  {
+   "data": "2006-05-09",
+   "eps_estimado": 0.51,
+   "eps_reportado": 0.3
+  },
+  {
+   "data": "2006-08-08",
+   "eps_estimado": 0.22,
+   "eps_reportado": null
+  },
+  {
+   "data": "2006-11-08",
+   "eps_estimado": 0.25,
+   "eps_reportado": 0.1
+  },
+  {
+   "data": "2007-03-15",
+   "eps_estimado": 0.49,
+   "eps_reportado": 0.34
+  },
+  {
+   "data": "2007-05-09",
+   "eps_estimado": 0.35,
+   "eps_reportado": 0.41
+  },
+  {
+   "data": "2007-08-15",
+   "eps_estimado": 0.35,
+   "eps_reportado": 0.3
+  },
+  {
+   "data": "2007-11-12",
+   "eps_estimado": 0.27,
+   "eps_reportado": 0.35
+  },
+  {
+   "data": "2008-03-14",
+   "eps_estimado": 0.24,
+   "eps_reportado": 0.12
+  },
+  {
+   "data": "2008-08-14",
+   "eps_estimado": null,
+   "eps_reportado": -0.13
+  },
+  {
+   "data": "2008-11-14",
+   "eps_estimado": -0.65,
+   "eps_reportado": -1.1
+  },
+  {
+   "data": "2009-03-19",
+   "eps_estimado": -0.06,
+   "eps_reportado": -3.92
+  },
+  {
+   "data": "2009-05-21",
+   "eps_estimado": -0.71,
+   "eps_reportado": -0.58
+  },
+  {
+   "data": "2009-08-15",
+   "eps_estimado": 4.42,
+   "eps_reportado": 0.47
+  },
+  {
+   "data": "2009-11-13",
+   "eps_estimado": null,
+   "eps_reportado": 0.35
+  }
+ ],
+ "erros": {
+  "calendar": "FetchError: yfinance calendar falhou: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')"
+ },
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "UNIP6.SA",
+ "url": "https://finance.yahoo.com/quote/UNIP6.SA"
+}

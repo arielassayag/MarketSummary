@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 17.72,
+  "high": 23.0,
+  "low": 16.0,
+  "mean": 19.2,
+  "median": 19.25
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.31526,
+   "currency": "BRL",
+   "growth": 2.1856,
+   "high": 0.34845,
+   "low": 0.28206,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": -0.2659
+  },
+  "+1y": {
+   "avg": 1.46749,
+   "currency": "BRL",
+   "growth": 0.2847,
+   "high": 1.56,
+   "low": 1.35,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 1.14226
+  },
+  "0q": {
+   "avg": 0.11432,
+   "currency": "BRL",
+   "growth": 6.0251,
+   "high": 0.13916,
+   "low": 0.08947,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": -0.02275
+  },
+  "0y": {
+   "avg": 1.14226,
+   "currency": "BRL",
+   "growth": -0.1444,
+   "high": 1.35,
+   "low": 0.81,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 1.3351
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 2965957880,
+   "currency": "BRL",
+   "growth": 0.3053,
+   "high": 2965957880,
+   "low": 2965957880,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 2272265000
+  },
+  "+1y": {
+   "avg": 9669910170,
+   "currency": "BRL",
+   "growth": 0.050300002,
+   "high": 10490000000,
+   "low": 9036000000,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 9206454950
+  },
+  "0q": {
+   "avg": 2200414400,
+   "currency": "BRL",
+   "growth": 0.054,
+   "high": 2200414400,
+   "low": 2200414400,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 2087705000
+  },
+  "0y": {
+   "avg": 9206454950,
+   "currency": "BRL",
+   "growth": 0.0764,
+   "high": 9609485280,
+   "low": 9083000000,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 8553147000
+  }
+ },
+ "ticker": "SLCE3.SA",
+ "url": "https://finance.yahoo.com/quote/SLCE3.SA"
+}

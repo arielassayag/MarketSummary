@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 12.54,
+  "high": 28.0,
+  "low": 20.0,
+  "mean": 23.81,
+  "median": 24.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.32155,
+   "currency": "USD",
+   "growth": null,
+   "high": 0.32155,
+   "low": 0.32155,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 1.67903,
+   "currency": "USD",
+   "growth": -0.1546,
+   "high": 1.76,
+   "low": 1.5671,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 1.98613
+  },
+  "0q": {
+   "avg": 0.46471,
+   "currency": "USD",
+   "growth": null,
+   "high": 0.46471,
+   "low": 0.46471,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": 1.98613,
+   "currency": "USD",
+   "growth": 1.1898,
+   "high": 2.27,
+   "low": 1.63,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": -10.466
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 368450861000,
+   "currency": "ARS",
+   "growth": 0.5123,
+   "high": 368450861000,
+   "low": 368450861000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 243630720000
+  },
+  "+1y": {
+   "avg": 1783898023450,
+   "currency": "ARS",
+   "growth": 0.0074,
+   "high": 2015342666690,
+   "low": 1593490606580,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 1770807633540
+  },
+  "0q": {
+   "avg": 438046881000,
+   "currency": "ARS",
+   "growth": 0.3241,
+   "high": 438046881000,
+   "low": 438046881000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 330828160000
+  },
+  "0y": {
+   "avg": 1770807633540,
+   "currency": "ARS",
+   "growth": 0.6049,
+   "high": 1936552292450,
+   "low": 1598816953250,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 1103387740000
+  }
+ },
+ "ticker": "CEPU",
+ "url": "https://finance.yahoo.com/quote/CEPU"
+}

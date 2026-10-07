@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 52.3,
+  "high": 72.70441,
+  "low": 60.56707,
+  "mean": 66.09872,
+  "median": 65.02468
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 5.017,
+   "currency": "PEN",
+   "growth": 0.2543,
+   "high": 5.114,
+   "low": 4.92,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 4.0
+  },
+  "+1y": {
+   "avg": 23.465,
+   "currency": "PEN",
+   "growth": 0.14649999,
+   "high": 23.48,
+   "low": 23.45,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 20.466
+  },
+  "0q": {
+   "avg": 4.889,
+   "currency": "PEN",
+   "growth": 0.2377,
+   "high": 4.9,
+   "low": 4.878,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 3.95
+  },
+  "0y": {
+   "avg": 20.466,
+   "currency": "PEN",
+   "growth": 0.1831,
+   "high": 20.51,
+   "low": 20.422,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 17.299
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 1621641000,
+   "currency": "PEN",
+   "growth": -0.0954,
+   "high": 1621641000,
+   "low": 1621641000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 1792600000
+  },
+  "+1y": {
+   "avg": 7745173500,
+   "currency": "PEN",
+   "growth": 0.146,
+   "high": 8505852999,
+   "low": 6984494000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 6758237000
+  },
+  "0q": {
+   "avg": 1554353000,
+   "currency": "PEN",
+   "growth": -0.0923,
+   "high": 1554353000,
+   "low": 1554353000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 1712400000
+  },
+  "0y": {
+   "avg": 6758237000,
+   "currency": "PEN",
+   "growth": 0.1372,
+   "high": 7373080000,
+   "low": 6143394000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 5942703000
+  }
+ },
+ "ticker": "IFS",
+ "url": "https://finance.yahoo.com/quote/IFS"
+}

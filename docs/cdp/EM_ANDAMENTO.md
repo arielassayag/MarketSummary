@@ -5,9 +5,91 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-Última atualização: 2026-10-07, 16:54, Brasília — ampla 8 local concluída; integração normal do lote técnico em andamento e P0 aberto. **Comece por
+Última atualização: 2026-10-07, 20:05, Brasília — ampla9 local verde; retrato oficial0f887cd; integração técnica em andamento e P0 aberto. **Comece por
 `docs/cdp/PASSAGEM_CODEX.md`**: rotinas no Codex, P0 de desenvolvimento e cronograma até a
 carteira inaugural de 09/10. Índice interno: `.cdp/README.md` e `.cdp/TAREFAS.md`.
+
+## Ampla9, publicação oficial e candidatos privados — 07/10/2026, 20:05 Brasília
+
+- A ampla9 terminou com código0, Ruff0 e os664 arquivos intactos: 2889 casos,
+  2872 aprovados,16 pulados e um xfail, zero falhas/erros; JUnit2863,688s.
+  Recibo `.cdp/validacoes/20261007-integracao-12/AMPLA9_TERMINAL.json`,
+  SHA c3884646a178afcb35d6305337106b2b8a3dc7099cbaf23e8d9da0a2167394d3.
+  Fonte:20 paths RI/atribuição revisados, reparo somente do teste de custo e CI150min.
+  Integração normal em main e executor em andamento; CI completa remota pendente.
+- O reparo de custo passou no Ubuntu, run37694889308/commit2cec4a5: um caso,
+  zero falhas/erros/pulos. A revisão independente conferiu992 payloads e29 linhas
+  de comissão em Decimal; integridade/replay/leitura sem escrita foram alcançados.
+  Isso não transfere sucesso à CI completa de5cb, cancelada com falha observada.
+- A rotina diária nativa publicou mercado/retrato completo de07/10 em0f887cd,
+  confirmou integridade e liberou a trava. Os632 arquivos do retrato conferem,
+  e Pages37697600912/manifesto HTTP correspondem ao commit. Só book/data diferem
+  de5cb nesse commit oficial; preservar integralmente seus efeitos na integração.
+  Retrato oficial: C100/233=42,92%, revisão30/233=12,88%, ambos acima dos limites.
+  A sombra8.5 é outro recorte, com C102/233=43,78%; não misturar os vintages.
+- A auditoria dos26 avisos econômicos conferiu1060 payloads e2638 originais com
+  SHA/metadados. Sem erro financeiro reproduzido no recorte; alertas preservados.
+  Comprovada ambiguidade em28 vínculos de SHA de curadoria junto à URL primária:
+  correção prospectiva em cópia privada, sem reassinar histórico ou mudar cifras.
+- CVM persistente v1 privado teve231 casos verdes, mas revisão formal adicional
+  reproduziu três falhas: checkpoint escrito antes da validação completa do grafo.
+  Candidato bloqueado; diagnóstico preservado e v2 nova em preparação. Nenhuma
+  autoridade humana, PIT, API/CLI ou integração operacional foi criada. V3 anterior
+  mantém revisão delimitada154; não copiar o candidato persistente v1 ao DEV.
+- Novo episódio único E1 de squeeze/preço recuperado/volume ausente passou os20
+  focais próprios e um legado; congelamento/revisão ainda pendentes. E1 integral,
+  PIT/E2, senha do operador e carteira inaugural permanecem abertos. Rotinas12,
+  fund3 e alterações herdadas ROOT5 continuam literais; sem writer operacional DEV.
+
+## Novo lote em DEV e diagnóstico remoto — 07/10/2026, 19:15 Brasília
+
+- Main e executor foram sincronizados normalmente em `5cb2d4a`, com identidade,
+  integridade e custódia conferidas; Pages desse commit está no ar. O resultado local
+  ampla8 é o descrito abaixo. A CI desse commit não terminou verde: cancelamento por
+  90 minutos, uma falha anterior observada e JUnit ausente. O provável item892 passou
+  Mac3.12; diagnóstico focal Ubuntu `37691330092` confirmou falha no mesmo nodeid:
+  ordem natural11 ações versus expectativa fixa12. A asserção da comissão passou.
+  Fonte/testes/configuração/lock desse diagnóstico são literais5cb; só o workflow
+  difere no diagnóstico original do ramo `codex/cdp-ci-custos`. Reparo revisado usa
+  Decimal sobre todas as ordens efetivas, preço/FX arquivados e mandato; não força
+  ações ou solver. Novo diagnóstico remoto `37694889308` está despachado sobre
+  `2cec4a5`, com esse teste e guarda SHA exata; terminal ainda pendente.
+- RI fluxo v2 recebeu revisão independente favorável delimitada: 83 portáteis,
+  30 controles próprios, cinco CLI e duas transições legado→primeiro RI. Autoridade,
+  corte, mapa de configuração e reserva são validados antes de qualquer reparo/escrita.
+  Default39 literal inclui três emissores e três ETFs simulados; não ETF vazio.
+  Nova fonte sobre5cb conserva o contrato atual de custos. Nove paths transpostos
+  somente ao DEV; não copiar Runtime da v1/base887.
+- Atribuição v2 recebeu revisão independente root: 95 portáteis e cinco próprios
+  finais verdes, quatro pares públicos com três modelos completos byte idênticos,
+  AST integral dos helpers reconstruído literal. Mudança de base/moeda/unidade/grão/
+  conceito ou domínio desconhecido recusa intermediários; endpoints permanecem.
+  Onze paths transpostos somente ao DEV, sem produzir G7 ou modelo primário virtual.
+  Um diagnóstico inicial do roteiro próprio selecionou fontes sintéticas inexistentes
+  e foi corrigido; registros anteriores preservados, sem alteração do candidato.
+- Composição de 20 paths transposta literalmente e Ruff completo verde. Nova ampla
+  necessária. Os132 focais da composição passaram sem falhas/erros/pulos; reparo do
+  teste de custo tem revisão independente delimitada e foi transposto ao DEV. Ruff
+  completo passou novamente. CI terá150 minutos e fail-fast com JUnit; sucesso
+  continua exigindo todos os casos. Nova ampla ainda necessária.
+  Recibos e estado: `.cdp/validacoes/20261007-integracao-12/INTEGRACAO.md`.
+- CVM nativo v3 privado congelado com112 focais do autor e revisão independente em
+  concluída favorável delimitada, com154 casos distintos. Recebimento real por
+  processo entra na disponibilidade; JSON não restaura
+  autoridade anterior. Não é integração CLI/livro/retomada persistente, cross-host ou PIT.
+- Alias Yahoo acrescentou869 fatos e zero mudança nos62.804 números econômicos do
+  controle causal. ΔWC segue ausente nos191 não financeiros. Rubricas primárias3tentos/
+  AXIA revisadas: elegibilidade documental limitada; Adição AXIA não é novo contrato.
+  Classificação3tentos recebeu revisão independente delimitada de436 células e
+  nove identidades; conserva ΔWC completo/capex econômico/FCFF e disponibilidade
+  operacional ausentes. A dupla barra da nota29 ocorre na camada textual, sem erro
+  visual comprovado. Consumidor autenticado e classificação completa seguem pendentes.
+- E1 provisório5cb foi revisado com24 posições sintéticas anteriores: recusa do marcador,
+  retomada literal e cadeia íntegra/incompleta. Não substitui captura intraday real ou
+  matriz E1 integral. P0 mantém C102/233=43,78%>35%; PIT/E2/carteira inaugural abertos.
+- As12 automações mantêm IDs, horários e executor interno. Nenhuma gravação operacional
+  por esta sessão. Senha do operador verificada apenas por existência: ausente; passo
+  humano no terminal do titular solicitado conforme PASSAGEM_CODEX §4, sem receber senha.
 
 ## Lote técnico após a ampla 8 — 07/10/2026, 16:54 Brasília
 

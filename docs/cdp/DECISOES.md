@@ -573,3 +573,77 @@ prospectiva exige handoff tipado externo, SHA fixado e recebimento autenticado c
 dependência temporal. Nenhum horário de arquivo, captura ou entrega se torna publicação
 financeira. → Consequências: origens locais e ausência de certificado entre hosts ficam
 explícitas; PIT falso, pub/received nulos, residual e classificação não são promovidos.
+
+## 2026-10-07 · Pré-condições RI antes da recuperação; legado preservado
+
+Contexto: a ligação RI v1 podia reparar uma trilha interrompida antes de demonstrar
+autoridade, configuração e reserva da tentativa atual. → Decisão: validar esses vínculos
+externos antes de qualquer efeito; mapa de configuração físico completo precisa corresponder
+aos parâmetros ativos. Só a cauda canônica selada é reparável. Endpoints RI históricos
+reabrem com suas autoridades e cortes próprios; o primeiro RI não retropreenche autoridade
+do legado. → Consequências: revisão independente delimitada da v2 favorece a transposição
+de nove paths apenas ao DEV, mantendo custos5cb e default39 literal com três ETFs simulados.
+Suíte ampla e integração pendentes; não certifica PIT, P0, E1/E2 ou publicação.
+
+## 2026-10-07 · Atribuição derivada abstém domínio incompatível
+
+Contexto: os endpoints documentais podem ser reproduzíveis, mas uma mistura entre bases,
+moedas, unidades, grãos ou conceitos não define automaticamente um intermediário econômico.
+→ Decisão: manter cenários privados, receita/etapa tipadas e reextração externa vinculada
+por hashes; recusar intermediário quando o domínio não foi demonstrado. BASE e METODOS
+continuam reproduzíveis, ausente não vira zero e o avaliador virtual não exporta modelo
+primário. A extração dos helpers conserva o AST integral de inicialização/TP e as guardas
+públicas. → Consequências: v2 recebeu revisão independente com100 testes finais e quatro
+pares integrais; onze paths só ao DEV. Não implementa transformação entre domínios nem
+emite G7 sem referência externa ao alvo anterior publicado. Ampla/integração pendentes.
+
+## 2026-10-07 · CI cancelada não é resultado integral
+
+Contexto: CI5cb chegou ao limite de90 minutos com uma falha anterior e sem JUnit. O ordinal
+apontou um teste natural de custo; o focal Mac3.12 passou, e diagnóstico Ubuntu confirmou
+a expectativa rígida de12 ações diante de11 naturalmente executadas. A comparação da
+comissão passou nesse diagnóstico. → Decisão: preservar os logs/resultados e investigar
+o teste com oráculo das ordens realmente executadas, sem fixar o solver, forçar quantidades
+ou alterar o custo. O ramo diagnóstico contém somente workflow diferente, código5cb literal.
+→ Consequências: focal não substitui CI ampla; o reparo do teste, nova suíte e resultado
+remoto terminal ainda necessários. Não converter cancelamento ou suite local em sucesso remoto.
+
+## 2026-10-07 · Teste natural usa ordens observadas; CI preserva diagnóstico
+
+Contexto: o Ubuntu executou11 ações no pico natural em que o teste fixava12; a
+comissão observada estava correta. → Decisão: retirar a quantidade rígida e conferir
+cada ordem efetiva contra posições, preço/FX do mesmo vintage e mandato, com oráculo
+Decimal independente. O episódio precisa exercer pisos individuais diferentes do
+agregado. Integridade, replay e leitura sem escrita continuam obrigatórios. Nenhuma
+quantidade, solver, fórmula, fixture, configuração ou gate é alterado. → Consequências:
+reparo revisado transposto ao DEV e diagnóstico remoto separado com SHA exato; não é
+ampla verde. A CI completa passa de90 a150 minutos após o timeout observado e usa
+fail-fast para preservar traceback/JUnit na primeira falha; sucesso exige toda a suíte.
+
+## 2026-10-07 · Rubricas3tentos não completam giro por reconciliação residual
+
+A revisão independente confirmou436 células, quatro totais TTM e nove identidades
+agregadas. → Decisão: manter os desembolsos PPE/intangível documentais, biológico e
+transações sem caixa segregados, sem promover subtotal de estoques/pessoal a ΔWC
+completo nem estimar capex econômico ou FCFF. Publicação/recebimento desconhecidos
+continuam None e PIT falso. Dupla barra da nota29 é limitação da camada textual,
+sem erro visual comprovado. → Consequências: pacote privado e parecer permanecem
+congelados; disponibilidade operacional/consumidor autenticado e P0 seguem pendentes.
+
+
+## 2026-10-07 · Integração do lote12 preserva o retrato oficial e exclui candidatos bloqueados
+
+Contexto: RI fluxo v2 e atribuição v2 receberam revisões independentes delimitadas; composição132
+verde e ampla9 local verde, com664 arquivos intactos,2872 aprovados,16 pulados e um xfail,
+zero falhas/erros. Reparo do teste de custo passou localmente e no Ubuntu; não alterou solver,
+ordens ou fórmula de comissão. A rotina nativa publicou o retrato de07/10 em0f887cd e liberou
+a trava. → Decisão: integrar normalmente os20 paths revisados, o teste reparado e o workflow
+CI150min, preservando integralmente o commit oficial e as alterações herdadas do Fechamento;
+sem force push. Não incorporar o CVM persistente v1: revisão formal encontrou checkpoint escrito
+antes da autenticação completa do grafo em três controles privados. O vermelho é preservado;
+correção em v2 nova e revisão final separada. → Consequências: a CI integral remota e a integração
+terminal ainda precisam ser confirmadas. O P0 continua aberto no retrato oficial (C100/233=42,92%
+e revisão30/233=12,88%); a sombra8.5 permanece separada. Auditoria26 comprova ambiguidade
+ documental de28 hashes de curadoria sem provar erro financeiro; correção prospectiva privada
+não promove confiança ou reescreve históricos. E1/PIT/E2 e senha humana não são liberados por
+um resultado técnico verde. Recibos em `.cdp/validacoes/20261007-integracao-12/`.

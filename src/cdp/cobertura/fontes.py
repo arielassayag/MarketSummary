@@ -223,7 +223,7 @@ def capital_fre(conteudo: bytes, ano: int, cnpjs: set[str] | None = None) -> pd.
     return out[out["qtd_total"] > 0].reset_index(drop=True)
 
 
-def capital_oficial(issuer_ids: Sequence[str], as_of: date, raiz: Path | None) -> pd.DataFrame:
+def capital_oficial(issuer_ids: Sequence[str], as_of: date, raiz: Path | None, *, universe=None) -> pd.DataFrame:
     """Contagem oficial de ações dos emissores brasileiros pelo FRE arquivado pela camada pública
     (sem rede): a versão mais recente recebida até ``as_of``; entre os tipos de capital, o maior
     total (integralizado, emitido ou subscrito)."""
@@ -233,7 +233,8 @@ def capital_oficial(issuer_ids: Sequence[str], as_of: date, raiz: Path | None) -
     except Exception:  # pragma: no cover - depende da camada A1
         return pd.DataFrame(columns=COLS_CAPITAL)
     try:
-        mestre = publico.mestre_publico(as_of, offline=True, root=raiz)
+        mestre = publico.mestre_publico(as_of, offline=True, root=raiz,
+                                       **({"universe": universe} if universe is not None else {}))
     except Exception:  # noqa: BLE001 - sem cadastro arquivado ⇒ sem contagem oficial
         return pd.DataFrame(columns=COLS_CAPITAL)
     cnpj_de = {str(i): str(mestre.loc[i, "cnpj"]) for i in issuer_ids
@@ -404,7 +405,7 @@ def _fatos_suplementares(tabs: dict[str, pd.DataFrame], doc: str) -> pd.DataFram
     return f[cols]
 
 
-def contas_suplementares_cvm(issuer_ids: Sequence[str], as_of: date, raiz: Path | None) -> pd.DataFrame:
+def contas_suplementares_cvm(issuer_ids: Sequence[str], as_of: date, raiz: Path | None, *, universe=None) -> pd.DataFrame:
     """Itens ``ITENS_SUPLEMENTARES`` (exercícios e 12 meses) dos emissores com CNPJ, no formato dos
     demonstrativos (``COLS_DEMONSTRATIVOS``), lidos dos ZIPs DFP/ITR arquivados pela camada pública
     (sem rede), point-in-time (versão mais recente recebida até ``as_of``), consolidado quando há."""
@@ -415,7 +416,8 @@ def contas_suplementares_cvm(issuer_ids: Sequence[str], as_of: date, raiz: Path 
     except Exception:  # pragma: no cover - depende da camada A1
         return vazio
     try:
-        mestre = publico.mestre_publico(as_of, offline=True, root=raiz)
+        mestre = publico.mestre_publico(as_of, offline=True, root=raiz,
+                                       **({"universe": universe} if universe is not None else {}))
     except Exception:  # noqa: BLE001 - sem cadastro arquivado ⇒ sem contas suplementares
         return vazio
     cnpj_de = {str(i): str(mestre.loc[i, "cnpj"]) for i in issuer_ids
@@ -559,11 +561,13 @@ def _coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Se
         raise FontePublicaIndisponivel(
             "camada de dados públicos (cdp.data.publico) indisponível") from exc
     kw = {"offline": offline, "root": raiz}
-    dem_bruto = publico.demonstrativos(list(issuer_ids), as_of, **kw)
+    from .ri_observada import ativo as ri_ativo
+    kw_universo = {"universe": md.universe} if params is not None and ri_ativo(params) else {}
+    dem_bruto = publico.demonstrativos(list(issuer_ids), as_of, **kw, **kw_universo)
     alertas = alertas_de_attrs(getattr(dem_bruto, "attrs", None))
     dem = _garantir(dem_bruto, COLS_DEMONSTRATIVOS)
     br = [i for i in issuer_ids if i in md.universe.issuers.index and str(md.universe.issuers.loc[i, "country"]) == "BR"]
-    sup = contas_suplementares_cvm(br, as_of, raiz)
+    sup = contas_suplementares_cvm(br, as_of, raiz, **kw_universo)
     if not sup.empty:
         dem = pd.concat([dem, sup[[c for c in sup.columns if c in dem.columns]]], ignore_index=True)
     resultado_evidencias = pd.DataFrame()
@@ -577,22 +581,22 @@ def _coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Se
                                                    conhecimento_ate=conhecimento_ate, **opcoes_resultado)
             dem, resultado_evidencias = incorporar_resultados(dem, primaria, catalogo)
     con = _garantir(publico.consenso_publico(list(tickers), as_of, **kw), COLS_CONSENSO)
-    div = _garantir(publico.dividendos(list(tickers), as_of, **kw), COLS_DIVIDENDOS)
+    div = _garantir(publico.dividendos(list(tickers), as_of, **kw, **kw_universo), COLS_DIVIDENDOS)
     ini = date(as_of.year - 1, as_of.month, 1)
     fim = date(as_of.year + 1, as_of.month, 28)
     try:  # ``as_of`` limita o calendário ao que se sabia na data (sem look-ahead)
-        eve_df = publico.eventos_corporativos(list(issuer_ids), ini, fim, as_of=as_of, **kw)
+        eve_df = publico.eventos_corporativos(list(issuer_ids), ini, fim, as_of=as_of, **kw, **kw_universo)
     except TypeError:
-        eve_df = publico.eventos_corporativos(list(issuer_ids), ini, fim, **kw)
+        eve_df = publico.eventos_corporativos(list(issuer_ids), ini, fim, **kw, **kw_universo)
     eve = _garantir(eve_df, COLS_EVENTOS)
     tax = _garantir(publico.taxas_publicas(as_of, **kw), COLS_TAXAS)
-    ff = _garantir(publico.free_float(list(issuer_ids), as_of, **kw), COLS_FLOAT)
+    ff = _garantir(publico.free_float(list(issuer_ids), as_of, **kw, **kw_universo), COLS_FLOAT)
     cap = capital_oficial([i for i in issuer_ids if i in md.universe.issuers.index
-                           and str(md.universe.issuers.loc[i, "country"]) == "BR"], as_of, raiz)
+                           and str(md.universe.issuers.loc[i, "country"]) == "BR"], as_of, raiz, **kw_universo)
     comp: dict[str, pd.DataFrame | None] = {}
     for e in etfs:
         try:
-            df = publico.composicao_etf(e, as_of, **kw)
+            df = publico.composicao_etf(e, as_of, **kw, **kw_universo)
         except Exception:  # composição indisponível na semana ⇒ só top-down
             df = None
         comp[e] = None if df is None else _garantir(df, COLS_ETF)

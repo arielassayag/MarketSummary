@@ -281,7 +281,11 @@ def cmd_verify(args: argparse.Namespace) -> int:
     from .workflow.runtime import Runtime
 
     rt = Runtime.from_args(args)
-    ok, msgs = rt.verify_all()
+    from .cobertura.ri_fluxo import autoridade_args, cortes_args
+    try:
+        ok, msgs = rt.verify_all(ri_autoridade=autoridade_args(args), ri_cortes=cortes_args(args))
+    except (ValueError, OSError) as exc:
+        ok, msgs = False, [str(exc)]
     print("ÍNTEGRO" if ok else "FALHA DE INTEGRIDADE")
     for m in msgs:
         print(f"- {m}")
@@ -747,6 +751,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     c = sub.add_parser("cobertura", help="cobertura de ações e ETFs: modelos e preços-alvo de 12 "
                                          "meses (números só do código)")
+    from .cobertura.ri_fluxo import adicionar_argumentos
     csub = c.add_subparsers(dest="action", required=True)
     s = csub.add_parser("run", help="snapshot de cobertura do dia (book/cobertura/<D>/)")
     s.add_argument("--date", type=_d, required=True, help="pregão de referência (AAAA-MM-DD)")
@@ -755,10 +760,12 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--offline", action="store_true", help="sem coleta ao vivo")
     s.add_argument("--raiz", default=None,
                    help="raiz do arquivo de dados públicos (<raiz>/publico/...; padrão: data/)")
+    adicionar_argumentos(s, executar=True)
     s.set_defaults(func=cmd_cobertura)
     s = csub.add_parser("verify", help="confere o livro da cobertura, manifestos e placar")
     s.add_argument("--sem-recalculo", action="store_true",
                    help="só confere cadeia e arquivos (não refaz os preços-alvo)")
+    adicionar_argumentos(s)
     s.set_defaults(func=cmd_cobertura)
     r = csub.add_parser("revisao-mensal",
                         help="revisão mensal dos modelos (último dia de montagem do mês): pacote "
@@ -825,6 +832,7 @@ def build_parser() -> argparse.ArgumentParser:
     s.set_defaults(func=cmd_reinicio)
 
     s = sub.add_parser("verify", help="verifica trilha de auditoria, track record e decisões")
+    adicionar_argumentos(s)
     s.set_defaults(func=cmd_verify)
 
     s = sub.add_parser("avaliacao", help="avaliação autenticada por mente e canal, somente leitura")

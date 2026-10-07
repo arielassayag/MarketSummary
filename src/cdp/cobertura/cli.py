@@ -62,7 +62,7 @@ def config_paths(valuation: Path = DEFAULT_VALUATION, pasta: Path = DEFAULT_COBE
 
 def executar_snapshot(book: Path, md, as_of: date, *, emissores=None, offline: bool = False,
                       raiz: Path | None = None, params=None, agora=None, codigo=None, audit: bool = True,
-                      relogio=None) -> dict:
+                      relogio=None, ri_autoridade=None, ri_mercado=None, arquivos_config=None, ri_cortes=None) -> dict:
     """Execução completa (coleta pública → modelos → gravação) sobre um ``MarketData`` dado."""
     params = params or carregar_parametros()
     from .temporal import ativo as temporal_ativo
@@ -73,7 +73,21 @@ def executar_snapshot(book: Path, md, as_of: date, *, emissores=None, offline: b
             raise LivroErro("Política temporal exige instante ou relógio explícito do executor.")
         agora = agora or relogio()
         as_of = date.fromisoformat(corte_temporal(md.as_of, agora)["data_modelo"])
-    reparar_pendencias(book, audit, agora)
+    from .ri_fluxo import (
+        conferir_configuracao,
+        conferir_livro_antes_de_escrita,
+        conferir_mercado,
+        exigir,
+    )
+    from .ri_observada import ativo as ri_ativo
+    contexto_ri = exigir(params, ri_autoridade, agora if ri_ativo(params) else None, md)
+    if ri_ativo(params):
+        conferir_mercado(md, ri_mercado)
+    conferir_configuracao(params, arquivos_config)
+    conferir_livro_antes_de_escrita(book, params, autoridade=ri_autoridade,
+                                  cortes=ri_cortes, agora=agora)
+    if not ri_ativo(params):
+        reparar_pendencias(book, audit, agora)
     if temporal:
         from .livro import datas_snapshots, snapshot
         datas = datas_snapshots(Path(book))
@@ -81,9 +95,6 @@ def executar_snapshot(book: Path, md, as_of: date, *, emissores=None, offline: b
             checar_data(book, as_of)
         pasta_existente = Path(book) / "cobertura" / as_of.isoformat()
         if pasta_existente.exists():
-            integro, problemas = verificar(Path(book), recalcular=False)
-            if not integro:
-                raise LivroErro("Reserva recusada: livro de cobertura não íntegro: " + "; ".join(problemas))
             existente = snapshot(Path(book), as_of)
             from .livro import conferir_corte
             conferir_corte(existente, agora)
@@ -93,10 +104,26 @@ def executar_snapshot(book: Path, md, as_of: date, *, emissores=None, offline: b
             if (existente.manifest["base_mercado"]["content_hash"] != md.manifest.content_hash()
                     or existente.manifest["configuracao"]["hash"] != params.hash()):
                 raise LivroErro("Snapshot do dia já concluído com outra base/configuração; não sobrescreve.")
+            reparos_ri = (reparar_pendencias(book, audit, agora, params=params,
+                            ri_autoridade=ri_autoridade, ri_cortes=ri_cortes) if ri_ativo(params) else [])
+            cortes_ri = ri_cortes if ri_ativo(params) else None
+            integro, problemas = verificar(Path(book), recalcular=False,
+                                            ri_autoridade=ri_autoridade, ri_cortes=cortes_ri)
+            if not integro:
+                raise LivroErro("Reserva recusada: livro de cobertura não íntegro: " + "; ".join(problemas))
             return {"pasta": str(pasta_existente), "manifest_sha256": existente.manifest_sha256,
                     "selo": json.loads((pasta_existente / "selo.json").read_text()),
-                    "n_eventos": 0, "reparos": [], "ja_concluido": True,
-                    "corte_temporal": existente.manifest["corte_temporal"]}
+                    "n_eventos": 0, "reparos": reparos_ri, "ja_concluido": True,
+                    "corte_temporal": existente.manifest["corte_temporal"],
+                    **({"ri_conhecimento_ate": ri_cortes[as_of.isoformat()].isoformat()}
+                       if ri_ativo(params) else {})}
+    if ri_ativo(params):
+        checar_data(book, as_of)
+        destino = Path(book) / "cobertura" / as_of.isoformat()
+        if destino.exists():
+            raise LivroErro(f"Snapshot {as_of} já existe.")
+        reparar_pendencias(book, audit, agora, params=params,
+                           ri_autoridade=ri_autoridade, ri_cortes=ri_cortes)
     checar_data(book, as_of)
     ok_s, msg_s = selado(book)
     if not ok_s:
@@ -104,7 +131,7 @@ def executar_snapshot(book: Path, md, as_of: date, *, emissores=None, offline: b
     ids = sorted(str(i) for i in md.universe.issuers.index)
     tickers = sorted(str(t) for t in md.universe.lines.index)
     etfs = [str(e["ticker"]) for e in params.etfs.get("etfs", []) if e["ticker"] in md.benchmarks.columns]
-    dados = coletar(md, as_of, ids, tickers, etfs, offline=offline, raiz=raiz, params=params, conhecimento_ate=agora)
+    dados = coletar(md, as_of, ids, tickers, etfs, offline=offline, raiz=raiz, params=params, conhecimento_ate=agora, ri_contexto=contexto_ri)
     if temporal:
         inicio = agora
         fim = relogio() if relogio is not None else agora
@@ -115,13 +142,25 @@ def executar_snapshot(book: Path, md, as_of: date, *, emissores=None, offline: b
                      coleta_fim=fim.astimezone(UTC).isoformat())
         as_of = date.fromisoformat(corte["data_modelo"])
         checar_data(book, as_of)
-        dados = coletar(md, as_of, ids, tickers, etfs, offline=True, raiz=raiz, params=params, conhecimento_ate=fim)
+        dados = coletar(md, as_of, ids, tickers, etfs, offline=True, raiz=raiz, params=params, conhecimento_ate=fim, ri_contexto=contexto_ri)
         dados = replace(dados, corte_temporal=corte)
     anterior = carregar_anterior(book, as_of)
-    ex = executar(md, dados, params, as_of, emissores=emissores, anterior=anterior)
-    res = gravar_snapshot(book, ex, dados, params, md_manifest=md.manifest, config_paths=config_paths(),
+    from .ri_consumo import FornecedorConsumoRI
+    fornecedor = FornecedorConsumoRI(md, dados) if ri_ativo(params) else None
+    if ri_ativo(params):
+        from .ri_fluxo import preparar_anterior
+        anterior, fornecedores_anteriores = preparar_anterior(book, as_of, params,
+            autoridade=ri_autoridade, cortes=ri_cortes)
+        fornecedor = replace(fornecedor, anteriores=fornecedores_anteriores)
+    conhecimento = fim if temporal else None
+    kwargs_ri = {"ri_fornecedor": fornecedor, "conhecimento_ate": conhecimento} if ri_ativo(params) else {}
+    ex = executar(md, dados, params, as_of, emissores=emissores, anterior=anterior, **kwargs_ri)
+    res = gravar_snapshot(book, ex, dados, params, md_manifest=md.manifest, config_paths=arquivos_config or config_paths(),
                           agora=(relogio() if temporal and relogio is not None else agora),
-                          codigo=codigo, audit=audit)
+                          codigo=codigo, audit=audit, ri_autoridade=ri_autoridade,
+                          ri_mercado=ri_mercado, ri_cortes=ri_cortes, **kwargs_ri)
+    if ri_ativo(params):
+        res["ri_conhecimento_ate"] = dados.corte_temporal["conhecimento_ate"]
     res["distribuicao"] = ex.distribuicao.get("distribuicao")
     return res
 
@@ -143,12 +182,27 @@ def cmd_run(args: argparse.Namespace) -> int:
         return FALHA
     raiz = getattr(args, "raiz", None)
     try:
-        params = carregar_parametros()
+        valuation = Path(args.valuation) if getattr(args, "valuation", None) else DEFAULT_VALUATION
+        pasta_params = (Path(args.parametros_cobertura) if getattr(args, "parametros_cobertura", None)
+                        else DEFAULT_COBERTURA_DIR)
+        params = carregar_parametros(valuation, pasta_params)
+        from ..data.ri_captura.observado import instant
+        from .ri_fluxo import autoridade_args, cortes_args
+        from .ri_observada import ativo as ri_ativo
+        autoridade = autoridade_args(args)
+        if ri_ativo(params) and not getattr(args, "ri_conhecimento_ate", None):
+            raise ValueError("RI fluxo: --ri-conhecimento-ate atual explícito obrigatório")
         from .temporal import ativo as temporal_ativo
         clocks = {"agora": rt.now(), "relogio": rt.now} if temporal_ativo(params) else {}
+        if ri_ativo(params):
+            clocks = {"agora": instant(args.ri_conhecimento_ate), "relogio": rt.now}
+            if clocks["agora"] > rt.now():
+                raise ValueError("RI fluxo: conhecimento futuro recusado")
         res = executar_snapshot(Path(args.book), md, as_of, emissores=args.emissores,
                                 offline=bool(args.offline), raiz=Path(raiz) if raiz else None,
-                                params=params, **clocks)
+                                params=params, ri_autoridade=autoridade, ri_cortes=cortes_args(args),
+                                ri_mercado=rt.market_root if ri_ativo(params) else None,
+                                arquivos_config=config_paths(valuation, pasta_params), **clocks)
     except FontePublicaIndisponivel as exc:
         print(f"cdp cobertura run: {exc}.", file=sys.stderr)
         return INDISPONIVEL
@@ -161,7 +215,12 @@ def cmd_run(args: argparse.Namespace) -> int:
 
 def cmd_verify(args: argparse.Namespace) -> int:
     """``cdp cobertura verify`` (só leitura; código 0 íntegro, 1 falha)."""
-    ok, msgs = verificar(Path(args.book), recalcular=not bool(getattr(args, "sem_recalculo", False)))
+    from .ri_fluxo import autoridade_args, cortes_args
+    try:
+        ok, msgs = verificar(Path(args.book), recalcular=not bool(getattr(args, "sem_recalculo", False)),
+                             ri_autoridade=autoridade_args(args), ri_cortes=cortes_args(args))
+    except (ValueError, OSError) as exc:
+        ok, msgs = False, [str(exc)]
     for m in msgs:
         print(m)
     return OK if ok else FALHA

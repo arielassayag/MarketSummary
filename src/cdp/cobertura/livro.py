@@ -284,10 +284,14 @@ def checar_data(book: Path, d: date) -> None:
         raise LivroErro("Livro da cobertura íntegro é pré-requisito: " + "; ".join(probs))
 
 
-def reparar_pendencias(book: Path, audit: bool = True, agora: datetime | None = None) -> list[str]:
+def reparar_pendencias(book: Path, audit: bool = True, agora: datetime | None = None, *,
+                       params=None, ri_autoridade=None, ri_cortes=None) -> list[str]:
     """Completa uma gravação interrompida do snapshot mais recente (só nas condições exatas de
     interrupção, a partir dos arquivos selados): eventos do ``eventos.jsonl`` que não chegaram ao
     livro e o evento ``COVERAGE_SNAPSHOT`` que não chegou à trilha do fundo."""
+    from .ri_fluxo import conferir_livro_antes_de_escrita
+    conferir_livro_antes_de_escrita(book, params, autoridade=ri_autoridade,
+                                  cortes=ri_cortes, agora=agora)
     ds = datas_snapshots(book)
     if not ds:
         return []
@@ -327,17 +331,32 @@ def reparar_pendencias(book: Path, audit: bool = True, agora: datetime | None = 
 
 def gravar_snapshot(book: Path, ex: Execucao, dados: DadosPublicos, params: ParametrosCobertura, *,
                     md_manifest: Any, config_paths: dict[str, Path], agora: datetime | None = None,
-                    codigo: dict[str, Any] | None = None, audit: bool = True) -> dict[str, Any]:
+                    codigo: dict[str, Any] | None = None, audit: bool = True,
+                    ri_fornecedor=None, conhecimento_ate=None, ri_autoridade=None,
+                    ri_mercado=None, ri_cortes=None) -> dict[str, Any]:
     """Grava ``book/cobertura/<D>/``, acrescenta os eventos ao livro e o selo à trilha do fundo."""
     from .placar import calcular_placar
-
+    from .ri_consumo import _corte, validar_conjunto
+    from .ri_fluxo import (
+        conferir_configuracao,
+        conferir_livro_antes_de_escrita,
+        conferir_mercado,
+        exigir,
+    )
+    from .ri_observada import ativo as ri_ativo
+    conferir_configuracao(params, config_paths)
+    if ri_ativo(params):
+        if ri_fornecedor is None:
+            raise ValueError("RI fluxo: fornecedor explícito obrigatório antes da escrita")
+        exigir(params, ri_autoridade, conhecimento_ate, ri_fornecedor.md)
+        conferir_mercado(ri_fornecedor.md, ri_mercado)
+        if ri_fornecedor.dados is not dados or ri_fornecedor.md.manifest != md_manifest:
+            raise ValueError("RI fluxo: fornecedor difere dos insumos/mercado da gravação")
+        _corte(params, ri_fornecedor, conhecimento_ate)
+        validar_conjunto(ex.pacotes, params, fornecedor=ri_fornecedor, conhecimento_ate=conhecimento_ate)
+    kwargs_ri = {"ri_fornecedor": ri_fornecedor, "conhecimento_ate": conhecimento_ate} if ri_ativo(params) else {}
     raiz = raiz_cobertura(book)
     d = ex.as_of
-    reparos = reparar_pendencias(book, audit, agora)
-    checar_data(book, d)
-    ok_s, msg_s = selado(book)
-    if not ok_s:
-        raise LivroErro(f"Livro da cobertura não confere com o último selo: {msg_s}.")
     from .temporal import ativo as temporal_ativo
     from .temporal import validar as validar_corte
     corte = None
@@ -355,10 +374,21 @@ def gravar_snapshot(book: Path, ex: Execucao, dados: DadosPublicos, params: Para
             dp = pd.to_datetime(t["data_publicacao"], errors="coerce")
             if (dp > pd.Timestamp(d)).any():
                 raise LivroErro("Insumo com data de publicação posterior à data do snapshot.")
+    conferir_livro_antes_de_escrita(book, params, autoridade=ri_autoridade,
+                                  cortes=ri_cortes, agora=agora)
+    existentes = datas_snapshots(book)
+    if existentes and d <= existentes[-1]:
+        raise LivroErro(f"Snapshot {d} recusado: já existe snapshot em {existentes[-1]} (sem retrodatar).")
     destino = raiz / d.isoformat()
-    tmp = raiz / f".{d.isoformat()}.tmp-{os.getpid()}"
     if destino.exists():
         raise LivroErro(f"Snapshot {d} já existe.")
+    reparos = reparar_pendencias(book, audit, agora, params=params,
+                                ri_autoridade=ri_autoridade, ri_cortes=ri_cortes)
+    checar_data(book, d)
+    ok_s, msg_s = selado(book)
+    if not ok_s:
+        raise LivroErro(f"Livro da cobertura não confere com o último selo: {msg_s}.")
+    tmp = raiz / f".{d.isoformat()}.tmp-{os.getpid()}"
     if tmp.exists():
         shutil.rmtree(tmp)
     tmp.mkdir(parents=True)
@@ -368,7 +398,7 @@ def gravar_snapshot(book: Path, ex: Execucao, dados: DadosPublicos, params: Para
         ids = ex.emissores
         for iid in ids:
             arquivos[f"modelos/{iid}.json"] = _escrever(tmp / "modelos" / f"{iid}.json",
-                                                         _json_bytes(modelo_json(ex, iid, params), compacto=True))
+                                                         _json_bytes(modelo_json(ex, iid, params, **kwargs_ri), compacto=True))
         tab = pd.DataFrame([resumo_linha(ex, i) for i in ids])
         arquivos["modelos.csv"] = _escrever(tmp / "modelos.csv", csv_canonico(tab).encode("utf-8"))
         etf_rows = []
@@ -481,6 +511,12 @@ def gravar_snapshot(book: Path, ex: Execucao, dados: DadosPublicos, params: Para
         placar = calcular_placar(evs_ant + novos, None, d)
         arquivos["placar.json"] = _escrever(tmp / "placar.json", _json_bytes(arredondar(placar)))
         n_alvo = sum(1 for i in ids if ex.modelos[i].get("tem_alvo"))
+        ri_metadata = None
+        if ri_ativo(params):
+            from .ri_fluxo import arquivar
+            ri_metadata, ri_arquivos = arquivar(tmp, ri_fornecedor, params, ri_autoridade,
+                                                conhecimento_ate, ri_mercado)
+            arquivos.update(ri_arquivos)
         manifest = arredondar({
             "schema": SCHEMA_MANIFESTO, "as_of": d.isoformat(), "parcial": parcial,
             "emissores": ids, "prices_as_of": md_manifest.as_of.isoformat(),
@@ -499,6 +535,8 @@ def gravar_snapshot(book: Path, ex: Execucao, dados: DadosPublicos, params: Para
             "livro_anterior": {"n_eventos": seq0, "head": head0},
             "reparos": reparos,
         })
+        if ri_metadata is not None:
+            manifest["ri_fluxo"] = ri_metadata
         if corte is not None:
             manifest.update(corte_temporal=corte, concluido_em=concluido)
         msha = _escrever(tmp / "manifest.json", _json_bytes(manifest))
@@ -734,7 +772,8 @@ def _versao_snapshot(pasta: Path) -> str | None:
 
 def verificar(book: Path, params_por_snapshot: bool = True, recalcular: bool = True,
               tolerancia: float = 1e-6, completo_todos: bool = True,
-              versao_atual: str | None = None) -> tuple[bool, list[str]]:
+              versao_atual: str | None = None, *, ri_autoridade=None,
+              ri_cortes=None) -> tuple[bool, list[str]]:
     """Confere o livro, cada manifesto/selo/arquivo, a correspondência com a trilha do fundo, o
     placar e (``recalcular``) refaz cada snapshot por completo a partir dos insumos e da
     configuração arquivados (``completo_todos=False``: só o mais recente por completo; dos
@@ -796,6 +835,16 @@ def verificar(book: Path, params_por_snapshot: bool = True, recalcular: bool = T
                     raise LivroErro("Modelos divergem do corte temporal selado.")
             except (LivroErro, ValueError, KeyError, OSError) as exc:
                 msgs.append(f"{d}: contrato temporal: {exc}")
+        try:
+            from .parametros import carregar_parametros
+            from .ri_fluxo import reabrir, snapshot_exige_ri
+            if snapshot_exige_ri(snap):
+                cfg_ri = pasta / "configuracao"
+                p_ri = carregar_parametros(cfg_ri / "valuation.yaml", cfg_ri / "cobertura")
+                reabrir(snap, p_ri, autoridade=ri_autoridade,
+                         conhecimento_ate=(ri_cortes or {}).get(d.isoformat()))
+        except (ValueError, OSError, KeyError, TypeError) as exc:
+            msgs.append(f"{d}: autoridade externa RI: {exc}")
         ant = snap.manifest.get("livro_anterior") or {}
         if int(ant.get("n_eventos", -1)) != n_prev or ant.get("head") != head_prev:
             msgs.append(f"{d}: snapshot não continua o selo anterior (livro_anterior)")
@@ -823,7 +872,9 @@ def verificar(book: Path, params_por_snapshot: bool = True, recalcular: bool = T
                 continue
             completo = completo_todos or d == ds[-1]
             try:
-                msgs.extend(recalcular_snapshot(snap, tolerancia, completo=completo))
+                msgs.extend(recalcular_snapshot(snap, tolerancia, completo=completo,
+                    ri_autoridade=ri_autoridade, conhecimento_ate=(ri_cortes or {}).get(d.isoformat()),
+                    ri_cortes=ri_cortes))
             except Exception as exc:  # noqa: BLE001 - qualquer falha de recálculo é divergência
                 msgs.append(f"{d}: recálculo falhou ({type(exc).__name__}: {exc})")
     # livro termina exatamente no último selo
@@ -859,7 +910,8 @@ def _rel(a: float | None, b: float | None, tol: float) -> bool:
     return abs(a - b) <= tol * max(abs(a), abs(b), 1e-12)
 
 
-def recalcular_snapshot(snap: SnapshotCobertura, tolerancia: float = 1e-6, completo: bool = True) -> list[str]:
+def recalcular_snapshot(snap: SnapshotCobertura, tolerancia: float = 1e-6, completo: bool = True, *,
+                        ri_autoridade=None, conhecimento_ate=None, ri_cortes=None) -> list[str]:
     """Refaz o snapshot a partir dos insumos e da configuração arquivados.
 
     ``completo``: contexto transversal (contra ``contexto.json``), custo de capital, métodos,
@@ -878,6 +930,11 @@ def recalcular_snapshot(snap: SnapshotCobertura, tolerancia: float = 1e-6, compl
         return [f"{snap.as_of}: configuração arquivada ausente"]
     tol = max(tolerancia, 1e-5)
     params = carregar_parametros(cfg / "valuation.yaml", cfg / "cobertura")
+    from .ri_observada import ativo as ri_ativo
+    if ri_ativo(params) or snap.manifest.get("ri_fluxo") is not None:
+        from .ri_fluxo import recalcular
+        return recalcular(snap, params, autoridade=ri_autoridade, conhecimento_ate=conhecimento_ate,
+                          cortes=ri_cortes)
     pacs = ler_pacotes(pasta, snap.manifest)
     ctx_arq = snap._json("contexto.json") or {}
     rf_info = snap.manifest.get("taxa_livre_risco") or {}

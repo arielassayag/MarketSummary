@@ -6,6 +6,7 @@ import hashlib
 import json
 import shutil
 from datetime import UTC, date, datetime
+from decimal import Decimal, localcontext
 from pathlib import Path
 
 import pytest
@@ -63,17 +64,43 @@ def test_natural_booking_payload_matches_independent_floor_and_readers_do_not_wr
     before = inventory(out)
     rec = rt.track().get(DAY)
     diag = risco_diario.load(rt.track(), rec)[DIAGNOSTIC_KEY]
-    fixture = json.loads((Path(__file__).parent / 'fixtures/custo_minimo_reserva.json').read_text())
-    row = diag['frame']['SMX06.MX']
-    got = diag['result']['SMX06.MX']['commission_bps'] * row['notional_usd'] / 1e4
-    assert got == pytest.approx(float(fixture['row']['commission_sum_individual_order_floors_usd']),
-                               abs=1e-10)
-    assert [p['acoes'] for p in row['ordens']] == [24800, 12]
-    assert row['acoes_executadas'] == 24812
+    md = rt.store.load(DAY)
+    positions = {p.ticker: p for p in rec.positions}
+    mixed_floors = []
+    # Quantidades vêm do MOC natural. O oráculo Decimal usa preço/FX do vintage,
+    # ações efetivas e mandato; não chama o kernel de custos nem o divisor de lotes.
+    with localcontext() as context:
+        context.prec = 50
+        for ticker, row in diag['frame'].items():
+            orders = row['ordens']
+            assert orders and row['n_ordens'] == len(orders)
+            assert all(isinstance(p['acoes'], int) and p['acoes'] != 0 for p in orders)
+            assert sum(p['acoes'] for p in orders) == positions[ticker].shares
+            assert row['acoes_executadas'] == positions[ticker].shares
+            price = Decimal.from_float(float(md.close.loc[str(DAY), ticker]))
+            # USD/USD=1 é identidade de unidade; moeda local exige observação no pregão.
+            fx = (Decimal(1) if row['currency'] == 'USD' else
+                  Decimal.from_float(float(md.fx.loc[str(DAY), row['currency']])))
+            assert price > 0 and fx > 0
+            amounts = [Decimal(abs(p['acoes'])) * price * fx for p in orders]
+            rate = Decimal(str(rt.cfg.costs.commission_bps[row['market']])) / Decimal('10000')
+            table = rt.cfg.costs.min_order_cost_usd
+            floor = Decimal(str(table.get(row['market'], max(table.values()))))
+            expected = sum((max(amount * rate, floor) for amount in amounts), Decimal(0))
+            assert row['notional_usd'] == pytest.approx(float(sum(amounts)), rel=0, abs=1e-8)
+            assert row['nocionais_ordens_usd'] == pytest.approx([float(a) for a in amounts],
+                                                              rel=0, abs=1e-8)
+            got = diag['result'][ticker]['commission_bps'] * row['notional_usd'] / 1e4
+            assert got == pytest.approx(float(expected), rel=0, abs=1e-10)
+            aggregate_floor = max(sum(amounts) * rate, len(orders) * floor)
+            if (any(amount * rate < floor for amount in amounts) and
+                    any(amount * rate > floor for amount in amounts)):
+                assert expected > aggregate_floor
+                mixed_floors.append(ticker)
+    assert mixed_floors, 'episódio deve exercer mínimo individual que difere do agregado'
     assert verify(rt) == []
     assert verify_replay(out)['integridade']
     assert inventory(out) == before
-
 
 @pytest.mark.parametrize('mutate', ['remove_diagnostic', 'commission', 'shares', 'price',
                                    'proposal_contract', 'market_fx'])

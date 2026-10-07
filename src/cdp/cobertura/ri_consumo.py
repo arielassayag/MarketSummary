@@ -21,6 +21,7 @@ class FornecedorConsumoRI:
     """
     md: object
     dados: object
+    anteriores: tuple = ()  # referências externas reabertas; nunca carregadas do pacote
 
 
 def emissores_autorizados(fornecedor):
@@ -52,6 +53,25 @@ def _corte(params, fornecedor, conhecimento_ate):
     return cut
 
 
+def recortar_fornecedor(pacote, params, fornecedor, conhecimento_ate):
+    """Só endpoints externos previamente reabertos; cenário híbrido continua sem autoridade."""
+    if not ativo(params) or type(fornecedor) is not FornecedorConsumoRI or not fornecedor.anteriores:
+        return fornecedor, conhecimento_ate
+    atual = _corte(params, fornecedor, conhecimento_ate)
+    pedido = pacote.get("corte_temporal")
+    if pedido == atual:
+        return fornecedor, conhecimento_ate
+    for anterior in fornecedor.anteriores:
+        if type(anterior) is not FornecedorConsumoRI:
+            raise ValueError("RI consumo: fornecedor anterior externo inválido")
+        cut = anterior.dados.corte_temporal
+        instante = instant(cut["conhecimento_ate"])
+        if pedido == cut and instante < instant(conhecimento_ate):
+            _corte(params, anterior, instante)
+            return anterior, instante
+    raise ValueError("RI consumo: corte anterior sem fornecedor externo exato")
+
+
 def validar_consumo(pacote, params, *, fornecedor=None, conhecimento_ate=None):
     """Reextrai desde o fornecedor e compara o pacote completo antes do consumo."""
     if not ativo(params):
@@ -61,6 +81,7 @@ def validar_consumo(pacote, params, *, fornecedor=None, conhecimento_ate=None):
         return pacote
     from .insumos import preparar_emissor
     from .resultado import visao
+    fornecedor, conhecimento_ate = recortar_fornecedor(pacote, params, fornecedor, conhecimento_ate)
     cut = _corte(params, fornecedor, conhecimento_ate)
     issuer_id = pacote.get("issuer_id")
     if issuer_id not in emissores_autorizados(fornecedor):
@@ -122,6 +143,7 @@ def validar_contexto(pacote, ctx, params, *, fornecedor=None, conhecimento_ate=N
         if CHAVE in ctx:
             raise ValueError("RI consumo: contexto observado exige a política e o fornecedor explícitos")
         return pacote
+    fornecedor, conhecimento_ate = recortar_fornecedor(pacote, params, fornecedor, conhecimento_ate)
     marker = ctx.get(CHAVE)
     tracos = marker.get("tracos", {}) if isinstance(marker, dict) else {}
     authorized = emissores_autorizados(fornecedor)

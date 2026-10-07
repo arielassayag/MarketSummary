@@ -105,6 +105,12 @@ class Avaliador:
         validar_ri(pac, ctx, params, fornecedor=ri_fornecedor, conhecimento_ate=conhecimento_ate)
         from .resultado import validar_contexto
         pac = validar_contexto(pac, ctx, params)
+        self._inicializar_numerico(pac, ctx, params, rf_ust, rf_fonte,
+                                   ri_fornecedor=ri_fornecedor, conhecimento_ate=conhecimento_ate)
+
+    def _inicializar_numerico(self, pac: Mapping[str, Any], ctx: Mapping[str, Any], params: ParametrosCobertura,
+                 rf_ust: float | None, rf_fonte: dict[str, Any], *,
+                 ri_fornecedor=None, conhecimento_ate=None) -> None:
         self.pac = dict(pac)
         self.ctx = ctx
         self.params = params

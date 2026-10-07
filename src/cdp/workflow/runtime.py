@@ -1180,7 +1180,7 @@ class Runtime:
         return publish_thesis(self, week)
 
     # ------------------------------------------------------------------ integridade
-    def verify_all(self) -> tuple[bool, list[str]]:
+    def verify_all(self, *, ri_autoridade=None, ri_cortes=None) -> tuple[bool, list[str]]:
         msgs: list[str] = []
         ok = True
         b = self.book
@@ -1241,6 +1241,15 @@ class Runtime:
             if not evaluation_problems:
                 msgs += [f"avaliação das mentes: {r['semana']} — {r['estado']} (fim {r['fim']})"
                          for r in status(b, self.track(), now=self.now()) if r["estado"] != "resolvida"]
+        from ..cobertura.livro import verificar
+
+        # Só a presença de RI ativa esta obrigação adicional; jamais fornece autoridade.
+        from ..cobertura.ri_fluxo import livro_exige_ri
+        ri_existente = livro_exige_ri(self.book_root)
+        if ri_existente or ri_autoridade is not None or ri_cortes:
+            c_ok, c_msgs = verificar(self.book_root, ri_autoridade=ri_autoridade, ri_cortes=ri_cortes)
+            ok &= c_ok
+            msgs += [f"cobertura RI: {m}" for m in c_msgs]
         return bool(ok), msgs
 
     def evaluation_status(self) -> list[dict]:

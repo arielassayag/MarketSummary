@@ -99,6 +99,10 @@ def tp_deterministico(pac: Mapping[str, Any], ctx: Mapping[str, Any], params: Pa
     """Preço-alvo do caso-base (sem Monte Carlo) — usado pela ponte e pela verificação."""
     av = Avaliador(pac, ctx, params, rf, rf_fonte or {},
                    ri_fornecedor=ri_fornecedor, conhecimento_ate=conhecimento_ate)
+    return _tp_do_avaliador(av, pac)
+
+
+def _tp_do_avaliador(av: Avaliador, pac: Mapping[str, Any]) -> float | None:
     av.preparar_metodos()
     validos = av.metodos_validos()
     p0 = pac.get("preco")

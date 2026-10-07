@@ -7,8 +7,11 @@ Regras:
   sempre escapados (nenhum ``<script>``/HTML vindo de modelo é interpretado).
 - HTML autocontido: CSS inline e gráficos SVG inline (NAV e drawdown desde o início); nenhum
   recurso externo, nenhum script.
-- Cabeçalho com o rótulo "paper trading com preços reais" e o aviso de dados ("DADOS SIMULADOS"
-  quando sintético); rodapé de integridade com os hashes do registro/decisão.
+- Cabeçalho com o rótulo "carteira simulada com preços reais" e o aviso de dados ("DADOS
+  SIMULADOS" quando sintético); rodapé de integridade com os hashes do registro/decisão.
+- Texto ao investidor em pt-BR (:mod:`cdp.workflow.rotulos`): nomes de empresas no lugar dos
+  identificadores internos, controles e detalhes traduzidos, sem o nome do app de IA (a autoria
+  é "a gestão"); os identificadores técnicos continuam nos dados abertos.
 - Dados ausentes aparecem como ``n/d`` — nunca como zero.
 - :func:`write_report_files` grava ``relatorio.md``/``relatorio.html`` de forma exclusiva
   (nunca sobrescreve) e devolve caminhos e SHA-256.
@@ -60,13 +63,24 @@ _COMPONENT_ORDER = ("equity", "factor", "specific", "costs", "borrow", "financin
 _COMPONENT_PT = {"equity": "Ações (total)", "factor": "Fatorial", "specific": "Específico (alpha)",
                  "costs": "Custos", "borrow": "Aluguel", "financing": "Financiamento"}
 _GROUP_PT = {"factor_group": "Grupos de fatores", "country": "País", "sector": "Setor",
-             "side": "Long × short"}
+             "side": "Comprado × vendido"}
+_LADO_ATTR_PT = {"long": "Comprado", "short": "Vendido", "LONG": "Comprado", "SHORT": "Vendido"}
 _LINHA_PT = {"LOCAL": "local", "ADR": "ADR", "US_LISTED": "listada nos EUA", "ETF": "ETF"}
 _SQUEEZE_PT = {"low": "baixo", "medium": "médio", "high": "alto", "LOW": "baixo",
                "MEDIUM": "médio", "HIGH": "alto"}
 _FONTE_VISAO_PT = {"ai": "pesquisa", "pm": "gestor", "quant": "modelo", "human": "humana"}
 _STAGE_LABEL = {"normal": "normal", "soft_stop": "stop suave", "hard_stop": "stop duro",
-                "stop_out": "stop-out"}
+                "stop_out": "zeragem"}
+_CAMINHO_RE = re.compile(r"\s*Caminho: [\w-]+\.\s*$")
+_INTEGRIDADE_PT = {
+    "proposal_id": "Identificador da proposta", "proposal_hash": "Hash da proposta",
+    "snapshot_hash": "Hash dos dados de mercado", "config_hash": "Hash do mandato",
+    "research_hash": "Hash da pesquisa", "approval_hash": "Hash da aprovação",
+    "pm_decision_hash": "Hash da decisão do gestor", "risk_gate_hash": "Hash dos controles de risco",
+    "audit_head_hash": "Topo da trilha de auditoria",
+    "shadow_quant_hash": "Hash da carteira-sombra do modelo quantitativo",
+    "prev_proposal_hash": "Hash da proposta anterior", "record_hash": "Hash do registro",
+    "prev_record_hash": "Hash do registro anterior"}
 _SPARK = "▁▂▃▄▅▆▇█"
 _STEM_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,80}")
 GENESIS_RECORD_HASH = "0" * 64
@@ -158,10 +172,19 @@ def _truncate(text: str, n: int) -> str:
 
 
 def _sem_mente(text: str) -> str:
-    """Texto sem o nome do app de IA (a autoria aparece como "app de IA da gestão")."""
+    """Texto sem o nome do app de IA: a autoria aparece como "a gestão, com apoio de IA"."""
     from .painel_publicacao import sem_nome_da_mente
 
-    return sem_nome_da_mente(text) if text else text
+    return _autoria(sem_nome_da_mente(text)) if text else text
+
+
+def _autoria(text: str) -> str:
+    """Autoria ao investidor: "a gestão" (nunca "app de IA" nem o nome do app)."""
+    if not text:
+        return text
+    t = re.sub(r"[Aa]utoria: app de IA da gestão", "Autoria: a gestão, com apoio de IA", text)
+    t = re.sub(r"\bpelo app de IA da gestão", "pela gestão, com apoio de IA", t)
+    return re.sub(r"\bapp de IA da gestão", "gestão, com apoio de IA", t)
 
 
 def _ai_text(text: str | None, factbook: FactBook | None) -> str:
@@ -563,7 +586,9 @@ def render_daily_report(record: DailyRecord, history: list[DailyRecord], comment
     periods = period_returns(record, history)
     chain = _chain(record, history)
     synthetic = record.is_synthetic
-    notice = record.data_notice or ("dados reais de mercado" if not synthetic else "")
+    from . import rotulos as R
+
+    notice = R.aviso(record.data_notice or ("dados reais de mercado" if not synthetic else ""))
     chain_ok, chain_problems = verify_record_chain(chain)
     labels = [PAPER_TRADING_TEXT,
               f"Aviso de dados: {notice or NA}"]
@@ -595,7 +620,8 @@ def render_daily_report(record: DailyRecord, history: list[DailyRecord], comment
 
     ai_comment = f"[{AI_LABEL}]" in (commentary_md or "")
     s = Section("Comentário do dia", ai=ai_comment)
-    s.blocks.append(Block("md", commentary_md or "Comentário indisponível.", ai=ai_comment))
+    s.blocks.append(Block("md", _sem_mente(commentary_md or "") or "Comentário indisponível.",
+                          ai=ai_comment))
     sections.append(s)
 
     s = Section("Atribuição")
@@ -606,8 +632,8 @@ def render_daily_report(record: DailyRecord, history: list[DailyRecord], comment
     s.table(["Componente", "P&L", "Contribuição"], comp_rows, caption="Componentes do P&L")
     for group in ("factor_group", "country", "sector", "side"):
         lines = [a for a in record.attribution if a.group == group]
-        s.table([_GROUP_PT[group], "P&L", "Contribuição"], _attr_rows(lines, nav0),
-                caption=_GROUP_PT[group])
+        s.table([_GROUP_PT[group], "P&L", "Contribuição"],
+                _attr_pt(_attr_rows(lines, nav0), group), caption=_GROUP_PT[group])
     pnl = _issuer_pnl(record)
     winners = sorted(((k, v) for k, v in pnl.items() if v > 0), key=lambda kv: (-kv[1], kv[0]))
     losers = sorted(((k, v) for k, v in pnl.items() if v < 0), key=lambda kv: (kv[1], kv[0]))
@@ -647,8 +673,8 @@ def render_daily_report(record: DailyRecord, history: list[DailyRecord], comment
     integrity_alerts = [f"Integridade: {p}" for p in chain_problems]
     investor_alerts, tech = split_data_limitations(record.alerts)
     resumo = data_limitations_summary(len(tech))
-    s.items(integrity_alerts + investor_alerts + ([resumo] if resumo else [])
-            or ["Nenhum alerta no dia."])
+    s.items(integrity_alerts + [R.nomes_no_texto(a) for a in investor_alerts]
+            + ([resumo] if resumo else []) or ["Nenhum alerta no dia."])
     sections.append(s)
 
     s = Section("Evolução desde o início")
@@ -656,11 +682,11 @@ def render_daily_report(record: DailyRecord, history: list[DailyRecord], comment
     navs = [r.nav_end_usd for r in chain]
     dds = [r.risk.drawdown for r in chain]
     s.blocks.append(Block("svg", {
-        "svg": sparkline_svg(navs, dates, title="NAV (USD) desde o início",
+        "svg": sparkline_svg(navs, dates, title="PL (US$) desde o início",
                              fmt=lambda v: format_money(v)),
         "text": sparkline_text(navs),
-        "summary": f"NAV de {format_money(navs[0])} a {format_money(navs[-1])} "
-                   f"({len(navs)} pregões)"}, caption="NAV"))
+        "summary": f"PL de {format_money(navs[0])} a {format_money(navs[-1])} "
+                   f"({R.contagem(len(navs), 'pregão', 'pregões')})"}, caption="PL"))
     s.blocks.append(Block("svg", {
         "svg": sparkline_svg(dds, dates, title="Drawdown desde o início",
                              fmt=lambda v: fmt_pct(v), area_to_zero=True),
@@ -671,18 +697,19 @@ def render_daily_report(record: DailyRecord, history: list[DailyRecord], comment
 
     s = Section("Integridade")
     first = chain[0]
-    scope = ("desde a inception, GENESIS" if first.prev_record_hash == GENESIS_RECORD_HASH
+    scope = ("desde o início do mandato" if first.prev_record_hash == GENESIS_RECORD_HASH
              else f"desde {fmt_date(first.date)}, histórico parcial")
-    kv = [("record_hash", record.record_hash or NA), ("prev_record_hash", record.prev_record_hash),
+    kv = [("Hash do registro", record.record_hash or NA),
+          ("Hash do registro anterior", record.prev_record_hash),
           ("Hash do registro (recalculado)",
            "confere" if record.record_hash and record.compute_hash() == record.record_hash
            else "NÃO CONFERE (registro adulterado ou sem hash)"),
-          (f"Cadeia de hashes ({len(chain)} registros {scope})",
+          (f"Cadeia de hashes ({R.contagem(len(chain), 'registro', 'registros')} {scope})",
            "íntegra" if chain_ok else "NÃO CONFERE: " + "; ".join(chain_problems[:5])),
-          ("approval_hash", record.approval_hash or NA),
-          ("semana da carteira vigente", record.live_book_week.isoformat()
-           if record.live_book_week else NA)]
-    kv += [(f"input:{k}", v) for k, v in sorted(record.input_hashes.items())]
+          ("Hash da aprovação", record.approval_hash or NA),
+          ("Semana da carteira vigente", fmt_date(record.live_book_week)
+           if record.live_book_week else "nenhuma (em caixa)")]
+    kv += [(f"Insumo: {k}", v) for k, v in sorted(record.input_hashes.items())]
     s.kv(kv)
     sections.append(s)
 
@@ -697,6 +724,53 @@ def render_daily_report(record: DailyRecord, history: list[DailyRecord], comment
 # Relatório semanal
 # ==========================================================
 
+_MOTIVO_PT = (
+    ("Carteira do CDP: pesquisa de IA + decisão do agente PM.",
+     "Carteira do CDP: pesquisa e decisão da gestão."),
+    ("Fallback 1: apenas restrições da IA/PM (sem inclinações).",
+     "Alternativa 1: só as restrições da pesquisa e do gestor (sem inclinações)."),
+    ("Fallback 2: carteira só-quant.", "Alternativa 2: carteira do modelo quantitativo."),
+    ("Fallback 3:", "Alternativa 3:"),
+)
+
+
+def _motivo_pt(texto: str) -> str:
+    """Motivo de cada tentativa da decisão sem o jargão interno ("agente PM", "fallback")."""
+    t = str(texto or "")
+    for a, b in _MOTIVO_PT:
+        t = t.replace(a, b)
+    return t
+
+
+def _cap(texto: str) -> str:
+    return texto[:1].upper() + texto[1:] if texto else texto
+
+
+def _decisor(decision: Decision | None) -> str:
+    """Quem decidiu, sem jargão: ``CDP — Cabra da Peste (gestão autônoma)``."""
+    quem = decision.approver if decision is not None else AUTONOMOUS_DECIDER
+    return str(quem).replace("(PM autônomo)", "(gestão autônoma)")
+
+
+def _attr_pt(rows: list[list[str]], group: str) -> list[list[str]]:
+    """Linhas de atribuição com os nomes em pt-BR (país, setor, lado e grupo de fatores)."""
+    from . import rotulos as R
+
+    out = []
+    for r in rows:
+        nome_ = str(r[0])
+        if group == "side":
+            nome_ = _LADO_ATTR_PT.get(nome_, nome_)
+        elif group in ("country", "sector"):
+            nome_ = R.exposicao(group, nome_)[1]
+        elif group == "factor_group":
+            from .tese_analise import GROUP_CODE, GROUP_LABEL
+
+            nome_ = R.fator(GROUP_LABEL.get(GROUP_CODE.get(nome_, nome_), nome_))
+        out.append([nome_, *r[1:]])
+    return out
+
+
 def _by_issuer(views: Iterable[View]) -> dict[str, View]:
     out: dict[str, View] = {}
     for v in views:
@@ -708,13 +782,17 @@ def _by_issuer(views: Iterable[View]) -> dict[str, View]:
 
 
 def _view_label(v: View | None) -> str:
+    """Visão em pt-BR: ``positiva (+1), gestor, confiança 60%; sem venda``."""
     if v is None:
         return "—"
-    flags = [f for f, on in (("no_long", v.no_long), ("no_short", v.no_short)) if on]
+    flags = [f for f, on in (("sem compra", v.no_long), ("sem venda", v.no_short)) if on]
     if v.max_abs_weight is not None:
-        flags.append(f"teto {fmt_pct(v.max_abs_weight)}")
-    base = f"{v.score:+d} ({v.source.value}, conf. {fmt_num(v.confidence, 2)})"
-    return base + (f" [{', '.join(flags)}]" if flags else "")
+        flags.append(f"teto de {fmt_pct(v.max_abs_weight)}")
+    tom = "positiva" if v.score > 0 else "negativa" if v.score < 0 else "neutra"
+    sinal = f"{v.score:+d}".replace("-", "−") if v.score else "0"
+    base = (f"{tom} ({sinal}), {_FONTE_VISAO_PT.get(v.source.value, v.source.value)}, "
+            f"confiança {fmt_pct(v.confidence, 0)}")
+    return base + (f"; {', '.join(flags)}" if flags else "")
 
 
 def issuer_period_returns(records: Sequence[DailyRecord]) -> dict[str, float]:
@@ -776,19 +854,23 @@ def _week_components(records: Sequence[DailyRecord]) -> list[list[str]]:
 
 def _position_rows(positions: Sequence[PositionTarget], views: Mapping[str, View],
                    factbook: FactBook | None,
-                   pm_rationale: Mapping[str, str] | None = None) -> list[list[str]]:
+                   pm_rationale: Mapping[str, str] | None = None,
+                   nomes: Mapping[str, str] | None = None) -> list[list[str]]:
     """Linhas da carteira; o racional prefere a visão do PM (``views`` com fonte PM ou, na falta
     dela, a visão verificada em ``pm``) e cai para a visão de pesquisa."""
+    from . import rotulos as R
+
     rows = []
     pm_rationale = pm_rationale or {}
+    nomes = nomes or {}
     for p in positions:
         v = views.get(p.issuer_id)
         text = (v.rationale if v is not None and v.source == ViewSource.PM
                 else pm_rationale.get(p.issuer_id) or (v.rationale if v is not None else None))
-        rationale = _truncate(_ai_text(text, factbook), AI_CELL_CHARS) if text else NA
-        from . import rotulos as R
-
-        rows.append([p.name or p.issuer_id, R.exposicao("country", p.country)[1],
+        rationale = (_truncate(R.nomes_no_texto(_ai_text(text, factbook), nomes), AI_CELL_CHARS)
+                     if text else NA)
+        rows.append([nomes.get(p.issuer_id) or p.name or p.issuer_id,
+                     R.exposicao("country", p.country)[1],
                      R.exposicao("sector", p.sector)[1], _pct(p.weight, signed=True),
                      _usd(p.notional_usd, signed=True),
                      f"{p.execution_ticker} ({_LINHA_PT.get(str(p.line_type), p.line_type)})",
@@ -804,9 +886,10 @@ def _liquidity_kv(risk: Any, cfg: FundConfig) -> list[tuple[str, str]]:
     com a execução no fechamento; dias a uma participação do ADTV na regra anterior."""
     if cfg.execution is not None:
         return [("Máx. fechamentos para liquidar", fmt_num(_f(risk.max_days_to_liquidate), 1)),
-                ("% do gross liquidável em 1 fechamento", _pct(risk.pct_nav_liquidated_1d))]
+                ("% da exposição bruta liquidável em 1 fechamento",
+                 _pct(risk.pct_nav_liquidated_1d))]
     return [("Máx. dias para liquidar", fmt_num(_f(risk.max_days_to_liquidate), 1)),
-            ("% do NAV liquidável em 1 dia", _pct(risk.pct_nav_liquidated_1d))]
+            ("% do PL liquidável em 1 dia", _pct(risk.pct_nav_liquidated_1d))]
 
 
 def _expected_cost(p: Proposal) -> tuple[float | None, bool]:
@@ -899,11 +982,11 @@ def _compare_rows(a: Proposal, b: Proposal) -> list[list[str]]:
         row("Fração de risco fatorial", _factor_share(a), _factor_share(b),
             lambda v: _pct(v), lambda v: _pct(v, True)),
         row("Beta", ra.beta, rb.beta, lambda v: fmt_num(_f(v), 3, True)),
-        row("Gross", ra.gross, rb.gross, lambda v: _pct(v), lambda v: _pct(v, True)),
-        row("Net", ra.net, rb.net, lambda v: _pct(v, True)),
-        row("Longs", ra.n_long, rb.n_long, lambda v: fmt_num(_f(v), 0),
+        row("Exposição bruta", ra.gross, rb.gross, lambda v: _pct(v), lambda v: _pct(v, True)),
+        row("Exposição líquida", ra.net, rb.net, lambda v: _pct(v, True)),
+        row("Posições compradas", ra.n_long, rb.n_long, lambda v: fmt_num(_f(v), 0),
             lambda v: fmt_num(_f(v), 0, True)),
-        row("Shorts", ra.n_short, rb.n_short, lambda v: fmt_num(_f(v), 0),
+        row("Posições vendidas", ra.n_short, rb.n_short, lambda v: fmt_num(_f(v), 0),
             lambda v: fmt_num(_f(v), 0, True)),
         row("N efetivo", ra.effective_n, rb.effective_n, lambda v: fmt_num(_f(v), 1),
             lambda v: fmt_num(_f(v), 1, True)),
@@ -951,9 +1034,10 @@ def render_weekly_report(week: date, proposal: Proposal, decision: Decision | No
     cfg = cfg or _default_config()
     week_records = [r for r in week_records if r.date < week]
     synthetic = bool(proposal.is_synthetic)
-    notice = proposal.data_notice or (SIMULATED_DATA_NOTICE if synthetic else "dados reais")
     from . import rotulos as R
 
+    notice = R.aviso(proposal.data_notice or (SIMULATED_DATA_NOTICE if synthetic
+                                              else "dados reais"))
     path_raw = path_taken or str(proposal.overrides.get("label", NA))
     path = R.CAMINHO_PT.get(path_raw, path_raw)
     risk = proposal.risk
@@ -964,13 +1048,19 @@ def render_weekly_report(week: date, proposal: Proposal, decision: Decision | No
         for fid, f in factbook.facts.items():
             if f.issuer_id and fid.endswith(".name") and f.formatted:
                 nomes.setdefault(f.issuer_id, f.formatted)
+    # Grafia canônica (acentos) do universo vence o nome cru da proposta.
+    nomes = {**nomes, **R.nomes_do_universo()}
 
     def nm(iid: str) -> str:
         return R.nome(iid, nomes)
 
-    labels = ["Textos marcados [IA]: escritos pelo app de IA da gestão e verificados pelo código "
-              "(números só do código)",
-              f"Decisão autônoma assinada por {decision.approver if decision else AUTONOMOUS_DECIDER}",
+    def ia(text: str | None) -> str:
+        """Texto da gestão (IA): placeholders resolvidos e emissores pelo nome."""
+        return R.nomes_no_texto(_ai_text(text, factbook), nomes)
+
+    labels = ["Textos marcados [IA]: redigidos pela gestão com apoio de IA e verificados pelo "
+              "código (números só do código)",
+              f"Decisão autônoma assinada por {_decisor(decision)}",
               PAPER_TRADING_TEXT, f"Aviso de dados: {notice}"]
     decision_problems = _decision_problems(decision, proposal) if decision is not None else []
     if decision_problems:
@@ -978,7 +1068,7 @@ def render_weekly_report(week: date, proposal: Proposal, decision: Decision | No
                       + "; ".join(decision_problems[:3]) + ")")
     vt = _f(proposal.overrides.get("vol_target"))
     kpis = [
-        ("Caminho da decisão", path, "gates determinísticos"),
+        ("Caminho da decisão", path, "controles determinísticos"),
         ("Vol ex-ante", _pct(risk.ex_ante_vol),
          f"alvo {_pct(vt) if vt is not None else fmt_pct(cfg.risk.vol_target_annual)} · banda "
          f"{_band(cfg)}"),
@@ -995,7 +1085,7 @@ def render_weekly_report(week: date, proposal: Proposal, decision: Decision | No
     s = Section("Decisão da semana (autônoma)")
     rows: list[tuple[str, str]] = []
     if decision is not None:
-        rows += [("Decisor", decision.approver),
+        rows += [("Decisor", _decisor(decision)),
                  ("Modo", R.MODO_PT.get(decision.mode.value, decision.mode.value)),
                  ("Decisão", R.DECISAO_PT.get(decision.decision.value, decision.decision.value)),
                  ("Decidida em", R.quando(decision.decided_at)),
@@ -1007,25 +1097,26 @@ def render_weekly_report(week: date, proposal: Proposal, decision: Decision | No
         rows.append(("Decisão", "não registrada"))
     rows += [("Caminho", path),
              ("Vol-alvo aplicada", _pct(vt) if vt is not None else "mandato"),
-             ("Gross máximo aplicado", _mult(proposal.overrides.get("gross_max"))
+             ("Exposição bruta máxima aplicada", _mult(proposal.overrides.get("gross_max"))
               if proposal.overrides.get("gross_max") is not None else "mandato")]
     if pm is not None:
         rows += [("Regime [IA]", REGIME_PT.get(pm.regime, pm.regime)),
                  ("Postura de risco [IA]", POSTURE_PT.get(pm.risk_posture, pm.risk_posture)),
-                 ("Abstenção do PM", "sim (o quant decidiu)" if pm.abstain else "não"),
-                 ("Visões / exclusões do PM", f"{len(pm.views)} / {len(pm.exclusions)}")]
+                 ("Abstenção do gestor", "sim (o modelo quantitativo decidiu)" if pm.abstain
+                  else "não"),
+                 ("Visões / exclusões do gestor", f"{len(pm.views)} / {len(pm.exclusions)}")]
     rows += [("Posições", f"{risk.n_long} compradas · {risk.n_short} vendidas"),
              ("Vol ex-ante", _pct(risk.ex_ante_vol)),
              ("Exposição bruta / líquida", f"{_pct(risk.gross)} / {_pct(risk.net, True)}"),
              ("Beta", fmt_num(_f(risk.beta), 3, True))]
     s.kv(rows)
     if decision is not None:
-        s.p(R.pt_texto(_ai_text(decision.rationale, factbook), nomes), ai=True)
+        s.p(ia(_CAMINHO_RE.sub("", decision.rationale or "")), ai=True)
     sections.append(s)
 
     # 2. Racional
     s = Section("Racional", ai=True)
-    s.p(_ai_text(pm.market_view if pm else None, factbook), ai=True)
+    s.p(ia(pm.market_view if pm else None), ai=True)
     sections.append(s)
 
     # 3. Avaliação da semana anterior
@@ -1036,19 +1127,21 @@ def render_weekly_report(week: date, proposal: Proposal, decision: Decision | No
         for r in recs:
             growth *= 1.0 + float(r.ret)
         last = recs[-1]
-        s.kv([("Período", f"{fmt_date(recs[0].date)} a {fmt_date(last.date)} ({len(recs)} pregões)"),
+        s.kv([("Período", f"{fmt_date(recs[0].date)} a {fmt_date(last.date)} "
+                          f"({R.contagem(len(recs), 'pregão', 'pregões')})"),
               ("Retorno da semana", _pct(growth - 1.0, True)),
               ("P&L da semana", _usd(sum(float(r.pnl_usd) for r in recs), True)),
-              ("NAV", f"{format_money(recs[0].nav_start_usd)} → {format_money(last.nav_end_usd)}"),
+              ("PL", f"{format_money(recs[0].nav_start_usd)} → {format_money(last.nav_end_usd)}"),
               ("Vol ex-ante no fechamento", _pct(last.risk.ex_ante_vol)),
               ("Drawdown no fechamento", _pct(last.risk.drawdown))])
         s.table(["Componente", "P&L", "Contribuição"], _week_components(recs),
                 caption="Componentes do P&L na semana")
         for group in ("factor_group", "country", "sector", "side"):
-            s.table([_GROUP_PT[group], "P&L", "Contribuição"], _agg_attr(recs, group)[:TOP_N],
+            s.table([_GROUP_PT[group], "P&L", "Contribuição"],
+                    _attr_pt(_agg_attr(recs, group)[:TOP_N], group),
                     caption=f"{_GROUP_PT[group]} — semana")
     else:
-        s.p("Sem registros diários na semana anterior (inception ou primeira semana).")
+        s.p("Sem registros diários na semana anterior (carteira inaugural ou primeira semana).")
     prev_map = {k: v for k, v in _by_issuer(prev_views).items() if v.score != 0}
     stock_ret = issuer_period_returns(recs)
     thesis_rows = []
@@ -1058,7 +1151,7 @@ def render_weekly_report(week: date, proposal: Proposal, decision: Decision | No
         if resid is not None:
             measure, sign = f"resíduo {_pct(resid, True)}", resid
         elif total is not None:
-            measure, sign = f"retorno total USD {_pct(total, True)}", total
+            measure, sign = f"retorno total em US$ {_pct(total, True)}", total
         else:
             measure, sign = NA, None
         worked = NA if sign is None or sign == 0 else ("sim" if (sign > 0) == (v.score > 0)
@@ -1068,7 +1161,7 @@ def render_weekly_report(week: date, proposal: Proposal, decision: Decision | No
                             fmt_num(v.confidence, 2), measure, worked])
     s.table(["Emissor", "Visão anterior", "Fonte", "Confiança", "Realizado", "Funcionou?"],
             thesis_rows, caption="Teses da semana anterior (realizado medido por código)")
-    s.p(_ai_text(pm.evaluation_last_week if pm else None, factbook), ai=True)
+    s.p(ia(pm.evaluation_last_week if pm else None), ai=True)
     sections.append(s)
 
     # 4. O que mudou na visão
@@ -1082,7 +1175,7 @@ def render_weekly_report(week: date, proposal: Proposal, decision: Decision | No
         elif b is None:
             change = "encerrada"
         elif a.score != b.score:
-            change = "stance ↑" if b.score > a.score else "stance ↓"
+            change = "visão mais positiva" if b.score > a.score else "visão mais negativa"
         elif (a.no_long, a.no_short, a.max_abs_weight) != (b.no_long, b.no_short,
                                                             b.max_abs_weight):
             change = "restrição alterada"
@@ -1091,9 +1184,9 @@ def render_weekly_report(week: date, proposal: Proposal, decision: Decision | No
         diff_rows.append([nm(iid), _view_label(a), _view_label(b), change])
     counts = {k: sum(1 for r in diff_rows if r[3] == k) for k in ("nova", "encerrada")}
     s.p(f"Visões novas: {counts['nova']}; encerradas: {counts['encerrada']}; com mudança de "
-        f"stance ou restrição: {len(diff_rows) - counts['nova'] - counts['encerrada']}.")
-    s.table(["Emissor", "Antes", "Agora", "Mudança"], diff_rows)
-    s.p(_ai_text(pm.what_changed if pm else None, factbook), ai=True)
+        f"visão ou restrição: {len(diff_rows) - counts['nova'] - counts['encerrada']}.")
+    s.table(["Empresa", "Antes", "Agora", "Mudança"], diff_rows)
+    s.p(ia(pm.what_changed if pm else None), ai=True)
     sections.append(s)
 
     # 5. O que mudou na carteira
@@ -1133,7 +1226,7 @@ def render_weekly_report(week: date, proposal: Proposal, decision: Decision | No
     change_rows.sort(key=lambda r: (r[1], r[0]))
     cost, partial = _expected_cost(proposal)
     s.kv([("Base de comparação", "carteira da semana anterior" if prev_proposal is not None
-           else "caixa (inception)"),
+           else "caixa (carteira inaugural)"),
           ("Entradas / saídas", f"{tally['Entrada']} / {tally['Saída']}"),
           ("Aumentos / reduções / inversões",
            f"{tally['Aumento']} / {tally['Redução']} / {tally['Inversão']}"),
@@ -1145,7 +1238,7 @@ def render_weekly_report(week: date, proposal: Proposal, decision: Decision | No
            if cost is not None else NA),
           ("Custo estimado (% do PL)", _pct(cost / proposal.nav_usd) if cost is not None else NA),
           ("Custo anual no objetivo (modelo)", _pct(proposal.optimizer.expected_cost_annual))])
-    s.table(["Emissor", "Ação", "Lado", "Peso anterior", "Peso novo", "Δ peso", "Linha"],
+    s.table(["Empresa", "Ação", "Lado", "Peso anterior", "Peso novo", "Δ peso", "Linha"],
             change_rows)
     sections.append(s)
 
@@ -1161,9 +1254,9 @@ def render_weekly_report(week: date, proposal: Proposal, decision: Decision | No
                "Risco de squeeze", "Sinal quant. (z)", "Visão", "Racional [IA]"]
     pm_rat = ({v.issuer_id: v.rationale for v in pm.views}
               if pm is not None and not pm.abstain else {})
-    s.table(headers, _position_rows(longs[:TOP_N], view_map, factbook, pm_rat),
+    s.table(headers, _position_rows(longs[:TOP_N], view_map, factbook, pm_rat, nomes),
             caption=f"Maiores posições compradas ({len(longs)} no total)")
-    s.table(headers, _position_rows(shorts[:TOP_N], view_map, factbook, pm_rat),
+    s.table(headers, _position_rows(shorts[:TOP_N], view_map, factbook, pm_rat, nomes),
             caption=f"Maiores posições vendidas ({len(shorts)} no total)")
     sections.append(s)
 
@@ -1200,16 +1293,17 @@ def render_weekly_report(week: date, proposal: Proposal, decision: Decision | No
         s.table(["Estilo", "Exposição líquida (σ × PL)", "Limite (σ × PL)"], estilo_rows,
                 caption="Exposições de estilo, em desvios-padrão do fator vezes o PL")
     stress = sorted(risk.stress_tests.items(), key=lambda kv: (kv[1], kv[0]))[:TOP_N]
-    s.table(["Cenário", "Resultado (% do PL)"], [[k, _pct(v, True)] for k, v in stress],
+    s.table(["Cenário", "Resultado (% do PL)"], [[R.cenario(k), _pct(v, True)]
+                                                 for k, v in stress],
             caption="Testes de estresse (piores cenários)")
     from .tese_analise import factor_label
 
     fac = sorted(risk.factor_contributions.items(), key=lambda kv: (-abs(kv[1]), kv[0]))[:TOP_N]
-    s.table(["Fator", "Fração da variância"], [[factor_label(k)[0], _pct(v, True)]
+    s.table(["Fator", "Fração da variância"], [[R.fator(factor_label(k)[0]), _pct(v, True)]
                                                for k, v in fac],
             caption="Contribuições fatoriais para a variância (Euler)")
     top = sorted(risk.top_risk_contributors.items(), key=lambda kv: (-abs(kv[1]), kv[0]))[:TOP_N]
-    s.table(["Emissor", "Fração da variância"], [[nm(k), _pct(v, True)] for k, v in top],
+    s.table(["Empresa", "Fração da variância"], [[nm(k), _pct(v, True)] for k, v in top],
             caption="Maiores contribuidores de risco")
     sections.append(s)
 
@@ -1219,22 +1313,25 @@ def render_weekly_report(week: date, proposal: Proposal, decision: Decision | No
     checks = sorted(proposal.compliance, key=lambda c: (c.passed, order[c.severity], c.check_id))
     fora = [c for c in checks if not c.passed and c.severity != Severity.INFO]
     s.table(["Controle", "Tipo", "Resultado", "Detalhe"],
-            [[R.controle(c.check_id).capitalize(),
+            [[_cap(R.controle(c.check_id, c.name)),
               R.SEVERIDADE_PT.get(c.severity.value, c.severity.value),
               ("dentro" if c.passed else "fora") if c.severity != Severity.INFO
               else ("na meta" if c.passed else "informativo"),
-              R.pt_texto(c.details, nomes)] for c in checks],
+              R.detalhe(c.details, nomes)] for c in checks],
             caption=(f"{len(fora)} controle(s) fora do limite" if fora
                      else "Todos os controles obrigatórios e de alerta dentro do limite"))
     s.kv([("Caminho tomado", path),
           ("Controles obrigatórios fora do limite",
-           "; ".join(R.controle(c.check_id) for c in proposal.hard_failures) or "nenhum"),
+           "; ".join(R.controle(c.check_id, c.name) for c in proposal.hard_failures)
+           or "nenhum"),
           ("Limites de alerta atingidos",
-           "; ".join(R.controle(c.check_id) for c in proposal.soft_failures) or "nenhum")])
+           "; ".join(R.controle(c.check_id, c.name) for c in proposal.soft_failures)
+           or "nenhum")])
     if attempts:
         s.table(["Tentativa", "Motivo", "Compradas", "Vendidas", "Vol", "Obrigatórios fora"],
                 [[R.CAMINHO_PT.get(str(a.get("label", NA)), str(a.get("label", NA))),
-                  R.pt_texto(str(a.get("why", "")), nomes), str(a.get("n_long", NA)),
+                  _motivo_pt(R.pt_texto(str(a.get("why", "")), nomes)),
+                  str(a.get("n_long", NA)),
                   str(a.get("n_short", NA)), _pct(a.get("vol")),
                   "; ".join(R.controle(h) for h in (a.get("hard") or [])) or "nenhum"]
                  for a in attempts],
@@ -1242,7 +1339,7 @@ def render_weekly_report(week: date, proposal: Proposal, decision: Decision | No
     notes = [n for n in proposal.optimizer.notes if any(
         k in n for k in ("Fallback", "KILL_SWITCH", "relax", "Relax", "inviáv"))]
     if notes:
-        s.items([R.pt_texto(n, nomes) for n in notes],
+        s.items([R.detalhe(n, nomes) for n in notes],
                 caption="Notas de alternativa e relaxamento")
     sections.append(s)
 
@@ -1266,24 +1363,23 @@ def render_weekly_report(week: date, proposal: Proposal, decision: Decision | No
     s = Section("Diário de decisão", ai=True)
     journal = decision.journal if decision is not None else None
     if journal is not None:
-        s.kv([("Situação [IA]", _ai_text(journal.situation, factbook)),
-              ("Variáveis-chave", "; ".join(journal.key_variables) or NA),
-              ("O que mudou [IA]", _ai_text(journal.alternatives_considered, factbook)),
+        # ``mental_state`` (a mente que decidiu) fica na trilha e nos dados abertos.
+        s.kv([("Situação [IA]", ia(journal.situation)),
+              ("Variáveis-chave", R.nomes_no_texto("; ".join(journal.key_variables), nomes)
+               or NA),
+              ("O que mudou [IA]", ia(journal.alternatives_considered)),
               ("Horizonte (semanas)", str(journal.horizon_weeks)),
-              ("Dimensionamento (código)", journal.sizing_rationale or NA),
-              ("IA × quant × PM [IA]", _ai_text(journal.ai_vs_quant_vs_pm, factbook)),
-              ("Premortem [IA]", _ai_text(journal.premortem, factbook)),
-              ("Estado", journal.mental_state or NA)])
-        jrows = [[nm(j.issuer_id), _ai_text(j.thesis, factbook),
-                  _ai_text(j.invalidation_criteria, factbook), _ai_text(j.premortem, factbook)]
+              ("Dimensionamento (código)", R.detalhe(journal.sizing_rationale, nomes) or NA),
+              ("Pesquisa × modelo × gestor [IA]", ia(journal.ai_vs_quant_vs_pm)),
+              ("Premortem [IA]", ia(journal.premortem))])
+        jrows = [[nm(j.issuer_id), ia(j.thesis), ia(j.invalidation_criteria), ia(j.premortem)]
                  for j in journal.positions]
     elif pm is not None:
-        jrows = [[nm(j.issuer_id), _ai_text(j.thesis, factbook),
-                  _ai_text(j.invalidation_criteria, factbook), _ai_text(j.premortem, factbook)]
+        jrows = [[nm(j.issuer_id), ia(j.thesis), ia(j.invalidation_criteria), ia(j.premortem)]
                  for j in pm.position_journal]
     else:
         jrows = []
-    s.table(["Emissor", "Tese", "Invalidação", "Premortem"], jrows, ai=True,
+    s.table(["Empresa", "Tese", "Invalidação", "Premortem"], jrows, ai=True,
             caption="Teses por posição")
     sections.append(s)
 
@@ -1304,7 +1400,7 @@ def render_weekly_report(week: date, proposal: Proposal, decision: Decision | No
         kv.append(("shadow_quant_hash", shadow_quant.proposal_hash()))
     if prev_proposal is not None:
         kv.append(("prev_proposal_hash", prev_proposal.proposal_hash()))
-    s.kv(kv)
+    s.kv([(_INTEGRIDADE_PT.get(k, k), v) for k, v in kv])
     sections.append(s)
 
     doc = Document(

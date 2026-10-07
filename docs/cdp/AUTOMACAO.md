@@ -56,6 +56,25 @@ das rotinas: `docs/cdp/ROTINAS.md`. Portal público: `docs/cdp/SITE.md`.
   nuvem ou do GitHub Actions; nos apps locais, o identificador da conversa quando o app o exporta
   — `CODEX_THREAD_ID`, por exemplo — ou `CDP_SESSAO` definido pelo script de rotina; sem isso, o
   trailer é omitido); `uv run python -m cdp estado` lê esse histórico.
+- **Modelos da cobertura (sem tarefa nova)**: a cadência anda nas tarefas que já existem, e o
+  código decide cada passo (`cobertura` em `cdp agenda`):
+  - `cdp-semanal`, no dia de montagem, antes do `weekly prepare`: retrato completo da data-base
+    da decisão (`cobertura.atualizar_antes_da_decisao`; `cdp cobertura run --date <pregão
+    anterior>`), para a pesquisa, a decisão, a tese e o portal usarem modelos do dia. Falha
+    nunca atrasa a decisão.
+  - `cdp-diario`, à noite: o retrato pendente (`cobertura.snapshot_pendente`) — parcial
+    (`--emissores`) quando um emissor divulgou resultado depois do último modelo (datas da CVM,
+    da SEC e do Yahoo no arquivo público local), completo depois de um evento macro de impacto
+    alto (`configs/cdp/cobertura/eventos_macro.yaml`) ou quando a atualização da manhã do dia
+    de montagem não foi gravada; nada na véspera do dia de montagem (a manhã seguinte cobre). No
+    último dia de montagem do mês, a revisão mensal dos modelos
+    (`cdp cobertura revisao-mensal`), retomada nas noites seguintes se não sair.
+  - `cdp-cobertura` (segunda a quinta): as notas de pós-resultado dos emissores reavaliados
+    (`cobertura.notas_pos_resultado`) antes da fila.
+  Não há retrato completo fixo na sexta à noite: o retrato da manhã é o que sustentou a decisão
+  (um segundo, na mesma noite, só dobraria o volume do livro, cerca de 18 MB por retrato
+  completo). As tarefas do Codex não mudam: o prompt manda seguir o roteiro, e o roteiro vive no
+  repositório.
 
 ## 2. Qual opção escolher (outubro de 2026)
 
@@ -374,7 +393,7 @@ Nenhum workflow roda a mente nas rotinas. O workflow com IA gerado por
 | `COMMIT_FORA_DO_ESCOPO` | alta | commit de rotina fora dos caminhos da tarefa |
 | `SLA_TESE` | média | tese da semana não publicada até 12:00 do dia seguinte |
 | `SLA_RELATORIO_SEMANAL` | média | relatório semanal pendente até 12:00 do dia seguinte |
-| `SLA_COBERTURA` | média | retrato da cobertura pendente por mais de um dia útil |
+| `SLA_COBERTURA` | média | retrato da cobertura (completo ou parcial) pendente por mais de um dia útil |
 | `EXECUTOR_PAUSADO` | média | executor `nenhum` há mais de 24 h |
 | `CLONE_DIVERGENTE` | média | gravações do livro neste clone fora de `origin/main` |
 | `PORTAL_DEFASADO` | média | portal publicado ≠ `origin/main` (com `--rede`) |
@@ -421,8 +440,10 @@ Nenhum workflow roda a mente nas rotinas. O workflow com IA gerado por
   reforço, 1 de sábado, 4 de notas, 1 de estado), mais a calibração mensal. A maioria sai no
   gate em poucos segundos. Confira o uso no painel do seu plano (no Claude,
   claude.ai/settings/usage).
-- Execuções pesadas: montagem (1 a 2 por semana), fechamentos (5 por semana, sexta mais longa),
-  notas de cobertura (4 por semana, até 12 emissores cada), calibração mensal.
+- Execuções pesadas: montagem (1 a 2 por semana, com o retrato completo da cobertura antes da
+  coleta), fechamentos (5 por semana, sexta mais longa; retratos parciais depois de resultados,
+  completos depois de eventos macro e, no último dia de montagem do mês, a revisão mensal dos
+  modelos), notas de cobertura (4 por semana, até 12 emissores cada), calibração mensal.
 - Níveis por tarefa em `configs/cdp/rotinas.yaml`: `forte` (semanal, diário, cobertura) e
   `leve` (risco, estado, calibração).
 

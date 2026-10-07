@@ -170,17 +170,26 @@ regular (`docs/cdp/AUTOMACAO.md`, seção 13).
 
 ## Pendentes de decisão humana
 
+Atualizado em 06/10/2026 (o Codex roda as rotinas; ver a entrada "O Codex roda as rotinas").
+
 - **Revisão jurídica antes da publicação de 09/10**: o portal público e indexado mostra ratings
   (Compra, Neutro, Venda), preços-alvo de emissores listados e os termos "fundo", "gestão" e
-  "Asset Management" (Resoluções CVM nº 20/2021 e nº 175/2022). Decidir rótulos, termos,
-  indexação das páginas da cobertura e o texto final do aviso legal.
-- **Regra do ramo `main` no GitHub** (hoje não existe): bloquear force push e exclusão, sem
-  exigir pull request, com o ramo `cdp-trava` livre — antes de ligar qualquer executor fora do
-  Claude Code e antes da troca de 11/10.
-- Confirmar a troca do executor no domingo 11/10, depois de ler o ensaio.
+  "Asset Management" (Resoluções CVM nº 20/2021 e nº 175/2022). Decidir rótulos dos ratings,
+  termos, indexação das páginas da cobertura, o texto final do aviso legal e o logotipo e a
+  imagem de compartilhamento com "ASSET MANAGEMENT".
+- **Senha do operador no PC do Codex** (antes de 09/10): `uv run python -m cdp kill-switch senha`,
+  num terminal próprio, fora de qualquer app de IA. Sem ela, um kill switch ligado por gatilho
+  HARD não tem como ser desligado.
+- Histórico público de commits anterior à data de início: manter ou publicar um ramo novo (depois
+  de 09/10, nunca force).
+- Distribuição de ratings e de confiança da cobertura no retrato-gênese de 08/10: aceitar ou
+  pedir nova calibração antes da publicação (`docs/cdp/COBERTURA.md`).
 - Portal indexado por buscadores (padrão: sim, com aviso legal fixo; depende da revisão
   jurídica acima) e domínio próprio (padrão: não; endereço do GitHub Pages).
 - Identificadores de modelo dos níveis `forte` e `leve` em cada app (nunca no repositório).
+
+Resolvidos: a regra do ramo `main` está ativa desde 06/10/2026 (entrada "Regra do ramo main
+ativa"); a troca de executor para a nuvem prevista para 11/10 não ocorre (o executor é o Codex).
 
 ## 2026-10-06 · O Codex roda as rotinas
 
@@ -193,3 +202,34 @@ Consequências: prompts com `uv run python -m cdp rotinas exportar --alvo codex 
 mente registrada nos JSON é a do gate (`codex`), conferida pelos validadores; o desligamento do
 kill switch exige a senha do operador (o Codex com acesso total não exporta variáveis de
 sandbox).
+
+## 2026-10-06 · Regra do ramo `main` ativa
+
+Contexto: o executor das rotinas (Codex) roda com acesso total ao clone e à credencial de push. →
+Decisão: ruleset 24618259 ativo em `main` desde 06/10/2026 — bloqueia force push e exclusão, sem
+exigir pull request; o ramo `cdp-trava` fica livre (a trava distribuída grava nele). →
+Consequências: nenhum histórico publicado é reescrito, nem por engano de um app de IA; `cdp
+publicar` continua sem força. Conferência: `gh api repos/arielassayag/MarketSummary/rulesets`.
+
+## 2026-10-06 · Caducidade da decisão recusada no leilão
+
+Contexto: com o kill switch ligado no fechamento do dia de montagem, a efetivação é recusada; sem
+registro do dia, a decisão ficava pendente e era efetivada depois, quando um humano desligasse o
+kill switch — com o preço daquele fechamento já conhecido. → Decisão: a decisão vale só para o
+leilão de fechamento do seu dia de montagem. Recusada nesse leilão pelo kill switch, o dia é
+registrado com a recusa ("efetivação recusada"; `book/<semana>/efetivacao_recusada.json` e evento
+`BOOKING_LAPSED`) e a decisão caduca: nunca é efetivada depois. Na carteira inaugural, o histórico
+começa nesse dia em caixa; numa semana regular, a carteira anterior segue marcada. A próxima data
+de montagem decide de novo, com dados novos. Recusa por dado ausente (preço ou câmbio) na
+inaugural não caduca: a reserva do mesmo fechamento tenta de novo. → Consequências: nenhuma
+efetivação retroativa; `docs/cdp/EXECUCAO.md`, seção 12.
+
+## 2026-10-06 · Falha de coleta nunca apaga dado gravado
+
+Contexto: com a rede fora, a coleta de fundamentos do Yahoo devolvia linhas vazias que apagavam o
+valor de mercado gravado e derrubavam o modelo de risco na preparação da semana. → Decisão: fonte
+sem resposta é falha de coleta registrada, nunca um retrato vazio; a análise usa o último dado
+gravado de cada fonte que falhou e o `weekly prepare` devolve um aviso legível (`aviso_coleta`);
+com a rede fora, `weekly prepare --offline` monta o briefing só com a base gravada. →
+Consequências: a preparação da sexta não depende da rede para terminar; ausente nunca vira zero
+nem substitui um valor gravado.

@@ -89,6 +89,11 @@ class FetchError(RuntimeError):
     """Falha de coleta após esgotar as novas tentativas."""
 
 
+class FundamentosVaziosError(FetchError):
+    """Nenhuma linha com fundamentos: falha de coleta (rede ou endpoint do Yahoo fora), nunca um
+    retrato "vazio" que substitua os fundamentos gravados."""
+
+
 # ======================================================================
 # Política HTTP compartilhada (User-Agent, retry com backoff)
 # ======================================================================
@@ -596,13 +601,37 @@ def fetch_fundamentals(tickers: Sequence[str], *, currency_map: Mapping[str, str
     divergências são sinalizadas em ``fundamentals_quality``. Múltiplos do Yahoo (P/L, P/VPA,
     EV/EBITDA, beta) são guardados como vieram, junto com os ingredientes brutos (LPA, VPA,
     moedas, ações), e marcados quando implausíveis. Linhas sem nenhum dado ficam com NaN e
-    ``fundamentals_quality = 'sem_dados'``.
+    ``fundamentals_quality = 'sem_dados'``; se NENHUMA linha tiver dado, é falha de coleta
+    (:class:`FundamentosVaziosError`), nunca um retrato vazio.
     """
     ref = as_of or datetime.now(UTC).date()
     infos = fetch_infos(tickers, ticker_factory=ticker_factory, max_workers=max_workers, sleep=sleep)
     cmap = {str(k): str(v) for k, v in (currency_map or {}).items()}
     rows = {t: _info_row(t, obj, info, cmap.get(t), ref) for t, (obj, info) in infos.items()}
-    return fundamentals_frame(rows)
+    df = fundamentals_frame(rows)
+    if len(df) and bool(linhas_sem_dados(df).all()):
+        # Sem rede (ou com o endpoint fora) o yfinance não lança erro: devolve ``info`` vazio
+        # para todo ticker. Isso é falha de coleta — nunca um retrato que apague os fundamentos
+        # gravados (o valor de mercado some e o modelo de risco fica sem histórico).
+        raise FundamentosVaziosError(
+            f"Yahoo sem fundamentos para nenhuma das {len(df)} linhas (falha de coleta: rede ou "
+            "endpoint fora); valem os fundamentos gravados")
+    return df
+
+
+def linhas_sem_dados(df: pd.DataFrame) -> pd.Series:
+    """Máscara das linhas de fundamentos sem nenhum dado do Yahoo: ``fundamentals_quality ==
+    'sem_dados'`` ou todos os campos numéricos ausentes (a moeda vem do universo, não conta)."""
+    if df is None or len(df) == 0:
+        return pd.Series(dtype=bool)
+    flag = (df["fundamentals_quality"].astype(str) == "sem_dados"
+            if "fundamentals_quality" in df.columns
+            else pd.Series(False, index=df.index))
+    num = [c for c in df.columns if c not in _TEXT_FIELDS
+           and c not in ("currency_yahoo", "quote_type", "fundamentals_quality")]
+    vazio = (df[num].apply(pd.to_numeric, errors="coerce").isna().all(axis=1) if num
+             else pd.Series(True, index=df.index))
+    return (flag | vazio).astype(bool)
 
 
 # ======================================================================

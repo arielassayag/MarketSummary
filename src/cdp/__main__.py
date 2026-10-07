@@ -52,6 +52,9 @@ Pré-início (uma vez, pela rotina, quando ``agenda`` informa ``reinicio.pendent
 Cobertura e notas de pesquisa (números só do código):
     cdp cobertura run --date D [--emissores IID,IID] [--offline]
     cdp cobertura verify
+    cdp cobertura revisao-mensal preparar|validar|publicar --date D
+                                     (último dia de montagem do mês; a gestão escreve
+                                      book/cobertura/revisoes/<D>/revisao.json)
     cdp nota agenda [--date D]
     cdp nota prepare --issuer IID [--date D]
     cdp validate-nota --issuer IID --date D
@@ -542,6 +545,13 @@ def cmd_cobertura(args: argparse.Namespace) -> int:
     return handler(args)
 
 
+def cmd_cobertura_revisao(args: argparse.Namespace) -> int:
+    """``cdp cobertura revisao-mensal preparar|validar|publicar`` (:mod:`cdp.cobertura.revisao`)."""
+    from .cobertura.revisao import cmd_revisao
+
+    return cmd_revisao(args)
+
+
 def cmd_nota(args: argparse.Namespace) -> int:
     """``cdp nota agenda|prepare|publish`` (módulo :mod:`cdp.workflow.notas`)."""
     from .workflow import notas
@@ -702,6 +712,19 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--sem-recalculo", action="store_true",
                    help="só confere cadeia e arquivos (não refaz os preços-alvo)")
     s.set_defaults(func=cmd_cobertura)
+    r = csub.add_parser("revisao-mensal",
+                        help="revisão mensal dos modelos (último dia de montagem do mês): pacote "
+                             "do código, leitura da gestão e publicação imutável")
+    rsub = r.add_subparsers(dest="etapa", required=True)
+    for etapa, ajuda in (("preparar", "grava o pacote (fatos, quadros, lista de verificação)"),
+                         ("validar", "valida revisao.json sem publicar"),
+                         ("publicar", "publica a revisão (imutável) e grava o evento na trilha")):
+        s = rsub.add_parser(etapa, help=ajuda)
+        s.add_argument("--date", type=_d, required=True, help="data da revisão (AAAA-MM-DD)")
+        if etapa != "preparar":
+            s.add_argument("--mind", choices=HARNESS_MINDS, default=None,
+                           help="mente desta execução (padrão: a do CDP_HARNESS)")
+        s.set_defaults(func=cmd_cobertura_revisao)
 
     n = sub.add_parser("nota", help="notas de pesquisa por emissor (números só do código)")
     nsub = n.add_subparsers(dest="action", required=True)

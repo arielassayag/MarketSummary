@@ -1,6 +1,6 @@
 ---
 name: cobertura
-description: "Notas de pesquisa por emissor do CDP — Cabra da Peste (segunda a quinta, 22h37 de Brasília; até 12 emissores por execução, na fila determinística do código): pesquisa só em fontes públicas (CVM, SEC EDGAR, bolsas, relações com investidores, bancos centrais, imprensa), nota.json escrita pela mente \"claude-code\" com números só como fatos do modelo aberto da cobertura, validação e publicação imutável. Entrada e saída da execução no Claude Code; o procedimento é o roteiro neutro docs/cdp/playbooks/COBERTURA.md. Use na tarefa agendada cdp-cobertura ou quando pedirem notas de pesquisa de emissores do CDP."
+description: "Notas de pesquisa por emissor do CDP — Cabra da Peste (segunda a quinta, 22h37 de Brasília; até 12 emissores por execução: primeiro os emissores com resultado já incorporado ao modelo, depois a fila determinística do código): pesquisa só em fontes públicas (CVM, SEC EDGAR, bolsas, relações com investidores, bancos centrais, imprensa), nota.json escrita pela mente \"claude-code\" com números só como fatos do modelo aberto da cobertura, validação e publicação imutável. Entrada e saída da execução no Claude Code; o procedimento é o roteiro neutro docs/cdp/playbooks/COBERTURA.md. Use na tarefa agendada cdp-cobertura ou quando pedirem notas de pesquisa de emissores do CDP."
 argument-hint: "[tarefa agendada: cdp-cobertura]"
 allowed-tools:
   - Read

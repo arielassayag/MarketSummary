@@ -878,7 +878,7 @@ def test_refused_execution_keeps_previous_book_with_alert(tmp_path, market, caus
     before = runner.track.last()
     if cause == "kill_switch":
         (runner.book.root / "KILL_SWITCH").write_text("{}", encoding="utf-8")
-        expected = "KILL_SWITCH"
+        expected = "kill switch"
     else:
         cfg = CFG.with_overrides({"risk": {"var_1d_max": 0.011}})
         runner = DailyRunner.from_root(cfg, FakeStore(market), runner.book.root,
@@ -889,15 +889,21 @@ def test_refused_execution_keeps_previous_book_with_alert(tmp_path, market, caus
     assert rec.pnl_components["costs"] == 0.0
     assert {p.ticker for p in rec.positions} == {p.ticker for p in before.positions}
     assert all(p.shares == _pos(before, p.ticker).shares for p in rec.positions)
-    assert any(f"semana {W2}" in a and expected in a for a in rec.alerts), rec.alerts
+    semana = f"semana de {W2:%d/%m/%Y}" if cause == "kill_switch" else f"semana {W2}"
+    assert any(semana in a and expected in a for a in rec.alerts), rec.alerts
     assert runner.book.load_booked(W2) is None
+    if cause == "kill_switch":  # a decisão caducou (regra de caducidade): sem efetivação depois
+        assert runner.book.efetivacao_recusada(W2)["sessao"] == W2.isoformat()
     assert runner.track.verify()[0]
     if cause == "kill_switch":
-        assert "BOOKING_REFUSED" in {e.event_type for e in runner.book.audit.events()}
+        eventos = {e.event_type for e in runner.book.audit.events()}
+        assert "BOOKING_REFUSED" in eventos and "BOOKING_LAPSED" in eventos
         (runner.book.root / "KILL_SWITCH").unlink()
-        nxt = runner.run(date(2026, 10, 14))  # trava removida: executa no pregão seguinte
-        assert nxt.live_book_week == W2 and nxt.pnl_components["costs"] < 0
-        assert any("primeiro pregão disponível" in a for a in nxt.alerts)
+        # Kill switch desligado: a decisão caducada NÃO é executada no pregão seguinte (regra
+        # de caducidade — sem efetivação retroativa; a próxima data de montagem decide de novo).
+        nxt = runner.run(date(2026, 10, 14))
+        assert nxt.live_book_week == W1 and nxt.pnl_components["costs"] == 0.0
+        assert runner.book.load_booked(W2) is None
         ok, problems = runner.verify_all()
         assert ok, problems
 

@@ -242,6 +242,9 @@ class DailyRunResult:
     shadow: DailyRecord | None = None
     booked: BookEntry | None = None
     shadow_booked: BookEntry | None = None
+    lapsed: dict[str, Any] | None = None
+    """Efetivação recusada no leilão do dia de montagem (kill switch): a decisão caducou
+    (registro de :meth:`Book.registrar_efetivacao_recusada`)."""
 
     @property
     def value_added(self) -> float | None:
@@ -1004,7 +1007,13 @@ class DailyRunner:
         md = self._session_market(session_date)
         refusals: list[str] = []
         plan = self._main_plan(session_date, prev, pending, refusals)
-        if prev is None and plan is None:
+        retomada = self._lapse_at(session_date) if plan is None else None
+        if retomada is not None:
+            # Recusa já registrada neste fechamento (execução anterior interrompida antes do
+            # registro do dia): o dia é registrado com a recusa, sem tentar efetivar de novo.
+            refusals = [r for r in refusals if "caducou" not in r] + [
+                _lapse_alert(retomada, inaugural=prev is None)]
+        if prev is None and plan is None and retomada is None:
             raise NoBookError(
                 f"Sem carteira efetivada executável em {session_date}: o track record começa no "
                 "fechamento do pregão de efetivação da primeira carteira aprovada."
@@ -1025,6 +1034,7 @@ class DailyRunner:
 
         extra = refusals + ([shadow_alert] if shadow_alert else [])
         hashes = {"shadow_record": shadow_hash} if shadow_hash else None
+        lapsed: dict[str, Any] | None = None
 
         # Gravação: primeiro a efetivação do CDP no livro (o passo que o livro pode recusar, ex.:
         # KILL_SWITCH); depois a sombra (efetivação + registro) e por fim o registro do CDP, que
@@ -1035,19 +1045,28 @@ class DailyRunner:
             if main_res.commit is not None:
                 main_res.commit()
         except ExecutionRefused as exc:
-            if prev is None and plan is not None:
-                # Carteira inaugural recusada (ex.: KILL_SWITCH ligado — só reduções, e não há
-                # posição a reduzir): o fundo segue sem carteira (zerado); nada é negociado nem
-                # registrado. A recusa sai estruturada, nunca como erro cru.
+            if plan is None:
+                raise
+            kill = self.book.kill_switch_active()
+            if prev is None and not kill:
+                # Carteira inaugural recusada por dado (preço/câmbio ausente): nada é negociado
+                # nem registrado; uma nova execução do mesmo fechamento tenta de novo.
                 raise NoBookError(
                     f"Execução da carteira inaugural (semana {plan.week}) RECUSADA no fechamento "
                     f"de {session_date}: {clean_text(exc, 600)} O fundo segue sem carteira "
                     "(zerado, sem negociação) até a próxima data de montagem.") from exc
-            if prev is None or plan is None:
-                raise
-            refused = (f"Execução da decisão da semana {plan.week} RECUSADA no fechamento de "
-                       f"{session_date}: {clean_text(exc, 600)} Carteira anterior mantida (sem "
-                       "negociação).")
+            if kill:
+                # Kill switch no leilão do dia de montagem: a ordem não foi executada e a decisão
+                # CADUCA (REGRA_CADUCIDADE) — o dia é registrado com a recusa e a decisão nunca é
+                # efetivada depois, nem quando um humano desligar o kill switch.
+                lapsed = self.book.registrar_efetivacao_recusada(
+                    plan.week, session_date, clean_text(exc, 600), plan.proposal_id,
+                    plan.approval_hash, actor=self.actor)
+                refused = _lapse_alert(lapsed, inaugural=prev is None)
+            else:
+                refused = (f"Execução da decisão da semana {plan.week} RECUSADA no fechamento de "
+                           f"{session_date}: {clean_text(exc, 600)} Carteira anterior mantida "
+                           "(sem negociação).")
             main_res = self._compute_side(self.main, ctx, prev, None,
                                           extra_alerts=extra + [refused], extra_hashes=hashes)
             plan = None
@@ -1056,12 +1075,13 @@ class DailyRunner:
                 shadow_res.commit()
             self.shadow.track.append(shadow_res.record)
         self.track.append(main_res.record)
+        lapsed = lapsed or retomada
         return DailyRunResult(
             record=main_res.record,
             shadow=shadow_res.record if shadow_res is not None else shadow_existing,
             booked=main_res.entry if plan is not None else None,
             shadow_booked=shadow_res.entry if shadow_res is not None and shadow_res.commit
-            else None)
+            else None, lapsed=lapsed)
 
     def backfill(self, start: date, end: date,
                  pending: Mapping[date, PendingExecution] | Iterable[PendingExecution] | None
@@ -1277,10 +1297,29 @@ class DailyRunner:
             raise ValueError(f"A semana {week} não é posterior à carteira vigente "
                              f"({prev.live_book_week}).")
 
+    def _lapse_at(self, session: date) -> dict[str, Any] | None:
+        """Registro de caducidade gravado no fechamento de ``session`` (ou ``None``)."""
+        for w in self.book.list_weeks():
+            if w > session:
+                continue
+            lapsed = self.book.efetivacao_recusada(w)
+            if lapsed is not None and lapsed.get("sessao") == session.isoformat():
+                return lapsed
+        return None
+
+    def _check_not_lapsed(self, week: date) -> None:
+        """Decisão caducada (efetivação recusada no leilão do dia de montagem) nunca executa."""
+        lapsed = self.book.efetivacao_recusada(week)
+        if lapsed is not None:
+            raise ValueError(f"A decisão da semana {week} caducou: efetivação recusada no "
+                             f"fechamento de {lapsed.get('sessao')} (sem efetivação "
+                             "retroativa; a próxima data de montagem decide de novo).")
+
     def _plan_from_pending(self, session: date, prev: DailyRecord | None,
                            pending: PendingExecution) -> _Plan:
         proposal, decision = pending.proposal, pending.decision
         self._check_week_window(session, proposal.week, prev)
+        self._check_not_lapsed(proposal.week)
         existing = self.book.load_booked(proposal.week)
         if existing is not None:
             if (existing.proposal_id != proposal.proposal_id
@@ -1368,6 +1407,7 @@ class DailyRunner:
             return None
         if decision.decided_at > cutoff:
             return None
+        self._check_not_lapsed(w)
         self._verify_decision(session, proposal, decision, None)
         return self._execute_plan(proposal, decision, None, "decisão")
 
@@ -1557,10 +1597,10 @@ class DailyRunner:
             hashes.update({k: v for k, v in extra_hashes.items() if v})
         if ctx.md.is_synthetic:
             notice = (f"{SIMULATED_DATA_NOTICE} — mercado sintético gerado por código; "
-                      "paper trading com execução hipotética no fechamento.")
+                      "carteira simulada com execução hipotética no fechamento.")
         else:
-            notice = (f"Dados reais de mercado ({REAL_DATA_SOURCES}); paper trading com execução "
-                      "hipotética no leilão de fechamento e custos do modelo.")
+            notice = (f"Dados reais de mercado ({REAL_DATA_SOURCES}); carteira simulada com "
+                      "execução hipotética no leilão de fechamento e custos do modelo.")
         record = DailyRecord(
             date=ctx.date, fund_name=side.fund_name, track_record_type=side.track_type,
             nav_start_usd=marked.nav_start, nav_end_usd=nav_end, pnl_usd=pnl,
@@ -2129,7 +2169,7 @@ class DailyRunner:
         nav_end = nav_pre - cost_usd
         if self.cfg.execution is not None:
             return self._build_entry_fechamento(ctx, plan, execs, nav_pre, cost_usd)
-        note = (f"Execução hipotética MOC no fechamento de {ctx.date} (paper trading): "
+        note = (f"Execução hipotética MOC no fechamento de {ctx.date} (carteira simulada): "
                 f"nocional-alvo = peso × NAV antes dos custos ({fmt_usd_mm(nav_pre)}), ações pelo "
                 f"fechamento local e câmbio do dia; custos estimados {fmt_usd(cost_usd)}; NAV após "
                 f"custos {fmt_usd_mm(nav_end)}.")
@@ -2158,7 +2198,7 @@ class DailyRunner:
         booked_at = (at.astimezone(ZoneInfo(self.cfg.fund.timezone)) if at is not None
                      else close_datetime(ctx.date, self.cfg))
         n_full = sum(1 for e in execs if e.traded != 0)
-        note = (f"Execução hipotética no leilão de fechamento de {ctx.date} (paper trading): "
+        note = (f"Execução hipotética no leilão de fechamento de {ctx.date} (carteira simulada): "
                 "ordens em quantidade de ações fixadas na decisão, executadas ao fechamento "
                 "oficial de cada linha até a capacidade do leilão e da janela pré-fechamento "
                 f"(volume realizado do pregão); {n_full} "
@@ -2519,6 +2559,20 @@ def _merge_execution(old: list[_Line], execs: list[_Exec]) -> list[_Line]:
             out.append(_Line(e.issuer_id, e.ticker, e.currency, float(e.shares), 0.0, 0.0, 0.0,
                              True, e.mv, e.price_local, e.price_local * e.fx))
     return out
+
+
+def _lapse_alert(lapsed: Mapping[str, Any], *, inaugural: bool) -> str:
+    """Alerta do registro do dia em que a efetivação foi recusada (decisão caducada)."""
+    semana = date.fromisoformat(str(lapsed.get("semana")))
+    sessao = date.fromisoformat(str(lapsed.get("sessao")))
+    if inaugural:
+        return (f"Efetivação recusada: a carteira inaugural decidida para {semana:%d/%m/%Y} não "
+                f"foi montada no leilão de fechamento de {sessao:%d/%m/%Y} (kill switch ligado: "
+                "só redução de risco). A decisão caducou; o fundo inicia o histórico em caixa e "
+                "a próxima data de montagem decide de novo.")
+    return (f"Efetivação recusada: a decisão da semana de {semana:%d/%m/%Y} não foi executada no "
+            f"leilão de fechamento de {sessao:%d/%m/%Y} (kill switch ligado). A decisão caducou; "
+            "a carteira anterior é mantida e a próxima data de montagem decide de novo.")
 
 
 def _check_track_tail(track: TrackRecord, prev: DailyRecord | None) -> None:

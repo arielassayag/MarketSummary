@@ -481,6 +481,10 @@ def _risco(cfg: Any, proposal: Proposal | None, rec: DailyRecord,
     kappa: float | None = kappa_vigente if proposal is None else None
     if kappa is not None:
         rk["kappa_f"] = kappa
+    vt = (proposal.overrides.get("vol_target") if proposal is not None
+          and isinstance(proposal.overrides, dict) else None)
+    if _f(vt) is not None:
+        rk["meta_aplicada"] = _f(vt)
     if proposal is not None and proposal.positions:
         r = proposal.risk
         rk["alvo"] = {"vol": r.ex_ante_vol, "fatorial": r.factor_vol,
@@ -620,7 +624,28 @@ def calcular_semana(rt: Runtime, d: date, md: MarketData | None = None) -> dict[
         "is_synthetic": bool(rec.is_synthetic), "aviso": rec.data_notice,
         "snapshot_id": f"registro-{(rec.record_hash or '')[:12]}",
         "alertas": list(rec.alerts),
+        "efetivacao_recusada": _recusa(b, d),
     }
+
+
+def _recusa(book: Any, d: date) -> dict[str, Any] | None:
+    """Efetivação recusada no leilão do dia de montagem ``d`` (decisão caducada) ou ``None``."""
+    try:
+        return book.efetivacao_recusada(d)
+    except (ValueError, OSError, AttributeError):
+        return None
+
+
+def _texto_recusa(dados: Mapping[str, Any]) -> str:
+    """Parágrafo do código (não da IA) quando a efetivação do dia de montagem foi recusada."""
+    d: date = dados["data"]
+    caixa = bool(dados.get("montagem"))
+    return (f"Efetivação recusada: a carteira decidida para {d:%d/%m/%Y} não foi montada no "
+            "leilão de fechamento (kill switch ligado: só redução de risco). A decisão caducou "
+            "e não será efetivada depois; "
+            + ("o fundo inicia o histórico em caixa, sem posições"
+               if caixa else "a carteira anterior foi mantida, sem negociação")
+            + ", e a próxima data de montagem decide de novo.")
 
 
 def factbook_semana(dados: Mapping[str, Any]) -> FactBook:
@@ -746,8 +771,8 @@ def _risk_rows(rk: Mapping[str, Any]) -> list[list[str]]:
         specs.append(("idio", "Fatia idiossincrática da variância — modelo sem κ_F", "pct"))
     else:
         specs.append(("idio", "Fatia idiossincrática da variância (modelo sem κ_F)", "pct"))
-    specs += [("beta", "Beta previsto", "x"), ("gross", "Gross", "pct"),
-              ("net", "Net", "pct"), ("n_long", "Nomes comprados", "n"),
+    specs += [("beta", "Beta previsto", "x"), ("gross", "Exposição bruta", "pct"),
+              ("net", "Exposição líquida", "pct"), ("n_long", "Nomes comprados", "n"),
               ("n_short", "Nomes vendidos", "n")]
     rows = []
     for key, label, fmt in specs:
@@ -772,12 +797,20 @@ def render_relatorio(dados: Mapping[str, Any], fb: FactBook, texto: Mapping[str,
     sem, itd, ex, rk = dados["semana"], dados["desde_inicio"], dados["execucao"], dados["risco"]
     montagem = bool(dados["montagem"])
     decisao = bool(dados.get("decisao", True))
+    recusa = dados.get("efetivacao_recusada")
     nomes: Mapping[str, str] = dados.get("nomes") or {}
-    titulo = ("Relatório de montagem da carteira" if montagem
+    titulo = ("Relatório semanal de resultado — efetivação recusada" if recusa
+              else "Relatório de montagem da carteira" if montagem
               else "Relatório semanal de resultado")
     ia = da_mente
+    if recusa and not da_mente:
+        # O texto determinístico descreve uma montagem que não ocorreu: fica só o do código.
+        texto = {**texto, "resumo": _texto_recusa(dados), "desempenho_semana": [],
+                 "desempenho_desde_inicio": [], "atribuicao": [], "execucao": []}
     secs: list[Section] = []
     s = Section("Resumo", ai=ia)
+    if recusa and da_mente:
+        s.p(_texto_recusa(dados))
     s.p(texto["resumo"], ai=ia)
     secs.append(s)
 
@@ -787,7 +820,8 @@ def render_relatorio(dados: Mapping[str, Any], fb: FactBook, texto: Mapping[str,
             ["Pregões", str(sem["n"]), str(itd["n"])]]
     ini = sem.get("inicio")
     inicio = dados.get("inicio") or itd.get("inicio")
-    cap = (f"Montagem da carteira no fechamento de {d:%d/%m/%Y}." if montagem else
+    cap = (f"Dia de montagem de {d:%d/%m/%Y}: efetivação recusada, sem negociação." if recusa
+           else f"Montagem da carteira no fechamento de {d:%d/%m/%Y}." if montagem else
            f"Semana: do fechamento do dia de montagem anterior ao fechamento de {d:%d/%m/%Y} "
            f"(registros de {ini:%d/%m/%Y} a {d:%d/%m/%Y}); desde o início: a partir de "
            f"{inicio:%d/%m/%Y}.")
@@ -803,7 +837,7 @@ def render_relatorio(dados: Mapping[str, Any], fb: FactBook, texto: Mapping[str,
     per = "Dia da montagem" if montagem else "Semana"
     hdr = ["", f"{per} (USD)", per, "Desde o início (USD)", "Desde o início"]
     s.table(hdr, _attr_table(sem, itd, "component"),
-            caption="Componentes (em bps do NAV no início de cada período)")
+            caption="Componentes (em bps do PL no início de cada período)")
     for g in ("factor_group", "side", "country", "sector"):
         rows = _attr_table(sem, itd, g, limit=12)
         if rows:
@@ -830,6 +864,9 @@ def render_relatorio(dados: Mapping[str, Any], fb: FactBook, texto: Mapping[str,
                   _num(m.get("alpha_z"), 2, True),
                   _pct(m.get("execucao"), digits=0), rac.get(m["emissor"], "—")]
                  for m in mud], caption="Racional: texto da gestão (IA) quando validado.")
+    elif recusa:
+        s.p("Sem negociação: a efetivação foi recusada no leilão de fechamento e a decisão "
+            "caducou.")
     elif not decisao:
         s.p("Sem decisão gravada no dia de montagem: a carteira anterior foi mantida, sem "
             "negociação no fechamento.")
@@ -838,13 +875,16 @@ def render_relatorio(dados: Mapping[str, Any], fb: FactBook, texto: Mapping[str,
     secs.append(s)
 
     s = Section("Execução no leilão de fechamento")
-    if not decisao or ex.get("manter"):
+    if recusa:
+        s.p("Sem negociação no fechamento: efetivação recusada (kill switch ligado); giro, "
+            "custos e implementation shortfall sem objeto nesta semana.")
+    elif not decisao or ex.get("manter"):
         s.p("Sem negociação no fechamento (carteira mantida): giro, custos e implementation "
             "shortfall sem objeto nesta semana.")
     else:
         s.kv([("Giro (Σ|Δw|)", _pct(ex.get("giro"))),
               ("Custos", f"{_usd(ex.get('custos_usd'))} ({_bps(ex.get('custos_nav'), False)} "
-                         f"do NAV; {_bps_val(ex.get('custos_bps'), False)} do valor "
+                         f"do PL; {_bps_val(ex.get('custos_bps'), False)} do valor "
                          "negociado)"),
               ("Taxa de execução (nocional)", _pct(ex.get("taxa_execucao"))),
               ("Deriva decisão→fechamento (positivo = custo)", _bps_val(ex.get("deriva_bps"))),
@@ -857,7 +897,7 @@ def render_relatorio(dados: Mapping[str, Any], fb: FactBook, texto: Mapping[str,
                _pct(ex.get("participacao_janela_mediana"))),
               ("Estatística t da deriva decisão→fechamento (até 13 semanas)",
                _num(ex.get("t_13s"), 2, True))],
-             caption="Paper trading: a execução é registrada ao preço oficial de fechamento "
+             caption="Carteira simulada: a execução é registrada ao preço oficial de fechamento "
                      "de cada linha, inclusive a parcela da janela pré-fechamento; o custo "
                      "debitado é o custo modelado, e a deriva decisão→fechamento é a parcela "
                      "mensurável do implementation shortfall. Participação = ações executadas "
@@ -877,7 +917,7 @@ def render_relatorio(dados: Mapping[str, Any], fb: FactBook, texto: Mapping[str,
     s = Section("Risco da nova carteira")
     e = rk.get("efetiva") or {}
     kap = rk.get("kappa_f")
-    cap_r = (f"Meta de vol ex-ante {_pct(rk.get('meta'))}; piso da banda "
+    cap_r = (f"{_meta_txt(rk, 'Meta de vol ex-ante')}; piso da banda "
              f"{_pct(rk.get('banda_min'))}.")
     if kap is not None:
         cap_r += (f" Fatia idiossincrática na base do limite: σ²_específica / (κ_F · "
@@ -922,8 +962,8 @@ def render_relatorio(dados: Mapping[str, Any], fb: FactBook, texto: Mapping[str,
     lq = dados.get("liquidez") or {}
     if lq.get("fracao_liquidavel"):
         rev = (lq.get("reverso") or {}).get("fracao_liquidavel") or {}
-        s.table(["Fechamentos", "Gross liquidável — estresse (0,7 × ADV)",
-                 "Gross liquidável — cenário reverso (0,5 × ADV)"],
+        s.table(["Fechamentos", "Exposição bruta liquidável — estresse (0,7 × ADV)",
+                 "Exposição bruta liquidável — cenário reverso (0,5 × ADV)"],
                 [[str(h), _pct(v), _pct(rev.get(h))]
                  for h, v in sorted(lq["fracao_liquidavel"].items())],
                 caption="Estresse de liquidez contado em leilões de fechamento: volume de 0,7 × "
@@ -932,13 +972,13 @@ def render_relatorio(dados: Mapping[str, Any], fb: FactBook, texto: Mapping[str,
                         "pré-fechamento num pregão regular.")
         c = lq.get("custo") or {}
         p90, p90r = lq.get("fechamentos_p90"), (lq.get("reverso") or {}).get("fechamentos_p90")
-        kv = [("Fechamentos para liquidar 90% do gross (estresse; cenário reverso)",
+        kv = [("Fechamentos para liquidar 90% da exposição bruta (estresse; cenário reverso)",
                f"{p90 if p90 is not None else 'n/d'}; {p90r if p90r is not None else 'n/d'}")]
         if c.get("custo_usd") is not None:
             kv.append(("Custo estimado de liquidação em estresse (spreads e σ × 2)",
-                       f"{_usd(c['custo_usd'])} ({_bps(c.get('custo_nav'), False)} do NAV; "
-                       f"{_bps_val(c.get('custo_bps_gross'), False)} do gross coberto, "
-                       f"{_pct(c.get('cobertura'), digits=0)} do gross)"))
+                       f"{_usd(c['custo_usd'])} ({_bps(c.get('custo_nav'), False)} do PL; "
+                       f"{_bps_val(c.get('custo_bps_gross'), False)} da exposição bruta "
+                       f"coberta, {_pct(c.get('cobertura'), digits=0)} da exposição bruta)"))
         prox, fech = lq.get("proximo_dia_de_montagem"), lq.get("mercados_fechados_proximo")
         if prox is not None and fech:
             kv.append((f"Sem fechamento elegível no próximo dia de montagem ({prox:%d/%m/%Y})",
@@ -955,7 +995,7 @@ def render_relatorio(dados: Mapping[str, Any], fb: FactBook, texto: Mapping[str,
         secs.append(s)
 
     s = Section("Integridade")
-    prov = ("Autoria do texto: app de IA da gestão [IA], validado; números calculados "
+    prov = ("Autoria do texto: a gestão, com apoio de IA [IA], validado; números calculados "
             "pelo código." if da_mente else
             "Autoria do texto: modelo determinístico do CDP [Calculado].")
     s.kv([("Registro diário do fechamento", str(dados.get("registro") or "n/d")),
@@ -963,7 +1003,9 @@ def render_relatorio(dados: Mapping[str, Any], fb: FactBook, texto: Mapping[str,
           ("Base de fatos da semana", fb.factbook_hash()), ("Procedência", prov)])
     secs.append(s)
 
-    notice = str(dados.get("aviso") or "")
+    from .rotulos import aviso
+
+    notice = aviso(str(dados.get("aviso") or ""))
     synthetic = bool(dados.get("is_synthetic"))
     if synthetic and SIMULATED_DATA_NOTICE not in notice.upper():
         notice = f"{SIMULATED_DATA_NOTICE} — {notice}".rstrip(" —")
@@ -980,18 +1022,26 @@ def render_relatorio(dados: Mapping[str, Any], fb: FactBook, texto: Mapping[str,
              f"P&L {_usd(sem['pnl_usd'], True)} · {ini_txt}"),
             ("Desde o início", _pct(itd["ret"], True),
              f"desde {inicio:%d/%m/%Y}" if inicio is not None else ""),
-            ("NAV", _usd(dados["nav"]), f"fechamento de {d:%d/%m/%Y}"),
+            ("PL", _usd(dados["nav"]), f"fechamento de {d:%d/%m/%Y}"),
             ("Vol ex-ante efetiva", _pct(e.get("vol")),
-             f"meta {_pct(rk.get('meta'))} · piso {_pct(rk.get('banda_min'))}"),
+             f"{_meta_txt(rk, 'meta')} · piso {_pct(rk.get('banda_min'))}"),
             idio_kpi]
     doc = Document(title=f"{dados['fundo']} — {titulo}", subtitle=f"Fechamento de {d:%d/%m/%Y}",
-                   labels=([SIMULATED_DATA_NOTICE, "paper trading"] if synthetic
-                           else ["paper trading com preços reais"]),
+                   labels=([SIMULATED_DATA_NOTICE, "carteira simulada"] if synthetic
+                           else ["carteira simulada com preços reais"]),
                    synthetic=synthetic, data_notice=notice, sections=secs, kpis=kpis)
     return to_markdown(doc), to_html(doc)
 
 
 # ============================================================ fluxo
+
+
+def _meta_txt(rk: Mapping[str, Any], rotulo: str) -> str:
+    """Meta de vol: a aplicada na decisão (postura) e a do mandato, quando diferem."""
+    ap, mandato = _f(rk.get("meta_aplicada")), _f(rk.get("meta"))
+    if ap is not None and mandato is not None and abs(ap - mandato) > 1e-9:
+        return f"{rotulo} aplicada {_pct(ap)} (mandato {_pct(mandato)})"
+    return f"{rotulo} {_pct(mandato)}"
 
 
 def preparar(rt: Runtime, d: date, *, mind: str | None = None) -> dict[str, Any]:

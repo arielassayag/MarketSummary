@@ -1,6 +1,6 @@
 ---
 name: cdp-diario
-description: "Fechamento diário (marcação, execução no leilão de fechamento no dia de montagem, risco, atribuição, registro encadeado, comentário e relatório); na noite do dia de montagem, relatório semanal de resultado; retrato diário da cobertura quando pendente. Rotina do CDP — Cabra da Peste (cdp-diario dias úteis, 19:22; cdp-diario-reforco dias úteis, 21:07; cdp-diario-sabado sábados, 10:07, Brasília). Use quando uma rotina agendada citar cdp-diario ou cdp-diario-reforco ou cdp-diario-sabado, ou quando pedirem esta etapa da operação."
+description: "Fechamento diário (marcação, execução no leilão de fechamento no dia de montagem, risco, atribuição, registro encadeado, comentário e relatório); na noite do dia de montagem, relatório semanal de resultado; retrato da cobertura quando pendente (parcial após resultados, completo após evento macro) e, no último dia de montagem do mês, a revisão mensal dos modelos. Rotina do CDP — Cabra da Peste (cdp-diario dias úteis, 19:22; cdp-diario-reforco dias úteis, 21:07; cdp-diario-sabado sábados, 10:07, Brasília). Use quando uma rotina agendada citar cdp-diario ou cdp-diario-reforco ou cdp-diario-sabado, ou quando pedirem esta etapa da operação."
 compatibility: "Requer git, uv e rede para fontes públicas; qualquer harness com shell (Claude Code, Codex, Gemini CLI, Antigravity, Copilot, Cursor)."
 metadata:
   gerado-por: "uv run python -m cdp skills sincronizar"

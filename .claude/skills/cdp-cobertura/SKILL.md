@@ -1,6 +1,6 @@
 ---
 name: cdp-cobertura
-description: "Notas de pesquisa por emissor a partir de fontes públicas (fila determinística do código, até 12 emissores por execução). Rotina do CDP — Cabra da Peste (cdp-cobertura segunda a quinta, 22:37, Brasília). Use quando uma rotina agendada citar cdp-cobertura, ou quando pedirem esta etapa da operação."
+description: "Notas de pesquisa por emissor a partir de fontes públicas (pós-resultado dos modelos reavaliados primeiro, depois a fila determinística do código; até 12 emissores por execução). Rotina do CDP — Cabra da Peste (cdp-cobertura segunda a quinta, 22:37, Brasília). Use quando uma rotina agendada citar cdp-cobertura, ou quando pedirem esta etapa da operação."
 compatibility: "Requer git, uv e rede para fontes públicas; qualquer harness com shell (Claude Code, Codex, Gemini CLI, Antigravity, Copilot, Cursor)."
 metadata:
   gerado-por: "uv run python -m cdp skills sincronizar"

@@ -33,7 +33,8 @@ Fonte única: `configs/cdp/rotinas.yaml`. Tabela gerada por
 
 - **Montagem semanal** (`cdp-semanal` e reservas): age só no **dia de montagem** — o último
   pregão da semana na NYSE (sexta-feira, ou o dia útil anterior em feriado nos EUA) e a data de
-  início do mandato (carteira inaugural). Coleta todos os dados até o momento, pesquisa, decisão
+  início do mandato (carteira inaugural). Atualiza os modelos da cobertura (retrato completo
+  com dados até o pregão anterior), coleta todos os dados até o momento, pesquisa, decisão
   do PM, validação e decisão autônoma antes do **prazo efetivo** (`semanal.prazo_efetivo` em
   `cdp agenda`: em geral 15:00; mais cedo nos fechamentos antecipados dos EUA), e a tese de
   investimento da carteira decidida. A execução hipotética é no leilão de fechamento. As reservas
@@ -42,24 +43,42 @@ Fonte única: `configs/cdp/rotinas.yaml`. Tabela gerada por
 - **Fechamento diário** (19:22, reforço às 21:07, repescagem no sábado às 10:07): registro do
   fechamento, comentário e relatório do dia, tese pendente da semana corrente, um relatório
   semanal de resultado para cada dia de montagem pendente (do mais antigo ao mais recente,
-  inclusive sem decisão gravada) e o retrato diário da cobertura.
-- **Cobertura** (segunda a quinta, 22:37): notas de pesquisa por emissor, até 12 por execução,
-  na fila do código, só com fontes públicas.
+  inclusive sem decisão gravada), o retrato da cobertura quando o código o pede — parcial, só
+  dos emissores com resultado divulgado depois do último modelo; completo, depois de um evento
+  macro de impacto alto do calendário público (`configs/cdp/cobertura/eventos_macro.yaml`) — e,
+  no último dia de montagem do mês, a revisão mensal dos modelos.
+- **Cobertura** (segunda a quinta, 22:37): notas de pesquisa por emissor, até 12 por execução —
+  primeiro as de pós-resultado dos emissores reavaliados, depois a fila do código —, só com
+  fontes públicas.
 - **Estado** (segundas, 08:30): só leitura.
 - **Calibração** (dia 1, 09:15): grava só arquivos novos em `reports/backtest/`; backtest mensal
   comparado com o anterior, mudanças de mandato só como proposta.
 
-**Sexta-feira (dia de montagem).** 11:07: coleta, pesquisa e decisão antes do prazo efetivo
-(reservas às 12:07, 13:07 e 14:07); leilão de fechamento: execução hipotética da carteira nova;
-19:22 (reforço às 21:07): registro do fechamento, comentário do dia, relatório semanal de
-resultado (mudanças da carteira, resultado e atribuição da semana e desde o início) e retrato da
-cobertura. De segunda a quinta: fechamento às 19:22 e notas de pesquisa às 22:37.
+**Sexta-feira (dia de montagem).** 11:07: modelos da cobertura atualizados com dados até o
+pregão anterior, coleta, pesquisa e decisão antes do prazo efetivo (reservas às 12:07, 13:07 e
+14:07); leilão de fechamento: execução hipotética da carteira nova; 19:22 (reforço às 21:07):
+registro do fechamento, comentário do dia, relatório semanal de resultado (mudanças da carteira,
+resultado e atribuição da semana e desde o início), retrato da cobertura só se houver resultado
+ou evento macro do dia (ou se a atualização da manhã não tiver sido gravada) e, no último dia de
+montagem do mês, a revisão mensal dos modelos. De
+segunda a quinta: fechamento às 19:22 (com o retrato parcial ou completo que o código pedir; na
+véspera do dia de montagem, nenhum) e notas de pesquisa às 22:37.
+
+**Cadência dos modelos da cobertura.** O código decide (`cobertura` em
+`uv run python -m cdp agenda`): `atualizar_antes_da_decisao` (rotina semanal, antes do
+`weekly prepare`), `snapshot_pendente` com `tipo` `parcial` ou `completo` e o comando pronto em
+`passo` (rotina diária), `notas_pos_resultado` (rotina de notas) e `revisao_mensal` (rotina
+diária no último dia de montagem do mês; retomada nas noites seguintes enquanto não for
+publicada). Um retrato por data e nunca com dado publicado depois dela: o retrato da manhã do
+dia de montagem usa a data do pregão anterior.
 
 **Antes da data de início do mandato** (`fase: "pre_inicio"` em `cdp agenda`), a montagem e o
 risco saem no gate; o fechamento diário só atualiza a base de mercado, roda o retrato da
-cobertura quando pendente e publica; as notas de pesquisa seguem normalmente. A primeira rotina
-que gravar com `reinicio.pendente: true` abre o livro na data de início (`cdp reinicio`, uma vez,
-seção "Pré-início" de `docs/cdp/playbooks/DIARIO.md`).
+cobertura quando o código o pedir e publica; as notas de pesquisa seguem normalmente. A gênese
+da cobertura é o primeiro retrato gravado no livro (pré-início); a carteira inaugural começa,
+como toda montagem, pela atualização completa dos modelos com dados até o pregão anterior. A
+primeira rotina que gravar com `reinicio.pendente: true` abre o livro na data de início
+(`cdp reinicio`, uma vez, seção "Pré-início" de `docs/cdp/playbooks/DIARIO.md`).
 
 ## 2. Como cada execução funciona (igual em qualquer app)
 

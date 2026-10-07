@@ -851,3 +851,50 @@ def test_runner_executor_mode_keeps_git_outside_the_mind(tmp_path):
     assert "--trava T1" in pub and "--execucao E1" in pub
     assert marca.exists() and "workspace-write" in marca.read_text()
     assert not any("--previa" in c for c in chamadas)
+
+
+def test_coverage_cadence_rides_on_the_existing_routines():
+    """A cadência dos modelos da cobertura não cria tarefa nova: a montagem atualiza os modelos
+    antes da coleta, o fechamento roda os retratos parciais e completos e a revisão mensal, e a
+    rotina de notas só escreve notas (nunca roda o motor da cobertura)."""
+    assert set(ROT.tarefas) >= {"cdp-semanal", "cdp-diario", "cdp-cobertura"}
+    for tid in ("cdp-semanal", "cdp-diario"):
+        t = ROT.tarefa(tid)
+        assert t.exclusiva and {"book", "data/publico"} <= set(t.caminhos), tid
+    cob = ROT.tarefa("cdp-cobertura")
+    assert "data/publico" not in cob.caminhos and "book" not in cob.caminhos
+    notas = (ROOT / cob.playbook).read_text(encoding="utf-8")
+    assert "cdp cobertura run" not in notas.replace("nunca roda `cdp cobertura run`", "")
+    assert "cobertura" in ROT.tarefa("cdp-semanal").descricao
+    assert "revisão mensal" in ROT.tarefa("cdp-diario").descricao
+    assert "pós-resultado" in cob.descricao
+    sem = (ROOT / ROT.tarefa("cdp-semanal").playbook).read_text(encoding="utf-8")
+    i_cob = sem.index("uv run python -m cdp cobertura run --date AAAA-MM-DD")
+    assert i_cob < sem.index("uv run python -m cdp weekly prepare --date AAAA-MM-DD")
+    assert "cobertura.atualizar_antes_da_decisao" in sem and "cobertura.data_base_decisao" in sem
+    dia = (ROOT / ROT.tarefa("cdp-diario").playbook).read_text(encoding="utf-8")
+    ordem = [dia.index("uv run python -m cdp cobertura run --date AAAA-MM-DD --emissores IID_A,IID_B"),
+             dia.index("uv run python -m cdp cobertura revisao-mensal preparar --date"),
+             dia.index("uv run python -m cdp cobertura revisao-mensal validar --date"),
+             dia.index("uv run python -m cdp cobertura revisao-mensal publicar --date"),
+             dia.index("## 7. Integridade e painel")]
+    assert ordem == sorted(ordem)
+    for chave in ("cobertura.tipo", "cobertura.passo", "cobertura.revisao_mensal.pendente",
+                  "cobertura.adiado_para_a_decisao", "COVERAGE_MONTHLY_REVIEW"):
+        assert chave in dia, chave
+    assert "cobertura.notas_pos_resultado" in notas
+
+
+def test_coverage_cadence_gates():
+    """Os gates existentes bastam: a etapa ``cobertura`` da montagem passa pelo gate semanal e o
+    retrato pendente (parcial ou completo) pelo gate diário."""
+    ctx = ro.ContextoGate(hoje=date(2026, 10, 16))
+    sem = ro.avaliar_gate("semanal", {"semanal": {"acao": "montar", "etapa": "cobertura",
+                                                  "motivo": "dia de montagem"}}, ctx)
+    assert sem.executar and "etapa=cobertura" in sem.itens
+    cob = {"snapshot_pendente": True, "data": date(2026, 10, 13), "tipo": "parcial",
+           "emissores": ["BR_VALE"]}
+    dia = ro.avaliar_gate("diario", {"fase": "operacao", "cobertura": cob}, ctx)
+    assert dia.executar and "retrato da cobertura de 2026-10-13 pendente" in dia.itens
+    adiado = {"snapshot_pendente": False, "adiado_para_a_decisao": date(2026, 10, 16)}
+    assert not ro.avaliar_gate("diario", {"fase": "operacao", "cobertura": adiado}, ctx).executar

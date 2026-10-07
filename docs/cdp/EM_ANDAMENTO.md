@@ -5,7 +5,9 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-Última atualização: 2026-10-06, terça-feira (correções do ensaio geral com o Codex como executor).
+Última atualização: 2026-10-06, terça-feira, noite — passagem para o Codex. **Comece por
+`docs/cdp/PASSAGEM_CODEX.md`**: ligar as rotinas no Codex, P0 de desenvolvimento antes do
+retrato-gênese da cobertura (qua 07/10, 19:22) e cronograma até a carteira inaugural (sex 09/10).
 
 ## Como continuar (qualquer app)
 
@@ -58,11 +60,37 @@ Feitas no código, nos roteiros e nas skills (suíte `tests/cdp` e ruff verdes):
   fato em moeda local; nomes com acento (`configs/cdp/nomes.yaml`); portão G20 de plausibilidade
   do alvo (consenso, cenários, margem do G11); ADR com o alvo da própria classe (PBR ← PETR3).
 
+Robustez para a carteira inaugural (mesma data, sobre as correções acima):
+
+- **Rede ou Yahoo fora no `weekly prepare`**: fundamentos sem nenhuma linha com dado são falha de
+  coleta (`yahoo.FundamentosVaziosError`), nunca um retrato vazio; linha sem dado (ou sem valor de
+  mercado onde o gravado o tem) nunca substitui a gravada; short interest e notícias sem resposta
+  mantêm os gravados; com Yahoo, FINRA e B3 sem resposta, as notícias nem são tentadas (rede
+  fora). O prepare termina com os últimos dados gravados e devolve `aviso_coleta`; com a rede
+  fora, `uv run python -m cdp weekly prepare --date 2026-10-09 --mind codex --offline` é a
+  alternativa. Conferido numa cópia do livro com o proxy numa porta fechada: código 0 em 3m21s.
+- **Kill switch no leilão do dia de montagem**: regra de caducidade (`docs/cdp/EXECUCAO.md`,
+  seção 12) — o dia é registrado com a recusa (`efetivacao_recusada.json`, evento
+  `BOOKING_LAPSED`) e a decisão nunca é efetivada depois; na inaugural, o histórico começa em
+  caixa e a próxima data de montagem decide de novo.
+- **Modo ensaio**: o substituto de dados copia os preços por série (cada linha parte da sua
+  última barra real); o gancho `pre-push` instalado no ensaio recusa, mesmo fora do ensaio, o
+  push de qualquer commit com o trailer `CDP-Ensaio`.
+- **Portal**: a conferência de termos vedados isenta só as manchetes e os veículos de terceiros
+  citados nas notícias públicas (`*news.jsonl`); o texto da casa continua conferido.
+- **Texto ao investidor** (relatório da decisão, memorando da proposta, relatórios diário e
+  semanal): controles, detalhes, cenários e fatores em pt-BR (`src/cdp/workflow/rotulos.py`),
+  empresas pelo nome, sem nome de app ou provedor de IA (a autoria é "a gestão"), "carteira
+  simulada" no lugar do termo em inglês, concordância de número ("1 pregão") e meta de vol
+  aplicada ao lado da do mandato; o memorando resolve os fatos citados pela pesquisa.
+
 Pendências que dependem do titular ou do commit (não são código):
 
 - `git rm -r --cached artifacts/painel` mantendo `.gitkeep` (a pasta passou a ser ignorada; o HTML
-  antigo com a fonte proprietária removida ainda está versionado) e decidir o histórico público
-  antes de 09/10 (commits da rodada anterior e da calibração: ramo novo ou aceitar).
+  antigo do painel local ainda está versionado) e decidir o histórico público de commits anterior
+  à data de início (manter ou publicar um ramo novo) antes de 09/10.
+- **Senha do operador no PC do Codex**, num terminal próprio, antes de 09/10:
+  `uv run python -m cdp kill-switch senha`. Sem ela, ninguém desliga o kill switch.
 - Logotipo e imagem de compartilhamento com "ASSET MANAGEMENT" (arte da marca) e
   `fund.minds` (valor do mandato, entra no hash da configuração da gênese).
 - Fora do escopo desta passagem: páginas estáticas por ativo (SEO), identidade visual dos
@@ -76,56 +104,47 @@ Pendências que dependem do titular ou do commit (não são código):
 | Portal: aba "Modelo aberto" da cobertura e "Auditoria e reprodução"; perfil "site" do painel sem cortes | em desenvolvimento | revisar no portal real montado de uma cópia do livro; no portal da demonstração, só depois de a demonstração gerar cobertura e notas (integração pendente abaixo) |
 | Calibração da cobertura (parâmetros de valuation e arquétipos) | em desenvolvimento | suíte da cobertura verde; retrato de 08/10 conferido por `cdp cobertura verify` |
 | Skills, plugin e roteiros no envelope gate → `cdp sincronizar` → roteiro → `cdp publicar` → `cdp trava liberar`; exportação para as tarefas agendadas do Codex e do Antigravity (`--alvo codex`, `--alvo gemini`) | em desenvolvimento | `uv run python -m cdp skills verificar`, versão do plugin, tabela de `docs/cdp/ROTINAS.md` gerada |
-| Construção: otimizador robusto na demonstração, recalibração de liquidez e custos para o PL de US$ 1,0 mi | em desenvolvimento | ensaio geral numa cópia do livro |
-| Ativação do mandato em `configs/cdp/fund.yaml` (regra do último pregão da semana na NYSE, seção `execution`, bloco de construção, liquidez e custos para o PL de US$ 1,0 mi) | **aplicada em 06/10/2026** (mescla chave a chave conferida semanticamente; `agenda --agora 2026-10-09T11:07` dá `acao: montar` e prazo efetivo 15:00) | — |
+| Ativação do mandato em `configs/cdp/fund.yaml` | **aplicada em 06/10/2026**; `agenda --agora 2026-10-09T11:07` dá `acao: montar` e prazo efetivo 15:00 | — |
 
 ## Cronograma até a primeira montagem regular (horário de Brasília)
 
 | Data | O que acontece | Quem |
 |---|---|---|
-| ter 06/10 | integração das frentes acima; push em `main` só com a suíte e o ruff verdes (licenças só depois da confirmação do titular) | desenvolvimento |
-| logo depois do push de integração (no máximo qua 07/10) | **preparar o PC executor para o novo envelope** (as skills e o plugin passam a começar por `cdp rotinas gate`; sem a identidade do clone, toda rotina responde "Sem execução: identidade deste ambiente desconhecida" — e uma rotina não consegue se registrar sozinha): no clone das rotinas do PC (`docs/cdp/LOCAL.md`, seção 3), `git pull --ff-only` e `bash scripts/cdp_setup_local.sh` (registra `cdp executor registrar --como local-pc --harness claude-code`, testa o push em `main` e no ramo `cdp-trava`, reinstala o plugin); recriar as tarefas do app desktop pela tabela de `uv run python -m cdp rotinas exportar --alvo claude-desktop` — as 12, inclusive `cdp-cobertura` (segunda a quinta, 22:37), `cdp-risco-1603`, `cdp-diario-sabado` e as reservas `cdp-semanal-b`/`-c`/`-d` (12:07, 13:07, 14:07); "Run now" em `cdp-status` e conferir em `uv run python -m cdp estado --formato md` que `executor.sou_o_executor` é verdadeiro | operador |
-| qua 07/10 | **regra do ramo `main`** no GitHub (Settings → Rules → Rulesets): bloquear force push e exclusão, **sem** exigir pull request, ramo `cdp-trava` livre; conferir com `gh api repos/arielassayag/MarketSummary/rulesets` (hoje a lista vem vazia: `main` sem proteção) — obrigatória antes de qualquer executor fora do Claude Code e antes da troca de 11/10 | titular |
-| qua 07/10 | rotinas da nuvem do Claude Code criadas **desligadas** no ambiente "CDP" e ligadas no "CDP-ensaio" (`CDP_ENSAIO=1`; nomes "CDP · <tarefa> (…) · ensaio"), em paralelo ao PC local | operador |
-| qui 08/10, até 18:00 | código completo, revisado, suíte verde; ativação do mandato publicada | desenvolvimento e titular |
-| qui 08/10, noite | 19:22 rotina diária com o retrato da cobertura de 08/10; 22:37 notas de cobertura | executor (PC local) |
-| sex 09/10 | **carteira inaugural**: 11:07 pesquisa e preparação, decisão até o prazo efetivo (15:00), execução no leilão de fechamento; 19:22 efetivação, primeiro registro diário, relatório semanal, portal. Às 11:00, conferir o uso do plano em claude.ai/settings/usage: o ensaio `cdp-semanal*` da nuvem roda ao mesmo tempo, na mesma conta; se a janela de uso estiver apertada, desligar as rotinas `cdp-semanal*` do CDP-ensaio antes das 11:07 (a carteira real tem prioridade) | executor (PC local); operador |
+| ter 06/10 | integração das frentes acima; push em `main` só com a suíte e o ruff verdes | desenvolvimento |
+| logo depois do push (no máximo qua 07/10) | **preparar o PC do Codex**: no clone dedicado das rotinas, `git pull --ff-only`; identidade com `uv run python -m cdp executor registrar --como local-pc --harness codex`; no `~/.codex/config.toml` da conta dedicada, acesso total, aprovação "never" e `CDP_HARNESS = "codex"`; recriar as 12 tarefas agendadas do app com os blocos de `uv run python -m cdp rotinas exportar --alvo codex --formato md`; **definir a senha do operador** (`cdp kill-switch senha`, terminal próprio); "Run now" em `cdp-status` e conferir em `uv run python -m cdp estado --formato md` que `executor.sou_o_executor` é verdadeiro (`docs/cdp/AUTOMACAO.md`, seção 5) | operador |
+| qui 08/10, até 18:00 | código completo, revisado, suíte verde | desenvolvimento e titular |
+| qui 08/10, noite | 19:22 rotina diária com o retrato da cobertura de 08/10; 22:37 notas de cobertura | executor (Codex) |
+| sex 09/10 | **carteira inaugural**: 11:07 pesquisa e preparação, decisão até o prazo efetivo (15:00), execução no leilão de fechamento; 19:22 efetivação, primeiro registro diário, relatório semanal, portal | executor (Codex) |
 | sáb 10/10, 10:07 | repescagem do fechamento, se necessário | executor |
-| dom 11/10, 10:00 | **troca do executor para a nuvem** (`cdp executor transferir --para claude-cloud`), depois de conferir o ensaio; **desligar as rotinas "· ensaio" do ambiente CDP-ensaio** (senão continuam rodando, cerca de 46 disparos por semana, e montam uma carteira paralela toda sexta na mesma conta); o PC fica como reserva quente por duas semanas, com as tarefas do app desktop desligadas (`docs/cdp/AUTOMACAO.md`, seção 13) | titular |
-| seg 12/10 | feriado na B3 com a NYSE aberta (pregão de dados); primeiras rotinas reais na nuvem | rotinas |
-| qui 15/10 | fechamento, retrato da cobertura e notas na nuvem | rotinas |
+| seg 12/10 | feriado na B3 com a NYSE aberta (pregão de dados) | rotinas |
+| qui 15/10 | fechamento, retrato da cobertura e notas | rotinas |
 | sex 16/10 | **primeira montagem regular** (com limites de giro), execução no leilão de fechamento e relatório semanal | rotinas |
 
 ## Riscos conhecidos
 
-- Rotinas da nuvem do Claude Code são um recurso em prévia: o formato da API pode mudar e a
-  documentação só traz limites por hora — conferir o uso em claude.ai/settings/usage. Sem a
-  conexão do GitHub, execuções são puladas (72 h depois, a rotina é desligada).
-- **PC executor sem a identidade do clone**: depois do push de integração, se o PC não rodar
-  `scripts/cdp_setup_local.sh` e não recriar as tarefas, as rotinas de quinta à noite (fechamento
-  e notas) e as de sexta (11:07 a 14:07) respondem "Sem execução" e a decisão da carteira
-  inaugural se perde (`decisao_perdida`). Ver a linha do cronograma logo depois do push.
-- **`main` sem proteção no GitHub** (nenhuma regra hoje): os apps com acesso total (Codex,
-  Antigravity) e o push da nuvem ficam limitados só pelo código (`cdp publicar` nunca força) até
-  a regra do ramo existir.
-- Até a ativação do mandato, `configs/cdp/fund.yaml` mantém a regra antiga de dia de montagem
-  (prazo 16:30, sem relatório semanal na sexta à noite, próxima montagem na terça 13/10); a
-  ativação precisa entrar antes de 09/10 (o portal filtra backtests pela regra vigente).
-- Kill switch pedido pela rotina de risco enquanto outra rotina segura a trava, em máquinas
-  separadas (nuvem): o relatório e o pedido (`reports/risk/<data>/kill_switch_<HHMM>.yaml`) saem
-  na hora, mas o kill switch só entra no livro na execução exclusiva seguinte (montagem ou
-  fechamento), que aplica os pedidos pendentes antes de gravar qualquer coisa.
-- Ensaio na nuvem em paralelo ao executor: consome a mesma capacidade do plano (cerca de 46
-  disparos por semana; na sexta, uma montagem completa sem publicar) — por isso a conferência do
-  uso na sexta e o desligamento no domingo.
-- Tarefas agendadas do Codex e do Antigravity rodam no computador (app aberto); o Antigravity
-  usa um modelo fixo nas tarefas agendadas e a sua documentação pública ainda é escassa —
-  ensaiar antes de confiar.
+- **PC do Codex sem a identidade do clone**: se o PC não registrar o executor nem recriar as
+  tarefas, as rotinas de quinta à noite (fechamento e notas) e as de sexta (11:07 a 14:07)
+  respondem "Sem execução" e a decisão da carteira inaugural se perde (`decisao_perdida`).
+- **Tarefas agendadas do Codex** rodam no computador, com o app aberto e o PC ligado; queda de
+  energia ou de rede na sexta usa as reservas (12:07, 13:07, 14:07; 21:07 e sábado 10:07 no
+  fechamento). Rede fora no prepare: o briefing sai com os últimos dados gravados (aviso no
+  resultado) ou com `weekly prepare --offline`.
+- **Senha do operador ainda não definida no PC das rotinas**: até lá, um kill switch ligado por
+  gatilho HARD não tem como ser desligado. Kill switch ligado no leilão do dia de montagem faz a
+  decisão caducar (regra de caducidade): a carteira não é montada naquela semana.
+- **Regra do ramo `main` ativa desde 06/10/2026** (ruleset 24618259: bloqueia force push e
+  exclusão, sem exigir pull request; ramo `cdp-trava` livre). `cdp publicar` nunca força; um
+  push direto também não reescreve `main`.
+- Kill switch pedido pela rotina de risco enquanto outra rotina segura a trava: o relatório e o
+  pedido (`reports/risk/<data>/kill_switch_<HHMM>.yaml`) saem na hora, mas o kill switch só entra
+  no livro na execução exclusiva seguinte (montagem ou fechamento), que aplica os pedidos
+  pendentes antes de gravar qualquer coisa.
 - `artifacts/painel/` passou a ser ignorada pelo git (cópia local do painel); o
   `cdp_painel_local.html` antigo (cerca de 2,3 MB, texto de pesquisa anterior à data de início)
   ainda é versionado até o `git rm -r --cached artifacts/painel` do commit, e até lá é a única
   exceção nominal do teste de termos proibidos. `cdp site conferir` falha se um termo vedado
-  aparecer em qualquer arquivo do portal.
+  aparecer no texto da casa de qualquer arquivo do portal (manchetes de terceiros citadas como
+  dado ficam isentas).
 - **Licenças confirmadas pelo titular em 06/10/2026**: `LICENSE` (Apache-2.0, todo o código do
   repositório, inclusive o app Fechamento), `LICENSE-docs` (CC BY 4.0, textos e conteúdos do
   CDP) e `NOTICE` (marca reservada) — ver `docs/cdp/DECISOES.md`.
@@ -159,10 +178,10 @@ Pendências que dependem do titular ou do commit (não são código):
 - `cdp reinicio --executar` abrindo um livro vazio com a gênese (ou um comando novo de
   preparação da cópia, como o previsto no desenho da replicação), para uma cópia do projeto
   começar com `book/genese.json` e o evento `FUND_GENESIS` (`docs/cdp/REPLICAR.md`, seção 3).
-- Guarda nos validadores da pesquisa e das notas que recuse, nas evidências e no texto livre, a
-  fonte proprietária removida e as ferramentas pagas de dados (hoje a guarda só confere o
-  endereço das URLs); `tests/cdp/test_docs_consistencia.py` já varre `artifacts/`, `reports/` e o
-  livro a partir da data de início.
+- Guarda nos validadores da pesquisa e das notas que recuse, nas evidências e no texto livre,
+  ferramentas e bases pagas de dados (hoje a guarda só confere o endereço das URLs);
+  `tests/cdp/test_docs_consistencia.py` já varre `artifacts/`, `reports/` e o livro a partir da
+  data de início.
 - `run_demo` (`src/cdp/workflow/demo.py`) gerar a cobertura sintética (`cdp.cobertura.demo`) e
   notas (`write_demo_note`, em `src/cdp/workflow/notas.py`) nas sextas da demonstração — dono:
   cobertura e mente. Sem isso, o portal da demonstração (DADOS SIMULADOS) sai sem cobertura e sem
@@ -180,9 +199,16 @@ Pendências que dependem do titular ou do commit (não são código):
   dedicado com credencial de push em `main` e no ramo `cdp-trava` (seção 6); IA no Actions só no
   apêndice A. O teste `test_gemini_md_points_to_the_app_scheduler` já confere (hoje marcado como
   falha esperada). `CLAUDE.md`: citar as saídas da mente (`AGENTS.md`, seção 3).
-- Redação antiga do dia de montagem em docstrings de `src/cdp/data/intraday.py` e
-  `src/cdp/data/live_refresh.py`; o backtest (`src/cdp/backtest/engine.py`) ainda usa a regra
-  antiga de dia de montagem.
-- "A mente (Claude Code ou Codex)" em `docs/cdp/METODOLOGIA.md`, `docs/cdp/TESE.md` e em
-  docstrings da camada da mente → "qualquer app de IA".
+- Redação antiga do dia de montagem em docstrings de `src/cdp/data/intraday.py`; o backtest
+  (`src/cdp/backtest/engine.py`) ainda usa a regra antiga de dia de montagem.
 - Workflows: passo `name: Checkout` → `name: Baixar o repositório`.
+- Roteiros (dono: roteiros e skills): no `docs/cdp/playbooks/SEMANAL.md`, a alternativa
+  `weekly prepare --offline` quando o prepare ao vivo falhar por rede e a leitura de
+  `aviso_coleta`; no `docs/cdp/playbooks/DIARIO.md`, o caso `registrado` com
+  `efetivacao_recusada` (o comentário explica que a carteira não foi montada e que a decisão
+  caducou). Depois, `uv run python -m cdp skills sincronizar`.
+- "paper trading" ainda aparece em textos gerados fora destes módulos: `DISCLAIMER`
+  (`src/cdp/workflow/tese.py`), `PAPER_TRADING_LABEL` e o prompt do comentário
+  (`src/cdp/research/commentary.py`), a etiqueta do app (`src/cdp/ui/components.py`) e o
+  `track_record_type` padrão (`src/cdp/config.py`, entra no hash do mandato: só com decisão do
+  titular). Os relatórios já traduzem na renderização.

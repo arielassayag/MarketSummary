@@ -515,7 +515,8 @@ def test_weekly_report_has_mandatory_sections_and_labels():
         assert title in html
     # o nome do app de IA nunca aparece no texto ao investidor
     assert "claude-code" not in md and "Mente que conduziu" not in md
-    assert "app de IA da gestão" in md
+    assert "Mente:" not in md and "app de IA" not in md
+    assert "redigidos pela gestão com apoio de IA" in md
     assert "[IA]" in md and 'class="badge ia"' in html
     assert "carteira simulada com preços reais" in md and "DADOS SIMULADOS" in md
     assert "DADOS SIMULADOS" in html
@@ -539,12 +540,12 @@ def test_weekly_report_changes_and_shadow_comparison():
     assert "Nomes em comum (mesmo lado) | 2 |" in sombra
     assert "Alpha esperado (a.a.) | 3,10% | 2,60% | +0,50%" in sombra
     visao = md.split("## O que mudou na visão", 1)[1].split("## O que mudou na carteira", 1)[0]
-    assert "| Nome AAA |" in visao and "nova" in visao and "encerrada" in visao and "stance ↑" in visao
+    assert "| Nome AAA |" in visao and "nova" in visao and "encerrada" in visao and "visão mais positiva" in visao
     avaliacao = md.split("## Avaliação da semana anterior", 1)[1].split("## O que mudou", 1)[0]
     assert "resíduo -1,50%" in avaliacao and "| Nome CCC | -1 | gestor | 0,60 | resíduo -1,50% | sim |" \
         in avaliacao
     # sem resíduo: mede-se o retorno total da ação (direção), não o sinal do P&L
-    assert "| Nome BBB | +1 | gestor | 0,40 | retorno total USD -" in avaliacao
+    assert "| Nome BBB | +1 | gestor | 0,40 | retorno total em US$ -" in avaliacao
     assert "| Nome BBB | +1 | gestor | 0,40 | P&L" not in avaliacao
 
 
@@ -569,7 +570,7 @@ def test_weekly_report_escapes_pm_text_and_handles_missing_shadow():
     md2, html2 = render_weekly_report(WEEK, cur, None, None, None, [], [], [], None, FUND)
     assert "Carteira-sombra só-quant indisponível" in md2
     assert "Sem registros diários na semana anterior" in md2
-    assert "DADOS SIMULADOS" not in md2 and "caixa (inception)" in md2
+    assert "DADOS SIMULADOS" not in md2 and "caixa (carteira inaugural)" in md2
 
 
 # ==========================================================
@@ -620,7 +621,7 @@ def test_thesis_evaluation_uses_stock_direction_not_pnl_sign():
     sec = md.split("## Avaliação da semana anterior", 1)[1].split("## O que mudou", 1)[0]
     row = next(line for line in sec.splitlines() if line.startswith("| CCC |"))
     assert row.endswith("| sim |"), row  # P&L do short positivo e ação em queda ⇒ funcionou
-    assert "retorno total USD -" in row and "P&L" not in row
+    assert "retorno total em US$ -" in row and "P&L" not in row
 
 
 def test_issuer_period_returns_compounds_direction_and_skips_missing_days():
@@ -656,7 +657,7 @@ def test_daily_report_flags_tampered_record_and_broken_chain():
     r1, r2, r3 = make_chain()
     md, html = render_daily_report(r3, [r1, r2], "Comentário.", FUND, cfg=CFG)
     assert "| Hash do registro (recalculado) | confere |" in md
-    assert "desde a inception, GENESIS) | íntegra |" in md
+    assert "desde o início do mandato) | íntegra |" in md
     assert "NÃO CONFERE" not in md + html
     tampered = r3.model_copy(update={"nav_end_usd": r3.nav_end_usd * 1.5})  # hash antigo
     md, html = render_daily_report(tampered, [r1, r2], "Comentário.", FUND, cfg=CFG)
@@ -801,3 +802,37 @@ def test_template_never_ranks_missing_country_attribution():
     assert not any("maior efeito" in p for p in _template_output(fb).paragraphs)
     fb_ok = build_daily_factbook(r3, [r1, r2], cfg=CFG)
     assert any("maior efeito veio de BR" in p for p in _template_output(fb_ok).paragraphs)
+
+
+# ----------------------------------------------------------------------------- rótulos pt-BR
+
+
+def test_investor_labels_translate_controls_and_keep_signs():
+    from cdp.workflow import rotulos as R
+
+    for cid in R.CONTROLE_PT:
+        assert R.controle(cid) != cid and "_" not in R.controle(cid)
+    assert R.controle("COUNTRY_OP:AR") == "exposição líquida por país, limite operacional (Argentina)"
+    assert R.controle("SECTOR_NET:Utilities") == "exposição líquida por setor (utilidades públicas)"
+    assert R.controle("STYLE_OP:size") == "exposição ao estilo, limite operacional (tamanho (size))"
+    assert R.controle("PASSIVO:OK", "Passivo conferido") == "Passivo conferido"
+    # sinais preservados (o zero arredondado não tem sinal)
+    assert R.detalhe("Net país AR: -0.50% do NAV (limite ±2.00%).") == (
+        "Líquido no país Argentina: −0,50% do PL (limite ±2,00%).")
+    assert R.detalhe("Drawdown -0.00% (stop -5.00%, stop-out -7.50%).") == (
+        "Drawdown 0,00% (stop −5,00%, zeragem −7,50%).")
+    assert R.detalhe("x -0.001 e -0.150%") == "x −0,001 e −0,150%"
+    assert R.detalhe("Net 0.86% do NAV; long 35.02%, short -34.16%.") == (
+        "Líquido 0,86% do PL; comprado 35,02%, vendido −34,16%.")
+    assert R.detalhe("Snapshot de 2026-10-08 para a semana de 2026-10-09: 1 dias corridos.") == (
+        "Dados de mercado de 08/10/2026 para a semana de 09/10/2026: 1 dia corrido.")
+    assert R.plural("PL de US$ 1 a US$ 2 (1 pregões); 0,1 fechamentos; 11 pregões") == (
+        "PL de US$ 1 a US$ 2 (1 pregão); 0,1 fechamentos; 11 pregões")
+    assert R.aviso("Dados reais; paper trading com execução hipotética.") == (
+        "Dados reais; carteira simulada com execução hipotética.")
+    assert R.cenario("Gap AR +41%") == "Gap Argentina +41%"
+    assert R.cenario("Quebra: 5 maiores longs -30%") == "Quebra: 5 maiores posições compradas −30%"
+    assert R.fator("Macro — BZ=F") == "Macro — petróleo Brent"
+    # texto da gestão: só nomes (números já em pt-BR ficam intactos)
+    assert R.nomes_no_texto("SIM001 subiu 1.234,5", {"SIM001": "Simulada 01"}) == (
+        "Simulada 01 subiu 1.234,5")

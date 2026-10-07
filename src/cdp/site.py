@@ -304,6 +304,8 @@ def _descricao(rel: str) -> str:
         (r"proposal_v\d+\.json$", "Proposta otimizada: formulação, restrições e risco ex-ante"),
         (r"memo_v\d+\.md$", "Memorando da decisão"),
         (r"booked\.json$", "Carteira registrada no livro"),
+        (r"efetivacao_recusada\.json$", "Efetivação recusada no leilão do dia de montagem "
+                                        "(decisão caducada)"),
         (r"config_decisao\.json$", "Mandato vigente na decisão"),
         (r"inputs/pm_decision\.json$", "Juízos do gestor (postura, convicções e exclusões)"),
         (r"research_pack[^/]*\.json$", "Pesquisa estruturada da semana (juízos com fontes "
@@ -1219,10 +1221,67 @@ def _refs_locais(path: Path, saida: Path) -> list[str]:
     return faltas
 
 
-#: Termos que nunca vão ao ar (só dados públicos; nenhuma ferramenta proprietária): a
-#: conferência do site falha se aparecerem em qualquer arquivo de texto publicado.
+#: Termos que nunca vão ao ar no texto da casa (só dados públicos; nenhuma ferramenta
+#: proprietária): a conferência do site falha se aparecerem em qualquer arquivo de texto publicado
+#: — exceto dentro de conteúdo de terceiros citado como dado (manchete e veículo das notícias
+#: públicas coletadas, ``*news.jsonl``): a imprensa cita essas casas ("…, aponta <casa>") e
+#: uma manchete nunca derruba a publicação do dia.
 VEDADOS_NO_PORTAL = ("quar" + "tr", "dalo" + "opa", "fact" + "set", "capital" + " iq",
                      "refini" + "tiv", "bloomberg" + " terminal", "econo" + "matica")
+#: Caracteres de contexto da manchete (antes do termo) que identificam a citação de terceiros.
+CONTEXTO_TERCEIROS = 24
+
+
+def _normalizado(texto: str) -> str:
+    """Texto comparável entre formatos (HTML, JSON, Markdown): entidades e escapes ``\\uXXXX``
+    desfeitos, minúsculas e só letras e dígitos."""
+    t = html.unescape(texto)
+    t = re.sub(r"\\u([0-9a-fA-F]{4})", lambda m: chr(int(m.group(1), 16)), t)
+    return re.sub(r"[\W_]+", "", t.lower())
+
+
+def _citacoes_de_terceiros(saida: Path, vedados: re.Pattern[str]) -> list[str]:
+    """Trechos normalizados (termo vedado + contexto) das manchetes e veículos das notícias
+    publicadas — conteúdo de terceiros, isento da conferência de termos vedados."""
+    trechos: set[str] = set()
+    for p in sorted(saida.rglob("*news.jsonl")):
+        try:
+            linhas = p.read_text(encoding="utf-8").splitlines()
+        except (UnicodeDecodeError, OSError):
+            continue
+        for linha in linhas:
+            try:
+                item = json.loads(linha)
+            except ValueError:
+                continue
+            if not isinstance(item, dict):
+                continue
+            for campo in ("title", "source"):
+                txt = str(item.get(campo) or "")
+                for m in vedados.finditer(txt):
+                    ini = m.start() - CONTEXTO_TERCEIROS
+                    trecho = (txt[ini:m.end()] if ini >= 0
+                              else txt[m.start():m.end() + CONTEXTO_TERCEIROS])
+                    n = _normalizado(trecho)
+                    if len(n) >= len(_normalizado(m.group(0))) + 8:  # contexto que identifica
+                        trechos.add(n)
+    return sorted(trechos, key=len, reverse=True)
+
+
+def termos_vedados(texto: str, vedados: re.Pattern[str], terceiros: Iterable[str] = (),
+                   *, so_terceiros: bool = False) -> str | None:
+    """Primeiro termo vedado no texto da casa (``None`` se não houver). ``terceiros``: citações
+    de manchetes (ver :func:`_citacoes_de_terceiros`), descontadas antes da busca;
+    ``so_terceiros``: o arquivo inteiro é conteúdo de terceiros (notícias coletadas)."""
+    if so_terceiros:
+        return None
+    terceiros = tuple(terceiros)
+    folga = 4 * CONTEXTO_TERCEIROS  # escapes de HTML/JSON alongam o texto bruto
+    for m in vedados.finditer(texto):
+        janela = _normalizado(texto[max(0, m.start() - folga):m.end() + folga])
+        if not any(t in janela for t in terceiros):
+            return m.group(0)
+    return None
 
 
 def conferir(saida: Path | str) -> list[str]:
@@ -1294,8 +1353,10 @@ def conferir(saida: Path | str) -> list[str]:
     og = re.search(r'property="og:image" content="([^"]+)"', idx)
     if og and not og.group(1).startswith(("https://", "http://")):
         out.append("og:image precisa ser endereço absoluto")
-    # Nada vedado no que vai ao ar: ferramentas e bases proprietárias (só dados públicos).
+    # Nada vedado no texto da casa que vai ao ar: ferramentas e bases proprietárias (só dados
+    # públicos). Manchetes de terceiros citadas como dado ficam isentas (VEDADOS_NO_PORTAL).
     vedados = re.compile("|".join(VEDADOS_NO_PORTAL), re.IGNORECASE)
+    terceiros = _citacoes_de_terceiros(saida, vedados)
     for p in sorted(saida.rglob("*")):
         if p.is_file() and p.suffix.lower() in (".html", ".json", ".md", ".csv", ".txt", ".yaml",
                                                 ".yml", ".xml", ".js", ".css", ".jsonl"):
@@ -1303,10 +1364,11 @@ def conferir(saida: Path | str) -> list[str]:
                 texto = p.read_text(encoding="utf-8")
             except (UnicodeDecodeError, OSError):
                 continue
-            m = vedados.search(texto)
-            if m:
+            achado = termos_vedados(texto, vedados, terceiros,
+                                    so_terceiros=p.name.endswith("news.jsonl"))
+            if achado:
                 out.append(f"{p.relative_to(saida).as_posix()}: termo vedado no portal "
-                           f"({m.group(0)!r})")
+                           f"({achado!r})")
     simulado = bool(man.get("dados_simulados"))
     for nome in ("index.html", "404.html", "dados/index.html"):
         txt = (saida / nome).read_text(encoding="utf-8")

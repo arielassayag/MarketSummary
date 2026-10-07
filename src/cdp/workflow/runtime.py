@@ -98,6 +98,21 @@ def _ultimo_pregao_completo(md: MarketData) -> date | None:
     return max(anteriores) if anteriores else None
 
 
+def aviso_coleta(falhas: list[str], pregao_base: object = None) -> str | None:
+    """Aviso legível do ``weekly prepare`` quando a coleta ao vivo falhou (rede ou fonte fora):
+    a análise segue com o último dado gravado de cada fonte que falhou (nunca com dado vazio)."""
+    if not falhas:
+        return None
+    base = str(pregao_base)[:10] if pregao_base else None
+    try:
+        base_txt = f" (base gravada até {date.fromisoformat(base):%d/%m/%Y})" if base else ""
+    except ValueError:
+        base_txt = ""
+    return (f"Coleta ao vivo incompleta: {len(falhas)} fonte(s) sem resposta. A análise usa os "
+            f"últimos dados gravados dessas fontes{base_txt}; nada gravado foi apagado. Com a "
+            "rede fora, `weekly prepare --offline` monta o briefing só com a base gravada.")
+
+
 def _write_json(path: Path, obj) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(obj, ensure_ascii=False, indent=2, sort_keys=True, default=str),
@@ -689,13 +704,16 @@ class Runtime:
         self.book.audit.append("WEEKLY_PREPARED", mind, info,
                                summary=f"Briefing da semana {week} preparado pela mente {mind}.",
                                week=week)
+        falhas = list(info.get("slow_failures", []))
+        aviso = aviso_coleta(falhas, info.get("previous_session"))
         return {"semana": week, "briefing": str(briefing),
                 "arquivos": {k: str(v) for k, v in paths.items()},
                 "entradas": str(self.week_dir(week) / "inputs"),
                 "candidatos_long": len(longs), "candidatos_short": len(shorts),
                 "emissores_elegiveis": int(ctx.panel.assets["eligible"].sum()),
                 "barra_provisoria": bool(info.get("live")) and bool(info.get("intraday", True)),
-                "snapshot_hash": info["snapshot_hash"], "falhas_coleta": info.get("slow_failures", []),
+                "snapshot_hash": info["snapshot_hash"], "falhas_coleta": falhas,
+                **({"aviso_coleta": aviso} if aviso else {}),
                 **({"briefing_incompleto_afastado": str(retomado)} if retomado else {}),
                 **({"kill_switch_pedidos": pedidos} if pedidos else {})}
 
@@ -749,7 +767,7 @@ class Runtime:
                                       live_weeks=self.live_weeks(),
                                       kill_switch=self.kill_switch_active(),
                                       audit_head_hash=b.audit_head(),
-                                      decided_at=t_dec, created_at=t_dec)
+                                      decided_at=t_dec, created_at=t_dec, factbook=pfb)
         inputs_dir = self.week_dir(week) / "inputs"
         b.audit.append("WEEKLY_INPUTS", pack.mind or mind,
                        {p.name: sha256_file(p) for p in sorted(inputs_dir.glob("*.json"))},
@@ -819,11 +837,13 @@ class Runtime:
 
         _md, _info, ctx, _fb, pmctx = self._week_state(week)
         pack, out, issues, pm_ctx = load_week_inputs(self.week_dir(week), pmctx, now=self.now())
-        bundle = to_bundle(out, self.cfg, pm_ctx.drawdown, factbook=pm_factbook(pm_ctx))
+        pfb = pm_factbook(pm_ctx)
+        bundle = to_bundle(out, self.cfg, pm_ctx.drawdown, factbook=pfb)
         outcome = run_weekly_decision(ctx, pack, bundle, version=self.book.next_version(week),
                                       live_weeks=self.live_weeks(),
                                       kill_switch=self.kill_switch_active(),
-                                      decided_at=self.now(), created_at=self.now())
+                                      decided_at=self.now(), created_at=self.now(),
+                                      factbook=pfb)
         stance: dict[str, int] = {}
         for v in list(pack.views) + list(bundle.views):
             if v.score != 0:
@@ -909,6 +929,16 @@ class Runtime:
                         "motivo": str(exc), "acao": "tente de novo em alguns minutos"}
             self._anchor_increments(increments)
         runner = self._runner(store)
+        feito = runner.track.get(session)
+        if feito is not None:
+            # Pregão já registrado (inclusive com efetivação recusada): nada a refazer — nunca
+            # uma segunda passagem que efetive depois uma decisão caducada.
+            out = {"data": session, "status": "já registrado", "registro": feito.record_hash,
+                   "acao": "nada a fazer: siga para o próximo fechamento pendente"}
+            lapso = self._lapso_do_dia(session)
+            if lapso:
+                out["efetivacao_recusada"] = lapso
+            return {**out, "kill_switch_pedidos": pedidos} if pedidos else out
         try:
             res = runner.run_session(session)
         except NoSessionError as exc:
@@ -929,13 +959,30 @@ class Runtime:
         out_dir.mkdir(parents=True, exist_ok=True)
         (out_dir / "factbook.json").write_text(factbook_json(fb), encoding="utf-8")
         paths = write_daily_commentary_inputs(out_dir, rec, fb, mind_hint=mind, overwrite=True)
+        recusa = ({"efetivacao_recusada": {
+            "semana": res.lapsed.get("semana"), "sessao": res.lapsed.get("sessao"),
+            "motivo": res.lapsed.get("motivo"), "decisao_caducada": True,
+            "regra": res.lapsed.get("regra")}} if res.lapsed else {})
         return {"data": session, "status": "registrado", "registro": rec.record_hash,
                 "nav_usd": rec.nav_end_usd, "retorno_dia": rec.ret,
                 "efetivacao": (res.booked.proposal_id if res.booked is not None else None),
+                **recusa,
                 "alertas": list(rec.alerts), "fatos": {k: str(v) for k, v in paths.items()},
                 "proximo_passo": (f"escreva {out_dir / 'comentario.json'} e rode "
                                   f"`cdp daily publish --date {session}`"),
                 **({"kill_switch_pedidos": pedidos} if pedidos else {})}
+
+    def _lapso_do_dia(self, session: date) -> dict | None:
+        """Registro de efetivação recusada (decisão caducada) no fechamento de ``session``."""
+        for w in self.book.list_weeks():
+            try:
+                lapso = self.book.efetivacao_recusada(w)
+            except ValueError:
+                continue
+            if lapso and lapso.get("sessao") == session.isoformat():
+                return {"semana": lapso.get("semana"), "sessao": lapso.get("sessao"),
+                        "decisao_caducada": True}
+        return None
 
     def _daily_pre_inicio(self, session: date, *, live: bool) -> dict:
         """Antes da data de início (fundo sem carteira): sem marcação, registro nem relatório;

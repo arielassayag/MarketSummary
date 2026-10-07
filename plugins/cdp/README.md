@@ -23,9 +23,9 @@ workflow), a skill faz só o roteiro e o resumo.
 
 | Skill | Invocação (argumento = a tarefa) | Roteiro | Papel |
 |---|---|---|---|
-| `semanal` | `/cdp:semanal cdp-semanal` (reservas `-b`, `-c`, `-d`) | `docs/cdp/playbooks/SEMANAL.md` | montagem da carteira no último pregão da semana na NYSE (decisão antes do prazo efetivo, execução no leilão de fechamento) e tese de investimento |
-| `diario` | `/cdp:diario cdp-diario` (`cdp-diario-reforco`, `cdp-diario-sabado`) | `docs/cdp/playbooks/DIARIO.md` | fechamento diário e comentário; relatórios semanais de resultado pendentes; retrato da cobertura |
-| `cobertura` | `/cdp:cobertura cdp-cobertura` | `docs/cdp/playbooks/COBERTURA.md` | notas de pesquisa por emissor (segunda a quinta, 22:37), só com fontes públicas |
+| `semanal` | `/cdp:semanal cdp-semanal` (reservas `-b`, `-c`, `-d`) | `docs/cdp/playbooks/SEMANAL.md` | montagem da carteira no último pregão da semana na NYSE (modelos da cobertura atualizados antes da coleta, decisão antes do prazo efetivo, execução no leilão de fechamento) e tese de investimento |
+| `diario` | `/cdp:diario cdp-diario` (`cdp-diario-reforco`, `cdp-diario-sabado`) | `docs/cdp/playbooks/DIARIO.md` | fechamento diário e comentário; relatórios semanais de resultado pendentes; retrato da cobertura (parcial após resultados, completo após evento macro); revisão mensal dos modelos no último dia de montagem do mês |
+| `cobertura` | `/cdp:cobertura cdp-cobertura` | `docs/cdp/playbooks/COBERTURA.md` | notas de pesquisa por emissor (segunda a quinta, 22:37), só com fontes públicas; pós-resultado dos modelos reavaliados primeiro |
 | `risco` | `/cdp:risco cdp-risco-1330` (`cdp-risco-1603`) | `docs/cdp/playbooks/RISCO.md` | monitor de risco; kill switch só por gatilho HARD do código |
 | `status` | `/cdp:status cdp-status` | `docs/cdp/playbooks/STATUS.md` | saúde da operação (só leitura) |
 | `calibracao` | `/cdp:calibracao cdp-calibracao` | `docs/cdp/playbooks/CALIBRACAO.md` | backtest mensal e comparação com a execução anterior |

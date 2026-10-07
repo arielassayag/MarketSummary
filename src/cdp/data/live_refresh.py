@@ -1,8 +1,13 @@
 """Atualização "ao vivo" dos dados lentos no momento da análise (fundamentos, short interest,
 aluguel da B3 e notícias até agora), gravada com hash e sobreposta ao ``MarketData``.
 
-Complementa ``intraday.py``: juntos garantem que a decisão de segunda use TODO dado disponível
-até o momento da análise, e que a etapa ``decide`` reproduza exatamente o mesmo conjunto.
+Complementa ``intraday.py``: juntos garantem que a decisão do dia de montagem use TODO dado
+disponível até o momento da análise, e que a etapa ``decide`` reproduza exatamente o mesmo
+conjunto.
+
+Falha de coleta (rede fora, endpoint do Yahoo fora) nunca apaga o que já está gravado: fonte sem
+resposta fica registrada em ``failures`` e a análise usa o último dado gravado daquela fonte
+(fundamentos, short interest e notícias); linha de fundamentos sem dado nunca substitui a gravada.
 """
 
 from __future__ import annotations
@@ -50,12 +55,20 @@ def fetch_slow_refresh(md: MarketData, as_of: date, *, lookback_days: int = 14,
                                         as_of=as_of)
     except Exception as exc:  # noqa: BLE001
         failures.append(f"fundamentos: {exc}")
+    if fund is not None:
+        fund, nota = _fundamentos_coletados(fund, md.fundamentals)
+        if nota:
+            failures.append(nota)
     us = [t for t in lines.index if lines.loc[t, "market"] == "US"]
     try:
         ratios = {t: float(r) for t, r in lines["adr_ratio"].dropna().items()}
         si = yahoo.fetch_short_interest(us, as_of=as_of, adr_ratios=ratios)
     except Exception as exc:  # noqa: BLE001
         failures.append(f"short interest: {exc}")
+    if si is not None and us and (len(si) == 0 or bool(_si_sem_dados(si).all())):
+        failures.append(f"short interest: sem dados para nenhuma das {len(us)} linhas nos EUA "
+                        "(falha de coleta); vale o short interest gravado")
+        si = None
     br = [t for t in lines.index if lines.loc[t, "market"] == "BR"]
     try:
         shares = None
@@ -68,14 +81,75 @@ def fetch_slow_refresh(md: MarketData, as_of: date, *, lookback_days: int = 14,
         lend = b3_lending.latest_lending(long_df, as_of)
     except Exception as exc:  # noqa: BLE001
         failures.append(f"aluguel B3: {exc}")
-    if include_news:
+    rede_fora = (fund is None and si is None and (lend is None or len(lend) == 0)
+                 and len(failures) >= 3)
+    if include_news and rede_fora:
+        # Yahoo, FINRA e B3 sem resposta: rede fora. Não espera centenas de tempos-limite nas
+        # notícias (minutos antes do prazo da decisão); valem as notícias gravadas.
+        failures.append("notícias: não coletadas (Yahoo, FINRA e B3 sem resposta: rede fora); "
+                        "valem as notícias gravadas")
+    elif include_news:
         try:
             items, failed = news.fetch_news(news.queries_from_universe(uni), as_of, lookback_days)
-            if failed:
+            if failed and not items:
+                # Nenhuma resposta: falha de coleta (rede fora) — valem as notícias gravadas.
+                failures.append(f"notícias: nenhuma resposta ({len(failed)} emissor(es)); valem "
+                                "as notícias gravadas")
+                items = None
+            elif failed:
                 failures.append(f"notícias: {len(failed)} emissor(es) sem resposta")
         except Exception as exc:  # noqa: BLE001
             failures.append(f"notícias: {exc}")
     return SlowRefresh(fund, si, lend, items, failures)
+
+
+def _fundamentos_coletados(new: pd.DataFrame, old: pd.DataFrame | None
+                           ) -> tuple[pd.DataFrame | None, str | None]:
+    """Só as linhas que o Yahoo de fato respondeu; o resto é falha de coleta registrada.
+
+    Linha sem nenhum dado (``sem_dados``) nunca entra na atualização: valem os fundamentos
+    gravados. Sem nenhuma linha útil, a atualização inteira é descartada (``None``)."""
+    from .yahoo import linhas_sem_dados
+
+    if new is None or new.empty:
+        return None, None
+    vazias = linhas_sem_dados(new)
+    n_vazias, total = int(vazias.sum()), len(new)
+    if n_vazias == 0:
+        return new, None
+    if n_vazias == total:
+        return None, (f"fundamentos: Yahoo sem dados para nenhuma das {total} linhas (falha de "
+                      "coleta); valem os fundamentos gravados")
+    gravadas = 0 if old is None else int(new.index[vazias].isin(old.index).sum())
+    return new.loc[~vazias], (f"fundamentos (parcial): {n_vazias} de {total} linha(s) sem "
+                              f"resposta do Yahoo; {gravadas} delas mantêm os fundamentos "
+                              "gravados")
+
+
+def _si_sem_dados(si: pd.DataFrame) -> pd.Series:
+    """Linhas de short interest sem a medida (ações vendidas e % do float ausentes)."""
+    cols = [c for c in ("shares_short", "short_pct_float") if c in si.columns]
+    if not cols:
+        from .yahoo import linhas_sem_dados
+
+        return linhas_sem_dados(si)
+    return si[cols].apply(pd.to_numeric, errors="coerce").isna().all(axis=1)
+
+
+def _sem_perder_dados(old: pd.DataFrame, new: pd.DataFrame, *,
+                      short_interest: bool = False) -> pd.DataFrame:
+    """Linhas novas que não apagam dado gravado: linha sem nenhum dado, ou sem valor de mercado
+    quando a gravada o tem, fica de fora (vale a gravada). Ausente nunca substitui um valor."""
+    from .yahoo import linhas_sem_dados
+
+    drop = _si_sem_dados(new) if short_interest else linhas_sem_dados(new)
+    if "market_cap" in new.columns and "market_cap" in old.columns:
+        mc_novo = pd.to_numeric(new["market_cap"], errors="coerce")
+        mc_old = pd.to_numeric(old["market_cap"], errors="coerce")
+        mc_old = mc_old[~mc_old.index.duplicated(keep="last")].reindex(new.index)
+        drop = drop | (mc_novo.isna() & mc_old.notna())
+    drop = drop & new.index.isin(old.index)
+    return new.loc[~drop.to_numpy(dtype=bool)]
 
 
 def save_slow_refresh(refresh: SlowRefresh, out_dir: Path) -> dict[str, str]:
@@ -128,13 +202,20 @@ def load_slow_refresh(out_dir: Path, expected: dict[str, str]) -> SlowRefresh:
 
 def overlay_slow_refresh(md: MarketData, refresh: SlowRefresh, hashes: dict[str, str],
                          captured_at: datetime, rel_dir: str) -> MarketData:
-    """Substitui os retratos lentos pelos mais recentes (mantendo os anteriores onde faltar)."""
+    """Substitui os retratos lentos pelos mais recentes (mantendo os anteriores onde faltar).
 
-    def merged(old: pd.DataFrame, new: pd.DataFrame | None) -> pd.DataFrame:
+    Fundamentos: linha nova sem dado (ou sem valor de mercado onde o gravado o tem) nunca
+    sobrescreve a gravada — falha de coleta não apaga o retrato anterior (ver
+    :func:`_sem_perder_dados`)."""
+
+    def merged(old: pd.DataFrame, new: pd.DataFrame | None, *, protege: bool = False,
+               short_interest: bool = False) -> pd.DataFrame:
         if new is None or new.empty:
             return old
         if old is None or old.empty:
             return new
+        if protege:
+            new = _sem_perder_dados(old, new, short_interest=short_interest)
         keep = old.loc[~old.index.isin(new.index)]
         return pd.concat([new, keep]).sort_index()
 
@@ -147,6 +228,7 @@ def overlay_slow_refresh(md: MarketData, refresh: SlowRefresh, hashes: dict[str,
     manifest = md.manifest.model_copy(update={"files": files, "limitations": limitations})
     news = tuple(refresh.news) if refresh.news is not None else md.news
     return replace(md, manifest=manifest,
-                   fundamentals=merged(md.fundamentals, refresh.fundamentals),
-                   short_interest=merged(md.short_interest, refresh.short_interest),
+                   fundamentals=merged(md.fundamentals, refresh.fundamentals, protege=True),
+                   short_interest=merged(md.short_interest, refresh.short_interest,
+                                         protege=True, short_interest=True),
                    lending=merged(md.lending, refresh.lending), news=news)

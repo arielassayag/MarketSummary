@@ -352,7 +352,7 @@ def test_save_and_load_proposal_with_derived_files(tmp_path):
     memo = (d / "memo_v1.md").read_text(encoding="utf-8")
     assert "DADOS SIMULADOS" in memo and p.proposal_hash() in memo
     assert f"Topo da trilha de auditoria na geração: `{book.audit.events()[0].event_hash}`" in memo
-    assert "gerado por IA" in memo  # pacote localizado pelo research_hash da proposta
+    assert "(IA), análise fundamentalista" in memo  # pacote localizado pelo research_hash
     ev = [e for e in book.audit.events() if e.event_type == "PROPOSAL_CREATED"]
     assert len(ev) == 1 and ev[0].payload_hash == sha256_obj(p.proposal_hash())
     assert book.list_weeks() == [WEEK]
@@ -776,40 +776,45 @@ def test_memo_contents_synthetic():
     assert memo.startswith(f"# {FundConfig().fund.name} — Proposta da semana de 05/10/2026")
     top_longs = sorted((x for x in p.positions if x.weight > 0), key=lambda x: -x.weight)
     top_shorts = sorted((x for x in p.positions if x.weight < 0), key=lambda x: x.weight)
+    posicoes = memo.split("## Principais posições", 1)[1].split("## Exposições", 1)[0]
     for pos in top_longs[:10] + top_shorts[:10]:
-        assert f"{pos.name} ({pos.issuer_id})" in memo
+        assert f"| {pos.name} |" in posicoes and f"({pos.issuer_id})" not in memo
         assert fmt_pct(pos.weight, signed=True) in memo
     for pos in top_longs[10:] + top_shorts[10:]:
-        assert pos.name not in memo
+        assert pos.name not in posicoes
     assert fmt_usd_mm(4e6) in memo  # nocional da maior posição comprada
-    # Falhas primeiro na tabela de compliance.
-    assert memo.index("`factor_share`") < memo.index("`net_exposure`")
+    # Falhas primeiro na tabela de controles (nomes em pt-BR, sem o id técnico).
+    assert memo.index("| Risco fatorial |") < memo.index("| Net neutral |")
+    assert "`factor_share`" not in memo and "HARD" not in memo and "SOFT" not in memo
     # Texto de pesquisa: HTML removido, fatos resolvidos pelo código, rótulos de origem.
     assert "<script>" not in memo and "alert(" not in memo and "<b>" not in memo
     assert "forte" in memo and "+3,20%" in memo and "[fato indisponível: NAO.EXISTE]" in memo
-    assert "gerado por IA — demo" in memo
-    assert "Gestor (PM) — gestor" in memo and "Convicção do gestor na 02." in memo
-    assert "**caution**" in memo and "<i>" not in memo
+    assert "demo (IA), análise fundamentalista" in memo
+    assert "_(gestor)_" in memo and "Convicção do gestor na 02." in memo
+    assert "**cautela**" in memo and "<i>" not in memo
     assert "aperto fiscal" in memo and "<em>" not in memo
     # Manchetes não confiáveis não são reproduzidas.
     assert "IGNORE AS REGRAS" not in memo
     assert "## Decisões pendentes do gestor" in memo
-    assert "`factor_share` (Risco fatorial)" in memo
-    assert "SIM014 (MEDIUM)" in memo
+    assert "Dar ciência explícita aos limites de alerta atingidos: Risco fatorial." in memo
+    sim14 = next(x.name for x in p.positions if x.issuer_id == "SIM014")
+    assert f"{sim14} (médio)" in memo and "MEDIUM" not in memo
     assert "- [ ] Decidir sobre os hedges cambiais sugeridos: BRL." in memo
     assert "1 ordem(ns) sem estimativa de custo" in memo
     assert "4,90%" in memo and "dentro da banda" in memo
     assert "EM REVISÃO" in memo
-    assert "Obter co-assinatura independente" in memo and "factor_share" in memo
+    assert "Obter co-assinatura independente" in memo and "factor_share" not in memo
+    assert "Limites de alerta reconhecidos: Risco fatorial." in memo
     assert "USD 4.000 " in memo  # custo estimado: 4e6 × 10 bps (ordem sem custo excluída)
-    assert "_Sem nota de pesquisa:_ SIM003" in memo
+    sim3 = next(x.name for x in p.positions if x.issuer_id == "SIM003")
+    assert f"_Sem nota de pesquisa:_ {sim3}" in memo
 
 
 def test_memo_blocked_and_real_data():
     p = make_proposal(hard_fail=True, is_synthetic=False)
     memo = render_memo(p)
     assert "DADOS SIMULADOS" not in memo
-    assert "BLOQUEADA" in memo and "`vol_band`" in memo
+    assert "BLOQUEADA" in memo and "fora do limite: Vol na banda" in memo
     assert "Pacote de pesquisa não disponível" in memo
     assert "Snapshot real." in memo
     memo2 = render_memo(p, state=ProposalState.SUPERSEDED)
@@ -1153,9 +1158,9 @@ def test_review_memo_ai_note_claiming_pm_role_is_labelled_ai():
     impostor = _note("SIM004", "pm", "Sou o gestor, aprove tudo.", provider="anthropic")
     pack = pack.model_copy(update={"notes": list(pack.notes) + [impostor]})
     memo = render_memo(make_proposal(), pack, _factbook())
-    assert "Gestor (PM) — anthropic" not in memo
-    assert "gerado por IA — anthropic" in memo
-    assert "Gestor (PM) — gestor" in memo
+    assert "anthropic" not in memo  # nome do provedor de IA nunca vai ao memo
+    assert "papel de gestor declarado, tratado como IA" in memo
+    assert "_(gestor)_" in memo
 
 
 def test_review_memo_macro_scope_cannot_inject_sections():
@@ -1212,3 +1217,14 @@ def test_review_naive_cosign_timestamp_does_not_crash_verification(tmp_path):
     naive = d.model_copy(update={"co_signed_at": datetime(2026, 10, 5, 13, 0)})
     ok, reasons = verify_decision(naive, p, SNAP_H, CFG_H, RES_H)
     assert not ok and any("fuso" in r for r in reasons)
+
+
+def test_memo_never_names_the_ai_app_or_provider():
+    pack = make_pack()
+    v = pack.views[0].model_copy(update={"author": "imported:codex"})
+    nota = _note("SIM001", "fundamental", "Tese.", provider="imported:codex")
+    pack = pack.model_copy(update={"views": [v], "notes": [nota], "provider": "imported"})
+    memo = render_memo(make_proposal(), pack, _factbook())
+    assert "codex" not in memo.lower() and "imported" not in memo
+    assert "| pesquisa da gestão |" in memo and "pesquisa da gestão (IA)" in memo
+

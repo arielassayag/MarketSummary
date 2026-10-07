@@ -41,9 +41,9 @@ tarefas:
     modelo: leve
   cdp-semanal:
     descricao: >-
-      Montagem da carteira no último pregão da semana na NYSE (decisão até o prazo efetivo,
-      execução no leilão de fechamento) e tese de investimento da carteira decidida; carteira
-      inaugural na data de início do mandato.
+      Montagem da carteira no último pregão da semana na NYSE (modelos da cobertura atualizados
+      antes da coleta, decisão até o prazo efetivo, execução no leilão de fechamento) e tese de
+      investimento da carteira decidida; carteira inaugural na data de início do mandato.
     playbook: docs/cdp/playbooks/SEMANAL.md
     skill: cdp-semanal
     plugin: /cdp:semanal
@@ -91,7 +91,9 @@ tarefas:
     descricao: >-
       Fechamento diário (marcação, execução no leilão de fechamento no dia de montagem, risco,
       atribuição, registro encadeado, comentário e relatório); na noite do dia de montagem,
-      relatório semanal de resultado; retrato diário da cobertura quando pendente.
+      relatório semanal de resultado; retrato da cobertura quando pendente (parcial após
+      resultados, completo após evento macro) e, no último dia de montagem do mês, a revisão
+      mensal dos modelos.
     playbook: docs/cdp/playbooks/DIARIO.md
     skill: cdp-diario
     plugin: /cdp:diario
@@ -108,8 +110,9 @@ tarefas:
     atraso_max_min: 4320             # recupera pregões perdidos (a agenda lista todos)
   cdp-cobertura:
     descricao: >-
-      Notas de pesquisa por emissor a partir de fontes públicas (fila determinística do código,
-      até 12 emissores por execução).
+      Notas de pesquisa por emissor a partir de fontes públicas (pós-resultado dos modelos
+      reavaliados primeiro, depois a fila determinística do código; até 12 emissores por
+      execução).
     playbook: docs/cdp/playbooks/COBERTURA.md
     skill: cdp-cobertura
     plugin: /cdp:cobertura

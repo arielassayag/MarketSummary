@@ -281,6 +281,33 @@ def test_publish_commits_only_task_paths_with_trailers_and_pushes_main(repos, mo
     assert code == ex.OK and out["motivo"] == "nada a publicar"
 
 
+def test_pre_push_hook_refuses_rehearsal_commits_even_outside_rehearsal(repos):
+    """Gancho do ensaio: com ``CDP_ENSAIO=1`` nada sai; fora do ensaio, um ``git push`` direto
+    com commit de ensaio (trailer ``CDP-Ensaio``) também é recusado; commit comum segue."""
+    remoto, a, _ = repos
+    assert ex.proteger_ensaio(a)["instalado"]
+    fora = {k: v for k, v in os.environ.items() if not k.startswith("CDP_")}
+
+    def push(*args: str, env: dict | None = None) -> subprocess.CompletedProcess:
+        return subprocess.run(["git", "push", "-q", "origin", *args], cwd=a, capture_output=True,
+                              text=True, check=False, env=env or fora)
+
+    (a / "src/comum.py").write_text("y = 2\n")
+    _git(a, "add", "-A")
+    _git(a, "commit", "-q", "-m", "CDP: comum")
+    assert push("HEAD:main").returncode == 0                    # commit comum: publica
+    (a / "book/ensaio.json").write_text("{}")
+    _git(a, "add", "-A")
+    _git(a, "commit", "-q", "-m", "CDP: fechamento\n\nCDP-Ensaio: sim")
+    r = push("HEAD:main")
+    assert r.returncode != 0 and "CDP-Ensaio" in r.stderr
+    assert _git(Path(remoto), "log", "-1", "--format=%s", "main") == "CDP: comum"
+    r = push("HEAD:refs/heads/outro")                           # ramo novo: idem
+    assert r.returncode != 0 and "CDP-Ensaio" in r.stderr
+    r = push("HEAD:main", env={**fora, "CDP_ENSAIO": "1"})
+    assert r.returncode != 0 and "ensaio" in r.stderr
+
+
 def test_publish_in_ensaio_commits_locally_and_never_pushes(repos):
     """Ensaio: commit local com o trailer ``CDP-Ensaio`` (a rotina seguinte encontra o livro em
     dia), nunca push nem trava; um clone com commits de ensaio nunca publica fora do ensaio."""

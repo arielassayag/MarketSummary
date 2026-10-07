@@ -541,18 +541,43 @@ def trava_liberar(raiz: Path | str, trava_id: str, *, agora: datetime | None = N
 
 ENSAIO_HOOK = """#!/bin/sh
 # cdp-ensaio: instalado por `cdp rotinas gate` em ensaio. Com CDP_ENSAIO=1 no ambiente (o ambiente
-# de ensaio inteiro), nenhum push sai deste clone; fora dele, o gancho não faz nada.
+# de ensaio inteiro), nenhum push sai deste clone. Fora dele, recusa o push de qualquer commit com
+# o trailer CDP-Ensaio (gravado em ensaio: nunca é publicado, nem por um `git push` direto).
 if [ "${CDP_ENSAIO:-}" = "1" ]; then
   echo "CDP: ensaio (CDP_ENSAIO=1) — push recusado: o ensaio nunca publica" >&2
   exit 1
 fi
+remoto="${1:-origin}"
+tem_ensaio() {
+  git log --format=%B "$@" 2>/dev/null | grep -q '^CDP-Ensaio:'
+}
+while read -r ref_local sha_local ref_remota sha_remota; do
+  case "$sha_local" in *[!0]*) ;; *) continue ;; esac
+  case "$sha_remota" in
+    *[!0]*)
+      if git cat-file -e "$sha_remota^{commit}" 2>/dev/null; then
+        faixa="$sha_remota..$sha_local"
+        if tem_ensaio "$faixa"; then achou=1; else achou=0; fi
+      else
+        if tem_ensaio "$sha_local" --not --remotes="$remoto"; then achou=1; else achou=0; fi
+      fi ;;
+    *)
+      if tem_ensaio "$sha_local" --not --remotes="$remoto"; then achou=1; else achou=0; fi ;;
+  esac
+  if [ "$achou" = "1" ]; then
+    echo "CDP: push recusado — commits de ensaio (trailer CDP-Ensaio) em $ref_local: o ensaio" \
+         "nunca é publicado; use um clone limpo para as rotinas reais" >&2
+    exit 1
+  fi
+done
 exit 0
 """
 
 
 def proteger_ensaio(raiz: Path | str) -> dict[str, Any]:
-    """Instala ``pre-push`` que recusa todo push enquanto ``CDP_ENSAIO=1`` (defesa além do
-    prompt; inerte fora do ensaio). Não sobrescreve um gancho alheio."""
+    """Instala ``pre-push`` que recusa todo push enquanto ``CDP_ENSAIO=1`` e, fora do ensaio, o
+    push de qualquer commit com o trailer ``CDP-Ensaio`` (defesa além do prompt e do
+    ``cdp publicar``). Não sobrescreve um gancho alheio."""
     pasta = _ok(git(["rev-parse", "--path-format=absolute", "--git-path", "hooks"], raiz))
     if not pasta:
         return {"instalado": False, "motivo": "fora de um repositório git"}

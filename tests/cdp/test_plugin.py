@@ -47,8 +47,8 @@ TESES = ROOT / "docs" / "cdp" / "teses"
 #: Versão do plugin e resumo das skills nessa versão. A instalação pelo marketplace do GitHub guarda
 #: uma cópia presa à ``version`` (docs/cdp/LOCAL.md): skills novas com a versão antiga nunca chegam
 #: às rotinas. Mudou uma skill ⇒ suba a ``version`` em plugin.json e atualize os dois valores.
-PLUGIN_VERSION = "1.5.1"
-SKILLS_SHA256 = "a895f67b38c22b1405bd034ecf9974227cde92f14a9cbdc1c3614a8967ee8a3d"
+PLUGIN_VERSION = "1.5.2"
+SKILLS_SHA256 = "f151cbdb91ab1cfdf385ea6fdf883300f55cf5a05f5071773fb13dc2d8af449c"
 #: Roteiro de cada skill do plugin e a família de tarefas de ``configs/cdp/rotinas.yaml``.
 ROTEIRO = {"semanal": "SEMANAL.md", "diario": "DIARIO.md", "cobertura": "COBERTURA.md",
            "risco": "RISCO.md", "status": "STATUS.md", "calibracao": "CALIBRACAO.md"}
@@ -1088,6 +1088,16 @@ def test_project_settings_permissions():
     assert not any(r.startswith("mcp__") or r.startswith("Mcp") for r in allow + ask + deny)
     assert _matches(k, "configs/cdp/fund.yaml") and not _matches(a, "configs/cdp/fund.yaml")
     assert s["env"]["PYTHONUTF8"] == "1"
+
+
+def test_monthly_review_file_of_the_mind_is_never_denied():
+    """``revisao.json`` (revisão mensal dos modelos) é arquivo da mente: nenhuma regra de
+    bloqueio o cobre; os arquivos do pacote são do código."""
+    s = json.loads((ROOT / ".claude" / "settings.json").read_text(encoding="utf-8"))
+    deny = _edit_rules(s["permissions"]["deny"])
+    assert not _matches(deny, "book/cobertura/revisoes/2026-10-30/revisao.json")
+    dia = _plano(_ler(PLAYBOOKS / "DIARIO.md"))
+    assert re.search(r"Você só escreve .{0,400}book/cobertura/revisoes/<data>/revisao\.json", dia)
 
 
 def test_settings_never_deny_a_mind_editable_file():

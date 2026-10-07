@@ -122,7 +122,7 @@ def test_new_commands_listed_in_the_parser():
     sub = _subparsers(build_parser())
     assert {"cobertura", "nota", "validate-nota", "validate-weekly-report", "reinicio"} <= set(sub)
     assert set(_subparsers(sub["weekly"])) == {"prepare", "preview", "decide", "close-report"}
-    assert set(_subparsers(sub["cobertura"])) == {"run", "verify"}
+    assert set(_subparsers(sub["cobertura"])) == {"run", "verify", "revisao-mensal"}
     assert set(_subparsers(sub["nota"])) == {"agenda", "prepare", "publish"}
 
 
@@ -204,7 +204,9 @@ def test_mind_choices_come_from_harness_minds():
             if "--mind" in a.option_strings:
                 found.append(path)
                 assert tuple(a.choices) == HARNESS_MINDS, path
-    assert sorted(found) == [("daily",), ("nota", "publish"), ("tese", "publish"),
+    assert sorted(found) == [("cobertura", "revisao-mensal", "publicar"),
+                             ("cobertura", "revisao-mensal", "validar"),
+                             ("daily",), ("nota", "publish"), ("tese", "publish"),
                              ("validate",), ("validate-daily",), ("validate-nota",),
                              ("validate-tese",), ("validate-weekly-report",),
                              ("weekly", "decide"),

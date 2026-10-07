@@ -322,6 +322,18 @@ uv run python -m cdp verify            # trilha, livro, track record e base de m
   uma piora: estágio pior da escada de drawdown, perda diária extrema num registro de fechamento
   posterior ao revisado ou short novo em stop (outro emissor ou outro preço médio de entrada; a
   escalada de squeeze é revisada short a short, nunca só pelo emissor).
+- **Kill switch no leilão do dia de montagem — regra de caducidade.** A decisão vale só para o
+  leilão de fechamento do seu dia de montagem. Com o kill switch ligado nesse fechamento, a ordem
+  não é executada (só redução de risco) e a rotina diária registra o próprio dia com a recusa
+  (`daily close` → `status: "registrado"` com `efetivacao_recusada`; alerta "Efetivação
+  recusada" no registro): grava `book/<semana>/efetivacao_recusada.json` e o evento
+  `BOOKING_LAPSED` na trilha. A decisão **caduca**: nunca é efetivada depois, nem quando um
+  humano desligar o kill switch (sem efetivação retroativa, que usaria um preço já conhecido). Na
+  carteira inaugural, o histórico começa nesse dia em caixa (PL inicial, sem posições); numa
+  semana regular, a carteira anterior segue marcada. A próxima data de montagem decide de novo,
+  com dados novos (a partir da caixa, se a inaugural caducou). Recusa por dado ausente (preço ou
+  câmbio) na carteira inaugural não caduca: nada é registrado e a reserva do mesmo fechamento
+  tenta de novo.
 - **Revisar um stop de squeeze por nome** (só um humano, como no desligamento): depois de um stop
   num fechamento, o emissor não pode ficar comprado até revisão humana — o relatório de risco
   lista os emissores nessa situação (`squeeze.vetos_compra`, gatilho

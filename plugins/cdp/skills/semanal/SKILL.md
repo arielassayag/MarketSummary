@@ -1,6 +1,6 @@
 ---
 name: semanal
-description: "Montagem semanal da carteira do CDP — Cabra da Peste no último pregão da semana na NYSE (ou na data de início do mandato): pesquisa só em fontes públicas, research_pack.json e pm_decision.json escritos pela mente \"claude-code\", validação, decisão autônoma pelo código antes do prazo efetivo, execução no leilão de fechamento e tese de investimento da carteira decidida. Entrada e saída da execução no Claude Code (gate, trava, sincronização e publicação pelo código); o procedimento é o roteiro neutro docs/cdp/playbooks/SEMANAL.md. Use nas tarefas agendadas cdp-semanal, cdp-semanal-b, cdp-semanal-c e cdp-semanal-d ou quando pedirem a carteira ou a tese da semana do CDP."
+description: "Montagem semanal da carteira do CDP — Cabra da Peste no último pregão da semana na NYSE (ou na data de início do mandato): pesquisa só em fontes públicas, research_pack.json e pm_decision.json escritos pela mente \"claude-code\", validação, decisão autônoma pelo código antes do prazo efetivo, execução no leilão de fechamento e tese de investimento da carteira decidida; antes da coleta, os modelos da cobertura são atualizados com dados até o pregão anterior. Entrada e saída da execução no Claude Code (gate, trava, sincronização e publicação pelo código); o procedimento é o roteiro neutro docs/cdp/playbooks/SEMANAL.md. Use nas tarefas agendadas cdp-semanal, cdp-semanal-b, cdp-semanal-c e cdp-semanal-d ou quando pedirem a carteira ou a tese da semana do CDP."
 argument-hint: "[tarefa agendada: cdp-semanal, cdp-semanal-b, cdp-semanal-c, cdp-semanal-d]"
 allowed-tools:
   - Read
@@ -57,7 +57,9 @@ do operador), acrescente `--manual` ao gate.
    `perdida` (outra execução assumiu a trava) ⇒ pare de gravar, pule os passos 5 e 6 e relate;
    `indisponivel` ⇒ siga e renove de novo ao fim da etapa seguinte.
    Logo antes do `weekly decide`, o roteiro manda rodar `cdp sincronizar --executar` de novo
-   (pedidos de kill switch publicados pela rotina de risco): rode-o.
+   (pedidos de kill switch publicados pela rotina de risco): rode-o. Com a etapa `cobertura`
+   (`cobertura.atualizar_antes_da_decisao`), o retrato completo vem antes do `weekly prepare`
+   (passo 2.1 do roteiro); falha nele nunca atrasa a decisão.
 5. Publique uma vez (seção 10 do roteiro):
    `uv run python -m cdp publicar --tarefa <tarefa> --mensagem "CDP: decisão da semana AAAA-MM-DD" --execucao <execucao> --trava <trava.id> --mente claude-code`
    (mensagem conforme o roteiro). Leia `push` e `motivo`; sem push, relate — nunca outro caminho.

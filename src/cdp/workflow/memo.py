@@ -9,6 +9,9 @@ Regras:
   ``{{fact:<id>}}`` são substituídos pelo valor formatado do FactBook (código), quando houver.
 - Manchetes são conteúdo não confiável e não são reproduzidas no memo.
 - Dados ausentes aparecem como ``n/d`` — nunca como zero.
+- Texto ao investidor em pt-BR (:mod:`cdp.workflow.rotulos`): empresas pelo nome, controles,
+  países, setores e cenários traduzidos; a autoria de IA é "pesquisa da gestão" (o nome do app
+  fica no campo ``mind`` do pacote e na trilha, nunca no memo).
 """
 
 from __future__ import annotations
@@ -190,27 +193,43 @@ def _is_pm_note(note: ResearchNote) -> bool:
     return note.role == "pm" and _is_pm_provider(note.provider)
 
 
+#: Nomes de apps e provedores de IA que nunca aparecem no texto ao investidor.
+_MENTES = ("imported", "claude", "codex", "gemini", "chatgpt", "openai", "anthropic",
+           "openrouter", "antigravity", "copilot", "cursor", "aider", "jules")
+_PAPEL_PT = {"pm": "gestor", "bull_bear_judge": "debate comprado × vendido",
+             "fundamental": "análise fundamentalista", "short_risk": "risco da venda a descoberto",
+             "news_sentiment": "notícias", "macro": "macro", "quant": "modelo quantitativo"}
+
+
 def _provedor(provider: str) -> str:
-    """Rótulo do provedor: a mente (``imported:<app>``) aparece como o app de IA da gestão — o
-    nome do app fica no campo ``mind`` do pacote e na trilha, não no texto ao investidor."""
-    p = str(provider or "")
-    if p.startswith("imported"):
-        return "app de IA da gestão"
-    return _inline(p)
+    """Rótulo do provedor: a mente (``imported:<app>``, nome de app ou de modelo) aparece como a
+    pesquisa da gestão — o nome do app fica no campo ``mind`` do pacote e na trilha, não no
+    texto ao investidor."""
+    p = _inline(str(provider or ""))
+    if not p or any(m in p.lower() for m in _MENTES):
+        return "pesquisa da gestão"
+    return p
 
 
 def _note_label(note: ResearchNote) -> str:
     if _is_pm_note(note):
-        return f"Gestor (PM) — {_inline(note.provider)}"
-    model = f", modelo {_inline(note.model)}" if note.model else ""
-    return f"gerado por IA — {_provedor(note.provider)}{model}, papel {note.role}"
+        return "gestor"
+    if note.role == "pm":  # IA que declara o papel de gestor continua rotulada como IA
+        return f"{_provedor(note.provider)} (IA; papel de gestor declarado, tratado como IA)"
+    papel = _PAPEL_PT.get(note.role, str(note.role).replace("_", " "))
+    return f"{_provedor(note.provider)} (IA), {papel}"
 
 
 def _macro_label(note: MacroNote) -> str:
     if _is_pm_provider(note.provider):
-        return f"Gestor (PM) — {_inline(note.provider)}"
-    model = f", modelo {_inline(note.model)}" if note.model else ""
-    return f"gerado por IA — {_provedor(note.provider)}{model}"
+        return "gestor"
+    return f"{_provedor(note.provider)} (IA)"
+
+
+def _autor(author: str, source: ViewSource) -> str:
+    if source == ViewSource.PM:
+        return "gestor"
+    return _provedor(author)
 
 
 def _best_notes(pack: ResearchPack | None) -> dict[str, ResearchNote]:
@@ -261,15 +280,20 @@ def _section_header(proposal: Proposal, cfg: FundConfig, state: ProposalState,
                 "> Esta proposta NÃO usa preços reais e não deve embasar decisões de investimento.",
                 ""]
     else:
-        notice = f" {proposal.data_notice}" if proposal.data_notice else ""
-        out += [f"> Dados de mercado: snapshot `{proposal.snapshot_id}`.{notice}", ""]
+        from .rotulos import aviso
+
+        notice = f" {aviso(proposal.data_notice)}" if proposal.data_notice else ""
+        out += [f"> Dados de mercado: retrato `{proposal.snapshot_id}`.{notice}", ""]
+    from .rotulos import quando
+
     out += _table(["Campo", "Valor"], [
         ["Estado", f"**{_STATE_LABEL[state]}**"],
         ["Proposta", f"{proposal.proposal_id} (versão {proposal.version})"],
-        ["Criada em / por", f"{fmt_date(proposal.created_at)} — {proposal.created_by}"],
-        ["NAV de referência", fmt_usd_mm(proposal.nav_usd)],
-        ["Snapshot", f"{proposal.snapshot_id} — {_short_hash(proposal.snapshot_hash)}"],
-        ["Hash da configuração", _short_hash(proposal.config_hash)],
+        ["Criada em / por", f"{quando(proposal.created_at)} — {proposal.created_by}"],
+        ["PL de referência", fmt_usd_mm(proposal.nav_usd)],
+        ["Retrato dos dados de mercado",
+         f"{proposal.snapshot_id} — {_short_hash(proposal.snapshot_hash)}"],
+        ["Hash do mandato", _short_hash(proposal.config_hash)],
         ["Hash da pesquisa", _short_hash(proposal.research_hash)],
     ])
     return out + [""]
@@ -335,18 +359,23 @@ def _section_risk(proposal: Proposal, cfg: FundConfig) -> list[str]:
     else:
         fref = (f"{fmt_pct(r.factor_risk_share)} da variância (alerta acima de "
                 f"{fmt_pct(rk.max_factor_risk_share)})")
+    vt = proposal.overrides.get("vol_target") if isinstance(proposal.overrides, dict) else None
+    alvo = (f"meta aplicada {fmt_pct(vt)} (mandato {fmt_pct(rk.vol_target_annual)})"
+            if _finite(vt) else f"meta {fmt_pct(rk.vol_target_annual)}")
     rows = [
         ["Vol ex-ante (a.a.)", fmt_pct(r.ex_ante_vol),
-         f"alvo {fmt_pct(rk.vol_target_annual)}; banda {fmt_pct(rk.vol_band_min)}–"
+         f"{alvo}; banda {fmt_pct(rk.vol_band_min)}–"
          f"{fmt_pct(rk.vol_band_max)} — {_vol_status(r.ex_ante_vol, cfg)}"],
         ["Vol fatorial (a.a.)", fmt_pct(r.factor_vol), fref],
         ["Vol específica (a.a.)", fmt_pct(r.specific_vol), "fonte pretendida do retorno (alpha puro)"],
         ["Beta previsto", fmt_num(r.beta, 3), f"limite ±{fmt_num(rk.beta_max_abs, 3)}"],
-        ["Gross (% NAV)", fmt_pct(r.gross),
+        ["Exposição bruta (% do PL)", fmt_pct(r.gross),
          f"faixa {fmt_pct(rk.gross_min, 0)}–{fmt_pct(rk.gross_max, 0)}"],
-        ["Net (% NAV)", fmt_pct(r.net, signed=True), f"limite ±{fmt_pct(rk.net_exposure_max_abs)}"],
-        ["Long / Short (% NAV)", f"{fmt_pct(r.long_exposure)} / {fmt_pct(r.short_exposure)}", ""],
-        ["Nº de posições long / short", f"{r.n_long} / {r.n_short}", ""],
+        ["Exposição líquida (% do PL)", fmt_pct(r.net, signed=True),
+         f"limite ±{fmt_pct(rk.net_exposure_max_abs)}"],
+        ["Comprado / vendido (% do PL)",
+         f"{fmt_pct(r.long_exposure)} / {fmt_pct(r.short_exposure)}", ""],
+        ["Nº de posições compradas / vendidas", f"{r.n_long} / {r.n_short}", ""],
         ["VaR 1d 99%", pct_usd(r.var_1d_99), "paramétrico/histórico (modelo de risco)"],
         ["ES 1d 99%", pct_usd(r.es_1d_99), ""],
         ["VaR 1 semana 99%", pct_usd(r.var_1w_99), ""],
@@ -362,26 +391,38 @@ def _section_risk(proposal: Proposal, cfg: FundConfig) -> list[str]:
         out += ["### Decomposição da variância ex-ante por grupo (modelo de decisão, κ_F no "
                 "bloco fatorial)", ""]
         out += _table(["Grupo", "Fração da variância"], grows) + [""]
+    from . import rotulos as R
+    from .tese_analise import factor_label
+
     if r.stress_tests:
-        srows = [[k, fmt_pct(v, signed=True), fmt_usd_mm(v * nav if _finite(v) else None,
-                                                        signed=True)]
+        srows = [[R.cenario(k), fmt_pct(v, signed=True),
+                  fmt_usd_mm(v * nav if _finite(v) else None, signed=True)]
                  for k, v in sorted(r.stress_tests.items(),
                                     key=lambda kv: (kv[1] if _finite(kv[1]) else math.inf, kv[0]))]
-        out += ["### Testes de estresse (P&L estimado)", ""]
-        out += _table(["Cenário", "% NAV", "USD"], srows) + [""]
+        out += ["### Testes de estresse (resultado estimado)", ""]
+        out += _table(["Cenário", "% do PL", "US$"], srows) + [""]
     if r.factor_contributions:
-        frows = [[k, fmt_pct(v)] for k, v in sorted(
+        frows = [[R.fator(factor_label(k)[0]), fmt_pct(v)] for k, v in sorted(
             r.factor_contributions.items(),
             key=lambda kv: (-abs(kv[1]) if _finite(kv[1]) else math.inf, kv[0]))[:TOP_N]]
         out += ["### Maiores contribuições fatoriais (fração da variância)", ""]
         out += _table(["Fator", "Contribuição"], frows) + [""]
     if r.top_risk_contributors:
-        trows = [[k, fmt_pct(v)] for k, v in sorted(
+        nomes = _nomes(proposal)
+        trows = [[R.nome(k, nomes), fmt_pct(v)] for k, v in sorted(
             r.top_risk_contributors.items(),
             key=lambda kv: (-abs(kv[1]) if _finite(kv[1]) else math.inf, kv[0]))[:TOP_N]]
-        out += ["### Maiores contribuições de risco por emissor (fração da variância)", ""]
-        out += _table(["Emissor", "Contribuição"], trows) + [""]
+        out += ["### Maiores contribuições de risco por empresa (fração da variância)", ""]
+        out += _table(["Empresa", "Contribuição"], trows) + [""]
     return out
+
+
+def _nomes(proposal: Proposal) -> dict[str, str]:
+    """Nome de cada emissor (grafia canônica do universo; senão o nome da proposta)."""
+    from .rotulos import nomes_do_universo
+
+    return {**{p.issuer_id: p.name for p in proposal.positions if p.name},
+            **nomes_do_universo()}
 
 
 def _fmt_check_value(x: float | None) -> str:
@@ -395,26 +436,47 @@ def _compliance_sort_key(c: ComplianceCheck) -> tuple[int, int, str]:
 
 
 def _section_compliance(proposal: Proposal) -> list[str]:
+    from . import rotulos as R
+
     checks = sorted(proposal.compliance, key=_compliance_sort_key)
-    n_fail = sum(not c.passed for c in checks)
-    out = ["## Compliance", "",
-           f"{len(checks)} verificações; {n_fail} falha(s) "
-           f"({len(proposal.hard_failures)} HARD, {len(proposal.soft_failures)} SOFT).", ""]
-    rows = [["FALHA" if not c.passed else "ok", c.severity.value, f"{c.name} (`{c.check_id}`)",
-             _fmt_check_value(c.value), _fmt_check_value(c.limit), c.details]
+    n_fail = sum(not c.passed and c.severity != Severity.INFO for c in checks)
+    nomes = _nomes(proposal)
+    out = ["## Controles do mandato", "",
+           f"{len(checks)} controles; {n_fail} fora do limite "
+           f"({len(proposal.hard_failures)} obrigatório(s), {len(proposal.soft_failures)} de "
+           "alerta).", ""]
+    rows = [[("fora" if not c.passed else "dentro") if c.severity != Severity.INFO
+             else ("informativo" if not c.passed else "na meta"),
+             R.SEVERIDADE_PT.get(c.severity.value, c.severity.value),
+             _cap(R.controle(c.check_id, c.name)),
+             _fmt_check_value(c.value), _fmt_check_value(c.limit), R.detalhe(c.details, nomes)]
             for c in checks]
-    out += _table(["Status", "Severidade", "Verificação", "Valor", "Limite", "Detalhes"], rows)
+    out += _table(["Resultado", "Tipo", "Controle", "Valor", "Limite", "Detalhe"], rows)
     return out + [""]
 
 
-def _position_row(rank: int, p: PositionTarget) -> list[str]:
-    bucket = p.squeeze_bucket if p.squeeze_bucket != "NA" else NA
+def _cap(texto: str) -> str:
+    return texto[:1].upper() + texto[1:] if texto else texto
+
+
+_SQUEEZE_PT = {"LOW": "baixo", "MEDIUM": "médio", "HIGH": "alto", "NA": NA}
+_LINHA_PT = {"LOCAL": "local", "ADR": "ADR", "US_LISTED": "listada nos EUA", "ETF": "ETF"}
+_ACAO_PT = {"BUY": "compra", "SELL": "venda", "SHORT": "venda a descoberto",
+            "COVER": "recompra"}
+
+
+def _position_row(rank: int, p: PositionTarget, nomes: dict[str, str] | None = None) -> list[str]:
+    from . import rotulos as R
+
+    bucket = _SQUEEZE_PT.get(str(p.squeeze_bucket), str(p.squeeze_bucket))
     if _finite(p.squeeze_score):
         bucket = f"{bucket} ({fmt_num(p.squeeze_score, 0)})"
-    return [str(rank), f"{p.name} ({p.issuer_id})", p.country, p.sector,
+    linha = getattr(p.line_type, "value", p.line_type)
+    return [str(rank), R.nome(p.issuer_id, nomes) if nomes else (p.name or p.issuer_id),
+            R.exposicao("country", p.country)[1], R.exposicao("sector", p.sector)[1],
             fmt_pct(p.weight, signed=True), fmt_usd_mm(p.notional_usd),
-            f"{p.execution_ticker} ({p.line_type.value})", fmt_pct(p.pct_adtv, 1),
-            bucket, fmt_num(p.alpha_z, 2, signed=True)]
+            f"{p.execution_ticker} ({_LINHA_PT.get(str(linha), linha)})",
+            fmt_pct(p.pct_adtv, 1), bucket, fmt_num(p.alpha_z, 2, signed=True)]
 
 
 def _top_positions(proposal: Proposal, side: Side) -> list[PositionTarget]:
@@ -424,25 +486,32 @@ def _top_positions(proposal: Proposal, side: Side) -> list[PositionTarget]:
     return sorted(sel, key=lambda p: (p.weight, p.issuer_id))[:TOP_N]
 
 
+_VEREDITO_PT = {"ok": "sem restrição", "caution": "cautela", "veto": "veto"}
+
+
 def _thesis_lines(positions: list[PositionTarget], notes: dict[str, ResearchNote],
                   squeeze: dict[str, ResearchNote], fb: FactBook | None,
-                  side: Side) -> list[str]:
+                  side: Side, nomes: dict[str, str] | None = None) -> list[str]:
+    from . import rotulos as R
+
     out: list[str] = []
     without: list[str] = []
     for p in positions:
+        nome_ = R.nome(p.issuer_id, nomes) if nomes else (p.name or p.issuer_id)
         note = notes.get(p.issuer_id)
         sq = squeeze.get(p.issuer_id) if side == Side.SHORT else None
         if note is None and (sq is None or sq.squeeze is None):
-            without.append(p.issuer_id)
+            without.append(nome_)
             continue
-        out.append(f"- **{p.name} ({p.issuer_id})**")
+        out.append(f"- **{nome_}**")
         if note is not None:
             out.append(f"  - Tese _({_note_label(note)})_:")
-            out.append(f"    > {render_research_text(note.thesis, fb)}")
+            out.append(f"    > {R.nomes_no_texto(render_research_text(note.thesis, fb), nomes)}")
         if sq is not None and sq.squeeze is not None:
-            out.append(f"  - Risco de short squeeze _({_note_label(sq)})_: "
-                       f"**{sq.squeeze.verdict}** —")
-            out.append(f"    > {render_research_text(sq.squeeze.rationale, fb)}")
+            out.append(f"  - Risco de squeeze _({_note_label(sq)})_: "
+                       f"**{_VEREDITO_PT.get(sq.squeeze.verdict, sq.squeeze.verdict)}** —")
+            out.append(f"    > "
+                       f"{R.nomes_no_texto(render_research_text(sq.squeeze.rationale, fb), nomes)}")
     if without:
         out.append("- _Sem nota de pesquisa:_ " + ", ".join(without))
     return out
@@ -452,19 +521,21 @@ def _section_positions(proposal: Proposal, pack: ResearchPack | None,
                        fb: FactBook | None) -> list[str]:
     notes = _best_notes(pack)
     squeeze = _squeeze_notes(pack)
-    headers = ["#", "Emissor", "País", "Setor", "Peso", "Nocional", "Linha", "% ADTV",
-               "Squeeze", "Alpha z"]
+    nomes = _nomes(proposal)
+    headers = ["#", "Empresa", "País", "Setor", "Peso", "Nocional", "Linha", "% do volume médio",
+               "Risco de squeeze", "Sinal quant. (z)"]
     out = ["## Principais posições", ""]
-    for side, title in ((Side.LONG, "Top 10 compradas (long)"),
-                        (Side.SHORT, "Top 10 vendidas (short)")):
+    for side, title in ((Side.LONG, "10 maiores posições compradas"),
+                        (Side.SHORT, "10 maiores posições vendidas")):
         top = _top_positions(proposal, side)
         out += [f"### {title}", ""]
         if not top:
             out += ["_Nenhuma posição._", ""]
             continue
-        out += _table(headers, [_position_row(i + 1, p) for i, p in enumerate(top)]) + [""]
+        out += _table(headers, [_position_row(i + 1, p, nomes) for i, p in enumerate(top)])
+        out += [""]
         out += ["Teses de pesquisa (texto citado como fornecido; números vêm do código):", ""]
-        out += _thesis_lines(top, notes, squeeze, fb, side) + [""]
+        out += _thesis_lines(top, notes, squeeze, fb, side, nomes) + [""]
     return out
 
 
@@ -474,20 +545,21 @@ def _exposure_table(proposal: Proposal, group: str) -> list[str]:
         return []
     lines.sort(key=lambda e: (-abs(e.net) if _finite(e.net) else math.inf, e.name))
     is_pct = group != "style"
+    from .rotulos import exposicao
 
     def f(x: float | None, signed: bool = False) -> str:
         return fmt_pct(x, signed=signed) if is_pct else fmt_num(x, 3, signed=signed)
 
-    rows = [[e.name, f(e.long), f(e.short), f(e.net, signed=True), f(e.gross),
-             f"±{f(e.limit)}" if _finite(e.limit) else NA]
+    rows = [[exposicao(group, e.name)[1], f(e.long), f(e.short), f(e.net, signed=True),
+             f(e.gross), f"±{f(e.limit)}" if _finite(e.limit) else NA]
             for e in lines]
-    return _table(["Nome", "Long", "Short", "Net", "Gross", "Limite"], rows) + [""]
+    return _table(["Nome", "Comprado", "Vendido", "Líquido", "Bruto", "Limite"], rows) + [""]
 
 
 def _section_exposures(proposal: Proposal) -> list[str]:
     out = ["## Exposições", ""]
-    titles = [("country", "Por país (% NAV)"), ("sector", "Por setor (% NAV)"),
-              ("currency", "Por moeda (% NAV)"), ("style", "Fatores de estilo (σ × NAV)")]
+    titles = [("country", "Por país (% do PL)"), ("sector", "Por setor (% do PL)"),
+              ("currency", "Por moeda (% do PL)"), ("style", "Fatores de estilo (σ × PL)")]
     any_table = False
     for group, title in titles:
         table = _exposure_table(proposal, group)
@@ -504,7 +576,8 @@ def _section_fx(proposal: Proposal) -> list[str]:
     if not proposal.fx_hedges:
         return out + ["Nenhum hedge cambial sugerido.", ""]
     rows = [[h.currency, fmt_usd_mm(h.exposure_usd, signed=True),
-             fmt_usd_mm(h.hedge_notional_usd, signed=True), h.instrument, h.rationale]
+             fmt_usd_mm(h.hedge_notional_usd, signed=True), h.instrument,
+             re.sub(r"\bNAV\b", "PL", h.rationale)]
             for h in sorted(proposal.fx_hedges, key=lambda h: h.currency)]
     return out + _table(["Moeda", "Exposição", "Hedge", "Instrumento", "Racional"], rows) + [""]
 
@@ -526,13 +599,13 @@ def _section_trades(proposal: Proposal, cfg: FundConfig | None = None) -> list[s
     days = [float(t.est_days) for t in trades if _finite(t.est_days)]
     rows = [
         ["Nº de ordens", f"{len(trades)} ("
-         + ", ".join(f"{k} {v}" for k, v in sorted(counts.items())) + ")"],
-        ["Volume bruto negociado", f"{fmt_usd_mm(gross)} ({fmt_pct(gross / nav)} do NAV)"],
-        ["Turnover (Σ|Δw|)", fmt_pct(turnover)],
+         + ", ".join(f"{_ACAO_PT.get(k, k)} {v}" for k, v in sorted(counts.items())) + ")"],
+        ["Volume bruto negociado", f"{fmt_usd_mm(gross)} ({fmt_pct(gross / nav)} do PL)"],
+        ["Giro (Σ|Δw|)", fmt_pct(turnover)],
         ["Custo estimado", f"{fmt_usd(cost_usd)} "
          f"({fmt_bps(cost_usd / costed_gross * 1e4 if costed_gross > 0 else None)} do volume; "
-         f"{fmt_pct(cost_usd / nav, 3)} do NAV)" if costed else NA],
-        ["Maior % do ADTV", fmt_pct(max(pct_adtv), 1) if pct_adtv else NA],
+         f"{fmt_pct(cost_usd / nav, 3)} do PL)" if costed else NA],
+        ["Maior % do volume médio diário", fmt_pct(max(pct_adtv), 1) if pct_adtv else NA],
         ["Maior prazo estimado de execução", fmt_liquidity(max(days), cfg) if days else NA],
     ]
     odd = _odd_lot_orders(trades)
@@ -547,7 +620,7 @@ def _section_trades(proposal: Proposal, cfg: FundConfig | None = None) -> list[s
         else None
     if isinstance(rr, dict) and rr.get("linha_maior_erro"):
         rows.append(["Maior erro do arredondamento a ações inteiras",
-                     f"{fmt_pct(rr.get('maior_erro_pct_nav'), 3, signed=True)} do NAV "
+                     f"{fmt_pct(rr.get('maior_erro_pct_nav'), 3, signed=True)} do PL "
                      f"({rr['linha_maior_erro']}); soma "
                      f"{fmt_pct(rr.get('soma_erros_pct_nav'), 3)}"])
         if rr.get("sem_uma_acao"):
@@ -610,8 +683,8 @@ def _section_research(pack: ResearchPack | None, fb: FactBook | None) -> list[st
     if pack is None:
         return out + ["_Pacote de pesquisa não disponível para este memo._", ""]
     n_ai = sum(1 for n in pack.notes if not _is_pm_note(n))
-    out += [f"Provedor: {_provedor(pack.provider)}; {len(pack.notes)} nota(s) por emissor "
-            f"({n_ai} geradas por IA), {len(pack.macro)} nota(s) macro, "
+    out += [f"Autoria: {_provedor(pack.provider)}; {len(pack.notes)} nota(s) por empresa "
+            f"({n_ai} com apoio de IA), {len(pack.macro)} nota(s) macro, "
             f"{len(pack.views)} visão(ões).", ""]
     if pack.news:
         out += [f"{len(pack.news)} manchete(s) considerada(s) — conteúdo NÃO confiável, não "
@@ -631,73 +704,133 @@ def _section_research(pack: ResearchPack | None, fb: FactBook | None) -> list[st
                 out += ["Eventos:"] + [
                     f"- {render_research_text(e.description, fb)} "
                     f"({fmt_date(e.expected_date) if e.expected_date else 'data n/d'}; "
-                    f"{e.direction})" for e in m.key_events] + [""]
+                    f"{_DIRECAO_PT.get(e.direction, e.direction)})" for e in m.key_events] + [""]
     if pack.views:
+        from .rotulos import nome, nomes_do_universo
+
+        nomes = nomes_do_universo()
         rows = []
         for v in sorted(pack.views, key=lambda v: (v.issuer_id, v.source.value, v.author)):
-            limits = [s for s, on in (("sem short", v.no_short), ("sem long", v.no_long)) if on]
+            limits = [s for s, on in (("sem venda", v.no_short), ("sem compra", v.no_long)) if on]
             if _finite(v.max_abs_weight):
-                limits.append(f"|w| ≤ {fmt_pct(v.max_abs_weight)}")
-            origin = "Gestor (PM)" if v.source == ViewSource.PM else "IA"
-            rows.append([v.issuer_id, origin, f"{v.score:+d}" if v.score else "0",
-                         fmt_pct(v.confidence, 0),
-                         ", ".join(limits) or "—", _inline(v.author)])
+                limits.append(f"|peso| ≤ {fmt_pct(v.max_abs_weight)}")
+            origin = "gestor" if v.source == ViewSource.PM else "pesquisa (IA)"
+            rows.append([nome(v.issuer_id, nomes), origin, f"{v.score:+d}" if v.score else "0",
+                         fmt_pct(v.confidence, 0), ", ".join(limits) or "—",
+                         _autor(v.author, v.source)])
         out += ["### Visões aplicadas", ""]
-        out += _table(["Emissor", "Origem", "Score", "Confiança", "Restrições", "Autor"], rows)
+        out += _table(["Empresa", "Origem", "Visão", "Confiança", "Restrições", "Autoria"], rows)
         out += [""]
     return out
 
 
+_DIRECAO_PT = {"positive": "positivo", "negative": "negativo", "uncertain": "incerto"}
+_STATUS_PT = {"optimal": "ótimo", "optimal_inaccurate": "ótimo (precisão reduzida)",
+              "hold": "carteira mantida", "infeasible": "inviável"}
+_RESTRICAO_PT = {"vol_target": "meta de vol", "max_long": "teto comprado",
+                 "max_short": "teto vendido", "sector": "setor", "style": "estilo",
+                 "op_country": "país (limite operacional)", "op_sector": "setor (limite operacional)",
+                 "theme": "tema", "country_share": "participação do país", "country": "país",
+                 "beta": "beta", "net": "exposição líquida", "gross": "exposição bruta"}
+
+
+def _restricao_pt(code: str, nomes: dict[str, str]) -> str:
+    from . import rotulos as R
+
+    base, _, arg = str(code).partition(":")
+    rot = _RESTRICAO_PT.get(base, base.replace("_", " "))
+    if not arg:
+        return rot
+    if base in ("max_long", "max_short"):
+        return f"{rot}: {R.nome(arg, nomes)}"
+    grupo = {"sector": "sector", "op_sector": "sector", "style": "style", "op_country": "country",
+             "country_share": "country", "country": "country"}.get(base)
+    if grupo:
+        return f"{rot}: {R.exposicao(grupo, arg)[1]}"
+    if base == "theme":
+        if arg.lower().startswith("evento:"):
+            pais = arg.split(":")[1].upper() if arg.count(":") >= 1 else ""
+            return f"choque de evento ({R.exposicao('country', pais)[1]})"
+        return f"{rot}: {R.exposicao('market', 'tema:' + arg)[1].lower()}"
+    return f"{rot}: {arg}"
+
+
+def _nota_otimizador(nota: str, nomes: dict[str, str]) -> str:
+    from . import rotulos as R
+
+    t = re.sub(r"\bvisões de AI\b", "visões de pesquisa", str(nota))
+    t = re.sub(r"\binclinação AI\b", "inclinação da pesquisa", t)
+    t = re.sub(r"\binclinação PM\b", "inclinação do gestor", t)
+    t = re.sub(r"\bvisão do gestor substitui a inclinação de (\d+) visão\(ões\) de IA",
+               r"visão do gestor substitui a inclinação de \1 visão(ões) da pesquisa", t)
+    t = t.replace("pesquisa de IA + decisão do agente PM", "pesquisa e decisão da gestão")
+    t = t.replace("override do gestor", "definido pelo gestor")
+    t = re.sub(r"\bGross máximo\b", "Exposição bruta máxima", t)
+    t = re.sub(r"\(config ", "(mandato ", t)
+    t = re.sub(r"macro:([\w=.-]+)", lambda m: R.MACRO_PT.get(m.group(1), m.group(1)), t)
+    return R.detalhe(t, nomes)
+
+
 def _section_optimizer(proposal: Proposal) -> list[str]:
     o = proposal.optimizer
+    nomes = _nomes(proposal)
     rows = [
-        ["Status / solver", f"{o.status} / {o.solver}"],
+        ["Situação / solver", f"{_STATUS_PT.get(o.status, o.status)} / {o.solver}"],
         ["Tempo de solução", f"{fmt_num(o.solve_seconds, 2)} s"],
         ["Alpha esperado (a.a.)", fmt_pct(o.expected_alpha_annual)],
         ["Custo esperado (a.a.)", fmt_pct(o.expected_cost_annual)],
         ["Candidatos", str(o.n_candidates)],
-        ["Excluídos", ", ".join(f"{k}: {v}" for k, v in sorted(o.n_excluded.items())) or "—"],
-        ["Restrições ativas", ", ".join(o.binding_constraints) or "—"],
+        ["Excluídos", ", ".join(f"{k.replace('_', ' ')}: {v}"
+                                for k, v in sorted(o.n_excluded.items())) or "—"],
+        ["Restrições ativas",
+         ", ".join(_restricao_pt(c, nomes) for c in o.binding_constraints) or "—"],
     ]
     out = ["## Otimizador", ""] + _table(["Item", "Valor"], rows) + [""]
     if o.notes:
-        out += ["Observações do otimizador:"] + [f"- {n}" for n in o.notes] + [""]
+        out += ["Observações do otimizador:"] + [f"- {_nota_otimizador(n, nomes)}"
+                                                 for n in o.notes] + [""]
     return out
 
 
 def _section_checklist(proposal: Proposal, pack: ResearchPack | None,
                        cfg: FundConfig) -> list[str]:
+    from . import rotulos as R
+
     items: list[str] = []
+    nomes = _nomes(proposal)
     hard = proposal.hard_failures
     if hard:
-        items.append("**Proposta BLOQUEADA** — falhas HARD: "
-                     + ", ".join(f"`{c.check_id}`" for c in hard)
+        items.append("**Proposta BLOQUEADA** — controles obrigatórios fora do limite: "
+                     + "; ".join(R.controle(c.check_id, c.name) for c in hard)
                      + ". Não é aprovável; corrigir e gerar nova versão.")
     soft = proposal.soft_failures
     if soft:
-        items.append("Dar ciência explícita às falhas SOFT: "
-                     + ", ".join(f"`{c.check_id}` ({c.name})" for c in soft) + ".")
+        items.append("Dar ciência explícita aos limites de alerta atingidos: "
+                     + "; ".join(R.controle(c.check_id, c.name) for c in soft) + ".")
     vol_status = _vol_status(proposal.risk.ex_ante_vol, cfg)
     if vol_status != "dentro da banda":
         items.append(f"Avaliar vol ex-ante ({fmt_pct(proposal.risk.ex_ante_vol)}) — {vol_status}.")
     risky = [p for p in proposal.positions
              if p.side == Side.SHORT and p.squeeze_bucket in ("MEDIUM", "HIGH")]
     if risky:
-        items.append("Validar shorts com risco de squeeze MEDIUM/HIGH: "
-                     + ", ".join(f"{p.issuer_id} ({p.squeeze_bucket})" for p in risky) + ".")
+        items.append("Validar posições vendidas com risco de squeeze médio ou alto: "
+                     + ", ".join(f"{R.nome(p.issuer_id, nomes)} "
+                                 f"({_SQUEEZE_PT.get(p.squeeze_bucket, p.squeeze_bucket)})"
+                                 for p in risky) + ".")
     n_short = sum(1 for p in proposal.positions if p.side == Side.SHORT)
     if n_short:
-        items.append(f"Confirmar locate/disponibilidade de aluguel para os {n_short} shorts "
-                     "antes da execução.")
+        items.append(f"Confirmar a disponibilidade de aluguel para as {n_short} posições "
+                     "vendidas antes da execução.")
     if pack is not None:
         n_ai = sum(1 for n in pack.notes if not _is_pm_note(n))
         if n_ai:
-            items.append(f"Revisar as {n_ai} nota(s) geradas por IA (citadas como fornecidas).")
+            items.append(f"Revisar as {n_ai} nota(s) da pesquisa com apoio de IA (citadas como "
+                         "fornecidas).")
         n_restr = sum(1 for v in pack.views if v.source == ViewSource.AI
                       and (v.no_short or v.no_long or v.max_abs_weight is not None))
         if n_restr:
-            items.append(f"Validar {n_restr} restrição(ões) propostas por IA "
-                         "(sem short / sem long / teto de peso).")
+            items.append(f"Validar {n_restr} restrição(ões) propostas pela pesquisa "
+                         "(sem venda / sem compra / teto de peso).")
     if proposal.fx_hedges:
         items.append("Decidir sobre os hedges cambiais sugeridos: "
                      + ", ".join(sorted(h.currency for h in proposal.fx_hedges)) + ".")
@@ -707,10 +840,28 @@ def _section_checklist(proposal: Proposal, pack: ResearchPack | None,
         co_sign = co_sign_reasons(proposal)
         if co_sign:
             items.append("Obter co-assinatura independente de Risco/Compliance (quatro olhos): "
-                         + " ".join(co_sign))
-    items.append("Aprovar ou rejeitar com justificativa — a decisão fica vinculada aos hashes de "
-                 "snapshot, configuração, pesquisa e proposta.")
+                         + " ".join(_co_sign_pt(r, proposal, nomes) for r in co_sign))
+    items.append("Aprovar ou rejeitar com justificativa — a decisão fica vinculada aos hashes dos "
+                 "dados de mercado, do mandato, da pesquisa e da proposta.")
     return ["## Decisões pendentes do gestor", ""] + [f"- [ ] {i}" for i in items] + [""]
+
+
+def _co_sign_pt(reason: str, proposal: Proposal, nomes: dict[str, str]) -> str:
+    """Motivo de co-assinatura (``approval.co_sign_reasons``) sem ids de controle nem códigos."""
+    from . import rotulos as R
+
+    if reason.startswith("Falha(s) SOFT reconhecida(s):"):
+        return ("Limites de alerta reconhecidos: "
+                + "; ".join(R.controle(c.check_id, c.name) for c in proposal.soft_failures) + ".")
+    if reason.startswith("Novo(s) short(s) com risco de squeeze:"):
+        new_shorts = {t.issuer_id for t in proposal.trades if t.action.value == "SHORT"}
+        risky = [f"{R.nome(p.issuer_id, nomes)} "
+                 f"({_SQUEEZE_PT.get(p.squeeze_bucket, p.squeeze_bucket)})"
+                 for p in proposal.positions
+                 if p.side == Side.SHORT and p.squeeze_bucket in ("MEDIUM", "HIGH")
+                 and (p.issuer_id in new_shorts or not proposal.trades)]
+        return "Nova(s) posição(ões) vendida(s) com risco de squeeze: " + ", ".join(risky) + "."
+    return R.detalhe(reason, nomes)
 
 
 def render_memo(proposal: Proposal, pack: ResearchPack | None = None,

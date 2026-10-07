@@ -1,6 +1,6 @@
 ---
 name: cdp-semanal
-description: "Montagem da carteira no último pregão da semana na NYSE (decisão até o prazo efetivo, execução no leilão de fechamento) e tese de investimento da carteira decidida; carteira inaugural na data de início do mandato. Rotina do CDP — Cabra da Peste (cdp-semanal dias úteis, 11:07; cdp-semanal-b dias úteis, 12:07; cdp-semanal-c dias úteis, 13:07; cdp-semanal-d dias úteis, 14:07, Brasília). Use quando uma rotina agendada citar cdp-semanal ou cdp-semanal-b ou cdp-semanal-c ou cdp-semanal-d, ou quando pedirem esta etapa da operação."
+description: "Montagem da carteira no último pregão da semana na NYSE (modelos da cobertura atualizados antes da coleta, decisão até o prazo efetivo, execução no leilão de fechamento) e tese de investimento da carteira decidida; carteira inaugural na data de início do mandato. Rotina do CDP — Cabra da Peste (cdp-semanal dias úteis, 11:07; cdp-semanal-b dias úteis, 12:07; cdp-semanal-c dias úteis, 13:07; cdp-semanal-d dias úteis, 14:07, Brasília). Use quando uma rotina agendada citar cdp-semanal ou cdp-semanal-b ou cdp-semanal-c ou cdp-semanal-d, ou quando pedirem esta etapa da operação."
 compatibility: "Requer git, uv e rede para fontes públicas; qualquer harness com shell (Claude Code, Codex, Gemini CLI, Antigravity, Copilot, Cursor)."
 metadata:
   gerado-por: "uv run python -m cdp skills sincronizar"

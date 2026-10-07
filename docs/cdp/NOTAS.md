@@ -126,6 +126,12 @@ proprietário: qualquer pessoa consegue abrir cada fonte citada.
 
 ## 7. Rotina, rascunhos e qualquer assistente
 
+- Pós-resultado: quando um emissor divulga resultado (CVM, SEC ou Yahoo), a rotina diária
+  reavalia o modelo no fechamento do pregão seguinte (retrato parcial da cobertura,
+  `cobertura.snapshot_pendente` com `tipo: "parcial"` em `cdp agenda`) e a rotina de notas
+  escreve a nota de pós-resultado na mesma noite ou na seguinte: `cobertura.notas_pos_resultado`
+  lista os emissores com resultado dos últimos 4 dias já incorporado ao modelo e sem nota
+  posterior, tratados antes da fila (tipo `pos_resultado`, ou `iniciacao` sem nota anterior).
 - Rotina `cdp-cobertura`: segunda a quinta, 22:37 de Brasília, até 12 emissores por execução,
   no app de IA de quem opera (Claude Code, Codex ou Gemini; `docs/cdp/ROTINAS.md`). O
   procedimento é o roteiro neutro `docs/cdp/playbooks/COBERTURA.md`, o mesmo em qualquer app; as

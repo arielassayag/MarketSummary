@@ -7,6 +7,7 @@ manifesto e somas, avisos de dados simulados, guardas, determinismo e conferênc
 from __future__ import annotations
 
 import hashlib
+import html
 import json
 import re
 import shutil
@@ -387,3 +388,34 @@ def test_page_data_lifts_audit_and_risk_caps_and_drops_superseded_backtests(tmp_
         st.dados_do_painel(rt, AGORA)
     assert visto["audit_tail"] >= st.GRANDE and visto["max_risk_full_runs"] >= st.GRANDE
     assert visto["max_risk_runs"] >= st.GRANDE and visto["pastas"] == ["2026-11-02"]
+
+
+def test_banned_terms_spare_third_party_headlines_but_not_house_text(site_sintetico, tmp_path):
+    """Manchete de terceiros citando uma casa de dados ("…, aponta <casa>") não derruba a
+    publicação; o mesmo termo no texto da casa continua vedado (e a fonte proprietária sempre)."""
+    s = tmp_path / "s"
+    shutil.copytree(site_sintetico, s)
+    pasta = s / "dados/livro/2024-03-04/briefing/live"
+    pasta.mkdir(parents=True, exist_ok=True)
+    casa_de_dados = "Econo" + "matica"
+    manchete = f"Bancos lideram lucros do trimestre na bolsa, aponta {casa_de_dados}"
+    item = {"news_id": "rss_1", "issuer_ids": ["SIM001"], "title": manchete,
+            "source": "Valor Econômico", "url": "https://example.com/n", "untrusted": True,
+            "published_at": "2024-03-04T10:00:00Z", "language": "pt", "is_synthetic": True}
+    (pasta / "news.jsonl").write_text(json.dumps(item, ensure_ascii=False) + "\n",
+                                      encoding="utf-8")
+    (pasta / "briefing.md").write_text(f"| SIM001 | {manchete} |\n", encoding="utf-8")
+    (pasta / "pagina.html").write_text("<p>" + html.escape(manchete + ' "1T24"') + "</p>",
+                                       encoding="utf-8")
+    vedados = re.compile("|".join(st.VEDADOS_NO_PORTAL), re.IGNORECASE)
+    terceiros = st._citacoes_de_terceiros(s, vedados)
+    for p in (pasta / "news.jsonl", pasta / "briefing.md"):
+        assert st.termos_vedados(p.read_text(encoding="utf-8"), vedados, terceiros,
+                                 so_terceiros=p.name.endswith("news.jsonl")) is None
+    assert st.termos_vedados(json.dumps({"t": manchete}), vedados, terceiros) is None
+    casa = f"Fonte: base da {casa_de_dados}, consolidada pela gestão."
+    assert st.termos_vedados(casa, vedados, terceiros) == casa_de_dados
+    assert st.termos_vedados("Transcrições via " + "Quar" + "tr.", vedados, terceiros)
+    assert "termo vedado" not in "\n".join(st.conferir(s))
+    (pasta / "nota.md").write_text(casa, encoding="utf-8")
+    assert f"nota.md: termo vedado no portal ('{casa_de_dados}')" in "\n".join(st.conferir(s))

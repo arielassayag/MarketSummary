@@ -74,6 +74,15 @@ uv run python -m cdp nota agenda
     libere a trava (no modo executor, não) e encerre relatando em destaque; a próxima rotina
     diária a publica.
 
+**Primeiro, os modelos reavaliados por resultado.** `cobertura.notas_pos_resultado` em
+`cdp agenda` lista, em ordem, os emissores cujo resultado divulgado nos últimos 4 dias já entrou
+no modelo da cobertura (retrato parcial da rotina diária ou atualização do dia de montagem) e que
+ainda não têm nota posterior ao resultado (`resultado`, `modelo` e `ultima_nota` de cada item).
+Trate-os antes da fila, com a data de hoje (`agora_brasilia`) como data da nota e tipo
+`pos_resultado` (ou `iniciacao`, se o emissor não tiver nota anterior), no mesmo limite de
+`limite_por_execucao` emissores por execução; um emissor que também esteja na `fila` é tratado
+uma vez só. Os retratos parciais são da rotina diária: esta rotina nunca roda `cdp cobertura run`.
+
 `nota agenda` devolve a `fila` (no máximo `limite_por_execucao` emissores), em grupos nesta ordem:
 rascunhos entregues pendentes (`docs/cdp/notas/`), pós-resultado (até 4 dias), notas vencidas
 (iniciação e SLA de 7/14/90 dias) e, por último, a nova leitura de emissores cuja última nota é a
@@ -160,7 +169,8 @@ no clone e você relata; nunca tente outro caminho. Libere a trava **sempre**, m
 ## 5. Resumo final
 
 Até 10 linhas: emissores tratados (nome, `tipo`, `autoria` mente ou código, `stance` e
-`conviccao`), os que ficaram para a próxima execução (`pendentes`), rascunhos obsoletos, o modelo
+`conviccao`; os de `cobertura.notas_pos_resultado` primeiro), os que ficaram para a próxima
+execução (`pendentes`), rascunhos obsoletos, o modelo
 de cobertura usado (`modelo_de_cobertura` ou o aviso), problemas de validação, integridade e
 publicação.
 

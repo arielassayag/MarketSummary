@@ -1,0 +1,174 @@
+# Calendário macro público que movimenta os modelos da cobertura (CDP — Cabra da Peste).
+#
+# Regra (código: cdp.workflow.agenda.coverage_status; roteiro: docs/cdp/playbooks/DIARIO.md):
+# - impacto "alto" (decisões de juros e inflação que entram nos insumos dos modelos: meta Selic e
+#   IPCA em 12 meses do BCB, Treasury de 10 anos do FRED) ⇒ nova execução COMPLETA da cobertura no
+#   fechamento do primeiro pregão (B3, NYSE ou BMV) que reagiu ao evento — o próprio dia, se o
+#   evento sai num pregão antes das 16:00 de Nova York; senão o pregão seguinte —, pela rotina
+#   diária daquela noite. Na véspera de um dia de montagem, a atualização completa da manhã
+#   seguinte (antes da decisão) cobre o evento: o motor grava um retrato por data;
+# - impacto "medio" ⇒ só listado na agenda (`cobertura.macro.proximos_7_dias`); o retrato do dia
+#   de montagem absorve o efeito de mercado.
+#
+# Só fontes públicas: a página oficial do banco central ou do instituto de estatística. Datas
+# conferidas em 06/10/2026. Calendário que a fonte ainda não publicou fica AUSENTE (nunca
+# estimado) e entra por commit quando for publicado (`publicado_ate` e `lacunas`). Mudou este
+# arquivo ⇒ commit revisável numa sessão de desenvolvimento (as rotinas nunca o editam).
+versao: 1
+conferido_em: "2026-10-06"
+publicado_ate:            # último mês com datas oficiais conferidas, por série
+  copom: "2027-12"
+  fomc: "2027-12"         # 2027: calendário provisório do Fed (confirmado reunião a reunião)
+  ipca: "2026-12"
+  cpi_eua: "2026-12"
+  banxico: "2026-12"
+  inegi_inpc: "2027-06"
+  inegi_inpc_quinzena: "2027-06"
+  bcch: "2027-12"
+  banrep: "2026-12"
+lacunas:
+  - "IPCA (IBGE): calendário de 2027 ainda não publicado pelo IBGE"
+  - "CPI dos EUA (BLS): calendário de 2027 ainda não publicado pelo BLS"
+  - "Banxico: calendário de 2027 ainda não publicado pelo Banco de México"
+  - "INPC (INEGI): calendário do segundo semestre de 2027 ainda não publicado"
+  - "BanRep (Colômbia): calendário de 2027 ainda não publicado"
+  - "BCRP (Peru): calendário oficial do programa monetário de outubro a dezembro de 2026 não localizado em fonte pública na conferência"
+series:
+  copom:
+    pais: BR
+    orgao: "Banco Central do Brasil (Copom)"
+    nome: "Copom: decisão da meta para a taxa Selic"
+    impacto: alto
+    hora: "18:30"
+    fuso: America/Sao_Paulo
+    fonte: "https://www.bcb.gov.br/controleinflacao/calendarioreunioescopom"
+  ipca:
+    pais: BR
+    orgao: "IBGE"
+    nome: "IPCA: inflação ao consumidor do mês anterior"
+    impacto: alto
+    hora: "09:00"
+    fuso: America/Sao_Paulo
+    fonte: "https://www.ibge.gov.br/calendario/conjunturais.html"
+  fomc:
+    pais: US
+    orgao: "Federal Reserve (FOMC)"
+    nome: "FOMC: decisão da taxa de juros dos fundos federais"
+    impacto: alto
+    hora: "14:00"
+    fuso: America/New_York
+    fonte: "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+  cpi_eua:
+    pais: US
+    orgao: "U.S. Bureau of Labor Statistics"
+    nome: "CPI dos EUA: inflação ao consumidor do mês anterior"
+    impacto: alto
+    hora: "08:30"
+    fuso: America/New_York
+    fonte: "https://www.bls.gov/schedule/news_release/cpi.htm"
+  banxico:
+    pais: MX
+    orgao: "Banco de México"
+    nome: "Banxico: decisão da taxa de juros de referência"
+    impacto: alto
+    hora: "13:00"
+    fuso: America/Mexico_City
+    fonte: "https://www.banxico.org.mx/monetary-policy/d/%7B0C35369C-BF8F-E5A8-7710-FD5A6716474F%7D.pdf"
+  inegi_inpc:
+    pais: MX
+    orgao: "INEGI"
+    nome: "INPC (México): inflação ao consumidor do mês anterior"
+    impacto: medio
+    hora: "06:00"
+    fuso: America/Mexico_City
+    fonte: "https://www.inegi.org.mx/contenidos/saladeprensa/doc/cal_2026.pdf"
+  inegi_inpc_quinzena:
+    pais: MX
+    orgao: "INEGI"
+    nome: "INPC (México): inflação da primeira quinzena do mês"
+    impacto: medio
+    hora: "06:00"
+    fuso: America/Mexico_City
+    fonte: "https://www.inegi.org.mx/contenidos/saladeprensa/doc/cal_2026.pdf"
+  bcch:
+    pais: CL
+    orgao: "Banco Central de Chile"
+    nome: "Banco Central de Chile: decisão da taxa de política monetária"
+    impacto: medio
+    hora: "18:00"
+    fuso: America/Santiago
+    fonte: "https://www.bcentral.cl/en/news-and-publications/press/monetary-and-financial-policy-calendar"
+  banrep:
+    pais: CO
+    orgao: "Banco de la República (Colômbia)"
+    nome: "BanRep: decisão da taxa de intervenção"
+    impacto: medio
+    fuso: America/Bogota
+    fonte: "https://www.banrep.gov.co/es/calendario-junta-directiva"
+eventos:
+  # ---- Brasil: Copom (decisão no segundo dia da reunião, depois do fechamento)
+  - {serie: copom, data: "2026-11-04"}
+  - {serie: copom, data: "2026-12-09"}
+  - {serie: copom, data: "2027-01-27"}
+  - {serie: copom, data: "2027-03-17"}
+  - {serie: copom, data: "2027-04-28"}
+  - {serie: copom, data: "2027-06-16"}
+  - {serie: copom, data: "2027-08-04"}
+  - {serie: copom, data: "2027-09-22"}
+  - {serie: copom, data: "2027-10-27"}
+  - {serie: copom, data: "2027-12-08"}
+  # ---- Brasil: IPCA (IBGE, 09:00)
+  - {serie: ipca, data: "2026-10-09", referencia: "2026-09"}
+  - {serie: ipca, data: "2026-11-12", referencia: "2026-10"}
+  - {serie: ipca, data: "2026-12-11", referencia: "2026-11"}
+  # ---- EUA: FOMC (comunicado às 14:00 de Nova York; 2027 provisório)
+  - {serie: fomc, data: "2026-10-28"}
+  - {serie: fomc, data: "2026-12-09"}
+  - {serie: fomc, data: "2027-01-27"}
+  - {serie: fomc, data: "2027-03-17"}
+  - {serie: fomc, data: "2027-04-28"}
+  - {serie: fomc, data: "2027-06-09"}
+  - {serie: fomc, data: "2027-07-28"}
+  - {serie: fomc, data: "2027-09-15"}
+  - {serie: fomc, data: "2027-10-27"}
+  - {serie: fomc, data: "2027-12-08"}
+  # ---- EUA: CPI (BLS, 08:30 de Nova York)
+  - {serie: cpi_eua, data: "2026-10-14", referencia: "2026-09"}
+  - {serie: cpi_eua, data: "2026-11-10", referencia: "2026-10"}
+  - {serie: cpi_eua, data: "2026-12-10", referencia: "2026-11"}
+  # ---- México: Banxico (13:00 da Cidade do México)
+  - {serie: banxico, data: "2026-11-05"}
+  - {serie: banxico, data: "2026-12-17"}
+  # ---- México: INPC (INEGI, 06:00 da Cidade do México)
+  - {serie: inegi_inpc, data: "2026-10-08", referencia: "2026-09"}
+  - {serie: inegi_inpc, data: "2026-11-09", referencia: "2026-10"}
+  - {serie: inegi_inpc, data: "2026-12-09", referencia: "2026-11"}
+  - {serie: inegi_inpc, data: "2027-01-07", referencia: "2026-12", fonte: "https://www.inegi.org.mx/contenidos/saladeprensa/doc/cal_2027.pdf"}
+  - {serie: inegi_inpc, data: "2027-02-09", referencia: "2027-01", fonte: "https://www.inegi.org.mx/contenidos/saladeprensa/doc/cal_2027.pdf"}
+  - {serie: inegi_inpc, data: "2027-03-09", referencia: "2027-02", fonte: "https://www.inegi.org.mx/contenidos/saladeprensa/doc/cal_2027.pdf"}
+  - {serie: inegi_inpc, data: "2027-04-08", referencia: "2027-03", fonte: "https://www.inegi.org.mx/contenidos/saladeprensa/doc/cal_2027.pdf"}
+  - {serie: inegi_inpc, data: "2027-05-07", referencia: "2027-04", fonte: "https://www.inegi.org.mx/contenidos/saladeprensa/doc/cal_2027.pdf"}
+  - {serie: inegi_inpc, data: "2027-06-09", referencia: "2027-05", fonte: "https://www.inegi.org.mx/contenidos/saladeprensa/doc/cal_2027.pdf"}
+  - {serie: inegi_inpc_quinzena, data: "2026-10-22", referencia: "2026-10"}
+  - {serie: inegi_inpc_quinzena, data: "2026-11-24", referencia: "2026-11"}
+  - {serie: inegi_inpc_quinzena, data: "2026-12-23", referencia: "2026-12"}
+  - {serie: inegi_inpc_quinzena, data: "2027-01-22", referencia: "2027-01", fonte: "https://www.inegi.org.mx/contenidos/saladeprensa/doc/cal_2027.pdf"}
+  - {serie: inegi_inpc_quinzena, data: "2027-02-24", referencia: "2027-02", fonte: "https://www.inegi.org.mx/contenidos/saladeprensa/doc/cal_2027.pdf"}
+  - {serie: inegi_inpc_quinzena, data: "2027-03-23", referencia: "2027-03", fonte: "https://www.inegi.org.mx/contenidos/saladeprensa/doc/cal_2027.pdf"}
+  - {serie: inegi_inpc_quinzena, data: "2027-04-22", referencia: "2027-04", fonte: "https://www.inegi.org.mx/contenidos/saladeprensa/doc/cal_2027.pdf"}
+  - {serie: inegi_inpc_quinzena, data: "2027-05-24", referencia: "2027-05", fonte: "https://www.inegi.org.mx/contenidos/saladeprensa/doc/cal_2027.pdf"}
+  - {serie: inegi_inpc_quinzena, data: "2027-06-24", referencia: "2027-06", fonte: "https://www.inegi.org.mx/contenidos/saladeprensa/doc/cal_2027.pdf"}
+  # ---- Chile: Banco Central de Chile (dia da decisão; 18:00 de Santiago)
+  - {serie: bcch, data: "2026-10-27"}
+  - {serie: bcch, data: "2026-12-15"}
+  - {serie: bcch, data: "2027-01-26"}
+  - {serie: bcch, data: "2027-03-30"}
+  - {serie: bcch, data: "2027-04-27"}
+  - {serie: bcch, data: "2027-06-15"}
+  - {serie: bcch, data: "2027-07-27"}
+  - {serie: bcch, data: "2027-08-31"}
+  - {serie: bcch, data: "2027-10-26"}
+  - {serie: bcch, data: "2027-12-14"}
+  # ---- Colômbia: BanRep (reuniões com decisão de juros)
+  - {serie: banrep, data: "2026-10-30"}
+  - {serie: banrep, data: "2026-12-18"}

@@ -13,7 +13,9 @@ decisão precisa estar gravada antes do **prazo efetivo** (`semanal.prazo_efetiv
 `cdp agenda`: o teto de 15:00 de Brasília ou o fechamento mais cedo entre NYSE, B3 e BMV menos a
 margem — mais cedo nos fechamentos antecipados dos EUA); depois dele o código recusa decidir. A
 carteira é executada no **leilão de fechamento** desse dia; o fechamento diário registra a
-execução e publica, na mesma noite, o relatório semanal de resultado.
+execução e publica, na mesma noite, o relatório semanal de resultado. **Antes da coleta, os
+modelos da cobertura são atualizados** (retrato completo com dados até o pregão anterior), para
+que a pesquisa, a decisão, a tese e o portal usem modelos do dia (passo 2.1).
 
 ## Regras invioláveis
 
@@ -54,7 +56,7 @@ uv run python -m cdp sincronizar --executar
 - `sincronizar` com `acao: "parar"` ⇒ libere a trava e encerre relatando o `motivo`.
 - **Modo executor.** Se o prompt disser que a agenda, a trava, a sincronização e a publicação são
   do executor, pule esta seção e a seção 10: faça os passos 1 a 9 e o resumo.
-- Ao fim de cada etapa (coleta, cada bloco de pesquisa, validação, decisão, tese), renove a
+- Ao fim de cada etapa (cobertura, coleta, cada bloco de pesquisa, validação, decisão, tese), renove a
   trava: `uv run python -m cdp trava renovar --id <trava.id>`. Sem `"estado": "renovada"`:
   - `perdida` (a validade venceu e outra execução assumiu a trava) ⇒ pare de gravar, **não** rode
     `cdp publicar` nem `trava liberar` e encerre relatando: quem assumiu conclui a montagem;
@@ -82,7 +84,7 @@ uv run python -m cdp status
   DD/MM/AAAA" (`data_de_inicio`). Na própria data de início, siga normalmente.
 - `fase: "pre_inicio"` sem a abertura pendente → encerre com a mesma mensagem (nada a publicar).
 - `semanal.acao`:
-  - `montar` → continue a partir de `semanal.etapa` (`prepare`, `pesquisa` ou
+  - `montar` → continue a partir de `semanal.etapa` (`cobertura`, `prepare`, `pesquisa` ou
     `validar_e_decidir`); anote `semanal.semana` (AAAA-MM-DD), `semanal.prazo_efetivo`,
     `semanal.minutos_ate_o_prazo`, `semanal.mercados_fechados` e
     `semanal.fechamento_antecipado` (o código congela ou roteia para o ADR os emissores cujo
@@ -92,7 +94,35 @@ uv run python -m cdp status
     (tese), 9 (integridade e painel), 10 (publicação, com a mensagem da retomada) e 11 (resumo).
   - `nenhuma`, `aguardar` ou `prazo_vencido` → encerre com "Sem montagem hoje: <semanal.motivo>".
 
-## 2. Coleta e briefing (código) — etapa `prepare`
+## 2. Modelos da cobertura e coleta (código) — etapas `cobertura` e `prepare`
+
+### 2.1 Modelos da cobertura atualizados antes da decisão — etapa `cobertura`
+
+Só com `cobertura.atualizar_antes_da_decisao: true` em `cdp agenda` (o código já conferiu que
+hoje é dia de montagem, que a decisão não foi gravada, que faltam ao menos 120 minutos para o
+prazo efetivo, que a base de mercado chega à data-base e que ainda não há retrato completo dela).
+Use a data de `cobertura.data_base_decisao` (o pregão anterior; `cobertura.passo_antes_da_decisao`
+traz o comando pronto):
+
+```sh
+uv run python -m cdp cobertura run --date AAAA-MM-DD
+```
+
+- Retrato **completo** de todo o universo com os dados públicos até aquele fechamento — o
+  motor recusa insumo publicado depois da data (sem look-ahead) — e o que o código coleta agora
+  (por exemplo, um resultado divulgado na noite anterior). Leva de 5 a 10 minutos; uma vez só por
+  execução, sem repetir em laço. Renove a trava ao terminar.
+- Saída 0: anote a data e a `distribuicao`. Código 1 ou 2 (recusa, base de mercado ou fonte
+  pública indisponível): relate e **siga para o 2.2** — a decisão nunca espera a cobertura; vale o
+  último retrato (`cobertura.ultimo_retrato_completo`), e a rotina diária grava o retrato
+  completo à noite.
+- Com `cobertura.atualizar_antes_da_decisao: false`, siga direto para o 2.2 (o motivo está em
+  `cobertura.motivo_antes_da_decisao`: modelos já em dia, pouco tempo até o prazo ou base de
+  mercado ainda no pregão anterior). Se o motivo for a base de mercado
+  (`cobertura.aguardando_base_de_mercado: true`), rode `cdp agenda` de novo depois do 2.2: com
+  `atualizar_antes_da_decisao: true`, faça o 2.1 uma vez, antes de pesquisar.
+
+### 2.2 Coleta e briefing — etapa `prepare`
 
 ```sh
 uv run python -m cdp weekly prepare --date AAAA-MM-DD --mind <mente>
@@ -110,7 +140,11 @@ briefing foi gravado; senão, pare e relate (a reserva seguinte tenta de novo; n
 
 Leia `briefing.md`, `context.json`, `INSTRUCTIONS.md` e os dois schemas. Ponto de partida por
 emissor: a nota de pesquisa publicada mais recente (`book/cobertura/notas/<IID>/<data>/nota.md`,
-com a ficha do modelo aberto da cobertura); confira o que mudou depois da data da nota.
+com a ficha do modelo aberto da cobertura) e o modelo atualizado do retrato de
+`cobertura.ultimo_retrato_completo` (`book/cobertura/<data>/modelos.csv` e
+`book/cobertura/<data>/modelos/<IID>.json`: preço-alvo, rating, confiança, portões e a ponte do
+alvo contra o retrato anterior); confira o que mudou depois da data da nota. O modelo é leitura:
+números só entram pelos fatos de `context.json`.
 
 1. **Macro por país** (BR, MX, CL, CO, PE, AR) e global: regime, eventos da semana, riscos.
 2. **Cada candidato e cada posição atual**: fatos recentes (CVM/IPE, SEC 6-K, relações com
@@ -254,7 +288,8 @@ nunca tente outro caminho. Libere a trava **sempre**, mesmo em falha.
 ## 11. Resumo final
 
 Até 12 linhas, números **copiados** da saída do `weekly decide` e de
-`reports/weekly/<semana>/relatorio.md`: semana, caminho (`cdp`, só-quant ou anterior), postura,
+`reports/weekly/<semana>/relatorio.md`: modelos da cobertura (retrato gravado no passo 2.1 e a
+data, ou o motivo de não ter havido atualização); semana, caminho (`cdp`, só-quant ou anterior), postura,
 abstenção; número de longs e shorts, vol ex-ante, beta, gross e net; principais mudanças e falhas
 SOFT; tese (autoria `mente` — cobertura das posições, se veio do rascunho entregue — ou `codigo`
 e os `problemas`); integridade e publicação (commit, push ou o motivo de não ter havido push).

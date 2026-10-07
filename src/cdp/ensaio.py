@@ -135,8 +135,17 @@ def _trocar_relogio() -> None:
             mod.date = RelogioDate
 
 
-def _redatar(df, fim, *, por_serie: bool = True):
-    """Acrescenta, até ``fim`` (dias úteis), cópias da última barra real de cada série."""
+#: Série cuja última barra real está a mais que isso (dias corridos) da barra mais recente do
+#: lote não é estendida (ativo suspenso ou deslistado continua sem preço, como na base real).
+JANELA_SERIE_DIAS = 7
+
+
+def _redatar(df, fim, *, por_serie: bool = True, janela_dias: int | None = None):
+    """Acrescenta, até ``fim`` (dias úteis), cópias da última barra real de cada série.
+
+    ``por_serie``: cada série parte da SUA última barra (ex.: EUA até 05/10 e Brasil até 06/10
+    no mesmo lote); ``janela_dias``: só séries com barra real a até essa distância da mais
+    recente do lote."""
     import pandas as pd
 
     if df is None or len(df) == 0 or "date" not in df.columns:
@@ -145,6 +154,9 @@ def _redatar(df, fim, *, por_serie: bool = True):
     alvo = pd.Timestamp(fim)
     chave = next((c for c in ("ticker", "currency", "symbol", "series") if c in df.columns), None)
     base_df = df if por_serie else df[datas == datas.max()]
+    if por_serie and janela_dias is not None and chave is not None:
+        ultimas = datas.groupby(df[chave]).transform("max")
+        base_df = df[ultimas >= datas.max() - pd.Timedelta(days=janela_dias)]
     grupos = [(None, base_df)] if chave is None else list(base_df.groupby(chave, sort=False))
     partes, n = [df], 0
     for _k, g in grupos:
@@ -179,8 +191,10 @@ def _ligar_substituto() -> None:
         f = self.fetchers
 
         def precos(tickers, start, end, *aa, **kk):
+            # Por série: um lote em que os EUA terminam um pregão antes do Brasil não pode
+            # deixar as linhas dos EUA sem a barra do cenário ("dados não prontos").
             df, faltando = f.prices(tickers, start, end, *aa, **kk)
-            return _redatar(df, end, por_serie=False), faltando
+            return _redatar(df, end, por_serie=True, janela_dias=JANELA_SERIE_DIAS), faltando
 
         def simples(fn):
             def g(x, start, end, *aa, **kk):

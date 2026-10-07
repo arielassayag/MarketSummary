@@ -12,6 +12,8 @@ Layout (``root`` = ``book/`` por padrão)::
     <semana>/positions_v<k>.csv, trades_v<k>.csv, memo_v<k>.md   derivados da proposta
     <semana>/decision_v<k>.json             decisão sobre a versão k (imutável)
     <semana>/booked.json                    carteira efetivada (uma por semana)
+    <semana>/efetivacao_recusada.json       efetivação recusada no leilão do dia de montagem:
+                                            a decisão caducou (``BOOKING_LAPSED``)
 
 Regras:
 
@@ -20,7 +22,9 @@ Regras:
 - Toda gravação relevante gera evento na trilha de auditoria encadeada. Convenção de payload:
   ``PROPOSAL_CREATED`` → ``proposal_hash``; ``RESEARCH_*`` → ``research_hash``;
   ``DECISION_*`` → a decisão completa; ``BOOKED`` → o ``BookEntry`` completo;
-  ``LEDGER_APPENDED`` → as linhas anexadas; ``BOOKING_REFUSED`` → motivo da recusa.
+  ``LEDGER_APPENDED`` → as linhas anexadas; ``BOOKING_REFUSED`` → motivo da recusa;
+  ``BOOKING_LAPSED`` → a decisão caducou (efetivação recusada no leilão do dia de montagem; nunca
+  efetivada depois — ``REGRA_CADUCIDADE``).
 - Como o ``approval_hash`` não tem segredo, qualquer um pode recalculá-lo: a defesa contra a
   troca ou edição de arquivos é o cruzamento de cada artefato com a trilha de auditoria
   (:meth:`Book.verify_integrity`). Divergência ⇒ estado ``BLOCKED`` e booking recusado
@@ -86,6 +90,14 @@ _PROPOSAL_RE = re.compile(r"^proposal_v(\d+)\.json$")
 _DECISION_RE = re.compile(r"^decision_v(\d+)\.json$")
 _RESEARCH_POINTER = "research_pack.json"
 _BOOKED = "booked.json"
+_CADUCADA = "efetivacao_recusada.json"
+LAPSE_EVENT = "BOOKING_LAPSED"
+"""Evento da trilha: a efetivação foi recusada no leilão do dia de montagem e a decisão caducou."""
+REGRA_CADUCIDADE = (
+    "A decisão vale só para o leilão de fechamento do seu dia de montagem. Efetivação recusada "
+    "nesse leilão pelo kill switch é registrada no próprio dia e a decisão caduca: nunca é "
+    "efetivada depois (sem efetivação retroativa); o fundo segue com a carteira vigente (em "
+    "caixa, se for a carteira inaugural) e a próxima data de montagem decide de novo.")
 _RESEARCH_EVENTS = ("RESEARCH_SAVED", "RESEARCH_SELECTED")
 _DECISION_EVENTS = ("DECISION_APPROVE", "DECISION_REJECT")
 _ARTIFACT_EVENTS = ("PROPOSAL_CREATED", "BOOKED", *_DECISION_EVENTS, *_RESEARCH_EVENTS)
@@ -762,6 +774,45 @@ class Book:
             week=week)
         return path
 
+    def registrar_efetivacao_recusada(self, week: date, sessao: date, motivo: str,
+                                      proposal_id: str, approval_hash: str,
+                                      actor: str = SYSTEM_ACTOR) -> dict[str, Any]:
+        """Registra que a decisão da semana CADUCOU: a efetivação foi recusada no leilão de
+        fechamento do dia de montagem (ex.: kill switch ligado). Regra (``REGRA_CADUCIDADE``): a
+        ordem vale só para aquele leilão; não há efetivação retroativa e a próxima data de
+        montagem decide de novo. Arquivo imutável ``<semana>/efetivacao_recusada.json`` e evento
+        ``BOOKING_LAPSED`` na trilha; idempotente (a primeira recusa vale)."""
+        atual = self.efetivacao_recusada(week)
+        if atual is not None:
+            return atual
+        if (self.week_dir(week) / _BOOKED).exists():
+            raise FileExistsError(f"A semana {week} já foi efetivada: não há o que caducar.")
+        payload = {"semana": week.isoformat(), "sessao": sessao.isoformat(),
+                   "motivo": " ".join(str(motivo).split())[:600], "proposal_id": proposal_id,
+                   "approval_hash": approval_hash, "regra": REGRA_CADUCIDADE}
+        _write_exclusive(self.week_dir(week) / _CADUCADA, dump_json(payload))
+        self.audit.append(
+            LAPSE_EVENT, actor, payload,
+            summary=(f"Efetivação recusada no fechamento de {sessao:%d/%m/%Y}: a decisão da "
+                     f"semana {week:%d/%m/%Y} caducou (sem efetivação retroativa; a próxima "
+                     "data de montagem decide de novo)."), week=week)
+        return payload
+
+    def efetivacao_recusada(self, week: date) -> dict[str, Any] | None:
+        """Registro de caducidade da decisão da semana (conferido contra a trilha) ou ``None``.
+
+        Arquivo que não confere com o evento ``BOOKING_LAPSED`` ⇒ ``ValueError`` (nunca se
+        "descaduca" uma decisão editando o livro)."""
+        path = self.week_dir(week) / _CADUCADA
+        if not path.exists():
+            return None
+        data = _read_json(path)
+        _, index = self._audit_state()
+        if sha256_obj(data) not in index.get((LAPSE_EVENT, week), set()):
+            raise ValueError(f"{_CADUCADA} da semana {week} não confere com a trilha de "
+                             "auditoria (arquivo alterado fora do livro).")
+        return data
+
     def _read_booked(self, week: date) -> BookEntry | None:
         """Leitura crua de ``booked.json`` (sem conferir a trilha) para integridade/estado."""
         path = self.week_dir(week) / _BOOKED
@@ -998,6 +1049,20 @@ class Book:
                 problems.append(f"{week}: booking sem decisão APPROVE correspondente.")
         if booked_events - booked_payloads:
             problems.append(f"{week}: evento BOOKED sem booked.json correspondente.")
+        lapse_events = index.get((LAPSE_EVENT, week), set())
+        lapse_path = self.week_dir(week) / _CADUCADA
+        if lapse_path.exists():
+            try:
+                lapse_ok = sha256_obj(_read_json(lapse_path)) in lapse_events
+            except ValueError:
+                lapse_ok = False
+            if not lapse_ok:
+                problems.append(f"{week}: registro de efetivação recusada não confere com a "
+                                "trilha de auditoria.")
+            if entry is not None:
+                problems.append(f"{week}: semana com efetivação e com decisão caducada.")
+        elif lapse_events:
+            problems.append(f"{week}: evento {LAPSE_EVENT} sem {_CADUCADA} correspondente.")
         return problems
 
     def _ledger_problems(self, events: list[AuditEvent]) -> list[str]:

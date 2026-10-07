@@ -23,6 +23,7 @@ uv run python -m cdp estado --formato md
 uv run python -m cdp status
 uv run python -m cdp verify
 uv run python -m cdp nota agenda
+uv run python -m cdp agenda
 uv run python -m cdp rotinas proximas --n 12
 ```
 
@@ -43,5 +44,11 @@ também o remoto, a trava e o portal publicado.
   (`relatorio_semanal.pendentes`), retrato da cobertura, a fila de notas (`pendentes` de
   `nota agenda`) e os rascunhos entregues ainda não adotados ou obsoletos
   (`rascunhos_pendentes`, `rascunhos_obsoletos`).
+- **Modelos da cobertura** (`cobertura` em `cdp agenda`): último retrato completo e parcial,
+  se os modelos estão em dia para a próxima decisão (`modelos_em_dia_para_a_decisao`,
+  `data_base_decisao`), emissores com resultado à espera de reavaliação (`adhoc.emissores`;
+  `adhoc.falha`, se as datas de resultado estiverem indisponíveis), eventos macro pendentes e dos
+  próximos 7 dias (`macro`), notas de pós-resultado (`notas_pos_resultado`) e a revisão mensal
+  (`revisao_mensal`: data, etapa e a próxima).
 - **Próximas rotinas** e se vão agir.
 - **Portal**: a URL pública e, com `--rede`, se a versão publicada corresponde a `origin/main`.

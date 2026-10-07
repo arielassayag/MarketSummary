@@ -43,8 +43,8 @@ from .hashing import sha256_obj
 
 DEFAULT_CONFIG_PATH = Path("configs/cdp/fund.yaml")
 #: Mandatos arquivados por hash (``<config_hash>.json``), para semanas decididas antes de o
-#: ``decide`` gravar ``config_decisao.json`` (ex.: a inception de 2026-10-05). Relativo à raiz do
-#: repositório, que contém ``book/`` e ``configs/`` lado a lado.
+#: ``decide`` gravar ``config_decisao.json`` (livros abertos com uma versão anterior do código).
+#: Relativo à raiz do repositório, que contém ``book/`` e ``configs/`` lado a lado.
 HISTORICO_DIR = DEFAULT_CONFIG_PATH.parent / "historico"
 _HASH_RE = re.compile(r"[0-9a-f]{64}")
 _HHMM_RE = re.compile(r"(?:[01]\d|2[0-3]):[0-5]\d")

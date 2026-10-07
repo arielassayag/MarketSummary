@@ -1,8 +1,9 @@
 """Robustez das rotinas diante de falhas reais (rede fora, kill switch, prazo vencido).
 
 Achados do ensaio geral: um ``weekly prepare`` interrompido no meio não pode travar a semana;
-cotação intradiária vazia é falha de coleta (nunca uma barra vazia); o kill switch ligado antes
-da carteira inaugural sai como status estruturado; prazo vencido não vira traceback.
+cotação intradiária vazia é falha de coleta (nunca uma barra vazia); com a rede fora, o prepare
+usa os últimos dados gravados (nada é apagado); o kill switch no leilão do dia de montagem registra
+a recusa e a decisão caduca (sem efetivação retroativa); prazo vencido não vira traceback.
 """
 
 from __future__ import annotations
@@ -98,6 +99,97 @@ def test_gitignore_keeps_briefing_staging_out_of_publication():
     assert "book/**/.briefing.*" in text
 
 
+# ----------------------------------------------------------------------------- rede fora (F01)
+
+
+class _SemInfo:
+    """``yf.Ticker`` sem rede: ``info`` vazio (o yfinance não lança erro)."""
+
+    info: dict = {}
+    calendar: dict = {}
+
+
+def test_yahoo_without_network_is_a_collection_failure_never_an_empty_snapshot():
+    from cdp.data import yahoo
+
+    with pytest.raises(yahoo.FundamentosVaziosError, match="nenhuma das 3 linhas"):
+        yahoo.fetch_fundamentals(["A.SA", "B.SA", "C"], currency_map={"A.SA": "BRL"},
+                                 as_of=date(2026, 10, 9), ticker_factory=lambda s: _SemInfo(),
+                                 sleep=lambda _s: None)
+
+
+def test_empty_fundamentals_never_overwrite_the_stored_ones(market):
+    from cdp.data.live_refresh import SlowRefresh, overlay_slow_refresh
+
+    md = market
+    stored = md.fundamentals
+    tickers = list(stored.index[:5])
+    vazio = pd.DataFrame(np.nan, index=pd.Index(tickers, name="ticker"),
+                         columns=list(stored.columns))
+    vazio["currency"] = "BRL"
+    vazio["fundamentals_quality"] = "sem_dados"
+    parcial = vazio.copy()
+    parcial.loc[tickers[0], ["market_cap", "trailing_pe"]] = [123.0, 7.0]   # respondeu
+    parcial.loc[tickers[0], "fundamentals_quality"] = "OK"
+    parcial.loc[tickers[1], "trailing_pe"] = 9.0                           # sem valor de mercado
+    parcial.loc[tickers[1], "fundamentals_quality"] = "OK"
+    when = datetime(2026, 10, 9, 11, 10, tzinfo=BRT)
+    for novo in (vazio, parcial):
+        out = overlay_slow_refresh(md, SlowRefresh(novo, None, None, None, []), {}, when, "x")
+        assert out.fundamentals.loc[tickers[2:], "market_cap"].equals(
+            stored.loc[tickers[2:], "market_cap"])
+        assert out.fundamentals["market_cap"].notna().sum() == stored["market_cap"].notna().sum()
+    assert out.fundamentals.loc[tickers[0], "market_cap"] == 123.0          # dado novo entra
+    assert out.fundamentals.loc[tickers[1], "market_cap"] == stored.loc[tickers[1], "market_cap"]
+
+
+def _rede_fora(monkeypatch):
+    """Toda coleta ao vivo sem resposta, como com o proxy apontado para uma porta fechada."""
+    import cdp.data.b3_lending as b3
+    import cdp.data.intraday as intraday
+    import cdp.data.news as news
+    import cdp.data.yahoo as yahoo
+    from cdp.workflow.demo import DemoStore as _DS
+
+    def quotes(tickers, currencies, benchmarks=None, getter=None):
+        syms = [*tickers, *(benchmarks or []), *[c for c in currencies if c != "USD"]]
+        return pd.DataFrame([{"symbol": s, "kind": "line", "price": np.nan, "time": None}
+                             for s in syms])
+
+    def fora(*_a, **_k):
+        raise ConnectionError("rede fora (proxy em porta fechada)")
+
+    monkeypatch.setattr(intraday, "fetch_intraday_quotes", quotes)
+    monkeypatch.setattr(yahoo, "fetch_infos",
+                        lambda tickers, **_k: {str(t): (None, None) for t in tickers})
+    monkeypatch.setattr(yahoo, "fetch_short_interest", fora)
+    monkeypatch.setattr(b3, "fetch_b3_lending", fora)
+    monkeypatch.setattr(news, "fetch_news", lambda queries, *_a, **_k: ([], [q for q in queries]))
+    monkeypatch.setattr(_DS, "catch_up", lambda self, _d: [], raising=False)
+
+
+def test_live_prepare_with_network_down_uses_stored_data_with_a_clear_notice(market, tmp_path,
+                                                                            monkeypatch):
+    rt, clock = _rt(tmp_path, market)
+    clock.set(WEEK, dtime(11, 10))
+    _rede_fora(monkeypatch)
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        out = rt.weekly_prepare(WEEK, mind="demo", live=True)
+    briefing = rt.week_dir(WEEK) / "briefing"
+    assert briefing_completo(briefing) and out["barra_provisoria"] is False
+    falhas = " | ".join(out["falhas_coleta"])
+    assert "fundamentos" in falhas and "valem os fundamentos gravados" in falhas
+    assert "valem as notícias gravadas" in falhas and "Cotações intradiárias" in falhas
+    assert "últimos dados gravados" in out["aviso_coleta"]
+    assert "--offline" in out["aviso_coleta"]
+    # Nada gravado foi apagado: o decide reconstrói os mesmos fundamentos da base.
+    md, _info, _ctx, _fb, _pm = rt._week_state(WEEK)
+    assert md.fundamentals["market_cap"].notna().sum() == market.fundamentals[
+        "market_cap"].notna().sum()
+    assert not (briefing / "live" / "fundamentals.parquet").exists()
+
+
 # ----------------------------------------------------------------------------- intradiário
 
 
@@ -155,10 +247,9 @@ def test_decide_after_deadline_is_a_structured_refusal_with_inaugural_wording(ma
     assert out["status"] == "prazo_vencido" and out["decisao_perdida"] is True
 
 
-def test_kill_switch_before_the_inaugural_booking_is_a_structured_status(market, tmp_path):
+def _decidida_com_kill_switch(rt, clock):
     from cdp.workflow.demo import write_demo_inputs
 
-    rt, clock = _rt(tmp_path, market)
     clock.set(WEEK, dtime(11, 0))
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
@@ -167,15 +258,93 @@ def test_kill_switch_before_the_inaugural_booking_is_a_structured_status(market,
         write_demo_inputs(rt, WEEK)
         clock.set(WEEK, dtime(15, 0))
         rt.weekly_decide(WEEK, mind="demo")
-        rt.set_kill_switch(True, "gatilho HARD (teste)", "CDP — rotina de risco")
-        clock.set(WEEK, dtime(19, 30))
+    rt.set_kill_switch(True, "gatilho HARD (teste)", "CDP — rotina de risco")
+
+
+def test_kill_switch_at_the_inaugural_close_records_the_refusal_and_the_decision_lapses(
+        market, tmp_path):
+    """Regra de caducidade: a ordem vale só para o leilão do dia de montagem. Recusada pelo kill
+    switch, o dia é registrado ("efetivação recusada", fundo em caixa) e a decisão nunca é
+    efetivada depois — nem quando um humano desliga o kill switch."""
+    from cdp.workflow.book import LAPSE_EVENT
+
+    rt, clock = _rt(tmp_path, market)
+    _decidida_com_kill_switch(rt, clock)
+    clock.set(WEEK, dtime(19, 30))
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
         out = rt.daily_close(WEEK, live=False)
-        again = rt.daily_close(WEEK, live=False)
-    assert out["status"] == "efetivação bloqueada pelo kill switch" and out["kill_switch"]
-    assert "sem carteira" in out["motivo"] and again["status"] == out["status"]
-    assert rt.book.load_booked(WEEK) is None and rt.track().last() is None
-    refusals = [e for e in rt.book.audit.events() if e.event_type == "BOOKING_REFUSED"]
-    assert refusals and "KILL_SWITCH" in refusals[-1].summary
+    assert out["status"] == "registrado" and out["efetivacao"] is None
+    rec_info = out["efetivacao_recusada"]
+    assert rec_info["decisao_caducada"] is True and rec_info["sessao"] == WEEK.isoformat()
+    assert "KILL_SWITCH" in rec_info["motivo"]
+    rec = rt.track().last()
+    assert rec.date == WEEK and rec.positions == [] and rec.live_book_week is None
+    assert rec.nav_end_usd == pytest.approx(rt.cfg.fund.inception_nav_usd)
+    assert any(a.startswith("Efetivação recusada: a carteira inaugural") for a in rec.alerts)
+    assert rt.book.load_booked(WEEK) is None
+    eventos = [e.event_type for e in rt.book.audit.events()]
+    assert "BOOKING_REFUSED" in eventos and LAPSE_EVENT in eventos
+    lapse = rt.book.efetivacao_recusada(WEEK)
+    assert lapse["sessao"] == WEEK.isoformat() and "retroativa" in lapse["regra"]
+    # O mesmo fechamento não roda de novo (o dia já está registrado): status estruturado.
+    de_novo = rt.daily_close(WEEK, live=False)
+    assert de_novo["status"] == "já registrado" and de_novo["registro"] == rec.record_hash
+    assert de_novo["efetivacao_recusada"]["decisao_caducada"] is True
+    # Um humano desliga o kill switch: o pregão seguinte NÃO efetiva a decisão caducada (no
+    # mandato legado ela ainda estaria na janela da semana).
+    rt.set_kill_switch(False, "revisão humana concluída", "operador")
+    nxt = demo_sessions(2)[-1]
+    clock.set(nxt, dtime(19, 30))
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        out2 = rt.daily_close(nxt, live=False)
+    assert out2["status"] == "registrado" and out2["efetivacao"] is None
+    assert "efetivacao_recusada" not in out2
+    assert rt.book.load_booked(WEEK) is None and rt.track().last().positions == []
+    # Nem pela via explícita: a decisão caducada é recusada.
+    from cdp.workflow.daily import PendingExecution
+
+    runner = rt._runner()
+    with pytest.raises(ValueError, match="caducou"):
+        runner._plan_from_pending(nxt, rt.track().last(), PendingExecution(
+            rt.book.load_proposal(WEEK), rt.book.load_decision(WEEK)))
+
+
+def test_interrupted_lapse_is_recorded_on_retry_without_booking(market, tmp_path):
+    """Execução interrompida depois de gravar a caducidade e antes do registro do dia: a nova
+    tentativa registra o dia com a recusa e não efetiva nada."""
+    rt, clock = _rt(tmp_path, market)
+    _decidida_com_kill_switch(rt, clock)
+    p, d = rt.book.load_proposal(WEEK), rt.book.load_decision(WEEK)
+    rt.book.registrar_efetivacao_recusada(WEEK, WEEK, "KILL_SWITCH ativo (teste)", p.proposal_id,
+                                          d.approval_hash)
+    rt.set_kill_switch(False, "revisão humana concluída", "operador")
+    clock.set(WEEK, dtime(21, 10))
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        out = rt.daily_close(WEEK, live=False)
+    assert out["status"] == "registrado" and out["efetivacao"] is None
+    assert out["efetivacao_recusada"]["decisao_caducada"] is True
+    rec = rt.track().last()
+    assert rec.positions == [] and rt.book.load_booked(WEEK) is None
+    assert sum(a.startswith("Efetivação recusada") for a in rec.alerts) == 1
+    assert not any("não executada em" in a for a in rec.alerts)
+
+
+def test_lapse_record_cannot_be_edited_outside_the_book(market, tmp_path):
+    rt, clock = _rt(tmp_path, market)
+    _decidida_com_kill_switch(rt, clock)
+    clock.set(WEEK, dtime(19, 30))
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        rt.daily_close(WEEK, live=False)
+    path = rt.week_dir(WEEK) / "efetivacao_recusada.json"
+    data = json.loads(path.read_text(encoding="utf-8"))
+    data["sessao"] = "2026-12-31"
+    path.write_text(json.dumps(data), encoding="utf-8")
+    with pytest.raises(ValueError, match="não confere com a trilha"):
+        rt.book.efetivacao_recusada(WEEK)
 
 
 # ----------------------------------------------------------------------------- modo ensaio
@@ -345,3 +514,58 @@ def test_news_relevance_drops_search_noise():
     assert titulo_relevante("Banco do Brasil eleva provisões", bb)
     assert not titulo_relevante("Banco Central do Brasil mantém juros", bb)
     assert titulo_relevante("BBAS3 sobe após resultado", bb)
+
+
+def test_rehearsal_substitute_copies_prices_per_series(capsys):
+    """Substituto do ensaio: cada série parte da SUA última barra real (EUA até 05/10 e Brasil
+    até 06/10 no mesmo lote); série parada há mais de uma semana não ganha preço."""
+    from cdp.ensaio import JANELA_SERIE_DIAS, _redatar
+
+    df = pd.DataFrame({"date": pd.to_datetime(["2026-10-05", "2026-10-06", "2026-09-01"]),
+                       "ticker": ["PBR", "PETR4.SA", "SUSP3.SA"], "close": [10.0, 30.0, 5.0]})
+    out = _redatar(df, date(2026, 10, 9), por_serie=True, janela_dias=JANELA_SERIE_DIAS)
+    ultimas = out.groupby("ticker")["date"].max()
+    assert ultimas["PBR"] == pd.Timestamp("2026-10-09")
+    assert ultimas["PETR4.SA"] == pd.Timestamp("2026-10-09")
+    assert ultimas["SUSP3.SA"] == pd.Timestamp("2026-09-01")
+    assert (out.loc[out["ticker"] == "PBR", "close"] == 10.0).all()
+    assert "[ensaio] SUBSTITUTO" in capsys.readouterr().err
+
+
+def test_refused_inaugural_under_the_active_mandate_reports_the_lapse(tmp_path):
+    """Mandato vigente (montagem na sexta, leilão de fechamento): kill switch no leilão da
+    carteira inaugural ⇒ registro do dia em caixa, relatório semanal "efetivação recusada" e
+    nenhuma efetivação no pregão seguinte, mesmo com o kill switch desligado."""
+    from test_calendar import ativado
+
+    from cdp.data.synthetic import make_synthetic_market
+    from cdp.workflow.demo import DEMO_HISTORY_START, DEMO_MIND, write_demo_inputs
+    from cdp.workflow.relatorio_semanal import publicar, report_dir
+
+    cfg = ativado()
+    w1, nxt = date(2024, 3, 8), date(2024, 3, 11)
+    md = make_synthetic_market(seed=7, start=DEMO_HISTORY_START, as_of=nxt)
+    clock = {"t": datetime.combine(w1, dtime(11, 0), tzinfo=BRT)}
+    rt = Runtime(cfg=cfg, book_root=tmp_path / "book", market_root=tmp_path / "market",
+                 reports_root=tmp_path / "reports", store_override=DemoStore(md),
+                 clock=lambda: clock["t"], teses_root=None)
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        rt.weekly_prepare(w1, mind=DEMO_MIND, live=False)
+        write_demo_inputs(rt, w1)
+        clock["t"] = datetime.combine(w1, dtime(13, 0), tzinfo=BRT)
+        rt.weekly_decide(w1, mind=DEMO_MIND)
+        rt.set_kill_switch(True, "gatilho HARD (teste)", "CDP — rotina de risco")
+        clock["t"] = datetime.combine(w1, dtime(21, 10), tzinfo=BRT)
+        out = rt.daily_close(w1, live=False)
+        assert out["status"] == "registrado" and out["efetivacao_recusada"]["decisao_caducada"]
+        pub = publicar(rt, w1)
+        txt = (report_dir(rt, w1) / "relatorio.md").read_text("utf-8")
+        assert "efetivação recusada" in txt and "inicia o histórico em caixa" in txt
+        assert "Carteira inaugural montada" not in txt and pub["tipo"] == "montagem"
+        rt.set_kill_switch(False, "revisão humana concluída", "operador")
+        clock["t"] = datetime.combine(nxt, dtime(21, 10), tzinfo=BRT)
+        out2 = rt.daily_close(nxt, live=False)
+    assert out2["status"] == "registrado" and out2["efetivacao"] is None
+    assert rt.book.load_booked(w1) is None and rt.track().last().positions == []
+    assert rt.verify_all()[0]

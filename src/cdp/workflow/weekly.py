@@ -44,6 +44,7 @@ from ..contracts import (
     BookEntry,
     ComplianceCheck,
     ExposureLine,
+    FactBook,
     OptimizerDiagnostics,
     Proposal,
     ResearchPack,
@@ -899,9 +900,11 @@ def build_proposal(ctx: WeekContext, *, views: list[View], overrides: dict | Non
                    pack: ResearchPack | None = None, created_at: datetime | None = None,
                    extra_notes: list[str] | None = None,
                    drawdown_ref_vol: float | None = None,
-                   risk_extra: dict | None = None) -> ProposalBuild:
+                   risk_extra: dict | None = None,
+                   factbook: FactBook | None = None) -> ProposalBuild:
     """``drawdown_ref_vol``: σ_ref da escada de drawdown por volatilidade (compliance);
-    ``risk_extra``: campos adicionais do bloco ``overrides["risco"]`` (ex.: ``escada``)."""
+    ``risk_extra``: campos adicionais do bloco ``overrides["risco"]`` (ex.: ``escada``);
+    ``factbook``: fatos da semana para resolver os ``{{fact:id}}`` citados no memo."""
     cfg = ctx.cfg
     overrides = dict(overrides or {})
     extended = metodologia_ativa(cfg)
@@ -1011,9 +1014,10 @@ def build_proposal(ctx: WeekContext, *, views: list[View], overrides: dict | Non
         fx_hedges=hedges, risk=summary, compliance=checks, optimizer=diag,
         is_synthetic=ctx.is_synthetic,
         data_notice=SIMULATED_DATA_NOTICE + " — mercado sintético" if ctx.is_synthetic
-        else "Dados reais (Yahoo Finance, B3, FINRA, BCB); paper trading com execução hipotética.",
+        else "Dados reais (Yahoo Finance, B3, FINRA, BCB); carteira simulada com execução "
+             "hipotética.",
     )
-    memo = render_memo(proposal, pack, None, config=cfg)
+    memo = render_memo(proposal, pack, factbook, config=cfg)
     proposal = proposal.model_copy(update={"memo_markdown": memo})
     return ProposalBuild(proposal=proposal, result=result, constraints=constraints,
                          alpha_used=alpha_adj, view_log=vlog)
@@ -1410,7 +1414,8 @@ def ladder_overrides(ctx: WeekContext, ov: dict, stage_name: str, sigma_ref: flo
 
 def _build_attempt(ctx: WeekContext, *, views: list[View], ov: dict, label: str,
                    research_hash: str, version: int, pack: ResearchPack | None,
-                   why: str, created_at: datetime | None) -> ProposalBuild:
+                   why: str, created_at: datetime | None,
+                   factbook: FactBook | None = None) -> ProposalBuild:
     """Uma tentativa, com a escada de drawdown por vol quando ativa: a mesma tentativa é
     resolvida no estágio normal (σ_ref, sem as chaves de redução do kill switch) e a decisão
     usa ``vol_cap = min(m·σ_ref, teto do kill switch)``. σ_ref: livro normal resolvido; sem
@@ -1419,7 +1424,7 @@ def _build_attempt(ctx: WeekContext, *, views: list[View], ov: dict, label: str,
     if ladder is None:
         return build_proposal(ctx, views=views, overrides=ov, research_hash=research_hash,
                               version=version, label=label, pack=pack, extra_notes=[why],
-                              created_at=created_at)
+                              created_at=created_at, factbook=factbook)
     stg, _m = ladder
     sigma_ref: float | None = None
     fonte = ""
@@ -1442,19 +1447,22 @@ def _build_attempt(ctx: WeekContext, *, views: list[View], ov: dict, label: str,
     ov2, escada, note = ladder_overrides(ctx, ov, stg, sigma_ref, fonte)
     return build_proposal(ctx, views=views, overrides=ov2, research_hash=research_hash,
                           version=version, label=label, pack=pack, extra_notes=[why, note],
-                          created_at=created_at, drawdown_ref_vol=sigma_ref, risk_extra=escada)
+                          created_at=created_at, drawdown_ref_vol=sigma_ref, risk_extra=escada,
+                          factbook=factbook)
 
 
 def run_weekly_decision(ctx: WeekContext, pack: ResearchPack, pm: PMDecisionBundle, *,
                         version: int, live_weeks: int = 0, kill_switch: bool = False,
                         audit_head_hash: str | None = None,
                         decided_at: datetime | None = None,
-                        created_at: datetime | None = None) -> WeeklyOutcome:
+                        created_at: datetime | None = None,
+                        factbook: FactBook | None = None) -> WeeklyOutcome:
     """Gera sombra só-quant e a carteira do CDP; aplica fallback por gates e decide sozinho.
 
     Uma tentativa inviável (``OptimizationError``) passa para a próxima e, se nenhuma passar nos
     gates HARD, a carteira é mantida (caixa na inception) — a decisão nunca é interrompida.
-    ``created_at``/``decided_at``: relógio da rotina (padrão: agora, UTC).
+    ``created_at``/``decided_at``: relógio da rotina (padrão: agora, UTC). ``factbook``: fatos da
+    semana (memo com os ``{{fact:id}}`` da pesquisa resolvidos pelo código).
     """
     from ..hashing import combine_hashes
     from .autonomy import effective_vol_target, make_autonomous_decision
@@ -1467,7 +1475,8 @@ def run_weekly_decision(ctx: WeekContext, pack: ResearchPack, pm: PMDecisionBund
     try:
         shadow = build_proposal(ctx, views=[], overrides={"vol_target": vt_default, **MATCH},
                                 research_hash=research_hash, version=version,
-                                label="sombra-quant", pack=pack, created_at=created_at).proposal
+                                label="sombra-quant", pack=pack, created_at=created_at,
+                                factbook=factbook).proposal
     except OptimizationError as exc:
         shadow = hold_proposal(ctx, research_hash, version,
                                f"Carteira-sombra só-quant não resolvida ({_error_code(exc)}); "
@@ -1481,7 +1490,7 @@ def run_weekly_decision(ctx: WeekContext, pack: ResearchPack, pm: PMDecisionBund
         try:
             b = _build_attempt(ctx, views=views, ov=ov, label=label,
                                research_hash=research_hash, version=version, pack=pack,
-                               why=why, created_at=created_at)
+                               why=why, created_at=created_at, factbook=factbook)
         except OptimizationError as exc:
             attempts.append({"label": label, "why": why, "erro": _error_code(exc),
                              "hard": ["OPTIMIZATION_FAILED"],

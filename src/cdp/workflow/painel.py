@@ -3291,7 +3291,8 @@ NA_TXT = "n/d"
 
 
 def _risco_modelo(prop: Any, records: Sequence[Any], md: Any, cfg: FundConfig,
-                  issues: _Issues) -> dict[str, Any] | None:
+                  issues: _Issues, *, diagnostics: Mapping[date, dict] | None = None
+                  ) -> dict[str, Any] | None:
     """Risco idiossincrático da decisão vigente (decomposição por grupo nos modelos de decisão e
     base, κF, meta e piso), parâmetros do modelo de risco e a série diária monitorada."""
     from ..cobertura import formato as fm
@@ -3305,7 +3306,7 @@ def _risco_modelo(prop: Any, records: Sequence[Any], md: Any, cfg: FundConfig,
         try:
             from ..risk.idio import serie_idio
 
-            s = serie_idio(records, md, cfg)
+            s = serie_idio(records, md, cfg, diagnostics=diagnostics)
             if s.get("datas"):
                 serie = {"datas": s["datas"], "ex_ante": s["ex_ante"],
                          "realizada_63d": s["realizada_63d"], "sem_modelo_63d": s["sem_modelo_63d"],
@@ -3742,7 +3743,16 @@ def _modelo_aberto(rt: Any, cfg: FundConfig, live: Any, records: Sequence[Any],
         "semana": getattr(live, "week", None),
     }
     if live is not None:
-        out["risco"] = _risco_modelo(live, records, md, cfg, issues)
+        from .risco_diario import read_measures
+
+        try:
+            diagnostics = read_measures(rt.track(), market_loader=rt.store.load,
+                                        market_root=getattr(rt.store, "root", None))
+        except (ValueError, OSError, KeyError) as exc:
+            diagnostics = {}
+            issues.add("Risco diário base/evento", str(exc))
+        out["risco"] = _risco_modelo(live, records, md, cfg, issues,
+                                    diagnostics=diagnostics)
         out["formulacao"] = _formulacao(live)
         out["carteira"] = _carteira_modelo(live, names)
         if out["formulacao"] is not None:

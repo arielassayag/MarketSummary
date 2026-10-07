@@ -261,7 +261,15 @@ def executar(md: MarketData, dados: DadosPublicos, params: ParametrosCobertura, 
     desconhecidos = [i for i in alvo_ids if i not in ids]
     if desconhecidos:
         raise KeyError(f"Emissores fora do universo: {desconhecidos}")
+    from .temporal import ativo as temporal_ativo
+    from .temporal import validar as validar_corte
+    if temporal_ativo(params) and dados.corte_temporal is not None:
+        validar_corte(dados.corte_temporal)
+        as_of = date.fromisoformat(dados.corte_temporal["data_modelo"])
     pacotes = preparar(md, dados, params, ids, as_of)
+    from .resultado import ativo, visao
+    if ativo(params):
+        pacotes = {iid: visao(p, params) for iid, p in pacotes.items()}
     rf, rf_data, rf_fonte = taxa_publica(dados, md, str(params.cc["rf_usd_serie"]), as_of)
     ctx = montar_contexto(pacotes, params, rf, rf_fonte)
     modelos, regs, dist = modelar(pacotes, ctx, params, rf, rf_fonte, anterior, alvo_ids)
@@ -326,6 +334,9 @@ def modelar(pacotes: Mapping[str, dict[str, Any]], ctx: Mapping[str, Any], param
             alvo_ids: list[str] | None = None) -> tuple[dict[str, dict[str, Any]], dict[str, Any], dict[str, Any]]:
     """Modelos, portões e rating de todos os emissores a partir dos pacotes e do contexto
     (função pura: é o que ``cobertura verify`` refaz a partir dos insumos arquivados)."""
+    from .resultado import ativo, validar_contexto
+    if ativo(params):
+        pacotes = {iid: validar_contexto(p, ctx, params) for iid, p in pacotes.items()}
     ids = sorted(pacotes)
     alvo_ids = alvo_ids or ids
     modelos: dict[str, dict[str, Any]] = {}
@@ -482,6 +493,10 @@ def modelo_json(ex: Execucao, iid: str, params: ParametrosCobertura) -> dict[str
         "pares": mod.get("pares"), "portoes": mod.get("portoes", []), "ponte": mod.get("ponte"),
         "passos": ex.registros[iid].passos,
     }
+    if "corte_temporal" in pac:
+        out["corte_temporal"] = pac["corte_temporal"]
+    if "visao_resultado" in mod:
+        out["diagnosticos"]["visao_resultado"] = mod["visao_resultado"]
     if "margem_fluxos" in mod:
         out["diagnosticos"]["margem_fluxos"] = mod["margem_fluxos"]
     return arredondar(out)

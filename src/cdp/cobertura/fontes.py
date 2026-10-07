@@ -15,8 +15,8 @@ import io
 import json
 import re
 from collections.abc import Sequence
-from dataclasses import dataclass, field
-from datetime import date
+from dataclasses import dataclass, field, replace
+from datetime import date, datetime
 from pathlib import Path
 
 import numpy as np
@@ -63,6 +63,9 @@ class DadosPublicos:
     alertas: pd.DataFrame = field(default_factory=lambda: pd.DataFrame(columns=COLS_ALERTAS))
     capital_oficial: pd.DataFrame = field(default_factory=lambda: pd.DataFrame(columns=COLS_CAPITAL))
 
+    resultado_evidencias: pd.DataFrame = field(default_factory=pd.DataFrame)
+    corte_temporal: dict[str, str] | None = None
+
     def tabelas(self) -> dict[str, pd.DataFrame]:
         out = {"demonstrativos": self.demonstrativos, "consenso": self.consenso,
                "dividendos": self.dividendos, "eventos": self.eventos, "taxas": self.taxas,
@@ -71,14 +74,32 @@ class DadosPublicos:
             out["alertas_fonte"] = self.alertas
         if not self.capital_oficial.empty:
             out["capital_oficial"] = self.capital_oficial
+        if not self.resultado_evidencias.empty:
+            out["resultado_evidencias"] = self.resultado_evidencias
+        if self.corte_temporal is not None:
+            out["corte_temporal"] = pd.DataFrame([self.corte_temporal])
         for etf, df in sorted(self.etfs.items()):
             if df is not None:
                 out[f"etf_{_slug(etf)}"] = df
+        if self.corte_temporal is not None:
+            # A precisão da custódia é parte do contrato .8. O serializador histórico
+            # continua reduzindo datetime64 a data civil; aqui os carimbos viram
+            # texto ISO antes dele, sem atribuir hora/fuso a datas indeterminadas.
+            out = {nome: _capturas_iso(df) for nome, df in out.items()}
         return out
 
 
 def _slug(t: str) -> str:
     return "".join(c if c.isalnum() else "_" for c in t.upper())
+
+
+def _capturas_iso(df: pd.DataFrame) -> pd.DataFrame:
+    d = df.copy()
+    for c in d.columns:
+        if str(c).startswith("data_coleta") or c == "first_capture":
+            d[c] = d[c].map(lambda x: None if pd.isna(x) else
+                           x.isoformat() if hasattr(x, "isoformat") else x)
+    return d
 
 
 def _garantir(df: pd.DataFrame | None, cols: list[str]) -> pd.DataFrame:
@@ -485,14 +506,45 @@ def contas_suplementares_cvm(issuer_ids: Sequence[str], as_of: date, raiz: Path 
     return out.sort_values(["issuer_id", "item", "freq", "period_end"], kind="mergesort").reset_index(drop=True)
 
 
-def coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Sequence[str],
+def incorporar_resultados(dem: pd.DataFrame, primaria: pd.DataFrame, catalogo: dict) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Seleção primária comum à coleta online e ao recálculo das tabelas seladas.
+
+    Preferência por fato/contexto integral, jamais por valor próximo ou nome do emissor.
+    Valores de itens não cobertos permanecem reportados nas respectivas fontes.
+    """
+    from ..data.publico_resultados import hash_obj, texto_json
+    if catalogo["catalogo_sha256"] != hash_obj({k: v for k, v in catalogo.items() if k != "catalogo_sha256"}):
+        raise ValueError("catálogo de resultados adulterado")
+    if not primaria.empty:
+        chaves = ["issuer_id", "item", "freq", "period_end"]
+        antiga = dem.assign(period_end=pd.to_datetime(dem["period_end"]).dt.strftime("%Y-%m-%d"))
+        preferidos = set(map(tuple, primaria[chaves].astype(str).to_numpy()))
+        dem = dem.loc[[tuple(x) not in preferidos for x in antiga[chaves].astype(str).to_numpy()]]
+        dem = pd.concat([dem, primaria], ignore_index=True)
+    tabela = pd.DataFrame([{"schema": catalogo["schema"], "catalogo_sha256": catalogo["catalogo_sha256"],
+                           "conhecimento_ate": catalogo["conhecimento_ate"], "catalogo_json": texto_json(catalogo)}])
+    return dem, tabela
+
+
+def _coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Sequence[str],
             etfs: Sequence[str], *, offline: bool = False, raiz: Path | None = None,
-            seed: int = 7) -> DadosPublicos:
+            seed: int = 7, params=None, conhecimento_ate: datetime | None = None) -> DadosPublicos:
     """Coleta as tabelas públicas da execução (sintéticas quando o mercado é sintético)."""
+    from .temporal import ativo as temporal_ativo
+    from .temporal import construir as corte_temporal
+
+    corte = None
+    if params is not None and temporal_ativo(params):
+        if conhecimento_ate is None:
+            raise ValueError("Política temporal exige corte explícito de conhecimento.")
+        corte = corte_temporal(md.as_of, conhecimento_ate)
+        conhecimento_ate = datetime.fromisoformat(corte["conhecimento_ate"])
+        as_of = date.fromisoformat(corte["data_modelo"])
     if md.is_synthetic:
         from .sintetico import dados_sinteticos
 
-        return dados_sinteticos(md, as_of, issuer_ids, tickers, etfs, seed=seed)
+        dados = dados_sinteticos(md, as_of, issuer_ids, tickers, etfs, seed=seed)
+        return replace(dados, corte_temporal=corte) if corte is not None else dados
     try:
         from ..data import publico  # type: ignore[attr-defined]
     except Exception as exc:  # pragma: no cover - depende da camada A1
@@ -506,6 +558,16 @@ def coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Seq
     sup = contas_suplementares_cvm(br, as_of, raiz)
     if not sup.empty:
         dem = pd.concat([dem, sup[[c for c in sup.columns if c in dem.columns]]], ignore_index=True)
+    resultado_evidencias = pd.DataFrame()
+    if params is not None:
+        from .resultado import ativo
+        if ativo(params):
+            from ..data.publico_arquivo import Arquivo
+            from ..data.publico_resultados import coletar_resultados
+            opcoes_resultado = {"exigir_captura": True} if corte is not None else {}
+            primaria, catalogo = coletar_resultados(list(issuer_ids), arquivo=Arquivo(raiz, offline=offline),
+                                                   conhecimento_ate=conhecimento_ate, **opcoes_resultado)
+            dem, resultado_evidencias = incorporar_resultados(dem, primaria, catalogo)
     con = _garantir(publico.consenso_publico(list(tickers), as_of, **kw), COLS_CONSENSO)
     div = _garantir(publico.dividendos(list(tickers), as_of, **kw), COLS_DIVIDENDOS)
     ini = date(as_of.year - 1, as_of.month, 1)
@@ -530,7 +592,22 @@ def coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Seq
         demonstrativos=_pit(dem, "data_publicacao", as_of), consenso=con,
         dividendos=_pit(div, "data_ex", as_of), eventos=eve, taxas=_pit(tax, "data", as_of),
         free_float=ff, etfs=comp, origem="PUBLICO", raiz=None if raiz is None else str(raiz),
-        alertas=alertas, capital_oficial=cap)
+        alertas=alertas, capital_oficial=cap, resultado_evidencias=resultado_evidencias, corte_temporal=corte)
+
+
+def coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Sequence[str],
+            etfs: Sequence[str], *, offline: bool = False, raiz: Path | None = None,
+            seed: int = 7, params=None, conhecimento_ate: datetime | None = None) -> DadosPublicos:
+    """Política nova sela corte exato em todos os arquivos; ausência conserva seleção legada."""
+    from .temporal import ativo as temporal_ativo
+    opcoes = dict(offline=offline, raiz=raiz, seed=seed, params=params, conhecimento_ate=conhecimento_ate)
+    if params is not None and temporal_ativo(params):
+        if conhecimento_ate is None:
+            raise ValueError("Coleta temporal exige instante explícito de conhecimento.")
+        from ..data.publico_arquivo import corte_de_conhecimento
+        with corte_de_conhecimento(conhecimento_ate):
+            return _coletar(md, as_of, issuer_ids, tickers, etfs, **opcoes)
+    return _coletar(md, as_of, issuer_ids, tickers, etfs, **opcoes)
 
 
 __all__ = ["COLS_ALERTAS", "COLS_CAPITAL", "ITENS_SUPLEMENTARES", "contas_suplementares_cvm", "COLS_CONSENSO", "COLS_DEMONSTRATIVOS", "COLS_DIVIDENDOS", "COLS_ETF", "COLS_EVENTOS",

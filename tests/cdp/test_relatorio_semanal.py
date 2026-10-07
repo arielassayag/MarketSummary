@@ -57,9 +57,14 @@ def demo(tmp_path_factory, cfg):
 
 
 def _rt(out, cfg, reports=None, md_as_of=W2) -> Runtime:
-    md = make_synthetic_market(seed=7, start=DEMO_HISTORY_START, as_of=md_as_of)
+    # Uma demo existente é reaberta pelos mesmos manifestos e bytes físicos.
+    # Raiz ainda sem livro é fixture de componente e arquiva antes de usar.
+    store = None
+    if not (out / "book").exists():
+        md = make_synthetic_market(seed=7, start=DEMO_HISTORY_START, as_of=md_as_of)
+        store = DemoStore(md, root=out / "market", cfg=cfg)
     return Runtime(cfg=cfg, book_root=out / "book", market_root=out / "market",
-                   reports_root=reports or out / "reports", store_override=DemoStore(md),
+                   reports_root=reports or out / "reports", store_override=store,
                    teses_root=None)
 
 
@@ -168,6 +173,7 @@ def test_pending_validation_template_fallback_and_immutability(demo, cfg, tmp_pa
     out, _ = demo
     copy = tmp_path / "copia"
     shutil.copytree(out / "book", copy / "book")
+    shutil.copytree(out / "market", copy / "market")
     rt = _rt(copy, cfg, reports=copy / "reports")
     st = weekly_report_status(rt, datetime.combine(W2, time(21, 0), tzinfo=BRT))
     # Nenhum relatório fica para trás: os dois dias de montagem sem relatório publicado são
@@ -283,18 +289,95 @@ def test_missed_decision_friday_still_gets_its_weekly_report(perdida, cfg):
 
 
 def test_stress_uses_structural_capacity_not_the_next_holiday(perdida, cfg):
-    """22/03/2024: o próximo dia de montagem é a Quinta-Feira Santa (28/03: BMV, BVC e Santiago
-    fechadas). O estresse mede a liquidez estrutural — nenhum nome fica sem capacidade só pelo
-    feriado — e o feriado aparece como nota operacional."""
+    """Mesmo rec/mercado: ausência limita estresse; feriado só limita a janela operacional."""
+    import math
+
+    from cdp.analytics.panel import FX_FFILL_LIMIT, STALE_DAYS_MAX
+    from cdp.portfolio.execucao import categoria_da_linha, resolver_mic
+    from cdp.workflow.relatorio_semanal import capacidade_carteira
+
     out, _ = perdida
     rt = _rt(out, cfg, md_as_of=W3)
+    md = rt.store.load(as_of=W3)
+    rec = rt.track().get(W3)
     lq = calcular_semana(rt, W3)["liquidez"]
+    cap = capacidade_carteira(rt, W3, md, rec)
     assert lq["proximo_dia_de_montagem"] == date(2024, 3, 28)
-    assert lq["nomes_sem_capacidade"] == []
-    assert lq["fracao_liquidavel"][10] == pytest.approx(1.0)
+    assert cap["proximo"] == date(2024, 3, 28)
+
+    # Oráculo de baixo nível: preço × volume × FX observado/carry limitado,
+    # P25 e frações do mandato. Não chama tabela_capacidade/estresse_liquidez.
+    main = {}
+    weights = {}
+    for position in rec.positions:
+        if not position.market_value_usd:
+            continue
+        iid = position.issuer_id
+        weights[iid] = weights.get(iid, 0.0) + position.market_value_usd / rec.nav_end_usd
+        if iid not in main or abs(position.market_value_usd) > abs(main[iid].market_value_usd):
+            main[iid] = position
+    expected = {}
+    stale = set()
+    settings = cfg.execution.capacity
+    reference_date = pd.Timestamp(date(2024, 3, 25))
+    for iid, position in main.items():
+        ticker = position.ticker
+        px = md.close[ticker]
+        idx = px.index[(px.index < reference_date) & px.notna().to_numpy()]
+        idx = idx[-settings.adv_window_days:]
+        ccy = str(md.universe.lines.at[ticker, "currency"])
+        if ccy == "USD":
+            fx = pd.Series(1.0, index=md.close.index)
+        else:
+            fx = md.fx[ccy].reindex(md.close.index.union(md.fx.index)).sort_index()
+            fx = fx.ffill(limit=FX_FFILL_LIMIT).reindex(md.close.index)
+        volume = md.volume[ticker].where(md.volume[ticker] > 0)
+        observations = (px * volume * fx).reindex(idx).dropna()
+        old = not len(idx) or (reference_date - idx[-1]).days > STALE_DAYS_MAX + 3
+        unavailable = len(observations) < math.ceil(0.5 * settings.adv_window_days) or old
+        if old:
+            stale.add(iid)
+        category = categoria_da_linha(ticker, str(md.universe.lines.at[ticker, "line_type"]),
+                                     md.universe.lines.loc[ticker].get("is_etf"))
+        participation = settings.auction_participation * settings.auction_share[category]
+        participation += settings.preclose_participation * settings.preclose_volume_share
+        side = settings.short_multiplier if position.market_value_usd < 0 else 1.0
+        # Zero aqui é restrição operacional derivada de dado indisponível, nunca preço/volume.
+        expected[iid] = (0.0 if unavailable else
+                         observations.quantile(0.25) * participation * side / rec.nav_end_usd)
+    assert expected == pytest.approx(cap["estrutural"])
+    assert stale == {"SIM006"}
+    missing = main["SIM006"].ticker
+    assert md.close[missing].tail(10).isna().all()
+    assert md.volume[missing].tail(10).isna().all()
+    assert md.close[missing].dropna().index[-1].date() == date(2024, 3, 8)
+    assert lq["nomes_sem_capacidade"] == sorted(iid for iid, value in expected.items() if value == 0)
+
+    # Calendário primário já fixado em test_calendar: Quinta-Feira Santa nesses MICs.
+    # A referência do mesmo mercado não é recalculada para o feriado futuro.
+    closed = {"XMEX", "XBOG", "XLIM", "XSGO"}
+    affected = []
+    for iid, position in main.items():
+        row = md.universe.lines.loc[position.ticker]
+        mic = resolver_mic(mic_da_linha(position.ticker, row["exchange"]), cfg)
+        holiday = 0.0 if mic in closed else expected[iid]
+        assert cap["por_janela"][0][iid] == pytest.approx(holiday)
+        if mic in closed and expected[iid] > 0:
+            affected.append(iid)
+    assert affected  # prova não trivial: janela fecha linha que tem ADV regular conhecido.
+    gross = sum(abs(w) for w in weights.values())
+    fraction = sum(min(abs(w), 10 * expected[iid] * lq["fator_volume"])
+                   for iid, w in weights.items()) / gross
+    assert lq["fracao_liquidavel"][10] == pytest.approx(fraction)
+    assert 0 < fraction < 1
     rev = lq["reverso"]["fracao_liquidavel"]
     assert all(rev[h] <= lq["fracao_liquidavel"][h] + 1e-12 for h in rev)
-    assert lq["custo"]["custo_usd"] > 0 and lq["custo"]["cobertura"] == pytest.approx(1.0)
+    covered = sum(abs(position.market_value_usd) for iid, position in main.items()
+                  if expected[iid] > 0)
+    full = sum(abs(position.market_value_usd) for position in main.values())
+    assert lq["custo"]["custo_usd"] > 0
+    assert lq["custo"]["cobertura"] == pytest.approx(covered / full)
+    assert 0 < lq["custo"]["cobertura"] < 1
 
 
 def test_weekly_report_is_never_pending_under_the_legacy_mandate(demo):

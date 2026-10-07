@@ -12,7 +12,6 @@ import pandas as pd
 import pytest
 
 from cdp.config import load_config
-from cdp.data.synthetic import make_synthetic_market
 from cdp.research.evaluation import AuthenticatedViewTracker
 from cdp.workflow.avaliacao import (
     BINDING_EVENT,
@@ -31,7 +30,7 @@ from cdp.workflow.avaliacao import (
     preregister,
     residuals,
 )
-from cdp.workflow.demo import DEMO_HISTORY_START, DEMO_SEED, DemoStore, run_demo
+from cdp.workflow.demo import run_demo
 from cdp.workflow.runtime import Runtime
 
 LEGACY = Path(__file__).parent / "fixtures/fund_legado.yaml"
@@ -47,9 +46,8 @@ def evaluated(tmp_path_factory):
 
 
 def _runtime(root):
-    market = make_synthetic_market(seed=DEMO_SEED, start=DEMO_HISTORY_START, as_of=END)
     return Runtime(load_config(LEGACY), root / "book", root / "market", root / "reports",
-                   store_override=DemoStore(market), clock=lambda: NOW, teses_root=None)
+                   clock=lambda: NOW, teses_root=None)
 
 
 def _copy(evaluated, tmp_path):

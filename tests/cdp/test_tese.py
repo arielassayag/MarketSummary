@@ -45,6 +45,15 @@ DAYS = 2
 BRT = ZoneInfo("America/Sao_Paulo")
 
 
+@pytest.fixture(autouse=True)
+def _configuracao_exata_no_cwd(request):
+    """Pré-condição do caso chdir: mesmos configs congelados, sem valores inventados."""
+    if request.node.name == "test_demo_never_adopts_repository_drafts":
+        root = request.getfixturevalue("tmp_path")
+        source = Path(__file__).resolve().parents[2] / "configs"
+        shutil.copytree(source, root / "cwd" / "configs")
+
+
 @pytest.fixture(scope="module")
 def demo(tmp_path_factory):
     out = tmp_path_factory.mktemp("cdp_tese_demo")
@@ -66,7 +75,6 @@ def market():
 def _runtime(root: Path, market=None, teses: Path | None = None) -> Runtime:
     """Runtime da cópia; ``teses`` = pasta dos rascunhos entregues (padrão: inexistente)."""
     return Runtime(load_config(LEGACY), root / "book", root / "market", root / "reports",
-                   store_override=DemoStore(market) if market is not None else None,
                    clock=lambda: datetime(2024, 3, 4, 16, 0, tzinfo=BRT),
                    teses_root=teses if teses is not None else root / "teses")
 
@@ -76,6 +84,7 @@ def _unpublished_copy(demo, tmp_path: Path) -> Path:
     out, _ = demo
     dst = tmp_path / "copia"
     shutil.copytree(out / "book", dst / "book")
+    shutil.copytree(out / "market", dst / "market")
     folder = thesis_dir(dst / "book", WEEK)
     for name in (PUBLISHED_JSON, TESE_MD, TESE_JSON):
         (folder / name).unlink(missing_ok=True)
@@ -501,7 +510,8 @@ def _decided_week(root: Path, market, *, mutate_pm=None, kill_switch: bool = Fal
 
     clock = _Clock()
     rt = Runtime(load_config(LEGACY), root / "book", root / "market", root / "reports",
-                 store_override=DemoStore(market), clock=clock, teses_root=None)
+                 store_override=DemoStore(market, root=root / "market", cfg=load_config(LEGACY)),
+                 clock=clock, teses_root=None)
     clock.set(WEEK, dtime(11, 0))
     rt.weekly_prepare(WEEK, mind="demo", live=False)
     clock.set(WEEK, dtime(12, 0))

@@ -604,6 +604,24 @@ def coverage_status(rt: Runtime, local: datetime, *, fonte_eventos: FonteEventos
         datas = datas_snapshots(book)
     except OSError:  # pragma: no cover - disco
         datas = []
+    from ..cobertura.parametros import carregar_parametros
+    from ..cobertura.temporal import ativo as temporal_ativo
+    temporal = temporal_ativo(carregar_parametros())
+    bases_precos = {}
+    if temporal:
+        from ..cobertura.livro import CortePosterior, conferir_corte, snapshot
+        validas = []
+        for data in datas:
+            arquivo = book / "cobertura" / data.isoformat() / "manifest.json"
+            man = json.loads(arquivo.read_text())
+            if man.get("corte_temporal") is not None:
+                try:
+                    conferir_corte(snapshot(book, data), local)
+                except CortePosterior:
+                    continue
+                bases_precos[data] = date.fromisoformat(man["corte_temporal"]["base_preco"])
+            validas.append(data)
+        datas = validas
     ultimo = datas[-1] if datas else None
     ultimo_completo: date | None = None
     sintetico = False
@@ -619,7 +637,10 @@ def coverage_status(rt: Runtime, local: datetime, *, fonte_eventos: FonteEventos
     pre = rt.pre_inicio(today)
     prox = _proximo_rebalanceamento(rt, today)
     base = rt.information_session(prox)
-    em_dia = ultimo_completo is not None and ultimo_completo >= base
+    ultimo_preco = bases_precos.get(ultimo_completo, ultimo_completo)
+    em_dia = ultimo_preco is not None and ultimo_preco >= base
+    if temporal and bases_precos:
+        out["ultima_base_preco_completa"] = ultimo_preco
     out.update({"proximo_rebalanceamento": prox, "data_base_decisao": base,
                 "modelos_em_dia_para_a_decisao": em_dia})
     if prox == today and not pre:

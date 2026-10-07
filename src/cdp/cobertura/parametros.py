@@ -144,6 +144,12 @@ def _validar(val: dict[str, Any], arqs: dict[str, Arquetipo], betas: dict[str, B
     unidade_metodo = val.get("consenso", {}).get("unidade_metodo")
     if unidade_metodo not in (None, "declaracao_fonte"):
         raise ValueError(f"Método de unidade do consenso desconhecido: {unidade_metodo!r}")
+    metodo_resultado = val["projecao"].get("normalizacao_resultado_metodo")
+    if metodo_resultado not in (None, "eventos_evidenciados"):
+        raise ValueError(f"Método de resultado desconhecido: {metodo_resultado!r}")
+    corte_metodo = val["projecao"].get("resultado_corte_metodo")
+    if corte_metodo not in (None, "base_preco_conhecimento_explicitos"):
+        raise ValueError(f"Método de corte temporal desconhecido: {corte_metodo!r}")
     reinvestimento_metodo = val["projecao"].get("reinvestimento_metodo")
     if reinvestimento_metodo not in (None, "capitalizacao_arrendamentos"):
         raise ValueError(f"Método de reinvestimento desconhecido: {reinvestimento_metodo!r}")
@@ -174,8 +180,13 @@ def carregar_parametros(valuation: Path | str | None = None,
     for nome in ("arquetipos.csv", "betas_setor.csv", "unidades.csv", "sotp.yaml", "etfs.yaml"):
         p = pdir / nome
         textos[f"cobertura/{nome}"] = p.read_text(encoding="utf-8") if p.exists() else ""
-    arquivos = {k: sha256_text(v) for k, v in sorted(textos.items())}
     val = yaml.safe_load(textos["valuation.yaml"]) or {}
+    if val.get("projecao", {}).get("normalizacao_resultado_metodo") == "eventos_evidenciados":
+        catalogo = vpath.parent / "resultado_evidencias.json"
+        if not catalogo.exists():
+            catalogo = DEFAULT_VALUATION.parent / "resultado_evidencias.json"
+        textos["resultado_evidencias.json"] = catalogo.read_text(encoding="utf-8")
+    arquivos = {k: sha256_text(v) for k, v in sorted(textos.items())}
 
     betas: dict[str, BetaSetor] = {}
     for r in _read_csv(textos["cobertura/betas_setor.csv"]):

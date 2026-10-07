@@ -90,7 +90,7 @@ em modo `AUTONOMOUS`, com as falhas SOFT registradas como cientes.
 | `alpha/` | sinais, combinação, ortogonalização, visões | `compute_signals`, `build_alpha`, `apply_views` |
 | `portfolio/` | custos, otimizador, compliance, ordens, câmbio | `optimize`, `run_compliance`, `build_trades` |
 | `portfolio/execucao.py` | execução no leilão de fechamento: janela do pregão, prazo efetivo, capacidade por linha, efetivação ao preço oficial | `janela_execucao`, capacidade de fechamento |
-| `backtest/` | walk-forward semanal e métricas | `run_backtest`, `performance_metrics`; CLI `cdp backtest` |
+| `backtest/` | walk-forward semanal, métricas e replay operacional isolado | `run_backtest`, `performance_metrics`; CLI `cdp backtest`; `cdp backtest-operacional` compõe o Runtime com ações, MOC, diário e origem retrospectiva autenticada (`docs/cdp/REPLAY_OPERACIONAL.md`) |
 | `research/` | camada da mente: briefing, schemas, guardrails (números, fontes públicas, injeção), PM, comentários diário e semanal, notas, avaliação por fases | `pm_agent`, `guardrails`, `comentario_semanal`, `notas`, `evaluation` |
 | `cobertura/` | cobertura de todo o universo: insumos point-in-time, custo de capital, métodos por arquétipo, cenários, rating, portões de qualidade, ponte do preço-alvo, ETFs, sinal de valuation (sombra), placar de acertos, livro imutável `book/cobertura/` | CLI `cdp cobertura run`, `cdp cobertura verify` (`docs/cdp/COBERTURA.md`) |
 | `workflow/weekly.py`, `autonomy.py`, `runtime.py` | pipeline semanal autônomo, escada de alternativas, reprodutibilidade `prepare` → `decide` por hash | CLI `cdp weekly prepare|preview|decide`, `cdp validate` |

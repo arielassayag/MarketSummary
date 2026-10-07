@@ -5,5 +5,8 @@ book/** -text
 data/** -text
 reports/** -text
 
+# PDFs simulados de teste são binários: preservar bytes e espaços válidos da tabela xref.
+tests/fixtures/cdp/**/*.pdf binary
+
 # Scripts de shell sempre com LF (rodam no macOS/Linux/WSL/Git Bash).
 *.sh text eol=lf

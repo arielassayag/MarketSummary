@@ -100,6 +100,8 @@ class Avaliador:
 
     def __init__(self, pac: Mapping[str, Any], ctx: Mapping[str, Any], params: ParametrosCobertura,
                  rf_ust: float | None, rf_fonte: dict[str, Any]) -> None:
+        from .resultado import validar_contexto
+        pac = validar_contexto(pac, ctx, params)
         self.pac = dict(pac)
         self.ctx = ctx
         self.params = params
@@ -149,6 +151,20 @@ class Avaliador:
     # ------------------------------------------------------------------ 1. insumos
     def _registrar_insumos(self) -> None:
         p, m = self.pac, self.moeda
+        if "visao_resultado" in p:
+            d = p["visao_resultado"]["diagnostico"]["corrente"]
+            self.reg.nota("insumos.escopo_resultado", "Escopo dos ajustes evidenciados",
+                          "Catálogo parcial de eventos primários: o saldo após ajustes não certifica integralmente resultado recorrente. "
+                          "Imposto do evento, lucro líquido e LPA ajustados não são estimados; CFO preservado.")
+            if d.get("valor_apos_ajustes_modelo") is not None and d.get("apos_ajustes") is not None and d.get("reportado") is not None:
+                fat = d.get("fator_moeda")
+                self.reg.add("insumos.ponte_ebit", "EBIT após ajustes evidenciados",
+                             "EBIT após ajustes = EBIT reportado − Σ(coeficiente do fluxo × inclusão do evento × ganho pré-imposto)",
+                             f"EBIT após ajustes = {self._t(float(d['reportado']) * fat)} − {self._t(float(d['contribuicao_excluida']) * fat)}",
+                             p.get("t.ebit"), f"total:{m}", self._fonte("t.ebit"),
+                             premissas="Ganhos/perdas em alienação de controle com bind primário; zeros temporais conservados; CFO já exclui o ganho.")
+            elif d.get("valor_apos_ajustes_modelo") is None:
+                self.reg.nota("insumos.ponte_ebit", "EBIT após ajustes indisponível", d.get("motivo", "vínculo primário insuficiente"))
         self.reg.nota("insumos.linha", "Linha de valuation",
                       f"{p['linha']} ({p['linha_tipo']}, {m}): {p['linha_motivo']}.")
         if p.get("preco") is not None:
@@ -1765,6 +1781,8 @@ class Avaliador:
         if self.params.sec("qualidade").get("margem_fluxos_metodo") is not None:
             out["margem_fluxos"] = self.margem_fluxos
         out["metodo_discrepante"] = getattr(self, "discrepante", None)
+        if "visao_resultado" in self.pac:
+            out["visao_resultado"] = self.pac["visao_resultado"]
         out["lacunas"] = self.lacunas + [{"insumo": f"metodo.{d['m']}", "nome": NOME_METODO[d["m"]],
                                           "motivo": d["motivo"]}
                                          for d in self.metodos.values() if d.get("motivo")]

@@ -353,12 +353,42 @@ def adv_fechamento_usd(md: MarketData, tickers: Sequence[str], antes_de: date,
 
 
 def volume_realizado_usd(md: MarketData, tickers: Sequence[str], sessao: date) -> pd.Series:
-    """Valor negociado em USD NO pregão ``sessao`` (``NaN`` se ausente)."""
-    tv = valor_negociado_usd(md, tickers)
+    """Valor realizado no pregão; exige preço, volume e FX da própria data, sem carry."""
     ts = pd.Timestamp(sessao)
-    if ts not in tv.index:
-        return pd.Series(np.nan, index=list(tickers), dtype=float)
-    return tv.loc[ts].reindex(list(tickers)).astype(float)
+    out: dict[str, float] = {}
+    for t in tickers:
+        value = float("nan")
+        if (t in md.universe.lines.index and t in md.close.columns and
+                ts in md.close.index and t in md.volume.columns and ts in md.volume.index):
+            px, vol = md.close.at[ts, t], md.volume.at[ts, t]
+            fx = cambio_do_pregao(md, str(md.universe.lines.at[t, "currency"]), sessao)
+            if (pd.notna(px) and pd.notna(vol) and math.isfinite(float(px)) and
+                    math.isfinite(float(vol)) and float(px) > 0 and float(vol) > 0
+                    and fx is not None):
+                value = float(px) * float(vol) * fx
+        out[t] = value
+    return pd.Series(out, dtype=float).reindex(list(tickers))
+
+
+def cambio_do_pregao(md: MarketData, moeda: str, sessao: date) -> float | None:
+    """USD por unidade local observado na data; USD/USD=1 é identidade de unidade.
+
+    O carry limitado usado por painel/ADV/marcação não autoriza uma operação no MOC.
+    """
+    if moeda == "USD":
+        return 1.0
+    ts = pd.Timestamp(sessao)
+    if moeda not in md.fx.columns or ts not in md.fx.index:
+        return None
+    try:
+        value = float(md.fx.at[ts, moeda])
+    except (TypeError, ValueError):
+        return None
+    return value if math.isfinite(value) and value > 0 else None
+
+
+def _motivo_cambio(moeda: str, sessao: date) -> str:
+    return f"câmbio {moeda} do pregão {sessao:%d/%m/%Y} ausente ou inválido"
 
 
 def _col(lines: pd.DataFrame, name: str) -> pd.Series:
@@ -390,11 +420,16 @@ def tabela_capacidade(lines: pd.DataFrame, md: MarketData, janela: JanelaExecuca
     exch = _col(lines, "exchange")
     ltype = _col(lines, "line_type")
     etf = _col(lines, "is_etf")
+    moedas = _col(lines, "currency")
     antecip = mics_antecipados(janela, cfg)
     rows = []
     for t in tickers:
         mic = mic_da_linha(t, exch.get(t))
         motivo = motivo_inelegivel(mic, janela, cfg)
+        if volume == "realizado" and motivo is None:
+            moeda = str(moedas.get(t))
+            if cambio_do_pregao(md, moeda, janela.sessao) is None:
+                motivo = _motivo_cambio(moeda, janela.sessao)
         cat = categoria_da_linha(t, ltype.get(t), etf.get(t) is True)
         share = float(cap.auction_share.get(cat, 0.0))
         frac = cap.auction_participation * share + cap.preclose_participation * \
@@ -634,7 +669,8 @@ def preenchimentos_esperados(ordens: Sequence[OrdemLinha], md: MarketData,
     (``DailyRunner``) e da conferência do livro e do ``cdp verify``.
 
     Ordem = alvo − detidas. Não negociam: emissor com linha DETIDA num mercado sem fechamento
-    elegível (congelado inteiro, nenhuma linha dele), linha em mercado inelegível, sem fechamento
+    elegível ou sem preço/câmbio próprios válidos (congelado inteiro, nenhuma linha dele),
+    linha em mercado inelegível, sem fechamento
     oficial ou câmbio no pregão, decisão depois do corte MOC do mercado, ordem abaixo da banda
     (``min_trade_weight`` e, com ``max_fixed_cost_bps``, o custo fixo mínimo por ordem do
     mercado; salvo o encerramento da posição). As demais executam
@@ -643,6 +679,7 @@ def preenchimentos_esperados(ordens: Sequence[OrdemLinha], md: MarketData,
     ex = _execution(cfg)
     uni = md.universe.lines
     exch = uni["exchange"] if "exchange" in uni.columns else pd.Series(dtype=object)
+    moedas = _col(uni, "currency")
     tickers = list(dict.fromkeys(o.ticker for o in ordens))
     lines_df = uni.reindex(tickers)
     source: Literal["adv", "realizado"] = (
@@ -650,9 +687,18 @@ def preenchimentos_esperados(ordens: Sequence[OrdemLinha], md: MarketData,
     caps = ({lado: tabela_capacidade(lines_df, md, janela, cfg, lado=lado, volume=source)
              for lado in ("long", "short")} if tickers else {})
     blocked: dict[str, str] = {}
+    ts = pd.Timestamp(janela.sessao)
     for o in ordens:
         if o.detidas != 0:
             mi = motivo_inelegivel(mic_da_linha(o.ticker, exch.get(o.ticker)), janela, cfg)
+            moeda = str(moedas.get(o.ticker))
+            if mi is None and cambio_do_pregao(md, moeda, janela.sessao) is None:
+                mi = _motivo_cambio(moeda, janela.sessao)
+            px = (md.close.at[ts, o.ticker]
+                  if ts in md.close.index and o.ticker in md.close.columns else None)
+            if mi is None and (px is None or pd.isna(px) or not math.isfinite(float(px))
+                               or float(px) <= 0):
+                mi = f"fechamento do pregão {janela.sessao:%d/%m/%Y} ausente ou inválido"
             if mi is not None:
                 blocked.setdefault(o.emissor, f"{o.ticker} ({mi})")
     out: list[Preenchimento] = []
@@ -673,10 +719,15 @@ def preenchimentos_esperados(ordens: Sequence[OrdemLinha], md: MarketData,
             continue
         mi = motivo_inelegivel(mic, janela, cfg)
         m_res = resolver_mic(mic, cfg)
-        px, fx = o.preco, o.fx
+        px = o.preco
+        moeda = str(moedas.get(o.ticker))
+        fx = cambio_do_pregao(md, moeda, janela.sessao)
         if mi is not None:
             out.append(Preenchimento(**base, situacao="inelegivel", motivo=mi))
-        elif px is None or fx is None or not (px > 0 and fx > 0):
+        elif fx is None:
+            out.append(Preenchimento(**base, situacao="sem_preco",
+                                     motivo=_motivo_cambio(moeda, janela.sessao)))
+        elif px is None or not (px > 0):
             out.append(Preenchimento(**base, situacao="sem_preco",
                                      motivo="sem fechamento oficial ou câmbio no pregão"))
         elif (decidido_em is not None and m_res is not None and m_res in janela.corte_moc
@@ -721,7 +772,6 @@ def conferir_efetivacao(entry: BookEntry, proposal: Proposal, decidido_em: datet
     do corte MOC ou abaixo da banda. Execução MENOR que a esperada é aceita (conservadora).
     Devolve os problemas (vazio = conforme). O pregão é a data de ``booked_at`` no fuso do
     mandato."""
-    from ..analytics.panel import fx_for_lines
 
     sessao = entry.booked_at.astimezone(ZoneInfo(cfg.fund.timezone)).date()
     md_s = md.truncate(sessao)
@@ -731,8 +781,6 @@ def conferir_efetivacao(entry: BookEntry, proposal: Proposal, decidido_em: datet
     janela = janela_execucao(sessao, cfg)
     nav_pre = float(entry.nav_usd)
     uni = md_s.universe.lines
-    fxf = fx_for_lines(md_s)
-    fx_row = fxf.loc[ts] if ts in fxf.index else pd.Series(dtype=float)
     approved = {(p.issuer_id, p.execution_ticker): p for p in proposal.positions
                 if p.weight != 0}
     if proposal.optimizer.status == "hold":
@@ -748,11 +796,7 @@ def conferir_efetivacao(entry: BookEntry, proposal: Proposal, decidido_em: datet
         if tk in md_s.close.columns:
             v = md_s.close.at[ts, tk]
             px = float(v) if pd.notna(v) and float(v) > 0 else None
-        if ccy == "USD":
-            fx: float | None = 1.0
-        else:
-            v = fx_row.get(ccy, np.nan)
-            fx = float(v) if pd.notna(v) and float(v) > 0 else None
+        fx = cambio_do_pregao(md_s, ccy, sessao)
         s0 = int(detidas.get((iid, tk), 0))
         if proposal.optimizer.status == "hold":
             alvo: int | None = s0

@@ -43,7 +43,9 @@ class AssetPanel:
 def fx_for_lines(md: MarketData) -> pd.DataFrame:
     """USD por unidade local, alinhado ao calendário de preços (ffill limitado)."""
     idx = md.close.index.union(md.fx.index)
-    fx = md.fx.reindex(idx).sort_index().ffill(limit=FX_FFILL_LIMIT)
+    quotes = md.fx.apply(pd.to_numeric, errors="coerce")
+    quotes = quotes.where(np.isfinite(quotes) & (quotes > 0))
+    fx = quotes.reindex(idx).sort_index().ffill(limit=FX_FFILL_LIMIT)
     if "USD" not in fx.columns:
         fx["USD"] = 1.0
     fx["USD"] = 1.0
@@ -51,12 +53,13 @@ def fx_for_lines(md: MarketData) -> pd.DataFrame:
 
 
 def _line_usd_returns(adj: pd.Series, fx: pd.Series) -> pd.Series:
-    s = adj.dropna()
-    s = s[s > 0]
+    s = pd.to_numeric(adj, errors="coerce")
+    s = s[np.isfinite(s) & (s > 0)]
     if s.empty:
         return pd.Series(dtype=float)
-    usd = s * fx.reindex(s.index)
-    usd = usd.dropna()
+    rate = pd.to_numeric(fx.reindex(s.index), errors="coerce")
+    usd = s * rate.where(np.isfinite(rate) & (rate > 0))
+    usd = usd[np.isfinite(usd) & (usd > 0)]
     return usd.pct_change(fill_method=None).iloc[1:]
 
 
@@ -68,6 +71,8 @@ def build_asset_panel(md: MarketData, cfg: FundConfig, as_of: date | None = None
     lines = uni.lines.copy()
     fx = fx_for_lines(md)
     calendar = md.close.index
+    close = md.close.apply(pd.to_numeric, errors="coerce")
+    close = close.where(np.isfinite(close) & (close > 0))
 
     line_ret = {}
     line_px_usd = {}
@@ -80,11 +85,14 @@ def build_asset_panel(md: MarketData, cfg: FundConfig, as_of: date | None = None
             continue
         f = fx[ccy]
         line_ret[tkr] = _line_usd_returns(md.adj_close[tkr], f)
-        line_px_usd[tkr] = md.close[tkr] * f
+        usd = close[tkr] * f
+        usd = usd.where(np.isfinite(usd) & (usd > 0))
+        line_px_usd[tkr] = usd
         vol = md.volume[tkr] if tkr in md.volume.columns else pd.Series(np.nan, index=calendar)
         # Volume zero com preço válido é dado ausente (ex.: Santiago no Yahoo), nunca liquidez zero.
         vol = vol.where(vol > 0)
-        line_tv_usd[tkr] = md.close[tkr] * vol * f
+        traded = close[tkr] * vol * f
+        line_tv_usd[tkr] = traded.where(np.isfinite(traded) & (traded > 0) & usd.notna())
 
     line_returns = pd.DataFrame(line_ret).reindex(calendar)
     px_usd = pd.DataFrame(line_px_usd).reindex(calendar)
@@ -94,14 +102,15 @@ def build_asset_panel(md: MarketData, cfg: FundConfig, as_of: date | None = None
     tail_tv = tv_usd.tail(win)
     lines["adtv_usd"] = tail_tv.mean(skipna=True).reindex(lines.index)
     lines["adtv_median_usd"] = tail_tv.median(skipna=True).reindex(lines.index)
-    last_valid = md.close.apply(lambda s: s.last_valid_index()).reindex(lines.index)
+    last_valid = close.apply(lambda s: s.last_valid_index()).reindex(lines.index)
     lines["last_date"] = last_valid
     lines["last_price_local"] = [
-        md.close[t].loc[d] if (t in md.close.columns and pd.notna(d)) else np.nan
+        close[t].loc[d] if (t in close.columns and pd.notna(d)) else np.nan
         for t, d in zip(lines.index, last_valid, strict=False)
     ]
     last_fx = fx.ffill().iloc[-1] if len(fx) else pd.Series(dtype=float)
-    lines["last_price_usd"] = lines["last_price_local"] * lines["currency"].map(last_fx)
+    last_usd = lines["last_price_local"] * lines["currency"].map(last_fx)
+    lines["last_price_usd"] = last_usd.where(np.isfinite(last_usd) & (last_usd > 0))
     lines["has_data"] = lines.index.isin(line_returns.columns) & lines["last_date"].notna()
 
     issuers = uni.issuers

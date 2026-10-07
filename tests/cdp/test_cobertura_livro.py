@@ -6,6 +6,7 @@ from __future__ import annotations
 import gzip
 import json
 import shutil
+from copy import deepcopy
 from dataclasses import replace
 from datetime import UTC, date, datetime
 from pathlib import Path
@@ -167,10 +168,12 @@ def test_tampering_archived_inputs_breaks_the_file_hash(livro, tmp_path):
 
 def test_backdating_and_duplicate_dates_are_refused(livro, mercado, tmp_path):
     book = _copia(livro[0], tmp_path)
+    legado = deepcopy(carregar_parametros())
+    legado.sec("projecao").pop("resultado_corte_metodo", None)
     with pytest.raises(LivroErro):
-        executar_snapshot(book, mercado.load(D1), D1, offline=True, agora=_agora(D1), codigo=CODIGO)
+        executar_snapshot(book, mercado.load(D1), D1, offline=True, params=legado, agora=_agora(D1), codigo=CODIGO)
     with pytest.raises(LivroErro):
-        executar_snapshot(book, mercado.load(D2), D2, offline=True, agora=_agora(D2), codigo=CODIGO)
+        executar_snapshot(book, mercado.load(D2), D2, offline=True, params=legado, agora=_agora(D2), codigo=CODIGO)
     assert datas_snapshots(book) == [D1, D2]
 
 

@@ -5,12 +5,116 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-Última atualização: 2026-10-07, quarta-feira, madrugada — validação científica em curso. **Comece por
+Última atualização: 2026-10-07, 08:55, Brasília — lote `.8` validado tecnicamente, integração pendente. **Comece por
 `docs/cdp/PASSAGEM_CODEX.md`**: ligar as rotinas no Codex, P0 de desenvolvimento antes do
 retrato-gênese da cobertura (qua 07/10, 19:22) e cronograma até a carteira inaugural (sex 09/10).
 
 ## Desenvolvimento científico e agendas — 07/10/2026, madrugada
 
+- Fechamento técnico atual: suíte ampla 5 completa, 2.565 aprovados, 16 pulados e um
+  xfail, zero falhas/erros em 2.582 casos; Ruff aprovado. Antes da atualização documental,
+  os 351 arquivos congelados continuavam iguais, assim como os 79 arquivos operacionais,
+  cinco arquivos locais do Fechamento e mandato. Conferência independente confirmou
+  os 351 hashes e os 189 arquivos da fonte física 8-5. A metodologia é `2026-10.8`;
+  8-5 identifica uma cópia física, não uma nova versão metodológica. Ainda não houve
+  commit, sincronização do executor ou confirmação de CI/portal deste lote.
+- Os ensaios finais dessa fonte concluíram 233 empresas/oito ETFs e 23 pregões/cinco
+  montagens/94 etapas. Os CSVs de modelos e ETFs são iguais aos da fonte temporal anterior;
+  JSONs de cobertura diferem somente nos instantes de conhecimento e hashes derivados.
+  A comparação do replay preserva a economia; tempos do solver e hashes de encadeamento
+  podem diferir. Os quatro livros históricos `.4`–`.7` foram conferidos sem alteração.
+  Confiança C permanece 102/233 (43,78%), acima de 35%; Compra, Venda e revisão passam.
+- Novo episódio completo de atraso em fechamento antecipado: 11 pregões, duas montagens,
+  48 etapas e 25 posições anteriores; decisão um segundo depois da margem foi recusada,
+  preservando ações, sem proposta, booking ou custo naquele dia. Integridade e retomada
+  selada passaram, com revisão independente. Dados simulados e alteração contrafactual
+  somente da data de início; o episódio fecha esse caso delimitado, não toda a matriz E1.
+- Protótipos privados, fora da integração: giro v4 teve 99 focais e revisão independente
+  verdes, inclusive fuso omitido e competência futura recusados; faltam insumos e adapter
+  reais. Capital por classe teve 41 focais, com associação AFYA→STONE e disponibilidade
+  futura recusadas; unidades reais continuam ausentes e G13c bloqueado. Patrimônio AMX
+  foi reextraído de PDF oficial e conferido independentemente, com identidades exatas;
+  publicação inicial desconhecida. Extrator privado por captura observada passou 39 focais,
+  mas a revisão reproduziu associação entidade→IID aberta: não pode alimentar modelos
+  ou gates até fechar esse vínculo. Nenhum protótipo altera o livro oficial.
+- Atualização do lote temporal: o coletor completo real da fonte física 8.4 concluiu 233
+  empresas e oito ETFs, com recálculo integral verde. O replay real dessa fonte concluiu
+  23 pregões, cinco montagens e 94 etapas; a comparação somente leitura com a fonte 7
+  encontrou posições, propostas, custos, P&L, risco e atribuição exatamente iguais.
+  Os quatro livros `.4`–`.7` foram verificados integralmente sem alterar seus bytes.
+  São ensaios privados retrospectivos; o executor oficial permanece na metodologia `.6`.
+- A suíte ampla 4 terminou: 2.475 aprovados, 32 falhas, um erro, 16 pulados e um xfail;
+  os 349 hashes de origem permaneceram intactos. As fixtures agora reabrem/copiam mercado
+  físico com o livro; 109 casos distintos passaram em validações privadas, conservando
+  as asserções, exceto duas alterações documentadas no relatório: copiar sua fonte física
+  e substituir a premissa de liquidez integral por um oráculo independente que conserva
+  o preço/volume ausente e a limitação parcial. Três falhas de risco/rotina também passaram
+  em cópia privada. Não somar focais sobrepostos como uma suíte completa.
+- Preços zero/infinito no driver completo revelaram falhas nos consumidores de marcação,
+  retorno, painel e evento societário. Reparo privado v3 aprovado independentemente:
+  quatro contrafactuais e baseline, sete pregões/duas montagens cada, íntegros e idempotentes;
+  economia e risco de zero/infinito equivalentes à ausência, sem modificar brutos;
+  baseline normal com 6.950 campos numéricos e quatro CSVs financeiros exatamente iguais.
+  Os três consumidores, 54 testes materiais e as fixtures delimitadas foram transpostos
+  para DEV; a suíte ampla 5 confirmou sua integração técnica. E1 integral e E2 seguem abertos.
+- O teste de gate em pasta sem Git próprio herdou o repositório pai e criou uma trava remota.
+  O registro comprovou o ID do próprio teste; a trava foi liberada por esse ID, sem force,
+  preservando `main` e os arquivos oficiais. Fixtures Git agora são isoladas e a descoberta
+  Git fica limitada à raiz informada por chamada. Revisão independente de cinco regressões
+  locais, incluindo raiz normal, bare, worktree e ambiente intacto, passou. Guardas e três
+  regressões portáveis foram transpostas para DEV; o executor ainda não recebeu esse lote.
+
+- Próximo lote após `.6`, em desenvolvimento: correção macro diária com modelos base/evento
+  sobre posições efetivas, atribuição macro observada antes da regressão estrutural e sidecar
+  autenticado sem alterar bytes históricos. Congelamento com 93 focais e revisão independente
+  com 28 focais verdes; não confundir esses grupos sobrepostos com uma suíte ampla concluída.
+- Ensaio operacional isolado: novo `backtest-operacional`, origem retrospectiva autenticada
+  fora do IC prospectivo, prefixos temporais, ações/capacidade/contabilidade canônicas e cadeia
+  de etapas. Passaram 62 focais, incluindo capacidade parcial, próxima decisão usando o
+  patrimônio/carteira efetivos, recibos de artefatos, vintage da execução e alteração de séries
+  futuras sem efeito passado. [Contrato e limites](REPLAY_OPERACIONAL.md). Matriz E1 e
+  ensaio real sombra concluiu 23 pregões e cinco montagens canônicas, com 94 etapas. A
+  repetição na fonte final de FX/preço também terminou íntegra; revisão independente concluída.
+  A economia dos 23 registros foi idêntica à sombra anterior, nas sessões normais observadas;
+  isso não exercita as cotações ausentes, cuja correção tem focais próprios.
+  A matriz E1 separa episódios completos de provas de APIs e mantém as lacunas explícitas.
+  A ampliação de dados ausentes encontrou falha material: sem FX no próprio pregão, o MOC
+  negociou usando o valor anterior. O código corrigido exige FX, preço e volume próprios;
+  posição sem FX/preço congela o emissor inteiro, inclusive a abertura de outra linha. Passaram
+  105 focais distintos de execução, diário e dados ausentes. A suíte ampla 5 concluiu verde;
+  as rodadas interrompidas foram preservadas como diagnóstico. A terceira rodada
+  parou no painel da demonstração: o leitor físico do risco procura `market/base`, enquanto
+  a demo usa mercado em memória. A demo agora arquiva cada prefixo antes do primeiro uso e
+  consome o `MarketStore` canônico; 14 focais passaram, incluindo reabertura e recusa de
+  perda/adulteração de fonte. Duas demos novas, legada e vigente, passaram offline. A raiz
+  temporária da falha original ficou indisponível; log/XML da terceira rodada são a evidência
+  histórica preservada. Revisão independente do reparo passou, incluindo painel sem override
+  e recusas por remoção de preços/adulteração de FX. A fixture da avaliação foi corrigida
+  para reabrir essa mesma fonte física: 23 testes passaram, preservando todas as asserções;
+  revisão independente confirmou a custódia. Lote ainda não integrado.
+- Ponte `.7` de EBIT após ajustes evidenciados: contrato explícito com fonte, período e
+  disponibilidade; valores reportados preservados, sem imposto/EPS imputados. Quatro bordas gerais de
+  extração/período/captura corrigidas, 193 focais verdes e revisão independente concluída.
+  Recálculo completo `.4/.5/.6` repetido, preservando os 768 arquivos de cada retrato. Novo
+  ensaio real sombra concluído: 233 emissores e oito ETFs, 188 fontes preservadas. Compra
+  40/203 (19,70%), Venda 38/203 (18,72%) e revisão 27/233 (11,59%) passam os limites da
+  passagem; confiança C 102/233 (43,78%) continua acima de 35%. Giro comercial parcial
+  continua insuficiente para certificar ΔWC/FCFF; não há relaxamento dos gates P0.
+- Integração temporal `.8`, em desenvolvimento: a cobertura semanal precisa usar preços do
+  fechamento anterior e conhecimento do instante da execução. A ponte `.7` confundia esses
+  cortes e recusava o catálogo atual no pacote datado pelo preço. A política nova sela
+  `base_preco`, `data_modelo`, `conhecimento_ate` e etapas de coleta, sem retrodatação; inclui
+  seleção pelo conhecimento disponível e ligação aos fatos/SHADOW da decisão. Capturas
+  posteriores ao corte continuam recusadas. Parâmetros arquivados sem a chave temporal
+  conservam a política anterior. A revisão encontrou duas falhas de precisão e seleção:
+  captura futura no mesmo dia e truncamento dentro do mesmo segundo. A correção exige o
+  instante UTC disponível, preserva microssegundos novos e admite carimbos legados somente
+  após o limite superior do segundo truncado. Os focais passaram; revisão independente
+  confirmou as recusas. O episódio com preços reais e dois PDFs simulados capturados na
+  execução ligou documento, ajuste, fatos e SHADOW à montagem, com reserva idempotente e
+  livro íntegro. Esse episódio testa mecanismos; não constitui evidência contábil real.
+  A ponte e os ensaios `.7` permanecem históricos. Os ensaios reais da fonte temporal 8.4
+  concluíram; a suíte ampla 5 após os reparos delimitados passou; produção permanece `.6`.
 - As 12 automações foram conferidas novamente: ativas, projeto atual, modo local, executor
   interno `.cdp/rotinas`. Nomes em seis famílias (operação, carteira, risco, fechamento,
   pesquisa, modelos), reservas explícitas e prompts que consultam o procedimento vigente
@@ -99,7 +203,7 @@ retrato-gênese da cobertura (qua 07/10, 19:22) e cronograma até a carteira ina
   Ruff, documentação, rotinas e skills verdes. Integração em `main` e no executor por fast-forward;
   181 fontes iguais ao ensaio final, 79 arquivos operacionais/locais e os cinco arquivos de trabalho
   do Fechamento preservados por SHA-256, mandato intacto. Executor íntegro e sem trava.
-  CI `37577281595` e portal `37577281613` em execução; publicação no ar ainda pendente desta conferência.
+  CI `37577463582` concluída com sucesso para `fc8b091`; portal `.6` confirmado no ar.
 
 ## Retomada no Codex — 06/10/2026, noite
 

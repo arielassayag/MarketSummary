@@ -653,6 +653,9 @@ def verify(book: Book, track=None, market_root: Path | None = None) -> list[str]
 
 def status(book: Book, track, *, now: datetime) -> list[dict]:
     """Estado de cada coorte, sem criar outcome ou transformar pendência em sucesso."""
+    from .origem import read_replay_origin
+
+    origin = read_replay_origin(book)
     rows = []
     for path in sorted(book.root.glob(f"*/{FOLDER}/{SIGNALS_FILE}")):
         c = _read(path, Cohort)
@@ -667,5 +670,6 @@ def status(book: Book, track, *, now: datetime) -> list[dict]:
         else:
             state = "pendente de reconciliação"
         rows.append({"semana": c.week, "fim": c.end, "mente_execucao": c.mind,
-                     "prospectiva": c.prospective, "estado": state})
+                     "prospectiva": c.prospective and origin is None, "estado": state,
+                     **({"origem": "ensaio retrospectivo"} if origin is not None else {})})
     return rows

@@ -61,6 +61,28 @@ geram aviso e lacuna. Instituições financeiras não usam crescimento de receit
 intermediação não é comparável entre fontes); o crescimento histórico fora de [−20%; +30%] (efeitos
 contábeis, como receita de construção de concessões) não é usado.
 
+Na política temporal `2026-10.8`, a base de preços e o conhecimento do modelo têm cortes
+distintos. `cobertura run --date D` usa o fechamento de mercado `D`; o retrato recebe a data
+civil do conhecimento do executor. O contrato selado contém `base_preco`, `data_modelo`,
+`conhecimento_ate`, `coleta_inicio` e `coleta_fim`. Assim, uma montagem na sexta pode usar
+preços de quinta e fontes disponíveis na sexta, sem anunciar um retrato histórico de quinta.
+A primeira coleta arquiva os bytes com horário real; a seleção final ocorre offline depois
+da coleta. Um corte histórico fixo não avança. Arquivos capturados depois do corte são
+recusados, inclusive quando o documento declara publicação anterior. Datas civis de
+publicação sem prova de horário continuam com essa limitação; nenhum carimbo é retrodatado.
+Parâmetros arquivados sem a chave temporal mantêm o contrato anterior. As novas capturas
+preservam microssegundos no índice e nos extratos; registros antigos truncados para segundos
+só comprovam disponibilidade, sob a política nova, a partir do segundo seguinte. Essa
+incerteza de precisão não autoriza antecipar a posse do documento.
+
+A ponte `eventos_evidenciados`, introduzida em `.7`, preserva valores reportados e produz
+uma visão separada de **EBIT após ajustes evidenciados**. Fatos, evento e aplicação precisam
+de documento bruto, hash, página/rubrica, moeda, base, período e disponibilidade. Seu
+catálogo parcial não certifica recorrência integral: ausência de evento catalogado não
+significa resultado recorrente. Imposto, lucro líquido, LPA, consenso e CFO permanecem
+reportados quando a prova trata somente EBIT. Uma reversão já presente na DFC não é
+descontada novamente; componentes sem fonte permanecem ausentes.
+
 - **Fluxos de 12 meses**: o TTM publicado; senão a soma dos 4 últimos trimestres consecutivos; senão
   a identidade "último exercício + acumulado do exercício corrente − acumulado do mesmo período do
   exercício anterior" (emissores cujas fontes não trazem todos os trimestres).
@@ -432,6 +454,12 @@ sombra, com peso zero. O upside bruto do preço-alvo nunca entra no otimizador. 
 com IC residual semanal sem sobreposição, em 26 semanas ou mais, IC médio ≥ 0,01 e t de
 Newey–West ≥ 1,5, com rebaixamento automático.
 
+O preparo `.8` seleciona a cobertura pelo conhecimento disponível no instante arquivado e
+confere a base de preços. O vínculo do retrato e a ausência de retrato também são selados;
+reabrir uma semana usa o mesmo vínculo, mesmo após nova cobertura ou mudança de relógio.
+Alvos citáveis entram no FactBook e o sinal fica em SHADOW, sem alterar `SIGNALS` ou o peso
+zero. Briefings legados sem esse marcador conservam seus fatos originais.
+
 ## 9. Placar de acertos
 
 Por previsão: atingiu o alvo no vencimento (`1[d × (P_H − TP) ≥ 0]`, d = sentido do alvo),
@@ -462,15 +490,18 @@ Para conferir e reproduzir:
 ```
 uv sync
 uv run python -m cdp cobertura verify     # livro, selos, trilha, arquivos, placar e recálculo completo
-# refazer os modelos a partir do arquivo público, num livro de trabalho separado:
+# atualizar modelos com o conhecimento atual, num livro de trabalho separado;
+# AAAA-MM-DD identifica a base de preços, na política temporal .8:
 uv run python -m cdp --book /tmp/livro-trabalho cobertura run --date AAAA-MM-DD --offline --raiz <pasta com publico/>
 ```
 
-O livro de trabalho começa sem histórico: os preços-alvo, cenários e α de cada emissor coincidem
-com os publicados (dependem só dos insumos, do contexto e da taxa livre de risco da data); o
-rating pode diferir onde a histerese ou a ponte do alvo contra o snapshot anterior pesaram.
-Nunca se executa `run` sobre o livro publicado para conferir: a data já coberta é recusada antes
-do cálculo.
+O livro de trabalho começa sem histórico. Preços-alvo, cenários e α só coincidem quando
+insumos, configuração, contexto, base de preços e corte de conhecimento são os mesmos;
+rating pode diferir onde a histerese ou a ponte contra o retrato anterior pesaram. Use
+`verify` para conferir um livro publicado. `run` com o conhecimento atual não reproduz
+automaticamente um retrato antigo. Na `.8`, uma reserva da mesma base, configuração e
+escopo reutiliza o último retrato íntegro já concluído; diferenças são recusadas antes de
+sobrescrever. A política legada continua recusando a data já coberta.
 
 `verify` é versionado pela metodologia: refaz por completo os snapshots gravados com a versão da
 configuração do repositório (`versao` de `valuation.yaml`, que sobe a cada mudança de metodologia); dos
@@ -485,7 +516,8 @@ positivo, α, α relativo e sem a exposição de estilo, preço-alvo com o ERP e
 ETFs — e confere a tabela pública `modelos.csv` (a que o sinal lê) contra o recálculo. A tolerância é relativa de 1e-5 (os números são armazenados com 6
 algarismos significativos). Recalcular em outra plataforma pode diferir na sexta casa por
 diferenças de biblioteca numérica; o hash dos arquivos arquivados é sempre exato. A execução
-recusa, antes de calcular, uma data já coberta ou anterior ao último snapshot.
+recusa uma data anterior ao último snapshot; a reserva temporal descrita acima não cria
+outro retrato nem altera os bytes já concluídos.
 
 ## 11. Limitações conhecidas
 

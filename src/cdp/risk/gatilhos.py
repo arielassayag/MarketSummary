@@ -163,10 +163,14 @@ def price_jumps(rec: DailyRecord, md: MarketData | None) -> list[dict]:
     for t in held:
         if t not in close.columns or t not in adj.columns:
             continue
-        c = close[t].loc[:ts].dropna()
-        a = adj[t].loc[:ts].dropna()
-        if len(c) < 2 or len(a) < 2 or c.index[-1] != ts or a.index[-1] != ts:
+        c = pd.to_numeric(close[t].loc[:ts], errors="coerce")
+        a = pd.to_numeric(adj[t].loc[:ts], errors="coerce")
+        c = c[np.isfinite(c) & (c > 0)]
+        a = a[np.isfinite(a) & (a > 0)]
+        common = c.index.intersection(a.index).sort_values()
+        if len(common) < 2 or common[-1] != ts:
             continue
+        c, a = c.reindex(common), a.reindex(common)
         dc = math.log(float(c.iloc[-1]) / float(c.iloc[-2])) if c.iloc[-2] > 0 else None
         da = math.log(float(a.iloc[-1]) / float(a.iloc[-2])) if a.iloc[-2] > 0 else None
         if dc is None or da is None:

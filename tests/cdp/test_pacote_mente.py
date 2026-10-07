@@ -24,7 +24,7 @@ from cdp.config import load_config
 from cdp.research.guardrails import style_issues
 from cdp.research.prompts import ESTILO_REGRAS
 from cdp.workflow import notas as N
-from cdp.workflow.demo import DEMO_FIRST_WEEK, DEMO_SEED, DemoStore, demo_sessions, run_demo
+from cdp.workflow.demo import DEMO_FIRST_WEEK, DEMO_SEED, demo_sessions, run_demo
 from cdp.workflow.pacote import ETAPAS_PACOTE
 from cdp.workflow.runtime import Runtime
 
@@ -60,12 +60,12 @@ def copia(demo, tmp_path) -> Path:
     dst = tmp_path / "copia"
     shutil.copytree(demo / "book", dst / "book")
     shutil.copytree(demo / "reports", dst / "reports")
+    shutil.copytree(demo / "market", dst / "market")
     return dst
 
 
 def _rt(root: Path, market) -> Runtime:
     return Runtime(load_config(LEGACY), root / "book", root / "market", root / "reports",
-                   store_override=DemoStore(market),
                    clock=lambda: datetime(2024, 3, 4, 21, 30, tzinfo=BRT), teses_root=None)
 
 

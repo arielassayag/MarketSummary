@@ -746,7 +746,7 @@ def compute_signals(
 # Sinal de valuation da cobertura (SOMBRA — fora do registro SIGNALS, peso 0)
 # ==========================================================
 
-def valuation_gap_sombra(snap, issuers: list[str]) -> pd.Series:
+def valuation_gap_sombra(snap, issuers: list[str], *, conhecimento_ate=None) -> pd.Series:
     """``valuation_gap`` da cobertura (z de ``α_rel`` dentro de país × setor), reindexado aos
     ``issuers`` da semana; ``NaN`` sem preço-alvo (nunca zero).
 
@@ -760,6 +760,9 @@ def valuation_gap_sombra(snap, issuers: list[str]) -> pd.Series:
         return _empty(ids, "valuation_gap", ["sem snapshot da cobertura até a data"])
     from ..cobertura.sinal import valuation_gap
 
+    if conhecimento_ate is not None:
+        from ..cobertura.livro import conferir_corte
+        conferir_corte(snap, conhecimento_ate)
     z = valuation_gap(snap).reindex(ids).astype(float)
     falt = [i for i in ids if not np.isfinite(z.get(i, np.nan))]
     notes = [f"snapshot da cobertura de {snap.as_of.isoformat()} (sombra, peso 0)"]

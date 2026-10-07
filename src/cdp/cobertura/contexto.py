@@ -186,7 +186,7 @@ def fundamentos(p: Mapping[str, Any], lim_g: tuple[float, float] = LIMITES_G,
     ev = None if mcap is None or nd is None or mino is None else mcap + nd + mino
     ev_rec = None if ev is None or rec is None or rec <= 0 else ev / rec
     ebitda = g("t.ebitda")
-    if ebitda is None and ebit is not None and g("t.d_a") is not None:
+    if ebitda is None and ebit is not None and g("t.d_a") is not None and "resultado_ebitda_base" not in p:
         ebitda = ebit + abs(g("t.d_a") or 0.0)
     alav = None if nd is None or ebitda is None or ebitda <= 0 else nd / ebitda
     pl_t = g("t.patrimonio_controladores")
@@ -297,6 +297,9 @@ def montar_contexto(pacotes: Mapping[str, Mapping[str, Any]], params: Parametros
                     rf_ust: float | None = None, rf_fonte: dict[str, Any] | None = None) -> dict[str, Any]:
     """Contexto transversal da execução (ver docstring do módulo). ``rf_ust``: UST 10 anos da data
     (o mesmo do modelo), usado no custo de capital de cada emissor que ancora as normas de ROE."""
+    from .resultado import ativo, visao
+    if ativo(params):
+        pacotes = {iid: visao(p, params) for iid, p in pacotes.items()}
     proj = params.sec("projecao")
     lim_g = tuple(float(x) for x in proj["crescimento_limites"])
     anos_roe = int(proj.get("roe_hist_anos", 5))
@@ -382,6 +385,8 @@ def montar_contexto(pacotes: Mapping[str, Mapping[str, Any]], params: Parametros
     }
     ctx: dict[str, Any] = {"universo": universo, "setores": setores, "pais_setor": pais_setor,
                            "beta_financeiras": beta_fin, "regressoes": regs}
+    if ativo(params):
+        ctx["visoes_resultado"] = {iid: p["visao_resultado"]["visao_sha256"] for iid, p in pacotes.items()}
     kes = custos_capital(pacotes, ctx, params, rf_ust, rf_fonte)
     for r in linhas:
         cc = kes.get(r["iid"])
@@ -393,6 +398,10 @@ def montar_contexto(pacotes: Mapping[str, Mapping[str, Any]], params: Parametros
     ctx["fundamentos"] = {r["iid"]: {k: r6(v) if isinstance(v, float) else v for k, v in r.items()
                                      if k not in ("iid",)} for r in linhas}
     ctx["calibracao_pais"] = calibrar_nivel_pais(pacotes, ctx, params, rf_ust, rf_fonte)
+    if ativo(params):
+        ctx["visoes_resultado"] = {iid: p["visao_resultado"]["visao_sha256"] for iid, p in pacotes.items()}
+        from .resultado import _canon, hash_obj
+        ctx["resultado_contexto_sha256"] = hash_obj(_canon(ctx))
     return ctx
 
 
@@ -403,6 +412,8 @@ def _razoes_v_p(pacotes: Mapping[str, Mapping[str, Any]], ctx: Mapping[str, Any]
     valor da soma das partes, que não depende do ke) para cada deslocamento ``δ`` da grade (em dólar,
     convertido ao ke local pelo diferencial de inflação)."""
     from .modelo import Avaliador, Drivers
+    from .resultado import assinar_contexto
+    ctx = assinar_contexto(ctx, pacotes, params)
 
     ids, linhas = [], []
     for iid in ids_alvo:

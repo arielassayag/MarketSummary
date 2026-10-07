@@ -468,13 +468,13 @@ def _kappa_da_decisao(proposal: Proposal | None) -> float | None:
 
 
 def _risco(cfg: Any, proposal: Proposal | None, rec: DailyRecord,
-           kappa_vigente: float | None = None) -> dict[str, Any]:
+           kappa_vigente: float | None = None, *, diagnostic: dict | None = None) -> dict[str, Any]:
     """Risco da carteira decidida (proposta) e da efetiva (registro do fechamento).
 
     A fatia idiossincrática PRINCIPAL é a da base do limite do mandato (κ_F no bloco fatorial,
     no modelo que vincula — :func:`cdp.risk.idio.base_vinculante`), a mesma do portal; a
-    carteira efetiva recebe o mesmo κ_F sobre o modelo de risco do fechamento (sem decisão no
-    dia, o κ_F da decisão vigente, ``kappa_vigente``). A fatia sem κ_F fica como linha
+    carteira efetiva usa base/evento e κ_F arquivados no diagnóstico autenticado. Registros
+    legados usam o κ_F da decisão vigente (``kappa_vigente``). A fatia sem κ_F fica como linha
     secundária, rotulada."""
     rk: dict[str, Any] = {"meta": cfg.risk.vol_target_annual,
                           "banda_min": cfg.risk.vol_band_min}
@@ -518,6 +518,12 @@ def _risco(cfg: Any, proposal: Proposal | None, rec: DailyRecord,
         if kappa is not None and f_ is not None:
             den = max(kappa, 1.0) * f_ ** 2 + s_ ** 2
             eff["idio_kf"] = s_ ** 2 / den if den > 0 else None
+    if "risco_diario_v1" in rec.input_hashes:
+        eff["idio_kf"] = diagnostic["idio_binding"] if diagnostic is not None else None
+        eff["kappa_f"] = diagnostic["kappa_f"] if diagnostic is not None else None
+        eff["base_vinculante"] = diagnostic["binding"] if diagnostic is not None else None
+        eff["medidas_base_evento"] = diagnostic["measures"] if diagnostic is not None else None
+        eff["diagnostico_autenticado"] = diagnostic is not None
     rk["efetiva"] = eff
     return rk
 
@@ -580,7 +586,11 @@ def calcular_semana(rt: Runtime, d: date, md: MarketData | None = None) -> dict[
     vigente = None
     if proposal is None and decided:
         vigente = _kappa_da_decisao(_proposal_of(rt, decided[-1])[0])
-    rk = _risco(cfg, proposal, rec, vigente)
+    from .risco_diario import read_measures
+
+    diagnostics = read_measures(rt.track(), market_loader=rt.store.load,
+                                market_root=getattr(rt.store, "root", None))
+    rk = _risco(cfg, proposal, rec, vigente, diagnostic=diagnostics.get(rec.date))
     er = rec.risk
     pesos: dict[str, float] = {}
     for p in rec.positions:

@@ -49,7 +49,7 @@ import os
 import platform
 import shutil
 import subprocess
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from datetime import UTC, date, datetime
 from pathlib import Path
 from typing import Any
@@ -338,6 +338,18 @@ def gravar_snapshot(book: Path, ex: Execucao, dados: DadosPublicos, params: Para
     ok_s, msg_s = selado(book)
     if not ok_s:
         raise LivroErro(f"Livro da cobertura não confere com o último selo: {msg_s}.")
+    from .temporal import ativo as temporal_ativo
+    from .temporal import validar as validar_corte
+    corte = None
+    if temporal_ativo(params):
+        corte = validar_corte(dados.corte_temporal, as_of=d.isoformat())
+        if corte["base_preco"] != md_manifest.as_of.isoformat():
+            raise LivroErro("Corte temporal diverge da base de preços selada.")
+        if agora is None or datetime.fromisoformat(corte["conhecimento_ate"]) > agora:
+            raise LivroErro("Conclusão anterior ao corte de conhecimento.")
+        for p in ex.pacotes.values():
+            if p.get("corte_temporal") != corte or p.get("as_of") != d.isoformat():
+                raise LivroErro("Corte temporal do pacote diverge da execução.")
     for t in dados.tabelas().values():
         if "data_publicacao" in t.columns and not t.empty:
             dp = pd.to_datetime(t["data_publicacao"], errors="coerce")
@@ -487,6 +499,8 @@ def gravar_snapshot(book: Path, ex: Execucao, dados: DadosPublicos, params: Para
             "livro_anterior": {"n_eventos": seq0, "head": head0},
             "reparos": reparos,
         })
+        if corte is not None:
+            manifest.update(corte_temporal=corte, concluido_em=concluido)
         msha = _escrever(tmp / "manifest.json", _json_bytes(manifest))
         selo = {"as_of": d.isoformat(), "manifest_sha256": msha, "livro_head": prev,
                 "n_eventos": seq0 + len(novos), "n_instrumentos": len(ids) + len(ex.etfs), "n_com_alvo": n_alvo,
@@ -541,6 +555,7 @@ class SnapshotCobertura:
     manifest: dict[str, Any] = field(default_factory=dict)
     manifest_sha256: str = ""
     is_synthetic: bool = False
+    conhecimento_ate: datetime | None = None
 
     def _bytes(self, rel: str) -> bytes | None:
         p = self.pasta / rel
@@ -584,6 +599,11 @@ class SnapshotCobertura:
             if d > self.as_of:
                 break
             snap = self if d == self.as_of else _ler(book, d)
+            if self.conhecimento_ate is not None:
+                try:
+                    conferir_corte(snap, self.conhecimento_ate)
+                except CortePosterior:
+                    continue
             t = snap.tabela(mascarar=False).reset_index()
             t["snapshot"] = d.isoformat()
             partes.append(t)
@@ -591,8 +611,15 @@ class SnapshotCobertura:
             return pd.DataFrame()
         tudo = pd.concat(partes, ignore_index=True)
         out = tudo.drop_duplicates("issuer_id", keep="last").set_index("issuer_id").sort_index()
-        encerrados = [i for i, ev in ultimo_evento_por_instrumento(book, self.as_of).items()
-                      if ev.get("tipo") == "ENCERRAMENTO"]
+        if self.conhecimento_ate is None:
+            ultimos = ultimo_evento_por_instrumento(book, self.as_of)
+        else:
+            from ..data.publico_resultados import instante
+            ultimos = {}
+            for ev in eventos(book):
+                if date.fromisoformat(ev["as_of"]) <= self.as_of and instante(ev["concluido_em"]) <= self.conhecimento_ate:
+                    ultimos[ev["issuer_id"]] = ev
+        encerrados = [i for i, ev in ultimos.items() if ev.get("tipo") == "ENCERRAMENTO"]
         out = out.drop(index=[i for i in encerrados if i in out.index])
         return _mascarar(out) if mascarar else out
 
@@ -608,7 +635,54 @@ def _ler(book: Path, d: date) -> SnapshotCobertura:
                              is_synthetic=bool(man.get("is_synthetic")))
 
 
-def ultimo_snapshot(root: Path, ate: date) -> SnapshotCobertura | None:
+class CortePosterior(LivroErro):
+    """Retrato íntegro, mas ainda desconhecido no instante solicitado."""
+
+
+def conferir_corte(snap: SnapshotCobertura, conhecimento_ate: datetime) -> None:
+    """Valida disponibilidade de modelo e conclusão contra relógio explícito."""
+    from ..data.publico_arquivo import data_local
+    from ..data.publico_resultados import instante
+    from .temporal import METODO
+    from .temporal import validar as validar_corte
+
+    corte = instante(conhecimento_ate)
+    if snap.as_of > data_local(corte):
+        raise CortePosterior("Snapshot da cobertura posterior ao corte de conhecimento.")
+    contrato = snap.manifest.get("corte_temporal")
+    cfg = snap._bytes("configuracao/valuation.yaml")
+    politica = ((yaml.safe_load(cfg) or {}).get("projecao") or {}).get("resultado_corte_metodo") if cfg else None
+    if politica == METODO and contrato is None:
+        raise LivroErro("Snapshot da política temporal sem corte declarado.")
+    if contrato is not None:
+        try:
+            validar_corte(contrato, as_of=snap.as_of.isoformat())
+        except ValueError as exc:
+            raise LivroErro(str(exc)) from exc
+        if (contrato["base_preco"] != snap.manifest["prices_as_of"]
+                or snap.manifest.get("concluido_em") is None):
+            raise LivroErro("Corte temporal do snapshot incompleto/incompatível.")
+        if instante(contrato["conhecimento_ate"]) > corte:
+            raise CortePosterior("Conhecimento do snapshot posterior ao corte solicitado.")
+        if instante(snap.manifest["concluido_em"]) < instante(contrato["conhecimento_ate"]):
+            raise LivroErro("Conclusão do snapshot anterior ao conhecimento.")
+        tabela = snap._bytes("insumos/corte_temporal.csv.gz")
+        if tabela is None:
+            raise LivroErro("Tabela selada do corte temporal ausente.")
+        rows = pd.read_csv(io.BytesIO(gzip.decompress(tabela)), dtype=str).to_dict("records")
+        if rows != [contrato]:
+            raise LivroErro("Corte do manifesto não confere com a tabela temporal selada.")
+    tempos = ([snap.manifest["concluido_em"]] if "concluido_em" in snap.manifest else [])
+    bruto = snap._bytes("eventos.jsonl")
+    if bruto is not None:
+        tempos.extend(json.loads(linha)["concluido_em"] for linha in bruto.decode().splitlines() if linha)
+    if not tempos:
+        raise LivroErro("Snapshot sem instante de conclusão auditável.")
+    if any(instante(t) > corte for t in tempos):
+        raise CortePosterior("Conclusão do snapshot posterior ao corte solicitado.")
+
+
+def ultimo_snapshot(root: Path, ate: date, *, conhecimento_ate: datetime | None = None) -> SnapshotCobertura | None:
     """Último snapshot com ``as_of <= ate`` sob ``root`` (a pasta ``book``), com manifesto,
     cadeia e selo conferidos; ``None`` se não há snapshot até a data (nunca um posterior)."""
     ok, probs = verificar_livro(Path(root))
@@ -618,7 +692,16 @@ def ultimo_snapshot(root: Path, ate: date) -> SnapshotCobertura | None:
     if not ok_s:
         raise LivroErro(msg)
     ds = [d for d in datas_snapshots(Path(root)) if d <= ate]
-    return _ler(Path(root), ds[-1]) if ds else None
+    if conhecimento_ate is None:
+        return _ler(Path(root), ds[-1]) if ds else None
+    for d in reversed(ds):
+        snap = _ler(Path(root), d)
+        try:
+            conferir_corte(snap, conhecimento_ate)
+        except CortePosterior:
+            continue
+        return replace(snap, conhecimento_ate=conhecimento_ate)
+    return None
 
 
 def snapshot(root: Path, d: date) -> SnapshotCobertura:
@@ -699,6 +782,20 @@ def verificar(book: Path, params_por_snapshot: bool = True, recalcular: bool = T
                 msgs.append(f"{d}: arquivo ausente {rel}")
             elif sha256_file(p) != sha:
                 msgs.append(f"{d}: arquivo adulterado {rel}")
+        if (snap.manifest.get("corte_temporal") is not None
+                or "insumos/corte_temporal.csv.gz" in snap.manifest.get("arquivos", {})):
+            try:
+                conferir_corte(snap, snap.manifest["concluido_em"])
+                corte = snap.manifest["corte_temporal"]
+                pacs_temporais = ler_pacotes(pasta, snap.manifest)
+                if any(p.get("corte_temporal") != corte or p.get("as_of") != d.isoformat()
+                       for p in pacs_temporais.values()):
+                    raise LivroErro("Pacotes divergem do corte temporal selado.")
+                if any((snap.modelo(iid) or {}).get("corte_temporal") != corte
+                       for iid in snap.manifest.get("emissores", [])):
+                    raise LivroErro("Modelos divergem do corte temporal selado.")
+            except (LivroErro, ValueError, KeyError, OSError) as exc:
+                msgs.append(f"{d}: contrato temporal: {exc}")
         ant = snap.manifest.get("livro_anterior") or {}
         if int(ant.get("n_eventos", -1)) != n_prev or ant.get("head") != head_prev:
             msgs.append(f"{d}: snapshot não continua o selo anterior (livro_anterior)")
@@ -923,7 +1020,7 @@ def carregar_anterior(book: Path, ate: date, excluir: date | None = None):
     return ant
 
 
-__all__ = ["COLUNAS_MASCARADAS", "LivroErro", "RATINGS_CITAVEIS", "SnapshotCobertura", "TIPOS_EVENTO", "ambiente",
-           "carregar_anterior", "checar_data", "datas_snapshots", "eventos", "gravar_snapshot", "ler_pacotes",
+__all__ = ["COLUNAS_MASCARADAS", "CortePosterior", "LivroErro", "RATINGS_CITAVEIS", "SnapshotCobertura", "TIPOS_EVENTO", "ambiente",
+           "carregar_anterior", "checar_data", "conferir_corte", "datas_snapshots", "eventos", "gravar_snapshot", "ler_pacotes",
            "ler_tabela", "raiz_cobertura", "recalcular_snapshot", "reparar_pendencias", "selado", "snapshot",
            "ultimo_evento_por_instrumento", "ultimo_snapshot", "verificar", "verificar_livro"]

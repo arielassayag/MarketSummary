@@ -429,7 +429,7 @@ def test_squeeze_stop_text_says_what_the_code_does(demo):
     assert "livro inteiro" in trig["motivo"]
 
 
-def test_loss_velocity_triggers_are_wired_only_with_the_active_construction(demo):
+def test_loss_velocity_triggers_are_wired_only_with_the_active_construction(demo, tmp_path):
     """Gatilhos de velocidade de perda (``cdp.risk.gatilhos``) só com a metodologia de construção
     ativa (kill switch só-redução); no mandato legado o monitor não muda."""
     legacy = run_risk_monitor(_rt(demo), as_of=SESSION, now=_at(SESSION, 13, 30))
@@ -437,7 +437,8 @@ def test_loss_velocity_triggers_are_wired_only_with_the_active_construction(demo
     assert "janela_incompleta" not in codes and "perda_diaria_extrema" not in codes
     active_cfg = load_config(LEGACY).with_overrides({"risk": {"idio_share_goal": 0.9,
                                                         "idio_share_floor": 0.85}})
-    active = run_risk_monitor(_rt(demo, cfg=active_cfg), as_of=SESSION,
+    active_rt = Runtime(active_cfg, demo / "book", tmp_path / "mercado_ausente", demo / "reports")
+    active = run_risk_monitor(active_rt, as_of=SESSION,
                               now=_at(SESSION, 13, 30))
     by_code = {t["codigo"]: t for t in active["gatilhos"]}
     assert by_code["janela_incompleta"]["nivel"] == "INFO"  # dois registros na demonstração
@@ -844,10 +845,13 @@ def test_operator_passphrase_is_stored_only_as_a_salted_hash(tmp_path, monkeypat
     assert operador.conferir(SENHA_TESTE) and not operador.conferir(SENHA_TESTE + "x")
 
 
-def test_agenda_reports_the_market_store_last_session(demo):
+def test_agenda_reports_the_market_store_last_session(demo, tmp_path):
     from cdp.data.synthetic import make_synthetic_market
 
     md = make_synthetic_market(seed=DEMO_SEED, start=DEMO_HISTORY_START, as_of=LAST)
     rt = _rt(demo, store_override=DemoStore(md))
     assert agenda(rt, _at(SESSION, 12))["base_ultimo_pregao"] == LAST
-    assert agenda(_rt(demo), _at(SESSION, 12))["base_ultimo_pregao"] is None  # sem base
+    assert agenda(_rt(demo), _at(SESSION, 12))["base_ultimo_pregao"] == LAST  # arquivo físico
+    missing = Runtime(load_config(LEGACY), demo / "book", tmp_path / "mercado_ausente",
+                      demo / "reports")
+    assert agenda(missing, _at(SESSION, 12))["base_ultimo_pregao"] is None

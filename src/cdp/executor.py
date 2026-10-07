@@ -105,10 +105,17 @@ def git(args: Sequence[str], raiz: Path | str, *, env: Mapping[str, str] | None 
     if token:
         cred = base64.b64encode(f"x-access-token:{token}".encode()).decode()
         pre = ["-c", f"http.https://github.com/.extraheader=AUTHORIZATION: basic {cred}"]
+    # Cada operação pertence à raiz informada; nunca descubra o Git de um projeto pai.
+    # Repositórios normais, bare e worktrees possuem sua própria raiz e continuam válidos.
+    git_env = _git_env(extra_env)
+    ceiling = str(Path(raiz).resolve().parent)
+    previous_ceiling = git_env.get("GIT_CEILING_DIRECTORIES")
+    git_env["GIT_CEILING_DIRECTORIES"] = (
+        previous_ceiling + os.pathsep + ceiling if previous_ceiling else ceiling)
     try:
         return subprocess.run(["git", *pre, *args], cwd=str(raiz), capture_output=True,
                               text=True, input=entrada, timeout=timeout,
-                              env=_git_env(extra_env), check=False)
+                              env=git_env, check=False)
     except (OSError, subprocess.SubprocessError) as exc:
         return subprocess.CompletedProcess(["git", *args], 127, "", str(exc))
 

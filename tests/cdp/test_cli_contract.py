@@ -244,11 +244,14 @@ def test_idio_and_cobertura_contracts():
     from cdp.risk import idio
 
     pk = "POSITIONAL_OR_KEYWORD"
-    assert _params(idio.serie_idio) == [("records", pk), ("md", pk), ("cfg", pk)]
+    assert _params(idio.serie_idio) == [
+        ("records", pk), ("md", pk), ("cfg", pk), ("diagnostics", "KEYWORD_ONLY")]
     assert _params(idio.decomposicao_decisao) == [("proposal", pk)]
     assert idio.CHAVE_RISCO == "risco"
     assert idio.GRUPOS_IDIO == ("mercado", "pais", "setor", "estilo", "macro", "especifico")
-    assert _params(livro.ultimo_snapshot) == [("root", pk), ("ate", pk)]
+    assert _params(livro.ultimo_snapshot) == [("root", pk), ("ate", pk),
+                                             ("conhecimento_ate", "KEYWORD_ONLY")]
+    assert inspect.signature(livro.ultimo_snapshot).parameters["conhecimento_ate"].default is None
     assert _params(fatos.factbook_emissor) == [("snap", pk), ("issuer_id", pk), ("md", pk)]
     assert _params(sinal.valuation_gap) == [("snap", pk)]
     snap = livro.SnapshotCobertura(as_of=date(2026, 10, 9), pasta=Path("x"))

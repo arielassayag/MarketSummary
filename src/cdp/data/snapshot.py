@@ -659,7 +659,7 @@ def write_snapshot(md: MarketData, out_dir: Path) -> SnapshotManifest:
     """Grava um ``MarketData`` (ex.: sintético) no layout de snapshot.
 
     O manifesto mantém ``snapshot_id``, ``as_of``, ``created_at``, fontes, limitações,
-    ``is_synthetic`` e o aviso (``DADOS SIMULADOS`` quando sintético); ``files`` e
+    ``is_synthetic``, marcadores intradiários e o aviso (``DADOS SIMULADOS`` quando sintético); ``files`` e
     ``universe_sha256`` passam a refletir os arquivos gravados.
     """
     m = md.manifest
@@ -674,6 +674,8 @@ def write_snapshot(md: MarketData, out_dir: Path) -> SnapshotManifest:
         "sources": list(m.sources), "limitations": list(m.limitations),
         "missing_tickers": list(m.missing_tickers), "is_synthetic": m.is_synthetic,
         "data_notice": m.data_notice,
+        "provisional_dates": list(m.provisional_dates),
+        "provisional_as_of": m.provisional_as_of,
     }
     return write_tables(
         Path(out_dir), manifest_fields=fields, universe_bytes=_universe_csv_bytes(md.universe),

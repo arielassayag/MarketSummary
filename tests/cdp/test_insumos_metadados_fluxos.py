@@ -20,6 +20,8 @@ METADADOS = ("historico_fontes", "historico_periodos", "historico_bases", "histo
 def fonte():
     md = make_synthetic_market(seed=7, as_of=D)
     params = carregar_parametros()
+    # Estes contratos isolam as políticas de reinvestimento/margem anteriores à ponte EBIT.
+    params.sec("projecao").pop("normalizacao_resultado_metodo", None)
     ids = list(md.universe.issuers.index)
     dados = coletar(md, D, ids, list(md.universe.lines.index), ["ILF", "EWZ", "EWW"])
     iid = next(i for i in ids if arquetipo_padrao(i, md.universe.issuers.loc[i, "gics_sector"]).arquetipo == "corporativo"

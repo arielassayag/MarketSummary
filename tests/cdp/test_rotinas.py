@@ -222,6 +222,8 @@ def test_gate_cobertura_and_calibracao(tmp_path):
 
 @pytest.fixture
 def raiz(tmp_path) -> Path:
+    # Git próprio impede que a pasta temporária herde o remoto do projeto pai.
+    subprocess.run(["git", "init", "--quiet", str(tmp_path)], check=True, capture_output=True)
     (tmp_path / "configs" / "cdp").mkdir(parents=True)
     for n in ("executor.yaml", "rotinas.yaml"):
         (tmp_path / "configs" / "cdp" / n).write_bytes((ROOT / "configs/cdp" / n).read_bytes())

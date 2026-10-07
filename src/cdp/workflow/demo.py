@@ -47,23 +47,50 @@ BRT = ZoneInfo("America/Sao_Paulo")
 
 
 class DemoStore:
-    """Fonte sem look-ahead sobre o mercado sintético: ``load(as_of)`` corta em ``as_of``."""
+    """Mercado sintético cortado por data, opcionalmente arquivado antes de cada uso.
 
-    def __init__(self, md: MarketData) -> None:
+    A demonstração completa usa ``root``: seus cálculos e os leitores posteriores consomem
+    os mesmos snapshots pelo ``MarketStore``. O modo em memória permanece disponível para
+    testes de componentes. Arquivos já usados nunca são regravados nem reparados pelo loader.
+    """
+
+    def __init__(self, md: MarketData, *, root: Path | None = None,
+                 cfg: FundConfig | None = None) -> None:
+        from ..data.store import MarketStore
+
         self.md = md
+        self.root = Path(root) if root is not None else None
+        self._archive = MarketStore(self.root, cfg=cfg) if self.root is not None else None
+        self._written: set[date] = set()
 
     def load(self, as_of: date | None = None, verify: bool = True) -> MarketData:
-        if as_of is None:
+        if as_of is None and self._archive is None:
             return self.md
-        cut = self.md.truncate(as_of)
+        requested = as_of or self.md.as_of
+        cut = self.md.truncate(requested)
         last = cut.close.index.max()
-        real_as_of = min(as_of, last.date()) if last is not None else as_of
-        return replace(cut, manifest=cut.manifest.model_copy(update={"as_of": real_as_of}))
+        real_as_of = min(requested, last.date()) if last is not None else requested
+        cut = replace(cut, manifest=cut.manifest.model_copy(update={"as_of": real_as_of}))
+        if self._archive is None:
+            return cut
+        from ..data.snapshot import write_snapshot
+
+        folder = self.root / "base" / real_as_of.isoformat()
+        if real_as_of not in self._written:
+            if folder.exists():
+                raise FileExistsError(f"Prefixo da demonstração já existe: {folder}.")
+            write_snapshot(cut, folder)
+            self._written.add(real_as_of)
+        return self._archive.load(as_of=as_of, verify=verify)
 
     def last_date(self) -> date:
+        if self._archive is not None:
+            return self._archive.last_date()
         return self.md.as_of
 
     def verify_chain(self) -> tuple[bool, list[str]]:
+        if self._archive is not None:
+            return self._archive.verify_chain()
         return True, [f"mercado sintético em memória ({SIMULATED_DATA_NOTICE})"]
 
 
@@ -177,11 +204,11 @@ def write_demo_thesis(rt: Runtime, week: date) -> Path:
 
 def run_demo(out: Path | str, days: int = 5, *, seed: int = DEMO_SEED,
              first_week: date = DEMO_FIRST_WEEK, cfg: FundConfig | None = None) -> dict:
-    """Executa a demonstração completa em ``out`` (recusa reutilizar uma pasta com livro)."""
+    """Executa a demonstração completa em ``out`` (recusa reutilizar livro ou mercado)."""
     from ..data.synthetic import make_synthetic_market
 
     out = Path(out)
-    if (out / "book").exists():
+    if (out / "book").exists() or (out / "market").exists():
         raise FileExistsError(f"Já existe uma demonstração em {out}: use outra pasta (--out).")
     cfg = cfg or load_config()
     sessions = demo_sessions(days, first_week, cfg)
@@ -189,7 +216,8 @@ def run_demo(out: Path | str, days: int = 5, *, seed: int = DEMO_SEED,
     clock = _Clock()
     # ``teses_root=None``: a demonstração nunca adota rascunhos de tese do repositório.
     rt = Runtime(cfg=cfg, book_root=out / "book", market_root=out / "market",
-                 reports_root=out / "reports", store_override=DemoStore(md), clock=clock,
+                 reports_root=out / "reports",
+                 store_override=DemoStore(md, root=out / "market", cfg=cfg), clock=clock,
                  teses_root=None)
     log: list[dict] = []
     for s in sessions:

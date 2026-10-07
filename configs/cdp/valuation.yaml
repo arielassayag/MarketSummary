@@ -5,7 +5,7 @@
 # Todos os valores abaixo são insumos públicos datados (com a fonte citada) ou regras de política
 # do modelo; nenhum é calculado aqui. Revisão semestral por commit (Damodaran publica em janeiro e
 # julho); a taxa livre de risco em dólar é lida diariamente da série pública (FRED DGS10).
-versao: "2026-10.6"
+versao: "2026-10.8"
 horizonte_meses: 12
 
 fontes:
@@ -161,6 +161,8 @@ consenso:
   unidade_metodo: declaracao_fonte
 
 projecao:
+  normalizacao_resultado_metodo: eventos_evidenciados
+  resultado_corte_metodo: base_preco_conhecimento_explicitos
   anos_explicitos: 10             # FCFF: anos 1-2 por direcionadores, 3-10 com fade geométrico
   anos_rim: 12                    # RIM (GLS): 12 anos com fade linear do ROE
   anos_ddm: 5                     # DDM: estágio 1

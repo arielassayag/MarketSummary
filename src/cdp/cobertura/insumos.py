@@ -542,7 +542,7 @@ def _base_linha(row: pd.Series) -> str | None:
     return "consolidado" if b in ("true", "1") else "individual" if b in ("false", "0") else None
 
 
-def _prov_linha(row: pd.Series | None, *, detalhar_fluxos: bool = False) -> dict[str, Any]:
+def _prov_linha(row: pd.Series | None, *, detalhar_fluxos: bool = False, detalhar_resultados: bool = False) -> dict[str, Any]:
     if row is None:
         return prov_codigo("sem linha de demonstrativo")
     freq = FREQ_PT.get(str(row.get("freq")), str(row.get("freq")))
@@ -562,6 +562,13 @@ def _prov_linha(row: pd.Series | None, *, detalhar_fluxos: bool = False) -> dict
     elif detalhar_fluxos and "componentes_fluxo=" in str(row.get("nota", "")):
         texto = str(row["nota"]).split("componentes_fluxo=", 1)[1]
         out["componentes_fluxo"], _ = json.JSONDecoder().raw_decode(texto)
+    if detalhar_resultados:
+        out.update({"moeda_fonte": row.get("currency"), "base_contabil": _base_linha(row),
+                    "freq_fonte": str(row.get("freq")), "fim_fonte": pd.Timestamp(row["period_end"]).date().isoformat()})
+        for k in ("fato_resultado_id", "disponivel_desde", "period_start"):
+            v = row.get(k)
+            if pd.notna(v):
+                out[k] = v.isoformat() if hasattr(v, "isoformat") else v
     return out
 
 
@@ -772,6 +779,13 @@ def _conv(valor: float | None, fator: float | None) -> float | None:
 def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCobertura,
                      issuer_id: str, as_of: date) -> dict[str, Any]:
     """Pacote de insumos normalizado de um emissor (ver docstring do módulo)."""
+    from .temporal import ativo as temporal_ativo
+    from .temporal import validar as validar_corte
+
+    corte = None
+    if temporal_ativo(params) and dados.corte_temporal is not None:
+        corte = validar_corte(dados.corte_temporal)
+        as_of = date.fromisoformat(corte["data_modelo"])
     uni = md.universe
     iss = uni.issuers.loc[issuer_id]
     pais = str(iss["country"])
@@ -800,7 +814,13 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
     else:
         pk.put("fim_concessao", None)
     pk.put("as_of", as_of.isoformat())
+    if corte is not None:
+        pk.put("corte_temporal", corte)
 
+    from .resultado import ativo as resultado_ativo
+    detalhar_resultados = resultado_ativo(params)
+    if detalhar_resultados and not dados.resultado_evidencias.empty:
+        pk.put("resultado_evidencias", str(dados.resultado_evidencias.iloc[0]["catalogo_json"]))
     dem = Demonstrativos(dados.demonstrativos, issuer_id)
     moeda_dem = dem.moeda() or arq.moeda_demonstrativos
     if moeda_dem is None:
@@ -917,7 +937,9 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
             periodos[item] = pd.Timestamp(row["period_end"])
             bases_fluxos[item] = _base_linha(row)
             moedas_fluxos[item] = row.get("currency")
-        prov = _prov_linha(row, detalhar_fluxos=detalhar_fluxos)
+        prov = _prov_linha(row, detalhar_fluxos=detalhar_fluxos, detalhar_resultados=detalhar_resultados)
+        if detalhar_resultados and row is not None:
+            prov.update({"fator_moeda_resultado": str(fator), "valor_modelo": r6(vv)})
         estimados = estimados or bool(prov.get("data_estimada"))
         pk.put(f"t.{item}", vv, prov, nome=rotulo(item), unidade=f"total:{moeda}", periodo=per)
         if prov.get("data_estimada"):
@@ -982,16 +1004,17 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
         if linhas:
             f_item = 1.0 if item == "acoes_em_circulacao" else fator
             hist[item] = {str(ano): r6(_conv(float(r["value"]), f_item)) for ano, r in sorted(linhas.items())}
-            hist_fontes[item] = {str(ano): {**_prov_linha(r), "item_fonte": str(r["item"]),
+            hist_fontes[item] = {str(ano): {**_prov_linha(r, detalhar_resultados=detalhar_resultados), "item_fonte": str(r["item"]),
                                  "moeda_fonte": str(r.get("currency")), "valor_fonte": float(r["value"]),
-                                 "fator_moeda": f_item, "valor_modelo": hist[item][str(ano)]}
+                                 "fator_moeda": f_item, "valor_modelo": hist[item][str(ano)],
+                                 **({"fator_moeda_resultado": str(f_item)} if detalhar_resultados else {})}
                                  for ano, r in linhas.items()}
             hist_periodos[item] = {str(ano): f"A|{pd.Timestamp(r['period_end']).date().isoformat()}"
                                    for ano, r in linhas.items()}
             hist_bases[item] = {str(ano): _base_linha(r) for ano, r in linhas.items()}
             hist_moedas[item] = {str(ano): r.get("currency") for ano, r in linhas.items()}
     pk.put("historico", hist)
-    if detalhar_fluxos:
+    if detalhar_fluxos or detalhar_resultados:
         pk.put("historico_fontes", hist_fontes)
         pk.put("historico_periodos", hist_periodos)
         pk.put("historico_bases", hist_bases)

@@ -41,8 +41,10 @@ import os
 import re
 import threading
 from collections.abc import Callable
+from contextlib import contextmanager
+from contextvars import ContextVar
 from dataclasses import dataclass
-from datetime import UTC, date, datetime
+from datetime import UTC, date, datetime, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -77,21 +79,35 @@ class RegistroArquivo:
     sha256: str
     bytes: int
     data_coleta: datetime   # UTC
+    precisao: str = "seconds"  # registros antigos eram truncados para segundo
+
+    @property
+    def limite_captura(self) -> datetime:
+        """Limite superior conhecido da posse; segundos antigos não provam subsegundos."""
+        if self.precisao not in ("seconds", "microseconds"):
+            raise ValueError("Precisão temporal desconhecida no registro público.")
+        return self.data_coleta + timedelta(seconds=1) if self.precisao == "seconds" else self.data_coleta
 
     def como_dict(self) -> dict:
-        return {"chave": self.chave, "fonte": self.fonte, "url": self.url,
-                "caminho": self.caminho, "sha256": self.sha256, "bytes": self.bytes,
-                "data_coleta": self.data_coleta.astimezone(UTC).isoformat(timespec="seconds")}
+        out = {"chave": self.chave, "fonte": self.fonte, "url": self.url,
+               "caminho": self.caminho, "sha256": self.sha256, "bytes": self.bytes,
+               "data_coleta": self.data_coleta.astimezone(UTC).isoformat(timespec=self.precisao)}
+        if self.precisao != "seconds":
+            out["precisao_temporal"] = self.precisao
+        return out
 
     @staticmethod
     def de_dict(d: dict) -> RegistroArquivo:
         dc = datetime.fromisoformat(str(d["data_coleta"]))
         if dc.tzinfo is None:
             dc = dc.replace(tzinfo=UTC)
+        precisao = d.get("precisao_temporal", "seconds")
+        if precisao not in ("seconds", "microseconds"):
+            raise ValueError("Precisão temporal desconhecida no índice público.")
         return RegistroArquivo(chave=str(d["chave"]), fonte=str(d["fonte"]),
                                url=d.get("url") or None, caminho=str(d["caminho"]),
                                sha256=str(d["sha256"]), bytes=int(d.get("bytes", 0)),
-                               data_coleta=dc)
+                               data_coleta=dc, precisao=precisao)
 
 
 FUSO = ZoneInfo("America/Sao_Paulo")
@@ -110,6 +126,10 @@ def agora_utc() -> datetime:
     return datetime.now(UTC).replace(microsecond=0)
 
 
+def _agora_preciso() -> datetime:
+    return datetime.now(UTC)
+
+
 _SEGREDO_RE = re.compile(r"(?i)((?:token|apikey|api_key|key|access_token)=)[^&\s'\"]+")
 
 
@@ -118,15 +138,37 @@ def ocultar_segredos(texto: str) -> str:
     return _SEGREDO_RE.sub(r"\1<oculto>", str(texto))
 
 
+_CORTE_CONHECIMENTO: ContextVar[datetime | None] = ContextVar("cdp_corte_conhecimento", default=None)
+
+
+@contextmanager
+def corte_de_conhecimento(corte: datetime):
+    """Limita todas as instâncias criadas nesta coleta; não altera arquivos nem o relógio."""
+    if corte.tzinfo is None:
+        raise ValueError("Corte de conhecimento exige fuso explícito.")
+    token = _CORTE_CONHECIMENTO.set(corte.astimezone(UTC))
+    try:
+        yield
+    finally:
+        _CORTE_CONHECIMENTO.reset(token)
+
+
 class Arquivo:
     """Arquivo de fontes públicas sob ``<raiz>/publico`` (seguro para threads)."""
 
     def __init__(self, raiz: str | Path | None = None, *, offline: bool = False,
-                 agora: Callable[[], datetime] = agora_utc) -> None:
+                 agora: Callable[[], datetime] = agora_utc,
+                 conhecimento_ate: datetime | None = None) -> None:
         self.raiz = Path(raiz) if raiz is not None else DEFAULT_RAIZ
         self.base = self.raiz / PASTA_ARQUIVO
         self.offline = bool(offline)
-        self._agora = agora
+        self.conhecimento_ate = conhecimento_ate or _CORTE_CONHECIMENTO.get()
+        if self.conhecimento_ate is not None:
+            if self.conhecimento_ate.tzinfo is None:
+                raise ValueError("Corte de conhecimento exige fuso explícito.")
+            self.conhecimento_ate = self.conhecimento_ate.astimezone(UTC)
+        self._agora = (_agora_preciso if self.conhecimento_ate is not None and agora is agora_utc
+                       else agora)
         self._lock = threading.RLock()
         self._indice: dict[str, list[RegistroArquivo]] | None = None
         self.falhas: list[str] = []
@@ -176,6 +218,8 @@ class Arquivo:
     def buscar(self, chave: str, ate: date | datetime | None = None) -> RegistroArquivo | None:
         """Coleta mais recente da ``chave`` com ``data_coleta <= ate`` (sem ``ate``: a última)."""
         regs = self._carregar().get(chave, [])
+        if self.conhecimento_ate is not None:
+            regs = [r for r in regs if r.limite_captura <= self.conhecimento_ate]
         if ate is not None:
             if isinstance(ate, datetime):
                 lim = ate if ate.tzinfo else ate.replace(tzinfo=UTC)
@@ -187,7 +231,8 @@ class Arquivo:
     def por_sha(self, sha256: str) -> RegistroArquivo | None:
         """Registro (mais antigo) de um conteúdo pelo SHA-256 — reprodução exata de um run."""
         for reg in self.registros():
-            if reg.sha256 == sha256:
+            if reg.sha256 == sha256 and (self.conhecimento_ate is None
+                                        or reg.limite_captura <= self.conhecimento_ate):
                 return reg
         return None
 
@@ -206,6 +251,8 @@ class Arquivo:
         return None
 
     def ler(self, reg: RegistroArquivo) -> bytes:
+        if self.conhecimento_ate is not None and reg.limite_captura > self.conhecimento_ate:
+            raise FonteIndisponivel("Primeira captura posterior ao corte de conhecimento.")
         p = self.base / reg.caminho
         if not p.exists():
             raise ArquivoAdulterado(f"Arquivo do índice ausente em disco: {reg.caminho}")
@@ -224,7 +271,12 @@ class Arquivo:
             raise ValueError(f"Fonte desconhecida: {fonte!r}")
         if self.offline:
             raise FonteIndisponivel("Arquivo aberto em modo offline: gravação não permitida.")
-        dc = (data_coleta or self._agora()).astimezone(UTC).replace(microsecond=0)
+        dc = data_coleta or self._agora()
+        if self.conhecimento_ate is not None and dc.tzinfo is None:
+            raise ValueError("Captura temporal exige fuso explícito.")
+        dc = dc.astimezone(UTC)
+        if self.conhecimento_ate is None:
+            dc = dc.replace(microsecond=0)
         sha = sha256_de(conteudo)
         pasta, nome = chave.rsplit("/", 1)
         dia = data_local(dc).isoformat()  # pasta pela data de São Paulo (a da rotina)
@@ -243,7 +295,8 @@ class Arquivo:
                 tmp.write_bytes(conteudo)
                 tmp.replace(destino)
             reg = RegistroArquivo(chave=chave, fonte=fonte, url=url, caminho=caminho,
-                                  sha256=sha, bytes=len(conteudo), data_coleta=dc)
+                                  sha256=sha, bytes=len(conteudo), data_coleta=dc,
+                                  precisao="microseconds" if self.conhecimento_ate is not None else "seconds")
             self.base.mkdir(parents=True, exist_ok=True)
             self._anexar_indice(json.dumps(reg.como_dict(), ensure_ascii=False,
                                            sort_keys=True) + "\n")
@@ -337,11 +390,16 @@ class Arquivo:
                 return arquivado, self.ler(arquivado)
             return None
         reg = self.gravar(chave, fonte, url, conteudo)
+        if self.conhecimento_ate is not None and reg.limite_captura > self.conhecimento_ate:
+            with self._lock:
+                self.falhas.append(f"{chave}: coleta {reg.data_coleta.isoformat()} posterior ao "
+                                   f"corte {self.conhecimento_ate.isoformat()}; arquivada sem uso no modelo")
+            return (arquivado, self.ler(arquivado)) if arquivado is not None else None
         return reg, conteudo
 
 
 __all__ = [
     "ArquivoAdulterado", "Arquivo", "DEFAULT_RAIZ", "FONTES", "FonteIndisponivel",
     "PASTA_ARQUIVO", "RegistroArquivo", "agora_utc", "data_local", "ocultar_segredos",
-    "sha256_de",
+    "sha256_de", "corte_de_conhecimento",
 ]

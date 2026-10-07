@@ -356,3 +356,82 @@ reconciliação idempotente sem outra ordem/decisão, ausência de preço/FX/mac
 por CLI e recomendação de fase sem escrita no mandato. Probabilidade/evento/horizonte explícitos
 são pré-condição do Brier; convicção ordinal não os substitui. Livros antigos não são preenchidos
 retroativamente. A avaliação sintética confirma mecanismos, sem demonstrar mérito econômico.
+
+## 2026-10-07 · Origem e recuperação do ensaio operacional
+
+Contexto: um relógio histórico não comprova autoria prospectiva; a integridade do livro não
+autentica um resultado de etapa ainda sem selo. → Decisão: origem retrospectiva imutável,
+ancorada no início, excluída do IC prospectivo em todos os modos. Etapas exigem arquivo,
+âncora e cadeia; recuperação de arquivo sem âncora é recusada. Artefatos canônicos existentes
+exigem recibos correspondentes. → Consequências: interrupções ambíguas ficam incompletas,
+sem nova ordem ou autoaprovação. A conclusão pode ser recuperada somente pelo recálculo exato
+e inventário completo. Ensaios permanecem internos, com configuração contrafactual declarada,
+sem publicação ou mudança do mandato oficial. O aceite técnico completo continua pendente.
+
+## 2026-10-07 · Custódia física da demonstração
+
+Contexto: o painel reaberto consultava a fonte física do risco, mas a demo só conservava o
+mercado em memória. → Decisão: arquivar cada prefixo antes do seu primeiro uso e executar a
+demo com o mesmo `MarketStore` canônico usado na reabertura. → Consequências: leitor,
+runtime e autenticação confrontam os mesmos bytes; perda/adulteração continua falhando
+fechada. Dados simulados permanecem explícitos; macro ausente não se converte em zero.
+A correção não preenche livros históricos e depende do aceite técnico do lote completo.
+
+## 2026-10-07 · Preços e conhecimento com cortes distintos
+
+Contexto: a montagem semanal atualiza os modelos durante a manhã usando o fechamento
+anterior; a data do preço não pode representar o conhecimento de documentos capturados no
+dia da decisão. → Decisão: a política temporal `.8` sela base do preço, data do modelo,
+instante de conhecimento e início/fim da coleta. Execução atual com relógio explícito pode
+fechar o corte após a coleta; um corte histórico fixo não avança. A seleção do modelo exige
+conhecimento disponível no instante da decisão. → Consequências: capturas não são
+retrodatadas, documentos futuros continuam ausentes e reservas reutilizam somente retrato
+íntegro da mesma base/configuração. Arquivos e parâmetros legados sem a chave nova mantêm
+o contrato anterior. A separação não certifica PIT intradiário dos demais provedores nem
+eficácia econômica; integração e aceite técnico da versão ainda estão pendentes.
+
+## 2026-10-07 · Precisão da disponibilidade arquivada
+
+Contexto: truncar uma captura para segundos podia admitir bytes recebidos depois de um
+corte no mesmo segundo. → Decisão: novas capturas sob a política temporal preservam UTC
+com microssegundos e seu marcador no próprio registro, índice e envelope. Registros legados
+sem marcador carregam incerteza de até um segundo e só ficam disponíveis, na política nova,
+a partir desse limite superior. → Consequências: leitura por chave, hash e catálogo segue o
+mesmo limite; o envelope histórico sem a política mantém formato e hashes anteriores.
+Fatos/PDFs simulados verificam o mecanismo e não são adotados como contabilidade real.
+
+## 2026-10-07 · Domínio de cotação finito e janela comum de evento societário
+
+Contexto: drivers isolados com zero/infinito mostraram marcação não finita, erro no logaritmo
+e divergência do risco frente à ausência. → Decisão: preços locais, FX e seus produtos derivados
+precisam ser finitos e positivos; dado inválido permanece ausente nos derivados, sem alterar
+entrada. Retornos negativos legítimos conservam seu sinal. Eventos societários comparam preço
+bruto e ajustado nas mesmas duas datas válidas; sem essa janela comum não há evento presumido.
+→ Consequências: posição não reprecificada conserva ações/valor e alerta; catch-up usa o retorno
+ajustado posterior e nunca cria fill atrasado. As regras de capacidade/custos e o carry limitado
+do FX não mudam. Baseline e contrafactuais completos foram conferidos independentemente antes
+do transplante delimitado para desenvolvimento; integração ainda depende da suíte ampla.
+
+## 2026-10-07 · Git pertence exclusivamente à raiz informada
+
+Contexto: uma raiz temporária de teste dentro do projeto, sem Git próprio, herdou o remoto pai
+e criou a trava distribuída. → Decisão: toda chamada Git do executor limita a descoberta ao
+pai da raiz informada, em variável de ambiente exclusiva do subprocesso; tetos existentes são
+preservados. As fixtures Git inicializam seu próprio repositório, com remotos exclusivamente
+locais nos testes. → Consequências: raiz sem Git próprio falha fechada antes de consultar/gravar
+a trava do pai; raiz normal, bare e worktree continuam válidos. A trava acidental foi liberada
+pelo ID comprovado no registro do próprio teste, sem force ou exclusão de ramo; `main`, mandato
+e arquivos do executor foram preservados. Não é uma autorização para remover a trava de outro.
+
+## 2026-10-07 · Aceite técnico do lote temporal e limites científicos
+
+Contexto: a suíte ampla 5 concluiu sem falhas/erros após os reparos delimitados de fontes,
+fixtures, cotações e isolamento Git; os 351 arquivos testados permaneceram iguais.
+→ Decisão: aceitar tecnicamente a metodologia `2026-10.8` com a suíte completa de 2.582
+casos (2.565 aprovados, 16 pulados, um xfail) e Ruff, mantendo as provas anteriores como
+histórico. Conferência independente também confirmou os 189 arquivos da fonte física final.
+→ Consequências: o lote pode seguir à integração autorizada; aprovação técnica não libera
+P0, cuja confiança C permanece 43,78%, nem certifica eficácia econômica, PIT ou E1 integral.
+Provas delimitadas de atraso e dados ausentes não substituem os casos ainda abertos.
+Giro, capital por classe e RI por captura observada continuam protótipos privados; associação
+de entidade a IID e disponibilidade precisam estar autenticadas antes do consumo operacional.

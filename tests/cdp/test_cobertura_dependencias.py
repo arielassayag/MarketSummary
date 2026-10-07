@@ -24,6 +24,7 @@ from cdp.data.synthetic import make_synthetic_market
 @pytest.fixture
 def params():
     p = deepcopy(carregar_parametros())
+    p.sec("projecao").pop("normalizacao_resultado_metodo", None)  # Isola a política .6 sob teste.
     p.sec("qualidade")["alertas_fonte_metodo"] = "dependencias_efetivas"
     return p
 

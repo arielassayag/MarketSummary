@@ -65,12 +65,15 @@ def portoes_emissor(pac: Mapping[str, Any], mod: Mapping[str, Any], params: Para
     q = params.sec("qualidade")
     tol = float(q["identidade_tolerancia"])
     out: list[dict[str, Any]] = []
-    # G1 identidades
+    # G1 compara demonstrações reportadas; a ponte pré-imposto é certificada à parte.
+    reportado = pac.get("resultado_reportado", {}) if params.sec("projecao").get(
+        "normalizacao_resultado_metodo") == "eventos_evidenciados" else {}
+    identidade = {**pac, **reportado}
     falhas = []
 
     def ident(a: str, b: list[tuple[str, float]], nome: str) -> None:
-        va = _f(pac.get(f"t.{a}"))
-        vs = [(_f(pac.get(f"t.{k}")), s) for k, s in b]
+        va = _f(identidade.get(f"t.{a}"))
+        vs = [(_f(identidade.get(f"t.{k}")), s) for k, s in b]
         if va is None or any(v is None for v, _ in vs):
             return
         soma = sum(s * v for v, s in vs)  # type: ignore[operator]

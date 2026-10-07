@@ -284,6 +284,10 @@ class AuthenticatedViewTracker(ViewTracker):
         valid &= not errors
         if not valid:
             raise ValueError("avaliação não autenticada: " + "; ".join(errors))
+        from ..workflow.origem import read_replay_origin
+
+        if read_replay_origin(book) is not None:
+            raise ValueError("Ensaio retrospectivo: resultados fora do IC prospectivo da mente.")
         seals = {e.week: e.ts for e in book.audit.events() if e.event_type == SIGNALS_EVENT}
         rows = []
         for path in sorted(self.book_root.glob(f"*/{FOLDER}/{SIGNALS_FILE}")):
@@ -336,6 +340,11 @@ class AuthenticatedViewTracker(ViewTracker):
         return hist
 
     def phase_gate(self, cfg: FundConfig) -> tuple[str, str]:
+        from ..workflow.book import Book
+        from ..workflow.origem import read_replay_origin
+
+        if read_replay_origin(Book(self.book_root)) is not None:
+            return cfg.research.llm_phase, "Manter fase: ensaio retrospectivo não promove mente."
         if self.include_synthetic or self.channel == "quant":
             return cfg.research.llm_phase, "Manter fase: diagnóstico sintético/quant não promove mente."
         return super().phase_gate(cfg)

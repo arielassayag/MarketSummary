@@ -439,41 +439,87 @@ def financing_rate(md: MarketData, as_of: date) -> tuple[float | None, date | No
 
 
 def factor_returns_source(session_model: RiskModel | None, model_prev: RiskModel,
-                          session_ts: pd.Timestamp, session_returns: pd.Series | None
+                          session_ts: pd.Timestamp, session_returns: pd.Series | None,
+                          *, required_macro: Iterable[str] = (),
+                          observed_macro: pd.DataFrame | None = None,
+                          observed_equity: pd.DataFrame | None = None,
                           ) -> tuple[Callable[[pd.Timestamp], pd.Series | None], dict[str, Any]]:
     """Retornos fatoriais por sessão para a atribuição com as exposições de ``model_prev``.
 
     Ordem: linha COMPLETA (todos os fatores de ``model_prev``) do modelo da sessão, depois do
     modelo anterior; para a própria sessão, regressão cross-section dos retornos do dia com as
     exposições de ``model_prev`` (``session_returns``). Uma linha incompleta (fator que o modelo
-    do dia descartou) só é usada como último recurso e é registrada em ``state['partial']`` —
-    os fatores sem retorno contribuem zero com alerta, nunca em silêncio.
+    do dia descartou) só é usada como último recurso no caminho legado, sem macro. Com macro,
+    fixa os retornos observados, desconta B_macro × f_macro do retorno de ações e estima somente
+    o bloco estrutural com B anterior. Não reutiliza WLS estimada sobre retorno bruto.
     """
     names = model_prev.factor_names
+    macro = sorted(set(required_macro) | {n for n in names if n.startswith("macro:")})
+    structural = [n for n in names if n not in macro]
     frames = [m.factor_returns for m in (session_model, model_prev) if m is not None]
     cache: dict[pd.Timestamp, pd.Series | None] = {}
-    state: dict[str, Any] = {"fallback": False, "partial": {}}
+    state: dict[str, Any] = {"fallback": False, "partial": {}, "missing_macro": {}}
 
     def get(s: pd.Timestamp) -> pd.Series | None:
         if s in cache:
             return cache[s]
         row: pd.Series | None = None
         partial: pd.Series | None = None
+        observed = None
+        if macro:
+            if set(macro) - set(names):
+                state["missing_macro"][str(s.date())] = sorted(set(macro) - set(names))
+                cache[s] = None
+                return None
+            if observed_macro is not None:
+                observed = (observed_macro.loc[s].reindex(macro) if s in observed_macro.index
+                            else pd.Series(np.nan, index=macro))
+            else:
+                for fr in frames:
+                    if s in fr.index:
+                        cand = fr.loc[s].reindex(macro).astype(float)
+                        if np.isfinite(cand.to_numpy()).all():
+                            observed = cand
+                            break
+            if observed is None or not np.isfinite(observed.to_numpy(dtype=float)).all():
+                state["missing_macro"][str(s.date())] = macro
+                cache[s] = None
+                return None
+            y = (observed_equity.loc[s] if observed_equity is not None
+                 and s in observed_equity.index else
+                 session_returns if s == session_ts else None)
+            if y is None:
+                cache[s] = None
+                return None
+            B = model_prev.exposures
+            residual = y - B[macro] @ observed
+            est = cross_sectional_factor_returns(B[structural], residual,
+                                                 model_prev.specific_var)
+            if est is not None:
+                row = est.reindex(names).astype(float)
+                row.loc[macro] = observed
+                if not np.isfinite(row.to_numpy()).all():
+                    row = None
+                state["fallback"] = True
+            cache[s] = row
+            return row
         for fr in frames:
             if s in fr.index:
                 cand = fr.loc[s].reindex(names).astype(float)
-                if cand.notna().all():
+                if np.isfinite(cand.to_numpy()).all():
                     row = cand
                     break
                 if partial is None and cand.notna().any():
                     partial = cand
         if row is None and s == session_ts and session_returns is not None:
-            est = cross_sectional_factor_returns(model_prev.exposures, session_returns,
+            y = session_returns
+            B = model_prev.exposures
+            est = cross_sectional_factor_returns(B, y,
                                                  model_prev.specific_var)
             if est is not None:
                 row = est.reindex(names).astype(float)
                 state["fallback"] = True
-        if row is None and partial is not None:
+        if row is None and partial is not None and not macro:
             state["partial"][str(s.date())] = sorted(partial.index[partial.isna()])
             row = partial
         cache[s] = row
@@ -504,7 +550,7 @@ def _finite(x: object) -> bool:
 
 def _last_valid(series: pd.Series, ts: pd.Timestamp) -> tuple[float | None, pd.Timestamp | None]:
     s = pd.to_numeric(series.loc[:ts], errors="coerce").dropna()
-    s = s[s > 0]
+    s = s[np.isfinite(s) & (s > 0)]
     if s.empty:
         return None, None
     return float(s.iloc[-1]), s.index[-1]
@@ -888,6 +934,7 @@ class _SideResult:
     record: DailyRecord
     entry: BookEntry | None
     commit: Callable[[], None] | None
+    diagnostic: dict | None = None
 
 
 class _MainSide:
@@ -1073,8 +1120,8 @@ class DailyRunner:
         if shadow_res is not None and self.shadow is not None:
             if shadow_res.commit is not None:
                 shadow_res.commit()
-            self.shadow.track.append(shadow_res.record)
-        self.track.append(main_res.record)
+            self._append_side(self.shadow.track, shadow_res)
+        self._append_side(self.track, main_res)
         lapsed = lapsed or retomada
         return DailyRunResult(
             record=main_res.record,
@@ -1082,6 +1129,15 @@ class DailyRunner:
             booked=main_res.entry if plan is not None else None,
             shadow_booked=shadow_res.entry if shadow_res is not None and shadow_res.commit
             else None, lapsed=lapsed)
+
+    @staticmethod
+    def _append_side(track: TrackRecord, result: _SideResult) -> None:
+        from .risco_diario import append
+
+        if result.diagnostic is None:
+            track.append(result.record)
+        else:
+            append(track, result.record, result.diagnostic)
 
     def backfill(self, start: date, end: date,
                  pending: Mapping[date, PendingExecution] | Iterable[PendingExecution] | None
@@ -1173,6 +1229,11 @@ class DailyRunner:
             problems += [f"[sombra] {m}" for m in msgs_s]
         _, msgs_b = self.book.verify_integrity()
         problems += [f"[livro] {m}" for m in msgs_b]
+        from .risco_diario import verify
+
+        for tr in [self.track] + ([self.shadow.track] if self.shadow else []):
+            problems += [f"[risco diário] {m}" for m in verify(
+                tr, market_loader=self.store.load, market_root=getattr(self.store, "root", None))]
         return (not problems, problems)
 
     # ------------------------------------------------------------------ contexto
@@ -1236,6 +1297,15 @@ class DailyRunner:
         daquela sessão usou."""
         if d in self._models:
             return self._models[d]
+        from .risco_diario import MARKER, load, restore
+
+        historical = self.track.get(d)
+        if historical is not None and MARKER in historical.input_hashes:
+            diagnostic = load(self.track, historical)
+            archived = diagnostic["models"]["base"]
+            model = restore(archived) if archived else None
+            self._models[d] = model
+            return model
         model: RiskModel | None = None
         if md is None:
             md = self.store.load(as_of=d)
@@ -1243,6 +1313,10 @@ class DailyRunner:
         try:
             p = panel if panel is not None else build_asset_panel(md, self.cfg, as_of=d)
             model = estimate_risk_model(p, self.cfg, md, as_of=d, issuers=p.eligible)
+            if self.cfg.risk_model.macro_factors:
+                from ..risk.macro import augment_with_macro
+
+                model = augment_with_macro(model, md, self.cfg, p)
         except (ValueError, KeyError, IndexError, np.linalg.LinAlgError) as exc:
             self._model_notes[d] = f"Modelo de risco indisponível em {d}: {exc}"
         self._models[d] = model
@@ -1418,9 +1492,9 @@ class DailyRunner:
         side = self.shadow
         assert side is not None
         prev = side.track.last()
+        _check_track_tail(side.track, prev)
         if prev is not None and prev.date >= ctx.date:
             return None, (prev if prev.date == ctx.date else None)
-        _check_track_tail(side.track, prev)
         alerts: list[str] = []
         try:
             plan = self._shadow_plan(side, ctx, prev, pending)
@@ -1593,6 +1667,24 @@ class DailyRunner:
 
         hashes = self._input_hashes(ctx, entry_after, proposal_after, model_prev
                                     if marked.lines else None)
+        from .risco_diario import MARKER, build, load, text
+
+        md_prev = (self.store.load(as_of=prev.date).truncate(prev.date)
+                   if prev is not None and model_prev is not None else None)
+        previous_sources = (load(side.track, prev)["sources"]["current"]
+                            if prev is not None and model_prev is not None
+                            and MARKER in prev.input_hashes else None)
+        diagnostic = build(ctx, cfg, positions, nav_end, model_prev, md_prev,
+                           previous_sources=previous_sources)
+        hashes[MARKER] = sha256_text(text(diagnostic))
+        if diagnostic["binding"] is None and any(p.market_value_usd for p in positions):
+            alerts.append("Risco diário base/evento incompleto: fatia idiossincrática vinculante "
+                          "indisponível; não comprova cumprimento integral do mandato.")
+        elif (diagnostic["idio_binding"] is not None and cfg.risk.idio_share_floor is not None
+              and diagnostic["idio_binding"] < cfg.risk.idio_share_floor - 1e-9):
+            alerts.append("Fatia idiossincrática efetiva abaixo do piso em "
+                          f"{diagnostic['binding']}: {fmt_pct(diagnostic['idio_binding'])}; "
+                          "monitorar a carteira efetiva para a próxima decisão.")
         if extra_hashes:
             hashes.update({k: v for k, v in extra_hashes.items() if v})
         if ctx.md.is_synthetic:
@@ -1616,7 +1708,7 @@ class DailyRunner:
         )
         record = record.model_copy(update={"record_hash": record.compute_hash()})
         return _SideResult(record=record, entry=entry_after if plan is not None else None,
-                           commit=commit)
+                           commit=commit, diagnostic=diagnostic)
 
     # ------------------------------------------------------------------ marcação
     def _fx(self, ctx: DailyContext) -> pd.Series:
@@ -1781,8 +1873,19 @@ class DailyRunner:
                                + note).strip()]
         session_returns = (ctx.panel.returns.loc[ctx.ts] if ctx.ts in ctx.panel.returns.index
                            else None)
-        get, source_state = factor_returns_source(ctx.model, model_prev, ctx.ts, session_returns)
+        from ..risk.macro import macro_returns
+
+        required = ["macro:" + s for s in self.cfg.risk_model.macro_factors]
+        symbols = sorted({s.removeprefix("macro:") for s in required} | {
+            n.removeprefix("macro:") for n in model_prev.factor_names if n.startswith("macro:")})
+        observed = macro_returns(ctx.md, symbols, ctx.panel.returns.index)
+        observed.columns = ["macro:" + c for c in observed.columns]
+        get, source_state = factor_returns_source(ctx.model, model_prev, ctx.ts, session_returns,
+                                                  required_macro=required,
+                                                  observed_macro=observed,
+                                                  observed_equity=ctx.panel.returns)
         names = model_prev.factor_names
+        strict_macro = bool(symbols)
         calendar = ctx.panel.returns.index
         prev_ts, ts = pd.Timestamp(prev.date), ctx.ts
         fx_frame = ctx.cache.get("fx_frame")
@@ -1799,10 +1902,14 @@ class DailyRunner:
             if ln.issuer_id not in model_prev.exposures.index:
                 outside.append(ln.ticker)
                 continue
+            if strict_macro and not np.isfinite(model_prev.exposures.loc[
+                    ln.issuer_id].reindex(names).to_numpy(dtype=float)).all():
+                return None, [], ["Atribuição macro indisponível: exposição da posição não finita."]
             # Janela do retorno da linha: (último preço válido ≤ registro anterior, último ≤ hoje].
             if ln.ticker in ctx.md.adj_close.columns and ln.currency in fx_frame.columns:
                 adj = pd.to_numeric(ctx.md.adj_close[ln.ticker], errors="coerce")
-                lvl = adj.where(adj > 0) * fx_frame[ln.currency].reindex(adj.index)
+                lvl = adj.where(np.isfinite(adj) & (adj > 0)) * fx_frame[ln.currency].reindex(adj.index)
+                lvl = lvl.where(np.isfinite(lvl) & (lvl > 0))
                 valid = lvl.dropna().index
                 d0 = valid[valid <= prev_ts]
                 d1 = valid[valid <= ts]
@@ -1815,6 +1922,10 @@ class DailyRunner:
             for s in window:
                 row = get(s)
                 if row is None:
+                    if strict_macro:
+                        return None, [], [f"Atribuição macro indisponível em {s.date()}: "
+                                          "fator requerido/retorno observado ausente ou não finito; "
+                                          "fatores e específico não apurados."]
                     if s == ts:
                         session_missing = True
                     else:
@@ -1829,7 +1940,9 @@ class DailyRunner:
         alerts: list[str] = []
         if source_state["fallback"]:
             alerts.append("Retornos fatoriais do dia estimados por regressão cross-section com as "
-                          "exposições da sessão anterior.")
+                          "exposições da sessão anterior." + (
+                              " Macro observado descontado antes da regressão estrutural."
+                              if strict_macro else ""))
         if source_state["partial"]:
             detail = "; ".join(f"{d}: {_list(fs)}"
                                for d, fs in sorted(source_state["partial"].items()))
@@ -1840,12 +1953,14 @@ class DailyRunner:
                           "negociar (contribuição fatorial zero nelas): "
                           f"{_list(sorted(missing_days))}.")
         if outside:
+            if strict_macro:
+                return None, [], ["Atribuição macro indisponível: posição fora da base anterior."]
             alerts.append("Linhas fora do modelo de risco (P&L classificado como específico): "
                           f"{_list(outside)}.")
         factor_pnl = float(contrib.sum())
         groups = model_prev.factor_groups
         lines: list[AttributionLine] = []
-        for g in FACTOR_GROUPS:
+        for g in FACTOR_GROUPS + (("macro",) if strict_macro else ()):
             v = float(contrib[[f for f in names if groups.get(f) == g]].sum())
             lines.append(AttributionLine(group="factor_group", name=g, pnl_usd=v,
                                          contribution=v / nav0))
@@ -1912,7 +2027,12 @@ class DailyRunner:
         dia, decisão após o corte MOC do mercado ou ordem abaixo da banda ``min_trade_weight``;
         emissor com linha detida sem negociação fica inteiro congelado. Linhas detidas sem
         negociação mantêm a marcação do dia."""
-        from ..portfolio.execucao import OrdemLinha, janela_execucao, preenchimentos_esperados
+        from ..portfolio.execucao import (
+            OrdemLinha,
+            cambio_do_pregao,
+            janela_execucao,
+            preenchimentos_esperados,
+        )
 
         cfg = self.cfg
         ex = cfg.execution
@@ -1950,7 +2070,7 @@ class DailyRunner:
             if tk in ctx.md.close.columns and ctx.ts in ctx.md.close.index:
                 v = ctx.md.close.at[ctx.ts, tk]
                 px = float(v) if _finite(v) and float(v) > 0 else None
-            fx = self._fx_rate(ctx, currency)
+            fx = cambio_do_pregao(ctx.md, currency, ctx.date)
             if tgt is None:
                 st: int | None = 0
             else:
@@ -1980,7 +2100,7 @@ class DailyRunner:
             if f.situacao == "congelado":
                 frozen.setdefault(f.emissor, f.motivo)
             elif f.situacao == "sem_preco":
-                no_px.append(f.ticker)
+                no_px.append(f"{f.ticker} ({f.motivo})")
             elif f.situacao == "inelegivel":
                 unmarketable.append(f"{f.ticker} ({f.motivo})")
             elif f.situacao == "apos_corte":
@@ -2271,6 +2391,15 @@ class DailyRunner:
         if w.empty:
             ex_ante = factor_vol = specific_vol = beta = var = es = 0.0
         elif model is not None:
+            from .risco_diario import measures
+
+            required = ["macro:" + s for s in cfg.risk_model.macro_factors]
+            complete = measures(model, w, required, 1.0)
+            if not complete["complete"] and required:
+                alerts.append("Risco macro incompleto: " + "; ".join(complete["reasons"]) +
+                              "; risco ex-ante/fatorial/específico indisponível.")
+                model = None
+        if not w.empty and model is not None:
             outside = sorted(set(w.index) - set(model.assets))
             if outside:
                 alerts.append("Emissores fora do modelo de risco (risco ex-ante parcial): "
@@ -2578,6 +2707,10 @@ def _lapse_alert(lapsed: Mapping[str, Any], *, inaugural: bool) -> str:
 def _check_track_tail(track: TrackRecord, prev: DailyRecord | None) -> None:
     """O último registro (ponto de partida da marcação do dia) precisa estar íntegro: hash
     recalculado, CSV terminando nele e evento na trilha (:meth:`TrackRecord.tail_problems`)."""
+    if prev is not None:
+        from .risco_diario import recover
+
+        recover(track, prev)
     problems = track.tail_problems(prev)
     if problems:
         raise ValueError(f"Track record inconsistente em {track.root}: " + " ".join(problems))

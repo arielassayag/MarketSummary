@@ -1,0 +1,343 @@
+{
+  "schema": "cdp.resultado_evidencias/v1",
+  "documentos": [
+    {
+      "issuer_id": "DADOS_SIMULADOS_ENTIDADE",
+      "url": "https://example.invalid/DADOS_SIMULADOS/anual.pdf",
+      "sha256": "526b9f4540ecfbad6e7889e5c0189fa1b470459850b1d4b22d1599cabd1cb228",
+      "provas": [
+        {
+          "pagina": 3,
+          "papel": "inclusao_ebit",
+          "ancoras": [
+            "Nota de evento simulado",
+            "Ganho inclui EBIT simulado",
+            "SUBSIDIARIA SIMULADA",
+            "COMPRADORA SIMULADA"
+          ],
+          "data_regex": "El (\\d{1,2}) de ([a-z]+) de (\\d{4}) se cumplieron"
+        },
+        {
+          "pagina": 4,
+          "papel": "operacoes_continuadas",
+          "ancoras": [
+            "Nota de escopo simulado",
+            "Operacoes continuadas simuladas"
+          ]
+        }
+      ],
+      "tabelas": [
+        {
+          "pagina": 1,
+          "ancoras": [
+            "DADOS SIMULADOS",
+            "Consolidado MXN",
+            "DRE SIMULADA"
+          ],
+          "cabecalho": "2025 2024 2023",
+          "colunas": [
+            {
+              "inicio": "2025-01-01",
+              "fim": "2025-12-31",
+              "freq": "A"
+            },
+            {
+              "inicio": "2024-01-01",
+              "fim": "2024-12-31",
+              "freq": "A"
+            },
+            {
+              "inicio": "2023-01-01",
+              "fim": "2023-12-31",
+              "freq": "A"
+            }
+          ],
+          "moeda": "MXN",
+          "escala": 1000,
+          "itens": [
+            {
+              "item": "receita",
+              "rotulos": [
+                "Receita"
+              ],
+              "coeficiente": 1
+            },
+            {
+              "item": "ebit",
+              "rotulos": [
+                "EBIT"
+              ],
+              "coeficiente": 1
+            },
+            {
+              "item": "lucro_bruto",
+              "rotulos": [
+                "Lucro bruto"
+              ],
+              "coeficiente": 1
+            },
+            {
+              "item": "despesas_operacionais",
+              "rotulos": [
+                "Despesa operacional"
+              ],
+              "coeficiente": 1
+            },
+            {
+              "item": "outros_ingressos",
+              "rotulos": [
+                "Outro resultado"
+              ],
+              "coeficiente": -1
+            }
+          ]
+        },
+        {
+          "pagina": 2,
+          "ancoras": [
+            "DADOS SIMULADOS",
+            "Consolidado MXN",
+            "DFC SIMULADA"
+          ],
+          "cabecalho": "2025 2024 2023",
+          "colunas": [
+            {
+              "inicio": "2025-01-01",
+              "fim": "2025-12-31",
+              "freq": "A"
+            },
+            {
+              "inicio": "2024-01-01",
+              "fim": "2024-12-31",
+              "freq": "A"
+            },
+            {
+              "inicio": "2023-01-01",
+              "fim": "2023-12-31",
+              "freq": "A"
+            }
+          ],
+          "moeda": "MXN",
+          "escala": 1000,
+          "itens": [
+            {
+              "item": "d_a_dfc",
+              "rotulos": [
+                "D A"
+              ],
+              "coeficiente": 1
+            },
+            {
+              "item": "ganho_alienacao_controle",
+              "rotulos": [
+                "Reversao de alienacao"
+              ],
+              "coeficiente": -1
+            },
+            {
+              "item": "cfo",
+              "rotulos": [
+                "CFO"
+              ],
+              "coeficiente": 1
+            },
+            {
+              "item": "capex",
+              "rotulos": [
+                "CAPEX"
+              ],
+              "coeficiente": -1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "issuer_id": "DADOS_SIMULADOS_ENTIDADE",
+      "url": "https://example.invalid/DADOS_SIMULADOS/semestre.pdf",
+      "sha256": "cad66c66da8781f3cd453b9743858c0f5a946fa8ddf92ac72119fdfe919ba8a7",
+      "publicacao": {
+        "pagina": 1,
+        "texto": "Publicacao simulada 23 de julio de 2026",
+        "disponivel_desde": "2026-07-24T05:59:59+00:00",
+        "tipo": "data_simulada_fim_dia"
+      },
+      "tabelas": [
+        {
+          "pagina": 2,
+          "ancoras": [
+            "DADOS SIMULADOS",
+            "Consolidado MXN",
+            "DRE SEMESTRAL SIMULADA"
+          ],
+          "cabecalho": "Q2026 H12026 Q2025 H12025",
+          "colunas": [
+            {
+              "inicio": "2026-04-01",
+              "fim": "2026-06-30",
+              "freq": "Q"
+            },
+            {
+              "inicio": "2026-01-01",
+              "fim": "2026-06-30",
+              "freq": "H1"
+            },
+            {
+              "inicio": "2025-04-01",
+              "fim": "2025-06-30",
+              "freq": "Q"
+            },
+            {
+              "inicio": "2025-01-01",
+              "fim": "2025-06-30",
+              "freq": "H1"
+            }
+          ],
+          "moeda": "MXN",
+          "escala": 1,
+          "itens": [
+            {
+              "item": "receita",
+              "rotulos": [
+                "Receita"
+              ],
+              "coeficiente": 1
+            },
+            {
+              "item": "ebit",
+              "rotulos": [
+                "EBIT"
+              ],
+              "coeficiente": 1
+            }
+          ]
+        },
+        {
+          "pagina": 3,
+          "ancoras": [
+            "DADOS SIMULADOS",
+            "Consolidado MXN",
+            "TTM SIMULADO"
+          ],
+          "cabecalho": "TTM2026 TTM2025",
+          "colunas": [
+            {
+              "inicio": "2025-07-01",
+              "fim": "2026-06-30",
+              "freq": "TTM"
+            },
+            {
+              "inicio": "2024-07-01",
+              "fim": "2025-06-30",
+              "freq": "TTM"
+            }
+          ],
+          "moeda": "MXN",
+          "escala": 1,
+          "itens": [
+            {
+              "item": "receita",
+              "rotulos": [
+                "Receita"
+              ],
+              "coeficiente": 1
+            },
+            {
+              "item": "ebit",
+              "rotulos": [
+                "EBIT"
+              ],
+              "coeficiente": 1
+            },
+            {
+              "item": "d_a",
+              "rotulos": [
+                "D A operacional"
+              ],
+              "coeficiente": 1,
+              "conceito": "depreciacao_amortizacao_operacional"
+            }
+          ]
+        },
+        {
+          "pagina": 4,
+          "ancoras": [
+            "DADOS SIMULADOS",
+            "Consolidado MXN",
+            "DFC SEMESTRAL SIMULADA"
+          ],
+          "cabecalho": "H12026 H12025",
+          "colunas": [
+            {
+              "inicio": "2026-01-01",
+              "fim": "2026-06-30",
+              "freq": "H1"
+            },
+            {
+              "inicio": "2025-01-01",
+              "fim": "2025-06-30",
+              "freq": "H1"
+            }
+          ],
+          "moeda": "MXN",
+          "escala": 1,
+          "itens": [
+            {
+              "item": "d_a_dfc",
+              "rotulos": [
+                "D A"
+              ],
+              "coeficiente": 1
+            },
+            {
+              "item": "cfo",
+              "rotulos": [
+                "CFO"
+              ],
+              "coeficiente": 1
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "pontes_subtotal": [
+    {
+      "documento_id": "526b9f4540ecfbad6e7889e5c0189fa1b470459850b1d4b22d1599cabd1cb228",
+      "total": "ebit",
+      "componentes": {
+        "lucro_bruto": 1,
+        "despesas_operacionais": -1,
+        "outros_ingressos": 1
+      }
+    }
+  ],
+  "eventos": [
+    {
+      "issuer_id": "DADOS_SIMULADOS_ENTIDADE",
+      "tipo": "alienacao_controle",
+      "identidade": {
+        "entidade": "DADOS_SIMULADOS_ENTIDADE",
+        "objeto": "SUBSIDIARIA SIMULADA",
+        "contraparte": "COMPRADORA SIMULADA",
+        "contrato": "2025-07-01"
+      },
+      "medida_item": "ganho_alienacao_controle",
+      "documentos_prova": [
+        "526b9f4540ecfbad6e7889e5c0189fa1b470459850b1d4b22d1599cabd1cb228"
+      ],
+      "papeis_prova": [
+        "inclusao_ebit",
+        "operacoes_continuadas"
+      ],
+      "medida_documentos": [
+        "526b9f4540ecfbad6e7889e5c0189fa1b470459850b1d4b22d1599cabd1cb228"
+      ],
+      "medida_periodo": {
+        "inicio": "2025-01-01",
+        "fim": "2025-12-31",
+        "freq": "A"
+      }
+    }
+  ]
+}

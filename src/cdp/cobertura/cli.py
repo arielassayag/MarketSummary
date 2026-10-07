@@ -3,8 +3,10 @@
 - ``cdp cobertura run --date D [--emissores IID,IID] [--offline] [--raiz DIR]``: snapshot de
   cobertura do dia ``D`` (depois do fechamento; parcial com ``--emissores`` após resultados).
   Usa a base de mercado (``--market``) e os dados públicos arquivados sob ``--raiz`` (padrão:
-  ``data/``); ``--offline`` lê só o arquivo local, sem rede. Recusa ``D`` anterior ou igual ao
-  último snapshot e insumos publicados depois de ``D``. Grava ``<book>/cobertura/<D>/`` e o
+  ``data/``); ``--offline`` lê só o arquivo local, sem rede. A política temporal explícita
+  separa D (base dos preços), data local do modelo e instante de conhecimento pós-coleta;
+  grava na data do modelo e reutiliza somente o último retrato íntegro equivalente. Sem essa
+  política, recusa D anterior ou igual ao último snapshot e publicações posteriores a D. Grava ``<book>/cobertura/<D>/`` e o
   evento ``COVERAGE_SNAPSHOT`` na trilha do fundo.
 - ``cdp cobertura verify [--sem-recalculo]``: confere o livro encadeado (terminando exatamente no
   último selo), cada manifesto, selo, arquivo e ``eventos.jsonl``, a correspondência um a um com
@@ -28,7 +30,8 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from datetime import date
+from dataclasses import replace
+from datetime import UTC, date
 from pathlib import Path
 
 from .fontes import FontePublicaIndisponivel, coletar
@@ -52,26 +55,73 @@ def config_paths(valuation: Path = DEFAULT_VALUATION, pasta: Path = DEFAULT_COBE
     out = {"valuation.yaml": Path(valuation)}
     for nome in ("arquetipos.csv", "betas_setor.csv", "unidades.csv", "sotp.yaml", "etfs.yaml"):
         out[f"cobertura/{nome}"] = Path(pasta) / nome
+    if carregar_parametros(valuation, pasta).sec("projecao").get("normalizacao_resultado_metodo") == "eventos_evidenciados":
+        out["resultado_evidencias.json"] = Path(valuation).parent / "resultado_evidencias.json"
     return out
 
 
 def executar_snapshot(book: Path, md, as_of: date, *, emissores=None, offline: bool = False,
-                      raiz: Path | None = None, params=None, agora=None, codigo=None, audit: bool = True) -> dict:
+                      raiz: Path | None = None, params=None, agora=None, codigo=None, audit: bool = True,
+                      relogio=None) -> dict:
     """Execução completa (coleta pública → modelos → gravação) sobre um ``MarketData`` dado."""
+    params = params or carregar_parametros()
+    from .temporal import ativo as temporal_ativo
+    from .temporal import construir as corte_temporal
+    temporal = temporal_ativo(params)
+    if temporal:
+        if agora is None and relogio is None:
+            raise LivroErro("Política temporal exige instante ou relógio explícito do executor.")
+        agora = agora or relogio()
+        as_of = date.fromisoformat(corte_temporal(md.as_of, agora)["data_modelo"])
     reparar_pendencias(book, audit, agora)
+    if temporal:
+        from .livro import datas_snapshots, snapshot
+        datas = datas_snapshots(Path(book))
+        if datas and as_of < datas[-1]:
+            checar_data(book, as_of)
+        pasta_existente = Path(book) / "cobertura" / as_of.isoformat()
+        if pasta_existente.exists():
+            integro, problemas = verificar(Path(book), recalcular=False)
+            if not integro:
+                raise LivroErro("Reserva recusada: livro de cobertura não íntegro: " + "; ".join(problemas))
+            existente = snapshot(Path(book), as_of)
+            from .livro import conferir_corte
+            conferir_corte(existente, agora)
+            escopo = sorted(set(emissores)) if emissores else sorted(str(i) for i in md.universe.issuers.index)
+            if sorted(existente.manifest["emissores"]) != escopo:
+                raise LivroErro("Snapshot do dia já concluído com outro escopo de emissores; não sobrescreve.")
+            if (existente.manifest["base_mercado"]["content_hash"] != md.manifest.content_hash()
+                    or existente.manifest["configuracao"]["hash"] != params.hash()):
+                raise LivroErro("Snapshot do dia já concluído com outra base/configuração; não sobrescreve.")
+            return {"pasta": str(pasta_existente), "manifest_sha256": existente.manifest_sha256,
+                    "selo": json.loads((pasta_existente / "selo.json").read_text()),
+                    "n_eventos": 0, "reparos": [], "ja_concluido": True,
+                    "corte_temporal": existente.manifest["corte_temporal"]}
     checar_data(book, as_of)
     ok_s, msg_s = selado(book)
     if not ok_s:
         raise LivroErro(f"Livro da cobertura não confere com o último selo: {msg_s}.")
-    params = params or carregar_parametros()
     ids = sorted(str(i) for i in md.universe.issuers.index)
     tickers = sorted(str(t) for t in md.universe.lines.index)
     etfs = [str(e["ticker"]) for e in params.etfs.get("etfs", []) if e["ticker"] in md.benchmarks.columns]
-    dados = coletar(md, as_of, ids, tickers, etfs, offline=offline, raiz=raiz)
+    dados = coletar(md, as_of, ids, tickers, etfs, offline=offline, raiz=raiz, params=params, conhecimento_ate=agora)
+    if temporal:
+        inicio = agora
+        fim = relogio() if relogio is not None else agora
+        if fim < inicio:
+            raise LivroErro("Relógio de coleta retrocedeu.")
+        corte = corte_temporal(md.as_of, fim)
+        corte.update(coleta_inicio=inicio.astimezone(UTC).isoformat(),
+                     coleta_fim=fim.astimezone(UTC).isoformat())
+        as_of = date.fromisoformat(corte["data_modelo"])
+        checar_data(book, as_of)
+        dados = coletar(md, as_of, ids, tickers, etfs, offline=True, raiz=raiz, params=params, conhecimento_ate=fim)
+        dados = replace(dados, corte_temporal=corte)
     anterior = carregar_anterior(book, as_of)
     ex = executar(md, dados, params, as_of, emissores=emissores, anterior=anterior)
     res = gravar_snapshot(book, ex, dados, params, md_manifest=md.manifest, config_paths=config_paths(),
-                          agora=agora, codigo=codigo, audit=audit)
+                          agora=(relogio() if temporal and relogio is not None else agora),
+                          codigo=codigo, audit=audit)
     res["distribuicao"] = ex.distribuicao.get("distribuicao")
     return res
 
@@ -93,12 +143,16 @@ def cmd_run(args: argparse.Namespace) -> int:
         return FALHA
     raiz = getattr(args, "raiz", None)
     try:
+        params = carregar_parametros()
+        from .temporal import ativo as temporal_ativo
+        clocks = {"agora": rt.now(), "relogio": rt.now} if temporal_ativo(params) else {}
         res = executar_snapshot(Path(args.book), md, as_of, emissores=args.emissores,
-                                offline=bool(args.offline), raiz=Path(raiz) if raiz else None)
+                                offline=bool(args.offline), raiz=Path(raiz) if raiz else None,
+                                params=params, **clocks)
     except FontePublicaIndisponivel as exc:
         print(f"cdp cobertura run: {exc}.", file=sys.stderr)
         return INDISPONIVEL
-    except (LivroErro, KeyError) as exc:
+    except (LivroErro, KeyError, ValueError) as exc:
         print(f"cdp cobertura run: recusado — {exc}", file=sys.stderr)
         return FALHA
     print(json.dumps(res, ensure_ascii=False, indent=1, default=str))

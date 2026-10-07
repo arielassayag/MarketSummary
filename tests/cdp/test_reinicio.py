@@ -652,6 +652,12 @@ class _FakeStore:
     def verify_chain(self):
         return True, []
 
+    def load(self, as_of=None, verify=True):
+        # O fake só testa catch-up no pré-início; nenhum preço foi publicado.
+        from cdp.data.store import DataNotReadyError
+
+        raise DataNotReadyError("mercado ausente no fake de pré-início")
+
 
 def test_daily_close_before_inception_keeps_market_data_current(tmp_path):
     """Antes do início: sem registro nem relatório, mas a base de mercado é incrementada (e o

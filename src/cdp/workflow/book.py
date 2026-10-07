@@ -1116,6 +1116,12 @@ class Book:
             problems += self._week_problems(week, events, index)
         problems += self._ledger_problems(events)
         problems += self._genesis_problems(events)
+        from .origem import read_replay_origin
+
+        try:
+            read_replay_origin(self)
+        except (OSError, ValueError) as exc:
+            problems.append(f"origem: {exc}")
         from .avaliacao import verify
 
         problems += [f"avaliação: {m}" for m in verify(self)]

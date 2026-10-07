@@ -918,7 +918,15 @@ def idio_monitor(rt: Runtime, history_asc: list[DailyRecord], limitations: list[
         md = None
         limitations.append("Fatia idiossincrática sem modelo indisponível (base de mercado: "
                            f"{_clip(str(exc), 160)}).")
-    serie = serie_idio(recs, md, cfg)
+    from .risco_diario import read_measures
+
+    try:
+        diagnostics = read_measures(rt.track(), market_loader=rt.store.load,
+                                    market_root=getattr(rt.store, "root", None))
+    except (ValueError, OSError, KeyError) as exc:
+        diagnostics = {}
+        limitations.append(f"Risco diário base/evento não autenticado: {_clip(str(exc), 200)}")
+    serie = serie_idio(recs, md, cfg, diagnostics=diagnostics)
     if not serie["datas"]:
         return None, []
     goal, floor = cfg.risk.idio_share_goal, cfg.risk.idio_share_floor
@@ -929,6 +937,9 @@ def idio_monitor(rt: Runtime, history_asc: list[DailyRecord], limitations: list[
              "sem_modelo_obs": serie["sem_modelo_obs"][-1], "meta": goal, "piso": floor,
              "kappa_f": serie["kappa_f"], "janela_pregoes": serie["janela"],
              "registros": len(recs), "regressores": serie["regressores"]}
+    if "base_vinculante" in serie:
+        block["base_vinculante"] = serie["base_vinculante"]
+        block["medidas_base_evento"] = serie.get("medidas_base_evento")
     t: list[Trigger] = []
     ex = _num(block["ex_ante"])
     if floor is not None and ex is not None and ex < floor - 1e-9:

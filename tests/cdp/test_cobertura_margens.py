@@ -155,6 +155,7 @@ def universo_simulado():
 @pytest.fixture
 def params():
     p = deepcopy(carregar_parametros())
+    p.sec("projecao").pop("normalizacao_resultado_metodo", None)  # Isola a política .6 sob teste.
     p.sec("qualidade")["margem_fluxos_metodo"] = METODO
     return p
 

@@ -32,7 +32,7 @@ from cdp.research.notas import (
     verify_nota,
 )
 from cdp.workflow import notas as N
-from cdp.workflow.demo import DEMO_FIRST_WEEK, DEMO_SEED, DemoStore, demo_sessions, run_demo
+from cdp.workflow.demo import DEMO_FIRST_WEEK, DEMO_SEED, demo_sessions, run_demo
 from cdp.workflow.runtime import Runtime
 
 D = DEMO_FIRST_WEEK
@@ -65,13 +65,14 @@ def _copy(demo: Path, tmp_path: Path) -> Path:
     dst = tmp_path / "copia"
     shutil.copytree(demo / "book", dst / "book")
     shutil.copytree(demo / "reports", dst / "reports")
+    shutil.copytree(demo / "market", dst / "market")
     return dst
 
 
 def _rt(root: Path, market, at: datetime | None = None) -> Runtime:
     clock = at or datetime(2024, 3, 4, 21, 30, tzinfo=BRT)
     return Runtime(load_config(LEGACY), root / "book", root / "market", root / "reports",
-                   store_override=DemoStore(market), clock=lambda: clock,
+                   clock=lambda: clock,
                    teses_root=root / "teses")
 
 

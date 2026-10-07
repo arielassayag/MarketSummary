@@ -564,6 +564,22 @@ def cmd_backtest(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_backtest_operacional(args: argparse.Namespace) -> int:
+    """Ensaio isolado pelo Runtime; não usa os destinos oficiais da CLI."""
+    from .backtest.replay import run_replay
+    from .config import load_config
+
+    try:
+        result = run_replay(Path(args.snapshot), Path(args.out), start=_d(args.start),
+                            end=_d(args.end), mode=args.modo, cfg=load_config(args.config),
+                            resume=args.resume)
+        _print(result)
+        return 0
+    except (OSError, ValueError) as exc:
+        print(f"cdp: replay incompleto: {exc}", file=sys.stderr)
+        return 1
+
+
 # ----------------------------------------------------------------------------- comandos novos
 # Registrados com os argumentos finais (contrato da CLI). Cada handler importa sob demanda a
 # função do módulo dono, que responde "em implementação" (código 2) até a entrega.
@@ -869,6 +885,15 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--end")
     s.add_argument("--out", default="reports/backtest")
     s.set_defaults(func=cmd_backtest)
+
+    s = sub.add_parser("backtest-operacional", help="replay isolado: decisão, MOC e diário pelo Runtime")
+    s.add_argument("--snapshot", required=True, help="captura local ou pasta de vintages verificadas")
+    s.add_argument("--start", required=True)
+    s.add_argument("--end", required=True)
+    s.add_argument("--out", required=True, help="subpasta nova dentro de .cdp/ensaios do projeto")
+    s.add_argument("--modo", required=True, choices=["simulado", "sombra_real", "pit_auditado"])
+    s.add_argument("--resume", action="store_true", help="retomar somente com os mesmos insumos e código")
+    s.set_defaults(func=cmd_backtest_operacional)
 
     # Operação em qualquer harness (rotinas, executor, trava, estado, portal): docs/cdp/AUTOMACAO.md
     from . import estado as _estado

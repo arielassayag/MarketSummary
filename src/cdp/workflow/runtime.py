@@ -455,15 +455,25 @@ class Runtime:
 
         return prazo_efetivo(week, self.cfg)
 
-    def _context(self, md: MarketData, week: date):
+    def _context(self, md: MarketData, week: date, *, conhecimento_ate: datetime | None = None,
+                 permitir_cobertura: bool = True, vinculo_cobertura=...):
         from .weekly import prepare_week
 
         b = self.book
         dd, _vol = self.drawdown_and_vol()
-        return prepare_week(md, self.cfg, week, nav=self.current_nav(),
-                            current_entry=b.latest_booked(),
-                            current_drifted_w=self.current_drifted_weights(), drawdown=dd,
-                            squeeze_stops=self.squeeze_stops(week))
+        ctx = prepare_week(md, self.cfg, week, nav=self.current_nav(),
+                           current_entry=b.latest_booked(),
+                           current_drifted_w=self.current_drifted_weights(), drawdown=dd,
+                           squeeze_stops=self.squeeze_stops(week))
+        snap, corte = self._snapshot_cobertura(md, conhecimento_ate, permitir=permitir_cobertura,
+                                               vinculo=vinculo_cobertura)
+        if corte is not None:
+            from ..alpha.signals import valuation_gap_sombra
+            ctx.cobertura_snapshot = snap
+            ctx.cobertura_conhecimento_ate = corte
+            ctx.valuation_gap_sombra = valuation_gap_sombra(
+                snap, list(ctx.panel.assets.index), conhecimento_ate=corte)
+        return ctx
 
     def squeeze_stops(self, week: date) -> dict[str, dict]:
         """Stop de squeeze por nome a aplicar na montagem de ``week`` (:func:`cdp.risk.limites.
@@ -541,12 +551,65 @@ class Runtime:
         held = [i for i, w in ctx.current_w.items() if w != 0]
         return sorted(set(longs) | set(held)), sorted(set(shorts) | set(held))
 
-    def _factbook(self, ctx, issuers: list[str]):
-        from ..research.factbook import build_factbook
+    def _snapshot_cobertura(self, md: MarketData, conhecimento_ate: datetime | None,
+                            *, permitir: bool = True, vinculo=...):
+        from ..cobertura.parametros import carregar_parametros
+        from ..cobertura.temporal import ativo
+        if not permitir or (vinculo is ... and not ativo(carregar_parametros())):
+            return None, None
+        if vinculo is not ... and conhecimento_ate is None:
+            raise ValueError("Prepare de cobertura sem instante arquivado.")
+        from ..cobertura.livro import conferir_corte, snapshot, ultimo_snapshot
+        from ..data.publico_arquivo import data_local
+        from ..data.publico_resultados import instante
+        corte = instante(conhecimento_ate if conhecimento_ate is not None else self.now())
+        if vinculo is None:
+            return None, corte
+        if vinculo is not ...:
+            if not isinstance(vinculo, dict) or set(vinculo) != {"as_of", "manifest_sha256", "corte_temporal"}:
+                raise ValueError("Vínculo de cobertura incompleto no prepare.")
+            snap = snapshot(self.book_root, date.fromisoformat(vinculo["as_of"]))
+            conferir_corte(snap, corte)
+            if (snap.manifest_sha256 != vinculo["manifest_sha256"]
+                    or snap.manifest.get("corte_temporal") != vinculo["corte_temporal"]):
+                raise ValueError("Snapshot de cobertura diverge do usado no prepare.")
+            from dataclasses import replace
+            snap = replace(snap, conhecimento_ate=corte)
+        else:
+            snap = ultimo_snapshot(self.book_root, data_local(corte), conhecimento_ate=corte)
+        if snap is not None and date.fromisoformat(snap.manifest["prices_as_of"]) > md.as_of:
+            raise ValueError("Base de cobertura posterior à base da etapa semanal.")
+        return snap, corte
 
-        return build_factbook(ctx.panel, ctx.md, issuers, alpha_z=ctx.alpha.composite_z,
-                              signal_z=ctx.alpha.signal_z, squeeze=ctx.squeeze, betas=ctx.betas,
-                              specific_vol=ctx.model.specific_vol, snapshot_id=ctx.snapshot_id)
+    def _factbook(self, ctx, issuers: list[str], *, conhecimento_ate: datetime | None = None,
+                  permitir_cobertura: bool = True, vinculo_cobertura=...):
+        from ..research.factbook import build_factbook, com_fatos_valuation
+        fb = build_factbook(ctx.panel, ctx.md, issuers, alpha_z=ctx.alpha.composite_z,
+                            signal_z=ctx.alpha.signal_z, squeeze=ctx.squeeze, betas=ctx.betas,
+                            specific_vol=ctx.model.specific_vol, snapshot_id=ctx.snapshot_id)
+        corte = conhecimento_ate or getattr(ctx, "cobertura_conhecimento_ate", None)
+        if vinculo_cobertura is ... and hasattr(ctx, "cobertura_conhecimento_ate"):
+            vinculo_cobertura = self._vinculo_cobertura(ctx)
+        snap, corte = self._snapshot_cobertura(ctx.md, corte, permitir=permitir_cobertura,
+                                               vinculo=vinculo_cobertura)
+        return com_fatos_valuation(fb, snap, issuers, conhecimento_ate=corte) if corte is not None else fb
+
+    @staticmethod
+    def _cobertura_registrada(info):
+        from ..cobertura.temporal import METODO
+        if "cobertura_metodo" not in info and "cobertura" not in info:
+            return False
+        if info.get("cobertura_metodo") != METODO or "cobertura" not in info:
+            raise ValueError("Política/vínculo de cobertura incompleto no prepare.")
+        return True
+
+    @staticmethod
+    def _vinculo_cobertura(ctx):
+        snap = getattr(ctx, "cobertura_snapshot", None)
+        return None if snap is None else {"as_of": snap.as_of.isoformat(),
+                                         "manifest_sha256": snap.manifest_sha256,
+                                         "corte_temporal": snap.manifest.get("corte_temporal")}
+
 
     # ------------------------------------------------------------------ semanal
     def week_dir(self, week: date) -> Path:
@@ -639,7 +702,10 @@ class Runtime:
                  else (None, None))
         try:
             longs, shorts = self._candidates(ctx, self.cfg.research.top_n_candidates)
-            fb = self._factbook(ctx, sorted(set(longs) | set(shorts)))
+            fb = self._factbook(ctx, sorted(set(longs) | set(shorts)),
+                                conhecimento_ate=self._analysis_ts(info),
+                                permitir_cobertura=self._cobertura_registrada(info),
+                                vinculo_cobertura=info.get("cobertura"))
             for ks in (False, True):
                 pmctx = self._pm_context(md, ctx, week, fb, self._analysis_ts(info),
                                          state=state, kill_switch=ks)
@@ -660,9 +726,15 @@ class Runtime:
         """Reconstrói (com verificação de hash) o estado exato do ``prepare`` da semana."""
         briefing = self.week_dir(week) / "briefing"
         md, info = self.market_for_week(week, live=False, briefing_dir=briefing, record=False)
-        ctx = self._context(md, week)
+        registrada = self._cobertura_registrada(info)
+        ctx = self._context(md, week, conhecimento_ate=self._analysis_ts(info),
+                            permitir_cobertura=registrada, vinculo_cobertura=info.get("cobertura"))
         longs, shorts = self._candidates(ctx, self.cfg.research.top_n_candidates)
-        fb = self._factbook(ctx, sorted(set(longs) | set(shorts)))
+        fb = self._factbook(ctx, sorted(set(longs) | set(shorts)),
+                            conhecimento_ate=self._analysis_ts(info),
+                            permitir_cobertura=registrada, vinculo_cobertura=info.get("cobertura"))
+        if "cobertura" in info and info["cobertura"] != self._vinculo_cobertura(ctx):
+            raise ValueError("Snapshot de cobertura diverge do usado no prepare.")
         pmctx = self._pm_context(md, ctx, week, fb, self._analysis_ts(info))
         return md, info, ctx, fb, pmctx
 
@@ -690,9 +762,15 @@ class Runtime:
             shutil.rmtree(staging)
         try:
             md, info = self.market_for_week(week, live=live, briefing_dir=staging, record=True)
-            ctx = self._context(md, week)
+            ctx = self._context(md, week, conhecimento_ate=self._analysis_ts(info))
             longs, shorts = self._candidates(ctx, self.cfg.research.top_n_candidates)
-            fb = self._factbook(ctx, sorted(set(longs) | set(shorts)))
+            fb = self._factbook(ctx, sorted(set(longs) | set(shorts)),
+                                conhecimento_ate=self._analysis_ts(info))
+            if hasattr(ctx, "cobertura_conhecimento_ate"):
+                from ..cobertura.temporal import METODO
+                info["cobertura_metodo"] = METODO
+                info["cobertura"] = self._vinculo_cobertura(ctx)
+                _write_json(staging / PREPARE_MANIFEST, info)
             pmctx = self._pm_context(md, ctx, week, fb, self._analysis_ts(info))
             staged = write_briefing_bundle(pmctx, staging, mind_hint=mind, final_dir=briefing)
             os.replace(staging, briefing)
@@ -961,6 +1039,13 @@ class Runtime:
         runner = self._runner(store)
         feito = runner.track.get(session)
         if feito is not None:
+            from .risco_diario import recover
+
+            recover(runner.track, feito)
+            if runner.shadow is not None:
+                sombra = runner.shadow.track.get(session)
+                if sombra is not None:
+                    recover(runner.shadow.track, sombra)
             # Pregão já registrado (inclusive com efetivação recusada): nada a refazer — nunca
             # uma segunda passagem que efetive depois uma decisão caducada.
             out = {"data": session, "status": "já registrado", "registro": feito.record_hash,
@@ -1110,6 +1195,17 @@ class Runtime:
             ok &= t_ok
             label = "sombra" if shadow else "track record"
             msgs += [f"{label}: {m}" for m in (t_msgs or ["íntegro"])]
+        from .risco_diario import verify as verify_daily_risk
+
+        for shadow in (False, True):
+            try:
+                daily_problems = verify_daily_risk(self.track(shadow),
+                    market_loader=self.store.load, market_root=getattr(self.store, "root", None))
+            except (OSError, ValueError, KeyError, TypeError) as exc:
+                daily_problems = [str(exc)]
+            ok &= not daily_problems
+            msgs += [f"risco diário {'sombra' if shadow else 'efetivo'}: {m}"
+                     for m in (daily_problems or ["íntegro (contrato v1; legado sem obrigação)"])]
         try:
             s_ok, s_msgs = self.store.verify_chain()
             ok &= s_ok
@@ -1182,7 +1278,6 @@ class Runtime:
         from ..portfolio.execucao import conferir_efetivacao
 
         b = b or self.book
-        md: MarketData | None = None
         n = 0
         problems: list[str] = []
         for w in b.list_weeks():
@@ -1199,17 +1294,23 @@ class Runtime:
             if prop is None:
                 continue
             cfg_w = self._config_da_decisao(w, prop)
-            if cfg_w is None or cfg_w.execution is None:
+            if cfg_w is None:
+                problems.append(f"{w}: mandato autenticado da decisão indisponível para "
+                                "conferir a efetivação")
+                continue
+            if cfg_w.execution is None:
                 continue
             dec = b.load_decision(w, prop.version)
-            if md is None:
-                try:
-                    md = self.store.load()
-                except Exception as exc:  # noqa: BLE001 - base ausente nesta cópia
-                    return True, [f"sem base de mercado para conferir as efetivações "
-                                  f"({exc.__class__.__name__})"]
-            found = conferir_efetivacao(entry, prop, dec.decided_at if dec else None,
-                                        b.holdings_before(w), md, cfg_w)
+            session = entry.booked_at.astimezone(ZoneInfo(cfg_w.fund.timezone)).date()
+            try:
+                # Universo/moeda/linha pertencem ao vintage do próprio pregão, além de preços.
+                md = self.store.load(as_of=session)
+                found = conferir_efetivacao(entry, prop, dec.decided_at if dec else None,
+                                            b.holdings_before(w), md, cfg_w)
+            except Exception as exc:  # noqa: BLE001 - fonte/contexto indisponível não é conforme
+                problems.append(f"{w}: sem base de mercado para conferir a efetivação "
+                                f"no próprio pregão {session} ({exc.__class__.__name__})")
+                continue
             problems += [f"{w}: {m}" for m in found]
             n += 1
         if problems:

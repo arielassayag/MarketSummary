@@ -24,7 +24,7 @@ from __future__ import annotations
 
 import math
 from collections.abc import Iterable, Mapping
-from datetime import date
+from datetime import date, datetime
 
 import numpy as np
 import pandas as pd
@@ -766,14 +766,24 @@ def fatos_etf(etf: Mapping) -> dict[str, Fact]:
     return {fid: b.facts[fid] for fid in sorted(b.facts)}
 
 
-def com_fatos_valuation(fb: FactBook, snap, issuer_ids: Iterable[str], incluir_etfs: bool = True) -> FactBook:
+def com_fatos_valuation(fb: FactBook, snap, issuer_ids: Iterable[str], incluir_etfs: bool = True,
+                       *, conhecimento_ate: datetime | None = None) -> FactBook:
     """Novo FactBook = ``fb`` + fatos de valuation do snapshot da cobertura para ``issuer_ids``.
 
     Use apenas em semanas com ``snap.as_of <= fb.as_of`` (o snapshot vigente na decisão)."""
     if snap is None:
         return fb
-    if snap.as_of > fb.as_of:
-        raise ValueError("Snapshot da cobertura posterior ao FactBook (look-ahead).")
+    if conhecimento_ate is None:
+        if snap.as_of > fb.as_of:
+            raise ValueError("Snapshot da cobertura posterior ao FactBook (look-ahead).")
+        hoje = fb.as_of
+    else:
+        from ..cobertura.livro import conferir_corte
+        from ..data.publico_arquivo import data_local
+        conferir_corte(snap, conhecimento_ate)
+        if date.fromisoformat(snap.manifest["prices_as_of"]) > fb.as_of:
+            raise ValueError("Base de preços da cobertura posterior ao FactBook.")
+        hoje = data_local(conhecimento_ate)
     from ..cobertura.livro import eventos as _eventos
 
     book = snap.pasta.parent.parent
@@ -791,7 +801,8 @@ def com_fatos_valuation(fb: FactBook, snap, issuer_ids: Iterable[str], incluir_e
 
         mod = _json.loads(p.read_text(encoding="utf-8"))
         facts.update(fatos_valuation(mod, [e for e in evs if e.get("issuer_id") == iid
-                                           and date.fromisoformat(e["as_of"]) <= snap.as_of], fb.as_of))
+                                           and date.fromisoformat(e["as_of"]) <= snap.as_of
+                                           and (conhecimento_ate is None or datetime.fromisoformat(e["concluido_em"]) <= conhecimento_ate)], hoje))
     if incluir_etfs:
         for _, row in snap.etfs().iterrows() if not snap.etfs().empty else []:
             e = snap.etf(str(row.name))

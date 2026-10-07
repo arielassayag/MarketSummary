@@ -2,15 +2,14 @@
 
 import hashlib
 import json
-from datetime import UTC, date, datetime
+from datetime import UTC, datetime
 from pathlib import Path
 
 import pytest
 
 from cdp.__main__ import build_parser
 from cdp.config import load_config
-from cdp.data.synthetic import make_synthetic_market
-from cdp.workflow.demo import DEMO_HISTORY_START, DEMO_SEED, DemoStore, run_demo
+from cdp.workflow.demo import run_demo
 from cdp.workflow.runtime import Runtime
 
 
@@ -19,10 +18,8 @@ def evaluated_cli(tmp_path_factory):
     root = tmp_path_factory.mktemp("avaliacao-cli")
     cfg = load_config(Path(__file__).parent / "fixtures/fund_legado.yaml")
     run_demo(root, days=6, cfg=cfg)
-    market = make_synthetic_market(seed=DEMO_SEED, start=DEMO_HISTORY_START,
-                                   as_of=date(2024, 3, 11))
     return Runtime(cfg, root / "book", root / "market", root / "reports",
-                   store_override=DemoStore(market), teses_root=None,
+                   teses_root=None,
                    clock=lambda: datetime(2024, 3, 12, 23, tzinfo=UTC))
 
 

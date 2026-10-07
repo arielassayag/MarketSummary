@@ -212,6 +212,7 @@ código (passo a passo em `docs/cdp/AUTOMACAO.md`):
 | `docs/cdp/LOCAL.md`, `docs/cdp/ROTINAS.md` | PC local (app desktop) e tabela de rotinas |
 | `docs/cdp/SITE.md` | portal público (GitHub Pages) e conferência de uma publicação |
 | `docs/cdp/REPRODUZIR.md`, `docs/cdp/REPLICAR.md` | auditar e recalcular; rodar a sua cópia |
+| `docs/cdp/REPLAY_OPERACIONAL.md` | ensaio isolado com decisão, MOC, diário e origem retrospectiva autenticada; limites E1/PIT |
 | `docs/cdp/ARQUITETURA.md` | módulos, comandos e fluxo semanal e diário |
 | `docs/cdp/EM_ANDAMENTO.md`, `docs/cdp/DECISOES.md` | passagem de bastão e registro de decisões |
 | `docs/cdp/PASSAGEM_CODEX.md` | prompt de passagem do desenvolvimento (Claude Code) para a operação no Codex, com o P0 até a carteira inaugural |

@@ -26,7 +26,8 @@ hipótese nula (:func:`banda_sem_modelo`).
 from __future__ import annotations
 
 import math
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
+from datetime import date
 from typing import TYPE_CHECKING, Any
 
 import numpy as np
@@ -349,9 +350,11 @@ def banda_sem_modelo(n: int, k: int) -> float | None:
     return math.sqrt(var) * (n - 1) / (n - k - 1)
 
 
-def serie_idio(records: Sequence[DailyRecord], md: MarketData, cfg: FundConfig) -> dict[str, Any]:
-    """Série diária da fatia idiossincrática por três medidas: ex-ante (``DailyRisk.factor_vol``
-    e ``specific_vol`` já gravados, com κ_F de configuração), realizada em 63 pregões (x-sigma-rho
+def serie_idio(records: Sequence[DailyRecord], md: MarketData, cfg: FundConfig, *,
+               diagnostics: Mapping[date, dict] | None = None) -> dict[str, Any]:
+    """Série diária da fatia idiossincrática por três medidas: ex-ante (base/evento e κ_F do
+    anexo autenticado; legado: ``DailyRisk`` com κ_F de configuração), realizada em 63 pregões
+    (x-sigma-rho
     ``σ_S·ρ(r_S, r_p)/σ_p``) e sem modelo (``1 − R²`` ajustado dos retornos diários do fundo
     contra ILF, EWZ, EWW, ECH, EPU, COLO, ARGT, BZ=F, HG=F, GC=F e DX-Y.NYB, com a banda de
     amostragem sob a nula em ``sem_modelo_banda``); ausente fica ``None``."""
@@ -374,6 +377,17 @@ def serie_idio(records: Sequence[DailyRecord], md: MarketData, cfg: FundConfig) 
         if fv is not None and sv is not None and np.isfinite(fv) and np.isfinite(sv):
             tot = k * float(fv) ** 2 + float(sv) ** 2
             ex = _sig(float(sv) ** 2 / tot) if tot > 0 else None
+        record = next(r for r in records if r.date == d.date())
+        if "risco_diario_v1" in record.input_hashes:
+            diagnostic = (diagnostics or {}).get(record.date)
+            ex = _sig(diagnostic["idio_binding"]) if diagnostic is not None else None
+            if diagnostic is not None and i == len(df) - 1:
+                out["kappa_f"] = diagnostic["kappa_f"]
+                out["base_vinculante"] = diagnostic["binding"]
+                out["medidas_base_evento"] = diagnostic["measures"]
+            elif i == len(df) - 1:
+                out["kappa_f"] = None
+                out["base_vinculante"] = None
         win = df.iloc[max(0, i + 1 - JANELA_REALIZADA): i + 1]
         real = _x_sigma_rho(win["specific"].to_numpy(dtype=float),
                             win["ret"].to_numpy(dtype=float))

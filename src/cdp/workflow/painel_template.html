@@ -1356,7 +1356,7 @@ UClmxeUGwg6AcVhMUyb+AMw46K8x6KJqR8Hfj3LHPiyNnW7CpKulxa/VL/nNlq+aeolzrjEVs0z9InIA
       <span class="brand-mark" id="brand-mark" role="img" aria-label="CDP — Cabra da Peste">CDP</span>
       <div class="brand-txt">
         <h1 class="brand-name" id="brand-name">Cabra da Peste</h1>
-        <p class="brand-sub" id="brand-sub">Long/short de ações da América Latina · neutro em mercado · base USD</p>
+        <p class="brand-sub" id="brand-sub">Long/short de ações da América Latina</p>
       </div>
     </div>
     <div class="mast-side">
@@ -2308,7 +2308,7 @@ function renderHeader() {
   var parts = String(fn).split(/\s+[—–]\s+/);
   $("brand-mark").textContent = parts.length > 1 ? parts[0] : "CDP";
   $("brand-name").textContent = parts.length > 1 ? parts.slice(1).join(" — ") : fn;
-  $("brand-sub").textContent = "Long/short de ações da América Latina · neutro em mercado · base " + (META.base_currency || "USD");
+  $("brand-sub").textContent = "Long/short de ações da América Latina";
 
   var chips = $("mast-chips");
   if (META.is_synthetic) chips.appendChild(pill(META.simulated_label || "DADOS SIMULADOS", "sim"));

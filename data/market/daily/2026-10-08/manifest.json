@@ -1,0 +1,119 @@
+{
+  "kind": "daily_increment",
+  "session_date": "2026-10-08",
+  "created_at": "2026-10-08T22:24:19.500680Z",
+  "base_as_of": "2026-10-02",
+  "base_content_hash": "ec1e53241d99de22f2f6deb06749e9d80b3d43864de3a1d931eb3e94c8d40455",
+  "base_manifest_sha256": "6bf7cc5b57e0a1eb5bd73080fb213eab399c7b04359ae68b2f75dc93a185d263",
+  "prev_manifest_hash": "250185c1dab51ffd610eb6d68b885e7245a069e379d5209d23fbe076347c5d79",
+  "universe_sha256": "a8f28ee5d20395a6e245c50ebb635eb56ada88922c01876351278cb99f5a29db",
+  "files": [
+    {
+      "path": "benchmarks.parquet",
+      "sha256": "07c4f1f3f9f3ae728a272db0ede8a6e154718f65ce04f5b97f21075f17b88c41",
+      "rows": 20,
+      "description": "Benchmarks do pregão"
+    },
+    {
+      "path": "fx.parquet",
+      "sha256": "635abf5a91b668026ea6e1d589975ccd65d126d26c69f76d721649b3bb539091",
+      "rows": 8,
+      "description": "Câmbio do pregão (USD por unidade)"
+    },
+    {
+      "path": "lending.parquet",
+      "sha256": "8a92c37a2c615831fc27dfbdc68723be4d16734b5a3ada78432878c54030701c",
+      "rows": 375,
+      "description": "Aluguel B3/BTC (longo) dos pregões ainda não gravados"
+    },
+    {
+      "path": "prices.parquet",
+      "sha256": "93fa0479fc5b794351e17da2c729a176c9dcb41cec6a4019a6cdd91ce3663648",
+      "rows": 281,
+      "description": "Preços do pregão (+ barra anterior da mesma coleta para encadear retorno total)"
+    },
+    {
+      "path": "qa.json",
+      "sha256": "302d1cb472b736e7d9d79e4d075baa252c6a7783564ffb51c829fe5e20ec777c",
+      "rows": null,
+      "description": "QA do incremento: revisões, paridade ADR, mercados fechados"
+    },
+    {
+      "path": "rates.parquet",
+      "sha256": "197bfad5de82313133cb180553af75ff1768c532463feb37e728007c4d1f3228",
+      "rows": 2,
+      "description": "Taxas do pregão (decimal anual)"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "yahoo_prices",
+      "name": "Yahoo Finance — barras diárias (janela)",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-10-08T22:24:00.967822Z",
+      "point_in_time": true,
+      "notes": ""
+    },
+    {
+      "source_id": "yahoo_fx",
+      "name": "Yahoo Finance — câmbio",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-10-08T22:24:02.366838Z",
+      "point_in_time": true,
+      "notes": ""
+    },
+    {
+      "source_id": "yahoo_benchmarks",
+      "name": "Yahoo Finance — benchmarks",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-10-08T22:24:03.493891Z",
+      "point_in_time": true,
+      "notes": ""
+    },
+    {
+      "source_id": "rates",
+      "name": "BCB SGS 432 + Yahoo ^IRX",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-10-08T22:24:04.245138Z",
+      "point_in_time": true,
+      "notes": ""
+    },
+    {
+      "source_id": "b3_bdi_lending",
+      "name": "B3 BDI — aluguel (BTC)",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-10-08T22:24:19.397262Z",
+      "point_in_time": false,
+      "notes": ""
+    }
+  ],
+  "limitations": [
+    "Revisões de fechamento do Yahoo em datas anteriores NÃO aplicadas (105): AC.MX@2026-10-05 (0.9995), ALPEKA.MX@2026-10-05 (1.0048), ALSEA.MX@2026-10-05 (0.9998), AMXB.MX@2026-10-05 (0.9985), ANDINA-B.SN@2026-10-05 (0.9592), ASURB.MX@2026-10-05 (0.9966), BBAJIOO.MX@2026-10-05 (0.9990), BCI.SN@2026-10-05 (1.0092), BOLSAA.MX@2026-10-05 (0.9969), BSANTANDER.SN@2026-10-05 (1.0230), CEMEXCPO.MX@2026-10-05 (1.0012), CENCOMALLS.SN@2026-10-05 (1.0238), CENCOSUD.SN@2026-10-05 (1.0885), CHDRAUIB.MX@2026-10-05 (1.0014), CHILE.SN@2026-10-05 (1.0308), CMPC.SN@2026-10-05 (0.9629), COLBUN.SN@2026-10-05 (1.0068), COPEC.SN@2026-10-05 (1.0047), ECL.SN@2026-10-05 (0.9892), EISA.SN@2026.",
+    "Revisões de volume em datas anteriores NÃO aplicadas: 540.",
+    "QA paridade ADR: SID vs CSNA3.SA desvio -2.9% no pregão (mediana -3.6%; tolerância 3%)."
+  ],
+  "notes": [],
+  "markets_traded": [
+    "AR",
+    "BR",
+    "CL",
+    "CO",
+    "MX",
+    "US"
+  ],
+  "markets_closed": [],
+  "slow_refreshed": [],
+  "lending_dates": [
+    "2026-10-05",
+    "2026-10-06",
+    "2026-10-07"
+  ],
+  "is_synthetic": false,
+  "data_notice": "Dados reais de fontes públicas gratuitas (Yahoo, FINRA, B3/BDI, BCB, Google News); uso de pesquisa — não é feed licenciado.",
+  "manifest_hash": "d7d3cd96881ab35037dae5fb0664c9a2cfbb6d6aeba11f713cc840482dc80873"
+}

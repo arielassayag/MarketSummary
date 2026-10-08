@@ -34,7 +34,7 @@ from dataclasses import replace
 from datetime import UTC, date
 from pathlib import Path
 
-from .fontes import FontePublicaIndisponivel, coletar
+from .fontes import FontePublicaIndisponivel, coletar, disponibilidade_observada
 from .livro import (
     LivroErro,
     carregar_anterior,
@@ -68,6 +68,8 @@ def executar_snapshot(book: Path, md, as_of: date, *, emissores=None, offline: b
     from .temporal import ativo as temporal_ativo
     from .temporal import construir as corte_temporal
     temporal = temporal_ativo(params)
+    if disponibilidade_observada(params) and not temporal:
+        raise LivroErro("Recepção observada exige a política temporal base_preco_conhecimento_explicitos.")
     if temporal:
         if agora is None and relogio is None:
             raise LivroErro("Política temporal exige instante ou relógio explícito do executor.")

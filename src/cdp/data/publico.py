@@ -30,8 +30,8 @@ import os
 import re
 from collections.abc import Callable, Sequence
 from concurrent.futures import ThreadPoolExecutor
-from dataclasses import dataclass
-from datetime import date, datetime, timedelta
+from dataclasses import asdict, dataclass
+from datetime import UTC, date, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -47,9 +47,11 @@ from . import publico_taxas as tx
 from . import publico_yahoo as yh
 from .fundamentals_pit import resolve_share_scale
 from .publico_arquivo import Arquivo, RegistroArquivo, agora_utc, data_local
+from .publico_confirmacao_cvm import COLUNAS_TEMPORAIS, ConfirmacaoCVM, instante
 from .publico_fatos import FLUXOS as FLUXOS_PIT
-from .publico_fatos import derivados, selecionar_pit
+from .publico_fatos import _corte_observado, derivados, selecionar_pit
 from .publico_pdf import PdfIlegivel, celulas
+from .publico_ypf import baixar_pdf_ypf
 from .security_master import (
     DEFAULT_USER_AGENT,
     HttpError,
@@ -455,7 +457,9 @@ def demonstrativos(issuer_ids: Sequence[str], as_of: date, *, offline: bool = Fa
                    root: Path | None = None, universe: Universe | None = None,
                    http_get: HttpGet | None = None,
                    yf_factory: Callable[[str], Any] | None = None, anos: int = 5,
-                   complementar_yahoo: bool = True) -> pd.DataFrame:
+                   complementar_yahoo: bool = True, confirmar_magnitude_cvm: bool = False,
+                   conhecimento_ate: datetime | None = None,
+                   selecionar_ri_observado: bool = False) -> pd.DataFrame:
     """Demonstrações em formato longo (``DEMONSTRATIVOS_COLUNAS``), point-in-time em ``as_of``.
 
     Fonte por emissor: CVM (CNPJ; trimestral e anual) > SEC (CIK; ``companyfacts``) > Yahoo
@@ -478,7 +482,11 @@ def demonstrativos(issuer_ids: Sequence[str], as_of: date, *, offline: bool = Fa
     ``falhas`` (coletas que falharam — o emissor fica sem os itens), ``qa`` (alertas de
     conferência), ``moeda_trocada`` (emissores que mudaram a moeda de apresentação).
     """
+    if selecionar_ri_observado and conhecimento_ate is None:
+        raise ValueError("RI observado exige corte UTC explícito de conhecimento")
     arq = _arquivo(root, offline)
+    if conhecimento_ate is not None:
+        conhecimento_ate = instante(conhecimento_ate)
     uni = _universo(universe)
     pedidos = [str(i) for i in dict.fromkeys(issuer_ids)]
     desconhecidos = [i for i in pedidos if i not in uni.issuers.index]
@@ -496,6 +504,7 @@ def demonstrativos(issuer_ids: Sequence[str], as_of: date, *, offline: bool = Fa
     ent_iss: dict[str, list[str]] = {}
     cobertos: set[str] = set()
     qa: list[str] = []
+    registros_cvm: list[RegistroArquivo] = []
 
     # ---- CVM
     cnpj_de = {i: str(sm.loc[i, "cnpj"]) for i in pedidos
@@ -515,6 +524,11 @@ def demonstrativos(issuer_ids: Sequence[str], as_of: date, *, offline: bool = Fa
             except Exception as exc:  # ZIP corrompido/layout inesperado: registrado
                 arq.falhas.append(f"CVM {doc} {ano}: leitura falhou ({exc})")
                 continue
+            if confirmar_magnitude_cvm:
+                # O cache de parsing não é um recibo: este registro pertence à coleta corrente.
+                f = f.copy(deep=True)
+                f['data_coleta'] = pd.Timestamp(got[0].data_coleta)
+                registros_cvm.append(got[0])
             for q in f.attrs.get("qa") or []:
                 for iid in ent_iss.get(q["cnpj"], []):
                     qa.append(f"{iid}: {q['documento']}: {q['msg']}")
@@ -713,12 +727,23 @@ def demonstrativos(issuer_ids: Sequence[str], as_of: date, *, offline: bool = Fa
             continue
         partes_ri = []
         for doc_ri in ri_pdf.documentos_ri(iid, as_of):
+            if (doc_ri.get("disponibilidade_tipo") == "recepcao_observada"
+                    and not selecionar_ri_observado):
+                continue
             url_ri = doc_ri["url"]
+            baixar_ri = _baixar(http_get, url_ri)
+            if (selecionar_ri_observado
+                    and doc_ri.get("disponibilidade_tipo") == "recepcao_observada"
+                    and http_get is None and url_ri.startswith("https://inversores.ypf.com/")):
+                def baixar_ri(url=url_ri):
+                    return baixar_pdf_ypf(url)
             got_ri = arq.obter(f"RI/demonstrativos/{iid}/{doc_ri['documento']}", "RI", url_ri,
-                               _baixar(http_get, url_ri), ate=as_of, max_idade_dias=3650.0,
+                               baixar_ri, ate=as_of, max_idade_dias=3650.0,
                                validar=lambda c, d=doc_ri: ri_pdf.fatos_pdf_ri(c, d, as_of=as_of))
             if got_ri:
-                f_ri = ri_pdf.fatos_pdf_ri(got_ri[1], doc_ri, as_of=as_of)
+                kwargs_ri = ({"recebido_em": got_ri[0].limite_captura}
+                             if doc_ri.get("disponibilidade_tipo") == "recepcao_observada" else {})
+                f_ri = ri_pdf.fatos_pdf_ri(got_ri[1], doc_ri, as_of=as_of, **kwargs_ri)
                 if not f_ri.empty:
                     f_ri["fonte"] = "RI"
                     f_ri["sha256"] = got_ri[0].sha256
@@ -784,10 +809,27 @@ def demonstrativos(issuer_ids: Sequence[str], as_of: date, *, offline: bool = Fa
     if not frames and not compl_frames:
         return vazio()
     fatos = pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
+    confirmacao = None
+    if confirmar_magnitude_cvm and registros_cvm:
+        _, corte = _corte_observado(as_of, conhecimento_ate or arq.conhecimento_ate or datetime.now(UTC))
+        confirmacao = ConfirmacaoCVM(arq, registros_cvm, cnpj_de, corte=corte)
+        _, disponibilidade = confirmacao.autenticar()
+        mask = fatos['fonte'].eq('CVM')
+        fatos.loc[mask, 'disponibilidade_tipo'] = 'recepcao_observada'
+        fatos.loc[mask, 'disponivel_desde'] = fatos.loc[mask, 'sha256'].map(
+            {sha: dt.isoformat() for sha, dt in disponibilidade.items()})
+        fatos.loc[mask, 'data_recebimento_documento'] = fatos.loc[mask, 'received_date'].map(
+            lambda v: pd.Timestamp(v).date().isoformat())
+        fatos.loc[mask, 'data_publicacao_primaria'] = None
     coleta = (fatos.groupby("sha256")["data_coleta"].first().to_dict()
               if not fatos.empty else {})
-    sel = selecionar_pit(fatos.drop(columns=["data_coleta"], errors="ignore"), as_of) \
-        if not fatos.empty else pd.DataFrame()
+    ri_observado = ("disponibilidade_tipo" in fatos
+                    and fatos["disponibilidade_tipo"].eq("recepcao_observada").any())
+    corte_selecao = ({"conhecimento_ate": confirmacao.corte} if confirmacao else
+                    {"conhecimento_ate": conhecimento_ate or arq.conhecimento_ate}
+                    if ri_observado else {})
+    sel = selecionar_pit(fatos.drop(columns=["data_coleta"], errors="ignore"), as_of,
+                         **corte_selecao) if not fatos.empty else pd.DataFrame()
     trocas: dict[str, dict] = {}
     partes = []
     if not sel.empty:
@@ -820,7 +862,8 @@ def demonstrativos(issuer_ids: Sequence[str], as_of: date, *, offline: bool = Fa
     if not partes:
         return vazio()
     out = pd.concat(partes, ignore_index=True)
-    out = _qa_magnitude(out, qa)
+    out = _qa_magnitude(out, qa, **({'confirmacao_cvm': confirmacao} if confirmacao else {}))
+    confirmacoes = out.attrs.get('confirmacoes_cvm', [])
     out = _qa_acoes(out, qa)
     out = _refazer_derivados(out)
     # Bancos (intermediação financeira): o fluxo de caixa operacional inclui captações e
@@ -834,10 +877,14 @@ def demonstrativos(issuer_ids: Sequence[str], as_of: date, *, offline: bool = Fa
     out["data_coleta"] = out["sha256"].map(coleta)
     out["data_publicacao"] = pd.to_datetime(out["data_publicacao"]).dt.date
     out["period_end"] = pd.to_datetime(out["period_end"])
-    out = out[DEMONSTRATIVOS_COLUNAS].sort_values(
+    extras = ([k for k in (*COLUNAS_TEMPORAIS, "period_start") if k in out]
+              if confirmar_magnitude_cvm or ri_observado else [])
+    out = out[DEMONSTRATIVOS_COLUNAS + extras].sort_values(
         ["issuer_id", "item", "freq", "period_end"], kind="stable").reset_index(drop=True)
     out.attrs = {"as_of": as_of.isoformat(), "falhas": list(arq.falhas),
                  "desconhecidos": desconhecidos, "qa": qa, "moeda_trocada": trocas}
+    if confirmar_magnitude_cvm:
+        out.attrs['confirmacoes_cvm'] = confirmacoes
     return out
 
 
@@ -906,9 +953,16 @@ def _marcar(out: pd.DataFrame, idx, motivo: str) -> None:
                             for a in atual]
 
 
-def _qa_magnitude(out: pd.DataFrame, qa: list[str]) -> pd.DataFrame:
+def _qa_magnitude(out: pd.DataFrame, qa: list[str], *,
+                  confirmacao_cvm: ConfirmacaoCVM | None = None) -> pd.DataFrame:
     """Valores ≥ 200× fora dos períodos vizinhos (vizinhos coerentes entre si) ⇒ ausentes com
     motivo; saltos ≥ 10× entre períodos consecutivos ⇒ alerta em ``qa``."""
+    before = None
+    if confirmacao_cvm is not None:
+        if type(confirmacao_cvm) is not ConfirmacaoCVM:
+            raise ValueError('confirmação CVM exige o verificador público explícito')
+        confirmacao_cvm.autenticar()
+        before = out.copy(deep=True)
     out = out.copy()
     alvo = out[out["item"].isin(ITENS_POSITIVOS) & out["freq"].isin(["A", "Q", "TTM"])
                & out["value"].notna() & (out["value"] > 0)]
@@ -944,6 +998,26 @@ def _qa_magnitude(out: pd.DataFrame, qa: list[str]) -> pd.DataFrame:
                 if r >= FATOR_SALTO or r <= 1.0 / FATOR_SALTO:
                     qa.append(f"{iid}: {item} {freq} salto de {r:.3g}× entre {datas[k - 1]} e "
                               f"{datas[k]} — conferir")
+    if before is not None:
+        diagnostics = []
+        descartados = before['value'].notna() & out['value'].isna() & before['item'].eq('aplicacoes_cp')
+        for idx in before.index[descartados]:
+            resultado = confirmacao_cvm.resolver(before.loc[idx])
+            diagnostics.append({'issuer_id': str(before.at[idx, 'issuer_id']),
+                                'period_end': pd.Timestamp(before.at[idx, 'period_end']).date().isoformat(),
+                                'freq': str(before.at[idx, 'freq']), 'item': 'aplicacoes_cp',
+                                'qa_descarte': str(out.at[idx, 'nota']), **asdict(resultado)})
+            if resultado.estado == 'saldo_unidade_confirmados':
+                out.at[idx, 'value'] = before.at[idx, 'value']
+                original = before.at[idx, 'nota']
+                out.at[idx, 'nota'] = ('confirmado documentalmente: saldo/unidade BPA 1.01.02; '
+                                      'não confirma classificação/DFC/FCFF' +
+                                      (f'; {original}' if pd.notna(original) else ''))
+                qa.append(f"{before.at[idx, 'issuer_id']}: aplicacoes_cp {before.at[idx, 'freq']} "
+                          f"{pd.Timestamp(before.at[idx, 'period_end']).date()}: saldo/unidade "
+                          'confirmados na fonte pública; descarte heurístico preservado no diagnóstico')
+        confirmacao_cvm.autenticar()
+        out.attrs['confirmacoes_cvm'] = diagnostics
     return out
 
 

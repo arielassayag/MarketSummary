@@ -101,10 +101,16 @@ def portoes_emissor(pac: Mapping[str, Any], mod: Mapping[str, Any], params: Para
     else:
         out.append(_portao("G1", "Identidades contábeis", True, "aviso", "identidades conferidas onde publicadas"))
     # G2 point-in-time
-    mx = pac.get("max_data_publicacao")
-    ok2 = None if mx is None else mx <= pac["as_of"]
-    out.append(_portao("G2", "Insumos publicados até a data", ok2, "bloqueio",
-                       f"publicação mais recente: {mx}" if mx else "sem demonstrativos"))
+    if q.get("demonstrativos_disponibilidade_metodo") == "recepcao_observada":
+        from .disponibilidade_demonstrativos import conferir
+
+        ok2, detalhe2 = conferir(pac)
+        out.append(_portao("G2", "Disponibilidade observada até o corte", ok2, "bloqueio", detalhe2))
+    else:
+        mx = pac.get("max_data_publicacao")
+        ok2 = None if mx is None else mx <= pac["as_of"]
+        out.append(_portao("G2", "Insumos publicados até a data", ok2, "bloqueio",
+                           f"publicação mais recente: {mx}" if mx else "sem demonstrativos"))
     tem = bool(mod.get("tem_alvo"))
     # G3 finito
     out.append(_portao("G3", "Valor finito", tem if mod.get("metodos") else None, "sem_alvo",

@@ -661,3 +661,126 @@ detectadas. → Consequências: integrar apenas teste e passagem de bastão para
 completa, sem mudar Python/pins/solver/custos/gates. A falha anterior/JUnit ficam congelados,
 e sucesso local não vira sucesso remoto. O delta prospectivo de curadoria permanece separado
 em DEV, sujeito à suíte ampla; E1 caso10 favorável é delimitado e não libera P0/PIT/E2/carteira.
+
+## 2026-10-08 · Curadoria identificada não substitui documento primário capturado
+
+Contexto: hashes de configuração acompanhavam URLs primárias sem que os bytes dessas
+fontes tivessem sido recebidos. → Decisão: separar prospectivamente a identidade da
+curadoria de hash/data de captura primária, mantendo desconhecidos como ausentes. Quatro
+caminhos revisados foram integrados em `3b30c974` depois de ampla10 local verde e Ruff0;
+os 2.595 arquivos conferidos permaneceram literais. → Consequências: números, seis
+modelos legados completos, mandato/gates e livro oficial não foram reescritos. A CI
+anterior `37703576248` terminou verde; a CI do novo commit `37825047226` também concluiu
+com JUnit próprio: 2.889 aprovados, 16 pulados e um xfail, zero falhas/erros.
+O reparo de proveniência não resolve sozinho C/revisão do P0.
+
+## 2026-10-08 · Moeda documental exige confronto no grão e no vintage
+
+Contexto: dez células YPF arquivadas no Yahoo coincidem com valores primários USD,
+mas `financialCurrency` e a interface pública do fornecedor dizem ARS; a conversão
+adicional foi reproduzida no código e no modelo publicado. → Decisão: investigar
+e corrigir por documento, conceito, período e versão, sem inferir moeda por magnitude,
+cotação, ticker ou rótulo divergente do fornecedor. Captura atual não é recepção histórica
+nem prova de primeira publicação. → Consequências: diagnóstico privado e revisão
+independente separados; não aplicar override geral ou promover confiança/PIT. Divergências
+IAS29 em bancos argentinos e revisões de receita precisam de bases homogêneas antes
+de formar TTM; quantidade de ações positiva não transforma prejuízo em lucro normalizado.
+
+## 2026-10-08 · Ensaio sem execução local CL mantém caso7 aberto
+
+Contexto: controle e cenário sintético de volume CL maior executaram BR/MX/US, sem
+linha local chilena; uma sonda posterior também não efetivou CL. → Decisão: preservar
+os resultados negativos e sementes declaradas, sem baixar pisos, forçar pesos/ordens
+ou procurar sementes até obter aprovação. → Consequências: caso7 permanece aberto;
+custos CL não exercidos são desconhecidos, nunca zero certificado. Custódia recebida
+e oráculo do autor não substituem revisão independente nem fecham E1/PIT/E2/P0.
+
+## 2026-10-08 · Recepção observada exige guarda prospectiva própria
+
+Contexto: a composição pública CVM/RI preserva publicação desconhecida, mas o consumidor
+legado G2 retorna `nao_aplicavel` e diz `sem demonstrativos`. Uma revisão não autora com
+universo sintético fixo de 60 emissores e cinco cenários, alterando apenas metadados,
+preservou nove Compra e seis Venda mesmo com recepção ausente, futura ou mista desconhecida.
+O seletor API recusa os mesmos recibos: a lacuna é do consumidor. → Decisão: a opção
+explícita de recepção observada precisa validar todas as disponibilidades dos participantes
+efetivamente usados, incluindo o denominador e os históricos de ações, contra o corte UTC
+já existente; ausência, fuso ausente, futuro ou componente
+TTM incompleto não podem virar aceite por um máximo que ignore nulos. Disponibilidade
+prospectiva válida não certifica primeira publicação nem muda `pit_ok` para verdadeiro.
+O contrato histórico sem opção permanece literal. → Consequências: correção em candidato
+separado, seguida de revisão ROOT e suíte completa antes da integração; nenhuma habilitação
+oficial, novo relógio, relaxamento de mandato ou reescrita de snapshots por esta decisão.
+
+A primeira implementação foi recusada na revisão não autora: as ações selecionadas
+ficaram fora da lista, e identidade/grão ou lista truncada podiam passar. A correção
+segue em candidato separado, com registro no momento de cada uso e vínculo de completude
+do pacote; esse vínculo interno não é autoridade documental ou PIT. Fonte confirmadora
+que participa da contagem exige sua própria disponibilidade, sem herdar o recibo de outro
+documento. Nenhuma publicação desconhecida ou data civil recebe UTC presumido.
+
+A segunda implementação também foi recusada: o seletor público normal conserva início
+e fim nos componentes, sem frequência; a guarda exigia esse campo e descartava o início.
+Derivados transmitem mais de uma lista de componentes na nota, mas só a primeira era
+registrada. → Decisão: preservar o grão nativo, coeficientes e todos os grupos transmitidos
+na nota, sem fabricar frequência nem refazer fórmulas. O campo explícito de componentes
+mantém a precedência total sobre notas antigas. Reutilização de intervalos com sinais
+opostos em trimestres derivados de acumulados é legítima; não há veto universal por
+repetição de período. Novos causais devem usar o seletor e o consumidor normais.
+
+A terceira implementação recebeu revisão não autora favorável no contrato delimitado:
+193 testes, incluindo 35 controles próprios, sem falhas; default de 60 emissores literal.
+ROOT transpôs o código e os testes ao DEV e repetiu os 193 focais com sucesso. Todos os
+grupos nativos e a precedência do campo explícito foram conferidos. A habilitação global
+continua ausente; a suíte completa e a integração permanecem prévias à entrega técnica.
+Recepção, completude e igualdade numérica continuam distintas de autenticidade e PIT.
+
+## 2026-10-08 · Fallback NW conserva o mínimo de observações
+
+Contexto: estudo externo reproduziu duas diagonais em que a máscara de menos de20
+observações era desfeita pelo fallback para lag0. → Decisão: repor lag0 somente se a
+contagem marginal também satisfizer o mínimo existente. A alteração de uma linha foi
+revisada independentemente:43 testes passam, contra16 falhas contratuais no original.
+Os testes de produto têm apenas microcasos inline e oráculos Decimal; os oito confrontos
+de984 retornos permanecem no estudo externo congelado. → Consequências: ausência continua
+ausência, fallback não positivo com histórico suficiente é preservado; nenhuma mudança
+de limiar, anualização, mandato ou calibração. `_build_model` exige pelo menos60
+observações por fator; impacto econômico ou operacional não foi demonstrado. Suíte
+completa e integração do lote continuam prévias à entrega técnica.
+
+## 2026-10-08 · IAS29: origem monetária não se deduz de EPS
+
+Contexto: uma coluna da DRE Galicia junho/2025 tem cabeçalho contraditório. → Decisão:
+o estudo externo V2 descarta essa página e lê diretamente o numerador monetário LPA
+explicitamente rotulado06.30.25, contra o resultado do balanço no mesmo conceito.
+O anual original exige ponte balanço→DRE owners; isso não é regra universal de saldo
+patrimonial para fluxo. → Consequências: revisão documental favorável delimitada,83
+testes sem falhas e valores anteriores preservados. Não usar EPS ou média de ações
+para deduzir lucro; não ampliar tolerância para fechar IPC. TTM documental homogêneo,
+reconstrução integral por IPC, resultado normalizado e disponibilidade histórica são
+conclusões distintas. Não há patch de consumidor financeiro, promoção de PIT/P0 ou
+TTM Supervielle novo. Pacotes V1 e sua revisão negativa permanecem literais.
+
+## 2026-10-08 · JBS conserva conflito documental por conceito e escala
+
+Contexto: código normal e CSVs completos confirmam JBS N.V. no ITR selecionado. HTML e XML
+SEC arquivados divergem da contagem visível na capa por escala, enquanto FRE e ITR não
+oferecem ponte inequívoca no mesmo período entre emitidas, tesouraria e circulação.
+→ Decisão: preservar os dados e o G13c bloqueado; não reclassificar um campo por coincidência
+numérica, retirar tesouraria ou aplicar fator por proximidade ao mercado. → Consequências:
+estudo encerrado sem patch financeiro; uma correção futura exige documento primário com
+ponte no grão correto. Verificação técnica, recepção atual e igualdade numérica não
+substituem essa prova nem liberam P0/PIT.
+
+## 2026-10-08 · Validação técnica e estudos externos são aceites distintos
+
+Contexto: ampla11 encerrou verde no delta de coleta pública, guarda de participantes
+G2 e mínimo NW; estudos externos passaram nos recortes de VaR/ES e WLS/HC2.
+→ Decisão: integrar somente o código revisto após a suíte e Ruff, preservando os defaults
+financeiros e o livro oficial. CI remota e portal exigem evidência do novo commit.
+Os estudos encerrados têm aceite delimitado às entradas e fórmulas documentadas;
+intermediários originais ausentes, calibração econômica e vintages não são fabricados.
+→ Consequências: resultados técnicos não encerram P0, PIT/E2 ou carteira inaugural.
+Galicia exige política contábil e data de poder aquisitivo nativas, completas e
+compatíveis em cada participante consumido. Seu candidato de propagação permanece
+separado até a revisão independente e validação própria, sem transformar a ponte
+específica do balanço em regra universal nem emitir lucro real nesta etapa.

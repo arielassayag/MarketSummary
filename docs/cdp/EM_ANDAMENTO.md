@@ -5,9 +5,238 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-Última atualização: 2026-10-07, 20:36, Brasília — lote12 integrado; CI remota falhou no teste AST; reparo somente de teste e proveniência prospectiva em DEV; P0 aberto. **Comece por
-`docs/cdp/PASSAGEM_CODEX.md`**: rotinas no Codex, P0 de desenvolvimento e cronograma até a
-carteira inaugural de 09/10. Índice interno: `.cdp/README.md` e `.cdp/TAREFAS.md`.
+Última atualização: 2026-10-08, 20:51, Brasília — ampla11 e Ruff concluídos; lote técnico
+revisto pronto para integração normal; CI e portal do novo commit ainda pendentes.
+Comece por `docs/cdp/PASSAGEM_CODEX.md`. Índice interno: `.cdp/README.md` e `.cdp/TAREFAS.md`.
+
+## Validação técnica do lote14 — 08/10/2026
+
+- Ampla11 sobre `4c25ce4a` mais o delta DEV revisado: 3.302 casos,
+  3.285 aprovados, 16 pulados e 1 falha esperada; zero falhas/erros inesperados.
+  Ruff completo passou. Os 2.619 arquivos antes/depois permaneceram idênticos.
+  JUnit e recibo `AMPLA11_TERMINAL.json` estão em
+  `.cdp/validacoes/20261008-integracao-14/`. É validação técnica local, sem transferir
+  o resultado da CI anterior nem conceder aceite financeiro.
+- O lote incorpora coleta pública CVM/YPF, transmissão temporal opcional, guarda G2
+  dos participantes efetivamente consumidos e reparo mínimo de uma linha no fallback NW.
+  Revisões não autoras e focais ROOT estão encerrados. Defaults financeiros legados,
+  mandato e configuração global de recepção observada permanecem inalterados.
+  Próximo passo: commit seletivo, push normal em main, avanço do executor somente
+  limpo e sem trava, CI própria e conferência HTTP do portal no novo commit.
+- VaR/ES diário: estudo externo encerrado com 3.157 confrontos sem divergência,
+  20 testes literais e quatro controles independentes aprovados. ROOT recebeu os
+  284 payloads autorais e os 13 da revisão. Os seis records sintéticos guardam apenas
+  os finais; painel e riscos histórico/paramétrico isolados originais continuam ausentes.
+  Não se certificam estimação, calibração, PIT ou carteira inaugural.
+- WLS/HC2: quatro espécimes declarados, 139 confrontos, oito testes e Ruff aprovados.
+  ROOT recebeu 204 payloads, leu a derivação KKT e refaz 38 confrontos dos mesmos
+  casos de intercepto por média ponderada e alavancagem fechadas, sem CDP/oráculo autoral.
+  O aceite é de matemática local; não valida adequação econômica ou geração de B/F/D.
+  Provas privadas em `.cdp/estudos/20261008-wls-hc2-externo/`.
+- Galicia: diagnóstico corrente recebeu revisão favorável delimitada, com 11 testes
+  recebidos e cinco controles próprios. Consumidor perde política contábil e poder
+  aquisitivo, conservando recepção observada/publicação ausente. O candidato separado
+  de propagação/comparabilidade encerrou 51 testes portáteis, nove documentais privados
+  e 25 legados selecionados; revisão independente do patch ainda em andamento.
+  Nenhum fato de lucro real, ponte anual nova ou extrator financeiro foi entregue.
+  Fonte DEV não recebe esse patch nesta integração.
+- Operação oficial: Diário nativo de 08/10 publicou `4c25ce4a`; mercado até 08/10,
+  integridade confirmada e trava liberada. Portal HTTP200 no mesmo commit. Cobertura
+  permanece em 07/10 e sua atualização completa é determinada pela agenda antes da
+  montagem de 09/10. As 12 automações permanecem no projeto AInotes, seção CDP,
+  executor interno `.cdp/rotinas`; o clone externo não existe.
+- P0 permanece aberto: C100/233=42,92% e revisão30/233=12,88%. Vintages/PIT,
+  holdout, classificação financeira pendente, tarifa/vigência CL, caso E1 restante
+  e carteira inaugural não se tornam concluídos por esta suíte. A senha do operador
+  continua passo humano fora do Codex, conforme a passagem.
+
+## Proveniência integrada e estudos P0 — 08/10/2026, 15:55 Brasília
+
+- Diário nativo de08/10 concluiu pré-início e publicou `4c25ce4a` às19:25: base de
+  mercado até08/10, integridade confirmada e trava liberada. Cobertura completa foi
+  adiada pelo código para amanhã; retrato atual permanece07/10. Pages37853382611
+  terminou verde e o manifesto HTTP200 confere4c25ce4a. O commit altera somente
+  audit_log e sete arquivos novos de mercado, sem SRC/testes/configs/docs; por isso
+  não dispara CI pelo filtro vigente. ROOT/DEV foram sincronizados por avanço normal,
+  preservando cinco alterações herdadas e16 arquivos do delta DEV. A nova suíte ampla
+  usará essa base oficial. Recibos nativos, de sincronização e portal estão no lote14.
+- ROOT/DEV/executor/origin/main chegaram a `3b30c974` por integração normal: quatro
+  caminhos de proveniência separam hash do arquivo de curadoria de bytes primários
+  não arquivados. Curadoria conserva sua identidade; URL pública não autentica um
+  documento não recebido. Nenhuma fórmula, cifra, confiança, mandato ou gate mudou.
+  Livro/dados oficiais, identidade do executor e cinco alterações herdadas do
+  Fechamento permaneceram literais. Integridade, executor e agenda passaram em leitura.
+- Ampla10 local terminou em 08/10, 00:27 UTC: 2.906 casos, 2.889 aprovados, 16 pulados
+  e uma falha esperada, zero falhas/erros; Ruff0 e 2.595 arquivos intactos. CI integral
+  do reparo AST anterior `f278410`, execução `37703576248`, terminou verde: 2.896 casos,
+  2.879 aprovados, 16 pulados e uma falha esperada. O JUnit remoto foi recebido e lido.
+  CI integral de `3b30c974`, execução `37825047226`, terminou verde em08/10,20:20UTC:
+  JUnit próprio confirma2.906 casos,2.889 aprovados,16 pulados e uma falha esperada,
+  zero falhas/erros. Recibo novo em `.cdp/validacoes/20261008-integracao-14/`.
+  Esse resultado não inclui os novos coletores. Pages37825047154 terminou verde e o manifesto HTTP200
+  contém `3b30c974`, sem significar aceite financeiro. Recibos em
+  `.cdp/validacoes/20261007-integracao-13/`.
+- Fila oficial de 07/10 recebida em leitura: 233 modelos, 100 C, 30 em revisão, 105
+  emissores na união dessas condições, 200 citáveis. Priorização não é correção.
+  YPF: dez células Yahoo coincidem com o PDF oficial apresentado em USD, enquanto
+  o coletor as rotula ARS e converte adicionalmente. A reprodução é privada em
+  `.cdp/prototipos/p0-ypf-moeda/diagnostico-v1/`; captura atual é real, mas publicação
+  primária UTC e recepção histórica não foram demonstradas. Nenhum override global,
+  modelo corrigido, vintage retrospectivo ou promoção de confiança/PIT foi integrado.
+- Estudo argentino delimitado reproduz os três G13 em código. Galicia/Supervielle
+  têm comparativos sob IAS29 incompatíveis com o vintage Yahoo usado; TTM homogêneo
+  não foi demonstrado, sem inflação presumida. LAR é commodity e sua divergência de
+  ações não elimina prejuízo/G13 no diagnóstico. Pacote privado separado em
+  `.cdp/prototipos/p0-bancos-argentinos/diagnostico-v1/`, sem patch financeiro.
+- Novo estudo documental argentino usa fontes completas BCRA/IAS29 e oráculo Decimal
+  externo: Galicia tem TTM documental delimitado em ARS de junho/2026; reconstrução
+  integral por IPC e TTM Supervielle permanecem ausentes. ROOT conferiu 49 payloads e
+  dois controles, todos literais, e reexecutou o oráculo: resultado byteidêntico, 325
+  caminhos lidos, zero escrita/rede/processos/imports CDP. Os intervalos de resolução
+  são condicionais ao arredondamento ao mais próximo; não certificam sua regra ou
+  a causa do resíduo. Revisão não autora encontrou no PDF junho/2025 um cabeçalho
+  literal contraditório na DRE usada pelo confronto IPC; LPA e balanço corroboram o
+  número e competência, mas a extração precisa de ponte explícita. Parecer V1 recusou
+  esse confronto; pacote autoral e revisão negativa foram preservados. V2 separada usa
+  o numerador monetário LPA da página7 explicitamente rotulado06.30.25, contra o balanço
+  da página5, e descarta a DRE ambígua da página6. A ponte anual balanço→DRE também foi
+  validada. Seus77 testes passaram, incluindo51 herdados e cinco controles literais
+  do revisor. Revisão V2 não autora favorável delimitada:83 casos verdes, resultado
+  reproduzido e553 leituras comzero escrita/rede/processos/import CDP. ROOT recebeu
+  os54 payloads autorais e14 da revisão, leu as pontes e seis causais próprios; nenhum
+  consumidor financeiro foi transposto. Sem nova coleta. TTM documental junho/2026
+  é separado dessa fonte; IPC integral e Supervielle continuam ausentes.
+  Estudo em `.cdp/estudos/20261008-bancos-ias29-homogeneo/`; recibo ROOT no lote14.
+- CVM persistente v2 tem revisão favorável apenas ao contrato privado. Ponte de QA
+  corrente sobre fonte física `f278410` recebeu revisão independente delimitada e
+  custódia ROOT, sem transposição. Novo delta privado sobre `3b30c974` usa ZIP/índice
+  CVM públicos recebidos agora no fluxo normal; distingue recepção observada, DT_RECEB
+  civil e publicação primária desconhecida. Candidato de cinco caminhos sobre3b passou
+  151 casos (52 novos/99 legados), sem falhas/erros/pulos; default234 linhas literal.
+  Oráculo documental confirma BPA1.01.02 de44mil/10mil BRL e só refaz as duas dívidas
+  líquidas pela fórmula existente. Revisão não autora confirmou os valores e encontrou
+  defeitos temporais corrigidos na composição: fuso ausente, máximo entre offsets e
+  mistura civil/UTC.14 controles próprios passaram na cópia final.37 testes portáteis
+  do fluxo/CLI e52 CVM literais, mais14 do revisor, passam na cópia normal composta.
+  A opção passa `md.universe`: causal anterior2falhas, posterior3passes, default preservado.
+  G2 tem uma lacuna do consumidor: com60 emissores sintéticos fixos e só metadados
+  alterados, ausência/futuro/misto mantiveram9Compra/6Venda e `nao_aplicavel` com detalhe
+  falso `sem demonstrativos`. O seletor API recusa esses recibos, mas o consumidor precisa
+  de guarda própria contextual. O candidato G2 v1 passou seus 65 controles, mas foi
+  recusado na revisão não autora: alterar só o recibo da contagem selecionada de SIM003
+  para ausente, sem fuso ou futuro manteve G2 `ok`. Identidade/grão incompletos e lista
+  truncada também passaram. Os 31 controles do revisor tiveram 20 passagens e 11
+  vermelhos de contrato; sem erro de fixture na rodada final. V1 não foi transposto.
+  V2 separado deve cobrir denominador, históricos e série de ações efetivamente usados,
+  com vínculo completo dos participantes ao pacote. V2 foi congelado com 126 testes e
+  default60 literal, mas o revisor encontrou incompatibilidade no contrato normal:
+  `selecionar_pit` gera componentes por início/fim do período, sem frequência; V2
+  descarta o início e bloqueia o TTM nativo válido, com valores e unidades inalterados.
+  V2 não será transposto. Correção V3 separada deve preservar o grão e as composições
+  nativas, incluindo acumulados/derivados, antes de nova revisão e suíte ampla.
+  V3 foi congelado separadamente com158 testes do autor sem falhas/erros/pulos,
+  default60 byteidêntico e60×5 cenários comzero alteração financeira. ROOT leu o
+  módulo final e26 causais, verificou1656 payloads+3 controles sem diferença ou links.
+  Revisão não autora favorável passou193 testes, incluindo35 controles próprios;
+  ROOT recebeu os33 payloads declarados da revisão e conferiu as fontes selecionadas.
+  A transposição ao DEV mantém os arquivos do autor e revisor byteidênticos. O patch
+  bruto precisou apenas dos seis cabeçalhos Git de arquivos novos; a derivação e o
+  original foram preservados. ROOT repetiu193 focais, sem falhas/erros/pulos. Ruff na
+  raiz exigiu somente ordenar imports de seis testes: funções/assertivas AST e conjunto
+  de imports permanecem literais, com recibo próprio; Ruff completo DEV passou. Suíte
+  completa e integração continuam pendentes. Manifesto interno é
+  completude dos usos, não autenticação documental, publicação ou PIT.
+  Transporte público YPF tem66 testes e única coleta real pelo protocolo anônimo fechado:
+  PDF junho com SHA original, recepção20:28:54.555923UTC, corte anterior recusado e leitura
+  posterior aceita. Token não persistido; módulo só retorna bytes. Fonte e testes estão
+  em DEV para compor conexão/guarda. Revisão independente do transporte passou 100
+  controles e cinco casos do hook final, sem rede. ROOT transpôs os testes portáteis
+  do revisor e conferiu 134 focais de transporte/parser/hook, zero falhas/erros.
+  Conferiu também 73 focais públicos CVM/CLI, sem falhas/erros/pulos: 207 no conjunto
+  anterior ao G2, com JUnit próprio. Isso não substitui a suíte completa do novo delta.
+  Suíte ampla e integração desse novo lote continuam pendentes.
+  Não são autoridade humana nem captura histórica PIT. V1 bloqueada permanece excluída.
+- YPF USD adicional:46 identidades Decimal de balanço, resultado e caixa passaram nos três
+  PDFs primários;390 entradas permaneceram literais em bytes/metadados. Rótulos de lucro
+  controlador não absorvem OCI, empréstimos CP/LP são parcelas distintas e variação de
+  caixa repetida é contada uma vez. Dívida líquida econômica, ΔWC, capex econômico,
+  normalização e denominador contemporâneo ainda não estão certificados. Estudo em
+  `.cdp/estudos/20261008-ypf-usd-integral/`; não habilita modelo USD completo em produção.
+  Estudo adicional de ações confirma por bytes primários a eficácia do split em 04/08/2026
+  e 1 ADS = 10 ações Classe D, relação já presente no universo. O 20-F informa 97.071.609 ADSs
+  efetivos em 09/03, grão distinto da base total da companhia. Médias ponderadas IAS33,
+  fluxos de recompra e rubricas monetárias não preencheram tesouraria quantitativa ou
+  circulação líquida atual. ROOT conferiu 19 fontes e 10 saídas; SEC 403 permaneceu falha,
+  não documento. Pacote em `.cdp/estudos/20261008-ypf-base-acoes/diagnostico-v1/`.
+- Aura: PDF primário de 2Q26 em USD confirma patrimônio e ações no grão; confronto
+  em Decimal teve 20 igualdades exatas entre 21 comparações. A soma do caixa operacional
+  de 1S2025 difere em US$1.000, sem causa certificada. P/VPA com ações primárias segue
+  acima de15; pontes documentais IFRS→ajustado não autorizam trocar o conceito para
+  liberar G13/G13b. Estudo em `.cdp/estudos/20261008-aura-fonte-primaria/`, sem patch.
+- Pré-análise E1 BR/MX/CL encerrou negativa: controle e cenário de volume local CL
+  multiplicado por dez não efetivaram linha local chilena; a sonda declarou seu seed
+  e também não produziu fill CL. Custos BR/MX/US confrontados; custos CL não exercidos.
+  Caso7 continua aberto, sem afrouxar mandato, procurar seeds ou alterar a matriz
+  histórica. Recebimento de custódia não é revisão econômica independente.
+- Novo estudo CL recebeu manuais CMF6373/6372 aprovados em junho2026: subasta termina
+  às16:00, negociação ao preço de fechamento segue até16:05. Aviso de vigência e tarifa
+  aplicável não foram confirmados; pisoUSD28 é parâmetro do modelo, não taxa universal
+  documentada. Álgebra independente expõe compensação short CL necessária à banda/net.
+  Episódio sintético definido a priori encerrou sem alterar mandato: seis sessões,
+  duas montagens, 36 linhas/49 ordens, US20/BR13/MX3/CL0; integridade nativa verdadeira.
+  Oráculo de custos por ordem e identidades NAV passou no recorte; não é validação
+  financeira integral, tarifa efetiva ou PIT. Três locais foram preteridas por ADR
+  e quatro eram candidatas long sem ordem final. Alpha puro dos zerados e pesos
+  intermediários não foram persistidos, portanto a causa individual não foi atribuída.
+  Caso7 e custos CL continuam abertos, sem repetição/ajuste após o resultado.
+  Fontes, rastreio e pacote encerrado em `.cdp/ensaios/20261008-e1-cl-contrato-v1/`.
+- Auditoria externa ampliada desse ensaio rederivou 115 períodos de posições/FX,
+  60 aluguéis ACT/360, financiamento, seis NAVs recursivos e 235 atribuições:
+  1.422 comparações sem falha, 31 testes, Ruff0. O ajuste sintético declarado na fonte
+  foi conferido em Decimal, sem chamá-lo de dividendo em caixa. ROOT leu código/fórmulas,
+  conferiu 31 payloads selados e reexecutou o oráculo com zero writer/rede/processos:
+  resultado byteidêntico, 573 payloads e 256 cópias de fonte originais intactos.
+  Custos são dependência explícita do oráculo anterior; não nova certificação de tarifas.
+  Caixa real, cotas, pagamentos de proventos, linha WLS estrutural efetiva e risco integral
+  permanecem ausentes ou não rederivados. Prova em
+  `.cdp/validacoes/20261008-auditoria/CL_FINANCEIRO_AMPLIADO/`; recebimento ROOT no lote14.
+  Frente separada de álgebra das matrizes encerrou 12 casos base/evento, 141 pesos finais
+  e 324 exposições: 5.262 comparações sem falha, 33 testes e Ruff0. ROOT leu código final,
+  fórmulas e controles, conferiu 27 payloads e reexecutou com zero writer/rede/processos;
+  resultado byteidêntico, entradas do ensaio e da auditoria financeira preservadas.
+  B/D/F são inputs herdados; F/D já anuais, sem novo 252. Não certifica estimação,
+  PSD universal, calibração, VaR/ES/beta/WLS/risco integral, CL/caso 7 ou PIT/E1/P0.
+  Provas em `.cdp/validacoes/20261008-auditoria/CL_RISCO_MATRIZES/`; recibo ROOT no lote14.
+  Estudo externo de estimação encerrou480 comparações e30 testes;478 concordam e duas
+  violações locais do mínimo de pares foram reproduzidas. ROOT recebeu28 payloads e
+  reexecutou com635 caminhos lidos, zero escrita/rede/processos/imports CDP, resultado
+  byteidêntico. O fallback da diagonal NW restaura lag0 indevidamente com18/19 pares.
+  Candidato separado altera uma linha para conservar ausência abaixo20;24 testes
+  passaram, contra cinco falhas específicas no original. ROOT recebeu204 payloads e
+  derivou16 microcasos inline sem fixtures privadas, com funções/assertivas AST literais;
+  revisão não autora favorável:43 casos verdes,16 vermelhos contratuais no original,
+  marginais suficientes preservadas literalmente. ROOT recebeu20 payloads e quatro
+  referências selecionadas da revisão e transpôs fonte/testes ao DEV. Os oito confrontos
+  de984 retornos ficam no pacote externo; ampla11 ainda pendente.
+  `_build_model` exige pelo menos60 observações por fator, portanto impacto operacional
+  ou econômico não foi demonstrado. Nada altera calibração, mandato, PSD geral ou P0.
+- JBS: estudo encerrado com40 verificações, Ruff0 e24 entradas intactas. Código normal
+  FCA25+26 seleciona NV/ITR160350; não há erro de identidade SA a corrigir. HTML/XML SEC
+  integrais arquivados confirmam conflito entre texto da capa e escala3 dos fatos de A/B.
+  FRE e ITR têm grãos distintos; coincidência numérica não prova dupla subtração de
+  tesouraria. Nota20 não contém ponte de quantidades. G13c continua bloqueado, sem patch.
+  Estudo em `.cdp/validacoes/20261008-auditoria/JBS_IDENTIDADE_CVM_FRE_REVISAO/`;
+  capturas e observação inicial em `.cdp/estudos/20261008-jbs-capital/`.
+- Releitura nativa de 08/10 confirma esta conversa e o projeto AInotes na seção CDP;
+  as 12 automações permanecem ativas, com horários e IDs preservados. Leitura do executor
+  às18:16 confirmou integridade, identidade local-pc/Codex, árvore limpa e trava livre;
+  Diário19:22 e montagem inaugural09/10 continuam na agenda. Executor e trabalho
+  ficam na pasta interna. A rotina nativa Cobertura de 07/10 falhou antes de usar
+  ferramentas por limite da conta. Leitura atual da conta indica uso permitido;
+  isso não reclassifica a chamada anterior como sucesso. Próximo disparo segue a agenda.
+- P0 oficial segue C100/233=42,92% e revisão30/233=12,88%, acima dos limites. Carteira
+  inaugural, E1 integral, PIT/E2 e senha humana seguem pendentes. Não confundir verde
+  técnico, fila de reparos ou ensaio privado com aceite financeiro ou publicação.
 
 ## Lote12 integrado e reparo da comparação AST — 07/10/2026, 20:36 Brasília
 

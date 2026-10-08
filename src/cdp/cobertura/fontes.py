@@ -104,7 +104,10 @@ def _slug(t: str) -> str:
 def _capturas_iso(df: pd.DataFrame) -> pd.DataFrame:
     d = df.copy()
     for c in d.columns:
-        if str(c).startswith("data_coleta") or c == "first_capture":
+        observado = ("disponibilidade_tipo" in d
+                     and d["disponibilidade_tipo"].eq("recepcao_observada").any())
+        if (str(c).startswith("data_coleta") or c == "first_capture"
+                or (observado and c in ("disponivel_desde", "received_date"))):
             d[c] = d[c].map(lambda x: None if pd.isna(x) else
                            x.isoformat() if hasattr(x, "isoformat") else x)
     return d
@@ -536,6 +539,14 @@ def incorporar_resultados(dem: pd.DataFrame, primaria: pd.DataFrame, catalogo: d
     return dem, tabela
 
 
+def disponibilidade_observada(params) -> bool:
+    """Opção normal de recepção; ausência preserva o contrato histórico."""
+    metodo = params.sec("qualidade").get("demonstrativos_disponibilidade_metodo") if params else None
+    if metodo not in (None, "recepcao_observada"):
+        raise ValueError("Método de disponibilidade dos demonstrativos desconhecido")
+    return metodo == "recepcao_observada"
+
+
 def _coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Sequence[str],
             etfs: Sequence[str], *, offline: bool = False, raiz: Path | None = None,
             seed: int = 7, params=None, conhecimento_ate: datetime | None = None) -> DadosPublicos:
@@ -562,8 +573,16 @@ def _coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Se
             "camada de dados públicos (cdp.data.publico) indisponível") from exc
     kw = {"offline": offline, "root": raiz}
     from .ri_observada import ativo as ri_ativo
-    kw_universo = {"universe": md.universe} if params is not None and ri_ativo(params) else {}
-    dem_bruto = publico.demonstrativos(list(issuer_ids), as_of, **kw, **kw_universo)
+    kw_universo = ({"universe": md.universe}
+                  if params is not None and (ri_ativo(params) or disponibilidade_observada(params)) else {})
+    kw_dem = kw
+    if disponibilidade_observada(params):
+        from ..data.publico_confirmacao_cvm import instante
+
+        kw_dem = dict(kw)
+        kw_dem.update(conhecimento_ate=instante(conhecimento_ate), confirmar_magnitude_cvm=True,
+                  selecionar_ri_observado=True)
+    dem_bruto = publico.demonstrativos(list(issuer_ids), as_of, **kw_dem, **kw_universo)
     alertas = alertas_de_attrs(getattr(dem_bruto, "attrs", None))
     dem = _garantir(dem_bruto, COLS_DEMONSTRATIVOS)
     br = [i for i in issuer_ids if i in md.universe.issuers.index and str(md.universe.issuers.loc[i, "country"]) == "BR"]
@@ -615,6 +634,8 @@ def coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Seq
     from .ri_observada import ativo as ri_ativo
     from .temporal import ativo as temporal_ativo
     ri = params is not None and ri_ativo(params)
+    if disponibilidade_observada(params) and not temporal_ativo(params):
+        raise ValueError("Recepção observada exige a política temporal base_preco_conhecimento_explicitos.")
     if ri:
         from ..data.ri_captura.adapter import autenticar, coletar_observados
         autenticar(ri_contexto, md)

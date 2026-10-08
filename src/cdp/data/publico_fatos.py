@@ -31,7 +31,8 @@ from __future__ import annotations
 
 import json
 import math
-from datetime import date
+from datetime import UTC, date, datetime, time, timedelta
+from zoneinfo import ZoneInfo
 
 import numpy as np
 import pandas as pd
@@ -54,6 +55,90 @@ SAIDA_COLUNAS = [
 ]
 
 _ANUAL = (350, 380)
+METADADOS_OBSERVADOS = ('disponivel_desde', 'disponibilidade_tipo',
+                       'data_recebimento_documento', 'received_date')
+
+
+def _observado(m) -> bool:
+    return str(m.get('disponibilidade_tipo')) == 'recepcao_observada'
+
+
+def _publicacao_componentes(ms):
+    if any(_observado(m) for m in ms) and any(pd.isna(m.get('data_publicacao')) for m in ms):
+        return None
+    return max(m['data_publicacao'] for m in ms)
+
+
+def _max_recebimento_observado(values):
+    """Agrega somente um domínio temporal; nunca transforma uma data civil em UTC."""
+    if any(pd.isna(v) for v in values):
+        return None
+    stamps = [pd.Timestamp(v) for v in values]
+    domains = {"instante" if t.tzinfo is not None else
+               "civil" if t == t.normalize() else "sem_fuso" for t in stamps}
+    if len(domains) != 1:
+        return None
+    return max(zip(values, stamps, strict=True), key=lambda pair: pair[1])[0]
+
+
+def _disponibilidade_com_fuso(value):
+    try:
+        t = pd.Timestamp(value)
+        return pd.notna(t) and t.tzinfo is not None
+    except (ValueError, TypeError):
+        return False
+
+
+def _max_disponibilidade_observada(values):
+    """Disponibilidade agregada exige instantes com fuso conhecido em todos os componentes."""
+    if any(pd.isna(v) for v in values):
+        return None
+    stamps = [pd.Timestamp(v) for v in values]
+    if any(t.tzinfo is None for t in stamps):
+        return None
+    return max(zip(values, stamps, strict=True), key=lambda pair: pair[1])[0]
+
+
+def _observacao_componentes(ms):
+    if not any(_observado(m) for m in ms):
+        return {}
+    out = {'disponibilidade_tipo': 'recepcao_observada'}
+    for key in ('disponivel_desde', 'data_recebimento_documento', 'received_date'):
+        values = [m.get(key) for m in ms]
+        out[key] = (_max_recebimento_observado(values) if key == 'received_date' else
+                    _max_disponibilidade_observada(values) if key == 'disponivel_desde' else
+                    None if any(pd.isna(v) for v in values) else max(values))
+    return out
+
+
+def _fonte_componente(m):
+    pub = m['data_publicacao']
+    out = {k: m[k] for k in ('fonte', 'url', 'documento', 'sha256')}
+    out['data_publicacao'] = None if pd.isna(pub) else pd.Timestamp(pub).date().isoformat()
+    if _observado(m):
+        out.update({k: (None if pd.isna(m.get(k)) else str(m[k])) for k in METADADOS_OBSERVADOS})
+    return out
+
+
+def _agora_observado():
+    return datetime.now(UTC)
+
+
+def _corte_observado(as_of, conhecimento_ate):
+    if isinstance(as_of, datetime):
+        if as_of.tzinfo is None or as_of.utcoffset() is None:
+            raise ValueError('seleção observada exige datetime com fuso explícito')
+        cut = as_of.astimezone(UTC)
+        civil = cut.astimezone(ZoneInfo('America/Sao_Paulo')).date()
+    else:
+        civil = as_of
+        cut = datetime.combine(civil + timedelta(days=1), time(),
+                               ZoneInfo('America/Sao_Paulo')).astimezone(UTC) - timedelta(microseconds=1)
+    if conhecimento_ate is not None:
+        if conhecimento_ate.tzinfo is None or conhecimento_ate.utcoffset() is None:
+            raise ValueError('corte observado exige fuso explícito')
+        cut = min(cut, conhecimento_ate.astimezone(UTC))
+    return civil, min(cut, _agora_observado())
 
 
 def _texto(v) -> str | None:
@@ -73,13 +158,18 @@ def _meta(row) -> dict:
     nota = _texto(getattr(row, "nota", None))
     if semantica and semantica != "receita_dre":
         nota = _juntar(nota, f"semantica_fluxo={semantica}; rubrica reportada: {rubrica}")
-    return {
+    out = {
         "demonstrativo": row.demonstrativo, "currency": row.currency,
         "consolidado": bool(row.consolidado), "fonte": row.fonte, "url": row.url,
         "documento": row.documento, "data_publicacao": row.received_date, "sha256": row.sha256,
         "pit_estimado": bool(getattr(row, "pit_estimado", False)),
         "nota": nota, "semantica_fluxo": semantica, "rubrica_reportada": rubrica,
     }
+    if str(getattr(row, 'disponibilidade_tipo', None)) == 'recepcao_observada':
+        out['data_publicacao'] = getattr(row, 'data_publicacao_primaria', None)
+        out.update({k: getattr(row, k, None) for k in METADADOS_OBSERVADOS})
+        out['received_date'] = getattr(row, 'received_date_original', row.received_date)
+    return out
 
 
 def _moeda_vigente(f: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, dict]]:
@@ -120,7 +210,7 @@ def _datas_base(f: pd.DataFrame) -> tuple[dict[str, set], dict[str, set]]:
     return todas, anuais
 
 
-def selecionar_pit(fatos: pd.DataFrame, as_of: date) -> pd.DataFrame:
+def selecionar_pit(fatos: pd.DataFrame, as_of: date, *, conhecimento_ate: datetime | None = None) -> pd.DataFrame:
     """Linhas canônicas (``SAIDA_COLUNAS``) conhecidas em ``as_of`` — sem look-ahead."""
     if fatos is None or fatos.empty:
         return pd.DataFrame(columns=SAIDA_COLUNAS)
@@ -129,10 +219,37 @@ def selecionar_pit(fatos: pd.DataFrame, as_of: date) -> pd.DataFrame:
         f["pit_estimado"] = False
     # fatos de fontes oficiais concatenados com os do Yahoo chegam com NaN aqui (≠ estimado)
     f["pit_estimado"] = f["pit_estimado"].astype("boolean").fillna(False).astype(bool)
-    f["received_date"] = pd.to_datetime(f["received_date"])
+    observed = (f['disponibilidade_tipo'].eq('recepcao_observada')
+                if 'disponibilidade_tipo' in f else pd.Series(False, index=f.index))
+    if observed.any():
+        civil, cut = _corte_observado(as_of, conhecimento_ate)
+        f['received_date_original'] = f['received_date']
+        known_utc = f['received_date'].map(lambda v: pd.notna(v) and pd.Timestamp(v).tzinfo is not None)
+        original_received = pd.to_datetime(f['received_date'], utc=True, format='mixed')
+        # O instante de disponibilidade conserva hora/fuso; DT_RECEB é civil e separado.
+        f['received_date'] = original_received
+        empty = pd.Series(None, index=f.index, dtype=object)
+        raw_available = f.get('disponivel_desde', empty)
+        valid_available = raw_available.map(_disponibilidade_com_fuso)
+        available = pd.to_datetime(raw_available.where(valid_available), utc=True, errors='coerce', format='mixed')
+        received_civil = pd.to_datetime(f.get('data_recebimento_documento', empty), errors='coerce', format='mixed')
+        observed_day = available.dt.tz_convert('America/Sao_Paulo').dt.tz_localize(None).dt.normalize()
+        document_day = received_civil.dt.normalize()
+        day = document_day.where(received_civil.notna(), observed_day)
+        eligible = observed & available.notna() & available.le(pd.Timestamp(cut)) & day.le(pd.Timestamp(civil))
+        legacy_day = original_received.dt.tz_localize(None).dt.normalize()
+        local_day = original_received.dt.tz_convert('America/Sao_Paulo').dt.tz_localize(None).dt.normalize()
+        legacy_day = legacy_day.where(~known_utc, local_day)
+        legacy = (~observed & legacy_day.le(pd.Timestamp(civil))
+                  & (~known_utc | original_received.le(pd.Timestamp(cut))))
+        f = f[eligible | legacy]
+    else:
+        f["received_date"] = pd.to_datetime(f["received_date"])
     f["period_end"] = pd.to_datetime(f["period_end"])
     f["period_start"] = pd.to_datetime(f["period_start"])
-    f = f[(f["received_date"] <= pd.Timestamp(as_of)) & f["value"].notna()]
+    if not observed.any():
+        f = f[f["received_date"] <= pd.Timestamp(as_of)]
+    f = f[f["value"].notna()]
     f = f[np.isfinite(f["value"].astype(float))]
     if f.empty:
         return pd.DataFrame(columns=SAIDA_COLUNAS)
@@ -162,7 +279,8 @@ def selecionar_pit(fatos: pd.DataFrame, as_of: date) -> pd.DataFrame:
     if "nota" not in out.columns:
         out["nota"] = None
     out["value"] = out["value"].astype(float) + 0.0  # -0.0 ⇒ 0.0
-    out = (out[SAIDA_COLUNAS]
+    extras = [k for k in METADADOS_OBSERVADOS if k in out] if observed.any() else []
+    out = (out[SAIDA_COLUNAS + extras]
            .sort_values(["entidade", "item", "freq", "period_end"], kind="stable")
            .reset_index(drop=True))
     out.attrs["moeda_trocada"] = trocas
@@ -277,19 +395,19 @@ def _meta_componentes(item: str, by_end: dict, metas: dict,
     componentes = [{"item": item, "period_start": s.isoformat(), "period_end": e.isoformat(),
                     "valor": by_end[e][s], "coeficiente": coef,
                     "currency": m["currency"], "consolidado": m["consolidado"],
-                    "fonte": {"fonte": m["fonte"], "url": m["url"], "documento": m["documento"],
-                              "sha256": m["sha256"],
-                              "data_publicacao": pd.Timestamp(m["data_publicacao"]).date().isoformat()}}
+                    "fonte": _fonte_componente(m)}
                    for (s, e, coef), m in zip(partes, ms, strict=True)]
     nota = ("componentes_fluxo=" + json.dumps(componentes, ensure_ascii=False)
             if len(partes) > 1 else None)
-    return {**m0, "data_publicacao": max(m["data_publicacao"] for m in ms),
+    return {**m0, **_observacao_componentes(ms), "data_publicacao": _publicacao_componentes(ms),
             "consolidado": all(m["consolidado"] for m in ms),
             "nota": _juntar(m0.get("nota"), nota_base, nota)}
 
 
 def _fluxo_compativel(ent: str, item: str, g: pd.DataFrame, *, derivar: bool = True,
                       proveniencia: bool = False) -> list[dict]:
+    if 'disponibilidade_tipo' in g and g['disponibilidade_tipo'].eq('recepcao_observada').any():
+        proveniencia = True
     g = g.dropna(subset=["period_start", "period_end"])
     by_end: dict[date, dict[date, float]] = {}
     meta_end: dict[date, dict] = {}
@@ -361,7 +479,7 @@ def _fluxo_compativel(ent: str, item: str, g: pd.DataFrame, *, derivar: bool = T
                 nota_base = "TTM semestral = semestre atual + anual anterior − semestre " \
                             "comparativo; componentes: " + origens
                 meta_ttm = {**meta_ttm, "data_publicacao":
-                            max(m["data_publicacao"] for m in componentes)}
+                            _publicacao_componentes(componentes)}
             else:
                 cons, nota_base = _base_janela(meta_end, e, 1 if how == "12m" else 370)
             meta_ttm = {**meta_ttm, "consolidado": cons,
@@ -414,6 +532,7 @@ def _derivados(df: pd.DataFrame) -> pd.DataFrame:
     w = df.pivot_table(index=k, columns="item", values="value", aggfunc="first")
     meta_cols = ["demonstrativo", "currency", "consolidado", "fonte", "url", "documento",
                  "data_publicacao", "sha256", "pit_estimado", "nota"]
+    meta_cols += [k for k in METADADOS_OBSERVADOS if k in df]
     if "nota" not in df.columns:
         df = df.assign(nota=None)
     meta = df.set_index(k + ["item"])[meta_cols]
@@ -430,7 +549,12 @@ def _derivados(df: pd.DataFrame) -> pd.DataFrame:
                    and pd.notna(w.loc[idx, c] if c in w.columns else np.nan)]
             if not ms:
                 continue
-            pub = max(m["data_publicacao"] for m in ms)
+            # EBIT reportado usa EBIT+D&A; a identidade alternativa só participa na sua falta.
+            if nome == 'ebitda' and any(_observado(m) for m in ms):
+                reportado = pd.notna(w.loc[idx, 'ebit'] if 'ebit' in w else np.nan)
+                usados = ('ebit', 'd_a') if reportado else ('lucro_antes_ir', 'resultado_financeiro', 'd_a')
+                ms = [meta.loc[(*idx, c)] for c in usados if (*idx, c) in meta.index]
+            pub = _publicacao_componentes(ms)
             m0 = ms[0]
             notas = [_texto(m["nota"]) for m in ms]
             notas = [n for n in notas if n and not n.startswith("calculado")]
@@ -442,7 +566,7 @@ def _derivados(df: pd.DataFrame) -> pd.DataFrame:
                         "documento": m0["documento"], "data_publicacao": pub,
                         "sha256": m0["sha256"],
                         "pit_estimado": any(bool(m["pit_estimado"]) for m in ms),
-                        "nota": _juntar(nota, *notas)})
+                        "nota": _juntar(nota, *notas), **_observacao_componentes(ms)})
 
     def col(c: str) -> pd.Series:
         return w[c] if c in w.columns else pd.Series(np.nan, index=w.index)

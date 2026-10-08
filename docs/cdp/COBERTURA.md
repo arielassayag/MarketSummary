@@ -83,6 +83,16 @@ preservam microssegundos no índice e nos extratos; registros antigos truncados 
 só comprovam disponibilidade, sob a política nova, a partir do segundo seguinte. Essa
 incerteza de precisão não autoriza antecipar a posse do documento.
 
+A opção `demonstrativos_disponibilidade_metodo: recepcao_observada` aplica uma guarda
+prospectiva adicional no G2. Cada participante efetivamente usado — demonstrativo,
+componente de fluxo, contagem de ações, confirmação e histórico — precisa de recepção
+explícita com fuso, válida até o corte UTC do conhecimento. Ausência ou recepção futura
+bloqueia, mesmo quando outro componente tem recibo válido. A guarda conserva os períodos,
+coeficientes e grupos da composição nativa; não refaz cifras. O vínculo interno verifica
+completude dos usos, sem autenticar documentos. A opção não está habilitada globalmente:
+o contrato legado conserva seus resultados. Publicação desconhecida continua desconhecida,
+e disponibilidade observada não transforma `pit_ok` em verdadeiro.
+
 A ponte `eventos_evidenciados`, introduzida em `.7`, preserva valores reportados e produz
 uma visão separada de **EBIT após ajustes evidenciados**. Fatos, evento e aplicação precisam
 de documento bruto, hash, página/rubrica, moeda, base, período e disponibilidade. Seu

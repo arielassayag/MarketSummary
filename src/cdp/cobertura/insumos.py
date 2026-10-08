@@ -307,6 +307,25 @@ class Demonstrativos:
         do exercício corrente − acumulado do mesmo período do exercício anterior`` (trimestres do
         exercício corrente consecutivos a partir do fim do último exercício e os mesmos trimestres
         um ano antes, todos publicados)."""
+        def observados(linhas: list[pd.Series]) -> bool:
+            return any(str(r.get('disponibilidade_tipo')) == 'recepcao_observada' for r in linhas)
+
+        def tempo(linhas: list[pd.Series]) -> dict:
+            if not observados(linhas):
+                return {}
+            out = {'disponibilidade_tipo': 'recepcao_observada'}
+            for key in ('data_publicacao', 'disponivel_desde', 'data_recebimento_documento', 'received_date'):
+                values = [r.get(key) for r in linhas]
+                from ..data.publico_fatos import (
+                    _max_disponibilidade_observada,
+                    _max_recebimento_observado,
+                )
+
+                out[key] = (_max_recebimento_observado(values) if key == "received_date" else
+                            _max_disponibilidade_observada(values) if key == "disponivel_desde" else
+                            None if any(pd.isna(v) for v in values) else max(values))
+            return out
+
         def componentes(linhas: list[tuple[pd.Series, float]]) -> str:
             return json.dumps([{"item": str(r["item"]), "freq": str(r["freq"]),
                                 "period_end": pd.Timestamp(r["period_end"]).date().isoformat(),
@@ -347,7 +366,8 @@ class Demonstrativos:
                         r.update({"freq": "TTM", "value": float(ult4["value"].sum()),
                                   "documento": f"{r.get('documento') or ''} (soma dos 4 últimos trimestres)".strip(),
                                   "data_publicacao": ult4["data_publicacao"].max(),
-                                  "componentes_fluxo": componentes([(rr, 1.0) for _, rr in ult4.iterrows()])})
+                                  "componentes_fluxo": componentes([(rr, 1.0) for _, rr in ult4.iterrows()]),
+                                  **tempo([rr for _, rr in ult4.iterrows()])})
                         rows.append(r)
                     continue
             a = d[(d["item"] == item) & (d["freq"] == "A")].sort_values("period_end")
@@ -383,7 +403,8 @@ class Demonstrativos:
                                     "mesmo período do exercício anterior)").strip(),
                       "data_publicacao": max(pd.Timestamp(rr["data_publicacao"]) for rr in participantes),
                       "componentes_fluxo": componentes([(a.iloc[-1], 1.0)] + [(rr, 1.0) for _, rr in cur.iterrows()]
-                                                        + [(rr, -1.0) for rr in linhas_ant])})
+                                                        + [(rr, -1.0) for rr in linhas_ant]),
+                      **tempo(participantes)})
             rows.append(r)
         return pd.DataFrame(rows, columns=[*d.columns, "componentes_fluxo"] if "componentes_fluxo" not in d else d.columns) \
             if rows else d.iloc[0:0]
@@ -422,6 +443,11 @@ class Demonstrativos:
 
     def ttm_ano_anterior(self, item: str) -> float | None:
         """Mesmo item TTM (ou anual) ~1 ano antes do último período (crescimento)."""
+        row = self.linha_ano_anterior(item)
+        return None if row is None else _f(row["value"])
+
+    def linha_ano_anterior(self, item: str) -> pd.Series | None:
+        """Linha exata usada no crescimento, conservada para o contrato temporal."""
         if self.df.empty:
             return None
         for fq in ("TTM", "A"):
@@ -431,7 +457,7 @@ class Demonstrativos:
                 alvo = ult - pd.DateOffset(years=1)
                 prev = sub[(sub["period_end"] - alvo).abs() <= pd.Timedelta(days=20)]
                 if not prev.empty:
-                    return _f(prev.iloc[-1]["value"])
+                    return prev.iloc[-1]
         return None
 
     def linhas_anuais(self, item: str) -> dict[int, pd.Series]:
@@ -468,15 +494,17 @@ class Demonstrativos:
         a = self.df[(self.df["freq"] == "A") & self.df["item"].isin(self.ITENS_REFERENCIA)]
         return None if a.empty else pd.Timestamp(a["period_end"].max())
 
-    def serie_acoes(self) -> list[tuple[pd.Timestamp, float]]:
+    def linhas_serie_acoes(self) -> list[pd.Series]:
         """Ações em circulação por data-base (todas as frequências; a última publicação por data)."""
         if self.df.empty:
             return []
         s = self.df[self.df["item"] == "acoes_em_circulacao"].sort_values(["period_end", "data_publicacao"],
                                                                        kind="mergesort")
         s = s.drop_duplicates("period_end", keep="last")
-        return [(pd.Timestamp(r["period_end"]), float(r["value"])) for _, r in s.iterrows()
-                if _f(r["value"]) is not None and float(r["value"]) > 0]
+        return [r for _, r in s.iterrows() if _f(r["value"]) is not None and float(r["value"]) > 0]
+
+    def serie_acoes(self) -> list[tuple[pd.Timestamp, float]]:
+        return [(pd.Timestamp(r["period_end"]), float(r["value"])) for r in self.linhas_serie_acoes()]
 
     def moeda(self) -> str | None:
         if self.df.empty or "currency" not in self.df.columns:
@@ -485,6 +513,15 @@ class Demonstrativos:
         c = sub.sort_values("period_end")["currency"].dropna()
         c = c[c.astype(str).str.len() == 3]
         return str(c.iloc[-1]).upper() if len(c) else None
+
+    def linha_moeda(self) -> pd.Series | None:
+        """Linha que fornece a moeda usada; mesmas seleção e ordem de ``moeda``."""
+        if self.df.empty or "currency" not in self.df.columns:
+            return None
+        s = self.df[~self.df["item"].isin(["acoes_em_circulacao", "acoes_emitidas", "acoes_tesouraria"])]
+        s = s.sort_values("period_end")
+        s = s[s["currency"].notna() & s["currency"].astype(str).str.len().eq(3)]
+        return None if s.empty else s.iloc[-1]
 
 
 def fim_exercicio_consenso(fye: pd.Timestamp | None, as_of: date, prazo_dias: int = 120
@@ -557,6 +594,10 @@ def _prov_linha(row: pd.Series | None, *, detalhar_fluxos: bool = False, detalha
                      "data_publicacao": pub, "data_coleta": row.get("data_coleta"),
                      "sha256": row.get("sha256")})
     out["data_estimada"] = _bool(row.get("pit_estimado"))
+    if str(row.get('disponibilidade_tipo')) == 'recepcao_observada':
+        for k in ('disponibilidade_tipo', 'disponivel_desde', 'data_recebimento_documento', 'received_date'):
+            v = row.get(k)
+            out[k] = None if pd.isna(v) else v.isoformat() if hasattr(v, 'isoformat') else v
     if str(row.get("fonte")) == "RI_OBSERVADA":
         out.update({k: row.get(k) for k in ("fato_id", "identity_binding_sha256", "disponivel_desde",
                                           "coluna", "lexema", "quantum", "locator", "received_date")})
@@ -671,7 +712,8 @@ def _txt_n(x: float | None) -> str:
 
 def conciliar_contagem(acoes_dem: float | None, apl: float, c_mkt: float | None, oficial: dict[str, Any] | None,
                        params: ParametrosCobertura, fonte_dem: dict[str, Any] | None, fonte_mkt: dict[str, Any],
-                       unidade_conferida: bool) -> tuple[float | None, str, dict[str, Any], dict[str, Any]]:
+                       unidade_conferida: bool, *, fontes_participantes: list[str] | None = None
+                       ) -> tuple[float | None, str, dict[str, Any], dict[str, Any]]:
     """Unidades em circulação da linha a partir de até três fontes independentes.
 
     ``c_dem`` = ações das demonstrações ÷ ações por unidade; ``c_mkt`` = valor de mercado público ÷
@@ -699,7 +741,13 @@ def conciliar_contagem(acoes_dem: float | None, apl: float, c_mkt: float | None,
              + (f", Formulário de Referência {_txt_n(c_ofi)}" if oficial is not None else ""))
 
     def fim(valor: float | None, status: str, origem: str, fonte: dict[str, Any] | None, detalhe: str,
-            portao: str) -> tuple[float | None, str, dict[str, Any], dict[str, Any]]:
+            portao: str, confirmadora: str | None = None
+            ) -> tuple[float | None, str, dict[str, Any], dict[str, Any]]:
+        if fontes_participantes is not None and valor is not None:
+            escolhida = ("demonstrativos" if origem.startswith("demonstrações") else
+                         "oficial" if origem == "Formulário de Referência" else "mercado")
+            fontes_participantes.extend([escolhida] + ([confirmadora] if confirmadora else []))
+            info["fontes_participantes"] = list(fontes_participantes)
         info.update({"escolhida": r6(valor), "origem": origem, "status": portao, "detalhe": detalhe})
         return valor, status, fonte or prov_codigo(origem), info
 
@@ -707,15 +755,16 @@ def conciliar_contagem(acoes_dem: float | None, apl: float, c_mkt: float | None,
         if perto(c_dem, c_ofi, tol3):
             par = "valor de mercado" if perto(c_dem, c_mkt, tol3) else "Formulário de Referência"
             return fim(c_dem, "demonstrativos", "demonstrações", fonte_dem,
-                       f"demonstrações confirmadas pelo {par} ({lista})", "ok")
+                       f"demonstrações confirmadas pelo {par} ({lista})", "ok",
+                       "mercado" if par == "valor de mercado" else "oficial")
         if perto(c_dem, c_mkt, tol3):
             return fim(c_dem, "demonstrativos", "demonstrações", fonte_dem,
                        f"demonstrações confirmadas pelo valor de mercado ({lista}); Formulário de Referência "
-                       "divergente", "ok")
+                       "divergente", "ok", "mercado")
         if perto(c_mkt, c_ofi, tol3):
             return fim(c_ofi, "oficial", "Formulário de Referência", fonte_ofi,
                        f"demonstrações divergentes; Formulário de Referência confirmado pelo valor de mercado ({lista})",
-                       "ok")
+                       "ok", "mercado")
         valor = c_dem if c_dem is not None else c_ofi
         return fim(valor, "nao_conciliada", "demonstrações" if c_dem is not None else "Formulário de Referência",
                    fonte_dem if c_dem is not None else fonte_ofi,
@@ -723,11 +772,11 @@ def conciliar_contagem(acoes_dem: float | None, apl: float, c_mkt: float | None,
     if c_dem is not None and c_mkt is not None:
         if perto(c_dem, c_mkt, tol2):
             return fim(c_dem, "demonstrativos", "demonstrações", fonte_dem,
-                       f"demonstrações confirmadas pelo valor de mercado a ±{pct(tol2, 0)} ({lista})", "ok")
+                       f"demonstrações confirmadas pelo valor de mercado a ±{pct(tol2, 0)} ({lista})", "ok", "mercado")
         alt = acoes_dem
         if apl != 1.0 and unidade_conferida and perto(alt, c_mkt, tol2):
             return fim(alt, "demonstrativos_em_unidades", "demonstrações (já em unidades negociadas)", fonte_dem,
-                       f"demonstrações já em unidades negociadas, composição da unidade conferida ({lista})", "ok")
+                       f"demonstrações já em unidades negociadas, composição da unidade conferida ({lista})", "ok", "mercado")
         info["avisos_pacote"].append(f"contagem das demonstrações diverge do valor de mercado público em "
                                      f"{abs(c_dem / c_mkt - 1):.0%} sem fonte oficial: usada a do valor de mercado")
         return fim(c_mkt, "valor_de_mercado", "valor de mercado público ÷ fechamento", fonte_mkt,
@@ -805,6 +854,14 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
     arq = params.arquetipos.get(issuer_id) or arquetipo_padrao(issuer_id, setor)
     beta_setor = params.betas.get(arq.industria_damodaran) or params.betas["Total Market"]
     pk = _Pacote()
+    from .fontes import disponibilidade_observada
+
+    observar_disponibilidade = disponibilidade_observada(params)
+    registro = None
+    if observar_disponibilidade:
+        from .disponibilidade_demonstrativos import RegistroParticipantes
+
+        registro = RegistroParticipantes(issuer_id)
     pk.put("issuer_id", issuer_id)
     pk.put("nome", str(iss["issuer_name"]))
     pk.put("pais", pais)
@@ -843,6 +900,10 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
             and "financial_currency" in md.fundamentals.columns else None
         moeda_dem = str(fc).upper() if isinstance(fc, str) and fc else None
     pk.put("moeda_demonstrativos", moeda_dem)
+    if registro is not None:
+        row_moeda = dem.linha_moeda()
+        if row_moeda is not None:
+            registro.registrar(row_moeda, "moeda_demonstrativos", fonte=_prov_linha(row_moeda))
 
     linha, motivo_linha = escolher_linha(md, params, issuer_id, moeda_dem, arq, as_of)
     ln = uni.lines.loc[linha]
@@ -895,13 +956,16 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
     pk.put("acoes_por_linha", apl, prov_codigo(apl_txt), nome="Ações por unidade negociada",
            unidade="n")
     acoes, row_acoes = dem.valor("acoes_em_circulacao")
+    rows_acoes = [row_acoes] if acoes is not None else []
     if acoes is None:
         emit, row_acoes = dem.valor("acoes_emitidas")
-        tes, _ = dem.valor("acoes_tesouraria")
+        tes, row_tes = dem.valor("acoes_tesouraria")
         if emit is not None and tes is not None:
             acoes = emit - tes
+            rows_acoes = [row_acoes, row_tes]
         elif emit is not None:
             acoes = emit
+            rows_acoes = [row_acoes]
             pk.avisos.append("ações em tesouraria indisponíveis: usadas as ações emitidas")
     mcap_pub = None
     if linha in md.fundamentals.index and "market_cap" in md.fundamentals.columns:
@@ -909,9 +973,10 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
     fonte_mkt_un = {**fonte_mkt, "documento": ("valor de mercado simulado ÷ fechamento (DADOS SIMULADOS)"
                                                if md.is_synthetic else "valor de mercado público ÷ fechamento")}
     oficial = _capital_oficial(dados, issuer_id, md.is_synthetic)
+    fontes_contagem = [] if observar_disponibilidade else None
     unidades, status_unid, fonte_un, contagem = conciliar_contagem(
         acoes, apl, _div(mcap_pub, preco), oficial, params, _prov_linha(row_acoes) if row_acoes is not None
-        else None, fonte_mkt_un, _unidade_conferida(params, linha))
+        else None, fonte_mkt_un, _unidade_conferida(params, linha), fontes_participantes=fontes_contagem)
     for a in contagem.get("avisos_pacote", []):
         pk.avisos.append(a)
     contagem.pop("avisos_pacote", None)
@@ -922,6 +987,23 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
                unidade="acoes")
     pk.put("status_unidades", status_unid)
     pk.put("contagem", contagem)
+    if registro is not None and unidades is not None:
+        if "demonstrativos" in fontes_contagem:
+            for r in rows_acoes:
+                registro.registrar(r, f"contagem.demonstrativos.{r['item']}", "unidades", fonte=_prov_linha(r))
+        if "oficial" in fontes_contagem:
+            capital = dados.capital_oficial[dados.capital_oficial["issuer_id"] == issuer_id].iloc[-1]
+            registro.registrar({**capital.to_dict(), "item": "qtd_total", "freq": "FRE",
+                "period_end": capital.get("data_ref")}, "contagem.oficial.qtd_total", "unidades",
+                origem="oficial", fonte=oficial["fonte"])
+        if "mercado" in fontes_contagem:
+            fm = md.fundamentals.loc[linha]
+            for item, periodo, recibo, freq in (
+                ("market_cap", md.as_of.isoformat(), fm.get("market_cap_disponivel_desde"), "SNAPSHOT"),
+                ("preco", data_preco.isoformat() if data_preco else None, fm.get("preco_disponivel_desde"), "D")):
+                registro.registrar({"item": item, "freq": freq, "period_end": periodo,
+                    "disponivel_desde": recibo}, f"contagem.mercado.{item}", "unidades",
+                    origem="mercado", fonte=fonte_mkt_un if item == "market_cap" else fonte_mkt)
 
     # --- demonstrativos (convertidos para a moeda do modelo)
     tem_dem = not dem.vazio
@@ -952,6 +1034,8 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
             bases_fluxos[item] = _base_linha(row)
             moedas_fluxos[item] = row.get("currency")
         prov = _prov_linha(row, detalhar_fluxos=detalhar_fluxos, detalhar_resultados=detalhar_resultados)
+        if observar_disponibilidade and row is not None:
+            registro.registrar(row, f"t.{item}", fonte=_prov_linha(row))
         if detalhar_resultados and row is not None:
             prov.update({"fator_moeda_resultado": str(fator), "valor_modelo": r6(vv)})
         estimados = estimados or bool(prov.get("data_estimada"))
@@ -1001,6 +1085,10 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
     pk.put("data_balanco", None if estoque_ref is None else estoque_ref.date().isoformat())
     pk.put("data_fluxos", None if fluxo_ref is None else fluxo_ref.date().isoformat())
     pk.put("receita_ano_anterior", _conv(dem.ttm_ano_anterior("receita"), fator))
+    if observar_disponibilidade and pk.v["receita_ano_anterior"] is not None:
+        row_receita_anterior = dem.linha_ano_anterior("receita")
+        if row_receita_anterior is not None:
+            registro.registrar(row_receita_anterior, "receita_ano_anterior", fonte=_prov_linha(row_receita_anterior))
     hist = {}
     hist_fontes = {}
     hist_periodos = {}
@@ -1018,6 +1106,10 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
         if linhas:
             f_item = 1.0 if item == "acoes_em_circulacao" else fator
             hist[item] = {str(ano): r6(_conv(float(r["value"]), f_item)) for ano, r in sorted(linhas.items())}
+            if registro is not None:
+                for ano, r in linhas.items():
+                    if hist[item][str(ano)] is not None:
+                        registro.registrar(r, f"historico.{item}.{ano}", fonte=_prov_linha(r))
             hist_fontes[item] = {str(ano): {**_prov_linha(r, detalhar_resultados=detalhar_resultados), "item_fonte": str(r["item"]),
                                  "moeda_fonte": str(r.get("currency")), "valor_fonte": float(r["value"]),
                                  "fator_moeda": f_item, "valor_modelo": hist[item][str(ano)],
@@ -1039,13 +1131,21 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
                                   for r in pk.tabela if str(r.get("id", "")).startswith("t.")
                                   and str(r["id"])[2:] in FLUXOS and r.get("periodo")})
     if arq.arquetipo == "holding":
-        pk.put("serie_acoes", [[d.date().isoformat(), r6(v)] for d, v in dem.serie_acoes()])
+        rows_serie = dem.linhas_serie_acoes()
+        pk.put("serie_acoes", [[pd.Timestamp(r["period_end"]).date().isoformat(), r6(float(r["value"]))]
+                               for r in rows_serie])
+        if registro is not None:
+            for r in rows_serie:
+                registro.registrar(r, f"serie_acoes.{pd.Timestamp(r['period_end']).date().isoformat()}",
+                                   fonte=_prov_linha(r))
     datas_pub = pd.to_datetime(dem.df["data_publicacao"], errors="coerce") if tem_dem else pd.Series(dtype="datetime64[ns]")
     est_col = dem.df["pit_estimado"].map(_bool) if tem_dem and "pit_estimado" in dem.df.columns else pd.Series(dtype=bool)
     pk.put("datas_estimadas", bool(estimados or (len(est_col) and est_col.any())))
     pk.put("pit_ok", bool(tem_dem and datas_pub.notna().all() and (datas_pub <= pd.Timestamp(as_of)).all()
                           and not pk.v["datas_estimadas"]))
-    pk.put("max_data_publicacao", None if datas_pub.dropna().empty else datas_pub.max().date().isoformat())
+    observado = tem_dem and 'disponibilidade_tipo' in dem.df and dem.df['disponibilidade_tipo'].eq('recepcao_observada').any()
+    pk.put("max_data_publicacao", None if (observado and datas_pub.isna().any()) or datas_pub.dropna().empty
+           else datas_pub.max().date().isoformat())
 
     # --- por ação (moeda do modelo, por unidade da linha)
     pl_ctrl, k_pl = _mais_recente(itens, periodos, "patrimonio_controladores", "patrimonio_liquido", pk)
@@ -1190,6 +1290,8 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
     pk.put("avisos", list(pk.avisos))
     pk.put("lacunas", list(pk.lacunas))
     pk.put("fontes", dict(sorted(pk.fontes.items())))
+    if registro is not None:
+        registro.finalizar(pk.v)
     pk.put("tabela_insumos", list(pk.tabela))
     from .ri_observada import finalizar_pacote
     return finalizar_pacote(pk.v, ri_trace)

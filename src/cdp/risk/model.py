@@ -115,7 +115,7 @@ def newey_west_ewma_cov(f: np.ndarray, halflife: float, lags: int) -> tuple[np.n
     cov = np.where(cnt >= MIN_PAIR_OBS, cov, np.nan)
     # Ajuste NW pode tornar a variância não positiva em amostras pequenas: volta ao lag 0.
     diag = np.diag(cov).copy()
-    bad = ~(diag > 0)
+    bad = ~(diag > 0) & (np.diag(cnt) >= MIN_PAIR_OBS)
     diag[bad] = np.diag(c0)[bad]
     np.fill_diagonal(cov, diag)
     return cov, cnt

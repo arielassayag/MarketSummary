@@ -63,7 +63,7 @@ from ..market import MarketData
 from .fontes import DadosPublicos
 from .formato import num, pct, r6
 from .parametros import Arquetipo, ParametrosCobertura, arquetipo_padrao
-from .passos import prov_codigo, prov_dict
+from .passos import prov_codigo, prov_curadoria, prov_dict
 
 FLUXOS = ("receita", "lucro_bruto", "ebit", "ebitda", "d_a", "resultado_financeiro", "lucro_antes_ir",
           "ir_csll", "lucro_liquido", "lucro_liquido_controladores", "cfo", "capex", "fcf",
@@ -1156,9 +1156,11 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
                           int(cc["beta"]["regressao_min_semanas"]))
     pk.put("beta_regressao", b, prov_codigo(f"MQO de {n} retornos semanais em USD de {linha} contra {ref}"))
     pk.put("beta_regressao_semanas", n)
-    pk.put("beta_u_setor", beta_setor.beta_u_global, {
-        "fonte": "DAMODARAN", "url": beta_setor.url, "documento": f"β desalavancado (corrigido por caixa) — {beta_setor.industria}",
-        "data_publicacao": beta_setor.data_ref, "data_coleta": None, "sha256": params.arquivos.get("cobertura/betas_setor.csv")},
+    pk.put("beta_u_setor", beta_setor.beta_u_global, prov_curadoria(
+        fonte="DAMODARAN", url=beta_setor.url,
+        documento=f"β desalavancado (corrigido por caixa) — {beta_setor.industria}",
+        data_publicacao=beta_setor.data_ref, arquivo="cobertura/betas_setor.csv",
+        sha256_curadoria=params.arquivos.get("cobertura/betas_setor.csv")),
         nome=f"β desalavancado setorial ({beta_setor.industria})", unidade="n")
     vol = vol_realizada(md, linha, as_of, int(params.sec("cenarios")["vol_janela_pregoes"]))
     pk.put("vol_12m", vol, prov_codigo(f"desvio-padrão anualizado dos log-retornos diários de {linha}"))
@@ -1596,9 +1598,11 @@ def preparar_soma_partes(md: MarketData, params: ParametrosCobertura, pacote: di
                        "conferido": conf, "conferido_texto": conf_txt,
                        "fracao_investida": r6(_f(p.get("fracao_investida"))),
                        "data_referencia": p.get("data_referencia"), "data_publicacao": p.get("data_publicacao"),
-                       "fonte": {"fonte": str(p.get("fonte") or "CONFIG"), "url": p.get("url"),
-                                 "documento": p.get("documento"), "data_publicacao": p.get("data_publicacao"),
-                                 "data_coleta": None, "sha256": params.arquivos.get("cobertura/sotp.yaml")}})
+                       "fonte": prov_curadoria(
+                           fonte=str(p.get("fonte") or "CONFIG"), url=p.get("url"),
+                           documento=p.get("documento"), data_publicacao=p.get("data_publicacao"),
+                           arquivo="cobertura/sotp.yaml",
+                           sha256_curadoria=params.arquivos.get("cobertura/sotp.yaml"))})
         s = _serie_usd_semanal(md, st, as_of)
         if not s.empty:
             series.append((s / s.iloc[-1]) * valor * fx_m)  # valor em USD ao longo do tempo

@@ -61,6 +61,14 @@ geram aviso e lacuna. Instituições financeiras não usam crescimento de receit
 intermediação não é comparável entre fontes); o crescimento histórico fora de [−20%; +30%] (efeitos
 contábeis, como receita de construção de concessões) não é usado.
 
+Nos novos insumos de parâmetros transcritos, `sha256` identifica exclusivamente bytes de um
+arquivo público arquivado. Sem esses bytes, ele permanece ausente, assim como a data de coleta.
+O objeto opcional `curadoria` declara separadamente `arquivo` e `sha256` da configuração usada
+na transcrição: por exemplo, `cobertura/betas_setor.csv` ou `cobertura/sotp.yaml`. Esse digest
+autentica a curadoria e não o documento público citado pela URL; não comprova recepção histórica
+ou PIT. A correção é prospectiva: modelos e snapshots históricos conservam seus bytes e devem
+ser lidos com o contrato e as ressalvas do respectivo registro.
+
 Na política temporal `2026-10.8`, a base de preços e o conhecimento do modelo têm cortes
 distintos. `cobertura run --date D` usa o fechamento de mercado `D`; o retrato recebe a data
 civil do conhecimento do executor. O contrato selado contém `base_preco`, `data_modelo`,

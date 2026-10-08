@@ -15,6 +15,7 @@ mesmos campos.
 
 from __future__ import annotations
 
+import json
 import math
 from collections.abc import Iterable, Mapping
 from dataclasses import dataclass, field
@@ -76,7 +77,7 @@ def prov_dict(p: Any) -> dict[str, Any]:
     url = get("url")
     doc = get("documento")
     sha = get("sha256")
-    return {
+    out = {
         "fonte": str(get("fonte") or "CODIGO"),
         "url": None if url is None or (isinstance(url, float) and math.isnan(url)) else str(url),
         "documento": None if doc is None or (isinstance(doc, float) and math.isnan(doc))
@@ -85,6 +86,25 @@ def prov_dict(p: Any) -> dict[str, Any]:
         "data_coleta": _iso(get("data_coleta")),
         "sha256": None if sha is None or (isinstance(sha, float) and math.isnan(sha)) else str(sha),
     }
+    curadoria = get("curadoria")
+    if curadoria is not None:
+        if not isinstance(curadoria, Mapping) or not isinstance(curadoria.get("arquivo"), str):
+            raise ValueError("Proveniência de curadoria sem arquivo declarado.")
+        digest = curadoria.get("sha256")
+        out["curadoria"] = {"arquivo": curadoria["arquivo"],
+                            "sha256": None if digest is None else str(digest)}
+    return out
+
+
+def prov_curadoria(*, fonte: str, url: str | None, documento: str | None,
+                   data_publicacao: Any, arquivo: str,
+                   sha256_curadoria: str | None) -> dict[str, Any]:
+    """Transcrição de fonte pública: autentica a configuração, sem inventar coleta ou hash
+    dos bytes primários. ``sha256`` pertence ao arquivo público arquivado; ``curadoria``
+    identifica separadamente os bytes da configuração que transcreveu o parâmetro."""
+    return prov_dict({"fonte": fonte, "url": url, "documento": documento,
+                      "data_publicacao": data_publicacao, "data_coleta": None, "sha256": None,
+                      "curadoria": {"arquivo": arquivo, "sha256": sha256_curadoria}})
 
 
 def prov_codigo(descricao: str) -> dict[str, Any]:
@@ -117,6 +137,8 @@ class Registro:
         for f in fontes:
             d = prov_dict(f)
             chave = "|".join(str(d.get(k)) for k in ("fonte", "url", "documento", "sha256"))
+            if "curadoria" in d:
+                chave += "|" + json.dumps(d["curadoria"], sort_keys=True, ensure_ascii=False)
             if chave not in vistos:
                 vistos.add(chave)
                 fs.append(d)

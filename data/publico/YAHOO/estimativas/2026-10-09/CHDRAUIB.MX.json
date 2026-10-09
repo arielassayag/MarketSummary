@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 87.32,
+  "high": 175.0,
+  "low": 95.0,
+  "mean": 122.5,
+  "median": 116.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1.86679,
+   "currency": "MXN",
+   "growth": -0.0315,
+   "high": 2.04715,
+   "low": 1.68643,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 1.9276
+  },
+  "+1y": {
+   "avg": 8.00828,
+   "currency": "MXN",
+   "growth": 0.16290002,
+   "high": 9.7,
+   "low": 7.01,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 6.88619
+  },
+  "0q": {
+   "avg": 1.65776,
+   "currency": "MXN",
+   "growth": -0.013200001,
+   "high": 1.66703,
+   "low": 1.64849,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 1.68
+  },
+  "0y": {
+   "avg": 6.88619,
+   "currency": "MXN",
+   "growth": -0.087799996,
+   "high": 7.18125,
+   "low": 6.64,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 7.5491
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 75343940900,
+   "currency": "MXN",
+   "growth": 0.0016,
+   "high": 75888819870,
+   "low": 74799061940,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 75221139000
+  },
+  "+1y": {
+   "avg": 310334923060,
+   "currency": "MXN",
+   "growth": 0.0642,
+   "high": 326592000000,
+   "low": 302067000000,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 291618978720
+  },
+  "0q": {
+   "avg": 70127548590,
+   "currency": "MXN",
+   "growth": -0.0229,
+   "high": 70162117320,
+   "low": 70092979860,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 71768073000
+  },
+  "0y": {
+   "avg": 291618978720,
+   "currency": "MXN",
+   "growth": -0.0125,
+   "high": 306820000000,
+   "low": 285722766800,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 295313651000
+  }
+ },
+ "ticker": "CHDRAUIB.MX",
+ "url": "https://finance.yahoo.com/quote/CHDRAUIB.MX"
+}

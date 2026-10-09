@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 17.435,
+  "high": 27.0,
+  "low": 22.5,
+  "mean": 24.75,
+  "median": 24.75
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.27,
+   "currency": "USD",
+   "growth": -0.1,
+   "high": 0.27,
+   "low": 0.27,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.3
+  },
+  "+1y": {
+   "avg": 1.01667,
+   "currency": "USD",
+   "growth": 0.08930001,
+   "high": 1.14,
+   "low": 0.92,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.93333
+  },
+  "0q": {
+   "avg": 0.21,
+   "currency": "USD",
+   "growth": 2.0,
+   "high": 0.22,
+   "low": 0.2,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.07
+  },
+  "0y": {
+   "avg": 0.93333,
+   "currency": "USD",
+   "growth": 1.029,
+   "high": 1.0,
+   "low": 0.85,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.46
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "CAD",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 2597862000,
+   "currency": "CAD",
+   "growth": 0.1269,
+   "high": 2597862000,
+   "low": 2597862000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 2305333500.0
+  },
+  "0q": {
+   "avg": 0,
+   "currency": "CAD",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "0y": {
+   "avg": 2305333500,
+   "currency": "CAD",
+   "growth": 0.3411,
+   "high": 2506783000,
+   "low": 2103884000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 1718961050.0
+  }
+ },
+ "ticker": "AG",
+ "url": "https://finance.yahoo.com/quote/AG"
+}

@@ -1,0 +1,85 @@
+{
+ "analyst_price_targets": {
+  "current": 10.65
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": -1.16,
+   "currency": "USD",
+   "growth": 0.71,
+   "high": -1.16,
+   "low": -1.16,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": -4.0
+  },
+  "+1y": {
+   "avg": -0.03,
+   "currency": "USD",
+   "growth": 0.97150004,
+   "high": -0.03,
+   "low": -0.03,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": -1.0515
+  },
+  "0q": {
+   "avg": 0.66,
+   "currency": "USD",
+   "growth": null,
+   "high": 0.66,
+   "low": 0.66,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": -1.0515,
+   "currency": "USD",
+   "growth": 0.8071,
+   "high": 0.067,
+   "low": -2.17,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": -5.45
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 164000000,
+   "currency": "USD",
+   "growth": null,
+   "high": 164000000,
+   "low": 164000000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 124423000,
+   "currency": "USD",
+   "growth": -0.8233,
+   "high": 148846000,
+   "low": 100000000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 704300000.0
+  },
+  "0q": {
+   "avg": 157000000,
+   "currency": "USD",
+   "growth": null,
+   "high": 157000000,
+   "low": 157000000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": null
+  },
+  "0y": {
+   "avg": 704300000,
+   "currency": "USD",
+   "growth": 0.18030001,
+   "high": 890000000,
+   "low": 598000000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 596713000.0
+  }
+ },
+ "ticker": "GTE",
+ "url": "https://finance.yahoo.com/quote/GTE"
+}

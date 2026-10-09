@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 11.45,
+  "high": 12.0,
+  "low": 10.0,
+  "mean": 10.85,
+  "median": 10.7
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": null,
+   "currency": "USD",
+   "growth": null,
+   "high": null,
+   "low": null,
+   "numberOfAnalysts": null,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 1.78,
+   "currency": "USD",
+   "growth": 0.62810004,
+   "high": 2.7,
+   "low": 1.25,
+   "numberOfAnalysts": 4.0,
+   "yearAgoEps": 1.09333
+  },
+  "0q": {
+   "avg": null,
+   "currency": "USD",
+   "growth": null,
+   "high": null,
+   "low": null,
+   "numberOfAnalysts": null,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": 1.09333,
+   "currency": "USD",
+   "growth": 0.1336,
+   "high": 1.36,
+   "low": 0.83,
+   "numberOfAnalysts": 3.0,
+   "yearAgoEps": 0.9645
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "USD",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 691866750,
+   "currency": "USD",
+   "growth": 0.1777,
+   "high": 797000000,
+   "low": 644467000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 587496330.0
+  },
+  "0q": {
+   "avg": 0,
+   "currency": "USD",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "0y": {
+   "avg": 587496330,
+   "currency": "USD",
+   "growth": 0.1929,
+   "high": 632000000,
+   "low": 506000000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 492500000.0
+  }
+ },
+ "ticker": "GPRK",
+ "url": "https://finance.yahoo.com/quote/GPRK"
+}

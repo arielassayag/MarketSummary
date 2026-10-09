@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 4.2877,
+  "high": 5.5,
+  "low": 3.69,
+  "mean": 4.298,
+  "median": 3.9
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.12864,
+   "currency": "USD",
+   "growth": 0.2281,
+   "high": 0.13411,
+   "low": 0.12,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.10475
+  },
+  "+1y": {
+   "avg": 0.54446,
+   "currency": "USD",
+   "growth": 0.087,
+   "high": 0.59,
+   "low": 0.458,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.50089
+  },
+  "0q": {
+   "avg": 0.13061,
+   "currency": "USD",
+   "growth": 0.1833,
+   "high": 0.13212,
+   "low": 0.1297,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.11038
+  },
+  "0y": {
+   "avg": 0.50089,
+   "currency": "USD",
+   "growth": 0.1333,
+   "high": 0.52348,
+   "low": 0.458,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.44199
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 38310976020,
+   "currency": "BRL",
+   "growth": 0.0648,
+   "high": 39632435050,
+   "low": 36642000000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 35978000000
+  },
+  "+1y": {
+   "avg": 162291874530,
+   "currency": "BRL",
+   "growth": 0.0783,
+   "high": 166243000000,
+   "low": 151382759290,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 150503689700
+  },
+  "0q": {
+   "avg": 37567209600,
+   "currency": "BRL",
+   "growth": 0.0731,
+   "high": 38793374910,
+   "low": 35347000000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 35008000000
+  },
+  "0y": {
+   "avg": 150503689700,
+   "currency": "BRL",
+   "growth": 0.0962,
+   "high": 153123841260,
+   "low": 139624433540,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 137292000000
+  }
+ },
+ "ticker": "BBD",
+ "url": "https://finance.yahoo.com/quote/BBD"
+}

@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 3.185,
+  "high": 4.0,
+  "low": 2.64,
+  "mean": 3.345,
+  "median": 3.435
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.0605,
+   "currency": "USD",
+   "growth": 0.120799996,
+   "high": 0.063,
+   "low": 0.05798,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.05398
+  },
+  "+1y": {
+   "avg": 0.21496,
+   "currency": "USD",
+   "growth": 0.0731,
+   "high": 0.237,
+   "low": 0.20091,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 0.20031
+  },
+  "0q": {
+   "avg": 0.04762,
+   "currency": "USD",
+   "growth": 0.0682,
+   "high": 0.05,
+   "low": 0.045,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.04458
+  },
+  "0y": {
+   "avg": 0.20031,
+   "currency": "USD",
+   "growth": 0.1172,
+   "high": 0.214,
+   "low": 0.192,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 0.17929
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 25729945830,
+   "currency": "BRL",
+   "growth": 0.0372,
+   "high": 26172805190,
+   "low": 25224103000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 24807600000
+  },
+  "+1y": {
+   "avg": 94963875610,
+   "currency": "BRL",
+   "growth": 0.048899997,
+   "high": 99531000000,
+   "low": 91322416430,
+   "numberOfAnalysts": 15,
+   "yearAgoRevenue": 90540056070
+  },
+  "0q": {
+   "avg": 21668843220,
+   "currency": "BRL",
+   "growth": 0.0394,
+   "high": 22276000000,
+   "low": 21234000000,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 20847300000
+  },
+  "0y": {
+   "avg": 90540056070,
+   "currency": "BRL",
+   "growth": 0.025999999,
+   "high": 94224000000,
+   "low": 88378000000,
+   "numberOfAnalysts": 16,
+   "yearAgoRevenue": 88242500000
+  }
+ },
+ "ticker": "ABEV",
+ "url": "https://finance.yahoo.com/quote/ABEV"
+}

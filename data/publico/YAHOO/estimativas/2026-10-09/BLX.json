@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 54.4,
+  "high": 73.0,
+  "low": 57.0,
+  "mean": 65.9,
+  "median": 66.8
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": null,
+   "currency": "USD",
+   "growth": null,
+   "high": null,
+   "low": null,
+   "numberOfAnalysts": null,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 7.04,
+   "currency": "USD",
+   "growth": 0.087299995,
+   "high": 7.51,
+   "low": 6.57,
+   "numberOfAnalysts": 2.0,
+   "yearAgoEps": 6.475
+  },
+  "0q": {
+   "avg": null,
+   "currency": "USD",
+   "growth": null,
+   "high": null,
+   "low": null,
+   "numberOfAnalysts": null,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": 6.475,
+   "currency": "USD",
+   "growth": 0.059699997,
+   "high": 6.86,
+   "low": 6.09,
+   "numberOfAnalysts": 2.0,
+   "yearAgoEps": 6.11
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "USD",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 413333330,
+   "currency": "USD",
+   "growth": 0.1012,
+   "high": 422000000,
+   "low": 400000000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 375333330.0
+  },
+  "0q": {
+   "avg": 0,
+   "currency": "USD",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "0y": {
+   "avg": 375333330,
+   "currency": "USD",
+   "growth": 0.10520001,
+   "high": 381000000,
+   "low": 366000000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 339600000.0
+  }
+ },
+ "ticker": "BLX",
+ "url": "https://finance.yahoo.com/quote/BLX"
+}

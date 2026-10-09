@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 46.08,
+  "high": 58.0,
+  "low": 37.7,
+  "mean": 48.83571,
+  "median": 50.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.5658,
+   "currency": "BRL",
+   "growth": -0.0228,
+   "high": 0.63125,
+   "low": 0.52,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.579
+  },
+  "+1y": {
+   "avg": 2.68439,
+   "currency": "BRL",
+   "growth": 0.2178,
+   "high": 2.92969,
+   "low": 2.52,
+   "numberOfAnalysts": 8,
+   "yearAgoEps": 2.20432
+  },
+  "0q": {
+   "avg": 0.59851,
+   "currency": "BRL",
+   "growth": -0.1243,
+   "high": 0.60845,
+   "low": 0.58559,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.6835
+  },
+  "0y": {
+   "avg": 2.20432,
+   "currency": "BRL",
+   "growth": -0.0347,
+   "high": 2.31048,
+   "low": 2.06405,
+   "numberOfAnalysts": 8,
+   "yearAgoEps": 2.2835
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 15758081750,
+   "currency": "BRL",
+   "growth": 0.021300001,
+   "high": 16162293710,
+   "low": 15220282550,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 15428800000
+  },
+  "+1y": {
+   "avg": 66958798899,
+   "currency": "BRL",
+   "growth": 0.0991,
+   "high": 69551000000,
+   "low": 65476426320,
+   "numberOfAnalysts": 12,
+   "yearAgoRevenue": 60919782710
+  },
+  "0q": {
+   "avg": 15621104820,
+   "currency": "BRL",
+   "growth": 0.0125,
+   "high": 15988378480,
+   "low": 15186628820,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 15427500000
+  },
+  "0y": {
+   "avg": 60919782710,
+   "currency": "BRL",
+   "growth": 0.0208,
+   "high": 62314000000,
+   "low": 59873577630,
+   "numberOfAnalysts": 12,
+   "yearAgoRevenue": 59680800000
+  }
+ },
+ "ticker": "RDOR3.SA",
+ "url": "https://finance.yahoo.com/quote/RDOR3.SA"
+}

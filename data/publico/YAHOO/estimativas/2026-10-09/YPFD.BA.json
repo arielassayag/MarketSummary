@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 8045.0,
+  "high": 12795.8,
+  "low": 9500.0,
+  "mean": 10898.6,
+  "median": 10400.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 241.049,
+   "currency": "ARS",
+   "growth": null,
+   "high": 241.049,
+   "low": 241.049,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 678.232,
+   "currency": "ARS",
+   "growth": -0.5266,
+   "high": 678.232,
+   "low": 678.232,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 1432.82
+  },
+  "0q": {
+   "avg": 414.724,
+   "currency": "ARS",
+   "growth": null,
+   "high": 414.724,
+   "low": 414.724,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": 1432.82,
+   "currency": "ARS",
+   "growth": 5.8126,
+   "high": 1432.82,
+   "low": 1432.82,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": -297.721
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 7829788634400,
+   "currency": "ARS",
+   "growth": 0.2206,
+   "high": 9827791578000,
+   "low": 6495995537000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 6414848000000
+  },
+  "+1y": {
+   "avg": 30660631444250,
+   "currency": "ARS",
+   "growth": -0.0633,
+   "high": 36217260239760,
+   "low": 28598776038000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 32734052723830
+  },
+  "0q": {
+   "avg": 8570565335400,
+   "currency": "ARS",
+   "growth": 0.2865,
+   "high": 9377618052000,
+   "low": 8098143158000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 6661776400000
+  },
+  "0y": {
+   "avg": 32734052723830,
+   "currency": "ARS",
+   "growth": 0.2602,
+   "high": 37156069293340,
+   "low": 28133647920000,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 25974784000000
+  }
+ },
+ "ticker": "YPFD.BA",
+ "url": "https://finance.yahoo.com/quote/YPFD.BA"
+}

@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 42.16,
+  "high": 61.0,
+  "low": 39.0,
+  "mean": 48.92857,
+  "median": 47.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.48011,
+   "currency": "BRL",
+   "growth": 0.1158,
+   "high": 0.48011,
+   "low": 0.48011,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.4303
+  },
+  "+1y": {
+   "avg": 2.10052,
+   "currency": "BRL",
+   "growth": 0.1715,
+   "high": 2.45,
+   "low": 1.63,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 1.793
+  },
+  "0q": {
+   "avg": 0.47985,
+   "currency": "BRL",
+   "growth": 0.1571,
+   "high": 0.47985,
+   "low": 0.47985,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.4147
+  },
+  "0y": {
+   "avg": 1.793,
+   "currency": "BRL",
+   "growth": 0.17879999,
+   "high": 1.86,
+   "low": 1.68753,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 1.521
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 2028837510,
+   "currency": "BRL",
+   "growth": 0.3464,
+   "high": 2044001000,
+   "low": 2018951570,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 1506900000
+  },
+  "+1y": {
+   "avg": 8795657660,
+   "currency": "BRL",
+   "growth": 0.1333,
+   "high": 9835000000,
+   "low": 7526000000,
+   "numberOfAnalysts": 13,
+   "yearAgoRevenue": 7760984920
+  },
+  "0q": {
+   "avg": 1964654550,
+   "currency": "BRL",
+   "growth": 0.2575,
+   "high": 1971220360,
+   "low": 1955609100,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 1562400000
+  },
+  "0y": {
+   "avg": 7760984920,
+   "currency": "BRL",
+   "growth": 0.3493,
+   "high": 8234000000,
+   "low": 7521900660,
+   "numberOfAnalysts": 12,
+   "yearAgoRevenue": 5751900000
+  }
+ },
+ "ticker": "TOTS3.SA",
+ "url": "https://finance.yahoo.com/quote/TOTS3.SA"
+}

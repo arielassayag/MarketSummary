@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 6.175,
+  "high": 12.0,
+  "low": 7.4,
+  "mean": 9.46154,
+  "median": 9.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": -0.91803,
+   "currency": "USD",
+   "growth": -23.9508,
+   "high": 0.13484,
+   "low": -3.96,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 0.04
+  },
+  "+1y": {
+   "avg": -0.33198,
+   "currency": "USD",
+   "growth": 0.8645,
+   "high": 0.65165,
+   "low": -1.8,
+   "numberOfAnalysts": 9,
+   "yearAgoEps": -2.45059
+  },
+  "0q": {
+   "avg": -0.76445,
+   "currency": "USD",
+   "growth": -16.289,
+   "high": 0.03451,
+   "low": -2.05,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 0.05
+  },
+  "0y": {
+   "avg": -2.45059,
+   "currency": "USD",
+   "growth": -1.6930001,
+   "high": -1.55418,
+   "low": -3.05,
+   "numberOfAnalysts": 8,
+   "yearAgoEps": -0.91
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 17357716280,
+   "currency": "MXN",
+   "growth": 0.1446,
+   "high": 17938712000,
+   "low": 16749189999,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 15164379350
+  },
+  "+1y": {
+   "avg": 66655350670,
+   "currency": "MXN",
+   "growth": 0.0797,
+   "high": 70921726000,
+   "low": 62298236000,
+   "numberOfAnalysts": 14,
+   "yearAgoRevenue": 61733417210
+  },
+  "0q": {
+   "avg": 17286479760,
+   "currency": "MXN",
+   "growth": 0.199,
+   "high": 17752589000,
+   "low": 16952738000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 14417524800
+  },
+  "0y": {
+   "avg": 61733417210,
+   "currency": "MXN",
+   "growth": 0.18180001,
+   "high": 64558092000,
+   "low": 58393982000,
+   "numberOfAnalysts": 15,
+   "yearAgoRevenue": 52237985160
+  }
+ },
+ "ticker": "VLRS",
+ "url": "https://finance.yahoo.com/quote/VLRS"
+}

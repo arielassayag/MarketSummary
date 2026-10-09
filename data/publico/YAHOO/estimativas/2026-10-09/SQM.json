@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 64.195,
+  "high": 110.0,
+  "low": 44.35,
+  "mean": 84.05833,
+  "median": 86.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 2.10034,
+   "currency": "USD",
+   "growth": 2.2818,
+   "high": 2.38976,
+   "low": 1.72,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.64
+  },
+  "+1y": {
+   "avg": 6.964,
+   "currency": "USD",
+   "growth": -0.0764,
+   "high": 10.41485,
+   "low": 3.55,
+   "numberOfAnalysts": 16,
+   "yearAgoEps": 7.54004
+  },
+  "0q": {
+   "avg": 2.12981,
+   "currency": "USD",
+   "growth": 2.4099,
+   "high": 2.35264,
+   "low": 1.92,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.6246
+  },
+  "0y": {
+   "avg": 7.54004,
+   "currency": "USD",
+   "growth": 2.6601999,
+   "high": 8.58,
+   "low": 6.29,
+   "numberOfAnalysts": 12,
+   "yearAgoEps": 2.06
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 2265272640,
+   "currency": "USD",
+   "growth": 0.7111,
+   "high": 2569599710,
+   "low": 2003171280,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 1323900000
+  },
+  "+1y": {
+   "avg": 7999605590,
+   "currency": "USD",
+   "growth": -0.023,
+   "high": 10019318360,
+   "low": 5350000000,
+   "numberOfAnalysts": 17,
+   "yearAgoRevenue": 8187748850
+  },
+  "0q": {
+   "avg": 2273968370,
+   "currency": "USD",
+   "growth": 0.9385,
+   "high": 2477000000,
+   "low": 2196496020,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 1173047000
+  },
+  "0y": {
+   "avg": 8187748850,
+   "currency": "USD",
+   "growth": 0.7892,
+   "high": 9103380780,
+   "low": 5465000000,
+   "numberOfAnalysts": 17,
+   "yearAgoRevenue": 4576200000
+  }
+ },
+ "ticker": "SQM",
+ "url": "https://finance.yahoo.com/quote/SQM"
+}

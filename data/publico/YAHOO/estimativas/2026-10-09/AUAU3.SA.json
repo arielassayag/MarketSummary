@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 5.07,
+  "high": 5.2,
+  "low": 3.75,
+  "mean": 4.53333,
+  "median": 4.7
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.08848,
+   "currency": "BRL",
+   "growth": -0.0014,
+   "high": 0.08911,
+   "low": 0.08785,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.0886
+  },
+  "+1y": {
+   "avg": 0.34975,
+   "currency": "BRL",
+   "growth": 0.1989,
+   "high": 0.4065,
+   "low": 0.25,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 0.29172
+  },
+  "0q": {
+   "avg": 0.08759,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0.08821,
+   "low": 0.08697,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": 0.29172,
+   "currency": "BRL",
+   "growth": -0.2722,
+   "high": 0.35,
+   "low": 0.19,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 0.40083
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 1862084590,
+   "currency": "BRL",
+   "growth": 1.3334,
+   "high": 1876479180,
+   "low": 1847690000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 798017000.0
+  },
+  "+1y": {
+   "avg": 7194931890,
+   "currency": "BRL",
+   "growth": 0.0633,
+   "high": 7747302520,
+   "low": 4316000000,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 6766618140.0
+  },
+  "0q": {
+   "avg": 1787475340,
+   "currency": "BRL",
+   "growth": null,
+   "high": 1789914680,
+   "low": 1785036000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": null
+  },
+  "0y": {
+   "avg": 6766618140,
+   "currency": "BRL",
+   "growth": 1.2451999,
+   "high": 7176318100,
+   "low": 4013000000,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 3013799000.0
+  }
+ },
+ "ticker": "AUAU3.SA",
+ "url": "https://finance.yahoo.com/quote/AUAU3.SA"
+}

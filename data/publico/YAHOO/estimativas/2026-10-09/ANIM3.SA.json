@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 4.96,
+  "high": 6.5,
+  "low": 1.8,
+  "mean": 3.42727,
+  "median": 3.2
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.03076,
+   "currency": "BRL",
+   "growth": 3.3303,
+   "high": 0.03153,
+   "low": 0.03,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": -0.0132
+  },
+  "+1y": {
+   "avg": 0.73882,
+   "currency": "BRL",
+   "growth": 0.1879,
+   "high": 1.0,
+   "low": 0.53,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 0.62196
+  },
+  "0q": {
+   "avg": 0.09718,
+   "currency": "BRL",
+   "growth": -0.27,
+   "high": 0.16437,
+   "low": 0.03,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.13312
+  },
+  "0y": {
+   "avg": 0.62196,
+   "currency": "BRL",
+   "growth": 0.2375,
+   "high": 0.68,
+   "low": 0.53,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 0.5026
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 1012093030,
+   "currency": "BRL",
+   "growth": 0.040900003,
+   "high": 1022651000,
+   "low": 1004375620,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 972320000
+  },
+  "+1y": {
+   "avg": 4526207200,
+   "currency": "BRL",
+   "growth": 0.0704,
+   "high": 4714000000,
+   "low": 4247000000,
+   "numberOfAnalysts": 12,
+   "yearAgoRevenue": 4228435150
+  },
+  "0q": {
+   "avg": 1047542910,
+   "currency": "BRL",
+   "growth": 0.0414,
+   "high": 1057715000,
+   "low": 1029343710,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 1005915000
+  },
+  "0y": {
+   "avg": 4228435150,
+   "currency": "BRL",
+   "growth": 0.0509,
+   "high": 4254000000,
+   "low": 4172000000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 4023697000
+  }
+ },
+ "ticker": "ANIM3.SA",
+ "url": "https://finance.yahoo.com/quote/ANIM3.SA"
+}

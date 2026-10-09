@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 17.8,
+  "high": 22.0,
+  "low": 17.0,
+  "mean": 18.62643,
+  "median": 18.685
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.25217,
+   "currency": "BRL",
+   "growth": 1.0287,
+   "high": 0.36103,
+   "low": 0.12,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.1243
+  },
+  "+1y": {
+   "avg": 1.05366,
+   "currency": "BRL",
+   "growth": 0.174,
+   "high": 1.19569,
+   "low": 0.92,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 0.8975
+  },
+  "0q": {
+   "avg": 0.1948,
+   "currency": "BRL",
+   "growth": 0.5596,
+   "high": 0.23484,
+   "low": 0.15956,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.1249
+  },
+  "0y": {
+   "avg": 0.8975,
+   "currency": "BRL",
+   "growth": 0.4321,
+   "high": 1.1,
+   "low": 0.71,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 0.6267
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 6988739020,
+   "currency": "BRL",
+   "growth": -0.0278,
+   "high": 8853597050,
+   "low": 5123881000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 7188439000
+  },
+  "+1y": {
+   "avg": 26157893120,
+   "currency": "BRL",
+   "growth": 0.0064,
+   "high": 35611918990,
+   "low": 21190444830,
+   "numberOfAnalysts": 13,
+   "yearAgoRevenue": 25990861710
+  },
+  "0q": {
+   "avg": 7865685990,
+   "currency": "BRL",
+   "growth": 0.1548,
+   "high": 10068624980,
+   "low": 5662747000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 6811177000
+  },
+  "0y": {
+   "avg": 25990861710,
+   "currency": "BRL",
+   "growth": -0.0047999998,
+   "high": 32907984030,
+   "low": 22636000000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 26116856000
+  }
+ },
+ "ticker": "CPLE3.SA",
+ "url": "https://finance.yahoo.com/quote/CPLE3.SA"
+}

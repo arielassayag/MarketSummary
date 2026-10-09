@@ -1,0 +1,67 @@
+{
+ "as_of": "2026-10-09",
+ "distribuicao_ratings": {
+  "Compra": 40,
+  "Em revisão": 35,
+  "Neutro": 122,
+  "Sem preço-alvo": 4,
+  "Venda": 32
+ },
+ "em_maturacao": true,
+ "erro_abs_mediano": null,
+ "exibir_ranking": false,
+ "exibir_taxas": false,
+ "ic_resumo": {
+  "dp": null,
+  "icir_anual": null,
+  "media": 0.0772133,
+  "p_ic_positivo": null,
+  "semanas": 1,
+  "t_newey_west": null
+ },
+ "ic_semanal": [
+  {
+   "ate": "2026-10-09",
+   "data": "2026-10-07",
+   "ic": 0.0772133,
+   "n": 199
+  }
+ ],
+ "metodo": "amostragem semanal dos preços de referência registrados no livro, reescalados por desdobramentos; IC entre snapshots completos consecutivos contra o retorno total em dólar menos a média do grupo país × setor",
+ "n_previsoes": 394,
+ "n_vencidas": 0,
+ "obsoletos": 0,
+ "primeiro_vencimento": "2027-10-07",
+ "referencias_literatura": {
+  "erro_abs": [
+   0.36,
+   0.45
+  ],
+  "tpmet12": [
+   0.24,
+   0.38
+  ],
+  "tpmetany": [
+   0.45,
+   0.64
+  ]
+ },
+ "tempo_ate_alvo_km": [
+  {
+   "dias": 2.0,
+   "sobrevivencia": 0.979899
+  }
+ ],
+ "tpmet12": {
+  "ic90": null,
+  "k": 0,
+  "n": 0,
+  "taxa": null
+ },
+ "tpmetany": {
+  "ic90": null,
+  "k": 0,
+  "n": 0,
+  "taxa": null
+ }
+}

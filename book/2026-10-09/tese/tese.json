@@ -1,0 +1,609 @@
+{
+  "mind": "codex",
+  "week": "2026-10-09",
+  "titulo": "Montagem inaugural: seleção residual com postura defensiva e risco predominantemente específico",
+  "resumo": "Carteira e execução hipotéticas: DADOS SIMULADOS; preços de mercado reais. A decisão reúne {{fact:tese.n_long}} compras e {{fact:tese.n_short}} vendas, com gross {{fact:tese.gross}}, net {{fact:tese.net}} e beta {{fact:tese.beta}}. A vol ex-ante de {{fact:tese.vol}} atende à meta aplicada. O alpha líquido esperado de {{fact:tese.alpha_liquido}} é estimativa anual do modelo, sem histórico realizado no mandato. O risco permanece predominantemente específico; a neutralidade não protege contra falha simultânea de nomes ou recompra forçada. A execução ainda depende do leilão de fechamento de 09/10/2026.",
+  "contexto": "Regime neutro e postura defensiva diante da janela eleitoral brasileira, da incerteza inflacionária e da heterogeneidade regional. A inauguração não permite avaliar desempenho realizado nem acerto das teses. A pesquisa acrescenta visões moderadas em ISA Energia Brasil e PagSeguro Digital e visão negativa de baixa convicção em CBA. Mills tem visão positiva, mas não foi selecionada. Banco do Brasil e Aura Minerals foram vetados na ponta vendida; Hudbay Minerals e XP foram excluídos da compra. As demais posições são mantidas principalmente pelo retorno residual e pelas restrições de construção, com convicção fundamental adicional ausente.",
+  "construcao": "O universo elegível de {{fact:tese.funil.universo}} emissores passa por liquidez, linhas de venda, free float, catalisadores e squeeze. A solução mantém {{fact:tese.n_posicoes}} posições e número efetivo de {{fact:tese.n_efetivo}}. A ponta comprada de {{fact:tese.long}} e a vendida de {{fact:tese.short}} equilibram exposições, custos e covariâncias. A meta do mandato {{fact:tese.vol_meta_mandato}} é reduzida pela postura para {{fact:tese.vol_meta_postura}} e ajustada pelo viés a priori {{fact:tese.vies_prior}}, resultando na meta aplicada {{fact:tese.vol_meta_aplicada}}. O gross é consequência da solução sob essa meta, não uma escolha independente de pesos. Petrobras, Patria Investments e Sigma Lithium têm dimensionamento condicionado ao risco por nome; FEMSA, Equatorial e Cemex recebem restrição adicional da sentinela. As posições de compensação em MercadoLibre e Arcos Dorados não exigem a mesma direção do alpha isolado.",
+  "temas": [
+    {
+      "titulo": "Energia: valor residual com risco político",
+      "lado": "long_short",
+      "emissores": [
+        "BR_PETROBRAS",
+        "BR_ULTRAPAR",
+        "AR_YPF",
+        "BR_VIBRA",
+        "BR_BRAVA",
+        "CO_GEOPARK",
+        "MX_VISTA",
+        "AR_TGS"
+      ],
+      "tese": "A seleção compara retorno residual, risco específico e custos dentro do grupo. Compras e vendas contribuem para alpha e para as neutralidades da carteira; não representam uma aposta direcional uniforme no setor. As inclinações fundamentais são limitadas à evidência confirmada.",
+      "riscos": "Petróleo, margens, investimento e intervenção regulatória podem alterar caixa e correlações."
+    },
+    {
+      "titulo": "Materiais: ciclo e assimetria de preço",
+      "lado": "long_short",
+      "emissores": [
+        "BR_SUZANO",
+        "MX_CEMEX",
+        "AR_LAR",
+        "LA_FORTUNA",
+        "BR_SIGMALITH",
+        "CL_SQM",
+        "BR_USIMINAS",
+        "BR_GERDAU",
+        "BR_VALE",
+        "BR_CBA",
+        "BR_KLABIN"
+      ],
+      "tese": "A seleção compara retorno residual, risco específico e custos dentro do grupo. Compras e vendas contribuem para alpha e para as neutralidades da carteira; não representam uma aposta direcional uniforme no setor. As inclinações fundamentais são limitadas à evidência confirmada.",
+      "riscos": "O ciclo das commodities, o câmbio e a execução operacional podem invalidar a margem normalizada."
+    },
+    {
+      "titulo": "Financeiro: retorno sobre capital e crédito",
+      "lado": "long_short",
+      "emissores": [
+        "BR_PAGS",
+        "BR_PATRIA",
+        "BR_INTER",
+        "BR_BRADESCO",
+        "BR_BBSEG",
+        "CO_CIBEST",
+        "BR_PORTO",
+        "CL_BCHILE",
+        "BR_CXSEG",
+        "BR_PICPAY",
+        "BR_PINE",
+        "AR_BBVA",
+        "LA_DLOCAL",
+        "BR_BANRISUL",
+        "AR_MACRO",
+        "BR_STONE",
+        "BR_ITAU",
+        "CL_BSAC"
+      ],
+      "tese": "A seleção compara retorno residual, risco específico e custos dentro do grupo. Compras e vendas contribuem para alpha e para as neutralidades da carteira; não representam uma aposta direcional uniforme no setor. As inclinações fundamentais são limitadas à evidência confirmada.",
+      "riscos": "Custo de crédito, margens e capital podem mudar; na venda, recuperação rápida adiciona risco de recompra."
+    },
+    {
+      "titulo": "Concessões e imóveis: caixa e capital",
+      "lado": "long_short",
+      "emissores": [
+        "BR_EQUATORIAL",
+        "BR_ALLOS",
+        "BR_ISAENERGIA",
+        "BR_SANEPAR",
+        "AR_CEPU",
+        "BR_ALUPAR",
+        "BR_COPASA",
+        "BR_AXIA",
+        "BR_CEMIG",
+        "BR_SABESP",
+        "AR_IRSA",
+        "BR_ENGIE"
+      ],
+      "tese": "A seleção compara retorno residual, risco específico e custos dentro do grupo. Compras e vendas contribuem para alpha e para as neutralidades da carteira; não representam uma aposta direcional uniforme no setor. As inclinações fundamentais são limitadas à evidência confirmada.",
+      "riscos": "Revisão tarifária, capex e custo da dívida podem impedir a conversão do resultado em caixa. Ocupação, vendas e capital de giro podem divergir do lucro contábil; a sensibilidade a juros permanece relevante."
+    },
+    {
+      "titulo": "Consumo discricionário: recuperação e preço",
+      "lado": "long_short",
+      "emissores": [
+        "BR_TENDA",
+        "BR_RIACHUELO",
+        "BR_ALPARGATAS",
+        "LA_MELI",
+        "BR_CURY",
+        "LA_ARCOS"
+      ],
+      "tese": "A seleção compara retorno residual, risco específico e custos dentro do grupo. Compras e vendas contribuem para alpha e para as neutralidades da carteira; não representam uma aposta direcional uniforme no setor. As inclinações fundamentais são limitadas à evidência confirmada.",
+      "riscos": "Demanda, crédito, estoques e capital de giro podem frustrar a recuperação; a venda enfrenta risco de reprecificação."
+    },
+    {
+      "titulo": "Consumo básico: margens e revisões",
+      "lado": "long_short",
+      "emissores": [
+        "MX_GENOMMA",
+        "MX_FEMSA",
+        "AR_ADECOAGRO",
+        "BR_JBS",
+        "BR_AMBEV",
+        "BR_SAOMARTINHO"
+      ],
+      "tese": "A seleção compara retorno residual, risco específico e custos dentro do grupo. Compras e vendas contribuem para alpha e para as neutralidades da carteira; não representam uma aposta direcional uniforme no setor. As inclinações fundamentais são limitadas à evidência confirmada.",
+      "riscos": "Custos, preços e execução comercial podem mudar a margem e a geração de caixa."
+    },
+    {
+      "titulo": "Industriais: execução e volumes",
+      "lado": "long_short",
+      "emissores": [
+        "MX_AEROMEXICO",
+        "MX_ASUR",
+        "BR_ORIZON",
+        "CL_LATAM",
+        "BR_EMBRAER",
+        "BR_MARCOPOLO",
+        "MX_OMA"
+      ],
+      "tese": "A seleção compara retorno residual, risco específico e custos dentro do grupo. Compras e vendas contribuem para alpha e para as neutralidades da carteira; não representam uma aposta direcional uniforme no setor. As inclinações fundamentais são limitadas à evidência confirmada.",
+      "riscos": "Volumes, cadeia de suprimentos, custo de combustível e investimento podem deslocar margem e caixa."
+    },
+    {
+      "titulo": "Serviços, saúde e tecnologia: crescimento e rentabilidade",
+      "lado": "long_short",
+      "emissores": [
+        "LA_LILA",
+        "BR_VTEX",
+        "BR_HYPERA",
+        "BR_REDEDOR",
+        "MX_AMX"
+      ],
+      "tese": "A seleção compara retorno residual, risco específico e custos dentro do grupo. Compras e vendas contribuem para alpha e para as neutralidades da carteira; não representam uma aposta direcional uniforme no setor. As inclinações fundamentais são limitadas à evidência confirmada.",
+      "riscos": "Pressão de custos, regulação e conversão em caixa podem alterar a rentabilidade. Competição, investimento e dívida podem restringir a realização do resultado. Crescimento, rentabilidade e retenção podem divergir do consenso; a avaliação é sensível ao custo de capital."
+    }
+  ],
+  "exposicoes": "O Brasil concentra gross de {{fact:tese.pais.BR.gross}}, mas net de {{fact:tese.pais.BR.net}}; o México tem net {{fact:tese.pais.MX.net}} e o Chile {{fact:tese.pais.CL.net}}. Não há posição peruana após o veto de compra em Hudbay e a seleção final. Consumo básico e discricionário mantêm net de {{fact:tese.setor.consumer_staples.net}} e {{fact:tese.setor.consumer_discretionary.net}}; financeiro fica em {{fact:tese.setor.financials.net}}. O tema estatais alcança {{fact:tese.tema.estatais}}, próximo de seu limite {{fact:tese.tema.estatais.limite}}, e merece atenção mesmo com beta agregado baixo. A exposição ao choque eleitoral é {{fact:tese.evento.eleicao_br}}, diante do limite {{fact:tese.evento.eleicao_br.limite}}. Tamanho e momentum permanecem exposições de estilo a acompanhar, respectivamente {{fact:tese.estilo.size}} e {{fact:tese.estilo.momentum}}.",
+  "sensibilidade": "Beta previsto {{fact:tese.beta}} frente ao limite absoluto {{fact:tese.beta_limite}}. O choque de mercado {{fact:tese.sens.choque}} implica P&L ilustrativo de {{fact:tese.sens.mercado_choque}}; a sensibilidade realizada ao índice latino-americano tem beta {{fact:tese.sens.ilf.beta}}. Os betas realizados ao peso mexicano, ao real e ao dólar global são {{fact:tese.sens.mxn.beta}}, {{fact:tese.sens.brl.beta}} e {{fact:tese.sens.dxy.beta}}. São estimativas sobre os pesos atuais, com preenchimento dos retornos ausentes pelo modelo; não equivalem ao histórico realizado do fundo. Petróleo, cobre e ouro têm medidas específicas, enquanto outras commodities e juros não são fatores modelados. Mudanças de juros podem afetar empresas e valuation mesmo sem sensibilidade explícita.",
+  "volatilidade": "A vol ex-ante {{fact:tese.vol}} está na banda de {{fact:tese.vol_banda_min}} a {{fact:tese.vol_banda_max}}. No modelo base, o risco específico representa {{fact:tese.risco_especifico}} da variância, e o fatorial {{fact:tese.risco_fatorial}}. Vol específica de {{fact:tese.vol_especifica}} e fatorial de {{fact:tese.vol_fatorial}} demonstram onde se concentra o orçamento. Sigma Lithium contribui {{fact:tese.BR_SIGMALITH.risco}} para a variância, perto do limite por nome de {{fact:tese.risco_nome_limite}}. VaR diário {{fact:tese.var_1d}} e expected shortfall {{fact:tese.es_1d}} não limitam a perda em eventos de cauda. A oscilação típica semanal {{fact:tese.sigma_semana}} é estimativa, não faixa garantida.",
+  "riscos": [
+    "Fatores de valor, qualidade e revisão de analistas usam retrato atual dos dados; sua validação histórica não equivale à dos sinais de preço.",
+    "A inflação e a política brasileira podem mudar simultaneamente juros, câmbio e correlações; neutralidade estimada pode falhar em choque.",
+    "Shorts enfrentam recompra forçada e alteração do aluguel. Controlador e disponibilidade efetiva não foram confirmados independentemente para todos os nomes.",
+    "A cobertura fundamental registra abstenção em muitos emissores. O preço-alvo não confirma catalisador no horizonte da carteira.",
+    "O risco idiossincrático elevado reduz dependência de fatores comuns, mas amplia a importância da execução e dos eventos por companhia.",
+    "A liquidez estimada presume participação em volumes observados; a capacidade real do leilão e os preços de fechamento ainda precisam ser conferidos.",
+    "A sensibilidade a juros não é modelada; demonstrações incompletas e cenários históricos sem dados permanecem lacunas."
+  ],
+  "premortem": "A carteira pode falhar se as revisões de consenso e os sinais de valor refletirem premissas comuns que não se realizem. A ponta comprada sofreria com piora de caixa e capital de giro; a vendida poderia valorizar com recuperação operacional ou catalisadores não antecipados. Um choque eleitoral alteraria correlações e aluguel ao mesmo tempo, enfraquecendo a neutralidade estimada. Mesmo sem direção de mercado relevante, perdas específicas simultâneas podem superar o risco diário usual. A execução hipotética pode ocorrer a preços distintos dos usados na análise; os custos devem ser incorporados antes de qualquer leitura de resultado.",
+  "gatilhos": [
+    "Rever com falha obrigatória de risco, mudança de aluguel ou disponibilidade de linhas de execução.",
+    "Rever as exposições a estatais e à janela eleitoral após notícia pública material ou alteração da sensibilidade.",
+    "Rever ISA Energia Brasil com mudança no cronograma de projetos, remuneração regulada ou dívida.",
+    "Rever PagSeguro Digital com piora de crédito, rentabilidade ou confirmação de resultado.",
+    "Rever CBA com recuperação de margem ou mudança sustentada no ciclo do alumínio.",
+    "Rever as posições quantitativas quando o retorno residual perder sustentação ou a cobertura resolver divergências relevantes."
+  ],
+  "monitoramento": "Conferir execução hipotética no fechamento de 09/10/2026, preços, custos e eventuais recusas. Acompanhar inflação americana em 14/10/2026 e a janela eleitoral até 25/10/2026. O calendário indica Grupo Aeroméxico em 19/10/2026, América Móvil em 20/10/2026, Genomma Lab em 21/10/2026 e Bradesco e aeroportos mexicanos em 22/10/2026; confirmar datas no RI antes de tratá-las como definitivas. Resultados de ISA Energia Brasil e CBA estão previstos para 03/11/2026 e 04/11/2026. A data de PagSeguro Digital ainda exige confirmação. Avaliar diariamente risco, aluguel, mudanças de sinal e incidentes; separar desempenho efetivado de estimativas do modelo.",
+  "posicoes": [
+    {
+      "issuer_id": "BR_PETROBRAS",
+      "por_que": "Petrobras gera alpha quantitativo de {{fact:tese.BR_PETROBRAS.alpha_quant}}, sem inclinação fundamental adicional. Peso {{fact:tese.BR_PETROBRAS.peso}}, condicionado ao teto específico de {{fact:tese.BR_PETROBRAS.teto}}, às neutralidades e ao tema estatais. A exposição bruta não elimina o risco eleitoral.",
+      "risco": "Petróleo, investimento, dividendos e intervenção estatal podem deslocar caixa e preço durante a janela eleitoral.",
+      "gatilho": "Rever com mudança de política de capital, intervenção estatal ou alteração material da exposição eleitoral."
+    },
+    {
+      "issuer_id": "MX_GENOMMA",
+      "por_que": "Genomma Lab gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.MX_GENOMMA.alpha_quant}}; peso {{fact:tese.MX_GENOMMA.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Custos, preços e execução comercial podem mudar a margem e a geração de caixa.",
+      "gatilho": "Rever com perda de margem, alteração de demanda ou aumento persistente de custos."
+    },
+    {
+      "issuer_id": "BR_PAGS",
+      "por_que": "PagSeguro Digital recebe inclinação positiva moderada: valuation favorável, com premissas comuns entre métodos. Alpha {{fact:tese.BR_PAGS.alpha}}; peso {{fact:tese.BR_PAGS.peso}} resulta da otimização sob risco por nome e neutralidade. A data de resultado ainda requer confirmação.",
+      "risco": "Crédito e competição podem reduzir a rentabilidade; a concordância de métodos pode refletir a mesma premissa excessiva.",
+      "gatilho": "Rever com piora do crédito, da rentabilidade ou confirmação do calendário de resultados."
+    },
+    {
+      "issuer_id": "BR_PATRIA",
+      "por_que": "Patria Investments gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.BR_PATRIA.alpha_quant}}; peso {{fact:tese.BR_PATRIA.peso}}. Dimensionamento limitado pelo risco específico por nome. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Custo de crédito, margens e capital podem mudar; na venda, recuperação rápida adiciona risco de recompra.",
+      "gatilho": "Rever com deterioração do crédito, revisão de despesas, rentabilidade ou restrição de aluguel."
+    },
+    {
+      "issuer_id": "BR_INTER",
+      "por_que": "Inter&Co gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.BR_INTER.alpha_quant}}; peso {{fact:tese.BR_INTER.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Custo de crédito, margens e capital podem mudar; na venda, recuperação rápida adiciona risco de recompra.",
+      "gatilho": "Rever com deterioração do crédito, revisão de despesas, rentabilidade ou restrição de aluguel."
+    },
+    {
+      "issuer_id": "BR_SUZANO",
+      "por_que": "Suzano gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.BR_SUZANO.alpha_quant}}; peso {{fact:tese.BR_SUZANO.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "O ciclo das commodities, o câmbio e a execução operacional podem invalidar a margem normalizada.",
+      "gatilho": "Rever com mudança sustentada nos preços, nas margens ou nos custos operacionais."
+    },
+    {
+      "issuer_id": "BR_ULTRAPAR",
+      "por_que": "Ultrapar gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.BR_ULTRAPAR.alpha_quant}}; peso {{fact:tese.BR_ULTRAPAR.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Petróleo, margens, investimento e intervenção regulatória podem alterar caixa e correlações.",
+      "gatilho": "Rever com mudança de preços de energia, política de capital ou disponibilidade de aluguel."
+    },
+    {
+      "issuer_id": "MX_AEROMEXICO",
+      "por_que": "Grupo Aeroméxico gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.MX_AEROMEXICO.alpha_quant}}; peso {{fact:tese.MX_AEROMEXICO.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Volumes, cadeia de suprimentos, custo de combustível e investimento podem deslocar margem e caixa.",
+      "gatilho": "Rever com revisão de volumes, entregas, margens ou capital de giro."
+    },
+    {
+      "issuer_id": "BR_TENDA",
+      "por_que": "Tenda gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.BR_TENDA.alpha_quant}}; peso {{fact:tese.BR_TENDA.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Demanda, crédito, estoques e capital de giro podem frustrar a recuperação; a venda enfrenta risco de reprecificação.",
+      "gatilho": "Rever com mudança de vendas, inadimplência, estoques ou revisão das estimativas."
+    },
+    {
+      "issuer_id": "BR_BRADESCO",
+      "por_que": "Banco Bradesco gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.BR_BRADESCO.alpha_quant}}; peso {{fact:tese.BR_BRADESCO.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Custo de crédito, margens e capital podem mudar; na venda, recuperação rápida adiciona risco de recompra.",
+      "gatilho": "Rever com deterioração do crédito, revisão de despesas, rentabilidade ou restrição de aluguel."
+    },
+    {
+      "issuer_id": "BR_RIACHUELO",
+      "por_que": "Riachuelo (ex-Guararapes) gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.BR_RIACHUELO.alpha_quant}}; peso {{fact:tese.BR_RIACHUELO.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Demanda, crédito, estoques e capital de giro podem frustrar a recuperação; a venda enfrenta risco de reprecificação.",
+      "gatilho": "Rever com mudança de vendas, inadimplência, estoques ou revisão das estimativas."
+    },
+    {
+      "issuer_id": "MX_FEMSA",
+      "por_que": "FEMSA gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.MX_FEMSA.alpha_quant}}; peso {{fact:tese.MX_FEMSA.peso}}. Dimensionamento limitado pela cautela da sentinela de venda. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Custos, preços e execução comercial podem mudar a margem e a geração de caixa.",
+      "gatilho": "Rever com perda de margem, alteração de demanda ou aumento persistente de custos."
+    },
+    {
+      "issuer_id": "BR_EQUATORIAL",
+      "por_que": "Equatorial gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.BR_EQUATORIAL.alpha_quant}}; peso {{fact:tese.BR_EQUATORIAL.peso}}. Dimensionamento limitado pela cautela da sentinela de venda. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Revisão tarifária, capex e custo da dívida podem impedir a conversão do resultado em caixa.",
+      "gatilho": "Rever com decisão regulatória, alteração de investimentos ou piora da cobertura da dívida."
+    },
+    {
+      "issuer_id": "MX_CEMEX",
+      "por_que": "Cemex gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.MX_CEMEX.alpha_quant}}; peso {{fact:tese.MX_CEMEX.peso}}. Dimensionamento limitado pela cautela da sentinela de venda. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "O ciclo das commodities, o câmbio e a execução operacional podem invalidar a margem normalizada.",
+      "gatilho": "Rever com mudança sustentada nos preços, nas margens ou nos custos operacionais."
+    },
+    {
+      "issuer_id": "AR_YPF",
+      "por_que": "YPF gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.AR_YPF.alpha_quant}}; peso {{fact:tese.AR_YPF.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Petróleo, margens, investimento e intervenção regulatória podem alterar caixa e correlações.",
+      "gatilho": "Rever com mudança de preços de energia, política de capital ou disponibilidade de aluguel."
+    },
+    {
+      "issuer_id": "BR_BBSEG",
+      "por_que": "BB Seguridade gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.BR_BBSEG.alpha_quant}}; peso {{fact:tese.BR_BBSEG.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Custo de crédito, margens e capital podem mudar; na venda, recuperação rápida adiciona risco de recompra.",
+      "gatilho": "Rever com deterioração do crédito, revisão de despesas, rentabilidade ou restrição de aluguel."
+    },
+    {
+      "issuer_id": "BR_ALLOS",
+      "por_que": "Allos gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.BR_ALLOS.alpha_quant}}; peso {{fact:tese.BR_ALLOS.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Ocupação, vendas e capital de giro podem divergir do lucro contábil; a sensibilidade a juros permanece relevante.",
+      "gatilho": "Rever com piora da ocupação, caixa ou condições de financiamento."
+    },
+    {
+      "issuer_id": "BR_VIBRA",
+      "por_que": "Vibra Energia gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.BR_VIBRA.alpha_quant}}; peso {{fact:tese.BR_VIBRA.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Petróleo, margens, investimento e intervenção regulatória podem alterar caixa e correlações.",
+      "gatilho": "Rever com mudança de preços de energia, política de capital ou disponibilidade de aluguel."
+    },
+    {
+      "issuer_id": "AR_ADECOAGRO",
+      "por_que": "Adecoagro gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.AR_ADECOAGRO.alpha_quant}}; peso {{fact:tese.AR_ADECOAGRO.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Custos, preços e execução comercial podem mudar a margem e a geração de caixa.",
+      "gatilho": "Rever com perda de margem, alteração de demanda ou aumento persistente de custos."
+    },
+    {
+      "issuer_id": "BR_BRAVA",
+      "por_que": "Brava Energia gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.BR_BRAVA.alpha_quant}}; peso {{fact:tese.BR_BRAVA.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Petróleo, margens, investimento e intervenção regulatória podem alterar caixa e correlações.",
+      "gatilho": "Rever com mudança de preços de energia, política de capital ou disponibilidade de aluguel."
+    },
+    {
+      "issuer_id": "BR_ISAENERGIA",
+      "por_que": "ISA Energia Brasil combina alpha quantitativo com visão positiva moderada ligada à entrada de receita regulada. Alpha {{fact:tese.BR_ISAENERGIA.alpha}}; peso {{fact:tese.BR_ISAENERGIA.peso}} é interior da otimização. Capex, dívida e reconhecimento tarifário limitam a confiança.",
+      "risco": "A energização dos projetos pode não converter receita em caixa; dívida e remuneração regulatória permanecem riscos.",
+      "gatilho": "Rever com atraso de projetos, revisão tarifária ou deterioração do endividamento."
+    },
+    {
+      "issuer_id": "BR_SANEPAR",
+      "por_que": "Sanepar gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.BR_SANEPAR.alpha_quant}}; peso {{fact:tese.BR_SANEPAR.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Revisão tarifária, capex e custo da dívida podem impedir a conversão do resultado em caixa.",
+      "gatilho": "Rever com decisão regulatória, alteração de investimentos ou piora da cobertura da dívida."
+    },
+    {
+      "issuer_id": "AR_LAR",
+      "por_que": "Lithium Argentina gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.AR_LAR.alpha_quant}}; peso {{fact:tese.AR_LAR.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "O ciclo das commodities, o câmbio e a execução operacional podem invalidar a margem normalizada.",
+      "gatilho": "Rever com mudança sustentada nos preços, nas margens ou nos custos operacionais."
+    },
+    {
+      "issuer_id": "MX_ASUR",
+      "por_que": "Grupo Aeroportuario del Sureste gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.MX_ASUR.alpha_quant}}; peso {{fact:tese.MX_ASUR.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Volumes, cadeia de suprimentos, custo de combustível e investimento podem deslocar margem e caixa.",
+      "gatilho": "Rever com revisão de volumes, entregas, margens ou capital de giro."
+    },
+    {
+      "issuer_id": "LA_FORTUNA",
+      "por_que": "Fortuna Mining gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.LA_FORTUNA.alpha_quant}}; peso {{fact:tese.LA_FORTUNA.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "O ciclo das commodities, o câmbio e a execução operacional podem invalidar a margem normalizada.",
+      "gatilho": "Rever com mudança sustentada nos preços, nas margens ou nos custos operacionais."
+    },
+    {
+      "issuer_id": "BR_SIGMALITH",
+      "por_que": "Sigma Lithium gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.BR_SIGMALITH.alpha_quant}}; peso {{fact:tese.BR_SIGMALITH.peso}}. Dimensionamento limitado pelo risco específico por nome. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "O ciclo das commodities, o câmbio e a execução operacional podem invalidar a margem normalizada.",
+      "gatilho": "Rever com mudança sustentada nos preços, nas margens ou nos custos operacionais."
+    },
+    {
+      "issuer_id": "AR_CEPU",
+      "por_que": "Central Puerto gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.AR_CEPU.alpha_quant}}; peso {{fact:tese.AR_CEPU.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Revisão tarifária, capex e custo da dívida podem impedir a conversão do resultado em caixa.",
+      "gatilho": "Rever com decisão regulatória, alteração de investimentos ou piora da cobertura da dívida."
+    },
+    {
+      "issuer_id": "BR_ALPARGATAS",
+      "por_que": "Alpargatas gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.BR_ALPARGATAS.alpha_quant}}; peso {{fact:tese.BR_ALPARGATAS.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Demanda, crédito, estoques e capital de giro podem frustrar a recuperação; a venda enfrenta risco de reprecificação.",
+      "gatilho": "Rever com mudança de vendas, inadimplência, estoques ou revisão das estimativas."
+    },
+    {
+      "issuer_id": "LA_MELI",
+      "por_que": "MercadoLibre compensa exposições da carteira na ponta vendida. Alpha quantitativo {{fact:tese.LA_MELI.alpha_quant}}; peso {{fact:tese.LA_MELI.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Demanda, crédito, estoques e capital de giro podem frustrar a recuperação; a venda enfrenta risco de reprecificação.",
+      "gatilho": "Rever com mudança de vendas, inadimplência, estoques ou revisão das estimativas."
+    },
+    {
+      "issuer_id": "CO_CIBEST",
+      "por_que": "Grupo Cibest (ex-Bancolombia) gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.CO_CIBEST.alpha_quant}}; peso {{fact:tese.CO_CIBEST.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Custo de crédito, margens e capital podem mudar; na venda, recuperação rápida adiciona risco de recompra.",
+      "gatilho": "Rever com deterioração do crédito, revisão de despesas, rentabilidade ou restrição de aluguel."
+    },
+    {
+      "issuer_id": "CO_GEOPARK",
+      "por_que": "GeoPark gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.CO_GEOPARK.alpha_quant}}; peso {{fact:tese.CO_GEOPARK.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Petróleo, margens, investimento e intervenção regulatória podem alterar caixa e correlações.",
+      "gatilho": "Rever com mudança de preços de energia, política de capital ou disponibilidade de aluguel."
+    },
+    {
+      "issuer_id": "BR_ORIZON",
+      "por_que": "Orizon gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.BR_ORIZON.alpha_quant}}; peso {{fact:tese.BR_ORIZON.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Volumes, cadeia de suprimentos, custo de combustível e investimento podem deslocar margem e caixa.",
+      "gatilho": "Rever com revisão de volumes, entregas, margens ou capital de giro."
+    },
+    {
+      "issuer_id": "CL_SQM",
+      "por_que": "SQM gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.CL_SQM.alpha_quant}}; peso {{fact:tese.CL_SQM.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "O ciclo das commodities, o câmbio e a execução operacional podem invalidar a margem normalizada.",
+      "gatilho": "Rever com mudança sustentada nos preços, nas margens ou nos custos operacionais."
+    },
+    {
+      "issuer_id": "BR_PORTO",
+      "por_que": "Porto Seguro gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.BR_PORTO.alpha_quant}}; peso {{fact:tese.BR_PORTO.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Custo de crédito, margens e capital podem mudar; na venda, recuperação rápida adiciona risco de recompra.",
+      "gatilho": "Rever com deterioração do crédito, revisão de despesas, rentabilidade ou restrição de aluguel."
+    },
+    {
+      "issuer_id": "BR_CURY",
+      "por_que": "Cury gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.BR_CURY.alpha_quant}}; peso {{fact:tese.BR_CURY.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Demanda, crédito, estoques e capital de giro podem frustrar a recuperação; a venda enfrenta risco de reprecificação.",
+      "gatilho": "Rever com mudança de vendas, inadimplência, estoques ou revisão das estimativas."
+    },
+    {
+      "issuer_id": "CL_BCHILE",
+      "por_que": "Banco de Chile gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.CL_BCHILE.alpha_quant}}; peso {{fact:tese.CL_BCHILE.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Custo de crédito, margens e capital podem mudar; na venda, recuperação rápida adiciona risco de recompra.",
+      "gatilho": "Rever com deterioração do crédito, revisão de despesas, rentabilidade ou restrição de aluguel."
+    },
+    {
+      "issuer_id": "MX_VISTA",
+      "por_que": "Vista Energy gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.MX_VISTA.alpha_quant}}; peso {{fact:tese.MX_VISTA.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Petróleo, margens, investimento e intervenção regulatória podem alterar caixa e correlações.",
+      "gatilho": "Rever com mudança de preços de energia, política de capital ou disponibilidade de aluguel."
+    },
+    {
+      "issuer_id": "CL_LATAM",
+      "por_que": "LATAM Airlines Group gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.CL_LATAM.alpha_quant}}; peso {{fact:tese.CL_LATAM.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Volumes, cadeia de suprimentos, custo de combustível e investimento podem deslocar margem e caixa.",
+      "gatilho": "Rever com revisão de volumes, entregas, margens ou capital de giro."
+    },
+    {
+      "issuer_id": "BR_USIMINAS",
+      "por_que": "Usiminas gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.BR_USIMINAS.alpha_quant}}; peso {{fact:tese.BR_USIMINAS.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "O ciclo das commodities, o câmbio e a execução operacional podem invalidar a margem normalizada.",
+      "gatilho": "Rever com mudança sustentada nos preços, nas margens ou nos custos operacionais."
+    },
+    {
+      "issuer_id": "LA_LILA",
+      "por_que": "Liberty Latin America gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.LA_LILA.alpha_quant}}; peso {{fact:tese.LA_LILA.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Competição, investimento e dívida podem restringir a realização do resultado.",
+      "gatilho": "Rever com alteração de concorrência, investimento ou endividamento."
+    },
+    {
+      "issuer_id": "BR_CXSEG",
+      "por_que": "Caixa Seguridade gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.BR_CXSEG.alpha_quant}}; peso {{fact:tese.BR_CXSEG.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Custo de crédito, margens e capital podem mudar; na venda, recuperação rápida adiciona risco de recompra.",
+      "gatilho": "Rever com deterioração do crédito, revisão de despesas, rentabilidade ou restrição de aluguel."
+    },
+    {
+      "issuer_id": "BR_VTEX",
+      "por_que": "VTEX gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.BR_VTEX.alpha_quant}}; peso {{fact:tese.BR_VTEX.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Crescimento, rentabilidade e retenção podem divergir do consenso; a avaliação é sensível ao custo de capital.",
+      "gatilho": "Rever com revisão de crescimento, deterioração da rentabilidade ou maior custo de capital."
+    },
+    {
+      "issuer_id": "BR_EMBRAER",
+      "por_que": "Embraer gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.BR_EMBRAER.alpha_quant}}; peso {{fact:tese.BR_EMBRAER.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Volumes, cadeia de suprimentos, custo de combustível e investimento podem deslocar margem e caixa.",
+      "gatilho": "Rever com revisão de volumes, entregas, margens ou capital de giro."
+    },
+    {
+      "issuer_id": "BR_PICPAY",
+      "por_que": "PicPay (PicS N.V.) gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.BR_PICPAY.alpha_quant}}; peso {{fact:tese.BR_PICPAY.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Custo de crédito, margens e capital podem mudar; na venda, recuperação rápida adiciona risco de recompra.",
+      "gatilho": "Rever com deterioração do crédito, revisão de despesas, rentabilidade ou restrição de aluguel."
+    },
+    {
+      "issuer_id": "BR_HYPERA",
+      "por_que": "Hypera gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.BR_HYPERA.alpha_quant}}; peso {{fact:tese.BR_HYPERA.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Pressão de custos, regulação e conversão em caixa podem alterar a rentabilidade.",
+      "gatilho": "Rever com mudança regulatória, pressão de margem ou piora da geração de caixa."
+    },
+    {
+      "issuer_id": "BR_REDEDOR",
+      "por_que": "Rede D'Or São Luiz gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.BR_REDEDOR.alpha_quant}}; peso {{fact:tese.BR_REDEDOR.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Pressão de custos, regulação e conversão em caixa podem alterar a rentabilidade.",
+      "gatilho": "Rever com mudança regulatória, pressão de margem ou piora da geração de caixa."
+    },
+    {
+      "issuer_id": "BR_GERDAU",
+      "por_que": "Gerdau gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.BR_GERDAU.alpha_quant}}; peso {{fact:tese.BR_GERDAU.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "O ciclo das commodities, o câmbio e a execução operacional podem invalidar a margem normalizada.",
+      "gatilho": "Rever com mudança sustentada nos preços, nas margens ou nos custos operacionais."
+    },
+    {
+      "issuer_id": "BR_VALE",
+      "por_que": "Vale gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.BR_VALE.alpha_quant}}; peso {{fact:tese.BR_VALE.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "O ciclo das commodities, o câmbio e a execução operacional podem invalidar a margem normalizada.",
+      "gatilho": "Rever com mudança sustentada nos preços, nas margens ou nos custos operacionais."
+    },
+    {
+      "issuer_id": "BR_PINE",
+      "por_que": "Banco Pine gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.BR_PINE.alpha_quant}}; peso {{fact:tese.BR_PINE.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Custo de crédito, margens e capital podem mudar; na venda, recuperação rápida adiciona risco de recompra.",
+      "gatilho": "Rever com deterioração do crédito, revisão de despesas, rentabilidade ou restrição de aluguel."
+    },
+    {
+      "issuer_id": "BR_ALUPAR",
+      "por_que": "Alupar gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.BR_ALUPAR.alpha_quant}}; peso {{fact:tese.BR_ALUPAR.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Revisão tarifária, capex e custo da dívida podem impedir a conversão do resultado em caixa.",
+      "gatilho": "Rever com decisão regulatória, alteração de investimentos ou piora da cobertura da dívida."
+    },
+    {
+      "issuer_id": "LA_ARCOS",
+      "por_que": "Arcos Dorados compensa exposições da carteira na ponta vendida. Alpha quantitativo {{fact:tese.LA_ARCOS.alpha_quant}}; peso {{fact:tese.LA_ARCOS.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Demanda, crédito, estoques e capital de giro podem frustrar a recuperação; a venda enfrenta risco de reprecificação.",
+      "gatilho": "Rever com mudança de vendas, inadimplência, estoques ou revisão das estimativas."
+    },
+    {
+      "issuer_id": "BR_MARCOPOLO",
+      "por_que": "Marcopolo gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.BR_MARCOPOLO.alpha_quant}}; peso {{fact:tese.BR_MARCOPOLO.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Volumes, cadeia de suprimentos, custo de combustível e investimento podem deslocar margem e caixa.",
+      "gatilho": "Rever com revisão de volumes, entregas, margens ou capital de giro."
+    },
+    {
+      "issuer_id": "AR_BBVA",
+      "por_que": "BBVA Argentina gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.AR_BBVA.alpha_quant}}; peso {{fact:tese.AR_BBVA.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Custo de crédito, margens e capital podem mudar; na venda, recuperação rápida adiciona risco de recompra.",
+      "gatilho": "Rever com deterioração do crédito, revisão de despesas, rentabilidade ou restrição de aluguel."
+    },
+    {
+      "issuer_id": "BR_JBS",
+      "por_que": "JBS N.V. gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.BR_JBS.alpha_quant}}; peso {{fact:tese.BR_JBS.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Custos, preços e execução comercial podem mudar a margem e a geração de caixa.",
+      "gatilho": "Rever com perda de margem, alteração de demanda ou aumento persistente de custos."
+    },
+    {
+      "issuer_id": "BR_COPASA",
+      "por_que": "Copasa gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.BR_COPASA.alpha_quant}}; peso {{fact:tese.BR_COPASA.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Revisão tarifária, capex e custo da dívida podem impedir a conversão do resultado em caixa.",
+      "gatilho": "Rever com decisão regulatória, alteração de investimentos ou piora da cobertura da dívida."
+    },
+    {
+      "issuer_id": "BR_CBA",
+      "por_que": "CBA entra vendida com visão negativa de baixa convicção, sensível ao ciclo do alumínio e à dispersão do valuation. Alpha {{fact:tese.BR_CBA.alpha}}; peso {{fact:tese.BR_CBA.peso}} é interior da otimização. Não extrapolo o alvo para o horizonte da execução.",
+      "risco": "Recuperação do alumínio ou melhora operacional pode invalidar o short e elevar o custo de recompra.",
+      "gatilho": "Rever com melhora de margens, mudança de preços do alumínio ou resultado em 04/11/2026."
+    },
+    {
+      "issuer_id": "BR_AXIA",
+      "por_que": "Axia Energia (ex-Eletrobras) gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.BR_AXIA.alpha_quant}}; peso {{fact:tese.BR_AXIA.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Revisão tarifária, capex e custo da dívida podem impedir a conversão do resultado em caixa.",
+      "gatilho": "Rever com decisão regulatória, alteração de investimentos ou piora da cobertura da dívida."
+    },
+    {
+      "issuer_id": "BR_KLABIN",
+      "por_que": "Klabin gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.BR_KLABIN.alpha_quant}}; peso {{fact:tese.BR_KLABIN.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "O ciclo das commodities, o câmbio e a execução operacional podem invalidar a margem normalizada.",
+      "gatilho": "Rever com mudança sustentada nos preços, nas margens ou nos custos operacionais."
+    },
+    {
+      "issuer_id": "LA_DLOCAL",
+      "por_que": "dLocal gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.LA_DLOCAL.alpha_quant}}; peso {{fact:tese.LA_DLOCAL.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Custo de crédito, margens e capital podem mudar; na venda, recuperação rápida adiciona risco de recompra.",
+      "gatilho": "Rever com deterioração do crédito, revisão de despesas, rentabilidade ou restrição de aluguel."
+    },
+    {
+      "issuer_id": "BR_CEMIG",
+      "por_que": "Cemig gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.BR_CEMIG.alpha_quant}}; peso {{fact:tese.BR_CEMIG.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Revisão tarifária, capex e custo da dívida podem impedir a conversão do resultado em caixa.",
+      "gatilho": "Rever com decisão regulatória, alteração de investimentos ou piora da cobertura da dívida."
+    },
+    {
+      "issuer_id": "BR_SABESP",
+      "por_que": "Sabesp gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.BR_SABESP.alpha_quant}}; peso {{fact:tese.BR_SABESP.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Revisão tarifária, capex e custo da dívida podem impedir a conversão do resultado em caixa.",
+      "gatilho": "Rever com decisão regulatória, alteração de investimentos ou piora da cobertura da dívida."
+    },
+    {
+      "issuer_id": "BR_BANRISUL",
+      "por_que": "Banrisul gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.BR_BANRISUL.alpha_quant}}; peso {{fact:tese.BR_BANRISUL.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Custo de crédito, margens e capital podem mudar; na venda, recuperação rápida adiciona risco de recompra.",
+      "gatilho": "Rever com deterioração do crédito, revisão de despesas, rentabilidade ou restrição de aluguel."
+    },
+    {
+      "issuer_id": "AR_IRSA",
+      "por_que": "IRSA gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.AR_IRSA.alpha_quant}}; peso {{fact:tese.AR_IRSA.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Ocupação, vendas e capital de giro podem divergir do lucro contábil; a sensibilidade a juros permanece relevante.",
+      "gatilho": "Rever com piora da ocupação, caixa ou condições de financiamento."
+    },
+    {
+      "issuer_id": "AR_MACRO",
+      "por_que": "Banco Macro combina alpha com diversificação na ponta comprada. Alpha quantitativo {{fact:tese.AR_MACRO.alpha_quant}}; peso {{fact:tese.AR_MACRO.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Custo de crédito, margens e capital podem mudar; na venda, recuperação rápida adiciona risco de recompra.",
+      "gatilho": "Rever com deterioração do crédito, revisão de despesas, rentabilidade ou restrição de aluguel."
+    },
+    {
+      "issuer_id": "BR_AMBEV",
+      "por_que": "Ambev gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.BR_AMBEV.alpha_quant}}; peso {{fact:tese.BR_AMBEV.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Custos, preços e execução comercial podem mudar a margem e a geração de caixa.",
+      "gatilho": "Rever com perda de margem, alteração de demanda ou aumento persistente de custos."
+    },
+    {
+      "issuer_id": "MX_OMA",
+      "por_que": "Grupo Aeroportuario Centro Norte combina alpha com diversificação na ponta vendida. Alpha quantitativo {{fact:tese.MX_OMA.alpha_quant}}; peso {{fact:tese.MX_OMA.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Volumes, cadeia de suprimentos, custo de combustível e investimento podem deslocar margem e caixa.",
+      "gatilho": "Rever com revisão de volumes, entregas, margens ou capital de giro."
+    },
+    {
+      "issuer_id": "MX_AMX",
+      "por_que": "América Móvil gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.MX_AMX.alpha_quant}}; peso {{fact:tese.MX_AMX.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Competição, investimento e dívida podem restringir a realização do resultado.",
+      "gatilho": "Rever com alteração de concorrência, investimento ou endividamento."
+    },
+    {
+      "issuer_id": "BR_SAOMARTINHO",
+      "por_que": "São Martinho gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.BR_SAOMARTINHO.alpha_quant}}; peso {{fact:tese.BR_SAOMARTINHO.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Custos, preços e execução comercial podem mudar a margem e a geração de caixa.",
+      "gatilho": "Rever com perda de margem, alteração de demanda ou aumento persistente de custos."
+    },
+    {
+      "issuer_id": "BR_STONE",
+      "por_que": "StoneCo gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.BR_STONE.alpha_quant}}; peso {{fact:tese.BR_STONE.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Custo de crédito, margens e capital podem mudar; na venda, recuperação rápida adiciona risco de recompra.",
+      "gatilho": "Rever com deterioração do crédito, revisão de despesas, rentabilidade ou restrição de aluguel."
+    },
+    {
+      "issuer_id": "BR_ITAU",
+      "por_que": "Itaú Unibanco gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.BR_ITAU.alpha_quant}}; peso {{fact:tese.BR_ITAU.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Custo de crédito, margens e capital podem mudar; na venda, recuperação rápida adiciona risco de recompra.",
+      "gatilho": "Rever com deterioração do crédito, revisão de despesas, rentabilidade ou restrição de aluguel."
+    },
+    {
+      "issuer_id": "CL_BSAC",
+      "por_que": "Banco Santander-Chile gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.CL_BSAC.alpha_quant}}; peso {{fact:tese.CL_BSAC.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Custo de crédito, margens e capital podem mudar; na venda, recuperação rápida adiciona risco de recompra.",
+      "gatilho": "Rever com deterioração do crédito, revisão de despesas, rentabilidade ou restrição de aluguel."
+    },
+    {
+      "issuer_id": "AR_TGS",
+      "por_que": "Transportadora de Gas del Sur gera alpha na ponta comprada. Alpha quantitativo {{fact:tese.AR_TGS.alpha_quant}}; peso {{fact:tese.AR_TGS.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Petróleo, margens, investimento e intervenção regulatória podem alterar caixa e correlações.",
+      "gatilho": "Rever com mudança de preços de energia, política de capital ou disponibilidade de aluguel."
+    },
+    {
+      "issuer_id": "BR_ENGIE",
+      "por_que": "Engie Brasil Energia gera alpha na ponta vendida. Alpha quantitativo {{fact:tese.BR_ENGIE.alpha_quant}}; peso {{fact:tese.BR_ENGIE.peso}}. Peso interior da otimização, condicionado às covariâncias, aos custos e às neutralidades. Sem convicção fundamental adicional, prevalece a seleção residual.",
+      "risco": "Revisão tarifária, capex e custo da dívida podem impedir a conversão do resultado em caixa.",
+      "gatilho": "Rever com decisão regulatória, alteração de investimentos ou piora da cobertura da dívida."
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 35.22,
+  "high": 50.0,
+  "low": 37.0,
+  "mean": 42.125,
+  "median": 41.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.75575,
+   "currency": "MXN",
+   "growth": 0.128,
+   "high": 0.8,
+   "low": 0.69577,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.67
+  },
+  "+1y": {
+   "avg": 3.31556,
+   "currency": "MXN",
+   "growth": 0.0739,
+   "high": 3.41,
+   "low": 3.08962,
+   "numberOfAnalysts": 8,
+   "yearAgoEps": 3.08738
+  },
+  "0q": {
+   "avg": 0.74095,
+   "currency": "MXN",
+   "growth": -0.0738,
+   "high": 0.76,
+   "low": 0.71404,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.8
+  },
+  "0y": {
+   "avg": 3.08738,
+   "currency": "MXN",
+   "growth": 0.072,
+   "high": 3.3,
+   "low": 2.94007,
+   "numberOfAnalysts": 8,
+   "yearAgoEps": 2.88
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 1225419180,
+   "currency": "MXN",
+   "growth": 0.0813,
+   "high": 1255706760,
+   "low": 1195131610,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 1133235000
+  },
+  "+1y": {
+   "avg": 5123660440,
+   "currency": "MXN",
+   "growth": 0.069,
+   "high": 5302941640,
+   "low": 4897000000,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 4793004730
+  },
+  "0q": {
+   "avg": 1190035960,
+   "currency": "MXN",
+   "growth": 0.0804,
+   "high": 1218283180,
+   "low": 1161788750,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 1101504000
+  },
+  "0y": {
+   "avg": 4793004730,
+   "currency": "MXN",
+   "growth": 0.0723,
+   "high": 4912424550,
+   "low": 4671000000,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 4469837000
+  }
+ },
+ "ticker": "BOLSAA.MX",
+ "url": "https://finance.yahoo.com/quote/BOLSAA.MX"
+}

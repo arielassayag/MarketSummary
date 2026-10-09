@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 204.64,
+  "high": 275.0,
+  "low": 138.33992,
+  "mean": 175.30443,
+  "median": 174.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1.93377,
+   "currency": "USD",
+   "growth": 0.2778,
+   "high": 2.16,
+   "low": 1.76087,
+   "numberOfAnalysts": 8,
+   "yearAgoEps": 1.51338
+  },
+  "+1y": {
+   "avg": 7.52036,
+   "currency": "USD",
+   "growth": -0.0348,
+   "high": 8.99658,
+   "low": 6.2253,
+   "numberOfAnalysts": 13,
+   "yearAgoEps": 7.79112
+  },
+  "0q": {
+   "avg": 1.95125,
+   "currency": "USD",
+   "growth": 0.50259995,
+   "high": 2.16,
+   "low": 1.79743,
+   "numberOfAnalysts": 9,
+   "yearAgoEps": 1.29861
+  },
+  "0y": {
+   "avg": 7.79112,
+   "currency": "USD",
+   "growth": 0.5327,
+   "high": 8.25,
+   "low": 7.38201,
+   "numberOfAnalysts": 13,
+   "yearAgoEps": 5.08339
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 4369794700,
+   "currency": "USD",
+   "growth": 0.1292,
+   "high": 4504000000,
+   "low": 4245961000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 3869800000
+  },
+  "+1y": {
+   "avg": 16543106990,
+   "currency": "USD",
+   "growth": -0.0379,
+   "high": 17713000000,
+   "low": 14007000000,
+   "numberOfAnalysts": 14,
+   "yearAgoRevenue": 17194859060
+  },
+  "0q": {
+   "avg": 4407479340,
+   "currency": "USD",
+   "growth": 0.305,
+   "high": 4608000000,
+   "low": 4219325000,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 3377300000
+  },
+  "0y": {
+   "avg": 17194859060,
+   "currency": "USD",
+   "growth": 0.28129998,
+   "high": 17705930080,
+   "low": 16563000000,
+   "numberOfAnalysts": 13,
+   "yearAgoRevenue": 13420000000
+  }
+ },
+ "ticker": "SCCO",
+ "url": "https://finance.yahoo.com/quote/SCCO"
+}

@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 28.5,
+  "high": 38.0,
+  "low": 30.0,
+  "mean": 35.43182,
+  "median": 36.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.58786,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0.58786,
+   "low": 0.58786,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 2.58425,
+   "currency": "BRL",
+   "growth": 0.24180001,
+   "high": 3.18798,
+   "low": 2.3,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 2.08104
+  },
+  "0q": {
+   "avg": 0.56576,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0.56576,
+   "low": 0.56576,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": 2.08104,
+   "currency": "BRL",
+   "growth": null,
+   "high": 2.24087,
+   "low": 1.86,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": null
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 4198365960,
+   "currency": "BRL",
+   "growth": null,
+   "high": 5329871460,
+   "low": 3435743740,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 20043428960,
+   "currency": "BRL",
+   "growth": 0.3,
+   "high": 27459000000,
+   "low": 12718000000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 15417898240.0
+  },
+  "0q": {
+   "avg": 4311031370,
+   "currency": "BRL",
+   "growth": null,
+   "high": 5329871460,
+   "low": 3704475270,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": null
+  },
+  "0y": {
+   "avg": 15417898240,
+   "currency": "BRL",
+   "growth": null,
+   "high": 17130099999,
+   "low": 13562217730,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": null
+  }
+ },
+ "ticker": "PASS3.SA",
+ "url": "https://finance.yahoo.com/quote/PASS3.SA"
+}

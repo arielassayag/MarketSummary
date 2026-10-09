@@ -1,0 +1,95 @@
+{
+  "acknowledged_soft_checks": [],
+  "approval_hash": "35cd7a95b979234aa1eb7c3b4925721558873fbe4d109c1ccba614695c6c2426",
+  "approver": "CDP — Cabra da Peste (PM autônomo)",
+  "audit_head_hash": "f5bf79316e41f7d17daccadc9b53267cb93cd3d63feefa4b05be9d1334bca9d4",
+  "co_sign_reasons": [],
+  "co_signed_at": null,
+  "co_signer": null,
+  "config_hash": "2ddf7d89ac769dea9781ac51fb825fa55931bf19250fa64e2f7447aa91f34ff0",
+  "conviction": 2,
+  "decided_at": "2026-10-09T14:53:47.885895Z",
+  "decision": "APPROVE",
+  "journal": {
+    "ai_vs_quant_vs_pm": "Avaliação da semana anterior: Não há semana anterior de carteira efetivada no mandato. Retornos, acertos e contribuição de teses anteriores permanecem indisponíveis; não existe histórico realizado a avaliar.",
+    "alternatives_considered": "O que mudou na visão: Montagem inaugural: não há posições ou teses semanais anteriores a encerrar. A cobertura foi atualizada com a base do pregão anterior e as informações públicas disponíveis na análise. Inclinações moderadas favorecem ISA Energia Brasil, Mills e PagSeguro Digital; CBA recebe visão negativa de baixa convicção. Banco do Brasil e Aura Minerals ficam excluídos do lado vendido. Nos demais candidatos, abstenho-me de inclinações fundamentais adicionais. A revisão da prévia exclui compras em Hudbay Minerals e XP por divergência com suas notas de cobertura; não transforma essa restrição em ordem vendida.",
+    "bias_checklist": {},
+    "catalysts": [],
+    "horizon_weeks": 8,
+    "key_variables": [
+      "Regime: neutro",
+      "Postura: defensiva → defensiva",
+      "Escada de drawdown: drawdown indisponível"
+    ],
+    "mental_state": "Mente: codex",
+    "positions": [
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Atraso na entrada dos projetos, deterioração do endividamento ou revisão desfavorável da remuneração regulatória.",
+        "issuer_id": "BR_ISAENERGIA",
+        "premortem": "A receita contratada cresceria sem conversão proporcional em caixa, enquanto o custo de financiamento consumiria o retorno dos novos projetos.",
+        "probability_correct": null,
+        "thesis": "Visão positiva de convicção moderada para ISA Energia Brasil. A energização de projetos informada pela companhia em 03/08/2026 favorece a entrada de receita regulada. O alvo de R$ 48,32 apresenta upside de +61,16%, mas a dispersão de 45,12% e o investimento necessário limitam a confiança. A tese depende da conversão do investimento em receita e caixa, com risco de endividamento e de remuneração regulatória.",
+        "variant_perception": ""
+      },
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Piora persistente na utilização da frota, na conversão de lucro em caixa ou no retorno sobre o investimento.",
+        "issuer_id": "BR_MILLS",
+        "premortem": "O desconto refletiria crescimento de capital investido sem retorno correspondente, em vez de uma assimetria realizável.",
+        "probability_correct": null,
+        "thesis": "Visão positiva de baixa convicção para Mills, apoiada no valuation aberto, com alvo de R$ 31,40 e upside de +94,91%. A dispersão de 25,41% não elimina a fragilidade da cobertura de consenso de lucro. A central pública de resultados foi consultada, mas não confirmou informação operacional adicional que permita elevar a convicção. Utilização de equipamentos, disciplina de investimento e conversão em caixa são condições a confirmar.",
+        "variant_perception": ""
+      },
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Deterioração da qualidade de crédito, redução persistente da rentabilidade ou crescimento sem remuneração adequada do capital.",
+        "issuer_id": "BR_PAGS",
+        "premortem": "A convergência dos métodos esconderia uma premissa comum excessivamente favorável para rentabilidade e custo de crédito.",
+        "probability_correct": null,
+        "thesis": "Visão positiva de convicção moderada para PagSeguro Digital. O modelo aponta alvo de US$ 20,02, upside de +87,49% e dispersão de 3,97%. A concordância entre métodos não é evidência independente, pois as premissas de rentabilidade são compartilhadas. A tese depende de rentabilidade sustentável, custo de crédito e competição nos pagamentos. O calendário consultado não exibiu data confirmada do próximo resultado; a estimativa do modelo permanece condicionada.",
+        "variant_perception": ""
+      },
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Melhora sustentada do preço do alumínio ou da eficiência operacional que invalide a margem normalizada do modelo.",
+        "issuer_id": "BR_CBA",
+        "premortem": "O ciclo da commodity se recuperaria antes de o desconto estimado se materializar, com valorização que tornaria custosa a recompra.",
+        "probability_correct": null,
+        "thesis": "Visão negativa de baixa convicção para CBA. O alvo de R$ 6,02 e o upside de -46,12% sustentam a assimetria negativa, mas a dispersão de 40,86% e a sensibilidade ao ciclo do alumínio limitam o juízo. O calendário da companhia indica resultado em 04/11/2026. Uma melhora operacional ou dos preços da commodity pode invalidar o short; a leitura de valuation não substitui a confirmação de aluguel e de capacidade de recompra.",
+        "variant_perception": ""
+      },
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Melhora sustentada dos resultados e revisão da assimetria relativa do valuation.",
+        "issuer_id": "PE_HUDBAY",
+        "premortem": "A melhora operacional ocorreria antes da convergência do preço ao valuation estimado.",
+        "probability_correct": null,
+        "thesis": "Visão negativa de convicção moderada para Hudbay Minerals, em linha com a nota de cobertura de 08/10/2026 e a revisão do modelo atualizado. A melhora de custos descrita pela companhia em 29/07/2026 não elimina o preço exigente. Abstenho-me de abrir a compra sugerida na prévia diante dessa divergência. Metais, licenciamento e execução dos projetos podem invalidar o juízo; a melhora operacional é argumento contrário à visão negativa.",
+        "variant_perception": ""
+      },
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Melhora sustentada dos resultados e revisão da assimetria relativa do valuation.",
+        "issuer_id": "BR_XP",
+        "premortem": "A melhora operacional ocorreria antes da convergência do preço ao valuation estimado.",
+        "probability_correct": null,
+        "thesis": "Visão negativa de baixa convicção para XP, preservando a leitura relativa da nota de cobertura de 08/10/2026 e a revisão do modelo atualizado. Captação e receitas complementares favorecem a franquia, mas não confirmam retorno residual superior. Não endosso a compra da prévia sem melhora da monetização e da rentabilidade; a divergência entre seleção quantitativa e cobertura limita a convicção.",
+        "variant_perception": ""
+      }
+    ],
+    "premortem": "BR_ISAENERGIA: A receita contratada cresceria sem conversão proporcional em caixa, enquanto o custo de financiamento consumiria o retorno dos novos projetos. | BR_MILLS: O desconto refletiria crescimento de capital investido sem retorno correspondente, em vez de uma assimetria realizável. | BR_PAGS: A convergência dos métodos esconderia uma premissa comum excessivamente favorável para rentabilidade e custo de crédito. | BR_CBA: O ciclo da commodity se recuperaria antes de o desconto estimado se materializar, com valorização que tornaria custosa a recompra. | PE_HUDBAY: A melhora operacional ocorreria antes da convergência do preço ao valuation estimado.",
+    "situation": "Regime regional neutro, com postura defensiva diante da janela eleitoral brasileira e da incerteza inflacionária global. A força recente do EWZ em +12,42% contrasta com o EWW em -5,22%; isso justifica seletividade, sem extrapolar retornos. O comitê preserva os controles de neutralidade, diversificação e aluguel. Sem confirmação fundamental adicional, a seleção quantitativa prevalece.",
+    "sizing_rationale": "Postura solicitada defensiva; efetiva defensiva (escada de drawdown: drawdown indisponível); vol-alvo 4,00% e gross máximo 2,00x (calculados por código). Drawdown indisponível: postura limitada a neutra."
+  },
+  "mind": "codex",
+  "mode": "AUTONOMOUS",
+  "pm_decision_hash": "8a0340c0be44c5514a0e1949fa07540455a80c07667614cee88ba42b700cfb77",
+  "proposal_hash": "df9d4d38ea75d0a77b4b39e3a8b84f17867114b4b7ce3cec930d3b144ae7f79f",
+  "proposal_id": "CDP-2026-10-09-cdp",
+  "rationale": "Postura defensiva; regime neutro. Regime regional neutro, com postura defensiva diante da janela eleitoral brasileira e da incerteza inflacionária global. A força recente do EWZ em +12,42% contrasta com o EWW em -5,22%; isso justifica seletividade, sem extrapolar retornos. O comitê preserva os controles de neutralidade, diversificação e aluguel. Sem confirmação fundamental adicional, a seleção quantitativa prevalece. Caminho: cdp.",
+  "research_hash": "25e88011886f538289630f831f575c8d22d71cd2ebe5d35c0ce5549784b022ee",
+  "risk_gate_hash": "b7dc48ac8984dfc9274575858019f7cf1ebecb24e0b8539b586df538cfd80dca",
+  "snapshot_hash": "e0dae242a7c0cf5c94e1a042914c525b17199d56d6a473b7b542925c4887e050",
+  "week": "2026-10-09"
+}

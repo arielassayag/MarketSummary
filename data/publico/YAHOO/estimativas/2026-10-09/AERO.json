@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 15.58,
+  "high": 30.0,
+  "low": 20.0,
+  "mean": 26.82222,
+  "median": 27.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.74722,
+   "currency": "USD",
+   "growth": -0.4961,
+   "high": 0.83788,
+   "low": 0.65655,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 1.483
+  },
+  "+1y": {
+   "avg": 1.87834,
+   "currency": "USD",
+   "growth": 0.8199,
+   "high": 2.50285,
+   "low": 1.25,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 1.03214
+  },
+  "0q": {
+   "avg": 0.52207,
+   "currency": "USD",
+   "growth": null,
+   "high": 0.76795,
+   "low": 0.27619,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": 1.03214,
+   "currency": "USD",
+   "growth": -0.6318,
+   "high": 1.9,
+   "low": 0.6106,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 2.80299
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 29401784000,
+   "currency": "MXN",
+   "growth": 0.19049999,
+   "high": 29722538000,
+   "low": 28898120000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 24696212000.0
+  },
+  "+1y": {
+   "avg": 109839714130,
+   "currency": "MXN",
+   "growth": 0.0456,
+   "high": 117310668000,
+   "low": 105052420000,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 105050761260.0
+  },
+  "0q": {
+   "avg": 28473796750,
+   "currency": "MXN",
+   "growth": null,
+   "high": 29126614000,
+   "low": 27991110000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": null
+  },
+  "0y": {
+   "avg": 105050761260,
+   "currency": "MXN",
+   "growth": 0.141,
+   "high": 108234956000,
+   "low": 102600756000,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 92069814000.0
+  }
+ },
+ "ticker": "AERO",
+ "url": "https://finance.yahoo.com/quote/AERO"
+}

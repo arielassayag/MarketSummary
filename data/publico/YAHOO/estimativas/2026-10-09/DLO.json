@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 15.19,
+  "high": 21.0,
+  "low": 15.0,
+  "mean": 18.8,
+  "median": 19.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.27083,
+   "currency": "USD",
+   "growth": 0.21190001,
+   "high": 0.30248,
+   "low": 0.25,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.22348
+  },
+  "+1y": {
+   "avg": 1.14373,
+   "currency": "USD",
+   "growth": 0.3421,
+   "high": 1.16,
+   "low": 1.09492,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.85222
+  },
+  "0q": {
+   "avg": 0.21606,
+   "currency": "USD",
+   "growth": 0.0269,
+   "high": 0.25,
+   "low": 0.15819,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.2104
+  },
+  "0y": {
+   "avg": 0.85222,
+   "currency": "USD",
+   "growth": 0.056599997,
+   "high": 0.91,
+   "low": 0.82,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.80658
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 450578130,
+   "currency": "USD",
+   "growth": 0.3335,
+   "high": 467264550,
+   "low": 425000000,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 337888000
+  },
+  "+1y": {
+   "avg": 2076730590,
+   "currency": "USD",
+   "growth": 0.3024,
+   "high": 2181398000,
+   "low": 2003100000,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 1594563590
+  },
+  "0q": {
+   "avg": 406790760,
+   "currency": "USD",
+   "growth": 0.44009998,
+   "high": 434052000,
+   "low": 385975000,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 282483000
+  },
+  "0y": {
+   "avg": 1594563590,
+   "currency": "USD",
+   "growth": 0.45810002,
+   "high": 1645642080,
+   "low": 1569297340,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 1093587000
+  }
+ },
+ "ticker": "DLO",
+ "url": "https://finance.yahoo.com/quote/DLO"
+}

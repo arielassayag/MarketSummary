@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 20.2,
+  "high": 27.0,
+  "low": 19.0,
+  "mean": 23.05,
+  "median": 22.75
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.57762,
+   "currency": "BRL",
+   "growth": 0.21069999,
+   "high": 0.7,
+   "low": 0.51286,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.4771
+  },
+  "+1y": {
+   "avg": 2.27618,
+   "currency": "BRL",
+   "growth": 0.16049999,
+   "high": 3.0,
+   "low": 1.92,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 1.96137
+  },
+  "0q": {
+   "avg": 0.54264,
+   "currency": "BRL",
+   "growth": -0.153,
+   "high": 0.55792,
+   "low": 0.52,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.64066
+  },
+  "0y": {
+   "avg": 1.96137,
+   "currency": "BRL",
+   "growth": 0.002,
+   "high": 2.61,
+   "low": 1.56,
+   "numberOfAnalysts": 8,
+   "yearAgoEps": 1.95753
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 2714725580,
+   "currency": "BRL",
+   "growth": -0.0023,
+   "high": 2714725580,
+   "low": 2714725580,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 2720857000
+  },
+  "+1y": {
+   "avg": 11077669400,
+   "currency": "BRL",
+   "growth": 0.0612,
+   "high": 11636000000,
+   "low": 10720000000,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 10439162500
+  },
+  "0q": {
+   "avg": 2837860480,
+   "currency": "BRL",
+   "growth": 0.019199999,
+   "high": 2837860480,
+   "low": 2837860480,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 2784387000
+  },
+  "0y": {
+   "avg": 10439162500,
+   "currency": "BRL",
+   "growth": 0.0002,
+   "high": 10556000000,
+   "low": 10289000000,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 10437548000
+  }
+ },
+ "ticker": "MDIA3.SA",
+ "url": "https://finance.yahoo.com/quote/MDIA3.SA"
+}

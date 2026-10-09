@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 49.315,
+  "high": 80.0,
+  "low": 69.0,
+  "mean": 74.26,
+  "median": 74.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1.4733,
+   "currency": "USD",
+   "growth": -0.1272,
+   "high": 1.82492,
+   "low": 1.26,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 1.6881
+  },
+  "+1y": {
+   "avg": 6.40289,
+   "currency": "USD",
+   "growth": 0.35720003,
+   "high": 8.19,
+   "low": 3.29,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 4.71757
+  },
+  "0q": {
+   "avg": 1.23626,
+   "currency": "USD",
+   "growth": -0.122200005,
+   "high": 1.26,
+   "low": 1.21253,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 1.4084
+  },
+  "0y": {
+   "avg": 4.71757,
+   "currency": "USD",
+   "growth": -0.1417,
+   "high": 5.47976,
+   "low": 2.73,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 5.4965
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 4658994000,
+   "currency": "USD",
+   "growth": 0.17979999,
+   "high": 4723432110,
+   "low": 4582603880,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 3949048000
+  },
+  "+1y": {
+   "avg": 18261550850,
+   "currency": "USD",
+   "growth": 0.0475,
+   "high": 19700000000,
+   "low": 17265000000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 17434268100
+  },
+  "0q": {
+   "avg": 4515904810,
+   "currency": "USD",
+   "growth": 0.171,
+   "high": 4638285830,
+   "low": 4431527590,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 3856299000
+  },
+  "0y": {
+   "avg": 17434268100,
+   "currency": "USD",
+   "growth": 0.2028,
+   "high": 17745000000,
+   "low": 16863508399,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 14494990000
+  }
+ },
+ "ticker": "LTM",
+ "url": "https://finance.yahoo.com/quote/LTM"
+}

@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 38.7,
+  "high": 46.0,
+  "low": 28.0,
+  "mean": 37.5,
+  "median": 37.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.75132,
+   "currency": "BRL",
+   "growth": -0.120699994,
+   "high": 0.76264,
+   "low": 0.74,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.8545
+  },
+  "+1y": {
+   "avg": 2.61018,
+   "currency": "BRL",
+   "growth": -0.0001,
+   "high": 3.0,
+   "low": 2.12,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 2.61042
+  },
+  "0q": {
+   "avg": 0.69466,
+   "currency": "BRL",
+   "growth": 0.5281,
+   "high": 0.81933,
+   "low": 0.57,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.4546
+  },
+  "0y": {
+   "avg": 2.61042,
+   "currency": "BRL",
+   "growth": 0.13430001,
+   "high": 3.16212,
+   "low": 1.99,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 2.3013
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 732045680,
+   "currency": "BRL",
+   "growth": -0.1883,
+   "high": 735190990,
+   "low": 730427000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 901812000
+  },
+  "+1y": {
+   "avg": 2771861410,
+   "currency": "BRL",
+   "growth": -0.038599998,
+   "high": 3003000000,
+   "low": 2392240130,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 2883100600
+  },
+  "0q": {
+   "avg": 661567770,
+   "currency": "BRL",
+   "growth": 0.0713,
+   "high": 839223660,
+   "low": 541217660,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 617538000
+  },
+  "0y": {
+   "avg": 2883100600,
+   "currency": "BRL",
+   "growth": 0.052600004,
+   "high": 3243558420,
+   "low": 2529051200,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 2739082000
+  }
+ },
+ "ticker": "MULT3.SA",
+ "url": "https://finance.yahoo.com/quote/MULT3.SA"
+}

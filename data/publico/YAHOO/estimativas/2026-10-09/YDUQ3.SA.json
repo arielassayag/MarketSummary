@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 14.15,
+  "high": 23.0,
+  "low": 9.5,
+  "mean": 14.9375,
+  "median": 15.25
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.31759,
+   "currency": "BRL",
+   "growth": 0.4827,
+   "high": 0.3976,
+   "low": 0.26594,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.2142
+  },
+  "+1y": {
+   "avg": 2.20102,
+   "currency": "BRL",
+   "growth": 0.2893,
+   "high": 2.53,
+   "low": 1.79317,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 1.7071
+  },
+  "0q": {
+   "avg": 0.64089,
+   "currency": "BRL",
+   "growth": 0.0863,
+   "high": 0.67536,
+   "low": 0.59999,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.59
+  },
+  "0y": {
+   "avg": 1.7071,
+   "currency": "BRL",
+   "growth": 0.1825,
+   "high": 1.87,
+   "low": 1.52022,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 1.4436
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 1342902500,
+   "currency": "BRL",
+   "growth": 0.0293,
+   "high": 1343000000,
+   "low": 1342805000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 1304720000
+  },
+  "+1y": {
+   "avg": 5941107140,
+   "currency": "BRL",
+   "growth": 0.0471,
+   "high": 6257000000,
+   "low": 5776000000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 5674115320
+  },
+  "0q": {
+   "avg": 1402055330,
+   "currency": "BRL",
+   "growth": 0.0373,
+   "high": 1404166000,
+   "low": 1398000000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 1351635000
+  },
+  "0y": {
+   "avg": 5674115320,
+   "currency": "BRL",
+   "growth": 0.0276,
+   "high": 5938000000,
+   "low": 5594000000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 5521740000
+  }
+ },
+ "ticker": "YDUQ3.SA",
+ "url": "https://finance.yahoo.com/quote/YDUQ3.SA"
+}

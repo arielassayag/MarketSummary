@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 11.22,
+  "high": 10.5,
+  "low": 7.5,
+  "mean": 9.5,
+  "median": 10.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": null,
+   "currency": "BRL",
+   "growth": null,
+   "high": null,
+   "low": null,
+   "numberOfAnalysts": null,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 1.17,
+   "currency": "BRL",
+   "growth": 0.8871,
+   "high": 1.17,
+   "low": 1.17,
+   "numberOfAnalysts": 1.0,
+   "yearAgoEps": 0.62
+  },
+  "0q": {
+   "avg": null,
+   "currency": "BRL",
+   "growth": null,
+   "high": null,
+   "low": null,
+   "numberOfAnalysts": null,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": 0.62,
+   "currency": "BRL",
+   "growth": 5.6738,
+   "high": 0.62,
+   "low": 0.62,
+   "numberOfAnalysts": 1.0,
+   "yearAgoEps": 0.0929
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 9577119170,
+   "currency": "BRL",
+   "growth": 0.076799996,
+   "high": 9577119170,
+   "low": 9577119170,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 8894029950.0
+  },
+  "0q": {
+   "avg": 0,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "0y": {
+   "avg": 8894029950,
+   "currency": "BRL",
+   "growth": 0.012,
+   "high": 8894029950,
+   "low": 8894029950,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 8788797000.0
+  }
+ },
+ "ticker": "CBAV3.SA",
+ "url": "https://finance.yahoo.com/quote/CBAV3.SA"
+}

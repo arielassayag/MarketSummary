@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 94.0,
+  "high": 110.0,
+  "low": 28.6,
+  "mean": 83.08373,
+  "median": 82.321
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 2.83546,
+   "currency": "USD",
+   "growth": 0.602,
+   "high": 3.35169,
+   "low": 2.31914,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 1.77
+  },
+  "+1y": {
+   "avg": 11.5804,
+   "currency": "USD",
+   "growth": 0.0846,
+   "high": 13.21426,
+   "low": 9.84172,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 10.67745
+  },
+  "0q": {
+   "avg": 2.85818,
+   "currency": "USD",
+   "growth": 0.3111,
+   "high": 3.29265,
+   "low": 2.35806,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 2.18
+  },
+  "0y": {
+   "avg": 10.67745,
+   "currency": "USD",
+   "growth": 0.32639998,
+   "high": 12.86736,
+   "low": 9.0689,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 8.05
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 8393000000000,
+   "currency": "COP",
+   "growth": 0.0642,
+   "high": 8393000000000,
+   "low": 8393000000000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 7886760000000
+  },
+  "+1y": {
+   "avg": 33395777235390,
+   "currency": "COP",
+   "growth": 0.0698,
+   "high": 36139295000000,
+   "low": 29620001690510,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 31217809874070
+  },
+  "0q": {
+   "avg": 7932884857280,
+   "currency": "COP",
+   "growth": 0.0678,
+   "high": 8176000000000,
+   "low": 7689769714560,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 7428981000000
+  },
+  "0y": {
+   "avg": 31217809874070,
+   "currency": "COP",
+   "growth": 0.053200003,
+   "high": 32716248000000,
+   "low": 28325782169040,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 29642280000000
+  }
+ },
+ "ticker": "CIB",
+ "url": "https://finance.yahoo.com/quote/CIB"
+}

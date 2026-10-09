@@ -1,0 +1,149 @@
+{
+  "mind": "codex",
+  "market_view": "Regime regional neutro, com postura defensiva diante da janela eleitoral brasileira e da incerteza inflacionária global. A força recente do EWZ em {{fact:bench.EWZ.ret_1m}} contrasta com o EWW em {{fact:bench.EWW.ret_1m}}; isso justifica seletividade, sem extrapolar retornos. O comitê preserva os controles de neutralidade, diversificação e aluguel. Sem confirmação fundamental adicional, a seleção quantitativa prevalece.",
+  "what_changed": "Montagem inaugural: não há posições ou teses semanais anteriores a encerrar. A cobertura foi atualizada com a base do pregão anterior e as informações públicas disponíveis na análise. Inclinações moderadas favorecem ISA Energia Brasil, Mills e PagSeguro Digital; CBA recebe visão negativa de baixa convicção. Banco do Brasil e Aura Minerals ficam excluídos do lado vendido. Nos demais candidatos, abstenho-me de inclinações fundamentais adicionais. A revisão da prévia exclui compras em Hudbay Minerals e XP por divergência com suas notas de cobertura; não transforma essa restrição em ordem vendida.",
+  "evaluation_last_week": "Não há semana anterior de carteira efetivada no mandato. Retornos, acertos e contribuição de teses anteriores permanecem indisponíveis; não existe histórico realizado a avaliar.",
+  "regime": "neutral",
+  "risk_posture": "defensiva",
+  "abstain": false,
+  "views": [
+    {
+      "issuer_id": "BR_ISAENERGIA",
+      "stance": 1,
+      "conviction": 2,
+      "horizon_weeks": 8,
+      "rationale": "Visão positiva de convicção moderada para ISA Energia Brasil. A energização de projetos informada pela companhia em 03/08/2026 favorece a entrada de receita regulada. O alvo de {{fact:val.BR_ISAENERGIA.preco_alvo}} apresenta upside de {{fact:val.BR_ISAENERGIA.upside}}, mas a dispersão de {{fact:val.BR_ISAENERGIA.cv_metodos}} e o investimento necessário limitam a confiança. A tese depende da conversão do investimento em receita e caixa, com risco de endividamento e de remuneração regulatória.",
+      "evidence_ids": [
+        "val.BR_ISAENERGIA.preco_alvo",
+        "val.BR_ISAENERGIA.upside",
+        "val.BR_ISAENERGIA.cv_metodos",
+        "2026-10-09-BR_ISAENERGIA-revisao",
+        "https://www.isaenergiabrasil.com.br/centro-de-midia/noticias/com-energizacao-de-grandes-projetos-isa-energia-brasil-amplia-receita-liquida-em-21-no-trimestre/"
+      ]
+    },
+    {
+      "issuer_id": "BR_MILLS",
+      "stance": 1,
+      "conviction": 1,
+      "horizon_weeks": 8,
+      "rationale": "Visão positiva de baixa convicção para Mills, apoiada no valuation aberto, com alvo de {{fact:val.BR_MILLS.preco_alvo}} e upside de {{fact:val.BR_MILLS.upside}}. A dispersão de {{fact:val.BR_MILLS.cv_metodos}} não elimina a fragilidade da cobertura de consenso de lucro. A central pública de resultados foi consultada, mas não confirmou informação operacional adicional que permita elevar a convicção. Utilização de equipamentos, disciplina de investimento e conversão em caixa são condições a confirmar.",
+      "evidence_ids": [
+        "val.BR_MILLS.preco_alvo",
+        "val.BR_MILLS.upside",
+        "val.BR_MILLS.cv_metodos",
+        "2026-10-09-BR_MILLS-revisao",
+        "https://ri.mills.com.br/informacoes-financeiras/central-de-resultados/"
+      ]
+    },
+    {
+      "issuer_id": "BR_PAGS",
+      "stance": 1,
+      "conviction": 2,
+      "horizon_weeks": 8,
+      "rationale": "Visão positiva de convicção moderada para PagSeguro Digital. O modelo aponta alvo de {{fact:val.BR_PAGS.preco_alvo}}, upside de {{fact:val.BR_PAGS.upside}} e dispersão de {{fact:val.BR_PAGS.cv_metodos}}. A concordância entre métodos não é evidência independente, pois as premissas de rentabilidade são compartilhadas. A tese depende de rentabilidade sustentável, custo de crédito e competição nos pagamentos. O calendário consultado não exibiu data confirmada do próximo resultado; a estimativa do modelo permanece condicionada.",
+      "evidence_ids": [
+        "val.BR_PAGS.preco_alvo",
+        "val.BR_PAGS.upside",
+        "val.BR_PAGS.cv_metodos",
+        "2026-10-09-BR_PAGS-revisao",
+        "https://investors.pagbank.com/"
+      ]
+    },
+    {
+      "issuer_id": "BR_CBA",
+      "stance": -1,
+      "conviction": 1,
+      "horizon_weeks": 8,
+      "rationale": "Visão negativa de baixa convicção para CBA. O alvo de {{fact:val.BR_CBA.preco_alvo}} e o upside de {{fact:val.BR_CBA.upside}} sustentam a assimetria negativa, mas a dispersão de {{fact:val.BR_CBA.cv_metodos}} e a sensibilidade ao ciclo do alumínio limitam o juízo. O calendário da companhia indica resultado em 04/11/2026. Uma melhora operacional ou dos preços da commodity pode invalidar o short; a leitura de valuation não substitui a confirmação de aluguel e de capacidade de recompra.",
+      "evidence_ids": [
+        "val.BR_CBA.preco_alvo",
+        "val.BR_CBA.upside",
+        "val.BR_CBA.cv_metodos",
+        "2026-10-09-BR_CBA-revisao",
+        "https://ri.cba.com.br/servicos-aos-investidores/calendario-de-eventos/"
+      ]
+    },
+    {
+      "issuer_id": "PE_HUDBAY",
+      "stance": -1,
+      "conviction": 2,
+      "horizon_weeks": 8,
+      "rationale": "Visão negativa de convicção moderada para Hudbay Minerals, em linha com a nota de cobertura de 08/10/2026 e a revisão do modelo atualizado. A melhora de custos descrita pela companhia em 29/07/2026 não elimina o preço exigente. Abstenho-me de abrir a compra sugerida na prévia diante dessa divergência. Metais, licenciamento e execução dos projetos podem invalidar o juízo; a melhora operacional é argumento contrário à visão negativa.",
+      "evidence_ids": [
+        "2026-10-09-PE_HUDBAY-revisao",
+        "https://hudbayminerals.com/investors/press-releases/press-release-details/2026/Hudbay-Delivers-Strong-Second-Quarter-2026-Results-and-Improves-Cash-Cost-Guidance/default.aspx"
+      ]
+    },
+    {
+      "issuer_id": "BR_XP",
+      "stance": -1,
+      "conviction": 1,
+      "horizon_weeks": 8,
+      "rationale": "Visão negativa de baixa convicção para XP, preservando a leitura relativa da nota de cobertura de 08/10/2026 e a revisão do modelo atualizado. Captação e receitas complementares favorecem a franquia, mas não confirmam retorno residual superior. Não endosso a compra da prévia sem melhora da monetização e da rentabilidade; a divergência entre seleção quantitativa e cobertura limita a convicção.",
+      "evidence_ids": [
+        "2026-10-09-BR_XP-revisao",
+        "https://www.sec.gov/Archives/edgar/data/1787425/000095010326012481/dp251884_6k-ex9901.htm"
+      ]
+    }
+  ],
+  "exclusions": [
+    {
+      "issuer_id": "BR_BB",
+      "no_short": true,
+      "reason": "A recuperação do crédito permanece incerta e o valuation positivo diverge da candidatura vendida. Não abro short contra a possibilidade de normalização sem evidência adicional."
+    },
+    {
+      "issuer_id": "BR_AURA",
+      "no_short": true,
+      "reason": "Produção preliminar recorde divulgada pela companhia em 09/10/2026 é catalisador favorável recente; veto a abertura do short."
+    },
+    {
+      "issuer_id": "PE_HUDBAY",
+      "no_long": true,
+      "reason": "A nota de cobertura e o valuation atualizado divergem da compra quantitativa; falta confirmação adicional suficiente para abrir esse lado."
+    },
+    {
+      "issuer_id": "BR_XP",
+      "no_long": true,
+      "reason": "A nota de cobertura e o valuation atualizado divergem da compra quantitativa; falta confirmação adicional suficiente para abrir esse lado."
+    }
+  ],
+  "position_journal": [
+    {
+      "issuer_id": "BR_ISAENERGIA",
+      "thesis": "Visão positiva de convicção moderada para ISA Energia Brasil. A energização de projetos informada pela companhia em 03/08/2026 favorece a entrada de receita regulada. O alvo de {{fact:val.BR_ISAENERGIA.preco_alvo}} apresenta upside de {{fact:val.BR_ISAENERGIA.upside}}, mas a dispersão de {{fact:val.BR_ISAENERGIA.cv_metodos}} e o investimento necessário limitam a confiança. A tese depende da conversão do investimento em receita e caixa, com risco de endividamento e de remuneração regulatória.",
+      "invalidation_criteria": "Atraso na entrada dos projetos, deterioração do endividamento ou revisão desfavorável da remuneração regulatória.",
+      "premortem": "A receita contratada cresceria sem conversão proporcional em caixa, enquanto o custo de financiamento consumiria o retorno dos novos projetos."
+    },
+    {
+      "issuer_id": "BR_MILLS",
+      "thesis": "Visão positiva de baixa convicção para Mills, apoiada no valuation aberto, com alvo de {{fact:val.BR_MILLS.preco_alvo}} e upside de {{fact:val.BR_MILLS.upside}}. A dispersão de {{fact:val.BR_MILLS.cv_metodos}} não elimina a fragilidade da cobertura de consenso de lucro. A central pública de resultados foi consultada, mas não confirmou informação operacional adicional que permita elevar a convicção. Utilização de equipamentos, disciplina de investimento e conversão em caixa são condições a confirmar.",
+      "invalidation_criteria": "Piora persistente na utilização da frota, na conversão de lucro em caixa ou no retorno sobre o investimento.",
+      "premortem": "O desconto refletiria crescimento de capital investido sem retorno correspondente, em vez de uma assimetria realizável."
+    },
+    {
+      "issuer_id": "BR_PAGS",
+      "thesis": "Visão positiva de convicção moderada para PagSeguro Digital. O modelo aponta alvo de {{fact:val.BR_PAGS.preco_alvo}}, upside de {{fact:val.BR_PAGS.upside}} e dispersão de {{fact:val.BR_PAGS.cv_metodos}}. A concordância entre métodos não é evidência independente, pois as premissas de rentabilidade são compartilhadas. A tese depende de rentabilidade sustentável, custo de crédito e competição nos pagamentos. O calendário consultado não exibiu data confirmada do próximo resultado; a estimativa do modelo permanece condicionada.",
+      "invalidation_criteria": "Deterioração da qualidade de crédito, redução persistente da rentabilidade ou crescimento sem remuneração adequada do capital.",
+      "premortem": "A convergência dos métodos esconderia uma premissa comum excessivamente favorável para rentabilidade e custo de crédito."
+    },
+    {
+      "issuer_id": "BR_CBA",
+      "thesis": "Visão negativa de baixa convicção para CBA. O alvo de {{fact:val.BR_CBA.preco_alvo}} e o upside de {{fact:val.BR_CBA.upside}} sustentam a assimetria negativa, mas a dispersão de {{fact:val.BR_CBA.cv_metodos}} e a sensibilidade ao ciclo do alumínio limitam o juízo. O calendário da companhia indica resultado em 04/11/2026. Uma melhora operacional ou dos preços da commodity pode invalidar o short; a leitura de valuation não substitui a confirmação de aluguel e de capacidade de recompra.",
+      "invalidation_criteria": "Melhora sustentada do preço do alumínio ou da eficiência operacional que invalide a margem normalizada do modelo.",
+      "premortem": "O ciclo da commodity se recuperaria antes de o desconto estimado se materializar, com valorização que tornaria custosa a recompra."
+    },
+    {
+      "issuer_id": "PE_HUDBAY",
+      "thesis": "Visão negativa de convicção moderada para Hudbay Minerals, em linha com a nota de cobertura de 08/10/2026 e a revisão do modelo atualizado. A melhora de custos descrita pela companhia em 29/07/2026 não elimina o preço exigente. Abstenho-me de abrir a compra sugerida na prévia diante dessa divergência. Metais, licenciamento e execução dos projetos podem invalidar o juízo; a melhora operacional é argumento contrário à visão negativa.",
+      "invalidation_criteria": "Melhora sustentada dos resultados e revisão da assimetria relativa do valuation.",
+      "premortem": "A melhora operacional ocorreria antes da convergência do preço ao valuation estimado."
+    },
+    {
+      "issuer_id": "BR_XP",
+      "thesis": "Visão negativa de baixa convicção para XP, preservando a leitura relativa da nota de cobertura de 08/10/2026 e a revisão do modelo atualizado. Captação e receitas complementares favorecem a franquia, mas não confirmam retorno residual superior. Não endosso a compra da prévia sem melhora da monetização e da rentabilidade; a divergência entre seleção quantitativa e cobertura limita a convicção.",
+      "invalidation_criteria": "Melhora sustentada dos resultados e revisão da assimetria relativa do valuation.",
+      "premortem": "A melhora operacional ocorreria antes da convergência do preço ao valuation estimado."
+    }
+  ]
+}

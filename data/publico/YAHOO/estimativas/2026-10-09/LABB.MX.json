@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 12.83,
+  "high": 29.0,
+  "low": 16.0,
+  "mean": 21.66667,
+  "median": 20.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.43641,
+   "currency": "MXN",
+   "growth": 0.36380002,
+   "high": 0.43641,
+   "low": 0.43641,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.32
+  },
+  "+1y": {
+   "avg": 1.97502,
+   "currency": "MXN",
+   "growth": 0.0436,
+   "high": 2.03,
+   "low": 1.93507,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 1.89255
+  },
+  "0q": {
+   "avg": 0.45724,
+   "currency": "MXN",
+   "growth": -0.2742,
+   "high": 0.45724,
+   "low": 0.45724,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.63
+  },
+  "0y": {
+   "avg": 1.89255,
+   "currency": "MXN",
+   "growth": 0.17549999,
+   "high": 2.56,
+   "low": 1.67,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 1.61
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "MXN",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 18740003600,
+   "currency": "MXN",
+   "growth": 0.0416,
+   "high": 20119000000,
+   "low": 18029200000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 17990722790.0
+  },
+  "0q": {
+   "avg": 0,
+   "currency": "MXN",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "0y": {
+   "avg": 17990722790,
+   "currency": "MXN",
+   "growth": 0.0256,
+   "high": 19975000000,
+   "low": 17136000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 17541200000.0
+  }
+ },
+ "ticker": "LABB.MX",
+ "url": "https://finance.yahoo.com/quote/LABB.MX"
+}

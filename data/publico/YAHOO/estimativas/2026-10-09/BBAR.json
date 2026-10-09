@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 12.64,
+  "high": 29.0,
+  "low": 20.0,
+  "mean": 24.5,
+  "median": 24.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": null,
+   "currency": "USD",
+   "growth": null,
+   "high": null,
+   "low": null,
+   "numberOfAnalysts": null,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 0.735,
+   "currency": "USD",
+   "growth": 0.5441,
+   "high": 0.735,
+   "low": 0.735,
+   "numberOfAnalysts": 1.0,
+   "yearAgoEps": 0.476
+  },
+  "0q": {
+   "avg": null,
+   "currency": "USD",
+   "growth": null,
+   "high": null,
+   "low": null,
+   "numberOfAnalysts": null,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": 0.476,
+   "currency": "USD",
+   "growth": -0.38830003,
+   "high": 0.476,
+   "low": 0.476,
+   "numberOfAnalysts": 1.0,
+   "yearAgoEps": 0.77819
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 1306057172540,
+   "currency": "ARS",
+   "growth": 0.4647,
+   "high": 1442815777000,
+   "low": 1169298568090,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 891698000000
+  },
+  "+1y": {
+   "avg": 5912208011660,
+   "currency": "ARS",
+   "growth": 0.17790002,
+   "high": 6833337487000,
+   "low": 4321406537189,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 5019082805640
+  },
+  "0q": {
+   "avg": 1285070133440,
+   "currency": "ARS",
+   "growth": 0.77849996,
+   "high": 1307052940000,
+   "low": 1263087326890,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 722550000000
+  },
+  "0y": {
+   "avg": 5019082805640,
+   "currency": "ARS",
+   "growth": 0.5531,
+   "high": 5257237365450,
+   "low": 4793945000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 3231730000000
+  }
+ },
+ "ticker": "BBAR",
+ "url": "https://finance.yahoo.com/quote/BBAR"
+}

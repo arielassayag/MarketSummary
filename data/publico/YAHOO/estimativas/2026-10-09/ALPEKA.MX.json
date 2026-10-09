@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 14.83,
+  "high": 20.0,
+  "low": 11.9,
+  "mean": 15.53333,
+  "median": 15.75
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.05749,
+   "currency": "MXN",
+   "growth": 1.0816001,
+   "high": 0.05749,
+   "low": 0.05749,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": -0.7049
+  },
+  "+1y": {
+   "avg": 0.63059,
+   "currency": "MXN",
+   "growth": -0.6272,
+   "high": 0.87,
+   "low": 0.41635,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 1.69145
+  },
+  "0q": {
+   "avg": 0.30246,
+   "currency": "MXN",
+   "growth": 2.5535002,
+   "high": 0.30246,
+   "low": 0.30246,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": -0.1947
+  },
+  "0y": {
+   "avg": 1.69145,
+   "currency": "MXN",
+   "growth": 3.4685001,
+   "high": 2.6,
+   "low": 0.175,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": -0.6852
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 29506499780,
+   "currency": "MXN",
+   "growth": 0.0554,
+   "high": 34971163340,
+   "low": 25197215000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 27957000000
+  },
+  "+1y": {
+   "avg": 128375459880,
+   "currency": "MXN",
+   "growth": -0.0152,
+   "high": 148563000000,
+   "low": 115289025000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 130355460790
+  },
+  "0q": {
+   "avg": 34129701170,
+   "currency": "MXN",
+   "growth": 0.098400004,
+   "high": 38917050680,
+   "low": 29704585000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 31073000000
+  },
+  "0y": {
+   "avg": 130355460790,
+   "currency": "MXN",
+   "growth": 0.0277,
+   "high": 141133214020,
+   "low": 117206793000,
+   "numberOfAnalysts": 12,
+   "yearAgoRevenue": 126840000000
+  }
+ },
+ "ticker": "ALPEKA.MX",
+ "url": "https://finance.yahoo.com/quote/ALPEKA.MX"
+}

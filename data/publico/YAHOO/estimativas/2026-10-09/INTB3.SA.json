@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 19.62,
+  "high": 19.0,
+  "low": 13.7,
+  "mean": 17.12,
+  "median": 17.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.49521,
+   "currency": "BRL",
+   "growth": 0.1721,
+   "high": 0.50942,
+   "low": 0.47,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.4225
+  },
+  "+1y": {
+   "avg": 1.99554,
+   "currency": "BRL",
+   "growth": 0.0585,
+   "high": 2.06657,
+   "low": 1.95,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 1.88526
+  },
+  "0q": {
+   "avg": 0.46132,
+   "currency": "BRL",
+   "growth": 0.0252,
+   "high": 0.46357,
+   "low": 0.46,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.45
+  },
+  "0y": {
+   "avg": 1.88526,
+   "currency": "BRL",
+   "growth": 0.2738,
+   "high": 1.93282,
+   "low": 1.8,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 1.48
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 1222265160,
+   "currency": "BRL",
+   "growth": 0.0465,
+   "high": 1247462050,
+   "low": 1208264790,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 1167975000
+  },
+  "+1y": {
+   "avg": 4915776230,
+   "currency": "BRL",
+   "growth": 0.060399998,
+   "high": 5018450070,
+   "low": 4778000000,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 4635770420
+  },
+  "0q": {
+   "avg": 1168028990,
+   "currency": "BRL",
+   "growth": 0.0385,
+   "high": 1191462110,
+   "low": 1144000000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 1124689000
+  },
+  "0y": {
+   "avg": 4635770420,
+   "currency": "BRL",
+   "growth": 0.039300002,
+   "high": 4698596160,
+   "low": 4600000000,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 4460379000
+  }
+ },
+ "ticker": "INTB3.SA",
+ "url": "https://finance.yahoo.com/quote/INTB3.SA"
+}

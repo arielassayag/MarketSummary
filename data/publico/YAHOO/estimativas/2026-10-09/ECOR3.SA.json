@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 14.23,
+  "high": 16.0,
+  "low": 8.6,
+  "mean": 12.20769,
+  "median": 12.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.20262,
+   "currency": "BRL",
+   "growth": 0.3508,
+   "high": 0.26034,
+   "low": 0.17312,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 0.15
+  },
+  "+1y": {
+   "avg": 0.62,
+   "currency": "BRL",
+   "growth": 1.3846,
+   "high": 0.66,
+   "low": 0.58,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.26
+  },
+  "0q": {
+   "avg": 0.25725,
+   "currency": "BRL",
+   "growth": -0.5839,
+   "high": 0.33024,
+   "low": 0.16276,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 0.61822
+  },
+  "0y": {
+   "avg": 0.26,
+   "currency": "BRL",
+   "growth": -0.78790003,
+   "high": 0.26,
+   "low": 0.26,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 1.2261
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 1943227400,
+   "currency": "BRL",
+   "growth": -0.0013,
+   "high": 1977299000,
+   "low": 1876383210,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 1945800000
+  },
+  "+1y": {
+   "avg": 8445352769,
+   "currency": "BRL",
+   "growth": 0.1188,
+   "high": 8727000000,
+   "low": 7902585490,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 7548396710
+  },
+  "0q": {
+   "avg": 1922085920,
+   "currency": "BRL",
+   "growth": -0.35790002,
+   "high": 1979483000,
+   "low": 1836774770,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 2993330000
+  },
+  "0y": {
+   "avg": 7548396710,
+   "currency": "BRL",
+   "growth": 0.019199999,
+   "high": 7639000000,
+   "low": 7373000000,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 7406300000
+  }
+ },
+ "ticker": "ECOR3.SA",
+ "url": "https://finance.yahoo.com/quote/ECOR3.SA"
+}

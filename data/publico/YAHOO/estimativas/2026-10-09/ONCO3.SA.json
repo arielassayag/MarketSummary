@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 1.1,
+  "high": 3.0,
+  "low": 0.7,
+  "mean": 1.9,
+  "median": 2.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.0,
+   "currency": "BRL",
+   "growth": 1.0,
+   "high": 0.0,
+   "low": 0.0,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": -0.3353
+  },
+  "+1y": {
+   "avg": 0.07877,
+   "currency": "BRL",
+   "growth": 14.106501,
+   "high": 0.07877,
+   "low": 0.07877,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": -0.00601
+  },
+  "0q": {
+   "avg": 0.0,
+   "currency": "BRL",
+   "growth": 1.0,
+   "high": 0.0,
+   "low": 0.0,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": -0.1509
+  },
+  "0y": {
+   "avg": -0.00601,
+   "currency": "BRL",
+   "growth": 0.9945,
+   "high": -0.00601,
+   "low": -0.00601,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": -1.0906
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 6219737160,
+   "currency": "BRL",
+   "growth": -0.0168,
+   "high": 6219737160,
+   "low": 6219737160,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 6326000000.0
+  },
+  "0q": {
+   "avg": 0,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "0y": {
+   "avg": 6326000000,
+   "currency": "BRL",
+   "growth": 0.1022,
+   "high": 6326000000,
+   "low": 6326000000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 5739367000.0
+  }
+ },
+ "ticker": "ONCO3.SA",
+ "url": "https://finance.yahoo.com/quote/ONCO3.SA"
+}

@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 7.62,
+  "high": 10.0,
+  "low": 5.0,
+  "mean": 7.1875,
+  "median": 7.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.24,
+   "currency": "BRL",
+   "growth": 2.2239,
+   "high": 0.24,
+   "low": 0.24,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": -0.1961
+  },
+  "+1y": {
+   "avg": 0.955,
+   "currency": "BRL",
+   "growth": 3.5476,
+   "high": 1.32,
+   "low": 0.59,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.21
+  },
+  "0q": {
+   "avg": 0.31,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0.31,
+   "low": 0.31,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": 0.21,
+   "currency": "BRL",
+   "growth": 11.1449,
+   "high": 0.78,
+   "low": -0.36,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": -0.0207
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 3439337190,
+   "currency": "BRL",
+   "growth": 0.0717,
+   "high": 3546320340,
+   "low": 3308925320,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 3209298000
+  },
+  "+1y": {
+   "avg": 14523870060,
+   "currency": "BRL",
+   "growth": 0.09060001,
+   "high": 15286000000,
+   "low": 14023000000,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 13317722810
+  },
+  "0q": {
+   "avg": 3557370690,
+   "currency": "BRL",
+   "growth": 0.032899998,
+   "high": 3591903470,
+   "low": 3506501860,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 3444219000
+  },
+  "0y": {
+   "avg": 13317722810,
+   "currency": "BRL",
+   "growth": 0.013300001,
+   "high": 13652205390,
+   "low": 13069000000,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 13143266000
+  }
+ },
+ "ticker": "RAPT4.SA",
+ "url": "https://finance.yahoo.com/quote/RAPT4.SA"
+}

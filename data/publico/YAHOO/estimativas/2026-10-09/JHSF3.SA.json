@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 13.97,
+  "high": 15.0,
+  "low": 10.0,
+  "mean": 12.21667,
+  "median": 11.75
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1.02395,
+   "currency": "BRL",
+   "growth": null,
+   "high": 1.02395,
+   "low": 1.02395,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 1.26813,
+   "currency": "BRL",
+   "growth": -0.3637,
+   "high": 2.34,
+   "low": 0.37438,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 1.99298
+  },
+  "0q": {
+   "avg": 0.09083,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0.09083,
+   "low": 0.09083,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": 1.99298,
+   "currency": "BRL",
+   "growth": -0.0417,
+   "high": 1.99298,
+   "low": 1.99298,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 2.0797
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 1088548210,
+   "currency": "BRL",
+   "growth": -0.4724,
+   "high": 1689378720,
+   "low": 487717700,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 2063100000
+  },
+  "+1y": {
+   "avg": 2689861600,
+   "currency": "BRL",
+   "growth": -0.0421,
+   "high": 3656000000,
+   "low": 1966941960,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 2808025590
+  },
+  "0q": {
+   "avg": 488650460,
+   "currency": "BRL",
+   "growth": -0.0543,
+   "high": 555286680,
+   "low": 422014230,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 516700000
+  },
+  "0y": {
+   "avg": 2808025590,
+   "currency": "BRL",
+   "growth": -0.1929,
+   "high": 3717645640,
+   "low": 1898405540,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 3479142000
+  }
+ },
+ "ticker": "JHSF3.SA",
+ "url": "https://finance.yahoo.com/quote/JHSF3.SA"
+}

@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 30.75,
+  "high": 35.0,
+  "low": 17.5,
+  "mean": 30.31,
+  "median": 32.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1.07,
+   "currency": "BRL",
+   "growth": 0.3223,
+   "high": 1.07,
+   "low": 1.07,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.80919
+  },
+  "+1y": {
+   "avg": 6.58448,
+   "currency": "BRL",
+   "growth": 0.4689,
+   "high": 7.7,
+   "low": 5.07,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 4.48265
+  },
+  "0q": {
+   "avg": 0.81,
+   "currency": "BRL",
+   "growth": -0.3644,
+   "high": 0.81,
+   "low": 0.81,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 1.27441
+  },
+  "0y": {
+   "avg": 4.48265,
+   "currency": "BRL",
+   "growth": 0.1014,
+   "high": 5.60796,
+   "low": 3.74,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 4.06993
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 55003750,
+   "currency": "BRL",
+   "growth": -0.1567,
+   "high": 56877000,
+   "low": 53130500,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 65222000
+  },
+  "+1y": {
+   "avg": 287984180,
+   "currency": "BRL",
+   "growth": 0.16510001,
+   "high": 321000000,
+   "low": 227782070,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 247165310
+  },
+  "0q": {
+   "avg": 49708640,
+   "currency": "BRL",
+   "growth": -0.2552,
+   "high": 49889290,
+   "low": 49528000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 66743000
+  },
+  "0y": {
+   "avg": 247165310,
+   "currency": "BRL",
+   "growth": -0.0064,
+   "high": 261000000,
+   "low": 230000000,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 248760000
+  }
+ },
+ "ticker": "LOGG3.SA",
+ "url": "https://finance.yahoo.com/quote/LOGG3.SA"
+}

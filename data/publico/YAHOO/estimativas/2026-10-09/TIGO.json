@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 83.05,
+  "high": 132.0,
+  "low": 60.1,
+  "mean": 98.3875,
+  "median": 97.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.52,
+   "currency": "USD",
+   "growth": -0.65660006,
+   "high": 0.52,
+   "low": 0.52,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 1.5143
+  },
+  "+1y": {
+   "avg": 7.04848,
+   "currency": "USD",
+   "growth": 0.5512,
+   "high": 10.07,
+   "low": 3.09,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 4.54402
+  },
+  "0q": {
+   "avg": 0.83,
+   "currency": "USD",
+   "growth": -0.2906,
+   "high": 0.83,
+   "low": 0.83,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 1.17
+  },
+  "0y": {
+   "avg": 4.54402,
+   "currency": "USD",
+   "growth": 0.16690001,
+   "high": 6.13,
+   "low": 2.41,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 3.8942
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 2294318500,
+   "currency": "USD",
+   "growth": 0.38880002,
+   "high": 2379955500,
+   "low": 2160000000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 1652000000
+  },
+  "+1y": {
+   "avg": 9134519070,
+   "currency": "USD",
+   "growth": 0.0425,
+   "high": 9641000000,
+   "low": 8644000000,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 8762301930
+  },
+  "0q": {
+   "avg": 2231636470,
+   "currency": "USD",
+   "growth": 0.5716,
+   "high": 2310000000,
+   "low": 2144000000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 1420000000
+  },
+  "0y": {
+   "avg": 8762301930,
+   "currency": "USD",
+   "growth": 0.5058,
+   "high": 9404000000,
+   "low": 8468000000,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 5819000000
+  }
+ },
+ "ticker": "TIGO",
+ "url": "https://finance.yahoo.com/quote/TIGO"
+}

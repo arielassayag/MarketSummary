@@ -1,0 +1,39 @@
+{
+ "calendar": {
+  "Earnings Average": 0.52207,
+  "Earnings Date": [
+   "2026-10-19"
+  ],
+  "Earnings High": 0.76795,
+  "Earnings Low": 0.27619,
+  "Revenue Average": 28473796750,
+  "Revenue High": 29126614000,
+  "Revenue Low": 27991110000
+ },
+ "earnings_dates": [
+  {
+   "data": "2026-04-21",
+   "eps_estimado": 0.17,
+   "eps_reportado": 0.07
+  },
+  {
+   "data": "2026-04-30",
+   "eps_estimado": 0.49,
+   "eps_reportado": 1.48
+  },
+  {
+   "data": "2026-07-13",
+   "eps_estimado": -0.21,
+   "eps_reportado": -0.4
+  },
+  {
+   "data": "2026-10-19",
+   "eps_estimado": 0.28,
+   "eps_reportado": null
+  }
+ ],
+ "fonte": "YAHOO",
+ "parte": "calendario",
+ "ticker": "AERO",
+ "url": "https://finance.yahoo.com/quote/AERO"
+}

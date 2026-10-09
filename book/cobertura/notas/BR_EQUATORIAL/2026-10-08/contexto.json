@@ -1,0 +1,108 @@
+{
+  "avisos_tecnicos": [],
+  "dados_ate": "2026-10-08",
+  "data": "2026-10-08",
+  "fontes_sugeridas": [
+    {
+      "instituicao": "CVM — RAD (fatos relevantes, ITR, DFP, formulário de referência)",
+      "tipo": "regulatorio",
+      "url": "https://www.rad.cvm.gov.br/ENET/frmConsultaExternaCVM.aspx"
+    },
+    {
+      "instituicao": "CVM — dados abertos (DFP, ITR, FRE, IPE)",
+      "tipo": "regulatorio",
+      "url": "https://dados.cvm.gov.br/"
+    },
+    {
+      "instituicao": "B3 — empresas listadas",
+      "tipo": "bolsa",
+      "url": "https://www.b3.com.br/"
+    },
+    {
+      "instituicao": "Banco Central do Brasil (Focus, SGS)",
+      "tipo": "banco_central",
+      "url": "https://www.bcb.gov.br/"
+    },
+    {
+      "instituicao": "IBGE",
+      "tipo": "estatistica_oficial",
+      "url": "https://www.ibge.gov.br/"
+    },
+    {
+      "instituicao": "Damodaran Online (NYU Stern) — prêmios de risco, betas e múltiplos setoriais",
+      "tipo": "dados_publicos",
+      "url": "https://pages.stern.nyu.edu/~adamodar/"
+    },
+    {
+      "instituicao": "FRED (Federal Reserve Bank of St. Louis) — juros e indicadores dos EUA",
+      "tipo": "dados_publicos",
+      "url": "https://fred.stlouisfed.org/"
+    }
+  ],
+  "is_synthetic": false,
+  "issuer_id": "BR_EQUATORIAL",
+  "lacunas": [
+    "Probabilidade implícita do otimista: sem dado na data.",
+    "Probabilidade implícita do pessimista: sem dado na data."
+  ],
+  "nome": "Equatorial",
+  "nomes": {
+    "BR_ALUPAR": "Alupar",
+    "BR_AUREN": "Auren Energia",
+    "BR_AXIA": "Axia Energia (ex-Eletrobras)",
+    "BR_CEMIG": "Cemig",
+    "BR_COMPASS": "Compass Gás e Energia",
+    "BR_COPASA": "Copasa",
+    "BR_COPEL": "Copel",
+    "BR_CPFL": "CPFL Energia",
+    "BR_EQUATORIAL": "Equatorial"
+  },
+  "nota_anterior": null,
+  "pais": "BR",
+  "pais_pt": "Brasil",
+  "pares": [
+    "BR_ALUPAR",
+    "BR_AUREN",
+    "BR_AXIA",
+    "BR_CEMIG",
+    "BR_COMPASS",
+    "BR_COPASA",
+    "BR_COPEL",
+    "BR_CPFL"
+  ],
+  "proximo_resultado": "2026-11-11",
+  "schema": "cdp.nota.contexto/v1",
+  "setor": "Utilities",
+  "setor_pt": "Utilidades públicas",
+  "snapshot": {
+    "as_of": "2026-10-07",
+    "manifest_sha256": "7ccb52e98b36ca4332f2ff41691740d5239b3ca82f73d6f509e743ee0d28d650",
+    "modelo_as_of": "2026-10-07"
+  },
+  "tem_linha_eua": false,
+  "termos": [
+    "ALUP11",
+    "ALUP11.SA",
+    "AURE3",
+    "AURE3.SA",
+    "AXIA3",
+    "AXIA3.SA",
+    "CMIG4",
+    "CMIG4.SA",
+    "CPFE3",
+    "CPFE3.SA",
+    "CPLE3",
+    "CPLE3.SA",
+    "CSMG3",
+    "CSMG3.SA",
+    "EQTL3",
+    "EQTL3.SA",
+    "PASS3",
+    "PASS3.SA"
+  ],
+  "tickers": [
+    "EQTL3.SA",
+    "EQTL3"
+  ],
+  "tipo_esperado": "iniciacao"
+}

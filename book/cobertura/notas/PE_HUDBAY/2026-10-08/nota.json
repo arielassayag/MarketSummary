@@ -1,0 +1,111 @@
+{
+  "mind": "codex",
+  "issuer_id": "PE_HUDBAY",
+  "data": "2026-10-08",
+  "tipo": "iniciacao",
+  "titulo": "Hudbay: custos favoráveis, exposição cíclica com preço exigente",
+  "resumo": "A combinação de cobre e ouro favorece a geração de caixa. O alvo de {{fact:val.PE_HUDBAY.preco_alvo}} ante {{fact:val.PE_HUDBAY.preco}} e alpha relativo de {{fact:val.PE_HUDBAY.alpha_rel}} sustentam leitura moderadamente negativa. A divergência com o consenso limita a convicção.",
+  "negocio": "Hudbay é uma mineradora canadense com operações no Peru e no Canadá e projetos nos Estados Unidos. Cobre e ouro são centrais na diversificação econômica (Hudbay, 2026-07-29).",
+  "pilares_tese": [
+    {
+      "titulo": "Créditos de ouro favorecem custos",
+      "texto": "A companhia manteve metas de produção e reduziu a faixa de custos, beneficiada pelo ouro e pela eficiência (Hudbay, 2026-07-29). A sustentação dessas condições é necessária para preservar margens.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Divergência de avaliação",
+      "texto": "O modelo apresenta confiança {{fact:val.PE_HUDBAY.confianca_codigo}}, diferença contra o consenso de {{fact:val.PE_HUDBAY.diff_consenso}} e alpha relativo de {{fact:val.PE_HUDBAY.alpha_rel}}. Premissas de metais e projetos devem ser revistas antes de aumentar a convicção.",
+      "evidencias": [
+        "val.PE_HUDBAY.confianca_codigo",
+        "val.PE_HUDBAY.diff_consenso",
+        "val.PE_HUDBAY.alpha_rel"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Preços de cobre e ouro",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "A diversificação ajuda a equilibrar margens, mas mantém exposição ao ciclo de commodities (Hudbay, 2026-07-29).",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Custo de capital e projetos",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "WACC de {{fact:val.PE_HUDBAY.wacc}}; upside sob maior custo de capital de {{fact:val.PE_HUDBAY.sens.ke_mais_100bp}}. A execução dos projetos condiciona a realização de valor.",
+      "evidencias": [
+        "val.PE_HUDBAY.wacc",
+        "val.PE_HUDBAY.sens.ke_mais_100bp"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Próximo resultado estimado em {{fact:evento.PE_HUDBAY.proximo_resultado}}; confirmar a data no calendário oficial.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "evento.PE_HUDBAY.proximo_resultado"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Preços de metais, custos e interrupções logísticas podem reduzir margens. O trimestre teve atraso temporário de embarques no Peru.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "Licenciamento e expansão de projetos exigem capital e podem sofrer atrasos; parte do caixa tem uso restrito ao Copper World.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Metais favoráveis, custos controlados e avanço dos projetos sustentam valor. Alvo de {{fact:val.PE_HUDBAY.alvo_otimista}}; probabilidade implícita de {{fact:val.PE_HUDBAY.prob_otimista}}.",
+    "base": "Operação estável e execução gradual dos investimentos. Alvo de {{fact:val.PE_HUDBAY.preco_alvo}}.",
+    "pessimista": "Metais mais fracos e atrasos comprimem caixa e retorno. Alvo de {{fact:val.PE_HUDBAY.alvo_pessimista}}; probabilidade implícita de {{fact:val.PE_HUDBAY.prob_pessimista}}."
+  },
+  "comentario_valuation": "P/L à frente de {{fact:val.PE_HUDBAY.pl_fwd}}, retorno total esperado de {{fact:val.PE_HUDBAY.etr}} e dispersão entre métodos de {{fact:val.PE_HUDBAY.cv_metodos}}. O consenso público aponta alvo de {{fact:val.PE_HUDBAY.consenso_alvo}}, divergente do modelo. Os pares do setor materiais têm exposições distintas; o briefing não decompõe o valor por mina ou projeto.",
+  "ultimo_resultado": "No 2T26, houve geração de caixa livre, mas lucro ajustado e resultado operacional recuaram sequencialmente por volumes vendidos menores. Metas de produção foram reafirmadas e a faixa de custos foi reduzida (Hudbay, 2026-07-29).",
+  "guidance": "reduzido",
+  "tom_gestao": "positivo",
+  "governanca": "Disciplina de capital e restrições de uso do caixa devem acompanhar a leitura da liquidez (Hudbay, 2026-07-29). Controle, free float, partes relacionadas e composição do conselho não foram aprofundados.",
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Revisão das metas de produção ou custos.",
+    "Mudança material nas premissas de metais e projetos.",
+    "Atrasos de licenciamento ou deterioração da geração de caixa."
+  ],
+  "lacunas_de_dados": [
+    "Probabilidades implícitas dos cenários indisponíveis.",
+    "Valor por mina ou projeto não detalhado no briefing.",
+    "Controle, free float e partes relacionadas não aprofundados.",
+    "Data do próximo resultado estimada; dados de aluguel indisponíveis."
+  ],
+  "stance": -1,
+  "conviccao": 2,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Hudbay Minerals",
+      "titulo": "Divulgação trimestral e revisão de metas de custos",
+      "url": "https://hudbayminerals.com/investors/press-releases/press-release-details/2026/Hudbay-Delivers-Strong-Second-Quarter-2026-Results-and-Improves-Cash-Cost-Guidance/default.aspx",
+      "publicado_em": "2026-07-29"
+    }
+  ]
+}

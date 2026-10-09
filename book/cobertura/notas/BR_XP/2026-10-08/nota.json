@@ -1,0 +1,111 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_XP",
+  "data": "2026-10-08",
+  "tipo": "iniciacao",
+  "titulo": "XP: diversificação avança, mas o retorno relativo limita a preferência",
+  "resumo": "Captação e novas receitas sustentam a franquia. O alvo de {{fact:val.BR_XP.preco_alvo}} ante {{fact:val.BR_XP.preco}} implica upside de {{fact:val.BR_XP.upside}} e alpha relativo de {{fact:val.BR_XP.alpha_rel}}. A leitura relativa é negativa, com convicção média.",
+  "negocio": "A XP combina distribuição de investimentos e assessoria com serviços de atacado, crédito, cartões, previdência e seguros. A receita depende de ativos, captação e composição de produtos (XP, 2026-08-17).",
+  "pilares_tese": [
+    {
+      "titulo": "Captação e receitas complementares",
+      "texto": "A captação avançou e novas verticais contribuíram para receitas. O take rate melhorou sequencialmente, mas ficou abaixo do período comparável anual; a monetização merece acompanhamento (XP, 2026-08-17).",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Retorno relativo",
+      "texto": "O rating é {{fact:val.BR_XP.rating_codigo}} e o alpha relativo é {{fact:val.BR_XP.alpha_rel}}. A diversificação operacional não elimina a exigência de preço.",
+      "evidencias": [
+        "val.BR_XP.rating_codigo",
+        "val.BR_XP.alpha_rel"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Mix de produtos e captação",
+      "direcao": "positivo",
+      "sensibilidade": "alta",
+      "texto": "Fundos, ações e serviços bancários favorecem diversificação; efeitos de marcação a mercado na renda fixa podem limitar a receita (XP, 2026-08-17).",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Custo de capital",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Ke de {{fact:val.BR_XP.ke}}; o upside com maior custo de capital é {{fact:val.BR_XP.sens.ke_mais_100bp}}.",
+      "evidencias": [
+        "val.BR_XP.ke",
+        "val.BR_XP.sens.ke_mais_100bp"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Resultado em {{fact:evento.BR_XP.proximo_resultado}}; avaliar captação, take rate e margem.",
+      "data": "2026-11-16",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "evento.BR_XP.proximo_resultado"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Queda da monetização ou da atividade dos clientes pode reduzir receitas; expansão de crédito adiciona exposição a perdas.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "Volatilidade realizada de {{fact:BR_XP.vol_3m}} e alpha relativo de {{fact:val.BR_XP.alpha_rel}} exigem prudência na leitura de preço.",
+      "probabilidade": "alta",
+      "impacto": "alto",
+      "evidencias": [
+        "BR_XP.vol_3m",
+        "val.BR_XP.alpha_rel"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Captação e monetização favorecem alavancagem operacional. Alvo de {{fact:val.BR_XP.alvo_otimista}}, com probabilidade implícita de {{fact:val.BR_XP.prob_otimista}}.",
+    "base": "Receitas diversificadas compensam parcialmente pressão no mix. Alvo de {{fact:val.BR_XP.preco_alvo}}.",
+    "pessimista": "Pressão de take rate e menor atividade comprimem margem. Alvo de {{fact:val.BR_XP.alvo_pessimista}}, probabilidade implícita de {{fact:val.BR_XP.prob_pessimista}}."
+  },
+  "comentario_valuation": "P/L à frente de {{fact:val.BR_XP.pl_fwd}}, preço sobre patrimônio de {{fact:val.BR_XP.pb}} e ke de {{fact:val.BR_XP.ke}}. A confiança é {{fact:val.BR_XP.confianca_codigo}}, com retorno total esperado de {{fact:val.BR_XP.etr}}. O consenso público aponta {{fact:val.BR_XP.consenso_alvo}}. A comparação com bancos e seguradoras deve considerar a dependência de distribuição e mercados. A contribuição individual dos métodos não está detalhada no briefing.",
+  "ultimo_resultado": "No 2T26, receita e lucro cresceram, com contribuição de atacado e novas verticais. A captação avançou; clientes ativos ficaram aproximadamente estáveis na comparação trimestral. O take rate melhorou sequencialmente, mas recuou na comparação anual (XP, 2026-08-17).",
+  "guidance": "nd",
+  "tom_gestao": "neutro",
+  "governanca": "A expansão de produtos exige disciplina prudencial e gestão de conflitos na distribuição. O resultado informa capital regulatório (XP, 2026-08-17). Controle, free float, remuneração e partes relacionadas precisam de avaliação adicional.",
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Deterioração persistente de captação ou take rate.",
+    "Expansão do crédito sem melhora proporcional do retorno.",
+    "Revisão material do retorno relativo no modelo."
+  ],
+  "lacunas_de_dados": [
+    "WACC indisponível.",
+    "Guidance formal, transcrição integral e governança não aprofundados.",
+    "Decomposição dos métodos ausente no briefing.",
+    "Taxa de aluguel e risco de short squeeze indisponíveis."
+  ],
+  "stance": -1,
+  "conviccao": 3,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "regulatorio",
+      "instituicao": "SEC / XP",
+      "titulo": "Resultado trimestral e discussão das operações",
+      "url": "https://www.sec.gov/Archives/edgar/data/1787425/000095010326012481/dp251884_6k-ex9901.htm",
+      "publicado_em": "2026-08-17"
+    }
+  ]
+}

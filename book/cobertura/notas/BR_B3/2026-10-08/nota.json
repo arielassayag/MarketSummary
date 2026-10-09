@@ -1,0 +1,119 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_B3",
+  "data": "2026-10-08",
+  "tipo": "iniciacao",
+  "titulo": "B3: receitas recorrentes ganham peso, mas o preço exige cautela",
+  "resumo": "A diversificação de receitas sustenta a resiliência da infraestrutura de mercado. O alvo de {{fact:val.BR_B3.preco_alvo}} ante {{fact:val.BR_B3.preco}} implica upside de {{fact:val.BR_B3.upside}}. A leitura relativa é negativa, com convicção média e atenção à diferença entre pares financeiros.",
+  "negocio": "A B3 atua em negociação, pós-negociação, registro de renda fixa, crédito, dados e serviços de mercado. A combinação de receitas cíclicas e recorrentes oferece diversificação (B3, 2026-08-11).",
+  "pilares_tese": [
+    {
+      "titulo": "Recorrência e atividade",
+      "texto": "Receitas recorrentes e pró-cíclicas cresceram no 2T26. A diversificação reduz, em nossa avaliação, a dependência da negociação de ações (B3, 2026-08-11).",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Retorno relativo desfavorável",
+      "texto": "Rating {{fact:val.BR_B3.rating_codigo}} e alpha relativo de {{fact:val.BR_B3.alpha_rel}} limitam a preferência. A infraestrutura de mercado difere economicamente dos bancos e seguradoras do grupo de comparação.",
+      "evidencias": [
+        "val.BR_B3.rating_codigo",
+        "val.BR_B3.alpha_rel"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Volumes e serviços recorrentes",
+      "direcao": "positivo",
+      "sensibilidade": "alta",
+      "texto": "Renda fixa, dados e serviços de mercado contribuíram para o crescimento. O ciclo de negociação permanece relevante (B3, 2026-08-11).",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Custo de capital",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Ke de {{fact:val.BR_B3.ke}}; o upside com maior custo de capital é {{fact:val.BR_B3.sens.ke_mais_100bp}}.",
+      "evidencias": [
+        "val.BR_B3.ke",
+        "val.BR_B3.sens.ke_mais_100bp"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Resultado em {{fact:evento.BR_B3.proximo_resultado}}; avaliar volumes, despesas e receitas recorrentes.",
+      "data": "2026-11-12",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "evento.BR_B3.proximo_resultado",
+        "F2"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Contração de volumes, pressão de tarifas ou maior competição pode limitar receitas e margem; julgamento de risco da infraestrutura de mercado.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "Diferença com o consenso de {{fact:val.BR_B3.diff_consenso}} e ausência de probabilidades implícitas reduzem a precisão da leitura de cenários.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "val.BR_B3.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Atividade de mercado e recorrência favorecem margens. Alvo de {{fact:val.BR_B3.alvo_otimista}}; probabilidade implícita indisponível.",
+    "base": "Receitas diversificadas e disciplina de despesas. Alvo de {{fact:val.BR_B3.preco_alvo}}.",
+    "pessimista": "Menor atividade e pressão competitiva limitam rentabilidade. Alvo de {{fact:val.BR_B3.alvo_pessimista}}; probabilidade implícita indisponível."
+  },
+  "comentario_valuation": "P/L à frente de {{fact:val.BR_B3.pl_fwd}}, preço sobre patrimônio de {{fact:val.BR_B3.pb}} e ke de {{fact:val.BR_B3.ke}}. O retorno total esperado é {{fact:val.BR_B3.etr}} e a confiança é {{fact:val.BR_B3.confianca_codigo}}. O consenso público tem alvo de {{fact:val.BR_B3.consenso_alvo}}. O prêmio da franquia não elimina o sinal negativo do modelo. A contribuição individual dos métodos e a comparação com bolsas internacionais não estão detalhadas no briefing.",
+  "ultimo_resultado": "O 2T26 apresentou crescimento de receita e lucro recorrente. A venda da participação na Dimensa gerou efeito não recorrente, que deve ser distinguido do desempenho operacional (B3, 2026-08-11).",
+  "guidance": "nd",
+  "tom_gestao": "positivo",
+  "governanca": "JCP, recompras e a alienação da Dimensa fazem parte da alocação de capital divulgada. Avaliamos que retorno ao acionista deve ser acompanhado da disciplina de investimentos (B3, 2026-08-11). Estrutura acionária e partes relacionadas não foram aprofundadas.",
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Pressão persistente de volumes e tarifas.",
+    "Mudança na disciplina de despesas e capital.",
+    "Revisão material das premissas do modelo."
+  ],
+  "lacunas_de_dados": [
+    "Probabilidades implícitas e WACC indisponíveis.",
+    "Release integral, transcrição e guidance formal não conferidos integralmente.",
+    "Governança societária e comparação com bolsas internacionais não aprofundadas.",
+    "Taxa de aluguel e risco de short squeeze indisponíveis."
+  ],
+  "stance": -1,
+  "conviccao": 3,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "bolsa",
+      "instituicao": "B3",
+      "titulo": "Discussão trimestral e alocação de capital",
+      "url": "https://www.b3.com.br/pt_br/noticias/divulgacao-de-resultados-8AE490C99FCA6603019FF2F138F95AF1.htm",
+      "publicado_em": "2026-08-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "B3",
+      "titulo": "Calendário de eventos corporativos",
+      "url": "https://ri.b3.com.br/pt-br/servicos-aos-investidores/calendario-de-eventos/",
+      "publicado_em": "2026-04-14"
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "avisos_tecnicos": [],
+  "dados_ate": "2026-10-08",
+  "data": "2026-10-08",
+  "fontes_sugeridas": [
+    {
+      "instituicao": "SMV Perú",
+      "tipo": "regulatorio",
+      "url": "https://www.smv.gob.pe/"
+    },
+    {
+      "instituicao": "BVL",
+      "tipo": "bolsa",
+      "url": "https://www.bvl.com.pe/"
+    },
+    {
+      "instituicao": "BCRP",
+      "tipo": "banco_central",
+      "url": "https://www.bcrp.gob.pe/"
+    },
+    {
+      "instituicao": "INEI",
+      "tipo": "estatistica_oficial",
+      "url": "https://www.inei.gob.pe/"
+    },
+    {
+      "instituicao": "SEC EDGAR — busca de documentos (20-F, 6-K, 10-K, 8-K)",
+      "tipo": "regulatorio",
+      "url": "https://www.sec.gov/edgar/search/"
+    },
+    {
+      "instituicao": "SEC EDGAR — dados XBRL por empresa (companyfacts)",
+      "tipo": "regulatorio",
+      "url": "https://www.sec.gov/search-filings/edgar-application-programming-interfaces"
+    },
+    {
+      "instituicao": "Damodaran Online (NYU Stern) — prêmios de risco, betas e múltiplos setoriais",
+      "tipo": "dados_publicos",
+      "url": "https://pages.stern.nyu.edu/~adamodar/"
+    },
+    {
+      "instituicao": "FRED (Federal Reserve Bank of St. Louis) — juros e indicadores dos EUA",
+      "tipo": "dados_publicos",
+      "url": "https://fred.stlouisfed.org/"
+    }
+  ],
+  "is_synthetic": false,
+  "issuer_id": "PE_HUDBAY",
+  "lacunas": [
+    "Probabilidade implícita do otimista: sem dado na data.",
+    "Probabilidade implícita do pessimista: sem dado na data."
+  ],
+  "nome": "Hudbay Minerals",
+  "nomes": {
+    "BR_BRADESPAR": "Bradespar",
+    "BR_CMIN": "CSN Mineração",
+    "BR_CSN": "CSN Siderúrgica Nacional",
+    "BR_ERO": "Ero Copper",
+    "BR_GERDAU": "Gerdau",
+    "BR_GOAU": "Metalúrgica Gerdau",
+    "BR_SUZANO": "Suzano",
+    "BR_UNIPAR": "Unipar",
+    "PE_HUDBAY": "Hudbay Minerals"
+  },
+  "nota_anterior": null,
+  "pais": "PE",
+  "pais_pt": "Peru",
+  "pares": [
+    "BR_BRADESPAR",
+    "BR_CMIN",
+    "BR_CSN",
+    "BR_ERO",
+    "BR_GERDAU",
+    "BR_GOAU",
+    "BR_SUZANO",
+    "BR_UNIPAR"
+  ],
+  "proximo_resultado": "2026-10-29",
+  "schema": "cdp.nota.contexto/v1",
+  "setor": "Materials",
+  "setor_pt": "Materiais",
+  "snapshot": {
+    "as_of": "2026-10-07",
+    "manifest_sha256": "7ccb52e98b36ca4332f2ff41691740d5239b3ca82f73d6f509e743ee0d28d650",
+    "modelo_as_of": "2026-10-07"
+  },
+  "tem_linha_eua": true,
+  "termos": [
+    "BRAP4",
+    "BRAP4.SA",
+    "CMIN3",
+    "CMIN3.SA",
+    "CSNA3",
+    "CSNA3.SA",
+    "GGBR4",
+    "GGBR4.SA",
+    "GOAU4",
+    "GOAU4.SA",
+    "SUZB3",
+    "SUZB3.SA",
+    "UNIP6",
+    "UNIP6.SA"
+  ],
+  "tickers": [
+    "HBM"
+  ],
+  "tipo_esperado": "iniciacao"
+}

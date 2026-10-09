@@ -1,0 +1,118 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_BB",
+  "data": "2026-10-08",
+  "tipo": "iniciacao",
+  "titulo": "Banco do Brasil: desconto exige confirmação da normalização do crédito",
+  "resumo": "O modelo indica alvo de {{fact:val.BR_BB.preco_alvo}} e upside de {{fact:val.BR_BB.upside}}. A melhora do lucro no 2T26 não elimina a pressão do crédito. A leitura relativa é favorável, com convicção baixa pela diferença com o consenso e pela incerteza de normalização.",
+  "negocio": "O Banco do Brasil combina crédito a pessoas físicas, empresas e agronegócio com serviços financeiros. A exposição agropecuária é relevante para a leitura do ciclo de crédito (Banco do Brasil, 2026-08-12).",
+  "pilares_tese": [
+    {
+      "titulo": "Desconto com risco de premissa",
+      "texto": "O preço sobre patrimônio é {{fact:val.BR_BB.pb}} e o alpha relativo é {{fact:val.BR_BB.alpha_rel}}. Julgamos o desconto favorável, condicionado à recuperação da rentabilidade.",
+      "evidencias": [
+        "val.BR_BB.pb",
+        "val.BR_BB.alpha_rel"
+      ]
+    },
+    {
+      "titulo": "Qualidade do crédito",
+      "texto": "O custo do crédito recuou na comparação trimestral, mas a inadimplência requer acompanhamento. A melhora do lucro não basta para confirmar normalização (Banco do Brasil, 2026-08-12).",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Normalização das perdas",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Uma redução sustentada das perdas favoreceria o lucro; receitas de crédito e serviços ajudam, mas o risco permanece elevado (Banco do Brasil, 2026-08-12).",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Custo de capital",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Ke de {{fact:val.BR_BB.ke}}; o upside com maior custo de capital é {{fact:val.BR_BB.sens.ke_mais_100bp}}.",
+      "evidencias": [
+        "val.BR_BB.ke",
+        "val.BR_BB.sens.ke_mais_100bp"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Resultado seguinte em {{fact:evento.BR_BB.proximo_resultado}}; avaliar perdas esperadas, renegociações e capital.",
+      "data": "2026-11-11",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "evento.BR_BB.proximo_resultado"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "A concentração em crédito agropecuário torna clima, preços agrícolas e recuperações vetores de risco; avaliação qualitativa de impacto alto.",
+      "probabilidade": "alta",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "Diferença com o consenso de {{fact:val.BR_BB.diff_consenso}} exige cautela: a recuperação embutida no alvo pode não se materializar.",
+      "probabilidade": "alta",
+      "impacto": "alto",
+      "evidencias": [
+        "val.BR_BB.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Recuperação do crédito e rentabilidade sustentam a leitura otimista de {{fact:val.BR_BB.alvo_otimista}}. Probabilidade implícita indisponível.",
+    "base": "Normalização gradual, ainda sujeita ao risco de crédito. Alvo base de {{fact:val.BR_BB.preco_alvo}}.",
+    "pessimista": "Perdas persistentes e restrições à geração de capital sustentam a leitura adversa de {{fact:val.BR_BB.alvo_pessimista}}. Probabilidade implícita indisponível."
+  },
+  "comentario_valuation": "O rating é {{fact:val.BR_BB.rating_codigo}}, com confiança {{fact:val.BR_BB.confianca_codigo}}, ke de {{fact:val.BR_BB.ke}} e P/L à frente de {{fact:val.BR_BB.pl_fwd}}. O retorno total esperado é {{fact:val.BR_BB.etr}} e o consenso público aponta {{fact:val.BR_BB.consenso_alvo}}. A confiança quantitativa não resolve a incerteza sobre perdas e recuperação. A ausência de decomposição por método impede atribuir o desconto a uma premissa específica.",
+  "ultimo_resultado": "No 2T26, o lucro ajustado avançou, a margem financeira cresceu na comparação anual e o custo do crédito recuou sequencialmente. A inadimplência e a exposição agropecuária mantêm a normalização como questão central (Banco do Brasil, 2026-08-12).",
+  "guidance": "nd",
+  "tom_gestao": "neutro",
+  "governanca": "Capital prudencial e política de distribuição devem preservar capacidade de absorver perdas. O resultado apresenta os índices de capital (Banco do Brasil, 2026-08-12). Controle, free float, partes relacionadas e eventuais objetivos do controlador requerem exame adicional.",
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Aumento persistente das perdas no agronegócio.",
+    "Revisão das projeções corporativas de lucro e crédito.",
+    "Mudança na distribuição de capital ou na rentabilidade normalizada."
+  ],
+  "lacunas_de_dados": [
+    "Probabilidades implícitas e WACC indisponíveis.",
+    "Projeções corporativas em imagem não conferidas integralmente; guidance ordinal não determinado.",
+    "Transcrição integral e governança não aprofundadas.",
+    "Aluguel e risco de short squeeze indisponíveis."
+  ],
+  "stance": 1,
+  "conviccao": 2,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "regulatorio",
+      "instituicao": "CVM / Banco do Brasil",
+      "titulo": "Divulgação trimestral e perspectivas corporativas",
+      "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1556521&numSequencia=1081227&numVersao=1",
+      "publicado_em": "2026-08-12"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Banco do Brasil",
+      "titulo": "Discussão pública do resultado trimestral",
+      "url": "https://imprensa.bb.com.br/bb-registra-lucro-liquido-ajustado-de-r-39-bilhoes-no-segundo-trimestre-de-2026/",
+      "publicado_em": "2026-08-12"
+    }
+  ]
+}

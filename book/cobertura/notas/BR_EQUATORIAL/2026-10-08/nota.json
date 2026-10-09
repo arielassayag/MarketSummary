@@ -1,0 +1,119 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_EQUATORIAL",
+  "data": "2026-10-08",
+  "tipo": "iniciacao",
+  "titulo": "Equatorial: execução operacional sob pressão financeira",
+  "resumo": "A melhora da distribuição convive com expansão em saneamento e custo financeiro elevado. O alvo de {{fact:val.BR_EQUATORIAL.preco_alvo}}, upside de {{fact:val.BR_EQUATORIAL.upside}} e alpha relativo de {{fact:val.BR_EQUATORIAL.alpha_rel}} sustentam leitura moderadamente negativa. A divergência entre modelo e consenso limita a convicção.",
+  "negocio": "A Equatorial é uma holding de serviços de utilidade pública, com distribuição elétrica, renováveis, saneamento e outros serviços. A gestão dos ativos e o ambiente regulatório condicionam os retornos (Equatorial, 2026-08-12).",
+  "pilares_tese": [
+    {
+      "titulo": "Melhora na distribuição",
+      "texto": "Mercado e margem bruta avançaram, com perdas consolidadas abaixo do limite regulatório. A melhora operacional precisa converter-se em caixa e lucro (Equatorial, 2026-08-12).",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Expansão exige disciplina",
+      "texto": "A participação na Copasa amplia a exposição ao saneamento (Equatorial, 2026-08-13). O alpha relativo de {{fact:val.BR_EQUATORIAL.alpha_rel}} e o custo de capital de {{fact:val.BR_EQUATORIAL.wacc}} limitam a preferência pelo preço atual.",
+      "evidencias": [
+        "F2",
+        "val.BR_EQUATORIAL.alpha_rel",
+        "val.BR_EQUATORIAL.wacc"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Perdas, qualidade e remuneração regulatória",
+      "direcao": "positivo",
+      "sensibilidade": "alta",
+      "texto": "Ganhos operacionais favorecem o resultado, sujeitos ao reconhecimento tarifário e à manutenção da qualidade (Equatorial, 2026-08-12).",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Endividamento e despesas financeiras",
+      "direcao": "negativo",
+      "sensibilidade": "alta",
+      "texto": "Maior dívida e encargos pressionaram o resultado; o EBITDA ajustado cresceu pouco no trimestre (Equatorial, 2026-08-12).",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Divulgação prevista para {{fact:evento.BR_EQUATORIAL.proximo_resultado}}, com foco em dívida, qualidade e integração dos investimentos.",
+      "data": "2026-11-11",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "evento.BR_EQUATORIAL.proximo_resultado"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Custo da dívida e investimentos podem restringir a conversão do crescimento operacional em retorno ao acionista.",
+      "probabilidade": "alta",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "Processos tarifários, contingências e restrições de geração renovável podem reduzir caixa e remuneração dos ativos.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Ganhos operacionais e integração com disciplina favorecem valor. Alvo de {{fact:val.BR_EQUATORIAL.alvo_otimista}}; probabilidade implícita de {{fact:val.BR_EQUATORIAL.prob_otimista}}.",
+    "base": "Melhora operacional gradual, limitada pelo financiamento. Alvo de {{fact:val.BR_EQUATORIAL.preco_alvo}}.",
+    "pessimista": "Pressão financeira e obstáculos regulatórios restringem retornos. Alvo de {{fact:val.BR_EQUATORIAL.alvo_pessimista}}; probabilidade implícita de {{fact:val.BR_EQUATORIAL.prob_pessimista}}."
+  },
+  "comentario_valuation": "P/L à frente de {{fact:val.BR_EQUATORIAL.pl_fwd}}, retorno total esperado de {{fact:val.BR_EQUATORIAL.etr}} e confiança {{fact:val.BR_EQUATORIAL.confianca_codigo}}. A dispersão entre métodos de {{fact:val.BR_EQUATORIAL.cv_metodos}} e a diferença contra o consenso de {{fact:val.BR_EQUATORIAL.diff_consenso}} exigem revisão das premissas. O WACC do modelo não representa automaticamente a taxa regulatória. Valor por concessão e participações não está discriminado no briefing.",
+  "ultimo_resultado": "No 2T26, o EBITDA ajustado cresceu modestamente, enquanto o lucro ajustado recuou. Distribuição melhorou; maior custo financeiro e provisões limitaram o resultado. Acordos tributários e itens não recorrentes exigem distinção dos ganhos permanentes (Equatorial, 2026-08-12).",
+  "guidance": "nd",
+  "tom_gestao": "neutro",
+  "governanca": "A expansão na Copasa envolve mudanças de governança e acompanhamento dos próximos passos (Equatorial, 2026-08-13). Alocação de capital, contingências e participações minoritárias merecem atenção. Controle, free float e partes relacionadas não foram aprofundados.",
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Mudança material do endividamento e cobertura dos encargos.",
+    "Revisão tarifária ou deterioração de perdas e qualidade.",
+    "Novos compromissos em saneamento ou revisão do valor por ativos."
+  ],
+  "lacunas_de_dados": [
+    "Probabilidades dos cenários e P/L histórico indisponíveis.",
+    "Guidance formal e transcrição integral não confirmados.",
+    "Valor por concessão e participações não discriminado no briefing.",
+    "Controle, free float, partes relacionadas e dados de aluguel não aprofundados."
+  ],
+  "stance": -1,
+  "conviccao": 2,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Equatorial",
+      "titulo": "Divulgação trimestral e desempenho consolidado",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/62b21cba-838c-49a4-aaef-e0fb2350c169/b1f651f0-9cd8-d2e0-87f0-498cd4b24f8b?origin=2",
+      "publicado_em": "2026-08-12"
+    },
+    {
+      "id": "F2",
+      "tipo": "regulatorio",
+      "instituicao": "CVM / Equatorial",
+      "titulo": "Apresentação trimestral e perspectivas operacionais",
+      "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1556897&numSequencia=1081603&numVersao=1",
+      "publicado_em": "2026-08-13"
+    }
+  ]
+}

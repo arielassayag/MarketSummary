@@ -1,0 +1,110 @@
+{
+  "avisos_tecnicos": [],
+  "dados_ate": "2026-10-08",
+  "data": "2026-10-08",
+  "fontes_sugeridas": [
+    {
+      "instituicao": "CVM — RAD (fatos relevantes, ITR, DFP, formulário de referência)",
+      "tipo": "regulatorio",
+      "url": "https://www.rad.cvm.gov.br/ENET/frmConsultaExternaCVM.aspx"
+    },
+    {
+      "instituicao": "CVM — dados abertos (DFP, ITR, FRE, IPE)",
+      "tipo": "regulatorio",
+      "url": "https://dados.cvm.gov.br/"
+    },
+    {
+      "instituicao": "B3 — empresas listadas",
+      "tipo": "bolsa",
+      "url": "https://www.b3.com.br/"
+    },
+    {
+      "instituicao": "Banco Central do Brasil (Focus, SGS)",
+      "tipo": "banco_central",
+      "url": "https://www.bcb.gov.br/"
+    },
+    {
+      "instituicao": "IBGE",
+      "tipo": "estatistica_oficial",
+      "url": "https://www.ibge.gov.br/"
+    },
+    {
+      "instituicao": "Damodaran Online (NYU Stern) — prêmios de risco, betas e múltiplos setoriais",
+      "tipo": "dados_publicos",
+      "url": "https://pages.stern.nyu.edu/~adamodar/"
+    },
+    {
+      "instituicao": "FRED (Federal Reserve Bank of St. Louis) — juros e indicadores dos EUA",
+      "tipo": "dados_publicos",
+      "url": "https://fred.stlouisfed.org/"
+    }
+  ],
+  "is_synthetic": false,
+  "issuer_id": "BR_BTG",
+  "lacunas": [
+    "Probabilidade implícita do otimista: sem dado na data.",
+    "Probabilidade implícita do pessimista: sem dado na data.",
+    "WACC: sem dado na data."
+  ],
+  "nome": "BTG Pactual",
+  "nomes": {
+    "BR_ABC": "Banco ABC Brasil",
+    "BR_B3": "B3",
+    "BR_BB": "Banco do Brasil",
+    "BR_BBSEG": "BB Seguridade",
+    "BR_BRADESCO": "Banco Bradesco",
+    "BR_BTG": "BTG Pactual",
+    "BR_CXSEG": "Caixa Seguridade",
+    "BR_INTER": "Inter&Co",
+    "BR_IRB": "IRB Brasil RE"
+  },
+  "nota_anterior": null,
+  "pais": "BR",
+  "pais_pt": "Brasil",
+  "pares": [
+    "BR_ABC",
+    "BR_B3",
+    "BR_BB",
+    "BR_BBSEG",
+    "BR_BRADESCO",
+    "BR_CXSEG",
+    "BR_INTER",
+    "BR_IRB"
+  ],
+  "proximo_resultado": null,
+  "schema": "cdp.nota.contexto/v1",
+  "setor": "Financials",
+  "setor_pt": "Financeiro",
+  "snapshot": {
+    "as_of": "2026-10-07",
+    "manifest_sha256": "7ccb52e98b36ca4332f2ff41691740d5239b3ca82f73d6f509e743ee0d28d650",
+    "modelo_as_of": "2026-10-07"
+  },
+  "tem_linha_eua": false,
+  "termos": [
+    "ABCB4",
+    "ABCB4.SA",
+    "B3",
+    "B3SA3",
+    "B3SA3.SA",
+    "BBAS3",
+    "BBAS3.SA",
+    "BBDC3",
+    "BBDC3.SA",
+    "BBDC4",
+    "BBDC4.SA",
+    "BBSE3",
+    "BBSE3.SA",
+    "BPAC11",
+    "BPAC11.SA",
+    "CXSE3",
+    "CXSE3.SA",
+    "IRBR3",
+    "IRBR3.SA"
+  ],
+  "tickers": [
+    "BPAC11.SA",
+    "BPAC11"
+  ],
+  "tipo_esperado": "iniciacao"
+}

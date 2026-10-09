@@ -1,0 +1,112 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_LOCALIZA",
+  "data": "2026-10-08",
+  "tipo": "iniciacao",
+  "titulo": "Localiza: recuperação operacional sob risco de valor residual",
+  "resumo": "A recuperação das operações convive com juros e depreciação elevados. Alvo de {{fact:val.BR_LOCALIZA.preco_alvo}}, upside de {{fact:val.BR_LOCALIZA.upside}} e alpha relativo de {{fact:val.BR_LOCALIZA.alpha_rel}} sustentam leitura moderadamente negativa, com convicção média.",
+  "negocio": "A Localiza atua em aluguel de carros, gestão de frotas e venda de seminovos. A integração dessas atividades permite renovar ativos e capturar receitas ao longo de sua vida útil (Localiza, 2026-08-06).",
+  "pilares_tese": [
+    {
+      "titulo": "Recomposição das operações",
+      "texto": "Receitas e margens de aluguel avançaram, com renovação da frota e melhora de eficiência. Seminovos é essencial para financiar o ciclo dos ativos (Localiza, 2026-08-06).",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Valor relativo desfavorável",
+      "texto": "O alvo de {{fact:val.BR_LOCALIZA.preco_alvo}} fica abaixo do preço de {{fact:val.BR_LOCALIZA.preco}}. O alpha relativo é {{fact:val.BR_LOCALIZA.alpha_rel}}, limitando a preferência pela ação.",
+      "evidencias": [
+        "val.BR_LOCALIZA.preco_alvo",
+        "val.BR_LOCALIZA.preco",
+        "val.BR_LOCALIZA.alpha_rel"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Tarifas e eficiência da frota",
+      "direcao": "positivo",
+      "sensibilidade": "alta",
+      "texto": "A recomposição de tarifas e a menor idade da frota favorecem eficiência; sua sustentação depende da demanda e da concorrência (Localiza, 2026-08-06).",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Depreciação e financiamento",
+      "direcao": "negativo",
+      "sensibilidade": "alta",
+      "texto": "A administração espera continuidade do aumento da depreciação. O custo de capital do modelo é {{fact:val.BR_LOCALIZA.wacc}} (Localiza, 2026-08-06).",
+      "evidencias": [
+        "F1",
+        "val.BR_LOCALIZA.wacc"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Divulgação de resultado prevista para {{fact:evento.BR_LOCALIZA.proximo_resultado}}; verificar o calendário antes do evento.",
+      "data": "2026-11-05",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "evento.BR_LOCALIZA.proximo_resultado"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Queda no valor residual dos carros pode elevar depreciação e reduzir a recuperação do capital investido.",
+      "probabilidade": "alta",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "Juros e necessidade de renovação da frota podem limitar a geração de caixa e o retorno ao acionista.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1",
+        "val.BR_LOCALIZA.wacc"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Tarifas e eficiência compensam depreciação e financiamento. Alvo de {{fact:val.BR_LOCALIZA.alvo_otimista}}, probabilidade implícita de {{fact:val.BR_LOCALIZA.prob_otimista}}.",
+    "base": "Recuperação operacional gradual, com capital exigente. Alvo de {{fact:val.BR_LOCALIZA.preco_alvo}}.",
+    "pessimista": "Valor residual menor e pressão financeira restringem a rentabilidade. Alvo de {{fact:val.BR_LOCALIZA.alvo_pessimista}}, probabilidade implícita de {{fact:val.BR_LOCALIZA.prob_pessimista}}."
+  },
+  "comentario_valuation": "O modelo indica P/L à frente de {{fact:val.BR_LOCALIZA.pl_fwd}}, WACC de {{fact:val.BR_LOCALIZA.wacc}} e retorno total esperado de {{fact:val.BR_LOCALIZA.etr}}. A diferença contra o consenso é {{fact:val.BR_LOCALIZA.diff_consenso}}, com confiança {{fact:val.BR_LOCALIZA.confianca_codigo}}. Os pares industriais têm modelos de negócio distintos; a comparação relativa exige cautela. A decomposição das premissas de frota e depreciação não está detalhada no briefing.",
+  "ultimo_resultado": "No 2T26, receitas, resultado operacional e lucro avançaram. A comparação do lucro ajusta a baixa de créditos tributários do período anterior. Renovação da frota, depreciação e expansão do varejo de seminovos seguem centrais (Localiza, 2026-08-06).",
+  "guidance": "nd",
+  "tom_gestao": "positivo",
+  "governanca": "A alocação de capital entre crescimento, renovação e distribuição exige disciplina. O resultado apresenta gestão de vencimentos da dívida (Localiza, 2026-08-06). Controle, free float e partes relacionadas não foram aprofundados.",
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Revisão relevante do valor residual ou depreciação.",
+    "Deterioração da geração de caixa após renovação da frota.",
+    "Mudança nas tarifas, demanda ou retorno relativo do modelo."
+  ],
+  "lacunas_de_dados": [
+    "Guidance quantitativo formal não confirmado.",
+    "Decomposição das premissas de frota do modelo não detalhada.",
+    "Controle, free float e partes relacionadas não aprofundados.",
+    "Taxa de aluguel e risco de short squeeze indisponíveis."
+  ],
+  "stance": -1,
+  "conviccao": 3,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Localiza",
+      "titulo": "Divulgação trimestral e mensagem aos investidores",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/08f327aa-e610-4d9d-b683-8ff0f7caae07/ffd204e4-d65f-5649-63a7-f12a8b70f4bd?origin=2",
+      "publicado_em": "2026-08-06"
+    }
+  ]
+}

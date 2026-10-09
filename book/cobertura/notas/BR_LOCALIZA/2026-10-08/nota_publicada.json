@@ -1,0 +1,307 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-07",
+    "manifest_sha256": "7ccb52e98b36ca4332f2ff41691740d5239b3ca82f73d6f509e743ee0d28d650",
+    "modelo_as_of": "2026-10-07"
+  },
+  "conviccao": 3,
+  "data": "2026-10-08",
+  "hashes": {
+    "contexto": "cae8e3978fd39948ded2d54fe1b16ee3a6a76c126f69b151c9103706e622a0d3",
+    "factbook": "04a578c0c087adccf2bc02ae757e669632a149b953781ddf99d82e4358b9e281",
+    "nota_json": "98c1f60ce165e01da5ed3d0cd58924201a76db553c7a41f8827933be34fcd3a0"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_LOCALIZA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-05",
+  "published_at": "2026-10-09T01:58:43.931429+00:00",
+  "rendered": {
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-05",
+        "descricao": "Divulgação de resultado prevista para 2026-11-05; verificar o calendário antes do evento.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "evento.BR_LOCALIZA.proximo_resultado",
+            "nome": "Próxima divulgação de resultado",
+            "valor": "2026-11-05"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Recuperação operacional gradual, com capital exigente. Alvo de R$ 38,23.",
+      "otimista": "Tarifas e eficiência compensam depreciação e financiamento. Alvo de R$ 57,73, probabilidade implícita de 36,33%.",
+      "pessimista": "Valor residual menor e pressão financeira restringem a rentabilidade. Alvo de R$ 20,18, probabilidade implícita de 1,78%."
+    },
+    "comentario_valuation": "O modelo indica P/L à frente de 11,7x, WACC de 9,73% e retorno total esperado de -19,39%. A diferença contra o consenso é -29,21%, com confiança A. Os pares industriais têm modelos de negócio distintos; a comparação relativa exige cautela. A decomposição das premissas de frota e depreciação não está detalhada no briefing.",
+    "conviccao": 3,
+    "dados_ate": "2026-10-08",
+    "dados_simulados": false,
+    "data": "2026-10-08",
+    "ficha": [
+      {
+        "fato": "val.BR_LOCALIZA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 50,66"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 38,23"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-24,53%"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "A"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 57,73"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "36,33%"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 20,18"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "1,78%"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,41%"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.wacc",
+        "rotulo": "WACC",
+        "valor": "9,73%"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-19,39%"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-55,47%"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "11,7x"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,1x"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 54,01"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-29,21%"
+      }
+    ],
+    "fontes": [
+      {
+        "id": "F1",
+        "instituicao": "Localiza",
+        "publicado_em": "2026-08-06",
+        "tipo": "Relações com investidores",
+        "titulo": "Divulgação trimestral e mensagem aos investidores",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/08f327aa-e610-4d9d-b683-8ff0f7caae07/ffd204e4-d65f-5649-63a7-f12a8b70f4bd?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Revisão relevante do valor residual ou depreciação.",
+      "Deterioração da geração de caixa após renovação da frota.",
+      "Mudança nas tarifas, demanda ou retorno relativo do modelo."
+    ],
+    "governanca": "A alocação de capital entre crescimento, renovação e distribuição exige disciplina. O resultado apresenta gestão de vencimentos da dívida (Localiza, 2026-08-06). Controle, free float e partes relacionadas não foram aprofundados.",
+    "guidance": "não avaliado",
+    "issuer_id": "BR_LOCALIZA",
+    "lacunas_de_dados": [
+      "Guidance quantitativo formal não confirmado.",
+      "Decomposição das premissas de frota do modelo não detalhada.",
+      "Controle, free float e partes relacionadas não aprofundados.",
+      "Taxa de aluguel e risco de short squeeze indisponíveis."
+    ],
+    "modelo_de_cobertura": "2026-10-07",
+    "negocio": "A Localiza atua em aluguel de carros, gestão de frotas e venda de seminovos. A integração dessas atividades permite renovar ativos e capturar receitas ao longo de sua vida útil (Localiza, 2026-08-06).",
+    "nome": "Localiza",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ECORODOVIAS",
+        "nome": "EcoRodovias"
+      },
+      {
+        "issuer_id": "BR_EMBRAER",
+        "nome": "Embraer"
+      },
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_MARCOPOLO",
+        "nome": "Marcopolo"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_MOTIVA",
+        "nome": "Motiva (ex-CCR)"
+      },
+      {
+        "issuer_id": "BR_RANDON",
+        "nome": "Randoncorp"
+      },
+      {
+        "issuer_id": "BR_SIMPAR",
+        "nome": "Simpar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Receitas e margens de aluguel avançaram, com renovação da frota e melhora de eficiência. Seminovos é essencial para financiar o ciclo dos ativos (Localiza, 2026-08-06).",
+        "titulo": "Recomposição das operações"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_LOCALIZA.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 38,23"
+          },
+          {
+            "fato": "val.BR_LOCALIZA.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 50,66"
+          },
+          {
+            "fato": "val.BR_LOCALIZA.alpha_rel",
+            "nome": "Alpha de valuation relativo aos pares",
+            "valor": "-55,47%"
+          }
+        ],
+        "texto": "O alvo de R$ 38,23 fica abaixo do preço de R$ 50,66. O alpha relativo é -55,47%, limitando a preferência pela ação.",
+        "titulo": "Valor relativo desfavorável"
+      }
+    ],
+    "publicada_em": "2026-10-09T01:58:43.931429+00:00",
+    "resumo": "A recuperação das operações convive com juros e depreciação elevados. Alvo de R$ 38,23, upside de -24,53% e alpha relativo de -55,47% sustentam leitura moderadamente negativa, com convicção média.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "alta",
+        "texto": "Queda no valor residual dos carros pode elevar depreciação e reduzir a recuperação do capital investido."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fato": "val.BR_LOCALIZA.wacc",
+            "nome": "Custo médio ponderado de capital",
+            "valor": "9,73%"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Juros e necessidade de renovação da frota podem limitar a geração de caixa e o retorno ao acionista."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": -1,
+    "stance_pt": "negativa",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Localiza: recuperação operacional sob risco de valor residual",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "No 2T26, receitas, resultado operacional e lucro avançaram. A comparação do lucro ajusta a baixa de créditos tributários do período anterior. Renovação da frota, depreciação e expansão do varejo de seminovos seguem centrais (Localiza, 2026-08-06).",
+    "vetores": [
+      {
+        "direcao": "positivo",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A recomposição de tarifas e a menor idade da frota favorecem eficiência; sua sustentação depende da demanda e da concorrência (Localiza, 2026-08-06).",
+        "vetor": "Tarifas e eficiência da frota"
+      },
+      {
+        "direcao": "negativo",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fato": "val.BR_LOCALIZA.wacc",
+            "nome": "Custo médio ponderado de capital",
+            "valor": "9,73%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A administração espera continuidade do aumento da depreciação. O custo de capital do modelo é 9,73% (Localiza, 2026-08-06).",
+        "vetor": "Depreciação e financiamento"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": -1
+}

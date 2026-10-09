@@ -1,0 +1,304 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-07",
+    "manifest_sha256": "7ccb52e98b36ca4332f2ff41691740d5239b3ca82f73d6f509e743ee0d28d650",
+    "modelo_as_of": "2026-10-07"
+  },
+  "conviccao": 2,
+  "data": "2026-10-08",
+  "hashes": {
+    "contexto": "16fb01299ab3cc793be27316b4078f6b1fe02446491259dcd93adad74f8e6a19",
+    "factbook": "378ae1d642692a630d1cadaddef89fd2888b21d802b2394eea0ede75ee0f689d",
+    "nota_json": "57ec823c309fa7611061a9dd0a8249c57c3126ed981bf573dc3ef73ad3aeaf2b"
+  },
+  "is_synthetic": false,
+  "issuer_id": "PE_HUDBAY",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-29",
+  "published_at": "2026-10-09T02:00:00.655101+00:00",
+  "rendered": {
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximo resultado estimado em 2026-10-29; confirmar a data no calendário oficial.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "evento.PE_HUDBAY.proximo_resultado",
+            "nome": "Próxima divulgação de resultado (data estimada)",
+            "valor": "2026-10-29"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Operação estável e execução gradual dos investimentos. Alvo de US$ 14,88.",
+      "otimista": "Metais favoráveis, custos controlados e avanço dos projetos sustentam valor. Alvo de US$ 18,65; probabilidade implícita de n/d.",
+      "pessimista": "Metais mais fracos e atrasos comprimem caixa e retorno. Alvo de US$ 11,12; probabilidade implícita de n/d."
+    },
+    "comentario_valuation": "P/L à frente de 13,8x, retorno total esperado de -42,39% e dispersão entre métodos de 26,18%. O consenso público aponta alvo de US$ 35,02, divergente do modelo. Os pares do setor materiais têm exposições distintas; o briefing não decompõe o valor por mina ou projeto.",
+    "conviccao": 2,
+    "dados_ate": "2026-10-08",
+    "dados_simulados": false,
+    "data": "2026-10-08",
+    "ficha": [
+      {
+        "fato": "val.PE_HUDBAY.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 25,87"
+      },
+      {
+        "fato": "val.PE_HUDBAY.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 14,88"
+      },
+      {
+        "fato": "val.PE_HUDBAY.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-42,48%"
+      },
+      {
+        "fato": "val.PE_HUDBAY.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.PE_HUDBAY.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.PE_HUDBAY.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 18,65"
+      },
+      {
+        "fato": "val.PE_HUDBAY.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.PE_HUDBAY.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 11,12"
+      },
+      {
+        "fato": "val.PE_HUDBAY.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.PE_HUDBAY.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,45%"
+      },
+      {
+        "fato": "val.PE_HUDBAY.wacc",
+        "rotulo": "WACC",
+        "valor": "9,96%"
+      },
+      {
+        "fato": "val.PE_HUDBAY.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.PE_HUDBAY.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-42,39%"
+      },
+      {
+        "fato": "val.PE_HUDBAY.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-43,46%"
+      },
+      {
+        "fato": "val.PE_HUDBAY.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "13,8x"
+      },
+      {
+        "fato": "val.PE_HUDBAY.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,4x"
+      },
+      {
+        "fato": "val.PE_HUDBAY.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 35,02"
+      },
+      {
+        "fato": "val.PE_HUDBAY.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-57,51%"
+      }
+    ],
+    "fontes": [
+      {
+        "id": "F1",
+        "instituicao": "Hudbay Minerals",
+        "publicado_em": "2026-07-29",
+        "tipo": "Relações com investidores",
+        "titulo": "Divulgação trimestral e revisão de metas de custos",
+        "url": "https://hudbayminerals.com/investors/press-releases/press-release-details/2026/Hudbay-Delivers-Strong-Second-Quarter-2026-Results-and-Improves-Cash-Cost-Guidance/default.aspx"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Revisão das metas de produção ou custos.",
+      "Mudança material nas premissas de metais e projetos.",
+      "Atrasos de licenciamento ou deterioração da geração de caixa."
+    ],
+    "governanca": "Disciplina de capital e restrições de uso do caixa devem acompanhar a leitura da liquidez (Hudbay, 2026-07-29). Controle, free float, partes relacionadas e composição do conselho não foram aprofundados.",
+    "guidance": "reduzido",
+    "issuer_id": "PE_HUDBAY",
+    "lacunas_de_dados": [
+      "Probabilidades implícitas dos cenários indisponíveis.",
+      "Valor por mina ou projeto não detalhado no briefing.",
+      "Controle, free float e partes relacionadas não aprofundados.",
+      "Data do próximo resultado estimada; dados de aluguel indisponíveis."
+    ],
+    "modelo_de_cobertura": "2026-10-07",
+    "negocio": "Hudbay é uma mineradora canadense com operações no Peru e no Canadá e projetos nos Estados Unidos. Cobre e ouro são centrais na diversificação econômica (Hudbay, 2026-07-29).",
+    "nome": "Hudbay Minerals",
+    "o_que_mudou": null,
+    "pais": "Peru",
+    "pares": [
+      {
+        "issuer_id": "BR_BRADESPAR",
+        "nome": "Bradespar"
+      },
+      {
+        "issuer_id": "BR_CMIN",
+        "nome": "CSN Mineração"
+      },
+      {
+        "issuer_id": "BR_CSN",
+        "nome": "CSN Siderúrgica Nacional"
+      },
+      {
+        "issuer_id": "BR_ERO",
+        "nome": "Ero Copper"
+      },
+      {
+        "issuer_id": "BR_GERDAU",
+        "nome": "Gerdau"
+      },
+      {
+        "issuer_id": "BR_GOAU",
+        "nome": "Metalúrgica Gerdau"
+      },
+      {
+        "issuer_id": "BR_SUZANO",
+        "nome": "Suzano"
+      },
+      {
+        "issuer_id": "BR_UNIPAR",
+        "nome": "Unipar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A companhia manteve metas de produção e reduziu a faixa de custos, beneficiada pelo ouro e pela eficiência (Hudbay, 2026-07-29). A sustentação dessas condições é necessária para preservar margens.",
+        "titulo": "Créditos de ouro favorecem custos"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.PE_HUDBAY.confianca_codigo",
+            "nome": "Confiança do modelo",
+            "valor": "B"
+          },
+          {
+            "fato": "val.PE_HUDBAY.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-57,51%"
+          },
+          {
+            "fato": "val.PE_HUDBAY.alpha_rel",
+            "nome": "Alpha de valuation relativo aos pares",
+            "valor": "-43,46%"
+          }
+        ],
+        "texto": "O modelo apresenta confiança B, diferença contra o consenso de -57,51% e alpha relativo de -43,46%. Premissas de metais e projetos devem ser revistas antes de aumentar a convicção.",
+        "titulo": "Divergência de avaliação"
+      }
+    ],
+    "publicada_em": "2026-10-09T02:00:00.655101+00:00",
+    "resumo": "A combinação de cobre e ouro favorece a geração de caixa. O alvo de US$ 14,88 ante US$ 25,87 e alpha relativo de -43,46% sustentam leitura moderadamente negativa. A divergência com o consenso limita a convicção.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Preços de metais, custos e interrupções logísticas podem reduzir margens. O trimestre teve atraso temporário de embarques no Peru."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Licenciamento e expansão de projetos exigem capital e podem sofrer atrasos; parte do caixa tem uso restrito ao Copper World."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": -1,
+    "stance_pt": "negativa",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Hudbay: custos favoráveis, exposição cíclica com preço exigente",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "No 2T26, houve geração de caixa livre, mas lucro ajustado e resultado operacional recuaram sequencialmente por volumes vendidos menores. Metas de produção foram reafirmadas e a faixa de custos foi reduzida (Hudbay, 2026-07-29).",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A diversificação ajuda a equilibrar margens, mas mantém exposição ao ciclo de commodities (Hudbay, 2026-07-29).",
+        "vetor": "Preços de cobre e ouro"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.PE_HUDBAY.wacc",
+            "nome": "Custo médio ponderado de capital",
+            "valor": "9,96%"
+          },
+          {
+            "fato": "val.PE_HUDBAY.sens.ke_mais_100bp",
+            "nome": "Upside com ke +1 p.p.",
+            "valor": "-48,56%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "WACC de 9,96%; upside sob maior custo de capital de -48,56%. A execução dos projetos condiciona a realização de valor.",
+        "vetor": "Custo de capital e projetos"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": -1
+}

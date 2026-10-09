@@ -1,0 +1,119 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_WEG",
+  "data": "2026-10-08",
+  "tipo": "iniciacao",
+  "titulo": "WEG: qualidade global com retorno relativo pressionado",
+  "resumo": "A exposição internacional e à infraestrutura elétrica sustenta a qualidade do negócio. O alvo de {{fact:val.BR_WEG.preco_alvo}}, upside de {{fact:val.BR_WEG.upside}} e alpha relativo de {{fact:val.BR_WEG.alpha_rel}} indicam preço exigente. A divergência do modelo com o consenso limita a convicção da leitura moderadamente negativa.",
+  "negocio": "A WEG produz equipamentos elétricos industriais, soluções de geração, transmissão e distribuição, motores comerciais e tintas. A diversificação geográfica e de produtos amplia as fontes de demanda (WEG, 2026-07-22).",
+  "pilares_tese": [
+    {
+      "titulo": "Infraestrutura e diversificação",
+      "texto": "Pedidos de infraestrutura elétrica e crescimento externo favorecem a franquia. A menor demanda solar doméstica e o câmbio limitam a conversão em receita consolidada (WEG, 2026-07-22).",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Prêmio de avaliação",
+      "texto": "P/L à frente de {{fact:val.BR_WEG.pl_fwd}} e preço sobre patrimônio de {{fact:val.BR_WEG.pb}} exigem crescimento sustentado. O alpha relativo é {{fact:val.BR_WEG.alpha_rel}}.",
+      "evidencias": [
+        "val.BR_WEG.pl_fwd",
+        "val.BR_WEG.pb",
+        "val.BR_WEG.alpha_rel"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Infraestrutura elétrica internacional",
+      "direcao": "positivo",
+      "sensibilidade": "alta",
+      "texto": "A carteira de equipamentos e a demanda por infraestrutura sustentam oportunidades; execução industrial e margens determinarão a realização de valor (WEG, 2026-07-22).",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Câmbio, insumos e tarifas",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "A valorização do real limita a receita externa convertida. Cobre e tarifas de importação pressionaram custos no trimestre (WEG, 2026-07-22).",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Resultado previsto para {{fact:evento.BR_WEG.proximo_resultado}}, com foco em pedidos, margens e expansão.",
+      "data": "2026-10-21",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "evento.BR_WEG.proximo_resultado"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Desaceleração de investimentos industriais ou elétricos pode reduzir pedidos e utilização das fábricas.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "O prêmio de mercado amplia a sensibilidade a revisões de crescimento e custo de capital; a avaliação difere materialmente do consenso.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "val.BR_WEG.pb",
+        "val.BR_WEG.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Pedidos e expansão sustentam rentabilidade elevada. Alvo de {{fact:val.BR_WEG.alvo_otimista}}; probabilidade implícita de {{fact:val.BR_WEG.prob_otimista}}.",
+    "base": "Diversificação preserva margens, com crescimento desigual. Alvo de {{fact:val.BR_WEG.preco_alvo}}.",
+    "pessimista": "Demanda fraca e pressão de custos restringem valor. Alvo de {{fact:val.BR_WEG.alvo_pessimista}}; probabilidade implícita de {{fact:val.BR_WEG.prob_pessimista}}."
+  },
+  "comentario_valuation": "WACC de {{fact:val.BR_WEG.wacc}}, retorno total esperado de {{fact:val.BR_WEG.etr}} e confiança {{fact:val.BR_WEG.confianca_codigo}}. A dispersão entre métodos é {{fact:val.BR_WEG.cv_metodos}} e a diferença contra o consenso é {{fact:val.BR_WEG.diff_consenso}}. O briefing não discrimina o valor das oportunidades de expansão; os pares industriais incluem atividades economicamente distintas.",
+  "ultimo_resultado": "No 2T26, o mercado externo cresceu em moeda local, enquanto receita consolidada e lucro recuaram na comparação anual. Margens e retorno sobre capital permaneceram resilientes (WEG, 2026-07-22).",
+  "guidance": "nd",
+  "tom_gestao": "positivo",
+  "governanca": "O índice de RI registra comunicado de planejamento sucessório em setembro (WEG, 2026-09-16). Seu conteúdo integral e os efeitos sobre a gestão não foram confirmados. Controle, free float e partes relacionadas não foram aprofundados.",
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Revisão relevante da carteira de pedidos ou margens.",
+    "Mudança nas premissas de expansão e avaliação relativa.",
+    "Novos detalhes sobre sucessão e alocação de capital."
+  ],
+  "lacunas_de_dados": [
+    "Probabilidades dos cenários e beta indisponíveis.",
+    "Guidance quantitativo e conteúdo integral da sucessão não confirmados.",
+    "Valor das expansões não discriminado no briefing.",
+    "Controle, free float, partes relacionadas e dados de aluguel não aprofundados."
+  ],
+  "stance": -1,
+  "conviccao": 2,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "regulatorio",
+      "instituicao": "CVM / WEG",
+      "titulo": "Divulgação trimestral e desempenho por negócio",
+      "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1546756&numSequencia=1071462&numVersao=1",
+      "publicado_em": "2026-07-22"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "WEG",
+      "titulo": "Planejamento sucessório no índice de comunicados",
+      "url": "https://ri.weg.net/",
+      "publicado_em": "2026-09-16"
+    }
+  ]
+}

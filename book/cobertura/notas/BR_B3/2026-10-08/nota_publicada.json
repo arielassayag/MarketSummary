@@ -1,0 +1,312 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-07",
+    "manifest_sha256": "7ccb52e98b36ca4332f2ff41691740d5239b3ca82f73d6f509e743ee0d28d650",
+    "modelo_as_of": "2026-10-07"
+  },
+  "conviccao": 3,
+  "data": "2026-10-08",
+  "hashes": {
+    "contexto": "ce54a3dbc3cc5e10d2a528842ed74fa384c642b6870f29bd008fda74236e1192",
+    "factbook": "87dd1f9158100cfd66bafc9b6bacc94d01968e6e671fe3ae58651eef580a6c75",
+    "nota_json": "135278a3b418012c7df4fb7b9931564f1b6ee38c60aee5ce9d90d2b7a905d779"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_B3",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-12",
+  "published_at": "2026-10-09T01:51:39.119185+00:00",
+  "rendered": {
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-12",
+        "descricao": "Resultado em 2026-11-12; avaliar volumes, despesas e receitas recorrentes.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "evento.BR_B3.proximo_resultado",
+            "nome": "Próxima divulgação de resultado",
+            "valor": "2026-11-12"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Receitas diversificadas e disciplina de despesas. Alvo de R$ 15,66.",
+      "otimista": "Atividade de mercado e recorrência favorecem margens. Alvo de R$ 17,59; probabilidade implícita indisponível.",
+      "pessimista": "Menor atividade e pressão competitiva limitam rentabilidade. Alvo de R$ 14,04; probabilidade implícita indisponível."
+    },
+    "comentario_valuation": "P/L à frente de 17,5x, preço sobre patrimônio de 6,0x e ke de 12,19%. O retorno total esperado é -27,36% e a confiança é B. O consenso público tem alvo de R$ 20,64. O prêmio da franquia não elimina o sinal negativo do modelo. A contribuição individual dos métodos e a comparação com bolsas internacionais não estão detalhadas no briefing.",
+    "conviccao": 3,
+    "dados_ate": "2026-10-08",
+    "dados_simulados": false,
+    "data": "2026-10-08",
+    "ficha": [
+      {
+        "fato": "val.BR_B3.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 22,33"
+      },
+      {
+        "fato": "val.BR_B3.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 15,66"
+      },
+      {
+        "fato": "val.BR_B3.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-29,87%"
+      },
+      {
+        "fato": "val.BR_B3.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_B3.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_B3.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 17,59"
+      },
+      {
+        "fato": "val.BR_B3.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_B3.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 14,04"
+      },
+      {
+        "fato": "val.BR_B3.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_B3.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,19%"
+      },
+      {
+        "fato": "val.BR_B3.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_B3.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_B3.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-27,36%"
+      },
+      {
+        "fato": "val.BR_B3.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-50,01%"
+      },
+      {
+        "fato": "val.BR_B3.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "17,5x"
+      },
+      {
+        "fato": "val.BR_B3.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "6,0x"
+      },
+      {
+        "fato": "val.BR_B3.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 20,64"
+      },
+      {
+        "fato": "val.BR_B3.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-24,14%"
+      }
+    ],
+    "fontes": [
+      {
+        "id": "F1",
+        "instituicao": "B3",
+        "publicado_em": "2026-08-11",
+        "tipo": "Bolsa",
+        "titulo": "Discussão trimestral e alocação de capital",
+        "url": "https://www.b3.com.br/pt_br/noticias/divulgacao-de-resultados-8AE490C99FCA6603019FF2F138F95AF1.htm"
+      },
+      {
+        "id": "F2",
+        "instituicao": "B3",
+        "publicado_em": "2026-04-14",
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário de eventos corporativos",
+        "url": "https://ri.b3.com.br/pt-br/servicos-aos-investidores/calendario-de-eventos/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Pressão persistente de volumes e tarifas.",
+      "Mudança na disciplina de despesas e capital.",
+      "Revisão material das premissas do modelo."
+    ],
+    "governanca": "JCP, recompras e a alienação da Dimensa fazem parte da alocação de capital divulgada. Avaliamos que retorno ao acionista deve ser acompanhado da disciplina de investimentos (B3, 2026-08-11). Estrutura acionária e partes relacionadas não foram aprofundadas.",
+    "guidance": "não avaliado",
+    "issuer_id": "BR_B3",
+    "lacunas_de_dados": [
+      "Probabilidades implícitas e WACC indisponíveis.",
+      "Release integral, transcrição e guidance formal não conferidos integralmente.",
+      "Governança societária e comparação com bolsas internacionais não aprofundadas.",
+      "Taxa de aluguel e risco de short squeeze indisponíveis."
+    ],
+    "modelo_de_cobertura": "2026-10-07",
+    "negocio": "A B3 atua em negociação, pós-negociação, registro de renda fixa, crédito, dados e serviços de mercado. A combinação de receitas cíclicas e recorrentes oferece diversificação (B3, 2026-08-11).",
+    "nome": "B3",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_BB",
+        "nome": "Banco do Brasil"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      },
+      {
+        "issuer_id": "BR_INTER",
+        "nome": "Inter&Co"
+      },
+      {
+        "issuer_id": "BR_IRB",
+        "nome": "IRB Brasil RE"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Receitas recorrentes e pró-cíclicas cresceram no 2T26. A diversificação reduz, em nossa avaliação, a dependência da negociação de ações (B3, 2026-08-11).",
+        "titulo": "Recorrência e atividade"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_B3.rating_codigo",
+            "nome": "Rating da cobertura (12 meses)",
+            "valor": "Venda"
+          },
+          {
+            "fato": "val.BR_B3.alpha_rel",
+            "nome": "Alpha de valuation relativo aos pares",
+            "valor": "-50,01%"
+          }
+        ],
+        "texto": "Rating Venda e alpha relativo de -50,01% limitam a preferência. A infraestrutura de mercado difere economicamente dos bancos e seguradoras do grupo de comparação.",
+        "titulo": "Retorno relativo desfavorável"
+      }
+    ],
+    "publicada_em": "2026-10-09T01:51:39.119185+00:00",
+    "resumo": "A diversificação de receitas sustenta a resiliência da infraestrutura de mercado. O alvo de R$ 15,66 ante R$ 22,33 implica upside de -29,87%. A leitura relativa é negativa, com convicção média e atenção à diferença entre pares financeiros.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Contração de volumes, pressão de tarifas ou maior competição pode limitar receitas e margem; julgamento de risco da infraestrutura de mercado."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_B3.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-24,14%"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Diferença com o consenso de -24,14% e ausência de probabilidades implícitas reduzem a precisão da leitura de cenários."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": -1,
+    "stance_pt": "negativa",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "B3: receitas recorrentes ganham peso, mas o preço exige cautela",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O 2T26 apresentou crescimento de receita e lucro recorrente. A venda da participação na Dimensa gerou efeito não recorrente, que deve ser distinguido do desempenho operacional (B3, 2026-08-11).",
+    "vetores": [
+      {
+        "direcao": "positivo",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Renda fixa, dados e serviços de mercado contribuíram para o crescimento. O ciclo de negociação permanece relevante (B3, 2026-08-11).",
+        "vetor": "Volumes e serviços recorrentes"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_B3.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,19%"
+          },
+          {
+            "fato": "val.BR_B3.sens.ke_mais_100bp",
+            "nome": "Upside com ke +1 p.p.",
+            "valor": "-37,99%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Ke de 12,19%; o upside com maior custo de capital é -37,99%.",
+        "vetor": "Custo de capital"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": -1
+}

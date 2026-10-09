@@ -1,0 +1,121 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_BTG",
+  "data": "2026-10-08",
+  "tipo": "iniciacao",
+  "titulo": "BTG Pactual: diversificação rentável, prêmio exigente",
+  "resumo": "A diversificação e a captação de clientes sustentam a franquia. O alvo de {{fact:val.BR_BTG.preco_alvo}} ante {{fact:val.BR_BTG.preco}} implica upside de {{fact:val.BR_BTG.upside}} e alpha relativo de {{fact:val.BR_BTG.alpha_rel}}. A avaliação relativa é moderadamente negativa, com convicção média.",
+  "negocio": "O BTG combina banco de investimento, crédito, negociação de ativos, gestão de recursos e patrimônio, com expansão dos serviços bancários. O modelo de sociedade de executivos favorece alinhamento e exige acompanhamento dos incentivos (BTG Pactual, 2026-08-11).",
+  "pilares_tese": [
+    {
+      "titulo": "Diversificação e recorrência",
+      "texto": "Gestão de recursos e patrimônio amplia a base de clientes. No trimestre, captação e crédito contribuíram para o crescimento, enquanto o banco de investimento enfrentou menor atividade de emissões (BTG Pactual, 2026-08-11).",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço exige continuidade",
+      "texto": "ROE de {{fact:BR_BTG.roe}} e preço sobre patrimônio de {{fact:val.BR_BTG.pb}} sinalizam uma franquia rentável com prêmio de mercado. O alpha relativo de {{fact:val.BR_BTG.alpha_rel}} limita a preferência pela ação.",
+      "evidencias": [
+        "BR_BTG.roe",
+        "val.BR_BTG.pb",
+        "val.BR_BTG.alpha_rel"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Captação e monetização dos clientes",
+      "direcao": "positivo",
+      "sensibilidade": "alta",
+      "texto": "A expansão dos ativos de clientes favorece receitas recorrentes. A atividade transacional permanece sensível ao ambiente de mercado (BTG Pactual, 2026-08-11).",
+      "evidencias": [
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Custo de capital",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Ke de {{fact:val.BR_BTG.ke}}; o upside com maior custo de capital é {{fact:val.BR_BTG.sens.ke_mais_100bp}}.",
+      "evidencias": [
+        "val.BR_BTG.ke",
+        "val.BR_BTG.sens.ke_mais_100bp"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Próximo resultado estimado em {{fact:evento.BR_BTG.proximo_resultado}}; confirmar a data no calendário oficial.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "evento.BR_BTG.proximo_resultado"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Crédito ao consumidor e aquisições ampliam os desafios de integração e controle de perdas. Resultados recentes favoráveis não asseguram qualidade futura.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2"
+      ]
+    },
+    {
+      "texto": "Exposição à negociação e ao mercado de capitais pode ampliar oscilações do resultado; o retorno relativo do modelo permanece desfavorável.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "val.BR_BTG.alpha_rel"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Captação, receitas recorrentes e crédito disciplinado sustentam a expansão. Alvo de {{fact:val.BR_BTG.alvo_otimista}}; probabilidade implícita de {{fact:val.BR_BTG.prob_otimista}}.",
+    "base": "Diversificação preserva rentabilidade, com atividade de mercado irregular. Alvo de {{fact:val.BR_BTG.preco_alvo}}.",
+    "pessimista": "Perdas de crédito, integração difícil e atividade fraca comprimem os resultados. Alvo de {{fact:val.BR_BTG.alvo_pessimista}}; probabilidade implícita de {{fact:val.BR_BTG.prob_pessimista}}."
+  },
+  "comentario_valuation": "O modelo aponta P/L à frente de {{fact:val.BR_BTG.pl_fwd}} e preço sobre patrimônio de {{fact:val.BR_BTG.pb}}, com ke de {{fact:val.BR_BTG.ke}} e confiança {{fact:val.BR_BTG.confianca_codigo}}. O retorno total esperado é {{fact:val.BR_BTG.etr}} e a diferença contra o consenso é {{fact:val.BR_BTG.diff_consenso}}. O rating considera a leitura relativa; não deve ser confundido com a direção do retorno absoluto. O briefing não detalha a contribuição de cada método.",
+  "ultimo_resultado": "No 2T26, receitas e lucro ajustado cresceram. Crédito e gestão de recursos contribuíram; o banco de investimento recuou, influenciado pelo mercado de dívida. A inclusão do Banco Pan exige atenção à comparabilidade (BTG Pactual, 2026-08-11).",
+  "guidance": "nd",
+  "tom_gestao": "positivo",
+  "governanca": "A estrutura de sociedade de executivos é parte do modelo institucional (BTG Pactual, 2026-08-11). Aquisições exigem disciplina de capital e integração. Controle, free float e partes relacionadas não foram aprofundados nesta iniciação.",
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Deterioração do crédito ao consumidor ou corporativo.",
+    "Mudança na captação ou monetização dos ativos de clientes.",
+    "Revisão material do retorno relativo ou dos riscos de integração."
+  ],
+  "lacunas_de_dados": [
+    "WACC e probabilidades dos cenários indisponíveis.",
+    "Guidance formal e transcrição integral não confirmados.",
+    "Controle, free float e partes relacionadas não aprofundados.",
+    "Data de resultado estimada; taxa de aluguel e risco de short squeeze indisponíveis."
+  ],
+  "stance": -1,
+  "conviccao": 3,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "BTG Pactual",
+      "titulo": "Perfil institucional e destaques do resultado",
+      "url": "https://institucional.btgpactual.com/",
+      "publicado_em": "2026-08-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "dados_publicos",
+      "instituicao": "BTG Pactual (comunicado público)",
+      "titulo": "Divulgação trimestral e discussão dos negócios",
+      "url": "https://cdn.financialreports.eu/financialreports/media/filings/52847/2026/RNS/52847_rns_2026-08-11_59a858f9-273e-411f-a2cd-5f2ad6f70eff.pdf",
+      "publicado_em": "2026-08-11"
+    }
+  ]
+}

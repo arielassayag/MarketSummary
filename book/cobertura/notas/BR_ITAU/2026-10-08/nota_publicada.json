@@ -1,0 +1,306 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-07",
+    "manifest_sha256": "7ccb52e98b36ca4332f2ff41691740d5239b3ca82f73d6f509e743ee0d28d650",
+    "modelo_as_of": "2026-10-07"
+  },
+  "conviccao": 3,
+  "data": "2026-10-08",
+  "hashes": {
+    "contexto": "f199e2d4c894d458342c67ac0674fba55b339645e471aa15ba97fac977fd1db9",
+    "factbook": "c4dd4fb9d48c57ce440b4c52cf83b754abaa2eb1442c271b23e77c8677a5fee6",
+    "nota_json": "5019f9eb57a312ab96578a9ce44c1f49b45ab96f030dfb9c10328edf0f64bf7e"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_ITAU",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-09T01:46:27.969379+00:00",
+  "rendered": {
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximo resultado estimado em 2026-11-03; confirmar a data no calendário oficial.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "evento.BR_ITAU.proximo_resultado",
+            "nome": "Próxima divulgação de resultado (data estimada)",
+            "valor": "2026-11-03"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Continuidade da rentabilidade com disciplina de despesas. Alvo de R$ 47,95.",
+      "otimista": "Margens resilientes e perdas controladas sustentam a leitura otimista. Alvo de R$ 54,99, probabilidade implícita de 36,01%.",
+      "pessimista": "Maior custo do crédito e menor rentabilidade sustentam a leitura adversa. Alvo de R$ 41,62, probabilidade implícita de 24,33%."
+    },
+    "comentario_valuation": "O modelo aponta P/L à frente de 9,9x e preço sobre patrimônio de 2,5x, com ke de 12,19% e confiança A. O retorno total esperado é +4,49% e a diferença contra o consenso é -1,37%. O rating considera a leitura relativa; não deve ser confundido com a direção do retorno absoluto. O briefing não detalha a contribuição de cada método.",
+    "conviccao": 3,
+    "dados_ate": "2026-10-08",
+    "dados_simulados": false,
+    "data": "2026-10-08",
+    "ficha": [
+      {
+        "fato": "val.BR_ITAU.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 49,11"
+      },
+      {
+        "fato": "val.BR_ITAU.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 47,95"
+      },
+      {
+        "fato": "val.BR_ITAU.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-2,36%"
+      },
+      {
+        "fato": "val.BR_ITAU.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_ITAU.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "A"
+      },
+      {
+        "fato": "val.BR_ITAU.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 54,99"
+      },
+      {
+        "fato": "val.BR_ITAU.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "36,01%"
+      },
+      {
+        "fato": "val.BR_ITAU.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 41,62"
+      },
+      {
+        "fato": "val.BR_ITAU.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "24,33%"
+      },
+      {
+        "fato": "val.BR_ITAU.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,19%"
+      },
+      {
+        "fato": "val.BR_ITAU.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_ITAU.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_ITAU.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+4,49%"
+      },
+      {
+        "fato": "val.BR_ITAU.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-18,27%"
+      },
+      {
+        "fato": "val.BR_ITAU.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "9,9x"
+      },
+      {
+        "fato": "val.BR_ITAU.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,5x"
+      },
+      {
+        "fato": "val.BR_ITAU.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 48,62"
+      },
+      {
+        "fato": "val.BR_ITAU.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-1,37%"
+      }
+    ],
+    "fontes": [
+      {
+        "id": "F1",
+        "instituicao": "SEC / Itaú Unibanco",
+        "publicado_em": "2026-08-05",
+        "tipo": "Regulador",
+        "titulo": "Divulgação trimestral e revisão de perspectivas",
+        "url": "https://www.sec.gov/Archives/edgar/data/1132597/000113259726000217/announcementtothemarket-.htm"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Revisão do guidance de despesas ou custo do crédito.",
+      "Deterioração persistente da inadimplência.",
+      "Mudança material do retorno relativo no modelo."
+    ],
+    "governanca": "A geração de capital e a distribuição de proventos devem ser avaliadas em conjunto com o crescimento e as exigências prudenciais. A divulgação apresenta capital principal e sua evolução (Itaú Unibanco, 2026-08-05). Controle, free float e partes relacionadas não foram aprofundados.",
+    "guidance": "elevado",
+    "issuer_id": "BR_ITAU",
+    "lacunas_de_dados": [
+      "WACC indisponível.",
+      "Data de resultado no FactBook é estimada e difere da indicação ausente no contexto.",
+      "Transcrição integral, controle e partes relacionadas não aprofundados.",
+      "Taxa de aluguel e risco de short squeeze indisponíveis."
+    ],
+    "modelo_de_cobertura": "2026-10-07",
+    "negocio": "O Itaú Unibanco combina crédito, serviços financeiros, seguros e operações de mercado, com atuação no Brasil e na América Latina. A diversidade de receitas favorece a resiliência ao ciclo (Itaú Unibanco, 2026-08-05).",
+    "nome": "Itaú Unibanco",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BB",
+        "nome": "Banco do Brasil"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      },
+      {
+        "issuer_id": "BR_INTER",
+        "nome": "Inter&Co"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O resultado de 2T26 aponta expansão da margem com clientes e do lucro recorrente, com inadimplência longa estável. A qualidade operacional é favorável, embora não dispense acompanhamento das perdas esperadas (Itaú Unibanco, 2026-08-05).",
+        "titulo": "Rentabilidade e disciplina"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "BR_ITAU.roe",
+            "nome": "Retorno sobre o patrimônio (ROE)",
+            "valor": "21,48%"
+          },
+          {
+            "fato": "val.BR_ITAU.rating_codigo",
+            "nome": "Rating da cobertura (12 meses)",
+            "valor": "Venda"
+          },
+          {
+            "fato": "val.BR_ITAU.alpha_rel",
+            "nome": "Alpha de valuation relativo aos pares",
+            "valor": "-18,27%"
+          }
+        ],
+        "texto": "O ROE da base de mercado é 21,48%; o modelo indica rating Venda e alpha relativo de -18,27%. O retorno relativo limita a preferência pela ação.",
+        "titulo": "Prêmio da franquia"
+      }
+    ],
+    "publicada_em": "2026-10-09T01:46:27.969379+00:00",
+    "resumo": "A franquia diversificada e a rentabilidade sustentam a qualidade operacional. O alvo de R$ 47,95 ante R$ 49,11 oferece upside de -2,36% e alpha relativo de -18,27%. A leitura relativa é moderadamente negativa, com convicção média.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Deterioração do crédito ou aumento das despesas pode reduzir a rentabilidade; a manutenção da inadimplência no trimestre não elimina o risco do ciclo."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ITAU.alpha_rel",
+            "nome": "Alpha de valuation relativo aos pares",
+            "valor": "-18,27%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "Alpha relativo de -18,27% sinaliza risco de desempenho inferior aos pares, mesmo com lucro operacional resiliente."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": -1,
+    "stance_pt": "negativa",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Itaú Unibanco: rentabilidade resiliente, retorno relativo limitado",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "No 2T26, lucro recorrente, margem com clientes e crédito avançaram; a inadimplência longa permaneceu estável. O guidance de despesas foi elevado, enquanto os demais componentes foram mantidos (Itaú Unibanco, 2026-08-05).",
+    "vetores": [
+      {
+        "direcao": "positivo",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O avanço da margem com clientes sustenta os resultados. Despesas e custo do crédito limitam a transmissão para lucro (Itaú Unibanco, 2026-08-05).",
+        "vetor": "Margem com clientes e eficiência"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_ITAU.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,19%"
+          },
+          {
+            "fato": "val.BR_ITAU.sens.ke_mais_100bp",
+            "nome": "Upside com ke +1 p.p.",
+            "valor": "-10,46%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Ke de 12,19%; o upside com maior custo de capital é -10,46%.",
+        "vetor": "Custo de capital"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": -1
+}

@@ -1,0 +1,321 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-07",
+    "manifest_sha256": "7ccb52e98b36ca4332f2ff41691740d5239b3ca82f73d6f509e743ee0d28d650",
+    "modelo_as_of": "2026-10-07"
+  },
+  "conviccao": 2,
+  "data": "2026-10-08",
+  "hashes": {
+    "contexto": "deb4b87af107304d332565285bd6258b6f407188f2ddc7ba0f93d3f40c851f09",
+    "factbook": "18ea41b6e289a3ac398c17360cdc4474088f67cdff484e9ac2816e54ef425b3b",
+    "nota_json": "11c1d97271d32bbd35a4a091867c30732b055a2f7e2666c4bcc32ac520b37153"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_NU",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-12",
+  "published_at": "2026-10-09T01:45:02.971692+00:00",
+  "rendered": {
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-12",
+        "descricao": "Próxima divulgação: 2026-11-12; avaliar margens ajustadas ao risco e monetização.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "evento.BR_NU.proximo_resultado",
+            "nome": "Próxima divulgação de resultado",
+            "valor": "2026-11-12"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": null,
+        "descricao": "Execução do programa de recompra autorizado pelo conselho; efeito depende dos preços e da decisão da administração (Nu Holdings, 2026-06-04).",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "capital"
+      }
+    ],
+    "cenarios": {
+      "base": "O alvo base é US$ 8,55, com continuidade da franquia e sem extrapolar o crescimento recente.",
+      "otimista": "Maior monetização e qualidade de crédito resiliente favorecem o cenário otimista de US$ 9,68. A probabilidade implícita está indisponível.",
+      "pessimista": "Perdas de crédito e pressão de despesas motivam a leitura de risco; o cenário pessimista do modelo é US$ 7,59. A probabilidade implícita está indisponível."
+    },
+    "comentario_valuation": "O modelo tem confiança B, P/L à frente de 14,9x e preço sobre patrimônio de 5,7x. O consenso público aponta US$ 18,77, enquanto o retorno total esperado do modelo é -42,51%. O alpha relativo é -64,34%; a comparação setorial não captura integralmente a expansão internacional. Não há decomposição por método neste briefing para atribuir a divergência a um método específico.",
+    "conviccao": 2,
+    "dados_ate": "2026-10-08",
+    "dados_simulados": false,
+    "data": "2026-10-08",
+    "ficha": [
+      {
+        "fato": "val.BR_NU.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 15,58"
+      },
+      {
+        "fato": "val.BR_NU.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 8,55"
+      },
+      {
+        "fato": "val.BR_NU.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-45,12%"
+      },
+      {
+        "fato": "val.BR_NU.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_NU.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_NU.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 9,68"
+      },
+      {
+        "fato": "val.BR_NU.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_NU.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 7,59"
+      },
+      {
+        "fato": "val.BR_NU.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_NU.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,23%"
+      },
+      {
+        "fato": "val.BR_NU.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_NU.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.BR_NU.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-42,51%"
+      },
+      {
+        "fato": "val.BR_NU.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-64,34%"
+      },
+      {
+        "fato": "val.BR_NU.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "14,9x"
+      },
+      {
+        "fato": "val.BR_NU.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "5,7x"
+      },
+      {
+        "fato": "val.BR_NU.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 18,77"
+      },
+      {
+        "fato": "val.BR_NU.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-54,45%"
+      }
+    ],
+    "fontes": [
+      {
+        "id": "F1",
+        "instituicao": "SEC / Nu Holdings",
+        "publicado_em": "2026-08-13",
+        "tipo": "Regulador",
+        "titulo": "Resultado trimestral e discussão operacional",
+        "url": "https://www.sec.gov/Archives/edgar/data/1691493/000129281426004222/nupr2q26_6k.htm"
+      },
+      {
+        "id": "F2",
+        "instituicao": "SEC / Nu Holdings",
+        "publicado_em": "2026-06-04",
+        "tipo": "Regulador",
+        "titulo": "Autorização do programa de recompra de ações",
+        "url": "https://www.sec.gov/Archives/edgar/data/1691493/000129281426003326/nu20260604_6k.htm"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Deterioração persistente da margem ajustada ao risco.",
+      "Mudança na monetização e na qualidade de crédito no México.",
+      "Revisão material do alvo ou das premissas do modelo."
+    ],
+    "governanca": "O conselho autorizou recompras; sua execução permanece discricionária. A alocação deve equilibrar retorno ao acionista, crescimento e capital regulatório (Nu Holdings, 2026-06-04). Controle, free float e partes relacionadas requerem leitura adicional do relatório anual.",
+    "guidance": "não avaliado",
+    "issuer_id": "BR_NU",
+    "lacunas_de_dados": [
+      "Probabilidades implícitas dos cenários indisponíveis.",
+      "WACC indisponível.",
+      "Guidance formal e transcrição integral não conferidos.",
+      "Controle, free float e partes relacionadas não detalhados nesta leitura.",
+      "Taxa de aluguel e indicadores de short squeeze indisponíveis."
+    ],
+    "modelo_de_cobertura": "2026-10-07",
+    "negocio": "A Nu Holdings oferece serviços financeiros digitais no Brasil, México e Colômbia. Crédito, depósitos e serviços geram receitas complementares. A gestão relata aprofundamento do relacionamento principal e ampliação da oferta bancária no México (Nu Holdings, 2026-08-13).",
+    "nome": "Nu Holdings",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BB",
+        "nome": "Banco do Brasil"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      },
+      {
+        "issuer_id": "BR_INTER",
+        "nome": "Inter&Co"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O resultado de 2T26 mostra expansão de receitas e rentabilidade, acompanhada de melhora sazonal na inadimplência inicial. Julgamos que a relação bancária principal favorece monetização, mas a exposição a crédito sem garantia exige acompanhamento (Nu Holdings, 2026-08-13).",
+        "titulo": "Monetização e crédito"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_NU.rating_codigo",
+            "nome": "Rating da cobertura (12 meses)",
+            "valor": "Venda"
+          },
+          {
+            "fato": "val.BR_NU.alpha_rel",
+            "nome": "Alpha de valuation relativo aos pares",
+            "valor": "-64,34%"
+          }
+        ],
+        "texto": "O rating é Venda e o alpha relativo aos pares é -64,34%. O crescimento operacional, isoladamente, não afasta o desconto indicado pelo modelo.",
+        "titulo": "Preço e retorno relativo"
+      }
+    ],
+    "publicada_em": "2026-10-09T01:45:02.971692+00:00",
+    "resumo": "A monetização e a expansão no México sustentam o negócio, mas a disciplina de preço exige cautela. O modelo aponta alvo de US$ 8,55 ante US$ 15,58, com upside de -45,12%. A leitura relativa é negativa, com convicção baixa, diante da divergência com o consenso e do risco de crédito.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "A expansão intencional para crédito de maior risco pode elevar perdas e reduzir a margem ajustada ao risco (Nu Holdings, 2026-08-13)."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_NU.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-54,45%"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "alta",
+        "texto": "A divergência com o consenso público de -54,45% amplia o risco de erro de premissas e de persistência do prêmio de mercado."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": -1,
+    "stance_pt": "negativa",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Nu Holdings: expansão rentável com exigência elevada de valuation",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "No 2T26, a companhia relatou crescimento do crédito e dos depósitos, avanço da margem ajustada ao risco e maior rentabilidade. A melhora sazonal da inadimplência inicial coexistiu com aumento da inadimplência longa e das despesas. O tom da gestão é favorável à expansão internacional (Nu Holdings, 2026-08-13).",
+    "vetores": [
+      {
+        "direcao": "positivo",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A licença bancária amplia as possibilidades de oferta, segundo a gestão. A contribuição econômica dependerá de monetização e disciplina de crédito (Nu Holdings, 2026-08-13).",
+        "vetor": "Expansão no México"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_NU.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,23%"
+          },
+          {
+            "fato": "val.BR_NU.sens.ke_mais_100bp",
+            "nome": "Upside com ke +1 p.p.",
+            "valor": "-51,53%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Ke de 11,23%; o upside com maior custo de capital é -51,53%.",
+        "vetor": "Custo de capital"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": -1
+}

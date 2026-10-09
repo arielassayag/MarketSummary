@@ -1,0 +1,128 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_NU",
+  "data": "2026-10-08",
+  "tipo": "iniciacao",
+  "titulo": "Nu Holdings: expansão rentável com exigência elevada de valuation",
+  "resumo": "A monetização e a expansão no México sustentam o negócio, mas a disciplina de preço exige cautela. O modelo aponta alvo de {{fact:val.BR_NU.preco_alvo}} ante {{fact:val.BR_NU.preco}}, com upside de {{fact:val.BR_NU.upside}}. A leitura relativa é negativa, com convicção baixa, diante da divergência com o consenso e do risco de crédito.",
+  "negocio": "A Nu Holdings oferece serviços financeiros digitais no Brasil, México e Colômbia. Crédito, depósitos e serviços geram receitas complementares. A gestão relata aprofundamento do relacionamento principal e ampliação da oferta bancária no México (Nu Holdings, 2026-08-13).",
+  "pilares_tese": [
+    {
+      "titulo": "Monetização e crédito",
+      "texto": "O resultado de 2T26 mostra expansão de receitas e rentabilidade, acompanhada de melhora sazonal na inadimplência inicial. Julgamos que a relação bancária principal favorece monetização, mas a exposição a crédito sem garantia exige acompanhamento (Nu Holdings, 2026-08-13).",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Preço e retorno relativo",
+      "texto": "O rating é {{fact:val.BR_NU.rating_codigo}} e o alpha relativo aos pares é {{fact:val.BR_NU.alpha_rel}}. O crescimento operacional, isoladamente, não afasta o desconto indicado pelo modelo.",
+      "evidencias": [
+        "val.BR_NU.rating_codigo",
+        "val.BR_NU.alpha_rel"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Expansão no México",
+      "direcao": "positivo",
+      "sensibilidade": "alta",
+      "texto": "A licença bancária amplia as possibilidades de oferta, segundo a gestão. A contribuição econômica dependerá de monetização e disciplina de crédito (Nu Holdings, 2026-08-13).",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Custo de capital",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Ke de {{fact:val.BR_NU.ke}}; o upside com maior custo de capital é {{fact:val.BR_NU.sens.ke_mais_100bp}}.",
+      "evidencias": [
+        "val.BR_NU.ke",
+        "val.BR_NU.sens.ke_mais_100bp"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Próxima divulgação: {{fact:evento.BR_NU.proximo_resultado}}; avaliar margens ajustadas ao risco e monetização.",
+      "data": "2026-11-12",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "evento.BR_NU.proximo_resultado"
+      ]
+    },
+    {
+      "descricao": "Execução do programa de recompra autorizado pelo conselho; efeito depende dos preços e da decisão da administração (Nu Holdings, 2026-06-04).",
+      "data": null,
+      "tipo": "capital",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "A expansão intencional para crédito de maior risco pode elevar perdas e reduzir a margem ajustada ao risco (Nu Holdings, 2026-08-13).",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "A divergência com o consenso público de {{fact:val.BR_NU.diff_consenso}} amplia o risco de erro de premissas e de persistência do prêmio de mercado.",
+      "probabilidade": "alta",
+      "impacto": "alto",
+      "evidencias": [
+        "val.BR_NU.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Maior monetização e qualidade de crédito resiliente favorecem o cenário otimista de {{fact:val.BR_NU.alvo_otimista}}. A probabilidade implícita está indisponível.",
+    "base": "O alvo base é {{fact:val.BR_NU.preco_alvo}}, com continuidade da franquia e sem extrapolar o crescimento recente.",
+    "pessimista": "Perdas de crédito e pressão de despesas motivam a leitura de risco; o cenário pessimista do modelo é {{fact:val.BR_NU.alvo_pessimista}}. A probabilidade implícita está indisponível."
+  },
+  "comentario_valuation": "O modelo tem confiança {{fact:val.BR_NU.confianca_codigo}}, P/L à frente de {{fact:val.BR_NU.pl_fwd}} e preço sobre patrimônio de {{fact:val.BR_NU.pb}}. O consenso público aponta {{fact:val.BR_NU.consenso_alvo}}, enquanto o retorno total esperado do modelo é {{fact:val.BR_NU.etr}}. O alpha relativo é {{fact:val.BR_NU.alpha_rel}}; a comparação setorial não captura integralmente a expansão internacional. Não há decomposição por método neste briefing para atribuir a divergência a um método específico.",
+  "ultimo_resultado": "No 2T26, a companhia relatou crescimento do crédito e dos depósitos, avanço da margem ajustada ao risco e maior rentabilidade. A melhora sazonal da inadimplência inicial coexistiu com aumento da inadimplência longa e das despesas. O tom da gestão é favorável à expansão internacional (Nu Holdings, 2026-08-13).",
+  "guidance": "nd",
+  "tom_gestao": "positivo",
+  "governanca": "O conselho autorizou recompras; sua execução permanece discricionária. A alocação deve equilibrar retorno ao acionista, crescimento e capital regulatório (Nu Holdings, 2026-06-04). Controle, free float e partes relacionadas requerem leitura adicional do relatório anual.",
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Deterioração persistente da margem ajustada ao risco.",
+    "Mudança na monetização e na qualidade de crédito no México.",
+    "Revisão material do alvo ou das premissas do modelo."
+  ],
+  "lacunas_de_dados": [
+    "Probabilidades implícitas dos cenários indisponíveis.",
+    "WACC indisponível.",
+    "Guidance formal e transcrição integral não conferidos.",
+    "Controle, free float e partes relacionadas não detalhados nesta leitura.",
+    "Taxa de aluguel e indicadores de short squeeze indisponíveis."
+  ],
+  "stance": -1,
+  "conviccao": 2,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "regulatorio",
+      "instituicao": "SEC / Nu Holdings",
+      "titulo": "Resultado trimestral e discussão operacional",
+      "url": "https://www.sec.gov/Archives/edgar/data/1691493/000129281426004222/nupr2q26_6k.htm",
+      "publicado_em": "2026-08-13"
+    },
+    {
+      "id": "F2",
+      "tipo": "regulatorio",
+      "instituicao": "SEC / Nu Holdings",
+      "titulo": "Autorização do programa de recompra de ações",
+      "url": "https://www.sec.gov/Archives/edgar/data/1691493/000129281426003326/nu20260604_6k.htm",
+      "publicado_em": "2026-06-04"
+    }
+  ]
+}

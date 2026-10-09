@@ -1,0 +1,313 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-07",
+    "manifest_sha256": "7ccb52e98b36ca4332f2ff41691740d5239b3ca82f73d6f509e743ee0d28d650",
+    "modelo_as_of": "2026-10-07"
+  },
+  "conviccao": 2,
+  "data": "2026-10-08",
+  "hashes": {
+    "contexto": "13098c7151e0aaf8f7e2bf41733da913e92bd693ae68162bcae9ca0c91113360",
+    "factbook": "04a578c0c087adccf2bc02ae757e669632a149b953781ddf99d82e4358b9e281",
+    "nota_json": "7e2dbe5b90a34d1e162b07dc7d3c816b5d908d228ba9ab99392a5a186665cf1d"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_EMBRAER",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-10",
+  "published_at": "2026-10-09T01:47:46.844006+00:00",
+  "rendered": {
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-10",
+        "descricao": "Resultado seguinte em 2026-11-10; conferir caixa, margem e conversão das entregas.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "evento.BR_EMBRAER.proximo_resultado",
+            "nome": "Próxima divulgação de resultado",
+            "valor": "2026-11-10"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Conversão progressiva de pedidos sem extrapolar créditos extraordinários. Alvo de R$ 62,31.",
+      "otimista": "Execução de entregas e margens resilientes sustentam a leitura otimista. Alvo de R$ 94,67, probabilidade implícita de 46,68%.",
+      "pessimista": "Atrasos e pressão de custos enfraquecem caixa e margem. Alvo de R$ 33,08, probabilidade implícita de 0,37%."
+    },
+    "comentario_valuation": "P/L à frente de 18,9x, ke de 10,32% e WACC de 9,54%. A confiança é B e o retorno total esperado é -29,81%. O consenso público tem alvo de R$ 115,73. A dispersão entre métodos exige cautela; o briefing não permite atribuir o peso de cada método nem reconciliar a valorização de defesa, serviços e aviação separadamente.",
+    "conviccao": 2,
+    "dados_ate": "2026-10-08",
+    "dados_simulados": false,
+    "data": "2026-10-08",
+    "ficha": [
+      {
+        "fato": "val.BR_EMBRAER.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 89,34"
+      },
+      {
+        "fato": "val.BR_EMBRAER.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 62,31"
+      },
+      {
+        "fato": "val.BR_EMBRAER.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-30,26%"
+      },
+      {
+        "fato": "val.BR_EMBRAER.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_EMBRAER.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_EMBRAER.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 94,67"
+      },
+      {
+        "fato": "val.BR_EMBRAER.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "46,68%"
+      },
+      {
+        "fato": "val.BR_EMBRAER.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 33,08"
+      },
+      {
+        "fato": "val.BR_EMBRAER.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "0,37%"
+      },
+      {
+        "fato": "val.BR_EMBRAER.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,32%"
+      },
+      {
+        "fato": "val.BR_EMBRAER.wacc",
+        "rotulo": "WACC",
+        "valor": "9,54%"
+      },
+      {
+        "fato": "val.BR_EMBRAER.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_EMBRAER.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-29,81%"
+      },
+      {
+        "fato": "val.BR_EMBRAER.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-63,23%"
+      },
+      {
+        "fato": "val.BR_EMBRAER.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "18,9x"
+      },
+      {
+        "fato": "val.BR_EMBRAER.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "3,6x"
+      },
+      {
+        "fato": "val.BR_EMBRAER.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 115,73"
+      },
+      {
+        "fato": "val.BR_EMBRAER.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-46,17%"
+      }
+    ],
+    "fontes": [
+      {
+        "id": "F1",
+        "instituicao": "Embraer",
+        "publicado_em": "2026-08-10",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado trimestral e atualização de metas financeiras",
+        "url": "https://www.embraer.com/media-center/en?detail=28090&mediatype=NEWS&page=1"
+      },
+      {
+        "id": "F2",
+        "instituicao": "Embraer",
+        "publicado_em": "2026-10-02",
+        "tipo": "Relações com investidores",
+        "titulo": "Atualização das entregas e nivelamento da produção",
+        "url": "https://embraer.com/media-center/pt?detail=32874&mediatype=NEWS"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Mudança no guidance de margem ou caixa.",
+      "Cancelamentos relevantes ou atrasos nas entregas.",
+      "Revisão material das premissas e da dispersão do modelo."
+    ],
+    "governanca": "A alocação entre investimentos industriais e Eve exige acompanhamento da geração de caixa e da exposição a desenvolvimento. A companhia divulga investimentos com e sem Eve (Embraer, 2026-08-10). Controle, free float e partes relacionadas não foram aprofundados.",
+    "guidance": "elevado",
+    "issuer_id": "BR_EMBRAER",
+    "lacunas_de_dados": [
+      "Transcrição integral e governança societária não aprofundadas.",
+      "Decomposição dos métodos e valuation por segmento ausentes no briefing.",
+      "Taxa de aluguel e indicadores de short squeeze indisponíveis."
+    ],
+    "modelo_de_cobertura": "2026-10-07",
+    "negocio": "A Embraer desenvolve aeronaves e sistemas para aviação comercial, executiva e defesa, além de serviços e suporte. A carteira de pedidos dá visibilidade, enquanto entregas e recebimentos determinam a conversão em caixa (Embraer, 2026-08-10).",
+    "nome": "Embraer",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ECORODOVIAS",
+        "nome": "EcoRodovias"
+      },
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_LOCALIZA",
+        "nome": "Localiza"
+      },
+      {
+        "issuer_id": "BR_MARCOPOLO",
+        "nome": "Marcopolo"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_MOTIVA",
+        "nome": "Motiva (ex-CCR)"
+      },
+      {
+        "issuer_id": "BR_RANDON",
+        "nome": "Randoncorp"
+      },
+      {
+        "issuer_id": "BR_SIMPAR",
+        "nome": "Simpar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A divulgação de entregas de 3T26 aponta avanço e continuidade do nivelamento da produção. Julgamos que a menor concentração de entregas favorece previsibilidade, condicionada à disponibilidade de componentes (Embraer, 2026-10-02).",
+        "titulo": "Execução industrial"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_EMBRAER.rating_codigo",
+            "nome": "Rating da cobertura (12 meses)",
+            "valor": "Venda"
+          },
+          {
+            "fato": "val.BR_EMBRAER.alpha_rel",
+            "nome": "Alpha de valuation relativo aos pares",
+            "valor": "-63,23%"
+          }
+        ],
+        "texto": "O rating Venda e o alpha relativo de -63,23% limitam a preferência pela ação. Pares industriais diversificados oferecem comparação imperfeita para uma fabricante aeroespacial.",
+        "titulo": "Disciplina de preço"
+      }
+    ],
+    "publicada_em": "2026-10-09T01:47:46.844006+00:00",
+    "resumo": "A execução industrial e a carteira de pedidos favorecem a geração de caixa. O modelo, contudo, aponta alvo de R$ 62,31 e upside de -30,26%, com alpha relativo de -63,23%. A leitura relativa é negativa, com convicção baixa diante da dispersão e dos pares heterogêneos.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Atrasos de fornecedores ou de aceitação de aeronaves podem deslocar receitas e recebimentos; julgamento de risco da execução industrial."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_EMBRAER.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "36,52%"
+          },
+          {
+            "fato": "val.BR_EMBRAER.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-46,17%"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "alta",
+        "texto": "Dispersão entre métodos de 36,52% e diferença contra consenso de -46,17% reduzem a convicção da leitura de preço."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": -1,
+    "stance_pt": "negativa",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Embraer: entregas e carteira de pedidos contrastam com o valuation",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "No 2T26, receitas, margem e lucro ajustado cresceram; antecipações de vendas e crédito tributário extraordinário favoreceram o caixa. A companhia elevou as perspectivas de margem e fluxo de caixa. A atualização de entregas de 3T26 confirmou avanço operacional (Embraer, 2026-08-10 e 2026-10-02).",
+    "vetores": [
+      {
+        "direcao": "positivo",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A melhora operacional contribuiu para elevar o guidance de margem e caixa. Parte da geração no trimestre refletiu crédito tributário extraordinário, exigindo separação da recorrência (Embraer, 2026-08-10).",
+        "vetor": "Conversão de pedidos em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_EMBRAER.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,32%"
+          },
+          {
+            "fato": "val.BR_EMBRAER.sens.ke_mais_100bp",
+            "nome": "Upside com ke +1 p.p.",
+            "valor": "-41,92%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Ke de 10,32%; o upside com maior custo de capital é -41,92%.",
+        "vetor": "Custo de capital"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": -1
+}

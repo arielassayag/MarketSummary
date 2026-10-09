@@ -1,0 +1,325 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-07",
+    "manifest_sha256": "7ccb52e98b36ca4332f2ff41691740d5239b3ca82f73d6f509e743ee0d28d650",
+    "modelo_as_of": "2026-10-07"
+  },
+  "conviccao": 2,
+  "data": "2026-10-08",
+  "hashes": {
+    "contexto": "5a4aa04f6768b722869ad72b300981ef575b777be1279a634e8093f6501cab13",
+    "factbook": "eff32c5823b87002dd322001f83f0e1d6bdb064070128ac44a2a77b0da4a2310",
+    "nota_json": "d0af695889c5d2c7f0940141dca792112050e592a817dfc4b926184076d3b9d3"
+  },
+  "is_synthetic": false,
+  "issuer_id": "LA_PAAS",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-16",
+  "published_at": "2026-10-09T01:53:16.643022+00:00",
+  "rendered": {
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-04",
+        "descricao": "Resultado em 2026-11-04; avaliar produção de ouro e custos.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "evento.LA_PAAS.proximo_resultado",
+            "nome": "Próxima divulgação de resultado",
+            "valor": "2026-11-04"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Metas operacionais com custos sob acompanhamento. Alvo de US$ 24,98.",
+      "otimista": "Produção resiliente e metais favoráveis sustentam a leitura otimista de US$ 31,92. Probabilidade implícita indisponível.",
+      "pessimista": "Pressão de custos e menor produção sustentam a leitura adversa de US$ 18,30. Probabilidade implícita indisponível."
+    },
+    "comentario_valuation": "O modelo tem confiança B, ke de 12,83% e WACC de 12,57%. O P/L à frente é 10,2x e o retorno total esperado é -41,87%. O consenso público tem alvo de US$ 64,53. A dispersão e a diferença de exposição aos metais entre pares exigem cautela. O briefing não detalha os métodos por mina ou reservas.",
+    "conviccao": 2,
+    "dados_ate": "2026-10-08",
+    "dados_simulados": false,
+    "data": "2026-10-08",
+    "ficha": [
+      {
+        "fato": "val.LA_PAAS.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 44,35"
+      },
+      {
+        "fato": "val.LA_PAAS.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 24,98"
+      },
+      {
+        "fato": "val.LA_PAAS.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-43,68%"
+      },
+      {
+        "fato": "val.LA_PAAS.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.LA_PAAS.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.LA_PAAS.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 31,92"
+      },
+      {
+        "fato": "val.LA_PAAS.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.LA_PAAS.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 18,30"
+      },
+      {
+        "fato": "val.LA_PAAS.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.LA_PAAS.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,83%"
+      },
+      {
+        "fato": "val.LA_PAAS.wacc",
+        "rotulo": "WACC",
+        "valor": "12,57%"
+      },
+      {
+        "fato": "val.LA_PAAS.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.LA_PAAS.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-41,87%"
+      },
+      {
+        "fato": "val.LA_PAAS.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-48,94%"
+      },
+      {
+        "fato": "val.LA_PAAS.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "10,2x"
+      },
+      {
+        "fato": "val.LA_PAAS.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,5x"
+      },
+      {
+        "fato": "val.LA_PAAS.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 64,53"
+      },
+      {
+        "fato": "val.LA_PAAS.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-61,29%"
+      }
+    ],
+    "fontes": [
+      {
+        "id": "F1",
+        "instituicao": "Pan American Silver",
+        "publicado_em": "2026-08-12",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado trimestral e perspectivas operacionais",
+        "url": "https://panamericansilver.com/news/pan-american-silver-reports-second-quarter-2026-financial-results-2/"
+      },
+      {
+        "id": "F2",
+        "instituicao": "Pan American Silver",
+        "publicado_em": "2026-10-07",
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário da próxima divulgação trimestral",
+        "url": "https://panamericansilver.com/news/pan-american-silver-to-announce-third-quarter-2026-unaudited-financial-results/"
+      },
+      {
+        "id": "F3",
+        "instituicao": "Pan American Silver",
+        "publicado_em": "2026-10-07",
+        "tipo": "Relações com investidores",
+        "titulo": "Saída anunciada de integrante do conselho",
+        "url": "https://panamericansilver.com/news/pan-american-silver-announces-director-retirement/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Redução das metas de produção ou aumento persistente de custos.",
+      "Mudança material dos preços de prata e ouro.",
+      "Revisão das premissas ou dos projetos de crescimento."
+    ],
+    "governanca": "A companhia anunciou a saída de Charles Jeannes do conselho, efetiva em 2026-10-31 (Pan American Silver, 2026-10-07). Retorno ao acionista e investimento em crescimento devem preservar liquidez. Controle, free float e partes relacionadas não foram aprofundados.",
+    "guidance": "mantido",
+    "issuer_id": "LA_PAAS",
+    "lacunas_de_dados": [
+      "Probabilidades implícitas indisponíveis.",
+      "Transcrição integral e análise por mina não aprofundadas.",
+      "Controle, free float e partes relacionadas não detalhados.",
+      "Taxa de aluguel e risco de short squeeze indisponíveis."
+    ],
+    "modelo_de_cobertura": "2026-10-07",
+    "negocio": "A Pan American Silver produz prata e ouro nas Américas, com operações próprias e participações em minas. A exposição a metais preciosos distingue a companhia de pares de siderurgia e celulose (Pan American Silver, 2026-10-07).",
+    "nome": "Pan American Silver",
+    "o_que_mudou": null,
+    "pais": "Regional (América Latina)",
+    "pares": [
+      {
+        "issuer_id": "BR_BRADESPAR",
+        "nome": "Bradespar"
+      },
+      {
+        "issuer_id": "BR_CMIN",
+        "nome": "CSN Mineração"
+      },
+      {
+        "issuer_id": "BR_CSN",
+        "nome": "CSN Siderúrgica Nacional"
+      },
+      {
+        "issuer_id": "BR_ERO",
+        "nome": "Ero Copper"
+      },
+      {
+        "issuer_id": "BR_GERDAU",
+        "nome": "Gerdau"
+      },
+      {
+        "issuer_id": "BR_GOAU",
+        "nome": "Metalúrgica Gerdau"
+      },
+      {
+        "issuer_id": "BR_SUZANO",
+        "nome": "Suzano"
+      },
+      {
+        "issuer_id": "BR_UNIPAR",
+        "nome": "Unipar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O resultado de 2T26 aponta forte caixa e contribuição de La Colorada e Juanicipio. A produção de ouro ficou abaixo da perspectiva trimestral, com maior concentração esperada no fim do ano (Pan American Silver, 2026-08-12).",
+        "titulo": "Caixa e execução"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.LA_PAAS.rating_codigo",
+            "nome": "Rating da cobertura (12 meses)",
+            "valor": "Venda"
+          },
+          {
+            "fato": "val.LA_PAAS.alpha_rel",
+            "nome": "Alpha de valuation relativo aos pares",
+            "valor": "-48,94%"
+          }
+        ],
+        "texto": "Rating Venda e alpha relativo de -48,94% favorecem prudência. A comparação setorial não substitui análise por mina e preço dos metais.",
+        "titulo": "Preço e comparação setorial"
+      }
+    ],
+    "publicada_em": "2026-10-09T01:53:16.643022+00:00",
+    "resumo": "A geração de caixa e Juanicipio sustentam o negócio, mas custos e execução do ouro exigem atenção. O modelo aponta alvo de US$ 24,98 e upside de -43,68%. A leitura relativa é negativa, com convicção baixa pela divergência com o consenso e pela heterogeneidade dos pares.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "alta",
+        "texto": "Menor produção de ouro e custos elevados podem limitar caixa mesmo com preços de metais favoráveis (Pan American Silver, 2026-08-12)."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.LA_PAAS.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-61,29%"
+          },
+          {
+            "fato": "val.LA_PAAS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "38,81%"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "alta",
+        "texto": "Diferença com consenso de -61,29% e dispersão de 38,81% limitam a convicção de valuation."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": -1,
+    "stance_pt": "negativa",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Pan American Silver: caixa favorável, com sensibilidade aos metais e custos",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "No 2T26, a produção de prata ficou no limite superior da perspectiva trimestral e a de ouro abaixo da faixa. A companhia manteve as faixas anuais operacionais, mas indicou ouro no limite inferior e custos do ouro no superior; elevou a expectativa de tributos pagos (Pan American Silver, 2026-08-12).",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Preços elevados favorecem receitas, mas royalties, consumíveis e custos de mão de obra pressionam custos. Julgamos alta a sensibilidade econômica aos metais (Pan American Silver, 2026-08-12).",
+        "vetor": "Metais, custos e produção"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.LA_PAAS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,83%"
+          },
+          {
+            "fato": "val.LA_PAAS.sens.ke_mais_100bp",
+            "nome": "Upside com ke +1 p.p.",
+            "valor": "-46,34%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Ke de 12,83%; o upside com maior custo de capital é -46,34%.",
+        "vetor": "Custo de capital"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": -1
+}

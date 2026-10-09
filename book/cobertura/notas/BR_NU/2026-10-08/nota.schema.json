@@ -1,0 +1,529 @@
+{
+  "$defs": {
+    "Catalisador": {
+      "additionalProperties": false,
+      "properties": {
+        "data": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "AAAA-MM-DD entre a data da nota e 12 meses depois; null se sem data.",
+          "title": "Data"
+        },
+        "descricao": {
+          "maxLength": 300,
+          "minLength": 1,
+          "title": "Descricao",
+          "type": "string"
+        },
+        "direcao": {
+          "enum": [
+            "positivo",
+            "negativo",
+            "incerto"
+          ],
+          "title": "Direcao",
+          "type": "string"
+        },
+        "evidencias": {
+          "description": "Ids de evidência: fact_id do FactBook do emissor ou id de uma fonte (F1…F20).",
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 8,
+          "title": "Evidencias",
+          "type": "array"
+        },
+        "tipo": {
+          "enum": [
+            "resultado",
+            "guidance",
+            "assembleia",
+            "dia_do_investidor",
+            "regulatorio",
+            "m_a",
+            "capital",
+            "dividendos",
+            "macro",
+            "outro"
+          ],
+          "title": "Tipo",
+          "type": "string"
+        }
+      },
+      "required": [
+        "descricao",
+        "tipo",
+        "direcao"
+      ],
+      "title": "Catalisador",
+      "type": "object"
+    },
+    "Cenarios": {
+      "additionalProperties": false,
+      "properties": {
+        "base": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Base",
+          "type": "string"
+        },
+        "otimista": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Otimista",
+          "type": "string"
+        },
+        "pessimista": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Pessimista",
+          "type": "string"
+        }
+      },
+      "required": [
+        "otimista",
+        "base",
+        "pessimista"
+      ],
+      "title": "Cenarios",
+      "type": "object"
+    },
+    "FonteNota": {
+      "additionalProperties": false,
+      "description": "Fonte pública consultada (dado não confiável; a URL só aparece aqui, nunca no texto).",
+      "properties": {
+        "id": {
+          "description": "F1 … F20",
+          "pattern": "^F(?:[1-9]|1[0-9]|20)$",
+          "title": "Id",
+          "type": "string"
+        },
+        "instituicao": {
+          "description": "Quem publicou: CVM, SEC, B3, RI da empresa, BCB, …",
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Instituicao",
+          "type": "string"
+        },
+        "publicado_em": {
+          "description": "Data de publicação (não posterior à nota).",
+          "format": "date",
+          "title": "Publicado Em",
+          "type": "string"
+        },
+        "tipo": {
+          "enum": [
+            "regulatorio",
+            "relacoes_com_investidores",
+            "bolsa",
+            "banco_central",
+            "estatistica_oficial",
+            "dados_publicos",
+            "imprensa",
+            "outro"
+          ],
+          "title": "Tipo",
+          "type": "string"
+        },
+        "titulo": {
+          "description": "Descrição curta do documento, sem números.",
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Titulo",
+          "type": "string"
+        },
+        "url": {
+          "description": "URL https pública.",
+          "maxLength": 500,
+          "minLength": 12,
+          "title": "Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "tipo",
+        "instituicao",
+        "titulo",
+        "url",
+        "publicado_em"
+      ],
+      "title": "FonteNota",
+      "type": "object"
+    },
+    "PilarTese": {
+      "additionalProperties": false,
+      "properties": {
+        "evidencias": {
+          "description": "Ids de evidência: fact_id do FactBook do emissor ou id de uma fonte (F1…F20).",
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Evidencias",
+          "type": "array"
+        },
+        "texto": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Texto",
+          "type": "string"
+        },
+        "titulo": {
+          "maxLength": 90,
+          "minLength": 1,
+          "title": "Titulo",
+          "type": "string"
+        }
+      },
+      "required": [
+        "titulo",
+        "texto",
+        "evidencias"
+      ],
+      "title": "PilarTese",
+      "type": "object"
+    },
+    "RiscoNota": {
+      "additionalProperties": false,
+      "properties": {
+        "evidencias": {
+          "description": "Ids de evidência: fact_id do FactBook do emissor ou id de uma fonte (F1…F20).",
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 8,
+          "title": "Evidencias",
+          "type": "array"
+        },
+        "impacto": {
+          "enum": [
+            "alto",
+            "medio",
+            "baixo"
+          ],
+          "title": "Impacto",
+          "type": "string"
+        },
+        "probabilidade": {
+          "enum": [
+            "alta",
+            "media",
+            "baixa"
+          ],
+          "title": "Probabilidade",
+          "type": "string"
+        },
+        "texto": {
+          "maxLength": 300,
+          "minLength": 1,
+          "title": "Texto",
+          "type": "string"
+        }
+      },
+      "required": [
+        "texto",
+        "probabilidade",
+        "impacto"
+      ],
+      "title": "RiscoNota",
+      "type": "object"
+    },
+    "VetorValor": {
+      "additionalProperties": false,
+      "properties": {
+        "direcao": {
+          "enum": [
+            "positivo",
+            "negativo",
+            "incerto"
+          ],
+          "title": "Direcao",
+          "type": "string"
+        },
+        "evidencias": {
+          "description": "Ids de evidência: fact_id do FactBook do emissor ou id de uma fonte (F1…F20).",
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 8,
+          "title": "Evidencias",
+          "type": "array"
+        },
+        "sensibilidade": {
+          "enum": [
+            "alta",
+            "media",
+            "baixa"
+          ],
+          "title": "Sensibilidade",
+          "type": "string"
+        },
+        "texto": {
+          "maxLength": 400,
+          "minLength": 1,
+          "title": "Texto",
+          "type": "string"
+        },
+        "vetor": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Vetor",
+          "type": "string"
+        }
+      },
+      "required": [
+        "vetor",
+        "direcao",
+        "sensibilidade",
+        "texto"
+      ],
+      "title": "VetorValor",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Nota de pesquisa do emissor (pt-BR; números só como {{fact:<id>}}; fontes públicas).",
+  "properties": {
+    "catalisadores": {
+      "items": {
+        "$ref": "#/$defs/Catalisador"
+      },
+      "maxItems": 10,
+      "title": "Catalisadores",
+      "type": "array"
+    },
+    "cenarios": {
+      "$ref": "#/$defs/Cenarios"
+    },
+    "comentario_valuation": {
+      "maxLength": 1500,
+      "minLength": 1,
+      "title": "Comentario Valuation",
+      "type": "string"
+    },
+    "conviccao": {
+      "description": "1 baixa … 5 máxima.",
+      "maximum": 5,
+      "minimum": 1,
+      "title": "Conviccao",
+      "type": "integer"
+    },
+    "data": {
+      "description": "Data da nota (AAAA-MM-DD).",
+      "format": "date",
+      "title": "Data",
+      "type": "string"
+    },
+    "fontes": {
+      "items": {
+        "$ref": "#/$defs/FonteNota"
+      },
+      "maxItems": 20,
+      "title": "Fontes",
+      "type": "array"
+    },
+    "gatilhos_revisao": {
+      "items": {
+        "maxLength": 220,
+        "minLength": 1,
+        "type": "string"
+      },
+      "maxItems": 6,
+      "minItems": 1,
+      "title": "Gatilhos Revisao",
+      "type": "array"
+    },
+    "governanca": {
+      "maxLength": 800,
+      "minLength": 1,
+      "title": "Governanca",
+      "type": "string"
+    },
+    "guidance": {
+      "default": "nd",
+      "enum": [
+        "elevado",
+        "mantido",
+        "reduzido",
+        "retirado",
+        "sem_guidance",
+        "nd"
+      ],
+      "title": "Guidance",
+      "type": "string"
+    },
+    "issuer_id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Issuer Id",
+      "type": "string"
+    },
+    "lacunas_de_dados": {
+      "items": {
+        "maxLength": 200,
+        "minLength": 1,
+        "type": "string"
+      },
+      "maxItems": 8,
+      "title": "Lacunas De Dados",
+      "type": "array"
+    },
+    "mind": {
+      "description": "Mente que escreveu a nota.",
+      "enum": [
+        "claude-code",
+        "codex",
+        "api",
+        "demo",
+        "chatgpt",
+        "gemini",
+        "outro"
+      ],
+      "title": "Mind",
+      "type": "string"
+    },
+    "modelo_ia": {
+      "anyOf": [
+        {
+          "maxLength": 80,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Governança: identificação do modelo de IA usado (fica no registro, nunca no texto publicado).",
+      "title": "Modelo Ia"
+    },
+    "negocio": {
+      "maxLength": 1500,
+      "minLength": 1,
+      "title": "Negocio",
+      "type": "string"
+    },
+    "o_que_mudou": {
+      "anyOf": [
+        {
+          "maxLength": 800,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "O Que Mudou"
+    },
+    "pilares_tese": {
+      "items": {
+        "$ref": "#/$defs/PilarTese"
+      },
+      "maxItems": 5,
+      "minItems": 1,
+      "title": "Pilares Tese",
+      "type": "array"
+    },
+    "resumo": {
+      "maxLength": 1200,
+      "minLength": 1,
+      "title": "Resumo",
+      "type": "string"
+    },
+    "riscos": {
+      "items": {
+        "$ref": "#/$defs/RiscoNota"
+      },
+      "maxItems": 8,
+      "minItems": 1,
+      "title": "Riscos",
+      "type": "array"
+    },
+    "stance": {
+      "description": "-2 fortemente negativa … +2 fortemente positiva (retorno relativo aos pares).",
+      "maximum": 2,
+      "minimum": -2,
+      "title": "Stance",
+      "type": "integer"
+    },
+    "tipo": {
+      "enum": [
+        "iniciacao",
+        "atualizacao",
+        "pos_resultado",
+        "evento"
+      ],
+      "title": "Tipo",
+      "type": "string"
+    },
+    "titulo": {
+      "maxLength": 160,
+      "minLength": 10,
+      "title": "Titulo",
+      "type": "string"
+    },
+    "tom_gestao": {
+      "default": "nd",
+      "enum": [
+        "positivo",
+        "neutro",
+        "negativo",
+        "nd"
+      ],
+      "title": "Tom Gestao",
+      "type": "string"
+    },
+    "ultimo_resultado": {
+      "anyOf": [
+        {
+          "maxLength": 1200,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Ultimo Resultado"
+    },
+    "vetores": {
+      "items": {
+        "$ref": "#/$defs/VetorValor"
+      },
+      "maxItems": 8,
+      "minItems": 1,
+      "title": "Vetores",
+      "type": "array"
+    }
+  },
+  "required": [
+    "mind",
+    "issuer_id",
+    "data",
+    "tipo",
+    "titulo",
+    "resumo",
+    "negocio",
+    "pilares_tese",
+    "vetores",
+    "riscos",
+    "cenarios",
+    "comentario_valuation",
+    "governanca",
+    "gatilhos_revisao",
+    "stance",
+    "conviccao"
+  ],
+  "title": "NotaEmpresa",
+  "type": "object"
+}

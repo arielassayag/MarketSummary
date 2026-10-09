@@ -1,0 +1,118 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_EMBRAER",
+  "data": "2026-10-08",
+  "tipo": "iniciacao",
+  "titulo": "Embraer: entregas e carteira de pedidos contrastam com o valuation",
+  "resumo": "A execução industrial e a carteira de pedidos favorecem a geração de caixa. O modelo, contudo, aponta alvo de {{fact:val.BR_EMBRAER.preco_alvo}} e upside de {{fact:val.BR_EMBRAER.upside}}, com alpha relativo de {{fact:val.BR_EMBRAER.alpha_rel}}. A leitura relativa é negativa, com convicção baixa diante da dispersão e dos pares heterogêneos.",
+  "negocio": "A Embraer desenvolve aeronaves e sistemas para aviação comercial, executiva e defesa, além de serviços e suporte. A carteira de pedidos dá visibilidade, enquanto entregas e recebimentos determinam a conversão em caixa (Embraer, 2026-08-10).",
+  "pilares_tese": [
+    {
+      "titulo": "Execução industrial",
+      "texto": "A divulgação de entregas de 3T26 aponta avanço e continuidade do nivelamento da produção. Julgamos que a menor concentração de entregas favorece previsibilidade, condicionada à disponibilidade de componentes (Embraer, 2026-10-02).",
+      "evidencias": [
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Disciplina de preço",
+      "texto": "O rating {{fact:val.BR_EMBRAER.rating_codigo}} e o alpha relativo de {{fact:val.BR_EMBRAER.alpha_rel}} limitam a preferência pela ação. Pares industriais diversificados oferecem comparação imperfeita para uma fabricante aeroespacial.",
+      "evidencias": [
+        "val.BR_EMBRAER.rating_codigo",
+        "val.BR_EMBRAER.alpha_rel"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão de pedidos em caixa",
+      "direcao": "positivo",
+      "sensibilidade": "alta",
+      "texto": "A melhora operacional contribuiu para elevar o guidance de margem e caixa. Parte da geração no trimestre refletiu crédito tributário extraordinário, exigindo separação da recorrência (Embraer, 2026-08-10).",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Custo de capital",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Ke de {{fact:val.BR_EMBRAER.ke}}; o upside com maior custo de capital é {{fact:val.BR_EMBRAER.sens.ke_mais_100bp}}.",
+      "evidencias": [
+        "val.BR_EMBRAER.ke",
+        "val.BR_EMBRAER.sens.ke_mais_100bp"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Resultado seguinte em {{fact:evento.BR_EMBRAER.proximo_resultado}}; conferir caixa, margem e conversão das entregas.",
+      "data": "2026-11-10",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "evento.BR_EMBRAER.proximo_resultado"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Atrasos de fornecedores ou de aceitação de aeronaves podem deslocar receitas e recebimentos; julgamento de risco da execução industrial.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2"
+      ]
+    },
+    {
+      "texto": "Dispersão entre métodos de {{fact:val.BR_EMBRAER.cv_metodos}} e diferença contra consenso de {{fact:val.BR_EMBRAER.diff_consenso}} reduzem a convicção da leitura de preço.",
+      "probabilidade": "alta",
+      "impacto": "alto",
+      "evidencias": [
+        "val.BR_EMBRAER.cv_metodos",
+        "val.BR_EMBRAER.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Execução de entregas e margens resilientes sustentam a leitura otimista. Alvo de {{fact:val.BR_EMBRAER.alvo_otimista}}, probabilidade implícita de {{fact:val.BR_EMBRAER.prob_otimista}}.",
+    "base": "Conversão progressiva de pedidos sem extrapolar créditos extraordinários. Alvo de {{fact:val.BR_EMBRAER.preco_alvo}}.",
+    "pessimista": "Atrasos e pressão de custos enfraquecem caixa e margem. Alvo de {{fact:val.BR_EMBRAER.alvo_pessimista}}, probabilidade implícita de {{fact:val.BR_EMBRAER.prob_pessimista}}."
+  },
+  "comentario_valuation": "P/L à frente de {{fact:val.BR_EMBRAER.pl_fwd}}, ke de {{fact:val.BR_EMBRAER.ke}} e WACC de {{fact:val.BR_EMBRAER.wacc}}. A confiança é {{fact:val.BR_EMBRAER.confianca_codigo}} e o retorno total esperado é {{fact:val.BR_EMBRAER.etr}}. O consenso público tem alvo de {{fact:val.BR_EMBRAER.consenso_alvo}}. A dispersão entre métodos exige cautela; o briefing não permite atribuir o peso de cada método nem reconciliar a valorização de defesa, serviços e aviação separadamente.",
+  "ultimo_resultado": "No 2T26, receitas, margem e lucro ajustado cresceram; antecipações de vendas e crédito tributário extraordinário favoreceram o caixa. A companhia elevou as perspectivas de margem e fluxo de caixa. A atualização de entregas de 3T26 confirmou avanço operacional (Embraer, 2026-08-10 e 2026-10-02).",
+  "guidance": "elevado",
+  "tom_gestao": "positivo",
+  "governanca": "A alocação entre investimentos industriais e Eve exige acompanhamento da geração de caixa e da exposição a desenvolvimento. A companhia divulga investimentos com e sem Eve (Embraer, 2026-08-10). Controle, free float e partes relacionadas não foram aprofundados.",
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Mudança no guidance de margem ou caixa.",
+    "Cancelamentos relevantes ou atrasos nas entregas.",
+    "Revisão material das premissas e da dispersão do modelo."
+  ],
+  "lacunas_de_dados": [
+    "Transcrição integral e governança societária não aprofundadas.",
+    "Decomposição dos métodos e valuation por segmento ausentes no briefing.",
+    "Taxa de aluguel e indicadores de short squeeze indisponíveis."
+  ],
+  "stance": -1,
+  "conviccao": 2,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Embraer",
+      "titulo": "Resultado trimestral e atualização de metas financeiras",
+      "url": "https://www.embraer.com/media-center/en?detail=28090&mediatype=NEWS&page=1",
+      "publicado_em": "2026-08-10"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Embraer",
+      "titulo": "Atualização das entregas e nivelamento da produção",
+      "url": "https://embraer.com/media-center/pt?detail=32874&mediatype=NEWS",
+      "publicado_em": "2026-10-02"
+    }
+  ]
+}

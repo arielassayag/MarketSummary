@@ -1,0 +1,128 @@
+{
+  "mind": "codex",
+  "issuer_id": "LA_PAAS",
+  "data": "2026-10-08",
+  "tipo": "iniciacao",
+  "titulo": "Pan American Silver: caixa favorável, com sensibilidade aos metais e custos",
+  "resumo": "A geração de caixa e Juanicipio sustentam o negócio, mas custos e execução do ouro exigem atenção. O modelo aponta alvo de {{fact:val.LA_PAAS.preco_alvo}} e upside de {{fact:val.LA_PAAS.upside}}. A leitura relativa é negativa, com convicção baixa pela divergência com o consenso e pela heterogeneidade dos pares.",
+  "negocio": "A Pan American Silver produz prata e ouro nas Américas, com operações próprias e participações em minas. A exposição a metais preciosos distingue a companhia de pares de siderurgia e celulose (Pan American Silver, 2026-10-07).",
+  "pilares_tese": [
+    {
+      "titulo": "Caixa e execução",
+      "texto": "O resultado de 2T26 aponta forte caixa e contribuição de La Colorada e Juanicipio. A produção de ouro ficou abaixo da perspectiva trimestral, com maior concentração esperada no fim do ano (Pan American Silver, 2026-08-12).",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Preço e comparação setorial",
+      "texto": "Rating {{fact:val.LA_PAAS.rating_codigo}} e alpha relativo de {{fact:val.LA_PAAS.alpha_rel}} favorecem prudência. A comparação setorial não substitui análise por mina e preço dos metais.",
+      "evidencias": [
+        "val.LA_PAAS.rating_codigo",
+        "val.LA_PAAS.alpha_rel"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Metais, custos e produção",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Preços elevados favorecem receitas, mas royalties, consumíveis e custos de mão de obra pressionam custos. Julgamos alta a sensibilidade econômica aos metais (Pan American Silver, 2026-08-12).",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Custo de capital",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Ke de {{fact:val.LA_PAAS.ke}}; o upside com maior custo de capital é {{fact:val.LA_PAAS.sens.ke_mais_100bp}}.",
+      "evidencias": [
+        "val.LA_PAAS.ke",
+        "val.LA_PAAS.sens.ke_mais_100bp"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Resultado em {{fact:evento.LA_PAAS.proximo_resultado}}; avaliar produção de ouro e custos.",
+      "data": "2026-11-04",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "evento.LA_PAAS.proximo_resultado",
+        "F2"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Menor produção de ouro e custos elevados podem limitar caixa mesmo com preços de metais favoráveis (Pan American Silver, 2026-08-12).",
+      "probabilidade": "alta",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "Diferença com consenso de {{fact:val.LA_PAAS.diff_consenso}} e dispersão de {{fact:val.LA_PAAS.cv_metodos}} limitam a convicção de valuation.",
+      "probabilidade": "alta",
+      "impacto": "alto",
+      "evidencias": [
+        "val.LA_PAAS.diff_consenso",
+        "val.LA_PAAS.cv_metodos"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Produção resiliente e metais favoráveis sustentam a leitura otimista de {{fact:val.LA_PAAS.alvo_otimista}}. Probabilidade implícita indisponível.",
+    "base": "Metas operacionais com custos sob acompanhamento. Alvo de {{fact:val.LA_PAAS.preco_alvo}}.",
+    "pessimista": "Pressão de custos e menor produção sustentam a leitura adversa de {{fact:val.LA_PAAS.alvo_pessimista}}. Probabilidade implícita indisponível."
+  },
+  "comentario_valuation": "O modelo tem confiança {{fact:val.LA_PAAS.confianca_codigo}}, ke de {{fact:val.LA_PAAS.ke}} e WACC de {{fact:val.LA_PAAS.wacc}}. O P/L à frente é {{fact:val.LA_PAAS.pl_fwd}} e o retorno total esperado é {{fact:val.LA_PAAS.etr}}. O consenso público tem alvo de {{fact:val.LA_PAAS.consenso_alvo}}. A dispersão e a diferença de exposição aos metais entre pares exigem cautela. O briefing não detalha os métodos por mina ou reservas.",
+  "ultimo_resultado": "No 2T26, a produção de prata ficou no limite superior da perspectiva trimestral e a de ouro abaixo da faixa. A companhia manteve as faixas anuais operacionais, mas indicou ouro no limite inferior e custos do ouro no superior; elevou a expectativa de tributos pagos (Pan American Silver, 2026-08-12).",
+  "guidance": "mantido",
+  "tom_gestao": "positivo",
+  "governanca": "A companhia anunciou a saída de Charles Jeannes do conselho, efetiva em 2026-10-31 (Pan American Silver, 2026-10-07). Retorno ao acionista e investimento em crescimento devem preservar liquidez. Controle, free float e partes relacionadas não foram aprofundados.",
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Redução das metas de produção ou aumento persistente de custos.",
+    "Mudança material dos preços de prata e ouro.",
+    "Revisão das premissas ou dos projetos de crescimento."
+  ],
+  "lacunas_de_dados": [
+    "Probabilidades implícitas indisponíveis.",
+    "Transcrição integral e análise por mina não aprofundadas.",
+    "Controle, free float e partes relacionadas não detalhados.",
+    "Taxa de aluguel e risco de short squeeze indisponíveis."
+  ],
+  "stance": -1,
+  "conviccao": 2,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Pan American Silver",
+      "titulo": "Resultado trimestral e perspectivas operacionais",
+      "url": "https://panamericansilver.com/news/pan-american-silver-reports-second-quarter-2026-financial-results-2/",
+      "publicado_em": "2026-08-12"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Pan American Silver",
+      "titulo": "Calendário da próxima divulgação trimestral",
+      "url": "https://panamericansilver.com/news/pan-american-silver-to-announce-third-quarter-2026-unaudited-financial-results/",
+      "publicado_em": "2026-10-07"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Pan American Silver",
+      "titulo": "Saída anunciada de integrante do conselho",
+      "url": "https://panamericansilver.com/news/pan-american-silver-announces-director-retirement/",
+      "publicado_em": "2026-10-07"
+    }
+  ]
+}

@@ -1,0 +1,312 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-07",
+    "manifest_sha256": "7ccb52e98b36ca4332f2ff41691740d5239b3ca82f73d6f509e743ee0d28d650",
+    "modelo_as_of": "2026-10-07"
+  },
+  "conviccao": 2,
+  "data": "2026-10-08",
+  "hashes": {
+    "contexto": "409143e9482c199ef185ea184db18dff9bb5931402ccea4ba1f407e7f48fb5e5",
+    "factbook": "aad688766e63dc6f5c575deeee6e6fd753414723ac16da472b15cc95210d3043",
+    "nota_json": "6f6fbbca05da967788525219119b75f6cb4a086a22659cd0f7f0760d95a64fbc"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_WEG",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-21",
+  "published_at": "2026-10-09T02:01:32.220784+00:00",
+  "rendered": {
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-21",
+        "descricao": "Resultado previsto para 2026-10-21, com foco em pedidos, margens e expansão.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "evento.BR_WEG.proximo_resultado",
+            "nome": "Próxima divulgação de resultado",
+            "valor": "2026-10-21"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Diversificação preserva margens, com crescimento desigual. Alvo de R$ 29,01.",
+      "otimista": "Pedidos e expansão sustentam rentabilidade elevada. Alvo de R$ 35,46; probabilidade implícita de n/d.",
+      "pessimista": "Demanda fraca e pressão de custos restringem valor. Alvo de R$ 23,49; probabilidade implícita de n/d."
+    },
+    "comentario_valuation": "WACC de 10,27%, retorno total esperado de -41,45% e confiança B. A dispersão entre métodos é 35,23% e a diferença contra o consenso é -48,27%. O briefing não discrimina o valor das oportunidades de expansão; os pares industriais incluem atividades economicamente distintas.",
+    "conviccao": 2,
+    "dados_ate": "2026-10-08",
+    "dados_simulados": false,
+    "data": "2026-10-08",
+    "ficha": [
+      {
+        "fato": "val.BR_WEG.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 51,27"
+      },
+      {
+        "fato": "val.BR_WEG.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 29,01"
+      },
+      {
+        "fato": "val.BR_WEG.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-43,42%"
+      },
+      {
+        "fato": "val.BR_WEG.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_WEG.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_WEG.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 35,46"
+      },
+      {
+        "fato": "val.BR_WEG.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_WEG.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 23,49"
+      },
+      {
+        "fato": "val.BR_WEG.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_WEG.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,38%"
+      },
+      {
+        "fato": "val.BR_WEG.wacc",
+        "rotulo": "WACC",
+        "valor": "10,27%"
+      },
+      {
+        "fato": "val.BR_WEG.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_WEG.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-41,45%"
+      },
+      {
+        "fato": "val.BR_WEG.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-75,43%"
+      },
+      {
+        "fato": "val.BR_WEG.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "29,2x"
+      },
+      {
+        "fato": "val.BR_WEG.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "11,4x"
+      },
+      {
+        "fato": "val.BR_WEG.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 56,08"
+      },
+      {
+        "fato": "val.BR_WEG.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-48,27%"
+      }
+    ],
+    "fontes": [
+      {
+        "id": "F1",
+        "instituicao": "CVM / WEG",
+        "publicado_em": "2026-07-22",
+        "tipo": "Regulador",
+        "titulo": "Divulgação trimestral e desempenho por negócio",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1546756&numSequencia=1071462&numVersao=1"
+      },
+      {
+        "id": "F2",
+        "instituicao": "WEG",
+        "publicado_em": "2026-09-16",
+        "tipo": "Relações com investidores",
+        "titulo": "Planejamento sucessório no índice de comunicados",
+        "url": "https://ri.weg.net/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Revisão relevante da carteira de pedidos ou margens.",
+      "Mudança nas premissas de expansão e avaliação relativa.",
+      "Novos detalhes sobre sucessão e alocação de capital."
+    ],
+    "governanca": "O índice de RI registra comunicado de planejamento sucessório em setembro (WEG, 2026-09-16). Seu conteúdo integral e os efeitos sobre a gestão não foram confirmados. Controle, free float e partes relacionadas não foram aprofundados.",
+    "guidance": "não avaliado",
+    "issuer_id": "BR_WEG",
+    "lacunas_de_dados": [
+      "Probabilidades dos cenários e beta indisponíveis.",
+      "Guidance quantitativo e conteúdo integral da sucessão não confirmados.",
+      "Valor das expansões não discriminado no briefing.",
+      "Controle, free float, partes relacionadas e dados de aluguel não aprofundados."
+    ],
+    "modelo_de_cobertura": "2026-10-07",
+    "negocio": "A WEG produz equipamentos elétricos industriais, soluções de geração, transmissão e distribuição, motores comerciais e tintas. A diversificação geográfica e de produtos amplia as fontes de demanda (WEG, 2026-07-22).",
+    "nome": "WEG",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ECORODOVIAS",
+        "nome": "EcoRodovias"
+      },
+      {
+        "issuer_id": "BR_EMBRAER",
+        "nome": "Embraer"
+      },
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_LOCALIZA",
+        "nome": "Localiza"
+      },
+      {
+        "issuer_id": "BR_MARCOPOLO",
+        "nome": "Marcopolo"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_MOTIVA",
+        "nome": "Motiva (ex-CCR)"
+      },
+      {
+        "issuer_id": "BR_RANDON",
+        "nome": "Randoncorp"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Pedidos de infraestrutura elétrica e crescimento externo favorecem a franquia. A menor demanda solar doméstica e o câmbio limitam a conversão em receita consolidada (WEG, 2026-07-22).",
+        "titulo": "Infraestrutura e diversificação"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_WEG.pl_fwd",
+            "nome": "P/L à frente (consenso público)",
+            "valor": "29,2x"
+          },
+          {
+            "fato": "val.BR_WEG.pb",
+            "nome": "Preço sobre valor patrimonial",
+            "valor": "11,4x"
+          },
+          {
+            "fato": "val.BR_WEG.alpha_rel",
+            "nome": "Alpha de valuation relativo aos pares",
+            "valor": "-75,43%"
+          }
+        ],
+        "texto": "P/L à frente de 29,2x e preço sobre patrimônio de 11,4x exigem crescimento sustentado. O alpha relativo é -75,43%.",
+        "titulo": "Prêmio de avaliação"
+      }
+    ],
+    "publicada_em": "2026-10-09T02:01:32.220784+00:00",
+    "resumo": "A exposição internacional e à infraestrutura elétrica sustenta a qualidade do negócio. O alvo de R$ 29,01, upside de -43,42% e alpha relativo de -75,43% indicam preço exigente. A divergência do modelo com o consenso limita a convicção da leitura moderadamente negativa.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Desaceleração de investimentos industriais ou elétricos pode reduzir pedidos e utilização das fábricas."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_WEG.pb",
+            "nome": "Preço sobre valor patrimonial",
+            "valor": "11,4x"
+          },
+          {
+            "fato": "val.BR_WEG.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-48,27%"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "O prêmio de mercado amplia a sensibilidade a revisões de crescimento e custo de capital; a avaliação difere materialmente do consenso."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": -1,
+    "stance_pt": "negativa",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "WEG: qualidade global com retorno relativo pressionado",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "No 2T26, o mercado externo cresceu em moeda local, enquanto receita consolidada e lucro recuaram na comparação anual. Margens e retorno sobre capital permaneceram resilientes (WEG, 2026-07-22).",
+    "vetores": [
+      {
+        "direcao": "positivo",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A carteira de equipamentos e a demanda por infraestrutura sustentam oportunidades; execução industrial e margens determinarão a realização de valor (WEG, 2026-07-22).",
+        "vetor": "Infraestrutura elétrica internacional"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A valorização do real limita a receita externa convertida. Cobre e tarifas de importação pressionaram custos no trimestre (WEG, 2026-07-22).",
+        "vetor": "Câmbio, insumos e tarifas"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": -1
+}

@@ -1,0 +1,306 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-07",
+    "manifest_sha256": "7ccb52e98b36ca4332f2ff41691740d5239b3ca82f73d6f509e743ee0d28d650",
+    "modelo_as_of": "2026-10-07"
+  },
+  "conviccao": 2,
+  "data": "2026-10-08",
+  "hashes": {
+    "contexto": "e80e54a47a23d46358370ca083ec43b6af8d8738bc12036dc3fae7bc382d0172",
+    "factbook": "be9fecf479a2b9510c59ad09d609c77528c56ab3f84a8ddefc235fd30bba7c78",
+    "nota_json": "b56c1f8b545463eee83f4a5a40477220a50fe41091d7bf9ac6ecbd259800c13d"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_EQUATORIAL",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-11",
+  "published_at": "2026-10-09T02:03:00.847894+00:00",
+  "rendered": {
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-11",
+        "descricao": "Divulgação prevista para 2026-11-11, com foco em dívida, qualidade e integração dos investimentos.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "evento.BR_EQUATORIAL.proximo_resultado",
+            "nome": "Próxima divulgação de resultado",
+            "valor": "2026-11-11"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Melhora operacional gradual, limitada pelo financiamento. Alvo de R$ 26,78.",
+      "otimista": "Ganhos operacionais e integração com disciplina favorecem valor. Alvo de R$ 31,27; probabilidade implícita de n/d.",
+      "pessimista": "Pressão financeira e obstáculos regulatórios restringem retornos. Alvo de R$ 23,09; probabilidade implícita de n/d."
+    },
+    "comentario_valuation": "P/L à frente de 31,5x, retorno total esperado de -44,68% e confiança B. A dispersão entre métodos de 45,02% e a diferença contra o consenso de -49,34% exigem revisão das premissas. O WACC do modelo não representa automaticamente a taxa regulatória. Valor por concessão e participações não está discriminado no briefing.",
+    "conviccao": 2,
+    "dados_ate": "2026-10-08",
+    "dados_simulados": false,
+    "data": "2026-10-08",
+    "ficha": [
+      {
+        "fato": "val.BR_EQUATORIAL.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 49,00"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 26,78"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-45,35%"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 31,27"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 23,09"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,90%"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.wacc",
+        "rotulo": "WACC",
+        "valor": "9,02%"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-44,68%"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-40,52%"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "31,5x"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,4x"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 52,86"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-49,34%"
+      }
+    ],
+    "fontes": [
+      {
+        "id": "F1",
+        "instituicao": "Equatorial",
+        "publicado_em": "2026-08-12",
+        "tipo": "Relações com investidores",
+        "titulo": "Divulgação trimestral e desempenho consolidado",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/62b21cba-838c-49a4-aaef-e0fb2350c169/b1f651f0-9cd8-d2e0-87f0-498cd4b24f8b?origin=2"
+      },
+      {
+        "id": "F2",
+        "instituicao": "CVM / Equatorial",
+        "publicado_em": "2026-08-13",
+        "tipo": "Regulador",
+        "titulo": "Apresentação trimestral e perspectivas operacionais",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1556897&numSequencia=1081603&numVersao=1"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Mudança material do endividamento e cobertura dos encargos.",
+      "Revisão tarifária ou deterioração de perdas e qualidade.",
+      "Novos compromissos em saneamento ou revisão do valor por ativos."
+    ],
+    "governanca": "A expansão na Copasa envolve mudanças de governança e acompanhamento dos próximos passos (Equatorial, 2026-08-13). Alocação de capital, contingências e participações minoritárias merecem atenção. Controle, free float e partes relacionadas não foram aprofundados.",
+    "guidance": "não avaliado",
+    "issuer_id": "BR_EQUATORIAL",
+    "lacunas_de_dados": [
+      "Probabilidades dos cenários e P/L histórico indisponíveis.",
+      "Guidance formal e transcrição integral não confirmados.",
+      "Valor por concessão e participações não discriminado no briefing.",
+      "Controle, free float, partes relacionadas e dados de aluguel não aprofundados."
+    ],
+    "modelo_de_cobertura": "2026-10-07",
+    "negocio": "A Equatorial é uma holding de serviços de utilidade pública, com distribuição elétrica, renováveis, saneamento e outros serviços. A gestão dos ativos e o ambiente regulatório condicionam os retornos (Equatorial, 2026-08-12).",
+    "nome": "Equatorial",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ALUPAR",
+        "nome": "Alupar"
+      },
+      {
+        "issuer_id": "BR_AUREN",
+        "nome": "Auren Energia"
+      },
+      {
+        "issuer_id": "BR_AXIA",
+        "nome": "Axia Energia (ex-Eletrobras)"
+      },
+      {
+        "issuer_id": "BR_CEMIG",
+        "nome": "Cemig"
+      },
+      {
+        "issuer_id": "BR_COMPASS",
+        "nome": "Compass Gás e Energia"
+      },
+      {
+        "issuer_id": "BR_COPASA",
+        "nome": "Copasa"
+      },
+      {
+        "issuer_id": "BR_COPEL",
+        "nome": "Copel"
+      },
+      {
+        "issuer_id": "BR_CPFL",
+        "nome": "CPFL Energia"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Mercado e margem bruta avançaram, com perdas consolidadas abaixo do limite regulatório. A melhora operacional precisa converter-se em caixa e lucro (Equatorial, 2026-08-12).",
+        "titulo": "Melhora na distribuição"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fato": "val.BR_EQUATORIAL.alpha_rel",
+            "nome": "Alpha de valuation relativo aos pares",
+            "valor": "-40,52%"
+          },
+          {
+            "fato": "val.BR_EQUATORIAL.wacc",
+            "nome": "Custo médio ponderado de capital",
+            "valor": "9,02%"
+          }
+        ],
+        "texto": "A participação na Copasa amplia a exposição ao saneamento (Equatorial, 2026-08-13). O alpha relativo de -40,52% e o custo de capital de 9,02% limitam a preferência pelo preço atual.",
+        "titulo": "Expansão exige disciplina"
+      }
+    ],
+    "publicada_em": "2026-10-09T02:03:00.847894+00:00",
+    "resumo": "A melhora da distribuição convive com expansão em saneamento e custo financeiro elevado. O alvo de R$ 26,78, upside de -45,35% e alpha relativo de -40,52% sustentam leitura moderadamente negativa. A divergência entre modelo e consenso limita a convicção.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "alta",
+        "texto": "Custo da dívida e investimentos podem restringir a conversão do crescimento operacional em retorno ao acionista."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Processos tarifários, contingências e restrições de geração renovável podem reduzir caixa e remuneração dos ativos."
+      }
+    ],
+    "setor": "Utilidades públicas",
+    "stance": -1,
+    "stance_pt": "negativa",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Equatorial: execução operacional sob pressão financeira",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "No 2T26, o EBITDA ajustado cresceu modestamente, enquanto o lucro ajustado recuou. Distribuição melhorou; maior custo financeiro e provisões limitaram o resultado. Acordos tributários e itens não recorrentes exigem distinção dos ganhos permanentes (Equatorial, 2026-08-12).",
+    "vetores": [
+      {
+        "direcao": "positivo",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Ganhos operacionais favorecem o resultado, sujeitos ao reconhecimento tarifário e à manutenção da qualidade (Equatorial, 2026-08-12).",
+        "vetor": "Perdas, qualidade e remuneração regulatória"
+      },
+      {
+        "direcao": "negativo",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Maior dívida e encargos pressionaram o resultado; o EBITDA ajustado cresceu pouco no trimestre (Equatorial, 2026-08-12).",
+        "vetor": "Endividamento e despesas financeiras"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": -1
+}

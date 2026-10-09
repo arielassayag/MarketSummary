@@ -91,13 +91,12 @@ links para o portal original (já estão nas páginas) e não se apresente como 
    (`reports/backtest`). O painel (`artifacts/painel/`) é regenerado pelas suas rotinas; o
    herdado aponta para a página do original.
 
-   **Gênese:** hoje a sua cópia começa **sem** `book/genese.json` e sem o evento
-   `FUND_GENESIS`: a CLI ainda não tem um comando que abra um livro vazio na data de início
-   (pendência em `docs/cdp/EM_ANDAMENTO.md`). O que isso enfraquece: a sua trilha não
-   tem o evento que ancora a data de início, o hash da configuração e o commit do código
-   (`docs/cdp/REPRODUZIR.md`, seção 1), e o livro não recusa sozinho gravações anteriores à data
-   de início — não rode montagem nem fechamento com data anterior à sua `fund.inception_date`.
-   Todo o resto (trilha encadeada, `cdp verify`, `cdp cobertura verify`) vale igual.
+   **Gênese:** depois de concluir a configuração e registrar o seu executor (passos 3 e 4),
+   abra o livro vazio explicitamente com `cdp genese`, no clone dedicado da sua réplica.
+   O plano é somente leitura. A abertura grava `book/genese.json` e o primeiro evento
+   `FUND_GENESIS`, ancorando a data de início, o hash do mandato e o commit do próprio clone
+   (`docs/cdp/REPRODUZIR.md`, seção 1). Com a gênese, o livro recusa chaves anteriores ao início.
+   Não use esse comando para remover história herdada, reparar trilha ou desligar kill switch.
 
 3. **Configuração e identidade próprias** — ajuste à mão, no mesmo ramo:
    - `configs/cdp/fund.yaml` → `fund.inception_date` (a sua data de início; mudar o mandato é
@@ -118,6 +117,9 @@ links para o portal original (já estão nas páginas) e não se apresente como 
      `src/cdp/site.py`, o cabeçalho do painel em `src/cdp/workflow/painel_template.html` e o
      endereço padrão em `src/cdp/research/providers/openrouter_provider.py`; ajuste também o
      endereço esperado em `tests/cdp/test_painel.py`;
+   - inventário documental: `scripts/cdp_mapear_modelos.py` recebe `--repo-url` para os
+     links da versão que você está auditando. Use o repositório próprio para um retrato da
+     réplica; preserve o repositório original ao reproduzir a auditoria histórica do CDP;
    - o que sobrar: `git grep -n -i -e "cabra da peste" -e "arielassayag"` lista cada ocorrência
      do nome e do endereço originais em código, configuração e textos.
 
@@ -140,6 +142,34 @@ links para o portal original (já estão nas páginas) e não se apresente como 
    às rotinas, trocando o app). Antes de ligar, crie a regra do ramo `main` no seu repositório
    (`docs/cdp/AUTOMACAO.md`, seção 3, passo 1). Ligue as rotinas em um app só: o escritor é
    único.
+
+   **Abrir a gênese da réplica:** faça isso após o mandato e o código estarem registrados no
+   seu `main`, sincronizado com `origin/main`, antes da primeira montagem ou fechamento.
+   No executor designado, confira o plano:
+
+   ```sh
+   uv run python -m cdp genese
+   ```
+
+   O estado esperado é `vazio`. Livro com arquivos herdados, gênese parcial, link simbólico,
+   área temporária de abertura interrompida ou kill switch ativo é recusado e preservado.
+   Leia `cdp estado` e `cdp agenda` e use o gate da tarefa exclusiva que a agenda autoriza.
+   Na sessão de operador, o gate usa `--manual` quando estiver fora do horário, mantendo as
+   mesmas pendências e guardas. Se o gate devolver `executar: false`, encerre; não force uma
+   abertura. Com a execução e a trava autorizadas, rode:
+
+   ```sh
+   uv run python -m cdp genese --executar --execucao <execucao> --trava <trava.id>
+   ```
+
+   A abertura confere identidade local e de `origin/main`, mandato do clone, código limpo,
+   registro de execução exclusivo e escopo do livro, e trava vigente da mesma tarefa,
+   executor e harness. Gênese e evento são preparados, conferidos e promovidos juntos.
+   Não há remoção de arquivos do livro; repetir com gênese íntegra não altera bytes nem datas.
+   Continue o roteiro autorizado e publique somente por `cdp publicar`, usando a mesma
+   execução e trava. Libere a trava ao encerrar, inclusive em falha. Sem pendência exclusiva
+   autorizada, a abertura fica pendente; o comando não cria um gate nem uma nova rotina.
+
 5. **Portal**: ligue o Pages (seção 2, passos 3 e 4); a cada gravação das rotinas o portal
    atualiza. O GitHub Actions só monta o portal e roda os testes; a IA roda no app que você
    escolheu.

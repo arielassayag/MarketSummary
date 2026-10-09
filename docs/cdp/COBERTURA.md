@@ -332,8 +332,12 @@ corroboração do G11.
   por emissor e data, com choques de média zero nos direcionadores: ke ± 0,5 p.p. (no WACC, pela
   fração de capital próprio), g ± 0,25 p.p., ROE ± 3 p.p. nos anos 1–2 (convergindo ao ROE de
   longo prazo), crescimento (σ setorial limitado a [3%; 5%], persistente pelo fade φ) e margem
-  correlacionados (ρ = 0,3), preço da commodity ± 20% transitório (anos 1–3, revertendo até o
-  ano 5, sem efeito na perpetuidade), desconto da holding ± 5 p.p. O modelo de cada sorteio
+  correlacionados (ρ = 0,3), variação aditiva transitória da margem EBIT de commodities com
+  escala de 20 p.p. (anos 1–3, revertendo até o ano 5, sem efeito na perpetuidade), desconto da
+  holding ± 5 p.p. O canal interno `d_comm` é consumido pelo FCFF normalizado: `Δmargem_t =
+  w_t × d_comm`, com `w_t` adimensional. Assim, `d_comm = 0,20` adiciona 20 p.p. à margem nos
+  anos de efeito pleno; não representa aumento físico de 20% no preço de um produto nem uma
+  variação relativa de 20% na margem. O modelo de cada sorteio
   preserva a média do caso-base: a receita do sorteio é a do caso-base mais o desvio acumulado de
   crescimento (aditivo), choques de margem incidem sobre a receita-base, o reinvestimento
   acompanha o crescimento adicional de forma simétrica (`ΔI_t = margem × (1 − t) × (ΔR_{t+1} − ΔR_t)
@@ -348,8 +352,19 @@ corroboração do G11.
   **alpha** `α = PWR − ke`; `α_rel = α − mediana(α dos pares)`.
 - **Probabilidade implícita pelo mercado** (exibida, não usada no alpha): lognormal com drift
   `ke − DY` e a volatilidade realizada de 12 meses.
-- **Sensibilidade**: grade 5 × 5 do preço-alvo (ke × g; ke × ROE para financeiras; ke × preço da
-  commodity para commodities).
+- **Sensibilidade**: grade 5 × 5 do preço-alvo (ke × g; ke × ROE para financeiras; ke × variação
+  transitória aditiva da margem EBIT, em pontos percentuais, para commodities). A apresentação
+  identifica os métodos participantes que recebem o canal das colunas. Se nenhum o recebe,
+  registra a sensibilidade indisponível e exibe somente os valores literais da coluna sem
+  choque por ke. Metadados ausentes ou métodos desconhecidos deixam a aplicabilidade não
+  conferida. Quando todos os métodos participantes preservam `V0` ao variar ke, explicita que
+  ke altera somente a rolagem `TP12 = V0 × (1 + ke) − DPS12`, não um desconto dos fluxos desses
+  métodos. Nos retratos históricos, o livro e as células ficam intactos; a apresentação informa
+  a denominação legada de preço de commodity quando existente. O perfil transitório provém
+  da memória/configuração do retrato; novas saídas informam os parâmetros efetivos.
+  A análise do preço físico de produto exige modelo industrial com preço, volume, custo,
+  unidade, perímetro, reinvestimento e estrutura de capital conciliados por emissor; esse
+  modelo não é criado pela correção de exposição.
 - **Ponte do alvo** entre snapshots: rolagem → estimativas → parâmetros → estrutura de capital
   → câmbio → preço → mix de métodos → resíduo, com o motivo dominante.
 

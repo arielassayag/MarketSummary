@@ -5,9 +5,327 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-Última atualização: 2026-10-08, 20:51, Brasília — ampla11 e Ruff concluídos; lote técnico
-revisto pronto para integração normal; CI e portal do novo commit ainda pendentes.
+Última atualização: 2026-10-09, 15:21 Brasília. Decisão inaugural e tese nativas
+publicadas em `7f0d368c`; ROOT e DEV receberam a base por avanço normal de Git,
+com fonte/delta DEV e cinco alterações herdadas ROOT literais. Integridade e trava
+livre confirmadas por leitura independente. Pages do mesmo commit passou e cinco
+arquivos HTTP tiveram procedência e integridade conferidas. A carteira ainda
+aguarda execução hipotética no fechamento; três reservas e risco das 13:30
+encerraram com código 10. Os chats sem execução foram arquivados; agendas ativas.
+Retrato oficial de 09/10, preços até 08/10: 233 empresas e oito ETFs; confiança C
+102/233 (43,78%) e revisão 35/233 (15,02%), mantendo P0 aberto.
+
+Lote de código em DEV: contratos bancários revistos/315 focais, gênese/74,
+inventário/27, sensibilidades/55, reparo AST/29, comparativos CVM/133 e controle
+ETF V2/44 passaram. Ampla14 negativa preservada: 571 casos, uma falha de teste,
+zero erros, 14 pulados e fonte literal. Reparo ETF V1 também permanece negativo;
+V2 recebeu parecer favorável delimitado e foi transposto. EPS V2 foi recusado;
+V3 passou revisão independente de 174 casos, com defaults e recusa causal de
+receita auxiliar. Compatibilidade corrente recebeu 10783 arquivos; ROOT conferiu precondições e
+transpôs quatro caminhos de fonte e seis testes, com demais fontes literais.
+Ampla15 terminou por falha, sem interrupção: 3012 casos, uma falha, zero erros,
+17 pulados incluindo um xfail, Ruff0 e 4805 arquivos antes/depois literais.
+O teste de transporte RI usava captura real posterior ao corte civil simulado;
+o parser extraiu fatos e o filtro os recusou corretamente. Reparo mínimo de
+relógio no teste foi revisto e transposto: 48 focais normais ROOT passaram,
+assertivas existentes e produto financeiro preservados.
+A primeira otimização das guardas foi recusada por alterar a ordem global de
+recusa entre módulos; V1 permanece preservado e não transposto. V2 recebeu revisão
+favorável delimitada, com 29 controles de revisão; ROOT transpôs só seis caminhos
+de testes e executou os 145 focais normais sem transferência AST. Ruff do conjunto
+passou. Ampla16 terminou favorável: 4075 casos, zero falhas/erros, 17 pulados
+incluindo um xfail (4058 aprovados, 16 pulados e um xfail), Ruff0 e 4808 arquivos
+antes/depois literais. Foram testados os 100 arquivos do delta revisto; novos
+candidatos financeiros permanecem fora desse lote. O terminal/JUnit e o freeze
+da fonte estão em `.cdp/validacoes/20261009-integracao-16/`.
+O título de downloads agora descreve a carteira decidida mais recente,
+e a documentação distingue microcasos simulados de PDFs e retratos reais usados
+em testes; verificações focais e documentais passaram. Suíte completa local
+concluída; atualização documental, publicação, CI e portal do novo lote ainda
+devem receber seus próprios comprovantes.
+
 Comece por `docs/cdp/PASSAGEM_CODEX.md`. Índice interno: `.cdp/README.md` e `.cdp/TAREFAS.md`.
+
+## Candidatos e estudos recebidos no lote15 — 08–09/10/2026
+
+- Diagnóstico do P0 corrente recebido: C102/233 e revisão35/233, com causas e
+  fontes separadas. Não promove confiança por quota. Estudo patrimonial conserva
+  39 células e 13 identidades owners + não controladores = patrimônio total,
+  conferidas por ROOT em Decimal; produtor opcional está em preparo separado.
+  Candidato de quatro estoques V1 foi recusado por 12 contradições de fonte;
+  V2 resolveu esses casos, mas nova revisão recusou quatro identificadores
+  efetivos informados como objeto vazio. As duas negativas estão preservadas.
+  V3 fechado/recebido distingue identificador de contêiner de proveniência,
+  conserva ausência legítima e defaults; revisão independente está em fechamento.
+  São 155 portáteis e 48 controles recebidos, com 16 assinaturas duplicadas
+  discriminadas; não 203 cenários econômicos únicos. NI107/G2privado2 são provas
+  recebidas da revisão V2, sem novo rerun, com alcance byte/AST preservado.
+  Nenhuma versão foi transposta ou habilitada globalmente.
+  As duas notas Galicia com destino desconhecido continuam sem uso como ajuste.
+- Estudo JBS conserva conceitos, classes, datas e conflitos SEC/CVM. A soma de
+  classes outstanding coincide com um total CVM, mas isso não prova capital bruto
+  ou dupla subtração de tesouraria. Falta ponte primária na mesma data para trocar
+  o denominador; G13c e número atual preservados. Nova GET SEC recebeu 403,
+  sem contorno; os bytes antigos não se tornam recepção atual ou prova PIT.
+  Circular B3 004/2025-VPE recebida completa HTTP200; confirma paridade declarada
+  em2025, sem certificar quantidades/termos integrais contemporâneos emjunho26.
+- JBS: candidato futuro transporta conceitos/lexemas/datas/recibos CVM/FRE em
+  ledger opcional separado dos participantes G2. Defaults e G13c literais;
+  revisão independente em andamento, sem transposição. Não resolve bruto/líquido,
+  classes, lastro ou contagem contemporânea. Há colisões com o candidato de
+  patrimônio; a composição futura precisa de conferência explícita das bases.
+- Enel Chile: estudo primário e diagnóstico SEC recebidos. O XML anual2025
+  preexistente e seu recibo original contêm fatos USD; o parser/seletor ordinários
+  passam no corpus real, sem necessidade demonstrada de novo produtor ou patch.
+  O accession está ausente dos caches correntes; causa HTTP histórica desconhecida.
+  Os quatro403 de junho/RI não provam403 do XML anual. Dívida consolidada continua
+  ausente, e os22 participantes precisam de adoção coerente pelo executor autorizado.
+  As negativas iniciais do diagnóstico são erros de harness preservados.
+  G19, P0 e PIT não foram resolvidos; nenhuma cópia manual foi feita ao executor.
+- Klabin/Rumo: recorte ROOT encerrado conserva758 linhas derivadas das DFCs
+  primárias de três ZIPs e os participantes do retrato09/10. Sete referências
+  preservadas; classificação/tie-out financeiro em andamento. Ausência de giro
+  operacional ou adições de direito de uso não vira zero. Sem alteração de
+  modelo, margem, concessão, minoritários, alvo ou gate por esse recorte.
+- Revisão não autora das guardas V1: 25 controles próprios, 21 equivalentes e
+  quatro contraexemplos de ordem global. O efeito foi bloqueado em ambos, porém
+  exceção e contador diferiram. Não transpor V1. Novo candidato deve preservar
+  ordem de ativação compartilhada e receber revisão antes da suíte normal.
+  V2 foi recebido e revisto: corrige os quatro contraexemplos e mantém políticas,
+  contadores, exceções e corpos financeiros. ROOT confirmou os seis paths físicos,
+  pytest normal145/Ruff0 e fonte4808 literal durante os focais. O primeiro controle
+  ROOT de cópia candidata abortou por seleção ambígua da cópia V1 também recebida,
+  antes dos testes; seleção exata foi corrigida e diagnóstico preservado.
+- Comparativos CVM706 receberam parecer independente favorável delimitado2655:
+  140casos distintos passaram,10saídasdefault/434149bytes literais,3036células
+  conferidas por leitor externo e quatro vínculosPDF/CSV/tiesDecimal. ROOT recebeu
+  os dois envelopes, leu o módulo completo e transpôs quatropaths seletivos;
+  133focaisDEV/Ruff0 passaram. ConservaÚLTIMO/PENÚLTIMO e conflitos, sem escolher
+  fonte ou transformar comparativo em dado econômico homogêneo. Opção global
+  desligada; TTM,crescimento,RIequivalenteCVM,PIT eP0 não certificados.
+- Estudo BCRA/IFRS158 e revisão não autora341 recebidos integralmente. Foram
+  conferidas 112 células anuais, 56 deltas e quatro pontes reportadas; 66 casos
+  distintos passaram. Duas notas de Galicia junho têm quantias observadas, mas
+  destino estoque/fluxo/PL/NI desconhecido. A classificação como PL no estudo
+  autoral não recebeu aceite; não consumir como ajuste de patrimônio ou lucro
+  sem fonte ou correção separada. Originais ficam preservados. Normalização
+  econômica e atribuição causal integral às normas continuam ausentes.
+- EPS V2 restrito a EPS foi recusado: quatro controles ativavam receita auxiliar
+  sem vínculo com o corpo autenticado. ROOT recebeu os1324 arquivos da negativa,
+  os6723 do V3 e os1574 da revisão independente. V3 recusa o namespace de receita
+  antes do consumo financeiro e conserva o legado sem marcadores. São174 casos
+  distintos aprovados; reaplicação não aumenta contagens. Errata externa delimita
+  Ruff0: o wrapper privado de fechamento tem F401 preservado, sem integrar o
+  produto. Transporte corrente revisto tecnicamente e transposto seletivamente por ROOT;
+  suíte ampla continua requisito adicional; sem habilitação global, fonte viva, nominalidade, FY/12m/FX ou PIT.
+- A rotina nativa de09/10 publicou decisão e tese em `7f0d368c`:37 posições
+  compradas,36 vendidas e tese73/73. Agenda confirma decisão concluída, nenhuma
+  nova montagem pendente e ausência de carteira em vigor antes do fechamento.
+  Desenvolvimento recebeu a publicação por Git normal; não executou gate,
+  sincronização operacional, decisão ou publicação do livro. O portal serve o
+  mesmo commit; esta recepção HTTP não substitui recálculo integral dos modelos.
+
+- Produtor Galicia V1 foi recusado pela revisão não autora: 64 controles autorais
+  passaram, mas três de17 próprios aceitam contradição de moeda, item ou consolidação
+  no agregado TTM mantendo componentes e contexto literais. São81 casos distintos,
+  78 aprovados e três negativos materiais; 25 legados não foram reexecutados pelo
+  revisor. ROOT recebeu os61 arquivos, controles e provas causais, sem transpor V1.
+- V2 ROOT separada altera somente o ramo de composição de `publico_galicia.py`
+  sobre V1: liga moeda/item/consolidação explícitos ao grão documental e o fim nativo
+  ao último componente. Não fabrica início ou frequência.194 casos distintos passaram:
+  86 portáteis,83 da fundação e25 legados. Default9 permanece literal374299bytes,
+  API normal conserva proveniência/ponte/disponibilidade conjunta sob guarda sem
+  escrita/rede/processo; Ruff e apply-check aprovados.260 arquivos estão encerrados
+  por hash. Revisão não autora encerrou 210 casos distintos aprovados: 102 portáteis
+  (16 próprios), 83 da fundação e 25 legados, baseline9 literal e API normal guardada.
+  ROOT recebeu os 566 arquivos, XML, guardas, parecer e patch dos controles.
+  As rodadas iniciais da fundação e
+  dos legados que herdaram fonteV3 foram descartadas e preservadas; só a rodada terminal
+  físicaV2 valida o candidato. As três etapas históricas do revisor, 100P/2F,
+  eram falhas do harness no tratamento do fallback, `Series.item` e início ausente;
+  foram diagnosticadas e preservadas, sem mudança do produto. Aceite independente
+  é delimitado ao contrato documental, não financeiro/PIT/P0. O selador privado tem
+  import não usado, com errata externa; lint do candidato/controles passou, sem
+  afirmar lint integral do pacote fechado.
+- Supervielle: nova captura primária June26 completa HTTP200 foi conservada com recibo
+  atual, junto ao annual25 anterior. ROOT recebeu54 arquivos, inspecionou oito páginas
+  em pixels e conferiu11 identidades documentais por Decimal. Três componentes reportados
+  owners consolidado, milharesARS e poderJune26 estão comprovados, incluindo anual
+  B/S reexpresso com ponte específica ao anual original. Política BCRA conserva
+  exceções IFRS9§5.5/A7014; não é IFRS integral ou lucro normalizado. IAS34/A7211
+  do trecho colorido são observação visual separada do texto incompleto.
+- Extrator Supervielle privado usa bytes e novos recibos como argumentos, sem pins
+  de horário/recibo antigo.61 controles portáteis passaram, e a reexecução dos mesmos
+  61 desde `/tmp` verifica portabilidade, não122 casos. ROOT recebeu49 arquivos,
+  confirmou248 origens literais e seis confrontos Decimal dos fatos/ponte; não fez
+  nova chamada da API nessa recepção. Revisão não autora encerrou 88 casos distintos
+  aprovados (27 próprios), guardas sem escritor/rede/processos/importCDP; ROOT recebeu
+  seus 75 arquivos e conferiu XML/parecer. Sem patch, coletor
+  normal, TTM, IPC integral, normalização, PIT ou promoção de confiança/P0.
+- YPF: quatro HTMLs primários novos conservados e uma tentativa CNV recusada por TLS,
+  sem corpo ou status conhecido. Estatuto explicita capital legal bruto; tabela de
+  detentores é de09/03/2026, e fatos relevantes recebidos são só o container dinâmico.
+  Tesouraria, circulação líquida e classes quantitativas atuais permanecem ausentes;
+  nenhuma soma histórica, multiplicação pelo split ou fluxo de recompra as substitui.
+  14 testes externos passaram. ROOT recebeu30 arquivos e reproduziu a API documental
+  byteidêntica, com15 leituras e zero escrita/rede/processos/importCDP. O diagnóstico
+  é negativo só nos documentos recebidos, sem prova de inexistência pública ou patch.
+- Cobertura nativa `CDP · Pesquisa · notas de cobertura` concluiu 12 iniciações
+  sobre o modelo oficial de07/10: publicação `af6eb0c9`, integridade confirmada,
+  trava liberada e 221 emissores pendentes. ROOT recebeu os comandos/recibos do chat,
+  sem executar gate ou publicar. ROOT/DEV receberam a base nativa por avanço normal,
+  preservando o delta e as cinco alterações herdadas. Estado em09/10,06:48: fase
+  operação pelo calendário, sem carteira/decisão/tese, trava livre e sem incidentes.
+  Reforços nativos de07/08 sem pendência foram
+  arquivados com histórico e agendamentos preservados. As12 automações permanecem
+  ativas no projeto atual e usam `.cdp/rotinas`.
+- Recebimentos ROOT do lote15 estão em `.cdp/validacoes/20261008-integracao-15/`.
+  Custódias de revisão DEV185/catalog foram encerradas antes da transposição de
+  Galicia: oito paths de fonte, catálogo passivo e 13 paths de testes/fixtures.
+  As seis organizações de imports exigidas pelo Ruff real conservam conjuntos de
+  imports e AST dos demais blocos, com recibo próprio e originais fechados intactos.
+  Árvores oficiais ficaram literais durante a transposição. Ampla12 terminou com
+  1719 casos, uma falha e17 pulados incluindo um xfail; Ruff0 e2718 arquivos
+  antes/depois idênticos. O primeiro teste Galicia falhou antes de qualquer mutação.
+  Isolado/env/coleção integral selecionada passaram; o revisor isolou uma fixture
+  de dimensões que deixa `_agora_observado` em08/10,22Z. Esse clock antecede os
+  recibos Galicia simulados, e o seletor corretamente corta os fatos. Reparo privado
+  restaura o relógio apenas no escopo do helper. ROOT recebeu2991 arquivos, conferiu
+  a causal e transpôs dois paths de testes.61 controles ROOT passaram; fonte financeira
+  literal. Nova suíte integrada ainda deve validar o conjunto sobre `af6eb0c9`. Habilitação global permanece
+  ausente. C100/233 e revisão30/233 ainda são
+  o último retrato oficial, sem encerramento P0, PIT/E1, calibração ou carteira inaugural.
+- Produtor Supervielle privado encerrado sobre GaliciaV2:263 casos distintos
+  aprovados (53 próprios,102 Galicia,83 fundação,25 legados), default9 literal,
+  writer-zero de API normal e reaplicação física conferida. Revisão não autora reaplicou os263 casos aprovados, mas quatro de seis controles
+  próprios recusaramV1: alterar somente o total TTM ou SHA/documento/URL de um
+  componente era aceito pela conferência normal. ROOT recebeu769 arquivos e leu
+  prova causal/Decimal/guardas; negativo imutável, sem transposição. Candidato
+  separado de vínculo quantitativo/documental preservado. Seus 285 testes autorais
+  passam, mas nova revisão não autora reproduziu alteração de freq do componente A
+  para TTM e rótulo sincronizado, com contexto de composição preservado em A: a API
+  normal aceita a contradição. V2 separada liga frequência e fim explícitos do
+  componente ao contexto composto. A revisão independente encerrou 43 controles
+  próprios aprovados, 299 autorais reexecutados aprovados e nove defaults literais.
+  Os 16 casos portáteis reexpressam parte dos 43 e não são cobertura adicional.
+  ROOT recebeu 682 arquivos e transpôs o cumulativo Supervielle/V2 em 25 paths
+  (incluindo dois PDFs e oito PNGs públicos). Quatro organizações de imports apenas
+  nos testes conservam conjuntos de imports e AST dos demais blocos; Ruff completo passou. Nunca reescrever o V1 ou atribuir a esse delta
+  a recusa de Timestamp primário já presente na baseline.
+  Cumulativo revisto permanece restrito ao DEV até a suíte integrada e publicação. RegistroArquivo
+  não vira recibo HTTP completo; perfis documentais são específicos, publicação
+  desconhecida/PITfalse e normalização/modelo bancário completo não certificados.
+- Objetivo ampliado pelo titular: completar os modelos de cada empresa e índice,
+  operação inaugural e reprodução/acesso no GitHub. Auditoria item a item cruza universo,
+  fonte→insumo→fórmula→gate→saída e requisitos de publicação. Usa Public Equity Investing,
+  auditoria de modelos e normalização financeira, com o código/portal existente como
+  entrega. Fontes seguem exclusivamente públicas; aprovação técnica não prova
+  comparabilidade, hipótese econômica ou eficácia fora da amostra.
+
+- JBS: estudo externo encerrado e recebido ROOT, 61 arquivos/22 controles autorais
+  aprovados. Os zeros de DFP2024/ITR primeiro trimestre2025 são explicitamente
+  reportados; comparativos posteriores são evidências separadas. O parser histórico
+  descarta PENÚLTIMO antes do seletor. TTM2026 BRL do CSV reproduzido por Decimal
+  externo; resíduos do pacote arredondado são conservados. Série anterior comparável
+  e crescimento não foram emitidos. Estudo primário BRL separado foi encerrado e
+  recebido ROOT: 70 arquivos, 21 controles autorais, seis páginas conferidas em pixels
+  e quatro receitas PDF/CSV confrontadas em Decimal sem tolerância. Demonstrações
+  BRL anuais de2025 e intermediárias June25 sustentam os comparativos reportados e
+  a política de predecessor/controle comum. Os PDFs também contêm seção USD: moeda
+  não pode ser inferida da primeira capa. O documento155686 é ID_DOC do catálogo CVM;
+  sua tentativa de download falhou, sem equiparar bytes RI a esse download.
+  Crescimento orgânico, perímetro econômico constante e PIT continuam não demonstrados.
+  Há plano de conservação opcional de comparativos/conflitos, sem patch ou seleção
+  financeira automática.
+- Normalização bancária: estudo121 recebido ROOT com 25 origens/cópias literais e
+  11 controles documentais aprovados. Confronta bases BCRA/IASB, perímetro Galicia,
+  ajustes gerenciais Supervielle e denominadores históricos de ROE. Delta patrimonial
+  não preenche lucro; poupança salarial futura não vira resultado realizado. O RIM
+  futuro conserva patrimônio de abertura, distinto do denominador histórico médio.
+  NI normalizado, ROE reproduzido, forecasts e modelo bancário completo permanecem
+  ausentes. Normativos completos BCRA/IAS29 e ponte causal de resultado/OCI/impostos
+  seguem em estudo primário novo, sem reabrir os extratores encerrados.
+
+## Auditoria de todo o universo e reprodução pública — 09/10/2026
+
+- Public Equity Investing orientou mapa de233 empresas,281 linhas e8 ETFs;
+  os8 índices são vistas por proxy, não valuations adicionais em pontos. São241
+  modelos financeiros e249 vistas de auditoria. ROOT recebeu1216 arquivos fechados
+  da revisão não autora e confrontou as233 identidades/ratings/confianças com os
+  downloads públicos. Ledger8087 insumos/15069 passos/4633 gates e10 prioridades
+  separam ausência de fonte, comparabilidade, método indisponível, hipótese econômica,
+  defeito de exposição e saída operacional ausente. Nenhuma quota vira gate HARD.
+- Portal `af6eb0c9`:52 arquivos da interface,273 do retrato e361 partições públicas
+  foram recebidos por HTTP200 com SHA-256 do manifesto e das somas. Todos632
+  participantes do manifesto do retrato07 conferem. União das241 fichas sem ausências
+  ou duplicação, incluindo30 em revisão e3 sem alvo. Nova recepção não é PIT histórico.
+- Código gerador `5cb2d4ab8c250b3289dc90fb4e655637335a0aec` foi recebido da história
+  Git e conferido literalmente (183 arquivos,180 Python e3 assets). Recálculo completo
+  do retrato público reproduziu233 empresas e8 ETFs sem divergências nos campos
+  conferidos pela rotina nativa, tolerância relativa1e-5. Fonte/dados permaneceram
+  literais; durante o cálculo não houve escrita, rede, processo ou mutação. Prova
+  numérica histórica não é oráculo independente de toda fórmula nem eficácia econômica.
+- Candidato ETF corrige uma linha: configurações sem coluna de preço continuam com
+  ficha/índice/moeda/lacuna.22 testes distintos aprovados, default de oito presentes
+  e objetos anteriores literais, dois processos API com7configs físicas e guardas.
+  Inclui gravação/reabertura/verificação de ETFs sem preço em fixture legada.
+  Revisão não autora recebeu1587 arquivos e confirmou22 autorais mais três próprios
+  aprovados. ROOT recebeu/releu o pacote e transpôs cinco paths ao DEV;25 focais
+  ROOT passaram. Preço/alvo/retorno ausentes permanecemNone; nova suíte integrada pendente.
+-38 sensibilidades com colunas constantes têm zero método consumidor da coluna:
+  sete commodities, oito holdings,21 imobiliárias,Auren,LILA. Estudo separado encerrou
+  924 conferências de estrutura/igualdade, sem reexecutar modelos financeiros. Das42
+  commodities,35 têmFCFF participante, mas o canal `d_comm` aplica choque aditivo
+  à margemEBIT, não preço físico de commodity→volume/receita/custo. Revisão não autora da apresentação encerrou 55 testes distintos (38 autorais e
+  17 próprios), 926 confrontos técnicos sobre 233 memórias e 230 grades sem diferença
+  financeira. ROOT recebeu 1121 arquivos e transpôs sete paths; os 55 testes passaram
+  no DEV, junto a Ruff e Node. Portal local foi construído e conferido: Vale mostra
+  p.p. de margem/consumidor; Adecoagro mostra indisponibilidade e só valores da coluna
+  sem choque. Console sem erro/aviso nos dois casos. A conferência é local sobre
+  dados oficiais já publicados; não confirma publicação ou adequação econômica
+  dos modelos industriais. Ampla13 negativa preservada; nova suíte integrada pendente.
+- ARGT: estudo privado488 arquivos recebido ROOT,25 controles autorais e645 ties
+  publicados confirmados.21 participantes têm origens nominais USD/CLP/ARS/MXN e
+  recebemφ ARS uniforme noTD. Conversão spot comum deFY1/FY2 cancela na razão;
+  não prova FX futuro. Aritmética local confere; comparabilidade sem ponte não
+  certificada. BU de campos públicos conserva resíduo API2e-7, sem relaxar igualdade
+  ou reestimar filhos. Contrato dos corpos originais/SDK/overlay em estudo separado;
+  nenhuma fórmula substituta ou promoção de confiança/PIT/P0. Contrato nominal separado
+  encerrou46 controles/285arquivos recebidosROOT:21 estimativas/21info e alternativas
+  conferidos;SDK1.7 replica a primeira earningsCurrency de até quatro períodos. Moeda
+  HTTP individual/endDate/base nominal continuam não autenticados; FinancialCurrency
+  não é fallbackEPS. Candidato opcional por período foi encerrado e recebido ROOT:
+  490 arquivos, 75 casos autorais aprovados (66 novos e nove legados); 21 linhas reais
+  do default e nove microcasos permaneceram literais. Corpos e metadados de período
+  são exigidos no caminho opcional; não há autenticação live, ponte nominal/FX ou
+  revisão financeira completa. A revisão independente encontrou canal adjacente
+  material: receita FY1 emARS e FY2 emUSD conserva moedaARS no normalizador legado
+  e calcula crescimento sem recusar a contradição explícita. Prova simulada altera
+  somente a moeda do segundo período; recibos/EPS/valores são iguais. O candidato
+  completo foi recusado: ROOT recebeu1132 arquivos,26 controles aprovados e uma
+  falha material.75 autorais reexecutados passaram; default21+9 literal.
+  O vínculo EPS individual passa, mas a nova exportação também transmite receita.
+  Correção separada deve delimitar esse canal preservando o default; não inventar FX.
+  Pertence ao próximo lote, sem transposição neste fechamento e sem alterar PPP ou gates.
+
+- Réplica vazia: CLI explícita `genese --executar` conserva reinicio/agenda e exige
+  autoridade/trava/mandato do próprio clone.70 autorais e quatro controles ROOT
+  passaram em sandboxes de Git local comDADOS SIMULADOS: mandato/registro alterados,
+  expiração da trava e kill após preparação recusam sem gênese parcial. ROOT recebeu
+  472 arquivos autorais, encerrou revisão214payload+2 e transpôs seis paths aoDEV.
+  Não inicializou réplica operacional real e não executa gate/publicação automaticamente.
+- Entrega pública do mapa:13 paths novos/1210arquivos autorais recebidos ROOT,829
+  fontes+cópias literalmente conferidas. Histórico permanece intacto e adendo atribui
+  o recálculo aoROOT por três recibos próprios.12 testesV1 passam, mas cinco controles
+  ROOT provam consumo fora do manifesto: modelo/ETF/dois gzip/valuation. V1 recebeu
+  negativo fechado. V2 separada exige presença+SHA dos arquivos consumidos;17 casos
+  passam e18outputs reais são literais. Revisão não autora do deltaROOTV2 encerrou27
+  controles aprovados/guardasAPIeCLI, com autoriaV1 declarada;1222 arquivos recebidos
+  ROOT.15paths transpostosDEV e27focaisROOT aprovados. Todos632 participantes e três
+  entradas auxiliares foram confrontados com bytes do Git emAF6, comprovando os insumos
+  do guia público. Publicação do inventário e nova suíte integrada ainda pendentes. O primeiro argumento ROOT de fonte inexistente
+  está preservado e excluído da prova terminal; a fonte física terminal tem183 arquivos.
+
 
 ## Validação técnica do lote14 — 08/10/2026
 
@@ -21,8 +339,13 @@ Comece por `docs/cdp/PASSAGEM_CODEX.md`. Índice interno: `.cdp/README.md` e `.c
   dos participantes efetivamente consumidos e reparo mínimo de uma linha no fallback NW.
   Revisões não autoras e focais ROOT estão encerrados. Defaults financeiros legados,
   mandato e configuração global de recepção observada permanecem inalterados.
-  Próximo passo: commit seletivo, push normal em main, avanço do executor somente
-  limpo e sem trava, CI própria e conferência HTTP do portal no novo commit.
+  Integração normal concluída em `3318a595`: ROOT, DEV, executor e origin/main
+  avançaram, com cinco alterações herdadas e árvores oficiais preservadas. Executor
+  limpo, trava livre e integridade confirmada na leitura de20:55. Pages37861863628
+  concluiu verde; manifesto HTTP200 contém esse commit. CI37861863705 terminou
+  verde em09/10,01:41UTC: JUnit próprio recebido confirma3302 casos,3285 aprovados,
+  16 pulados e uma falha esperada, zero falhas/erros inesperados. Lint e verificação
+  de livro/rotinas/skills/portal passaram. Recibo novo no lote15, `CI_3318_REMOTA/`.
 - VaR/ES diário: estudo externo encerrado com 3.157 confrontos sem divergência,
   20 testes literais e quatro controles independentes aprovados. ROOT recebeu os
   284 payloads autorais e os 13 da revisão. Os seis records sintéticos guardam apenas
@@ -33,15 +356,43 @@ Comece por `docs/cdp/PASSAGEM_CODEX.md`. Índice interno: `.cdp/README.md` e `.c
   casos de intercepto por média ponderada e alavancagem fechadas, sem CDP/oráculo autoral.
   O aceite é de matemática local; não valida adequação econômica ou geração de B/F/D.
   Provas privadas em `.cdp/estudos/20261008-wls-hc2-externo/`.
+- Risco específico: seis microcasos e13 causais declarados passaram, com26 testes,
+  Ruff0 e64 comparações numéricas válidas. ROOT recebeu212 payloads, leu código,
+  oráculo, controles e contrato; reproduziu a API original byteidêntica sob1491
+  leituras sem escrita/rede/processos. Confirmou mais17 confrontos por fórmulas
+  fechadas de três casos constantes, sem CDP/oráculo autoral para o esperado.
+  Piso, shrinkage e grupos têm aceite matemático delimitado; origem HC2/cap/país,
+  janela, adequação econômica, calibração e PIT não foram certificados. Sem patch.
 - Galicia: diagnóstico corrente recebeu revisão favorável delimitada, com 11 testes
   recebidos e cinco controles próprios. Consumidor perde política contábil e poder
   aquisitivo, conservando recepção observada/publicação ausente. O candidato separado
-  de propagação/comparabilidade encerrou 51 testes portáteis, nove documentais privados
-  e 25 legados selecionados; revisão independente do patch ainda em andamento.
-  Nenhum fato de lucro real, ponte anual nova ou extrator financeiro foi entregue.
-  Fonte DEV não recebe esse patch nesta integração.
+  de propagação V1 foi recusado por bloquear G2 do TTM legado não tipado. V2
+  corrige essa regressão, mas foi recusada por admitir uma fonte explicitamente
+  contraditória ao par nativo do componente. Ambos e suas revisões negativas estão
+  encerrados e preservados. V3 ROOT muda somente o helper central sobreV2:
+  fonte estruturada pode omitir o par; quando o declara, deve ser completo e
+  coerente, sem preencher o topo.117 testes passaram (83 portáteis,9 documentais,
+  25 legados), baseline9 financeiro+G2 literal393070bytes e guarda2965 leituras
+  sem escritor/rede/processos. Revisão não autora encerrada favorável delimitada:
+  122 aprovações, cinco controles próprios, baseline/API literais, sem transposição.
+  ROOT recebeu43 arquivos e leu o parecer/controles/custódia.
+  Extrator privado separado encerrou53 testes e extrai três componentes June26,
+  com ponte anual específica, owners, contexto contábil e poder aquisitivo.
+  Sua revisão encerrou65 casos aprovados,12 próprios e oráculo Decimal separado.
+  ROOT recebeu31 arquivos, leu os controles/harness/oráculo e confirmou custódia/JUnit;
+  esses recebimentos não são nova reexecução ROOT. Pins de recibos antigos
+  restringem-no à reprodução fechada. Produtor observado separado prepara a API
+  normal com RegistroArquivo/novas recepções e disponibilidade conjunta. Nenhum
+  lucro real foi emitido no coletor oficial, sem TTM operacional/PIT/P0 liberado.
+- Covariância fatorial: estudo Decimal externo encerrado sobre fonte física185 literal,
+  quatro testes/seis variantes, zero falhas/erros/pulos e Ruff0. Duas meias-vidas,
+  máscaras/pouco overlap, anualização252, PSD2×2 e zero/vazio conferem. ROOT recebeu208
+  arquivos, leu programas/parecer e confirmou16 valores por fórmulas fechadas próprias,
+  mais piso escalar exato do mesmo caso, sem novo cenário/CDP/seed. Guarda do autor
+  e ROOT sem escrita de cálculo/rede/processo. Aceite local, sem estimação geral,
+  adequação econômica, calibração, PIT ou P0; nenhum patch de fonte.
 - Operação oficial: Diário nativo de 08/10 publicou `4c25ce4a`; mercado até 08/10,
-  integridade confirmada e trava liberada. Portal HTTP200 no mesmo commit. Cobertura
+  integridade confirmada e trava liberada. Portal agora HTTP200 no código3318a595. Cobertura
   permanece em 07/10 e sua atualização completa é determinada pela agenda antes da
   montagem de 09/10. As 12 automações permanecem no projeto AInotes, seção CDP,
   executor interno `.cdp/rotinas`; o clone externo não existe.

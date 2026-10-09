@@ -24,6 +24,7 @@ Contrato compartilhado com A2 (``cobertura run``) e E2 (vetos de risco): :class:
 
 from __future__ import annotations
 
+import json
 import logging
 import math
 import os
@@ -41,10 +42,13 @@ import pandas as pd
 from ..universe import Universe, load_universe
 from . import publico_cvm as cvm
 from . import publico_etf as etfm
+from . import publico_galicia as galicia_pdf
 from . import publico_ri as ri_pdf
 from . import publico_sec as sec
+from . import publico_supervielle as supervielle_pdf
 from . import publico_taxas as tx
 from . import publico_yahoo as yh
+from .dimensoes_contabeis import CAMPOS, dimensoes
 from .fundamentals_pit import resolve_share_scale
 from .publico_arquivo import Arquivo, RegistroArquivo, agora_utc, data_local
 from .publico_confirmacao_cvm import COLUNAS_TEMPORAIS, ConfirmacaoCVM, instante
@@ -737,6 +741,25 @@ def demonstrativos(issuer_ids: Sequence[str], as_of: date, *, offline: bool = Fa
                     and http_get is None and url_ri.startswith("https://inversores.ypf.com/")):
                 def baixar_ri(url=url_ri):
                     return baixar_pdf_ypf(url)
+            perfil = next((p for p in (galicia_pdf, supervielle_pdf)
+                           if doc_ri.get("extrator") == p.EXTRATOR_ID), None)
+            if perfil is not None:
+                perfil.validar_catalogo(doc_ri)
+                dep = doc_ri["dependencia_anual"]
+                got_dep = arq.obter(f"RI/demonstrativos/{iid}/{dep['documento']}", "RI", dep["url"],
+                    _baixar(http_get, dep["url"]), ate=as_of, max_idade_dias=3650.0,
+                    validar=lambda c, p=perfil: p.validar_pdf_observado(c, "anual"))
+                if got_dep is None:
+                    arq.falhas.append(f"{iid}: ponte anual RI observada não recebida; três fatos não emitidos")
+                    continue
+                got = arq.obter(f"RI/demonstrativos/{iid}/{doc_ri['documento']}", "RI", url_ri,
+                    baixar_ri, ate=as_of, max_idade_dias=3650.0,
+                    validar=lambda c, dep_bytes=got_dep[1], p=perfil: p.validar_documentos(c, dep_bytes))
+                if got is not None:
+                    f_ri = perfil.fatos_pdf_observado(got[1], got[0], got_dep[1], got_dep[0], doc_ri)
+                    f_ri["data_coleta"] = pd.Timestamp(got[0].data_coleta)
+                    partes_ri.append(f_ri)
+                continue
             got_ri = arq.obter(f"RI/demonstrativos/{iid}/{doc_ri['documento']}", "RI", url_ri,
                                baixar_ri, ate=as_of, max_idade_dias=3650.0,
                                validar=lambda c, d=doc_ri: ri_pdf.fatos_pdf_ri(c, d, as_of=as_of))
@@ -879,6 +902,11 @@ def demonstrativos(issuer_ids: Sequence[str], as_of: date, *, offline: bool = Fa
     out["period_end"] = pd.to_datetime(out["period_end"])
     extras = ([k for k in (*COLUNAS_TEMPORAIS, "period_start") if k in out]
               if confirmar_magnitude_cvm or ri_observado else [])
+    if any(k in out for k in CAMPOS):
+        for _, row in out.iterrows():
+            dimensoes(row)
+        extras += [k for k in (*CAMPOS, "componentes_fluxo") if k in out]
+    extras += [k for k in galicia_pdf.CAMPOS_CONTEXTO if k in out]
     out = out[DEMONSTRATIVOS_COLUNAS + extras].sort_values(
         ["issuer_id", "item", "freq", "period_end"], kind="stable").reset_index(drop=True)
     out.attrs = {"as_of": as_of.isoformat(), "falhas": list(arq.falhas),
@@ -1232,36 +1260,66 @@ def _plausivel_frente_base(base: pd.DataFrame, s2: pd.DataFrame, iid: str,
 
 def consenso_publico(tickers: Sequence[str], as_of: date, *, offline: bool = False,
                      root: Path | None = None,
-                     yf_factory: Callable[[str], Any] | None = None) -> pd.DataFrame:
+                     yf_factory: Callable[[str], Any] | None = None,
+                     eps_por_periodo: bool = False, eps_http_get: HttpGet | None = None,
+                     conhecimento_ate: datetime | None = None) -> pd.DataFrame:
     """Consenso público (Yahoo Finance) por ticker, como coletado até ``as_of``.
 
     Retrato sem data própria: com ``as_of`` no passado só vale o que foi arquivado até lá
     (coletar hoje seria look-ahead). Campos ausentes ⇒ ``NaN``; o rótulo de exibição é
     "consenso público Yahoo Finance" (``NOTA_CONSENSO``).
     """
-    arq = _arquivo(root, offline)
+    if eps_por_periodo:
+        from . import publico_eps as eps
+        from .publico_arquivo import corte_de_conhecimento
+
+        corte = instante(conhecimento_ate)
+        with corte_de_conhecimento(corte):
+            arq = _arquivo(root, offline)
+    else:
+        arq = _arquivo(root, offline)
     lista = [str(t) for t in dict.fromkeys(tickers)]
-    sim = _simulado(arq, "consenso", as_of, CONSENSO_COLUNAS)
+    sim = None if eps_por_periodo else _simulado(arq, "consenso", as_of, CONSENSO_COLUNAS)
     if sim is not None:
         sim["data_coleta"] = pd.to_datetime(sim["data_coleta"])
         return sim[sim["ticker"].isin(lista)].reset_index(drop=True)
 
     def um(t: str) -> dict:
         info = _parte_yahoo(arq, t, "info", as_of, yf_factory, instantaneo=True)
-        est = _parte_yahoo(arq, t, "estimativas", as_of, yf_factory, instantaneo=True)
+        extras = {}
+        if eps_por_periodo:
+            key, url = eps.identidade(t)
+            raw = arq.obter(key, "YAHOO", url, _baixar(eps_http_get, url), ate=as_of,
+                            max_idade_dias=1.0, instantaneo=True,
+                            validar=lambda body: eps.ler_corpo(body, t))
+            est = None
+            if raw:
+                # Uma única resposta fornece EPS e contexto; o recibo não é publicação.
+                try:
+                    parsed, extras = eps.consenso_do_registro(raw[1], t, raw[0], conhecimento_ate=corte)
+                    est = (raw[0], parsed)
+                except ValueError as exc:
+                    arq.falhas.append(f"EPS individual {t}: {exc}")
+        else:
+            est = _parte_yahoo(arq, t, "estimativas", as_of, yf_factory, instantaneo=True)
         c = yh.consenso_de(info[1] if info else None, est[1] if est else None)
+        if eps_por_periodo and extras:
+            # Sem o par completo, a moeda comum fica ausente; OR legado não preenche.
+            c["moeda_estimativas"] = json.loads(extras["eps_contexto"])["moeda_comum"]
         reg = est[0] if est else (info[0] if info else None)
         reg_info = info[0] if info else None
+        contexto_eps = json.loads(extras["eps_contexto"]) if extras else None
         return {"ticker": t, **c, "fonte": "YAHOO" if reg else None,
-                "data_coleta": _data_coleta(reg), "url": yh.URL_QUOTE.format(t=t) + "/analysis",
+                "data_coleta": contexto_eps["recebido_em"] if contexto_eps else _data_coleta(reg),
+                "url": contexto_eps["url"] if contexto_eps else yh.URL_QUOTE.format(t=t) + "/analysis",
                 "sha256": reg.sha256 if reg else None,
                 "sha256_info": reg_info.sha256 if reg_info else None,
-                "data_coleta_info": _data_coleta(reg_info)}
+                "data_coleta_info": _data_coleta(reg_info), **extras}
 
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as ex:
         rows = list(ex.map(um, lista))
-    out = pd.DataFrame(rows, columns=CONSENSO_COLUNAS) if rows else pd.DataFrame(
-        columns=CONSENSO_COLUNAS)
+    cols = CONSENSO_COLUNAS + ([k for k in eps.COLUNAS if any(k in r for r in rows)] if eps_por_periodo else [])
+    out = pd.DataFrame(rows, columns=cols) if rows else pd.DataFrame(columns=cols)
     out.attrs = {"as_of": as_of.isoformat(), "falhas": list(arq.falhas), "nota": NOTA_CONSENSO}
     return out
 

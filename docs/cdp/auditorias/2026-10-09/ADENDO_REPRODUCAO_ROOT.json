@@ -1,0 +1,37 @@
+{
+  "schema": "cdp.auditoria.adendo_reproducao_root/v1",
+  "natureza": "Extrato documental atribuído ao ROOT; não reexecução pelo autor da portabilidade",
+  "historico_preservado": {
+    "parecer_sha256": "3fb54634a36a8a2c88cab38d2e627123ab11a150683f5e673e2679650571aee2",
+    "prioridades_sha256": "0a41a9491c4e80d8aa8e6b6ea68936f8348a197321b9d198ff2d3100a8781a42"
+  },
+  "snapshot": "2026-10-07",
+  "commit_snapshot": "af6eb0c93d7c14efaa49bd658c0a502f4e9aedb9",
+  "codigo_gerador": "5cb2d4ab8c250b3289dc90fb4e655637335a0aec",
+  "publicos_manifestados_recebidos": 632,
+  "publicos_recebidos_incluindo_auxiliares": 634,
+  "recibos_originais_sha256": {
+    "RECALCULO_TERMINAL.json": "318dbbcf4b4884dfd254ec33e7bd024558e607e9f92a0e3236a67951f36f0968",
+    "PREPARACAO_RECALCULO.json": "aae2e46090c172f3bb32a71e510794fb6561f39aa4b13f415a127a00aaffb743",
+    "RETRATO_RECEBIDO.json": "dd60f6dbe2a43f0cf9344a02328bff966036fbebf8ef564bb2309e20116f70f4"
+  },
+  "recalculo_ROOT": {
+    "inicio_utc": "2026-10-09T10:34:29.838075+00:00",
+    "fim_utc": "2026-10-09T10:38:35.108590+00:00",
+    "as_of": "2026-10-07",
+    "empresas": 233,
+    "etfs": 8,
+    "completo": true,
+    "tolerancia_relativa_nativa": 1e-05,
+    "divergencias": [],
+    "arquivos_antes": 817,
+    "arquivos_depois": 817,
+    "hashes_fonte_e_dados_identicos": true,
+    "tentativas_efeitos": [],
+    "novos_insumos_ou_nova_seed": false,
+    "escopo": "Reexecução histórica de contexto, métodos, cenários com a semente arquivada, custo de capital, PWR, alpha, confiança, rating e ETFs. Não é teste independente de todas as fórmulas nem certificação econômica, PIT ou E1/E2."
+  },
+  "autor_portabilidade_reexecutou_financeiro": false,
+  "conclusao_delimitada": "Recepção pública e recálculo histórico nativo foram confirmados pelo ROOT após o fechamento do mapa histórico. Não é oráculo independente de todas as fórmulas, adequação econômica, PIT/E1/E2 nem aceite operacional.",
+  "historico_nao_reescrito": true
+}

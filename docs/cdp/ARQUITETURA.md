@@ -101,6 +101,7 @@ em modo `AUTONOMOUS`, com as falhas SOFT registradas como cientes.
 | `workflow/pacote.py` | pacote autocontido de uma etapa da mente para qualquer assistente (ChatGPT, Gemini, Claude) | CLI `cdp mente pacote` (`docs/cdp/REPRODUZIR.md`) |
 | `workflow/agenda.py`, `risk_monitor.py` | o que fazer agora pelo relógio de Brasília; monitor de risco com ações determinísticas | CLI `cdp agenda`, `cdp risk`, `cdp kill-switch` |
 | `workflow/reinicio.py` | abertura do livro na data de início do mandato (uma única vez, pelo executor; simulação por padrão) | CLI `cdp reinicio [--executar]` |
+| `workflow/genese.py` | plano de gênese para réplica vazia; execução explícita exige executor, mandato, base main limpa, registro e trava nativos, com conferência antes e depois da preparação | CLI `cdp genese [--executar]`; leitura por padrão, sem gate ou publicação automática (`docs/cdp/REPLICAR.md`) |
 | `workflow/demo.py` | demonstração offline completa com mercado sintético (DADOS SIMULADOS): montagens, tese, fechamentos, relatório semanal e verificação da trilha | CLI `cdp demo` |
 | `workflow/painel*.py`, `painel_template.html` | painel de gestão (dados e página) na identidade visual da marca | CLI `cdp painel` |
 | `estado.py` | retrato só de leitura para qualquer agente: fase, executor, trava, integridade, últimas execuções, pendências, incidentes e próximo passo | CLI `cdp estado [--rede] [--sla]` |

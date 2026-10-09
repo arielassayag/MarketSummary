@@ -49,6 +49,9 @@ Kill switch (só redução de risco; docs/cdp/EXECUCAO.md, "Kill switch: procedi
 Pré-início (uma vez, pela rotina, quando ``agenda`` informa ``reinicio.pendente``):
     cdp reinicio [--executar] [--pesquisa DIR]   (sem --executar só mostra o plano, não grava)
 
+Abertura da própria réplica (ato explícito no executor, somente livro vazio):
+    cdp genese [--executar --execucao ID --trava ID]   (sem --executar só mostra o plano)
+
 Cobertura e notas de pesquisa (números só do código):
     cdp cobertura run --date D [--emissores IID,IID] [--offline]
     cdp cobertura verify
@@ -649,6 +652,13 @@ def cmd_reinicio(args: argparse.Namespace) -> int:
     return handler(args)
 
 
+def cmd_genese(args: argparse.Namespace) -> int:
+    """Abre somente livro vazio da própria réplica; sem --executar apenas lê."""
+    from .workflow.genese import cmd_genese as handler
+
+    return handler(args)
+
+
 # ----------------------------------------------------------------------------- parser
 
 
@@ -830,6 +840,12 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--pesquisa", default="pesquisa",
                    help="pasta do material de pesquisa da mente (padrão: pesquisa)")
     s.set_defaults(func=cmd_reinicio)
+
+    s = sub.add_parser("genese", help="abre somente o livro vazio da própria réplica")
+    s.add_argument("--executar", action="store_true", help="cria a gênese após as guardas")
+    s.add_argument("--execucao", default=None, help="execução registrada do gate exclusivo")
+    s.add_argument("--trava", default=None, help="trava vigente dessa execução")
+    s.set_defaults(func=cmd_genese)
 
     s = sub.add_parser("verify", help="verifica trilha de auditoria, track record e decisões")
     adicionar_argumentos(s)

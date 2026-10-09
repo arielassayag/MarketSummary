@@ -531,7 +531,7 @@ def avaliar_etfs(md: MarketData, dados: DadosPublicos, params: ParametrosCobertu
 
     validar_modelos_etf(pacotes, modelos, params, fornecedor=ri_fornecedor,
                        conhecimento_ate=conhecimento_ate)
-    cfgs = [c for c in params.etfs.get("etfs", []) if c["ticker"] in md.benchmarks.columns]
+    cfgs = params.etfs.get("etfs", [])
     insumos = {}
     for c in cfgs:
         ins = insumos_etf(c, md, dados, params, pacotes, as_of,

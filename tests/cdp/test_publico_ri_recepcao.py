@@ -440,6 +440,9 @@ def test_conexao_transporte_preserva_arquivo_url_sha_e_default(ambiente, monkeyp
     monkeypatch.setattr(publico, "baixar_pdf_ypf", transporte)
     monkeypatch.setattr(publico, "default_http_get", http)
     raiz = a.tmp / "coleta-nova-DADOS-SIMULADOS"
+    # DADOS SIMULADOS: a captura online participa do corte civil e usa relógio fixo.
+    monkeypatch.setattr(publico, "_arquivo",
+                        lambda root, offline: Arquivo(root, offline=offline, agora=lambda: RECEBIDO))
     out = publico.demonstrativos([a.iid], DIA, root=raiz, universe=a.md.universe,
                                 offline=False, complementar_yahoo=False,
                                 http_get=http if injetado else None,
@@ -455,6 +458,7 @@ def test_conexao_transporte_preserva_arquivo_url_sha_e_default(ambiente, monkeyp
         for reg in registros:
             assert reg.sha256 == hashlib.sha256(por_url[reg.url]).hexdigest()
             assert reg.data_coleta.tzinfo is not None
+            assert reg.data_coleta == RECEBIDO.replace(microsecond=0)
             assert Arquivo(raiz, offline=True).ler(reg) == por_url[reg.url]
     else:
         assert out.empty and not registros

@@ -549,7 +549,8 @@ def disponibilidade_observada(params) -> bool:
 
 def _coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Sequence[str],
             etfs: Sequence[str], *, offline: bool = False, raiz: Path | None = None,
-            seed: int = 7, params=None, conhecimento_ate: datetime | None = None) -> DadosPublicos:
+            seed: int = 7, params=None, conhecimento_ate: datetime | None = None,
+            eps_por_periodo: bool = False, eps_http_get=None) -> DadosPublicos:
     """Coleta as tabelas públicas da execução (sintéticas quando o mercado é sintético)."""
     from .temporal import ativo as temporal_ativo
     from .temporal import construir as corte_temporal
@@ -599,7 +600,10 @@ def _coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Se
             primaria, catalogo = coletar_resultados(list(issuer_ids), arquivo=Arquivo(raiz, offline=offline),
                                                    conhecimento_ate=conhecimento_ate, **opcoes_resultado)
             dem, resultado_evidencias = incorporar_resultados(dem, primaria, catalogo)
-    con = _garantir(publico.consenso_publico(list(tickers), as_of, **kw), COLS_CONSENSO)
+    kw_con = dict(kw)
+    if eps_por_periodo:
+        kw_con.update(eps_por_periodo=True, eps_http_get=eps_http_get, conhecimento_ate=conhecimento_ate)
+    con = _garantir(publico.consenso_publico(list(tickers), as_of, **kw_con), COLS_CONSENSO)
     div = _garantir(publico.dividendos(list(tickers), as_of, **kw, **kw_universo), COLS_DIVIDENDOS)
     ini = date(as_of.year - 1, as_of.month, 1)
     fim = date(as_of.year + 1, as_of.month, 28)
@@ -629,7 +633,7 @@ def _coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Se
 def coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Sequence[str],
             etfs: Sequence[str], *, offline: bool = False, raiz: Path | None = None,
             seed: int = 7, params=None, conhecimento_ate: datetime | None = None,
-            ri_contexto=None) -> DadosPublicos:
+            ri_contexto=None, eps_por_periodo: bool = False, eps_http_get=None) -> DadosPublicos:
     """Política nova sela corte exato em todos os arquivos; ausência conserva seleção legada."""
     from .ri_observada import ativo as ri_ativo
     from .temporal import ativo as temporal_ativo
@@ -649,6 +653,8 @@ def coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Seq
         return replace(dados, ri_observados=tabela, ri_evidencias=evidencias, ri_contexto=ri_contexto)
 
     opcoes = dict(offline=offline, raiz=raiz, seed=seed, params=params, conhecimento_ate=conhecimento_ate)
+    if eps_por_periodo:
+        opcoes.update(eps_por_periodo=True, eps_http_get=eps_http_get)
     if params is not None and temporal_ativo(params):
         if conhecimento_ate is None:
             raise ValueError("Coleta temporal exige instante explícito de conhecimento.")

@@ -59,7 +59,10 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
+from ..data.dimensoes_contabeis import CAMPOS, compativeis, dimensoes
+from ..data.publico_contexto_documental import contexto_composicao, contexto_documental
 from ..market import MarketData
+from .disponibilidade_demonstrativos import _grupos
 from .fontes import DadosPublicos
 from .formato import num, pct, r6
 from .parametros import Arquetipo, ParametrosCobertura, arquetipo_padrao
@@ -272,6 +275,9 @@ class Demonstrativos:
         self.em_conferencia: list[tuple[str, pd.Timestamp]] = []
         self._conf: dict[str, pd.Timestamp] = {}
         if not d.empty:
+            if any(k in d for k in CAMPOS):
+                for _, row in d.iterrows():
+                    dimensoes(row)
             d["period_end"] = pd.to_datetime(d["period_end"], errors="coerce")
             d["data_publicacao"] = pd.to_datetime(d["data_publicacao"], errors="coerce")
             d["value"] = pd.to_numeric(d["value"], errors="coerce")
@@ -330,9 +336,19 @@ class Demonstrativos:
             return json.dumps([{"item": str(r["item"]), "freq": str(r["freq"]),
                                 "period_end": pd.Timestamp(r["period_end"]).date().isoformat(),
                                 "valor": float(r["value"]), "coeficiente": sinal,
-                                "fonte": _prov_linha(r)} for r, sinal in linhas], ensure_ascii=False)
+                                "fonte": _prov_linha(r), **dimensoes(r), **contexto_documental(r)} for r, sinal in linhas], ensure_ascii=False)
 
-        def compativeis(linhas: list[pd.Series]) -> bool:
+        def comparaveis(linhas: list[pd.Series]) -> bool:
+            if not compativeis(linhas):
+                return False
+            if any(dimensoes(row) for row in linhas):
+                for row in linhas:
+                    try:
+                        for _, grupo in _grupos(row):
+                            if not isinstance(grupo, list) or not grupo or not compativeis([row, *grupo]):
+                                return False
+                    except (TypeError, ValueError, AttributeError):
+                        return False
             moedas = {str(r.get("currency")) for r in linhas}
             bases = {_base_linha(r) for r in linhas}
             conceitos = [set(re.findall(r"semantica_fluxo=([^;\s]*)", str(r.get("nota", ""))))
@@ -361,13 +377,14 @@ class Demonstrativos:
                 gaps = ult4["period_end"].diff().dropna().dt.days
                 fim = ult4["period_end"].iloc[-1]
                 if gaps.between(80, 100).all():
-                    if (ult_outros is None or ult_outros < fim) and compativeis([rr for _, rr in ult4.iterrows()]):
+                    if (ult_outros is None or ult_outros < fim) and comparaveis([rr for _, rr in ult4.iterrows()]):
                         r = ult4.iloc[-1].to_dict()
                         r.update({"freq": "TTM", "value": float(ult4["value"].sum()),
                                   "documento": f"{r.get('documento') or ''} (soma dos 4 últimos trimestres)".strip(),
                                   "data_publicacao": ult4["data_publicacao"].max(),
                                   "componentes_fluxo": componentes([(rr, 1.0) for _, rr in ult4.iterrows()]),
                                   **tempo([rr for _, rr in ult4.iterrows()])})
+                        r.update(contexto_composicao(json.loads(r["componentes_fluxo"])))
                         rows.append(r)
                     continue
             a = d[(d["item"] == item) & (d["freq"] == "A")].sort_values("period_end")
@@ -395,7 +412,7 @@ class Demonstrativos:
             if ant is None:
                 continue
             participantes = [a.iloc[-1], *(rr for _, rr in cur.iterrows()), *linhas_ant]
-            if not compativeis(participantes):
+            if not comparaveis(participantes):
                 continue
             r = cur.iloc[-1].to_dict()
             r.update({"freq": "TTM", "value": float(a["value"].iloc[-1]) + float(cur["value"].sum()) - sum(ant),
@@ -405,6 +422,7 @@ class Demonstrativos:
                       "componentes_fluxo": componentes([(a.iloc[-1], 1.0)] + [(rr, 1.0) for _, rr in cur.iterrows()]
                                                         + [(rr, -1.0) for rr in linhas_ant]),
                       **tempo(participantes)})
+            r.update(contexto_composicao(json.loads(r["componentes_fluxo"])))
             rows.append(r)
         return pd.DataFrame(rows, columns=[*d.columns, "componentes_fluxo"] if "componentes_fluxo" not in d else d.columns) \
             if rows else d.iloc[0:0]
@@ -579,20 +597,27 @@ def _base_linha(row: pd.Series) -> str | None:
     return "consolidado" if b in ("true", "1") else "individual" if b in ("false", "0") else None
 
 
+def documento_proveniencia(row) -> str:
+    """Rótulo determinístico existente; não é identificador ou documento novo."""
+    freq = FREQ_PT.get(str(row.get("freq")), str(row.get("freq")))
+    base = ""
+    if "consolidado" in row and str(row.get("consolidado")).lower() in ("false", "0"):
+        base = "; demonstrações individuais (sem consolidadas no período)"
+    return f"{documento_pt(row.get('documento'))} ({row.get('demonstrativo')}, " \
+           f"{freq} até {pd.Timestamp(row['period_end']).date()}{base})".strip()
+
+
 def _prov_linha(row: pd.Series | None, *, detalhar_fluxos: bool = False, detalhar_resultados: bool = False) -> dict[str, Any]:
     if row is None:
         return prov_codigo("sem linha de demonstrativo")
-    freq = FREQ_PT.get(str(row.get("freq")), str(row.get("freq")))
-    base = ""
-    if "consolidado" in row.index and str(row.get("consolidado")).lower() in ("false", "0"):
-        base = "; demonstrações individuais (sem consolidadas no período)"
     pub = row.get("data_publicacao")
     pub = pd.Timestamp(pub).date() if pd.notna(pub) else None
     out = prov_dict({"fonte": row.get("fonte"), "url": row.get("url"),
-                     "documento": f"{documento_pt(row.get('documento'))} ({row.get('demonstrativo')}, "
-                                  f"{freq} até {pd.Timestamp(row['period_end']).date()}{base})".strip(),
+                     "documento": documento_proveniencia(row),
                      "data_publicacao": pub, "data_coleta": row.get("data_coleta"),
                      "sha256": row.get("sha256")})
+    out.update(dimensoes(row))
+    out.update(contexto_documental(row))
     out["data_estimada"] = _bool(row.get("pit_estimado"))
     if str(row.get('disponibilidade_tipo')) == 'recepcao_observada':
         for k in ('disponibilidade_tipo', 'disponivel_desde', 'data_recebimento_documento', 'received_date'):
@@ -1311,6 +1336,11 @@ def _consenso(md: MarketData, dados: DadosPublicos, params: ParametrosCobertura,
     def fator_de(r: pd.Series, t: str) -> float | None:
         """LPA por unidade da linha ``t`` na moeda das estimativas → por unidade da linha de valuation
         na moeda dela (ações por linha e câmbio)."""
+        from ..data.publico_eps import autenticar_linha
+
+        contexto_eps = autenticar_linha(r, getattr(dados, "raiz", None))
+        if contexto_eps is not None and contexto_eps["moeda_comum"] is None:
+            return None
         m_e = r.get("moeda_estimativas")
         if unidades_declaradas and not (isinstance(m_e, str) and len(m_e) == 3):
             return None
@@ -1375,6 +1405,18 @@ def _consenso(md: MarketData, dados: DadosPublicos, params: ParametrosCobertura,
                                      "número de analistas e moeda de cotação)"),
                   "data_coleta": None if row is None else _iso(row.get("data_coleta_info")),
                   "sha256": None if row is None else _sha(row.get("sha256_info"))}
+    fonte_eps = fonte
+    if row is not None:
+        from ..data.publico_eps import autenticar_linha
+
+        contexto_eps = autenticar_linha(row, getattr(dados, "raiz", None))
+        if contexto_eps is not None:
+            fonte_eps = {**fonte, "url": contexto_eps["url"],
+                         "documento": "EPS por período no corpo HTTP público quoteSummary.earningsTrend",
+                         "eps_contexto": contexto_eps}
+            # Os preços-alvo vêm de info; o corpo EPS não lhes fornece autoridade.
+            fonte = fonte_info
+            pk.fontes["consenso_eps"] = fonte_eps
     if row is None:
         pk.falta("eps_fy1", "sem consenso público de LPA")
         pk.put("consenso", None)
@@ -1444,9 +1486,9 @@ def _consenso(md: MarketData, dados: DadosPublicos, params: ParametrosCobertura,
     if e1 is None:
         pk.falta("eps_fy1", "consenso de LPA indisponível ou inconsistente")
     else:
-        pk.put("eps_fy1", e1, fonte, nome="LPA de consenso (ano 1)", unidade=f"preco:{moeda}")
+        pk.put("eps_fy1", e1, fonte_eps, nome="LPA de consenso (ano 1)", unidade=f"preco:{moeda}")
     if e2 is not None:
-        pk.put("eps_fy2", e2, fonte, nome="LPA de consenso (ano 2)", unidade=f"preco:{moeda}")
+        pk.put("eps_fy2", e2, fonte_eps, nome="LPA de consenso (ano 2)", unidade=f"preco:{moeda}")
     r1, r2 = _f(row.get("receita_fy1")), _f(row.get("receita_fy2"))
     g1 = None
     rec = itens.get("receita")

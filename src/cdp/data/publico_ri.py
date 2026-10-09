@@ -18,10 +18,11 @@ from pathlib import Path
 import pandas as pd
 from pypdf import PdfReader
 
-from .publico_cvm import FATO_COLUNAS
+from .publico_cvm import FATO_COLUNAS, FATO_DIMENSOES
 
 CATALOGO_RI = Path(__file__).resolve().parents[3] / "configs/cdp/ri_demonstrativos.json"
 COLUNAS = FATO_COLUNAS + ["nota", "pit_estimado"]
+COLUNAS_DIMENSOES = FATO_DIMENSOES  # Somente fatos documentalmente tipados.
 COLUNAS_OBSERVADAS = ["disponibilidade_tipo", "disponivel_desde",
                      "data_recebimento_documento", "data_publicacao_primaria"]
 _NUMERO = r"(?:\$?\(?-?(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?\)?|[-—])"

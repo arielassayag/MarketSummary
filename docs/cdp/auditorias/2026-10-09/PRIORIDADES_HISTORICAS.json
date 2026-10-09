@@ -1,0 +1,100 @@
+[
+  {
+    "id": "A01",
+    "prioridade": 0,
+    "tipo": "saída decisória/fonte temporal pendente",
+    "itens": "todos; corte/preço/modelo/inaugural",
+    "causa": "snapshot vigente07; base atual08 não torna retrato07 contemporâneo; nova fonte/corte e regras antes de decisão09",
+    "acao": "ROOT conclui integração técnica; executor produz cobertura normal atual sob política vigente e reconcilia modelo/config/código/fonte antes de montagem",
+    "prova": "novo manifesto imutável e execução normal, gates/conhecimento/recepção sem inventar publicação; esta auditoria não executa"
+  },
+  {
+    "id": "A02",
+    "prioridade": 0,
+    "tipo": "contradição documental/ausência de ponte",
+    "itens": "AR_YPF,AR_GALICIA,AR_SUPERVIELLE,AR_LAR e G13/G13b por empresa",
+    "causa": "estudos primários anteriores provam casos específicos de moeda/restatement/contagem; não inferir USD por magnitude nem homogêneo por inflação presumida",
+    "acao": "consumir somente células/documentos/períodos certificados; GaliciaV2 privado já em integração ROOT; Supervielle extrator externo tem produtor normal pendente; YPF ainda limite por célula",
+    "prova": "Arquivo→coletor→seletor→componentes→consumidor; recepções presentes, políticas/poder aquisitivo coerentes e grãos de agregado/filhos; G13 mantido quando insuficiente"
+  },
+  {
+    "id": "A03",
+    "prioridade": 0,
+    "tipo": "bug de controle/visibilidade evidenciado por leitura",
+    "itens": "8ETF se ticker inteiro ausente na base",
+    "causa": "avaliar_etfs534 filtra configurações pelo benchmark; retorno sem preço de calcular_etf234 não alcançado",
+    "acao": "candidato separado mantendo8fichas, sem inventar preço/relaxar portões",
+    "prova": "negativo original com coluna ausente; oito atuais byte literais; ROOT autorando em outra frente"
+  },
+  {
+    "id": "A04",
+    "prioridade": 1,
+    "tipo": "missing_required_source_metadata",
+    "itens": "todos8ETF/índices",
+    "causa": "fonte_composicao do modelo não transporta SHA/recepção/data primária; índice autentica configuração, não provedor",
+    "acao": "vincular recibo/bytes reais da composição e data de referência às posições efetivamente consumidas; fonte/ausência explicitamente separadas",
+    "prova": "ligações porhash e grão sem usar página de produto como arquivo; composição ausente/aproximada rotulada; não confundir comA03"
+  },
+  {
+    "id": "A05",
+    "prioridade": 1,
+    "tipo": "hipótese/driver econômico sem participação",
+    "itens": [
+      "AR_ADECOAGRO",
+      "AR_LAR",
+      "BR_BRASKEM",
+      "BR_CSN",
+      "BR_SIGMALITH",
+      "CL_CMPC",
+      "PE_SCCO"
+    ],
+    "causa": "colunas commodity invariantes no snapshot; FCFF normalizado retirado/não participante em vários desses casos",
+    "acao": "revisar adequação industrial/método e nome da sensibilidade; manter falta/negativo em vez de inventar FCFF",
+    "prova": "comparar grade já publicada e métodos participantes; novo stress fundamental somente em tarefa futura autorizada, não corrigir pela quota"
+  },
+  {
+    "id": "A06",
+    "prioridade": 1,
+    "tipo": "saída de underwriting ausente/incompleta",
+    "itens": "cada empresa; verEMPRESAS/METODOS/LEDGER",
+    "causa": "passos/cenários MC são estruturais; nota qualitativa apenas12empresas e não valida todos drivers",
+    "acao": "caso de investimento fonteado por empresa: negócio→drivers→normalização→tese contra consenso→catalisador→downside→ação; preservar bloqueios legítimos",
+    "prova": "source_reported vs standardized vs consensus vs policy; dívida/liquidez/maturidades/capacidade/ROIC e ROE industrial; não chamar pacote técnico de validado investimento"
+  },
+  {
+    "id": "A07",
+    "prioridade": 1,
+    "tipo": "reprodução independente de gênese ausente",
+    "itens": "clone próprio com livro vazio",
+    "causa": "REPLICAR94–101 e reinicio.plano275–283/executar338–340: nada sem chaves anteriores, antes de gênese",
+    "acao": "propor comando/ramo mínimo explícito para abrir livro novo, com hash/config/código/inception e sem reset de livro existente",
+    "prova": "candidato futuro: livro vazio, iniciado, incompatível; nenhum reinicio/gênese executado por esta revisão"
+  },
+  {
+    "id": "A08",
+    "prioridade": 1,
+    "tipo": "reprodução pública/serviço não demonstrado",
+    "itens": "241modelos,249vistas e portal",
+    "causa": "632 hashes versionados conferem localmente; HTTP/Actions/portal/downloadexato de brutos foraGit não exercitados; código privado8deltas ainda separado",
+    "acao": "após integração, provar cloneGitHub público normal+manifesto+source_commit+SHA256SUMS+rota de cada ficha/download e recálculo na versão geradora",
+    "prova": "execução separada sem reutilizar autoridade do painel local ou gitpush; endpoints mutáveis precisam recuperar SHA correto ou ausência explícita"
+  },
+  {
+    "id": "A09",
+    "prioridade": 1,
+    "tipo": "controle técnico versus ciência econômica",
+    "itens": "risco/alpha/optimizer/E1/E2",
+    "causa": "E1integral/PIT/holdout/estimação permanecem distintos dos estudos locais e testes; backtests declarados limitados",
+    "acao": "fechar matriz recebida por episódio; fazer holdout/vintage e calibração conforme desenho documentado, sem novas alegações a partir destas contagens",
+    "prova": "artefatos e outcomes originais completos, autoria/cortes não retrospectivos, sem mudar mandato ou dados para metasP0"
+  },
+  {
+    "id": "A10",
+    "prioridade": 2,
+    "tipo": "hipótese de coerência não provada",
+    "itens": "ETF_ARGT TD1",
+    "causa": "crescimento dos pacotes USD combinado comphiARS por país no fluxo; posições reais/misturas noCSV mostram onde conferir",
+    "acao": "estudo causal delimitado de grão/moeda do crescimento e exposição FX antes de patch",
+    "prova": "não há erro numérico demonstrado nesta auditoria; não aplicarUSDglobal nem mudar preço por proximidade"
+  }
+]

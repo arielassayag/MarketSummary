@@ -8,7 +8,7 @@ mesmos insumos ⇒ mesmo resultado, byte a byte. A parte transversal (classe de 
 Cenários (Monte Carlo centrado no caso-base): os choques nos direcionadores têm média zero e o
 modelo de cada sorteio preserva a média do caso-base — no fluxo de caixa, a receita do sorteio é
 a do caso-base mais o desvio acumulado de crescimento (aditivo), o reinvestimento acompanha o
-crescimento adicional de forma simétrica e o choque de preço de commodity é transitório (anos
+crescimento adicional de forma simétrica e o choque aditivo de margem EBIT para commodities é transitório (anos
 1–3, revertendo até o ano 5, sem efeito na perpetuidade); o piso de zero (responsabilidade
 limitada) vale só para o valor combinado do patrimônio. A diferença entre o retorno ponderado
 (PWR) e o retorno do caso-base (ETR) fica restrita à convexidade das fórmulas.
@@ -38,7 +38,7 @@ from .contexto import (
 )
 from .custo_capital import CustoCapital, calcular, real
 from .formato import contagem, inteiro, mult, num, operando, pct, pp, preco, r6, total
-from .parametros import NOME_METODO, ParametrosCobertura
+from .parametros import ARQUETIPOS, NOME_METODO, ParametrosCobertura
 from .passos import Registro, prov_codigo
 
 METODOS_PATRIMONIAIS = ("rim", "rim_real", "pb_justificado", "regressao_pb_roe")
@@ -53,6 +53,51 @@ STATUS_UNIDADES_PT = {
 }
 ROTULO_REGRESSOR = {"roe": "ROE", "g": "g", "beta_reg": "β", "payout": "payout", "margem": "margem EBIT",
                     "alavancagem": "DL/EBITDA"}
+
+
+def exposicao_sensibilidade(arquetipo: str, metodos: list[str], *,
+                           anos_plenos: int | None = None, zero_em: int | None = None,
+                           inventario_conferido: bool = True) -> dict[str, Any]:
+    """Contrato de apresentação dos canais já consumidos por _valor_metodo; não calcula valores.
+
+    d_comm é margem EBIT aditiva, não elasticidade de preço. Método desconhecido conserva
+    aplicabilidade não conferida; nenhum campo desta descrição muda um choque ou método.
+    """
+    consumidores = {
+        "d_roe": {"rim", "rim_real", "pb_justificado", "multiplo_justificado", "ddm", "ddm_real", "regressao_pb_roe"},
+        "d_g": {"pb_justificado", "multiplo_justificado", "ddm", "ddm_real", "fcff", "fcff_real", "fcff_vida_finita", "fcff_normalizado"},
+        "d_comm": {"fcff_normalizado"},
+    }
+    nomes = {"d_roe": "ROE (permanente)", "d_g": "g", "d_comm": "Margem EBIT: variação transitória (p.p.)"}
+    canal = "d_roe" if arquetipo in ("banco", "seguradora") else "d_comm" if arquetipo == "commodity" else "d_g"
+    ativos = list(dict.fromkeys(metodos))
+    usados = [m for m in ativos if m in consumidores[canal]]
+    contratos = set().union(*consumidores.values()) | {"regressao_pl", "regressao_ev_receita", "soma_partes"}
+    desconhecidos = [m for m in ativos if m not in contratos]
+    conferido = inventario_conferido and arquetipo in ARQUETIPOS
+    aplicavel = None if not conferido or desconhecidos else bool(usados)
+    so_rolagem = None if desconhecidos or not conferido else bool(ativos) and not any(
+        m in consumidores["d_g"] | {"rim", "rim_real"} for m in ativos)
+    motivo = (None if aplicavel else "Aplicabilidade do choque não conferida: inventário ou método sem contrato de exposição."
+              if aplicavel is None else f"Sensibilidade a {nomes[canal]} indisponível: nenhum método participante recebe esse choque.")
+    descricao = None
+    perfil = None
+    if canal == "d_comm":
+        descricao = ("O choque adiciona pontos percentuais à margem EBIT sobre a receita do caso-base, "
+                     "multiplicados pelo perfil transitório. A análise do preço físico de produto requer "
+                     "uma ponte específica de preço, volume e custo.")
+        perfil = (f"Efeito pleno até o ano {anos_plenos}; reversão linear a zero no ano {zero_em}; "
+                  "sem margem transitória na perpetuidade." if anos_plenos is not None and zero_em is not None
+                  else "Perfil vinculado à memória e à configuração arquivadas do retrato.")
+    return {"canal_colunas": canal, "arquetipo_conferido": arquetipo in ARQUETIPOS,
+            "nome_colunas": nomes[canal], "unidade_colunas": "p.p.",
+            "colunas_aplicavel": aplicavel, "metodos_colunas": usados,
+            "metodos_colunas_nomes": [NOME_METODO.get(m, m) for m in usados],
+            "metodos_desconhecidos": desconhecidos, "motivo": motivo, "descricao": descricao,
+            "formula_delta_margem": "Δmargem_t = w_t × choque; w_t é adimensional; +0,20 equivale a +20 p.p.; NOPAT inclui R_base,t × Δmargem_t × (1 − imposto)" if canal == "d_comm" else None,
+            "perfil": perfil, "ke_so_rolagem": so_rolagem,
+            "descricao_ke": "V0 permanece fixo; ke varia somente a rolagem para 12 meses: TP12 = V0 × (1 + ke) − DPS12."
+            if so_rolagem else None}
 
 
 @dataclass(frozen=True)
@@ -832,7 +877,8 @@ class Avaliador:
 
     def _caminho_margem_ciclo(self, n_anos: int) -> np.ndarray | float:
         """Commodities: margem EBIT corrente revertendo à margem mediana do ciclo com o mesmo perfil
-        do choque de preço (plena nos anos 1–3, linear até zero no ano 5, nenhuma na perpetuidade):
+        da variação transitória aditiva da margem EBIT (plena nos anos 1–3, linear até zero no
+        ano 5, nenhuma na perpetuidade):
         ``margem_t = margem_ciclo + (margem_corrente − margem_ciclo) × w_t``. Sem margem corrente,
         a do ciclo em todos os anos."""
         if self.margem is None or self.margem_hist is None:
@@ -1639,8 +1685,10 @@ class Avaliador:
                 f"ke {pp(mc['sigma_ke'], 2, False)}, g {pp(mc['sigma_g'], 2, False)}, ROE {pp(mc['sigma_roe'], 1, False)} "
                 "(anos 1–2, convergindo ao ROE de longo prazo), "
                 f"crescimento {pp(s_cres, 1, False)} e margem {pp(s_marg, 1, False)} (correlação {num(rho, 1)})"
-                + (f", preço da commodity {pct(mc['sigma_commodity'], 0)} (transitório: anos 1–3, revertendo até o ano 5)"
-                   if commodity else ""),
+                + (f", variação transitória aditiva da margem EBIT {pp(mc['sigma_commodity'], 0, False)} "
+                   f"(plena até o ano {int(mc.get('commodity_anos_plenos', 3))}, zero no ano {int(mc.get('commodity_zero_em', 5))})"
+                   if commodity and "fcff_normalizado" in validos else
+                   ", variação transitória da margem EBIT indisponível nos métodos participantes" if commodity else ""),
                 f"P50 dos {inteiro(len(tps))} preços-alvo simulados", p50, f"preco:{self.moeda}",
                 premissas=(f"P10 = {P(p10)}; P90 = {P(p90)}; preço-alvo do caso-base = {P(tp)}; sorteios "
                            "reprodutíveis com semente fixa por emissor e data"))
@@ -1717,6 +1765,10 @@ class Avaliador:
     def _sensibilidade(self, p0: float) -> dict[str, Any]:
         s = self.params.sec("sensibilidade")
         arq = self.pac["arquetipo"]
+        mc = self.params.sec("cenarios")["monte_carlo"]
+        exposicao = exposicao_sensibilidade(arq, self.metodos_validos(),
+                                            anos_plenos=int(mc.get("commodity_anos_plenos", 3)),
+                                            zero_em=int(mc.get("commodity_zero_em", 5)))
         ke_p = [float(x) for x in s["ke_passos"]]
         if arq in ("banco", "seguradora"):
             col = [float(x) for x in s["roe_passos"]]
@@ -1724,8 +1776,8 @@ class Avaliador:
             col_txt = [pp(c, 1) for c in col]
         elif arq == "commodity":
             col = [float(x) for x in s["commodity_passos"]]
-            nome_c, fc = "preço da commodity (choque transitório)", (lambda b: {"d_comm": b})
-            col_txt = [pct(c, 0, True) for c in col]
+            nome_c, fc = exposicao["nome_colunas"], (lambda b: {"d_comm": b})
+            col_txt = [pp(c, 0) for c in col]
         else:
             col = [float(x) for x in s["g_passos"]]
             nome_c, fc = "g", (lambda b: {"d_g": b})
@@ -1735,7 +1787,7 @@ class Avaliador:
         self.reg.nota("sensibilidade", f"Sensibilidade do preço-alvo (ke × {nome_c})",
                       f"Grade 5 × 5 recalculada pelos mesmos métodos: ke {', '.join(pct(self.cc.ke + d) for d in ke_p)}; "
                       f"{nome_c} com choques {'; '.join(col_txt)}")
-        return {"linhas": "ke", "colunas": nome_c, "ke": [r6(self.cc.ke + d) for d in ke_p],
+        return {"linhas": "ke", "colunas": nome_c, "aplicabilidade": exposicao, "ke": [r6(self.cc.ke + d) for d in ke_p],
                 "choques_colunas": [r6(c) for c in col], "preco_alvo": grade, "upside": ups,
                 "ke_texto": [pct(self.cc.ke + d) for d in ke_p], "colunas_texto": col_txt,
                 "preco_alvo_texto": [[self._p(v) for v in row] for row in grade],

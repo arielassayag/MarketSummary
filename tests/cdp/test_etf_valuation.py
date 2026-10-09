@@ -141,8 +141,12 @@ def test_etfs_recomputed_from_archived_packages_match(run):
     _, params, _, ex = run
     again = calcular_etfs(ex.insumos_etf, params, ex.pacotes, ex.modelos, ex.rf["valor"])
     for k, e in ex.etfs.items():
-        assert again[k]["preco_alvo"] == pytest.approx(e["preco_alvo"], rel=1e-12)
-        assert again[k]["visao_ilf"] == e["visao_ilf"]
+        if e["tem_alvo"]:
+            assert again[k]["preco_alvo"] == pytest.approx(e["preco_alvo"], rel=1e-12)
+            assert again[k]["visao_ilf"] == e["visao_ilf"]
+        else:
+            assert again[k] == e
+            assert again[k].get("preco_alvo") is None
 
 
 def test_blocking_etf_gate_puts_view_under_review(run):

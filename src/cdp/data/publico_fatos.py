@@ -37,8 +37,10 @@ from zoneinfo import ZoneInfo
 import numpy as np
 import pandas as pd
 
+from .dimensoes_contabeis import CAMPOS, compativeis, composicao, dimensoes
 from .fundamentals_pit import _QUARTER_DAYS as _QUARTER_DIAS
 from .fundamentals_pit import _match_end, _months_back, _quarter_value, _ttm_value
+from .publico_contexto_documental import CAMPOS_CONTEXTO, contexto_composicao, contexto_documental
 
 FLUXOS = frozenset({
     "receita", "lucro_bruto", "ebit", "ebitda", "d_a", "resultado_financeiro", "lucro_antes_ir",
@@ -53,6 +55,8 @@ SAIDA_COLUNAS = [
     "consolidado", "fonte", "url", "documento", "data_publicacao", "sha256", "pit_estimado",
     "nota",
 ]
+
+SAIDA_DIMENSOES = CAMPOS  # Extensão opcional; SAIDA_COLUNAS histórica permanece literal.
 
 _ANUAL = (350, 380)
 METADADOS_OBSERVADOS = ('disponivel_desde', 'disponibilidade_tipo',
@@ -117,6 +121,7 @@ def _fonte_componente(m):
     out['data_publicacao'] = None if pd.isna(pub) else pd.Timestamp(pub).date().isoformat()
     if _observado(m):
         out.update({k: (None if pd.isna(m.get(k)) else str(m[k])) for k in METADADOS_OBSERVADOS})
+    out.update(contexto_documental(m))
     return out
 
 
@@ -169,6 +174,8 @@ def _meta(row) -> dict:
         out['data_publicacao'] = getattr(row, 'data_publicacao_primaria', None)
         out.update({k: getattr(row, k, None) for k in METADADOS_OBSERVADOS})
         out['received_date'] = getattr(row, 'received_date_original', row.received_date)
+    out.update(dimensoes(row._asdict()))
+    out.update(contexto_documental(row._asdict()))
     return out
 
 
@@ -215,6 +222,12 @@ def selecionar_pit(fatos: pd.DataFrame, as_of: date, *, conhecimento_ate: dateti
     if fatos is None or fatos.empty:
         return pd.DataFrame(columns=SAIDA_COLUNAS)
     f = fatos.copy()
+    if any(k in f for k in CAMPOS_CONTEXTO):
+        for _, row in f.iterrows():
+            contexto_documental(row)
+    if any(k in f for k in CAMPOS):
+        for _, row in f.iterrows():
+            dimensoes(row)  # Pares parciais/inválidos nunca viram ausência válida.
     if "pit_estimado" not in f.columns:
         f["pit_estimado"] = False
     # fatos de fontes oficiais concatenados com os do Yahoo chegam com NaN aqui (≠ estimado)
@@ -280,6 +293,7 @@ def selecionar_pit(fatos: pd.DataFrame, as_of: date, *, conhecimento_ate: dateti
         out["nota"] = None
     out["value"] = out["value"].astype(float) + 0.0  # -0.0 ⇒ 0.0
     extras = [k for k in METADADOS_OBSERVADOS if k in out] if observed.any() else []
+    extras += [k for k in (*CAMPOS, *CAMPOS_CONTEXTO) if k in out]
     out = (out[SAIDA_COLUNAS + extras]
            .sort_values(["entidade", "item", "freq", "period_end"], kind="stable")
            .reset_index(drop=True))
@@ -395,17 +409,24 @@ def _meta_componentes(item: str, by_end: dict, metas: dict,
     componentes = [{"item": item, "period_start": s.isoformat(), "period_end": e.isoformat(),
                     "valor": by_end[e][s], "coeficiente": coef,
                     "currency": m["currency"], "consolidado": m["consolidado"],
-                    "fonte": _fonte_componente(m)}
+                    "fonte": _fonte_componente(m), **dimensoes(m), **contexto_documental(m)}
                    for (s, e, coef), m in zip(partes, ms, strict=True)]
+    contexto = contexto_composicao(componentes)
     nota = ("componentes_fluxo=" + json.dumps(componentes, ensure_ascii=False)
-            if len(partes) > 1 else None)
-    return {**m0, **_observacao_componentes(ms), "data_publicacao": _publicacao_componentes(ms),
+            if len(partes) > 1 or contexto else None)
+    par = composicao(ms)
+    origem_composta = ({"documento": m0["documento"] + " (composição de fluxos; agregado não reportado no PDF)"}
+                       if contexto else {})
+    return {**m0, **par, **contexto, **origem_composta, **_observacao_componentes(ms), "data_publicacao": _publicacao_componentes(ms),
             "consolidado": all(m["consolidado"] for m in ms),
             "nota": _juntar(m0.get("nota"), nota_base, nota)}
 
 
 def _fluxo_compativel(ent: str, item: str, g: pd.DataFrame, *, derivar: bool = True,
                       proveniencia: bool = False) -> list[dict]:
+    tipado = any(dimensoes(row._asdict()) for row in g.itertuples(index=False))
+    if tipado:
+        proveniencia = True
     if 'disponibilidade_tipo' in g and g['disponibilidade_tipo'].eq('recepcao_observada').any():
         proveniencia = True
     g = g.dropna(subset=["period_start", "period_end"])
@@ -433,7 +454,9 @@ def _fluxo_compativel(ent: str, item: str, g: pd.DataFrame, *, derivar: bool = T
         q = _quarter_value(by_end, e)
         direto = any(_QUARTER_DIAS[0] <= (e - s0).days + 1 <= _QUARTER_DIAS[1]
                      for s0 in flows)
-        if math.isfinite(q) and (derivar or direto):
+        partes_q = _componentes_q(by_end, e)
+        q_compativel = not tipado or compativeis([meta_periodo[(s, fim)] for s, fim, _ in partes_q])
+        if math.isfinite(q) and (derivar or direto) and q_compativel:
             cons, nota_base = _base_janela(meta_end, e, 1 if direto else 100)
             meta_q = {**meta_end[e], "consolidado": cons,
                       "nota": _juntar(meta_end[e].get("nota"), nota_base)}
@@ -463,14 +486,16 @@ def _fluxo_compativel(ent: str, item: str, g: pd.DataFrame, *, derivar: bool = T
                     continue
                 componentes = [meta_periodo[(s, e)], meta_periodo[(s_prev, fim_anual)],
                                meta_periodo[(s_prev, e_prev)]]
-                if len({m["consolidado"] for m in componentes}) != 1:
+                if len({m["consolidado"] for m in componentes}) != 1 or not compativeis(componentes):
                     componentes = None
                     continue  # base mista não representa nem consolidado nem individual
                 t = atual + anual_prev - comparativo
                 how = "semestre"
                 periodos_componentes = [(s, e, 1.0), (s_prev, fim_anual, 1.0), (s_prev, e_prev, -1.0)]
                 break
-        if math.isfinite(t):
+        partes_ttm = periodos_componentes or _componentes_ttm(by_end, e, how)
+        ttm_compativel = not tipado or compativeis([meta_periodo[(s, fim)] for s, fim, _ in partes_ttm])
+        if math.isfinite(t) and ttm_compativel:
             meta_ttm = meta_end[e]
             if componentes:
                 cons = all(m["consolidado"] for m in componentes)
@@ -533,6 +558,7 @@ def _derivados(df: pd.DataFrame) -> pd.DataFrame:
     meta_cols = ["demonstrativo", "currency", "consolidado", "fonte", "url", "documento",
                  "data_publicacao", "sha256", "pit_estimado", "nota"]
     meta_cols += [k for k in METADADOS_OBSERVADOS if k in df]
+    meta_cols += [k for k in CAMPOS if k in df]
     if "nota" not in df.columns:
         df = df.assign(nota=None)
     meta = df.set_index(k + ["item"])[meta_cols]
@@ -550,10 +576,32 @@ def _derivados(df: pd.DataFrame) -> pd.DataFrame:
             if not ms:
                 continue
             # EBIT reportado usa EBIT+D&A; a identidade alternativa só participa na sua falta.
-            if nome == 'ebitda' and any(_observado(m) for m in ms):
+            if nome == 'ebitda' and (any(_observado(m) for m in ms) or any(dimensoes(m) for m in ms)):
                 reportado = pd.notna(w.loc[idx, 'ebit'] if 'ebit' in w else np.nan)
                 usados = ('ebit', 'd_a') if reportado else ('lucro_antes_ir', 'resultado_financeiro', 'd_a')
                 ms = [meta.loc[(*idx, c)] for c in usados if (*idx, c) in meta.index]
+            if not compativeis(ms):
+                continue
+            par = composicao(ms)
+            nota_dimensoes = None
+            if par:
+                sinais = ({"ebit": [("lucro_antes_ir", 1), ("resultado_financeiro", -1)],
+                           "fcf": [("cfo", 1), ("capex", -1)],
+                           "divida_liquida": [("divida_bruta", 1), ("caixa", -1)]}.get(nome))
+                if nome == "ebitda":
+                    sinais = ([("ebit", 1), ("d_a", 1)] if pd.notna(col("ebit").loc[idx]) else
+                              [("lucro_antes_ir", 1), ("resultado_financeiro", -1), ("d_a", 1)])
+                if nome == "divida_liquida" and "aplicacoes_cp" in comp:
+                    sinais += [("aplicacoes_cp", -1)]
+                componentes_dimensoes = [
+                    {"item": c, "freq": idx[1], "period_end": pd.Timestamp(idx[2]).date().isoformat(),
+                     "valor": float(w.loc[idx, c]), "coeficiente": coef,
+                     "currency": meta.loc[(*idx, c)]["currency"],
+                     "consolidado": bool(meta.loc[(*idx, c)]["consolidado"]),
+                     "fonte": _fonte_componente(meta.loc[(*idx, c)]),
+                     **dimensoes(meta.loc[(*idx, c)])}
+                    for c, coef in sinais]
+                nota_dimensoes = "componentes_fluxo=" + json.dumps(componentes_dimensoes, ensure_ascii=False)
             pub = _publicacao_componentes(ms)
             m0 = ms[0]
             notas = [_texto(m["nota"]) for m in ms]
@@ -566,7 +614,7 @@ def _derivados(df: pd.DataFrame) -> pd.DataFrame:
                         "documento": m0["documento"], "data_publicacao": pub,
                         "sha256": m0["sha256"],
                         "pit_estimado": any(bool(m["pit_estimado"]) for m in ms),
-                        "nota": _juntar(nota, *notas), **_observacao_componentes(ms)})
+                        "nota": _juntar(nota, *notas, nota_dimensoes), **par, **_observacao_componentes(ms)})
 
     def col(c: str) -> pd.Series:
         return w[c] if c in w.columns else pd.Series(np.nan, index=w.index)

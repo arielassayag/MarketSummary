@@ -133,8 +133,22 @@ def test_synthetic_models_never_name_real_sources(run):
     for iid in ex.modelos:
         m = modelo_json(ex, iid, params)
         texto = repr(m["passos"]) + repr(m["insumos"])
-        for real in ("Yahoo", "CVM", "SEC ", "iShares", "ISHARES", "Global X", "GLOBALX"):
+        for real in ("Yahoo", "CVM", "SEC", "iShares", "ISHARES", "Global X", "GLOBALX"):
             assert real not in texto, (iid, real)
-    for e in ex.etfs.values():
-        assert e["fonte_composicao"]["fonte"] in ("SIMULADO", "CODIGO")
-        assert "iShares" not in repr(e["passos"])
+    assert set(ex.etfs) == set(ex.insumos_etf)
+    for iid, e in ex.etfs.items():
+        ins = ex.insumos_etf[iid]
+        assert e["preco"] is None or e["preco"] > 0
+        assert e["preco"] == ins["preco"]
+        assert ins["fonte_composicao"]["fonte"] in ("SIMULADO", "CODIGO")
+        texto = (repr(e["passos"]) + repr({k: v for k, v in ins.items() if k.startswith("fonte_")})
+                 + repr({k: v for k, v in e.items() if k.startswith("fonte_")}))
+        for real in ("Yahoo", "CVM", "SEC", "iShares", "ISHARES", "Global X", "GLOBALX"):
+            assert real not in texto, (iid, real)
+        if e["preco"] is None:
+            assert ins["preco"] is e["data_preco"] is ins["data_preco"] is None
+            assert e["tem_alvo"] is False
+            assert e.get("preco_alvo") is e.get("retorno_esperado") is None
+            assert any(lacuna["insumo"] == "preco" for lacuna in e["lacunas"])
+        else:
+            assert e["fonte_composicao"]["fonte"] in ("SIMULADO", "CODIGO")

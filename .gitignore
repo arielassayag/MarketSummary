@@ -59,6 +59,9 @@ logs/
 # CDP: área temporária do pré-início (cdp reinicio; removida ao terminar)
 .cdp_reinicio.tmp/
 
+# CDP: abertura preparada da própria réplica (cdp genese)
+.cdp_genese.tmp/
+
 # CDP: identidade do clone e registros das execuções (cdp executor registrar, cdp rotinas gate)
 .cdp/
 

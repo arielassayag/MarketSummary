@@ -277,7 +277,7 @@ class Arquivo:
 
 
 GRUPOS = (
-    ("carteira", "Carteira em vigor", "A carteira decidida mais recente, com ordens, tese e "
+    ("carteira", "Carteira decidida mais recente", "A carteira decidida mais recente, com ordens, tese e "
                                       "decisão."),
     ("livro", "Livro do fundo", "Decisões semanais, propostas otimizadas, pesquisa estruturada e "
                                 "teses de investimento, semana a semana."),

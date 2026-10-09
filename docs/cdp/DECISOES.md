@@ -784,3 +784,220 @@ Galicia exige política contábil e data de poder aquisitivo nativas, completas 
 compatíveis em cada participante consumido. Seu candidato de propagação permanece
 separado até a revisão independente e validação própria, sem transformar a ponte
 específica do balanço em regra universal nem emitir lucro real nesta etapa.
+
+## 2026-10-08 · Dimensões explícitas da fonte não contradizem o componente
+
+Contexto: a propagação Galicia V1 bloqueou o legado G2; a V2 reparou isso, mas a
+revisão encontrou duas contradições explícitas aceitas no par da fonte de componente
+efetivamente usado. → Decisão: conservar ambas as versões negativas e desenvolver
+V3 separada. Uma fonte estruturada pode omitir o par; quando o declara, deve trazer
+política e data válidas, completas e iguais ao contexto nativo. A fonte não preenche
+uma ausência no topo, e notas não fornecem as dimensões. → Consequências: coerência
+participa da composição e da conferência; legado integral continua literal.
+V3 tem117 testes, baseline financeiro/G2 idêntico e guarda sem escritores; sua
+revisão não autora encerrou122 aprovações. A transposição cumulativa acompanha
+o produtor GaliciaV2, sujeita à suíte completa antes da integração. Um par coerente
+não autentica bytes primários nem concede PIT, confiança ou aceite financeiro.
+
+## 2026-10-08 · Extração fechada e produtor com nova recepção têm contratos distintos
+
+Contexto: o extrator documental Galicia fixa os dois PDFs e recibos anteriores para
+reproduzir três componentes reportados, com ponte anual específica. → Decisão:
+preservar esse pacote e preparar separadamente a adaptação ao coletor observado.
+Ela deve ligar os bytes do filing aos registros da observação atual e aceitar novas
+recepções legítimas sem exigir o hash de um recibo antigo. A disponibilidade do anual
+depende também da recepção da ponte; o contexto documental deve sobreviver no caminho
+dos participantes consumidos. → Consequências: primeira publicação UTC desconhecida
+continua ausente, recepção observada não vira PIT histórico, e o resultado B/S anual
+conserva sua natureza e ponte específica. Não inferir normalização, IPC ou outros
+insumos bancários. O produtor permanece candidato privado até revisão e validação.
+
+## 2026-10-08 · Agregado documental conserva o próprio grão nativo
+
+Contexto: a revisão não autora recusou Galicia V1 em três causais que alteram apenas
+moeda, item ou consolidação do TTM consumido. Componentes íntegros não legitimam uma
+declaração contraditória no agregado. → Decisão: preservar V1 negativa e criar V2
+separada, vinculando grão explícito e fim nativo à composição comprovada. Campos
+opcionais ausentes não são preenchidos por inferência; início/frequência não são
+fabricados. → Consequências:194 controles autorais distintos passaram e o default
+conservou bytes; revisão não autora encerrou210 casos distintos aprovados, com16
+próprios. ROOT recebeu o pacote e transpôs o delta cumulativo/controles ao DEV,
+sem alterar arquivos oficiais; a suíte integrada ainda antecede publicação da fonte.
+Não há alteração de fórmula, mandato, confiança, PIT ou aceite P0.
+
+## 2026-10-08 · Componentes Supervielle e evidência visual são provas distintas
+
+Contexto: o June26 primário completo permite conferir três resultados owners e a
+ponte anual B/S→DRE/numerador monetário. Trechos coloridos IAS34/A7211 estão nos pixels,
+mas incompletos no texto; outra menção IAS34 consta depois na mesma página.
+→ Decisão: conservar a leitura visual fechada separada, com hashes de PDF/pixels,
+sem inventar texto ou afirmar ausência em toda a página. Extrator privado finito
+recebe bytes e novos recibos como argumentos; recibos anteriores ficam só em custódia.
+→ Consequências:61 controles autorais e portabilidade aprovados; revisão independente
+encerrou88 casos distintos,27 próprios, com aceite delimitado da API privada.
+ROOT recebeu o pacote. São componentes reportados BCRA com exceções, sem normalização, IPC
+integral, perímetro econômico constante, TTM integrado ou disponibilidade histórica.
+
+## 2026-10-08 · Capital legal YPF não substitui circulação líquida contemporânea
+
+Contexto: estatuto atual informa explicitamente ações legais brutas; composição
+de detentores tem data09/03/2026. HTML de fatos relevantes só contém container dinâmico,
+e a única tentativa CNV falhou TLS sem corpo. → Decisão: conservar desconhecidos
+o saldo atual em tesouraria, circulação líquida, classes quantitativas e data-base
+compatível; não somar detentores históricos, aplicar split, deduzir médias IAS33 ou
+reconstruir estoque por fluxos. → Consequências: estudo offline recebido e reproduzido
+ROOT sem patch financeiro. A lacuna vale para documentos utilizáveis recebidos,
+sem afirmar inexistência pública, certificar PIT ou liberar o modelo/P0.
+
+## 2026-10-09 · Auditoria por empresa e índice conserva os critérios do CDP
+
+Contexto: o titular ampliou explicitamente o objetivo para modelos completos de cada
+empresa e índice, operação inaugural e acesso/reprodução pelo GitHub, invocando
+Public Equity Investing. → Decisão: usar sua auditoria de modelos e normalização
+financeira para cruzar fontes, períodos, unidades, fórmulas, hipóteses e saídas no
+código/portal existente, distinguindo defeito, contradição, hipótese sem suporte e
+ausência de ponte. → Consequências: nenhuma fonte paga/proprietária, revisão de
+mandato, novo formato obrigatório ou promoção automática de confiança. Cada lacuna
+exige evidência própria e remediação quando demonstrada; teste técnico aprovado
+não encerra disponibilidade histórica, eficácia econômica ou carteira inaugural.
+
+
+## 2026-10-09 — reprodução pública e auditoria de modelos
+
+Contexto: o pedido ampliado exige todos os modelos acessíveis e reproduzíveis. → Decisão:
+usar o retrato público imutável com seu código gerador, não presumir que fonte mais recente
+recertifique versões antigas. ROOT recebeu por HTTP todos os632 participantes manifestados,
+conferiu hashes e refez233 empresas e8 ETFs na versão5cb2d4a, sem divergências nos campos
+nativos e sem escritor/rede/processo durante o cálculo. O mapa não autor conserva233 empresas,
+8 ETFs e8 vistas de índices por proxy; fonte→insumo→passo coincidente não é dependência causal
+exata presumida. Reprodução numérica não encerra PIT, P0, adequação econômica ou underwriting.
+
+Contexto: ampla12 falhou porque um helper de dimensões deixa o clock simulado alterado. → Decisão:
+reparar somente a fixture com escopo/restauração, preservando o seletor que corretamente recusa
+recepção posterior ao conhecimento. Não corrigir produto financeiro por falha de infraestrutura
+nem aceitar teste isolado como substituto da nova suíte integrada. O vermelho e a causal ficam
+preservados, assim como os pacotes privados fechados e as cinco alterações herdadas do ROOT.
+
+Contexto: a função plural de ETF filtra configurações pela existência da coluna de preço. → Decisão:
+propor visita de todas as configurações e usar o caminho nativo de ausência, com preço/alvo/retorno
+None e gates não aplicáveis. A revisão não autora confirmou25 casos distintos e ROOT
+transpôs cinco paths ao DEV; suíte integrada e publicação permanecem pendentes. Composição/proveniência primária, hipótese ARGT e tabela de
+insumos ETF são requisitos separados; não relaxar qualidade ou fabricar dado para expor a ficha.
+
+
+## 2026-10-09 · Coerência quantitativa e identidade no envelope documental
+
+Contexto: os263 testes SupervielleV1 passam, mas revisão independente aceita quatro
+contradições isoladas no total agregado ou na fonte dos componentes nativos. → Decisão:
+preservar o candidato e negativo; corrigir separadamente o vínculo entre valor transmitido,
+componentes/coefs já produzidos e identificadores públicos explicitamente presentes.
+Não igualar rótulo formatado de proveniência a filename nem preencher ausências legadas.
+→ Consequências: ajuste apenas do contrato documental, sem fórmula nova, tolerância
+financeira nova, lucro normalizado, recertificaçãoPIT ou aceiteP0.
+
+## 2026-10-09 · Reprodução documental exige presença e hash das entradas consumidas
+
+Contexto: o inventário portátilV1 verifica hashes listados, mas pode consumir cinco
+famílias removidas do manifesto. → Decisão: preservarV1/revisão negativa e exigir
+manifestação+SHA antes de ler cada modelo,ETF,pacote comprimido e configuração devaluation do retrato.
+→ Consequências: V2 separada conserva18outputs reais literais; revisão não autora
+encerrou27 testes aprovados e ROOT transpôs15 paths ao DEV. Suíte completa e publicação
+permanecem pendentes. Não reestima financeiros nem converte
+hash de configuração, origem Git declarada ou flagPIT em comprovação primária.
+
+## 2026-10-09 · Moeda nominal prospectiva e canal de sensibilidade são hipóteses explícitas
+
+Contexto: ARGT agrega crescimento nominal de origens heterogêneas e aplicaφ ARS de
+país; o choque denominado preço decommodity atua na margemEBIT emFCFF e38 grades
+não têm método consumidor. → Decisão: exigir ponte/contrato prospectivo para
+comparabilidade de moedas e expor unidade/método participante da sensibilidade.
+Não substituir moeda pelo país ou demonstrações, inventar FX futuro, nem tratar
+choque aditivo de margem como transmissão física de preço. → Consequências: estudos
+conservam a aritmética atual; ajustes de apresentação ficam separados de modelos
+econômicos e de eventual candidato financeiro com fonte, revisão e validação próprias.
+
+
+## 2026-10-09 · Campos explícitos do componente devem coincidir com a composição
+
+Contexto: o candidato de vínculo quantitativo e documental passa 285 controles autorais,
+mas revisão independente aceitou mudar a frequência explícita de um componente anual para TTM
+e sincronizar seu rótulo, conservando o contexto de composição anual. → Decisão: preservar
+o negativo e corrigir o contrato separadamente, conferindo frequência e fim do período
+quando transmitidos pelo contexto original. Não criar frequência trimestral, início ausente
+ou convenção de tempo geral para reparar um vínculo documental. → Consequências: correção
+revista e transposta ao DEV, com 43 controles independentes aprovados e 299 recebidos
+reexecutados; suíte completa e publicação pendentes. Os 16 controles portáteis são
+subconjunto reexpresso dos 43. Adequação financeira, normalização e PIT continuam
+requisitos separados.
+
+Contexto: a revisão das sensibilidades conserva células e chamadas financeiras; 55 testes
+distintos passaram e o navegador local confirma unidades e ausência de consumidor. → Decisão:
+integrar a exposição e os controles ao DEV, mantendo a memória histórica imutável. → Consequências:
+a suíte completa e a publicação da nova fonte permanecem pendentes; revisão de apresentação
+não certifica transmissão industrial de preço, volume e custo.
+
+## 2026-10-09 · Referência AST histórica continua imutável
+
+Contexto: ampla13 encontra diferença no módulo inteiro após a apresentação revista,
+com guardas e inicialização numéricas literais. → Decisão: conservar a referência
+AST original e usar sidecar específico para o digest completo da apresentação;
+nenhuma comparação pode ignorar diferenças. → Consequências: reparo separado de dois
+paths de teste, sem SRC novo. Revisão não autora do reparo passou 29 focais e 13
+controles próprios, incluindo mutações de cálculo, driver, seed, guardas, motor,
+ponte e adulteração da fixture/sidecar. A revisora é autora da apresentação anterior;
+esse aceite é delimitado ao reparo do teste. Ampla13 vermelha permanece preservada
+e a integração exige nova suíte completa.
+
+## 2026-10-09 · Contradição de moeda adjacente também impede integração
+
+Contexto: candidato EPS por período também exporta estimativas de receita. A revisão
+independente comprovou que moedas explícitas ARS/USD em FY1/FY2 são reduzidas a ARS
+pelo normalizador legado, que calcula a razão de receita sem recusa. → Decisão:
+recusar a integração do pacote completo e corrigir separadamente o canal novo,
+preservando default e prova negativa; não inferir FX. → Consequências: testes EPS
+verdes não autorizam essa emissão financeira adjacente nem comparabilidade nominal.
+
+## 2026-10-09 · Comparativo reportado e normalização econômica são contratos separados
+
+Contexto: fontes primárias BRL JBS comprovam comparativos e predecessor; estudos
+bancários documentam diferenças BCRA/IASB, eventos de perímetro e métricas gerenciais.
+→ Decisão: conservar fatos por período, base, owners, moeda, poder e perímetro,
+sem substituir zero originalmente reportado por comparativo posterior ou transformar
+controle comum em crescimento orgânico. → Consequências: JBS pode receber futuro
+candidato opcional de conservação PENÚLTIMO; seleção/TTM/crescimento exigem contrato
+próprio. Nos bancos, lucro normalizado exige ponte causal de resultado/OCI/impostos;
+PL não preenche lucro ausente, proforma não vira histórico e ROE histórico médio
+não substitui B0 do RIM futuro. Sem modelo completo, alvo, promoção P0 ou PIT novos.
+
+## 2026-10-09 · Horário normativo, corte do modelo e tarifa observada são distintos
+
+Contexto: fonte primária de Santiago anuncia novos manuais a partir de20/07/2026;
+o manual documenta leilão15:50–16:00 e negociação ao fechamento16:00–16:05.
+→ Decisão: corrigir somente a documentação, com cutoff15:45 qualificado como
+antecipação do CDP e US$28 como estimativa do modelo. → Consequências: revisão
+independente de97arquivos autoriza uma path/três linhas; não muda parâmetros,
+mandato ou execução. Associação entre aviso e resoluções é inferência por títulos
+e cronologia; tarifa aplicável, vigência comercial, fill, PIT e E1 permanecem abertos.
+Recibos atuais não provam primeira publicação; limitações de captura ficam conservadas.
+
+## 2026-10-09 · Autoridade de EPS não autoriza receita auxiliar
+
+Contexto: retirar receita do produtor não impedia o consumidor de usar campos
+acrescentados à linha autenticada de EPS. → Decisão: o contrato individual de EPS
+recusa campos presentes no namespace de receita antes do consumo financeiro;
+ausência continua ausência e o legado sem marcadores mantém seu comportamento.
+→ Consequências: reparo separado revisto, sem alterar fórmula, moeda, confiança
+ou gate. Autenticar bytes e período não prova base nominal, poder aquisitivo ou
+comparabilidade; receita futura exige contrato próprio. Habilitação global não
+foi autorizada por testes técnicos.
+
+## 2026-10-09 · Quantum reportado não completa destino contábil ausente
+
+Contexto: duas notas de Galicia junho informam redução e valor, sem explicitar
+o destino contábil na frase. → Decisão: manter quantum, moeda, poder e data como
+observados; destino patrimônio/lucro/estoque/fluxo permanece desconhecido. Não
+usar a nota anual de outro documento nem identidade contábil para completar esse
+destino. → Consequências: estudo autoral imutável e negativa semântica separada;
+contrato futuro não pode consumir as duas notas como ajuste de PL ou lucro sem
+outra fonte primária ou correção revisada. Pontes anuais reportadas continuam
+separadas da normalização econômica.

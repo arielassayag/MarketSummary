@@ -95,6 +95,9 @@ FATO_COLUNAS = [
 ]
 
 
+# Extensão nativa opcional; não adiciona colunas vazias aos parsers históricos.
+FATO_DIMENSOES = ("politica_contabil_id", "poder_aquisitivo_data")
+
 def url_zip(doc: str, ano: int) -> str:
     doc = doc.upper()
     return f"{CVM_DOC_BASE_URL}/{doc}/DADOS/{doc.lower()}_cia_aberta_{int(ano)}.zip"
@@ -115,12 +118,21 @@ def _membro(nomes: list[str], sufixo: str) -> str | None:
 # ======================================================================
 
 def ler_zip_demonstracoes(conteudo: bytes, doc: str, ano: int,
-                          cnpjs: Iterable[str] | None = None) -> dict[str, pd.DataFrame]:
+                          cnpjs: Iterable[str] | None = None, *,
+                          conservar_comparativos: bool = False, registro_comparativos=None,
+                          conhecimento_ate=None, contextos_politica=()) -> dict[str, pd.DataFrame]:
     """Tabelas brutas (texto) do ZIP DFP/ITR, só ``ORDEM_EXERC = ÚLTIMO`` e os ``cnpjs``.
 
     Chaves: ``index``, ``<TAB>_con``/``<TAB>_ind`` para ``TABELAS`` e ``capital``.
+    A opção explícita acrescenta ``exercicios_reportados``; as tabelas antigas continuam
+    ÚLTIMO. Esse ledger documental não alimenta ``fatos_cvm`` ou o seletor financeiro.
     """
     alvo = None if cnpjs is None else {str(c).strip() for c in cnpjs}
+    if not isinstance(conservar_comparativos, bool):
+        raise ValueError("conservar_comparativos exige bool explícito")
+    if not conservar_comparativos and (registro_comparativos is not None
+                                      or conhecimento_ate is not None or contextos_politica):
+        raise ValueError("Metadados de comparativos exigem opção explícita")
     pref = f"{doc.lower()}_cia_aberta_"
     out: dict[str, pd.DataFrame] = {}
     with zipfile.ZipFile(io.BytesIO(conteudo)) as zf:
@@ -153,6 +165,10 @@ def ler_zip_demonstracoes(conteudo: bytes, doc: str, ano: int,
         if alvo is not None and not cap.empty:
             cap = cap[cap["CNPJ_CIA"].astype(str).str.strip().isin(alvo)]
         out["capital"] = cap.reset_index(drop=True)
+    if conservar_comparativos:
+        from .publico_cvm_comparativos import conservar_exercicios
+        out["exercicios_reportados"] = conservar_exercicios(
+            conteudo, doc, ano, alvo, registro_comparativos, conhecimento_ate, contextos_politica)
     return out
 
 

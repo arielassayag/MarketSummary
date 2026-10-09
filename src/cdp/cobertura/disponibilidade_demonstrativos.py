@@ -9,13 +9,15 @@ from datetime import UTC
 
 import pandas as pd
 
+from ..data.dimensoes_contabeis import CAMPOS, compativeis, dimensoes
+from ..data.publico_contexto_documental import conferir_contexto_participantes, contexto_documental
 from .temporal import validar as validar_corte
 
 VERSAO = "cdp.disponibilidade_participantes/v3"
 GRAO = ("issuer_id", "origem", "item", "freq", "period_end", "uso")
 FREQUENCIAS = {"A", "Q", "TTM", "YTD", "H1", "9M", "FRE", "SNAPSHOT", "D"}
 IDENTIDADE = (*GRAO, "period_start", "entidade", "identidade_declarada", "contexto",
-              "tipo_grao", "grupo", "posicao", "valor", "coeficiente", "currency", "consolidado")
+              "tipo_grao", "grupo", "posicao", "valor", "coeficiente", "currency", "consolidado", *CAMPOS, "contexto_documental_sha256")
 
 
 def _texto(value):
@@ -54,6 +56,11 @@ def participante(row, uso, *, issuer_id=None, origem="demonstrativos", fonte=Non
            "disponivel_desde": _texto(row.get("disponivel_desde")),
            "fonte": deepcopy(fonte) if fonte is not None else {
                k: _texto(row.get(k)) for k in ("fonte", "url", "documento", "sha256", "data_publicacao")}}
+    out.update(dimensoes(row))
+    contexto_doc = contexto_documental(row)
+    out.update(contexto_doc)
+    if fonte is None and contexto_doc:
+        out["fonte"].update(deepcopy(contexto_doc))
     # Contexto do consumidor não substitui identidade explicitamente declarada na entrada.
     out["identidade_declarada"] = {k: _texto(row.get(k)) for k in ("issuer_id", "origem")
                                   if _texto(row.get(k)) is not None}
@@ -77,6 +84,8 @@ def participante(row, uso, *, issuer_id=None, origem="demonstrativos", fonte=Non
                     raise ValueError("componente incompleto")
                 index = len(out["componentes"])
                 member = deepcopy(dict(componente))
+                member.update(dimensoes(componente))
+                member.update(contexto_documental(componente))
                 for key in ("item", "freq", "period_start", "period_end", "issuer_id", "origem", "entidade"):
                     if key in member:
                         member[key] = _texto(member[key])
@@ -180,6 +189,9 @@ def _conferir_componentes(row):
         indices = declaracao.get("indices")
         if not isinstance(indices, list) or not indices:
             return "grupo de componentes vazio"
+        membros_dimensoes = [row] + [componentes[i] for i in indices if isinstance(i, int) and not isinstance(i, bool) and 0 <= i < len(componentes)]
+        if not compativeis(membros_dimensoes):
+            return "dimensões contábeis incompatíveis no grupo de componentes"
         operacoes = set()
         for posicao, index in enumerate(indices):
             if not isinstance(index, int) or isinstance(index, bool) or not 0 <= index < len(componentes):
@@ -208,6 +220,8 @@ def _conferir_componentes(row):
             except (ValueError, TypeError, OverflowError):
                 return "período de componente inválido"
             campos = ("valor", "coeficiente", "currency", "consolidado")
+            if dimensoes(row):
+                campos += CAMPOS
             if tipo == "intervalo" and any(k not in member for k in campos):
                 return "semântica de componente intervalar incompleta"
             for key in ("valor", "coeficiente"):
@@ -266,9 +280,17 @@ def _conferir_manifesto(pac, rows):
                 return "intervalo do participante inválido"
         except (ValueError, TypeError, OverflowError):
             return "período financeiro inválido"
+        try:
+            dimensoes(row)
+        except (TypeError, ValueError):
+            return "dimensões contábeis inválidas no participante"
         problema = _conferir_componentes(row)
         if problema:
             return problema
+        try:
+            conferir_contexto_participantes(row)
+        except (TypeError, ValueError):
+            return "contexto documental inválido no participante/componentes"
         vistos.append({**_identidade(row), "componentes": [_identidade(c) for c in componentes],
                        "grupos_componentes": deepcopy(row.get("grupos_componentes", []))})
     if vistos != esperados or len({_chave(r) for r in rows}) != len(rows):

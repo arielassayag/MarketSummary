@@ -1639,6 +1639,17 @@ def _sensibilidade(m: Mapping[str, Any], citavel: bool) -> dict[str, Any] | None
         return None
     lin = s.get("ke_texto") or []
     col = s.get("colunas_texto") or []
+    from ..cobertura.modelo import exposicao_sensibilidade
+
+    inventario = m.get("metodos")
+    metodos = [str(x["m"]) for x in inventario or []
+               if x.get("valor") is not None and (_num(x.get("peso")) or 0) > 0]
+    exposicao = s.get("aplicabilidade") or exposicao_sensibilidade(
+        str(m.get("arquetipo") or ""), metodos, inventario_conferido=isinstance(inventario, list))
+    nome_colunas = exposicao["nome_colunas"] if exposicao.get("arquetipo_conferido") else str(s.get("colunas") or "")
+    legado = exposicao["canal_colunas"] == "d_comm" and s.get("colunas") != exposicao["nome_colunas"]
+    if exposicao["canal_colunas"] == "d_comm":
+        col = [pp(_num(c), 0) for c in s.get("choques_colunas") or []] or col
     ups = s.get("upside") or []
     uts = s.get("upside_texto") or []
     cells = []
@@ -1649,8 +1660,10 @@ def _sensibilidade(m: Mapping[str, Any], citavel: bool) -> dict[str, Any] | None
                             for j, t in enumerate(row)]})
     choques = [_num(c) for c in s.get("choques_colunas") or []]
     base_c = choques.index(0.0) if 0.0 in choques else len(col) // 2
-    return {"linhas": "ke", "colunas": str(s.get("colunas") or ""), "rot_linhas": lin, "rot_colunas": col,
-            "celulas": cells, "base": [len(lin) // 2, base_c], "citavel": citavel}
+    return {"linhas": "ke", "colunas": nome_colunas, "rot_linhas": lin, "rot_colunas": col,
+            "celulas": cells, "base": [len(lin) // 2, base_c], "citavel": citavel,
+            "aplicabilidade": exposicao, "rotulo_original": str(s.get("colunas") or ""),
+            "nota_rotulo_legado": "A memória do retrato usa a denominação de preço de commodity; a fórmula aplica variação transitória aditiva da margem EBIT." if legado else None}
 
 
 def _ponte_pub(m: Mapping[str, Any], moeda: str, nomes: Mapping[str, str] | None = None) -> dict[str, Any] | None:

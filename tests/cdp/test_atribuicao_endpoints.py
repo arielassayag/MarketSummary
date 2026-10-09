@@ -299,7 +299,11 @@ def test_ast_numerico_guardas_e_ponte_literais():
     assert [dump(n) for n in methods['_inicializar_numerico'].body] == expected['modelo_numerico']
     methods['__init__'].body = methods['__init__'].body[:4] + methods['_inicializar_numerico'].body
     cl.body.remove(methods['_inicializar_numerico'])
-    assert dump(model) == expected['modelo_completo']
+    # Pin completo da versão de apresentação revista. A referência numérica original
+    # continua imutável e é conferida acima; motor e ponte mantêm seus pins originais.
+    presentation = json.loads((FONTE / 'tests/fixtures/cdp/atribuicao/AST_APRESENTACAO_SENSIBILIDADE.json').read_text())
+    assert sha((FONTE / 'tests/fixtures/cdp/atribuicao/AST_ORIGINAL.json').read_bytes()) == presentation['ast_original_sha256']
+    assert sha(dump(model).encode()) == presentation['modelo_completo_sha256']
     motor = ast.parse((FONTE / 'src/cdp/cobertura/motor.py').read_text())
     functions = {n.name:n for n in motor.body if isinstance(n,ast.FunctionDef)}
     assert [dump(n) for n in functions['tp_deterministico'].body[:2]] == expected['motor_guardas']

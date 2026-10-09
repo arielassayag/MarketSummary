@@ -474,6 +474,92 @@
           "tipo": "capital"
         }
       ]
+    },
+    {
+      "issuer_id": "AR_GALICIA",
+      "documento": "GALICIA_202606_EEFF.pdf",
+      "sha256": "ff2b65222f2591c8fd9354d05b50020ee8879528233e4b0cce8a9b5b83921886",
+      "url": "https://b.gfgsa.com/app/uploads/2026/09/EEFF-GFG-30-06-2026-INGLES.pdf",
+      "disponibilidade_tipo": "recepcao_observada",
+      "data_publicacao": null,
+      "extrator": "galicia_owners_jun2026/v1",
+      "dependencia_anual": {
+        "documento": "GALICIA_202512_EEFF.pdf",
+        "sha256": "5589b6bf1f3e695625f0ed85e8a841becb8610fd8f46101646000b5f3c5bacf2",
+        "url": "https://b.gfgsa.com/app/uploads/2026/03/GRUPO-FINANCIERO-GALICIA-SA-31-12-2025-BYMA.pdf"
+      },
+      "tabelas": [
+        {
+          "demonstrativo": "BPA",
+          "pagina": 5,
+          "colunas": [
+            {
+              "inicio": "2025-01-01",
+              "fim": "2025-12-31",
+              "rotulo": "12.31.25"
+            }
+          ]
+        },
+        {
+          "demonstrativo": "DRE",
+          "pagina": 6,
+          "colunas": [
+            {
+              "inicio": "2026-01-01",
+              "fim": "2026-06-30",
+              "rotulo": "Six months as of 06.30.26"
+            },
+            {
+              "inicio": "2025-01-01",
+              "fim": "2025-06-30",
+              "rotulo": "Six months as of 06.30.25"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "issuer_id": "AR_SUPERVIELLE",
+      "documento": "SUPV_202606_COMPLETO.pdf",
+      "sha256": "320a78c3c35e4c62cb957690435d130897f7e3d0ba0ca1696dbc11a427dc67ee",
+      "url": "https://s26.q4cdn.com/426641508/files/doc_financials/2026/q2/Financial-Statements-06-30-26.pdf",
+      "disponibilidade_tipo": "recepcao_observada",
+      "data_publicacao": null,
+      "extrator": "supervielle_owners_jun2026/v1",
+      "dependencia_anual": {
+        "documento": "SUPV_202512_FS.pdf",
+        "sha256": "8f58fc084261c11abb635c3bbfa8303ed2fbac0b6c9e56c1525e2a2e6285aea7",
+        "url": "https://s26.q4cdn.com/426641508/files/doc_financials/2025/q4/FS-Grupo-Supervielle-31-12-2025.pdf"
+      },
+      "tabelas": [
+        {
+          "demonstrativo": "BPA",
+          "pagina": 6,
+          "colunas": [
+            {
+              "inicio": "2025-01-01",
+              "fim": "2025-12-31",
+              "rotulo": "12/31/2025"
+            }
+          ]
+        },
+        {
+          "demonstrativo": "DRE",
+          "pagina": 7,
+          "colunas": [
+            {
+              "inicio": "2026-01-01",
+              "fim": "2026-06-30",
+              "rotulo": "Six-month period 06/30/2026"
+            },
+            {
+              "inicio": "2025-01-01",
+              "fim": "2025-06-30",
+              "rotulo": "Six-month period 06/30/2025"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

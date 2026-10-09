@@ -751,7 +751,24 @@ function football(m) {
 }
 /* V3: mapa de sensibilidade */
 function sensibilidade(G) {
+  var A = obj(G.aplicabilidade);
+  if (A.colunas_aplicavel === false) {
+    var sem = block("Sensibilidade do preço-alvo", "ke · choque das colunas indisponível");
+    var centro = arr(G.base)[1], linhas = arr(G.celulas).map(function (row, i) {
+      var c = arr(row.c)[centro] || {};
+      return { ke: txt(arr(G.rot_linhas)[i]), alvo: c.t, potencial: c.u };
+    });
+    add(sem, [note(A.motivo), A.descricao ? note(A.descricao) : null,
+      A.descricao_ke ? note(A.descricao_ke) : null, G.nota_rotulo_legado ? note(G.nota_rotulo_legado) : null,
+      tabela([{ t: "ke", k: "ke" }, { t: "Preço-alvo", k: "alvo", num: true }, { t: "Potencial", k: "potencial", num: true }], linhas, { stack: true }),
+      leitura("Valores da coluna sem choque, preservados do retrato." + (G.citavel ? "" : " Modelo sem preço-alvo citável: valores só para auditoria."), null, null)]);
+    return sem;
+  }
   var b = block("Sensibilidade do preço-alvo", "ke × " + G.colunas);
+  add(b, [A.colunas_aplicavel === null ? note(A.motivo) : null, A.descricao ? note(A.descricao) : null,
+    arr(A.metodos_colunas_nomes).length ? note("Métodos que recebem o choque: " + arr(A.metodos_colunas_nomes).join("; ") + ".") : null,
+    A.formula_delta_margem ? note(A.formula_delta_margem) : null, A.perfil ? note(A.perfil) : null,
+    A.descricao_ke ? note(A.descricao_ke) : null, G.nota_rotulo_legado ? note(G.nota_rotulo_legado) : null]);
   var thead = h("tr", null, h("th", { scope: "col", title: "linhas: ke; colunas: " + G.colunas }, "ke"), arr(G.rot_colunas).map(function (c) { return h("th", { scope: "col", class: "num" }, c); }));
   var body = h("tbody");
   each(G.celulas, function (row, i) {

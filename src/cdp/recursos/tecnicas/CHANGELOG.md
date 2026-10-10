@@ -1,5 +1,14 @@
 # Histórico de versões do CDP
 
+## 1.7.0
+
+- Nove consultas operacionais nativas de leitura com contexto explícito recebido,
+  readset físico e representação integral tipada; transporte MCP separado dos três kernels.
+- Diagnósticos puros de κ_F, viés, earnings, overlay, beta distribuído e fase por
+  grupo em sombra, sem consumidor, calibração, promoção ou alteração do mandato.
+- Referências, disponibilidade histórica, PIT, integridade nativa e hash de
+  transporte conservam qualificações distintas; nenhum catálogo concede escrita.
+
 ## 1.6.1
 
 - Catálogo operacional de permissões por folha e tarefa, gerado nas skills e no settings local.

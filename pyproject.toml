@@ -31,6 +31,7 @@ dependencies = [
 cdp = "cdp.__main__:main"
 cdp-tecnicas = "cdp.tecnicas.cli:main"
 cdp-tecnicas-mcp = "cdp.mcp_readonly.__main__:main"
+cdp-mcp-operacional = "cdp.mcp_readonly.operacional:main"
 
 [project.optional-dependencies]
 mcp = [

@@ -1001,3 +1001,23 @@ destino. → Consequências: estudo autoral imutável e negativa semântica sepa
 contrato futuro não pode consumir as duas notas como ajuste de PL ou lucro sem
 outra fonte primária ou correção revisada. Pontes anuais reportadas continuam
 separadas da normalização econômica.
+
+## 2026-10-10 · Escrita NET prospectiva exige origem econômica inteira
+
+Contexto: uma comparação privada de NET não protege os escritores oficiais, e
+recusar toda entrada também impede novas efetivações válidas. → Decisão: integrar
+contrato reservado antes do hash, recepção física de proposta/configuração/prior/
+mercado, receita diária nativa com custos e prova preparatória sem ciclo. A prova
+é vinculada apenas depois de BOOKED, diário e risco completos. Retomada factual
+completa os corpos retidos; nenhuma nova ordem/NAV é criada pela recuperação.
+Históricos sem contrato conservam leitura, mas não autorizam nova escrita.
+
+Consequências: o limite usa configuração própria e denominador após custos,
+com comparação decimal exata inclusiva. Configuração atual ausente, Store livre,
+prova ausente/adulterada ou contrato reservado desconhecido não fornecem autoridade.
+Carry histórico permanece factual com monitor NET SOFT. O JSON integral de origem
+conserva stress ausente `NaN` sem imputação; aprovação NET não qualifica todos os
+modelos de risco nem os insumos financeiros externos. Os caminhos `net_config` e
+`net_moc` continuam no escopo canônico do livro, sob trava; nenhuma publicação
+alternativa. Desenvolvimento isolado ainda depende de suíte conjunta, revisão e
+integração ROOT; não há adoção retroativa da carteira de 09/10.

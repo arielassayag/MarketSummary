@@ -19,7 +19,10 @@ from cdp.workflow.risco_diario import market_data, read_measures
 from cdp.workflow.runtime import Runtime
 
 LEGACY = Path(__file__).parent / "fixtures" / "fund_legado.yaml"
-NOW = datetime(2024, 3, 5, 22, 30, tzinfo=UTC)
+CONFIG = Path(__file__).resolve().parents[2] / "configs/cdp/fund.yaml"
+FIRST = date(2026, 11, 13)
+SECOND = date(2026, 11, 16)
+NOW = datetime(2026, 11, 16, 22, 30, tzinfo=UTC)
 
 
 def _hashes(root):
@@ -27,7 +30,7 @@ def _hashes(root):
 
 
 def _runtime(root):
-    return Runtime(load_config(LEGACY), root / "book", root / "market", root / "reports")
+    return Runtime(load_config(CONFIG), root / "book", root / "market", root / "reports")
 
 
 @pytest.fixture(scope="module")
@@ -35,7 +38,7 @@ def archived_demo(tmp_path_factory):
     root = tmp_path_factory.mktemp("demo_arquivada")
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        result = run_demo(root, days=2, cfg=load_config(LEGACY))
+        result = run_demo(root, days=2, first_week=FIRST, cfg=load_config(CONFIG))
     assert result["integridade"], result["verificacao"]
     return root
 
@@ -75,7 +78,7 @@ def test_demo_reopens_without_override_and_reads_authenticated_risk(archived_dem
     valid, problems = rt.verify_all()
     assert valid, problems
     diagnosed = read_measures(rt.track(), market_loader=rt.store.load, market_root=rt.store.root)
-    assert set(diagnosed) == {date(2024, 3, 4), date(2024, 3, 5)}
+    assert set(diagnosed) == {FIRST, SECOND}
     assert any(obj["weights"] for obj in diagnosed.values())  # carteira efetiva não trivial
     for d, obj in diagnosed.items():
         assert obj["sources"]["current"] == market_data(rt.store.load(d).truncate(d))

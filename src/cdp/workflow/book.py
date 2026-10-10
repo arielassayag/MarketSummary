@@ -352,9 +352,10 @@ class Book:
     """
 
     def __init__(self, root: Path | str = "book", config: FundConfig | None = None,
-                 mercado: Callable[[date], Any] | None = None) -> None:
+                 mercado: Callable[[date], Any] | None = None, *, market_store=None) -> None:
         self.root = Path(root)
         self.config = config
+        self.market_store = market_store
         self.mercado = mercado
         self.root.mkdir(parents=True, exist_ok=True)
         self.audit = AuditLog(self.root / "audit_log.jsonl")
@@ -519,6 +520,9 @@ class Book:
         if not path.exists():
             return None
         proposal = Proposal.model_validate(_read_json(path))
+        from .net_moc import descriptor
+
+        descriptor(proposal)  # ausência literal conserva leitura histórica; presença é tipada
         if proposal.version != version or proposal.week != week:
             raise ValueError(f"{path.name} inconsistente com o local (versão/semana divergentes).")
         return proposal
@@ -704,6 +708,21 @@ class Book:
             raise ValueError(f"Trilha de auditoria comprometida ({msg}); booking recusado.")
         events, index = self._audit_state()
         problems = self._week_problems(week, events, index)
+        orphan = f"{week}: booking não confere com a trilha de auditoria."
+        if orphan in problems:
+            from .net_moc import compose
+            from .net_moc_prova import recover, validate_booking
+
+            sealed = recover(self.root, week)
+            if sealed is not None and sealed.state == "booked_pending_event" and sealed.entry == entry:
+                candidate = compose(self, entry)
+                try:
+                    validate_booking(candidate)
+                finally:
+                    candidate.sources.close()
+                # Único estado intermediário admitido: os bytes e a origem inteiros já
+                # preparados, com arquivo BOOKED idêntico e só seu evento ainda ausente.
+                problems.remove(orphan)
         if problems:
             raise ValueError("Integridade da semana comprometida; booking recusado: "
                              + " ".join(problems))
@@ -744,6 +763,13 @@ class Book:
             if bad:
                 raise ValueError(f"{KILL_SWITCH_FILE} ativo: apenas reduções de posições já "
                                  f"efetivadas são permitidas; novas/aumentadas: {bad}.")
+        from .net_moc import compose
+
+        candidate = compose(self, entry)
+        try:
+            candidate.sources.recheck()
+        finally:
+            candidate.sources.close()
         return k
 
     def save_booked(self, entry: BookEntry, snapshot_hash_now: str, config_hash_now: str,
@@ -766,6 +792,17 @@ class Book:
                  "reason": str(exc)},
                 summary=f"Booking recusado ({entry.proposal_id}): {str(exc)[:300]}", week=week)
             raise
+        from .net_moc import compose
+        from .net_moc_prova import prepare
+
+        candidate = compose(self, entry)
+        try:
+            prepare(candidate)
+            candidate.sources.recheck()
+            # Repetir as guardas de versão, kill e aprovação após a preparação.
+            self._validate_booking(entry, snapshot_hash_now, config_hash_now, research_hash_now)
+        finally:
+            candidate.sources.close()
         _write_exclusive(path, dump_json(entry))
         self.audit.append(
             "BOOKED", actor, entry,
@@ -773,6 +810,32 @@ class Book:
                     f"posições, aprovação {entry.approval_hash[:HASH_PREFIX]}.",
             week=week)
         return path
+
+    def recover_booking(self, week: date) -> None:
+        """Completa somente o evento de um BOOKED literal previamente preparado."""
+        from .net_moc import receive_config
+        from .net_moc_prova import recover
+
+        sealed = recover(self.root, week)
+        if sealed is None or sealed.state != "booked_pending_event":
+            return
+        proposal = self._find_proposal(week, sealed.entry.proposal_id)
+        decision = self.load_decision(week, proposal.version)
+        if decision is None or self.config is None:
+            raise ValueError("retomada NET sem decisão/configuração própria")
+        own_cfg, _ = receive_config(self.root, proposal)
+        valid, reasons = verify_decision(decision, proposal, proposal.snapshot_hash,
+                                         own_cfg.config_hash(), decision.research_hash)
+        events, index = self._audit_state()
+        problems = self._week_problems(week, events, index)
+        orphan = f"{week}: booking não confere com a trilha de auditoria."
+        if not valid or problems != [orphan]:
+            raise ValueError("retomada factual NET recusada: " + "; ".join([*reasons, *problems]))
+        # O arquivo já existe e a prova reteve todos os corpos e origens antes
+        # dele. Fecha só o evento factual; não dimensiona ordens ou NAV novamente.
+        self.audit.append("BOOKED", SYSTEM_ACTOR, sealed.entry,
+                          summary="Retomada do evento da efetivação NET previamente preparada.",
+                          week=week)
 
     def registrar_efetivacao_recusada(self, week: date, sessao: date, motivo: str,
                                       proposal_id: str, approval_hash: str,

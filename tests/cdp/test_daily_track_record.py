@@ -17,6 +17,11 @@ from types import SimpleNamespace
 import numpy as np
 import pandas as pd
 import pytest
+from historico_simulado import (
+    historical_session,
+    instalar_booking_historico,
+    instalar_booking_sombra_historico,
+)
 
 from cdp.analytics.panel import build_asset_panel
 from cdp.analytics.shortability import short_availability
@@ -181,7 +186,9 @@ def approve_and_book(book: Book, proposal: Proposal, when: datetime) -> None:
                              co_signer="Bruno Risco", now=when)
     book.save_decision(decision)
     entry = book_entry_from_proposal(proposal, decision, booked_at=when)
-    book.save_booked(entry, proposal.snapshot_hash, CFG.config_hash(), proposal.research_hash)
+    with pytest.raises(ValueError, match="NET UNVERIFIABLE"):
+        book.save_booked(entry, proposal.snapshot_hash, CFG.config_hash(), proposal.research_hash)
+    instalar_booking_historico(book, entry)
 
 
 @pytest.fixture(scope="module")
@@ -223,7 +230,7 @@ def test_backfill_starts_at_first_booking_and_skips_non_sessions(human):
     assert all(d in human.store.loads for d in dates)
 
 
-def test_inception_record_is_moc_execution_with_costs_only(human):
+def test_historical_inception_record_is_moc_execution_with_costs_only(human):
     r = human.by_date[W1]
     entry = human.book.load_booked(W1)
     assert r.prev_record_hash == GENESIS_RECORD_HASH
@@ -641,11 +648,14 @@ def _autonomous(md: MarketData, decided: datetime, cfg: FundConfig = CFG):
     return final, shadow, decision
 
 
-def test_autonomous_moc_execution_with_shadow(tmp_path, market):
+def test_historical_booking_with_shadow_after_net_refusal(tmp_path, market):
     root = tmp_path / "book"
     runner = DailyRunner.from_root(CFG, FakeStore(market), root)
     final, shadow, decision = _autonomous(market, datetime(2026, 10, 5, 18, 0, tzinfo=UTC))
-    res = runner.run_session(W1, pending=PendingExecution(final, decision, shadow))
+    save_decided_proposal(runner.book, final, decision, CFG)
+    with pytest.raises(ValueError, match="NET UNVERIFIABLE"):
+        runner.execute_decision(W1, final, decision)
+    res = historical_session(runner, W1, PendingExecution(final, decision, shadow))
     book = runner.book
     entry = book.load_booked(W1)  # conferido contra a trilha de auditoria
     assert entry is not None and res.booked == entry
@@ -657,12 +667,14 @@ def test_autonomous_moc_execution_with_shadow(tmp_path, market):
     assert {b.ticker: float(b.shares) for b in entry.positions} == shares
     assert {b.ticker: b.notional_usd for b in entry.positions} == pytest.approx(
         {p.ticker: p.market_value_usd for p in rec.positions})
-    # Sombra só-quant executada na própria série, ligada ao registro do CDP por hash.
-    assert res.shadow is not None and res.shadow_booked is not None
+    # Corpus sombra de formato legado adotado na série, ligado ao registro por hash.
+    assert res.shadow is not None and res.shadow_booked is None
+    shadow_entry = runner.shadow_book.load_booked(W1)
+    assert shadow_entry is not None
     assert {p.ticker for p in res.shadow.positions} == {"SBR01ADR", "SBR10ADR"}
     assert rec.input_hashes["shadow_record"] == res.shadow.record_hash
     assert "sombra" in res.shadow.fund_name
-    assert runner.shadow_book.load_booked(W1) == res.shadow_booked
+    assert runner.shadow_book.load_booked(W1) == shadow_entry
     assert res.value_added == pytest.approx(rec.ret - res.shadow.ret)
 
     nxt = runner.run_session(date(2026, 10, 6))  # sem decisão: as duas carteiras derivam
@@ -685,8 +697,11 @@ def test_autonomous_moc_execution_with_shadow(tmp_path, market):
     shadow2 = make_proposal(W2, [_target(market, "SIM002", "SBR02.SA", 0.02),
                                  _target(market, "SIM010", "SBR10ADR", -0.02, 0.003)],
                             "sombra-quant")
-    recs = runner.backfill(date(2026, 10, 7), W2,
-                           pending=[PendingExecution(hold, hold_dec, shadow2)])
+    recs = runner.backfill(date(2026, 10, 7), date(2026, 10, 9))
+    save_decided_proposal(runner.book, hold, hold_dec, CFG)
+    with pytest.raises(ValueError, match="NET UNVERIFIABLE"):
+        runner.execute_decision(W2, hold, hold_dec)
+    recs.append(historical_session(runner, W2, PendingExecution(hold, hold_dec, shadow2)).record)
     assert [r.date for r in recs][-1] == W2
     before, held = recs[-2], recs[-1]
     assert held.pnl_components["costs"] == 0.0 and held.live_book_week == W2
@@ -751,27 +766,34 @@ def test_tampered_or_late_or_stale_mandate_decisions_are_refused(tmp_path, marke
     assert late.decided_at > close_datetime(W1, CFG)
     with pytest.raises(ValueError, match="após o fechamento"):
         runner.run(W1, pending=PendingExecution(f2, late, s2))
-    recs = runner.backfill(W1, date(2026, 10, 6), pending=[PendingExecution(f2, late, s2)])
+    save_decided_proposal(runner.book, f2, late, CFG)
+    with pytest.raises(ValueError, match="NET UNVERIFIABLE"):
+        runner.execute_decision(date(2026, 10, 6), f2, late)
+    recs = [historical_session(runner, date(2026, 10, 6), PendingExecution(f2, late, s2)).record]
     assert [r.date for r in recs] == [date(2026, 10, 6)]
     assert recs[0].nav_start_usd == pytest.approx(CFG.fund.inception_nav_usd)
     assert any("primeiro pregão disponível" in a for a in recs[0].alerts)
     assert executable_in(W1, date(2026, 10, 9)) and not executable_in(W1, date(2026, 10, 12))
 
 
-def test_execute_decision_then_run_adopts_the_booking(tmp_path, market):
+def test_historical_booking_adoption_is_idempotent_after_net_refusal(tmp_path, market):
     runner = DailyRunner.from_root(CFG, FakeStore(market), tmp_path / "book", with_shadow=False)
     final, _, decision = _autonomous(market, datetime(2026, 10, 5, 18, 0, tzinfo=UTC))
-    entry = runner.execute_decision(W1, final, decision)
+    save_decided_proposal(runner.book, final, decision, CFG)
+    with pytest.raises(ValueError, match="NET UNVERIFIABLE"):
+        runner.execute_decision(W1, final, decision)
+    historical_session(runner, W1, PendingExecution(final, decision))
+    entry = runner.book.load_booked(W1)
     assert runner.book.load_booked(W1) == entry
     assert runner.execute_decision(W1, final, decision) == entry  # idempotente
-    rec = runner.run(W1)  # descobre a efetivação no livro
+    rec = runner.track.get(W1)  # corpo histórico adotado, sem nova escrita
     assert rec.approval_hash == decision.approval_hash
     assert {p.ticker: p.shares for p in rec.positions} == {
         b.ticker: float(b.shares) for b in entry.positions}
     assert rec.pnl_components["costs"] < 0
-    # Determinismo: executar via pendência num livro novo gera o mesmo registro, byte a byte.
+    # Determinismo da adoção do corpus sintético de formato legado, byte a byte.
     other = DailyRunner.from_root(CFG, FakeStore(market), tmp_path / "outro", with_shadow=False)
-    same = other.run(W1, pending=PendingExecution(final, decision))
+    same = historical_session(other, W1, PendingExecution(final, decision)).record
     assert same.record_hash == rec.record_hash
     assert (other.track.record_path(W1).read_bytes()
             == runner.track.record_path(W1).read_bytes())
@@ -790,12 +812,15 @@ def test_session_limitations_keep_base_and_same_day_only(market):
 # Revisão adversarial: regressões dos defeitos corrigidos
 # ==========================================================
 
-def _inception(tmp_path: Path, market: MarketData, session: date = W1, cfg: FundConfig = CFG,
+def _historical_inception(tmp_path: Path, market: MarketData, session: date = W1, cfg: FundConfig = CFG,
                store: FakeStore | None = None, name: str = "book") -> DailyRunner:
     runner = DailyRunner.from_root(cfg, store or FakeStore(market), tmp_path / name,
                                    with_shadow=False)
     final, _, decision = _autonomous(market, datetime(2026, 10, 5, 18, 0, tzinfo=UTC))
-    runner.run(session, pending=PendingExecution(final, decision))
+    save_decided_proposal(runner.book, final, decision, cfg)
+    with pytest.raises(ValueError, match="NET UNVERIFIABLE"):
+        runner.execute_decision(session, final, decision)
+    historical_session(runner, session, PendingExecution(final, decision))
     return runner
 
 
@@ -806,7 +831,7 @@ def _tamper_json(path: Path, mutate) -> None:
 
 
 def test_never_marks_or_chains_from_a_tampered_last_record(tmp_path, market):
-    runner = _inception(tmp_path, market)
+    runner = _historical_inception(tmp_path, market)
     _tamper_json(runner.track.record_path(W1),
                  lambda d: d["positions"][0].update(
                      market_value_usd=d["positions"][0]["market_value_usd"] * 2))
@@ -852,11 +877,19 @@ def test_verify_flags_resealed_record_with_incoherent_nav(tmp_path, monkeypatch)
     assert any("NAV final" in p and "P&L" in p for p in problems), problems
 
 
-def test_booked_week_is_adopted_after_a_later_mandate_change(tmp_path, market):
+def test_historical_booked_week_is_adopted_after_a_later_mandate_change(tmp_path, market):
     root = tmp_path / "book"
     runner = DailyRunner.from_root(CFG, FakeStore(market), root, with_shadow=False)
     final, _, decision = _autonomous(market, datetime(2026, 10, 5, 18, 0, tzinfo=UTC))
-    entry = runner.execute_decision(W1, final, decision)  # MOC às 17h; mandato muda às 18h
+    save_decided_proposal(runner.book, final, decision, CFG)
+    with pytest.raises(ValueError, match="NET UNVERIFIABLE"):
+        runner.execute_decision(W1, final, decision)
+    # Corpo legado encerrado antes de o leitor receber o mandato posterior.
+    plan = runner._plan_from_pending(W1, None, PendingExecution(final, decision))
+    prepared = runner._prepare_side(runner.main, runner.context(W1), None, plan)
+    save_decided_proposal(runner.book, final, decision, CFG)
+    entry = prepared.entry
+    instalar_booking_historico(runner.book, entry)
     other_cfg = CFG.with_overrides({"risk": {"var_1d_max": 0.011}})
     later = DailyRunner.from_root(other_cfg, FakeStore(market), root, with_shadow=False)
     rec = later.run(W1)  # antes: ValueError (hash de configuração) e semana inteira sem registro
@@ -869,7 +902,7 @@ def test_booked_week_is_adopted_after_a_later_mandate_change(tmp_path, market):
 
 @pytest.mark.parametrize("cause", ["kill_switch", "mandate"])
 def test_refused_execution_keeps_previous_book_with_alert(tmp_path, market, cause):
-    runner = _inception(tmp_path, market, session=date(2026, 10, 9))
+    runner = _historical_inception(tmp_path, market, session=date(2026, 10, 9))
     p2 = make_proposal(W2, week2(market))
     d2 = make_autonomous_decision(p2, research_hash=p2.research_hash, pm_decision_hash="f" * 64,
                                   rationale="Semana 2 autônoma de teste.",
@@ -878,7 +911,12 @@ def test_refused_execution_keeps_previous_book_with_alert(tmp_path, market, caus
     before = runner.track.last()
     if cause == "kill_switch":
         (runner.book.root / "KILL_SWITCH").write_text("{}", encoding="utf-8")
-        expected = "kill switch"
+        # A recusa do writer continua testada diretamente; o preflight diário é
+        # seco e não substitui a prova do evento BOOKING_REFUSED do livro.
+        entry2 = book_entry_from_proposal(p2, d2, booked_at=close_datetime(W2, CFG))
+        with pytest.raises(ValueError, match="KILL_SWITCH"):
+            runner.book.save_booked(entry2, p2.snapshot_hash, CFG.config_hash(), p2.research_hash)
+        expected = "KILL_SWITCH"
     else:
         cfg = CFG.with_overrides({"risk": {"var_1d_max": 0.011}})
         runner = DailyRunner.from_root(cfg, FakeStore(market), runner.book.root,
@@ -919,13 +957,14 @@ class RevisingStore(FakeStore):
         return replace(md, fundamentals=f)
 
 
-def test_records_do_not_depend_on_the_run_path(tmp_path, market):
+def test_historical_records_do_not_depend_on_the_read_path(tmp_path, market):
     final, _, decision = _autonomous(market, datetime(2026, 10, 5, 18, 0, tzinfo=UTC))
     a = DailyRunner.from_root(CFG, RevisingStore(market), tmp_path / "a", with_shadow=False)
-    a.backfill(W1, date(2026, 10, 6), pending=[PendingExecution(final, decision)])
+    historical_session(a, W1, PendingExecution(final, decision))
+    a.run(date(2026, 10, 6))
     b_root = tmp_path / "b"
-    DailyRunner.from_root(CFG, RevisingStore(market), b_root, with_shadow=False).run(
-        W1, pending=PendingExecution(final, decision))
+    original = DailyRunner.from_root(CFG, RevisingStore(market), b_root, with_shadow=False)
+    historical_session(original, W1, PendingExecution(final, decision))
     # Rotina do dia seguinte num processo novo: o modelo da sessão anterior precisa vir dos
     # dados daquela sessão (antes: dados de hoje cortados ⇒ atribuição diferente do backfill).
     b = DailyRunner.from_root(CFG, RevisingStore(market), b_root, with_shadow=False)
@@ -934,7 +973,7 @@ def test_records_do_not_depend_on_the_run_path(tmp_path, market):
         assert a.track.record_path(d).read_bytes() == b.track.record_path(d).read_bytes(), d
 
 
-def test_shadow_series_event_type_and_cross_week_copies(tmp_path, market):
+def test_historical_shadow_event_type_and_cross_week_copies(tmp_path, market):
     root = tmp_path / "book"
     assert TrackRecord(root / "track_record").audit_event == DAILY_RECORD_EVENT
     assert TrackRecord(root / "track_record_shadow").audit_event == SHADOW_RECORD_EVENT
@@ -944,8 +983,11 @@ def test_shadow_series_event_type_and_cross_week_copies(tmp_path, market):
     sb = ShadowBook(TrackRecord(root / "track_record_shadow"))
     p = make_proposal(W1, week1(market), "sombra-quant")
     sb.save_proposal(p)
-    sb.save_booked(BookEntry(week=W1, proposal_id=p.proposal_id, approval_hash=p.proposal_hash(),
-                             booked_at=close_datetime(W1, CFG), nav_usd=NAV0, positions=[]))
+    entry = BookEntry(week=W1, proposal_id=p.proposal_id, approval_hash=p.proposal_hash(),
+                      booked_at=close_datetime(W1, CFG), nav_usd=NAV0, positions=[])
+    with pytest.raises(ValueError, match="NET UNVERIFIABLE"):
+        sb.save_booked(entry)
+    instalar_booking_sombra_historico(sb, entry, config=CFG)
     assert sb.load_proposal(W1) == p and sb.load_booked(W1).week == W1
     # Cópia da semana 1 no lugar da semana 2: o hash consta da trilha, mas de outra semana.
     sb.proposal_path(W2).write_bytes(sb.proposal_path(W1).read_bytes())
@@ -1030,7 +1072,10 @@ def test_weekly_runtime_shadow_file_is_discovered_and_verified(tmp_path, market)
     AuditLog(root / "audit_log.jsonl").append("SHADOW_QUANT", "CDP", {"sha256": sha256_file(path)},
                                               week=W1)
     assert book_shadow_proposal(runner.book, W1) == shadow
-    res = runner.run_session(W1, pending=PendingExecution(final, decision))  # sem sombra explícita
+    save_decided_proposal(runner.book, final, decision, CFG)
+    with pytest.raises(ValueError, match="NET UNVERIFIABLE"):
+        runner.execute_decision(W1, final, decision)
+    res = historical_session(runner, W1, PendingExecution(final, decision))  # sombra descoberta
     assert res.shadow is not None and {p.ticker for p in res.shadow.positions} == {
         "SBR01ADR", "SBR10ADR"}
     assert res.record.input_hashes["shadow_record"] == res.shadow.record_hash
@@ -1046,7 +1091,7 @@ def test_non_finite_var_becomes_none_with_alert(tmp_path, market, monkeypatch):
 
     monkeypatch.setattr(daily_mod, "parametric_var_es", lambda *_a, **_k: (math.nan, math.nan))
     monkeypatch.setattr(daily_mod, "historical_var_es", broken_hist)
-    runner = _inception(tmp_path, market)  # antes: NaN no registro ⇒ append recusado
+    runner = _historical_inception(tmp_path, market)  # antes: NaN no registro ⇒ append recusado
     rec = runner.track.last()
     assert rec.risk.var_1d_99 is None and rec.risk.es_1d_99 is None
     assert any("VaR/ES 1d indisponível" in a for a in rec.alerts)

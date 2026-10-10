@@ -5,17 +5,22 @@ import copy
 import hashlib
 import json
 import shutil
+from dataclasses import replace
 from datetime import UTC, date, datetime
 from decimal import Decimal, localcontext
 from pathlib import Path
+from unittest.mock import patch
 
+import pandas as pd
 import pytest
 
+from cdp.audit import AuditLog
 from cdp.backtest.replay import run_replay, verify_replay
 from cdp.config import FundConfig, load_config
 from cdp.data.snapshot import write_snapshot
 from cdp.data.synthetic import make_synthetic_market
 from cdp.workflow import risco_diario
+from cdp.workflow.book import REGRA_CADUCIDADE
 from cdp.workflow.contrato_custos import (
     DIAGNOSTIC_KEY,
     RECORD_MARKER,
@@ -23,6 +28,10 @@ from cdp.workflow.contrato_custos import (
     verify,
     verify_record,
 )
+from cdp.workflow.daily import DailyRunner, book_execution
+from cdp.workflow.net_moc import RECORD_MARKER as NET_MARKER
+from cdp.workflow.net_moc_prova import load as load_net
+from cdp.workflow.net_moc_prova import recover as recover_net
 from cdp.workflow.runtime import Runtime
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -49,13 +58,231 @@ def natural_episode(tmp_path_factory):
     write_snapshot(md, raw)
     cfg = load_config(ROOT / 'configs/cdp/fund.yaml')
     out = workspace / '.cdp/ensaios/novo'
-    result = run_replay(raw, out, start=DAY, end=DAY, mode='simulado', cfg=cfg,
-                        workspace=workspace)
+    native_run = DailyRunner.run_session
+    preflight = []
+
+    def with_native_preflight(self, session, *args, **kwargs):
+        if session == DAY and self.track.last() is None:
+            # Mesmo plano natural. Exercita a API de dry_run sem I/O e a API
+            # execute_decision antes de o fechamento adotar os corpos preparados.
+            ctx = self.context(session)
+            plan = self._discover_plan(session, session)
+            assert plan is not None
+            candidate = self._prepare_side(self.main, ctx, None, plan)
+            before = inventory(self.book.root)
+            book_execution(self.book, candidate.entry, plan.proposal, plan.decision, self.cfg,
+                           dry_run=True)
+            assert inventory(self.book.root) == before
+            native_append = AuditLog.append
+
+            def before_booked_event(audit, event_type, *a, **k):
+                if event_type == 'BOOKED':
+                    raise RuntimeError('DADOS SIMULADOS: interrupção após arquivo BOOKED')
+                return native_append(audit, event_type, *a, **k)
+
+            with patch.object(AuditLog, 'append', before_booked_event):
+                with pytest.raises(RuntimeError, match='após arquivo BOOKED'):
+                    self.execute_decision(session, plan.proposal, plan.decision)
+            assert recover_net(self.book.root, session).state == 'booked_pending_event'
+            # Recalibração posterior altera o hash e o parâmetro econômico do
+            # mandato atual; fechar só o evento recebe a configuração ORIGINAL.
+            changed = self.cfg.model_copy(update={
+                'costs': self.cfg.costs.model_copy(update={
+                    'fx_cost_bps': self.cfg.costs.fx_cost_bps + 1})})
+            assert changed.config_hash() != self.cfg.config_hash()
+            own_cfg = self.book.config
+            self.book.config = changed
+            try:
+                self.book.recover_booking(session)
+            finally:
+                self.book.config = own_cfg
+            got = self.execute_decision(session, plan.proposal, plan.decision)
+            assert got == candidate.entry and got.positions
+            assert recover_net(self.book.root, session).state == 'booked'
+            preflight.append(session)
+            def before_shadow_booked_event(audit, event_type, *a, **k):
+                if event_type == 'BOOKED_SHADOW':
+                    raise RuntimeError('DADOS SIMULADOS: interrupção após BOOKED_SHADOW')
+                return native_append(audit, event_type, *a, **k)
+
+            with patch.object(AuditLog, 'append', before_shadow_booked_event):
+                with pytest.raises(RuntimeError, match='após BOOKED_SHADOW'):
+                    native_run(self, session, *args, **kwargs)
+            assert recover_net(self.book.root, session, 'shadow').state == 'booked_pending_event'
+            # A adoção main/sombra também recebe os corpos econômicos selados
+            # sob a configuração anterior; não prepara outra receita/custo.
+            runner_cfg = self.cfg
+            self.cfg = self.book.config = changed
+            try:
+                self.shadow.store.recover_booking(session)
+                result = native_run(self, session, *args, **kwargs)
+                assert result.record.nav_end_usd == recover_net(self.book.root, session).record.nav_end_usd
+                assert result.shadow == recover_net(self.book.root, session, 'shadow').record
+                return result
+            finally:
+                self.cfg, self.book.config = runner_cfg, own_cfg
+        return native_run(self, session, *args, **kwargs)
+
+    with patch.object(DailyRunner, 'run_session', with_native_preflight):
+        result = run_replay(raw, out, start=DAY, end=DAY, mode='simulado', cfg=cfg,
+                            workspace=workspace)
     assert result['integridade']
     rt = runtime(out)
     record = rt.track().get(DAY)
+    assert preflight == [DAY]
     assert record and len(record.positions) == 29 and abs(record.pnl_components['costs']) > 0
     return workspace, raw, out, cfg
+
+
+def test_net_nativo_d0_d1_bound_historico_e_carry_sem_nova_autorizacao(natural_episode, tmp_path):
+    workspace, _, original, _ = natural_episode
+    out = tmp_path / 'carry-historico'
+    shutil.copytree(original, out)
+    rt = runtime(out)
+    d0 = rt.track().get(DAY)
+    assert d0.risk.n_long > 0 and d0.risk.n_short > 0 and d0.input_hashes[NET_MARKER]
+    assert recover_net(rt.book_root, DAY).state == 'bound'
+    assert load_net(rt.track(), d0)['net']['passed']
+    shadow0 = rt.track(shadow=True).get(DAY)
+    assert shadow0 and shadow0.input_hashes[NET_MARKER]
+    assert recover_net(rt.book_root, DAY, 'shadow').state == 'bound'
+    assert d0.input_hashes['shadow_record'] == shadow0.record_hash
+    proof = out / f'book/net_moc/v1/main/{DAY}/{DAY}/base.json'
+    base = json.loads(proof.read_text())
+    assert 'NaN' in base['proposal_json']  # sete stress ausentes preservados literalmente
+
+    # Hipótese fixa para D1: carry literal das barras D0, em outra base sintética.
+    # Nenhum retorno, preço, sinal, seed ou mandato é escolhido pelo resultado.
+    d1 = date(2026, 11, 16)
+    md = rt.store.load(DAY)
+
+    def carried(frame):
+        new = frame.copy(deep=True)
+        new.loc[pd.Timestamp(d1)] = frame.loc[pd.Timestamp(DAY)]
+        return new
+
+    fields = {name: carried(getattr(md, name)) for name in
+              ('close', 'adj_close', 'volume', 'fx', 'benchmarks', 'rates')}
+    manifest = md.manifest.model_copy(update={
+        'as_of': d1, 'snapshot_id': md.manifest.snapshot_id + '-carry-d1', 'files': [],
+        'limitations': [*md.manifest.limitations,
+                        'DADOS SIMULADOS: D1 conserva literalmente barras D0 como hipótese fixa.']})
+    d1_raw = workspace / 'inputs-d1-carry'
+    write_snapshot(replace(md, manifest=manifest, **fields), d1_raw)
+    rt.store.init_base(d1_raw)
+    runner = DailyRunner.from_root(rt.cfg, rt.store, rt.book_root, with_shadow=True)
+    got = runner.run_session(d1)
+    assert got.booked is None and got.shadow_booked is None
+    assert got.record.prev_record_hash == d0.record_hash
+    assert NET_MARKER not in got.record.input_hashes
+    assert len(got.record.positions) == len(d0.positions)
+    assert got.record.pnl_components['costs'] == 0
+    assert got.record.pnl_components['borrow'] < 0
+    assert got.record.nav_start_usd == d0.nav_end_usd
+    assert load_net(rt.track(), d0)['net']['passed']
+    recovered = recover_net(rt.book_root, DAY)
+    assert recovered.state == 'bound' and recovered.record == d0
+    assert runner.verify_all()[0]
+
+
+def test_net_fail_nativo_caduca_sem_kill_e_nao_efetiva_depois(natural_episode):
+    """Mandato negativo fixo antes do modelo: NET exatamente zero, demais campos iguais.
+
+    Hipótese de teste mais restritiva; não procura seed/resultado nem afrouxa gate.
+    Usa o mesmo snapshot público sintético inteiro, em outro livro nativo vazio.
+    """
+    workspace, raw, _, cfg = natural_episode
+    strict = cfg.model_copy(update={
+        'risk': cfg.risk.model_copy(update={'net_exposure_max_abs': 0.0})})
+    before, after = cfg.model_dump(mode='json'), strict.model_dump(mode='json')
+    before['risk'].pop('net_exposure_max_abs')
+    after['risk'].pop('net_exposure_max_abs')
+    assert before == after
+    out = workspace / '.cdp/ensaios/net-zero-negativo'
+    result = run_replay(raw, out, start=DAY, end=DAY, mode='simulado', cfg=strict,
+                        workspace=workspace)
+    assert result['integridade']
+    rt = runtime(out)
+    lapsed = rt.book.efetivacao_recusada(DAY)
+    assert lapsed and lapsed['regra'] == REGRA_CADUCIDADE and 'NET FAIL' in lapsed['motivo']
+    assert not rt.kill_switch_active() and rt.book.load_booked(DAY) is None
+    rec = rt.track().get(DAY)
+    assert rec and not rec.positions and rec.pnl_components['costs'] == 0
+    assert all('kill switch ligado' not in text for text in rec.alerts)
+    runner = DailyRunner.from_root(rt.cfg, rt.store, rt.book_root, with_shadow=True)
+    proposal = rt.book.load_proposal(DAY)
+    decision = rt.book.load_decision(DAY)
+    with pytest.raises(ValueError, match='caduc|execut|janela|fechamento'):
+        runner.execute_decision(date(2026, 11, 16), proposal, decision)
+    assert rt.book.load_booked(DAY) is None
+
+
+def test_hold_nativo_com_origem_propria_preflight_e_bound_sem_ordens(natural_episode, tmp_path):
+    """Rota HOLD escolhida antes da chamada, sem solver, insumo financeiro ou PASS do teste.
+
+    O gerador nativo recebe o contexto integral do mercado fixo do ensaio. Este
+    caso verifica seu contrato de escrita; não declara que o modelo escolheu HOLD.
+    """
+    from cdp.data.store import MarketStore
+    from cdp.hashing import combine_hashes, sha256_file
+    from cdp.research.pm_agent import load_week_inputs, pm_factbook, to_bundle
+    from cdp.workflow.autonomy import make_autonomous_decision
+    from cdp.workflow.demo import write_demo_inputs
+    from cdp.workflow.origem import ReplayOrigin, install_replay_origin
+    from cdp.workflow.weekly import hold_proposal
+
+    _, raw, original, _ = natural_episode
+    cfg = runtime(original).cfg  # configuração integral do próprio ensaio, não cfg atual
+    out = tmp_path / 'hold-nativo'
+    store = MarketStore(out / 'market', cfg=cfg)
+    store.init_base(raw)
+    now = datetime(2026, 11, 13, 17, tzinfo=UTC)
+    rt = Runtime(cfg, out / 'book', out / 'market', out / 'reports',
+                 store_override=store, teses_root=None, clock=lambda: now)
+    # Manifesto específico e explícito deste teste de protocolo, não replay
+    # completo nem pré-registro econômico real. Ambas âncoras são bytes físicos.
+    origin_path = out / 'hold_test_manifest.json'
+    origin_path.write_text(json.dumps({
+        'aviso': 'DADOS SIMULADOS: teste da rota nativa HOLD, escolhida antes da chamada.',
+        'config_hash': cfg.config_hash(), 'source_manifest_sha256': sha256_file(raw / 'manifest.json'),
+        'generator_sha256': sha256_file(Path(__file__).parents[2] / 'src/cdp/workflow/weekly.py'),
+        'test_sha256': sha256_file(Path(__file__))}, sort_keys=True))
+    install_replay_origin(rt.book, ReplayOrigin(
+        mode='simulado', actual_started_at=datetime.now(UTC),
+        run_manifest_sha256=sha256_file(origin_path),
+        source_manifest_sha256=sha256_file(raw / 'manifest.json')))
+    rt.weekly_prepare(DAY, live=False, mind='demo')
+    write_demo_inputs(rt, DAY)
+    _, _, ctx, _, pmctx = rt._week_state(DAY)
+    pack, output, _, pmctx = load_week_inputs(rt.week_dir(DAY), pmctx, now=now)
+    bundle = to_bundle(output, cfg, pmctx.drawdown, factbook=pm_factbook(pmctx))
+    research_hash = combine_hashes(pack.research_hash(), bundle.pm_output_hash)
+    proposal = hold_proposal(ctx, research_hash, 1,
+                             'DADOS SIMULADOS: teste declarado da rota manter em caixa.',
+                             created_at=now)
+    rt.book.save_research_pack(pack, actor='demo')
+    rt.book.save_proposal(proposal)
+    decision = make_autonomous_decision(
+        proposal, research_hash=research_hash, pm_decision_hash=bundle.pm_output_hash,
+        rationale='DADOS SIMULADOS: recepção da rota HOLD nativa sem negociação.',
+        journal=bundle.journal, decided_at=now, audit_head_hash=rt.book.audit_head()).model_copy(
+            update={'mind': 'demo'})
+    rt.book.save_decision(decision)
+    runner = DailyRunner.from_root(cfg, store, rt.book_root, with_shadow=False)
+    context = runner.context(DAY)
+    plan = runner._discover_plan(DAY, DAY)
+    candidate = runner._prepare_side(runner.main, context, None, plan)
+    before = inventory(out)
+    book_execution(runner.book, candidate.entry, proposal, decision, cfg, dry_run=True)
+    assert inventory(out) == before
+    booked = runner.execute_decision(DAY, proposal, decision)
+    assert booked.positions == []
+    result = runner.run_session(DAY)
+    assert result.record.positions == [] and result.record.pnl_components['costs'] == 0
+    assert result.record.nav_start_usd == result.record.nav_end_usd == cfg.fund.inception_nav_usd
+    assert load_net(runner.track, result.record)['net']['passed']
+    assert recover_net(rt.book_root, DAY).state == 'bound'
+    assert runner.verify_all()[0]
 
 
 def test_natural_booking_payload_matches_independent_floor_and_readers_do_not_write(natural_episode):

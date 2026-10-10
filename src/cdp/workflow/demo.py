@@ -93,6 +93,13 @@ class DemoStore:
             return self._archive.verify_chain()
         return True, [f"mercado sintético em memória ({SIMULATED_DATA_NOTICE})"]
 
+    @property
+    def physical_store(self):
+        """Armazenamento nativo dos prefixos já arquivados; não grava ao ser lido."""
+        if self._archive is None:
+            raise ValueError("A demonstração completa exige mercado físico próprio.")
+        return self._archive
+
 
 class _Clock:
     def __init__(self) -> None:
@@ -126,8 +133,7 @@ def demo_sessions(days: int, first_week: date = DEMO_FIRST_WEEK,
 
 
 def _montagem(s: date, cfg: FundConfig) -> bool:
-    """Dia de montagem da demonstração (regra semanal do mandato; a demonstração roda em datas
-    históricas, então a data de início do mandato não se aplica)."""
+    """Dia de montagem da demonstração segundo a regra semanal do mandato recebido."""
     if regra(cfg) == "LAST_US_SESSION":
         return rebalance_date_of_week(s, cfg) == s
     return is_rebalance_day(s)
@@ -202,26 +208,67 @@ def write_demo_thesis(rt: Runtime, week: date) -> Path:
     return path
 
 
+def _open_demo_book(rt: Runtime) -> None:
+    """Abre só a raiz sintética vazia da demo, com corpos monetários nativos."""
+    from ..backtest.replay import _code_identity
+    from .book import GENESIS_EVENT, GENESIS_FILE, Book, _write_exclusive, dump_json
+    from .net_moc import archive_config, economic_genesis
+
+    rt.book_root.mkdir(parents=True, exist_ok=False)
+    archive_config(rt.book_root, rt.cfg)
+    code = _code_identity()
+    payload = {"inception_date": str(rt.cfg.fund.inception_date),
+               "config_hash": rt.cfg.config_hash(), "economic": economic_genesis(rt.cfg),
+               "codigo": code["commit"], "codigo_sha256": code["source_sha256"],
+               "ancora_sha256": None, "data_notice": SIMULATED_DATA_NOTICE,
+               "origin": "demo_offline"}
+    _write_exclusive(rt.book_root / GENESIS_FILE, dump_json(payload))
+    book = Book(rt.book_root, config=rt.cfg, market_store=rt.store)
+    book.audit.append(GENESIS_EVENT, DEMO_MIND, payload,
+                      summary=f"{SIMULATED_DATA_NOTICE}: gênese monetária da demonstração offline.",
+                      ts=rt.now())
+    valid, issues = book.verify_integrity()
+    if not valid:
+        raise ValueError("Gênese da demonstração inválida: " + "; ".join(issues))
+
+
 def run_demo(out: Path | str, days: int = 5, *, seed: int = DEMO_SEED,
-             first_week: date = DEMO_FIRST_WEEK, cfg: FundConfig | None = None) -> dict:
-    """Executa a demonstração completa em ``out`` (recusa reutilizar livro ou mercado)."""
+             first_week: date | None = None, cfg: FundConfig | None = None) -> dict:
+    """Executa a demo com mandato completo próprio, sem adaptar limites/configuração.
+
+    Sem semana explícita, começa na semana da inception recebida. A configuração
+    sem execução ou uma semana anterior ao início são recusadas antes de gravar.
+    """
+    from ..config import config_json
     from ..data.synthetic import make_synthetic_market
+    from .book import _write_exclusive
+    from .net_moc import NetUnverifiable
 
     out = Path(out)
     if (out / "book").exists() or (out / "market").exists():
         raise FileExistsError(f"Já existe uma demonstração em {out}: use outra pasta (--out).")
     cfg = cfg or load_config()
-    sessions = demo_sessions(days, first_week, cfg)
-    md = make_synthetic_market(seed=seed, start=DEMO_HISTORY_START, as_of=sessions[-1])
+    if cfg.execution is None:
+        raise NetUnverifiable("NET UNVERIFIABLE: demo de nova escrita exige execution explícita")
+    sessions = demo_sessions(days, first_week or cfg.fund.inception_date, cfg)
+    if sessions[0] < cfg.fund.inception_date:
+        raise NetUnverifiable("NET UNVERIFIABLE: semana da demo antecede a gênese do mandato recebido")
+    md = make_synthetic_market(seed=seed, start=DEMO_HISTORY_START, as_of=sessions[-1],
+                               macro_symbols=cfg.risk_model.macro_factors)
     clock = _Clock()
+    archiver = DemoStore(md, root=out / "market", cfg=cfg)
     # ``teses_root=None``: a demonstração nunca adota rascunhos de tese do repositório.
     rt = Runtime(cfg=cfg, book_root=out / "book", market_root=out / "market",
                  reports_root=out / "reports",
-                 store_override=DemoStore(md, root=out / "market", cfg=cfg), clock=clock,
+                 store_override=archiver.physical_store, clock=clock,
                  teses_root=None)
+    clock.set(sessions[0], time(8, 0))
+    _write_exclusive(out / "demo_config.json", config_json(cfg))
+    _open_demo_book(rt)
     log: list[dict] = []
     for s in sessions:
         if _montagem(s, cfg):
+            archiver.load(rt.information_session(s))
             clock.set(s, time(11, 0))
             prep = rt.weekly_prepare(s, mind=DEMO_MIND, live=False)
             clock.set(s, time(12, 0))
@@ -249,6 +296,7 @@ def run_demo(out: Path | str, days: int = 5, *, seed: int = DEMO_SEED,
                 step.update({"tese": None, "tese_apontamentos": [],
                              "tese_rascunho_adotado": False})
             log.append(step)
+        archiver.load(s)
         clock.set(s, time(19, 20))
         close = rt.daily_close(s, live=False, mind=DEMO_MIND)
         entry: dict = {"data": s, "status": close.get("status")}

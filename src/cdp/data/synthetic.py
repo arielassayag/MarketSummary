@@ -9,6 +9,7 @@ tentativa de injeção de instruções (teste de segurança).
 
 from __future__ import annotations
 
+import hashlib
 from datetime import UTC, date, datetime
 
 import numpy as np
@@ -59,13 +60,25 @@ def _universe_frame(rng: np.random.Generator) -> pd.DataFrame:
 
 
 def make_synthetic_market(seed: int = 7, start: date = date(2023, 1, 2),
-                          as_of: date = date(2026, 10, 2), planted_alpha: float = 0.0002) -> MarketData:
+                          as_of: date = date(2026, 10, 2), planted_alpha: float = 0.0002,
+                          *, macro_symbols: tuple[str, ...] = ()) -> MarketData:
     """Cria um ``MarketData`` sintético completo e determinístico.
 
     ``planted_alpha`` adiciona um drift diário proporcional a um escore de "qualidade"
     sintético (retorno de ~5% a.a. por desvio-padrão), útil para testar se sinal, otimizador e
     backtest capturam alpha conhecido.
+
+    ``macro_symbols`` acrescenta índices SIMULADOS de base 100: log-retornos normais
+    (média 0, desvio 0,01), RNG por símbolo a partir dos primeiros 16 bytes do SHA-256
+    de ``cdp.synthetic.macro/v1|seed|symbol``. Não consome o RNG dos dados originais;
+    a opção vazia mantém o mercado anterior integralmente. A ordem é canônica.
     """
+    if (isinstance(macro_symbols, str)
+            or any(not isinstance(s, str) or not s or s != s.strip() for s in macro_symbols)
+            or len(set(macro_symbols)) != len(macro_symbols)
+            or set(macro_symbols) & {"ILF", "EWZ", "EWW"}):
+        raise ValueError("Símbolos macro simulados precisam ser únicos, válidos e próprios.")
+    symbols = tuple(sorted(macro_symbols))
     rng = np.random.default_rng(seed)
     uframe = _universe_frame(rng)
     uni = universe_from_frame(uframe, source_sha256=sha256_obj(uframe.to_dict("records")))
@@ -198,6 +211,11 @@ def make_synthetic_market(seed: int = 7, start: date = date(2023, 1, 2),
     ewz = 28.0 * np.cumprod(1 + usd_ret[:, [ids.index(i) for i in br_ids]].mean(axis=1))
     eww = 55.0 * np.cumprod(1 + usd_ret[:, [ids.index(i) for i in mx_ids]].mean(axis=1))
     benchmarks = pd.DataFrame({"ILF": ilf, "EWZ": ewz, "EWW": eww}, index=dates)
+    for symbol in symbols:
+        token = f"cdp.synthetic.macro/v1|{seed}|{symbol}".encode()
+        macro_seed = int.from_bytes(hashlib.sha256(token).digest()[:16], "big")
+        macro_rng = np.random.default_rng(macro_seed)
+        benchmarks[symbol] = 100.0 * np.exp(np.cumsum(macro_rng.normal(0.0, 0.01, T)))
     rates = pd.DataFrame({"USD_3M": 0.04, "SELIC": 0.1375}, index=dates)
 
     news = (
@@ -223,6 +241,10 @@ def make_synthetic_market(seed: int = 7, start: date = date(2023, 1, 2),
         limitations=["Mercado inteiramente simulado; serve apenas para testes e demonstração."],
         is_synthetic=True, data_notice=SYNTHETIC_NOTICE,
     )
+    if symbols:
+        manifest = manifest.model_copy(update={"limitations": [*manifest.limitations,
+            "DADOS SIMULADOS: índices macro independentes (cdp.synthetic.macro/v1): "
+            + ", ".join(symbols) + "; não são cotações públicas nem dados preenchidos."]})
     return MarketData(manifest=manifest, universe=uni, close=close_df, adj_close=adj_df, volume=vol_df,
                       fx=fx, fundamentals=fundamentals_df, short_interest=si_df, lending=lend_df,
                       benchmarks=benchmarks, rates=rates, news=news)

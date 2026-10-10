@@ -11,6 +11,7 @@ from zoneinfo import ZoneInfo
 
 import pandas as pd
 import pytest
+from demo_historica import run_historical_demo as run_demo
 from test_calendar import LEGADO, ativado
 
 import cdp.workflow.demo as demo_mod
@@ -25,7 +26,7 @@ from cdp.portfolio.execucao import (
 from cdp.research.comentario_semanal import build_weekly_factbook, modelo_valido
 from cdp.workflow.agenda import agenda, weekly_report_status
 from cdp.workflow.book import Book, _booking_mismatches_fechamento
-from cdp.workflow.demo import DEMO_HISTORY_START, DEMO_MIND, DemoStore, run_demo, write_demo_inputs
+from cdp.workflow.demo import DEMO_HISTORY_START, DEMO_MIND, DemoStore, write_demo_inputs
 from cdp.workflow.relatorio_semanal import (
     REPORT_EVENT,
     _causa_capacidade,

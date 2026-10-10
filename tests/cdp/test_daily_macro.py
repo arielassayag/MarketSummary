@@ -11,6 +11,7 @@ from types import SimpleNamespace
 import numpy as np
 import pandas as pd
 import pytest
+from historico_simulado import historical_session
 from test_daily_track_record import FakeStore, make_proposal, week1
 
 from cdp.analytics.panel import build_asset_panel
@@ -88,7 +89,7 @@ def inception(root, market, cfg, *, with_shadow=False):
         co_signer="Bruno",
         now=datetime(2023, 12, 4, 18, tzinfo=UTC),
     )
-    result = runner.run_session(
+    result = historical_session(runner,
         FIRST, PendingExecution(prop, decision, shadow=prop if with_shadow else None)
     )
     return runner, prop, result
@@ -338,7 +339,9 @@ def test_moc_partial_execution_uses_effective_quantities_not_ideal_targets(tmp_p
         co_signer="Bruno",
         now=datetime(2023, 12, 8, 14, tzinfo=UTC),
     )
-    result = runner.run_session(fri, PendingExecution(proposal, decision))
+    from historico_moc_simulado import historical_moc_session
+
+    result = historical_moc_session(runner, fri, PendingExecution(proposal, decision))
     assert result.booked.positions
     quantities = {p.ticker: p.shares for p in result.booked.positions}
     assert any(0 < abs(quantities.get(p.execution_ticker, 0)) < abs(p.shares) for p in targets)

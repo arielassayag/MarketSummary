@@ -478,10 +478,16 @@ def cmd_kill_switch(args: argparse.Namespace) -> int:
 
 
 def cmd_demo(args: argparse.Namespace) -> int:
+    from .config import load_config
     from .workflow.demo import run_demo
+    from .workflow.net_moc import NetUnverifiable
 
     print(f"{SIMULATED_DATA_NOTICE}: demonstração offline com mercado sintético.")
-    out = run_demo(Path(args.out), days=args.days)
+    try:
+        out = run_demo(Path(args.out), days=args.days, cfg=load_config(args.config))
+    except NetUnverifiable as exc:
+        print(f"cdp demo: {exc}", file=sys.stderr)
+        return 2
     _print(out)
     return 0
 

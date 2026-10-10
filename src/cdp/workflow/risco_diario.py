@@ -369,9 +369,15 @@ def recover(track, record) -> None:
             f"Risco base/evento da carteira efetiva em {record.date}",
             week=record.date,
         )
+    from .net_moc_prova import bind
+
+    bind(track, record)
 
 
 def append(track, record, diagnostic: dict) -> None:
+    from .net_moc_prova import validate_record
+
+    validate_record(track, record)
     p = path(track, record.date)
     raw = text(diagnostic)
     if sha256_text(raw) != record.input_hashes[MARKER]:

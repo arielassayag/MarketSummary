@@ -1,6 +1,6 @@
 # Em andamento — passagem entre sessões
 
-Estado observado em **10/10/2026, 16:10 Brasília**. Quem retoma lê primeiro
+Estado observado em **10/10/2026, 16:59 Brasília**. Quem retoma lê primeiro
 AGENTS.md e o roteiro RETOMAR, consulta estado e agenda determinísticos e continua
 pela fila abaixo. Decisões de mandato permanecem em DECISOES.md.
 
@@ -37,8 +37,8 @@ rotina foi duplicada ou reagendada nesta etapa.
 |---|---|---|
 | Enel Chile | Notas 6/10/4/7/20/23 recebidas. Ponte reportada da Nota 6(f): sete correspondências e cinco fechamentos em código, conferidos pela ROOT; 41 origens e cópias integrais | Residual EFI de 628 ThUS$ com causa desconhecida. Aplicações adicionais, contexto de caixa, mensuração e hedge econômico pendentes; ponte reportada não calcula dívida líquida. E2/E3 não executados; G19 aberto |
 | Galicia/BCRA | Demonstrações locais e 20-F recebidos em estudos separados. A7211 documentada no exercício corrente de 1T21; relatório local de 1T21 é revisão limitada | A7222 e auditor anual local de 2020 não localizados/lidos nesse recorte. Bases BCRA e IFRS IASB distintas; NI/PL/owners não adotados |
-| Bancos: fontes nativas | Custódia integral, quatro registros prospectivos privados e revisão independente recebidos. Parser nativo aceitou configuração privada de uma linha; RI permanece ausente | V1f2 chegou às seis APIs públicas nativas, uma chamada cada, e encerrou na primeira recusa documental de Galicia. A correção estrita de data civil foi revista: 108 casos aprovados, Ruff limpo, sem mudar dados/hash; commit ad8ef9d local. Plano mínimo recebido com 47 insumos: cinco grãos Yahoo dependem também do corpo de moeda; dois de mercado têm donos físicos distintos. Produtor e propagação prospectivos ainda não implementados. F2 não repetida; owners/NI/normalização sem aceite financeiro |
-| Fonte simulada do ensaio MOC | Reabertura V1b estrutural positiva recebida e revista; 13 corpos originais, 13 derivados e macro. Receita corrigida preserva sete moedas FX | Não prova ordens, booking ou transição diária. V1g reabriu e derivou a fonte 15, observou 30 fábricas de tipagem e 7.320 chamadas, e encerrou negativa em clone_module do SciPy antes de modelos/D0/D1. Pós-run: 38.007 caminhos físicos conferidos. Versões negativas encerradas; plano V1h estático em preparação. Mudança posterior de 14 metadados da instalação foi registrada separadamente, sem reentrada |
+| Bancos: fontes nativas | Custódia integral, quatro registros prospectivos privados e revisão independente recebidos. Parser nativo aceitou configuração privada de uma linha; RI permanece ausente | V1f2 chegou às seis APIs públicas nativas, uma chamada cada, e encerrou na primeira recusa documental de Galicia. A correção estrita de data civil foi revista: 108 casos aprovados, Ruff limpo, sem mudar dados/hash; commit ad8ef9d local. Plano mínimo recebido com 47 insumos: cinco grãos Yahoo dependem também do corpo de moeda; dois de mercado têm donos físicos distintos. Produtor e propagação prospectivos implementados em ramo separado, com revisão dos metadados em curso e sem integração. V1 focal: três aprovados e uma falha de caminho da fixture, preservada. V2 corrige custódia FD, vínculo de views, grão de valor/moeda e calendário civil; teste ainda pendente neste corte. F2 não repetida; owners/NI/normalização sem aceite financeiro |
+| Fonte simulada do ensaio MOC | Reabertura V1b estrutural positiva recebida e revista; 13 corpos originais, 13 derivados e macro. Receita corrigida preserva sete moedas FX | Não prova ordens, booking ou transição diária. V1g reabriu e derivou a fonte 15, observou 30 fábricas de tipagem e 7.320 chamadas, e encerrou negativa em clone_module do SciPy antes de modelos/D0/D1. Pós-run: 38.007 caminhos físicos conferidos. Versões negativas encerradas; V1h3 recebida integralmente como composição estática: 19.054 caminhos e revisão independente de 38 corpos. ModuleSpec pendente de tipo/identidade retidos e rechecagem do nome no getter; nova entrega mínima necessária antes de autoridade financeira. Mudança posterior de 14 metadados da instalação foi registrada separadamente, sem reentrada |
 | JBS | Sete corpos primários e 31 linhas de lexemas/contextos recebidos; produtores executados originais preservados antes da formatação. EPS trimestral básico/diluído e conflitos de unidade/eixo documentados | Média interina não localizada no recorte amplo recebido; limite de extração/OCR explícito. Emitidas, tesouraria, outstanding A/B e Conversion Shares precisam de reconciliação por data. Nenhuma quantidade escolhida; G13 aberto |
 | Rumo | Aditivo recebido e Portaria 648 lida integralmente na interface oficial: GT preparatório e não deliberativo | Instauração, cumprimento, compensação e dívida zero não comprovados. Versão certificada e corpo HTTP bruto do ato não recebidos; pesquisa posterior não comprova inexistência de outro ato |
 
@@ -75,9 +75,29 @@ humanos permaneceram literais. A correção somente de teste conserva volume,
 seed e mandato, verifica caducidade/caixa e preserva o oráculo de capacidade
 independente: 27 casos do arquivo inteiro aprovados, sem somar os dois focais.
 A correção 65aefb82 foi recebida pela ROOT e revista independentemente, depois
-integrada como 351641f. Nova ampla conjunta24 pendente neste corte.
+integrada como 351641f. A ampla24 passou no Ruff e encerrou interrompida após outro teste legado: 2.039 IDs executados, 2.021 aprovados, 17 pulados e uma falha, zero erros. A expectativa antiga omitia o contrato NET reservado em uma proposta nova. A correção exclusivamente do teste exige o descritor inteiro e SHA da configuração via hashlib, preserva risco legado e passou no arquivo inteiro: 20 aprovados; focal separado aprovado, sem somar casos. Revisão independente recebida; correção integrada no ramo como e143c67, ainda sem push. A suíte inteira permanece necessária.
 Demonstração e fixtures já foram adaptados; casos históricos de leitura dizem
 DADOS SIMULADOS e não autorizam nova efetivação. Nenhum push novo ocorreu.
+
+## Classes bancárias e revisão jurídica
+
+A [passagem de classes e ADS](estudos/2026-10-10-bancos-classes-ads/README.md)
+registra 34 arquivos recebidos e seis PDFs primários, com extração de 1.356 páginas
+e limites de leitura explícitos. Galicia declara dez ações Classe B por ADS e
+Supervielle cinco; a vigência operacional dos contratos não foi adotada. As 20 ações
+de divergência Supervielle e a quantidade Galicia/2024 permanecem conflitos
+documentais. Raw de marketCap não recebido; nenhum denominador ou razão foi escolhido.
+
+A [revisão documental CVM](estudos/2026-10-10-cvm20-175/README.md) recebeu três
+PDFs oficiais, incluindo o consolidado integral 175 com alteração 240/26. Descrição
+proposta: pesquisa quantitativa e carteira simulada. Nomenclatura, enquadramento
+e aviso final continuam dependentes do titular; não houve mudança do portal ou
+comunicação externa. Documentar o estudo não aprova os ratings ou a atividade.
+
+A fila local inclui P1 de risco e P2 de motor instalável, fachada tipada, MCP de
+leitura e técnicas compartilháveis. O plano do pacote recebeu 247 corpos integrais e propõe recursos explícitos,
+três kernels nativos iniciais e CLI de técnicas; implementação ainda pendente. Nenhum
+recurso operacional ou identidade do executor será empacotado como autoridade.
 
 ## Operação de 09/10 e fila P0
 
@@ -92,10 +112,10 @@ mercado, relatórios ou artifacts oficiais e não opera o kill switch.
 
 Continuar nesta ordem:
 
-1. Receber a correção somente de teste do NET, integrar os adendos documentais e
-   executar a ampla conjunta24 com fontes finais congeladas. Publicar código só
+1. Receber a revisão da correção do teste legado e a entrega final do produtor
+   bancário; executar nova ampla com fontes finais congeladas e adendos documentais. Publicar código só
    com suíte e Ruff verdes; conferir CI e Pages sem publicar a operação de 09/10.
-2. Concluir o plano estático V1h e o produtor nativo dos sete participantes bancários.
+2. Fechar ModuleSpec no ensaio privado e receber o produtor nativo dos sete participantes bancários.
    Mudanças e ensaios ficam em ramos/copias próprios, sob contrato prospectivo
    finito; negativas anteriores não se repetem. Disponibilidade técnica não aprova modelo.
 3. Resolver as dependências primárias de bancos/IAS29, EPS/ARS, JBS/G13, Enel/G19 e

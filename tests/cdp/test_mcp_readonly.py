@@ -419,3 +419,43 @@ def test_entrada_sem_sdk_nao_instala(monkeypatch, capsys):
     assert main() == 2
     out = capsys.readouterr()
     assert not out.out and "extra mcp" in out.err
+
+
+@pytest.mark.anyio
+@pytest.mark.parametrize("ordem_acoes", [7, -7])
+async def test_overflow_finito_preenchimento_envelope_e_recuperacao(
+    client, monkeypatch, capsys, caplog, ordem_acoes,
+):
+    """DADOS SIMULADOS: razão extrema finita recusa sem encerrar o Client."""
+    calls = []
+    original = server.estimar_preenchimento
+
+    def spy(**arguments):
+        calls.append(dict(arguments))
+        return original(**arguments)
+
+    monkeypatch.setattr(server, "estimar_preenchimento", spy)
+    extreme = {"ordem_acoes": ordem_acoes, "capacidade_usd": 1e308, "preco_usd": 1e-308}
+    refused = await client.call_tool("estimar_preenchimento", extreme)
+    assert calls == [extreme]
+    assert refused.is_error
+    data = refused.structured_content
+    assert data["resultado"] == {
+        "tipo": "erro", "codigo": "KERNEL_RECUSOU",
+        "mensagem": "Pré-condição do kernel recusada",
+    }
+    text = refused.content[0].text
+    assert json.loads(text, parse_constant=lambda value: pytest.fail(value)) == data
+    tools = await client.list_tools()
+    schema = next(t.output_schema for t in tools.tools if t.name == "estimar_preenchimento")
+    Draft202012Validator(schema).validate(data)
+    for detail in ("Traceback", "OverflowError", str(Path(__file__)), "1e+308", "1e-308"):
+        assert detail not in text
+
+    accepted = await client.call_tool("estimar_preenchimento", FILL)
+    assert not accepted.is_error
+    assert accepted.structured_content["resultado"]["acoes"] == estimar_preenchimento(**FILL)
+    assert calls == [extreme, FILL]
+    captured = capsys.readouterr()
+    assert "Traceback" not in captured.out + captured.err
+    assert all(record.exc_info is None for record in caplog.records)

@@ -130,7 +130,7 @@ async def _chamar(ctx: ServerRequestContext, params: CallToolRequestParams):
     else:
         try:
             result = fn(args)
-        except ValueError:
+        except (ValueError, OverflowError):
             result = Erro(codigo="KERNEL_RECUSOU", mensagem="Pré-condição do kernel recusada")
     return _resposta(saida(versao_motor=__version__, resultado=result))
 

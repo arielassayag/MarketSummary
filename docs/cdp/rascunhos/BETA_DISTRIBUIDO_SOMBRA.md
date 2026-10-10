@@ -22,6 +22,11 @@ O algoritmo é OLS conjunta por SVD, `rcond=1e-12` técnico fixo e pelo menos qu
 centros. Normaliza positivamente os operandos para evitar produtos brutos
 extremos. Posto inferior a3 e resultados não representáveis ficam insuficientes;
 não há ridge, reparo de matriz, preenchimento de ausências ou clamp de beta.
+Perda de observação não zero na normalização, escala ou produto de coeficiente
+que arredonde para zero tornam a saída insuficiente. A recusa é conservadora:
+não prova que outra ordem de operações seria incapaz de representar o resultado.
+Resposta observada inteiramente zero só retorna beta zero depois de confirmar
+posto3; não forma uma escala artificial que transforme zero em `0*inf`.
 
 A saída preserva a entrada imutável, centros, exclusões, posto e valores
 singulares, com `autoridade_operacional=false`, referências não verificadas e

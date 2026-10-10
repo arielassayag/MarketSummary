@@ -197,3 +197,48 @@ def test_funcao_sem_io_python(monkeypatch):
 
     monkeypatch.setattr("builtins.open", proibido)
     assert estimar_beta_distribuido_sombra(entrada()).estado == "CONDICIONAL_SEM_CALIBRACAO"
+
+
+def escalas_relativas(x, escala_x, escala_y):
+    return replace(x, observacoes=tuple(
+        replace(o, retorno_excedente_mercado=o.retorno_excedente_mercado * escala_x,
+                retorno_excedente_carteira=o.retorno_excedente_carteira * escala_y)
+        for o in x.observacoes
+    ))
+
+
+def test_underflow_escala_nao_fabrica_beta_zero():
+    y = estimar_beta_distribuido_sombra(escalas_relativas(entrada(), 1e200, 1e-200))
+    assert y.estado == "INSUFICIENTE_NUMERICO"
+    assert y.coeficientes_lag_atual_lead is None and y.beta_agregado is None
+
+
+def test_underflow_produto_individual_nao_fabrica_coeficiente_zero():
+    x = escalas_relativas(entrada(coef=(1.0, 1e-20, 0.5)), 1e110, 1e-200)
+    y = estimar_beta_distribuido_sombra(x)
+    assert y.estado == "INSUFICIENTE_NUMERICO" and y.beta_agregado is None
+    assert y.motivos == ("Produto perdeu coeficiente não zero",)
+
+
+@pytest.mark.parametrize("campo", ["retorno_excedente_mercado", "retorno_excedente_carteira"])
+def test_underflow_normalizacao_nao_apaga_observacao(campo):
+    x = alterar_obs(entrada(escala=1e300), 3, **{campo: 1e-300})
+    y = estimar_beta_distribuido_sombra(x)
+    assert y.estado == "INSUFICIENTE_NUMERICO" and y.beta_agregado is None
+    assert y.motivos == ("Normalização perdeu observação não zero",)
+
+
+def test_zero_observado_mercado_subnormal_sem_zero_vezes_infinito():
+    x = escalas_relativas(entrada(coef=(0.0, 0.0, 0.0)), 1e-320, 1.0)
+    y = estimar_beta_distribuido_sombra(x)
+    assert y.posto == 3 and y.estado == "CONDICIONAL_SEM_CALIBRACAO"
+    assert y.coeficientes_lag_atual_lead == (0.0, 0.0, 0.0)
+    assert y.beta_agregado == y.beta_contemporaneo_mesma_mascara == 0.0
+
+
+def test_zero_observado_nao_supera_posto_deficiente():
+    x = entrada(coef=(0.0, 0.0, 0.0))
+    x = replace(x, observacoes=tuple(replace(o, retorno_excedente_mercado=1e-320)
+                                    for o in x.observacoes))
+    y = estimar_beta_distribuido_sombra(x)
+    assert y.estado == "INSUFICIENTE_POSTO" and y.beta_agregado is None

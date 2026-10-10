@@ -197,11 +197,15 @@ def estimar_beta_distribuido_sombra(x: EntradaBetaDistribuido) -> DiagnosticoBet
     escala_y = float(np.max(np.abs(y)))
     if escala_x == 0.0:
         return saida("INSUFICIENTE_POSTO", "Mercado observado inteiramente zero", 0)
+    x_nao_zero, y_nao_zero = a != 0.0, y != 0.0
+    y_inteiramente_zero = escala_y == 0.0
     a /= escala_x
     # y=0 continua observado zero; unidade é apenas normalização técnica.
     if escala_y == 0.0:
         escala_y = 1.0
     y /= escala_y
+    if np.any(x_nao_zero & (a == 0.0)) or np.any(y_nao_zero & (y == 0.0)):
+        return saida("INSUFICIENTE_NUMERICO", "Normalização perdeu observação não zero")
     try:
         coef, _, posto, singular = np.linalg.lstsq(a, y, rcond=1e-12)
     except np.linalg.LinAlgError:
@@ -211,12 +215,25 @@ def estimar_beta_distribuido_sombra(x: EntradaBetaDistribuido) -> DiagnosticoBet
         return saida("INSUFICIENTE_NUMERICO", "Valores singulares não finitos")
     if posto != 3:
         return saida("INSUFICIENTE_POSTO", "Três colunas não identificáveis no rcond fixo", int(posto), sv)
+    if y_inteiramente_zero:
+        return saida(
+            "CONDICIONAL_SEM_CALIBRACAO",
+            "Resposta observada zero com posto3; autenticidade/PIT não demonstrados",
+            3, sv, (0.0, 0.0, 0.0), 0.0, 0.0,
+        )
     # Multiplicar depois de dividir pode transbordar: saída insuficiente, nunca clamp.
     try:
         escala_beta = escala_y / escala_x
+        if escala_beta == 0.0 or not math.isfinite(escala_beta):
+            return saida("INSUFICIENTE_NUMERICO", "Escala de coeficientes não representável", 3, sv)
         cs = tuple(float(v) * escala_beta for v in coef)
         agregado = math.fsum(cs)
-        contemporaneo = float(np.dot(a[:, 1], y) / np.dot(a[:, 1], a[:, 1])) * escala_beta
+        atual_normalizado = float(np.dot(a[:, 1], y) / np.dot(a[:, 1], a[:, 1]))
+        contemporaneo = atual_normalizado * escala_beta
+        if any(float(v) != 0.0 and c == 0.0 for v, c in zip(coef, cs, strict=True)) or (
+            atual_normalizado != 0.0 and contemporaneo == 0.0
+        ):
+            return saida("INSUFICIENTE_NUMERICO", "Produto perdeu coeficiente não zero", 3, sv)
     except (OverflowError, ZeroDivisionError):
         return saida("INSUFICIENTE_NUMERICO", "Escala de coeficientes não representável", 3, sv)
     if not all(math.isfinite(v) for v in (*cs, agregado, contemporaneo)):

@@ -17,6 +17,8 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from cdp.leitura_arquivos import ler_bytes, ler_texto, recusar_escrita
+
 from ..audit import AuditLog
 from ..contracts import FactBook, mente_divergente
 from ..hashing import sha256_file, sha256_obj
@@ -103,7 +105,7 @@ def _checked(rt, entry: RetificacaoSemanal, *, expected_mind: str | None = None)
     for name, path in (("relatorio.md", original.md), ("relatorio.html", original.html)):
         if Path(path).parts[-3:] != ("semanal", entry.data.isoformat(), name):
             raise ValueError("Caminho do recibo não corresponde ao relatório semanal")
-    fb = FactBook.model_validate_json((folder / "factbook.json").read_bytes())
+    fb = FactBook.model_validate_json(ler_bytes(folder / 'factbook.json'))
     if fb.as_of != entry.data or fb.factbook_hash() != original.factbook:
         raise ValueError("FactBook original não confere com o recibo")
     log = _audit(rt)
@@ -113,12 +115,12 @@ def _checked(rt, entry: RetificacaoSemanal, *, expected_mind: str | None = None)
     if (len(target) != 1 or target[0].actor != "CDP"
             or target[0].payload_hash != sha256_obj(original.model_dump(mode="json"))):
         raise ValueError("Recibo original não confere com WEEKLY_CLOSE_REPORT")
-    comment = ComentarioSemanal.model_validate_json((folder / "comentario.json").read_bytes())
+    comment = ComentarioSemanal.model_validate_json(ler_bytes(folder / 'comentario.json'))
     changes = {item.emissor: item for item in comment.mudancas_carteira}
     if len(changes) != len(comment.mudancas_carteira):
         raise ValueError("Emissor repetido no comentário original")
-    md = (folder / "relatorio.md").read_text(encoding="utf-8")
-    markup = (folder / "relatorio.html").read_text(encoding="utf-8")
+    md = ler_texto(folder / 'relatorio.md', encoding='utf-8')
+    markup = ler_texto(folder / 'relatorio.html', encoding='utf-8')
     seen = set()
     corrected = []
     for item in entry.correcoes:
@@ -181,6 +183,7 @@ def _texts(entry, corrected, synthetic):
 
 def publicar(rt, entry: RetificacaoSemanal, *, expected_mind: str):
     """Anexa novo artefato e novo evento; CLI exige execução/trava do executor."""
+    recusar_escrita()
     fb, corrected, log = _checked(rt, entry, expected_mind=expected_mind)
     _confirmar_alvos_novos(rt, entry)
     rid = sha256_obj(entry.model_dump(mode="json"))
@@ -243,7 +246,7 @@ def _historico(rt) -> tuple[list[str], set[tuple[date, str, str]]]:
                 raise ValueError("Artefato parcial ou com arquivo extra")
             for path in folder.iterdir():
                 _regular(path)
-            artifact = json.loads((folder / "retificacao.json").read_bytes())
+            artifact = json.loads(ler_bytes(folder / 'retificacao.json'))
             if set(artifact) != {"schema_version", "entrada", "correcoes_calculadas", "is_synthetic", "audit_head_anterior"}:
                 raise ValueError("Campos extras/ausentes no artefato")
             if artifact["schema_version"] != "cdp.weekly.editorial.artifact/v1":
@@ -258,7 +261,7 @@ def _historico(rt) -> tuple[list[str], set[tuple[date, str, str]]]:
             if artifact["correcoes_calculadas"] != corrected or artifact["is_synthetic"] is not fb.is_synthetic:
                 raise ValueError("Retificação alterou valores ou lado do fato publicado")
             md, markup = _texts(entry, corrected, fb.is_synthetic)
-            if (folder / "retificacao.md").read_text() != md or (folder / "retificacao.html").read_text() != markup:
+            if ler_texto(folder / 'retificacao.md') != md or ler_texto(folder / 'retificacao.html') != markup:
                 raise ValueError("Texto derivado foi alterado")
             payload = _payload(entry.data, folder.name, folder)
             event = remaining.pop((entry.data, sha256_obj(payload)), None)
@@ -299,10 +302,10 @@ def status(rt) -> dict:
             continue  # Legado/modelo sem insumo editorial: não afirmar ausência de contradição.
         try:
             day = date.fromisoformat(folder.name)
-            fb = FactBook.model_validate_json((folder / "factbook.json").read_bytes())
-            comment = ComentarioSemanal.model_validate_json((folder / "comentario.json").read_bytes())
-            md = (folder / "relatorio.md").read_text(encoding="utf-8")
-            markup = (folder / "relatorio.html").read_text(encoding="utf-8")
+            fb = FactBook.model_validate_json(ler_bytes(folder / 'factbook.json'))
+            comment = ComentarioSemanal.model_validate_json(ler_bytes(folder / 'comentario.json'))
+            md = ler_texto(folder / 'relatorio.md', encoding='utf-8')
+            markup = ler_texto(folder / 'relatorio.html', encoding='utf-8')
             wrong = []
             for item in comment.mudancas_carteira:
                 prior = render_placeholders(item.racional, fb)
@@ -316,7 +319,7 @@ def status(rt) -> dict:
             completed = set()
             for correction in listar(rt, day):
                 path = folder / "retificacoes" / correction["id"] / "retificacao.json"
-                artifact = json.loads(path.read_bytes())
+                artifact = json.loads(ler_bytes(path))
                 completed.update(item["emissor"] for item in artifact["correcoes_calculadas"])
             pending = sorted(set(wrong) - completed)
             if wrong or completed:
@@ -340,7 +343,7 @@ def cmd(args: argparse.Namespace) -> int:
         print(json.dumps(RetificacaoSemanal.model_json_schema(), ensure_ascii=False, indent=2))
         return 0
     try:
-        entry = RetificacaoSemanal.model_validate_json(Path(args.arquivo).read_bytes())
+        entry = RetificacaoSemanal.model_validate_json(ler_bytes(Path(args.arquivo)))
         if entry.data != args.date:
             raise ValueError("Data do arquivo diverge do comando")
         issues = validar(rt, entry, expected_mind=rt.mente_esperada())

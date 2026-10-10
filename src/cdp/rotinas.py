@@ -37,6 +37,8 @@ from zoneinfo import ZoneInfo
 
 import yaml
 
+from cdp.leitura_arquivos import ler_texto, recusar_escrita
+
 ROTINAS_PADRAO = Path("configs/cdp/rotinas.yaml")
 FUSO = "America/Sao_Paulo"
 #: Brasília sem horário de verão desde 2019: UTC = Brasília + 3 h (``verificar`` confere).
@@ -388,7 +390,7 @@ def carregar(caminho: Path | str | None = None) -> Rotinas:
     """Lê e expande ``rotinas.yaml`` (``herda`` e ``reservas`` viram tarefas completas)."""
     path = Path(caminho) if caminho is not None else ROTINAS_PADRAO
     try:
-        raw = yaml.safe_load(path.read_text(encoding="utf-8"))
+        raw = yaml.safe_load(ler_texto(path, encoding='utf-8'))
     except OSError as exc:
         raise ErroRotinas(f"não consegui ler {path}: {exc}") from exc
     except yaml.YAMLError as exc:
@@ -1533,6 +1535,7 @@ def gerar_skills(rot: Rotinas) -> dict[str, str]:
 def sincronizar_skills(rot: Rotinas, raiz: Path, *, verificar_apenas: bool = False,
                        claude: bool = False, permissoes: bool = False) -> dict[str, Any]:
     """Grava (ou só confere) as skills geradas; ``claude`` espelha em ``.claude/skills``."""
+    recusar_escrita()
     gerado = gerar_skills(rot)
     if claude:
         gerado.update({p.replace(SKILLS_DIR.as_posix(), SKILLS_CLAUDE_DIR.as_posix(), 1): txt
@@ -1547,7 +1550,7 @@ def sincronizar_skills(rot: Rotinas, raiz: Path, *, verificar_apenas: bool = Fal
     diferentes, gravados = [], []
     for rel, txt in gerado.items():
         path = raiz / rel
-        atual = path.read_text(encoding="utf-8") if path.is_file() else None
+        atual = ler_texto(path, encoding='utf-8') if path.is_file() else None
         if atual == txt:
             continue
         diferentes.append(rel)
@@ -1830,6 +1833,7 @@ def cmd_conferir(args: argparse.Namespace) -> int:
 
 
 def cmd_exportar(args: argparse.Namespace) -> int:
+    recusar_escrita()
     rot = _carregar(args)
     alvo = args.alvo
     modelos = _modelos(args.modelo)

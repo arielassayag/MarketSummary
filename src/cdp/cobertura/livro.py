@@ -58,6 +58,8 @@ import numpy as np
 import pandas as pd
 import yaml
 
+from cdp.leitura_arquivos import ler_bytes, ler_csv, ler_texto, recusar_escrita
+
 from .. import SIMULATED_DATA_NOTICE
 from ..audit import AuditLog
 from ..hashing import sha256_file, sha256_obj
@@ -96,6 +98,7 @@ def _linha_evento(ev: dict[str, Any]) -> str:
 
 
 def _escrever(path: Path, data: bytes) -> str:
+    recusar_escrita()
     path.parent.mkdir(parents=True, exist_ok=True)
     with open(path, "xb") as f:  # criação exclusiva
         f.write(data)
@@ -115,7 +118,7 @@ def ler_pacotes(pasta: Path, manifest: dict[str, Any] | None = None, nome: str =
     """Pacotes de insumos normalizados arquivados no snapshot (``insumos/<nome>.json.gz``);
     com ``manifest``, o arquivo é conferido contra o hash registrado."""
     rel = f"insumos/{nome}.json.gz"
-    b = (Path(pasta) / rel).read_bytes()
+    b = ler_bytes(Path(pasta) / rel)
     if manifest is not None and _sha(b) != (manifest.get("arquivos") or {}).get(rel):
         raise LivroErro(f"{rel} não confere com o manifesto")
     return json.loads(gzip.decompress(b).decode("utf-8"))
@@ -137,10 +140,10 @@ def ler_tabela(pasta: Path, nome: str) -> pd.DataFrame:
     pasta = Path(pasta)
     unica = pasta / "insumos" / f"{nome}.csv.gz"
     if unica.exists():
-        return pd.read_csv(io.BytesIO(gzip.decompress(unica.read_bytes())))
-    man = json.loads((pasta / "manifest.json").read_text(encoding="utf-8"))
+        return ler_csv(io.BytesIO(gzip.decompress(ler_bytes(unica))))
+    man = json.loads(ler_texto(pasta / 'manifest.json', encoding='utf-8'))
     prefixo = f"../publico/{nome}/"
-    partes = [pd.read_csv(io.BytesIO(gzip.decompress((pasta / rel).read_bytes())))
+    partes = [ler_csv(io.BytesIO(gzip.decompress(ler_bytes(pasta / rel))))
               for rel in sorted(man.get("arquivos", {})) if rel.startswith(prefixo)]
     return pd.concat(partes, ignore_index=True) if partes else pd.DataFrame()
 
@@ -148,6 +151,7 @@ def ler_tabela(pasta: Path, nome: str) -> pd.DataFrame:
 def _gravar_parte(raiz: Path, nome: str, chave: str, data: bytes) -> tuple[str, str]:
     """Grava (se ainda não existe) uma parte endereçada pelo conteúdo; devolve ``(rel, sha)``
     com ``rel`` relativo à pasta do snapshot."""
+    recusar_escrita()
     sha = _sha(data)
     destino = raiz / "publico" / nome / chave / f"{sha}.csv.gz"
     if destino.exists():
@@ -189,7 +193,7 @@ def eventos(book: Path) -> list[dict[str, Any]]:
     p = raiz_cobertura(book) / "livro.jsonl"
     if not p.exists():
         return []
-    return [json.loads(x) for x in p.read_text(encoding="utf-8").splitlines() if x.strip()]
+    return [json.loads(x) for x in ler_texto(p, encoding='utf-8').splitlines() if x.strip()]
 
 
 def verificar_livro(book: Path) -> tuple[bool, list[str]]:
@@ -206,7 +210,7 @@ def verificar_livro(book: Path) -> tuple[bool, list[str]]:
 
 
 def _selo(book: Path, d: date) -> dict[str, Any]:
-    return json.loads((raiz_cobertura(book) / d.isoformat() / "selo.json").read_text(encoding="utf-8"))
+    return json.loads(ler_texto(raiz_cobertura(book) / d.isoformat() / 'selo.json', encoding='utf-8'))
 
 
 def selado(book: Path) -> tuple[bool, str]:
@@ -289,6 +293,7 @@ def reparar_pendencias(book: Path, audit: bool = True, agora: datetime | None = 
     """Completa uma gravação interrompida do snapshot mais recente (só nas condições exatas de
     interrupção, a partir dos arquivos selados): eventos do ``eventos.jsonl`` que não chegaram ao
     livro e o evento ``COVERAGE_SNAPSHOT`` que não chegou à trilha do fundo."""
+    recusar_escrita()
     from .ri_fluxo import conferir_livro_antes_de_escrita
     conferir_livro_antes_de_escrita(book, params, autoridade=ri_autoridade,
                                   cortes=ri_cortes, agora=agora)
@@ -307,7 +312,7 @@ def reparar_pendencias(book: Path, audit: bool = True, agora: datetime | None = 
     ant = snap.manifest.get("livro_anterior") or {}
     rel = "eventos.jsonl"
     if len(evs) < int(selo["n_eventos"]) and rel in snap.manifest.get("arquivos", {}):
-        b = (pasta / rel).read_bytes()
+        b = ler_bytes(pasta / rel)
         pend = [json.loads(x) for x in b.decode("utf-8").splitlines() if x.strip()]
         head = evs[-1]["event_hash"] if evs else GENESIS
         if (_sha(b) == snap.manifest["arquivos"][rel] and len(evs) == int(ant.get("n_eventos", -1))
@@ -335,6 +340,7 @@ def gravar_snapshot(book: Path, ex: Execucao, dados: DadosPublicos, params: Para
                     ri_fornecedor=None, conhecimento_ate=None, ri_autoridade=None,
                     ri_mercado=None, ri_cortes=None) -> dict[str, Any]:
     """Grava ``book/cobertura/<D>/``, acrescenta os eventos ao livro e o selo à trilha do fundo."""
+    recusar_escrita()
     from .placar import calcular_placar
     from .ri_consumo import _corte, validar_conjunto
     from .ri_fluxo import (
@@ -427,7 +433,7 @@ def gravar_snapshot(book: Path, ex: Execucao, dados: DadosPublicos, params: Para
         arquivos["contexto.json"] = _escrever(tmp / "contexto.json", _json_bytes(arredondar(ex.contexto)))
         for rel, src in sorted(config_paths.items()):
             if Path(src).exists():
-                arquivos[f"configuracao/{rel}"] = _escrever(tmp / "configuracao" / rel, Path(src).read_bytes())
+                arquivos[f"configuracao/{rel}"] = _escrever(tmp / "configuracao" / rel, ler_bytes(Path(src)))
         # eventos do livro (um por instrumento): gravados na pasta selada e depois no livro
         anteriores = ultimo_evento_por_instrumento(book)
         evs_ant = eventos(book)
@@ -600,7 +606,7 @@ class SnapshotCobertura:
         if not p.exists():
             return None
         sha = (self.manifest.get("arquivos") or {}).get(rel)
-        b = p.read_bytes()
+        b = ler_bytes(p)
         if sha is None or _sha(b) != sha:
             raise LivroErro(f"{self.as_of}: {rel} não confere com o manifesto do snapshot")
         return b
@@ -611,7 +617,7 @@ class SnapshotCobertura:
 
     def tabela(self, mascarar: bool = True) -> pd.DataFrame:
         """``modelos.csv`` deste snapshot (índice ``issuer_id``)."""
-        t = pd.read_csv(io.BytesIO(self._bytes("modelos.csv") or b"issuer_id\n")).set_index("issuer_id")
+        t = ler_csv(io.BytesIO(self._bytes('modelos.csv') or b'issuer_id\n')).set_index("issuer_id")
         return _mascarar(t) if mascarar else t
 
     def modelo(self, issuer_id: str) -> dict[str, Any] | None:
@@ -619,7 +625,7 @@ class SnapshotCobertura:
 
     def etfs(self) -> pd.DataFrame:
         b = self._bytes("etfs.csv")
-        return pd.read_csv(io.BytesIO(b)).set_index("iid") if b else pd.DataFrame()
+        return ler_csv(io.BytesIO(b)).set_index("iid") if b else pd.DataFrame()
 
     def etf(self, iid: str) -> dict[str, Any] | None:
         return self._json(f"etfs/{iid}.json")
@@ -665,10 +671,10 @@ class SnapshotCobertura:
 def _ler(book: Path, d: date) -> SnapshotCobertura:
     pasta = raiz_cobertura(book) / d.isoformat()
     msha = sha256_file(pasta / "manifest.json")
-    selo = json.loads((pasta / "selo.json").read_text(encoding="utf-8"))
+    selo = json.loads(ler_texto(pasta / 'selo.json', encoding='utf-8'))
     if selo.get("manifest_sha256") != msha:
         raise LivroErro(f"Manifesto do snapshot {d} não confere com o selo.")
-    man = json.loads((pasta / "manifest.json").read_text(encoding="utf-8"))
+    man = json.loads(ler_texto(pasta / 'manifest.json', encoding='utf-8'))
     return SnapshotCobertura(as_of=d, pasta=pasta, manifest=man, manifest_sha256=msha,
                              is_synthetic=bool(man.get("is_synthetic")))
 
@@ -707,7 +713,7 @@ def conferir_corte(snap: SnapshotCobertura, conhecimento_ate: datetime) -> None:
         tabela = snap._bytes("insumos/corte_temporal.csv.gz")
         if tabela is None:
             raise LivroErro("Tabela selada do corte temporal ausente.")
-        rows = pd.read_csv(io.BytesIO(gzip.decompress(tabela)), dtype=str).to_dict("records")
+        rows = ler_csv(io.BytesIO(gzip.decompress(tabela)), dtype=str).to_dict("records")
         if rows != [contrato]:
             raise LivroErro("Corte do manifesto não confere com a tabela temporal selada.")
     tempos = ([snap.manifest["concluido_em"]] if "concluido_em" in snap.manifest else [])
@@ -754,7 +760,7 @@ def versao_metodologia_atual(valuation: Path | str | None = None) -> str | None:
     from .parametros import DEFAULT_VALUATION
 
     try:
-        val = yaml.safe_load(Path(valuation or DEFAULT_VALUATION).read_text(encoding="utf-8")) or {}
+        val = yaml.safe_load(ler_texto(Path(valuation or DEFAULT_VALUATION), encoding='utf-8')) or {}
     except (OSError, yaml.YAMLError):
         return None
     v = val.get("versao")
@@ -763,7 +769,7 @@ def versao_metodologia_atual(valuation: Path | str | None = None) -> str | None:
 
 def _versao_snapshot(pasta: Path) -> str | None:
     try:
-        val = yaml.safe_load((pasta / "configuracao" / "valuation.yaml").read_text(encoding="utf-8")) or {}
+        val = yaml.safe_load(ler_texto(pasta / 'configuracao' / 'valuation.yaml', encoding='utf-8')) or {}
     except (OSError, yaml.YAMLError):
         return None
     v = val.get("versao")
@@ -813,7 +819,7 @@ def verificar(book: Path, params_por_snapshot: bool = True, recalcular: bool = T
         except (LivroErro, FileNotFoundError) as exc:
             msgs.append(str(exc))
             continue
-        selo = json.loads((pasta / "selo.json").read_text(encoding="utf-8"))
+        selo = json.loads(ler_texto(pasta / 'selo.json', encoding='utf-8'))
         hashes_selos[sha256_obj(selo)] = d
         for rel, sha in snap.manifest.get("arquivos", {}).items():
             p = pasta / rel
@@ -853,12 +859,12 @@ def verificar(book: Path, params_por_snapshot: bool = True, recalcular: bool = T
         if n > len(evs) or (n and evs[n - 1]["event_hash"] != head):
             msgs.append(f"{d}: selo não confere com o livro (head/n_eventos)")
         elif (pasta / "eventos.jsonl").exists():
-            proprios = [json.loads(x) for x in (pasta / "eventos.jsonl").read_text(encoding="utf-8").splitlines()
+            proprios = [json.loads(x) for x in ler_texto(pasta / 'eventos.jsonl', encoding='utf-8').splitlines()
                         if x.strip()]
             if proprios != evs[int(ant.get("n_eventos", 0)):n]:
                 msgs.append(f"{d}: eventos do snapshot não conferem com o livro")
         pl = calcular_placar(evs[:n], None, d)
-        b_pl = (pasta / "placar.json").read_bytes() if (pasta / "placar.json").exists() else b"{}"
+        b_pl = ler_bytes(pasta / 'placar.json') if (pasta / "placar.json").exists() else b"{}"
         if sha256_obj(arredondar(pl)) != sha256_obj(json.loads(b_pl)):
             msgs.append(f"{d}: placar.json não confere com o recálculo")
         n_prev, head_prev = n, head
@@ -1023,7 +1029,7 @@ def ler_tabela_snapshot(pasta: Path) -> pd.DataFrame | None:
     p = Path(pasta) / "modelos.csv"
     if not p.exists():
         return None
-    t = pd.read_csv(p)
+    t = ler_csv(p)
     return t.set_index("issuer_id") if "issuer_id" in t.columns else None
 
 
@@ -1061,8 +1067,8 @@ def carregar_anterior(book: Path, ate: date, excluir: date | None = None):
             pasta = raiz_cobertura(book) / d
             try:
                 pacs = ler_pacotes(pasta)
-                ctx = json.loads((pasta / "contexto.json").read_text(encoding="utf-8"))
-                man = json.loads((pasta / "manifest.json").read_text(encoding="utf-8"))
+                ctx = json.loads(ler_texto(pasta / 'contexto.json', encoding='utf-8'))
+                man = json.loads(ler_texto(pasta / 'manifest.json', encoding='utf-8'))
                 cache[d] = (pacs, ctx, (man.get("taxa_livre_risco") or {}).get("valor"))
             except FileNotFoundError:
                 cache[d] = ({}, {}, None)

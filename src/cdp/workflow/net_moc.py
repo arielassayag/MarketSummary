@@ -17,6 +17,8 @@ from fractions import Fraction
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
+from cdp.leitura_arquivos import ler_bytes, ler_texto
+
 from ..audit import AuditLog
 from ..config import FundConfig, config_json, load_archived_config
 from ..contracts import BookEntry, DailyRecord
@@ -72,7 +74,7 @@ def archive_config(root: Path, cfg: FundConfig) -> Path:
     p = Path(root) / stamp(cfg)["config_path"]
     _own_path(p)
     if p.exists():
-        if p.read_text(encoding="utf-8") != raw:
+        if ler_texto(p, encoding='utf-8') != raw:
             raise NetUnverifiable("NET UNVERIFIABLE: configuração arquivada divergente")
     else:
         _write_exclusive(p, raw)
@@ -139,7 +141,7 @@ def _receive_archived(root: Path, desc: dict, config_hash: str) -> tuple[FundCon
     p = root / desc["config_path"]
     _own_path(p)
     try:
-        raw = p.read_text(encoding="utf-8")
+        raw = ler_texto(p, encoding='utf-8')
         if sha256_text(raw) != desc["config_sha256"]:
             raise ValueError("SHA bruto divergente")
         obj = json.loads(raw)
@@ -171,7 +173,7 @@ class PhysicalSources:
         self.receipts: dict[str, dict] = {}
         self.namespace: dict[str, list[str]] = {}
         self.directories: dict[str, dict] = {}
-        raw = audit.path.read_bytes() if audit.path.exists() else b""
+        raw = ler_bytes(audit.path) if audit.path.exists() else b""
         self.audit_raw = (b"".join(raw.splitlines(keepends=True)[:audit_rows])
                           if audit_rows is not None else raw)
         events = audit.events()
@@ -273,7 +275,7 @@ class PhysicalSources:
             name, rel = key.split("/", 1)
             if self._receipt(fd, self.roots[name] / rel) != self.receipts[key]:
                 raise NetUnverifiable("NET UNVERIFIABLE: origem física mudou antes da escrita")
-        raw = self.audit.path.read_bytes() if self.audit.path.exists() else b""
+        raw = ler_bytes(self.audit.path) if self.audit.path.exists() else b""
         if not raw.startswith(self.audit_raw) or not self.audit.verify_chain()[0]:
             raise NetUnverifiable("NET UNVERIFIABLE: prefixo/trilha mudou antes da escrita")
 
@@ -310,8 +312,8 @@ def _configuration_of_prior(book, proposal) -> dict:
     if archived is None:
         raise NetUnverifiable("NET UNVERIFIABLE: configuração própria da carteira anterior ausente")
     return {"proposal_config_hash": proposal.config_hash,
-            "raw_sha256": sha256_text(p.read_text()), "raw": p.read_text(),
-            "body": json.loads(p.read_text())}
+            "raw_sha256": sha256_text(ler_texto(p)), "raw": ler_texto(p),
+            "body": json.loads(ler_texto(p))}
 
 
 def _prior_config(book, entry) -> dict | None:
@@ -349,8 +351,8 @@ def compose(book, entry: BookEntry, *, shadow: bool = False) -> NetCandidate:
         proposal = book_shadow_proposal(book, entry.week)
         duplicate = shadow_book.load_proposal(entry.week)
         if (proposal is None or duplicate is not None
-                and (root / str(entry.week) / BOOK_SHADOW_FILE).read_bytes()
-                != shadow_book.proposal_path(entry.week).read_bytes()):
+                and ler_bytes(root / str(entry.week) / BOOK_SHADOW_FILE)
+                != ler_bytes(shadow_book.proposal_path(entry.week))):
             raise NetUnverifiable("NET UNVERIFIABLE: origem/duplicata da proposta-sombra divergente")
     else:
         proposal = book._find_proposal(entry.week, entry.proposal_id)
@@ -409,7 +411,7 @@ def compose(book, entry: BookEntry, *, shadow: bool = False) -> NetCandidate:
                 read_replay_origin(book)
                 monetary = root / ECONOMIC_FILE
                 if monetary.is_file():
-                    money = json.loads(monetary.read_text())
+                    money = json.loads(ler_texto(monetary))
                     if set(money) != {"schema", "currency", "initial_nav_usd", "config",
                                       "config_hash", "inception_date"}:
                         raise NetUnverifiable("NET UNVERIFIABLE: gênese monetária incompleta")
@@ -496,7 +498,7 @@ def compose(book, entry: BookEntry, *, shadow: bool = False) -> NetCandidate:
         # O JSON nativo pode registrar NaN em stress tests ausentes. Seus bytes
         # integrais ficam como texto: ausência não vira zero, null ou novo dado.
         base = {"schema": SCHEMA, "side": "shadow" if shadow else "main",
-                "session": str(session), "proposal_json": proposal_path.read_text(encoding="utf-8"),
+                "session": str(session), "proposal_json": ler_texto(proposal_path, encoding='utf-8'),
                 "decision": decision.model_dump(mode="json") if decision else None,
                 "config_raw_sha256": sha256_text(raw), "config_raw": raw,
                 "config": json.loads(raw),

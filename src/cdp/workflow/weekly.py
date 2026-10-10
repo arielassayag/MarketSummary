@@ -30,6 +30,8 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
+from cdp.leitura_arquivos import ler_csv
+
 from .. import SIMULATED_DATA_NOTICE
 from ..alpha.combine import AlphaResult, build_alpha, reresidualize
 from ..alpha.signals import compute_signals
@@ -141,7 +143,7 @@ class WeekContext:
 def load_themes(path: str = THEMES_PATH) -> dict[str, list[str]]:
     """Temas (ex.: estatais) por emissor a partir de ``issuer_id,theme``; ausente ⇒ vazio."""
     try:
-        df = pd.read_csv(path)
+        df = ler_csv(path)
     except FileNotFoundError:
         return {}
     return {t: sorted(g["issuer_id"].astype(str)) for t, g in df.groupby("theme")}

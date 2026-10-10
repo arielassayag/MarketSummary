@@ -41,6 +41,8 @@ from zoneinfo import ZoneInfo
 
 import yaml
 
+from cdp.leitura_arquivos import ler_texto, recusar_escrita
+
 if TYPE_CHECKING:  # pragma: no cover
     from .rotinas import Tarefa
 
@@ -101,6 +103,15 @@ def git(args: Sequence[str], raiz: Path | str, *, env: Mapping[str, str] | None 
     """``git`` sem prompts, em inglês (saída estável) e, em chamadas de rede, com o token de
     ``CDP_GIT_TOKEN`` injetado só nesta chamada."""
     pre: list[str] = []
+    from .leitura_arquivos import em_leitura, recusar_escrita
+
+    readonly = em_leitura()
+    if readonly:
+        if (rede or entrada is not None or extra_env is not None or type(args) is not list
+                or not args or any(type(x) is not str for x in args)
+                or args[0] not in {"rev-parse", "branch", "rev-list", "status", "log", "show", "merge-base"}
+                or (args[0] == "branch" and args != ["branch", "--show-current"])):
+            recusar_escrita()
     token = (env or os.environ).get("CDP_GIT_TOKEN") if rede else None
     if token:
         cred = base64.b64encode(f"x-access-token:{token}".encode()).decode()
@@ -108,6 +119,10 @@ def git(args: Sequence[str], raiz: Path | str, *, env: Mapping[str, str] | None 
     # Cada operação pertence à raiz informada; nunca descubra o Git de um projeto pai.
     # Repositórios normais, bare e worktrees possuem sua própria raiz e continuam válidos.
     git_env = _git_env(extra_env)
+    if readonly:
+        git_env["GIT_OPTIONAL_LOCKS"] = "0"
+        git_env["GIT_CONFIG_NOSYSTEM"] = "1"
+        git_env["GIT_CONFIG_GLOBAL"] = os.devnull
     ceiling = str(Path(raiz).resolve().parent)
     previous_ceiling = git_env.get("GIT_CEILING_DIRECTORIES")
     git_env["GIT_CEILING_DIRECTORIES"] = (
@@ -164,7 +179,7 @@ def ler_executor(texto: str) -> dict[str, Any]:
 def carregar_executor(raiz: Path | str, caminho: Path | None = None) -> dict[str, Any]:
     path = Path(raiz) / (caminho or EXECUTOR_PADRAO)
     try:
-        return ler_executor(path.read_text(encoding="utf-8"))
+        return ler_executor(ler_texto(path, encoding='utf-8'))
     except OSError as exc:
         raise ErroExecutor(f"não consegui ler {path}: {exc}") from exc
 
@@ -214,7 +229,7 @@ def identidade(raiz: Path | str, env: Mapping[str, str] | None = None) -> dict[s
     path = Path(raiz) / LOCAL_YAML
     if path.is_file():
         try:
-            raw = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+            raw = yaml.safe_load(ler_texto(path, encoding='utf-8')) or {}
         except (OSError, yaml.YAMLError):
             raw = {}
         if isinstance(raw, dict) and raw.get("executor"):
@@ -316,6 +331,7 @@ def trailers(tarefa_id: str, ident: Mapping[str, Any], execucao: str,
 
 
 def registrar_execucao(raiz: Path | str, exec_id: str, dados: Mapping[str, Any]) -> None:
+    recusar_escrita()
     pasta = Path(raiz) / EXECUCOES_DIR
     try:
         pasta.mkdir(parents=True, exist_ok=True)
@@ -327,8 +343,7 @@ def registrar_execucao(raiz: Path | str, exec_id: str, dados: Mapping[str, Any])
 
 def ler_execucao(raiz: Path | str, exec_id: str) -> dict[str, Any] | None:
     try:
-        return json.loads((Path(raiz) / EXECUCOES_DIR / f"{exec_id}.json")
-                          .read_text(encoding="utf-8"))
+        return json.loads(ler_texto(Path(raiz) / EXECUCOES_DIR / f'{exec_id}.json', encoding='utf-8'))
     except (OSError, ValueError):
         return None
 
@@ -585,13 +600,13 @@ def proteger_ensaio(raiz: Path | str) -> dict[str, Any]:
     """Instala ``pre-push`` que recusa todo push enquanto ``CDP_ENSAIO=1`` e, fora do ensaio, o
     push de qualquer commit com o trailer ``CDP-Ensaio`` (defesa além do prompt e do
     ``cdp publicar``). Não sobrescreve um gancho alheio."""
+    recusar_escrita()
     pasta = _ok(git(["rev-parse", "--path-format=absolute", "--git-path", "hooks"], raiz))
     if not pasta:
         return {"instalado": False, "motivo": "fora de um repositório git"}
     hook = Path(pasta) / "pre-push"
     try:
-        if hook.exists() and "cdp-ensaio" not in hook.read_text(encoding="utf-8",
-                                                                  errors="replace"):
+        if hook.exists() and "cdp-ensaio" not in ler_texto(hook, encoding='utf-8', errors='replace'):
             return {"instalado": False, "motivo": f"gancho pre-push alheio em {hook}"}
         hook.parent.mkdir(parents=True, exist_ok=True)
         hook.write_text(ENSAIO_HOOK, encoding="utf-8", newline="\n")
@@ -957,6 +972,7 @@ LIMITE_ENTREGA = 512 * 1024 * 1024
 def entrega_exportar(raiz: Path | str, tarefa: Tarefa, saida: Path | str) -> dict[str, Any]:
     """Empacota (tar) o que a mente gravou nos caminhos da tarefa: arquivos novos ou alterados
     e a lista dos apagados. Nada fora dos caminhos entra."""
+    recusar_escrita()
     import tarfile
 
     raiz = Path(raiz)
@@ -992,6 +1008,7 @@ def entrega_importar(raiz: Path | str, tarefa: Tarefa, pacote: Path | str
     """Aplica um pacote de :func:`entrega_exportar` no clone limpo do publicador. Recusa
     tudo o que não for arquivo comum dentro dos caminhos da tarefa (sem ligações simbólicas,
     sem ``..``, sem ``.git``); nada é executado."""
+    recusar_escrita()
     import tarfile
 
     raiz = Path(raiz).resolve()
@@ -1058,6 +1075,7 @@ def _em_worktree(raiz: Path | str) -> bool:
 
 def registrar_local(raiz: Path | str, como: str, harness: str | None = None, *,
                     forcar: bool = False) -> tuple[int, dict[str, Any]]:
+    recusar_escrita()
     if como not in EXECUTORES or como == "nenhum":
         return CONFIG, {"motivo": f"executor inválido: {como!r}"}
     ramo = _ok(git(["branch", "--show-current"], raiz))
@@ -1089,6 +1107,7 @@ def transferir(raiz: Path | str, para: str, por: str, motivo: str, *,
                env: Mapping[str, str] | None = None, checar_trava: bool = True
                ) -> tuple[int, dict[str, Any]]:
     """Reescreve ``executor.yaml`` para ``para`` (o commit e o push ficam com o humano)."""
+    recusar_escrita()
     env = os.environ if env is None else env
     if para not in EXECUTORES:
         return CONFIG, {"motivo": f"executor inválido: {para!r}"}
@@ -1105,7 +1124,7 @@ def transferir(raiz: Path | str, para: str, por: str, motivo: str, *,
                                       f"{_hhmm(estado.get('expira'))}: espere ou escolha outra "
                                       "janela (`cdp executor janela`)"}
     path = Path(raiz) / EXECUTOR_PADRAO
-    texto = path.read_text(encoding="utf-8")
+    texto = ler_texto(path, encoding='utf-8')
     atual = ler_executor(texto)
     novo = {"versao": 1, "executor": para,
             "harness": harness or atual.get("harness") or "claude-code",

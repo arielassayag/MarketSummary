@@ -11,6 +11,8 @@ from typing import TYPE_CHECKING, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
+from cdp.leitura_arquivos import ler_texto
+
 from ..hashing import sha256_file, sha256_obj
 
 if TYPE_CHECKING:
@@ -56,7 +58,7 @@ def read_replay_origin(book: Book) -> ReplayOrigin | None:
         raise ValueError("Origem do replay ausente ou redirecionada.")
     if len(seals) != 1 or seals[0].seq != 0:
         raise ValueError("Origem do replay exige uma única âncora antes das operações.")
-    origin = ReplayOrigin.model_validate_json(path.read_text(encoding="utf-8"))
+    origin = ReplayOrigin.model_validate_json(ler_texto(path, encoding='utf-8'))
     payload = {"arquivo": ORIGIN_FILE, "sha256": sha256_file(path)}
     monetary = book.root / ECONOMIC_FILE
     if monetary.exists() or monetary.is_symlink():
@@ -83,7 +85,7 @@ def install_replay_origin(book: Book, origin: ReplayOrigin) -> ReplayOrigin:
     # A janela arquivo→evento pode ser retomada somente com bytes idênticos.
     text = dump_json(origin)
     if path.exists() or path.is_symlink():
-        if path.is_symlink() or path.read_text(encoding="utf-8") != text:
+        if path.is_symlink() or ler_texto(path, encoding='utf-8') != text:
             raise ValueError("Marca de origem preexistente diverge da execução.")
     else:
         _write_exclusive(path, text)
@@ -101,7 +103,7 @@ def install_replay_origin(book: Book, origin: ReplayOrigin) -> ReplayOrigin:
         monetary = book.root / ECONOMIC_FILE
         money_raw = dump_json(money)
         if monetary.exists():
-            if monetary.is_symlink() or monetary.read_text() != money_raw:
+            if monetary.is_symlink() or ler_texto(monetary) != money_raw:
                 raise ValueError("Gênese monetária preexistente diverge do ensaio.")
         else:
             _write_exclusive(monetary, money_raw)

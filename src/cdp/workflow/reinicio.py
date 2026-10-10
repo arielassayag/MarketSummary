@@ -47,6 +47,8 @@ from datetime import date
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
+from cdp.leitura_arquivos import ler_texto, recusar_escrita
+
 from ..hashing import sha256_file, sha256_obj
 from .book import GENESIS_EVENT, GENESIS_FILE
 
@@ -134,7 +136,7 @@ def _genese_registrada(rt: Runtime) -> dict[str, Any] | None:
     path = root / GENESIS_FILE
     if path.exists():
         try:
-            return json.loads(path.read_text(encoding="utf-8"))
+            return json.loads(ler_texto(path, encoding='utf-8'))
         except ValueError:
             return {"ilegivel": True}
     audit = root / AUDIT_NAME
@@ -308,6 +310,7 @@ def _rollback(staging: Path, alvos: list[Path], novos: list[Path]) -> list[str]:
     (``<i>_<nome>`` ⇒ ``alvos[i]``; pelo conteúdo da área, não por uma lista em memória, para
     não perder um caminho movido no instante de uma interrupção). Nunca apaga a área com
     conteúdo: o que não voltar fica nela (e a guarda da próxima execução denuncia)."""
+    recusar_escrita()
     erros: list[str] = []
     for p in reversed(novos):
         try:
@@ -336,6 +339,7 @@ def _rollback(staging: Path, alvos: list[Path], novos: list[Path]) -> list[str]:
 
 def executar(rt: Runtime, pesquisa: Path | str = DEFAULT_PESQUISA) -> tuple[int, dict[str, Any]]:
     """Executa o pré-início (ver docstring do módulo). Devolve ``(código, relatório)``."""
+    recusar_escrita()
     p = plano(rt, pesquisa)
     out = _relatorio(p, executado=False)
     if p.estado in ("iniciado", "nada"):

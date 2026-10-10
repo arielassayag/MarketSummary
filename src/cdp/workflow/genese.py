@@ -17,6 +17,8 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
+from cdp.leitura_arquivos import ler_texto, recusar_escrita
+
 from ..audit import GENESIS_HASH, AuditLog
 from ..config import load_config
 from ..hashing import sha256_obj
@@ -46,7 +48,7 @@ def _genese_integra(book: Path, inicio: str) -> tuple[dict | None, str | None]:
     try:
         if any((book / n).is_symlink() for n in (GENESIS_FILE, AUDIT_NAME)):
             return None, "gênese e trilha precisam ser arquivos próprios, sem link simbólico"
-        payload = json.loads((book / GENESIS_FILE).read_text(encoding="utf-8"))
+        payload = json.loads(ler_texto(book / GENESIS_FILE, encoding='utf-8'))
         if not isinstance(payload, dict) or payload.get("inception_date") != inicio:
             return None, "gênese ausente, inválida ou de outra data de início"
         if not _SHA.fullmatch(str(payload.get("config_hash", ""))):
@@ -132,7 +134,7 @@ def _autoridade(rt: Runtime, execucao: str | None, trava: str | None,
         if branch.stdout.strip() != "main" or remoto.stdout.strip() != head:
             return None, "use o clone executor em main, sincronizado com origin/main"
         cfg_head = ex.git(["show", f"{head}:configs/cdp/fund.yaml"], base)
-        if cfg_head.returncode or cfg_head.stdout != cfg_path.read_text(encoding="utf-8"):
+        if cfg_head.returncode or cfg_head.stdout != ler_texto(cfg_path, encoding='utf-8'):
             return None, "mandato não registrado no commit do próprio clone"
         dirty = ex.git(["status", "--porcelain", "--untracked-files=all", "--",
                         "src/cdp", "configs/cdp"], base)
@@ -165,6 +167,7 @@ def _autoridade(rt: Runtime, execucao: str | None, trava: str | None,
 def executar(rt: Runtime, *, execucao: str | None = None, trava: str | None = None,
              env: Mapping[str, str] | None = None) -> tuple[int, dict[str, Any]]:
     """Abre somente livro vazio, após autorização explícita do chamador e guardas."""
+    recusar_escrita()
     out = plano(rt)
     if out["estado"] == "conflito":
         return RECUSADO, out

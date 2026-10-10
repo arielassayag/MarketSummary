@@ -5,6 +5,8 @@ from dataclasses import dataclass
 from datetime import date, datetime
 from pathlib import Path
 
+from cdp.leitura_arquivos import ler_bytes, ler_texto, recusar_escrita
+
 from ..data.ri_captura.adapter import autenticar
 from ..data.ri_captura.configuracao import carregar_contexto_ri
 from ..data.ri_captura.observado import instant, sha
@@ -86,6 +88,7 @@ def _membro(raiz, nome):
 
 def arquivar(tmp, fornecedor, params, autoridade, conhecimento_ate, raiz_mercado):
     """Sela matéria-prima sem transcrever pacote nem importar autoridade para o livro."""
+    recusar_escrita()
     md = fornecedor.md
     exigir(params, autoridade, conhecimento_ate, md)
     _corte(params, fornecedor, conhecimento_ate)
@@ -96,9 +99,9 @@ def arquivar(tmp, fornecedor, params, autoridade, conhecimento_ate, raiz_mercado
     arquivos = {}
     nomes = {f.path: f.sha256 for f in md.manifest.files}
     if modo == "snapshot":
-        nomes["manifest.json"] = sha((Path(raiz_mercado) / "manifest.json").read_bytes())
+        nomes["manifest.json"] = sha(ler_bytes(Path(raiz_mercado) / 'manifest.json'))
     for nome, digest in sorted(nomes.items()):
-        raw = _membro(raiz_mercado, nome).read_bytes()
+        raw = ler_bytes(_membro(raiz_mercado, nome))
         if sha(raw) != digest:
             raise ValueError("RI fluxo: bytes de mercado não conferem com manifesto")
         out = _membro(destino, nome)
@@ -108,7 +111,7 @@ def arquivar(tmp, fornecedor, params, autoridade, conhecimento_ate, raiz_mercado
     transporte = gravar_insumos_ri(tmp / "ri" / "insumos", raiz_saida=tmp,
                                    fornecedor=fornecedor, params=params, conhecimento_ate=conhecimento_ate)
     for file in (tmp / "ri" / "insumos").iterdir():
-        arquivos[str(file.relative_to(tmp))] = sha(file.read_bytes())
+        arquivos[str(file.relative_to(tmp))] = sha(ler_bytes(file))
     metadata = {"schema": SCHEMA, "configuracao_sha256": autoridade.sha256_esperado,
                 "conhecimento_ate": instant(conhecimento_ate).isoformat(),
                 "mercado_formato": modo, "mercado_content_hash": md.manifest.content_hash(),
@@ -276,7 +279,7 @@ def snapshot_exige_ri(snap):
     cfg = snap.pasta / "configuracao" / "valuation.yaml"
     if not cfg.exists():
         return False
-    raw = cfg.read_text(encoding="utf-8")
+    raw = ler_texto(cfg, encoding='utf-8')
     if "captura_observada_identidade" not in raw:
         return False
     import yaml
@@ -292,7 +295,7 @@ def livro_exige_ri(book):
     for dia in datas_snapshots(Path(book)):
         pasta = Path(book) / "cobertura" / dia.isoformat()
         import json
-        manifest = json.loads((pasta / "manifest.json").read_text(encoding="utf-8"))
+        manifest = json.loads(ler_texto(pasta / 'manifest.json', encoding='utf-8'))
         if (pasta / "ri").exists() or snapshot_exige_ri(SimpleNamespace(manifest=manifest, pasta=pasta)):
             return True
     return False
@@ -312,7 +315,7 @@ def conferir_configuracao(params, arquivos_config):
         if rel.startswith("/") or ".." in Path(rel).parts:
             raise ValueError("RI fluxo: caminho de configuração inválido")
         arquivo = Path(arquivos_config[rel])
-        if not arquivo.is_file() or sha(arquivo.read_bytes()) != esperado:
+        if not arquivo.is_file() or sha(ler_bytes(arquivo)) != esperado:
             raise ValueError(f"RI fluxo: configuração física ausente ou divergente: {rel}")
     val = Path(arquivos_config["valuation.yaml"])
     pasta = Path(arquivos_config["cobertura/arquetipos.csv"]).parent
@@ -401,7 +404,7 @@ def conferir_livro_antes_de_escrita(book, params, *, autoridade, cortes, agora):
                 raise LivroErro("RI fluxo: encadeamento histórico selado inválido")
             completos.append(ev)
             head = esperado
-        selo = json.loads((snap.pasta / "selo.json").read_text())
+        selo = json.loads(ler_texto(snap.pasta / 'selo.json'))
         if selo.get("n_eventos") != len(completos) or selo.get("livro_head") != head:
             raise LivroErro("RI fluxo: selo histórico não corresponde aos eventos")
         if sha256_obj(arredondar(calcular_placar(completos, None, dia))) != sha256_obj(snap.placar()):
@@ -411,7 +414,7 @@ def conferir_livro_antes_de_escrita(book, params, *, autoridade, cortes, agora):
     if feitos != completos[:len(feitos)] or len(feitos) not in (len(completos), prefixo_ultimo):
         raise LivroErro("RI fluxo: livro não é completo nem a cauda canônica recuperável")
     arquivo_trilha = book / "audit_log.jsonl"
-    trilha = ([AuditEvent.model_validate_json(linha) for linha in arquivo_trilha.read_text().splitlines()
+    trilha = ([AuditEvent.model_validate_json(linha) for linha in ler_texto(arquivo_trilha).splitlines()
                if linha.strip()] if arquivo_trilha.is_file() else [])
     head_trilha = GENESIS_HASH
     for i, ev in enumerate(trilha):

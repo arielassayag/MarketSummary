@@ -15,6 +15,8 @@ from pathlib import Path
 
 import pandas as pd
 
+from cdp.leitura_arquivos import ler_csv, ler_texto
+
 from .contracts import Country, LineType
 from .hashing import sha256_file
 
@@ -82,11 +84,16 @@ def nomes_canonicos(path: str | None = None) -> dict[str, str]:
         raise ValueError("Caminho de nomes explícito vazio")
     p = NOMES_CANONICOS if path is None else Path(path)
     try:
-        raw = yaml.safe_load(p.read_text(encoding="utf-8")) or {}
+        raw = yaml.safe_load(ler_texto(p, encoding='utf-8')) or {}
     except (OSError, yaml.YAMLError):
         if path is None:
             return {}
         raise
+    return nomes_do_corpo(raw)
+
+
+def nomes_do_corpo(raw: object) -> dict[str, str]:
+    """Parser nativo fiel de nomes já recebidos; não consulta cache/arquivo/default."""
     nomes = raw.get("nomes") if isinstance(raw, dict) else None
     return {str(k): str(v) for k, v in (nomes or {}).items() if v}
 
@@ -97,7 +104,10 @@ def universe_from_frame(df: pd.DataFrame, source_sha256: str = "", *,
     if missing:
         raise ValueError(f"Universo sem colunas obrigatórias: {missing}")
     df = df.copy()
-    canon = nomes_canonicos() if nomes is None else nomes
+    from .leitura_arquivos import nomes_recebidos
+
+    received = nomes_recebidos() if nomes is None else None
+    canon = (nomes_canonicos() if received is None else received) if nomes is None else nomes
     if canon:
         iid = df["issuer_id"].astype(str).str.strip()
         df["issuer_name"] = [canon.get(i, n) for i, n in zip(iid, df["issuer_name"], strict=True)]
@@ -152,9 +162,9 @@ def universe_from_frame(df: pd.DataFrame, source_sha256: str = "", *,
     return Universe(lines=lines, issuers=issuers, source_sha256=source_sha256)
 
 
-def load_universe(path: str | Path | None = None) -> Universe:
+def load_universe(path: str | Path | None = None, *, nomes: Mapping[str, str] | None = None) -> Universe:
     if path == "":
         raise ValueError("Caminho de universo explícito vazio")
     p = DEFAULT_UNIVERSE_PATH if path is None else Path(path)
-    df = pd.read_csv(p, dtype={"adr_ratio": "string"}, keep_default_na=False, na_values=[""])
-    return universe_from_frame(df, source_sha256=sha256_file(p))
+    df = ler_csv(p, dtype={'adr_ratio': 'string'}, keep_default_na=False, na_values=[''])
+    return universe_from_frame(df, source_sha256=sha256_file(p), nomes=nomes)

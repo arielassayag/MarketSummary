@@ -52,6 +52,8 @@ from zoneinfo import ZoneInfo
 import pandas as pd
 from pydantic import BaseModel
 
+from cdp.leitura_arquivos import em_leitura, ler_texto, recusar_escrita, validar_modo
+
 from .. import SIMULATED_DATA_NOTICE
 from ..audit import GENESIS_HASH, AuditLog
 from ..config import FundConfig
@@ -132,6 +134,7 @@ def _tmp_in(directory: Path, text: str) -> Path:
 
 def _write_exclusive(path: Path, text: str) -> None:
     """Cria ``path`` atomicamente; ``FileExistsError`` se já existir (nunca sobrescreve)."""
+    recusar_escrita()
     path.parent.mkdir(parents=True, exist_ok=True)
     if path.exists():
         raise FileExistsError(f"Arquivo imutável já existe: {path}")
@@ -150,6 +153,7 @@ def _write_exclusive(path: Path, text: str) -> None:
 
 def _write_replace(path: Path, text: str) -> None:
     """Grava (ou regrava) ``path`` atomicamente — apenas para ponteiros e derivados."""
+    recusar_escrita()
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = _tmp_in(path.parent, text)
     try:
@@ -159,7 +163,7 @@ def _write_replace(path: Path, text: str) -> None:
 
 
 def _read_json(path: Path) -> dict:
-    return json.loads(path.read_text(encoding="utf-8"))
+    return json.loads(ler_texto(path, encoding='utf-8'))
 
 
 def _models_csv(models: list[BaseModel], model_cls: type[BaseModel], notice: str) -> str:
@@ -352,14 +356,17 @@ class Book:
     """
 
     def __init__(self, root: Path | str = "book", config: FundConfig | None = None,
-                 mercado: Callable[[date], Any] | None = None, *, market_store=None) -> None:
+                 mercado: Callable[[date], Any] | None = None, *, market_store=None,
+                 somente_leitura: bool = False) -> None:
+        self.somente_leitura = validar_modo(somente_leitura)
         self.root = Path(root)
         self.config = config
         self.market_store = market_store
         self.mercado = mercado
-        self.root.mkdir(parents=True, exist_ok=True)
-        self.audit = AuditLog(self.root / "audit_log.jsonl")
-        self.ledger = Ledger(self.root / "ledger.csv")
+        if not em_leitura(self.somente_leitura):
+            self.root.mkdir(parents=True, exist_ok=True)
+        self.audit = AuditLog(self.root / "audit_log.jsonl", somente_leitura=self.somente_leitura)
+        self.ledger = Ledger(self.root / "ledger.csv", somente_leitura=self.somente_leitura)
 
     # ---------------------------------------------- semanas
     def week_dir(self, week: date) -> Path:
@@ -398,6 +405,7 @@ class Book:
 
     def save_research_pack(self, pack: ResearchPack, actor: str | None = None) -> Path:
         """Grava o pacote (imutável por hash) e aponta ``research_pack.json`` para ele."""
+        recusar_escrita(self.somente_leitura)
         self.check_key(pack.week)
         h = pack.research_hash()
         path = self._research_file(pack.week, h)
@@ -467,6 +475,7 @@ class Book:
         Os derivados (memo e CSVs) de propostas com dados sintéticos sempre carregam o aviso
         "DADOS SIMULADOS", inclusive quando o memo vem pronto em ``memo_markdown``.
         """
+        recusar_escrita(self.somente_leitura)
         week, k = proposal.week, proposal.version
         self.check_key(week)
         path = self._proposal_path(week, k)
@@ -576,6 +585,7 @@ class Book:
         determinísticos substituem a co-assinatura. Audita ``DECISION_<tipo>`` com a decisão
         completa como payload.
         """
+        recusar_escrita(self.somente_leitura)
         week = decision.week
         proposal = self._find_proposal(week, decision.proposal_id)
         k = proposal.version
@@ -778,6 +788,7 @@ class Book:
 
         Toda recusa por validação gera o evento ``BOOKING_REFUSED`` na trilha (§6.2).
         """
+        recusar_escrita(self.somente_leitura)
         week = entry.week
         path = self.week_dir(week) / _BOOKED
         if path.exists():
@@ -813,6 +824,7 @@ class Book:
 
     def recover_booking(self, week: date) -> None:
         """Completa somente o evento de um BOOKED literal previamente preparado."""
+        recusar_escrita(self.somente_leitura)
         from .net_moc import receive_config
         from .net_moc_prova import recover
 
@@ -845,6 +857,7 @@ class Book:
         ordem vale só para aquele leilão; não há efetivação retroativa e a próxima data de
         montagem decide de novo. Arquivo imutável ``<semana>/efetivacao_recusada.json`` e evento
         ``BOOKING_LAPSED`` na trilha; idempotente (a primeira recusa vale)."""
+        recusar_escrita(self.somente_leitura)
         atual = self.efetivacao_recusada(week)
         if atual is not None:
             return atual
@@ -910,6 +923,7 @@ class Book:
     def record_ledger(self, rows: list[LedgerRow], actor: str = SYSTEM_ACTOR,
                       week: date | None = None) -> int:
         """Anexa linhas de MTM ao ledger e registra o evento ``LEDGER_APPENDED``."""
+        recusar_escrita(self.somente_leitura)
         rows = list(rows)
         n = self.ledger.append(rows)
         if n:

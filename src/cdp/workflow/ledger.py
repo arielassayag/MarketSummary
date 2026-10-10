@@ -38,6 +38,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+from cdp.leitura_arquivos import recusar_escrita, validar_modo
+
 from ..contracts import BookedPosition, BookEntry, LedgerRow
 from ..risk.types import TRADING_DAYS, RiskModel
 from .memo import fmt_pct, fmt_usd
@@ -103,13 +105,16 @@ def _check_finite(row: LedgerRow) -> None:
 class Ledger:
     """Série de NAV diária em CSV, somente anexação, com datas estritamente crescentes."""
 
-    def __init__(self, path: str | Path) -> None:
+    def __init__(self, path: str | Path, *, somente_leitura: bool = False) -> None:
+        self.somente_leitura = validar_modo(somente_leitura)
         self.path = Path(path)
 
     def rows(self) -> list[LedgerRow]:
         if not self.path.exists():
             return []
-        with self.path.open(encoding="utf-8", newline="") as f:
+        from cdp.leitura_arquivos import abrir_leitura
+
+        with abrir_leitura(self.path, encoding="utf-8", newline="") as f:
             reader = csv.DictReader(f)
             if reader.fieldnames is not None and list(reader.fieldnames) != LEDGER_COLUMNS:
                 raise ValueError(f"Cabeçalho do ledger inesperado em {self.path}: "
@@ -143,6 +148,7 @@ class Ledger:
 
     def append(self, rows: Iterable[LedgerRow]) -> int:
         """Anexa linhas; recusa datas repetidas ou fora de ordem e valores não finitos."""
+        recusar_escrita(self.somente_leitura)
         new = [LedgerRow.model_validate(r) for r in rows]
         if not new:
             return 0

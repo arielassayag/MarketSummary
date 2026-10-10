@@ -91,6 +91,8 @@ from zoneinfo import ZoneInfo
 import numpy as np
 import pandas as pd
 
+from cdp.leitura_arquivos import ler_texto, recusar_escrita
+
 from .. import SIMULATED_DATA_NOTICE
 from ..analytics.liquidity import liquidity_profile, liquidity_summary
 from ..analytics.panel import STALE_DAYS_MAX, AssetPanel, build_asset_panel, fx_for_lines
@@ -781,7 +783,7 @@ class ShadowBook:
         path = self.proposal_path(week)
         if not path.exists():
             return None
-        proposal = Proposal.model_validate_json(path.read_text(encoding="utf-8"))
+        proposal = Proposal.model_validate_json(ler_texto(path, encoding='utf-8'))
         if proposal.week != week:
             raise ValueError(f"Proposta-sombra em {path.name} é da semana {proposal.week} "
                              "(arquivo copiado/renomeado).")
@@ -796,7 +798,7 @@ class ShadowBook:
         path = self.booked_path(week)
         if not path.exists():
             return None
-        entry = BookEntry.model_validate_json(path.read_text(encoding="utf-8"))
+        entry = BookEntry.model_validate_json(ler_texto(path, encoding='utf-8'))
         if entry.week != week:
             raise ValueError(f"Efetivação-sombra em {path.name} é da semana {entry.week} "
                              "(arquivo copiado/renomeado).")
@@ -806,14 +808,15 @@ class ShadowBook:
 
     def save_proposal(self, proposal: Proposal) -> Path:
         """Grava a proposta-sombra da semana (idempotente para o mesmo conteúdo)."""
+        recusar_escrita(self.track.somente_leitura)
         path = self.proposal_path(proposal.week)
         raw = dump_json(proposal)
         if self.book is not None:
             original = book_shadow_proposal(self.book, proposal.week)
             if original is None or dump_json(original) != raw:
                 raise ValueError("A cópia sombra difere do corpo nativo integral de origem.")
-            raw = (self.book.week_dir(proposal.week) / BOOK_SHADOW_FILE).read_text(encoding="utf-8")
-        existing = (Proposal.model_validate_json(path.read_text(encoding="utf-8"))
+            raw = ler_texto(self.book.week_dir(proposal.week) / BOOK_SHADOW_FILE, encoding='utf-8')
+        existing = (Proposal.model_validate_json(ler_texto(path, encoding='utf-8'))
                     if path.exists() else None)
         if existing is not None:
             if existing.proposal_hash() != proposal.proposal_hash():
@@ -827,6 +830,7 @@ class ShadowBook:
         return path
 
     def save_booked(self, entry: BookEntry) -> Path:
+        recusar_escrita(self.track.somente_leitura)
         from .net_moc import NetUnverifiable, compose
         from .net_moc_prova import prepare
 
@@ -847,6 +851,7 @@ class ShadowBook:
         return path
 
     def recover_booking(self, week: date) -> None:
+        recusar_escrita(self.track.somente_leitura)
         from .net_moc import NetUnverifiable
         from .net_moc_prova import recover
 
@@ -877,7 +882,7 @@ def book_shadow_proposal(book: Book, week: date) -> Proposal | None:
                and ev.payload_hash == payload for ev in book.audit.events()):
         raise ValueError(f"{BOOK_SHADOW_FILE} da semana {week} não confere com a trilha de "
                          "auditoria.")
-    proposal = Proposal.model_validate_json(path.read_text(encoding="utf-8"))
+    proposal = Proposal.model_validate_json(ler_texto(path, encoding='utf-8'))
     if proposal.week != week:
         raise ValueError(f"{BOOK_SHADOW_FILE} da semana {week} contém a proposta de "
                          f"{proposal.week}.")

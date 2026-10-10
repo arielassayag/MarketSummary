@@ -104,7 +104,9 @@ def load_quotes(path: Path, expected_sha256: str | None = None) -> tuple[pd.Data
     path = Path(path)
     if expected_sha256 is not None and sha256_file(path) != expected_sha256:
         raise ValueError(f"Hash divergente nas cotações intradiárias: {path}")
-    df = pd.read_parquet(path)
+    from cdp.leitura_arquivos import ler_parquet
+
+    df = ler_parquet(path)
     captured = datetime.fromisoformat(str(df["captured_at"].iloc[0]))
     return df.drop(columns=["captured_at"]), captured
 

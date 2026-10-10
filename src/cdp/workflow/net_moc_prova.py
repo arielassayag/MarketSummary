@@ -70,6 +70,10 @@ def _no_links(path: Path) -> None:
 def _read(path: Path) -> str:
     """Recebe todos os bytes com FD/nome estáveis, sem seguir links."""
     _no_links(path)
+    from cdp.leitura_arquivos import em_leitura, ler_texto_exclusivo
+
+    if em_leitura():
+        return ler_texto_exclusivo(path)
     try:
         fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
         try:

@@ -34,6 +34,8 @@ from typing import TYPE_CHECKING, Annotated, Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
+from cdp.leitura_arquivos import ler_bytes, ler_texto, recusar_escrita
+
 from .. import SIMULATED_DATA_NOTICE
 from ..contracts import FactBook
 from ..hashing import sha256_file
@@ -247,7 +249,7 @@ def load_published(book_root: Path | str, week: date) -> dict[str, Any] | None:
     if not path.is_file():
         return None
     try:
-        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw = json.loads(ler_texto(path, encoding='utf-8'))
     except (OSError, ValueError):
         return None
     return raw if isinstance(raw, dict) else None
@@ -259,8 +261,8 @@ def _dump(obj: Any) -> str:
 
 
 def load_prepared(folder: Path) -> tuple[FactBook, dict[str, Any]]:
-    fb = FactBook.model_validate(json.loads((folder / FACTBOOK_JSON).read_text(encoding="utf-8")))
-    analysis = json.loads((folder / ANALISE_JSON).read_text(encoding="utf-8"))
+    fb = FactBook.model_validate(json.loads(ler_texto(folder / FACTBOOK_JSON, encoding='utf-8')))
+    analysis = json.loads(ler_texto(folder / ANALISE_JSON, encoding='utf-8'))
     return fb, analysis
 
 
@@ -1232,12 +1234,13 @@ def handoff_path(rt: Runtime, week: date) -> Path | None:
 def _copy_exclusive(src: Path, dst: Path) -> bool:
     """Copia ``src`` para ``dst`` byte a byte, atomicamente e SEM sobrescrever (``False`` se
     ``dst`` já existir)."""
+    recusar_escrita()
     import os
     import tempfile
 
     if dst.exists():
         return False
-    data = src.read_bytes()
+    data = ler_bytes(src)
     dst.parent.mkdir(parents=True, exist_ok=True)
     fd, tmp_name = tempfile.mkstemp(prefix=".tmp_", dir=dst.parent)
     try:
@@ -1368,7 +1371,7 @@ def _fresh_prepared(rt: Runtime, week: date) -> tuple[FactBook, dict[str, Any], 
     notes: list[str] = []
     if not missing:
         changed = [name for name in (ANALISE_JSON, FACTBOOK_JSON)
-                   if (folder / name).read_text(encoding="utf-8") != texts[name]]
+                   if ler_texto(folder / name, encoding='utf-8') != texts[name]]
         if changed:
             notes.append("Arquivos preparados diferentes do recálculo do código ("
                          + ", ".join(changed) + "): regravados; a publicação usa o recálculo.")
@@ -1450,8 +1453,8 @@ def _resume_publication(rt: Runtime, week: date, decision: Any) -> dict[str, Any
     doc_text, markdown, authorship2, problems = _compose(
         fb, analysis, folder / TESE_JSON, decision, week=week,
         published_at=str(doc.get("published_at")), expected_mind=_mente_esperada(rt, week))
-    if pub.read_text(encoding="utf-8") != doc_text or authorship2 != authorship or (
-            md_path.exists() and md_path.read_text(encoding="utf-8") != markdown):
+    if ler_texto(pub, encoding='utf-8') != doc_text or authorship2 != authorship or (
+            md_path.exists() and ler_texto(md_path, encoding='utf-8') != markdown):
         raise ValueError(f"Publicação incompleta da tese de {week}: os arquivos existentes não "
                          "conferem com o recálculo do código e não estão na trilha; "
                          "publicação recusada (intervenção manual).")
@@ -1480,6 +1483,7 @@ def publish_thesis(rt: Runtime, week: date) -> dict[str, Any]:
     ancorados na trilha) ⇒ ``FileExistsError``; publicação interrompida antes do evento ⇒
     retomada (ver :func:`_resume_publication`).
     """
+    recusar_escrita()
     from .tese_analise import approved_proposal
 
     folder = thesis_dir(rt.book_root, week)

@@ -18,6 +18,8 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
+from cdp.leitura_arquivos import ler_bytes, ler_texto
+
 from ..config import FundConfig
 from ..hashing import sha256_file, sha256_obj, sha256_text
 from ..risk.analytics import risk_decomposition
@@ -282,7 +284,7 @@ def load(track, record, *, require_event: bool = True) -> dict | None:
     p = path(track, record.date)
     if not p.is_file() or sha256_file(p) != record.input_hashes[MARKER]:
         raise ValueError(f"{record.date}: diagnóstico diário ausente/adulterado")
-    obj = json.loads(p.read_text())
+    obj = json.loads(ler_texto(p))
     if obj.get("policy") != POLICY or obj.get("session") != str(record.date):
         raise ValueError("contrato/data do diagnóstico diário inválido")
     if record.compute_hash() != record.record_hash:
@@ -323,7 +325,7 @@ def _repair_track_tail(track, record) -> None:
         if row != expected:
             raise ValueError("CSV divergente na recuperação")
     if track.csv_path.exists() and track.csv_path.stat().st_size:
-        if not track.csv_path.read_bytes().endswith(b"\n"):
+        if not ler_bytes(track.csv_path).endswith(b"\n"):
             raise ValueError("CSV parcial na recuperação")
     h = sha256_obj(record.record_hash)
     events = [
@@ -383,7 +385,7 @@ def append(track, record, diagnostic: dict) -> None:
     if sha256_text(raw) != record.input_hashes[MARKER]:
         raise ValueError("diagnóstico não corresponde ao registro")
     if p.exists():
-        if p.read_text() != raw:
+        if ler_texto(p) != raw:
             raise ValueError("diagnóstico órfão divergente na recuperação")
     else:
         write_exclusive(p, raw)

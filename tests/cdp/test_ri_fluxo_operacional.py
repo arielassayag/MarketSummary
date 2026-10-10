@@ -294,7 +294,7 @@ def _fontes_cvm_simuladas(path):
             DT_RECEB='2026-03-01',LINK_DOC='https://example.test/DFP-DADOS-SIMULADOS')],
         'dfp_cia_aberta_DFC_MI_con_2025.csv':[dict(CNPJ_CIA=cnpj,DT_REFER='2025-12-31',VERSAO='1',
             ORDEM_EXERC='ULTIMO',DT_INI_EXERC='2025-01-01',DT_FIM_EXERC='2025-12-31',
-            MOEDA='REAL',ESCALA_MOEDA='MIL',CD_CONTA='6.01.01',DS_CONTA='Depreciacao (DADOS SIMULADOS)',VL_CONTA='15')]})
+            MOEDA='REAL',ESCALA_MOEDA='MIL',CD_CONTA='6.01.01',DS_CONTA='Depreciacao',VL_CONTA='15')]})
     return uni,path/'arquivo-publico'
 
 

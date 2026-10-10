@@ -45,7 +45,7 @@ from .publico_contexto_documental import CAMPOS_CONTEXTO, contexto_composicao, c
 FLUXOS = frozenset({
     "receita", "lucro_bruto", "ebit", "ebitda", "d_a", "resultado_financeiro", "lucro_antes_ir",
     "ir_csll", "lucro_liquido", "lucro_liquido_controladores", "cfo", "capex", "fcf",
-    "d_a_dfc", "adicoes_direito_uso", "depreciacao_direito_uso",
+    "d_a_dfc", "retencoes_dva", "adicoes_direito_uso", "depreciacao_direito_uso",
     "variacao_capital_giro_operacional", "juros_pagos_operacionais",
     "dividendos_pagos", "arrendamentos_pagos", "recompras", "margem_financeira", "receita_servicos", "despesa_pdd",
 })
@@ -176,6 +176,8 @@ def _meta(row) -> dict:
         out['received_date'] = getattr(row, 'received_date_original', row.received_date)
     out.update(dimensoes(row._asdict()))
     out.update(contexto_documental(row._asdict()))
+    if 'semantica_capital' in row._fields and _texto(getattr(row, 'semantica_capital', None)) is not None:
+        out['semantica_capital'] = row.semantica_capital
     return out
 
 
@@ -294,6 +296,7 @@ def selecionar_pit(fatos: pd.DataFrame, as_of: date, *, conhecimento_ate: dateti
     out["value"] = out["value"].astype(float) + 0.0  # -0.0 ⇒ 0.0
     extras = [k for k in METADADOS_OBSERVADOS if k in out] if observed.any() else []
     extras += [k for k in (*CAMPOS, *CAMPOS_CONTEXTO) if k in out]
+    extras += ['semantica_capital'] if 'semantica_capital' in out else []
     out = (out[SAIDA_COLUNAS + extras]
            .sort_values(["entidade", "item", "freq", "period_end"], kind="stable")
            .reset_index(drop=True))
@@ -525,12 +528,17 @@ def _saldo(ent: str, item: str, g: pd.DataFrame, datas: set | None,
     out = []
     for e, ge in g.groupby("period_end", sort=True):
         d = pd.Timestamp(e).date()
-        if datas is not None and d not in datas:
-            continue
         row = list(ge.itertuples(index=False))[-1]
+        from .publico_contexto_documental import estoque_documental
+
+        estoque_comprovado = estoque_documental(row._asdict())
+        if datas is not None and d not in datas and not estoque_comprovado:
+            continue
         base = {"entidade": ent, "item": item, "period_end": pd.Timestamp(e),
                 "value": float(row.value), **_meta(row)}
         out.append({**base, "freq": "Q"})
+        if estoque_comprovado:
+            continue  # Q é observação instantânea; o perfil não emite A/TTM.
         anuais = ge[ge["anual"].astype(bool)]
         if anuais_ent is not None:
             if d not in anuais_ent:

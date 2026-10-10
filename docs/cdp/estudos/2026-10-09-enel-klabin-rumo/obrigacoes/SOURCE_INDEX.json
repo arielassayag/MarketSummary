@@ -1,0 +1,199 @@
+{
+  "schema": "cdp.rumo.obrigacoes.fontes_publicas/v1",
+  "contexto": {
+    "publicacao_historica": "7f0d368c1a5bba0c1bbe948aea38dda232e34852",
+    "gerador_historico": "af6eb0c93d7c14efaa49bd658c0a502f4e9aedb9",
+    "retrato": "2026-10-09",
+    "corte_UTC": "2026-10-09T14:19:57.833570+00:00",
+    "replay07_nao_e_prova09": true,
+    "natureza": "apoio_documental_sem_aceite_economico_ou_PIT"
+  },
+  "identificacao": {
+    "issuer_id": "BR_RUMO",
+    "entidade": "Rumo S.A.",
+    "cnpj": "02.387.241/0001-60",
+    "natureza_CNPJ": "herdado_CVM_sem_nova_conferencia_primaria",
+    "natureza_issuer": "mapeamento_curatorial_versionado",
+    "versao": "rumo-obrigacoes-v1",
+    "moeda": "BRL",
+    "escala": "MIL",
+    "base": "grupo/controladas na nota do consolidado",
+    "tipo_periodo": "estoques_pontuais_com_comparativos_nativos_nao_TTM"
+  },
+  "fontes": {
+    "RUMO_PDF_2T26": {
+      "source_id": "RUMO_PDF_2T26",
+      "tipo": "PDF_publico_primario_RI",
+      "entidade_reportada": "Rumo S.A.",
+      "sha256": "ba0083fabddc262ccf391e14123d00910b8965d628b2d6718bfab7fd5a741a35",
+      "bytes": 1185213,
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/003f6029-d45a-44ac-9c9e-869fe5df83fc/e563721f-ed1f-b028-f29b-edc251818619?origin=2",
+      "url_final": "https://api.mziq.com/mzfilemanager/v2/d/003f6029-d45a-44ac-9c9e-869fe5df83fc/e563721f-ed1f-b028-f29b-edc251818619?origin=2",
+      "datas_colunas": [
+        "2026-06-30",
+        "2025-12-31"
+      ],
+      "papel_colunas": [
+        "original_do_documento",
+        "comparativo_nativo_do_documento"
+      ],
+      "n_paginas": 102,
+      "paginas_fisicas": [
+        35,
+        39,
+        67,
+        68,
+        80,
+        81,
+        90,
+        91,
+        92
+      ],
+      "publicado_instante_UTC": null,
+      "recibo_literal_original_SHA": "c86e1b3df8c484b102beb856b47b0442ee96b562d7ae4a20a67f0fca5469a5ec",
+      "recibo_projecao": {
+        "url_observada": "https://api.mziq.com/mzfilemanager/v2/d/003f6029-d45a-44ac-9c9e-869fe5df83fc/e563721f-ed1f-b028-f29b-edc251818619?origin=2",
+        "url_final": "https://api.mziq.com/mzfilemanager/v2/d/003f6029-d45a-44ac-9c9e-869fe5df83fc/e563721f-ed1f-b028-f29b-edc251818619?origin=2",
+        "inicio_utc": "2026-10-09T18:18:33.595645+00:00",
+        "recebido_utc": "2026-10-09T18:18:35.688355+00:00",
+        "status": 200,
+        "sha256": "ba0083fabddc262ccf391e14123d00910b8965d628b2d6718bfab7fd5a741a35",
+        "bytes": 1185213
+      },
+      "projecao_recibo": "Metadados derivados de recibo histórico; não nova HTTP, assinatura ou prova independente do evento passado."
+    },
+    "RUMO_PDF_4T25": {
+      "source_id": "RUMO_PDF_4T25",
+      "tipo": "PDF_publico_primario_RI",
+      "entidade_reportada": "Rumo S.A.",
+      "sha256": "ed34eb3cd60505dd2b1024afd613cd9a06a36c075d472c4a66c1b7f28952e982",
+      "bytes": 1232576,
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/003f6029-d45a-44ac-9c9e-869fe5df83fc/6ee246be-abc2-a58f-13f4-39dbf47c8cf0?origin=2",
+      "url_final": "https://api.mziq.com/mzfilemanager/v2/d/003f6029-d45a-44ac-9c9e-869fe5df83fc/6ee246be-abc2-a58f-13f4-39dbf47c8cf0?origin=2",
+      "datas_colunas": [
+        "2025-12-31",
+        "2024-12-31"
+      ],
+      "papel_colunas": [
+        "original_do_documento",
+        "comparativo_nativo_do_documento"
+      ],
+      "n_paginas": 140,
+      "paginas_fisicas": [
+        33,
+        74,
+        75,
+        99,
+        100,
+        101,
+        119,
+        120,
+        121
+      ],
+      "publicado_instante_UTC": null,
+      "recibo_literal_original_SHA": "48584cd2dee226f37a722dc57c3a208765b23a7fa34b2d485f8309f27bd905b7",
+      "recibo_projecao": {
+        "url_observada": "https://api.mziq.com/mzfilemanager/v2/d/003f6029-d45a-44ac-9c9e-869fe5df83fc/6ee246be-abc2-a58f-13f4-39dbf47c8cf0?origin=2",
+        "url_final": "https://api.mziq.com/mzfilemanager/v2/d/003f6029-d45a-44ac-9c9e-869fe5df83fc/6ee246be-abc2-a58f-13f4-39dbf47c8cf0?origin=2",
+        "inicio_utc": "2026-10-09T18:52:19.545732+00:00",
+        "recebido_utc": "2026-10-09T18:52:20.687390+00:00",
+        "status": 200,
+        "sha256": "ed34eb3cd60505dd2b1024afd613cd9a06a36c075d472c4a66c1b7f28952e982",
+        "bytes": 1232576
+      },
+      "projecao_recibo": "Metadados derivados de recibo histórico; não nova HTTP, assinatura ou prova independente do evento passado."
+    },
+    "RUMO_PDF_2T25": {
+      "source_id": "RUMO_PDF_2T25",
+      "tipo": "PDF_publico_primario_RI",
+      "entidade_reportada": "Rumo S.A.",
+      "sha256": "16bd36189133e78b96e1eac9148999d2c4fef6c62261b0b4e63963004c9fe882",
+      "bytes": 2484940,
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/003f6029-d45a-44ac-9c9e-869fe5df83fc/e466510f-2d3d-e096-40b5-b5e0886006d9?origin=2",
+      "url_final": "https://api.mziq.com/mzfilemanager/v2/d/003f6029-d45a-44ac-9c9e-869fe5df83fc/e466510f-2d3d-e096-40b5-b5e0886006d9?origin=2",
+      "datas_colunas": [
+        "2025-06-30",
+        "2024-12-31"
+      ],
+      "papel_colunas": [
+        "original_do_documento",
+        "comparativo_nativo_do_documento"
+      ],
+      "n_paginas": 91,
+      "paginas_fisicas": [
+        30,
+        56,
+        57,
+        69,
+        70,
+        79,
+        80,
+        81,
+        82
+      ],
+      "publicado_instante_UTC": null,
+      "recibo_literal_original_SHA": "679db2f443d5a3767f876302aee4c2eba3d7dbf3f6d80ec754902aefee52765b",
+      "recibo_projecao": {
+        "url_observada": "https://api.mziq.com/mzfilemanager/v2/d/003f6029-d45a-44ac-9c9e-869fe5df83fc/e466510f-2d3d-e096-40b5-b5e0886006d9?origin=2",
+        "url_final": "https://api.mziq.com/mzfilemanager/v2/d/003f6029-d45a-44ac-9c9e-869fe5df83fc/e466510f-2d3d-e096-40b5-b5e0886006d9?origin=2",
+        "inicio_utc": "2026-10-09T18:40:48.357009+00:00",
+        "recebido_utc": "2026-10-09T18:40:49.478862+00:00",
+        "status": 200,
+        "sha256": "16bd36189133e78b96e1eac9148999d2c4fef6c62261b0b4e63963004c9fe882",
+        "bytes": 2484940
+      },
+      "projecao_recibo": "Metadados derivados de recibo histórico; não nova HTTP, assinatura ou prova independente do evento passado."
+    }
+  },
+  "proveniencia_fechada": [
+    {
+      "id": "Rumo_perimetro_37",
+      "manifesto_SHA": "be29187988709dc1197eadf181ab212ae4d352bac5cdbd02eb5917cc9015afe6",
+      "freeze_SHA": "a1902b29abfe8135e0f60787149ce9e6cc30355dbd09848f12442448cad4a37c",
+      "recibo_SHA": "455c24edfd520b072bb341ffc9fd3d80076d52bfa158b2b52611d1b1e712ff7c",
+      "n_fisicos": 37
+    },
+    {
+      "id": "Revisao_documental_25",
+      "manifesto_SHA": "dac3e9410d5753a8ab3341dee06fde1bcf32dbd06b8fbafbf79ce1ae3e83a8e9",
+      "freeze_SHA": "9b18869af91095d011a7069d8c593eb9a2be62f0d9617eb7486190755b905eb4",
+      "recibo_SHA": "14e775d09053f9187c333545f6a7d3550b3559642c5e03cda8170d1bc9335120",
+      "n_fisicos": 25
+    },
+    {
+      "id": "ANTT_negativa_15",
+      "manifesto_SHA": "8bd3c5b11378cc30c9492ffd9abd698cd458fb6eb672320ac43f807fa6b72f56",
+      "freeze_SHA": "73aeedb70dccb9a9e6e6024a7094fd5f30907645c28738df1a08cb66d1e3ab96",
+      "recibo_SHA": "d0045e37726871a59a0495b547d0843f40b839a792b066f6a9f29a466587c41c",
+      "n_fisicos": 15
+    }
+  ],
+  "revisao_documental_recebida_ROOT_SHA": "1204335def1ee15036393c9d55906d93072e03d8d26b20e7d17f46f158ec1012",
+  "ANTT_descoberta_e_negativa": {
+    "recibo_negativo": {
+      "url_observada": "https://www.gov.br/antt/pt-br/assuntos/ferrovias/concessoes-ferroviarias/rumo-malha-oeste-s-a/contrato-de-concessao-e-aditivos/5o-termo-aditivo-ao-contrato-de-concessao-da-rumo-malha-oeste.pdf",
+      "inicio_utc": "2026-10-09T21:43:05.262148+00:00",
+      "metodo": "GET urllib.request padrão, sem header User-Agent personalizado, sem chave, sem retry",
+      "tentativa": 1,
+      "status": 403,
+      "content_type": "text/html; charset=iso-8859-1",
+      "bytes": 199,
+      "sha256": "5b13fb5957b84ef7bb9d0b6cd509c947ff6a37d67efdac2b896ddd3b908aad10",
+      "recebido_utc": "2026-10-09T21:43:05.514799+00:00",
+      "body_completo_lido": true,
+      "erro": "HTTPError"
+    },
+    "recibo_literal_original_SHA": "b85c1bea01247d240376ad55dc0a97408581538cd2d707a75b2250be735ca82c",
+    "catalogo_URL": "https://www.gov.br/antt/pt-br/assuntos/ferrovias/concessoes-ferroviarias/rumo-malha-oeste-s-a/contrato-de-concessao-e-aditivos",
+    "catalogo_publicacao_exibida": "02/07/2026 14h20",
+    "catalogo_timezone": null,
+    "paginas_informadas_web": 23,
+    "PDF200_local_autenticado": false,
+    "GET_neste_candidato": 0,
+    "limite": "Descoberta web e recepção urllib403 são meios distintos. Não autentica instrumento/cláusulas/implementação, nem nega existência pública. Sem retry ou contorno."
+  },
+  "corpos_externos_nao_distribuidos": true,
+  "GET_neste_candidato": 0,
+  "recepcoes_novamente_contadas": false,
+  "revisao_25": "Favorável no escopo documental; qualificação jurídica, econômica e PIT permanece aberta."
+}

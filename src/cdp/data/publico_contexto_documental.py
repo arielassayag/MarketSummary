@@ -36,6 +36,10 @@ def _perfil(schema):
         from . import publico_supervielle
 
         return publico_supervielle
+    if schema in {"cdp.galicia.patrimonio_owners/v1", "cdp.supervielle.patrimonio_owners/v1"}:
+        from .publico_patrimonio_owners import perfil_schema
+
+        return perfil_schema(schema)
     raise ExtracaoRecusada("Perfil documental desconhecido")
 
 
@@ -193,6 +197,8 @@ def contexto_documental(row):
     if not isinstance(ctx, Mapping) or sha != _sha(_canonico(ctx)):
         raise ExtracaoRecusada("Contexto documental/hash divergente")
     perfil = _perfil(ctx.get("schema"))
+    if not getattr(perfil, "SUPORTA_COMPOSICAO", True) and ctx.get("tipo") != "celula_primaria":
+        raise ExtracaoRecusada("Perfil de estoque não autoriza composição financeira")
     if ctx.get("tipo") not in {
         "celula_primaria",
         "composicao",
@@ -215,7 +221,7 @@ def contexto_documental(row):
     if (
         len(roles) != len(dependencies)
         or len(set(roles)) != len(roles)
-        or not set(roles) <= {"junho", "anual"}
+        or not set(roles) <= set(getattr(perfil, "PAPEIS_DEPENDENCIA", ("junho", "anual")))
     ):
         raise ExtracaoRecusada("Dependências documentais incompletas/duplicadas")
     available = max(
@@ -342,6 +348,14 @@ def contexto_composicao(componentes):
         "disponivel_desde": max(_instante(d["limite_captura"]) for d in deps).isoformat(),
     }
     return _envelope(ctx)
+
+
+def estoque_documental(row):
+    """Coluna instantânea explicitamente comprovada; não cria período de fluxo."""
+    envelope = contexto_documental(row)
+    return bool(envelope and getattr(
+        _perfil(envelope["contexto_documental"]["schema"]), "DATA_ESTOQUE_COMPROVADA", False
+    ))
 
 
 def conferir_contexto_participantes(row):

@@ -2392,7 +2392,7 @@ function highlights(expos, basis) {
   var exc = arr(expos).filter(function (e) { return e.status === "excesso"; });
   if (exc.length) it("crit", "Excesso", "Exposições acima do limite: " + exc.map(expoTxt).join("; ") + ".");
   var drift = arr(expos).filter(function (e) { return e.status === "alerta"; });
-  if (drift.length) it("warn", "Alerta", (basis === "daily" ? "Exposições acima do limite pela variação de preços desde a decisão (reequilibradas no próximo rebalanceamento): " : "Exposições acima de limite de alerta: ") + drift.map(expoTxt).join("; ") + ".");
+  if (drift.length) it("warn", "Alerta", (basis === "daily" ? "Exposições acima do limite no registro diário: " : "Exposições acima de limite de alerta: ") + drift.map(expoTxt).join("; ") + ".");
   var ack = arr(g(LIVEW, "decision.acknowledged_soft_checks"));
   if (ack.length) it("info", "Reconhecido", "Limites de alerta reconhecidos pelo comitê na decisão de " + fdate(LIVEW.week) + ": " + ack.map(gateName).join("; ") + ".");
   var laAll = LD ? arr(LD.alerts) : [];
@@ -3451,7 +3451,7 @@ function expoTone(e) {
 }
 function expoState(e, basis) {
   if (e.status === "excesso") return pill("Excesso", "crit");
-  if (e.status === "alerta") return pill(basis === "daily" ? "Acima (variação de preços)" : "Acima do alerta", "warn");
+  if (e.status === "alerta") return pill(basis === "daily" ? "Acima no fechamento" : "Acima do alerta", "warn");
   if (!isNum(e.limit)) return h("span", { class: "muted" }, "sem limite");
   if (isNum(e.utilization) && e.utilization >= 0.9) return pill("No limite", "info");
   return h("span", { class: "muted" }, "dentro");
@@ -3549,7 +3549,7 @@ function renderRisco(p) {
   if (ex && arr(ex.exposures).length) bases.push(["ex_ante", "Carteira decidida em " + fdate(RK.live_week), ex.exposures]);
   var curExpo = bases.length ? bases[0][2] : [];
   var basis = bases.length ? bases[0][0] : null;
-  var basisLine = dl ? "risco medido no fechamento de " + fdate(RK.as_of_date) + " (pesos com a variação de preços desde a decisão)" : ex ? "risco ex-ante da carteira decidida em " + fdate(RK.live_week) : null;
+  var basisLine = dl ? "risco medido no fechamento de " + fdate(RK.as_of_date) + " (pesos registrados no fechamento)" : ex ? "risco ex-ante da carteira decidida em " + fdate(RK.live_week) : null;
 
   /* 1. resumo contra o mandato */
   var vsrc = dl || ex || {};
@@ -3664,12 +3664,12 @@ function renderRisco(p) {
   var mon = latestMonitor();
   var stops = mon && mon.data ? arr(g(mon.data, "squeeze.stops_intradiario")).map(function (x) { return { r: x, base: "intradiário" }; })
     .concat(arr(g(mon.data, "squeeze.stops_fechamento")).map(function (x) { return { r: x, base: "fechamento" }; })) : [];
-  var sqB = block("Shorts e risco de squeeze", "escore de risco de recompra forçada; parecer da pesquisa ao lado",
+  var sqB = block("Shorts e risco de squeeze", "Squeeze, aluguel, liquidez e distribuição são da decisão de " + fdate(RK.live_week) + "; pesos " + (RK.as_of_date ? "do fechamento de " + fdate(RK.as_of_date) : "da decisão") + ". Ocorrências do fechamento são mostradas separadamente.",
     byb.length ? h("div", { class: "chips" }, byb.map(function (b) { return h("span", { class: "chip" }, h("span", { class: "sq " + b.bucket }, SQ_PT[b.bucket] || b.bucket), " " + plural(b.n, "nome", "nomes") + (isNum(b.weight) ? " · " + pct(b.weight, 2) : "")); })) : null,
     sqs.length ? table([
       { label: "Emissor", get: function (r) { return r.name || nm(r.issuer_id); }, render: function (r) { return h("span", null, r.name || nm(r.issuer_id), h("span", { class: "cellsub" }, tk(r.ticker))); } },
-      { label: "Squeeze", get: function (r) { return r.score; }, render: function (r) { return sqTag(r.bucket, r.score); } },
-      { label: "Peso", num: true, get: function (r) { return r.weight; }, render: function (r) { return spct(r.weight); } },
+      { label: "Squeeze na decisão", get: function (r) { return r.score; }, render: function (r) { return sqTag(r.bucket, r.score); } },
+      { label: RK.as_of_date ? "Peso no fechamento" : "Peso na decisão", num: true, get: function (r) { return r.weight; }, render: function (r) { return spct(r.weight); } },
       { label: "Aluguel a.a.", num: true, get: function (r) { return r.borrow_fee_annual; }, render: function (r) { return pct(r.borrow_fee_annual); } },
       { label: "Dias p/ recomprar", num: true, get: function (r) { return r.days_to_liquidate; }, render: function (r) { return days(r.days_to_liquidate); } },
       { label: "% ADTV", num: true, get: function (r) { return r.pct_adtv; }, render: function (r) { return pct(r.pct_adtv, 1); } },
@@ -4192,7 +4192,7 @@ function renderRelatorios(p) {
   var seen = {};
   items.forEach(function (i) { seen[i.key] = 1; });
   RIDX.forEach(function (r) {
-    var k = (r.kind === "weekly" ? "w:" : "d:") + r.date;
+    var k = (r.kind === "weekly" ? "w:" : r.kind === "semanal" ? "s:" : "d:") + r.date;
     if (!seen[k]) { items.push({ kind: r.kind, date: r.date, key: k, md: null, notExported: true, path: reportPath(r) }); seen[k] = 1; }
   });
   items.sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : (a.kind === "weekly" ? -1 : 1); });
@@ -4205,12 +4205,22 @@ function renderRelatorios(p) {
     cur = it; lsSet("report", it.key);
     listEl.querySelectorAll(".repitem").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-key") === it.key ? "true" : "false"); });
     view.textContent = "";
-    var title = (it.kind === "weekly" ? "Relatório semanal · semana de " : "Relatório diário · ") + fdate(it.date);
+    var title = (it.kind === "weekly" ? "Relatório da decisão · semana de " : it.kind === "semanal" ? "Relatório semanal de resultado · " : "Relatório diário · ") + fdate(it.date);
     var meta = h("div", { class: "chips" });
     if (it.rep && isNum(it.rep.ret)) meta.appendChild(chip("dia " + spct(it.rep.ret)));
     if (it.rep && isNum(it.rep.nav_end)) meta.appendChild(chip("PL " + usd(it.rep.nav_end)));
     if (it.memo) meta.appendChild(pill("Memorando da decisão", "info"));
     view.appendChild(h("div", { class: "block-h" }, h("h3", null, title), meta.childNodes.length ? meta : null));
+    var editorial = RIDX.filter(function (r) { return r.kind === it.kind && r.date === it.date; })[0];
+    if (it.kind === "semanal" && editorial && arr(editorial.retificacoes).length) {
+      var notice = h("div", { class: "stack" }, h("p", { class: "prose" }, "Há retificação editorial vinculada a este relatório. O original foi preservado; leia a nota antes de interpretar seu comentário."));
+      arr(editorial.retificacoes).forEach(function (r) {
+        if (!/^[a-f0-9]{64}$/.test(r.id)) return;
+        var rp = reportPath(editorial);
+        if (rp) notice.appendChild(h("a", { class: "go", href: rp.replace(/relatorio\.md$/, "retificacoes/" + r.id + "/retificacao.html") }, "Ler a retificação editorial →"));
+      });
+      view.appendChild(block("Retificação editorial", null, notice));
+    }
     var c = it.rep && it.rep.commentary ? obj(it.rep.commentary) : null;
     if (c && has(c.markdown)) {
       view.appendChild(h("div", { class: "comment" },
@@ -4221,7 +4231,7 @@ function renderRelatorios(p) {
     var full = !has(it.md) && META.profile === "site" ? RIDX.filter(function (r) { return r.kind === it.kind && r.date === it.date && r.has_md; })[0] : null;
     if (full) {
       var rp = reportPath(full);
-      view.appendChild(block(null, null, h("p", { class: "prose" }, it.kind === "weekly" ? "O relatório completo da semana — decisão, carteira, risco e pesquisa — está publicado nos dados abertos do portal." : "O relatório completo do dia está publicado nos dados abertos do portal."),
+      view.appendChild(block(null, null, h("p", { class: "prose" }, it.kind === "weekly" ? "O relatório completo da semana — decisão, carteira, risco e pesquisa — está publicado nos dados abertos do portal." : it.kind === "semanal" ? "O relatório semanal de resultado original está preservado nos dados abertos do portal." : "O relatório completo do dia está publicado nos dados abertos do portal."),
         h("div", { class: "pre-go" }, h("a", { class: "go", href: full.has_html ? rp.replace(/\.md$/, ".html") : rp }, "Ler o relatório completo →"), full.has_html ? h("a", { class: "go", href: rp, download: "" }, "Baixar (texto)") : null)));
     } else if (it.notExported) view.appendChild(empty("Este relatório não acompanha esta versão do portal."));
     else if (!has(it.md) && PUB) view.appendChild(empty("O texto completo do relatório não acompanha esta versão do portal. " + (it.kind === "weekly" ? "A decisão da semana está em Comitê de investimento." : "O comentário do dia aparece acima quando disponível.")));
@@ -4230,7 +4240,7 @@ function renderRelatorios(p) {
   }
   items.forEach(function (it) {
     var b = h("button", { class: "repitem", type: "button", "data-key": it.key, "aria-pressed": "false" },
-      h("span", null, h("b", null, fdate(it.date)), h("small", null, " " + (it.kind === "weekly" ? "semanal" : "diário"))),
+      h("span", null, h("b", null, fdate(it.date)), h("small", null, " " + (it.kind === "weekly" ? "decisão semanal" : it.kind === "semanal" ? "resultado semanal" : "diário"))),
       h("small", null, it.rep && isNum(it.rep.ret) ? spct(it.rep.ret) : it.memo ? "memorando" : ""));
     b.addEventListener("click", function () { show(it); });
     listEl.appendChild(b);

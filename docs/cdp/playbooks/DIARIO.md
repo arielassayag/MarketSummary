@@ -23,6 +23,9 @@ tom: `docs/cdp/ESTILO.md`; tese: `docs/cdp/TESE.md`.
   na revisão mensal dos modelos (passo 6), `book/cobertura/revisoes/<data>/revisao.json`.
   Nunca edite `configs/`, `src/`, `data/`, os demais arquivos de `book/` e de `reports/` nem
   `docs/cdp/teses/` (rascunhos entregues de fora do clone: corrija só a cópia no livro).
+  A exceção editorial é somente o JSON novo `.cdp/retificacoes/<data>.json`, no schema
+  `RetificacaoSemanal`, conforme [Retificação editorial](../RETIFICACAO_EDITORIAL.md). O código
+  anexa a nota e seu evento; nunca edite o relatório ou o comentário original selado.
 - As publicações (`daily publish`, `tese publish`, `close-report --publish`,
   `cobertura revisao-mensal publicar`) são **imutáveis**: valide antes.
 - **Só os comandos deste roteiro** (a CLI do CDP) e leitura dos arquivos gravados pelo
@@ -32,6 +35,13 @@ tom: `docs/cdp/ESTILO.md`; tese: `docs/cdp/TESE.md`.
 - Nunca desligue o kill switch. `cdp reinicio --executar` só na condição da seção "Pré-início".
 
 ## 0. Entrada da execução (uma vez por execução)
+
+Quando uma sessão de operador estiver explicitamente autorizada para retificação editorial
+e o executor ainda tiver código que não reconhece essa pendência, a atualização canônica
+somente das fontes pode ser necessária **antes do primeiro gate novo**, conforme
+[Retificação editorial](../RETIFICACAO_EDITORIAL.md). Isso não grava o livro nem autoriza
+novo contato com chat. Não se aplica à recuperação de um no-op agendado: `executar: false`
+sempre encerra a rotina, sem sincronização, repetição do gate ou `--manual` como contorno.
 
 Numa rotina agendada, a skill ou o prompt da rotina já fez estes três passos: use os valores
 guardados e siga do passo 1. **Nunca rode o gate de novo na mesma execução.** Numa sessão de
@@ -86,9 +96,15 @@ uv run python -m cdp agenda
 - `fechamentos_pendentes_excedem_limite: true` → pare e peça intervenção no resumo.
 - `relatorio_semanal` e `cobertura` (retrato da noite e revisão mensal): tratados no passo 6,
   depois dos fechamentos.
+- `retificacao_editorial.pendente: true` → trate a pendência por
+  [Retificação editorial](../RETIFICACAO_EDITORIAL.md) antes do passo 7. Se for o único item do
+  gate, pule os passos financeiros 2 a 6: não repita MOC, registro diário, tese, coleta ou
+  relatório semanal. Falha de integridade ou recibo original incompleto → pare e relate;
+  nunca regrave o original para resolver a pendência.
 - Fora do pré-início (`fase: "operacao"`): se as duas primeiras listas estiverem vazias, a tese da
   semana corrente não estiver pendente e não houver `relatorio_semanal.pendente`,
-  `cobertura.snapshot_pendente` nem `cobertura.revisao_mensal.pendente`, siga para o passo 7 (o
+  `cobertura.snapshot_pendente`, `cobertura.revisao_mensal.pendente` nem
+  `retificacao_editorial.pendente`, siga para o passo 7 (o
   gate só deixa a execução chegar aqui com algo pendente; sem nada, o resumo diz "Nada a fazer:
   último registro <data> publicado").
 

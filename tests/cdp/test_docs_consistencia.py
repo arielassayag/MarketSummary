@@ -540,8 +540,6 @@ def test_fund_activation_draft_merges_into_a_valid_config(tmp_path: Path):
     assert "docs/cdp/ativacao/fund_ativacao.yaml" in _ler("docs/cdp/EM_ANDAMENTO.md")
 
 
-@pytest.mark.xfail(strict=False, reason="GEMINI.md sem dono nesta onda: ainda descreve o GitHub "
-                   "Actions como caminho sem supervisão (pendência em docs/cdp/EM_ANDAMENTO.md)")
 def test_gemini_md_points_to_the_app_scheduler():
     texto = " ".join(_ler("GEMINI.md").split())
     assert "seção 5" not in texto  # a seção 5 da AUTOMACAO.md é o Codex

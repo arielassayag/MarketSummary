@@ -828,7 +828,7 @@ def verify_market_integrity(market_root: Path) -> CheckResult:
 
 @dataclass(frozen=True)
 class ReportInfo:
-    kind: str  # daily | weekly
+    kind: str  # daily | weekly (decisão) | semanal (resultado)
     key: date
     folder: Path
     md: Path | None
@@ -856,7 +856,7 @@ def list_reports(reports_root: Path, kind: str | None = None) -> list[ReportInfo
         except OSError:
             return False
 
-    for k in ("daily", "weekly"):
+    for k in ("daily", "weekly", "semanal"):
         if kind is not None and k != kind:
             continue
         base = root / k

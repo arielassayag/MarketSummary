@@ -24,8 +24,10 @@ ir_csll                   DRE nível 1 "Imposto de Renda e Contribuição Social
 lucro_liquido             DRE nível 1 "Lucro/Prejuízo Consolidado do Período"
 lucro_liquido_controladores  filha "Atribuído a Sócios da Empresa Controladora" (zero reservado ⇒
                           lucro consolidado − não controladores; sem a irmã ⇒ ausente)
-d_a                       DVA ``7.04.01`` (módulo); na falta, soma das linhas de depreciação,
-                          amortização e exaustão da DFC indireta (``6.01.01.xx``)
+d_a / d_a_dfc             soma das rubricas identificadas integralmente como depreciação,
+                          amortização e exaustão restituídas na DFC indireta; sem DFC
+                          classificada, ausente (DVA não completa o conceito)
+retencoes_dva             rubrica DVA ``7.04.01`` com sinal reportado, separada de D&A
 cfo                       DFC ``6.01``
 capex                     −Σ aquisições de imobilizado, intangível, ativo de contrato de concessão,
                           ativo biológico (plantio e tratos) e infraestrutura em ``6.02.xx``
@@ -120,7 +122,8 @@ def _membro(nomes: list[str], sufixo: str) -> str | None:
 def ler_zip_demonstracoes(conteudo: bytes, doc: str, ano: int,
                           cnpjs: Iterable[str] | None = None, *,
                           conservar_comparativos: bool = False, registro_comparativos=None,
-                          conhecimento_ate=None, contextos_politica=()) -> dict[str, pd.DataFrame]:
+                          conhecimento_ate=None, contextos_politica=(),
+                          preservar_semantica_capital: bool = False) -> dict[str, pd.DataFrame]:
     """Tabelas brutas (texto) do ZIP DFP/ITR, só ``ORDEM_EXERC = ÚLTIMO`` e os ``cnpjs``.
 
     Chaves: ``index``, ``<TAB>_con``/``<TAB>_ind`` para ``TABELAS`` e ``capital``.
@@ -128,6 +131,8 @@ def ler_zip_demonstracoes(conteudo: bytes, doc: str, ano: int,
     ÚLTIMO. Esse ledger documental não alimenta ``fatos_cvm`` ou o seletor financeiro.
     """
     alvo = None if cnpjs is None else {str(c).strip() for c in cnpjs}
+    if not isinstance(preservar_semantica_capital, bool):
+        raise ValueError("preservar_semantica_capital exige bool explícito")
     if not isinstance(conservar_comparativos, bool):
         raise ValueError("conservar_comparativos exige bool explícito")
     if not conservar_comparativos and (registro_comparativos is not None
@@ -165,6 +170,19 @@ def ler_zip_demonstracoes(conteudo: bytes, doc: str, ano: int,
         if alvo is not None and not cap.empty:
             cap = cap[cap["CNPJ_CIA"].astype(str).str.strip().isin(alvo)]
         out["capital"] = cap.reset_index(drop=True)
+        if preservar_semantica_capital:
+            from hashlib import sha256
+            raw = (pd.read_csv(io.BytesIO(zf.read(n_cap)), sep=";", encoding="latin1",
+                dtype=str, keep_default_na=False) if n_cap else pd.DataFrame())
+            linhas = [{'raw': row.to_dict(), 'registro_csv_1based': int(index) + 2}
+                for index, row in raw.iterrows()
+                if alvo is None or str(row.get('CNPJ_CIA', '')).strip() in alvo]
+            out["capital"].attrs['capital_semantica_linhas'] = linhas
+            out["capital"].attrs['capital_semantica_fonte'] = {
+                'arquivo_sha256': sha256(conteudo).hexdigest(), 'membro': n_cap,
+                'membro_sha256': sha256(zf.read(n_cap)).hexdigest() if n_cap else None,
+                'indice_membro': n_idx,
+                'indice_membro_sha256': sha256(zf.read(n_idx)).hexdigest() if n_idx else None}
     if conservar_comparativos:
         from .publico_cvm_comparativos import conservar_exercicios
         out["exercicios_reportados"] = conservar_exercicios(
@@ -431,14 +449,85 @@ def _itens_dfc(dfc: pd.DataFrame) -> tuple[list[pd.DataFrame], list[dict]]:
     div["value"] = -div["value"]
     out.append(_item(div, "dividendos_pagos", "DFC", K))
     out.append(_item(rec, "recompras", "DFC", K))
-    da = d[d["cd"].str.match(r"^6\.01\.01\.\d{2}$") & d["ds"].str.contains(
-        r"deprec|amortiz|exaust") & ~d["ds"].str.contains(
-        r"custo|agio|mais.valia|antecipad|juros|emprestim|debentur|financiament|captacao|"
-        r"transacao|premio")]
-    da = _soma(da, K)
-    da["value"] = da["value"].abs()
-    out.append(_item(da, "d_a_dfc", "DFC", K))
+    da, qa_da = _da_dfc_identificada(d, K)
+    qa.extend(qa_da)
+    da_item = _item(da, "d_a_dfc", "DFC", K)
+    da_item["nota"] = da["nota"]
+    out.append(da_item)
     return out, qa
+
+
+# Classificação finita da rubrica completa, não presença de uma palavra parcial.
+# Qualificadores de ativos não mudam o conceito; impairment/baixa/reversão não estão aqui.
+_RE_DA_RUBRICA = re.compile(
+    r"^(?:depreciacao|depreciacoes|amortizacao|amortizacoes|exaustao)"
+    r"(?: (?:de|do|dos|da|das) (?:ativos biologicos|ativos de direito de uso|"
+    r"ativos imobilizados|ativo imobilizado|imobilizado|ativos intangiveis|"
+    r"ativo intangivel|intangivel|intangiveis))?$"
+)
+
+
+def _rubrica_da_identificada(descricao: str) -> bool:
+    partes = re.split(r"\s*(?:,|/|&|\be\b)\s*", descricao)
+    return bool(partes) and all(_RE_DA_RUBRICA.fullmatch(p.strip()) for p in partes)
+
+
+def _da_dfc_identificada(d: pd.DataFrame, key: list[str], *,
+                         codigo: str = r"^6\.01\.01\.\d{2}$") -> tuple[pd.DataFrame, list[dict]]:
+    """D&A no próprio grão da DFC, sem converter perdas em D&A por coincidência.
+
+    Um termo misto/indeterminado impede certificar a soma do grupo. Amortização de
+    financiamento/custo não é um candidato de D&A. Moeda ausente/divergente e montante
+    negativo impedem a magnitude, sem preenchimento; zero explicitamente publicado vale.
+    """
+    # Nomes financeiros completos não são D&A. Não excluir por uma palavra parcial:
+    # "depreciação e juros/baixa" é misto e precisa impedir a soma do grupo.
+    nao_da = d["ds"].isin({
+        "amortizacao de encargos financeiros", "amortizacao de juros",
+        "amortizacao de emprestimos, financiamentos e debentures",
+        "amortizacao de principal de emprestimos, financiamentos e debentures",
+        "amortizacao de principal de arrendamento mercantil",
+        "amortizacao de custos de transacao", "amortizacao de custos de captacao",
+    })
+    candidatos = d[d["cd"].str.match(codigo) & d["ds"].str.contains(
+        r"deprec|amortiz|exaust") & ~nao_da]
+    candidatos = _sem_ancestral(candidatos, key)
+    partes, qa = [], []
+    for grupo_key, g in candidatos.groupby(key, sort=False, dropna=False):
+        # MI/MD podem repetir a mesma conta: não são parcelas disjuntas da soma.
+        # Nenhum método tem preferência documental implícita. Zero também é observação.
+        conflitos = {cd: sorted(set(v)) for cd, v in g.groupby("cd")["value"]
+                     if v.nunique(dropna=False) > 1}
+        if conflitos:
+            qa.append({"cnpj": grupo_key[0], "dt_refer": grupo_key[1], "versao": grupo_key[2],
+                       "msg": ("D&A da DFC recusada: mesma conta com montantes concorrentes "
+                               f"{conflitos}; intervalo {g['dt_ini'].iloc[0]} a "
+                               f"{g['dt_fim'].iloc[0]}; sem preferência entre métodos")})
+            continue
+        if not g["dt_ini"].le(g["dt_fim"]).all():
+            qa.append({"cnpj": grupo_key[0], "dt_refer": grupo_key[1], "versao": grupo_key[2],
+                       "msg": ("D&A da DFC recusada: intervalo invertido "
+                               f"{g['dt_ini'].iloc[0]} a {g['dt_fim'].iloc[0]}")})
+            continue
+        moedas = g["currency"].dropna().unique()
+        valido = (g["ds"].map(_rubrica_da_identificada).all() and g["value"].ge(0).all()
+                  and g["currency"].notna().all() and len(moedas) == 1
+                  and isinstance(moedas[0], str) and re.fullmatch(r"[A-Z]{3}", moedas[0]))
+        if valido:
+            partes.append(g.drop_duplicates(key + ["cd", "value", "currency"]))
+        else:
+            qa.append({"cnpj": grupo_key[0], "dt_refer": grupo_key[1], "versao": grupo_key[2],
+                       "msg": "D&A da DFC indeterminada: rubrica mista/não classificada, "
+                              "sinal ou moeda incompatível; DVA não substitui a restituição"})
+    da = _soma(pd.concat(partes, ignore_index=True) if partes else candidatos.iloc[0:0], key)
+    if partes:
+        rubricas = (pd.concat(partes, ignore_index=True).groupby(key, as_index=False, dropna=False)
+                    .agg(nota=("ds", lambda v: "D&A da DFC: descrições normalizadas "
+                               + " / ".join(sorted(set(v))))))
+        da = da.merge(rubricas, on=key, how="left")
+    else:
+        da["nota"] = pd.Series(dtype=object)
+    return da, qa
 
 
 def _itens_dva(dva: pd.DataFrame) -> list[pd.DataFrame]:
@@ -449,8 +538,10 @@ def _itens_dva(dva: pd.DataFrame) -> list[pd.DataFrame]:
     da = d[(d["cd"] == "7.04.01") | ((d["level"] == 2) & d["cd"].str.startswith("7.04.")
                                      & d["ds"].str.contains(r"deprec|amortiz|exaust"))]
     da = _primeira(da, K).copy()
-    da["value"] = da["value"].abs()
-    return [_item(da, "d_a", "DVA", K)]
+    item = _item(da, "retencoes_dva", "DVA", K)
+    item["nota"] = ("retenção DVA reportada com sinal; descrição normalizada: " + da["ds"]
+                    + "; não certifica D&A pura nem restituição na DFC")
+    return [item]
 
 
 def _itens_bpa(bpa: pd.DataFrame, fin: pd.DataFrame) -> list[pd.DataFrame]:
@@ -523,8 +614,13 @@ def _itens_bpp(bpp: pd.DataFrame, fin: pd.DataFrame) -> list[pd.DataFrame]:
 
 
 def _itens_capital(capital: pd.DataFrame, dre: pd.DataFrame, eq_doc: pd.DataFrame,
-                   ni_flows: pd.DataFrame) -> pd.DataFrame:
+                   ni_flows: pd.DataFrame, *, preservar_semantica_capital: bool = False,
+                   indice_capital: pd.DataFrame | None = None) -> pd.DataFrame:
+    if not isinstance(preservar_semantica_capital, bool):
+        raise ValueError("preservar_semantica_capital exige bool explícito")
     cols = ["cnpj", "dt_refer", "versao", "item", "value"]
+    if preservar_semantica_capital:
+        cols += ['semantica_capital']
     need = {"CNPJ_CIA", "DT_REFER", "VERSAO", "QT_ACAO_TOTAL_CAP_INTEGR", "QT_ACAO_TOTAL_TESOURO"}
     if capital is None or capital.empty or not need <= set(capital.columns):
         return pd.DataFrame(columns=cols)
@@ -539,6 +635,10 @@ def _itens_capital(capital: pd.DataFrame, dre: pd.DataFrame, eq_doc: pd.DataFram
         "tes": pd.to_numeric(capital["QT_ACAO_TOTAL_TESOURO"], errors="coerce"),
     }).dropna(subset=["dt_refer", "versao"])
     raw["versao"] = raw["versao"].astype(int)
+    if preservar_semantica_capital:
+        from .publico_capital_semantica import contextos_composicao
+        contexts = contextos_composicao(capital, indice_capital)
+        raw['semantica_capital'] = pd.Series(contexts, index=capital.index).reindex(raw.index)
     m = corr.merge(raw, on=["cnpj", "dt_refer", "versao"], how="inner")
     m = m[(m["total"] - m["tes"]) > 0]
     fator = m["value"] / (m["total"] - m["tes"])
@@ -548,30 +648,42 @@ def _itens_capital(capital: pd.DataFrame, dre: pd.DataFrame, eq_doc: pd.DataFram
         linhas.append(pd.DataFrame({"cnpj": m["cnpj"], "dt_refer": m["dt_refer"],
                                     "versao": m["versao"], "item": item, "value": v,
                                     "unidade": m["scale_check"]}))
+        if preservar_semantica_capital:
+            from .publico_capital_semantica import para_item
+            linhas[-1]['semantica_capital'] = [para_item(ctx, item, unit)
+                for ctx, unit in zip(m['semantica_capital'], m['scale_check'], strict=True)]
     out = pd.concat(linhas, ignore_index=True)
     return out[cols + ["unidade"]]
 
 
-def _preferir_dva(f: pd.DataFrame) -> pd.DataFrame:
-    """D&A da DVA quando existe; senão a soma das linhas da DFC indireta (mesmo período)."""
-    k = ["cnpj", "dt_refer", "versao", "dt_ini", "dt_fim"]
-    dva = f[f["item"] == "d_a"][k].drop_duplicates().assign(_tem=True)
-    dfc = f[f["item"] == "d_a_dfc"].merge(dva, on=k, how="left")
-    usar = dfc[dfc["_tem"].isna()].drop(columns="_tem").assign(item="d_a")
-    resto = f[f["item"] != "d_a_dfc"]
-    return pd.concat([resto, usar], ignore_index=True)
+def _identificar_da_dfc(f: pd.DataFrame) -> pd.DataFrame:
+    """Alias do mesmo fato DFC identificado; a retenção DVA continua distinta.
+
+    Nenhum join com DVA, outra consolidação, moeda ou filing; nenhum residual/subtração.
+    Mantém d_a_dfc para o consumidor que exige restituição de D&A na DFC.
+    """
+    da = f[f["item"] == "d_a_dfc"].copy().assign(item="d_a")
+    return pd.concat([f, da], ignore_index=True)
 
 
-def fatos_cvm(tabelas: dict[str, pd.DataFrame], doc: str) -> pd.DataFrame:
+def fatos_cvm(tabelas: dict[str, pd.DataFrame], doc: str, *,
+              preservar_semantica_capital: bool = False) -> pd.DataFrame:
     """Fatos canônicos (``FATO_COLUNAS``) de um ZIP DFP/ITR já lido.
 
     ``received_date`` = ``DT_RECEB`` da versão do documento; ``url`` = ``LINK_DOC`` (documento
     no sistema da CVM). Linhas sem data de recebimento conhecida são descartadas.
     """
+    if not isinstance(preservar_semantica_capital, bool):
+        raise ValueError("preservar_semantica_capital exige bool explícito")
     doc_u = doc.upper()
     idx = tabelas.get("index", pd.DataFrame())
+    def semanticamente(df):
+        if preservar_semantica_capital:
+            from .publico_capital_semantica import contextos_composicao
+            df.attrs['capital_semantica'] = contextos_composicao(tabelas.get('capital'), idx)
+        return df
     if idx is None or idx.empty:
-        return _com_qa(pd.DataFrame(columns=FATO_COLUNAS), [], doc_u)
+        return semanticamente(_com_qa(pd.DataFrame(columns=FATO_COLUNAS), [], doc_u))
     rec = pd.DataFrame({
         "cnpj": idx["CNPJ_CIA"].astype(str).str.strip(),
         "dt_refer": pd.to_datetime(idx["DT_REFER"], errors="coerce"),
@@ -598,7 +710,7 @@ def fatos_cvm(tabelas: dict[str, pd.DataFrame], doc: str) -> pd.DataFrame:
         f = pd.concat(partes, ignore_index=True)
         if "dt_ini" not in f.columns:
             f["dt_ini"] = pd.NaT
-        frames.append(_preferir_dva(f))
+        frames.append(_identificar_da_dfc(f))
     # ações (composição do capital), com a unidade conferida
     ni = [p for p in it_dre if not p.empty and p["item"].iloc[0] == "lucro_liquido"]
     ni_flows = (ni[0].rename(columns={"dt_ini": "period_start", "dt_fim": "period_end"})
@@ -607,13 +719,14 @@ def fatos_cvm(tabelas: dict[str, pd.DataFrame], doc: str) -> pd.DataFrame:
     eq = [p for p in it_bpp if not p.empty and p["item"].iloc[0] == "patrimonio_liquido"]
     eq_doc = (eq[0].drop_duplicates(["cnpj", "dt_refer", "versao"])[
         ["cnpj", "dt_refer", "versao", "value"]] if eq else None)
-    cap = _itens_capital(tabelas.get("capital", pd.DataFrame()), dre, eq_doc, ni_flows)
+    cap = _itens_capital(tabelas.get("capital", pd.DataFrame()), dre, eq_doc, ni_flows,
+                         **({'preservar_semantica_capital': True, 'indice_capital': idx} if preservar_semantica_capital else {}))
     if not cap.empty:
         cap = cap.assign(kind="con", dt_ini=pd.NaT, dt_fim=cap["dt_refer"], currency=None,
                          demonstrativo="BP")
         frames.append(cap)
     if not frames:
-        return _com_qa(pd.DataFrame(columns=FATO_COLUNAS), [], doc_u)
+        return semanticamente(_com_qa(pd.DataFrame(columns=FATO_COLUNAS), [], doc_u))
     f = pd.concat(frames, ignore_index=True)
     for c in ("dt_refer", "dt_ini", "dt_fim"):
         f[c] = pd.to_datetime(f[c], errors="coerce")
@@ -643,10 +756,10 @@ def fatos_cvm(tabelas: dict[str, pd.DataFrame], doc: str) -> pd.DataFrame:
         "consolidado": f["kind"].astype(str).eq("con"),
         "anual": doc_u == "DFP",
     })
-    opcionais = [c for c in ("semantica_fluxo", "rubrica_reportada") if c in f.columns]
+    opcionais = [c for c in ("semantica_fluxo", "rubrica_reportada", "semantica_capital", "nota") if c in f.columns]
     for c in opcionais:
         out[c] = f[c]
-    return _com_qa(out[FATO_COLUNAS + opcionais].reset_index(drop=True), qa_capex, doc_u)
+    return semanticamente(_com_qa(out[FATO_COLUNAS + opcionais].reset_index(drop=True), qa_capex, doc_u))
 
 
 def _com_qa(df: pd.DataFrame, qa: list[dict], doc: str) -> pd.DataFrame:

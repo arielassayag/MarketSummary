@@ -1,0 +1,5029 @@
+{
+  "schema": "cdp-estudo-documental-publico-v1",
+  "autor": "Codex; derivação dos estudos fechados, sem revisão não autora deste candidato",
+  "corte_historico_UTC": "2026-10-09T14:19:57.833570+00:00",
+  "commit_snapshot": "7f0d368c1a5bba0c1bbe948aea38dda232e34852",
+  "commit_gerador": "af6eb0c93d7c14efaa49bd658c0a502f4e9aedb9",
+  "base_DEV_candidato": "3c27b35914eb03b135987df6aefe3e87e2c1e7b6",
+  "fontes": {
+    "CVM_ITR2026": {
+      "tipo": "ZIP",
+      "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/ITR/DADOS/itr_cia_aberta_2026.zip",
+      "sha256": "0e1ef74291d2143e7bb55247b01c8bbd94995d995536f70f0d19de1d79d7e38c",
+      "bytes": 19634453,
+      "recibos": [
+        {
+          "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/ITR/DADOS/itr_cia_aberta_2026.zip",
+          "recebido_utc": "2026-10-07T22:26:46.497295+00:00",
+          "bytes": 19634453,
+          "sha256": "0e1ef74291d2143e7bb55247b01c8bbd94995d995536f70f0d19de1d79d7e38c",
+          "status_http": null,
+          "publicacao_instante_utc": null
+        },
+        {
+          "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/ITR/DADOS/itr_cia_aberta_2026.zip",
+          "recebido_utc": "2026-10-07T22:31:23.783907+00:00",
+          "bytes": 19634453,
+          "sha256": "0e1ef74291d2143e7bb55247b01c8bbd94995d995536f70f0d19de1d79d7e38c",
+          "status_http": null,
+          "publicacao_instante_utc": null
+        },
+        {
+          "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/ITR/DADOS/itr_cia_aberta_2026.zip",
+          "recebido_utc": "2026-10-09T14:13:32.273674+00:00",
+          "bytes": 19634453,
+          "sha256": "0e1ef74291d2143e7bb55247b01c8bbd94995d995536f70f0d19de1d79d7e38c",
+          "status_http": null,
+          "publicacao_instante_utc": null
+        },
+        {
+          "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/ITR/DADOS/itr_cia_aberta_2026.zip",
+          "recebido_utc": "2026-10-09T14:16:21.331534+00:00",
+          "bytes": 19634453,
+          "sha256": "0e1ef74291d2143e7bb55247b01c8bbd94995d995536f70f0d19de1d79d7e38c",
+          "status_http": null,
+          "publicacao_instante_utc": null
+        }
+      ],
+      "status_HTTP_nao_registrado_no_indice_nativo": true,
+      "filing_data_civil": null
+    },
+    "CVM_ITR2025": {
+      "tipo": "ZIP",
+      "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/ITR/DADOS/itr_cia_aberta_2025.zip",
+      "sha256": "efe754841bed9eac2a3138c92a187060842c1746845e9471749be5c91819dc51",
+      "bytes": 31660219,
+      "recibos": [
+        {
+          "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/ITR/DADOS/itr_cia_aberta_2025.zip",
+          "recebido_utc": "2026-10-07T22:26:45.662932+00:00",
+          "bytes": 31660219,
+          "sha256": "efe754841bed9eac2a3138c92a187060842c1746845e9471749be5c91819dc51",
+          "status_http": null,
+          "publicacao_instante_utc": null
+        },
+        {
+          "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/ITR/DADOS/itr_cia_aberta_2025.zip",
+          "recebido_utc": "2026-10-07T22:31:22.967888+00:00",
+          "bytes": 31660219,
+          "sha256": "efe754841bed9eac2a3138c92a187060842c1746845e9471749be5c91819dc51",
+          "status_http": null,
+          "publicacao_instante_utc": null
+        },
+        {
+          "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/ITR/DADOS/itr_cia_aberta_2025.zip",
+          "recebido_utc": "2026-10-09T14:13:26.726478+00:00",
+          "bytes": 31660219,
+          "sha256": "efe754841bed9eac2a3138c92a187060842c1746845e9471749be5c91819dc51",
+          "status_http": null,
+          "publicacao_instante_utc": null
+        },
+        {
+          "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/ITR/DADOS/itr_cia_aberta_2025.zip",
+          "recebido_utc": "2026-10-09T14:16:20.622516+00:00",
+          "bytes": 31660219,
+          "sha256": "efe754841bed9eac2a3138c92a187060842c1746845e9471749be5c91819dc51",
+          "status_http": null,
+          "publicacao_instante_utc": null
+        }
+      ],
+      "status_HTTP_nao_registrado_no_indice_nativo": true,
+      "filing_data_civil": null
+    },
+    "CVM_DFP2025": {
+      "tipo": "ZIP",
+      "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2025.zip",
+      "sha256": "d7aec54e7c67998e4cd3ef94c463ab247f09a6baaa2254878d1e431f28130e2a",
+      "bytes": 12784140,
+      "recibos": [
+        {
+          "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2025.zip",
+          "recebido_utc": "2026-10-07T22:26:43.407735+00:00",
+          "bytes": 12784140,
+          "sha256": "d7aec54e7c67998e4cd3ef94c463ab247f09a6baaa2254878d1e431f28130e2a",
+          "status_http": null,
+          "publicacao_instante_utc": null
+        },
+        {
+          "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2025.zip",
+          "recebido_utc": "2026-10-07T22:31:27.225524+00:00",
+          "bytes": 12784140,
+          "sha256": "d7aec54e7c67998e4cd3ef94c463ab247f09a6baaa2254878d1e431f28130e2a",
+          "status_http": null,
+          "publicacao_instante_utc": null
+        },
+        {
+          "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2025.zip",
+          "recebido_utc": "2026-10-09T14:13:18.637799+00:00",
+          "bytes": 12784140,
+          "sha256": "d7aec54e7c67998e4cd3ef94c463ab247f09a6baaa2254878d1e431f28130e2a",
+          "status_http": null,
+          "publicacao_instante_utc": null
+        },
+        {
+          "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2025.zip",
+          "recebido_utc": "2026-10-09T14:16:21.936288+00:00",
+          "bytes": 12784140,
+          "sha256": "d7aec54e7c67998e4cd3ef94c463ab247f09a6baaa2254878d1e431f28130e2a",
+          "status_http": null,
+          "publicacao_instante_utc": null
+        }
+      ],
+      "status_HTTP_nao_registrado_no_indice_nativo": true,
+      "filing_data_civil": null
+    },
+    "ENEL_XML2025": {
+      "tipo": "XML",
+      "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+      "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+      "bytes": 38598294,
+      "recibos": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+          "recebido_utc": "2026-10-07T03:18:30+00:00",
+          "bytes": 38598294,
+          "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+          "status_http": null,
+          "publicacao_instante_utc": null
+        }
+      ],
+      "filing_data_civil": "2026-04-28",
+      "precisao_recebimento": "seconds",
+      "copia_posterior_nao_e_HTTP": true
+    },
+    "RUMO_PDF6M2026": {
+      "tipo": "PDF",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/003f6029-d45a-44ac-9c9e-869fe5df83fc/e563721f-ed1f-b028-f29b-edc251818619?origin=2",
+      "sha256": "ba0083fabddc262ccf391e14123d00910b8965d628b2d6718bfab7fd5a741a35",
+      "bytes": 1185213,
+      "recibos": [
+        {
+          "url": "https://api.mziq.com/mzfilemanager/v2/d/003f6029-d45a-44ac-9c9e-869fe5df83fc/e563721f-ed1f-b028-f29b-edc251818619?origin=2",
+          "recebido_utc": "2026-10-09T18:18:35.688355+00:00",
+          "bytes": 1185213,
+          "sha256": "ba0083fabddc262ccf391e14123d00910b8965d628b2d6718bfab7fd5a741a35",
+          "status_http": 200,
+          "publicacao_instante_utc": null
+        }
+      ],
+      "filing_data_civil": null,
+      "posterior_ao_corte": true,
+      "publicacao_instante_utc": null
+    },
+    "RUMO_PDF2025": {
+      "tipo": "PDF",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/003f6029-d45a-44ac-9c9e-869fe5df83fc/6ee246be-abc2-a58f-13f4-39dbf47c8cf0?origin=2",
+      "sha256": "ed34eb3cd60505dd2b1024afd613cd9a06a36c075d472c4a66c1b7f28952e982",
+      "bytes": 1232576,
+      "recibos": [
+        {
+          "url": "https://api.mziq.com/mzfilemanager/v2/d/003f6029-d45a-44ac-9c9e-869fe5df83fc/6ee246be-abc2-a58f-13f4-39dbf47c8cf0?origin=2",
+          "recebido_utc": "2026-10-09T18:52:20.687390+00:00",
+          "bytes": 1232576,
+          "sha256": "ed34eb3cd60505dd2b1024afd613cd9a06a36c075d472c4a66c1b7f28952e982",
+          "status_http": 200,
+          "publicacao_instante_utc": null
+        }
+      ],
+      "filing_data_civil": null,
+      "posterior_ao_corte": true,
+      "publicacao_instante_utc": null
+    },
+    "RUMO_PDF6M2025": {
+      "tipo": "PDF",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/003f6029-d45a-44ac-9c9e-869fe5df83fc/e466510f-2d3d-e096-40b5-b5e0886006d9?origin=2",
+      "sha256": "16bd36189133e78b96e1eac9148999d2c4fef6c62261b0b4e63963004c9fe882",
+      "bytes": 2484940,
+      "recibos": [
+        {
+          "url": "https://api.mziq.com/mzfilemanager/v2/d/003f6029-d45a-44ac-9c9e-869fe5df83fc/e466510f-2d3d-e096-40b5-b5e0886006d9?origin=2",
+          "recebido_utc": "2026-10-09T18:40:49.478862+00:00",
+          "bytes": 2484940,
+          "sha256": "16bd36189133e78b96e1eac9148999d2c4fef6c62261b0b4e63963004c9fe882",
+          "status_http": 200,
+          "publicacao_instante_utc": null
+        }
+      ],
+      "filing_data_civil": null,
+      "posterior_ao_corte": true,
+      "publicacao_instante_utc": null
+    }
+  },
+  "enel_XML_ocorrencias_delimitadas": [
+    {
+      "grupo_documental": "owners",
+      "tag_xml": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}EquityAttributableToOwnersOfParent",
+      "ordinal_filho_xbrl_0base": 5053,
+      "contexto": {
+        "id": "As_Of_12_31_2025_lLIQjKNmBE-lkTZbnvs9hQ",
+        "entidade": "0001659939",
+        "inicio": null,
+        "fim": "2025-12-31",
+        "dimensoes": []
+      },
+      "unidade_xml": {
+        "id": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA",
+        "medidas": [
+          "iso4217:USD"
+        ],
+        "divisao": false
+      },
+      "valor_literal": "5175869000",
+      "valor_decimal_codigo": "5175869000",
+      "escala_multiplicativa": "1",
+      "decimals_precisao_nao_multiplicador": "-3",
+      "atributos_literais": {
+        "contextRef": "As_Of_12_31_2025_lLIQjKNmBE-lkTZbnvs9hQ",
+        "decimals": "-3",
+        "id": "Tc_AGSyg0IFgk-wvpyRm4Yxbg_31_4",
+        "unitRef": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA"
+      },
+      "estoque_ou_fluxo": "estoque",
+      "consolidacao": "total_sem_dimensoes",
+      "poder_aquisitivo_documental": null,
+      "periodo_documental": "20-F2025; não é balançoJune2026"
+    },
+    {
+      "grupo_documental": "owners",
+      "tag_xml": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}EquityAttributableToOwnersOfParent",
+      "ordinal_filho_xbrl_0base": 5054,
+      "contexto": {
+        "id": "As_Of_12_31_2024_yFL-VfzATUOaMyAwPlBcyQ",
+        "entidade": "0001659939",
+        "inicio": null,
+        "fim": "2024-12-31",
+        "dimensoes": []
+      },
+      "unidade_xml": {
+        "id": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA",
+        "medidas": [
+          "iso4217:USD"
+        ],
+        "divisao": false
+      },
+      "valor_literal": "4976415000",
+      "valor_decimal_codigo": "4976415000",
+      "escala_multiplicativa": "1",
+      "decimals_precisao_nao_multiplicador": "-3",
+      "atributos_literais": {
+        "contextRef": "As_Of_12_31_2024_yFL-VfzATUOaMyAwPlBcyQ",
+        "decimals": "-3",
+        "id": "Tc_1P0WEk_I-kiaT21Vq05qUA_31_6",
+        "unitRef": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA"
+      },
+      "estoque_ou_fluxo": "estoque",
+      "consolidacao": "total_sem_dimensoes",
+      "poder_aquisitivo_documental": null,
+      "periodo_documental": "20-F2025; não é balançoJune2026"
+    },
+    {
+      "grupo_documental": "owners",
+      "tag_xml": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}EquityAttributableToOwnersOfParent",
+      "ordinal_filho_xbrl_0base": 5055,
+      "contexto": {
+        "id": "As_Of_12_31_2023_2pZG7y_y20W1UUVjNmif3Q",
+        "entidade": "0001659939",
+        "inicio": null,
+        "fim": "2023-12-31",
+        "dimensoes": []
+      },
+      "unidade_xml": {
+        "id": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA",
+        "medidas": [
+          "iso4217:USD"
+        ],
+        "divisao": false
+      },
+      "valor_literal": "5068953000",
+      "valor_decimal_codigo": "5068953000",
+      "escala_multiplicativa": "1",
+      "decimals_precisao_nao_multiplicador": "-3",
+      "atributos_literais": {
+        "contextRef": "As_Of_12_31_2023_2pZG7y_y20W1UUVjNmif3Q",
+        "decimals": "-3",
+        "id": "Tc_ruv18bktdU2p0h37u_r70Q_31_8",
+        "unitRef": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA"
+      },
+      "estoque_ou_fluxo": "estoque",
+      "consolidacao": "total_sem_dimensoes",
+      "poder_aquisitivo_documental": null,
+      "periodo_documental": "20-F2025; não é balançoJune2026"
+    },
+    {
+      "grupo_documental": "NCI",
+      "tag_xml": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}NoncontrollingInterests",
+      "ordinal_filho_xbrl_0base": 5056,
+      "contexto": {
+        "id": "As_Of_12_31_2025_lLIQjKNmBE-lkTZbnvs9hQ",
+        "entidade": "0001659939",
+        "inicio": null,
+        "fim": "2025-12-31",
+        "dimensoes": []
+      },
+      "unidade_xml": {
+        "id": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA",
+        "medidas": [
+          "iso4217:USD"
+        ],
+        "divisao": false
+      },
+      "valor_literal": "373638000",
+      "valor_decimal_codigo": "373638000",
+      "escala_multiplicativa": "1",
+      "decimals_precisao_nao_multiplicador": "-3",
+      "atributos_literais": {
+        "contextRef": "As_Of_12_31_2025_lLIQjKNmBE-lkTZbnvs9hQ",
+        "decimals": "-3",
+        "id": "Tc_4wS-Fw_5gUaBWevZDe-ttQ_32_4",
+        "unitRef": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA"
+      },
+      "estoque_ou_fluxo": "estoque",
+      "consolidacao": "total_sem_dimensoes",
+      "poder_aquisitivo_documental": null,
+      "periodo_documental": "20-F2025; não é balançoJune2026"
+    },
+    {
+      "grupo_documental": "NCI",
+      "tag_xml": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}NoncontrollingInterests",
+      "ordinal_filho_xbrl_0base": 5057,
+      "contexto": {
+        "id": "As_Of_12_31_2024_yFL-VfzATUOaMyAwPlBcyQ",
+        "entidade": "0001659939",
+        "inicio": null,
+        "fim": "2024-12-31",
+        "dimensoes": []
+      },
+      "unidade_xml": {
+        "id": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA",
+        "medidas": [
+          "iso4217:USD"
+        ],
+        "divisao": false
+      },
+      "valor_literal": "368887000",
+      "valor_decimal_codigo": "368887000",
+      "escala_multiplicativa": "1",
+      "decimals_precisao_nao_multiplicador": "-3",
+      "atributos_literais": {
+        "contextRef": "As_Of_12_31_2024_yFL-VfzATUOaMyAwPlBcyQ",
+        "decimals": "-3",
+        "id": "Tc_Xi20LY9QoUafxu0XRO5uMA_32_6",
+        "unitRef": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA"
+      },
+      "estoque_ou_fluxo": "estoque",
+      "consolidacao": "total_sem_dimensoes",
+      "poder_aquisitivo_documental": null,
+      "periodo_documental": "20-F2025; não é balançoJune2026"
+    },
+    {
+      "grupo_documental": "NCI",
+      "tag_xml": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}NoncontrollingInterests",
+      "ordinal_filho_xbrl_0base": 5058,
+      "contexto": {
+        "id": "As_Of_12_31_2023_2pZG7y_y20W1UUVjNmif3Q",
+        "entidade": "0001659939",
+        "inicio": null,
+        "fim": "2023-12-31",
+        "dimensoes": []
+      },
+      "unidade_xml": {
+        "id": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA",
+        "medidas": [
+          "iso4217:USD"
+        ],
+        "divisao": false
+      },
+      "valor_literal": "358909000",
+      "valor_decimal_codigo": "358909000",
+      "escala_multiplicativa": "1",
+      "decimals_precisao_nao_multiplicador": "-3",
+      "atributos_literais": {
+        "contextRef": "As_Of_12_31_2023_2pZG7y_y20W1UUVjNmif3Q",
+        "decimals": "-3",
+        "id": "Tc_Hdp4cbH8xkeKuPrGmQMbRw_32_8",
+        "unitRef": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA"
+      },
+      "estoque_ou_fluxo": "estoque",
+      "consolidacao": "total_sem_dimensoes",
+      "poder_aquisitivo_documental": null,
+      "periodo_documental": "20-F2025; não é balançoJune2026"
+    },
+    {
+      "grupo_documental": "PL_total",
+      "tag_xml": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}Equity",
+      "ordinal_filho_xbrl_0base": 5059,
+      "contexto": {
+        "id": "As_Of_12_31_2025_lLIQjKNmBE-lkTZbnvs9hQ",
+        "entidade": "0001659939",
+        "inicio": null,
+        "fim": "2025-12-31",
+        "dimensoes": []
+      },
+      "unidade_xml": {
+        "id": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA",
+        "medidas": [
+          "iso4217:USD"
+        ],
+        "divisao": false
+      },
+      "valor_literal": "5549507000",
+      "valor_decimal_codigo": "5549507000",
+      "escala_multiplicativa": "1",
+      "decimals_precisao_nao_multiplicador": "-3",
+      "atributos_literais": {
+        "contextRef": "As_Of_12_31_2025_lLIQjKNmBE-lkTZbnvs9hQ",
+        "decimals": "-3",
+        "id": "Tc_XrLekj_eLkq0o_gnI1fGig_33_4",
+        "unitRef": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA"
+      },
+      "estoque_ou_fluxo": "estoque",
+      "consolidacao": "total_sem_dimensoes",
+      "poder_aquisitivo_documental": null,
+      "periodo_documental": "20-F2025; não é balançoJune2026"
+    },
+    {
+      "grupo_documental": "PL_total",
+      "tag_xml": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}Equity",
+      "ordinal_filho_xbrl_0base": 5060,
+      "contexto": {
+        "id": "As_Of_12_31_2024_yFL-VfzATUOaMyAwPlBcyQ",
+        "entidade": "0001659939",
+        "inicio": null,
+        "fim": "2024-12-31",
+        "dimensoes": []
+      },
+      "unidade_xml": {
+        "id": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA",
+        "medidas": [
+          "iso4217:USD"
+        ],
+        "divisao": false
+      },
+      "valor_literal": "5345302000",
+      "valor_decimal_codigo": "5345302000",
+      "escala_multiplicativa": "1",
+      "decimals_precisao_nao_multiplicador": "-3",
+      "atributos_literais": {
+        "contextRef": "As_Of_12_31_2024_yFL-VfzATUOaMyAwPlBcyQ",
+        "decimals": "-3",
+        "id": "Tc_0uNx26mPh0yH6y19gxQaGw_33_6",
+        "unitRef": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA"
+      },
+      "estoque_ou_fluxo": "estoque",
+      "consolidacao": "total_sem_dimensoes",
+      "poder_aquisitivo_documental": null,
+      "periodo_documental": "20-F2025; não é balançoJune2026"
+    },
+    {
+      "grupo_documental": "PL_total",
+      "tag_xml": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}Equity",
+      "ordinal_filho_xbrl_0base": 5061,
+      "contexto": {
+        "id": "As_Of_12_31_2023_2pZG7y_y20W1UUVjNmif3Q",
+        "entidade": "0001659939",
+        "inicio": null,
+        "fim": "2023-12-31",
+        "dimensoes": []
+      },
+      "unidade_xml": {
+        "id": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA",
+        "medidas": [
+          "iso4217:USD"
+        ],
+        "divisao": false
+      },
+      "valor_literal": "5427862000",
+      "valor_decimal_codigo": "5427862000",
+      "escala_multiplicativa": "1",
+      "decimals_precisao_nao_multiplicador": "-3",
+      "atributos_literais": {
+        "contextRef": "As_Of_12_31_2023_2pZG7y_y20W1UUVjNmif3Q",
+        "decimals": "-3",
+        "id": "Tc_S4Nv4n-zSUalljryRIUC8A_33_8",
+        "unitRef": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA"
+      },
+      "estoque_ou_fluxo": "estoque",
+      "consolidacao": "total_sem_dimensoes",
+      "poder_aquisitivo_documental": null,
+      "periodo_documental": "20-F2025; não é balançoJune2026"
+    },
+    {
+      "grupo_documental": "NI_total",
+      "tag_xml": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}ProfitLoss",
+      "ordinal_filho_xbrl_0base": 5125,
+      "contexto": {
+        "id": "Duration_1_1_2025_To_12_31_2025_pCpD7qPWMEyBuGJKL17gLA",
+        "entidade": "0001659939",
+        "inicio": "2025-01-01",
+        "fim": "2025-12-31",
+        "dimensoes": []
+      },
+      "unidade_xml": {
+        "id": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA",
+        "medidas": [
+          "iso4217:USD"
+        ],
+        "divisao": false
+      },
+      "valor_literal": "584899000",
+      "valor_decimal_codigo": "584899000",
+      "escala_multiplicativa": "1",
+      "decimals_precisao_nao_multiplicador": "-3",
+      "atributos_literais": {
+        "contextRef": "Duration_1_1_2025_To_12_31_2025_pCpD7qPWMEyBuGJKL17gLA",
+        "decimals": "-3",
+        "id": "Tc_a43vu0dTS0a_gM1gEm4PCw_26_4",
+        "unitRef": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA"
+      },
+      "estoque_ou_fluxo": "fluxo",
+      "consolidacao": "total_sem_dimensoes",
+      "poder_aquisitivo_documental": null,
+      "periodo_documental": "20-F2025; não é balançoJune2026"
+    },
+    {
+      "grupo_documental": "NI_total",
+      "tag_xml": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}ProfitLoss",
+      "ordinal_filho_xbrl_0base": 5126,
+      "contexto": {
+        "id": "Duration_1_1_2024_To_12_31_2024_9mbAv9hwb0iYcXpd4BJjWg",
+        "entidade": "0001659939",
+        "inicio": "2024-01-01",
+        "fim": "2024-12-31",
+        "dimensoes": []
+      },
+      "unidade_xml": {
+        "id": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA",
+        "medidas": [
+          "iso4217:USD"
+        ],
+        "divisao": false
+      },
+      "valor_literal": "202432000",
+      "valor_decimal_codigo": "202432000",
+      "escala_multiplicativa": "1",
+      "decimals_precisao_nao_multiplicador": "-3",
+      "atributos_literais": {
+        "contextRef": "Duration_1_1_2024_To_12_31_2024_9mbAv9hwb0iYcXpd4BJjWg",
+        "decimals": "-3",
+        "id": "Tc_gEW8tOb-9023b1uWrsn4tw_26_6",
+        "unitRef": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA"
+      },
+      "estoque_ou_fluxo": "fluxo",
+      "consolidacao": "total_sem_dimensoes",
+      "poder_aquisitivo_documental": null,
+      "periodo_documental": "20-F2025; não é balançoJune2026"
+    },
+    {
+      "grupo_documental": "NI_total",
+      "tag_xml": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}ProfitLoss",
+      "ordinal_filho_xbrl_0base": 5127,
+      "contexto": {
+        "id": "Duration_1_1_2023_To_12_31_2023_KXLoc7v1TkCqHzb5SL8cJQ",
+        "entidade": "0001659939",
+        "inicio": "2023-01-01",
+        "fim": "2023-12-31",
+        "dimensoes": []
+      },
+      "unidade_xml": {
+        "id": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA",
+        "medidas": [
+          "iso4217:USD"
+        ],
+        "divisao": false
+      },
+      "valor_literal": "809627000",
+      "valor_decimal_codigo": "809627000",
+      "escala_multiplicativa": "1",
+      "decimals_precisao_nao_multiplicador": "-3",
+      "atributos_literais": {
+        "contextRef": "Duration_1_1_2023_To_12_31_2023_KXLoc7v1TkCqHzb5SL8cJQ",
+        "decimals": "-3",
+        "id": "Tc_jQ1VXh9xY0GAnatW16QIaw_26_8",
+        "unitRef": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA"
+      },
+      "estoque_ou_fluxo": "fluxo",
+      "consolidacao": "total_sem_dimensoes",
+      "poder_aquisitivo_documental": null,
+      "periodo_documental": "20-F2025; não é balançoJune2026"
+    },
+    {
+      "grupo_documental": "NI_owners",
+      "tag_xml": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}ProfitLossAttributableToOwnersOfParent",
+      "ordinal_filho_xbrl_0base": 5128,
+      "contexto": {
+        "id": "Duration_1_1_2025_To_12_31_2025_pCpD7qPWMEyBuGJKL17gLA",
+        "entidade": "0001659939",
+        "inicio": "2025-01-01",
+        "fim": "2025-12-31",
+        "dimensoes": []
+      },
+      "unidade_xml": {
+        "id": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA",
+        "medidas": [
+          "iso4217:USD"
+        ],
+        "divisao": false
+      },
+      "valor_literal": "537629000",
+      "valor_decimal_codigo": "537629000",
+      "escala_multiplicativa": "1",
+      "decimals_precisao_nao_multiplicador": "-3",
+      "atributos_literais": {
+        "contextRef": "Duration_1_1_2025_To_12_31_2025_pCpD7qPWMEyBuGJKL17gLA",
+        "decimals": "-3",
+        "id": "Tc_ADexA3ZvZUqfneybfFexag_29_4",
+        "unitRef": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA"
+      },
+      "estoque_ou_fluxo": "fluxo",
+      "consolidacao": "total_sem_dimensoes",
+      "poder_aquisitivo_documental": null,
+      "periodo_documental": "20-F2025; não é balançoJune2026"
+    },
+    {
+      "grupo_documental": "NI_owners",
+      "tag_xml": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}ProfitLossAttributableToOwnersOfParent",
+      "ordinal_filho_xbrl_0base": 5129,
+      "contexto": {
+        "id": "Duration_1_1_2024_To_12_31_2024_9mbAv9hwb0iYcXpd4BJjWg",
+        "entidade": "0001659939",
+        "inicio": "2024-01-01",
+        "fim": "2024-12-31",
+        "dimensoes": []
+      },
+      "unidade_xml": {
+        "id": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA",
+        "medidas": [
+          "iso4217:USD"
+        ],
+        "divisao": false
+      },
+      "valor_literal": "153763000",
+      "valor_decimal_codigo": "153763000",
+      "escala_multiplicativa": "1",
+      "decimals_precisao_nao_multiplicador": "-3",
+      "atributos_literais": {
+        "contextRef": "Duration_1_1_2024_To_12_31_2024_9mbAv9hwb0iYcXpd4BJjWg",
+        "decimals": "-3",
+        "id": "Tc_gV0jfo0ntUuhk6RnuaqMFw_29_6",
+        "unitRef": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA"
+      },
+      "estoque_ou_fluxo": "fluxo",
+      "consolidacao": "total_sem_dimensoes",
+      "poder_aquisitivo_documental": null,
+      "periodo_documental": "20-F2025; não é balançoJune2026"
+    },
+    {
+      "grupo_documental": "NI_owners",
+      "tag_xml": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}ProfitLossAttributableToOwnersOfParent",
+      "ordinal_filho_xbrl_0base": 5130,
+      "contexto": {
+        "id": "Duration_1_1_2023_To_12_31_2023_KXLoc7v1TkCqHzb5SL8cJQ",
+        "entidade": "0001659939",
+        "inicio": "2023-01-01",
+        "fim": "2023-12-31",
+        "dimensoes": []
+      },
+      "unidade_xml": {
+        "id": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA",
+        "medidas": [
+          "iso4217:USD"
+        ],
+        "divisao": false
+      },
+      "valor_literal": "754195000",
+      "valor_decimal_codigo": "754195000",
+      "escala_multiplicativa": "1",
+      "decimals_precisao_nao_multiplicador": "-3",
+      "atributos_literais": {
+        "contextRef": "Duration_1_1_2023_To_12_31_2023_KXLoc7v1TkCqHzb5SL8cJQ",
+        "decimals": "-3",
+        "id": "Tc_uP_8jEjYKUaiR3IV2x7g-w_29_8",
+        "unitRef": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA"
+      },
+      "estoque_ou_fluxo": "fluxo",
+      "consolidacao": "total_sem_dimensoes",
+      "poder_aquisitivo_documental": null,
+      "periodo_documental": "20-F2025; não é balançoJune2026"
+    }
+  ],
+  "CVM_linhas": {
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82513": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 82513,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.01.01.02",
+        "DS_CONTA": "Depreciação e amortização",
+        "VL_CONTA": "1175564.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82515": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 82515,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.01.01.03",
+        "DS_CONTA": "Exaustão dos ativos biológicos",
+        "VL_CONTA": "1145773.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_DFP2025:dfp_cia_aberta_DFC_MI_con_2025.csv:46521": {
+      "SourceID": "CVM_DFP2025",
+      "membro": "dfp_cia_aberta_DFC_MI_con_2025.csv",
+      "membro_sha256": "67c048f3b76fd2c8c8b4bf445baf5265062b56684931ccbe4d1044fd439b6922",
+      "linha_csv_1base": 46521,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2025-12-31",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2025-01-01",
+        "DT_FIM_EXERC": "2025-12-31",
+        "CD_CONTA": "6.01.01.02",
+        "DS_CONTA": "Depreciação e amortização",
+        "VL_CONTA": "2292455.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_DFP2025:dfp_cia_aberta_DFC_MI_con_2025.csv:46525": {
+      "SourceID": "CVM_DFP2025",
+      "membro": "dfp_cia_aberta_DFC_MI_con_2025.csv",
+      "membro_sha256": "67c048f3b76fd2c8c8b4bf445baf5265062b56684931ccbe4d1044fd439b6922",
+      "linha_csv_1base": 46525,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2025-12-31",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2025-01-01",
+        "DT_FIM_EXERC": "2025-12-31",
+        "CD_CONTA": "6.01.01.04",
+        "DS_CONTA": "Exaustão dos ativos biológicos",
+        "VL_CONTA": "2697982.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2025:itr_cia_aberta_DFC_MI_con_2025.csv:133205": {
+      "SourceID": "CVM_ITR2025",
+      "membro": "itr_cia_aberta_DFC_MI_con_2025.csv",
+      "membro_sha256": "bad525d9f0706e13fd28d89db13019a2e041d34838e881894fe90a118073ded3",
+      "linha_csv_1base": 133205,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2025-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2025-01-01",
+        "DT_FIM_EXERC": "2025-06-30",
+        "CD_CONTA": "6.01.01.02",
+        "DS_CONTA": "Depreciação e amortização",
+        "VL_CONTA": "1107622.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2025:itr_cia_aberta_DFC_MI_con_2025.csv:133207": {
+      "SourceID": "CVM_ITR2025",
+      "membro": "itr_cia_aberta_DFC_MI_con_2025.csv",
+      "membro_sha256": "bad525d9f0706e13fd28d89db13019a2e041d34838e881894fe90a118073ded3",
+      "linha_csv_1base": 133207,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2025-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2025-01-01",
+        "DT_FIM_EXERC": "2025-06-30",
+        "CD_CONTA": "6.01.01.03",
+        "DS_CONTA": "Exaustão dos ativos biológicos",
+        "VL_CONTA": "1317945.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82579": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 82579,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.02.01",
+        "DS_CONTA": "Adição de bens do ativo imobilizado e intangível",
+        "VL_CONTA": "-942493.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82585": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 82585,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.02.04",
+        "DS_CONTA": "Adição de plantio e compras de madeira em pé",
+        "VL_CONTA": "-553274.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_DFP2025:dfp_cia_aberta_DFC_MI_con_2025.csv:46585": {
+      "SourceID": "CVM_DFP2025",
+      "membro": "dfp_cia_aberta_DFC_MI_con_2025.csv",
+      "membro_sha256": "67c048f3b76fd2c8c8b4bf445baf5265062b56684931ccbe4d1044fd439b6922",
+      "linha_csv_1base": 46585,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2025-12-31",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2025-01-01",
+        "DT_FIM_EXERC": "2025-12-31",
+        "CD_CONTA": "6.02.01",
+        "DS_CONTA": "Adição de bens do ativo imobilizado e intangível",
+        "VL_CONTA": "-1761866.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_DFP2025:dfp_cia_aberta_DFC_MI_con_2025.csv:46591": {
+      "SourceID": "CVM_DFP2025",
+      "membro": "dfp_cia_aberta_DFC_MI_con_2025.csv",
+      "membro_sha256": "67c048f3b76fd2c8c8b4bf445baf5265062b56684931ccbe4d1044fd439b6922",
+      "linha_csv_1base": 46591,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2025-12-31",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2025-01-01",
+        "DT_FIM_EXERC": "2025-12-31",
+        "CD_CONTA": "6.02.04",
+        "DS_CONTA": "Adição de plantio e compras de madeira em pé",
+        "VL_CONTA": "-1070097.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2025:itr_cia_aberta_DFC_MI_con_2025.csv:133271": {
+      "SourceID": "CVM_ITR2025",
+      "membro": "itr_cia_aberta_DFC_MI_con_2025.csv",
+      "membro_sha256": "bad525d9f0706e13fd28d89db13019a2e041d34838e881894fe90a118073ded3",
+      "linha_csv_1base": 133271,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2025-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2025-01-01",
+        "DT_FIM_EXERC": "2025-06-30",
+        "CD_CONTA": "6.02.01",
+        "DS_CONTA": "Adição de bens do ativo imobilizado e intangível",
+        "VL_CONTA": "-827918.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2025:itr_cia_aberta_DFC_MI_con_2025.csv:133277": {
+      "SourceID": "CVM_ITR2025",
+      "membro": "itr_cia_aberta_DFC_MI_con_2025.csv",
+      "membro_sha256": "bad525d9f0706e13fd28d89db13019a2e041d34838e881894fe90a118073ded3",
+      "linha_csv_1base": 133277,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2025-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2025-01-01",
+        "DT_FIM_EXERC": "2025-06-30",
+        "CD_CONTA": "6.02.04",
+        "DS_CONTA": "Adição de plantio e compras de madeira em pé",
+        "VL_CONTA": "-504404.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DVA_con_2026.csv:67987": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DVA_con_2026.csv",
+      "membro_sha256": "597065d0b66c407791378571fc5b9ccd725236e995d9c59a0498e37881cc9fc0",
+      "linha_csv_1base": 67987,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Demonstração de Valor Adicionado",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "7.04.01",
+        "DS_CONTA": "Depreciação, Amortização e Exaustão",
+        "VL_CONTA": "-2321337.0000000000",
+        "ST_CONTA_FIXA": "S"
+      }
+    },
+    "CVM_DFP2025:dfp_cia_aberta_DVA_con_2025.csv:36783": {
+      "SourceID": "CVM_DFP2025",
+      "membro": "dfp_cia_aberta_DVA_con_2025.csv",
+      "membro_sha256": "ca719f794884b3370935ae05865cfdb487273ec2329de2b81e5c2e1dde98b3c0",
+      "linha_csv_1base": 36783,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2025-12-31",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Demonstração de Valor Adicionado",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2025-01-01",
+        "DT_FIM_EXERC": "2025-12-31",
+        "CD_CONTA": "7.04.01",
+        "DS_CONTA": "Depreciação, Amortização e Exaustão",
+        "VL_CONTA": "-4990437.0000000000",
+        "ST_CONTA_FIXA": "S"
+      }
+    },
+    "CVM_ITR2025:itr_cia_aberta_DVA_con_2025.csv:111251": {
+      "SourceID": "CVM_ITR2025",
+      "membro": "itr_cia_aberta_DVA_con_2025.csv",
+      "membro_sha256": "f8b39f6c279400541bac3a0bed074302cdd0879ea5e646232f27cff91de6102e",
+      "linha_csv_1base": 111251,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2025-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Demonstração de Valor Adicionado",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2025-01-01",
+        "DT_FIM_EXERC": "2025-06-30",
+        "CD_CONTA": "7.04.01",
+        "DS_CONTA": "Depreciação, Amortização e Exaustão",
+        "VL_CONTA": "-2425567.0000000000",
+        "ST_CONTA_FIXA": "S"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82609": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 82609,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.03.04",
+        "DS_CONTA": "Pagamento de passivos de arrendamentos",
+        "VL_CONTA": "-307449.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_DFP2025:dfp_cia_aberta_DFC_MI_con_2025.csv:46615": {
+      "SourceID": "CVM_DFP2025",
+      "membro": "dfp_cia_aberta_DFC_MI_con_2025.csv",
+      "membro_sha256": "67c048f3b76fd2c8c8b4bf445baf5265062b56684931ccbe4d1044fd439b6922",
+      "linha_csv_1base": 46615,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2025-12-31",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2025-01-01",
+        "DT_FIM_EXERC": "2025-12-31",
+        "CD_CONTA": "6.03.04",
+        "DS_CONTA": "Pagamento de passivos de arrendamentos",
+        "VL_CONTA": "-497299.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2025:itr_cia_aberta_DFC_MI_con_2025.csv:133301": {
+      "SourceID": "CVM_ITR2025",
+      "membro": "itr_cia_aberta_DFC_MI_con_2025.csv",
+      "membro_sha256": "bad525d9f0706e13fd28d89db13019a2e041d34838e881894fe90a118073ded3",
+      "linha_csv_1base": 133301,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2025-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2025-01-01",
+        "DT_FIM_EXERC": "2025-06-30",
+        "CD_CONTA": "6.03.04",
+        "DS_CONTA": "Pagamento de passivos de arrendamentos",
+        "VL_CONTA": "-257423.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7427": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 7427,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.01.01.02",
+        "DS_CONTA": "Depreciação e amortização",
+        "VL_CONTA": "1048203.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_DFP2025:dfp_cia_aberta_DFC_MI_con_2025.csv:4233": {
+      "SourceID": "CVM_DFP2025",
+      "membro": "dfp_cia_aberta_DFC_MI_con_2025.csv",
+      "membro_sha256": "67c048f3b76fd2c8c8b4bf445baf5265062b56684931ccbe4d1044fd439b6922",
+      "linha_csv_1base": 4233,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2025-12-31",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2025-01-01",
+        "DT_FIM_EXERC": "2025-12-31",
+        "CD_CONTA": "6.01.01.02",
+        "DS_CONTA": "Depreciação e amortização",
+        "VL_CONTA": "2213331.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2025:itr_cia_aberta_DFC_MI_con_2025.csv:11771": {
+      "SourceID": "CVM_ITR2025",
+      "membro": "itr_cia_aberta_DFC_MI_con_2025.csv",
+      "membro_sha256": "bad525d9f0706e13fd28d89db13019a2e041d34838e881894fe90a118073ded3",
+      "linha_csv_1base": 11771,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2025-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2025-01-01",
+        "DT_FIM_EXERC": "2025-06-30",
+        "CD_CONTA": "6.01.01.02",
+        "DS_CONTA": "Depreciação e amortização",
+        "VL_CONTA": "1126851.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7505": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 7505,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.02.08",
+        "DS_CONTA": "Adições ao imobilizado, intangível e investimentos",
+        "VL_CONTA": "-3370831.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_DFP2025:dfp_cia_aberta_DFC_MI_con_2025.csv:4313": {
+      "SourceID": "CVM_DFP2025",
+      "membro": "dfp_cia_aberta_DFC_MI_con_2025.csv",
+      "membro_sha256": "67c048f3b76fd2c8c8b4bf445baf5265062b56684931ccbe4d1044fd439b6922",
+      "linha_csv_1base": 4313,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2025-12-31",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2025-01-01",
+        "DT_FIM_EXERC": "2025-12-31",
+        "CD_CONTA": "6.02.08",
+        "DS_CONTA": "Adições ao imobilizado, intangível e investimentos",
+        "VL_CONTA": "-6096341.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2025:itr_cia_aberta_DFC_MI_con_2025.csv:11849": {
+      "SourceID": "CVM_ITR2025",
+      "membro": "itr_cia_aberta_DFC_MI_con_2025.csv",
+      "membro_sha256": "bad525d9f0706e13fd28d89db13019a2e041d34838e881894fe90a118073ded3",
+      "linha_csv_1base": 11849,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2025-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2025-01-01",
+        "DT_FIM_EXERC": "2025-06-30",
+        "CD_CONTA": "6.02.08",
+        "DS_CONTA": "Adições ao imobilizado, intangível e investimentos",
+        "VL_CONTA": "-3159198.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DVA_con_2026.csv:6639": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DVA_con_2026.csv",
+      "membro_sha256": "597065d0b66c407791378571fc5b9ccd725236e995d9c59a0498e37881cc9fc0",
+      "linha_csv_1base": 6639,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração de Valor Adicionado",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "7.04.01",
+        "DS_CONTA": "Depreciação, Amortização e Exaustão",
+        "VL_CONTA": "-1048203.0000000000",
+        "ST_CONTA_FIXA": "S"
+      }
+    },
+    "CVM_DFP2025:dfp_cia_aberta_DVA_con_2025.csv:3769": {
+      "SourceID": "CVM_DFP2025",
+      "membro": "dfp_cia_aberta_DVA_con_2025.csv",
+      "membro_sha256": "ca719f794884b3370935ae05865cfdb487273ec2329de2b81e5c2e1dde98b3c0",
+      "linha_csv_1base": 3769,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2025-12-31",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração de Valor Adicionado",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2025-01-01",
+        "DT_FIM_EXERC": "2025-12-31",
+        "CD_CONTA": "7.04.01",
+        "DS_CONTA": "Depreciação, Amortização e Exaustão",
+        "VL_CONTA": "-2213331.0000000000",
+        "ST_CONTA_FIXA": "S"
+      }
+    },
+    "CVM_ITR2025:itr_cia_aberta_DVA_con_2025.csv:10501": {
+      "SourceID": "CVM_ITR2025",
+      "membro": "itr_cia_aberta_DVA_con_2025.csv",
+      "membro_sha256": "f8b39f6c279400541bac3a0bed074302cdd0879ea5e646232f27cff91de6102e",
+      "linha_csv_1base": 10501,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2025-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração de Valor Adicionado",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2025-01-01",
+        "DT_FIM_EXERC": "2025-06-30",
+        "CD_CONTA": "7.04.01",
+        "DS_CONTA": "Depreciação, Amortização e Exaustão",
+        "VL_CONTA": "-1809990.0000000000",
+        "ST_CONTA_FIXA": "S"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7517": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 7517,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.03.04",
+        "DS_CONTA": "Amortização de principal de arrendamento mercantil",
+        "VL_CONTA": "-218457.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_DFP2025:dfp_cia_aberta_DFC_MI_con_2025.csv:4325": {
+      "SourceID": "CVM_DFP2025",
+      "membro": "dfp_cia_aberta_DFC_MI_con_2025.csv",
+      "membro_sha256": "67c048f3b76fd2c8c8b4bf445baf5265062b56684931ccbe4d1044fd439b6922",
+      "linha_csv_1base": 4325,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2025-12-31",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2025-01-01",
+        "DT_FIM_EXERC": "2025-12-31",
+        "CD_CONTA": "6.03.04",
+        "DS_CONTA": "Amortização de principal de arrendamento mercantil",
+        "VL_CONTA": "-592842.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2025:itr_cia_aberta_DFC_MI_con_2025.csv:11861": {
+      "SourceID": "CVM_ITR2025",
+      "membro": "itr_cia_aberta_DFC_MI_con_2025.csv",
+      "membro_sha256": "bad525d9f0706e13fd28d89db13019a2e041d34838e881894fe90a118073ded3",
+      "linha_csv_1base": 11861,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2025-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2025-01-01",
+        "DT_FIM_EXERC": "2025-06-30",
+        "CD_CONTA": "6.03.04",
+        "DS_CONTA": "Amortização de principal de arrendamento mercantil",
+        "VL_CONTA": "-226523.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:182105": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_BPP_con_2026.csv",
+      "membro_sha256": "51aad64d205f053223b1df762fd80e831ca7afad1b34b72f90d36ef8746dd1e4",
+      "linha_csv_1base": 182105,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Balanço Patrimonial Passivo",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "2.01.04",
+        "DS_CONTA": "Empréstimos e Financiamentos",
+        "VL_CONTA": "2238821.0000000000",
+        "ST_CONTA_FIXA": "S"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:182171": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_BPP_con_2026.csv",
+      "membro_sha256": "51aad64d205f053223b1df762fd80e831ca7afad1b34b72f90d36ef8746dd1e4",
+      "linha_csv_1base": 182171,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Balanço Patrimonial Passivo",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "2.02.01",
+        "DS_CONTA": "Empréstimos e Financiamentos",
+        "VL_CONTA": "32620929.0000000000",
+        "ST_CONTA_FIXA": "S"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:182115": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_BPP_con_2026.csv",
+      "membro_sha256": "51aad64d205f053223b1df762fd80e831ca7afad1b34b72f90d36ef8746dd1e4",
+      "linha_csv_1base": 182115,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Balanço Patrimonial Passivo",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "2.01.04.03",
+        "DS_CONTA": "Financiamento por Arrendamento",
+        "VL_CONTA": "0.0000000000",
+        "ST_CONTA_FIXA": "S"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:182181": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_BPP_con_2026.csv",
+      "membro_sha256": "51aad64d205f053223b1df762fd80e831ca7afad1b34b72f90d36ef8746dd1e4",
+      "linha_csv_1base": 182181,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Balanço Patrimonial Passivo",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "2.02.01.03",
+        "DS_CONTA": "Financiamento por Arrendamento",
+        "VL_CONTA": "0.0000000000",
+        "ST_CONTA_FIXA": "S"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:182139": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_BPP_con_2026.csv",
+      "membro_sha256": "51aad64d205f053223b1df762fd80e831ca7afad1b34b72f90d36ef8746dd1e4",
+      "linha_csv_1base": 182139,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Balanço Patrimonial Passivo",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "2.01.05.02.06",
+        "DS_CONTA": "Passivos de arrendamentos",
+        "VL_CONTA": "381325.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:182205": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_BPP_con_2026.csv",
+      "membro_sha256": "51aad64d205f053223b1df762fd80e831ca7afad1b34b72f90d36ef8746dd1e4",
+      "linha_csv_1base": 182205,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Balanço Patrimonial Passivo",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "2.02.02.02.06",
+        "DS_CONTA": "Passivo de arrendamentos",
+        "VL_CONTA": "1458968.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:17121": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_BPP_con_2026.csv",
+      "membro_sha256": "51aad64d205f053223b1df762fd80e831ca7afad1b34b72f90d36ef8746dd1e4",
+      "linha_csv_1base": 17121,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Balanço Patrimonial Passivo",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "2.01.04",
+        "DS_CONTA": "Empréstimos e Financiamentos",
+        "VL_CONTA": "1081560.0000000000",
+        "ST_CONTA_FIXA": "S"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:17197": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_BPP_con_2026.csv",
+      "membro_sha256": "51aad64d205f053223b1df762fd80e831ca7afad1b34b72f90d36ef8746dd1e4",
+      "linha_csv_1base": 17197,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Balanço Patrimonial Passivo",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "2.02.01",
+        "DS_CONTA": "Empréstimos e Financiamentos",
+        "VL_CONTA": "21828287.0000000000",
+        "ST_CONTA_FIXA": "S"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:17131": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_BPP_con_2026.csv",
+      "membro_sha256": "51aad64d205f053223b1df762fd80e831ca7afad1b34b72f90d36ef8746dd1e4",
+      "linha_csv_1base": 17131,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Balanço Patrimonial Passivo",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "2.01.04.03",
+        "DS_CONTA": "Financiamento por Arrendamento",
+        "VL_CONTA": "0.0000000000",
+        "ST_CONTA_FIXA": "S"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:17207": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_BPP_con_2026.csv",
+      "membro_sha256": "51aad64d205f053223b1df762fd80e831ca7afad1b34b72f90d36ef8746dd1e4",
+      "linha_csv_1base": 17207,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Balanço Patrimonial Passivo",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "2.02.01.03",
+        "DS_CONTA": "Financiamento por Arrendamento",
+        "VL_CONTA": "0.0000000000",
+        "ST_CONTA_FIXA": "S"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:17157": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_BPP_con_2026.csv",
+      "membro_sha256": "51aad64d205f053223b1df762fd80e831ca7afad1b34b72f90d36ef8746dd1e4",
+      "linha_csv_1base": 17157,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Balanço Patrimonial Passivo",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "2.01.05.02.07",
+        "DS_CONTA": "Passivos de arrendamento",
+        "VL_CONTA": "664065.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:17163": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_BPP_con_2026.csv",
+      "membro_sha256": "51aad64d205f053223b1df762fd80e831ca7afad1b34b72f90d36ef8746dd1e4",
+      "linha_csv_1base": 17163,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Balanço Patrimonial Passivo",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "2.01.05.02.10",
+        "DS_CONTA": "Arrendamentos e concessões em litígio e parcelados",
+        "VL_CONTA": "197128.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:17237": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_BPP_con_2026.csv",
+      "membro_sha256": "51aad64d205f053223b1df762fd80e831ca7afad1b34b72f90d36ef8746dd1e4",
+      "linha_csv_1base": 17237,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Balanço Patrimonial Passivo",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "2.02.02.02.09",
+        "DS_CONTA": "Arrendamentos e concessões em litígio e parcelados",
+        "VL_CONTA": "4070484.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:17239": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_BPP_con_2026.csv",
+      "membro_sha256": "51aad64d205f053223b1df762fd80e831ca7afad1b34b72f90d36ef8746dd1e4",
+      "linha_csv_1base": 17239,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Balanço Patrimonial Passivo",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "2.02.02.02.10",
+        "DS_CONTA": "Passivos de arrendamento",
+        "VL_CONTA": "3804727.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7426": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 7426,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "PENÚLTIMO",
+        "DT_INI_EXERC": "2025-01-01",
+        "DT_FIM_EXERC": "2025-06-30",
+        "CD_CONTA": "6.01.01.02",
+        "DS_CONTA": "Depreciação e amortização",
+        "VL_CONTA": "1126851.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7454": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 7454,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "PENÚLTIMO",
+        "DT_INI_EXERC": "2025-01-01",
+        "DT_FIM_EXERC": "2025-06-30",
+        "CD_CONTA": "6.01.01.16",
+        "DS_CONTA": "Perda por redução ao valor recuperável",
+        "VL_CONTA": "683139.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7455": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 7455,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.01.01.16",
+        "DS_CONTA": "Perda por redução ao valor recuperável",
+        "VL_CONTA": "336487.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DVA_con_2026.csv:6636": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DVA_con_2026.csv",
+      "membro_sha256": "597065d0b66c407791378571fc5b9ccd725236e995d9c59a0498e37881cc9fc0",
+      "linha_csv_1base": 6636,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração de Valor Adicionado",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "PENÚLTIMO",
+        "DT_INI_EXERC": "2025-01-01",
+        "DT_FIM_EXERC": "2025-06-30",
+        "CD_CONTA": "7.04",
+        "DS_CONTA": "Retenções",
+        "VL_CONTA": "-1126851.0000000000",
+        "ST_CONTA_FIXA": "S"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DVA_con_2026.csv:6637": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DVA_con_2026.csv",
+      "membro_sha256": "597065d0b66c407791378571fc5b9ccd725236e995d9c59a0498e37881cc9fc0",
+      "linha_csv_1base": 6637,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração de Valor Adicionado",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "7.04",
+        "DS_CONTA": "Retenções",
+        "VL_CONTA": "-1048203.0000000000",
+        "ST_CONTA_FIXA": "S"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DVA_con_2026.csv:6638": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DVA_con_2026.csv",
+      "membro_sha256": "597065d0b66c407791378571fc5b9ccd725236e995d9c59a0498e37881cc9fc0",
+      "linha_csv_1base": 6638,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração de Valor Adicionado",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "PENÚLTIMO",
+        "DT_INI_EXERC": "2025-01-01",
+        "DT_FIM_EXERC": "2025-06-30",
+        "CD_CONTA": "7.04.01",
+        "DS_CONTA": "Depreciação, Amortização e Exaustão",
+        "VL_CONTA": "-1126851.0000000000",
+        "ST_CONTA_FIXA": "S"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DVA_con_2026.csv:6640": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DVA_con_2026.csv",
+      "membro_sha256": "597065d0b66c407791378571fc5b9ccd725236e995d9c59a0498e37881cc9fc0",
+      "linha_csv_1base": 6640,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração de Valor Adicionado",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "PENÚLTIMO",
+        "DT_INI_EXERC": "2025-01-01",
+        "DT_FIM_EXERC": "2025-06-30",
+        "CD_CONTA": "7.04.02",
+        "DS_CONTA": "Outras",
+        "VL_CONTA": "0.0000000000",
+        "ST_CONTA_FIXA": "S"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DVA_con_2026.csv:6641": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DVA_con_2026.csv",
+      "membro_sha256": "597065d0b66c407791378571fc5b9ccd725236e995d9c59a0498e37881cc9fc0",
+      "linha_csv_1base": 6641,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração de Valor Adicionado",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "7.04.02",
+        "DS_CONTA": "Outras",
+        "VL_CONTA": "0.0000000000",
+        "ST_CONTA_FIXA": "S"
+      }
+    },
+    "CVM_ITR2025:itr_cia_aberta_DFC_MI_con_2025.csv:11770": {
+      "SourceID": "CVM_ITR2025",
+      "membro": "itr_cia_aberta_DFC_MI_con_2025.csv",
+      "membro_sha256": "bad525d9f0706e13fd28d89db13019a2e041d34838e881894fe90a118073ded3",
+      "linha_csv_1base": 11770,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2025-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "PENÚLTIMO",
+        "DT_INI_EXERC": "2024-01-01",
+        "DT_FIM_EXERC": "2024-06-30",
+        "CD_CONTA": "6.01.01.02",
+        "DS_CONTA": "Depreciação e amortização",
+        "VL_CONTA": "1175876.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2025:itr_cia_aberta_DFC_MI_con_2025.csv:11798": {
+      "SourceID": "CVM_ITR2025",
+      "membro": "itr_cia_aberta_DFC_MI_con_2025.csv",
+      "membro_sha256": "bad525d9f0706e13fd28d89db13019a2e041d34838e881894fe90a118073ded3",
+      "linha_csv_1base": 11798,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2025-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "PENÚLTIMO",
+        "DT_INI_EXERC": "2024-01-01",
+        "DT_FIM_EXERC": "2024-06-30",
+        "CD_CONTA": "6.01.01.16",
+        "DS_CONTA": "Perda por redução ao valor recuperável",
+        "VL_CONTA": "2574817.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2025:itr_cia_aberta_DFC_MI_con_2025.csv:11799": {
+      "SourceID": "CVM_ITR2025",
+      "membro": "itr_cia_aberta_DFC_MI_con_2025.csv",
+      "membro_sha256": "bad525d9f0706e13fd28d89db13019a2e041d34838e881894fe90a118073ded3",
+      "linha_csv_1base": 11799,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2025-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2025-01-01",
+        "DT_FIM_EXERC": "2025-06-30",
+        "CD_CONTA": "6.01.01.16",
+        "DS_CONTA": "Perda por redução ao valor recuperável",
+        "VL_CONTA": "683139.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2025:itr_cia_aberta_DVA_con_2025.csv:10498": {
+      "SourceID": "CVM_ITR2025",
+      "membro": "itr_cia_aberta_DVA_con_2025.csv",
+      "membro_sha256": "f8b39f6c279400541bac3a0bed074302cdd0879ea5e646232f27cff91de6102e",
+      "linha_csv_1base": 10498,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2025-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração de Valor Adicionado",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "PENÚLTIMO",
+        "DT_INI_EXERC": "2024-01-01",
+        "DT_FIM_EXERC": "2024-06-30",
+        "CD_CONTA": "7.04",
+        "DS_CONTA": "Retenções",
+        "VL_CONTA": "-3750693.0000000000",
+        "ST_CONTA_FIXA": "S"
+      }
+    },
+    "CVM_ITR2025:itr_cia_aberta_DVA_con_2025.csv:10499": {
+      "SourceID": "CVM_ITR2025",
+      "membro": "itr_cia_aberta_DVA_con_2025.csv",
+      "membro_sha256": "f8b39f6c279400541bac3a0bed074302cdd0879ea5e646232f27cff91de6102e",
+      "linha_csv_1base": 10499,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2025-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração de Valor Adicionado",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2025-01-01",
+        "DT_FIM_EXERC": "2025-06-30",
+        "CD_CONTA": "7.04",
+        "DS_CONTA": "Retenções",
+        "VL_CONTA": "-1809990.0000000000",
+        "ST_CONTA_FIXA": "S"
+      }
+    },
+    "CVM_ITR2025:itr_cia_aberta_DVA_con_2025.csv:10500": {
+      "SourceID": "CVM_ITR2025",
+      "membro": "itr_cia_aberta_DVA_con_2025.csv",
+      "membro_sha256": "f8b39f6c279400541bac3a0bed074302cdd0879ea5e646232f27cff91de6102e",
+      "linha_csv_1base": 10500,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2025-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração de Valor Adicionado",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "PENÚLTIMO",
+        "DT_INI_EXERC": "2024-01-01",
+        "DT_FIM_EXERC": "2024-06-30",
+        "CD_CONTA": "7.04.01",
+        "DS_CONTA": "Depreciação, Amortização e Exaustão",
+        "VL_CONTA": "-3750693.0000000000",
+        "ST_CONTA_FIXA": "S"
+      }
+    },
+    "CVM_ITR2025:itr_cia_aberta_DVA_con_2025.csv:10502": {
+      "SourceID": "CVM_ITR2025",
+      "membro": "itr_cia_aberta_DVA_con_2025.csv",
+      "membro_sha256": "f8b39f6c279400541bac3a0bed074302cdd0879ea5e646232f27cff91de6102e",
+      "linha_csv_1base": 10502,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2025-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração de Valor Adicionado",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "PENÚLTIMO",
+        "DT_INI_EXERC": "2024-01-01",
+        "DT_FIM_EXERC": "2024-06-30",
+        "CD_CONTA": "7.04.02",
+        "DS_CONTA": "Outras",
+        "VL_CONTA": "0.0000000000",
+        "ST_CONTA_FIXA": "S"
+      }
+    },
+    "CVM_ITR2025:itr_cia_aberta_DVA_con_2025.csv:10503": {
+      "SourceID": "CVM_ITR2025",
+      "membro": "itr_cia_aberta_DVA_con_2025.csv",
+      "membro_sha256": "f8b39f6c279400541bac3a0bed074302cdd0879ea5e646232f27cff91de6102e",
+      "linha_csv_1base": 10503,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2025-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração de Valor Adicionado",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2025-01-01",
+        "DT_FIM_EXERC": "2025-06-30",
+        "CD_CONTA": "7.04.02",
+        "DS_CONTA": "Outras",
+        "VL_CONTA": "0.0000000000",
+        "ST_CONTA_FIXA": "S"
+      }
+    },
+    "CVM_DFP2025:dfp_cia_aberta_DFC_MI_con_2025.csv:4232": {
+      "SourceID": "CVM_DFP2025",
+      "membro": "dfp_cia_aberta_DFC_MI_con_2025.csv",
+      "membro_sha256": "67c048f3b76fd2c8c8b4bf445baf5265062b56684931ccbe4d1044fd439b6922",
+      "linha_csv_1base": 4232,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2025-12-31",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "PENÚLTIMO",
+        "DT_INI_EXERC": "2024-01-01",
+        "DT_FIM_EXERC": "2024-12-31",
+        "CD_CONTA": "6.01.01.02",
+        "DS_CONTA": "Depreciação e amortização",
+        "VL_CONTA": "2303380.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_DFP2025:dfp_cia_aberta_DFC_MI_con_2025.csv:4260": {
+      "SourceID": "CVM_DFP2025",
+      "membro": "dfp_cia_aberta_DFC_MI_con_2025.csv",
+      "membro_sha256": "67c048f3b76fd2c8c8b4bf445baf5265062b56684931ccbe4d1044fd439b6922",
+      "linha_csv_1base": 4260,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2025-12-31",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "PENÚLTIMO",
+        "DT_INI_EXERC": "2024-01-01",
+        "DT_FIM_EXERC": "2024-12-31",
+        "CD_CONTA": "6.01.01.16",
+        "DS_CONTA": "Perda por redução ao valor recuperável",
+        "VL_CONTA": "3149244.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_DFP2025:dfp_cia_aberta_DFC_MI_con_2025.csv:4261": {
+      "SourceID": "CVM_DFP2025",
+      "membro": "dfp_cia_aberta_DFC_MI_con_2025.csv",
+      "membro_sha256": "67c048f3b76fd2c8c8b4bf445baf5265062b56684931ccbe4d1044fd439b6922",
+      "linha_csv_1base": 4261,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2025-12-31",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2025-01-01",
+        "DT_FIM_EXERC": "2025-12-31",
+        "CD_CONTA": "6.01.01.16",
+        "DS_CONTA": "Perda por redução ao valor recuperável",
+        "VL_CONTA": "1227872.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_DFP2025:dfp_cia_aberta_DVA_con_2025.csv:3766": {
+      "SourceID": "CVM_DFP2025",
+      "membro": "dfp_cia_aberta_DVA_con_2025.csv",
+      "membro_sha256": "ca719f794884b3370935ae05865cfdb487273ec2329de2b81e5c2e1dde98b3c0",
+      "linha_csv_1base": 3766,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2025-12-31",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração de Valor Adicionado",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "PENÚLTIMO",
+        "DT_INI_EXERC": "2024-01-01",
+        "DT_FIM_EXERC": "2024-12-31",
+        "CD_CONTA": "7.04",
+        "DS_CONTA": "Retenções",
+        "VL_CONTA": "-2303380.0000000000",
+        "ST_CONTA_FIXA": "S"
+      }
+    },
+    "CVM_DFP2025:dfp_cia_aberta_DVA_con_2025.csv:3767": {
+      "SourceID": "CVM_DFP2025",
+      "membro": "dfp_cia_aberta_DVA_con_2025.csv",
+      "membro_sha256": "ca719f794884b3370935ae05865cfdb487273ec2329de2b81e5c2e1dde98b3c0",
+      "linha_csv_1base": 3767,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2025-12-31",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração de Valor Adicionado",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2025-01-01",
+        "DT_FIM_EXERC": "2025-12-31",
+        "CD_CONTA": "7.04",
+        "DS_CONTA": "Retenções",
+        "VL_CONTA": "-2213331.0000000000",
+        "ST_CONTA_FIXA": "S"
+      }
+    },
+    "CVM_DFP2025:dfp_cia_aberta_DVA_con_2025.csv:3768": {
+      "SourceID": "CVM_DFP2025",
+      "membro": "dfp_cia_aberta_DVA_con_2025.csv",
+      "membro_sha256": "ca719f794884b3370935ae05865cfdb487273ec2329de2b81e5c2e1dde98b3c0",
+      "linha_csv_1base": 3768,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2025-12-31",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração de Valor Adicionado",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "PENÚLTIMO",
+        "DT_INI_EXERC": "2024-01-01",
+        "DT_FIM_EXERC": "2024-12-31",
+        "CD_CONTA": "7.04.01",
+        "DS_CONTA": "Depreciação, Amortização e Exaustão",
+        "VL_CONTA": "-2303380.0000000000",
+        "ST_CONTA_FIXA": "S"
+      }
+    },
+    "CVM_DFP2025:dfp_cia_aberta_DVA_con_2025.csv:3770": {
+      "SourceID": "CVM_DFP2025",
+      "membro": "dfp_cia_aberta_DVA_con_2025.csv",
+      "membro_sha256": "ca719f794884b3370935ae05865cfdb487273ec2329de2b81e5c2e1dde98b3c0",
+      "linha_csv_1base": 3770,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2025-12-31",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração de Valor Adicionado",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "PENÚLTIMO",
+        "DT_INI_EXERC": "2024-01-01",
+        "DT_FIM_EXERC": "2024-12-31",
+        "CD_CONTA": "7.04.02",
+        "DS_CONTA": "Outras",
+        "VL_CONTA": "0.0000000000",
+        "ST_CONTA_FIXA": "S"
+      }
+    },
+    "CVM_DFP2025:dfp_cia_aberta_DVA_con_2025.csv:3771": {
+      "SourceID": "CVM_DFP2025",
+      "membro": "dfp_cia_aberta_DVA_con_2025.csv",
+      "membro_sha256": "ca719f794884b3370935ae05865cfdb487273ec2329de2b81e5c2e1dde98b3c0",
+      "linha_csv_1base": 3771,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2025-12-31",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração de Valor Adicionado",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2025-01-01",
+        "DT_FIM_EXERC": "2025-12-31",
+        "CD_CONTA": "7.04.02",
+        "DS_CONTA": "Outras",
+        "VL_CONTA": "0.0000000000",
+        "ST_CONTA_FIXA": "S"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82551": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 82551,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.01.02",
+        "DS_CONTA": "Variações nos Ativos e Passivos",
+        "VL_CONTA": "-390116.0000000000",
+        "ST_CONTA_FIXA": "S"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82553": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 82553,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.01.02.01",
+        "DS_CONTA": "Contas a receber de clientes e partes relacionadas",
+        "VL_CONTA": "172741.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82555": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 82555,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.01.02.02",
+        "DS_CONTA": "Estoques",
+        "VL_CONTA": "53970.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82557": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 82557,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.01.02.03",
+        "DS_CONTA": "Tributos a recuperar",
+        "VL_CONTA": "-27850.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82559": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 82559,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.01.02.04",
+        "DS_CONTA": "Outros ativos",
+        "VL_CONTA": "64155.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82561": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 82561,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.01.02.05",
+        "DS_CONTA": "Fornecedores",
+        "VL_CONTA": "-632134.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82563": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 82563,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.01.02.06",
+        "DS_CONTA": "Fornecedores risco sacado e risco sacado florestal",
+        "VL_CONTA": "117358.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82565": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 82565,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.01.02.07",
+        "DS_CONTA": "Obrigações fiscais",
+        "VL_CONTA": "-36584.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82567": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 82567,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.01.02.08",
+        "DS_CONTA": "Obrigações sociais e trabalhistas",
+        "VL_CONTA": "-43192.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82569": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 82569,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.01.02.09",
+        "DS_CONTA": "Outros passivos",
+        "VL_CONTA": "50566.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82571": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 82571,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.01.02.10",
+        "DS_CONTA": "Imposto de renda e contribuição social pagos",
+        "VL_CONTA": "-109146.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82573": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 82573,
+      "campos": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "KLABIN S.A.",
+        "CD_CVM": "012653",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.01.02.11",
+        "DS_CONTA": "Fornecedores risco sacado e risco sacado florestal",
+        "VL_CONTA": "0.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7457": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 7457,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.01.02",
+        "DS_CONTA": "Variações nos Ativos e Passivos",
+        "VL_CONTA": "-1021708.0000000000",
+        "ST_CONTA_FIXA": "S"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7459": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 7459,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.01.02.01",
+        "DS_CONTA": "Partes relacionadas, líquidas",
+        "VL_CONTA": "-26286.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7461": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 7461,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.01.02.02",
+        "DS_CONTA": "Contas a receber de clientes",
+        "VL_CONTA": "-128041.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7463": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 7463,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.01.02.03",
+        "DS_CONTA": "Depósitos judiciais",
+        "VL_CONTA": "0.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7465": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 7465,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.01.02.04",
+        "DS_CONTA": "Outros tributos, líquidos",
+        "VL_CONTA": "-443602.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7467": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 7467,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.01.02.05",
+        "DS_CONTA": "Imposto de renda e contribuição social pagos",
+        "VL_CONTA": "-11598.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7469": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 7469,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.01.02.06",
+        "DS_CONTA": "Estoques",
+        "VL_CONTA": "-27030.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7471": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 7471,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.01.02.07",
+        "DS_CONTA": "Ordenados e salários a pagar",
+        "VL_CONTA": "-132316.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7473": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 7473,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.01.02.08",
+        "DS_CONTA": "Fornecedores",
+        "VL_CONTA": "-81740.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7475": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 7475,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.01.02.09",
+        "DS_CONTA": "Arrendamentos e concessões a pagar",
+        "VL_CONTA": "-2409.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7477": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 7477,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.01.02.10",
+        "DS_CONTA": "Provisão para demandas judiciais",
+        "VL_CONTA": "-101236.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7479": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 7479,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.01.02.11",
+        "DS_CONTA": "Outros passivos financeiros",
+        "VL_CONTA": "-5672.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7481": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 7481,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.01.02.12",
+        "DS_CONTA": "Outros ativos e passivos, líquidos",
+        "VL_CONTA": "-47438.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7483": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 7483,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.01.02.13",
+        "DS_CONTA": "Arrendamentos e concessões a pagar",
+        "VL_CONTA": "0.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    },
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7485": {
+      "SourceID": "CVM_ITR2026",
+      "membro": "itr_cia_aberta_DFC_MI_con_2026.csv",
+      "membro_sha256": "077cbd03532e9d59bedb10276f25aef87aab859c3ece7c0692087f500a549ebd",
+      "linha_csv_1base": 7485,
+      "campos": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DT_REFER": "2026-06-30",
+        "VERSAO": "1",
+        "DENOM_CIA": "RUMO S.A.",
+        "CD_CVM": "017450",
+        "GRUPO_DFP": "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)",
+        "MOEDA": "REAL",
+        "ESCALA_MOEDA": "MIL",
+        "ORDEM_EXERC": "ÚLTIMO",
+        "DT_INI_EXERC": "2026-01-01",
+        "DT_FIM_EXERC": "2026-06-30",
+        "CD_CONTA": "6.01.02.14",
+        "DS_CONTA": "Instrumentos financeiros derivativos",
+        "VL_CONTA": "-14340.0000000000",
+        "ST_CONTA_FIXA": "N"
+      }
+    }
+  },
+  "contas_CVM": [
+    {
+      "issuer_id": "BR_KLABIN",
+      "item": "d_a_dfc",
+      "tipo": "TTM",
+      "inicio": "2025-07-01",
+      "fim": "2026-06-30",
+      "moeda": "BRL",
+      "termos": [
+        {
+          "coeficiente": "1",
+          "linhas": [
+            "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82513",
+            "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82515"
+          ]
+        },
+        {
+          "coeficiente": "1",
+          "linhas": [
+            "CVM_DFP2025:dfp_cia_aberta_DFC_MI_con_2025.csv:46521",
+            "CVM_DFP2025:dfp_cia_aberta_DFC_MI_con_2025.csv:46525"
+          ]
+        },
+        {
+          "coeficiente": "-1",
+          "linhas": [
+            "CVM_ITR2025:itr_cia_aberta_DFC_MI_con_2025.csv:133205",
+            "CVM_ITR2025:itr_cia_aberta_DFC_MI_con_2025.csv:133207"
+          ]
+        }
+      ],
+      "usar_modulo_nas_partes": true,
+      "valor_codigo_arquivado": "4886207000.0000000000",
+      "escopo": "conta documental; não FCFF certificado",
+      "frequencia": "TTM",
+      "item_e_rotulo_curatorial": true
+    },
+    {
+      "issuer_id": "BR_KLABIN",
+      "item": "capex",
+      "tipo": "TTM",
+      "inicio": "2025-07-01",
+      "fim": "2026-06-30",
+      "moeda": "BRL",
+      "termos": [
+        {
+          "coeficiente": "1",
+          "linhas": [
+            "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82579",
+            "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82585"
+          ]
+        },
+        {
+          "coeficiente": "1",
+          "linhas": [
+            "CVM_DFP2025:dfp_cia_aberta_DFC_MI_con_2025.csv:46585",
+            "CVM_DFP2025:dfp_cia_aberta_DFC_MI_con_2025.csv:46591"
+          ]
+        },
+        {
+          "coeficiente": "-1",
+          "linhas": [
+            "CVM_ITR2025:itr_cia_aberta_DFC_MI_con_2025.csv:133271",
+            "CVM_ITR2025:itr_cia_aberta_DFC_MI_con_2025.csv:133277"
+          ]
+        }
+      ],
+      "usar_modulo_nas_partes": true,
+      "valor_codigo_arquivado": "2995408000.0000000000",
+      "escopo": "conta documental; não FCFF certificado",
+      "frequencia": "TTM",
+      "item_e_rotulo_curatorial": true
+    },
+    {
+      "issuer_id": "BR_KLABIN",
+      "item": "d_a",
+      "tipo": "TTM",
+      "inicio": "2025-07-01",
+      "fim": "2026-06-30",
+      "moeda": "BRL",
+      "termos": [
+        {
+          "coeficiente": "1",
+          "linhas": [
+            "CVM_ITR2026:itr_cia_aberta_DVA_con_2026.csv:67987"
+          ]
+        },
+        {
+          "coeficiente": "1",
+          "linhas": [
+            "CVM_DFP2025:dfp_cia_aberta_DVA_con_2025.csv:36783"
+          ]
+        },
+        {
+          "coeficiente": "-1",
+          "linhas": [
+            "CVM_ITR2025:itr_cia_aberta_DVA_con_2025.csv:111251"
+          ]
+        }
+      ],
+      "usar_modulo_nas_partes": true,
+      "valor_codigo_arquivado": "4886207000.0000000000",
+      "escopo": "conta documental; não FCFF certificado",
+      "frequencia": "TTM",
+      "item_e_rotulo_curatorial": true
+    },
+    {
+      "issuer_id": "BR_KLABIN",
+      "item": "arrendamentos_pagos",
+      "tipo": "TTM",
+      "inicio": "2025-07-01",
+      "fim": "2026-06-30",
+      "moeda": "BRL",
+      "termos": [
+        {
+          "coeficiente": "1",
+          "linhas": [
+            "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82609"
+          ]
+        },
+        {
+          "coeficiente": "1",
+          "linhas": [
+            "CVM_DFP2025:dfp_cia_aberta_DFC_MI_con_2025.csv:46615"
+          ]
+        },
+        {
+          "coeficiente": "-1",
+          "linhas": [
+            "CVM_ITR2025:itr_cia_aberta_DFC_MI_con_2025.csv:133301"
+          ]
+        }
+      ],
+      "usar_modulo_nas_partes": true,
+      "valor_codigo_arquivado": "547325000.0000000000",
+      "escopo": "conta documental; não FCFF certificado",
+      "frequencia": "TTM",
+      "item_e_rotulo_curatorial": true
+    },
+    {
+      "issuer_id": "BR_RUMO",
+      "item": "d_a_dfc",
+      "tipo": "TTM",
+      "inicio": "2025-07-01",
+      "fim": "2026-06-30",
+      "moeda": "BRL",
+      "termos": [
+        {
+          "coeficiente": "1",
+          "linhas": [
+            "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7427"
+          ]
+        },
+        {
+          "coeficiente": "1",
+          "linhas": [
+            "CVM_DFP2025:dfp_cia_aberta_DFC_MI_con_2025.csv:4233"
+          ]
+        },
+        {
+          "coeficiente": "-1",
+          "linhas": [
+            "CVM_ITR2025:itr_cia_aberta_DFC_MI_con_2025.csv:11771"
+          ]
+        }
+      ],
+      "usar_modulo_nas_partes": true,
+      "valor_codigo_arquivado": "2134683000.0000000000",
+      "escopo": "conta documental; não FCFF certificado",
+      "frequencia": "TTM",
+      "item_e_rotulo_curatorial": true
+    },
+    {
+      "issuer_id": "BR_RUMO",
+      "item": "capex",
+      "tipo": "TTM",
+      "inicio": "2025-07-01",
+      "fim": "2026-06-30",
+      "moeda": "BRL",
+      "termos": [
+        {
+          "coeficiente": "1",
+          "linhas": [
+            "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7505"
+          ]
+        },
+        {
+          "coeficiente": "1",
+          "linhas": [
+            "CVM_DFP2025:dfp_cia_aberta_DFC_MI_con_2025.csv:4313"
+          ]
+        },
+        {
+          "coeficiente": "-1",
+          "linhas": [
+            "CVM_ITR2025:itr_cia_aberta_DFC_MI_con_2025.csv:11849"
+          ]
+        }
+      ],
+      "usar_modulo_nas_partes": true,
+      "valor_codigo_arquivado": "6307974000.0000000000",
+      "escopo": "conta documental; não FCFF certificado",
+      "frequencia": "TTM",
+      "item_e_rotulo_curatorial": true
+    },
+    {
+      "issuer_id": "BR_RUMO",
+      "item": "d_a",
+      "tipo": "TTM",
+      "inicio": "2025-07-01",
+      "fim": "2026-06-30",
+      "moeda": "BRL",
+      "termos": [
+        {
+          "coeficiente": "1",
+          "linhas": [
+            "CVM_ITR2026:itr_cia_aberta_DVA_con_2026.csv:6639"
+          ]
+        },
+        {
+          "coeficiente": "1",
+          "linhas": [
+            "CVM_DFP2025:dfp_cia_aberta_DVA_con_2025.csv:3769"
+          ]
+        },
+        {
+          "coeficiente": "-1",
+          "linhas": [
+            "CVM_ITR2025:itr_cia_aberta_DVA_con_2025.csv:10501"
+          ]
+        }
+      ],
+      "usar_modulo_nas_partes": true,
+      "valor_codigo_arquivado": "1451544000.0000000000",
+      "escopo": "conta documental; não FCFF certificado",
+      "frequencia": "TTM",
+      "item_e_rotulo_curatorial": true,
+      "ressalva_legado": "d_a legado DVA; preservado, não D&A operacional pura certificada ou adoção de candidata"
+    },
+    {
+      "issuer_id": "BR_RUMO",
+      "item": "arrendamentos_pagos",
+      "tipo": "TTM",
+      "inicio": "2025-07-01",
+      "fim": "2026-06-30",
+      "moeda": "BRL",
+      "termos": [
+        {
+          "coeficiente": "1",
+          "linhas": [
+            "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7517"
+          ]
+        },
+        {
+          "coeficiente": "1",
+          "linhas": [
+            "CVM_DFP2025:dfp_cia_aberta_DFC_MI_con_2025.csv:4325"
+          ]
+        },
+        {
+          "coeficiente": "-1",
+          "linhas": [
+            "CVM_ITR2025:itr_cia_aberta_DFC_MI_con_2025.csv:11861"
+          ]
+        }
+      ],
+      "usar_modulo_nas_partes": true,
+      "valor_codigo_arquivado": "584776000.0000000000",
+      "escopo": "conta documental; não FCFF certificado",
+      "frequencia": "TTM",
+      "item_e_rotulo_curatorial": true
+    },
+    {
+      "issuer_id": "BR_KLABIN",
+      "item": "divida_bruta",
+      "tipo": "estoque",
+      "inicio": null,
+      "fim": "2026-06-30",
+      "moeda": "BRL",
+      "termos": [
+        {
+          "coeficiente": "1",
+          "linhas": [
+            "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:182105",
+            "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:182171"
+          ]
+        }
+      ],
+      "usar_modulo_nas_partes": false,
+      "valor_codigo_arquivado": "34859750000.0000000000",
+      "escopo": "rubricas_BPP_identificadas",
+      "subcontas_reportadas": [
+        "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:182115",
+        "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:182181"
+      ],
+      "frequencia": "pontual",
+      "item_e_rotulo_curatorial": true
+    },
+    {
+      "issuer_id": "BR_KLABIN",
+      "item": "arrendamentos",
+      "tipo": "estoque",
+      "inicio": null,
+      "fim": "2026-06-30",
+      "moeda": "BRL",
+      "termos": [
+        {
+          "coeficiente": "1",
+          "linhas": [
+            "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:182139",
+            "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:182205"
+          ]
+        }
+      ],
+      "usar_modulo_nas_partes": false,
+      "valor_codigo_arquivado": "1840293000.0000000000",
+      "escopo": "rubricas_BPP_identificadas",
+      "subcontas_reportadas": [
+        "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:182115",
+        "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:182181"
+      ],
+      "frequencia": "pontual",
+      "item_e_rotulo_curatorial": true
+    },
+    {
+      "issuer_id": "BR_RUMO",
+      "item": "divida_bruta",
+      "tipo": "estoque",
+      "inicio": null,
+      "fim": "2026-06-30",
+      "moeda": "BRL",
+      "termos": [
+        {
+          "coeficiente": "1",
+          "linhas": [
+            "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:17121",
+            "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:17197"
+          ]
+        }
+      ],
+      "usar_modulo_nas_partes": false,
+      "valor_codigo_arquivado": "22909847000.0000000000",
+      "escopo": "rubricas_BPP_identificadas",
+      "subcontas_reportadas": [
+        "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:17131",
+        "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:17207"
+      ],
+      "frequencia": "pontual",
+      "item_e_rotulo_curatorial": true
+    },
+    {
+      "issuer_id": "BR_RUMO",
+      "item": "arrendamentos",
+      "tipo": "estoque",
+      "inicio": null,
+      "fim": "2026-06-30",
+      "moeda": "BRL",
+      "termos": [
+        {
+          "coeficiente": "1",
+          "linhas": [
+            "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:17157",
+            "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:17163",
+            "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:17237",
+            "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:17239"
+          ]
+        }
+      ],
+      "usar_modulo_nas_partes": false,
+      "valor_codigo_arquivado": "8736404000.0000000000",
+      "escopo": "passivos_de_arrendamento_mais_litigios_concessoes_parcelados",
+      "subcontas_reportadas": [
+        "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:17131",
+        "CVM_ITR2026:itr_cia_aberta_BPP_con_2026.csv:17207"
+      ],
+      "frequencia": "pontual",
+      "item_e_rotulo_curatorial": true
+    }
+  ],
+  "DVA_CVM_originais_e_comparativos": [
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7426",
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7427",
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7454",
+    "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7455",
+    "CVM_ITR2026:itr_cia_aberta_DVA_con_2026.csv:6636",
+    "CVM_ITR2026:itr_cia_aberta_DVA_con_2026.csv:6637",
+    "CVM_ITR2026:itr_cia_aberta_DVA_con_2026.csv:6638",
+    "CVM_ITR2026:itr_cia_aberta_DVA_con_2026.csv:6639",
+    "CVM_ITR2026:itr_cia_aberta_DVA_con_2026.csv:6640",
+    "CVM_ITR2026:itr_cia_aberta_DVA_con_2026.csv:6641",
+    "CVM_ITR2025:itr_cia_aberta_DFC_MI_con_2025.csv:11770",
+    "CVM_ITR2025:itr_cia_aberta_DFC_MI_con_2025.csv:11771",
+    "CVM_ITR2025:itr_cia_aberta_DFC_MI_con_2025.csv:11798",
+    "CVM_ITR2025:itr_cia_aberta_DFC_MI_con_2025.csv:11799",
+    "CVM_ITR2025:itr_cia_aberta_DVA_con_2025.csv:10498",
+    "CVM_ITR2025:itr_cia_aberta_DVA_con_2025.csv:10499",
+    "CVM_ITR2025:itr_cia_aberta_DVA_con_2025.csv:10500",
+    "CVM_ITR2025:itr_cia_aberta_DVA_con_2025.csv:10501",
+    "CVM_ITR2025:itr_cia_aberta_DVA_con_2025.csv:10502",
+    "CVM_ITR2025:itr_cia_aberta_DVA_con_2025.csv:10503",
+    "CVM_DFP2025:dfp_cia_aberta_DFC_MI_con_2025.csv:4232",
+    "CVM_DFP2025:dfp_cia_aberta_DFC_MI_con_2025.csv:4233",
+    "CVM_DFP2025:dfp_cia_aberta_DFC_MI_con_2025.csv:4260",
+    "CVM_DFP2025:dfp_cia_aberta_DFC_MI_con_2025.csv:4261",
+    "CVM_DFP2025:dfp_cia_aberta_DVA_con_2025.csv:3766",
+    "CVM_DFP2025:dfp_cia_aberta_DVA_con_2025.csv:3767",
+    "CVM_DFP2025:dfp_cia_aberta_DVA_con_2025.csv:3768",
+    "CVM_DFP2025:dfp_cia_aberta_DVA_con_2025.csv:3769",
+    "CVM_DFP2025:dfp_cia_aberta_DVA_con_2025.csv:3770",
+    "CVM_DFP2025:dfp_cia_aberta_DVA_con_2025.csv:3771"
+  ],
+  "giro_Jun2026_controles": [
+    {
+      "issuer_id": "BR_KLABIN",
+      "agregado": "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82551",
+      "filhos": [
+        "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82553",
+        "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82555",
+        "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82557",
+        "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82559",
+        "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82561",
+        "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82563",
+        "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82565",
+        "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82567",
+        "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82569",
+        "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82571",
+        "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:82573"
+      ],
+      "residuo_arquivado": "0E-10",
+      "nao_e_giro_operacional_certificado": true
+    },
+    {
+      "issuer_id": "BR_RUMO",
+      "agregado": "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7457",
+      "filhos": [
+        "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7459",
+        "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7461",
+        "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7463",
+        "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7465",
+        "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7467",
+        "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7469",
+        "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7471",
+        "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7473",
+        "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7475",
+        "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7477",
+        "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7479",
+        "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7481",
+        "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7483",
+        "CVM_ITR2026:itr_cia_aberta_DFC_MI_con_2026.csv:7485"
+      ],
+      "residuo_arquivado": "0E-10",
+      "nao_e_giro_operacional_certificado": true
+    }
+  ],
+  "PDF_linhas": [
+    {
+      "id": "original_DVA",
+      "SourceID": "RUMO_PDF6M2025",
+      "pagina_fisica_1base": 28,
+      "qualificador": "controladora e consolidado, quatro colunas",
+      "ultimo_consolidado": false,
+      "rotulo": "Depreciação, amortização e perda por redução ao valor recuperável",
+      "tokens_arquivados": [
+        "(50.351)",
+        "(50.353)",
+        "(1.809.990)",
+        "(3.750.693)"
+      ],
+      "valores_BRL_arquivados": [
+        "-50351000",
+        "-50353000",
+        "-1809990000",
+        "-3750693000"
+      ],
+      "colunas": [
+        "controladora6M2025",
+        "controladora6M2024",
+        "consolidado6M2025",
+        "consolidado6M2024"
+      ],
+      "tipo": "DVA_DFC"
+    },
+    {
+      "id": "original_DFC_DA",
+      "SourceID": "RUMO_PDF6M2025",
+      "pagina_fisica_1base": 26,
+      "qualificador": "controladora e consolidado, quatro colunas",
+      "ultimo_consolidado": false,
+      "rotulo": "Depreciação e amortização",
+      "tokens_arquivados": [
+        "50.351",
+        "50.353",
+        "1.126.851",
+        "1.175.876"
+      ],
+      "valores_BRL_arquivados": [
+        "50351000",
+        "50353000",
+        "1126851000",
+        "1175876000"
+      ],
+      "colunas": [
+        "controladora6M2025",
+        "controladora6M2024",
+        "consolidado6M2025",
+        "consolidado6M2024"
+      ],
+      "tipo": "DVA_DFC"
+    },
+    {
+      "id": "original_DFC_perda",
+      "SourceID": "RUMO_PDF6M2025",
+      "pagina_fisica_1base": 26,
+      "qualificador": "controladora e consolidado, quatro colunas",
+      "ultimo_consolidado": false,
+      "rotulo": "Perda por redução ao valor recuperável",
+      "tokens_arquivados": [
+        "—",
+        "—",
+        "683.139",
+        "2.574.817"
+      ],
+      "valores_BRL_arquivados": [
+        null,
+        null,
+        "683139000",
+        "2574817000"
+      ],
+      "colunas": [
+        "controladora6M2025",
+        "controladora6M2024",
+        "consolidado6M2025",
+        "consolidado6M2024"
+      ],
+      "tipo": "DVA_DFC"
+    },
+    {
+      "id": "despesas_DA",
+      "SourceID": "RUMO_PDF6M2025",
+      "pagina_fisica_1base": 84,
+      "qualificador": "último bloco Consolidado",
+      "ultimo_consolidado": true,
+      "rotulo": "Depreciação e amortização",
+      "tokens_arquivados": [
+        "(570.075)",
+        "(1.126.851)",
+        "(592.578)",
+        "(1.175.876)"
+      ],
+      "valores_BRL_arquivados": [
+        "-570075000",
+        "-1126851000",
+        "-592578000",
+        "-1175876000"
+      ],
+      "colunas": [
+        "consolidado2T2025",
+        "consolidado6M2025",
+        "consolidado2T2024",
+        "consolidado6M2024"
+      ],
+      "tipo": "DVA_DFC"
+    },
+    {
+      "id": "atual_DVA",
+      "SourceID": "RUMO_PDF6M2026",
+      "pagina_fisica_1base": 33,
+      "qualificador": "controladora e consolidado, quatro colunas",
+      "ultimo_consolidado": false,
+      "rotulo": "Depreciação e amortização",
+      "tokens_arquivados": [
+        "(50.657)",
+        "(50.351)",
+        "(1.048.203)",
+        "(1.126.851)"
+      ],
+      "valores_BRL_arquivados": [
+        "-50657000",
+        "-50351000",
+        "-1048203000",
+        "-1126851000"
+      ],
+      "colunas": [
+        "controladora6M2026",
+        "controladora6M2025_reapresentado",
+        "consolidado6M2026",
+        "consolidado6M2025_reapresentado"
+      ],
+      "tipo": "DVA_DFC"
+    },
+    {
+      "id": "atual_DVA_perda_separada",
+      "SourceID": "RUMO_PDF6M2026",
+      "pagina_fisica_1base": 33,
+      "qualificador": "controladora e consolidado, quatro colunas",
+      "ultimo_consolidado": false,
+      "rotulo": "Perda por redução ao valor recuperável",
+      "tokens_arquivados": [
+        "—",
+        "—",
+        "(336.487)",
+        "(683.139)"
+      ],
+      "valores_BRL_arquivados": [
+        null,
+        null,
+        "-336487000",
+        "-683139000"
+      ],
+      "colunas": [
+        "controladora6M2026",
+        "controladora6M2025_reapresentado",
+        "consolidado6M2026",
+        "consolidado6M2025_reapresentado"
+      ],
+      "tipo": "DVA_DFC"
+    },
+    {
+      "id": "6M2026:adicoes_custo_ROU",
+      "SourceID": "RUMO_PDF6M2026",
+      "pagina_fisica_1base": 81,
+      "qualificador": "valor de custo",
+      "inicio_exercicio": "2026-01-01",
+      "rotulo": "Adições",
+      "trecho_compactado": "Adições — 26.321 64.201 — 28.794 138.114 257.430",
+      "tokens_arquivados": [
+        "—",
+        "26.321",
+        "64.201",
+        "—",
+        "28.794",
+        "138.114",
+        "257.430"
+      ],
+      "valores_BRL_arquivados": [
+        null,
+        "26321000",
+        "64201000",
+        null,
+        "28794000",
+        "138114000",
+        "257430000"
+      ],
+      "colunas": [
+        "Terrenos, edificios e benfeitorias",
+        "Maquinas, equipamentos e instalacoes",
+        "Vagoes e locomotivas",
+        "Software",
+        "Veiculos",
+        "Infraestrutura ferroviaria e portuaria",
+        "Total"
+      ],
+      "tipo": "ROU"
+    },
+    {
+      "id": "6M2026:reajuste_custo_ROU",
+      "SourceID": "RUMO_PDF6M2026",
+      "pagina_fisica_1base": 81,
+      "qualificador": "valor de custo",
+      "inicio_exercicio": "2026-01-01",
+      "rotulo": "Reajuste contratual",
+      "trecho_compactado": "Reajuste contratual 10.376 12.017 451 16.358 19.904 89.531 148.637",
+      "tokens_arquivados": [
+        "10.376",
+        "12.017",
+        "451",
+        "16.358",
+        "19.904",
+        "89.531",
+        "148.637"
+      ],
+      "valores_BRL_arquivados": [
+        "10376000",
+        "12017000",
+        "451000",
+        "16358000",
+        "19904000",
+        "89531000",
+        "148637000"
+      ],
+      "colunas": [
+        "Terrenos, edificios e benfeitorias",
+        "Maquinas, equipamentos e instalacoes",
+        "Vagoes e locomotivas",
+        "Software",
+        "Veiculos",
+        "Infraestrutura ferroviaria e portuaria",
+        "Total"
+      ],
+      "tipo": "ROU"
+    },
+    {
+      "id": "6M2026:adicoes_amortizacao_ROU",
+      "SourceID": "RUMO_PDF6M2026",
+      "pagina_fisica_1base": 81,
+      "qualificador": "amortização",
+      "inicio_exercicio": "2026-01-01",
+      "rotulo": "Adições",
+      "trecho_compactado": "Adições (8.621) (39.165) (12.980) (2.911) (9.587) (125.397) (198.661)",
+      "tokens_arquivados": [
+        "(8.621)",
+        "(39.165)",
+        "(12.980)",
+        "(2.911)",
+        "(9.587)",
+        "(125.397)",
+        "(198.661)"
+      ],
+      "valores_BRL_arquivados": [
+        "-8621000",
+        "-39165000",
+        "-12980000",
+        "-2911000",
+        "-9587000",
+        "-125397000",
+        "-198661000"
+      ],
+      "colunas": [
+        "Terrenos, edificios e benfeitorias",
+        "Maquinas, equipamentos e instalacoes",
+        "Vagoes e locomotivas",
+        "Software",
+        "Veiculos",
+        "Infraestrutura ferroviaria e portuaria",
+        "Total"
+      ],
+      "tipo": "ROU"
+    },
+    {
+      "id": "6M2026:adicoes_passivo_arrendamento",
+      "SourceID": "RUMO_PDF6M2026",
+      "pagina_fisica_1base": 67,
+      "qualificador": "passivo",
+      "inicio_exercicio": "2026-01-01",
+      "rotulo": "Adições",
+      "trecho_compactado": "Adições — 138.114 119.316 257.430",
+      "tokens_arquivados": [
+        "—",
+        "138.114",
+        "119.316",
+        "257.430"
+      ],
+      "valores_BRL_arquivados": [
+        null,
+        "138114000",
+        "119316000",
+        "257430000"
+      ],
+      "colunas": [
+        "Financeiro",
+        "Operacionais - concessoes",
+        "Operacionais - outros",
+        "Total"
+      ],
+      "tipo": "ROU"
+    },
+    {
+      "id": "6M2026:saldo_inicial_custo",
+      "SourceID": "RUMO_PDF6M2026",
+      "pagina_fisica_1base": 81,
+      "qualificador": "valor de custo",
+      "inicio_exercicio": "2026-01-01",
+      "rotulo": "Saldo em 01 de janeiro de 2026",
+      "trecho_compactado": "Saldo em 01 de janeiro de 2026 200.396 602.434 280.917 87.979 48.733 9.309.772 10.530.231",
+      "tokens_arquivados": [
+        "200.396",
+        "602.434",
+        "280.917",
+        "87.979",
+        "48.733",
+        "9.309.772",
+        "10.530.231"
+      ],
+      "valores_BRL_arquivados": [
+        "200396000",
+        "602434000",
+        "280917000",
+        "87979000",
+        "48733000",
+        "9309772000",
+        "10530231000"
+      ],
+      "colunas": [
+        "Terrenos, edificios e benfeitorias",
+        "Maquinas, equipamentos e instalacoes",
+        "Vagoes e locomotivas",
+        "Software",
+        "Veiculos",
+        "Infraestrutura ferroviaria e portuaria",
+        "Total"
+      ],
+      "tipo": "ROU"
+    },
+    {
+      "id": "6M2026:saldo_final_custo",
+      "SourceID": "RUMO_PDF6M2026",
+      "pagina_fisica_1base": 81,
+      "qualificador": "valor de custo",
+      "inicio_exercicio": "2026-01-01",
+      "rotulo": "Saldo em 30 de junho de 2026",
+      "trecho_compactado": "Saldo em 30 de junho de 2026 210.772 640.772 345.569 104.337 97.431 9.537.417 10.936.298",
+      "tokens_arquivados": [
+        "210.772",
+        "640.772",
+        "345.569",
+        "104.337",
+        "97.431",
+        "9.537.417",
+        "10.936.298"
+      ],
+      "valores_BRL_arquivados": [
+        "210772000",
+        "640772000",
+        "345569000",
+        "104337000",
+        "97431000",
+        "9537417000",
+        "10936298000"
+      ],
+      "colunas": [
+        "Terrenos, edificios e benfeitorias",
+        "Maquinas, equipamentos e instalacoes",
+        "Vagoes e locomotivas",
+        "Software",
+        "Veiculos",
+        "Infraestrutura ferroviaria e portuaria",
+        "Total"
+      ],
+      "tipo": "ROU"
+    },
+    {
+      "id": "A2025:adicoes_custo_ROU",
+      "SourceID": "RUMO_PDF2025",
+      "pagina_fisica_1base": 101,
+      "qualificador": "valor de custo",
+      "inicio_exercicio": "2025-01-01",
+      "rotulo": "Adições",
+      "trecho_compactado": "Adições 44.660 19.092 — — 25.918 150.410 240.080",
+      "tokens_arquivados": [
+        "44.660",
+        "19.092",
+        "—",
+        "—",
+        "25.918",
+        "150.410",
+        "240.080"
+      ],
+      "valores_BRL_arquivados": [
+        "44660000",
+        "19092000",
+        null,
+        null,
+        "25918000",
+        "150410000",
+        "240080000"
+      ],
+      "colunas": [
+        "Terrenos, edificios e benfeitorias",
+        "Maquinas, equipamentos e instalacoes",
+        "Vagoes e locomotivas",
+        "Software",
+        "Veiculos",
+        "Infraestrutura ferroviaria e portuaria",
+        "Total"
+      ],
+      "tipo": "ROU"
+    },
+    {
+      "id": "A2025:reajuste_custo_ROU",
+      "SourceID": "RUMO_PDF2025",
+      "pagina_fisica_1base": 101,
+      "qualificador": "valor de custo",
+      "inicio_exercicio": "2025-01-01",
+      "rotulo": "Reajuste contratual",
+      "trecho_compactado": "Reajuste contratual 9.737 60.571 10.494 259 (7.172) 178.776 252.665",
+      "tokens_arquivados": [
+        "9.737",
+        "60.571",
+        "10.494",
+        "259",
+        "(7.172)",
+        "178.776",
+        "252.665"
+      ],
+      "valores_BRL_arquivados": [
+        "9737000",
+        "60571000",
+        "10494000",
+        "259000",
+        "-7172000",
+        "178776000",
+        "252665000"
+      ],
+      "colunas": [
+        "Terrenos, edificios e benfeitorias",
+        "Maquinas, equipamentos e instalacoes",
+        "Vagoes e locomotivas",
+        "Software",
+        "Veiculos",
+        "Infraestrutura ferroviaria e portuaria",
+        "Total"
+      ],
+      "tipo": "ROU"
+    },
+    {
+      "id": "A2025:adicoes_amortizacao_ROU",
+      "SourceID": "RUMO_PDF2025",
+      "pagina_fisica_1base": 101,
+      "qualificador": "amortização",
+      "inicio_exercicio": "2025-01-01",
+      "rotulo": "Adições",
+      "trecho_compactado": "Adições (22.739) (64.576) (16.318) (4.788) (18.005) (256.778) (383.204)",
+      "tokens_arquivados": [
+        "(22.739)",
+        "(64.576)",
+        "(16.318)",
+        "(4.788)",
+        "(18.005)",
+        "(256.778)",
+        "(383.204)"
+      ],
+      "valores_BRL_arquivados": [
+        "-22739000",
+        "-64576000",
+        "-16318000",
+        "-4788000",
+        "-18005000",
+        "-256778000",
+        "-383204000"
+      ],
+      "colunas": [
+        "Terrenos, edificios e benfeitorias",
+        "Maquinas, equipamentos e instalacoes",
+        "Vagoes e locomotivas",
+        "Software",
+        "Veiculos",
+        "Infraestrutura ferroviaria e portuaria",
+        "Total"
+      ],
+      "tipo": "ROU"
+    },
+    {
+      "id": "A2025:adicoes_passivo_arrendamento",
+      "SourceID": "RUMO_PDF2025",
+      "pagina_fisica_1base": 75,
+      "qualificador": "passivo",
+      "inicio_exercicio": "2025-01-01",
+      "rotulo": "Adições",
+      "trecho_compactado": "Adições — 150.409 89.671 240.080",
+      "tokens_arquivados": [
+        "—",
+        "150.409",
+        "89.671",
+        "240.080"
+      ],
+      "valores_BRL_arquivados": [
+        null,
+        "150409000",
+        "89671000",
+        "240080000"
+      ],
+      "colunas": [
+        "Financeiro",
+        "Operacionais - concessoes",
+        "Operacionais - outros",
+        "Total"
+      ],
+      "tipo": "ROU"
+    },
+    {
+      "id": "A2025:saldo_inicial_custo",
+      "SourceID": "RUMO_PDF2025",
+      "pagina_fisica_1base": 101,
+      "qualificador": "valor de custo",
+      "inicio_exercicio": "2025-01-01",
+      "rotulo": "Saldo em 01 de janeiro de 2025",
+      "trecho_compactado": "Saldo em 01 de janeiro de 2025 145.999 525.233 957.260 87.720 29.987 8.980.586 10.726.785",
+      "tokens_arquivados": [
+        "145.999",
+        "525.233",
+        "957.260",
+        "87.720",
+        "29.987",
+        "8.980.586",
+        "10.726.785"
+      ],
+      "valores_BRL_arquivados": [
+        "145999000",
+        "525233000",
+        "957260000",
+        "87720000",
+        "29987000",
+        "8980586000",
+        "10726785000"
+      ],
+      "colunas": [
+        "Terrenos, edificios e benfeitorias",
+        "Maquinas, equipamentos e instalacoes",
+        "Vagoes e locomotivas",
+        "Software",
+        "Veiculos",
+        "Infraestrutura ferroviaria e portuaria",
+        "Total"
+      ],
+      "tipo": "ROU"
+    },
+    {
+      "id": "A2025:saldo_final_custo",
+      "SourceID": "RUMO_PDF2025",
+      "pagina_fisica_1base": 101,
+      "qualificador": "valor de custo",
+      "inicio_exercicio": "2025-01-01",
+      "rotulo": "Saldo em 31 de dezembro de 2025",
+      "trecho_compactado": "Saldo em 31 de dezembro de 2025 200.396 602.434 280.917 87.979 48.733 9.309.772 10.530.231",
+      "tokens_arquivados": [
+        "200.396",
+        "602.434",
+        "280.917",
+        "87.979",
+        "48.733",
+        "9.309.772",
+        "10.530.231"
+      ],
+      "valores_BRL_arquivados": [
+        "200396000",
+        "602434000",
+        "280917000",
+        "87979000",
+        "48733000",
+        "9309772000",
+        "10530231000"
+      ],
+      "colunas": [
+        "Terrenos, edificios e benfeitorias",
+        "Maquinas, equipamentos e instalacoes",
+        "Vagoes e locomotivas",
+        "Software",
+        "Veiculos",
+        "Infraestrutura ferroviaria e portuaria",
+        "Total"
+      ],
+      "tipo": "ROU"
+    },
+    {
+      "id": "6M2025:adicoes_custo_ROU",
+      "SourceID": "RUMO_PDF6M2025",
+      "pagina_fisica_1base": 70,
+      "qualificador": "valor de custo",
+      "inicio_exercicio": "2025-01-01",
+      "rotulo": "Adições",
+      "trecho_compactado": "Adições 26.758 7.016 — — 24.602 — 58.376",
+      "tokens_arquivados": [
+        "26.758",
+        "7.016",
+        "—",
+        "—",
+        "24.602",
+        "—",
+        "58.376"
+      ],
+      "valores_BRL_arquivados": [
+        "26758000",
+        "7016000",
+        null,
+        null,
+        "24602000",
+        null,
+        "58376000"
+      ],
+      "colunas": [
+        "Terrenos, edificios e benfeitorias",
+        "Maquinas, equipamentos e instalacoes",
+        "Vagoes e locomotivas",
+        "Software",
+        "Veiculos",
+        "Infraestrutura ferroviaria e portuaria",
+        "Total"
+      ],
+      "tipo": "ROU"
+    },
+    {
+      "id": "6M2025:reajuste_custo_ROU",
+      "SourceID": "RUMO_PDF6M2025",
+      "pagina_fisica_1base": 70,
+      "qualificador": "valor de custo",
+      "inicio_exercicio": "2025-01-01",
+      "rotulo": "Reajuste contratual",
+      "trecho_compactado": "Reajuste contratual 7.708 27.978 11.048 259 (7.031) 124.619 164.581",
+      "tokens_arquivados": [
+        "7.708",
+        "27.978",
+        "11.048",
+        "259",
+        "(7.031)",
+        "124.619",
+        "164.581"
+      ],
+      "valores_BRL_arquivados": [
+        "7708000",
+        "27978000",
+        "11048000",
+        "259000",
+        "-7031000",
+        "124619000",
+        "164581000"
+      ],
+      "colunas": [
+        "Terrenos, edificios e benfeitorias",
+        "Maquinas, equipamentos e instalacoes",
+        "Vagoes e locomotivas",
+        "Software",
+        "Veiculos",
+        "Infraestrutura ferroviaria e portuaria",
+        "Total"
+      ],
+      "tipo": "ROU"
+    },
+    {
+      "id": "6M2025:adicoes_amortizacao_ROU",
+      "SourceID": "RUMO_PDF6M2025",
+      "pagina_fisica_1base": 70,
+      "qualificador": "amortização",
+      "inicio_exercicio": "2025-01-01",
+      "rotulo": "Adições",
+      "trecho_compactado": "Adições (15.173) (29.491) (8.813) (2.380) (9.012) (128.226) (193.095)",
+      "tokens_arquivados": [
+        "(15.173)",
+        "(29.491)",
+        "(8.813)",
+        "(2.380)",
+        "(9.012)",
+        "(128.226)",
+        "(193.095)"
+      ],
+      "valores_BRL_arquivados": [
+        "-15173000",
+        "-29491000",
+        "-8813000",
+        "-2380000",
+        "-9012000",
+        "-128226000",
+        "-193095000"
+      ],
+      "colunas": [
+        "Terrenos, edificios e benfeitorias",
+        "Maquinas, equipamentos e instalacoes",
+        "Vagoes e locomotivas",
+        "Software",
+        "Veiculos",
+        "Infraestrutura ferroviaria e portuaria",
+        "Total"
+      ],
+      "tipo": "ROU"
+    },
+    {
+      "id": "6M2025:adicoes_passivo_arrendamento",
+      "SourceID": "RUMO_PDF6M2025",
+      "pagina_fisica_1base": 56,
+      "qualificador": "passivo",
+      "inicio_exercicio": "2025-01-01",
+      "rotulo": "Adições",
+      "trecho_compactado": "Adições — — 58.376 58.376",
+      "tokens_arquivados": [
+        "—",
+        "—",
+        "58.376",
+        "58.376"
+      ],
+      "valores_BRL_arquivados": [
+        null,
+        null,
+        "58376000",
+        "58376000"
+      ],
+      "colunas": [
+        "Financeiro",
+        "Operacionais - concessoes",
+        "Operacionais - outros",
+        "Total"
+      ],
+      "tipo": "ROU"
+    },
+    {
+      "id": "6M2025:saldo_inicial_custo",
+      "SourceID": "RUMO_PDF6M2025",
+      "pagina_fisica_1base": 70,
+      "qualificador": "valor de custo",
+      "inicio_exercicio": "2025-01-01",
+      "rotulo": "Saldo em 01 de janeiro de 2025",
+      "trecho_compactado": "Saldo em 01 de janeiro de 2025 145.999 525.233 957.260 87.720 29.987 8.980.586 10.726.785",
+      "tokens_arquivados": [
+        "145.999",
+        "525.233",
+        "957.260",
+        "87.720",
+        "29.987",
+        "8.980.586",
+        "10.726.785"
+      ],
+      "valores_BRL_arquivados": [
+        "145999000",
+        "525233000",
+        "957260000",
+        "87720000",
+        "29987000",
+        "8980586000",
+        "10726785000"
+      ],
+      "colunas": [
+        "Terrenos, edificios e benfeitorias",
+        "Maquinas, equipamentos e instalacoes",
+        "Vagoes e locomotivas",
+        "Software",
+        "Veiculos",
+        "Infraestrutura ferroviaria e portuaria",
+        "Total"
+      ],
+      "tipo": "ROU"
+    },
+    {
+      "id": "6M2025:saldo_final_custo",
+      "SourceID": "RUMO_PDF6M2025",
+      "pagina_fisica_1base": 70,
+      "qualificador": "valor de custo",
+      "inicio_exercicio": "2025-01-01",
+      "rotulo": "Saldo em 30 de junho de 2025",
+      "trecho_compactado": "Saldo em 30 de junho de 2025 180.465 557.765 281.471 87.979 47.558 9.105.205 10.260.443",
+      "tokens_arquivados": [
+        "180.465",
+        "557.765",
+        "281.471",
+        "87.979",
+        "47.558",
+        "9.105.205",
+        "10.260.443"
+      ],
+      "valores_BRL_arquivados": [
+        "180465000",
+        "557765000",
+        "281471000",
+        "87979000",
+        "47558000",
+        "9105205000",
+        "10260443000"
+      ],
+      "colunas": [
+        "Terrenos, edificios e benfeitorias",
+        "Maquinas, equipamentos e instalacoes",
+        "Vagoes e locomotivas",
+        "Software",
+        "Veiculos",
+        "Infraestrutura ferroviaria e portuaria",
+        "Total"
+      ],
+      "tipo": "ROU"
+    }
+  ],
+  "ROU_termos": [
+    {
+      "periodo": "6M2026",
+      "SourceID": "RUMO_PDF6M2026",
+      "entidade": "Rumo S.A.",
+      "base": "consolidado",
+      "moeda": "BRL",
+      "inicio": "2026-01-01",
+      "fim": "2026-06-30",
+      "linhas_PDF": {
+        "adicoes_custo_ROU": "6M2026:adicoes_custo_ROU",
+        "reajuste_custo_ROU": "6M2026:reajuste_custo_ROU",
+        "adicoes_amortizacao_ROU": "6M2026:adicoes_amortizacao_ROU",
+        "adicoes_passivo_arrendamento": "6M2026:adicoes_passivo_arrendamento",
+        "saldo_inicial_custo": "6M2026:saldo_inicial_custo",
+        "saldo_final_custo": "6M2026:saldo_final_custo"
+      },
+      "suplemento_nao_caixa_reportado_BRL": "406067000",
+      "adicoes_custo_reportado_BRL": "257430000",
+      "pagina_suplemento": 32,
+      "residuos_arquivados": {
+        "residuo_adicoes_custo_menos_passivo": "0",
+        "residuo_adicoes_mais_reajustes_menos_suplemento": "0"
+      }
+    },
+    {
+      "periodo": "A2025",
+      "SourceID": "RUMO_PDF2025",
+      "entidade": "Rumo S.A.",
+      "base": "consolidado",
+      "moeda": "BRL",
+      "inicio": "2025-01-01",
+      "fim": "2025-12-31",
+      "linhas_PDF": {
+        "adicoes_custo_ROU": "A2025:adicoes_custo_ROU",
+        "reajuste_custo_ROU": "A2025:reajuste_custo_ROU",
+        "adicoes_amortizacao_ROU": "A2025:adicoes_amortizacao_ROU",
+        "adicoes_passivo_arrendamento": "A2025:adicoes_passivo_arrendamento",
+        "saldo_inicial_custo": "A2025:saldo_inicial_custo",
+        "saldo_final_custo": "A2025:saldo_final_custo"
+      },
+      "suplemento_nao_caixa_reportado_BRL": "492745000",
+      "adicoes_custo_reportado_BRL": "240080000",
+      "pagina_suplemento": 30,
+      "residuos_arquivados": {
+        "residuo_adicoes_custo_menos_passivo": "0",
+        "residuo_adicoes_mais_reajustes_menos_suplemento": "0"
+      }
+    },
+    {
+      "periodo": "6M2025",
+      "SourceID": "RUMO_PDF6M2025",
+      "entidade": "Rumo S.A.",
+      "base": "consolidado",
+      "moeda": "BRL",
+      "inicio": "2025-01-01",
+      "fim": "2025-06-30",
+      "linhas_PDF": {
+        "adicoes_custo_ROU": "6M2025:adicoes_custo_ROU",
+        "reajuste_custo_ROU": "6M2025:reajuste_custo_ROU",
+        "adicoes_amortizacao_ROU": "6M2025:adicoes_amortizacao_ROU",
+        "adicoes_passivo_arrendamento": "6M2025:adicoes_passivo_arrendamento",
+        "saldo_inicial_custo": "6M2025:saldo_inicial_custo",
+        "saldo_final_custo": "6M2025:saldo_final_custo"
+      },
+      "suplemento_nao_caixa_reportado_BRL": "222957000",
+      "adicoes_custo_reportado_BRL": "58376000",
+      "pagina_suplemento": 27,
+      "residuos_arquivados": {
+        "residuo_adicoes_custo_menos_passivo": "0",
+        "residuo_adicoes_mais_reajustes_menos_suplemento": "0"
+      }
+    }
+  ],
+  "ROU_composicao_condicional": {
+    "janela_documental": "2025-07-01/2026-06-30",
+    "formula_documental": "6M2026+A2025-6M2025",
+    "coeficientes": {
+      "6M2026": "1",
+      "A2025": "1",
+      "6M2025": "-1"
+    },
+    "composicao_documental_condicional_BRL": "439134000",
+    "residuo_continuidade_custo_dez25_abertura26": "0",
+    "apenas_adicoes_custo_sem_reajustes_transferencias_amortizacao": true,
+    "nao_e_fato_adotado_produtor_consumidor_nem_FCFF": true,
+    "classificacao_economica_reinvestimento_a_validar": true,
+    "giro_operacional_e_outros_participantes_ainda_pendentes": true,
+    "PIT_corte_historico_nao_certificado": true
+  },
+  "DVA_residuos_arquivados": {
+    "DVA_PDF_original_menos_CSV_7_04_01": "0E-10",
+    "DFC_PDF_menos_CSV_DA": "0E-10",
+    "DFC_PDF_menos_CSV_perda": "0E-10",
+    "DVA_original_menos_DFC_DA_menos_perda": "0",
+    "despesas_por_natureza_menos_DFC_DA": "0",
+    "DVA_comparativo_reapresentado_menos_DFC_original_DA": "0",
+    "perda_DVA_comparativo_menos_perda_DFC_original": "0"
+  },
+  "negativas_HTTP_enel": [
+    {
+      "SourceID": "indice_ri",
+      "url": "https://www.enel.cl/es/inversionistas/inversionistas-enel-chile/informacion-para-accionista/resultados-trimestrales.html",
+      "status_http": 403,
+      "recebido_utc": "2026-10-09T17:30:14.602954+00:00",
+      "sha256_envelope_negativo": "b5e720ae730f4533dda8206c93fd826c3b8e3cd671b3ac99d3a12591effac19a",
+      "bytes": 964,
+      "corpo_financeiro_nao_recebido": true
+    },
+    {
+      "SourceID": "eeff_junho2026",
+      "url": "https://www.enel.cl/content/dam/enel-cl/inversionistas/enel-chile/informacion-para-el-accionista/resultados-trimestrales/estados-financieros/2026/Estados-Financieros-Enel-Chile-junio-2026.pdf",
+      "status_http": 403,
+      "recebido_utc": "2026-10-09T17:30:15.052935+00:00",
+      "sha256_envelope_negativo": "e7f73ccbbd2a14946dbe7c52524172afcc1d94047db10a138d4298775f5be757",
+      "bytes": 960,
+      "corpo_financeiro_nao_recebido": true
+    },
+    {
+      "SourceID": "calendario_ri",
+      "url": "https://www.enel.cl/es/inversionistas/inversionistas-enel-chile/informacion-para-accionista/calendario-financiero.html",
+      "status_http": 403,
+      "recebido_utc": "2026-10-09T17:30:15.446800+00:00",
+      "sha256_envelope_negativo": "6ee4e40858b5d18c72bc31325c6c2670ba7139fa23e190981eb761aab2c9a6a4",
+      "bytes": 965,
+      "corpo_financeiro_nao_recebido": true
+    },
+    {
+      "SourceID": "sec_6k_observado",
+      "url": "https://www.sec.gov/Archives/edgar/data/1659939/000129281426003952/enicfs2q26_6k.htm",
+      "status_http": 403,
+      "recebido_utc": "2026-10-09T17:30:15.707573+00:00",
+      "sha256_envelope_negativo": "03da71443060548a6f79accf9e80b014d9c44b220b8bea00dc01d2d284a1570d",
+      "bytes": 4819,
+      "corpo_financeiro_nao_recebido": true
+    }
+  ],
+  "pins_estudos_fechados": {
+    "20261009-enelchile-g19": {
+      "FREEZE_ESTUDO.json": "28495b45f347e453713bcd7f4048dbd8837d2a54866f89389b07d2bc8f651634",
+      "MANIFESTO_ESTUDO.json": "bb742e1378e2cacc85af1ad60c9f326e594d9330f2b3ad85d2fdc09417f1f4f1",
+      "RECIBO_ESTUDO.json": "635b9347c8f411be342ec018e0fedfb638f14b1054c911e81608a3ee80ae201e",
+      "PARECER.md": "455a72c699ee39eabac9c04e001b533ffa20ad7ca51193dbb57773b98a22a392"
+    },
+    "20261009-enelchile-percurso-sec": {
+      "FREEZE_ESTUDO.json": "af4687f8d2018cd9f223aab792939c03a5846a1c413fb68f1f2dd8bc9b9802c6",
+      "MANIFESTO_ESTUDO.json": "d38381e49c77c236818d1576f22532dfe38603a12cd8075180251ba66c3a0e66",
+      "RECIBO_ESTUDO.json": "35ecbf101ff80db7925b2c629907068cf9ac278029053758f39ec210c9543c24",
+      "PARECER.md": "f354d21c0158806ad72500e0341de4926b80b49f103bba38c5a5ebb2dd24db1e"
+    },
+    "20261009-klabin-rumo-confronto-financeiro": {
+      "FREEZE_ESTUDO.json": "8ebebd110b88cf9df0a54313bf01a3d94a4bd45e4737ad1d5cdc41d06ba552a1",
+      "MANIFESTO_ESTUDO.json": "868e03e5ce12a52314550aef77ccd46c855aae8887b6fde3c51f74f8e9ff73b0",
+      "RECIBO_ESTUDO.json": "7d116515eb9a06d3b4ceba9c3f20de3d64d3e2a12e8891977afa716a4d924e82",
+      "PARECER.md": "ac18cf07f9a1ba3e7a79c24ea37548b87841cc95015b98b3016cad8a011f3587"
+    },
+    "20261009-rumo-dva-conceito": {
+      "FREEZE_ESTUDO.json": "5171efb5d3e526238ebdfb1a4372461b95203d4ed4f1abaad1db2d37e32385c7",
+      "MANIFESTO_ESTUDO.json": "c34f090f5e6e540b440a24fa4f6b747011fcb14667c314f88fa897bbcdd61d1a",
+      "RECIBO_ESTUDO.json": "133f1dd94607c081d805d8628909fd4b0e4a0f1a476cbe2981088bef61e34593",
+      "PARECER.md": "349c17504e88f86048e42499e0a337565c69d30c00b48e5ac4298674fcebde21"
+    },
+    "20261009-rumo-dva-conceito-errata": {
+      "FREEZE_ESTUDO.json": "bd9bf91c4d3b1a79388e0039e60c7bc4506ac73011cafb5cbeb5de18fa7dbce1",
+      "MANIFESTO_ESTUDO.json": "2a1240759ba5c9f5a9c81d3fe58385e3bae3ae9653c19f6306a13cec4c3ddbbd",
+      "RECIBO_ESTUDO.json": "b8a1b6e3ede4ef03bebf5f6be88e35bf94931972972e250b76ba51a3a8f60478",
+      "PARECER.md": "3a8186eb28ab6ed69f6777c1db42f65a42fd89fac05dd7b4234d8633d4b27ccd"
+    },
+    "20261009-rumo-rou-termos-ttm": {
+      "FREEZE_ESTUDO.json": "c3a1b12211eb2693cee21331ea252ae27a310dd0c7d7deaef8e0d7656bdeb90e",
+      "MANIFESTO_ESTUDO.json": "052ed4b39e5156696b2b631ce1e58922a2bd968c67034cd1b9a2faeefb240fbb",
+      "RECIBO_ESTUDO.json": "4ba58ba87b09fc5c27b3db9ff44759a4a78522fb84fd8c27bf9789296ce880f1",
+      "PARECER.md": "80d6f8e45ace0769e03458a96990b09176f3701a13e6351ca55d892f17c613b9"
+    }
+  },
+  "desconhecidos": {
+    "Enel_divida_consolidada": null,
+    "Enel_June2026_corpo_primario": null,
+    "PIT_historico_certificado": false,
+    "FCFF_adotado": null,
+    "giro_operacional": null,
+    "publicacao_instante_PDFs": null
+  },
+  "escopo": "recortes factuais e contas delimitadas; não financeiros completos, modelo novo ou cache operacional",
+  "fontes_contextuais_nao_reexecutadas_pelo_leitor": [
+    {
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001659939.json",
+      "sha256": "cfd599826f84b4f2d70e80c2e38920f32de179338164aa43406e9be0caba8d48",
+      "bytes": 825447,
+      "recebido_utc": "2026-10-09T14:13:44.726676+00:00",
+      "status_http": null
+    },
+    {
+      "url": "https://data.sec.gov/submissions/CIK0001659939.json",
+      "sha256": "b3702cf634660baa7d9b0c0e64c4a3c96d77a46dd9b33406b3e4c3eb85747a3f",
+      "bytes": 42640,
+      "recebido_utc": "2026-10-09T14:13:45.703490+00:00",
+      "status_http": null
+    },
+    {
+      "url": "https://data.sec.gov/submissions/CIK0001659939.json",
+      "sha256": "b3702cf634660baa7d9b0c0e64c4a3c96d77a46dd9b33406b3e4c3eb85747a3f",
+      "bytes": 42640,
+      "recebido_utc": "2026-10-09T14:18:19.250527+00:00",
+      "status_http": null
+    },
+    {
+      "bytes": 23585,
+      "data_coleta": "2026-10-07T03:18:30+00:00",
+      "sha256": "2f8d099fd8fc2ff6f5acee7f3e687ef55b5b29805d68cf830a9a5c346f1b7502",
+      "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/index.json"
+    }
+  ],
+  "Enel_observacoes_fechadas_nao_reexecutadas_pelo_leitor": {
+    "diagnostico_UTC": "2026-10-09T17:34:33.102604+00:00",
+    "inventario_companyfacts": {
+      "dei": {
+        "shares": {
+          "n_fatos": 9,
+          "max_end": "2025-12-31",
+          "periodos_2025_mais": [
+            "2025-12-31"
+          ]
+        }
+      },
+      "ifrs-full": {
+        "CLP": {
+          "n_fatos": 5007,
+          "max_end": "2024-12-31",
+          "periodos_2025_mais": []
+        },
+        "pure": {
+          "n_fatos": 196,
+          "max_end": "2024-12-31",
+          "periodos_2025_mais": []
+        },
+        "CLF": {
+          "n_fatos": 19,
+          "max_end": "2020-12-31",
+          "periodos_2025_mais": []
+        },
+        "Employee": {
+          "n_fatos": 4,
+          "max_end": "2017-12-31",
+          "periodos_2025_mais": []
+        },
+        "employee": {
+          "n_fatos": 28,
+          "max_end": "2024-12-31",
+          "periodos_2025_mais": []
+        },
+        "CLP/shares": {
+          "n_fatos": 54,
+          "max_end": "2024-12-31",
+          "periodos_2025_mais": []
+        },
+        "USD": {
+          "n_fatos": 2,
+          "max_end": "2020-12-31",
+          "periodos_2025_mais": []
+        },
+        "shares": {
+          "n_fatos": 25,
+          "max_end": "2024-12-31",
+          "periodos_2025_mais": []
+        }
+      },
+      "us-gaap": {
+        "CLP": {
+          "n_fatos": 3,
+          "max_end": "2020-12-31",
+          "periodos_2025_mais": []
+        }
+      }
+    },
+    "filings_submissions_literais": [
+      {
+        "accessionNumber": "0001292814-26-003952",
+        "filingDate": "2026-07-29",
+        "reportDate": "2026-06-30",
+        "acceptanceDateTime": "2026-07-29T15:29:19.000Z",
+        "act": "34",
+        "form": "6-K",
+        "fileNumber": "001-37723",
+        "filmNumber": "261215438",
+        "items": "",
+        "core_type": "6-K",
+        "size": 525898,
+        "isXBRL": 0,
+        "isInlineXBRL": 0,
+        "isXBRLNumeric": 0,
+        "primaryDocument": "enicfs2q26_6k.htm",
+        "primaryDocDescription": "6-K"
+      },
+      {
+        "accessionNumber": "0001104659-26-050251",
+        "filingDate": "2026-04-28",
+        "reportDate": "2025-12-31",
+        "acceptanceDateTime": "2026-04-28T19:24:13.000Z",
+        "act": "34",
+        "form": "20-F",
+        "fileNumber": "001-37723",
+        "filmNumber": "26906917",
+        "items": "",
+        "core_type": "XBRL",
+        "size": 111390689,
+        "isXBRL": 1,
+        "isInlineXBRL": 1,
+        "isXBRLNumeric": 1,
+        "primaryDocument": "enic-20251231x20f.htm",
+        "primaryDocDescription": "20-F"
+      }
+    ],
+    "n_participantes_preservados_no_estudo": 22,
+    "companyfacts_nao_tem_USD_monetario_2025_2026": true,
+    "cache_executor_e_ROOT_sem_index_XML_annual_no_estudo": true,
+    "sem_defeito_parser_demonstrado": true
+  },
+  "Enel_nota3_celulas_reportadas_nao_reexecutadas_pelo_leitor": [
+    {
+      "fonte_id": "SEC_20F_2025_XML_PREEXISTENTE",
+      "issuer_id": "CL_ENELCHILE",
+      "rubrica_literal": "Equity attributable to shareholders of Enel Chile",
+      "moeda": "CLP",
+      "escala_reportada": "1000",
+      "valor_reportado_literal": "4,958,798,421",
+      "valor_em_unidades_codigo": "4958798421000",
+      "data_fim": "2024-12-31",
+      "data_inicio": null,
+      "natureza": "estoque",
+      "base": "consolidado",
+      "coluna_literal": "As Reported",
+      "nota": "3",
+      "tag_xml": "{http://www.enelchile.cl/20251231}DisclosureOfChangesInFunctionalAndPresentationCurrencyTextBlock",
+      "contextRef": "Duration_1_1_2025_To_12_31_2025_pCpD7qPWMEyBuGJKL17gLA",
+      "tabela_html_0base": 0,
+      "linha_html_0base": 58,
+      "coluna_html_0base": 2,
+      "poder_aquisitivo_documental": null,
+      "comparabilidade": "ponte de apresentação reportada; não lucro normalizado/perímetro constante"
+    },
+    {
+      "fonte_id": "SEC_20F_2025_XML_PREEXISTENTE",
+      "issuer_id": "CL_ENELCHILE",
+      "rubrica_literal": "Equity attributable to shareholders of Enel Chile",
+      "moeda": "USD",
+      "escala_reportada": "1000",
+      "valor_reportado_literal": "4,976,415",
+      "valor_em_unidades_codigo": "4976415000",
+      "data_fim": "2024-12-31",
+      "data_inicio": null,
+      "natureza": "estoque",
+      "base": "consolidado",
+      "coluna_literal": "Restated",
+      "nota": "3",
+      "tag_xml": "{http://www.enelchile.cl/20251231}DisclosureOfChangesInFunctionalAndPresentationCurrencyTextBlock",
+      "contextRef": "Duration_1_1_2025_To_12_31_2025_pCpD7qPWMEyBuGJKL17gLA",
+      "tabela_html_0base": 0,
+      "linha_html_0base": 58,
+      "coluna_html_0base": 4,
+      "poder_aquisitivo_documental": null,
+      "comparabilidade": "ponte de apresentação reportada; não lucro normalizado/perímetro constante"
+    },
+    {
+      "fonte_id": "SEC_20F_2025_XML_PREEXISTENTE",
+      "issuer_id": "CL_ENELCHILE",
+      "rubrica_literal": "Equity attributable to shareholders of Enel Chile",
+      "moeda": "CLP",
+      "escala_reportada": "1000",
+      "valor_reportado_literal": "4,446,079,918",
+      "valor_em_unidades_codigo": "4446079918000",
+      "data_fim": "2024-01-01",
+      "data_inicio": null,
+      "natureza": "estoque",
+      "base": "consolidado",
+      "coluna_literal": "As Reported",
+      "nota": "3",
+      "tag_xml": "{http://www.enelchile.cl/20251231}DisclosureOfChangesInFunctionalAndPresentationCurrencyTextBlock",
+      "contextRef": "Duration_1_1_2025_To_12_31_2025_pCpD7qPWMEyBuGJKL17gLA",
+      "tabela_html_0base": 0,
+      "linha_html_0base": 58,
+      "coluna_html_0base": 6,
+      "poder_aquisitivo_documental": null,
+      "comparabilidade": "ponte de apresentação reportada; não lucro normalizado/perímetro constante"
+    },
+    {
+      "fonte_id": "SEC_20F_2025_XML_PREEXISTENTE",
+      "issuer_id": "CL_ENELCHILE",
+      "rubrica_literal": "Equity attributable to shareholders of Enel Chile",
+      "moeda": "USD",
+      "escala_reportada": "1000",
+      "valor_reportado_literal": "5,068,953",
+      "valor_em_unidades_codigo": "5068953000",
+      "data_fim": "2024-01-01",
+      "data_inicio": null,
+      "natureza": "estoque",
+      "base": "consolidado",
+      "coluna_literal": "Restated",
+      "nota": "3",
+      "tag_xml": "{http://www.enelchile.cl/20251231}DisclosureOfChangesInFunctionalAndPresentationCurrencyTextBlock",
+      "contextRef": "Duration_1_1_2025_To_12_31_2025_pCpD7qPWMEyBuGJKL17gLA",
+      "tabela_html_0base": 0,
+      "linha_html_0base": 58,
+      "coluna_html_0base": 8,
+      "poder_aquisitivo_documental": null,
+      "comparabilidade": "ponte de apresentação reportada; não lucro normalizado/perímetro constante"
+    },
+    {
+      "fonte_id": "SEC_20F_2025_XML_PREEXISTENTE",
+      "issuer_id": "CL_ENELCHILE",
+      "rubrica_literal": "Non-controlling interests",
+      "moeda": "CLP",
+      "escala_reportada": "1000",
+      "valor_reportado_literal": "367,581,094",
+      "valor_em_unidades_codigo": "367581094000",
+      "data_fim": "2024-12-31",
+      "data_inicio": null,
+      "natureza": "estoque",
+      "base": "consolidado",
+      "coluna_literal": "As Reported",
+      "nota": "3",
+      "tag_xml": "{http://www.enelchile.cl/20251231}DisclosureOfChangesInFunctionalAndPresentationCurrencyTextBlock",
+      "contextRef": "Duration_1_1_2025_To_12_31_2025_pCpD7qPWMEyBuGJKL17gLA",
+      "tabela_html_0base": 0,
+      "linha_html_0base": 59,
+      "coluna_html_0base": 2,
+      "poder_aquisitivo_documental": null,
+      "comparabilidade": "ponte de apresentação reportada; não lucro normalizado/perímetro constante"
+    },
+    {
+      "fonte_id": "SEC_20F_2025_XML_PREEXISTENTE",
+      "issuer_id": "CL_ENELCHILE",
+      "rubrica_literal": "Non-controlling interests",
+      "moeda": "USD",
+      "escala_reportada": "1000",
+      "valor_reportado_literal": "368,887",
+      "valor_em_unidades_codigo": "368887000",
+      "data_fim": "2024-12-31",
+      "data_inicio": null,
+      "natureza": "estoque",
+      "base": "consolidado",
+      "coluna_literal": "Restated",
+      "nota": "3",
+      "tag_xml": "{http://www.enelchile.cl/20251231}DisclosureOfChangesInFunctionalAndPresentationCurrencyTextBlock",
+      "contextRef": "Duration_1_1_2025_To_12_31_2025_pCpD7qPWMEyBuGJKL17gLA",
+      "tabela_html_0base": 0,
+      "linha_html_0base": 59,
+      "coluna_html_0base": 4,
+      "poder_aquisitivo_documental": null,
+      "comparabilidade": "ponte de apresentação reportada; não lucro normalizado/perímetro constante"
+    },
+    {
+      "fonte_id": "SEC_20F_2025_XML_PREEXISTENTE",
+      "issuer_id": "CL_ENELCHILE",
+      "rubrica_literal": "Non-controlling interests",
+      "moeda": "CLP",
+      "escala_reportada": "1000",
+      "valor_reportado_literal": "314,806,354",
+      "valor_em_unidades_codigo": "314806354000",
+      "data_fim": "2024-01-01",
+      "data_inicio": null,
+      "natureza": "estoque",
+      "base": "consolidado",
+      "coluna_literal": "As Reported",
+      "nota": "3",
+      "tag_xml": "{http://www.enelchile.cl/20251231}DisclosureOfChangesInFunctionalAndPresentationCurrencyTextBlock",
+      "contextRef": "Duration_1_1_2025_To_12_31_2025_pCpD7qPWMEyBuGJKL17gLA",
+      "tabela_html_0base": 0,
+      "linha_html_0base": 59,
+      "coluna_html_0base": 6,
+      "poder_aquisitivo_documental": null,
+      "comparabilidade": "ponte de apresentação reportada; não lucro normalizado/perímetro constante"
+    },
+    {
+      "fonte_id": "SEC_20F_2025_XML_PREEXISTENTE",
+      "issuer_id": "CL_ENELCHILE",
+      "rubrica_literal": "Non-controlling interests",
+      "moeda": "USD",
+      "escala_reportada": "1000",
+      "valor_reportado_literal": "358,909",
+      "valor_em_unidades_codigo": "358909000",
+      "data_fim": "2024-01-01",
+      "data_inicio": null,
+      "natureza": "estoque",
+      "base": "consolidado",
+      "coluna_literal": "Restated",
+      "nota": "3",
+      "tag_xml": "{http://www.enelchile.cl/20251231}DisclosureOfChangesInFunctionalAndPresentationCurrencyTextBlock",
+      "contextRef": "Duration_1_1_2025_To_12_31_2025_pCpD7qPWMEyBuGJKL17gLA",
+      "tabela_html_0base": 0,
+      "linha_html_0base": 59,
+      "coluna_html_0base": 8,
+      "poder_aquisitivo_documental": null,
+      "comparabilidade": "ponte de apresentação reportada; não lucro normalizado/perímetro constante"
+    },
+    {
+      "fonte_id": "SEC_20F_2025_XML_PREEXISTENTE",
+      "issuer_id": "CL_ENELCHILE",
+      "rubrica_literal": "TOTAL EQUITY",
+      "moeda": "CLP",
+      "escala_reportada": "1000",
+      "valor_reportado_literal": "5,326,379,515",
+      "valor_em_unidades_codigo": "5326379515000",
+      "data_fim": "2024-12-31",
+      "data_inicio": null,
+      "natureza": "estoque",
+      "base": "consolidado",
+      "coluna_literal": "As Reported",
+      "nota": "3",
+      "tag_xml": "{http://www.enelchile.cl/20251231}DisclosureOfChangesInFunctionalAndPresentationCurrencyTextBlock",
+      "contextRef": "Duration_1_1_2025_To_12_31_2025_pCpD7qPWMEyBuGJKL17gLA",
+      "tabela_html_0base": 0,
+      "linha_html_0base": 60,
+      "coluna_html_0base": 2,
+      "poder_aquisitivo_documental": null,
+      "comparabilidade": "ponte de apresentação reportada; não lucro normalizado/perímetro constante"
+    },
+    {
+      "fonte_id": "SEC_20F_2025_XML_PREEXISTENTE",
+      "issuer_id": "CL_ENELCHILE",
+      "rubrica_literal": "TOTAL EQUITY",
+      "moeda": "USD",
+      "escala_reportada": "1000",
+      "valor_reportado_literal": "5,345,302",
+      "valor_em_unidades_codigo": "5345302000",
+      "data_fim": "2024-12-31",
+      "data_inicio": null,
+      "natureza": "estoque",
+      "base": "consolidado",
+      "coluna_literal": "Restated",
+      "nota": "3",
+      "tag_xml": "{http://www.enelchile.cl/20251231}DisclosureOfChangesInFunctionalAndPresentationCurrencyTextBlock",
+      "contextRef": "Duration_1_1_2025_To_12_31_2025_pCpD7qPWMEyBuGJKL17gLA",
+      "tabela_html_0base": 0,
+      "linha_html_0base": 60,
+      "coluna_html_0base": 4,
+      "poder_aquisitivo_documental": null,
+      "comparabilidade": "ponte de apresentação reportada; não lucro normalizado/perímetro constante"
+    },
+    {
+      "fonte_id": "SEC_20F_2025_XML_PREEXISTENTE",
+      "issuer_id": "CL_ENELCHILE",
+      "rubrica_literal": "TOTAL EQUITY",
+      "moeda": "CLP",
+      "escala_reportada": "1000",
+      "valor_reportado_literal": "4,760,886,272",
+      "valor_em_unidades_codigo": "4760886272000",
+      "data_fim": "2024-01-01",
+      "data_inicio": null,
+      "natureza": "estoque",
+      "base": "consolidado",
+      "coluna_literal": "As Reported",
+      "nota": "3",
+      "tag_xml": "{http://www.enelchile.cl/20251231}DisclosureOfChangesInFunctionalAndPresentationCurrencyTextBlock",
+      "contextRef": "Duration_1_1_2025_To_12_31_2025_pCpD7qPWMEyBuGJKL17gLA",
+      "tabela_html_0base": 0,
+      "linha_html_0base": 60,
+      "coluna_html_0base": 6,
+      "poder_aquisitivo_documental": null,
+      "comparabilidade": "ponte de apresentação reportada; não lucro normalizado/perímetro constante"
+    },
+    {
+      "fonte_id": "SEC_20F_2025_XML_PREEXISTENTE",
+      "issuer_id": "CL_ENELCHILE",
+      "rubrica_literal": "TOTAL EQUITY",
+      "moeda": "USD",
+      "escala_reportada": "1000",
+      "valor_reportado_literal": "5,427,862",
+      "valor_em_unidades_codigo": "5427862000",
+      "data_fim": "2024-01-01",
+      "data_inicio": null,
+      "natureza": "estoque",
+      "base": "consolidado",
+      "coluna_literal": "Restated",
+      "nota": "3",
+      "tag_xml": "{http://www.enelchile.cl/20251231}DisclosureOfChangesInFunctionalAndPresentationCurrencyTextBlock",
+      "contextRef": "Duration_1_1_2025_To_12_31_2025_pCpD7qPWMEyBuGJKL17gLA",
+      "tabela_html_0base": 0,
+      "linha_html_0base": 60,
+      "coluna_html_0base": 8,
+      "poder_aquisitivo_documental": null,
+      "comparabilidade": "ponte de apresentação reportada; não lucro normalizado/perímetro constante"
+    },
+    {
+      "fonte_id": "SEC_20F_2025_XML_PREEXISTENTE",
+      "issuer_id": "CL_ENELCHILE",
+      "rubrica_literal": "PROFIT (LOSS)",
+      "moeda": "CLP",
+      "escala_reportada": "1000",
+      "valor_reportado_literal": "191,042,971",
+      "valor_em_unidades_codigo": "191042971000",
+      "data_fim": "2024-12-31",
+      "data_inicio": "2024-01-01",
+      "natureza": "fluxo_anual",
+      "base": "consolidado",
+      "coluna_literal": "As Reported",
+      "nota": "3",
+      "tag_xml": "{http://www.enelchile.cl/20251231}DisclosureOfChangesInFunctionalAndPresentationCurrencyTextBlock",
+      "contextRef": "Duration_1_1_2025_To_12_31_2025_pCpD7qPWMEyBuGJKL17gLA",
+      "tabela_html_0base": 1,
+      "linha_html_0base": 27,
+      "coluna_html_0base": 2,
+      "poder_aquisitivo_documental": null,
+      "comparabilidade": "ponte de apresentação reportada; não lucro normalizado/perímetro constante"
+    },
+    {
+      "fonte_id": "SEC_20F_2025_XML_PREEXISTENTE",
+      "issuer_id": "CL_ENELCHILE",
+      "rubrica_literal": "PROFIT (LOSS)",
+      "moeda": "USD",
+      "escala_reportada": "1000",
+      "valor_reportado_literal": "202,432",
+      "valor_em_unidades_codigo": "202432000",
+      "data_fim": "2024-12-31",
+      "data_inicio": "2024-01-01",
+      "natureza": "fluxo_anual",
+      "base": "consolidado",
+      "coluna_literal": "Restated",
+      "nota": "3",
+      "tag_xml": "{http://www.enelchile.cl/20251231}DisclosureOfChangesInFunctionalAndPresentationCurrencyTextBlock",
+      "contextRef": "Duration_1_1_2025_To_12_31_2025_pCpD7qPWMEyBuGJKL17gLA",
+      "tabela_html_0base": 1,
+      "linha_html_0base": 27,
+      "coluna_html_0base": 4,
+      "poder_aquisitivo_documental": null,
+      "comparabilidade": "ponte de apresentação reportada; não lucro normalizado/perímetro constante"
+    },
+    {
+      "fonte_id": "SEC_20F_2025_XML_PREEXISTENTE",
+      "issuer_id": "CL_ENELCHILE",
+      "rubrica_literal": "PROFIT (LOSS)",
+      "moeda": "CLP",
+      "escala_reportada": "1000",
+      "valor_reportado_literal": "680,013,391",
+      "valor_em_unidades_codigo": "680013391000",
+      "data_fim": "2023-12-31",
+      "data_inicio": "2023-01-01",
+      "natureza": "fluxo_anual",
+      "base": "consolidado",
+      "coluna_literal": "As Reported",
+      "nota": "3",
+      "tag_xml": "{http://www.enelchile.cl/20251231}DisclosureOfChangesInFunctionalAndPresentationCurrencyTextBlock",
+      "contextRef": "Duration_1_1_2025_To_12_31_2025_pCpD7qPWMEyBuGJKL17gLA",
+      "tabela_html_0base": 1,
+      "linha_html_0base": 27,
+      "coluna_html_0base": 6,
+      "poder_aquisitivo_documental": null,
+      "comparabilidade": "ponte de apresentação reportada; não lucro normalizado/perímetro constante"
+    },
+    {
+      "fonte_id": "SEC_20F_2025_XML_PREEXISTENTE",
+      "issuer_id": "CL_ENELCHILE",
+      "rubrica_literal": "PROFIT (LOSS)",
+      "moeda": "USD",
+      "escala_reportada": "1000",
+      "valor_reportado_literal": "809,627",
+      "valor_em_unidades_codigo": "809627000",
+      "data_fim": "2023-12-31",
+      "data_inicio": "2023-01-01",
+      "natureza": "fluxo_anual",
+      "base": "consolidado",
+      "coluna_literal": "Restated",
+      "nota": "3",
+      "tag_xml": "{http://www.enelchile.cl/20251231}DisclosureOfChangesInFunctionalAndPresentationCurrencyTextBlock",
+      "contextRef": "Duration_1_1_2025_To_12_31_2025_pCpD7qPWMEyBuGJKL17gLA",
+      "tabela_html_0base": 1,
+      "linha_html_0base": 27,
+      "coluna_html_0base": 8,
+      "poder_aquisitivo_documental": null,
+      "comparabilidade": "ponte de apresentação reportada; não lucro normalizado/perímetro constante"
+    },
+    {
+      "fonte_id": "SEC_20F_2025_XML_PREEXISTENTE",
+      "issuer_id": "CL_ENELCHILE",
+      "rubrica_literal": "Profit (loss) attributable to owners of the parent",
+      "moeda": "CLP",
+      "escala_reportada": "1000",
+      "valor_reportado_literal": "145,112,153",
+      "valor_em_unidades_codigo": "145112153000",
+      "data_fim": "2024-12-31",
+      "data_inicio": "2024-01-01",
+      "natureza": "fluxo_anual",
+      "base": "consolidado",
+      "coluna_literal": "As Reported",
+      "nota": "3",
+      "tag_xml": "{http://www.enelchile.cl/20251231}DisclosureOfChangesInFunctionalAndPresentationCurrencyTextBlock",
+      "contextRef": "Duration_1_1_2025_To_12_31_2025_pCpD7qPWMEyBuGJKL17gLA",
+      "tabela_html_0base": 1,
+      "linha_html_0base": 30,
+      "coluna_html_0base": 2,
+      "poder_aquisitivo_documental": null,
+      "comparabilidade": "ponte de apresentação reportada; não lucro normalizado/perímetro constante"
+    },
+    {
+      "fonte_id": "SEC_20F_2025_XML_PREEXISTENTE",
+      "issuer_id": "CL_ENELCHILE",
+      "rubrica_literal": "Profit (loss) attributable to owners of the parent",
+      "moeda": "USD",
+      "escala_reportada": "1000",
+      "valor_reportado_literal": "153,763",
+      "valor_em_unidades_codigo": "153763000",
+      "data_fim": "2024-12-31",
+      "data_inicio": "2024-01-01",
+      "natureza": "fluxo_anual",
+      "base": "consolidado",
+      "coluna_literal": "Restated",
+      "nota": "3",
+      "tag_xml": "{http://www.enelchile.cl/20251231}DisclosureOfChangesInFunctionalAndPresentationCurrencyTextBlock",
+      "contextRef": "Duration_1_1_2025_To_12_31_2025_pCpD7qPWMEyBuGJKL17gLA",
+      "tabela_html_0base": 1,
+      "linha_html_0base": 30,
+      "coluna_html_0base": 4,
+      "poder_aquisitivo_documental": null,
+      "comparabilidade": "ponte de apresentação reportada; não lucro normalizado/perímetro constante"
+    },
+    {
+      "fonte_id": "SEC_20F_2025_XML_PREEXISTENTE",
+      "issuer_id": "CL_ENELCHILE",
+      "rubrica_literal": "Profit (loss) attributable to owners of the parent",
+      "moeda": "CLP",
+      "escala_reportada": "1000",
+      "valor_reportado_literal": "633,455,775",
+      "valor_em_unidades_codigo": "633455775000",
+      "data_fim": "2023-12-31",
+      "data_inicio": "2023-01-01",
+      "natureza": "fluxo_anual",
+      "base": "consolidado",
+      "coluna_literal": "As Reported",
+      "nota": "3",
+      "tag_xml": "{http://www.enelchile.cl/20251231}DisclosureOfChangesInFunctionalAndPresentationCurrencyTextBlock",
+      "contextRef": "Duration_1_1_2025_To_12_31_2025_pCpD7qPWMEyBuGJKL17gLA",
+      "tabela_html_0base": 1,
+      "linha_html_0base": 30,
+      "coluna_html_0base": 6,
+      "poder_aquisitivo_documental": null,
+      "comparabilidade": "ponte de apresentação reportada; não lucro normalizado/perímetro constante"
+    },
+    {
+      "fonte_id": "SEC_20F_2025_XML_PREEXISTENTE",
+      "issuer_id": "CL_ENELCHILE",
+      "rubrica_literal": "Profit (loss) attributable to owners of the parent",
+      "moeda": "USD",
+      "escala_reportada": "1000",
+      "valor_reportado_literal": "754,195",
+      "valor_em_unidades_codigo": "754195000",
+      "data_fim": "2023-12-31",
+      "data_inicio": "2023-01-01",
+      "natureza": "fluxo_anual",
+      "base": "consolidado",
+      "coluna_literal": "Restated",
+      "nota": "3",
+      "tag_xml": "{http://www.enelchile.cl/20251231}DisclosureOfChangesInFunctionalAndPresentationCurrencyTextBlock",
+      "contextRef": "Duration_1_1_2025_To_12_31_2025_pCpD7qPWMEyBuGJKL17gLA",
+      "tabela_html_0base": 1,
+      "linha_html_0base": 30,
+      "coluna_html_0base": 8,
+      "poder_aquisitivo_documental": null,
+      "comparabilidade": "ponte de apresentação reportada; não lucro normalizado/perímetro constante"
+    },
+    {
+      "fonte_id": "SEC_20F_2025_XML_PREEXISTENTE",
+      "issuer_id": "CL_ENELCHILE",
+      "rubrica_literal": "Profit (loss) attributable to non-controlling interests",
+      "moeda": "CLP",
+      "escala_reportada": "1000",
+      "valor_reportado_literal": "45,930,818",
+      "valor_em_unidades_codigo": "45930818000",
+      "data_fim": "2024-12-31",
+      "data_inicio": "2024-01-01",
+      "natureza": "fluxo_anual",
+      "base": "consolidado",
+      "coluna_literal": "As Reported",
+      "nota": "3",
+      "tag_xml": "{http://www.enelchile.cl/20251231}DisclosureOfChangesInFunctionalAndPresentationCurrencyTextBlock",
+      "contextRef": "Duration_1_1_2025_To_12_31_2025_pCpD7qPWMEyBuGJKL17gLA",
+      "tabela_html_0base": 1,
+      "linha_html_0base": 31,
+      "coluna_html_0base": 2,
+      "poder_aquisitivo_documental": null,
+      "comparabilidade": "ponte de apresentação reportada; não lucro normalizado/perímetro constante"
+    },
+    {
+      "fonte_id": "SEC_20F_2025_XML_PREEXISTENTE",
+      "issuer_id": "CL_ENELCHILE",
+      "rubrica_literal": "Profit (loss) attributable to non-controlling interests",
+      "moeda": "USD",
+      "escala_reportada": "1000",
+      "valor_reportado_literal": "48,669",
+      "valor_em_unidades_codigo": "48669000",
+      "data_fim": "2024-12-31",
+      "data_inicio": "2024-01-01",
+      "natureza": "fluxo_anual",
+      "base": "consolidado",
+      "coluna_literal": "Restated",
+      "nota": "3",
+      "tag_xml": "{http://www.enelchile.cl/20251231}DisclosureOfChangesInFunctionalAndPresentationCurrencyTextBlock",
+      "contextRef": "Duration_1_1_2025_To_12_31_2025_pCpD7qPWMEyBuGJKL17gLA",
+      "tabela_html_0base": 1,
+      "linha_html_0base": 31,
+      "coluna_html_0base": 4,
+      "poder_aquisitivo_documental": null,
+      "comparabilidade": "ponte de apresentação reportada; não lucro normalizado/perímetro constante"
+    },
+    {
+      "fonte_id": "SEC_20F_2025_XML_PREEXISTENTE",
+      "issuer_id": "CL_ENELCHILE",
+      "rubrica_literal": "Profit (loss) attributable to non-controlling interests",
+      "moeda": "CLP",
+      "escala_reportada": "1000",
+      "valor_reportado_literal": "46,557,616",
+      "valor_em_unidades_codigo": "46557616000",
+      "data_fim": "2023-12-31",
+      "data_inicio": "2023-01-01",
+      "natureza": "fluxo_anual",
+      "base": "consolidado",
+      "coluna_literal": "As Reported",
+      "nota": "3",
+      "tag_xml": "{http://www.enelchile.cl/20251231}DisclosureOfChangesInFunctionalAndPresentationCurrencyTextBlock",
+      "contextRef": "Duration_1_1_2025_To_12_31_2025_pCpD7qPWMEyBuGJKL17gLA",
+      "tabela_html_0base": 1,
+      "linha_html_0base": 31,
+      "coluna_html_0base": 6,
+      "poder_aquisitivo_documental": null,
+      "comparabilidade": "ponte de apresentação reportada; não lucro normalizado/perímetro constante"
+    },
+    {
+      "fonte_id": "SEC_20F_2025_XML_PREEXISTENTE",
+      "issuer_id": "CL_ENELCHILE",
+      "rubrica_literal": "Profit (loss) attributable to non-controlling interests",
+      "moeda": "USD",
+      "escala_reportada": "1000",
+      "valor_reportado_literal": "55,432",
+      "valor_em_unidades_codigo": "55432000",
+      "data_fim": "2023-12-31",
+      "data_inicio": "2023-01-01",
+      "natureza": "fluxo_anual",
+      "base": "consolidado",
+      "coluna_literal": "Restated",
+      "nota": "3",
+      "tag_xml": "{http://www.enelchile.cl/20251231}DisclosureOfChangesInFunctionalAndPresentationCurrencyTextBlock",
+      "contextRef": "Duration_1_1_2025_To_12_31_2025_pCpD7qPWMEyBuGJKL17gLA",
+      "tabela_html_0base": 1,
+      "linha_html_0base": 31,
+      "coluna_html_0base": 8,
+      "poder_aquisitivo_documental": null,
+      "comparabilidade": "ponte de apresentação reportada; não lucro normalizado/perímetro constante"
+    }
+  ],
+  "Enel_nota3_predicados_reportados_nao_reexecutados_pelo_leitor": {
+    "mudanca_01jan2025": true,
+    "funcional_anterior_CLP": true,
+    "novo_USD": true,
+    "funcional_prospectiva": true,
+    "apresentacao_retrospectiva": true,
+    "fluxos_media_periodo": true,
+    "estoques_fechamento": true,
+    "componentes_PL_historico": true
+  },
+  "Enel_harness_negativo_preservado": {
+    "received_date_data_coleta_recusado": "Usar filed civil real; recepção UTC em disponivel_desde",
+    "FinanceIncomeCost_expected_incompleto": "Defeito do esperado de harness, não da fonte ou parser",
+    "share_unit_namespace": "Diferença no esperado de namespace, não defeito da fonte",
+    "negativos_originais_permanecem_no_estudo_fechado": true
+  },
+  "mapeamento_issuer_CVM": {
+    "versao": "cdp-enel-klabin-rumo-2026-10-09-issuer-v1",
+    "natureza": "declaracao_curatorial_versionada",
+    "vinculos": {
+      "BR_KLABIN": {
+        "CNPJ_CIA": "89.637.490/0001-45",
+        "DENOM_CIA": "KLABIN S.A."
+      },
+      "BR_RUMO": {
+        "CNPJ_CIA": "02.387.241/0001-60",
+        "DENOM_CIA": "RUMO S.A."
+      }
+    },
+    "origem_do_CNPJ_e_DENOM": "campos literais dos participantes CVM; conferidos novamente nos CSVs físicos pelo leitor",
+    "issuer_id_e_contexto_CDP_nao_e_campo_do_documento_CVM": true,
+    "nao_prova_PIT_ou_integracao_modelo": true
+  },
+  "reparo_documental_V2": {
+    "motivo": "vincular rótulos ao grão físico e contexto histórico do quadro",
+    "versao_anterior_EVIDENCIAS_sha256": "10540fb43495f15884a93bc9ff6dfeaca47e40692f66ade3f94ab8dc1fd6bcfc",
+    "parecer_independente_V1_sha256": "4c13a56bbbc3e540713de5750db79252fb3fe185256ad3d8ac6ae6c656733c53",
+    "recibo_ROOT_negativo_V1_sha256": "aad7f06936dc8924cee0ad3fdd0caac632e443d48b47183bdcc34c7093fe0051",
+    "V1_fechada_preservada": true,
+    "valores_SourceIDs_originais_comparativos_inalterados": true,
+    "aprovacao_independente_V2": null
+  }
+}

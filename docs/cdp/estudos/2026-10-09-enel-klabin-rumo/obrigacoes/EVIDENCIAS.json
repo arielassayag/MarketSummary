@@ -1,0 +1,1617 @@
+{
+  "schema": "cdp.rumo.obrigacoes.evidencias_publicas/v1",
+  "contexto": {
+    "publicacao_historica": "7f0d368c1a5bba0c1bbe948aea38dda232e34852",
+    "gerador_historico": "af6eb0c93d7c14efaa49bd658c0a502f4e9aedb9",
+    "retrato": "2026-10-09",
+    "corte_UTC": "2026-10-09T14:19:57.833570+00:00",
+    "replay07_nao_e_prova09": true,
+    "natureza": "apoio_documental_sem_aceite_economico_ou_PIT"
+  },
+  "rubricas": [
+    {
+      "source_id": "RUMO_PDF_2T26",
+      "pdf_sha256": "ba0083fabddc262ccf391e14123d00910b8965d628b2d6718bfab7fd5a741a35",
+      "pagina_fisica_1base": 90,
+      "linha_texto_1base": 20,
+      "linha_literal": "Rumo Malha Oeste S.A.  2.975.582  2.786.696 ",
+      "rubrica": "Rumo Malha Oeste S.A.",
+      "categoria_documental": "a_litigio",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2026-06-30",
+          "lexema": "2.975.582",
+          "valor_BRL": "2975582000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "2.786.696",
+          "valor_BRL": "2786696000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_2T26",
+      "pdf_sha256": "ba0083fabddc262ccf391e14123d00910b8965d628b2d6718bfab7fd5a741a35",
+      "pagina_fisica_1base": 90,
+      "linha_texto_1base": 23,
+      "linha_literal": "Rumo Malha Paulista S.A.  867.243  805.884 ",
+      "rubrica": "Rumo Malha Paulista S.A.",
+      "categoria_documental": "a_parcelados",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2026-06-30",
+          "lexema": "867.243",
+          "valor_BRL": "867243000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "805.884",
+          "valor_BRL": "805884000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_2T26",
+      "pdf_sha256": "ba0083fabddc262ccf391e14123d00910b8965d628b2d6718bfab7fd5a741a35",
+      "pagina_fisica_1base": 90,
+      "linha_texto_1base": 29,
+      "linha_literal": " 424.787  395.665 ",
+      "rubrica": "Subtotal concessões e outorgas",
+      "categoria_documental": "a_outorgas",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2026-06-30",
+          "lexema": "424.787",
+          "valor_BRL": "424787000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "395.665",
+          "valor_BRL": "395665000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_2T26",
+      "pdf_sha256": "ba0083fabddc262ccf391e14123d00910b8965d628b2d6718bfab7fd5a741a35",
+      "pagina_fisica_1base": 90,
+      "linha_texto_1base": 30,
+      "linha_literal": "Total  4.267.612  3.988.245 ",
+      "rubrica": "Total",
+      "categoria_documental": "a_total",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2026-06-30",
+          "lexema": "4.267.612",
+          "valor_BRL": "4267612000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "3.988.245",
+          "valor_BRL": "3988245000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_2T26",
+      "pdf_sha256": "ba0083fabddc262ccf391e14123d00910b8965d628b2d6718bfab7fd5a741a35",
+      "pagina_fisica_1base": 92,
+      "linha_texto_1base": 7,
+      "linha_literal": " 347.409  488.216 ",
+      "rubrica": "Subtotal arrendamentos IFRS16",
+      "categoria_documental": "b_IFRS16",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2026-06-30",
+          "lexema": "347.409",
+          "valor_BRL": "347409000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "488.216",
+          "valor_BRL": "488216000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_2T26",
+      "pdf_sha256": "ba0083fabddc262ccf391e14123d00910b8965d628b2d6718bfab7fd5a741a35",
+      "pagina_fisica_1base": 92,
+      "linha_texto_1base": 11,
+      "linha_literal": " 3.507.508  3.149.179 ",
+      "rubrica": "Subtotal outorgas IFRS16",
+      "categoria_documental": "b_IFRS16",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2026-06-30",
+          "lexema": "3.507.508",
+          "valor_BRL": "3507508000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "3.149.179",
+          "valor_BRL": "3149179000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_2T26",
+      "pdf_sha256": "ba0083fabddc262ccf391e14123d00910b8965d628b2d6718bfab7fd5a741a35",
+      "pagina_fisica_1base": 92,
+      "linha_texto_1base": 12,
+      "linha_literal": "Total  3.854.917  3.637.395 ",
+      "rubrica": "Total",
+      "categoria_documental": "b_total_subconjunto_5_6",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2026-06-30",
+          "lexema": "3.854.917",
+          "valor_BRL": "3854917000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "3.637.395",
+          "valor_BRL": "3637395000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_2T26",
+      "pdf_sha256": "ba0083fabddc262ccf391e14123d00910b8965d628b2d6718bfab7fd5a741a35",
+      "pagina_fisica_1base": 90,
+      "linha_texto_1base": 26,
+      "linha_literal": "Rumo Malha Sul S.A.  56.779  61.339 ",
+      "rubrica": "Rumo Malha Sul S.A.",
+      "categoria_documental": "a_outorgas_detalhe",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2026-06-30",
+          "lexema": "56.779",
+          "valor_BRL": "56779000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "61.339",
+          "valor_BRL": "61339000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_2T26",
+      "pdf_sha256": "ba0083fabddc262ccf391e14123d00910b8965d628b2d6718bfab7fd5a741a35",
+      "pagina_fisica_1base": 90,
+      "linha_texto_1base": 27,
+      "linha_literal": "Rumo Malha Paulista S.A.  330.957  298.340 ",
+      "rubrica": "Rumo Malha Paulista S.A.",
+      "categoria_documental": "a_outorgas_detalhe",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2026-06-30",
+          "lexema": "330.957",
+          "valor_BRL": "330957000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "298.340",
+          "valor_BRL": "298340000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_2T26",
+      "pdf_sha256": "ba0083fabddc262ccf391e14123d00910b8965d628b2d6718bfab7fd5a741a35",
+      "pagina_fisica_1base": 90,
+      "linha_texto_1base": 28,
+      "linha_literal": "Rumo Malha Central S.A.  37.051  35.986 ",
+      "rubrica": "Rumo Malha Central S.A.",
+      "categoria_documental": "a_outorgas_detalhe",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2026-06-30",
+          "lexema": "37.051",
+          "valor_BRL": "37051000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "35.986",
+          "valor_BRL": "35986000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_2T26",
+      "pdf_sha256": "ba0083fabddc262ccf391e14123d00910b8965d628b2d6718bfab7fd5a741a35",
+      "pagina_fisica_1base": 92,
+      "linha_texto_1base": 4,
+      "linha_literal": "Rumo Malha Sul S.A.  89.257  175.328 ",
+      "rubrica": "Rumo Malha Sul S.A.",
+      "categoria_documental": "b_arrendamentos_detalhe",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2026-06-30",
+          "lexema": "89.257",
+          "valor_BRL": "89257000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "175.328",
+          "valor_BRL": "175328000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_2T26",
+      "pdf_sha256": "ba0083fabddc262ccf391e14123d00910b8965d628b2d6718bfab7fd5a741a35",
+      "pagina_fisica_1base": 92,
+      "linha_texto_1base": 5,
+      "linha_literal": "Rumo Malha Paulista S.A.  258.152  295.476 ",
+      "rubrica": "Rumo Malha Paulista S.A.",
+      "categoria_documental": "b_arrendamentos_detalhe",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2026-06-30",
+          "lexema": "258.152",
+          "valor_BRL": "258152000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "295.476",
+          "valor_BRL": "295476000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_2T26",
+      "pdf_sha256": "ba0083fabddc262ccf391e14123d00910b8965d628b2d6718bfab7fd5a741a35",
+      "pagina_fisica_1base": 92,
+      "linha_texto_1base": 6,
+      "linha_literal": "Rumo Malha Oeste S.A.  —  17.412 ",
+      "rubrica": "Rumo Malha Oeste S.A.",
+      "categoria_documental": "b_arrendamentos_detalhe",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2026-06-30",
+          "lexema": "—",
+          "valor_BRL": null,
+          "ausente_nao_e_zero": true
+        },
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "17.412",
+          "valor_BRL": "17412000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_2T26",
+      "pdf_sha256": "ba0083fabddc262ccf391e14123d00910b8965d628b2d6718bfab7fd5a741a35",
+      "pagina_fisica_1base": 92,
+      "linha_texto_1base": 9,
+      "linha_literal": "Rumo Malha Paulista S.A. (renovação)  2.133.438  1.834.965 ",
+      "rubrica": "Rumo Malha Paulista S.A. (renovação)",
+      "categoria_documental": "b_outorgas_detalhe",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2026-06-30",
+          "lexema": "2.133.438",
+          "valor_BRL": "2133438000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "1.834.965",
+          "valor_BRL": "1834965000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_2T26",
+      "pdf_sha256": "ba0083fabddc262ccf391e14123d00910b8965d628b2d6718bfab7fd5a741a35",
+      "pagina_fisica_1base": 92,
+      "linha_texto_1base": 10,
+      "linha_literal": "Rumo Malha Central S.A.  1.374.070  1.314.214 ",
+      "rubrica": "Rumo Malha Central S.A.",
+      "categoria_documental": "b_outorgas_detalhe",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2026-06-30",
+          "lexema": "1.374.070",
+          "valor_BRL": "1374070000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "1.314.214",
+          "valor_BRL": "1314214000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_2T26",
+      "pdf_sha256": "ba0083fabddc262ccf391e14123d00910b8965d628b2d6718bfab7fd5a741a35",
+      "pagina_fisica_1base": 91,
+      "linha_texto_1base": 24,
+      "linha_literal": "Rumo Malha Oeste S.A.  31.424  30.202 ",
+      "rubrica": "Rumo Malha Oeste S.A.",
+      "categoria_documental": "deposito_judicial_nao_compensado_sem_contrato",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2026-06-30",
+          "lexema": "31.424",
+          "valor_BRL": "31424000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "30.202",
+          "valor_BRL": "30202000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_4T25",
+      "pdf_sha256": "ed34eb3cd60505dd2b1024afd613cd9a06a36c075d472c4a66c1b7f28952e982",
+      "pagina_fisica_1base": 119,
+      "linha_texto_1base": 19,
+      "linha_literal": "Rumo Malha Oeste S.A.  2.786.696  2.442.600 ",
+      "rubrica": "Rumo Malha Oeste S.A.",
+      "categoria_documental": "a_litigio",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "2.786.696",
+          "valor_BRL": "2786696000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "2.442.600",
+          "valor_BRL": "2442600000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_4T25",
+      "pdf_sha256": "ed34eb3cd60505dd2b1024afd613cd9a06a36c075d472c4a66c1b7f28952e982",
+      "pagina_fisica_1base": 119,
+      "linha_texto_1base": 22,
+      "linha_literal": "Rumo Malha Paulista S.A.  805.884  940.215 ",
+      "rubrica": "Rumo Malha Paulista S.A.",
+      "categoria_documental": "a_parcelados",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "805.884",
+          "valor_BRL": "805884000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "940.215",
+          "valor_BRL": "940215000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_4T25",
+      "pdf_sha256": "ed34eb3cd60505dd2b1024afd613cd9a06a36c075d472c4a66c1b7f28952e982",
+      "pagina_fisica_1base": 119,
+      "linha_texto_1base": 28,
+      "linha_literal": " 395.665  338.375 ",
+      "rubrica": "Subtotal concessões e outorgas",
+      "categoria_documental": "a_outorgas",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "395.665",
+          "valor_BRL": "395665000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "338.375",
+          "valor_BRL": "338375000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_4T25",
+      "pdf_sha256": "ed34eb3cd60505dd2b1024afd613cd9a06a36c075d472c4a66c1b7f28952e982",
+      "pagina_fisica_1base": 119,
+      "linha_texto_1base": 29,
+      "linha_literal": "Total  3.988.245  3.721.190 ",
+      "rubrica": "Total",
+      "categoria_documental": "a_total",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "3.988.245",
+          "valor_BRL": "3988245000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "3.721.190",
+          "valor_BRL": "3721190000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_4T25",
+      "pdf_sha256": "ed34eb3cd60505dd2b1024afd613cd9a06a36c075d472c4a66c1b7f28952e982",
+      "pagina_fisica_1base": 120,
+      "linha_texto_1base": 26,
+      "linha_literal": " 488.216  755.188 ",
+      "rubrica": "Subtotal arrendamentos IFRS16",
+      "categoria_documental": "b_IFRS16",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "488.216",
+          "valor_BRL": "488216000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "755.188",
+          "valor_BRL": "755188000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_4T25",
+      "pdf_sha256": "ed34eb3cd60505dd2b1024afd613cd9a06a36c075d472c4a66c1b7f28952e982",
+      "pagina_fisica_1base": 120,
+      "linha_texto_1base": 30,
+      "linha_literal": " 3.149.179  2.784.932 ",
+      "rubrica": "Subtotal outorgas IFRS16",
+      "categoria_documental": "b_IFRS16",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "3.149.179",
+          "valor_BRL": "3149179000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "2.784.932",
+          "valor_BRL": "2784932000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_4T25",
+      "pdf_sha256": "ed34eb3cd60505dd2b1024afd613cd9a06a36c075d472c4a66c1b7f28952e982",
+      "pagina_fisica_1base": 120,
+      "linha_texto_1base": 31,
+      "linha_literal": "Total  3.637.395  3.540.120 ",
+      "rubrica": "Total",
+      "categoria_documental": "b_total_subconjunto_5_6",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "3.637.395",
+          "valor_BRL": "3637395000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "3.540.120",
+          "valor_BRL": "3540120000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_4T25",
+      "pdf_sha256": "ed34eb3cd60505dd2b1024afd613cd9a06a36c075d472c4a66c1b7f28952e982",
+      "pagina_fisica_1base": 119,
+      "linha_texto_1base": 25,
+      "linha_literal": "Rumo Malha Sul S.A.  61.339  68.487 ",
+      "rubrica": "Rumo Malha Sul S.A.",
+      "categoria_documental": "a_outorgas_detalhe",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "61.339",
+          "valor_BRL": "61339000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "68.487",
+          "valor_BRL": "68487000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_4T25",
+      "pdf_sha256": "ed34eb3cd60505dd2b1024afd613cd9a06a36c075d472c4a66c1b7f28952e982",
+      "pagina_fisica_1base": 119,
+      "linha_texto_1base": 26,
+      "linha_literal": "Rumo Malha Paulista S.A.  298.340  238.146 ",
+      "rubrica": "Rumo Malha Paulista S.A.",
+      "categoria_documental": "a_outorgas_detalhe",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "298.340",
+          "valor_BRL": "298340000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "238.146",
+          "valor_BRL": "238146000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_4T25",
+      "pdf_sha256": "ed34eb3cd60505dd2b1024afd613cd9a06a36c075d472c4a66c1b7f28952e982",
+      "pagina_fisica_1base": 119,
+      "linha_texto_1base": 27,
+      "linha_literal": "Rumo Malha Central S.A.  35.986  31.742 ",
+      "rubrica": "Rumo Malha Central S.A.",
+      "categoria_documental": "a_outorgas_detalhe",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "35.986",
+          "valor_BRL": "35986000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "31.742",
+          "valor_BRL": "31742000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_4T25",
+      "pdf_sha256": "ed34eb3cd60505dd2b1024afd613cd9a06a36c075d472c4a66c1b7f28952e982",
+      "pagina_fisica_1base": 120,
+      "linha_texto_1base": 23,
+      "linha_literal": "Rumo Malha Sul S.A.  175.328  309.269 ",
+      "rubrica": "Rumo Malha Sul S.A.",
+      "categoria_documental": "b_arrendamentos_detalhe",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "175.328",
+          "valor_BRL": "175328000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "309.269",
+          "valor_BRL": "309269000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_4T25",
+      "pdf_sha256": "ed34eb3cd60505dd2b1024afd613cd9a06a36c075d472c4a66c1b7f28952e982",
+      "pagina_fisica_1base": 120,
+      "linha_texto_1base": 24,
+      "linha_literal": "Rumo Malha Paulista S.A.  295.476  363.588 ",
+      "rubrica": "Rumo Malha Paulista S.A.",
+      "categoria_documental": "b_arrendamentos_detalhe",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "295.476",
+          "valor_BRL": "295476000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "363.588",
+          "valor_BRL": "363588000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_4T25",
+      "pdf_sha256": "ed34eb3cd60505dd2b1024afd613cd9a06a36c075d472c4a66c1b7f28952e982",
+      "pagina_fisica_1base": 120,
+      "linha_texto_1base": 25,
+      "linha_literal": "Rumo Malha Oeste S.A.  17.412  82.331 ",
+      "rubrica": "Rumo Malha Oeste S.A.",
+      "categoria_documental": "b_arrendamentos_detalhe",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "17.412",
+          "valor_BRL": "17412000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "82.331",
+          "valor_BRL": "82331000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_4T25",
+      "pdf_sha256": "ed34eb3cd60505dd2b1024afd613cd9a06a36c075d472c4a66c1b7f28952e982",
+      "pagina_fisica_1base": 120,
+      "linha_texto_1base": 28,
+      "linha_literal": "Rumo Malha Paulista S.A. (renovação)  1.834.965  1.673.889 ",
+      "rubrica": "Rumo Malha Paulista S.A. (renovação)",
+      "categoria_documental": "b_outorgas_detalhe",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "1.834.965",
+          "valor_BRL": "1834965000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "1.673.889",
+          "valor_BRL": "1673889000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_4T25",
+      "pdf_sha256": "ed34eb3cd60505dd2b1024afd613cd9a06a36c075d472c4a66c1b7f28952e982",
+      "pagina_fisica_1base": 120,
+      "linha_texto_1base": 29,
+      "linha_literal": "Rumo Malha Central S.A.  1.314.214  1.111.043 ",
+      "rubrica": "Rumo Malha Central S.A.",
+      "categoria_documental": "b_outorgas_detalhe",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "1.314.214",
+          "valor_BRL": "1314214000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "1.111.043",
+          "valor_BRL": "1111043000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_4T25",
+      "pdf_sha256": "ed34eb3cd60505dd2b1024afd613cd9a06a36c075d472c4a66c1b7f28952e982",
+      "pagina_fisica_1base": 120,
+      "linha_texto_1base": 18,
+      "linha_literal": "Rumo Malha Oeste S.A.  30.202  27.897 ",
+      "rubrica": "Rumo Malha Oeste S.A.",
+      "categoria_documental": "deposito_judicial_nao_compensado_sem_contrato",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-12-31",
+          "lexema": "30.202",
+          "valor_BRL": "30202000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "27.897",
+          "valor_BRL": "27897000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_2T25",
+      "pdf_sha256": "16bd36189133e78b96e1eac9148999d2c4fef6c62261b0b4e63963004c9fe882",
+      "pagina_fisica_1base": 79,
+      "linha_texto_1base": 31,
+      "linha_literal": "Rumo Malha Oeste S.A.   2.596.716    2.442.600  ",
+      "rubrica": "Rumo Malha Oeste S.A.",
+      "categoria_documental": "a_litigio",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-06-30",
+          "lexema": "2.596.716",
+          "valor_BRL": "2596716000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "2.442.600",
+          "valor_BRL": "2442600000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_2T25",
+      "pdf_sha256": "16bd36189133e78b96e1eac9148999d2c4fef6c62261b0b4e63963004c9fe882",
+      "pagina_fisica_1base": 79,
+      "linha_texto_1base": 34,
+      "linha_literal": "Rumo Malha Paulista S.A.   1.003.742    940.215  ",
+      "rubrica": "Rumo Malha Paulista S.A.",
+      "categoria_documental": "a_parcelados",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-06-30",
+          "lexema": "1.003.742",
+          "valor_BRL": "1003742000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "940.215",
+          "valor_BRL": "940215000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_2T25",
+      "pdf_sha256": "16bd36189133e78b96e1eac9148999d2c4fef6c62261b0b4e63963004c9fe882",
+      "pagina_fisica_1base": 79,
+      "linha_texto_1base": 41,
+      "linha_literal": "   372.145    338.375  ",
+      "rubrica": "Subtotal concessões e outorgas",
+      "categoria_documental": "a_outorgas",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-06-30",
+          "lexema": "372.145",
+          "valor_BRL": "372145000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "338.375",
+          "valor_BRL": "338375000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_2T25",
+      "pdf_sha256": "16bd36189133e78b96e1eac9148999d2c4fef6c62261b0b4e63963004c9fe882",
+      "pagina_fisica_1base": 79,
+      "linha_texto_1base": 43,
+      "linha_literal": "Total   3.972.603    3.721.190  ",
+      "rubrica": "Total",
+      "categoria_documental": "a_total",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-06-30",
+          "lexema": "3.972.603",
+          "valor_BRL": "3972603000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "3.721.190",
+          "valor_BRL": "3721190000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_2T25",
+      "pdf_sha256": "16bd36189133e78b96e1eac9148999d2c4fef6c62261b0b4e63963004c9fe882",
+      "pagina_fisica_1base": 81,
+      "linha_texto_1base": 15,
+      "linha_literal": "   647.284    755.188  ",
+      "rubrica": "Subtotal arrendamentos IFRS16",
+      "categoria_documental": "b_IFRS16",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-06-30",
+          "lexema": "647.284",
+          "valor_BRL": "647284000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "755.188",
+          "valor_BRL": "755188000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_2T25",
+      "pdf_sha256": "16bd36189133e78b96e1eac9148999d2c4fef6c62261b0b4e63963004c9fe882",
+      "pagina_fisica_1base": 81,
+      "linha_texto_1base": 20,
+      "linha_literal": "   2.998.091    2.784.932  ",
+      "rubrica": "Subtotal outorgas IFRS16",
+      "categoria_documental": "b_IFRS16",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-06-30",
+          "lexema": "2.998.091",
+          "valor_BRL": "2998091000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "2.784.932",
+          "valor_BRL": "2784932000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_2T25",
+      "pdf_sha256": "16bd36189133e78b96e1eac9148999d2c4fef6c62261b0b4e63963004c9fe882",
+      "pagina_fisica_1base": 81,
+      "linha_texto_1base": 22,
+      "linha_literal": "Total   3.645.375    3.540.120  ",
+      "rubrica": "Total",
+      "categoria_documental": "b_total_subconjunto_5_6",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-06-30",
+          "lexema": "3.645.375",
+          "valor_BRL": "3645375000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "3.540.120",
+          "valor_BRL": "3540120000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_2T25",
+      "pdf_sha256": "16bd36189133e78b96e1eac9148999d2c4fef6c62261b0b4e63963004c9fe882",
+      "pagina_fisica_1base": 79,
+      "linha_texto_1base": 38,
+      "linha_literal": "Rumo Malha Sul S.A.   65.593    68.487  ",
+      "rubrica": "Rumo Malha Sul S.A.",
+      "categoria_documental": "a_outorgas_detalhe",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-06-30",
+          "lexema": "65.593",
+          "valor_BRL": "65593000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "68.487",
+          "valor_BRL": "68487000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_2T25",
+      "pdf_sha256": "16bd36189133e78b96e1eac9148999d2c4fef6c62261b0b4e63963004c9fe882",
+      "pagina_fisica_1base": 79,
+      "linha_texto_1base": 39,
+      "linha_literal": "Rumo Malha Paulista S.A.   271.597    238.146  ",
+      "rubrica": "Rumo Malha Paulista S.A.",
+      "categoria_documental": "a_outorgas_detalhe",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-06-30",
+          "lexema": "271.597",
+          "valor_BRL": "271597000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "238.146",
+          "valor_BRL": "238146000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_2T25",
+      "pdf_sha256": "16bd36189133e78b96e1eac9148999d2c4fef6c62261b0b4e63963004c9fe882",
+      "pagina_fisica_1base": 79,
+      "linha_texto_1base": 40,
+      "linha_literal": "Rumo Malha Central S.A.   34.955    31.742  ",
+      "rubrica": "Rumo Malha Central S.A.",
+      "categoria_documental": "a_outorgas_detalhe",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-06-30",
+          "lexema": "34.955",
+          "valor_BRL": "34955000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "31.742",
+          "valor_BRL": "31742000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_2T25",
+      "pdf_sha256": "16bd36189133e78b96e1eac9148999d2c4fef6c62261b0b4e63963004c9fe882",
+      "pagina_fisica_1base": 81,
+      "linha_texto_1base": 12,
+      "linha_literal": "Rumo Malha Sul S.A.   255.276    309.269  ",
+      "rubrica": "Rumo Malha Sul S.A.",
+      "categoria_documental": "b_arrendamentos_detalhe",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-06-30",
+          "lexema": "255.276",
+          "valor_BRL": "255276000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "309.269",
+          "valor_BRL": "309269000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_2T25",
+      "pdf_sha256": "16bd36189133e78b96e1eac9148999d2c4fef6c62261b0b4e63963004c9fe882",
+      "pagina_fisica_1base": 81,
+      "linha_texto_1base": 13,
+      "linha_literal": "Rumo Malha Paulista S.A.   340.641    363.588  ",
+      "rubrica": "Rumo Malha Paulista S.A.",
+      "categoria_documental": "b_arrendamentos_detalhe",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-06-30",
+          "lexema": "340.641",
+          "valor_BRL": "340641000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "363.588",
+          "valor_BRL": "363588000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_2T25",
+      "pdf_sha256": "16bd36189133e78b96e1eac9148999d2c4fef6c62261b0b4e63963004c9fe882",
+      "pagina_fisica_1base": 81,
+      "linha_texto_1base": 14,
+      "linha_literal": "Rumo Malha Oeste S.A.   51.367    82.331  ",
+      "rubrica": "Rumo Malha Oeste S.A.",
+      "categoria_documental": "b_arrendamentos_detalhe",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-06-30",
+          "lexema": "51.367",
+          "valor_BRL": "51367000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "82.331",
+          "valor_BRL": "82331000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_2T25",
+      "pdf_sha256": "16bd36189133e78b96e1eac9148999d2c4fef6c62261b0b4e63963004c9fe882",
+      "pagina_fisica_1base": 81,
+      "linha_texto_1base": 18,
+      "linha_literal": "Rumo Malha Paulista S.A. (renovação)   1.835.359    1.673.889  ",
+      "rubrica": "Rumo Malha Paulista S.A. (renovação)",
+      "categoria_documental": "b_outorgas_detalhe",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-06-30",
+          "lexema": "1.835.359",
+          "valor_BRL": "1835359000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "1.673.889",
+          "valor_BRL": "1673889000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_2T25",
+      "pdf_sha256": "16bd36189133e78b96e1eac9148999d2c4fef6c62261b0b4e63963004c9fe882",
+      "pagina_fisica_1base": 81,
+      "linha_texto_1base": 19,
+      "linha_literal": "Rumo Malha Central S.A.   1.162.732    1.111.043  ",
+      "rubrica": "Rumo Malha Central S.A.",
+      "categoria_documental": "b_outorgas_detalhe",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-06-30",
+          "lexema": "1.162.732",
+          "valor_BRL": "1162732000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "1.111.043",
+          "valor_BRL": "1111043000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    },
+    {
+      "source_id": "RUMO_PDF_2T25",
+      "pdf_sha256": "16bd36189133e78b96e1eac9148999d2c4fef6c62261b0b4e63963004c9fe882",
+      "pagina_fisica_1base": 80,
+      "linha_texto_1base": 28,
+      "linha_literal": "Rumo Malha Oeste S.A.   29.010    27.897  ",
+      "rubrica": "Rumo Malha Oeste S.A.",
+      "categoria_documental": "deposito_judicial_nao_compensado_sem_contrato",
+      "moeda": "BRL",
+      "escala": "MIL",
+      "base": "grupo/controladas na nota do consolidado",
+      "label": "fact_source_reported",
+      "celulas": [
+        {
+          "data_coluna": "2025-06-30",
+          "lexema": "29.010",
+          "valor_BRL": "29010000",
+          "ausente_nao_e_zero": false
+        },
+        {
+          "data_coluna": "2024-12-31",
+          "lexema": "27.897",
+          "valor_BRL": "27897000",
+          "ausente_nao_e_zero": false
+        }
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "id": "P01",
+      "source_id": "RUMO_PDF_4T25",
+      "pdf_sha256": "ed34eb3cd60505dd2b1024afd613cd9a06a36c075d472c4a66c1b7f28952e982",
+      "pagina_fisica_1base": 119,
+      "linha_inicio_1base": 9,
+      "pagina_texto_sha256": "9391b89ea3f5ce858a81d8a9bd3f2d5f69eb5c850ca39099ba93d387df4eb105",
+      "ancora_literal": "mediante transferência da conta",
+      "label": "fact_source_reported",
+      "claim": "A política registra parcelas em litígio transferidas da conta de passivos de arrendamentos no vencimento e corrigidas posteriormente por Selic.",
+      "qualificador": "Não reexecuta roll-forward nem prova que todo saldo a tenha origem IFRS16; não somar a parcela transferida novamente na conta de origem."
+    },
+    {
+      "id": "P02",
+      "source_id": "RUMO_PDF_4T25",
+      "pdf_sha256": "ed34eb3cd60505dd2b1024afd613cd9a06a36c075d472c4a66c1b7f28952e982",
+      "pagina_fisica_1base": 119,
+      "linha_inicio_1base": 12,
+      "pagina_texto_sha256": "9391b89ea3f5ce858a81d8a9bd3f2d5f69eb5c850ca39099ba93d387df4eb105",
+      "ancora_literal": "resolução do litígio",
+      "label": "fact_source_reported",
+      "claim": "Parcelamentos são registrados pelo valor ainda devido após resolução do litígio e corrigidos por Selic até pagamento.",
+      "qualificador": "Saldo contábil reconhecido, não cronograma de desembolso ou valor de acordo futuro certificado."
+    },
+    {
+      "id": "P03",
+      "source_id": "RUMO_PDF_4T25",
+      "pdf_sha256": "ed34eb3cd60505dd2b1024afd613cd9a06a36c075d472c4a66c1b7f28952e982",
+      "pagina_fisica_1base": 119,
+      "linha_inicio_1base": 15,
+      "pagina_texto_sha256": "9391b89ea3f5ce858a81d8a9bd3f2d5f69eb5c850ca39099ba93d387df4eb105",
+      "ancora_literal": "contrapartida ao",
+      "label": "fact_source_reported",
+      "claim": "A conta a também inclui outorgas por direitos de concessão, com contrapartida textual ao intangível e mensuração posterior pela taxa efetiva.",
+      "qualificador": "O próprio texto remete à Nota5.12.3; essa seção tem título Direito de Uso. Preservar a tensão do localizador e não alocar automaticamente a outorga ao ROU ou ao direito de concessão Malha Norte."
+    },
+    {
+      "id": "P04",
+      "source_id": "RUMO_PDF_2T26",
+      "pdf_sha256": "ba0083fabddc262ccf391e14123d00910b8965d628b2d6718bfab7fd5a741a35",
+      "pagina_fisica_1base": 92,
+      "linha_inicio_1base": 1,
+      "pagina_texto_sha256": "8794eb2e931ec50bbea327e91425252b005e74c151a25133810e5096df595b13",
+      "ancora_literal": "b) Arrendamentos e outorgas enquadrados",
+      "label": "fact_source_reported",
+      "claim": "A abertura b é expressamente enquadrada no IFRS16 e referida à Nota5.6, com arrendamentos e outorgas apresentados separadamente.",
+      "qualificador": "b pertence à coluna Operacionais-concessões5.6, demonstrado no controle; não é dívida extra a acrescentar ao total dessa nota."
+    },
+    {
+      "id": "P05",
+      "source_id": "RUMO_PDF_4T25",
+      "pdf_sha256": "ed34eb3cd60505dd2b1024afd613cd9a06a36c075d472c4a66c1b7f28952e982",
+      "pagina_fisica_1base": 74,
+      "linha_inicio_1base": 12,
+      "pagina_texto_sha256": "19a5846e27765a7551d87222448e9c08e286f234248e2af4a802d904d1e196ad",
+      "ancora_literal": "pagamentos fixos, incluindo pagamentos fixos na essência",
+      "label": "fact_source_reported",
+      "claim": "A política de5.6 inclui valor presente de pagamentos fixos/em essência, variáveis por índice/taxa, garantias e opções sob critérios próprios.",
+      "qualificador": "Política geral não discrimina parcela fixa/variável de cada contrato nem autoriza chamar todas as obrigações a e b de outorga fixa."
+    },
+    {
+      "id": "P06",
+      "source_id": "RUMO_PDF_2T26",
+      "pdf_sha256": "ba0083fabddc262ccf391e14123d00910b8965d628b2d6718bfab7fd5a741a35",
+      "pagina_fisica_1base": 67,
+      "linha_inicio_1base": 27,
+      "pagina_texto_sha256": "2eaeceb43b4e43e2c0869eb95e17011e80add6a052dc1e5418add89317088c6f",
+      "ancora_literal": "demais contratos de arrendamento que não",
+      "label": "fact_source_reported",
+      "claim": "Arrendamentos variáveis não reconhecidos no passivo, contratos de curto prazo e baixo valor têm impactos reportados em resultado.",
+      "qualificador": "Identificar sua presença efetiva no EBIT/FCFF; não capitalizar novamente pelo nome nem converter despesa reportada em estoque de dívida."
+    },
+    {
+      "id": "P07",
+      "source_id": "RUMO_PDF_2T26",
+      "pdf_sha256": "ba0083fabddc262ccf391e14123d00910b8965d628b2d6718bfab7fd5a741a35",
+      "pagina_fisica_1base": 68,
+      "linha_inicio_1base": 13,
+      "pagina_texto_sha256": "bfa3f1032c26a7950a513c6762421d284e26211f3b428d8e8622523b27e5bb8c",
+      "ancora_literal": "O potencial crédito de PIS/COFINS",
+      "label": "fact_source_reported",
+      "claim": "A mensuração declarada do passivo inclui potencial crédito de PIS/COFINS no pagamento.",
+      "qualificador": "Não compensar crédito fiscal ou ajustar dívida/FCFF sem ponte de tratamento tributário, fluxo e disponibilidade própria."
+    },
+    {
+      "id": "P08",
+      "source_id": "RUMO_PDF_2T26",
+      "pdf_sha256": "ba0083fabddc262ccf391e14123d00910b8965d628b2d6718bfab7fd5a741a35",
+      "pagina_fisica_1base": 91,
+      "linha_inicio_1base": 21,
+      "pagina_texto_sha256": "0535bfe390595eb01fd263b2d0181ef13e6b626cd2719436a4c8405c62687f6f",
+      "ancora_literal": "Os depósitos judiciais associados",
+      "label": "fact_source_reported",
+      "claim": "Há depósito judicial associado ao litígio Malha Oeste, apresentado separadamente da obrigação.",
+      "qualificador": "Não foi demonstrado direito/valor líquido para compensação econômica automática; não é caixa livre por associação nominal."
+    },
+    {
+      "id": "P09",
+      "source_id": "RUMO_PDF_2T26",
+      "pdf_sha256": "ba0083fabddc262ccf391e14123d00910b8965d628b2d6718bfab7fd5a741a35",
+      "pagina_fisica_1base": 91,
+      "linha_inicio_1base": 16,
+      "pagina_texto_sha256": "0535bfe390595eb01fd263b2d0181ef13e6b626cd2719436a4c8405c62687f6f",
+      "ancora_literal": "Quinto Termo Aditivo",
+      "label": "issuer_management_claim",
+      "claim": "A nota relata termo aditivo da Malha Oeste com regime transitório e necessidade de encontro de contas entre débitos/créditos, incluindo a discussão judicial.",
+      "qualificador": "Conteúdo relatado no filing; contrato/aditivo/encontro de contas não foi adquirido nesta frente. Não é confirmação jurídica independente do resultado ou abatimento."
+    },
+    {
+      "id": "P10",
+      "source_id": "RUMO_PDF_2T26",
+      "pdf_sha256": "ba0083fabddc262ccf391e14123d00910b8965d628b2d6718bfab7fd5a741a35",
+      "pagina_fisica_1base": 35,
+      "linha_inicio_1base": 1,
+      "pagina_texto_sha256": "b579e68bfb89f2cf0e0bb61a251c2810660e43dde7d19f807c7c54b8c6e1b22d",
+      "ancora_literal": "Concessões de operações ferroviárias",
+      "label": "fact_source_reported",
+      "claim": "O grupo divulga múltiplos vencimentos, entidades controladas e coligadas/controladas em conjunto; o prazo atual divulgado para Malha Oeste difere da tabela anual anterior.",
+      "qualificador": "Não estender ou encurtar o conjunto de FCFF por um prazo isolado. A premissa histórica2058 do corredor principal é curatorial e já explícita, não defeito demonstrado por encontrar outra concessão."
+    },
+    {
+      "id": "P11",
+      "source_id": "RUMO_PDF_2T26",
+      "pdf_sha256": "ba0083fabddc262ccf391e14123d00910b8965d628b2d6718bfab7fd5a741a35",
+      "pagina_fisica_1base": 80,
+      "linha_inicio_1base": 33,
+      "pagina_texto_sha256": "99b16fa9d0ec995646177c50e20ce671472ea557e16ee5bc7750c08d92f35351",
+      "ancora_literal": "valorizado ao valor justo na combinação de negócios",
+      "label": "fact_source_reported",
+      "claim": "O direito de concessão Malha Norte no intangível é atribuído a combinação de negócios e amortizado pelo prazo próprio divulgado.",
+      "qualificador": "Origem distinta de nova outorga paga/ROU; não converter saldo justo adquirido em novo investimento ou passivo pelo nome da rubrica."
+    },
+    {
+      "id": "P12",
+      "source_id": "RUMO_PDF_2T26",
+      "pdf_sha256": "ba0083fabddc262ccf391e14123d00910b8965d628b2d6718bfab7fd5a741a35",
+      "pagina_fisica_1base": 92,
+      "linha_inicio_1base": 16,
+      "pagina_texto_sha256": "8794eb2e931ec50bbea327e91425252b005e74c151a25133810e5096df595b13",
+      "ancora_literal": "c) Compromissos de investimento",
+      "label": "fact_source_reported",
+      "claim": "Os contratos divulgam compromissos de investimento com estimativas históricas e repactuação de obras/prazos.",
+      "qualificador": "Não são, só por esse texto, saldo devedor reconhecido, capex executado no TTM, custo futuro remanescente ou valor presente para deduzir do EV."
+    },
+    {
+      "id": "P13",
+      "source_id": "RUMO_PDF_4T25",
+      "pdf_sha256": "ed34eb3cd60505dd2b1024afd613cd9a06a36c075d472c4a66c1b7f28952e982",
+      "pagina_fisica_1base": 100,
+      "linha_inicio_1base": 3,
+      "pagina_texto_sha256": "e7b9159535c7671d41e13f3c23f484c888d40ad417dd4e47b69162a14dbd57b8",
+      "ancora_literal": "O ativo de direito de uso é mensurado inicialmente ao custo",
+      "label": "fact_source_reported",
+      "claim": "ROU inicial inclui ajustes ao passivo por pagamentos prévios, custos diretos, restauração e incentivos; sua vida posterior pode seguir prazo contratual ou vida útil conforme transferência/compra.",
+      "qualificador": "Adição de custo, remensuração, amortização e pagamento de principal não são intercambiáveis. Os tiesROU recebidos não garantem equivalência universal nem FCFF completo."
+    },
+    {
+      "id": "P14",
+      "source_id": "RUMO_PDF_2T26",
+      "pdf_sha256": "ba0083fabddc262ccf391e14123d00910b8965d628b2d6718bfab7fd5a741a35",
+      "pagina_fisica_1base": 39,
+      "linha_inicio_1base": 11,
+      "pagina_texto_sha256": "49aff78ba5e5043485662f783d8815de6882a9c405141480b9d961f6fb29eaf7",
+      "ancora_literal": "políticas contábeis consistentes",
+      "label": "fact_source_reported",
+      "claim": "O semestre2026 manda ler as informações em conjunto com2025 e declara políticas consistentes.",
+      "qualificador": "Sustenta o uso documental da política anual como qualificador; ambas as recepções são posteriores ao corte do retrato09 e não recertificam PIT."
+    }
+  ],
+  "flags": [
+    {
+      "id": "Q01",
+      "label": "analyst_interpretation",
+      "material": true,
+      "issue": "O participante t.arrendamentos reúne5.6 e5.15a; não é uma única obrigação IFRS16 homogênea.",
+      "tratamento": "Preservar montante/rotulagem históricos e separar perímetro para contrato futuro; sem exclusão ou patch nesta pesquisa."
+    },
+    {
+      "id": "Q02",
+      "label": "missing_required_source",
+      "material": true,
+      "issue": "Falta ponte por contrato/entidade para ligar saldo reconhecido, pagamentos futuros, ROU/capex e os fluxos efetivamente projetados.",
+      "tratamento": "Sem essa ponte não demonstrar dupla contagem efetiva EV/FCFF ou autorizar dedução diferente."
+    },
+    {
+      "id": "Q03",
+      "label": "missing_required_source",
+      "material": true,
+      "issue": "Falta contrato/aditivo e encontro de contas para a liquidação econômica Malha Oeste.",
+      "tratamento": "Não deduzir depósitos nem presumir crédito/renúncia/baixa. Fonte ainda não adquirida nesta frente, não declarada ausente da internet."
+    },
+    {
+      "id": "Q04",
+      "label": "unknown",
+      "material": true,
+      "issue": "Outorga da conta a cita intangível com referência5.12.3, seção intitulada Direito de Uso.",
+      "tratamento": "Preservar contrapartida textual e localizador; não resolver a alocação por heurística."
+    },
+    {
+      "id": "Q05",
+      "label": "missing_required_source",
+      "material": true,
+      "issue": "Prazos e participação econômica/capex futuro não estão ligados a cada fluxo do modelo do corredor.",
+      "tratamento": "Premissa conservadora2058 recebida permanece premissa; não substituir pela última concessão do grupo."
+    },
+    {
+      "id": "Q06",
+      "label": "unknown",
+      "material": true,
+      "issue": "Tratamento de variáveis/curto prazo/baixo valor e créditos fiscais dentro do EBIT/FCFF não foi certificado.",
+      "tratamento": "Não somar despesa de arrendamento à dívida nem ajustar imposto sem a ponte."
+    },
+    {
+      "id": "Q07",
+      "label": "unknown",
+      "material": true,
+      "issue": "Instante primário de publicação dos PDFs é desconhecido; todos os recebimentos herdados são posteriores ao corte histórico09.",
+      "tratamento": "Recebimentos reutilizados não são HTTP novo, nem prova PIT ou nova coleta do executor."
+    },
+    {
+      "id": "Q08",
+      "label": "analyst_interpretation",
+      "material": true,
+      "issue": "Giro agregado misto e DVA original contaminada por impairment continuam nos estudos próprios; obrigações não resolvem essas exceções.",
+      "tratamento": "Não tratar o presente leitor como FCFF observado completo, normalização recorrente ou remoção deG9/G11."
+    }
+  ],
+  "paginas_SHA": {
+    "RUMO_PDF_2T26": {
+      "35": "b579e68bfb89f2cf0e0bb61a251c2810660e43dde7d19f807c7c54b8c6e1b22d",
+      "39": "49aff78ba5e5043485662f783d8815de6882a9c405141480b9d961f6fb29eaf7",
+      "67": "2eaeceb43b4e43e2c0869eb95e17011e80add6a052dc1e5418add89317088c6f",
+      "68": "bfa3f1032c26a7950a513c6762421d284e26211f3b428d8e8622523b27e5bb8c",
+      "80": "99b16fa9d0ec995646177c50e20ce671472ea557e16ee5bc7750c08d92f35351",
+      "81": "421285329a150bf6d3ecf01b918da561f9b66f6ebed3d5ff56510d3c401d18db",
+      "90": "7720ef8b2c0574976281078ef4ec37d6632445cd68b61c9b32024b8ab424d191",
+      "91": "0535bfe390595eb01fd263b2d0181ef13e6b626cd2719436a4c8405c62687f6f",
+      "92": "8794eb2e931ec50bbea327e91425252b005e74c151a25133810e5096df595b13"
+    },
+    "RUMO_PDF_4T25": {
+      "33": "5784a21960f17e3a186501a0930f34e4c8df547fc6de8382887ac0e02ee012a8",
+      "74": "19a5846e27765a7551d87222448e9c08e286f234248e2af4a802d904d1e196ad",
+      "75": "8f526c96b0e8f7744ce8c756925a11b6b6a096a532abe220e35f62f4a16d8efe",
+      "99": "e04924bca49663eff261e995ebb808f4608821f03c511382d7e0b277e7e231d4",
+      "100": "e7b9159535c7671d41e13f3c23f484c888d40ad417dd4e47b69162a14dbd57b8",
+      "101": "b031594ee9737bccc83f5087528cb6dc7dd70662b0f22564ae5098ed48af33e3",
+      "119": "9391b89ea3f5ce858a81d8a9bd3f2d5f69eb5c850ca39099ba93d387df4eb105",
+      "120": "dd79c2fc828414d5ce4ca7845399397099452ad1a2770fa1d490c8b8bdc43319",
+      "121": "8c40b76be0ef4b868b48fc91b74e2c5de2ebd35847e5b590ec82f0c712d666fd"
+    },
+    "RUMO_PDF_2T25": {
+      "30": "1df55b85c3fae0d7ff8f8effaaefde557fa3778c2a9e93730b59a2700a9ee1a0",
+      "56": "5cdfdb17f538cb0dfacd93d4ab2872683eb2e045bb5ed61693733d45c50ca6ff",
+      "57": "dbabd42db9f0db8dddce0b15a5d600338a25914a08f9eaca45be78b620a2d5bc",
+      "69": "0adc13a99e4ffd141498b3f0f3b170cf70865bd7d071be26ca159920fce4bc7c",
+      "70": "77f4d67ee12b7f64ac817ae3712cfc7e0501693615bc6fd147b83c0c4d0a7c88",
+      "79": "56ae683e1deb12eb7107281f142d214c45294a71ad7bf025d1e7f2d55c714fc9",
+      "80": "43596221442d4a5cff85ee586249bbf2a4b8b1c22ac5cab0fd8390c41765fe16",
+      "81": "a79dbf9ef20cb65ecc350b5fe9d3d55d277bbc51fa85411f052ef23a683043cf",
+      "82": "d7f7e49a3ca1978819116928628e81745b3fef6c7e894b7bc639c443c5bd991f"
+    }
+  },
+  "base_herdada_5_6": {
+    "source_id": "RUMO_PDF_2T26",
+    "pagina": 67,
+    "data": "2026-06-30",
+    "moeda": "BRL",
+    "escala": "MIL",
+    "linha_literal": "Saldo em 30 de junho de 2026  6.608  3.854.917  607.267  4.468.792 ",
+    "valores_BRL": [
+      "6608000",
+      "3854917000",
+      "607267000",
+      "4468792000"
+    ],
+    "natureza": "Linha de apoio já recebida/revista; fora das48rubricas, sem novo caso financeiro."
+  },
+  "controles_documentais": [
+    {
+      "id": "b_total_mesma_coluna_concessoes_fisica_5_6",
+      "residuo_BRL": "0"
+    },
+    {
+      "id": "b_subtotais_total_b_fisico",
+      "residuo_BRL": "0"
+    },
+    {
+      "id": "abertura_mesmo_perimetro_total5_6_mais_a",
+      "residuo_BRL": "0"
+    }
+  ],
+  "participante_historico_recebido": {
+    "id": "t.arrendamentos",
+    "valor_BRL_declarado": "8736400000.0",
+    "base": "consolidado",
+    "referencia": "2026-06-30",
+    "coleta_declarada_UTC": "2026-10-07T22:31:23.783907+00:00",
+    "documento_declarado": "ITR 2026-06-30 v1 (BP, trimestral até 2026-06-30)",
+    "data_publicacao_civil_declarada": "2026-08-12",
+    "source_SHA_declarado": "0e1ef74291d2143e7bb55247b01c8bbd94995d995536f70f0d19de1d79d7e38c",
+    "url_declarada": "http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=160490",
+    "natureza": "Metadados e arredondamento legados recebidos; não reexecução, autenticação pelo PDF ou recertificação PIT."
+  },
+  "recorte": "48rubricas/96células,14claims,8flags,3controles documentais herdados; originais/comparativos separados; travessãoNone.",
+  "pypdf_recebido": "6.19.0",
+  "loadable_into_financial_model": false,
+  "economic_contract_ready": false
+}

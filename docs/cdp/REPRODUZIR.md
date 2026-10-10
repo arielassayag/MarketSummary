@@ -224,3 +224,12 @@ texto do fundo.
 - **Operar a sua própria cópia** — fork, configuração, escolha do app de IA (Claude Code, Codex,
   Gemini ou outro), agenda das rotinas e portal próprio: `docs/cdp/REPLICAR.md`. As rotinas rodam
   dentro do app de IA, com o mesmo roteiro em qualquer um (`docs/cdp/ROTINAS.md`).
+
+## Conferências documentais delimitadas
+
+O [estudo Enel Chile, Klabin e Rumo de 09/10/2026](estudos/2026-10-09-enel-klabin-rumo/README.md)
+vincula recortes primários, recibos declarados e localizadores a um leitor de
+corpos fornecidos pelo terceiro. Ele preserva DVA original/comparativa e errata
+externa da autoria. Reproduz contas delimitadas sem coleta, cache operacional ou
+modelo; ROU permanece condicional, giro misto e dívida Enel não comprovada continuam
+visíveis. Sua conferência técnica não certifica financeiros completos, PIT ou P0.

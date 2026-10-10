@@ -706,6 +706,16 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--publish", action="store_true",
                    help="publica o relatório (comentário da mente ou modelo de código); imutável")
     s.set_defaults(func=cmd_weekly_close_report)
+    s = wsub.add_parser("rectify-report", help="retificação editorial append-only do lado de posição")
+    s.add_argument("--date", type=_d, required=True)
+    s.add_argument("--mind", choices=HARNESS_MINDS, required=True)
+    s.add_argument("--arquivo", type=Path, help="JSON no schema RetificacaoSemanal; sem arquivo mostra schema")
+    s.add_argument("--publish", action="store_true", help="anexa artefato editorial, sem refazer o fechamento")
+    s.add_argument("--raiz", type=Path, default=Path("."))
+    s.add_argument("--execucao")
+    s.add_argument("--trava")
+    from .workflow.retificacao_semanal import cmd as cmd_rectify_report
+    s.set_defaults(func=cmd_rectify_report)
 
     s = sub.add_parser("validate", help="valida os arquivos escritos pela mente")
     s.add_argument("--week", required=True)

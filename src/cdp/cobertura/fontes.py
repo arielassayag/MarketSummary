@@ -69,6 +69,7 @@ class DadosPublicos:
     ri_observados: pd.DataFrame | None = None
     ri_evidencias: pd.DataFrame | None = None
     ri_contexto: Any = None
+    capital_semantica: pd.DataFrame | None = None
 
     def tabelas(self) -> dict[str, pd.DataFrame]:
         out = {"demonstrativos": self.demonstrativos, "consenso": self.consenso,
@@ -86,6 +87,8 @@ class DadosPublicos:
             out["ri_observados"] = self.ri_observados
         if self.ri_evidencias is not None:
             out["ri_evidencias"] = self.ri_evidencias
+        if self.capital_semantica is not None:
+            out['capital_semantica'] = self.capital_semantica
         for etf, df in sorted(self.etfs.items()):
             if df is not None:
                 out[f"etf_{_slug(etf)}"] = df
@@ -197,23 +200,42 @@ ITENS_ALERTA = ("receita", "ebit", "ebitda", "d_a", "capex", "cfo", "fcf", "caix
 TIPOS_CAPITAL = ("Capital Integralizado", "Capital Emitido", "Capital Subscrito")
 
 
-def capital_fre(conteudo: bytes, ano: int, cnpjs: set[str] | None = None) -> pd.DataFrame:
+def capital_fre(conteudo: bytes, ano: int, cnpjs: set[str] | None = None, *,
+                preservar_semantica_capital: bool = False) -> pd.DataFrame:
     """Capital social do FRE (CVM): uma linha por (CNPJ, data de referência, versão, tipo), com a
     quantidade total de ações e a data de recebimento da versão."""
     import zipfile
 
+    if not isinstance(preservar_semantica_capital, bool):
+        raise ValueError("preservar_semantica_capital exige bool explícito")
     with zipfile.ZipFile(io.BytesIO(conteudo)) as zf:
         nomes = zf.namelist()
         n_cap = next((n for n in nomes if n.endswith(f"capital_social_{ano}.csv")), None)
         n_idx = next((n for n in nomes if n.endswith(f"fre_cia_aberta_{ano}.csv")), None)
         if n_cap is None or n_idx is None:
-            return pd.DataFrame(columns=COLS_CAPITAL)
+            return pd.DataFrame(columns=COLS_CAPITAL + (['semantica_capital'] if preservar_semantica_capital else []))
         cap = pd.read_csv(io.BytesIO(zf.read(n_cap)), sep=";", encoding="latin1", dtype=str)
         idx = pd.read_csv(io.BytesIO(zf.read(n_idx)), sep=";", encoding="latin1", dtype=str)
     cap = cap[cap["Tipo_Capital"].isin(TIPOS_CAPITAL)].copy()
     cap["cnpj"] = cap["CNPJ_Companhia"].astype(str).str.strip()
     if cnpjs is not None:
         cap = cap[cap["cnpj"].isin(cnpjs)]
+    if preservar_semantica_capital:
+        from ..data.publico_capital_semantica import contexto, texto
+        with zipfile.ZipFile(io.BytesIO(conteudo)) as zf:
+            raw = pd.read_csv(io.BytesIO(zf.read(n_cap)), sep=';', encoding='latin1', dtype=str, keep_default_na=False)
+            cap_sha = hashlib.sha256(zf.read(n_cap)).hexdigest()
+            idx_sha = hashlib.sha256(zf.read(n_idx)).hexdigest()
+        contexts = []
+        for index, row in cap.iterrows():
+            physical = raw.loc[index].to_dict()
+            matches = idx[idx['ID_DOC'].astype(str).eq(str(row['ID_Documento']))]
+            known = matches.iloc[0] if len(matches) == 1 else {}
+            contexts.append(contexto(physical, tipo='FRE', fonte={
+                'arquivo_sha256': hashlib.sha256(conteudo).hexdigest(), 'membro': n_cap,
+                'membro_sha256': cap_sha, 'indice_membro': n_idx, 'indice_membro_sha256': idx_sha,
+                'url_documento': texto(known.get('LINK_DOC'))}, recebido=known.get('DT_RECEB'), registro=int(index) + 2))
+        cap['semantica_capital'] = contexts
     idx = idx.rename(columns={"ID_DOC": "ID_Documento", "DT_RECEB": "data_publicacao", "LINK_DOC": "url"})
     cap = cap.merge(idx[["ID_Documento", "data_publicacao", "url"]], on="ID_Documento", how="left")
     out = pd.DataFrame({
@@ -223,13 +245,21 @@ def capital_fre(conteudo: bytes, ano: int, cnpjs: set[str] | None = None) -> pd.
         "qtd_ordinarias": pd.to_numeric(cap["Quantidade_Acoes_Ordinarias"], errors="coerce"),
         "qtd_preferenciais": pd.to_numeric(cap["Quantidade_Acoes_Preferenciais"], errors="coerce"),
         "qtd_total": pd.to_numeric(cap["Quantidade_Total_Acoes"], errors="coerce"), "url": cap["url"]})
-    return out[out["qtd_total"] > 0].reset_index(drop=True)
+    if preservar_semantica_capital:
+        out['semantica_capital'] = cap['semantica_capital']
+    result = out[out["qtd_total"] > 0].reset_index(drop=True)
+    if preservar_semantica_capital:
+        result.attrs['capital_semantica'] = contexts
+    return result
 
 
-def capital_oficial(issuer_ids: Sequence[str], as_of: date, raiz: Path | None, *, universe=None) -> pd.DataFrame:
+def capital_oficial(issuer_ids: Sequence[str], as_of: date, raiz: Path | None, *, universe=None,
+                    preservar_semantica_capital: bool = False) -> pd.DataFrame:
     """Contagem oficial de ações dos emissores brasileiros pelo FRE arquivado pela camada pública
     (sem rede): a versão mais recente recebida até ``as_of``; entre os tipos de capital, o maior
     total (integralizado, emitido ou subscrito)."""
+    if not isinstance(preservar_semantica_capital, bool):
+        raise ValueError("preservar_semantica_capital exige bool explícito")
     try:
         from ..data import publico  # type: ignore[attr-defined]
         from ..data.publico_arquivo import Arquivo  # type: ignore[attr-defined]
@@ -246,11 +276,17 @@ def capital_oficial(issuer_ids: Sequence[str], as_of: date, raiz: Path | None, *
         return pd.DataFrame(columns=COLS_CAPITAL)
     arq = Arquivo(raiz, offline=True)
     partes = []
+    observacoes = []
     for ano in (as_of.year - 1, as_of.year):
         reg = arq.buscar(f"CVM/FRE/fre_cia_aberta_{ano}.zip", ate=as_of)
         if reg is None:
             continue
-        f = capital_fre(arq.ler(reg), ano, set(cnpj_de.values()))
+        f = capital_fre(arq.ler(reg), ano, set(cnpj_de.values()),
+                        **({'preservar_semantica_capital': True} if preservar_semantica_capital else {}))
+        if preservar_semantica_capital:
+            from ..data.publico_capital_semantica import vincular_registro
+            f['semantica_capital'] = f['semantica_capital'].map(lambda ctx, registro=reg: vincular_registro(ctx, registro))
+            observacoes.extend(vincular_registro(ctx, reg) for ctx in f.attrs.get('capital_semantica', []))
         f["sha256"] = reg.sha256
         partes.append(f)
     if not partes:
@@ -265,7 +301,15 @@ def capital_oficial(issuer_ids: Sequence[str], as_of: date, raiz: Path | None, *
             r = ult.loc[c]
             rows.append({"issuer_id": iid, "cnpj": c, **{k: r[k] for k in COLS_CAPITAL if k in r.index
                                                          and k not in ("issuer_id", "cnpj")}})
-    return pd.DataFrame(rows, columns=COLS_CAPITAL)
+            if preservar_semantica_capital:
+                from ..data.publico_capital_semantica import ler, serializar
+                rows[-1]['semantica_capital'] = serializar({**ler(r['semantica_capital']), 'issuer_id_cadastro': iid})
+    result = pd.DataFrame(rows, columns=COLS_CAPITAL + (['semantica_capital'] if preservar_semantica_capital else []))
+    if preservar_semantica_capital:
+        from ..data.publico_capital_semantica import ler, serializar
+        result.attrs['capital_semantica'] = [serializar({**ler(ctx), 'issuer_id_cadastro': iid})
+            for ctx in observacoes for iid, cnpj in cnpj_de.items() if str(ler(ctx)['cnpj']).strip() == cnpj]
+    return result
 
 
 # ============================================================ contas suplementares da CVM
@@ -292,8 +336,6 @@ _RE_ARR_FORA = re.compile(r"juros|captac|recebid|recebiment|ingresso|sublocac|em
 _RE_CONSTR = re.compile(r"constru")
 _RE_CONSTR_REC = re.compile(r"receit|ativos? propri")
 _RE_CONSTR_FORA = re.compile(r"custo|gasto|insumo|materia|pessoal|servicos de terceiros")
-_RE_DA_DFC = re.compile(r"depreciac|amortizac|exaust|deplec")
-_RE_DA_FORA = re.compile(r"juros|financ|divida|emprest|arrendamento.*pag|principal|impairment|perda.*recuper")
 _RE_GIRO = re.compile(r"variac.*capital de giro|capital de giro.*variac")
 
 
@@ -362,6 +404,7 @@ def _fatos_suplementares(tabs: dict[str, pd.DataFrame], doc: str) -> pd.DataFram
     }).dropna(subset=["dt_refer", "versao", "recebido"]).drop_duplicates(["cnpj", "dt_refer", "versao"])
     key = ["cnpj", "dt_refer", "versao", "kind", "dt_ini", "dt_fim"]
     partes = []
+    qa_da = []
     dfc = pd.concat([_prepare_statement(tabs, "DFC_MI"), _prepare_statement(tabs, "DFC_MD")], ignore_index=True)
     if not dfc.empty:
         d = dfc.dropna(subset=["dt_ini"])
@@ -372,13 +415,13 @@ def _fatos_suplementares(tabs: dict[str, pd.DataFrame], doc: str) -> pd.DataFram
                                                                     currency=("currency", "first"))
             g["value"] = -g["value"]
             partes.append(g.assign(item="arrendamentos_pagos"))
-        da = _sem_ancestral(d[d["cd"].str.match(r"^6\.01(\.\d{2})+$")
-                              & d["ds"].str.contains(_RE_DA_DFC) & ~d["ds"].str.contains(_RE_DA_FORA)
-                              & (d["value"] >= 0)], key)
+        # O complemento não reintroduz D&A mista recusada pelo produtor nativo.
+        # Mantém os níveis de conta originais, com a mesma classificação documental.
+        from ..data.publico_cvm import _da_dfc_identificada
+
+        da, qa_da = _da_dfc_identificada(d, key, codigo=r"^6\.01(\.\d{2})+$")
         if not da.empty:
-            g = da.groupby(key, as_index=False, dropna=False).agg(value=("value", "sum"),
-                                                                   currency=("currency", "first"))
-            partes.append(g.assign(item="d_a_dfc"))
+            partes.append(da[key + ["value", "currency"]].assign(item="d_a_dfc"))
         # Só a rubrica explicitamente de capital de giro; uma linha genérica de variações de
         # ativos/passivos pode incluir dívida, pensões e provisões de desmantelamento.
         giro = _sem_ancestral(d[d["cd"].str.match(r"^6\.01(\.\d{2})+$")
@@ -399,13 +442,19 @@ def _fatos_suplementares(tabs: dict[str, pd.DataFrame], doc: str) -> pd.DataFram
                                                                     currency=("currency", "first"))
             partes.append(g.assign(item="receita_construcao"))
     if not partes:
-        return pd.DataFrame(columns=cols)
+        out = pd.DataFrame(columns=cols)
+        if qa_da:
+            out.attrs["qa"] = qa_da
+        return out
     f = pd.concat(partes, ignore_index=True)
     f["versao"] = pd.to_numeric(f["versao"], errors="coerce")
     f = f.merge(rec, on=["cnpj", "dt_refer", "versao"], how="inner")
     f["consolidado"] = f["kind"].astype(str).eq("con")
     f["doc"] = doc.upper()
-    return f[cols]
+    out = f[cols]
+    if qa_da:
+        out.attrs["qa"] = qa_da
+    return out
 
 
 def contas_suplementares_cvm(issuer_ids: Sequence[str], as_of: date, raiz: Path | None, *, universe=None) -> pd.DataFrame:
@@ -438,6 +487,8 @@ def contas_suplementares_cvm(issuer_ids: Sequence[str], as_of: date, raiz: Path 
             try:
                 f = _fatos_suplementares(_tabelas_cvm(arq.ler(reg), doc, ano, cnpjs), doc)
             except Exception:  # noqa: BLE001 - ZIP com layout inesperado: itens ausentes
+                continue
+            if f.empty:
                 continue
             f["sha256"] = reg.sha256
             f["data_coleta"] = pd.Timestamp(reg.data_coleta)
@@ -550,7 +601,9 @@ def disponibilidade_observada(params) -> bool:
 def _coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Sequence[str],
             etfs: Sequence[str], *, offline: bool = False, raiz: Path | None = None,
             seed: int = 7, params=None, conhecimento_ate: datetime | None = None,
-            eps_por_periodo: bool = False, eps_http_get=None) -> DadosPublicos:
+            eps_por_periodo: bool = False, eps_http_get=None,
+            patrimonio_owners_observado: bool = False,
+            preservar_semantica_capital: bool = False) -> DadosPublicos:
     """Coleta as tabelas públicas da execução (sintéticas quando o mercado é sintético)."""
     from .temporal import ativo as temporal_ativo
     from .temporal import construir as corte_temporal
@@ -566,6 +619,8 @@ def _coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Se
         from .sintetico import dados_sinteticos
 
         dados = dados_sinteticos(md, as_of, issuer_ids, tickers, etfs, seed=seed)
+        if preservar_semantica_capital:
+            dados = replace(dados, capital_semantica=pd.DataFrame(columns=['semantica_capital']))
         return replace(dados, corte_temporal=corte) if corte is not None else dados
     try:
         from ..data import publico  # type: ignore[attr-defined]
@@ -583,6 +638,10 @@ def _coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Se
         kw_dem = dict(kw)
         kw_dem.update(conhecimento_ate=instante(conhecimento_ate), confirmar_magnitude_cvm=True,
                   selecionar_ri_observado=True)
+    if patrimonio_owners_observado:
+        kw_dem = dict(kw_dem, patrimonio_owners_observado=True)
+    if preservar_semantica_capital:
+        kw_dem = dict(kw_dem, preservar_semantica_capital=True)
     dem_bruto = publico.demonstrativos(list(issuer_ids), as_of, **kw_dem, **kw_universo)
     alertas = alertas_de_attrs(getattr(dem_bruto, "attrs", None))
     dem = _garantir(dem_bruto, COLS_DEMONSTRATIVOS)
@@ -615,7 +674,8 @@ def _coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Se
     tax = _garantir(publico.taxas_publicas(as_of, **kw), COLS_TAXAS)
     ff = _garantir(publico.free_float(list(issuer_ids), as_of, **kw, **kw_universo), COLS_FLOAT)
     cap = capital_oficial([i for i in issuer_ids if i in md.universe.issuers.index
-                           and str(md.universe.issuers.loc[i, "country"]) == "BR"], as_of, raiz, **kw_universo)
+                           and str(md.universe.issuers.loc[i, "country"]) == "BR"], as_of, raiz, **kw_universo,
+                         **({'preservar_semantica_capital': True} if preservar_semantica_capital else {}))
     comp: dict[str, pd.DataFrame | None] = {}
     for e in etfs:
         try:
@@ -627,17 +687,25 @@ def _coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Se
         demonstrativos=_pit(dem, "data_publicacao", as_of), consenso=con,
         dividendos=_pit(div, "data_ex", as_of), eventos=eve, taxas=_pit(tax, "data", as_of),
         free_float=ff, etfs=comp, origem="PUBLICO", raiz=None if raiz is None else str(raiz),
-        alertas=alertas, capital_oficial=cap, resultado_evidencias=resultado_evidencias, corte_temporal=corte)
+        alertas=alertas, capital_oficial=cap, resultado_evidencias=resultado_evidencias, corte_temporal=corte,
+        capital_semantica=(pd.DataFrame({'semantica_capital': [*dem_bruto.attrs.get('capital_semantica', []),
+                         *cap.attrs.get('capital_semantica', [])]}) if preservar_semantica_capital else None))
 
 
 def coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Sequence[str],
             etfs: Sequence[str], *, offline: bool = False, raiz: Path | None = None,
             seed: int = 7, params=None, conhecimento_ate: datetime | None = None,
-            ri_contexto=None, eps_por_periodo: bool = False, eps_http_get=None) -> DadosPublicos:
+            ri_contexto=None, eps_por_periodo: bool = False, eps_http_get=None,
+            patrimonio_owners_observado: bool = False,
+            preservar_semantica_capital: bool = False) -> DadosPublicos:
     """Política nova sela corte exato em todos os arquivos; ausência conserva seleção legada."""
+    if not isinstance(preservar_semantica_capital, bool):
+        raise ValueError("preservar_semantica_capital exige bool explícito")
     from .ri_observada import ativo as ri_ativo
     from .temporal import ativo as temporal_ativo
     ri = params is not None and ri_ativo(params)
+    if patrimonio_owners_observado and not disponibilidade_observada(params):
+        raise ValueError("Patrimônio owners observado exige a política de recepção observada explícita.")
     if disponibilidade_observada(params) and not temporal_ativo(params):
         raise ValueError("Recepção observada exige a política temporal base_preco_conhecimento_explicitos.")
     if ri:
@@ -655,6 +723,10 @@ def coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Seq
     opcoes = dict(offline=offline, raiz=raiz, seed=seed, params=params, conhecimento_ate=conhecimento_ate)
     if eps_por_periodo:
         opcoes.update(eps_por_periodo=True, eps_http_get=eps_http_get)
+    if patrimonio_owners_observado:
+        opcoes.update(patrimonio_owners_observado=True)
+    if preservar_semantica_capital:
+        opcoes.update(preservar_semantica_capital=True)
     if params is not None and temporal_ativo(params):
         if conhecimento_ate is None:
             raise ValueError("Coleta temporal exige instante explícito de conhecimento.")

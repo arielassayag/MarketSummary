@@ -5,6 +5,257 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
+## Estado corrente — 10/10/2026, 00:33 Brasília
+
+Registro pré-integração. AMPLA18B terminou positiva em 03:33:03 UTC: 4408
+casos, 4391 aprovados, 17 pulados e zero falhas, erros ou xfail. Ruff passou;
+os 4835 arquivos de fonte permaneceram literais. O conjunto tem 52 caminhos
+revistos; as cinco alterações herdadas ROOT seguem preservadas. AMPLA18 negativa
+e o reparo exclusivo do índice AGENTS permanecem no histórico. Após o terminal,
+a passagem foi atualizada e uma linha em branco terminal de um teste novo foi
+removida após a conferência do stage; AST e assertivas ficaram iguais. Teste e
+documentação recebem conferência focal antes da integração. CI remota, Pages e
+interface do próximo commit ainda exigem confirmação.
+
+ROOT produziu quatro componentes MOC privados após o limite de uso dos
+auxiliares: comparação exata após custos, arquivo bruto da configuração,
+retenção integral da entry e leitura física de origens. O terminal V2 registra
+83 testes sintéticos distintos e Ruff aprovados, fontes literais e guardas sem
+negativas. V1 negativa do harness foi preservada. Esse código não integra
+AMPLA18B/DEV e não protege ainda o escritor operacional; não recebeu revisão
+não autora. Faltam resolver financeiro, NAV/custos nativos, fechamento final,
+integração nas aprovações/escritores, retomada JSON/CSV/evento, caducidade e legado.
+
+A fila técnica P0 foi concluída por ROOT em cópias do extrato histórico recebido:
+233 empresas e oito ETFs, com gates, lacunas e confiança preservados. A ordem
+de trabalho é derivada por regra explícita, sem nova cobertura, valuation ou
+promoção de PIT/P0. Recepção de 246 origens e limites estão no pacote privado
+`.cdp/estudos/20261009-p0-fila-tecnica-snapshot/`. Componentes e testes privados:
+`.cdp/prototipos/moc-net-guarda-v1/`; suíte e recepção:
+`.cdp/validacoes/20261009-integracao-18B/`.
+
+Nesta observação a fonte publicada permanece 3c27; efetivação e relatórios09
+continuam locais, com a proposta editorial validada sem publicação. Nenhum novo
+contato foi enviado ao executor. A exposição inaugural permanece fora do limite
+de net; integridade e aprovação técnica não certificam conformidade financeira.
+As 12 automações internas seguem ativas e sujeitas aos limites de uso do Codex.
+P0 financeiro, PIT, G19/G13c/G9/G11, calibração e E1/E2 permanecem abertos.
+
+## Registro histórico anterior — 09/10/2026, 23:35 Brasília
+
+A suíte integral AMPLA18 encerrou negativa em 00:57:07 UTC: 4408 casos,
+4390 aprovados, 17 pulados, uma falha e zero erros/xfail. Ruff passou;
+os 4835 arquivos de fonte permaneceram literais. A única falha exige que
+`docs/cdp/RETIFICACAO_EDITORIAL.md` conste no mapa de `AGENTS.md`.
+O reparo inclui esse documento no índice, sem alterar teste, regra ou produto.
+O novo candidato tem 52 caminhos; a documentação é conferida antes de AMPLA18B.
+Ainda não houve commit, publicação do código ou publicação da operação09.
+
+A revisão não autora do plano MOC V2 foi recebida: suficiente para iniciar
+candidato privado, condicionado à preservação do corpo integral do entry em
+PROOF_ONLY e à conclusão autenticada dos cortes JSON/CSV/evento em
+BOOKED_NO_RECORD. A recepção privada da base51 terminou, mas o autor e o
+revisor auxiliar atingiram o limite de uso antes de implementar a guarda.
+As fontes privadas recebidas/candidato continuam iguais; zero implementação
+financeira, sem inclusão dessa guarda em AMPLA18B. ROOT assume a continuação.
+
+O limite de uso também interrompeu a nova organização da fila P0 por emissor
+antes de produzir resultado; não existe nova cobertura ou revisão financeira.
+As 12 rotinas ativas continuam sujeitas à disponibilidade do Codex. O quadro
+privado registra incidentes e a separação entre agendamento e execução.
+
+## Registro histórico anterior — 09/10/2026, 20:59 Brasília
+
+O candidato em DEV tem 51 caminhos alterados e 4835 arquivos de fonte, na base
+`3c27b35914eb03b135987df6aefe3e87e2c1e7b6`, ainda sem commit/publicação. Foram
+compostos os 34 caminhos anteriores com os 17 da retificação editorial V2 e os
+dois deltas sobrepostos de rótulo do painel. As duas ordens de composição conferem
+byte a byte com a revisão independente. Nenhum caminho oficial de livro, dados,
+relatórios ou artefatos integra o delta; as cinco alterações herdadas ROOT estão
+preservadas. O candidato está pronto para a suíte completa AMPLA18, ainda sem
+resultado: a negativa AMPLA17B e seu reparo mínimo permanecem documentados abaixo.
+
+A revisão editorial independente é favorável delimitada: 127 IDs, 112 aprovados,
+15 pulados e 11 controles próprios adicionais aprovados. Os nove contraexemplos
+da V1 passam na V2; não somar rodadas ou os nove já incluídos aos 127. A guarda
+recusa contradição trazida por placeholder após renderização, errata espúria e
+repetição do mesmo evento/emissor por outra mente/id. Originais e trilha são
+preservados. Duas tentativas opcionais de leitura de metadados do pytest foram
+negadas no harness final sem falha de produto; não afirmar guardas zero.
+
+O painel passa a nomear squeeze, aluguel, liquidez e distribuição como dados da
+decisão, distinguindo os pesos do fechamento. Remove a atribuição genérica do
+excesso à variação de preços e a promessa de reequilíbrio. Fórmulas, limites,
+alertas e valores permanecem os anteriores; sintaxe JavaScript conferida,
+validação visual e publicação ainda pendentes.
+
+A proposta editorial real de Ultrapar foi preparada e validada somente em
+cópias isoladas: campos observados da CLI original mais hashes da seção
+Integridade do relatório preservado, com recomposição declarada derivada.
+O corpo completo confere ao evento WEEKLY_CLOSE_REPORT original. Nenhum relatório,
+comentário ou evento oficial foi editado; não houve recálculo financeiro nem
+publicação. A retomada exige código integrado, sessão de operador autorizada,
+execução/trava atuais e publicador normal. Rotina agendada com gate falso encerra;
+nenhuma mensagem nova foi enviada ao chat executor.
+
+A recepção mínima da entry e trilha inaugural confirma o único BOOKED local,
+seq 30, e sua extensão literal do prefixo 3c27 de 29 eventos. O BOOKED pertence
+ao sufixo local, NÃO publicado; o UUID da execução não está nesses dois corpos.
+Essa identificação finita não constitui assinatura externa, dispensa ou
+conformidade financeira. O net inaugural segue fora de ±1%, antes e após custos.
+O plano executável prospectivo MOC V2 foi fechado e encaminhado à revisão:
+configuração exata antes da primeira aprovação/HOLD, custo antes do registro,
+guarda comum e estados de retomada/caducidade próprios. São 25 controles apenas
+planejados, zero implementação; essa guarda não integra o candidato AMPLA18.
+
+As 12 automações continuam no projeto atual e na pasta interna `.cdp/rotinas`;
+P0 financeiro, PIT, G19/G13c/G9/G11, calibração e E1/E2 permanecem abertos.
+O retrato mantém 102/233 empresas C e 35/233 em revisão, acima dos limites.
+A última publicação confirmada permanece 3c27, com CI/Pages/HTTP conferidos.
+Comprovantes privados e proposta editorial: `.cdp/validacoes/20261009-integracao-18/`
+e `.cdp/retificacoes/preparacao-20261009-v2/`.
+
+## Registro histórico anterior — 09/10/2026, 20:27 Brasília
+
+A última publicação confirmada continua `3c27b35914eb03b135987df6aefe3e87e2c1e7b6`,
+com CI e Pages aprovados e cinco arquivos HTTP conferidos. O próximo conjunto está
+em desenvolvimento, ainda sem commit ou publicação: 34 caminhos, incluindo o reparo
+mínimo de um teste e seis novos destinos documentais de obrigações da Rumo, revistos
+independentemente. A retificação editorial e a guarda MOC futura continuam fora desse
+conjunto. Cinco alterações herdadas ROOT permanecem literais; DEV nunca grava o livro.
+
+A suíte completa AMPLA17B terminou em 23:03:39 UTC: 3790 casos, 3773 aprovados,
+16 pulados, uma falha e zero erros/xfail; Ruff passou e os 4824 arquivos de fonte
+ficaram literais. O helper do teste de universo CVM usava o sufixo DADOS SIMULADOS
+dentro da rubrica contábil, recusada corretamente pelo novo reconhecimento integral.
+O reparo revisto troca somente esse lexema por `Depreciacao`; a identificação de
+simulação continua no fixture, sem modificar produto, método ou assertivas.
+Os dois casos normais passaram no candidato. O novo conjunto precisa de uma nova
+suíte completa antes de integração/publicação; a negativa anterior fica preservada.
+
+A rotina nativa `CDP · Fechamento · principal` efetivou localmente a carteira de
+09/10 e criou os relatórios diário/semanal, mas encerrou sem publicação Git.
+O relatório semanal original afirma que Ultrapar entrou comprada, enquanto seu
+fato publicado mostra peso negativo. Não editar originais nem repetir MOC/diário.
+ROOT executou somente `cdp verify` no executor: integridade aprovada, uma efetivação
+conferida contra a execução esperada e 4537 arquivos oficiais com seis metadados
+literais antes/depois. Essa prova de integridade não certifica texto ou mandato.
+O portal 3c27 ainda apresenta decisão/tese, sem a efetivação local da noite.
+
+A revisão não autora do diagnóstico de exposição confirmou net de 1,24919120%
+antes e 1,25052070% após custos, contra ±1% do mandato. O excesso já existe no
+numerador antes dos custos; custo só amplifica a razão. As 73 quantidades coincidem
+com a proposta. Preço/FX/arredondamento não foram separados por fonte primária,
+as datas por linha e os drivers atuais do squeeze Inter continuam desconhecidos.
+Não foi encontrada dispensa explícita de net no MOC nas fontes recebidas.
+Compatibilidade com o código e integridade da cadeia não tornam o fechamento
+conforme. O plano prospectivo MOC é estático, com 25 controles apenas planejados,
+e está em revisão: guarda após custos, proteção do escritor comum e do dry-run,
+caducidade e reconhecimento autenticado do legado, sem mudança do mandato.
+
+A primeira proposta de retificação editorial foi recusada na revisão independente:
+token textual pode introduzir uma frase direcional contraditória após renderização;
+errata de racional correto/neutro e segunda errata do mesmo alvo também passavam.
+Cinco contraexemplos falharam nos nove controles próprios. V1 fica encerrada e fora
+de DEV; V2 deve demonstrar recusa causal dos mesmos inputs, preservando payload,
+hashes, números, relatórios originais e prefixo da trilha. A futura retomada no
+executor exige fontes atualizadas e execução/trava novas pelo caminho canônico,
+sem inventário terminal atribuído ao gate antigo. Contato com outro chat requer
+autorização humana direta; nenhum novo disparo foi enviado nesta frente.
+
+O recálculo histórico A08 V3 de 09 concluiu positivo, sem divergências do comparador
+nativo recebido, em fonte/corpus/seed/tolerância pinados. Envelope de 1536 arquivos
+e revisão independente de 16 foram recebidos. A descoberta de metadados do runtime
+foi delimitada sem plugins Pydantic; dois negativos anteriores permanecem arquivados.
+Treze referências vivas mudaram de af6eb0c para 3c27 por sincronização nativa posterior
+ao terminal: os corpos históricos físicos continuam literais e a mudança temporal
+tem recibo próprio. O resultado técnico não é aceite financeiro, PIT ou P0.
+
+Rumo: o leitor público de obrigações e cinco documentos foram transpostos após
+revisão favorável delimitada. Conferem 48 rubricas/96 células, 14 âncoras e oito flags
+nos três PDFs exatos, sem nova coleta, certificado econômico ou incorporação no FCFF.
+O mapa estático da ponte FCFF também recebeu revisão favorável; não executa fórmulas,
+não separa automaticamente giro/ROU/D&A e não autoriza excluir passivo consolidado.
+Os recibos posteriores ao corte não provam disponibilidade histórica.
+
+As 12 automações continuam ativas no projeto atual, organizadas em seis famílias,
+com escritor único na pasta interna `.cdp/rotinas`, em `main`; o executor recebeu
+3c27 pela sincronização da rotina. Índice privado: `.cdp/TAREFAS.md` e `.cdp/AGENDAS.md`.
+Retrato oficial recebido: 233 empresas e oito ETFs; C102/233 (43,776824%) e
+revisão35/233 (15,021459%). G19, G13c, G9/G11, FCFF integral, homogeneidade/PIT,
+calibração e E1/E2 continuam pendentes. Não promover confiança por quota.
+Comprovantes privados: `.cdp/validacoes/20261009-integracao-17/` e `-18/`.
+
+## Registro histórico anterior — 09/10/2026, 19:08 Brasília
+
+O lote anterior de 100 arquivos foi publicado por Git normal em
+`3c27b35914eb03b135987df6aefe3e87e2c1e7b6`. A suíte local e a CI remota
+concluíram os mesmos 4075 IDs: 4058 aprovados, 16 pulados e um xfail,
+zero falhas/erros; Ruff passou. Pages e cinco arquivos HTTP passaram,
+com conferência visual delimitada dos oito ETFs, ficha EWZ e sensibilidade
+Klabin. Isso não certifica recálculo integral nem aceite financeiro. ROOT e DEV
+receberam a publicação; cinco alterações herdadas ROOT continuam literais.
+
+As 12 automações continuam ativas no projeto atual, com executor único na
+pasta interna `.cdp/rotinas`, em `main`. Prompts, horários e configuração
+foram conferidos. O executor recebeu a publicação operacional `7f0d368c`;
+a sincronização seguinte cabe à rotina canônica. Decisão inaugural e tese
+73/73 estão publicadas: 37 posições compradas e 36 vendidas. Efetivação e
+relatórios da noite permanecem pendentes no último estado observado.
+Três reservas e os riscos das 13:30/16:03 encerraram normalmente com código 10.
+
+Foram transpostos seletivamente 26 arquivos revistos, além deste documento.
+A composição owners/JBS/D&A V2 foi recusada por falha de `.dt` ao combinar
+suplementos vazios e preenchidos. V3 exclui frames totalmente vazios nessa
+unidade com duas linhas, sem casting, zero ou classificação nova. Revisão
+independente: 330 IDs aprovados; reexecuções discriminadas, sem crédito de
+novos cenários financeiros. A negativa V2 continua preservada. O impacto
+global D&A é intencional: retenção DVA continua separada; rubrica mista ou
+MI–MD divergente não certifica D&A. As 3066/3026 ausências são impacto
+recebido, sem nova aferição econômica ou alegação de default literal à base.
+Owners e capital continuam opcionais/desligados: não certificam contagem
+bruta/líquida, classes, NI, normalização ou G2 efetivo.
+
+O leitor público dos estudos V2, seis destinos e um teste portátil de seis
+IDs receberam revisão favorável delimitada. V1 negativa e errata DVA foram
+preservadas. O adendo corrente da auditoria tem três destinos revistos:
+482 modelos de 07/09 comparados e 767 participantes de 09 vinculados aos
+caminhos e blobs da publicação `7f0d368c`. Leitor e adendo não recalculam
+valuation. Correção documental Gemini e retirada do xfail correspondente
+também foram revistas. O lint integrado recusou I001 em um import de teste,
+antes de iniciar pytest. Uma linha foi reposicionada, com corpos e assertivas
+literais; Ruff do repositório passou. Suíte completa do conjunto, publicação, CI e portal
+do novo lote continuam etapas distintas pendentes. Comprovantes privados:
+`.cdp/validacoes/20261009-integracao-17/`.
+
+A08 de 09: primeiro ensaio parou na alteração temporária de ambiente do
+NumPy; o segundo concluiu bootstrap ordinário e parou na leitura externa de
+`entry_points.txt` da instalação. Ambos negativos foram encerrados antes de
+alcançar a API histórica, sem divergências numéricas aferidas e com originais
+e réplicas intactos. A proposta V3 delimita descoberta de metadados do runtime
+em revisão própria; não altera fonte histórica, corpus, semente, tolerância
+ou prazo. Nenhum desses negativos certifica recálculo de 09.
+
+Estudo Rumo de obrigações e revisão documental concluídos: abertura IFRS16
+já apresentada na nota 5.6, litígios/parcelamentos/outorgas com políticas
+distintas. Não prova dupla contagem do produtor ou FCFF nem autoriza excluir
+passivo consolidado, compensar depósito ou valorar crédito. GET direta única
+do quinto termo ANTT recebeu 403; contrato localizado separadamente pela
+ferramenta web, sem corpo PDF local autenticado. Nenhuma ausência pública foi
+inferida. O incremento público reproduzível está em candidato futuro separado,
+com seis novos destinos, ainda fora deste lote.
+
+Retrato oficial de 09, preços até 08: 233 empresas e oito ETFs; C102/233
+(43,776824%) e revisão35/233 (15,021459%). G19, G13c, G9/G11, FCFF integral,
+giro, concessões, fontes contábeis homogêneas, PIT, calibração e E1/E2 continuam
+com pendências materiais. Não promover confiança por quota, alterar mandato,
+copiar cache ao executor ou tratar decisão aprovada como efetivada.
+
+## Registro histórico anterior — 09/10/2026, 15:21 Brasília
+
+As pendências abaixo refletem aquele corte. O estado corrente acima registra
+as publicações, revisões e transposições posteriores.
+
 Última atualização: 2026-10-09, 15:21 Brasília. Decisão inaugural e tese nativas
 publicadas em `7f0d368c`; ROOT e DEV receberam a base por avanço normal de Git,
 com fonte/delta DEV e cinco alterações herdadas ROOT literais. Integridade e trava

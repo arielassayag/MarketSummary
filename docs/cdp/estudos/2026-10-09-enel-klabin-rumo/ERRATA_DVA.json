@@ -1,0 +1,25 @@
+{
+  "origem": "errata externa; não modifica pacote original",
+  "negativa_original": {
+    "sha256_log": "3189df15c8d5e3150871ba61fb5a4e1e9c121e791b4caaa8984dad0f39e65049",
+    "erro": "AssertionError: PROVA_CONCEITUAL.json",
+    "reexecucao_original_aprovada": false,
+    "afirmacoes_de_aprovacao_em_parecer_comandos_originais_incorretas": true
+  },
+  "mudanca_exata_de_comparacao": {
+    "antes": "assert json.loads((BASE / name).read_text()) == obj, name",
+    "depois": "assert json.loads((BASE / name).read_text()) == json.loads(json.dumps(obj, ensure_ascii=False, allow_nan=False)), name"
+  },
+  "script_original_sha256": "60cc17a14f872d708da90f39024ded73f43cc758f24500d537790e4f3db43078",
+  "fonte_corrigida_em_memoria_sha256": "729068dbb7eb3fc3e64d74d7f25d44ca3da5845f6dfa3acffdc3d4d2b651c7c8",
+  "paridade_integral_tres_JSON_apos_roundtrip": true,
+  "montantes_periodos_rotulos_AST_guardas_inalterados": true,
+  "nao_credita_caso_financeiro_novo": true,
+  "pins": {
+    "FREEZE_ESTUDO.json": "bd9bf91c4d3b1a79388e0039e60c7bc4506ac73011cafb5cbeb5de18fa7dbce1",
+    "MANIFESTO_ESTUDO.json": "2a1240759ba5c9f5a9c81d3fe58385e3bae3ae9653c19f6306a13cec4c3ddbbd",
+    "RECIBO_ESTUDO.json": "b8a1b6e3ede4ef03bebf5f6be88e35bf94931972972e250b76ba51a3a8f60478",
+    "PARECER.md": "3a8186eb28ab6ed69f6777c1db42f65a42fd89fac05dd7b4234d8633d4b27ccd"
+  },
+  "reproducao_publica_atual_tem_escopo_proprio": true
+}

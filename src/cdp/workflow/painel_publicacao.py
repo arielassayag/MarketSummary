@@ -1209,7 +1209,7 @@ def _reports(daily: Sequence[Mapping[str, Any]], index: Sequence[Mapping[str, An
     # Índice: tipo e data; o caminho é sempre
     # ``<meta.publication.reports_dir>/<kind>/<date>/relatorio.md`` (``has_md``) e a página o
     # monta (:func:`report_path`), sem repeti-lo em cada linha.
-    idx = [_pick(r, ("kind", "date", "has_md", "has_html")) for r in index]
+    idx = [_pick(r, ("kind", "date", "has_md", "has_html", "retificacoes")) for r in index]
     if lim.indice_relatorios is not None and len(idx) > lim.indice_relatorios:
         idx = sorted(idx, key=lambda r: (str(r.get("date")), str(r.get("kind"))),
                      reverse=True)[:lim.indice_relatorios]

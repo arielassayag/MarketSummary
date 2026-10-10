@@ -605,6 +605,8 @@ def gate_diario(ag: Mapping[str, Any], ctx: ContextoGate) -> Decisao:
     rs = ag.get("relatorio_semanal") or {}
     if rs.get("pendente"):
         itens.append(f"relatório semanal de {_d(rs.get('data'))} pendente")
+    if (ag.get("retificacao_editorial") or {}).get("pendente"):
+        itens.append("retificação editorial semanal pendente (sem repetir fechamento)")
     cob = ag.get("cobertura") or {}
     if cob.get("snapshot_pendente"):
         itens.append(f"retrato da cobertura de {_d(cob.get('data'))} pendente")

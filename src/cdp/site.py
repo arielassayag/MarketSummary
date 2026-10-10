@@ -340,6 +340,7 @@ def _descricao(rel: str) -> str:
         (r"relatorios/daily/.*comentario\.json$", "Comentário do dia (texto validado)"),
         (r"relatorios/daily/.*(facts\.md|factbook\.json)$", "Fatos do dia (calculados pelo "
                                                             "código)"),
+        (r"relatorios/semanal/.*/retificacoes/", "Retificação editorial vinculada — original preservado"),
         (r"relatorios/semanal/.*relatorio\.(md|html)$", "Relatório semanal de resultado"),
         (r"relatorios/semanal/", "Relatório semanal de resultado (fatos e comentário)"),
         (r"relatorios/weekly/", "Relatório da decisão semanal"),

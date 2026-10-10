@@ -208,6 +208,7 @@ código (passo a passo em `docs/cdp/AUTOMACAO.md`):
 | `docs/cdp/EXECUCAO.md` | dia de montagem, prazo efetivo, leilão de fechamento, capacidade e custos |
 | `docs/cdp/COBERTURA.md`, `docs/cdp/NOTAS.md` | modelos abertos de valuation e notas de pesquisa por emissor |
 | `docs/cdp/TESE.md`, `docs/cdp/ESTILO.md` | tese semanal; tom e redação para investidores |
+| `docs/cdp/RETIFICACAO_EDITORIAL.md` | correção editorial autenticada, preservando relatórios e resultados originais |
 | `docs/cdp/AUTOMACAO.md` | rotinas no app de IA: Claude Code, Codex, Gemini; troca de executor |
 | `docs/cdp/LOCAL.md`, `docs/cdp/ROTINAS.md` | PC local (app desktop) e tabela de rotinas |
 | `docs/cdp/SITE.md` | portal público (GitHub Pages) e conferência de uma publicação |

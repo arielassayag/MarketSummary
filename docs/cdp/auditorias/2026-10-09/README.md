@@ -4,6 +4,7 @@ Este diretório organiza 233 empresas, 281 linhas negociadas, oito ETFs e oito v
 
 ## Arquivos para leitura
 
+- [COMPARACAO_RETRATOS.md](COMPARACAO_RETRATOS.md) e [PRIORIDADES_CORRENTES.json](PRIORIDADES_CORRENTES.json): adendo documental separado para o retrato09; os pareceres e prioridades históricas permanecem intactos.
 - [CONTRATOS_DOCUMENTAIS.md](CONTRATOS_DOCUMENTAIS.md): escopo e limites dos contratos novos de demonstrações, comparativos e consenso; separado do mapa histórico.
 - [mapas/EMPRESAS.csv](mapas/EMPRESAS.csv): empresa, linha e moeda, métodos presentes, portões, lacunas, publicação desconhecida e link ao JSON da versão histórica.
 - [mapas/ETFS.csv](mapas/ETFS.csv) e [mapas/INDICES.csv](mapas/INDICES.csv): cota do proxy, cobertura bottom-up, composição e limite da identificação do índice.

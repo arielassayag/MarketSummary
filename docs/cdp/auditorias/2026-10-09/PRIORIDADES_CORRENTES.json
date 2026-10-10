@@ -1,0 +1,569 @@
+{
+  "schema": "cdp.auditoria.prioridades_correntes_publicas/v1",
+  "as_of": "2026-10-09",
+  "corte_temporal_declarado": "2026-10-09T14:19:57.833570+00:00",
+  "aprovacao_financeira": false,
+  "historico_reescrito": false,
+  "origens": {
+    "2026-10-07": {
+      "publicacao_git": "af6eb0c93d7c14efaa49bd658c0a502f4e9aedb9",
+      "gerador_declarado": "5cb2d4ab8c250b3289dc90fb4e655637335a0aec",
+      "fonte": "https://github.com/arielassayag/MarketSummary/tree/af6eb0c93d7c14efaa49bd658c0a502f4e9aedb9/book/cobertura/2026-10-07",
+      "manifesto_sha256": "7ccb52e98b36ca4332f2ff41691740d5239b3ca82f73d6f509e743ee0d28d650"
+    },
+    "2026-10-09": {
+      "publicacao_git": "7f0d368c1a5bba0c1bbe948aea38dda232e34852",
+      "gerador_declarado": "af6eb0c93d7c14efaa49bd658c0a502f4e9aedb9",
+      "fonte": "https://github.com/arielassayag/MarketSummary/tree/7f0d368c1a5bba0c1bbe948aea38dda232e34852/book/cobertura/2026-10-09",
+      "manifesto_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c"
+    }
+  },
+  "codigo_produto_posterior": "3c27b35914eb03b135987df6aefe3e87e2c1e7b6",
+  "resumos_conferidos": {
+    "2026-10-07": {
+      "empresas": 233,
+      "etfs": 8,
+      "alvos_numericos": 230,
+      "citaveis": 200,
+      "confiancas": {
+        "C": 100,
+        "A": 20,
+        "B": 110,
+        "Insuficiente": 3
+      },
+      "ratings": {
+        "Neutro": 134,
+        "Em revisão": 30,
+        "Compra": 34,
+        "Venda": 32,
+        "Sem preço-alvo": 3
+      },
+      "pit_declarado": {
+        "False": 113,
+        "True": 120
+      },
+      "percentual_confianca_C": "42.918455",
+      "percentual_em_revisao": "12.875536",
+      "portoes_bloqueio_ou_sem_alvo": {
+        "G13c": [
+          "BR_JBS"
+        ],
+        "G13": [
+          "AR_GALICIA",
+          "AR_LAR",
+          "AR_SUPERVIELLE",
+          "AR_YPF",
+          "BR_AURA",
+          "BR_HAPVIDA",
+          "BR_SIGMALITH"
+        ],
+        "G11": [
+          "AR_CAAP",
+          "AR_LOMA",
+          "AR_YPF",
+          "BR_ANIMA",
+          "BR_CVC",
+          "BR_HAPVIDA",
+          "BR_JHSF",
+          "BR_KLABIN",
+          "BR_LOGCP",
+          "BR_MINERVA",
+          "BR_MOVIDA",
+          "BR_RIACHUELO",
+          "BR_RUMO",
+          "BR_VAMOS",
+          "CL_CMPC",
+          "CL_LATAM",
+          "CO_GEOPARK",
+          "LA_LILA",
+          "MX_AEROMEXICO",
+          "MX_FMTY",
+          "MX_FUNO",
+          "MX_GAP",
+          "PE_SCCO"
+        ],
+        "G3": [
+          "BR_GPA",
+          "BR_ONCOCLINICAS",
+          "MX_VOLARIS"
+        ],
+        "G13b": [
+          "BR_AURA",
+          "BR_SIGMALITH"
+        ],
+        "G9": [
+          "AR_YPF",
+          "BR_HAPVIDA",
+          "BR_KLABIN",
+          "BR_MINERVA",
+          "BR_MOVIDA",
+          "BR_RIACHUELO",
+          "BR_RUMO",
+          "CL_CMPC",
+          "CO_GEOPARK",
+          "LA_LILA",
+          "MX_CARSO"
+        ]
+      },
+      "sensibilidades_colunas_invariantes": [
+        "AR_ADECOAGRO",
+        "AR_CRESUD",
+        "AR_IRSA",
+        "AR_LAR",
+        "BR_ALLOS",
+        "BR_AUREN",
+        "BR_BRADESPAR",
+        "BR_BRASKEM",
+        "BR_COSAN",
+        "BR_CSN",
+        "BR_CURY",
+        "BR_CYRELA",
+        "BR_DIRECIONAL",
+        "BR_EZTEC",
+        "BR_GOAU",
+        "BR_IGUATEMI",
+        "BR_ITAUSA",
+        "BR_JHSF",
+        "BR_LOGCP",
+        "BR_MOURADUBEUX",
+        "BR_MRV",
+        "BR_MULTIPLAN",
+        "BR_PLANO",
+        "BR_SIGMALITH",
+        "BR_SIMPAR",
+        "BR_TENDA",
+        "CL_CENCOMALLS",
+        "CL_CMPC",
+        "CL_MALLPLAZA",
+        "CL_PARAUCO",
+        "CO_GRUPOARGOS",
+        "CO_SURA",
+        "LA_LILA",
+        "MX_FIBRAPL",
+        "MX_FMTY",
+        "MX_FUNO",
+        "MX_VESTA",
+        "PE_SCCO"
+      ],
+      "manifesto_n_participantes_declarados": 632,
+      "portoes_bloqueio_literal": {
+        "G11": [
+          "AR_CAAP",
+          "AR_LOMA",
+          "AR_YPF",
+          "BR_ANIMA",
+          "BR_CVC",
+          "BR_HAPVIDA",
+          "BR_JHSF",
+          "BR_KLABIN",
+          "BR_LOGCP",
+          "BR_MINERVA",
+          "BR_MOVIDA",
+          "BR_RIACHUELO",
+          "BR_RUMO",
+          "BR_VAMOS",
+          "CL_CMPC",
+          "CL_LATAM",
+          "CO_GEOPARK",
+          "LA_LILA",
+          "MX_AEROMEXICO",
+          "MX_FMTY",
+          "MX_FUNO",
+          "MX_GAP",
+          "PE_SCCO"
+        ],
+        "G13": [
+          "AR_GALICIA",
+          "AR_LAR",
+          "AR_SUPERVIELLE",
+          "AR_YPF",
+          "BR_AURA",
+          "BR_HAPVIDA",
+          "BR_SIGMALITH"
+        ],
+        "G9": [
+          "AR_YPF",
+          "BR_HAPVIDA",
+          "BR_KLABIN",
+          "BR_MINERVA",
+          "BR_MOVIDA",
+          "BR_RIACHUELO",
+          "BR_RUMO",
+          "CL_CMPC",
+          "CO_GEOPARK",
+          "LA_LILA",
+          "MX_CARSO"
+        ],
+        "G13b": [
+          "BR_AURA",
+          "BR_SIGMALITH"
+        ],
+        "G13c": [
+          "BR_JBS"
+        ]
+      },
+      "portoes_sem_alvo_literal": {
+        "G3": [
+          "BR_GPA",
+          "BR_ONCOCLINICAS",
+          "MX_VOLARIS"
+        ]
+      }
+    },
+    "2026-10-09": {
+      "empresas": 233,
+      "etfs": 8,
+      "alvos_numericos": 229,
+      "citaveis": 194,
+      "confiancas": {
+        "C": 102,
+        "Insuficiente": 4,
+        "A": 18,
+        "B": 109
+      },
+      "ratings": {
+        "Neutro": 122,
+        "Em revisão": 35,
+        "Sem preço-alvo": 4,
+        "Compra": 40,
+        "Venda": 32
+      },
+      "pit_declarado": {
+        "False": 103,
+        "True": 130
+      },
+      "percentual_confianca_C": "43.776824",
+      "percentual_em_revisao": "15.021459",
+      "portoes_bloqueio_ou_sem_alvo": {
+        "G13": [
+          "AR_CEPU",
+          "AR_LAR",
+          "BR_AURA",
+          "BR_HAPVIDA",
+          "BR_SIGMALITH"
+        ],
+        "G13c": [
+          "AR_TEO",
+          "BR_JBS"
+        ],
+        "G11": [
+          "AR_CAAP",
+          "BR_ANIMA",
+          "BR_CVC",
+          "BR_HAPVIDA",
+          "BR_JHSF",
+          "BR_KLABIN",
+          "BR_LOGCP",
+          "BR_MINERVA",
+          "BR_MOVIDA",
+          "BR_RIACHUELO",
+          "BR_RUMO",
+          "CL_CMPC",
+          "CL_LATAM",
+          "LA_LILA",
+          "LA_MELI",
+          "MX_AEROMEXICO",
+          "MX_FIRSTMAJ",
+          "MX_FMTY",
+          "MX_FUNO",
+          "MX_GAP",
+          "PE_NEXA"
+        ],
+        "G3": [
+          "AR_TEO",
+          "BR_GPA",
+          "BR_ONCOCLINICAS",
+          "MX_VOLARIS"
+        ],
+        "G13b": [
+          "BR_AURA",
+          "BR_SIGMALITH"
+        ],
+        "G19": [
+          "AR_BBVA",
+          "AR_CEPU",
+          "AR_GALICIA",
+          "AR_LOMA",
+          "AR_MACRO",
+          "AR_SUPERVIELLE",
+          "AR_TGS",
+          "CL_ENELCHILE"
+        ],
+        "G9": [
+          "BR_HAPVIDA",
+          "BR_KLABIN",
+          "BR_MINERVA",
+          "BR_RIACHUELO",
+          "BR_RUMO",
+          "CL_CMPC",
+          "CL_LATAM",
+          "CO_GEOPARK",
+          "LA_LILA",
+          "MX_CARSO"
+        ]
+      },
+      "sensibilidades_colunas_invariantes": [
+        "AR_ADECOAGRO",
+        "AR_CRESUD",
+        "AR_IRSA",
+        "AR_LAR",
+        "AR_YPF",
+        "BR_ALLOS",
+        "BR_AUREN",
+        "BR_BRADESPAR",
+        "BR_BRASKEM",
+        "BR_COSAN",
+        "BR_CSN",
+        "BR_CURY",
+        "BR_CYRELA",
+        "BR_DIRECIONAL",
+        "BR_EZTEC",
+        "BR_GOAU",
+        "BR_IGUATEMI",
+        "BR_ITAUSA",
+        "BR_JHSF",
+        "BR_LOGCP",
+        "BR_MOURADUBEUX",
+        "BR_MRV",
+        "BR_MULTIPLAN",
+        "BR_PLANO",
+        "BR_SIGMALITH",
+        "BR_SIMPAR",
+        "BR_TENDA",
+        "CL_CENCOMALLS",
+        "CL_CMPC",
+        "CL_MALLPLAZA",
+        "CL_PARAUCO",
+        "CO_GRUPOARGOS",
+        "CO_SURA",
+        "LA_LILA",
+        "MX_FIBRAPL",
+        "MX_FMTY",
+        "MX_FUNO",
+        "MX_VESTA"
+      ],
+      "manifesto_n_participantes_declarados": 767,
+      "portoes_bloqueio_literal": {
+        "G19": [
+          "AR_BBVA",
+          "AR_CEPU",
+          "AR_GALICIA",
+          "AR_LOMA",
+          "AR_MACRO",
+          "AR_SUPERVIELLE",
+          "AR_TGS",
+          "CL_ENELCHILE"
+        ],
+        "G11": [
+          "AR_CAAP",
+          "BR_ANIMA",
+          "BR_CVC",
+          "BR_HAPVIDA",
+          "BR_JHSF",
+          "BR_KLABIN",
+          "BR_LOGCP",
+          "BR_MINERVA",
+          "BR_MOVIDA",
+          "BR_RIACHUELO",
+          "BR_RUMO",
+          "CL_CMPC",
+          "CL_LATAM",
+          "LA_LILA",
+          "LA_MELI",
+          "MX_AEROMEXICO",
+          "MX_FIRSTMAJ",
+          "MX_FMTY",
+          "MX_FUNO",
+          "MX_GAP",
+          "PE_NEXA"
+        ],
+        "G13": [
+          "AR_CEPU",
+          "AR_LAR",
+          "BR_AURA",
+          "BR_HAPVIDA",
+          "BR_SIGMALITH"
+        ],
+        "G13c": [
+          "AR_TEO",
+          "BR_JBS"
+        ],
+        "G13b": [
+          "BR_AURA",
+          "BR_SIGMALITH"
+        ],
+        "G9": [
+          "BR_HAPVIDA",
+          "BR_KLABIN",
+          "BR_MINERVA",
+          "BR_RIACHUELO",
+          "BR_RUMO",
+          "CL_CMPC",
+          "CL_LATAM",
+          "CO_GEOPARK",
+          "LA_LILA",
+          "MX_CARSO"
+        ]
+      },
+      "portoes_sem_alvo_literal": {
+        "G3": [
+          "AR_TEO",
+          "BR_GPA",
+          "BR_ONCOCLINICAS",
+          "MX_VOLARIS"
+        ]
+      }
+    }
+  },
+  "ratings_mudaram": [
+    "AR_BBVA",
+    "AR_CEPU",
+    "AR_MACRO",
+    "AR_TEO",
+    "AR_TGS",
+    "AR_YPF",
+    "BR_AFYA",
+    "BR_AMBEV",
+    "BR_CBA",
+    "BR_COMPASS",
+    "BR_ENERGISA",
+    "BR_GERDAU",
+    "BR_GPS",
+    "BR_ISAENERGIA",
+    "BR_ITAU",
+    "BR_MARCOPOLO",
+    "BR_TIM",
+    "BR_VAMOS",
+    "BR_WEG",
+    "CL_ANDINA",
+    "CL_BSAC",
+    "CL_CENCOMALLS",
+    "CL_EISA",
+    "CL_ENELCHILE",
+    "LA_FORTUNA",
+    "LA_MELI",
+    "MX_ALSEA",
+    "MX_ENDEAVOUR",
+    "MX_FIRSTMAJ",
+    "MX_WALMEX",
+    "PE_NEXA",
+    "PE_SCCO"
+  ],
+  "confiancas_mudaram": [
+    "AR_TEO",
+    "BR_AFYA",
+    "BR_AZZAS",
+    "BR_BBSEG",
+    "BR_BRADESPAR",
+    "BR_CBA",
+    "BR_ENERGISA",
+    "BR_ISAENERGIA",
+    "BR_MARCOPOLO",
+    "BR_SANEPAR",
+    "BR_TAESA",
+    "CL_LATAM",
+    "MX_ASUR",
+    "MX_CEMEX",
+    "MX_ENDEAVOUR"
+  ],
+  "numero_transicoes_status_portao": 138,
+  "prioridades": [
+    {
+      "id_historico": "A01",
+      "prioridade_historica": 0,
+      "estado_corrente_documental": "parcialmente_demonstrado",
+      "causa_corrente": "Cobertura09 e decisão APPROVE/autônoma existem; efetivação não é provada pela decisão recebida. Gerador09 af6 não é código atual3c27.",
+      "prova_ainda_necessaria": "Manter separadas cobertura, decisão, MOC, diário e resultado. Acompanhamento cabe à rotina nativa, sem regravar esta decisão.",
+      "aceite_economico_ou_P0": false
+    },
+    {
+      "id_historico": "A02",
+      "prioridade_historica": 0,
+      "estado_corrente_documental": "aberto_com_causas_modificadas",
+      "causa_corrente": "YPF deixa revisão; Galicia/Supervielle trocam G13 por G19; LAR continua G13 e arquétipo commodity. Nova prioridade de atualidade inclui oito G19.",
+      "prova_ainda_necessaria": "Ponte primária por grão, moeda, base/poder aquisitivo, classe e contagem; retirar bloqueio antigo no retrato não certifica os próximos períodos. Atualidade não é flag PIT.",
+      "aceite_economico_ou_P0": false
+    },
+    {
+      "id_historico": "A03",
+      "prioridade_historica": 0,
+      "estado_corrente_documental": "reparo_tecnico_no_codigo_posterior",
+      "causa_corrente": "As oito fichas existem em09; o geradoraf6 ainda filtrava coluna ausente. Código3c27 remove filtro e contém testes publicados; não se reescreve o retrato09.",
+      "prova_ainda_necessaria": "Adoção futura normal do código e manutenção de ausências explícitas. Não chamar todos os oito atuais ausentes.",
+      "aceite_economico_ou_P0": false
+    },
+    {
+      "id_historico": "A04",
+      "prioridade_historica": 1,
+      "estado_corrente_documental": "aberto",
+      "causa_corrente": "Os oito fonte_composicao ainda possuem SHA/recepção/publicação null no09; fonte_indice autentica configuração.",
+      "prova_ainda_necessaria": "Vínculo primário da composição realmente consumida; diferenciar raw arquivado, exportação e página de produto. Ausência exportada não prova inexistência do bruto.",
+      "aceite_economico_ou_P0": false
+    },
+    {
+      "id_historico": "A05",
+      "prioridade_historica": 1,
+      "estado_corrente_documental": "aberto_com_participantes_modificados",
+      "causa_corrente": "38 grades planas persistem. SaiPE_SCCO, entraAR_YPF; os seis demais commodities da prioridade histórica continuam invariantes.",
+      "prova_ainda_necessaria": "Adequação do método/driver e apresentação do alcance. Peso configurado de FCFF indisponível não é participação efetiva nem autoriza fabricar patrimônio positivo.",
+      "aceite_economico_ou_P0": false
+    },
+    {
+      "id_historico": "A06",
+      "prioridade_historica": 1,
+      "estado_corrente_documental": "aberto_com_saida_decisoria_presente",
+      "causa_corrente": "Existe saída decisória de montagem09, diferente da ausência histórica. Sua presença e as fichas não demonstram análise financeira completa integral por empresa.",
+      "prova_ainda_necessaria": "Análise financeira completa fonteado de determinantes/normalização/catalisador/consenso/cenário adverso e regra de ação por empresa; não transformar aprovação determinística em auditoria financeira completa.",
+      "aceite_economico_ou_P0": false
+    },
+    {
+      "id_historico": "A07",
+      "prioridade_historica": 1,
+      "estado_corrente_documental": "reparo_tecnico_no_codigo_posterior",
+      "causa_corrente": "3c27 contém comando/módulo de gênese explícita e testes; ausente nos geradores5cb/af6. Esta revisão somente leu, sem abrir livro.",
+      "prova_ainda_necessaria": "Publicar vínculo da integração técnica e procedimento próprio de réplica. Gênese de réplica não é reinício do livro oficial nem prova financeira.",
+      "aceite_economico_ou_P0": false
+    },
+    {
+      "id_historico": "A08",
+      "prioridade_historica": 1,
+      "estado_corrente_documental": "parcialmente_demonstrado_documental",
+      "causa_corrente": "Adendo anterior prova recálculo07. Conferência posterior do inventário09 valida os767 participantes do manifesto e seu vínculo à árvoreGit7f, sem recálculo financeiro09.",
+      "prova_ainda_necessaria": "Recálculo financeiro09 com geradoraf6 e auditoria dos brutos primários efetivamente usados; não estender a prova do inventário a comparabilidade, PIT ou eficácia.",
+      "aceite_economico_ou_P0": false
+    },
+    {
+      "id_historico": "A09",
+      "prioridade_historica": 1,
+      "estado_corrente_documental": "aberto",
+      "causa_corrente": "PIT recebido120→130 true; flags não foram recertificadas, não demonstram E1/E2 integral, amostra reservada ou calibração. ConfiançaC102 e revisão35 acima dos objetivos históricos.",
+      "prova_ainda_necessaria": "Preservar episódios E1, vintages/amostra reservada e eficáciaIA como provas distintas; quotas não promovem confiança nem relaxam gates.",
+      "aceite_economico_ou_P0": false
+    },
+    {
+      "id_historico": "A10",
+      "prioridade_historica": 2,
+      "estado_corrente_documental": "aberto_nao_comparavel_sem_ponte",
+      "causa_corrente": "Continua ETF_ARGT em USD, composição nominal heterogênea, fonte_indice/config e mesma falta temporal. Diferenças de posições não certificam a exposiçãoFX.",
+      "prova_ainda_necessaria": "Ponte de moeda/horizonte/câmbio dos filhos e crescimento consolidado; manter diagnóstico sem novo choque/alvo.",
+      "aceite_economico_ou_P0": false
+    }
+  ],
+  "limites": [
+    "Contagens e estados declarados; sem recálculo de valuation, alvo, solver ou primários nesta comparação.",
+    "Os 241 modelos de cada data tiveram SHA conferido; conferência posterior do inventário09 validou767 participantes do manifesto nos corpos fornecidos e na árvoreGit7f. Não implica todos os brutos do índice público ou recálculo financeiro.",
+    "Status bloqueio e sem_alvo são apresentados separadamente; ausência ou remoção de portão não equivale a ok.",
+    "PIT declarado, idade das demonstrações e autenticação ponto no tempo são controles distintos.",
+    "Peso configurado de método sem valor/formula não é participação efetiva.",
+    "A decisão recebida não prova efetivação, diário ou resultado; fonte nova não reescreve o retrato09."
+  ],
+  "inventario09_verificado_posteriormente": {
+    "programa": "scripts/cdp_mapear_modelos.py",
+    "codigo_inventario": "3c27b35914eb03b135987df6aefe3e87e2c1e7b6",
+    "fonte_geradora_literal_af6": true,
+    "manifesto_participantes_sha_conferidos": 767,
+    "participantes_encontrados_na_arvore_git7f": 767,
+    "financas_recalculadas": false,
+    "limite": "Corpos fornecidos do manifesto verificados, com vínculo Git; não autentica todos os brutos primários do índice de coleta ou recepçãoHTTP nova."
+  }
+}

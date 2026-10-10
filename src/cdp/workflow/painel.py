@@ -1873,7 +1873,7 @@ def _risk_section(cfg: FundConfig, latest_rec: Any | None, live: Any | None,
                   live_week: date | None, executed: bool) -> dict[str, Any]:
     if latest_rec is not None:
         note = (f"Carteira efetivada (semana de {live_week:%d/%m/%Y}) marcada em "
-                f"{latest_rec.date:%d/%m/%Y}: risco diário com drift; liquidez, stress e "
+                f"{latest_rec.date:%d/%m/%Y}: risco diário; liquidez, stress e "
                 "contribuições ex-ante da decisão." if live_week else
                 f"Registro diário de {latest_rec.date:%d/%m/%Y}.")
     elif live is not None:
@@ -1982,6 +1982,11 @@ def _daily_reports(rt: Any, cfg: FundConfig, records: Sequence[Any], issues: _Is
               "has_html": r.html is not None,
               "md_sha256": _sha256_file(r.md) if r.md is not None else None}
              for r in reports]
+    from .retificacao_semanal import listar as listar_retificacoes
+
+    for report in index:
+        if report["kind"] == "semanal":
+            report["retificacoes"] = listar_retificacoes(rt, report["date"])
     by_date = {r.date: r for r in records}
     daily = [r for r in reports if r.kind == "daily"]
     report_dates = {r.key for r in daily}

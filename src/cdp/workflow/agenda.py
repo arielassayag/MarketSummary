@@ -881,6 +881,8 @@ def agenda(rt: Runtime, now: datetime | None = None) -> dict[str, Any]:
         # Dia de montagem: os modelos da cobertura são atualizados antes da coleta e da pesquisa.
         weekly["etapa"] = "cobertura"
     closes = pending_closes(rt, local)
+    from .retificacao_semanal import status as status_editorial
+
     pubs = pending_publications(rt)
     try:
         last = rt.track().dates()
@@ -906,6 +908,7 @@ def agenda(rt: Runtime, now: datetime | None = None) -> dict[str, Any]:
         "horario_fechamento_diario": cfg.fund.daily_close_run_local,
         "publicacoes_pendentes": pubs,
         "relatorio_semanal": weekly_report_status(rt, local),
+        "retificacao_editorial": status_editorial(rt),
         "cobertura": cobertura,
         "teses_pendentes": pending_theses(rt),
         "proximos_eventos": _next_events(rt, local, weekly),

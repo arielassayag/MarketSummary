@@ -718,7 +718,7 @@ def _capital_oficial(dados: DadosPublicos, issuer_id: str, sintetico: bool) -> d
     q = _f(r.get("qtd_total"))
     if q is None or q <= 0:
         return None
-    return {"qtd_total": q, "data_ref": str(r.get("data_ref")), "versao": _f(r.get("versao")),
+    result = {"qtd_total": q, "data_ref": str(r.get("data_ref")), "versao": _f(r.get("versao")),
             "data_publicacao": str(r.get("data_publicacao")), "tipo_capital": str(r.get("tipo_capital")),
             "fonte": prov_dict({"fonte": "SIMULADO" if sintetico else "CVM",
                                 "url": None if sintetico else r.get("url"),
@@ -727,6 +727,10 @@ def _capital_oficial(dados: DadosPublicos, issuer_id: str, sintetico: bool) -> d
                                               f"{int(_f(r.get('versao')) or 0)}: {r.get('tipo_capital')} (item 12.1)"),
                                 "data_publicacao": r.get("data_publicacao"), "data_coleta": None,
                                 "sha256": r.get("sha256")})}
+    if 'semantica_capital' in r:
+        from ..data.publico_capital_semantica import ler
+        result['semantica_capital'] = ler(r['semantica_capital'])
+    return result
 
 
 def _txt_n(x: float | None) -> str:
@@ -1002,6 +1006,16 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
     unidades, status_unid, fonte_un, contagem = conciliar_contagem(
         acoes, apl, _div(mcap_pub, preco), oficial, params, _prov_linha(row_acoes) if row_acoes is not None
         else None, fonte_mkt_un, _unidade_conferida(params, linha), fontes_participantes=fontes_contagem)
+    semantica = getattr(dados, 'capital_semantica', None)
+    if semantica is not None:
+        from ..data.publico_capital_semantica import discriminacao_contagem, ler
+        observacoes = [value for value in semantica.get('semantica_capital', pd.Series(dtype=str)).dropna()
+                      if ler(value).get('issuer_id_cadastro') == issuer_id]
+        mercado_contagem = md.fundamentals.loc[linha].to_dict() if linha in md.fundamentals.index else {}
+        contagem['semantica'] = discriminacao_contagem(contagem=contagem, rows_acoes=rows_acoes,
+            oficial=oficial, observacoes=observacoes, linha=linha, apl=apl,
+            data_preco=data_preco, data_mercado=md.as_of, mercado=mercado_contagem,
+            ratio_curado=params.unidades.get(linha))
     for a in contagem.get("avisos_pacote", []):
         pk.avisos.append(a)
     contagem.pop("avisos_pacote", None)

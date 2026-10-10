@@ -53,6 +53,9 @@ COMMANDS = [
      {"cmd": "weekly", "action": "close-report", "date": date(2026, 10, 9), "publish": False}),
     (["weekly", "close-report", "--date", D, "--publish"],
      "cdp.workflow.relatorio_semanal:cmd_close_report", {"publish": True}),
+    (["weekly", "rectify-report", "--date", D, "--mind", "codex"],
+     "cdp.workflow.retificacao_semanal:cmd", {"action": "rectify-report", "publish": False,
+                                            "mind": "codex", "arquivo": None}),
     (["validate-weekly-report", "--date", D], "cdp.workflow.relatorio_semanal:cmd_validate",
      {"cmd": "validate-weekly-report", "date": date(2026, 10, 9)}),
     (["reinicio"], "cdp.workflow.reinicio:cmd_reinicio", {"cmd": "reinicio", "executar": False}),
@@ -73,6 +76,8 @@ INVALID = [
     ["nota", "publish", "--issuer", "BR_VALE"],                 # --date obrigatório
     ["validate-nota", "--issuer", "BR_VALE"],
     ["weekly", "close-report"],
+    ["weekly", "rectify-report"],
+    ["weekly", "rectify-report", "--date", D],
     ["validate-weekly-report"],
     ["reinicio", "--executar", "sim"],                          # flag sem valor
     ["reinicio", "--dry-run"],                                  # simulação é o padrão
@@ -121,7 +126,8 @@ def _all_parsers(p: argparse.ArgumentParser, path: tuple[str, ...] = ()):
 def test_new_commands_listed_in_the_parser():
     sub = _subparsers(build_parser())
     assert {"cobertura", "nota", "validate-nota", "validate-weekly-report", "reinicio"} <= set(sub)
-    assert set(_subparsers(sub["weekly"])) == {"prepare", "preview", "decide", "close-report"}
+    assert set(_subparsers(sub["weekly"])) == {"prepare", "preview", "decide", "close-report",
+                                             "rectify-report"}
     assert set(_subparsers(sub["cobertura"])) == {"run", "verify", "revisao-mensal"}
     assert set(_subparsers(sub["nota"])) == {"agenda", "prepare", "publish"}
 
@@ -211,7 +217,8 @@ def test_mind_choices_come_from_harness_minds():
                              ("validate",), ("validate-daily",), ("validate-nota",),
                              ("validate-tese",), ("validate-weekly-report",),
                              ("weekly", "decide"),
-                             ("weekly", "prepare"), ("weekly", "preview")]
+                             ("weekly", "prepare"), ("weekly", "preview"),
+                             ("weekly", "rectify-report")]
     desc = ResearchPack.model_fields["mind"].description
     assert all(m in desc for m in HARNESS_MINDS)
 

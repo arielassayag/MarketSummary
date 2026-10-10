@@ -77,7 +77,7 @@ FONTES_PUBLICAS = ("CVM", "SEC", "RI", "YAHOO", "BCB", "FRED", "B3", "ISHARES", 
 CANONICAL_ITEMS: tuple[str, ...] = (
     "receita", "lucro_bruto", "ebit", "ebitda", "d_a", "resultado_financeiro", "lucro_antes_ir",
     "ir_csll", "lucro_liquido", "lucro_liquido_controladores", "cfo", "capex", "fcf",
-    "d_a_dfc", "adicoes_direito_uso", "depreciacao_direito_uso",
+    "d_a_dfc", "retencoes_dva", "adicoes_direito_uso", "depreciacao_direito_uso",
     "variacao_capital_giro_operacional", "juros_pagos_operacionais",
     "dividendos_pagos", "recompras", "caixa", "aplicacoes_cp", "divida_bruta", "divida_liquida",
     "arrendamentos", "arrendamentos_pagos", "patrimonio_liquido", "patrimonio_controladores",
@@ -88,7 +88,8 @@ CANONICAL_ITEMS: tuple[str, ...] = (
 """Itens canônicos (coluna ``item``). Convenção de sinais (a da CVM): receitas e lucros positivos;
 despesas negativas (``ir_csll``, ``resultado_financeiro`` líquido negativo, ``despesa_pdd``);
 ``d_a``, ``capex``, ``dividendos_pagos``, ``recompras`` e ``provisao_credito`` em módulo; ``cfo``
-e ``fcf`` com sinal. Valores em unidades da moeda (``escala = 1``); ações em quantidade."""
+e ``fcf`` com sinal; ``retencoes_dva`` conserva o sinal da rubrica reportada 7.04.01,
+sem uso como D&A nos derivados. Valores em unidades da moeda (``escala = 1``); ações em quantidade."""
 
 DEMONSTRATIVOS_COLUNAS = [
     "issuer_id", "demonstrativo", "freq", "period_end", "item", "value", "currency", "escala",
@@ -384,18 +385,27 @@ _CACHE_CVM: dict[tuple[str, int], pd.DataFrame] = {}
 
 
 def _fatos_cvm_zip(reg: RegistroArquivo, conteudo: bytes, doc: str, ano: int,
-                   cnpjs: frozenset[str]) -> pd.DataFrame:
+                   cnpjs: frozenset[str], *, preservar_semantica_capital: bool = False) -> pd.DataFrame:
     chave = (reg.sha256, hash(cnpjs))
-    if chave in _CACHE_CVM:
+    if not preservar_semantica_capital and chave in _CACHE_CVM:
         return _CACHE_CVM[chave]
-    tabs = cvm.ler_zip_demonstracoes(conteudo, doc, ano, cnpjs)
-    f = cvm.fatos_cvm(tabs, doc)
+    opcoes_capital = {'preservar_semantica_capital': True} if preservar_semantica_capital else {}
+    tabs = cvm.ler_zip_demonstracoes(conteudo, doc, ano, cnpjs, **opcoes_capital)
+    f = cvm.fatos_cvm(tabs, doc, **opcoes_capital)
     f["fonte"] = "CVM"
     f["sha256"] = reg.sha256
     f["data_coleta"] = pd.Timestamp(reg.data_coleta)
-    if len(_CACHE_CVM) > 32:
+    if not preservar_semantica_capital and len(_CACHE_CVM) > 32:
         _CACHE_CVM.clear()
-    _CACHE_CVM[chave] = f
+    if preservar_semantica_capital:
+        from .publico_capital_semantica import vincular_registro
+        f.attrs['capital_semantica'] = [vincular_registro(ctx, reg)
+                                       for ctx in f.attrs.get('capital_semantica', [])]
+        if 'semantica_capital' in f:
+            f['semantica_capital'] = f['semantica_capital'].map(
+                lambda ctx: vincular_registro(ctx, reg) if isinstance(ctx, str) else ctx)
+    else:
+        _CACHE_CVM[chave] = f
     return f
 
 
@@ -463,7 +473,9 @@ def demonstrativos(issuer_ids: Sequence[str], as_of: date, *, offline: bool = Fa
                    yf_factory: Callable[[str], Any] | None = None, anos: int = 5,
                    complementar_yahoo: bool = True, confirmar_magnitude_cvm: bool = False,
                    conhecimento_ate: datetime | None = None,
-                   selecionar_ri_observado: bool = False) -> pd.DataFrame:
+                   selecionar_ri_observado: bool = False,
+                   patrimonio_owners_observado: bool = False,
+                   preservar_semantica_capital: bool = False) -> pd.DataFrame:
     """Demonstrações em formato longo (``DEMONSTRATIVOS_COLUNAS``), point-in-time em ``as_of``.
 
     Fonte por emissor: CVM (CNPJ; trimestral e anual) > SEC (CIK; ``companyfacts``) > Yahoo
@@ -486,8 +498,12 @@ def demonstrativos(issuer_ids: Sequence[str], as_of: date, *, offline: bool = Fa
     ``falhas`` (coletas que falharam — o emissor fica sem os itens), ``qa`` (alertas de
     conferência), ``moeda_trocada`` (emissores que mudaram a moeda de apresentação).
     """
+    if not isinstance(preservar_semantica_capital, bool):
+        raise ValueError("preservar_semantica_capital exige bool explícito")
     if selecionar_ri_observado and conhecimento_ate is None:
         raise ValueError("RI observado exige corte UTC explícito de conhecimento")
+    if patrimonio_owners_observado and not selecionar_ri_observado:
+        raise ValueError("Patrimônio owners observado exige RI observado explícito")
     arq = _arquivo(root, offline)
     if conhecimento_ate is not None:
         conhecimento_ate = instante(conhecimento_ate)
@@ -509,6 +525,7 @@ def demonstrativos(issuer_ids: Sequence[str], as_of: date, *, offline: bool = Fa
     cobertos: set[str] = set()
     qa: list[str] = []
     registros_cvm: list[RegistroArquivo] = []
+    capital_semantica = []
 
     # ---- CVM
     cnpj_de = {i: str(sm.loc[i, "cnpj"]) for i in pedidos
@@ -524,7 +541,10 @@ def demonstrativos(issuer_ids: Sequence[str], as_of: date, *, offline: bool = Fa
             if got is None:
                 continue
             try:
-                f = _fatos_cvm_zip(got[0], got[1], doc, ano, todos)
+                f = _fatos_cvm_zip(got[0], got[1], doc, ano, todos,
+                    **({'preservar_semantica_capital': True} if preservar_semantica_capital else {}))
+                if preservar_semantica_capital:
+                    capital_semantica.extend(f.attrs.get('capital_semantica', []))
             except Exception as exc:  # ZIP corrompido/layout inesperado: registrado
                 arq.falhas.append(f"CVM {doc} {ano}: leitura falhou ({exc})")
                 continue
@@ -778,6 +798,41 @@ def demonstrativos(issuer_ids: Sequence[str], as_of: date, *, offline: bool = Fa
             frames.append(f_ri)
             cobertos.add(iid)
 
+    # ---- Estoques owners: complemento documental finito, somente com opt-in.
+    # A cobertura SEC/CVM do emissor não elimina uma lacuna deste item; chaves
+    # já presentes (inclusive recusadas na fonte prioritária) não são trocadas.
+    if patrimonio_owners_observado:
+        from . import publico_patrimonio_owners as owners_pdf
+
+        for iid in pedidos:
+            if iid not in owners_pdf.PERFIS:
+                continue
+            anteriores = set()
+            for f in frames:
+                ent = f["entidade"].map(lambda e, emissor=iid: emissor in ent_iss.get(e, []))
+                mask = ent & f["item"].eq("patrimonio_controladores")
+                anteriores.update(pd.to_datetime(f.loc[mask, "period_end"]))
+            for doc in ri_pdf.documentos_ri(iid, as_of):
+                perfil = owners_pdf.PERFIS[iid]
+                if doc.get("extrator") != perfil.produto.EXTRATOR_ID:
+                    continue
+                owners_pdf.validar_catalogo(doc)
+                got = arq.obter(f"RI/demonstrativos/{iid}/{doc['documento']}", "RI", doc["url"],
+                    _baixar(http_get, doc["url"]), ate=as_of, max_idade_dias=3650.0,
+                    validar=lambda c, emissor=iid: owners_pdf.validar_pdf(c, emissor))
+                if got is None:
+                    arq.falhas.append(f"{iid}: PDF de patrimônio owners não recebido")
+                    continue
+                f_owners = owners_pdf.fatos_pdf_observado(got[1], got[0], iid)
+                f_owners = f_owners[~f_owners["period_end"].isin(anteriores)].copy()
+                if not f_owners.empty:
+                    f_owners["data_coleta"] = pd.Timestamp(got[0].data_coleta)
+                    vinculados = ent_iss.setdefault("RI:" + iid, [])
+                    if iid not in vinculados:
+                        vinculados.append(iid)
+                    frames.append(f_owners)
+                    anteriores.update(f_owners["period_end"])
+
     # ---- Yahoo (sem CVM/SEC; e complemento trimestral)
     alvo_yh = [i for i in pedidos if i not in cobertos]
     compl = [i for i in pedidos if i in cobertos and i not in cnpj_de] if complementar_yahoo \
@@ -823,11 +878,23 @@ def demonstrativos(issuer_ids: Sequence[str], as_of: date, *, offline: bool = Fa
         else:
             compl_frames[iid] = f
 
+    def anotar_capital(out):
+        if preservar_semantica_capital:
+            from .publico_capital_semantica import ler, serializar
+            anotados = []
+            for value in capital_semantica:
+                ctx = ler(value)
+                for iid in ent_iss.get(str(ctx['cnpj']).strip(), []):
+                    if iid in pedidos:
+                        anotados.append(serializar({**ctx, 'issuer_id_cadastro': iid}))
+            out.attrs['capital_semantica'] = anotados
+        return out
+
     def vazio() -> pd.DataFrame:
         out = pd.DataFrame(columns=DEMONSTRATIVOS_COLUNAS)
         out.attrs = {"as_of": as_of.isoformat(), "falhas": list(arq.falhas),
                      "desconhecidos": desconhecidos, "qa": qa, "moeda_trocada": {}}
-        return out
+        return anotar_capital(out)
 
     if not frames and not compl_frames:
         return vazio()
@@ -907,13 +974,15 @@ def demonstrativos(issuer_ids: Sequence[str], as_of: date, *, offline: bool = Fa
             dimensoes(row)
         extras += [k for k in (*CAMPOS, "componentes_fluxo") if k in out]
     extras += [k for k in galicia_pdf.CAMPOS_CONTEXTO if k in out]
+    if preservar_semantica_capital and 'semantica_capital' in out:
+        extras.append('semantica_capital')
     out = out[DEMONSTRATIVOS_COLUNAS + extras].sort_values(
         ["issuer_id", "item", "freq", "period_end"], kind="stable").reset_index(drop=True)
     out.attrs = {"as_of": as_of.isoformat(), "falhas": list(arq.falhas),
                  "desconhecidos": desconhecidos, "qa": qa, "moeda_trocada": trocas}
     if confirmar_magnitude_cvm:
         out.attrs['confirmacoes_cvm'] = confirmacoes
-    return out
+    return anotar_capital(out)
 
 
 # ----------------------------------------------------------------- conferência (QA)

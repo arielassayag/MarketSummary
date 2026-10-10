@@ -1250,6 +1250,14 @@ class Runtime:
             c_ok, c_msgs = verificar(self.book_root, ri_autoridade=ri_autoridade, ri_cortes=ri_cortes)
             ok &= c_ok
             msgs += [f"cobertura RI: {m}" for m in c_msgs]
+        from .retificacao_semanal import status as status_editorial
+
+        editorial = status_editorial(self)
+        ok &= not editorial["pendente"]
+        msgs += [f"retificação editorial semanal: {m}" for m in editorial["problemas"]]
+        for report in editorial["relatorios"]:
+            label = "pendente" if report["pendente"] else "corrigido por nota vinculada; original preservado"
+            msgs.append(f"retificação editorial semanal: {report['data']} — {label}")
         return bool(ok), msgs
 
     def evaluation_status(self) -> list[dict]:

@@ -19,3 +19,11 @@ Em todos os recortes, coleta, custódia e leitura documental permanecem separada
 Custódia primária do Quinto Termo: SHA-256 `be7ad836eedd0a38b61014c3a3d3107c03c2ae093b218e77290f71404fa4eb07`, 214058 bytes; recebido em 2026-10-10T11:11:05.363510+00:00 (HTTP200), 23 páginas físicas integrais. O catálogo MT foi recebido HTTP200 em 10/10/2026; o corpo DOU permaneceu pendente, com web502 e GET403 preservados. A página Azion de erro não é ato normativo.
 
 Ausências não foram convertidas em zero. Não houve nova aritmética, compensação, alteração de dívida líquida/EV/ROU, adoção financeira ou encerramento OP, P0 e PIT.
+
+## Leitura posterior da Portaria na interface oficial
+
+Em 10/10/2026, uma navegação normal na [Imprensa Nacional](https://www.in.gov.br/web/dou/-/portaria-n-648-de-12-de-agosto-de-2026-725011981) exibiu a unidade completa do ato, artigos 1–11, assinatura e aviso sobre a versão certificada. O rótulo informa publicação em 13/08/2026, edição 152, seção 1, página 70. As falhas anteriores permanecem como resultado daquele acesso.
+
+Os artigos 1–2 instituem um grupo para avaliar modalidades e apresentar proposta à autoridade competente. Os artigos 7–8 definem produtos sem caráter vinculante e atuação preparatória, consultiva e não deliberativa. O artigo 9 condiciona a segunda etapa à decisão da autoridade sobre a modalidade. Inferência delimitada: o ato isolado não comprova instauração formal do Encontro de Contas, decisão posterior, conclusão, cumprimento, prorrogação ou compensação reconhecida. As condições do aditivo permanecem; nenhuma dívida foi excluída.
+
+O arquivo local é transcrição ROOT do artigo retornado pelo DOM, com LF final, 6622 bytes e SHA-256 `0d955d36d562201cf507ec070bf7025434e1e0df8f26b8d1b653dd6a120aa80d`. Não é corpo HTTP bruto nem PDF certificado. A versão certificada foi localizada, mas não recebida. Data declarada de publicação não autentica primeira publicação UTC ou posse histórica. Sem adoção financeira ou certificação P0/PIT.

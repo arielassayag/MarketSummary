@@ -216,6 +216,7 @@ código (passo a passo em `docs/cdp/AUTOMACAO.md`):
 | `docs/cdp/REPLAY_OPERACIONAL.md` | ensaio isolado com decisão, MOC, diário e origem retrospectiva autenticada; limites E1/PIT |
 | `docs/cdp/ARQUITETURA.md` | módulos, comandos e fluxo semanal e diário |
 | `docs/cdp/EM_ANDAMENTO.md`, `docs/cdp/DECISOES.md` | passagem de bastão e registro de decisões |
+| `docs/cdp/HISTORICO_2026-10-10_EM_ANDAMENTO.md` | histórico integral da passagem até 10/10/2026; a retomada começa pelo estado corrente em EM_ANDAMENTO |
 | `docs/cdp/PASSAGEM_CODEX.md` | prompt de passagem do desenvolvimento (Claude Code) para a operação no Codex, com o P0 até a carteira inaugural |
 | `docs/cdp/marca/IDENTIDADE.md` | identidade visual (marca reservada) |
 | `LICENSE`, `LICENSE-docs`, `NOTICE`, `README.md` | Apache-2.0 (código), CC BY 4.0 (textos do CDP), marca reservada, aviso legal (licenças confirmadas pelo titular em 06/10/2026: `docs/cdp/DECISOES.md`) |

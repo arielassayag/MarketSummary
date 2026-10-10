@@ -6,15 +6,20 @@ bytes/localizadores; não certifica política financeira, homogeneidade ou perí
 
 from __future__ import annotations
 
+import base64
+import binascii
 import csv
 import hashlib
 import io
+import re
 import zipfile
 from collections.abc import Iterable, Sequence
 from copy import deepcopy
 from dataclasses import dataclass
 from datetime import UTC, date, datetime
 from decimal import Decimal, InvalidOperation
+from html.parser import HTMLParser
+from urllib.parse import parse_qsl, urlsplit
 
 import pandas as pd
 from pypdf import PdfReader
@@ -60,7 +65,8 @@ class ContextoPoliticaCVM:
     """Ligação documental explícita, sem rótulo declaratório de política financeira.
 
     Cada célula tem source_sha256, membro, linha_csv_1_based e raw integral. O PDF
-    é uma fonte separada, com seu próprio registro e páginas/âncoras observadas.
+    é uma fonte separada, com páginas/âncoras observadas. Para RI, conteudo é PDF
+    direto; para CVM, é o HTML recebido que incorpora o PDF, com recibo do HTML.
     """
 
     registro: RegistroArquivo
@@ -127,6 +133,105 @@ def _numero(value: str | None) -> Decimal | None:
     return result
 
 
+def _parametros_cvm(url: str, path: str, keys: set[str], *, schemes=("https",)) -> dict:
+    if not isinstance(url, str) or not url.isascii() or any(c.isspace() for c in url):
+        raise ValueError("URL documental CVM inválida")
+    parsed = urlsplit(url)
+    if (
+        parsed.scheme not in schemes
+        or parsed.netloc != "www.rad.cvm.gov.br"
+        or parsed.path != path
+        or parsed.fragment
+    ):
+        raise ValueError("Rota documental CVM incompatível")
+    raw_pairs = [field.partition("=") for field in parsed.query.split("&")]
+    raw_params = {name: value for name, _, value in raw_pairs}
+    if (
+        any(not separator for _, separator, _ in raw_pairs)
+        or len(raw_params) != len(raw_pairs)
+        or set(raw_params) != keys
+        or not all(raw_params.values())
+    ):
+        raise ValueError("Parâmetros documentais CVM exigem nomes literais únicos e completos")
+    try:
+        pairs = parse_qsl(parsed.query, keep_blank_values=True, strict_parsing=True)
+    except ValueError as exc:
+        raise ValueError("Parâmetros documentais CVM inválidos") from exc
+    params = dict(pairs)
+    if len(params) != len(pairs) or set(params) != keys or not all(params.values()):
+        raise ValueError("Parâmetros documentais CVM duplicados, ausentes ou desconhecidos")
+    identity_keys = keys - {"Hash", "RelatorioRevisaoEspecial"}
+    if any(raw_params[name] != params[name] for name in identity_keys):
+        raise ValueError("Identidade documental CVM exige lexemas brutos literais")
+    if not re.fullmatch(r"[1-9][0-9]*", params["NumeroSequencialDocumento"]):
+        raise ValueError("NSD CVM exige inteiro ASCII positivo literal")
+    return params
+
+
+class _PDFIncorporado(HTMLParser):
+    """Lê somente o input literal; nenhum script ou recurso externo é executado."""
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.values = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag != "input" or not any(
+            key in {"id", "name"} and value == "hdnConteudoArquivo" for key, value in attrs
+        ):
+            return
+        data = dict(attrs)
+        if (
+            len(data) != len(attrs)
+            or data.get("type") != "hidden"
+            or data.get("id") != "hdnConteudoArquivo"
+            or data.get("name") != "hdnConteudoArquivo"
+            or not data.get("value")
+        ):
+            raise ValueError("Input PDF CVM incompleto ou ambíguo")
+        self.values.append(data["value"])
+
+
+def _pdf_cvm(conteudo: bytes, url: str) -> tuple[bytes, dict]:
+    params = _parametros_cvm(
+        url,
+        "/ENET/frmExibirArquivoFRE.aspx",
+        {"NumeroSequencialDocumento", "CodigoGrupo", "CodigoQuadro", "Tipo",
+         "RelatorioRevisaoEspecial", "CodTipoDocumento", "Hash"},
+    )
+    if (
+        params["CodigoGrupo"] != "412"
+        or params["CodigoQuadro"] != "0"
+        or params["Tipo"] != "PDF"
+        or params["CodTipoDocumento"] != "4"
+    ):
+        raise ValueError("Perfil de notas DFP CVM incompatível")
+    parser = _PDFIncorporado()
+    try:
+        parser.feed(conteudo.decode("utf-8"))
+        parser.close()
+        if len(parser.values) != 1:
+            raise ValueError("HTML CVM exige exatamente um input PDF")
+        pdf = base64.b64decode(parser.values[0], validate=True)
+        if base64.b64encode(pdf).decode("ascii") != parser.values[0]:
+            raise ValueError("Base64 PDF CVM não canônica")
+    except (UnicodeError, binascii.Error) as exc:
+        raise ValueError("HTML/Base64 PDF CVM inválido") from exc
+    if not pdf.startswith(b"%PDF-") or not pdf.rstrip().endswith(b"%%EOF"):
+        raise ValueError("Corpo derivado CVM não é PDF completo")
+    return pdf, {
+        "resposta_HTTP_sha256": hashlib.sha256(conteudo).hexdigest(),
+        "resposta_HTTP_bytes": len(conteudo),
+        "numero_sequencial_documento": params["NumeroSequencialDocumento"],
+        "derivacao": {
+            "localizador": "input#hdnConteudoArquivo[name=hdnConteudoArquivo].value",
+            "metodo": "HTMLParser; Base64 estrita canônica; sem alteração dos bytes PDF",
+            "document_bytes": len(pdf),
+            "parametros_url": params,
+        },
+    }
+
+
 def _documento_politica(contexto: ContextoPoliticaCVM, corte: datetime) -> dict:
     if (
         not isinstance(contexto, ContextoPoliticaCVM)
@@ -134,9 +239,14 @@ def _documento_politica(contexto: ContextoPoliticaCVM, corte: datetime) -> dict:
         or not contexto.celulas
     ):
         raise ValueError("Contexto documental parcial")
-    limite = _registro(contexto.conteudo, contexto.registro, "RI", corte)
+    if not isinstance(contexto.registro, RegistroArquivo) or contexto.registro.fonte not in {"RI", "CVM"}:
+        raise ValueError("Registro de contexto documental incompatível")
+    limite = _registro(contexto.conteudo, contexto.registro, contexto.registro.fonte, corte)
+    body, derivation = contexto.conteudo, {}
+    if contexto.registro.fonte == "CVM":
+        body, derivation = _pdf_cvm(body, contexto.registro.url)
     try:
-        pdf = PdfReader(io.BytesIO(contexto.conteudo), strict=True)
+        pdf = PdfReader(io.BytesIO(body), strict=True)
         if pdf.is_encrypted:
             raise ValueError("PDF criptografado não é contexto público legível")
         anchors = []
@@ -159,7 +269,7 @@ def _documento_politica(contexto: ContextoPoliticaCVM, corte: datetime) -> dict:
     except (KeyError, TypeError, IndexError, PdfReadError) as exc:
         raise ValueError("Contexto PDF inválido") from exc
     return {
-        "document_sha256": contexto.registro.sha256,
+        "document_sha256": hashlib.sha256(body).hexdigest(),
         "url": contexto.registro.url,
         "recibo": contexto.registro.como_dict(),
         "disponivel_desde": limite.isoformat(),
@@ -167,15 +277,25 @@ def _documento_politica(contexto: ContextoPoliticaCVM, corte: datetime) -> dict:
         "alcance": "ligação documental; não aprovação financeira",
         "perimetro_economico_constante": None,
         "publicacao_primaria_UTC": None,
+        **derivation,
     }
 
 
-def _vincular(rows: list[dict], contextos: Sequence[ContextoPoliticaCVM], corte: datetime):
+def _vincular(
+    rows: list[dict], contextos: Sequence[ContextoPoliticaCVM], corte: datetime, *, doc: str
+):
     by_cell = {
         (r["source_sha256"], r["localizador"]["membro"], r["localizador"]["linha_csv_1_based"]): r
         for r in rows
     }
     for contexto in contextos:
+        if (
+            isinstance(contexto, ContextoPoliticaCVM)
+            and isinstance(contexto.registro, RegistroArquivo)
+            and contexto.registro.fonte == "CVM"
+            and doc != "DFP"
+        ):
+            raise ValueError("Notas anuais CVM exigem origem documental DFP")
         document = _documento_politica(contexto, corte)
         for cell in contexto.celulas:
             if not isinstance(cell, dict) or set(cell) != {
@@ -189,6 +309,20 @@ def _vincular(rows: list[dict], contextos: Sequence[ContextoPoliticaCVM], corte:
             row = by_cell.get(key)
             if row is None or row["raw"] != cell["raw"]:
                 raise ValueError("Contexto contradiz origem/grão/lexema da célula CVM")
+            if contexto.registro.fonte == "CVM":
+                params = _parametros_cvm(
+                    row["url_filing"],
+                    "/ENETCONSULTA/frmDownloadDocumento.aspx",
+                    {"CodigoInstituicao", "NumeroSequencialDocumento"},
+                    schemes=("http", "https"),
+                )
+                nsd = document["numero_sequencial_documento"]
+                if (
+                    row["id_doc"] != nsd
+                    or params["NumeroSequencialDocumento"] != nsd
+                    or params["CodigoInstituicao"] != "1"
+                ):
+                    raise ValueError("Notas CVM não pertencem ao mesmo NSD da célula/filing")
             if row["contexto_politica"] is not None:
                 raise ValueError("Mais de um contexto declarado para a mesma célula")
             row["contexto_politica"] = deepcopy({**document, "celula_CVM": cell})
@@ -353,5 +487,5 @@ def conservar_exercicios(
                             "data_publicacao_primaria": None,
                         }
                     )
-    _vincular(rows, contextos_politica, cutoff)
+    _vincular(rows, contextos_politica, cutoff, doc=doc)
     return expor_conflitos([pd.DataFrame(rows, dtype=object)])

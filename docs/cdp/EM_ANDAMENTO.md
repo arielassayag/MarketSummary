@@ -5,7 +5,88 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-## Estado corrente — 10/10/2026, 03:36 Brasília
+## Estado corrente — 10/10/2026, 06:44 Brasília
+
+A fonte publicada confirmada é `603e283f4605d8711d994bbe4480a97f0ccbf894`.
+Seu reparo de quatro olhos recebeu AMPLA20: 4.429 aprovados, 17 pulados,
+zero falhas/erros/xfail; 31 casos autorais e 12 independentes separados.
+Push normal, Pages e cinco corpos públicos HTTP200/hash confirmados. Rodapé e
+Risco mostram603e, ex-ante e preços até08/10; Risco em390px sem overflow global.
+Delta JSON frente a21bc somente tempos/hashes/vínculos de código; cobertura
+literal. CI603e concluiu com sucesso: JUnit real recebido, 4.429 aprovados,
+17 pulados e zero falhas/erros. CI21bc também concluiu e seu JUnit foi recebido.
+
+O leitor opcional de comparativos CVM recebeu vínculo a notas anuais DFP:
+HTML público com PDF incorporado, SHA/recibo HTTP separado do PDF, página/
+âncora e célula bruta ligados ao mesmo NSD. A URL exige lexemas de identidade
+brutos, e o tipo DFP do ZIP chega ao vínculo: ITR não recebe notas grupo412/doc4.
+RI com PDF direto e ITR sem contexto preservam os resultados. Default comparativo
+continua inativo; não há seleção ou aprovação financeira. V1 teve6 falhas de
+query entre38 IDs próprios; V2 corrigiu a query com12 casos portáteis, mas a
+revisão independente confirmou vínculo DFP–ITR indevido (1 falha/6 passes).
+V2b recebeu6 casos autorais e5 independentes aprovados; baselines causais e
+negativas preservadas sem somar rodadas. Transposição no checkout interno
+`.cdp/integracoes/cvm-notas`: módulo e dois arquivos de regressão portáteis.
+
+AMPLA21 terminou em10/10,09:41:02UTC: 4.464 IDs únicos, 4.447 aprovados,
+17 pulados, zero falhas/erros/xfail; Ruff0 e4.839 fontes SHA literais antes/depois.
+ROOT recebeu JUnit/terminal e reconferiu a fonte. Esta passagem posterior ao
+terminal exige apenas conferência documental focal: código testado permanece
+literal. Integração/push normais autorizados pela passagem, com CI e Pages da
+nova fonte ainda a conferir; não declarar publicação de operação ou P0 aqui.
+Evidência local em `.cdp/validacoes/20261010-integracao-21/` e recepção independente
+em `.cdp/revisoes/20261010-recepcoes-root/CVM_V2B_RECEBIDO_ROOT.json`.
+
+MOC permanece privado. V3 recebeu191 autorais de composição parcial e29
+independentes; marcação15 autorais/20 independentes; gênese33 autorais
+(18 novos/15 herdados) e37 independentes. Consumo A V1 recebeu40 autorais e
+revisão de6 IDs próprios (3 passes/3 falhas): aliases de bytes no cache e CSV
+sem origem comprovada. V1b recebeu10 novos passes autorais e4 novos passes
+independentes, com baselines causais separadas. Aplicação real dos patches
+em cópias Git isoladas confirmou77 fontes por árvore, sem skips. O aceite é
+focal: gênese vazia rederivada, sem origem econômica anterior, escritor ou NET.
+
+Plano B recebido integralmente: D0 integral eD1 carry, mesma cfg bruta, linhas
+USD long/short e taxa conhecida, resultados completos de contexto/transição/
+risco/atribuição/diagnóstico/custos. Preflight dry_run não substitui validação
+completa do booking; nomes recebidos devem alcançar também cargas preguiçosas.
+Implementação própria iniciada sob modelos nativos offline, sem chamar commit,
+writer financeiro, solver implícito ou repetir operação09. Faltam transição
+qualificada, fechamento NET final, prova operacional e rotas do escritor/
+retomada/caducidade. Nenhum componente adotado no livro.
+
+Enel V4b recebeu8 autorais e10 IDs independentes por9+1, reparo restrito à
+exceção JSON. Perfil anual V1:37 autorais e7 IDs independentes efetivos
+(5 passes/2 falhas), negativa preservada. V1b:10 novos passes autorais e7
+novos passes independentes, ambos recebidos. Instalação técnica privada por
+wheel, fora do clone:5 IDs próprios aprovados, baseline2 passes/3 falhas,
+cinco corpos primários relativos e catálogo empacotado.20 destinos do patch
+real comparados; diagnóstico anterior de git apply com20 skips preservado.
+Revisão independente da integração em execução; nem carregador nem seleção
+operacional ativados. Empréstimos e arrendamentos separados; ordinal somente
+local num universo de um filing. G19, composição DL e posse histórica/PIT abertos.
+
+JBS: CVM DFP155686(47p), ITR160350(21p) e RI trimestralUSD(51p) recebidos.
+Leitura independente trimestral e leitura anual/HTML completos recebidas.
+PDF anual composto: USD1–67, BRL desde68; capital/tesouraria/EPS42–44.
+Capa e nota de capital divergem na mesma data31/12/2025. EPS anual reproduz o
+arredondamento em Python, mas escala/legenda/grão permanecem em conflito;
+Q2 apresenta escala digital incompatível com os lexemas de ações. Nenhuma
+quantidade selecionada para valuation. Faltam conciliação primária e
+ denominadores interinos diretamente publicados; G13 aberto. SEC403 e HTML
+capital com seis0,00 preservados; ausência nunca preenchida como zero.
+Auditoria, recepção e metadados não são publicação primária ou posse histórica.
+
+As12 automações seguem ACTIVE no projeto atual, execução exclusiva em
+`.cdp/rotinas` e seis famílias em `.cdp/AGENDAS.md`; configuração não comprova
+execução futura. Instrução editorial603e preparada e não enviada: falta
+ autorização direta para contatar o chat executor. Fechamento09 local e não
+publicado, net fora de±1%; não repetir decisão/MOC/diário para corrigir Ultrapar.
+Executor3c27 e cinco alterações herdadas ROOT preservados. Bancos, FCFF/
+concessões, calibração, P0 e E1/E2 não encerrados. Quadro/evidências correntes
+em `.cdp/TAREFAS.md`; estudos, protótipos, integrações e revisões em áreas internas.
+
+## Registro histórico anterior — 10/10/2026, 03:36 Brasília
 
 Observação após o terminal local e anterior ao commit deste reparo. A fonte
 publicada confirmada é21bc1938d7de1c8835b2dab3a7dbb66f34a9b017:

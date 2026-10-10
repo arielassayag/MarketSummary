@@ -380,10 +380,12 @@ def verify_decision(decision: Decision, proposal: Proposal, snapshot_hash_now: s
                              decision.risk_gate_hash)
     if reason:
         reasons.append(reason)
-    if decision.co_signer:
+    if decision.co_signer is not None:
         co_reason = automated_approver_reason(decision.co_signer, proposal.created_by)
         if co_reason:
             reasons.append("Co-assinatura inválida: " + co_reason)
+        if decision.co_signer.strip().lower() == decision.approver.strip().lower():
+            reasons.append("Co-assinante precisa ser pessoa diferente do aprovador (quatro olhos).")
     reasons.extend(_temporal_violations(proposal, decision.decided_at, decision.co_signed_at))
 
     if decision.decision == DecisionType.APPROVE:

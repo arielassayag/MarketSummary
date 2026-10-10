@@ -574,7 +574,8 @@ class Decision(_Model):
 
     @model_validator(mode="after")
     def _four_eyes(self) -> Decision:
-        if self.co_signer is not None and self.co_signer.lower() == self.approver.lower():
+        if (self.co_signer is not None
+                and self.co_signer.strip().lower() == self.approver.strip().lower()):
             raise ValueError("Co-assinante precisa ser pessoa diferente do aprovador (quatro olhos).")
         if self.co_signer is not None and self.co_signed_at is None:
             raise ValueError("Co-assinatura sem data.")

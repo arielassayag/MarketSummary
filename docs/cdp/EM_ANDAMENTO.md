@@ -5,7 +5,96 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-## Estado corrente — 10/10/2026, 02:03 Brasília
+## Estado corrente — 10/10/2026, 03:36 Brasília
+
+Observação após o terminal local e anterior ao commit deste reparo. A fonte
+publicada confirmada é21bc1938d7de1c8835b2dab3a7dbb66f34a9b017:
+Pages e cinco corpos HTTP/hash recebidos, com40 justificativas de squeeze
+resolvidas. Navegação das dez abas em390px conferida sem overflow global;
+fichas amostrais Enel e BOVA11 carregaram modelo, fontes e limites explícitos.
+Captura móvel inicial observada; emulação e viewport restaurados. Essa
+conferência não audita todos os241 modelos nem seus cálculos financeiros.
+CI21bc permanece em execução na última consulta; não cancelar/reexecutar.
+
+O reparo nativo de quatro olhos normaliza espaços e caixa dos dois nomes na
+comparação, recusa coassinatura vazia também no verificador e preserva o texto
+bruto do aprovador e os hashes existentes.31 regressões autorais e12 controles
+independentes aprovados. AMPLA20 concluiu em06:30:40UTC com4446 IDs únicos:
+4429 aprovados,17 pulados, zero falhas/erros/xfail; Ruff aprovado e4837 fontes
+SHA literais. ROOT recebeu JUnit/terminal e reconferiu as cinco alterações
+herdadas em M6. O conjunto tem quatro caminhos, sem livro/dados/relatórios:
+contrato, verificador, regressões e esta passagem. A alteração documental após
+o terminal exige apenas conferência focal de consistência; o código testado
+permanece literal. Integração normal autorizada pela passagem, com nova CI,
+Pages e recepção HTTP a conferir depois do push; não declarar novo deploy aqui.
+
+MOC continua privado. A V3 de configuração/confinamento recebeu191 casos de
+composição parcial autoral e29 na revisão não autora (19 próprios,10 recebidos).
+Aceite limitado à recusa de symlink antes da abertura, exclusividade, parcial
+e teto de configuração no consumidor. Hardlink transitório pode expor o corpo
+e ainda retornar aceite; descritores não substituem exclusividade do escritor.
+Sem integração ao livro. A marcação anterior recebeu15 casos autorais e35 na
+revisão independente (20 próprios,15 recebidos): integridade de TrackRecord
+não autentica por si a origem econômica de NAV/posições. Cache transitório e
+DataFrames mutáveis exigem consumo selado. Gênese sem NAV/configuração bruta
+inaugural continua recusada; âncora monetária prospectiva em desenvolvimento,
+sem completar retrospectivamente o livro atual. Faltam resolver financeiro,
+fechamento final, prova, rotas comuns do escritor, retomada e caducidade.
+
+Enel documental V2 recebeu97 casos autorais e25 na revisão independente
+(17 próprios,8 recebidos), sem somar os terminais. Empréstimos da Nota20/20.1,
+arrendamentos da Nota21, separados; aritmética exata e CLI física delimitada.
+Submissions SEC já arquivado confirma filed28/04/2026 e o mesmo accession do
+XML; o floor de conhecimento dos corpos recebidos é09/10,14:13:45.703490UTC.
+Acceptance, filed e recepção são campos distintos, sem prova de primeira
+publicação/PIT ou posse pelo executor. Consumidor temporal/dívida em candidato
+privado; não altera fatos canônicos ou modelo. G19, demais lacunas de resultado,
+capital JBS, bancos, FCFF/concessões e calibração permanecem abertos.
+
+As12 automações continuam ACTIVE no projeto atual, executando exclusivamente
+em `.cdp/rotinas`. O quadro interno foi resumido e seu histórico preservado.
+A operação09 permanece local e não publicada, com net fora de ±1%; instrução
+editorial pronta, sem autorização direta recebida para enviar ao chat executor.
+Não repetir decisão/MOC para corrigir Ultrapar. Executor3c27 e ROOT5 preservados.
+P0 financeiro, PIT e E1/E2 não encerrados. Recepção local em
+`.cdp/validacoes/20261010-integracao-20/`; mapa atual em `.cdp/TAREFAS.md`.
+
+## Registro histórico anterior — 10/10/2026, 02:34 Brasília
+
+O reparo de apresentação foi integrado e publicado em
+`21bc1938d7de1c8835b2dab3a7dbb66f34a9b017`, após AMPLA19 positiva
+(4398 aprovados, 17 pulados, zero falhas/erros/xfail), Ruff e passagem focal
+(200 aprovados, um pulado). Pages concluiu com sucesso. Cinco corpos públicos
+HTTP/hash foram recebidos; 40 justificativas passaram a exibir os fatos
+formatados, preservando os demais campos de squeeze. AX da aba Risco confirmou
+Inter&Co, Patria e Bradesco e a versão no rodapé. É uma conferência delimitada
+da apresentação; CI21bc ainda em execução e operação09 continua não publicada.
+
+A revisão não autora do estudo Enel confirmou 102 controles documentais e
+identificou erro no localizador autoral: os empréstimos são da Nota 20 / 20.1,
+os arrendamentos da Nota 21. O rótulo anterior `nota14`, os corpos e a negativa
+ficam preservados; adendo corrige a referência, sem recálculo ROOT ou adoção
+canônica. Fonte e 48 entradas M6 reconferidas. G19/P0/PIT seguem abertos.
+
+A revisão não autora dos componentes privados MOC reexecutou 172 testes
+recebidos, todos aprovados, e sete contraprovas expuseram seis grupos de
+defeitos: abertura de FIFO bloqueante; corrida de symlink na configuração;
+leitura do corpo excessivo antes do teto; precisão insuficiente para expoentes
+positivos; mesma identidade de quatro olhos com espaços; receita de custos
+diferente quando execution é ausente. Nenhum falso PASS aritmético foi
+demonstrado. Aceite parcial condicionado para continuar desenvolvimento privado,
+sem aprovação de writer, composição financeira, P0 ou PIT. O reparo nativo de
+quatro olhos e os reparos privados são candidatos em revisão; não estão em main.
+
+As 12 automações foram reconferidas ACTIVE no projeto atual, com executor na
+pasta interna `.cdp/rotinas` e proibição explícita de atalhos. Configuração
+ativa não prova execução futura. A disponibilidade ordinária do Codex voltou
+a permitir revisões; ROOT não consumiu reset nem comprou créditos. A instrução
+editorial está atualizada para21bc, pronta e não enviada: autorização direta
+para contatar o chat executor continua pendente. Executor3c27 e cinco arquivos
+herdados ROOT preservados. Evidências em `.cdp/TAREFAS.md`.
+
+## Registro histórico anterior — 10/10/2026, 02:03 Brasília
 
 Observação anterior à integração do reparo de apresentação. A fonte publicada
 é `8450c8bbfb533cd2a44018383a2824faa5073eba`: sua CI remota concluiu com
@@ -37,7 +126,8 @@ marcação/NAV, carteira resultante, fechamento final, prova, rotas comuns,
 retomada e caducidade; a evolução normal da trilha precisa de prefixo durável.
 Pacotes em `.cdp/prototipos/`; quadros/evidências em `.cdp/TAREFAS.md`.
 
-A nota14 primária de Enel Chile recebeu ponte documental entre subtotais de
+A ponte de Enel Chile foi rotulada incorretamente como nota14 nesta observação;
+o localizador foi corrigido no estado corrente acima. Ela relaciona subtotais de
 empréstimos, tags dimensionais específicas e arrendamentos separados, por
 código e sem nova recepção HTTP. Não altera parser, fatos canônicos ou valuation;
 G19/P0/PIT continuam abertos. Estudo em

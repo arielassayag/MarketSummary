@@ -594,12 +594,19 @@ class FundConfig(_Frozen):
         return FundConfig.model_validate(base)
 
 
+def config_from_text(texto: str) -> FundConfig:
+    """Mesmo schema do mandato nativo, a partir de um corpo declarado pelo chamador."""
+    raw = yaml.safe_load(texto) or {}
+    return FundConfig.model_validate(raw)
+
+
 def load_config(path: str | Path | None = None) -> FundConfig:
-    p = Path(path) if path else DEFAULT_CONFIG_PATH
+    if path == "":
+        raise ValueError("Caminho de configuração explícito vazio")
+    p = DEFAULT_CONFIG_PATH if path is None else Path(path)
     if not p.exists():
         raise FileNotFoundError(f"Arquivo de configuração não encontrado: {p}")
-    raw = yaml.safe_load(p.read_text(encoding="utf-8")) or {}
-    return FundConfig.model_validate(raw)
+    return config_from_text(p.read_text(encoding="utf-8"))
 
 
 # ----------------------------------------------------------------------------- arquivo

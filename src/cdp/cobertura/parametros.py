@@ -188,6 +188,12 @@ def carregar_parametros(valuation: Path | str | None = None,
         if not catalogo.exists():
             catalogo = DEFAULT_VALUATION.parent / "resultado_evidencias.json"
         textos["resultado_evidencias.json"] = catalogo.read_text(encoding="utf-8")
+    return _parametros_de_textos(textos)
+
+
+def _parametros_de_textos(textos: dict[str, str]) -> ParametrosCobertura:
+    """Parser nativo de corpos recebidos; não procura arquivo, catálogo ou fonte."""
+    val = yaml.safe_load(textos["valuation.yaml"]) or {}
     arquivos = {k: sha256_text(v) for k, v in sorted(textos.items())}
 
     betas: dict[str, BetaSetor] = {}

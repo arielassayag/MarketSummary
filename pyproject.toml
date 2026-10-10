@@ -29,6 +29,7 @@ dependencies = [
 
 [project.scripts]
 cdp = "cdp.__main__:main"
+cdp-tecnicas = "cdp.tecnicas.cli:main"
 
 [project.optional-dependencies]
 gemini = [
@@ -48,7 +49,10 @@ ai = [
 where = ["src"]
 
 [tool.setuptools.package-data]
-cdp = ["workflow/*.html", "recursos/sec_classes_acoes.json"]
+cdp = ["workflow/*.html", "recursos/sec_classes_acoes.json", "py.typed",
+       "recursos/exemplos/latam_simulado_v1/*.json", "recursos/exemplos/latam_simulado_v1/*.yaml",
+       "recursos/exemplos/latam_simulado_v1/*.csv", "recursos/exemplos/latam_simulado_v1/cobertura/*.csv",
+       "recursos/exemplos/latam_simulado_v1/cobertura/*.yaml"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

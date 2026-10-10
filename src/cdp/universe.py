@@ -8,6 +8,7 @@ apareçam como ativos "independentes" e gerem falsa diversificação ou falsa ar
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
@@ -77,21 +78,26 @@ def nomes_canonicos(path: str | None = None) -> dict[str, str]:
     """``{emissor: nome com a grafia oficial}`` (vazio sem o arquivo)."""
     import yaml
 
-    p = Path(path) if path else NOMES_CANONICOS
+    if path == "":
+        raise ValueError("Caminho de nomes explícito vazio")
+    p = NOMES_CANONICOS if path is None else Path(path)
     try:
         raw = yaml.safe_load(p.read_text(encoding="utf-8")) or {}
     except (OSError, yaml.YAMLError):
-        return {}
+        if path is None:
+            return {}
+        raise
     nomes = raw.get("nomes") if isinstance(raw, dict) else None
     return {str(k): str(v) for k, v in (nomes or {}).items() if v}
 
 
-def universe_from_frame(df: pd.DataFrame, source_sha256: str = "") -> Universe:
+def universe_from_frame(df: pd.DataFrame, source_sha256: str = "", *,
+                        nomes: Mapping[str, str] | None = None) -> Universe:
     missing = [c for c in REQUIRED_COLUMNS if c not in df.columns]
     if missing:
         raise ValueError(f"Universo sem colunas obrigatórias: {missing}")
     df = df.copy()
-    canon = nomes_canonicos()
+    canon = nomes_canonicos() if nomes is None else nomes
     if canon:
         iid = df["issuer_id"].astype(str).str.strip()
         df["issuer_name"] = [canon.get(i, n) for i, n in zip(iid, df["issuer_name"], strict=True)]
@@ -147,6 +153,8 @@ def universe_from_frame(df: pd.DataFrame, source_sha256: str = "") -> Universe:
 
 
 def load_universe(path: str | Path | None = None) -> Universe:
-    p = Path(path) if path else DEFAULT_UNIVERSE_PATH
+    if path == "":
+        raise ValueError("Caminho de universo explícito vazio")
+    p = DEFAULT_UNIVERSE_PATH if path is None else Path(path)
     df = pd.read_csv(p, dtype={"adr_ratio": "string"}, keep_default_na=False, na_values=[""])
     return universe_from_frame(df, source_sha256=sha256_file(p))

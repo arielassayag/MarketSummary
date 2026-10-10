@@ -143,6 +143,14 @@ o sandbox padrão. Para sincronizar, fazer commit e push pelo código, o Codex p
 de escrita em `.git`: use **acesso total numa conta de usuário e num clone dedicados**
 (`docs/cdp/AUTOMACAO.md`, seção 5).
 
+Na instalação atual, por decisão do titular em 10/10/2026, as 12 automações
+pertencem ao projeto AInotes e entram no executor dedicado interno `.cdp/rotinas`,
+em `main`, antes de executar o procedimento. O checkout de desenvolvimento não
+ganha identidade de executor. Os quadros `.cdp/AGENDAS.md` e `.cdp/TAREFAS.md`
+organizam horários, seis famílias e pendências. Conserve esse arranjo ao retomar;
+o roteiro abaixo é para uma instalação nova. As definições nativas ficam na pasta
+global do Codex, conforme [AUTOMACAO.md](AUTOMACAO.md), seção 5.1.
+
 1. Conta do sistema e clone dedicados; `uv sync --extra dev --extra ai`; credencial do Git com
    push em `main` e no ramo `cdp-trava`. O script de preparação testa os dois
    (`CDP_HARNESS=codex bash scripts/cdp_setup_local.sh`; `docs/cdp/LOCAL.md`, seção 3).

@@ -204,6 +204,24 @@ proteções do CDP continuam valendo pelo código (gate, escopo de caminhos, `cd
 publicar, nunca force) e pela regra do ramo `main` — que precisa estar criada antes (seção 3,
 passo 1).
 
+**Arranjo adotado pelo titular em 10/10/2026:** as 12 automações pertencem ao
+projeto atual AInotes, na seção CDP do Codex. Cada prompt entra no clone dedicado
+interno `.cdp/rotinas`, em `main`, antes de consultar a skill e o procedimento
+gerado. A pasta de desenvolvimento permanece sem identidade de executor. Essa
+escolha está registrada em [DECISOES.md](DECISOES.md); não crie outro executor ao
+retomar este projeto.
+
+As definições das automações são administradas pelo Codex em sua pasta global.
+Execução, quadros, estudos e evidências ficam na área interna `.cdp/`. O quadro
+`.cdp/AGENDAS.md` reúne nomes e horários por seis famílias, e `.cdp/TAREFAS.md`
+registra entregas e pendências. As reservas continuam separadas: ainda não foi
+validada a concorrência de múltiplos horários dentro de uma única automação.
+A configuração ativa não certifica um disparo futuro nem a publicação de uma
+operação. Computador ligado, app aberto e gates nativos continuam necessários.
+
+O passo a passo abaixo prepara uma instalação nova; na instalação atual,
+conserve o projeto e o clone internos já designados.
+
 Passo a passo:
 
 1. **Conta e clone dedicados.** Numa conta de usuário do sistema só para as rotinas:

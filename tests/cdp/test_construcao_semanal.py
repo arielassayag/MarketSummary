@@ -6,12 +6,13 @@ from __future__ import annotations
 
 import json
 from datetime import date
+from hashlib import sha256
 
 import numpy as np
 import pandas as pd
 import pytest
 
-from cdp.config import FundConfig
+from cdp.config import FundConfig, config_json
 from cdp.contracts import ResearchPack, Severity, View, ViewSource
 from cdp.data.synthetic import make_synthetic_market
 from cdp.portfolio.optimizer import OptimizationError
@@ -226,13 +227,24 @@ def test_alpha_is_reresidualized_after_views(md, cfgs):
     assert any("Após as visões" in n for n in notes)
 
 
-def test_legacy_proposal_has_no_new_blocks(md, cfgs):
+def test_legacy_proposal_has_only_net_contract_beyond_legacy_overrides(md, cfgs):
     legacy, _active = cfgs
     ctx = prepare_week(md, legacy, WEEK, drawdown=0.0, themes={})
     assert ctx.entry_blocks is None and ctx.kappa_f == 1.0
     b = weekly.build_proposal(ctx, views=[], overrides={"vol_target": 0.045},
                               research_hash="0" * 64, version=1, label="quant")
-    assert set(b.proposal.overrides) == {"label", "vol_target"}
+    # É uma nova proposta, ainda que os parâmetros de risco sejam legados.
+    # O contrato NET reservado identifica a configuração antes da aprovação.
+    config_sha = sha256(config_json(legacy).encode("utf-8")).hexdigest()
+    assert b.proposal.overrides == {
+        "label": "quant", "vol_target": 0.045,
+        "net_moc_contract": {
+            "schema": "cdp.net_moc/v1",
+            "config_path": f"net_config/{config_sha}.json",
+            "config_sha256": config_sha,
+            "comparison": "abs_signed_usd/nav_after_costs_exact",
+        },
+    }
     from cdp.risk.idio import decomposicao_decisao
 
     assert decomposicao_decisao(b.proposal)["disponivel"] is False

@@ -225,12 +225,14 @@ uv run python -m cdp rotinas listar
 uv run python -m cdp rotinas proximas --n 12
 uv run python -m cdp rotinas prompt --tarefa cdp-diario --harness codex
 uv run python -m cdp rotinas verificar
-uv run python -m cdp skills sincronizar --claude --verificar
+uv run python -m cdp skills sincronizar --claude --verificar --permissoes
 ```
 
-O último confere as skills neutras (`.agents/skills/`) **e** a cópia do Claude Code
-(`.claude/skills/`, a que as rotinas na nuvem usam). Depois de mudar `configs/cdp/rotinas.yaml`,
-regenere as duas com `uv run python -m cdp skills sincronizar --claude`.
+O último confere as skills neutras (`.agents/skills/`), a cópia do Claude Code
+(`.claude/skills/`, a que as rotinas na nuvem usam) e os blocos de permissões locais derivados.
+Depois de mudar `configs/cdp/rotinas.yaml`, regenere no checkout de desenvolvimento com
+`uv run python -m cdp skills sincronizar --claude --permissoes`. O catálogo não concede grant
+genérico de CDP; preserva regras ASK/DENY e ferramentas não-CDP do projeto/plugin.
 
 ## 8. GitHub Actions: só integração contínua e portal
 

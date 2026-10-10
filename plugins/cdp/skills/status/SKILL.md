@@ -7,7 +7,20 @@ allowed-tools:
   - Grep
   - Glob
   - Bash(uv sync *)
-  - Bash(uv run python -m cdp *)
+  - Bash(uv run python -m cdp agenda *)
+  - Bash(uv run python -m cdp agenda)
+  - Bash(uv run python -m cdp estado *)
+  - Bash(uv run python -m cdp estado)
+  - Bash(uv run python -m cdp nota agenda *)
+  - Bash(uv run python -m cdp nota agenda)
+  - Bash(uv run python -m cdp rotinas gate --tarefa cdp-status *)
+  - Bash(uv run python -m cdp rotinas gate --tarefa cdp-status)
+  - Bash(uv run python -m cdp rotinas proximas *)
+  - Bash(uv run python -m cdp rotinas proximas)
+  - Bash(uv run python -m cdp status *)
+  - Bash(uv run python -m cdp status)
+  - Bash(uv run python -m cdp verify *)
+  - Bash(uv run python -m cdp verify)
   - Bash(git status *)
   - Bash(git log *)
 ---

@@ -24,6 +24,8 @@ import yaml
 
 from cdp import rotinas as ro
 from cdp.__main__ import build_parser, main
+from cdp.tecnicas.adaptadores import SKILLS as SKILLS_TECNICAS
+from cdp.tecnicas.adaptadores import gerar_adaptadores
 
 ROOT = Path(__file__).resolve().parents[2]
 BRT = ZoneInfo("America/Sao_Paulo")
@@ -497,16 +499,23 @@ def test_neutral_skills_are_generated_and_in_sync():
     for rel, txt in gerado.items():
         assert (ROOT / rel).read_text(encoding="utf-8") == txt, (
             f"{rel} desatualizada: rode `uv run python -m cdp skills sincronizar`")
-    no_disco = {p.relative_to(ROOT).as_posix() for p in SKILLS.glob("*/SKILL.md")}
+    no_disco = {p.relative_to(ROOT).as_posix() for p in SKILLS.glob("cdp-*/SKILL.md")}
     assert no_disco == set(gerado)
+    technical = {p.parent.name for p in SKILLS.glob("tecnica-*/SKILL.md")}
+    assert technical == set(SKILLS_TECNICAS)
+    assert {p.parent.name for p in SKILLS.glob("*/SKILL.md")} == technical | {
+        Path(p).parent.name for p in gerado}
+    for relative, body in gerar_adaptadores().items():
+        if relative.startswith(".agents/skills/"):
+            assert (ROOT / relative).read_text(encoding="utf-8") == body
     assert ro.sincronizar_skills(ROT, ROOT, verificar_apenas=True)["ok"]
 
 
 def test_neutral_skills_cover_every_plugin_skill_and_follow_the_spec():
     plugin = {p.name for p in (ROOT / "plugins/cdp/skills").iterdir() if p.is_dir()}
-    neutras = {p.name for p in SKILLS.iterdir() if p.is_dir()}
+    neutras = {p.name for p in SKILLS.iterdir() if p.is_dir() and p.name.startswith("cdp-")}
     assert {f"cdp-{n}" for n in plugin} | {"cdp-retomar"} == neutras
-    for path in SKILLS.glob("*/SKILL.md"):
+    for path in SKILLS.glob("cdp-*/SKILL.md"):
         fm, corpo = _fm(path)
         assert set(fm) <= CHAVES_PADRAO, path
         assert fm["name"] == path.parent.name and re.fullmatch(r"[a-z0-9]+(-[a-z0-9]+)*",

@@ -82,6 +82,7 @@ from pathlib import Path
 
 from . import SIMULATED_DATA_NOTICE
 from .contracts import HARNESS_MINDS
+from .permissoes import ArgumentParserCDP
 from .workflow.pacote import ETAPAS_PACOTE, MENTE_PADRAO
 from .workflow.painel_artifact import painel_artifact_check  # reexportado (skills/testes)
 
@@ -669,7 +670,7 @@ def cmd_genese(args: argparse.Namespace) -> int:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(prog="cdp", description="CDP — Cabra da Peste (PM autônomo LatAm L/S)")
+    p = ArgumentParserCDP(prog="cdp", description="CDP — Cabra da Peste (PM autônomo LatAm L/S)")
     p.add_argument("--config", default=None, help="fund.yaml (padrão: configs/cdp/fund.yaml)")
     p.add_argument("--book", default=str(DEFAULT_BOOK))
     p.add_argument("--market", default=str(DEFAULT_MARKET))

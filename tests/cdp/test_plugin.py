@@ -29,6 +29,7 @@ from pathlib import Path
 import pytest
 import yaml
 
+from cdp import permissoes as pe
 from cdp import rotinas as ro
 from cdp.__main__ import build_parser
 
@@ -47,8 +48,8 @@ TESES = ROOT / "docs" / "cdp" / "teses"
 #: Versão do plugin e resumo das skills nessa versão. A instalação pelo marketplace do GitHub guarda
 #: uma cópia presa à ``version`` (docs/cdp/LOCAL.md): skills novas com a versão antiga nunca chegam
 #: às rotinas. Mudou uma skill ⇒ suba a ``version`` em plugin.json e atualize os dois valores.
-PLUGIN_VERSION = "1.6.0"
-SKILLS_SHA256 = "99c2d6a5c09a10a50c086950e456699900d960cf27eb5c870b815b4b60455cf2"
+PLUGIN_VERSION = "1.6.1"
+SKILLS_SHA256 = "6307e4ef355a8eebda82c20f4b65a610a411b4a28107688fea3bd3f4f4b39e88"
 #: Roteiro de cada skill do plugin e a família de tarefas de ``configs/cdp/rotinas.yaml``.
 ROTEIRO = {"semanal": "SEMANAL.md", "diario": "DIARIO.md", "cobertura": "COBERTURA.md",
            "risco": "RISCO.md", "status": "STATUS.md", "calibracao": "CALIBRACAO.md"}
@@ -217,7 +218,10 @@ def test_skill_frontmatter(path: Path):
     # nenhuma ferramenta de git que grave e nenhuma publicação de artifact numa rotina
     assert not any(GIT_GRAVA.search(t) for t in tools), tools
     assert "Artifact" not in tools
-    assert {"Bash(uv sync *)", "Bash(uv run python -m cdp *)"} <= set(tools)
+    assert "Bash(uv sync *)" in tools
+    assert {t for t in tools if pe._cdp(t)} == set(
+        pe.regras(ROT, path.parent.name, formas=(pe.FORMAS[0],)))
+    assert "Bash(uv run python -m cdp *)" not in tools
     body = _ler(path)
     assert "docs/cdp/METODOLOGIA.md" in body  # metodologia perene, fora do app
     assert "Resumo final" in body
@@ -1000,8 +1004,10 @@ def test_project_settings_permissions():
     perm = s["permissions"]
     assert perm["defaultMode"] in {"default", "acceptEdits", "plan", "auto", "dontAsk"}
     allow, ask, deny = perm["allow"], perm.get("ask", []), perm["deny"]
-    for needed in ("Bash(uv sync *)", "Bash(uv run python -m cdp *)", "WebSearch", "WebFetch"):
+    for needed in ("Bash(uv sync *)", "WebSearch", "WebFetch"):
         assert needed in allow, needed
+    assert {r for r in allow if pe._cdp(r)} == set(pe.regras(ROT))
+    assert "Bash(uv run python -m cdp *)" not in allow and "Bash(uv run cdp *)" not in allow
     assert "Bash" not in allow and "Bash(*)" not in allow and "Read" not in allow
     # as skills do CDP, nas formas documentadas (nome exato e nome com argumentos = a tarefa)
     for nome in sorted(SKILLS | {"retomar"}):

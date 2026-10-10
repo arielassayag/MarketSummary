@@ -1,5 +1,12 @@
 # Histórico de versões do CDP
 
+## 1.6.1
+
+- Catálogo operacional de permissões por folha e tarefa, gerado nas skills e no settings local.
+- Reinício e flags de intervenção permanecem sob consulta; flags de força são bloqueadas.
+- CLI com flags completas, sem abreviações herdadas nos subparsers.
+- Permissões do host não certificam exclusividade do SO, sandbox ou restrição da nuvem.
+
 ## 1.6.0
 
 - Recursos de exemplo e configurações explícitas utilizáveis fora de clone.

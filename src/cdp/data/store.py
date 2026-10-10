@@ -554,8 +554,14 @@ class MarketStore:
             lh = pd.concat([lh, extra], ignore_index=True) if not extra.empty else lh
         return normalize_lending_history(lh)
 
-    def load(self, as_of: date | None = None, verify: bool = True) -> MarketData:
+    def load(self, as_of: date | None = None, verify: bool = True, *,
+             recepcao_bancaria: bool = False, conhecimento_ate: datetime | None = None) -> MarketData:
         """Base + incrementos com data <= ``as_of`` como ``MarketData`` verificado."""
+        from .recepcao_bancaria import instante, opcao
+        if opcao(recepcao_bancaria):
+            if type(self) is not MarketStore or verify is not True:
+                raise ValueError("Recepção bancária exige MarketStore nativo e verify=True")
+            instante(conhecimento_ate)
         bases = self.bases()
         if not bases:
             raise FileNotFoundError(f"Nenhuma base em {self.base_root}.")
@@ -566,6 +572,8 @@ class MarketStore:
             eligible = [b for b in bases if read_manifest(b).as_of <= as_of]
             base = eligible[-1] if eligible else bases[0]
         bt = read_tables(base, verify=False)  # já verificada em _require_chain quando verify
+        if recepcao_bancaria and bt.manifest.is_synthetic:
+            raise ValueError("Recepção bancária não autentica produto sintético")
         incs = [i for i in self.increments(base) if as_of is None or i.session_date <= as_of]
         tabs = [self._read_increment(i) for i in incs]
         base_as_of = bt.manifest.as_of
@@ -636,8 +644,12 @@ class MarketStore:
                                if bt.manifest.provisional_dates
                                and all(d <= eff for d in bt.manifest.provisional_dates)
                                else None))
-        return assemble_market_data(manifest, bt.universe, prices, fx, bench, rates, fundamentals,
-                                    short_interest, lending, items)
+        md = assemble_market_data(manifest, bt.universe, prices, fx, bench, rates, fundamentals,
+                                  short_interest, lending, items)
+        if recepcao_bancaria:
+            from .recepcao_bancaria import _novo_mercado
+            object.__setattr__(md, "contexto_bancario", _novo_mercado(md, self, base, bt, tabs))
+        return md
 
     # --------------------------------------------------------------- escrita
     def session_closed(self, session_date: date) -> bool:

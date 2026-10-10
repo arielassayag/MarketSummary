@@ -70,6 +70,7 @@ class DadosPublicos:
     ri_evidencias: pd.DataFrame | None = None
     ri_contexto: Any = None
     capital_semantica: pd.DataFrame | None = None
+    contexto_bancario: Any = field(default=None, repr=False, compare=False)
 
     def tabelas(self) -> dict[str, pd.DataFrame]:
         out = {"demonstrativos": self.demonstrativos, "consenso": self.consenso,
@@ -603,7 +604,8 @@ def _coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Se
             seed: int = 7, params=None, conhecimento_ate: datetime | None = None,
             eps_por_periodo: bool = False, eps_http_get=None,
             patrimonio_owners_observado: bool = False,
-            preservar_semantica_capital: bool = False) -> DadosPublicos:
+            preservar_semantica_capital: bool = False,
+            recepcao_bancaria: bool = False) -> DadosPublicos:
     """Coleta as tabelas públicas da execução (sintéticas quando o mercado é sintético)."""
     from .temporal import ativo as temporal_ativo
     from .temporal import construir as corte_temporal
@@ -642,6 +644,8 @@ def _coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Se
         kw_dem = dict(kw_dem, patrimonio_owners_observado=True)
     if preservar_semantica_capital:
         kw_dem = dict(kw_dem, preservar_semantica_capital=True)
+    if recepcao_bancaria:
+        kw_dem = dict(kw_dem, recepcao_bancaria=True, contexto_bancario=md.contexto_bancario)
     dem_bruto = publico.demonstrativos(list(issuer_ids), as_of, **kw_dem, **kw_universo)
     alertas = alertas_de_attrs(getattr(dem_bruto, "attrs", None))
     dem = _garantir(dem_bruto, COLS_DEMONSTRATIVOS)
@@ -688,6 +692,7 @@ def _coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Se
         dividendos=_pit(div, "data_ex", as_of), eventos=eve, taxas=_pit(tax, "data", as_of),
         free_float=ff, etfs=comp, origem="PUBLICO", raiz=None if raiz is None else str(raiz),
         alertas=alertas, capital_oficial=cap, resultado_evidencias=resultado_evidencias, corte_temporal=corte,
+        contexto_bancario=md.contexto_bancario if recepcao_bancaria else None,
         capital_semantica=(pd.DataFrame({'semantica_capital': [*dem_bruto.attrs.get('capital_semantica', []),
                          *cap.attrs.get('capital_semantica', [])]}) if preservar_semantica_capital else None))
 
@@ -697,12 +702,22 @@ def coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Seq
             seed: int = 7, params=None, conhecimento_ate: datetime | None = None,
             ri_contexto=None, eps_por_periodo: bool = False, eps_http_get=None,
             patrimonio_owners_observado: bool = False,
-            preservar_semantica_capital: bool = False) -> DadosPublicos:
+            preservar_semantica_capital: bool = False,
+            recepcao_bancaria: bool = False) -> DadosPublicos:
     """Política nova sela corte exato em todos os arquivos; ausência conserva seleção legada."""
     if not isinstance(preservar_semantica_capital, bool):
         raise ValueError("preservar_semantica_capital exige bool explícito")
     if type(patrimonio_owners_observado) is not bool:
         raise ValueError("patrimonio_owners_observado exige bool explícito")
+    from ..data.recepcao_bancaria import autenticar as autenticar_bancos
+    from ..data.recepcao_bancaria import instante as instante_bancos
+    from ..data.recepcao_bancaria import opcao as opcao_bancos
+    opcao_bancos(recepcao_bancaria)
+    if recepcao_bancaria:
+        instante_bancos(conhecimento_ate)
+        autenticar_bancos(md.contexto_bancario, md)
+        if md.is_synthetic or not disponibilidade_observada(params):
+            raise ValueError("Recepção bancária exige mercado público e política observada explícita")
     from .ri_observada import ativo as ri_ativo
     from .temporal import ativo as temporal_ativo
     ri = params is not None and ri_ativo(params)
@@ -729,6 +744,8 @@ def coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Seq
         opcoes.update(patrimonio_owners_observado=True)
     if preservar_semantica_capital:
         opcoes.update(preservar_semantica_capital=True)
+    if recepcao_bancaria:
+        opcoes.update(recepcao_bancaria=True)
     if params is not None and temporal_ativo(params):
         if conhecimento_ate is None:
             raise ValueError("Coleta temporal exige instante explícito de conhecimento.")

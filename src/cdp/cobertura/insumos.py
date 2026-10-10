@@ -623,6 +623,10 @@ def _prov_linha(row: pd.Series | None, *, detalhar_fluxos: bool = False, detalha
         for k in ('disponibilidade_tipo', 'disponivel_desde', 'data_recebimento_documento', 'received_date'):
             v = row.get(k)
             out[k] = None if pd.isna(v) else v.isoformat() if hasattr(v, 'isoformat') else v
+    for k in ('recepcao_bancaria', 'data_publicacao_estimada', 'recepcao_fisica_utc'):
+        value = row.get(k)
+        if isinstance(value, str):
+            out[k] = value
     if str(row.get("fonte")) == "RI_OBSERVADA":
         out.update({k: row.get(k) for k in ("fato_id", "identity_binding_sha256", "disponivel_desde",
                                           "coluna", "lexema", "quantum", "locator", "received_date")})
@@ -890,7 +894,7 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
     if observar_disponibilidade:
         from .disponibilidade_demonstrativos import RegistroParticipantes
 
-        registro = RegistroParticipantes(issuer_id)
+        registro = RegistroParticipantes(issuer_id, contexto_bancario=dados.contexto_bancario)
     pk.put("issuer_id", issuer_id)
     pk.put("nome", str(iss["issuer_name"]))
     pk.put("pais", pais)
@@ -1040,9 +1044,24 @@ def preparar_emissor(md: MarketData, dados: DadosPublicos, params: ParametrosCob
             for item, periodo, recibo, freq in (
                 ("market_cap", md.as_of.isoformat(), fm.get("market_cap_disponivel_desde"), "SNAPSHOT"),
                 ("preco", data_preco.isoformat() if data_preco else None, fm.get("preco_disponivel_desde"), "D")):
-                registro.registrar({"item": item, "freq": freq, "period_end": periodo,
-                    "disponivel_desde": recibo}, f"contagem.mercado.{item}", "unidades",
-                    origem="mercado", fonte=fonte_mkt_un if item == "market_cap" else fonte_mkt)
+                row_market = {"item": item, "freq": freq, "period_end": periodo,
+                              "disponivel_desde": recibo}
+                source_market = fonte_mkt_un if item == "market_cap" else fonte_mkt
+                if dados.contexto_bancario is not None:
+                    from ..data.recepcao_bancaria import autenticar as autenticar_bancos
+                    ctx = autenticar_bancos(dados.contexto_bancario, md)
+                    encoded = ctx.mercado(md, linha, item, period_end=periodo)
+                    # Colunas livres do quadro legado não autenticam a opção prospectiva.
+                    row_market["disponivel_desde"] = None
+                    if encoded is not None:
+                        envelope = ctx.conferir(encoded)
+                        row_market.update(recepcao_bancaria=encoded,
+                                          value=mcap_pub if item == "market_cap" else preco,
+                                          currency=moeda,
+                                          disponivel_desde=envelope["disponivel_desde"])
+                        source_market = {**source_market, **row_market}
+                registro.registrar(row_market, f"contagem.mercado.{item}", "unidades",
+                                   origem="mercado", fonte=source_market)
 
     # --- demonstrativos (convertidos para a moeda do modelo)
     tem_dem = not dem.vazio

@@ -475,7 +475,8 @@ def demonstrativos(issuer_ids: Sequence[str], as_of: date, *, offline: bool = Fa
                    conhecimento_ate: datetime | None = None,
                    selecionar_ri_observado: bool = False,
                    patrimonio_owners_observado: bool = False,
-                   preservar_semantica_capital: bool = False) -> pd.DataFrame:
+                   preservar_semantica_capital: bool = False,
+                   recepcao_bancaria: bool = False, contexto_bancario=None) -> pd.DataFrame:
     """Demonstrações em formato longo (``DEMONSTRATIVOS_COLUNAS``), point-in-time em ``as_of``.
 
     Fonte por emissor: CVM (CNPJ; trimestral e anual) > SEC (CIK; ``companyfacts``) > Yahoo
@@ -498,6 +499,15 @@ def demonstrativos(issuer_ids: Sequence[str], as_of: date, *, offline: bool = Fa
     ``falhas`` (coletas que falharam — o emissor fica sem os itens), ``qa`` (alertas de
     conferência), ``moeda_trocada`` (emissores que mudaram a moeda de apresentação).
     """
+    from .recepcao_bancaria import autenticar as autenticar_bancos
+    from .recepcao_bancaria import instante as instante_bancos
+    from .recepcao_bancaria import opcao as opcao_bancos
+    opcao_bancos(recepcao_bancaria)
+    if recepcao_bancaria:
+        instante_bancos(conhecimento_ate)
+        if universe is None:
+            raise ValueError("Recepção bancária exige universo físico do contexto nativo")
+        autenticar_bancos(contexto_bancario, universe=universe)
     if not isinstance(preservar_semantica_capital, bool):
         raise ValueError("preservar_semantica_capital exige bool explícito")
     if type(patrimonio_owners_observado) is not bool:
@@ -865,6 +875,11 @@ def demonstrativos(issuer_ids: Sequence[str], as_of: date, *, offline: bool = Fa
         f["fonte"] = "YAHOO"
         f["sha256"] = got[0].sha256
         f["data_coleta"] = pd.Timestamp(got[0].data_coleta)
+        if recepcao_bancaria:
+            from .recepcao_bancaria import anotar_yahoo
+            f = anotar_yahoo(f, arquivo=arq, registro=got[0], info=info[0] if info else None,
+                ticker=t, issuer_id=iid, universe=uni, contexto=contexto_bancario,
+                conhecimento_ate=conhecimento_ate, as_of=as_of)
         return f
 
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as ex:
@@ -896,6 +911,8 @@ def demonstrativos(issuer_ids: Sequence[str], as_of: date, *, offline: bool = Fa
         out = pd.DataFrame(columns=DEMONSTRATIVOS_COLUNAS)
         out.attrs = {"as_of": as_of.isoformat(), "falhas": list(arq.falhas),
                      "desconhecidos": desconhecidos, "qa": qa, "moeda_trocada": {}}
+        if recepcao_bancaria:
+            out.attrs["contexto_bancario"] = contexto_bancario
         return anotar_capital(out)
 
     if not frames and not compl_frames:
@@ -970,7 +987,10 @@ def demonstrativos(issuer_ids: Sequence[str], as_of: date, *, offline: bool = Fa
     out["data_publicacao"] = pd.to_datetime(out["data_publicacao"]).dt.date
     out["period_end"] = pd.to_datetime(out["period_end"])
     extras = ([k for k in (*COLUNAS_TEMPORAIS, "period_start") if k in out]
-              if confirmar_magnitude_cvm or ri_observado else [])
+              if confirmar_magnitude_cvm or ri_observado or recepcao_bancaria else [])
+    if recepcao_bancaria:
+        from .recepcao_bancaria import CAMPOS as CAMPOS_RECEPCAO
+        extras += [k for k in CAMPOS_RECEPCAO if k in out]
     if any(k in out for k in CAMPOS):
         for _, row in out.iterrows():
             dimensoes(row)
@@ -982,6 +1002,8 @@ def demonstrativos(issuer_ids: Sequence[str], as_of: date, *, offline: bool = Fa
         ["issuer_id", "item", "freq", "period_end"], kind="stable").reset_index(drop=True)
     out.attrs = {"as_of": as_of.isoformat(), "falhas": list(arq.falhas),
                  "desconhecidos": desconhecidos, "qa": qa, "moeda_trocada": trocas}
+    if recepcao_bancaria:
+        out.attrs["contexto_bancario"] = contexto_bancario
     if confirmar_magnitude_cvm:
         out.attrs['confirmacoes_cvm'] = confirmacoes
     return anotar_capital(out)

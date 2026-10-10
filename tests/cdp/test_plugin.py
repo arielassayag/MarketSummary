@@ -47,7 +47,7 @@ TESES = ROOT / "docs" / "cdp" / "teses"
 #: Versão do plugin e resumo das skills nessa versão. A instalação pelo marketplace do GitHub guarda
 #: uma cópia presa à ``version`` (docs/cdp/LOCAL.md): skills novas com a versão antiga nunca chegam
 #: às rotinas. Mudou uma skill ⇒ suba a ``version`` em plugin.json e atualize os dois valores.
-PLUGIN_VERSION = "1.5.3"
+PLUGIN_VERSION = "1.6.0"
 SKILLS_SHA256 = "99c2d6a5c09a10a50c086950e456699900d960cf27eb5c870b815b4b60455cf2"
 #: Roteiro de cada skill do plugin e a família de tarefas de ``configs/cdp/rotinas.yaml``.
 ROTEIRO = {"semanal": "SEMANAL.md", "diario": "DIARIO.md", "cobertura": "COBERTURA.md",
@@ -66,7 +66,8 @@ def _skill_files() -> list[Path]:
 
 
 def _project_skill_files() -> list[Path]:
-    return sorted((ROOT / ".claude" / "skills").glob("*/SKILL.md"))
+    return sorted(p for p in (ROOT / ".claude" / "skills").glob("*/SKILL.md")
+                  if p.parent.name.startswith("cdp-"))
 
 
 def _playbook_files() -> list[Path]:
@@ -172,7 +173,7 @@ def _idx(texto: str, agulha: str, inicio: int = 0) -> int:
 def test_marketplace_manifest_points_to_plugin():
     m = json.loads(MARKETPLACE.read_text(encoding="utf-8"))
     assert ID_RE.match(m["name"]) and m["owner"]["name"] and m.get("description")
-    assert [p["name"] for p in m["plugins"]] == ["cdp"]
+    assert [p["name"] for p in m["plugins"]] == ["cdp", "cdp-tecnicas"]
     entry = m["plugins"][0]
     assert entry["source"].startswith("./") and ".." not in entry["source"]
     plugin_dir = (ROOT / entry["source"]).resolve()
@@ -278,7 +279,7 @@ def test_project_skills_are_the_generated_neutral_wrappers():
     """``.claude/skills`` é o espelho exato de ``.agents/skills`` (gerado de rotinas.yaml): a
     nuvem do Claude Code não instala plugins e usa essas skills."""
     gerado = ro.gerar_skills(ROT)
-    neutras = {p.parent.name: p for p in sorted((ROOT / ".agents" / "skills").glob("*/SKILL.md"))}
+    neutras = {p.parent.name: p for p in sorted((ROOT / ".agents" / "skills").glob("cdp-*/SKILL.md"))}
     espelho = {p.parent.name: p for p in _project_skill_files()}
     assert set(espelho) == set(neutras) == {Path(r).parent.name for r in gerado}
     for nome, path in espelho.items():

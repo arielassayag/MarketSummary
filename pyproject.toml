@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "fechamento"
-version = "0.1.0"
+dynamic = ["version"]
 description = "Fechamento — AI Notes #8: Redesenho do processo de elaboração do comentário de fechamento de mercado"
 requires-python = ">=3.12"
 dependencies = [
@@ -52,7 +52,11 @@ where = ["src"]
 cdp = ["workflow/*.html", "recursos/sec_classes_acoes.json", "py.typed",
        "recursos/exemplos/latam_simulado_v1/*.json", "recursos/exemplos/latam_simulado_v1/*.yaml",
        "recursos/exemplos/latam_simulado_v1/*.csv", "recursos/exemplos/latam_simulado_v1/cobertura/*.csv",
-       "recursos/exemplos/latam_simulado_v1/cobertura/*.yaml"]
+       "recursos/exemplos/latam_simulado_v1/cobertura/*.yaml",
+       "recursos/tecnicas/skills/*/SKILL.md", "recursos/tecnicas/*.md"]
+
+[tool.setuptools.dynamic]
+version = {attr = "cdp.__version__"}
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

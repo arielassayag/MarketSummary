@@ -1124,19 +1124,11 @@ def test_settings_deny_every_code_written_coverage_file(tmp_path):
     """Todo arquivo que o retrato da cobertura grava no livro é bloqueado para a mente (o único
     arquivo editável da cobertura é ``nota.json``)."""
     import warnings
-    from datetime import datetime
+    from datetime import date, datetime
     from zoneinfo import ZoneInfo
 
     from cdp.config import load_config
-    from cdp.data.synthetic import make_synthetic_market
-    from cdp.workflow.demo import (
-        DEMO_FIRST_WEEK,
-        DEMO_HISTORY_START,
-        DEMO_SEED,
-        DemoStore,
-        demo_sessions,
-        run_demo,
-    )
+    from cdp.workflow.demo import run_demo
     from cdp.workflow.runtime import Runtime
 
     try:
@@ -1145,13 +1137,13 @@ def test_settings_deny_every_code_written_coverage_file(tmp_path):
         pytest.skip(f"cobertura indisponível: {exc!r}")
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        run_demo(tmp_path, days=1)
-    market = make_synthetic_market(seed=DEMO_SEED, start=DEMO_HISTORY_START,
-                                   as_of=demo_sessions(1)[-1])
-    rt = Runtime(load_config(), tmp_path / "book", tmp_path / "market", tmp_path / "reports",
-                 store_override=DemoStore(market), teses_root=None,
-                 clock=lambda: datetime(2024, 3, 4, 21, 30, tzinfo=ZoneInfo("America/Sao_Paulo")))
-    gerar(rt, [DEMO_FIRST_WEEK])
+        first = date(2026, 11, 13)
+        cfg = load_config(ROOT / "configs/cdp/fund.yaml")
+        run_demo(tmp_path, days=1, first_week=first, cfg=cfg)
+    rt = Runtime(cfg, tmp_path / "book", tmp_path / "market", tmp_path / "reports",
+                 teses_root=None,
+                 clock=lambda: datetime(2026, 11, 13, 21, 30, tzinfo=ZoneInfo("America/Sao_Paulo")))
+    gerar(rt, [first])
     written = sorted(p.relative_to(tmp_path).as_posix()
                      for p in (tmp_path / "book" / "cobertura").rglob("*") if p.is_file())
     assert written, "o retrato sintético não gravou nada"

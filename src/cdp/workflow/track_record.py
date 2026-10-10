@@ -325,6 +325,9 @@ class TrackRecord:
         violadas (:func:`record_consistency`), números não finitos, serialização instável e
         arquivo já existente.
         """
+        from .net_moc_prova import validate_record
+
+        validate_record(self, record)
         if record.record_hash != record.compute_hash():
             raise ValueError("record_hash não confere com o conteúdo do registro.")
         bad = non_finite_fields(record.model_dump(mode="json"))
@@ -529,6 +532,12 @@ class TrackRecord:
                                 f"({prev_date}).")
             problems += [f"Contas do NAV incoerentes — {m}"
                          for m in record_consistency(rec, prev_rec)]
+            from .net_moc_prova import load as load_net_proof
+
+            try:
+                load_net_proof(self, rec)
+            except (ValueError, OSError, KeyError, TypeError) as exc:
+                problems.append(f"{rec.date}: prova NET inválida ({str(exc)[:250]}).")
             prev_hash = rec.record_hash
             prev_date = rec.date
             prev_rec = rec

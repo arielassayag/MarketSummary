@@ -9,6 +9,7 @@ from zoneinfo import ZoneInfo
 
 import pandas as pd
 import pytest
+from historico_moc_simulado import historical_moc_session
 from test_calendar import ativado
 from test_daily_track_record import FakeStore, make_proposal, week1, week2
 
@@ -40,7 +41,7 @@ def booked(tmp_path_factory):
             co_signer="Bruno",
             now=datetime(d.year, d.month, d.day, 14, tzinfo=UTC),
         )
-        runner.run_session(d, PendingExecution(prop, dec))
+        historical_moc_session(runner, d, PendingExecution(prop, dec))
     return root / "book", cfg, md
 
 

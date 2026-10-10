@@ -165,7 +165,7 @@ class Runtime:
 
     @property
     def book(self) -> Book:
-        return Book(self.book_root, config=self.cfg)
+        return Book(self.book_root, config=self.cfg, market_store=self.store)
 
     @property
     def store(self):
@@ -866,6 +866,19 @@ class Runtime:
         bundle = to_bundle(out, self.cfg, pm_ctx.drawdown, factbook=pfb)
         cohort = preregister(b, ctx, pack, bundle, mind=mind, cutoff=t_dec, now=self.now(),
                              deadline=self.decision_deadline(week), clock=self.now)
+        from .net_moc import archive_config
+
+        archive_config(self.book_root, self.cfg)
+        config_path = self.week_dir(week) / DECISION_CONFIG
+        from ..config import config_json
+        from .book import _write_exclusive
+
+        config_raw = config_json(self.cfg)
+        if config_path.exists():
+            if config_path.read_text(encoding="utf-8") != config_raw:
+                raise ValueError("configuração da decisão já arquivada com outros bytes")
+        else:
+            _write_exclusive(config_path, config_raw)
         outcome = run_weekly_decision(ctx, pack, bundle, version=b.next_version(week),
                                       live_weeks=self.live_weeks(),
                                       kill_switch=self.kill_switch_active(),
@@ -883,9 +896,6 @@ class Runtime:
         # carteira reconstrói a semana com ela mesmo após uma recalibração do mandato. Sem
         # ``sort_keys``: a ordem dos dicionários (ex.: pesos dos sinais) define a ordem das
         # somas, e a reconstrução precisa ser idêntica bit a bit.
-        (self.week_dir(week) / DECISION_CONFIG).write_text(
-            json.dumps(self.cfg.model_dump(mode="json"), ensure_ascii=False, indent=2) + "\n",
-            encoding="utf-8")
         b.audit.append("SHADOW_QUANT", "CDP", {"sha256": sha256_file(shadow_path)},
                        summary="Carteira-sombra só-quant gravada.", week=week)
         # A decisão é ancorada na trilha DEPOIS da proposta gravada (nunca retroativa).

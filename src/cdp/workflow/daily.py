@@ -730,6 +730,8 @@ def book_execution(book: Book, entry: BookEntry, proposal: Proposal, decision: D
     save_decided_proposal(book, proposal, decision, cfg, snapshot_hash_now=snapshot_hash_now,
                           dry_run=dry_run)
     if dry_run:
+        book._validate_booking(entry, snapshot_hash_now or proposal.snapshot_hash,
+                               cfg.config_hash(), decision.research_hash)
         return path
     return book.save_booked(entry, snapshot_hash_now or proposal.snapshot_hash, cfg.config_hash(),
                             decision.research_hash, actor=actor)
@@ -742,10 +744,11 @@ class ShadowBook:
     ``SHADOW_PROPOSAL_SAVED`` e ``BOOKED_SHADOW`` na trilha da série.
     """
 
-    def __init__(self, track: TrackRecord) -> None:
+    def __init__(self, track: TrackRecord, book: Book | None = None) -> None:
         self.track = track
         self.root = track.root
         self.audit = track.audit
+        self.book = book
 
     def proposal_path(self, week: date) -> Path:
         return self.root / "proposals" / f"{week.isoformat()}.json"
@@ -804,6 +807,12 @@ class ShadowBook:
     def save_proposal(self, proposal: Proposal) -> Path:
         """Grava a proposta-sombra da semana (idempotente para o mesmo conteúdo)."""
         path = self.proposal_path(proposal.week)
+        raw = dump_json(proposal)
+        if self.book is not None:
+            original = book_shadow_proposal(self.book, proposal.week)
+            if original is None or dump_json(original) != raw:
+                raise ValueError("A cópia sombra difere do corpo nativo integral de origem.")
+            raw = (self.book.week_dir(proposal.week) / BOOK_SHADOW_FILE).read_text(encoding="utf-8")
         existing = (Proposal.model_validate_json(path.read_text(encoding="utf-8"))
                     if path.exists() else None)
         if existing is not None:
@@ -811,13 +820,24 @@ class ShadowBook:
                 raise FileExistsError(f"Proposta-sombra da semana {proposal.week} já existe com "
                                       "conteúdo diferente (imutável).")
             return path
-        write_exclusive(path, dump_json(proposal))
+        write_exclusive(path, raw)
         self.audit.append(SHADOW_PROPOSAL_EVENT, DAILY_ACTOR, proposal.proposal_hash(),
                           summary=f"Proposta-sombra só-quant {proposal.proposal_id}.",
                           week=proposal.week)
         return path
 
     def save_booked(self, entry: BookEntry) -> Path:
+        from .net_moc import NetUnverifiable, compose
+        from .net_moc_prova import prepare
+
+        if self.book is None:
+            raise NetUnverifiable("NET UNVERIFIABLE: livro/origens nativos da sombra ausentes")
+        candidate = compose(self.book, entry, shadow=True)
+        try:
+            prepare(candidate)
+            candidate.sources.recheck()
+        finally:
+            candidate.sources.close()
         path = self.booked_path(entry.week)
         write_exclusive(path, dump_json(entry))
         self.audit.append(SHADOW_BOOKED_EVENT, DAILY_ACTOR, entry,
@@ -825,6 +845,21 @@ class ShadowBook:
                                    f"{len(entry.positions)} posições."),
                           week=entry.week)
         return path
+
+    def recover_booking(self, week: date) -> None:
+        from .net_moc import NetUnverifiable
+        from .net_moc_prova import recover
+
+        sealed = recover(self.root.parent, week, "shadow")
+        if sealed is None or sealed.state != "booked_pending_event":
+            return
+        if self.book is None:
+            raise NetUnverifiable("NET UNVERIFIABLE: origens nativas ausentes na retomada sombra")
+        # C recebeu o candidato inteiro e readset ainda pendente. O arquivo
+        # BOOKED já existia: apenas seu evento faltante é completado literalmente.
+        self.audit.append(SHADOW_BOOKED_EVENT, DAILY_ACTOR, sealed.entry,
+                          summary="Retomada da efetivação sombra NET previamente preparada.",
+                          week=week)
 
 
 def book_shadow_proposal(book: Book, week: date) -> Proposal | None:
@@ -963,9 +998,9 @@ class _ShadowSide:
     label = "sombra"
     is_shadow = True
 
-    def __init__(self, cfg: FundConfig, track: TrackRecord) -> None:
+    def __init__(self, cfg: FundConfig, track: TrackRecord, book: Book | None = None) -> None:
         self.cfg, self.track = cfg, track
-        self.store = ShadowBook(track)
+        self.store = ShadowBook(track, book)
         self.fund_name = f"{cfg.fund.name} — {SHADOW_LABEL}"
         self.track_type = (f"{cfg.fund.track_record_type} — carteira-sombra só-quant "
                            "(contrafactual, sem decisão)")
@@ -1005,7 +1040,8 @@ class DailyRunner:
         self.track = track
         self.actor = actor
         self.main = _MainSide(cfg, book, track)
-        self.shadow = _ShadowSide(cfg, shadow_track) if shadow_track is not None else None
+        self.shadow = _ShadowSide(cfg, shadow_track, book) if shadow_track is not None else None
+        book.market_store = store
         self._models: dict[date, RiskModel | None] = {}
         self._model_notes: dict[date, str] = {}
         self._md_pregao: tuple[date, MarketData] | None = None
@@ -1020,7 +1056,7 @@ class DailyRunner:
         """Layout padrão: ``<root>/`` (livro), ``<root>/track_record`` e
         ``<root>/track_record_shadow``."""
         root = Path(root)
-        book = Book(root, cfg)
+        book = Book(root, cfg, market_store=store)
         track = TrackRecord(root / "track_record")
         shadow = (TrackRecord(root / "track_record_shadow", audit_event=SHADOW_RECORD_EVENT)
                   if with_shadow else None)  # o mesmo tipo seria inferido da pasta
@@ -1095,14 +1131,21 @@ class DailyRunner:
             if plan is None:
                 raise
             kill = self.book.kill_switch_active()
-            if prev is None and not kill:
+            from .net_moc import NetLimitExceeded
+
+            cause = exc
+            net_refused = False
+            while cause is not None:
+                net_refused |= isinstance(cause, NetLimitExceeded)
+                cause = cause.__cause__
+            if prev is None and not kill and not net_refused:
                 # Carteira inaugural recusada por dado (preço/câmbio ausente): nada é negociado
                 # nem registrado; uma nova execução do mesmo fechamento tenta de novo.
                 raise NoBookError(
                     f"Execução da carteira inaugural (semana {plan.week}) RECUSADA no fechamento "
                     f"de {session_date}: {clean_text(exc, 600)} O fundo segue sem carteira "
                     "(zerado, sem negociação) até a próxima data de montagem.") from exc
-            if kill:
+            if kill or net_refused:
                 # Kill switch no leilão do dia de montagem: a ordem não foi executada e a decisão
                 # CADUCA (REGRA_CADUCIDADE) — o dia é registrado com a recusa e a decisão nunca é
                 # efetivada depois, nem quando um humano desligar o kill switch.
@@ -1186,6 +1229,7 @@ class DailyRunner:
         mesma decisão já foi efetivada. Recusa do livro ou execução impossível ⇒
         :class:`ExecutionRefused`. O registro diário do pregão é gravado por :meth:`run`.
         """
+        self.book.recover_booking(proposal.week)
         existing = self.book.load_booked(proposal.week)
         if existing is not None:
             if (existing.proposal_id == proposal.proposal_id
@@ -1199,25 +1243,13 @@ class DailyRunner:
         md = self._session_market(session_date, md)
         pending = PendingExecution(proposal, decision, snapshot_hash_now=snapshot_hash_now)
         plan = self._plan_from_pending(session_date, prev, pending)
-        ctx = self.context(session_date, md, prev, need_models=False)
+        ctx = self.context(session_date, md, prev)
         if plan.entry is not None:
             return plan.entry
-        _, _, ref_prop = self._live(self.main, prev, [])
-        marked = self._mark(ctx, prev, ref_prop)
-        nav_pre = marked.nav_pre
-        if plan.hold:
-            entry = self._build_hold_entry(ctx, plan, nav_pre, marked)
-        else:
-            try:
-                execs, _ = self._size(ctx, plan, marked, nav_pre)
-            except ValueError as exc:
-                raise ExecutionRefused(str(exc)) from exc
-            cost, _ = self._costs(ctx, marked.lines, execs, nav_pre, plan)
-            entry = self._build_entry(ctx, plan, execs, nav_pre, cost)
-        assert plan.persist is not None
-        _guarded(plan.preflight, entry)
-        _guarded(plan.persist, entry)
-        return entry
+        result = self._compute_side(self.main, ctx, prev, plan)
+        assert result.commit is not None and result.entry is not None
+        result.commit()
+        return result.entry
 
     def verify_all(self) -> tuple[bool, list[str]]:
         """Integridade do track record (e da sombra) e do livro (``Book.verify_integrity``)."""
@@ -1402,6 +1434,7 @@ class DailyRunner:
         proposal, decision = pending.proposal, pending.decision
         self._check_week_window(session, proposal.week, prev)
         self._check_not_lapsed(proposal.week)
+        self.book.recover_booking(proposal.week)
         existing = self.book.load_booked(proposal.week)
         if existing is not None:
             if (existing.proposal_id != proposal.proposal_id
@@ -1467,6 +1500,7 @@ class DailyRunner:
     def _discover_plan(self, session: date, w: date) -> _Plan | None:
         close = close_datetime(session, self.cfg)
         cutoff = decision_cutoff(session, self.cfg)
+        self.book.recover_booking(w)
         entry = self.book.load_booked(w)
         if entry is not None:
             if entry.booked_at > close:
@@ -1546,11 +1580,12 @@ class DailyRunner:
             return None
         if not executable_in(proposal.week, ctx.date, self.cfg):
             raise ValueError(f"Proposta-sombra da semana {proposal.week} fora da janela.")
-        if proposal.config_hash != self.cfg.config_hash():
-            raise ValueError("Proposta-sombra com mandato diferente do atual.")
+        side.store.recover_booking(proposal.week)
         existing = side.store.load_booked(proposal.week)
         if existing is not None:
             return self._adopt_plan(existing, proposal, None, "sombra")
+        if proposal.config_hash != self.cfg.config_hash():
+            raise ValueError("Proposta-sombra com mandato diferente do atual.")
         store = side.store
 
         def persist(entry: BookEntry, _p: Proposal = proposal) -> None:
@@ -1601,6 +1636,47 @@ class DailyRunner:
                       prev: DailyRecord | None, plan: _Plan | None,
                       extra_alerts: list[str] | None = None,
                       extra_hashes: dict[str, str] | None = None) -> _SideResult:
+        if plan is not None and plan.entry is not None:
+            from .net_moc import descriptor
+            from .net_moc_prova import recover
+
+            if descriptor(plan.proposal) is not None:
+                sealed = recover(self.book.root, plan.week, "shadow" if side.is_shadow else "main")
+                if sealed is None or sealed.state == "lapsed" or sealed.record.date != ctx.date:
+                    raise ExecutionRefused("NET UNVERIFIABLE: efetivação sem receita original selada")
+                return _SideResult(sealed.record, sealed.entry, None, sealed.diagnostic)
+        result = self._prepare_side(side, ctx, prev, plan, extra_alerts, extra_hashes)
+        if plan is None or plan.entry is not None:
+            return result
+        from .net_moc import compose
+        from .net_moc_prova import seal
+
+        assert result.entry is not None
+        try:
+            _guarded(plan.preflight, result.entry)
+            candidate = compose(self.book, result.entry, shadow=side.is_shadow)
+            try:
+                seal(candidate)
+                result.record, result.diagnostic = candidate.record, candidate.diagnostic
+                candidate.sources.recheck()
+            finally:
+                candidate.sources.close()
+        except ValueError as exc:
+            raise ExecutionRefused(str(exc)) from exc
+        persist = plan.persist
+        assert persist is not None
+
+        def commit() -> None:
+            _guarded(persist, result.entry)
+
+        result.commit = commit
+        return result
+
+    def _prepare_side(self, side: _MainSide | _ShadowSide, ctx: DailyContext,
+                      prev: DailyRecord | None, plan: _Plan | None,
+                      extra_alerts: list[str] | None = None,
+                      extra_hashes: dict[str, str] | None = None) -> _SideResult:
+        """Prepara a receita inteira sem preflight, gravação ou callback do chamador."""
         cfg = self.cfg
         alerts: list[str] = list(extra_alerts or [])
         live_entry, live_prop, ref_prop = self._live(side, prev, alerts)
@@ -1636,13 +1712,6 @@ class DailyRunner:
                 cost = -cost_usd
                 end_lines = _merge_execution(marked.lines, execs)
                 entry = plan.entry or self._build_entry(ctx, plan, execs, nav_pre, cost_usd)
-            if plan.entry is None:
-                _guarded(plan.preflight, entry)
-                persist = plan.persist
-                assert persist is not None
-
-                def commit(_e: BookEntry = entry) -> None:
-                    _guarded(persist, _e)
             entry_after = entry
             proposal_after = plan.proposal
             if not plan.hold:
@@ -2757,13 +2826,14 @@ def _lapse_alert(lapsed: Mapping[str, Any], *, inaugural: bool) -> str:
     """Alerta do registro do dia em que a efetivação foi recusada (decisão caducada)."""
     semana = date.fromisoformat(str(lapsed.get("semana")))
     sessao = date.fromisoformat(str(lapsed.get("sessao")))
+    motivo = clean_text(lapsed.get("motivo") or "motivo de recusa não informado", 600)
     if inaugural:
         return (f"Efetivação recusada: a carteira inaugural decidida para {semana:%d/%m/%Y} não "
-                f"foi montada no leilão de fechamento de {sessao:%d/%m/%Y} (kill switch ligado: "
-                "só redução de risco). A decisão caducou; o fundo inicia o histórico em caixa e "
+                f"foi montada no leilão de fechamento de {sessao:%d/%m/%Y} ({motivo}). "
+                "A decisão caducou; o fundo inicia o histórico em caixa e "
                 "a próxima data de montagem decide de novo.")
     return (f"Efetivação recusada: a decisão da semana de {semana:%d/%m/%Y} não foi executada no "
-            f"leilão de fechamento de {sessao:%d/%m/%Y} (kill switch ligado). A decisão caducou; "
+            f"leilão de fechamento de {sessao:%d/%m/%Y} ({motivo}). A decisão caducou; "
             "a carteira anterior é mantida e a próxima data de montagem decide de novo.")
 
 

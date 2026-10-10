@@ -2,7 +2,7 @@
 
 import hashlib
 import json
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
 from pathlib import Path
 
 import pytest
@@ -12,15 +12,20 @@ from cdp.config import load_config
 from cdp.workflow.demo import run_demo
 from cdp.workflow.runtime import Runtime
 
+CONFIG = Path(__file__).resolve().parents[2] / "configs/cdp/fund.yaml"
+FIRST = date(2026, 11, 13)
+
 
 @pytest.fixture(scope="module")
 def evaluated_cli(tmp_path_factory):
     root = tmp_path_factory.mktemp("avaliacao-cli")
-    cfg = load_config(Path(__file__).parent / "fixtures/fund_legado.yaml")
-    run_demo(root, days=6, cfg=cfg)
+    # Fixture nativa declarada: seed7, 13–20/11/2026, mandato atual integral.
+    cfg = load_config(CONFIG)
+    run_demo(root, days=6, first_week=FIRST, cfg=cfg)
+    assert Runtime(cfg, root / "book", root / "market", root / "reports").track().get(FIRST)
     return Runtime(cfg, root / "book", root / "market", root / "reports",
                    teses_root=None,
-                   clock=lambda: datetime(2024, 3, 12, 23, tzinfo=UTC))
+                   clock=lambda: datetime(2026, 11, 21, 23, tzinfo=UTC))
 
 
 def _invoke(monkeypatch, capsys, rt, *argv):
@@ -66,7 +71,7 @@ def test_cli_quant_keeps_absent_incremental_as_null(monkeypatch, capsys, evaluat
 
 def test_cli_refuses_changed_outcome(monkeypatch, capsys, evaluated_cli):
     rt = evaluated_cli
-    path = rt.book_root / "2024-03-04/avaliacao/outcome.json"
+    path = rt.book_root / str(FIRST) / "avaliacao/outcome.json"
     original = path.read_bytes()
     try:
         path.write_bytes(original + b" ")

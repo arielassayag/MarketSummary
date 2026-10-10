@@ -91,7 +91,7 @@ def _rt(root: Path, reports: Path | None = None, cfg: FundConfig | None = None) 
 
 @pytest.fixture(scope="module")
 def demo(tmp_path_factory):
-    from cdp.workflow.demo import run_demo
+    from demo_historica import run_historical_demo as run_demo
 
     out = tmp_path_factory.mktemp("painel_demo")
     with warnings.catch_warnings():
@@ -828,7 +828,7 @@ NOW6 = datetime(2024, 3, 12, 22, 30, tzinfo=UTC)
 @pytest.fixture(scope="module")
 def demo6(tmp_path_factory):
     """Livro sintético com duas semanas e seis pregões (o orçamento vale num livro "real")."""
-    from cdp.workflow.demo import run_demo
+    from demo_historica import run_historical_demo as run_demo
 
     out = tmp_path_factory.mktemp("painel_demo6")
     with warnings.catch_warnings():

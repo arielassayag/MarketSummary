@@ -77,9 +77,11 @@ def plano(rt: Runtime) -> dict[str, Any]:
     """Classifica sem criar livro, relatório, área temporária ou evento."""
     book = _book(rt)
     inicio = rt.cfg.fund.inception_date.isoformat()
+    from .net_moc import stamp
+
     out = {"executado": False, "estado": "vazio", "motivo": "livro vazio; abertura explícita",
            "data_de_inicio": inicio, "config_hash": rt.cfg.config_hash(),
-           "arquivos_novos": [GENESIS_FILE, AUDIT_NAME], "remover": []}
+           "arquivos_novos": [GENESIS_FILE, AUDIT_NAME, stamp(rt.cfg)["config_path"]], "remover": []}
 
     def recusar(motivo: str) -> dict[str, Any]:
         return {**out, "estado": "conflito", "motivo": motivo, "arquivos_novos": []}
@@ -178,11 +180,15 @@ def executar(rt: Runtime, *, execucao: str | None = None, trava: str | None = No
     payload = {"inception_date": rt.cfg.fund.inception_date.isoformat(),
                "config_hash": rt.cfg.config_hash(), "codigo": auth["codigo"],
                "ancora_sha256": None}
+    from .net_moc import archive_config, economic_genesis
+
+    payload["economic"] = economic_genesis(rt.cfg)
     criada = False
     try:
         # Área exclusiva: jamais limpar uma área que já existia ou foi criada por outro.
         staging.mkdir(exist_ok=False)
         criada = True
+        archive_config(staging, rt.cfg)
         _write_exclusive(staging / GENESIS_FILE, dump_json(payload))
         Book(staging, config=rt.cfg).audit.append(
             GENESIS_EVENT, "CDP", payload,

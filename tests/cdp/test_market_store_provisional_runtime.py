@@ -122,7 +122,9 @@ def new_bookings(tmp_path_factory):
         decision = make_decision(prop, 'Ana', DecisionType.APPROVE, 'MOC simulado',
                                  prop.research_hash, co_signer='Bruno',
                                  now=datetime(day.year, day.month, day.day, 14, tzinfo=UTC))
-        runner.run_session(day, PendingExecution(prop, decision))
+        from historico_moc_simulado import historical_moc_session
+
+        historical_moc_session(runner, day, PendingExecution(prop, decision))
         assert runner.book.load_booked(day).positions
     assert runner.book.verify_integrity() == (True, [])
     return root / 'book', cfg, market
@@ -150,7 +152,7 @@ def runtime_for_bookings(tmp_path, new_bookings, markers):
     return rt, store
 
 
-def test_fresh_official_bookings_are_valid_under_physical_store(tmp_path, new_bookings):
+def test_historical_moc_bookings_are_valid_under_physical_store(tmp_path, new_bookings):
     rt, store = runtime_for_bookings(tmp_path, new_bookings, [])
     before = files(rt.book_root)
     assert rt.verify_execucao() == (True, ['2 efetivações conferidas contra a execução esperada no fechamento'])

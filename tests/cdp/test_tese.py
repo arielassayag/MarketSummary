@@ -17,10 +17,11 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 import pytest
+from demo_historica import run_historical_demo as run_demo
 
 from cdp.config import load_config
 from cdp.hashing import sha256_file, sha256_obj
-from cdp.workflow.demo import DEMO_FIRST_WEEK, DEMO_SEED, DemoStore, demo_sessions, run_demo
+from cdp.workflow.demo import DEMO_FIRST_WEEK, DEMO_SEED, DemoStore, demo_sessions
 from cdp.workflow.runtime import Runtime
 from cdp.workflow.tese import (
     ANALISE_JSON,

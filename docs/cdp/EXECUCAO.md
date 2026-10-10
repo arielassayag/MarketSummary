@@ -233,6 +233,40 @@ exposição dividida pelo tamanho do contrato, arredondada; o resíduo fica divu
 ARS ficam sem hedge, com a exposição divulgada: não há futuro de bolsa acessível de tamanho
 compatível, e o NDF exige nocional mínimo muito acima do PL.
 
+### Barreira prospectiva NET (integração em desenvolvimento)
+
+Novas propostas recebem o contrato reservado `net_moc_contract` antes de seus hashes.
+O escritor recebe a configuração integral própria em `book/net_config/<sha256>.json`,
+proposta e decisão físicas, gênese monetária, prior completo e mercado nativo verificado.
+`Book`, carteira-sombra, prévia sem escrita e execução da decisão conferem a receita
+diária nativa completa: posições finais assinadas em USD e NAV após todos os custos.
+A comparação inclusiva usa frações dos lexemas decimais, sem epsilon:
+`abs(soma das posições USD) <= NAV após custos × limite NET da configuração própria`.
+Ausência/adulteração é `NET UNVERIFIABLE`; excesso numérico é `NET FAIL`.
+
+A prova em `book/net_moc/v1/<main|shadow>/<semana>/<sessão>/` contém `base.json`,
+`candidate.json` e, depois de BOOKED e diário completos, `binding.json`. A preparação
+precede BOOKED, e o vínculo final sucede os eventos de registro diário e risco. Os
+corpos literais retidos permitem completar interrupções sem calcular outro NAV ou
+negociar novamente. A leitura histórica confere essa prova mesmo após novos registros;
+o carry factual posterior não constitui autorização de nova efetivação.
+Uma prova BOUND completa pode ser conferida em cópia literal do livro sob outra
+raiz, sem reescrever corpos ou hashes. Preparações e retomadas ainda pendentes
+conservam a custódia física estrita da raiz original.
+
+Todos esses caminhos já pertencem ao escopo `book` da publicação canônica das rotinas
+semanais e diárias, inclusive efeitos de uma execução anterior interrompida. Exigem a
+trava exclusiva existente; nenhuma alternativa de publicação foi adicionada. A gênese
+nativa conserva NAV/data iniciais e configuração própria. Ensaio isolado conserva
+descritor monetário separado, vinculado ao primeiro evento de origem retrospectiva.
+
+O corpo da proposta é preservado como texto JSON físico integral: no ensaio sintético,
+sete stress tests sem observações possuem `NaN` nativo. Nenhum deles vira zero ou dado
+observado. A barreira NET não certifica disponibilidade de toda a família de riscos,
+qualidade financeira de emissores ou validade externa do ensaio. O monitor passivo NET
+continua SOFT; excesso confirmado na escrita faz a decisão caducar pelo fluxo nativo,
+sem afirmar que um kill switch foi ligado quando o motivo foi apenas NET.
+
 ## 8. Implementation shortfall (execução em papel)
 
 A execução ao fechamento oficial tende a lisonjear o resultado se não for medida. Em cada dia de

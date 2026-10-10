@@ -14,10 +14,11 @@ import pytest
 from cdp import executor as ex
 from cdp.__main__ import build_parser, main
 from cdp.audit import GENESIS_HASH
-from cdp.config import load_config
+from cdp.config import config_json, load_config
 from cdp.hashing import sha256_obj
 from cdp.workflow import genese as g
-from cdp.workflow.book import GENESIS_EVENT, Book
+from cdp.workflow.book import GENESIS_EVENT, GENESIS_FILE, Book
+from cdp.workflow.net_moc import CONFIG_FOLDER, economic_genesis, stamp
 from cdp.workflow.reinicio import plano as plano_legado
 from cdp.workflow.reinicio import situacao
 from cdp.workflow.runtime import Runtime
@@ -110,7 +111,7 @@ def test_plano_vazio_nao_cria_diretorio_ou_arquivo(tmp_path):
 
 
 @pytest.mark.parametrize("diretorio_vazio", [False, True])
-def test_api_real_promove_so_genese_e_evento_com_trava_nativa_local(replica, diretorio_vazio):
+def test_api_real_promove_genese_configuracao_e_evento_com_trava_nativa_local(replica, diretorio_vazio):
     root, rt, reg, lock = replica
     if diretorio_vazio:
         rt.book_root.mkdir()
@@ -118,10 +119,13 @@ def test_api_real_promove_so_genese_e_evento_com_trava_nativa_local(replica, dir
     head = git(root, "rev-parse", "HEAD")
     code, out = abrir(rt)
     assert code == 0 and out["executado"] and out["estado"] == "iniciado"
-    assert sorted(p.name for p in rt.book_root.iterdir()) == ["audit_log.jsonl", "genese.json"]
-    payload = json.loads((rt.book_root / "genese.json").read_text())
+    assert sorted(p.name for p in rt.book_root.iterdir()) == [
+        "audit_log.jsonl", GENESIS_FILE, CONFIG_FOLDER]
+    payload = json.loads((rt.book_root / GENESIS_FILE).read_text())
     assert payload == {"inception_date": "2026-10-09", "config_hash": cfg_hash,
-                       "codigo": head, "ancora_sha256": None}
+                       "codigo": head, "ancora_sha256": None,
+                       "economic": economic_genesis(rt.cfg)}
+    assert (rt.book_root / stamp(rt.cfg)["config_path"]).read_text() == config_json(rt.cfg)
     book = Book(rt.book_root, config=rt.cfg)
     event, = book.audit.events()
     assert (event.event_type, event.seq, event.prev_hash) == (GENESIS_EVENT, 0, GENESIS_HASH)

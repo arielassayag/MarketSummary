@@ -204,7 +204,7 @@ proteções do CDP continuam valendo pelo código (gate, escopo de caminhos, `cd
 publicar, nunca force) e pela regra do ramo `main` — que precisa estar criada antes (seção 3,
 passo 1).
 
-**Arranjo adotado pelo titular em 10/10/2026:** as 12 automações pertencem ao
+**Arranjo vigente, conferido em 10/10/2026:** as 12 automações pertencem ao
 projeto atual AInotes, na seção CDP do Codex. Cada prompt entra no clone dedicado
 interno `.cdp/rotinas`, em `main`, antes de consultar a skill e o procedimento
 gerado. A pasta de desenvolvimento permanece sem identidade de executor. Essa

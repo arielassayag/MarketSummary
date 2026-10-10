@@ -1,6 +1,6 @@
 # Em andamento — passagem entre sessões
 
-Estado observado em **10/10/2026, 13:38 Brasília**. Quem retoma lê primeiro
+Estado observado em **10/10/2026, 15:00 Brasília**. Quem retoma lê primeiro
 AGENTS.md e o roteiro RETOMAR, consulta estado e agenda determinísticos e continua
 pela fila abaixo. Decisões de mandato permanecem em DECISOES.md.
 
@@ -26,7 +26,10 @@ local de 09/10. Publicar código não publicou aquela operação.**
 O código integrado inclui o perfil documental anual opt-in da Enel e a exigência
 de bool exato nas duas APIs de owners. Loader, composição econômica e configuração
 operacional não foram ativados por essas entregas. Os estudos JBS, BCRA e Rumo
-estão versionados; os adendos documentais abaixo estão preparados para integração.
+estão versionados. A passagem compacta, os adendos documentais, a correção de data
+civil e o perfil real do Codex estão no checkout de integração, ainda sem push.
+A revisão documental do perfil interno aprovou 389 casos e pulou um; nenhuma
+rotina foi duplicada ou reagendada nesta etapa.
 
 ## Pesquisa e ensaios privados
 
@@ -34,9 +37,9 @@ estão versionados; os adendos documentais abaixo estão preparados para integra
 |---|---|---|
 | Enel Chile | Notas 6/10 e, na etapa E1c, 4/7/20/23 inteiras recebidas e lidas. E1c: XML 1, HTML 4, fontes 30 e runtime 58 antes/depois/atuais, cinco cópias integrais; recepção ROOT concluída | Natureza, prazo, liquidez e restrições dos outros ativos amortizados desconhecidos; falta ponte de mensuração e exclusão mútua. E2/E3 não executados; G19 aberto |
 | Galicia/BCRA | Demonstrações locais e 20-F recebidos em estudos separados. A7211 documentada no exercício corrente de 1T21; relatório local de 1T21 é revisão limitada | A7222 e auditor anual local de 2020 não localizados/lidos nesse recorte. Bases BCRA e IFRS IASB distintas; NI/PL/owners não adotados |
-| Bancos: fontes nativas | Custódia integral, quatro registros prospectivos privados e revisão independente recebidos. Parser nativo aceitou configuração privada de uma linha; RI permanece ausente | V1f2 chegou às seis APIs públicas nativas, uma chamada cada, e encerrou na primeira recusa documental de Galicia. Timestamp serializado do período diverge da data civil da célula; correção estrita do produto em desenvolvimento. Participantes com disponibilidade nula ainda não aprovados; owners/NI/normalização sem aceite financeiro |
-| Fonte simulada do ensaio MOC | Reabertura V1b estrutural positiva recebida e revista; 13 corpos originais, 13 derivados e macro. Receita corrigida preserva sete moedas FX | Não prova ordens, booking ou transição diária. B v1 bloqueado por guarda absorvível; V1b corrige interrupção, mas o catálogo de aliases tem chave incompatível com o consumidor. V1c separada em preparação; B ainda não executado |
-| JBS | Fontes e divergências de capital/EPS preservadas | Conceitos, unidades e denominadores interinos sem conciliação; nenhuma quantidade escolhida |
+| Bancos: fontes nativas | Custódia integral, quatro registros prospectivos privados e revisão independente recebidos. Parser nativo aceitou configuração privada de uma linha; RI permanece ausente | V1f2 chegou às seis APIs públicas nativas, uma chamada cada, e encerrou na primeira recusa documental de Galicia. A correção estrita de data civil foi revista: 108 casos aprovados, Ruff limpo, sem mudar dados/hash; commit ad8ef9d local. Sete participantes têm disponibilidade nula: cinco grãos Yahoo e dois de mercado, ainda sem vínculo nativo ao recibo. F2 não repetida; owners/NI/normalização sem aceite financeiro |
+| Fonte simulada do ensaio MOC | Reabertura V1b estrutural positiva recebida e revista; 13 corpos originais, 13 derivados e macro. Receita corrigida preserva sete moedas FX | Não prova ordens, booking ou transição diária. V1c, V1d, V1e e V1f encerraram na primeira recusa durante importações, antes do decode/modelos/D0/D1. V1f identificou namespace próprio de fábrica typing_inspection; diagnóstico e custódia recebidos pela ROOT. As versões negativas não são repetidas; novo plano finito necessário |
+| JBS | Fontes e divergências de capital/EPS preservadas; FRE v3 de 28/08 recebido em 10/10, PDF inteiro e extração de 460 páginas | Circulação/free float, capital emitido, tesouraria, classes e denominadores interinos têm definições/datas diferentes. A/B compartilham direitos econômicos; Conversion Shares exigem tratamento distinto. Conciliação ainda aberta; nenhuma quantidade escolhida |
 | Rumo | Aditivo recebido e Portaria 648 lida integralmente na interface oficial: GT preparatório e não deliberativo | Instauração, cumprimento, compensação e dívida zero não comprovados. Versão certificada e corpo HTTP bruto do ato não recebidos; pesquisa posterior não comprova inexistência de outro ato |
 
 A [passagem documental da Enel](estudos/2026-10-10-enel-perimetro-financiamento/README.md)
@@ -52,9 +55,24 @@ não habilita o adapter RI específico de outro emissor. Pontes de período, pod
 compra, owners, NI normalizado, ações e ROE/BVPS continuam sem aceite financeiro.
 
 Os ensaios MOC dizem **DADOS SIMULADOS**. Não alteram seed, alpha, piso, gates ou
-mandato para obter resultado positivo. As verificações privadas NET ainda não
-estão ligadas aos escritores: Book e Daily da candidata são literais ao main.
-Plano finito dos escritores recebido; integração de contrato, receita pós-custo, dry-run, retomada e caducidade em desenvolvimento isolado, ainda sem validação ou adoção.
+mandato para obter resultado positivo. A candidata privada do ensaio B conserva
+Book e Daily literais ao main; ela não certifica a implementação prospectiva nova.
+
+A proteção dos escritores NET está em desenvolvimento isolado. Seus resultados
+nativos atuais: D0/D1 e caducidade, dois casos aprovados; HOLD deliberado sem ordens,
+um caso aprovado; configuração própria do estado anterior e fronteiras, 12 casos
+aprovados. Os ensaios incluem interrupção após BOOKED principal/sombra, retomada
+com configuração atual diferente, leitura BOUND em outro clone e carry sem nova
+proposta. HOLD foi solicitado no teste antes do resultado; não se afirma que o
+modelo o selecionou espontaneamente.
+
+O protocolo documental de vinculação foi revisto independentemente, com 94 casos
+aprovados. Só fatos inteiros já BOUND são portáveis; estados pendentes exigem a
+custódia física original. A suíte ampla inicial encerrou negativa: demonstrações
+antigas forneciam configuração sem execução nativa. Não houve tolerância no
+writer. Demonstração e fixtures históricos estão sendo adaptados; a suíte ampla
+conjunta e a integração ainda não ocorreram. Casos históricos em testes dizem
+DADOS SIMULADOS, servem à leitura e não são autorização de nova efetivação.
 O fechamento factual de uma carteira existente precisa preservar o incidente
 observado; não pode escondê-lo pela recusa do registro diário.
 
@@ -71,11 +89,12 @@ mercado, relatórios ou artifacts oficiais e não opera o kill switch.
 
 Continuar nesta ordem:
 
-1. Encerrar o consumo bancário e o ensaio B pelo resultado nativo real, com primeira
-   negativa encerrando o percurso e sem reutilizar um positivo estrutural como financeiro.
-2. Concluir a proteção prospectiva de efetivação nos escritores e seus dry-runs e
-   retomadas, com origem completa de configuração, mercado, estado e custo. Preservar
-   a leitura histórica e o livro inaugural, sem tolerância retroativa.
+1. Concluir o plano nativo dos sete participantes bancários sem disponibilidade e
+   a qualificação finita da nova fábrica Python do ensaio B. As primeiras negativas
+   recebidas permanecem encerradas; nenhum positivo estrutural vale como financeiro.
+2. Concluir demonstração e fixtures da proteção prospectiva NET, receber a revisão
+   final e executar a suíte ampla conjunta com a correção dos bancos e documentos.
+   Preservar a leitura histórica e o livro inaugural, sem tolerância retroativa.
 3. Resolver as dependências primárias de bancos/IAS29, EPS/ARS, JBS/G13, Enel/G19 e
    FCFF/concessões Rumo/Klabin; desconhecido nunca vira zero.
 4. Concluir confiança, calibração e E1/E2/PIT pelos critérios da passagem. O retrato
@@ -85,9 +104,9 @@ Continuar nesta ordem:
 Não há conclusão de todos os modelos ou do P0. Recibos e resultados privados estão
 nas pastas locais de estudos, protótipos, revisões e validações; o quadro local registra
 os encerramentos posteriores a este corte. Cinco alterações herdadas no checkout
-principal e o executor foram preservados. Esta atualização é documental e aguarda
-conferência focal antes de integração; a suíte financeira já concluída não foi repetida
-por causa dos textos.
+principal e o executor foram preservados. Os commits de integração novos ainda não foram publicados. Esta atualização
+aguarda conferência documental; a suíte ampla nova é necessária pela mudança dos
+escritores e será executada com as fontes finais congeladas.
 
 ## Histórico preservado
 

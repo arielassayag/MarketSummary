@@ -98,3 +98,11 @@ A nota 20 anual distingue quantidades de ações e valores em milhares de USD. A
 Locador: [20-F anual SEC](https://www.sec.gov/Archives/edgar/data/1791942/000121390026034213/ea0282342-20f_jbsnv.htm), nota 20 a/c1, Item 16E, nota 23 para a definição da média de EPS e capa para outstanding. Não transportar moeda BRL do outro bloco do PDF composto nem converter legenda/scale por inferência. A data de referência é 31/12/2025; primeira publicação UTC e posse operacional não foram autenticadas por este estudo.
 
 Custódia deste adendo: ZIP DFP2025 SHA-256 `d7aec54e7c67998e4cd3ef94c463ab247f09a6baaa2254878d1e431f28130e2a`; membro composição de capital SHA-256 `f29b0e4bf6004cbb6d0758460d92cab5eb4807181786d668eb7c7cfe14593e6f`. O confronto final V2 conserva abertura numérica ausente e rollforward não autenticado; não foi reexecutado nesta passagem. Nenhuma adoção de quantidade, alteração financeira, OP, P0 ou PIT.
+
+## Adendo documental — Formulário de Referência v3
+
+O catálogo de RI apontou o [Formulário de Referência v3](https://api.mziq.com/mzfilemanager/v2/d/fdb59571-9620-473a-8f8d-a9c27ebf7d44/cf39a35e-3dec-44fa-70a3-12c54c36127c?origin=2), datado de 28/08/2026. Uma recepção HTTP200 em 10/10/2026, 17:39:05 UTC conservou o corpo completo de 16.777.216 bytes, SHA `b545894f3cc48b53cec119c2b1f06db8e5866259b36cc820842071d26b01833d`. Foram extraídas 460 páginas físicas; leitura humana delimitada, sem afirmar leitura integral do documento. O corpo contém preenchimento zero após o marcador PDF final, preservado sem alteração.
+
+Na página física 249 (245 impressa), a seção 6.3 define circulação excluindo controlador, vinculados, administradores e tesouraria, com data de última alteração 30/04/2026. Essa medida não substitui outstanding ou média de EPS. A seção 12.1, física 442 (438 impressa), informa capital emitido, subscrito e integralizado de 1.163.046.411 ações, com autorização em 20/05/2025; não reconcilia automaticamente os estoques de dezembro e junho já recebidos.
+
+As páginas físicas 443–444 distinguem classes A/B, com igualdade de distribuição e conversão 1:1, das Conversion Shares mantidas pela companhia. A quantidade por classe e seu grão ainda exigem ponte. Nenhum denominador foi selecionado, nem G13/PIT aprovado. Fonte, texto integral extraído, páginas lidas e recibos ficam em `.cdp/estudos/20261010-jbs-fre-v3-agosto/`.

@@ -1229,7 +1229,9 @@ def _research_section(pack: Any, facts: Mapping[str, str], *, full: bool,
         "bear_points": [_render_facts(x, facts) for x in n.bear_points],
         "key_risks": [_render_facts(x, facts) for x in n.key_risks],
         "catalysts": [c.model_dump(mode="json") for c in n.catalysts],
-        "squeeze": n.squeeze.model_dump(mode="json") if n.squeeze else None,
+        "squeeze": ({**n.squeeze.model_dump(mode="json"),
+                     "rationale": _render_facts(n.squeeze.rationale, facts)}
+                    if n.squeeze else None),
         "evidence": _evidence(n.evidence), "n_evidence": len(n.evidence),
         "provider": n.provider, "created_at": n.created_at,
     } for n in sorted(notes, key=lambda n: (n.issuer_id, n.role, n.note_id))]

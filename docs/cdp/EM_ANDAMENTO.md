@@ -5,7 +5,86 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-## Estado corrente — 10/10/2026, 00:33 Brasília
+## Estado corrente — 10/10/2026, 02:03 Brasília
+
+Observação anterior à integração do reparo de apresentação. A fonte publicada
+é `8450c8bbfb533cd2a44018383a2824faa5073eba`: sua CI remota concluiu com
+4391 testes aprovados, 17 pulados e zero falhas, erros ou xfail. Pages e cinco
+corpos HTTP/hash desse commit foram recebidos. A interface pública desse retrato
+continua negativa: 40 justificativas de squeeze exibem marcadores de fatos.
+
+O reparo de apresentação foi validado em AMPLA19: 4415 casos, 4398 aprovados,
+17 pulados e zero falhas, erros ou xfail; Ruff aprovado e 4836 fontes SHA
+literais. A prévia local da aba Risco resolve as 40 justificativas pelo briefing
+original, preservando pesquisa e juízo. Os sete testes novos incluem fato
+ausente explícito e ida/volta da publicação compacta. O delta tem três caminhos:
+painel, regressões e esta passagem. A atualização documental posterior ao
+terminal recebe conferência focal antes do commit. Integrar normalmente e
+conferir CI, Pages, corpos/hash e interface do novo commit; ainda não declarar
+o novo deploy confirmado.
+
+O trabalho privado MOC avançou: recepção de corpos do mercado (18 controles),
+carga nativa isolada (sete), contexto/custos nativos LEGACY/CURRENT (12),
+vínculos de proposta/decisão/configuração/trilha (16), inventário físico do
+livro (12) e seleção do estado anterior por integridade nativa de livro/série
+(12). São controles próprios de pacotes separados; não somar como composição
+integral nem repetir os anteriores quatro componentes/83 e trades/12.
+Fontes e origens permaneceram literais; a negativa de importação de uma fixture
+foi preservada. Confronto com DEV encontrou apenas a diferença de painel já
+conhecida; demais corpos compartilhados literais. Não há integração desse
+código no escritor nem revisão não autora. Faltam origem financeira completa,
+marcação/NAV, carteira resultante, fechamento final, prova, rotas comuns,
+retomada e caducidade; a evolução normal da trilha precisa de prefixo durável.
+Pacotes em `.cdp/prototipos/`; quadros/evidências em `.cdp/TAREFAS.md`.
+
+A nota14 primária de Enel Chile recebeu ponte documental entre subtotais de
+empréstimos, tags dimensionais específicas e arrendamentos separados, por
+código e sem nova recepção HTTP. Não altera parser, fatos canônicos ou valuation;
+G19/P0/PIT continuam abertos. Estudo em
+`.cdp/estudos/20261010-enelchile-divida-nota14/`.
+
+A retificação de Ultrapar permanece pronta e não enviada: autorização humana
+direta para contatar o chat executor ainda não recebida. A operação09 segue
+local e não publicada, com net fora de ±1%; não repetir decisão ou MOC para
+corrigir texto. As 12 automações internas continuam ativas, sujeitas aos limites
+do Codex. O executor permanece em 3c27 nesta observação. Cinco alterações
+herdadas ROOT estão preservadas; P0 financeiro, PIT, calibração e E1/E2 abertos.
+
+## Registro histórico anterior — 10/10/2026, 01:04 Brasília
+
+O conjunto de 52 caminhos foi integrado por fast-forward e publicado normalmente
+em main, commit `8450c8bbfb533cd2a44018383a2824faa5073eba`. AMPLA18B aprovou
+4391 testes, com 17 pulados; os dois ajustes posteriores de passagem/EOF receberam
+202 testes focais aprovados e um pulado. Ruff passou e as cinco alterações
+herdadas ROOT permanecem fora do conjunto. A CI integral remota ainda está em
+execução; lint, livro, rotinas, skills e portal-demo já passaram.
+
+Pages concluiu com sucesso. A recepção de cinco corpos HTTP confirma esse commit
+e seus hashes cruzados, limitada aos arquivos recebidos. Na aba Risco, porém,
+as sentinelas ainda mostram marcadores de fatos sem resolução: o corpo público
+contém 40 justificativas nesse estado. A correção candidata usa o formatador
+existente na justificativa de squeeze, preservando juízo e pesquisa original;
+fato ausente permanece explícito. Regressão negativa preservada; conferência
+focal e suíte integral do novo candidato precedem sua publicação. Ainda não
+declarar a interface concluída.
+
+O novo adaptador privado de trades antes do registro recebeu 12 testes próprios
+aprovados; chama o extrator nativo, sem criar DailyRecord ou recalcular carteira.
+É um pacote separado dos quatro componentes MOC/83 testes: não afirmar 95 testes
+de composição nem guarda integrada. Resolver financeiro, custo monetário/NAV,
+fechamento final, escritor e retomada seguem pendentes de implementação e
+revisão não autora. Pacote: `.cdp/prototipos/moc-trades-posicoes-v1/`.
+
+A retificação de Ultrapar tem instrução concreta pronta. Autorização direta para
+enviar ao chat executor foi solicitada, mas ainda não recebida; mensagem não
+enviada. A efetivação e os relatórios09 continuam locais no executor, que ainda
+está em 3c27. O net inaugural segue fora de ±1%. P0 financeiro, PIT, calibração
+e E1/E2 permanecem abertos; as 12 automações internas seguem ativas e sujeitas
+à disponibilidade do Codex. Recepção do portal em
+`.cdp/validacoes/20261009-integracao-18B/PORTAL_8450/`; candidato de apresentação
+em `.cdp/validacoes/20261010-integracao-19/`.
+
+## Registro histórico anterior — 10/10/2026, 00:33 Brasília
 
 Registro pré-integração. AMPLA18B terminou positiva em 03:33:03 UTC: 4408
 casos, 4391 aprovados, 17 pulados e zero falhas, erros ou xfail. Ruff passou;

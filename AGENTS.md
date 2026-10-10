@@ -213,7 +213,7 @@ código (passo a passo em `docs/cdp/AUTOMACAO.md`):
 | `docs/cdp/LOCAL.md`, `docs/cdp/ROTINAS.md` | PC local (app desktop) e tabela de rotinas |
 | `docs/cdp/SITE.md` | portal público (GitHub Pages) e conferência de uma publicação |
 | `docs/cdp/REPRODUZIR.md`, `docs/cdp/REPLICAR.md` | auditar e recalcular; rodar a sua cópia |
-| `docs/cdp/TECNICAS.md` | fundação de técnicas portáteis, recursos de exemplo e limites de instalação |
+| `docs/cdp/TECNICAS.md`, `docs/cdp/MCP.md` | fundação de técnicas portáteis, recursos de exemplo, MCP de leitura e limites de instalação |
 | `docs/cdp/RECEPCAO_BANCARIA.md` | recepção prospectiva opcional de saldos e células bancárias, custódia física e limites de autenticação |
 | `docs/cdp/REPLAY_OPERACIONAL.md` | ensaio isolado com decisão, MOC, diário e origem retrospectiva autenticada; limites E1/PIT |
 | `docs/cdp/ARQUITETURA.md` | módulos, comandos e fluxo semanal e diário |

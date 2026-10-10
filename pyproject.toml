@@ -30,8 +30,12 @@ dependencies = [
 [project.scripts]
 cdp = "cdp.__main__:main"
 cdp-tecnicas = "cdp.tecnicas.cli:main"
+cdp-tecnicas-mcp = "cdp.mcp_readonly.__main__:main"
 
 [project.optional-dependencies]
+mcp = [
+    "mcp==2.3.0",
+]
 gemini = [
     "google-genai>=0.1.1",
 ]

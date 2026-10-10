@@ -39,6 +39,21 @@ ou horizonte8 não substituem o outcome fechado de horizonte5. Os parâmetros n�
 recalculados. Identificadores de coorte e início por grupo são únicos; vetores por
 emissor têm comprimentos iguais e ids únicos. Tipos malformados recusam antes do cálculo.
 
+`AmostraIC.week` conserva a chave semanal original, como `date` nativa exata.
+O início precisa ocorrer no mesmo dia civil UTC dessa chave. O calendário explícito
+`CalendarioFaseDeclarado(corpo_ref, selado_utc, chaves)` é congelado: chaves nativas,
+únicas, ordenadas e no máximo uma por semana civil segunda–domingo. Cada chave de
+coorte deve pertencer ao calendário presente e não vazio. Não impõe sexta-feira:
+quinta em feriado ou inception excepcional precisam apenas constar da declaração.
+Mesmo sem calendário, duas coortes do mesmo grupo/semana civil são contradição,
+recusada antes da máscara e do cálculo, sem escolher a melhor pela performance.
+
+Calendário ausente/vazio ou selado depois da primeira previsão do grupo impede
+recomendação. Referência e chaves declaram consistência, não autenticam sessões,
+feriados, inception, disponibilidade ou PIT. A convenção de dia civil UTC é explícita;
+não se converte um timestamp livre para fazê-lo caber na chave. Contagem de sessões
+reais do horizonte permanece fora do kernel, sem buscar a configuração atual.
+
 IA, quant e retorno usam a mesma máscara, junto da autoria confirmada. Uma ausência
 retira o emissor das três séries, conservando id/motivo e as contagens. Autoria externa
 não vira autoria do executor. `None` permanece ausência; retorno zero finito é legítimo.
@@ -55,6 +70,9 @@ deixa somente a média/intercepto, enquanto IA inteiramente linear no quant tem 
 ausente, não mérito zero. Não há importação do tracker/escritores/financeiro neste kernel.
 
 Agregação semanal mantém média/desvio ddof1, ICIR média/desvio e t IID média/(sd/√n).
+`n_semanas` conta ICs disponíveis de chaves/semana civil distintas; treze retornos
+diários disjuntos não viram treze semanas. Lacunas não recebem IC zero e não há
+consecutividade artificial além das chaves recebidas.
 Menos de2 semanas ou desvio zero tornam t/ICIR ausentes. T é explicitamente diagnóstico
 IID, sem provar independência ou fornecer significância corrigida para seleção.
 
@@ -74,6 +92,9 @@ aprovação, certificado de modelo, autorização financeira ou conclusão do P1
 ## Validação e limites
 
 Fixtures são TESTE/DADOS SIMULADOS e nunca recebem flag pública para obter promoção.
+Controles de cadência conservam origem simulada e recusam datas diárias, chaves
+artificiais desalinhadas, duplicidade civil, tipos livres e calendário contraditório.
+Quinta/inception e semanas com lacunas exercitam somente consistência declarada.
 Os oráculos de rank/MQO/DDOF/thresholds exercitam kernels matemáticos isolados; o fluxo
 principal simulado confirma insuficiência e preservação de identidade/ausência/máscara.
 A focal carrega o módulo inteiro por loader de arquivo, pois o agregador de pesquisa

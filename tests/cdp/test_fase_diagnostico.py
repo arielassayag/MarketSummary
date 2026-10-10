@@ -5,7 +5,7 @@ import importlib.util
 import math
 import sys
 from dataclasses import FrozenInstanceError, replace
-from datetime import UTC, datetime, timedelta, timezone, tzinfo
+from datetime import UTC, date, datetime, timedelta, timezone, tzinfo
 from pathlib import Path
 
 import pytest
@@ -20,6 +20,7 @@ SPEC.loader.exec_module(FASE)
 ChaveGrupo = FASE.ChaveGrupo
 AmostraIC = FASE.AmostraIC
 PoliticaFase = FASE.PoliticaFase
+CalendarioFaseDeclarado = FASE.CalendarioFaseDeclarado
 EntradaFaseInvalida = FASE.EntradaFaseInvalida
 recomendar_fase_grupo = FASE.recomendar_fase_grupo
 START = datetime(2026, 1, 2, 20, tzinfo=UTC)
@@ -27,18 +28,26 @@ GROUP = ChaveGrupo("codex", "provider_original_TESTE", "snapshot_original_TESTE"
 MACRO = "a" * 64
 
 
+def calendar(**changes):
+    value = CalendarioFaseDeclarado(
+        "CALENDARIO_TESTE_DECLARADO_SEM_PIT", START - timedelta(days=1),
+        tuple((START + timedelta(weeks=i)).date() for i in range(104)),
+    )
+    return replace(value, **changes)
+
+
 def policy(**changes):
     value = PoliticaFase(START + timedelta(days=400), 5, MACRO, FASE.UNIDADE,
                         "GRUPO_REFERENCIA_HUMANA", "REFERENCIA_TESTE_SEM_AUTORIDADE",
                         "UNIVERSO_TESTE_PREDECLARADO", START - timedelta(days=1),
-                        "DECLARADA_NAO_PROVADA")
+                        "DECLARADA_NAO_PROVADA", calendar())
     return replace(value, **changes)
 
 
 def sample(i=0, **changes):
     begin = START + timedelta(weeks=i)
     value = AmostraIC(
-        f"DADOS_SIMULADOS-{i}", GROUP, begin, begin + timedelta(days=5),
+        f"DADOS_SIMULADOS-{i}", GROUP, begin.date(), begin, begin + timedelta(days=5),
         begin - timedelta(hours=1), begin - timedelta(hours=2), begin - timedelta(minutes=30),
         begin + timedelta(days=5, hours=1), "COORTE_TESTE", "BINDING_TESTE", "OUTCOME_TESTE",
         ("CHAMADA_TESTE",), (GROUP.model_snapshot_original,), "ORIGINAL_UNIQUE_COMPLETE", 1,
@@ -269,11 +278,9 @@ def test_iid_desconhecida_ou_dependencia_nao_promove(qual):
 
 
 def test_overlap_observado_e_comparacoes_tardias_nao_promovem():
-    second = sample(1, inicio_utc=START + timedelta(days=4))
-    second = replace(second, previsao_selada_utc=second.inicio_utc - timedelta(hours=1),
-                     modelo_as_of_utc=second.inicio_utc - timedelta(hours=2),
-                     deadline_utc=second.inicio_utc - timedelta(minutes=30))
-    result = diagnose((sample(), second))
+    first = sample(fim_utc=START + timedelta(days=8),
+                   outcome_selado_utc=START + timedelta(days=8, hours=1))
+    result = diagnose((first, sample(1)))
     assert "OUTCOMES_SOBREPOSTOS" in result.impedimentos
     late = diagnose(comparisons_seladas_utc=START)
     assert "COMPARACOES_NAO_PRE_DECLARADAS" in late.impedimentos
@@ -386,3 +393,148 @@ def test_sem_io_ambiente_financeiro_ou_imports_do_agregador():
                    for n in calls)
     assert not any(isinstance(n.func, ast.Attribute) and n.func.attr in {"now", "today"}
                    for n in calls)
+
+
+def daily_sample(i):
+    """Receita diária fixa, disjunta e rotulada TESTE; nunca origem pública fictícia."""
+    begin = START + timedelta(days=i)
+    return sample(i, week=begin.date(), inicio_utc=begin, fim_utc=begin + timedelta(hours=6),
+                  previsao_selada_utc=begin - timedelta(hours=1),
+                  modelo_as_of_utc=begin - timedelta(hours=2),
+                  deadline_utc=begin - timedelta(minutes=30),
+                  outcome_selado_utc=begin + timedelta(hours=7), horizonte_sessoes=1)
+
+
+def test_treze_diarias_disjuntas_nao_contam_treze_semanas():
+    samples = tuple(daily_sample(i) for i in range(13))
+    assert all(s.origem == "SIMULADA_TESTE" for s in samples)
+    with pytest.raises(EntradaFaseInvalida, match="grupo na mesma semana civil"):
+        diagnose(samples, horizonte_sessoes=1, calendario=None)
+
+
+def test_calendario_diario_nao_fabrica_unidade_semanal():
+    keys = tuple((START + timedelta(days=i)).date() for i in range(13))
+    with pytest.raises(EntradaFaseInvalida, match="chave por semana civil"):
+        diagnose(calendario=calendar(chaves=keys))
+
+
+def test_chaves_artificiais_semanais_nao_rebatizam_retornos_diarios():
+    s = replace(daily_sample(1), week=(START + timedelta(weeks=1)).date())
+    with pytest.raises(EntradaFaseInvalida, match="dia civil UTC"):
+        diagnose((daily_sample(0), s), horizonte_sessoes=1, calendario=None)
+
+
+def test_dois_dias_diferentes_da_mesma_semana_recusam_sem_selecionar_coorte():
+    thursday = START - timedelta(days=1)
+    s = sample(1, week=thursday.date(), inicio_utc=thursday,
+               previsao_selada_utc=thursday - timedelta(hours=1),
+               modelo_as_of_utc=thursday - timedelta(hours=2),
+               deadline_utc=thursday - timedelta(minutes=30))
+    with pytest.raises(EntradaFaseInvalida, match="grupo na mesma semana civil"):
+        diagnose((s, sample()), calendario=None)
+
+
+def test_grupos_distintos_podem_reter_mesma_chave_sem_vazar_estatistica():
+    other = replace(GROUP, channel="mente_final")
+    result = diagnose((sample(), sample(id_coorte="DADOS_SIMULADOS-1", grupo=other)))
+    assert result.ic_ai_descritivo.n_semanas == 1
+    assert result.coortes_outros_grupos == ("DADOS_SIMULADOS-1",)
+    assert result.coortes[0].week == START.date()
+
+
+@pytest.mark.parametrize("begin", [datetime(2026, 1, 1, 20, tzinfo=UTC),
+                                  datetime(2026, 1, 7, 20, tzinfo=UTC)])
+def test_quinta_feriado_e_inception_declaradas_sem_impor_sexta(begin):
+    s = sample(week=begin.date(), inicio_utc=begin, fim_utc=begin + timedelta(days=5),
+               previsao_selada_utc=begin - timedelta(hours=1),
+               modelo_as_of_utc=begin - timedelta(hours=2),
+               deadline_utc=begin - timedelta(minutes=30),
+               outcome_selado_utc=begin + timedelta(days=5, hours=1))
+    cal = calendar(chaves=(begin.date(),), selado_utc=begin - timedelta(days=1))
+    result = diagnose((s,), calendario=cal)
+    assert result.coortes[0].week == begin.date()
+    assert result.ic_ai_descritivo.n_semanas == 1
+    assert result.fase_sugerida is None and not result.autoriza_promocao
+    assert "DADOS_SIMULADOS" in result.coortes[0].impedimentos
+
+
+@pytest.mark.parametrize("cal", [None, calendar(chaves=())])
+def test_calendario_ausente_conserva_estatistica_sem_recomendacao(cal):
+    result = diagnose(calendario=cal)
+    assert result.ic_ai_descritivo.n_semanas == 1
+    assert "CALENDARIO_DECLARADO_AUSENTE" in result.impedimentos
+    assert result.fase_sugerida is None
+
+
+def test_calendario_tardio_nao_recebe_selo_da_propria_previsao():
+    result = diagnose(calendario=calendar(selado_utc=START))
+    assert "CALENDARIO_NAO_PRE_DECLARADO" in result.impedimentos
+    at = diagnose(calendario=calendar(selado_utc=START - timedelta(hours=1)))
+    assert "CALENDARIO_NAO_PRE_DECLARADO" not in at.impedimentos
+
+
+def test_chave_ausente_recusada_sem_fallback_calendario_global():
+    with pytest.raises(EntradaFaseInvalida, match="ausente no calendário"):
+        diagnose(calendario=calendar(chaves=((START + timedelta(weeks=1)).date(),)))
+
+
+class MaliciousDate(date):
+    def weekday(self):
+        raise AssertionError("callback weekday proibido")
+
+    def __eq__(self, other):
+        raise AssertionError("callback de igualdade temporal proibido")
+
+
+@pytest.mark.parametrize("bad", [None, "2026-01-02", START,
+                                 MaliciousDate(2026, 1, 2), object()])
+def test_week_exata_antes_de_comparacao_ou_callback(bad):
+    with pytest.raises(EntradaFaseInvalida, match="week: date"):
+        diagnose((sample(week=bad),))
+
+
+@pytest.mark.parametrize("changes", [
+    {"corpo_ref": None}, {"corpo_ref": MaliciousText("x")},
+    {"selado_utc": START.replace(tzinfo=None)},
+    {"selado_utc": START.replace(fold=1)}, {"chaves": [START.date()]},
+    {"chaves": (START,)}, {"chaves": (MaliciousDate(2026, 1, 2),)},
+    {"chaves": (START.date(), START.date())},
+    {"chaves": ((START + timedelta(weeks=1)).date(), START.date())},
+])
+def test_calendario_tipos_ordem_e_metadados_exatos(changes):
+    with pytest.raises(EntradaFaseInvalida):
+        diagnose(calendario=calendar(**changes))
+
+
+@pytest.mark.parametrize("bad", [object(), {"chaves": ()}])
+def test_dto_calendario_nao_confere_autoridade(bad):
+    with pytest.raises(EntradaFaseInvalida, match="CalendarioFaseDeclarado exato"):
+        diagnose(calendario=bad)
+
+
+def test_virada_ano_semana_civil_nao_separa_chaves_por_ano():
+    with pytest.raises(EntradaFaseInvalida, match="chave por semana civil"):
+        diagnose(calendario=calendar(chaves=(date(2025, 12, 31), date(2026, 1, 2))))
+    begin = datetime(2026, 1, 5, 20, tzinfo=UTC)
+    s = sample(1, inicio_utc=begin, week=begin.date(),
+               previsao_selada_utc=begin - timedelta(hours=1),
+               modelo_as_of_utc=begin - timedelta(hours=2),
+               deadline_utc=begin - timedelta(minutes=30))
+    result = diagnose((sample(), s), calendario=calendar(chaves=(START.date(), s.week)))
+    assert result.ic_ai_descritivo.n_semanas == 2
+
+
+def test_semanas_ausentes_nao_viram_zero_ou_exigem_consecutividade():
+    result = diagnose((sample(), sample(2)))
+    assert result.ic_ai_descritivo.n_semanas == 2
+    assert tuple(r.week for r in result.coortes) == (START.date(), (START + timedelta(weeks=2)).date())
+    assert result.ic_ai_descritivo.media == pytest.approx(1.0)
+
+
+def test_calendario_congelado_e_preservado_sem_reescrever_chaves():
+    cal = calendar()
+    before = cal
+    diagnose(calendario=cal)
+    assert cal == before
+    with pytest.raises(FrozenInstanceError):
+        cal.chaves = ()

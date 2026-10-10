@@ -9,7 +9,7 @@ from __future__ import annotations
 import math
 import sys
 from dataclasses import dataclass
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime, timedelta
 from statistics import mean, stdev
 
 MIN_IC_OBS = 3
@@ -33,6 +33,7 @@ class ChaveGrupo:
 class AmostraIC:
     id_coorte: str
     grupo: ChaveGrupo
+    week: date
     inicio_utc: datetime
     fim_utc: datetime
     previsao_selada_utc: datetime
@@ -58,6 +59,15 @@ class AmostraIC:
 
 
 @dataclass(frozen=True, slots=True)
+class CalendarioFaseDeclarado:
+    """Chaves originais declaradas; não autentica sessões, inception ou PIT."""
+
+    corpo_ref: str
+    selado_utc: datetime
+    chaves: tuple[date, ...]
+
+
+@dataclass(frozen=True, slots=True)
 class PoliticaFase:
     corte_utc: datetime
     horizonte_sessoes: int
@@ -68,11 +78,13 @@ class PoliticaFase:
     comparisons_scope_ref: str | None
     comparisons_seladas_utc: datetime | None
     independencia: str
+    calendario: CalendarioFaseDeclarado | None
 
 
 @dataclass(frozen=True, slots=True)
 class CoorteIC:
     id_coorte: str
+    week: date
     inicio_utc: datetime
     fim_utc: datetime
     emissores_incluidos: tuple[str, ...]
@@ -159,6 +171,29 @@ def _group(group: object) -> None:
     _enum(group.channel, "channel", ("quant", "pesquisa_ai", "mente_final"))
 
 
+def _semana_civil(value: date) -> date:
+    return value - timedelta(days=value.weekday())
+
+
+def _calendar(calendar: object) -> None:
+    if calendar is None:
+        return
+    if type(calendar) is not CalendarioFaseDeclarado:
+        raise EntradaFaseInvalida("calendario: CalendarioFaseDeclarado exato obrigatório.")
+    _text(calendar.corpo_ref, "calendario.corpo_ref")
+    _utc(calendar.selado_utc, "calendario.selado_utc")
+    _tuple(calendar.chaves, "calendario.chaves")
+    # Tipos exatos primeiro: weekday/comparação de subclasses não são chamados.
+    for key in calendar.chaves:
+        if type(key) is not date:
+            raise EntradaFaseInvalida("calendario.chaves: date nativa exata obrigatória.")
+    if any(a >= b for a, b in zip(calendar.chaves, calendar.chaves[1:], strict=False)):
+        raise EntradaFaseInvalida("Chaves do calendário devem ser únicas e ordenadas.")
+    weeks = tuple(_semana_civil(key) for key in calendar.chaves)
+    if len(set(weeks)) != len(weeks):
+        raise EntradaFaseInvalida("Calendário contém mais de uma chave por semana civil.")
+
+
 def _policy(policy: object, reference: object) -> None:
     if type(policy) is not PoliticaFase:
         raise EntradaFaseInvalida("politica: PoliticaFase exata obrigatória.")
@@ -173,6 +208,7 @@ def _policy(policy: object, reference: object) -> None:
     _text(policy.referencia_fase, "referencia_fase", optional=True)
     _text(policy.comparisons_scope_ref, "comparisons_scope_ref", optional=True)
     _utc(policy.comparisons_seladas_utc, "comparisons_seladas_utc", optional=True)
+    _calendar(policy.calendario)
     if (policy.comparisons_scope_ref is None) != (policy.comparisons_seladas_utc is None):
         raise EntradaFaseInvalida("Comparações: referência e selo devem estar ambos presentes/ausentes.")
     if reference is not None:
@@ -188,6 +224,13 @@ def _sample(sample: object, policy: PoliticaFase) -> None:
         _utc(getattr(sample, name), name)
     for name in ("modelo_as_of_utc", "outcome_selado_utc"):
         _utc(getattr(sample, name), name, optional=True)
+    if type(sample.week) is not date:
+        raise EntradaFaseInvalida("week: date nativa exata obrigatória.")
+    if sample.week != sample.inicio_utc.date():
+        raise EntradaFaseInvalida("Chave week diferente do dia civil UTC de início.")
+    if (policy.calendario is not None and policy.calendario.chaves
+            and sample.week not in policy.calendario.chaves):
+        raise EntradaFaseInvalida("Chave week ausente no calendário declarado.")
     if not sample.previsao_selada_utc <= sample.inicio_utc < sample.fim_utc:
         raise EntradaFaseInvalida("Cronologia exige selo <= início < fim.")
     if sample.modelo_as_of_utc is not None and sample.modelo_as_of_utc > sample.previsao_selada_utc:
@@ -359,14 +402,14 @@ def _cohort(sample: AmostraIC, policy: PoliticaFase) -> CoorteIC:
     n = len(included)
     q_ic = _spearman(tuple(quant), tuple(outcome))
     if sample.grupo.channel == "quant":
-        return CoorteIC(sample.id_coorte, sample.inicio_utc, sample.fim_utc,
+        return CoorteIC(sample.id_coorte, sample.week, sample.inicio_utc, sample.fim_utc,
                         tuple(included), tuple(excluded), 0, n, 0,
                         None, q_ic, None, tuple(blockers))
     a_ic = _spearman(tuple(ai), tuple(outcome))
     incr = _incremental(tuple(ai), tuple(quant), tuple(outcome))
     if n < MIN_IC_OBS:
         blockers.append("MENOS_DE_3_PARES_COMUNS")
-    return CoorteIC(sample.id_coorte, sample.inicio_utc, sample.fim_utc,
+    return CoorteIC(sample.id_coorte, sample.week, sample.inicio_utc, sample.fim_utc,
                     tuple(included), tuple(excluded), n, n, n,
                     a_ic, q_ic, incr, tuple(blockers))
 
@@ -385,10 +428,17 @@ def recomendar_fase_grupo(amostras: tuple[AmostraIC, ...], grupo: ChaveGrupo,
     periods = tuple((s.grupo, s.inicio_utc) for s in amostras)
     if len(set(periods)) != len(periods):
         raise EntradaFaseInvalida("Início de coorte duplicado no mesmo grupo.")
+    weeks = tuple((s.grupo, _semana_civil(s.week)) for s in amostras)
+    if len(set(weeks)) != len(weeks):
+        raise EntradaFaseInvalida("Mais de uma coorte do grupo na mesma semana civil.")
     selected = tuple(sorted((s for s in amostras if s.grupo == grupo), key=lambda s: s.inicio_utc))
     rows = tuple(_cohort(s, politica) for s in selected)
     other = tuple(s.id_coorte for s in amostras if s.grupo != grupo)
     blockers = []
+    if politica.calendario is None or not politica.calendario.chaves:
+        blockers.append("CALENDARIO_DECLARADO_AUSENTE")
+    elif selected and politica.calendario.selado_utc > min(s.previsao_selada_utc for s in selected):
+        blockers.append("CALENDARIO_NAO_PRE_DECLARADO")
     if any(v is None for v in (grupo.mind_original, grupo.provider_original,
                               grupo.model_snapshot_original)):
         blockers.append("GRUPO_NAO_IDENTIFICADO")

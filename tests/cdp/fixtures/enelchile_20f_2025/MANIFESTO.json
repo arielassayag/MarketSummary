@@ -1,0 +1,87 @@
+{
+  "catalogo": {
+    "bytes": 2608,
+    "resource": "recursos/sec_classes_acoes.json",
+    "sha256": "4327afa24f342363200e65ebef3d7673d30a3b6e6a8120d856aee53ce6b1bcc7"
+  },
+  "corpos": [
+    {
+      "bytes": 38598294,
+      "compression": "gzip",
+      "origem_recebida": "/Users/arielassayag/codigos/MarketSummary/.cdp/prototipos/enelchile-perfil-anual-v1b/inputs/enic-20251231x20f_htm.xml",
+      "path": "enic-20251231x20f_htm.xml.gz",
+      "role": "XML",
+      "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+      "stored_bytes": 1419419,
+      "stored_sha256": "daa473909a336889b56da0a44baff3ff612649e303b9db30567c423a81b08c00"
+    },
+    {
+      "bytes": 438,
+      "compression": null,
+      "origem_recebida": "/Users/arielassayag/codigos/MarketSummary/.cdp/prototipos/enelchile-perfil-anual-v1b/inputs/recibo_xml_literal.json",
+      "path": "recibo_xml_literal.json",
+      "role": "XML_receipt",
+      "sha256": "2d4710181623696931d02c901ab4f44864ead53a5d969de7f45bc3aa456e0a2e",
+      "stored_bytes": 438,
+      "stored_sha256": "2d4710181623696931d02c901ab4f44864ead53a5d969de7f45bc3aa456e0a2e"
+    },
+    {
+      "bytes": 42640,
+      "compression": null,
+      "origem_recebida": "/Users/arielassayag/codigos/MarketSummary/.cdp/prototipos/enelchile-perfil-anual-v1b/inputs/submissions_recebidas.json",
+      "path": "submissions_recebidas.json",
+      "role": "submissions",
+      "sha256": "b3702cf634660baa7d9b0c0e64c4a3c96d77a46dd9b33406b3e4c3eb85747a3f",
+      "stored_bytes": 42640,
+      "stored_sha256": "b3702cf634660baa7d9b0c0e64c4a3c96d77a46dd9b33406b3e4c3eb85747a3f"
+    },
+    {
+      "bytes": 736,
+      "compression": null,
+      "origem_recebida": "/Users/arielassayag/codigos/MarketSummary/.cdp/prototipos/enelchile-perfil-anual-v1b/inputs/recibos_indice_literais.jsonl",
+      "path": "recibos_indice_literais.jsonl",
+      "role": "index_receipts",
+      "sha256": "c29efd420ec2584e905449b6345569137e6fb4c7ded5f02a7606d137e552d7f9",
+      "stored_bytes": 736,
+      "stored_sha256": "c29efd420ec2584e905449b6345569137e6fb4c7ded5f02a7606d137e552d7f9"
+    },
+    {
+      "bytes": 3758,
+      "compression": null,
+      "origem_recebida": "/Users/arielassayag/codigos/MarketSummary/.cdp/prototipos/enelchile-perfil-anual-v1b/inputs/RECIBO_METADADOS_ROOT.json",
+      "path": "RECIBO_METADADOS_ROOT.json",
+      "role": "metadata_receipt_ROOT",
+      "sha256": "25d6197f836943c6fb99c153f8d0ef79ba2a857c0494fea904e69ad6c72f127b",
+      "stored_bytes": 3758,
+      "stored_sha256": "25d6197f836943c6fb99c153f8d0ef79ba2a857c0494fea904e69ad6c72f127b"
+    }
+  ],
+  "exercicio": "DADOS SIMULADOS — integração técnica privada",
+  "fontes_publicas_reais": true,
+  "knowledge_cutoff_UTC": "2026-10-09T14:13:45.703490+00:00",
+  "lxml_lock_recebido": "6.1.3",
+  "modulos_documentais": {
+    "__init__.py": {
+      "bytes": 315,
+      "sha256": "fb9d90eab41d7e5a35a412242a616e6fe14c21b628f4c39647014bf4350f06fe"
+    },
+    "consumidor.py": {
+      "bytes": 13588,
+      "sha256": "694b26fce1404dbf6c4d74c6cb6eff6fc2fdd2686f43ab78e69e1e7492bf1e15"
+    },
+    "leitor.py": {
+      "bytes": 8736,
+      "sha256": "e627af7cc54cc84a7b87f96ad66c2d3bbb3aa0a8fcc44a40a867fa512755f509"
+    },
+    "produtor.py": {
+      "bytes": 22959,
+      "sha256": "8790b79f06c3b6ddf9a8c2d22f7403d091914dba86276b643cf7aa2da87960d1"
+    }
+  },
+  "novo_HTTP": false,
+  "oraculo": {
+    "path": "POSITIVO_SELECAO.json",
+    "sha256": "82940212893b7c8e85113f764ad8f9b05e6c475fea28810ebb122c6963a07b6b"
+  },
+  "schema": "cdp.enelchile.fixture_offline/v1"
+}

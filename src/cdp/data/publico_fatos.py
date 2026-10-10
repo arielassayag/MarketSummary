@@ -224,6 +224,9 @@ def selecionar_pit(fatos: pd.DataFrame, as_of: date, *, conhecimento_ate: dateti
     if fatos is None or fatos.empty:
         return pd.DataFrame(columns=SAIDA_COLUNAS)
     f = fatos.copy()
+    from .publico_contexto_documental import conferir_estoques_no_conjunto
+
+    conferir_estoques_no_conjunto(f)
     if any(k in f for k in CAMPOS_CONTEXTO):
         for _, row in f.iterrows():
             contexto_documental(row)
@@ -289,7 +292,9 @@ def selecionar_pit(fatos: pd.DataFrame, as_of: date, *, conhecimento_ate: dateti
         vazio.attrs["moeda_trocada"] = trocas
         vazio.attrs["incompatibilidades_fluxos"] = incompatibilidades
         return vazio
-    out = pd.concat([out, _derivados(out)], ignore_index=True)
+    novos_derivados = _derivados(out)
+    derivados_recusados = novos_derivados.attrs.get("derivados_recusados", [])
+    out = pd.concat([out, novos_derivados], ignore_index=True)
     out["escala"] = 1
     if "nota" not in out.columns:
         out["nota"] = None
@@ -302,6 +307,8 @@ def selecionar_pit(fatos: pd.DataFrame, as_of: date, *, conhecimento_ate: dateti
            .reset_index(drop=True))
     out.attrs["moeda_trocada"] = trocas
     out.attrs["incompatibilidades_fluxos"] = incompatibilidades
+    if derivados_recusados:
+        out.attrs["derivados_recusados"] = derivados_recusados
     return out
 
 
@@ -529,13 +536,17 @@ def _saldo(ent: str, item: str, g: pd.DataFrame, datas: set | None,
     for e, ge in g.groupby("period_end", sort=True):
         d = pd.Timestamp(e).date()
         row = list(ge.itertuples(index=False))[-1]
-        from .publico_contexto_documental import estoque_documental
+        from .publico_contexto_documental import estoque_documental, frequencia_estoque_documental
 
+        frequencia_fechada = frequencia_estoque_documental(row._asdict())
         estoque_comprovado = estoque_documental(row._asdict())
         if datas is not None and d not in datas and not estoque_comprovado:
             continue
         base = {"entidade": ent, "item": item, "period_end": pd.Timestamp(e),
                 "value": float(row.value), **_meta(row)}
+        if frequencia_fechada is not None:
+            out.append({**base, "freq": frequencia_fechada})
+            continue
         out.append({**base, "freq": "Q"})
         if estoque_comprovado:
             continue  # Q é observação instantânea; o perfil não emite A/TTM.
@@ -561,6 +572,9 @@ def derivados(df: pd.DataFrame) -> pd.DataFrame:
 
 def _derivados(df: pd.DataFrame) -> pd.DataFrame:
     """``ebitda``, ``fcf`` e ``divida_liquida`` por (entidade, freq, period_end)."""
+    from .publico_enelchile_estoque import chaves_dl_recusadas
+
+    dl_recusada = chaves_dl_recusadas(df)
     k = ["entidade", "freq", "period_end"]
     w = df.pivot_table(index=k, columns="item", values="value", aggfunc="first")
     meta_cols = ["demonstrativo", "currency", "consolidado", "fonte", "url", "documento",
@@ -576,6 +590,8 @@ def _derivados(df: pd.DataFrame) -> pd.DataFrame:
     def add(nome: str, comp: list[str], valor: pd.Series, demonstrativo: str, nota: str,
             opcionais: tuple[str, ...] = ()) -> None:
         for idx, v in valor.dropna().items():
+            if nome == "divida_liquida" and idx in dl_recusada:
+                continue  # Sem composição autenticada de todos os participantes.
             if not math.isfinite(float(v)):
                 continue
             ms = [meta.loc[(*idx, c)] for c in comp if (*idx, c) in meta.index]
@@ -642,7 +658,14 @@ def _derivados(df: pd.DataFrame) -> pd.DataFrame:
         "calculado: divida_bruta − caixa − aplicacoes_cp")
     add("divida_liquida", ["divida_bruta", "caixa"], liq_so_caixa, "BP",
         "calculado: divida_bruta − caixa (aplicações de curto prazo não informadas)")
-    return pd.DataFrame(out)
+    result = pd.DataFrame(out)
+    if dl_recusada:
+        result.attrs["derivados_recusados"] = [
+            {"entidade": ent, "freq": freq, "period_end": end.date().isoformat(),
+             "item": "divida_liquida", "motivo": "perfil Enel anual sem composição autenticada dos participantes"}
+            for ent, freq, end in sorted(dl_recusada)
+        ]
+    return result
 
 
 __all__ = ["FLUXOS", "SAIDA_COLUNAS", "derivados", "selecionar_pit"]

@@ -701,6 +701,8 @@ def coletar(md: MarketData, as_of: date, issuer_ids: Sequence[str], tickers: Seq
     """Política nova sela corte exato em todos os arquivos; ausência conserva seleção legada."""
     if not isinstance(preservar_semantica_capital, bool):
         raise ValueError("preservar_semantica_capital exige bool explícito")
+    if type(patrimonio_owners_observado) is not bool:
+        raise ValueError("patrimonio_owners_observado exige bool explícito")
     from .ri_observada import ativo as ri_ativo
     from .temporal import ativo as temporal_ativo
     ri = params is not None and ri_ativo(params)

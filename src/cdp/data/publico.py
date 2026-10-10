@@ -500,6 +500,8 @@ def demonstrativos(issuer_ids: Sequence[str], as_of: date, *, offline: bool = Fa
     """
     if not isinstance(preservar_semantica_capital, bool):
         raise ValueError("preservar_semantica_capital exige bool explícito")
+    if type(patrimonio_owners_observado) is not bool:
+        raise ValueError("patrimonio_owners_observado exige bool explícito")
     if selecionar_ri_observado and conhecimento_ate is None:
         raise ValueError("RI observado exige corte UTC explícito de conhecimento")
     if patrimonio_owners_observado and not selecionar_ri_observado:

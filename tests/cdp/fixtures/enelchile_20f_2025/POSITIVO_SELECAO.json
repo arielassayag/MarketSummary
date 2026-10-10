@@ -1,0 +1,2624 @@
+[
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "BP",
+    "freq": "A",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "acoes_em_circulacao",
+    "value": 69166557219.0,
+    "currency": null,
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (EntityCommonStockSharesOutstanding)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "BP",
+    "freq": "Q",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "acoes_em_circulacao",
+    "value": 69166557219.0,
+    "currency": null,
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (EntityCommonStockSharesOutstanding)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "BP",
+    "freq": "A",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "arrendamentos",
+    "value": 410197000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (arrendamentos) [Enel estoque anual documental v1]",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": "estoque documental anual; revisão local de um filing",
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": {
+      "ancoras_anuais": [
+        {
+          "anual": true,
+          "consolidado": true,
+          "currency": "USD",
+          "demonstrativo": "DFC",
+          "documento": "SEC 20-F 0001104659-26-050251 (PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities+PurchaseOfIntangibleAssetsClassifiedAsInvestingActivities)",
+          "entidade": "0001659939",
+          "item": "capex",
+          "nota": null,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "received_date": "2026-04-28",
+          "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/",
+          "value": 499108000.0,
+          "version": 1
+        },
+        {
+          "anual": true,
+          "consolidado": true,
+          "currency": "USD",
+          "demonstrativo": "DFC",
+          "documento": "SEC 20-F 0001104659-26-050251 (CashFlowsFromUsedInOperatingActivities)",
+          "entidade": "0001659939",
+          "item": "cfo",
+          "nota": null,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "received_date": "2026-04-28",
+          "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/",
+          "value": 1319678000.0,
+          "version": 1
+        },
+        {
+          "anual": true,
+          "consolidado": true,
+          "currency": "USD",
+          "demonstrativo": "DRE",
+          "documento": "SEC 20-F 0001104659-26-050251 (DepreciationExpense+AmortisationExpense)",
+          "entidade": "0001659939",
+          "item": "d_a",
+          "nota": null,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "received_date": "2026-04-28",
+          "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/",
+          "value": 387430000.0,
+          "version": 1
+        },
+        {
+          "anual": true,
+          "consolidado": true,
+          "currency": "USD",
+          "demonstrativo": "DRE",
+          "documento": "SEC 20-F 0001104659-26-050251 (ImpairmentLossImpairmentGainAndReversalOfImpairmentLossDeterminedInAccordanceWithIFRS9)",
+          "entidade": "0001659939",
+          "item": "despesa_pdd",
+          "nota": null,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "received_date": "2026-04-28",
+          "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/",
+          "value": -38658000.0,
+          "version": 1
+        },
+        {
+          "anual": true,
+          "consolidado": true,
+          "currency": "USD",
+          "demonstrativo": "DFC",
+          "documento": "SEC 20-F 0001104659-26-050251 (DividendsPaidClassifiedAsFinancingActivities)",
+          "entidade": "0001659939",
+          "item": "dividendos_pagos",
+          "nota": null,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "received_date": "2026-04-28",
+          "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/",
+          "value": 351451000.0,
+          "version": 1
+        },
+        {
+          "anual": true,
+          "consolidado": true,
+          "currency": "USD",
+          "demonstrativo": "DRE",
+          "documento": "SEC 20-F 0001104659-26-050251 (ProfitLossFromOperatingActivities)",
+          "entidade": "0001659939",
+          "item": "ebit",
+          "nota": null,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "received_date": "2026-04-28",
+          "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/",
+          "value": 1011339000.0,
+          "version": 1
+        },
+        {
+          "anual": true,
+          "consolidado": true,
+          "currency": "USD",
+          "demonstrativo": "DRE",
+          "documento": "SEC 20-F 0001104659-26-050251 (IncomeTaxExpenseContinuingOperations)",
+          "entidade": "0001659939",
+          "item": "ir_csll",
+          "nota": null,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "received_date": "2026-04-28",
+          "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/",
+          "value": -210059000.0,
+          "version": 1
+        },
+        {
+          "anual": true,
+          "consolidado": true,
+          "currency": "USD",
+          "demonstrativo": "DRE",
+          "documento": "SEC 20-F 0001104659-26-050251 (ProfitLossBeforeTax)",
+          "entidade": "0001659939",
+          "item": "lucro_antes_ir",
+          "nota": null,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "received_date": "2026-04-28",
+          "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/",
+          "value": 794958000.0,
+          "version": 1
+        },
+        {
+          "anual": true,
+          "consolidado": true,
+          "currency": "USD",
+          "demonstrativo": "DRE",
+          "documento": "SEC 20-F 0001104659-26-050251 (GrossProfit)",
+          "entidade": "0001659939",
+          "item": "lucro_bruto",
+          "nota": null,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "received_date": "2026-04-28",
+          "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/",
+          "value": 1882350000.0,
+          "version": 1
+        },
+        {
+          "anual": true,
+          "consolidado": true,
+          "currency": "USD",
+          "demonstrativo": "DRE",
+          "documento": "SEC 20-F 0001104659-26-050251 (ProfitLoss)",
+          "entidade": "0001659939",
+          "item": "lucro_liquido",
+          "nota": null,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "received_date": "2026-04-28",
+          "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/",
+          "value": 584899000.0,
+          "version": 1
+        },
+        {
+          "anual": true,
+          "consolidado": true,
+          "currency": "USD",
+          "demonstrativo": "DRE",
+          "documento": "SEC 20-F 0001104659-26-050251 (ProfitLossAttributableToOwnersOfParent)",
+          "entidade": "0001659939",
+          "item": "lucro_liquido_controladores",
+          "nota": null,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "received_date": "2026-04-28",
+          "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/",
+          "value": 537629000.0,
+          "version": 1
+        },
+        {
+          "anual": true,
+          "consolidado": true,
+          "currency": "USD",
+          "demonstrativo": "DRE",
+          "documento": "SEC 20-F 0001104659-26-050251 (Revenue)",
+          "entidade": "0001659939",
+          "item": "receita",
+          "nota": null,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "received_date": "2026-04-28",
+          "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/",
+          "value": 4509547000.0,
+          "version": 1
+        },
+        {
+          "anual": true,
+          "consolidado": true,
+          "currency": "USD",
+          "demonstrativo": "DRE",
+          "documento": "SEC 20-F 0001104659-26-050251 (FinanceIncomeCost)",
+          "entidade": "0001659939",
+          "item": "resultado_financeiro",
+          "nota": null,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "received_date": "2026-04-28",
+          "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/",
+          "value": -237149000.0,
+          "version": 1
+        }
+      ],
+      "consolidado": true,
+      "currency": "USD",
+      "disponibilidade_tipo": "recepcao_observada",
+      "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+      "entidade": "0001659939",
+      "escala": 1,
+      "filingDate_primario": "2026-04-28",
+      "fonte_cache_id": "2fecbdaada45eebbcb7a60bb2b27df3414c246549b1a072f007c342d94da0350",
+      "fonte_documental_rederivada": {
+        "PIT_certified": false,
+        "accession": "0001104659-26-050251",
+        "component_tags": [
+          "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}CurrentLeaseLiabilities",
+          "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}NoncurrentLeaseLiabilities"
+        ],
+        "components": [
+          {
+            "currency": "USD",
+            "decimals": "-3",
+            "dedup": "um_valor_por_grao_semantico_sem_somar_ocorrencias",
+            "evidence_label": "fact_source_reported",
+            "group": "arrendamentos",
+            "maturity": "current",
+            "occurrences": [
+              {
+                "attrs": {
+                  "contextRef": "As_Of_12_31_2025_lLIQjKNmBE-lkTZbnvs9hQ",
+                  "decimals": "-3",
+                  "id": "Tc_FEk7W4MUtUim3gghZgMpwg_6_4",
+                  "unitRef": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA"
+                },
+                "context": {
+                  "dimensions": [],
+                  "entity": [
+                    {
+                      "attrs": {
+                        "scheme": "http://www.sec.gov/CIK"
+                      },
+                      "lexema": "0001659939"
+                    }
+                  ],
+                  "id": "As_Of_12_31_2025_lLIQjKNmBE-lkTZbnvs9hQ",
+                  "period": [
+                    {
+                      "lexema": "2025-12-31",
+                      "tag": "{http://www.xbrl.org/2003/instance}instant"
+                    }
+                  ],
+                  "sha256_serializado": "31b8efbcae49e02c3ce3cff6f583c9470830bdc9259656921a66bee3e38b31b3"
+                },
+                "fact_sha256_serializado": "9e6c1b9def183f6e362d15950af92cfb2a638432e6b3d00257110b5c3634ca0d",
+                "lexema": "41518000",
+                "ordinal_xml_0base": 4993,
+                "tag": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}CurrentLeaseLiabilities",
+                "unit_xml_serializado": "<unit xmlns=\"http://www.xbrl.org/2003/instance\" xmlns:country=\"http://xbrl.sec.gov/country/2025\" xmlns:currency=\"http://xbrl.sec.gov/currency/2025\" xmlns:cyd=\"http://xbrl.sec.gov/cyd/2025\" xmlns:dei=\"http://xbrl.sec.gov/dei/2025\" xmlns:ecd=\"http://xbrl.sec.gov/ecd/2025\" xmlns:enic=\"http://www.enelchile.cl/20251231\" xmlns:ifrs-full=\"https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full\" xmlns:iso4217=\"http://www.xbrl.org/2003/iso4217\" xmlns:link=\"http://www.xbrl.org/2003/linkbase\" xmlns:srt=\"http://fasb.org/srt/2025\" xmlns:utr=\"http://www.xbrl.org/2009/utr\" xmlns:xbrldi=\"http://xbrl.org/2006/xbrldi\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" id=\"Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA\">\n        <measure>iso4217:USD</measure>\n    </unit>\n    ",
+                "value_USD": "41518000"
+              },
+              {
+                "attrs": {
+                  "contextRef": "As_Of_12_31_2025_lLIQjKNmBE-lkTZbnvs9hQ",
+                  "decimals": "-3",
+                  "id": "Tc_4gP3vxDzsESPNMIctK4Zjw_3_2",
+                  "unitRef": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA"
+                },
+                "context": {
+                  "dimensions": [],
+                  "entity": [
+                    {
+                      "attrs": {
+                        "scheme": "http://www.sec.gov/CIK"
+                      },
+                      "lexema": "0001659939"
+                    }
+                  ],
+                  "id": "As_Of_12_31_2025_lLIQjKNmBE-lkTZbnvs9hQ",
+                  "period": [
+                    {
+                      "lexema": "2025-12-31",
+                      "tag": "{http://www.xbrl.org/2003/instance}instant"
+                    }
+                  ],
+                  "sha256_serializado": "31b8efbcae49e02c3ce3cff6f583c9470830bdc9259656921a66bee3e38b31b3"
+                },
+                "fact_sha256_serializado": "a9f96f03972445a6c5ede95b7ec018e5fe415e3827775b1641861400d54c483a",
+                "lexema": "41518000",
+                "ordinal_xml_0base": 9125,
+                "tag": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}CurrentLeaseLiabilities",
+                "unit_xml_serializado": "<unit xmlns=\"http://www.xbrl.org/2003/instance\" xmlns:country=\"http://xbrl.sec.gov/country/2025\" xmlns:currency=\"http://xbrl.sec.gov/currency/2025\" xmlns:cyd=\"http://xbrl.sec.gov/cyd/2025\" xmlns:dei=\"http://xbrl.sec.gov/dei/2025\" xmlns:ecd=\"http://xbrl.sec.gov/ecd/2025\" xmlns:enic=\"http://www.enelchile.cl/20251231\" xmlns:ifrs-full=\"https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full\" xmlns:iso4217=\"http://www.xbrl.org/2003/iso4217\" xmlns:link=\"http://www.xbrl.org/2003/linkbase\" xmlns:srt=\"http://fasb.org/srt/2025\" xmlns:utr=\"http://www.xbrl.org/2009/utr\" xmlns:xbrldi=\"http://xbrl.org/2006/xbrldi\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" id=\"Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA\">\n        <measure>iso4217:USD</measure>\n    </unit>\n    ",
+                "value_USD": "41518000"
+              },
+              {
+                "attrs": {
+                  "contextRef": "As_Of_12_31_2025_lLIQjKNmBE-lkTZbnvs9hQ",
+                  "decimals": "-3",
+                  "id": "Tc_M8o_LkD7p0WbgPK0i_WXzA_4_2",
+                  "unitRef": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA"
+                },
+                "context": {
+                  "dimensions": [],
+                  "entity": [
+                    {
+                      "attrs": {
+                        "scheme": "http://www.sec.gov/CIK"
+                      },
+                      "lexema": "0001659939"
+                    }
+                  ],
+                  "id": "As_Of_12_31_2025_lLIQjKNmBE-lkTZbnvs9hQ",
+                  "period": [
+                    {
+                      "lexema": "2025-12-31",
+                      "tag": "{http://www.xbrl.org/2003/instance}instant"
+                    }
+                  ],
+                  "sha256_serializado": "31b8efbcae49e02c3ce3cff6f583c9470830bdc9259656921a66bee3e38b31b3"
+                },
+                "fact_sha256_serializado": "8e9d41433c22617f2b9d69d30e0a33872eb0be50a8f04188fa52541f4e8f953f",
+                "lexema": "41518000",
+                "ordinal_xml_0base": 9131,
+                "tag": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}CurrentLeaseLiabilities",
+                "unit_xml_serializado": "<unit xmlns=\"http://www.xbrl.org/2003/instance\" xmlns:country=\"http://xbrl.sec.gov/country/2025\" xmlns:currency=\"http://xbrl.sec.gov/currency/2025\" xmlns:cyd=\"http://xbrl.sec.gov/cyd/2025\" xmlns:dei=\"http://xbrl.sec.gov/dei/2025\" xmlns:ecd=\"http://xbrl.sec.gov/ecd/2025\" xmlns:enic=\"http://www.enelchile.cl/20251231\" xmlns:ifrs-full=\"https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full\" xmlns:iso4217=\"http://www.xbrl.org/2003/iso4217\" xmlns:link=\"http://www.xbrl.org/2003/linkbase\" xmlns:srt=\"http://fasb.org/srt/2025\" xmlns:utr=\"http://www.xbrl.org/2009/utr\" xmlns:xbrldi=\"http://xbrl.org/2006/xbrldi\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" id=\"Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA\">\n        <measure>iso4217:USD</measure>\n    </unit>\n    ",
+                "value_USD": "41518000"
+              },
+              {
+                "attrs": {
+                  "contextRef": "As_Of_12_31_2025_lLIQjKNmBE-lkTZbnvs9hQ",
+                  "decimals": "-3",
+                  "id": "Tc_Yhl6d842vU21vs9KvbSTmg_73_22",
+                  "unitRef": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA"
+                },
+                "context": {
+                  "dimensions": [],
+                  "entity": [
+                    {
+                      "attrs": {
+                        "scheme": "http://www.sec.gov/CIK"
+                      },
+                      "lexema": "0001659939"
+                    }
+                  ],
+                  "id": "As_Of_12_31_2025_lLIQjKNmBE-lkTZbnvs9hQ",
+                  "period": [
+                    {
+                      "lexema": "2025-12-31",
+                      "tag": "{http://www.xbrl.org/2003/instance}instant"
+                    }
+                  ],
+                  "sha256_serializado": "31b8efbcae49e02c3ce3cff6f583c9470830bdc9259656921a66bee3e38b31b3"
+                },
+                "fact_sha256_serializado": "d2e5aac6ee67041033b5955b84a4a08c8a5f919afdbb45414351bb3ca5bd49e0",
+                "lexema": "41518000",
+                "ordinal_xml_0base": 9703,
+                "tag": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}CurrentLeaseLiabilities",
+                "unit_xml_serializado": "<unit xmlns=\"http://www.xbrl.org/2003/instance\" xmlns:country=\"http://xbrl.sec.gov/country/2025\" xmlns:currency=\"http://xbrl.sec.gov/currency/2025\" xmlns:cyd=\"http://xbrl.sec.gov/cyd/2025\" xmlns:dei=\"http://xbrl.sec.gov/dei/2025\" xmlns:ecd=\"http://xbrl.sec.gov/ecd/2025\" xmlns:enic=\"http://www.enelchile.cl/20251231\" xmlns:ifrs-full=\"https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full\" xmlns:iso4217=\"http://www.xbrl.org/2003/iso4217\" xmlns:link=\"http://www.xbrl.org/2003/linkbase\" xmlns:srt=\"http://fasb.org/srt/2025\" xmlns:utr=\"http://www.xbrl.org/2009/utr\" xmlns:xbrldi=\"http://xbrl.org/2006/xbrldi\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" id=\"Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA\">\n        <measure>iso4217:USD</measure>\n    </unit>\n    ",
+                "value_USD": "41518000"
+              },
+              {
+                "attrs": {
+                  "contextRef": "As_Of_12_31_2025_lLIQjKNmBE-lkTZbnvs9hQ",
+                  "decimals": "-3",
+                  "id": "Tc_KGI-ZJ6yoEK-h9tJxRoahA_7_20",
+                  "unitRef": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA"
+                },
+                "context": {
+                  "dimensions": [],
+                  "entity": [
+                    {
+                      "attrs": {
+                        "scheme": "http://www.sec.gov/CIK"
+                      },
+                      "lexema": "0001659939"
+                    }
+                  ],
+                  "id": "As_Of_12_31_2025_lLIQjKNmBE-lkTZbnvs9hQ",
+                  "period": [
+                    {
+                      "lexema": "2025-12-31",
+                      "tag": "{http://www.xbrl.org/2003/instance}instant"
+                    }
+                  ],
+                  "sha256_serializado": "31b8efbcae49e02c3ce3cff6f583c9470830bdc9259656921a66bee3e38b31b3"
+                },
+                "fact_sha256_serializado": "e7db7e218c9021057d254b17f553e86b9f59ad50e6cf7c5c2db49d7a46aa8b19",
+                "lexema": "41518000",
+                "ordinal_xml_0base": 12001,
+                "tag": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}CurrentLeaseLiabilities",
+                "unit_xml_serializado": "<unit xmlns=\"http://www.xbrl.org/2003/instance\" xmlns:country=\"http://xbrl.sec.gov/country/2025\" xmlns:currency=\"http://xbrl.sec.gov/currency/2025\" xmlns:cyd=\"http://xbrl.sec.gov/cyd/2025\" xmlns:dei=\"http://xbrl.sec.gov/dei/2025\" xmlns:ecd=\"http://xbrl.sec.gov/ecd/2025\" xmlns:enic=\"http://www.enelchile.cl/20251231\" xmlns:ifrs-full=\"https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full\" xmlns:iso4217=\"http://www.xbrl.org/2003/iso4217\" xmlns:link=\"http://www.xbrl.org/2003/linkbase\" xmlns:srt=\"http://fasb.org/srt/2025\" xmlns:utr=\"http://www.xbrl.org/2009/utr\" xmlns:xbrldi=\"http://xbrl.org/2006/xbrldi\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" id=\"Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA\">\n        <measure>iso4217:USD</measure>\n    </unit>\n    ",
+                "value_USD": "41518000"
+              },
+              {
+                "attrs": {
+                  "contextRef": "As_Of_12_31_2025_lLIQjKNmBE-lkTZbnvs9hQ",
+                  "decimals": "-3",
+                  "id": "Tc_4e6YDLFBxE-CPtZmth-LsQ_6_14",
+                  "unitRef": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA"
+                },
+                "context": {
+                  "dimensions": [],
+                  "entity": [
+                    {
+                      "attrs": {
+                        "scheme": "http://www.sec.gov/CIK"
+                      },
+                      "lexema": "0001659939"
+                    }
+                  ],
+                  "id": "As_Of_12_31_2025_lLIQjKNmBE-lkTZbnvs9hQ",
+                  "period": [
+                    {
+                      "lexema": "2025-12-31",
+                      "tag": "{http://www.xbrl.org/2003/instance}instant"
+                    }
+                  ],
+                  "sha256_serializado": "31b8efbcae49e02c3ce3cff6f583c9470830bdc9259656921a66bee3e38b31b3"
+                },
+                "fact_sha256_serializado": "355c126cd57a96bb0e6cefb7825bcf6ae427093d88b8a765987aaf3d3200f660",
+                "lexema": "41518000",
+                "ordinal_xml_0base": 14047,
+                "tag": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}CurrentLeaseLiabilities",
+                "unit_xml_serializado": "<unit xmlns=\"http://www.xbrl.org/2003/instance\" xmlns:country=\"http://xbrl.sec.gov/country/2025\" xmlns:currency=\"http://xbrl.sec.gov/currency/2025\" xmlns:cyd=\"http://xbrl.sec.gov/cyd/2025\" xmlns:dei=\"http://xbrl.sec.gov/dei/2025\" xmlns:ecd=\"http://xbrl.sec.gov/ecd/2025\" xmlns:enic=\"http://www.enelchile.cl/20251231\" xmlns:ifrs-full=\"https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full\" xmlns:iso4217=\"http://www.xbrl.org/2003/iso4217\" xmlns:link=\"http://www.xbrl.org/2003/linkbase\" xmlns:srt=\"http://fasb.org/srt/2025\" xmlns:utr=\"http://www.xbrl.org/2009/utr\" xmlns:xbrldi=\"http://xbrl.org/2006/xbrldi\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" id=\"Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA\">\n        <measure>iso4217:USD</measure>\n    </unit>\n    ",
+                "value_USD": "41518000"
+              }
+            ],
+            "semantic_key": [
+              "0001659939",
+              "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}CurrentLeaseLiabilities",
+              "2025-12-31",
+              "USD",
+              []
+            ],
+            "sign_convention": "lexema_positivo_sem_atributo_sign",
+            "tag": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}CurrentLeaseLiabilities",
+            "tieout_index": 1,
+            "value_USD": "41518000",
+            "xml_scale": "1"
+          },
+          {
+            "currency": "USD",
+            "decimals": "-3",
+            "dedup": "um_valor_por_grao_semantico_sem_somar_ocorrencias",
+            "evidence_label": "fact_source_reported",
+            "group": "arrendamentos",
+            "maturity": "noncurrent",
+            "occurrences": [
+              {
+                "attrs": {
+                  "contextRef": "As_Of_12_31_2025_lLIQjKNmBE-lkTZbnvs9hQ",
+                  "decimals": "-3",
+                  "id": "Tc_37jB5br-HU2aR8WBAtHs0g_16_4",
+                  "unitRef": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA"
+                },
+                "context": {
+                  "dimensions": [],
+                  "entity": [
+                    {
+                      "attrs": {
+                        "scheme": "http://www.sec.gov/CIK"
+                      },
+                      "lexema": "0001659939"
+                    }
+                  ],
+                  "id": "As_Of_12_31_2025_lLIQjKNmBE-lkTZbnvs9hQ",
+                  "period": [
+                    {
+                      "lexema": "2025-12-31",
+                      "tag": "{http://www.xbrl.org/2003/instance}instant"
+                    }
+                  ],
+                  "sha256_serializado": "31b8efbcae49e02c3ce3cff6f583c9470830bdc9259656921a66bee3e38b31b3"
+                },
+                "fact_sha256_serializado": "85bcc6e9a2afe46e0c76523ffb6d93f832e08b0feb0d796d08479eacc7218c8f",
+                "lexema": "368679000",
+                "ordinal_xml_0base": 5017,
+                "tag": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}NoncurrentLeaseLiabilities",
+                "unit_xml_serializado": "<unit xmlns=\"http://www.xbrl.org/2003/instance\" xmlns:country=\"http://xbrl.sec.gov/country/2025\" xmlns:currency=\"http://xbrl.sec.gov/currency/2025\" xmlns:cyd=\"http://xbrl.sec.gov/cyd/2025\" xmlns:dei=\"http://xbrl.sec.gov/dei/2025\" xmlns:ecd=\"http://xbrl.sec.gov/ecd/2025\" xmlns:enic=\"http://www.enelchile.cl/20251231\" xmlns:ifrs-full=\"https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full\" xmlns:iso4217=\"http://www.xbrl.org/2003/iso4217\" xmlns:link=\"http://www.xbrl.org/2003/linkbase\" xmlns:srt=\"http://fasb.org/srt/2025\" xmlns:utr=\"http://www.xbrl.org/2009/utr\" xmlns:xbrldi=\"http://xbrl.org/2006/xbrldi\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" id=\"Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA\">\n        <measure>iso4217:USD</measure>\n    </unit>\n    ",
+                "value_USD": "368679000"
+              },
+              {
+                "attrs": {
+                  "contextRef": "As_Of_12_31_2025_lLIQjKNmBE-lkTZbnvs9hQ",
+                  "decimals": "-3",
+                  "id": "Tc_2if5GeQ6rUm_ZFJE0qr2iA_3_8",
+                  "unitRef": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA"
+                },
+                "context": {
+                  "dimensions": [],
+                  "entity": [
+                    {
+                      "attrs": {
+                        "scheme": "http://www.sec.gov/CIK"
+                      },
+                      "lexema": "0001659939"
+                    }
+                  ],
+                  "id": "As_Of_12_31_2025_lLIQjKNmBE-lkTZbnvs9hQ",
+                  "period": [
+                    {
+                      "lexema": "2025-12-31",
+                      "tag": "{http://www.xbrl.org/2003/instance}instant"
+                    }
+                  ],
+                  "sha256_serializado": "31b8efbcae49e02c3ce3cff6f583c9470830bdc9259656921a66bee3e38b31b3"
+                },
+                "fact_sha256_serializado": "eea43fe49a5b0aef2f5857c315199393d7d4ecdd85263a32fa3c4f8e01320b28",
+                "lexema": "368679000",
+                "ordinal_xml_0base": 9128,
+                "tag": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}NoncurrentLeaseLiabilities",
+                "unit_xml_serializado": "<unit xmlns=\"http://www.xbrl.org/2003/instance\" xmlns:country=\"http://xbrl.sec.gov/country/2025\" xmlns:currency=\"http://xbrl.sec.gov/currency/2025\" xmlns:cyd=\"http://xbrl.sec.gov/cyd/2025\" xmlns:dei=\"http://xbrl.sec.gov/dei/2025\" xmlns:ecd=\"http://xbrl.sec.gov/ecd/2025\" xmlns:enic=\"http://www.enelchile.cl/20251231\" xmlns:ifrs-full=\"https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full\" xmlns:iso4217=\"http://www.xbrl.org/2003/iso4217\" xmlns:link=\"http://www.xbrl.org/2003/linkbase\" xmlns:srt=\"http://fasb.org/srt/2025\" xmlns:utr=\"http://www.xbrl.org/2009/utr\" xmlns:xbrldi=\"http://xbrl.org/2006/xbrldi\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" id=\"Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA\">\n        <measure>iso4217:USD</measure>\n    </unit>\n    ",
+                "value_USD": "368679000"
+              },
+              {
+                "attrs": {
+                  "contextRef": "As_Of_12_31_2025_lLIQjKNmBE-lkTZbnvs9hQ",
+                  "decimals": "-3",
+                  "id": "Tc_BcxYVO7w4kq9Tq_L8YUDoQ_4_8",
+                  "unitRef": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA"
+                },
+                "context": {
+                  "dimensions": [],
+                  "entity": [
+                    {
+                      "attrs": {
+                        "scheme": "http://www.sec.gov/CIK"
+                      },
+                      "lexema": "0001659939"
+                    }
+                  ],
+                  "id": "As_Of_12_31_2025_lLIQjKNmBE-lkTZbnvs9hQ",
+                  "period": [
+                    {
+                      "lexema": "2025-12-31",
+                      "tag": "{http://www.xbrl.org/2003/instance}instant"
+                    }
+                  ],
+                  "sha256_serializado": "31b8efbcae49e02c3ce3cff6f583c9470830bdc9259656921a66bee3e38b31b3"
+                },
+                "fact_sha256_serializado": "95274df669e0e43937258c4e57d77fc750e6c51541886355045c749e3c0bd76f",
+                "lexema": "368679000",
+                "ordinal_xml_0base": 9134,
+                "tag": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}NoncurrentLeaseLiabilities",
+                "unit_xml_serializado": "<unit xmlns=\"http://www.xbrl.org/2003/instance\" xmlns:country=\"http://xbrl.sec.gov/country/2025\" xmlns:currency=\"http://xbrl.sec.gov/currency/2025\" xmlns:cyd=\"http://xbrl.sec.gov/cyd/2025\" xmlns:dei=\"http://xbrl.sec.gov/dei/2025\" xmlns:ecd=\"http://xbrl.sec.gov/ecd/2025\" xmlns:enic=\"http://www.enelchile.cl/20251231\" xmlns:ifrs-full=\"https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full\" xmlns:iso4217=\"http://www.xbrl.org/2003/iso4217\" xmlns:link=\"http://www.xbrl.org/2003/linkbase\" xmlns:srt=\"http://fasb.org/srt/2025\" xmlns:utr=\"http://www.xbrl.org/2009/utr\" xmlns:xbrldi=\"http://xbrl.org/2006/xbrldi\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" id=\"Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA\">\n        <measure>iso4217:USD</measure>\n    </unit>\n    ",
+                "value_USD": "368679000"
+              },
+              {
+                "attrs": {
+                  "contextRef": "As_Of_12_31_2025_lLIQjKNmBE-lkTZbnvs9hQ",
+                  "decimals": "-3",
+                  "id": "Tc_a37ZZXRkekWViD3_Nqa0vA_73_34",
+                  "unitRef": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA"
+                },
+                "context": {
+                  "dimensions": [],
+                  "entity": [
+                    {
+                      "attrs": {
+                        "scheme": "http://www.sec.gov/CIK"
+                      },
+                      "lexema": "0001659939"
+                    }
+                  ],
+                  "id": "As_Of_12_31_2025_lLIQjKNmBE-lkTZbnvs9hQ",
+                  "period": [
+                    {
+                      "lexema": "2025-12-31",
+                      "tag": "{http://www.xbrl.org/2003/instance}instant"
+                    }
+                  ],
+                  "sha256_serializado": "31b8efbcae49e02c3ce3cff6f583c9470830bdc9259656921a66bee3e38b31b3"
+                },
+                "fact_sha256_serializado": "79c8e63e463af5cfdf44bfd160fffda1cb0c2808a477aa43e8cfd944518653c5",
+                "lexema": "368679000",
+                "ordinal_xml_0base": 9709,
+                "tag": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}NoncurrentLeaseLiabilities",
+                "unit_xml_serializado": "<unit xmlns=\"http://www.xbrl.org/2003/instance\" xmlns:country=\"http://xbrl.sec.gov/country/2025\" xmlns:currency=\"http://xbrl.sec.gov/currency/2025\" xmlns:cyd=\"http://xbrl.sec.gov/cyd/2025\" xmlns:dei=\"http://xbrl.sec.gov/dei/2025\" xmlns:ecd=\"http://xbrl.sec.gov/ecd/2025\" xmlns:enic=\"http://www.enelchile.cl/20251231\" xmlns:ifrs-full=\"https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full\" xmlns:iso4217=\"http://www.xbrl.org/2003/iso4217\" xmlns:link=\"http://www.xbrl.org/2003/linkbase\" xmlns:srt=\"http://fasb.org/srt/2025\" xmlns:utr=\"http://www.xbrl.org/2009/utr\" xmlns:xbrldi=\"http://xbrl.org/2006/xbrldi\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" id=\"Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA\">\n        <measure>iso4217:USD</measure>\n    </unit>\n    ",
+                "value_USD": "368679000"
+              },
+              {
+                "attrs": {
+                  "contextRef": "As_Of_12_31_2025_lLIQjKNmBE-lkTZbnvs9hQ",
+                  "decimals": "-3",
+                  "id": "Tc_x2Jd89Cud0-xmpokzpKNSg_15_20",
+                  "unitRef": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA"
+                },
+                "context": {
+                  "dimensions": [],
+                  "entity": [
+                    {
+                      "attrs": {
+                        "scheme": "http://www.sec.gov/CIK"
+                      },
+                      "lexema": "0001659939"
+                    }
+                  ],
+                  "id": "As_Of_12_31_2025_lLIQjKNmBE-lkTZbnvs9hQ",
+                  "period": [
+                    {
+                      "lexema": "2025-12-31",
+                      "tag": "{http://www.xbrl.org/2003/instance}instant"
+                    }
+                  ],
+                  "sha256_serializado": "31b8efbcae49e02c3ce3cff6f583c9470830bdc9259656921a66bee3e38b31b3"
+                },
+                "fact_sha256_serializado": "d997bda764d27941c9663eda5a337f97b9a2bfccbfe327d7d2919eb41cdd7e66",
+                "lexema": "368679000",
+                "ordinal_xml_0base": 12090,
+                "tag": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}NoncurrentLeaseLiabilities",
+                "unit_xml_serializado": "<unit xmlns=\"http://www.xbrl.org/2003/instance\" xmlns:country=\"http://xbrl.sec.gov/country/2025\" xmlns:currency=\"http://xbrl.sec.gov/currency/2025\" xmlns:cyd=\"http://xbrl.sec.gov/cyd/2025\" xmlns:dei=\"http://xbrl.sec.gov/dei/2025\" xmlns:ecd=\"http://xbrl.sec.gov/ecd/2025\" xmlns:enic=\"http://www.enelchile.cl/20251231\" xmlns:ifrs-full=\"https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full\" xmlns:iso4217=\"http://www.xbrl.org/2003/iso4217\" xmlns:link=\"http://www.xbrl.org/2003/linkbase\" xmlns:srt=\"http://fasb.org/srt/2025\" xmlns:utr=\"http://www.xbrl.org/2009/utr\" xmlns:xbrldi=\"http://xbrl.org/2006/xbrldi\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" id=\"Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA\">\n        <measure>iso4217:USD</measure>\n    </unit>\n    ",
+                "value_USD": "368679000"
+              },
+              {
+                "attrs": {
+                  "contextRef": "As_Of_12_31_2025_lLIQjKNmBE-lkTZbnvs9hQ",
+                  "decimals": "-3",
+                  "id": "Tc_gh2xGjmorUmqG6MJ9tR16A_16_14",
+                  "unitRef": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA"
+                },
+                "context": {
+                  "dimensions": [],
+                  "entity": [
+                    {
+                      "attrs": {
+                        "scheme": "http://www.sec.gov/CIK"
+                      },
+                      "lexema": "0001659939"
+                    }
+                  ],
+                  "id": "As_Of_12_31_2025_lLIQjKNmBE-lkTZbnvs9hQ",
+                  "period": [
+                    {
+                      "lexema": "2025-12-31",
+                      "tag": "{http://www.xbrl.org/2003/instance}instant"
+                    }
+                  ],
+                  "sha256_serializado": "31b8efbcae49e02c3ce3cff6f583c9470830bdc9259656921a66bee3e38b31b3"
+                },
+                "fact_sha256_serializado": "2f2bc545882ecd1c4fb1d6fa38316f379d7bad36c6cd74f860bd28ddaaf86e2e",
+                "lexema": "368679000",
+                "ordinal_xml_0base": 14081,
+                "tag": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}NoncurrentLeaseLiabilities",
+                "unit_xml_serializado": "<unit xmlns=\"http://www.xbrl.org/2003/instance\" xmlns:country=\"http://xbrl.sec.gov/country/2025\" xmlns:currency=\"http://xbrl.sec.gov/currency/2025\" xmlns:cyd=\"http://xbrl.sec.gov/cyd/2025\" xmlns:dei=\"http://xbrl.sec.gov/dei/2025\" xmlns:ecd=\"http://xbrl.sec.gov/ecd/2025\" xmlns:enic=\"http://www.enelchile.cl/20251231\" xmlns:ifrs-full=\"https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full\" xmlns:iso4217=\"http://www.xbrl.org/2003/iso4217\" xmlns:link=\"http://www.xbrl.org/2003/linkbase\" xmlns:srt=\"http://fasb.org/srt/2025\" xmlns:utr=\"http://www.xbrl.org/2009/utr\" xmlns:xbrldi=\"http://xbrl.org/2006/xbrldi\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" id=\"Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA\">\n        <measure>iso4217:USD</measure>\n    </unit>\n    ",
+                "value_USD": "368679000"
+              }
+            ],
+            "semantic_key": [
+              "0001659939",
+              "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}NoncurrentLeaseLiabilities",
+              "2025-12-31",
+              "USD",
+              []
+            ],
+            "sign_convention": "lexema_positivo_sem_atributo_sign",
+            "tag": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}NoncurrentLeaseLiabilities",
+            "tieout_index": 3,
+            "value_USD": "368679000",
+            "xml_scale": "1"
+          }
+        ],
+        "consolidated": true,
+        "currency": "USD",
+        "dependencies": [
+          {
+            "bytes": 38598294,
+            "role": "XML",
+            "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102"
+          },
+          {
+            "bytes": 438,
+            "role": "XML_receipt",
+            "sha256": "2d4710181623696931d02c901ab4f44864ead53a5d969de7f45bc3aa456e0a2e"
+          },
+          {
+            "bytes": 42640,
+            "role": "submissions",
+            "sha256": "b3702cf634660baa7d9b0c0e64c4a3c96d77a46dd9b33406b3e4c3eb85747a3f"
+          },
+          {
+            "bytes": 736,
+            "role": "index_receipts",
+            "sha256": "c29efd420ec2584e905449b6345569137e6fb4c7ded5f02a7606d137e552d7f9"
+          },
+          {
+            "bytes": 3758,
+            "role": "metadata_receipt_ROOT",
+            "sha256": "25d6197f836943c6fb99c153f8d0ef79ba2a857c0494fea904e69ad6c72f127b"
+          }
+        ],
+        "documentary_full_sha256": "b96acc1eaf5629daec5f0a99cfd4a504ea5826dacc5057aaa65dc960a3a00995",
+        "entity": "0001659939",
+        "executor_possession_authenticated": false,
+        "first_publication_utc": null,
+        "freq": null,
+        "includes_leases": true,
+        "issuer_id": "CL_ENELCHILE",
+        "item": "arrendamentos",
+        "localizer_refs": [
+          {
+            "note": "2",
+            "ordinal_xml_0base": 5498,
+            "tag": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}DisclosureOfBasisOfPreparationOfFinancialStatementsExplanatory",
+            "textblock_sha256_utf8": "6646b13a281648eed73541fb57b8fb750b305fad24c4c1d2612da8953fde3eac"
+          },
+          {
+            "note": "20/20.1",
+            "ordinal_xml_0base": 8446,
+            "tag": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}DisclosureOfFinancialLiabilitiesExplanatory",
+            "textblock_sha256_utf8": "1666b25d632f12d4e08d0b8ec7cb38752f138a68c4351dc9543454fb91745bd0"
+          },
+          {
+            "note": "21",
+            "ordinal_xml_0base": 9123,
+            "tag": "{http://www.enelchile.cl/20251231}DisclosureOfLeaseLiabilitiesTextBlock",
+            "textblock_sha256_utf8": "b695aa9bd0950f4726e46756e90d15f385facbf039b33a6b49788167316d83f7"
+          },
+          {
+            "note": "20",
+            "ordinal_xml_0base": 8447,
+            "tag": "{http://www.enelchile.cl/20251231}DisclosureOfOtherFinancialLiabilitiesExplanatory",
+            "textblock_sha256_utf8": "902d3171ac3f66a23be816e2c6116677e0ac6fba5bb52e7bd56288c0fd84c7fb"
+          },
+          {
+            "note": "20.1",
+            "ordinal_xml_0base": 8468,
+            "tag": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}DisclosureOfDetailedInformationAboutBorrowingsExplanatory",
+            "textblock_sha256_utf8": "ea6ca2cd63e5731355a5d48408b39c8dcd4816879aa3535e14aa85cac8681e99"
+          },
+          {
+            "note": "21",
+            "ordinal_xml_0base": 9124,
+            "tag": "{http://www.enelchile.cl/20251231}ScheduleOfLeaseLiabilitiesTableTextBlock",
+            "textblock_sha256_utf8": "b45d0edc63c53fe4951f8cbf0e070670208d2f97369a9506d8a4e2f334bf0d53"
+          }
+        ],
+        "native_profile_registered": false,
+        "native_version": null,
+        "note": "21",
+        "period_end": "2025-12-31",
+        "period_start": null,
+        "reportado_no_documento": false,
+        "scale": "1",
+        "schema": "cdp.enelchile.contexto_estoque_proposto/v1",
+        "source_URL": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+        "source_XML_sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+        "source_version": null,
+        "temporal": {
+          "PIT_certified": false,
+          "availability_floor_utc": "2026-10-09T14:13:45.703490+00:00",
+          "executor_possession_authenticated": false,
+          "filed_date": "2026-04-28",
+          "first_publication_utc": null,
+          "knowledge_cutoff_utc": "2026-10-09T14:13:45.703490+00:00",
+          "metadata_receipt_created_at_utc": "2026-10-10T06:20:06.689083+00:00",
+          "sec_acceptance_at_utc": "2026-04-28T19:24:13+00:00",
+          "submissions_received_at_utc": "2026-10-09T14:13:45.703490+00:00",
+          "xml_received_at_utc": "2026-10-07T03:18:30+00:00"
+        },
+        "tieouts": [
+          {
+            "cells": [
+              {
+                "block_ordinal_xml_0base": 9124,
+                "block_sha256_utf8": "b45d0edc63c53fe4951f8cbf0e070670208d2f97369a9506d8a4e2f334bf0d53",
+                "block_tag": "{http://www.enelchile.cl/20251231}ScheduleOfLeaseLiabilitiesTableTextBlock",
+                "cell": {
+                  "attrs": {
+                    "style": "vertical-align:bottom;white-space:nowrap;width:12.03%;background:#cceeff;margin:0pt;padding:0pt;"
+                  },
+                  "cell_ordinal_0base": 2,
+                  "colspan": 1,
+                  "expanded_column_0base": 2,
+                  "raw_text": " 41,518",
+                  "row_0base": 3,
+                  "rowspan": 1,
+                  "sha256_serializado": "506a1fcc0eee675f2fbe5ebe48633f4cec939fcf9665cab04fc48a2709bddf11",
+                  "text": "41,518"
+                },
+                "expanded_column_0base": 2,
+                "note": "21",
+                "row_0base": 3
+              },
+              {
+                "block_ordinal_xml_0base": 9124,
+                "block_sha256_utf8": "b45d0edc63c53fe4951f8cbf0e070670208d2f97369a9506d8a4e2f334bf0d53",
+                "block_tag": "{http://www.enelchile.cl/20251231}ScheduleOfLeaseLiabilitiesTableTextBlock",
+                "cell": {
+                  "attrs": {
+                    "style": "vertical-align:bottom;white-space:nowrap;width:12.03%;margin:0pt;padding:0pt;"
+                  },
+                  "cell_ordinal_0base": 2,
+                  "colspan": 1,
+                  "expanded_column_0base": 2,
+                  "raw_text": " 41,518",
+                  "row_0base": 4,
+                  "rowspan": 1,
+                  "sha256_serializado": "0cd5ed479a7b9359383975a032a10baa6f8d9ae8ee99a7374aa084ae3d50b367",
+                  "text": "41,518"
+                },
+                "expanded_column_0base": 2,
+                "note": "21",
+                "row_0base": 4
+              }
+            ],
+            "currency": "USD",
+            "end": "2025-12-31",
+            "html_scale": "1000",
+            "residuals_HTML_tag_USD": [
+              "0",
+              "0"
+            ],
+            "tag": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}CurrentLeaseLiabilities",
+            "xml_scale": "1"
+          },
+          {
+            "cells": [
+              {
+                "block_ordinal_xml_0base": 9124,
+                "block_sha256_utf8": "b45d0edc63c53fe4951f8cbf0e070670208d2f97369a9506d8a4e2f334bf0d53",
+                "block_tag": "{http://www.enelchile.cl/20251231}ScheduleOfLeaseLiabilitiesTableTextBlock",
+                "cell": {
+                  "attrs": {
+                    "style": "vertical-align:bottom;white-space:nowrap;width:12.03%;background:#cceeff;margin:0pt;padding:0pt;"
+                  },
+                  "cell_ordinal_0base": 8,
+                  "colspan": 1,
+                  "expanded_column_0base": 8,
+                  "raw_text": " 368,679",
+                  "row_0base": 3,
+                  "rowspan": 1,
+                  "sha256_serializado": "faefaca0616f01482114da7d16c0b06d8ca865ce2281bd2e9c9b01443d9e9ef0",
+                  "text": "368,679"
+                },
+                "expanded_column_0base": 8,
+                "note": "21",
+                "row_0base": 3
+              },
+              {
+                "block_ordinal_xml_0base": 9124,
+                "block_sha256_utf8": "b45d0edc63c53fe4951f8cbf0e070670208d2f97369a9506d8a4e2f334bf0d53",
+                "block_tag": "{http://www.enelchile.cl/20251231}ScheduleOfLeaseLiabilitiesTableTextBlock",
+                "cell": {
+                  "attrs": {
+                    "style": "vertical-align:bottom;white-space:nowrap;width:12.03%;margin:0pt;padding:0pt;"
+                  },
+                  "cell_ordinal_0base": 8,
+                  "colspan": 1,
+                  "expanded_column_0base": 8,
+                  "raw_text": " 368,679",
+                  "row_0base": 4,
+                  "rowspan": 1,
+                  "sha256_serializado": "7e38271e12952f3d7ea2b3ab6bc51a6728a8719c3d7eec5ae4f32e0a770a9e25",
+                  "text": "368,679"
+                },
+                "expanded_column_0base": 8,
+                "note": "21",
+                "row_0base": 4
+              }
+            ],
+            "currency": "USD",
+            "end": "2025-12-31",
+            "html_scale": "1000",
+            "residuals_HTML_tag_USD": [
+              "0",
+              "0"
+            ],
+            "tag": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}NoncurrentLeaseLiabilities",
+            "xml_scale": "1"
+          }
+        ],
+        "type": "estoque_calculado_proposto",
+        "value_USD": "410197000"
+      },
+      "fontes_pinned": [
+        {
+          "bytes": 38598294,
+          "role": "XML",
+          "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102"
+        },
+        {
+          "bytes": 438,
+          "role": "XML_receipt",
+          "sha256": "2d4710181623696931d02c901ab4f44864ead53a5d969de7f45bc3aa456e0a2e"
+        },
+        {
+          "bytes": 42640,
+          "role": "submissions",
+          "sha256": "b3702cf634660baa7d9b0c0e64c4a3c96d77a46dd9b33406b3e4c3eb85747a3f"
+        },
+        {
+          "bytes": 736,
+          "role": "index_receipts",
+          "sha256": "c29efd420ec2584e905449b6345569137e6fb4c7ded5f02a7606d137e552d7f9"
+        },
+        {
+          "bytes": 3758,
+          "role": "metadata_receipt_ROOT",
+          "sha256": "25d6197f836943c6fb99c153f8d0ef79ba2a857c0494fea904e69ad6c72f127b"
+        }
+      ],
+      "freq": "A",
+      "item": "arrendamentos",
+      "period_end": "2025-12-31",
+      "period_start": null,
+      "pit_certificado": false,
+      "posse_executor_certificada": false,
+      "publicacao_primaria": null,
+      "reportado_no_documento": false,
+      "schema": "cdp.enelchile.estoque_anual/v1",
+      "tipo": "estoque_calculado",
+      "value_USD": "410197000",
+      "versao": {
+        "ordem_republicacao_historica_conhecida": false,
+        "ordinal_local": 1,
+        "semantica": "revisao_local_universo_exatamente_um_filing_autenticado",
+        "source_version": null,
+        "universo": [
+          {
+            "accession": "0001104659-26-050251",
+            "cik": "0001659939",
+            "filed": "2026-04-28",
+            "form": "20-F",
+            "period_end": "2025-12-31",
+            "source_XML_sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102"
+          }
+        ]
+      }
+    },
+    "contexto_documental_sha256": "e2792f79d325a71ee6e75ab99819508ed048e3650d0a435f1409124b0feff10a"
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "BP",
+    "freq": "A",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "ativo_total",
+    "value": 12903659000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (Assets)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "BP",
+    "freq": "Q",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "ativo_total",
+    "value": 12903659000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (Assets)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "BP",
+    "freq": "A",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "caixa",
+    "value": 461924000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (CashAndCashEquivalents)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "BP",
+    "freq": "Q",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "caixa",
+    "value": 461924000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (CashAndCashEquivalents)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "DFC",
+    "freq": "A",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "capex",
+    "value": 499108000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities+PurchaseOfIntangibleAssetsClassifiedAsInvestingActivities)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "DFC",
+    "freq": "TTM",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "capex",
+    "value": 499108000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities+PurchaseOfIntangibleAssetsClassifiedAsInvestingActivities)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "DFC",
+    "freq": "A",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "cfo",
+    "value": 1319678000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (CashFlowsFromUsedInOperatingActivities)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "DFC",
+    "freq": "TTM",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "cfo",
+    "value": 1319678000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (CashFlowsFromUsedInOperatingActivities)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "DRE",
+    "freq": "A",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "d_a",
+    "value": 387430000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (DepreciationExpense+AmortisationExpense)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "DRE",
+    "freq": "TTM",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "d_a",
+    "value": 387430000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (DepreciationExpense+AmortisationExpense)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "DRE",
+    "freq": "A",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "despesa_pdd",
+    "value": -38658000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (ImpairmentLossImpairmentGainAndReversalOfImpairmentLossDeterminedInAccordanceWithIFRS9)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "DRE",
+    "freq": "TTM",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "despesa_pdd",
+    "value": -38658000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (ImpairmentLossImpairmentGainAndReversalOfImpairmentLossDeterminedInAccordanceWithIFRS9)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "BP",
+    "freq": "A",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "divida_bruta",
+    "value": 2420827000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (divida_bruta) [Enel estoque anual documental v1]",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": "estoque documental anual; revisão local de um filing",
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": {
+      "ancoras_anuais": [
+        {
+          "anual": true,
+          "consolidado": true,
+          "currency": "USD",
+          "demonstrativo": "DFC",
+          "documento": "SEC 20-F 0001104659-26-050251 (PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities+PurchaseOfIntangibleAssetsClassifiedAsInvestingActivities)",
+          "entidade": "0001659939",
+          "item": "capex",
+          "nota": null,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "received_date": "2026-04-28",
+          "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/",
+          "value": 499108000.0,
+          "version": 1
+        },
+        {
+          "anual": true,
+          "consolidado": true,
+          "currency": "USD",
+          "demonstrativo": "DFC",
+          "documento": "SEC 20-F 0001104659-26-050251 (CashFlowsFromUsedInOperatingActivities)",
+          "entidade": "0001659939",
+          "item": "cfo",
+          "nota": null,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "received_date": "2026-04-28",
+          "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/",
+          "value": 1319678000.0,
+          "version": 1
+        },
+        {
+          "anual": true,
+          "consolidado": true,
+          "currency": "USD",
+          "demonstrativo": "DRE",
+          "documento": "SEC 20-F 0001104659-26-050251 (DepreciationExpense+AmortisationExpense)",
+          "entidade": "0001659939",
+          "item": "d_a",
+          "nota": null,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "received_date": "2026-04-28",
+          "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/",
+          "value": 387430000.0,
+          "version": 1
+        },
+        {
+          "anual": true,
+          "consolidado": true,
+          "currency": "USD",
+          "demonstrativo": "DRE",
+          "documento": "SEC 20-F 0001104659-26-050251 (ImpairmentLossImpairmentGainAndReversalOfImpairmentLossDeterminedInAccordanceWithIFRS9)",
+          "entidade": "0001659939",
+          "item": "despesa_pdd",
+          "nota": null,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "received_date": "2026-04-28",
+          "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/",
+          "value": -38658000.0,
+          "version": 1
+        },
+        {
+          "anual": true,
+          "consolidado": true,
+          "currency": "USD",
+          "demonstrativo": "DFC",
+          "documento": "SEC 20-F 0001104659-26-050251 (DividendsPaidClassifiedAsFinancingActivities)",
+          "entidade": "0001659939",
+          "item": "dividendos_pagos",
+          "nota": null,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "received_date": "2026-04-28",
+          "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/",
+          "value": 351451000.0,
+          "version": 1
+        },
+        {
+          "anual": true,
+          "consolidado": true,
+          "currency": "USD",
+          "demonstrativo": "DRE",
+          "documento": "SEC 20-F 0001104659-26-050251 (ProfitLossFromOperatingActivities)",
+          "entidade": "0001659939",
+          "item": "ebit",
+          "nota": null,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "received_date": "2026-04-28",
+          "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/",
+          "value": 1011339000.0,
+          "version": 1
+        },
+        {
+          "anual": true,
+          "consolidado": true,
+          "currency": "USD",
+          "demonstrativo": "DRE",
+          "documento": "SEC 20-F 0001104659-26-050251 (IncomeTaxExpenseContinuingOperations)",
+          "entidade": "0001659939",
+          "item": "ir_csll",
+          "nota": null,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "received_date": "2026-04-28",
+          "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/",
+          "value": -210059000.0,
+          "version": 1
+        },
+        {
+          "anual": true,
+          "consolidado": true,
+          "currency": "USD",
+          "demonstrativo": "DRE",
+          "documento": "SEC 20-F 0001104659-26-050251 (ProfitLossBeforeTax)",
+          "entidade": "0001659939",
+          "item": "lucro_antes_ir",
+          "nota": null,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "received_date": "2026-04-28",
+          "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/",
+          "value": 794958000.0,
+          "version": 1
+        },
+        {
+          "anual": true,
+          "consolidado": true,
+          "currency": "USD",
+          "demonstrativo": "DRE",
+          "documento": "SEC 20-F 0001104659-26-050251 (GrossProfit)",
+          "entidade": "0001659939",
+          "item": "lucro_bruto",
+          "nota": null,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "received_date": "2026-04-28",
+          "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/",
+          "value": 1882350000.0,
+          "version": 1
+        },
+        {
+          "anual": true,
+          "consolidado": true,
+          "currency": "USD",
+          "demonstrativo": "DRE",
+          "documento": "SEC 20-F 0001104659-26-050251 (ProfitLoss)",
+          "entidade": "0001659939",
+          "item": "lucro_liquido",
+          "nota": null,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "received_date": "2026-04-28",
+          "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/",
+          "value": 584899000.0,
+          "version": 1
+        },
+        {
+          "anual": true,
+          "consolidado": true,
+          "currency": "USD",
+          "demonstrativo": "DRE",
+          "documento": "SEC 20-F 0001104659-26-050251 (ProfitLossAttributableToOwnersOfParent)",
+          "entidade": "0001659939",
+          "item": "lucro_liquido_controladores",
+          "nota": null,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "received_date": "2026-04-28",
+          "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/",
+          "value": 537629000.0,
+          "version": 1
+        },
+        {
+          "anual": true,
+          "consolidado": true,
+          "currency": "USD",
+          "demonstrativo": "DRE",
+          "documento": "SEC 20-F 0001104659-26-050251 (Revenue)",
+          "entidade": "0001659939",
+          "item": "receita",
+          "nota": null,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "received_date": "2026-04-28",
+          "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/",
+          "value": 4509547000.0,
+          "version": 1
+        },
+        {
+          "anual": true,
+          "consolidado": true,
+          "currency": "USD",
+          "demonstrativo": "DRE",
+          "documento": "SEC 20-F 0001104659-26-050251 (FinanceIncomeCost)",
+          "entidade": "0001659939",
+          "item": "resultado_financeiro",
+          "nota": null,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "received_date": "2026-04-28",
+          "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/",
+          "value": -237149000.0,
+          "version": 1
+        }
+      ],
+      "consolidado": true,
+      "currency": "USD",
+      "disponibilidade_tipo": "recepcao_observada",
+      "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+      "entidade": "0001659939",
+      "escala": 1,
+      "filingDate_primario": "2026-04-28",
+      "fonte_cache_id": "2fecbdaada45eebbcb7a60bb2b27df3414c246549b1a072f007c342d94da0350",
+      "fonte_documental_rederivada": {
+        "PIT_certified": false,
+        "accession": "0001104659-26-050251",
+        "component_tags": [
+          "{http://www.enelchile.cl/20251231}InterestBearingLoansAndBorrowingsCurrent",
+          "{http://www.enelchile.cl/20251231}InterestBearingLoansAndBorrowingsNoncurrent"
+        ],
+        "components": [
+          {
+            "currency": "USD",
+            "decimals": "-3",
+            "dedup": "um_valor_por_grao_semantico_sem_somar_ocorrencias",
+            "evidence_label": "fact_source_reported",
+            "group": "emprestimos",
+            "maturity": "current",
+            "occurrences": [
+              {
+                "attrs": {
+                  "contextRef": "As_Of_12_31_2025_ifrs-full_CategoriesOfFinancialLiabilitiesAxis_ifrs-full_FinancialLiabilitiesAtAmortisedCostCategoryMember_zu8Es0qvUESoMNircPA2uQ",
+                  "decimals": "-3",
+                  "id": "Tc_QJaBs-dULUiLqZHuFLppYA_4_4",
+                  "unitRef": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA"
+                },
+                "context": {
+                  "dimensions": [
+                    {
+                      "attrs": {
+                        "dimension": "ifrs-full:CategoriesOfFinancialLiabilitiesAxis"
+                      },
+                      "lexema": "ifrs-full:FinancialLiabilitiesAtAmortisedCostCategoryMember",
+                      "tag": "{http://xbrl.org/2006/xbrldi}explicitMember"
+                    }
+                  ],
+                  "entity": [
+                    {
+                      "attrs": {
+                        "scheme": "http://www.sec.gov/CIK"
+                      },
+                      "lexema": "0001659939"
+                    }
+                  ],
+                  "id": "As_Of_12_31_2025_ifrs-full_CategoriesOfFinancialLiabilitiesAxis_ifrs-full_FinancialLiabilitiesAtAmortisedCostCategoryMember_zu8Es0qvUESoMNircPA2uQ",
+                  "period": [
+                    {
+                      "lexema": "2025-12-31",
+                      "tag": "{http://www.xbrl.org/2003/instance}instant"
+                    }
+                  ],
+                  "sha256_serializado": "80b5817ed00fc0d80063d04aeb919e7b02d0046df5330261d236e45bd7b8c301"
+                },
+                "fact_sha256_serializado": "cd590dfc9c201892fc57d2f08563957f06945c7d6dc4a31f0d9f2cc1c0f3ddb6",
+                "lexema": "259461000",
+                "ordinal_xml_0base": 10603,
+                "tag": "{http://www.enelchile.cl/20251231}InterestBearingLoansAndBorrowingsCurrent",
+                "unit_xml_serializado": "<unit xmlns=\"http://www.xbrl.org/2003/instance\" xmlns:country=\"http://xbrl.sec.gov/country/2025\" xmlns:currency=\"http://xbrl.sec.gov/currency/2025\" xmlns:cyd=\"http://xbrl.sec.gov/cyd/2025\" xmlns:dei=\"http://xbrl.sec.gov/dei/2025\" xmlns:ecd=\"http://xbrl.sec.gov/ecd/2025\" xmlns:enic=\"http://www.enelchile.cl/20251231\" xmlns:ifrs-full=\"https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full\" xmlns:iso4217=\"http://www.xbrl.org/2003/iso4217\" xmlns:link=\"http://www.xbrl.org/2003/linkbase\" xmlns:srt=\"http://fasb.org/srt/2025\" xmlns:utr=\"http://www.xbrl.org/2009/utr\" xmlns:xbrldi=\"http://xbrl.org/2006/xbrldi\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" id=\"Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA\">\n        <measure>iso4217:USD</measure>\n    </unit>\n    ",
+                "value_USD": "259461000"
+              }
+            ],
+            "semantic_key": [
+              "0001659939",
+              "{http://www.enelchile.cl/20251231}InterestBearingLoansAndBorrowingsCurrent",
+              "2025-12-31",
+              "USD",
+              [
+                [
+                  "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}CategoriesOfFinancialLiabilitiesAxis",
+                  "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}FinancialLiabilitiesAtAmortisedCostCategoryMember"
+                ]
+              ]
+            ],
+            "sign_convention": "lexema_positivo_sem_atributo_sign",
+            "tag": "{http://www.enelchile.cl/20251231}InterestBearingLoansAndBorrowingsCurrent",
+            "tieout_index": 0,
+            "value_USD": "259461000",
+            "xml_scale": "1"
+          },
+          {
+            "currency": "USD",
+            "decimals": "-3",
+            "dedup": "um_valor_por_grao_semantico_sem_somar_ocorrencias",
+            "evidence_label": "fact_source_reported",
+            "group": "emprestimos",
+            "maturity": "noncurrent",
+            "occurrences": [
+              {
+                "attrs": {
+                  "contextRef": "As_Of_12_31_2025_ifrs-full_CategoriesOfFinancialLiabilitiesAxis_ifrs-full_FinancialLiabilitiesAtAmortisedCostCategoryMember_zu8Es0qvUESoMNircPA2uQ",
+                  "decimals": "-3",
+                  "id": "Tc_GUxxFXr99EGtHhFnSp6E7Q_11_4",
+                  "unitRef": "Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA"
+                },
+                "context": {
+                  "dimensions": [
+                    {
+                      "attrs": {
+                        "dimension": "ifrs-full:CategoriesOfFinancialLiabilitiesAxis"
+                      },
+                      "lexema": "ifrs-full:FinancialLiabilitiesAtAmortisedCostCategoryMember",
+                      "tag": "{http://xbrl.org/2006/xbrldi}explicitMember"
+                    }
+                  ],
+                  "entity": [
+                    {
+                      "attrs": {
+                        "scheme": "http://www.sec.gov/CIK"
+                      },
+                      "lexema": "0001659939"
+                    }
+                  ],
+                  "id": "As_Of_12_31_2025_ifrs-full_CategoriesOfFinancialLiabilitiesAxis_ifrs-full_FinancialLiabilitiesAtAmortisedCostCategoryMember_zu8Es0qvUESoMNircPA2uQ",
+                  "period": [
+                    {
+                      "lexema": "2025-12-31",
+                      "tag": "{http://www.xbrl.org/2003/instance}instant"
+                    }
+                  ],
+                  "sha256_serializado": "80b5817ed00fc0d80063d04aeb919e7b02d0046df5330261d236e45bd7b8c301"
+                },
+                "fact_sha256_serializado": "3381c97fad650ab099df9f6c1e2d350a48e445784d7d54dee4772d6560ad860b",
+                "lexema": "2161366000",
+                "ordinal_xml_0base": 10614,
+                "tag": "{http://www.enelchile.cl/20251231}InterestBearingLoansAndBorrowingsNoncurrent",
+                "unit_xml_serializado": "<unit xmlns=\"http://www.xbrl.org/2003/instance\" xmlns:country=\"http://xbrl.sec.gov/country/2025\" xmlns:currency=\"http://xbrl.sec.gov/currency/2025\" xmlns:cyd=\"http://xbrl.sec.gov/cyd/2025\" xmlns:dei=\"http://xbrl.sec.gov/dei/2025\" xmlns:ecd=\"http://xbrl.sec.gov/ecd/2025\" xmlns:enic=\"http://www.enelchile.cl/20251231\" xmlns:ifrs-full=\"https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full\" xmlns:iso4217=\"http://www.xbrl.org/2003/iso4217\" xmlns:link=\"http://www.xbrl.org/2003/linkbase\" xmlns:srt=\"http://fasb.org/srt/2025\" xmlns:utr=\"http://www.xbrl.org/2009/utr\" xmlns:xbrldi=\"http://xbrl.org/2006/xbrldi\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" id=\"Unit_Standard_USD_DL6dfCtFsE6jSZU-bgXiBA\">\n        <measure>iso4217:USD</measure>\n    </unit>\n    ",
+                "value_USD": "2161366000"
+              }
+            ],
+            "semantic_key": [
+              "0001659939",
+              "{http://www.enelchile.cl/20251231}InterestBearingLoansAndBorrowingsNoncurrent",
+              "2025-12-31",
+              "USD",
+              [
+                [
+                  "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}CategoriesOfFinancialLiabilitiesAxis",
+                  "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}FinancialLiabilitiesAtAmortisedCostCategoryMember"
+                ]
+              ]
+            ],
+            "sign_convention": "lexema_positivo_sem_atributo_sign",
+            "tag": "{http://www.enelchile.cl/20251231}InterestBearingLoansAndBorrowingsNoncurrent",
+            "tieout_index": 2,
+            "value_USD": "2161366000",
+            "xml_scale": "1"
+          }
+        ],
+        "consolidated": true,
+        "currency": "USD",
+        "dependencies": [
+          {
+            "bytes": 38598294,
+            "role": "XML",
+            "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102"
+          },
+          {
+            "bytes": 438,
+            "role": "XML_receipt",
+            "sha256": "2d4710181623696931d02c901ab4f44864ead53a5d969de7f45bc3aa456e0a2e"
+          },
+          {
+            "bytes": 42640,
+            "role": "submissions",
+            "sha256": "b3702cf634660baa7d9b0c0e64c4a3c96d77a46dd9b33406b3e4c3eb85747a3f"
+          },
+          {
+            "bytes": 736,
+            "role": "index_receipts",
+            "sha256": "c29efd420ec2584e905449b6345569137e6fb4c7ded5f02a7606d137e552d7f9"
+          },
+          {
+            "bytes": 3758,
+            "role": "metadata_receipt_ROOT",
+            "sha256": "25d6197f836943c6fb99c153f8d0ef79ba2a857c0494fea904e69ad6c72f127b"
+          }
+        ],
+        "documentary_full_sha256": "b96acc1eaf5629daec5f0a99cfd4a504ea5826dacc5057aaa65dc960a3a00995",
+        "entity": "0001659939",
+        "executor_possession_authenticated": false,
+        "first_publication_utc": null,
+        "freq": null,
+        "includes_leases": false,
+        "issuer_id": "CL_ENELCHILE",
+        "item": "divida_bruta",
+        "localizer_refs": [
+          {
+            "note": "2",
+            "ordinal_xml_0base": 5498,
+            "tag": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}DisclosureOfBasisOfPreparationOfFinancialStatementsExplanatory",
+            "textblock_sha256_utf8": "6646b13a281648eed73541fb57b8fb750b305fad24c4c1d2612da8953fde3eac"
+          },
+          {
+            "note": "20/20.1",
+            "ordinal_xml_0base": 8446,
+            "tag": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}DisclosureOfFinancialLiabilitiesExplanatory",
+            "textblock_sha256_utf8": "1666b25d632f12d4e08d0b8ec7cb38752f138a68c4351dc9543454fb91745bd0"
+          },
+          {
+            "note": "21",
+            "ordinal_xml_0base": 9123,
+            "tag": "{http://www.enelchile.cl/20251231}DisclosureOfLeaseLiabilitiesTextBlock",
+            "textblock_sha256_utf8": "b695aa9bd0950f4726e46756e90d15f385facbf039b33a6b49788167316d83f7"
+          },
+          {
+            "note": "20",
+            "ordinal_xml_0base": 8447,
+            "tag": "{http://www.enelchile.cl/20251231}DisclosureOfOtherFinancialLiabilitiesExplanatory",
+            "textblock_sha256_utf8": "902d3171ac3f66a23be816e2c6116677e0ac6fba5bb52e7bd56288c0fd84c7fb"
+          },
+          {
+            "note": "20.1",
+            "ordinal_xml_0base": 8468,
+            "tag": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}DisclosureOfDetailedInformationAboutBorrowingsExplanatory",
+            "textblock_sha256_utf8": "ea6ca2cd63e5731355a5d48408b39c8dcd4816879aa3535e14aa85cac8681e99"
+          },
+          {
+            "note": "21",
+            "ordinal_xml_0base": 9124,
+            "tag": "{http://www.enelchile.cl/20251231}ScheduleOfLeaseLiabilitiesTableTextBlock",
+            "textblock_sha256_utf8": "b45d0edc63c53fe4951f8cbf0e070670208d2f97369a9506d8a4e2f334bf0d53"
+          }
+        ],
+        "native_profile_registered": false,
+        "native_version": null,
+        "note": "20.1",
+        "period_end": "2025-12-31",
+        "period_start": null,
+        "reportado_no_documento": false,
+        "scale": "1",
+        "schema": "cdp.enelchile.contexto_estoque_proposto/v1",
+        "source_URL": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+        "source_XML_sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+        "source_version": null,
+        "temporal": {
+          "PIT_certified": false,
+          "availability_floor_utc": "2026-10-09T14:13:45.703490+00:00",
+          "executor_possession_authenticated": false,
+          "filed_date": "2026-04-28",
+          "first_publication_utc": null,
+          "knowledge_cutoff_utc": "2026-10-09T14:13:45.703490+00:00",
+          "metadata_receipt_created_at_utc": "2026-10-10T06:20:06.689083+00:00",
+          "sec_acceptance_at_utc": "2026-04-28T19:24:13+00:00",
+          "submissions_received_at_utc": "2026-10-09T14:13:45.703490+00:00",
+          "xml_received_at_utc": "2026-10-07T03:18:30+00:00"
+        },
+        "tieouts": [
+          {
+            "cells": [
+              {
+                "block_ordinal_xml_0base": 8447,
+                "block_sha256_utf8": "902d3171ac3f66a23be816e2c6116677e0ac6fba5bb52e7bd56288c0fd84c7fb",
+                "block_tag": "{http://www.enelchile.cl/20251231}DisclosureOfOtherFinancialLiabilitiesExplanatory",
+                "cell": {
+                  "attrs": {
+                    "style": "vertical-align:bottom;white-space:nowrap;width:8.16%;background:#cceeff;margin:0pt;padding:0pt;"
+                  },
+                  "cell_ordinal_0base": 2,
+                  "colspan": 1,
+                  "expanded_column_0base": 2,
+                  "raw_text": "  259,461",
+                  "row_0base": 4,
+                  "rowspan": 1,
+                  "sha256_serializado": "8bfb97dd3e2fcb2af7121344f20f92954e05a95540c8d2bbfda4e8dbd87c104b",
+                  "text": "259,461"
+                },
+                "expanded_column_0base": 2,
+                "note": "20",
+                "row_0base": 4
+              },
+              {
+                "block_ordinal_xml_0base": 8468,
+                "block_sha256_utf8": "ea6ca2cd63e5731355a5d48408b39c8dcd4816879aa3535e14aa85cac8681e99",
+                "block_tag": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}DisclosureOfDetailedInformationAboutBorrowingsExplanatory",
+                "cell": {
+                  "attrs": {
+                    "style": "vertical-align:bottom;white-space:nowrap;width:7.94%;margin:0pt;padding:0pt;"
+                  },
+                  "cell_ordinal_0base": 2,
+                  "colspan": 1,
+                  "expanded_column_0base": 2,
+                  "raw_text": "  259,461",
+                  "row_0base": 7,
+                  "rowspan": 1,
+                  "sha256_serializado": "0d9c2f49eff221abe56b69a86ee3917859092673407e5be709d12a3bea0735c9",
+                  "text": "259,461"
+                },
+                "expanded_column_0base": 2,
+                "note": "20.1",
+                "row_0base": 7
+              }
+            ],
+            "currency": "USD",
+            "end": "2025-12-31",
+            "html_scale": "1000",
+            "residuals_HTML_tag_USD": [
+              "0",
+              "0"
+            ],
+            "tag": "{http://www.enelchile.cl/20251231}InterestBearingLoansAndBorrowingsCurrent",
+            "xml_scale": "1"
+          },
+          {
+            "cells": [
+              {
+                "block_ordinal_xml_0base": 8447,
+                "block_sha256_utf8": "902d3171ac3f66a23be816e2c6116677e0ac6fba5bb52e7bd56288c0fd84c7fb",
+                "block_tag": "{http://www.enelchile.cl/20251231}DisclosureOfOtherFinancialLiabilitiesExplanatory",
+                "cell": {
+                  "attrs": {
+                    "style": "vertical-align:bottom;white-space:nowrap;width:8.6%;background:#cceeff;margin:0pt;padding:0pt;"
+                  },
+                  "cell_ordinal_0base": 8,
+                  "colspan": 1,
+                  "expanded_column_0base": 8,
+                  "raw_text": "  2,161,366",
+                  "row_0base": 4,
+                  "rowspan": 1,
+                  "sha256_serializado": "6233f6284fb11496bf8c1e16b402a2ebb1166992e357d6d0cc4cb00b2dbbf690",
+                  "text": "2,161,366"
+                },
+                "expanded_column_0base": 8,
+                "note": "20",
+                "row_0base": 4
+              },
+              {
+                "block_ordinal_xml_0base": 8468,
+                "block_sha256_utf8": "ea6ca2cd63e5731355a5d48408b39c8dcd4816879aa3535e14aa85cac8681e99",
+                "block_tag": "{https://xbrl.ifrs.org/taxonomy/2025-03-27/ifrs-full}DisclosureOfDetailedInformationAboutBorrowingsExplanatory",
+                "cell": {
+                  "attrs": {
+                    "style": "vertical-align:bottom;white-space:nowrap;width:8.35%;margin:0pt;padding:0pt;"
+                  },
+                  "cell_ordinal_0base": 8,
+                  "colspan": 1,
+                  "expanded_column_0base": 8,
+                  "raw_text": "  2,161,366",
+                  "row_0base": 7,
+                  "rowspan": 1,
+                  "sha256_serializado": "428401050f05d49e5368b9e7f19583f87a66530884996128902882240c4b3c79",
+                  "text": "2,161,366"
+                },
+                "expanded_column_0base": 8,
+                "note": "20.1",
+                "row_0base": 7
+              }
+            ],
+            "currency": "USD",
+            "end": "2025-12-31",
+            "html_scale": "1000",
+            "residuals_HTML_tag_USD": [
+              "0",
+              "0"
+            ],
+            "tag": "{http://www.enelchile.cl/20251231}InterestBearingLoansAndBorrowingsNoncurrent",
+            "xml_scale": "1"
+          }
+        ],
+        "type": "estoque_calculado_proposto",
+        "value_USD": "2420827000"
+      },
+      "fontes_pinned": [
+        {
+          "bytes": 38598294,
+          "role": "XML",
+          "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102"
+        },
+        {
+          "bytes": 438,
+          "role": "XML_receipt",
+          "sha256": "2d4710181623696931d02c901ab4f44864ead53a5d969de7f45bc3aa456e0a2e"
+        },
+        {
+          "bytes": 42640,
+          "role": "submissions",
+          "sha256": "b3702cf634660baa7d9b0c0e64c4a3c96d77a46dd9b33406b3e4c3eb85747a3f"
+        },
+        {
+          "bytes": 736,
+          "role": "index_receipts",
+          "sha256": "c29efd420ec2584e905449b6345569137e6fb4c7ded5f02a7606d137e552d7f9"
+        },
+        {
+          "bytes": 3758,
+          "role": "metadata_receipt_ROOT",
+          "sha256": "25d6197f836943c6fb99c153f8d0ef79ba2a857c0494fea904e69ad6c72f127b"
+        }
+      ],
+      "freq": "A",
+      "item": "divida_bruta",
+      "period_end": "2025-12-31",
+      "period_start": null,
+      "pit_certificado": false,
+      "posse_executor_certificada": false,
+      "publicacao_primaria": null,
+      "reportado_no_documento": false,
+      "schema": "cdp.enelchile.estoque_anual/v1",
+      "tipo": "estoque_calculado",
+      "value_USD": "2420827000",
+      "versao": {
+        "ordem_republicacao_historica_conhecida": false,
+        "ordinal_local": 1,
+        "semantica": "revisao_local_universo_exatamente_um_filing_autenticado",
+        "source_version": null,
+        "universo": [
+          {
+            "accession": "0001104659-26-050251",
+            "cik": "0001659939",
+            "filed": "2026-04-28",
+            "form": "20-F",
+            "period_end": "2025-12-31",
+            "source_XML_sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102"
+          }
+        ]
+      }
+    },
+    "contexto_documental_sha256": "3a48d6d518809706bbd01571dfb7aa4b3373651ed05956623ea0dfb4d3593731"
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "DFC",
+    "freq": "A",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "dividendos_pagos",
+    "value": 351451000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (DividendsPaidClassifiedAsFinancingActivities)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "DFC",
+    "freq": "TTM",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "dividendos_pagos",
+    "value": 351451000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (DividendsPaidClassifiedAsFinancingActivities)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "DRE",
+    "freq": "A",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "ebit",
+    "value": 1011339000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (ProfitLossFromOperatingActivities)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "DRE",
+    "freq": "TTM",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "ebit",
+    "value": 1011339000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (ProfitLossFromOperatingActivities)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "DRE",
+    "freq": "A",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "ebitda",
+    "value": 1398769000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (ProfitLossFromOperatingActivities)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": "calculado: ebit + d_a",
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "DRE",
+    "freq": "TTM",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "ebitda",
+    "value": 1398769000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (ProfitLossFromOperatingActivities)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": "calculado: ebit + d_a",
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "DFC",
+    "freq": "A",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "fcf",
+    "value": 820570000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (CashFlowsFromUsedInOperatingActivities)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": "calculado: cfo − capex",
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "DFC",
+    "freq": "TTM",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "fcf",
+    "value": 820570000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (CashFlowsFromUsedInOperatingActivities)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": "calculado: cfo − capex",
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "DRE",
+    "freq": "A",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "ir_csll",
+    "value": -210059000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (IncomeTaxExpenseContinuingOperations)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "DRE",
+    "freq": "TTM",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "ir_csll",
+    "value": -210059000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (IncomeTaxExpenseContinuingOperations)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "DRE",
+    "freq": "A",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "lucro_antes_ir",
+    "value": 794958000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (ProfitLossBeforeTax)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "DRE",
+    "freq": "TTM",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "lucro_antes_ir",
+    "value": 794958000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (ProfitLossBeforeTax)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "DRE",
+    "freq": "A",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "lucro_bruto",
+    "value": 1882350000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (GrossProfit)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "DRE",
+    "freq": "TTM",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "lucro_bruto",
+    "value": 1882350000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (GrossProfit)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "DRE",
+    "freq": "A",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "lucro_liquido",
+    "value": 584899000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (ProfitLoss)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "DRE",
+    "freq": "TTM",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "lucro_liquido",
+    "value": 584899000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (ProfitLoss)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "DRE",
+    "freq": "A",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "lucro_liquido_controladores",
+    "value": 537629000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (ProfitLossAttributableToOwnersOfParent)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "DRE",
+    "freq": "TTM",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "lucro_liquido_controladores",
+    "value": 537629000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (ProfitLossAttributableToOwnersOfParent)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "BP",
+    "freq": "A",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "participacao_minoritarios",
+    "value": 373638000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (NoncontrollingInterests)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "BP",
+    "freq": "Q",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "participacao_minoritarios",
+    "value": 373638000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (NoncontrollingInterests)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "BP",
+    "freq": "A",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "patrimonio_controladores",
+    "value": 5175869000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (EquityAttributableToOwnersOfParent)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "BP",
+    "freq": "Q",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "patrimonio_controladores",
+    "value": 5175869000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (EquityAttributableToOwnersOfParent)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "BP",
+    "freq": "A",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "patrimonio_liquido",
+    "value": 5549507000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (Equity)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "BP",
+    "freq": "Q",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "patrimonio_liquido",
+    "value": 5549507000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (Equity)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "DRE",
+    "freq": "A",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "receita",
+    "value": 4509547000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (Revenue)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "DRE",
+    "freq": "TTM",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "receita",
+    "value": 4509547000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (Revenue)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "DRE",
+    "freq": "A",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "resultado_financeiro",
+    "value": -237149000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (FinanceIncomeCost)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  },
+  {
+    "entidade": "0001659939",
+    "demonstrativo": "DRE",
+    "freq": "TTM",
+    "period_end": "2025-12-31T00:00:00.000",
+    "item": "resultado_financeiro",
+    "value": -237149000.0,
+    "currency": "USD",
+    "escala": 1,
+    "consolidado": true,
+    "fonte": "SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f_htm.xml",
+    "documento": "SEC 20-F 0001104659-26-050251 (FinanceIncomeCost)",
+    "data_publicacao": null,
+    "sha256": "fe0cb64242a503309cf75c5a4ed292569073ea6c0014ec351c5d5c2485566102",
+    "pit_estimado": false,
+    "nota": null,
+    "disponivel_desde": "2026-10-09T14:13:45.703490+00:00",
+    "disponibilidade_tipo": "recepcao_observada",
+    "data_recebimento_documento": "2026-10-09",
+    "received_date": "2026-10-09T14:13:45.703Z",
+    "contexto_documental": null,
+    "contexto_documental_sha256": null
+  }
+]

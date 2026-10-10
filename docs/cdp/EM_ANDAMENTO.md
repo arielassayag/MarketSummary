@@ -5,7 +5,140 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-## Estado corrente — 10/10/2026, 06:44 Brasília
+## Estado corrente — 10/10/2026, 10:14 Brasília
+
+A fonte pública observada nesta recepção é `36f256aa63332b4f3cdc5e2d7763cd9d604c3faf`.
+CI36f concluiu em12:09:50UTC, com JUnit real recebido:4.448 aprovados,
+17 pulados e zero falhas/erros; Pages, cinco corpos HTTP200/hash e interface
+confirmados. O portal mantém o retrato anterior ao fechamento local09/10.
+
+O ramo `codex/cdp-guardas-enel-bancos` recebeu e qualificou27 caminhos:
+pacote documental Enel anual opt-in, duas guardas owners bool exato, oito
+regressões e passagens documentais JBS/BCRA/Rumo. AMPLA22 terminou
+em13:11:31UTC:4.458 aprovados,17 pulados,4.475 IDs únicos,zero falhas/erros/
+xfail; Ruff0. ROOT conferiu XML/contagens,4.858 fontes SHA literais, M6
+integral de book/data/reports/artifacts do checkout e cinco alterações
+herdadas da raiz. Nenhuma adoção financeira ou alteração no livro oficial.
+
+Depois do terminal, apenas esta passagem e o adendo BCRA foram atualizados.
+O código testado permanece literal; a consistência documental focal ainda
+será conferida antes do commit. Integração e push normais autorizados pela
+passagem, sujeitos à conferência da nova CI/Pages; não estão antecipados aqui.
+
+Enel mantém empréstimos/arrendamentos separados, contexto anual recebido e
+recusa de escrita relativa no qualificador. A composição financeira e o
+carregador operacional continuam inativos; pacote técnico não encerra G19.
+As guardas owners recusam entradas que não sejam bool antes de política/I/O;
+não habilitam automaticamente recepção observada, CLI ou snapshot financeiro.
+
+Os estudos JBS preservam divergências primárias de capital, tesouraria, EPS
+e grão; nenhuma quantidade escolhida. Rumo conserva condições do aditivo,
+sem confirmar instauração/cumprimento, compensação ou dívida zero; corpo
+Portaria648 ainda ausente. Adendo BCRA novo recebeu revisão independente:
+Supervielle declara não antecipação em31/12/2020 e aplicação nas demonstrações
+31/03/2021, distinguindo vigência01/01/2021 e comparativos reexpressos. Fonte é
+comunicado de resultados, sem nova confirmação por nota auditada. Galicia
+permanece desconhecido; “Early Adopter” no relatório é programa da ONU.
+B6 parcial e pontes de NI/owners/período não qualificadas.
+
+Custódia bancária integral privada recebida:2.897 cópias físicas,3.257 registros
+do índice com corpo e339 sem corpo; quatro chaves RI necessárias ausentes.
+Política de disponibilidade não ativada; ausências não viram zero. Não houve
+API financeira ou uso desses corpos no modelo pela etapa de custódia.
+
+MOC permanece privado. Fonte original15 encerrada negativamente: uma geração
+sintética integral,13 corpos/11 quadros recebidos, derivado/macros/snapshot
+não persistidos. Revisão documental independente recebida com três IDs
+próprios finais PASS, preservando diagnóstico inicial de um ID. Reabertura
+novo adapter delimitada está em implementação a partir dos corpos arquivados,
+sem novo gerador: frequência será reconstrução explícita, macros serão novos
+insumos derivados e não se promete identidade do grafo anterior. Nenhuma
+transição D0/D1, modelo, solver, Store ou escritor adotado por esta etapa.
+DADOS SIMULADOS; nenhum PIT ou efeito econômico qualificado.
+
+As12 rotinas estão ACTIVE no projeto atual AInotes/seçãoCDP, seis famílias,
+executor interno `.cdp/rotinas`. Auditoria final13:06:03UTC recebeu TOMLs,
+nomes/horários/procedimentos e confirmou ausência de duplicatas/divergências;
+nenhuma alteração indicada. Arquivos nativos permanecem no diretório global
+do Codex. Configuração não certifica disparo futuro. Quadro resumido em
+`.cdp/TAREFAS.md`, agenda em `.cdp/AGENDAS.md`, história preservada.
+
+Fechamento09 local e não publicado; net excede±1%, BOOKEDseq30 local.
+Integridade não demonstra conformidade financeira. Retificação Ultrapar é
+editorial; não repetir decisão/MOC/diário. Instrução preparada e não enviada
+ ao chat executor, sem autorização direta de contato recebida.
+Bancos/IAS29, EPS/ARS, JBS/G13, Enel/G19, FCFF/concessões, calibração eE1/E2
+permanecem na fila P0. Recibos em `.cdp/validacoes/20261010-integracao-22/`
+e `.cdp/revisoes/20261010-recepcoes-root/`. Preservados executor e arquivos
+herdados; desenvolvimento não grava mercado/livro/relatórios/artifacts oficiais.
+
+## Registro histórico anterior — 10/10/2026, 09:05 Brasília
+
+Fonte pública confirmada: `36f256aa63332b4f3cdc5e2d7763cd9d604c3faf`.
+Notas anuais DFP CVM integradas por a123866; passagem documental JBS por36f.
+AMPLA21:4.447 aprovados/17 pulados,4.464 IDs únicos, zero falhas/erros/xfail;
+Ruff0 e4.839 fontes SHA literais. Push normal, Pages36f, cinco corpos públicos
+HTTP200/hash e abas Visão geral/Risco/rodapé confirmados. CI36f permanece em
+execução na consulta12:00:19UTC; terminal/JUnit pendentes. O portal conserva
+retrato ex-ante09/10 com preços08/10, sem o fechamento local.
+
+As12 automações estão ACTIVE no projeto atual do Codex, executor exclusivo
+`.cdp/rotinas`; seis famílias em `.cdp/AGENDAS.md` e quadro em `.cdp/TAREFAS.md`.
+Views nativas08:49UTC e configurações TOML reconferidas11:30UTC. Os arquivos
+nativos de agendamento continuam no diretório global do Codex. Configuração
+não certifica execução futura. Clone externo substituído pelo executor interno.
+
+No ramo `codex/cdp-guardas-enel-bancos`, duas APIs de owners receberam guarda
+bool exato antes de truthiness, política e I/O. Oito IDs autorais PASS/oito
+falhas causais no baseline; quatro independentes PASS/uma falha causal.
+True/False/default pelo par somente até fronteiras pré-I/O. ROOT recebeu8618
+paths M6; três destinos aplicados realmente e581 corpos literais reconferidos.
+Nenhuma habilitação nova de CLI/snapshot, sem adoção IAS29 ou financeira.
+
+Enel V1c recebeu seis controles autorais PASS/baseline2PASS4FAIL e três novos
+independentes PASS/baseline2PASS1FAIL. Famílias/rodadas permanecem separadas.
+ROOT recebeu96943 paths M6 autorais e128259 no recibo independente. Reparo
+recusa open relativo str/bytes antes de resolução; negativos exigem recusa
+interna e corpo M6 intacto, positivos absolutos privados permanecem permitidos.
+Limitação temporal dos links próprios capturados só depois explícita.
+Mesma wheel financeira, sem repetir composição. Cumulativo20 destinos aplicado
+realmente no ramo; todos os corpos são literais e somente20 deltas do patch.
+Loader/default operacional continuam inativos; G19/P0/PIT não encerrados.
+
+Três estudos documentais receberam revisão independente: JBS DFP2025/Item16E,
+BCRA A7211/A7222 e Quinto Termo Malha Oeste/Portaria648. ROOT recebeu218 paths
+M6 da revisão e290 da passagem portátil; três documentos aplicados literalmente
+no ramo. JBS preserva o corpo anterior6101B. São sete passagens aceitas2/2/3.
+Abertura de tesouraria ausente e rollforward não autenticado; nenhuma quantidade
+JBS escolhida. Opção por banco desconhecida. Condições4.1/7.5/18.1 Rumo
+preservadas; Portaria648 tem título/link de catálogo, corpo DOU403/502 pendente.
+Sem compensação, dívida zero, adoção econômica ou certificação de posse/PIT.
+
+Suíte ampla22 deste conjunto ainda não iniciada. Plano fechará a fonte integral,
+27 caminhos previstos, cinco alterações herdadas ROOT e M6 antes/depois de
+book/data/reports/artifacts do checkout. Não declarar commit/main/push/Pages
+ou aprovação ampla dos candidatos antes do terminal e recebimento real.
+
+MOC B permanece negativo:25 alvos com quantidades zero, nenhum trade. Store
+recebeu aceite focal independente de quatro IDs finais, sem positivo econômico.
+Novo domínio recebeu plano ROOT(1969 paths M6); receita antiga contém fontes
+posteriores ao corte15. Autorizada uma geração sintética integral15/seed7,
+sem prepare/build/modelo/solver/booking/escritor. Bootstrap ainda tem negativas
+mecânicas preservadas, antes da entrada efetiva do gerador; reparo restrito a
+anotações/construtores estruturais autenticados. Não existem barras16/19 nessa
+receita; D0/D1 seguem recusados até origem posterior coerente. DADOS SIMULADOS.
+
+Fechamento09 local e não publicado: net fora de±1%, BOOKEDseq30 no sufixo local.
+Integridade não demonstra conformidade financeira. Retificação Ultrapar é
+editorial; não repetir decisão/MOC/diário. Instrução revisável continua não
+enviada ao chat executor, sem autorização direta de contato recebida.
+
+Bancos/IAS29, EPS/ARS, JBS/G13, Enel/G19, FCFF/concessões, calibração e E1/E2
+permanecem na fila P0. Executor3c27 e cinco alterações herdadas ROOT preservados.
+Desenvolvimento não altera livro, mercado oficial, relatórios ou artifacts.
+Recibos atuais em `.cdp/validacoes/20261010-integracao-22/` e quadro interno.
+
+## Registro histórico anterior — 10/10/2026, 06:44 Brasília
 
 A fonte publicada confirmada é `603e283f4605d8711d994bbe4480a97f0ccbf894`.
 Seu reparo de quatro olhos recebeu AMPLA20: 4.429 aprovados, 17 pulados,

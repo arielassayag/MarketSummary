@@ -28,6 +28,10 @@ def _sha(data):
 
 def _perfil(schema):
     # Import tardio evita ciclo; allowlist fechada, nunca import determinado por payload.
+    if schema == "cdp.enelchile.estoque_anual/v1":
+        from . import publico_enelchile_estoque
+
+        return publico_enelchile_estoque
     if schema == "cdp.galicia.contexto_documental/v1":
         from . import publico_galicia
 
@@ -183,6 +187,10 @@ def _conferir_valor_composto(row, parts):
 def contexto_documental(row):
     """Coerência e vínculo por hash; não substitui autenticação dos PDFs no produtor."""
 
+    from .publico_enelchile_estoque import conferir_vinculo_linha
+
+    conferir_vinculo_linha(row)
+
     def presente(v):
         if v is None or v is pd.NA or v is pd.NaT:
             return False
@@ -196,6 +204,10 @@ def contexto_documental(row):
     ctx, sha = [row.get(k) for k in CAMPOS_CONTEXTO]
     if not isinstance(ctx, Mapping) or sha != _sha(_canonico(ctx)):
         raise ExtracaoRecusada("Contexto documental/hash divergente")
+    if ctx.get("schema") == "cdp.enelchile.estoque_anual/v1":
+        from .publico_enelchile_estoque import validar_contexto
+
+        return validar_contexto(row)
     perfil = _perfil(ctx.get("schema"))
     if not getattr(perfil, "SUPORTA_COMPOSICAO", True) and ctx.get("tipo") != "celula_primaria":
         raise ExtracaoRecusada("Perfil de estoque não autoriza composição financeira")
@@ -356,6 +368,22 @@ def estoque_documental(row):
     return bool(envelope and getattr(
         _perfil(envelope["contexto_documental"]["schema"]), "DATA_ESTOQUE_COMPROVADA", False
     ))
+
+
+def frequencia_estoque_documental(row):
+    """Decisão anual finita; perfis sem esta extensão mantêm a regra histórica."""
+    fields = contexto_documental(row)
+    if fields and fields["contexto_documental"]["schema"] == "cdp.enelchile.estoque_anual/v1":
+        from .publico_enelchile_estoque import frequencia_estoque
+
+        return frequencia_estoque(row)
+    return None
+
+
+def conferir_estoques_no_conjunto(fatos):
+    from .publico_enelchile_estoque import validar_conjunto
+
+    validar_conjunto(fatos)
 
 
 def conferir_contexto_participantes(row):

@@ -86,3 +86,15 @@ ficam no estudo interno `.cdp/estudos/20261010-jbs-ponte-capital-anual/`.
 O ROOT recebeu 58 artefatos, 20 origens e 19 cópias; os 31 artefatos do estudo
 trimestral anterior permanecem intactos. Essa custódia local não comprova
 qualificação financeira nativa ou disponibilidade histórica para a operação.
+
+## Adendo documental — DFP2025 e Item 16E
+
+Na composição de capital da DFP2025, JBS N.V. (CNPJ 49.115.815/0001-05), em 31/12/2025, versão 1, informa 1.109.058.185 ações de capital integralizado e 94.537.534 em tesouraria. JBS S.A. aparece em registro distinto, com outro CNPJ. Esses campos não foram adotados como substitutos de ações outstanding.
+
+Locador: [ZIP CVM DFP2025](https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2025.zip), membro `dfp_cia_aberta_composicao_capital_2025.csv`, linha física 505 com cabeçalho; S.A. na linha 86. Cabeçalho identifica campos QT_ACAO_TOTAL_CAP_INTEGR e QT_ACAO_TOTAL_TESOURO. Os hashes do ZIP e do membro estão registrados na custódia abaixo.
+
+A nota 20 anual distingue quantidades de ações e valores em milhares de USD. A abertura de tesouraria aparece como travessão e permanece numericamente ausente. O Item 16E divulga a recompra de 41.008.292 ações classe A no programa descrito; esse fluxo não substitui o estoque final de tesouraria. A divergência de quantidades por classe entre capa e nota 20 permanece em aberto, assim como a conciliação entre estoque, tesouraria e média anual de EPS. Nenhuma quantidade foi selecionada para valuation.
+
+Locador: [20-F anual SEC](https://www.sec.gov/Archives/edgar/data/1791942/000121390026034213/ea0282342-20f_jbsnv.htm), nota 20 a/c1, Item 16E, nota 23 para a definição da média de EPS e capa para outstanding. Não transportar moeda BRL do outro bloco do PDF composto nem converter legenda/scale por inferência. A data de referência é 31/12/2025; primeira publicação UTC e posse operacional não foram autenticadas por este estudo.
+
+Custódia deste adendo: ZIP DFP2025 SHA-256 `d7aec54e7c67998e4cd3ef94c463ab247f09a6baaa2254878d1e431f28130e2a`; membro composição de capital SHA-256 `f29b0e4bf6004cbb6d0758460d92cab5eb4807181786d668eb7c7cfe14593e6f`. O confronto final V2 conserva abertura numérica ausente e rollforward não autenticado; não foi reexecutado nesta passagem. Nenhuma adoção de quantidade, alteração financeira, OP, P0 ou PIT.

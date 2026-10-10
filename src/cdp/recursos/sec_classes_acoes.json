@@ -1,0 +1,58 @@
+{
+  "schema": "cdp.sec_classes_acoes/v1",
+  "documentos": [
+    {
+      "cik": "0000932470",
+      "accn": "0001104659-26-026480",
+      "form": "20-F",
+      "filed": "2026-03-11",
+      "period_end": "2025-12-31",
+      "documento_sec": "teo-20251231x20f.htm",
+      "url": "https://www.sec.gov/Archives/edgar/data/932470/000110465926026480/teo-20251231x20f_htm.xml",
+      "sha256": "8de15e5bbbd938eee7b08a495cf62c96acdde88e4eaa8af6126d85b269c708c2",
+      "eixo": "ifrs-full:ClassesOfShareCapitalAxis",
+      "membros": [
+        "teo:ClassOrdinarySharesMember",
+        "teo:ClassBOrdinarySharesMember",
+        "teo:ClassCOrdinarySharesMember",
+        "teo:ClassDOrdinarySharesMember"
+      ],
+      "conferido_em": "2026-10-07",
+      "nota": "Classes completas de ações em circulação da capa do 20-F, cada uma como DEI EntityCommonStockSharesOutstanding; a soma é feita em código. Nenhuma dimensão financeira ou de subsidiária é aceita."
+    },
+    {
+      "cik": "0001114700",
+      "accn": "0001114700-26-000038",
+      "form": "20-F",
+      "filed": "2026-04-16",
+      "period_end": "2025-12-31",
+      "documento_sec": "ggal-20251231.htm",
+      "url": "https://www.sec.gov/Archives/edgar/data/1114700/000111470026000038/ggal-20251231_htm.xml",
+      "sha256": "c6f19d2c9611d413c3eea5ddfd61f24dcb4a0240b93be1d97a58e7f3ab1d975f",
+      "eixo": "ifrs-full:ClassesOfShareCapitalAxis",
+      "membros": [
+        "ggal:ClassAOrdinarySharesMember",
+        "ggal:ClassBOrdinarySharesMember"
+      ],
+      "conferido_em": "2026-10-07",
+      "nota": "Classes completas de ações em circulação da capa do 20-F, cada uma como DEI EntityCommonStockSharesOutstanding; a soma é feita em código. Nenhuma dimensão financeira ou de subsidiária é aceita."
+    },
+    {
+      "cik": "0001791942",
+      "accn": "0001213900-26-034213",
+      "form": "20-F",
+      "filed": "2026-03-25",
+      "period_end": "2025-12-31",
+      "documento_sec": "ea0282342-20f_jbsnv.htm",
+      "url": "https://www.sec.gov/Archives/edgar/data/1791942/000121390026034213/ea0282342-20f_jbsnv_htm.xml",
+      "sha256": "1adcbdedd30f6ea70355d2ff449426df8f5da54a341d3c4186d995f6fb8cbbcc",
+      "eixo": "ifrs-full:ClassesOfShareCapitalAxis",
+      "membros": [
+        "jbs:ClassACommonSharesMember",
+        "jbs:ClassBCommonSharesMember"
+      ],
+      "conferido_em": "2026-10-07",
+      "nota": "Classes completas de ações em circulação da capa do 20-F, cada uma como DEI EntityCommonStockSharesOutstanding; a soma é feita em código. Nenhuma dimensão financeira ou de subsidiária é aceita."
+    }
+  ]
+}

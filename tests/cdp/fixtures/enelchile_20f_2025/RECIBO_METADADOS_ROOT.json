@@ -1,0 +1,109 @@
+{
+  "utc": "2026-10-10T06:20:06.689083+00:00",
+  "primary_URL": "https://data.sec.gov/submissions/CIK0001659939.json",
+  "source_before_after_M6": {
+    "data/publico/SEC/submissions/2026-10-09/CIK0001659939.json": {
+      "sha256": "b3702cf634660baa7d9b0c0e64c4a3c96d77a46dd9b33406b3e4c3eb85747a3f",
+      "bytes": 42640,
+      "mtime_ns": 1791559078672476032,
+      "inode": 561694983,
+      "mode": 33188,
+      "nlink": 1
+    },
+    "data/publico/indice.jsonl": {
+      "sha256": "dbfba66ac49b2c142790364aa5053c21a3b503ced7ea3cee8b41bcf4bb046c18",
+      "bytes": 1285969,
+      "mtime_ns": 1791559078794797386,
+      "inode": 561696275,
+      "mode": 33188,
+      "nlink": 1
+    },
+    ".cdp/prototipos/enelchile-emprestimos-v1/inputs/recibo_xml_literal.json": {
+      "sha256": "2d4710181623696931d02c901ab4f44864ead53a5d969de7f45bc3aa456e0a2e",
+      "bytes": 438,
+      "mtime_ns": 1791610294668619061,
+      "inode": 562641381,
+      "mode": 33188,
+      "nlink": 1
+    }
+  },
+  "source_preserved": true,
+  "accession_index": 3,
+  "fields_literal": {
+    "accessionNumber": "0001104659-26-050251",
+    "filingDate": "2026-04-28",
+    "reportDate": "2025-12-31",
+    "acceptanceDateTime": "2026-04-28T19:24:13.000Z",
+    "act": "34",
+    "form": "20-F",
+    "fileNumber": "001-37723",
+    "filmNumber": "26906917",
+    "items": "",
+    "core_type": "XBRL",
+    "size": 111390689,
+    "isXBRL": 1,
+    "isInlineXBRL": 1,
+    "isXBRLNumeric": 1,
+    "primaryDocument": "enic-20251231x20f.htm",
+    "primaryDocDescription": "20-F"
+  },
+  "same_period_forms_observed": [
+    {
+      "accessionNumber": "0001104659-26-050251",
+      "filingDate": "2026-04-28",
+      "reportDate": "2025-12-31",
+      "acceptanceDateTime": "2026-04-28T19:24:13.000Z",
+      "act": "34",
+      "form": "20-F",
+      "fileNumber": "001-37723",
+      "filmNumber": "26906917",
+      "items": "",
+      "core_type": "XBRL",
+      "size": 111390689,
+      "isXBRL": 1,
+      "isInlineXBRL": 1,
+      "isXBRLNumeric": 1,
+      "primaryDocument": "enic-20251231x20f.htm",
+      "primaryDocDescription": "20-F"
+    }
+  ],
+  "archive_receipts": [
+    {
+      "line": 1551,
+      "receipt": {
+        "bytes": 42640,
+        "caminho": "SEC/submissions/2026-10-09/CIK0001659939.json",
+        "chave": "SEC/submissions/CIK0001659939.json",
+        "data_coleta": "2026-10-09T14:13:45.703490+00:00",
+        "fonte": "SEC",
+        "precisao_temporal": "microseconds",
+        "sha256": "b3702cf634660baa7d9b0c0e64c4a3c96d77a46dd9b33406b3e4c3eb85747a3f",
+        "url": "https://data.sec.gov/submissions/CIK0001659939.json"
+      }
+    },
+    {
+      "line": 2967,
+      "receipt": {
+        "bytes": 42640,
+        "caminho": "SEC/submissions/2026-10-09/CIK0001659939.json",
+        "chave": "SEC/submissions/CIK0001659939.json",
+        "data_coleta": "2026-10-09T14:18:19.250527+00:00",
+        "fonte": "SEC",
+        "precisao_temporal": "microseconds",
+        "sha256": "b3702cf634660baa7d9b0c0e64c4a3c96d77a46dd9b33406b3e4c3eb85747a3f",
+        "url": "https://data.sec.gov/submissions/CIK0001659939.json"
+      }
+    }
+  ],
+  "availability_floor_received_bodies_UTC": "2026-10-09T14:13:45.703490+00:00",
+  "knowledge_cutoff_UTC": "2026-10-10T06:20:06.689740+00:00",
+  "filing_date_observed": true,
+  "acceptance_is_not_claimed_first_publication": true,
+  "executor_possession_authenticated": false,
+  "source_recency_G19_pass_claimed": false,
+  "canonical_adoption": false,
+  "P0_complete": false,
+  "PIT_complete": false,
+  "new_HTTP": false,
+  "unsuccessful_web_observation": "Consulta ao index HTML SEC pela ferramenta web retornou inacessível; não houve retry/contorno nem corpo recebido dessa consulta. Evidência positiva é arquivo local primário já arquivado."
+}

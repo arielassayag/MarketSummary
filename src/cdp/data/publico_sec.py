@@ -29,6 +29,7 @@ import zipfile
 from collections.abc import Mapping
 from datetime import date
 from html.parser import HTMLParser
+from importlib.resources import files
 from pathlib import Path, PurePosixPath
 from urllib.parse import urlparse
 from xml.etree import ElementTree as ET
@@ -45,6 +46,11 @@ URL_EFTS = "https://efts.sec.gov/LATEST/search-index?keysTyped={q}"
 URL_SUBMISSIONS = "https://data.sec.gov/submissions/CIK{cik}.json"
 CATALOGO_RI = Path(__file__).resolve().parents[3] / "configs/cdp/sec_ri_xbrl.json"
 CATALOGO_CLASSES = Path(__file__).resolve().parents[3] / "configs/cdp/sec_classes_acoes.json"
+try:
+    CATALOGO_CLASSES.lstat()
+except FileNotFoundError:
+    # Instalação fora do clone: recurso literal; catálogo presente nunca vira fallback.
+    CATALOGO_CLASSES = files("cdp").joinpath("recursos/sec_classes_acoes.json")
 CATALOGO_FLUXOS = Path(__file__).resolve().parents[3] / "configs/cdp/sec_fluxos_html.json"
 FORMULARIOS = frozenset({
     "10-K", "10-K/A", "10-KT", "10-Q", "10-Q/A", "20-F", "20-F/A", "40-F", "40-F/A",

@@ -15,3 +15,5 @@ Receba quantidade inteira com sinal, preço, capacidade no leilão, custos, FX, 
 Valide denominador monetário exato depois de custos, margem de NET e efeito de fills parciais pelo código. Limite de execução não é garantia de preenchimento. Ordens reais e gravação de Book não pertencem a esta técnica.
 
 Ensaio privado deve ter plano, configuração e dados congelados antes da execução, número finito de chamadas e encerramento na primeira negativa. Não repita a mesma versão, não mude seed ou volume para obter sucesso. Recusa de efetivação no dia de montagem caduca a decisão; não execute depois nem desligue kill switch por hipótese.
+
+Após uma negativa, preserve a versão, entrada, terminal e causa observada. Proponha um novo ensaio apenas com diferença de código/dados identificada, hipótese e critérios fechados, novo inventário recebido e plano congelado antes dos efeitos. Registre a autorização aplicável à nova versão; a anterior não se transfere. Não lance esse ensaio por esta técnica nem escolha versões, seeds, volumes ou cortes pelo resultado desejado.

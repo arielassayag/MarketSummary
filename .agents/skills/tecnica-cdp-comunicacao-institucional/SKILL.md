@@ -14,4 +14,4 @@ Receba texto, FactBook, fatos e estado de publicação da mesma versão. Reconci
 
 Use português do Brasil, tom institucional e afirmações proporcionais à evidência. Números financeiros ficam como `{{fact:id}}` no JSON; contas e rankings só pelo código. Dados sintéticos exibem DADOS SIMULADOS. Separe relatório local, publicação em main, CI e portal: um não comprova o outro.
 
-Nomenclatura jurídica, ratings e aviso final dependem da decisão do titular; estudo não é autorização regulatória. Entregue rascunho revisável; não envie email, mensagem, publicação ou divulgação sem instrução direta correspondente.
+Nomenclatura jurídica, ratings e aviso final dependem da decisão do titular; estudo não é autorização regulatória. Entregue rascunho revisável. Esta técnica termina na preparação privada; não envia email, mensagem ou divulgação. Uma eventual distribuição é tarefa separada, com autorização humana direta para conteúdo, destinatário e canal correspondentes; invocar esta skill não concede essa autorização.

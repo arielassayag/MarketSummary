@@ -74,6 +74,13 @@ histórica. A análise da Cemig não incorpora mudança de controle não confirm
 
 ## Lotes seguintes de empresas em 11/10/2026
 
+- `BR_TAESA`, `BR_ISAENERGIA`, `BR_CPFL` e `BR_ENEVA`: retorno das redes,
+  investimento, geração contratada e caixa após financiamento. Taesa distingue
+  lucro regulatório e societário; ISA separa dívida, aferição contratual e
+  reorganização posterior ao trimestre. CPFL preserva a contribuição excepcional
+  do seguro e uma divergência de bases da geração. Eneva distingue a venda
+  concluída de Pecém, a permuta condicional de Itaqui e a opção cancelada;
+  anúncio não equivale a monetização recorrente ou caixa disponível.
 - `BR_ALUPAR`, `BR_AUREN`, `BR_AXIA` e `BR_ENERGISA`: remuneração das redes,
   margem realizada de energia, implantação e caixa após obrigações. As bases
   regulatória e societária, recursos restritos e participações têm leituras

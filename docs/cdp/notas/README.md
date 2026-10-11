@@ -186,6 +186,13 @@ histórica. A análise da Cemig não incorpora mudança de controle não confirm
   operações descontinuadas e dividendos anunciados têm bases distintas. Sigma
   Foods é a antiga Alfa, com estatísticas próprias da holding e da subsidiária.
 
+- `MX_CARSO`, `MX_GENOMMA`, `MX_KIMBER`, `MX_MEGACABLE` e `MX_TELEVISA`:
+  conglomerados, marcas de consumo e telecomunicações. As narrativas distinguem
+  alienações concluídas, aprovações pendentes, lucro financeiro e operacional,
+  indicadores gerenciais, investimento não corrente e capital conversível.
+  O calendário de Kimber tem evento futuro confirmado; datas não comprovadas
+  permanecem ausentes. Inconsistências do texto do emissor são preservadas.
+
 Todos são rascunhos com hipóteses próprias, contraponto, indicadores e lacunas.
 Mesmo a consulta do último release não encerra a reconciliação financeira com o
 modelo, a comparação competitiva e a diligência do capital. Nenhum dado externo

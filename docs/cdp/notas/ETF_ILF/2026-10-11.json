@@ -86,7 +86,7 @@
   "ultimo_resultado": null,
   "guidance": "nd",
   "tom_gestao": "nd",
-  "governanca": "A diligência de governança do produto deve conferir administrador, custódia, regras do índice, conflitos e política de empréstimo de ativos nos documentos contratuais. A página pública informa objetivo e composição, mas não comprova todos esses controles. As empresas detidas preservam riscos próprios de controle, partes relacionadas e alocação de capital. Não se atribui ao fundo uma política empresarial de investimentos ou de lucros.",
+  "governanca": "O prospecto resumido diferencia o índice e a gestão do fundo. Permissões de investimento não comprovam uso efetivo; negociação em bolsa não confere resgate individual direto ao valor patrimonial. Suplementos, custódia, garantias e operações com partes relacionadas continuam sujeitos à reconciliação documental.",
   "posicao_competitiva": null,
   "qualidade_resultados": null,
   "alocacao_capital": null,
@@ -121,27 +121,38 @@
       "evidencias": [
         "etf.ILF.ter"
       ]
+    },
+    {
+      "titulo": "Regras, carteira e direitos do cotista",
+      "texto": "Conferir alterações do índice, replicação efetiva, diferenças de marcação e custos. Reconciliar carteira e direitos societários com o corte usado; mudança de regra não deve ser incorporada retrospectivamente ao histórico.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
     }
   ],
   "estrutura_etf": {
     "titulo": "Objetivo e regras do produto",
-    "texto": "O objetivo e a identificação do índice constam da página pública do administrador. A pesquisa deve reconciliar prospecto, metodologia do índice e políticas de replicação antes de afirmar como o acompanhamento é implementado. A forma de negociação não comprova proteção cambial nem seleção fundamental ativa.",
+    "texto": "O prospecto identifica o índice latino-americano da S&P, formado por empresas de grande capitalização e liquidez de Brasil, Chile, Colômbia, México e Peru. A gestora usa amostragem representativa e pode utilizar derivativos e instrumentos auxiliares, dentro dos limites do produto. O fundo admite concentração em emissores e empréstimo de ativos. Essas permissões não comprovam operações efetivamente realizadas nem representação equilibrada de todas as economias latino-americanas.",
     "evidencias": [
-      "F1"
+      "F1",
+      "F2"
     ]
   },
   "exposicao_etf": {
     "titulo": "Exposição econômica",
-    "texto": "A condição decisiva é saber se a cesta representa o risco regional desejado. A hipótese de retorno deve ser confrontada com concentração por país, setor e emissor, além de geração de caixa das participações. A função de referência não constitui uma tese favorável de investimento. A composição pública é a referência para testar essa hipótese; a identificação por país não substitui análise de receitas e ativos das participações.",
+    "texto": "A presença de vários países não implica pesos iguais nem inclusão de toda a América Latina. O índice contratual seleciona grandes empresas líquidas; finanças, materiais e energia podem produzir fatores de risco comuns entre mercados. Diversificação precisa ser examinada por emissores e receitas, além do país de classificação.",
     "evidencias": [
-      "F1"
+      "F1",
+      "F2"
     ]
   },
   "custos_liquidez_etf": {
     "titulo": "Taxa e negociação",
-    "texto": "Taxa declarada no retrato {{fact:etf.ILF.ter}}. A taxa não inclui necessariamente corretagem, spread ou prêmio e desconto ao patrimônio. A diligência requer séries comparáveis, horário e moeda; volume visível isoladamente não mede o custo de executar uma ordem.",
+    "texto": "Taxa declarada no retrato {{fact:etf.ILF.ter}}. A taxa não inclui necessariamente corretagem, spread ou prêmio e desconto ao patrimônio. A diligência requer séries comparáveis, horário e moeda; volume visível isoladamente não mede o custo de executar uma ordem. O prospecto diferencia despesas do fundo, custos de transação e comissões do investidor. Cotas negociadas em bolsa podem ter prêmio ou desconto ao patrimônio; horários distintos dos mercados subjacentes exigem leitura consistente da marcação.",
     "evidencias": [
-      "etf.ILF.ter"
+      "etf.ILF.ter",
+      "F2"
     ]
   },
   "aderencia_indice_etf": {
@@ -151,18 +162,19 @@
       "etf.ILF.visao_ilf"
     ]
   },
-  "o_que_mudou": null,
+  "o_que_mudou": "A pesquisa recebeu documentos oficiais de estratégia e regras do produto. A análise diferencia composição, replicação, moeda e direitos do cotista; documentos parciais ou históricos mantêm limites explícitos. Os números e a classificação do modelo permanecem os do código.",
   "gatilhos_revisao": [
     "Mudança de objetivo, índice ou regras contratuais do produto.",
     "Composição recebida deixa de representar a exposição econômica analisada.",
     "Resultados e caixa das participações contrariam a hipótese de investimento.",
     "Custos ou diferenças de negociação tornam inadequada a exposição pretendida.",
-    "Novo retrato altera a citabilidade ou a cobertura da avaliação."
+    "Novo retrato altera a citabilidade ou a cobertura da avaliação.",
+    "Mudança de replicação, marcação ou direitos contratuais exige reavaliação da exposição e da série comparável."
   ],
   "lacunas_de_dados": [
-    "Prospecto e metodologia do índice não foram integralmente reconciliados com o retrato.",
-    "Replicação, empréstimo de ativos, custódia e conflitos exigem conferência documental.",
-    "Spread e prêmio ou desconto ao patrimônio não estão no FactBook recebido.",
+    "Prospecto resumido recebido; documento estatutário completo, suplementos posteriores e metodologia integral vigente ainda exigem reconciliação.",
+    "Replicação diária efetiva, custódia, ativos emprestados e garantias não foram integralmente reconciliados.",
+    "As medidas públicas de spread e prêmio ou desconto não foram incorporadas ao FactBook; falta série comparável conferida.",
     "Série de aderência ao índice contratual não foi calculada e conferida.",
     "Percepção de mercado, posicionamento e interesse vendido não têm evidência suficiente.",
     "Cenários qualitativos não têm preços ou probabilidades próprios calculados.",
@@ -177,6 +189,15 @@
       "instituicao": "BlackRock",
       "titulo": "Página oficial do produto, objetivo e composição",
       "url": "https://www.ishares.com/us/products/239761/ishares-latin-america-40-etf",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "BlackRock",
+      "titulo": "Prospecto resumido — estratégia e riscos do produto",
+      "url": "https://www.ishares.com/us/literature/summary-prospectus/sp-ishares-latin-america-40-etf-3-31.pdf",
       "publicado_em": null,
       "consultado_em": "2026-10-11"
     }

@@ -5,7 +5,7 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-## Estado atual das teses — 11/10/2026, 16:14 Brasília
+## Estado atual das teses — 11/10/2026, 16:38 Brasília
 
 O portal `8aea3f1` está publicado e foi conferido independentemente: 241 páginas,
 233 empresas e oito ETFs; 727 arquivos HTTP200 com tamanho e SHA iguais ao
@@ -38,6 +38,15 @@ Os testes de notas, ETFs, teses por ativo, agenda, documentação e site tiveram
 286 aprovados, um pulado e nenhum erro ou falha, em 287 casos únicos. Ruff
 e a conferência de espaços passaram. A diligência integral e a adoção das
 novas notas pelo executor permanecem pendentes.
+
+As oito pesquisas de ETFs receberam documentos oficiais de estratégia e regras.
+Os prospectos resumidos distinguem amostragem, replicação, concentração,
+instrumentos auxiliares, custos e direitos do cotista. O EPU considera vínculo
+econômico com o Peru além da classificação nacional; o ILF tem universo
+contratual próprio, sem representação equilibrada de toda a região. O BOVA11
+informa reinvestimento dos rendimentos e comparação contratual em reais;
+seu regulamento recebido é histórico, com vigência atual ainda não comprovada.
+As permissões contratuais não comprovam operações efetivamente realizadas.
 
 Marcopolo, Tupy, Randon, Simpar, Movida, Vamos, Mills e CVC acrescentam
 análise de mobilidade, frota e serviços. Compass, Cosan, EcoRodovias, Engie,

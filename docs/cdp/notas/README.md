@@ -327,6 +327,12 @@ histórica. A análise da Cemig não incorpora mudança de controle não confirm
   adiantamentos, crédito tributário e Eve. Caixa atribuível de participação
   e recursos restritos de projetos não são liquidez livre da controladora.
 
+As pesquisas dos oito ETFs foram aprofundadas com prospectos resumidos oficiais,
+resumos metodológicos e documentos do produto. Os textos distinguem amostragem,
+replicação, concentração por grupo, vínculo econômico, moeda, custos e direitos
+do cotista. O regulamento público do BOVA11 é histórico e mantém a lacuna de
+vigência atual; documentos parciais não encerram a reconciliação contratual.
+
 Todos são rascunhos com hipóteses próprias, contraponto, indicadores e lacunas.
 Mesmo a consulta do último release não encerra a reconciliação financeira com o
 modelo, a comparação competitiva e a diligência do capital. Nenhum dado externo

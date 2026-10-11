@@ -86,7 +86,7 @@
   "ultimo_resultado": null,
   "guidance": "nd",
   "tom_gestao": "nd",
-  "governanca": "A diligência de governança do produto deve conferir administrador, custódia, regras do índice, conflitos e política de empréstimo de ativos nos documentos contratuais. A página pública informa objetivo e composição, mas não comprova todos esses controles. As empresas detidas preservam riscos próprios de controle, partes relacionadas e alocação de capital. Não se atribui ao fundo uma política empresarial de investimentos ou de lucros.",
+  "governanca": "O regulamento recebido descreve administração pelo BNP Paribas e gestão pela BlackRock, empréstimo de ações e direitos de assembleia. A versão é histórica e não comprova vigência atual. Reinvestimento informado na página do produto não representa promessa de distribuição periódica em dinheiro. Alterações contratuais e adequação normativa permanecem abertas.",
   "posicao_competitiva": null,
   "qualidade_resultados": null,
   "alocacao_capital": null,
@@ -121,47 +121,63 @@
       "evidencias": [
         "etf.BOVA11.ter"
       ]
+    },
+    {
+      "titulo": "Regras, carteira e direitos do cotista",
+      "texto": "Conferir alterações do índice, replicação efetiva, diferenças de marcação e custos. Reconciliar carteira e direitos societários com o corte usado; mudança de regra não deve ser incorporada retrospectivamente ao histórico.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
     }
   ],
   "estrutura_etf": {
     "titulo": "Objetivo e regras do produto",
-    "texto": "O objetivo e a identificação do índice constam da página pública do administrador. A pesquisa deve reconciliar prospecto, metodologia do índice e políticas de replicação antes de afirmar como o acompanhamento é implementado. A forma de negociação não comprova proteção cambial nem seleção fundamental ativa.",
+    "texto": "A página oficial identifica fundo domiciliado no Brasil, negociado na B3 em reais, com objetivo de acompanhar o Ibovespa e reinvestir rendimentos. A B3 descreve índice de retorno total em reais, seleção por negociabilidade e presença em pregão, ponderação pelo valor de mercado disponível à negociação e revisão quadrimestral. O regulamento público recebido é uma versão histórica; sua vigência atual e alterações normativas ainda exigem comprovação.",
     "evidencias": [
-      "F1"
+      "F1",
+      "F2",
+      "F3"
     ]
   },
   "exposicao_etf": {
     "titulo": "Exposição econômica",
-    "texto": "O ponto decisivo é separar resultado econômico da cesta, condições de desconto e câmbio da carteira de referência. A exposição ao índice só é adequada quando concentração, custos e moeda correspondem ao risco que se pretende representar. A composição pública é a referência para testar essa hipótese; a identificação por país não substitui análise de receitas e ativos das participações.",
+    "texto": "A composição resulta dos critérios do índice e dos preços de mercado; não é uma seleção ativa de qualidade financeira. Reinvestimento dos rendimentos difere de recebimento periódico pelo cotista. A leitura em dólares do mandato requer conversão em código, separada do acompanhamento do Ibovespa em reais.",
     "evidencias": [
-      "F1"
+      "F1",
+      "F2",
+      "F3"
     ]
   },
   "custos_liquidez_etf": {
     "titulo": "Taxa e negociação",
-    "texto": "Taxa declarada no retrato {{fact:etf.BOVA11.ter}}. A taxa não inclui necessariamente corretagem, spread ou prêmio e desconto ao patrimônio. A diligência requer séries comparáveis, horário e moeda; volume visível isoladamente não mede o custo de executar uma ordem.",
+    "texto": "Taxa declarada no retrato {{fact:etf.BOVA11.ter}}. A taxa não inclui necessariamente corretagem, spread ou prêmio e desconto ao patrimônio. A diligência requer séries comparáveis, horário e moeda; volume visível isoladamente não mede o custo de executar uma ordem. A página distingue retorno patrimonial da cotação negociada e informa rendimentos reinvestidos. A taxa de administração não representa corretagem, custos de negociação ou todos os encargos; a versão histórica do regulamento requer atualização antes da leitura contratual definitiva.",
     "evidencias": [
-      "etf.BOVA11.ter"
+      "etf.BOVA11.ter",
+      "F3"
     ]
   },
   "aderencia_indice_etf": {
     "titulo": "Índice contratual e comparação regional",
-    "texto": "A comparação frente ao ILF é {{fact:etf.BOVA11.visao_ilf}}. Ela se refere à referência regional do modelo, e não à qualidade de replicação. Aderência ao índice exige retorno total da cota e do índice contratual em bases equivalentes; o estudo não dispõe dessa série conferida.",
+    "texto": "A comparação frente ao ILF é {{fact:etf.BOVA11.visao_ilf}}. Ela se refere à referência regional do modelo, e não à qualidade de replicação. Aderência ao índice exige retorno total da cota e do índice contratual em bases equivalentes; o estudo não dispõe dessa série conferida. O teste contratual do Ibovespa requer retorno total em reais com reinvestimento; a comparação regional do mandato tem outra moeda e finalidade.",
     "evidencias": [
-      "etf.BOVA11.visao_ilf"
+      "etf.BOVA11.visao_ilf",
+      "F2"
     ]
   },
-  "o_que_mudou": null,
+  "o_que_mudou": "A pesquisa recebeu documentos oficiais de estratégia e regras do produto. A análise diferencia composição, replicação, moeda e direitos do cotista; documentos parciais ou históricos mantêm limites explícitos. Os números e a classificação do modelo permanecem os do código.",
   "gatilhos_revisao": [
     "Mudança de objetivo, índice ou regras contratuais do produto.",
     "Composição recebida deixa de representar a exposição econômica analisada.",
     "Resultados e caixa das participações contrariam a hipótese de investimento.",
     "Custos ou diferenças de negociação tornam inadequada a exposição pretendida.",
-    "Novo retrato altera a citabilidade ou a cobertura da avaliação."
+    "Novo retrato altera a citabilidade ou a cobertura da avaliação.",
+    "Mudança de replicação, marcação ou direitos contratuais exige reavaliação da exposição e da série comparável."
   ],
   "lacunas_de_dados": [
-    "Prospecto e metodologia do índice não foram integralmente reconciliados com o retrato.",
-    "Replicação, empréstimo de ativos, custódia e conflitos exigem conferência documental.",
+    "Regulamento público histórico recebido; versão vigente, alterações, suplementos e adequação normativa não foram comprovados.",
+    "Replicação diária efetiva, empréstimo de ativos, garantias e conflitos continuam sem reconciliação completa.",
     "Spread e prêmio ou desconto ao patrimônio não estão no FactBook recebido.",
     "Série de aderência ao índice contratual não foi calculada e conferida.",
     "Percepção de mercado, posicionamento e interesse vendido não têm evidência suficiente.",
@@ -177,6 +193,24 @@
       "instituicao": "BlackRock",
       "titulo": "Página oficial do produto, objetivo e composição",
       "url": "https://www.blackrock.com/br/products/251816/ishares-ibovespa-fundo-de-ndice-fund",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "bolsa",
+      "instituicao": "B3",
+      "titulo": "Ibovespa — objetivo, seleção e retorno do índice",
+      "url": "https://b3.com.br/pt_br/market-data-e-indices/indices/indices-amplos/ibovespa-b3.htm",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "BlackRock",
+      "titulo": "Regulamento público — versão histórica recebida",
+      "url": "https://www.blackrock.com/br/literature/bylaws/ishares-bova11-brl-regulamento-ptbr.pdf",
       "publicado_em": null,
       "consultado_em": "2026-10-11"
     }

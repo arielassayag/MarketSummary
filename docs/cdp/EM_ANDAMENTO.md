@@ -48,6 +48,10 @@ quantificadas por código a partir dos pares completos do job Linux. A correçã
 qualificação alinha apenas os seis derivados à política já usada no `DailyRisk`;
 metadados, ausências e autenticação permanecem estritos. Não foi identificada a
 operação de backend responsável por cada arredondamento; não há alteração dos anexos.
+O job operacional Linux da correção passou integralmente. A suíte completa parou
+no teste de ordem do aviso pré-inaugural de `renderRisco`: o link do dashboard havia
+sido inserido antes da proteção. O link foi reposicionado após o retorno antecipado,
+mantendo o teste existente; a nova qualificação completa ainda é necessária.
 
 ## Registro anterior das teses — 11/10/2026, 16:38 Brasília
 

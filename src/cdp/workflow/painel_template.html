@@ -3542,8 +3542,8 @@ function stressKind(s) {
   return /\(|\b(19|20)\d{2}\b/.test(n) ? "historico" : "hipotetico";
 }
 function renderRisco(p) {
-  if (META.risco_url === "risco/") p.appendChild(h("p", { class: "pre-go" }, h("a", { href: "risco/", class: "pillbtn" }, "Dashboard de risco e fatores →")));
   if (aguardaInaugural(p, "Risco e exposições", "Exposições, decomposição do risco entre fatores e risco específico, testes de estresse e liquidez são publicados a partir da carteira inaugural; o modelo de risco e os limites estão em Mandato e metodologia.")) return;
+  if (META.risco_url === "risco/") p.appendChild(h("p", { class: "pre-go" }, h("a", { href: "risco/", class: "pillbtn" }, "Dashboard de risco e fatores →")));
   var ex = RK.ex_ante ? obj(RK.ex_ante) : null, dl = RK.daily ? obj(RK.daily) : null;
   var bases = [];
   if (dl && arr(dl.exposures).length) bases.push(["daily", "Fechamento de " + fdate(RK.as_of_date), dl.exposures]);

@@ -74,6 +74,13 @@ histórica. A análise da Cemig não incorpora mudança de controle não confirm
 
 ## Lotes seguintes de empresas em 11/10/2026
 
+- `BR_PETROBRAS`, `BR_PRIO`, `BR_BRAVA` e `BR_RECV`: produção econômica,
+  custo completo, capital e caixa após financiamento. Petrobras separa fluxo da
+  política de remuneração e arrendamentos. PRIO distingue produção mensal
+  preliminar, participação e recurso prospectivo; Brava documenta mudança de
+  controle concluída e poço em estabilização. PetroReconcavo separa acesso
+  contratado ao processamento, marcação financeira e liquidação de proteção.
+  Resultado posterior e pagamento programado conservam seus estados próprios.
 - `BR_TAESA`, `BR_ISAENERGIA`, `BR_CPFL` e `BR_ENEVA`: retorno das redes,
   investimento, geração contratada e caixa após financiamento. Taesa distingue
   lucro regulatório e societário; ISA separa dívida, aferição contratual e

@@ -5,7 +5,7 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-## Estado atual das teses — 11/10/2026, 11:14 Brasília
+## Estado atual das teses — 11/10/2026, 11:25 Brasília
 
 O portal `8aea3f1` está publicado e foi conferido independentemente: 241 páginas,
 233 empresas e oito ETFs; 727 arquivos HTTP200 com tamanho e SHA iguais ao
@@ -23,12 +23,12 @@ nenhum erro ou falha, 4.507 casos únicos. Ruff passou; os 4.875 arquivos fixado
 e o commit permaneceram idênticos. Não há soma de execuções focais sobrepostas
 nem promoção da qualificação de outra frente privada.
 
-O ramo documental `codex/cdp-pesquisa-lote-2` tem 145 rascunhos entregues e
+O ramo documental `codex/cdp-pesquisa-lote-2` tem 149 rascunhos entregues e
 validados em conjunto: oito ETFs e empresas de diferentes países e setores.
 O índice de lotes em [notas/README.md](notas/README.md) registra os ativos,
 fontes e limites relevantes. A conferência conjunta preservou a renderização
 das doze notas históricas e os 4.122 arquivos operacionais. Os textos mantêm
-visão neutra, baixa convicção e lacunas próprias. Há 84 ativos ainda sem nota
+visão neutra, baixa convicção e lacunas próprias. Há 80 ativos ainda sem nota
 publicada ou rascunho individual; cobertura qualitativa completa continua aberta.
 
 Os novos estudos incluem bancos e seguros mexicanos, imóveis e concessões,
@@ -80,6 +80,15 @@ anual da ISA exigem conciliação própria; oferta liquidada e transferência de
 ativos posterior ao trimestre preservam suas datas. A divergência de bases da
 geração da CPFL continua explícita. Eneva distingue venda concluída, permuta
 condicional e opção cancelada, sem antecipar receita ou recebimento recorrente.
+
+Petrobras, PRIO, Brava e PetroReconcavo acrescentam análise de produção,
+custo completo e retorno depois do reinvestimento. O fluxo da política de
+remuneração da Petrobras precede obrigações de arrendamento; subvenção
+reconhecida não comprova recebimento. PRIO distingue comunicado operacional
+preliminar e recursos prospectivos de resultado e reservas. Brava documenta
+controle concluído e início de produção em estabilização. PetroReconcavo
+mantém processamento contratado, derivativos liquidados e pagamentos
+programados em suas bases e datas próprias.
 
 A pesquisa distingue resultado recorrente, medidas gerenciais, inflação, moeda,
 capital por entidade e recursos atribuíveis ao acionista. Reorganização anunciada,

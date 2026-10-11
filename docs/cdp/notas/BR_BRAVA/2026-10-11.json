@@ -1,0 +1,195 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_BRAVA",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Brava Energia — produção integrada após confiabilidade, proteção financeira e novo controle",
+  "resumo": "A hipótese é que confiabilidade dos campos, novos poços e integração industrial sustentem caixa depois de proteção financeira, manutenção e obrigações de aquisição. A condição decisiva é margem realizada com capital suficiente e transmissão ao minoritário sob o novo controle. Aumento de EBITDA, capacidade e preço do petróleo não demonstra melhora uniforme da produção, rentabilidade por barril ou liquidez livre. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_BRAVA.rating_codigo}}, com retorno esperado {{fact:val.BR_BRAVA.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Empresa integrada de produção de petróleo e gás em terra e no mar, processamento, logística e refino. O portfólio combinado reúne operações com participações e custos distintos. Vendas entre negócios são eliminadas no consolidado; produção própria, compra de petróleo e margem de derivados não devem ser somadas como contribuições independentes. O controle foi adquirido pela Ecopetrol em operação concluída depois do trimestre.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que confiabilidade dos campos, novos poços e integração industrial sustentem caixa depois de proteção financeira, manutenção e obrigações de aquisição. A condição decisiva é margem realizada com capital suficiente e transmissão ao minoritário sob o novo controle. Aumento de EBITDA, capacidade e preço do petróleo não demonstra melhora uniforme da produção, rentabilidade por barril ou liquidez livre.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_BRAVA.preco}} e alvo {{fact:val.BR_BRAVA.preco_alvo}}, com potencial {{fact:val.BR_BRAVA.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_BRAVA.ke}} e retorno esperado {{fact:val.BR_BRAVA.etr}}.",
+      "evidencias": [
+        "val.BR_BRAVA.preco",
+        "val.BR_BRAVA.preco_alvo",
+        "val.BR_BRAVA.upside",
+        "val.BR_BRAVA.ke",
+        "val.BR_BRAVA.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Monitorar disponibilidade, restrições, produção e custo por participação. Conferir vendas, utilização da refinaria e margem depois de compras. Separar derivativo reconhecido e liquidado, capex e desembolso, dívida e obrigações do portfólio. Acompanhar novo controle, partes relacionadas e direitos do minoritário antes de inferir apoio financeiro.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_BRAVA.ke}} e a dispersão entre métodos {{fact:val.BR_BRAVA.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_BRAVA.ke",
+        "val.BR_BRAVA.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Paradas, integridade, preço do petróleo, proteção financeira e obrigações de aquisição podem absorver caixa. Saldo restrito não é liquidez livre; novo controle e partes relacionadas exigem verificar retorno e direitos do minoritário.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_BRAVA.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_BRAVA.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Operação se estabiliza, novos poços convertem investimento em produção econômica e margem integrada sustenta caixa depois de proteção e dívida. O cenário otimista calculado pelo código é {{fact:val.BR_BRAVA.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_BRAVA.preco_alvo}}, com retorno esperado {{fact:val.BR_BRAVA.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Paradas, custos, derivativos e obrigações de aquisição reduzem recursos enquanto novos investimentos e decisões do controlador limitam retorno ao minoritário. O cenário pessimista calculado pelo código é {{fact:val.BR_BRAVA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_BRAVA.preco}} e alvo do modelo aberto {{fact:val.BR_BRAVA.preco_alvo}}, com potencial {{fact:val.BR_BRAVA.upside}}. Retorno total esperado {{fact:val.BR_BRAVA.etr}} e custo do capital próprio {{fact:val.BR_BRAVA.ke}}. A dispersão entre métodos é {{fact:val.BR_BRAVA.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_BRAVA.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_BRAVA.consenso_alvo}}; a diferença {{fact:val.BR_BRAVA.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "A recuperação offshore convive com restrições e retomada gradual no Potiguar. A alavancagem de covenant sobe sequencialmente, apesar da queda anual de dívida, porque a proteção liquidada pressiona o resultado de referência. O reconhecimento de reembolso de descomissionamento não elimina a obrigação ambiental; compensação de contas tem natureza distinta de recebimento livre. O poço posterior em Papa-Terra iniciou produção após autorização, mas permanecia em estabilização inicial no comunicado.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "A conclusão da oferta e aquisição pela Ecopetrol está documentada; não foi mantida como evento meramente proposto nem incorporada retrospectivamente ao trimestre. Integração, contratos intragrupo e incentivos exigem acompanhar a participação minoritária. A autorização e produção inicial do novo poço não comprovam vazão estabilizada ou conclusão de toda a campanha. Dívida compensada por aplicação, recursos restritos e parcelas contingentes preservam suas bases.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Infraestrutura de processamento e refino pode facilitar monetização do portfólio, mas exige operação segura, integridade e abastecimento. A participação em cada campo e as relações com operadores determinam custo e volume atribuível. Maior margem do refino pode coexistir com menor utilização; melhora do spread não comprova vantagem permanente. A liderança declarada pela administração não foi tratada como comparação independente.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "A produção melhora sequencialmente, mas recua na comparação anual, com comportamentos distintos de petróleo e gás. Receita e resultado operacional ajustado aumentam, enquanto lucro permanece menor que no ano anterior. Custo unitário de extração cresce com mistura de ativos e repasses do operador. No refino, margem melhora apesar de volume e utilização menores. Marcação de derivativos favorece lucro financeiro, mas liquidação de proteção de óleo reduz caixa operacional.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Caixa operacional já considera o desembolso da proteção de óleo; a medida antes desse efeito não é caixa efetivamente gerado. Reembolso de parcela de aquisição reduz o investimento líquido sem constituir geração recorrente. Amortizações antecipadas, novas captações e juros consomem recursos. Caixa gerencial inclui saldo restrito e exclui aplicação vinculada à dívida compensada; parcelas diferidas e contingentes de aquisição têm conciliação própria.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se retomadas e novos poços não sustentam produtividade depois do investimento, ou se preço e spreads explicam melhora transitória. Ganho contábil em derivativos pode coexistir com saída de caixa. Controle por grupo maior não assegura apoio financeiro nem remuneração adequada do minoritário; aquisição, dívida e passivos ambientais continuam econômicos.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Monitorar disponibilidade, restrições, produção e custo por participação. Conferir vendas, utilização da refinaria e margem depois de compras. Separar derivativo reconhecido e liquidado, capex e desembolso, dívida e obrigações do portfólio. Acompanhar novo controle, partes relacionadas e direitos do minoritário antes de inferir apoio financeiro.",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F4"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_BRAVA.etr}}, custo do capital {{fact:val.BR_BRAVA.ke}} e dispersão entre métodos {{fact:val.BR_BRAVA.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_BRAVA.etr",
+        "val.BR_BRAVA.ke",
+        "val.BR_BRAVA.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Disponibilidade, restrições e custo impedem converter investimentos em produção econômica.",
+    "Resultado ajustado melhora sem caixa após proteção financeira e compras de petróleo.",
+    "Dívida, recursos restritos e compromissos de aquisição reduzem capital disponível.",
+    "Novo controle e partes relacionadas alteram direitos ou transmissão de valor ao minoritário."
+  ],
+  "lacunas_de_dados": [
+    "Demonstrações completas, contratos de proteção e fluxo livre não foram integralmente reconciliados.",
+    "Reservas, obrigações ambientais, custo final e retorno da campanha exigem análise por campo.",
+    "Participações, dívida compensada, caixa restrito e compromissos contingentes têm bases próprias a conciliar.",
+    "Retomada integral das operações e vazão estabilizada do poço posterior não foram confirmadas.",
+    "Documentos completos da oferta, acordos de controle e partes relacionadas não foram integralmente examinados.",
+    "Há estimativas de projetos, sem direção agregada de revisão de guidance classificada.",
+    "Não há catalisador futuro datado confirmado nesta pesquisa.",
+    "Tom agregado, vantagem relativa e percepção do mercado não foram classificados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Brava Energia",
+      "titulo": "Perfil integrado de exploração, infraestrutura e refino",
+      "url": "https://bravaenergia.com/sobre-nos/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Brava Energia",
+      "titulo": "Release arquivado na CVM, produção, hedge, fluxo e compromissos de aquisição",
+      "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1552890&numSequencia=1077596&numVersao=1",
+      "publicado_em": "2026-08-05",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Brava Energia",
+      "titulo": "Conclusão da aquisição de controle pela Ecopetrol",
+      "url": "https://bravaenergia.com/noticias/brava-conclui-operacao-com-ecopetrol-e-fortalece-posicao-como-plataforma-estrategica-de-oleo-e-gas-no-brasil/",
+      "publicado_em": "2026-08-17",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F4",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Brava Energia",
+      "titulo": "Início autorizado de produção de novo poço em Papa-Terra",
+      "url": "https://bravaenergia.com/noticias/novo-poco-em-producao-no-campo-de-papa-terra/",
+      "publicado_em": "2026-09-29",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

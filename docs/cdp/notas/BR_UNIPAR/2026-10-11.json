@@ -1,0 +1,208 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_UNIPAR",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Unipar — equilíbrio químico, energia e caixa após modernização",
+  "resumo": "A hipótese é que eficiência industrial e disciplina comercial sustentem caixa ao longo do ciclo químico depois de energia, manutenção e financiamento. A condição decisiva é conciliar utilização, margem por produto e recursos livres após modernização. Integração e energia contratada podem apoiar competitividade, mas não neutralizam pressão importada sobre PVC, curtailment ou a necessidade de capital. A visão exige comparar resultado recorrente com caixa e retorno efetivo, antes de presumir distribuição sustentável. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_UNIPAR.rating_codigo}}, com retorno esperado {{fact:val.BR_UNIPAR.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Produtora de cloro, soda cáustica e PVC, com unidades em Cubatão, Santo André, Camaçari e Bahía Blanca. Eletrólise combina produção de cloro e soda; demanda e destino de cada produto afetam utilização econômica. PVC tem cadeia, concorrência importada e exposição próprias. Revenda oportunística de soda não equivale a produção industrial. Participações e contratos de energia exigem distinguir controle, direitos econômicos, geração e consumo.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que eficiência industrial e disciplina comercial sustentem caixa ao longo do ciclo químico depois de energia, manutenção e financiamento. A condição decisiva é conciliar utilização, margem por produto e recursos livres após modernização. Integração e energia contratada podem apoiar competitividade, mas não neutralizam pressão importada sobre PVC, curtailment ou a necessidade de capital. A visão exige comparar resultado recorrente com caixa e retorno efetivo, antes de presumir distribuição sustentável.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_UNIPAR.preco}} e alvo {{fact:val.BR_UNIPAR.preco_alvo}}, com potencial {{fact:val.BR_UNIPAR.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_UNIPAR.ke}} e retorno esperado {{fact:val.BR_UNIPAR.etr}}.",
+      "evidencias": [
+        "val.BR_UNIPAR.preco",
+        "val.BR_UNIPAR.preco_alvo",
+        "val.BR_UNIPAR.upside",
+        "val.BR_UNIPAR.ke",
+        "val.BR_UNIPAR.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar margem, volume, utilização e importações por produto, separando produção e revenda. Conciliar energia contratada, cortes, participação econômica e equivalência. Verificar manutenção, modernização, giro, tributos, dívida e covenants; testar caixa disponível e direitos por classe antes de inferir distribuição.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_UNIPAR.ke}} e a dispersão entre métodos {{fact:val.BR_UNIPAR.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_UNIPAR.ke",
+        "val.BR_UNIPAR.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Resultados posteriores à modernização; testar utilização, mix, energia, manutenção e caixa após financiamento.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "descricao": "Conciliação dos direitos acionários e do retorno das participações energéticas, com cortes e obrigações comerciais próprios.",
+      "data": null,
+      "tipo": "outro",
+      "direcao": "incerto",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Ciclo químico, importações, energia e desequilíbrio entre produtos podem comprimir caixa. Modernização e dívida exigem retorno. Ajustes contábeis, estoques liberados e autoprodução não garantem recursos distribuíveis.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_UNIPAR.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_UNIPAR.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Modernização e gestão comercial sustentam utilização econômica, eficiência e caixa após energia e financiamento, remunerando capital e preservando retorno por classe. O cenário otimista calculado pelo código é {{fact:val.BR_UNIPAR.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_UNIPAR.preco_alvo}}, com retorno esperado {{fact:val.BR_UNIPAR.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Pressão importada, energia e mix reduzem margem, enquanto investimento e financiamento limitam caixa e distribuição. O cenário pessimista calculado pelo código é {{fact:val.BR_UNIPAR.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_UNIPAR.preco}} e alvo do modelo aberto {{fact:val.BR_UNIPAR.preco_alvo}}, com potencial {{fact:val.BR_UNIPAR.upside}}. Retorno total esperado {{fact:val.BR_UNIPAR.etr}} e custo do capital próprio {{fact:val.BR_UNIPAR.ke}}. A dispersão entre métodos é {{fact:val.BR_UNIPAR.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_UNIPAR.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_UNIPAR.consenso_alvo}}; a diferença {{fact:val.BR_UNIPAR.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "Cloro e soda apresentam avanço sequencial de volume, enquanto PVC recua no trimestre com seleção comercial frente às importações. O resultado semestral tem comparação distinta da recuperação trimestral. A modernização de Cubatão e a entrega posterior em Camaçari têm datas próprias. Fluxo operacional gerencial não foi promovido a fluxo livre após todas as obrigações. Projeções e eventos posteriores não foram incorporados retrospectivamente ao modelo recebido.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Ordinárias e preferenciais têm voto, prioridades e remuneração distintos, conforme demonstrações; não se assume equivalência entre classes. Programa de ações restritas tem autorização e concessão próprias. A revisão intermediária tem alcance inferior a auditoria anual. A linguagem de controle dos projetos de energia no perfil requer conciliação com a nota do release, que descreve empresas não controladas e participação econômica específica. Tesouraria incluída no gráfico de free float não comprova ações disponíveis para negociação.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Infraestrutura, localização e confiabilidade podem apoiar fornecimento de químicos essenciais, com restrições de transporte e armazenagem. A produção conjunta de cloro e soda impede avaliar apenas o produto mais rentável. Eletricidade, insumos e destino comercial determinam custo completo. Autoprodução não é energia gratuita ou integralmente atribuível. Certificações e posição declarada pela companhia não foram transformadas em prova independente de poder de preço.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Receita e EBITDA recorrente ajustado melhoram sequencialmente e na comparação anual; EBITDA sem os mesmos ajustes e lucro reportado têm comparação anual distinta. Ajustes de hiperinflação argentina, câmbio, arbitragem e provisões de margem de PVC têm natureza própria. Revenda e mix afetam receita sem comprovar aumento equivalente de produção. A geração operacional gerencial antecede investimento, juros e tributos; liberação de estoques no semestre não demonstra recorrência indefinida de caixa.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Dívida líquida e alavancagem recuam no trimestre, com bases anuais diferentes; melhora sequencial não apaga o capital exigido pela modernização. Desembolso parcial contratado não é disponibilidade integral de financiamento. Cubatão concluiu a retomada industrial descrita, enquanto a entrega em Camaçari ocorre depois do trimestre. Autoprodução sofreu cortes e menor disponibilidade; equivalência e contratos energéticos não são distribuição de caixa. Classes acionárias têm remuneração e prioridades distintas.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se maior receita depende de revenda ou preços sem recuperação sustentável da utilização. PVC pode manter pressão mesmo com soda e cloro favoráveis. Menor custo industrial pode ser compensado por energia, financiamento e manutenção. Caixa liberado do giro e benefícios tributários têm limites; direitos diferentes por classe impedem presumir retorno uniforme ao acionista.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Acompanhar margem, volume, utilização e importações por produto, separando produção e revenda. Conciliar energia contratada, cortes, participação econômica e equivalência. Verificar manutenção, modernização, giro, tributos, dívida e covenants; testar caixa disponível e direitos por classe antes de inferir distribuição.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_UNIPAR.etr}}, custo do capital {{fact:val.BR_UNIPAR.ke}} e dispersão entre métodos {{fact:val.BR_UNIPAR.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_UNIPAR.etr",
+        "val.BR_UNIPAR.ke",
+        "val.BR_UNIPAR.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Margem por produto não remunera energia e custo completo.",
+    "Modernização não sustenta utilização econômica e retorno sobre o capital.",
+    "Giro e benefícios tributários explicam caixa sem recorrência equivalente.",
+    "Novos documentos alteram controle de participadas, direitos econômicos ou classes acionárias."
+  ],
+  "lacunas_de_dados": [
+    "Produção conjunta, custo por produto e ponte integral de fluxo livre precisam de conciliação.",
+    "Controle e participação econômica nos projetos energéticos exigem reconciliar perfil e nota do release.",
+    "Prazo do benefício tributário tem descrições diferentes no release; sua realização não foi integralmente conciliada.",
+    "O gráfico semestral de caixa tem legenda temporal divergente; não foi corrigido por inferência.",
+    "A cópia local de páginas de RI foi recusada; PDFs públicos foram obtidos normalmente, sem contornar o bloqueio.",
+    "Direitos por classe, eventuais conversões e caixa atribuível exigem diligência atual específica.",
+    "Guidance, tom e percepção do mercado não foram classificados; calendário dinâmico não forneceu data atual arquivada."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Unipar",
+      "titulo": "Perfil industrial e energia; leitura pública com cópia local indisponível",
+      "url": "https://ri.unipar.com/sobre-a-unipar/perfil-corporativo/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Unipar",
+      "titulo": "Resultado trimestral: produtos, ajustes, giro, energia e dívida",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/3c0b3516-7dff-44a5-946f-20e7ec87dfa0/bd18e23a-20cf-5455-dc94-ecb4f607acce?origin=2",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Unipar",
+      "titulo": "Demonstrações intermediárias e revisão: caixa, classes, direitos e eventos posteriores",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/3c0b3516-7dff-44a5-946f-20e7ec87dfa0/7725d294-c67a-cac1-8f4a-c7556abccff9?origin=2",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

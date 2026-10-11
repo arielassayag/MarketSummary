@@ -5,7 +5,7 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-## Estado atual das teses — 11/10/2026, 12:17 Brasília
+## Estado atual das teses — 11/10/2026, 12:41 Brasília
 
 O portal `8aea3f1` está publicado e foi conferido independentemente: 241 páginas,
 233 empresas e oito ETFs; 727 arquivos HTTP200 com tamanho e SHA iguais ao
@@ -23,12 +23,12 @@ nenhum erro ou falha, 4.507 casos únicos. Ruff passou; os 4.875 arquivos fixado
 e o commit permaneceram idênticos. Não há soma de execuções focais sobrepostas
 nem promoção da qualificação de outra frente privada.
 
-O ramo documental `codex/cdp-pesquisa-lote-2` tem 161 rascunhos entregues e
+O ramo documental `codex/cdp-pesquisa-lote-2` tem 165 rascunhos entregues e
 validados em conjunto: oito ETFs e empresas de diferentes países e setores.
 O índice de lotes em [notas/README.md](notas/README.md) registra os ativos,
 fontes e limites relevantes. A conferência conjunta preservou a renderização
 das doze notas históricas e os 4.122 arquivos operacionais. Os textos mantêm
-visão neutra, baixa convicção e lacunas próprias. Há 68 ativos ainda sem nota
+visão neutra, baixa convicção e lacunas próprias. Há 64 ativos ainda sem nota
 publicada ou rascunho individual; cobertura qualitativa completa continua aberta.
 
 Os novos estudos incluem bancos e seguros mexicanos, imóveis e concessões,
@@ -122,6 +122,18 @@ comprova cumprimento integral. CBA separa risco sacado, juros capitalizados,
 novação de UBP e mudança de controle condicional. O conjunto de 161 rascunhos
 passou na validação nativa; os testes documentais tiveram 273 aprovados e um
 pulado, 274 casos únicos, sem erro ou falha.
+
+Braskem, Unipar, Ultrapar e Vibra acrescentam análise de ciclo industrial,
+distribuição, estrutura de capital e caixa disponível. Braskem preserva a
+incerteza relevante de continuidade operacional, os direitos por classe e o
+alcance limitado da decisão judicial sobre a recuperação extrajudicial; OPA
+lançada não comprova liquidação. Unipar distingue ajustes e produção própria;
+Ultrapar separa consolidação, minoritários e risco sacado. Vibra mantém a
+pressão sobre Comerc e o pagamento de JCP declarado para prazo posterior à
+janela anual da nota. O conjunto de 165 rascunhos passou na validação nativa;
+os testes documentais tiveram 273 aprovados e um pulado, 274 casos únicos,
+sem erro ou falha. As doze renderizações históricas e os arquivos operacionais
+permaneceram idênticos.
 
 A pesquisa distingue resultado recorrente, medidas gerenciais, inflação, moeda,
 capital por entidade e recursos atribuíveis ao acionista. Reorganização anunciada,

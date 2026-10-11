@@ -74,6 +74,12 @@ histórica. A análise da Cemig não incorpora mudança de controle não confirm
 
 ## Lotes seguintes de empresas em 11/10/2026
 
+- `BR_BRASKEM`, `BR_UNIPAR`, `BR_ULTRAPAR` e `BR_VIBRA`: ciclo industrial,
+  distribuição, dívida e caixa disponível. Braskem distingue continuidade
+  operacional, consolidação processual e limites da proteção judicial; a OPA
+  lançada mantém liquidação futura. Unipar separa ajustes e produção própria;
+  Ultrapar preserva perímetro, minoritários e risco sacado. Vibra documenta
+  pressão sobre Comerc e JCP declarado com pagamento além da janela anual.
 - `BR_AURA`, `BR_ERO`, `BR_SIGMALITH` e `BR_CBA`: produção econômica,
   custo completo, reposição e financiamento. Aura separa proteção liquidada,
   produção preliminar e frota condicional. Ero preserva streaming e aquisição

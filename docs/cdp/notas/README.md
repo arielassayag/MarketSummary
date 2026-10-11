@@ -52,3 +52,13 @@ consultadas na data da nota; data de consulta não é data de publicação.
 A extensão de notas aceita o produto somente com identidade e modelo íntegros no retrato,
 na fila existente e no mesmo limite de execução. Verificação de desenvolvimento não é
 publicação: o executor continua responsável pela adoção, validação e trilha imutável.
+
+## Estudos de empresas entregues em 11/10/2026
+
+Os diretórios `BR_AMBEV`, `BR_GERDAU`, `BR_ITAUSA` e `BR_COPEL` contêm estudos com
+hipótese própria, condição decisiva, posição competitiva a comprovar, qualidade do
+resultado, alocação de capital, contraponto e indicadores de revisão. Todos os preços,
+cenários e retornos citados são referências ao FactBook. Os perfis e materiais públicos
+de RI foram consultados; o último resultado, as notas explicativas e os projetos não
+foram integralmente reconciliados. Os textos são rascunhos de baixa convicção, com
+lacunas explícitas, e aguardam adoção e validação pelo executor.

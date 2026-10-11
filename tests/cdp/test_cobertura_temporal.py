@@ -178,6 +178,61 @@ def test_snapshot_depois_do_corte_no_mesmo_dia_nao_alimenta_sombra_ou_factbook(a
         com_fatos_valuation(base, snap, [a.iid], conhecimento_ate=corte)
 
 
+def test_nota_atual_usa_modelo_concluido_com_preco_anterior_sem_redatar_mercado(ambiente):
+    from cdp.cobertura.fatos import factbook_emissor
+    from cdp.research.notas import template_nota
+    from cdp.workflow import notas as N
+
+    a = ambiente
+    _run(a)
+    s = snapshot(a.book, DIA)
+    before = _hashes(a.book)
+    original = a.md.manifest.model_dump(mode="json")
+    rt = Runtime(load_config(), a.book, a.root, a.book / "reports",
+                 clock=lambda: a.at["agora"], store_override=DemoStore(a.md))
+    fb, ctx = N.build_note_inputs(rt, a.iid, DIA)
+    assert fb.as_of == BASE and ctx.dados_ate == BASE
+    assert ctx.snapshot["as_of"] == DIA.isoformat()
+    assert ctx.snapshot["conhecimento_ate"] == s.manifest["corte_temporal"]["conhecimento_ate"]
+    assert fb.facts[f"val.{a.iid}.preco"].value == s.modelo(a.iid)["resumo"]["preco"]
+    assert _hashes(a.book) == before and a.md.manifest.model_dump(mode="json") == original
+    fb2, ctx2 = N.build_note_inputs(replace(rt, clock=lambda: a.at["agora"] + timedelta(minutes=1)), a.iid, DIA)
+    assert fb2 == fb and ctx2 == ctx
+    with pytest.raises(ValueError, match="look-ahead"):
+        factbook_emissor(s, a.iid, a.md)
+    with pytest.raises(CortePosterior):
+        N.build_note_inputs(replace(rt, clock=lambda: INICIO), a.iid, DIA)
+    assert _hashes(a.book) == before
+
+    # DADOS SIMULADOS: interrupção entre a saída imutável e o evento, só no livro temporário.
+    rt = replace(rt, teses_root=a.root / "teses")
+    draft = N.handoff_root(rt) / a.iid / f"{DIA}.json"
+    draft.parent.mkdir(parents=True)
+    raw = template_nota(fb, ctx, "codex").model_dump(mode="json")
+    raw["fontes"] = [{"id": "F1", "tipo": "relacoes_com_investidores",
+                      "instituicao": "DADOS SIMULADOS", "titulo": "Resultado simulado",
+                      "url": "https://www.sec.gov/Archives/DADOS_SIMULADOS/resultado",
+                      "publicado_em": BASE.isoformat()}]
+    raw["lacunas_de_dados"] = ["DADOS SIMULADOS: resultado não reconciliado."]
+    draft.write_text(json.dumps(raw))
+    assert N.prepare_note(rt, a.iid, DIA)["rascunho_adotado"]
+    a.at["agora"] += timedelta(minutes=1)
+    validation = N.validate_note(rt, a.iid, DIA)
+    assert validation["ok"], validation["problemas"]
+    folder = N.nota_dir(a.book, a.iid, DIA)
+    pub, _md, autoria, problemas, _mind = N._compose(
+        fb, ctx, folder / N.NOTA_JSON, published_at=rt.now().isoformat())
+    assert autoria == "mente" and not problemas
+    (folder / N.PUBLISHED_JSON).write_text(pub)
+    a.at["agora"] += timedelta(minutes=2)
+    resumed = N.publish_note(rt, a.iid, DIA)
+    assert resumed["retomada"] and resumed["autoria"] == "mente"
+    assert N.verify_notes(rt) == []
+    assert (folder / N.PUBLISHED_JSON).read_text() == pub
+    with pytest.raises(FileExistsError, match="imutável"):
+        N.publish_note(rt, a.iid, DIA)
+
+
 def test_manifesto_temporal_precisa_corresponder_a_tabela_selada(ambiente):
     a = ambiente
     _run(a)

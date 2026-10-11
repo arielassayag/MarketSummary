@@ -224,7 +224,11 @@ def build_note_inputs(rt: Runtime, issuer_id: str, d: date) -> tuple[FactBook, C
             try:
                 from ..cobertura.fatos import factbook_emissor
 
-                fb = factbook_emissor(snap, issuer_id, md)
+                if snap.as_of > md.as_of:
+                    fb, corte_nota = _fatos_nota_entre_pregoes(rt, snap, mod, md, issuer_id, d)
+                else:
+                    fb = factbook_emissor(snap, issuer_id, md)
+                    corte_nota = None
             except NotImplementedError:
                 aviso = "fatos do modelo de cobertura em implementação"
             else:
@@ -233,6 +237,8 @@ def build_note_inputs(rt: Runtime, issuer_id: str, d: date) -> tuple[FactBook, C
                 snap_info = {"as_of": snap.as_of.isoformat(),
                              "manifest_sha256": snap.manifest_sha256,
                              "modelo_as_of": str(mod.get("as_of"))}
+                if corte_nota is not None:
+                    snap_info["conhecimento_ate"] = corte_nota.isoformat()
     if fb is None:
         panel = build_asset_panel(md, rt.cfg)
         tv = panel.traded_value_usd.tail(20).median()
@@ -264,6 +270,30 @@ def build_note_inputs(rt: Runtime, issuer_id: str, d: date) -> tuple[FactBook, C
         snapshot=snap_info, proximo_resultado=_next_earnings(md, issuer_id),
         lacunas=tuple(lacunas), avisos_tecnicos=tuple(avisos))
     return fb, ctx
+
+
+def _fatos_nota_entre_pregoes(rt: Runtime, snap: Any, mod: dict[str, Any], md: Any,
+                            issuer_id: str, d: date) -> tuple[FactBook, datetime | None]:
+    """Pesquisa atual com preço anterior: usa o corte auditável existente, sem redatar o mercado."""
+    from datetime import time
+    from zoneinfo import ZoneInfo
+
+    from ..analytics.panel import build_asset_panel
+    from ..research.factbook import build_factbook, com_fatos_valuation
+
+    fim_nota = datetime.combine(d, time.max, tzinfo=ZoneInfo(rt.cfg.fund.timezone))
+    corte = min(rt.now(), fim_nota)
+    pares = [i for i in (mod.get("pares") or {}).get("emissores", [])
+             if i != issuer_id][:MAX_PARES]
+    ids = [i for i in [issuer_id, *pares] if i in md.universe.issuers.index]
+    panel = build_asset_panel(md, rt.cfg)
+    fb = build_factbook(panel, md, ids)
+    # Confere preço, conclusão e conhecimento; não muda a guarda padrão da decisão semanal.
+    atualizado = com_fatos_valuation(fb, snap, ids, incluir_etfs=True,
+                                     conhecimento_ate=corte)
+    origem = (snap.manifest.get("corte_temporal") or {}).get("conhecimento_ate") or snap.manifest.get("concluido_em")
+    # O contexto registra o corte selado do modelo; o relógio da validação não muda seus hashes.
+    return atualizado, datetime.fromisoformat(origem) if origem else None
 
 
 def _commands(rt: Runtime, issuer_id: str, d: date) -> tuple[str, str]:

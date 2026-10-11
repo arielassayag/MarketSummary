@@ -167,6 +167,16 @@ uv run python -m cdp mente pacote --etapa nota --emissor IID --data AAAA-MM-DD -
 Na demonstração offline (DADOS SIMULADOS), a nota usa o snapshot sintético da cobertura, se
 houver, e é escrita pela mente `demo` com a nota automática.
 
+## Corte temporal da pesquisa entre pregões
+
+Uma pesquisa atual pode usar um modelo concluído depois do último preço disponível.
+Nessa situação, o preparo da nota usa a conferência temporal auditável já existente:
+preço e `dados_ate` mantêm a data de mercado, enquanto o retrato registra sua própria
+data e o instante selado de conhecimento. Modelo ou conclusão posteriores ao corte da
+nota são recusados. O relógio de uma validação posterior não altera esse contexto nem
+seus hashes; a retomada recompõe a publicação original. A guarda padrão da decisão
+semanal continua recusando um retrato posterior à sua base sem corte explícito.
+
 ## 8. Visões por mente
 
 `stance` e `conviccao` publicadas ficam em `nota_publicada.json` com a mente (`mind`) e, quando

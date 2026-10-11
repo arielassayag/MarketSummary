@@ -23,7 +23,11 @@ longas foi corrigido. As fórmulas e projeções do modelo foram incluídas.
 A primeira suíte ampla interrompeu porque o renderizador foi editado durante
 um replay: a guarda recusou a mistura de versões. A fonte será fixada antes
 da nova ampla; nenhuma falha de cálculo financeiro foi estabelecida por esse
-negativo. A suíte do ramo a publicar e a publicação pública estão pendentes. Esta entrega não escreve no livro,
+negativo. A suíte completa do ramo `7032a51` concluiu com 4.479 aprovações e dezessete pulados,
+sem falhas ou erros; Ruff passou e os 4.861 arquivos da fonte fixada permaneceram idênticos.
+A integração avançou `main` sem incluir outras frentes privadas. O Pages confirmou
+a publicação em `38125611769`; a conferência independente no ar está em andamento.
+Esta entrega não escreve no livro,
 não altera a operação de 09/10 e não certifica as frentes privadas anteriores.
 As pesquisas qualitativas dos demais ativos e o fluxo editorial específico
 de ETFs continuam abertos; página disponível não equivale a tese concluída.
@@ -54,6 +58,34 @@ suíte completa; testes finais, integração e publicação ainda estão pendent
 A cobertura qualitativa permanece incompleta: oito rascunhos são entrega de pesquisa,
 não notas publicadas. O portal incorpora narrativas apenas da trilha íntegra e compatíveis
 com o corte do retrato. A operação local de 09/10 continua separada desta entrega.
+
+## Pesquisa de empresas entre pregões — desenvolvimento em 11/10/2026
+
+O ramo `codex/cdp-pesquisa-empresas`, em `.cdp/integracoes/pesquisa-empresas`, entrega
+quatro rascunhos: Ambev, Gerdau, Itaúsa e Copel. As hipóteses distinguem monetização de
+marcas, normalização do ciclo do aço, transmissão de valor da holding e remuneração dos
+investimentos de energia. Fontes públicas de RI e lacunas específicas acompanham os
+textos; visão neutra e baixa convicção não certificam a diligência como concluída.
+
+A leitura real revelou que o preparo antigo das notas de empresas recusava o retrato de
+09/10 por comparar sua data com a dos preços de 08/10. A correção usa a conferência de
+corte já existente na pesquisa, preservando preço, origem, conclusão e conhecimento.
+O instante selado do modelo permanece no contexto; o relógio corrente apenas confere
+admissibilidade. Não muda cálculo de valuation nem a guarda padrão da decisão semanal.
+
+Os 123 casos da primeira conferência válida tiveram 108 aprovações e quinze pulados,
+sem falhas ou erros. Um teste inicial negativo decorreu de escopo incorreto de três
+asserções do próprio teste; foi corrigido mantendo as recusas temporais. A verificação
+seguinte inclui adoção, validação e retomada de uma publicação interrompida num livro
+temporário com dados simulados: 335 casos únicos, com 319 aprovados e dezesseis pulados,
+sem falhas ou erros. Os negativos intermediários usaram uma nota automática sem as
+fontes exigidas e um domínio de teste recusado; os dados da fixture foram corrigidos,
+sem afrouxar os validadores. A suíte ampla deste ramo ainda não concluiu.
+
+Os oito rascunhos de ETFs e os quatro de empresas não são notas publicadas. O portal
+continua usando apenas narrativas da trilha íntegra e compatíveis com o corte do retrato.
+A operação de 09/10, as frentes privadas antigas e a qualificação da raiz continuam
+separadas desta entrega. A pesquisa das demais empresas permanece na fila canônica.
 
 ## Estado corrente — 10/10/2026, 10:14 Brasília
 

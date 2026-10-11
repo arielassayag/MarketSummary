@@ -1,5 +1,12 @@
 # Rascunhos de notas de pesquisa entregues fora do clone das rotinas
 
+- Saúde: Rede D’Or, Hapvida, Fleury, Hypera, RD Saúde, Pague Menos e
+  Oncoclínicas. As teses distinguem normas contábeis, medidas gerenciais,
+  caixa após juros, reservas regulatórias e recebíveis de alienação.
+  Reestruturação em negociação, incerteza de continuidade operacional,
+  arbitragem requerida e decisão de OPA relatada pelo emissor mantêm limites
+  próprios. Projeções hipotéticas da Oncoclínicas não são tratadas como guidance.
+
 - Alimentos e agronegócio: JBS, MBRF, Minerva, M. Dias Branco, São Martinho,
   SLC e 3tentos. Os estudos preservam proteína e origem, calendário da safra,
   resultado ajustado e caixa, direitos de sócios e bases de financiamento.

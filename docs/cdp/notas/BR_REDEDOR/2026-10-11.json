@@ -1,0 +1,207 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_REDEDOR",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Rede D’Or — capacidade hospitalar, seguros e capital atribuível",
+  "resumo": "A hipótese é que densidade hospitalar, especialidades e relacionamento com pagadores monetizem a capacidade instalada e que a gestão dos seguros amplie resultado recorrente. A condição decisiva é converter margem em caixa depois de juros, reinvestimento e obrigações regulatórias. Crescimento do EBITDA ou queda do índice de alavancagem não bastam se dívida absoluta, capital de giro e recursos vinculados limitarem o retorno atribuível. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_REDEDOR.rating_codigo}}, com retorno esperado {{fact:val.BR_REDEDOR.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Grupo de hospitais, oncologia e serviços diagnósticos, combinado com seguros, previdência e gestão de ativos da SulAmérica. A operação hospitalar depende de ocupação, complexidade dos procedimentos, relacionamento com fontes pagadoras e recebimento. Seguros agregam exposição a sinistralidade, reajustes e reservas regulatórias. A parceria Atlântica D’Or reúne hospitais operacionais e projetos em implantação. Eliminações entre empresas, participações de terceiros e capital vinculado tornam inadequada a soma simples das receitas e disponibilidades dos negócios.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que densidade hospitalar, especialidades e relacionamento com pagadores monetizem a capacidade instalada e que a gestão dos seguros amplie resultado recorrente. A condição decisiva é converter margem em caixa depois de juros, reinvestimento e obrigações regulatórias. Crescimento do EBITDA ou queda do índice de alavancagem não bastam se dívida absoluta, capital de giro e recursos vinculados limitarem o retorno atribuível.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_REDEDOR.preco}} e alvo {{fact:val.BR_REDEDOR.preco_alvo}}, com potencial {{fact:val.BR_REDEDOR.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_REDEDOR.ke}} e retorno esperado {{fact:val.BR_REDEDOR.etr}}.",
+      "evidencias": [
+        "val.BR_REDEDOR.preco",
+        "val.BR_REDEDOR.preco_alvo",
+        "val.BR_REDEDOR.upside",
+        "val.BR_REDEDOR.ke",
+        "val.BR_REDEDOR.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Ocupação, cirurgias, complexidade, receita recebida, glosas e prazo de recebimento; sinistralidade por carteira e reservas; juros pagos, capex, arrendamentos, dívida absoluta e disponibilidade por entidade. Conciliar norma de seguros vigente, visão gerencial e eliminações antes de avaliar conversão e retorno.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_REDEDOR.ke}} e a dispersão entre métodos {{fact:val.BR_REDEDOR.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_REDEDOR.ke",
+        "val.BR_REDEDOR.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Resultados posteriores: confirmar ocupação, margem recebida, sinistralidade e caixa após juros e expansão.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "descricao": "Maturação e decisões de capital na operação hospitalar e nas parcerias, com direitos e desembolsos comprovados.",
+      "data": null,
+      "tipo": "capital",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Glosas, custo assistencial, reajustes insuficientes, expansão antes da maturação e dívida crescente podem reduzir caixa atribuível. Reservas regulatórias e minoritários restringem distribuição; ganhos não recorrentes podem antecipar margem sem recebimento.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_REDEDOR.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_REDEDOR.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Capacidade madura, especialidades e gestão de sinistros sustentam margem, recebimento e caixa depois do custo completo, com investimento disciplinado. O cenário otimista calculado pelo código é {{fact:val.BR_REDEDOR.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_REDEDOR.preco_alvo}}, com retorno esperado {{fact:val.BR_REDEDOR.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Glosas, custo assistencial e expansão absorvem capital; dívida e obrigações regulatórias restringem retorno mesmo com EBITDA crescente. O cenário pessimista calculado pelo código é {{fact:val.BR_REDEDOR.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_REDEDOR.preco}} e alvo do modelo aberto {{fact:val.BR_REDEDOR.preco_alvo}}, com potencial {{fact:val.BR_REDEDOR.upside}}. Retorno total esperado {{fact:val.BR_REDEDOR.etr}} e custo do capital próprio {{fact:val.BR_REDEDOR.ke}}. A dispersão entre métodos é {{fact:val.BR_REDEDOR.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_REDEDOR.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_REDEDOR.consenso_alvo}}; a diferença {{fact:val.BR_REDEDOR.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "No resultado recebido, hospitais e oncologia cresceram e ampliaram margem na comparação anual, com ajustes não recorrentes e pro forma identificados. SulAmérica registrou crescimento de receita e melhora anual da sinistralidade, mas piora sequencial desse indicador e redução sequencial do EBITDA. O release apresenta base anterior ao norma de seguros vigente e reconciliação ao padrão vigente; as análises separadas não incluem todas as eliminações entre empresas. O caixa operacional semestral consolidado das demonstrações, depois de juros e tributos, permaneceu positivo e caiu frente ao comparável anual. A dívida bruta e líquida cresceu apesar da redução sequencial do índice gerencial. Datas de referência da central não foram adotadas como datas de publicação; o relatório de revisão é datado em agosto.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "A revisão intermediária da EY tem conclusão sem modificação e alcance menor que auditoria anual. Direitos de parceiros hospitalares, minoritários e capital regulatório precisam ser preservados. Proventos deliberados e pagamentos são estados próprios; a demonstração registra desembolsos de proventos e recompra no semestre. Não se certificou retorno incremental dos projetos nem disponibilidade de toda a carteira financeira para a controladora.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Rede, profissionais, complexidade e acesso às fontes pagadoras são vantagens possíveis; precisam remunerar capacidade e despesas fixas. A integração com seguros exige conciliar transações internas e interesses dos demais pagadores. Reputação assistencial e qualidade sustentam utilização, mas não provam poder ilimitado de preço. Participação e eficiência relativas não foram verificadas independentemente.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "O release mantém base gerencial anterior ao norma de seguros vigente e indicadores separados não auditados. Ajustes hospitalares incluem eventos não recorrentes e participação pro forma. O EBITDA de seguros acrescido do rendimento de ativos vinculados não equivale ao caixa disponível. A demonstração consolidada apresenta caixa operacional semestral positivo, porém inferior ao comparável anual após juros e tributos.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Dívida bruta e líquida aumentaram, embora o índice gerencial tenha recuado sequencialmente. As diferentes definições descontam reservas distintas e excluem arrendamentos e aquisição. Expansão, recompra e proventos competem com serviço da dívida. Recursos da seguradora e previdência não devem ser tratados como caixa livre hospitalar nem como capital automaticamente distribuível.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "Escala e integração podem ampliar complexidade, investimentos e capital vinculado sem remunerar o acionista. Sinistralidade melhor na comparação anual coexistiu com piora sequencial. Se margem e ocupação não suportarem recebimentos, juros e expansão, a diversificação não confirmará a hipótese.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Ocupação, cirurgias, complexidade, receita recebida, glosas e prazo de recebimento; sinistralidade por carteira e reservas; juros pagos, capex, arrendamentos, dívida absoluta e disponibilidade por entidade. Conciliar norma de seguros vigente, visão gerencial e eliminações antes de avaliar conversão e retorno.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_REDEDOR.etr}}, custo do capital {{fact:val.BR_REDEDOR.ke}} e dispersão entre métodos {{fact:val.BR_REDEDOR.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_REDEDOR.etr",
+        "val.BR_REDEDOR.ke",
+        "val.BR_REDEDOR.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Ocupação e especialidades deixam de remunerar expansão, recebimento e juros.",
+    "Sinistralidade e reservas alteram caixa disponível e capital regulatório.",
+    "Bases contábeis, eliminações e ganhos não recorrentes mudam retorno atribuível.",
+    "Dívida absoluta, parceiros ou direitos de terceiros restringem alocação e distribuição."
+  ],
+  "lacunas_de_dados": [
+    "Bases norma de seguros vigente, ajustes hospitalares e visão gerencial não foram integralmente reconciliados ao modelo recebido.",
+    "Disponibilidade por entidade, reservas, minoritários e obrigações de aquisição exigem ponte específica.",
+    "Retorno e maturação de hospitais e projetos da parceria permanecem a comprovar.",
+    "Índices gerenciais distintos não substituem leitura de todas as escrituras e testes contratuais.",
+    "Metadados da central usam data de referência; publicação das cópias não foi datada por esse campo.",
+    "Participação relativa, percepção do mercado, guidance e tom não foram determinados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Rede D’Or",
+      "titulo": "Negócio e materiais públicos do emissor",
+      "url": "https://ri.rededorsaoluiz.com.br/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Rede D’Or",
+      "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/5ecded6f-d02b-4439-bd60-b78400f01f1e/b0571f84-bf03-c349-a6a1-e722c724bac1?origin=2",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Rede D’Or",
+      "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/5ecded6f-d02b-4439-bd60-b78400f01f1e/402be66c-e7ec-0a96-5ea7-3e3ac812299f?origin=2",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

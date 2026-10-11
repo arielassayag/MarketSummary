@@ -1,0 +1,222 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_HAPVIDA",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Hapvida — rentabilidade assistencial, reestruturação e capital regulatório",
+  "resumo": "A hipótese é que revisão comercial, integração e eficiência assistencial recuperem rentabilidade sem comprometer qualidade e retenção. A condição decisiva é reduzir o custo dos serviços e converter resultado em caixa depois de aluguéis, juros, contingências e capital regulatório. Reajustar ou encerrar contratos sob avaliação é uma expectativa da administração; ainda precisa demonstrar efeito econômico líquido. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_HAPVIDA.rating_codigo}}, com retorno esperado {{fact:val.BR_HAPVIDA.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Operadora de planos médicos e odontológicos com rede própria e credenciada. A verticalização procura coordenar atendimento, protocolos, utilização e custo assistencial; a exposição depende do produto, região e perfil de beneficiários. Receita de contratos recorrentes não dispensa reajuste, retenção e cobrança. Qualidade do serviço, obrigações da ANS, contingências e capital de cada operadora são partes do modelo econômico, além da infraestrutura e integração dos negócios adquiridos.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que revisão comercial, integração e eficiência assistencial recuperem rentabilidade sem comprometer qualidade e retenção. A condição decisiva é reduzir o custo dos serviços e converter resultado em caixa depois de aluguéis, juros, contingências e capital regulatório. Reajustar ou encerrar contratos sob avaliação é uma expectativa da administração; ainda precisa demonstrar efeito econômico líquido.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3",
+        "F4"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_HAPVIDA.preco}} e alvo {{fact:val.BR_HAPVIDA.preco_alvo}}, com potencial {{fact:val.BR_HAPVIDA.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_HAPVIDA.ke}} e retorno esperado {{fact:val.BR_HAPVIDA.etr}}.",
+      "evidencias": [
+        "val.BR_HAPVIDA.preco",
+        "val.BR_HAPVIDA.preco_alvo",
+        "val.BR_HAPVIDA.upside",
+        "val.BR_HAPVIDA.ke",
+        "val.BR_HAPVIDA.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Beneficiários por produto, reajuste, cancelamento, cobrança, utilização, sinistralidade e qualidade assistencial; aluguéis, contingências e depósitos; caixa após juros e capex; capital e ativos garantidores por operadora; ponte entre norma de seguros vigente, base anterior e índice de cada contrato.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_HAPVIDA.ke}} e a dispersão entre métodos {{fact:val.BR_HAPVIDA.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_HAPVIDA.ke",
+        "val.BR_HAPVIDA.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Resultados posteriores: comprovar efeito líquido da revisão comercial, sinistralidade, qualidade e caixa após juros.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "descricao": "Verificação de capital e ativos garantidores por operadora, incluindo condições contratuais posteriores.",
+      "data": null,
+      "tipo": "capital",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Reajustes e revisão comercial podem acelerar perda de beneficiários antes dos ganhos de margem. Custo assistencial, contingências, integração e ativos garantidores podem consumir liquidez; EBITDA ajustado não elimina prejuízo nem juros.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F4"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_HAPVIDA.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_HAPVIDA.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Reajuste, retenção e coordenação assistencial recuperam margem e caixa, com qualidade preservada e capital regulatório suficiente em cada operadora. O cenário otimista calculado pelo código é {{fact:val.BR_HAPVIDA.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_HAPVIDA.preco_alvo}}, com retorno esperado {{fact:val.BR_HAPVIDA.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Custo, cancelamento, contingências e integração mantêm pressão sobre margem e caixa; capital vinculado e dívida limitam flexibilidade. O cenário pessimista calculado pelo código é {{fact:val.BR_HAPVIDA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_HAPVIDA.preco}} e alvo do modelo aberto {{fact:val.BR_HAPVIDA.preco_alvo}}, com potencial {{fact:val.BR_HAPVIDA.upside}}. Retorno total esperado {{fact:val.BR_HAPVIDA.etr}} e custo do capital próprio {{fact:val.BR_HAPVIDA.ke}}. A dispersão entre métodos é {{fact:val.BR_HAPVIDA.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_HAPVIDA.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_HAPVIDA.consenso_alvo}}; a diferença {{fact:val.BR_HAPVIDA.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "O release datado em agosto apresenta receita crescente, sinistralidade caixa pior e redução do EBITDA ajustado nas comparações anual e sequencial. O lucro ajustado recuou e coexistiu com prejuízo contábil. A revisão comercial identifica contratos sob avaliação, com renegociação ou possível descontinuação; a retirada da base é uma hipótese pro forma, não um fato consumado. A geração livre gerencial do semestre antecede despesas financeiras; a dívida líquida e os índices de alavancagem aumentaram. Caixa livre e superávit regulatório diminuíram, e a própria companhia diferencia soma de entidades de consolidação hipotética. A central oferece demonstrações em bases anterior e norma de seguros vigente. Metadados e data do release têm estados distintos; resíduos editoriais da cópia não foram corrigidos.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "A revisão intermediária da Deloitte tem conclusão sem modificação, com alcance menor que auditoria. A administração declara cumprimento contratual na data-base de junho; isso não certifica folga posterior. Rede assistencial, operadoras, garantidores, controle e contingências têm obrigações próprias. A análise exige preservar capital e recursos vinculados por entidade, além de direitos de acionistas e efeitos da integração.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Rede própria, cobertura regional e gestão integrada podem apoiar custo e qualidade. A escala exige utilização eficiente, profissionais, sistemas e acesso adequado aos serviços. Clientes e pagadores podem reagir a reajustes ou descontinuação; vantagem econômica depende de retenção e prestação assistencial. Não se certificou superioridade de custo, satisfação ou participação frente a concorrentes.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Receita cresceu, mas sinistralidade caixa aumentou e EBITDA ajustado caiu nas comparações anual e sequencial. Lucro ajustado positivo coexiste com prejuízo contábil, incluindo amortização de intangíveis e outros ajustes. A visão gerencial de caixa livre antecede juros financeiros e tem aluguéis e contingências próprios. norma de seguros anterior, norma de seguros vigente e índices contratuais não são bases intercambiáveis.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Dívida líquida e alavancagem cresceram, enquanto caixa livre regulatório caiu. A soma dos superávits das operadoras não equivale ao capital de uma entidade consolidada hipotética. Pagamento da parcela final da aquisição da Intermédica e venda hospitalar têm efeitos diferentes. Refinanciamento e ganhos comerciais precisam ser avaliados depois de juros, restrições e investimento.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F4"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "Verticalização pode ampliar despesas fixas, necessidade de investimento e complexidade, sem conter custo assistencial. Redução de contratos pode diminuir receita antes de melhorar margem. Se o caixa após juros e obrigações não se recuperar, a reestruturação não sustentará retorno por ação.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F4"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Beneficiários por produto, reajuste, cancelamento, cobrança, utilização, sinistralidade e qualidade assistencial; aluguéis, contingências e depósitos; caixa após juros e capex; capital e ativos garantidores por operadora; ponte entre norma de seguros vigente, base anterior e índice de cada contrato.",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F4"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_HAPVIDA.etr}}, custo do capital {{fact:val.BR_HAPVIDA.ke}} e dispersão entre métodos {{fact:val.BR_HAPVIDA.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_HAPVIDA.etr",
+        "val.BR_HAPVIDA.ke",
+        "val.BR_HAPVIDA.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Revisão comercial reduz receita sem ganho assistencial e caixa comprovados.",
+    "Sinistralidade, qualidade, contingências ou integração ampliam desembolso.",
+    "Capital e ativos garantidores por operadora deixam de sustentar obrigações.",
+    "Índices contratuais, norma de seguros vigente e aluguel mudam leitura de financiamento e retorno."
+  ],
+  "lacunas_de_dados": [
+    "Ponte entre norma de seguros vigente, base anterior e modelo aberto permanece incompleta.",
+    "Efeito efetivo da revisão comercial sobre vidas, retenção, custo e caixa ainda precisa ser comprovado.",
+    "Recursos vinculados e superávits por operadora não foram certificados independentemente.",
+    "Covenant contratual e índice gerencial com aluguéis têm critérios diferentes; folga posterior não foi apurada.",
+    "Resultado ajustado, amortização e contingências exigem reconciliação completa de recorrência.",
+    "Data do release difere do metadado da central; resíduos editoriais foram preservados.",
+    "Guidance agregado, tom e percepção do mercado permanecem não determinados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Hapvida",
+      "titulo": "Negócio e materiais públicos do emissor",
+      "url": "https://ri.hapvida.com.br/a-companhia/perfil-corporativo-e-mercado-de-atuacao/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Hapvida",
+      "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/6bbd1770-f9f4-44e8-a1b1-d26b7585eec1/2da3a782-e91a-675b-c1ad-9b08af4c71b0?origin=2",
+      "publicado_em": "2026-08-13",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Hapvida",
+      "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/6bbd1770-f9f4-44e8-a1b1-d26b7585eec1/63a55ce5-12fb-176f-e6a1-35b9518dc780?origin=2",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F4",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Hapvida",
+      "titulo": "Demonstrações intermediárias na base anterior de contratos de seguros",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/6bbd1770-f9f4-44e8-a1b1-d26b7585eec1/ce5d03b6-c671-3542-3a3d-427a1b76bd07?origin=2",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

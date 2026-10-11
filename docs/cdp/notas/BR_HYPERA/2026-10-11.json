@@ -1,0 +1,207 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_HYPERA",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Hypera — portfólio farmacêutico, giro e caixa após financiamento",
+  "resumo": "A hipótese é que marcas, inovação e disciplina de estoque ampliem rentabilidade e conversão econômica do portfólio. A condição decisiva é manter demanda final e caixa depois de marketing, reinvestimento e juros, sem deslocar estoques para os canais. Redução de dívida apoiada por aporte de acionistas e pela operação deve ser distinguida para avaliar criação de valor por ação. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_HYPERA.rating_codigo}}, com retorno esperado {{fact:val.BR_HYPERA.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Grupo farmacêutico com marcas de prescrição, produtos sem prescrição, genéricos e especialidades, produção industrial e pesquisa de portfólio. Distribuição e demanda final têm prazos distintos. O retorno depende de mix, inovação, capacidade industrial, gasto comercial e estoque, sob regulação sanitária e de preços. Parcerias e marcas adquiridas ampliam opções, mas exigem desembolso e validação econômica, além de aprovação e execução comercial.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que marcas, inovação e disciplina de estoque ampliem rentabilidade e conversão econômica do portfólio. A condição decisiva é manter demanda final e caixa depois de marketing, reinvestimento e juros, sem deslocar estoques para os canais. Redução de dívida apoiada por aporte de acionistas e pela operação deve ser distinguida para avaliar criação de valor por ação.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_HYPERA.preco}} e alvo {{fact:val.BR_HYPERA.preco_alvo}}, com potencial {{fact:val.BR_HYPERA.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_HYPERA.ke}} e retorno esperado {{fact:val.BR_HYPERA.etr}}.",
+      "evidencias": [
+        "val.BR_HYPERA.preco",
+        "val.BR_HYPERA.preco_alvo",
+        "val.BR_HYPERA.upside",
+        "val.BR_HYPERA.ke",
+        "val.BR_HYPERA.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Demanda final e vendas ao canal em bases comparáveis; mix, margem, marketing, produção e estoques; recebíveis e cessão de fornecedores; caixa após juros, capex e intangíveis; dívida e diluição; realização tributária; condições e retorno de lançamentos e parcerias.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_HYPERA.ke}} e a dispersão entre métodos {{fact:val.BR_HYPERA.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_HYPERA.ke",
+        "val.BR_HYPERA.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Resultados posteriores: confirmar demanda, margens e caixa depois de juros e reposição do giro.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "descricao": "Lançamento anunciado para o semestre inicial seguinte, sujeito a execução comercial e comprovação de retorno.",
+      "data": null,
+      "tipo": "outro",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Concorrência, regulação, execução industrial e custo comercial podem limitar retorno. Estoque e recebíveis absorvem caixa; juros no financiamento e capitalização de intangíveis podem reduzir a conversão econômica aparente.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_HYPERA.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_HYPERA.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Portfólio, execução industrial e estoque equilibrado sustentam demanda, margem e caixa depois de marketing, inovação e juros. O cenário otimista calculado pelo código é {{fact:val.BR_HYPERA.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_HYPERA.preco_alvo}}, com retorno esperado {{fact:val.BR_HYPERA.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Lançamentos e concorrência elevam gasto e estoque; recebíveis, juros e reinvestimento absorvem caixa e reduzem retorno por ação. O cenário pessimista calculado pelo código é {{fact:val.BR_HYPERA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_HYPERA.preco}} e alvo do modelo aberto {{fact:val.BR_HYPERA.preco_alvo}}, com potencial {{fact:val.BR_HYPERA.upside}}. Retorno total esperado {{fact:val.BR_HYPERA.etr}} e custo do capital próprio {{fact:val.BR_HYPERA.ke}}. A dispersão entre métodos é {{fact:val.BR_HYPERA.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_HYPERA.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_HYPERA.consenso_alvo}}; a diferença {{fact:val.BR_HYPERA.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "O resultado recebido apresenta crescimento anual de receita, EBITDA e lucro das operações continuadas, com margem bruta maior e margem EBITDA menor. A redução de estoques e o menor investimento industrial e em intangíveis favoreceram caixa livre gerencial. Essa medida antecede juros de empréstimos classificados no financiamento. O endividamento líquido recuou sequencialmente; o aporte ocorrido no período anterior também integra a história de capital. O release informa parceria comercial e aprovação de produto posterior ao trimestre, além de lançamento futuro, sem demonstrar sua margem realizada. Não se adotam afirmações comerciais como evidência médica. JCP declarado, desembolso efetivo e crédito fiscal realizável têm estados distintos.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "O perfil público informa participação da Votorantim no bloco de controle e no conselho. A revisão intermediária da PwC tem conclusão sem modificação e alcance menor que auditoria anual. Controle, partes relacionadas, diluição e direitos dos acionistas precisam ser avaliados na alocação de capital. Nenhuma regra contratual ou disponibilidade tributária foi flexibilizada por narrativa.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Portfólio, relacionamento comercial, marcas e produção própria podem apoiar diferenciação e lançamento. Essa posição depende de execução, regulação, concorrência e disponibilidade industrial. Estatísticas de demanda final são alegações do release, sem acesso ou validação de base proprietária. Aprovação e anúncio de parceria não comprovam adoção, margem ou retorno do produto.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Receita, EBITDA e lucro das operações continuadas cresceram na comparação anual; margem EBITDA caiu enquanto a bruta melhorou. Redução de estoque favoreceu caixa operacional e livre gerencial. Os juros de empréstimos aparecem no financiamento, além do fluxo operacional. Créditos fiscais e resultado de operações descontinuadas exigem leitura distinta da margem recorrente.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "O aporte de acionistas no período anterior e o caixa gerencial corrente contribuíram para a redução do endividamento. O aporte não é geração operacional. Capex, intangíveis, aquisição de empresas, cessão de crédito de fornecedores e juros precisam integrar a leitura econômica. Créditos tributários dependem de realização; declaração de JCP não equivale a pagamento integral.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "Marcas e lançamentos podem exigir investimento comercial superior ao retorno e recomposição de estoque. A melhora de caixa pode refletir liberação pontual de giro, enquanto aporte reduz dívida sem criar valor operacional. Sem demanda final e margem persistentes, a expansão de portfólio enfraquece a hipótese.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Demanda final e vendas ao canal em bases comparáveis; mix, margem, marketing, produção e estoques; recebíveis e cessão de fornecedores; caixa após juros, capex e intangíveis; dívida e diluição; realização tributária; condições e retorno de lançamentos e parcerias.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_HYPERA.etr}}, custo do capital {{fact:val.BR_HYPERA.ke}} e dispersão entre métodos {{fact:val.BR_HYPERA.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_HYPERA.etr",
+        "val.BR_HYPERA.ke",
+        "val.BR_HYPERA.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Demanda final e margens deixam de sustentar gasto comercial e inovação.",
+    "Recomposição de estoque ou cessão de fornecedores reduz conversão econômica.",
+    "Aporte, diluição e juros alteram retorno por ação e disponibilidade.",
+    "Parcerias, produção e realização tributária não confirmam as condições anunciadas."
+  ],
+  "lacunas_de_dados": [
+    "Demanda final, vendas ao canal e giro não foram integralmente conciliados ao modelo recebido.",
+    "Caixa livre gerencial antecede juros financeiros; retorno atribuível exige ponte completa.",
+    "Efeitos do aporte, diluição e do caixa operacional precisam ser separados por período.",
+    "Retorno de parceria, lançamento e produção própria permanece a comprovar.",
+    "Realização de créditos fiscais e condições de todas as dívidas não foram certificadas.",
+    "Estatísticas de mercado do release não foram verificadas em fonte independente pública.",
+    "Guidance agregado, tom e percepção de mercado permanecem não determinados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Hypera Pharma",
+      "titulo": "Negócio e materiais públicos do emissor",
+      "url": "https://ri.hypera.com.br/hypera-pharma/perfil-corporativo/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Hypera Pharma",
+      "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/4be66703-ecd7-4134-a39e-224ce462b371/b8f9a239-11f6-b191-2764-efc15686ed97?origin=2",
+      "publicado_em": "2026-08-06",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Hypera Pharma",
+      "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/4be66703-ecd7-4134-a39e-224ce462b371/cfc1a13c-348e-f1b6-67b5-edacf431a3dd?origin=2",
+      "publicado_em": "2026-08-06",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

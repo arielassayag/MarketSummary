@@ -5,7 +5,7 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-## Estado atual das teses — 11/10/2026, 13:43 Brasília
+## Estado atual das teses — 11/10/2026, 14:16 Brasília
 
 O portal `8aea3f1` está publicado e foi conferido independentemente: 241 páginas,
 233 empresas e oito ETFs; 727 arquivos HTTP200 com tamanho e SHA iguais ao
@@ -23,11 +23,11 @@ nenhum erro ou falha, 4.507 casos únicos. Ruff passou; os 4.875 arquivos fixado
 e o commit permaneceram idênticos. Não há soma de execuções focais sobrepostas
 nem promoção da qualificação de outra frente privada.
 
-O ramo documental `codex/cdp-pesquisa-lote-2` tem 183 rascunhos entregues e validados em conjunto: oito ETFs e empresas de diferentes países e setores.
+O ramo documental `codex/cdp-pesquisa-lote-2` tem 190 rascunhos entregues e validados em conjunto: oito ETFs e empresas de diferentes países e setores.
 O índice de lotes em [notas/README.md](notas/README.md) registra os ativos,
 fontes e limites relevantes. A conferência conjunta preservou a renderização
 das doze notas históricas e os 4.122 arquivos operacionais. Os textos mantêm
-visão neutra, baixa convicção e lacunas próprias. Há 46 ativos ainda sem nota
+visão neutra, baixa convicção e lacunas próprias. Há 39 ativos ainda sem nota
 publicada ou rascunho individual; cobertura qualitativa completa continua aberta.
 
 Os novos estudos incluem bancos e seguros mexicanos, imóveis e concessões,
@@ -161,6 +161,20 @@ teses, agenda, documentação e site concluíram com 286 aprovações, um caso
 pulado e nenhuma falha ou erro; Ruff e a conferência do diff passaram.
 A CI documental `38148284737`, do commit `6c0e62a`, concluiu com sucesso
 em 11/10, 13:17 Brasília. Essas qualificações não publicam as novas narrativas.
+
+Rede D’Or, Hapvida, Fleury, Hypera, RD Saúde, Pague Menos e Oncoclínicas
+acrescentam teses de saúde. Bases contábeis e gerenciais mantêm identidades
+próprias; recebíveis futuros e reservas regulatórias não se tornam caixa livre.
+Fleury preserva a consolidação inicial da Femme; RD Saúde separa alienação,
+parcela recebida e DIFAL condicional. Pague Menos distingue dívida convencional
+e dívida com antecipações. A incerteza relevante de continuidade operacional
+da Oncoclínicas, a recuperação em negociação e a retificação do requerimento
+arbitral permanecem explícitas. O prazo de adesão informado no ITR termina
+na data da consulta, sem conclusão presumida; as projeções hipotéticas não
+são guidance. A conferência validou os 190 rascunhos, preservando as doze
+notas históricas, os 4.122 arquivos operacionais e o limite de doze por execução.
+Os testes tiveram 287 casos únicos: 286 aprovados, um pulado e nenhuma falha
+ou erro. Ruff e a conferência do diff passaram. Qualificação não é publicação.
 
 A pesquisa distingue resultado recorrente, medidas gerenciais, inflação, moeda,
 capital por entidade e recursos atribuíveis ao acionista. Reorganização anunciada,

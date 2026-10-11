@@ -126,6 +126,31 @@ def test_conferencia_recusa_dashboard_ausente(site_sintetico, tmp_path):
     assert "arquivo obrigatório ausente: risco/dashboard.json" in st.conferir(out)
 
 
+def test_risco_recebe_linhas_expandidas_do_painel_compacto(tmp_path):
+    raw = {"meta": {"is_synthetic": True}, "risk": {"daily": {
+        "factor_contributions": {"_colunas": {"factor": ["mercado"], "share": [-0.03]}, "_n": 1},
+        "stress_tests": {"_colunas": {"scenario": ["choque"], "pnl": [-0.04]}, "_n": 1},
+        "exposures": {"_colunas": {"group": ["country"], "name": ["BR"], "net": [0.02]}, "_n": 1}},
+        "limit_checks": {"_colunas": {"id": ["net"], "label": ["Líquido"], "value": [0.02],
+            "limit": [0.01], "unit": ["pct"], "status": ["excesso"]}, "_n": 1}},
+        "latest_day": {"date": "2026-10-09", "positions": {"_colunas": {
+            "issuer_id": ["BR_A"], "name": ["Empresa"], "weight": [0.02]}, "_n": 1}}}
+    cfg = {"base_url": "https://exemplo.test/cdp", "titulo_curto": "CDP",
+           "repositorio": "exemplo/cdp", "autor": "CDP", "idioma": "pt-BR"}
+    st.construir_dashboards([], raw, cfg, tmp_path, indexar=False, demo=True,
+                           commit=COMMIT, agora=AGORA)
+    d = json.loads((tmp_path / "risco/dashboard.json").read_bytes())
+    v = d["views"][0]
+    assert v["positions_known"] is True and len(v["positions"]) == 1
+    assert v["factor_contributions"][0]["key"] == "mercado"
+    assert v["factor_contributions"][0]["value"] == -0.03
+    assert v["stress"][0]["key"] == "choque"
+    assert v["stress"][0]["value"] == -0.04
+    assert v["exposures"]["country"][0]["value"] == 0.02
+    assert d["limits"][0]["status"] == "excesso"
+    assert raw["latest_day"]["positions"]["_n"] == 1  # o painel original é preservado
+
+
 def test_simulated_book_is_marked_and_kept_out_of_search(site_sintetico):
     man = json.loads((site_sintetico / "manifest.json").read_text(encoding="utf-8"))
     assert man["dados_simulados"] is True and man["indexado"] is False

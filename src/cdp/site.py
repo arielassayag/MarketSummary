@@ -1214,12 +1214,13 @@ def construir_dashboards(documentos: list[dict[str, Any]], painel: Mapping[str, 
     """Duas vistas de leitura, com cálculos de apresentação no produtor Python."""
     from .workflow import dashboard_cases as cases
     from .workflow import dashboard_risco as risco
+    from .workflow.painel_publicacao import expandir
 
     projetos = [
         ("cases", "Cases e comparáveis", "Teses, modelos e comparáveis econômicos por ativo.",
          cases, cases.construir_dashboard_cases(documentos), cases.renderizar_dashboard_cases),
         ("risco", "Risco e fatores", "Carteira efetivada, exposições, fatores, estresses e limites.",
-         risco, risco.construir_dashboard_risco(dict(painel)), risco.renderizar_dashboard_risco),
+         risco, risco.construir_dashboard_risco(expandir(dict(painel))), risco.renderizar_dashboard_risco),
     ]
     for rota, titulo, descricao, modulo, payload, renderizar in projetos:
         rodape = f'<footer class="analise-shell"><p>Versão do código: {esc(commit or "não identificada")} · publicação do portal {agora.astimezone(FUSO):%d/%m/%Y %H:%M} (Brasília).</p><p>Carteira simulada com preços reais. <a href="../dados/">Fontes, fórmulas e auditoria</a> · <a href="dashboard.json" download>Dados desta vista</a></p></footer>'

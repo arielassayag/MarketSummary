@@ -13,6 +13,7 @@ from html import escape
 from typing import Any
 
 SCHEMA = "cdp.dashboard.risco/v1"
+_TRANSPORT_KEYS = frozenset({"_colunas", "_n", "_rep", "_partes", "_igual"})
 _GROUPS = {"country": "País", "sector": "Setor", "style": "Estilo",
            "currency": "Moeda", "market": "Mercado e temas"}
 _STATUS = {"ok": "Dentro do limite", "alerta": "Alerta", "excesso": "Excesso",
@@ -41,6 +42,18 @@ def _num(value: Any) -> float | None:
     except (OverflowError, ValueError):
         return None
     return result if math.isfinite(result) else None
+
+
+def _exigir_expandido(value: Any) -> None:
+    """A codificação de transporte não pode virar linha ou valor financeiro."""
+    if type(value) is dict:
+        if _TRANSPORT_KEYS.intersection(value):
+            raise ValueError("Payload compactado: expanda com painel_publicacao.expandir antes do dashboard de risco.")
+        for child in value.values():
+            _exigir_expandido(child)
+    elif type(value) is list:
+        for child in value:
+            _exigir_expandido(child)
 
 
 def _fmt(value: Any, unit: str = "pct", *, signed: bool = False) -> str:
@@ -212,6 +225,7 @@ def construir_dashboard_risco(payload: dict) -> dict:
     """Transforma somente dados recebidos; nenhuma ausência é completada pela outra view."""
     if type(payload) is not dict:
         raise TypeError("O payload do painel deve ser um dict.")
+    _exigir_expandido(payload)
     meta, risk, latest = map(_obj, (payload.get("meta"), payload.get("risk"), payload.get("latest_day")))
     labels = _obj(_obj(meta.get("rotulos")).get("fatores"))
     weeks = [w for w in _rows(payload.get("weeks")) if _obj(w.get("proposal"))]
@@ -394,7 +408,7 @@ def _view_html(view: dict) -> str:
                       view["source"] + '.' + view["factor_source"], view["risk_basis"])
     content += _chart(view["top_position_risk"], 'Principais riscos por posição · variância',
                       view["source"] + '.top_risk_contributors', view["risk_basis"])
-    content += _chart(view["stress"], 'Cenários de stress · resultado / PL',
+    content += _chart(view["stress"], 'Cenários de estresse · resultado / PL',
                       view["source"] + '.stress_tests', view["risk_basis"])
     content += '</div><details><summary>Consultar exposições e contribuições completas</summary>'
     exp_rows = [[_esc(_GROUPS[group]), _esc(row["label"]), _esc(row["display"]),
@@ -404,14 +418,14 @@ def _view_html(view: dict) -> str:
     content += _table(("Grupo", "Exposição", "Líquida", "Bruta / PL", "Limite", "Unidade", "Estado"),
                       exp_rows, 'Exposições originais do quadro selecionado.')
     factor_rows = [[_esc(kind), _esc(row["label"]), _esc(row["display"]),
-                   _esc(row.get("measure")) if "measure" in row else "fração do PL" if kind.startswith("Stress") else "fração da variância"]
+                   _esc(row.get("measure")) if "measure" in row else "fração do PL" if kind.startswith("Estresse") else "fração da variância"]
                    for kind, rows in (("Fator · variância", view["factor_contributions"]),
                                      ("Posição · variância", view["top_position_risk"]),
-                                     ("Stress · resultado / PL", view["stress"]),
+                                     ("Estresse · resultado / PL", view["stress"]),
                                      ("Grupo · variância", view["direct_risk_groups"]),
                                      ("Carga fatorial · unidade do modelo", view["factor_exposures"])) for row in rows]
     content += _table(("Medida", "Nome", "Valor assinado", "Unidade"), factor_rows,
-                      'Contribuições de Euler negativas podem reduzir risco; stress não é previsão de retorno.')
+                      'Contribuições de Euler negativas podem reduzir risco; estresse não é previsão de retorno.')
     content += '</details><details><summary>Consultar posições do quadro · '
     content += f'{len(view["positions"]) if view["positions_known"] else "n/d"}</summary>'
     content += _positions_table(view) + '</details>'
@@ -444,7 +458,7 @@ def renderizar_dashboard_risco(dashboard: dict) -> str:
         checks.append([_esc(c["label"]), _esc(c["basis"]), _esc(c["value_display"]),
                        _esc(c["limit_display"]), escape(usage), _esc(_STATUS.get(c["status"], c["status"])),
                        _esc(c["severity"]), _esc(c["detail"])])
-    body += _table(("Controle", "Base", "Valor", "Limite", "Uso / distância", "Estado", "Gate", "Detalhe"),
+    body += _table(("Controle", "Base", "Valor", "Limite", "Uso / distância", "Estado", "Severidade", "Detalhe"),
                    checks, 'Estados recebidos do produtor; a página não recalcula gates. Semana ' + (dashboard["limit_week"] or 'n/d') + '.')
     liquidity = []
     for side, row in dashboard["liquidity"].items():

@@ -9,6 +9,27 @@ import pytest
 from cdp.workflow.dashboard_risco import construir_dashboard_risco, renderizar_dashboard_risco
 
 
+@pytest.mark.parametrize("encoded", [
+    {"_colunas": {"factor": ["market"], "share": [-.02]}, "_n": 1},
+    {"_n": 15},
+    {"_rep": {"v": ["market"], "n": [1]}},
+    {"_partes": ["Dados", " recebidos"]},
+    {"_igual": "ex_ante"},
+])
+def test_codificacao_compactada_recusada_recursivamente_antes_de_numero(payload, encoded, monkeypatch):
+    from cdp.workflow import dashboard_risco as dr
+
+    def forbidden(value):
+        pytest.fail("A conversão numérica não pode preceder a recusa do transporte compactado.")
+
+    payload["risk"]["ex_ante"]["metadata_aninhada"] = [{"origem": encoded}]
+    before = copy.deepcopy(payload)
+    monkeypatch.setattr(dr, "_num", forbidden)
+    with pytest.raises(ValueError, match="Payload compactado"):
+        construir_dashboard_risco(payload)
+    assert payload == before
+
+
 @pytest.fixture
 def payload():
     """Declaração de teste de apresentação; nenhuma qualificação financeira ou PIT."""
@@ -193,6 +214,8 @@ def test_pisos_nao_exibem_utilizacao_falsa_e_liquidez_usa_chaves_nativas(payload
     assert "Piso · distância -30,00%" in html
     assert "3 dias 95,00%; 5 dias 100,00%" in html
     assert "Posições sem ADTV: 0" in html
+    assert '<th scope="col">Severidade</th>' in html
+    assert '<th scope="col">Gate</th>' not in html
 
 
 def test_extras_ja_recebidos_decomposicao_e_cargas_sem_chamar_modelo(payload):
@@ -281,6 +304,8 @@ def test_fragmento_consultavel_acessivel_responsivo_sem_script_ou_shell(payload)
     assert "https://" not in html and "fetch(" not in html
     assert parsed.headings[0] == "h1" and parsed.headings.count("h1") == 1
     assert "h4" not in parsed.headings
+    assert "Cenários de estresse" in html and "Estresse · resultado / PL" in html
+    assert "stress não é" not in html
 
 
 @pytest.mark.parametrize("target", ["css", "url", "view"])

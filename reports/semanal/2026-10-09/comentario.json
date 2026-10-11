@@ -1,0 +1,36 @@
+{
+  "mind": "codex",
+  "resumo": "DADOS SIMULADOS: carteira inaugural com preços reais e execução hipotética no fechamento de 09/10/2026. Foram registradas {{fact:mudancas.entrada}} entradas; o resultado de {{fact:semana.ret}} reflete os custos de execução. A exposição líquida efetiva de {{fact:risco.efetiva.net}} requer acompanhamento por exceder a neutralidade prevista no mandato.",
+  "desempenho_semana": [
+    "O período inaugural compreende {{fact:semana.pregoes}} pregão e registra retorno de {{fact:semana.ret}}, P&L de {{fact:semana.pnl_usd}} e NAV de {{fact:nav}}. A carteira foi constituída no leilão de fechamento e não participou da variação dos preços ao longo da sessão."
+  ],
+  "desempenho_desde_inicio": [
+    "Desde o início do mandato, o retorno foi de {{fact:itd.ret}} e o P&L de {{fact:itd.pnl_usd}}. Esse resultado inicial corresponde à implantação da carteira e não permite inferir persistência de alpha ou desempenho futuro."
+  ],
+  "atribuicao": [
+    "Os custos de transação contribuíram {{fact:semana.attr.costs}} na semana e {{fact:itd.attr.costs}} desde o início. Ações contribuíram {{fact:semana.attr.equity}}, com parcelas fatorial e específica de {{fact:semana.attr.factor}} e {{fact:semana.attr.specific}}. Financiamento e aluguel registraram {{fact:semana.attr.financing}} e {{fact:semana.attr.borrow}}. A decomposição não evidencia contribuição dos lados comprado e vendido para a performance antes da constituição da carteira."
+  ],
+  "mudancas_carteira": [
+    {"emissor":"BR_PETROBRAS","tipo":"entrada","racional":"Petrobras entrou comprada com peso de {{fact:mud.BR_PETROBRAS.depois}}. O alpha composto de {{fact:mud.BR_PETROBRAS.alpha_z}} apoia a exposição positiva, com contribuição ao risco ex-ante de {{fact:mud.BR_PETROBRAS.risco}} e execução de {{fact:mud.BR_PETROBRAS.execucao}}."},
+    {"emissor":"MX_GENOMMA","tipo":"entrada","racional":"Genomma Lab entrou comprada com peso de {{fact:mud.MX_GENOMMA.depois}}, apoiada em alpha composto de {{fact:mud.MX_GENOMMA.alpha_z}}. A contribuição ao risco ex-ante é de {{fact:mud.MX_GENOMMA.risco}}; a execução alcançou {{fact:mud.MX_GENOMMA.execucao}}."},
+    {"emissor":"BR_PAGS","tipo":"entrada","racional":"PagSeguro Digital entrou comprada com peso de {{fact:mud.BR_PAGS.depois}}, alpha composto de {{fact:mud.BR_PAGS.alpha_z}} e visão da pesquisa de {{fact:mud.BR_PAGS.visao}}. A contribuição ao risco ex-ante é de {{fact:mud.BR_PAGS.risco}}."},
+    {"emissor":"BR_PATRIA","tipo":"entrada","racional":"Patria Investments entrou vendida com peso de {{fact:mud.BR_PATRIA.depois}}, em linha com alpha composto de {{fact:mud.BR_PATRIA.alpha_z}}. A contribuição ao risco ex-ante é de {{fact:mud.BR_PATRIA.risco}}; a execução foi de {{fact:mud.BR_PATRIA.execucao}}."},
+    {"emissor":"BR_INTER","tipo":"entrada","racional":"Inter entrou vendida com peso de {{fact:mud.BR_INTER.depois}}, alpha composto de {{fact:mud.BR_INTER.alpha_z}} e contribuição ao risco ex-ante de {{fact:mud.BR_INTER.risco}}. O alerta de squeeze alto no fechamento exige reavaliação da posição, embora a execução tenha alcançado {{fact:mud.BR_INTER.execucao}}."},
+    {"emissor":"BR_SUZANO","tipo":"entrada","racional":"Suzano entrou comprada com peso de {{fact:mud.BR_SUZANO.depois}}, alpha composto de {{fact:mud.BR_SUZANO.alpha_z}} e contribuição ao risco ex-ante de {{fact:mud.BR_SUZANO.risco}}. A exposição combina o sinal quantitativo com a construção da carteira sob restrições de risco."},
+    {"emissor":"BR_ULTRAPAR","tipo":"entrada","racional":"Ultrapar entrou comprada com peso de {{fact:mud.BR_ULTRAPAR.depois}}, alpha composto de {{fact:mud.BR_ULTRAPAR.alpha_z}} e contribuição ao risco ex-ante de {{fact:mud.BR_ULTRAPAR.risco}}. A execução alcançou {{fact:mud.BR_ULTRAPAR.execucao}}."},
+    {"emissor":"MX_AEROMEXICO","tipo":"entrada","racional":"Grupo Aeroméxico entrou comprado com peso de {{fact:mud.MX_AEROMEXICO.depois}}, alpha composto de {{fact:mud.MX_AEROMEXICO.alpha_z}} e contribuição ao risco ex-ante de {{fact:mud.MX_AEROMEXICO.risco}}. A execução alcançou {{fact:mud.MX_AEROMEXICO.execucao}}."},
+    {"emissor":"BR_TENDA","tipo":"entrada","racional":"Tenda entrou comprada com peso de {{fact:mud.BR_TENDA.depois}}, apoiada em alpha composto de {{fact:mud.BR_TENDA.alpha_z}}. A contribuição ao risco ex-ante é de {{fact:mud.BR_TENDA.risco}}."},
+    {"emissor":"BR_RIACHUELO","tipo":"entrada","racional":"Riachuelo entrou comprada com peso de {{fact:mud.BR_RIACHUELO.depois}}, alpha composto de {{fact:mud.BR_RIACHUELO.alpha_z}} e contribuição ao risco ex-ante de {{fact:mud.BR_RIACHUELO.risco}}. A execução alcançou {{fact:mud.BR_RIACHUELO.execucao}}."}
+  ],
+  "risco_nova_carteira": [
+    "A carteira efetiva contém {{fact:risco.efetiva.n_long}} nomes comprados e {{fact:risco.efetiva.n_short}} vendidos, com gross de {{fact:risco.efetiva.gross}} e net de {{fact:risco.efetiva.net}}. O net decidido era de {{fact:risco.alvo.net}}; a exposição após o fechamento excede o limite de neutralidade apontado no relatório diário.",
+    "A vol ex-ante efetiva é de {{fact:risco.efetiva.vol}}, ante {{fact:risco.alvo.vol}} na carteira decidida e meta de {{fact:risco.meta}}. O beta efetivo ficou em {{fact:risco.efetiva.beta}}, e a parcela idiossincrática da variância, na base do limite do mandato, em {{fact:risco.efetiva.idio_kf}}. O cenário de estresse estima {{fact:liquidez.frac_1}} do gross liquidável no fechamento, com custo de {{fact:liquidez.custo_nav}} do NAV."
+  ],
+  "execucao": [
+    "A montagem apresentou giro de {{fact:exec.giro}}, custos de {{fact:exec.custos_usd}} e taxa de execução de {{fact:exec.taxa_execucao}} do nocional. O custo por valor negociado foi de {{fact:exec.custos_bps_negociado}}, com {{fact:exec.congelados}} emissores congelados e {{fact:exec.parciais}} ordens parcialmente executadas.",
+    "A deriva entre decisão e fechamento foi de {{fact:exec.deriva_bps}}; o custo modelado no leilão foi de {{fact:exec.custo_modelo_bps}} e o implementation shortfall de {{fact:exec.shortfall_bps}}. O custo de oportunidade da parcela não executada foi de {{fact:exec.oportunidade_bps}}, e a participação mediana na janela de fechamento de {{fact:exec.participacao_janela}}."
+  ],
+  "perspectivas": [
+    "A prioridade é acompanhar a exposição líquida e reavaliar o risco de squeeze do short de Inter sob os controles do mandato. A janela eleitoral brasileira e as limitações dos insumos públicos permanecem relevantes para o acompanhamento do risco; a evidência de desempenho será construída nos próximos pregões."
+  ]
+}

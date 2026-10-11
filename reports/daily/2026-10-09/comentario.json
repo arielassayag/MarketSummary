@@ -1,0 +1,18 @@
+{
+  "mind": "codex",
+  "headline": "Carteira inaugural encerra com {{fact:day.ret}}, refletindo custos de execução",
+  "paragraphs": [
+    "DADOS SIMULADOS: carteira com preços reais e execução hipotética no fechamento de 09/10/2026. O resultado inaugural foi de {{fact:day.ret}} ({{fact:day.pnl_usd}}), com NAV de {{fact:nav}} e retorno desde o início de {{fact:itd.ret}}. A atribuição registra {{fact:attr.costs}} em custos de execução; ações, financiamento e aluguel contribuíram, respectivamente, {{fact:attr.equity}}, {{fact:attr.financing}} e {{fact:attr.borrow}}.",
+    "As contribuições fatorial e específica foram de {{fact:attr.factor}} e {{fact:attr.specific}}; os lados comprado e vendido registraram {{fact:attr.long}} e {{fact:attr.short}}. Como a carteira foi constituída no fechamento, o resultado inaugural não evidencia geração de alpha nem participação na variação dos mercados durante o pregão.",
+    "O contexto de mercado mostrou o Ibovespa em {{fact:mkt.BVSP.ret_1d}} em moeda local e o índice mexicano em {{fact:mkt.MXX.ret_1d}}, também em moeda local; o ETF de ações latino-americanas registrou {{fact:mkt.ILF.ret_1d}} em dólar. O real variou {{fact:fx.BRL.ret_1d}} e o peso mexicano {{fact:fx.MXN.ret_1d}} contra o dólar, enquanto os futuros de Brent e cobre registraram {{fact:mkt.BZ_F.ret_1d}} e {{fact:mkt.HG_F.ret_1d}}. O IBGE divulgou o IPCA de setembro em 09/10/2026; essa divulgação compõe o contexto doméstico, sem estabelecer uma relação causal com o resultado da carteira.",
+    "A vol ex-ante ficou em {{fact:risk.ex_ante_vol}}, dentro da banda de {{fact:mandate.vol_band_min}} a {{fact:mandate.vol_band_max}}, com beta de {{fact:risk.beta}} e VaR de um dia de {{fact:risk.var_1d}}. A exposição bruta foi de {{fact:risk.gross}}, distribuída entre {{fact:risk.n_long}} posições compradas e {{fact:risk.n_short}} vendidas. A exposição líquida de {{fact:risk.net}} excede o limite de neutralidade indicado no relatório; o short de Inter apresenta risco de squeeze alto e exige reavaliação.",
+    "A leitura do risco permanece condicionada às limitações declaradas dos dados públicos: fundamentos atuais, universo sem composição histórica integral, câmbio diário distinto dos fixings oficiais e defasagem de informações de posições vendidas. As revisões de séries históricas não foram incorporadas retroativamente. A volatilidade realizada ainda não está disponível, e a janela eleitoral brasileira permanece ativa."
+  ],
+  "risk_flags": [
+    "Exposição líquida de {{fact:risk.net}} acima do limite de neutralidade apontado pelo controle de risco.",
+    "Short de Inter com risco de squeeze alto; posições vendidas nessa condição: {{fact:risk.squeeze_high_shorts}}.",
+    "Janela eleitoral brasileira ativa; manter acompanhamento do risco por país e da liquidez.",
+    "Limitações dos insumos públicos e revisões históricas não incorporadas estão detalhadas no relatório.",
+    "Alertas registrados no dia: {{fact:day.n_alerts}}."
+  ]
+}

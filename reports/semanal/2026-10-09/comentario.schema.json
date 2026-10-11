@@ -1,0 +1,146 @@
+{
+  "$defs": {
+    "MudancaComentada": {
+      "additionalProperties": false,
+      "description": "Racional de uma mudança da carteira (números só como placeholders).",
+      "properties": {
+        "emissor": {
+          "description": "issuer_id",
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Emissor",
+          "type": "string"
+        },
+        "racional": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Racional",
+          "type": "string"
+        },
+        "tipo": {
+          "enum": [
+            "entrada",
+            "saida",
+            "aumento",
+            "reducao"
+          ],
+          "title": "Tipo",
+          "type": "string"
+        }
+      },
+      "required": [
+        "emissor",
+        "tipo",
+        "racional"
+      ],
+      "title": "MudancaComentada",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Comentário do relatório semanal (pt-BR, registro institucional); números só como\n{{fact:<fact_id>}}.",
+  "properties": {
+    "atribuicao": {
+      "items": {
+        "maxLength": 1500,
+        "minLength": 1,
+        "type": "string"
+      },
+      "maxItems": 3,
+      "minItems": 1,
+      "title": "Atribuicao",
+      "type": "array"
+    },
+    "desempenho_desde_inicio": {
+      "items": {
+        "maxLength": 1500,
+        "minLength": 1,
+        "type": "string"
+      },
+      "maxItems": 2,
+      "title": "Desempenho Desde Inicio",
+      "type": "array"
+    },
+    "desempenho_semana": {
+      "items": {
+        "maxLength": 1500,
+        "minLength": 1,
+        "type": "string"
+      },
+      "maxItems": 3,
+      "minItems": 1,
+      "title": "Desempenho Semana",
+      "type": "array"
+    },
+    "execucao": {
+      "items": {
+        "maxLength": 1500,
+        "minLength": 1,
+        "type": "string"
+      },
+      "maxItems": 2,
+      "minItems": 1,
+      "title": "Execucao",
+      "type": "array"
+    },
+    "mind": {
+      "description": "Mente que escreveu o comentário.",
+      "enum": [
+        "claude-code",
+        "codex",
+        "api",
+        "demo",
+        "chatgpt",
+        "gemini",
+        "outro"
+      ],
+      "title": "Mind",
+      "type": "string"
+    },
+    "mudancas_carteira": {
+      "items": {
+        "$ref": "#/$defs/MudancaComentada"
+      },
+      "maxItems": 40,
+      "title": "Mudancas Carteira",
+      "type": "array"
+    },
+    "perspectivas": {
+      "items": {
+        "maxLength": 1500,
+        "minLength": 1,
+        "type": "string"
+      },
+      "maxItems": 2,
+      "title": "Perspectivas",
+      "type": "array"
+    },
+    "resumo": {
+      "maxLength": 600,
+      "minLength": 1,
+      "title": "Resumo",
+      "type": "string"
+    },
+    "risco_nova_carteira": {
+      "items": {
+        "maxLength": 1500,
+        "minLength": 1,
+        "type": "string"
+      },
+      "maxItems": 3,
+      "minItems": 1,
+      "title": "Risco Nova Carteira",
+      "type": "array"
+    }
+  },
+  "required": [
+    "mind",
+    "resumo",
+    "desempenho_semana",
+    "atribuicao",
+    "risco_nova_carteira",
+    "execucao"
+  ],
+  "title": "ComentarioSemanal",
+  "type": "object"
+}

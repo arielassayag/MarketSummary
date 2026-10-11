@@ -5,7 +5,7 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-## Estado atual das teses — 11/10/2026, 11:42 Brasília
+## Estado atual das teses — 11/10/2026, 12:00 Brasília
 
 O portal `8aea3f1` está publicado e foi conferido independentemente: 241 páginas,
 233 empresas e oito ETFs; 727 arquivos HTTP200 com tamanho e SHA iguais ao
@@ -23,12 +23,12 @@ nenhum erro ou falha, 4.507 casos únicos. Ruff passou; os 4.875 arquivos fixado
 e o commit permaneceram idênticos. Não há soma de execuções focais sobrepostas
 nem promoção da qualificação de outra frente privada.
 
-O ramo documental `codex/cdp-pesquisa-lote-2` tem 153 rascunhos entregues e
+O ramo documental `codex/cdp-pesquisa-lote-2` tem 157 rascunhos entregues e
 validados em conjunto: oito ETFs e empresas de diferentes países e setores.
 O índice de lotes em [notas/README.md](notas/README.md) registra os ativos,
 fontes e limites relevantes. A conferência conjunta preservou a renderização
 das doze notas históricas e os 4.122 arquivos operacionais. Os textos mantêm
-visão neutra, baixa convicção e lacunas próprias. Há 76 ativos ainda sem nota
+visão neutra, baixa convicção e lacunas próprias. Há 72 ativos ainda sem nota
 publicada ou rascunho individual; cobertura qualitativa completa continua aberta.
 
 Os novos estudos incluem bancos e seguros mexicanos, imóveis e concessões,
@@ -100,6 +100,17 @@ recebimento pela holding. O conjunto passou por validação nativa e preservou
 as notas históricas; os testes documentais tiveram 273 aprovados e um pulado,
 274 casos únicos, sem erro ou falha. A CI de `8535bbb` concluiu com sucesso
 em `38139742971`; isso não publica as novas narrativas.
+
+Suzano, Klabin, Usiminas e GOAU acrescentam análise de florestas, manutenção,
+custo entregue e transmissão de caixa. Ativos biológicos e medidas ajustadas
+não equivalem a recursos distribuíveis. Klabin preserva o fluxo livre negativo
+antes de ajustes; a melhora do EBITDA da Usiminas contém itens extraordinários
+e não se replica integralmente no caixa. GOAU distingue holding e consolidado,
+minoritários e equivalência; divergências do release sobre lucro por ação e
+identificação do conselho permanecem explícitas. Aquisição liquidada, programa
+autorizado, cancelamento aprovado e projeto futuro têm estados próprios.
+O conjunto de 157 rascunhos passou na validação nativa; os testes documentais
+tiveram 273 aprovados e um pulado, 274 casos únicos, sem erro ou falha.
 
 A pesquisa distingue resultado recorrente, medidas gerenciais, inflação, moeda,
 capital por entidade e recursos atribuíveis ao acionista. Reorganização anunciada,

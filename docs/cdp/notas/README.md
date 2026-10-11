@@ -74,6 +74,12 @@ histórica. A análise da Cemig não incorpora mudança de controle não confirm
 
 ## Lotes seguintes de empresas em 11/10/2026
 
+- `BR_SUZANO`, `BR_KLABIN`, `BR_USIMINAS` e `BR_GOAU`: produtividade,
+  manutenção, custo completo e caixa atribuível. Suzano distingue valor justo,
+  derivativos e integração posterior. Klabin preserva diferenças entre fluxo
+  livre, ajustes e financiamento. Usiminas separa itens extraordinários e
+  recuperação de caixa. GOAU distingue holding, consolidado e minoritários;
+  inconsistências do release ficam documentadas sem correção da fonte.
 - `BR_VALE`, `BR_CSN`, `BR_CMIN` e `BR_BRADESPAR`: custo mineral completo,
   reposição, reparação, liquidez e transmissão de valor pela holding. Vale
   distingue subprodutos, caixa de contratos e obrigações fora da dívida

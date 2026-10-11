@@ -1,0 +1,216 @@
+{
+  "mind": "codex",
+  "issuer_id": "AR_LAR",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Lithium Argentina — caixa atribuível e expansão condicionada",
+  "resumo": "A hipótese é que produtividade e disciplina de capital permitam gerar caixa atribuível em um ciclo de preços adverso, preservando capacidade de financiar desenvolvimento. A expansão é uma opção condicionada: retorno exige engenharia, licenças, financiamento e recuperação industrial comprovados, sem diluição que absorva o benefício. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.AR_LAR.rating_codigo}}, com retorno esperado {{fact:val.AR_LAR.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Companhia com interesses em ativos de lítio argentinos, operando Cauchari-Olaroz com Ganfeng e desenvolvendo outros projetos. Indicadores físicos do projeto e direitos econômicos da companhia listada não são a mesma base.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que produtividade e disciplina de capital permitam gerar caixa atribuível em um ciclo de preços adverso, preservando capacidade de financiar desenvolvimento. A expansão é uma opção condicionada: retorno exige engenharia, licenças, financiamento e recuperação industrial comprovados, sem diluição que absorva o benefício.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F4"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.AR_LAR.preco}} e alvo {{fact:val.AR_LAR.preco_alvo}}, com potencial {{fact:val.AR_LAR.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.AR_LAR.ke}} e retorno esperado {{fact:val.AR_LAR.etr}}.",
+      "evidencias": [
+        "val.AR_LAR.preco",
+        "val.AR_LAR.preco_alvo",
+        "val.AR_LAR.upside",
+        "val.AR_LAR.ke",
+        "val.AR_LAR.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar recuperação industrial, especificação do produto, preço realizado e caixa distribuído à companhia. Separar financiamento de projeto, caixa corporativo, participação econômica e potencial diluição. Na expansão, acompanhar engenharia, água, licenças, implantação e desempenho do processo.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.AR_LAR.ke}} e a dispersão entre métodos {{fact:val.AR_LAR.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.AR_LAR.ke",
+        "val.AR_LAR.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Divulgação e discussão de resultado anunciadas pelo emissor; revisar caixa, financiamento e desenvolvimento sem antecipar o resultado.",
+      "data": "2026-11-10",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F5"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Preço do lítio, execução industrial e financiamento podem impedir retorno. A expansão envolve risco de tecnologia e licenças; acesso ao caixa do projeto depende de parceiros e obrigações, enquanto financiamento conversível pode diluir direitos econômicos.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1",
+        "F3",
+        "F4"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.AR_LAR.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.AR_LAR.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "A operação demonstra custos e caixa atribuível resistentes; expansão licenciada e bem financiada acrescenta retorno sem comprometer o acionista. O cenário otimista calculado pelo código é {{fact:val.AR_LAR.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.AR_LAR.preco_alvo}}, com retorno esperado {{fact:val.AR_LAR.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Preços e recuperação industrial frustram caixa; licenças ou tecnologia atrasam expansão, com maior necessidade de financiamento e diluição. O cenário pessimista calculado pelo código é {{fact:val.AR_LAR.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.AR_LAR.preco}} e alvo do modelo aberto {{fact:val.AR_LAR.preco_alvo}}, com potencial {{fact:val.AR_LAR.upside}}. Retorno total esperado {{fact:val.AR_LAR.etr}} e custo do capital próprio {{fact:val.AR_LAR.ke}}. A dispersão entre métodos é {{fact:val.AR_LAR.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.AR_LAR.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.AR_LAR.consenso_alvo}}; a diferença {{fact:val.AR_LAR.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "A análise distingue operação do projeto e caixa atribuível à companhia. O financiamento conversível foi concluído depois do trimestre; expansão e cronograma acelerado são planos condicionados. Esses eventos não foram incorporados automaticamente aos alvos do retrato recebido.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "A parceria exige conciliar direitos de voto, distribuição, obrigações e capital potencialmente diluído. A confiança no parceiro não dispensa avaliação de contratos, conflitos e proteção do acionista listado.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Infraestrutura existente e aprendizado industrial podem beneficiar uma expansão. Essa possibilidade precisa ser demonstrada em custo total, consumo de água, recuperação e confiabilidade, em comparação consistente com alternativas. Recursos minerais e estimativas de estudo não demonstram automaticamente viabilidade econômica.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "O release apresenta indicadores do projeto em base integral, salvo indicação distinta. Custos operacionais divulgados não equivalem ao caixa residual do acionista. Distribuições recebidas, participação no resultado e tributos precisam ser reconciliados à demonstração da companhia.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "O investimento conversível foi concluído; a conversão e seus efeitos por ação permanecem condicionais. O estudo de expansão considera processo e cronograma distintos da fase inicial acelerada. A autorização chinesa para tecnologia ainda não havia sido obtida naquele comunicado; engenharia antecipada não elimina esse risco.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F4"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "Maior produção pode não criar valor se o custo total e o capital investido consomem o ganho. Uma avaliação que atribua à companhia a totalidade do projeto ou trate estudo preliminar como caixa certo superestima a hipótese.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Acompanhar recuperação industrial, especificação do produto, preço realizado e caixa distribuído à companhia. Separar financiamento de projeto, caixa corporativo, participação econômica e potencial diluição. Na expansão, acompanhar engenharia, água, licenças, implantação e desempenho do processo.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3",
+        "F4"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.AR_LAR.etr}}, custo do capital {{fact:val.AR_LAR.ke}} e dispersão entre métodos {{fact:val.AR_LAR.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.AR_LAR.etr",
+        "val.AR_LAR.ke",
+        "val.AR_LAR.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+    "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+    "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+    "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "Demonstrações e participação econômica exigem conciliação entre resultados de projeto e caixa corporativo.",
+    "Contratos e potencial diluição do financiamento conversível não foram integralmente reconstituídos.",
+    "Não se comprovou neste estudo a conclusão da joint venture PPG anunciada anteriormente.",
+    "O relatório técnico integral da expansão não foi recebido; recursos minerais não são reservas demonstradas.",
+    "Licenças, processo, orçamento e financiamento da fase acelerada permanecem condicionais.",
+    "Guidance e tom da gestão não foram classificados após reconciliação integral.",
+    "Não há evidência suficiente de percepção do mercado, posicionamento ou interesse vendido.",
+    "Os documentos não foram integralmente reconciliados ao modelo; a consulta atual não comprova disponibilidade histórica no corte recebido."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Lithium Argentina",
+      "titulo": "Perfil e ativos em parceria",
+      "url": "https://investors.lithium-argentina.com/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Lithium Argentina",
+      "titulo": "Resultado trimestral e notas operacionais",
+      "url": "https://investors.lithium-argentina.com/news-releases/news-release-details/lithium-argentina-reports-second-quarter-2026-results",
+      "publicado_em": "2026-08-11",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Lithium Argentina",
+      "titulo": "Conclusão do investimento conversível",
+      "url": "https://investors.lithium-argentina.com/news-releases/news-release-details/lithium-argentina-announces-closing-180m-strategic-investment",
+      "publicado_em": "2026-09-15",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F4",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Lithium Argentina",
+      "titulo": "Estudo de expansão e fase inicial condicionada",
+      "url": "https://investors.lithium-argentina.com/news-releases/news-release-details/lithium-argentina-announces-cauchari-olaroz-stage-2-scoping",
+      "publicado_em": "2026-09-30",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F5",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Lithium Argentina",
+      "titulo": "Calendário anunciado para divulgação de resultados",
+      "url": "https://investors.lithium-argentina.com/news-releases/news-release-details/lithium-argentina-release-third-quarter-2026-results-november-10",
+      "publicado_em": "2026-10-08",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

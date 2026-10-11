@@ -1,0 +1,169 @@
+{
+  "mind": "codex",
+  "issuer_id": "LA_COPA",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Copa: conectividade, combustível e retorno da frota",
+  "resumo": "A hipótese é que conectividade e disciplina operacional remunerem a frota ao longo do ciclo. A condição é conservar retorno depois de combustível, manutenção e expansão; ocupação elevada não assegura caixa disponível. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.LA_COPA.rating_codigo}}, com retorno esperado {{fact:val.LA_COPA.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "A Copa Holdings reúne transporte de passageiros e cargas por Copa Airlines e Wingo. A conexão via Panamá e a utilização da frota sustentam a proposta comercial; demanda e capacidade precisam ser analisadas com custos e compromissos de aeronaves.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que conectividade e disciplina operacional remunerem a frota ao longo do ciclo. A condição é conservar retorno depois de combustível, manutenção e expansão; ocupação elevada não assegura caixa disponível.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.LA_COPA.preco}} e alvo {{fact:val.LA_COPA.preco_alvo}}, com potencial {{fact:val.LA_COPA.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.LA_COPA.ke}} e retorno esperado {{fact:val.LA_COPA.etr}}.",
+      "evidencias": [
+        "val.LA_COPA.preco",
+        "val.LA_COPA.preco_alvo",
+        "val.LA_COPA.upside",
+        "val.LA_COPA.ke",
+        "val.LA_COPA.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar capacidade, ocupação, receita unitária e custo total com combustível. Testar utilização, manutenção e entregas de frota contra caixa após investimento; observar se capacidade adicional é remunerada sem deterioração de preços.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.LA_COPA.ke}} e a dispersão entre métodos {{fact:val.LA_COPA.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.LA_COPA.ke",
+        "val.LA_COPA.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Combustível e mudanças na demanda podem reduzir rentabilidade enquanto compromissos de frota permanecem. Reservas vendidas antes de choques de custo podem limitar recomposição de tarifa.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.LA_COPA.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.LA_COPA.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "A rede mantém demanda remunerada e disciplina de frota através de custos voláteis. O cenário otimista calculado pelo código é {{fact:val.LA_COPA.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.LA_COPA.preco_alvo}}, com retorno esperado {{fact:val.LA_COPA.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Combustível e excesso de capacidade pressionam receita e caixa depois dos compromissos. O cenário pessimista calculado pelo código é {{fact:val.LA_COPA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.LA_COPA.preco}} e alvo do modelo aberto {{fact:val.LA_COPA.preco_alvo}}, com potencial {{fact:val.LA_COPA.upside}}. Retorno total esperado {{fact:val.LA_COPA.etr}} e custo do capital próprio {{fact:val.LA_COPA.ke}}. A dispersão entre métodos é {{fact:val.LA_COPA.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.LA_COPA.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.LA_COPA.consenso_alvo}}; a diferença {{fact:val.LA_COPA.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "O release consultado apresenta pressão de combustível, demonstrações condensadas e perspectiva atualizada. A direção da revisão não foi classificada sem confronto com a orientação anterior. Mudança futura da estrutura de conexões foi anunciada por mês, sem data exata adotada como catalisador. A conciliação integral com o modelo permanece pendente.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Confrontar frota, adiantamentos, manutenção e arrendamentos com dívida e distribuições. Recompras e classes alteram a leitura por ação; a base atual precisa de conciliação. O dividendo anunciado para data posterior não comprova pagamento realizado.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Testar conveniência de conexões, pontualidade e custos frente às alternativas de viagem. Localização favorável é hipótese de vantagem; exige demonstração de receita e retorno sem expansão excessiva de capacidade.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "O release descreve pressão do combustível apesar de crescimento de receita. Custo unitário sem combustível exclui um fator decisivo; separar caixa operacional semestral de adiantamentos de aeronaves, investimento e financiamento. Investimentos financeiros não são todos equivalentes a caixa imediato.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Confrontar frota, adiantamentos, manutenção e arrendamentos com dívida e distribuições. Recompras e classes alteram a leitura por ação; a base atual precisa de conciliação. O dividendo anunciado para data posterior não comprova pagamento realizado.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se conectividade e crescimento de passageiros não remunerarem custo total, manutenção e compromissos da frota.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Acompanhar capacidade, ocupação, receita unitária e custo total com combustível. Testar utilização, manutenção e entregas de frota contra caixa após investimento; observar se capacidade adicional é remunerada sem deterioração de preços.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.LA_COPA.etr}}, custo do capital {{fact:val.LA_COPA.ke}} e dispersão entre métodos {{fact:val.LA_COPA.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.LA_COPA.etr",
+        "val.LA_COPA.ke",
+        "val.LA_COPA.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+    "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+    "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+    "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "Demonstrações, investimentos financeiros e compromissos da frota não foram integralmente reconciliados com o modelo.",
+    "Orientação anterior não foi confrontada para classificar a direção da revisão.",
+    "Pagamento do dividendo posterior anunciado exige confirmação documental.",
+    "Classes, recompras e base plenamente diluída precisam de conciliação.",
+    "Vantagem competitiva, tom da gestão e percepção de mercado não estão concluídos.",
+    "Não há catalisador futuro com data exata confirmado neste estudo."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Copa Holdings",
+      "titulo": "Perfil e estrutura do negócio",
+      "url": "https://ir.copaair.com/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Copa Holdings",
+      "titulo": "Release de resultados, frota e perspectiva operacional",
+      "url": "https://ir.copaair.com/static-files/2e6392d2-38f3-4a59-818f-407c171369a3",
+      "publicado_em": "2026-08-05",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

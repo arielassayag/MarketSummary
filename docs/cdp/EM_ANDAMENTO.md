@@ -5,14 +5,15 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-## Estado atual das teses — 11/10/2026, 07:10 Brasília
+## Estado atual das teses — 11/10/2026, 08:48 Brasília
 
-O portal `7032a51` foi publicado e conferido independentemente: 241 páginas,
+O portal `8aea3f1` está publicado e foi conferido independentemente: 241 páginas,
 233 empresas e oito ETFs; 727 arquivos HTTP200 com tamanho e SHA iguais ao
-manifesto público. O índice, downloads e oito páginas reais foram examinados
-em desktop e celular, com quatorze capturas, sem erros de JavaScript ou
-transbordamento. Há doze narrativas publicadas e 229 análises preliminares;
-página disponível não equivale a pesquisa qualitativa concluída.
+manifesto público. Há doze narrativas publicadas e 229 análises preliminares;
+página disponível não equivale a pesquisa qualitativa concluída. A apresentação
+já foi examinada em desktop e celular, com quatorze capturas, sem erros de
+JavaScript ou transbordamento. O Pages concluiu em `38131073972`; a CI
+`38131073961` continua em execução na última consulta, sem certificação antecipada.
 
 A extensão de notas de ETFs `bfb4187` concluiu a suíte completa: 4.489 aprovados,
 dezessete pulados e nenhum erro ou falha, 4.506 casos únicos. Ruff passou;
@@ -22,63 +23,36 @@ nenhum erro ou falha, 4.507 casos únicos. Ruff passou; os 4.875 arquivos fixado
 e o commit permaneceram idênticos. Não há soma de execuções focais sobrepostas
 nem promoção da qualificação de outra frente privada.
 
-O ramo documental `codex/cdp-pesquisa-lote-2` acrescenta trinta e seis empresas às
-quatro iniciais e aos oito ETFs: Fortuna, Stone, Vivo, Cemig, Cyrela, Copasa,
-Motiva, Walmex, TIM, Multiplan, Santander Brasil, PagBank, FEMSA, Cencosud,
-CMPC, Banorte, Sabesp, Credicorp, Buenaventura, Southern Copper, Pampa, Cresud,
-IRSA, YPF, Empresas Copec, Enel Américas, Enel Chile, Ecopetrol, Cemex, América
-Móvil, Coca-Cola FEMSA, ASUR, Arca Continental, GAP, OMA e Orbia. Os quarenta e oito
-rascunhos passaram individualmente em schema e fatos nativos. A conferência
-conjunta validou todos os quarenta e oito e preservou
-a renderização das doze notas históricas e os 4.122 arquivos operacionais.
-Permanecem fora do livro, com visão
-neutra, baixa convicção e lacunas próprias, aguardando adoção na fila canônica.
+O ramo documental `codex/cdp-pesquisa-lote-2` tem 93 rascunhos entregues e
+validados em conjunto: oito ETFs e empresas de diferentes países e setores.
+O índice de lotes em [notas/README.md](notas/README.md) registra os ativos,
+fontes e limites relevantes. A conferência conjunta preservou a renderização
+das doze notas históricas e os 4.122 arquivos operacionais. Os textos mantêm
+visão neutra, baixa convicção e lacunas próprias. Há 136 ativos ainda sem nota
+publicada ou rascunho individual; cobertura qualitativa completa continua aberta.
 
-A revisão documental diferencia mudança de controle de retorno operacional,
-venda da plataforma de aeroportos da Motiva de perímetro ainda a reconciliar,
-IFRS e medidas gerenciais dos bancos, e bases contábeis de inflação, contratos
-de uso e atribuição. Cencosud altera a definição de vendas comparáveis; FEMSA
-tem assuntos de auditoria sobre controles e intangíveis; o anexo Banorte é de
-financiamentos, sem reconciliação de resultado e capital. Sabesp distingue
-remuneração contratual e funding; Credicorp separa orientação anual e expectativa
-de médio prazo; Buenaventura corrige resultado anterior de associadas e descreve
-maturação de San Gabriel; Southern Copper separa créditos de subprodutos e
-financiamento dos projetos. Consulta não comprova posse histórica ou incorporação
-dos dados ao modelo. A Pampa exige reconciliar afiliadas, garantias e estágio
-dos projetos; Cresud e IRSA exigem eliminar sobreposição e separar avaliações
-de recebimentos. O anual completo da Cresud não foi recebido com HTTPS válido.
-YPF exige direitos e base por ação após evento de capital e resultado atual
-completo. Copec separa a declaração de financiamento do anual das condições
-e do estágio atual dos projetos. Enel Américas distingue efeitos de moeda e
-regularização das obrigações; Enel Chile exige conciliação de recebíveis e
-instrumentos regulatórios. O release de Enel Chile foi consultado na fonte,
-mas o download separado foi recusado e não gerou cópia local. Ecopetrol exige
-separar saldos do fundo de estabilização, títulos recebidos e caixa. Nenhum
-novo número financeiro foi escolhido pela mente. Cemex distingue orientação
-elevada de execução comprovada; América Móvil preserva mudanças de classificação,
-bases cambiais e definições de liquidez. Coca-Cola FEMSA diferencia ações,
-unidades e recibos; o download separado do release foi recusado. ASUR separa
-a aquisição posterior da base histórica e exige conciliação da reorganização
-e da dívida de Cancún. GAP descreve emissão já realizada e combinação concluída,
-com efeito de provisão que não comprova recorrência. OMA distingue construção,
-provisão de manutenção e desembolso. Orbia diferencia recuperação de preços,
-capital de giro e financiamento; sua orientação anterior ainda não foi
-reconciliada para classificar a mudança de guidance. Calendários de Arca
-Continental e Orbia confirmam eventos futuros, sem antecipar resultado.
+A pesquisa distingue resultado recorrente, medidas gerenciais, inflação, moeda,
+capital por entidade e recursos atribuíveis ao acionista. Reorganização anunciada,
+transferência concluída e recebimento de caixa têm estados diferentes. Os bancos
+argentinos preservam norma local, bases de retorno e reconhecimento de crédito;
+os chilenos separam inflação, tesouraria, provisões específicas e capital. A
+presença de Bci Group entre acionistas diretos não comprova conclusão de todas
+as etapas. Itaú Colombia tem eventos posteriores ao trimestre que não são
+incorporados retrospectivamente àquelas demonstrações. Consulta atual não
+comprova posse histórica ou incorporação dos dados ao modelo.
 
-O escritor e o limite continuam os mesmos: `.cdp/rotinas`, até doze ativos por
-execução. Um rascunho de domingo mantém sua data ao entrar na fila posterior;
-a nota publicada só aparece num retrato com corte compatível. Não se publica
-rascunho diretamente no site. A cobertura qualitativa completa dos demais
-ativos, reconciliação das demonstrações e qualificação dos projetos continuam
-pendentes. A integração qualificada até `4abb248` já foi concluída no `main`
-local, preservando os cinco arquivos herdados com alterações humanas. Os oito
-rascunhos mais recentes concluíram o controle conjunto; o último controle
-documental precede seu commit. A qualificação local completa autoriza o envio
-da integração; uma nova execução remota de CI substitui a anterior ainda em
-andamento, sem promover seu estado a aprovação. A publicação deve ser conferida
-no Pages contra o commit entregue. A operação local de 09/10 e todas as frentes privadas antigas abaixo
-continuam separadas, sem nova decisão, repetição MOC ou escrita operacional.
+O escritor permanece `.cdp/rotinas`, com limite global de doze ativos por execução.
+As doze automações nativas permanecem ACTIVE no projeto atual. Um rascunho de
+domingo mantém sua data na fila posterior; só uma nota publicada entra num
+retrato com corte compatível. Não se publica rascunho diretamente no site.
+Reconciliação financeira, direitos de capital e projetos continuam pendentes.
+A integração qualificada anterior está em `main` e no remoto `8aea3f1`; este
+lote documental concluiu 274 casos únicos, um pulado e nenhuma falha ou erro,
+além de Ruff sem problemas. Os rascunhos novos são entregues neste commit,
+sem adoção ou publicação operacional.
+Os cinco arquivos herdados com alterações humanas e a venv H5 permanecem
+preservados. A operação local de 09/10 e as frentes privadas abaixo continuam
+separadas, sem nova decisão, repetição MOC ou escrita operacional.
 
 ## Páginas de tese por ativo — desenvolvimento em 11/10/2026
 

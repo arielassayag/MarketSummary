@@ -1,0 +1,169 @@
+{
+  "mind": "codex",
+  "issuer_id": "AR_SUPERVIELLE",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Supervielle — retorno recorrente depois da transformação operacional",
+  "resumo": "A hipótese é que relacionamento transacional e redução do custo de servir sustentem retorno depois das perdas de crédito e do capital exigido. A transformação só será econômica se preservar clientes rentáveis e qualidade de atendimento. A recuperação deve aparecer em lucro recorrente, sem depender de ajustes que antecipam economias futuras. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.AR_SUPERVIELLE.rating_codigo}}, com retorno esperado {{fact:val.AR_SUPERVIELLE.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Grupo financeiro argentino com banco, seguros, corretora digital IOL e gestão de recursos. O banco e as plataformas têm fontes de receita, exigências de capital e riscos diferentes. Ativos sob custódia dos clientes não são patrimônio livre da holding.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que relacionamento transacional e redução do custo de servir sustentem retorno depois das perdas de crédito e do capital exigido. A transformação só será econômica se preservar clientes rentáveis e qualidade de atendimento. A recuperação deve aparecer em lucro recorrente, sem depender de ajustes que antecipam economias futuras.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.AR_SUPERVIELLE.preco}} e alvo {{fact:val.AR_SUPERVIELLE.preco_alvo}}, com potencial {{fact:val.AR_SUPERVIELLE.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.AR_SUPERVIELLE.ke}} e retorno esperado {{fact:val.AR_SUPERVIELLE.etr}}.",
+      "evidencias": [
+        "val.AR_SUPERVIELLE.preco",
+        "val.AR_SUPERVIELLE.preco_alvo",
+        "val.AR_SUPERVIELLE.upside",
+        "val.AR_SUPERVIELLE.ke",
+        "val.AR_SUPERVIELLE.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar margem após reprecificação, custo de funding e receita líquida por cliente. Revisar atraso, renegociações, recuperações e perda por safra de crédito. Confrontar despesas efetivas com economias projetadas e acompanhar capital por entidade, títulos e transferências à holding.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.AR_SUPERVIELLE.ke}} e a dispersão entre métodos {{fact:val.AR_SUPERVIELLE.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.AR_SUPERVIELLE.ke",
+        "val.AR_SUPERVIELLE.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Crédito, inflação, títulos e financiamento podem reduzir o retorno ao mesmo tempo. Cortes de custo podem prejudicar atendimento e originação. A recuperação depende de renda e demanda em ambiente macroeconômico incerto; ajustes gerenciais podem superestimar a capacidade já realizada.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.AR_SUPERVIELLE.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.AR_SUPERVIELLE.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Relacionamento e eficiência produzem retorno recorrente depois de crédito e capital, com economias efetivas e recursos atribuíveis à holding. O cenário otimista calculado pelo código é {{fact:val.AR_SUPERVIELLE.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.AR_SUPERVIELLE.preco_alvo}}, com retorno esperado {{fact:val.AR_SUPERVIELLE.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Margem normaliza enquanto perdas, títulos e falhas na transformação absorvem a economia de despesas e limitam distribuição. O cenário pessimista calculado pelo código é {{fact:val.AR_SUPERVIELLE.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.AR_SUPERVIELLE.preco}} e alvo do modelo aberto {{fact:val.AR_SUPERVIELLE.preco_alvo}}, com potencial {{fact:val.AR_SUPERVIELLE.upside}}. Retorno total esperado {{fact:val.AR_SUPERVIELLE.etr}} e custo do capital próprio {{fact:val.AR_SUPERVIELLE.ke}}. A dispersão entre métodos é {{fact:val.AR_SUPERVIELLE.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.AR_SUPERVIELLE.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.AR_SUPERVIELLE.consenso_alvo}}; a diferença {{fact:val.AR_SUPERVIELLE.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "A pesquisa diferencia lucro realizado de retorno ajustado e de projeção estrutural. As séries são reexpressas por inflação. Comparação com custo de capital ou resultado em dólar exige definição homogênea; regras prudenciais narradas pelo emissor não substituem consulta ao regulador.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Revisar controle, classes, correspondência dos recibos e transações entre banco e holding. Autonomia de financiamento e limites prudenciais precisam ser conciliados antes de atribuir recursos das plataformas ao acionista.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "A integração de crédito, seguros e investimentos pode apoiar relacionamento e receita por cliente. A vantagem exige monetização líquida, funding estável e risco controlado. Crescimento de contas ou de custódia não comprova rentabilidade incremental, e a tese precisa testar concorrência com bancos e plataformas digitais.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "O release distingue retorno contábil, ajustado por desligamentos e estrutural, que incorpora economias projetadas como se já vigentes. A margem recebeu benefício temporário da reprecificação desigual de ativos e depósitos. NPL regulatório e atraso bancário usam critérios distintos; melhora trimestral não elimina o risco acumulado.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Capital e recursos devem ser reconciliados entre banco, subsidiárias e holding. O índice prudencial caiu com maior risco de mercado da carteira de títulos privados. A tabela de transferências utiliza valores nominais de pagamento, distintos das séries reexpressas pela inflação; não se presume capacidade irrestrita de distribuir lucros.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se a margem perde o ganho de reprecificação antes de as economias se materializarem, ou se menor estrutura reduz receita rentável. Recuperações e renegociações não bastam quando perdas posteriores consomem retorno e capital.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Acompanhar margem após reprecificação, custo de funding e receita líquida por cliente. Revisar atraso, renegociações, recuperações e perda por safra de crédito. Confrontar despesas efetivas com economias projetadas e acompanhar capital por entidade, títulos e transferências à holding.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.AR_SUPERVIELLE.etr}}, custo do capital {{fact:val.AR_SUPERVIELLE.ke}} e dispersão entre métodos {{fact:val.AR_SUPERVIELLE.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.AR_SUPERVIELLE.etr",
+        "val.AR_SUPERVIELLE.ke",
+        "val.AR_SUPERVIELLE.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+    "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+    "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+    "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "Notas, perdas esperadas e capital por entidade não foram integralmente reconciliados.",
+    "Retornos real, ajustado e estrutural requerem base homogênea com o modelo.",
+    "Transferências nominais, classes e base atual por ação permanecem a comprovar.",
+    "Comunicações regulatórias e efeitos da transformação exigem diligência original.",
+    "Guidance, tom da gestão e evento futuro datado seguem não classificados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo Supervielle",
+      "titulo": "Negócios bancários, seguros e plataformas de investimento",
+      "url": "https://www.gruposupervielle.com/Spanish/acerca-de-nosotros/nuestros-negocios/default.aspx",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo Supervielle",
+      "titulo": "Resultado, ajustes e capital do grupo",
+      "url": "https://www.sec.gov/Archives/edgar/data/1517399/000151739926000031/supv-20260810x6k.htm",
+      "publicado_em": "2026-08-10",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

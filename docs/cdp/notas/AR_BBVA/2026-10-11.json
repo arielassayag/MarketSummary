@@ -1,0 +1,169 @@
+{
+  "mind": "codex",
+  "issuer_id": "AR_BBVA",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "BBVA Argentina — margem real, carteira e disciplina de capital",
+  "resumo": "A hipótese é que relacionamento transacional e capacidade tecnológica sustentem margem real depois do risco e do custo de servir. O crescimento deve preservar qualidade de crédito e capital, além de participação de mercado. O valor econômico depende do retorno atribuível e distribuível na entidade local, sem presumir suporte irrestrito da controladora. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.AR_BBVA.rating_codigo}}, com retorno esperado {{fact:val.AR_BBVA.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Banco argentino controlado pelo grupo BBVA, com atendimento a indivíduos, pequenas e médias empresas e grandes corporações. Negócios e participações financeiras ampliam produtos e canais. O vínculo global não elimina exigências locais de capital, crédito e liquidez.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que relacionamento transacional e capacidade tecnológica sustentem margem real depois do risco e do custo de servir. O crescimento deve preservar qualidade de crédito e capital, além de participação de mercado. O valor econômico depende do retorno atribuível e distribuível na entidade local, sem presumir suporte irrestrito da controladora.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.AR_BBVA.preco}} e alvo {{fact:val.AR_BBVA.preco_alvo}}, com potencial {{fact:val.AR_BBVA.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.AR_BBVA.ke}} e retorno esperado {{fact:val.AR_BBVA.etr}}.",
+      "evidencias": [
+        "val.AR_BBVA.preco",
+        "val.AR_BBVA.preco_alvo",
+        "val.AR_BBVA.upside",
+        "val.AR_BBVA.ke",
+        "val.AR_BBVA.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar margem real depois de perdas, custo de depósitos por moeda e retorno por segmento. Revisar atraso, garantias, safras e cobertura, além da carteira de títulos. Conciliar base de clientes, capital, obrigações de financiamento e remuneração efetivamente paga.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.AR_BBVA.ke}} e a dispersão entre métodos {{fact:val.AR_BBVA.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.AR_BBVA.ke",
+        "val.AR_BBVA.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Inflação, moeda, crédito e títulos afetam lucro e capital. O vínculo global pode criar dependências e transações relacionadas. Ganhos de margem e eficiência podem anteceder perdas de crédito e reprecificação completa.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.AR_BBVA.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.AR_BBVA.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Relacionamento e tecnologia sustentam funding e crédito rentável; retorno real preserva capital e remuneração atribuível. O cenário otimista calculado pelo código é {{fact:val.AR_BBVA.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.AR_BBVA.preco_alvo}}, com retorno esperado {{fact:val.AR_BBVA.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Perdas, reprecificação e títulos absorvem ganhos de eficiência enquanto capital ou restrições locais limitam distribuição. O cenário pessimista calculado pelo código é {{fact:val.AR_BBVA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.AR_BBVA.preco}} e alvo do modelo aberto {{fact:val.AR_BBVA.preco_alvo}}, com potencial {{fact:val.AR_BBVA.upside}}. Retorno total esperado {{fact:val.AR_BBVA.etr}} e custo do capital próprio {{fact:val.AR_BBVA.ke}}. A dispersão entre métodos é {{fact:val.AR_BBVA.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.AR_BBVA.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.AR_BBVA.consenso_alvo}}; a diferença {{fact:val.AR_BBVA.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "A pesquisa distingue retornos reais e anualizados de custo de capital do modelo, e registra a direção separada de lucro e qualidade da carteira. Divergências de unidades e comparativos precisam ser reconciliadas com os demonstrativos, sem recalcular números na narrativa.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Revisar controle do grupo BBVA, direitos das ações e recibos e relações com empresas associadas. Solvência e liquidez locais não são automaticamente equivalentes ao suporte ou aos recursos da controladora.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Rede, produtos e integração global podem apoiar atendimento corporativo e aquisição de clientes. A vantagem exige depósitos estáveis, receita líquida por cliente e eficiência comprovada. Critérios de cliente ativo e mudanças de base precisam ser preservados ao comparar monetização e retenção.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Os resultados são reexpressos pela inflação e distinguem NIM total de margem líquida do efeito monetário. A eficiência melhorou, enquanto NPL aumentou e a cobertura caiu. Exposição a títulos públicos inclui classificações distintas. Algumas unidades e variações tabulares requerem reconciliação, sem correção por inferência.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Capital e liquidez locais devem ser conciliados com risco ponderado, crédito e títulos, antes de discutir distribuição. O release registra anúncios de parcelas de dividendos e emissões por moeda. Anúncio de pagamento não comprova a liquidação nem dispensa a revisão da capacidade futura.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se maior rentabilidade depende da desinflação e de efeitos financeiros enquanto qualidade da carteira deteriora. Escala global e tecnologia não garantem retorno distribuível ao acionista local.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Acompanhar margem real depois de perdas, custo de depósitos por moeda e retorno por segmento. Revisar atraso, garantias, safras e cobertura, além da carteira de títulos. Conciliar base de clientes, capital, obrigações de financiamento e remuneração efetivamente paga.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.AR_BBVA.etr}}, custo do capital {{fact:val.AR_BBVA.ke}} e dispersão entre métodos {{fact:val.AR_BBVA.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.AR_BBVA.etr",
+        "val.AR_BBVA.ke",
+        "val.AR_BBVA.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+    "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+    "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+    "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "Notas, perdas esperadas e capital não foram integralmente reconciliados.",
+    "Unidades, variações tabulares e retorno real exigem confronto com originais.",
+    "Classes, recibos e base atual por ação permanecem a comprovar.",
+    "Liquidação de dividendos, restrições locais e transações relacionadas requerem diligência.",
+    "Guidance, tom da gestão e evento futuro datado não foram classificados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "BBVA Argentina",
+      "titulo": "Perfil de clientes e estrutura bancária",
+      "url": "https://ir.bbva.com.ar/our-company/business-overview/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "BBVA Argentina",
+      "titulo": "Resultado trimestral e exposição financeira",
+      "url": "https://www.sec.gov/Archives/edgar/data/913059/000129281426004370/bbarpr2q26_6k.htm",
+      "publicado_em": "2026-08-27",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

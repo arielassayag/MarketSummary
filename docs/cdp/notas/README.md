@@ -123,6 +123,41 @@ histórica. A análise da Cemig não incorpora mudança de controle não confirm
   e Orbia têm eventos futuros datados em material primário; o calendário não
   antecipa conteúdo ou resultado do evento.
 
+- `LA_MELI`, `LA_DLOCAL`, `LA_ARCOS`, `LA_COPA`, `BR_VTEX`, `BR_AFYA`,
+  `BR_YDUQS`, `AR_GLOBANT` e `BR_PATRIA`: monetização de plataformas, risco
+  de crédito e pagamentos, franquias e operação aérea, software, educação,
+  serviços de tecnologia e gestão de investimentos. Receita ajustada, atividade,
+  capital de clientes e lucro atribuível têm perímetros próprios.
+- `AR_ADECOAGRO`, `AR_CAAP`, `AR_CEPU`, `AR_LAR`, `AR_LOMA`, `AR_TEO` e
+  `AR_TGS`: agricultura e indústria, concessões aeroportuárias, energia, lítio,
+  cimento, telecomunicações e gás. Inflação, controle, moeda, recebíveis,
+  infraestrutura e financiamento exigem conciliação específica; anúncio não
+  equivale a caixa recebido ou projeto em operação.
+- `CL_ANDINA`, `CL_CENCOMALLS`, `CL_FALABELLA`, `CL_MALLPLAZA`, `CL_PARAUCO`,
+  `CL_LATAM` e `CL_SQM`: distribuição de bebidas, imóveis, varejo, transporte
+  aéreo e materiais. O memorando entre Falabella e Mallplaza era não vinculante
+  no comunicado consultado; não comprova transferência concluída. Participação
+  econômica, contratos de uso, caixa e exposição de projetos ficam separados.
+- `CL_COLBUN`, `CL_ECL`, `CL_EISA`, `CO_GEOPARK`, `CO_GRANTIERRA`,
+  `CO_TECNOGLASS` e `PE_NEXA`: geração, distribuição, exploração de petróleo,
+  materiais para construção e metais. Contratos, disponibilidade, reservas,
+  capital de giro e maturação precisam sustentar caixa depois do reinvestimento.
+- `CO_CEMARGOS`, `CO_GRUPOARGOS`, `CO_SURA`, `CO_ISA`, `CO_CIBEST`, `LA_LILA`
+  e `LA_MILLICOM`: reorganização de portfólios e participações, capital financeiro,
+  infraestrutura e telecomunicações. Direitos da holding, reorganizações e
+  dividendos não são presumidos equivalentes ao resultado das controladas.
+- `AR_SUPERVIELLE`, `AR_MACRO`, `AR_GALICIA` e `AR_BBVA`: resultado real,
+  crédito e funding, integração de negócios e capital bancário. Resultado
+  estrutural ou ajustado não substitui retorno efetivo; provisão menor não
+  comprova atraso menor. A norma local, a base do retorno e os direitos por
+  instrumento precisam ser compatíveis com o modelo.
+- `CL_BCHILE`, `CL_BCI`, `CL_BSAC` e `CL_ITAU`: retorno além da inflação,
+  capital por país, transformação e direitos societários. Bci Group já aparece
+  no retrato posterior de acionistas diretos, sem comprovar todas as etapas de
+  reorganização. Itaú Colombia registra cessão de parte do varejo e efeitos de
+  reestruturação posteriores ao trimestre. Projeções com direções diferentes
+  não são classificadas como melhora uniforme de guidance.
+
 Todos são rascunhos com hipóteses próprias, contraponto, indicadores e lacunas.
 Mesmo a consulta do último release não encerra a reconciliação financeira com o
 modelo, a comparação competitiva e a diligência do capital. Nenhum dado externo

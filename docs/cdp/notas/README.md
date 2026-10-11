@@ -74,6 +74,12 @@ histórica. A análise da Cemig não incorpora mudança de controle não confirm
 
 ## Lotes seguintes de empresas em 11/10/2026
 
+- `BR_AURA`, `BR_ERO`, `BR_SIGMALITH` e `BR_CBA`: produção econômica,
+  custo completo, reposição e financiamento. Aura separa proteção liquidada,
+  produção preliminar e frota condicional. Ero preserva streaming e aquisição
+  de participação por etapas. Sigma mantém prejuízo, capital de giro negativo,
+  controles deficientes e obrigações ambientais explícitos. CBA distingue
+  risco sacado, juros capitalizados, UBP liquidado e controle condicional.
 - `BR_SUZANO`, `BR_KLABIN`, `BR_USIMINAS` e `BR_GOAU`: produtividade,
   manutenção, custo completo e caixa atribuível. Suzano distingue valor justo,
   derivativos e integração posterior. Klabin preserva diferenças entre fluxo

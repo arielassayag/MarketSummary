@@ -1350,6 +1350,8 @@ def termos_vedados(texto: str, vedados: re.Pattern[str], terceiros: Iterable[str
         return None
     texto = _sem_escapes(texto)
     for url in urls_terceiros:
+        if url not in texto:
+            continue  # Um endereço ausente não precisa de varredura por expressão regular.
         # O limite impede isentar outro endereço cujo início coincida com o da notícia.
         texto = re.sub(re.escape(url) + r"(?=$|[\s\"'<>{}\[\]),])", "", texto)
     terceiros = tuple(terceiros)

@@ -98,7 +98,7 @@ def _tabela(colunas: list[tuple[str, str]], linhas: list[Mapping[str, Any]]) -> 
         return "<p>Não disponível neste recorte.</p>"
     cab = "".join(f'<th scope="col">{_s(t)}</th>' for _, t in colunas)
     body = "".join("<tr>" + "".join(f"<td>{_s(r.get(k))}</td>" for k, _ in colunas) + "</tr>" for r in linhas)
-    return f'<div class="analise-tabela"><table><thead><tr>{cab}</tr></thead><tbody>{body}</tbody></table></div>'
+    return f'<div class="analise-tabela" tabindex="0" role="region" aria-label="{_s("Tabela: " + ", ".join(t for _, t in colunas))}"><table><thead><tr>{cab}</tr></thead><tbody>{body}</tbody></table></div>'
 
 
 def carregar_notas(rt: Any, ate: str) -> dict[str, dict[str, Any]]:
@@ -187,6 +187,31 @@ def _nota_secoes(r: Mapping[str, Any]) -> list[tuple[str, str, str]]:
     return out
 
 
+def _memoria(m: Mapping[str, Any]) -> str:
+    partes = []
+    for passo in m.get("passos") or []:
+        partes.append(f'<h3>{_s(passo["t"])}</h3>')
+        partes.append(_paragrafo(passo.get("s") or passo.get("f") or passo.get("r")))
+        if passo.get("r") and passo["r"] != passo.get("s"):
+            partes.append(_paragrafo("Resultado: " + str(passo["r"])))
+        if passo.get("p"):
+            partes.append(_paragrafo(passo["p"]))
+        fontes_passo = [f'<a href="#fonte-{i}">M{i + 1}</a>' for i in passo.get("fo") or []
+                        if type(i) is int and 0 <= i < len(m.get("fontes") or [])]
+        if fontes_passo:
+            partes.append('<p class="analise-fonte">Fontes do modelo: ' + " · ".join(fontes_passo) + '</p>')
+    for metodo in m.get("metodos") or []:
+        if metodo.get("projecao") and metodo.get("colunas"):
+            partes.append(f'<h3>Projeção: {_s(metodo["t"])}</h3>')
+            colunas = [("ano", "Ano"), *((c["k"], c["t"]) for c in metodo["colunas"])]
+            partes.append(_tabela(colunas, metodo["projecao"]))
+        if metodo.get("terminal"):
+            partes.append(_paragrafo(f'Participação do valor terminal em {metodo["t"]}: {metodo["terminal"]}.'))
+    if not partes:
+        return "<p>Memória detalhada não disponível neste recorte.</p>"
+    return '<details><summary>Abrir fórmulas, resultados intermediários e projeções</summary>' + "".join(partes) + '</details>'
+
+
 def secoes(doc: Mapping[str, Any]) -> list[tuple[str, str, str]]:
     """Narrativa existente e análise do modelo permanecem em seus próprios cortes."""
     u, m = doc["ativo"], doc["modelo"]
@@ -218,7 +243,8 @@ def secoes(doc: Mapping[str, Any]) -> list[tuple[str, str, str]]:
     if u["tipo"] == "etf":
         out += [("exposicao", "Carteira subjacente e exposição", _tabela([("t", "Indicador"), ("v", "Valor")], m.get("agregados") or []) + _tabela([("nome", "Componente"), ("peso", "Peso")], [{"nome": p.get("nome") or p.get("t"), "peso": p.get("peso_texto") or p.get("peso") or p.get("w")} for p in m.get("posicoes") or []]) + _paragrafo("A composição é a recebida no retrato. Cobertura parcial das posições, preços defasados e exposição cambial limitam a leitura do retorno agregado.")),
                 ("diligencia-etf", "Diligência do ETF", _paragrafo("O erro de acompanhamento frente ao ILF compara exposições regionais; não mede a aderência ao índice contratual do ETF. Spread, prêmio ou desconto ao patrimônio, empréstimo de ativos, replicação e regras de rebalanceamento exigem documentos próprios do administrador. Sem esses insumos, a diligência do produto permanece aberta."))]
-    out += [("qualidade", "Qualidade dos dados e condições da análise", _tabela([("t", "Condição"), ("s", "Estado"), ("d", "Detalhe")], m.get("portoes") or []) + _lista(m.get("avisos") or []) + _tabela([("t", "Lacuna"), ("m", "Consequência")], m.get("lacunas") or [])),
+    out += [("memoria-calculo", "Memória de cálculo do modelo aberto", _memoria(m)),
+            ("qualidade", "Qualidade dos dados e condições da análise", _tabela([("t", "Condição"), ("s", "Estado"), ("d", "Detalhe")], m.get("portoes") or []) + _lista(m.get("avisos") or []) + _tabela([("t", "Lacuna"), ("m", "Consequência")], m.get("lacunas") or [])),
             ("insumos", "Resultados, insumos e custo de capital", _tabela([("t", "Insumo"), ("v", "Valor"), ("per", "Período"), ("pub", "Publicação")], m.get("insumos") or []) + _tabela([("t", "Parâmetro"), ("v", "Valor")], m.get("custo_capital") or []))]
     return out
 
@@ -234,7 +260,7 @@ def fontes(doc: Mapping[str, Any]) -> str:
         titulo = _s(f.get("doc") or f.get("fonte"))
         url = _url(f.get("url"))
         link = f'<a href="{_s(url)}" rel="noopener noreferrer">{titulo}</a>' if url else titulo
-        identificador = f'<b>{_s(f["id"])}</b> · ' if f.get("id") else ""
+        identificador = f'<b>{_s(f.get("id") or f"M{i + 1}")}</b> · '
         itens.append(f'<li id="fonte-{i}">{identificador}{link} · {_s(f.get("fonte"))} · publicação {_s(f.get("pub"))}</li>')
     return "<ol>" + "".join(itens) + "</ol>" if itens else "<p>Sem fonte pública identificada neste recorte.</p>"
 
@@ -282,6 +308,8 @@ def markdown(doc: Mapping[str, Any]) -> str:
             self.partes = []
             self.ignorar = 0
             self.href = None
+            self.cabecalho = False
+            self.colunas = 0
 
         def handle_starttag(self, tag, attrs):
             if tag in {"nav", "aside", "button"}:
@@ -292,6 +320,13 @@ def markdown(doc: Mapping[str, Any]) -> str:
                 self.partes.append("\n\n" + {"h1": "# ", "h2": "## ", "h3": "### "}[tag])
             elif tag == "li":
                 self.partes.append("\n- ")
+            elif tag == "table":
+                self.partes.append("\n\n")
+            elif tag == "tr":
+                self.partes.append("| ")
+                self.colunas = 0
+            elif tag == "th":
+                self.cabecalho = True
             elif tag == "a":
                 self.href = _url(dict(attrs).get("href"))
                 if self.href:
@@ -299,7 +334,7 @@ def markdown(doc: Mapping[str, Any]) -> str:
 
         def handle_data(self, data):
             if not self.ignorar:
-                self.partes.append(data)
+                self.partes.append(re.sub(r"([\\`*_\[\]<>|])", r"\\\1", data))
 
         def handle_endtag(self, tag):
             if tag in {"nav", "aside", "button"}:
@@ -310,9 +345,15 @@ def markdown(doc: Mapping[str, Any]) -> str:
             if tag == "a" and self.href:
                 self.partes.append("](" + self.href + ")")
                 self.href = None
-            if tag in {"p", "h1", "h2", "h3", "li", "tr", "section", "header"}:
+            if tag == "tr":
+                self.partes.append("\n")
+                if self.cabecalho:
+                    self.partes.append("|" + " --- |" * self.colunas + "\n")
+                    self.cabecalho = False
+            elif tag in {"p", "h1", "h2", "h3", "li", "section", "header", "table"}:
                 self.partes.append("\n\n")
             elif tag in {"td", "th"}:
+                self.colunas += 1
                 self.partes.append(" | ")
 
     parser = Texto()
@@ -332,8 +373,8 @@ def indice(docs: list[dict[str, Any]]) -> str:
     return '<main class="analise-shell"><header class="analise-capa"><p class="analise-kicker">Pesquisa por ativo</p><h1>Teses e análises de investimento</h1><p>Uma página dedicada a cada empresa e ETF sob cobertura. Narrativas publicadas e análises preliminares têm estados distintos, fontes e datas visíveis.</p>' + progresso + '</header><label class="analise-busca">Buscar por empresa, ticker ou país<input type="search" id="analise-busca" placeholder="Empresa, ticker ou país"></label><ul class="analise-cards">' + ''.join(cards) + '</ul>' + ("<p>A cobertura está indisponível ou em conferência; nenhuma tese é exibida como válida.</p>" if not docs else "") + '</main>'
 
 
-CSS = """.analise-shell{max-width:1180px;margin:0 auto;padding:32px 28px 64px;color:var(--ink,#211b16)}
-.analise-capa{max-width:900px;padding:24px 0 32px;border-bottom:2px solid #ad8b50}.analise-capa h1{font:600 clamp(2.2rem,5vw,3.8rem)/1.1 Alegreya,Georgia,serif;margin:8px 0 20px}.analise-capa p{line-height:1.65}.analise-kicker{text-transform:uppercase;letter-spacing:.12em;font-size:.75rem}.analise-estado{display:inline-block;border:1px solid #97723a;border-radius:4px;padding:6px 12px;font-weight:600}.analise-layout{display:grid;grid-template-columns:230px minmax(0,1fr);gap:48px;margin-top:32px}.analise-layout aside nav{position:sticky;top:20px}.analise-layout aside h2{font-size:1rem}.analise-layout aside ol{padding-left:18px;line-height:1.8;font-size:.9rem}.analise-layout article{min-width:0;max-width:820px}.analise-layout section{padding:8px 0 32px;border-bottom:1px solid #b5a58a;scroll-margin-top:24px}.analise-layout h2{font:600 1.8rem/1.2 Alegreya,Georgia,serif}.analise-layout h3{font-size:1.1rem;margin-top:24px}.analise-layout p,.analise-layout li{line-height:1.75}.analise-fonte{font-size:.86rem;color:var(--muted,#6b6051)}.analise-tabela{overflow-x:auto;margin:20px 0}.analise-tabela table{border-collapse:collapse;width:100%;font-size:.9rem;min-width:380px}.analise-tabela th,.analise-tabela td{padding:12px;text-align:left;vertical-align:top;border-bottom:1px solid #b5a58a}.analise-acoes{display:flex;flex-wrap:wrap;gap:12px;align-items:center}.analise-acoes a,.analise-acoes button{font:inherit;color:inherit;border:1px solid #97723a;border-radius:4px;padding:8px 12px;background:transparent;cursor:pointer}.analise-shell code{overflow-wrap:anywhere;font-size:.8rem}.analise-pular{position:absolute;left:-9999px}.analise-pular:focus{position:static;padding:12px}.analise-busca{display:block;margin:28px 0;font-weight:600}.analise-busca input{display:block;margin-top:10px;width:min(100%,500px);font:inherit;padding:12px;border:1px solid #97723a;border-radius:4px;background:transparent;color:inherit}.analise-cards{padding:0;list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.analise-card{border:1px solid #b5a58a;border-radius:6px}.analise-card a{display:block;padding:24px;color:inherit;text-decoration:none;height:100%}.analise-card a:hover,.analise-card a:focus-visible{outline:2px solid #97723a;outline-offset:3px}.analise-card h2{font:600 1.55rem/1.2 Alegreya,Georgia,serif}.analise-card span{font-size:.8rem}.analise-card[hidden]{display:none}
+CSS = """.analise-shell{max-width:1180px;margin:0 auto;padding:32px 28px 64px;color:var(--ink,#211b16);overflow-wrap:anywhere}
+.analise-capa{max-width:900px;padding:24px 0 32px;border-bottom:2px solid #ad8b50}.analise-capa h1{font:600 clamp(2.2rem,5vw,3.8rem)/1.1 Alegreya,Georgia,serif;margin:8px 0 20px}.analise-capa p{line-height:1.65}.analise-kicker{text-transform:uppercase;letter-spacing:.12em;font-size:.75rem}.analise-estado{display:inline-block;border:1px solid #97723a;border-radius:4px;padding:6px 12px;font-weight:600}.analise-layout{display:grid;grid-template-columns:230px minmax(0,1fr);gap:48px;margin-top:32px}.analise-layout aside nav{position:sticky;top:20px}.analise-layout aside h2{font-size:1rem}.analise-layout aside ol{padding-left:18px;line-height:1.8;font-size:.9rem}.analise-layout article{min-width:0;max-width:820px}.analise-layout section{padding:8px 0 32px;border-bottom:1px solid #b5a58a;scroll-margin-top:24px}.analise-layout h2{font:600 1.8rem/1.2 Alegreya,Georgia,serif}.analise-layout h3{font-size:1.1rem;margin-top:24px}.analise-layout p,.analise-layout li{line-height:1.75}.analise-fonte{font-size:.86rem;color:var(--muted,#6b6051)}.analise-tabela{overflow-x:auto;margin:20px 0}.analise-tabela table{display:table;border-collapse:collapse;width:100%;font-size:.9rem;min-width:380px}.analise-tabela thead{display:table-header-group}.analise-tabela tbody{display:table-row-group}.analise-tabela tr{display:table-row}.analise-tabela th{white-space:nowrap;overflow-wrap:normal}.analise-tabela td{min-width:110px;overflow-wrap:break-word}.analise-tabela th,.analise-tabela td{display:table-cell;padding:12px;text-align:left;vertical-align:top;border-bottom:1px solid #b5a58a}.analise-acoes{display:flex;flex-wrap:wrap;gap:12px;align-items:center}.analise-acoes a,.analise-acoes button{font:inherit;color:inherit;border:1px solid #97723a;border-radius:4px;padding:8px 12px;background:transparent;cursor:pointer}.analise-shell code{overflow-wrap:anywhere;font-size:.8rem}.analise-pular{position:absolute;left:-9999px}.analise-pular:focus{position:static;padding:12px}.analise-busca{display:block;margin:28px 0;font-weight:600}.analise-busca input{display:block;margin-top:10px;width:min(100%,500px);font:inherit;padding:12px;border:1px solid #97723a;border-radius:4px;background:transparent;color:inherit}.analise-cards{padding:0;list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.analise-card{border:1px solid #b5a58a;border-radius:6px}.analise-card a{display:block;padding:24px;color:inherit;text-decoration:none;height:100%}.analise-card a:hover,.analise-card a:focus-visible{outline:2px solid #97723a;outline-offset:3px}.analise-card h2{font:600 1.55rem/1.2 Alegreya,Georgia,serif}.analise-card span{font-size:.8rem}.analise-card[hidden]{display:none}
 @media(max-width:800px){.analise-shell{padding:24px 18px}.analise-layout{display:block}.analise-layout aside nav{position:static}.analise-layout aside{margin-bottom:28px}.analise-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:480px){.analise-cards{grid-template-columns:1fr}.analise-acoes{display:block}.analise-acoes a,.analise-acoes button{display:inline-block;margin:4px}}
 @media print{.mast,.analise-layout aside,.analise-acoes,.analise-voltar,.analise-busca{display:none!important}.analise-shell{max-width:none;padding:0}.analise-layout{display:block}.analise-layout article{max-width:none}.analise-layout section{break-inside:auto}.analise-capa{max-width:none}.analise-tabela{overflow:visible}h2,h3{break-after:avoid}a{color:inherit}.analise-card{break-inside:avoid}}

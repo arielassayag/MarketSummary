@@ -52,6 +52,9 @@ def test_textos_e_urls_externos_sao_dados_nao_executaveis():
     assert "<script>alert" not in body and "<img src=x" not in body
     assert "&lt;script&gt;" in body and "&lt;img" in body
     assert 'href="javascript:' not in body
+    md = ta.markdown(ta.documentos(_arquivos(), {})[0])
+    assert "<script>" not in md and r"\<script\>" in md
+    assert "| Indicador | Valor no retrato | \n| --- | --- |" in md
 
 
 @pytest.mark.parametrize("iid", ["../livro", "A/B", "A.B", "", "x" * 65])
@@ -115,3 +118,20 @@ def test_paginas_completas_downloads_e_simulacao(tmp_path, monkeypatch):
         assert d["dados_simulados"] is True and d["endereco"] == r
         assert "DADOS SIMULADOS" in (tmp_path / r / "analise.md").read_text()
         assert 'href="analise.md" download' in (tmp_path / r / "index.html").read_text()
+
+
+def test_memoria_preserva_formulas_fontes_e_projecoes_do_codigo():
+    a = _arquivos()
+    modelos = json.loads(a["cobertura-modelo-1.json"])
+    m = modelos["modelos"]["BR_EMPRESA"]
+    m["passos"] = [{"t": "Conta conferida", "s": "Valor = insumo público",
+                    "r": "US$ 7,00", "fo": [0], "p": "Data do documento preservada"}]
+    m["metodos"] = [{"t": "Lucro residual", "colunas": [{"k": "roe", "t": "ROE"}],
+                     "projecao": [{"ano": 1, "roe": "12,0%"}], "terminal": "17%"}]
+    a["cobertura-modelo-1.json"] = json.dumps(modelos)
+    d = ta.documentos(a, {})[0]
+    body = ta.corpo(d)
+    assert "Valor = insumo público" in body and "US$ 7,00" in body
+    assert 'href="#fonte-0">M1</a>' in body and "<b>M1</b>" in body
+    assert "12,0%" in body and "17%" in body
+    assert "Data do documento preservada" in ta.markdown(d)

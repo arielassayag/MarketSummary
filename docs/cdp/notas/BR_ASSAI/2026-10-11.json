@@ -1,0 +1,208 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_ASSAI",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Assaí — produtividade, crédito fiscal e desalavancagem efetiva",
+  "resumo": "A hipótese é que maturação das lojas e produtividade permitam crescer com menor investimento incremental e reduzir dívida. A condição decisiva é gerar caixa recorrente depois de juros, aluguel e reposição, preservando a competitividade. Lucro fiscal, venda de imóveis com locação posterior e normalização hipotética de recebíveis não comprovam essa conversão. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_ASSAI.rating_codigo}}, com retorno esperado {{fact:val.BR_ASSAI.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Atacarejo que atende famílias e pequenos negócios com escala de compras, sortimento e giro de mercadorias. A rentabilidade depende de produtividade por loja, perdas, logística, preço e custo da ocupação. Lojas convertidas e recentes exigem maturação. Serviços, marcas próprias, canais digitais e farmácias ampliam a proposta comercial, mas têm investimentos e riscos próprios. A participação na FIC acrescenta exposição financeira sem equivaler a caixa de varejo.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que maturação das lojas e produtividade permitam crescer com menor investimento incremental e reduzir dívida. A condição decisiva é gerar caixa recorrente depois de juros, aluguel e reposição, preservando a competitividade. Lucro fiscal, venda de imóveis com locação posterior e normalização hipotética de recebíveis não comprovam essa conversão.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_ASSAI.preco}} e alvo {{fact:val.BR_ASSAI.preco_alvo}}, com potencial {{fact:val.BR_ASSAI.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_ASSAI.ke}} e retorno esperado {{fact:val.BR_ASSAI.etr}}.",
+      "evidencias": [
+        "val.BR_ASSAI.preco",
+        "val.BR_ASSAI.preco_alvo",
+        "val.BR_ASSAI.upside",
+        "val.BR_ASSAI.ke",
+        "val.BR_ASSAI.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Vendas comparáveis e efeito calendário; fluxo, tíquete, perdas e produtividade por loja; margem com e sem créditos e mudança tributária; recebíveis descontados, juros pagos, aluguel, manutenção e dívida absoluta. Distinguir caixa final de visão normalizada e receita operacional de venda de imóveis.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_ASSAI.ke}} e a dispersão entre métodos {{fact:val.BR_ASSAI.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_ASSAI.ke",
+        "val.BR_ASSAI.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Próximos resultados: testar caixa depois de juros, margem sem créditos e menor dívida efetiva.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "descricao": "Aprovação e implementação da cisão da FIC e maturação das novas frentes, sem data ou conclusão comprovada.",
+      "data": null,
+      "tipo": "regulatorio",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Concorrência, consumo fraco e despesas sensíveis ao atendimento podem reduzir retorno. Créditos fiscais têm realização própria; antecipações e venda com locação posterior podem sustentar liquidez sem criar caixa recorrente. Juros e compromissos de ocupação limitam distribuição.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_ASSAI.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_ASSAI.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Maturação, disponibilidade e produtividade sustentam margem sem benefícios excepcionais; caixa depois do custo completo reduz dívida sem comprometer manutenção. O cenário otimista calculado pelo código é {{fact:val.BR_ASSAI.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_ASSAI.preco_alvo}}, com retorno esperado {{fact:val.BR_ASSAI.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Despesas, juros e competição absorvem produtividade; a melhora contábil não chega ao acionista e a liquidez depende de antecipações ou alienações. O cenário pessimista calculado pelo código é {{fact:val.BR_ASSAI.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_ASSAI.preco}} e alvo do modelo aberto {{fact:val.BR_ASSAI.preco_alvo}}, com potencial {{fact:val.BR_ASSAI.upside}}. Retorno total esperado {{fact:val.BR_ASSAI.etr}} e custo do capital próprio {{fact:val.BR_ASSAI.ke}}. A dispersão entre métodos é {{fact:val.BR_ASSAI.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_ASSAI.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_ASSAI.consenso_alvo}}; a diferença {{fact:val.BR_ASSAI.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "O release mostra crescimento de vendas brutas e fluxo, com vendas comparáveis ajustadas pelo calendário. A margem bruta também reflete mudança de tributação; a margem operacional deve preservar o denominador. O lucro recorrente aumentou na comparação anual, enquanto o EBITDA sem créditos ficou ligeiramente menor. O fluxo livre gerencial acumulado aumentou e inclui alienação de imóveis com locação posterior; o caixa final depois de juros e proventos diminuiu no comparável anual. O índice gerencial de dívida recuou, com definição distinta da dívida contábil. Farmácias iniciais foram inauguradas após o trimestre; a expansão e a cisão da FIC permanecem dependentes de execução e aprovação nos materiais recebidos.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "O ITR contém revisão limitada sem modificação, que não certifica realização fiscal ou liquidez futura. O release informa índice contratual com definição distinta da alavancagem gerencial. A participação na FIC e sua cisão exigem atos próprios; anúncio não comprova aprovação regulatória. O acesso direto ao RI retornou bloqueio, preservado sem contorno; release e ITR públicos do emissor foram recebidos separadamente.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Escala, presença local e abastecimento podem sustentar preço e disponibilidade. A margem estreita exige eficiência em cada loja; fluxo maior com migração para itens baratos pode elevar despesas sem receita proporcional. Ganhos de participação citados no release provêm de base externa relatada pelo emissor, sem consulta independente ao conjunto subjacente.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "A alteração de tributação por substituição muda a relação entre receitas bruta e líquida e a comparação das margens. Créditos extemporâneos afetam lucro e EBITDA; atualização monetária também contribui ao resultado financeiro. A geração livre gerencial acumulada inclui venda de imóveis e precede juros e proventos. A visão normalizada dos recebíveis é uma sensibilidade, sem entrada adicional comprovada.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "A dívida gerencial deduz derivativos e inclui recebíveis descontados na alavancagem, com base operacional própria. O caixa final depois de juros e proventos foi positivo, porém menor no comparável anual, apesar do avanço do fluxo livre gerencial. Venda com locação posterior troca ativos por liquidez e compromissos futuros. Capex menor precisa preservar manutenção, maturação e retorno das novas frentes.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A escala pode aumentar complexidade e capital comprometido enquanto clientes reduzem a cesta. O EBITDA sem créditos ficou ligeiramente abaixo do comparável anual; lucro maior não resolve essa pressão. Se a redução da alavancagem depender de benefícios fiscais, alienações ou normalizações, a recuperação do valor por ação será mais frágil.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Vendas comparáveis e efeito calendário; fluxo, tíquete, perdas e produtividade por loja; margem com e sem créditos e mudança tributária; recebíveis descontados, juros pagos, aluguel, manutenção e dívida absoluta. Distinguir caixa final de visão normalizada e receita operacional de venda de imóveis.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_ASSAI.etr}}, custo do capital {{fact:val.BR_ASSAI.ke}} e dispersão entre métodos {{fact:val.BR_ASSAI.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_ASSAI.etr",
+        "val.BR_ASSAI.ke",
+        "val.BR_ASSAI.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+    "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+    "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+    "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "A ponte entre bases de aluguel, créditos tributários, derivativos e dívida não foi integralmente incorporada ao retrato de avaliação.",
+    "A utilização futura dos créditos fiscais exige cronograma e comprovação específica.",
+    "As bases externas de participação de mercado não foram consultadas independentemente.",
+    "O retorno de marcas próprias, farmácias e canais digitais permanece a comprovar.",
+    "A cisão da FIC e a situação regulatória posterior aos documentos exigem acompanhamento.",
+    "O RI direto não foi recebido; o estudo usa cópias públicas do release e do ITR.",
+    "Calendário atual completo, percepção do mercado e posicionamento não foram comprovados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Assaí",
+      "titulo": "Negócio e estratégia no release público do emissor",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/ec14f0ab-c5d4-4b12-a413-b6cc7475ed98/ecd60f65-8e70-bf69-5d12-d9615573ce8f?origin=2",
+      "publicado_em": "2026-08-06",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Assaí",
+      "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/ec14f0ab-c5d4-4b12-a413-b6cc7475ed98/ecd60f65-8e70-bf69-5d12-d9615573ce8f?origin=2",
+      "publicado_em": "2026-08-06",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Assaí",
+      "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/ec14f0ab-c5d4-4b12-a413-b6cc7475ed98/55d523cd-a95c-fcca-f9a6-26cbe35365b6?origin=2",
+      "publicado_em": "2026-08-06",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

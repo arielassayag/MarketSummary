@@ -5,7 +5,7 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-## Estado atual das teses — 11/10/2026, 14:16 Brasília
+## Estado atual das teses — 11/10/2026, 14:47 Brasília
 
 O portal `8aea3f1` está publicado e foi conferido independentemente: 241 páginas,
 233 empresas e oito ETFs; 727 arquivos HTTP200 com tamanho e SHA iguais ao
@@ -23,12 +23,22 @@ nenhum erro ou falha, 4.507 casos únicos. Ruff passou; os 4.875 arquivos fixado
 e o commit permaneceram idênticos. Não há soma de execuções focais sobrepostas
 nem promoção da qualificação de outra frente privada.
 
-O ramo documental `codex/cdp-pesquisa-lote-2` tem 190 rascunhos entregues e validados em conjunto: oito ETFs e empresas de diferentes países e setores.
+O ramo documental `codex/cdp-pesquisa-lote-2` tem 198 rascunhos entregues e validados em conjunto: oito ETFs e empresas de diferentes países e setores.
 O índice de lotes em [notas/README.md](notas/README.md) registra os ativos,
 fontes e limites relevantes. A conferência conjunta preservou a renderização
 das doze notas históricas e os 4.122 arquivos operacionais. Os textos mantêm
-visão neutra, baixa convicção e lacunas próprias. Há 39 ativos ainda sem nota
+visão neutra, baixa convicção e lacunas próprias. Há 31 ativos ainda sem nota
 publicada ou rascunho individual; cobertura qualitativa completa continua aberta.
+
+Assaí, GPA, Grupo Mateus, Magalu, Renner, C&A, Riachuelo e Azzas acrescentam
+análise de varejo e capital de giro. A homologação do GPA tem limites
+judiciais explícitos; a reorganização da Azzas continua condicional.
+As bases pro forma, reapresentações, antecipações e juros preservam suas
+definições. A redução do guidance de receita da Renner não se estende
+a métricas sem revisão comprovada. O conjunto de 198 rascunhos passou
+na conferência, preservando as doze renderizações históricas e os 4.122
+arquivos operacionais. Os testes documentais registraram 286 aprovados,
+um pulado, nenhum erro ou falha, em 287 casos únicos; Ruff passou.
 
 Os novos estudos incluem bancos e seguros mexicanos, imóveis e concessões,
 energia, metais e petroquímica. A análise distingue oferta autorizada e liquidada,

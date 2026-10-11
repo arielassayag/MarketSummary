@@ -97,7 +97,7 @@
     "pessimista": "Glosas, custo assistencial e expansão absorvem capital; dívida e obrigações regulatórias restringem retorno mesmo com EBITDA crescente. O cenário pessimista calculado pelo código é {{fact:val.BR_REDEDOR.alvo_pessimista}}."
   },
   "comentario_valuation": "Preço de referência {{fact:val.BR_REDEDOR.preco}} e alvo do modelo aberto {{fact:val.BR_REDEDOR.preco_alvo}}, com potencial {{fact:val.BR_REDEDOR.upside}}. Retorno total esperado {{fact:val.BR_REDEDOR.etr}} e custo do capital próprio {{fact:val.BR_REDEDOR.ke}}. A dispersão entre métodos é {{fact:val.BR_REDEDOR.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_REDEDOR.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_REDEDOR.consenso_alvo}}; a diferença {{fact:val.BR_REDEDOR.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
-  "ultimo_resultado": "No resultado recebido, hospitais e oncologia cresceram e ampliaram margem na comparação anual, com ajustes não recorrentes e pro forma identificados. SulAmérica registrou crescimento de receita e melhora anual da sinistralidade, mas piora sequencial desse indicador e redução sequencial do EBITDA. O release apresenta base anterior ao norma de seguros vigente e reconciliação ao padrão vigente; as análises separadas não incluem todas as eliminações entre empresas. O caixa operacional semestral consolidado das demonstrações, depois de juros e tributos, permaneceu positivo e caiu frente ao comparável anual. A dívida bruta e líquida cresceu apesar da redução sequencial do índice gerencial. Datas de referência da central não foram adotadas como datas de publicação; o relatório de revisão é datado em agosto.",
+  "ultimo_resultado": "No resultado recebido, hospitais e oncologia cresceram e ampliaram margem na comparação anual, com ajustes não recorrentes e pro forma identificados. SulAmérica registrou crescimento de receita e melhora anual da sinistralidade, mas piora sequencial desse indicador e redução sequencial do EBITDA. O release apresenta base anterior à norma de seguros vigente e reconciliação ao padrão vigente; as análises separadas não incluem todas as eliminações entre empresas. O caixa operacional semestral consolidado das demonstrações, depois de juros e tributos, permaneceu positivo e caiu frente ao comparável anual. A dívida bruta e líquida cresceu apesar da redução sequencial do índice gerencial. Datas de referência da central não foram adotadas como datas de publicação; o relatório de revisão é datado em agosto.",
   "guidance": "nd",
   "tom_gestao": "nd",
   "governanca": "A revisão intermediária da EY tem conclusão sem modificação e alcance menor que auditoria anual. Direitos de parceiros hospitalares, minoritários e capital regulatório precisam ser preservados. Proventos deliberados e pagamentos são estados próprios; a demonstração registra desembolsos de proventos e recompra no semestre. Não se certificou retorno incremental dos projetos nem disponibilidade de toda a carteira financeira para a controladora.",
@@ -111,7 +111,7 @@
   },
   "qualidade_resultados": {
     "titulo": "Recorrência e caixa",
-    "texto": "O release mantém base gerencial anterior ao norma de seguros vigente e indicadores separados não auditados. Ajustes hospitalares incluem eventos não recorrentes e participação pro forma. O EBITDA de seguros acrescido do rendimento de ativos vinculados não equivale ao caixa disponível. A demonstração consolidada apresenta caixa operacional semestral positivo, porém inferior ao comparável anual após juros e tributos.",
+    "texto": "O release mantém base gerencial anterior à norma de seguros vigente e indicadores separados não auditados. Ajustes hospitalares incluem eventos não recorrentes e participação pro forma. O EBITDA de seguros acrescido do rendimento de ativos vinculados não equivale ao caixa disponível. A demonstração consolidada apresenta caixa operacional semestral positivo, porém inferior ao comparável anual após juros e tributos.",
     "evidencias": [
       "F2",
       "F3"
@@ -165,7 +165,7 @@
     "Dívida absoluta, parceiros ou direitos de terceiros restringem alocação e distribuição."
   ],
   "lacunas_de_dados": [
-    "Bases norma de seguros vigente, ajustes hospitalares e visão gerencial não foram integralmente reconciliados ao modelo recebido.",
+    "Bases da norma de seguros vigente, ajustes hospitalares e visão gerencial não foram integralmente reconciliados ao modelo recebido.",
     "Disponibilidade por entidade, reservas, minoritários e obrigações de aquisição exigem ponte específica.",
     "Retorno e maturação de hospitais e projetos da parceria permanecem a comprovar.",
     "Índices gerenciais distintos não substituem leitura de todas as escrituras e testes contratuais.",

@@ -1,0 +1,236 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_MATEUS",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Grupo Mateus — integração, estoques reapresentados e retorno regional",
+  "resumo": "A hipótese é que densidade regional e integração logística recuperem produtividade e caixa sem outra expansão intensiva. A condição decisiva é conciliar estoques confiáveis, margem por formato e caixa depois de juros e aluguel. Receita consolidada maior por aquisição não comprova crescimento orgânico; redução de recebíveis por antecipação não equivale a melhor recebimento operacional. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_MATEUS.rating_codigo}}, com retorno esperado {{fact:val.BR_MATEUS.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Grupo regional com supermercados, atacarejo, atacado e serviços complementares, apoiado em logística própria e adaptação ao consumo local. A consolidação do Novo Atacarejo amplia presença e complexidade, com participações de terceiros. A produtividade depende do formato, abastecimento, giro e disciplina de preço. Expansão geográfica e farmácias precisam justificar capital, enquanto o canal de atacado tem dinâmica diferente da venda ao consumidor.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que densidade regional e integração logística recuperem produtividade e caixa sem outra expansão intensiva. A condição decisiva é conciliar estoques confiáveis, margem por formato e caixa depois de juros e aluguel. Receita consolidada maior por aquisição não comprova crescimento orgânico; redução de recebíveis por antecipação não equivale a melhor recebimento operacional.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_MATEUS.preco}} e alvo {{fact:val.BR_MATEUS.preco_alvo}}, com potencial {{fact:val.BR_MATEUS.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_MATEUS.ke}} e retorno esperado {{fact:val.BR_MATEUS.etr}}.",
+      "evidencias": [
+        "val.BR_MATEUS.preco",
+        "val.BR_MATEUS.preco_alvo",
+        "val.BR_MATEUS.upside",
+        "val.BR_MATEUS.ke",
+        "val.BR_MATEUS.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Vendas comparáveis por formato, atacado e região; integração e direitos do Novo Atacarejo; estoque, perdas e rastreabilidade dos custos; caixa após juros e aluguel, antecipações e manutenção. Acompanhar autuação fiscal, controles e remuneração em ações sem promover redução contábil do giro a caixa recebido.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_MATEUS.ke}} e a dispersão entre métodos {{fact:val.BR_MATEUS.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_MATEUS.ke",
+        "val.BR_MATEUS.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Próximos resultados: testar integração, vendas por formato, estoque e caixa depois de juros e aluguel.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "descricao": "Desenvolvimento da discussão fiscal e eficácia dos controles de custeio, sem desfecho ou data presumidos.",
+      "data": null,
+      "tipo": "regulatorio",
+      "direcao": "incerto",
+      "evidencias": [
+        "F3",
+        "F4"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Consumo, concorrência regional e estoques imprecisos podem reduzir margem e caixa. Integração e minoritários alteram retorno atribuível; autuação fiscal e expansão de sistemas exigem acompanhamento. Antecipações podem encobrir fragilidade de recebimento.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F4",
+        "F5"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_MATEUS.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_MATEUS.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Controles confiáveis, integração e densidade regional recuperam vendas e margem; menor expansão e manutenção adequada sustentam caixa recorrente. O cenário otimista calculado pelo código é {{fact:val.BR_MATEUS.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_MATEUS.preco_alvo}}, com retorno esperado {{fact:val.BR_MATEUS.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Vendas maduras e produtividade enfraquecem, novos ajustes e exposição fiscal ampliam incerteza e antecipações substituem a conversão operacional. O cenário pessimista calculado pelo código é {{fact:val.BR_MATEUS.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_MATEUS.preco}} e alvo do modelo aberto {{fact:val.BR_MATEUS.preco_alvo}}, com potencial {{fact:val.BR_MATEUS.upside}}. Retorno total esperado {{fact:val.BR_MATEUS.etr}} e custo do capital próprio {{fact:val.BR_MATEUS.ke}}. A dispersão entre métodos é {{fact:val.BR_MATEUS.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_MATEUS.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_MATEUS.consenso_alvo}}; a diferença {{fact:val.BR_MATEUS.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "A receita consolidada aumentou na comparação anual, com Novo Atacarejo somente na base atual; vendas comparáveis recuaram. EBITDA e lucro atribuível caíram anualmente e melhoraram sequencialmente. Comparativos foram reapresentados por ajustes de estoque, custos e tributos, preservando caixa anterior segundo o ITR. O ciclo de caixa piorou sequencialmente, com mais estoque, apesar do benefício de antecipação na carteira de recebíveis. O caixa operacional trimestral depois de juros permaneceu positivo e menor que o comparável anual; investimento e arrendamentos consumiram recursos. O comunicado de recompra tem metadado e corpo atuais, mas data final anterior, preservada como inconsistência da fonte.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "O ITR descreve revisão dos processos de custeio e implantação de sistema; declaração de melhoria não comprova eficácia futura dos controles. A revisão limitada sem modificação inclui os ajustes comparativos. A autuação da Armazém Mateus foi classificada preliminarmente como possível pelo emissor e assessores. Recompra encerrada para remuneração não comprova cancelamento ou redução permanente da base de ações.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Conhecimento regional, formatos e logística podem apoiar disponibilidade e custo entregue. A expansão para novos estados aumenta complexidade fiscal e controle de estoques. Competição de preço, perdas e diferença entre canais limitam a transferência de escala ao acionista. A posição relativa citada no perfil não foi comprovada independentemente.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Comparativos foram reapresentados por valorização dos estoques, custos e tributos; a revisão limitada analisou esses ajustes sem modificação. A base anual não consolida Novo Atacarejo, enquanto o período atual consolida. Vendas comparáveis incluem centros do atacado e não ajustam calendário. Antecipações influem no ciclo; caixa trimestral após juros ficou positivo e menor que o comparável.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Menor investimento em expansão coexistiu com maior manutenção, integração e compromissos de ocupação. Os fluxos distinguem aquisição, venda de imóveis, juros e arrendamentos. A recompra foi encerrada para atender remuneração em ações, sem equivaler a cancelamento de capital. A autuação da controlada tem classificação preliminar de perda possível informada pelo emissor, sem decisão final presumida.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F4",
+      "F5"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A aquisição eleva receita sem preservar comparabilidade; vendas maduras fracas e margem menor podem superar ganhos logísticos. Ajustes de estoque e antecipações mudam indicadores sem criar retorno. Se o controle contábil e a integração não sustentarem caixa após custo completo, a expansão regional não confirmará a tese.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F4",
+      "F5"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Vendas comparáveis por formato, atacado e região; integração e direitos do Novo Atacarejo; estoque, perdas e rastreabilidade dos custos; caixa após juros e aluguel, antecipações e manutenção. Acompanhar autuação fiscal, controles e remuneração em ações sem promover redução contábil do giro a caixa recebido.",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F4",
+        "F5"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_MATEUS.etr}}, custo do capital {{fact:val.BR_MATEUS.ke}} e dispersão entre métodos {{fact:val.BR_MATEUS.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_MATEUS.etr",
+        "val.BR_MATEUS.ke",
+        "val.BR_MATEUS.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+    "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+    "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+    "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "A comparabilidade econômica integral com Novo Atacarejo não foi incorporada retrospectivamente ao modelo.",
+    "Eficácia dos controles e rastreabilidade das correções exigem acompanhamento independente.",
+    "A conciliação de antecipações, recebíveis e índices contratuais permanece pendente.",
+    "O desfecho e a realização financeira da autuação fiscal não foram comprovados.",
+    "O comunicado de recompra tem data final divergente de corpo e metadado, sem correção da fonte.",
+    "Guidance agregado e retornos de projetos não foram qualificados integralmente.",
+    "Posição relativa, percepção e posicionamento do mercado não foram comprovados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo Mateus",
+      "titulo": "Negócio e materiais públicos do emissor",
+      "url": "https://www.grupomateus.com.br/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo Mateus",
+      "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/8ea287f8-ae0a-4b88-b20b-80c1f1b86a1e/759380ab-906c-cfb2-3d52-43e262f436d1?origin=2",
+      "publicado_em": "2026-08-13",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo Mateus",
+      "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/8ea287f8-ae0a-4b88-b20b-80c1f1b86a1e/bd4a2608-b719-c378-c9e6-048e239d0bab?origin=2",
+      "publicado_em": "2026-08-13",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F4",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo Mateus",
+      "titulo": "Autuação fiscal da Armazém Mateus: avaliação preliminar do emissor",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/8ea287f8-ae0a-4b88-b20b-80c1f1b86a1e/6eba9ca1-8cb5-0252-94d1-bd5a820cc9d9?origin=2",
+      "publicado_em": "2026-06-29",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F5",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo Mateus",
+      "titulo": "Encerramento de recompra: finalidade e datas divergentes",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/8ea287f8-ae0a-4b88-b20b-80c1f1b86a1e/87636176-0bef-5f87-a239-edda1c578cc9?origin=2",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

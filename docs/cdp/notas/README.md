@@ -1,5 +1,12 @@
 # Rascunhos de notas de pesquisa entregues fora do clone das rotinas
 
+- Varejo: Assaí, GPA, Grupo Mateus, Magalu, Renner, C&A, Riachuelo e Azzas.
+  As teses distinguem receita bruta e líquida, recomposição de estoque,
+  resultado ajustado, juros, arrendamentos e antecipações de recebíveis.
+  A homologação da recuperação extrajudicial do GPA preserva os limites
+  da decisão judicial; a cisão e permuta propostas da Azzas permanecem
+  condicionais. Renner tem redução explícita da projeção anual de receita.
+
 - Saúde: Rede D’Or, Hapvida, Fleury, Hypera, RD Saúde, Pague Menos e
   Oncoclínicas. As teses distinguem normas contábeis, medidas gerenciais,
   caixa após juros, reservas regulatórias e recebíveis de alienação.

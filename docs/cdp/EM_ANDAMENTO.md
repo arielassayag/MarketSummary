@@ -5,7 +5,7 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-## Estado atual das teses — 11/10/2026, 08:48 Brasília
+## Estado atual das teses — 11/10/2026, 09:30 Brasília
 
 O portal `8aea3f1` está publicado e foi conferido independentemente: 241 páginas,
 233 empresas e oito ETFs; 727 arquivos HTTP200 com tamanho e SHA iguais ao
@@ -13,7 +13,7 @@ manifesto público. Há doze narrativas publicadas e 229 análises preliminares;
 página disponível não equivale a pesquisa qualitativa concluída. A apresentação
 já foi examinada em desktop e celular, com quatorze capturas, sem erros de
 JavaScript ou transbordamento. O Pages concluiu em `38131073972`; a CI
-`38131073961` continua em execução na última consulta, sem certificação antecipada.
+`38131073961` concluiu com sucesso em 11/10, 09:20 Brasília.
 
 A extensão de notas de ETFs `bfb4187` concluiu a suíte completa: 4.489 aprovados,
 dezessete pulados e nenhum erro ou falha, 4.506 casos únicos. Ruff passou;
@@ -23,13 +23,20 @@ nenhum erro ou falha, 4.507 casos únicos. Ruff passou; os 4.875 arquivos fixado
 e o commit permaneceram idênticos. Não há soma de execuções focais sobrepostas
 nem promoção da qualificação de outra frente privada.
 
-O ramo documental `codex/cdp-pesquisa-lote-2` tem 93 rascunhos entregues e
+O ramo documental `codex/cdp-pesquisa-lote-2` tem 114 rascunhos entregues e
 validados em conjunto: oito ETFs e empresas de diferentes países e setores.
 O índice de lotes em [notas/README.md](notas/README.md) registra os ativos,
 fontes e limites relevantes. A conferência conjunta preservou a renderização
 das doze notas históricas e os 4.122 arquivos operacionais. Os textos mantêm
-visão neutra, baixa convicção e lacunas próprias. Há 136 ativos ainda sem nota
+visão neutra, baixa convicção e lacunas próprias. Há 115 ativos ainda sem nota
 publicada ou rascunho individual; cobertura qualitativa completa continua aberta.
+
+Os novos estudos incluem bancos e seguros mexicanos, imóveis e concessões,
+energia, metais e petroquímica. A análise distingue oferta autorizada e liquidada,
+reservas e produção, crescimento orgânico e aquisição, caixa restrito e recursos
+não sacados. As medidas por certificado, ação e equivalente metálico preservam
+suas bases; resultados de minoritários não são presumidos atribuíveis ao titular.
+Fatos posteriores ao trimestre não são incorporados retrospectivamente ao modelo.
 
 A pesquisa distingue resultado recorrente, medidas gerenciais, inflação, moeda,
 capital por entidade e recursos atribuíveis ao acionista. Reorganização anunciada,

@@ -1,0 +1,202 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_VESTA",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Vesta — desenvolvimento industrial e caixa depois de diluição e impostos",
+  "resumo": "A hipótese é que localização e execução do desenvolvimento sustentem contratos e caixa por ação depois de impostos, investimento e financiamento. Oferta de capital só cria valor se os projetos remuneram diluição e risco de locação. O potencial industrial exige contratos, entregas e retorno realizado, além de metas de expansão. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.MX_VESTA.rating_codigo}}, com retorno esperado {{fact:val.MX_VESTA.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Empresa mexicana que possui, desenvolve e administra imóveis industriais e centros de distribuição. Portfólio total, estabilizado e mesmos imóveis usam bases de ocupação diferentes. Ações ordinárias e recibos de depósito representam instrumentos distintos; a análise deve preservar a unidade coberta e o capital médio.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que localização e execução do desenvolvimento sustentem contratos e caixa por ação depois de impostos, investimento e financiamento. Oferta de capital só cria valor se os projetos remuneram diluição e risco de locação. O potencial industrial exige contratos, entregas e retorno realizado, além de metas de expansão.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.MX_VESTA.preco}} e alvo {{fact:val.MX_VESTA.preco_alvo}}, com potencial {{fact:val.MX_VESTA.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.MX_VESTA.ke}} e retorno esperado {{fact:val.MX_VESTA.etr}}.",
+      "evidencias": [
+        "val.MX_VESTA.preco",
+        "val.MX_VESTA.preco_alvo",
+        "val.MX_VESTA.upside",
+        "val.MX_VESTA.ke",
+        "val.MX_VESTA.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar locação e pré-locação, custo e entrega dos projetos, renda dos mesmos imóveis e manutenção. Conciliar FFO depois de impostos por ação, efeitos da emissão e instrumentos cobertos. Revisar quitação, custos financeiros, caixa após capex e remuneração atribuível.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.MX_VESTA.ke}} e a dispersão entre métodos {{fact:val.MX_VESTA.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.MX_VESTA.ke",
+        "val.MX_VESTA.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Divulgação de resultados prevista no calendário oficial; revisar projetos, caixa por ação e financiamento.",
+      "data": "2026-10-22",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F4"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Oferta de imóveis, atraso e custos de construção podem reduzir retorno do desenvolvimento. Impostos, dívida e diluição podem absorver renda crescente. Avaliações e ocupação agregada podem ocultar risco do conjunto de projetos e contribuição insuficiente por ação.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.MX_VESTA.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.MX_VESTA.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Entrega e locação rentável elevam caixa por ação depois de impostos e capex, com dívida e diluição conciliadas. O cenário otimista calculado pelo código é {{fact:val.MX_VESTA.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.MX_VESTA.preco_alvo}}, com retorno esperado {{fact:val.MX_VESTA.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Atrasos, vacância e custos absorvem expansão enquanto impostos e capital emitido pressionam retorno por ação. O cenário pessimista calculado pelo código é {{fact:val.MX_VESTA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.MX_VESTA.preco}} e alvo do modelo aberto {{fact:val.MX_VESTA.preco_alvo}}, com potencial {{fact:val.MX_VESTA.upside}}. Retorno total esperado {{fact:val.MX_VESTA.etr}} e custo do capital próprio {{fact:val.MX_VESTA.ke}}. A dispersão entre métodos é {{fact:val.MX_VESTA.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.MX_VESTA.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.MX_VESTA.consenso_alvo}}; a diferença {{fact:val.MX_VESTA.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "A análise distingue renda, valorização, FFO total e medida depois de impostos por ação. Captação e ações emitidas afetam a comparação. Quitação posterior tem documento próprio e não é incorporada retrospectivamente àquelas demonstrações ou presumida no modelo recebido.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Revisar direitos da ação e do recibo de depósito, incentivos de desenvolvimento e retornos após emissão. Decisões de financiamento devem considerar custo total da quitação e recursos necessários para o conjunto de projetos.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Parques e execução podem facilitar relacionamento e atender necessidades industriais. A vantagem exige testar locação, pré-locação, custo de construção e retenção frente à oferta concorrente. Projetos e rendimento projetado exigem confirmação de locação e retorno após os investimentos.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "O release mostra aumento da renda e do FFO total, enquanto FFO após impostos por ação tem trajetória distinta. Lucro inclui reavaliação de propriedades. Emissão altera a base de ações; ocupação total e estabilizada não são equivalentes, e investimento em imóveis deve ser separado de valorização.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "A oferta foi concluída e ampliou recursos e base de ações no trimestre. A quitação de financiamentos privados anunciada depois incluiu juros e custos de antecipação; não deve ser retroprojetada sobre o balanço semestral. Distribuição e flexibilidade dependem do caixa após desenvolvimento e obrigações.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se expansão e valorização não se convertem em caixa depois de impostos por ação. O capital captado pode elevar capacidade sem retorno que compense diluição, vacância e reinvestimento.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Acompanhar locação e pré-locação, custo e entrega dos projetos, renda dos mesmos imóveis e manutenção. Conciliar FFO depois de impostos por ação, efeitos da emissão e instrumentos cobertos. Revisar quitação, custos financeiros, caixa após capex e remuneração atribuível.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.MX_VESTA.etr}}, custo do capital {{fact:val.MX_VESTA.ke}} e dispersão entre métodos {{fact:val.MX_VESTA.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.MX_VESTA.etr",
+        "val.MX_VESTA.ke",
+        "val.MX_VESTA.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+    "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+    "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+    "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "FFO depois de impostos, lucro e fluxo por ação não foram integralmente conciliados.",
+    "Direitos, conversão dos recibos e bases médias de ações exigem reconciliação.",
+    "Retorno dos projetos, manutenção e custos de locação permanecem a comprovar.",
+    "Quitação posterior e caixa depois de capex não foram integralmente conciliados.",
+    "Guidance e tom da gestão não foram classificados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Vesta",
+      "titulo": "Informações e calendário de investidores",
+      "url": "https://ir.vesta.com.mx/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Vesta",
+      "titulo": "Resultado semestral de propriedades industriais",
+      "url": "https://ir.vesta.com.mx/news-events/press-releases/detail/151/corporacin-inmobiliaria-vesta-reports-second-quarter-2026-earnings-results",
+      "publicado_em": "2026-07-22",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Vesta",
+      "titulo": "Quitação antecipada de financiamentos privados",
+      "url": "https://ir.vesta.com.mx/news-events/press-releases/detail/155/vesta-repays-us105-million-of-private-debt-ahead-of-maturity",
+      "publicado_em": "2026-09-09",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F4",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Vesta",
+      "titulo": "Calendário de divulgação e conferência de resultados",
+      "url": "https://ir.vesta.com.mx/news-events/press-releases/detail/156/vesta-announces-third-quarter-2026-earnings-conference-call-and-webcast",
+      "publicado_em": "2026-09-28",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

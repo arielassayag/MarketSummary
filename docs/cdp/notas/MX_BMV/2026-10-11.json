@@ -1,0 +1,173 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_BMV",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Grupo BMV — infraestrutura de mercado, recorrência e investimento tecnológico",
+  "resumo": "A hipótese é que infraestrutura integrada e serviços de informação sustentem receita recorrente e monetização da atividade. Investimento tecnológico precisa preservar disponibilidade e gerar retorno depois de custos e reinvestimento. Crescimento dos mercados só cria valor se melhora caixa atribuível, sem depender de moeda ou rendimento das disponibilidades. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.MX_BMV.rating_codigo}}, com retorno esperado {{fact:val.MX_BMV.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Grupo de infraestrutura financeira mexicana com listagem e negociação, derivativos, corretagem, depósito, compensação e informação de mercado. Receitas transacionais dependem de atividade, enquanto subscrições têm dinâmica própria. Volume negociado, interesse aberto e valores em custódia não são receita nem ativos livres do grupo.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que infraestrutura integrada e serviços de informação sustentem receita recorrente e monetização da atividade. Investimento tecnológico precisa preservar disponibilidade e gerar retorno depois de custos e reinvestimento. Crescimento dos mercados só cria valor se melhora caixa atribuível, sem depender de moeda ou rendimento das disponibilidades.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.MX_BMV.preco}} e alvo {{fact:val.MX_BMV.preco_alvo}}, com potencial {{fact:val.MX_BMV.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.MX_BMV.ke}} e retorno esperado {{fact:val.MX_BMV.etr}}.",
+      "evidencias": [
+        "val.MX_BMV.preco",
+        "val.MX_BMV.preco_alvo",
+        "val.MX_BMV.upside",
+        "val.MX_BMV.ke",
+        "val.MX_BMV.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar receita por transação e por subscrição, retenção e preço, com volume separado de monetização. Revisar disponibilidade dos sistemas, despesas e retorno dos projetos tecnológicos. Conciliar capex, intangíveis, caixa recorrente, distribuição e atribuição por subsidiária, incluindo moeda e juros.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.MX_BMV.ke}} e a dispersão entre métodos {{fact:val.MX_BMV.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.MX_BMV.ke",
+        "val.MX_BMV.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Menor atividade, concorrência e pressão regulatória podem reduzir monetização. Incidentes operacionais e cibernéticos ameaçam retenção e custos. Investimento tecnológico, moeda e menor rendimento do caixa podem consumir margem e limitar remuneração.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.MX_BMV.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.MX_BMV.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Serviços recorrentes e monetização de atividade sustentam caixa após reinvestimento, com disponibilidade e retorno dos projetos. O cenário otimista calculado pelo código é {{fact:val.MX_BMV.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.MX_BMV.preco_alvo}}, com retorno esperado {{fact:val.MX_BMV.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Atividade e preço enfraquecem enquanto tecnologia, concorrência e incidentes consomem margem e caixa. O cenário pessimista calculado pelo código é {{fact:val.MX_BMV.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.MX_BMV.preco}} e alvo do modelo aberto {{fact:val.MX_BMV.preco_alvo}}, com potencial {{fact:val.MX_BMV.upside}}. Retorno total esperado {{fact:val.MX_BMV.etr}} e custo do capital próprio {{fact:val.MX_BMV.ke}}. A dispersão entre métodos é {{fact:val.MX_BMV.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.MX_BMV.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.MX_BMV.consenso_alvo}}; a diferença {{fact:val.MX_BMV.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "A análise distingue serviços, atividade e monetização e preserva cortes trimestrais e acumulados. Resultado financeiro tem descrições divergentes dentro do release, que não são corrigidas pela narrativa. Capex e distribuição são lidos no fluxo, sem converter EBITDA ou volume em caixa livre.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Revisar decisões de infraestrutura, segurança e continuidade, além de transações relacionadas, minoritários e distribuição. Mudanças regulatórias exigem fonte normativa própria; objetivos comerciais não são tratados como autorização ou receita contratada.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Conectividade, padrões operacionais e integração de serviços podem apoiar retenção. A vantagem precisa ser confrontada com concorrência entre ambientes, custos dos usuários e regulação. Base conectada ou maior volume não comprova poder de preço ou rentabilidade incremental dos projetos.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Maior atividade e subscrições acompanham despesas de pessoal, tecnologia e depreciação. Moeda e juros afetam comparações. O resumo e o corpo do release descrevem o resultado financeiro de formas distintas; a análise preserva essa lacuna. EBITDA não equivale a caixa livre e perímetros trimestrais e acumulados não são intercambiáveis.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Capex tecnológico, manutenção e intangíveis precisam ser separados de distribuição. O fluxo semestral registra dividendos e recompras e redução do caixa. Recebimentos de investimentos e venda de participação não são presumidos como recorrentes. Recursos operacionais, minoritários e obrigações devem ser reconciliados antes de avaliar excedente.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se maior atividade não compensa despesas e tecnologia, ou se a retenção exige reduzir preço. Caixa e distribuição podem depender de investimentos e efeitos temporários sem retorno econômico dos projetos.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Acompanhar receita por transação e por subscrição, retenção e preço, com volume separado de monetização. Revisar disponibilidade dos sistemas, despesas e retorno dos projetos tecnológicos. Conciliar capex, intangíveis, caixa recorrente, distribuição e atribuição por subsidiária, incluindo moeda e juros.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.MX_BMV.etr}}, custo do capital {{fact:val.MX_BMV.ke}} e dispersão entre métodos {{fact:val.MX_BMV.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.MX_BMV.etr",
+        "val.MX_BMV.ke",
+        "val.MX_BMV.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+    "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+    "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+    "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "Resultado financeiro no resumo e corpo do release exige conciliação.",
+    "Receita por volume, retenção e preço não foram integralmente reconciliados.",
+    "Retorno de tecnologia, manutenção e intangíveis permanece a comprovar.",
+    "Caixa recorrente, investimentos e distribuição por subsidiária exigem diligência completa.",
+    "Guidance, tom da gestão e catalisador futuro datado não foram classificados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo BMV",
+      "titulo": "Estrutura e serviços da infraestrutura de mercado",
+      "url": "https://blog.bmv.com.mx/glossary/grupo-bmv/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo BMV",
+      "titulo": "Resultado e comentários semestrais de Grupo BMV",
+      "url": "https://www.bmv.com.mx/docs-pub/reporteTrimestral/GBMV-doc-BMV_2T26_esp.pdf",
+      "publicado_em": "2026-07-21",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

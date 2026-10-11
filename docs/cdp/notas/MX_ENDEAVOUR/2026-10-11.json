@@ -1,0 +1,194 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_ENDEAVOUR",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Endeavour — maturação de minas, interrupções e custo econômico",
+  "resumo": "A hipótese é que maturação e escala industrial reduzam custo completo e transformem expansão em caixa por ação. O investimento depende de continuidade das minas, preservação de teor e retorno após manutenção, capital novo e impostos. Preços elevados e capacidade instalada não resolvem esse teste de remuneração. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.MX_ENDEAVOUR.rating_codigo}}, com retorno esperado {{fact:val.MX_ENDEAVOUR.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Produtora de prata com Guanaceví, Terronera e Kolpa no México e Peru, além de projetos de exploração. A maturação de Terronera, a aquisição de Kolpa e a venda de Bolañitos alteram comparações. Produção total, metal pagável e prata equivalente têm conceitos e unidades distintos.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que maturação e escala industrial reduzam custo completo e transformem expansão em caixa por ação. O investimento depende de continuidade das minas, preservação de teor e retorno após manutenção, capital novo e impostos. Preços elevados e capacidade instalada não resolvem esse teste de remuneração.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.MX_ENDEAVOUR.preco}} e alvo {{fact:val.MX_ENDEAVOUR.preco_alvo}}, com potencial {{fact:val.MX_ENDEAVOUR.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.MX_ENDEAVOUR.ke}} e retorno esperado {{fact:val.MX_ENDEAVOUR.etr}}.",
+      "evidencias": [
+        "val.MX_ENDEAVOUR.preco",
+        "val.MX_ENDEAVOUR.preco_alvo",
+        "val.MX_ENDEAVOUR.upside",
+        "val.MX_ENDEAVOUR.ke",
+        "val.MX_ENDEAVOUR.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar disponibilidade, teor, recuperação e produção pagável por mina, com equivalência homogênea. Revisar custo total e manutenção, operação após bloqueio e reparo de Guanaceví. Conciliar impostos, derivativos, inventários, conversíveis e caixa por ação após expansão.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.MX_ENDEAVOUR.ke}} e a dispersão entre métodos {{fact:val.MX_ENDEAVOUR.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.MX_ENDEAVOUR.ke",
+        "val.MX_ENDEAVOUR.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Divulgação financeira e atualização de metas previstas pela companhia; revisar interrupções, custos e caixa.",
+      "data": "2026-11-09",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Bloqueios, reparos e diluição de minério podem impedir escala rentável. Moeda, royalties e preço de materiais de terceiros pressionam custos. Conversíveis e reinvestimento podem absorver lucro, enquanto perímetros e equivalência ocultam desempenho comparável.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.MX_ENDEAVOUR.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.MX_ENDEAVOUR.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Continuidade e recuperação industrial elevam caixa depois de custos completos, manutenção e financiamento. O cenário otimista calculado pelo código é {{fact:val.MX_ENDEAVOUR.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.MX_ENDEAVOUR.preco_alvo}}, com retorno esperado {{fact:val.MX_ENDEAVOUR.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Interrupções e custos absorvem a receita dos metais enquanto reparos e financiamento limitam retorno por ação. O cenário pessimista calculado pelo código é {{fact:val.MX_ENDEAVOUR.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.MX_ENDEAVOUR.preco}} e alvo do modelo aberto {{fact:val.MX_ENDEAVOUR.preco_alvo}}, com potencial {{fact:val.MX_ENDEAVOUR.upside}}. Retorno total esperado {{fact:val.MX_ENDEAVOUR.etr}} e custo do capital próprio {{fact:val.MX_ENDEAVOUR.ke}}. A dispersão entre métodos é {{fact:val.MX_ENDEAVOUR.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.MX_ENDEAVOUR.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.MX_ENDEAVOUR.consenso_alvo}}; a diferença {{fact:val.MX_ENDEAVOUR.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "A atualização prevê produção anual próxima ou abaixo do limite inferior e revisão de metas no resultado seguinte. Não é orientação revisada completa ou resultado financeiro daquele trimestre. Reparo esperado e resolução do bloqueio não certificam disponibilidade sustentável; as bases das comparações são preservadas.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Revisar estrutura dos conversíveis, incentivos de desenvolvimento, transações de aquisição e venda e compromissos com comunidades. Direitos e obrigações por entidade precisam ser conciliados com retorno e risco do acionista.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Experiência e base de ativos podem favorecer aprendizado e reposição mineral. A vantagem exige disponibilidade, recuperação e custo homogêneo, sem promover expansão de planta a retorno comprovado. Comparações em prata equivalente dependem de relações de conversão que mudaram entre períodos.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "O release separa caixa das minas antes de impostos e caixa operacional antes de capital de giro. Derivativos e ações recebidas na venda de ativo afetam lucro. Comparações incluem perímetros e equivalências diferentes. A atualização seguinte relata bloqueio em Terronera e menor capacidade de Guanaceví, sem demonstração financeira nova.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "A expansão de Kolpa e a maturação de Terronera precisam remunerar capex e financiamento. Instrumentos conversíveis exigem juros, diluição e termos completos, e ações recebidas por desinvestimento não são caixa. Reparos planejados e retomada de capacidade dependem de execução comprovada.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se capacidade e metais mais caros sustentam lucro sem redução de custo completo. Novas minas e expansão podem aumentar necessidades de capital e risco operacional antes de gerar retorno por ação.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Acompanhar disponibilidade, teor, recuperação e produção pagável por mina, com equivalência homogênea. Revisar custo total e manutenção, operação após bloqueio e reparo de Guanaceví. Conciliar impostos, derivativos, inventários, conversíveis e caixa por ação após expansão.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.MX_ENDEAVOUR.etr}}, custo do capital {{fact:val.MX_ENDEAVOUR.ke}} e dispersão entre métodos {{fact:val.MX_ENDEAVOUR.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.MX_ENDEAVOUR.etr",
+        "val.MX_ENDEAVOUR.ke",
+        "val.MX_ENDEAVOUR.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+    "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+    "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+    "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "Fontes foram consultadas publicamente, mas downloads separados foram recusados e não há cópias locais recebidas.",
+    "Custos completos, equivalências e perímetros exigem reconciliação integral.",
+    "Reparo de Guanaceví e continuidade após bloqueio não foram comprovados.",
+    "Conversíveis, derivativos e caixa depois de impostos e capex permanecem a conciliar.",
+    "Guidance revisado completo e tom da gestão ainda não foram classificados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Endeavour Silver",
+      "titulo": "Central oficial de notícias e operações",
+      "url": "https://edrsilver.com/news-media/news/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Endeavour Silver",
+      "titulo": "Resultado e reconciliações semestrais",
+      "url": "https://edrsilver.com/news-media/news/endeavour-silver-announces-q2-2026-financial-resul-15366/",
+      "publicado_em": "2026-07-29",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Endeavour Silver",
+      "titulo": "Produção, interrupções e perspectiva de revisão de metas",
+      "url": "https://edrsilver.com/news-media/news/endeavour-silver-produces-2-096-545-oz-silver-and-15494/",
+      "publicado_em": "2026-10-08",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

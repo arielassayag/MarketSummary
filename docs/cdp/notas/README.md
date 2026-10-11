@@ -158,6 +158,26 @@ histórica. A análise da Cemig não incorpora mudança de controle não confirm
   reestruturação posteriores ao trimestre. Projeções com direções diferentes
   não são classificadas como melhora uniforme de guidance.
 
+- `LA_BLADEX` e `PE_IFS`: intermediação e comércio exterior, capital e crédito
+  por negócio. Caixa bancário e recursos das controladas não são presumidos
+  disponíveis ao acionista; retorno e financiamento precisam ter bases compatíveis.
+- `MX_BAJIO`, `MX_REGIONAL`, `MX_INBURSA`, `MX_GENTERA`, `MX_QUALITAS` e
+  `MX_BMV`: crédito, capital, seguros e infraestrutura de mercado. Safras de
+  crédito, qualidade da carteira, reservas, resultado de investimentos e volumes
+  negociados exigem reconciliações próprias; lucro maior não comprova risco menor.
+- `MX_FIBRAPL`, `MX_FMTY`, `MX_FUNO`, `MX_VESTA`, `MX_PINFRA` e `MX_GCC`:
+  renda imobiliária, direitos por certificado, concessões e materiais. Oferta
+  autorizada não comprova liquidação; aquisição no período não tem a mesma base
+  temporal de todos os certificados emitidos. Transferência de receitas e ativos,
+  incentivos, recursos não sacados e capex estratégico permanecem distintos.
+- `MX_VISTA`, `MX_TERNIUM`, `MX_GMEXICO`, `MX_PENOLES`, `MX_FIRSTMAJ`,
+  `MX_ENDEAVOUR` e `MX_ALPEK`: energia, metais e petroquímica. Reservas não
+  são produção; caixa gerencial antes de aquisições, resultado ajustado e caixa
+  livre atribuível têm perímetros diferentes. Misturas de períodos, custo por
+  equivalente metálico, minoritários e eventos posteriores ao trimestre ficam
+  explícitos. Comunicados da First Majestic e Endeavour Silver foram consultados
+  na fonte, mas o download separado foi recusado, sem cópia local recebida.
+
 Todos são rascunhos com hipóteses próprias, contraponto, indicadores e lacunas.
 Mesmo a consulta do último release não encerra a reconciliação financeira com o
 modelo, a comparação competitiva e a diligência do capital. Nenhum dado externo

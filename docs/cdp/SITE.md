@@ -80,6 +80,13 @@ artifact do claude.ai continua como espelho privado opcional, nunca publicado po
   arquivos `cobertura*.json` ao lado da página — universo, tabela de cobertura, ficha do ativo
   com o modelo aberto (memória de cálculo, insumos com fonte e data, cenários, sensibilidade),
   histórico de acertos e metodologia de avaliação.
+- **Teses e análises por ativo**: índice pesquisável em `ativos/` e uma página estática
+  em `ativos/<iid-em-minusculas>/` para cada empresa e ETF do retrato publicado. Cada página
+  reúne a narrativa publicada, quando existente, a visão do modelo, cenários, premissas,
+  condições de qualidade, fontes e diligências. A data da nota permanece distinta da data
+  do modelo. Sem nota específica, o estado é **Análise quantitativa preliminar**.
+  Downloads `analise.md` e `analise.json`, impressão, links da ficha de cobertura, endereços
+  canônicos, sitemap e hashes fazem parte da mesma montagem. Ver [Teses por ativo](TESES_ATIVOS.md).
 - **Antes da carteira inaugural**: cada aba da carteira mostra um aviso institucional com a data
   da carteira inaugural; Mandato e metodologia, Cobertura de ativos e Pesquisa quantitativa já
   ficam completos.

@@ -91,6 +91,8 @@ prepare`). Fatos de outros emissores só dos pares; câmbio, juros, índices e E
 | `comentario_valuation` | leitura do modelo aberto |
 | `ultimo_resultado`, `guidance`, `tom_gestao` | `pos_resultado` exige `ultimo_resultado` e `guidance` avaliado |
 | `governanca`, `o_que_mudou`, `gatilhos_revisao`, `lacunas_de_dados` | texto |
+| `posicao_competitiva`, `qualidade_resultados`, `alocacao_capital`, `percepcao_variante`, `contratese` | opcionais; mesmo formato e limites de um pilar (`titulo`, `texto`, `evidencias`) |
+| `indicadores_monitoramento` | opcional; até 6 itens no formato de um pilar |
 | `stance`, `conviccao` | inteiros −2…+2 e 1…5 |
 | `fontes` | até 20: `id` (F1…F20), `tipo`, `instituicao`, `titulo` (sem números), `url` https, `publicado_em` |
 | `modelo_ia` | opcional, governança: o modelo de IA usado (registrado, nunca exibido no texto) |
@@ -105,6 +107,7 @@ prepare`). Fatos de outros emissores só dos pares; câmbio, juros, índices e E
 - Fatos de emissor fora dos pares; em pilares, vetores, catalisadores e riscos, todo fato citado
   no texto precisa estar nas `evidencias` do item, e toda evidência precisa ser um fato do
   FactBook ou uma fonte declarada.
+  Os complementos de tese têm as mesmas verificações de texto, fatos e evidências.
 - Fontes: URL https com domínio público (nunca endereço IP, `localhost`, rede local, intranet
   ou domínio de teste); publicação não posterior à nota (sem look-ahead); fontes `regulatorio` e
   `bolsa` só com URL do domínio oficial (CVM, agências e BCB sob gov.br; sec.gov e finra.org;
@@ -139,6 +142,10 @@ proprietário: qualquer pessoa consegue abrir cada fonte citada.
   fazem a entrada e a saída da execução.
 - Nota escrita fora do clone das rotinas: rascunho em `docs/cdp/notas/<IID>/<data>.json`
   (`docs/cdp/notas/README.md`).
+- As páginas dedicadas do portal incorporam o conteúdo integral da última nota publicada
+  compatível com a data do retrato, junto ao modelo aberto. Os complementos opcionais ampliam
+  a pesquisa futura; não alteram notas históricas nem fazem uma análise preliminar virar
+  uma tese concluída. Estrutura e referências: [Teses por ativo](TESES_ATIVOS.md).
 - Qualquer assistente de IA: `cdp mente pacote --etapa nota` exporta o pacote autocontido
   (`docs/cdp/REPRODUZIR.md`); o JSON devolvido é validado por `validate-nota`, como o da rotina.
 

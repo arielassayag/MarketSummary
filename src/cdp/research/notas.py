@@ -38,7 +38,7 @@ from .prompts import ESTILO_REGRAS
 
 NOTA_SCHEMA = "cdp.nota/v1"
 NOTA_PUBLICADA_SCHEMA = "cdp.nota.publicada/v1"
-NOTA_PROMPT_VERSION = "cdp-nota-2026-10-06.2"
+NOTA_PROMPT_VERSION = "cdp-nota-2026-10-11.1"
 
 MAX_TITULO = 160
 MAX_RESUMO = 1200
@@ -204,6 +204,12 @@ class NotaEmpresa(_Strict):
     guidance: Guidance = "nd"
     tom_gestao: TomGestao = "nd"
     governanca: str = Field(..., min_length=1, max_length=MAX_GOVERNANCA)
+    posicao_competitiva: PilarTese | None = None
+    qualidade_resultados: PilarTese | None = None
+    alocacao_capital: PilarTese | None = None
+    percepcao_variante: PilarTese | None = None
+    contratese: PilarTese | None = None
+    indicadores_monitoramento: list[PilarTese] = Field(default_factory=list, max_length=6)
     o_que_mudou: str | None = Field(None, max_length=MAX_MUDOU)
     gatilhos_revisao: list[Gatilho] = Field(..., min_length=1, max_length=6)
     lacunas_de_dados: list[Lacuna] = Field(default_factory=list, max_length=8)
@@ -217,6 +223,12 @@ class NotaEmpresa(_Strict):
 
 
 NOTE_RULES: tuple[str, ...] = (
+    "Para uma tese aprofundada, preencha, quando houver evidência específica, posicao_competitiva, "
+    "qualidade_resultados, alocacao_capital, percepcao_variante, contratese e indicadores_monitoramento. "
+    "Cada seção usa titulo, texto e evidencias como um pilar. Diga o que deve ocorrer e o que "
+    "invalidaria a visão. Não apresente uma hipótese de diligência como fato do emissor; "
+    "sem evidência, mantenha o campo ausente e registre a lacuna. Consenso público não prova "
+    "o que está precificado. Indicadores numéricos e limiares só como fatos disponíveis.",
     "Números apenas como {{fact:<id>}} copiados das tabelas deste arquivo. Datas AAAA-MM-DD, "
     "anos, rótulos de trimestre (ex.: 3T26) e ordinais são permitidos; percentuais, valores, "
     "múltiplos e contagens com algarismos (ou por extenso, como 'por cento') não são.",
@@ -274,6 +286,12 @@ FIELD_GUIDE: tuple[tuple[str, str], ...] = (
                                                f"{MAX_RESULTADO}) e dois juízos ordinais"),
     ("governanca", f"controle, free float, partes relacionadas, alocação de capital, até "
                    f"{MAX_GOVERNANCA}"),
+    ("posicao_competitiva, qualidade_resultados, alocacao_capital, percepcao_variante, contratese",
+     "complementos opcionais da tese: cada um com titulo, texto e evidencias, nos limites "
+     "de um pilar; preencher só quando houver suporte público específico; lacunas explícitas "
+     "quando não houver. A percepção variante exige evidência do contraponto de mercado"),
+    ("indicadores_monitoramento", "até seis complementos com titulo, texto e evidencias; "
+     "acompanhar a hipótese e seus critérios de invalidação, sem inventar números ou limiares"),
     ("o_que_mudou", f"o que mudou desde a nota anterior (obrigatório fora da iniciação), até "
                     f"{MAX_MUDOU}"),
     ("gatilhos_revisao", f"um a seis, cada um até {MAX_GATILHO}"),
@@ -420,6 +438,10 @@ def _item_texts(nota: NotaEmpresa) -> list[tuple[str, str, list[str] | None]]:
         out.append((f"catalisadores[{i}].descricao", c.descricao, list(c.evidencias)))
     for i, r in enumerate(nota.riscos):
         out.append((f"riscos[{i}].texto", r.texto, list(r.evidencias)))
+    for nome, itens in _complementos(nota):
+        for i, item in enumerate(itens):
+            out += [(f"{nome}[{i}].titulo", item.titulo, list(item.evidencias)),
+                    (f"{nome}[{i}].texto", item.texto, list(item.evidencias))]
     out += [("cenarios.otimista", nota.cenarios.otimista, None),
             ("cenarios.base", nota.cenarios.base, None),
             ("cenarios.pessimista", nota.cenarios.pessimista, None),
@@ -517,14 +539,30 @@ def verify_nota(nota: NotaEmpresa, fb: FactBook, ctx: ContextoNota) -> list[str]
         uncited = [fid for fid in cited if evid is not None and fid not in evid]
         if uncited:
             issues.append(f"{path}: fato usado no texto sem estar em evidencias {uncited}")
-    for group, items in (("pilares_tese", nota.pilares_tese), ("vetores", nota.vetores),
-                         ("catalisadores", nota.catalisadores), ("riscos", nota.riscos)):
+    for group, items in [("pilares_tese", nota.pilares_tese), ("vetores", nota.vetores),
+                        ("catalisadores", nota.catalisadores), ("riscos", nota.riscos),
+                        *_complementos(nota)]:
         for i, it in enumerate(items):
             bad = [e for e in it.evidencias
                    if e not in fonte_ids and not _fact_allowed(fb, e, ctx)]
             if bad:
                 issues.append(f"{group}[{i}].evidencias: inexistentes ou fora dos pares {bad}")
     return list(dict.fromkeys(issues))
+
+
+COMPLEMENTOS_TESE = {
+    "posicao_competitiva": "Indústria e posição competitiva",
+    "qualidade_resultados": "Qualidade dos resultados e geração de caixa",
+    "alocacao_capital": "Alocação de capital e financiamento",
+    "percepcao_variante": "Debate de investimento e percepção variante",
+    "contratese": "Contratese e evidência que invalida a visão",
+    "indicadores_monitoramento": "Indicadores de acompanhamento",
+}
+
+
+def _complementos(nota: NotaEmpresa) -> list[tuple[str, list[PilarTese]]]:
+    return [(nome, value if isinstance(value, list) else [value])
+            for nome in COMPLEMENTOS_TESE if (value := getattr(nota, nome))]
 
 
 # ==========================================================
@@ -715,7 +753,7 @@ def render_nota(nota: NotaEmpresa, fb: FactBook, ctx: ContextoNota, *, autoria: 
                 out.append({"fato": e, "valor": fb.facts[e].formatted, "nome": fb.facts[e].name})
         return out
 
-    return {
+    rendered = {
         "issuer_id": ctx.issuer_id, "nome": ctx.nome, "pais": ctx.pais_pt,
         "setor": ctx.setor_pt, "data": ctx.data.isoformat(), "dados_ate": ctx.dados_ate.isoformat(),
         "tipo": nota.tipo, "tipo_pt": TIPO_PT[nota.tipo], "autoria": autoria,
@@ -753,6 +791,10 @@ def render_nota(nota: NotaEmpresa, fb: FactBook, ctx: ContextoNota, *, autoria: 
         "dados_simulados": ctx.is_synthetic,
         "aviso": SYNTHETIC_DISCLAIMER if ctx.is_synthetic else DISCLAIMER,
     }
+    for nome, itens in _complementos(nota):
+        rendered[nome] = [{"titulo": _r(p.titulo, fb), "texto": _r(p.texto, fb),
+                           "evidencias": ev(p.evidencias)} for p in itens]
+    return rendered
 
 
 def _md_cell(text: object) -> str:
@@ -795,6 +837,11 @@ def render_markdown(r: Mapping[str, Any]) -> str:
         L += ["## Último resultado", "", r["ultimo_resultado"], "",
               f"Guidance: {r['guidance']}. Tom da gestão: {r['tom_gestao']}.", ""]
     L += ["## Governança", "", r["governanca"], ""]
+    for nome, titulo in COMPLEMENTOS_TESE.items():
+        if r.get(nome):
+            L += [f"## {titulo}", ""]
+            for p in r[nome]:
+                L += [f"**{p['titulo']}.** {p['texto']}", ""]
     if r.get("o_que_mudou"):
         L += ["## O que mudou", "", r["o_que_mudou"], ""]
     L += ["## Gatilhos de revisão", ""] + [f"- {g}" for g in r["gatilhos_revisao"]] + [""]

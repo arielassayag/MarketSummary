@@ -734,6 +734,7 @@ def _rodape_painel(cfg: Mapping[str, Any], commit: str | None, agora: datetime) 
 <p class="prose">Todos os números deste portal são calculados por código aberto a partir de dados
 públicos e podem ser conferidos por qualquer pessoa, arquivo por arquivo.</p>
 <ul class="lk">
+<li><a href="ativos/">Teses e análises de todas as empresas e ETFs</a></li>
 <li><a href="dados/">Dados abertos e auditoria</a></li>
 <li>{codigo}</li>
 <li><a href="manifest.json">Manifesto da publicação</a> e <a href="SHA256SUMS">códigos de verificação</a></li>
@@ -811,6 +812,7 @@ def _pagina(cfg: Mapping[str, Any], *, titulo: str, descricao: str, canonico: st
             f'<span><b>CABRA DA PESTE</b><small>Carteira simulada long/short · ações da América '
             f'Latina · USD</small></span></a>'
             f'<nav class="nav" aria-label="Portal"><a href="{raiz_rel or "./"}">Painel</a>'
+            f'<a href="{raiz_rel}ativos/">Teses e análises</a>'
             f'<a href="{raiz_rel}dados/">Dados abertos</a>'
             f'<a href="https://github.com/{esc(cfg["repositorio"])}">Código</a></nav>'
             "</div></header>\n")
@@ -1040,14 +1042,23 @@ def construir(rt: Any, op: Opcoes) -> dict[str, Any]:
             warnings.simplefilter("ignore")
             dados = dados_do_painel(rt, agora, commit=commit)
         meta = dados.get("meta") or {}
+        # Só o site montado oferece as rotas estáticas; artifacts locais não ganham links mortos.
+        from .workflow.painel import data_hash
+
+        meta["teses_url"] = "ativos/"
+        meta["data_hash"] = data_hash(dados)
         demo = op.demo or bool(meta.get("is_synthetic"))
         indexar = bool(cfg.get("indexar", True)) and not op.noindex and not demo
         # 1) painel: dados, estilo, script e módulos versionados, dados da cobertura, página
         _gravar(saida / "data.json", dump_publicacao(dados))
         for nome, texto in page_assets().items():
             _gravar(saida / nome, texto)
-        for nome, texto in arquivos_cobertura(rt, perfil="site", painel=dados).items():
+        cobertura_site = arquivos_cobertura(rt, perfil="site", painel=dados)
+        for nome, texto in cobertura_site.items():
             _gravar(saida / nome, texto)
+        # Documentos de pesquisa são uma projeção de leitura, nunca uma publicação no livro.
+        paginas_ativos = construir_analises(rt, cobertura_site, cfg, saida, indexar=indexar,
+                                           demo=demo, commit=commit, agora=agora)
         estaticos = raiz / ESTATICOS
         if estaticos.is_dir():
             for p in sorted(estaticos.iterdir()):
@@ -1099,7 +1110,8 @@ def construir(rt: Any, op: Opcoes) -> dict[str, Any]:
         base = cfg["base_url"]
         regra = "Allow: /" if indexar else "Disallow: /"
         _gravar(saida / "robots.txt", f"User-agent: *\n{regra}\nSitemap: {base}/sitemap.xml\n")
-        urls = [f"{base}/", f"{base}/dados/"] + [
+        urls = [f"{base}/", f"{base}/dados/", f"{base}/ativos/"] + [
+            f"{base}/{rota}" for rota in paginas_ativos] + [
             f"{base}/{a.destino}" for a in arquivos if a.destino.endswith("/relatorio.html")]
         lastmod = agora.astimezone(UTC).strftime("%Y-%m-%dT%H:%M:%S+00:00")
         sm = ['<?xml version="1.0" encoding="UTF-8"?>',
@@ -1129,10 +1141,51 @@ def construir(rt: Any, op: Opcoes) -> dict[str, Any]:
         return {"saida": saida.as_posix(), "arquivos": len(mapa) + 2, "bytes": total,
                 "source_commit": commit, "agora": agora.isoformat(), "dados_simulados": demo,
                 "indexado": indexar, "verificacao": verificacao["resultado"],
+                "paginas_de_ativos": len(paginas_ativos),
                 "downloads": len(arquivos), "data_json_bytes": (saida / "data.json").stat().st_size}
     finally:
         if tmp is not None:
             tmp.cleanup()
+
+
+def construir_analises(rt: Any, cobertura: Mapping[str, str], cfg: Mapping[str, Any],
+                      saida: Path, *, indexar: bool, demo: bool, commit: str | None,
+                      agora: datetime) -> list[str]:
+    """HTML e documentos por ativo; somente fontes já conferidas da cobertura e notas."""
+    from .workflow import teses_ativos as ta
+    from .workflow.painel_publicacao import expandir
+
+    principal = expandir(json.loads(cobertura.get("cobertura.json", "{}")))
+    meta = principal.get("meta") or {}
+    notas = ta.carregar_notas(rt, meta["as_of"]) if meta.get("estado") == "publicado" else {}
+    docs = ta.documentos(cobertura, notas) if "cobertura.json" in cobertura else []
+    _gravar(saida / "teses.css", ta.CSS)
+    _gravar(saida / "teses.js", ta.JS)
+
+    def pagina(titulo: str, descricao: str, rota: str, body: str, rel: str) -> str:
+        texto = _pagina(cfg, titulo=titulo, descricao=descricao,
+                        canonico=cfg["base_url"] + "/" + rota, indexar=indexar,
+                        raiz_rel=rel, corpo=body, demo=demo, tem_og=False)
+        return texto.replace("</head>", f'<link rel="stylesheet" href="{rel}teses.css">\n</head>') \
+            .replace("</body>", f'<script src="{rel}teses.js" defer></script>\n</body>')
+
+    _gravar(saida / "ativos/index.html", pagina(
+        "Teses e análises de investimento · " + cfg["titulo_curto"],
+        "Pesquisa por empresa e ETF, com visão de investimento, valuation, riscos e fontes.",
+        "ativos/", ta.indice(docs), "../"))
+    rotas = []
+    for doc in docs:
+        rota, u = doc["endereco"], doc["ativo"]
+        rotas.append(rota)
+        body = ta.corpo(doc) + f'<footer class="analise-shell"><p>Versão do código: {esc(commit or "não identificada")} · publicação do portal {agora.astimezone(FUSO):%d/%m/%Y %H:%M} (Brasília).</p></footer>'
+        _gravar(saida / rota / "index.html", pagina(
+            u["nome"] + " — tese e análise · " + cfg["titulo_curto"],
+            "Tese, análise dos modelos, cenários, riscos e fontes de " + u["nome"] + ".",
+            rota, body, "../../"))
+        _gravar(saida / rota / "analise.md", ta.markdown(doc))
+        _gravar(saida / rota / "analise.json", json.dumps(doc, ensure_ascii=False, sort_keys=True,
+                                                        indent=1, allow_nan=False) + "\n")
+    return rotas
 
 
 def datapackage(cfg: Mapping[str, Any], arquivos: list[Arquivo], saida: Path, *,

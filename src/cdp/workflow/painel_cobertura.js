@@ -487,6 +487,9 @@ function compara(a, b, k, asc) {
 function secTabela(M) {
   var s = sec("cv-tabela", "Tabela de cobertura", "todas as ações e ETFs do universo; ordene e filtre");
   var cols = COLS.slice();
+  if (obj(CTX.meta).teses_url === "ativos/") cols.push({ t: "Tese e análise", render: function (u) {
+    return /^[A-Za-z0-9_-]{1,64}$/.test(u.iid) ? h("a", { href: "ativos/" + u.iid.toLowerCase() + "/" }, "Ler análise →") : null;
+  } });
   /* a carteira logo depois do rating: a ligação entre a cobertura e o fundo fica à vista */
   if (M.has_book) cols.splice(4, 0, COL_CARTEIRA);
   var estado = { k: "nome", asc: true, pais: "", setor: "", rating: "", busca: "", carteira: false, todos: false };
@@ -637,6 +640,9 @@ function mostrarFicha(iid, rolar) {
 }
 function ficha(corpo, u, m, hs) {
   var cab = block(null, null);
+  if (obj(CTX.meta).teses_url === "ativos/" && /^[A-Za-z0-9_-]{1,64}$/.test(u.iid)) {
+    cab.appendChild(h("p", null, h("a", { href: "ativos/" + u.iid.toLowerCase() + "/", class: "btn" }, "Ler tese e análise completa →")));
+  }
   var p = PRECO[u.iid];
   cab.appendChild(h("div", { class: "cv-fh" },
     h("div", null, h("h3", { class: "cv-fh-t" }, m.nome), h("p", { class: "cv-fh-s" }, [txt(m.ticker), txt(m.pais), txt(m.setor), txt(m.arquetipo)].join(" · "))),

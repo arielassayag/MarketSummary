@@ -131,6 +131,11 @@ de Brasília não comece emissor novo.
    leitura do valuation, último resultado, governança, o que mudou (fora da iniciação), gatilhos de
    revisão, lacunas, `stance`, `conviccao` e `fontes`. Datas só como 2026-10-25, 25/10/2026 ou
    "25 de outubro" (nunca dia e mês sem o ano); trimestres como 3T26; empresas pelo nome.
+   Aprofunde, com evidência específica, posição competitiva, qualidade dos resultados,
+   alocação de capital, contraponto da tese e indicadores de acompanhamento nos complementos
+   do schema. Percepção variante exige suporte público para a leitura atribuída ao mercado;
+   não presuma um consenso. Se faltar evidência, declare a lacuna. As páginas individuais
+   do portal incorporam esses campos após a publicação válida da nota.
 5. Valide e corrija até `ok: true`, no máximo 3 tentativas (comando do subpasso 2).
 6. Publique (imutável; grava o evento `COVERAGE_NOTE` na trilha):
 

@@ -312,6 +312,26 @@ def test_valid_note_with_peer_and_macro_facts_passes():
     assert verify_nota(macro, fb, ctx) == []
 
 
+@pytest.mark.parametrize("campo", ["posicao_competitiva", "qualidade_resultados",
+                                   "alocacao_capital", "percepcao_variante", "contratese",
+                                   "indicadores_monitoramento"])
+def test_complementos_da_tese_conservam_guardas_e_evidencias(campo):
+    fb, ctx = _world()
+    item = {"titulo": "Condição da tese", "texto": "Avaliar continuidade do negócio.",
+            "evidencias": ["F1"]}
+    valor = [item] if campo == "indicadores_monitoramento" else item
+    nota = _nota(**{campo: valor})
+    assert verify_nota(nota, fb, ctx) == []
+    r = render_nota(nota, fb, ctx, autoria="mente", published_at="2026-10-08T12:00:00Z")
+    assert r[campo][0]["evidencias"] == [{"fonte": "F1"}]
+    assert "Avaliar continuidade do negócio." in render_markdown(r)
+    item = {**item, "texto": "Crescimento de 12%.", "evidencias": ["F99"]}
+    valor = [item] if campo == "indicadores_monitoramento" else item
+    issues = verify_nota(_nota(**{campo: valor}), fb, ctx)
+    assert any(campo in i and "inexistentes" in i for i in issues)
+    assert any(campo in i and "evidencias" not in i for i in issues)
+
+
 def test_foreign_issuer_facts_rejected_except_peers():
     fb, ctx = _world()
     issues = verify_nota(_nota(resumo="Outro em {{fact:val.OUT.upside}}."), fb, ctx)

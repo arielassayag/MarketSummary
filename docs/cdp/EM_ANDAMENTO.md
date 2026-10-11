@@ -5,6 +5,24 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
+## Páginas de tese por ativo — desenvolvimento em 11/10/2026
+
+O ramo `codex/cdp-teses-ativos`, em `.cdp/integracoes/teses-ativos`, implementa um
+índice pesquisável e documentos HTML, Markdown e JSON por ativo. A montagem local
+produziu 241 páginas: 233 empresas e oito ETFs, com 12 narrativas publicadas e
+229 análises quantitativas preliminares. As datas e lacunas da nota e do modelo
+permanecem distintas. Notas futuras podem aprofundar competição, qualidade do
+lucro, capital, percepção variante, contraponto e monitoramento com evidências
+validadas. Referências e limites: [TESES_ATIVOS.md](TESES_ATIVOS.md).
+
+Os 64 casos focais iniciais passaram e Ruff passou nos arquivos alterados.
+A conferência completa, a revisão visual, a suíte do ramo a publicar e a
+publicação pública ainda estão pendentes. Esta entrega não escreve no livro,
+não altera a operação de 09/10 e não certifica as frentes privadas anteriores.
+As pesquisas qualitativas dos demais ativos e o fluxo editorial específico
+de ETFs continuam abertos; página disponível não equivale a tese concluída.
+
+
 ## Estado corrente — 10/10/2026, 10:14 Brasília
 
 A fonte pública observada nesta recepção é `36f256aa63332b4f3cdc5e2d7763cd9d604c3faf`.

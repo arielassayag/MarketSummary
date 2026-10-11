@@ -734,6 +734,8 @@ def _rodape_painel(cfg: Mapping[str, Any], commit: str | None, agora: datetime) 
 <p class="prose">Todos os números deste portal são calculados por código aberto a partir de dados
 públicos e podem ser conferidos por qualquer pessoa, arquivo por arquivo.</p>
 <ul class="lk">
+<li><a href="cases/">Dashboard de cases e comparáveis</a></li>
+<li><a href="risco/">Dashboard de risco e fatores da carteira</a></li>
 <li><a href="ativos/">Teses e análises de todas as empresas e ETFs</a></li>
 <li><a href="dados/">Dados abertos e auditoria</a></li>
 <li>{codigo}</li>
@@ -779,6 +781,16 @@ def pagina_inicial(fragmento: str, cfg: Mapping[str, Any], *, indexar: bool, dem
          "inLanguage": "pt-BR", "description": descricao}, dataset]}))
     extra, corpo = _separar_fragmento(fragmento)
     corpo = corpo.strip()
+    atalhos = ('<nav class="site-atalhos" aria-label="Pesquisa e carteira">'
+               '<a href="cases/">Cases e comparáveis</a>'
+               '<a href="risco/">Risco e fatores</a>'
+               '<a href="ativos/">Teses por ativo</a>'
+               '<a href="dados/">Dados e auditoria</a></nav>')
+    corpo = corpo.replace('<main class="wrap" id="main">',
+                          atalhos + '\n<main class="wrap" id="main">', 1)
+    cab.append('<style>.site-atalhos{display:flex;gap:1rem;flex-wrap:wrap;'
+               'max-width:1240px;margin:1rem auto;padding:0 1rem;'
+               'font-size:.9rem}.site-atalhos a{color:inherit;text-underline-offset:4px}</style>')
     rodape = _rodape_painel(cfg, commit, agora)
     marca_rodape = '<footer class="foot" id="foot">'
     corpo = (corpo.replace(marca_rodape, rodape + marca_rodape, 1) if marca_rodape in corpo
@@ -812,6 +824,8 @@ def _pagina(cfg: Mapping[str, Any], *, titulo: str, descricao: str, canonico: st
             f'<span><b>CABRA DA PESTE</b><small>Carteira simulada long/short · ações da América '
             f'Latina · USD</small></span></a>'
             f'<nav class="nav" aria-label="Portal"><a href="{raiz_rel or "./"}">Painel</a>'
+            f'<a href="{raiz_rel}cases/">Cases e comparáveis</a>'
+            f'<a href="{raiz_rel}risco/">Risco e fatores</a>'
             f'<a href="{raiz_rel}ativos/">Teses e análises</a>'
             f'<a href="{raiz_rel}dados/">Dados abertos</a>'
             f'<a href="https://github.com/{esc(cfg["repositorio"])}">Código</a></nav>'
@@ -1046,6 +1060,8 @@ def construir(rt: Any, op: Opcoes) -> dict[str, Any]:
         from .workflow.painel import data_hash
 
         meta["teses_url"] = "ativos/"
+        meta["cases_url"] = "cases/"
+        meta["risco_url"] = "risco/"
         meta["data_hash"] = data_hash(dados)
         demo = op.demo or bool(meta.get("is_synthetic"))
         indexar = bool(cfg.get("indexar", True)) and not op.noindex and not demo
@@ -1058,7 +1074,7 @@ def construir(rt: Any, op: Opcoes) -> dict[str, Any]:
             _gravar(saida / nome, texto)
         # Documentos de pesquisa são uma projeção de leitura, nunca uma publicação no livro.
         paginas_ativos = construir_analises(rt, cobertura_site, cfg, saida, indexar=indexar,
-                                           demo=demo, commit=commit, agora=agora)
+                                           demo=demo, commit=commit, agora=agora, painel=dados)
         estaticos = raiz / ESTATICOS
         if estaticos.is_dir():
             for p in sorted(estaticos.iterdir()):
@@ -1110,7 +1126,8 @@ def construir(rt: Any, op: Opcoes) -> dict[str, Any]:
         base = cfg["base_url"]
         regra = "Allow: /" if indexar else "Disallow: /"
         _gravar(saida / "robots.txt", f"User-agent: *\n{regra}\nSitemap: {base}/sitemap.xml\n")
-        urls = [f"{base}/", f"{base}/dados/", f"{base}/ativos/"] + [
+        urls = [f"{base}/", f"{base}/dados/", f"{base}/ativos/", f"{base}/cases/",
+                f"{base}/risco/"] + [
             f"{base}/{rota}" for rota in paginas_ativos] + [
             f"{base}/{a.destino}" for a in arquivos if a.destino.endswith("/relatorio.html")]
         lastmod = agora.astimezone(UTC).strftime("%Y-%m-%dT%H:%M:%S+00:00")
@@ -1150,15 +1167,16 @@ def construir(rt: Any, op: Opcoes) -> dict[str, Any]:
 
 def construir_analises(rt: Any, cobertura: Mapping[str, str], cfg: Mapping[str, Any],
                       saida: Path, *, indexar: bool, demo: bool, commit: str | None,
-                      agora: datetime) -> list[str]:
+                      agora: datetime, painel: Mapping[str, Any] | None = None) -> list[str]:
     """HTML e documentos por ativo; somente fontes já conferidas da cobertura e notas."""
     from .workflow import teses_ativos as ta
     from .workflow.painel_publicacao import expandir
 
     principal = expandir(json.loads(cobertura.get("cobertura.json", "{}")))
     meta = principal.get("meta") or {}
-    notas = ta.carregar_notas(rt, meta["as_of"]) if meta.get("estado") == "publicado" else {}
-    docs = ta.documentos(cobertura, notas) if "cobertura.json" in cobertura else []
+    corte_pesquisa = agora.astimezone(FUSO).date().isoformat()
+    notas = ta.carregar_notas(rt, corte_pesquisa) if meta.get("estado") == "publicado" else {}
+    docs = ta.documentos(cobertura, notas, corte_pesquisa=corte_pesquisa) if "cobertura.json" in cobertura else []
     _gravar(saida / "teses.css", ta.CSS)
     _gravar(saida / "teses.js", ta.JS)
 
@@ -1185,7 +1203,47 @@ def construir_analises(rt: Any, cobertura: Mapping[str, str], cfg: Mapping[str, 
         _gravar(saida / rota / "analise.md", ta.markdown(doc))
         _gravar(saida / rota / "analise.json", json.dumps(doc, ensure_ascii=False, sort_keys=True,
                                                         indent=1, allow_nan=False) + "\n")
+    construir_dashboards(docs, painel or {}, cfg, saida, indexar=indexar, demo=demo,
+                         commit=commit, agora=agora)
     return rotas
+
+
+def construir_dashboards(documentos: list[dict[str, Any]], painel: Mapping[str, Any],
+                         cfg: Mapping[str, Any], saida: Path, *, indexar: bool, demo: bool,
+                         commit: str | None, agora: datetime) -> None:
+    """Duas vistas de leitura, com cálculos de apresentação no produtor Python."""
+    from .workflow import dashboard_cases as cases
+    from .workflow import dashboard_risco as risco
+
+    projetos = [
+        ("cases", "Cases e comparáveis", "Teses, modelos e comparáveis econômicos por ativo.",
+         cases, cases.construir_dashboard_cases(documentos), cases.renderizar_dashboard_cases),
+        ("risco", "Risco e fatores", "Carteira efetivada, exposições, fatores, estresses e limites.",
+         risco, risco.construir_dashboard_risco(dict(painel)), risco.renderizar_dashboard_risco),
+    ]
+    for rota, titulo, descricao, modulo, payload, renderizar in projetos:
+        rodape = f'<footer class="analise-shell"><p>Versão do código: {esc(commit or "não identificada")} · publicação do portal {agora.astimezone(FUSO):%d/%m/%Y %H:%M} (Brasília).</p><p>Carteira simulada com preços reais. <a href="../dados/">Fontes, fórmulas e auditoria</a> · <a href="dashboard.json" download>Dados desta vista</a></p></footer>'
+        texto = _pagina(cfg, titulo=titulo + " · " + cfg["titulo_curto"], descricao=descricao,
+                        canonico=cfg["base_url"] + "/" + rota + "/", indexar=indexar,
+                        raiz_rel="../", corpo=renderizar(payload) + rodape,
+                        demo=demo, tem_og=False)
+        texto = texto.replace("</head>", '<link rel="stylesheet" href="../teses.css">\n</head>')
+        for ext, attr in (("css", "CSS"), ("js", "JS")):
+            conteudo = getattr(modulo, attr, None)
+            fonte = Path(modulo.__file__).with_suffix("." + ext)
+            if not conteudo and fonte.is_file():
+                conteudo = fonte.read_text(encoding="utf-8")
+            if not conteudo:
+                continue
+            nome = f"dashboard-{rota}.{ext}"
+            _gravar(saida / nome, conteudo)
+            if ext == "css" and f'../{nome}' not in texto:
+                texto = texto.replace("</head>", f'<link rel="stylesheet" href="../{nome}">\n</head>')
+            elif ext == "js" and f'../{nome}' not in texto:
+                texto = texto.replace("</body>", f'<script src="../{nome}" defer></script>\n</body>')
+        _gravar(saida / rota / "index.html", texto)
+        _gravar(saida / rota / "dashboard.json", json.dumps(payload, ensure_ascii=False,
+                    sort_keys=True, indent=1, allow_nan=False) + "\n")
 
 
 def datapackage(cfg: Mapping[str, Any], arquivos: list[Arquivo], saida: Path, *,
@@ -1369,7 +1427,9 @@ def conferir(saida: Path | str) -> list[str]:
     out: list[str] = []
     obrigatorios = ("index.html", "data.json", "404.html", "robots.txt", "sitemap.xml",
                     "manifest.json", "SHA256SUMS", "favicon.svg", "site.css",
-                    "dados/index.html", "dados/datapackage.json")
+                    "dados/index.html", "dados/datapackage.json", "ativos/index.html",
+                    "cases/index.html", "cases/dashboard.json", "dashboard-cases.css",
+                    "dashboard-cases.js", "risco/index.html", "risco/dashboard.json")
     for nome in obrigatorios:
         if not (saida / nome).is_file():
             out.append(f"arquivo obrigatório ausente: {nome}")

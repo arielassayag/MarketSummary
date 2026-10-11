@@ -76,6 +76,8 @@ def test_built_site_passes_the_checks(site_sintetico):
     for rel in ("index.html", "data.json", "404.html", "robots.txt", "sitemap.xml",
                 "manifest.json", "SHA256SUMS", "favicon.svg", "og.png", "apple-touch-icon.png",
                 "site.css", "dados/index.html", "dados/datapackage.json",
+                "cases/index.html", "cases/dashboard.json", "dashboard-cases.css",
+                "dashboard-cases.js", "risco/index.html", "risco/dashboard.json",
                 "marca/marca_tinta.webp"):
         assert (site_sintetico / rel).is_file(), rel
     assert len(list(site_sintetico.glob("painel-*.css"))) == 1
@@ -98,6 +100,30 @@ def test_index_is_a_complete_document(site_sintetico):
     assert "Transparência e auditoria" in idx and 'href="dados/"' in idx
     assert idx.index('class="site-auditoria"') < idx.index('<footer class="foot" id="foot">')
     assert f"/tree/{COMMIT}" in idx
+
+
+def test_dashboards_têm_fontes_navegacao_e_manifesto(site_sintetico):
+    man = json.loads((site_sintetico / "manifest.json").read_text(encoding="utf-8"))
+    for rota, schema in (("cases", "cdp.dashboard-cases/v1"),
+                         ("risco", "cdp.dashboard.risco/v1")):
+        h = (site_sintetico / rota / "index.html").read_text(encoding="utf-8")
+        d = json.loads((site_sintetico / rota / "dashboard.json").read_text(encoding="utf-8"))
+        assert d["schema"] == schema
+        assert h.startswith('<!doctype html>\n<html lang="pt-BR">')
+        assert 'href="dashboard.json" download' in h
+        assert 'href="../dados/"' in h and "DADOS SIMULADOS" in h and "noindex" in h
+        assert f'href="https://exemplo.test/cdp/{rota}/"' in h
+        assert f"{rota}/dashboard.json" in man["arquivos"]
+    idx = (site_sintetico / "index.html").read_text(encoding="utf-8")
+    assert 'aria-label="Pesquisa e carteira"' in idx
+    assert 'href="cases/"' in idx and 'href="risco/"' in idx
+
+
+def test_conferencia_recusa_dashboard_ausente(site_sintetico, tmp_path):
+    out = tmp_path / "sem_dashboard"
+    shutil.copytree(site_sintetico, out)
+    (out / "risco/dashboard.json").unlink()
+    assert "arquivo obrigatório ausente: risco/dashboard.json" in st.conferir(out)
 
 
 def test_simulated_book_is_marked_and_kept_out_of_search(site_sintetico):

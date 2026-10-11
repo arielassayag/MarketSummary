@@ -34,7 +34,7 @@ Investing, respeitando os insumos públicos, a linguagem e os gates canônicos d
 ## Estados de maturidade e datas
 
 **Narrativa publicada da gestão** identifica uma nota da mente já publicada, íntegra e
-anterior ou igual à data do retrato. A página reproduz todo o conteúdo dessa nota e conserva
+anterior ou igual ao corte de pesquisa da publicação do portal. A página reproduz todo o conteúdo dessa nota e conserva
 seus cortes de publicação e de dados. Uma nota publicada não significa que todos os temas
 da tabela estejam resolvidos: suas lacunas continuam visíveis.
 
@@ -47,6 +47,9 @@ O retrato quantitativo, a data do preço, o período de cada insumo e a data da 
 mostrados separadamente. Um sinal do modelo pode diferir de uma nota anterior; a montagem
 do site não atualiza a opinião da nota nem dimensiona uma posição. Para ETFs, a comparação
 com o ILF não é apresentada como medida de aderência ao índice contratual do produto.
+O corte de pesquisa pode ser posterior ao retrato quantitativo: uma nota nova não recalcula
+o modelo anterior, não altera suas fontes nem comprova disponibilidade histórica da pesquisa.
+O documento declara ambos os cortes e a data do preço; datas futuras são recusadas.
 
 ## Integração e controles
 
@@ -81,5 +84,7 @@ data real da consulta separadamente.
 
 Sessões de desenvolvimento entregam rascunhos no caminho canônico documentado em NOTAS.md.
 Só o executor publica no livro após os gates. Rascunhos, mesmo validados em desenvolvimento,
-não são narrativas publicadas nem entram silenciosamente nas páginas do portal. Uma nota
-posterior ao corte do retrato aguarda um retrato compatível antes de aparecer nele.
+não são narrativas publicadas nem entram silenciosamente nas páginas do portal. O carregamento
+considera a última nota publicada até o corte de pesquisa, independentemente da data do modelo,
+mantendo cada versão e suas limitações explícitas. Os [dashboards de cases e risco](DASHBOARDS.md)
+organizam essas páginas e a carteira por bases de comparação declaradas.

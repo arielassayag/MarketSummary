@@ -11,6 +11,7 @@ import html
 import json
 import re
 from collections.abc import Mapping
+from datetime import date
 from typing import Any
 from urllib.parse import urlsplit
 
@@ -120,12 +121,19 @@ def carregar_notas(rt: Any, ate: str) -> dict[str, dict[str, Any]]:
     return out
 
 
-def documentos(arquivos: Mapping[str, str], notas: Mapping[str, dict[str, Any]]) -> list[dict[str, Any]]:
+def documentos(arquivos: Mapping[str, str], notas: Mapping[str, dict[str, Any]], *,
+               corte_pesquisa: str | None = None) -> list[dict[str, Any]]:
     """Um dossiê por linha, com números já formatados e identidade dos insumos."""
     principal = expandir(json.loads(arquivos["cobertura.json"]))
     meta = principal["meta"]
     if meta.get("estado") != "publicado":
         return []
+    corte = corte_pesquisa or meta["as_of"]
+    try:
+        if date.fromisoformat(corte) < date.fromisoformat(meta["as_of"]):
+            raise ValueError("Corte de pesquisa anterior ao retrato quantitativo")
+    except (TypeError, ValueError) as exc:
+        raise ValueError("Corte de pesquisa inválido ou anterior ao retrato quantitativo") from exc
     modelos, origens = {}, {}
     for info in (meta.get("files") or {}).get("modelos", []):
         nome = info["file"]
@@ -144,10 +152,11 @@ def documentos(arquivos: Mapping[str, str], notas: Mapping[str, dict[str, Any]])
             raise ValueError("Dossiê duplicado ou sem modelo: " + iid)
         enderecos.add(rota)
         n = notas.get(iid)
-        if n and (n["documento"].get("issuer_id") != iid or n["documento"].get("data", "") > meta["as_of"]):
-            raise ValueError("Nota incompatível com o ativo ou com a data da cobertura")
+        if n and (n["documento"].get("issuer_id") != iid or n["documento"].get("data", "") > corte):
+            raise ValueError("Nota incompatível com o ativo ou com o corte de pesquisa")
         out.append({"schema": SCHEMA, "ativo": u, "modelo": modelos[iid], "nota": n,
-                    "corte_cobertura": meta["as_of"], "dados_simulados": bool(meta["is_synthetic"]),
+                    "corte_cobertura": meta["as_of"], "corte_pesquisa": corte,
+                    "dados_simulados": bool(meta["is_synthetic"]),
                     "aviso": meta.get("aviso_cvm"), "origem_modelo": origens[iid], "endereco": rota,
                     "estado_pesquisa": "nota_publicada" if n and n["documento"].get("autoria") == "mente"
                     else "analise_quantitativa_preliminar"})
@@ -289,11 +298,12 @@ def corpo(doc: Mapping[str, Any]) -> str:
     origem = doc["origem_modelo"]["arquivo"]
     return f'''<a class="analise-pular" href="#analise">Ir para a análise</a>
 <main class="analise-shell" id="analise">
-<p class="analise-voltar"><a href="../">Todas as teses e análises</a> · <a href="../../#cobertura">Cobertura de ativos</a></p>
+<p class="analise-voltar"><a href="../">Todas as teses e análises</a> · <a href="../../cases/?ativo={_s(u['iid'])}">Case e comparáveis</a> · <a href="../../risco/">Risco da carteira</a></p>
 <header class="analise-capa"><p class="analise-kicker">Tese e análise de investimento · {_s(u['ticker'])}</p>
 <h1>{_s(u['nome'])}</h1><p>{_s(u['pais_nome'])} · {_s(u['setor_nome'])} · {_s(u['arquetipo_nome'])}</p>
 <p class="analise-estado">{_s(estado)}</p>{_paragrafo(resumo)}<p class="analise-fonte">{_s(sub)}</p>
 <p>Retrato quantitativo: {_s(doc['corte_cobertura'])} · preço de {_s(u.get('preco_data'))} · sinal do modelo: {_s(u['rating'])}</p>
+<p class="analise-fonte">Pesquisa disponível até {_s(doc.get('corte_pesquisa', doc['corte_cobertura']))}. Narrativa e modelo conservam suas próprias datas; a pesquisa não recalcula o retrato quantitativo.</p>
 <nav class="analise-acoes" aria-label="Documento"><a href="analise.md" download>Baixar documento</a><a href="analise.json" download>Dados da análise</a><button type="button" id="analise-imprimir">Imprimir ou salvar PDF</button></nav></header>
 <div class="analise-layout"><aside><nav aria-label="Conteúdo da tese"><h2>Nesta análise</h2><ol>{toc}</ol></nav></aside><article>{conteudo}
 <section id="fontes"><h2>Fontes e rastreabilidade</h2>{fontes(doc)}

@@ -87,6 +87,24 @@ def test_nota_futura_ou_de_outro_emissor_nao_contamina_visao():
             ta.documentos(_arquivos(), {"BR_EMPRESA": {"documento": doc}})
 
 
+def test_narrativa_atual_nao_retroage_o_retrato_quantitativo():
+    nota = {"documento": {"issuer_id": "BR_EMPRESA", "data": "2026-10-11",
+                           "autoria": "mente"}}
+    d = ta.documentos(_arquivos(), {"BR_EMPRESA": nota}, corte_pesquisa="2026-10-11")[0]
+    assert d["estado_pesquisa"] == "nota_publicada"
+    assert d["corte_cobertura"] == "2026-10-09"
+    assert d["ativo"]["preco_data"] == "2026-10-08"
+    assert d["nota"]["documento"]["data"] == d["corte_pesquisa"] == "2026-10-11"
+    with pytest.raises(ValueError, match="Nota incompatível"):
+        ta.documentos(_arquivos(), {"BR_EMPRESA": nota}, corte_pesquisa="2026-10-10")
+
+
+@pytest.mark.parametrize("corte", ["2026-10-08", "2026-02-30", "ontem"])
+def test_corte_de_pesquisa_invalido_ou_anterior_e_recusado(corte):
+    with pytest.raises(ValueError, match="Corte de pesquisa"):
+        ta.documentos(_arquivos(), {}, corte_pesquisa=corte)
+
+
 def test_geracao_deterministica_e_sem_mutar_insumos():
     a = _arquivos()
     original = dict(a)

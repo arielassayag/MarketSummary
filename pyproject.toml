@@ -48,7 +48,8 @@ ai = [
 where = ["src"]
 
 [tool.setuptools.package-data]
-cdp = ["workflow/*.html", "recursos/sec_classes_acoes.json"]
+cdp = ["workflow/*.html", "workflow/dashboard_*.css", "workflow/dashboard_*.js",
+       "recursos/sec_classes_acoes.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

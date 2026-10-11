@@ -5,7 +5,35 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-## Estado atual das teses — 11/10/2026, 16:38 Brasília
+## Dashboards e publicação das teses — desenvolvimento em 11/10/2026
+
+Pedido humano explícito: revisar e publicar as teses de todo o universo e oferecer
+dashboards profissionais de cases/comparáveis e de risco/fatores. O desenvolvimento
+está no ramo `codex/cdp-dashboards-profissionais`; a operação é exclusiva do executor
+interno `.cdp/rotinas`, com gates manuais e limite conservado de doze notas por execução.
+
+A revisão documental recebeu os 241 rascunhos, suas referências e modelos: 233 empresas
+e oito ETFs, 229 iniciações e doze atualizações. Não alegou erro aritmético novo; encontrou
+uma legenda de alpha relativo restrita a país × setor apesar dos fallbacks do modelo.
+O código passa a rotular o grupo registrado, sem mudar valores nem históricos imutáveis.
+O grupo estatístico do modelo e os peers econômicos do dashboard têm critérios distintos.
+Lacunas, baixa convicção e disponibilidade histórica da pesquisa não comprovada continuam
+explícitas; publicação não significa diligência integral concluída.
+
+O fechamento preservado e a retificação editorial de Ultrapar foram publicados pelo fluxo
+canônico em `11afdb8fa79cf8500f965f6b2650be01a4bbfadc`, com `push: true`,
+`verify: ÍNTEGRO` e trava liberada. A retificação conserva os documentos originais e corrige
+a descrição da ponta. Não houve repetição de decisão, MOC ou fechamento. O excesso de
+exposição líquida inaugural permanece registrado; integridade não comprova conformidade.
+
+As novas vistas são descritas em [DASHBOARDS.md](DASHBOARDS.md). Pesquisa publicada até o
+corte do portal pode acompanhar um retrato quantitativo anterior, com datas próprias;
+a narrativa não recalcula o modelo. Carteira registrada e proposta, risco diário e ex-ante,
+memória da mesma semana, sinais e ausências permanecem separados. Faltam nesta etapa a
+qualificação final do código, a adoção canônica das novas notas e a conferência remota do
+deploy completo; recibos de desenvolvimento não são prova dessas publicações.
+
+## Registro anterior das teses — 11/10/2026, 16:38 Brasília
 
 O portal `8aea3f1` está publicado e foi conferido independentemente: 241 páginas,
 233 empresas e oito ETFs; 727 arquivos HTTP200 com tamanho e SHA iguais ao

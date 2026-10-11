@@ -676,7 +676,7 @@ def fatos_valuation(modelo: Mapping, eventos_emissor: Iterable[Mapping] = (),
     add("alpha", "Alpha de valuation", r.get("alpha"), "pct", "PWR − ke (Monte Carlo dos direcionadores)",
         signed=True, mascarar=True)
     add("alpha_rel", "Alpha de valuation relativo aos pares", r.get("alpha_rel"), "pct",
-        "α − mediana(α dos pares de país × setor)", signed=True, mascarar=True)
+        "α − mediana(α do grupo de comparação registrado no modelo)", signed=True, mascarar=True)
     add("rating_codigo", "Rating da cobertura (12 meses)", VAL_RATING_CODIGO.get(str(rt)), "score",
         "Compra = 1, Neutro = 0, Venda = −1 (regra de α_rel por incerteza)", formatted=str(rt or NA_TEXT))
     cf = r.get("confianca")

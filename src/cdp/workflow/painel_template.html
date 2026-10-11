@@ -3542,6 +3542,7 @@ function stressKind(s) {
   return /\(|\b(19|20)\d{2}\b/.test(n) ? "historico" : "hipotetico";
 }
 function renderRisco(p) {
+  if (META.risco_url === "risco/") p.appendChild(h("p", { class: "pre-go" }, h("a", { href: "risco/", class: "pillbtn" }, "Dashboard de risco e fatores →")));
   if (aguardaInaugural(p, "Risco e exposições", "Exposições, decomposição do risco entre fatores e risco específico, testes de estresse e liquidez são publicados a partir da carteira inaugural; o modelo de risco e os limites estão em Mandato e metodologia.")) return;
   var ex = RK.ex_ante ? obj(RK.ex_ante) : null, dl = RK.daily ? obj(RK.daily) : null;
   var bases = [];
@@ -4491,6 +4492,7 @@ function cobAviso(p, texto, link) {
   p.appendChild(sec("Cobertura de ativos", null, h("div", { class: "block pre" }, h("p", { class: "lead" }, "Modelos abertos e preços-alvo de 12 meses para as ações e ETFs do universo."), h("p", { class: "prose" }, texto), link ? h("div", { class: "pre-go" }, extLink(link, "Cobertura no portal público →")) : null)));
 }
 function renderCobertura(p) {
+  if (META.cases_url === "cases/") p.appendChild(h("p", { class: "pre-go" }, h("a", { href: "cases/", class: "pillbtn" }, "Dashboard de cases e comparáveis →")));
   if (!COV) { cobAviso(p, obj(META.coverage).estado === "em_verificacao" ? "A cobertura está em conferência e volta a ser publicada assim que o registro dos modelos for verificado." : "A cobertura é publicada a partir do primeiro retrato dos modelos, com os insumos públicos, as fórmulas com os valores substituídos e o histórico de acertos de cada ativo."); return; }
   var wait = h("div", { class: "boot", role: "status" }, h("h2", null, "Carregando a cobertura…"), h("div", { class: "boot-bar", "aria-hidden": "true" }), h("p", null, "Modelos, preços-alvo e histórico de acertos dos ativos cobertos."));
   p.appendChild(wait);

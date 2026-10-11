@@ -1184,7 +1184,7 @@ def _linhas_ke(cfg: Mapping[str, Any]) -> list[str]:
         out.append("δ do país: ajuste de nível que faz o emissor mediano do país valer o preço com as premissas "
                    "da casa" + (f", limitado a ±{pp(lim, 1, False)}" if lim is not None else "")
                    + "; corrige o nível dos fluxos do modelo, não é prêmio de risco (a carteira é neutra a país "
-                   "e o rating é relativo a país × setor); o ke sem o ajuste fica como sensibilidade")
+                   "e o rating é relativo ao grupo de comparação registrado); o ke sem o ajuste fica como sensibilidade")
     out += ["ke na moeda local = (1 + ke em dólar) × (1 + inflação esperada local) ÷ (1 + inflação esperada nos EUA) − 1",
             "α = retorno ponderado pelos cenários − ke; α relativo = α − mediana do α dos pares"]
     return out
@@ -1239,7 +1239,7 @@ def _metodologia(ent: Entrada, uni: Sequence[Mapping[str, Any]], compacta: bool)
            if k not in ("US",)]
     rating = [
         {"r": "Compra", "tom": "compra",
-         "t": (f"α relativo aos pares (país × setor) acima do limiar da classe de incerteza ({lim_t}); "
+         "t": (f"α relativo ao grupo de comparação registrado acima do limiar da classe de incerteza ({lim_t}); "
                f"α ≥ {pct(_num(rcfg.get('guarda_compra_alpha_min')) or 0.0, 0)}, retorno esperado do caso-base ≥ ke "
                f"e potencial positivo; confiança mínima {rcfg.get('confianca_minima', 'B')}.")},
         {"r": "Neutro", "tom": "neutro",

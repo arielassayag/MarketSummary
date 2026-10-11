@@ -1001,3 +1001,20 @@ destino. → Consequências: estudo autoral imutável e negativa semântica sepa
 contrato futuro não pode consumir as duas notas como ajuste de PL ou lucro sem
 outra fonte primária ou correção revisada. Pontes anuais reportadas continuam
 separadas da normalização econômica.
+
+## 2026-10-11 · Pesquisa e risco em dashboards com bases explícitas
+
+Contexto: pedido humano para revisar/publicar as teses de todo o universo e organizar
+cases, peers, risco e fatores. → Decisão: publicar notas somente pelo executor canônico,
+em lotes sujeitos ao limite vigente; montar `cases/` e `risco/` como vistas de leitura
+do site, com documentos individuais e dados para download. → Consequências: peers
+econômicos precisam de setor e enquadramento, com país local e ampliação regional
+explícita; ETFs comparam produtos sem presumir índices idênticos. O grupo estatístico
+do alpha relativo permanece identificado pelo próprio modelo. A legenda genérica passa
+a citar esse grupo, inclusive fallbacks, sem alterar números ou históricos imutáveis.
+
+A nota publicada pode ser mais recente que o retrato quantitativo, respeitando o corte
+de pesquisa do portal e preservando ambas as datas. Não se recertifica PIT nem se recalcula
+o valuation. Na carteira, registro diário e proposta, risco diário e ex-ante e memória
+da mesma semana ficam separados. Ausentes continuam `n/d`; sinais e excessos de limites
+não são ocultados. Os renderizadores não aprovam decisões nem alteram mandato ou posições.

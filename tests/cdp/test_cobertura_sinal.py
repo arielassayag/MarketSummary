@@ -78,6 +78,9 @@ def test_val_facts_from_open_model(snap):
     assert f[f"val.{iid}.preco_alvo"].formatted.startswith(("R$", "US$", "MXN", "CLP", "COP", "PEN", "ARS"))
     assert f[f"val.{iid}.rating_codigo"].formatted == tab.loc[iid, "rating"]
     assert f[f"val.{iid}.upside"].value == pytest.approx(mod["resumo"]["upside"])
+    assert f[f"val.{iid}.alpha_rel"].value == pytest.approx(mod["resumo"]["alpha_rel"])
+    assert f[f"val.{iid}.alpha_rel"].formula == (
+        "α − mediana(α do grupo de comparação registrado no modelo)")
     assert f[f"cob.{iid}.alvo_anterior"].value is None  # sem histórico ⇒ n/d, nunca zero
     fb = factbook_emissor(s, iid, md)
     assert f"val.{iid}.preco_alvo" in fb.facts and fb.is_synthetic

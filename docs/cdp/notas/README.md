@@ -1,5 +1,12 @@
 # Rascunhos de notas de pesquisa entregues fora do clone das rotinas
 
+- Alimentos e agronegócio: JBS, MBRF, Minerva, M. Dias Branco, São Martinho,
+  SLC e 3tentos. Os estudos preservam proteína e origem, calendário da safra,
+  resultado ajustado e caixa, direitos de sócios e bases de financiamento.
+  A oferta cancelada da MBRF, o aporte futuro da Sadia Halal, a joint venture
+  condicional da JBS e a dispensa contratual da 3tentos mantêm estados próprios.
+  Metadados e cabeçalhos divergentes das fontes permanecem explícitos.
+
 O livro (`book/`) tem um único escritor: o clone que roda as rotinas. Uma nota de pesquisa
 escrita em outro lugar — uma sessão de desenvolvimento, o Codex, ou qualquer assistente com o
 pacote de `cdp mente pacote` — chega aqui como rascunho versionado:

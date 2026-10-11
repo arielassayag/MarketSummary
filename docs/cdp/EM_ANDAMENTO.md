@@ -5,7 +5,7 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-## Estado atual das teses — 11/10/2026, 13:30 Brasília
+## Estado atual das teses — 11/10/2026, 13:43 Brasília
 
 O portal `8aea3f1` está publicado e foi conferido independentemente: 241 páginas,
 233 empresas e oito ETFs; 727 arquivos HTTP200 com tamanho e SHA iguais ao
@@ -23,12 +23,11 @@ nenhum erro ou falha, 4.507 casos únicos. Ruff passou; os 4.875 arquivos fixado
 e o commit permaneceram idênticos. Não há soma de execuções focais sobrepostas
 nem promoção da qualificação de outra frente privada.
 
-O ramo documental `codex/cdp-pesquisa-lote-2` tem 176 rascunhos entregues e
-validados em conjunto: oito ETFs e empresas de diferentes países e setores.
+O ramo documental `codex/cdp-pesquisa-lote-2` tem 183 rascunhos entregues e validados em conjunto: oito ETFs e empresas de diferentes países e setores.
 O índice de lotes em [notas/README.md](notas/README.md) registra os ativos,
 fontes e limites relevantes. A conferência conjunta preservou a renderização
 das doze notas históricas e os 4.122 arquivos operacionais. Os textos mantêm
-visão neutra, baixa convicção e lacunas próprias. Há 53 ativos ainda sem nota
+visão neutra, baixa convicção e lacunas próprias. Há 46 ativos ainda sem nota
 publicada ou rascunho individual; cobertura qualitativa completa continua aberta.
 
 Os novos estudos incluem bancos e seguros mexicanos, imóveis e concessões,
@@ -172,6 +171,20 @@ presença de Bci Group entre acionistas diretos não comprova conclusão de toda
 as etapas. Itaú Colombia tem eventos posteriores ao trimestre que não são
 incorporados retrospectivamente àquelas demonstrações. Consulta atual não
 comprova posse histórica ou incorporação dos dados ao modelo.
+
+JBS, MBRF, Minerva, M. Dias Branco, São Martinho, SLC e 3tentos acrescentam
+análise de proteínas, indústria de alimentos e ciclo agrícola. As teses distinguem
+resultado ajustado, valor justo, capital de giro e caixa após custo completo.
+JBS preserva o perímetro atual, unidade dos recibos e joint venture condicional;
+MBRF mantém a oferta cancelada e a contribuição futura da Sadia Halal.
+São Martinho conserva calendário da safra e teste anual dos índices; SLC separa
+terras já operadas, aquisição, arrendamento e produtividade. A dispensa contratual
+da 3tentos tem prazo e critérios próprios. Datas, metadados e cabeçalhos
+divergentes das fontes não foram corrigidos. A conferência conjunta validou os 183 rascunhos, preservando as doze notas
+históricas, os 4.122 arquivos operacionais e o limite global de doze por execução.
+A suíte documental teve 287 casos únicos: 286 aprovados, um pulado e nenhuma
+falha ou erro; Ruff e a conferência do diff passaram. As novas narrativas
+continuam sem publicação.
 
 O escritor permanece `.cdp/rotinas`, com limite global de doze ativos por execução.
 As doze automações nativas permanecem ACTIVE no projeto atual. Um rascunho de

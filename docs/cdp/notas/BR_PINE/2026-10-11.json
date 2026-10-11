@@ -1,0 +1,171 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_PINE",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Pine — retorno do consignado após perdas, captação e capital",
+  "resumo": "A hipótese é que originação especializada e venda de serviços produzam retorno sustentável depois de perdas e custo de captação. A condição decisiva é confirmar a economia das safras maduras e a reposição de capital com lucro recorrente. Crédito consignado e cobertura securitária reduzem alguns riscos, sem eliminar desligamento, cobrança ou concentração. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_PINE.rating_codigo}}, com retorno esperado {{fact:val.BR_PINE.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Banco com varejo colateralizado e crédito corporativo estruturado, apoiado por derivativos, câmbio, seguros, investimentos e mercado de capitais. Consignado público, privado e INSS têm riscos e processos distintos. Carteiras cedidas e saldo reconhecido precisam preservar perímetro e obrigações residuais.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que originação especializada e venda de serviços produzam retorno sustentável depois de perdas e custo de captação. A condição decisiva é confirmar a economia das safras maduras e a reposição de capital com lucro recorrente. Crédito consignado e cobertura securitária reduzem alguns riscos, sem eliminar desligamento, cobrança ou concentração.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_PINE.preco}} e alvo {{fact:val.BR_PINE.preco_alvo}}, com potencial {{fact:val.BR_PINE.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_PINE.ke}} e retorno esperado {{fact:val.BR_PINE.etr}}.",
+      "evidencias": [
+        "val.BR_PINE.preco",
+        "val.BR_PINE.preco_alvo",
+        "val.BR_PINE.upside",
+        "val.BR_PINE.ke",
+        "val.BR_PINE.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Monitorar perdas e cobrança por safra de consignado, margem depois de crédito, custo de captação e dependência de parceiros. Conciliar cessões, riscos retidos, capital principal e crescimento dos ativos ponderados. Rever despesas de integração da Amigoz, lucro por ação e efetivo pagamento dos proventos.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_PINE.ke}} e a dispersão entre métodos {{fact:val.BR_PINE.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_PINE.ke",
+        "val.BR_PINE.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Maturação de safras, empregadores, processos de cobrança e regras do consignado podem elevar perdas. Captação mais cara, parceiros e capital prudencial podem limitar crescimento, mesmo com colateral e lucro maior.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_PINE.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_PINE.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Safras maduras confirmam perda e margem sustentáveis, com serviços e reciclagem de capital preservando retorno por ação. O cenário otimista calculado pelo código é {{fact:val.BR_PINE.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_PINE.preco_alvo}}, com retorno esperado {{fact:val.BR_PINE.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Perdas e captação absorvem a margem, enquanto cessões e novas originações exigem mais capital ou transferência de risco onerosa. O cenário pessimista calculado pelo código é {{fact:val.BR_PINE.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_PINE.preco}} e alvo do modelo aberto {{fact:val.BR_PINE.preco_alvo}}, com potencial {{fact:val.BR_PINE.upside}}. Retorno total esperado {{fact:val.BR_PINE.etr}} e custo do capital próprio {{fact:val.BR_PINE.ke}}. A dispersão entre métodos é {{fact:val.BR_PINE.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_PINE.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_PINE.consenso_alvo}}; a diferença {{fact:val.BR_PINE.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "O avanço do lucro requer acompanhar custo de crédito, atraso e cobertura que têm trajetórias próprias. A eficiência melhora apesar de despesas maiores, que incluem tecnologia, pessoal e Amigoz. O retorno anualizado usa patrimônio médio e não demonstra, sozinho, retorno econômico final de safras novas.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Revisar controle, classes de capital, oferta anterior, recompra e remuneração. Parcerias, cessões e seguros precisam de contratos completos, com identificação de riscos retidos e relacionadas. A atuação nacional e o canal digital não comprovam vantagem de custo ou qualidade de crédito independente.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Canais próprios e parceiros podem acelerar originação e combinar crédito com serviços. A vantagem precisa ser demonstrada por perda final e margem ajustada ao risco em safras comparáveis. O retorno das safras divulgado pela administração permanece uma avaliação do emissor, sem comprovação independente nesta pesquisa.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "O lucro e a margem bruta avançam com a mudança de mix; custo de crédito e atraso consolidado também aumentam. A margem ajustada ao risco recua sequencialmente apesar da margem bruta maior. O release descreve securitização para gestão do balanço sem reconhecimento de resultado na cessão; não é ganho imediato a somar ao lucro.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "A oferta de capital anterior mudou patrimônio e base por ação. A securitização libera capacidade segundo o emissor, mas exige conciliar retenções e riscos residuais. Capital principal, subordinado e caixa livre têm funções diferentes. Proventos aprovados e recompra executada no semestre preservam seus estados.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se originação veloz dilui temporariamente indicadores e o retorno só parece elevado antes da maturação das perdas. Securitização e aporte podem permitir expansão sem demonstrar geração recorrente suficiente ao titular da ação.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Monitorar perdas e cobrança por safra de consignado, margem depois de crédito, custo de captação e dependência de parceiros. Conciliar cessões, riscos retidos, capital principal e crescimento dos ativos ponderados. Rever despesas de integração da Amigoz, lucro por ação e efetivo pagamento dos proventos.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_PINE.etr}}, custo do capital {{fact:val.BR_PINE.ke}} e dispersão entre métodos {{fact:val.BR_PINE.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_PINE.etr",
+        "val.BR_PINE.ke",
+        "val.BR_PINE.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+    "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+    "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+    "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "Data de publicação do release não foi comprovada; a data da conferência não foi usada em seu lugar.",
+    "Notas completas em norma local e IFRS, cessões e riscos residuais não foram reconciliados integralmente.",
+    "Perdas finais, garantias e retorno por safra madura não têm comprovação independente nesta pesquisa.",
+    "Custo de parceiros, integração, direitos por classe e proventos exigem documentos completos.",
+    "Guidance, tom agregado da gestão e catalisador futuro datado não foram classificados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Banco Pine",
+      "titulo": "Perfil e estrutura do negócio",
+      "url": "https://www.pine.com/quem-somos/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Banco Pine",
+      "titulo": "Resultado, carteiras, securitização e capital",
+      "url": "https://duiqud9a6tzqw.cloudfront.net/Banco_Pine_Release_2_T26_v_F_ab4eb7c68e.pdf",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

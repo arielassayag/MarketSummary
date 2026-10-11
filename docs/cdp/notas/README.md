@@ -193,6 +193,13 @@ histórica. A análise da Cemig não incorpora mudança de controle não confirm
   O calendário de Kimber tem evento futuro confirmado; datas não comprovadas
   permanecem ausentes. Inconsistências do texto do emissor são preservadas.
 
+- `BR_ABC`, `BR_PINE`, `BR_INTER`, `BR_PICPAY`, `BR_BANRISUL` e
+  `BR_BRADESCO`: retorno da franquia bancária, perdas por safra, provisões,
+  capital e direitos por ação. Recuperação de crédito e reversão não equivalem
+  à melhora recorrente da margem. A janela dos recibos do Inter, a integração
+  da seguradora do PicPay e o crédito programado de ações do Bradesco preservam
+  seus estados. O contrato de folha do Banrisul tem custo e vigência próprios.
+
 Todos são rascunhos com hipóteses próprias, contraponto, indicadores e lacunas.
 Mesmo a consulta do último release não encerra a reconciliação financeira com o
 modelo, a comparação competitiva e a diligência do capital. Nenhum dado externo

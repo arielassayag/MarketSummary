@@ -5,7 +5,7 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-## Estado atual das teses — 11/10/2026, 10:00 Brasília
+## Estado atual das teses — 11/10/2026, 10:17 Brasília
 
 O portal `8aea3f1` está publicado e foi conferido independentemente: 241 páginas,
 233 empresas e oito ETFs; 727 arquivos HTTP200 com tamanho e SHA iguais ao
@@ -23,12 +23,12 @@ nenhum erro ou falha, 4.507 casos únicos. Ruff passou; os 4.875 arquivos fixado
 e o commit permaneceram idênticos. Não há soma de execuções focais sobrepostas
 nem promoção da qualificação de outra frente privada.
 
-O ramo documental `codex/cdp-pesquisa-lote-2` tem 126 rascunhos entregues e
+O ramo documental `codex/cdp-pesquisa-lote-2` tem 132 rascunhos entregues e
 validados em conjunto: oito ETFs e empresas de diferentes países e setores.
 O índice de lotes em [notas/README.md](notas/README.md) registra os ativos,
 fontes e limites relevantes. A conferência conjunta preservou a renderização
 das doze notas históricas e os 4.122 arquivos operacionais. Os textos mantêm
-visão neutra, baixa convicção e lacunas próprias. Há 103 ativos ainda sem nota
+visão neutra, baixa convicção e lacunas próprias. Há 97 ativos ainda sem nota
 publicada ou rascunho individual; cobertura qualitativa completa continua aberta.
 
 Os novos estudos incluem bancos e seguros mexicanos, imóveis e concessões,
@@ -49,6 +49,13 @@ Os estudos distinguem lucro financeiro, produtividade, investimento, base de
 clientes, capital conversível e liquidez efetivamente disponível. O relato de
 Genomma tem uma inconsistência de período explícita, sem correção da fonte.
 Alienações concluídas e projetos sujeitos a autorização têm estados distintos.
+
+ABC Brasil, Pine, Inter, PicPay, Banrisul e Bradesco acrescentam leitura de
+retorno por ação, safras, provisões, capital e transmissão ao acionista. A janela
+dos recibos do Inter ainda está aberta; PicPay tem projeções que excluem a
+seguradora adquirida, sem direção agregada classificada. O crédito de ações
+subscritas do Bradesco e o pagamento de proventos conservam datas futuras.
+O custo da folha adquirida e as reversões do Banrisul têm análise própria.
 
 A pesquisa distingue resultado recorrente, medidas gerenciais, inflação, moeda,
 capital por entidade e recursos atribuíveis ao acionista. Reorganização anunciada,

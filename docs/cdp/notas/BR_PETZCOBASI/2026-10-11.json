@@ -1,0 +1,207 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_PETZCOBASI",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Petz Cobasi — integração, direitos e caixa da companhia combinada",
+  "resumo": "A hipótese é que integração, logística e marcas próprias elevem contribuição e caixa sem prejudicar disponibilidade ou concorrência. A condição decisiva é retorno depois de ocupação, tecnologia, dívida e pagamentos da combinação, preservando direitos do titular. Sinergias e comparativos pro forma não comprovarão esse retorno antes da execução. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_PETZCOBASI.rating_codigo}}, com retorno esperado {{fact:val.BR_PETZCOBASI.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Companhia combinada de varejo pet, serviços, marcas e canais digitais, apresentada como União Pet Participações. Cobasi é a adquirente contábil e Petz tornou-se subsidiária integral; a combinação foi concluída no início do exercício. Serviços veterinários, marcas próprias e negócios adquiridos têm investimentos e riscos próprios. Comparativos gerenciais anteriores simulam a consolidação e não equivalem ao histórico original auditado.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que integração, logística e marcas próprias elevem contribuição e caixa sem prejudicar disponibilidade ou concorrência. A condição decisiva é retorno depois de ocupação, tecnologia, dívida e pagamentos da combinação, preservando direitos do titular. Sinergias e comparativos pro forma não comprovarão esse retorno antes da execução.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_PETZCOBASI.preco}} e alvo {{fact:val.BR_PETZCOBASI.preco_alvo}}, com potencial {{fact:val.BR_PETZCOBASI.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_PETZCOBASI.ke}} e retorno esperado {{fact:val.BR_PETZCOBASI.etr}}.",
+      "evidencias": [
+        "val.BR_PETZCOBASI.preco",
+        "val.BR_PETZCOBASI.preco_alvo",
+        "val.BR_PETZCOBASI.upside",
+        "val.BR_PETZCOBASI.ke",
+        "val.BR_PETZCOBASI.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Vendas comparáveis e margem por bandeira, marcas próprias e serviços; estoque, disponibilidade e integração de sistemas. Conciliar base pro forma, juros, aluguel, earn-outs, parcela caixa e empréstimos a acionistas. Confirmar PPA final, direitos, base por ação e retorno do capital após a combinação.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_PETZCOBASI.ke}} e a dispersão entre métodos {{fact:val.BR_PETZCOBASI.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_PETZCOBASI.ke",
+        "val.BR_PETZCOBASI.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Próximos resultados: testar integração, caixa e retorno por bandeira.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "descricao": "Finalização da alocação do preço e conciliação dos direitos da combinação, sem prazo presumido.",
+      "data": null,
+      "tipo": "m_a",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Integração, estoque e concorrência podem limitar sinergias. Ocupação, tecnologia, earn-outs e empréstimos a acionistas consomem capital. Comparativos pro forma, PPA preliminar e direitos societários exigem ponte antes de atribuir retorno por ação.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_PETZCOBASI.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_PETZCOBASI.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Integração melhora disponibilidade e produtividade, com caixa depois de investimento e pagamentos; direitos e PPA reconciliados permitem avaliar o retorno atribuível sem dupla contagem. O cenário otimista calculado pelo código é {{fact:val.BR_PETZCOBASI.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_PETZCOBASI.preco_alvo}}, com retorno esperado {{fact:val.BR_PETZCOBASI.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Integração exige mais capital, prejudica serviços e limita margem; pagamentos e direitos absorvem sinergias enquanto a base pro forma dificulta comparação econômica. O cenário pessimista calculado pelo código é {{fact:val.BR_PETZCOBASI.alvo_pessimista}}."
+  },
+  "comentario_valuation": "O retrato tem preço {{fact:val.BR_PETZCOBASI.preco}}, alvo {{fact:val.BR_PETZCOBASI.preco_alvo}}, potencial {{fact:val.BR_PETZCOBASI.upside}}, retorno esperado {{fact:val.BR_PETZCOBASI.etr}} e custo do capital {{fact:val.BR_PETZCOBASI.ke}}. Dispersão {{fact:val.BR_PETZCOBASI.cv_metodos}} e confiança {{fact:val.BR_PETZCOBASI.confianca_codigo}} são calculadas pelo código. Consenso público {{fact:val.BR_PETZCOBASI.consenso_alvo}} e diferença {{fact:val.BR_PETZCOBASI.diff_consenso}} não comprovam percepção do mercado. Perímetro, passivos, direitos de terceiros e base por ação exigem ponte ao valor atribuível. A narrativa não recalcula preços nem incorpora retrospectivamente a reorganização ao modelo. Comparativos pro forma não substituem os registros originais.",
+  "ultimo_resultado": "A combinação é apresentada como concluída, com Cobasi como adquirente contábil e Petz adquirida. Receita, EBITDA e lucro ajustados cresceram contra comparativo pro forma gerencial não auditado. Caixa operacional aumentou no trimestre e diminuiu no semestre. Caixa líquido final trimestral cresceu, mas o semestre consumiu recursos com pagamentos e empréstimos ligados à combinação. A geração excluindo desembolsos selecionados é hipotética, sem substituir o fluxo realizado. A alocação do preço e efeitos tributários permaneciam preliminares no ITR.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "A data de obtenção de controle e a companhia remanescente constam do ITR. Controle, representação no conselho e Petz subsidiária integral diferem da antiga estrutura listada. Empréstimos a acionistas, PPA e efeitos fiscais exigem análise de interesses e direitos. A tese não atualiza automaticamente a base por ação ou incorpora retrospectivamente a combinação ao retrato.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Presença física, conveniência digital e serviços podem sustentar recorrência e relacionamento. Marcas próprias acrescentam margem potencial e responsabilidade por estoque e produto. Integração de sistemas pode melhorar abastecimento e também gerar interrupções. Escala não garante poder de preço ou retorno diante de concorrentes e restrições específicas.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Receita, EBITDA e lucro ajustados cresceram contra base pro forma gerencial não auditada. Caixa operacional trimestral aumentou, mas o semestral caiu; caixa final trimestral cresceu e o semestre consumiu recursos. A geração hipotética sem amortização, dividendos e earn-out não é o caixa realizado. PPA preliminar e custos da combinação têm bases próprias.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Tecnologia de integração, manutenção e retorno das lojas competem com earn-outs, dívida e remuneração. O semestre inclui parcela caixa aos antigos acionistas de Petz e empréstimo a acionistas relacionados à discussão tributária. A alocação preliminar do preço e efeitos fiscais ainda estavam em avaliação. Base por ação e direitos precisam refletir a companhia combinada.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "Escala pode elevar complexidade e investimento sem recuperar produtividade. Lucro ajustado e caixa trimestral podem coexistir com consumo semestral causado pela combinação. Se os benefícios forem absorvidos por sistemas, direitos e financiamento, a consolidação não confirmará retorno ao titular.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Vendas comparáveis e margem por bandeira, marcas próprias e serviços; estoque, disponibilidade e integração de sistemas. Conciliar base pro forma, juros, aluguel, earn-outs, parcela caixa e empréstimos a acionistas. Confirmar PPA final, direitos, base por ação e retorno do capital após a combinação.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_PETZCOBASI.etr}}, custo do capital {{fact:val.BR_PETZCOBASI.ke}} e dispersão entre métodos {{fact:val.BR_PETZCOBASI.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_PETZCOBASI.etr",
+        "val.BR_PETZCOBASI.ke",
+        "val.BR_PETZCOBASI.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+    "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+    "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+    "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "A ponte entre base pro forma, história original e modelo por ação permanece pendente.",
+    "PPA final e efeitos tributários da combinação não foram comprovados.",
+    "Condições e recuperação dos empréstimos a acionistas exigem diligência.",
+    "Sinergias e retorno de integração e tecnologia precisam de comprovação.",
+    "Direitos, obrigações de ocupação e pagamentos contingentes exigem ponte completa.",
+    "Guidance agregado, percepção e posicionamento de mercado não foram comprovados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Petz Cobasi",
+      "titulo": "Negócio e materiais públicos do emissor",
+      "url": "https://ri.petzcobasi.com.br/nossa-historia/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Petz Cobasi",
+      "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/b06ff083-901c-4706-adda-d4b8c9344896/afb17ba9-abd1-dbc9-44fa-cb0ec4990ef0?origin=2",
+      "publicado_em": "2026-08-13",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Petz Cobasi",
+      "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/b06ff083-901c-4706-adda-d4b8c9344896/123a5728-3b78-6606-2bd4-df6474e8f488?origin=2",
+      "publicado_em": "2026-08-13",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

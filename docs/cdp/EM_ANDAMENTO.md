@@ -5,7 +5,7 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-## Estado atual das teses — 11/10/2026, 14:47 Brasília
+## Estado atual das teses — 11/10/2026, 15:03 Brasília
 
 O portal `8aea3f1` está publicado e foi conferido independentemente: 241 páginas,
 233 empresas e oito ETFs; 727 arquivos HTTP200 com tamanho e SHA iguais ao
@@ -23,12 +23,21 @@ nenhum erro ou falha, 4.507 casos únicos. Ruff passou; os 4.875 arquivos fixado
 e o commit permaneceram idênticos. Não há soma de execuções focais sobrepostas
 nem promoção da qualificação de outra frente privada.
 
-O ramo documental `codex/cdp-pesquisa-lote-2` tem 198 rascunhos entregues e validados em conjunto: oito ETFs e empresas de diferentes países e setores.
+O ramo documental `codex/cdp-pesquisa-lote-2` tem 206 rascunhos entregues e validados em conjunto: oito ETFs e empresas de diferentes países e setores.
 O índice de lotes em [notas/README.md](notas/README.md) registra os ativos,
 fontes e limites relevantes. A conferência conjunta preservou a renderização
 das doze notas históricas e os 4.122 arquivos operacionais. Os textos mantêm
-visão neutra, baixa convicção e lacunas próprias. Há 31 ativos ainda sem nota
+visão neutra, baixa convicção e lacunas próprias. Há 23 ativos ainda sem nota
 publicada ou rascunho individual; cobertura qualitativa completa continua aberta.
+
+Alpargatas, Grendene, Vulcabras, Vivara, Natura, PetzCobasi, Grupo SBF e
+Smart Fit acrescentam análise de marcas, canais e serviços. Os estudos
+preservam comparativos pro forma, perímetros, direitos de terceiros e
+financiamento. Alienação contratada, aquisição concluída e saldo condicionado
+têm estados próprios. O conjunto de 206 rascunhos passou na validação e
+renderização, preservando as doze notas históricas e os 4.122 arquivos
+operacionais; o limite permanece em doze por execução. Os testes documentais
+citados abaixo qualificam o conjunto anterior e o código inalterado.
 
 Assaí, GPA, Grupo Mateus, Magalu, Renner, C&A, Riachuelo e Azzas acrescentam
 análise de varejo e capital de giro. A homologação do GPA tem limites

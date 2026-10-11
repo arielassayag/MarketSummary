@@ -1,5 +1,12 @@
 # Rascunhos de notas de pesquisa entregues fora do clone das rotinas
 
+- Marcas e serviços: Alpargatas, Grendene, Vulcabras, Vivara, Natura,
+  PetzCobasi, Grupo SBF e Smart Fit. As teses distinguem venda ao canal e
+  consumo final, caixa industrial e participações imobiliárias, ajustes
+  gerenciais e custo completo. Natura e PetzCobasi preservam os novos
+  perímetros e bases pro forma; contratos, aquisições e desembolsos
+  condicionais mantêm seus estados e limites documentais.
+
 - Varejo: Assaí, GPA, Grupo Mateus, Magalu, Renner, C&A, Riachuelo e Azzas.
   As teses distinguem receita bruta e líquida, recomposição de estoque,
   resultado ajustado, juros, arrendamentos e antecipações de recebíveis.

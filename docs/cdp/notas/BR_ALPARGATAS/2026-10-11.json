@@ -1,0 +1,210 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_ALPARGATAS",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Alpargatas — recuperação operacional e distribuição internacional",
+  "resumo": "A hipótese é que serviço, mix e disciplina operacional recuperem margem e caixa de Havaianas. A condição decisiva é sustentar demanda final sem transferir estoque ou custo excessivo ao distribuidor. Crescimento internacional e lucro ajustado precisam ser conciliados com câmbio, mudança de canal, investimento e direitos por classe de ação. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_ALPARGATAS.rating_codigo}}, com retorno esperado {{fact:val.BR_ALPARGATAS.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Fabricante e gestora de Havaianas, com produção, distribuição e presença no Brasil e no exterior. Venda ao canal, venda direta e consumo final têm sazonalidades distintas. O modelo norte-americano de distribuição foi alterado; evolução de volume e preço precisa preservar essa base. Produtos infantis e novas ocasiões de uso ampliam a marca, sem garantir demanda ou retorno de marketing.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que serviço, mix e disciplina operacional recuperem margem e caixa de Havaianas. A condição decisiva é sustentar demanda final sem transferir estoque ou custo excessivo ao distribuidor. Crescimento internacional e lucro ajustado precisam ser conciliados com câmbio, mudança de canal, investimento e direitos por classe de ação.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3",
+        "F4"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_ALPARGATAS.preco}} e alvo {{fact:val.BR_ALPARGATAS.preco_alvo}}, com potencial {{fact:val.BR_ALPARGATAS.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_ALPARGATAS.ke}} e retorno esperado {{fact:val.BR_ALPARGATAS.etr}}.",
+      "evidencias": [
+        "val.BR_ALPARGATAS.preco",
+        "val.BR_ALPARGATAS.preco_alvo",
+        "val.BR_ALPARGATAS.upside",
+        "val.BR_ALPARGATAS.ke",
+        "val.BR_ALPARGATAS.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Venda ao canal e ao consumidor, mix, serviço e estoque por região; receita e margem em moeda constante; despesas, capital de giro, caixa após juros e investimento. Distinguir sazonalidade norte-americana e reconhecimento de receita sob o novo distribuidor; conciliar classes de ação e base do modelo.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_ALPARGATAS.ke}} e a dispersão entre métodos {{fact:val.BR_ALPARGATAS.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_ALPARGATAS.ke",
+        "val.BR_ALPARGATAS.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Divulgação programada de resultados no calendário do emissor, sujeita a confirmação.",
+      "data": "2026-11-06",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F4"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Consumo, competição e estoques podem exigir remarcação. Distribuidor internacional, câmbio e sazonalidade alteram receita e margem. Investimento em marca e expansão pode consumir caixa antes da demanda; ajustes gerenciais e classes de ação exigem conciliação.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F4"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_ALPARGATAS.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_ALPARGATAS.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Serviço, mix e demanda final sustentam margem, com estoque disciplinado e caixa após custo completo; a distribuição internacional amplia alcance com retorno demonstrado. O cenário otimista calculado pelo código é {{fact:val.BR_ALPARGATAS.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_ALPARGATAS.preco_alvo}}, com retorno esperado {{fact:val.BR_ALPARGATAS.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Consumo e canais enfraquecem, marketing e estoque absorvem recursos e a mudança internacional reduz rentabilidade; ajustes não se convertem em caixa atribuível. O cenário pessimista calculado pelo código é {{fact:val.BR_ALPARGATAS.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_ALPARGATAS.preco}} e alvo do modelo aberto {{fact:val.BR_ALPARGATAS.preco_alvo}}, com potencial {{fact:val.BR_ALPARGATAS.upside}}. Retorno total esperado {{fact:val.BR_ALPARGATAS.etr}} e custo do capital próprio {{fact:val.BR_ALPARGATAS.ke}}. A dispersão entre métodos é {{fact:val.BR_ALPARGATAS.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_ALPARGATAS.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_ALPARGATAS.consenso_alvo}}; a diferença {{fact:val.BR_ALPARGATAS.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "A apresentação do trimestre mostra crescimento anual de volume, receita e EBITDA, com melhora de margens. O mercado norte-americano apresentou queda trimestral de volume e receita após alteração do modelo de distribuição, apesar de volume semestral maior. Europa e mercados distribuidores possuem dinâmicas diferentes. A reconciliação completa de caixa, itens extraordinários e passivos permanece pendente. O calendário contém divulgação futura programada; não comprova publicação já realizada ou resultado futuro.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "A análise utiliza a apresentação original entregue à CVM e calendário público do emissor. O RI recusou o acesso, sem contorno; não foi atribuída leitura a esse portal. Classes de ação, partes relacionadas, controle e capital precisam ser confrontados com o modelo. A data de publicação específica da apresentação não foi inferida do calendário da conferência.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Marca, distribuição e reconhecimento podem sustentar recorrência e preço. A apresentação relata evolução do atendimento e de participação de mercado, sem comprovação independente da base subjacente. No exterior, expansão de portas e venda ao distribuidor não comprovam giro ao consumidor nem margem equivalente ao modelo anterior.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Volume, receita e EBITDA cresceram anualmente na apresentação, com melhora da margem bruta. EBITDA ajustado exclui itens extraordinários. A operação norte-americana teve menor volume e receita trimestrais, apesar do avanço semestral do volume, após mudança do modelo. Gráficos de caixa e capital de giro não substituem conciliação integral das demonstrações e notas.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Manutenção, desenvolvimento de produto e capital de giro competem com distribuição e marketing. O material relata disciplina de investimento e redução do consumo de giro frente ao comparável. A tese exige caixa depois de juros e reinvestimento, com ponte entre capital, classes de ação e valor atribuível. Indicador de retorno informado não comprova rentabilidade de cada iniciativa.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F4"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A marca pode recuperar venda ao canal sem recuperação equivalente do consumo final. Mudanças no distribuidor podem antecipar pedidos ou reduzir receita por par. Se margem depender de mix temporário ou corte de investimento, melhora operacional não confirmará retorno sustentável ao titular.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F4"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Venda ao canal e ao consumidor, mix, serviço e estoque por região; receita e margem em moeda constante; despesas, capital de giro, caixa após juros e investimento. Distinguir sazonalidade norte-americana e reconhecimento de receita sob o novo distribuidor; conciliar classes de ação e base do modelo.",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F4"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_ALPARGATAS.etr}}, custo do capital {{fact:val.BR_ALPARGATAS.ke}} e dispersão entre métodos {{fact:val.BR_ALPARGATAS.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_ALPARGATAS.etr",
+        "val.BR_ALPARGATAS.ke",
+        "val.BR_ALPARGATAS.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+    "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+    "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+    "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "O portal de RI recusou acesso; nenhuma cópia foi obtida ou bloqueio contornado.",
+    "Release integral, ITR e notas não foram reconciliados nesta pesquisa.",
+    "A publicação específica da apresentação não foi comprovada.",
+    "Caixa após juros, passivos e retorno de projetos precisam de conciliação.",
+    "Mudança do distribuidor norte-americano e classes de ação exigem análise contratual.",
+    "Participação de mercado, guidance agregado e posicionamento não foram comprovados integralmente."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Alpargatas",
+      "titulo": "Apresentação original: negócio e canais",
+      "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1553887&numSequencia=1078593&numVersao=1",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Alpargatas",
+      "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+      "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1553887&numSequencia=1078593&numVersao=1",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Alpargatas",
+      "titulo": "Apresentação original entregue à CVM: indicadores e capital de giro",
+      "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1553887&numSequencia=1078593&numVersao=1",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F4",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Alpargatas",
+      "titulo": "Calendário anual público de eventos",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/a8ec6c13-3ef3-4e4a-9879-c684188aa2cb/4065bc59-48c5-3aff-b5ad-c2dfad8063e5?origin=2",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

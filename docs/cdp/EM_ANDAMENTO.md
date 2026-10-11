@@ -5,7 +5,7 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-## Estado atual das teses — 11/10/2026, 12:41 Brasília
+## Estado atual das teses — 11/10/2026, 13:02 Brasília
 
 O portal `8aea3f1` está publicado e foi conferido independentemente: 241 páginas,
 233 empresas e oito ETFs; 727 arquivos HTTP200 com tamanho e SHA iguais ao
@@ -23,12 +23,12 @@ nenhum erro ou falha, 4.507 casos únicos. Ruff passou; os 4.875 arquivos fixado
 e o commit permaneceram idênticos. Não há soma de execuções focais sobrepostas
 nem promoção da qualificação de outra frente privada.
 
-O ramo documental `codex/cdp-pesquisa-lote-2` tem 165 rascunhos entregues e
+O ramo documental `codex/cdp-pesquisa-lote-2` tem 170 rascunhos entregues e
 validados em conjunto: oito ETFs e empresas de diferentes países e setores.
 O índice de lotes em [notas/README.md](notas/README.md) registra os ativos,
 fontes e limites relevantes. A conferência conjunta preservou a renderização
 das doze notas históricas e os 4.122 arquivos operacionais. Os textos mantêm
-visão neutra, baixa convicção e lacunas próprias. Há 64 ativos ainda sem nota
+visão neutra, baixa convicção e lacunas próprias. Há 59 ativos ainda sem nota
 publicada ou rascunho individual; cobertura qualitativa completa continua aberta.
 
 Os novos estudos incluem bancos e seguros mexicanos, imóveis e concessões,
@@ -134,6 +134,18 @@ janela anual da nota. O conjunto de 165 rascunhos passou na validação nativa;
 os testes documentais tiveram 273 aprovados e um pulado, 274 casos únicos,
 sem erro ou falha. As doze renderizações históricas e os arquivos operacionais
 permaneceram idênticos.
+
+Cury, Direcional, Eztec, Plano&Plano e Tenda acrescentam análise de safras,
+repasses, crédito direto e capital. Vendas, receita por avanço de obra e caixa
+têm etapas próprias. Cury preserva a prévia com repasses menores; Direcional
+separa cessões e confirma integralização indicada no encerramento da oferta.
+Eztec documenta locação assinada com vigência conforme entrega, enquanto
+Plano&Plano mantém recebimentos pendentes e inconsistência de margem na fonte.
+Tenda preserva direções diferentes das projeções por segmento e mudança da
+metodologia de margem a apropriar. O conjunto de 170 rascunhos passou na
+validação nativa, preservando as doze notas históricas e os arquivos operacionais.
+Os testes documentais, de teses e do site tiveram 286 aprovados e um pulado,
+287 casos únicos, sem falha ou erro. Ruff passou.
 
 A pesquisa distingue resultado recorrente, medidas gerenciais, inflação, moeda,
 capital por entidade e recursos atribuíveis ao acionista. Reorganização anunciada,

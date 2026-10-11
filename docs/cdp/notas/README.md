@@ -74,6 +74,12 @@ histórica. A análise da Cemig não incorpora mudança de controle não confirm
 
 ## Lotes seguintes de empresas em 11/10/2026
 
+- `BR_CURY`, `BR_DIRECIONAL`, `BR_EZTEC`, `BR_PLANO` e `BR_TENDA`:
+  safras, crédito, repasses e capital. Cury distingue prévia e caixa gerencial;
+  Direcional preserva risco retido nas cessões e a integralização da oferta.
+  Eztec documenta locação contratada com vigência conforme entrega. Plano&Plano
+  mantém recebimentos pendentes e divergência de margem na fonte. Tenda separa
+  projeções por segmento, mudança metodológica e risco de crédito pós-chaves.
 - `BR_BRASKEM`, `BR_UNIPAR`, `BR_ULTRAPAR` e `BR_VIBRA`: ciclo industrial,
   distribuição, dívida e caixa disponível. Braskem distingue continuidade
   operacional, consolidação processual e limites da proteção judicial; a OPA

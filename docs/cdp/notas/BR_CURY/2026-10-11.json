@@ -1,0 +1,251 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_CURY",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Cury — crédito associativo, produtividade e caixa atribuível",
+  "resumo": "A hipótese é que seleção de terrenos, produtividade e crédito associativo sustentem retorno por ação depois de construção, aquisição de áreas, tributos e financiamento. A condição decisiva é conciliar velocidade comercial e produção com caixa atribuível, sem depender de crescimento da carteira financiada pela incorporadora. A concentração regional pode apoiar escala operacional, mas amplia exposição a preço, renda, crédito e aprovações locais. Rentabilidade elevada exige confirmação ao longo das safras, sem extrapolar margens ou tratar resultado ainda a apropriar como recurso recebido. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_CURY.rating_codigo}}, com retorno esperado {{fact:val.BR_CURY.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Incorporadora e construtora residencial concentrada nas regiões metropolitanas de São Paulo e Rio de Janeiro, com produtos enquadrados no Minha Casa Minha Vida e outras linhas habitacionais. Seleção de terrenos, comercialização própria, padronização e crédito associativo integram a operação. A contratação bancária do comprador permite repasses durante a construção, mas mantém dependência de elegibilidade, registro e execução. Participações em projetos e financiamento direto têm direitos e riscos distintos.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que seleção de terrenos, produtividade e crédito associativo sustentem retorno por ação depois de construção, aquisição de áreas, tributos e financiamento. A condição decisiva é conciliar velocidade comercial e produção com caixa atribuível, sem depender de crescimento da carteira financiada pela incorporadora. A concentração regional pode apoiar escala operacional, mas amplia exposição a preço, renda, crédito e aprovações locais. Rentabilidade elevada exige confirmação ao longo das safras, sem extrapolar margens ou tratar resultado ainda a apropriar como recurso recebido.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F6"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_CURY.preco}} e alvo {{fact:val.BR_CURY.preco_alvo}}, com potencial {{fact:val.BR_CURY.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_CURY.ke}} e retorno esperado {{fact:val.BR_CURY.etr}}.",
+      "evidencias": [
+        "val.BR_CURY.preco",
+        "val.BR_CURY.preco_alvo",
+        "val.BR_CURY.upside",
+        "val.BR_CURY.ke",
+        "val.BR_CURY.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar vendas, distratos, produção, custo por safra e repasses, preservando participação econômica. Conciliar fluxo gerencial e contábil, giro, terrenos, crédito direto e recursos restritos. Verificar inadimplência, direitos, dívida, derivativos e dividendos efetivamente pagos antes de inferir caixa distribuível.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_CURY.ke}} e a dispersão entre métodos {{fact:val.BR_CURY.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_CURY.ke",
+        "val.BR_CURY.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Resultados financeiros posteriores à prévia: conciliar menor repasse, produção, margem e caixa gerencial com a demonstração dos fluxos.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F4"
+      ]
+    },
+    {
+      "descricao": "Revisão dos direitos societários e da distribuição depois de mudanças na participação de acionista relevante.",
+      "data": null,
+      "tipo": "capital",
+      "direcao": "incerto",
+      "evidencias": [
+        "F5",
+        "F6"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Crédito, elegibilidade, renda e concentração regional podem limitar vendas e repasses. Obra, inflação e carteira direta exigem capital. Margem ajustada e geração gerencial não garantem caixa livre por ação.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F6"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_CURY.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_CURY.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Seleção, construção e registros sustentam absorção e recebimento, com caixa depois de terrenos e financiamento remunerando o acionista e preservando capital. O cenário otimista calculado pelo código é {{fact:val.BR_CURY.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_CURY.preco_alvo}}, com retorno esperado {{fact:val.BR_CURY.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Crédito e repasses desaceleram, custos aumentam e a carteira direta absorve recursos, limitando distribuição e retorno por ação. O cenário pessimista calculado pelo código é {{fact:val.BR_CURY.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_CURY.preco}} e alvo do modelo aberto {{fact:val.BR_CURY.preco_alvo}}, com potencial {{fact:val.BR_CURY.upside}}. Retorno total esperado {{fact:val.BR_CURY.etr}} e custo do capital próprio {{fact:val.BR_CURY.ke}}. A dispersão entre métodos é {{fact:val.BR_CURY.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_CURY.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_CURY.consenso_alvo}}; a diferença {{fact:val.BR_CURY.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "O trimestre distingue receita recorde, lucro integral e atribuível e menor margem sequencial. O financiamento direto e o pró-soluto ampliam a carteira administrada, que não é igual ao saldo contábil reconhecido por avanço da obra. A prévia posterior registra produção maior e repasses menores, com geração de caixa gerencial positiva; é preliminar e sujeita a revisão. O glossário caracteriza EBITDA como geração de caixa, mas a nota preserva a distinção contábil. Esses eventos posteriores não foram incorporados retrospectivamente ao modelo recebido.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "A revisão intermediária tem alcance inferior à auditoria anual. Lucro de projeto, participação societária, ação emitida e base diluída exigem conciliação. A notificação de alienação de Cyrela inclui declaração de que não pretende alterar controle ou administração; isso não substitui leitura do acordo vigente. O aviso de dividendos estabelece direitos e procedimentos próprios, sem comprovar pagamento. O perfil institucional pode refletir estrutura anterior; a direção atual e as partes relacionadas exigem documento atualizado.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Produto adaptado ao público, terrenos próximos a transporte, canais próprios e execução padronizada podem apoiar absorção e custo. Crédito associativo reduz determinadas necessidades de giro, sem eliminar risco de obras, registro e financiamento. Capacidade de lançar não prova vantagem de preço nem velocidade permanente de vendas. A concorrência deve ser aferida por localização, faixa de renda, custo completo e recebimento efetivo. Posição declarada pela companhia permanece distinta de comparação independente.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "A receita cresce no trimestre, enquanto EBITDA e lucro atribuível melhoram anualmente e recuam sequencialmente. Juros capitalizados são excluídos de medidas ajustadas, mas permanecem custo econômico. O lucro integral dos projetos não pertence integralmente à Cury. A geração gerencial de caixa melhora, com base distinta da demonstração dos fluxos. Contas a receber, terrenos e tributos consomem recursos; garantias do financiamento direto não equivalem a liquidez imediata. A prévia posterior mostra geração gerencial positiva com repasses menores, exigindo ponte própria.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F4"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "O balanço mantém caixa líquido, com dívida, aplicações e derivativos em bases específicas. Essa posição não demonstra que todos os recursos sejam livres para distribuição por entidade. Terrenos e carteira de venda direta exigem capital e avaliação de risco. Dividendos declarados depois do trimestre têm data prevista de pagamento passada na consulta, sem comprovação da liquidação. A alienação de participação comunicada por Cyrela é negociação do acionista; não é captação pela Cury nem prova de alteração do controle.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F4",
+      "F5",
+      "F6"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se menor velocidade comercial e repasses exigirem mais financiamento direto, sem retorno proporcional ao risco de crédito. Produtividade pode coexistir com custo de terreno maior ou margens menores nas novas safras. Crescimento do resultado a apropriar não assegura conclusão das obras, ausência de distratos ou recebimento. A distribuição pode superar recursos recorrentes atribuíveis; a comparação exige controlar minoritários, instrumentos financeiros e bases de caixa.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F4",
+      "F5",
+      "F6"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Acompanhar vendas, distratos, produção, custo por safra e repasses, preservando participação econômica. Conciliar fluxo gerencial e contábil, giro, terrenos, crédito direto e recursos restritos. Verificar inadimplência, direitos, dívida, derivativos e dividendos efetivamente pagos antes de inferir caixa distribuível.",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F6"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_CURY.etr}}, custo do capital {{fact:val.BR_CURY.ke}} e dispersão entre métodos {{fact:val.BR_CURY.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_CURY.etr",
+        "val.BR_CURY.ke",
+        "val.BR_CURY.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Menor repasse e velocidade comercial ampliam exposição ao crédito direto sem retorno suficiente.",
+    "Margens das novas safras e custo completo não sustentam rentabilidade atribuível.",
+    "Distribuição e terrenos consomem caixa recorrente depois de obrigações.",
+    "Novos documentos alteram participação, direitos ou conciliação do fluxo gerencial."
+  ],
+  "lacunas_de_dados": [
+    "Fluxo gerencial e demonstração dos fluxos não foram integralmente reconciliados por trimestre e entidade.",
+    "Prévia operacional posterior permanece sujeita a revisão; demonstrações desse período ainda não foram avaliadas.",
+    "Crédito direto, cessões, perdas esperadas e recursos restritos precisam de ponte completa.",
+    "Liquidação dos dividendos declarados não foi comprovada.",
+    "Estrutura atual da direção e acordo societário vigente não foram integralmente reconciliados.",
+    "Participação relativa, guidance agregado, tom e percepção do mercado permanecem não determinados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Cury",
+      "titulo": "Perfil: habitação, concentração regional e modelo construtivo",
+      "url": "https://ri.cury.net/sobre-a-cury/perfil-corporativo/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Cury",
+      "titulo": "Resultado trimestral: vendas, produção, repasses, lucro e capital",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/702b9586-4f10-4a79-a7e6-232ce8803136/8ffb3865-6cf8-f750-d1d6-aafbd22c8925?origin=2",
+      "publicado_em": "2026-08-11",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Cury",
+      "titulo": "Demonstrações intermediárias e revisão: caixa, crédito, minoritários e obrigações",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/702b9586-4f10-4a79-a7e6-232ce8803136/590697f6-8927-fdf1-226d-6dba73851671?origin=2",
+      "publicado_em": "2026-08-26",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F4",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Cury",
+      "titulo": "Prévia operacional posterior: vendas, repasses, produção e caixa gerencial",
+      "url": "https://filemanager-cdn.mziq.com/published/702b9586-4f10-4a79-a7e6-232ce8803136/dc1d8384-e9b1-4272-8db0-1fade2c4f712",
+      "publicado_em": "2026-10-08",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F5",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Cury",
+      "titulo": "Declaração de dividendos, direitos e pagamento previsto",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/702b9586-4f10-4a79-a7e6-232ce8803136/3774e7bc-ecdb-890b-0256-a9dc66841f5d?origin=2",
+      "publicado_em": "2026-08-11",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F6",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Cury",
+      "titulo": "Alienação de participação por Cyrela e declaração sobre controle",
+      "url": "https://filemanager-cdn.mziq.com/published/702b9586-4f10-4a79-a7e6-232ce8803136/7110129e-c7f1-4b65-b0c1-c28c661a2f89",
+      "publicado_em": "2026-10-09",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

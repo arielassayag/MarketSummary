@@ -1,0 +1,252 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_EZTEC",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Eztec — safras residenciais, financiamento direto e locação contratada",
+  "resumo": "A hipótese é que escolha de áreas, disciplina de lançamento e execução das safras sustentem retorno depois de capital, crédito e custos completos. A condição decisiva é converter estoque e contratos em caixa atribuível, mantendo rentabilidade após normalização de itens específicos e receitas financeiras. A expansão para renda média pode ampliar absorção, mas requer testar preço, financiamento e margem por safra. A locação de Esther Towers reduz determinada incerteza comercial, enquanto preserva riscos de entrega, investimento e início escalonado de receita. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_EZTEC.rating_codigo}}, com retorno esperado {{fact:val.BR_EZTEC.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Incorporadora e construtora com projetos residenciais de diferentes padrões e ativos comerciais na região metropolitana de São Paulo. Empreendimentos consolidados, controlados em conjunto e participações têm bases distintas de resultado. A companhia financia diretamente compradores de estoque pronto por alienação fiduciária; juros e correção integram o resultado, com risco de crédito e duração próprios. A plataforma comercial inclui ativos cuja monetização pode ocorrer por venda ou locação, sujeitos a obra e entrega.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que escolha de áreas, disciplina de lançamento e execução das safras sustentem retorno depois de capital, crédito e custos completos. A condição decisiva é converter estoque e contratos em caixa atribuível, mantendo rentabilidade após normalização de itens específicos e receitas financeiras. A expansão para renda média pode ampliar absorção, mas requer testar preço, financiamento e margem por safra. A locação de Esther Towers reduz determinada incerteza comercial, enquanto preserva riscos de entrega, investimento e início escalonado de receita.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F6"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_EZTEC.preco}} e alvo {{fact:val.BR_EZTEC.preco_alvo}}, com potencial {{fact:val.BR_EZTEC.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_EZTEC.ke}} e retorno esperado {{fact:val.BR_EZTEC.etr}}.",
+      "evidencias": [
+        "val.BR_EZTEC.preco",
+        "val.BR_EZTEC.preco_alvo",
+        "val.BR_EZTEC.upside",
+        "val.BR_EZTEC.ke",
+        "val.BR_EZTEC.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar absorção por safra, distratos comparáveis, estoque pronto, custo e margem após itens específicos. Conciliar equivalência, crédito fiduciário, perdas, caixa restrito e dívida. Verificar entregas de Esther Towers, vigência escalonada, investimento e recebimento do aluguel antes de inferir retorno atribuível.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_EZTEC.ke}} e a dispersão entre métodos {{fact:val.BR_EZTEC.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_EZTEC.ke",
+        "val.BR_EZTEC.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Entregas e início escalonado da locação de Esther Towers; verificar investimento restante, recebimento e direitos econômicos.",
+      "data": null,
+      "tipo": "outro",
+      "direcao": "incerto",
+      "evidencias": [
+        "F5",
+        "F6"
+      ]
+    },
+    {
+      "descricao": "Resultado posterior à prévia: conciliar absorção, estoque, safras, receitas financeiras e caixa.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F4"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Juros, crédito, estoque e concentração regional podem reduzir conversão em caixa. Receitas financeiras e monetizações têm recorrência própria. A locação mantém risco de entrega e capital; liquidez restrita e participações limitam distribuição.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F6"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_EZTEC.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_EZTEC.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Absorção e execução sustentam margens após normalização, estoque converte em caixa com crédito controlado e locação começa conforme entrega, remunerando capital atribuível. O cenário otimista calculado pelo código é {{fact:val.BR_EZTEC.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_EZTEC.preco_alvo}}, com retorno esperado {{fact:val.BR_EZTEC.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Estoque e financiamento direto aumentam, margem normaliza e custos ou atrasos de ativos comerciais absorvem recursos, restringindo retorno ao acionista. O cenário pessimista calculado pelo código é {{fact:val.BR_EZTEC.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_EZTEC.preco}} e alvo do modelo aberto {{fact:val.BR_EZTEC.preco_alvo}}, com potencial {{fact:val.BR_EZTEC.upside}}. Retorno total esperado {{fact:val.BR_EZTEC.etr}} e custo do capital próprio {{fact:val.BR_EZTEC.ke}}. A dispersão entre métodos é {{fact:val.BR_EZTEC.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_EZTEC.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_EZTEC.consenso_alvo}}; a diferença {{fact:val.BR_EZTEC.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "O release reafirma a faixa de lançamentos, sem promover projeção a receita ou retorno. A margem e o lucro exigem retirar efeitos específicos e preservar equivalência, juros e crédito. A definição de distratos foi revisada para considerar vendas assinadas e pagas, exigindo comparabilidade própria. A prévia posterior mostra lançamentos anuais maiores, menor velocidade de vendas e estoque pronto menor sequencialmente, com estoque total maior. A contratação de aluguel sucedeu negociação condicional, sem comprovar início integral da vigência. Não há incorporação retrospectiva desses eventos ao modelo recebido.",
+  "guidance": "mantido",
+  "tom_gestao": "nd",
+  "governanca": "O estudo distingue Eztec, EZ INC e subsidiária titular do contrato de locação, preservando direitos por participação. Receita projetada no comunicado usa preços da data e correção prevista; não foi convertida em valor presente ou caixa recebido. Cancelamento de tesouraria e programa autorizado não comprovam recompra posterior. Dividendos anunciados têm direitos e pagamento previstos próprios; liquidação não foi reconciliada. Revisão intermediária não equivale a auditoria anual nem encerra risco de crédito e obra.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Marca, conhecimento regional e acesso a terrenos podem apoiar vendas. Ampliação de padrões e localidades exige comprovar que o produto encontra demanda sem concessões que eliminem retorno. Financiamento próprio pode facilitar venda de estoque, mas transfere crédito e duração para o balanço. Estoque pronto, em obras e lançamento têm necessidades diferentes. A vantagem não foi presumida a partir de premiações ou recordes; deve aparecer em margem depois de custo completo e recebimento por participação.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "A receita avança sequencialmente com entregas, economia em obras e venda de terreno. Indenização no período anterior e monetização de área têm ocorrência e magnitude variáveis. Resultado financeiro cresce, apoiado por aplicações e juros de recebíveis, sem ser margem de construção. Equivalência e lucro consolidado exigem participação própria. Caixa operacional do semestre melhora, mas variação líquida gerencial trimestral tem direção distinta e novas alienações fiduciárias absorvem recursos. O resultado a apropriar contém margens menores e não representa caixa recebido.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F4"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "A companhia mantém posição de caixa líquido gerencial pequena frente às disponibilidades e dívida brutas. Parte dos recursos está sob patrimônio de afetação; não é disponibilidade irrestrita para a holding. A carteira de crédito direto alonga recebimento e requer provisões. Recompra autorizada e cancelamento aprovado são estados diferentes de execução. O contrato de Esther Towers foi celebrado após negociação anunciada, com vigência escalonada conforme entrega; receita contratual acumulada não é dinheiro recebido nem valor presente calculado nesta nota.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F4",
+      "F5",
+      "F6"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se expansão de lançamentos conviver com menor absorção, estoques maiores e financiamento próprio crescente. Margem de obras beneficiada por economia de entrega ou venda de terreno pode não persistir. Receita financeira pode mascarar retorno imobiliário insuficiente. O aluguel contratado não elimina investimento restante nem garante início simultâneo de receita; atraso, custo ou concentração no locatário podem limitar a monetização. A liquidez deve sobreviver a dívida, patrimônios de afetação e direitos dos sócios.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F4",
+      "F5",
+      "F6"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Acompanhar absorção por safra, distratos comparáveis, estoque pronto, custo e margem após itens específicos. Conciliar equivalência, crédito fiduciário, perdas, caixa restrito e dívida. Verificar entregas de Esther Towers, vigência escalonada, investimento e recebimento do aluguel antes de inferir retorno atribuível.",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F6"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_EZTEC.etr}}, custo do capital {{fact:val.BR_EZTEC.ke}} e dispersão entre métodos {{fact:val.BR_EZTEC.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_EZTEC.etr",
+        "val.BR_EZTEC.ke",
+        "val.BR_EZTEC.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Absorção menor e crédito próprio crescente impedem conversão do estoque em caixa.",
+    "Margem recorrente depois de eventos específicos não remunera capital e custo completo.",
+    "Entrega e investimento de Esther Towers divergem do contrato e limitam retorno.",
+    "Novas bases de distratos, participação ou liquidez modificam a leitura econômica."
+  ],
+  "lacunas_de_dados": [
+    "Resultado normalizado por safra, equivalência e caixa não foi integralmente reconciliado.",
+    "Definição revisada de distratos exige ponte comparável; diferenças de bases entre release e prévia não foram corrigidas na fonte.",
+    "Crédito fiduciário, perdas esperadas e duração dos recebíveis precisam de conciliação completa.",
+    "Cronograma atualizado, investimento restante e início de vigência de cada torre não foram comprovados.",
+    "Contrato integral de locação e garantias não foram examinados; comunicado não encerra diligência contratual.",
+    "Execução da recompra e liquidação dos dividendos anunciados não foram conciliadas.",
+    "Tom, desempenho relativo e percepção do mercado permanecem não determinados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Eztec",
+      "titulo": "Portal institucional: segmentos, projetos e materiais financeiros",
+      "url": "https://ri.eztec.com.br/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Eztec",
+      "titulo": "Resultado trimestral: safras, equivalência, carteira e eventos específicos",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/653fada3-cbcd-4015-9a94-2149f610a321/d9ba377b-edc4-66e1-f2e0-486d36b481bf?origin=2",
+      "publicado_em": "2026-08-06",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Eztec",
+      "titulo": "Informações intermediárias: fluxo, participações e revisão",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/653fada3-cbcd-4015-9a94-2149f610a321/dee110fd-95b4-cffe-2cf1-1012b0c96c81?origin=2",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F4",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Eztec",
+      "titulo": "Prévia operacional posterior: absorção, estoque e empreendimentos",
+      "url": "https://filemanager-cdn.mziq.com/published/653fada3-cbcd-4015-9a94-2149f610a321/8a6db535-6a8b-4d72-a400-4cbb2591da5e",
+      "publicado_em": "2026-10-09",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F5",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Eztec",
+      "titulo": "Negociações avançadas para locação de Esther Towers",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/653fada3-cbcd-4015-9a94-2149f610a321/659f97aa-9a27-b141-9bd5-f3b2f8b5828c?origin=2",
+      "publicado_em": "2026-09-01",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F6",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Eztec e EZ INC",
+      "titulo": "Celebração da locação de Esther Towers e vigência conforme entrega",
+      "url": "https://filemanager-cdn.mziq.com/published/653fada3-cbcd-4015-9a94-2149f610a321/00f5a5fb-714c-4ad5-a1ac-2f8a230d31cf",
+      "publicado_em": "2026-09-17",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

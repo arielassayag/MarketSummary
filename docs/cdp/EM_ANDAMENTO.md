@@ -41,6 +41,10 @@ O Pages de `11afdb8` recusou a montagem, embora a verificação desse snapshot p
 nos ambientes locais privados com Python de séries distintas. A recusa não foi
 contornada: o diagnóstico do site agora mostra todas as mensagens da verificação,
 e a qualificação Linux ocorre em PR de desenvolvimento antes de integrar em `main`.
+O primeiro job operacional Linux do PR identificou a recusa nas medidas recalculadas
+do risco diário efetivo e sombra de 09/10; todos os outros componentes passaram.
+A comparação das medidas é literal. O diagnóstico dos valores, ainda em andamento,
+precede qualquer correção: não há tolerância nova, bypass ou alteração dos anexos.
 
 ## Registro anterior das teses — 11/10/2026, 16:38 Brasília
 

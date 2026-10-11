@@ -478,8 +478,13 @@ def verify(track, *, market_loader=None, market_root=None) -> list[str]:
             if k != obj["kappa_f"] or info != obj["kappa_info"]:
                 raise ValueError("κ_F arquivado não recalcula na base")
             for n in ("base", "evento"):
-                if measures(models[n], w, required, obj["kappa_f"]) != obj["measures"][n]:
-                    raise ValueError("medidas base/evento não recalculam")
+                computed = measures(models[n], w, required, obj["kappa_f"])
+                archived = obj["measures"][n]
+                if computed != archived:
+                    raise ValueError(
+                        "medidas base/evento não recalculam: "
+                        + text({"modelo": n, "computed": computed, "archived": archived})
+                    )
             if models["base"] is not None:
                 event_model = apply_event_windows(
                     models["base"], pd.Series(obj["countries"]), cfg, record.date

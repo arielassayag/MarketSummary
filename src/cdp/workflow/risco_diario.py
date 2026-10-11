@@ -180,6 +180,61 @@ def measures(model: RiskModel | None, w: pd.Series, required: list[str], kappa: 
     }
 
 
+def _measure_metadata_equal(left: Any, right: Any) -> bool:
+    """Metadados JSON iguais por tipo/valor; nenhuma tolerância fora dos derivados."""
+    if type(left) is not type(right):
+        return False
+    if type(left) is dict:
+        return (
+            all(type(k) is str for k in left)
+            and all(type(k) is str for k in right)
+            and left.keys() == right.keys()
+            and all(_measure_metadata_equal(left[k], right[k]) for k in left)
+        )
+    if type(left) is list:
+        return len(left) == len(right) and all(
+            _measure_metadata_equal(a, b) for a, b in zip(left, right, strict=True)
+        )
+    if type(left) is float and not math.isfinite(left):
+        return False
+    return type(left) in (type(None), bool, int, float, str) and left == right
+
+
+def _measures_equal(computed: dict, archived: dict) -> bool:
+    """Seis derivados usam a política DailyRisk; chaves e demais campos são exatos."""
+    if (
+        type(computed) is not dict
+        or type(archived) is not dict
+        or any(type(k) is not str for k in computed)
+        or any(type(k) is not str for k in archived)
+        or computed.keys() != archived.keys()
+    ):
+        return False
+    numeric = {"vol", "vol_kf", "factor_vol", "specific_vol", "idio", "idio_kf"}
+    for name, current in computed.items():
+        saved = archived[name]
+        if name not in numeric:
+            if not _measure_metadata_equal(current, saved):
+                return False
+            continue
+        if current is None or saved is None:
+            if current is not saved:
+                return False
+            continue
+        if type(current) not in (int, float) or type(saved) not in (int, float):
+            return False
+        try:
+            if (
+                not math.isfinite(current)
+                or not math.isfinite(saved)
+                or not math.isclose(current, saved, rel_tol=1e-12, abs_tol=1e-14)
+            ):
+                return False
+        except OverflowError:
+            return False
+    return True
+
+
 def build(
     ctx, cfg: FundConfig, positions, nav: float, model_prev, md_prev=None, *, previous_sources=None
 ) -> dict:
@@ -480,7 +535,7 @@ def verify(track, *, market_loader=None, market_root=None) -> list[str]:
             for n in ("base", "evento"):
                 computed = measures(models[n], w, required, obj["kappa_f"])
                 archived = obj["measures"][n]
-                if computed != archived:
+                if not _measures_equal(computed, archived):
                     raise ValueError(
                         "medidas base/evento não recalculam: "
                         + text({"modelo": n, "computed": computed, "archived": archived})

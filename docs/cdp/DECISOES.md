@@ -1018,3 +1018,18 @@ de pesquisa do portal e preservando ambas as datas. Não se recertifica PIT nem 
 o valuation. Na carteira, registro diário e proposta, risco diário e ex-ante e memória
 da mesma semana ficam separados. Ausentes continuam `n/d`; sinais e excessos de limites
 não são ocultados. Os renderizadores não aprovam decisões nem alteram mandato ou posições.
+
+## 2026-10-11 · Recalcular risco entre ambientes sem alterar o arquivo autenticado
+
+Contexto: o job Linux recusou medidas arquivadas do risco diário efetivo e sombra,
+enquanto as verificações locais passaram no mesmo snapshot. O diagnóstico integral
+quantificou por código quatro diferenças finitas de uma ou duas ULPs no modelo base;
+os demais valores e metadados comparados eram iguais. Não se atribuiu uma operação
+específica de backend como causa. → Decisão: comparar somente `vol`, `vol_kf`,
+`factor_vol`, `specific_vol`, `idio` e `idio_kf` com a política já usada no `DailyRisk`
+(`math.isclose`, `rel_tol=1e-12`, `abs_tol=1e-14`), exigindo números finitos e ausências
+simétricas. → Consequências: chaves, tipos de metadados, listas, completude, matrizes,
+configuração, pesos, NAV, cortes, fontes, eventos e hashes mantêm seus controles;
+diferença material continua sendo recusa com diagnóstico completo. Isso não altera
+o cálculo financeiro, o mandato, gates ou bytes imutáveis. A integração depende dos
+testes de regressão e da verificação Linux, incluindo os controles posteriores.

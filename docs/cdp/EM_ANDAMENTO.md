@@ -43,8 +43,11 @@ contornada: o diagnóstico do site agora mostra todas as mensagens da verificaç
 e a qualificação Linux ocorre em PR de desenvolvimento antes de integrar em `main`.
 O primeiro job operacional Linux do PR identificou a recusa nas medidas recalculadas
 do risco diário efetivo e sombra de 09/10; todos os outros componentes passaram.
-A comparação das medidas é literal. O diagnóstico dos valores, ainda em andamento,
-precede qualquer correção: não há tolerância nova, bypass ou alteração dos anexos.
+A comparação literal recusou quatro diferenças finitas de uma ou duas ULPs,
+quantificadas por código a partir dos pares completos do job Linux. A correção em
+qualificação alinha apenas os seis derivados à política já usada no `DailyRisk`;
+metadados, ausências e autenticação permanecem estritos. Não foi identificada a
+operação de backend responsável por cada arredondamento; não há alteração dos anexos.
 
 ## Registro anterior das teses — 11/10/2026, 16:38 Brasília
 

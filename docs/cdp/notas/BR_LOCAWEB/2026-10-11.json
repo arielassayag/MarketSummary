@@ -1,0 +1,196 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_LOCAWEB",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "LWSA — monetização, comparabilidade e caixa depois da integração",
+  "resumo": "A hipótese é que integração e monetização sustentem retenção e caixa depois de desenvolvimento e ocupação. A condição decisiva é remunerar aquisição de clientes e capital empregado sem confundir volume com receita. Reclassificação de custos financeiros e ajustes do perímetro precisam preservar a comparação econômica. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_LOCAWEB.rating_codigo}}, com retorno esperado {{fact:val.BR_LOCAWEB.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Grupo de software e serviços digitais para comércio eletrônico e presença on-line. Commerce combina plataformas, logística, pagamentos e soluções para lojistas; BeOnline e SaaS possuem clientes e ciclos distintos. Volume vendido ou processado não equivale à receita própria, e alienações modificam o perímetro comparável.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que integração e monetização sustentem retenção e caixa depois de desenvolvimento e ocupação. A condição decisiva é remunerar aquisição de clientes e capital empregado sem confundir volume com receita. Reclassificação de custos financeiros e ajustes do perímetro precisam preservar a comparação econômica.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_LOCAWEB.preco}} e alvo {{fact:val.BR_LOCAWEB.preco_alvo}}, com potencial {{fact:val.BR_LOCAWEB.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_LOCAWEB.ke}} e retorno esperado {{fact:val.BR_LOCAWEB.etr}}.",
+      "evidencias": [
+        "val.BR_LOCAWEB.preco",
+        "val.BR_LOCAWEB.preco_alvo",
+        "val.BR_LOCAWEB.upside",
+        "val.BR_LOCAWEB.ke",
+        "val.BR_LOCAWEB.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Retenção, receita, preço, clientes e monetização por plataforma; volume e taxa efetiva de pagamentos. Conciliar bases sem ativos vendidos, antecipações, giro, desenvolvimento, aluguel e earn-outs. Verificar caixa por entidade e retorno das integrações.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_LOCAWEB.ke}} e a dispersão entre métodos {{fact:val.BR_LOCAWEB.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_LOCAWEB.ke",
+        "val.BR_LOCAWEB.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Próximos resultados: testar retenção, monetização e caixa após obrigações.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Churn, concorrência e monetização podem reduzir receita e margem. Desenvolvimento e aquisições absorvem caixa. Reclassificações financeiras, perímetro e antecipações alteram comparabilidade, enquanto aluguel e earn-outs restringem liquidez.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_LOCAWEB.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_LOCAWEB.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Retenção e integração sustentam receita própria, com desenvolvimento e giro disciplinados; caixa após ocupação e aquisições remunera o capital. O cenário otimista calculado pelo código é {{fact:val.BR_LOCAWEB.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_LOCAWEB.preco_alvo}}, com retorno esperado {{fact:val.BR_LOCAWEB.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Concorrência e churn reduzem monetização; desenvolvimento e obrigações absorvem recursos, enquanto medidas gerenciais sugerem melhora sem caixa equivalente. O cenário pessimista calculado pelo código é {{fact:val.BR_LOCAWEB.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_LOCAWEB.preco}} e alvo do modelo aberto {{fact:val.BR_LOCAWEB.preco_alvo}}, com potencial {{fact:val.BR_LOCAWEB.upside}}. Retorno total esperado {{fact:val.BR_LOCAWEB.etr}} e custo do capital próprio {{fact:val.BR_LOCAWEB.ke}}. A dispersão entre métodos é {{fact:val.BR_LOCAWEB.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_LOCAWEB.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_LOCAWEB.consenso_alvo}}; a diferença {{fact:val.BR_LOCAWEB.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "Commerce teve expansão, enquanto BeOnline e SaaS registraram queda de receita e clientes. Comparativos ajustados por alienações não têm a mesma base da margem bruta. O custo de antecipação foi reclassificado, sem alterar lucro ou caixa. Geração gerencial depois de CAPEX diminuiu no trimestre e cresceu no semestre; parcelas de aquisição e arrendamento vêm depois. A redução de capital e a recompra tiveram desembolsos no semestre.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "As bases contábeis e gerenciais do custo de antecipação são distintas, sem mudança do resultado final. Negócios vendidos têm datas próprias e os comparativos ajustados não substituem os registros originais. Caixa sem empréstimos e caixa depois de arrendamento e earn-outs preservam definições diferentes.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Ecossistema de lojas, pagamentos e logística pode elevar conveniência e integração. Concorrência, preço e custos de migração precisam de evidência de retenção e retorno. Plataformas, SaaS e hospedagem têm qualidade de recorrência distinta; número de clientes e volume não comprovam participação ou vantagem sustentável.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Commerce cresceu, mas BeOnline e SaaS apresentaram menor receita e base de clientes. Comparativos de receita e EBITDA excluem negócios vendidos, enquanto margem bruta tem base distinta. Custo de antecipação foi reclassificado sem efeito em lucro ou caixa. Caixa gerencial após CAPEX caiu no trimestre, mas aumentou no semestre, com comparável próprio.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Desenvolvimento, aquisições e parcelas de arrendamento competem com caixa. A geração gerencial após CAPEX precede pagamentos de aquisições e principal de arrendamento. Caixa líquido sem empréstimos difere do saldo após earn-outs e ocupação. Redução de capital e recompra tiveram pagamentos, sem presumir novos programas executados.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "Volume e plataformas podem crescer enquanto outra base de clientes diminui. EBITDA pode mudar por reclassificação sem melhora econômica. Se integração e monetização não cobrirem desenvolvimento e obrigações, o saldo sem dívida bancária superestimará caixa distribuível.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Retenção, receita, preço, clientes e monetização por plataforma; volume e taxa efetiva de pagamentos. Conciliar bases sem ativos vendidos, antecipações, giro, desenvolvimento, aluguel e earn-outs. Verificar caixa por entidade e retorno das integrações.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_LOCAWEB.etr}}, custo do capital {{fact:val.BR_LOCAWEB.ke}} e dispersão entre métodos {{fact:val.BR_LOCAWEB.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_LOCAWEB.etr",
+        "val.BR_LOCAWEB.ke",
+        "val.BR_LOCAWEB.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+    "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+    "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+    "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "A ponte integral do ITR, antecipações e caixa por entidade permanece pendente.",
+    "Receita, EBITDA e margem bruta possuem comparativos de perímetro diferentes.",
+    "Retorno das integrações, desenvolvimento e aquisição de clientes exige diligência.",
+    "Earn-outs, arrendamentos e base por ação precisam de conciliação.",
+    "Guidance agregado e participação de mercado não foram comprovados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "LWSA",
+      "titulo": "Negócio e materiais públicos do emissor",
+      "url": "https://ri.lwsa.tech/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "LWSA",
+      "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+      "url": "https://ri.lwsa.tech/Download.aspx?Arquivo=TOmC3kVeAtsc/dWynHBGlg==",
+      "publicado_em": "2026-08-13",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "LWSA",
+      "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+      "url": "https://ri.lwsa.tech/Download.aspx?Arquivo=MmWw8PkNddMtVIyz5nk3uQ==",
+      "publicado_em": "2026-08-13",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

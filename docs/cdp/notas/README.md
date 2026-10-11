@@ -1,5 +1,12 @@
 # Rascunhos de notas de pesquisa entregues fora do clone das rotinas
 
+- Educação e tecnologia: Ânima, Cogna, Ser Educacional, Bemobi, Intelbras,
+  LWSA e TOTVS. Os estudos distinguem retenção, modalidades reclassificadas,
+  crédito estudantil, volume processado e receita própria. Caixa restrito,
+  recursos de repasse, juros, arrendamentos e direitos de sócios conservam
+  suas bases. Aquisições concluídas, aportes futuros e alienações condicionais
+  têm estados próprios; divergências nos documentos permanecem explícitas.
+
 - Marcas e serviços: Alpargatas, Grendene, Vulcabras, Vivara, Natura,
   PetzCobasi, Grupo SBF e Smart Fit. As teses distinguem venda ao canal e
   consumo final, caixa industrial e participações imobiliárias, ajustes

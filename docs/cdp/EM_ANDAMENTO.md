@@ -5,7 +5,7 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-## Estado atual das teses — 11/10/2026, 09:30 Brasília
+## Estado atual das teses — 11/10/2026, 09:47 Brasília
 
 O portal `8aea3f1` está publicado e foi conferido independentemente: 241 páginas,
 233 empresas e oito ETFs; 727 arquivos HTTP200 com tamanho e SHA iguais ao
@@ -23,12 +23,12 @@ nenhum erro ou falha, 4.507 casos únicos. Ruff passou; os 4.875 arquivos fixado
 e o commit permaneceram idênticos. Não há soma de execuções focais sobrepostas
 nem promoção da qualificação de outra frente privada.
 
-O ramo documental `codex/cdp-pesquisa-lote-2` tem 114 rascunhos entregues e
+O ramo documental `codex/cdp-pesquisa-lote-2` tem 121 rascunhos entregues e
 validados em conjunto: oito ETFs e empresas de diferentes países e setores.
 O índice de lotes em [notas/README.md](notas/README.md) registra os ativos,
 fontes e limites relevantes. A conferência conjunta preservou a renderização
 das doze notas históricas e os 4.122 arquivos operacionais. Os textos mantêm
-visão neutra, baixa convicção e lacunas próprias. Há 115 ativos ainda sem nota
+visão neutra, baixa convicção e lacunas próprias. Há 108 ativos ainda sem nota
 publicada ou rascunho individual; cobertura qualitativa completa continua aberta.
 
 Os novos estudos incluem bancos e seguros mexicanos, imóveis e concessões,
@@ -37,6 +37,12 @@ reservas e produção, crescimento orgânico e aquisição, caixa restrito e rec
 não sacados. As medidas por certificado, ação e equivalente metálico preservam
 suas bases; resultados de minoritários não são presumidos atribuíveis ao titular.
 Fatos posteriores ao trimestre não são incorporados retrospectivamente ao modelo.
+
+O lote seguinte inclui Aeroméxico, Volaris, Bimbo, Alsea, Chedraui, Gruma e
+Sigma Foods. As narrativas examinam frota, manutenção, canais, produtividade,
+integração e capital; preservam bases comparáveis e a diferença entre dividendos
+programados e pagos. A consulta pública dos documentos foi realizada; bloqueios
+de download continuam descritos como ausência de cópia local, sem contorno.
 
 A pesquisa distingue resultado recorrente, medidas gerenciais, inflação, moeda,
 capital por entidade e recursos atribuíveis ao acionista. Reorganização anunciada,

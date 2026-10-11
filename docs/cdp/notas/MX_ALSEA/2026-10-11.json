@@ -1,0 +1,171 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_ALSEA",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Alsea — economia por restaurante, franquias e caixa depois de contratos de uso",
+  "resumo": "A hipótese é que execução das marcas e frequência sustentem contribuição por restaurante depois de todos os custos. Expansão e reformas precisam produzir caixa que remunere capital e contratos de uso. A condição decisiva é monetização recorrente por unidade, sem depender de medidas de loja que excluem despesas corporativas. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.MX_ALSEA.rating_codigo}}, com retorno esperado {{fact:val.MX_ALSEA.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Operadora de cafeterias, alimentação rápida e restaurantes de serviço completo na América Latina e Europa. Marcas próprias, licenças, operação corporativa e subfranquias têm receitas e capital distintos. Venda de loja, resultado da loja e resultado consolidado não são equivalentes.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que execução das marcas e frequência sustentem contribuição por restaurante depois de todos os custos. Expansão e reformas precisam produzir caixa que remunere capital e contratos de uso. A condição decisiva é monetização recorrente por unidade, sem depender de medidas de loja que excluem despesas corporativas.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.MX_ALSEA.preco}} e alvo {{fact:val.MX_ALSEA.preco_alvo}}, com potencial {{fact:val.MX_ALSEA.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.MX_ALSEA.ke}} e retorno esperado {{fact:val.MX_ALSEA.etr}}.",
+      "evidencias": [
+        "val.MX_ALSEA.preco",
+        "val.MX_ALSEA.preco_alvo",
+        "val.MX_ALSEA.upside",
+        "val.MX_ALSEA.ke",
+        "val.MX_ALSEA.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar frequência, valor da compra e vendas comparáveis por formato e território. Revisar contribuição da loja depois de administração, royalties e aluguel, retorno de reformas e novas unidades. Conciliar perímetro vendido, capital de giro, financiamento e caixa depois de manutenção.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.MX_ALSEA.ke}} e a dispersão entre métodos {{fact:val.MX_ALSEA.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.MX_ALSEA.ke",
+        "val.MX_ALSEA.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Consumo, mão de obra e insumos podem reduzir contribuição. Franquias e contratos de imóveis exigem despesas mesmo com tráfego menor. Reformas, desinvestimentos e bases ajustadas podem dificultar comparação e limitar retorno por ação.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.MX_ALSEA.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.MX_ALSEA.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Frequência, contribuição das marcas e disciplina de expansão sustentam caixa após obrigações e manutenção. O cenário otimista calculado pelo código é {{fact:val.MX_ALSEA.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.MX_ALSEA.preco_alvo}}, com retorno esperado {{fact:val.MX_ALSEA.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Consumo e custos reduzem margem enquanto contratos, reformas e financiamento absorvem monetização. O cenário pessimista calculado pelo código é {{fact:val.MX_ALSEA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.MX_ALSEA.preco}} e alvo do modelo aberto {{fact:val.MX_ALSEA.preco_alvo}}, com potencial {{fact:val.MX_ALSEA.upside}}. Retorno total esperado {{fact:val.MX_ALSEA.etr}} e custo do capital próprio {{fact:val.MX_ALSEA.ke}}. A dispersão entre métodos é {{fact:val.MX_ALSEA.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.MX_ALSEA.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.MX_ALSEA.consenso_alvo}}; a diferença {{fact:val.MX_ALSEA.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "A companhia reduziu perspectivas de crescimento de vendas, vendas comparáveis e EBITDA, preservando planos de capex e aberturas no comunicado. Moeda e consumo sustentam a revisão. As medidas de loja, consolidadas, antes de arrendamentos e hiperinflação não são misturadas.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Revisar direitos de marca, licenças, subfranquias, controladas e transações relacionadas. Perímetros alienados e capital contratado por unidade precisam permanecer conciliáveis com o resultado e a distribuição.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Marcas conhecidas, execução local e programas de fidelidade podem sustentar frequência e valor da compra. A vantagem exige contribuição depois de mão de obra, aluguel, royalties e reforma. Crescimento digital e usuários ativos usam definições diferentes por formato e não comprovam monetização incremental.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "O release separa medidas antes de arrendamentos e hiperinflação argentina, com perímetro anterior pro forma após desinvestimentos. O EBITDA de loja exclui administração e gastos pré-operacionais. Resultado líquido sofre comparação com ganho cambial não monetário anterior; caixa livre depende também de giro, capex e refinanciamento.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Aberturas, reformas, tecnologia e manutenção precisam remunerar todo capital contratado. Dívida antes e depois de arrendamentos apresenta bases diferentes. A alienação de Archies foi concluída no período, enquanto outras marcas continuavam em avaliação; possível venda não é caixa disponível.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se fidelidade e expansão aumentam atividade sem pagar o custo completo da loja e da estrutura. EBITDA antes de aluguel e administração pode ocultar retorno insuficiente, enquanto menor investimento apenas adia manutenção.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Acompanhar frequência, valor da compra e vendas comparáveis por formato e território. Revisar contribuição da loja depois de administração, royalties e aluguel, retorno de reformas e novas unidades. Conciliar perímetro vendido, capital de giro, financiamento e caixa depois de manutenção.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.MX_ALSEA.etr}}, custo do capital {{fact:val.MX_ALSEA.ke}} e dispersão entre métodos {{fact:val.MX_ALSEA.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.MX_ALSEA.etr",
+        "val.MX_ALSEA.ke",
+        "val.MX_ALSEA.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+    "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+    "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+    "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "Medidas de loja, administração, arrendamentos e hiperinflação exigem reconciliação integral.",
+    "Caixa depois de reforma, manutenção e royalties permanece a avaliar.",
+    "Definições de usuários ativos e monetização digital precisam de bases comparáveis.",
+    "Direitos de marca, capital por entidade e vendas de portfólio não foram integralmente conciliados.",
+    "Guidance agregado, tom da gestão e catalisador futuro datado não foram classificados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Alsea",
+      "titulo": "Marcas, países e unidades corporativas e subfranqueadas",
+      "url": "https://www.alsea.net/somos-alsea.html",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Alsea",
+      "titulo": "Resultado trimestral e revisão de perspectivas apresentada à BMV",
+      "url": "https://www.bmv.com.mx/docs-pub/eventemi/eventemi_1575402_1.pdf",
+      "publicado_em": "2026-07-20",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

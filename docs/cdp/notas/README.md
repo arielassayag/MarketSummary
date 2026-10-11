@@ -178,6 +178,14 @@ histórica. A análise da Cemig não incorpora mudança de controle não confirm
   explícitos. Comunicados da First Majestic e Endeavour Silver foram consultados
   na fonte, mas o download separado foi recusado, sem cópia local recebida.
 
+- `MX_AEROMEXICO` e `MX_VOLARIS`: economia da frota, manutenção, arrendamentos
+  e capital. Margem gerencial não equivale a caixa; uma decisão judicial relatada
+  pela emissora e combinações aprovadas por acionistas conservam seus limites.
+- `MX_BIMBO`, `MX_ALSEA`, `MX_CHEDRAUI`, `MX_GRUMA` e `MX_SIGMA`: consumo,
+  canais e produção de alimentos. Moeda, aquisições, produtividade, seguros,
+  operações descontinuadas e dividendos anunciados têm bases distintas. Sigma
+  Foods é a antiga Alfa, com estatísticas próprias da holding e da subsidiária.
+
 Todos são rascunhos com hipóteses próprias, contraponto, indicadores e lacunas.
 Mesmo a consulta do último release não encerra a reconciliação financeira com o
 modelo, a comparação competitiva e a diligência do capital. Nenhum dado externo

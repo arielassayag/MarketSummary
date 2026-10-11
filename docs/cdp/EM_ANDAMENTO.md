@@ -5,7 +5,7 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-## Estado atual das teses — 11/10/2026, 06:47 Brasília
+## Estado atual das teses — 11/10/2026, 07:10 Brasília
 
 O portal `7032a51` foi publicado e conferido independentemente: 241 páginas,
 233 empresas e oito ETFs; 727 arquivos HTTP200 com tamanho e SHA iguais ao
@@ -22,13 +22,14 @@ nenhum erro ou falha, 4.507 casos únicos. Ruff passou; os 4.875 arquivos fixado
 e o commit permaneceram idênticos. Não há soma de execuções focais sobrepostas
 nem promoção da qualificação de outra frente privada.
 
-O novo ramo documental `codex/cdp-pesquisa-lote-2` acrescenta vinte e oito empresas às
+O ramo documental `codex/cdp-pesquisa-lote-2` acrescenta trinta e seis empresas às
 quatro iniciais e aos oito ETFs: Fortuna, Stone, Vivo, Cemig, Cyrela, Copasa,
 Motiva, Walmex, TIM, Multiplan, Santander Brasil, PagBank, FEMSA, Cencosud,
 CMPC, Banorte, Sabesp, Credicorp, Buenaventura, Southern Copper, Pampa, Cresud,
-IRSA, YPF, Empresas Copec, Enel Américas, Enel Chile e Ecopetrol. Os quarenta
+IRSA, YPF, Empresas Copec, Enel Américas, Enel Chile, Ecopetrol, Cemex, América
+Móvil, Coca-Cola FEMSA, ASUR, Arca Continental, GAP, OMA e Orbia. Os quarenta e oito
 rascunhos passaram individualmente em schema e fatos nativos. A conferência
-conjunta validou todos os quarenta e preservou
+conjunta validou todos os quarenta e oito e preservou
 a renderização das doze notas históricas e os 4.122 arquivos operacionais.
 Permanecem fora do livro, com visão
 neutra, baixa convicção e lacunas próprias, aguardando adoção na fila canônica.
@@ -53,16 +54,30 @@ regularização das obrigações; Enel Chile exige conciliação de recebíveis 
 instrumentos regulatórios. O release de Enel Chile foi consultado na fonte,
 mas o download separado foi recusado e não gerou cópia local. Ecopetrol exige
 separar saldos do fundo de estabilização, títulos recebidos e caixa. Nenhum
-novo número financeiro foi escolhido pela mente.
+novo número financeiro foi escolhido pela mente. Cemex distingue orientação
+elevada de execução comprovada; América Móvil preserva mudanças de classificação,
+bases cambiais e definições de liquidez. Coca-Cola FEMSA diferencia ações,
+unidades e recibos; o download separado do release foi recusado. ASUR separa
+a aquisição posterior da base histórica e exige conciliação da reorganização
+e da dívida de Cancún. GAP descreve emissão já realizada e combinação concluída,
+com efeito de provisão que não comprova recorrência. OMA distingue construção,
+provisão de manutenção e desembolso. Orbia diferencia recuperação de preços,
+capital de giro e financiamento; sua orientação anterior ainda não foi
+reconciliada para classificar a mudança de guidance. Calendários de Arca
+Continental e Orbia confirmam eventos futuros, sem antecipar resultado.
 
 O escritor e o limite continuam os mesmos: `.cdp/rotinas`, até doze ativos por
 execução. Um rascunho de domingo mantém sua data ao entrar na fila posterior;
 a nota publicada só aparece num retrato com corte compatível. Não se publica
 rascunho diretamente no site. A cobertura qualitativa completa dos demais
 ativos, reconciliação das demonstrações e qualificação dos projetos continuam
-pendentes. A integração em `main` e publicação do novo código ainda aguardam
-os últimos controles documentais e o encerramento da CI do portal anterior,
-para não cancelar sua execução. A operação local de 09/10 e todas as frentes privadas antigas abaixo
+pendentes. A integração qualificada até `4abb248` já foi concluída no `main`
+local, preservando os cinco arquivos herdados com alterações humanas. Os oito
+rascunhos mais recentes concluíram o controle conjunto; o último controle
+documental precede seu commit. A qualificação local completa autoriza o envio
+da integração; uma nova execução remota de CI substitui a anterior ainda em
+andamento, sem promover seu estado a aprovação. A publicação deve ser conferida
+no Pages contra o commit entregue. A operação local de 09/10 e todas as frentes privadas antigas abaixo
 continuam separadas, sem nova decisão, repetição MOC ou escrita operacional.
 
 ## Páginas de tese por ativo — desenvolvimento em 11/10/2026

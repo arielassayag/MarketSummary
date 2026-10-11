@@ -106,6 +106,22 @@ histórica. A análise da Cemig não incorpora mudança de controle não confirm
   instrumento recebido e caixa têm significados distintos. A análise de Enel
   Chile foi consultada na fonte; o download separado foi recusado e não há
   cópia local recebida. Demonstrações, unidades e obrigações exigem reconciliação.
+- `MX_CEMEX`, `MX_AMX`, `MX_KOF` e `MX_ASUR`: eficiência ao longo do ciclo,
+  monetização da rede, retorno da distribuição franqueada e remuneração de
+  concessões após expansão. A Cemex distingue orientação elevada e efeito
+  excepcional; América Móvil exige bases comparáveis e liquidez por entidade;
+  Coca-Cola FEMSA distingue ação, unidade e recibo. A aquisição da Motiva pela
+  ASUR foi concluída depois do trimestre e está fora daquelas demonstrações;
+  reorganização e dívida posterior exigem conciliação própria. O release de
+  Coca-Cola FEMSA foi consultado na pesquisa, mas não recebido no download separado.
+- `MX_AC`, `MX_GAP`, `MX_OMA` e `MX_ORBIA`: caixa por território, retorno após
+  integração e emissão de capital, manutenção e desenvolvimento de concessões,
+  e conversão da recuperação industrial em caixa. A GAP já descreve ações
+  emitidas e combinação concluída; o perfil institucional antigo não representa
+  sozinho a estrutura atual. A OMA distingue provisão de manutenção e desembolso;
+  Orbia distingue defasagem de custos e rentabilidade durável. Arca Continental
+  e Orbia têm eventos futuros datados em material primário; o calendário não
+  antecipa conteúdo ou resultado do evento.
 
 Todos são rascunhos com hipóteses próprias, contraponto, indicadores e lacunas.
 Mesmo a consulta do último release não encerra a reconciliação financeira com o

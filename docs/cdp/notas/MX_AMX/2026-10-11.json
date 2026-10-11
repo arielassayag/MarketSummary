@@ -1,0 +1,169 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_AMX",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "América Móvil: monetização da conectividade e retorno sobre a rede",
+  "resumo": "A hipótese é que a escala de rede permita monetizar conectividade com retorno superior ao custo econômico de renovar a infraestrutura. A condição é comprovar caixa depois de rede, espectro, arrendamentos e obrigações regulatórias. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.MX_AMX.rating_codigo}}, com retorno esperado {{fact:val.MX_AMX.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "A América Móvil oferece serviços de telecomunicações móveis e fixos em operações internacionais. Monetizar conectividade exige investimento contínuo, retenção e conciliação do caixa transferível entre subsidiárias e controladora.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que a escala de rede permita monetizar conectividade com retorno superior ao custo econômico de renovar a infraestrutura. A condição é comprovar caixa depois de rede, espectro, arrendamentos e obrigações regulatórias.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.MX_AMX.preco}} e alvo {{fact:val.MX_AMX.preco_alvo}}, com potencial {{fact:val.MX_AMX.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.MX_AMX.ke}} e retorno esperado {{fact:val.MX_AMX.etr}}.",
+      "evidencias": [
+        "val.MX_AMX.preco",
+        "val.MX_AMX.preco_alvo",
+        "val.MX_AMX.upside",
+        "val.MX_AMX.ke",
+        "val.MX_AMX.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar receita de serviços, retenção, investimento e caixa por operação em bases comparáveis. Examinar conversão de capital de giro e capacidade de distribuição da controladora; aquisição anunciada não comprova fechamento.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.MX_AMX.ke}} e a dispersão entre métodos {{fact:val.MX_AMX.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.MX_AMX.ke",
+        "val.MX_AMX.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Concorrência, exigências regulatórias e renovação de rede podem consumir a receita adicional. Efeitos de moeda podem alterar a leitura consolidada sem mudança operacional correspondente.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.MX_AMX.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.MX_AMX.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "A monetização e a retenção acompanham a expansão da rede e sustentam caixa depois dos compromissos. O cenário otimista calculado pelo código é {{fact:val.MX_AMX.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.MX_AMX.preco_alvo}}, com retorno esperado {{fact:val.MX_AMX.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "A competição reduz monetização enquanto investimentos e obrigações absorvem o caixa. O cenário pessimista calculado pelo código é {{fact:val.MX_AMX.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.MX_AMX.preco}} e alvo do modelo aberto {{fact:val.MX_AMX.preco_alvo}}, com potencial {{fact:val.MX_AMX.upside}}. Retorno total esperado {{fact:val.MX_AMX.etr}} e custo do capital próprio {{fact:val.MX_AMX.ke}}. A dispersão entre métodos é {{fact:val.MX_AMX.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.MX_AMX.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.MX_AMX.consenso_alvo}}; a diferença {{fact:val.MX_AMX.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "O release trimestral consultado apresenta desempenho por operação, mudanças de classificação dos acessos e definições gerenciais de alavancagem. A assinatura do formulário não é usada como data presumida do anúncio. Demonstrações, direitos e eventos posteriores ainda precisam de reconciliação integral.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Reconciliar dívida, arrendamentos e os títulos incluídos na definição gerencial de liquidez, que não equivalem todos a caixa. Distinguir investimento de rede, aquisições, recompra e direitos por ação ou recibo antes da conclusão por ação.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Testar qualidade de serviço, retenção, custos de aquisição e capacidade de monetização por operação. A autodescrição de liderança não comprova vantagem econômica nem retorno sobre o capital incremental.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "O release muda a classificação de acessos fixos sem fio e ajusta comparativos; comparações em moeda constante excluem a Argentina. Separar EBITDA após arrendamentos, multas excepcionais e lucro consolidado atribuível ao acionista.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Reconciliar dívida, arrendamentos e os títulos incluídos na definição gerencial de liquidez, que não equivalem todos a caixa. Distinguir investimento de rede, aquisições, recompra e direitos por ação ou recibo antes da conclusão por ação.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se crescer a base de clientes sem retorno sobre a rede ou se liquidez consolidada não se transformar em caixa distribuível ao acionista.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Acompanhar receita de serviços, retenção, investimento e caixa por operação em bases comparáveis. Examinar conversão de capital de giro e capacidade de distribuição da controladora; aquisição anunciada não comprova fechamento.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.MX_AMX.etr}}, custo do capital {{fact:val.MX_AMX.ke}} e dispersão entre métodos {{fact:val.MX_AMX.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.MX_AMX.etr",
+        "val.MX_AMX.ke",
+        "val.MX_AMX.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+    "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+    "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+    "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "Reconciliação integral das demonstrações, resultado atribuível e caixa por entidade permanece pendente.",
+    "Bases de moeda constante e classificação de acessos devem ser preservadas na comparação.",
+    "Direitos, recompra e equivalência de recibos exigem reconciliação com o modelo.",
+    "Fechamento e financiamento das aquisições anunciadas não foram comprovados por material posterior.",
+    "Orientação, tom da gestão e percepção do mercado não estão concluídos.",
+    "Calendário futuro não foi confirmado em documento recebido com conteúdo suficiente."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "América Móvil",
+      "titulo": "Perfil e estrutura do negócio",
+      "url": "https://www.americamovil.com/about-us/our-company/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "América Móvil",
+      "titulo": "Resultados operacionais, financeiros e definições do emissor",
+      "url": "https://www.sec.gov/Archives/edgar/data/1129137/000114036126029404/ef20078440_6k.htm",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

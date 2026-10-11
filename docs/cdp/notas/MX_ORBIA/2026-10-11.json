@@ -1,0 +1,188 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_ORBIA",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Orbia: retorno do portfólio e conversão da recuperação em caixa",
+  "resumo": "A hipótese é que diferenciação e integração possam gerar retorno através dos ciclos. A condição é converter rentabilidade dos negócios em caixa depois de capital de giro, manutenção e expansão; recuperação de preços não comprova vantagem estrutural. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.MX_ORBIA.rating_codigo}}, com retorno esperado {{fact:val.MX_ORBIA.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "A Orbia reúne negócios de polímeros, infraestrutura, flúor, agricultura de precisão e conectividade. A diversificação exige analisar ciclos, capital empregado e transferências entre segmentos antes de interpretar o resultado consolidado.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que diferenciação e integração possam gerar retorno através dos ciclos. A condição é converter rentabilidade dos negócios em caixa depois de capital de giro, manutenção e expansão; recuperação de preços não comprova vantagem estrutural.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.MX_ORBIA.preco}} e alvo {{fact:val.MX_ORBIA.preco_alvo}}, com potencial {{fact:val.MX_ORBIA.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.MX_ORBIA.ke}} e retorno esperado {{fact:val.MX_ORBIA.etr}}.",
+      "evidencias": [
+        "val.MX_ORBIA.preco",
+        "val.MX_ORBIA.preco_alvo",
+        "val.MX_ORBIA.upside",
+        "val.MX_ORBIA.ke",
+        "val.MX_ORBIA.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar preços de resinas e insumos, utilização, margens e capital de giro por negócio. Testar reversão do giro, caixa após investimento e retorno dos projetos; não extrapolar efeitos favoráveis transitórios para o ciclo completo.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.MX_ORBIA.ke}} e a dispersão entre métodos {{fact:val.MX_ORBIA.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.MX_ORBIA.ke",
+        "val.MX_ORBIA.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Divulgação de resultado anunciada pelo emissor; revisar os novos documentos e o calendário quando estiverem disponíveis.",
+      "data": "2026-10-27",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Normalização de preços, custos e capital de giro pode limitar caixa e desalavancagem. A diversificação pode reunir ciclos adversos e necessidades de reinvestimento simultâneas.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.MX_ORBIA.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.MX_ORBIA.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Negócios diferenciados convertem rentabilidade em caixa e remuneram reinvestimento através dos ciclos. O cenário otimista calculado pelo código é {{fact:val.MX_ORBIA.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.MX_ORBIA.preco_alvo}}, com retorno esperado {{fact:val.MX_ORBIA.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Preços normalizam e capital de giro permanece elevado, reduzindo caixa e capacidade de financiar projetos. O cenário pessimista calculado pelo código é {{fact:val.MX_ORBIA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.MX_ORBIA.preco}} e alvo do modelo aberto {{fact:val.MX_ORBIA.preco_alvo}}, com potencial {{fact:val.MX_ORBIA.upside}}. Retorno total esperado {{fact:val.MX_ORBIA.etr}} e custo do capital próprio {{fact:val.MX_ORBIA.ke}}. A dispersão entre métodos é {{fact:val.MX_ORBIA.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.MX_ORBIA.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.MX_ORBIA.consenso_alvo}}; a diferença {{fact:val.MX_ORBIA.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "O release recebido apresenta negócios, capital e perspectivas, advertindo que condições favoráveis do trimestre podem não persistir. A direção da mudança de guidance não foi classificada sem conciliação com orientação anterior. Reconciliação de demonstrações e caixa permanece pendente.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Confrontar manutenção, integridade industrial e projetos selecionados com dívida e retorno econômico. Separar queda de razão de alavancagem de amortização efetiva; financiamento, direitos e base por ação permanecem a reconciliar.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Testar diferenciação, custo econômico e retenção por negócio. Exposição a conectividade e transição energética não comprova poder de preço nem retorno dos projetos; mercados e necessidades de capital são distintos.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "O release distingue melhora de EBITDA de caixa afetado por capital de giro. Parte da margem decorre da defasagem entre preço de venda e custo do insumo; impostos e efeitos de moeda exigem ponte com lucro atribuível e caixa recorrente.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Confrontar manutenção, integridade industrial e projetos selecionados com dívida e retorno econômico. Separar queda de razão de alavancagem de amortização efetiva; financiamento, direitos e base por ação permanecem a reconciliar.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se recuperação contábil não se converter em caixa ou se os projetos ampliarem capital empregado sem retorno suficiente.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Acompanhar preços de resinas e insumos, utilização, margens e capital de giro por negócio. Testar reversão do giro, caixa após investimento e retorno dos projetos; não extrapolar efeitos favoráveis transitórios para o ciclo completo.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.MX_ORBIA.etr}}, custo do capital {{fact:val.MX_ORBIA.ke}} e dispersão entre métodos {{fact:val.MX_ORBIA.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.MX_ORBIA.etr",
+        "val.MX_ORBIA.ke",
+        "val.MX_ORBIA.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+    "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+    "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+    "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "Reconciliação integral de EBITDA, lucro atribuível, impostos e caixa permanece pendente.",
+    "Vendas internas e capital empregado por negócio exigem ponte com o consolidado.",
+    "Orientação anterior não foi reconciliada para classificar a direção da mudança de guidance.",
+    "Retorno, cronograma e financiamento completo dos projetos permanecem a comprovar.",
+    "Direitos e base plenamente diluída precisam de conciliação com o modelo.",
+    "Vantagem competitiva, tom da gestão e percepção do mercado não estão concluídos."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Orbia",
+      "titulo": "Perfil e estrutura do negócio",
+      "url": "https://www.orbia.com/investor-relations/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Orbia",
+      "titulo": "Resultados dos negócios, capital e perspectivas",
+      "url": "https://www.orbia.com/4a1617/siteassets/5.-investor-relations/quarterly-earnings/2026/q2/orbia-q2-2026-earnings-release_vf1-1.pdf",
+      "publicado_em": "2026-07-22",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Orbia",
+      "titulo": "Convite de resultados e teleconferência",
+      "url": "https://www.orbia.com/4a709d/siteassets/5.-investor-relations/quarterly-earnings/2026/q3/ccinvitation.q326-vf1.pdf",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

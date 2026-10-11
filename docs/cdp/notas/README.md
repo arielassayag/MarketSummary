@@ -74,6 +74,13 @@ histórica. A análise da Cemig não incorpora mudança de controle não confirm
 
 ## Lotes seguintes de empresas em 11/10/2026
 
+- `BR_ALUPAR`, `BR_AUREN`, `BR_AXIA` e `BR_ENERGISA`: remuneração das redes,
+  margem realizada de energia, implantação e caixa após obrigações. As bases
+  regulatória e societária, recursos restritos e participações têm leituras
+  próprias. O protocolo posterior da CESP não comprova fechamento da etapa
+  societária; o aviso de dividendos da Alupar fixa data passada sem comprovar
+  crédito efetivo. Axia preserva estados divergentes de Três Irmãos no release,
+  e Energisa distingue projeções retiradas e mantidas, sem direção agregada.
 - `BR_CYRELA`, `BR_COPASA`, `BR_MOTIVA` e `MX_WALMEX`: economia dos projetos
   imobiliários, obrigações do saneamento, perímetro após venda de aeroportos e
   contribuição do varejo depois de estoque e contratos de uso. A composição

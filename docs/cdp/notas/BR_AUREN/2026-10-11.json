@@ -1,0 +1,214 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_AUREN",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Auren — geração e comercialização convertidas em caixa após integração e dívida",
+  "resumo": "A hipótese é que portfólio e contratação reduzam o custo de atender clientes e gerem caixa recorrente após investimento e financiamento. A condição decisiva é margem realizada, com proteção e geração compatíveis com as obrigações. Receita maior, marcação de contratos e dividendos declarados por investidas não comprovam recuperação equivalente de caixa. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_AUREN.rating_codigo}}, com retorno esperado {{fact:val.BR_AUREN.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Geradora de energia com portfólio hidrelétrico, eólico e solar e atividade de comercialização e soluções no mercado livre. A integração dos negócios adquiridos exige distinguir entidade operadora, holding e participações econômicas. Geração física divulgada pode incluir ativos de propriedade compartilhada em base diferente do resultado atribuível.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que portfólio e contratação reduzam o custo de atender clientes e gerem caixa recorrente após investimento e financiamento. A condição decisiva é margem realizada, com proteção e geração compatíveis com as obrigações. Receita maior, marcação de contratos e dividendos declarados por investidas não comprovam recuperação equivalente de caixa.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_AUREN.preco}} e alvo {{fact:val.BR_AUREN.preco_alvo}}, com potencial {{fact:val.BR_AUREN.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_AUREN.ke}} e retorno esperado {{fact:val.BR_AUREN.etr}}.",
+      "evidencias": [
+        "val.BR_AUREN.preco",
+        "val.BR_AUREN.preco_alvo",
+        "val.BR_AUREN.upside",
+        "val.BR_AUREN.ke",
+        "val.BR_AUREN.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Monitorar geração e compras por fonte, obrigações contratadas, modulação, margem realizada e risco de contraparte. Separar marcação de contratos, resultados das investidas e caixa recebido. Conferir dívida, garantias e restrições por entidade. Acompanhar condição de fechamento societário, operação comercial dos projetos e validação de eventual compensação por restrições.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_AUREN.ke}} e a dispersão entre métodos {{fact:val.BR_AUREN.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_AUREN.ke",
+        "val.BR_AUREN.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Divulgação programada de resultados; rever margem realizada, integração, restrições e serviço da dívida.",
+      "data": "2026-11-10",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F5"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Hidrologia, vento, restrições e preços regionais podem elevar compras ou reduzir margem. Dívida, garantias e integração exigem caixa. Marcação de contratos e compensações estimadas não comprovam recebimento ou liquidez livre.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_AUREN.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_AUREN.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Contratação e operação sustentam margem realizada, integração comprovada e caixa disponível após investimento e dívida. O cenário otimista calculado pelo código é {{fact:val.BR_AUREN.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_AUREN.preco_alvo}}, com retorno esperado {{fact:val.BR_AUREN.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Restrições, compras e perdas comerciais reduzem margem, enquanto financiamento e integração absorvem recursos. O cenário pessimista calculado pelo código é {{fact:val.BR_AUREN.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_AUREN.preco}} e alvo do modelo aberto {{fact:val.BR_AUREN.preco_alvo}}, com potencial {{fact:val.BR_AUREN.upside}}. Retorno total esperado {{fact:val.BR_AUREN.etr}} e custo do capital próprio {{fact:val.BR_AUREN.ke}}. A dispersão entre métodos é {{fact:val.BR_AUREN.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_AUREN.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_AUREN.consenso_alvo}}; a diferença {{fact:val.BR_AUREN.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "A contribuição por fonte, contratos e participações tem bases distintas. Dividendos declarados por investidas excedem os recebidos no período e não podem ser contados novamente como caixa livre. O projeto Cajuína tinha equipamentos em teste, com conclusão comercial estimada. A compensação por cortes de geração exigia validação, eventual contestação e adesão, sem antecipação de recebimento.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "A reorganização altera emissor de dívida, garantias e entidades; a holding assume compromissos que precisam conservar seus termos. A retirada temporária de determinados indicadores contratuais da operadora não elimina restrições dos projetos. O documento posterior registra pedido de conversão na CVM, sem comprovar conclusão das condições da etapa seguinte.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Fontes e regiões distintas podem apoiar atendimento e modulação, mas hidrologia, vento, restrições e preço regional mantêm sensibilidades próprias. Escala de comercialização exige disciplina de risco e crédito; volume de energia e base de clientes não são margem. Integração societária planejada não comprova economia de custos já realizada.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "A receita cresce na comparação anual, enquanto o resultado operacional ajustado recua e o prejuízo permanece. A marcação de contratos futuros favorece a medida reportada, sem recebimento equivalente. Geração hídrica melhora, mas produção eólica é afetada por recurso e restrições. Comercialização tem resultado negativo mesmo após excluir efeito específico de contratos cedidos.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "A dívida líquida diminui na comparação sequencial, mas a alavancagem aumenta com menor resultado usado no denominador. Liquidez inclui recursos com destinação restrita. A reorganização implementada tem etapas posteriores sujeitas a condições; protocolo de conversão do registro da CESP não comprova fechamento. Compensação estimada por restrições de geração não foi tratada como caixa recebido.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F4"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se diversificação não protege margem realizada e o custo financeiro absorve a contribuição operacional. Melhor produção hídrica pode coexistir com restrições e perdas na comercialização. Simplificação societária e compensação potencial não substituem recuperação recorrente de caixa atribuível.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Monitorar geração e compras por fonte, obrigações contratadas, modulação, margem realizada e risco de contraparte. Separar marcação de contratos, resultados das investidas e caixa recebido. Conferir dívida, garantias e restrições por entidade. Acompanhar condição de fechamento societário, operação comercial dos projetos e validação de eventual compensação por restrições.",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F4"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_AUREN.etr}}, custo do capital {{fact:val.BR_AUREN.ke}} e dispersão entre métodos {{fact:val.BR_AUREN.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_AUREN.etr",
+        "val.BR_AUREN.ke",
+        "val.BR_AUREN.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Contratação e produção deixam de sustentar margem após compras e modulação.",
+    "Marcação e dividendos das investidas não se convertem em caixa disponível.",
+    "Integração, garantias ou financiamento exigem recursos além da contribuição recorrente.",
+    "Novos documentos alteram fechamento da reorganização ou elegibilidade e recebimento das compensações."
+  ],
+  "lacunas_de_dados": [
+    "Demonstrações completas, contratos e fluxo livre não foram integralmente reconciliados.",
+    "Fechamento da etapa societária posterior ao protocolo da CESP não foi comprovado.",
+    "Recursos restritos, garantias e indicadores de dívida por projeto exigem documentação detalhada.",
+    "Geração física e participação econômica têm bases distintas, sem ajuste manual do modelo.",
+    "Operação comercial final e recebimento das compensações estimadas não foram confirmados.",
+    "Guidance, tom agregado da gestão, vantagem relativa e percepção do mercado não foram classificados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Auren Energia",
+      "titulo": "Perfil institucional e negócios de energia",
+      "url": "https://www.aurenenergia.com.br/#institucional",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Auren Energia",
+      "titulo": "Release de resultados, contratos, geração, integração e financiamento",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/691c9da5-45e0-458f-a3da-41982b1730fc/dc5fdc3a-062b-e2db-c2c2-364fc1474185?origin=2",
+      "publicado_em": "2026-08-05",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Auren Energia",
+      "titulo": "Fato relevante de aprovação condicional da reorganização societária",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/691c9da5-45e0-458f-a3da-41982b1730fc/c13b0e33-1980-5af8-398a-cc4cdbba5f9b?origin=2",
+      "publicado_em": "2026-06-24",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F4",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Auren Energia",
+      "titulo": "Protocolo de pedido de conversão do registro da CESP",
+      "url": "https://filemanager-cdn.mziq.com/published/691c9da5-45e0-458f-a3da-41982b1730fc/fa919008-cc35-4628-824f-538bd91c4894",
+      "publicado_em": "2026-09-22",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F5",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Auren Energia",
+      "titulo": "Calendário público de eventos futuros utilizado pelo RI",
+      "url": "https://api.mziq.com/mzevents/events/future/691c9da5-45e0-458f-a3da-41982b1730fc/pt-br",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

@@ -5,7 +5,7 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-## Estado atual das teses — 11/10/2026, 10:36 Brasília
+## Estado atual das teses — 11/10/2026, 10:50 Brasília
 
 O portal `8aea3f1` está publicado e foi conferido independentemente: 241 páginas,
 233 empresas e oito ETFs; 727 arquivos HTTP200 com tamanho e SHA iguais ao
@@ -23,12 +23,12 @@ nenhum erro ou falha, 4.507 casos únicos. Ruff passou; os 4.875 arquivos fixado
 e o commit permaneceram idênticos. Não há soma de execuções focais sobrepostas
 nem promoção da qualificação de outra frente privada.
 
-O ramo documental `codex/cdp-pesquisa-lote-2` tem 137 rascunhos entregues e
+O ramo documental `codex/cdp-pesquisa-lote-2` tem 141 rascunhos entregues e
 validados em conjunto: oito ETFs e empresas de diferentes países e setores.
 O índice de lotes em [notas/README.md](notas/README.md) registra os ativos,
 fontes e limites relevantes. A conferência conjunta preservou a renderização
 das doze notas históricas e os 4.122 arquivos operacionais. Os textos mantêm
-visão neutra, baixa convicção e lacunas próprias. Há 92 ativos ainda sem nota
+visão neutra, baixa convicção e lacunas próprias. Há 88 ativos ainda sem nota
 publicada ou rascunho individual; cobertura qualitativa completa continua aberta.
 
 Os novos estudos incluem bancos e seguros mexicanos, imóveis e concessões,
@@ -64,6 +64,14 @@ não são promovidas a melhoria operacional ou caixa livre. Bradsaúde mantém
 lacuna crítica de base por ação após a reorganização; proventos e vencimentos
 posteriores à consulta conservam seus estados. Projeções existentes sem direção
 de revisão comprovada permanecem não determinadas.
+
+Alupar, Auren, Axia e Energisa acrescentam análise de remuneração das redes,
+margem realizada e caixa depois de investimento e dívida. Resultado societário
+e regulatório não são intercambiáveis; recursos restritos e minoritários têm
+leituras próprias. O protocolo posterior da CESP não confirma fechamento
+societário, e a data passada de dividendos da Alupar não comprova crédito.
+Axia preserva estados divergentes de Três Irmãos na fonte; Energisa mantém
+projeções com estados diferentes, sem direção agregada classificada.
 
 A pesquisa distingue resultado recorrente, medidas gerenciais, inflação, moeda,
 capital por entidade e recursos atribuíveis ao acionista. Reorganização anunciada,

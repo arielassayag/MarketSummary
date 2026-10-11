@@ -105,6 +105,61 @@ def test_quadros_separados_reconciliacao_e_fontes_proprias(payload):
     json.dumps(d, allow_nan=False)
 
 
+@pytest.mark.parametrize("origin", ["own", "same_week_fallback"])
+def test_origem_real_do_risco_e_posicoes_separada_sem_mudar_valores(payload, origin):
+    baseline = construir_dashboard_risco(payload)["views"][1]
+    if origin == "same_week_fallback":
+        del payload["weeks"][0]["proposal"]["risk"]
+    before = copy.deepcopy(payload)
+    d = construir_dashboard_risco(payload)
+    view = d["views"][1]
+    risk_source = "risk.ex_ante" if origin == "same_week_fallback" else "weeks[].proposal.risk"
+    assert view["position_source"] == view["source"] == "weeks[].proposal"
+    assert view["position_field_source"] == "weeks[].proposal.positions"
+    assert view["risk_source"] == risk_source
+    for field in ("positions", "kpis", "exposures", "factor_contributions", "stress",
+                  "top_position_risk", "risk_groups", "reconciliation", "nav_usd", "cut", "week"):
+        assert view[field] == baseline[field]
+    fields = {"exposures": "exposures", "factor_contributions": "factor_contributions",
+              "stress": "stress_tests", "top_position_risk": "top_risk_contributors"}
+    html = renderizar_dashboard_risco(d)
+    for key, path in fields.items():
+        expected = risk_source + "." + path
+        assert view["risk_field_sources"][key] == expected
+        assert f"<code>{expected}</code>" in html
+        assert f"<code>weeks[].proposal.{path}</code>" not in html
+    assert "<code>weeks[].proposal.positions</code>" in html
+    assert payload == before
+
+
+@pytest.mark.parametrize("origin", ["risk_daily", "latest_day_risk", "absent"])
+def test_origem_diaria_real_e_ausencia_sem_caminhos_inventados(payload, origin):
+    baseline = construir_dashboard_risco(payload)["views"][0]
+    if origin != "risk_daily":
+        daily = payload["risk"].pop("daily")
+        if origin == "latest_day_risk":
+            payload["latest_day"]["risk"] = daily
+    d = construir_dashboard_risco(payload)
+    view = d["views"][0]
+    expected = {"risk_daily": "risk.daily", "latest_day_risk": "latest_day.risk", "absent": None}[origin]
+    assert view["position_source"] == "latest_day" and view["position_field_source"] == "latest_day.positions"
+    assert view["risk_source"] == expected
+    assert view["risk_field_sources"]["stress"] is None
+    assert view["risk_field_sources"]["factor_contributions"] is None
+    assert view["risk_field_sources"]["top_position_risk"] is None
+    html = renderizar_dashboard_risco(d)
+    assert "<code>latest_day.positions</code>" in html
+    if expected:
+        assert view["kpis"] == baseline["kpis"] and view["exposures"] == baseline["exposures"]
+        assert view["risk_field_sources"]["exposures"] == expected + ".exposures"
+        assert f"<code>{expected}.exposures</code>" in html
+    else:
+        assert all(k["value"] is None for k in view["kpis"])
+        assert all(path is None for path in view["risk_field_sources"].values())
+    assert "<code>risk.daily.stress_tests</code>" not in html
+    assert "<code>risk.daily.factor_contributions</code>" not in html
+
+
 def test_ausencias_nao_sao_completadas_por_proposta(payload):
     d = construir_dashboard_risco(payload)
     daily, proposal = d["views"]
@@ -179,8 +234,13 @@ def test_proposta_mais_recente_nao_troca_diario_nem_modelo(payload):
     assert d["views"][0]["week"] == "2026-10-09" and d["views"][0]["kpis"][0]["value"] == .045
     assert d["views"][1]["week"] == "2026-10-16" and not d["views"][1]["executed"]
     assert d["views"][1]["kpis"][0]["value"] == .09
+    assert d["views"][1]["risk_source"] == "weeks[].proposal.risk"
     assert d["views"][1]["risk_groups"] == {"decisao": [], "base": []}
     assert d["limit_week"] == "2026-10-09"
+    del new["proposal"]["risk"]
+    d = construir_dashboard_risco(payload)
+    assert d["views"][1]["risk_source"] is None
+    assert all(k["value"] is None for k in d["views"][1]["kpis"])
 
 
 @pytest.mark.parametrize("change", ["executed", "week", "no_record"])

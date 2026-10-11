@@ -33,6 +33,15 @@ memória da mesma semana, sinais e ausências permanecem separados. Faltam nesta
 qualificação final do código, a adoção canônica das novas notas e a conferência remota do
 deploy completo; recibos de desenvolvimento não são prova dessas publicações.
 
+A conferência nativa identificou duas falhas de apresentação: o transporte compacto
+precisava ser expandido antes da vista de risco, e as origens de posições e risco
+precisavam ser separadas quando havia fallback da mesma semana. Os testes causais
+conservam os valores, sinais e ausências; o contraste dos cases também foi corrigido.
+O Pages de `11afdb8` recusou a montagem, embora a verificação desse snapshot passe
+nos ambientes locais privados com Python de séries distintas. A recusa não foi
+contornada: o diagnóstico do site agora mostra todas as mensagens da verificação,
+e a qualificação Linux ocorre em PR de desenvolvimento antes de integrar em `main`.
+
 ## Registro anterior das teses — 11/10/2026, 16:38 Brasília
 
 O portal `8aea3f1` está publicado e foi conferido independentemente: 241 páginas,

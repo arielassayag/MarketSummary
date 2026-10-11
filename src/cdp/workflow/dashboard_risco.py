@@ -163,7 +163,8 @@ def _reconcile(positions: list[dict], risk: dict, known: bool) -> dict:
             "status": "coerente" if agrees is True else "divergente" if agrees is False else "n/d"}
 
 
-def _view(identifier: str, title: str, source: str, risk: dict, position_body: dict,
+def _view(identifier: str, title: str, position_source: str | None, risk_source: str | None,
+          risk: dict, position_body: dict,
           cut: str | None, week: str | None, *, daily: bool, labels: dict) -> dict:
     positions = _positions(position_body.get("positions"), daily=daily)
     exposures: dict[str, list[dict]] = {group: [] for group in _GROUPS}
@@ -185,7 +186,8 @@ def _view(identifier: str, title: str, source: str, risk: dict, position_body: d
             "status": _text(row.get("status")), "severity": _text(row.get("severity"))})
     exposures = {group: _bars(rows) for group, rows in exposures.items()}
     decomposition = _obj(risk.get("risk_decomposition"))
-    factor_source = "factor_contributions" if "factor_contributions" in risk else "risk_decomposition.by_factor"
+    factor_source = ("factor_contributions" if "factor_contributions" in risk else
+                     "risk_decomposition.by_factor" if "by_factor" in decomposition else None)
     factor_body = risk.get("factor_contributions") if "factor_contributions" in risk else decomposition.get("by_factor")
     factor = _maps(factor_body, "factor", "share", labels=labels)
     stress = _maps(risk.get("stress_tests"), "scenario", "pnl")
@@ -202,7 +204,19 @@ def _view(identifier: str, title: str, source: str, risk: dict, position_body: d
             ("factor_risk_share", "Parcela fatorial", "pct", "da variância ex-ante"),
             ("specific_vol", "Volatilidade específica", "pct", "ao ano")]
     reconciliation = _reconcile(positions, risk, type(position_body.get("positions")) is list)
-    return {"id": identifier, "title": title, "source": source, "cut": cut, "week": week,
+    fields = {"exposures": "exposures" if "exposures" in risk else None,
+              "factor_contributions": factor_source,
+              "stress": "stress_tests" if "stress_tests" in risk else None,
+              "top_position_risk": "top_risk_contributors" if "top_risk_contributors" in risk else None,
+              "direct_risk_groups": "risk_decomposition.by_group" if "by_group" in decomposition else None,
+              "factor_exposures": "factor_exposures" if "factor_exposures" in risk else None}
+    field_sources = {key: f"{risk_source}.{path}" if risk_source and path else None
+                     for key, path in fields.items()}
+    return {"id": identifier, "title": title, "source": position_source,
+            "position_source": position_source, "risk_source": risk_source,
+            "risk_field_sources": field_sources,
+            "position_field_source": f"{position_source}.positions" if position_source and "positions" in position_body else None,
+            "cut": cut, "week": week,
             "available": bool(risk or position_body), "positions": positions,
             "positions_known": type(position_body.get("positions")) is list,
             "kpis": [{"key": key, "label": label, "value": _num(risk.get(key)), "unit": unit,
@@ -236,17 +250,22 @@ def construir_dashboard_risco(payload: dict) -> dict:
     live_week = _text(risk.get("live_week"))
     same_week = week is not None and week == live_week
     proposal_risk = _obj(proposal.get("risk"))
+    proposal_risk_source = "weeks[].proposal.risk" if proposal_risk else None
     if not proposal_risk and same_week:
         proposal_risk = _obj(risk.get("ex_ante"))
+        proposal_risk_source = "risk.ex_ante" if proposal_risk else None
     daily_risk = _obj(risk.get("daily")) if latest else {}
+    daily_risk_source = "risk.daily" if daily_risk else None
     if latest and not daily_risk:
         daily_risk = _obj(latest.get("risk"))
+        daily_risk_source = "latest_day.risk" if daily_risk else None
     recorded_week = _text(latest.get("live_book_week"))
     effective = bool(latest) and risk.get("executed") is True and recorded_week is not None and recorded_week == live_week
     title = "Carteira efetivada · registro diário" if effective else "Registro diário · efetivação não identificada" if latest else "Registro diário indisponível"
-    recorded = _view("registro", title, "latest_day / risk.daily", daily_risk, latest,
+    recorded = _view("registro", title, "latest_day" if latest else None, daily_risk_source, daily_risk, latest,
                      _text(latest.get("date")), recorded_week, daily=True, labels=labels)
-    target = _view("proposta", "Proposta · pesos-alvo", "weeks[].proposal", proposal_risk, proposal,
+    target = _view("proposta", "Proposta · pesos-alvo", "weeks[].proposal" if proposal else None,
+                   proposal_risk_source, proposal_risk, proposal,
                    _text(proposal.get("created_at")), week, daily=False, labels=labels)
     target["executed"] = chosen.get("executed") is True
     target["state"] = _text(chosen.get("stage_label")) or _text(chosen.get("state"))
@@ -268,6 +287,8 @@ def construir_dashboard_risco(payload: dict) -> dict:
                                "text": _text(row.get("texto"))} for row in _rows(model_risk.get("fatores"))]
     target["model_note"] = _text(model_risk.get("kappa_fonte"))
     target["model_week"] = _text(model.get("semana")) if model_risk else None
+    target["model_field_sources"] = {key: f"modelo.risco.{key}" if key in model_risk else None
+                                     for key in ("grupos", "parametros", "fatores")}
     checks = []
     for row in _rows(risk.get("limit_checks")):
         unit = _text(row.get("unit")) or "ratio"
@@ -299,6 +320,8 @@ def construir_dashboard_risco(payload: dict) -> dict:
             "data_hash": _text(meta.get("data_hash")), "config_hash_panel": _text(meta.get("config_hash")),
             "basis_note": _text(risk.get("basis_note")), "limit_week": live_week,
             "limits": checks, "liquidity": liquidity, "liquidity_summary": liquidity_summary,
+            "limit_source": "risk.limit_checks" if "limit_checks" in risk else None,
+            "liquidity_source": "risk.liquidity_by_side" if "liquidity_by_side" in risk else None,
             "warnings": warnings,
             "sources": [{"url": "../data.json", "label": "Retrato completo do painel"},
                         {"url": "../dados/", "label": "Documentos e trilha do livro"}]}
@@ -317,12 +340,12 @@ def _esc(value: Any) -> str:
     return escape(_text(value) or "n/d", quote=True)
 
 
-def _source(path: str, basis: str | None = None) -> str:
+def _source(path: str | None, basis: str | None = None) -> str:
     return (f'<p class="dr-source">Fonte: <a href="../data.json">retrato do painel</a>'
             f' · <code>{_esc(path)}</code> · {_esc(basis)}</p>')
 
 
-def _chart(rows: list[dict], title: str, source: str, basis: str | None,
+def _chart(rows: list[dict], title: str, source: str | None, basis: str | None,
            *, maximum: int = 9) -> str:
     items = []
     for row in rows[:maximum]:
@@ -391,25 +414,27 @@ def _view_html(view: dict) -> str:
         rows = view["exposures"][group]
         if group in {"country", "sector"} or rows:
             content += _chart(rows, f'Exposição líquida · {_GROUPS[group]}',
-                              view["source"] + '.exposures', view["risk_basis"])
+                              view["risk_field_sources"]["exposures"], view["risk_basis"])
     if vid == "proposta":
         for basis, name in (("decisao", "Modelo de decisão"), ("base", "Modelo base")):
+            source = view["model_field_sources"]["grupos"]
             content += _chart(view["risk_groups"][basis], f'Participação na variância · {name}',
-                              'modelo.risco.grupos.' + basis, 'ex-ante · semana ' + (view["week"] or 'n/d'))
+                              source + '[].' + basis if source else None,
+                              'ex-ante · semana ' + (view["week"] or 'n/d'))
     if view["direct_risk_groups"]:
         content += _chart(view["direct_risk_groups"], 'Decomposição recebida · grupos de risco',
-                          view["source"] + '.risk_decomposition.by_group', view["risk_basis"])
+                          view["risk_field_sources"]["direct_risk_groups"], view["risk_basis"])
     for measure in dict.fromkeys(row["measure"] for row in view["factor_exposures"]):
         rows = [row for row in view["factor_exposures"] if row["measure"] == measure]
         content += _chart(rows, 'Exposições por fator · ' + measure,
-                          view["source"] + '.factor_exposures',
+                          view["risk_field_sources"]["factor_exposures"],
                           'valor original, sem conversão · ' + measure)
     content += _chart(view["factor_contributions"], 'Contribuição por fator · variância',
-                      view["source"] + '.' + view["factor_source"], view["risk_basis"])
+                      view["risk_field_sources"]["factor_contributions"], view["risk_basis"])
     content += _chart(view["top_position_risk"], 'Principais riscos por posição · variância',
-                      view["source"] + '.top_risk_contributors', view["risk_basis"])
+                      view["risk_field_sources"]["top_position_risk"], view["risk_basis"])
     content += _chart(view["stress"], 'Cenários de estresse · resultado / PL',
-                      view["source"] + '.stress_tests', view["risk_basis"])
+                      view["risk_field_sources"]["stress"], view["risk_basis"])
     content += '</div><details><summary>Consultar exposições e contribuições completas</summary>'
     exp_rows = [[_esc(_GROUPS[group]), _esc(row["label"]), _esc(row["display"]),
                  escape(_fmt(row["gross"])), escape(_fmt(row["limit"], row["unit"])),
@@ -417,6 +442,7 @@ def _view_html(view: dict) -> str:
                 for group, rows in view["exposures"].items() for row in rows]
     content += _table(("Grupo", "Exposição", "Líquida", "Bruta / PL", "Limite", "Unidade", "Estado"),
                       exp_rows, 'Exposições originais do quadro selecionado.')
+    content += _source(view["risk_field_sources"]["exposures"], view["risk_basis"])
     factor_rows = [[_esc(kind), _esc(row["label"]), _esc(row["display"]),
                    _esc(row.get("measure")) if "measure" in row else "fração do PL" if kind.startswith("Estresse") else "fração da variância"]
                    for kind, rows in (("Fator · variância", view["factor_contributions"]),
@@ -426,10 +452,11 @@ def _view_html(view: dict) -> str:
                                      ("Carga fatorial · unidade do modelo", view["factor_exposures"])) for row in rows]
     content += _table(("Medida", "Nome", "Valor assinado", "Unidade"), factor_rows,
                       'Contribuições de Euler negativas podem reduzir risco; estresse não é previsão de retorno.')
+    content += _source(view["risk_source"], view["risk_basis"])
     content += '</details><details><summary>Consultar posições do quadro · '
     content += f'{len(view["positions"]) if view["positions_known"] else "n/d"}</summary>'
-    content += _positions_table(view) + '</details>'
-    return content + _source(view["source"], view["risk_basis"]) + '</section>'
+    content += _positions_table(view) + _source(view["position_field_source"], "posições do quadro") + '</details>'
+    return content + _source(view["position_source"], "origem das posições") + _source(view["risk_source"], view["risk_basis"]) + '</section>'
 
 
 def renderizar_dashboard_risco(dashboard: dict) -> str:
@@ -460,6 +487,7 @@ def renderizar_dashboard_risco(dashboard: dict) -> str:
                        _esc(c["severity"]), _esc(c["detail"])])
     body += _table(("Controle", "Base", "Valor", "Limite", "Uso / distância", "Estado", "Severidade", "Detalhe"),
                    checks, 'Estados recebidos do produtor; a página não recalcula gates. Semana ' + (dashboard["limit_week"] or 'n/d') + '.')
+    body += _source(dashboard["limit_source"], dashboard["basis_note"])
     liquidity = []
     for side, row in dashboard["liquidity"].items():
         row = _obj(row)
@@ -473,7 +501,7 @@ def renderizar_dashboard_risco(dashboard: dict) -> str:
     body += '<p class="dr-note">Parcela da exposição bruta liquidável: '
     body += '3 dias ' + escape(_fmt(summary["liquid_3d"])) + '; 5 dias ' + escape(_fmt(summary["liquid_5d"])) + '. '
     body += 'Posições sem ADTV: ' + escape(_fmt(summary["n_missing_adtv"], "count")) + '.</p>'
-    body += '</details>' + _source('risk.limit_checks / risk.liquidity_by_side', dashboard["basis_note"]) + '</section>'
+    body += '</details>' + _source(dashboard["liquidity_source"], dashboard["basis_note"]) + '</section>'
     body += '<section id="dr-memoria" class="dr-view" aria-labelledby="dr-memoria-titulo">'
     body += '<h2 id="dr-memoria-titulo">Memória do modelo e fontes</h2><p class="dr-note">'
     body += 'Volatilidades anuais; exposições em fração do PL ou na unidade indicada. Participações de Euler podem ser negativas. Cada quadro conserva seu próprio corte; ex-ante não substitui dado diário ausente.</p>'
@@ -487,10 +515,12 @@ def renderizar_dashboard_risco(dashboard: dict) -> str:
     params = [[_esc(row["label"]), _esc(row["text"])] for row in target["model_parameters"]]
     body += _table(("Parâmetro do modelo da proposta", "Valor recebido"), params,
                    'Memória nativa da mesma semana da proposta; nenhum modelo é reestimado nesta página.')
+    body += _source(target["model_field_sources"]["parametros"], "modelo da mesma semana da proposta")
     if target["model_factors"]:
         body += _table(("Grupo de fatores", "Quantidade", "Fatores recebidos"),
                        [[_esc(row["label"]), escape(_fmt(row["count"], "count")), _esc(row["text"])] for row in target["model_factors"]],
                        'Catálogo do modelo da mesma semana da proposta.')
+        body += _source(target["model_field_sources"]["fatores"], "modelo da mesma semana da proposta")
     for row in dashboard["sources"]:
         if row["url"] not in {"../data.json", "../dados/"}:
             raise ValueError("Fonte fora do contrato do dashboard.")

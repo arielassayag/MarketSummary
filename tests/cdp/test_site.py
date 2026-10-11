@@ -252,10 +252,13 @@ def test_guards_pending_book_and_broken_integrity(demo, tmp_path, monkeypatch):
         _build(_rt(demo), tmp_path / "x")
     assert exc.value.codigo == st.AGUARDANDO_ABERTURA
     rt = _rt(tmp_path)
-    monkeypatch.setattr(rt, "verify_all", lambda: (False, ["livro: cadeia quebrada"]))
+    mensagens = ["livro: íntegro", "track record: íntegro", "sombra: íntegro",
+                 "risco diário: divergência de medidas"]
+    monkeypatch.setattr(rt, "verify_all", lambda: (False, mensagens))
     with pytest.raises(st.ErroSite) as exc:
         _build(rt, tmp_path / "y")
     assert exc.value.codigo == 1 and "verify" in str(exc.value)
+    assert all(mensagem in str(exc.value) for mensagem in mensagens)
     assert not (tmp_path / "y").exists()
 
 

@@ -1049,7 +1049,7 @@ def construir(rt: Any, op: Opcoes) -> dict[str, Any]:
                            "mensagens": msgs}
             if not ok and not op.demo:
                 raise ErroSite("cdp verify falhou: o portal não publica um livro com a trilha "
-                               "quebrada (" + "; ".join(msgs[:3]) + ")")
+                               "quebrada (" + "; ".join(msgs) + ")")
         saida = Path(op.saida)
         _preparar_saida(saida, raiz)
         with warnings.catch_warnings():

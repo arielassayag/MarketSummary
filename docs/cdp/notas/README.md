@@ -200,6 +200,13 @@ histórica. A análise da Cemig não incorpora mudança de controle não confirm
   da seguradora do PicPay e o crédito programado de ações do Bradesco preservam
   seus estados. O contrato de folha do Banrisul tem custo e vigência próprios.
 
+- `BR_BBSEG`, `BR_CXSEG`, `BR_PORTO`, `BR_IRB` e `BR_BRADSAUDE`: seguros,
+  resseguro e saúde. As teses separam subscrição e rendimento de reservas,
+  bases gerenciais e contábeis, capital por entidade e caixa da holding.
+  Reversões, retrocessão e perímetro após reorganização têm análise própria.
+  Bradsaúde conserva lacuna de base por ação; dividendos, dívida e datas
+  futuras não foram antecipados como concluídos.
+
 Todos são rascunhos com hipóteses próprias, contraponto, indicadores e lacunas.
 Mesmo a consulta do último release não encerra a reconciliação financeira com o
 modelo, a comparação competitiva e a diligência do capital. Nenhum dado externo

@@ -1,0 +1,203 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_CXSEG",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Caixa Seguridade — economia da distribuição após sinistros, parceiros e capital",
+  "resumo": "A hipótese é que a rede e o relacionamento da Caixa sustentem distribuição rentável e receita recorrente por ação. A condição decisiva é resultado depois de sinistros, comissões e capital nas operações, recebido pela holding sem dupla contagem. Expansão de habitação pode coexistir com menor emissão em outros seguros e não comprova crescimento uniforme. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_CXSEG.rating_codigo}}, com retorno esperado {{fact:val.BR_CXSEG.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Holding controlada pela Caixa Econômica Federal, com seguros, previdência, capitalização, consórcios e corretagem. A economia reúne participações operacionais, comissões e uso da rede e marca. Os negócios têm parceiros e contratos com vigências próprias; cartas de consórcio administradas não são carteira de empréstimos da holding.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que a rede e o relacionamento da Caixa sustentem distribuição rentável e receita recorrente por ação. A condição decisiva é resultado depois de sinistros, comissões e capital nas operações, recebido pela holding sem dupla contagem. Expansão de habitação pode coexistir com menor emissão em outros seguros e não comprova crescimento uniforme.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_CXSEG.preco}} e alvo {{fact:val.BR_CXSEG.preco_alvo}}, com potencial {{fact:val.BR_CXSEG.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_CXSEG.ke}} e retorno esperado {{fact:val.BR_CXSEG.etr}}.",
+      "evidencias": [
+        "val.BR_CXSEG.preco",
+        "val.BR_CXSEG.preco_alvo",
+        "val.BR_CXSEG.upside",
+        "val.BR_CXSEG.ke",
+        "val.BR_CXSEG.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Monitorar emissão e prêmio ganho por ramo, comissões, rede e marca, sinistralidade e combinado antes dos rendimentos. Acompanhar entradas e resgates da previdência, taxa de administração e retorno das participações. Separar capitalização e consórcio de crédito próprio. Conciliar patrimônio ajustado, recebimentos e pagamentos da holding.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_CXSEG.ke}} e a dispersão entre métodos {{fact:val.BR_CXSEG.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_CXSEG.ke",
+        "val.BR_CXSEG.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Pagamento de dividendos programado no aviso específico, sujeito à posição acionária e regras informadas; conferir efetivo crédito.",
+      "data": "2026-11-17",
+      "tipo": "dividendos",
+      "direcao": "incerto",
+      "evidencias": [
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Dependência da rede, parceiros, habitação e regras dos produtos pode reduzir receita. Sinistros, despesas e rentabilidade das reservas têm sensibilidades distintas. Resultado de equivalência e caixa da holding não são intercambiáveis.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_CXSEG.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_CXSEG.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "A rede amplia emissão rentável e receitas recorrentes, com perdas e custos controlados e caixa efetivamente recebido pela holding. O cenário otimista calculado pelo código é {{fact:val.BR_CXSEG.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_CXSEG.preco_alvo}}, com retorno esperado {{fact:val.BR_CXSEG.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Mix e emissão enfraquecem, custos ou sinistros absorvem receita e os rendimentos financeiros deixam de compensar a operação. O cenário pessimista calculado pelo código é {{fact:val.BR_CXSEG.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_CXSEG.preco}} e alvo do modelo aberto {{fact:val.BR_CXSEG.preco_alvo}}, com potencial {{fact:val.BR_CXSEG.upside}}. Retorno total esperado {{fact:val.BR_CXSEG.etr}} e custo do capital próprio {{fact:val.BR_CXSEG.ke}}. A dispersão entre métodos é {{fact:val.BR_CXSEG.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_CXSEG.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_CXSEG.consenso_alvo}}; a diferença {{fact:val.BR_CXSEG.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "Habitação cresce enquanto prestamista e vida recuam, com suspensão anterior de produto associado ao INSS ainda descrita no material. Previdência tem captação líquida positiva, sem dispensar conferir remuneração sobre reservas. Redução da sinistralidade não implica queda de todo custo: consultoria, tecnologia e publicidade também afetam despesas. Incentivos fiscais e ajustes de patrimônio precisam ser separados da recorrência.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Controle estatal, sociedades com parceiros e remuneração da rede exigem examinar relacionadas e contratos. A norma gerencial anterior de seguros e a norma contábil atual têm bases diferentes. Equivalência, resultado financeiro das participações e resultado financeiro da holding não podem ser somados como contribuições independentes sem conciliação.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "A ligação com crédito habitacional e a rede pode apoiar aquisição e retenção. A emissão de habitação, prestamista e vida depende de canais e produtos distintos. O teste da distribuição exige prêmio ganho, persistência e custo comercial na mesma base; vigência contratual e acesso à marca não comprovam vantagem perpétua.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "O lucro cresce na base anual, mas a comparação sequencial tem direção diferente entre gerencial e contábil. A equivalência patrimonial inclui rendimento financeiro das participações, não apenas subscrição. A sinistralidade melhora enquanto o combinado permanece estável; a medida ampliada recebe contribuição financeira e precisa conservar sua definição.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Reservas de previdência, ativos garantidores e patrimônio das participações não são caixa da holding. O retorno sobre patrimônio usa base ajustada e distribuição, que exigem conciliação por ação. O aviso específico confirma dividendos aprovados com data-base e pagamento futuros; aprovação não foi promovida a recebimento.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se crescimento de distribuição e rendimento das reservas encobre menor rentabilidade de subscrição ou custo comercial maior. Receitas ligadas à rede podem persistir sem retorno suficiente depois da remuneração dos parceiros e da retenção de capital.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Monitorar emissão e prêmio ganho por ramo, comissões, rede e marca, sinistralidade e combinado antes dos rendimentos. Acompanhar entradas e resgates da previdência, taxa de administração e retorno das participações. Separar capitalização e consórcio de crédito próprio. Conciliar patrimônio ajustado, recebimentos e pagamentos da holding.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_CXSEG.etr}}, custo do capital {{fact:val.BR_CXSEG.ke}} e dispersão entre métodos {{fact:val.BR_CXSEG.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_CXSEG.etr",
+        "val.BR_CXSEG.ke",
+        "val.BR_CXSEG.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Distribuição rentável e retenção não confirmam crescimento de receita recorrente por ação.",
+    "Custo comercial, sinistros ou despesas absorvem a contribuição operacional.",
+    "Contratos, relacionadas ou regras de produtos alteram a economia da rede e das participações.",
+    "Recebimentos, capital e base ajustada não sustentam a transmissão de resultado à holding."
+  ],
+  "lacunas_de_dados": [
+    "Demonstrações completas, reservas, solvência e capital por entidade não foram integralmente reconciliados.",
+    "Data de publicação do release não foi comprovada e permanece ausente.",
+    "Contratos, remuneração da rede e retorno por produto exigem documentos completos.",
+    "O aviso específico comprova pagamento futuro; efetivo recebimento não foi antecipado.",
+    "Patrimônio ajustado, equivalência e contribuição financeira requerem conciliação com o modelo recebido.",
+    "Guidance, tom agregado da gestão e percepção do mercado não foram classificados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Caixa Seguridade",
+      "titulo": "Perfil e estrutura do negócio",
+      "url": "https://www.ri.caixaseguridade.com.br/a-companhia/historico-e-perfil-corporativo/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Caixa Seguridade",
+      "titulo": "Resultado, reconciliação contábil e desempenho por negócio",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/3972906b-e50b-4f74-ab74-4d0d32125d11/460a0d8d-9a1d-b81b-5b0d-ebbf391e4cd4?origin=2",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Caixa Seguridade",
+      "titulo": "Aviso de aprovação e pagamento futuro de dividendos",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/3972906b-e50b-4f74-ab74-4d0d32125d11/de9d1427-2967-3f75-6950-47dbea4a183a?origin=2",
+      "publicado_em": "2026-08-10",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F4",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Caixa Seguridade",
+      "titulo": "Estrutura das participações",
+      "url": "https://www.ri.caixaseguridade.com.br/a-companhia/estrutura-societaria/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

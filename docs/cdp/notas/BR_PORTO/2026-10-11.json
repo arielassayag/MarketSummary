@@ -1,0 +1,201 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_PORTO",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Porto — retorno das franquias após perdas, reservas e capital",
+  "resumo": "A hipótese é que distribuição e serviços ampliem relacionamento com retorno recorrente por ação após perdas, despesas e capital. A condição decisiva é resultado operacional sustentável em cada vertical, sem depender de benefício fiscal ou tesouraria. A diversificação pode reduzir algumas dependências e também somar riscos de crédito, saúde e integração. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_PORTO.rating_codigo}}, com retorno esperado {{fact:val.BR_PORTO.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Grupo que reúne seguros, saúde, banco e serviços. Distribuição por corretores, canais e parceiros conecta negócios com exigências próprias de capital. Crédito e garantias financeiras têm riscos diferentes dos seguros tradicionais; receitas, despesas e recursos de participantes precisam conservar seu perímetro.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que distribuição e serviços ampliem relacionamento com retorno recorrente por ação após perdas, despesas e capital. A condição decisiva é resultado operacional sustentável em cada vertical, sem depender de benefício fiscal ou tesouraria. A diversificação pode reduzir algumas dependências e também somar riscos de crédito, saúde e integração.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_PORTO.preco}} e alvo {{fact:val.BR_PORTO.preco_alvo}}, com potencial {{fact:val.BR_PORTO.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_PORTO.ke}} e retorno esperado {{fact:val.BR_PORTO.etr}}.",
+      "evidencias": [
+        "val.BR_PORTO.preco",
+        "val.BR_PORTO.preco_alvo",
+        "val.BR_PORTO.upside",
+        "val.BR_PORTO.ke",
+        "val.BR_PORTO.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Monitorar sinistralidade, combinado e resultado antes de finanças; no banco, perdas, garantias, safras e captação. Acompanhar beneficiários, reajuste e custo médico na saúde, além de margem dos serviços. Conciliar receitas diferidas de consórcio, métricas de eficiência, tributos, capital por entidade e efetivo crédito de proventos.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_PORTO.ke}} e a dispersão entre métodos {{fact:val.BR_PORTO.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_PORTO.ke",
+        "val.BR_PORTO.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Divulgação programada de resultados; rever perdas por vertical, ajustes e capital disponível.",
+      "data": "2026-11-05",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F4"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Sinistros, crédito, custo médico e comissões podem absorver receitas. Ajustes fiscais, mudanças de método e reservas afetam comparabilidade. Capital por entidade e recursos de participantes não são caixa livre da holding.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_PORTO.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_PORTO.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Relacionamento sustenta emissão e serviços rentáveis, com perdas controladas e capital suficiente para retorno recorrente por ação. O cenário otimista calculado pelo código é {{fact:val.BR_PORTO.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_PORTO.preco_alvo}}, com retorno esperado {{fact:val.BR_PORTO.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Crédito, sinistros e despesas absorvem receita e os rendimentos ou ajustes deixam de compensar a contribuição operacional. O cenário pessimista calculado pelo código é {{fact:val.BR_PORTO.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_PORTO.preco}} e alvo do modelo aberto {{fact:val.BR_PORTO.preco_alvo}}, com potencial {{fact:val.BR_PORTO.upside}}. Retorno total esperado {{fact:val.BR_PORTO.etr}} e custo do capital próprio {{fact:val.BR_PORTO.ke}}. A dispersão entre métodos é {{fact:val.BR_PORTO.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_PORTO.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_PORTO.consenso_alvo}}; a diferença {{fact:val.BR_PORTO.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "A margem de seguros, o custo de crédito do banco e o resultado de saúde têm movimentos próprios. Perdas de garantias financeiras integram o custo de crédito e não foram somadas novamente como sinistros independentes. Novas receitas diferidas do consórcio exigem comparar a mesma base. A revisão de eficiência do banco inclui reclassificações de recompensas e tarifas; não prova redução econômica equivalente de despesa.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Controle, acordos de distribuição, partes relacionadas e alocação entre verticais exigem documentos completos. A norma gerencial de seguros tem bases distintas da contábil. O aviso de juros sobre capital tem posição acionária passada e pagamento até prazo futuro, sujeito às regras e ratificação informadas; compra posterior não cria automaticamente esse direito.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Corretores, serviços e relacionamento podem apoiar retenção e venda cruzada. A vantagem exige preço e custo de atendimento compatíveis com risco, além de retorno depois de comissões e despesas compartilhadas. O acesso à distribuição não comprova margem uniforme; banco, serviços e saúde têm economias diferentes.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "O lucro contábil e o recorrente têm ajustes tributários e bases próprias. Em seguros, menor sinistralidade coexiste com maior custo comercial. O banco amplia receita com custo de crédito maior e resultado menor. Saúde tem melhora anual e trajetória sequencial distinta; a combinação não autoriza presumir melhora simultânea de todas as verticais.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Caixa e investimentos incluem ativos destinados a reservas e obrigações, com medidas que excluem ou incluem previdência e gestão de passivos. Fluxo operacional recebe efeitos de captação e investimento, enquanto dividendos e financiamento afetam caixa final. Capital regulatório por entidade e recursos do grupo não são excedente único distribuível.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se distribuição cresce enquanto perdas, custos comerciais e capital impedem retorno recorrente por ação. Rendimentos financeiros ou ajustes tributários podem compensar temporariamente uma franquia sem demonstrar vantagem operacional sustentável.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Monitorar sinistralidade, combinado e resultado antes de finanças; no banco, perdas, garantias, safras e captação. Acompanhar beneficiários, reajuste e custo médico na saúde, além de margem dos serviços. Conciliar receitas diferidas de consórcio, métricas de eficiência, tributos, capital por entidade e efetivo crédito de proventos.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_PORTO.etr}}, custo do capital {{fact:val.BR_PORTO.ke}} e dispersão entre métodos {{fact:val.BR_PORTO.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_PORTO.etr",
+        "val.BR_PORTO.ke",
+        "val.BR_PORTO.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Emissão e relacionamento não sustentam margem após sinistros, perdas e custos comerciais.",
+    "Crédito, garantias ou saúde exigem perdas e capital adicionais.",
+    "Reclassificações e ajustes alteram a recorrência ou a comparabilidade das métricas.",
+    "Capital por entidade e caixa recebido não confirmam transmissão de valor ao acionista."
+  ],
+  "lacunas_de_dados": [
+    "Demonstrações completas, reservas e capital por entidade não foram integralmente reconciliados.",
+    "Há revisões em sentidos diferentes das projeções; direção agregada não foi classificada e guidance permanece não determinado.",
+    "Mudanças de método, consórcio e ajustes fiscais exigem bases comparáveis com o modelo recebido.",
+    "Contratos, relacionadas, safras e garantias precisam de análise documental detalhada.",
+    "O aviso confirma aprovação e prazo de pagamento; efetivo crédito não foi antecipado.",
+    "Tom agregado da gestão, vantagem relativa e percepção do mercado não foram comprovados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Porto",
+      "titulo": "Perfil e estrutura do negócio",
+      "url": "https://ri.portoseguro.com.br/a-companhia/apresentacao-da-companhia/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Porto",
+      "titulo": "Release de resultado, verticais e reconciliações gerenciais",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/b77a3922-d280-4451-b3ee-0afec4577834/4432e300-316c-530a-bf34-b5ac18038e09?origin=2",
+      "publicado_em": "2026-08-07",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Porto",
+      "titulo": "Juros sobre capital aprovados e prazo futuro de pagamento",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/b77a3922-d280-4451-b3ee-0afec4577834/703c94b9-095b-86e3-319b-c915488ca4e2?origin=2",
+      "publicado_em": "2026-09-18",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F4",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Porto",
+      "titulo": "Calendário público de eventos futuros utilizado pelo portal de RI",
+      "url": "https://api.mziq.com/mzevents/events/future/b77a3922-d280-4451-b3ee-0afec4577834/pt-br",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

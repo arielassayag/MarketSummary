@@ -5,7 +5,7 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-## Estado atual das teses — 11/10/2026, 13:02 Brasília
+## Estado atual das teses — 11/10/2026, 13:30 Brasília
 
 O portal `8aea3f1` está publicado e foi conferido independentemente: 241 páginas,
 233 empresas e oito ETFs; 727 arquivos HTTP200 com tamanho e SHA iguais ao
@@ -23,12 +23,12 @@ nenhum erro ou falha, 4.507 casos únicos. Ruff passou; os 4.875 arquivos fixado
 e o commit permaneceram idênticos. Não há soma de execuções focais sobrepostas
 nem promoção da qualificação de outra frente privada.
 
-O ramo documental `codex/cdp-pesquisa-lote-2` tem 170 rascunhos entregues e
+O ramo documental `codex/cdp-pesquisa-lote-2` tem 176 rascunhos entregues e
 validados em conjunto: oito ETFs e empresas de diferentes países e setores.
 O índice de lotes em [notas/README.md](notas/README.md) registra os ativos,
 fontes e limites relevantes. A conferência conjunta preservou a renderização
 das doze notas históricas e os 4.122 arquivos operacionais. Os textos mantêm
-visão neutra, baixa convicção e lacunas próprias. Há 59 ativos ainda sem nota
+visão neutra, baixa convicção e lacunas próprias. Há 53 ativos ainda sem nota
 publicada ou rascunho individual; cobertura qualitativa completa continua aberta.
 
 Os novos estudos incluem bancos e seguros mexicanos, imóveis e concessões,
@@ -146,6 +146,22 @@ metodologia de margem a apropriar. O conjunto de 170 rascunhos passou na
 validação nativa, preservando as doze notas históricas e os arquivos operacionais.
 Os testes documentais, de teses e do site tiveram 286 aprovados e um pulado,
 287 casos únicos, sem falha ou erro. Ruff passou.
+
+MRV, Moura Dubeux, JHSF, ALLOS, Iguatemi e LOG acrescentam análise de imóveis,
+locação e direitos econômicos. A prévia da MRV tem caixa ajustado e dívida
+construída por liquidações; recebimento diferido permanece distinto de caixa.
+Moura Dubeux mantém cessões com exposição retida e consumo operacional.
+JHSF examina cotas, swap relacionado e reconhecimento da venda ao fundo;
+a identificação inconsistente do fluxo gerencial permanece explícita. ALLOS
+foi consultada por documento público da CVM, preservando a falta de reconciliação
+integral do ITR. Iguatemi separa bases recorrente e pro forma. A venda concluída
+da LOG tem dinheiro, cotas e parcelas futuras, sem antecipar recebimento.
+A conferência conjunta validou os 176 rascunhos, preservando as doze notas
+históricas e os 4.122 arquivos operacionais. Os 287 casos únicos de notas,
+teses, agenda, documentação e site concluíram com 286 aprovações, um caso
+pulado e nenhuma falha ou erro; Ruff e a conferência do diff passaram.
+A CI documental `38148284737`, do commit `6c0e62a`, concluiu com sucesso
+em 11/10, 13:17 Brasília. Essas qualificações não publicam as novas narrativas.
 
 A pesquisa distingue resultado recorrente, medidas gerenciais, inflação, moeda,
 capital por entidade e recursos atribuíveis ao acionista. Reorganização anunciada,

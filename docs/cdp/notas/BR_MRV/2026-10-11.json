@@ -1,0 +1,267 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_MRV",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "MRV — recuperação habitacional e desalavancagem com direitos distintos",
+  "resumo": "A hipótese é que safras habitacionais melhores e simplificação do grupo reduzam risco financeiro e sustentem retorno depois de construção, perdas e juros. A condição decisiva é a incorporação converter vendas e produção em recebimentos recorrentes, enquanto alienações reduzem obrigações sem destruir valor superior ao capital liberado. A liquidez obtida com ativos não prova recuperação estrutural. O teste deve preservar capital dos sócios, juros alocados entre operações e custos das cessões, sem extrapolar margens ou tratar dívida pro forma como balanço efetivo. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_MRV.rating_codigo}}, com retorno esperado {{fact:val.BR_MRV.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Grupo imobiliário com incorporação residencial brasileira nas marcas MRV e Sensia, loteamentos pela Urba, administração e desenvolvimento de imóveis de locação pela Luggo e operação norte-americana pela Resia. Habitação popular depende de crédito, produção, registro e repasse. Locação, construção e venda de ativos têm ciclos próprios. Sócios dos projetos, recebíveis cedidos e obrigações corporativas modificam os direitos econômicos do acionista; o resultado brasileiro ajustado não representa todo o grupo.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que safras habitacionais melhores e simplificação do grupo reduzam risco financeiro e sustentem retorno depois de construção, perdas e juros. A condição decisiva é a incorporação converter vendas e produção em recebimentos recorrentes, enquanto alienações reduzem obrigações sem destruir valor superior ao capital liberado. A liquidez obtida com ativos não prova recuperação estrutural. O teste deve preservar capital dos sócios, juros alocados entre operações e custos das cessões, sem extrapolar margens ou tratar dívida pro forma como balanço efetivo.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F6",
+        "F7"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_MRV.preco}} e alvo {{fact:val.BR_MRV.preco_alvo}}, com potencial {{fact:val.BR_MRV.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_MRV.ke}} e retorno esperado {{fact:val.BR_MRV.etr}}.",
+      "evidencias": [
+        "val.BR_MRV.preco",
+        "val.BR_MRV.preco_alvo",
+        "val.BR_MRV.upside",
+        "val.BR_MRV.ke",
+        "val.BR_MRV.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Conciliar safras, vendas, produção, registros, repasses e carteira pós-chaves. Separar caixa contábil e gerencial, cessões e juros realocados. Confirmar liquidação de alienações, distribuições aos sócios e recebimentos diferidos. Avaliar dívida consolidada, covenants, perdas e recursos restritos antes de inferir distribuição.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_MRV.ke}} e a dispersão entre métodos {{fact:val.BR_MRV.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_MRV.ke",
+        "val.BR_MRV.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Resultados posteriores à prévia: conciliar repasses, cessões, perdas, juros e caixa atribuível por operação.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F7"
+      ]
+    },
+    {
+      "descricao": "Liquidação das vendas adicionais da Resia e confirmação das parcelas diferidas da Luggo, preservando direitos de sócios.",
+      "data": null,
+      "tipo": "m_a",
+      "direcao": "incerto",
+      "evidencias": [
+        "F5",
+        "F6",
+        "F7"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Repasses, crédito, custos e perdas podem limitar recuperação. Alienações dependem de compradores e preço. Cessões, juros, sócios e recebimentos diferidos podem restringir o caixa atribuível e manter risco de refinanciamento.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F6",
+        "F7"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_MRV.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_MRV.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Safras, repasses e crédito sustentam caixa depois de custos completos; alienações concluídas reduzem risco financeiro e preservam retorno atribuível. O cenário otimista calculado pelo código é {{fact:val.BR_MRV.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_MRV.preco_alvo}}, com retorno esperado {{fact:val.BR_MRV.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Repasses atrasam, cessões e juros absorvem recursos e ativos são vendidos em condições desfavoráveis, prolongando perda e restrição de capital. O cenário pessimista calculado pelo código é {{fact:val.BR_MRV.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_MRV.preco}} e alvo do modelo aberto {{fact:val.BR_MRV.preco_alvo}}, com potencial {{fact:val.BR_MRV.upside}}. Retorno total esperado {{fact:val.BR_MRV.etr}} e custo do capital próprio {{fact:val.BR_MRV.ke}}. A dispersão entre métodos é {{fact:val.BR_MRV.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_MRV.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_MRV.consenso_alvo}}; a diferença {{fact:val.BR_MRV.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "O grupo preserva diferença entre lucro brasileiro ajustado e prejuízo consolidado, incluindo perdas de ativos da Resia. A prévia posterior atribui melhora gerencial a vendas concluídas e caixa da Urba, com repasses prejudicados pela greve bancária. A incorporação apresenta consumo na medida sem efeito líquido de cessão. A ponte de dívida posterior é construída a partir da posição anterior e das liquidações; não foi tratada como novo balanço. Eventos posteriores não foram incorporados retrospectivamente ao modelo recebido.",
+  "guidance": "retirado",
+  "tom_gestao": "nd",
+  "governanca": "A revisão intermediária tem alcance inferior à auditoria anual. Cessões podem desreconhecer ativos ou manter passivo e exposição; a carteira líquida gerencial não resolve essa distinção. Sócios dos projetos e financiamento realocado entre operações exigem ponte consolidada. O comunicado da Luggo confirma fechamento com parcela a receber futuramente. Os contratos adicionais da Resia permanecem sujeitos a diligência e financiamento; conclusão e recebimento integral não foram presumidos.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Padronização, presença regional, relacionamento com canais bancários e escala de obras podem apoiar o produto habitacional. A vantagem precisa de prova por safra, praça, custo completo e repasse. Resia enfrenta demanda, financiamento e valores de venda do mercado norte-americano; escala brasileira não transfere vantagem automaticamente. O loteamento tem ciclo próprio. A Luggo passa a manter administração de ativos depois da alienação, com base de receitas e capital diferente da construção para locação.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "O resultado brasileiro ajustado melhora, enquanto o consolidado mantém prejuízo e incorpora perdas nos ativos norte-americanos. Juros ligados ao empréstimo da operação estrangeira são retirados da medida brasileira, sem desaparecer economicamente. A demonstração dos fluxos separa recebimento por venda de controladas e financiamento de recebíveis. A prévia posterior mostra caixa gerencial beneficiado por alienações; na incorporação, a medida ajustada fica negativa ao retirar o efeito líquido das cessões. Ajustes e pro forma exigem ponte própria.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F7"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Vendas concluídas de ativos da Resia e da Luggo diferem de contratos ainda sujeitos a condições e financiamento do comprador. A Luggo mantém recebimento diferido depois do fechamento. Na Resia, distribuições aos sócios alteram o caixa atribuível. Dívida brasileira ajustada realoca financiamento do grupo e não elimina obrigação. Cessões com e sem desreconhecimento têm reservas, custos e exposição próprios. A retirada formal de guidance não torna as expectativas operacionais compromissos nem dispensa avaliar liquidez e covenants.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F4",
+      "F5",
+      "F6",
+      "F7"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se margens melhoram antes de caixa e liquidez continua dependente da monetização de ativos e recebíveis. Venda abaixo do custo libera capital com perda econômica, sem provar retorno. A recuperação brasileira pode ser absorvida por juros, obrigações e necessidades da operação estrangeira. A prévia tem bases ajustadas e não auditadas; dívida construída a partir de liquidações não substitui balanço. Menor carteira líquida após cessão pode coexistir com exposição contratual retida.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F4",
+      "F5",
+      "F6",
+      "F7"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Conciliar safras, vendas, produção, registros, repasses e carteira pós-chaves. Separar caixa contábil e gerencial, cessões e juros realocados. Confirmar liquidação de alienações, distribuições aos sócios e recebimentos diferidos. Avaliar dívida consolidada, covenants, perdas e recursos restritos antes de inferir distribuição.",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F6",
+        "F7"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_MRV.etr}}, custo do capital {{fact:val.BR_MRV.ke}} e dispersão entre métodos {{fact:val.BR_MRV.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_MRV.etr",
+        "val.BR_MRV.ke",
+        "val.BR_MRV.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Safras e vendas não se convertem em caixa depois de juros e cessões.",
+    "Alienações ou perdas não reduzem risco financeiro em condições econômicas adequadas.",
+    "Sócios, reservas, recebimentos diferidos ou covenants limitam recursos atribuíveis.",
+    "Novo balanço diverge da ponte pro forma ou altera premissas de recuperação."
+  ],
+  "lacunas_de_dados": [
+    "Caixa gerencial, cessões e demonstração dos fluxos não foram integralmente reconciliados por entidade.",
+    "Fechamento e recebimento integral dos contratos adicionais da Resia não foram comprovados.",
+    "Recebimentos diferidos da Luggo mantêm prazo e risco próprios; não foram antecipados.",
+    "Dívida pro forma da prévia não substitui a posição contábil posterior ainda não examinada.",
+    "Custo completo das safras, financiamento direto e direitos dos sócios exigem ponte detalhada.",
+    "Condições completas de covenants e recursos restritos não foram reconciliadas.",
+    "Participação relativa, tom e percepção do mercado permanecem não determinados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "MRV",
+      "titulo": "Estrutura do grupo e materiais públicos das operações",
+      "url": "https://ri.mrv.com.br/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "MRV",
+      "titulo": "Resultado: incorporação brasileira, Resia, dívida e fluxo consolidado",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/4b56353d-d5d9-435f-bf63-dcbf0a6c25d5/abfbc3bc-6aa1-9834-d2cf-5122eaac9188?origin=2",
+      "publicado_em": "2026-08-12",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "MRV",
+      "titulo": "Informações intermediárias: cessões, obrigações, sócios e revisão",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/4b56353d-d5d9-435f-bf63-dcbf0a6c25d5/66e7ea93-345b-e5db-9585-4d1a62bc79a7?origin=2",
+      "publicado_em": "2026-08-12",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F4",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "MRV",
+      "titulo": "Retirada formal das projeções anuais",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/4b56353d-d5d9-435f-bf63-dcbf0a6c25d5/79e922ec-b1ae-6a53-fad0-46f12d8fe6e8?origin=2",
+      "publicado_em": "2026-03-09",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F5",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "MRV",
+      "titulo": "Luggo: venda concluída, administração mantida e recebimento diferido",
+      "url": "https://filemanager-cdn.mziq.com/published/4b56353d-d5d9-435f-bf63-dcbf0a6c25d5/e029504e-9df9-43e3-8de6-089baa57b617",
+      "publicado_em": "2026-10-01",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F6",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "MRV",
+      "titulo": "Resia: contratos de venda, perdas e condições precedentes",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/4b56353d-d5d9-435f-bf63-dcbf0a6c25d5/6c98d072-3aa8-329e-c948-97c4739f8bf5?origin=2",
+      "publicado_em": "2026-08-06",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F7",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "MRV",
+      "titulo": "Prévia posterior: repasses, cessões, sócios e dívida pro forma",
+      "url": "https://filemanager-cdn.mziq.com/published/4b56353d-d5d9-435f-bf63-dcbf0a6c25d5/c41cb50d-8c2e-48f9-a2ed-887aff455ed9",
+      "publicado_em": "2026-10-08",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

@@ -74,6 +74,13 @@ histórica. A análise da Cemig não incorpora mudança de controle não confirm
 
 ## Lotes seguintes de empresas em 11/10/2026
 
+- `BR_MRV`, `BR_MOURADUBEUX`, `BR_JHSF`, `BR_ALLOS`, `BR_IGUATEMI` e
+  `BR_LOGCP`: imóveis, locação, capital e direitos econômicos. MRV distingue
+  projeções retiradas, liquidações e recebimento diferido. Moura Dubeux preserva
+  condomínio, cessão com risco retido e caixa operacional. JHSF examina fundo
+  comprador, cotas e swap relacionado. ALLOS separa FFO, tributos e perímetro;
+  Iguatemi mantém bases recorrente e pro forma distintas. LOG diferencia
+  dinheiro, cotas e parcelas futuras da venda concluída.
 - `BR_CURY`, `BR_DIRECIONAL`, `BR_EZTEC`, `BR_PLANO` e `BR_TENDA`:
   safras, crédito, repasses e capital. Cury distingue prévia e caixa gerencial;
   Direcional preserva risco retido nas cessões e a integralização da oferta.

@@ -5,7 +5,7 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-## Estado atual das teses — 11/10/2026, 11:25 Brasília
+## Estado atual das teses — 11/10/2026, 11:42 Brasília
 
 O portal `8aea3f1` está publicado e foi conferido independentemente: 241 páginas,
 233 empresas e oito ETFs; 727 arquivos HTTP200 com tamanho e SHA iguais ao
@@ -23,12 +23,12 @@ nenhum erro ou falha, 4.507 casos únicos. Ruff passou; os 4.875 arquivos fixado
 e o commit permaneceram idênticos. Não há soma de execuções focais sobrepostas
 nem promoção da qualificação de outra frente privada.
 
-O ramo documental `codex/cdp-pesquisa-lote-2` tem 149 rascunhos entregues e
+O ramo documental `codex/cdp-pesquisa-lote-2` tem 153 rascunhos entregues e
 validados em conjunto: oito ETFs e empresas de diferentes países e setores.
 O índice de lotes em [notas/README.md](notas/README.md) registra os ativos,
 fontes e limites relevantes. A conferência conjunta preservou a renderização
 das doze notas históricas e os 4.122 arquivos operacionais. Os textos mantêm
-visão neutra, baixa convicção e lacunas próprias. Há 80 ativos ainda sem nota
+visão neutra, baixa convicção e lacunas próprias. Há 76 ativos ainda sem nota
 publicada ou rascunho individual; cobertura qualitativa completa continua aberta.
 
 Os novos estudos incluem bancos e seguros mexicanos, imóveis e concessões,
@@ -89,6 +89,17 @@ preliminar e recursos prospectivos de resultado e reservas. Brava documenta
 controle concluído e início de produção em estabilização. PetroReconcavo
 mantém processamento contratado, derivativos liquidados e pagamentos
 programados em suas bases e datas próprias.
+
+Vale, CSN, CSN Mineração e Bradespar acrescentam análise de custo completo,
+reposição, reparação e transmissão de valor. O fluxo gerencial da CSN contém
+financiamento; propostas e term sheet não comprovam alienação concluída.
+Volume e custo da CMIN têm revisões diferentes, sem direção agregada presumida.
+Bradespar e Vale descrevem a dívida expandida com períodos divergentes;
+o estudo preserva a lacuna. Equivalência e provento programado não comprovam
+recebimento pela holding. O conjunto passou por validação nativa e preservou
+as notas históricas; os testes documentais tiveram 273 aprovados e um pulado,
+274 casos únicos, sem erro ou falha. A CI de `8535bbb` concluiu com sucesso
+em `38139742971`; isso não publica as novas narrativas.
 
 A pesquisa distingue resultado recorrente, medidas gerenciais, inflação, moeda,
 capital por entidade e recursos atribuíveis ao acionista. Reorganização anunciada,

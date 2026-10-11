@@ -74,6 +74,13 @@ histórica. A análise da Cemig não incorpora mudança de controle não confirm
 
 ## Lotes seguintes de empresas em 11/10/2026
 
+- `BR_VALE`, `BR_CSN`, `BR_CMIN` e `BR_BRADESPAR`: custo mineral completo,
+  reposição, reparação, liquidez e transmissão de valor pela holding. Vale
+  distingue subprodutos, caixa de contratos e obrigações fora da dívida
+  expandida. CSN preserva financiamento na medida gerencial de fluxo livre e
+  alienações condicionais. CMIN separa produção, compras e perímetro do grupo;
+  volume e custo têm revisões diferentes. Bradespar mantém a divergência de
+  período sobre a dívida da Vale e não presume recebimento de provento programado.
 - `BR_PETROBRAS`, `BR_PRIO`, `BR_BRAVA` e `BR_RECV`: produção econômica,
   custo completo, capital e caixa após financiamento. Petrobras separa fluxo da
   política de remuneração e arrendamentos. PRIO distingue produção mensal

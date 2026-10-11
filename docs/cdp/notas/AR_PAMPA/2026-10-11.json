@@ -1,0 +1,179 @@
+{
+  "mind": "codex",
+  "issuer_id": "AR_PAMPA",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Pampa: integração energética e retorno após capital dos projetos",
+  "resumo": "A hipótese é que integração de gás e energia e disciplina de execução sustentem caixa após reinvestimento e financiamento. A condição decisiva é retorno atribuível demonstrado por negócio e projeto. Crescimento de produção, enquadramento em incentivo ou expansão anunciada não comprova contribuição econômica após todo o capital necessário. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.AR_PAMPA.rating_codigo}}, com retorno esperado {{fact:val.AR_PAMPA.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "A Pampa participa de petróleo, gás, geração, transmissão e petroquímica na Argentina, incluindo negócios associados. Produção própria, contratos de energia e participações têm exposições e perímetros diferentes. O perfil e o release distinguem afiliadas que não integram a consolidação contábil. A análise deve separar ativos operacionais e projetos de expansão.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que integração de gás e energia e disciplina de execução sustentem caixa após reinvestimento e financiamento. A condição decisiva é retorno atribuível demonstrado por negócio e projeto. Crescimento de produção, enquadramento em incentivo ou expansão anunciada não comprova contribuição econômica após todo o capital necessário.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.AR_PAMPA.preco}} e alvo {{fact:val.AR_PAMPA.preco_alvo}}, com potencial {{fact:val.AR_PAMPA.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.AR_PAMPA.ke}} e retorno esperado {{fact:val.AR_PAMPA.etr}}.",
+      "evidencias": [
+        "val.AR_PAMPA.preco",
+        "val.AR_PAMPA.preco_alvo",
+        "val.AR_PAMPA.upside",
+        "val.AR_PAMPA.ke",
+        "val.AR_PAMPA.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Separar contribuição de gás, petróleo, energia e afiliadas; reconciliar caixa, garantias e capital de giro. Conferir orçamento, financiamento, infraestrutura e estágio dos projetos, junto a direitos e distribuições das participações e alterações de concessões.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.AR_PAMPA.ke}} e a dispersão entre métodos {{fact:val.AR_PAMPA.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.AR_PAMPA.ke",
+        "val.AR_PAMPA.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Preços, remuneração, transporte e garantias podem pressionar caixa. Projetos exigem financiamento e execução. Perímetro, moeda das afiliadas e concessões precisam de análise atual; aprovação de incentivo não comprova retorno nem operação futura.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.AR_PAMPA.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.AR_PAMPA.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Integração demonstra benefício depois do custo total, com contratos e infraestrutura suficientes. Projetos têm execução e financiamento disciplinados, e retorno atribuível se transmite em caixa sem depender de incentivos tratados como resultado realizado. O cenário otimista calculado pelo código é {{fact:val.AR_PAMPA.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.AR_PAMPA.preco_alvo}}, com retorno esperado {{fact:val.AR_PAMPA.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Preço, remuneração ou transporte limita contribuição, enquanto garantias e expansão absorvem recursos. Projetos atrasam ou exigem mais funding e afiliadas não transferem caixa suficiente para remunerar os compromissos. O cenário pessimista calculado pelo código é {{fact:val.AR_PAMPA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.AR_PAMPA.preco}} e alvo do modelo aberto {{fact:val.AR_PAMPA.preco_alvo}}, com potencial {{fact:val.AR_PAMPA.upside}}. Retorno total esperado {{fact:val.AR_PAMPA.etr}} e custo do capital próprio {{fact:val.AR_PAMPA.ke}}. A dispersão entre métodos é {{fact:val.AR_PAMPA.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.AR_PAMPA.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.AR_PAMPA.consenso_alvo}}; a diferença {{fact:val.AR_PAMPA.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "O release consultado distingue lucro atribuível, EBITDA ajustado com afiliadas e dívida por perímetro. O comunicado posterior informa aprovação do projeto de fertilizantes no RIGI; o estágio de agosto não deve ser confundido com o atual. A reconciliação integral dos resultados, concessões e projetos com o modelo permanece pendente.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Novos projetos precisam demonstrar orçamento, compromissos e retorno depois de financiamento. O comunicado posterior informa aprovação do projeto de fertilizantes no RIGI, que deve ser separada do estágio e do funding. Produção futura e capacidade esperada não entram como caixa realizado; direitos nas associadas e recursos na companhia listada exigem conciliação.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Integração pode melhorar disponibilidade de insumos e acesso ao mercado, mas requer teste de custo, contratos e infraestrutura. A pesquisa deve comparar geração e produção na mesma base, evitando atribuir vantagem uniforme ao portfólio. Acesso a recursos naturais não demonstra financiamento suficiente nem retorno incremental da expansão.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "O release apresenta perímetros distintos para consolidação, EBITDA ajustado e participações e explicita bases de moeda das associadas. A análise deve conciliar lucro atribuível, caixa recebido, capital de giro e garantias de instrumentos financeiros. Somar lucro das afiliadas e dividendos como valor independente causaria dupla contagem.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Novos projetos precisam demonstrar orçamento, compromissos e retorno depois de financiamento. O comunicado posterior informa aprovação do projeto de fertilizantes no RIGI, que deve ser separada do estágio e do funding. Produção futura e capacidade esperada não entram como caixa realizado; direitos nas associadas e recursos na companhia listada exigem conciliação.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "Integração pode favorecer contribuição corrente enquanto garantias, infraestrutura e novos projetos absorvem capital. Mudanças de preço ou regras de remuneração podem reduzir retorno antes da expansão contribuir. Se caixa atribuível depende de obras ou financiamento não demonstrados, a hipótese de integração e disciplina enfraquece.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Separar contribuição de gás, petróleo, energia e afiliadas; reconciliar caixa, garantias e capital de giro. Conferir orçamento, financiamento, infraestrutura e estágio dos projetos, junto a direitos e distribuições das participações e alterações de concessões.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.AR_PAMPA.etr}}, custo do capital {{fact:val.AR_PAMPA.ke}} e dispersão entre métodos {{fact:val.AR_PAMPA.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.AR_PAMPA.etr",
+        "val.AR_PAMPA.ke",
+        "val.AR_PAMPA.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+    "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+    "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+    "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "Resultado, moeda das afiliadas e caixa atribuível não foram integralmente reconciliados com o modelo.",
+    "Financiamento integral, orçamento e retorno dos novos projetos permanecem a demonstrar.",
+    "Concessões, contratos e infraestrutura exigem documentação atual completa.",
+    "Garantias de instrumentos financeiros e disponibilidade na holding precisam de conciliação.",
+    "Comparação competitiva e percepção do mercado têm evidência insuficiente.",
+    "Não há catalisador futuro com data precisa adotado nesta pesquisa."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Pampa Energía",
+      "titulo": "Perfil e estrutura do negócio",
+      "url": "https://ri.pampa.com/compania/perfil-de-la-compania/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Pampa Energía",
+      "titulo": "Informações financeiras e materiais de análise",
+      "url": "https://www.sec.gov/Archives/edgar/data/1469395/000129281426004047/ex99-1.htm",
+      "publicado_em": "2026-08-04",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Pampa Energía",
+      "titulo": "Aprovação do projeto de fertilizantes no RIGI",
+      "url": "https://ri.pampa.com/press-release/aprobacion-del-proyecto-fertilizantes-al-regimen-de-incentivo-para-grandes-inversiones-rigi/",
+      "publicado_em": "2026-09-07",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

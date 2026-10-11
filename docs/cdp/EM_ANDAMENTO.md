@@ -5,6 +5,66 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
+## Estado atual das teses — 11/10/2026, 06:47 Brasília
+
+O portal `7032a51` foi publicado e conferido independentemente: 241 páginas,
+233 empresas e oito ETFs; 727 arquivos HTTP200 com tamanho e SHA iguais ao
+manifesto público. O índice, downloads e oito páginas reais foram examinados
+em desktop e celular, com quatorze capturas, sem erros de JavaScript ou
+transbordamento. Há doze narrativas publicadas e 229 análises preliminares;
+página disponível não equivale a pesquisa qualitativa concluída.
+
+A extensão de notas de ETFs `bfb4187` concluiu a suíte completa: 4.489 aprovados,
+dezessete pulados e nenhum erro ou falha, 4.506 casos únicos. Ruff passou;
+os 4.871 arquivos fixados e o commit permaneceram idênticos. A correção temporal
+`13cfece` concluiu sua suíte completa: 4.490 aprovados, dezessete pulados e
+nenhum erro ou falha, 4.507 casos únicos. Ruff passou; os 4.875 arquivos fixados
+e o commit permaneceram idênticos. Não há soma de execuções focais sobrepostas
+nem promoção da qualificação de outra frente privada.
+
+O novo ramo documental `codex/cdp-pesquisa-lote-2` acrescenta vinte e oito empresas às
+quatro iniciais e aos oito ETFs: Fortuna, Stone, Vivo, Cemig, Cyrela, Copasa,
+Motiva, Walmex, TIM, Multiplan, Santander Brasil, PagBank, FEMSA, Cencosud,
+CMPC, Banorte, Sabesp, Credicorp, Buenaventura, Southern Copper, Pampa, Cresud,
+IRSA, YPF, Empresas Copec, Enel Américas, Enel Chile e Ecopetrol. Os quarenta
+rascunhos passaram individualmente em schema e fatos nativos. A conferência
+conjunta validou todos os quarenta e preservou
+a renderização das doze notas históricas e os 4.122 arquivos operacionais.
+Permanecem fora do livro, com visão
+neutra, baixa convicção e lacunas próprias, aguardando adoção na fila canônica.
+
+A revisão documental diferencia mudança de controle de retorno operacional,
+venda da plataforma de aeroportos da Motiva de perímetro ainda a reconciliar,
+IFRS e medidas gerenciais dos bancos, e bases contábeis de inflação, contratos
+de uso e atribuição. Cencosud altera a definição de vendas comparáveis; FEMSA
+tem assuntos de auditoria sobre controles e intangíveis; o anexo Banorte é de
+financiamentos, sem reconciliação de resultado e capital. Sabesp distingue
+remuneração contratual e funding; Credicorp separa orientação anual e expectativa
+de médio prazo; Buenaventura corrige resultado anterior de associadas e descreve
+maturação de San Gabriel; Southern Copper separa créditos de subprodutos e
+financiamento dos projetos. Consulta não comprova posse histórica ou incorporação
+dos dados ao modelo. A Pampa exige reconciliar afiliadas, garantias e estágio
+dos projetos; Cresud e IRSA exigem eliminar sobreposição e separar avaliações
+de recebimentos. O anual completo da Cresud não foi recebido com HTTPS válido.
+YPF exige direitos e base por ação após evento de capital e resultado atual
+completo. Copec separa a declaração de financiamento do anual das condições
+e do estágio atual dos projetos. Enel Américas distingue efeitos de moeda e
+regularização das obrigações; Enel Chile exige conciliação de recebíveis e
+instrumentos regulatórios. O release de Enel Chile foi consultado na fonte,
+mas o download separado foi recusado e não gerou cópia local. Ecopetrol exige
+separar saldos do fundo de estabilização, títulos recebidos e caixa. Nenhum
+novo número financeiro foi escolhido pela mente.
+
+O escritor e o limite continuam os mesmos: `.cdp/rotinas`, até doze ativos por
+execução. Um rascunho de domingo mantém sua data ao entrar na fila posterior;
+a nota publicada só aparece num retrato com corte compatível. Não se publica
+rascunho diretamente no site. A cobertura qualitativa completa dos demais
+ativos, reconciliação das demonstrações e qualificação dos projetos continuam
+pendentes. A integração em `main` e publicação do novo código ainda aguardam
+os últimos controles documentais e o encerramento da CI do portal anterior,
+para não cancelar sua execução. A operação local de 09/10 e todas as frentes privadas antigas abaixo
+continuam separadas, sem nova decisão, repetição MOC ou escrita operacional.
+
 ## Páginas de tese por ativo — desenvolvimento em 11/10/2026
 
 O ramo `codex/cdp-portal-teses`, em `.cdp/integracoes/portal-teses`, implementa um
@@ -58,6 +118,26 @@ suíte completa; testes finais, integração e publicação ainda estão pendent
 A cobertura qualitativa permanece incompleta: oito rascunhos são entrega de pesquisa,
 não notas publicadas. O portal incorpora narrativas apenas da trilha íntegra e compatíveis
 com o corte do retrato. A operação local de 09/10 continua separada desta entrega.
+
+## Segundo lote de pesquisa — 11/10/2026
+
+O ramo `codex/cdp-pesquisa-lote-2`, em `.cdp/integracoes/pesquisa-lote-2`, acrescenta
+Fortuna Mining, StoneCo, Telefônica Brasil e Cemig aos rascunhos. As hipóteses próprias
+tratam de financiamento e execução de minas, monetização com risco de crédito,
+retorno das redes após reinvestimento e transmissão de caixa sob controle estatal.
+O estudo de Fortuna incorpora a atualização operacional pública de 07/10 e distingue
+produção de retorno dos projetos. Stone separa orientação de lucro ajustado básico da
+reconciliação diluída. O perfil da Vivo contém referência operacional posterior à data
+do rodapé; consulta atual não comprova publicação histórica. Cemig mantém evento de
+controle não confirmado fora da hipótese-base.
+
+Os textos não calculam números, não alteram modelos e não publicam no livro. A
+reconciliação financeira completa e a pesquisa dos demais ativos permanecem abertas.
+A primeira tentativa do arquivo Cemig excedeu o limite textual de um risco; o texto
+foi condensado, sem mudar o schema. O portal `7032a51` foi conferido independentemente
+no ar: 241 ativos, 727 arquivos com hashes válidos, oito páginas reais em desktop e
+celular, quatorze capturas, sem erros de JavaScript ou transbordamento. A extensão ETF
+e a correção temporal continuam em suítes amplas com fontes fixadas.
 
 ## Pesquisa de empresas entre pregões — desenvolvimento em 11/10/2026
 

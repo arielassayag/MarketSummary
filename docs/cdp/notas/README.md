@@ -62,3 +62,53 @@ cenários e retornos citados são referências ao FactBook. Os perfis e materiai
 de RI foram consultados; o último resultado, as notas explicativas e os projetos não
 foram integralmente reconciliados. Os textos são rascunhos de baixa convicção, com
 lacunas explícitas, e aguardam adoção e validação pelo executor.
+
+## Segundo lote de empresas em 11/10/2026
+
+`LA_FORTUNA`, `BR_STONE`, `BR_VIVO` e `BR_CEMIG` acrescentam pesquisas próprias de
+mineração, pagamentos, telecomunicações e energia sob controle estatal. Documentos de
+RI consultados e lacunas acompanham cada estudo. A orientação de produção da Fortuna
+não equivale a retorno dos projetos; o lucro ajustado básico da Stone não substitui a
+reconciliação diluída. A consulta atual do perfil da Vivo não comprova publicação
+histórica. A análise da Cemig não incorpora mudança de controle não confirmada.
+
+## Lotes seguintes de empresas em 11/10/2026
+
+- `BR_CYRELA`, `BR_COPASA`, `BR_MOTIVA` e `MX_WALMEX`: economia dos projetos
+  imobiliários, obrigações do saneamento, perímetro após venda de aeroportos e
+  contribuição do varejo depois de estoque e contratos de uso. A composição
+  atual da Copasa exige documentos de controle e direitos; a consulta parcial
+  do perfil da Cyrela não equivale a arquivo primário integral recebido.
+- `BR_TIM`, `BR_MULTIPLAN`, `BR_SANTANDER` e `BR_PAGS`: retorno após investimento
+  em redes, receitas e participação econômica de shopping centers, lucro
+  atribuível e capital bancário, e monetização de pagamentos depois do risco.
+  Direitos de capital, OPA, distribuição e recompras não são presumidos por
+  títulos de comunicados.
+- `MX_FEMSA`, `CL_CENCOSUD`, `CL_CMPC` e `MX_BANORTE`: caixa por negócio e
+  participação, comparabilidade do varejo, retorno industrial ao longo do ciclo,
+  e capital por atividade financeira. O anexo consultado de Banorte detalha
+  financiamentos; não substitui demonstrações completas de resultado e capital.
+- `BR_SABESP`, `PE_CREDICORP`, `PE_BVN` e `PE_SCCO`: remuneração contratual e
+  financiamento da universalização, monetização bancária após perdas e capital,
+  maturação das minas e caixa das associadas, e execução de expansão do cobre.
+  A correção retrospectiva de resultado da Buenaventura exige base reconciliada;
+  recurso captado pela Southern Copper não prova financiamento integral ou retorno.
+- `AR_PAMPA`, `AR_CRESUD`, `AR_IRSA` e `AR_YPF`: retorno depois de infraestrutura
+  e financiamento, produtividade rural e recebimentos das participações, renda
+  imobiliária e monetização dos projetos, e caixa por ação depois de reinvestimento.
+  Perímetro de afiliadas, avaliações, permutas e direitos de capital exigem
+  conciliação. O anual completo da Cresud não foi recebido com HTTPS válido;
+  o estatuto da YPF não substitui seu último resultado.
+- `CL_COPEC`, `CL_ENELAM`, `CL_ENELCHILE` e `CO_ECOPETROL`: retorno recebido do
+  portfólio após expansão, remuneração das redes e capital das controladas,
+  geração contratada e monetização regulatória, e contribuição do refino e dos
+  recebíveis de combustíveis. Declaração de financiamento, conversão cambial,
+  instrumento recebido e caixa têm significados distintos. A análise de Enel
+  Chile foi consultada na fonte; o download separado foi recusado e não há
+  cópia local recebida. Demonstrações, unidades e obrigações exigem reconciliação.
+
+Todos são rascunhos com hipóteses próprias, contraponto, indicadores e lacunas.
+Mesmo a consulta do último release não encerra a reconciliação financeira com o
+modelo, a comparação competitiva e a diligência do capital. Nenhum dado externo
+foi incorporado automaticamente ao FactBook. A fila preserva a data de cada
+rascunho até a adoção pelo executor; não há publicação direta desta pasta.

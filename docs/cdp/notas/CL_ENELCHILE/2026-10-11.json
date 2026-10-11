@@ -1,0 +1,170 @@
+{
+  "mind": "codex",
+  "issuer_id": "CL_ENELCHILE",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Enel Chile: geração contratada, recebimentos regulatórios e disciplina de capital",
+  "resumo": "A hipótese é que o portfólio de geração e os investimentos nas redes sustentem caixa depois de contratos, manutenção e financiamento. A condição decisiva é geração e recebimentos suficientes na base atribuível. Reajuste tarifário e reconhecimento de recebíveis regulatórios não equivalem a monetização imediata nem demonstram retorno após todo o capital aplicado. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.CL_ENELCHILE.rating_codigo}}, com retorno esperado {{fact:val.CL_ENELCHILE.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "A Enel Chile reúne geração, distribuição e outros serviços ligados à energia no Chile. Hidrelétricas e outras fontes renováveis, geração térmica, contratos de venda e rede de distribuição têm exposições diferentes. A economia deve ser examinada por negócio e participação, evitando tratar geração instalada como energia recebida ou caixa disponível à holding.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que o portfólio de geração e os investimentos nas redes sustentem caixa depois de contratos, manutenção e financiamento. A condição decisiva é geração e recebimentos suficientes na base atribuível. Reajuste tarifário e reconhecimento de recebíveis regulatórios não equivalem a monetização imediata nem demonstram retorno após todo o capital aplicado.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.CL_ENELCHILE.preco}} e alvo {{fact:val.CL_ENELCHILE.preco_alvo}}, com potencial {{fact:val.CL_ENELCHILE.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.CL_ENELCHILE.ke}} e retorno esperado {{fact:val.CL_ENELCHILE.etr}}.",
+      "evidencias": [
+        "val.CL_ENELCHILE.preco",
+        "val.CL_ENELCHILE.preco_alvo",
+        "val.CL_ENELCHILE.upside",
+        "val.CL_ENELCHILE.ke",
+        "val.CL_ENELCHILE.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Separar geração por fonte, energia contratada, compras e custo de suprimento. Conciliar saldos regulatórios, instrumentos e recebimentos. Acompanhar qualidade da distribuição, investimento total, derivativos, dívida por entidade e recursos recebidos pela holding.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.CL_ENELCHILE.ke}} e a dispersão entre métodos {{fact:val.CL_ENELCHILE.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.CL_ENELCHILE.ke",
+        "val.CL_ENELCHILE.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Clima, hidrologia, contratos, tarifa e recebimentos podem pressionar caixa. Novos projetos exigem financiamento e licenças. Derivativos, obrigações, partes relacionadas e atribuição precisam de conciliação antes de inferir recursos distribuíveis.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.CL_ENELCHILE.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.CL_ENELCHILE.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Geração e contratação demonstram contribuição depois do custo de suprimento. Recebimentos regulatórios se convertem em recursos na base correta, e redes e projetos remuneram capital depois de manutenção e financiamento. O cenário otimista calculado pelo código é {{fact:val.CL_ENELCHILE.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.CL_ENELCHILE.preco_alvo}}, com retorno esperado {{fact:val.CL_ENELCHILE.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Hidrologia, custo ou contratos prejudicam contribuição, recebimentos demoram e investimento exige mais capital. Obrigações e financiamento limitam caixa distribuível, enquanto reconhecimento contábil sugere monetização ainda não demonstrada. O cenário pessimista calculado pelo código é {{fact:val.CL_ENELCHILE.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.CL_ENELCHILE.preco}} e alvo do modelo aberto {{fact:val.CL_ENELCHILE.preco_alvo}}, com potencial {{fact:val.CL_ENELCHILE.upside}}. Retorno total esperado {{fact:val.CL_ENELCHILE.etr}} e custo do capital próprio {{fact:val.CL_ENELCHILE.ke}}. A dispersão entre métodos é {{fact:val.CL_ENELCHILE.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.CL_ENELCHILE.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.CL_ENELCHILE.consenso_alvo}}; a diferença {{fact:val.CL_ENELCHILE.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "Foi consultada a análise semestral pública, incluindo mecanismos regulatórios, fluxo de caixa e riscos. A tentativa separada de baixar o arquivo retornou bloqueio de acesso; não foi arquivado localmente. As demonstrações e notas completas, unidades e obrigações não foram integralmente reconciliadas com o modelo.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Redes, manutenção, geração e armazenamento exigem orçamento, participação, contratos e retorno após financiamento. Dívida com partes relacionadas e outras entidades precisa de conciliação por prazo, moeda e condições. A análise semestral consultada não demonstra por si só o financiamento integral ou a remuneração de cada novo projeto, nem encerra direitos e base por ação atuais.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Diversidade de fontes pode favorecer disponibilidade e contratação, mas depende de hidrologia, custo de suprimento e condições dos contratos. Na distribuição, a comparação exige qualidade da rede, perdas, remuneração e capital semelhantes. Maior participação em energia renovável não comprova vantagem econômica se restrições ou compromissos comerciais limitam recebimentos.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "A análise semestral descreve mecanismos de estabilização tarifária, documentos de pagamento e financiamento dos saldos. A pesquisa deve separar reconhecimento contábil, instrumentos recebidos e caixa. Fluxos de derivativos, pagamentos de contratos de uso, lucro atribuível e distribuições exigem reconciliação própria; resultado da geração não deve ser confundido com recursos recebidos pela holding.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Redes, manutenção, geração e armazenamento exigem orçamento, participação, contratos e retorno após financiamento. Dívida com partes relacionadas e outras entidades precisa de conciliação por prazo, moeda e condições. A análise semestral consultada não demonstra por si só o financiamento integral ou a remuneração de cada novo projeto, nem encerra direitos e base por ação atuais.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "Geração e tarifa podem sustentar lucro enquanto recebíveis, contratos e investimento restringem caixa. Hidrologia desfavorável ou custo de suprimento pode alterar a economia comercial. Se a monetização regulatória demora ou a expansão não remunera seus compromissos, a hipótese de geração contratada e disciplina perde suporte.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Separar geração por fonte, energia contratada, compras e custo de suprimento. Conciliar saldos regulatórios, instrumentos e recebimentos. Acompanhar qualidade da distribuição, investimento total, derivativos, dívida por entidade e recursos recebidos pela holding.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.CL_ENELCHILE.etr}}, custo do capital {{fact:val.CL_ENELCHILE.ke}} e dispersão entre métodos {{fact:val.CL_ENELCHILE.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.CL_ENELCHILE.etr",
+        "val.CL_ENELCHILE.ke",
+        "val.CL_ENELCHILE.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+    "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+    "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+    "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "Demonstrações completas, unidades e obrigações não foram integralmente reconciliadas com o modelo.",
+    "A análise foi consultada na fonte pública; o download separado foi recusado e não há cópia local recebida.",
+    "Recebíveis regulatórios, instrumentos e caixa exigem conciliação por período e condições.",
+    "Contratos, financiamento e retorno dos projetos permanecem a demonstrar.",
+    "Partes relacionadas, direitos de capital e base por ação precisam de análise atual.",
+    "Comparação competitiva e percepção do mercado têm evidência insuficiente.",
+    "Não há catalisador futuro com data precisa adotado nesta pesquisa."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Enel Chile",
+      "titulo": "Perfil e estrutura do negócio",
+      "url": "https://www.enel.cl/en/meet-enel/enel-chile.html",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Enel Chile",
+      "titulo": "Análise das demonstrações financeiras do semestre",
+      "url": "https://www.enel.cl/content/dam/enel-cl/en/investors/enel-chile/information-for-the-shareholder/quarterly-results/financial-statements-analysis/2026/Enel-Chile-Financial-Statements-Analysis-Q2-H1-2026.pdf",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

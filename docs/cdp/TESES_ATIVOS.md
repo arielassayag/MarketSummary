@@ -71,10 +71,15 @@ qualidade dos resultados, alocação de capital, percepção variante, contrates
 de acompanhamento. Eles reutilizam os limites e as verificações de fatos e evidências dos
 pilares. Os campos ausentes não alteram a renderização histórica das notas.
 
-As pesquisas das empresas seguem a fila de `cdp-cobertura`, com até doze emissores por
-execução, no executor interno `.cdp/rotinas`. Nenhuma automação adicional é necessária.
-Sessões de desenvolvimento podem entregar rascunhos no caminho canônico documentado em
-NOTAS.md; só o executor pode validar e publicar no livro. Os ETFs já têm o documento do
-modelo, mas o fluxo de notas por emissor ainda não publica uma tese qualitativa específica
-de ETF. Essa extensão exige schema, validação e fila próprios, sem substituir a pesquisa
-do produto por texto genérico.
+As pesquisas das empresas e dos ETFs seguem a mesma fila de `cdp-cobertura`, com até doze
+ativos por execução, no executor interno `.cdp/rotinas`. Nenhuma automação adicional é
+necessária. ETFs exigem modelo íntegro e identidade conferida no retrato; os complementos
+`estrutura_etf`, `exposicao_etf`, `custos_liquidez_etf` e `aderencia_indice_etf` tratam o produto
+sem aplicar a ele contabilidade de uma companhia. A taxa declarada não representa todos os
+custos de negociação. Fontes sem data de publicação conservam essa ausência e registram a
+data real da consulta separadamente.
+
+Sessões de desenvolvimento entregam rascunhos no caminho canônico documentado em NOTAS.md.
+Só o executor publica no livro após os gates. Rascunhos, mesmo validados em desenvolvimento,
+não são narrativas publicadas nem entram silenciosamente nas páginas do portal. Uma nota
+posterior ao corte do retrato aguarda um retrato compatível antes de aparecer nele.

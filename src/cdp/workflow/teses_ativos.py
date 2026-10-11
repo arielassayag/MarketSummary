@@ -159,7 +159,7 @@ def _evidencias(itens: list[dict[str, Any]]) -> str:
     return f'<p class="analise-fonte">Evidências: {_s(" · ".join(descricoes))}</p>' if descricoes else ""
 
 
-def _nota_secoes(r: Mapping[str, Any]) -> list[tuple[str, str, str]]:
+def _nota_secoes(r: Mapping[str, Any], *, etf: bool = False) -> list[tuple[str, str, str]]:
     from ..research.notas import COMPLEMENTOS_TESE
 
     pilares = "".join(f'<h3>{_s(p["titulo"])}</h3>{_paragrafo(p["texto"])}{_evidencias(p.get("evidencias") or [])}' for p in r.get("pilares_tese") or [])
@@ -168,7 +168,7 @@ def _nota_secoes(r: Mapping[str, Any]) -> list[tuple[str, str, str]]:
     catalisadores = "".join(f'<h3>{_s(c["descricao"])}</h3><p>Data: {_s(c.get("data") or "Não confirmada")} · Direção: {_s(c["direcao"])}</p>{_evidencias(c.get("evidencias") or [])}' for c in r.get("catalisadores") or [])
     cenarios = "".join(f'<h3>{_s(t)}</h3>{_paragrafo((r.get("cenarios") or {}).get(k))}' for k, t in (("pessimista", "Pessimista"), ("base", "Base"), ("otimista", "Otimista")))
     out = [
-        ("negocio", "Negócio e economia da empresa", _paragrafo(r.get("negocio"))),
+        ("negocio", "Produto e exposição econômica" if etf else "Negócio e economia da empresa", _paragrafo(r.get("negocio"))),
         ("tese", "Tese e evidências", pilares),
         ("vetores", "Vetores de valor", vetores),
         ("valuation-narrativa", "Leitura qualitativa do valuation", _paragrafo(r.get("comentario_valuation"))),
@@ -180,6 +180,11 @@ def _nota_secoes(r: Mapping[str, Any]) -> list[tuple[str, str, str]]:
         ("revisao", "O que muda a visão", _lista(r.get("gatilhos_revisao") or []) + (_paragrafo(r["o_que_mudou"]) if r.get("o_que_mudou") else "")),
         ("lacunas-narrativa", "Lacunas da pesquisa qualitativa", _lista(r.get("lacunas_de_dados") or [])),
     ]
+    if etf:
+        out = [(k, t, b) if k != "resultado" else
+               (k, "Prestação de contas do produto", _paragrafo(
+                   r.get("ultimo_resultado") or "Prestação de contas do fundo não analisada nesta nota."))
+               for k, t, b in out]
     for campo, titulo in COMPLEMENTOS_TESE.items():
         if r.get(campo):
             body = "".join(f'<h3>{_s(p["titulo"])}</h3>{_paragrafo(p["texto"])}{_evidencias(p.get("evidencias") or [])}' for p in r[campo])
@@ -217,7 +222,7 @@ def secoes(doc: Mapping[str, Any]) -> list[tuple[str, str, str]]:
     u, m = doc["ativo"], doc["modelo"]
     n = doc.get("nota")
     r = (n["documento"].get("rendered") or {}) if n else {}
-    out = _nota_secoes(r) if r else []
+    out = _nota_secoes(r, etf=u.get("tipo") == "etf") if r else []
     if u["tipo"] == "etf":
         pergunta = "A exposição ao índice oferece retorno suficiente após custos e riscos da carteira subjacente?"
         indicadores = "Composição efetiva, concentração, taxa de administração, liquidez, spread, prêmio ou desconto ao patrimônio e aderência ao índice."
@@ -254,14 +259,15 @@ def fontes(doc: Mapping[str, Any]) -> str:
     rows = list(m.get("fontes") or [])
     if doc.get("nota"):
         r = doc["nota"]["documento"].get("rendered") or {}
-        rows += [{"doc": f.get("titulo"), "fonte": f.get("instituicao"), "url": f.get("url"), "pub": f.get("publicado_em"), "id": f.get("id")} for f in r.get("fontes") or []]
+        rows += [{"doc": f.get("titulo"), "fonte": f.get("instituicao"), "url": f.get("url"), "pub": f.get("publicado_em"), "consulta": f.get("consultado_em"), "id": f.get("id")} for f in r.get("fontes") or []]
     itens = []
     for i, f in enumerate(rows):
         titulo = _s(f.get("doc") or f.get("fonte"))
         url = _url(f.get("url"))
         link = f'<a href="{_s(url)}" rel="noopener noreferrer">{titulo}</a>' if url else titulo
         identificador = f'<b>{_s(f.get("id") or f"M{i + 1}")}</b> · '
-        itens.append(f'<li id="fonte-{i}">{identificador}{link} · {_s(f.get("fonte"))} · publicação {_s(f.get("pub"))}</li>')
+        consulta = f' · consulta {_s(f["consulta"])}' if f.get("consulta") else ""
+        itens.append(f'<li id="fonte-{i}">{identificador}{link} · {_s(f.get("fonte"))} · publicação {_s(f.get("pub"))}{consulta}</li>')
     return "<ol>" + "".join(itens) + "</ol>" if itens else "<p>Sem fonte pública identificada neste recorte.</p>"
 
 

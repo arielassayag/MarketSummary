@@ -38,7 +38,7 @@ from .prompts import ESTILO_REGRAS
 
 NOTA_SCHEMA = "cdp.nota/v1"
 NOTA_PUBLICADA_SCHEMA = "cdp.nota.publicada/v1"
-NOTA_PROMPT_VERSION = "cdp-nota-2026-10-11.1"
+NOTA_PROMPT_VERSION = "cdp-nota-2026-10-11.2"
 
 MAX_TITULO = 160
 MAX_RESUMO = 1200
@@ -145,7 +145,8 @@ class FonteNota(_Strict):
     titulo: str = Field(..., min_length=1, max_length=MAX_FONTE_TITULO,
                         description="Descrição curta do documento, sem números.")
     url: str = Field(..., min_length=12, max_length=MAX_URL, description="URL https pública.")
-    publicado_em: date = Field(..., description="Data de publicação (não posterior à nota).")
+    publicado_em: date | None = Field(..., description="Data de publicação; null quando não informada.")
+    consultado_em: date | None = Field(None, description="Data real da consulta, necessária se a publicação não é informada; nunca posterior à nota.")
 
 
 class PilarTese(_Strict):
@@ -210,6 +211,10 @@ class NotaEmpresa(_Strict):
     percepcao_variante: PilarTese | None = None
     contratese: PilarTese | None = None
     indicadores_monitoramento: list[PilarTese] = Field(default_factory=list, max_length=6)
+    estrutura_etf: PilarTese | None = None
+    exposicao_etf: PilarTese | None = None
+    custos_liquidez_etf: PilarTese | None = None
+    aderencia_indice_etf: PilarTese | None = None
     o_que_mudou: str | None = Field(None, max_length=MAX_MUDOU)
     gatilhos_revisao: list[Gatilho] = Field(..., min_length=1, max_length=6)
     lacunas_de_dados: list[Lacuna] = Field(default_factory=list, max_length=8)
@@ -223,6 +228,14 @@ class NotaEmpresa(_Strict):
 
 
 NOTE_RULES: tuple[str, ...] = (
+    "Fonte sem data pública de publicação: publicado_em deve ser null e consultado_em deve "
+    "registrar a data real da consulta, não posterior à nota. Consulta não é publicação "
+    "nem comprovação de disponibilidade histórica do documento.",
+    "ETF: explique estrutura do produto, índice, exposição, replicação, custos e liquidez "
+    "nos campos estrutura_etf, exposicao_etf, custos_liquidez_etf e aderencia_indice_etf. "
+    "Use documentos públicos do administrador e do índice. A comparação frente ao ILF "
+    "não mede aderência ao índice contratual. Não atribua resultados empresariais, guidance "
+    "ou governança de uma companhia ao ETF; não presuma spread, patrimônio ou custos ausentes.",
     "Para uma tese aprofundada, preencha, quando houver evidência específica, posicao_competitiva, "
     "qualidade_resultados, alocacao_capital, percepcao_variante, contratese e indicadores_monitoramento. "
     "Cada seção usa titulo, texto e evidencias como um pilar. Diga o que deve ocorrer e o que "
@@ -292,13 +305,16 @@ FIELD_GUIDE: tuple[tuple[str, str], ...] = (
      "quando não houver. A percepção variante exige evidência do contraponto de mercado"),
     ("indicadores_monitoramento", "até seis complementos com titulo, texto e evidencias; "
      "acompanhar a hipótese e seus critérios de invalidação, sem inventar números ou limiares"),
+    ("estrutura_etf, exposicao_etf, custos_liquidez_etf, aderencia_indice_etf",
+     "opcionais, exclusivos de ETF; titulo, texto e evidencias nos limites de um pilar; "
+     "distinguir índice contratual da comparação regional e declarar dados não recebidos"),
     ("o_que_mudou", f"o que mudou desde a nota anterior (obrigatório fora da iniciação), até "
                     f"{MAX_MUDOU}"),
     ("gatilhos_revisao", f"um a seis, cada um até {MAX_GATILHO}"),
     ("lacunas_de_dados", f"até oito, cada uma até {MAX_LACUNA}"),
     ("stance, conviccao", "inteiros: −2…+2 e 1…5"),
     ("fontes", f"até {MAX_FONTES}: id (F1…F20), tipo, instituicao, titulo (sem números), url "
-               "https, publicado_em"),
+               "https, publicado_em (ou null), consultado_em (data real; exigida com publicação desconhecida)"),
     ("modelo_ia", "opcional: identificação do modelo de IA usado (governança; não é publicada "
                   "no texto)"),
 )
@@ -471,6 +487,12 @@ def verify_nota(nota: NotaEmpresa, fb: FactBook, ctx: ContextoNota) -> list[str]
     """Problemas da nota (vazio = aprovada): identidade, tipo, fontes, evidências, datas,
     guardrails de texto (números livres, fatos, marcação, injeção) e guia de estilo."""
     issues: list[str] = []
+    if ctx.setor != "ETF":
+        for campo in ("estrutura_etf", "exposicao_etf", "custos_liquidez_etf", "aderencia_indice_etf"):
+            if getattr(nota, campo) is not None:
+                issues.append(f"{campo}: complemento exclusivo de ETF")
+    elif nota.tipo == "pos_resultado" or nota.guidance not in {"nd", "sem_guidance"}:
+        issues.append("ETF: não atribua pós-resultado ou guidance empresarial ao produto")
     if nota.issuer_id != ctx.issuer_id:
         issues.append(f"issuer_id: {nota.issuer_id!r} difere do emissor {ctx.issuer_id!r}")
     if nota.data != ctx.data:
@@ -511,9 +533,16 @@ def verify_nota(nota: NotaEmpresa, fb: FactBook, ctx: ContextoNota) -> list[str]
         for campo, valor in (("instituicao", f.instituicao), ("titulo", f.titulo)):
             if "{{" in valor or "}}" in valor or PLACEHOLDER_RE.search(valor):
                 issues.append(f"fontes[{i}].{campo}: sem placeholders de fatos (texto literal)")
-        if f.publicado_em > ctx.data:
+        if f.publicado_em is not None and f.publicado_em > ctx.data:
             issues.append(f"fontes[{i}].publicado_em: {f.publicado_em.isoformat()} posterior à "
                           f"nota {ctx.data.isoformat()} (look-ahead)")
+        if f.publicado_em is None and f.consultado_em is None:
+            issues.append(f"fontes[{i}]: publicação não informada exige data real da consulta")
+        if f.consultado_em is not None and f.consultado_em > ctx.data:
+            issues.append(f"fontes[{i}].consultado_em: posterior à nota (look-ahead)")
+        if (f.publicado_em is not None and f.consultado_em is not None
+                and f.publicado_em > f.consultado_em):
+            issues.append(f"fontes[{i}]: publicação posterior à data declarada da consulta")
     if not ctx.is_synthetic:
         if not nota.fontes:
             issues.append("fontes: cite ao menos uma fonte pública consultada")
@@ -557,6 +586,10 @@ COMPLEMENTOS_TESE = {
     "percepcao_variante": "Debate de investimento e percepção variante",
     "contratese": "Contratese e evidência que invalida a visão",
     "indicadores_monitoramento": "Indicadores de acompanhamento",
+    "estrutura_etf": "Estrutura e regras do ETF",
+    "exposicao_etf": "Exposição e composição do ETF",
+    "custos_liquidez_etf": "Custos e liquidez do ETF",
+    "aderencia_indice_etf": "Aderência ao índice contratual",
 }
 
 
@@ -589,6 +622,8 @@ def _cited(text: str, fb: FactBook) -> list[str]:
 def template_nota(fb: FactBook, ctx: ContextoNota, mind: str = "demo") -> NotaEmpresa:
     """Nota automática (só fatos do código; nenhum juízo): usada quando a mente não entregou uma
     nota válida e como exemplo da demonstração. ``stance`` neutra e convicção mínima."""
+    if ctx.setor == "ETF":
+        return _template_etf(fb, ctx, mind)
     iid, nome = ctx.issuer_id, ctx.nome
     v = f"val.{iid}"
     tem_modelo = _with_value(fb, f"{v}.preco_alvo")
@@ -678,6 +713,33 @@ def template_nota(fb: FactBook, ctx: ContextoNota, mind: str = "demo") -> NotaEm
         fontes=[])
 
 
+def _template_etf(fb: FactBook, ctx: ContextoNota, mind: str) -> NotaEmpresa:
+    k = "etf." + ctx.issuer_id.removeprefix("ETF_")
+    resumo = (f"Preço de referência {_ph(fb, k + '.preco')}, alvo do modelo "
+              f"{_ph(fb, k + '.preco_alvo')} e retorno esperado {_ph(fb, k + '.retorno_esperado')}. "
+              "Texto automático: a diligência qualitativa do produto permanece pendente.")
+    texto = (f"Visão relativa ao ILF: {_ph(fb, k + '.visao_ilf')}; cobertura pelas posições "
+             f"{_ph(fb, k + '.cobertura')}. Essa comparação não mede aderência ao índice contratual.")
+    tipo = "iniciacao" if ctx.nota_anterior is None else "atualizacao"
+    return NotaEmpresa(
+        mind=mind if mind in MIND_VALUES else "demo", issuer_id=ctx.issuer_id, data=ctx.data, tipo=tipo,
+        titulo=f"{ctx.nome}: modelo e diligência do fundo de índice",
+        resumo=resumo, negocio="Produto de exposição ao índice declarado no retrato; leitura do prospecto pendente.",
+        pilares_tese=[PilarTese(titulo="Leitura quantitativa do produto", texto=texto, evidencias=_cited(texto, fb))],
+        vetores=[VetorValor(vetor="Exposição da carteira", direcao="incerto", sensibilidade="alta",
+                           texto="A composição recebida exige análise específica de concentração e riscos.", evidencias=[])],
+        riscos=[RiscoNota(texto="Liquidez e custos totais do produto exigem diligência específica.",
+                          probabilidade="media", impacto="alto")], catalisadores=[],
+        cenarios=Cenarios(otimista="Cenário qualitativo não formulado.", base="Cenário qualitativo não formulado.",
+                          pessimista="Cenário qualitativo não formulado."),
+        comentario_valuation=texto, ultimo_resultado=None, guidance="nd", tom_gestao="nd",
+        governanca="Regras do administrador e do índice ainda exigem leitura documental.",
+        o_que_mudou=None if tipo == "iniciacao" else "Atualização dos fatos recebidos; sem nova leitura qualitativa.",
+        gatilhos_revisao=["Mudança da composição ou das regras do produto."],
+        lacunas_de_dados=[*ctx.lacunas[:7], "Leitura qualitativa do produto pendente."],
+        stance=0, conviccao=1, fontes=[])
+
+
 def example_nota(fb: FactBook, ctx: ContextoNota, mind: str = "claude-code") -> dict[str, Any]:
     """Esqueleto válido de ``nota.json`` (a nota automática) para orientar a mente."""
     return template_nota(fb, ctx, mind).model_dump(mode="json")
@@ -727,6 +789,14 @@ FICHA_MERCADO: tuple[tuple[str, str], ...] = (
 
 def ficha(fb: FactBook, issuer_id: str) -> list[dict[str, str]]:
     """Tabela de fatos-chave do emissor (modelo de cobertura; sem ele, indicadores de mercado)."""
+    if issuer_id.startswith("ETF_"):
+        raiz = "etf." + issuer_id.removeprefix("ETF_")
+        campos = (("preco", "Preço de referência"), ("preco_alvo", "Preço-alvo do modelo"),
+                  ("retorno_esperado", "Retorno esperado"), ("r_bu", "Retorno pelas posições"),
+                  ("r_td", "Retorno pelo índice"), ("cobertura", "Cobertura pelas posições"),
+                  ("ter", "Taxa de administração declarada"), ("visao_ilf", "Visão frente ao ILF"))
+        return [{"rotulo": rotulo, "valor": fb.facts[fid].formatted, "fato": fid}
+                for suf, rotulo in campos if (fid := raiz + "." + suf) in fb.facts]
     rows = [{"rotulo": rotulo, "valor": fb.facts[fid].formatted, "fato": fid}
             for suf, rotulo in FICHA if (fid := f"val.{issuer_id}.{suf}") in fb.facts]
     if not any(r["fato"].endswith(".preco_alvo") for r in rows):
@@ -784,7 +854,9 @@ def render_nota(nota: NotaEmpresa, fb: FactBook, ctx: ContextoNota, *, autoria: 
         "conviccao": nota.conviccao,
         "fontes": [{"id": f.id, "tipo": FONTE_PT[f.tipo], "instituicao": _r(f.instituicao, fb),
                     "titulo": _r(f.titulo, fb), "url": f.url,
-                    "publicado_em": f.publicado_em.isoformat()} for f in nota.fontes],
+                    "publicado_em": f.publicado_em.isoformat() if f.publicado_em else None,
+                    **({"consultado_em": f.consultado_em.isoformat()} if f.consultado_em else {})}
+                   for f in nota.fontes],
         "ficha": ficha(fb, ctx.issuer_id),
         "pares": [{"issuer_id": p, "nome": ctx.nomes.get(p, p)} for p in ctx.pares],
         "modelo_de_cobertura": (ctx.snapshot or {}).get("as_of"),
@@ -851,7 +923,8 @@ def render_markdown(r: Mapping[str, Any]) -> str:
         L += ["## Pares de comparação", "", ", ".join(p["nome"] for p in r["pares"]), ""]
     if r["fontes"]:
         L += ["## Fontes públicas", ""]
-        L += [f"- [{f['id']}] {f['instituicao']} — {f['titulo']} ({f['publicado_em']}): "
+        L += [f"- [{f['id']}] {f['instituicao']} — {f['titulo']} ({f['publicado_em'] or 'publicação não informada'}"
+              + (f"; consulta {f['consultado_em']}" if f.get('consultado_em') else "") + "): "
               f"{f['url']}" for f in r["fontes"]]
         L.append("")
     L += ["## Aviso", "", r["aviso"], ""]
@@ -932,6 +1005,13 @@ def render_fatos_md(fb: FactBook, ctx: ContextoNota, *, nota_path: str, schema_n
           for s in fontes_sugeridas(ctx.pais, ctx.tem_linha_eua)]
     L += ["- Página de relações com investidores do emissor (releases, apresentações, "
           "transcrições públicas de teleconferências)."]
+    if ctx.setor == "ETF":
+        L += ["", "## Diligência específica do produto", "",
+              "Leia prospecto, regras do índice e documentos do administrador. Explique exposição, "
+              "replicação, custos, liquidez e riscos; não substitua essas fontes por análise de uma empresa.",
+              "Preço/NAV, spread e aderência ao índice contratual só são citados quando recebidos como fatos.",
+              "A comparação regional frente ao ILF não é o erro de acompanhamento do índice contratual.",
+              "- Página pública do administrador: " + str((ctx.snapshot or {}).get("url_produto") or "não recebida")]
     for title, ids in _group_facts(fb, ctx):
         if ids:
             L += ["", f"## Fatos citáveis — {title} (`{{{{fact:<id>}}}}`)", ""]

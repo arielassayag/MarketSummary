@@ -1,6 +1,6 @@
 # Notas de pesquisa por emissor — especificação
 
-A nota de pesquisa é a leitura qualitativa da gestão sobre um emissor coberto pelo CDP — Cabra da
+A nota de pesquisa é a leitura qualitativa da gestão sobre uma empresa ou ETF coberto pelo CDP — Cabra da
 Peste: negócio, pilares da tese, vetores de valor, catalisadores datados, matriz de riscos,
 cenários, leitura do modelo de valuation, último resultado, governança e gatilhos de revisão, com
 uma visão ordinal (`stance` de −2 a +2, convicção de 1 a 5). O modelo de valuation, o preço-alvo
@@ -38,7 +38,7 @@ uv run python -m cdp validate-nota --issuer IID --date AAAA-MM-DD
 uv run python -m cdp nota publish --issuer IID --date AAAA-MM-DD
 ```
 
-- `nota agenda [--date D]`: fila determinística, no máximo 12 emissores por execução, em
+- `nota agenda [--date D]`: fila determinística, no máximo 12 ativos por execução, em
   quatro grupos, nesta ordem: (1) rascunhos entregues em `docs/cdp/notas/` com data até D ainda
   não publicados; (2) pós-resultado (o próximo resultado registrado na nota anterior caiu nos
   últimos 4 dias corridos); (3) notas vencidas: sem nota (iniciação) ou nota mais velha que 7 dias
@@ -75,6 +75,14 @@ apenas "Modelo de valuation da cobertura indisponível nesta data; ficha com ind
 mercado." e o motivo técnico fica em `avisos_tecnicos` (`contexto.json` e saída do `nota
 prepare`). Fatos de outros emissores só dos pares; câmbio, juros, índices e ETFs são livres.
 
+ETFs entram na mesma fila somente quando têm um modelo íntegro no retrato de cobertura.
+Seus fatos `etf.<ticker>.*` incluem a taxa declarada, preço, retorno esperado e componentes
+do modelo. Não recebem contabilidade, pares empresariais ou calendário de resultados de uma
+companhia. A data do retrato pode ser posterior à do preço; ambas devem respeitar o corte da
+nota. A comparação com ILF não mede aderência ao índice contratual. A pesquisa deve tratar
+objetivo, exposição, replicação, concentração, custos, negociação e documentos do produto;
+dados ausentes permanecem ausentes. A posse histórica dos documentos não é presumida.
+
 ## 4. Schema `NotaEmpresa` (resumo)
 
 | Campo | Regras |
@@ -93,8 +101,9 @@ prepare`). Fatos de outros emissores só dos pares; câmbio, juros, índices e E
 | `governanca`, `o_que_mudou`, `gatilhos_revisao`, `lacunas_de_dados` | texto |
 | `posicao_competitiva`, `qualidade_resultados`, `alocacao_capital`, `percepcao_variante`, `contratese` | opcionais; mesmo formato e limites de um pilar (`titulo`, `texto`, `evidencias`) |
 | `indicadores_monitoramento` | opcional; até 6 itens no formato de um pilar |
+| `estrutura_etf`, `exposicao_etf`, `custos_liquidez_etf`, `aderencia_indice_etf` | opcionais, exclusivos de ETFs; mesmo formato de um pilar |
 | `stance`, `conviccao` | inteiros −2…+2 e 1…5 |
-| `fontes` | até 20: `id` (F1…F20), `tipo`, `instituicao`, `titulo` (sem números), `url` https, `publicado_em` |
+| `fontes` | até 20: `id` (F1…F20), `tipo`, `instituicao`, `titulo` (sem números), `url` https, `publicado_em` (data ou `null`) e `consultado_em` (data real da consulta, obrigatória com publicação desconhecida) |
 | `modelo_ia` | opcional, governança: o modelo de IA usado (registrado, nunca exibido no texto) |
 
 ## 5. Verificação
@@ -109,7 +118,9 @@ prepare`). Fatos de outros emissores só dos pares; câmbio, juros, índices e E
   FactBook ou uma fonte declarada.
   Os complementos de tese têm as mesmas verificações de texto, fatos e evidências.
 - Fontes: URL https com domínio público (nunca endereço IP, `localhost`, rede local, intranet
-  ou domínio de teste); publicação não posterior à nota (sem look-ahead); fontes `regulatorio` e
+  ou domínio de teste); publicação conhecida e consulta não posteriores à nota (sem look-ahead); publicação
+  desconhecida exige `publicado_em: null` e data real em `consultado_em`, nunca uma data
+  inventada. Consulta não comprova disponibilidade histórica; fontes `regulatorio` e
   `bolsa` só com URL do domínio oficial (CVM, agências e BCB sob gov.br; sec.gov e finra.org;
   gob.mx; cmfchile.cl e gob.cl; gov.co; gob.pe; gov.ar e gob.ar; B3, BMV, BIVA, Bolsa de
   Santiago, BVC, BVL, BYMA, NYSE e Nasdaq); emissor real exige ao menos uma fonte primária

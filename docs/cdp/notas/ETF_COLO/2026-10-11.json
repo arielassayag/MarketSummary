@@ -1,0 +1,185 @@
+{
+  "mind": "codex",
+  "issuer_id": "ETF_COLO",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Colômbia: transmissão de crédito, energia e infraestrutura",
+  "resumo": "A visão qualitativa permanece neutra, com convicção limitada pelas lacunas de diligência. O ponto decisivo é a capacidade de converter atividade econômica em caixa distribuível, considerando risco de crédito, investimentos e regulação. Classes de ações e empresas com controle comum precisam ser agregadas na diligência para evitar uma falsa impressão de diversificação. O modelo aberto apresenta retorno esperado de {{fact:etf.COLO.retorno_esperado}} e leitura frente ao ILF {{fact:etf.COLO.visao_ilf}}. Esses resultados do código não substituem a pesquisa do produto nem comprovam uma percepção do mercado.",
+  "negocio": "O fundo busca acompanhar uma cesta de ações ligada à Colômbia. A página do administrador identifica participações em Grupo Cibest, Ecopetrol, ISA e outros emissores financeiros, de energia e infraestrutura. Há classes distintas de ações do mesmo grupo: linhas negociadas não equivalem necessariamente a negócios independentes. O produto concentra a seleção nas regras do índice.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese de investimento",
+      "texto": "A tese a testar é que melhora das condições de crédito e do investimento doméstico favoreça os negócios financeiros e de infraestrutura, enquanto a geração de caixa em energia sustente remuneração ao acionista. A cadeia causal exige resultados por segmento; uma leitura favorável sobre o país não comprova melhora simultânea desses negócios.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Condição decisiva",
+      "texto": "O ponto decisivo é a capacidade de converter atividade econômica em caixa distribuível, considerando risco de crédito, investimentos e regulação. Classes de ações e empresas com controle comum precisam ser agregadas na diligência para evitar uma falsa impressão de diversificação.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Cobertura do modelo",
+      "texto": "A cobertura fundamental recebida é {{fact:etf.COLO.cobertura}}. Conclusões sobre a cesta dependem também das participações fora dessa cobertura; uma composição incompleta reduz o suporte à avaliação.",
+      "evidencias": [
+        "etf.COLO.cobertura"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Geração de caixa das participações",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar qualidade do crédito, geração de caixa após investimentos e regras de remuneração dos negócios regulados; conferir grupos econômicos e classes de ações na composição atualizada.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Qualidade da avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "A leitura fundamental do código é {{fact:etf.COLO.r_bu}}; a leitura de mercado é {{fact:etf.COLO.r_td}}. Os componentes dependem de premissas diferentes e não provam o comportamento do índice contratual.",
+      "evidencias": [
+        "etf.COLO.r_bu",
+        "etf.COLO.r_td"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Exposição a grupos financeiros e energia pode gerar perdas correlacionadas quando crédito, câmbio ou decisões regulatórias se deterioram. A presença de classes distintas não elimina o risco econômico comum.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "Custos e condições de negociação podem reduzir o resultado efetivo. A taxa declarada é {{fact:etf.COLO.ter}}; ela não determina o spread nem todos os custos de transação.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "etf.COLO.ter"
+      ]
+    },
+    {
+      "texto": "A cobertura fundamental é {{fact:etf.COLO.cobertura}}. Participações sem modelo e composição desatualizada podem enfraquecer a avaliação da cesta.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "etf.COLO.cobertura"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Recuperação do crédito com perdas controladas e remuneração previsível dos negócios regulados aumenta o caixa dos componentes. A política de distribuição permanece compatível com investimentos e balanços. Hipótese qualitativa; não é cenário numérico calculado.",
+    "base": "Sem antecipar evento não confirmado, o caso central mantém a exposição da cesta e exige confirmação de caixa, custos e composição. O retorno esperado do código é {{fact:etf.COLO.retorno_esperado}}. Não há probabilidade de cenário qualitativo estimada.",
+    "pessimista": "Perdas de crédito, enfraquecimento do câmbio ou intervenção em energia comprimem resultados e dividendos. Concentração econômica entre classes de ações amplifica a deterioração. Não há perda numérica de cenário validada neste estudo."
+  },
+  "comentario_valuation": "Preço de referência {{fact:etf.COLO.preco}} e alvo do modelo aberto {{fact:etf.COLO.preco_alvo}}. A leitura fundamental é {{fact:etf.COLO.r_bu}} e a de mercado {{fact:etf.COLO.r_td}}, com retorno esperado {{fact:etf.COLO.retorno_esperado}}. A avaliação agrega insumos das participações e condições de mercado; não constitui estimativa do patrimônio líquido da cota. Cobertura {{fact:etf.COLO.cobertura}} exige examinar componentes sem modelo e representatividade da composição. O alvo é do código, sem ajuste discricionário nesta nota. As hipóteses qualitativas de cenário não recebem preços ou probabilidades inventados. A classificação frente ao ILF é {{fact:etf.COLO.visao_ilf}}; não mede diferença ou erro de aderência ao índice contratual.",
+  "ultimo_resultado": null,
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "A diligência de governança do produto deve conferir administrador, custódia, regras do índice, conflitos e política de empréstimo de ativos nos documentos contratuais. A página pública informa objetivo e composição, mas não comprova todos esses controles. As empresas detidas preservam riscos próprios de controle, partes relacionadas e alocação de capital. Não se atribui ao fundo uma política empresarial de investimentos ou de lucros.",
+  "posicao_competitiva": null,
+  "qualidade_resultados": null,
+  "alocacao_capital": null,
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a visão",
+    "texto": "Uma recuperação de crédito pode conviver com maior inadimplência ou remuneração menor do capital. Intervenções em energia e mudanças no retorno regulado podem neutralizar o benefício macro. Esse cenário enfraquece a hipótese de valorização conjunta da cesta.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Hipótese econômica",
+      "texto": "Acompanhar qualidade do crédito, geração de caixa após investimentos e regras de remuneração dos negócios regulados; conferir grupos econômicos e classes de ações na composição atualizada.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Suficiência do modelo",
+      "texto": "Acompanhar composição, cobertura {{fact:etf.COLO.cobertura}} e divergência entre leitura fundamental {{fact:etf.COLO.r_bu}} e de mercado {{fact:etf.COLO.r_td}}. Mudança da composição exige reavaliar a representatividade dos insumos.",
+      "evidencias": [
+        "etf.COLO.cobertura",
+        "etf.COLO.r_bu",
+        "etf.COLO.r_td"
+      ]
+    },
+    {
+      "titulo": "Execução da exposição",
+      "texto": "Obter custos de negociação, prêmio ou desconto ao patrimônio e retorno total do índice contratual; usar corte, moeda e convenção consistentes. A taxa recebida é {{fact:etf.COLO.ter}}.",
+      "evidencias": [
+        "etf.COLO.ter"
+      ]
+    }
+  ],
+  "estrutura_etf": {
+    "titulo": "Objetivo e regras do produto",
+    "texto": "O objetivo e a identificação do índice constam da página pública do administrador. A pesquisa deve reconciliar prospecto, metodologia do índice e políticas de replicação antes de afirmar como o acompanhamento é implementado. A forma de negociação não comprova proteção cambial nem seleção fundamental ativa.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "exposicao_etf": {
+    "titulo": "Exposição econômica",
+    "texto": "O ponto decisivo é a capacidade de converter atividade econômica em caixa distribuível, considerando risco de crédito, investimentos e regulação. Classes de ações e empresas com controle comum precisam ser agregadas na diligência para evitar uma falsa impressão de diversificação. A composição pública é a referência para testar essa hipótese; a identificação por país não substitui análise de receitas e ativos das participações.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "custos_liquidez_etf": {
+    "titulo": "Taxa e negociação",
+    "texto": "Taxa declarada no retrato {{fact:etf.COLO.ter}}. A taxa não inclui necessariamente corretagem, spread ou prêmio e desconto ao patrimônio. A diligência requer séries comparáveis, horário e moeda; volume visível isoladamente não mede o custo de executar uma ordem.",
+    "evidencias": [
+      "etf.COLO.ter"
+    ]
+  },
+  "aderencia_indice_etf": {
+    "titulo": "Índice contratual e comparação regional",
+    "texto": "A comparação frente ao ILF é {{fact:etf.COLO.visao_ilf}}. Ela se refere à referência regional do modelo, e não à qualidade de replicação. Aderência ao índice exige retorno total da cota e do índice contratual em bases equivalentes; o estudo não dispõe dessa série conferida.",
+    "evidencias": [
+      "etf.COLO.visao_ilf"
+    ]
+  },
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Mudança de objetivo, índice ou regras contratuais do produto.",
+    "Composição recebida deixa de representar a exposição econômica analisada.",
+    "Resultados e caixa das participações contrariam a hipótese de investimento.",
+    "Custos ou diferenças de negociação tornam inadequada a exposição pretendida.",
+    "Novo retrato altera a citabilidade ou a cobertura da avaliação."
+  ],
+  "lacunas_de_dados": [
+    "Prospecto e metodologia do índice não foram integralmente reconciliados com o retrato.",
+    "Replicação, empréstimo de ativos, custódia e conflitos exigem conferência documental.",
+    "Spread e prêmio ou desconto ao patrimônio não estão no FactBook recebido.",
+    "Série de aderência ao índice contratual não foi calculada e conferida.",
+    "Percepção de mercado, posicionamento e interesse vendido não têm evidência suficiente.",
+    "Cenários qualitativos não têm preços ou probabilidades próprios calculados.",
+    "Posse histórica dos documentos do produto não está comprovada."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Global X",
+      "titulo": "Página oficial do produto, objetivo e composição",
+      "url": "https://www.globalxetfs.com/funds/colo/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

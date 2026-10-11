@@ -38,3 +38,17 @@ uv run python -m cdp --book /tmp/cdp-copia/book validate-nota --issuer IID --dat
 
 Depois de `ok: true`, copie `book/cobertura/notas/<IID>/<data>/nota.json` da cópia para
 `docs/cdp/notas/<IID>/<AAAA-MM-DD>.json` e faça commit só desse arquivo.
+
+## Estudos de ETFs entregues em 11/10/2026
+
+Os diretórios `ETF_ARGT`, `ETF_BOVA11`, `ETF_COLO`, `ETF_ECH`, `ETF_EPU`, `ETF_EWW`,
+`ETF_EWZ` e `ETF_ILF` contêm rascunhos de iniciação. Cada estudo reúne hipótese de
+investimento, condição decisiva, contraponto, cenários qualitativos, riscos, interpretação
+do modelo, produto, exposição, custos, aderência ao índice e acompanhamento. Os documentos
+preservam as lacunas de prospecto, replicação e negociação; visão neutra não equivale a
+recomendação nem a diligência concluída. Fontes públicas dos administradores foram
+consultadas na data da nota; data de consulta não é data de publicação.
+
+A extensão de notas aceita o produto somente com identidade e modelo íntegros no retrato,
+na fila existente e no mesmo limite de execução. Verificação de desenvolvimento não é
+publicação: o executor continua responsável pela adoção, validação e trilha imutável.

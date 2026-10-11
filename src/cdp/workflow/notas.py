@@ -204,6 +204,11 @@ def build_note_inputs(rt: Runtime, issuer_id: str, d: date) -> tuple[FactBook, C
     if md.as_of > d:
         raise ValueError(f"Dados de mercado posteriores à data da nota ({md.as_of} > {d}).")
     iss = md.universe.issuers
+    if issuer_id not in iss.index and issuer_id.startswith("ETF_"):
+        from .notas_etfs import entradas
+
+        snap, _ = _snapshot(rt, d)
+        return entradas(rt, md, snap, issuer_id, d)
     if issuer_id not in iss.index:
         raise ValueError(f"Emissor fora do universo: {issuer_id}.")
     lacunas: list[str] = []
@@ -621,7 +626,7 @@ def handoff_drafts(rt: Runtime, d: date) -> tuple[list[dict[str, Any]], list[dic
     if root is None or not root.is_dir():
         return [], []
     try:
-        universo = set(rt.store.load(d).universe.issuers.index)
+        universo = set(_alvos_notas(rt, rt.store.load(d), d).index)
     except Exception:  # noqa: BLE001 - sem base de mercado: o prepare acusa depois
         universo = None
     pend: list[dict[str, Any]] = []
@@ -665,10 +670,26 @@ def mind_history(book_root: Path | str) -> list[dict[str, Any]]:
 GRUPOS_FILA = ("rascunho", "pos_resultado", "vencida", "nota_automatica")
 
 
+def _alvos_notas(rt: Runtime, md: Any, d: date) -> Any:
+    """Empresas e produtos recebidos; ETF não vira emissor econômico do painel quantitativo."""
+    import pandas as pd
+
+    from .notas_etfs import alvos
+
+    iss = md.universe.issuers
+    snap, _ = _snapshot(rt, d)
+    ets = alvos(snap)
+    if not ets:
+        return iss
+    if set(ets) & set(iss.index):
+        raise ValueError("Identificador compartilhado entre empresa e ETF.")
+    return pd.concat([iss, pd.DataFrame.from_dict(ets, orient="index")])
+
+
 def note_agenda(rt: Runtime, d: date, limit: int = LIMITE_POR_EXECUCAO) -> dict[str, Any]:
     """Fila determinística de notas a escrever em ``d`` (ver docstring do módulo)."""
     md = rt.store.load(d)
-    iss = md.universe.issuers
+    iss = _alvos_notas(rt, md, d)
     held, cands = _held(rt), _candidates(rt, d)
     liq = _liquidity(md, rt.cfg)
     pubs = published_notes(rt.book_root)

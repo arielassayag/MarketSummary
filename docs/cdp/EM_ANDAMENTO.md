@@ -29,6 +29,32 @@ As pesquisas qualitativas dos demais ativos e o fluxo editorial específico
 de ETFs continuam abertos; página disponível não equivale a tese concluída.
 
 
+## Pesquisa qualitativa de ETFs — extensão em 11/10/2026
+
+O ramo `codex/cdp-notas-etfs`, em `.cdp/integracoes/notas-etfs`, acrescenta os ETFs com
+modelo íntegro à fila canônica de notas. Conserva o limite global de doze ativos por
+execução e o escritor exclusivo `.cdp/rotinas`; não cria disparos adicionais. O briefing
+usa fatos nativos do ETF e separa produto, exposição, custos e aderência ao índice.
+Datas do preço, modelo, publicação e consulta continuam distintas. A comparação com
+ILF não se apresenta como aderência ao índice contratual; não há guidance empresarial.
+
+Foram entregues oito rascunhos datados de 11/10 para ARGT, BOVA11, COLO, ECH, EPU,
+EWW, EWZ e ILF. As páginas públicas dos administradores foram consultadas, as hipóteses
+são condicionais e as lacunas contratuais e de negociação estão explícitas. Fontes sem
+data de publicação usam `null` e a data real da consulta. Todos os rascunhos passaram
+no schema e na verificação em memória com os fatos recebidos. Isso não publica no livro,
+não comprova posse histórica dos documentos e não encerra a diligência contratual.
+
+A conferência real corrigiu duas diferenças que o ambiente sintético não reproduzia:
+o retrato pode ser posterior à data do preço, respeitado o corte da nota, e a identidade
+do mercado vem de `manifest.snapshot_id`. Houve 251 aprovações e um pulado na verificação
+focal posterior, sem somar execuções sobrepostas. A fonte final será fixada antes da
+suíte completa; testes finais, integração e publicação ainda estão pendentes.
+
+A cobertura qualitativa permanece incompleta: oito rascunhos são entrega de pesquisa,
+não notas publicadas. O portal incorpora narrativas apenas da trilha íntegra e compatíveis
+com o corte do retrato. A operação local de 09/10 continua separada desta entrega.
+
 ## Estado corrente — 10/10/2026, 10:14 Brasília
 
 A fonte pública observada nesta recepção é `36f256aa63332b4f3cdc5e2d7763cd9d604c3faf`.

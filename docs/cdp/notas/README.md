@@ -301,6 +301,32 @@ histórica. A análise da Cemig não incorpora mudança de controle não confirm
   Bradsaúde conserva lacuna de base por ação; dividendos, dívida e datas
   futuras não foram antecipados como concluídos.
 
+- `BR_MARCOPOLO`, `BR_TUPY`, `BR_RANDON`, `BR_SIMPAR`, `BR_MOVIDA`,
+  `BR_VAMOS`, `BR_MILLS` e `BR_CVC`: mobilidade, veículos, locação e serviços.
+  As análises distinguem investimento de frota, fornecedores, antecipações,
+  juros e dívida de covenants. Operações descontinuadas, direitos de sócios,
+  reajustes de depreciação e efeitos não recorrentes preservam bases próprias.
+  A fonte da Movida foi conferida visualmente; a data de publicação dos
+  documentos da CVC permanece ausente, sem inferência a partir da revisão.
+
+- `BR_COMPASS`, `BR_COSAN`, `BR_ECORODOVIAS`, `BR_ENGIE`, `BR_GPS`,
+  `BR_ORIZON`, `BR_RUMO` e `BR_SANEPAR`: infraestrutura, holdings e serviços.
+  As teses separam operação, construção, reequilíbrio, capital adquirido e
+  caixa atribuível. IPO secundário não é aporte à investida; direitos
+  preferenciais, obrigações com concedentes e recursos destinados a tarifas
+  restringem distribuição. Eventos concluídos e condicionais têm estados
+  distintos; divergências entre texto e tabela não foram corrigidas pela mente.
+
+- `BR_B3`, `BR_BB`, `BR_BTG`, `BR_EMBRAER`, `BR_EQUATORIAL`, `BR_ITAU`,
+  `BR_LOCALIZA`, `BR_NU`, `BR_WEG`, `BR_XP`, `LA_PAAS` e `PE_HUDBAY`:
+  novas versões documentais das doze notas históricas. A redação acrescenta
+  posição competitiva, qualidade dos resultados, capital, contratese e
+  acompanhamento, preservando integralmente as notas publicadas. A conferência
+  visual do Itaú confirma projeção menor de serviços e seguros, com demais
+  linhas mantidas. Nu tem recompra efetiva em tesouraria; Embraer separa
+  adiantamentos, crédito tributário e Eve. Caixa atribuível de participação
+  e recursos restritos de projetos não são liquidez livre da controladora.
+
 Todos são rascunhos com hipóteses próprias, contraponto, indicadores e lacunas.
 Mesmo a consulta do último release não encerra a reconciliação financeira com o
 modelo, a comparação competitiva e a diligência do capital. Nenhum dado externo

@@ -5,7 +5,7 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-## Estado atual das teses — 11/10/2026, 15:19 Brasília
+## Estado atual das teses — 11/10/2026, 16:14 Brasília
 
 O portal `8aea3f1` está publicado e foi conferido independentemente: 241 páginas,
 233 empresas e oito ETFs; 727 arquivos HTTP200 com tamanho e SHA iguais ao
@@ -23,12 +23,39 @@ nenhum erro ou falha, 4.507 casos únicos. Ruff passou; os 4.875 arquivos fixado
 e o commit permaneceram idênticos. Não há soma de execuções focais sobrepostas
 nem promoção da qualificação de outra frente privada.
 
-O ramo documental `codex/cdp-pesquisa-lote-2` tem 213 rascunhos entregues e validados em conjunto: oito ETFs e empresas de diferentes países e setores.
+O ramo documental `codex/cdp-pesquisa-lote-2` tem 241 rascunhos individuais
+entregues: 233 empresas e oito ETFs. Não há ativo do universo sem documento.
 O índice de lotes em [notas/README.md](notas/README.md) registra os ativos,
-fontes e limites relevantes. A conferência conjunta preservou a renderização
-das doze notas históricas e os 4.122 arquivos operacionais. Os textos mantêm
-visão neutra, baixa convicção e lacunas próprias. Há dezesseis ativos ainda sem nota
-publicada ou rascunho individual; cobertura qualitativa completa continua aberta.
+fontes e limites relevantes. Os textos mantêm hipóteses específicas, contraponto,
+monitoramento, visão neutra, baixa convicção e lacunas próprias. A preparação
+individual está completa; diligência integral e publicação qualitativa continuam
+abertas. Rascunho validado não é nota publicada nem altera o FactBook.
+
+Os 241 rascunhos passaram na validação e renderização, com todos os campos
+profissionais conferidos. As doze notas históricas e os 4.122 arquivos
+operacionais permaneceram idênticos; o limite continua em doze por execução.
+Os testes de notas, ETFs, teses por ativo, agenda, documentação e site tiveram
+286 aprovados, um pulado e nenhum erro ou falha, em 287 casos únicos. Ruff
+e a conferência de espaços passaram. A diligência integral e a adoção das
+novas notas pelo executor permanecem pendentes.
+
+Marcopolo, Tupy, Randon, Simpar, Movida, Vamos, Mills e CVC acrescentam
+análise de mobilidade, frota e serviços. Compass, Cosan, EcoRodovias, Engie,
+GPS, Orizon, Rumo e Sanepar acrescentam infraestrutura, holdings e serviços.
+Os documentos distinguem caixa original e gerencial, juros, fornecedores,
+antecipações, construção, recursos restritos e direitos de sócios. A data de
+publicação dos documentos da CVC permanece ausente, sem inferência a partir
+da revisão. Divergências entre texto e tabela são preservadas.
+
+B3, Banco do Brasil, BTG, Embraer, Equatorial, Itaú, Localiza, Nu, WEG, XP,
+Pan American Silver e Hudbay receberam novas versões documentais com todos
+os complementos profissionais de empresas. As notas históricas permanecem
+preservadas. A conferência visual do Itaú confirma projeção menor de serviços
+e seguros, com demais linhas mantidas. Nu tem recompra efetiva em tesouraria;
+Embraer separa adiantamentos, crédito tributário extraordinário e Eve. Caixa
+atribuível de participação e recursos restritos de projetos não foram tratados
+como liquidez livre da controladora. Bancos conservam limites de capital
+regulatório e a qualificação própria das frentes experimentais.
 
 Ânima, Cogna, Ser Educacional, Bemobi, Intelbras, LWSA e TOTVS acrescentam
 análise de educação, produtos e plataformas. Os textos preservam modalidades

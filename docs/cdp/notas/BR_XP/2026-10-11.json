@@ -1,0 +1,196 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_XP",
+  "data": "2026-10-11",
+  "tipo": "atualizacao",
+  "titulo": "XP Inc. — monetização da distribuição e capital ajustado ao risco",
+  "resumo": "A hipótese é que captação e relacionamento sustentem monetização depois de custos e capital. A condição decisiva é preservar receita própria e retorno ajustado ao risco enquanto crédito e banco crescem. Ativos captados, valorização de mercado e remuneração por saldo precisam de análise separada. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_XP.rating_codigo}}, com retorno esperado {{fact:val.BR_XP.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Plataforma de distribuição financeira, assessoria, crédito, seguros, previdência e serviços corporativos. Ativos de clientes não são patrimônio ou caixa próprio. Receita depende de atividade, preços, saldos e reconhecimento de instrumentos; reorganização dos segmentos altera comparação entre varejo, institucional e atacado.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que captação e relacionamento sustentem monetização depois de custos e capital. A condição decisiva é preservar receita própria e retorno ajustado ao risco enquanto crédito e banco crescem. Ativos captados, valorização de mercado e remuneração por saldo precisam de análise separada.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_XP.preco}} e alvo {{fact:val.BR_XP.preco_alvo}}, com potencial {{fact:val.BR_XP.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_XP.ke}} e retorno esperado {{fact:val.BR_XP.etr}}.",
+      "evidencias": [
+        "val.BR_XP.preco",
+        "val.BR_XP.preco_alvo",
+        "val.BR_XP.upside",
+        "val.BR_XP.ke",
+        "val.BR_XP.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Captação, atividade, monetização e retenção por canal, separando valorização dos ativos. Conciliar marcação a mercado, crédito, perdas, custos e segmentos reorganizados. Monitorar capital prudencial e gerencial, liquidez, recompras, diluição e distribuição efetiva.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_XP.ke}} e a dispersão entre métodos {{fact:val.BR_XP.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_XP.ke",
+        "val.BR_XP.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Próximos resultados: testar monetização, perdas e retorno depois do capital.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Competição, atividade e preço podem reduzir monetização. Crédito e negociação exigem capital; previdência e títulos influenciam caixa bancário. Reorganização e remuneração em ações limitam comparabilidade e transmissão de retorno.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_XP.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_XP.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Retenção e monetização sustentam receita própria depois de custos e perdas, com capital e distribuição conciliados em bases prudenciais. O cenário otimista calculado pelo código é {{fact:val.BR_XP.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_XP.preco_alvo}}, com retorno esperado {{fact:val.BR_XP.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Competição e risco pressionam preço e perdas; expansão bancária e remuneração absorvem capital enquanto captação e recompra sugerem retorno sem recorrência equivalente. O cenário pessimista calculado pelo código é {{fact:val.BR_XP.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_XP.preco}} e alvo do modelo aberto {{fact:val.BR_XP.preco_alvo}}, com potencial {{fact:val.BR_XP.upside}}. Retorno total esperado {{fact:val.BR_XP.etr}} e custo do capital próprio {{fact:val.BR_XP.ke}}. A dispersão entre métodos é {{fact:val.BR_XP.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_XP.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_XP.consenso_alvo}}; a diferença {{fact:val.BR_XP.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "Receita e lucro cresceram, com contribuição de banco corporativo e verticais varejistas. Monetização melhorou contra o trimestre anterior e recuou anualmente; renda fixa teve efeito de marcação a mercado. Institucional passou ao atacado e a antiga linha de outras receitas foi redistribuída. Caixa operacional semestral cresceu após juros, com movimentos bancários próprios. Recompra e dividendos efetivos constam no fluxo; meta de capital gerencial conserva sua base.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Classes de ações, remuneração em ações e tesouraria afetam direitos e diluição. O indicador gerencial de capital usa o grupo inteiro e não substitui o conglomerado prudencial. Ativos de clientes, previdência e fluxo bancário não foram classificados como caixa livre. Documentos originais foram recebidos pela central pública do emissor.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Assessoria, distribuição e integração de produtos podem apoiar retenção e captação. A vantagem deve ser testada por receita por cliente, custo, qualidade e permanência dos recursos. Número de assessores e ativos de clientes não comprovam receita recorrente ou superioridade independente.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Receita e lucro aumentaram, com forte contribuição corporativa e de novas verticais. Monetização varejista melhorou sequencialmente e recuou anualmente; renda fixa sofreu marcação a mercado. Reorganização alterou segmentos. Caixa operacional semestral cresceu após juros, mas inclui movimentos de títulos, previdência e financiamento bancário.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Crédito e banco consomem capital; a meta gerencial usa ativos do grupo, em base distinta do conglomerado prudencial. Recompras e dividendos foram pagos no semestre, enquanto autorização restante não é gasto realizado. Ativos de clientes e provisões de previdência não pertencem livremente ao acionista.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "Captação e lucro podem aumentar com menor monetização anual e maior necessidade de capital. Se crescimento do banco e custos absorverem retorno, ativos de clientes e recompra não confirmarão geração residual por ação.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Captação, atividade, monetização e retenção por canal, separando valorização dos ativos. Conciliar marcação a mercado, crédito, perdas, custos e segmentos reorganizados. Monitorar capital prudencial e gerencial, liquidez, recompras, diluição e distribuição efetiva.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_XP.etr}}, custo do capital {{fact:val.BR_XP.ke}} e dispersão entre métodos {{fact:val.BR_XP.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_XP.etr",
+        "val.BR_XP.ke",
+        "val.BR_XP.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": "Nova versão documental com hipótese, posição competitiva, qualidade dos resultados, capital, contratese e monitoramento. Fontes públicas foram revistas na data da consulta; o histórico publicado e o retrato determinístico permanecem preservados.",
+  "gatilhos_revisao": [
+    "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+    "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+    "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+    "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "A ponte integral de segmentos reorganizados e receita recorrente permanece pendente.",
+    "Capital prudencial, indicador gerencial e liquidez por entidade exigem conciliação.",
+    "Risco, direitos por classe e diluição não foram integralmente reconciliados.",
+    "Retenção e vantagem competitiva independente precisam de diligência.",
+    "Guidance agregado e percepção do mercado não foram comprovados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "XP Inc.",
+      "titulo": "Negócio e materiais públicos do emissor",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/d1820734-8b3f-4a23-8642-331a3a8561a6/36a988de-06ae-15e3-c671-95bf23ef0ae5?origin=2",
+      "publicado_em": "2026-08-17",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "XP Inc.",
+      "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/d1820734-8b3f-4a23-8642-331a3a8561a6/36a988de-06ae-15e3-c671-95bf23ef0ae5?origin=2",
+      "publicado_em": "2026-08-17",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "XP Inc.",
+      "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/d1820734-8b3f-4a23-8642-331a3a8561a6/abd48eb4-bb02-acaa-7e11-1276e563b584?origin=2",
+      "publicado_em": "2026-08-17",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

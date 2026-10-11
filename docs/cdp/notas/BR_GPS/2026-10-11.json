@@ -1,0 +1,196 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_GPS",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "GPS — contratos, pessoal e recorrência depois dos ajustes",
+  "resumo": "A hipótese é que relacionamento e execução sustentem renovação e retorno depois de custos de pessoal e capital. A condição decisiva é converter crescimento orgânico em caixa sem depender de reversões tributárias. Aquisições e reajustes precisam remunerar mobilização e obrigações contingentes. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_GPS.rating_codigo}}, com retorno esperado {{fact:val.BR_GPS.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Prestadora de facilities, segurança, alimentação, logística interna e serviços industriais. Contratos, mobilização, salários e recebimento determinam margem e giro. Aquisições acrescentam clientes, contingências e obrigações com vendedores; integração não equivale automaticamente a crescimento orgânico.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que relacionamento e execução sustentem renovação e retorno depois de custos de pessoal e capital. A condição decisiva é converter crescimento orgânico em caixa sem depender de reversões tributárias. Aquisições e reajustes precisam remunerar mobilização e obrigações contingentes.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_GPS.preco}} e alvo {{fact:val.BR_GPS.preco_alvo}}, com potencial {{fact:val.BR_GPS.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_GPS.ke}} e retorno esperado {{fact:val.BR_GPS.etr}}.",
+      "evidencias": [
+        "val.BR_GPS.preco",
+        "val.BR_GPS.preco_alvo",
+        "val.BR_GPS.upside",
+        "val.BR_GPS.ke",
+        "val.BR_GPS.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Renovação, reajuste, qualidade e margem por contrato; orgânico e aquisição separados. Conciliar salários, mobilização, recebíveis, reversões e juros. Monitorar contingências, indenizações de vendedores, parcelas de aquisição e satisfação em base comparável.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_GPS.ke}} e a dispersão entre métodos {{fact:val.BR_GPS.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_GPS.ke",
+        "val.BR_GPS.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Próximos resultados: testar contratos e caixa depois do custo completo.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Pessoal, alimentos, mobilização e contratos podem comprimir margem. Aquisições trazem passivos e indenizações incertas; juros e giro absorvem caixa. Reversões e metodologia de pesquisa alteram comparação sem provar qualidade recorrente.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_GPS.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_GPS.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Renovação e reajustes sustentam qualidade e margem recorrente, com caixa depois de pessoal, juros e obrigações de aquisição. O cenário otimista calculado pelo código é {{fact:val.BR_GPS.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_GPS.preco_alvo}}, com retorno esperado {{fact:val.BR_GPS.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Custos e execução pressionam contratos; giro, contingências e aquisições absorvem geração e reversões deixam de contribuir. O cenário pessimista calculado pelo código é {{fact:val.BR_GPS.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_GPS.preco}} e alvo do modelo aberto {{fact:val.BR_GPS.preco_alvo}}, com potencial {{fact:val.BR_GPS.upside}}. Retorno total esperado {{fact:val.BR_GPS.etr}} e custo do capital próprio {{fact:val.BR_GPS.ke}}. A dispersão entre métodos é {{fact:val.BR_GPS.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_GPS.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_GPS.consenso_alvo}}; a diferença {{fact:val.BR_GPS.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "Receita e EBITDA ajustado cresceram, com contribuição orgânica e pressão de custos em algumas soluções. O lucro inclui reversão de provisão do Sistema S, sem caixa equivalente presumido. Caixa líquido após juros e tributos aumentou no semestre; dividendos e obrigações têm fluxos próprios. Dívida líquida recuou, mas a bruta aumentou anualmente. A mudança de plataforma da pesquisa de satisfação restringe a comparação direta.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "O perfil institucional recusou acesso, sem contorno; a análise usa RI e documentos recebidos. Lucro ajustado não é base de distribuição. Indenizações de aquisições, contingências e direitos de vendedores têm reconhecimento e liquidação próprios, sem realização presumida.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Cobertura e oferta de serviços podem apoiar contratos amplos e atendimento. Escala de empregados não garante qualidade ou poder de preço. Renovação, satisfação e margem por contrato exigem prova; menor número de clientes pode alterar o mix sem ser perda equivalente de receita.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Receita e EBITDA ajustado cresceram, com contribuição orgânica, mas segmentos sofreram custos de alimentação e mobilização. Lucro ajustado inclui reversão do Sistema S; a medida sem esse efeito tem expansão menor. Caixa após juros e tributos cresceu no semestre. Pesquisa de satisfação mudou de plataforma e não tem comparável automaticamente equivalente.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Dívida líquida diminuiu com caixa maior, mas dívida bruta permaneceu acima do ano anterior. Aquisições, parcelas, tributos e direitos de vendedores exigem caixa. Geração antes de juros difere do fluxo líquido; arrendamento, dividendos e opções aparecem no financiamento. Reversão de provisão não é recebimento operacional.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "Lucro ajustado maior por reversão não garante melhora equivalente dos contratos. Se reajustes e recebimento não acompanharem pessoal e mobilização, escala e aquisição poderão elevar receita sem remunerar o capital.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Renovação, reajuste, qualidade e margem por contrato; orgânico e aquisição separados. Conciliar salários, mobilização, recebíveis, reversões e juros. Monitorar contingências, indenizações de vendedores, parcelas de aquisição e satisfação em base comparável.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_GPS.etr}}, custo do capital {{fact:val.BR_GPS.ke}} e dispersão entre métodos {{fact:val.BR_GPS.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_GPS.etr",
+        "val.BR_GPS.ke",
+        "val.BR_GPS.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+    "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+    "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+    "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "O perfil institucional recusou acesso; nenhuma cópia foi obtida.",
+    "A ponte integral de contingências, aquisições e caixa atribuível permanece pendente.",
+    "Recorrência da margem sem reversões exige análise por contrato.",
+    "A pesquisa de satisfação tem metodologia alterada, a reconciliar.",
+    "Guidance agregado e vantagem competitiva independente não foram comprovados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo GPS",
+      "titulo": "Negócio e materiais públicos do emissor",
+      "url": "https://ri.gpssa.com.br/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo GPS",
+      "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/a35cc248-b835-4157-944e-86f7561fa441/b5bb0bc5-9518-e57f-e70f-a8aa5ae9471c?origin=2",
+      "publicado_em": "2026-08-12",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo GPS",
+      "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/a35cc248-b835-4157-944e-86f7561fa441/acfe645f-11de-e6ac-c8f2-63763679d774?origin=2",
+      "publicado_em": "2026-08-12",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

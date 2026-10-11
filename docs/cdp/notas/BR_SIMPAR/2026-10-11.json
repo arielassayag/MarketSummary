@@ -1,0 +1,216 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_SIMPAR",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Simpar — transmissão de caixa, frota e estrutura da holding",
+  "resumo": "A hipótese é que escala e produtividade das investidas sustentem caixa depois de frota, obras e juros. A condição decisiva é transmitir recursos à holding sem contar aportes internos ou alienações condicionais como geração recorrente. Financiamento e direitos de terceiros precisam de ponte por entidade. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_SIMPAR.rating_codigo}}, com retorno esperado {{fact:val.BR_SIMPAR.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Holding de logística, locação, concessionárias, infraestrutura e serviços financeiros. Cada controlada possui contratos, capital, credores e sócios próprios. Serviços e renovação de ativos não são receitas equivalentes; caixa consolidado não representa automaticamente liquidez disponível na controladora.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que escala e produtividade das investidas sustentem caixa depois de frota, obras e juros. A condição decisiva é transmitir recursos à holding sem contar aportes internos ou alienações condicionais como geração recorrente. Financiamento e direitos de terceiros precisam de ponte por entidade.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_SIMPAR.preco}} e alvo {{fact:val.BR_SIMPAR.preco_alvo}}, com potencial {{fact:val.BR_SIMPAR.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_SIMPAR.ke}} e retorno esperado {{fact:val.BR_SIMPAR.etr}}.",
+      "evidencias": [
+        "val.BR_SIMPAR.preco",
+        "val.BR_SIMPAR.preco_alvo",
+        "val.BR_SIMPAR.upside",
+        "val.BR_SIMPAR.ke",
+        "val.BR_SIMPAR.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Preço, utilização, giro e investimento por investida; caixa após juros e frota. Conciliar holding, minoritários, eliminações internas e crédito do BBC. Verificar fechamento de alienações, recursos efetivamente recebidos e liquidação futura de derivativos de ações.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_SIMPAR.ke}} e a dispersão entre métodos {{fact:val.BR_SIMPAR.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_SIMPAR.ke",
+        "val.BR_SIMPAR.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Próximos resultados: testar transmissão de caixa depois de frota e juros.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "descricao": "Comprovação das condições e recebimentos das alienações.",
+      "data": null,
+      "tipo": "m_a",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "descricao": "Liquidação financeira dos derivativos de ações, conforme vencimento informado.",
+      "data": "2027-09-06",
+      "tipo": "capital",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Juros, valor residual, inadimplência e obras podem absorver caixa. Credores, minoritários e condições de alienação restringem a transmissão à holding. Medidas de covenant e derivativos não eliminam desembolsos futuros.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_SIMPAR.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_SIMPAR.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Produtividade e ocupação sustentam caixa depois do reinvestimento; recursos chegam à holding com financiamento e direitos de terceiros conciliados. O cenário otimista calculado pelo código é {{fact:val.BR_SIMPAR.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_SIMPAR.preco_alvo}}, com retorno esperado {{fact:val.BR_SIMPAR.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Frota, juros e obras absorvem geração; alienações atrasam e obrigações por entidade impedem a transmissão de recursos ao controlador. O cenário pessimista calculado pelo código é {{fact:val.BR_SIMPAR.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_SIMPAR.preco}} e alvo do modelo aberto {{fact:val.BR_SIMPAR.preco_alvo}}, com potencial {{fact:val.BR_SIMPAR.upside}}. Retorno total esperado {{fact:val.BR_SIMPAR.etr}} e custo do capital próprio {{fact:val.BR_SIMPAR.ke}}. A dispersão entre métodos é {{fact:val.BR_SIMPAR.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_SIMPAR.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_SIMPAR.consenso_alvo}}; a diferença {{fact:val.BR_SIMPAR.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "Serviços e EBITDA cresceram, com menor receita de renovação da frota e prejuízo consolidado. O investimento líquido aumentou. Aportes privados foram concluídos e a monetização de Porto Aratu continua condicionada; classificações de ativos para venda não comprovam fechamento. Medidas de covenant separam BBC e adicionam itens com definições próprias. A marcação de derivativos de ações não teve caixa imediato, mas há liquidação futura.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Covenants de bonds e dívidas locais têm perímetros e denominadores distintos. BBC é segregado em medidas contratuais, sem desaparecer economicamente. Alienação condicionada e desconsolidação contábil conservam estados próprios. Recursos de investidas listadas e direitos de sócios precisam de conciliação com a holding.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Contratos, capilaridade e especialização podem apoiar atendimento e ocupação. O portfólio diversificado não elimina concorrência nem perdas de crédito. Eficiência deve aparecer em preço, uso dos ativos e caixa; posição informada pelas investidas exige bases específicas e não comprova vantagem agregada.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Serviços cresceram, enquanto receita de renovação da frota caiu e investimento líquido aumentou. EBITDA avançou, mas o consolidado teve prejuízo. Medidas sem marcação de derivativos e com custo de ativos adicionado têm definições próprias. Aumentos de capital concluídos e venda contratada não equivalem a caixa operacional.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Aportes privados foram concluídos; seus fluxos internos não devem ser contados novamente no consolidado. CS Porto Aratu continua condicionada a autorizações no documento, enquanto Ciclus Rio tem estado distinto. A holding tem dívida e caixa próprios. Derivativos de ações possuem liquidação financeira futura, mesmo sem caixa imediato.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "EBITDA e capital reforçado podem coexistir com prejuízo e reinvestimento maior. Monetização por valor da empresa não prova caixa líquido recebido. Se recursos não chegarem à holding depois de terceiros e juros, escala não confirmará valor ao acionista.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Preço, utilização, giro e investimento por investida; caixa após juros e frota. Conciliar holding, minoritários, eliminações internas e crédito do BBC. Verificar fechamento de alienações, recursos efetivamente recebidos e liquidação futura de derivativos de ações.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_SIMPAR.etr}}, custo do capital {{fact:val.BR_SIMPAR.ke}} e dispersão entre métodos {{fact:val.BR_SIMPAR.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_SIMPAR.etr",
+        "val.BR_SIMPAR.ke",
+        "val.BR_SIMPAR.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+    "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+    "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+    "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "A ponte integral de caixa da holding, dívidas e minoritários permanece pendente.",
+    "Fechamento e caixa líquido de Porto Aratu não foram comprovados após o anúncio.",
+    "A reconciliação de aquisições, operações descontinuadas e eliminações requer diligência.",
+    "Liquidação e risco dos derivativos de ações exigem análise específica.",
+    "Guidance agregado e posição competitiva independente não foram comprovados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Simpar",
+      "titulo": "Negócio e materiais públicos do emissor",
+      "url": "https://ri.simpar.com.br/a-companhia/perfil-organizacional/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Simpar",
+      "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/0f7b667d-72c4-4013-ad2f-58abeff9b857/dd3d121e-b6b5-c4dc-f942-96b08fd01ae7?origin=2",
+      "publicado_em": "2026-08-12",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Simpar",
+      "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/0f7b667d-72c4-4013-ad2f-58abeff9b857/6a661257-c122-a73a-778f-0c7430bac13e?origin=2",
+      "publicado_em": "2026-08-12",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

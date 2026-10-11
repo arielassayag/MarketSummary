@@ -1,0 +1,196 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_LOCALIZA",
+  "data": "2026-10-11",
+  "tipo": "atualizacao",
+  "titulo": "Localiza — retorno da frota, valor residual e caixa após renovação",
+  "resumo": "A hipótese é que preço e utilização remunerem a frota depois de renovação e financiamento. A condição decisiva é sustentar retorno sem adiar obrigações com montadoras ou subestimar depreciação. Crescimento de seminovos e margem de aluguel não comprovam caixa livre depois do custo completo do veículo. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_LOCALIZA.rating_codigo}}, com retorno esperado {{fact:val.BR_LOCALIZA.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Locadora de veículos, gestão de frotas e venda de seminovos no Brasil e México. Diárias, ocupação, manutenção e valor residual determinam retorno. Venda de carros faz parte do ciclo de renovação; não é receita de aluguel. Preço de compra, depreciação e juros precisam ser avaliados em conjunto.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que preço e utilização remunerem a frota depois de renovação e financiamento. A condição decisiva é sustentar retorno sem adiar obrigações com montadoras ou subestimar depreciação. Crescimento de seminovos e margem de aluguel não comprovam caixa livre depois do custo completo do veículo.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_LOCALIZA.preco}} e alvo {{fact:val.BR_LOCALIZA.preco_alvo}}, com potencial {{fact:val.BR_LOCALIZA.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_LOCALIZA.ke}} e retorno esperado {{fact:val.BR_LOCALIZA.etr}}.",
+      "evidencias": [
+        "val.BR_LOCALIZA.preco",
+        "val.BR_LOCALIZA.preco_alvo",
+        "val.BR_LOCALIZA.upside",
+        "val.BR_LOCALIZA.ke",
+        "val.BR_LOCALIZA.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Diária, ocupação, idade, manutenção e valor residual por divisão. Conciliar venda, compra, fornecedores, depreciação e juros com caixa original. Monitorar dívida, rolagem, retorno com e sem alienação de subsidiárias e remuneração efetivamente paga.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_LOCALIZA.ke}} e a dispersão entre métodos {{fact:val.BR_LOCALIZA.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_LOCALIZA.ke",
+        "val.BR_LOCALIZA.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Próximos resultados: testar depreciação e caixa depois de renovação e juros.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Juros e queda de valor residual podem reduzir retorno. Renovação e expansão absorvem caixa; fornecedores financiam parte do ciclo. Comparativo ajustado e venda de subsidiária podem ampliar lucro e retorno sem a mesma recorrência.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_LOCALIZA.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_LOCALIZA.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Preço e utilização remuneram renovação e financiamento, com valores residuais prudentes e caixa após pagamento das montadoras. O cenário otimista calculado pelo código é {{fact:val.BR_LOCALIZA.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_LOCALIZA.preco_alvo}}, com retorno esperado {{fact:val.BR_LOCALIZA.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Depreciação e juros superam ganhos de preço; renovação e fornecedores consomem recursos, e venda de seminovos não sustenta retorno residual. O cenário pessimista calculado pelo código é {{fact:val.BR_LOCALIZA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_LOCALIZA.preco}} e alvo do modelo aberto {{fact:val.BR_LOCALIZA.preco_alvo}}, com potencial {{fact:val.BR_LOCALIZA.upside}}. Retorno total esperado {{fact:val.BR_LOCALIZA.etr}} e custo do capital próprio {{fact:val.BR_LOCALIZA.ke}}. A dispersão entre métodos é {{fact:val.BR_LOCALIZA.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_LOCALIZA.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_LOCALIZA.consenso_alvo}}; a diferença {{fact:val.BR_LOCALIZA.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "Aluguel, gestão e seminovos cresceram, com EBITDA e EBIT maiores. Lucro usa comparação ajustada pela baixa anterior de crédito fiscal. Depreciação continuou subindo. No semestre, a compra líquida de carros consumiu a geração de aluguel; fornecedores contribuíram para o subtotal antes de juros. O fluxo original inclui veículos e juros na operação. Dívida líquida cresceu desde o encerramento anual; rolagem posterior e JCP têm estados próprios.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "O retorno divulgado exclui ágio da base de capital e possui ajustes de eventos anteriores e alienação de subsidiárias. Caixa gerencial e original não foram tratados como medidas equivalentes. Rolagem posterior, cessão por fornecedores e calendário de JCP preservam obrigações e período.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Rede, compra e canais de venda podem apoiar utilização e renovação. Escala exige avaliar desconto de compra, custo de manutenção e preço efetivo de venda. Novas montadoras e modelos mudam valor residual; reputação e métricas declaradas não demonstram vantagem independente de retorno.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Receitas, EBITDA e EBIT cresceram; o lucro é comparado com base anterior ajustada por baixa de crédito fiscal. Depreciação por carro continua aumentando. O caixa gerencial antes de juros recebeu contribuição de fornecedores; a demonstração original inclui compra e venda de carros e juros na operação.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Expansão e rejuvenescimento exigem compra de frota antes do recebimento. Fornecedores de carros apoiaram caixa, com obrigação futura correspondente. Dívida líquida aumentou desde o encerramento anual; rolagem posterior altera vencimentos, sem ser geração operacional. JCP aprovado para pagamento posterior não foi presumido pago.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "Margem e venda de seminovos podem crescer enquanto compra de frota e juros consomem recursos. Se valor residual cair ou pagamento de montadoras liberar menos financiamento, o retorno divulgado e a expansão não confirmarão caixa sustentável.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Diária, ocupação, idade, manutenção e valor residual por divisão. Conciliar venda, compra, fornecedores, depreciação e juros com caixa original. Monitorar dívida, rolagem, retorno com e sem alienação de subsidiárias e remuneração efetivamente paga.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_LOCALIZA.etr}}, custo do capital {{fact:val.BR_LOCALIZA.ke}} e dispersão entre métodos {{fact:val.BR_LOCALIZA.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_LOCALIZA.etr",
+        "val.BR_LOCALIZA.ke",
+        "val.BR_LOCALIZA.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": "Nova versão documental com hipótese, posição competitiva, qualidade dos resultados, capital, contratese e monitoramento. Fontes públicas foram revistas na data da consulta; o histórico publicado e o retrato determinístico permanecem preservados.",
+  "gatilhos_revisao": [
+    "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+    "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+    "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+    "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "A data de publicação do arquivo recebido não foi comprovada nesta consulta.",
+    "A ponte integral entre caixa gerencial, fornecedores, cessão e demonstrações permanece pendente.",
+    "Valor residual e retorno por divisão exigem diligência independente.",
+    "O pagamento posterior do JCP não foi confirmado apenas pelo calendário.",
+    "Guidance agregado e percepção do mercado não foram comprovados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Localiza",
+      "titulo": "Negócio e materiais públicos do emissor",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/08f327aa-e610-4d9d-b683-8ff0f7caae07/ffd204e4-d65f-5649-63a7-f12a8b70f4bd?origin=2",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Localiza",
+      "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/08f327aa-e610-4d9d-b683-8ff0f7caae07/ffd204e4-d65f-5649-63a7-f12a8b70f4bd?origin=2",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Localiza",
+      "titulo": "Release com demonstrações resumidas e fluxo original de frota e financiamento",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/08f327aa-e610-4d9d-b683-8ff0f7caae07/ffd204e4-d65f-5649-63a7-f12a8b70f4bd?origin=2",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

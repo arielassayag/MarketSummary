@@ -1455,6 +1455,18 @@ def conferir(saida: Path | str) -> list[str]:
     if total > MAX_SITE:
         out.append(f"site com {total} bytes (acima de 900 MB)")
     man = json.loads((saida / "manifest.json").read_text(encoding="utf-8"))
+    # Módulos sob demanda não aparecem como URLs literais no HTML. Sua presença é contrato
+    # da página recebida, inclusive se alguém refizer manifesto/somas após uma omissão.
+    from .workflow.painel import ASSET_PREFIX, MODULOS
+
+    page_sha = man.get("pagina_sha256")
+    if type(page_sha) is not str or not re.fullmatch(r"[0-9a-f]{64}", page_sha):
+        out.append("manifesto sem pagina_sha256 válida para os módulos obrigatórios")
+    else:
+        for nome in MODULOS:
+            rel = f"{ASSET_PREFIX}{page_sha[:16]}-{nome}.js"
+            if not (saida / rel).is_file():
+                out.append(f"módulo obrigatório ausente: {rel}")
     listados = man.get("arquivos") or {}
     presentes = {p.relative_to(saida).as_posix() for p in saida.rglob("*") if p.is_file()}
     for rel in sorted(presentes - set(listados) - {"manifest.json", "SHA256SUMS"}):

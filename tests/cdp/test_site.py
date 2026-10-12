@@ -122,6 +122,20 @@ def test_index_is_a_complete_document(site_sintetico):
     assert f"/tree/{COMMIT}" in idx
 
 
+@pytest.mark.parametrize("missing", ["cobertura", "modelo"])
+def test_conferencia_recusa_modulo_ausente_mesmo_com_manifesto_refeito(site_sintetico, tmp_path, missing):
+    out = tmp_path / "site_recebido"
+    shutil.copytree(site_sintetico, out)
+    manifest = json.loads((out / "manifest.json").read_text())
+    name = f"painel-{manifest['pagina_sha256'][:16]}-{missing}.js"
+    (out / name).unlink()
+    manifest["arquivos"].pop(name)
+    (out / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False))
+    lines = (out / "SHA256SUMS").read_text().splitlines()
+    (out / "SHA256SUMS").write_text("\n".join(x for x in lines if not x.endswith("  " + name)) + "\n")
+    assert f"módulo obrigatório ausente: {name}" in st.conferir(out)
+
+
 def test_dashboards_têm_fontes_navegacao_e_manifesto(site_sintetico):
     man = json.loads((site_sintetico / "manifest.json").read_text(encoding="utf-8"))
     for rota, schema in (("cases", "cdp.dashboard-cases/v1"),

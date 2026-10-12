@@ -54,7 +54,7 @@ jobs:
           enable-cache: true
           python-version: "3.12"
       - name: Dependências
-        run: uv sync --frozen --extra dev --extra ai
+        run: uv sync --frozen --extra dev --extra ai --extra mcp
       - name: Lint
         run: uv run ruff check .
       - name: Testes
@@ -71,6 +71,52 @@ jobs:
         with:
           name: testes-cdp
           path: .cdp/validacoes/ci-junit.xml
+          retention-days: 7
+          if-no-files-found: warn
+
+  pacote:
+    name: Wheel instalado e MCP STDIO
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+      UV_CACHE_DIR: ${{ runner.temp }}/cdp-pacote-cache
+      TMPDIR: ${{ runner.temp }}/cdp-pacote-tmp
+      TEMP: ${{ runner.temp }}/cdp-pacote-tmp
+      TMP: ${{ runner.temp }}/cdp-pacote-tmp
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Instalar uv e Python
+        uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          enable-cache: false
+          python-version: "3.12"
+      - name: Ambiente próprio e backend explícito
+        run: |
+          mkdir -p "$TMPDIR"
+          uv --no-config sync --frozen --extra mcp --extra dev
+          uv --no-config pip install --python .venv/bin/python --only-binary :all: --index-url https://pypi.org/simple setuptools==84.0.0
+      - name: Build e instalação sem editable
+        run: |
+          uv --no-config build --no-build-isolation --out-dir .cdp/qualificacoes/pacote/dist
+          uv --no-config export --frozen --no-dev --extra mcp --no-emit-project --format requirements.txt --output-file .cdp/qualificacoes/pacote/dependencias.txt
+          uv --no-config venv "$RUNNER_TEMP/cdp-pacote-env"
+          uv --no-config pip sync --python "$RUNNER_TEMP/cdp-pacote-env/bin/python" --require-hashes --only-binary :all: --index-url https://pypi.org/simple .cdp/qualificacoes/pacote/dependencias.txt
+          uv --no-config pip install --python "$RUNNER_TEMP/cdp-pacote-env/bin/python" --no-deps .cdp/qualificacoes/pacote/dist/*.whl
+      - name: Recursos, kernels e nove consultas nativas instaladas
+        run: |
+          "$RUNNER_TEMP/cdp-pacote-env/bin/python" -I "$GITHUB_WORKSPACE/scripts/cdp_qualificar_pacote.py" --fonte "$GITHUB_WORKSPACE" --saida "$RUNNER_TEMP/cdp-pacote-prova"
+      - name: Guardar qualificação instalada
+        if: ${{ always() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: pacote-cdp-instalado
+          path: |
+            ${{ runner.temp }}/cdp-pacote-prova
+            .cdp/qualificacoes/pacote
           retention-days: 7
           if-no-files-found: warn
 

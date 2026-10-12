@@ -11,12 +11,35 @@ Pedido humano: integrar o projeto e publicar, com revisão ROOT antes de main.
 O ramo `codex/cdp-consolidacao-ai-notes-12out`, no checkout interno
 `.cdp/integracoes/risco-unidades`, conserva a conclusão oficial241 abaixo.
 Fechamento foi recebido dos cinco diffs humanos sem alterar o checkout original:
-contratos distinguem data confirmada de publicação e horário retornado pela fonte,
+contratos distinguem data de publicação informada pela fonte e horário retornado pela fonte,
 registros malformados são recusados por item e RSS permanece contingência.
 Os dezesseis arquivos de teste de Fechamento concluíram92 casos únicos aprovados,
 sem skip, falha ou erro; Ruff passou. Uma CI própria foi acrescentada sem retirar
 os jobs CDP. Negativos intermediários ficaram preservados; nenhuma fonte externa
 ou execução financeira foi certificada por esses testes.
+
+Revisão dirigida posterior separou as taxas da BrasilAPI em contexto estruturado,
+com corpo JSON bruto, hora de consulta e SHA de `sources.json` no manifesto. Nenhuma
+manchete cria taxas no FactBook. RSS e GDELT compartilham validação HTTP(S) de URL;
+registros inválidos não eliminam o próximo válido. O reparo de seleção ignora valores
+de índices extras ao validar Selic/CDI, preservando o corpo inteiro e o domínio
+positivo declarado dos alvos. Ausência, valor não finito e domínio não positivo são
+condições distintas; não se inventa publicação ou vigência. A rodada final dos dezesseis
+arquivos, incluindo o rótulo informado pela fonte e mensagens de domínio distintas,
+concluiu111 casos únicos aprovados, sem skip/falha/erro. A fonte final exige sua
+própria qualificação conjunta; as negativas intermediárias permanecem privadas.
+
+A auditoria histórica F01–F09 foi confrontada com os corpos atuais. Os reparos
+F05–F08 foram recebidos em commit local independente: risco valida B/F/D detidos,
+regressão usa o posto efetivo, PM duplicado é recusado na fronteira comum e golden
+set vazio não produz avaliação. Os132 casos focais do autor não são somados ao
+Fechamento. F01/F02/F04 foram recebidos e incorporados de autor independente: commits
+pendentes também exigem trava, push usa o SHA conferido, importação valida o pacote
+e os pais por descritores/no-follow antes de aplicar, e append serializa a cauda
+e o flush. A importação é POSIX e não é transação multi-arquivo; Windows não foi
+qualificado. Os39 focais do autor não são uma suíte integral da composição. F03 recebe recusa de módulo JS obrigatório ausente na construção
+e na conferência do portal, inclusive quando manifesto/somas foram refeitos.
+Empacotamento instalado/STDIO e CI Linux são etapas distintas, ainda pendentes.
 
 A composição CDP recebe a fonte privada0594f14, incluindo escritores NET,
 recepção bancária opt-in, diagnósticos P1 em sombra, técnicas e MCP1.7.

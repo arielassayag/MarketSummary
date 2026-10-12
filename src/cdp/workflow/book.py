@@ -97,7 +97,7 @@ LAPSE_EVENT = "BOOKING_LAPSED"
 """Evento da trilha: a efetivação foi recusada no leilão do dia de montagem e a decisão caducou."""
 REGRA_CADUCIDADE = (
     "A decisão vale só para o leilão de fechamento do seu dia de montagem. Efetivação recusada "
-    "nesse leilão pelo kill switch é registrada no próprio dia e a decisão caduca: nunca é "
+    "nesse leilão é registrada no próprio dia e a decisão caduca: nunca é "
     "efetivada depois (sem efetivação retroativa); o fundo segue com a carteira vigente (em "
     "caixa, se for a carteira inaugural) e a próxima data de montagem decide de novo.")
 _RESEARCH_EVENTS = ("RESEARCH_SAVED", "RESEARCH_SELECTED")
@@ -782,6 +782,15 @@ class Book:
             candidate.sources.close()
         return k
 
+    def _registrar_booking_recusado(self, week: date, proposal_id: str,
+                                    approval_hash: str, motivo: str, actor: str) -> None:
+        """Evento padronizado de recusa; chamado somente por coordenadores escritores."""
+        recusar_escrita(self.somente_leitura)
+        self.audit.append(
+            "BOOKING_REFUSED", actor,
+            {"proposal_id": proposal_id, "approval_hash": approval_hash, "reason": motivo},
+            summary=f"Booking recusado ({proposal_id}): {motivo[:300]}", week=week)
+
     def save_booked(self, entry: BookEntry, snapshot_hash_now: str, config_hash_now: str,
                     research_hash_now: str, actor: str = SYSTEM_ACTOR) -> Path:
         """Efetiva a carteira da semana; exige aprovação válida contra os hashes atuais.
@@ -797,11 +806,8 @@ class Book:
             k = self._validate_booking(entry, snapshot_hash_now, config_hash_now,
                                        research_hash_now)
         except ValueError as exc:
-            self.audit.append(
-                "BOOKING_REFUSED", actor,
-                {"proposal_id": entry.proposal_id, "approval_hash": entry.approval_hash,
-                 "reason": str(exc)},
-                summary=f"Booking recusado ({entry.proposal_id}): {str(exc)[:300]}", week=week)
+            self._registrar_booking_recusado(
+                week, entry.proposal_id, entry.approval_hash, str(exc), actor)
             raise
         from .net_moc import compose
         from .net_moc_prova import prepare
@@ -853,7 +859,7 @@ class Book:
                                       proposal_id: str, approval_hash: str,
                                       actor: str = SYSTEM_ACTOR) -> dict[str, Any]:
         """Registra que a decisão da semana CADUCOU: a efetivação foi recusada no leilão de
-        fechamento do dia de montagem (ex.: kill switch ligado). Regra (``REGRA_CADUCIDADE``): a
+        fechamento do dia de montagem (ex.: kill switch ligado ou recusa NET). Regra (``REGRA_CADUCIDADE``): a
         ordem vale só para aquele leilão; não há efetivação retroativa e a próxima data de
         montagem decide de novo. Arquivo imutável ``<semana>/efetivacao_recusada.json`` e evento
         ``BOOKING_LAPSED`` na trilha; idempotente (a primeira recusa vale)."""

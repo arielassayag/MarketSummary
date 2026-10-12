@@ -56,9 +56,12 @@ cliente; o ramo discover/adopt versus initialize não foi registrado. Isso quali
 esta instalação e o corpus DADOS SIMULADOS, sem autoridade financeira, PIT ou prova
 universal de ausência de rede. UVtool/UVx da nova composição permanecem apenas
 preparados; a qualificação histórica não é atribuída a esta fonte.
-Produto, recursos, configuração e lock continuam literalmente iguais aos corpos
-instalados recebidos. Os testes agora têm um delta explícito na fixture de replay:
-o sdist anterior conserva seus testes históricos e não é atribuído à fixture nova.
+A instalação recebida acima pertence à fonte `836c783`. A revisão posterior altera
+o produtor de recusa em Book/Daily e os pins do catálogo; esses corpos já não são
+iguais aos daquele wheel. Um pacote novo em prefixo isolado precisa concluir a
+qualificação real de SDK/STDIO. A prova anterior permanece histórica e intacta.
+Os testes também têm deltas explícitos: o sdist anterior conserva seus testes
+históricos e não é atribuído às fixtures novas.
 
 A primeira suíte integral local de `836c783` encerrou na primeira falha documental:
 faltava o histórico preservado no mapa de AGENTS. Foram 2170 casos únicos executados,
@@ -90,15 +93,43 @@ aprovados, com Ruff e identidade da fonte: o cenário corrigido, três regras
 existentes de corte parcial/episódio/veto e três contratos NET/HOLD nativos.
 Os seis positivos anteriores não foram repetidos nem somados a esse focal.
 A prova de corte positivo de squeeze por MOC sob o gate NET permanece aberta;
-os testes de regras com registros sintéticos não a substituem. O campo textual
-`regra` da caducidade ainda menciona kill switch; motivo e alerta preservam a causa
-NET efetiva, e esta alteração não modifica aquele texto de produto.
+os testes de regras com registros sintéticos não a substituem. Naquela versão, o campo textual
+`regra` ainda mencionava kill switch; a correção futura descrita abaixo preserva
+os registros originais e o motivo NET específico.
 
 Uma coleta sem executar casos recebeu 6174 IDs únicos e comparou o conjunto com
 os 4860 IDs do full interrompido. O plano local distingue casos ainda não executados,
 afetados e provas já recebidas; a renomeação do teste tem relação explícita de IDs.
 Não é uma nova suíte integral local aprovada. A CI integral Linux do sucessor
 continua obrigatória antes da revisão de integração em main.
+
+O recorte local de `6b4caff` parou depois de 241 aprovados e uma falha: o mock
+Git devolvia vazio para os SHAs exigidos pelo inventário. A captura causal confirmou
+o motivo nativo; o mock foi fechado por comandos, com versões simuladas coerentes,
+história sem pendentes e recusa de comando desconhecido. Três controles passaram,
+conservando seleção, retificação, perda da trava e recusa de história ilegível.
+A continuação recebeu 309 aprovados e um erro instrumental: o helper histórico
+exige o temporário nativo e o `basetemp` estava dentro do checkout. O harness foi
+corrigido sem mudar a guarda. A execução externa seguinte recebeu 87 aprovados e
+uma falha material de auditoria; essas execuções não são somadas como full.
+
+O preflight puro recusava o kill switch antes do método que emitia
+`BOOKING_REFUSED`. O produtor foi reparado com uma exceção tipada e causa preservada:
+os coordenadores escritores diário e API direta registram o evento padronizado,
+com proposta, aprovação, semana, ator, motivo e hash, antes da caducidade quando
+cabível. O preflight/dry-run continua sem escrita e a recusa de persistência já
+auditada não duplica o evento. Sete controles nativos passaram: o caso inaugural
+original com retry/caducidade, cinco controles novos e o cenário squeeze existente.
+O catálogo recebeu os 79 owners reais e conservou as 257 representações.
+A regra textual futura de caducidade agora abrange recusas pelo kill switch ou NET;
+registros anteriores continuam autenticados pelos próprios bytes e hashes.
+O controle de legado é um corpus simulado criado hoje, sem alegação de PIT.
+Não há nova prova de atomicidade entre os eventos ou de corrida após o prepare.
+
+A CI de `6b4caff` permanece uma execução própria, sem atribuição ao produtor reparado.
+A fonte final precisa da CI integral CDP e de Fechamento separadas, dos restantes
+locais por IDs e da instalação nova; nenhum desses estados pendentes é promovido
+a conclusão de integração ou publicação.
 
 A composição CDP recebe a fonte privada 0594f14, incluindo escritores NET,
 recepção bancária opt-in, diagnósticos P1 em sombra, técnicas e MCP 1.7.
@@ -111,7 +142,8 @@ conserva integralmente o corpo da passagem dessa frente e seus limites originais
 Evidências novas ficam em `.cdp/estudos/CONSOLIDACAO_AI_NOTES_12OUT/` e nas áreas
 privadas de qualificação da composição e do replay.
 Fonte enviada ao PR 7 como draft, sem integração em main ou nova publicação do portal.
-O merge normal do relatório oficial de risco de 16:07 preservou a rotina em main;
+Os merges normais do relatório oficial de risco de 16:07 e do fechamento de 12/10
+preservaram as rotinas em main;
 nenhuma operação foi realizada pela sessão de desenvolvimento. ROOT recebe a
 entrega final antes da integração e publicação.
 

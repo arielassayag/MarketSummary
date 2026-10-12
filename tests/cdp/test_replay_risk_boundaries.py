@@ -263,6 +263,7 @@ def test_squeeze_net_refusal_keeps_cut_pending_and_long_veto(operational):
     refused = closed["efetivacao_recusada"]
     assert refused["decisao_caducada"] is True
     assert refused["motivo"] == "NET FAIL: exposição resultante excede o limite após custos"
+    assert "kill switch" not in rt.book.efetivacao_recusada(SECOND)["regra"]
     assert rt.book.load_booked(SECOND) is None and not rt.kill_switch_active()
     record = rt.track().get(SECOND)
     assert record.live_book_week == FIRST and record.approval_hash == prior.approval_hash

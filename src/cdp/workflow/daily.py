@@ -176,11 +176,15 @@ class NoBookError(ValueError):
 
 
 class ExecutionRefused(ValueError):
-    """A execução MOC da decisão foi recusada (livro, KILL_SWITCH, preço/câmbio ausente).
+    """A execução MOC da decisão foi recusada (livro, KILL_SWITCH, NET ou preço/câmbio ausente).
 
     Na rotina diária com carteira vigente, a recusa NÃO interrompe o track record: o dia é
     registrado com a carteira anterior e um alerta com o motivo (nenhuma negociação ocorreu).
     """
+
+
+class _BookingPreflightRefused(ExecutionRefused):
+    """Validação pura de booking recusada, ainda sem evento de auditoria."""
 
 
 class MarketSource(Protocol):
@@ -732,8 +736,11 @@ def book_execution(book: Book, entry: BookEntry, proposal: Proposal, decision: D
     save_decided_proposal(book, proposal, decision, cfg, snapshot_hash_now=snapshot_hash_now,
                           dry_run=dry_run)
     if dry_run:
-        book._validate_booking(entry, snapshot_hash_now or proposal.snapshot_hash,
-                               cfg.config_hash(), decision.research_hash)
+        try:
+            book._validate_booking(entry, snapshot_hash_now or proposal.snapshot_hash,
+                                   cfg.config_hash(), decision.research_hash)
+        except ValueError as exc:
+            raise _BookingPreflightRefused(str(exc)) from exc
         return path
     return book.save_booked(entry, snapshot_hash_now or proposal.snapshot_hash, cfg.config_hash(),
                             decision.research_hash, actor=actor)
@@ -1135,6 +1142,7 @@ class DailyRunner:
         except ExecutionRefused as exc:
             if plan is None:
                 raise
+            self._audit_preflight_refusal(plan, exc)
             kill = self.book.kill_switch_active()
             from .net_moc import NetLimitExceeded
 
@@ -1151,7 +1159,7 @@ class DailyRunner:
                     f"de {session_date}: {clean_text(exc, 600)} O fundo segue sem carteira "
                     "(zerado, sem negociação) até a próxima data de montagem.") from exc
             if kill or net_refused:
-                # Kill switch no leilão do dia de montagem: a ordem não foi executada e a decisão
+                # Kill switch ou recusa NET no leilão: a ordem não foi executada e a decisão
                 # CADUCA (REGRA_CADUCIDADE) — o dia é registrado com a recusa e a decisão nunca é
                 # efetivada depois, nem quando um humano desligar o kill switch.
                 lapsed = self.book.registrar_efetivacao_recusada(
@@ -1251,10 +1259,28 @@ class DailyRunner:
         ctx = self.context(session_date, md, prev)
         if plan.entry is not None:
             return plan.entry
-        result = self._compute_side(self.main, ctx, prev, plan)
-        assert result.commit is not None and result.entry is not None
-        result.commit()
+        try:
+            result = self._compute_side(self.main, ctx, prev, plan)
+            assert result.commit is not None and result.entry is not None
+            result.commit()
+        except ExecutionRefused as exc:
+            self._audit_preflight_refusal(plan, exc)
+            raise
         return result.entry
+
+    def _audit_preflight_refusal(self, plan: _Plan, exc: ExecutionRefused) -> None:
+        """Apenas a recusa tipada do preflight ainda precisa do evento escritor.
+
+        Recusa de persistência já passa por Book.save_booked e não recebe o marcador.
+        Não cria caducidade; o coordenador diário conserva sua regra própria.
+        """
+        cause: BaseException | None = exc
+        while cause is not None:
+            if isinstance(cause, _BookingPreflightRefused):
+                self.book._registrar_booking_recusado(
+                    plan.week, plan.proposal_id, plan.approval_hash, str(exc), self.actor)
+                return
+            cause = cause.__cause__
 
     def verify_all(self) -> tuple[bool, list[str]]:
         """Integridade do track record (e da sombra) e do livro (``Book.verify_integrity``)."""

@@ -105,6 +105,113 @@ def test_quadros_separados_reconciliacao_e_fontes_proprias(payload):
     json.dumps(d, allow_nan=False)
 
 
+@pytest.mark.parametrize("other_measure", ["fração do PL", "z × NAV"])
+def test_dominios_de_exposicao_nao_comparam_medidas_diferentes(payload, other_measure):
+    """Alterar outra unidade/medida não muda a escala da sensibilidade Σ w·β."""
+    risk = payload["weeks"][0]["proposal"]["risk"]
+    risk["exposures"] = [
+        {"group": "market", "name": "commodity:gold", "net": -.0049, "measure": "Σ w·β"},
+        {"group": "market", "name": "outro", "net": .2, "measure": other_measure},
+    ]
+    before = copy.deepcopy(payload)
+    first = construir_dashboard_risco(payload)["views"][1]["exposures"]["market"]
+    gold = next(row for row in first if row["key"] == "commodity:gold")
+    risk["exposures"][1]["net"] = .9
+    second = construir_dashboard_risco(payload)["views"][1]["exposures"]["market"]
+    assert next(row for row in second if row["key"] == "commodity:gold") == gold
+    assert gold["domain_abs"] == .0049 and gold["value"] == -.0049
+    assert gold["display"] == "-0,0049"
+    assert gold["label"] == "Commodity: ouro"
+    before["weeks"][0]["proposal"]["risk"]["exposures"][1]["net"] = .9
+    # O fixture compartilha a mesma origem de risco; só a entrada deliberada mudou.
+    before["risk"]["ex_ante"]["exposures"][1]["net"] = .9
+    assert payload == before
+    html = renderizar_dashboard_risco(construir_dashboard_risco(payload))
+    assert "Mercado e temas · Σ w·β · coeficiente" in html
+    assert "Mercado e temas · " + other_measure in html
+
+
+def test_bruta_so_e_percentual_quando_unidade_do_pl_e_declarada(payload):
+    """Valor bruto em coeficiente é preservado sem transformá-lo em percentual do PL."""
+    risk = payload["weeks"][0]["proposal"]["risk"]
+    risk["exposures"] = [
+        {"group": "market", "name": "tema:state_owned", "net": .01, "gross": .03,
+         "measure": "fração do PL"},
+        {"group": "market", "name": "commodity:gold", "net": -.0049, "gross": .25,
+         "measure": "Σ w·β"},
+    ]
+    before = copy.deepcopy(payload)
+    d = construir_dashboard_risco(payload)
+    rows = {row["key"]: row for row in d["views"][1]["exposures"]["market"]}
+    assert rows["tema:state_owned"]["gross_unit"] == "pct"
+    assert rows["tema:state_owned"]["gross_display"] == "3,00%"
+    assert rows["commodity:gold"]["gross"] == .25
+    assert rows["commodity:gold"]["gross_unit"] == "ratio"
+    assert rows["commodity:gold"]["gross_display"] == "0,2500"
+    assert payload == before
+    html = renderizar_dashboard_risco(d)
+    assert "Bruta (unidade da linha)" in html
+    assert "25,00%" not in html
+
+
+@pytest.mark.parametrize("same_week", [True, False])
+def test_normalizacoes_tem_origem_propria_sem_reconciliar_parcelas(payload, same_week):
+    """A memória com κ_F não substitui o KPI sem ajuste nem o dado diário ausente."""
+    payload["modelo"]["risco"].update(kappa_texto="1,45", kappa_fonte="valor do mandato")
+    if not same_week:
+        payload["modelo"]["semana"] = "2026-10-02"
+    before = copy.deepcopy(payload)
+    d = construir_dashboard_risco(payload)
+    daily, target = d["views"]
+    factor = next(k for k in target["kpis"] if k["key"] == "factor_risk_share")
+    assert factor["value"] == .08 and factor["display"] == "8,00%"
+    assert "sem ajuste κ_F" in factor["note"]
+    assert target["risk_normalization"]["factor_share_source"] == "weeks[].proposal.risk.factor_risk_share"
+    assert daily["risk_normalization"]["method"] is None
+    assert next(k for k in daily["kpis"] if k["key"] == "factor_risk_share")["value"] is None
+    normalization = target["model_normalization"]
+    assert normalization["kappa_text"] == ("1,45" if same_week else None)
+    assert normalization["kappa_origin"] == ("valor do mandato" if same_week else None)
+    assert normalization["source"] == ("modelo.risco.grupos" if same_week else None)
+    assert payload == before
+    html = renderizar_dashboard_risco(d)
+    if same_week:
+        assert "κ_F = 1,45" in html and "valor do mandato" in html
+        assert "Normalizações distintas não são comparáveis diretamente" in html
+        assert "não são parcelas complementares" in html
+        assert "overrides.risco.por_grupo_base" in html
+    else:
+        assert "κ_F = 1,45" not in html
+
+
+def test_coeficiente_commodity_nao_multiplica_por_cem_nem_altera_outros_kpis(payload):
+    """Precisão de coeficiente conserva o limite/estado; β do KPI mantém seu formato."""
+    payload["risk"]["limit_checks"].append({"id": "commodity_beta", "label": "Σ w·β · coeficiente",
+        "basis": "ex-ante", "value": -.0049, "limit": .03, "unit": "ratio", "status": "alerta",
+        "utilization": .2, "severity": "SOFT"})
+    before = copy.deepcopy(payload)
+    d = construir_dashboard_risco(payload)
+    row = next(r for r in d["limits"] if r["id"] == "commodity_beta")
+    assert row["value"] == -.0049 and row["limit"] == .03 and row["utilization"] == .2
+    assert row["value_display"] == "-0,0049" and row["limit_display"] == "0,0300"
+    assert row["status"] == "alerta" and row["severity"] == "SOFT"
+    assert next(k for k in d["views"][1]["kpis"] if k["key"] == "beta")["display"] == "-0,10"
+    assert payload == before
+
+
+@pytest.mark.parametrize("kappa_metadata", [{}, {"kappa_texto": "1,45"},
+                                           {"kappa_fonte": "valor do mandato"}])
+def test_origem_kappa_indisponivel_sem_metadados_completos(payload, kappa_metadata):
+    """Grupos recebidos não são prova de que o parâmetro κ_F veio na memória."""
+    payload["modelo"]["risco"].update(kappa_metadata)
+    before = copy.deepcopy(payload)
+    normalization = construir_dashboard_risco(payload)["views"][1]["model_normalization"]
+    assert normalization["kappa_origin_source"] is None
+    assert normalization["kappa_text"] == kappa_metadata.get("kappa_texto")
+    assert normalization["kappa_origin"] == kappa_metadata.get("kappa_fonte")
+    assert payload == before
+
+
 @pytest.mark.parametrize("origin", ["own", "same_week_fallback"])
 def test_origem_real_do_risco_e_posicoes_separada_sem_mudar_valores(payload, origin):
     baseline = construir_dashboard_risco(payload)["views"][1]

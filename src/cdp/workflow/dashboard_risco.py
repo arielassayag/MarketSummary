@@ -14,12 +14,14 @@ from typing import Any
 
 SCHEMA = "cdp.dashboard.risco/v1"
 _TRANSPORT_KEYS = frozenset({"_colunas", "_n", "_rep", "_partes", "_igual"})
-_GROUPS = {"country": "País", "sector": "Setor", "style": "Estilo",
+_GROUPS = {"country": "País ou região", "sector": "Setor", "style": "Estilo",
            "currency": "Moeda", "market": "Mercado e temas"}
 _STATUS = {"ok": "Dentro do limite", "alerta": "Alerta", "excesso": "Excesso",
            "n/d": "n/d", "info": "Informativo"}
 _COUNTRIES = {"AR": "Argentina", "BR": "Brasil", "CL": "Chile", "CO": "Colômbia",
-              "MX": "México", "PE": "Peru", "LATAM": "América Latina"}
+              "MX": "México", "PE": "Peru", "UY": "Uruguai", "LATAM": "América Latina"}
+_MARKET_LABELS = {"tema:state_owned": "Tema: estatais", "commodity:oil": "Commodity: petróleo",
+                  "commodity:copper": "Commodity: cobre", "commodity:gold": "Commodity: ouro"}
 
 
 def _obj(value: Any) -> dict:
@@ -56,9 +58,10 @@ def _exigir_expandido(value: Any) -> None:
             _exigir_expandido(child)
 
 
-def _fmt(value: Any, unit: str = "pct", *, signed: bool = False) -> str:
+def _fmt(value: Any, unit: str = "pct", *, signed: bool = False,
+         precision: int | None = None) -> str:
     if type(value) is list:
-        return " a ".join(_fmt(v, unit, signed=signed) for v in value)
+        return " a ".join(_fmt(v, unit, signed=signed, precision=precision) for v in value)
     if unit == "text":
         return _text(value) or "n/d"
     number = _num(value)
@@ -69,13 +72,13 @@ def _fmt(value: Any, unit: str = "pct", *, signed: bool = False) -> str:
     if abs(display) >= Decimal("1e10"):
         text = f"{display:.2E}".replace(".", ",")
     else:
-        places = 0 if unit == "count" else 2
+        places = precision if precision is not None else 0 if unit == "count" else 2
         text = f"{display:,.{places}f}".replace(",", "_").replace(".", ",").replace("_", ".")
     suffix = {"pct": "%", "days": " dias", "x": "×"}.get(unit, "")
     return ("US$ " if unit == "usd" else "") + sign + text + suffix
 
 
-def _bars(rows: list[dict]) -> list[dict]:
+def _bars(rows: list[dict], *, precision: int | None = None) -> list[dict]:
     """Domínio simétrico próprio; falta não participa da escala e zero é legítimo."""
     valid = [abs(v) for row in rows if (v := _num(row.get("value"))) is not None]
     domain = max(valid, default=0.0)
@@ -87,11 +90,28 @@ def _bars(rows: list[dict]) -> list[dict]:
         if value == 0:
             direction = "zero"
         out.append({**row, "value": value, "domain_abs": domain,
-                    "display": _fmt(value, row.get("unit", "pct"), signed=True),
+                    "display": _fmt(value, row.get("unit", "pct"), signed=True, precision=precision),
                     "sign": direction if value is not None else "ausente",
                     "bar_width": f"{width:.3f}%",
                     "bar_left": f"{50 - width if direction == 'negativo' else 50:.3f}%"})
     return out
+
+
+def _exposure_groups(rows: list[dict]) -> dict[tuple[str, str], list[dict]]:
+    """Unidades e medidas diferentes não compartilham domínio de apresentação."""
+    groups: dict[tuple[str, str], list[dict]] = {}
+    for row in rows:
+        groups.setdefault((row["unit"], row["measure"]), []).append(row)
+    return groups
+
+
+def _exposure_bars(rows: list[dict]) -> list[dict]:
+    """Escalas independentes, mantendo a ordem original das linhas recebidas."""
+    formatted = {}
+    for (unit, measure), values in _exposure_groups(rows).items():
+        bars = _bars(values, precision=4 if unit == "ratio" and measure == "Σ w·β" else None)
+        formatted.update((id(original), bar) for original, bar in zip(values, bars, strict=True))
+    return [formatted[id(row)] for row in rows]
 
 
 def _maps(value: Any, key: str, number: str, *, labels: dict | None = None,
@@ -178,13 +198,18 @@ def _view(identifier: str, title: str, position_source: str | None, risk_source:
         label = _text(labels.get(f"{group}:{name}")) or _text(labels.get(name))
         if label is None and group == "country":
             label = _COUNTRIES.get(name)
+        if label is None and group == "market":
+            label = _MARKET_LABELS.get(name)
         exposures[group].append({"key": name,
             "label": label or name or "Identificação n/d",
             "value": _num(row.get("net")), "unit": unit, "measure": measure or ("fração do PL" if unit == "pct" else "carga do modelo"),
             "long": _num(row.get("long")), "short": _num(row.get("short")),
-            "gross": _num(row.get("gross")), "limit": _num(row.get("limit")),
+            "gross": _num(row.get("gross")), "gross_unit": unit,
+            "gross_display": _fmt(row.get("gross"), unit,
+                                  precision=4 if unit == "ratio" and measure == "Σ w·β" else None),
+            "limit": _num(row.get("limit")),
             "status": _text(row.get("status")), "severity": _text(row.get("severity"))})
-    exposures = {group: _bars(rows) for group, rows in exposures.items()}
+    exposures = {group: _exposure_bars(rows) for group, rows in exposures.items()}
     decomposition = _obj(risk.get("risk_decomposition"))
     factor_source = ("factor_contributions" if "factor_contributions" in risk else
                      "risk_decomposition.by_factor" if "by_factor" in decomposition else None)
@@ -201,7 +226,7 @@ def _view(identifier: str, title: str, position_source: str | None, risk_source:
             ("beta", "Beta de mercado", "ratio", "coeficiente"),
             ("var_1d_99", "VaR de 1 dia · 99%", "pct", "perda / PL"),
             ("es_1d_99", "ES de 1 dia · 99%", "pct", "perda / PL"),
-            ("factor_risk_share", "Parcela fatorial", "pct", "da variância ex-ante"),
+            ("factor_risk_share", "Parcela fatorial", "pct", "da variância ex-ante · sem ajuste κ_F"),
             ("specific_vol", "Volatilidade específica", "pct", "ao ano")]
     reconciliation = _reconcile(positions, risk, type(position_body.get("positions")) is list)
     fields = {"exposures": "exposures" if "exposures" in risk else None,
@@ -215,12 +240,19 @@ def _view(identifier: str, title: str, position_source: str | None, risk_source:
     return {"id": identifier, "title": title, "source": position_source,
             "position_source": position_source, "risk_source": risk_source,
             "risk_field_sources": field_sources,
+            "risk_normalization": {
+                "method": "risk_decomposition sem ajuste κ_F" if
+                    _num(risk.get("factor_risk_share")) is not None or factor or top or direct_groups else None,
+                "factor_share_source": f"{risk_source}.factor_risk_share" if
+                    risk_source and _num(risk.get("factor_risk_share")) is not None else None},
             "position_field_source": f"{position_source}.positions" if position_source and "positions" in position_body else None,
             "cut": cut, "week": week,
             "available": bool(risk or position_body), "positions": positions,
             "positions_known": type(position_body.get("positions")) is list,
             "kpis": [{"key": key, "label": label, "value": _num(risk.get(key)), "unit": unit,
-                      "display": _fmt(risk.get(key), unit, signed=key in {"net", "beta"}), "note": note}
+                      "display": _fmt(risk.get(key), unit, signed=key in {"net", "beta"}),
+                      "note": "da variância ex-ante · metodologia n/d" if key == "factor_risk_share"
+                          and _num(risk.get(key)) is None else note}
                      for key, label, unit, note in kpis],
             "nav_usd": _num(position_body.get("nav_end" if daily else "nav_usd")),
             "exposures": exposures, "factor_contributions": factor, "stress": stress,
@@ -286,18 +318,29 @@ def construir_dashboard_risco(payload: dict) -> dict:
     target["model_factors"] = [{"label": _text(row.get("grupo")), "count": _num(row.get("n")),
                                "text": _text(row.get("texto"))} for row in _rows(model_risk.get("fatores"))]
     target["model_note"] = _text(model_risk.get("kappa_fonte"))
+    target["model_normalization"] = {
+        "method": "participação de Euler na variância com κ_F" if "grupos" in model_risk else None,
+        "kappa_text": _text(model_risk.get("kappa_texto")),
+        "kappa_origin": _text(model_risk.get("kappa_fonte")),
+        "source": "modelo.risco.grupos" if "grupos" in model_risk else None,
+        "decision_origin": "overrides.risco.por_grupo" if "grupos" in model_risk else None,
+        "base_origin": "overrides.risco.por_grupo_base" if "grupos" in model_risk else None,
+        "kappa_source": "modelo.risco.kappa_texto" if _text(model_risk.get("kappa_texto")) else None,
+        "kappa_origin_source": "overrides.risco.kappa_f" if _text(model_risk.get("kappa_texto"))
+            and _text(model_risk.get("kappa_fonte")) else None}
     target["model_week"] = _text(model.get("semana")) if model_risk else None
     target["model_field_sources"] = {key: f"modelo.risco.{key}" if key in model_risk else None
                                      for key in ("grupos", "parametros", "fatores")}
     checks = []
     for row in _rows(risk.get("limit_checks")):
         unit = _text(row.get("unit")) or "ratio"
+        precision = 4 if row.get("id") == "commodity_beta" and unit == "ratio" else None
         value = [_num(v) for v in row["value"]] if type(row.get("value")) is list else _text(row.get("value")) if unit == "text" else _num(row.get("value"))
         limit = [_num(v) for v in row["limit"]] if type(row.get("limit")) is list else _text(row.get("limit")) if unit == "text" else _num(row.get("limit"))
         checks.append({"id": _text(row.get("id")), "label": _text(row.get("label")),
                        "basis": _text(row.get("basis")), "value": value,
-                       "limit": limit, "value_display": _fmt(row.get("value"), unit),
-                       "limit_display": _fmt(row.get("limit"), unit), "unit": unit,
+                       "limit": limit, "value_display": _fmt(row.get("value"), unit, precision=precision),
+                       "limit_display": _fmt(row.get("limit"), unit, precision=precision), "unit": unit,
                        "status": _text(row.get("status")), "floor": row.get("floor") is True,
                        "severity": _text(row.get("severity")), "detail": _text(row.get("detail")),
                        "utilization": _num(row.get("utilization")),
@@ -361,7 +404,7 @@ def _chart(rows: list[dict], title: str, source: str | None, basis: str | None,
     contents = ('<ul class="dr-chart">' + "".join(items) + '</ul><p class="dr-note">'
                 'Escala simétrica por gráfico; zero no centro. Sinais preservados.</p>') if rows else '<p class="dr-empty">n/d · dados não disponíveis neste retrato.</p>'
     if len(rows) > maximum:
-        contents += f'<p class="dr-note">{maximum} de {len(rows)} linhas; conjunto completo na tabela.</p>'
+        contents += f'<p class="dr-note">{maximum} de {len(rows)} linhas; todas as linhas recebidas na tabela.</p>'
     return f'<article class="dr-card"><h3>{escape(title)}</h3>{contents}{_source(source, basis)}</article>'
 
 
@@ -411,16 +454,38 @@ def _view_html(view: dict) -> str:
         content += (f'Soma líquida {escape(_fmt(r["net_from_positions"], signed=True))}; '
                     f'soma bruta {escape(_fmt(r["gross_from_positions"]))}. ')
     content += 'A exposição gravada permanece no KPI.</p>'
+    normalization = view["risk_normalization"]
+    if normalization["method"]:
+        content += ('<p class="dr-note">Parcela fatorial do KPI e contribuições por fator e posição: '
+                    'participações na variância da decomposição sem ajuste κ_F.</p>')
+        content += _source(normalization["factor_share_source"], normalization["method"])
+    if vid == "proposta" and view["model_normalization"]["method"]:
+        model_normalization = view["model_normalization"]
+        content += ('<p class="dr-note">Modelo de decisão e modelo base: participação de Euler na variância '
+                    'com ajuste fatorial κ_F = ' + _esc(model_normalization["kappa_text"]) + '; origem: '
+                    + _esc(model_normalization["kappa_origin"]) + '. Normalizações distintas não são comparáveis '
+                    'diretamente e não são parcelas complementares. A decomposição sem ajuste do KPI, '
+                    'dos fatores e das posições usa outra normalização.</p>')
+        content += ('<p class="dr-source">Origem da memória: <code>'
+                    + _esc(model_normalization["decision_origin"]) + '</code> e <code>'
+                    + _esc(model_normalization["base_origin"]) + '</code>; ajuste em <code>'
+                    + _esc(model_normalization["kappa_origin_source"]) + '</code>.</p>')
+        content += _source(model_normalization["source"], model_normalization["method"])
     content += '<div class="dr-grid">'
     for group in ("country", "sector", "style", "currency", "market"):
         rows = view["exposures"][group]
-        if group in {"country", "sector"} or rows:
-            content += _chart(rows, f'Exposição líquida · {_GROUPS[group]}',
+        if rows:
+            for (unit, measure), values in _exposure_groups(rows).items():
+                unit_label = ' · coeficiente' if unit == "ratio" and measure == "Σ w·β" else ''
+                content += _chart(values, f'Exposição líquida · {_GROUPS[group]} · {measure}{unit_label}',
+                                  view["risk_field_sources"]["exposures"], view["risk_basis"])
+        elif group in {"country", "sector"}:
+            content += _chart([], f'Exposição líquida · {_GROUPS[group]}',
                               view["risk_field_sources"]["exposures"], view["risk_basis"])
     if vid == "proposta":
         for basis, name in (("decisao", "Modelo de decisão"), ("base", "Modelo base")):
             source = view["model_field_sources"]["grupos"]
-            content += _chart(view["risk_groups"][basis], f'Participação na variância · {name}',
+            content += _chart(view["risk_groups"][basis], f'Participação na variância · {name} · com κ_F',
                               source + '[].' + basis if source else None,
                               'ex-ante · semana ' + (view["week"] or 'n/d'))
     if view["direct_risk_groups"]:
@@ -439,11 +504,13 @@ def _view_html(view: dict) -> str:
                       view["risk_field_sources"]["stress"], view["risk_basis"])
     content += '</div><details><summary>Consultar exposições e contribuições completas</summary>'
     exp_rows = [[_esc(_GROUPS[group]), _esc(row["label"]), _esc(row["display"]),
-                 escape(_fmt(row["gross"])), escape(_fmt(row["limit"], row["unit"])),
+                 _esc(row["gross_display"]),
+                 escape(_fmt(row["limit"], row["unit"],
+                             precision=4 if row["unit"] == "ratio" and row["measure"] == "Σ w·β" else None)),
                  _esc(row["measure"]), _esc(_STATUS.get(row["status"], row["status"]))]
                 for group, rows in view["exposures"].items() for row in rows]
-    content += _table(("Grupo", "Exposição", "Líquida", "Bruta / PL", "Limite", "Unidade", "Estado"),
-                      exp_rows, 'Exposições originais do quadro selecionado.')
+    content += _table(("Grupo", "Exposição", "Líquida", "Bruta (unidade da linha)", "Limite", "Unidade", "Estado"),
+                      exp_rows, 'Exposições originais: líquida, bruta e limite na unidade indicada em cada linha; n/d preserva ausência.')
     content += _source(view["risk_field_sources"]["exposures"], view["risk_basis"])
     factor_rows = [[_esc(kind), _esc(row["label"]), _esc(row["display"]),
                    _esc(row.get("measure")) if "measure" in row else "fração do PL" if kind.startswith("Estresse") else "fração da variância"]
@@ -508,6 +575,14 @@ def renderizar_dashboard_risco(dashboard: dict) -> str:
     body += '<h2 id="dr-memoria-titulo">Memória do modelo e fontes</h2><p class="dr-note">'
     body += 'Volatilidades anuais; exposições em fração do PL ou na unidade indicada. Participações de Euler podem ser negativas. Cada quadro conserva seu próprio corte; ex-ante não substitui dado diário ausente.</p>'
     target = dashboard["views"][1]
+    normalization = target["model_normalization"]
+    if normalization["method"]:
+        body += ('<p class="dr-note">Memória de grupos com ajuste fatorial κ_F = '
+                 + _esc(normalization["kappa_text"]) + ' (' + _esc(normalization["kappa_origin"])
+                 + '). O ajuste é aplicado ao bloco fatorial na participação de Euler da variância. '
+                 'O KPI e as contribuições por fator e posição conservam a decomposição sem ajuste κ_F. '
+                 'Normalizações distintas não são comparáveis diretamente e não são parcelas complementares.</p>')
+        body += _source(normalization["kappa_source"], normalization["kappa_origin"])
     memory = [("Retrato gerado em", dashboard["generated_at"]), ("Hash do retrato", dashboard["data_hash"]),
               ("Configuração do painel", dashboard["config_hash_panel"]),
               ("Configuração da proposta", target["config_hash"]), ("Snapshot da proposta", target["snapshot_hash"]),

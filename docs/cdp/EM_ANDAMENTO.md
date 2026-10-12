@@ -5,11 +5,12 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-## Dashboards e publicação das teses — desenvolvimento em 11/10/2026
+## Dashboards e publicação das teses — atualização em 12/10/2026
 
 Pedido humano explícito: revisar e publicar as teses de todo o universo e oferecer
 dashboards profissionais de cases/comparáveis e de risco/fatores. O desenvolvimento
-está no ramo `codex/cdp-dashboards-profissionais`; a operação é exclusiva do executor
+foi qualificado no ramo `codex/cdp-dashboards-profissionais` e integrado em `main`;
+a operação é exclusiva do executor
 interno `.cdp/rotinas`, com gates manuais e limite conservado de doze notas por execução.
 
 A revisão documental recebeu os 241 rascunhos, suas referências e modelos: 233 empresas
@@ -29,9 +30,114 @@ exposição líquida inaugural permanece registrado; integridade não comprova c
 As novas vistas são descritas em [DASHBOARDS.md](DASHBOARDS.md). Pesquisa publicada até o
 corte do portal pode acompanhar um retrato quantitativo anterior, com datas próprias;
 a narrativa não recalcula o modelo. Carteira registrada e proposta, risco diário e ex-ante,
-memória da mesma semana, sinais e ausências permanecem separados. Faltam nesta etapa a
-qualificação final do código, a adoção canônica das novas notas e a conferência remota do
-deploy completo; recibos de desenvolvimento não são prova dessas publicações.
+memória da mesma semana, sinais e ausências permanecem separados. O executor adotou,
+validou e publicou 156 notas distintas em treze lotes de até doze emissores:
+144 iniciações e doze atualizações. Todas as execuções terminaram com
+`verify: ÍNTEGRO`, push confirmado e trava liberada. O último commit operacional é
+`67f1e219bad503198e7c44f4b691be7597ff810c`. As 168 notas físicas incluem doze
+versões históricas preservadas; não representam 168 ativos com pesquisa atualizada.
+A agenda final confirmou 85 rascunhos pendentes, nenhum obsoleto e integridade das
+notas. O checkout do executor ficou limpo e a trava remota livre, com `id: null`.
+
+A auditoria textual das 156 notas adotadas conferiu 4.056 citações, sem divergência
+confirmada entre rascunho, original, FactBook formatado, Markdown, payload do site
+e vínculo na trilha. É reprodução e custódia, sem recertificação integral das
+fontes externas ou de sua disponibilidade histórica. Dois gaps de recepção
+foram preservados; a conclusão usa 155 casos completos e a recepção individual
+de `fatos.md` da Eztec, idêntico ao original nativo. O protocolo integral de
+241 permanece pendente.
+
+O calendário de `contexto/proximo_resultado` vem de fundamentals; o evento do
+FactBook conserva o calendário do modelo. Há 39 contextos com campo ausente
+embora a cobertura tenha evento e dez pares com datas não nulas diferentes.
+Isso registra origens e cortes distintos, sem escolher uma data ou preencher
+ausência. A consulta atual de fontes primárias conferiu os dez pares; os
+catalisadores de resultado de Pan American Silver, First Majestic, Lithium
+Argentina e Endeavour coincidem com os anúncios recebidos. Quatro fontes
+confirmam somente teleconferência, sem inferir a divulgação na véspera. A SQM
+tem calendário atual diferente da estimativa histórica do modelo; sua narrativa
+não cita esse evento com data. O PDF ASUR foi recebido diretamente e seu corpo
+confirmado, conservando a inconsistência do título nos metadados do documento.
+A consulta atual não recertifica disponibilidade em 09/10.
+Comunicado, resultado e conferência mantêm significados próprios. Eventual
+mudança prospectiva de consumo do calendário exige revisão específica; não
+retificar os originais por diferença de metadata.
+
+O orçamento do [roteiro de cobertura](playbooks/COBERTURA.md) impede iniciar emissor
+depois de 00:30 de Brasília. A operação respeitou o corte, sem iniciar um décimo
+quarto lote. Foi solicitada ao humano uma extensão apenas desse orçamento, mantendo
+gates, trava e limite de doze; a resposta permanece pendente. Não iniciar outro
+emissor fora do orçamento sem essa resposta. A publicação integral das 241 teses
+continua aberta; as 85 restantes mantêm a apresentação preliminar no portal.
+A revisão de prontidão confirmou 77 empresas e oito ETFs, com todos os
+rascunhos de 11/10, `mind: codex`, seções profissionais e hashes idênticos à
+qualificação documental anterior. Os 85 payloads preservam `nota: null` e
+o estado preliminar; não há sobreposição com as 156 adotadas. O vínculo
+final aos fatos nativos e ao schema da execução exige novo `nota prepare`
+e validação autorizados. A lista histórica do próximo lote não substitui
+uma nova agenda nem autoriza a operação fora do orçamento.
+A conferência HTTP do checkpoint recebeu o artefato do Pages `38199935749` e
+comparou os 3.068 arquivos declarados: todos HTTP200, tamanho e SHA idênticos,
+178.085.251 bytes, sem drift, com manifesto estável antes/depois. Foram
+confirmados 241 ativos, 156 narrativas e 85 análises preliminares. É prova
+deste checkpoint parcial, separada do protocolo de entrega integral.
+
+A navegação pública de `67f1e219` confirmou manifesto, dados e interações em
+desktop e celular. A inspeção dos pixels identificou uma falha móvel de leitura:
+o CSS geral empilha as tabelas do risco e oculta seus cabeçalhos. A correção
+restabelece a tabela semântica e uma região rotulada com rolagem de teclado,
+restrita à apresentação desse dashboard. O navegador conferiu o antes/depois
+em 1440×1000 e 390×844, com cabeçalhos legíveis, dados idênticos e scroll
+contido. Os 136 testes únicos de risco, painel e site passaram; Ruff passou.
+A fonte `267bf539803c520a57ed56480c1466dfd8a7cf17` concluiu a suíte
+Linux `38202514379`: 4.711 casos únicos, 4.694 aprovados, dezessete ignorados,
+nenhuma falha ou erro; Ruff e job operacional aprovados. Essa qualificação não
+foi promovida a integração, pois a revisão independente encontrou ambiguidades
+de unidades e de normalização. O checkpoint público continua em `67f1e219`.
+
+A correção final está no ramo interno `codex/cdp-risco-unidades`, derivado de
+`267bf539`. Os gráficos de mercado separam frações do patrimônio e coeficientes
+Σwβ, com domínios próprios. Sensibilidades e limites de commodities aparecem
+como coeficientes com quatro casas decimais, inclusive no painel tradicional,
+na tabela do mandato, na metodologia e nos destaques. Os valores, limites,
+estados dos gates e dados originais permanecem iguais. Os nomes visíveis de
+países e fatores recebem rótulos em português, sem mudar suas chaves internas.
+No quadro de conformidade, as verificações operacionais de beta e estilos
+conservam a mesma unidade dos respectivos limites do mandato, sem porcentagem.
+
+A participação fatorial do KPI conserva a decomposição sem ajuste κ_F; a memória
+de grupos da mesma semana explicita κ_F, seu valor recebido e sua origem. A
+interface avisa que essas normalizações não são diretamente comparáveis nem
+parcelas complementares. Ausência de parâmetro ou de origem continua ausente,
+sem atribuição presumida. Campos brutos de exposição também conservam sua
+unidade de origem; não são convertidos automaticamente em porcentagem.
+
+Nos cases, o critério local diz “Mesmo país ou região”, para representar os
+agrupamentos regionais já usados em código. O retorno do modelo explicita que
+é total e tem horizonte de doze meses. Composição dos peers, grupos estatísticos,
+ordinais, dados e cortes não mudam. Os 182 testes únicos combinados de cases,
+risco, painel e site passaram, sem falhas, erros ou skips; Ruff passou. A revisão
+independente final foi encerrada sem novo achado material no recorte estático de
+unidades e normalização. As prévias locais antes/depois receberam 60 capturas
+em desktop e celular, sem erros de JavaScript ou transbordamento da página.
+Os metadados prospectivos de apresentação foram identificados nas prévias;
+valores financeiros e estados originais permaneceram iguais. Essa navegação
+não substitui a conferência do build publicado da fonte final.
+
+A suíte integral local Python 3.13.12 concluiu com 4.725 casos únicos: 4.708
+aprovados, dezessete ignorados e nenhuma falha ou erro. Os IDs ignorados são
+idênticos aos do baseline. Ruff passou; os 805 caminhos congelados conservaram
+os hashes, com recepção física antes/depois. Esses resultados não são somados
+aos testes focais nem à CI histórica. A consolidação deste registro é um delta
+exclusivamente documental posterior ao terminal; código e testes conservam
+os hashes qualificados e a documentação será conferida separadamente.
+
+Corte deste registro: 12/10/2026, 04:00 Brasília. A CI própria do novo commit, a
+integração e a conferência de artefato, HTTP e pixels públicos ainda são etapas
+pendentes. Resultados anteriores não qualificam esse patch final. O checkpoint
+público confirmado permanece em `67f1e219`, com 156 narrativas adotadas e
+85 análises preliminares. A entrega integral das teses continua pendente dos
+85 emissores e da resposta à extensão do orçamento solicitada ao humano.
 
 A conferência nativa identificou duas falhas de apresentação: o transporte compacto
 precisava ser expandido antes da vista de risco, e as origens de posições e risco
@@ -51,7 +157,13 @@ operação de backend responsável por cada arredondamento; não há alteração
 O job operacional Linux da correção passou integralmente. A suíte completa parou
 no teste de ordem do aviso pré-inaugural de `renderRisco`: o link do dashboard havia
 sido inserido antes da proteção. O link foi reposicionado após o retorno antecipado,
-mantendo o teste existente; a nova qualificação completa ainda é necessária.
+mantendo o teste existente. A nova CI `38184338879`, fonte
+`7ef04a4d5574a735508ecff90774a9a70a7011d3`, concluiu integralmente em 11/10,
+22:34 Brasília: 4.711 casos únicos, 4.694 aprovados, dezessete ignorados e nenhuma
+falha ou erro. Ruff, livro real, rotinas, skills e portal de demonstração passaram.
+A fonte foi integrada em `main` por avanço normal, sem force push. A execução
+anterior que recusou a ordem da proteção permanece registrada como negativa,
+sem soma de seus testes ao resultado final.
 
 ## Registro anterior das teses — 11/10/2026, 16:38 Brasília
 

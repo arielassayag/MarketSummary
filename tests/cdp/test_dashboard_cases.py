@@ -226,6 +226,45 @@ def test_javascript_nao_recalcula_estatisticas_e_usa_ordinais_recebidos():
     assert "parseFloat" not in js and ".reduce(" not in js
 
 
+def test_latam_pais_ou_regiao_preserva_membros_locais_brasileiros_e_ordinais():
+    docs = [documento("LA_PAAS", nome="Pan American", pais="LATAM"),
+            documento("LA_FORTUNA", nome="Fortuna", pais="LATAM"),
+            documento("BR_A"), documento("BR_B", nome="Banco B")]
+    for doc in docs[:2]:
+        doc["ativo"]["pais_nome"] = "Regional (América Latina)"
+    d = dc.construir_dashboard_cases(docs)
+    before = copy.deepcopy(d)
+    assert caso(d, "LA_PAAS")["comparaveis"]["local"] == ["LA_FORTUNA"]
+    assert caso(d, "BR_A")["comparaveis"]["local"] == ["BR_B"]
+    assert caso(d, "LA_PAAS")["comparaveis"]["regional"] == ["BR_A", "BR_B", "LA_FORTUNA"]
+    assert caso(d, "LA_PAAS")["pais"] == "LATAM"
+    assert caso(d, "BR_A")["pais"] == "BR"
+    body = dc.renderizar_dashboard_cases(d)
+    assert '<option value="local">Mesmo país ou região</option>' in body
+    assert 'aria-label="País ou região"' in body
+    assert '<th scope="col">País ou região / setor</th>' in body
+    assert "país ou região restringe o grupo local" in caso(d, "LA_PAAS")["comparaveis"]["criterio"]
+    assert 'data-local="LA_FORTUNA"' in body and 'data-local="BR_B"' in body
+    assert d == before
+
+
+@pytest.mark.parametrize("tipo", ["acao", "etf"])
+def test_retorno_total_12_meses_preserva_valores_cortes_e_ordinais(tipo):
+    doc = documento("ETF_A" if tipo == "etf" else "BR_A", tipo=tipo)
+    d = dc.construir_dashboard_cases([doc])
+    before = copy.deepcopy(d)
+    c = d["casos"][0]
+    assert c["etr"] == 0.15 and c["etr_texto"] == "+15,0%"
+    assert c["preco_data"] == "2026-10-08" and c["corte_modelo"] == "2026-10-09"
+    body = dc.renderizar_dashboard_cases(d)
+    assert '<dt>Retorno total esperado · 12 meses</dt>' in body
+    assert '<th scope="col">Retorno total esperado · 12 meses</th>' in body
+    assert '<dd>+15,0%</dd>' in body
+    assert "Retorno total esperado · 12 meses · citável" in body
+    assert "Retorno esperado não é retorno realizado" in body
+    assert d == before
+
+
 @pytest.mark.parametrize("iid", ["../A", "A/B", "A.B", "", "x" * 65])
 def test_rota_arbitraria_recusada(iid):
     d = documento()

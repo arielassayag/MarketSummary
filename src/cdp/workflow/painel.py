@@ -450,8 +450,8 @@ def _mandate_table(cfg: FundConfig) -> list[dict[str, Any]]:
         ("risco", "theme_net_max_abs", "Net por tema", dict(rk.theme_net_max_abs), "pct"),
         ("risco", "country_gross_share_max", "Fatia máxima da exposição bruta por país",
          dict(rk.country_gross_share_max), "pct"),
-        ("risco", "commodity_beta_max_abs", "Sensibilidade a commodity (|Σ w·β|)",
-         rk.commodity_beta_max_abs, "pct"),
+        ("risco", "commodity_beta_max_abs", "Sensibilidade a commodity (|Σ w·β| · coeficiente)",
+         rk.commodity_beta_max_abs, "ratio"),
         ("risco", "max_long_weight", "Peso máximo por nome (long)", rk.max_long_weight, "pct"),
         ("risco", "max_short_weight", "Peso máximo por nome (short)", rk.max_short_weight,
          "pct"),
@@ -1632,7 +1632,7 @@ EXPOSURE_CHECKS = (
     ("sector", None, "sector_net", "Net por setor (pior)", True),
     ("style", None, "style", "Exposição a estilo (pior)", False),
     ("market", "tema:", "theme_net", "Net por tema (pior)", True),
-    ("market", "commodity:", "commodity_beta", "Sensibilidade a commodity (pior, Σ w·β)", False),
+    ("market", "commodity:", "commodity_beta", "Sensibilidade a commodity (pior, Σ w·β · coeficiente)", False),
 )
 
 
@@ -1723,7 +1723,7 @@ def _limit_checks(cfg: FundConfig, rec: Any | None, proposal: Any | None) -> lis
             continue
         st = _over(util, 1.0, daily=g_daily, hard=hard)
         checks.append(_check(cid, label, d_basis if g_daily else p_basis, worst.net, worst.limit,
-                             "x" if group == "style" else "pct", st,
+                             "ratio" if cid == "commodity_beta" else "x" if group == "style" else "pct", st,
                              f"{_expo_label(group, worst.name)}: {_util_txt(util)} do limite",
                              util, subject={"group": group, "name": worst.name}))
     shares = rk.country_gross_share_max
@@ -3077,8 +3077,9 @@ def _metodologia(cfg: FundConfig, hoje: date, inaugural: Mapping[str, Any] | Non
         {"rotulo": "Temas e commodities", "texto": (
             ("Estatais até " + _lista_pt([fm.pct(v, 1) for v in rk.theme_net_max_abs.values()])
              + "; " if rk.theme_net_max_abs else "")
-            + "sensibilidade a cada commodity (Σ peso × beta) até "
-            + lim(rk.commodity_beta_max_abs, op.commodity_beta if op else None, p2) + ".")},
+            + "sensibilidade a cada commodity (Σ peso × beta · coeficiente) até "
+            + lim(rk.commodity_beta_max_abs, op.commodity_beta if op else None,
+                  lambda v: fm.num(v, 4)) + ".")},
     ]
     if cfg.risk_model.macro_factors:
         camadas.append({"rotulo": "Commodities e dólar no modelo de risco", "texto": (
@@ -3166,8 +3167,8 @@ def _metodologia(cfg: FundConfig, hoje: date, inaugural: Mapping[str, Any] | Non
              "mandato": fm.num(rk.style_exposure_max_abs, 2)},
             {"limite": "Líquido por setor", "operacional": fm.pct(op.sector_net, 1),
              "mandato": fm.pct(rk.sector_net_max_abs, 1)},
-            {"limite": "Commodity (Σ peso × beta)", "operacional": fm.pct(op.commodity_beta, 1),
-             "mandato": fm.pct(rk.commodity_beta_max_abs, 1)},
+            {"limite": "Commodity (Σ peso × beta · coeficiente)", "operacional": fm.num(op.commodity_beta, 4),
+             "mandato": fm.num(rk.commodity_beta_max_abs, 4)},
         ] + [{"limite": f"Líquido por país ({_pais_pt(k)})",
               "operacional": fm.pct(v, 1), "mandato": fm.pct(rk.country_net_max_abs, 1)}
              for k, v in sorted(op.country_net.items(), key=lambda kv: kv[0] == "*")]

@@ -1524,7 +1524,11 @@ function fmtLimit(c) {
     return lim.map(function (v) { return fmtUnit(v, c.unit); }).join(sep);
   }
   if (c.unit === "count") return "≤ " + int(lim);
+  if (c.id === "commodity_beta" && c.unit === "ratio") return "≤ " + fnum(lim, 4);
   return (c.floor || c.id === "gross_min" || c.id === "country_gap_stress" ? "≥ " : c.id === "drawdown" ? "" : "≤ ") + fmtUnit(lim, c.unit);
+}
+function fmtCheckValue(c) {
+  return c.id === "commodity_beta" && c.unit === "ratio" ? fnum(c.value, 4) : fmtUnit(c.value, c.unit);
 }
 
 var MESES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
@@ -2376,7 +2380,7 @@ arr(g(LIVEP, "compliance.checks")).forEach(function (c) { if (c.check_id && c.na
 GATE_NAME.VOL_TARGET = "Distância à meta de volatilidade da semana";
 function gateName(id) { return GATE_NAME[id] || { GROSS_MIN: "Exposição bruta mínima", SINGLE_NAME_RISK: "Contribuição máxima de um nome ao risco" }[id] || ptLabel(String(id).replace(/_/g, " ").toLowerCase()); }
 function checkTxt(c) {
-  var t = c.label + ": " + fmtUnit(c.value, c.unit) + " (limite " + fmtLimit(c) + ")";
+  var t = c.label + ": " + fmtCheckValue(c) + " (limite " + fmtLimit(c) + ")";
   if (isNum(c.shortfall) && c.shortfall > 0) t += ", abaixo do piso em " + fnum(c.shortfall * 100, 2) + " p.p.";
   return t + (c.detail ? " · " + ptLabel(ptNums(c.detail)) : "") + ".";
 }
@@ -2388,7 +2392,7 @@ function highlights(expos, basis) {
   if (STAGE_PT[ST.ladder_stage] && ST.ladder_stage !== "normal") it(STAGE_TONE[ST.ladder_stage] || "warn", "Controle de perdas", "Drawdown de " + pct(ST.drawdown) + ": " + STAGE_PT[ST.ladder_stage] + ".");
   CHECKS.forEach(function (c) { if (c.status === "excesso") it("crit", "Excesso", checkTxt(c)); });
   CHECKS.forEach(function (c) { if (c.status === "alerta") it("warn", "Alerta", checkTxt(c)); });
-  function expoTxt(e) { return expoName(e.group, e.name) + " " + (e.group === "style" ? xnum(e.net) : spct(e.net)) + " (" + pct(e.utilization, 0) + " do limite)"; }
+  function expoTxt(e) { return expoName(e.group, e.name) + " " + (e.measure === "Σ w·β" ? fnum(e.net, 4, true) + " (coeficiente)" : e.group === "style" ? xnum(e.net) : spct(e.net)) + " (" + pct(e.utilization, 0) + " do limite)"; }
   var exc = arr(expos).filter(function (e) { return e.status === "excesso"; });
   if (exc.length) it("crit", "Excesso", "Exposições acima do limite: " + exc.map(expoTxt).join("; ") + ".");
   var drift = arr(expos).filter(function (e) { return e.status === "alerta"; });
@@ -3030,12 +3034,12 @@ function renderTese(p) {
     h("div", { class: "cols-2" }, block("Por país", null, bfly(TN.countries, function (e) { return COUNTRY_PT[e.code]; })), block("Por setor", null, bfly(TN.sectors, function (e) { return SECTOR_PT[e.code]; }))),
     h("div", { class: "cols-2" },
       block("Estilos (fatores)", "exposição líquida em desvios-padrão × PL", netRows(TN.styles, function (v) { return fnum(v, 3, true); }, function (v) { return fnum(v, 3); })),
-      block("Commodities", "Σ peso × beta em fração do PL (0,030 = 3% do PL para uma alta de 100% no preço) e resultado para o choque indicado", table([
+      block("Commodities", "Σ peso × beta (coeficiente) e resultado no PL para o choque indicado", table([
         { label: "Commodity", render: function (c) { return tt(c.label) || COMMODITY_PT[c.code] || c.code; } },
-        { label: "Σ w·β (fração do PL)", num: true, render: function (c) { return fnum(c.beta, 3, true); } },
+        { label: "Σ w·β (coeficiente)", num: true, render: function (c) { return fnum(c.beta, 4, true); } },
         { label: "Choque", num: true, render: function (c) { return spct(c.shock, 0); } },
         { label: "Resultado no PL", num: true, render: function (c) { return signed(spct(c.pnl), c.pnl); } },
-        { label: "Limite", num: true, render: function (c) { return isNum(c.limit) ? "±" + fnum(c.limit, 3) : NA; } }
+        { label: "Limite (coeficiente)", num: true, render: function (c) { return isNum(c.limit) ? "±" + fnum(c.limit, 4) : NA; } }
       ].concat(arr(TN.commodities).some(function (c) { return isNum(c.utilization) || has(c.status); }) ? [{ label: "Situação", render: function (c) { return expoState(c, "ex_ante"); } }] : []),
       arr(TN.commodities), { stack: true, empty: "Sensibilidade a commodities não medida nesta semana." }))),
     h("div", { class: "cols-2" },
@@ -3477,7 +3481,7 @@ function netBar(e, m, tone) {
   function at(x) { return (50 + Math.max(-1, Math.min(1, x / m)) * 50).toFixed(2) + "%"; }
   var lim = isNum(e.limit) ? Math.abs(e.limit) : null, col = tone === "crit" ? "var(--crit-mark)" : tone === "warn" || tone === "near" ? "var(--warn-mark)" : "var(--accent)";
   var wd = isNum(e.net) ? (Math.min(Math.abs(e.net), m) / m * 50).toFixed(2) + "%" : "0";
-  return h("div", { class: "ls", role: "img", "aria-label": "líquido " + (isNum(e.net) ? fnum(e.net, 3, true) : NA) },
+  return h("div", { class: "ls", role: "img", "aria-label": "líquido " + (isNum(e.net) ? fnum(e.net, e.measure === "Σ w·β" ? 4 : 3, true) : NA) },
     lim !== null ? h("span", { class: "ls-lim", style: "left:" + at(-lim) }) : null, lim !== null ? h("span", { class: "ls-lim", style: "left:" + at(lim) }) : null,
     isNum(e.net) ? h("span", { class: e.net < 0 ? "ls-s" : "ls-l", style: "width:" + wd + ";background:" + col }) : null);
 }
@@ -3489,7 +3493,7 @@ function expoBlock(k, rows, basis) {
     else [e.net, isNum(e.limit) ? e.limit * 1.15 : null].forEach(function (x) { if (isNum(x)) mN = Math.max(mN, Math.abs(x)); });
   });
   var anyLS = rows.some(hasLS);
-  function f(e, v) { return k === "style" ? xnum(v) : spct(v); }
+  function f(e, v) { return e.measure === "Σ w·β" ? fnum(v, 4, true) : k === "style" ? xnum(v) : spct(v); }
   var cols = [{ label: "Nome", get: function (e) { return expoName(k, e.name); }, render: function (e) {
     var s = /^commodity:/.test(e.name || "") ? commodityShock(e.name) : null;
     return h("span", null, expoName(k, e.name), s ? h("span", { class: "cellsub" }, s) : null);
@@ -3500,10 +3504,10 @@ function expoBlock(k, rows, basis) {
   cols.push(
     { label: anyLS ? "Long × short" : "Exposição", render: function (e) { return hasLS(e) ? lsBar(e, mL || 1) : netBar(e, mN || 1, expoTone(e)); } },
     { label: k === "style" ? "Líquido (z)" : "Líquido", num: true, get: function (e) { return e.net; }, render: function (e) { return f(e, e.net); } },
-    { label: "Limite", num: true, get: function (e) { return e.limit; }, render: function (e) { return isNum(e.limit) ? "±" + (k === "style" ? fnum(e.limit, 2) : pct(e.limit)) : NA; } },
+    { label: "Limite", num: true, get: function (e) { return e.limit; }, render: function (e) { return isNum(e.limit) ? "±" + (e.measure === "Σ w·β" ? fnum(e.limit, 4) : k === "style" ? fnum(e.limit, 2) : pct(e.limit)) : NA; } },
     { label: "Uso", num: true, get: function (e) { return e.utilization; }, render: function (e) { return isNum(e.utilization) ? pct(e.utilization, 0) : NA; } },
     { label: "Situação", get: function (e) { return e.status === "excesso" ? 3 : e.status === "alerta" ? 2 : isNum(e.utilization) && e.utilization >= 0.9 ? 1 : 0; }, render: function (e) { return expoState(e, basis); } });
-  var sub = k === "style" ? "exposição líquida em desvios-padrão × PL" : k === "market" ? "tema em % do PL; commodities em Σ peso × beta (% do PL por variação de 100% no preço)" : "% do PL";
+  var sub = k === "style" ? "exposição líquida em desvios-padrão × PL" : k === "market" && rows.every(function (e) { return e.measure === "Σ w·β"; }) ? "Σ peso × beta · coeficiente" : "% do PL";
   return block(EXPO_PT[k] || GROUP_PT[k] || k, sub, table(cols, rows, { sortable: true, stack: true, rowClass: function (e) { var t = expoTone(e); return t === "crit" ? "st-crit" : t === "warn" ? "st-warn" : t === "near" ? "st-info" : null; } }));
 }
 function expoTables(expos, basis) {
@@ -3511,7 +3515,14 @@ function expoTables(expos, basis) {
   arr(expos).forEach(function (e) { (groups[e.group] = groups[e.group] || []).push(e); });
   var keys = EXPO_GROUPS.filter(function (k) { return groups[k]; }).concat(Object.keys(groups).filter(function (k) { return EXPO_GROUPS.indexOf(k) < 0; }));
   if (!keys.length) return [empty("Sem exposições nesta base.")];
-  return [lsKey()].concat(keys.map(function (k) { return expoBlock(k, groups[k], basis); }));
+  var blocks = [];
+  keys.forEach(function (k) {
+    if (k !== "market") { blocks.push(expoBlock(k, groups[k], basis)); return; }
+    var measures = {};
+    groups[k].forEach(function (e) { var measure = e.measure || "fração do PL"; (measures[measure] = measures[measure] || []).push(e); });
+    Object.keys(measures).forEach(function (measure) { blocks.push(expoBlock(k, measures[measure], basis)); });
+  });
+  return [lsKey()].concat(blocks);
 }
 function eventWindows() {
   var ew = arr(MR.event_windows);
@@ -3739,7 +3750,7 @@ function limitsTable() {
   var one = Object.keys(bs).length === 1;
   return h("div", { class: "stack", style: "gap:8px" }, one ? note("Base: " + plain(Object.keys(bs)[0]) + ".") : null, table([
     { label: "Limite", get: function (c) { return c.label; }, render: function (c) { return h("span", null, c.label, !one && c.basis ? h("span", { class: "cellsub" }, plain(c.basis)) : null); } },
-    { label: "Carteira", num: true, get: function (c) { return c.value; }, render: function (c) { return fmtUnit(c.value, c.unit); } },
+    { label: "Carteira", num: true, get: function (c) { return c.value; }, render: function (c) { return fmtCheckValue(c); } },
     { label: "Mandato", num: true, render: function (c) { return fmtLimit(c); } },
     { label: "Uso do limite", get: function (c) { return c.utilization; }, render: function (c) {
       if (c.id === "vol_ex_ante" || c.id === "vol_realizada_21d") return Array.isArray(c.limit) ? bandGauge(c.value, c.limit[0], c.limit[1], volTarget(LIVEW), true) : NA;
@@ -3756,12 +3767,12 @@ function limitsTable() {
   ], CHECKS, { sortable: true, stack: true, rowClass: function (c) { var t = statusTone(c.status); return t === "crit" ? "st-crit" : t === "warn" ? "st-warn" : null; } }), utilLegend());
 }
 /* conformidade da decisão: verificações do mandato (rígidas, de alerta e indicadores) */
-var CK_UNIT = { BETA: "x", STYLE: "x", LIQ_DAYS_LONG: "days", LIQ_DAYS_SHORT: "days", SQUEEZE_HIGH: "count", LONG_NOT_ALLOWED: "count", SHORT_NOT_ALLOWED: "count", RISK_MODEL_COVERAGE: "count" };
+var CK_UNIT = { BETA: "x", BETA_OP: "x", STYLE: "x", STYLE_OP: "x", COMMODITY: "ratio", COMMODITY_OP: "ratio", LIQ_DAYS_LONG: "days", LIQ_DAYS_SHORT: "days", SQUEEZE_HIGH: "count", LONG_NOT_ALLOWED: "count", SHORT_NOT_ALLOWED: "count", RISK_MODEL_COVERAGE: "count" };
 var CK_HIDE = { WEIGHTS_VALID: 1, SYNTHETIC_DATA: 1, DATA_STALENESS: 1 };
 function ckFmt(c, v) {
   var k = String(c.check_id || "").split(":")[0], u = CK_UNIT[k] || "pct";
   if (!isNum(v)) return NA;
-  return u === "x" ? fnum(v, 3, true) : u === "days" ? days(v) : u === "count" ? int(v) : pct(v);
+  return u === "ratio" ? fnum(v, 4, true) + " (coeficiente)" : u === "x" ? fnum(v, 3, true) : u === "days" ? days(v) : u === "count" ? int(v) : pct(v);
 }
 /* VOL_TARGET compara a vol ex-ante com a meta APLICADA na semana (postura e viés a priori; o limite
    do indicador). Indicadores (INFO) só informam: nunca contam como "pedem atenção". */

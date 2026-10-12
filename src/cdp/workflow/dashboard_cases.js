@@ -32,7 +32,7 @@
     const query = normalize(get('cases-peer-busca').value);
     peers.forEach((row) => { row.hidden = !ids.has(row.dataset.peer) || !row.dataset.busca.includes(query); });
     get('cases-criterio').textContent = option.dataset.criterio + ' Grupo: ' +
-      (scope === 'local' ? 'mesmo país.' : 'América Latina.') + ' Referência: ' + option.textContent.trim() + '.';
+      (scope === 'local' ? 'mesmo país ou região.' : 'América Latina.') + ' Referência: ' + option.textContent.trim() + '.';
     get('cases-peer-limite').textContent = option.dataset.limite + ' Cada linha conserva seus cortes; retornos e preços não foram atualizados por esta seleção.';
     get('cases-peers-vazios').hidden = peers.some((row) => !row.hidden);
     order(peers, get('cases-peer-linhas'), get('cases-peer-ordem').value);

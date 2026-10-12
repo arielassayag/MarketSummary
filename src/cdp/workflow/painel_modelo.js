@@ -82,7 +82,7 @@ function mandato(U) {
       ["Líquido por país / por setor", pm0(MR.country_net_max_abs) + " / " + pm0(MR.sector_net_max_abs)],
       ["Estilos (fatores)", U.isNum(MR.style_exposure_max_abs) ? "±" + fnum(MR.style_exposure_max_abs, 2) + " desvio-padrão × PL" : NA],
       Object.keys(th).length ? ["Temas", Object.keys(th).map(function (k) { return (U.THEME_PT[k] || k) + " " + pm0(th[k]); }).join(" · ")] : null,
-      ["Commodities (Σ peso × beta)", pm0(MR.commodity_beta_max_abs)],
+      ["Commodities (|Σ w·β| · coeficiente)", U.isNum(MR.commodity_beta_max_abs) ? "±" + fnum(MR.commodity_beta_max_abs, 4) : NA],
       ["Peso por nome (long / short)", pct(MR.max_long_weight) + " / " + pct(MR.max_short_weight) + (U.isNum(MR.min_position_weight) ? " · mínimo " + pct(MR.min_position_weight) : "")],
       ["Contribuição de um nome ao risco", "até " + pct(MR.max_single_name_risk_share, 0) + " da variância"],
       U.isNum(MR.idio_share_floor) ? ["Risco específico (meta / piso)", pct(MR.idio_share_goal, 0) + " / " + pct(MR.idio_share_floor, 0) + " da variância"] : null,

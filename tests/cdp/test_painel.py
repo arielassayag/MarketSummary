@@ -696,12 +696,45 @@ def test_theme_and_commodity_are_separate_checks(demo):
     assert checks["theme_net"]["status"] == "excesso"
     assert checks["theme_net"]["subject"] == {"group": "market", "name": "tema:state_owned"}
     assert checks["commodity_beta"]["status"] == "alerta"
+    assert checks["commodity_beta"]["unit"] == "ratio"
+    assert checks["commodity_beta"]["value"] == .0315
+    assert checks["commodity_beta"]["limit"] == .03
+    assert checks["commodity_beta"]["utilization"] == pytest.approx(.0315 / .03)
+    assert checks["commodity_beta"]["gate"] == "COMMODITY"
+    assert checks["commodity_beta"]["severity"] == "SOFT"
+    assert checks["theme_net"]["unit"] == "pct"
     assert "ouro" in checks["commodity_beta"]["detail"]
     if "country_gross_share" in checks:
         assert checks["country_gross_share"]["status"] != "excesso"
         assert checks["country_gross_share"]["severity"] is None
     if "country_gap_stress" in checks:
         assert checks["country_gap_stress"]["utilization"] == 0.0
+
+
+@pytest.mark.parametrize(("operational", "display"), [(.03, "0,0300"), (.0049, "0,0049")])
+def test_commodity_em_mandato_e_metodologia_conserva_coeficiente(operational, display):
+    """A mesma sensibilidade não vira percentual no mandato nem no limite operacional."""
+    from cdp.config import OperationalLimits
+    from cdp.workflow.painel import _mandate_table, _metodologia
+
+    cfg = load_config(LEGACY)
+    risk = cfg.risk.model_copy(update={"commodity_beta_max_abs": .03,
+        "operational": OperationalLimits().model_copy(update={"commodity_beta": operational})})
+    cfg = cfg.model_copy(update={"risk": risk})
+    before = cfg.model_dump(mode="json")
+    row = next(r for r in _mandate_table(cfg) if r["key"] == "commodity_beta_max_abs")
+    assert row["value"] == .03 and row["unit"] == "ratio"
+    assert "coeficiente" in row["label"]
+    methodology = _metodologia(cfg, date(2026, 10, 9))
+    limit = next(r for r in methodology["limites"] if r["limite"].startswith("Commodity"))
+    assert limit["operacional"] == display and limit["mandato"] == "0,0300"
+    assert "coeficiente" in limit["limite"]
+    theme = next(r for r in methodology["neutralizacao"] if r["rotulo"] == "Temas e commodities")
+    assert "coeficiente" in theme["texto"] and "0,0300" in theme["texto"]
+    assert "3,0%" not in theme["texto"]
+    if operational != .03:
+        assert display in theme["texto"]
+    assert cfg.model_dump(mode="json") == before
 
 
 def test_short_liquidity_uses_short_participation(demo, data):

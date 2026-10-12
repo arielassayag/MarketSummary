@@ -147,12 +147,14 @@ def construir_dashboard_cases(documentos: list[dict]) -> dict:
             regionais = [p for p in casos if p["iid"] != c["iid"] and p["tipo"] == "acao"
                          and definidos and p["setor"] == c["setor"]
                          and p["arquetipo"] == c["arquetipo"]]
-            criterio = "Mesmo setor e enquadramento econômico; país restringe o grupo local."
+            criterio = ("Mesmo setor e enquadramento econômico; "
+                        "país ou região restringe o grupo local.")
             limite = ("Classificação não comprova negócios, crescimento, risco ou contabilidade "
                       "equivalentes. Preços nominais são referências, não uma medida de valor relativo.")
         else:
             regionais = [p for p in casos if p["iid"] != c["iid"] and p["tipo"] == "etf"]
-            criterio = "Comparação de produtos de exposição regional; país restringe o grupo local."
+            criterio = ("Comparação de produtos de exposição regional; "
+                        "país ou região restringe o grupo local.")
             limite = ("Benchmarks, composição e custos podem diferir. O grupo não implica "
                       "equivalência dos índices; a visão do modelo é relativa ao ILF.")
         locais = [p["iid"] for p in regionais if _definido(c["pais"]) and p["pais"] == c["pais"]]
@@ -233,7 +235,7 @@ def renderizar_dashboard_cases(dashboard: dict) -> str:
         ("narrativas_publicadas", "Narrativas publicadas"), ("retornos_citaveis", "Retornos citáveis")))
     filtros = "".join(f'<label>{_s(t)}<select data-cases-filtro="{k}" aria-label="{_s(t)}">'
                        + _opcoes(dashboard["filtros"][k]) + '</select></label>' for k, t in (
-                           ("tipo_nome", "Instrumento"), ("pais_nome", "País"),
+                            ("tipo_nome", "Instrumento"), ("pais_nome", "País ou região"),
                            ("setor_nome", "Setor"), ("rating", "Visão do modelo")))
     options, cards, rows = [], [], []
     for c in casos:
@@ -252,7 +254,7 @@ data-tipo_nome="{_s(c['tipo_nome'])}" data-pais_nome="{_s(c['pais_nome'])}" data
 data-rating="{_s(c['rating'])}" {_attrs(c)}>
 <div class="cases-card-top"><span>{_s(c['tipo_nome'])} · {_s(c['ticker'])}</span><span class="cases-status">{_s(c['rating'])}</span></div>
 <h2><a href="{_href(c['href'])}">{_s(c['nome'])}</a></h2><p class="cases-meta">{_s(c['pais_nome'])} · {_s(c['setor_nome'])}</p>
-<p class="cases-method">{_s(c['arquetipo'])}</p><dl class="cases-card-numbers"><div><dt>Retorno esperado</dt><dd>{_s(c['etr_texto'])}</dd></div>
+<p class="cases-method">{_s(c['arquetipo'])}</p><dl class="cases-card-numbers"><div><dt>Retorno total esperado · 12 meses</dt><dd>{_s(c['etr_texto'])}</dd></div>
 <div><dt>Referência · {_s(c['moeda'])}</dt><dd>{_s(c['preco_texto'])}</dd></div></dl>
 <p class="cases-meta">Modelo: {_s(c['corte_modelo'])} · preço: {_s(c['preco_data'])}</p>
 <p class="cases-meta cases-model-group">{_s(_grupo_modelo(c))}</p>
@@ -279,19 +281,19 @@ data-rating="{_s(c['rating'])}" {_attrs(c)}>
 <h2 id="cases-catalogo-titulo">Encontre um case</h2></div><a href="../ativos/">Todas as teses e análises</a></div>
 <div class="cases-controls"><label class="cases-search">Buscar<input id="cases-busca" type="search" placeholder="Empresa, ticker ou método" autocomplete="off"></label>{filtros}
 <label>Ordenar<select id="cases-ordem"><option value="nome">Nome · companhias / ETFs</option><option value="estado">Estado da pesquisa</option>
-<option value="corte">Modelo mais recente</option><option value="etr">Retorno esperado citável · maior primeiro</option></select></label></div>
+<option value="corte">Modelo mais recente</option><option value="etr">Retorno total esperado · 12 meses · citável · maior primeiro</option></select></label></div>
 <p id="cases-filtro-estado" class="cases-meta" role="status" aria-live="polite">{kpis['total']} dossiês no recorte completo.</p>{vazio}
 <ul class="cases-grid" id="cases-lista">{''.join(cards)}</ul><p id="cases-sem-resultados" hidden>Nenhum case corresponde aos filtros.</p></section>
 <section class="cases-section" aria-labelledby="cases-comparaveis-titulo"><p class="cases-kicker">Comparação com contexto</p><h2 id="cases-comparaveis-titulo" tabindex="-1">Comparáveis do case</h2>
 <div class="cases-peer-controls"><label>Case de referência<select id="cases-referencia">{''.join(options)}</select></label>
-<label>Grupo<select id="cases-grupo"><option value="local">Mesmo país</option><option value="regional">América Latina</option></select></label>
+<label>Grupo<select id="cases-grupo"><option value="local">Mesmo país ou região</option><option value="regional">América Latina</option></select></label>
 <label>Buscar no grupo<input id="cases-peer-busca" type="search" placeholder="Nome ou ticker"></label>
-<label>Ordenar linhas<select id="cases-peer-ordem"><option value="nome">Nome</option><option value="corte">Modelo mais recente</option><option value="etr">Retorno esperado citável</option></select></label></div>
+<label>Ordenar linhas<select id="cases-peer-ordem"><option value="nome">Nome</option><option value="corte">Modelo mais recente</option><option value="etr">Retorno total esperado · 12 meses · citável</option></select></label></div>
 <p id="cases-criterio" class="cases-criterio">Selecione um case. Sem JavaScript, a tabela abaixo apresenta o universo recebido; ela não é um grupo de peers.</p>
 <p id="cases-peer-limite" class="cases-meta">Preços nominais não são comparáveis entre ativos. Cada linha tem moeda e cortes próprios.</p>
 <div class="cases-table-wrap" tabindex="0" role="region" aria-label="Tabela de comparáveis com cortes por linha"><table class="cases-table"><caption>Medidas públicas recebidas por ativo; sem múltiplos inferidos.</caption>
-<thead><tr><th scope="col">Ativo</th><th scope="col">País / setor</th><th scope="col">Enquadramento / métodos</th><th scope="col">Visão / confiança</th>
-<th scope="col">Qualidade do modelo</th><th scope="col">Preço de referência</th><th scope="col">Retorno esperado</th><th scope="col">Múltiplos</th><th scope="col">Pesquisa / fontes</th></tr></thead>
+<thead><tr><th scope="col">Ativo</th><th scope="col">País ou região / setor</th><th scope="col">Enquadramento / métodos</th><th scope="col">Visão / confiança</th>
+<th scope="col">Qualidade do modelo</th><th scope="col">Preço de referência</th><th scope="col">Retorno total esperado · 12 meses</th><th scope="col">Múltiplos</th><th scope="col">Pesquisa / fontes</th></tr></thead>
 <tbody id="cases-peer-linhas">{''.join(rows)}</tbody></table></div><p id="cases-peers-vazios" hidden>Não há comparáveis recebidos neste grupo. O grupo regional é uma escolha explícita; não ampliamos o critério automaticamente.</p></section>
 <section class="cases-section cases-limits" aria-labelledby="cases-limites-titulo"><h2 id="cases-limites-titulo">Critérios e limites de leitura</h2><ul>{limites}</ul></section></main>
 <script src="../dashboard-cases.js" defer></script>'''

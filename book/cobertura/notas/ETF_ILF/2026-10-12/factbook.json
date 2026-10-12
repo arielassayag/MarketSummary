@@ -1,0 +1,111 @@
+{
+  "as_of": "2026-10-09",
+  "facts": {
+    "etf.ILF.cobertura": {
+      "fact_id": "etf.ILF.cobertura",
+      "formatted": "65,24%",
+      "formula": "Σ pesos com preço-alvo da casa",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_ILF.json"
+      ],
+      "issuer_id": null,
+      "name": "Peso coberto por modelos da casa no ILF",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.652435
+    },
+    "etf.ILF.preco": {
+      "fact_id": "etf.ILF.preco",
+      "formatted": "US$ 37,51",
+      "formula": "fechamento público na moeda da linha",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_ILF.json"
+      ],
+      "issuer_id": null,
+      "name": "Preço de referência do ETF",
+      "point_in_time": false,
+      "unit": "preco",
+      "value": 37.51
+    },
+    "etf.ILF.preco_alvo": {
+      "fact_id": "etf.ILF.preco_alvo",
+      "formatted": "US$ 38,01",
+      "formula": "TP_e = P_e × (1 + R_e − DY)",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_ILF.json"
+      ],
+      "issuer_id": null,
+      "name": "Preço-alvo de 12 meses do ILF",
+      "point_in_time": false,
+      "unit": "preco",
+      "value": 38.0125
+    },
+    "etf.ILF.r_bu": {
+      "fact_id": "etf.ILF.r_bu",
+      "formatted": "+1,34%",
+      "formula": "alvos da casa por posição",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_ILF.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno bottom-up do ILF",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.0134002
+    },
+    "etf.ILF.r_td": {
+      "fact_id": "etf.ILF.r_td",
+      "formatted": "+9,11%",
+      "formula": "P/L justificado e Grinold–Kroner",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_ILF.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno top-down do ILF",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.0910602
+    },
+    "etf.ILF.retorno_esperado": {
+      "fact_id": "etf.ILF.retorno_esperado",
+      "formatted": "+6,29%",
+      "formula": "R_e = ω × R_BU + (1 − ω) × R_TD",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_ILF.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno esperado de 12 meses do ILF",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.0629112
+    },
+    "etf.ILF.ter": {
+      "fact_id": "etf.ILF.ter",
+      "formatted": "0,47%",
+      "formula": "parâmetro público do produto; não inclui todos os custos de negociação",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_ILF.json"
+      ],
+      "issuer_id": null,
+      "name": "Taxa de administração declarada no retrato",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.0047
+    },
+    "etf.ILF.visao_ilf": {
+      "fact_id": "etf.ILF.visao_ilf",
+      "formatted": "Referência",
+      "formula": "IR = (R_e − R_ILF) ÷ TE",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_ILF.json"
+      ],
+      "issuer_id": null,
+      "name": "Visão do ILF relativa ao ILF",
+      "point_in_time": false,
+      "unit": "ratio",
+      "value": null
+    }
+  },
+  "is_synthetic": false,
+  "snapshot_id": "store-2026-10-02+5-2026-10-09:etf:ETF_ILF:14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c"
+}

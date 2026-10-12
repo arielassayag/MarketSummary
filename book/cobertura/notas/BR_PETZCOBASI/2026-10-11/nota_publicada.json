@@ -1,0 +1,456 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "6b6f9b691ac6c306e47bfbed5f986c36de6f866eccd8c0c5f5a1447188928fd4",
+    "factbook": "392d5da056d060c77ec8b7c6aba270b2348b0a49228ae553b2ae52766d2f95ce",
+    "nota_json": "998f6b6426244ed7f3841d42417bb1502a7b782e508d7a7b96804703989f6773"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_PETZCOBASI",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T03:07:54.424690+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Tecnologia de integração, manutenção e retorno das lojas competem com earn-outs, dívida e remuneração. O semestre inclui parcela caixa aos antigos acionistas de Petz e empréstimo a acionistas relacionados à discussão tributária. A alocação preliminar do preço e efeitos fiscais ainda estavam em avaliação. Base por ação e direitos precisam refletir a companhia combinada.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar integração, caixa e retorno por bandeira.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": null,
+        "descricao": "Finalização da alocação do preço e conciliação dos direitos da combinação, sem prazo presumido.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "m_a"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 2,51, com retorno esperado -48,43%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Integração melhora disponibilidade e produtividade, com caixa depois de investimento e pagamentos; direitos e PPA reconciliados permitem avaliar o retorno atribuível sem dupla contagem. O cenário otimista calculado pelo código é R$ 3,26.",
+      "pessimista": "Integração exige mais capital, prejudica serviços e limita margem; pagamentos e direitos absorvem sinergias enquanto a base pro forma dificulta comparação econômica. O cenário pessimista calculado pelo código é R$ 1,80."
+    },
+    "comentario_valuation": "O retrato tem preço R$ 4,95, alvo R$ 2,51, potencial -49,35%, retorno esperado -48,43% e custo do capital 12,32%. Dispersão 26,43% e confiança B são calculadas pelo código. Consenso público R$ 4,53 e diferença -44,70% não comprovam percepção do mercado. Perímetro, passivos, direitos de terceiros e base por ação exigem ponte ao valor atribuível. A narrativa não recalcula preços nem incorpora retrospectivamente a reorganização ao modelo. Comparativos pro forma não substituem os registros originais.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Escala pode elevar complexidade e investimento sem recuperar produtividade. Lucro ajustado e caixa trimestral podem coexistir com consumo semestral causado pela combinação. Se os benefícios forem absorvidos por sistemas, direitos e financiamento, a consolidação não confirmará retorno ao titular.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_PETZCOBASI.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 4,95"
+      },
+      {
+        "fato": "val.BR_PETZCOBASI.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 2,51"
+      },
+      {
+        "fato": "val.BR_PETZCOBASI.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-49,35%"
+      },
+      {
+        "fato": "val.BR_PETZCOBASI.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_PETZCOBASI.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_PETZCOBASI.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 3,26"
+      },
+      {
+        "fato": "val.BR_PETZCOBASI.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_PETZCOBASI.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 1,80"
+      },
+      {
+        "fato": "val.BR_PETZCOBASI.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_PETZCOBASI.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,32%"
+      },
+      {
+        "fato": "val.BR_PETZCOBASI.wacc",
+        "rotulo": "WACC",
+        "valor": "10,31%"
+      },
+      {
+        "fato": "val.BR_PETZCOBASI.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_PETZCOBASI.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-48,43%"
+      },
+      {
+        "fato": "val.BR_PETZCOBASI.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-69,94%"
+      },
+      {
+        "fato": "val.BR_PETZCOBASI.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "14,7x"
+      },
+      {
+        "fato": "val.BR_PETZCOBASI.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,3x"
+      },
+      {
+        "fato": "val.BR_PETZCOBASI.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 4,53"
+      },
+      {
+        "fato": "val.BR_PETZCOBASI.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-44,70%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Petz Cobasi",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://ri.petzcobasi.com.br/nossa-historia/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Petz Cobasi",
+        "publicado_em": "2026-08-13",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/b06ff083-901c-4706-adda-d4b8c9344896/afb17ba9-abd1-dbc9-44fa-cb0ec4990ef0?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Petz Cobasi",
+        "publicado_em": "2026-08-13",
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/b06ff083-901c-4706-adda-d4b8c9344896/123a5728-3b78-6606-2bd4-df6474e8f488?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+      "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+      "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+      "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+    ],
+    "governanca": "A data de obtenção de controle e a companhia remanescente constam do ITR. Controle, representação no conselho e Petz subsidiária integral diferem da antiga estrutura listada. Empréstimos a acionistas, PPA e efeitos fiscais exigem análise de interesses e direitos. A tese não atualiza automaticamente a base por ação ou incorpora retrospectivamente a combinação ao retrato.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Vendas comparáveis e margem por bandeira, marcas próprias e serviços; estoque, disponibilidade e integração de sistemas. Conciliar base pro forma, juros, aluguel, earn-outs, parcela caixa e empréstimos a acionistas. Confirmar PPA final, direitos, base por ação e retorno do capital após a combinação.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_PETZCOBASI.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-48,43%"
+          },
+          {
+            "fato": "val.BR_PETZCOBASI.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,32%"
+          },
+          {
+            "fato": "val.BR_PETZCOBASI.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "26,43%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -48,43%, custo do capital 12,32% e dispersão entre métodos 26,43% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_PETZCOBASI",
+    "lacunas_de_dados": [
+      "A ponte entre base pro forma, história original e modelo por ação permanece pendente.",
+      "PPA final e efeitos tributários da combinação não foram comprovados.",
+      "Condições e recuperação dos empréstimos a acionistas exigem diligência.",
+      "Sinergias e retorno de integração e tecnologia precisam de comprovação.",
+      "Direitos, obrigações de ocupação e pagamentos contingentes exigem ponte completa.",
+      "Guidance agregado, percepção e posicionamento de mercado não foram comprovados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Companhia combinada de varejo pet, serviços, marcas e canais digitais, apresentada como União Pet Participações. Cobasi é a adquirente contábil e Petz tornou-se subsidiária integral; a combinação foi concluída no início do exercício. Serviços veterinários, marcas próprias e negócios adquiridos têm investimentos e riscos próprios. Comparativos gerenciais anteriores simulam a consolidação e não equivalem ao histórico original auditado.",
+    "nome": "Petz-Cobasi",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_AFYA",
+        "nome": "Afya"
+      },
+      {
+        "issuer_id": "BR_ALPARGATAS",
+        "nome": "Alpargatas"
+      },
+      {
+        "issuer_id": "BR_AZZAS",
+        "nome": "Azzas 2154"
+      },
+      {
+        "issuer_id": "BR_CEA",
+        "nome": "C&A Modas"
+      },
+      {
+        "issuer_id": "BR_COGNA",
+        "nome": "Cogna"
+      },
+      {
+        "issuer_id": "BR_CURY",
+        "nome": "Cury"
+      },
+      {
+        "issuer_id": "BR_CYRELA",
+        "nome": "Cyrela"
+      },
+      {
+        "issuer_id": "BR_DIRECIONAL",
+        "nome": "Direcional"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que integração, logística e marcas próprias elevem contribuição e caixa sem prejudicar disponibilidade ou concorrência. A condição decisiva é retorno depois de ocupação, tecnologia, dívida e pagamentos da combinação, preservando direitos do titular. Sinergias e comparativos pro forma não comprovarão esse retorno antes da execução.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_PETZCOBASI.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 4,95"
+          },
+          {
+            "fato": "val.BR_PETZCOBASI.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 2,51"
+          },
+          {
+            "fato": "val.BR_PETZCOBASI.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-49,35%"
+          },
+          {
+            "fato": "val.BR_PETZCOBASI.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,32%"
+          },
+          {
+            "fato": "val.BR_PETZCOBASI.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-48,43%"
+          }
+        ],
+        "texto": "Preço de referência R$ 4,95 e alvo R$ 2,51, com potencial -49,35%. A hipótese de investimento deve ser confrontada com o custo do capital 12,32% e retorno esperado -48,43%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Presença física, conveniência digital e serviços podem sustentar recorrência e relacionamento. Marcas próprias acrescentam margem potencial e responsabilidade por estoque e produto. Integração de sistemas pode melhorar abastecimento e também gerar interrupções. Escala não garante poder de preço ou retorno diante de concorrentes e restrições específicas.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T03:07:54.424690+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita, EBITDA e lucro ajustados cresceram contra base pro forma gerencial não auditada. Caixa operacional trimestral aumentou, mas o semestral caiu; caixa final trimestral cresceu e o semestre consumiu recursos. A geração hipotética sem amortização, dividendos e earn-out não é o caixa realizado. PPA preliminar e custos da combinação têm bases próprias.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que integração, logística e marcas próprias elevem contribuição e caixa sem prejudicar disponibilidade ou concorrência. A condição decisiva é retorno depois de ocupação, tecnologia, dívida e pagamentos da combinação, preservando direitos do titular. Sinergias e comparativos pro forma não comprovarão esse retorno antes da execução. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Venda, com retorno esperado -48,43%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Integração, estoque e concorrência podem limitar sinergias. Ocupação, tecnologia, earn-outs e empréstimos a acionistas consomem capital. Comparativos pro forma, PPA preliminar e direitos societários exigem ponte antes de atribuir retorno por ação."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_PETZCOBASI.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-44,70%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -44,70%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Consumo discricionário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Petz Cobasi — integração, direitos e caixa da companhia combinada",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A combinação é apresentada como concluída, com Cobasi como adquirente contábil e Petz adquirida. Receita, EBITDA e lucro ajustados cresceram contra comparativo pro forma gerencial não auditado. Caixa operacional aumentou no trimestre e diminuiu no semestre. Caixa líquido final trimestral cresceu, mas o semestre consumiu recursos com pagamentos e empréstimos ligados à combinação. A geração excluindo desembolsos selecionados é hipotética, sem substituir o fluxo realizado. A alocação do preço e efeitos tributários permaneciam preliminares no ITR.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Vendas comparáveis e margem por bandeira, marcas próprias e serviços; estoque, disponibilidade e integração de sistemas. Conciliar base pro forma, juros, aluguel, earn-outs, parcela caixa e empréstimos a acionistas. Confirmar PPA final, direitos, base por ação e retorno do capital após a combinação.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_PETZCOBASI.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,32%"
+          },
+          {
+            "fato": "val.BR_PETZCOBASI.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "26,43%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 12,32% e a dispersão entre métodos 26,43%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

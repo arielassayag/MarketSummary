@@ -1,0 +1,408 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "6167e25f1dfa4ac9fac491f61b3b1bdcc72a7f2f6f5e7ec7a05337693dc037dc",
+    "factbook": "b61d89843509bdbb64794d78479dd72f8f4940225b13148943caef9efc26f6f7",
+    "nota_json": "18a3dfe528d3aeb8e7e58f805b18149574ac0d350ef134670f580e8c6f12c2b6"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_PINFRA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-22",
+  "published_at": "2026-10-12T03:07:16.862235+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O relatório descreve dívida de projeto paga por fluxos de pedágio e ausência de garantias cruzadas corporativas. Isso não torna caixa consolidado irrestrito. Expansões e compartilhamento de receitas têm obrigações específicas; estimativas de conclusão e retorno precisam ser conciliadas com título e desembolso.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em MXN 385,12, com retorno esperado +42,04%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Tráfego, remuneração e execução sustentam retorno contratual e recursos distribuíveis após obras e dívida. O cenário otimista calculado pelo código é MXN 448,47.",
+      "pessimista": "Demanda, obras e obrigações absorvem receita enquanto restrições por projeto limitam distribuição. O cenário pessimista calculado pelo código é MXN 321,92."
+    },
+    "comentario_valuation": "Preço de referência MXN 274,05 e alvo do modelo aberto MXN 385,12, com potencial +40,53%. Retorno total esperado +42,04% e custo do capital próprio 11,69%. A dispersão entre métodos é 8,48%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é MXN 325,00; a diferença +18,50% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se reajustes e tráfego não remuneram expansão e manutenção. Receita de construção e saldos de projetos podem aparentar liquidez sem caixa atribuível disponível ao acionista.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.MX_PINFRA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 274,05"
+      },
+      {
+        "fato": "val.MX_PINFRA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 385,12"
+      },
+      {
+        "fato": "val.MX_PINFRA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+40,53%"
+      },
+      {
+        "fato": "val.MX_PINFRA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.MX_PINFRA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_PINFRA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 448,47"
+      },
+      {
+        "fato": "val.MX_PINFRA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_PINFRA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 321,92"
+      },
+      {
+        "fato": "val.MX_PINFRA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_PINFRA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,69%"
+      },
+      {
+        "fato": "val.MX_PINFRA.wacc",
+        "rotulo": "WACC",
+        "valor": "11,21%"
+      },
+      {
+        "fato": "val.MX_PINFRA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_PINFRA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+42,04%"
+      },
+      {
+        "fato": "val.MX_PINFRA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+40,92%"
+      },
+      {
+        "fato": "val.MX_PINFRA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "13,1x"
+      },
+      {
+        "fato": "val.MX_PINFRA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,4x"
+      },
+      {
+        "fato": "val.MX_PINFRA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 325,00"
+      },
+      {
+        "fato": "val.MX_PINFRA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+18,50%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Pinfra",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Relatórios oficiais e perfil das concessões",
+        "url": "https://www.pinfra.com.mx/reporte-trimestral"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Pinfra",
+        "publicado_em": "2026-07-23",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e demonstrações semestrais",
+        "url": "https://cdn.investorcloud.net/pinfra/InformacionFinanciera/InformesTrimestrales/2026-07-2T26Reporte.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+      "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+      "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+      "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+    ],
+    "governanca": "Revisar controle, partes relacionadas, condições de títulos e alocação entre projetos e holding. Dívida sem garantias cruzadas não resolve a atribuição de caixa ou obrigações próprias de cada concessão.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar tráfego por corredor e veículo, reajustes, disponibilidade e custo de manutenção. Revisar obras, orçamento e remuneração contratual com participação atribuível. Conciliar caixa restrito, dívida de projeto, associadas, eliminações e distribuição depois das obrigações.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_PINFRA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+42,04%"
+          },
+          {
+            "fato": "val.MX_PINFRA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,69%"
+          },
+          {
+            "fato": "val.MX_PINFRA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "8,48%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +42,04%, custo do capital 11,69% e dispersão entre métodos 8,48% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "MX_PINFRA",
+    "lacunas_de_dados": [
+      "Títulos, modificações e obrigações de cada concessão não foram integralmente conciliados.",
+      "Obras, custos e retorno realizado permanecem a comprovar.",
+      "Dívida de projeto, caixa restrito e distribuição exigem diligência por entidade.",
+      "Associadas, receita de construção e eliminações não foram integralmente reconciliadas.",
+      "Guidance, tom da gestão e catalisador futuro datado não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Operadora e desenvolvedora mexicana de infraestrutura, principalmente rodovias concedidas, com construção, manutenção e materiais asfálticos. Concessões consolidadas e participações não consolidadas têm direitos e fluxos próprios. Serviços entre operadoras e concessionárias exigem eliminações antes de medir receita do grupo.",
+    "nome": "Pinfra",
+    "o_que_mudou": null,
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "BR_ECORODOVIAS",
+        "nome": "EcoRodovias"
+      },
+      {
+        "issuer_id": "BR_EMBRAER",
+        "nome": "Embraer"
+      },
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_LOCALIZA",
+        "nome": "Localiza"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_MOTIVA",
+        "nome": "Motiva (ex-CCR)"
+      },
+      {
+        "issuer_id": "BR_RANDON",
+        "nome": "Randoncorp"
+      },
+      {
+        "issuer_id": "BR_SIMPAR",
+        "nome": "Simpar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que demanda e remuneração contratual sustentem caixa após operação, manutenção e expansão. Obras precisam remunerar o capital e preservar a transmissão de recursos ao acionista. A tese depende de contratos e participação atribuível; saldo de caixa e receita de construção não substituem retorno econômico das concessões.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_PINFRA.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "MXN 274,05"
+          },
+          {
+            "fato": "val.MX_PINFRA.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "MXN 385,12"
+          },
+          {
+            "fato": "val.MX_PINFRA.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+40,53%"
+          },
+          {
+            "fato": "val.MX_PINFRA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,69%"
+          },
+          {
+            "fato": "val.MX_PINFRA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+42,04%"
+          }
+        ],
+        "texto": "Preço de referência MXN 274,05 e alvo MXN 385,12, com potencial +40,53%. A hipótese de investimento deve ser confrontada com o custo do capital 11,69% e retorno esperado +42,04%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Concessões e execução podem apoiar oferta de mobilidade e continuidade de serviços. A vantagem exige desempenho dos corredores, custo, segurança e cumprimento contratual. Direitos concedidos não eliminam rotas alternativas, risco regulatório ou obrigações de expansão.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T03:07:16.862235+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Venda da terminal de Altamira altera a comparação, enquanto calendário de feriados e data do reajuste afetam tráfego e receita. Construção tem dinâmica própria e operadoras eliminam serviços intragrupo. Tráfego proporcional de associadas não equivale a tráfego consolidado ou dividendo recebido.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que demanda e remuneração contratual sustentem caixa após operação, manutenção e expansão. Obras precisam remunerar o capital e preservar a transmissão de recursos ao acionista. A tese depende de contratos e participação atribuível; saldo de caixa e receita de construção não substituem retorno econômico das concessões. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Compra, com retorno esperado +42,04%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Tráfego e reajustes podem ficar abaixo do necessário para financiar obrigações. Atrasos, custos e alterações contratuais podem consumir caixa. Concentração regional, dívida de projeto e restrições de distribuição podem limitar remuneração apesar do caixa consolidado."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_PINFRA.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+18,50%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +18,50%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Pinfra — concessões, obras e caixa atribuível após obrigações",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O estudo preserva mudança de perímetro, efeitos de feriados e reajustes e tratamento de associadas. Obras concluídas e estimadas são distinguidas. Modificações contratuais descritas pela companhia exigem leitura do título original antes de certificar remuneração ou capacidade de distribuição.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar tráfego por corredor e veículo, reajustes, disponibilidade e custo de manutenção. Revisar obras, orçamento e remuneração contratual com participação atribuível. Conciliar caixa restrito, dívida de projeto, associadas, eliminações e distribuição depois das obrigações.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.MX_PINFRA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,69%"
+          },
+          {
+            "fato": "val.MX_PINFRA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "8,48%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,69% e a dispersão entre métodos 8,48%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

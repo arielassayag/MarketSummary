@@ -1,0 +1,441 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "a42fcc7a64d7691e4adf5e76abaf22b3310a177b8c62f5fb3a1fce9d38ff5d1b",
+    "factbook": "9c843a579cff4fb6c1e8a476d3939b943e50481ddb2c88dd96aa8446ae9292e1",
+    "nota_json": "69689ae9ea408fe3c8438328466fefed825201aae0b68a97e424f9e0e44ce732"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_SER",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T03:08:52.044786+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A liquidez divulgada inclui recursos de escrow, depósitos judiciais e fundo estudantil. A dívida gerencial deduz o escrow relacionado à aquisição, em base distinta da obrigação integral. Refinanciamento e resgate antecipado foram realizados. CAPEX, pagamentos de aquisições, aluguel e dividendos precisam ser conciliados antes de chamar toda geração de livre.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar ocupação, crédito e caixa após compromissos.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 25,03, com retorno esperado +53,89%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Ocupação e retenção sustentam preço e mix, com recebimento disciplinado e financiamento mais eficiente; caixa após compromissos remunera manutenção e capital. O cenário otimista calculado pelo código é R$ 35,01.",
+      "pessimista": "Crédito e evasão enfraquecem recebimento, enquanto aluguel e manutenção absorvem margem; recursos restritos não sustentam distribuição livre. O cenário pessimista calculado pelo código é R$ 15,75."
+    },
+    "comentario_valuation": "Preço de referência R$ 16,92 e alvo do modelo aberto R$ 25,03, com potencial +47,93%. Retorno total esperado +53,89% e custo do capital próprio 12,11%. A dispersão entre métodos é 30,71%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 17,11; a diferença +46,25% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Ocupação e lucro podem crescer com recebíveis e crédito mais lentos. A liquidez total pode superestimar recursos livres. Se manutenção, aluguel e aquisições absorverem eficiência, caixa pós-CAPEX divulgado não confirmará retorno integral ao acionista.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_SER.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 16,92"
+      },
+      {
+        "fato": "val.BR_SER.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 25,03"
+      },
+      {
+        "fato": "val.BR_SER.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+47,93%"
+      },
+      {
+        "fato": "val.BR_SER.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.BR_SER.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_SER.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 35,01"
+      },
+      {
+        "fato": "val.BR_SER.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "6,63%"
+      },
+      {
+        "fato": "val.BR_SER.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 15,75"
+      },
+      {
+        "fato": "val.BR_SER.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "50,88%"
+      },
+      {
+        "fato": "val.BR_SER.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,11%"
+      },
+      {
+        "fato": "val.BR_SER.wacc",
+        "rotulo": "WACC",
+        "valor": "9,66%"
+      },
+      {
+        "fato": "val.BR_SER.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_SER.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+53,89%"
+      },
+      {
+        "fato": "val.BR_SER.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+34,17%"
+      },
+      {
+        "fato": "val.BR_SER.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "7,0x"
+      },
+      {
+        "fato": "val.BR_SER.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,4x"
+      },
+      {
+        "fato": "val.BR_SER.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 17,11"
+      },
+      {
+        "fato": "val.BR_SER.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+46,25%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Ser Educacional",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://ri.sereducacional.com/a-companhia/perfil-corporativo/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Ser Educacional",
+        "publicado_em": "2026-08-12",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/4e9e23d7-cea5-42fd-bf06-7a7ca01880fc/bd43857a-977c-c7b4-8b51-478fb227d657?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Ser Educacional",
+        "publicado_em": "2026-08-12",
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/4e9e23d7-cea5-42fd-bf06-7a7ca01880fc/2222dbf4-b215-afef-7b19-cf4383a23740?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+      "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+      "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+      "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+    ],
+    "governanca": "A dívida da aquisição e o escrow têm apresentação gerencial distinta da obrigação integral. Recursos judiciais e do fundo estudantil não foram presumidos livres. A análise não promove divulgação ajustada a auditoria de retorno econômico nem certifica contratos futuros. Pagamentos relatados conservam o período do documento.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Matrícula, retenção, ocupação, preço e provisões por modalidade; recebimento de FIES e crédito próprio. Separar caixa livre e restrito, dívida integral e gerencial, CAPEX e aquisições. Confirmar geração depois de aluguel, juros e manutenção dos campi.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_SER.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+53,89%"
+          },
+          {
+            "fato": "val.BR_SER.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,11%"
+          },
+          {
+            "fato": "val.BR_SER.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "30,71%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +53,89%, custo do capital 12,11% e dispersão entre métodos 30,71% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_SER",
+    "lacunas_de_dados": [
+      "A ponte integral do ITR, obrigações de aquisição e caixa atribuível permanece pendente.",
+      "Liquidez restrita e dívida integral exigem conciliação com a medida gerencial.",
+      "Retorno da expansão médica e qualidade do crédito estudantil precisam de diligência.",
+      "Comparabilidade das novas modalidades não foi integralmente reconciliada.",
+      "Guidance agregado e participação de mercado não foram comprovados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo educacional com instituições regionais, ensino presencial, semipresencial e a distância, além de medicina. Matrícula, retenção e preço líquido determinam receita; financiamentos estudantis alteram recebimento. A nova classificação de modalidades requer comparativos próprios e não transforma alunos reclassificados em expansão orgânica.",
+    "nome": "Ser Educacional",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_AFYA",
+        "nome": "Afya"
+      },
+      {
+        "issuer_id": "BR_ALPARGATAS",
+        "nome": "Alpargatas"
+      },
+      {
+        "issuer_id": "BR_AZZAS",
+        "nome": "Azzas 2154"
+      },
+      {
+        "issuer_id": "BR_CEA",
+        "nome": "C&A Modas"
+      },
+      {
+        "issuer_id": "BR_COGNA",
+        "nome": "Cogna"
+      },
+      {
+        "issuer_id": "BR_CURY",
+        "nome": "Cury"
+      },
+      {
+        "issuer_id": "BR_CYRELA",
+        "nome": "Cyrela"
+      },
+      {
+        "issuer_id": "BR_DIRECIONAL",
+        "nome": "Direcional"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que ocupação, qualidade e mix sustentem retorno depois do custo completo. A condição decisiva é converter receita em recebimento sem dependência crescente de crédito estudantil. Margens e desalavancagem precisam ser confrontadas com aluguel, investimento e liquidez efetivamente disponível.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_SER.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 16,92"
+          },
+          {
+            "fato": "val.BR_SER.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 25,03"
+          },
+          {
+            "fato": "val.BR_SER.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+47,93%"
+          },
+          {
+            "fato": "val.BR_SER.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,11%"
+          },
+          {
+            "fato": "val.BR_SER.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+53,89%"
+          }
+        ],
+        "texto": "Preço de referência R$ 16,92 e alvo R$ 25,03, com potencial +47,93%. A hipótese de investimento deve ser confrontada com o custo do capital 12,11% e retorno esperado +53,89%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Marcas regionais e campi podem apoiar relacionamento e oferta de saúde e direito. Medicina tem autorizações e maturação específicas. Ganhos de ocupação relatados pela gestão precisam de teste de retenção, concorrência e preço; modalidade semipresencial reclassificada não tem comparável orgânico automaticamente válido.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T03:08:52.044786+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita, EBITDA ajustado e lucro cresceram, com maior caixa após CAPEX. Recebíveis e financiamento próprio aumentaram; o prazo de recebimento sofreu pressão do FIES. Caixa operacional considera juros pagos, mas parcelas principais de arrendamento estão no financiamento. O saldo final trimestral caiu apesar da melhora gerencial.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que ocupação, qualidade e mix sustentem retorno depois do custo completo. A condição decisiva é converter receita em recebimento sem dependência crescente de crédito estudantil. Margens e desalavancagem precisam ser confrontadas com aluguel, investimento e liquidez efetivamente disponível. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Compra, com retorno esperado +53,89%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Regulação, evasão e financiamento estudantil podem reduzir recebimento. Caixa restrito, aquisições e ocupação limitam liquidez. Margem e geração gerenciais têm bases próprias, com pagamentos posteriores ao subtotal divulgado."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_SER.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+46,25%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +46,25%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Consumo discricionário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Ser Educacional — ocupação, recebimento e liquidez disponível",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "Receita, EBITDA ajustado e lucro cresceram anualmente. O refinanciamento e o resgate antecipado de obrigações foram realizados no semestre. Caixa operacional após juros e pós-CAPEX melhorou, mas parcelas principais de arrendamento e aquisições exigem leitura adicional. A liquidez total inclui valores restritos e a dívida gerencial deduz escrow. Modalidades reclassificadas preservam bases próprias, e o semipresencial não tem comparação direta validada.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Matrícula, retenção, ocupação, preço e provisões por modalidade; recebimento de FIES e crédito próprio. Separar caixa livre e restrito, dívida integral e gerencial, CAPEX e aquisições. Confirmar geração depois de aluguel, juros e manutenção dos campi.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_SER.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,11%"
+          },
+          {
+            "fato": "val.BR_SER.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "30,71%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 12,11% e a dispersão entre métodos 30,71%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

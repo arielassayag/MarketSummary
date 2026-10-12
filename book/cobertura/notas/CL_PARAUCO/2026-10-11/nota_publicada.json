@@ -1,0 +1,394 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "2ce464af869b99b09dea3e3855e2e17f75e0540cbcbab63740af37a2a73808ad",
+    "factbook": "916d85d1cc9eda4c6df225feabcf05f574701578de1ce9e8a5b591125cbcc204",
+    "nota_json": "b1220a5e564ff755c1075b7dfff6af02fed9cc2aff1acc7724720ad5dbe413d7"
+  },
+  "is_synthetic": false,
+  "issuer_id": "CL_PARAUCO",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-29",
+  "published_at": "2026-10-12T03:06:17.192657+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O relatório confirma subscrição da parcela de aumento de capital destinada ao mercado, sem tornar captação geração operacional. A compra de Paseo Quilín foi descrita como condicionada, e Chicureo tem pagamentos por marcos. Capital, caixa, dívida e direitos precisam ser conciliados na base por ação.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em CLP 2.526,62, com retorno esperado -30,45%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Locação e produtividade sustentam caixa; imóveis novos amadurecem com capital compatível e retorno atribuível superior ao custo de financiamento. O cenário otimista calculado pelo código é CLP 3.043,79.",
+      "pessimista": "Consumo e ocupação enfraquecem enquanto obras e obrigações financeiras absorvem caixa, prejudicando retorno e flexibilidade por ação. O cenário pessimista calculado pelo código é CLP 2.096,61."
+    },
+    "comentario_valuation": "Preço de referência CLP 3.710,00 e alvo do modelo aberto CLP 2.526,62, com potencial -31,90%. Retorno total esperado -30,45% e custo do capital próprio 9,08%. A dispersão entre métodos é 12,84%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é CLP 4.226,40; a diferença -40,22% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese falha se crescimento decorre de compras ou captação, sem avanço de caixa por ação. Maior patrimônio contábil pode coexistir com retorno fraco de imóveis e associados, especialmente quando custo financeiro e reinvestimento absorvem a renda.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.CL_PARAUCO.preco",
+        "rotulo": "Preço de referência",
+        "valor": "CLP 3.710,00"
+      },
+      {
+        "fato": "val.CL_PARAUCO.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "CLP 2.526,62"
+      },
+      {
+        "fato": "val.CL_PARAUCO.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-31,90%"
+      },
+      {
+        "fato": "val.CL_PARAUCO.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.CL_PARAUCO.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.CL_PARAUCO.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "CLP 3.043,79"
+      },
+      {
+        "fato": "val.CL_PARAUCO.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CL_PARAUCO.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "CLP 2.096,61"
+      },
+      {
+        "fato": "val.CL_PARAUCO.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CL_PARAUCO.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "9,08%"
+      },
+      {
+        "fato": "val.CL_PARAUCO.wacc",
+        "rotulo": "WACC",
+        "valor": "8,04%"
+      },
+      {
+        "fato": "val.CL_PARAUCO.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,09%"
+      },
+      {
+        "fato": "val.CL_PARAUCO.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-30,45%"
+      },
+      {
+        "fato": "val.CL_PARAUCO.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-25,78%"
+      },
+      {
+        "fato": "val.CL_PARAUCO.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "20,8x"
+      },
+      {
+        "fato": "val.CL_PARAUCO.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,9x"
+      },
+      {
+        "fato": "val.CL_PARAUCO.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "CLP 4.226,40"
+      },
+      {
+        "fato": "val.CL_PARAUCO.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-40,22%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Parque Arauco",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Índice oficial de documentos financeiros",
+        "url": "https://www.parauco.com/parque-arauco-corporativo/inversionistas/informacion-financiera"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Parque Arauco",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Reporte de resultados trimestrais e definições",
+        "url": "https://parquearauco.modyocdn.com/uploads/c36fe87e-6f59-49f2-93ab-b06d7d3eb0d4/original/Earnings_2Q26.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+      "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+      "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+      "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+    ],
+    "governanca": "A diligência deve demonstrar direitos em associadas, minoritários e projetos, além do efeito da emissão sobre a classe coberta. A intenção de comprar não altera o perímetro antes de cumprimento das condições.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar vendas comparáveis dos lojistas, aluguel recebido, custo de ocupação, vacância e manutenção por uso. Conciliar FFO, caixa, indexação e investimento. Testar retorno das novas áreas, pagamentos diferidos e efeito da emissão na participação do investidor.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_PARAUCO.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-30,45%"
+          },
+          {
+            "fato": "val.CL_PARAUCO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "9,08%"
+          },
+          {
+            "fato": "val.CL_PARAUCO.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "12,84%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -30,45%, custo do capital 9,08% e dispersão entre métodos 12,84% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "CL_PARAUCO",
+    "lacunas_de_dados": [
+      "As notas financeiras completas não foram integralmente reconciliadas ao reporte.",
+      "Condições atuais e conclusão de Paseo Quilín requerem documento posterior.",
+      "Ações emitidas, médias ponderadas e base atual por ação permanecem a conciliar ao modelo.",
+      "Índices, covenants, associadas e caixa disponível exigem tratamento homogêneo.",
+      "Guidance, tom da gestão e evento futuro datado permanecem não avaliados.",
+      "Não há suporte suficiente para percepção do mercado, posicionamento ou interesse vendido.",
+      "A reconciliação integral ao modelo e a disponibilidade histórica dos documentos no corte recebido não foram comprovadas."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Plataforma de centros comerciais e ativos residenciais no Chile, Peru e Colômbia. Área consolidada, área própria e interesses em associadas representam bases diferentes de propriedade e retorno econômico.",
+    "nome": "Parque Arauco",
+    "o_que_mudou": null,
+    "pais": "Chile",
+    "pares": [
+      {
+        "issuer_id": "BR_ALLOS",
+        "nome": "Allos"
+      },
+      {
+        "issuer_id": "BR_IGUATEMI",
+        "nome": "Iguatemi"
+      },
+      {
+        "issuer_id": "BR_MULTIPLAN",
+        "nome": "Multiplan"
+      },
+      {
+        "issuer_id": "CL_CENCOMALLS",
+        "nome": "Cencosud Shopping"
+      },
+      {
+        "issuer_id": "CL_MALLPLAZA",
+        "nome": "Plaza SA (Mallplaza)"
+      },
+      {
+        "issuer_id": "MX_FIBRAPL",
+        "nome": "Fibra Prologis"
+      },
+      {
+        "issuer_id": "MX_VESTA",
+        "nome": "Corporación Inmobiliaria Vesta"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese exige que qualidade dos ativos e execução comercial produzam aluguel recebido e caixa depois de manutenção, expansão e financiamento. O retorno precisa ser demonstrado por ação e participação, inclusive após captação de capital. Aquisição ou reavaliação de imóveis não substitui remuneração incremental.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_PARAUCO.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "CLP 3.710,00"
+          },
+          {
+            "fato": "val.CL_PARAUCO.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "CLP 2.526,62"
+          },
+          {
+            "fato": "val.CL_PARAUCO.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-31,90%"
+          },
+          {
+            "fato": "val.CL_PARAUCO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "9,08%"
+          },
+          {
+            "fato": "val.CL_PARAUCO.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-30,45%"
+          }
+        ],
+        "texto": "Preço de referência CLP 3.710,00 e alvo CLP 2.526,62, com potencial -31,90%. A hipótese de investimento deve ser confrontada com o custo do capital 9,08% e retorno esperado -30,45%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Localização e composição comercial podem favorecer vendas e renovação de contratos. A vantagem exige comparar renda líquida, custo de ocupação e necessidade de reforma por ativo, preservando perímetro e estágio de maturação; escala ou valorização contábil não a comprovam.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T03:06:17.192657+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "FFO e FFO ajustado tratam atualização monetária de forma diferente e divergem de caixa operacional. O portfólio separa área própria e consolidada; imóveis residenciais têm ocupação distinta. EBITDA ajustado e indicadores financeiros usam definições que não necessariamente coincidem com covenants.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese exige que qualidade dos ativos e execução comercial produzam aluguel recebido e caixa depois de manutenção, expansão e financiamento. O retorno precisa ser demonstrado por ação e participação, inclusive após captação de capital. Aquisição ou reavaliação de imóveis não substitui remuneração incremental. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Venda, com retorno esperado -30,45%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Consumo e vacância podem limitar renda enquanto dívida indexada e taxas pressionam caixa. Obras, pagamentos diferidos e aquisições ampliam compromissos; imóveis em maturação podem exigir capital por mais tempo do que o esperado."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_PARAUCO.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-40,22%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -40,22%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Imobiliário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Parque Arauco — renda imobiliária com retorno por ação",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O relatório distingue melhora operacional, pressão de atualização monetária e caixa de financiamento. A avaliação não trata o aumento de capital como receita ou como retorno realizado. As definições de participação e ajuste devem ser preservadas antes de modificar o modelo.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar vendas comparáveis dos lojistas, aluguel recebido, custo de ocupação, vacância e manutenção por uso. Conciliar FFO, caixa, indexação e investimento. Testar retorno das novas áreas, pagamentos diferidos e efeito da emissão na participação do investidor.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.CL_PARAUCO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "9,08%"
+          },
+          {
+            "fato": "val.CL_PARAUCO.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "12,84%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 9,08% e a dispersão entre métodos 12,84%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

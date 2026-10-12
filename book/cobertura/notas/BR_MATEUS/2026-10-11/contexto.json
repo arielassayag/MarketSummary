@@ -1,0 +1,108 @@
+{
+  "avisos_tecnicos": [],
+  "dados_ate": "2026-10-09",
+  "data": "2026-10-11",
+  "fontes_sugeridas": [
+    {
+      "instituicao": "CVM — RAD (fatos relevantes, ITR, DFP, formulário de referência)",
+      "tipo": "regulatorio",
+      "url": "https://www.rad.cvm.gov.br/ENET/frmConsultaExternaCVM.aspx"
+    },
+    {
+      "instituicao": "CVM — dados abertos (DFP, ITR, FRE, IPE)",
+      "tipo": "regulatorio",
+      "url": "https://dados.cvm.gov.br/"
+    },
+    {
+      "instituicao": "B3 — empresas listadas",
+      "tipo": "bolsa",
+      "url": "https://www.b3.com.br/"
+    },
+    {
+      "instituicao": "Banco Central do Brasil (Focus, SGS)",
+      "tipo": "banco_central",
+      "url": "https://www.bcb.gov.br/"
+    },
+    {
+      "instituicao": "IBGE",
+      "tipo": "estatistica_oficial",
+      "url": "https://www.ibge.gov.br/"
+    },
+    {
+      "instituicao": "Damodaran Online (NYU Stern) — prêmios de risco, betas e múltiplos setoriais",
+      "tipo": "dados_publicos",
+      "url": "https://pages.stern.nyu.edu/~adamodar/"
+    },
+    {
+      "instituicao": "FRED (Federal Reserve Bank of St. Louis) — juros e indicadores dos EUA",
+      "tipo": "dados_publicos",
+      "url": "https://fred.stlouisfed.org/"
+    }
+  ],
+  "is_synthetic": false,
+  "issuer_id": "BR_MATEUS",
+  "lacunas": [
+    "Probabilidade implícita do otimista: sem dado na data.",
+    "Probabilidade implícita do pessimista: sem dado na data."
+  ],
+  "nome": "Grupo Mateus",
+  "nomes": {
+    "BR_AMBEV": "Ambev",
+    "BR_ASSAI": "Assaí Atacadista",
+    "BR_MATEUS": "Grupo Mateus",
+    "BR_MBRF": "MBRF (Marfrig+BRF)",
+    "BR_MDIAS": "M. Dias Branco",
+    "BR_NATURA": "Natura Cosméticos",
+    "BR_PAGUEMENOS": "Pague Menos",
+    "BR_RAIADROGASIL": "Raia Drogasil",
+    "BR_SAOMARTINHO": "São Martinho"
+  },
+  "nota_anterior": null,
+  "pais": "BR",
+  "pais_pt": "Brasil",
+  "pares": [
+    "BR_AMBEV",
+    "BR_ASSAI",
+    "BR_MBRF",
+    "BR_MDIAS",
+    "BR_NATURA",
+    "BR_PAGUEMENOS",
+    "BR_RAIADROGASIL",
+    "BR_SAOMARTINHO"
+  ],
+  "proximo_resultado": null,
+  "schema": "cdp.nota.contexto/v1",
+  "setor": "Consumer Staples",
+  "setor_pt": "Consumo básico",
+  "snapshot": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "tem_linha_eua": false,
+  "termos": [
+    "ABEV3",
+    "ABEV3.SA",
+    "ASAI3",
+    "ASAI3.SA",
+    "GMAT3",
+    "GMAT3.SA",
+    "MBRF3",
+    "MBRF3.SA",
+    "MDIA3",
+    "MDIA3.SA",
+    "NATU3",
+    "NATU3.SA",
+    "PGMN3",
+    "PGMN3.SA",
+    "RADL3",
+    "RADL3.SA",
+    "SMTO3",
+    "SMTO3.SA"
+  ],
+  "tickers": [
+    "GMAT3.SA",
+    "GMAT3"
+  ],
+  "tipo_esperado": "iniciacao"
+}

@@ -1,0 +1,391 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "96c068d0b9ba5905bf02b07b96ff9bf5d78cc71cf2a46ae9603d57c79168751b",
+    "factbook": "45b8392d1a1eae4b5fbb626836cbd864dd266eb3b9433e8c7f2287d26f0ea345",
+    "nota_json": "4af791bff76018d177624d11632386978ae8bd94bdaaded10b4f065a6252e675"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_REGIONAL",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-26",
+  "published_at": "2026-10-12T03:05:58.624131+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O capital prudencial citado para Banco Regional tem corte em maio, distinto do resultado de junho. Capital, liquidez e retorno devem ser avaliados por entidade e na holding. A reorganização de Hey exige separar operações transferidas de geração nova; disponibilidades restritas não são tratadas como caixa distribuível.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em MXN 251,28, com retorno esperado +85,76%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Relacionamento e canais elevam contribuição recorrente, com crédito disciplinado e capital transparente por entidade. O cenário otimista calculado pelo código é MXN 306,99.",
+      "pessimista": "Funding, despesas e risco em formação consomem a margem enquanto a reorganização limita comparação e distribuição. O cenário pessimista calculado pelo código é MXN 201,39."
+    },
+    "comentario_valuation": "Preço de referência MXN 138,98 e alvo do modelo aberto MXN 251,28, com potencial +80,81%. Retorno total esperado +85,76% e custo do capital próprio 11,34%. A dispersão entre métodos é 7,82%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é MXN 173,69; a diferença +44,68% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se relacionamento e digitalização ampliam ativos sem retorno depois de perdas e despesas. Menor inadimplência pode coexistir com risco em formação, enquanto a reorganização dificulta identificar rentabilidade incremental.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.MX_REGIONAL.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 138,98"
+      },
+      {
+        "fato": "val.MX_REGIONAL.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 251,28"
+      },
+      {
+        "fato": "val.MX_REGIONAL.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+80,81%"
+      },
+      {
+        "fato": "val.MX_REGIONAL.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.MX_REGIONAL.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_REGIONAL.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 306,99"
+      },
+      {
+        "fato": "val.MX_REGIONAL.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_REGIONAL.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 201,39"
+      },
+      {
+        "fato": "val.MX_REGIONAL.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_REGIONAL.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,34%"
+      },
+      {
+        "fato": "val.MX_REGIONAL.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_REGIONAL.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_REGIONAL.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+85,76%"
+      },
+      {
+        "fato": "val.MX_REGIONAL.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+44,51%"
+      },
+      {
+        "fato": "val.MX_REGIONAL.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "6,5x"
+      },
+      {
+        "fato": "val.MX_REGIONAL.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,0x"
+      },
+      {
+        "fato": "val.MX_REGIONAL.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 173,69"
+      },
+      {
+        "fato": "val.MX_REGIONAL.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+44,68%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Regional",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Centro oficial de informações financeiras",
+        "url": "https://www.regional.mx/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Regional",
+        "publicado_em": "2026-07-27",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e notas semestrais de Regional",
+        "url": "https://www.bmv.com.mx/docs-pub/infingps/infingps_1577211_2026-02_1.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+      "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+      "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+      "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+    ],
+    "governanca": "Revisar controle, transações relacionadas e critérios de transferência entre Banco Regional e Hey. A estrutura operacional independente exige examinar capital e distribuição próprios, sem assumir independência do grupo econômico.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Revisar margem depois de perdas, migração para o segundo estágio e despesas por negócio. Acompanhar depósitos por prazo, custo de funding e comissões recebidas. Conciliar contribuição de Hey, capital por entidade, indicadores trimestrais e de doze meses e transmissão de caixa à holding.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_REGIONAL.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+85,76%"
+          },
+          {
+            "fato": "val.MX_REGIONAL.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,34%"
+          },
+          {
+            "fato": "val.MX_REGIONAL.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "7,82%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +85,76%, custo do capital 11,34% e dispersão entre métodos 7,82% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "MX_REGIONAL",
+    "lacunas_de_dados": [
+      "Perímetros de Hey e contribuição incremental ainda exigem conciliação completa.",
+      "Datas de capital e bases dos indicadores não são uniformes no documento.",
+      "Segmentação gerencial difere da classificação contábil.",
+      "Crédito por safra, depósitos e distribuição à holding não foram integralmente conciliados.",
+      "Guidance, tom da gestão e catalisador futuro datado não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo mexicano com Banregio, Banco Regional, Start e Hey Banco, voltado a crédito e arrendamento para empresas e pessoas. A reorganização transferiu operações ligadas à marca Hey para banco com operação própria. Independência operacional dessa entidade não significa ausência de consolidação econômica no grupo coberto.",
+    "nome": "Regional (Banregio)",
+    "o_que_mudou": null,
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_BAJIO",
+        "nome": "Banco del Bajío"
+      },
+      {
+        "issuer_id": "MX_BANORTE",
+        "nome": "Grupo Financiero Banorte"
+      },
+      {
+        "issuer_id": "MX_BMV",
+        "nome": "Bolsa Mexicana de Valores"
+      },
+      {
+        "issuer_id": "MX_GENTERA",
+        "nome": "Gentera"
+      },
+      {
+        "issuer_id": "MX_INBURSA",
+        "nome": "Grupo Financiero Inbursa"
+      },
+      {
+        "issuer_id": "MX_QUALITAS",
+        "nome": "Quálitas"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que relacionamento com empresas sustente crédito, depósitos e serviços, enquanto canais próprios ampliem alcance com retorno após perdas e despesas. A separação de Hey precisa tornar visível contribuição e capital por entidade. Crescimento só cria valor se preserva funding, eficiência e retorno atribuível.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_REGIONAL.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "MXN 138,98"
+          },
+          {
+            "fato": "val.MX_REGIONAL.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "MXN 251,28"
+          },
+          {
+            "fato": "val.MX_REGIONAL.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+80,81%"
+          },
+          {
+            "fato": "val.MX_REGIONAL.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,34%"
+          },
+          {
+            "fato": "val.MX_REGIONAL.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+85,76%"
+          }
+        ],
+        "texto": "Preço de referência MXN 138,98 e alvo MXN 251,28, com potencial +80,81%. A hipótese de investimento deve ser confrontada com o custo do capital 11,34% e retorno esperado +85,76%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Conhecimento do cliente empresarial e combinação de crédito, pagamentos e arrendamento podem apoiar retenção. Essa hipótese exige custo total de servir, estabilidade de depósitos e disciplina por segmento. Escala digital não comprova aquisição rentável nem elimina concorrência no funding.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T03:05:58.624131+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Margem e comissões crescem na comparação anual, mas lucro é pressionado por despesas. A carteira no segundo estágio de risco cresce mesmo com menor inadimplência anual. Indicadores em horizonte de doze meses e medidas trimestrais usam bases diferentes; a segmentação operacional também difere da contábil.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que relacionamento com empresas sustente crédito, depósitos e serviços, enquanto canais próprios ampliem alcance com retorno após perdas e despesas. A separação de Hey precisa tornar visível contribuição e capital por entidade. Crescimento só cria valor se preserva funding, eficiência e retorno atribuível. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Compra, com retorno esperado +85,76%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Despesas e migração de crédito podem absorver margem e comissões. Captação a prazo aumenta sensibilidade ao preço do funding. Mudança de perímetro e despesas digitais podem ocultar retorno insuficiente ou necessidades de capital em cada entidade."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_REGIONAL.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+44,68%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +44,68%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Regional — crédito empresarial e separação econômica de Hey Banco",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A leitura preserva despesas e crédito em formação, sem promover menor inadimplência a melhora uniforme. Notas da reorganização e contribuição de Hey são consideradas no perímetro. Bases temporais e classificação operacional requerem conciliação antes de comparar retorno ou capital.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Revisar margem depois de perdas, migração para o segundo estágio e despesas por negócio. Acompanhar depósitos por prazo, custo de funding e comissões recebidas. Conciliar contribuição de Hey, capital por entidade, indicadores trimestrais e de doze meses e transmissão de caixa à holding.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.MX_REGIONAL.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,34%"
+          },
+          {
+            "fato": "val.MX_REGIONAL.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "7,82%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,34% e a dispersão entre métodos 7,82%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

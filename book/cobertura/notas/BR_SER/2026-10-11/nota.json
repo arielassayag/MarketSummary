@@ -1,0 +1,196 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_SER",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Ser Educacional — ocupação, recebimento e liquidez disponível",
+  "resumo": "A hipótese é que ocupação, qualidade e mix sustentem retorno depois do custo completo. A condição decisiva é converter receita em recebimento sem dependência crescente de crédito estudantil. Margens e desalavancagem precisam ser confrontadas com aluguel, investimento e liquidez efetivamente disponível. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_SER.rating_codigo}}, com retorno esperado {{fact:val.BR_SER.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Grupo educacional com instituições regionais, ensino presencial, semipresencial e a distância, além de medicina. Matrícula, retenção e preço líquido determinam receita; financiamentos estudantis alteram recebimento. A nova classificação de modalidades requer comparativos próprios e não transforma alunos reclassificados em expansão orgânica.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que ocupação, qualidade e mix sustentem retorno depois do custo completo. A condição decisiva é converter receita em recebimento sem dependência crescente de crédito estudantil. Margens e desalavancagem precisam ser confrontadas com aluguel, investimento e liquidez efetivamente disponível.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_SER.preco}} e alvo {{fact:val.BR_SER.preco_alvo}}, com potencial {{fact:val.BR_SER.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_SER.ke}} e retorno esperado {{fact:val.BR_SER.etr}}.",
+      "evidencias": [
+        "val.BR_SER.preco",
+        "val.BR_SER.preco_alvo",
+        "val.BR_SER.upside",
+        "val.BR_SER.ke",
+        "val.BR_SER.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Matrícula, retenção, ocupação, preço e provisões por modalidade; recebimento de FIES e crédito próprio. Separar caixa livre e restrito, dívida integral e gerencial, CAPEX e aquisições. Confirmar geração depois de aluguel, juros e manutenção dos campi.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_SER.ke}} e a dispersão entre métodos {{fact:val.BR_SER.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_SER.ke",
+        "val.BR_SER.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Próximos resultados: testar ocupação, crédito e caixa após compromissos.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Regulação, evasão e financiamento estudantil podem reduzir recebimento. Caixa restrito, aquisições e ocupação limitam liquidez. Margem e geração gerenciais têm bases próprias, com pagamentos posteriores ao subtotal divulgado.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_SER.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_SER.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Ocupação e retenção sustentam preço e mix, com recebimento disciplinado e financiamento mais eficiente; caixa após compromissos remunera manutenção e capital. O cenário otimista calculado pelo código é {{fact:val.BR_SER.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_SER.preco_alvo}}, com retorno esperado {{fact:val.BR_SER.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Crédito e evasão enfraquecem recebimento, enquanto aluguel e manutenção absorvem margem; recursos restritos não sustentam distribuição livre. O cenário pessimista calculado pelo código é {{fact:val.BR_SER.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_SER.preco}} e alvo do modelo aberto {{fact:val.BR_SER.preco_alvo}}, com potencial {{fact:val.BR_SER.upside}}. Retorno total esperado {{fact:val.BR_SER.etr}} e custo do capital próprio {{fact:val.BR_SER.ke}}. A dispersão entre métodos é {{fact:val.BR_SER.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_SER.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_SER.consenso_alvo}}; a diferença {{fact:val.BR_SER.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "Receita, EBITDA ajustado e lucro cresceram anualmente. O refinanciamento e o resgate antecipado de obrigações foram realizados no semestre. Caixa operacional após juros e pós-CAPEX melhorou, mas parcelas principais de arrendamento e aquisições exigem leitura adicional. A liquidez total inclui valores restritos e a dívida gerencial deduz escrow. Modalidades reclassificadas preservam bases próprias, e o semipresencial não tem comparação direta validada.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "A dívida da aquisição e o escrow têm apresentação gerencial distinta da obrigação integral. Recursos judiciais e do fundo estudantil não foram presumidos livres. A análise não promove divulgação ajustada a auditoria de retorno econômico nem certifica contratos futuros. Pagamentos relatados conservam o período do documento.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Marcas regionais e campi podem apoiar relacionamento e oferta de saúde e direito. Medicina tem autorizações e maturação específicas. Ganhos de ocupação relatados pela gestão precisam de teste de retenção, concorrência e preço; modalidade semipresencial reclassificada não tem comparável orgânico automaticamente válido.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Receita, EBITDA ajustado e lucro cresceram, com maior caixa após CAPEX. Recebíveis e financiamento próprio aumentaram; o prazo de recebimento sofreu pressão do FIES. Caixa operacional considera juros pagos, mas parcelas principais de arrendamento estão no financiamento. O saldo final trimestral caiu apesar da melhora gerencial.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "A liquidez divulgada inclui recursos de escrow, depósitos judiciais e fundo estudantil. A dívida gerencial deduz o escrow relacionado à aquisição, em base distinta da obrigação integral. Refinanciamento e resgate antecipado foram realizados. CAPEX, pagamentos de aquisições, aluguel e dividendos precisam ser conciliados antes de chamar toda geração de livre.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "Ocupação e lucro podem crescer com recebíveis e crédito mais lentos. A liquidez total pode superestimar recursos livres. Se manutenção, aluguel e aquisições absorverem eficiência, caixa pós-CAPEX divulgado não confirmará retorno integral ao acionista.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Matrícula, retenção, ocupação, preço e provisões por modalidade; recebimento de FIES e crédito próprio. Separar caixa livre e restrito, dívida integral e gerencial, CAPEX e aquisições. Confirmar geração depois de aluguel, juros e manutenção dos campi.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_SER.etr}}, custo do capital {{fact:val.BR_SER.ke}} e dispersão entre métodos {{fact:val.BR_SER.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_SER.etr",
+        "val.BR_SER.ke",
+        "val.BR_SER.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+    "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+    "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+    "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "A ponte integral do ITR, obrigações de aquisição e caixa atribuível permanece pendente.",
+    "Liquidez restrita e dívida integral exigem conciliação com a medida gerencial.",
+    "Retorno da expansão médica e qualidade do crédito estudantil precisam de diligência.",
+    "Comparabilidade das novas modalidades não foi integralmente reconciliada.",
+    "Guidance agregado e participação de mercado não foram comprovados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Ser Educacional",
+      "titulo": "Negócio e materiais públicos do emissor",
+      "url": "https://ri.sereducacional.com/a-companhia/perfil-corporativo/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Ser Educacional",
+      "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/4e9e23d7-cea5-42fd-bf06-7a7ca01880fc/bd43857a-977c-c7b4-8b51-478fb227d657?origin=2",
+      "publicado_em": "2026-08-12",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Ser Educacional",
+      "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/4e9e23d7-cea5-42fd-bf06-7a7ca01880fc/2222dbf4-b215-afef-7b19-cf4383a23740?origin=2",
+      "publicado_em": "2026-08-12",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

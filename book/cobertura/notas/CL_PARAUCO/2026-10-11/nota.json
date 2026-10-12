@@ -1,0 +1,171 @@
+{
+  "mind": "codex",
+  "issuer_id": "CL_PARAUCO",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Parque Arauco — renda imobiliária com retorno por ação",
+  "resumo": "A hipótese exige que qualidade dos ativos e execução comercial produzam aluguel recebido e caixa depois de manutenção, expansão e financiamento. O retorno precisa ser demonstrado por ação e participação, inclusive após captação de capital. Aquisição ou reavaliação de imóveis não substitui remuneração incremental. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.CL_PARAUCO.rating_codigo}}, com retorno esperado {{fact:val.CL_PARAUCO.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Plataforma de centros comerciais e ativos residenciais no Chile, Peru e Colômbia. Área consolidada, área própria e interesses em associadas representam bases diferentes de propriedade e retorno econômico.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese exige que qualidade dos ativos e execução comercial produzam aluguel recebido e caixa depois de manutenção, expansão e financiamento. O retorno precisa ser demonstrado por ação e participação, inclusive após captação de capital. Aquisição ou reavaliação de imóveis não substitui remuneração incremental.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.CL_PARAUCO.preco}} e alvo {{fact:val.CL_PARAUCO.preco_alvo}}, com potencial {{fact:val.CL_PARAUCO.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.CL_PARAUCO.ke}} e retorno esperado {{fact:val.CL_PARAUCO.etr}}.",
+      "evidencias": [
+        "val.CL_PARAUCO.preco",
+        "val.CL_PARAUCO.preco_alvo",
+        "val.CL_PARAUCO.upside",
+        "val.CL_PARAUCO.ke",
+        "val.CL_PARAUCO.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar vendas comparáveis dos lojistas, aluguel recebido, custo de ocupação, vacância e manutenção por uso. Conciliar FFO, caixa, indexação e investimento. Testar retorno das novas áreas, pagamentos diferidos e efeito da emissão na participação do investidor.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.CL_PARAUCO.ke}} e a dispersão entre métodos {{fact:val.CL_PARAUCO.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.CL_PARAUCO.ke",
+        "val.CL_PARAUCO.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Consumo e vacância podem limitar renda enquanto dívida indexada e taxas pressionam caixa. Obras, pagamentos diferidos e aquisições ampliam compromissos; imóveis em maturação podem exigir capital por mais tempo do que o esperado.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.CL_PARAUCO.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.CL_PARAUCO.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Locação e produtividade sustentam caixa; imóveis novos amadurecem com capital compatível e retorno atribuível superior ao custo de financiamento. O cenário otimista calculado pelo código é {{fact:val.CL_PARAUCO.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.CL_PARAUCO.preco_alvo}}, com retorno esperado {{fact:val.CL_PARAUCO.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Consumo e ocupação enfraquecem enquanto obras e obrigações financeiras absorvem caixa, prejudicando retorno e flexibilidade por ação. O cenário pessimista calculado pelo código é {{fact:val.CL_PARAUCO.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.CL_PARAUCO.preco}} e alvo do modelo aberto {{fact:val.CL_PARAUCO.preco_alvo}}, com potencial {{fact:val.CL_PARAUCO.upside}}. Retorno total esperado {{fact:val.CL_PARAUCO.etr}} e custo do capital próprio {{fact:val.CL_PARAUCO.ke}}. A dispersão entre métodos é {{fact:val.CL_PARAUCO.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.CL_PARAUCO.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.CL_PARAUCO.consenso_alvo}}; a diferença {{fact:val.CL_PARAUCO.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "O relatório distingue melhora operacional, pressão de atualização monetária e caixa de financiamento. A avaliação não trata o aumento de capital como receita ou como retorno realizado. As definições de participação e ajuste devem ser preservadas antes de modificar o modelo.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "A diligência deve demonstrar direitos em associadas, minoritários e projetos, além do efeito da emissão sobre a classe coberta. A intenção de comprar não altera o perímetro antes de cumprimento das condições.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Localização e composição comercial podem favorecer vendas e renovação de contratos. A vantagem exige comparar renda líquida, custo de ocupação e necessidade de reforma por ativo, preservando perímetro e estágio de maturação; escala ou valorização contábil não a comprovam.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "FFO e FFO ajustado tratam atualização monetária de forma diferente e divergem de caixa operacional. O portfólio separa área própria e consolidada; imóveis residenciais têm ocupação distinta. EBITDA ajustado e indicadores financeiros usam definições que não necessariamente coincidem com covenants.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "O relatório confirma subscrição da parcela de aumento de capital destinada ao mercado, sem tornar captação geração operacional. A compra de Paseo Quilín foi descrita como condicionada, e Chicureo tem pagamentos por marcos. Capital, caixa, dívida e direitos precisam ser conciliados na base por ação.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese falha se crescimento decorre de compras ou captação, sem avanço de caixa por ação. Maior patrimônio contábil pode coexistir com retorno fraco de imóveis e associados, especialmente quando custo financeiro e reinvestimento absorvem a renda.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Acompanhar vendas comparáveis dos lojistas, aluguel recebido, custo de ocupação, vacância e manutenção por uso. Conciliar FFO, caixa, indexação e investimento. Testar retorno das novas áreas, pagamentos diferidos e efeito da emissão na participação do investidor.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.CL_PARAUCO.etr}}, custo do capital {{fact:val.CL_PARAUCO.ke}} e dispersão entre métodos {{fact:val.CL_PARAUCO.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.CL_PARAUCO.etr",
+        "val.CL_PARAUCO.ke",
+        "val.CL_PARAUCO.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+    "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+    "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+    "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "As notas financeiras completas não foram integralmente reconciliadas ao reporte.",
+    "Condições atuais e conclusão de Paseo Quilín requerem documento posterior.",
+    "Ações emitidas, médias ponderadas e base atual por ação permanecem a conciliar ao modelo.",
+    "Índices, covenants, associadas e caixa disponível exigem tratamento homogêneo.",
+    "Guidance, tom da gestão e evento futuro datado permanecem não avaliados.",
+    "Não há suporte suficiente para percepção do mercado, posicionamento ou interesse vendido.",
+    "A reconciliação integral ao modelo e a disponibilidade histórica dos documentos no corte recebido não foram comprovadas."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Parque Arauco",
+      "titulo": "Índice oficial de documentos financeiros",
+      "url": "https://www.parauco.com/parque-arauco-corporativo/inversionistas/informacion-financiera",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Parque Arauco",
+      "titulo": "Reporte de resultados trimestrais e definições",
+      "url": "https://parquearauco.modyocdn.com/uploads/c36fe87e-6f59-49f2-93ab-b06d7d3eb0d4/original/Earnings_2Q26.pdf",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

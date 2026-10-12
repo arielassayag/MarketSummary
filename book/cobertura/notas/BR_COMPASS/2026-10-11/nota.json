@@ -1,0 +1,196 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_COMPASS",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Compass — remuneração das redes e maturação do gás livre",
+  "resumo": "A hipótese é que redes, conexões e suprimento remunerem o capital depois de obras e financiamento. A condição decisiva é converter receita regulada e expansão de soluções em caixa atribuível, preservando direitos de sócios. Otimização de cargas, aquisição e mercado livre não têm a mesma recorrência econômica. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_COMPASS.rating_codigo}}, com retorno esperado {{fact:val.BR_COMPASS.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Grupo de distribuição de gás canalizado e soluções de comercialização, regaseificação, GNL e biometano. Distribuidoras reguladas e Edge têm contratos, riscos e maturação distintos. O veículo de distribuição com a Mitsui e outras participações possuem sócios; caixa consolidado e resultado integral não pertencem automaticamente ao controlador.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que redes, conexões e suprimento remunerem o capital depois de obras e financiamento. A condição decisiva é converter receita regulada e expansão de soluções em caixa atribuível, preservando direitos de sócios. Otimização de cargas, aquisição e mercado livre não têm a mesma recorrência econômica.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_COMPASS.preco}} e alvo {{fact:val.BR_COMPASS.preco_alvo}}, com potencial {{fact:val.BR_COMPASS.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_COMPASS.ke}} e retorno esperado {{fact:val.BR_COMPASS.etr}}.",
+      "evidencias": [
+        "val.BR_COMPASS.preco",
+        "val.BR_COMPASS.preco_alvo",
+        "val.BR_COMPASS.upside",
+        "val.BR_COMPASS.ke",
+        "val.BR_COMPASS.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Conexões, volume e margem regulada; preço, crédito e custos de suprimento na Edge. Separar otimização de cargas e maturação de projetos. Conciliar giro, obras, juros, derivativos, dividendos e direitos de sócios entre holding e distribuidoras.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_COMPASS.ke}} e a dispersão entre métodos {{fact:val.BR_COMPASS.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_COMPASS.ke",
+        "val.BR_COMPASS.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Próximos resultados: testar maturação e caixa depois de obras e juros.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Tarifa, demanda industrial, suprimento e crédito podem reduzir margem. Obras e maturação absorvem caixa; sócios e juros limitam transmissão ao acionista. Ajustes de cargas e liquidez consolidada não garantem recorrência ou distribuição.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_COMPASS.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_COMPASS.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Conexões, mix e maturação sustentam margem e recebimento depois de obras e financiamento, com direitos de sócios conciliados. O cenário otimista calculado pelo código é {{fact:val.BR_COMPASS.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_COMPASS.preco_alvo}}, com retorno esperado {{fact:val.BR_COMPASS.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Demanda e suprimento pressionam margem; giro e obras absorvem recursos, e juros e minoritários restringem a geração atribuível. O cenário pessimista calculado pelo código é {{fact:val.BR_COMPASS.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_COMPASS.preco}} e alvo do modelo aberto {{fact:val.BR_COMPASS.preco_alvo}}, com potencial {{fact:val.BR_COMPASS.upside}}. Retorno total esperado {{fact:val.BR_COMPASS.etr}} e custo do capital próprio {{fact:val.BR_COMPASS.ke}}. A dispersão entre métodos é {{fact:val.BR_COMPASS.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_COMPASS.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_COMPASS.consenso_alvo}}; a diferença {{fact:val.BR_COMPASS.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "EBITDA cresceu e lucro caiu. Volume de distribuição recuou, com compensação do mix; Edge expandiu volumes e clientes, com ajuste temporal de otimização de cargas. O fluxo original semestral teve geração operacional menor, antes dos juros classificados no financiamento. O fluxo gerencial para acionistas ficou negativo. A abertura de capital foi secundária; dividendos pagos não comprovam geração recorrente equivalente.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "O IPO e o histórico corporativo mantêm seu estado, sem retroação ao modelo. Distribuidoras, o veículo societário com a Mitsui e Edge têm direitos de sócios e regras próprias. Juros e dividendos conservam classificações na demonstração original. Não se transferiu à Compass o caixa da venda secundária recebido pela Cosan.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Infraestrutura, atendimento e originação podem apoiar distribuição e suprimento. A rede possui regras de tarifa e remuneração próprias; contratos livres concorrem por preço, flexibilidade e crédito. A posição informada pelo emissor não comprova vantagem independente nem retorno dos projetos em maturação.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "EBITDA aumentou, mas lucro recuou com depreciação e despesa financeira. Distribuição teve volume menor e mix melhor; Edge cresceu com ajustes temporais de cargas. Caixa operacional semestral original diminuiu e precede juros de empréstimos. A medida gerencial de caixa para acionistas ficou negativa após financiamento.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Investimento em rede, suprimento e novas plantas exige caixa antes da maturação. O IPO foi secundário e seus recursos ao vendedor não são aporte operacional à Compass. Dividendos pagos e juros conservam fluxos próprios; direitos de minoritários restringem atribuição integral. Giro, principal e derivativos alteram recursos distribuíveis.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "EBITDA crescente e presença em gás livre podem coexistir com lucro e caixa operacional menores. Se giro, obras e financiamento absorverem o resultado, a expansão da rede e o IPO não confirmarão caixa disponível ao acionista.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Conexões, volume e margem regulada; preço, crédito e custos de suprimento na Edge. Separar otimização de cargas e maturação de projetos. Conciliar giro, obras, juros, derivativos, dividendos e direitos de sócios entre holding e distribuidoras.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_COMPASS.etr}}, custo do capital {{fact:val.BR_COMPASS.ke}} e dispersão entre métodos {{fact:val.BR_COMPASS.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_COMPASS.etr",
+        "val.BR_COMPASS.ke",
+        "val.BR_COMPASS.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+    "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+    "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+    "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "A data exata de publicação do arquivo recebido não foi comprovada; a consulta foi registrada.",
+    "A ponte integral de caixa por entidade e direitos de sócios permanece pendente.",
+    "Recorrência da otimização de cargas e retorno dos projetos exigem diligência.",
+    "Tarifas, suprimento e crédito não foram reconciliados integralmente.",
+    "Guidance agregado e vantagem competitiva independente não foram comprovados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Compass",
+      "titulo": "Negócio e materiais públicos do emissor",
+      "url": "https://www.compassbr.com/sobre-a-compass/quem-somos/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Compass",
+      "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/17eafccb-2e4b-40d4-8da2-1ba38e6d4676/a2ac023a-6247-72dc-04b0-01fe67df15c1?origin=2",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Compass",
+      "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/17eafccb-2e4b-40d4-8da2-1ba38e6d4676/e5fe79c7-97f1-8596-ebc7-ea9ff9351f5f?origin=2",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

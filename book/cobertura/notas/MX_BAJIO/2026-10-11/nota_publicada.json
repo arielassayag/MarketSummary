@@ -1,0 +1,400 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "8f6216b4b4e7b120d0cd780a1862648dd9ec45a4dea1c23c6b62e931d7995739",
+    "factbook": "45b8392d1a1eae4b5fbb626836cbd864dd266eb3b9433e8c7f2287d26f0ea345",
+    "nota_json": "0c5308d28a01853c99babb88bb22683766177c6dbcad2ad5153b2831fa3bdf2e"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_BAJIO",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-26",
+  "published_at": "2026-10-12T03:06:36.251905+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O capital de junho é divulgado como preliminar e sujeito à revisão regulatória. A mudança anterior de metodologia de risco limita comparação direta dos índices. Distribuição depende de lucro realizado e necessidades de reservas e capital; intenção histórica de dividendos não comprova obrigação futura ou caixa disponível.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em MXN 85,43, com retorno esperado +55,55%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Relacionamento preserva depósitos, originação e receitas recorrentes, com risco e capital que permitem remunerar o acionista. O cenário otimista calculado pelo código é MXN 100,56.",
+      "pessimista": "Reprecificação, perdas e funding absorvem o crescimento enquanto capital limita distribuição. O cenário pessimista calculado pelo código é MXN 71,69."
+    },
+    "comentario_valuation": "Preço de referência MXN 58,02 e alvo do modelo aberto MXN 85,43, com potencial +47,24%. Retorno total esperado +55,55% e custo do capital próprio 11,34%. A dispersão entre métodos é 13,15%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é MXN 65,50; a diferença +30,43% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se crescimento de carteira não compensa queda da margem depois de risco, ou se a melhora do lucro depende de menor provisão e tesouraria. Capital aparentemente estável pode refletir metodologia e limitar expansão e remuneração.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.MX_BAJIO.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 58,02"
+      },
+      {
+        "fato": "val.MX_BAJIO.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 85,43"
+      },
+      {
+        "fato": "val.MX_BAJIO.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+47,24%"
+      },
+      {
+        "fato": "val.MX_BAJIO.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.MX_BAJIO.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_BAJIO.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 100,56"
+      },
+      {
+        "fato": "val.MX_BAJIO.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_BAJIO.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 71,69"
+      },
+      {
+        "fato": "val.MX_BAJIO.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_BAJIO.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,34%"
+      },
+      {
+        "fato": "val.MX_BAJIO.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_BAJIO.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_BAJIO.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+55,55%"
+      },
+      {
+        "fato": "val.MX_BAJIO.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+13,62%"
+      },
+      {
+        "fato": "val.MX_BAJIO.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "7,4x"
+      },
+      {
+        "fato": "val.MX_BAJIO.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,5x"
+      },
+      {
+        "fato": "val.MX_BAJIO.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 65,50"
+      },
+      {
+        "fato": "val.MX_BAJIO.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+30,43%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "BanBajío",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Crédito empresarial e capital de giro",
+        "url": "https://www.bb.com.mx/webcenter/portal/BanBajio/empresas/e-creditos/e-credito-empresarial"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "BanBajío",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado, comentários e demonstrações semestrais",
+        "url": "https://www.bmv.com.mx/docs-pub/infinbnc/bncinfin_1577916_2026-02_2.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+      "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+      "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+      "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+    ],
+    "governanca": "Conferir concentração de controle, operações relacionadas e decisões de dividendos e reinvestimento. Índices prudenciais e disponibilidade de caixa têm funções distintas; o capital definitivo precisa ser confirmado.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar margem antes e depois de perdas, taxa dos ativos e custo de funding por origem. Revisar migração de risco, provisões e cobertura, separando banco e tesouraria. Conferir o capital definitivo, a metodologia usada e a capacidade de distribuição após crescimento e obrigações.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_BAJIO.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+55,55%"
+          },
+          {
+            "fato": "val.MX_BAJIO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,34%"
+          },
+          {
+            "fato": "val.MX_BAJIO.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "13,15%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +55,55%, custo do capital 11,34% e dispersão entre métodos 13,15% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "MX_BAJIO",
+    "lacunas_de_dados": [
+      "Capital definitivo e metodologia de comparação prudencial permanecem a confirmar.",
+      "Crédito por safra, concentração e perdas não foram integralmente conciliados.",
+      "Comparações com a indústria têm cortes diferentes.",
+      "Efeitos tributários citados pela administração exigem conciliação normativa e financeira.",
+      "Guidance, tom da gestão e catalisador futuro datado não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Banco mexicano que atende empresas, pequenos negócios e pessoas, com crédito, depósitos e serviços financeiros. Crédito de capital de giro, operações redescontadas e tesouraria têm funções e riscos distintos. A relação bancária deve ser avaliada pelo conjunto de receitas, custo de servir e perdas, além do saldo emprestado.",
+    "nome": "Banco del Bajío",
+    "o_que_mudou": null,
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_BANORTE",
+        "nome": "Grupo Financiero Banorte"
+      },
+      {
+        "issuer_id": "MX_BMV",
+        "nome": "Bolsa Mexicana de Valores"
+      },
+      {
+        "issuer_id": "MX_GENTERA",
+        "nome": "Gentera"
+      },
+      {
+        "issuer_id": "MX_INBURSA",
+        "nome": "Grupo Financiero Inbursa"
+      },
+      {
+        "issuer_id": "MX_QUALITAS",
+        "nome": "Quálitas"
+      },
+      {
+        "issuer_id": "MX_REGIONAL",
+        "nome": "Regional (Banregio)"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que o conhecimento de clientes empresariais sustente originação, depósitos e serviços com retorno depois de risco. O crescimento precisa compensar a reprificação dos ativos quando os juros caem, sem depender de menor provisão ou tesouraria. A disciplina de capital e a retenção de funding são condições para transmitir valor ao acionista.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_BAJIO.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "MXN 58,02"
+          },
+          {
+            "fato": "val.MX_BAJIO.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "MXN 85,43"
+          },
+          {
+            "fato": "val.MX_BAJIO.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+47,24%"
+          },
+          {
+            "fato": "val.MX_BAJIO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,34%"
+          },
+          {
+            "fato": "val.MX_BAJIO.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+55,55%"
+          }
+        ],
+        "texto": "Preço de referência MXN 58,02 e alvo MXN 85,43, com potencial +47,24%. A hipótese de investimento deve ser confrontada com o custo do capital 11,34% e retorno esperado +55,55%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Relacionamento e oferta de crédito de giro podem favorecer uso recorrente e conhecimento do cliente. A vantagem exige testar preço, retenção de depósitos e qualidade das safras frente a bancos e canais digitais. A narrativa não presume liderança relativa ou prêmio de funding sem comparação homogênea.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T03:06:36.251905+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O release descreve pressão anual sobre margem antes de perdas e menor provisão nessa comparação. Resultado bancário e tesouraria caminham de formas distintas. A leitura trimestral do crédito e da cobertura exige acompanhamento próprio; comparações com a indústria têm cortes diferentes e não provam posição relativa atual.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que o conhecimento de clientes empresariais sustente originação, depósitos e serviços com retorno depois de risco. O crescimento precisa compensar a reprificação dos ativos quando os juros caem, sem depender de menor provisão ou tesouraria. A disciplina de capital e a retenção de funding são condições para transmitir valor ao acionista. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Compra, com retorno esperado +55,55%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Juros menores podem reprificar ativos antes do funding. Crescimento pode elevar perdas e consumir capital, enquanto provisões ou tesouraria mascaram a franquia. Concentração empresarial e depósitos sensíveis a preço podem ampliar o estresse de liquidez."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_BAJIO.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+30,43%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +30,43%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "BanBajío — relacionamento empresarial, margem e capital preliminar",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A análise distingue margem, provisões e tesouraria e preserva cortes trimestrais e anuais. Capital preliminar, metodologia de risco e diferenças de data nas comparações com a indústria permanecem limites da leitura. Não há conciliação financeira integral ou mudança de guidance classificada.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar margem antes e depois de perdas, taxa dos ativos e custo de funding por origem. Revisar migração de risco, provisões e cobertura, separando banco e tesouraria. Conferir o capital definitivo, a metodologia usada e a capacidade de distribuição após crescimento e obrigações.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.MX_BAJIO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,34%"
+          },
+          {
+            "fato": "val.MX_BAJIO.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "13,15%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,34% e a dispersão entre métodos 13,15%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

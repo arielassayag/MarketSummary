@@ -9,11 +9,11 @@ motivo: `docs/cdp/DECISOES.md`.
 
 Pedido humano: integrar o projeto e publicar, com revisão ROOT antes de main.
 O ramo `codex/cdp-consolidacao-ai-notes-12out`, no checkout interno
-`.cdp/integracoes/risco-unidades`, conserva a conclusão oficial241 abaixo.
+`.cdp/integracoes/risco-unidades`, conserva a conclusão oficial 241 abaixo.
 Fechamento foi recebido dos cinco diffs humanos sem alterar o checkout original:
 contratos distinguem data de publicação informada pela fonte e horário retornado pela fonte,
 registros malformados são recusados por item e RSS permanece contingência.
-Os dezesseis arquivos de teste de Fechamento concluíram92 casos únicos aprovados,
+Os dezesseis arquivos de teste de Fechamento concluíram 92 casos únicos aprovados,
 sem skip, falha ou erro; Ruff passou. Uma CI própria foi acrescentada sem retirar
 os jobs CDP. Negativos intermediários ficaram preservados; nenhuma fonte externa
 ou execução financeira foi certificada por esses testes.
@@ -26,28 +26,28 @@ de índices extras ao validar Selic/CDI, preservando o corpo inteiro e o domíni
 positivo declarado dos alvos. Ausência, valor não finito e domínio não positivo são
 condições distintas; não se inventa publicação ou vigência. A rodada final dos dezesseis
 arquivos, incluindo o rótulo informado pela fonte e mensagens de domínio distintas,
-concluiu111 casos únicos aprovados, sem skip/falha/erro. A fonte final exige sua
+concluiu 111 casos únicos aprovados, sem skip/falha/erro. A fonte final exige sua
 própria qualificação conjunta; as negativas intermediárias permanecem privadas.
 
 A auditoria histórica F01–F09 foi confrontada com os corpos atuais. Os reparos
 F05–F08 foram recebidos em commit local independente: risco valida B/F/D detidos,
 regressão usa o posto efetivo, PM duplicado é recusado na fronteira comum e golden
-set vazio não produz avaliação. Os132 casos focais do autor não são somados ao
+set vazio não produz avaliação. Os 132 casos focais do autor não são somados ao
 Fechamento. F01/F02/F04 foram recebidos e incorporados de autor independente: commits
 pendentes também exigem trava, push usa o SHA conferido, importação valida o pacote
 e os pais por descritores/no-follow antes de aplicar, e append serializa a cauda
 e o flush. A importação é POSIX e não é transação multi-arquivo; Windows não foi
-qualificado. Os39 focais do autor não são uma suíte integral da composição. F03 recebe recusa de módulo JS obrigatório ausente na construção
+qualificado. Os 39 focais do autor não são uma suíte integral da composição. F03 recebe recusa de módulo JS obrigatório ausente na construção
 e na conferência do portal, inclusive quando manifesto/somas foram refeitos.
 O sucessor do inventário de commits confere origens de renomeações e cada pai dos
 merges, com remoto e cabeça pinados. A exceção para código remoto exige pai autorizado
-e resultado literal igual ao remoto; erro de leitura recusa a publicação. Seus17
-casos focais aprovados permanecem separados dos39 anteriores e da suíte conjunta.
+e resultado literal igual ao remoto; erro de leitura recusa a publicação. Seus 17
+casos focais aprovados permanecem separados dos 39 anteriores e da suíte conjunta.
 F09 está fechado na documentação: Claude Code é alternativa, com configuração e
 registro explícitos, enquanto Codex é o executor corrente.
 Wheel e sdist foram construídos no ambiente próprio, com os corpos do pacote
 confrontados integralmente com a fonte. A instalação fresh fora do clone, sem
-editable, recebeu o SDK MCP2.3.0 físico e concluiu três kernels, onze recursos e
+editable, recebeu o SDK MCP 2.3.0 físico e concluiu três kernels, onze recursos e
 nove consultas nativas pelo STDIO, com paridade, ausência real, autoria divergente,
 instrumento fora do universo, adulteração e recuperação. As negativas do helper
 anteriores foram preservadas; o sucessor corrigiu seus oráculos conforme os
@@ -56,28 +56,62 @@ cliente; o ramo discover/adopt versus initialize não foi registrado. Isso quali
 esta instalação e o corpus DADOS SIMULADOS, sem autoridade financeira, PIT ou prova
 universal de ausência de rede. UVtool/UVx da nova composição permanecem apenas
 preparados; a qualificação histórica não é atribuída a esta fonte.
+Produto, recursos, configuração e lock continuam literalmente iguais aos corpos
+instalados recebidos. Os testes agora têm um delta explícito na fixture de replay:
+o sdist anterior conserva seus testes históricos e não é atribuído à fixture nova.
 
 A primeira suíte integral local de `836c783` encerrou na primeira falha documental:
-faltava o histórico preservado no mapa de AGENTS. Foram2170 casos únicos executados,
+faltava o histórico preservado no mapa de AGENTS. Foram 2170 casos únicos executados,
 2153 aprovados, dezesseis ignorados e uma falha; não é uma suíte integral aprovada.
 O mapa foi corrigido mantendo o teste. A CI inicial recusou quatro expressões
 `runner.temp` no nível de ambiente do job antes de iniciar jobs; o sucessor usa
 diretórios privados declarados em etapa própria. Na CI de `0880123`, os jobs de
-wheel/SDK/STDIO e livro/rotinas/skills/portal foram observados aprovados; a qualidade
-integral ainda está em andamento. Fechamento Linux concluiu111 casos únicos
-aprovados em `836c783`. Resultados de fontes distintas permanecem separados.
+wheel/SDK/STDIO e livro/rotinas/skills/portal concluíram; a qualidade foi cancelada
+automaticamente pela concorrência ao enviar o sucessor, sem JUnit integral.
+Fechamento Linux de `28b3594` concluiu 111 casos únicos aprovados. Resultados de
+fontes distintas permanecem separados.
 
-A composição CDP recebe a fonte privada0594f14, incluindo escritores NET,
-recepção bancária opt-in, diagnósticos P1 em sombra, técnicas e MCP1.7.
+O full local e a CI Linux de `28b3594` encerraram, separadamente, na mesma primeira
+negativa de setup: 4860 casos únicos executados em cada ambiente, 4842 aprovados,
+dezessete ignorados e um erro, sem falha de assertion. A fixture de limites de
+replay não selava gênese antes da operação inaugural. A captura mínima do retorno
+nativo confirmou `NET UNVERIFIABLE: gênese econômica autenticada ausente`; a
+negativa instrumental anterior de representação de data também foi preservada.
+A fixture passou a usar `ReplayOrigin` simulada e seu produtor monetário nativo
+antes do primeiro preparo, com manifesto físico, sem mudar sementes, arrays,
+datas, configuração, modelos ou limites. Cinco ausências de dados e o caso HARD
+concluíram positivamente; o caso de squeeze encontrou uma nova recusa NET após
+custos, registrada como caducidade, com carteira anterior mantida.
+
+Esse cenário fixo não prova um corte operacional positivo. O teste foi renomeado
+para exigir a recusa NET literal, posições e custos preservados, hashes imutáveis,
+episódio pendente, veto e idempotência. Sete controles específicos concluíram
+aprovados, com Ruff e identidade da fonte: o cenário corrigido, três regras
+existentes de corte parcial/episódio/veto e três contratos NET/HOLD nativos.
+Os seis positivos anteriores não foram repetidos nem somados a esse focal.
+A prova de corte positivo de squeeze por MOC sob o gate NET permanece aberta;
+os testes de regras com registros sintéticos não a substituem. O campo textual
+`regra` da caducidade ainda menciona kill switch; motivo e alerta preservam a causa
+NET efetiva, e esta alteração não modifica aquele texto de produto.
+
+Uma coleta sem executar casos recebeu 6174 IDs únicos e comparou o conjunto com
+os 4860 IDs do full interrompido. O plano local distingue casos ainda não executados,
+afetados e provas já recebidas; a renomeação do teste tem relação explícita de IDs.
+Não é uma nova suíte integral local aprovada. A CI integral Linux do sucessor
+continua obrigatória antes da revisão de integração em main.
+
+A composição CDP recebe a fonte privada 0594f14, incluindo escritores NET,
+recepção bancária opt-in, diagnósticos P1 em sombra, técnicas e MCP 1.7.
 São candidatos de fonte recebidos; a instalação/STDIO acima foi qualificada no
-recorte declarado. A suíte conjunta e a CI final ainda precisam concluir. Não
+recorte declarado. Os checks locais restantes e a CI final ainda precisam concluir. Não
 atribuir resultados de fontes anteriores ao novo pai. Os contratos/hard gates/configuração continuam preservados,
-sem integração financeira automática dos protótipos ou nova operação de09/10.
+sem integração financeira automática dos protótipos ou nova operação de 09/10.
 O [registro privado histórico](HISTORICO_PRIVADO_2026-10-10_CONSOLIDACAO.md)
 conserva integralmente o corpo da passagem dessa frente e seus limites originais.
-Evidências novas ficam em `.cdp/estudos/CONSOLIDACAO_AI_NOTES_12OUT/`.
-Fonte enviada ao PR7 como draft, sem integração em main ou nova publicação do portal.
-O merge normal do relatório oficial de risco de16:07 preservou a rotina em main;
+Evidências novas ficam em `.cdp/estudos/CONSOLIDACAO_AI_NOTES_12OUT/` e nas áreas
+privadas de qualificação da composição e do replay.
+Fonte enviada ao PR 7 como draft, sem integração em main ou nova publicação do portal.
+O merge normal do relatório oficial de risco de 16:07 preservou a rotina em main;
 nenhuma operação foi realizada pela sessão de desenvolvimento. ROOT recebe a
 entrega final antes da integração e publicação.
 

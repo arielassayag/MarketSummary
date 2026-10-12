@@ -1,0 +1,391 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "e27dc3f522315c9e9e14caca49cd8a26782d3e336fb373efa335d3c3882351f3",
+    "factbook": "10838af8714b5de8d7f62645d1b01ac864d61e326066d5ee7473cf5b27e4ab70",
+    "nota_json": "25599b46e682f94b6a9d459f176b6538c0273ef18c866df5ddce212f29d21e3c"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_STONE",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-12",
+  "published_at": "2026-10-12T02:03:26.748769+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A avaliação depende de financiamento de antecipação e crédito, disponibilidade de capital e risco das carteiras, em conjunto com recompras e distribuições. O retorno ao acionista deve ser analisado após perdas e obrigações financeiras. A pesquisa ainda não reconciliou o capital prospectivo totalmente diluído e os compromissos dos produtos.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em US$ 19,27, com retorno esperado +83,27%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Relacionamento aumenta retenção e contribuição depois de custos, perdas e capital. Produtos financeiros têm financiamento e risco compatíveis com o retorno; demonstrações e base acionária sustentam a melhora econômica por acionista. O cenário otimista calculado pelo código é US$ 21,42.",
+      "pessimista": "Concorrência comprime monetização e retenção; financiamento e perdas absorvem crescimento. Capital necessário limita distribuições, enquanto ajustes ou mudanças de ações básicas exageram a melhora aparente por ação. O cenário pessimista calculado pelo código é US$ 17,28."
+    },
+    "comentario_valuation": "Preço de referência US$ 11,60 e alvo do modelo aberto US$ 19,27, com potencial +66,09%. Retorno total esperado +83,27% e custo do capital próprio 10,89%. A dispersão entre métodos é 24,07%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é US$ 15,48; a diferença +24,43% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Monetização pode crescer por maior prazo, risco ou custo de financiamento, em vez de contribuição sustentável dos serviços. Concorrência pode reduzir preços e retenção, enquanto perdas ou necessidades de capital absorvem receita. Uma melhora ajustada por ação pode refletir base acionária sem resolver a economia do cliente.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_STONE.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 11,60"
+      },
+      {
+        "fato": "val.BR_STONE.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 19,27"
+      },
+      {
+        "fato": "val.BR_STONE.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+66,09%"
+      },
+      {
+        "fato": "val.BR_STONE.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.BR_STONE.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_STONE.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 21,42"
+      },
+      {
+        "fato": "val.BR_STONE.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_STONE.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 17,28"
+      },
+      {
+        "fato": "val.BR_STONE.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_STONE.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,89%"
+      },
+      {
+        "fato": "val.BR_STONE.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_STONE.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.BR_STONE.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+83,27%"
+      },
+      {
+        "fato": "val.BR_STONE.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+55,03%"
+      },
+      {
+        "fato": "val.BR_STONE.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "5,0x"
+      },
+      {
+        "fato": "val.BR_STONE.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,5x"
+      },
+      {
+        "fato": "val.BR_STONE.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 15,48"
+      },
+      {
+        "fato": "val.BR_STONE.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+24,43%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "StoneCo",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e estrutura do negócio",
+        "url": "https://investors.stone.co/about-us/about/?section=numbers"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "StoneCo",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Informações financeiras e materiais de análise",
+        "url": "https://investors.stone.co/guidance/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+      "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+      "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+      "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+    ],
+    "governanca": "A avaliação depende de financiamento de antecipação e crédito, disponibilidade de capital e risco das carteiras, em conjunto com recompras e distribuições. O retorno ao acionista deve ser analisado após perdas e obrigações financeiras. A pesquisa ainda não reconciliou o capital prospectivo totalmente diluído e os compromissos dos produtos.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Separar contribuição de pagamentos, serviços bancários e crédito; acompanhar retenção, monetização, custo de aquisição e atendimento, financiamento, perdas e caixa. Reconciliar operações continuadas, ajustes, classes, recompras e diluição antes de concluir retorno ao acionista.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_STONE.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+83,27%"
+          },
+          {
+            "fato": "val.BR_STONE.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,89%"
+          },
+          {
+            "fato": "val.BR_STONE.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "24,07%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +83,27%, custo do capital 10,89% e dispersão entre métodos 24,07% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_STONE",
+    "lacunas_de_dados": [
+      "Último resultado e notas explicativas não foram integralmente reconciliados nesta pesquisa.",
+      "Guidance e tom da gestão não foram avaliados em material atual completo.",
+      "Participação de mercado e desempenho relativo frente a concorrentes exigem comprovação específica.",
+      "Percepção do mercado, posicionamento e interesse vendido não têm suporte documental suficiente.",
+      "Retorno econômico de projetos e decisões recentes de capital permanece a comprovar.",
+      "Não há catalisador datado confirmado neste estudo."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "A Stone oferece soluções de pagamentos, serviços bancários e tecnologia para comerciantes e parceiros integrados no Brasil. Atua em canais presenciais, digitais e móveis. O negócio combina transações, relacionamento comercial e produtos financeiros. A análise deve separar receita de serviços, antecipação e crédito, custos de financiamento, perdas e capital necessário; crescimento da base não é sinônimo de retorno econômico.",
+    "nome": "StoneCo",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BB",
+        "nome": "Banco do Brasil"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      },
+      {
+        "issuer_id": "BR_INTER",
+        "nome": "Inter&Co"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese é que relacionamento e integração dos serviços aumentem a contribuição econômica por cliente sem depender de risco de crédito ou financiamento crescente. A condição decisiva é retenção e monetização após custo de atendimento, perdas e capital consumido. Escala de transações só sustenta valor quando se converte em caixa e retorno ajustado ao risco.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_STONE.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "US$ 11,60"
+          },
+          {
+            "fato": "val.BR_STONE.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "US$ 19,27"
+          },
+          {
+            "fato": "val.BR_STONE.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+66,09%"
+          },
+          {
+            "fato": "val.BR_STONE.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,89%"
+          },
+          {
+            "fato": "val.BR_STONE.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+83,27%"
+          }
+        ],
+        "texto": "Preço de referência US$ 11,60 e alvo US$ 19,27, com potencial +66,09%. A hipótese de investimento deve ser confrontada com o custo do capital 10,89% e retorno esperado +83,27%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Integração operacional e proximidade comercial podem afetar retenção e adoção de serviços. São hipóteses a testar frente a concorrentes, preços e custo de aquisição. A descrição de foco no cliente não demonstra poder de preço nem impede migração para alternativas de pagamentos e serviços financeiros.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:03:26.748769+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A página de orientação usa lucro ajustado por ação básica de operações continuadas e explicita tratamento das distribuições nas ações básicas. A pesquisa precisa reconciliar ajustes, diluição e base acionária com o lucro atribuível. Projeção por ação básica não substitui o lucro diluído nem a ponte de capital necessária à avaliação.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que relacionamento e integração dos serviços aumentem a contribuição econômica por cliente sem depender de risco de crédito ou financiamento crescente. A condição decisiva é retenção e monetização após custo de atendimento, perdas e capital consumido. Escala de transações só sustenta valor quando se converte em caixa e retorno ajustado ao risco. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Compra, com retorno esperado +83,27%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Competição, retenção, custo de servir e financiamento podem reduzir a contribuição por cliente. Crédito e antecipação acrescentam perdas e necessidade de capital. Ajustes e diferenças entre ações básicas e diluídas podem comprometer a comparabilidade do lucro e do valor por ação."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_STONE.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+24,43%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +24,43%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Stone: monetização do relacionamento com risco e financiamento explícitos",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A leitura consolidada do modelo está disponível no retrato recebido. A reconciliação integral do último release, das notas explicativas e da apresentação por negócio permanece pendente; não se atribui alteração de guidance nem tom à gestão sem essa evidência.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Separar contribuição de pagamentos, serviços bancários e crédito; acompanhar retenção, monetização, custo de aquisição e atendimento, financiamento, perdas e caixa. Reconciliar operações continuadas, ajustes, classes, recompras e diluição antes de concluir retorno ao acionista.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_STONE.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,89%"
+          },
+          {
+            "fato": "val.BR_STONE.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "24,07%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 10,89% e a dispersão entre métodos 24,07%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

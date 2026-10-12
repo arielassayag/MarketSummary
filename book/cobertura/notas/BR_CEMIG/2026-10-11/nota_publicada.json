@@ -1,0 +1,391 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "20dc1b9062a28ae6e96e34f65d7983cf23e2a4e9f39d17b5f89075ffd06c3cd2",
+    "factbook": "514a18a021f80b567a7ae2c9113001a3c06ed28c438ddbbcfebb8c62fa308410",
+    "nota_json": "afbc19aa35c906eefad072c527d7a9b82434ed472e89ad903cf8233d00e6f8c0"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_CEMIG",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-12",
+  "published_at": "2026-10-12T02:03:51.734454+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O programa de investimentos, obrigações de serviço e distribuições deve ser examinado junto a dívida e interesses do controlador estatal. Alocação de capital e transações com partes relacionadas podem modificar o retorno ao minoritário. A pesquisa não atribui criação de valor a uma mudança de controle que ainda depende de atos e condições não reconciliados.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 17,97, com retorno esperado +54,07%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Eficiência, qualidade e investimentos remunerados são demonstrados por caixa após financiamento. Decisões de capital preservam obrigações de serviço e transmissão de valor ao minoritário, com incentivos de controle claramente examinados. O cenário otimista calculado pelo código é R$ 21,27.",
+      "pessimista": "Obras, financiamento ou remuneração insuficiente absorvem caixa; interesses de controle e obrigações limitam distribuição. Expectativa de evento societário não se materializa e deixa sem suporte parte da avaliação. O cenário pessimista calculado pelo código é R$ 15,05."
+    },
+    "comentario_valuation": "Preço de referência R$ 12,07 e alvo do modelo aberto R$ 17,97, com potencial +48,86%. Retorno total esperado +54,07% e custo do capital próprio 10,34%. A dispersão entre métodos é 20,82%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 12,12; a diferença +48,30% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Investimento e obrigações operacionais podem consumir melhora de eficiência, enquanto remuneração ou financiamento limitam o caixa. Incentivos de controle podem divergir do retorno ao minoritário. Uma avaliação apoiada em evento societário não confirmado pode falhar mesmo quando a companhia mantém resultado operacional.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_CEMIG.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 12,07"
+      },
+      {
+        "fato": "val.BR_CEMIG.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 17,97"
+      },
+      {
+        "fato": "val.BR_CEMIG.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+48,86%"
+      },
+      {
+        "fato": "val.BR_CEMIG.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.BR_CEMIG.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_CEMIG.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 21,27"
+      },
+      {
+        "fato": "val.BR_CEMIG.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_CEMIG.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 15,05"
+      },
+      {
+        "fato": "val.BR_CEMIG.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_CEMIG.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,34%"
+      },
+      {
+        "fato": "val.BR_CEMIG.wacc",
+        "rotulo": "WACC",
+        "valor": "8,56%"
+      },
+      {
+        "fato": "val.BR_CEMIG.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_CEMIG.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+54,07%"
+      },
+      {
+        "fato": "val.BR_CEMIG.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+57,59%"
+      },
+      {
+        "fato": "val.BR_CEMIG.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "10,3x"
+      },
+      {
+        "fato": "val.BR_CEMIG.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,2x"
+      },
+      {
+        "fato": "val.BR_CEMIG.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 12,12"
+      },
+      {
+        "fato": "val.BR_CEMIG.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+48,30%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Cemig",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e estrutura do negócio",
+        "url": "https://www.cemig.com.br/a-cemig/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Cemig",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Informações financeiras e materiais de análise",
+        "url": "https://ri.cemig.com.br/governanca-corporativa/composicao-acionaria"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+      "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+      "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+      "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+    ],
+    "governanca": "O programa de investimentos, obrigações de serviço e distribuições deve ser examinado junto a dívida e interesses do controlador estatal. Alocação de capital e transações com partes relacionadas podem modificar o retorno ao minoritário. A pesquisa não atribui criação de valor a uma mudança de controle que ainda depende de atos e condições não reconciliados.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Separar caixa, remuneração regulatória, qualidade e capital investido de distribuição, geração, transmissão e gás. Reconciliar financiamento, classes, proventos e transações societárias; verificar atos e condições de qualquer mudança de controle antes de incorporá-la à tese.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_CEMIG.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+54,07%"
+          },
+          {
+            "fato": "val.BR_CEMIG.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,34%"
+          },
+          {
+            "fato": "val.BR_CEMIG.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "20,82%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +54,07%, custo do capital 10,34% e dispersão entre métodos 20,82% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_CEMIG",
+    "lacunas_de_dados": [
+      "Último resultado e notas explicativas não foram integralmente reconciliados nesta pesquisa.",
+      "Guidance e tom da gestão não foram avaliados em material atual completo.",
+      "Participação de mercado e desempenho relativo frente a concorrentes exigem comprovação específica.",
+      "Percepção do mercado, posicionamento e interesse vendido não têm suporte documental suficiente.",
+      "Retorno econômico de projetos e decisões recentes de capital permanece a comprovar.",
+      "Não há catalisador datado confirmado neste estudo."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "A Cemig atua em geração, transmissão, distribuição e comercialização de energia elétrica, além da distribuição de gás natural. O Estado de Minas Gerais possui a maioria das ações ordinárias na composição divulgada. Cada negócio tem contratos, investimentos e riscos próprios. A pesquisa deve separar empresas e segmentos, classes de capital e incentivos do controle, sem assumir que caixa consolidado esteja livremente disponível ao acionista.",
+    "nome": "Cemig",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ALUPAR",
+        "nome": "Alupar"
+      },
+      {
+        "issuer_id": "BR_AUREN",
+        "nome": "Auren Energia"
+      },
+      {
+        "issuer_id": "BR_AXIA",
+        "nome": "Axia Energia (ex-Eletrobras)"
+      },
+      {
+        "issuer_id": "BR_COMPASS",
+        "nome": "Compass Gás e Energia"
+      },
+      {
+        "issuer_id": "BR_COPASA",
+        "nome": "Copasa"
+      },
+      {
+        "issuer_id": "BR_COPEL",
+        "nome": "Copel"
+      },
+      {
+        "issuer_id": "BR_CPFL",
+        "nome": "CPFL Energia"
+      },
+      {
+        "issuer_id": "BR_ENERGISA",
+        "nome": "Energisa"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese é que eficiência e investimentos remunerados produzam caixa transferível ao acionista sem comprometer a qualidade e as obrigações dos serviços. A condição decisiva é retorno após investimento e financiamento em cada negócio, sob decisões de capital verificáveis. Mudança eventual de controle ou estrutura não integra o caso-base sem ato e mecanismo confirmado.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_CEMIG.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 12,07"
+          },
+          {
+            "fato": "val.BR_CEMIG.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 17,97"
+          },
+          {
+            "fato": "val.BR_CEMIG.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+48,86%"
+          },
+          {
+            "fato": "val.BR_CEMIG.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,34%"
+          },
+          {
+            "fato": "val.BR_CEMIG.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+54,07%"
+          }
+        ],
+        "texto": "Preço de referência R$ 12,07 e alvo R$ 17,97, com potencial +48,86%. A hipótese de investimento deve ser confrontada com o custo do capital 10,34% e retorno esperado +54,07%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Redes reguladas, ativos de geração e negócios de gás possuem economias distintas. A presença regional não prova vantagem uniforme nem elimina restrições contratuais. A pesquisa deve comparar eficiência, qualidade, remuneração dos investimentos e exposição comercial por segmento, evitando extrapolar um negócio para toda a companhia.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:03:51.734454+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A separação entre classes acionárias e níveis societários exige reconciliar lucro atribuível, caixa distribuído e passivos no nível correto. O resultado de energia inclui componentes regulatórios e contábeis que podem diferir do recebimento. A composição acionária é evidência de controle, não comprovação de retorno ou de caixa disponível.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que eficiência e investimentos remunerados produzam caixa transferível ao acionista sem comprometer a qualidade e as obrigações dos serviços. A condição decisiva é retorno após investimento e financiamento em cada negócio, sob decisões de capital verificáveis. Mudança eventual de controle ou estrutura não integra o caso-base sem ato e mecanismo confirmado. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Compra, com retorno esperado +54,07%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Regulação, obras, hidrologia e financiamento podem pressionar caixa e distribuição. Controle estatal, classes e partes relacionadas exigem exame próprio. Evento societário não confirmado pode deixar a avaliação sem suporte."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_CEMIG.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+48,30%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +48,30%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Utilidades públicas",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Cemig: retorno dos investimentos e transmissão de caixa sob controle estatal",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A leitura consolidada do modelo está disponível no retrato recebido. A reconciliação integral do último release, das notas explicativas e da apresentação por negócio permanece pendente; não se atribui alteração de guidance nem tom à gestão sem essa evidência.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Separar caixa, remuneração regulatória, qualidade e capital investido de distribuição, geração, transmissão e gás. Reconciliar financiamento, classes, proventos e transações societárias; verificar atos e condições de qualquer mudança de controle antes de incorporá-la à tese.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_CEMIG.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,34%"
+          },
+          {
+            "fato": "val.BR_CEMIG.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "20,82%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 10,34% e a dispersão entre métodos 20,82%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

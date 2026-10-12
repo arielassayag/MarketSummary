@@ -1,0 +1,501 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "dd925fe59924eda88f2daba8da52443b281b3b079d2e859c66d8ec07f2b8fbfd",
+    "factbook": "69945a150c338860b5a28860f6d431d795fb336f85b3e2db4076f78e1788c85a",
+    "nota_json": "b6e1a2014696018949c6fa7f1354fb619dbee371db59dc4081c9bc3feaba75ee"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_VIBRA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-04",
+  "published_at": "2026-10-12T01:57:30.517932+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F6"
+          }
+        ],
+        "texto": "Dívida líquida e alavancagem diminuem, com amortizações e maior EBITDA no denominador; arrendamentos e swaps integram medidas específicas. Renegociação alonga prazos e reduz custo apresentado, sem eliminar financiamento. Fluxo livre gerencial antes de captação e amortização não é caixa distribuível integral; a medida após financiamento tem direção sequencial distinta. Bookbuilding posterior não comprova liquidação. Juros sobre capital próprio foram declarados para pagamento futuro, sujeito a direitos e retenções.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Resultados posteriores: testar margem normalizada de distribuição, energia, giro e caixa depois do financiamento.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": null,
+        "descricao": "Liquidação e destinação da emissão posterior; conciliar obrigações e recursos efetivamente recebidos.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F4"
+          }
+        ],
+        "tipo": "capital"
+      },
+      {
+        "data": null,
+        "descricao": "Pagamento declarado para prazo além da janela anual de catalisadores desta nota; consultar cronograma e verificar elegibilidade, retenções e efetiva liquidação.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F6"
+          }
+        ],
+        "tipo": "dividendos"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 50,11, com retorno esperado +36,48%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Logística, mix e fidelização sustentam margem comparável e caixa após manutenção e financiamento, com Comerc remunerando capital e reduzindo risco de contraparte. O cenário otimista calculado pelo código é R$ 71,89.",
+      "pessimista": "Margens normalizam e energia deteriora, enquanto giro, contratos e financiamento absorvem recursos e limitam retorno ao acionista. O cenário pessimista calculado pelo código é R$ 30,29."
+    },
+    "comentario_valuation": "Preço de referência R$ 37,55 e alvo do modelo aberto R$ 50,11, com potencial +33,46%. Retorno total esperado +36,48% e custo do capital próprio 11,24%. A dispersão entre métodos é 14,04%; a confiança quantitativa recebida é A. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 41,81; a diferença +19,87% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "A hipótese enfraquece se crescimento de margem depende de preços e suprimento temporários, sem fidelização e eficiência recorrentes. Novos postos podem coexistir com perda líquida de base. Recuperações e ressarcimentos não se repetem indefinidamente. Comercialização, cortes de geração e dívida podem impedir que a integração energética remunere capital, enquanto resultado ajustado e linha contratada não garantem caixa ao acionista.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_VIBRA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 37,55"
+      },
+      {
+        "fato": "val.BR_VIBRA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 50,11"
+      },
+      {
+        "fato": "val.BR_VIBRA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+33,46%"
+      },
+      {
+        "fato": "val.BR_VIBRA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_VIBRA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "A"
+      },
+      {
+        "fato": "val.BR_VIBRA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 71,89"
+      },
+      {
+        "fato": "val.BR_VIBRA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "1,59%"
+      },
+      {
+        "fato": "val.BR_VIBRA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 30,29"
+      },
+      {
+        "fato": "val.BR_VIBRA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "18,17%"
+      },
+      {
+        "fato": "val.BR_VIBRA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,24%"
+      },
+      {
+        "fato": "val.BR_VIBRA.wacc",
+        "rotulo": "WACC",
+        "valor": "9,45%"
+      },
+      {
+        "fato": "val.BR_VIBRA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_VIBRA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+36,48%"
+      },
+      {
+        "fato": "val.BR_VIBRA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+13,80%"
+      },
+      {
+        "fato": "val.BR_VIBRA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "9,1x"
+      },
+      {
+        "fato": "val.BR_VIBRA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,9x"
+      },
+      {
+        "fato": "val.BR_VIBRA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 41,81"
+      },
+      {
+        "fato": "val.BR_VIBRA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+19,87%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Vibra Energia",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil de distribuição e plataforma de energia após Comerc",
+        "url": "https://ri.vibraenergia.com.br/vibra-energia/perfil-corporativo/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Vibra Energia",
+        "publicado_em": "2026-08-14",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado trimestral: distribuição, Comerc, caixa, dívida e ajustes",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/d243bdaa-0468-4f64-8c09-ba0bcee9789b/36213875-dcba-f137-2545-3f3eaa493e36?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Vibra Energia",
+        "publicado_em": "2026-08-14",
+        "tipo": "Relações com investidores",
+        "titulo": "Demonstrações intermediárias e revisão: fluxo, ajustes e obrigações",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/d243bdaa-0468-4f64-8c09-ba0bcee9789b/60f6d86e-bee9-f5b7-421e-81adc87a4fdd?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F4",
+        "instituicao": "Vibra Energia",
+        "publicado_em": "2026-09-25",
+        "tipo": "Relações com investidores",
+        "titulo": "Conclusão do bookbuilding da emissão de debêntures",
+        "url": "https://filemanager-cdn.mziq.com/published/d243bdaa-0468-4f64-8c09-ba0bcee9789b/7b20c334-a060-4b29-8625-1d9d59012f95"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F5",
+        "instituicao": "Vibra Energia",
+        "publicado_em": "2026-10-08",
+        "tipo": "Relações com investidores",
+        "titulo": "Notificação de participação acionária relevante",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/d243bdaa-0468-4f64-8c09-ba0bcee9789b/2fae913c-dc21-a4b5-30cc-bb787805d310?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F6",
+        "instituicao": "Vibra Energia",
+        "publicado_em": "2026-08-14",
+        "tipo": "Relações com investidores",
+        "titulo": "Declaração de juros sobre capital próprio e pagamento futuro",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/d243bdaa-0468-4f64-8c09-ba0bcee9789b/282f00c5-705b-e5e5-f985-1fa5602b3385?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Margem comparável e rede líquida não sustentam caixa depois da normalização.",
+      "Ressarcimentos, tributos e giro explicam resultado sem fonte recorrente equivalente.",
+      "Energia, contratos e financiamento deixam de remunerar o capital.",
+      "Novos documentos alteram dívida, liquidez, direitos ou intenção dos acionistas relevantes."
+    ],
+    "governanca": "A revisão intermediária não equivale a auditoria anual. A licença da marca não comprova propriedade dos postos nem vínculo de controle com Petrobras. A participação relevante notificada depois do trimestre não demonstra mudança de controle ou intenção do investidor; a correspondência anunciada como anexo não foi integralmente reproduzida na cópia recebida. Declaração de juros sobre capital próprio tem data de direito passada e pagamento futuro; valor por ação pode mudar com tesouraria. Rating e registro automático da emissão não garantem solvência.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          },
+          {
+            "fonte": "F6"
+          }
+        ],
+        "texto": "Conciliar rede líquida, volume, mix, margem e crédito por segmento. Verificar bonificações, CBIOs, tributos, giro e manutenção. Separar energia efetiva e potencial, ressarcimento, marcação e risco de contraparte. Acompanhar dívida, swap, arrendamentos, liquidação de emissões e caixa após financiamento antes de inferir retorno por ação.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_VIBRA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+36,48%"
+          },
+          {
+            "fato": "val.BR_VIBRA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,24%"
+          },
+          {
+            "fato": "val.BR_VIBRA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "14,04%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +36,48%, custo do capital 11,24% e dispersão entre métodos 14,04% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_VIBRA",
+    "lacunas_de_dados": [
+      "Ponte integral de caixa por segmento e recursos atribuíveis depois de todas as obrigações não foi concluída.",
+      "Margem normalizada, bonificações e retorno líquido do embandeiramento precisam de conciliação.",
+      "Ressarcimento de cortes, contratos de energia e risco de contraparte exigem diligência específica.",
+      "Liquidação e destinação integral da emissão posterior não foram comprovadas pelo comunicado de bookbuilding.",
+      "A correspondência do acionista relevante anunciada como anexo não foi integralmente recebida.",
+      "Capacidade de distribuição futura depende de direitos, tesouraria e obrigações; declaração não comprova pagamento.",
+      "Guidance agregado, tom e percepção do mercado não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Distribuidora de combustíveis, lubrificantes e soluções para rede de postos e clientes empresariais, com infraestrutura logística e licença de marca Petrobras. A plataforma de energia inclui geração, comercialização e serviços da Comerc, integralmente adquirida. Postos embandeirados, ativos próprios e contratos comerciais têm naturezas diferentes. Preço de combustível, volume, mix, crédito e suprimento determinam margem de distribuição; energia tem contratos, cortes de geração e risco de contraparte próprios.",
+    "nome": "Vibra Energia",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRAVA",
+        "nome": "Brava Energia"
+      },
+      {
+        "issuer_id": "BR_COSAN",
+        "nome": "Cosan"
+      },
+      {
+        "issuer_id": "BR_PRIO",
+        "nome": "PRIO"
+      },
+      {
+        "issuer_id": "BR_RECV",
+        "nome": "PetroRecôncavo"
+      },
+      {
+        "issuer_id": "BR_ULTRAPAR",
+        "nome": "Ultrapar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que confiabilidade logística e gestão comercial sustentem caixa por ação depois de bonificações, manutenção e financiamento. A condição decisiva é margem comparável ao longo do ciclo e retorno econômico da integração com energia. Ampliação da rede e melhoria do mix podem apoiar resultado, mas margem conjuntural elevada não estabelece um patamar permanente. Desalavancagem precisa ser conciliada com obrigações, giro e qualidade dos ajustes antes de presumir capacidade sustentável de distribuição.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_VIBRA.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 37,55"
+          },
+          {
+            "fato": "val.BR_VIBRA.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 50,11"
+          },
+          {
+            "fato": "val.BR_VIBRA.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+33,46%"
+          },
+          {
+            "fato": "val.BR_VIBRA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,24%"
+          },
+          {
+            "fato": "val.BR_VIBRA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+36,48%"
+          }
+        ],
+        "texto": "Preço de referência R$ 37,55 e alvo R$ 50,11, com potencial +33,46%. A hipótese de investimento deve ser confrontada com o custo do capital 11,24% e retorno esperado +36,48%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Capilaridade, importação, contratos e qualidade do fornecimento podem apoiar fidelização e escala. Embandeiramento bruto não equivale à expansão líquida da rede; o quadro trimestral mostra base anual menor apesar de adições recentes. Mix aditivado e contratos empresariais têm margens e risco de crédito próprios. A vantagem precisa sobreviver à normalização de suprimento e preços. Geração potencial e energia contratada não substituem geração efetiva, recebimento ou rentabilidade da Comerc.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T01:57:30.517932+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita, volumes, EBITDA ajustado recorrente e lucro consolidado melhoram sequencialmente e na comparação anual, com distribuição favorecida por mix e margem. Comerc apresenta comparação anual mais fraca no EBITDA e prejuízo ajustado, apesar da melhora sequencial de determinadas medidas. Recuperações tributárias, imóveis e marcação de contratos têm naturezas diferentes. A geração centralizada reconhece ressarcimento de cortes anteriores. Fluxo operacional cresce, com recebíveis e estoques consumindo recursos e fornecedores contribuindo para a ponte.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que confiabilidade logística e gestão comercial sustentem caixa por ação depois de bonificações, manutenção e financiamento. A condição decisiva é margem comparável ao longo do ciclo e retorno econômico da integração com energia. Ampliação da rede e melhoria do mix podem apoiar resultado, mas margem conjuntural elevada não estabelece um patamar permanente. Desalavancagem precisa ser conciliada com obrigações, giro e qualidade dos ajustes antes de presumir capacidade sustentável de distribuição. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +36,48%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Normalização de margem, suprimento, crédito e energia podem reduzir caixa. Cortes, contratos e contraparte afetam Comerc. Giro, financiamento e obrigações podem limitar distribuição, apesar de EBITDA ajustado maior."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_VIBRA.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+19,87%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +19,87%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Energia",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Vibra — margem de distribuição, energia e retorno depois do financiamento",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O resultado distingue distribuição, que sustenta o avanço, e Comerc, com pressão de comercialização, recurso e cortes de geração. EBITDA proporcional à participação não é igual ao consolidado. Ajustes excluem marcações sem caixa, mas obrigações de energia e financiamento continuam. A companhia apresenta hipótese de giro sem determinado recebimento atrasado; não foi tratada como caixa realizado. Eventos posteriores não foram incorporados retrospectivamente ao modelo recebido.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Conciliar rede líquida, volume, mix, margem e crédito por segmento. Verificar bonificações, CBIOs, tributos, giro e manutenção. Separar energia efetiva e potencial, ressarcimento, marcação e risco de contraparte. Acompanhar dívida, swap, arrendamentos, liquidação de emissões e caixa após financiamento antes de inferir retorno por ação.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_VIBRA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,24%"
+          },
+          {
+            "fato": "val.BR_VIBRA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "14,04%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,24% e a dispersão entre métodos 14,04%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

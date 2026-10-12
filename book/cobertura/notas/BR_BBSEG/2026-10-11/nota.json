@@ -1,0 +1,204 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_BBSEG",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "BB Seguridade — distribuição convertida em lucro recorrente e capital distribuível",
+  "resumo": "A hipótese é que a distribuição e o relacionamento bancário gerem lucro recorrente por ação com retenção prudencial compatível. A condição decisiva é contribuição operacional dos negócios depois de sinistros, despesas e remuneração dos parceiros. Juros e reservas técnicas podem favorecer a demonstração sem comprovar crescimento comercial ou caixa livremente distribuível. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_BBSEG.rating_codigo}}, com retorno esperado {{fact:val.BR_BBSEG.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Holding de seguros, previdência, capitalização, odontologia e corretagem, controlada pelo Banco do Brasil. A distribuição combina sua rede e canais com sociedades operacionais e parceiros. Resultado de participações, comissões da corretora e rendimentos da holding têm origens e exigências de capital diferentes.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que a distribuição e o relacionamento bancário gerem lucro recorrente por ação com retenção prudencial compatível. A condição decisiva é contribuição operacional dos negócios depois de sinistros, despesas e remuneração dos parceiros. Juros e reservas técnicas podem favorecer a demonstração sem comprovar crescimento comercial ou caixa livremente distribuível.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_BBSEG.preco}} e alvo {{fact:val.BR_BBSEG.preco_alvo}}, com potencial {{fact:val.BR_BBSEG.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_BBSEG.ke}} e retorno esperado {{fact:val.BR_BBSEG.etr}}.",
+      "evidencias": [
+        "val.BR_BBSEG.preco",
+        "val.BR_BBSEG.preco_alvo",
+        "val.BR_BBSEG.upside",
+        "val.BR_BBSEG.ke",
+        "val.BR_BBSEG.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Monitorar prêmios emitidos e ganhos, sinistralidade, comissões, despesas e resultado financeiro por negócio. Na previdência, acompanhar entradas, resgates, reservas, taxa média e descasamentos de índices. Conciliar lucro na mesma norma, ajustes recorrentes, tributos e dividendos recebidos pela holding antes de comparar retorno por ação.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_BBSEG.ke}} e a dispersão entre métodos {{fact:val.BR_BBSEG.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_BBSEG.ke",
+        "val.BR_BBSEG.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Divulgação programada de resultados; conciliar bases contábeis, subscrição, reservas e comissões.",
+      "data": "2026-11-03",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F4"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Crédito rural, sinistros, resgates e descasamentos de índices podem reduzir resultado. Contratos de distribuição e parceiros têm vigência e custos. Juros altos não beneficiam todos os negócios da mesma forma nem tornam reservas caixa livre.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_BBSEG.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_BBSEG.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Distribuição e retenção sustentam resultado operacional recorrente, com capital e recebimentos efetivos permitindo retorno por ação. O cenário otimista calculado pelo código é {{fact:val.BR_BBSEG.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_BBSEG.preco_alvo}}, com retorno esperado {{fact:val.BR_BBSEG.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Prêmios e comissões enfraquecem, sinistros ou resgates aumentam e descasamentos financeiros absorvem a contribuição da franquia. O cenário pessimista calculado pelo código é {{fact:val.BR_BBSEG.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_BBSEG.preco}} e alvo do modelo aberto {{fact:val.BR_BBSEG.preco_alvo}}, com potencial {{fact:val.BR_BBSEG.upside}}. Retorno total esperado {{fact:val.BR_BBSEG.etr}} e custo do capital próprio {{fact:val.BR_BBSEG.ke}}. A dispersão entre métodos é {{fact:val.BR_BBSEG.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_BBSEG.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_BBSEG.consenso_alvo}}; a diferença {{fact:val.BR_BBSEG.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "O crescimento semestral do lucro gerencial coexiste com recuo trimestral; a base contábil precisa de reconciliação própria. Em seguros, emissão rural e de vida tem trajetória diferente de prêmio ganho e comissões. Na previdência, melhora anual dos resgates não significa captação líquida positiva no trimestre. Corretagem tem mudanças de custos entre relacionadas, enquanto capitalização recebe efeitos financeiros e tributários.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "O controle bancário e as sociedades com parceiros exigem revisar vigências, direitos, relacionadas e remuneração da distribuição. A análise gerencial usa norma anterior de seguros e tem escopo diferente da demonstração contábil. Não se presume que conciliação de resultado, auditoria financeira e avaliação da qualidade das reservas tenham alcance idêntico.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "O acesso à rede do Banco do Brasil pode reduzir custo de distribuição e apoiar venda cruzada. Os acordos têm vigências próprias e não foram tratados como perpetuidade. A vantagem exige retenção, prêmios rentáveis e receitas após comissões; volume de reservas não demonstra poder de preço quando a taxa média de administração diminui.",
+    "evidencias": [
+      "F1",
+      "F2",
+      "F3"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "O resultado recorrente gerencial cai no trimestre nas bases anual e sequencial, enquanto a leitura contábil tem direção diferente. A previdência tem diferenças de reconhecimento e sensibilidade a índices, ativos e passivos. A capitalização combina resultado operacional negativo e contribuição financeira; lucro agregado não equivale a melhora uniforme de subscrição.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Reservas de participantes, ativos garantidores, patrimônio de cada operação e caixa da holding têm destinações distintas. A posição da holding inclui dividendos a receber e obrigações de distribuição, que precisam ser conciliados. Distribuição declarada, direito e pagamento conservam seus estados; rentabilidade contábil não permite presumir todo caixa disponível.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se a franquia depende de rendimentos financeiros e ajustes enquanto prêmios, retenção e comissões não sustentam lucro operacional. A rede pode preservar distribuição sem assegurar retorno suficiente ao acionista após capital e remuneração dos parceiros.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Monitorar prêmios emitidos e ganhos, sinistralidade, comissões, despesas e resultado financeiro por negócio. Na previdência, acompanhar entradas, resgates, reservas, taxa média e descasamentos de índices. Conciliar lucro na mesma norma, ajustes recorrentes, tributos e dividendos recebidos pela holding antes de comparar retorno por ação.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_BBSEG.etr}}, custo do capital {{fact:val.BR_BBSEG.ke}} e dispersão entre métodos {{fact:val.BR_BBSEG.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_BBSEG.etr",
+        "val.BR_BBSEG.ke",
+        "val.BR_BBSEG.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Prêmios rentáveis, retenção e comissões deixam de sustentar a contribuição operacional da distribuição.",
+    "Resgates, sinistros ou descasamentos de índices exigem capital e reduzem resultado atribuível.",
+    "Revisão de acordos e relacionadas altera a economia da holding ou a transmissão de dividendos.",
+    "Reconciliação contábil muda a leitura da recorrência e das medidas por ação."
+  ],
+  "lacunas_de_dados": [
+    "Notas completas, reservas, solvência por entidade e caixa distribuível não foram integralmente reconciliados.",
+    "Data de publicação do release não foi comprovada; data-base e conferência não a substituem.",
+    "Há projeções por negócio; a direção de revisão não foi confirmada e guidance permanece não determinado.",
+    "Vigências, renovação, direitos e remuneração dos acordos exigem contratos completos.",
+    "A divergência entre lucro recorrente gerencial e contábil requer bases comparáveis, sem alterar o modelo recebido.",
+    "Tom agregado da gestão, vantagem relativa e percepção do mercado não foram comprovados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "BB Seguridade",
+      "titulo": "Perfil e estrutura do negócio",
+      "url": "https://www.bbseguridaderi.com.br/a-bb-seguridade/quem-somos",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "BB Seguridade",
+      "titulo": "Análise de desempenho, bases contábeis e negócios participados",
+      "url": "https://www.bbseguridaderi.com.br/docs/bb-seguridade-2026-06-30-hwWJdzWP.pdf",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "BB Seguridade",
+      "titulo": "Estrutura e acordos das participações",
+      "url": "https://www.bbseguridaderi.com.br/a-bb-seguridade/estrutura-societaria",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F4",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "BB Seguridade",
+      "titulo": "Calendário de divulgação de resultados no portal de RI",
+      "url": "https://www.bbseguridaderi.com.br/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

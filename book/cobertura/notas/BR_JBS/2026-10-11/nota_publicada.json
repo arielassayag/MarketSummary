@@ -1,0 +1,471 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "abe1a636c4cadf7b9b7688ea4057705a5f4c69229b290000863ed100dff69edc",
+    "factbook": "c25cf766a7ba07893062f38ae85fb65f92549ecfe02bb2015be48cba3043c24f",
+    "nota_json": "46aa7a1757d5f9e4b964e26bf5071623e9fe40dc05b39f81959d399c7527a316"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_JBS",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-09",
+  "published_at": "2026-10-12T01:58:24.715142+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Dividendo foi pago no período, enquanto caixa, investimento e dívida precisam de reconciliação atribuível. Ampliação da linha rotativa posterior aumenta crédito disponível, sem equivaler a dinheiro sacado. A joint venture com Danantara foi contratada sob condições, com aporte inicial e parcelas futuras; não se antecipou fechamento ou caixa. Transferência de obrigações de CRA depende de aprovações e mantém garantias. O anúncio de sucessão da liderança conserva sua data futura e não substitui exame de direitos e controle.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Resultados posteriores: comprovar margem por proteína, capital de giro e caixa recorrente depois do custo completo.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": null,
+        "descricao": "Comprovação das condições, fechamento e aportes da joint venture anunciada com Danantara.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "m_a"
+      },
+      {
+        "data": null,
+        "descricao": "Transição de liderança anunciada para janeiro, com exame de execução, controle e alocação de capital.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "outro"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em Em revisão, com retorno esperado Em revisão. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Operações e produtos preparados sustentam margens e caixa depois de reinvestimento; financiamento e eventos societários preservam retorno atribuível e direitos. O cenário otimista calculado pelo código é Em revisão.",
+      "pessimista": "Custo de animais, crédito e logística comprimem margem; capital de giro, juros e obrigações legais absorvem caixa, limitando retorno ao investidor. O cenário pessimista calculado pelo código é Em revisão."
+    },
+    "comentario_valuation": "Os valores do retrato recebido permanecem os do modelo aberto: preço R$ 64,01, alvo Em revisão, potencial Em revisão, retorno esperado Em revisão e custo do capital 10,23%. A dispersão é 61,25% e a confiança quantitativa C. Consenso público R$ 94,98 e diferença Em revisão não comprovam percepção de mercado. A unidade do recibo, moeda, capital e perímetro atual precisam de ponte documental; não se declara equivalência automática com a ação da JBS N.V. As fontes consultadas depois do retrato não foram incorporadas retrospectivamente aos números. Retorno por negócio, juros e reinvestimento permanecem condições da análise.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese enfraquece se diversificação não sustenta caixa depois do custo completo e a liquidez depende de antecipações, crédito ou venda de participações. Crescer receita com bovinos caros não prova retorno industrial. Medidas ajustadas podem ocultar custos que continuam econômicos, e resultados em bases distintas não são intercambiáveis. Capital da joint venture tem condições e direitos próprios. O preço do recibo exige ponte documental com a ação e o perímetro atual, sem tratar a entidade anterior como base automática.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_JBS.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 64,01"
+      },
+      {
+        "fato": "val.BR_JBS.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_JBS.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_JBS.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_JBS.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_JBS.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_JBS.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_JBS.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_JBS.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_JBS.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,23%"
+      },
+      {
+        "fato": "val.BR_JBS.wacc",
+        "rotulo": "WACC",
+        "valor": "7,91%"
+      },
+      {
+        "fato": "val.BR_JBS.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_JBS.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_JBS.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_JBS.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "9,9x"
+      },
+      {
+        "fato": "val.BR_JBS.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,5x"
+      },
+      {
+        "fato": "val.BR_JBS.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 94,98"
+      },
+      {
+        "fato": "val.BR_JBS.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Em revisão"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "JBS N.V.",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://jbsglobal.com/br/quem-somos/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "JBS N.V.",
+        "publicado_em": "2026-08-10",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/fdb59571-9620-473a-8f8d-a9c27ebf7d44/c77a4d4f-afc4-6bd4-947e-09b4049af5c6?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "JBS N.V.",
+        "publicado_em": "2026-08-10",
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/fdb59571-9620-473a-8f8d-a9c27ebf7d44/7489b5dc-c4eb-2f17-9c08-4f7d33144a7e?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Diversificação e produtos preparados deixam de sustentar margem e caixa depois do custo completo.",
+      "Recebíveis descontados, antecipações ou fornecedores passam a financiar consumo recorrente.",
+      "Litígios, garantias, sócios ou joint venture alteram capital e transmissão de valor.",
+      "Unidade do recibo, moeda ou bases contábeis deixam de corresponder ao modelo recebido."
+    ],
+    "governanca": "O documento intermediário se declara não auditado. A companhia anunciou mudança voluntária do regime de entrega à SEC; esse anúncio e o regime jurídico da entidade exigem alinhamento com a avaliação. A revisão dos acordos de controle, classes e direitos dos recibos não foi encerrada. A fonte usada é a cópia pública normalmente recebida no RI; ela não transforma bloqueio anterior de download na SEC em coleta concluída nem estabelece disponibilidade no instante histórico do modelo.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Conciliar margens e custos por proteína, origens e base contábil. Separar recebíveis descontados, adiantamentos, fornecedores e caixa recorrente. Monitorar juros, capex, arrendamento, acordos legais, direitos de minoritários, BDR, linha não sacada e condições da joint venture.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_JBS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.BR_JBS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,23%"
+          },
+          {
+            "fato": "val.BR_JBS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "61,25%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado Em revisão, custo do capital 10,23% e dispersão entre métodos 61,25% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_JBS",
+    "lacunas_de_dados": [
+      "Unidade da ação, recibo, moeda e capital do modelo precisam de ponte com o perímetro atual da JBS N.V.",
+      "Caixa livre trimestral, fluxo semestral e recebíveis descontados não foram integralmente reconciliados.",
+      "Investimento, obrigações legais, garantias e direitos de minoritários exigem diligência específica.",
+      "Fechamento da joint venture e seus aportes posteriores não foram comprovados nesta pesquisa.",
+      "IFRS e medidas em USGAAP não auditadas têm bases próprias; a nota não as funde.",
+      "Classes, acordos de controle e regras dos recibos não foram integralmente examinados.",
+      "Guidance agregado, alterações posteriores, tom e percepção do mercado permanecem não determinados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo global de alimentos com bovinos, aves, suínos, preparados e negócios associados. JBS Brasil, Beef North America, USA Pork, Austrália, Seara e Pilgrim’s têm ciclos e bases contábeis próprios. A entidade atual é JBS N.V., domiciliada nos Países Baixos, com ações em Nova York e recibos na bolsa brasileira. A Mantiqueira é investida pelo método de equivalência. Exposição econômica, direitos do recibo e minoritários devem ser conciliados antes de comparar capital, resultados e preço por unidade.",
+    "nome": "JBS N.V.",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_AMBEV",
+        "nome": "Ambev"
+      },
+      {
+        "issuer_id": "BR_ASSAI",
+        "nome": "Assaí Atacadista"
+      },
+      {
+        "issuer_id": "BR_MATEUS",
+        "nome": "Grupo Mateus"
+      },
+      {
+        "issuer_id": "BR_MBRF",
+        "nome": "MBRF (Marfrig+BRF)"
+      },
+      {
+        "issuer_id": "BR_MDIAS",
+        "nome": "M. Dias Branco"
+      },
+      {
+        "issuer_id": "BR_NATURA",
+        "nome": "Natura Cosméticos"
+      },
+      {
+        "issuer_id": "BR_PAGUEMENOS",
+        "nome": "Pague Menos"
+      },
+      {
+        "issuer_id": "BR_RAIADROGASIL",
+        "nome": "Raia Drogasil"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que diversificação de proteínas, origens e produtos preparados reduza volatilidade e gere retorno depois de investimento, juros e capital de giro. A condição decisiva é a melhora de margens se converter em caixa recorrente atribuível, sem depender de antecipações ou financiamento comercial crescente. Receita recorde não elimina o ciclo bovino norte-americano. O teste deve conciliar bases contábeis, participação nos negócios e unidade do recibo, preservando custos legais e a remuneração de capital requerida.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_JBS.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 64,01"
+          },
+          {
+            "fato": "val.BR_JBS.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.BR_JBS.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.BR_JBS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,23%"
+          },
+          {
+            "fato": "val.BR_JBS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "Em revisão"
+          }
+        ],
+        "texto": "Preço de referência R$ 64,01 e alvo Em revisão, com potencial Em revisão. A hipótese de investimento deve ser confrontada com o custo do capital 10,23% e retorno esperado Em revisão.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Escala industrial, marcas, distribuição e origens diversas podem ampliar acesso a clientes e redirecionamento comercial. A vantagem precisa de prova por negócio, custo completo, execução e retorno incremental. Gado restrito pressiona abate norte-americano mesmo com preços finais maiores. Prepared foods e marcas podem reduzir exposição a commodities, com capital e capacidade próprios. Pilgrim’s e investidas têm direitos de terceiros; a diversificação do grupo não garante a mesma proteção ao titular do recibo.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T01:58:24.715142+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita cresce e EBITDA ajustado cai na comparação anual; o trimestre apresenta prejuízo atribuível, apesar de lucro ajustado. O caixa livre trimestral melhora com desconto de recebíveis, antecipações de clientes e fornecedores, sem provar recorrência. O fluxo operacional semestral após juros é positivo, com investimento industrial e pagamentos de arrendamento separados. IFRS e medidas em USGAAP não auditadas têm resultados distintos por operação. Acordos legais, refinanciamento e ganho na aquisição exigem ponte própria.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que diversificação de proteínas, origens e produtos preparados reduza volatilidade e gere retorno depois de investimento, juros e capital de giro. A condição decisiva é a melhora de margens se converter em caixa recorrente atribuível, sem depender de antecipações ou financiamento comercial crescente. Receita recorde não elimina o ciclo bovino norte-americano. O teste deve conciliar bases contábeis, participação nos negócios e unidade do recibo, preservando custos legais e a remuneração de capital requerida. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Em revisão, com retorno esperado Em revisão. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Ciclo bovino, doença animal, comércio, frete e custos podem limitar margens. Antecipações, juros e litígios absorvem recursos. Unidade do recibo, minoritários e condições societárias podem restringir transmissão de valor."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_JBS.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "Em revisão"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é Em revisão. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Consumo básico",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "JBS — diversificação de proteínas, capital e direitos do investidor",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O release atual apresenta resultados em dólar e separa IFRS de medidas em USGAAP não auditadas. Receita cresce na comparação anual, enquanto EBITDA ajustado e rentabilidade atribuível recuam. O caixa livre trimestral melhora com descontos de recebíveis, antecipações e fornecedores. A leitura semestral após juros e investimentos tem escopo próprio. A linha rotativa ampliada, a joint venture contratada e a transição de liderança são eventos posteriores; não foram incorporados retrospectivamente ao modelo recebido.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Conciliar margens e custos por proteína, origens e base contábil. Separar recebíveis descontados, adiantamentos, fornecedores e caixa recorrente. Monitorar juros, capex, arrendamento, acordos legais, direitos de minoritários, BDR, linha não sacada e condições da joint venture.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_JBS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,23%"
+          },
+          {
+            "fato": "val.BR_JBS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "61,25%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 10,23% e a dispersão entre métodos 61,25%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

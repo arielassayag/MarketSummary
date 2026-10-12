@@ -1,0 +1,214 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_VISTA",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Vista — produtividade de Vaca Muerta, aquisições e caixa após expansão",
+  "resumo": "A hipótese é que produtividade dos poços e escala reduzam custo total de desenvolvimento e monetização. O crescimento precisa pagar manutenção da produção, infraestrutura, aquisições e dívida, com caixa atribuível por ação. Reservas e produção não bastam: a condição decisiva é retorno econômico após declínio dos poços e todo reinvestimento. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.MX_VISTA.rating_codigo}}, com retorno esperado {{fact:val.MX_VISTA.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Produtora de petróleo e gás com ativos de Vaca Muerta, produção operada e participações sem operação própria. O resultado trimestral ajusta participações não controladoras e distingue crescimento orgânico e adquirido. A ação mexicana e o recibo americano exigem preservar a unidade de capital do instrumento coberto.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que produtividade dos poços e escala reduzam custo total de desenvolvimento e monetização. O crescimento precisa pagar manutenção da produção, infraestrutura, aquisições e dívida, com caixa atribuível por ação. Reservas e produção não bastam: a condição decisiva é retorno econômico após declínio dos poços e todo reinvestimento.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.MX_VISTA.preco}} e alvo {{fact:val.MX_VISTA.preco_alvo}}, com potencial {{fact:val.MX_VISTA.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.MX_VISTA.ke}} e retorno esperado {{fact:val.MX_VISTA.etr}}.",
+      "evidencias": [
+        "val.MX_VISTA.preco",
+        "val.MX_VISTA.preco_alvo",
+        "val.MX_VISTA.upside",
+        "val.MX_VISTA.ke",
+        "val.MX_VISTA.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar produtividade e declínio por área, custo de desenvolvimento e transporte, realizações após hedges e frete. Conciliar caixa depois de aquisição e capex, capital de giro, participação atribuível e dívida histórica. Confirmar liquidação do financiamento e reservas desenvolvidas antes de inferir crescimento financiado.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.MX_VISTA.ke}} e a dispersão entre métodos {{fact:val.MX_VISTA.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.MX_VISTA.ke",
+        "val.MX_VISTA.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Divulgação de resultados anunciada pela companhia; revisar produtividade, dívida e caixa após expansão.",
+      "data": "2026-10-28",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F5"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Declínio, custo de perfuração e gargalos de infraestrutura podem absorver o crescimento. Petróleo, contratos de risco, câmbio e regras argentinas afetam caixa. Aquisições, participações não operadas e dívida podem limitar retorno atribuível e distribuição.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F4"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.MX_VISTA.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.MX_VISTA.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Produtividade e acesso comercial sustentam caixa atribuível após manutenção, expansão e financiamento. O cenário otimista calculado pelo código é {{fact:val.MX_VISTA.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.MX_VISTA.preco_alvo}}, com retorno esperado {{fact:val.MX_VISTA.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Declínio, petróleo e reinvestimento absorvem a monetização enquanto dívida e participações limitam retorno por ação. O cenário pessimista calculado pelo código é {{fact:val.MX_VISTA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.MX_VISTA.preco}} e alvo do modelo aberto {{fact:val.MX_VISTA.preco_alvo}}, com potencial {{fact:val.MX_VISTA.upside}}. Retorno total esperado {{fact:val.MX_VISTA.etr}} e custo do capital próprio {{fact:val.MX_VISTA.ke}}. A dispersão entre métodos é {{fact:val.MX_VISTA.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.MX_VISTA.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.MX_VISTA.consenso_alvo}}; a diferença {{fact:val.MX_VISTA.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "A leitura separa crescimento orgânico e adquirido, receita ajustada e caixa após aquisição. Reservas e financiamento divulgados depois do trimestre não são inseridos retrospectivamente nas demonstrações nem no modelo. Participação atribuível e bases históricas e pro forma permanecem distintas.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Revisar direitos da ação e do recibo, participações não controladoras, contratos de áreas não operadas e transações de aquisição. Recursos da subsidiária e estrutura de garantias não constituem disponibilidade irrestrita da holding.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Base de áreas e execução podem permitir aprendizado e diluição de custos. Essa hipótese deve aparecer em produtividade sustentável, custo completo por poço e acesso comercial, sem presumir que volume ou reservas demonstrem vantagem frente aos pares. Participações não operadas dependem de decisões e obrigações compartilhadas.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "O release separa participação econômica, receita após contratos de risco e frete, e lucro contábil. O caixa livre inclui pagamentos de aquisição; a medida que os exclui não representa caixa remanescente. Liberação de capital de giro e alavancagem pro forma exigem bases próprias, diferentes da operação histórica consolidada.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Expansão e aquisição exigem conciliar capex reconhecido, pago e capital de giro. O comunicado posterior de dívida confirma precificação, mas previa fechamento posterior, sem comprovar liquidação neste estudo. A estimativa de reservas divulgada depois do trimestre tem data-base anterior e efeito pro forma; não é produção ou incorporação automática ao modelo.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F4"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se crescimento exige capex e financiamento persistentes sem caixa por ação. Custos operacionais baixos podem coexistir com investimento completo elevado, enquanto medidas pro forma e caixa sem aquisição tornam a expansão aparentemente mais remuneradora.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F4"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Acompanhar produtividade e declínio por área, custo de desenvolvimento e transporte, realizações após hedges e frete. Conciliar caixa depois de aquisição e capex, capital de giro, participação atribuível e dívida histórica. Confirmar liquidação do financiamento e reservas desenvolvidas antes de inferir crescimento financiado.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.MX_VISTA.etr}}, custo do capital {{fact:val.MX_VISTA.ke}} e dispersão entre métodos {{fact:val.MX_VISTA.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.MX_VISTA.etr",
+        "val.MX_VISTA.ke",
+        "val.MX_VISTA.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+    "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+    "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+    "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "Produtividade, declínio e retorno por poço exigem conciliação integral.",
+    "Capex pago, capital de giro e caixa atribuível não foram integralmente reconciliados.",
+    "Liquidação do financiamento posterior não foi comprovada.",
+    "Reservas desenvolvidas, obrigações e perímetros operados e não operados exigem diligência.",
+    "Guidance e tom da gestão não foram classificados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Vista Energy",
+      "titulo": "Instrumentos, informações financeiras e calendário oficial",
+      "url": "https://www.vistaenergy.com/en/investors",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Vista Energy",
+      "titulo": "Resultado trimestral e demonstrações ajustadas à participação",
+      "url": "https://vista-energy.cdn.prismic.io/vista-energy/u8Gi03xxlMW-RgdX_Vista-EarningsreleaseQ22026.pdf",
+      "publicado_em": "2026-07-16",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Vista Energy",
+      "titulo": "Estimativa de reservas adquiridas e base pro forma",
+      "url": "https://vista-energy.cdn.prismic.io/vista-energy/UCcll6qdM3wStAUl_Vista-announces66.8MMboeofestimatedP1reservesinBandurriaSurandBajodelToro.pdf",
+      "publicado_em": "2026-09-08",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F4",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Vista Energy",
+      "titulo": "Precificação de notas da subsidiária e fechamento previsto",
+      "url": "https://vista-energy.cdn.prismic.io/vista-energy/2Yz3WJC56zGcPeWK_Vista-IssuanceofnotesunderNewYorklawbyVistaEnergyArgentinaSAU.pdf",
+      "publicado_em": "2026-09-22",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F5",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Vista Energy",
+      "titulo": "Aviso de resultados e conferência",
+      "url": "https://vista-energy.cdn.prismic.io/vista-energy/y7Ja4uu_FLY0jxSM_Vista-AdvanceNoticeofQ32026Results.pdf",
+      "publicado_em": "2026-09-23",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

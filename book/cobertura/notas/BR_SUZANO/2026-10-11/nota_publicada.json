@@ -1,0 +1,422 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "850eb464bb0012659d8f2710020c1197759b35f2eca220e4b654491b8a72f378",
+    "factbook": "9e5bde064bd3e79304e333b206ab07fe76ff6423b88c3c8c805d9ac25e914b77",
+    "nota_json": "3655286f2d7a9d6ad10224638d151ab1fc3ebc685070fb82f2488a897dfb8dc8"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_SUZANO",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-05",
+  "published_at": "2026-10-12T01:59:33.606234+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Dívida líquida diminui no trimestre, enquanto dívida bruta, caixa e alavancagem aumentam. Financiamento e denominador de resultado exigem leitura própria; linha rotativa disponível não é caixa sacado. O fluxo livre ajustado antecede distribuição, recompra e investimento fora da manutenção. A compra de controle da Arbex foi liquidada depois do trimestre, com dívida e minoritário na nova entidade; opção para participação remanescente continua discricionária.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-05",
+        "descricao": "Divulgação programada de resultados; rever perímetro da Arbex, custos, caixa, dívida e recursos atribuíveis ao acionista.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 57,19, com retorno esperado +35,47%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Produtividade e logística sustentam margem ao longo do ciclo, e integração remunera o capital sem comprometer manutenção, dívida e retorno por ação. O cenário otimista calculado pelo código é R$ 96,31.",
+      "pessimista": "Preços e custos deterioram enquanto reinvestimento, proteção e aquisição consomem caixa e mantêm alavancagem elevada. O cenário pessimista calculado pelo código é R$ 17,22."
+    },
+    "comentario_valuation": "Preço de referência R$ 42,77 e alvo do modelo aberto R$ 57,19, com potencial +33,73%. Retorno total esperado +35,47% e custo do capital próprio 11,95%. A dispersão entre métodos é 30,44%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 64,55; a diferença -11,39% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se a vantagem de produção desaparece no custo entregue ou se manutenção e expansão consomem a margem. Caixa favorecido por giro, proteção e alienação não é repetível sem limite. Tissue pode ampliar o portfólio e também exigir capital e integração; controle societário não elimina minoritário, dívida ou compromissos contratuais.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_SUZANO.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 42,77"
+      },
+      {
+        "fato": "val.BR_SUZANO.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 57,19"
+      },
+      {
+        "fato": "val.BR_SUZANO.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+33,73%"
+      },
+      {
+        "fato": "val.BR_SUZANO.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_SUZANO.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_SUZANO.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 96,31"
+      },
+      {
+        "fato": "val.BR_SUZANO.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "0,43%"
+      },
+      {
+        "fato": "val.BR_SUZANO.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 17,22"
+      },
+      {
+        "fato": "val.BR_SUZANO.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "0,03%"
+      },
+      {
+        "fato": "val.BR_SUZANO.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,95%"
+      },
+      {
+        "fato": "val.BR_SUZANO.wacc",
+        "rotulo": "WACC",
+        "valor": "9,30%"
+      },
+      {
+        "fato": "val.BR_SUZANO.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_SUZANO.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+35,47%"
+      },
+      {
+        "fato": "val.BR_SUZANO.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+25,62%"
+      },
+      {
+        "fato": "val.BR_SUZANO.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "5,9x"
+      },
+      {
+        "fato": "val.BR_SUZANO.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,1x"
+      },
+      {
+        "fato": "val.BR_SUZANO.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 64,55"
+      },
+      {
+        "fato": "val.BR_SUZANO.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-11,39%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Suzano",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil, produtos e capacidade da companhia de base florestal",
+        "url": "https://ir.suzano.com.br/Portuguese/The-Company/Perfil-Corporativo/default.aspx"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Suzano",
+        "publicado_em": "2026-08-12",
+        "tipo": "Relações com investidores",
+        "titulo": "Release de resultados, custos, fluxo, dívida e eventos subsequentes",
+        "url": "https://s201.q4cdn.com/761980458/files/doc_news/2026/08/Release/Release-de-Resultados_2T26_PT.pdf"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Suzano",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Portal com divulgação e teleconferência futuras",
+        "url": "https://ri.suzano.com.br/Portuguese/Home/default.aspx"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Produtividade e escala deixam de sustentar margem depois do custo entregue e manutenção.",
+      "Giro, derivativos e alienações explicam caixa sem geração recorrente equivalente.",
+      "Integração, dívida e minoritários impedem retorno econômico do capital investido.",
+      "Novos documentos alteram perímetro, direitos por ação ou premissas da avaliação."
+    ],
+    "governanca": "O perfil informa controle pela Suzano Holding. A aquisição posterior da Arbex obtém controle, mas preserva participação da Kimberly-Clark e opção futura discricionária. Ações e recibos têm bases próprias; tesouraria e elegibilidade precisam ser conciliadas. Afirmações da companhia sobre posição global e competitividade não substituem comparação independente. Recompra realizada e programa autorizado têm estados distintos.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Monitorar produtividade florestal, disponibilidade, preço realizado e custo completo por produto. Conciliar paradas, transporte, terras e manutenção com caixa. Separar venda de ativos, giro, marcação e liquidação de proteção. Acompanhar dívida, minoritários, integração da Arbex e retorno do investimento antes de inferir recursos distribuíveis.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_SUZANO.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+35,47%"
+          },
+          {
+            "fato": "val.BR_SUZANO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,95%"
+          },
+          {
+            "fato": "val.BR_SUZANO.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "30,44%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +35,47%, custo do capital 11,95% e dispersão entre métodos 30,44% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_SUZANO",
+    "lacunas_de_dados": [
+      "Demonstrações completas, obrigações por entidade e fluxo atribuível não foram integralmente reconciliados.",
+      "Aderência das faixas de custo e premissas cambiais requer conciliação determinística.",
+      "Capex em caixa e competência, arrendamentos e juros capitalizados têm bases próprias.",
+      "Alocação do preço, ajustes finais e desempenho da Arbex após controle permanecem a examinar.",
+      "Custo entregue, produtividade e vantagem frente a concorrentes precisam de comparação equivalente.",
+      "Projeções por indicador existem, mas revisão agregada e tom não foram classificados.",
+      "Percepção do mercado e execução final de recompra não foram comprovadas."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Produtora de celulose de eucalipto e papéis, com base florestal, fábricas e canais no Brasil e exterior. Exportações expõem receitas a preço internacional, frete e câmbio; manutenção florestal e industrial preserva capacidade econômica. Tissue, embalagens e participação em outros produtores têm perímetros próprios. A aquisição posterior de controle da Arbex não compõe o trimestre apresentado, e minoritários conservam direitos sobre caixa e resultado.",
+    "nome": "Suzano",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRADESPAR",
+        "nome": "Bradespar"
+      },
+      {
+        "issuer_id": "BR_CBA",
+        "nome": "Companhia Brasileira de Alumínio"
+      },
+      {
+        "issuer_id": "BR_CMIN",
+        "nome": "CSN Mineração"
+      },
+      {
+        "issuer_id": "BR_CSN",
+        "nome": "CSN Siderúrgica Nacional"
+      },
+      {
+        "issuer_id": "BR_ERO",
+        "nome": "Ero Copper"
+      },
+      {
+        "issuer_id": "BR_GERDAU",
+        "nome": "Gerdau"
+      },
+      {
+        "issuer_id": "BR_GOAU",
+        "nome": "Metalúrgica Gerdau"
+      },
+      {
+        "issuer_id": "BR_UNIPAR",
+        "nome": "Unipar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que produtividade florestal, escala industrial e disciplina comercial sustentem caixa por ação ao longo do ciclo. A condição decisiva é retorno depois de manutenção, terras, logística, proteção financeira e investimento. Diversificação em bens de consumo pode reduzir a dependência da celulose, mas precisa remunerar preço de aquisição e integração; capacidade maior e EBITDA ajustado não demonstram, isoladamente, criação de valor.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_SUZANO.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 42,77"
+          },
+          {
+            "fato": "val.BR_SUZANO.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 57,19"
+          },
+          {
+            "fato": "val.BR_SUZANO.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+33,73%"
+          },
+          {
+            "fato": "val.BR_SUZANO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,95%"
+          },
+          {
+            "fato": "val.BR_SUZANO.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+35,47%"
+          }
+        ],
+        "texto": "Preço de referência R$ 42,77 e alvo R$ 57,19, com potencial +33,73%. A hipótese de investimento deve ser confrontada com o custo do capital 11,95% e retorno esperado +35,47%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Base florestal e infraestrutura integrada podem apoiar custo e confiabilidade. A vantagem exige comparar desembolso operacional completo, incluindo paradas, transporte e manutenção, com produtores de produtos equivalentes. Custo de produção sem paradas não substitui custo total entregue. Maior preço realizado pode refletir mercado e mix, sem comprovar poder de negociação durável. A expansão em marcas de consumo requer capacidades comerciais e retorno próprios.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T01:59:33.606234+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Receita e EBITDA ajustado crescem sequencialmente, mas recuam na comparação anual; lucro diminui nas duas bases. Câmbio, custo de insumos e volume têm efeitos diferentes. Reavaliação de floresta é não caixa, enquanto venda de terras e liquidação de proteção têm contribuições próprias. O fluxo livre ajustado melhora com giro, derivativos e calendário de juros, apesar da menor geração operacional anual. Essa composição não foi atribuída integralmente a eficiência recorrente.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que produtividade florestal, escala industrial e disciplina comercial sustentem caixa por ação ao longo do ciclo. A condição decisiva é retorno depois de manutenção, terras, logística, proteção financeira e investimento. Diversificação em bens de consumo pode reduzir a dependência da celulose, mas precisa remunerar preço de aquisição e integração; capacidade maior e EBITDA ajustado não demonstram, isoladamente, criação de valor. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +35,47%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Ciclo de celulose, câmbio, insumos e logística podem comprimir caixa. Manutenção, dívida e integração exigem recursos. Fluxo ajustado, ativos biológicos e crédito disponível não equivalem a caixa atribuível ao acionista."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_SUZANO.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-11,39%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -11,39%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Suzano — produtividade florestal e caixa após manutenção, dívida e integração",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A companhia mantém a projeção anual de custo de celulose sem paradas e apresenta metas posteriores de dívida e alavancagem; isso não comprova atingimento nem revisão agregada. A aderência do custo trimestral à faixa e às premissas deve ser conciliada. Capex em caixa, competência e fluxo ajustado têm tratamentos diferentes de terras, arrendamentos e juros capitalizados. A leitura preserva esses perímetros e não incorpora retrospectivamente a Arbex.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar produtividade florestal, disponibilidade, preço realizado e custo completo por produto. Conciliar paradas, transporte, terras e manutenção com caixa. Separar venda de ativos, giro, marcação e liquidação de proteção. Acompanhar dívida, minoritários, integração da Arbex e retorno do investimento antes de inferir recursos distribuíveis.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_SUZANO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,95%"
+          },
+          {
+            "fato": "val.BR_SUZANO.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "30,44%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,95% e a dispersão entre métodos 30,44%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

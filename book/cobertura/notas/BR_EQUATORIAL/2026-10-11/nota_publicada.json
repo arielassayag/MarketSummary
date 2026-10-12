@@ -1,0 +1,441 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "91fc272667d0a1636b9cc12282ca473747ef3890e891478ab53cf1bfa062dffb",
+    "factbook": "f65e4cb91629bf5de9d8052296341ceddb30c69e79499a3a9b98d7dbe76062a6",
+    "nota_json": "8a4d4ce393f2569a5e0f78083166968ccfa00ea005261a640047095d95a0a5c3"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_EQUATORIAL",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-11",
+  "published_at": "2026-10-12T01:58:54.090438+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A aquisição de participação em Copasa utilizou financiamento. A dívida de covenants agrega equivalência de investidas e exclui obrigações próprias da definição; não é dívida econômica integral. Direitos das preferenciais afetam lucro atribuível e remuneração. Investimentos consolidados não pertencem integralmente ao controlador.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar margem regulada e caixa depois dos direitos de capital.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 26,44, com retorno esperado -46,10%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Execução regulada sustenta margem e recebimento depois de obras e juros, com participações e direitos de capital devidamente conciliados. O cenário otimista calculado pelo código é R$ 31,41.",
+      "pessimista": "Perdas, despacho e provisões pressionam operação; financiamento e direitos de sócios absorvem recursos, apesar de crescimento ajustado da distribuição. O cenário pessimista calculado pelo código é R$ 22,55."
+    },
+    "comentario_valuation": "Preço de referência R$ 49,66 e alvo do modelo aberto R$ 26,44, com potencial -46,76%. Retorno total esperado -46,10% e custo do capital próprio 10,53%. A dispersão entre métodos é 46,06%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 52,86; a diferença -49,98% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Melhoria na distribuição e EBITDA ajustado maior podem coexistir com lucro menor e financiamento crescente. Se obras, juros e direitos prioritários absorverem resultado, participação em saneamento e escala não confirmarão caixa ao acionista.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_EQUATORIAL.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 49,66"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 26,44"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-46,76%"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 31,41"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 22,55"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,53%"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.wacc",
+        "rotulo": "WACC",
+        "valor": "8,73%"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-46,10%"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-42,92%"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "31,9x"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,4x"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 52,86"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-49,98%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Equatorial",
+        "publicado_em": "2026-08-12",
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/62b21cba-838c-49a4-aaef-e0fb2350c169/b1f651f0-9cd8-d2e0-87f0-498cd4b24f8b?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Equatorial",
+        "publicado_em": "2026-08-12",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/62b21cba-838c-49a4-aaef-e0fb2350c169/b1f651f0-9cd8-d2e0-87f0-498cd4b24f8b?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Equatorial",
+        "publicado_em": "2026-08-13",
+        "tipo": "Relações com investidores",
+        "titulo": "Apresentação pública dos resultados e das definições gerenciais",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1556897&numSequencia=1081603&numVersao=1"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+      "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+      "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+      "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+    ],
+    "governanca": "Preferenciais de Equatorial Distribuição têm direitos econômicos que diferem da participação societária simples. Covenant usa definições próprias, inclusive equivalência de investidas. O release e a apresentação não substituem leitura integral das demonstrações. Aquisições e ajustes não retroagem ao modelo.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Perdas, continuidade, tarifa e margem por distribuidora; geração e restrição de despacho. Conciliar obras, juros, tributos destinados ao consumidor e participações. Monitorar covenants, dívida econômica, dividendos recebidos e direitos das preferenciais.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_EQUATORIAL.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-46,10%"
+          },
+          {
+            "fato": "val.BR_EQUATORIAL.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,53%"
+          },
+          {
+            "fato": "val.BR_EQUATORIAL.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "46,06%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -46,10%, custo do capital 10,53% e dispersão entre métodos 46,06% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_EQUATORIAL",
+    "lacunas_de_dados": [
+      "Demonstrações e ponte integral de caixa por entidade não foram integralmente reconciliadas.",
+      "Dívida econômica, exclusões dos covenants e direitos das preferenciais exigem diligência.",
+      "Dividendos recebidos de investidas não equivalem à equivalência reconhecida.",
+      "Retorno das obras e da participação em Copasa permanece a comprovar.",
+      "Guidance agregado e comparação competitiva independente não foram comprovados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Holding com distribuição elétrica, renováveis, saneamento, serviços e participações. Tarifa, perdas, continuidade e investimento determinam retorno da distribuição. Equivalência patrimonial não é dividendo recebido; consolidação, participações e ações preferenciais possuem direitos econômicos distintos.",
+    "nome": "Equatorial",
+    "o_que_mudou": "Nova versão documental com hipótese, posição competitiva, qualidade dos resultados, capital, contratese e monitoramento. Fontes públicas foram revistas na data da consulta; o histórico publicado e o retrato determinístico permanecem preservados.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ALUPAR",
+        "nome": "Alupar"
+      },
+      {
+        "issuer_id": "BR_AUREN",
+        "nome": "Auren Energia"
+      },
+      {
+        "issuer_id": "BR_AXIA",
+        "nome": "Axia Energia (ex-Eletrobras)"
+      },
+      {
+        "issuer_id": "BR_CEMIG",
+        "nome": "Cemig"
+      },
+      {
+        "issuer_id": "BR_COMPASS",
+        "nome": "Compass Gás e Energia"
+      },
+      {
+        "issuer_id": "BR_COPASA",
+        "nome": "Copasa"
+      },
+      {
+        "issuer_id": "BR_COPEL",
+        "nome": "Copel"
+      },
+      {
+        "issuer_id": "BR_CPFL",
+        "nome": "CPFL Energia"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que execução regulada e melhoria operacional remunerem obras e capital. A condição decisiva é transformar margem em caixa atribuível depois de juros e direitos de sócios. Expansão em saneamento e financiamento de participações não devem ser tratados como retorno já realizado.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_EQUATORIAL.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 49,66"
+          },
+          {
+            "fato": "val.BR_EQUATORIAL.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 26,44"
+          },
+          {
+            "fato": "val.BR_EQUATORIAL.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-46,76%"
+          },
+          {
+            "fato": "val.BR_EQUATORIAL.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,53%"
+          },
+          {
+            "fato": "val.BR_EQUATORIAL.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-46,10%"
+          }
+        ],
+        "texto": "Preço de referência R$ 49,66 e alvo R$ 26,44, com potencial -46,76%. A hipótese de investimento deve ser confrontada com o custo do capital 10,53% e retorno esperado -46,10%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Execução, controle de perdas e atendimento podem apoiar eficiência regulada. Concessão não garante retorno sem cumprir continuidade e investimento. Renováveis dependem de vento, despacho e contratos; desempenho relatado e participação em saneamento exigem teste independente de remuneração e recebimento.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T01:58:54.090438+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita cresceu, EBITDA reportado recuou e ajustado teve aumento modesto; lucro ajustado caiu. Distribuição compensou parcialmente geração menor e equivalência de Sabesp. Provisões e custo financeiro pressionaram resultado. Crédito tributário destinado ao consumidor e atualização de ativos não equivalem integralmente a caixa do acionista.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que execução regulada e melhoria operacional remunerem obras e capital. A condição decisiva é transformar margem em caixa atribuível depois de juros e direitos de sócios. Expansão em saneamento e financiamento de participações não devem ser tratados como retorno já realizado. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Venda, com retorno esperado -46,10%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Regulação, perdas, crédito e restrição de geração podem pressionar margem. Financiamento de participações eleva juros; preferenciais e minoritários limitam atribuição. Equivalência e ajuste de ativos não comprovam recebimento distribuível."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_EQUATORIAL.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-49,98%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -49,98%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Utilidades públicas",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Equatorial — execução regulada, participações e direitos de capital",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "Receita aumentou, EBITDA reportado caiu e EBITDA ajustado cresceu modestamente. Distribuição melhorou, com compensações de geração e equivalência de Sabesp. Lucro ajustado recuou e encargos financeiros aumentaram. Financiamento da participação em Copasa elevou dívida. Covenant, ganho anterior de transmissão e direitos de preferenciais alteram bases. Reclassificações, créditos destinados ao consumidor e equivalência não foram tratados como caixa distribuível.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Perdas, continuidade, tarifa e margem por distribuidora; geração e restrição de despacho. Conciliar obras, juros, tributos destinados ao consumidor e participações. Monitorar covenants, dívida econômica, dividendos recebidos e direitos das preferenciais.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_EQUATORIAL.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,53%"
+          },
+          {
+            "fato": "val.BR_EQUATORIAL.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "46,06%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 10,53% e a dispersão entre métodos 46,06%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

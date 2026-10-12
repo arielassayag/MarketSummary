@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from datetime import date, datetime
 from enum import StrEnum
+from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
@@ -132,18 +133,40 @@ class NewsItem(BaseModel):
     news_id: str = Field(..., description="Identificador único da notícia")
     title: str = Field(..., description="Título da notícia")
     body: str = Field(..., description="Corpo do texto da notícia")
-    published_at: datetime = Field(..., description="Timestamp de publicação com fuso horário")
+    published_at: datetime | None = Field(default=None, description="Data confirmada de publicação com fuso horário")
+    observed_at: datetime | None = Field(default=None, description="Horário retornado pela fonte com fuso horário")
+    source_timestamp: str | None = Field(default=None, description="Lexema temporal original da fonte")
+    source_raw: dict[str, Any] | None = Field(default=None, description="Registro original, sem promover seu conteúdo a instruções")
     source: str = Field(..., description="Fonte da notícia")
     url: str | None = Field(default=None, description="Link fornecido pela fonte; pode ser redirecionamento")
     related_tickers: list[str] = Field(default_factory=list, description="Tickers diretamente relacionados")
     is_synthetic: bool = Field(default=True, description="Indicador obrigatório de dado simulado")
 
-    @field_validator("published_at")
+    @field_validator("published_at", "observed_at")
     @classmethod
-    def check_tz(cls, v: datetime) -> datetime:
-        if v.tzinfo is None:
-            raise ValueError("Timestamp de publicação da notícia deve conter fuso horário.")
+    def check_tz(cls, v: datetime | None) -> datetime | None:
+        if v is not None and v.tzinfo is None:
+            raise ValueError("O horário da notícia deve conter fuso horário.")
         return v
+
+    @model_validator(mode="after")
+    def check_available_time(self) -> NewsItem:
+        if self.published_at is None and self.observed_at is None:
+            raise ValueError("Notícia sem horário de publicação ou horário retornado pela fonte.")
+        return self
+
+    @property
+    def evidence_time(self) -> datetime:
+        times = [v for v in (self.published_at, self.observed_at) if v is not None]
+        if not times:
+            raise ValueError("Notícia sem horário disponível.")
+        return max(times)
+
+    @property
+    def time_label(self) -> str:
+        if self.observed_at is not None and self.observed_at == self.evidence_time:
+            return "Horário retornado pela fonte"
+        return "Data confirmada de publicação"
 
 
 class ManifestFileEntry(BaseModel):

@@ -261,7 +261,7 @@ with tab_execute:
     st.markdown('<div class="section-title">Execução do Pipeline Funcional</div>', unsafe_allow_html=True)
     st.markdown(
         "Execute o fluxo funcional de fechamento de mercado. Escolha entre o **Leitor de Mercado ao Vivo** "
-        "(cotações públicas e carteira simulada com modelos gratuitos do OpenRouter) ou **Cenários Pré-gravados**."
+        "(cotações públicas, notícias da GDELT e carteira simulada com modelos gratuitos do OpenRouter) ou **Cenários Pré-gravados**."
     )
 
     tab_sub_live, tab_sub_presets = st.tabs([
@@ -276,7 +276,8 @@ with tab_execute:
         st.markdown("##### Últimas Cotações Disponíveis & Geração de Narrativa")
         st.markdown(
             "Esta modalidade coleta cotações reais da **B3** (Yahoo Chart API), taxas oficiais **Selic e CDI** da **BrasilAPI** "
-            "e cotação do **USD/BRL** da **AwesomeAPI**, com os horários de cada fonte e uma carteira de pesos iguais SIMULADA."
+            "cotação do **USD/BRL** da **AwesomeAPI** e notícias em português pela **GDELT DOC 2.0**, "
+            "com os horários de cada fonte e uma carteira de pesos iguais SIMULADA."
         )
 
         col_live_cfg1, col_live_cfg2 = st.columns([1, 1])
@@ -331,7 +332,7 @@ with tab_execute:
                 )
 
         # Painel Informativo de Dados Reais
-        with st.expander("🔍 Pré-visualizar Fontes Gratuitas Disponíveis (BrasilAPI & AwesomeAPI)", expanded=False):
+        with st.expander("🔍 Pré-visualizar Fontes Gratuitas Disponíveis", expanded=False):
             c_prev1, c_prev2 = st.columns(2)
             with c_prev1:
                 st.markdown("**Taxas Oficiais BrasilAPI (https://brasilapi.com.br)**")
@@ -688,7 +689,7 @@ with tab_review:
                     for n in ctx.evidence.eligible_news:
                         with st.expander(f"[{n.source}] {n.title}"):
                             st.markdown(f"**ID:** `{n.news_id}`")
-                            st.markdown(f"**Publicado:** `{n.published_at.isoformat()}`")
+                            st.markdown(f"**{n.time_label}:** `{n.evidence_time.isoformat()}`")
                             st.markdown(f"**Tickers relacionados:** `{', '.join(n.related_tickers)}`")
                             st.markdown(f"**Texto:** {n.body}")
                 else:

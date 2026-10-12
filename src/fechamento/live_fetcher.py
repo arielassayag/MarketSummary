@@ -3,12 +3,13 @@ from __future__ import annotations
 
 import csv
 import hashlib
+import html
 import json
 import math
+import re
 import tempfile
 import urllib.parse
 import urllib.request
-import warnings
 import xml.etree.ElementTree as ET
 from datetime import UTC, datetime
 from email.utils import parsedate_to_datetime
@@ -103,39 +104,187 @@ def fetch_yahoo_chart(ticker: str) -> dict[str, Any]:
         raise RuntimeError(f"Yahoo Finance: cotação de {ticker} indisponível ({exc}).") from exc
 
 
-def fetch_real_market_news(query: str = "Ibovespa B3", max_items: int = 4) -> list[dict[str, Any]]:
-    """Lê manchetes RSS, preservando pubDate e link (que pode ser um redirecionamento)."""
-    url = "https://news.google.com/rss/search?" + urllib.parse.urlencode({
-        "q": f"{query} when:1d", "hl": "pt-BR", "gl": "BR", "ceid": "BR:pt-419",
-    })
+GDELT_DOC_API_URL = "https://api.gdeltproject.org/api/v2/doc/doc"
+
+
+GOOGLE_NEWS_RSS_URL = "https://news.google.com/rss/search"
+
+
+TICKER_NEWS_ALIASES = {
+    "PETR4": ("PETR4", "PETROBRAS"),
+    "VALE3": ("VALE3", "VALE"),
+    "ITUB4": ("ITUB4", "ITAÚ", "ITAU", "ITAÚ UNIBANCO", "ITAU UNIBANCO"),
+    "BBDC4": ("BBDC4", "BRADESCO"),
+    "BBAS3": ("BBAS3", "BANCO DO BRASIL"),
+    "WEGE3": ("WEGE3", "WEG"),
+    "IBOV": ("IBOV", "IBOVESPA", "B3", "BOLSA"),
+    "USD/BRL": ("USD/BRL", "DÓLAR", "DOLAR", "CÂMBIO", "CAMBIO"),
+}
+
+
+def _news_id(prefix: str, title: str, link: str) -> str:
+    digest = hashlib.sha256(f"{title}|{link}".encode()).hexdigest()[:12]
+    return f"news_{prefix}_{digest}"
+
+
+def _related_tickers(title: str) -> list[str]:
+    normalized = title.upper()
+    related = [
+        ticker
+        for ticker, aliases in TICKER_NEWS_ALIASES.items()
+        if any(re.search(rf"(?<!\w){re.escape(alias)}(?!\w)", normalized) for alias in aliases)
+    ]
+    return related
+
+
+def _parse_gdelt_date(raw: str) -> str:
+    for fmt in ("%Y%m%dT%H%M%SZ", "%Y-%m-%dT%H:%M:%SZ"):
+        try:
+            return datetime.strptime(raw, fmt).replace(tzinfo=UTC).isoformat()
+        except ValueError:
+            continue
+    raise ValueError(f"Data inválida retornada pela GDELT: {raw!r}")
+
+
+def build_market_news_query(tickers: list[str] | None = None) -> str:
+    """Monta uma consulta GDELT com empresas da carteira e filtros de imprensa local."""
+    clean_tickers = [ticker.replace(".SA", "") for ticker in (tickers or [])]
+    terms = ["Ibovespa"]
+    for ticker in clean_tickers:
+        aliases = TICKER_NEWS_ALIASES.get(ticker, (ticker,))
+        company_alias = next((alias for alias in aliases if alias != ticker), ticker)
+        terms.append(f'"{company_alias}"' if " " in company_alias else company_alias)
+    unique_terms = list(dict.fromkeys(terms))
+    return f"({' OR '.join(unique_terms)}) sourcelang:portuguese sourcecountry:brazil"
+
+
+def fetch_gdelt_market_news(
+    query: str,
+    max_items: int = 6,
+    timespan: str = "24h",
+) -> list[dict[str, Any]]:
+    """Busca manchetes pela API JSON pública da GDELT DOC 2.0, sem chave."""
+    params = {
+        "query": query,
+        "mode": "ArtList",
+        "format": "json",
+        "sort": "DateDesc",
+        "timespan": timespan,
+        "maxrecords": str(max(1, min(max_items, 250))),
+    }
+    url = f"{GDELT_DOC_API_URL}?{urllib.parse.urlencode(params)}"
+    req = urllib.request.Request(url, headers=DEFAULT_HEADERS)
     try:
-        req = urllib.request.Request(url, headers=DEFAULT_HEADERS)
-        with urllib.request.urlopen(req, timeout=15) as resp:
-            tree = ET.fromstring(resp.read())
-        news = []
-        for item in tree.findall(".//item"):
-            try:
-                title = item.findtext("title")
-                link = item.findtext("link")
-                published = parsedate_to_datetime(item.findtext("pubDate") or "")
-                if not title or not link or published.tzinfo is None:
-                    raise ValueError("Manchete sem título, link ou data com fuso")
-                source = item.findtext("source") or "Google News RSS"
-                related = [tk for tk in ["PETR4", "VALE3", "ITUB4", "BBDC4", "BBAS3", "WEGE3", "IBOV", "USD/BRL"] if tk in title.upper()]
-                news.append({
-                    "news_id": "rss_" + hashlib.sha256(link.encode()).hexdigest()[:12],
-                    "title": title, "body": f"Manchete coletada de {source}: {title}",
-                    "url": link, "published_at": published.astimezone(UTC).isoformat(),
-                    "source": source, "related_tickers": related, "is_synthetic": False,
-                })
-                if len(news) >= max_items:
-                    break
-            except (ValueError, TypeError) as exc:
-                warnings.warn(f"Manchete ignorada: {exc}", stacklevel=2)
-        return news
-    except Exception as exc:
-        warnings.warn(f"Google News RSS indisponível; nenhuma manchete substituta será criada: {exc}", stacklevel=2)
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            payload = json.loads(resp.read().decode("utf-8"))
+    except (OSError, ValueError, json.JSONDecodeError):
         return []
+
+    articles = payload.get("articles", []) if isinstance(payload, dict) else []
+    if not isinstance(articles, list):
+        return []
+    news_list: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for article in articles:
+        if not isinstance(article, dict):
+            continue
+        required = [article.get(k) for k in ("title", "url", "seendate")]
+        if any(type(value) is not str for value in required):
+            continue
+        title = html.unescape(article["title"].strip())
+        link = article["url"].strip()
+        published_raw = article["seendate"].strip()
+        domain_raw = article.get("domain")
+        if domain_raw is not None and type(domain_raw) is not str:
+            continue
+        if not title or not link or not published_raw:
+            continue
+        dedupe_key = f"{title.casefold()}|{link}"
+        if dedupe_key in seen:
+            continue
+        try:
+            parsed_url = urllib.parse.urlsplit(link)
+            if parsed_url.scheme not in {"http", "https"} or not parsed_url.hostname:
+                continue
+            _ = parsed_url.port  # recusa porta/autoridade malformada sem abortar os outros registros
+            observed_at = _parse_gdelt_date(published_raw)
+        except ValueError:
+            continue
+        seen.add(dedupe_key)
+        domain = (domain_raw or "").strip() or parsed_url.netloc
+        source = domain.replace(".", "_").replace("-", "_") or "GDELT"
+        news_list.append({
+            "news_id": _news_id("gdelt", title, link),
+            "title": title,
+            "body": f"Manchete coletada via GDELT DOC 2.0. Fonte original: {link}",
+            "url": link,
+            "published_at": None,
+            "observed_at": observed_at,
+            "source_timestamp": article["seendate"],
+            "source_raw": article,
+            "source": source,
+            "related_tickers": _related_tickers(title),
+            "is_synthetic": False,
+        })
+        if len(news_list) >= max_items:
+            break
+    return news_list
+
+
+def fetch_google_news_rss(query: str, max_items: int = 6) -> list[dict[str, Any]]:
+    """Fallback público: coleta manchetes via RSS e preserva o horário de publicação."""
+    params = {"q": f"{query} when:1d", "hl": "pt-BR", "gl": "BR", "ceid": "BR:pt-419"}
+    url = f"{GOOGLE_NEWS_RSS_URL}?{urllib.parse.urlencode(params)}"
+    headers = {**DEFAULT_HEADERS, "Accept": "application/rss+xml, application/xml;q=0.9,*/*;q=0.8"}
+    req = urllib.request.Request(url, headers=headers)
+    news_list: list[dict[str, Any]] = []
+    try:
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            tree = ET.fromstring(resp.read())
+            items = tree.findall(".//item")[:max_items]
+            for item in items:
+                title_elem = item.find("title")
+                title = html.unescape(title_elem.text.strip()) if title_elem is not None and title_elem.text else ""
+                source_elem = item.find("source")
+                source = source_elem.text.strip() if source_elem is not None and source_elem.text else "Google_News"
+                link_elem = item.find("link")
+                link = link_elem.text.strip() if link_elem is not None and link_elem.text else ""
+                pub_date_elem = item.find("pubDate")
+                if not title or not link or pub_date_elem is None or not pub_date_elem.text:
+                    continue
+                try:
+                    published = parsedate_to_datetime(pub_date_elem.text)
+                    if published.tzinfo is None:
+                        raise ValueError("Manchete sem data com fuso")
+                    published_at = published.astimezone(UTC).isoformat()
+                except (TypeError, ValueError):
+                    continue
+                news_list.append({
+                    "news_id": _news_id("rss", title, link),
+                    "title": title,
+                    "body": f"Manchete coletada via Google News RSS. Fonte original: {link}",
+                    "url": link,
+                    "published_at": published_at,
+                    "source": source.replace(" ", "_"),
+                    "related_tickers": _related_tickers(title),
+                    "is_synthetic": False,
+                })
+    except (OSError, ET.ParseError):
+        return []
+    return news_list
+
+
+def fetch_real_market_news(
+    query: str = "Ibovespa B3",
+    max_items: int = 6,
+    timespan: str = "24h",
+) -> list[dict[str, Any]]:
+    """Busca notícias pela GDELT e usa Google News RSS somente como contingência."""
+    gdelt_news = fetch_gdelt_market_news(query, max_items=max_items, timespan=timespan)
+    if gdelt_news:
+        return gdelt_news
+    rss_query = re.sub(r"\s*(?:sourcelang|sourcecountry):\S+", "", query).strip()
+    return fetch_google_news_rss(rss_query, max_items=max_items)
 
 
 def build_live_market_package(output_dir: str | Path, timeframe: str = "1d", tickers: list[str] | None = None) -> Path:
@@ -168,7 +317,7 @@ def build_live_market_package(output_dir: str | Path, timeframe: str = "1d", tic
         "O câmbio usa bid e varBid da AwesomeAPI; sua referência pode diferir do fechamento da bolsa.",
         "Notícias da janela recente até a coleta; podem ser posteriores à sessão das cotações.",
     ]
-    news = fetch_real_market_news()
+    news = fetch_real_market_news(build_market_news_query(stocks), max_items=6, timespan="24h")
     if not news:
         notes.append("Nenhuma manchete coletada. Ausência de resultado não significa ausência de notícias.")
     try:

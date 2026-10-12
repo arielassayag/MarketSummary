@@ -128,7 +128,7 @@ class OpenRouterProvider(NarrativeProvider):
         ]
 
         news_summary = [
-            f"- [{n.news_id}] (Publicado: {n.published_at.isoformat()}): {n.title} -- {n.body}"
+            f"- [{n.news_id}] ({n.time_label}: {n.evidence_time.isoformat()}): {n.title} -- {n.body}"
             for n in request.eligible_news
         ]
 

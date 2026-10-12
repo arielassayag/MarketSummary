@@ -3,6 +3,7 @@
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from unittest.mock import MagicMock, patch
+from urllib.parse import parse_qs, urlparse
 
 import pytest
 
@@ -12,6 +13,9 @@ from fechamento.live_fetcher import (
     compute_sha256,
     fetch_awesomeapi_usd_brl,
     fetch_brasilapi_taxas,
+    fetch_gdelt_market_news,
+    fetch_google_news_rss,
+    fetch_real_market_news,
     fetch_yahoo_chart,
 )
 
@@ -70,6 +74,112 @@ def test_fetch_yahoo_chart_mocked() -> None:
         assert res["currency"] == "BRL"
 
 
+def test_fetch_gdelt_market_news_uses_json_api_and_source_timestamp() -> None:
+    mock_payload = '''{
+      "articles": [
+        {
+          "url": "https://exemplo.com/petrobras-alta",
+          "title": "Petrobras sobe com petróleo e impulsiona o Ibovespa",
+          "seendate": "20260925T180500Z",
+          "domain": "exemplo.com",
+          "language": "Portuguese",
+          "sourcecountry": "Brazil"
+        }
+      ]
+    }'''.encode()
+    mock_resp = MagicMock()
+    mock_resp.read.return_value = mock_payload
+    mock_resp.__enter__.return_value = mock_resp
+
+    with patch("urllib.request.urlopen", return_value=mock_resp) as urlopen:
+        news = fetch_gdelt_market_news(
+            "(Ibovespa OR Petrobras) sourcelang:portuguese sourcecountry:brazil",
+            max_items=4,
+            timespan="24h",
+        )
+
+    requested = urlparse(urlopen.call_args.args[0].full_url)
+    params = parse_qs(requested.query)
+    assert requested.netloc == "api.gdeltproject.org"
+    assert params["format"] == ["json"]
+    assert params["mode"] == ["ArtList"]
+    assert params["timespan"] == ["24h"]
+    assert news[0]["published_at"] is None
+    assert news[0]["observed_at"] == "2026-09-25T18:05:00+00:00"
+    assert news[0]["source_timestamp"] == "20260925T180500Z"
+    assert news[0]["source"] == "exemplo_com"
+    assert news[0]["related_tickers"] == ["PETR4", "IBOV"]
+    assert news[0]["is_synthetic"] is False
+
+
+@pytest.mark.parametrize("field,value", [
+    ("title", {"nao": "titulo"}), ("url", ["https://exemplo.com"]),
+    ("url", "https://[malformado"), ("url", "javascript:alert(1)"),
+    ("seendate", 20260925), ("seendate", "sem-data"), ("domain", ["exemplo.com"]),
+])
+def test_gdelt_rejeita_registro_malformado_sem_perder_proximo(field, value) -> None:
+    import json
+
+    good = {"title": "Petrobras &amp; mercado", "url": "https://exemplo.com/valida",
+            "seendate": "20260925T180500Z", "domain": "exemplo.com"}
+    bad = {**good, field: value}
+    response = MagicMock()
+    response.__enter__.return_value = response
+    response.read.return_value = json.dumps({"articles": [bad, good]}).encode()
+    with patch("urllib.request.urlopen", return_value=response):
+        news = fetch_gdelt_market_news("Petrobras")
+    assert len(news) == 1
+    assert news[0]["url"] == good["url"]
+    assert news[0]["source_raw"] == good
+
+
+def test_gdelt_malformado_admite_contingencia_rss_real() -> None:
+    import json
+
+    gdelt = MagicMock()
+    gdelt.__enter__.return_value = gdelt
+    gdelt.read.return_value = json.dumps({"articles": [{"title": "Não promover",
+        "url": "https://[invalida", "seendate": "20260925T180500Z"}]}).encode()
+    rss = MagicMock()
+    rss.__enter__.return_value = rss
+    rss.read.return_value = b'<rss><channel><item><title>Vale</title><link>https://exemplo.com/rss</link><pubDate>Fri, 25 Sep 2026 18:00:00 GMT</pubDate></item></channel></rss>'
+    with patch("urllib.request.urlopen", side_effect=[gdelt, rss]):
+        news = fetch_real_market_news("(Ibovespa OR Vale) sourcelang:portuguese sourcecountry:brazil")
+    assert len(news) == 1
+    assert news[0]["published_at"] == "2026-09-25T18:00:00+00:00"
+    assert news[0]["url"] == "https://exemplo.com/rss"
+
+
+def test_fetch_google_news_rss_preserves_pubdate() -> None:
+    mock_payload = b'''<?xml version="1.0" encoding="UTF-8"?>
+    <rss><channel><item>
+      <title>Vale avanca e ajuda o Ibovespa</title>
+      <link>https://news.google.com/rss/articles/exemplo</link>
+      <pubDate>Thu, 25 Sep 2026 17:10:00 GMT</pubDate>
+      <source>Agencia Teste</source>
+    </item></channel></rss>'''
+    mock_resp = MagicMock()
+    mock_resp.read.return_value = mock_payload
+    mock_resp.__enter__.return_value = mock_resp
+
+    with patch("urllib.request.urlopen", return_value=mock_resp):
+        news = fetch_google_news_rss("Ibovespa", max_items=2)
+
+    assert news[0]["published_at"] == "2026-09-25T17:10:00+00:00"
+    assert news[0]["source"] == "Agencia_Teste"
+    assert news[0]["related_tickers"] == ["VALE3", "IBOV"]
+
+
+def test_fetch_real_market_news_falls_back_to_rss() -> None:
+    fallback = [{"news_id": "news_rss_example"}]
+    with (
+        patch("fechamento.live_fetcher.fetch_gdelt_market_news", return_value=[]),
+        patch("fechamento.live_fetcher.fetch_google_news_rss", return_value=fallback) as rss,
+    ):
+        assert fetch_real_market_news("Ibovespa", max_items=3) == fallback
+    rss.assert_called_once_with("Ibovespa", max_items=3)
+
+
 def test_build_live_market_package(tmp_path: Path) -> None:
     out_dir = tmp_path / "live_pkg"
 
@@ -88,8 +198,17 @@ def test_build_live_market_package(tmp_path: Path) -> None:
             "currency": "POINTS" if "BVSP" in t else "BRL",
             "reference_date": today, "previous_session": previous, "observed_at": now.isoformat(),
         }),
-        patch("fechamento.live_fetcher.fetch_real_market_news", return_value=[]),
         patch("fechamento.live_fetcher.fetch_brasilapi_taxas", return_value={"SELIC": 13.75, "CDI": 13.65}),
+        patch("fechamento.live_fetcher.fetch_real_market_news", return_value=[{
+            "news_id": "news_gdelt_teste",
+            "title": "Petrobras impulsiona o Ibovespa",
+            "body": "Manchete coletada via GDELT.",
+            "published_at": now.isoformat(),
+            "url": "https://exemplo.com/noticia",
+            "source": "exemplo_com",
+            "related_tickers": ["PETR4", "IBOV"],
+            "is_synthetic": False,
+        }]),
     ):
         pkg_dir = build_live_market_package(out_dir, timeframe="1d", tickers=["PETR4.SA", "VALE3.SA"])
         assert pkg_dir.exists()
@@ -108,3 +227,7 @@ def test_build_live_market_package(tmp_path: Path) -> None:
         assert "Agencia_Mercado_Ao_Vivo" not in (pkg_dir / "news.jsonl").read_text()
         assert len(ingestion_res.quotes) == 4  # IBOV, USD/BRL, PETR4, VALE3
         assert len(ingestion_res.positions) == 2
+        assert {item.news_id for item in ingestion_res.eligible_news} == {
+            "brasilapi_taxas",
+            "news_gdelt_teste",
+        }

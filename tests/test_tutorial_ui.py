@@ -32,6 +32,28 @@ def test_first_render_reads_key_from_project_dotenv(tmp_path, monkeypatch):
     assert at.text_input(key="live_or_key_input").value == "tutorial-test-key"
 
 
+def test_ui_noticia_observada_exibe_ausencia_de_publicacao(tmp_path, monkeypatch):
+    from dataclasses import replace
+    from datetime import UTC, datetime
+
+    from fechamento.contracts import NewsItem
+
+    at = isolated_app(tmp_path, monkeypatch)
+    next(s for s in at.selectbox if s.label == "Cenário de Entrada:").select(
+        "Cenário Demo Normal (Sintético — Pregão 18/09/2026)")
+    next(r for r in at.radio if r.label == "Modo de Geração:").set_value(
+        "DemoProvider (Determinístico e Offline — Recomendado)")
+    at.run()
+    at.button(key="btn_preset_exec").click().run()
+    ctx = at.session_state.workflow_ctx
+    ctx.evidence = replace(ctx.evidence, eligible_news=[NewsItem(news_id="observada",
+        title="DADOS SIMULADOS", body="Manchete", source="Fixture",
+        observed_at=datetime(2026, 9, 25, 18, tzinfo=UTC))])
+    at.run()
+    assert not at.exception
+    assert any("Horário retornado pela fonte" in m.value for m in at.markdown)
+
+
 def test_export_remains_completed_after_rerun(tmp_path, monkeypatch):
     at = isolated_app(tmp_path, monkeypatch)
     scenario = next(s for s in at.selectbox if s.label == "Cenário de Entrada:")

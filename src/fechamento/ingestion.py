@@ -232,10 +232,10 @@ def load_and_validate_package(package_dir: str | Path) -> IngestionResult:
                     news_item = NewsItem.model_validate(item_raw)
 
                     # Verificar horário de corte (Cutoff Time)
-                    if manifest and news_item.published_at > manifest.cutoff_time:
+                    if manifest and news_item.evidence_time > manifest.cutoff_time:
                         result.excluded_news.append((
                             news_item,
-                            f"Publicada em {news_item.published_at.isoformat()}, posterior ao horário de corte {manifest.cutoff_time.isoformat()}"
+                            f"{news_item.time_label}: {news_item.evidence_time.isoformat()}, posterior ao horário de corte {manifest.cutoff_time.isoformat()}"
                         ))
                     else:
                         result.eligible_news.append(news_item)

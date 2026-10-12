@@ -108,6 +108,8 @@ A interface permite revisar, aprovar e exportar. A aplicação não se autoaprov
 
 Na primeira abertura, o Streamlit pode pedir `Email:` no terminal. O cadastro é opcional: deixe em branco e pressione Enter. A interface lê o `.env` da pasta do projeto ao iniciar; reinicie a aplicação se alterar a chave com ela aberta.
 
+O leitor ao vivo consulta notícias pela **GDELT DOC 2.0**, uma API JSON pública e sem chave, com busca por fontes brasileiras em português e Google News RSS como contingência. O registro original, o horário retornado pela fonte e a URL são preservados no `news.jsonl`. Esse horário não confirma a data original de publicação. Nenhuma manchete é criada quando as duas fontes falham.
+
 ### Concluir pela CLI
 
 Depois de revisar o texto, substitua `ID_DA_EXECUCAO` pelo `Run ID` informado na geração:

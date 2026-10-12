@@ -91,12 +91,14 @@ em 1440×1000 e 390×844, com cabeçalhos legíveis, dados idênticos e scroll
 contido. Os 136 testes únicos de risco, painel e site passaram; Ruff passou.
 A fonte `267bf539803c520a57ed56480c1466dfd8a7cf17` concluiu a suíte
 Linux `38202514379`: 4.711 casos únicos, 4.694 aprovados, dezessete ignorados,
-nenhuma falha ou erro; Ruff e job operacional aprovados. Essa qualificação não
-foi promovida a integração, pois a revisão independente encontrou ambiguidades
-de unidades e de normalização. O checkpoint público continua em `67f1e219`.
+nenhuma falha ou erro; Ruff e job operacional aprovados. Essa qualificação isolada não encerrou a entrega: a revisão independente encontrou
+ambiguidades de unidades e de normalização, corrigidas na fonte final abaixo.
+Naquele corte, o checkpoint público permanecia em `67f1e219`.
 
-A correção final está no ramo interno `codex/cdp-risco-unidades`, derivado de
-`267bf539`. Os gráficos de mercado separam frações do patrimônio e coeficientes
+A correção final `b07570e386fdb60e1fba838142b1f11967e1fdb3`, desenvolvida no
+ramo interno `codex/cdp-risco-unidades`, foi integrada em `main`; o
+[PR 6](https://github.com/arielassayag/MarketSummary/pull/6) está integrado.
+Os gráficos de mercado separam frações do patrimônio e coeficientes
 Σwβ, com domínios próprios. Sensibilidades e limites de commodities aparecem
 como coeficientes com quatro casas decimais, inclusive no painel tradicional,
 na tabela do mandato, na metodologia e nos destaques. Os valores, limites,
@@ -132,12 +134,54 @@ aos testes focais nem à CI histórica. A consolidação deste registro é um de
 exclusivamente documental posterior ao terminal; código e testes conservam
 os hashes qualificados e a documentação será conferida separadamente.
 
-Corte deste registro: 12/10/2026, 04:00 Brasília. A CI própria do novo commit, a
-integração e a conferência de artefato, HTTP e pixels públicos ainda são etapas
-pendentes. Resultados anteriores não qualificam esse patch final. O checkpoint
-público confirmado permanece em `67f1e219`, com 156 narrativas adotadas e
-85 análises preliminares. A entrega integral das teses continua pendente dos
-85 emissores e da resposta à extensão do orçamento solicitada ao humano.
+A [CI própria da fonte final](https://github.com/arielassayag/MarketSummary/actions/runs/38215854682)
+foi recebida integralmente: 4.725 casos únicos, 4.708 aprovados, dezessete ignorados,
+nenhuma falha ou erro; Ruff e o trabalho operacional aprovados. O checkout de teste
+`5ec06411e4060a57e41e4768e30f92d1799136ce` tem a mesma árvore da fonte `b07570e`.
+Os 805 corpos do recorte CDP, incluindo este registro na versão commitada,
+corresponderam ao checkout; o relatório XML próprio e o artefato de testes foram
+recebidos com seus hashes. Os resultados não foram somados aos da suíte local.
+
+O [Pages da fonte final](https://github.com/arielassayag/MarketSummary/actions/runs/38229931289)
+concluiu montagem, publicação e conferência no ar. O artefato `11737953049` foi
+recebido por duas cópias independentes, com catálogo seguro, tamanho e hashes
+conferidos: 3.070 arquivos físicos, 3.068 declarados no manifesto. A conferência
+remota recebeu os 3.068 arquivos, todos HTTP 200, com tamanho e SHA iguais ao
+artefato, total de 178.104.228 bytes. O manifesto conservou o hash
+`cd9b5b0e0b5daf73b11c8ef79e90ca96d54891803e62ee5bd5bdfc82abac41d0`
+antes e depois. São provas novas do checkpoint parcial de 156 narrativas e
+85 análises preliminares, sem reaproveitar a publicação histórica de `67f1e219`.
+
+A navegação pública da fonte final conferiu doze páginas, 161 controles e
+67 capturas em desktop e celular, sem erros de JavaScript ou transbordamento da
+página. As quatorze verificações recebidas permanecem nativas, sem injeção;
+valores e limites foram comparados ao transporte original e à formatação Python
+qualificada. As três exposições de commodities, a tabela de limites operacionais
+e do mandato e seu campo no cartão também tiveram células vinculadas às origens.
+Os dois falsos negativos do helper visual foram preservados: grafias distintas do
+sinal de menos e o lowercase contextual de Σ no seletor. As correções ficaram
+somente no protocolo privado, sem alteração adicional de produto ou dados.
+As capturas de viewport não comprovam células fora do enquadramento. Um adendo
+recebeu 32 imagens dirigidas dos quatorze checks e do mandato nos dois perfis;
+elas foram conferidas fisicamente e inspecionadas. Sua execução terminou negativa
+por um seletor genérico e não chegou à guarda celular posterior; esse limite
+permanece preservado, sem promover o adendo a uma execução integral positiva.
+Um suplemento móvel próprio conferiu a coluna Estado pelo cabeçalho recebido,
+com alinhamento horizontal, geometria contida e alerta NET legível. Manifesto e
+dados desse suplemento coincidiram com o nativo antes e depois; a página
+conservou largura e extensão de 390 pixels, sem erros de JavaScript. As contagens
+e limites dessas provas não são somados nem substituem a navegação integral.
+
+Corte deste registro: 12/10/2026, 07:52 Brasília. Os dashboards de
+[cases e comparáveis](https://arielassayag.github.io/MarketSummary/cases/) e de
+[risco e fatores](https://arielassayag.github.io/MarketSummary/risco/) estão publicados
+na fonte `b07570e`. Os 241 rascunhos foram revisados, mas a entrega integral das
+teses continua aberta: 85 emissores aguardam adoção, validação nativa e publicação
+oficial, além da resposta humana à extensão do orçamento solicitada. Não iniciar
+outro emissor fora desse orçamento. Este encerramento documental posterior
+conserva código e testes da fonte qualificada. Seus checks documentais são
+separados da CI e da conferência pública de `b07570e`; uma CI automática
+posterior não é presumida concluída.
 
 A conferência nativa identificou duas falhas de apresentação: o transporte compacto
 precisava ser expandido antes da vista de risco, e as origens de posições e risco

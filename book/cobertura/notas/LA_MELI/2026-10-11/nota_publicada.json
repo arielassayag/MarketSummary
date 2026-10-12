@@ -1,0 +1,393 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "008a6832192768a83a172e373b4938b86318024def3a5a4eed09f1faf4e820de",
+    "factbook": "6c1e537c1662af16106b351494336e89731aa3b2febd8f503b59ccd8dc93ca15",
+    "nota_json": "032dda2a9b3d112afd7fc606ec86c05151918d343d07fed72172ea1b1f174001"
+  },
+  "is_synthetic": false,
+  "issuer_id": "LA_MELI",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-04",
+  "published_at": "2026-10-12T01:44:09.305136+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Confrontar investimento comercial e expansão de crédito com retorno por coorte e financiamento. Fundos de clientes não são caixa corporativo livre; recursos restritos e ativos digitais precisam de tratamento próprio antes de avaliar distribuições ou dívida.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em Em revisão, com retorno esperado Em revisão. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Retenção e produtividade remuneram investimento sem deterioração do crédito. O cenário otimista calculado pelo código é Em revisão.",
+      "pessimista": "Incentivos, perdas e necessidades de capital limitam a remuneração do crescimento. O cenário pessimista calculado pelo código é Em revisão."
+    },
+    "comentario_valuation": "Preço de referência US$ 1.856,66 e alvo do modelo aberto Em revisão, com potencial Em revisão. Retorno total esperado Em revisão e custo do capital próprio 10,77%. A dispersão entre métodos é 51,72%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é US$ 2.275,78; a diferença Em revisão não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese enfraquece se engajamento depender de incentivos permanentes ou se perdas e reinvestimento impedirem transmissão do crescimento ao caixa econômico.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.LA_MELI.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 1.856,66"
+      },
+      {
+        "fato": "val.LA_MELI.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.LA_MELI.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,77%"
+      },
+      {
+        "fato": "val.LA_MELI.wacc",
+        "rotulo": "WACC",
+        "valor": "10,11%"
+      },
+      {
+        "fato": "val.LA_MELI.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.LA_MELI.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "36,0x"
+      },
+      {
+        "fato": "val.LA_MELI.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "12,0x"
+      },
+      {
+        "fato": "val.LA_MELI.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 2.275,78"
+      },
+      {
+        "fato": "val.LA_MELI.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Em revisão"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "MercadoLibre",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e estrutura do negócio",
+        "url": "https://investor.mercadolibre.com/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "MercadoLibre",
+        "publicado_em": "2026-08-05",
+        "tipo": "Relações com investidores",
+        "titulo": "Carta aos acionistas e demonstrações condensadas",
+        "url": "https://investor.mercadolibre.com/open-file?file=aHR0cHM6Ly9odHRwMi5tbHN0YXRpYy5jb20vc3RvcmFnZS9tbC1jbXMtYmFja2VuZC9jbXMtZG9jdW1lbnRzLXByb2QvNWRiYmE5MTktNzIxYy00OTE2LWJiOTEtYzc2YTg3MTNmN2YwLzIxYzk4MzdhLWMyMTItNGQ2ZC1hYTE0LTMwNDFjMjZiMTE0My9MZXR0ZXJfdG9fU2hhcmVob2xkZXJzLnBkZg%3D%3D"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+      "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+      "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+      "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+    ],
+    "governanca": "Confrontar investimento comercial e expansão de crédito com retorno por coorte e financiamento. Fundos de clientes não são caixa corporativo livre; recursos restritos e ativos digitais precisam de tratamento próprio antes de avaliar distribuições ou dívida.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar frequência, retenção, custo de entrega e monetização. No crédito, testar perdas, maturação das coortes e custo de financiamento; confrontar a expansão com caixa depois de reinvestimento e obrigações.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.LA_MELI.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.LA_MELI.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,77%"
+          },
+          {
+            "fato": "val.LA_MELI.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "51,72%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado Em revisão, custo do capital 10,77% e dispersão entre métodos 51,72% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "LA_MELI",
+    "lacunas_de_dados": [
+      "Retorno por coorte, subsídios e economia logística não foram integralmente demonstrados.",
+      "Fundos de clientes, recursos restritos, crédito e financiamento precisam de conciliação completa com o modelo.",
+      "Notas explicativas e base plenamente diluída não foram integralmente reconciliadas.",
+      "Vantagem competitiva, guidance, tom da gestão e percepção de mercado não estão concluídos.",
+      "Não há catalisador futuro datado confirmado neste estudo."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "O MercadoLibre reúne marketplace, logística, publicidade e serviços financeiros. O vínculo entre comércio e pagamentos é central à estratégia; a exposição a crédito exige analisar risco e financiamento além da escala comercial.",
+    "nome": "MercadoLibre",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_AFYA",
+        "nome": "Afya"
+      },
+      {
+        "issuer_id": "BR_ALPARGATAS",
+        "nome": "Alpargatas"
+      },
+      {
+        "issuer_id": "BR_AZZAS",
+        "nome": "Azzas 2154"
+      },
+      {
+        "issuer_id": "BR_CEA",
+        "nome": "C&A Modas"
+      },
+      {
+        "issuer_id": "BR_COGNA",
+        "nome": "Cogna"
+      },
+      {
+        "issuer_id": "BR_CURY",
+        "nome": "Cury"
+      },
+      {
+        "issuer_id": "BR_CYRELA",
+        "nome": "Cyrela"
+      },
+      {
+        "issuer_id": "BR_DIRECIONAL",
+        "nome": "Direcional"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese é que maior frequência e integração gerem retorno durável. A condição é demonstrar caixa econômico após subsídios, logística e perdas de crédito, sem confundir crescimento de atividade com criação de valor.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.LA_MELI.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "US$ 1.856,66"
+          },
+          {
+            "fato": "val.LA_MELI.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.LA_MELI.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.LA_MELI.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,77%"
+          },
+          {
+            "fato": "val.LA_MELI.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "Em revisão"
+          }
+        ],
+        "texto": "Preço de referência US$ 1.856,66 e alvo Em revisão, com potencial Em revisão. A hipótese de investimento deve ser confrontada com o custo do capital 10,77% e retorno esperado Em revisão.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Testar retenção, frequência, oferta e produtividade da rede frente a alternativas de comércio e pagamentos. A visão de vantagem do ecossistema é da administração; diferenciação precisa sobreviver à competição e aos incentivos comerciais.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T01:44:09.305136+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Separar receitas comerciais, financeiras e perdas de crédito. A carta apresenta crescimento junto de pressão sobre lucro operacional. Fluxo ajustado exclui fundos de clientes e considera expansão da carteira e seu financiamento; exige ponte com o fluxo consolidado.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que maior frequência e integração gerem retorno durável. A condição é demonstrar caixa econômico após subsídios, logística e perdas de crédito, sem confundir crescimento de atividade com criação de valor. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Em revisão, com retorno esperado Em revisão. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Competição pode exigir subsídios persistentes. Expansão de crédito e logística pode consumir capital antes de remunerá-lo; a leitura consolidada pode esconder diferenças entre países e atividades."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.LA_MELI.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "Em revisão"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é Em revisão. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Consumo discricionário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "MercadoLibre: retorno do ecossistema e disciplina de reinvestimento",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A carta consultada apresenta iniciativas comerciais, crédito e reconciliação do fluxo ajustado. A administração associa pressão de rentabilidade ao reinvestimento. Essa explicação é hipótese a confrontar com retorno por coorte; a conciliação integral com notas e modelo permanece pendente.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar frequência, retenção, custo de entrega e monetização. No crédito, testar perdas, maturação das coortes e custo de financiamento; confrontar a expansão com caixa depois de reinvestimento e obrigações.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.LA_MELI.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,77%"
+          },
+          {
+            "fato": "val.LA_MELI.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "51,72%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 10,77% e a dispersão entre métodos 51,72%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

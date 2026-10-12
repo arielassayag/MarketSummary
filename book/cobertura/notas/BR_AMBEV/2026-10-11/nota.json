@@ -1,0 +1,168 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_AMBEV",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Ambev: testar preço, distribuição e caixa além das marcas",
+  "resumo": "A hipótese é que marcas e distribuição permitam preservar preço e geração de caixa sem deterioração persistente dos volumes. A condição decisiva é observar contribuição econômica após custos comerciais, embalagens e investimentos. Presença de marcas conhecidas não comprova poder de preço sustentável nem retorno incremental do capital. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_AMBEV.rating_codigo}}, com retorno esperado {{fact:val.BR_AMBEV.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "A Ambev produz e distribui cervejas e bebidas não alcoólicas em mercados das Américas. O RI descreve marcas próprias, licenciamento com o grupo controlador e acordos de engarrafamento e distribuição com parceiros. Receitas dependem de volume, preço e composição de produtos; fabricação, embalagens, logística e execução comercial determinam custos. A exposição internacional exige separar moeda econômica e efeito da consolidação.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que marcas e distribuição permitam preservar preço e geração de caixa sem deterioração persistente dos volumes. A condição decisiva é observar contribuição econômica após custos comerciais, embalagens e investimentos. Presença de marcas conhecidas não comprova poder de preço sustentável nem retorno incremental do capital.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_AMBEV.preco}} e alvo {{fact:val.BR_AMBEV.preco_alvo}}, com potencial {{fact:val.BR_AMBEV.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_AMBEV.ke}} e retorno esperado {{fact:val.BR_AMBEV.etr}}.",
+      "evidencias": [
+        "val.BR_AMBEV.preco",
+        "val.BR_AMBEV.preco_alvo",
+        "val.BR_AMBEV.upside",
+        "val.BR_AMBEV.ke",
+        "val.BR_AMBEV.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar volume, preço e composição separadamente, custo de embalagens, despesas comerciais, margem recorrente e caixa após investimentos por operação; confrontar esses dados com a hipótese de monetização das marcas.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_AMBEV.ke}} e a dispersão entre métodos {{fact:val.BR_AMBEV.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_AMBEV.ke",
+        "val.BR_AMBEV.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Perda persistente de volumes ou aumento de custos comerciais e industriais pode reduzir caixa mesmo com receita sustentada por preço. Licenciamento, controle e exposição cambial exigem avaliação por operação.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_AMBEV.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_AMBEV.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Preço e composição preservam volumes e eficiência dos canais; ganhos operacionais se convertem em caixa após investimentos. A monetização das marcas remunera o capital sem depender de ajustes recorrentes. O cenário otimista calculado pelo código é {{fact:val.BR_AMBEV.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_AMBEV.preco_alvo}}, com retorno esperado {{fact:val.BR_AMBEV.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Volumes e eficiência pioram, enquanto embalagens, câmbio e despesas absorvem a receita. O lucro ajustado não se traduz em caixa e a distribuição disputa recursos com o negócio. O cenário pessimista calculado pelo código é {{fact:val.BR_AMBEV.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_AMBEV.preco}} e alvo do modelo aberto {{fact:val.BR_AMBEV.preco_alvo}}, com potencial {{fact:val.BR_AMBEV.upside}}. Retorno total esperado {{fact:val.BR_AMBEV.etr}} e custo do capital próprio {{fact:val.BR_AMBEV.ke}}. A dispersão entre métodos é {{fact:val.BR_AMBEV.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_AMBEV.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_AMBEV.consenso_alvo}}; a diferença {{fact:val.BR_AMBEV.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "A leitura consolidada do modelo está disponível no retrato recebido. A reconciliação integral do último release, das notas explicativas e da apresentação por negócio permanece pendente; não se atribui alteração de guidance nem tom à gestão sem essa evidência.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "A tese requer que expansão comercial, capacidade e distribuição ao acionista concorram pelo capital sob critérios de retorno. A estrutura de controle e contratos de licenciamento tornam relevante examinar partes relacionadas. A pesquisa não estabelece que dividendos, recompras ou investimentos recentes já satisfazem esse critério.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Marcas, contratos e acesso aos canais podem sustentar diferenciação. Essa é uma hipótese de vantagem competitiva a testar com volumes, preço, composição e custo de atendimento. A descrição do RI confirma a estrutura comercial, mas não demonstra participação de mercado atual ou resiliência frente a concorrentes.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "O RI distingue indicadores ajustados e resultados das demonstrações, alertando que destaques financeiros não substituem o conjunto dos documentos. A análise deve reconciliar ajustes, itens financeiros, tributação e conversão em caixa por operação. Não há reconciliação completa de lucro recorrente por segmento neste estudo.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "A tese requer que expansão comercial, capacidade e distribuição ao acionista concorram pelo capital sob critérios de retorno. A estrutura de controle e contratos de licenciamento tornam relevante examinar partes relacionadas. A pesquisa não estabelece que dividendos, recompras ou investimentos recentes já satisfazem esse critério.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "Preço e composição podem sustentar a receita enquanto volumes ou eficiência dos canais se enfraquecem. Custos, câmbio e competição podem absorver o ganho, e ajustes contábeis podem afastar lucro de caixa. Esse cenário enfraquece a hipótese de monetização sustentável das marcas.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Acompanhar volume, preço e composição separadamente, custo de embalagens, despesas comerciais, margem recorrente e caixa após investimentos por operação; confrontar esses dados com a hipótese de monetização das marcas.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_AMBEV.etr}}, custo do capital {{fact:val.BR_AMBEV.ke}} e dispersão entre métodos {{fact:val.BR_AMBEV.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_AMBEV.etr",
+        "val.BR_AMBEV.ke",
+        "val.BR_AMBEV.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+    "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+    "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+    "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "Último resultado e notas explicativas não foram integralmente reconciliados nesta pesquisa.",
+    "Guidance e tom da gestão não foram avaliados em material atual completo.",
+    "Participação de mercado e desempenho relativo frente a concorrentes exigem comprovação específica.",
+    "Percepção do mercado, posicionamento e interesse vendido não têm suporte documental suficiente.",
+    "Retorno econômico de projetos e decisões recentes de capital permanece a comprovar.",
+    "Não há catalisador datado confirmado neste estudo."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Ambev",
+      "titulo": "Perfil e estrutura do negócio",
+      "url": "https://ri.ambev.com.br/perguntas-frequentes/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Ambev",
+      "titulo": "Informações financeiras e materiais de análise",
+      "url": "https://ri.ambev.com.br/visao-geral/destaques-financeiros/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

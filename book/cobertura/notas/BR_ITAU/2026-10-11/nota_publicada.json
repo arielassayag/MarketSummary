@@ -1,0 +1,441 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "6ec87f951c3bdc9689e33f00cd6b8a3e469d3676f1fcd174001ba7f6f80806cf",
+    "factbook": "d8e1fd214e02aaf7e66d692a71a94d37c950a940cff1a4cc490bacb42ee6b623",
+    "nota_json": "d6053b5bed46ea096f77f1db579a135cf77fa116414d1a96c685108fc683920e"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_ITAU",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T01:47:31.235626+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "O capital principal aumentou sequencialmente, com lucro, distribuição e ativos ponderados de efeitos distintos. Captação subordinada e recompra de letras alteram direitos prioritários. JCP anunciado com data posterior não foi presumido pago. Depósitos e liquidez bancária não são caixa livre industrial.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar serviços, perdas e retorno depois do capital requerido.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 50,40, com retorno esperado +7,86%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Margem ajustada ao risco e eficiência sustentam retorno, com qualidade de crédito e capital preservados apesar da projeção menor de serviços. O cenário otimista calculado pelo código é R$ 57,71.",
+      "pessimista": "Serviços e crédito enfraquecem retorno, enquanto contratos, risco e financiamento exigem recursos que restringem distribuição ao acionista. O cenário pessimista calculado pelo código é R$ 43,49."
+    },
+    "comentario_valuation": "Preço de referência R$ 49,35 e alvo do modelo aberto R$ 50,40, com potencial +2,13%. Retorno total esperado +7,86% e custo do capital próprio 11,85%. A dispersão entre métodos é 2,24%; a confiança quantitativa recebida é A. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 48,62; a diferença +3,67% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Lucro e margem crescentes podem coexistir com projeção menor de serviços e maior necessidade de capital. Se risco, custos e aquisição de relacionamentos absorverem retorno, escala e eficiência não confirmarão geração residual distribuível.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_ITAU.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 49,35"
+      },
+      {
+        "fato": "val.BR_ITAU.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 50,40"
+      },
+      {
+        "fato": "val.BR_ITAU.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+2,13%"
+      },
+      {
+        "fato": "val.BR_ITAU.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_ITAU.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "A"
+      },
+      {
+        "fato": "val.BR_ITAU.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 57,71"
+      },
+      {
+        "fato": "val.BR_ITAU.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "31,11%"
+      },
+      {
+        "fato": "val.BR_ITAU.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 43,49"
+      },
+      {
+        "fato": "val.BR_ITAU.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "28,20%"
+      },
+      {
+        "fato": "val.BR_ITAU.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,85%"
+      },
+      {
+        "fato": "val.BR_ITAU.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_ITAU.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_ITAU.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+7,86%"
+      },
+      {
+        "fato": "val.BR_ITAU.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-21,67%"
+      },
+      {
+        "fato": "val.BR_ITAU.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "10,0x"
+      },
+      {
+        "fato": "val.BR_ITAU.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,5x"
+      },
+      {
+        "fato": "val.BR_ITAU.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 48,62"
+      },
+      {
+        "fato": "val.BR_ITAU.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+3,67%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Itaú Unibanco",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/42787847-4cf6-4461-94a5-40ed237dca33/978c7174-bc04-1014-865c-e05f019f5180?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Itaú Unibanco",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/42787847-4cf6-4461-94a5-40ed237dca33/e950fa46-4ba0-6db4-e324-23883f242e73?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Itaú Unibanco",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/42787847-4cf6-4461-94a5-40ed237dca33/b0756a4b-29fa-0f84-04f5-adbbace246a8?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+      "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+      "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+      "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+    ],
+    "governanca": "A apresentação foi conferida visualmente nas páginas de capital e guidance. A revisão limitada e as bases BRGAAP e IFRS não equivalem a auditoria anual ou capital econômico. Contrato de folha tem reconhecimento diferido. A nota atualiza a leitura documental sem reescrever a versão histórica nem qualificar modelo bancário experimental.",
+    "guidance": "reduzido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Margem depois de perdas, serviços e seguros, inadimplência, renegociação e eficiência. Conciliar resultado gerencial, BRGAAP e IFRS. Monitorar capital principal, ativos ponderados, captação, direitos subordinados, pagamentos de folha e distribuição efetiva.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ITAU.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+7,86%"
+          },
+          {
+            "fato": "val.BR_ITAU.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,85%"
+          },
+          {
+            "fato": "val.BR_ITAU.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "2,24%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +7,86%, custo do capital 11,85% e dispersão entre métodos 2,24% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_ITAU",
+    "lacunas_de_dados": [
+      "A ponte integral entre BRGAAP, IFRS, resultado gerencial e capital permanece pendente.",
+      "A data de publicação dos arquivos da central não foi comprovada nesta consulta.",
+      "Pagamento posterior do JCP não foi confirmado apenas pelo calendário divulgado.",
+      "Retorno de contratos e aquisições exige diligência específica.",
+      "Capital econômico e qualificação bancária experimental permanecem abertos."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Banco de crédito, serviços, seguros, gestão e investimentos no Brasil e exterior. Margem de clientes, negociação, perdas esperadas e custos determinam retorno. BRGAAP, IFRS e resultado recorrente gerencial têm conciliações próprias; depósitos e instrumentos subordinados representam obrigações e direitos distintos.",
+    "nome": "Itaú Unibanco",
+    "o_que_mudou": "Nova versão documental com hipótese, posição competitiva, qualidade dos resultados, capital, contratese e monitoramento. Fontes públicas foram revistas na data da consulta; o histórico publicado e o retrato determinístico permanecem preservados.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BB",
+        "nome": "Banco do Brasil"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      },
+      {
+        "issuer_id": "BR_INTER",
+        "nome": "Inter&Co"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que relacionamento e eficiência sustentem retorno depois das perdas e do capital requerido. A condição decisiva é preservar margem ajustada ao risco e qualidade da carteira enquanto serviços enfrentam projeção menor. Lucro crescente não comprova por si só distribuição sustentável ou adequação de capital.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ITAU.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 49,35"
+          },
+          {
+            "fato": "val.BR_ITAU.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 50,40"
+          },
+          {
+            "fato": "val.BR_ITAU.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+2,13%"
+          },
+          {
+            "fato": "val.BR_ITAU.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,85%"
+          },
+          {
+            "fato": "val.BR_ITAU.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+7,86%"
+          }
+        ],
+        "texto": "Preço de referência R$ 49,35 e alvo R$ 50,40, com potencial +2,13%. A hipótese de investimento deve ser confrontada com o custo do capital 11,85% e retorno esperado +7,86%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Canais, base de clientes e diversidade de produtos podem apoiar captação e serviços. Contrato de folha demanda pagamento e amortização antes do retorno. Vantagem em atendimento e tecnologia precisa de teste independente; aquisição de controle e reclassificações gerenciais limitam comparação orgânica.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T01:47:31.235626+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Lucro recorrente e margem financeira cresceram; inadimplência longa consolidada permaneceu estável. Custo de crédito e renegociação requerem leitura própria. A projeção de serviços e seguros foi reduzida, com demais linhas mantidas. BRGAAP e IFRS não são bases intercambiáveis; lucro e fluxo bancário conservam suas definições.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que relacionamento e eficiência sustentem retorno depois das perdas e do capital requerido. A condição decisiva é preservar margem ajustada ao risco e qualidade da carteira enquanto serviços enfrentam projeção menor. Lucro crescente não comprova por si só distribuição sustentável ou adequação de capital. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +7,86%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Crédito e menor crescimento de serviços podem pressionar retorno. Contratos de folha e expansão utilizam capital; classes subordinadas e exigências regulatórias limitam distribuição. Comparativos e extração textual do PDF exigem conferência visual."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ITAU.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+3,67%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +3,67%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Itaú Unibanco — margem ajustada ao risco e disciplina de capital",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "Resultado recorrente e margem cresceram, com estabilidade da inadimplência longa consolidada e capital principal maior sequencialmente. A conferência visual confirma redução da projeção de serviços e seguros; despesas e demais linhas foram mantidas. Resíduos textuais de edição na apresentação não foram tratados como tabela final. Aquisição de controle da Avenue e reclassificações alteram comparativos. JCP e letras subordinadas conservam estados e datas próprios.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Margem depois de perdas, serviços e seguros, inadimplência, renegociação e eficiência. Conciliar resultado gerencial, BRGAAP e IFRS. Monitorar capital principal, ativos ponderados, captação, direitos subordinados, pagamentos de folha e distribuição efetiva.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_ITAU.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,85%"
+          },
+          {
+            "fato": "val.BR_ITAU.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "2,24%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,85% e a dispersão entre métodos 2,24%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

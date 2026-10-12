@@ -1,0 +1,479 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "728aa8425b1e28572b49b533c43377227b28e8bbe1cc332a5829d47ba6f39b2c",
+    "factbook": "199b4b1a5126edbcd415e3a57ffd39d5df14a9c6d02b5cc150c4c9c6f4a25fce",
+    "nota_json": "8fd641c4fb978b008a743ff30cd1d43174108efe02713064af3ed2361dcecb08"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_EMBRAER",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-10",
+  "published_at": "2026-10-12T01:48:49.985066+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "Desenvolvimento, peças e suporte exigem recursos; Eve consome caixa em perímetro próprio. A dívida líquida sem Eve diminuiu, sem transformar o saldo em caixa líquido positivo. Linha não sacada não é caixa recebido. Recompras e dividendos pagos são separados de JCP com pagamento futuro condicionado ao calendário corporativo.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar margem sem efeitos extraordinários e conversão da carteira.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": "2027-05-24",
+        "descricao": "Pagamento de JCP anunciado para calendário futuro, a confirmar.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "capital"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 67,95, com retorno esperado -23,80%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Entregas e serviços convertem carteira em margem e caixa depois de desenvolvimento, com adiantamentos e Eve conciliados em bases próprias. O cenário otimista calculado pelo código é R$ 101,66.",
+      "pessimista": "Atrasos e custos absorvem pedidos; adiantamentos e crédito tributário deixam de sustentar caixa, enquanto desenvolvimento e Eve exigem recursos adicionais. O cenário pessimista calculado pelo código é R$ 36,63."
+    },
+    "comentario_valuation": "Preço de referência R$ 89,70 e alvo do modelo aberto R$ 67,95, com potencial -24,25%. Retorno total esperado -23,80% e custo do capital próprio 9,95%. A dispersão entre métodos é 36,84%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 117,45; a diferença -42,15% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "Pedidos e caixa ajustado podem aumentar com adiantamentos e benefício tributário extraordinário. Se entregas e serviços não sustentarem margem após desenvolvimento e juros, carteira recorde e metas elevadas não confirmarão geração recorrente ao acionista.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_EMBRAER.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 89,70"
+      },
+      {
+        "fato": "val.BR_EMBRAER.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 67,95"
+      },
+      {
+        "fato": "val.BR_EMBRAER.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-24,25%"
+      },
+      {
+        "fato": "val.BR_EMBRAER.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_EMBRAER.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_EMBRAER.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 101,66"
+      },
+      {
+        "fato": "val.BR_EMBRAER.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "39,38%"
+      },
+      {
+        "fato": "val.BR_EMBRAER.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 36,63"
+      },
+      {
+        "fato": "val.BR_EMBRAER.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "0,79%"
+      },
+      {
+        "fato": "val.BR_EMBRAER.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "9,95%"
+      },
+      {
+        "fato": "val.BR_EMBRAER.wacc",
+        "rotulo": "WACC",
+        "valor": "9,24%"
+      },
+      {
+        "fato": "val.BR_EMBRAER.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_EMBRAER.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-23,80%"
+      },
+      {
+        "fato": "val.BR_EMBRAER.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-21,15%"
+      },
+      {
+        "fato": "val.BR_EMBRAER.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "18,7x"
+      },
+      {
+        "fato": "val.BR_EMBRAER.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "3,6x"
+      },
+      {
+        "fato": "val.BR_EMBRAER.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 117,45"
+      },
+      {
+        "fato": "val.BR_EMBRAER.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-42,15%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Embraer",
+        "publicado_em": "2026-08-10",
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://www.embraer.com/media-center/en?detail=28090&mediatype=NEWS&page=1"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Embraer",
+        "publicado_em": "2026-08-10",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://www.embraer.com/media/i50deoku/ri_release_earnings_2q26_eng.pdf?rmode=pad&v=1dd28ad9f636f10"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Embraer",
+        "publicado_em": "2026-08-10",
+        "tipo": "Relações com investidores",
+        "titulo": "Release com demonstrações resumidas e reconciliação de caixa; operação com e sem Eve",
+        "url": "https://www.embraer.com/media/i50deoku/ri_release_earnings_2q26_eng.pdf?rmode=pad&v=1dd28ad9f636f10"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F4",
+        "instituicao": "Embraer",
+        "publicado_em": "2026-10-02",
+        "tipo": "Relações com investidores",
+        "titulo": "Divulgação de entregas posterior ao resultado financeiro",
+        "url": "https://embraer.com/media-center/pt?detail=32874&mediatype=NEWS"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+      "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+      "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+      "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+    ],
+    "governanca": "O PDF recebido foi conferido, preservando a cópia original. Eve, consolidado e operação sem Eve têm direitos e recursos próprios. O emissor informa novos símbolos de negociação; isso não retroage à unidade do retrato. JCP declarado possui pagamento futuro, sem recebimento presumido.",
+    "guidance": "elevado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "Carteira, entregas, mix, serviços e margem sem efeitos extraordinários. Conciliar adiantamentos, estoques, desenvolvimento, juros e Eve. Confirmar metas elevadas, unidade por ação e ADS, dívida econômica e pagamento efetivo da remuneração anunciada.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_EMBRAER.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-23,80%"
+          },
+          {
+            "fato": "val.BR_EMBRAER.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "9,95%"
+          },
+          {
+            "fato": "val.BR_EMBRAER.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "36,84%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -23,80%, custo do capital 9,95% e dispersão entre métodos 36,84% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_EMBRAER",
+    "lacunas_de_dados": [
+      "Notas completas, adiantamentos e caixa recorrente não foram integralmente reconciliados.",
+      "Unidade do ADS e eventos de negociação requerem conciliação específica com o retrato.",
+      "Pagamento futuro do JCP não foi comprovado.",
+      "Carteira, cancelamentos e retorno dos novos programas exigem diligência.",
+      "Entregas posteriores não equivalem ao resultado financeiro completo do período."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Fabricante de aeronaves comerciais e executivas, defesa e serviços, com investimento em desenvolvimento e suporte. Carteira contratada não é entrega nem recebimento final. Eve tem pesquisa, caixa, dívida e sócios próprios; medidas sem Eve diferem do consolidado. Moeda e unidade da ação e do ADS preservam bases próprias.",
+    "nome": "Embraer",
+    "o_que_mudou": "Nova versão documental com hipótese, posição competitiva, qualidade dos resultados, capital, contratese e monitoramento. Fontes públicas foram revistas na data da consulta; o histórico publicado e o retrato determinístico permanecem preservados.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ECORODOVIAS",
+        "nome": "EcoRodovias"
+      },
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_LOCALIZA",
+        "nome": "Localiza"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_MOTIVA",
+        "nome": "Motiva (ex-CCR)"
+      },
+      {
+        "issuer_id": "BR_RANDON",
+        "nome": "Randoncorp"
+      },
+      {
+        "issuer_id": "BR_SIMPAR",
+        "nome": "Simpar"
+      },
+      {
+        "issuer_id": "BR_TUPY",
+        "nome": "Tupy"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "A hipótese é que carteira e serviços sustentem entregas com retorno depois de desenvolvimento e financiamento. A condição decisiva é converter pedidos em margem e caixa recorrente, preservando qualidade e suporte. Adiantamentos de clientes e crédito tributário extraordinário não devem representar permanentemente a geração normal.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_EMBRAER.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 89,70"
+          },
+          {
+            "fato": "val.BR_EMBRAER.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 67,95"
+          },
+          {
+            "fato": "val.BR_EMBRAER.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-24,25%"
+          },
+          {
+            "fato": "val.BR_EMBRAER.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "9,95%"
+          },
+          {
+            "fato": "val.BR_EMBRAER.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-23,80%"
+          }
+        ],
+        "texto": "Preço de referência R$ 89,70 e alvo R$ 67,95, com potencial -24,25%. A hipótese de investimento deve ser confrontada com o custo do capital 9,95% e retorno esperado -23,80%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Certificação, produto, suporte e relacionamento podem apoiar venda e reposição. Carteira contratada indica demanda, sem eliminar cancelamento, atraso de fornecedor ou necessidade de investimento. A vantagem em custo e utilização precisa de teste independente; futura mobilidade aérea possui maturação distinta.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T01:48:49.985066+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita e margem ajustada cresceram; adiantamentos de clientes e crédito tributário extraordinário apoiaram o caixa. O guidance de margem e caixa sem Eve foi elevado, com receita e entregas mantidas. A medida ajustada não é caixa residual distribuível. Entregas posteriores cresceram, sem comprovar resultado financeiro completo posterior.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que carteira e serviços sustentem entregas com retorno depois de desenvolvimento e financiamento. A condição decisiva é converter pedidos em margem e caixa recorrente, preservando qualidade e suporte. Adiantamentos de clientes e crédito tributário extraordinário não devem representar permanentemente a geração normal. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Venda, com retorno esperado -23,80%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Fornecedores, certificação, cancelamento e tarifas podem afetar entregas. Adiantamentos e créditos fiscais reduzem comparabilidade de caixa. Desenvolvimento e Eve exigem financiamento; unidade por ação e obrigações restringem retorno atribuível."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_EMBRAER.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-42,15%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -42,15%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Embraer — carteira contratada, entregas e caixa recorrente",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "Receita, margem ajustada e caixa melhoraram; a elevação de metas financeiras inclui crédito tributário extraordinário e isenção de tarifas diretas, com pequena contribuição da perspectiva operacional relatada. Receita e entregas projetadas foram mantidas. Caixa ajustado sem Eve inclui adiantamentos e difere do consolidado. A divulgação posterior registra entregas maiores; não substitui resultado financeiro posterior. Dívida líquida sem Eve diminuiu, mas permanece endividamento líquido.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Carteira, entregas, mix, serviços e margem sem efeitos extraordinários. Conciliar adiantamentos, estoques, desenvolvimento, juros e Eve. Confirmar metas elevadas, unidade por ação e ADS, dívida econômica e pagamento efetivo da remuneração anunciada.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_EMBRAER.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "9,95%"
+          },
+          {
+            "fato": "val.BR_EMBRAER.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "36,84%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 9,95% e a dispersão entre métodos 36,84%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

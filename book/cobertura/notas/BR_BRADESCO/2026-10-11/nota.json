@@ -1,0 +1,212 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_BRADESCO",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Bradesco — recuperação operacional transmitida ao acionista após capital",
+  "resumo": "A hipótese é que recuperação da margem após crédito e eficiência sustentem retorno recorrente suficiente para o acionista. A condição decisiva é lucro por ação e capital disponível depois de perdas e reinvestimento. A melhora agregada não basta se a base acionária, o risco ou os ajustes absorvem a recuperação. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_BRADESCO.rating_codigo}}, com retorno esperado {{fact:val.BR_BRADESCO.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Grupo financeiro com banco, crédito, captação, serviços, seguros e previdência. A diversificação combina margem de clientes, mercado e resultado segurador, com perímetros e exigências de capital distintos. O resultado consolidado deve ser conciliado com lucro atribuível e direitos de cada classe de ação.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que recuperação da margem após crédito e eficiência sustentem retorno recorrente suficiente para o acionista. A condição decisiva é lucro por ação e capital disponível depois de perdas e reinvestimento. A melhora agregada não basta se a base acionária, o risco ou os ajustes absorvem a recuperação.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_BRADESCO.preco}} e alvo {{fact:val.BR_BRADESCO.preco_alvo}}, com potencial {{fact:val.BR_BRADESCO.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_BRADESCO.ke}} e retorno esperado {{fact:val.BR_BRADESCO.etr}}.",
+      "evidencias": [
+        "val.BR_BRADESCO.preco",
+        "val.BR_BRADESCO.preco_alvo",
+        "val.BR_BRADESCO.upside",
+        "val.BR_BRADESCO.ke",
+        "val.BR_BRADESCO.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Monitorar margem com clientes, mercado, perdas finais e realização de garantias. Separar seguros operacionais e resultado financeiro, despesas totais e ajustes recorrentes. Conciliar base acionária após a subscrição, lucro atribuível, capital principal e proventos efetivamente pagos. Rever resultados na mesma base temporal e por classe.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_BRADESCO.ke}} e a dispersão entre métodos {{fact:val.BR_BRADESCO.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_BRADESCO.ke",
+        "val.BR_BRADESCO.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Crédito programado das ações subscritas; conciliar base por ação e proventos conforme o comunicado.",
+      "data": "2026-10-13",
+      "tipo": "capital",
+      "direcao": "incerto",
+      "evidencias": [
+        "F3"
+      ]
+    },
+    {
+      "descricao": "Divulgação programada de resultados; rever recuperação recorrente, perdas, seguros e capital.",
+      "data": "2026-10-22",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F4"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Crédito, garantias, despesas e capital podem frustrar a recuperação por ação. Seguro e margem de mercado têm sensibilidades próprias. Ajustes recorrentes, base acionária e datas de proventos exigem conciliação, sem antecipar pagamento ou distribuição.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_BRADESCO.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_BRADESCO.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Margem comercial e crédito sustentam recuperação recorrente, eficiência se confirma no custo total e capital permite transmissão ao acionista. O cenário otimista calculado pelo código é {{fact:val.BR_BRADESCO.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_BRADESCO.preco_alvo}}, com retorno esperado {{fact:val.BR_BRADESCO.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Perdas, garantias e despesas absorvem margem, seguros deixam de compensar e a nova base não recebe retorno suficiente por ação. O cenário pessimista calculado pelo código é {{fact:val.BR_BRADESCO.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_BRADESCO.preco}} e alvo do modelo aberto {{fact:val.BR_BRADESCO.preco_alvo}}, com potencial {{fact:val.BR_BRADESCO.upside}}. Retorno total esperado {{fact:val.BR_BRADESCO.etr}} e custo do capital próprio {{fact:val.BR_BRADESCO.ke}}. A dispersão entre métodos é {{fact:val.BR_BRADESCO.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_BRADESCO.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_BRADESCO.consenso_alvo}}; a diferença {{fact:val.BR_BRADESCO.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "O release distingue lucro contábil e recorrente, provisão nominal e custo de crédito relativo. Carteira em estágio problemático, renegociação e atraso não devem ser somados como perdas independentes. A afirmação de controle de despesas usa recorte sem participação nos lucros; a tese precisa conferir o custo total e seus ajustes.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "As classes ordinária e preferencial têm direitos próprios. A homologação do capital está confirmada, mas emissão e crédito têm data posterior à consulta. O provento destinado também conserva prazo futuro de pagamento. Controle, relacionadas e trânsito de resultado entre banco e seguros exigem os documentos completos.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Distribuição, relacionamento e seguros podem ampliar receitas e retenção. A combinação precisa demonstrar custo total, margem depois de perdas e retorno dos negócios. Maior uso de canais digitais e redução de agências não comprovam queda de toda despesa; investimento em tecnologia e custos compartilhados permanecem relevantes.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "O lucro recorrente avança, mas sua base difere do resultado contábil com encargos fiscais anteriores. Inadimplência longa cresce ligeiramente e atraso na realização de garantias exige atenção. A melhora consolidada não significa avanço sequencial de todas as linhas: resultado operacional de seguros e margem de mercado têm trajetórias próprias.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "O aumento de capital já foi homologado; o crédito das ações subscritas ainda está programado para depois da pesquisa. A nova base muda valores por ação, enquanto o comunicado preserva o montante bruto do provento destinado. Destinação e pagamento futuro são estados diferentes. Capital do banco e das seguradoras não é automaticamente distribuível em conjunto.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se a recuperação depende de mercado e ajustes enquanto crédito, despesas e capital impedem melhora recorrente por ação. Diversificação não garante compensação simultânea entre banco e seguros nem livre transferência de caixa.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Monitorar margem com clientes, mercado, perdas finais e realização de garantias. Separar seguros operacionais e resultado financeiro, despesas totais e ajustes recorrentes. Conciliar base acionária após a subscrição, lucro atribuível, capital principal e proventos efetivamente pagos. Rever resultados na mesma base temporal e por classe.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_BRADESCO.etr}}, custo do capital {{fact:val.BR_BRADESCO.ke}} e dispersão entre métodos {{fact:val.BR_BRADESCO.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_BRADESCO.etr",
+        "val.BR_BRADESCO.ke",
+        "val.BR_BRADESCO.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Margem depois de perdas e custo total não confirma recuperação recorrente por ação.",
+    "Realização de garantias, crédito ou seguros exige provisões e capital adicionais.",
+    "A nova base acionária ou direitos por classe muda a transmissão de resultado e proventos.",
+    "Reconciliação contábil altera o peso de ajustes e resultado recorrente."
+  ],
+  "lacunas_de_dados": [
+    "Demonstrações completas, notas explicativas e capital prudencial não foram integralmente reconciliados.",
+    "Lucro atribuível, seguros e ajustes recorrentes exigem conferência na mesma base temporal.",
+    "Crédito das ações subscritas e pagamento futuro dos proventos não foram antecipados como concluídos.",
+    "Direitos por classe, relacionadas e capacidade de distribuir entre entidades permanecem a conferir.",
+    "Garantias, renegociação e perdas finais requerem documentação detalhada.",
+    "Guidance, tom agregado da gestão e percepção do mercado não foram classificados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Bradesco",
+      "titulo": "Perfil e estrutura do negócio",
+      "url": "https://www.bradescori.com.br/o-bradesco/quem-somos-nos/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Bradesco",
+      "titulo": "Release de resultado, crédito e reconciliação recorrente",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/80f2e993-0a30-421a-9470-a4d5c8ad5e9f/108e06bf-b649-e356-203c-ac94477b336d?origin=2",
+      "publicado_em": "2026-08-05",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Bradesco",
+      "titulo": "Homologação do capital e crédito programado das ações subscritas",
+      "url": "https://filemanager-cdn.mziq.com/published/80f2e993-0a30-421a-9470-a4d5c8ad5e9f/f48b7256-a843-4112-8e02-dfc233b63563",
+      "publicado_em": "2026-10-08",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F4",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Bradesco",
+      "titulo": "Calendário de eventos corporativos atualizado",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/80f2e993-0a30-421a-9470-a4d5c8ad5e9f/028903d2-d77e-217b-353d-fb72001b1a17?origin=2",
+      "publicado_em": "2026-09-18",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

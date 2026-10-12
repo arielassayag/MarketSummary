@@ -1,0 +1,207 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_ULTRAPAR",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Ultrapar — distribuição, infraestrutura e caixa atribuível depois do giro",
+  "resumo": "A hipótese é que qualidade do fornecimento, eficiência comercial e infraestrutura remunerem capital depois de manutenção, bonificações, financiamento e giro. A condição decisiva é caixa atribuível à holding e ao acionista, com retorno comparável por negócio. Margens favorecidas pela conjuntura não foram extrapoladas como permanentes. Diversificação pode ampliar fontes de resultado, mas exige disciplina de aquisições e projetos, sem confundir EBITDA consolidado com recurso livre para distribuição. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_ULTRAPAR.rating_codigo}}, com retorno esperado {{fact:val.BR_ULTRAPAR.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Grupo com distribuição de combustíveis na Ipiranga, GLP e novas energias na Ultragaz, armazenagem na Ultracargo e logística na Hidrovias. A holding aloca capital e recebe recursos conforme direitos e obrigações das controladas. Suprimento, capilaridade, contratos, giro e utilização determinam margem. Hidrovias passou a ser consolidada após aquisição do controle; seus resultados completos divulgados por negócio e os consolidados do grupo têm períodos e eliminações diferentes.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que qualidade do fornecimento, eficiência comercial e infraestrutura remunerem capital depois de manutenção, bonificações, financiamento e giro. A condição decisiva é caixa atribuível à holding e ao acionista, com retorno comparável por negócio. Margens favorecidas pela conjuntura não foram extrapoladas como permanentes. Diversificação pode ampliar fontes de resultado, mas exige disciplina de aquisições e projetos, sem confundir EBITDA consolidado com recurso livre para distribuição.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_ULTRAPAR.preco}} e alvo {{fact:val.BR_ULTRAPAR.preco_alvo}}, com potencial {{fact:val.BR_ULTRAPAR.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_ULTRAPAR.ke}} e retorno esperado {{fact:val.BR_ULTRAPAR.etr}}.",
+      "evidencias": [
+        "val.BR_ULTRAPAR.preco",
+        "val.BR_ULTRAPAR.preco_alvo",
+        "val.BR_ULTRAPAR.upside",
+        "val.BR_ULTRAPAR.ke",
+        "val.BR_ULTRAPAR.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Monitorar volume, margem comparável, suprimento, mix e crédito por negócio. Conciliar capital de giro, fornecedores convênio, exclusividade, arrendamentos e impostos. Verificar navegabilidade, capacidade, projetos e retorno das aquisições; separar lucro consolidado, participação minoritária e caixa recebido pela holding.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_ULTRAPAR.ke}} e a dispersão entre métodos {{fact:val.BR_ULTRAPAR.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_ULTRAPAR.ke",
+        "val.BR_ULTRAPAR.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Resultados posteriores e retorno dos projetos de armazenagem; confirmar entrada, utilização e caixa sem extrapolar margens conjunturais.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "descricao": "Revisão da alocação de capital e dos recursos efetivamente recebidos pela holding, após exclusividade, dívida e minoritários.",
+      "data": null,
+      "tipo": "capital",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Normalização de margens, energia, demanda e logística podem reduzir caixa. Giro, exclusividade, manutenção e financiamento exigem capital. Aquisições, minoritários e perímetros distintos limitam a transmissão automática de resultado à holding.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_ULTRAPAR.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_ULTRAPAR.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Confiabilidade, eficiência e contratos sustentam margem após normalização, com projetos remunerando capital e caixa atribuível depois de todas as obrigações. O cenário otimista calculado pelo código é {{fact:val.BR_ULTRAPAR.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_ULTRAPAR.preco_alvo}}, com retorno esperado {{fact:val.BR_ULTRAPAR.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Margens normalizam enquanto giro, contratos, manutenção e financiamento absorvem recursos, e projetos ou aquisições não entregam retorno suficiente. O cenário pessimista calculado pelo código é {{fact:val.BR_ULTRAPAR.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_ULTRAPAR.preco}} e alvo do modelo aberto {{fact:val.BR_ULTRAPAR.preco_alvo}}, com potencial {{fact:val.BR_ULTRAPAR.upside}}. Retorno total esperado {{fact:val.BR_ULTRAPAR.etr}} e custo do capital próprio {{fact:val.BR_ULTRAPAR.ke}}. A dispersão entre métodos é {{fact:val.BR_ULTRAPAR.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_ULTRAPAR.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_ULTRAPAR.consenso_alvo}}; a diferença {{fact:val.BR_ULTRAPAR.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "O resultado da Ipiranga é favorecido por volume, escala e margem, com componentes estruturais e conjunturais descritos pela administração. Ultragaz tem volume anual menor e margem recorrente favorecida pelo mix; Ultracargo cresce anualmente e recua sequencialmente no EBITDA; Hidrovias exige controlar venda da navegação costeira e sazonalidade. A ponte de fluxo mostra fornecedores e despesas próprias. Projeções e acontecimentos posteriores não foram incorporados retrospectivamente ao modelo recebido.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "A leitura distingue lucro da Ultrapar e dos não controladores, caixa por entidade e resultado consolidado. Recibos e ações têm conversão, elegibilidade e datas de direito próprias. Aquisição de controle de Hidrovias não transfere todos os direitos de seus minoritários. Recompra autorizada, realização e dividendos aprovados são estados distintos. Transações entre segmentos e períodos antes da consolidação impedem somar os quadros gerenciais como se fossem um único perímetro contábil.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Rede, importação, terminais e relacionamentos podem favorecer confiabilidade. O resultado da Ipiranga distingue melhora competitiva alegada pela companhia e efeitos conjunturais de suprimento internacional. No GLP, logística e mix precisam compensar demanda e competição. Tancagem depende de giro, localização e contratos; volume movimentado não equivale à capacidade estática. Hidrovias exige controlar sazonalidade, navegabilidade, contratos e perímetro continuado.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Receita, EBITDA ajustado recorrente, lucro consolidado e fluxo operacional melhoram sequencialmente e na comparação anual. A Ipiranga concentra o avanço; Ultragaz tem diferença entre resultado ajustado e recorrente pela baixa de investimento, e Hidrovias mantém comparação própria após desinvestimento. Ajustes excluem amortização de direitos de clientes e marcação de energia, sem eliminar os desembolsos econômicos associados. Fluxo incorpora fornecedores convênio e giro; lucro consolidado inclui participação de não controladores.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Dívida líquida diminui, mas arrendamentos, fornecedores convênio e passivos financeiros de clientes têm leitura própria. Bonificações de exclusividade e manutenção consomem caixa antes de presumir distribuição. Dividendos intermediários foram aprovados com pagamento previsto após o trimestre; aprovação não comprova liquidação. Expansões de terminais descritas para período posterior exigem confirmação de entrada e retorno. Holding, controladas e minoritários têm obrigações e recursos distintos.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se ganho de distribuição depende de conjuntura que não se repete. Desembolsos por exclusividade e giro financiado podem explicar distância entre EBITDA e caixa livre. Capacidade nova não cria valor sem contratação e utilização econômica. Hidrovias e novas energias podem exigir capital e enfrentar riscos diferentes, enquanto lucro de minoritários não pertence integralmente ao acionista da holding.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Monitorar volume, margem comparável, suprimento, mix e crédito por negócio. Conciliar capital de giro, fornecedores convênio, exclusividade, arrendamentos e impostos. Verificar navegabilidade, capacidade, projetos e retorno das aquisições; separar lucro consolidado, participação minoritária e caixa recebido pela holding.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_ULTRAPAR.etr}}, custo do capital {{fact:val.BR_ULTRAPAR.ke}} e dispersão entre métodos {{fact:val.BR_ULTRAPAR.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_ULTRAPAR.etr",
+        "val.BR_ULTRAPAR.ke",
+        "val.BR_ULTRAPAR.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Margem comparável não sustenta caixa depois da normalização do suprimento.",
+    "Giro financiado e exclusividade explicam caixa sem recorrência equivalente.",
+    "Aquisições e expansão não remuneram capital ou exigem aportes adicionais.",
+    "Novos documentos alteram perímetro, minoritários ou recursos atribuíveis à holding."
+  ],
+  "lacunas_de_dados": [
+    "Fluxo livre por negócio e recursos atribuíveis à holding não foram integralmente reconciliados.",
+    "Fornecedores convênio, passivos de clientes e ajustes do EBITDA precisam de ponte econômica completa.",
+    "Entrada e retorno das expansões previstas para período posterior não foram comprovados.",
+    "Liquidação dos dividendos aprovados e execução integral da recompra não foram conciliadas.",
+    "A cópia local de páginas de RI foi recusada; PDFs públicos foram obtidos normalmente, sem contornar o bloqueio.",
+    "Material posterior do evento de investidores e calendário atual não foram integralmente arquivados.",
+    "Guidance, tom e percepção do mercado não foram classificados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Ultrapar",
+      "titulo": "Portfólio e histórico; leitura pública com cópia local indisponível",
+      "url": "https://ri.ultra.com.br/visao-geral/perfil-e-historia/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Ultrapar",
+      "titulo": "Resultado trimestral por negócio, caixa, investimento e dívida",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/4282e939-a6dc-401d-a873-e3c28b7e48df/a8ec731a-2a87-ecd0-896c-975c26cd9ef5?origin=2",
+      "publicado_em": "2026-08-12",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Ultrapar",
+      "titulo": "Demonstrações intermediárias: lucro atribuível, caixa e dividendos posteriores",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/4282e939-a6dc-401d-a873-e3c28b7e48df/11122b60-35ae-dc51-737a-918dde893b4c?origin=2",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

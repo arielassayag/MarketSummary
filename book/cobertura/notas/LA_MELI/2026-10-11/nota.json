@@ -1,0 +1,168 @@
+{
+  "mind": "codex",
+  "issuer_id": "LA_MELI",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "MercadoLibre: retorno do ecossistema e disciplina de reinvestimento",
+  "resumo": "A hipótese é que maior frequência e integração gerem retorno durável. A condição é demonstrar caixa econômico após subsídios, logística e perdas de crédito, sem confundir crescimento de atividade com criação de valor. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.LA_MELI.rating_codigo}}, com retorno esperado {{fact:val.LA_MELI.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "O MercadoLibre reúne marketplace, logística, publicidade e serviços financeiros. O vínculo entre comércio e pagamentos é central à estratégia; a exposição a crédito exige analisar risco e financiamento além da escala comercial.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que maior frequência e integração gerem retorno durável. A condição é demonstrar caixa econômico após subsídios, logística e perdas de crédito, sem confundir crescimento de atividade com criação de valor.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.LA_MELI.preco}} e alvo {{fact:val.LA_MELI.preco_alvo}}, com potencial {{fact:val.LA_MELI.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.LA_MELI.ke}} e retorno esperado {{fact:val.LA_MELI.etr}}.",
+      "evidencias": [
+        "val.LA_MELI.preco",
+        "val.LA_MELI.preco_alvo",
+        "val.LA_MELI.upside",
+        "val.LA_MELI.ke",
+        "val.LA_MELI.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar frequência, retenção, custo de entrega e monetização. No crédito, testar perdas, maturação das coortes e custo de financiamento; confrontar a expansão com caixa depois de reinvestimento e obrigações.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.LA_MELI.ke}} e a dispersão entre métodos {{fact:val.LA_MELI.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.LA_MELI.ke",
+        "val.LA_MELI.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Competição pode exigir subsídios persistentes. Expansão de crédito e logística pode consumir capital antes de remunerá-lo; a leitura consolidada pode esconder diferenças entre países e atividades.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.LA_MELI.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.LA_MELI.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Retenção e produtividade remuneram investimento sem deterioração do crédito. O cenário otimista calculado pelo código é {{fact:val.LA_MELI.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.LA_MELI.preco_alvo}}, com retorno esperado {{fact:val.LA_MELI.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Incentivos, perdas e necessidades de capital limitam a remuneração do crescimento. O cenário pessimista calculado pelo código é {{fact:val.LA_MELI.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.LA_MELI.preco}} e alvo do modelo aberto {{fact:val.LA_MELI.preco_alvo}}, com potencial {{fact:val.LA_MELI.upside}}. Retorno total esperado {{fact:val.LA_MELI.etr}} e custo do capital próprio {{fact:val.LA_MELI.ke}}. A dispersão entre métodos é {{fact:val.LA_MELI.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.LA_MELI.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.LA_MELI.consenso_alvo}}; a diferença {{fact:val.LA_MELI.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "A carta consultada apresenta iniciativas comerciais, crédito e reconciliação do fluxo ajustado. A administração associa pressão de rentabilidade ao reinvestimento. Essa explicação é hipótese a confrontar com retorno por coorte; a conciliação integral com notas e modelo permanece pendente.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Confrontar investimento comercial e expansão de crédito com retorno por coorte e financiamento. Fundos de clientes não são caixa corporativo livre; recursos restritos e ativos digitais precisam de tratamento próprio antes de avaliar distribuições ou dívida.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Testar retenção, frequência, oferta e produtividade da rede frente a alternativas de comércio e pagamentos. A visão de vantagem do ecossistema é da administração; diferenciação precisa sobreviver à competição e aos incentivos comerciais.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Separar receitas comerciais, financeiras e perdas de crédito. A carta apresenta crescimento junto de pressão sobre lucro operacional. Fluxo ajustado exclui fundos de clientes e considera expansão da carteira e seu financiamento; exige ponte com o fluxo consolidado.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Confrontar investimento comercial e expansão de crédito com retorno por coorte e financiamento. Fundos de clientes não são caixa corporativo livre; recursos restritos e ativos digitais precisam de tratamento próprio antes de avaliar distribuições ou dívida.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se engajamento depender de incentivos permanentes ou se perdas e reinvestimento impedirem transmissão do crescimento ao caixa econômico.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Acompanhar frequência, retenção, custo de entrega e monetização. No crédito, testar perdas, maturação das coortes e custo de financiamento; confrontar a expansão com caixa depois de reinvestimento e obrigações.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.LA_MELI.etr}}, custo do capital {{fact:val.LA_MELI.ke}} e dispersão entre métodos {{fact:val.LA_MELI.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.LA_MELI.etr",
+        "val.LA_MELI.ke",
+        "val.LA_MELI.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+    "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+    "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+    "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "Retorno por coorte, subsídios e economia logística não foram integralmente demonstrados.",
+    "Fundos de clientes, recursos restritos, crédito e financiamento precisam de conciliação completa com o modelo.",
+    "Notas explicativas e base plenamente diluída não foram integralmente reconciliadas.",
+    "Vantagem competitiva, guidance, tom da gestão e percepção de mercado não estão concluídos.",
+    "Não há catalisador futuro datado confirmado neste estudo."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "MercadoLibre",
+      "titulo": "Perfil e estrutura do negócio",
+      "url": "https://investor.mercadolibre.com/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "MercadoLibre",
+      "titulo": "Carta aos acionistas e demonstrações condensadas",
+      "url": "https://investor.mercadolibre.com/open-file?file=aHR0cHM6Ly9odHRwMi5tbHN0YXRpYy5jb20vc3RvcmFnZS9tbC1jbXMtYmFja2VuZC9jbXMtZG9jdW1lbnRzLXByb2QvNWRiYmE5MTktNzIxYy00OTE2LWJiOTEtYzc2YTg3MTNmN2YwLzIxYzk4MzdhLWMyMTItNGQ2ZC1hYTE0LTMwNDFjMjZiMTE0My9MZXR0ZXJfdG9fU2hhcmVob2xkZXJzLnBkZg%3D%3D",
+      "publicado_em": "2026-08-05",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

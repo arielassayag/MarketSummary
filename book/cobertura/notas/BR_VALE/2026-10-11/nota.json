@@ -1,0 +1,172 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_VALE",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Vale — produção e qualidade mineral após custo completo, reposição e reparação",
+  "resumo": "A hipótese é que qualidade mineral, confiabilidade e logística sustentem caixa por ação depois de manutenção, reposição, expansão e reparação. A condição decisiva é retorno econômico ao longo do ciclo, com custo completo e obrigações financiadas. Crescimento dos metais básicos e menor dívida expandida não demonstram melhora uniforme dos custos nem eliminam exposição ao minério de ferro e ao investimento futuro. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_VALE.rating_codigo}}, com retorno esperado {{fact:val.BR_VALE.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Mineradora de minério de ferro, pelotas, cobre e níquel, com operações e infraestrutura logística no Brasil e exterior. Qualidade, umidade, frete e termos de venda determinam preço realizado. Controladas, coligadas e contratos de entrega de subprodutos têm atribuição econômica própria. Capacidade, produção, venda e recebimento não são equivalentes; projetos de reposição preservam operações e não representam integralmente expansão.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que qualidade mineral, confiabilidade e logística sustentem caixa por ação depois de manutenção, reposição, expansão e reparação. A condição decisiva é retorno econômico ao longo do ciclo, com custo completo e obrigações financiadas. Crescimento dos metais básicos e menor dívida expandida não demonstram melhora uniforme dos custos nem eliminam exposição ao minério de ferro e ao investimento futuro.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_VALE.preco}} e alvo {{fact:val.BR_VALE.preco_alvo}}, com potencial {{fact:val.BR_VALE.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_VALE.ke}} e retorno esperado {{fact:val.BR_VALE.etr}}.",
+      "evidencias": [
+        "val.BR_VALE.preco",
+        "val.BR_VALE.preco_alvo",
+        "val.BR_VALE.upside",
+        "val.BR_VALE.ke",
+        "val.BR_VALE.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Monitorar produção, disponibilidade, qualidade e preço realizado por mineral. Conferir compras, umidade, frete, manutenção e custo completo. Separar subprodutos e entrega contratual, marcação e liquidação de proteção. Conciliar reposição, expansão, minoritários, dívida e obrigações de reparação antes de inferir caixa disponível e retorno por ação.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_VALE.ke}} e a dispersão entre métodos {{fact:val.BR_VALE.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_VALE.ke",
+        "val.BR_VALE.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Ciclo mineral, câmbio, transporte, paradas e qualidade podem reduzir margem. Reposição, expansão e reparação exigem caixa; custos após subprodutos e dívida expandida não abrangem automaticamente todas as obrigações econômicas.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_VALE.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_VALE.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Confiabilidade, qualidade e logística sustentam margem, projetos remuneram o capital e caixa permanece suficiente após reposição e reparação. O cenário otimista calculado pelo código é {{fact:val.BR_VALE.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_VALE.preco_alvo}}, com retorno esperado {{fact:val.BR_VALE.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Preço, qualidade e custos deterioram enquanto manutenção, expansão e compromissos ambientais consomem recursos atribuíveis ao acionista. O cenário pessimista calculado pelo código é {{fact:val.BR_VALE.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_VALE.preco}} e alvo do modelo aberto {{fact:val.BR_VALE.preco_alvo}}, com potencial {{fact:val.BR_VALE.upside}}. Retorno total esperado {{fact:val.BR_VALE.etr}} e custo do capital próprio {{fact:val.BR_VALE.ke}}. A dispersão entre métodos é {{fact:val.BR_VALE.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_VALE.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_VALE.consenso_alvo}}; a diferença {{fact:val.BR_VALE.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "As projeções de custos do minério foram elevadas, enquanto as de custos de cobre e níquel foram reduzidas e intervalos de produção foram estreitados. Essas direções diferentes não receberam classificação agregada. A referência de teor do minério e comparações foram reapresentadas; não se misturaram as bases. Serra Sul inicia etapa de operação depois do trimestre, sem comprovar toda a capacidade projetada, e Bacaba tem previsão antecipada, ainda em construção.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Resultado e caixa de minoritários, coligadas e contratos de entrega de subprodutos têm direitos próprios. Reparação de Brumadinho e Mariana e descaracterização conservam obrigações e cronogramas distintos. Programa de recompra e distribuição programada não comprovam execução ou elegibilidade individual posterior. Consulta atual e eventos subsequentes não foram incorporados retrospectivamente ao modelo.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Qualidade, localização e logística podem apoiar preço realizado e acesso ao mercado. O custo de extração exclui compras de terceiros, transporte e reinvestimento; diferentes bases de minério úmido e seco exigem conciliação. Nos metais básicos, receitas de subprodutos reduzem custo gerencial, mas dependem de preço e contratos de entrega. Custo ajustado negativo não significa extração sem gasto nem caixa integralmente disponível.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Receita e EBITDA proforma aumentam na comparação anual e sequencial, mas lucro atribuível recua; resultado operacional e EBITDA ajustado também diminuem sequencialmente. Frete, câmbio, paradas, despesa excepcional, derivativos e impostos têm contribuições distintas. Caixa operacional aumenta e o fluxo livre recorrente melhora, com benefício de liquidação de derivativos e menor tributo pago. Pagamentos de reparação ficam fora de parte das medidas recorrentes e precisam permanecer na avaliação econômica.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "A dívida líquida expandida diminui sequencialmente com geração de caixa e pagamentos, mas a dívida financeira líquida aumenta na comparação anual. A medida expandida incorpora determinadas provisões e swaps; descaracterização e despesas incorridas têm tratamento próprio e não desaparecem por estarem fora dela. Fluxos gerencial e contábil classificam investimentos e reparação de formas distintas. Recompra realizada consome recursos; novo programa autorizado não equivale à sua execução.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se preços e subprodutos explicam melhora sem eficiência durável ou se frete, manutenção e reposição absorvem a margem. Projetos e capacidade maior podem exigir recursos antes da monetização. Redução de provisão ou dívida gerencial não elimina desembolsos de reparação, e autorização de recompra não assegura retorno por ação.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Monitorar produção, disponibilidade, qualidade e preço realizado por mineral. Conferir compras, umidade, frete, manutenção e custo completo. Separar subprodutos e entrega contratual, marcação e liquidação de proteção. Conciliar reposição, expansão, minoritários, dívida e obrigações de reparação antes de inferir caixa disponível e retorno por ação.",
+      "evidencias": [
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_VALE.etr}}, custo do capital {{fact:val.BR_VALE.ke}} e dispersão entre métodos {{fact:val.BR_VALE.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_VALE.etr",
+        "val.BR_VALE.ke",
+        "val.BR_VALE.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Qualidade, disponibilidade e logística deixam de sustentar margem depois do custo completo.",
+    "Subprodutos e ajustes explicam melhora sem caixa após contratos e reinvestimento.",
+    "Reposição, expansão e reparação absorvem recursos além do retorno econômico demonstrado.",
+    "Novos documentos alteram obrigações, participações e direitos por ação ou recibo."
+  ],
+  "lacunas_de_dados": [
+    "Demonstrações completas, fluxo atribuível e dívida por entidade não foram integralmente reconciliados.",
+    "Reservas, reposição, licenças e custo final dos projetos exigem análise por ativo.",
+    "Contratos de entrega de subprodutos e distinção entre custo gerencial e caixa requerem conciliação.",
+    "Obrigações de reparação, descaracterização e despesas fora da dívida expandida têm bases próprias a conferir.",
+    "Data e confirmação dos pagamentos posteriores e execução final de recompra não foram verificadas.",
+    "Projeções têm revisões diferentes por mineral; direção agregada e tom não foram classificados.",
+    "Vantagem relativa e percepção do mercado permanecem a comprovar.",
+    "Não há catalisador futuro com dia exato confirmado nesta pesquisa."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Vale",
+      "titulo": "Empresa, negócios e infraestrutura mineral",
+      "url": "https://www.vale.com/pt/conheca-nossa-empresa",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Vale",
+      "titulo": "Relatório de desempenho, custos, fluxo, dívida e reparação",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/53207d1c-63b4-48f1-96b7-19869fae19fe/5f4bd27d-7617-e113-75fb-a8bf16031963?origin=2",
+      "publicado_em": "2026-07-30",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

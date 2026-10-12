@@ -1,0 +1,397 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "ec67964de095c2e2e081fdb4c52d4e8702d8b4f281bdc28e41da547cef3d47cc",
+    "factbook": "3beb8789bd7d8e6a6688d2fab6622e0a63da139aaa488d738b2f120157cd5f00",
+    "nota_json": "fff85430b102ec0314f5e0f8af03938d87767d895e6d831353d8693aeca83bc0"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_PETROBRAS",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-10",
+  "published_at": "2026-10-12T01:46:01.679540+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O fluxo livre divulgado segue a política de remuneração e precede amortizações de arrendamentos e financiamento. O saldo de caixa e equivalentes diminui no trimestre enquanto disponibilidades ajustadas aumentam com aplicações; as medidas não são intercambiáveis. Dívida financeira cai, mas passivos de uso de ativos aumentam, limitando a queda da dívida bruta. Investimentos de competência e desembolsos têm bases próprias; proventos dependem de recursos, direitos e elegibilidade.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 111,19, com retorno esperado +114,31%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Produção e confiabilidade melhoram, margens realizadas preservam caixa e investimentos remuneram capital após arrendamentos e obrigações. O cenário otimista calculado pelo código é R$ 151,85.",
+      "pessimista": "Petróleo, margens e recebíveis deterioram enquanto expansão, manutenção e decisões de capital consomem recursos atribuíveis ao acionista. O cenário pessimista calculado pelo código é R$ 74,93."
+    },
+    "comentario_valuation": "Preço de referência R$ 55,48 e alvo do modelo aberto R$ 111,19, com potencial +100,41%. Retorno total esperado +114,31% e custo do capital próprio 11,26%. A dispersão entre métodos é 20,71%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 59,76; a diferença +86,05% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se Brent e estoques explicam melhora sem retorno recorrente por ação, ou se investimentos e arrendamentos absorvem a geração operacional. Política comercial e capital podem atender objetivos do controlador sem remuneração suficiente do minoritário. Distribuição passada não demonstra sustentabilidade diante de novo ciclo, dívida e obrigações de desmantelamento.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_PETROBRAS.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 55,48"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 111,19"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+100,41%"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 151,85"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 74,93"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,26%"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.wacc",
+        "rotulo": "WACC",
+        "valor": "9,39%"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+114,31%"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+92,80%"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "5,5x"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,5x"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 59,76"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+86,05%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Petrobras",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Composição acionária, controle e classes negociadas",
+        "url": "https://www.investidorpetrobras.com.br/visao-geral/composicao-acionaria/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Petrobras",
+        "publicado_em": "2026-08-06",
+        "tipo": "Relações com investidores",
+        "titulo": "Relatório de resultados, segmentos, fluxo de caixa e arrendamentos",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/25fdf098-34f5-4608-b7fa-17d60b2de47d/857e970b-1bf4-9ea4-093f-b93bfc2bac95?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Produção, manutenção e reposição de reservas deixam de sustentar caixa depois do reinvestimento.",
+      "Arrendamentos, dívida e desmantelamento absorvem o fluxo usado na política de remuneração.",
+      "Recebíveis de subvenção e giro de estoque não se convertem em recursos com margem recorrente.",
+      "Política comercial, capital e direitos de classe reduzem a transmissão de valor ao minoritário."
+    ],
+    "governanca": "Controle votante, classes e recibos exigem atribuição de direitos e lucro ao ativo negociado. Decisões de investimento e comercialização devem ser confrontadas com retorno econômico e regras de partes relacionadas. Projetos contratados e plataformas em implantação não são produção comercial concluída. A data atual da composição acionária não comprova posse histórica; o rodapé da página não foi usado como data de publicação do conteúdo.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Monitorar disponibilidade das plataformas, declínio, novos poços e reposição de reservas. Separar produção, exportações e recebimento, incluindo subvenções e estoques. Conferir margem do refino sem efeitos transitórios, tributos e custos completos por atividade. Conciliar investimentos, obrigações de arrendamento, desmantelamento, dívida e caixa atribuível antes da remuneração por classe.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_PETROBRAS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+114,31%"
+          },
+          {
+            "fato": "val.BR_PETROBRAS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,26%"
+          },
+          {
+            "fato": "val.BR_PETROBRAS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "20,71%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +114,31%, custo do capital 11,26% e dispersão entre métodos 20,71% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_PETROBRAS",
+    "lacunas_de_dados": [
+      "Demonstrações completas, contratos de arrendamento e fluxo atribuível não foram integralmente reconciliados.",
+      "Reservas certificadas, custo final e retorno dos projetos exigem conciliação por ativo.",
+      "Recebimento posterior das subvenções e elegibilidade individual dos proventos não foram confirmados.",
+      "Tributação, política comercial e obrigações de desmantelamento requerem documentação detalhada.",
+      "Composição atual, direitos por classe e recibos não foram integralmente conciliados com a base do modelo.",
+      "Há estimativas e metas de projetos, sem direção agregada de revisão de guidance classificada.",
+      "Não há catalisador futuro datado confirmado nesta pesquisa.",
+      "Tom agregado, vantagem relativa e percepção do mercado não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Empresa integrada de exploração e produção de petróleo e gás, refino, transporte, comercialização e energia. Produção, exportação e venda doméstica têm volumes e momentos de reconhecimento próprios. A União controla o capital votante; ações ordinárias, preferenciais e recibos no exterior têm direitos e bases distintos. O resultado consolidado não é integralmente atribuível ao titular da classe sob cobertura.",
+    "nome": "Petrobras",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRAVA",
+        "nome": "Brava Energia"
+      },
+      {
+        "issuer_id": "BR_COSAN",
+        "nome": "Cosan"
+      },
+      {
+        "issuer_id": "BR_PRIO",
+        "nome": "PRIO"
+      },
+      {
+        "issuer_id": "BR_RECV",
+        "nome": "PetroRecôncavo"
+      },
+      {
+        "issuer_id": "BR_ULTRAPAR",
+        "nome": "Ultrapar"
+      },
+      {
+        "issuer_id": "BR_VIBRA",
+        "nome": "Vibra Energia"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que produção do pré-sal e eficiência industrial sustentem retorno por ação depois de reposição de reservas, expansão, arrendamentos e dívida. A condição decisiva é caixa atribuível com disciplina de capital ao longo do ciclo do petróleo. Maior produção e distribuição declarada não resolvem sozinhas os riscos de precificação doméstica, intervenção do controlador e projetos com retorno ainda não demonstrado.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_PETROBRAS.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 55,48"
+          },
+          {
+            "fato": "val.BR_PETROBRAS.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 111,19"
+          },
+          {
+            "fato": "val.BR_PETROBRAS.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+100,41%"
+          },
+          {
+            "fato": "val.BR_PETROBRAS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,26%"
+          },
+          {
+            "fato": "val.BR_PETROBRAS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+114,31%"
+          }
+        ],
+        "texto": "Preço de referência R$ 55,48 e alvo R$ 111,19, com potencial +100,41%. A hipótese de investimento deve ser confrontada com o custo do capital 11,26% e retorno esperado +114,31%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Escala de produção, infraestrutura e experiência no pré-sal podem favorecer eficiência. O custo de extração divulgado exclui parcelas que aparecem em medidas ampliadas, como afretamento e participação governamental; não representa custo econômico completo. Capacidade de refino e exportação depende de manutenção, logística e margem realizada. A vantagem frente a concorrentes precisa de bases comparáveis, sem transformar integração em proteção automática contra o ciclo.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T01:46:01.679540+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Receita, resultado operacional, lucro atribuível e caixa operacional crescem na comparação anual e sequencial. Preço do petróleo, maior produção e calendário de exportações ajudam o resultado. No refino, ganho com giro de estoques convive com menor resultado operacional sequencial por fretes e tributação. Recebíveis de subvenção absorvem capital de giro; receita reconhecida não comprova recebimento. Variação cambial e ajustes gerenciais têm natureza diferente de desempenho operacional recorrente.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que produção do pré-sal e eficiência industrial sustentem retorno por ação depois de reposição de reservas, expansão, arrendamentos e dívida. A condição decisiva é caixa atribuível com disciplina de capital ao longo do ciclo do petróleo. Maior produção e distribuição declarada não resolvem sozinhas os riscos de precificação doméstica, intervenção do controlador e projetos com retorno ainda não demonstrado. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +114,31%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Ciclo do petróleo, indisponibilidade, precificação doméstica, recebíveis públicos e obrigações de capital podem reduzir caixa. Controle estatal, projetos e direitos por classe exigem análise própria; fluxo livre gerencial não equivale a caixa após arrendamentos."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_PETROBRAS.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+86,05%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +86,05%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Energia",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Petrobras — retorno do petróleo e refino após reinvestimento, arrendamentos e controle",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O aumento das exportações inclui efeito do cronograma de vendas, sem equivaler integralmente a crescimento orgânico da produção. A alavancagem gerencial diminui com resultado e dívida, mas o saldo de dívida bruta em dólar permanece maior na comparação anual. Tributação de exportação classificada pela administração entre eventos exclusivos não deixa de ser custo efetivo; recorrência depende de vigência, volume e legislação. O fator de utilização do refino tem definição própria e não foi confundido com limite físico absoluto.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar disponibilidade das plataformas, declínio, novos poços e reposição de reservas. Separar produção, exportações e recebimento, incluindo subvenções e estoques. Conferir margem do refino sem efeitos transitórios, tributos e custos completos por atividade. Conciliar investimentos, obrigações de arrendamento, desmantelamento, dívida e caixa atribuível antes da remuneração por classe.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_PETROBRAS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,26%"
+          },
+          {
+            "fato": "val.BR_PETROBRAS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "20,71%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,26% e a dispersão entre métodos 20,71%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

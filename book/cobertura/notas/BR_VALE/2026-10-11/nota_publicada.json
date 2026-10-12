@@ -1,0 +1,399 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "6704270894a84655787be1a85aa7d7ddb1c0c58a096163d4600711b98b340f5e",
+    "factbook": "663b7bc7a2722fc81cb79c9957df59a5e384bf13769d493cba221cde8b131a0a",
+    "nota_json": "895b775ac0a856d5a81dfc38c713d0f3865b69794f46803b5010200a4962a95f"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_VALE",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-29",
+  "published_at": "2026-10-12T01:46:53.322752+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A dívida líquida expandida diminui sequencialmente com geração de caixa e pagamentos, mas a dívida financeira líquida aumenta na comparação anual. A medida expandida incorpora determinadas provisões e swaps; descaracterização e despesas incorridas têm tratamento próprio e não desaparecem por estarem fora dela. Fluxos gerencial e contábil classificam investimentos e reparação de formas distintas. Recompra realizada consome recursos; novo programa autorizado não equivale à sua execução.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 66,36, com retorno esperado +7,74%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Confiabilidade, qualidade e logística sustentam margem, projetos remuneram o capital e caixa permanece suficiente após reposição e reparação. O cenário otimista calculado pelo código é R$ 98,80.",
+      "pessimista": "Preço, qualidade e custos deterioram enquanto manutenção, expansão e compromissos ambientais consomem recursos atribuíveis ao acionista. O cenário pessimista calculado pelo código é R$ 34,70."
+    },
+    "comentario_valuation": "Preço de referência R$ 67,64 e alvo do modelo aberto R$ 66,36, com potencial -1,90%. Retorno total esperado +7,74% e custo do capital próprio 12,64%. A dispersão entre métodos é 11,41%; a confiança quantitativa recebida é A. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 83,30; a diferença -20,34% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se preços e subprodutos explicam melhora sem eficiência durável ou se frete, manutenção e reposição absorvem a margem. Projetos e capacidade maior podem exigir recursos antes da monetização. Redução de provisão ou dívida gerencial não elimina desembolsos de reparação, e autorização de recompra não assegura retorno por ação.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_VALE.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 67,64"
+      },
+      {
+        "fato": "val.BR_VALE.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 66,36"
+      },
+      {
+        "fato": "val.BR_VALE.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-1,90%"
+      },
+      {
+        "fato": "val.BR_VALE.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_VALE.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "A"
+      },
+      {
+        "fato": "val.BR_VALE.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 98,80"
+      },
+      {
+        "fato": "val.BR_VALE.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "7,59%"
+      },
+      {
+        "fato": "val.BR_VALE.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 34,70"
+      },
+      {
+        "fato": "val.BR_VALE.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "0,69%"
+      },
+      {
+        "fato": "val.BR_VALE.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,64%"
+      },
+      {
+        "fato": "val.BR_VALE.wacc",
+        "rotulo": "WACC",
+        "valor": "10,86%"
+      },
+      {
+        "fato": "val.BR_VALE.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_VALE.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+7,74%"
+      },
+      {
+        "fato": "val.BR_VALE.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-2,12%"
+      },
+      {
+        "fato": "val.BR_VALE.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "7,2x"
+      },
+      {
+        "fato": "val.BR_VALE.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,4x"
+      },
+      {
+        "fato": "val.BR_VALE.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 83,30"
+      },
+      {
+        "fato": "val.BR_VALE.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-20,34%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Vale",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Empresa, negócios e infraestrutura mineral",
+        "url": "https://www.vale.com/pt/conheca-nossa-empresa"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Vale",
+        "publicado_em": "2026-07-30",
+        "tipo": "Relações com investidores",
+        "titulo": "Relatório de desempenho, custos, fluxo, dívida e reparação",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/53207d1c-63b4-48f1-96b7-19869fae19fe/5f4bd27d-7617-e113-75fb-a8bf16031963?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Qualidade, disponibilidade e logística deixam de sustentar margem depois do custo completo.",
+      "Subprodutos e ajustes explicam melhora sem caixa após contratos e reinvestimento.",
+      "Reposição, expansão e reparação absorvem recursos além do retorno econômico demonstrado.",
+      "Novos documentos alteram obrigações, participações e direitos por ação ou recibo."
+    ],
+    "governanca": "Resultado e caixa de minoritários, coligadas e contratos de entrega de subprodutos têm direitos próprios. Reparação de Brumadinho e Mariana e descaracterização conservam obrigações e cronogramas distintos. Programa de recompra e distribuição programada não comprovam execução ou elegibilidade individual posterior. Consulta atual e eventos subsequentes não foram incorporados retrospectivamente ao modelo.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Monitorar produção, disponibilidade, qualidade e preço realizado por mineral. Conferir compras, umidade, frete, manutenção e custo completo. Separar subprodutos e entrega contratual, marcação e liquidação de proteção. Conciliar reposição, expansão, minoritários, dívida e obrigações de reparação antes de inferir caixa disponível e retorno por ação.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_VALE.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+7,74%"
+          },
+          {
+            "fato": "val.BR_VALE.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,64%"
+          },
+          {
+            "fato": "val.BR_VALE.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "11,41%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +7,74%, custo do capital 12,64% e dispersão entre métodos 11,41% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_VALE",
+    "lacunas_de_dados": [
+      "Demonstrações completas, fluxo atribuível e dívida por entidade não foram integralmente reconciliados.",
+      "Reservas, reposição, licenças e custo final dos projetos exigem análise por ativo.",
+      "Contratos de entrega de subprodutos e distinção entre custo gerencial e caixa requerem conciliação.",
+      "Obrigações de reparação, descaracterização e despesas fora da dívida expandida têm bases próprias a conferir.",
+      "Data e confirmação dos pagamentos posteriores e execução final de recompra não foram verificadas.",
+      "Projeções têm revisões diferentes por mineral; direção agregada e tom não foram classificados.",
+      "Vantagem relativa e percepção do mercado permanecem a comprovar.",
+      "Não há catalisador futuro com dia exato confirmado nesta pesquisa."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Mineradora de minério de ferro, pelotas, cobre e níquel, com operações e infraestrutura logística no Brasil e exterior. Qualidade, umidade, frete e termos de venda determinam preço realizado. Controladas, coligadas e contratos de entrega de subprodutos têm atribuição econômica própria. Capacidade, produção, venda e recebimento não são equivalentes; projetos de reposição preservam operações e não representam integralmente expansão.",
+    "nome": "Vale",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRADESPAR",
+        "nome": "Bradespar"
+      },
+      {
+        "issuer_id": "BR_CBA",
+        "nome": "Companhia Brasileira de Alumínio"
+      },
+      {
+        "issuer_id": "BR_CMIN",
+        "nome": "CSN Mineração"
+      },
+      {
+        "issuer_id": "BR_CSN",
+        "nome": "CSN Siderúrgica Nacional"
+      },
+      {
+        "issuer_id": "BR_ERO",
+        "nome": "Ero Copper"
+      },
+      {
+        "issuer_id": "BR_GERDAU",
+        "nome": "Gerdau"
+      },
+      {
+        "issuer_id": "BR_GOAU",
+        "nome": "Metalúrgica Gerdau"
+      },
+      {
+        "issuer_id": "BR_SUZANO",
+        "nome": "Suzano"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que qualidade mineral, confiabilidade e logística sustentem caixa por ação depois de manutenção, reposição, expansão e reparação. A condição decisiva é retorno econômico ao longo do ciclo, com custo completo e obrigações financiadas. Crescimento dos metais básicos e menor dívida expandida não demonstram melhora uniforme dos custos nem eliminam exposição ao minério de ferro e ao investimento futuro.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_VALE.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 67,64"
+          },
+          {
+            "fato": "val.BR_VALE.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 66,36"
+          },
+          {
+            "fato": "val.BR_VALE.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-1,90%"
+          },
+          {
+            "fato": "val.BR_VALE.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,64%"
+          },
+          {
+            "fato": "val.BR_VALE.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+7,74%"
+          }
+        ],
+        "texto": "Preço de referência R$ 67,64 e alvo R$ 66,36, com potencial -1,90%. A hipótese de investimento deve ser confrontada com o custo do capital 12,64% e retorno esperado +7,74%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Qualidade, localização e logística podem apoiar preço realizado e acesso ao mercado. O custo de extração exclui compras de terceiros, transporte e reinvestimento; diferentes bases de minério úmido e seco exigem conciliação. Nos metais básicos, receitas de subprodutos reduzem custo gerencial, mas dependem de preço e contratos de entrega. Custo ajustado negativo não significa extração sem gasto nem caixa integralmente disponível.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T01:46:53.322752+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Receita e EBITDA proforma aumentam na comparação anual e sequencial, mas lucro atribuível recua; resultado operacional e EBITDA ajustado também diminuem sequencialmente. Frete, câmbio, paradas, despesa excepcional, derivativos e impostos têm contribuições distintas. Caixa operacional aumenta e o fluxo livre recorrente melhora, com benefício de liquidação de derivativos e menor tributo pago. Pagamentos de reparação ficam fora de parte das medidas recorrentes e precisam permanecer na avaliação econômica.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que qualidade mineral, confiabilidade e logística sustentem caixa por ação depois de manutenção, reposição, expansão e reparação. A condição decisiva é retorno econômico ao longo do ciclo, com custo completo e obrigações financiadas. Crescimento dos metais básicos e menor dívida expandida não demonstram melhora uniforme dos custos nem eliminam exposição ao minério de ferro e ao investimento futuro. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +7,74%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Ciclo mineral, câmbio, transporte, paradas e qualidade podem reduzir margem. Reposição, expansão e reparação exigem caixa; custos após subprodutos e dívida expandida não abrangem automaticamente todas as obrigações econômicas."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_VALE.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-20,34%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -20,34%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Vale — produção e qualidade mineral após custo completo, reposição e reparação",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "As projeções de custos do minério foram elevadas, enquanto as de custos de cobre e níquel foram reduzidas e intervalos de produção foram estreitados. Essas direções diferentes não receberam classificação agregada. A referência de teor do minério e comparações foram reapresentadas; não se misturaram as bases. Serra Sul inicia etapa de operação depois do trimestre, sem comprovar toda a capacidade projetada, e Bacaba tem previsão antecipada, ainda em construção.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar produção, disponibilidade, qualidade e preço realizado por mineral. Conferir compras, umidade, frete, manutenção e custo completo. Separar subprodutos e entrega contratual, marcação e liquidação de proteção. Conciliar reposição, expansão, minoritários, dívida e obrigações de reparação antes de inferir caixa disponível e retorno por ação.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_VALE.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,64%"
+          },
+          {
+            "fato": "val.BR_VALE.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "11,41%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 12,64% e a dispersão entre métodos 11,41%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

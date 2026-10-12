@@ -1,0 +1,442 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "71b51c86e0d4b8a710de63511b3cea0d960dfea43dd21cdc4b7bac944f30d365",
+    "factbook": "69945a150c338860b5a28860f6d431d795fb336f85b3e2db4076f78e1788c85a",
+    "nota_json": "0defe5168ce64b2bed224c6f7c402998578febf05ad3b0b2e3d56273cf2940a9"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_ULTRAPAR",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-11",
+  "published_at": "2026-10-12T01:52:00.409092+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Dívida líquida diminui, mas arrendamentos, fornecedores convênio e passivos financeiros de clientes têm leitura própria. Bonificações de exclusividade e manutenção consomem caixa antes de presumir distribuição. Dividendos intermediários foram aprovados com pagamento previsto após o trimestre; aprovação não comprova liquidação. Expansões de terminais descritas para período posterior exigem confirmação de entrada e retorno. Holding, controladas e minoritários têm obrigações e recursos distintos.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Resultados posteriores e retorno dos projetos de armazenagem; confirmar entrada, utilização e caixa sem extrapolar margens conjunturais.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": null,
+        "descricao": "Revisão da alocação de capital e dos recursos efetivamente recebidos pela holding, após exclusividade, dívida e minoritários.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "capital"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 44,71, com retorno esperado +17,05%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Confiabilidade, eficiência e contratos sustentam margem após normalização, com projetos remunerando capital e caixa atribuível depois de todas as obrigações. O cenário otimista calculado pelo código é R$ 58,33.",
+      "pessimista": "Margens normalizam enquanto giro, contratos, manutenção e financiamento absorvem recursos, e projetos ou aquisições não entregam retorno suficiente. O cenário pessimista calculado pelo código é R$ 32,24."
+    },
+    "comentario_valuation": "Preço de referência R$ 39,06 e alvo do modelo aberto R$ 44,71, com potencial +14,45%. Retorno total esperado +17,05% e custo do capital próprio 11,21%. A dispersão entre métodos é 21,23%; a confiança quantitativa recebida é A. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 38,20; a diferença +17,03% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese enfraquece se ganho de distribuição depende de conjuntura que não se repete. Desembolsos por exclusividade e giro financiado podem explicar distância entre EBITDA e caixa livre. Capacidade nova não cria valor sem contratação e utilização econômica. Hidrovias e novas energias podem exigir capital e enfrentar riscos diferentes, enquanto lucro de minoritários não pertence integralmente ao acionista da holding.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_ULTRAPAR.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 39,06"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 44,71"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+14,45%"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "A"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 58,33"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "11,49%"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 32,24"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "21,83%"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,21%"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.wacc",
+        "rotulo": "WACC",
+        "valor": "9,50%"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+17,05%"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-6,49%"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "11,6x"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,4x"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 38,20"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+17,03%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Ultrapar",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Portfólio e histórico; leitura pública com cópia local indisponível",
+        "url": "https://ri.ultra.com.br/visao-geral/perfil-e-historia/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Ultrapar",
+        "publicado_em": "2026-08-12",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado trimestral por negócio, caixa, investimento e dívida",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/4282e939-a6dc-401d-a873-e3c28b7e48df/a8ec731a-2a87-ecd0-896c-975c26cd9ef5?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Ultrapar",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Demonstrações intermediárias: lucro atribuível, caixa e dividendos posteriores",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/4282e939-a6dc-401d-a873-e3c28b7e48df/11122b60-35ae-dc51-737a-918dde893b4c?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Margem comparável não sustenta caixa depois da normalização do suprimento.",
+      "Giro financiado e exclusividade explicam caixa sem recorrência equivalente.",
+      "Aquisições e expansão não remuneram capital ou exigem aportes adicionais.",
+      "Novos documentos alteram perímetro, minoritários ou recursos atribuíveis à holding."
+    ],
+    "governanca": "A leitura distingue lucro da Ultrapar e dos não controladores, caixa por entidade e resultado consolidado. Recibos e ações têm conversão, elegibilidade e datas de direito próprias. Aquisição de controle de Hidrovias não transfere todos os direitos de seus minoritários. Recompra autorizada, realização e dividendos aprovados são estados distintos. Transações entre segmentos e períodos antes da consolidação impedem somar os quadros gerenciais como se fossem um único perímetro contábil.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Monitorar volume, margem comparável, suprimento, mix e crédito por negócio. Conciliar capital de giro, fornecedores convênio, exclusividade, arrendamentos e impostos. Verificar navegabilidade, capacidade, projetos e retorno das aquisições; separar lucro consolidado, participação minoritária e caixa recebido pela holding.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ULTRAPAR.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+17,05%"
+          },
+          {
+            "fato": "val.BR_ULTRAPAR.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,21%"
+          },
+          {
+            "fato": "val.BR_ULTRAPAR.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "21,23%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +17,05%, custo do capital 11,21% e dispersão entre métodos 21,23% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_ULTRAPAR",
+    "lacunas_de_dados": [
+      "Fluxo livre por negócio e recursos atribuíveis à holding não foram integralmente reconciliados.",
+      "Fornecedores convênio, passivos de clientes e ajustes do EBITDA precisam de ponte econômica completa.",
+      "Entrada e retorno das expansões previstas para período posterior não foram comprovados.",
+      "Liquidação dos dividendos aprovados e execução integral da recompra não foram conciliadas.",
+      "A cópia local de páginas de RI foi recusada; PDFs públicos foram obtidos normalmente, sem contornar o bloqueio.",
+      "Material posterior do evento de investidores e calendário atual não foram integralmente arquivados.",
+      "Guidance, tom e percepção do mercado não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo com distribuição de combustíveis na Ipiranga, GLP e novas energias na Ultragaz, armazenagem na Ultracargo e logística na Hidrovias. A holding aloca capital e recebe recursos conforme direitos e obrigações das controladas. Suprimento, capilaridade, contratos, giro e utilização determinam margem. Hidrovias passou a ser consolidada após aquisição do controle; seus resultados completos divulgados por negócio e os consolidados do grupo têm períodos e eliminações diferentes.",
+    "nome": "Ultrapar",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRAVA",
+        "nome": "Brava Energia"
+      },
+      {
+        "issuer_id": "BR_COSAN",
+        "nome": "Cosan"
+      },
+      {
+        "issuer_id": "BR_PRIO",
+        "nome": "PRIO"
+      },
+      {
+        "issuer_id": "BR_RECV",
+        "nome": "PetroRecôncavo"
+      },
+      {
+        "issuer_id": "BR_VIBRA",
+        "nome": "Vibra Energia"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que qualidade do fornecimento, eficiência comercial e infraestrutura remunerem capital depois de manutenção, bonificações, financiamento e giro. A condição decisiva é caixa atribuível à holding e ao acionista, com retorno comparável por negócio. Margens favorecidas pela conjuntura não foram extrapoladas como permanentes. Diversificação pode ampliar fontes de resultado, mas exige disciplina de aquisições e projetos, sem confundir EBITDA consolidado com recurso livre para distribuição.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ULTRAPAR.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 39,06"
+          },
+          {
+            "fato": "val.BR_ULTRAPAR.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 44,71"
+          },
+          {
+            "fato": "val.BR_ULTRAPAR.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+14,45%"
+          },
+          {
+            "fato": "val.BR_ULTRAPAR.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,21%"
+          },
+          {
+            "fato": "val.BR_ULTRAPAR.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+17,05%"
+          }
+        ],
+        "texto": "Preço de referência R$ 39,06 e alvo R$ 44,71, com potencial +14,45%. A hipótese de investimento deve ser confrontada com o custo do capital 11,21% e retorno esperado +17,05%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Rede, importação, terminais e relacionamentos podem favorecer confiabilidade. O resultado da Ipiranga distingue melhora competitiva alegada pela companhia e efeitos conjunturais de suprimento internacional. No GLP, logística e mix precisam compensar demanda e competição. Tancagem depende de giro, localização e contratos; volume movimentado não equivale à capacidade estática. Hidrovias exige controlar sazonalidade, navegabilidade, contratos e perímetro continuado.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T01:52:00.409092+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita, EBITDA ajustado recorrente, lucro consolidado e fluxo operacional melhoram sequencialmente e na comparação anual. A Ipiranga concentra o avanço; Ultragaz tem diferença entre resultado ajustado e recorrente pela baixa de investimento, e Hidrovias mantém comparação própria após desinvestimento. Ajustes excluem amortização de direitos de clientes e marcação de energia, sem eliminar os desembolsos econômicos associados. Fluxo incorpora fornecedores convênio e giro; lucro consolidado inclui participação de não controladores.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que qualidade do fornecimento, eficiência comercial e infraestrutura remunerem capital depois de manutenção, bonificações, financiamento e giro. A condição decisiva é caixa atribuível à holding e ao acionista, com retorno comparável por negócio. Margens favorecidas pela conjuntura não foram extrapoladas como permanentes. Diversificação pode ampliar fontes de resultado, mas exige disciplina de aquisições e projetos, sem confundir EBITDA consolidado com recurso livre para distribuição. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +17,05%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Normalização de margens, energia, demanda e logística podem reduzir caixa. Giro, exclusividade, manutenção e financiamento exigem capital. Aquisições, minoritários e perímetros distintos limitam a transmissão automática de resultado à holding."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ULTRAPAR.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+17,03%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +17,03%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Energia",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Ultrapar — distribuição, infraestrutura e caixa atribuível depois do giro",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O resultado da Ipiranga é favorecido por volume, escala e margem, com componentes estruturais e conjunturais descritos pela administração. Ultragaz tem volume anual menor e margem recorrente favorecida pelo mix; Ultracargo cresce anualmente e recua sequencialmente no EBITDA; Hidrovias exige controlar venda da navegação costeira e sazonalidade. A ponte de fluxo mostra fornecedores e despesas próprias. Projeções e acontecimentos posteriores não foram incorporados retrospectivamente ao modelo recebido.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar volume, margem comparável, suprimento, mix e crédito por negócio. Conciliar capital de giro, fornecedores convênio, exclusividade, arrendamentos e impostos. Verificar navegabilidade, capacidade, projetos e retorno das aquisições; separar lucro consolidado, participação minoritária e caixa recebido pela holding.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_ULTRAPAR.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,21%"
+          },
+          {
+            "fato": "val.BR_ULTRAPAR.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "21,23%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,21% e a dispersão entre métodos 21,23%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,453 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "256a12134a135424e7fc1acd97a91ceccfbcbebfa9dac853b6443a0d2c955573",
+    "factbook": "038dc511f011581f7f2d67a2e793ed58e413d257b0d64a4aa0ee69644c6a2e9b",
+    "nota_json": "90377a59899d386619c2c7a22b13d96c858aa408e67e2fdbebdc95cf6795493f"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_BRADESCO",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T01:48:24.492833+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "O aumento de capital já foi homologado; o crédito das ações subscritas ainda está programado para depois da pesquisa. A nova base muda valores por ação, enquanto o comunicado preserva o montante bruto do provento destinado. Destinação e pagamento futuro são estados diferentes. Capital do banco e das seguradoras não é automaticamente distribuível em conjunto.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-13",
+        "descricao": "Crédito programado das ações subscritas; conciliar base por ação e proventos conforme o comunicado.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "capital"
+      },
+      {
+        "data": "2026-10-22",
+        "descricao": "Divulgação programada de resultados; rever recuperação recorrente, perdas, seguros e capital.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F4"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 28,48, com retorno esperado +42,65%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Margem comercial e crédito sustentam recuperação recorrente, eficiência se confirma no custo total e capital permite transmissão ao acionista. O cenário otimista calculado pelo código é R$ 33,53.",
+      "pessimista": "Perdas, garantias e despesas absorvem margem, seguros deixam de compensar e a nova base não recebe retorno suficiente por ação. O cenário pessimista calculado pelo código é R$ 23,64."
+    },
+    "comentario_valuation": "Preço de referência R$ 21,51 e alvo do modelo aberto R$ 28,48, com potencial +32,39%. Retorno total esperado +42,65% e custo do capital próprio 11,85%. A dispersão entre métodos é 6,60%; a confiança quantitativa recebida é A. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 22,33; a diferença +27,51% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese enfraquece se a recuperação depende de mercado e ajustes enquanto crédito, despesas e capital impedem melhora recorrente por ação. Diversificação não garante compensação simultânea entre banco e seguros nem livre transferência de caixa.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_BRADESCO.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 21,51"
+      },
+      {
+        "fato": "val.BR_BRADESCO.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 28,48"
+      },
+      {
+        "fato": "val.BR_BRADESCO.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+32,39%"
+      },
+      {
+        "fato": "val.BR_BRADESCO.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_BRADESCO.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "A"
+      },
+      {
+        "fato": "val.BR_BRADESCO.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 33,53"
+      },
+      {
+        "fato": "val.BR_BRADESCO.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_BRADESCO.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 23,64"
+      },
+      {
+        "fato": "val.BR_BRADESCO.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_BRADESCO.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,85%"
+      },
+      {
+        "fato": "val.BR_BRADESCO.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_BRADESCO.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_BRADESCO.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+42,65%"
+      },
+      {
+        "fato": "val.BR_BRADESCO.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+13,45%"
+      },
+      {
+        "fato": "val.BR_BRADESCO.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "7,5x"
+      },
+      {
+        "fato": "val.BR_BRADESCO.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,3x"
+      },
+      {
+        "fato": "val.BR_BRADESCO.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 22,33"
+      },
+      {
+        "fato": "val.BR_BRADESCO.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+27,51%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Bradesco",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e estrutura do negócio",
+        "url": "https://www.bradescori.com.br/o-bradesco/quem-somos-nos/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Bradesco",
+        "publicado_em": "2026-08-05",
+        "tipo": "Relações com investidores",
+        "titulo": "Release de resultado, crédito e reconciliação recorrente",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/80f2e993-0a30-421a-9470-a4d5c8ad5e9f/108e06bf-b649-e356-203c-ac94477b336d?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Bradesco",
+        "publicado_em": "2026-10-08",
+        "tipo": "Relações com investidores",
+        "titulo": "Homologação do capital e crédito programado das ações subscritas",
+        "url": "https://filemanager-cdn.mziq.com/published/80f2e993-0a30-421a-9470-a4d5c8ad5e9f/f48b7256-a843-4112-8e02-dfc233b63563"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F4",
+        "instituicao": "Bradesco",
+        "publicado_em": "2026-09-18",
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário de eventos corporativos atualizado",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/80f2e993-0a30-421a-9470-a4d5c8ad5e9f/028903d2-d77e-217b-353d-fb72001b1a17?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Margem depois de perdas e custo total não confirma recuperação recorrente por ação.",
+      "Realização de garantias, crédito ou seguros exige provisões e capital adicionais.",
+      "A nova base acionária ou direitos por classe muda a transmissão de resultado e proventos.",
+      "Reconciliação contábil altera o peso de ajustes e resultado recorrente."
+    ],
+    "governanca": "As classes ordinária e preferencial têm direitos próprios. A homologação do capital está confirmada, mas emissão e crédito têm data posterior à consulta. O provento destinado também conserva prazo futuro de pagamento. Controle, relacionadas e trânsito de resultado entre banco e seguros exigem os documentos completos.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Monitorar margem com clientes, mercado, perdas finais e realização de garantias. Separar seguros operacionais e resultado financeiro, despesas totais e ajustes recorrentes. Conciliar base acionária após a subscrição, lucro atribuível, capital principal e proventos efetivamente pagos. Rever resultados na mesma base temporal e por classe.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_BRADESCO.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+42,65%"
+          },
+          {
+            "fato": "val.BR_BRADESCO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,85%"
+          },
+          {
+            "fato": "val.BR_BRADESCO.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "6,60%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +42,65%, custo do capital 11,85% e dispersão entre métodos 6,60% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_BRADESCO",
+    "lacunas_de_dados": [
+      "Demonstrações completas, notas explicativas e capital prudencial não foram integralmente reconciliados.",
+      "Lucro atribuível, seguros e ajustes recorrentes exigem conferência na mesma base temporal.",
+      "Crédito das ações subscritas e pagamento futuro dos proventos não foram antecipados como concluídos.",
+      "Direitos por classe, relacionadas e capacidade de distribuir entre entidades permanecem a conferir.",
+      "Garantias, renegociação e perdas finais requerem documentação detalhada.",
+      "Guidance, tom agregado da gestão e percepção do mercado não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo financeiro com banco, crédito, captação, serviços, seguros e previdência. A diversificação combina margem de clientes, mercado e resultado segurador, com perímetros e exigências de capital distintos. O resultado consolidado deve ser conciliado com lucro atribuível e direitos de cada classe de ação.",
+    "nome": "Banco Bradesco",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BB",
+        "nome": "Banco do Brasil"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      },
+      {
+        "issuer_id": "BR_INTER",
+        "nome": "Inter&Co"
+      },
+      {
+        "issuer_id": "BR_IRB",
+        "nome": "IRB Brasil RE"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que recuperação da margem após crédito e eficiência sustentem retorno recorrente suficiente para o acionista. A condição decisiva é lucro por ação e capital disponível depois de perdas e reinvestimento. A melhora agregada não basta se a base acionária, o risco ou os ajustes absorvem a recuperação.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_BRADESCO.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 21,51"
+          },
+          {
+            "fato": "val.BR_BRADESCO.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 28,48"
+          },
+          {
+            "fato": "val.BR_BRADESCO.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+32,39%"
+          },
+          {
+            "fato": "val.BR_BRADESCO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,85%"
+          },
+          {
+            "fato": "val.BR_BRADESCO.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+42,65%"
+          }
+        ],
+        "texto": "Preço de referência R$ 21,51 e alvo R$ 28,48, com potencial +32,39%. A hipótese de investimento deve ser confrontada com o custo do capital 11,85% e retorno esperado +42,65%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Distribuição, relacionamento e seguros podem ampliar receitas e retenção. A combinação precisa demonstrar custo total, margem depois de perdas e retorno dos negócios. Maior uso de canais digitais e redução de agências não comprovam queda de toda despesa; investimento em tecnologia e custos compartilhados permanecem relevantes.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T01:48:24.492833+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O lucro recorrente avança, mas sua base difere do resultado contábil com encargos fiscais anteriores. Inadimplência longa cresce ligeiramente e atraso na realização de garantias exige atenção. A melhora consolidada não significa avanço sequencial de todas as linhas: resultado operacional de seguros e margem de mercado têm trajetórias próprias.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que recuperação da margem após crédito e eficiência sustentem retorno recorrente suficiente para o acionista. A condição decisiva é lucro por ação e capital disponível depois de perdas e reinvestimento. A melhora agregada não basta se a base acionária, o risco ou os ajustes absorvem a recuperação. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +42,65%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Crédito, garantias, despesas e capital podem frustrar a recuperação por ação. Seguro e margem de mercado têm sensibilidades próprias. Ajustes recorrentes, base acionária e datas de proventos exigem conciliação, sem antecipar pagamento ou distribuição."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_BRADESCO.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+27,51%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +27,51%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Bradesco — recuperação operacional transmitida ao acionista após capital",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O release distingue lucro contábil e recorrente, provisão nominal e custo de crédito relativo. Carteira em estágio problemático, renegociação e atraso não devem ser somados como perdas independentes. A afirmação de controle de despesas usa recorte sem participação nos lucros; a tese precisa conferir o custo total e seus ajustes.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar margem com clientes, mercado, perdas finais e realização de garantias. Separar seguros operacionais e resultado financeiro, despesas totais e ajustes recorrentes. Conciliar base acionária após a subscrição, lucro atribuível, capital principal e proventos efetivamente pagos. Rever resultados na mesma base temporal e por classe.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_BRADESCO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,85%"
+          },
+          {
+            "fato": "val.BR_BRADESCO.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "6,60%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,85% e a dispersão entre métodos 6,60%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

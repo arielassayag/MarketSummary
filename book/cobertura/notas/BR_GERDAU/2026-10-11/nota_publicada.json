@@ -1,0 +1,391 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "a12446e4352b8c524b8cb00fb87f979eee802046bf2dd40df7e7f28e97ddbe6d",
+    "factbook": "9e5bde064bd3e79304e333b206ab07fe76ff6423b88c3c8c805d9ac25e914b77",
+    "nota_json": "f1974e85fc58623b7df303c1d1423ea5e9bb11eb7b8cdbf917b8efdded0f66e6"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_GERDAU",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-26",
+  "published_at": "2026-10-12T01:52:33.020041+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A tese exige comparar retorno de modernização, expansão e novos negócios com a alternativa de preservar balanço ou remunerar acionistas. A diversificação além do aço só cria valor se remunera o capital próprio e não oculta desempenho do negócio principal. A disciplina efetiva de cada projeto permanece a comprovar.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 30,82, com retorno esperado +28,42%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Eficiência e investimentos seletivos preservam competitividade quando o ciclo normaliza. Recuperação de utilização se converte em caixa, com balanço disciplinado e retorno demonstrado nos projetos. O cenário otimista calculado pelo código é R$ 56,03.",
+      "pessimista": "Concorrência e matérias-primas comprimem margens, e utilização menor amplia pressão de custos. Capital de giro ou projetos absorvem o caixa, expondo a dependência da avaliação de condições favoráveis do ciclo. O cenário pessimista calculado pelo código é R$ 6,94."
+    },
+    "comentario_valuation": "Preço de referência R$ 24,77 e alvo do modelo aberto R$ 30,82, com potencial +24,42%. Retorno total esperado +28,42% e custo do capital próprio 10,71%. A dispersão entre métodos é 16,80%; a confiança quantitativa recebida é A. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 27,32; a diferença +12,80% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Margens elevadas podem decorrer do ciclo ou de condições comerciais temporárias. Sucata, energia, importações ou menor utilização podem pressionar resultado e caixa. Investimentos de maturação longa podem consumir a recuperação operacional, invalidando extrapolação de rentabilidade corrente.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_GERDAU.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 24,77"
+      },
+      {
+        "fato": "val.BR_GERDAU.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 30,82"
+      },
+      {
+        "fato": "val.BR_GERDAU.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+24,42%"
+      },
+      {
+        "fato": "val.BR_GERDAU.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.BR_GERDAU.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "A"
+      },
+      {
+        "fato": "val.BR_GERDAU.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 56,03"
+      },
+      {
+        "fato": "val.BR_GERDAU.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "0,34%"
+      },
+      {
+        "fato": "val.BR_GERDAU.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 6,94"
+      },
+      {
+        "fato": "val.BR_GERDAU.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "0,00%"
+      },
+      {
+        "fato": "val.BR_GERDAU.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,71%"
+      },
+      {
+        "fato": "val.BR_GERDAU.wacc",
+        "rotulo": "WACC",
+        "valor": "9,55%"
+      },
+      {
+        "fato": "val.BR_GERDAU.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_GERDAU.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+28,42%"
+      },
+      {
+        "fato": "val.BR_GERDAU.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+21,40%"
+      },
+      {
+        "fato": "val.BR_GERDAU.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "8,7x"
+      },
+      {
+        "fato": "val.BR_GERDAU.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,9x"
+      },
+      {
+        "fato": "val.BR_GERDAU.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 27,32"
+      },
+      {
+        "fato": "val.BR_GERDAU.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+12,80%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Gerdau",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e estrutura do negócio",
+        "url": "https://ri.gerdau.com/a-gerdau/historico-e-perfil-corporativo/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Gerdau",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Informações financeiras e materiais de análise",
+        "url": "https://ri.gerdau.com/informacoes-ao-mercado/guia-de-modelagem/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+      "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+      "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+      "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+    ],
+    "governanca": "A tese exige comparar retorno de modernização, expansão e novos negócios com a alternativa de preservar balanço ou remunerar acionistas. A diversificação além do aço só cria valor se remunera o capital próprio e não oculta desempenho do negócio principal. A disciplina efetiva de cada projeto permanece a comprovar.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Separar preços realizados, volumes, custos de sucata e energia e utilização por região; acompanhar capital de giro, investimentos e caixa disponível, confrontando margem corrente e margem normalizada do modelo.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_GERDAU.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+28,42%"
+          },
+          {
+            "fato": "val.BR_GERDAU.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,71%"
+          },
+          {
+            "fato": "val.BR_GERDAU.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "16,80%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +28,42%, custo do capital 10,71% e dispersão entre métodos 16,80% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_GERDAU",
+    "lacunas_de_dados": [
+      "Último resultado e notas explicativas não foram integralmente reconciliados nesta pesquisa.",
+      "Guidance e tom da gestão não foram avaliados em material atual completo.",
+      "Participação de mercado e desempenho relativo frente a concorrentes exigem comprovação específica.",
+      "Percepção do mercado, posicionamento e interesse vendido não têm suporte documental suficiente.",
+      "Retorno econômico de projetos e decisões recentes de capital permanece a comprovar.",
+      "Não há catalisador datado confirmado neste estudo."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "A Gerdau produz aços longos e especiais nas Américas, além de aços planos no Brasil. Seu perfil descreve uso de sucata e presença em mercados industriais e de construção. O resultado depende de volumes, preços realizados, matérias-primas, energia e utilização das plantas. A diversificação geográfica não elimina o ciclo do aço; negócios novos e investimentos precisam ser avaliados separadamente da operação consolidada.",
+    "nome": "Gerdau",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRADESPAR",
+        "nome": "Bradespar"
+      },
+      {
+        "issuer_id": "BR_CBA",
+        "nome": "Companhia Brasileira de Alumínio"
+      },
+      {
+        "issuer_id": "BR_CMIN",
+        "nome": "CSN Mineração"
+      },
+      {
+        "issuer_id": "BR_CSN",
+        "nome": "CSN Siderúrgica Nacional"
+      },
+      {
+        "issuer_id": "BR_ERO",
+        "nome": "Ero Copper"
+      },
+      {
+        "issuer_id": "BR_GOAU",
+        "nome": "Metalúrgica Gerdau"
+      },
+      {
+        "issuer_id": "BR_SUZANO",
+        "nome": "Suzano"
+      },
+      {
+        "issuer_id": "BR_UNIPAR",
+        "nome": "Unipar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese é que eficiência das operações e disciplina de investimentos sustentem caixa em margens normalizadas. O ponto decisivo é distinguir melhora estrutural de uma fase favorável do ciclo. Volume, preço realizado e custos por região devem confirmar que o retorno do capital permanece adequado em condições menos favoráveis.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_GERDAU.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 24,77"
+          },
+          {
+            "fato": "val.BR_GERDAU.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 30,82"
+          },
+          {
+            "fato": "val.BR_GERDAU.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+24,42%"
+          },
+          {
+            "fato": "val.BR_GERDAU.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,71%"
+          },
+          {
+            "fato": "val.BR_GERDAU.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+28,42%"
+          }
+        ],
+        "texto": "Preço de referência R$ 24,77 e alvo R$ 30,82, com potencial +24,42%. A hipótese de investimento deve ser confrontada com o custo do capital 10,71% e retorno esperado +28,42%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Presença industrial regional, reciclagem e especificações dos produtos podem afetar custo de atendimento e diferenciação. O perfil confirma esses elementos operacionais, mas não prova vantagem de custo atual ou proteção frente a importações. A pesquisa deve testar exposição de cada negócio à concorrência e ao ciclo.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T01:52:33.020041+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Lucro de uma siderúrgica pode refletir fase do ciclo, câmbio, estoques e itens não recorrentes. A análise deve reconciliar resultados regionais, capital de giro e caixa após investimentos. O guia público de modelagem é uma fonte disponível; suas premissas não foram adotadas como previsão ou guidance nesta nota.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que eficiência das operações e disciplina de investimentos sustentem caixa em margens normalizadas. O ponto decisivo é distinguir melhora estrutural de uma fase favorável do ciclo. Volume, preço realizado e custos por região devem confirmar que o retorno do capital permanece adequado em condições menos favoráveis. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Compra, com retorno esperado +28,42%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Preços, custos de sucata e energia, concorrência externa e utilização das plantas podem reduzir margens de forma simultânea. Projetos e novos negócios podem consumir caixa antes de demonstrar retorno."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_GERDAU.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+12,80%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +12,80%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Gerdau: margem normalizada e retorno do capital ao longo do ciclo",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A leitura consolidada do modelo está disponível no retrato recebido. A reconciliação integral do último release, das notas explicativas e da apresentação por negócio permanece pendente; não se atribui alteração de guidance nem tom à gestão sem essa evidência.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Separar preços realizados, volumes, custos de sucata e energia e utilização por região; acompanhar capital de giro, investimentos e caixa disponível, confrontando margem corrente e margem normalizada do modelo.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_GERDAU.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,71%"
+          },
+          {
+            "fato": "val.BR_GERDAU.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "16,80%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 10,71% e a dispersão entre métodos 16,80%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

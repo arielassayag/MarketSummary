@@ -1,0 +1,465 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "6daaee1fa3c3b065f7a30c0847053a7bb42142a89f65c5314825fbc9d3df4d71",
+    "factbook": "199b4b1a5126edbcd415e3a57ffd39d5df14a9c6d02b5cc150c4c9c6f4a25fce",
+    "nota_json": "0cac9ab645bcdbd4758035672d6a837e5a0765360517aa386c71e55b4a96c494"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_RANDON",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T15:18:00.698858+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Dívida líquida e alavancagem diminuíram, com medidas próprias sem Banco Randon. Caixa gerencial inclui resultado financeiro, investimento, proventos e aquisições, mas depende da liberação de giro e do comparativo de integração. Direitos de minoritários e crédito financeiro limitam a atribuição integral do consolidado.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar integração, giro e retorno ao controlador.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 5,03, com retorno esperado -26,67%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Reposição, produtividade e integração sustentam resultado recorrente e caixa atribuível, com dívida e crédito disciplinados. O cenário otimista calculado pelo código é R$ 9,61.",
+      "pessimista": "Demanda e integração pressionam retorno; equivalência, tributos e minoritários absorvem margem e a liberação de giro deixa de contribuir. O cenário pessimista calculado pelo código é R$ 0,66."
+    },
+    "comentario_valuation": "A soma das partes deve valorar operação industrial e participações pelos direitos econômicos, com dívida e caixa próprios. Banco e consórcio não recebem o mesmo tratamento do EBITDA fabril. Múltiplo consolidado sem minoritários e equivalência pode distorcer valor da holding; integração exige caixa e retorno normalizados. Preço de referência R$ 7,31 e alvo do modelo aberto R$ 5,03, com potencial -31,19%. Retorno total esperado -26,67% e custo do capital próprio 14,64%. A dispersão entre métodos é 70,42%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 7,19; a diferença -30,02% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Diversificação e caixa melhores não garantem retorno ao controlador quando minoritários, equivalência negativa e descontinuidade absorvem resultados. Menos aquisições melhora o comparável, mas não prova maturação suficiente dos ativos comprados.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.BR_RANDON.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 7,31"
+      },
+      {
+        "fato": "val.BR_RANDON.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 5,03"
+      },
+      {
+        "fato": "val.BR_RANDON.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-31,19%"
+      },
+      {
+        "fato": "val.BR_RANDON.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_RANDON.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_RANDON.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 9,61"
+      },
+      {
+        "fato": "val.BR_RANDON.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "27,03%"
+      },
+      {
+        "fato": "val.BR_RANDON.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 0,66"
+      },
+      {
+        "fato": "val.BR_RANDON.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "0,00%"
+      },
+      {
+        "fato": "val.BR_RANDON.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "14,64%"
+      },
+      {
+        "fato": "val.BR_RANDON.wacc",
+        "rotulo": "WACC",
+        "valor": "10,70%"
+      },
+      {
+        "fato": "val.BR_RANDON.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_RANDON.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-26,67%"
+      },
+      {
+        "fato": "val.BR_RANDON.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-28,36%"
+      },
+      {
+        "fato": "val.BR_RANDON.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "9,3x"
+      },
+      {
+        "fato": "val.BR_RANDON.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,8x"
+      },
+      {
+        "fato": "val.BR_RANDON.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 7,19"
+      },
+      {
+        "fato": "val.BR_RANDON.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-30,02%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "Randoncorp",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://www.randoncorp.com/pt/quem-somos/"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Randoncorp",
+        "publicado_em": "2026-08-13",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/a8409c46-1419-4694-b935-b868e0b64e35/cba9750b-4418-1060-0a74-124acb3f218c?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Randoncorp",
+        "publicado_em": "2026-08-13",
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/a8409c46-1419-4694-b935-b868e0b64e35/69b4ec66-6520-9919-3c97-0adb57d82ad3?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultado de reposição e integração cresce sem recuperação do lucro e caixa atribuíveis ao controlador.",
+      "Crédito, Addiante ou operações descontinuadas exigem capital além da melhora industrial.",
+      "Redução de giro ou menor aquisição explica caixa sem confirmar maturação dos ativos comprados.",
+      "Dívida com e sem banco, minoritários ou novas obrigações mudam a ponte econômica da holding."
+    ],
+    "governanca": "O documento apresenta medidas separadas do Banco Randon, ajustes de receitas externas e direitos de minoritários. Delta descontinuada e Addiante têm resultado próprio. As projeções existentes e suas bases não comprovam revisão agregada; informação ajustada não encerra a reconciliação por entidade.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Pedidos, produção e reposição por vertical; margem recorrente e retorno das aquisições. Conciliar operação descontinuada, Addiante, tributos e minoritários. Monitorar giro, caixa e dívida com e sem banco, além do cumprimento das projeções em sua base original.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_RANDON.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-26,67%"
+          },
+          {
+            "fato": "val.BR_RANDON.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "14,64%"
+          },
+          {
+            "fato": "val.BR_RANDON.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "70,42%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -26,67%, custo do capital 14,64% e dispersão entre métodos 70,42% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Na próxima divulgação, seguir resultado industrial por vertical e recebimentos da holding, preservando minoritários e equivalência. Separar liberação de giro e menor gasto com aquisições de eficiência permanente. Rever a hipótese se reposição e margens avançarem sem recuperação do retorno investido, ou se crédito, Addiante e descontinuidade mantiverem consumo de capital apesar de dívida gerencial menor.",
+        "titulo": "Maturação das aquisições e distribuição atribuível"
+      }
+    ],
+    "issuer_id": "BR_RANDON",
+    "lacunas_de_dados": [
+      "A reconciliação integral do ITR e do caixa atribuível permanece pendente.",
+      "Retorno das aquisições e maturação de Addiante requerem diligência.",
+      "Recorrência do giro e dos efeitos fiscais não foi comprovada.",
+      "Direção de revisão das projeções existentes não foi comprovada.",
+      "Participação de mercado e vantagem independente exigem análise própria."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo de implementos, componentes, reposição e serviços financeiros para transporte. Montadoras e reposição possuem ciclos distintos; Frasle e outras controladas têm sócios externos. Banco Randon e participações compartilhadas exigem leitura própria de crédito, dívida e resultado atribuível.",
+    "nome": "Randoncorp",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ECORODOVIAS",
+        "nome": "EcoRodovias"
+      },
+      {
+        "issuer_id": "BR_EMBRAER",
+        "nome": "Embraer"
+      },
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_LOCALIZA",
+        "nome": "Localiza"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_MOTIVA",
+        "nome": "Motiva (ex-CCR)"
+      },
+      {
+        "issuer_id": "BR_SIMPAR",
+        "nome": "Simpar"
+      },
+      {
+        "issuer_id": "BR_TUPY",
+        "nome": "Tupy"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que diversificação e produtividade remunerem o capital depois da integração. A condição decisiva é transformar margem e giro em caixa ao acionista, mantendo crédito e dívida sob disciplina. EBITDA consolidado e desempenho de reposição não pertencem integralmente ao controlador.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_RANDON.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 7,31"
+          },
+          {
+            "fato": "val.BR_RANDON.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 5,03"
+          },
+          {
+            "fato": "val.BR_RANDON.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-31,19%"
+          },
+          {
+            "fato": "val.BR_RANDON.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "14,64%"
+          },
+          {
+            "fato": "val.BR_RANDON.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-26,67%"
+          }
+        ],
+        "texto": "Preço de referência R$ 7,31 e alvo R$ 5,03, com potencial -31,19%. A hipótese de investimento deve ser confrontada com o custo do capital 14,64% e retorno esperado -26,67%.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Reposição pode amortecer o ciclo das montadoras, mas resultado consolidado não equivale ao retorno da participação da holding. O release separa Banco Randon, equivalência da Addiante e minoritários. A tese exige que integração e produtividade sustentem caixa atribuível sem que crédito, operações descontinuadas ou sócios absorvam o ganho industrial. Maior EBITDA de controladas com terceiros não comprova igual crescimento do lucro do controlador.",
+        "titulo": "Verticais industriais e financeiras têm capitais distintos"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Engenharia, distribuição e marcas de reposição podem apoiar atendimento e disponibilidade. Reposição e montagem têm concorrência e demanda próprias. A escala internacional e as aquisições precisam demonstrar retorno sem depender de créditos fiscais temporários, câmbio favorável ou consolidação de sócios.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:18:00.698858+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita trimestral ficou próxima da base anual, com queda no semestre; EBITDA ajustado aumentou. O prejuízo ampliou-se, com operação descontinuada, equivalência negativa, tributos e minoritários. Caixa sem Banco Randon melhorou com giro e menos aquisições. ROIC recuperou sequencialmente, mas permaneceu abaixo do ano anterior.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que diversificação e produtividade remunerem o capital depois da integração. A condição decisiva é transformar margem e giro em caixa ao acionista, mantendo crédito e dívida sob disciplina. EBITDA consolidado e desempenho de reposição não pertencem integralmente ao controlador. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado -26,67%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Demanda industrial, integração e câmbio podem limitar margem. Crédito e participações compartilhadas trazem obrigações próprias. Ganhos temporários de giro e tributos podem não se repetir; EBITDA maior pode coexistir com prejuízo."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_RANDON.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-30,02%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -30,02%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Randoncorp — reposição, integração e retorno atribuível",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "EBITDA ajustado cresceu apesar da receita semestral menor. O prejuízo ampliou-se pelo efeito da Delta descontinuada, equivalência da Addiante, tributos e minoritários. Caixa livre sem Banco Randon ficou positivo com liberação de giro, menor investimento e aquisições. Dívida e alavancagem caíram, enquanto ROIC permaneceu menor anualmente. Existem projeções anuais, sem direção de revisão comprovada.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Pedidos, produção e reposição por vertical; margem recorrente e retorno das aquisições. Conciliar operação descontinuada, Addiante, tributos e minoritários. Monitorar giro, caixa e dívida com e sem banco, além do cumprimento das projeções em sua base original.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_RANDON.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "14,64%"
+          },
+          {
+            "fato": "val.BR_RANDON.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "70,42%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 14,64% e a dispersão entre métodos 70,42%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

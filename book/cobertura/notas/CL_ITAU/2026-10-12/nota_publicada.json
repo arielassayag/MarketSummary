@@ -1,0 +1,428 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "12a791dcfe3c8f0eafc799a3eb848df87124f9a17ae860808b1d88fdaac6ff36",
+    "factbook": "7d54084a548e71170a083f3bb1afaefa989cf40400a7f1b8d39b23e082b2a5cb",
+    "nota_json": "6b1c3fc9e344671069b1ca78549fee6e5c3e4a6163cb67c9b7330d0764df815b"
+  },
+  "is_synthetic": false,
+  "issuer_id": "CL_ITAU",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-30",
+  "published_at": "2026-10-12T15:15:01.533388+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A fonte colombiana informa conclusão da cessão, efeitos de reestruturação e desarme de coberturas, além de capitalização posterior ao trimestre. Preservar esses cortes separados. A operação empresarial remanescente deve demonstrar receita, custos e capital próprios; liberação esperada não equivale a recursos distribuíveis. Instrumentos perpétuos e relações entre subsidiárias conservam obrigações econômicas.",
+        "titulo": "Cessão concluída não resolve capital residual"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em CLP 31.153,70, com retorno esperado +40,09%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Foco e relacionamento sustentam receita depois do risco; a transformação termina com custo controlado e capital remunerado. O cenário otimista calculado pelo código é CLP 39.034,40.",
+      "pessimista": "Custos residuais, perdas e financiamento absorvem a melhora operacional enquanto capitalização e restrições limitam distribuição. O cenário pessimista calculado pelo código é CLP 24.503,70."
+    },
+    "comentario_valuation": "Preço de referência CLP 22.689,00 e alvo do modelo aberto CLP 31.153,70, com potencial +37,31%. Retorno total esperado +40,09% e custo do capital próprio 9,66%. A dispersão entre métodos é 8,60%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é CLP 25.387,40; a diferença +22,71% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota. Usar patrimônio e lucro residual após perdas e capital regulatório, distinguindo retorno tangível do contábil. A transformação requer perímetro e custos residuais próprios; ajustes gerenciais e cessão não justificam equivalência automática do valor por ação.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A tese falha se a cessão reduz receitas mais rápido que os custos residuais, exige novo capital ou deixa obrigações não refletidas no lucro gerencial. No Chile, disputa por depósitos e perdas podem consumir ganhos de relacionamento. Recuperações e retorno tangível favorável não comprovam retorno contábil distribuível após instrumentos de capital.",
+        "titulo": "Ajustes podem esconder custo que permanece"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.CL_ITAU.preco",
+        "rotulo": "Preço de referência",
+        "valor": "CLP 22.689,00"
+      },
+      {
+        "fato": "val.CL_ITAU.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "CLP 31.153,70"
+      },
+      {
+        "fato": "val.CL_ITAU.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+37,31%"
+      },
+      {
+        "fato": "val.CL_ITAU.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.CL_ITAU.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.CL_ITAU.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "CLP 39.034,40"
+      },
+      {
+        "fato": "val.CL_ITAU.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CL_ITAU.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "CLP 24.503,70"
+      },
+      {
+        "fato": "val.CL_ITAU.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CL_ITAU.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "9,66%"
+      },
+      {
+        "fato": "val.CL_ITAU.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CL_ITAU.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,09%"
+      },
+      {
+        "fato": "val.CL_ITAU.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+40,09%"
+      },
+      {
+        "fato": "val.CL_ITAU.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+17,61%"
+      },
+      {
+        "fato": "val.CL_ITAU.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "10,2x"
+      },
+      {
+        "fato": "val.CL_ITAU.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,1x"
+      },
+      {
+        "fato": "val.CL_ITAU.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "CLP 25.387,40"
+      },
+      {
+        "fato": "val.CL_ITAU.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+22,71%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "Itaú Chile",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil bancário e operações por país",
+        "url": "https://ir.itau.cl/es/quienes-somos/perfil-corporativo/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Itaú Chile",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Resultados contábeis, gerenciais e transformação",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/4a2da77a-1e3e-41d5-8eb2-01dc7b15a10f/88deb755-3471-e362-1aed-a0867faeeb17?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F3",
+        "instituicao": "Itaú Colombia",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Eventos posteriores de cessão, reestruturação e capitalização",
+        "url": "https://banco.itau.co/web/corporate/relacion-con-inversionistas"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Custos residuais não recuam com a receita do perímetro cedido.",
+      "Negócio remanescente exige capital adicional sem remuneração suficiente.",
+      "Margem de clientes ou perdas deteriora sem recuperação recorrente.",
+      "Direitos, perpétuos ou eventos posteriores alteram lucro atribuível e capital."
+    ],
+    "governanca": "Examinar controle do grupo Itaú, direitos locais, ações e recibos e relações entre subsidiárias. Recursos e capital da operação colombiana não equivalem a recursos distribuíveis na holding, e a operação remanescente precisa de perímetro atualizado.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Separar Chile e Colômbia, cliente e mercado, contábil e gerencial. Examinar custo e estabilidade dos depósitos, provisões, recuperações e base de atraso; reconciliar patrimônio tangível e remuneração dos perpétuos antes de comparar retornos.",
+        "titulo": "Margem do cliente e perdas normalizadas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Acompanhar negócio empresarial remanescente, despesas residuais, efeitos de hedge e capital efetivo após os eventos divulgados. Conferir direitos e transferências entre subsidiárias; não levar efeitos posteriores para o resultado trimestral anterior.",
+        "titulo": "Perímetro e custos após a cessão"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_ITAU.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+40,09%"
+          },
+          {
+            "fato": "val.CL_ITAU.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "9,66%"
+          },
+          {
+            "fato": "val.CL_ITAU.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "8,60%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +40,09%, custo do capital 9,66% e dispersão entre métodos 8,60% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "CL_ITAU",
+    "lacunas_de_dados": [
+      "Notas, capital e perdas esperadas por entidade não foram integralmente reconciliados.",
+      "Lucro gerencial, patrimônio tangível, perpétuos e câmbio exigem base homogênea.",
+      "Cessão, custos residuais, capitalização e estrutura atual permanecem a conciliar.",
+      "Classes, recibos e base por ação requerem diligência própria.",
+      "Guidance, tom da gestão e evento futuro datado seguem não classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Banco universal com sede no Chile e operações na Colômbia e Panamá, além de presença internacional de apoio. Crédito, depósitos e serviços têm riscos e requisitos próprios por país. A transformação colombiana altera perímetro e comparabilidade e precisa ser avaliada separadamente da franquia chilena.",
+    "nome": "Banco Itaú Chile",
+    "o_que_mudou": null,
+    "pais": "Chile",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BB",
+        "nome": "Banco do Brasil"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      },
+      {
+        "issuer_id": "BR_INTER",
+        "nome": "Inter&Co"
+      }
+    ],
+    "percepcao_variante": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A alternativa é avaliar a transformação pelo negócio que fica, não apenas pelo fechamento da cessão ou por metas ajustadas. Custos residuais, clientes retidos e capital por entidade fornecem testes verificáveis. Não se presume surpresa ao mercado, nem melhoria concluída, a partir da notícia de fechamento.",
+        "titulo": "Economia remanescente, sem sucesso antecipado"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A cadeia é relacionamento → depósitos e margem de clientes → perdas de crédito e custo operacional → retorno após capital e transformação. A condição decisiva é que o perímetro remanescente remunere capital sem depender de recuperações, ajustes gerenciais ou custos retirados da comparação. A cessão colombiana precisa ser lida com seus efeitos posteriores, capitalização e obrigações que permanecem.",
+        "titulo": "Franquia remanescente após a transformação"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_ITAU.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "CLP 22.689,00"
+          },
+          {
+            "fato": "val.CL_ITAU.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "CLP 31.153,70"
+          },
+          {
+            "fato": "val.CL_ITAU.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+37,31%"
+          },
+          {
+            "fato": "val.CL_ITAU.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "9,66%"
+          },
+          {
+            "fato": "val.CL_ITAU.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+40,09%"
+          }
+        ],
+        "texto": "Preço de referência CLP 22.689,00 e alvo CLP 31.153,70, com potencial +37,31%. A hipótese de investimento deve ser confrontada com o custo do capital 9,66% e retorno esperado +40,09%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Produtos e canais integrados podem apoiar empresas e indivíduos em mais de um mercado. A vantagem exige funding estável, serviço e receita líquida por cliente. Crescimento hipotecário ou participação declarada precisa ser confrontado com risco, capital e custo de aquisição, sem presumir continuidade dos incentivos.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:15:01.533388+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Resultado gerencial ajusta transformação, intangíveis e custo de instrumentos perpétuos; retornos sobre patrimônio tangível e contábil diferem. A margem distingue clientes e mercado, e a Colômbia usa câmbio constante. Custo de crédito inclui recuperações e liberação de provisões; alguns comparativos de atraso exigem conciliação.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que relacionamento transacional e foco operacional sustentem retorno depois de risco e capital. A transformação deve deixar uma base econômica rentável depois das despesas e da mudança de perímetro. Crescimento do crédito e metas gerenciais não bastam sem geração atribuível e capacidade de remunerar capital. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +40,09%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Transformação, crédito, juros e moeda podem consumir recursos antes dos benefícios. Perda de clientes e custos residuais podem reduzir retorno do perímetro remanescente. Ajustes de lucro e capital tangível podem mascarar obrigações econômicas persistentes."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_ITAU.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+22,71%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +22,71%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Itaú Chile — retorno depois da transformação e capital por operação",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O estudo distingue o trimestre da cessão e dos efeitos posteriores na Colômbia. Preserva lucro gerencial, contábil, câmbio constante e obrigações de instrumentos de capital. Metas não têm base anterior totalmente reconciliada para classificar mudança de guidance; unidades e comparativos não são corrigidos pela mente.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar depósitos, margem com clientes e crédito por segmento e país, separando crescimento nominal e indexação. Revisar recuperação, provisões, despesas de transformação e obrigações de instrumentos de capital. Conferir perímetro após a cessão e capital efetivo por entidade.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.CL_ITAU.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "9,66%"
+          },
+          {
+            "fato": "val.CL_ITAU.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "8,60%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 9,66% e a dispersão entre métodos 8,60%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

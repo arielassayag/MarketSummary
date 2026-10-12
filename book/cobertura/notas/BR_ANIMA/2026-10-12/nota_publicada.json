@@ -1,0 +1,472 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "36890b071e38d050ff9dc6bb74cf79112ce176badb9ad031d12ad1155a71de91",
+    "factbook": "9deedde56cc01761263c5adaf6fbec4ef844d5538eece39a13534e1822a0c868",
+    "nota_json": "f5728d69e13c3989ed94758a77896edec233552369e39dcebb7640814ed09cf3"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_ANIMA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T15:18:52.647264+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Dívida líquida ajustada aumentou anualmente, embora a relação com EBITDA tenha diminuído. Aluguéis entram na geração gerencial; juros de empréstimos vêm depois e aumentaram. Financiamentos estudantis consomem giro. Aquisições e parcelas de minoritários exigem caixa; controlada adquirida com aporte futuro não equivale a pagamento integral realizado.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar retenção, provisões e caixa após juros.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": null,
+        "descricao": "Comprovação das condições da FMU e dos aportes da CALIPER, sem conclusão presumida.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "m_a"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em Em revisão, com retorno esperado Em revisão. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Retenção e qualidade recuperam ocupação; medicina e integração remuneram o capital, com recebimento e caixa após juros e direitos de sócios. O cenário otimista calculado pelo código é Em revisão.",
+      "pessimista": "Evasão, crédito e limitações regulatórias reduzem a base, enquanto juros e integração absorvem recursos; margem ajustada não confirma caixa atribuível. O cenário pessimista calculado pelo código é Em revisão."
+    },
+    "comentario_valuation": "Preço de referência R$ 4,70 e alvo do modelo aberto Em revisão, com potencial Em revisão. Retorno total esperado Em revisão e custo do capital próprio 14,64%. A dispersão entre métodos é 56,75%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 3,43; a diferença Em revisão não constitui evidência de percepção do mercado. Ensino Core, digital e medicina pedem bases próprias de retenção, recebimento e maturação. EBITDA antes do efeito dos arrendamentos precisa ser comparado com aluguel no fluxo e dívida na mesma convenção. Valor da Inspirali deve respeitar minoritários; aquisição sem desembolso inicial não elimina aporte futuro nem permite atribuir sinergia integral à holding.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Preço maior pode compensar temporariamente uma base de alunos menor. Melhora ajustada e dívida sobre EBITDA menor podem coexistir com dívida absoluta e juros maiores. Se retenção e crédito piorarem, crescimento médico não provará caixa sustentável ao acionista.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.BR_ANIMA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 4,70"
+      },
+      {
+        "fato": "val.BR_ANIMA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_ANIMA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_ANIMA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_ANIMA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_ANIMA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_ANIMA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_ANIMA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_ANIMA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_ANIMA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "14,64%"
+      },
+      {
+        "fato": "val.BR_ANIMA.wacc",
+        "rotulo": "WACC",
+        "valor": "8,35%"
+      },
+      {
+        "fato": "val.BR_ANIMA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_ANIMA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_ANIMA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_ANIMA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "6,6x"
+      },
+      {
+        "fato": "val.BR_ANIMA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,7x"
+      },
+      {
+        "fato": "val.BR_ANIMA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 3,43"
+      },
+      {
+        "fato": "val.BR_ANIMA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Em revisão"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Ânima",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://ri.animaeducacao.com.br/show.aspx?idCanal=NeeBu1Wsd1UlE9vJaj6abw=="
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Ânima",
+        "publicado_em": "2026-08-14",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://ri.animaeducacao.com.br/Download.aspx?Arquivo=Hg3EIPptu0/h0UU+wtaXBA=="
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Ânima",
+        "publicado_em": "2026-08-14",
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+        "url": "https://ri.animaeducacao.com.br/Download.aspx?Arquivo=hhAlxnGjiSUs0Za0CCdnqg=="
+      }
+    ],
+    "gatilhos_revisao": [
+      "Evasão do Core permanece elevada apesar dos ajustes operacionais anunciados.",
+      "Geração após aluguel e juros piora enquanto a alavancagem gerencial diminui.",
+      "Aportes e integração de CALIPER ou FMU consomem recursos sem retorno atribuível."
+    ],
+    "governanca": "O ITR tem revisão limitada sem modificação. Inspirali e participações adquiridas possuem direitos de terceiros e opções próprios. O documento distingue controle da CALIPER sem desembolso imediato e FMU sem controle antes da aprovação. As bases gerenciais de arrendamento e passivos não são equivalentes à dívida simples.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Captação, evasão, ocupação, preço líquido e recebimento por segmento; provisões e financiamentos estudantis. Conciliar aluguel, juros, investimento e caixa atribuível a minoritários. Confirmar condições da FMU, aportes da CALIPER e retorno da integração.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ANIMA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.BR_ANIMA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "14,64%"
+          },
+          {
+            "fato": "val.BR_ANIMA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "56,75%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado Em revisão, custo do capital 14,64% e dispersão entre métodos 56,75% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Evasão do Core permanece elevada apesar dos ajustes operacionais anunciados. Geração após aluguel e juros piora enquanto a alavancagem gerencial diminui. Aportes e integração de CALIPER ou FMU consomem recursos sem retorno atribuível.",
+        "titulo": "Evidência que muda a visão"
+      }
+    ],
+    "issuer_id": "BR_ANIMA",
+    "lacunas_de_dados": [
+      "A ponte integral de caixa, passivos e direitos por entidade permanece pendente.",
+      "O texto de CAPEX diverge da tabela do próprio release.",
+      "Desembolso do aporte da CALIPER e cumprimento das condições da FMU não foram comprovados.",
+      "Retorno da integração, crédito estudantil e ocupação médica exigem diligência específica.",
+      "Guidance agregado e posição de mercado não foram comprovados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo educacional com ensino presencial, digital e formação médica pela Inspirali. Matrícula, retenção, preço líquido e financiamento estudantil determinam receita e recebimento. Medicina possui regulação e maturação próprias. A Inspirali tem sócios externos; contribuição consolidada não pertence integralmente ao acionista da holding.",
+    "nome": "Ânima Educação",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_AFYA",
+        "nome": "Afya"
+      },
+      {
+        "issuer_id": "BR_ALPARGATAS",
+        "nome": "Alpargatas"
+      },
+      {
+        "issuer_id": "BR_AZZAS",
+        "nome": "Azzas 2154"
+      },
+      {
+        "issuer_id": "BR_CEA",
+        "nome": "C&A Modas"
+      },
+      {
+        "issuer_id": "BR_COGNA",
+        "nome": "Cogna"
+      },
+      {
+        "issuer_id": "BR_CURY",
+        "nome": "Cury"
+      },
+      {
+        "issuer_id": "BR_CYRELA",
+        "nome": "Cyrela"
+      },
+      {
+        "issuer_id": "BR_DIRECIONAL",
+        "nome": "Direcional"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que qualidade acadêmica, retenção e ocupação remunerem o capital depois de reinvestimento e juros. A condição decisiva é recuperar a experiência do aluno sem ampliar excessivamente descontos, crédito ou evasão. Medicina e ensino digital têm bases distintas; margem e desalavancagem precisam converter-se em caixa atribuível.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ANIMA.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 4,70"
+          },
+          {
+            "fato": "val.BR_ANIMA.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.BR_ANIMA.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.BR_ANIMA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "14,64%"
+          },
+          {
+            "fato": "val.BR_ANIMA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "Em revisão"
+          }
+        ],
+        "texto": "Preço de referência R$ 4,70 e alvo Em revisão, com potencial Em revisão. A hipótese de investimento deve ser confrontada com o custo do capital 14,64% e retorno esperado Em revisão.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A prioridade é comprovar que os ajustes do retorno às aulas revertem a evasão de forma sustentável. Preço médio e medicina podem sustentar receita com menos alunos, mas esse mix não demonstra recuperação da franquia Core. O caixa deve remunerar aluguéis, juros, crédito estudantil e direitos de sócios antes de financiar novas integrações. A declaração da administração sobre normalização da evasão exige confirmação nos próximos indicadores.",
+        "titulo": "Recuperação da experiência precisa aparecer no caixa"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Marcas regionais, qualidade e oferta médica podem apoiar retenção e preço. A capacidade autorizada e a ocupação são condições específicas, sem assegurar liderança independente. Falhas operacionais no retorno às aulas afetaram evasão; escala e canais digitais não eliminam regulação ou competição por estudantes.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:18:52.647264+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita e EBITDA ajustado cresceram, mas base de alunos diminuiu e o Core sofreu evasão e provisões maiores. Inspirali cresceu; o digital teve captação menor sob a regulação. Caixa da empresa aumentou no semestre, mas recuou no trimestre, antes dos juros de empréstimos. Lucro atribuível também reflete menor amortização e compra de minoritários.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que qualidade acadêmica, retenção e ocupação remunerem o capital depois de reinvestimento e juros. A condição decisiva é recuperar a experiência do aluno sem ampliar excessivamente descontos, crédito ou evasão. Medicina e ensino digital têm bases distintas; margem e desalavancagem precisam converter-se em caixa atribuível. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Em revisão, com retorno esperado Em revisão. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Evasão, crédito e regulação podem limitar preço e receita. Juros, ocupação e aquisições competem com caixa. Medicina exige autorizações e capital; minoritários e parcelas futuras restringem o retorno integral à holding."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ANIMA.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "Em revisão"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é Em revisão. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Consumo discricionário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Ânima — retenção, medicina e caixa atribuível",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O resultado registra crescimento de receita e EBITDA ajustado, com redução de alunos e maior evasão no Core. A geração da empresa cresceu no semestre, mas caiu no trimestre e precede juros de empréstimos. Dívida ajustada aumentou anualmente apesar da redução da alavancagem. O controle da CALIPER foi adquirido posteriormente, com aporte ainda futuro; a FMU permanece condicionada ao CADE no documento. O texto sobre CAPEX tem base divergente da tabela, sem correção da fonte.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Captação, evasão, ocupação, preço líquido e recebimento por segmento; provisões e financiamentos estudantis. Conciliar aluguel, juros, investimento e caixa atribuível a minoritários. Confirmar condições da FMU, aportes da CALIPER e retorno da integração.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_ANIMA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "14,64%"
+          },
+          {
+            "fato": "val.BR_ANIMA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "56,75%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 14,64% e a dispersão entre métodos 56,75%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

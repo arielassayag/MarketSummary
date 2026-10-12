@@ -1,0 +1,414 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "2d338945c8023058a4ccce2c0028d81307a403bf6569e85432f3984a3ff49b57",
+    "factbook": "6e0f7f166d66aebdef50e1085e53f0f8dfd385c677ffce0f6b68a2d3757a70b3",
+    "nota_json": "9458cba5baa2f9abe34cf86589615351a332370cb43b5099f1c933d2ec7b184b"
+  },
+  "is_synthetic": false,
+  "issuer_id": "CL_ENELAM",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-29",
+  "published_at": "2026-10-12T15:18:26.794953+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Confrontar expansão e manutenção das redes com remuneração reconhecida e qualidade exigida. Fluxos de investimento incluem ativos físicos e intangíveis de concessão; a linha de investimento físico não cobre todos os compromissos. Separar dívida, juros, partes relacionadas e caixa das controladas da holding, sem presumir que resultado consolidado esteja distribuível.",
+        "titulo": "Investimento completo e capital por entidade"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em CLP 182,66, com retorno esperado +105,26%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Redes e geração demonstram eficiência e remuneração suficientes depois do capital total. Recebimentos e financiamento se conciliam na base atribuível, e a holding recebe retorno sem depender de efeitos cambiais ou eventos de comparação para sustentar contribuição. O cenário otimista calculado pelo código é CLP 217,01.",
+      "pessimista": "Perdas, serviço ou remuneração pressionam operação, enquanto recebíveis e investimento absorvem caixa. Financiamento e obrigações das controladas restringem distribuições, e efeitos contábeis obscurecem o retorno recebido. O cenário pessimista calculado pelo código é CLP 152,69."
+    },
+    "comentario_valuation": "Preço de referência CLP 90,99 e alvo do modelo aberto CLP 182,66, com potencial +100,74%. Retorno total esperado +105,26% e custo do capital próprio 8,85%. A dispersão entre métodos é 24,56%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é CLP 116,13; a diferença +57,28% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota. Separar concessões e geração por país, participação e financiamento. Fluxo regulado exige investimento completo, qualidade e recebimento; geração exige contratos e prazo dos direitos. Câmbio e regularização não justificam crescimento perpétuo do consolidado.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A tese falha se moeda e indexação melhoram o resultado divulgado enquanto perdas, serviço e recebíveis exigem mais capital. A base de Edesur pode distorcer recorrência, e concessão não renovada reduz o perímetro econômico. Investimento que não recebe remuneração ou caixa retido nas controladas impede que melhora operacional beneficie proporcionalmente a ação.",
+        "titulo": "Resultado em dólar pode ocultar retorno limitado"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.CL_ENELAM.preco",
+        "rotulo": "Preço de referência",
+        "valor": "CLP 90,99"
+      },
+      {
+        "fato": "val.CL_ENELAM.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "CLP 182,66"
+      },
+      {
+        "fato": "val.CL_ENELAM.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+100,74%"
+      },
+      {
+        "fato": "val.CL_ENELAM.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.CL_ENELAM.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.CL_ENELAM.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "CLP 217,01"
+      },
+      {
+        "fato": "val.CL_ENELAM.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CL_ENELAM.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "CLP 152,69"
+      },
+      {
+        "fato": "val.CL_ENELAM.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CL_ENELAM.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "8,85%"
+      },
+      {
+        "fato": "val.CL_ENELAM.wacc",
+        "rotulo": "WACC",
+        "valor": "7,43%"
+      },
+      {
+        "fato": "val.CL_ENELAM.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,09%"
+      },
+      {
+        "fato": "val.CL_ENELAM.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+105,26%"
+      },
+      {
+        "fato": "val.CL_ENELAM.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+102,57%"
+      },
+      {
+        "fato": "val.CL_ENELAM.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "9,2x"
+      },
+      {
+        "fato": "val.CL_ENELAM.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,5x"
+      },
+      {
+        "fato": "val.CL_ENELAM.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "CLP 116,13"
+      },
+      {
+        "fato": "val.CL_ENELAM.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+57,28%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "Enel Américas",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e estrutura do negócio",
+        "url": "https://www.enelamericas.com/en/aboutus/a201609-about-enel-americas.html"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Enel Américas",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Análise das demonstrações financeiras do semestre",
+        "url": "https://www.enelamericas.com/content/dam/enel-americas/en/investor/presentations_of_results/quarterly-results/financial-statements-analysis-pdf/2026/Financial-Statements-Analysis-Q2-H1-2026.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Tarifa e crescimento convertido não acompanham recebimento e qualidade de serviço.",
+      "Perdas e obrigações exigem investimento sem remuneração suficiente.",
+      "Renovação ou alienação altera o perímetro e os direitos da geração.",
+      "Dívida ou relações intragrupo restringem caixa atribuível na holding."
+    ],
+    "governanca": "Investimento deve ser avaliado pela remuneração reconhecida, obrigação de serviço e retorno depois de financiamento. Dívida e caixa das controladas precisam ser separados dos recursos disponíveis à holding. Empréstimos e serviços com partes relacionadas exigem documentos e condições atuais. O release consultado não encerra a reconciliação das notas completas, dos direitos de capital ou da disponibilidade dos recursos.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar tarifa reconhecida, faturamento, perdas esperadas, cobrança e qualidade por distribuidora. Distinguir Argentina reexpressa, conversão cambial e regularização da Edesur. Confirmar perímetro e direitos da geração, sem usar ativos históricos como fonte atual de caixa.",
+        "titulo": "Concessões, perdas e receita recebida"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Reconciliar ativos físicos e intangíveis de concessão com caixa operacional, dívida e juros por entidade. Examinar empréstimos relacionados, distribuição das controladas e recursos da holding, mantendo participação de minoritários e obrigações de serviço.",
+        "titulo": "Investimento e disponibilidade na holding"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_ENELAM.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+105,26%"
+          },
+          {
+            "fato": "val.CL_ENELAM.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "8,85%"
+          },
+          {
+            "fato": "val.CL_ENELAM.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "24,56%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +105,26%, custo do capital 8,85% e dispersão entre métodos 24,56% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "CL_ENELAM",
+    "lacunas_de_dados": [
+      "Demonstrações completas, unidades e partes relacionadas não foram integralmente reconciliadas com o modelo.",
+      "O perfil corporativo contém bases históricas; perímetro presente exige documentos do mesmo período.",
+      "Remuneração, serviço, perdas e direitos das concessões precisam de análise atual comparável.",
+      "Investimento total, dívida por entidade e caixa disponível na holding permanecem a conciliar.",
+      "Capital por ação, desempenho competitivo e percepção do mercado têm evidência insuficiente.",
+      "Não há catalisador futuro com data precisa adotado nesta pesquisa."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "A Enel Américas combina geração, transmissão e distribuição por controladas. O perfil corporativo contém bases históricas e não define o perímetro presente. A análise semestral separa Argentina, Brasil, Colômbia e operações na América Central, além de efeitos de não renovação de ativos de El Chocón e menor trading. Cada concessão, contrato e participação exige caixa e direitos próprios.",
+    "nome": "Enel Américas",
+    "o_que_mudou": null,
+    "pais": "Chile",
+    "pares": [
+      {
+        "issuer_id": "AR_PAMPA",
+        "nome": "Pampa Energía"
+      },
+      {
+        "issuer_id": "BR_ALUPAR",
+        "nome": "Alupar"
+      },
+      {
+        "issuer_id": "BR_AUREN",
+        "nome": "Auren Energia"
+      },
+      {
+        "issuer_id": "BR_AXIA",
+        "nome": "Axia Energia (ex-Eletrobras)"
+      },
+      {
+        "issuer_id": "BR_CEMIG",
+        "nome": "Cemig"
+      },
+      {
+        "issuer_id": "BR_COMPASS",
+        "nome": "Compass Gás e Energia"
+      },
+      {
+        "issuer_id": "BR_COPASA",
+        "nome": "Copasa"
+      },
+      {
+        "issuer_id": "BR_COPEL",
+        "nome": "Copel"
+      }
+    ],
+    "percepcao_variante": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese alternativa é que remuneração depois do investimento total e transmissão à holding expliquem mais que crescimento em dólar. O próprio release separa câmbio, países e base de regularização, permitindo verificar essa hipótese. Isso não demonstra que ela esteja ausente do consenso ou preço.",
+        "titulo": "Atribuição e recorrência acima do consolidado"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A cadeia é investimento e qualidade por concessão → tarifa reconhecida → energia faturada após perdas → recebimento → caixa após compromissos e financiamento. A condição decisiva é remuneração atribuível por entidade. Câmbio, indexação e comparação com a regularização de Edesur não substituem eficiência; na geração, contratos e renovação de concessões delimitam o fluxo que permanece.",
+        "titulo": "Remuneração da rede deve cobrir capital e serviço"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_ENELAM.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "CLP 90,99"
+          },
+          {
+            "fato": "val.CL_ENELAM.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "CLP 182,66"
+          },
+          {
+            "fato": "val.CL_ENELAM.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+100,74%"
+          },
+          {
+            "fato": "val.CL_ENELAM.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "8,85%"
+          },
+          {
+            "fato": "val.CL_ENELAM.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+105,26%"
+          }
+        ],
+        "texto": "Preço de referência CLP 90,99 e alvo CLP 182,66, com potencial +100,74%. A hipótese de investimento deve ser confrontada com o custo do capital 8,85% e retorno esperado +105,26%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Concessões e escala podem influenciar serviço, eficiência e capacidade de contratação, mas devem ser confrontadas com qualidade da rede, perdas e custos reconhecidos. A comparação entre países exige harmonizar regulação, moeda e capital empregado. A integração de geração e distribuição não elimina risco de remuneração ou de reinvestimento insuficientemente remunerado.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:18:26.794953+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O release distingue efeitos de conversão cambial, desempenho por país e comparação com a regularização de obrigações da Edesur. A análise deve conciliar esses efeitos, inflação argentina, perdas esperadas, lucro atribuível e caixa. Fluxos de investimento incluem ativos físicos e intangíveis de concessões; comparar somente investimento físico com geração operacional pode omitir compromissos relevantes.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que investimentos nas redes e disciplina comercial da geração sustentem retorno recebido depois dos compromissos de capital. A condição decisiva é remuneração e caixa atribuível comprovados por concessão e negócio. Reajuste de tarifas, crescimento do resultado convertido em dólar e expansão de ativos não estabelecem sozinhos retorno por ação. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +105,26%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Remuneração, qualidade de serviço, perdas, clima e moeda podem afetar resultado e caixa. Investimentos e renovação de concessões exigem análise atual. Partes relacionadas, dívida nas controladas e participação econômica precisam de conciliação antes de inferir valor recebido pelo acionista."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_ENELAM.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+57,28%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +57,28%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Utilidades públicas",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Enel Américas: remuneração das redes e caixa atribuível após investimento",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "Foi consultada a análise semestral, que distingue operações por país, câmbio, regularização de obrigações e caixa. O documento não substitui reconciliação das notas completas com o modelo; rubricas de investimento, partes relacionadas e apresentação de unidades exigem conferência própria.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Separar energia vendida, tarifas, perdas e qualidade das redes por concessão. Conciliar moeda, efeitos de regularização, inflação, perdas esperadas e caixa. Conferir investimento total, dívida por entidade, recebimentos da holding e condições de partes relacionadas.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.CL_ENELAM.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "8,85%"
+          },
+          {
+            "fato": "val.CL_ENELAM.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "24,56%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 8,85% e a dispersão entre métodos 24,56%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

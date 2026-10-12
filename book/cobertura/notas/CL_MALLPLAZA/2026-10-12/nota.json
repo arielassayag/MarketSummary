@@ -1,0 +1,213 @@
+{
+  "mind": "codex",
+  "issuer_id": "CL_MALLPLAZA",
+  "data": "2026-10-12",
+  "tipo": "iniciacao",
+  "titulo": "Mallplaza — aluguel recebido e disciplina na expansão regional",
+  "resumo": "A hipótese exige que localização, composição de lojas e gestão comercial sustentem aluguel recebido após manutenção e financiamento. A expansão regional só acrescenta valor se remunera o capital incremental e preserva qualidade dos ativos. Ocupação e visitas precisam ser convertidas em capacidade de pagamento dos lojistas e caixa residual. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.CL_MALLPLAZA.rating_codigo}}, com retorno esperado {{fact:val.CL_MALLPLAZA.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Operadora de centros comerciais e ativos urbanos no Chile, Peru e Colômbia, integrante do grupo Falabella. A análise deve distinguir propriedade, controle, receita consolidada e caixa atribuível ao acionista da companhia listada.",
+  "pilares_tese": [
+    {
+      "titulo": "Venda do lojista até caixa residual do imóvel",
+      "texto": "A cadeia é localização e composição de lojas → vendas sustentáveis → aluguel faturado e recebido → caixa após incentivos, manutenção e financiamento. A condição decisiva é crescimento comparável dos imóveis existentes e retorno incremental dos adquiridos, com direitos próprios. Mais área ou visitas não demonstra caixa por ação; obras e transações intragrupo têm estágios distintos.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3",
+        "F4"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.CL_MALLPLAZA.preco}} e alvo {{fact:val.CL_MALLPLAZA.preco_alvo}}, com potencial {{fact:val.CL_MALLPLAZA.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.CL_MALLPLAZA.ke}} e retorno esperado {{fact:val.CL_MALLPLAZA.etr}}.",
+      "evidencias": [
+        "val.CL_MALLPLAZA.preco",
+        "val.CL_MALLPLAZA.preco_alvo",
+        "val.CL_MALLPLAZA.upside",
+        "val.CL_MALLPLAZA.ke",
+        "val.CL_MALLPLAZA.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar vendas dos lojistas, aluguel recebido, vacância, incentivos e manutenção por ativo. Na expansão, revisar desembolsos, ocupação inicial e financiamento. Separar integração concluída de transações condicionadas, respeitando participações e direitos de distribuição.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.CL_MALLPLAZA.ke}} e a dispersão entre métodos {{fact:val.CL_MALLPLAZA.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.CL_MALLPLAZA.ke",
+        "val.CL_MALLPLAZA.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Consumo, vacância e custos podem enfraquecer aluguel e caixa. Expansão exige financiamento e execução; relações com o grupo podem gerar conflitos sobre ativos, preços e destinação de capital.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1",
+        "F3",
+        "F4"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.CL_MALLPLAZA.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.CL_MALLPLAZA.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Lojistas sustentam vendas e aluguéis; integração e projetos entregam caixa depois de manutenção, financiados em condições compatíveis com retorno. O cenário otimista calculado pelo código é {{fact:val.CL_MALLPLAZA.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.CL_MALLPLAZA.preco_alvo}}, com retorno esperado {{fact:val.CL_MALLPLAZA.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Vacância e pressão comercial coincidem com obras e integração, reduzindo caixa residual e ampliando a necessidade de financiamento. O cenário pessimista calculado pelo código é {{fact:val.CL_MALLPLAZA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.CL_MALLPLAZA.preco}} e alvo do modelo aberto {{fact:val.CL_MALLPLAZA.preco_alvo}}, com potencial {{fact:val.CL_MALLPLAZA.upside}}. Retorno total esperado {{fact:val.CL_MALLPLAZA.etr}} e custo do capital próprio {{fact:val.CL_MALLPLAZA.ke}}. A dispersão entre métodos é {{fact:val.CL_MALLPLAZA.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.CL_MALLPLAZA.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.CL_MALLPLAZA.consenso_alvo}}; a diferença {{fact:val.CL_MALLPLAZA.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota. Avaliar fluxo imobiliário após manutenção e financiamento, com ocupação e aluguel comparáveis. Valor patrimonial e taxa de capitalização exigem perímetro, direitos e dívida próprios; FFO ajustado e sinergia anunciada não substituem caixa incremental comprovado.",
+  "ultimo_resultado": "O comunicado trimestral antecede a aquisição concluída e a reorganização condicionada. A pesquisa mantém esses perímetros separados. A taxa de capitalização histórica divulgada na compra não constitui retorno futuro do acionista depois da dívida.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Transações dentro do grupo devem ser avaliadas pelas condições finais, proteção de minoritários e efeitos por ação. A capacidade de gestão compartilhada não dispensa conciliação de direitos e eliminação de sobreposição.",
+  "posicao_competitiva": {
+    "titulo": "Localização e mix sob prova econômica",
+    "texto": "Destinos com comércio, serviços e entretenimento podem apoiar frequência e vendas. A vantagem exige renovação sem incentivos excessivos, aluguel recebido e ocupação sustentável diante de concorrência física e digital. Liderança declarada, metragem e tráfego não demonstram retorno de cada ativo; Gran Plaza deve conservar uma base anterior para medir integração.",
+    "evidencias": [
+      "F1",
+      "F2",
+      "F3"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "O comunicado divulga EBITDA e FFO ajustado, além de projetos comprometidos ou em construção. Esses indicadores e estágios não substituem caixa contábil nem imóvel já remunerador. A comparação do portfólio precisa separar ativos consolidados, obras e investimentos de parceiros.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "A compra dos ativos Gran Plaza foi concluída em outubro, depois do trimestre. A reorganização com Falabella segue em memorandos não vinculantes. Conclusão da aquisição não demonstra sinergias; retorno precisa considerar preço total, financiamento, integração e capital futuro.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F4"
+    ]
+  },
+  "percepcao_variante": {
+    "titulo": "Integração deve ser demonstrada após o fechamento",
+    "texto": "A alternativa à leitura por área é testar caixa incremental e qualidade dos imóveis adquiridos, comparados à sua base anterior e ao capital total. A aquisição foi anunciada como concluída, mas sinergias e condições finais da reorganização não estão comprovadas. Não se infere o que o mercado já precifica.",
+    "evidencias": [
+      "F3",
+      "F4"
+    ]
+  },
+  "contratese": {
+    "titulo": "Crescimento de área sem retorno incremental",
+    "texto": "A tese falha se aluguel cresce por consolidação e indexação, mas lojas existentes exigem incentivos ou apresentam pior cobrança. Aquisição e reconversões podem consumir capital acima do caixa incremental, e reorganização intragrupo pode transferir valor de forma desigual. FFO ajustado e taxa histórica da compra não comprovam retorno da ação depois de dívida e manutenção.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F4"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Aluguel comparável e cobrança",
+      "texto": "Acompanhar vendas dos lojistas, aluguel comparável, vacância, inadimplência, incentivos e manutenção por ativo e país. Reconciliar FFO ajustado com caixa, juros, despesas e investimento, distinguindo obras e participações de imóveis consolidados.",
+      "evidencias": [
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Integração e direitos nas transações",
+      "texto": "Manter o trimestre anterior separado de Gran Plaza adquirido e medir investimento e financiamento incremental após fechamento. Para a reorganização com Falabella, exigir termos definitivos, aprovações e direitos dos minoritários; memorando não é transferência concluída.",
+      "evidencias": [
+        "F3",
+        "F4"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.CL_MALLPLAZA.etr}}, custo do capital {{fact:val.CL_MALLPLAZA.ke}} e dispersão entre métodos {{fact:val.CL_MALLPLAZA.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.CL_MALLPLAZA.etr",
+        "val.CL_MALLPLAZA.ke",
+        "val.CL_MALLPLAZA.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Aluguel comparável ou cobrança deteriora apesar de maior tráfego e área.",
+    "Incentivos e manutenção absorvem a contribuição dos imóveis existentes.",
+    "Gran Plaza exige mais investimento ou dívida sem caixa incremental suficiente.",
+    "Termos intragrupo mudam direitos ou valor por ação sem proteção demonstrada."
+  ],
+  "lacunas_de_dados": [
+    "Demonstrações e reconciliação integral de FFO, caixa, investimento e direitos econômicos permanecem pendentes.",
+    "Financiamento e caixa incremental dos ativos adquiridos exigem atualização após a conclusão.",
+    "Termos definitivos e conclusão das reorganizações com o grupo não foram demonstrados.",
+    "Projetos comprometidos e em construção não foram reconciliados a desembolsos e retorno atribuível.",
+    "Guidance, tom da gestão e evento futuro datado permanecem não avaliados.",
+    "Não há suporte suficiente para percepção do mercado, posicionamento ou interesse vendido.",
+    "A reconciliação integral ao modelo e a disponibilidade histórica dos documentos no corte recebido não foram comprovadas."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Mallplaza",
+      "titulo": "Perfil e plataforma imobiliária",
+      "url": "https://corporativo.mallplaza.com/nosotros/somos-mallplaza/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Mallplaza",
+      "titulo": "Comunicado de resultado trimestral",
+      "url": "https://corporativo.mallplaza.com/noticia/ebitda-de-mallplaza-crece-96-en-el-segundo-trimestre-mientras-avanza-en-su-plan-de-crecimiento-en-colombia/",
+      "publicado_em": "2026-08-04",
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Mallplaza",
+      "titulo": "Conclusão da aquisição dos ativos Gran Plaza",
+      "url": "https://corporativo.mallplaza.com/noticia/mallplaza-concreta-la-compra-de-ocho-centros-comerciales-gran-plaza-a-pactia-en-colombia/",
+      "publicado_em": "2026-10-01",
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F4",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Falabella e Mallplaza",
+      "titulo": "Memorandos de reorganização imobiliária condicionada",
+      "url": "https://corporativo.mallplaza.com/noticia/grupo-falabella-y-su-filial-mallplaza-reorganizan-activos-inmobiliarios-para-potenciar-crecimiento/",
+      "publicado_em": "2026-09-30",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

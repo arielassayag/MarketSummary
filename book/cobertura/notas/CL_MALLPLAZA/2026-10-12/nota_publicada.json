@@ -1,0 +1,465 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "c7f1307945b3d49c9f778cf16b326e27ff06b78ba4891d8fbf82c416df020d2a",
+    "factbook": "916d85d1cc9eda4c6df225feabcf05f574701578de1ce9e8a5b591125cbcc204",
+    "nota_json": "7d0a32ff426af0782242b76ca221826526275e9ac642580d5e6b5b38abbc034b"
+  },
+  "is_synthetic": false,
+  "issuer_id": "CL_MALLPLAZA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T15:17:33.364310+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "A compra dos ativos Gran Plaza foi concluída em outubro, depois do trimestre. A reorganização com Falabella segue em memorandos não vinculantes. Conclusão da aquisição não demonstra sinergias; retorno precisa considerar preço total, financiamento, integração e capital futuro.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em CLP 3.594,19, com retorno esperado +0,98%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Lojistas sustentam vendas e aluguéis; integração e projetos entregam caixa depois de manutenção, financiados em condições compatíveis com retorno. O cenário otimista calculado pelo código é CLP 4.058,08.",
+      "pessimista": "Vacância e pressão comercial coincidem com obras e integração, reduzindo caixa residual e ampliando a necessidade de financiamento. O cenário pessimista calculado pelo código é CLP 3.207,00."
+    },
+    "comentario_valuation": "Preço de referência CLP 3.575,00 e alvo do modelo aberto CLP 3.594,19, com potencial +0,54%. Retorno total esperado +0,98% e custo do capital próprio 8,82%. A dispersão entre métodos é 33,55%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é CLP 4.117,70; a diferença -12,71% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota. Avaliar fluxo imobiliário após manutenção e financiamento, com ocupação e aluguel comparáveis. Valor patrimonial e taxa de capitalização exigem perímetro, direitos e dívida próprios; FFO ajustado e sinergia anunciada não substituem caixa incremental comprovado.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "A tese falha se aluguel cresce por consolidação e indexação, mas lojas existentes exigem incentivos ou apresentam pior cobrança. Aquisição e reconversões podem consumir capital acima do caixa incremental, e reorganização intragrupo pode transferir valor de forma desigual. FFO ajustado e taxa histórica da compra não comprovam retorno da ação depois de dívida e manutenção.",
+        "titulo": "Crescimento de área sem retorno incremental"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.CL_MALLPLAZA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "CLP 3.575,00"
+      },
+      {
+        "fato": "val.CL_MALLPLAZA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "CLP 3.594,19"
+      },
+      {
+        "fato": "val.CL_MALLPLAZA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+0,54%"
+      },
+      {
+        "fato": "val.CL_MALLPLAZA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.CL_MALLPLAZA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.CL_MALLPLAZA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "CLP 4.058,08"
+      },
+      {
+        "fato": "val.CL_MALLPLAZA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "38,28%"
+      },
+      {
+        "fato": "val.CL_MALLPLAZA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "CLP 3.207,00"
+      },
+      {
+        "fato": "val.CL_MALLPLAZA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "35,62%"
+      },
+      {
+        "fato": "val.CL_MALLPLAZA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "8,82%"
+      },
+      {
+        "fato": "val.CL_MALLPLAZA.wacc",
+        "rotulo": "WACC",
+        "valor": "8,20%"
+      },
+      {
+        "fato": "val.CL_MALLPLAZA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,09%"
+      },
+      {
+        "fato": "val.CL_MALLPLAZA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+0,98%"
+      },
+      {
+        "fato": "val.CL_MALLPLAZA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+5,80%"
+      },
+      {
+        "fato": "val.CL_MALLPLAZA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "17,2x"
+      },
+      {
+        "fato": "val.CL_MALLPLAZA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,6x"
+      },
+      {
+        "fato": "val.CL_MALLPLAZA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "CLP 4.117,70"
+      },
+      {
+        "fato": "val.CL_MALLPLAZA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-12,71%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "Mallplaza",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e plataforma imobiliária",
+        "url": "https://corporativo.mallplaza.com/nosotros/somos-mallplaza/"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Mallplaza",
+        "publicado_em": "2026-08-04",
+        "tipo": "Relações com investidores",
+        "titulo": "Comunicado de resultado trimestral",
+        "url": "https://corporativo.mallplaza.com/noticia/ebitda-de-mallplaza-crece-96-en-el-segundo-trimestre-mientras-avanza-en-su-plan-de-crecimiento-en-colombia/"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F3",
+        "instituicao": "Mallplaza",
+        "publicado_em": "2026-10-01",
+        "tipo": "Relações com investidores",
+        "titulo": "Conclusão da aquisição dos ativos Gran Plaza",
+        "url": "https://corporativo.mallplaza.com/noticia/mallplaza-concreta-la-compra-de-ocho-centros-comerciales-gran-plaza-a-pactia-en-colombia/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F4",
+        "instituicao": "Falabella e Mallplaza",
+        "publicado_em": "2026-09-30",
+        "tipo": "Relações com investidores",
+        "titulo": "Memorandos de reorganização imobiliária condicionada",
+        "url": "https://corporativo.mallplaza.com/noticia/grupo-falabella-y-su-filial-mallplaza-reorganizan-activos-inmobiliarios-para-potenciar-crecimiento/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Aluguel comparável ou cobrança deteriora apesar de maior tráfego e área.",
+      "Incentivos e manutenção absorvem a contribuição dos imóveis existentes.",
+      "Gran Plaza exige mais investimento ou dívida sem caixa incremental suficiente.",
+      "Termos intragrupo mudam direitos ou valor por ação sem proteção demonstrada."
+    ],
+    "governanca": "Transações dentro do grupo devem ser avaliadas pelas condições finais, proteção de minoritários e efeitos por ação. A capacidade de gestão compartilhada não dispensa conciliação de direitos e eliminação de sobreposição.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar vendas dos lojistas, aluguel comparável, vacância, inadimplência, incentivos e manutenção por ativo e país. Reconciliar FFO ajustado com caixa, juros, despesas e investimento, distinguindo obras e participações de imóveis consolidados.",
+        "titulo": "Aluguel comparável e cobrança"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "Manter o trimestre anterior separado de Gran Plaza adquirido e medir investimento e financiamento incremental após fechamento. Para a reorganização com Falabella, exigir termos definitivos, aprovações e direitos dos minoritários; memorando não é transferência concluída.",
+        "titulo": "Integração e direitos nas transações"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_MALLPLAZA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+0,98%"
+          },
+          {
+            "fato": "val.CL_MALLPLAZA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "8,82%"
+          },
+          {
+            "fato": "val.CL_MALLPLAZA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "33,55%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +0,98%, custo do capital 8,82% e dispersão entre métodos 33,55% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "CL_MALLPLAZA",
+    "lacunas_de_dados": [
+      "Demonstrações e reconciliação integral de FFO, caixa, investimento e direitos econômicos permanecem pendentes.",
+      "Financiamento e caixa incremental dos ativos adquiridos exigem atualização após a conclusão.",
+      "Termos definitivos e conclusão das reorganizações com o grupo não foram demonstrados.",
+      "Projetos comprometidos e em construção não foram reconciliados a desembolsos e retorno atribuível.",
+      "Guidance, tom da gestão e evento futuro datado permanecem não avaliados.",
+      "Não há suporte suficiente para percepção do mercado, posicionamento ou interesse vendido.",
+      "A reconciliação integral ao modelo e a disponibilidade histórica dos documentos no corte recebido não foram comprovadas."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Operadora de centros comerciais e ativos urbanos no Chile, Peru e Colômbia, integrante do grupo Falabella. A análise deve distinguir propriedade, controle, receita consolidada e caixa atribuível ao acionista da companhia listada.",
+    "nome": "Plaza SA (Mallplaza)",
+    "o_que_mudou": null,
+    "pais": "Chile",
+    "pares": [
+      {
+        "issuer_id": "BR_ALLOS",
+        "nome": "Allos"
+      },
+      {
+        "issuer_id": "BR_IGUATEMI",
+        "nome": "Iguatemi"
+      },
+      {
+        "issuer_id": "BR_MULTIPLAN",
+        "nome": "Multiplan"
+      },
+      {
+        "issuer_id": "CL_CENCOMALLS",
+        "nome": "Cencosud Shopping"
+      },
+      {
+        "issuer_id": "CL_PARAUCO",
+        "nome": "Parque Arauco"
+      },
+      {
+        "issuer_id": "MX_FIBRAPL",
+        "nome": "Fibra Prologis"
+      },
+      {
+        "issuer_id": "MX_VESTA",
+        "nome": "Corporación Inmobiliaria Vesta"
+      }
+    ],
+    "percepcao_variante": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "A alternativa à leitura por área é testar caixa incremental e qualidade dos imóveis adquiridos, comparados à sua base anterior e ao capital total. A aquisição foi anunciada como concluída, mas sinergias e condições finais da reorganização não estão comprovadas. Não se infere o que o mercado já precifica.",
+        "titulo": "Integração deve ser demonstrada após o fechamento"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "A cadeia é localização e composição de lojas → vendas sustentáveis → aluguel faturado e recebido → caixa após incentivos, manutenção e financiamento. A condição decisiva é crescimento comparável dos imóveis existentes e retorno incremental dos adquiridos, com direitos próprios. Mais área ou visitas não demonstra caixa por ação; obras e transações intragrupo têm estágios distintos.",
+        "titulo": "Venda do lojista até caixa residual do imóvel"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_MALLPLAZA.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "CLP 3.575,00"
+          },
+          {
+            "fato": "val.CL_MALLPLAZA.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "CLP 3.594,19"
+          },
+          {
+            "fato": "val.CL_MALLPLAZA.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+0,54%"
+          },
+          {
+            "fato": "val.CL_MALLPLAZA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "8,82%"
+          },
+          {
+            "fato": "val.CL_MALLPLAZA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+0,98%"
+          }
+        ],
+        "texto": "Preço de referência CLP 3.575,00 e alvo CLP 3.594,19, com potencial +0,54%. A hipótese de investimento deve ser confrontada com o custo do capital 8,82% e retorno esperado +0,98%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Destinos com comércio, serviços e entretenimento podem apoiar frequência e vendas. A vantagem exige renovação sem incentivos excessivos, aluguel recebido e ocupação sustentável diante de concorrência física e digital. Liderança declarada, metragem e tráfego não demonstram retorno de cada ativo; Gran Plaza deve conservar uma base anterior para medir integração.",
+        "titulo": "Localização e mix sob prova econômica"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:17:33.364310+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O comunicado divulga EBITDA e FFO ajustado, além de projetos comprometidos ou em construção. Esses indicadores e estágios não substituem caixa contábil nem imóvel já remunerador. A comparação do portfólio precisa separar ativos consolidados, obras e investimentos de parceiros.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese exige que localização, composição de lojas e gestão comercial sustentem aluguel recebido após manutenção e financiamento. A expansão regional só acrescenta valor se remunera o capital incremental e preserva qualidade dos ativos. Ocupação e visitas precisam ser convertidas em capacidade de pagamento dos lojistas e caixa residual. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +0,98%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Consumo, vacância e custos podem enfraquecer aluguel e caixa. Expansão exige financiamento e execução; relações com o grupo podem gerar conflitos sobre ativos, preços e destinação de capital."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_MALLPLAZA.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-12,71%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -12,71%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Imobiliário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Mallplaza — aluguel recebido e disciplina na expansão regional",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O comunicado trimestral antecede a aquisição concluída e a reorganização condicionada. A pesquisa mantém esses perímetros separados. A taxa de capitalização histórica divulgada na compra não constitui retorno futuro do acionista depois da dívida.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar vendas dos lojistas, aluguel recebido, vacância, incentivos e manutenção por ativo. Na expansão, revisar desembolsos, ocupação inicial e financiamento. Separar integração concluída de transações condicionadas, respeitando participações e direitos de distribuição.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.CL_MALLPLAZA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "8,82%"
+          },
+          {
+            "fato": "val.CL_MALLPLAZA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "33,55%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 8,82% e a dispersão entre métodos 33,55%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,460 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "454ed17bf99583b219c1727e93db2a43eb6ee1b3d943a401337c965a8c411f25",
+    "factbook": "fe579e709edf8dbe79eb609331e5e3516e4a7d7e3401e0cddde1e7c9f9c54b8b",
+    "nota_json": "49a8c6bd9c501812c32e7ceed271f4ef20de517e821babcee82566ea1cd86675"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_CVC",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-11",
+  "published_at": "2026-10-12T15:13:43.632078+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A dívida líquida sem antecipações caiu, mas o saldo incluindo recebíveis antecipados aumentou. Seu custo financeiro cresceu. Caixa gerencial após investimento precede juros de empréstimos e aluguel. Uma medida ampliada inclui ações em tesouraria, que não são caixa; baixa anterior de aquisições não é pagamento atual.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar comissão, antecipações e caixa depois de juros.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em Em revisão, com retorno esperado Em revisão. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Comissão, eficiência e embarques recuperam caixa depois de tecnologia, juros e aluguel, com antecipações e giro disciplinados. O cenário otimista calculado pelo código é Em revisão.",
+      "pessimista": "Demanda e mix reduzem receita; antecipações, juros e reestruturação absorvem caixa, enquanto ajustes regionais superestimam a recuperação. O cenário pessimista calculado pelo código é Em revisão."
+    },
+    "comentario_valuation": "Preço de referência R$ 1,68 e alvo do modelo aberto Em revisão, com potencial Em revisão. Retorno total esperado Em revisão e custo do capital próprio 12,08%. A dispersão entre métodos é 72,20%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 2,70; a diferença Em revisão não constitui evidência de percepção do mercado. Receita própria e comissão por canal são a base econômica da intermediação, distinta de reservas brutas. A ponte de financiamento deve incluir antecipações e preservar suas reclassificações. Caixa ampliado com ações em tesouraria não é liquidez disponível. A avaliação deve testar margem e giro normalizados, com custo completo de tecnologia e reestruturação, sem capitalizar economias anunciadas como realizadas.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Reservas maiores e margem ajustada do Brasil podem coexistir com menor receita consolidada e prejuízo maior. Se antecipações financiarem o giro, queda da dívida sem recebíveis não provará desalavancagem econômica ou caixa distribuível.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.BR_CVC.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 1,68"
+      },
+      {
+        "fato": "val.BR_CVC.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_CVC.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_CVC.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_CVC.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_CVC.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_CVC.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_CVC.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_CVC.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_CVC.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,08%"
+      },
+      {
+        "fato": "val.BR_CVC.wacc",
+        "rotulo": "WACC",
+        "valor": "9,67%"
+      },
+      {
+        "fato": "val.BR_CVC.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_CVC.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_CVC.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_CVC.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "12,8x"
+      },
+      {
+        "fato": "val.BR_CVC.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,7x"
+      },
+      {
+        "fato": "val.BR_CVC.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 2,70"
+      },
+      {
+        "fato": "val.BR_CVC.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Em revisão"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "CVC Corp",
+        "publicado_em": null,
+        "tipo": "Regulador",
+        "titulo": "Documento original na CVM: marcas e canais",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1556525&numSequencia=1081231&numVersao=1"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "CVC Corp",
+        "publicado_em": null,
+        "tipo": "Regulador",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1556525&numSequencia=1081231&numVersao=1"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "CVC Corp",
+        "publicado_em": null,
+        "tipo": "Regulador",
+        "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1556519&numSequencia=1081225&numVersao=1"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Reservas crescem sem recuperar comissão efetiva e caixa consolidado.",
+      "Antecipações aumentam o custo financeiro apesar da queda da dívida gerencial restrita.",
+      "Economias de reestruturação não compensam tecnologia, aluguel, juros e perdas do grupo."
+    ],
+    "governanca": "O RI recusou acesso; os documentos originais na CVM foram recebidos sem contorno. Medidas gerenciais, antecipações e ITR possuem reconciliações distintas. A posição ampliada de caixa inclui ações em tesouraria; renúncia de conselheiro e estimativas de reestruturação não comprovam substituição ou economia concluída.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Reservas, embarques, comissão e cancelamentos por marca e país. Conciliar reestruturação, tecnologia, antecipações, juros e aluguel. Monitorar giro com fornecedores e clientes, caixa original e dívida econômica, sem tratar ações em tesouraria como liquidez.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_CVC.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.BR_CVC.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,08%"
+          },
+          {
+            "fato": "val.BR_CVC.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "72,20%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado Em revisão, custo do capital 12,08% e dispersão entre métodos 72,20% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Reservas crescem sem recuperar comissão efetiva e caixa consolidado. Antecipações aumentam o custo financeiro apesar da queda da dívida gerencial restrita. Economias de reestruturação não compensam tecnologia, aluguel, juros e perdas do grupo.",
+        "titulo": "Evidência que muda a visão"
+      }
+    ],
+    "issuer_id": "BR_CVC",
+    "lacunas_de_dados": [
+      "A data exata de publicação do release recebido não foi comprovada; a consulta foi registrada.",
+      "O portal de RI recusou acesso; não houve contorno.",
+      "As bases de receita e resultado financeiro do release e do ITR precisam de reconciliação.",
+      "A ponte integral de juros, antecipações e caixa atribuível permanece pendente.",
+      "Economia efetiva da reestruturação não foi comprovada.",
+      "Guidance agregado e posição competitiva independente não foram comprovados.",
+      "A nova recepção do release foi recusada; a análise preserva a leitura documental anterior, sem datá-la como nova consulta concluída."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo de intermediação de viagens, com franquias, marcas e canais de varejo e corporativos no Brasil e na Argentina. Reservas confirmadas e receita própria não são equivalentes. Mix, comissão, embarque e prazo de pagamento afetam resultado, giro e risco de cancelamento.",
+    "nome": "CVC Brasil",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_AFYA",
+        "nome": "Afya"
+      },
+      {
+        "issuer_id": "BR_ALPARGATAS",
+        "nome": "Alpargatas"
+      },
+      {
+        "issuer_id": "BR_AZZAS",
+        "nome": "Azzas 2154"
+      },
+      {
+        "issuer_id": "BR_CEA",
+        "nome": "C&A Modas"
+      },
+      {
+        "issuer_id": "BR_COGNA",
+        "nome": "Cogna"
+      },
+      {
+        "issuer_id": "BR_CURY",
+        "nome": "Cury"
+      },
+      {
+        "issuer_id": "BR_CYRELA",
+        "nome": "Cyrela"
+      },
+      {
+        "issuer_id": "BR_DIRECIONAL",
+        "nome": "Direcional"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que distribuição e eficiência sustentem margem depois do custo completo. A condição decisiva é transformar reservas em receita e caixa sem dependência crescente de antecipações. Custos de reestruturação, tecnologia e juros precisam confirmar retorno ao acionista.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_CVC.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 1,68"
+          },
+          {
+            "fato": "val.BR_CVC.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.BR_CVC.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.BR_CVC.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,08%"
+          },
+          {
+            "fato": "val.BR_CVC.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "Em revisão"
+          }
+        ],
+        "texto": "Preço de referência R$ 1,68 e alvo Em revisão, com potencial Em revisão. A hipótese de investimento deve ser confrontada com o custo do capital 12,08% e retorno esperado Em revisão.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Reservas comparáveis maiores não bastam se mix, cancelamentos e comissão comprimem receita própria. A recuperação deve aparecer no consolidado após tecnologia, aluguel e juros, incluindo o custo das antecipações. A Argentina tem moeda e ciclo próprios. Ganho ajustado do Brasil e economia estimada da reestruturação não comprovaram retorno do grupo; a tese permanece condicionada à conversão de recebíveis em caixa.",
+        "titulo": "Reservas só criam valor após monetização e financiamento"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Marcas, franquias e distribuição podem apoiar conveniência e alcance. Concorrência on-line, fornecedores e mix corporativo afetam comissão e custo de aquisição. Reconhecimento de marca e reservas maiores não comprovam rentabilidade; Brasil e Argentina possuem moedas e demanda distintas.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:13:43.632078+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Reservas comparáveis cresceram, mas receita e comissão efetiva recuaram com o mix. EBITDA e prejuízo consolidado pioraram; a melhora ajustada do Brasil não representa todo o grupo. Caixa gerencial trimestral ficou positivo, menor anualmente, e negativo no semestre. O release reclassifica antecipações e tem base de receita diferente do ITR.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que distribuição e eficiência sustentem margem depois do custo completo. A condição decisiva é transformar reservas em receita e caixa sem dependência crescente de antecipações. Custos de reestruturação, tecnologia e juros precisam confirmar retorno ao acionista. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Em revisão, com retorno esperado Em revisão. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Demanda, passagens aéreas, câmbio e mix podem reduzir comissão. Antecipações e juros absorvem geração; reestruturação e tecnologia exigem caixa. Sazonalidade favorável não assegura recuperação nem elimina crédito e cancelamentos."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_CVC.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "Em revisão"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é Em revisão. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Consumo discricionário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "CVC — margem de intermediação, recebíveis e custo completo",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "Reservas comparáveis avançaram, mas receita, comissão efetiva e EBITDA consolidado recuaram, com prejuízo maior. A geração gerencial trimestral caiu anualmente e ficou negativa no semestre. Antecipações aumentaram e encareceram o financiamento; sua reclassificação altera comparação do fluxo original. Release e ITR têm bases distintas de receita e resultado financeiro, a reconciliar. Estimativa de economia de custos não comprova captura realizada.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Reservas, embarques, comissão e cancelamentos por marca e país. Conciliar reestruturação, tecnologia, antecipações, juros e aluguel. Monitorar giro com fornecedores e clientes, caixa original e dívida econômica, sem tratar ações em tesouraria como liquidez.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_CVC.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,08%"
+          },
+          {
+            "fato": "val.BR_CVC.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "72,20%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 12,08% e a dispersão entre métodos 72,20%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

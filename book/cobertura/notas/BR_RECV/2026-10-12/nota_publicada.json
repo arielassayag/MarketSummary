@@ -1,0 +1,420 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "287052930490b508bce7933a6b0961660d59f9c9b5a4ac3f1d4c540a95359735",
+    "factbook": "69945a150c338860b5a28860f6d431d795fb336f85b3e2db4076f78e1788c85a",
+    "nota_json": "e846766f610c9bd3abde6bea686e4fbe89482ceaf2d9c919ff60c1aad9f909de"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_RECV",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T15:13:18.024319+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O caixa operacional diminui, mesmo com fluxo livre gerencial positivo antes da remuneração. Investimento e aplicações têm classificações próprias, e o pagamento realizado de juros sobre capital não comprova os pagamentos posteriores programados. Swaps e parcela de aquisição integram medidas de dívida com definição própria; obrigação de dividendos declarados não desaparece quando fica fora da dívida gerencial. Financiamento, processamento e manutenção devem preceder a avaliação de retorno por ação.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 15,47, com retorno esperado +33,70%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Intervenções e disponibilidade estabilizam produção, processamento sustenta margem e caixa remunera capital depois de manutenção, dívida e proteção. O cenário otimista calculado pelo código é R$ 22,49.",
+      "pessimista": "Declínio, falhas e custos reduzem produção econômica enquanto derivativos, processamento e obrigações financeiras absorvem caixa por ação. O cenário pessimista calculado pelo código é R$ 8,99."
+    },
+    "comentario_valuation": "Campos maduros pedem fluxo de caixa finito por reservas economicamente recuperáveis, declínio, investimento e abandono, com participação na infraestrutura e dívida próprios. Perpetuidade automática ou múltiplo de EBITDA favorecido pelo petróleo pode ignorar reposição da produção. Acesso contratado e proteção devem conservar preços, prazos e liquidações. Preço de referência R$ 12,10 e alvo do modelo aberto R$ 15,47, com potencial +27,87%. Retorno total esperado +33,70% e custo do capital próprio 12,15%. A dispersão entre métodos é 13,75%; a confiança quantitativa recebida é A. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 11,87; a diferença +30,36% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se intervenções não compensam declínio e paradas, ou se acesso à infraestrutura exige capital e custo sem produção econômica suficiente. Preço e marcação financeira podem melhorar lucro enquanto caixa operacional diminui. Contrato longo e dividendos programados não asseguram margem realizada, recebimento nem retorno após reinvestimento.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.BR_RECV.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 12,10"
+      },
+      {
+        "fato": "val.BR_RECV.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 15,47"
+      },
+      {
+        "fato": "val.BR_RECV.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+27,87%"
+      },
+      {
+        "fato": "val.BR_RECV.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_RECV.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "A"
+      },
+      {
+        "fato": "val.BR_RECV.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 22,49"
+      },
+      {
+        "fato": "val.BR_RECV.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "3,11%"
+      },
+      {
+        "fato": "val.BR_RECV.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 8,99"
+      },
+      {
+        "fato": "val.BR_RECV.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "17,40%"
+      },
+      {
+        "fato": "val.BR_RECV.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,15%"
+      },
+      {
+        "fato": "val.BR_RECV.wacc",
+        "rotulo": "WACC",
+        "valor": "9,32%"
+      },
+      {
+        "fato": "val.BR_RECV.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_RECV.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+33,70%"
+      },
+      {
+        "fato": "val.BR_RECV.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+10,79%"
+      },
+      {
+        "fato": "val.BR_RECV.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "7,1x"
+      },
+      {
+        "fato": "val.BR_RECV.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,8x"
+      },
+      {
+        "fato": "val.BR_RECV.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 11,87"
+      },
+      {
+        "fato": "val.BR_RECV.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+30,36%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "Petrobras",
+        "publicado_em": "2026-08-19",
+        "tipo": "Relações com investidores",
+        "titulo": "Aditivos de acesso e processamento à UTG Catu",
+        "url": "https://agencia.petrobras.com.br/w/negocio/petrobras-petroreconcavo-brava-energia-e-origem-energia-ampliam-contratos-da-utg-catu-para-processamento-de-g%C3%A1s-no-longo-prazo"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "PetroReconcavo",
+        "publicado_em": "2026-08-06",
+        "tipo": "Relações com investidores",
+        "titulo": "Release arquivado na CVM, campos, derivativos, infraestrutura e fluxo",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1553782&numSequencia=1078488&numVersao=1"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Intervenções e manutenção deixam de compensar declínio com produção economicamente viável.",
+      "Disponibilidade, processamento e compras reduzem margem realizada depois dos contratos.",
+      "Créditos e marcação financeira explicam resultado sem caixa recorrente equivalente.",
+      "Dívida, aquisição e distribuição comprometem reinvestimento e retorno por ação."
+    ],
+    "governanca": "Participação compartilhada em Guamaré e acesso contratado a Catu têm direitos e custos diferentes de controle integral. O calendário de distribuição divulgado distingue pagamento realizado e parcelas programadas; vencimento passado não foi convertido em confirmação de crédito. Crédito de royalty depende de reconhecimento e compensação próprios. Documentos e contratos posteriores conservam suas datas, sem incorporação retrospectiva ao modelo.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Monitorar produção, declínio, intervenções, injeção e disponibilidade de compressão e energia. Conferir processamento próprio, compartilhado e contratado, volume entregue e preço realizado de petróleo e gás. Separar derivativo contabilizado e liquidado, créditos de royalties e caixa recorrente. Conciliar investimentos, dívida, aquisições e distribuição efetivamente paga com direitos por ação.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_RECV.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+33,70%"
+          },
+          {
+            "fato": "val.BR_RECV.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,15%"
+          },
+          {
+            "fato": "val.BR_RECV.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "13,75%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +33,70%, custo do capital 12,15% e dispersão entre métodos 13,75% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Na divulgação seguinte, comparar resposta dos poços e declínio por campo com gasto e disponibilidade efetiva. Conferir preço realizado, índice de referência e liquidação de proteção, separando gás próprio de adquirido. Rever a tese se contratos preservarem entrega mas aumentarem compras e custos, ou se intervenções não sustentarem caixa depois de manutenção, obrigações ambientais e financiamento.",
+        "titulo": "Intervenção, entrega e margem realizada"
+      }
+    ],
+    "issuer_id": "BR_RECV",
+    "lacunas_de_dados": [
+      "Demonstrações completas, derivativos e fluxo atribuível não foram integralmente reconciliados.",
+      "Reservas, declínio, integridade, retorno das intervenções e compromissos de abandono exigem análise por campo; não há ponte integral ao valor atribuível.",
+      "Contratos completos de petróleo e processamento e custo dos aditivos permanecem a examinar.",
+      "Participação da infraestrutura, dívida e obrigações de distribuição requerem conciliação com o modelo.",
+      "O perfil de RI não foi recebido nesta consulta; o release e o comunicado primário sustentam a descrição utilizada.",
+      "Pagamento posterior das parcelas programadas não foi confirmado.",
+      "Guidance, tom agregado, vantagem relativa e percepção do mercado não foram classificados.",
+      "Não há catalisador futuro com dia exato confirmado nesta pesquisa."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Produtora independente de petróleo e gás em campos maduros terrestres na Bahia e no Rio Grande do Norte. Revitalização, intervenção em poços e injeção de água exigem manutenção e capital contínuos. O processamento combina infraestrutura própria, participação compartilhada e acesso contratado a instalações de terceiros. Capacidade e produção têm bases distintas; infraestrutura compartilhada não é integralmente atribuível.",
+    "nome": "PetroRecôncavo",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRAVA",
+        "nome": "Brava Energia"
+      },
+      {
+        "issuer_id": "BR_COSAN",
+        "nome": "Cosan"
+      },
+      {
+        "issuer_id": "BR_PRIO",
+        "nome": "PRIO"
+      },
+      {
+        "issuer_id": "BR_ULTRAPAR",
+        "nome": "Ultrapar"
+      },
+      {
+        "issuer_id": "BR_VIBRA",
+        "nome": "Vibra Energia"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que revitalização e acesso ao processamento sustentem caixa por ação depois do declínio natural, manutenção e proteção financeira. A condição decisiva é produtividade econômica com margem realizada e recursos para reinvestimento e dívida. Propriedade de infraestrutura, contrato longo e menor gasto agregado não demonstram redução durável do custo unitário nem produção recuperada.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_RECV.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 12,10"
+          },
+          {
+            "fato": "val.BR_RECV.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 15,47"
+          },
+          {
+            "fato": "val.BR_RECV.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+27,87%"
+          },
+          {
+            "fato": "val.BR_RECV.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,15%"
+          },
+          {
+            "fato": "val.BR_RECV.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+33,70%"
+          }
+        ],
+        "texto": "Preço de referência R$ 12,10 e alvo R$ 15,47, com potencial +27,87%. A hipótese de investimento deve ser confrontada com o custo do capital 12,15% e retorno esperado +33,70%.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O release liga intervenções e injeção ao aproveitamento dos campos e registra paradas de compressão, energia e processamento. A tese exige incremento que remunere manutenção e capital, sem depender apenas do preço do petróleo. Compra de gás de terceiros para atender demanda firme conserva serviço, mas tem custo próprio. O aditivo de Catu oferece horizonte contratual; menor custo e margem futura continuam condições a demonstrar, sem confundir acesso com propriedade.",
+        "titulo": "Produção econômica depende de campo e disponibilidade"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Experiência em campos terrestres e equipes de intervenção pode apoiar recuperação, mas produtividade depende de reservatório, integridade e energia. Processamento próprio e compartilhado tem obrigações e participação econômica; acesso à UTG Catu continua sendo relação contratual com a Petrobras. Extensão de contrato dá horizonte operacional, sem comprovar custo menor já realizado. Vantagem de custo frente a concorrentes requer medida econômica completa e comparável.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:13:18.024319+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Produção recua sequencialmente e na comparação anual, com declínio e interrupções; preços ajudam receita e resultado operacional na comparação com o trimestre anterior. O lucro melhora sequencialmente, mas fica abaixo do ano anterior; o semestre tem receita, resultado e lucro menores. Custo unitário aumenta apesar de menor gasto agregado no semestre. Derivativos e câmbio favorecem resultado contábil, enquanto proteção de commodity tem desembolso efetivo. Crédito de royalty de períodos anteriores não foi perpetuado como redução da alíquota corrente.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que revitalização e acesso ao processamento sustentem caixa por ação depois do declínio natural, manutenção e proteção financeira. A condição decisiva é produtividade econômica com margem realizada e recursos para reinvestimento e dívida. Propriedade de infraestrutura, contrato longo e menor gasto agregado não demonstram redução durável do custo unitário nem produção recuperada. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +33,70%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Declínio, integridade, processamento, preço e proteção financeira podem reduzir caixa. Custo unitário cresce com menor volume; créditos e marcação financeira não comprovam recorrência. Dívida e distribuição declarada têm obrigações próprias."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_RECV.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+30,36%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +30,36%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Energia",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "PetroReconcavo — revitalização em terra após declínio, processamento e obrigações financeiras",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O resultado financeiro inclui marcação de proteção e swaps, sem equivaler a entrada integral de caixa; liquidações de proteção de petróleo e swaps têm efeitos distintos. O novo contrato de petróleo com a Brava foi assinado depois do trimestre e tem início posterior, sem comprovar margem já realizada por todo o prazo. Os aditivos de processamento à UTG Catu foram assinados com efeito imediato e horizonte ampliado; não transferem propriedade da instalação nem comprovam todo o benefício futuro.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar produção, declínio, intervenções, injeção e disponibilidade de compressão e energia. Conferir processamento próprio, compartilhado e contratado, volume entregue e preço realizado de petróleo e gás. Separar derivativo contabilizado e liquidado, créditos de royalties e caixa recorrente. Conciliar investimentos, dívida, aquisições e distribuição efetivamente paga com direitos por ação.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_RECV.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,15%"
+          },
+          {
+            "fato": "val.BR_RECV.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "13,75%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 12,15% e a dispersão entre métodos 13,75%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

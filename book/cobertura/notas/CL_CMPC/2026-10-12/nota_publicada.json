@@ -1,0 +1,447 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "2b1879b1f90ad310587d822f31eef15284011dc179aa380e38026a2afbf54e1e",
+    "factbook": "e7ee64c5739460558cec14ec0793e4c208403326b4ec355f5798653363a99b32",
+    "nota_json": "70f02c2aeb80173be332789ba60c5afd1827f650a921ef8e898c0a01c4fab1d9"
+  },
+  "is_synthetic": false,
+  "issuer_id": "CL_CMPC",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-05",
+  "published_at": "2026-10-12T15:16:37.816245+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "O anúncio de alienação inclui Corrugados Cordillera e Chimolsa, sujeito a aprovação e condições; a operação continua com a CMPC até a transferência e exclui Softys Puente Alto. Não tratar preço anunciado como caixa recebido. Comparar uso eventual dos recursos com manutenção, dívida e expansão. Natureza exige licenças, compromissos e financiamento próprios antes de atribuir retorno à capacidade futura.",
+        "titulo": "Expansão e alienação condicionada"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em Em revisão, com retorno esperado Em revisão. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Custos e disponibilidade sustentam contribuição ao longo do ciclo. Manutenção e expansão têm execução e financiamento disciplinados, e os novos recursos empregados demonstram retorno após maturação. O cenário otimista calculado pelo código é Em revisão.",
+      "pessimista": "Preço ou custo reduz contribuição e paradas ou incêndios prejudicam disponibilidade. Expansão e manutenção absorvem capital, projetos atrasam ou financiamento limita caixa antes da maturação. O cenário pessimista calculado pelo código é Em revisão."
+    },
+    "comentario_valuation": "Preço de referência CLP 968,40 e alvo do modelo aberto Em revisão, com potencial Em revisão. Retorno total esperado Em revisão e custo do capital próprio 11,93%. A dispersão entre métodos é n/d; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é CLP 1.505,40; a diferença Em revisão não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota. Confrontar celulose em ciclo normalizado, Softys e embalagens com margens e reinvestimento próprios. Alienação entra apenas conforme estágio e perímetro comprovados; receita anunciada e capacidade futura não substituem fluxo disponível nem justificam múltiplo uniforme.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A tese perde suporte se preço de celulose sustenta resultado apesar de custos ou indisponibilidade, enquanto manutenção e expansão elevam dívida. Softys pode crescer sem margem após insumos e distribuição. A alienação pode não concluir ou consumir recursos em projetos de retorno não demonstrado. Caixa após manutenção e capital comprometido deve refutar essa hipótese, não apenas lucro ajustado.",
+        "titulo": "Preço ou portfólio podem ocultar custo estrutural"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.CL_CMPC.preco",
+        "rotulo": "Preço de referência",
+        "valor": "CLP 968,40"
+      },
+      {
+        "fato": "val.CL_CMPC.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CL_CMPC.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CL_CMPC.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CL_CMPC.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.CL_CMPC.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CL_CMPC.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CL_CMPC.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CL_CMPC.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CL_CMPC.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,93%"
+      },
+      {
+        "fato": "val.CL_CMPC.wacc",
+        "rotulo": "WACC",
+        "valor": "9,61%"
+      },
+      {
+        "fato": "val.CL_CMPC.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,09%"
+      },
+      {
+        "fato": "val.CL_CMPC.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CL_CMPC.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CL_CMPC.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "12,5x"
+      },
+      {
+        "fato": "val.CL_CMPC.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,2x"
+      },
+      {
+        "fato": "val.CL_CMPC.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "CLP 1.505,40"
+      },
+      {
+        "fato": "val.CL_CMPC.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Em revisão"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "Empresas CMPC",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e estrutura do negócio",
+        "url": "https://www.cmpc.com/nosotros/historia/"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Empresas CMPC",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Informações financeiras e materiais de análise",
+        "url": "https://www.cmpc.com/assets/uploads/2026/04/REPORTE-INTEGRADO-CMPC_2025.pdf"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F3",
+        "instituicao": "Empresas CMPC",
+        "publicado_em": "2026-09-23",
+        "tipo": "Relações com investidores",
+        "titulo": "Acordo condicionado de alienação do negócio de corrugados",
+        "url": "https://www.cmpc.com/cmpc-acuerda-venta-de-su-negocio-de-corrugados-a-smurfit-westrock-por-us420-millones/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Custo ou indisponibilidade industrial piora sem compensação sustentável de caixa.",
+      "Manutenção e projetos absorvem capital com financiamento ou retorno não demonstrados.",
+      "Condições da alienação mudam perímetro, prazo ou ingresso efetivo de recursos.",
+      "Margem de Softys não acompanha crescimento após insumos e distribuição."
+    ],
+    "governanca": "Exigir disciplina entre manutenção, base florestal, expansão e aquisições, com critérios por negócio. A alienação anunciada requer acompanhar aprovação concorrencial, condições de transferência e uso efetivo de recursos; preço contratado não equivale a distribuição. Avaliar direitos, obrigações e decisões sobre projetos sem presumir benefício uniforme ao acionista.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Acompanhar custo, disponibilidade, paradas, logística e capital de giro de celulose, separados de preço e volume. Em Softys, distinguir demanda, preço e margem após insumos e distribuição; no Biopackaging, manter perímetro constante até transferência documentada.",
+        "titulo": "Competitividade industrial através do ciclo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Monitorar manifestação concorrencial, cumprimento das condições, transferência e caixa efetivamente recebido pela alienação. Para Natureza, conferir licenças, cronograma, compromissos e financiamento; separar manutenção de crescimento e testar efeito sobre dívida.",
+        "titulo": "Condições da venda e compromissos de expansão"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_CMPC.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.CL_CMPC.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,93%"
+          },
+          {
+            "fato": "val.CL_CMPC.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "n/d"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado Em revisão, custo do capital 11,93% e dispersão entre métodos n/d quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "CL_CMPC",
+    "lacunas_de_dados": [
+      "Último resultado e caixa por segmento não foram integralmente reconciliados.",
+      "Custo e capital ao longo do ciclo exigem comparação operacional suficiente.",
+      "Estágio atual, licenças, compromissos e financiamento do Projeto Natureza permanecem a verificar.",
+      "Itens não recorrentes e efeitos de avaliação precisam de conciliação com o modelo.",
+      "Percepção do mercado e posicionamento não têm evidência suficiente.",
+      "Não há catalisador futuro com data precisa confirmado nesta pesquisa."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "A CMPC reúne celulose, Biopackaging e Softys, com base florestal, indústria e bens de consumo. Cada segmento combina preço, custo, disponibilidade e capital de modo distinto. O Projeto Natureza permanece objeto de diligência sobre estágio e financiamento. O anúncio de venda dos corrugados chilenos e de Chimolsa é condicionado à aprovação concorrencial e demais condições; Softys Puente Alto está fora do acordo. Não se presume transferência nem recebimento.",
+    "nome": "Empresas CMPC",
+    "o_que_mudou": null,
+    "pais": "Chile",
+    "pares": [
+      {
+        "issuer_id": "BR_BRADESPAR",
+        "nome": "Bradespar"
+      },
+      {
+        "issuer_id": "BR_CBA",
+        "nome": "Companhia Brasileira de Alumínio"
+      },
+      {
+        "issuer_id": "BR_CMIN",
+        "nome": "CSN Mineração"
+      },
+      {
+        "issuer_id": "BR_CSN",
+        "nome": "CSN Siderúrgica Nacional"
+      },
+      {
+        "issuer_id": "BR_ERO",
+        "nome": "Ero Copper"
+      },
+      {
+        "issuer_id": "BR_GERDAU",
+        "nome": "Gerdau"
+      },
+      {
+        "issuer_id": "BR_GOAU",
+        "nome": "Metalúrgica Gerdau"
+      },
+      {
+        "issuer_id": "BR_SUZANO",
+        "nome": "Suzano"
+      }
+    ],
+    "percepcao_variante": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A alternativa à leitura centrada no preço da celulose é testar retorno do capital por segmento e disciplina na mudança de portfólio. A venda condicionada fornece um evento verificável, mas não demonstra desalavancagem nem criação de valor antes do fechamento. Não se infere percepção do mercado a partir desse anúncio.",
+        "titulo": "Disciplina de portfólio como teste"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A cadeia é base florestal e disponibilidade → produção e preço realizado → contribuição por segmento → caixa após manutenção e giro → retorno depois de expansão e financiamento. A condição decisiva é competitividade que sobreviva ao ciclo, sem depender de preço favorável. Alienação anunciada só altera a ponte de capital quando condições, perímetro e ingresso de caixa forem comprovados.",
+        "titulo": "Custo no ciclo e caixa após compromissos"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_CMPC.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "CLP 968,40"
+          },
+          {
+            "fato": "val.CL_CMPC.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.CL_CMPC.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.CL_CMPC.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,93%"
+          },
+          {
+            "fato": "val.CL_CMPC.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "Em revisão"
+          }
+        ],
+        "texto": "Preço de referência CLP 968,40 e alvo Em revisão, com potencial Em revisão. A hipótese de investimento deve ser confrontada com o custo do capital 11,93% e retorno esperado Em revisão.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Base florestal, escala industrial e presença comercial podem influenciar custos e oferta. A pesquisa deve comparar rendimento, disponibilidade, logística e capital empregado em operações semelhantes. Certificações e ambições de expansão não demonstram isoladamente vantagem econômica nem eliminam sensibilidade ao ciclo global de celulose.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:16:37.816245+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Lucro industrial e caixa podem divergir por preço, estoques, capital de giro, manutenção e efeitos de avaliação. A leitura deve separar segmentos e itens não recorrentes, evitando extrapolar uma fase favorável para todo o ciclo. O reporte integrado consultado não substitui a reconciliação integral das últimas demonstrações e premissas do modelo.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que eficiência industrial e disciplina no reinvestimento preservem retorno ao longo do ciclo de preços. A condição decisiva é caixa depois de manutenção, expansão e financiamento. Recuperação de celulose ou crescimento de capacidade não comprova custo competitivo, execução de projetos ou retorno econômico das novas operações. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Em revisão, com retorno esperado Em revisão. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Preço de celulose, energia, logística, incêndios e disponibilidade industrial podem afetar caixa. Manutenção e expansão exigem capital e prazo. Projetos, licenças e financiamento precisam de análise atual antes de interpretar capacidade anunciada como valor."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_CMPC.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "Em revisão"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é Em revisão. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "CMPC: custo industrial e retorno após manutenção e expansão",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A leitura consolidada do modelo está disponível no retrato recebido. A reconciliação integral do último release, das notas explicativas e da apresentação por negócio permanece pendente; não se atribui alteração de guidance nem tom à gestão sem essa evidência.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Separar preço, volume, custo e disponibilidade por segmento; reconciliar estoque, manutenção, investimento e dívida. Examinar estágio, licenças, capital comprometido e financiamento dos projetos, junto a retorno após maturação e sensibilidade ao ciclo.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.CL_CMPC.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,93%"
+          },
+          {
+            "fato": "val.CL_CMPC.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "n/d"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,93% e a dispersão entre métodos n/d. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

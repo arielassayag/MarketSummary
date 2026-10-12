@@ -1,0 +1,182 @@
+{
+  "mind": "codex",
+  "issuer_id": "CL_ENELAM",
+  "data": "2026-10-12",
+  "tipo": "iniciacao",
+  "titulo": "Enel Américas: remuneração das redes e caixa atribuível após investimento",
+  "resumo": "A hipótese é que investimentos nas redes e disciplina comercial da geração sustentem retorno recebido depois dos compromissos de capital. A condição decisiva é remuneração e caixa atribuível comprovados por concessão e negócio. Reajuste de tarifas, crescimento do resultado convertido em dólar e expansão de ativos não estabelecem sozinhos retorno por ação. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.CL_ENELAM.rating_codigo}}, com retorno esperado {{fact:val.CL_ENELAM.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "A Enel Américas combina geração, transmissão e distribuição por controladas. O perfil corporativo contém bases históricas e não define o perímetro presente. A análise semestral separa Argentina, Brasil, Colômbia e operações na América Central, além de efeitos de não renovação de ativos de El Chocón e menor trading. Cada concessão, contrato e participação exige caixa e direitos próprios.",
+  "pilares_tese": [
+    {
+      "titulo": "Remuneração da rede deve cobrir capital e serviço",
+      "texto": "A cadeia é investimento e qualidade por concessão → tarifa reconhecida → energia faturada após perdas → recebimento → caixa após compromissos e financiamento. A condição decisiva é remuneração atribuível por entidade. Câmbio, indexação e comparação com a regularização de Edesur não substituem eficiência; na geração, contratos e renovação de concessões delimitam o fluxo que permanece.",
+      "evidencias": [
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.CL_ENELAM.preco}} e alvo {{fact:val.CL_ENELAM.preco_alvo}}, com potencial {{fact:val.CL_ENELAM.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.CL_ENELAM.ke}} e retorno esperado {{fact:val.CL_ENELAM.etr}}.",
+      "evidencias": [
+        "val.CL_ENELAM.preco",
+        "val.CL_ENELAM.preco_alvo",
+        "val.CL_ENELAM.upside",
+        "val.CL_ENELAM.ke",
+        "val.CL_ENELAM.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Separar energia vendida, tarifas, perdas e qualidade das redes por concessão. Conciliar moeda, efeitos de regularização, inflação, perdas esperadas e caixa. Conferir investimento total, dívida por entidade, recebimentos da holding e condições de partes relacionadas.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.CL_ENELAM.ke}} e a dispersão entre métodos {{fact:val.CL_ENELAM.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.CL_ENELAM.ke",
+        "val.CL_ENELAM.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Remuneração, qualidade de serviço, perdas, clima e moeda podem afetar resultado e caixa. Investimentos e renovação de concessões exigem análise atual. Partes relacionadas, dívida nas controladas e participação econômica precisam de conciliação antes de inferir valor recebido pelo acionista.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.CL_ENELAM.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.CL_ENELAM.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Redes e geração demonstram eficiência e remuneração suficientes depois do capital total. Recebimentos e financiamento se conciliam na base atribuível, e a holding recebe retorno sem depender de efeitos cambiais ou eventos de comparação para sustentar contribuição. O cenário otimista calculado pelo código é {{fact:val.CL_ENELAM.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.CL_ENELAM.preco_alvo}}, com retorno esperado {{fact:val.CL_ENELAM.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Perdas, serviço ou remuneração pressionam operação, enquanto recebíveis e investimento absorvem caixa. Financiamento e obrigações das controladas restringem distribuições, e efeitos contábeis obscurecem o retorno recebido. O cenário pessimista calculado pelo código é {{fact:val.CL_ENELAM.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.CL_ENELAM.preco}} e alvo do modelo aberto {{fact:val.CL_ENELAM.preco_alvo}}, com potencial {{fact:val.CL_ENELAM.upside}}. Retorno total esperado {{fact:val.CL_ENELAM.etr}} e custo do capital próprio {{fact:val.CL_ENELAM.ke}}. A dispersão entre métodos é {{fact:val.CL_ENELAM.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.CL_ENELAM.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.CL_ENELAM.consenso_alvo}}; a diferença {{fact:val.CL_ENELAM.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota. Separar concessões e geração por país, participação e financiamento. Fluxo regulado exige investimento completo, qualidade e recebimento; geração exige contratos e prazo dos direitos. Câmbio e regularização não justificam crescimento perpétuo do consolidado.",
+  "ultimo_resultado": "Foi consultada a análise semestral, que distingue operações por país, câmbio, regularização de obrigações e caixa. O documento não substitui reconciliação das notas completas com o modelo; rubricas de investimento, partes relacionadas e apresentação de unidades exigem conferência própria.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Investimento deve ser avaliado pela remuneração reconhecida, obrigação de serviço e retorno depois de financiamento. Dívida e caixa das controladas precisam ser separados dos recursos disponíveis à holding. Empréstimos e serviços com partes relacionadas exigem documentos e condições atuais. O release consultado não encerra a reconciliação das notas completas, dos direitos de capital ou da disponibilidade dos recursos.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Concessões e escala podem influenciar serviço, eficiência e capacidade de contratação, mas devem ser confrontadas com qualidade da rede, perdas e custos reconhecidos. A comparação entre países exige harmonizar regulação, moeda e capital empregado. A integração de geração e distribuição não elimina risco de remuneração ou de reinvestimento insuficientemente remunerado.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "O release distingue efeitos de conversão cambial, desempenho por país e comparação com a regularização de obrigações da Edesur. A análise deve conciliar esses efeitos, inflação argentina, perdas esperadas, lucro atribuível e caixa. Fluxos de investimento incluem ativos físicos e intangíveis de concessões; comparar somente investimento físico com geração operacional pode omitir compromissos relevantes.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Investimento completo e capital por entidade",
+    "texto": "Confrontar expansão e manutenção das redes com remuneração reconhecida e qualidade exigida. Fluxos de investimento incluem ativos físicos e intangíveis de concessão; a linha de investimento físico não cobre todos os compromissos. Separar dívida, juros, partes relacionadas e caixa das controladas da holding, sem presumir que resultado consolidado esteja distribuível.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "percepcao_variante": {
+    "titulo": "Atribuição e recorrência acima do consolidado",
+    "texto": "A hipótese alternativa é que remuneração depois do investimento total e transmissão à holding expliquem mais que crescimento em dólar. O próprio release separa câmbio, países e base de regularização, permitindo verificar essa hipótese. Isso não demonstra que ela esteja ausente do consenso ou preço.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "contratese": {
+    "titulo": "Resultado em dólar pode ocultar retorno limitado",
+    "texto": "A tese falha se moeda e indexação melhoram o resultado divulgado enquanto perdas, serviço e recebíveis exigem mais capital. A base de Edesur pode distorcer recorrência, e concessão não renovada reduz o perímetro econômico. Investimento que não recebe remuneração ou caixa retido nas controladas impede que melhora operacional beneficie proporcionalmente a ação.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Concessões, perdas e receita recebida",
+      "texto": "Acompanhar tarifa reconhecida, faturamento, perdas esperadas, cobrança e qualidade por distribuidora. Distinguir Argentina reexpressa, conversão cambial e regularização da Edesur. Confirmar perímetro e direitos da geração, sem usar ativos históricos como fonte atual de caixa.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Investimento e disponibilidade na holding",
+      "texto": "Reconciliar ativos físicos e intangíveis de concessão com caixa operacional, dívida e juros por entidade. Examinar empréstimos relacionados, distribuição das controladas e recursos da holding, mantendo participação de minoritários e obrigações de serviço.",
+      "evidencias": [
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.CL_ENELAM.etr}}, custo do capital {{fact:val.CL_ENELAM.ke}} e dispersão entre métodos {{fact:val.CL_ENELAM.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.CL_ENELAM.etr",
+        "val.CL_ENELAM.ke",
+        "val.CL_ENELAM.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Tarifa e crescimento convertido não acompanham recebimento e qualidade de serviço.",
+    "Perdas e obrigações exigem investimento sem remuneração suficiente.",
+    "Renovação ou alienação altera o perímetro e os direitos da geração.",
+    "Dívida ou relações intragrupo restringem caixa atribuível na holding."
+  ],
+  "lacunas_de_dados": [
+    "Demonstrações completas, unidades e partes relacionadas não foram integralmente reconciliadas com o modelo.",
+    "O perfil corporativo contém bases históricas; perímetro presente exige documentos do mesmo período.",
+    "Remuneração, serviço, perdas e direitos das concessões precisam de análise atual comparável.",
+    "Investimento total, dívida por entidade e caixa disponível na holding permanecem a conciliar.",
+    "Capital por ação, desempenho competitivo e percepção do mercado têm evidência insuficiente.",
+    "Não há catalisador futuro com data precisa adotado nesta pesquisa."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Enel Américas",
+      "titulo": "Perfil e estrutura do negócio",
+      "url": "https://www.enelamericas.com/en/aboutus/a201609-about-enel-americas.html",
+      "publicado_em": null,
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Enel Américas",
+      "titulo": "Análise das demonstrações financeiras do semestre",
+      "url": "https://www.enelamericas.com/content/dam/enel-americas/en/investor/presentations_of_results/quarterly-results/financial-statements-analysis-pdf/2026/Financial-Statements-Analysis-Q2-H1-2026.pdf",
+      "publicado_em": null,
+      "consultado_em": "2026-10-12"
+    }
+  ],
+  "modelo_ia": null
+}

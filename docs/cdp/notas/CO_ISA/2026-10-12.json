@@ -1,0 +1,198 @@
+{
+  "mind": "codex",
+  "issuer_id": "CO_ISA",
+  "data": "2026-10-12",
+  "tipo": "iniciacao",
+  "titulo": "ISA — remuneração das concessões e caixa após expansão",
+  "resumo": "A hipótese é que execução e disponibilidade sustentem recebimento contratual depois de manutenção, expansão e financiamento. Novas concessões criam valor quando remuneram o capital e respeitam prazo e risco assumido. A previsibilidade contratual deve ser demonstrada no caixa atribuível, sem promover indexação contábil a recebimento imediato. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.CO_ISA.rating_codigo}}, com retorno esperado {{fact:val.CO_ISA.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Grupo de transmissão elétrica, concessões viárias e infraestrutura digital na América Latina, controlado por Ecopetrol. Contratos e participações determinam remuneração e caixa atribuível; receitas de construção exigem tratamento distinto das receitas de serviço.",
+  "pilares_tese": [
+    {
+      "titulo": "Entrada comercial e recebimento antes da expansão seguinte",
+      "texto": "A cadeia é adjudicação → obra e licenças → operação com disponibilidade → remuneração contratual e cobrança → caixa após manutenção e financiamento. A condição decisiva é retorno pelo capital e prazo efetivamente assumidos. Receita de construção, atualização regulatória e indexação não são recebimento livre; capital das subsidiárias e associadas precisa chegar à base atribuível.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.CO_ISA.preco}} e alvo {{fact:val.CO_ISA.preco_alvo}}, com potencial {{fact:val.CO_ISA.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.CO_ISA.ke}} e retorno esperado {{fact:val.CO_ISA.etr}}.",
+      "evidencias": [
+        "val.CO_ISA.preco",
+        "val.CO_ISA.preco_alvo",
+        "val.CO_ISA.upside",
+        "val.CO_ISA.ke",
+        "val.CO_ISA.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar disponibilidade, remuneração permitida, cobrança, penalidades e manutenção por concessão. Revisar investimento até a entrada em operação, capital, indexação da dívida e caixa RBSE. Separar contratos adjudicados de ativos remunerados e direitos das associadas.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.CO_ISA.ke}} e a dispersão entre métodos {{fact:val.CO_ISA.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.CO_ISA.ke",
+        "val.CO_ISA.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Atrasos, penalidades, revisão regulatória e sobrecustos podem impedir retorno do capital. Dívida indexada e câmbio afetam o resultado. Controle estatal e relações entre empresas exigem análise de decisões, financiamento e proteção do minoritário.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.CO_ISA.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.CO_ISA.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Concessões entregam disponibilidade e recebimento; obras entram em operação com retorno compatível e financiamento adequado. O cenário otimista calculado pelo código é {{fact:val.CO_ISA.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.CO_ISA.preco_alvo}}, com retorno esperado {{fact:val.CO_ISA.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Execução e regulação atrasam recebimento enquanto investimento e dívida indexada consomem recursos atribuíveis. O cenário pessimista calculado pelo código é {{fact:val.CO_ISA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.CO_ISA.preco}} e alvo do modelo aberto {{fact:val.CO_ISA.preco_alvo}}, com potencial {{fact:val.CO_ISA.upside}}. Retorno total esperado {{fact:val.CO_ISA.etr}} e custo do capital próprio {{fact:val.CO_ISA.ke}}. A dispersão entre métodos é {{fact:val.CO_ISA.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.CO_ISA.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.CO_ISA.consenso_alvo}}; a diferença {{fact:val.CO_ISA.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota. Avaliar fluxo por concessão até o fim dos direitos, com manutenção, obras e financiamento coerentes. Separar RBSE, construção e receita de serviço sem duplicar ativo regulatório; associadas, minoritários e emissão posterior exigem participação atual conciliada.",
+  "ultimo_resultado": "A pesquisa preserva resultado sem construção e bases de RBSE, além da passagem para caixa e financiamento. Eventos de capital posteriores ao trimestre permanecem separados das demonstrações daquele período. Não se recalculou alvo ou participação na mente.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Revisar controle da Ecopetrol, decisões de investimento, garantias e relações com subsidiárias listadas. Distinguir preservação do controle de preservação da participação econômica e do acesso ao caixa.",
+  "posicao_competitiva": {
+    "titulo": "Execução em concessões sob comparação homogênea",
+    "texto": "Engenharia e experiência regulatória podem apoiar entrega e disponibilidade. A prova é entrada comercial com orçamento controlado, remuneração e penalidades compatíveis com retorno. Comparar concessões pelo prazo, regra de indexação e capital, não por extensão ou volume adjudicado. Vencer disputa com preço insuficiente pode ampliar ativos e reduzir valor.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "O relatório separa receitas de construção, concessão, conversão cambial e efeito RBSE na comparação. Indicadores de dívida e FFO incorporam caixa RBSE em definições próprias. Liquidez inclui outros ativos financeiros; resultado de construção e atualização de ativos não equivale a caixa livre recebido.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "A apresentação registra emissão de ações na subsidiária brasileira concluída depois do trimestre e preservação do controle, com destinação anunciada de recursos. Captação não comprova execução de cada destino. A avaliação deve conciliar diluição, participação econômica e projetos consolidados ou por equivalência.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": {
+    "titulo": "Prazo de recebimento e atribuição como teste",
+    "texto": "A alternativa à leitura por ativos contratados é testar caixa depois da obra e a participação que o acionista conserva. As definições de dívida e FFO incluem caixa RBSE de forma própria e devem ser harmonizadas. Não se infere que essa diferença seja desconhecida nem se toma o comparativo de pares do emissor como grupo econômico homogêneo.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "contratese": {
+    "titulo": "Previsibilidade contábil sem caixa suficiente",
+    "texto": "A tese falha se ativos e receitas de construção crescem antes da cobrança, enquanto atraso e dívida indexada consomem o retorno. RBSE pode melhorar métricas gerenciais sem sustentar o fluxo recorrente após seu próprio calendário. Emissão na subsidiária preserva controle, mas pode mudar participação econômica; expansão não comprova valor por ação.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Concessão da obra ao serviço remunerado",
+      "texto": "Acompanhar licenças, orçamento, energização ou operação viária, disponibilidade, penalidades e cobrança. Separar contratos adjudicados de entrada comercial comprovada e confrontar construção, indexação e conversão cambial com caixa por país.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "RBSE, dívida e emissão posterior",
+      "texto": "Reconciliar calendário e caixa RBSE com definições de dívida e FFO, distinguindo recorrência e liquidez financeira. Manter emissão brasileira posterior ao trimestre separada, conferir diluição e uso efetivo dos recursos e distinguir controle de participação econômica.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.CO_ISA.etr}}, custo do capital {{fact:val.CO_ISA.ke}} e dispersão entre métodos {{fact:val.CO_ISA.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.CO_ISA.etr",
+        "val.CO_ISA.ke",
+        "val.CO_ISA.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Obras atrasam a remuneração ou superam orçamento sem retorno equivalente.",
+    "Receita regulatória e construção não se convertem em caixa após manutenção.",
+    "Dívida indexada ou calendário RBSE altera a cobertura dos compromissos.",
+    "Emissão e destinação de recursos mudam participação atribuível sem conciliação."
+  ],
+  "lacunas_de_dados": [
+    "Notas, caixa integral e definições de dívida e RBSE não foram integralmente conciliados.",
+    "Recebimento contratual, construção e ativos regulatórios exigem séries homogêneas.",
+    "Capital posterior, diluição e cumprimento da destinação anunciada permanecem a comprovar.",
+    "Licenças, garantias e retorno dos projetos e associadas requerem diligência específica.",
+    "Guidance, tom da gestão e evento futuro datado seguem não classificados.",
+    "Percepção do mercado, posicionamento e interesse vendido não têm comprovação suficiente.",
+    "Disponibilidade histórica dos documentos e reconciliação integral ao modelo recebido não foram comprovadas."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Interconexión Eléctrica",
+      "titulo": "Perfil e negócios de infraestrutura",
+      "url": "https://isa.co/inversionistas/perfil-de-la-compania/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Interconexión Eléctrica",
+      "titulo": "Resultado de concessões, investimento e liquidez",
+      "url": "https://isa.co/wp-content/uploads/2026/08/2t-26-informe-resultados-financieros-isa.pdf",
+      "publicado_em": "2026-08-03",
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "ISA",
+      "titulo": "Apresentação de projetos e evento de capital posterior",
+      "url": "https://isa.co/wp-content/uploads/2026/08/isa-webcast-2t-2026-espanol.pdf",
+      "publicado_em": null,
+      "consultado_em": "2026-10-12"
+    }
+  ],
+  "modelo_ia": null
+}

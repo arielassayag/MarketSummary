@@ -1,0 +1,254 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_FUNO",
+  "data": "2026-10-12",
+  "tipo": "iniciacao",
+  "titulo": "Fibra Uno — renda por segmento e efeito da internalização",
+  "resumo": "A hipótese é que diversificação e retenção sustentem renda recebida e distribuição por certificado, com reinvestimento disciplinado. A internalização precisa gerar benefício líquido depois dos ativos usados na transação e dos efeitos de financiamento. Crescimento de imóveis só cria valor se melhora caixa recorrente atribuível, além da avaliação patrimonial. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.MX_FUNO.rating_codigo}}, com retorno esperado {{fact:val.MX_FUNO.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Fideicomisso imobiliário mexicano que opera e desenvolve imóveis industriais, comerciais, de escritórios e usos mistos. Direitos fiduciários e participações entram em perímetros próprios. Renda de locação, resultado de participações, valores avaliados e recursos disponíveis têm significados distintos para o titular de certificados.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que diversificação e retenção sustentem renda recebida e distribuição por certificado, com reinvestimento disciplinado. A internalização precisa gerar benefício líquido depois dos ativos usados na transação e dos efeitos de financiamento. Crescimento de imóveis só cria valor se melhora caixa recorrente atribuível, além da avaliação patrimonial.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.MX_FUNO.preco}} e alvo {{fact:val.MX_FUNO.preco_alvo}}, com potencial {{fact:val.MX_FUNO.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.MX_FUNO.ke}} e retorno esperado {{fact:val.MX_FUNO.etr}}.",
+      "evidencias": [
+        "val.MX_FUNO.preco",
+        "val.MX_FUNO.preco_alvo",
+        "val.MX_FUNO.upside",
+        "val.MX_FUNO.ke",
+        "val.MX_FUNO.etr"
+      ]
+    },
+    {
+      "titulo": "Renda comercial e financeira não são o mesmo ativo",
+      "texto": "A tese exige renda recebida e renovada por segmento, depois de incentivos e manutenção. Imóveis industriais, comércio e escritórios têm demanda e necessidades distintas. A presença de direitos fiduciários e participações requer atribuição própria; ocupação consolidada pode ocultar despesas ou concentração locais.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Internalização tem custos de oportunidade",
+      "texto": "O emissor relaciona benefícios de taxas à internalização, mas também relata perda de renda dos imóveis usados no pagamento e efeito do crédito Samara. A condição decisiva é melhorar caixa atribuível após essas mudanças, com denominadores de certificados compatíveis. Despesa evitada ou valorização patrimonial não bastam para provar criação de valor.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar renda recebida, ocupação, renovação e incentivos por segmento e moeda. Conciliar taxas evitadas, renda transferida e financiamento da internalização. Revisar manutenção, desenvolvimento, AFFO e distribuição por base de certificados, com participação atribuível e dívida.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.MX_FUNO.ke}} e a dispersão entre métodos {{fact:val.MX_FUNO.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.MX_FUNO.ke",
+        "val.MX_FUNO.cv_metodos"
+      ]
+    },
+    {
+      "vetor": "Renovação e renda recebida por segmento",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Examinar reajustes em pesos e dólares, ocupação, incentivos e manutenção na mesma base. Medir a qualidade econômica pelo caixa contratual recebido, sem supor que aumentos anunciados de aluguel equivalem a fluxo incremental disponível.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "vetor": "Benefício líquido da estrutura e refinanciamento",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Confrontar taxas evitadas com renda transferida, custos internos e efeito do crédito cedido. Revisar vencimentos, moeda, linhas comprometidas e obrigações de projetos; uma linha disponível não é caixa livre nem financiamento sem condições.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Vacância, incentivos e concentração de locatários podem pressionar renda. Desenvolvimento e financiamento podem consumir caixa, enquanto avaliações mascaram retorno. Transações relacionadas e mudanças de perímetro podem limitar alinhamento e comparação por certificado.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.MX_FUNO.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.MX_FUNO.diff_consenso"
+      ]
+    },
+    {
+      "texto": "O benefício de taxas pode ser absorvido por renda de ativos transferidos, custos internos ou financiamento. Desenvolvimentos e participações requerem capital antes da renda; linhas disponíveis e NAV elevado não eliminam risco de refinanciamento ou de distribuição insuficiente.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Renda recebida e benefício líquido da estrutura sustentam caixa após manutenção e financiamento, com distribuição conciliada por certificado. O cenário otimista calculado pelo código é {{fact:val.MX_FUNO.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.MX_FUNO.preco_alvo}}, com retorno esperado {{fact:val.MX_FUNO.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Vacância, reinvestimento e mudanças de perímetro absorvem receitas e benefício de taxas, limitando distribuição. O cenário pessimista calculado pelo código é {{fact:val.MX_FUNO.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.MX_FUNO.preco}} e alvo do modelo aberto {{fact:val.MX_FUNO.preco_alvo}}, com potencial {{fact:val.MX_FUNO.upside}}. Retorno total esperado {{fact:val.MX_FUNO.etr}} e custo do capital próprio {{fact:val.MX_FUNO.ke}}. A dispersão entre métodos é {{fact:val.MX_FUNO.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.MX_FUNO.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.MX_FUNO.consenso_alvo}}; a diferença {{fact:val.MX_FUNO.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota. Testar métodos imobiliários com renda estabilizada, manutenção e dívida atribuível. NAV e FFO requerem perímetros e certificados coerentes; valorizações não são liquidação de ativos nem caixa, e participações não devem ser contadas novamente.",
+  "ultimo_resultado": "O estudo separa renda, participação, medidas gerenciais e valorização. A internalização altera taxas, imóveis e crédito; comparação antes e depois exige bases homogêneas. Cortes trimestrais e anuais, certificados médios e elegíveis não são intercambiáveis. Não há conciliação integral ou guidance classificado.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Revisar comitês, relacionadas e termos econômicos da internalização, além de participações e direitos fiduciários. Menor despesa de administração não encerra a análise de alinhamento, ativos transferidos e valor recebido.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Localização e diversidade podem ampliar opções para o cliente e reduzir dependência de um segmento. A vantagem exige retorno, ocupação, retenção e preço depois de incentivos, sem presumir que liderança declarada ou escala prove poder de preço.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Bases por certificado e renda após a transação",
+    "texto": "O suplemento usa bases próprias de certificados médios e elegíveis para distribuição, além de comparações distintas no resumo. A internalização retira taxas e renda dos imóveis cedidos. Valorizações, direitos fiduciários, reclasificações e efeito cambial devem ser separados da renda recebida e do fluxo após manutenção; FFO não substitui essa ponte.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Desenvolvimento, relacionadas e capital distribuível",
+    "texto": "A distribuição deve ser confrontada com manutenção, desenvolvimento e obrigações financeiras. As notas apresentam linhas de financiamento, projetos e operações com relacionadas em bases próprias. Examinar ativos e crédito transferidos na internalização e compromissos dos desenvolvimentos antes de concluir benefício líquido ou excedente por certificado.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "Benefício contábil sem ganho líquido ao titular",
+    "texto": "O caso falha se aluguel e economias de taxas não compensam renda transferida, custos internos e financiamento. NAV maior pode coexistir com caixa insuficiente após desenvolvimento e manutenção. A expansão de participações também pode aumentar recursos comprometidos sem distribuição proporcional ao certificado coberto.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Acompanhar renda recebida, ocupação, renovação e incentivos por segmento e moeda. Conciliar taxas evitadas, renda transferida e financiamento da internalização. Revisar manutenção, desenvolvimento, AFFO e distribuição por base de certificados, com participação atribuível e dívida.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.MX_FUNO.etr}}, custo do capital {{fact:val.MX_FUNO.ke}} e dispersão entre métodos {{fact:val.MX_FUNO.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.MX_FUNO.etr",
+        "val.MX_FUNO.ke",
+        "val.MX_FUNO.cv_metodos"
+      ]
+    },
+    {
+      "titulo": "Renda do mesmo perímetro e condições de renovação",
+      "texto": "Separar segmento, moeda, direitos fiduciários e propriedades consolidadas. Acompanhar ocupação, retenção e aluguel após incentivos, custos de manutenção e inadimplência; testar se renovação comercial se converte em recebimento.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Ponte econômica da internalização",
+      "texto": "Conferir taxas cessadas, despesas próprias, renda perdida dos imóveis transferidos e efeitos do crédito Samara. Examinar contribuição atribuível e denominadores dos certificados em cortes equivalentes, sem reconciliar comparações incompatíveis por suposição.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Desenvolvimento e obrigações financeiras",
+      "texto": "Revisar desembolsos e marcos de estabilização de projetos, relacionadas e participações. Conciliar caixa disponível, vencimentos, linhas utilizadas e condições de acesso ao crédito com manutenção e distribuição efetiva.",
+      "evidencias": [
+        "F3"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": "Aprofundamento editorial com consulta pública nesta data. Hipóteses, condições de confirmação, caixa, capital e acompanhamento foram detalhados; o modelo recebido e seu corte histórico não foram recalculados.",
+  "gatilhos_revisao": [
+    "Benefícios da internalização não compensam renda transferida e custos financeiros ou internos.",
+    "Renda renovada não se converte em recebimento após incentivos e manutenção.",
+    "Desenvolvimento e refinanciamento absorvem a geração atribuível dos imóveis.",
+    "Perímetros e bases por certificado impedem confirmar crescimento de distribuição recorrente."
+  ],
+  "lacunas_de_dados": [
+    "Internalização, imóveis transferidos e financiamento não foram integralmente conciliados.",
+    "Perímetros de participações e ativos do grupo exigem reconciliação completa.",
+    "Resumo, FFO e distribuição usam comparações e bases distintas.",
+    "Caixa recorrente, manutenção e desenvolvimento por segmento permanecem a comprovar.",
+    "Guidance, tom da gestão e catalisador futuro datado não foram classificados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Fibra Uno",
+      "titulo": "Perfil, segmentos e gestão",
+      "url": "https://funo.mx/empresa/sobre-nosotros",
+      "publicado_em": null,
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Fibra Uno",
+      "titulo": "Suplemento informativo semestral",
+      "url": "https://funo.mx/site_media/uploads/documentos/documento-5NoCv-1785442612.pdf",
+      "publicado_em": "2026-07-29",
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Fibra Uno",
+      "titulo": "Demonstrações semestrais e notas explicativas",
+      "url": "https://funo.mx/site_media/uploads/documentos/documento-oyTeQ-1785359046.pdf",
+      "publicado_em": "2026-07-29",
+      "consultado_em": "2026-10-12"
+    }
+  ],
+  "modelo_ia": null
+}

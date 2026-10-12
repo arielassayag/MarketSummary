@@ -1,0 +1,222 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_INTELBRAS",
+  "data": "2026-10-12",
+  "tipo": "iniciacao",
+  "titulo": "Intelbras — distribuição, custo de reposição e retorno industrial",
+  "resumo": "A hipótese é que portfólio e distribuição sustentem retorno industrial e caixa depois do reinvestimento. A condição decisiva é manter demanda e serviço sem depender de estoque comprado a custo menor ou de proteção comercial temporária. Expansão de capacidade deve remunerar manutenção, giro e financiamento. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_INTELBRAS.rating_codigo}}, com retorno esperado {{fact:val.BR_INTELBRAS.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Fornecedor de segurança eletrônica, tecnologia da informação e comunicação e equipamentos de energia. Distribuição, suporte e portfólio conectam indústria e integradores. Componentes, câmbio e estoque influenciam custo; solar, redes e segurança têm ciclos e condições competitivas diferentes.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que portfólio e distribuição sustentem retorno industrial e caixa depois do reinvestimento. A condição decisiva é manter demanda e serviço sem depender de estoque comprado a custo menor ou de proteção comercial temporária. Expansão de capacidade deve remunerar manutenção, giro e financiamento.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_INTELBRAS.preco}} e alvo {{fact:val.BR_INTELBRAS.preco_alvo}}, com potencial {{fact:val.BR_INTELBRAS.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_INTELBRAS.ke}} e retorno esperado {{fact:val.BR_INTELBRAS.etr}}.",
+      "evidencias": [
+        "val.BR_INTELBRAS.preco",
+        "val.BR_INTELBRAS.preco_alvo",
+        "val.BR_INTELBRAS.upside",
+        "val.BR_INTELBRAS.ke",
+        "val.BR_INTELBRAS.etr"
+      ]
+    },
+    {
+      "titulo": "Margem de reposição versus vantagem de canal",
+      "texto": "O release atribui parte da margem ao estoque de custo anterior e distingue esse efeito do portfólio mais rentável. A tese precisa sobreviver à reposição dos componentes, sem depender de proteção comercial. Cabeamento e redes empresariais, segurança e energia têm demandas e custos próprios; o ganho de um segmento não demonstra melhoria de todos. Distribuição e suporte devem aparecer em demanda final, giro e retorno industrial depois da ampliação.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Receita e margem por segmento, demanda ao canal e consumidor, estoque e fornecedores. Distinguir preço e custo de reposição, proteção comercial e produtividade. Conciliar capacidade futura, manutenção, caixa após juros e pagamento efetivo de proventos.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_INTELBRAS.ke}} e a dispersão entre métodos {{fact:val.BR_INTELBRAS.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_INTELBRAS.ke",
+        "val.BR_INTELBRAS.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Próximos resultados: testar demanda, giro e normalização de margem.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "descricao": "Comprovação da expansão industrial e do retorno da nova capacidade.",
+      "data": null,
+      "tipo": "capital",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Câmbio, componentes e concorrência podem reduzir margem e consumo. Estoque e distribuição absorvem giro. Mudanças comerciais e regulatórias alteram demanda, enquanto capacidade futura exige investimento antes do retorno.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_INTELBRAS.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_INTELBRAS.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Distribuição e mix preservam demanda e margem após renovação do estoque; capacidade e capital de giro disciplinados sustentam caixa depois da manutenção. O cenário otimista calculado pelo código é {{fact:val.BR_INTELBRAS.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_INTELBRAS.preco_alvo}}, com retorno esperado {{fact:val.BR_INTELBRAS.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Custos e competição normalizam margem, demanda enfraquece e expansão absorve capital; ganhos temporários de estoque e proteção comercial deixam de contribuir. O cenário pessimista calculado pelo código é {{fact:val.BR_INTELBRAS.alvo_pessimista}}."
+  },
+  "comentario_valuation": "O fluxo de caixa normalizado deve remover benefícios transitórios de estoque e conservar investimento industrial, giro e financiamento. Margens e reinvestimento distintos dos segmentos pedem leitura separada. Múltiplo de lucro de um trimestre favorecido por reposição não estabelece preço sustentado; capacidade anunciada não é retorno já gerado. Preço de referência {{fact:val.BR_INTELBRAS.preco}} e alvo do modelo aberto {{fact:val.BR_INTELBRAS.preco_alvo}}, com potencial {{fact:val.BR_INTELBRAS.upside}}. Retorno total esperado {{fact:val.BR_INTELBRAS.etr}} e custo do capital próprio {{fact:val.BR_INTELBRAS.ke}}. A dispersão entre métodos é {{fact:val.BR_INTELBRAS.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_INTELBRAS.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_INTELBRAS.consenso_alvo}}; a diferença {{fact:val.BR_INTELBRAS.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "Receita trimestral recuou anualmente, com comparação anterior afetada pelo ERP, mas o semestre cresceu. EBITDA, lucro e caixa operacional aumentaram. O emissor explica expansão temporária de margem pelo preço de reposição; segurança, TIC e energia têm dinâmicas diferentes. Terreno adquirido antecede capacidade futura. Capa e texto do release divergem sobre a data de divulgação; provento programado não foi confirmado como pago.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "A data da capa e dos metadados públicos foi preservada, com divergência do texto explicitada. O perfil institucional recusou acesso, sem contorno; a análise usa RI e documentos financeiros recebidos. Investimento previsto e remuneração aprovada conservam estados próprios, sem realização inferida do calendário.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Canal de distribuição, suporte e produção local podem apoiar disponibilidade e atendimento. Redes e cabeamento possuem exposição regulatória comercial própria; operação próxima da capacidade não prova vantagem permanente. A expansão de margem por preço de reposição precisa sobreviver à renovação do estoque e à reação da concorrência.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Receita trimestral caiu anualmente, mas cresceu no semestre, com base anterior afetada pelo ERP. EBITDA e lucro cresceram. A margem inclui efeito temporário entre custo de reposição e estoque antigo. Energia mudou o mix para rentabilidade; TIC cresceu. Caixa operacional aumentou, com contribuição de estoque e fornecedores.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Caixa aumentou no trimestre e dívida bruta diminuiu. Investimento inclui terreno em Manaus; expansão prevista não é capacidade já operacional. Manutenção, componentes e tecnologia exigem capital contínuo. Dividendo aprovado com data passada programada não comprova crédito efetivo ao investidor.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "Margem pode melhorar temporariamente pela diferença entre preços de reposição e custo histórico. Proteção comercial e estoque menor não garantem receita recorrente. Se a nova capacidade chegar sem demanda suficiente, caixa forte no trimestre não provará retorno sustentável.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Receita e margem por segmento, demanda ao canal e consumidor, estoque e fornecedores. Distinguir preço e custo de reposição, proteção comercial e produtividade. Conciliar capacidade futura, manutenção, caixa após juros e pagamento efetivo de proventos.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_INTELBRAS.etr}}, custo do capital {{fact:val.BR_INTELBRAS.ke}} e dispersão entre métodos {{fact:val.BR_INTELBRAS.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_INTELBRAS.etr",
+        "val.BR_INTELBRAS.ke",
+        "val.BR_INTELBRAS.cv_metodos"
+      ]
+    },
+    {
+      "titulo": "Renovação do estoque e absorção industrial",
+      "texto": "Na próxima divulgação, acompanhar custo médio renovado, preços praticados e margem por segmento, separando vendas ao canal e ao cliente final. Verificar implantação e utilização de Manaus, capital de giro e manutenção. Rever a hipótese se margem e caixa recuarem quando desaparecer o benefício do estoque antigo, ou se nova capacidade depender de restrição comercial sem demanda independente comprovada.",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Margem de reposição recua quando componentes novos entram no estoque sem compensação de mix ou produtividade.",
+    "Demanda final e giro não confirmam as vendas ao canal por segmento.",
+    "Manaus exige capital antes de comprovar utilização e retorno depois da manutenção.",
+    "Dependência de proteção comercial ou competição reduz preço e retorno industrial."
+  ],
+  "lacunas_de_dados": [
+    "A capa e o texto divergem sobre a data do release.",
+    "O perfil institucional recusou acesso; nenhuma cópia foi obtida.",
+    "Pagamento efetivo do dividendo programado não foi comprovado.",
+    "Capacidade, retorno industrial e margem após renovação do estoque exigem diligência.",
+    "A ponte integral do ITR, juros e caixa atribuível permanece pendente.",
+    "Guidance agregado e posição de mercado não foram comprovados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Intelbras",
+      "titulo": "Negócio e materiais públicos do emissor",
+      "url": "https://ri.intelbras.com.br/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Intelbras",
+      "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/660c9d23-3bb0-4bd4-9707-c9fe5ad308b4/94c5df34-3998-9f71-9d8c-7160ca6df70e?origin=2",
+      "publicado_em": "2026-07-29",
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Intelbras",
+      "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/660c9d23-3bb0-4bd4-9707-c9fe5ad308b4/851f3820-6387-a65b-e586-6ca8f90d844f?origin=2",
+      "publicado_em": "2026-07-29",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

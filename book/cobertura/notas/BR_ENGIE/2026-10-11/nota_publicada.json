@@ -1,0 +1,455 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "b2d31e79f2c57b55e0cb549220b9cddb67e07d0eea94c8dd7cf9bf16d0fc5624",
+    "factbook": "026103149f39fa897b66e6650b01e93ca229acb09122b9645fc70708b9413c4f",
+    "nota_json": "a81a3fdb9ed8b4b73fd6b4ad9d4dc796d8488e56004f3fdd7b5a339644bc76d9"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_ENGIE",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-10",
+  "published_at": "2026-10-12T02:18:07.348657+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A dívida líquida aumentou; depósitos vinculados ao serviço da dívida não são liquidez livre. A oferta posterior foi concluída com parte integralizada por ativos de Jirau, sem caixa integral presumido. O pagamento de repactuação foi realizado depois do trimestre. Provento aprovado sem data de pagamento definida não comprova crédito ao titular.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar caixa e retorno na nova base de capital.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": null,
+        "descricao": "Comprovação do pagamento dos proventos aprovados.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "dividendos"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 29,15, com retorno esperado -2,49%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Contratos e disponibilidade sustentam caixa depois de obras e juros; expansão remunera a nova base de capital com direitos conciliados. O cenário otimista calculado pelo código é R$ 33,53.",
+      "pessimista": "Preço e geração pressionam margem; obras e obrigações absorvem recursos, enquanto diluição e restrições de caixa reduzem retorno por ação. O cenário pessimista calculado pelo código é R$ 25,37."
+    },
+    "comentario_valuation": "Preço de referência R$ 31,79 e alvo do modelo aberto R$ 29,15, com potencial -8,29%. Retorno total esperado -2,49% e custo do capital próprio 10,83%. A dispersão entre métodos é 13,31%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 33,92; a diferença -14,04% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Lucro contábil elevado por repactuação não comprova caixa recorrente. Se obras, obrigações e dívida absorverem geração ou o capital por ação mudar sem retorno equivalente, expansão e EBITDA maior não confirmarão valor ao titular.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_ENGIE.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 31,79"
+      },
+      {
+        "fato": "val.BR_ENGIE.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 29,15"
+      },
+      {
+        "fato": "val.BR_ENGIE.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-8,29%"
+      },
+      {
+        "fato": "val.BR_ENGIE.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_ENGIE.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_ENGIE.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 33,53"
+      },
+      {
+        "fato": "val.BR_ENGIE.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "44,25%"
+      },
+      {
+        "fato": "val.BR_ENGIE.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 25,37"
+      },
+      {
+        "fato": "val.BR_ENGIE.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "18,44%"
+      },
+      {
+        "fato": "val.BR_ENGIE.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,83%"
+      },
+      {
+        "fato": "val.BR_ENGIE.wacc",
+        "rotulo": "WACC",
+        "valor": "8,92%"
+      },
+      {
+        "fato": "val.BR_ENGIE.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_ENGIE.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-2,49%"
+      },
+      {
+        "fato": "val.BR_ENGIE.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "0,00%"
+      },
+      {
+        "fato": "val.BR_ENGIE.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "12,6x"
+      },
+      {
+        "fato": "val.BR_ENGIE.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "3,0x"
+      },
+      {
+        "fato": "val.BR_ENGIE.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 33,92"
+      },
+      {
+        "fato": "val.BR_ENGIE.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-14,04%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "ENGIE Brasil Energia",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Documento original na CVM: segmentos e contratação",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1552761&numSequencia=1077467&numVersao=1"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "ENGIE Brasil Energia",
+        "publicado_em": "2026-08-05",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1552761&numSequencia=1077467&numVersao=1"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "ENGIE Brasil Energia",
+        "publicado_em": "2026-08-05",
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1552756&numSequencia=1077462&numVersao=1"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+      "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+      "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+      "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+    ],
+    "governanca": "O RI recusou acesso; documentos originais na CVM foram recebidos sem contorno. Oferta e contribuição de ativo de parte relacionada exigem retorno por ação e direitos próprios. Construção, cotistas, depósitos vinculados e ganho de repactuação mantêm bases distintas.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Preço realizado, contratação, disponibilidade e geração; construção e recebimento regulado separados. Conciliar obras, juros, depósitos vinculados e direitos de cotistas. Verificar Jirau, nova base por ação, desembolso regulatório e pagamento efetivo dos proventos.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ENGIE.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-2,49%"
+          },
+          {
+            "fato": "val.BR_ENGIE.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,83%"
+          },
+          {
+            "fato": "val.BR_ENGIE.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "13,31%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -2,49%, custo do capital 10,83% e dispersão entre métodos 13,31% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_ENGIE",
+    "lacunas_de_dados": [
+      "O portal de RI recusou acesso; não houve contorno.",
+      "A ponte integral do ITR, caixa por entidade e nova base por ação permanece pendente.",
+      "Retorno de Jirau e aportes de ativos de partes relacionadas exigem diligência.",
+      "Pagamento posterior dos dividendos aprovados não foi comprovado.",
+      "Contratos, cortes de geração e guidance agregado não foram reconciliados integralmente."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Geradora e transmissora de energia, com comercialização e participação em transporte de gás. Energia contratada, geração, preço realizado e disponibilidade determinam receitas; construção e remuneração de ativos regulados não equivalem ao caixa recebido. Aquisições e cotistas possuem capital e direitos próprios.",
+    "nome": "Engie Brasil Energia",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ALUPAR",
+        "nome": "Alupar"
+      },
+      {
+        "issuer_id": "BR_AUREN",
+        "nome": "Auren Energia"
+      },
+      {
+        "issuer_id": "BR_AXIA",
+        "nome": "Axia Energia (ex-Eletrobras)"
+      },
+      {
+        "issuer_id": "BR_CEMIG",
+        "nome": "Cemig"
+      },
+      {
+        "issuer_id": "BR_COMPASS",
+        "nome": "Compass Gás e Energia"
+      },
+      {
+        "issuer_id": "BR_COPASA",
+        "nome": "Copasa"
+      },
+      {
+        "issuer_id": "BR_COPEL",
+        "nome": "Copel"
+      },
+      {
+        "issuer_id": "BR_CPFL",
+        "nome": "CPFL Energia"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que contratação e execução remunerem os ativos depois de obras, financiamento e obrigações regulatórias. A condição decisiva é converter margem em caixa por ação, preservando a nova base de capital. Ganho de renegociação e aporte de ativos não são geração operacional recorrente.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ENGIE.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 31,79"
+          },
+          {
+            "fato": "val.BR_ENGIE.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 29,15"
+          },
+          {
+            "fato": "val.BR_ENGIE.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-8,29%"
+          },
+          {
+            "fato": "val.BR_ENGIE.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,83%"
+          },
+          {
+            "fato": "val.BR_ENGIE.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-2,49%"
+          }
+        ],
+        "texto": "Preço de referência R$ 31,79 e alvo R$ 29,15, com potencial -8,29%. A hipótese de investimento deve ser confrontada com o custo do capital 10,83% e retorno esperado -2,49%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Portfólio e experiência podem apoiar contratação, disponibilidade e construção. Hidrologia, preços e regras regulatórias impõem limites; participação em transporte de gás tem direitos próprios. Escala não assegura retorno quando cortes de geração, suprimento e capital alteram a economia dos contratos.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:18:07.348657+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita, EBITDA e lucro ajustado cresceram, com energia vendida maior e preço médio menor. O lucro contábil inclui ganho financeiro da repactuação do uso de bem público. Caixa operacional semestral aumentou após juros, mas o trimestre antecede pagamento regulatório e oferta de ações concluídos posteriormente.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que contratação e execução remunerem os ativos depois de obras, financiamento e obrigações regulatórias. A condição decisiva é converter margem em caixa por ação, preservando a nova base de capital. Ganho de renegociação e aporte de ativos não são geração operacional recorrente. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado -2,49%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Hidrologia, preços, cortes de geração e obras podem reduzir margem. Dívida e obrigações regulatórias absorvem caixa. Aporte de ativos, minoritários e emissão de ações alteram valor por ação; ganho financeiro não é recorrência."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ENGIE.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-14,04%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -14,04%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Utilidades públicas",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "ENGIE Brasil — caixa regulado, expansão e capital por ação",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "Energia vendida, receita, EBITDA e lucro ajustado cresceram, com preço médio menor. O lucro contábil inclui ganho da repactuação do uso de bem público, distinto do caixa original. Oferta de ações, contribuição de Jirau e pagamento regulatório ocorreram após o trimestre, sem retroação. Dividendos intercalares foram aprovados com pagamento a definir; não houve comprovação posterior de crédito. A dívida líquida inclui reconciliação com depósitos vinculados.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Preço realizado, contratação, disponibilidade e geração; construção e recebimento regulado separados. Conciliar obras, juros, depósitos vinculados e direitos de cotistas. Verificar Jirau, nova base por ação, desembolso regulatório e pagamento efetivo dos proventos.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_ENGIE.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,83%"
+          },
+          {
+            "fato": "val.BR_ENGIE.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "13,31%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 10,83% e a dispersão entre métodos 13,31%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

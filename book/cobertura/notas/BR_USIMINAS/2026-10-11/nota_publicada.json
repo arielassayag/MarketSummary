@@ -1,0 +1,396 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "4c215927f268091e0c326dd5ab08515822729ff974b32d627101e04e7136c3b9",
+    "factbook": "1cd48b0c16e8b719065d56327d6aecc546e6f4f6a69e77a309d1eb7abac8fb37",
+    "nota_json": "cfa93d9d0f8a06d5dc027645a8a47183aca1a6bf9e686e9e28bc2df3523b8f31"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_USIMINAS",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T02:20:17.807023+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A posição financeira líquida de caixa cresce no trimestre, mas não elimina arrendamentos, tributos parcelados, títulos de fornecedores e demais obrigações. A geração livre divulgada precede atividades de financiamento e pagamentos próprios dessa seção. Estoques, clientes, fornecedores e liquidação de forfaiting têm efeitos distintos. Capex siderúrgico aumenta no trimestre; a conclusão técnica do projeto não comprova retorno econômico integral nem dispensa manutenção futura.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 8,13, com retorno esperado +12,71%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Confiabilidade e mix preservam margem depois dos custos, giro estabiliza e os projetos remuneram o capital sem depender de receitas extraordinárias. O cenário otimista calculado pelo código é R$ 19,62.",
+      "pessimista": "Competição e insumos comprimem siderurgia enquanto frete e reinvestimento consomem caixa, apesar da posição financeira líquida inicialmente favorável. O cenário pessimista calculado pelo código é R$ 0,00."
+    },
+    "comentario_valuation": "Preço de referência R$ 7,21 e alvo do modelo aberto R$ 8,13, com potencial +12,71%. Retorno total esperado +12,71% e custo do capital próprio 12,57%. A dispersão entre métodos é 65,34%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 8,51; a diferença -4,56% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se preços e eventos extraordinários explicam margem sem eficiência durável ou se estoques e manutenção consomem a geração. Frete pode neutralizar a melhora da extração mineral. Posição financeira líquida positiva não é caixa livre para distribuir, e proteção comercial não assegura demanda, preço ou retorno permanente.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_USIMINAS.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 7,21"
+      },
+      {
+        "fato": "val.BR_USIMINAS.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 8,13"
+      },
+      {
+        "fato": "val.BR_USIMINAS.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+12,71%"
+      },
+      {
+        "fato": "val.BR_USIMINAS.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_USIMINAS.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_USIMINAS.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 19,62"
+      },
+      {
+        "fato": "val.BR_USIMINAS.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "1,66%"
+      },
+      {
+        "fato": "val.BR_USIMINAS.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 0,00"
+      },
+      {
+        "fato": "val.BR_USIMINAS.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_USIMINAS.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,57%"
+      },
+      {
+        "fato": "val.BR_USIMINAS.wacc",
+        "rotulo": "WACC",
+        "valor": "9,95%"
+      },
+      {
+        "fato": "val.BR_USIMINAS.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_USIMINAS.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+12,71%"
+      },
+      {
+        "fato": "val.BR_USIMINAS.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-0,18%"
+      },
+      {
+        "fato": "val.BR_USIMINAS.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "5,3x"
+      },
+      {
+        "fato": "val.BR_USIMINAS.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,4x"
+      },
+      {
+        "fato": "val.BR_USIMINAS.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 8,51"
+      },
+      {
+        "fato": "val.BR_USIMINAS.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-4,56%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Usiminas",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Portal institucional da companhia industrial",
+        "url": "https://www.usiminas.com/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Usiminas",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Release de resultados, siderurgia, mineração, dívida e fluxo",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/5dcf459c-823d-4c02-ac4b-a2aa54a63486/d3f91994-9257-c40e-8a2a-4b581911af32?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Eficiência e mix deixam de sustentar margem depois do custo industrial completo.",
+      "Receitas extraordinárias e benefícios fiscais explicam resultado sem caixa recorrente equivalente.",
+      "Frete e condição comercial anulam retorno econômico da mineração.",
+      "Giro, manutenção e obrigações reduzem recursos atribuíveis apesar da posição financeira líquida."
+    ],
+    "governanca": "Controladas, coligadas e classes de ação exigem conciliar direitos, capital e transações relacionadas. A nota usa o resultado consolidado com essa identificação, sem atribuí-lo integralmente ao acionista. Receita de desfecho judicial e valor de venda de ativo não operacional não comprovaram, por si, recebimento integral. Documentos completos de controle, acordos e partes relacionadas permanecem a examinar.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Monitorar mix, preço realizado, utilização e consumo de insumos na siderurgia. Conferir extração, condição comercial e frete do minério. Separar receitas extraordinárias, benefício fiscal e equivalência de caixa. Conciliar estoques, títulos de fornecedores, arrendamentos e manutenção com recursos atribuíveis e retorno dos projetos.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_USIMINAS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+12,71%"
+          },
+          {
+            "fato": "val.BR_USIMINAS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,57%"
+          },
+          {
+            "fato": "val.BR_USIMINAS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "65,34%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +12,71%, custo do capital 12,57% e dispersão entre métodos 65,34% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_USIMINAS",
+    "lacunas_de_dados": [
+      "Demonstrações completas, minoritários e obrigações por entidade não foram integralmente reconciliados.",
+      "Data de publicação do release não foi presumida a partir da referência trimestral.",
+      "Extraordinários, créditos tributários e recebimentos judiciais requerem conciliação com caixa.",
+      "Forfaiting, arrendamentos e fluxo livre têm perímetros próprios a conferir.",
+      "Conclusão técnica e retorno econômico dos projetos não são equivalentes.",
+      "Controle, acordos e direitos por classe permanecem a examinar em documentos completos.",
+      "Expectativas por negócio existem, mas guidance agregado, tom e percepção do mercado não foram classificados.",
+      "Não há catalisador futuro com dia exato confirmado neste estudo."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo de siderurgia e mineração, com produção de aço, laminados e minério. Preço, mix, capacidade utilizada e insumos determinam margem industrial; frete, moeda e condição comercial determinam a realização mineral. Participações em controladas em conjunto e coligadas têm bases próprias. EBITDA ajustado incorpora participação proporcional, que não equivale a caixa integralmente recebido pelo grupo ou pelo titular.",
+    "nome": "Usiminas",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRADESPAR",
+        "nome": "Bradespar"
+      },
+      {
+        "issuer_id": "BR_CBA",
+        "nome": "Companhia Brasileira de Alumínio"
+      },
+      {
+        "issuer_id": "BR_CMIN",
+        "nome": "CSN Mineração"
+      },
+      {
+        "issuer_id": "BR_CSN",
+        "nome": "CSN Siderúrgica Nacional"
+      },
+      {
+        "issuer_id": "BR_ERO",
+        "nome": "Ero Copper"
+      },
+      {
+        "issuer_id": "BR_GERDAU",
+        "nome": "Gerdau"
+      },
+      {
+        "issuer_id": "BR_GOAU",
+        "nome": "Metalúrgica Gerdau"
+      },
+      {
+        "issuer_id": "BR_SUZANO",
+        "nome": "Suzano"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que confiabilidade industrial, eficiência energética e mix sustentem caixa depois de manutenção e capital de giro. A condição decisiva é recuperação econômica demonstrada ao longo do ciclo, sem depender de indenização, venda de ativos ou proteção comercial permanente. A conclusão do projeto de injeção de carvão pode reduzir custo, mas ganho técnico precisa aparecer em produção, margem e retorno após investimento.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_USIMINAS.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 7,21"
+          },
+          {
+            "fato": "val.BR_USIMINAS.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 8,13"
+          },
+          {
+            "fato": "val.BR_USIMINAS.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+12,71%"
+          },
+          {
+            "fato": "val.BR_USIMINAS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,57%"
+          },
+          {
+            "fato": "val.BR_USIMINAS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+12,71%"
+          }
+        ],
+        "texto": "Preço de referência R$ 7,21 e alvo R$ 8,13, com potencial +12,71%. A hipótese de investimento deve ser confrontada com o custo do capital 12,57% e retorno esperado +12,71%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Qualidade, capacidade industrial e relacionamento com clientes podem apoiar mix, mas concorrência inclui aço importado e bens com conteúdo de aço. A administração relata pressões comerciais; vantagem frente a concorrentes não foi comprovada de forma independente. Menor custo de extração do minério pode conviver com menor realização e margem por transporte. Condições de frete atribuídas ao vendedor ou comprador exigem comparar bases equivalentes.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:20:17.807023+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Receita cresce sequencialmente e recua na comparação anual, enquanto EBITDA ajustado e margem aumentam nas duas bases. O lucro consolidado diminui sequencialmente e melhora anualmente; a comparação anterior tem benefício fiscal e resultado financeiro próprios. Recuperação judicial de valores e venda de ativo não operacional contribuem para o resultado siderúrgico ajustado. O caixa operacional e o fluxo livre diminuem, apesar da melhora do EBITDA, com consumo de giro e compromissos de caixa.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que confiabilidade industrial, eficiência energética e mix sustentem caixa depois de manutenção e capital de giro. A condição decisiva é recuperação econômica demonstrada ao longo do ciclo, sem depender de indenização, venda de ativos ou proteção comercial permanente. A conclusão do projeto de injeção de carvão pode reduzir custo, mas ganho técnico precisa aparecer em produção, margem e retorno após investimento. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +12,71%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Importações, insumos, demanda e logística podem reduzir margem. Recuperação extraordinária não comprova recorrência; capital de giro e obrigações fora da dívida financeira podem absorver o caixa líquido divulgado."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_USIMINAS.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-4,56%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -4,56%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Usiminas — margem do aço após capital de giro, reinvestimento e custo logístico",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A administração prevê estabilidade operacional da siderurgia sem os efeitos extraordinários e queda na mineração, com expectativas diferentes para vendas, preços e custos. Essas indicações qualitativas não receberam direção agregada de guidance nem foram tratadas como resultado realizado. A leitura preserva diferenças entre EBITDA proporcional, equivalência, receita mineral após frete e caixa operacional contábil.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar mix, preço realizado, utilização e consumo de insumos na siderurgia. Conferir extração, condição comercial e frete do minério. Separar receitas extraordinárias, benefício fiscal e equivalência de caixa. Conciliar estoques, títulos de fornecedores, arrendamentos e manutenção com recursos atribuíveis e retorno dos projetos.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_USIMINAS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,57%"
+          },
+          {
+            "fato": "val.BR_USIMINAS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "65,34%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 12,57% e a dispersão entre métodos 65,34%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

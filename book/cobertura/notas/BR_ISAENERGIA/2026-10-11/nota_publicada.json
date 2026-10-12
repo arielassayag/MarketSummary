@@ -1,0 +1,421 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "45340e9539e2652b5897c008b4aeb0cf64dcd2d23a34e6d76b134546c8ca20ac",
+    "factbook": "44b1f3b862c81dec94496896833692a064cb3daf7fe48f099acb64510bf45d00",
+    "nota_json": "3eaa1c5546711216dd554c38fbc1462bd7953507fe3904c77bd460595e00439d"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_ISAENERGIA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T02:18:59.421659+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Dívida aumenta e caixa diminui no trimestre. Menor custo médio de captação não impede maior despesa absoluta com saldo e inflação. Fluxos regulatório e societário classificam infraestrutura de forma diferente e chegam ao mesmo saldo final de caixa. Depois do trimestre, a oferta primária foi liquidada, captações têm destinações próprias e a troca de participações foi concluída.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-03",
+        "descricao": "Divulgação programada de resultados; rever novo perímetro, emissão, recebimentos e obrigações de financiamento.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 48,32, com retorno esperado +66,03%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Novos ativos recebem remuneração com disponibilidade e custo adequados, sustentando caixa por ação depois de capital e dívida. O cenário otimista calculado pelo código é R$ 58,27.",
+      "pessimista": "Financiamento, emissão e obrigações das obras absorvem os recebimentos, com retorno menor por ação e revisão de componentes financeiros. O cenário pessimista calculado pelo código é R$ 40,05."
+    },
+    "comentario_valuation": "Preço de referência R$ 29,98 e alvo do modelo aberto R$ 48,32, com potencial +61,16%. Retorno total esperado +66,03% e custo do capital próprio 10,99%. A dispersão entre métodos é 45,12%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 31,27; a diferença +54,50% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se expansão exige capital antes de remuneração suficiente e dilui retorno por ação. Lucro societário maior pode coexistir com caixa menor e resultado regulatório atribuível mais fraco. Troca de ativos e novas captações não comprovam melhora econômica sem conciliar dívida, preço pago e contribuição adquirida.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_ISAENERGIA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 29,98"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 48,32"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+61,16%"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 58,27"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 40,05"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,99%"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.wacc",
+        "rotulo": "WACC",
+        "valor": "8,56%"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+66,03%"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+70,06%"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "10,5x"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,9x"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 31,27"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+54,50%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "ISA Energia Brasil",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil corporativo, negócios e classes de ações",
+        "url": "https://ri.isaenergiabrasil.com.br/pt/a-isa-energia/perfil-corporativo"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "ISA Energia Brasil",
+        "publicado_em": "2026-08-03",
+        "tipo": "Relações com investidores",
+        "titulo": "Release de resultados, fluxos, dívida, oferta de ações e eventos subsequentes",
+        "url": "https://ri.isaenergiabrasil.com.br/pt/documentos/6758-Earnings-Release-2T26-vfinal.pdf"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "ISA Energia Brasil",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Portal de RI e calendário público de resultados",
+        "url": "https://ri.isaenergiabrasil.com.br/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Receita permitida, disponibilidade e recebimento deixam de remunerar o capital das obras.",
+      "Componentes financeiros e ajustes têm redução não compensada pelo retorno dos novos ativos.",
+      "Financiamento, restrições e aportes reduzem o caixa atribuível depois de infraestrutura.",
+      "Oferta, conversão de classes e troca de participações alteram a contribuição por ação."
+    ],
+    "governanca": "A companhia está no segmento de governança declarado em seu perfil, sem promoção ao Novo Mercado. Conversão de ações ordinárias em preferenciais e emissão primária exigem atualizar base e direitos. O indicador contratual do BNDES tem aferição anual; uma leitura trimestral isolada não demonstra vencimento antecipado, e a dispensa anterior não foi presumida para o exercício corrente. Disputas da remuneração financeira continuam sem conclusão jurídica independente.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Monitorar disponibilidade, penalidades, recebimento por concessão e efeitos de revisão tarifária. Conferir autorizações, energização, custo e participação econômica dos projetos. Separar componentes financeiros com prazo definido e ajustes da receita recorrente. Conciliar fluxo depois de infraestrutura, dívida, restrições e capital por ação após oferta e novo perímetro.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ISAENERGIA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+66,03%"
+          },
+          {
+            "fato": "val.BR_ISAENERGIA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,99%"
+          },
+          {
+            "fato": "val.BR_ISAENERGIA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "45,12%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +66,03%, custo do capital 10,99% e dispersão entre métodos 45,12% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_ISAENERGIA",
+    "lacunas_de_dados": [
+      "Demonstrações completas, fluxo livre e financiamento por projeto não foram integralmente reconciliados.",
+      "Datas de liberação e efeitos de receita de Jacarandá e Piraquê exigem conciliação entre seções do release.",
+      "Oferta primária, conversão de classes e novo perímetro não foram ajustados manualmente no modelo.",
+      "Apuração contratual anual e eventual dispensa corrente precisam ser conferidas em documentação própria.",
+      "Controvérsias da remuneração financeira precisam de atualização regulatória e jurídica primária.",
+      "Guidance, tom agregado, vantagem relativa e percepção do mercado não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Transmissora de energia que opera concessões e desenvolve novas redes e reforços no Brasil. Remuneração de disponibilidade, construção e componentes financeiros têm naturezas próprias. Investidas de controle compartilhado não são integralmente atribuíveis. O ativo sob cobertura é uma ação preferencial; conversão de classes e oferta primária alteram a leitura por titular.",
+    "nome": "ISA Energia Brasil",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ALUPAR",
+        "nome": "Alupar"
+      },
+      {
+        "issuer_id": "BR_AUREN",
+        "nome": "Auren Energia"
+      },
+      {
+        "issuer_id": "BR_AXIA",
+        "nome": "Axia Energia (ex-Eletrobras)"
+      },
+      {
+        "issuer_id": "BR_CEMIG",
+        "nome": "Cemig"
+      },
+      {
+        "issuer_id": "BR_COMPASS",
+        "nome": "Compass Gás e Energia"
+      },
+      {
+        "issuer_id": "BR_COPASA",
+        "nome": "Copasa"
+      },
+      {
+        "issuer_id": "BR_COPEL",
+        "nome": "Copel"
+      },
+      {
+        "issuer_id": "BR_CPFL",
+        "nome": "CPFL Energia"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que novos projetos e reforços gerem recebimentos com retorno suficiente depois de capital, dívida e emissão de ações. A condição decisiva é expansão econômica atribuível por ação, preservando disponibilidade. Construção e remuneração financeira do ativo contratual não comprovam crescimento equivalente de caixa livre; componentes com prazo determinado não foram perpetuados.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ISAENERGIA.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 29,98"
+          },
+          {
+            "fato": "val.BR_ISAENERGIA.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 48,32"
+          },
+          {
+            "fato": "val.BR_ISAENERGIA.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+61,16%"
+          },
+          {
+            "fato": "val.BR_ISAENERGIA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,99%"
+          },
+          {
+            "fato": "val.BR_ISAENERGIA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+66,03%"
+          }
+        ],
+        "texto": "Preço de referência R$ 29,98 e alvo R$ 48,32, com potencial +61,16%. A hipótese de investimento deve ser confrontada com o custo do capital 10,99% e retorno esperado +66,03%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Experiência operacional e de implantação pode apoiar novos lotes, mas deságio de leilão, licenças e execução precisam sustentar retorno. Receita permitida depende das regras de cada concessão e de sua disponibilidade. Ampliação de infraestrutura não representa vantagem relativa comprovada frente a concorrentes nem margem sobre todo repasse tarifário.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:18:59.421659+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Receita e resultado operacional regulatórios aumentam na comparação anual, mas lucro regulatório atribuível recua com encargos e impostos. O lucro societário melhora com construção e remuneração contratual, em comparação afetada por remensuração anterior. Repasses da conta setorial não são margem; parcelas de ajuste e arrecadação antecipada não constituem crescimento permanente.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que novos projetos e reforços gerem recebimentos com retorno suficiente depois de capital, dívida e emissão de ações. A condição decisiva é expansão econômica atribuível por ação, preservando disponibilidade. Construção e remuneração financeira do ativo contratual não comprovam crescimento equivalente de caixa livre; componentes com prazo determinado não foram perpetuados. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Compra, com retorno esperado +66,03%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Obras, penalidades, inflação da dívida e revisão de remuneração podem absorver caixa. Componentes financeiros têm prazo próprio. Nova emissão, classes de ações e mudança de participações exigem conciliação do retorno por titular."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ISAENERGIA.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+54,50%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +54,50%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Utilidades públicas",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "ISA Energia — expansão das redes após financiamento, emissão e mudança de perímetro",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A melhora operacional das investidas não impede redução da equivalência patrimonial por encargos financeiros. Infraestrutura consome caixa sob classificações diferentes entre as bases, sem soma das medidas. O fechamento da troca de IE Madeira e Garanhuns ocorreu depois do trimestre, com pagamento de torna e consolidação posterior de Madeira; a oferta primária também é evento posterior.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar disponibilidade, penalidades, recebimento por concessão e efeitos de revisão tarifária. Conferir autorizações, energização, custo e participação econômica dos projetos. Separar componentes financeiros com prazo definido e ajustes da receita recorrente. Conciliar fluxo depois de infraestrutura, dívida, restrições e capital por ação após oferta e novo perímetro.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_ISAENERGIA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,99%"
+          },
+          {
+            "fato": "val.BR_ISAENERGIA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "45,12%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 10,99% e a dispersão entre métodos 45,12%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

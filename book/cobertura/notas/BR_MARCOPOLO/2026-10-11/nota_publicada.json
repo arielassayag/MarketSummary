@@ -1,0 +1,441 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "b563f7b8f0037f2c205f0cb7c2f2a83adaa6c96e9c6668dc9cd2a4c9b2eed6e1",
+    "factbook": "241a71cab34ca64e1425b64f876ce1e29812749492ca1eeffa1bc552d9377652",
+    "nota_json": "83f89da4201e030fb95a2b3f7d11d1a0517f0dc8f0b2416f2489908433b03fa8"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_MARCOPOLO",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T02:19:24.932101+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Endividamento líquido industrial e financeiro aumentou anualmente. O Banco Moneo não tem a mesma função de caixa ou dívida da fábrica. Giro de produção, recebimento de entregas e expansão internacional exigem recursos; margem contábil não substitui caixa após manutenção, juros e direitos de sócios.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar mix, capital industrial e recebimento.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 9,63, com retorno esperado +109,36%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Mix, produtividade e execução sustentam recebimento e margem, com crédito e capital industrial disciplinados ao longo do ciclo. O cenário otimista calculado pelo código é R$ 13,57.",
+      "pessimista": "Entregas e mix deterioram retorno; giro e crédito absorvem caixa, enquanto endividamento e juros limitam o resultado atribuível. O cenário pessimista calculado pelo código é R$ 5,95."
+    },
+    "comentario_valuation": "Preço de referência R$ 4,83 e alvo do modelo aberto R$ 9,63, com potencial +99,32%. Retorno total esperado +109,36% e custo do capital próprio 12,02%. A dispersão entre métodos é 15,08%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 7,33; a diferença +31,34% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita e participação podem crescer enquanto EBITDA e lucro recuam. Se o mix público e a produção exigirem mais giro ou crédito, a expansão das entregas não provará retorno sustentável ao acionista.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_MARCOPOLO.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 4,83"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 9,63"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+99,32%"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 13,57"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 5,95"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,02%"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.wacc",
+        "rotulo": "WACC",
+        "valor": "9,74%"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+109,36%"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+111,55%"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "5,2x"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,4x"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 7,33"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+31,34%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Marcopolo",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Apresentação original na CVM: mercados e operação",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1552366&numSequencia=1077072&numVersao=1"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Marcopolo",
+        "publicado_em": "2026-08-05",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1552366&numSequencia=1077072&numVersao=1"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Marcopolo",
+        "publicado_em": "2026-08-05",
+        "tipo": "Relações com investidores",
+        "titulo": "Apresentação original: resultados e endividamento por perímetro",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1552366&numSequencia=1077072&numVersao=1"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+      "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+      "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+      "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+    ],
+    "governanca": "A análise usa a apresentação original entregue à CVM. O portal de RI recusou acesso e não foi contornado. Banco Moneo, unidades externas e participações exigem conciliação por entidade; não se atribuiu revisão independente à apresentação ou realização a um calendário futuro.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Pedidos, entregas e mix por mercado; contratos públicos, exportações e operações externas separados. Monitorar margem, estoques, recebíveis, capital industrial e crédito do Banco Moneo. Conciliar caixa depois de investimento, juros e direitos de terceiros.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_MARCOPOLO.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+109,36%"
+          },
+          {
+            "fato": "val.BR_MARCOPOLO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,02%"
+          },
+          {
+            "fato": "val.BR_MARCOPOLO.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "15,08%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +109,36%, custo do capital 12,02% e dispersão entre métodos 15,08% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_MARCOPOLO",
+    "lacunas_de_dados": [
+      "O portal de RI recusou acesso; não houve contorno.",
+      "O ITR integral, caixa e notas de crédito não foram reconciliados.",
+      "Pedidos, compras públicas e mix exigem diligência por mercado.",
+      "Direitos de sócios e caixa industrial atribuível permanecem pendentes.",
+      "Guidance agregado e vantagem competitiva independente não foram comprovados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Fabricante de carrocerias e veículos para transporte coletivo, com operações brasileiras e internacionais. Produção, mix, entregas e preço determinam a receita industrial; financiamento de clientes pelo Banco Moneo tem capital e risco distintos. Mercado doméstico, exportação do Brasil e unidades externas não são exposições equivalentes.",
+    "nome": "Marcopolo",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ECORODOVIAS",
+        "nome": "EcoRodovias"
+      },
+      {
+        "issuer_id": "BR_EMBRAER",
+        "nome": "Embraer"
+      },
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_LOCALIZA",
+        "nome": "Localiza"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_MOTIVA",
+        "nome": "Motiva (ex-CCR)"
+      },
+      {
+        "issuer_id": "BR_RANDON",
+        "nome": "Randoncorp"
+      },
+      {
+        "issuer_id": "BR_SIMPAR",
+        "nome": "Simpar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que engenharia, distribuição e mix remunerem o capital industrial ao longo do ciclo. A condição decisiva é sustentar margem e recebimento depois do investimento, sem depender permanentemente de entregas públicas ou câmbio favorável. Resultado bancário e participações precisam de ponte ao acionista industrial.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_MARCOPOLO.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 4,83"
+          },
+          {
+            "fato": "val.BR_MARCOPOLO.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 9,63"
+          },
+          {
+            "fato": "val.BR_MARCOPOLO.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+99,32%"
+          },
+          {
+            "fato": "val.BR_MARCOPOLO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,02%"
+          },
+          {
+            "fato": "val.BR_MARCOPOLO.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+109,36%"
+          }
+        ],
+        "texto": "Preço de referência R$ 4,83 e alvo R$ 9,63, com potencial +99,32%. A hipótese de investimento deve ser confrontada com o custo do capital 12,02% e retorno esperado +109,36%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Engenharia, fabricação e rede internacional podem apoiar execução e atendimento. Participação informada pelo emissor tem definição própria, sem comprovar vantagem permanente. Compras de transporte escolar e saúde, exportações e unidades externas têm concorrência, financiamento e calendários diferentes.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:19:24.932101+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita cresceu anualmente, com expansão no Brasil e nas operações externas, enquanto exportações brasileiras recuaram. EBITDA e lucro caíram frente ao ano anterior, apesar da receita maior. O mix e a origem das entregas precisam ser separados; volume crescente não demonstra manutenção do retorno ou geração de caixa.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que engenharia, distribuição e mix remunerem o capital industrial ao longo do ciclo. A condição decisiva é sustentar margem e recebimento depois do investimento, sem depender permanentemente de entregas públicas ou câmbio favorável. Resultado bancário e participações precisam de ponte ao acionista industrial. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +109,36%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Calendário público, demanda, câmbio e mix podem reduzir margens. Produção e crédito absorvem capital; dívida industrial e financeira têm riscos próprios. Resultado externo e consolidação não garantem caixa integralmente atribuível."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_MARCOPOLO.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+31,34%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +31,34%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Marcopolo — mix de ônibus, ciclo público e capital industrial",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A apresentação registra expansão anual de receita, com Brasil e unidades externas em crescimento e menor exportação a partir do Brasil. EBITDA e lucro recuaram anualmente. O endividamento líquido aumentou tanto no perímetro industrial quanto no financeiro. A leitura da participação e do volume mantém a definição do emissor; a apresentação não substitui o ITR integral nem demonstra caixa disponível.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Pedidos, entregas e mix por mercado; contratos públicos, exportações e operações externas separados. Monitorar margem, estoques, recebíveis, capital industrial e crédito do Banco Moneo. Conciliar caixa depois de investimento, juros e direitos de terceiros.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_MARCOPOLO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,02%"
+          },
+          {
+            "fato": "val.BR_MARCOPOLO.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "15,08%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 12,02% e a dispersão entre métodos 15,08%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,436 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "857a0347891fe74be0a1c3b81dd182bca00a7db6fb9fb9375f1fc54916b43cdd",
+    "factbook": "0a2b1acbc7b0c95f7b1154f4ac5e46f7487112947782e523b0210dec14cc0a33",
+    "nota_json": "a971fda350fe6da80c962135959953c280e15f634024b67f3ddf506c2c2d5995"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_PORTO",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-05",
+  "published_at": "2026-10-12T02:18:33.333092+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Caixa e investimentos incluem ativos destinados a reservas e obrigações, com medidas que excluem ou incluem previdência e gestão de passivos. Fluxo operacional recebe efeitos de captação e investimento, enquanto dividendos e financiamento afetam caixa final. Capital regulatório por entidade e recursos do grupo não são excedente único distribuível.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-05",
+        "descricao": "Divulgação programada de resultados; rever perdas por vertical, ajustes e capital disponível.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F4"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 55,42, com retorno esperado +7,87%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Relacionamento sustenta emissão e serviços rentáveis, com perdas controladas e capital suficiente para retorno recorrente por ação. O cenário otimista calculado pelo código é R$ 64,96.",
+      "pessimista": "Crédito, sinistros e despesas absorvem receita e os rendimentos ou ajustes deixam de compensar a contribuição operacional. O cenário pessimista calculado pelo código é R$ 47,59."
+    },
+    "comentario_valuation": "Preço de referência R$ 53,56 e alvo do modelo aberto R$ 55,42, com potencial +3,46%. Retorno total esperado +7,87% e custo do capital próprio 11,85%. A dispersão entre métodos é 11,95%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 57,18; a diferença -3,09% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se distribuição cresce enquanto perdas, custos comerciais e capital impedem retorno recorrente por ação. Rendimentos financeiros ou ajustes tributários podem compensar temporariamente uma franquia sem demonstrar vantagem operacional sustentável.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_PORTO.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 53,56"
+      },
+      {
+        "fato": "val.BR_PORTO.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 55,42"
+      },
+      {
+        "fato": "val.BR_PORTO.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+3,46%"
+      },
+      {
+        "fato": "val.BR_PORTO.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_PORTO.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_PORTO.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 64,96"
+      },
+      {
+        "fato": "val.BR_PORTO.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "28,09%"
+      },
+      {
+        "fato": "val.BR_PORTO.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 47,59"
+      },
+      {
+        "fato": "val.BR_PORTO.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "27,59%"
+      },
+      {
+        "fato": "val.BR_PORTO.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,85%"
+      },
+      {
+        "fato": "val.BR_PORTO.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_PORTO.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_PORTO.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+7,87%"
+      },
+      {
+        "fato": "val.BR_PORTO.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-21,24%"
+      },
+      {
+        "fato": "val.BR_PORTO.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "8,8x"
+      },
+      {
+        "fato": "val.BR_PORTO.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,1x"
+      },
+      {
+        "fato": "val.BR_PORTO.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 57,18"
+      },
+      {
+        "fato": "val.BR_PORTO.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-3,09%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Porto",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e estrutura do negócio",
+        "url": "https://ri.portoseguro.com.br/a-companhia/apresentacao-da-companhia/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Porto",
+        "publicado_em": "2026-08-07",
+        "tipo": "Relações com investidores",
+        "titulo": "Release de resultado, verticais e reconciliações gerenciais",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/b77a3922-d280-4451-b3ee-0afec4577834/4432e300-316c-530a-bf34-b5ac18038e09?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Porto",
+        "publicado_em": "2026-09-18",
+        "tipo": "Relações com investidores",
+        "titulo": "Juros sobre capital aprovados e prazo futuro de pagamento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/b77a3922-d280-4451-b3ee-0afec4577834/703c94b9-095b-86e3-319b-c915488ca4e2?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F4",
+        "instituicao": "Porto",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário público de eventos futuros utilizado pelo portal de RI",
+        "url": "https://api.mziq.com/mzevents/events/future/b77a3922-d280-4451-b3ee-0afec4577834/pt-br"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Emissão e relacionamento não sustentam margem após sinistros, perdas e custos comerciais.",
+      "Crédito, garantias ou saúde exigem perdas e capital adicionais.",
+      "Reclassificações e ajustes alteram a recorrência ou a comparabilidade das métricas.",
+      "Capital por entidade e caixa recebido não confirmam transmissão de valor ao acionista."
+    ],
+    "governanca": "Controle, acordos de distribuição, partes relacionadas e alocação entre verticais exigem documentos completos. A norma gerencial de seguros tem bases distintas da contábil. O aviso de juros sobre capital tem posição acionária passada e pagamento até prazo futuro, sujeito às regras e ratificação informadas; compra posterior não cria automaticamente esse direito.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Monitorar sinistralidade, combinado e resultado antes de finanças; no banco, perdas, garantias, safras e captação. Acompanhar beneficiários, reajuste e custo médico na saúde, além de margem dos serviços. Conciliar receitas diferidas de consórcio, métricas de eficiência, tributos, capital por entidade e efetivo crédito de proventos.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_PORTO.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+7,87%"
+          },
+          {
+            "fato": "val.BR_PORTO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,85%"
+          },
+          {
+            "fato": "val.BR_PORTO.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "11,95%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +7,87%, custo do capital 11,85% e dispersão entre métodos 11,95% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_PORTO",
+    "lacunas_de_dados": [
+      "Demonstrações completas, reservas e capital por entidade não foram integralmente reconciliados.",
+      "Há revisões em sentidos diferentes das projeções; direção agregada não foi classificada e guidance permanece não determinado.",
+      "Mudanças de método, consórcio e ajustes fiscais exigem bases comparáveis com o modelo recebido.",
+      "Contratos, relacionadas, safras e garantias precisam de análise documental detalhada.",
+      "O aviso confirma aprovação e prazo de pagamento; efetivo crédito não foi antecipado.",
+      "Tom agregado da gestão, vantagem relativa e percepção do mercado não foram comprovados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo que reúne seguros, saúde, banco e serviços. Distribuição por corretores, canais e parceiros conecta negócios com exigências próprias de capital. Crédito e garantias financeiras têm riscos diferentes dos seguros tradicionais; receitas, despesas e recursos de participantes precisam conservar seu perímetro.",
+    "nome": "Porto Seguro",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BB",
+        "nome": "Banco do Brasil"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      },
+      {
+        "issuer_id": "BR_INTER",
+        "nome": "Inter&Co"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que distribuição e serviços ampliem relacionamento com retorno recorrente por ação após perdas, despesas e capital. A condição decisiva é resultado operacional sustentável em cada vertical, sem depender de benefício fiscal ou tesouraria. A diversificação pode reduzir algumas dependências e também somar riscos de crédito, saúde e integração.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_PORTO.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 53,56"
+          },
+          {
+            "fato": "val.BR_PORTO.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 55,42"
+          },
+          {
+            "fato": "val.BR_PORTO.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+3,46%"
+          },
+          {
+            "fato": "val.BR_PORTO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,85%"
+          },
+          {
+            "fato": "val.BR_PORTO.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+7,87%"
+          }
+        ],
+        "texto": "Preço de referência R$ 53,56 e alvo R$ 55,42, com potencial +3,46%. A hipótese de investimento deve ser confrontada com o custo do capital 11,85% e retorno esperado +7,87%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Corretores, serviços e relacionamento podem apoiar retenção e venda cruzada. A vantagem exige preço e custo de atendimento compatíveis com risco, além de retorno depois de comissões e despesas compartilhadas. O acesso à distribuição não comprova margem uniforme; banco, serviços e saúde têm economias diferentes.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:18:33.333092+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O lucro contábil e o recorrente têm ajustes tributários e bases próprias. Em seguros, menor sinistralidade coexiste com maior custo comercial. O banco amplia receita com custo de crédito maior e resultado menor. Saúde tem melhora anual e trajetória sequencial distinta; a combinação não autoriza presumir melhora simultânea de todas as verticais.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que distribuição e serviços ampliem relacionamento com retorno recorrente por ação após perdas, despesas e capital. A condição decisiva é resultado operacional sustentável em cada vertical, sem depender de benefício fiscal ou tesouraria. A diversificação pode reduzir algumas dependências e também somar riscos de crédito, saúde e integração. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +7,87%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Sinistros, crédito, custo médico e comissões podem absorver receitas. Ajustes fiscais, mudanças de método e reservas afetam comparabilidade. Capital por entidade e recursos de participantes não são caixa livre da holding."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_PORTO.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-3,09%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -3,09%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Porto — retorno das franquias após perdas, reservas e capital",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A margem de seguros, o custo de crédito do banco e o resultado de saúde têm movimentos próprios. Perdas de garantias financeiras integram o custo de crédito e não foram somadas novamente como sinistros independentes. Novas receitas diferidas do consórcio exigem comparar a mesma base. A revisão de eficiência do banco inclui reclassificações de recompensas e tarifas; não prova redução econômica equivalente de despesa.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar sinistralidade, combinado e resultado antes de finanças; no banco, perdas, garantias, safras e captação. Acompanhar beneficiários, reajuste e custo médico na saúde, além de margem dos serviços. Conciliar receitas diferidas de consórcio, métricas de eficiência, tributos, capital por entidade e efetivo crédito de proventos.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_PORTO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,85%"
+          },
+          {
+            "fato": "val.BR_PORTO.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "11,95%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,85% e a dispersão entre métodos 11,95%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

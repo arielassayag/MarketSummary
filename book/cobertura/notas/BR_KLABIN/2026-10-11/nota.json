@@ -1,0 +1,207 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_KLABIN",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Klabin — flexibilidade do portfólio após floresta, manutenção e capital",
+  "resumo": "A hipótese é que flexibilidade industrial e comercial estabilize caixa ao longo dos ciclos de celulose e embalagens. A condição decisiva é retorno depois de silvicultura, manutenção, modernização, juros e remuneração dos participantes. Portfólio diversificado pode mitigar volatilidade, mas não elimina exposição a câmbio, madeira, frete e preço; eficiência deve aparecer em caixa atribuível e retorno do capital. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_KLABIN.rating_codigo}}, com retorno esperado {{fact:val.BR_KLABIN.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Companhia integrada de florestas, celulose, papéis e embalagens. A combinação de fibras, papel-cartão e papelão ondulado permite direcionar produção conforme demanda e rentabilidade, com transações internas entre negócios. Florestas, silvicultura e manutenção exigem reposição contínua. Units representam classes de capital distintas; sociedades de projetos e participantes têm direitos próprios sobre remuneração e recursos.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que flexibilidade industrial e comercial estabilize caixa ao longo dos ciclos de celulose e embalagens. A condição decisiva é retorno depois de silvicultura, manutenção, modernização, juros e remuneração dos participantes. Portfólio diversificado pode mitigar volatilidade, mas não elimina exposição a câmbio, madeira, frete e preço; eficiência deve aparecer em caixa atribuível e retorno do capital.",
+      "evidencias": [
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_KLABIN.preco}} e alvo {{fact:val.BR_KLABIN.preco_alvo}}, com potencial {{fact:val.BR_KLABIN.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_KLABIN.ke}} e retorno esperado {{fact:val.BR_KLABIN.etr}}.",
+      "evidencias": [
+        "val.BR_KLABIN.preco",
+        "val.BR_KLABIN.preco_alvo",
+        "val.BR_KLABIN.upside",
+        "val.BR_KLABIN.ke",
+        "val.BR_KLABIN.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Monitorar mix e margem por celulose, papéis e embalagens, com eliminações internas. Conferir silvicultura, madeira, paradas, frete e estoque. Conciliar valor justo, alienações e geração recorrente com manutenção, juros e participantes. Acompanhar dívida nas bases de moeda, retorno da modernização e distribuição efetivamente paga.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_KLABIN.ke}} e a dispersão entre métodos {{fact:val.BR_KLABIN.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_KLABIN.ke",
+        "val.BR_KLABIN.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Informações trimestrais programadas; rever custo completo, giro, caixa após manutenção e dívida nas bases de moeda.",
+      "data": "2026-10-28",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F4"
+      ]
+    },
+    {
+      "descricao": "Parcela de dividendos previamente declarada e programada, sujeita aos direitos e condições da deliberação.",
+      "data": "2026-11-12",
+      "tipo": "dividendos",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Câmbio, insumos, clima e demanda podem reduzir margem. Floresta, manutenção e dívida exigem caixa; medidas ajustadas excluem compromissos. Integração, units e participantes requerem conciliar recursos atribuíveis.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_KLABIN.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_KLABIN.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Flexibilidade de produto e canal preserva margem, manutenção e modernização remuneram o capital, e caixa sustenta participantes, dívida e retorno por unit. O cenário otimista calculado pelo código é {{fact:val.BR_KLABIN.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_KLABIN.preco_alvo}}, com retorno esperado {{fact:val.BR_KLABIN.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Custos, câmbio e estoques comprimem geração enquanto reinvestimento e juros mantêm consumo de recursos e limitam remuneração. O cenário pessimista calculado pelo código é {{fact:val.BR_KLABIN.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_KLABIN.preco}} e alvo do modelo aberto {{fact:val.BR_KLABIN.preco_alvo}}, com potencial {{fact:val.BR_KLABIN.upside}}. Retorno total esperado {{fact:val.BR_KLABIN.etr}} e custo do capital próprio {{fact:val.BR_KLABIN.ke}}. A dispersão entre métodos é {{fact:val.BR_KLABIN.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_KLABIN.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_KLABIN.consenso_alvo}}; a diferença {{fact:val.BR_KLABIN.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "Existe guidance formal de capex por finalidade, referenciado ao comunicado anterior, sem revisão agregada classificada nesta nota. O retorno gerencial usa fluxo ajustado, capital médio e exclusões contábeis próprias; não substitui retorno econômico comparável ao custo do capital. Bases históricas de ativos biológicos foram reclassificadas. O calendário fixa informações futuras, sem comprovar publicação apenas pela data do período.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "A companhia informa adesão ao segmento de governança e direitos de venda conjunta para preferenciais; estatuto e estrutura atual precisam ser conciliados com a unit. Remuneração de participantes de projetos e dividendos da companhia não são intercambiáveis. A parcela futura declarada conserva condições de elegibilidade; data passada de parcela posterior ao trimestre não comprova pagamento. A nota não presume execução da recompra autorizada.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Integração permite ajustar produtos e destino, mas volumes e receitas internas não comprovam criação de valor independente. Qualidade, disponibilidade e serviço podem sustentar canais premium; a comparação precisa controlar fibra, gramatura e integração. Custos de madeira, preparação climática e paradas entram na avaliação econômica. Declarações de rastreabilidade e sustentabilidade exigem diligência documental, sem serem convertidas em vantagem financeira automática.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Receita e EBITDA ajustado melhoram sequencialmente e recuam na comparação anual. O lucro volta a ser positivo, mas fica abaixo do trimestre equivalente do ano anterior. Preço, mix, câmbio e monetização de ativos florestais têm efeitos distintos. Valor justo de floresta é não caixa; geração operacional gerencial deduz manutenção, sem equivaler ao fluxo disponível depois de todos os compromissos. Formação de estoque, juros e remuneração de participantes contribuem para o consumo de caixa.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "O fluxo livre divulgado é negativo; o ajustado exclui dividendos e projetos especiais e de expansão. Menor alavancagem em dólares convive com maior relação em reais, enquanto captação aumenta dívida bruta e caixa. Silvicultura e continuidade preservam capacidade; modernização precisa remunerar o capital adicional. Recompra autorizada não comprova execução integral. Dividendos pagos no trimestre e parcelas posteriores programadas têm estados distintos.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se diversificação apenas transfere margem entre negócios ou se custo completo e reinvestimento absorvem a eficiência. Venda de ativos e redução temporária de imposto não asseguram repetição do caixa. Desalavancagem em uma moeda não demonstra melhora em todas as bases, e recompra pode competir com modernização e financiamento.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Monitorar mix e margem por celulose, papéis e embalagens, com eliminações internas. Conferir silvicultura, madeira, paradas, frete e estoque. Conciliar valor justo, alienações e geração recorrente com manutenção, juros e participantes. Acompanhar dívida nas bases de moeda, retorno da modernização e distribuição efetivamente paga.",
+      "evidencias": [
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_KLABIN.etr}}, custo do capital {{fact:val.BR_KLABIN.ke}} e dispersão entre métodos {{fact:val.BR_KLABIN.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_KLABIN.etr",
+        "val.BR_KLABIN.ke",
+        "val.BR_KLABIN.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Mix, integração e serviço deixam de sustentar margem depois do custo completo.",
+    "Monetização de floresta, ajustes e giro explicam melhora sem caixa recorrente equivalente.",
+    "Silvicultura, modernização e juros absorvem recursos sem retorno suficiente.",
+    "Units, participantes e política de capital alteram valor transmitido ao acionista."
+  ],
+  "lacunas_de_dados": [
+    "Demonstrações completas, fluxo por entidade e direitos dos participantes não foram integralmente reconciliados.",
+    "Data de publicação do release não foi presumida a partir da referência trimestral ou do calendário.",
+    "Valor justo, alienações e reclassificações de ativos biológicos requerem conciliação.",
+    "Retorno gerencial, manutenção florestal e custo do capital têm perímetros próprios a conferir.",
+    "Estrutura atual de units, estatuto e elegibilidade de parcelas futuras permanecem a examinar.",
+    "Pagamentos posteriores ao trimestre e execução final da recompra não foram confirmados.",
+    "Guidance existe, mas revisão agregada, tom e percepção do mercado não foram classificados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Klabin",
+      "titulo": "Portal da companhia e materiais de negócios",
+      "url": "https://ri.klabin.com.br/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Klabin",
+      "titulo": "Release de resultados, integração, ativos biológicos, fluxo e financiamento",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/1c41fa99-efe7-4e72-81dd-5b571f5aa376/1c433925-a2b4-39b8-9193-db7a1ff0a2e0?origin=2",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Klabin",
+      "titulo": "Órgãos de governança e direitos de capital",
+      "url": "https://ri.klabin.com.br/governanca-corporativa/visao-geral/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F4",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Klabin",
+      "titulo": "Calendário anual de informações periódicas",
+      "url": "https://cdn-sites-assets.mziq.com/wp-content/uploads/sites/603/2026/03/Calendario-CVM-2026-v2.pdf",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

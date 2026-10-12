@@ -1,0 +1,418 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "f9cbab0d7ebd363c63543345a5bad11e9764ac9e5d2f077e298acdb6f641ca50",
+    "factbook": "73cd05d69e1e849479c4ece377d2b28a5ea90d599131b50caa66e78e06a52444",
+    "nota_json": "8767b858323ff2d99c2680deccd971df565abb8738112542d0347d04ee2edbe1"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_BANRISUL",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T02:37:14.665765+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "O contrato de folha foi renovado com pagamento antecipado no semestre; renovação futura depende de novo preço. O investimento deve ser avaliado pelo retorno durante sua vigência. Adiantamento ao fundo garantidor e depósitos judiciais têm tratamento e liquidez próprios. Capital prudencial e patrimônio contábil não são excedente equivalente.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 36,19, com retorno esperado +105,89%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Relacionamento da folha amplia receita recorrente, crédito estabiliza e a eficiência operacional se confirma sem depender de reversões. O cenário otimista calculado pelo código é R$ 44,64.",
+      "pessimista": "Crédito e contingências absorvem margem, o preço da folha pesa no retorno e capital prudencial limita crescimento ou distribuição. O cenário pessimista calculado pelo código é R$ 28,11."
+    },
+    "comentario_valuation": "Preço de referência R$ 18,15 e alvo do modelo aberto R$ 36,19, com potencial +99,37%. Retorno total esperado +105,89% e custo do capital próprio 11,85%. A dispersão entre métodos é 27,10%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 15,16; a diferença +138,74% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se resultado melhora por reversões e desconto de crédito enquanto margem comercial e receita da folha não remuneram o investimento. Uma franquia regional forte pode coexistir com capital limitado e retorno insuficiente ao acionista.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_BANRISUL.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 18,15"
+      },
+      {
+        "fato": "val.BR_BANRISUL.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 36,19"
+      },
+      {
+        "fato": "val.BR_BANRISUL.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+99,37%"
+      },
+      {
+        "fato": "val.BR_BANRISUL.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_BANRISUL.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_BANRISUL.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 44,64"
+      },
+      {
+        "fato": "val.BR_BANRISUL.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_BANRISUL.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 28,11"
+      },
+      {
+        "fato": "val.BR_BANRISUL.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_BANRISUL.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,85%"
+      },
+      {
+        "fato": "val.BR_BANRISUL.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_BANRISUL.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_BANRISUL.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+105,89%"
+      },
+      {
+        "fato": "val.BR_BANRISUL.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+76,89%"
+      },
+      {
+        "fato": "val.BR_BANRISUL.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "5,9x"
+      },
+      {
+        "fato": "val.BR_BANRISUL.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,6x"
+      },
+      {
+        "fato": "val.BR_BANRISUL.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 15,16"
+      },
+      {
+        "fato": "val.BR_BANRISUL.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+138,74%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Banrisul",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e estrutura do negócio",
+        "url": "https://ri.banrisul.com.br/quem-somos/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Banrisul",
+        "publicado_em": "2026-08-20",
+        "tipo": "Relações com investidores",
+        "titulo": "Análise de desempenho, crédito, folha de pagamento e capital",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/fafdeaf3-7820-4ec2-9477-ce501c563c96/41da6488-f4f6-3f22-1205-d7efc2f02ac6?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Banrisul",
+        "publicado_em": "2025-08-06",
+        "tipo": "Relações com investidores",
+        "titulo": "Estrutura acionária com data histórica de atualização",
+        "url": "https://ri.banrisul.com.br/governanca-corporativa/estrutura-acionaria/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Margem recorrente e receita da folha não remuneram aquisição e despesas durante o contrato.",
+      "Reversões deixam de sustentar resultado e perdas finais ou contingências excedem provisões.",
+      "Capital principal não acompanha risco e obrigações sem restringir retorno ao acionista.",
+      "Novos documentos alteram direitos por classe, controle ou comparabilidade das carteiras."
+    ],
+    "governanca": "A página de estrutura acionária identifica controle estadual e classes distintas, com atualização histórica. Seus percentuais não foram tratados como composição atual. Direitos, relacionadas, política de capital e obrigações do contrato de folha devem ser conciliados com documentos vigentes. Posição prudencial e contábil têm perímetros diferentes.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Monitorar margem de clientes e tesouraria, captação, crédito problemático e recuperação em caixa. Separar despesas recorrentes e reversões de contingências. Acompanhar retorno da folha adquirida, capital principal e resultado por ação. Conferir regras de classificação de empresas e baixa antes de comparar crescimento e atraso.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_BANRISUL.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+105,89%"
+          },
+          {
+            "fato": "val.BR_BANRISUL.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,85%"
+          },
+          {
+            "fato": "val.BR_BANRISUL.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "27,10%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +105,89%, custo do capital 11,85% e dispersão entre métodos 27,10% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_BANRISUL",
+    "lacunas_de_dados": [
+      "Demonstrações completas, capital prudencial e ajustes contábeis não foram integralmente reconciliados.",
+      "Retorno da folha, retenção dos clientes e custo total durante a vigência não foram comprovados.",
+      "Liquidez e desfecho de garantias, acordos e depósitos judiciais exigem documentação completa.",
+      "A estrutura acionária consultada é histórica; composição vigente e direitos por classe permanecem a conferir.",
+      "Comparabilidade de carteiras e critérios de baixa exige séries na mesma base.",
+      "Guidance, tom agregado da gestão e próximo catalisador datado não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Banco regional com atuação concentrada no Sul, em varejo, empresas, crédito, captação e serviços. A relação com o Rio Grande do Sul inclui controle acionário e contrato de folha de pagamento. Franquia regional e distribuição precisam produzir margem depois de perdas e do custo de adquirir relacionamento.",
+    "nome": "Banrisul",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BB",
+        "nome": "Banco do Brasil"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      },
+      {
+        "issuer_id": "BR_INTER",
+        "nome": "Inter&Co"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que relacionamento regional e acesso à folha sustentem depósitos e serviços com retorno suficiente sobre capital e despesas. A condição decisiva é resultado recorrente após crédito e custo de aquisição da folha. Reversões de provisão podem favorecer o trimestre sem comprovar rentabilidade persistente da franquia.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_BANRISUL.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 18,15"
+          },
+          {
+            "fato": "val.BR_BANRISUL.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 36,19"
+          },
+          {
+            "fato": "val.BR_BANRISUL.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+99,37%"
+          },
+          {
+            "fato": "val.BR_BANRISUL.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,85%"
+          },
+          {
+            "fato": "val.BR_BANRISUL.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+105,89%"
+          }
+        ],
+        "texto": "Preço de referência R$ 18,15 e alvo R$ 36,19, com potencial +99,37%. A hipótese de investimento deve ser confrontada com o custo do capital 11,85% e retorno esperado +105,89%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Conhecimento local e relacionamento podem apoiar retenção e financiamento. A renovação da folha reforça acesso ao cliente, mas tem preço, prazo e obrigação de monetizar. A tese exige custo de captação, ativação e receita recorrente depois de despesas; exclusividade contratual não comprova retorno excedente nem é perpétua.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:37:14.665765+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O lucro melhorou sequencialmente, ainda abaixo das bases anuais. Reversões de provisões de crédito e contingências trabalhistas contribuíram para a melhora, enquanto a margem financeira caiu no trimestre. A solução de crédito problemático com desconto e reclassificação exige separar redução de saldo, provisão e efetivo recebimento.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que relacionamento regional e acesso à folha sustentem depósitos e serviços com retorno suficiente sobre capital e despesas. A condição decisiva é resultado recorrente após crédito e custo de aquisição da folha. Reversões de provisão podem favorecer o trimestre sem comprovar rentabilidade persistente da franquia. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +105,89%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Concentração regional, crédito, contingências e custo da folha podem reduzir retorno. Garantias e depósitos judiciais têm liquidez própria. Controle estatal, direitos por classe e capital prudencial exigem conciliação, sem presumir interferência ou distribuição."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_BANRISUL.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+138,74%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +138,74%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Banrisul — retorno regional depois de provisões e aquisição da folha",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A análise separa lucro, margem financeira, crédito e contingências. Alterações de classificação e prazo de baixa afetam comparabilidade; crescimento de empresas grandes inclui mudança de enquadramento. O índice de eficiência também incorpora despesas de provisão e não demonstra queda uniforme dos custos operacionais.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar margem de clientes e tesouraria, captação, crédito problemático e recuperação em caixa. Separar despesas recorrentes e reversões de contingências. Acompanhar retorno da folha adquirida, capital principal e resultado por ação. Conferir regras de classificação de empresas e baixa antes de comparar crescimento e atraso.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_BANRISUL.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,85%"
+          },
+          {
+            "fato": "val.BR_BANRISUL.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "27,10%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,85% e a dispersão entre métodos 27,10%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

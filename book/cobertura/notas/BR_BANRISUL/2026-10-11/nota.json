@@ -1,0 +1,183 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_BANRISUL",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Banrisul — retorno regional depois de provisões e aquisição da folha",
+  "resumo": "A hipótese é que relacionamento regional e acesso à folha sustentem depósitos e serviços com retorno suficiente sobre capital e despesas. A condição decisiva é resultado recorrente após crédito e custo de aquisição da folha. Reversões de provisão podem favorecer o trimestre sem comprovar rentabilidade persistente da franquia. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_BANRISUL.rating_codigo}}, com retorno esperado {{fact:val.BR_BANRISUL.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Banco regional com atuação concentrada no Sul, em varejo, empresas, crédito, captação e serviços. A relação com o Rio Grande do Sul inclui controle acionário e contrato de folha de pagamento. Franquia regional e distribuição precisam produzir margem depois de perdas e do custo de adquirir relacionamento.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que relacionamento regional e acesso à folha sustentem depósitos e serviços com retorno suficiente sobre capital e despesas. A condição decisiva é resultado recorrente após crédito e custo de aquisição da folha. Reversões de provisão podem favorecer o trimestre sem comprovar rentabilidade persistente da franquia.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_BANRISUL.preco}} e alvo {{fact:val.BR_BANRISUL.preco_alvo}}, com potencial {{fact:val.BR_BANRISUL.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_BANRISUL.ke}} e retorno esperado {{fact:val.BR_BANRISUL.etr}}.",
+      "evidencias": [
+        "val.BR_BANRISUL.preco",
+        "val.BR_BANRISUL.preco_alvo",
+        "val.BR_BANRISUL.upside",
+        "val.BR_BANRISUL.ke",
+        "val.BR_BANRISUL.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Monitorar margem de clientes e tesouraria, captação, crédito problemático e recuperação em caixa. Separar despesas recorrentes e reversões de contingências. Acompanhar retorno da folha adquirida, capital principal e resultado por ação. Conferir regras de classificação de empresas e baixa antes de comparar crescimento e atraso.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_BANRISUL.ke}} e a dispersão entre métodos {{fact:val.BR_BANRISUL.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_BANRISUL.ke",
+        "val.BR_BANRISUL.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Concentração regional, crédito, contingências e custo da folha podem reduzir retorno. Garantias e depósitos judiciais têm liquidez própria. Controle estatal, direitos por classe e capital prudencial exigem conciliação, sem presumir interferência ou distribuição.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_BANRISUL.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_BANRISUL.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Relacionamento da folha amplia receita recorrente, crédito estabiliza e a eficiência operacional se confirma sem depender de reversões. O cenário otimista calculado pelo código é {{fact:val.BR_BANRISUL.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_BANRISUL.preco_alvo}}, com retorno esperado {{fact:val.BR_BANRISUL.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Crédito e contingências absorvem margem, o preço da folha pesa no retorno e capital prudencial limita crescimento ou distribuição. O cenário pessimista calculado pelo código é {{fact:val.BR_BANRISUL.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_BANRISUL.preco}} e alvo do modelo aberto {{fact:val.BR_BANRISUL.preco_alvo}}, com potencial {{fact:val.BR_BANRISUL.upside}}. Retorno total esperado {{fact:val.BR_BANRISUL.etr}} e custo do capital próprio {{fact:val.BR_BANRISUL.ke}}. A dispersão entre métodos é {{fact:val.BR_BANRISUL.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_BANRISUL.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_BANRISUL.consenso_alvo}}; a diferença {{fact:val.BR_BANRISUL.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "A análise separa lucro, margem financeira, crédito e contingências. Alterações de classificação e prazo de baixa afetam comparabilidade; crescimento de empresas grandes inclui mudança de enquadramento. O índice de eficiência também incorpora despesas de provisão e não demonstra queda uniforme dos custos operacionais.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "A página de estrutura acionária identifica controle estadual e classes distintas, com atualização histórica. Seus percentuais não foram tratados como composição atual. Direitos, relacionadas, política de capital e obrigações do contrato de folha devem ser conciliados com documentos vigentes. Posição prudencial e contábil têm perímetros diferentes.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Conhecimento local e relacionamento podem apoiar retenção e financiamento. A renovação da folha reforça acesso ao cliente, mas tem preço, prazo e obrigação de monetizar. A tese exige custo de captação, ativação e receita recorrente depois de despesas; exclusividade contratual não comprova retorno excedente nem é perpétua.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "O lucro melhorou sequencialmente, ainda abaixo das bases anuais. Reversões de provisões de crédito e contingências trabalhistas contribuíram para a melhora, enquanto a margem financeira caiu no trimestre. A solução de crédito problemático com desconto e reclassificação exige separar redução de saldo, provisão e efetivo recebimento.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "O contrato de folha foi renovado com pagamento antecipado no semestre; renovação futura depende de novo preço. O investimento deve ser avaliado pelo retorno durante sua vigência. Adiantamento ao fundo garantidor e depósitos judiciais têm tratamento e liquidez próprios. Capital prudencial e patrimônio contábil não são excedente equivalente.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se resultado melhora por reversões e desconto de crédito enquanto margem comercial e receita da folha não remuneram o investimento. Uma franquia regional forte pode coexistir com capital limitado e retorno insuficiente ao acionista.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Monitorar margem de clientes e tesouraria, captação, crédito problemático e recuperação em caixa. Separar despesas recorrentes e reversões de contingências. Acompanhar retorno da folha adquirida, capital principal e resultado por ação. Conferir regras de classificação de empresas e baixa antes de comparar crescimento e atraso.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_BANRISUL.etr}}, custo do capital {{fact:val.BR_BANRISUL.ke}} e dispersão entre métodos {{fact:val.BR_BANRISUL.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_BANRISUL.etr",
+        "val.BR_BANRISUL.ke",
+        "val.BR_BANRISUL.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Margem recorrente e receita da folha não remuneram aquisição e despesas durante o contrato.",
+    "Reversões deixam de sustentar resultado e perdas finais ou contingências excedem provisões.",
+    "Capital principal não acompanha risco e obrigações sem restringir retorno ao acionista.",
+    "Novos documentos alteram direitos por classe, controle ou comparabilidade das carteiras."
+  ],
+  "lacunas_de_dados": [
+    "Demonstrações completas, capital prudencial e ajustes contábeis não foram integralmente reconciliados.",
+    "Retorno da folha, retenção dos clientes e custo total durante a vigência não foram comprovados.",
+    "Liquidez e desfecho de garantias, acordos e depósitos judiciais exigem documentação completa.",
+    "A estrutura acionária consultada é histórica; composição vigente e direitos por classe permanecem a conferir.",
+    "Comparabilidade de carteiras e critérios de baixa exige séries na mesma base.",
+    "Guidance, tom agregado da gestão e próximo catalisador datado não foram classificados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Banrisul",
+      "titulo": "Perfil e estrutura do negócio",
+      "url": "https://ri.banrisul.com.br/quem-somos/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Banrisul",
+      "titulo": "Análise de desempenho, crédito, folha de pagamento e capital",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/fafdeaf3-7820-4ec2-9477-ce501c563c96/41da6488-f4f6-3f22-1205-d7efc2f02ac6?origin=2",
+      "publicado_em": "2026-08-20",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Banrisul",
+      "titulo": "Estrutura acionária com data histórica de atualização",
+      "url": "https://ri.banrisul.com.br/governanca-corporativa/estrutura-acionaria/",
+      "publicado_em": "2025-08-06",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

@@ -1,0 +1,138 @@
+# Companhia Brasileira de Alumínio — Iniciação de cobertura — 2026-10-11
+
+**CBA — integração energética, custo de alumínio e caixa após obrigações**
+
+Brasil · Materiais · Narrativa da gestão (IA) · visão neutra, convicção 1 de 5
+
+## Resumo
+
+A hipótese é que integração, confiabilidade e mix de produtos sustentem caixa por ação depois de manutenção, energia e financiamento. A condição decisiva é separar vantagem produtiva de ciclo favorável do metal e de efeitos contábeis. Reciclagem e energia podem ampliar caminhos de retorno, mas precisam remunerar capital, contratos e obrigações. Mudança de controle anunciada é um evento condicionado, cujo preço não substitui valuation ou comprova recebimento pelo acionista minoritário. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Venda, com retorno esperado -45,73%. A visão da nota não altera esse modelo.
+
+## Ficha do modelo
+
+| Indicador | Valor |
+|---|---|
+| Preço de referência | R$ 11,17 |
+| Preço-alvo de 12 meses | R$ 6,02 |
+| Potencial até o alvo | -46,12% |
+| Rating da cobertura | Venda |
+| Confiança do modelo | B |
+| Cenário otimista | R$ 14,49 |
+| Probabilidade implícita do otimista | 27,80% |
+| Cenário pessimista | R$ 3,14 |
+| Probabilidade implícita do pessimista | 0,00% |
+| Custo de capital próprio (ke) | 13,19% |
+| WACC | 10,43% |
+| Crescimento na perpetuidade | 5,29% |
+| Retorno total esperado | -45,73% |
+| Alpha relativo aos pares | -40,02% |
+| P/L à frente | 12,2x |
+| Preço sobre valor patrimonial | 1,4x |
+| Alvo médio do consenso público | R$ 9,50 |
+| Alvo da casa contra o consenso | -36,65% |
+
+## Negócio
+
+Companhia integrada de bauxita, alumina, alumínio primário, transformados e reciclagem, com ativos e contratos de energia. Preço internacional, mix, câmbio, custo energético e disponibilidade industrial determinam margem. Energia excedente tem resultado próprio, distinto do consumo alocado ao alumínio. Empreendimentos não consolidados, minoritários e contratos financeiros têm direitos específicos; ativos de níquel suspensos não foram tratados como produção corrente.
+
+## Pilares da tese
+
+**Hipótese e condição decisiva.** A hipótese é que integração, confiabilidade e mix de produtos sustentem caixa por ação depois de manutenção, energia e financiamento. A condição decisiva é separar vantagem produtiva de ciclo favorável do metal e de efeitos contábeis. Reciclagem e energia podem ampliar caminhos de retorno, mas precisam remunerar capital, contratos e obrigações. Mudança de controle anunciada é um evento condicionado, cujo preço não substitui valuation ou comprova recebimento pelo acionista minoritário.
+
+**Preço e premissas do modelo.** Preço de referência R$ 11,17 e alvo R$ 6,02, com potencial -46,12%. A hipótese de investimento deve ser confrontada com o custo do capital 13,19% e retorno esperado -45,73%.
+
+## Vetores de valor
+
+| Vetor | Direção | Sensibilidade | Leitura |
+|---|---|---|---|
+| Conversão econômica em caixa | incerto | alta | Acompanhar produção, vendas, mix, custo de alumina, energia e manutenção. Conciliar contratos, geração própria e concessões vencidas. Separar giro, risco sacado, dividendos de participadas, juros capitalizados e derivativos. Verificar capex adiado, dívida, UBP e mudança de controle antes de inferir retorno por ação. |
+| Premissas de avaliação | incerto | alta | O custo do capital próprio é 13,19% e a dispersão entre métodos 40,86%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída. |
+
+## Catalisadores
+
+| Data | Tipo | Direção | Descrição |
+|---|---|---|---|
+| sem data | m_a | incerto | Condições e eventual fechamento da alienação do controle; verificar direitos, oferta e efeitos por ação sem antecipar conclusão. |
+| sem data | resultado | incerto | Resultados e evolução de energia, manutenção e financiamento; reavaliar caixa sem promover novação de UBP a margem recorrente. |
+
+## Riscos
+
+| Risco | Probabilidade | Impacto |
+|---|---|---|
+| Preço do metal, câmbio, energia e disponibilidade podem comprimir caixa. Manutenção, risco sacado, dívida e obrigações de concessões exigem capital. Mudança de controle anunciada não garante fechamento ou valor ao minoritário. | média | alto |
+| A diferença entre o alvo do modelo e o consenso público é -36,65%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas. | média | médio |
+
+## Cenários
+
+- **Otimista.** Confiabilidade, custo energético e mix sustentam caixa após manutenção e financiamento, remunerando capital e preservando retorno ao acionista ao longo do ciclo. O cenário otimista calculado pelo código é R$ 14,49.
+- **Base.** Caso-base do modelo em R$ 6,02, com retorno esperado -45,73%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.
+- **Pessimista.** Preços e custos deterioram enquanto contratos, manutenção adiada, dívida e obrigações consomem caixa e restringem retorno por ação. O cenário pessimista calculado pelo código é R$ 3,14.
+
+## Valuation
+
+Preço de referência R$ 11,17 e alvo do modelo aberto R$ 6,02, com potencial -46,12%. Retorno total esperado -45,73% e custo do capital próprio 13,19%. A dispersão entre métodos é 40,86%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 9,50; a diferença -36,65% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.
+
+## Último resultado
+
+O resultado descreve normalização da refinaria e maior produção, junto com preço favorável do alumínio. O fluxo livre gerencial tem tratamento de juros, derivativos, arrendamentos e participação na CBA Energia; não foi presumido idêntico ao fluxo contábil. A novação de UBP posterior ao trimestre distingue assinatura e liquidação financeira. Projeções, direção de guidance, tom e reação do mercado não foram classificados. Nenhum evento posterior foi incorporado retrospectivamente ao modelo recebido.
+
+Guidance: não avaliado. Tom da gestão: não avaliado.
+
+## Governança
+
+O portal apresenta Votorantim como acionista controlador. O contrato de alienação anunciado e o resultado trimestral descrevem fechamento sujeito a condições concorrenciais e regulatórias; a conclusão até a consulta não foi comprovada. A revisão intermediária não equivale a auditoria completa. A companhia mantém gestão de concessões vencidas enquanto aguarda deliberação do poder concedente, sem confirmação de renovação. Direitos do minoritário, oferta e ajustes de preço exigem documentos próprios.
+
+## Indústria e posição competitiva
+
+**Posição competitiva a comprovar.** Integração da cadeia e energia podem apoiar confiabilidade e custo; contratos, geração hídrica e necessidades de manutenção impedem presumir energia gratuita ou vantagem permanente. Mix de maior valor agregado precisa sustentar margem e fidelidade, com comparação de produtos equivalentes. Custo do alumínio líquido não abrange sozinho todo o custo entregue do portfólio. Alegações ambientais, premiações e certificações não foram convertidas automaticamente em poder de preço.
+
+## Qualidade dos resultados e geração de caixa
+
+**Recorrência e caixa.** Receita, volume e EBITDA ajustado crescem sequencialmente e na comparação anual, favorecidos pelo preço do metal e pelo mix. Dividendos de empresas não consolidadas integram ajuste ao EBITDA, sem efeito de caixa operacional. Capitalização de juros altera apresentação do resultado financeiro, sem eliminar obrigação. O fluxo gerencial é positivo, mas giro inclui risco sacado, encargos e adiantamentos, enquanto estoques e recebíveis absorvem recursos; essa composição exige conciliação com a demonstração contábil.
+
+## Alocação de capital e financiamento
+
+**Retorno e financiamento.** Dívida líquida e alavancagem recuam sequencialmente, com contribuição de caixa, derivativos e maior resultado no denominador. A medida inclui arrendamentos, mas risco sacado e outros compromissos exigem leitura própria. Linha rotativa disponível não foi sacada. Capex menor reflete priorização e deslocamento de desembolsos, sem comprovar redução estrutural da manutenção. A renegociação do uso do bem público foi liquidada depois do trimestre, com novação; seu efeito não é margem industrial recorrente.
+
+## Contratese e evidência que invalida a visão
+
+**O que enfraquece a hipótese.** A hipótese enfraquece se resultados dependem de preço elevado do alumínio e de efeito contábil, sem produtividade equivalente. Energia contratada, concessões vencidas e manutenção podem reduzir a vantagem integrada. Caixa beneficiado por giro e capex adiado não se repete indefinidamente. Alienação do controle e remuneração do minoritário dependem de condições, direitos e documentos próprios.
+
+## Indicadores de acompanhamento
+
+**Indicadores operacionais e de caixa.** Acompanhar produção, vendas, mix, custo de alumina, energia e manutenção. Conciliar contratos, geração própria e concessões vencidas. Separar giro, risco sacado, dividendos de participadas, juros capitalizados e derivativos. Verificar capex adiado, dívida, UBP e mudança de controle antes de inferir retorno por ação.
+
+**Revisão das premissas.** Reavaliar retorno esperado -45,73%, custo do capital 13,19% e dispersão entre métodos 40,86% quando novos resultados e documentos forem incorporados pelo código.
+
+## Gatilhos de revisão
+
+- Preço e mix não sustentam margem depois de energia e custo entregue.
+- Giro e investimento adiado explicam caixa sem geração recorrente equivalente.
+- Concessões, dívida e manutenção impedem remuneração do capital.
+- Novos documentos alteram controle, direitos do minoritário ou recursos atribuíveis por ação.
+
+## Lacunas de dados
+
+- Demonstrações completas, custo entregue e caixa atribuível por entidade não foram integralmente reconciliados.
+- Risco sacado, juros capitalizados e fluxo gerencial exigem ponte contábil completa.
+- Concessões vencidas e obrigações de energia precisam de diligência regulatória específica.
+- Fechamento da mudança de controle, oferta e tratamento do minoritário não foram comprovados.
+- Desembolsos deslocados e retorno de manutenção, reforma e expansão precisam ser conciliados.
+- Guidance, tom agregado e percepção do mercado não foram classificados.
+- Datas futuras do calendário dinâmico não foram conciliadas em registro primário arquivado.
+
+## Pares de comparação
+
+Bradespar, CSN Mineração, CSN Siderúrgica Nacional, Ero Copper, Gerdau, Metalúrgica Gerdau, Suzano, Unipar
+
+## Fontes públicas
+
+- [F1] Companhia Brasileira de Alumínio — Perfil da companhia integrada de alumínio (publicação não informada; consulta 2026-10-11): https://ri.cba.com.br/a-cba/quem-somos/
+- [F2] Companhia Brasileira de Alumínio — Resultado trimestral, energia, fluxo, dívida e mudança condicional de controle (2026-08-04; consulta 2026-10-11): https://api.mziq.com/mzfilemanager/v2/d/73a23c6c-b1fd-4abb-beba-056de474f2ec/d1dbe170-751e-3a4f-acd2-ecc96e9f2a46?origin=2
+- [F3] Companhia Brasileira de Alumínio — Demonstrações intermediárias: estrutura, fluxo, controle e UBP (2026-08-05; consulta 2026-10-11): https://api.mziq.com/mzfilemanager/v2/d/73a23c6c-b1fd-4abb-beba-056de474f2ec/3f64cf69-7508-46e3-b81c-772ea404f4b6?origin=2
+- [F4] Companhia Brasileira de Alumínio — Composição acionária apresentada no portal (publicação não informada; consulta 2026-10-11): https://ri.cba.com.br/composicao-acionaria/
+- [F5] Companhia Brasileira de Alumínio — Repositório público de fatos e comunicados (publicação não informada; consulta 2026-10-11): https://ri.cba.com.br/publicacoes-cvm/fatos-relevantes-comunicados-ao-mercado-e-avisos-aos-acionistas/
+
+## Aviso
+
+Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.

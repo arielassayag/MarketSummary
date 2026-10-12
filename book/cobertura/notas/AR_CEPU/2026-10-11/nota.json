@@ -1,0 +1,172 @@
+{
+  "mind": "codex",
+  "issuer_id": "AR_CEPU",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Central Puerto — geração, cobrança e retorno do reinvestimento",
+  "resumo": "A hipótese exige confiabilidade de geração e contratos remuneradores convertidos em recebimentos após combustível e manutenção. O crescimento só melhora o investimento se novas concessões e projetos gerarem retorno superior ao custo do capital. Diversificação deve ser analisada como uso de capital sujeito a prova, sem presumir sinergia. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.AR_CEPU.rating_codigo}}, com retorno esperado {{fact:val.AR_CEPU.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Geradora argentina com ativos térmicos, hidrelétricos e renováveis, além de participações e diversificação em florestas e mineração. Capacidade operada, participações em afiliadas e resultados atribuíveis são perímetros distintos.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese exige confiabilidade de geração e contratos remuneradores convertidos em recebimentos após combustível e manutenção. O crescimento só melhora o investimento se novas concessões e projetos gerarem retorno superior ao custo do capital. Diversificação deve ser analisada como uso de capital sujeito a prova, sem presumir sinergia.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.AR_CEPU.preco}} e alvo {{fact:val.AR_CEPU.preco_alvo}}, com potencial {{fact:val.AR_CEPU.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.AR_CEPU.ke}} e retorno esperado {{fact:val.AR_CEPU.etr}}.",
+      "evidencias": [
+        "val.AR_CEPU.preco",
+        "val.AR_CEPU.preco_alvo",
+        "val.AR_CEPU.upside",
+        "val.AR_CEPU.ke",
+        "val.AR_CEPU.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar geração, disponibilidade com e sem manutenção, mix de contratos e receitas efetivamente cobradas. Reconciliar combustível, recebíveis, caixa acumulado, dívida, garantias e desembolsos de novos negócios por participação econômica.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.AR_CEPU.ke}} e a dispersão entre métodos {{fact:val.AR_CEPU.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.AR_CEPU.ke",
+        "val.AR_CEPU.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Hidrologia, indisponibilidade, combustível, remuneração e atraso de recebíveis podem pressionar caixa. Diversificação e concessões novas ampliam necessidade de capital; renda financeira ou reavaliação não substitui geração recorrente.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.AR_CEPU.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.AR_CEPU.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Disponibilidade, remuneração e cobrança sustentam caixa; reinvestimentos têm financiamento compatível e retorno incremental comprovado. O cenário otimista calculado pelo código é {{fact:val.AR_CEPU.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.AR_CEPU.preco_alvo}}, com retorno esperado {{fact:val.AR_CEPU.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Falhas de geração e cobrança coincidem com maior necessidade de capital, reduzindo caixa residual e a flexibilidade financeira. O cenário pessimista calculado pelo código é {{fact:val.AR_CEPU.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.AR_CEPU.preco}} e alvo do modelo aberto {{fact:val.AR_CEPU.preco_alvo}}, com potencial {{fact:val.AR_CEPU.upside}}. Retorno total esperado {{fact:val.AR_CEPU.etr}} e custo do capital próprio {{fact:val.AR_CEPU.ke}}. A dispersão entre métodos é {{fact:val.AR_CEPU.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.AR_CEPU.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.AR_CEPU.consenso_alvo}}; a diferença {{fact:val.AR_CEPU.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "A apresentação trimestral declara mudanças de moeda funcional, de definição de EBITDA e de classificação operacional. Os anexos ainda exigem conciliação do tratamento inflacionário; a comparação de caixa deve respeitar a duração explícita de cada coluna.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "O mapa de participações deve distinguir gestão, controle e direitos econômicos. A diversificação precisa ser confrontada com limites de capital e proteção dos minoritários, sem atribuir o total dos ativos de afiliadas ao acionista listado.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Disponibilidade e localização de ativos podem favorecer despacho e atendimento contratual. A vantagem precisa ser demonstrada em margem e cobrança, considerando hidrologia, manutenção e regras do mercado; capacidade instalada não mede sozinha retorno econômico.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "A apresentação informa mudança de moeda funcional para dólar e nova definição de EBITDA ajustado. A compra própria de combustível muda a apresentação de receita. A tabela de caixa mistura períodos acumulados diferentes. A análise deve reconstruir bases comparáveis antes de inferir tendência.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Concessões, aquisições e investimentos em novos negócios requerem financiamento e retorno próprios. Resultados de afiliadas e reavaliações não equivalem a dividendos recebidos. É necessário eliminar sobreposição e separar caixa disponível, compromissos de projetos e direitos dos demais investidores.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A tese enfraquece quando expansão contábil de receita ou resultado de participações não se traduz em caixa, e novos negócios absorvem recursos sem remuneração demonstrada. Mudanças de base podem também criar aparente melhora sem avanço operacional.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Acompanhar geração, disponibilidade com e sem manutenção, mix de contratos e receitas efetivamente cobradas. Reconciliar combustível, recebíveis, caixa acumulado, dívida, garantias e desembolsos de novos negócios por participação econômica.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.AR_CEPU.etr}}, custo do capital {{fact:val.AR_CEPU.ke}} e dispersão entre métodos {{fact:val.AR_CEPU.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.AR_CEPU.etr",
+        "val.AR_CEPU.ke",
+        "val.AR_CEPU.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+    "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+    "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+    "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "Mudança de moeda funcional e menção a tratamento inflacionário nos anexos requerem conciliação com as demonstrações originais.",
+    "Nova fórmula de EBITDA, combustível e classificação de contratos exigem série comparável.",
+    "Os períodos da tabela de caixa não foram convertidos em uma série trimestral homogênea.",
+    "Afiliadas, concessões, garantias e investimentos de diversificação permanecem a conciliar.",
+    "O arquivo financeiro da SEC consultado contém páginas como imagens; não se alegou extração completa das notas.",
+    "Guidance, tom da gestão e catalisador futuro datado não foram avaliados em material completo.",
+    "Não há evidência suficiente de percepção do mercado, posicionamento ou interesse vendido.",
+    "Os documentos não foram integralmente reconciliados ao modelo; a consulta atual não comprova disponibilidade histórica no corte recebido."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Central Puerto",
+      "titulo": "Perfil de geração e diversificação",
+      "url": "https://www.centralpuerto.com/en/about-us-2025/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Central Puerto",
+      "titulo": "Apresentação do resultado trimestral e anexos",
+      "url": "https://www.centralpuerto.com/wp-content/uploads/2026/08/20260811_2Q26_ENG_CEPU-1.pdf",
+      "publicado_em": "2026-08-11",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

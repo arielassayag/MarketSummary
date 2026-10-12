@@ -1,0 +1,222 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_AEROMEXICO",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Aeroméxico — monetização da rede, contratos de frota e caixa atribuível",
+  "resumo": "A hipótese é que conexões, fidelidade e diferenciação comercial sustentem receita suficiente para remunerar a frota ao longo do ciclo. A condição decisiva é caixa atribuível após manutenção, expansão, arrendamentos e financiamento. Ocupação e oferta premium precisam produzir retorno econômico, sem depender de liquidez contratada ou antecipação de passagens. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.MX_AEROMEXICO.rating_codigo}}, com retorno esperado {{fact:val.MX_AEROMEXICO.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Holding de aviação, carga e fidelidade, com rede mexicana e internacional e serviço de longo curso. A companhia combina oferta premium e conexões com parceiros. A ação local e o recibo americano preservam direitos e unidades próprias; capacidade e receita por assento não representam caixa líquido para o acionista.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que conexões, fidelidade e diferenciação comercial sustentem receita suficiente para remunerar a frota ao longo do ciclo. A condição decisiva é caixa atribuível após manutenção, expansão, arrendamentos e financiamento. Ocupação e oferta premium precisam produzir retorno econômico, sem depender de liquidez contratada ou antecipação de passagens.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.MX_AEROMEXICO.preco}} e alvo {{fact:val.MX_AEROMEXICO.preco_alvo}}, com potencial {{fact:val.MX_AEROMEXICO.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.MX_AEROMEXICO.ke}} e retorno esperado {{fact:val.MX_AEROMEXICO.etr}}.",
+      "evidencias": [
+        "val.MX_AEROMEXICO.preco",
+        "val.MX_AEROMEXICO.preco_alvo",
+        "val.MX_AEROMEXICO.upside",
+        "val.MX_AEROMEXICO.ke",
+        "val.MX_AEROMEXICO.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar receita e custo por capacidade, realização doméstica e internacional, fidelidade e composição premium. Conciliar passagens pré-vendidas, caixa após manutenção e contratos de frota, capital e direitos por instrumento. Confirmar condições da parceria, uso do crédito e estágio da recompra.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.MX_AEROMEXICO.ke}} e a dispersão entre métodos {{fact:val.MX_AEROMEXICO.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.MX_AEROMEXICO.ke",
+        "val.MX_AEROMEXICO.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Resultado anunciado para depois do fechamento; revisar caixa após contratos de frota e monetização da rede.",
+      "data": "2026-10-19",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F6"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Combustível, moeda, disponibilidade de aeronaves e demanda podem reduzir margem. Manutenção e arrendamentos exigem caixa, mesmo com receita forte. Mudanças na parceria, condições aeroportuárias e capital por instrumento podem limitar monetização da rede.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F4"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.MX_AEROMEXICO.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.MX_AEROMEXICO.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Realização e disciplina de capacidade sustentam caixa atribuível depois de manutenção, frota e financiamento. O cenário otimista calculado pelo código é {{fact:val.MX_AEROMEXICO.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.MX_AEROMEXICO.preco_alvo}}, com retorno esperado {{fact:val.MX_AEROMEXICO.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Custos, restrições de operação e reinvestimento consomem receita enquanto obrigações e direitos limitam retorno por ação. O cenário pessimista calculado pelo código é {{fact:val.MX_AEROMEXICO.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.MX_AEROMEXICO.preco}} e alvo do modelo aberto {{fact:val.MX_AEROMEXICO.preco_alvo}}, com potencial {{fact:val.MX_AEROMEXICO.upside}}. Retorno total esperado {{fact:val.MX_AEROMEXICO.etr}} e custo do capital próprio {{fact:val.MX_AEROMEXICO.ke}}. A dispersão entre métodos é {{fact:val.MX_AEROMEXICO.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.MX_AEROMEXICO.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.MX_AEROMEXICO.consenso_alvo}}; a diferença {{fact:val.MX_AEROMEXICO.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "A receita maior coexiste com margem menor e prejuízo. As perspectivas seguintes dependem de combustível, moeda, demanda e utilização; não são convertidas em previsão própria. Eventos de crédito, parceria e recompra posteriores permanecem separados das demonstrações trimestrais.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Revisar controle, relacionadas, direitos da ação e do recibo e capital disponível por subsidiária. O comunicado da companhia descreve decisão judicial favorável à parceria, sem substituir leitura da decisão e condições completas.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Rede de conexões, fidelidade e oferta de longo curso podem sustentar receita por cliente. A condição é preservar realização depois do custo completo de operar a rede. A companhia comunicou manutenção da parceria com Delta após decisão judicial; a comparação independente e o alcance jurídico integral continuam necessários.",
+    "evidencias": [
+      "F1",
+      "F2",
+      "F4"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "O release mostra receita maior e deterioração de margem diante de combustível e custos, com prejuízo líquido apesar do resultado operacional positivo. Caixa operacional é apresentado no acumulado e exige separar pré-venda de passagens, juros e manutenção. EBITDAR ajustado tem limitações expressas e não substitui pagamento de arrendamentos e renovação da frota.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "A renovação posterior de crédito confirma disponibilidade contratual, sem tornar o limite não sacado caixa recebido. Investimentos, manutenção e principal de arrendamentos consomem recursos. A proposta de recompra era intenção sujeita a aprovação e discricionariedade; não comprova autorização final ou execução.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F5"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se oferta premium e conectividade elevam receita sem remunerar o custo completo de frota. Caixa sustentado por passagens futuras ou crédito disponível pode ocultar geração insuficiente após manutenção e contratos de uso.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Acompanhar receita e custo por capacidade, realização doméstica e internacional, fidelidade e composição premium. Conciliar passagens pré-vendidas, caixa após manutenção e contratos de frota, capital e direitos por instrumento. Confirmar condições da parceria, uso do crédito e estágio da recompra.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.MX_AEROMEXICO.etr}}, custo do capital {{fact:val.MX_AEROMEXICO.ke}} e dispersão entre métodos {{fact:val.MX_AEROMEXICO.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.MX_AEROMEXICO.etr",
+        "val.MX_AEROMEXICO.ke",
+        "val.MX_AEROMEXICO.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+    "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+    "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+    "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "Release e calendário foram consultados publicamente; o download separado foi recusado e não há cópia local recebida.",
+    "Arrendamentos, manutenção e caixa após passagens antecipadas exigem conciliação integral.",
+    "Decisão judicial, parceria e direitos de capital precisam de documentos completos.",
+    "Aprovação e execução da proposta de recompra não foram comprovadas.",
+    "Guidance agregado, tom da gestão e comparação competitiva permanecem a avaliar."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo Aeroméxico",
+      "titulo": "Perfil do grupo e instrumentos de capital",
+      "url": "https://ir.aeromexico.com/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo Aeroméxico",
+      "titulo": "Resultado trimestral e conciliação de medidas gerenciais",
+      "url": "https://ir.aeromexico.com/static-files/5a9eac4b-5357-4344-8f6d-8548ad608cca",
+      "publicado_em": "2026-07-13",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo Aeroméxico",
+      "titulo": "Renovação e expansão de crédito da subsidiária",
+      "url": "https://ir.aeromexico.com/static-files/b0d23afd-bf1c-446f-a4d4-bff60e7aa91c",
+      "publicado_em": "2026-09-30",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F4",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo Aeroméxico",
+      "titulo": "Comunicado sobre decisão judicial e parceria Delta",
+      "url": "https://ir.aeromexico.com/static-files/1f5fb667-02c8-43df-9763-3bf49cbbefe5",
+      "publicado_em": "2026-08-20",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F5",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo Aeroméxico",
+      "titulo": "Intenção de propor programa de recompra",
+      "url": "https://ir.aeromexico.com/static-files/b813249a-6591-42b3-8090-32898bbc162e",
+      "publicado_em": "2026-08-24",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F6",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo Aeroméxico",
+      "titulo": "Calendário de resultado e conferência",
+      "url": "https://ir.aeromexico.com/static-files/30ea3e8d-0097-44f2-909b-e6601f9cdd59",
+      "publicado_em": "2026-09-30",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

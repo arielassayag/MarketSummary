@@ -1,0 +1,398 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "c669998f533b0a75df1c1096424a2a0d91a78cb7d769f0b636eb6e15cca1ca9f",
+    "factbook": "5fdfe2db8ec07839da326ba697291646ca32627513885c38f12e80021bce356e",
+    "nota_json": "848c19dde67b9d32378eeda06d358b3ef697d43cca8f3b7f7c26981d287df648"
+  },
+  "is_synthetic": false,
+  "issuer_id": "AR_TGS",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-29",
+  "published_at": "2026-10-12T02:35:06.345249+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O comunicado descreve decisão de investimento no projeto integrado de líquidos e aprovação de incentivo para uma expansão específica. Esses estágios não comprovam operação nem extensão do benefício a todo projeto. Financiamento, garantias e compromissos precisam ser confrontados com caixa residual.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em Em revisão, com retorno esperado Em revisão. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Contratos e disponibilidade sustentam caixa; projetos entram em operação com financiamento e remuneração compatíveis, sem pressionar manutenção. O cenário otimista calculado pelo código é Em revisão.",
+      "pessimista": "Preços, tarifa real e falhas operacionais pressionam caixa enquanto obras exigem mais capital, reduzindo flexibilidade e retorno ao acionista. O cenário pessimista calculado pelo código é Em revisão."
+    },
+    "comentario_valuation": "Preço de referência US$ 26,39 e alvo do modelo aberto Em revisão, com potencial Em revisão. Retorno total esperado Em revisão e custo do capital próprio 15,72%. A dispersão entre métodos é 38,09%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é US$ 40,88; a diferença Em revisão não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese enfraquece se a melhora do resultado depende de base interrompida ou itens excepcionais e a expansão absorve caixa antes de contratos remuneradores. Volume potencial da bacia não substitui retorno atribuível demonstrado.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.AR_TGS.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 26,39"
+      },
+      {
+        "fato": "val.AR_TGS.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_TGS.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_TGS.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_TGS.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.AR_TGS.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_TGS.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_TGS.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_TGS.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_TGS.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "15,72%"
+      },
+      {
+        "fato": "val.AR_TGS.wacc",
+        "rotulo": "WACC",
+        "valor": "15,00%"
+      },
+      {
+        "fato": "val.AR_TGS.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.AR_TGS.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_TGS.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_TGS.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "10,0x"
+      },
+      {
+        "fato": "val.AR_TGS.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,7x"
+      },
+      {
+        "fato": "val.AR_TGS.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 40,88"
+      },
+      {
+        "fato": "val.AR_TGS.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Em revisão"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Transportadora de Gas del Sur",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e segmentos de transporte, líquidos e serviços",
+        "url": "https://www.tgs.com.ar/en/investors/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Transportadora de Gas del Sur",
+        "publicado_em": "2026-08-03",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado trimestral e projetos",
+        "url": "https://www.sec.gov/Archives/edgar/data/931427/000093142726000010/tgs.htm"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+      "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+      "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+      "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+    ],
+    "governanca": "A diligência deve conciliar a cadeia de controle e direitos do acionista listado, distinguindo ações, recibos, participações e garantias. A relação com parceiros não dispensa análise da destinação de caixa e dos conflitos de capital.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar capacidade contratada, disponibilidade, tarifas reais, composição de líquidos e custos energéticos. Separar manutenção de expansão, eventos não recorrentes, cronograma, contratos, desembolsos e direitos econômicos antes de avaliar distribuição.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.AR_TGS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.AR_TGS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "15,72%"
+          },
+          {
+            "fato": "val.AR_TGS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "38,09%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado Em revisão, custo do capital 15,72% e dispersão entre métodos 38,09% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "AR_TGS",
+    "lacunas_de_dados": [
+      "Seguro, provisões e efeitos de base exigem reconciliação ao resultado e ao caixa.",
+      "Financiamento, garantias, contratação e orçamento dos projetos não foram integralmente reconstituídos.",
+      "A resolução original do incentivo e sua aplicação exata não foram verificadas; registra-se o relato do emissor.",
+      "Controle, base por ação e obrigações de subsidiárias precisam de conciliação atual.",
+      "Guidance, tom da gestão e catalisador futuro datado não foram avaliados em material completo.",
+      "Não há evidência suficiente de percepção do mercado, posicionamento ou interesse vendido.",
+      "Os documentos não foram integralmente reconciliados ao modelo; a consulta atual não comprova disponibilidade histórica no corte recebido."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Transportadora argentina de gás, produtora e comercializadora de líquidos e prestadora de serviços ligados à infraestrutura de gás. Transporte regulado, margem de líquidos e serviços têm riscos, contratos e usos de capital distintos.",
+    "nome": "Transportadora de Gas del Sur",
+    "o_que_mudou": null,
+    "pais": "Argentina",
+    "pares": [
+      {
+        "issuer_id": "AR_YPF",
+        "nome": "YPF"
+      },
+      {
+        "issuer_id": "BR_BRAVA",
+        "nome": "Brava Energia"
+      },
+      {
+        "issuer_id": "BR_COSAN",
+        "nome": "Cosan"
+      },
+      {
+        "issuer_id": "BR_PRIO",
+        "nome": "PRIO"
+      },
+      {
+        "issuer_id": "BR_RECV",
+        "nome": "PetroRecôncavo"
+      },
+      {
+        "issuer_id": "BR_ULTRAPAR",
+        "nome": "Ultrapar"
+      },
+      {
+        "issuer_id": "BR_VIBRA",
+        "nome": "Vibra Energia"
+      },
+      {
+        "issuer_id": "CO_ECOPETROL",
+        "nome": "Ecopetrol"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese exige que contratos, confiabilidade e margem de líquidos produzam caixa após manutenção e financiamento. A expansão pode ampliar a capacidade econômica, mas só cria valor com demanda contratada, execução e remuneração do investimento. Decisão de investir não equivale a operação ou retorno realizado.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.AR_TGS.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "US$ 26,39"
+          },
+          {
+            "fato": "val.AR_TGS.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.AR_TGS.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.AR_TGS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "15,72%"
+          },
+          {
+            "fato": "val.AR_TGS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "Em revisão"
+          }
+        ],
+        "texto": "Preço de referência US$ 26,39 e alvo Em revisão, com potencial Em revisão. A hipótese de investimento deve ser confrontada com o custo do capital 15,72% e retorno esperado Em revisão.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Infraestrutura e conexão com produção podem favorecer atendimento e contratação. A vantagem precisa ser comprovada por disponibilidade, qualidade, custos e duração de contratos; crescimento da bacia não garante que toda renda seja capturada pelo acionista.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:35:06.345249+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O comunicado diferencia transporte, líquidos e serviços, em pesos constantes. A comparação inclui base anterior afetada por interrupção e itens de seguro ou provisão. Resultado abrangente não é lucro atribuível; recorrência exige separar esses componentes e a conversão em caixa.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese exige que contratos, confiabilidade e margem de líquidos produzam caixa após manutenção e financiamento. A expansão pode ampliar a capacidade econômica, mas só cria valor com demanda contratada, execução e remuneração do investimento. Decisão de investir não equivale a operação ou retorno realizado. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Em revisão, com retorno esperado Em revisão. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Remuneração regulada, preços de líquidos, disponibilidade e custo de energia podem deteriorar caixa. Obras e financiamento acrescentam risco de execução, enquanto classificação ou melhoria de crédito não elimina exposição econômica."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.AR_TGS.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "Em revisão"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é Em revisão. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Energia",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "TGS — transporte contratado, líquidos e disciplina na expansão",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O resultado exige distinguir efeito de base, seguros e provisões da operação recorrente. O projeto de líquidos está em estágio de investimento; expansão e incentivo mencionados têm escopo específico. A ponte integral de lucro, caixa e capital permanece pendente.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar capacidade contratada, disponibilidade, tarifas reais, composição de líquidos e custos energéticos. Separar manutenção de expansão, eventos não recorrentes, cronograma, contratos, desembolsos e direitos econômicos antes de avaliar distribuição.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.AR_TGS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "15,72%"
+          },
+          {
+            "fato": "val.AR_TGS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "38,09%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 15,72% e a dispersão entre métodos 38,09%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

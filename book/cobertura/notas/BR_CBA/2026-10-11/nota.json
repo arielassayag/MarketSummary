@@ -1,0 +1,230 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_CBA",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "CBA — integração energética, custo de alumínio e caixa após obrigações",
+  "resumo": "A hipótese é que integração, confiabilidade e mix de produtos sustentem caixa por ação depois de manutenção, energia e financiamento. A condição decisiva é separar vantagem produtiva de ciclo favorável do metal e de efeitos contábeis. Reciclagem e energia podem ampliar caminhos de retorno, mas precisam remunerar capital, contratos e obrigações. Mudança de controle anunciada é um evento condicionado, cujo preço não substitui valuation ou comprova recebimento pelo acionista minoritário. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_CBA.rating_codigo}}, com retorno esperado {{fact:val.BR_CBA.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Companhia integrada de bauxita, alumina, alumínio primário, transformados e reciclagem, com ativos e contratos de energia. Preço internacional, mix, câmbio, custo energético e disponibilidade industrial determinam margem. Energia excedente tem resultado próprio, distinto do consumo alocado ao alumínio. Empreendimentos não consolidados, minoritários e contratos financeiros têm direitos específicos; ativos de níquel suspensos não foram tratados como produção corrente.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que integração, confiabilidade e mix de produtos sustentem caixa por ação depois de manutenção, energia e financiamento. A condição decisiva é separar vantagem produtiva de ciclo favorável do metal e de efeitos contábeis. Reciclagem e energia podem ampliar caminhos de retorno, mas precisam remunerar capital, contratos e obrigações. Mudança de controle anunciada é um evento condicionado, cujo preço não substitui valuation ou comprova recebimento pelo acionista minoritário.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_CBA.preco}} e alvo {{fact:val.BR_CBA.preco_alvo}}, com potencial {{fact:val.BR_CBA.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_CBA.ke}} e retorno esperado {{fact:val.BR_CBA.etr}}.",
+      "evidencias": [
+        "val.BR_CBA.preco",
+        "val.BR_CBA.preco_alvo",
+        "val.BR_CBA.upside",
+        "val.BR_CBA.ke",
+        "val.BR_CBA.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar produção, vendas, mix, custo de alumina, energia e manutenção. Conciliar contratos, geração própria e concessões vencidas. Separar giro, risco sacado, dividendos de participadas, juros capitalizados e derivativos. Verificar capex adiado, dívida, UBP e mudança de controle antes de inferir retorno por ação.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_CBA.ke}} e a dispersão entre métodos {{fact:val.BR_CBA.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_CBA.ke",
+        "val.BR_CBA.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Condições e eventual fechamento da alienação do controle; verificar direitos, oferta e efeitos por ação sem antecipar conclusão.",
+      "data": null,
+      "tipo": "m_a",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F4",
+        "F5"
+      ]
+    },
+    {
+      "descricao": "Resultados e evolução de energia, manutenção e financiamento; reavaliar caixa sem promover novação de UBP a margem recorrente.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Preço do metal, câmbio, energia e disponibilidade podem comprimir caixa. Manutenção, risco sacado, dívida e obrigações de concessões exigem capital. Mudança de controle anunciada não garante fechamento ou valor ao minoritário.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_CBA.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_CBA.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Confiabilidade, custo energético e mix sustentam caixa após manutenção e financiamento, remunerando capital e preservando retorno ao acionista ao longo do ciclo. O cenário otimista calculado pelo código é {{fact:val.BR_CBA.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_CBA.preco_alvo}}, com retorno esperado {{fact:val.BR_CBA.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Preços e custos deterioram enquanto contratos, manutenção adiada, dívida e obrigações consomem caixa e restringem retorno por ação. O cenário pessimista calculado pelo código é {{fact:val.BR_CBA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_CBA.preco}} e alvo do modelo aberto {{fact:val.BR_CBA.preco_alvo}}, com potencial {{fact:val.BR_CBA.upside}}. Retorno total esperado {{fact:val.BR_CBA.etr}} e custo do capital próprio {{fact:val.BR_CBA.ke}}. A dispersão entre métodos é {{fact:val.BR_CBA.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_CBA.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_CBA.consenso_alvo}}; a diferença {{fact:val.BR_CBA.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "O resultado descreve normalização da refinaria e maior produção, junto com preço favorável do alumínio. O fluxo livre gerencial tem tratamento de juros, derivativos, arrendamentos e participação na CBA Energia; não foi presumido idêntico ao fluxo contábil. A novação de UBP posterior ao trimestre distingue assinatura e liquidação financeira. Projeções, direção de guidance, tom e reação do mercado não foram classificados. Nenhum evento posterior foi incorporado retrospectivamente ao modelo recebido.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "O portal apresenta Votorantim como acionista controlador. O contrato de alienação anunciado e o resultado trimestral descrevem fechamento sujeito a condições concorrenciais e regulatórias; a conclusão até a consulta não foi comprovada. A revisão intermediária não equivale a auditoria completa. A companhia mantém gestão de concessões vencidas enquanto aguarda deliberação do poder concedente, sem confirmação de renovação. Direitos do minoritário, oferta e ajustes de preço exigem documentos próprios.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Integração da cadeia e energia podem apoiar confiabilidade e custo; contratos, geração hídrica e necessidades de manutenção impedem presumir energia gratuita ou vantagem permanente. Mix de maior valor agregado precisa sustentar margem e fidelidade, com comparação de produtos equivalentes. Custo do alumínio líquido não abrange sozinho todo o custo entregue do portfólio. Alegações ambientais, premiações e certificações não foram convertidas automaticamente em poder de preço.",
+    "evidencias": [
+      "F1",
+      "F2",
+      "F3"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Receita, volume e EBITDA ajustado crescem sequencialmente e na comparação anual, favorecidos pelo preço do metal e pelo mix. Dividendos de empresas não consolidadas integram ajuste ao EBITDA, sem efeito de caixa operacional. Capitalização de juros altera apresentação do resultado financeiro, sem eliminar obrigação. O fluxo gerencial é positivo, mas giro inclui risco sacado, encargos e adiantamentos, enquanto estoques e recebíveis absorvem recursos; essa composição exige conciliação com a demonstração contábil.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Dívida líquida e alavancagem recuam sequencialmente, com contribuição de caixa, derivativos e maior resultado no denominador. A medida inclui arrendamentos, mas risco sacado e outros compromissos exigem leitura própria. Linha rotativa disponível não foi sacada. Capex menor reflete priorização e deslocamento de desembolsos, sem comprovar redução estrutural da manutenção. A renegociação do uso do bem público foi liquidada depois do trimestre, com novação; seu efeito não é margem industrial recorrente.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se resultados dependem de preço elevado do alumínio e de efeito contábil, sem produtividade equivalente. Energia contratada, concessões vencidas e manutenção podem reduzir a vantagem integrada. Caixa beneficiado por giro e capex adiado não se repete indefinidamente. Alienação do controle e remuneração do minoritário dependem de condições, direitos e documentos próprios.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Acompanhar produção, vendas, mix, custo de alumina, energia e manutenção. Conciliar contratos, geração própria e concessões vencidas. Separar giro, risco sacado, dividendos de participadas, juros capitalizados e derivativos. Verificar capex adiado, dívida, UBP e mudança de controle antes de inferir retorno por ação.",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F4",
+        "F5"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_CBA.etr}}, custo do capital {{fact:val.BR_CBA.ke}} e dispersão entre métodos {{fact:val.BR_CBA.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_CBA.etr",
+        "val.BR_CBA.ke",
+        "val.BR_CBA.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Preço e mix não sustentam margem depois de energia e custo entregue.",
+    "Giro e investimento adiado explicam caixa sem geração recorrente equivalente.",
+    "Concessões, dívida e manutenção impedem remuneração do capital.",
+    "Novos documentos alteram controle, direitos do minoritário ou recursos atribuíveis por ação."
+  ],
+  "lacunas_de_dados": [
+    "Demonstrações completas, custo entregue e caixa atribuível por entidade não foram integralmente reconciliados.",
+    "Risco sacado, juros capitalizados e fluxo gerencial exigem ponte contábil completa.",
+    "Concessões vencidas e obrigações de energia precisam de diligência regulatória específica.",
+    "Fechamento da mudança de controle, oferta e tratamento do minoritário não foram comprovados.",
+    "Desembolsos deslocados e retorno de manutenção, reforma e expansão precisam ser conciliados.",
+    "Guidance, tom agregado e percepção do mercado não foram classificados.",
+    "Datas futuras do calendário dinâmico não foram conciliadas em registro primário arquivado."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Companhia Brasileira de Alumínio",
+      "titulo": "Perfil da companhia integrada de alumínio",
+      "url": "https://ri.cba.com.br/a-cba/quem-somos/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Companhia Brasileira de Alumínio",
+      "titulo": "Resultado trimestral, energia, fluxo, dívida e mudança condicional de controle",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/73a23c6c-b1fd-4abb-beba-056de474f2ec/d1dbe170-751e-3a4f-acd2-ecc96e9f2a46?origin=2",
+      "publicado_em": "2026-08-04",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Companhia Brasileira de Alumínio",
+      "titulo": "Demonstrações intermediárias: estrutura, fluxo, controle e UBP",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/73a23c6c-b1fd-4abb-beba-056de474f2ec/3f64cf69-7508-46e3-b81c-772ea404f4b6?origin=2",
+      "publicado_em": "2026-08-05",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F4",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Companhia Brasileira de Alumínio",
+      "titulo": "Composição acionária apresentada no portal",
+      "url": "https://ri.cba.com.br/composicao-acionaria/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F5",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Companhia Brasileira de Alumínio",
+      "titulo": "Repositório público de fatos e comunicados",
+      "url": "https://ri.cba.com.br/publicacoes-cvm/fatos-relevantes-comunicados-ao-mercado-e-avisos-aos-acionistas/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

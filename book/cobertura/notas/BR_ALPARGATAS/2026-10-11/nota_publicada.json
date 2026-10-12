@@ -1,0 +1,463 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "268c4d586bca6e9318743ce4320899ee5dee64afde04da64afd9e780eb562ea3",
+    "factbook": "19235e4243db5a23916452310db1d273e5c6ed5326dc74fe893075c1e03ee6d8",
+    "nota_json": "4db0e19e041b0c27d910bdf491a25ca5879d13fa8589b82df193e6a8b4774174"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_ALPARGATAS",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T02:35:30.788643+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "Manutenção, desenvolvimento de produto e capital de giro competem com distribuição e marketing. O material relata disciplina de investimento e redução do consumo de giro frente ao comparável. A tese exige caixa depois de juros e reinvestimento, com ponte entre capital, classes de ação e valor atribuível. Indicador de retorno informado não comprova rentabilidade de cada iniciativa.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-06",
+        "descricao": "Divulgação programada de resultados no calendário do emissor, sujeita a confirmação.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F4"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 10,09, com retorno esperado -32,32%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Serviço, mix e demanda final sustentam margem, com estoque disciplinado e caixa após custo completo; a distribuição internacional amplia alcance com retorno demonstrado. O cenário otimista calculado pelo código é R$ 12,92.",
+      "pessimista": "Consumo e canais enfraquecem, marketing e estoque absorvem recursos e a mudança internacional reduz rentabilidade; ajustes não se convertem em caixa atribuível. O cenário pessimista calculado pelo código é R$ 7,51."
+    },
+    "comentario_valuation": "Preço de referência R$ 15,82 e alvo do modelo aberto R$ 10,09, com potencial -36,22%. Retorno total esperado -32,32% e custo do capital próprio 11,71%. A dispersão entre métodos é 51,98%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 15,44; a diferença -34,64% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "A marca pode recuperar venda ao canal sem recuperação equivalente do consumo final. Mudanças no distribuidor podem antecipar pedidos ou reduzir receita por par. Se margem depender de mix temporário ou corte de investimento, melhora operacional não confirmará retorno sustentável ao titular.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_ALPARGATAS.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 15,82"
+      },
+      {
+        "fato": "val.BR_ALPARGATAS.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 10,09"
+      },
+      {
+        "fato": "val.BR_ALPARGATAS.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-36,22%"
+      },
+      {
+        "fato": "val.BR_ALPARGATAS.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_ALPARGATAS.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_ALPARGATAS.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 12,92"
+      },
+      {
+        "fato": "val.BR_ALPARGATAS.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_ALPARGATAS.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 7,51"
+      },
+      {
+        "fato": "val.BR_ALPARGATAS.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_ALPARGATAS.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,71%"
+      },
+      {
+        "fato": "val.BR_ALPARGATAS.wacc",
+        "rotulo": "WACC",
+        "valor": "11,02%"
+      },
+      {
+        "fato": "val.BR_ALPARGATAS.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_ALPARGATAS.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-32,32%"
+      },
+      {
+        "fato": "val.BR_ALPARGATAS.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-52,90%"
+      },
+      {
+        "fato": "val.BR_ALPARGATAS.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "12,8x"
+      },
+      {
+        "fato": "val.BR_ALPARGATAS.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "3,0x"
+      },
+      {
+        "fato": "val.BR_ALPARGATAS.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 15,44"
+      },
+      {
+        "fato": "val.BR_ALPARGATAS.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-34,64%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Alpargatas",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Apresentação original: negócio e canais",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1553887&numSequencia=1078593&numVersao=1"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Alpargatas",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1553887&numSequencia=1078593&numVersao=1"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Alpargatas",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Apresentação original entregue à CVM: indicadores e capital de giro",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1553887&numSequencia=1078593&numVersao=1"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F4",
+        "instituicao": "Alpargatas",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário anual público de eventos",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/a8ec6c13-3ef3-4e4a-9879-c684188aa2cb/4065bc59-48c5-3aff-b5ad-c2dfad8063e5?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+      "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+      "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+      "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+    ],
+    "governanca": "A análise utiliza a apresentação original entregue à CVM e calendário público do emissor. O RI recusou o acesso, sem contorno; não foi atribuída leitura a esse portal. Classes de ação, partes relacionadas, controle e capital precisam ser confrontados com o modelo. A data de publicação específica da apresentação não foi inferida do calendário da conferência.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "Venda ao canal e ao consumidor, mix, serviço e estoque por região; receita e margem em moeda constante; despesas, capital de giro, caixa após juros e investimento. Distinguir sazonalidade norte-americana e reconhecimento de receita sob o novo distribuidor; conciliar classes de ação e base do modelo.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ALPARGATAS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-32,32%"
+          },
+          {
+            "fato": "val.BR_ALPARGATAS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,71%"
+          },
+          {
+            "fato": "val.BR_ALPARGATAS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "51,98%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -32,32%, custo do capital 11,71% e dispersão entre métodos 51,98% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_ALPARGATAS",
+    "lacunas_de_dados": [
+      "O portal de RI recusou acesso; nenhuma cópia foi obtida ou bloqueio contornado.",
+      "Release integral, ITR e notas não foram reconciliados nesta pesquisa.",
+      "A publicação específica da apresentação não foi comprovada.",
+      "Caixa após juros, passivos e retorno de projetos precisam de conciliação.",
+      "Mudança do distribuidor norte-americano e classes de ação exigem análise contratual.",
+      "Participação de mercado, guidance agregado e posicionamento não foram comprovados integralmente."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Fabricante e gestora de Havaianas, com produção, distribuição e presença no Brasil e no exterior. Venda ao canal, venda direta e consumo final têm sazonalidades distintas. O modelo norte-americano de distribuição foi alterado; evolução de volume e preço precisa preservar essa base. Produtos infantis e novas ocasiões de uso ampliam a marca, sem garantir demanda ou retorno de marketing.",
+    "nome": "Alpargatas",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_AFYA",
+        "nome": "Afya"
+      },
+      {
+        "issuer_id": "BR_AZZAS",
+        "nome": "Azzas 2154"
+      },
+      {
+        "issuer_id": "BR_CEA",
+        "nome": "C&A Modas"
+      },
+      {
+        "issuer_id": "BR_COGNA",
+        "nome": "Cogna"
+      },
+      {
+        "issuer_id": "BR_CURY",
+        "nome": "Cury"
+      },
+      {
+        "issuer_id": "BR_CYRELA",
+        "nome": "Cyrela"
+      },
+      {
+        "issuer_id": "BR_DIRECIONAL",
+        "nome": "Direcional"
+      },
+      {
+        "issuer_id": "BR_EZTEC",
+        "nome": "EZTec"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "A hipótese é que serviço, mix e disciplina operacional recuperem margem e caixa de Havaianas. A condição decisiva é sustentar demanda final sem transferir estoque ou custo excessivo ao distribuidor. Crescimento internacional e lucro ajustado precisam ser conciliados com câmbio, mudança de canal, investimento e direitos por classe de ação.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ALPARGATAS.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 15,82"
+          },
+          {
+            "fato": "val.BR_ALPARGATAS.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 10,09"
+          },
+          {
+            "fato": "val.BR_ALPARGATAS.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-36,22%"
+          },
+          {
+            "fato": "val.BR_ALPARGATAS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,71%"
+          },
+          {
+            "fato": "val.BR_ALPARGATAS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-32,32%"
+          }
+        ],
+        "texto": "Preço de referência R$ 15,82 e alvo R$ 10,09, com potencial -36,22%. A hipótese de investimento deve ser confrontada com o custo do capital 11,71% e retorno esperado -32,32%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Marca, distribuição e reconhecimento podem sustentar recorrência e preço. A apresentação relata evolução do atendimento e de participação de mercado, sem comprovação independente da base subjacente. No exterior, expansão de portas e venda ao distribuidor não comprovam giro ao consumidor nem margem equivalente ao modelo anterior.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:35:30.788643+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Volume, receita e EBITDA cresceram anualmente na apresentação, com melhora da margem bruta. EBITDA ajustado exclui itens extraordinários. A operação norte-americana teve menor volume e receita trimestrais, apesar do avanço semestral do volume, após mudança do modelo. Gráficos de caixa e capital de giro não substituem conciliação integral das demonstrações e notas.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que serviço, mix e disciplina operacional recuperem margem e caixa de Havaianas. A condição decisiva é sustentar demanda final sem transferir estoque ou custo excessivo ao distribuidor. Crescimento internacional e lucro ajustado precisam ser conciliados com câmbio, mudança de canal, investimento e direitos por classe de ação. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado -32,32%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Consumo, competição e estoques podem exigir remarcação. Distribuidor internacional, câmbio e sazonalidade alteram receita e margem. Investimento em marca e expansão pode consumir caixa antes da demanda; ajustes gerenciais e classes de ação exigem conciliação."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ALPARGATAS.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-34,64%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -34,64%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Consumo discricionário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Alpargatas — recuperação operacional e distribuição internacional",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A apresentação do trimestre mostra crescimento anual de volume, receita e EBITDA, com melhora de margens. O mercado norte-americano apresentou queda trimestral de volume e receita após alteração do modelo de distribuição, apesar de volume semestral maior. Europa e mercados distribuidores possuem dinâmicas diferentes. A reconciliação completa de caixa, itens extraordinários e passivos permanece pendente. O calendário contém divulgação futura programada; não comprova publicação já realizada ou resultado futuro.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Venda ao canal e ao consumidor, mix, serviço e estoque por região; receita e margem em moeda constante; despesas, capital de giro, caixa após juros e investimento. Distinguir sazonalidade norte-americana e reconhecimento de receita sob o novo distribuidor; conciliar classes de ação e base do modelo.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_ALPARGATAS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,71%"
+          },
+          {
+            "fato": "val.BR_ALPARGATAS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "51,98%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,71% e a dispersão entre métodos 51,98%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

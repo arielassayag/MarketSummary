@@ -1,0 +1,397 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "ccb209d69ccfb2ad1220c38e96707cf53ecc90f99663ec7ae9046d6e528e12ba",
+    "factbook": "bceda7390e0568a1c0a3c5c88b0fcc95bf928851b2a2b5ed01ba96f59ac0adb4",
+    "nota_json": "33f5aee3e8ec6b8fb3a4855c53302600743d0f32ae5be73611cd81e00edbf5bd"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_PICPAY",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-12",
+  "published_at": "2026-10-12T02:37:38.268966+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O aumento de caixa também veio de aporte, enquanto originação e financiamento de terceiros afetam o fluxo. Capital ainda na holding não integra automaticamente índices prudenciais da operação. A aquisição da KOVR, concluída depois do trimestre e denominada Kev Seguros, amplia o perímetro; seus efeitos posteriores não foram atribuídos ao balanço recebido.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em US$ 24,63, com retorno esperado +115,21%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Safras maduras confirmam margem após perdas, serviços aprofundam relacionamento e o capital financia crescimento com retorno atribuível sustentável. O cenário otimista calculado pelo código é US$ 28,02.",
+      "pessimista": "Perdas e financiamento absorvem monetização, a normalização tributária reduz lucro e integração de seguros consome capital sem retorno suficiente. O cenário pessimista calculado pelo código é US$ 21,49."
+    },
+    "comentario_valuation": "Preço de referência US$ 11,98 e alvo do modelo aberto US$ 24,63, com potencial +105,56%. Retorno total esperado +115,21% e custo do capital próprio 10,89%. A dispersão entre métodos é 12,29%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é US$ 19,72; a diferença +24,91% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se receita por cliente cresce com crédito ainda imaturo, enquanto margem econômica depende de benefício fiscal e custos excluídos. Expansão do perímetro e aporte podem aumentar atividade sem melhorar retorno atribuível recorrente.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_PICPAY.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 11,98"
+      },
+      {
+        "fato": "val.BR_PICPAY.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 24,63"
+      },
+      {
+        "fato": "val.BR_PICPAY.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+105,56%"
+      },
+      {
+        "fato": "val.BR_PICPAY.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_PICPAY.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_PICPAY.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 28,02"
+      },
+      {
+        "fato": "val.BR_PICPAY.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_PICPAY.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 21,49"
+      },
+      {
+        "fato": "val.BR_PICPAY.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_PICPAY.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,89%"
+      },
+      {
+        "fato": "val.BR_PICPAY.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_PICPAY.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.BR_PICPAY.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+115,21%"
+      },
+      {
+        "fato": "val.BR_PICPAY.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+87,16%"
+      },
+      {
+        "fato": "val.BR_PICPAY.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "4,6x"
+      },
+      {
+        "fato": "val.BR_PICPAY.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,2x"
+      },
+      {
+        "fato": "val.BR_PICPAY.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 19,72"
+      },
+      {
+        "fato": "val.BR_PICPAY.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+24,91%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "PicPay",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e estrutura do negócio",
+        "url": "https://investor.picpay.com/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "PicPay",
+        "publicado_em": "2026-08-24",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado, reconciliações, safras e projeções divulgadas",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/f4269298-97ef-427d-ac29-04f9d6a6054a/c9fc5e49-8a8c-1705-19c0-a36dd7681ea6?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Safras maduras não confirmam margem e perdas compatíveis com crescimento.",
+      "Lucro recorrente atribuível não substitui benefício fiscal concentrado e ajustes excluídos.",
+      "Capital da operação ou financiamento não sustenta a expansão e o perímetro adquirido.",
+      "Novos documentos alteram garantias, riscos retidos ou direitos do titular da ação."
+    ],
+    "governanca": "A holding listada e as entidades reguladas precisam preservar controle, minoritários e direitos por classe. Garantias públicas, entidades de financiamento e relacionadas exigem documentação completa. A seguradora adquirida está fora dos números trimestrais recebidos; a integração não pode ser presumida concluída a partir do fechamento da compra.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Monitorar safras, perda final, atraso e renegociação, sem somar medidas sobrepostas. Conciliar margem após perdas, tributos, remuneração em ações e resultado atribuível. Separar depósitos, captação institucional e capital da holding. Acompanhar integração da seguradora e projeções divulgadas para a operação anterior à aquisição.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_PICPAY.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+115,21%"
+          },
+          {
+            "fato": "val.BR_PICPAY.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,89%"
+          },
+          {
+            "fato": "val.BR_PICPAY.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "12,29%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +115,21%, custo do capital 10,89% e dispersão entre métodos 12,29% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_PICPAY",
+    "lacunas_de_dados": [
+      "Demonstrações completas, tributos, garantias e financiamento não foram integralmente reconciliados.",
+      "Há projeções para o período seguinte, sem a seguradora; sua direção frente à projeção anterior não foi classificada, por isso guidance permanece não determinado.",
+      "Resultado e consumo de capital da seguradora após a compra permanecem prospectivos no material recebido.",
+      "Perdas finais por safra e efetividade das garantias não têm comprovação independente nesta pesquisa.",
+      "Direitos por classe, relacionadas e transmissão do resultado da holding exigem conciliação.",
+      "Tom agregado da gestão, percepção do mercado e próximo catalisador datado não foram comprovados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Plataforma digital de pagamentos que amplia crédito, cartões, depósitos, seguros e investimentos. A entidade listada, PicS N.V., é uma holding estrangeira. Receitas transacionais e financeiras interagem com crédito, garantias e financiamento. Atividade no aplicativo e definição de cliente principal não demonstram relacionamento exclusivo.",
+    "nome": "PicPay (PicS N.V.)",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BB",
+        "nome": "Banco do Brasil"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      },
+      {
+        "issuer_id": "BR_INTER",
+        "nome": "Inter&Co"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que relacionamento e distribuição digital produzam receitas após perdas com reinvestimento e capital compatíveis. A condição decisiva é confirmar margem de safras maduras e resultado atribuível recorrente. Crescimento de receita por cliente pode vir acompanhado de risco, subsídio ou benefício fiscal sem repetição.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_PICPAY.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "US$ 11,98"
+          },
+          {
+            "fato": "val.BR_PICPAY.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "US$ 24,63"
+          },
+          {
+            "fato": "val.BR_PICPAY.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+105,56%"
+          },
+          {
+            "fato": "val.BR_PICPAY.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,89%"
+          },
+          {
+            "fato": "val.BR_PICPAY.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+115,21%"
+          }
+        ],
+        "texto": "Preço de referência US$ 11,98 e alvo US$ 24,63, com potencial +105,56%. A hipótese de investimento deve ser confrontada com o custo do capital 10,89% e retorno esperado +115,21%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Pagamentos e conta podem alimentar distribuição de produtos e financiamento. A vantagem precisa ser comprovada por retenção, custo total e receita depois de perdas. As definições de cliente ativo e principal permitem diferentes comportamentos; receita e custo por cliente têm periodicidade própria e não autorizam comparação direta com outro banco.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:37:38.268966+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O lucro recebeu benefício fiscal concentrado no trimestre, além da operação. A receita gerencial ajusta hedge e o lucro ajustado exclui remuneração em ações. A renegociação com desconto reduziu formação de crédito problemático; não é recuperação integral em caixa. Cobertura depende de mistura, garantias e expectativa de recuperação a testar.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que relacionamento e distribuição digital produzam receitas após perdas com reinvestimento e capital compatíveis. A condição decisiva é confirmar margem de safras maduras e resultado atribuível recorrente. Crescimento de receita por cliente pode vir acompanhado de risco, subsídio ou benefício fiscal sem repetição. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +115,21%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Crédito parcialmente garantido, cartões e safras novas podem revelar perdas com atraso. Financiamento, capital e integração de seguros limitam crescimento. Garantias e renegociação não eliminam cobrança, risco operacional ou necessidade de provisão."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_PICPAY.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+24,91%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +24,91%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "PicPay — monetização financeira com safras maduras e capital disponível",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O release separa resultado gerencial, contábil e ajustado. A queda de atraso inicial coexiste com maior atraso longo, que tem base distinta do estágio problemático. Custo de risco trimestral e retorno marginal sem custos compartilhados não equivalem, respectivamente, a medida anual ou retorno completo do banco.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar safras, perda final, atraso e renegociação, sem somar medidas sobrepostas. Conciliar margem após perdas, tributos, remuneração em ações e resultado atribuível. Separar depósitos, captação institucional e capital da holding. Acompanhar integração da seguradora e projeções divulgadas para a operação anterior à aquisição.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_PICPAY.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,89%"
+          },
+          {
+            "fato": "val.BR_PICPAY.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "12,29%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 10,89% e a dispersão entre métodos 12,29%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

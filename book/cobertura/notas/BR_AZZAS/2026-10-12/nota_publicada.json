@@ -1,0 +1,533 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "62d8f7f59074cd95292d2fa54aa8b179f55916cd90f3909cd09ca246ec30a393",
+    "factbook": "19235e4243db5a23916452310db1d273e5c6ed5326dc74fe893075c1e03ee6d8",
+    "nota_json": "5a6fb532fde2517702dcb48dd2e7545afc38568289f170d841e5247441b9623f"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_AZZAS",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-11",
+  "published_at": "2026-10-12T14:36:30.642135+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          }
+        ],
+        "texto": "A dívida líquida diminuiu sequencialmente, enquanto o índice de alavancagem aumentou com menor EBITDA acumulado. Recebíveis de cartões têm prazo e custo próprios. A reorganização prevê cisão, permuta e participação compartilhada de FARM, com aprovações e anuências; não comprova alienação ou recebimento. Distribuição de dívida, garantias e custos de separação ainda precisa de ponte executável.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Apreciação e aprovações da cisão, permuta e sociedade compartilhada de FARM, sem consumação ou calendário presumidos.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          }
+        ],
+        "tipo": "m_a"
+      },
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar contribuição das marcas, saúde dos parceiros e caixa depois de juros.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 22,27, com retorno esperado -3,33%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Coleções, parceiros e estoque recuperam contribuição; caixa após o custo completo reduz dívida, e aprovações permitem governança e capital coerentes com cada negócio. O cenário otimista calculado pelo código é R$ 40,74.",
+      "pessimista": "Vendas e margens enfraquecem, parceiros e perdas consomem recursos e a reorganização se prolonga ou restringe direitos sem aliviar compromissos financeiros. O cenário pessimista calculado pelo código é R$ 3,43."
+    },
+    "comentario_valuation": "O retrato recebido tem preço R$ 25,28, alvo R$ 22,27, potencial -11,90%, retorno esperado -3,33% e custo do capital 12,71%. Dispersão 50,02% e confiança C pertencem ao código. Consenso público R$ 24,43 e diferença -8,83% não comprovam percepção do mercado. Valor operacional, prioridade dos credores, direitos de terceiros e base por ação exigem ponte econômica consistente. Homologação ou reorganização anunciada não atualiza automaticamente a dívida nem o perímetro do modelo. Não se recalculam preços ou probabilidades na narrativa e não se incorporam retrospectivamente documentos posteriores. A leitura por marca e canal precisa de caixa após remarcação, recebíveis, ocupação e capital de giro. Soma das partes exige perímetro e dívida próprios, incluindo participação compartilhada da FARM e custos de separação. Uma expansão de múltiplos não está sustentada apenas pelo anúncio; a comparação deve manter bases continuadas, recorrentes e consolidadas distintas.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          }
+        ],
+        "texto": "Marcas relevantes podem não compensar queda da venda ao canal e complexidade do portfólio. Giro melhorado por provisões ou prazo de fornecedores não garante repetição de caixa. A separação pode impor custos e direitos compartilhados sem recuperar rentabilidade; anúncio não elimina execução nem dívida.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.BR_AZZAS.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 25,28"
+      },
+      {
+        "fato": "val.BR_AZZAS.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 22,27"
+      },
+      {
+        "fato": "val.BR_AZZAS.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-11,90%"
+      },
+      {
+        "fato": "val.BR_AZZAS.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_AZZAS.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_AZZAS.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 40,74"
+      },
+      {
+        "fato": "val.BR_AZZAS.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "13,50%"
+      },
+      {
+        "fato": "val.BR_AZZAS.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 3,43"
+      },
+      {
+        "fato": "val.BR_AZZAS.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "0,01%"
+      },
+      {
+        "fato": "val.BR_AZZAS.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,71%"
+      },
+      {
+        "fato": "val.BR_AZZAS.wacc",
+        "rotulo": "WACC",
+        "valor": "9,99%"
+      },
+      {
+        "fato": "val.BR_AZZAS.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_AZZAS.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-3,33%"
+      },
+      {
+        "fato": "val.BR_AZZAS.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-25,95%"
+      },
+      {
+        "fato": "val.BR_AZZAS.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "7,7x"
+      },
+      {
+        "fato": "val.BR_AZZAS.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,6x"
+      },
+      {
+        "fato": "val.BR_AZZAS.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 24,43"
+      },
+      {
+        "fato": "val.BR_AZZAS.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-8,83%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Azzas",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://ri.azzas2154.com.br/a-companhia/modelo-de-negocios/"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Azzas",
+        "publicado_em": "2026-08-12",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/2edfd667-eaa1-4187-9777-1528284720de/a99b5067-d063-1676-95ec-b9609bb74531?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Azzas",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/2edfd667-eaa1-4187-9777-1528284720de/a46f1746-35d1-a280-3de9-c2b6269e9d04?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F4",
+        "instituicao": "Azzas",
+        "publicado_em": "2026-09-02",
+        "tipo": "Relações com investidores",
+        "titulo": "Acordo de reorganização e condições precedentes",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/2edfd667-eaa1-4187-9777-1528284720de/af04645f-3aab-4f68-7d69-98a22347b317?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F5",
+        "instituicao": "Azzas",
+        "publicado_em": "2026-10-08",
+        "tipo": "Relações com investidores",
+        "titulo": "Renúncias e substituição de conselheiros",
+        "url": "https://filemanager-cdn.mziq.com/published/2edfd667-eaa1-4187-9777-1528284720de/8d37c823-aae8-4df2-9df0-d607bd760cc5"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Venda ao consumidor e recebimento do canal não confirmam recuperação do estoque.",
+      "Caixa após juros e aluguel piora apesar da geração gerencial divulgada.",
+      "Separação não comprova direitos, dívida e custos sem dupla contagem de FARM."
+    ],
+    "governanca": "O ITR recebido é uma versão revista, com revisão limitada sem modificação; a data de publicação dessa versão não foi inferida do relatório original. A reorganização propõe estruturas distintas e sociedade de FARM compartilhada, com direitos e governança próprios. O comunicado confirma substituição de conselheiros, sem equivaler a aprovação da cisão. Condições e interesses dos blocos precisam ser avaliados antes de atribuir valor por ação.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          }
+        ],
+        "texto": "Venda ao canal e ao consumidor por marca, estoque, remarcação, saúde dos franqueados e perdas de recebíveis; caixa após juros, aluguel e capex. Confirmar aprovações, dívida, garantias, governança e direitos na cisão proposta; conciliar FARM compartilhada e base por ação sem antecipar a reorganização ao modelo.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_AZZAS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-3,33%"
+          },
+          {
+            "fato": "val.BR_AZZAS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,71%"
+          },
+          {
+            "fato": "val.BR_AZZAS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "50,02%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -3,33%, custo do capital 12,71% e dispersão entre métodos 50,02% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          }
+        ],
+        "texto": "Venda ao consumidor e recebimento do canal não confirmam recuperação do estoque. Caixa após juros e aluguel piora apesar da geração gerencial divulgada. Separação não comprova direitos, dívida e custos sem dupla contagem de FARM.",
+        "titulo": "Evidência que muda a visão"
+      }
+    ],
+    "issuer_id": "BR_AZZAS",
+    "lacunas_de_dados": [
+      "A publicação específica da versão revista do ITR não foi comprovada.",
+      "As aprovações e a consumação da reorganização não foram comprovadas.",
+      "Distribuição de dívida, garantias, custos e direitos de FARM requer documentação executável.",
+      "A conciliação dos ajustes de provisão e caixa gerencial ao modelo permanece pendente.",
+      "Retorno de marcas, franquias e investimentos exige avaliação por negócio.",
+      "Guidance agregado, percepção e posicionamento de mercado não foram qualificados integralmente."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo de moda com calçados, acessórios, marcas femininas e masculinas e Hering, combinando lojas, franquias, atacado e digital. FARM também tem operação internacional. Venda ao canal e ao consumidor possuem bases e capital distintos. O acordo posterior propõe separação em companhias e sociedade compartilhada de FARM, sujeita a aprovações; esse desenho não substitui o perímetro consolidado efetivamente recebido.",
+    "nome": "Azzas 2154",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_AFYA",
+        "nome": "Afya"
+      },
+      {
+        "issuer_id": "BR_ALPARGATAS",
+        "nome": "Alpargatas"
+      },
+      {
+        "issuer_id": "BR_CEA",
+        "nome": "C&A Modas"
+      },
+      {
+        "issuer_id": "BR_COGNA",
+        "nome": "Cogna"
+      },
+      {
+        "issuer_id": "BR_CURY",
+        "nome": "Cury"
+      },
+      {
+        "issuer_id": "BR_CYRELA",
+        "nome": "Cyrela"
+      },
+      {
+        "issuer_id": "BR_DIRECIONAL",
+        "nome": "Direcional"
+      },
+      {
+        "issuer_id": "BR_EZTEC",
+        "nome": "EZTec"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          }
+        ],
+        "texto": "A hipótese é que marcas, disciplina comercial e gestão de estoque recuperem contribuição e caixa, com governança adequada ao capital de cada negócio. A condição decisiva é remunerar giro, ocupação, juros e reinvestimento. Separação anunciada não comprova novos direitos implementados, listagem concluída ou liberação de caixa; valor de FARM não pode ser contado integralmente em cada parte.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_AZZAS.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 25,28"
+          },
+          {
+            "fato": "val.BR_AZZAS.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 22,27"
+          },
+          {
+            "fato": "val.BR_AZZAS.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-11,90%"
+          },
+          {
+            "fato": "val.BR_AZZAS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,71%"
+          },
+          {
+            "fato": "val.BR_AZZAS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-3,33%"
+          }
+        ],
+        "texto": "Preço de referência R$ 25,28 e alvo R$ 22,27, com potencial -11,90%. A hipótese de investimento deve ser confrontada com o custo do capital 12,71% e retorno esperado -3,33%.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          }
+        ],
+        "texto": "A hipótese operacional depende de venda ao consumidor, saúde do canal e estoque remunerado depois de aluguel e juros. A separação proposta pode alterar governança e financiamento, mas exige aprovação e definição executável de dívida, garantias e direitos. FARM será compartilhada no desenho anunciado; seu valor não pertence integralmente a cada companhia resultante. Substituição no conselho não comprova a consumação da cisão.",
+        "titulo": "Recuperação comercial antes da separação societária"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Marcas, desenvolvimento de produto e canais podem sustentar preço e fidelidade, com risco de coleção e remarcação. Franquia e atacado dependem da saúde do parceiro, não apenas do consumidor final. FARM internacional acrescenta exposição cambial e logística. Portfólio amplo pode diversificar demanda e elevar complexidade de capital e governança.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T14:36:30.642135+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita de marcas continuadas e EBITDA recorrente recuaram anualmente, com maior pressão na venda ao canal. A visão recorrente exclui perdas e despesas; ajustes de estoque e recebíveis alteram a comparação do ciclo financeiro. O caixa operacional e pós-capex gerencial aumentou, mas precede juros e tem reclassificações próprias. A versão recebida do ITR é posterior à original.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que marcas, disciplina comercial e gestão de estoque recuperem contribuição e caixa, com governança adequada ao capital de cada negócio. A condição decisiva é remunerar giro, ocupação, juros e reinvestimento. Separação anunciada não comprova novos direitos implementados, listagem concluída ou liberação de caixa; valor de FARM não pode ser contado integralmente em cada parte. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado -3,33%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Demanda, parceiros e estoque podem reduzir contribuição. Provisões e ajustes gerenciais afetam comparabilidade; juros e separação societária exigem capital. Aprovações, governança compartilhada e direitos entre blocos podem limitar realização de valor ao acionista."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_AZZAS.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-8,83%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -8,83%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Consumo discricionário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Azzas — marcas, capital de giro e reorganização condicional",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "Receita de marcas continuadas e EBITDA recorrente recuaram anualmente, especialmente na venda ao canal; a margem bruta melhorou, com mix e bases distintas. A geração operacional e pós-capex gerencial cresceu, precedendo juros. O ciclo financeiro contém comparação ajustada por provisões de estoque e recebíveis. Dívida líquida menor coexistiu com alavancagem maior sequencialmente. Posteriormente, os blocos acionários acordaram reorganização sujeita a órgãos societários, CADE e listagem; não há consumação comprovada neste estudo. O comunicado atual confirma renúncias e eleição de substitutos no conselho até a próxima assembleia.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Venda ao canal e ao consumidor por marca, estoque, remarcação, saúde dos franqueados e perdas de recebíveis; caixa após juros, aluguel e capex. Confirmar aprovações, dívida, garantias, governança e direitos na cisão proposta; conciliar FARM compartilhada e base por ação sem antecipar a reorganização ao modelo.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_AZZAS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,71%"
+          },
+          {
+            "fato": "val.BR_AZZAS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "50,02%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 12,71% e a dispersão entre métodos 50,02%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

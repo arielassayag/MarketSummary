@@ -1,0 +1,474 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "93629b4239d7304d5ba9f4e9533d9d4f4e52be35f2ea6262f1d5be664b07808c",
+    "factbook": "514a18a021f80b567a7ae2c9113001a3c06ed28c438ddbbcfebb8c62fa308410",
+    "nota_json": "0609a2c541d055e145f2e5103058059bc0489314f12818e123c888e6ea4d1136"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_AUREN",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T14:47:05.248002+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "A dívida líquida diminui na comparação sequencial, mas a alavancagem aumenta com menor resultado usado no denominador. Liquidez inclui recursos com destinação restrita. A reorganização implementada tem etapas posteriores sujeitas a condições; protocolo de conversão do registro da CESP não comprova fechamento. Compensação estimada por restrições de geração não foi tratada como caixa recebido.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-10",
+        "descricao": "Divulgação programada de resultados; rever margem realizada, integração, restrições e serviço da dívida.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F5"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 10,61, com retorno esperado -33,92%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Contratação e operação sustentam margem realizada, integração comprovada e caixa disponível após investimento e dívida. O cenário otimista calculado pelo código é R$ 12,46.",
+      "pessimista": "Restrições, compras e perdas comerciais reduzem margem, enquanto financiamento e integração absorvem recursos. O cenário pessimista calculado pelo código é R$ 9,06."
+    },
+    "comentario_valuation": "Preço de referência R$ 16,06 e alvo do modelo aberto R$ 10,61, com potencial -33,92%. Retorno total esperado -33,92% e custo do capital próprio 11,38%. A dispersão entre métodos é n/d; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 14,62; a diferença -27,43% não constitui evidência de percepção do mercado. Avaliação por ativo e contratos deve preservar hidrologia, restrições de geração, compras e risco de contraparte. Dívida e recursos vinculados precisam de ponte por projeto; dividendos declarados não são recebimentos repetíveis. Valor terminal baseado em EBITDA ajustado exige margem realizada e manutenção, sem incorporar compensações ainda não recebidas.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese enfraquece se diversificação não protege margem realizada e o custo financeiro absorve a contribuição operacional. Melhor produção hídrica pode coexistir com restrições e perdas na comercialização. Simplificação societária e compensação potencial não substituem recuperação recorrente de caixa atribuível.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.BR_AUREN.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 16,06"
+      },
+      {
+        "fato": "val.BR_AUREN.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 10,61"
+      },
+      {
+        "fato": "val.BR_AUREN.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-33,92%"
+      },
+      {
+        "fato": "val.BR_AUREN.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_AUREN.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_AUREN.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 12,46"
+      },
+      {
+        "fato": "val.BR_AUREN.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_AUREN.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 9,06"
+      },
+      {
+        "fato": "val.BR_AUREN.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_AUREN.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,38%"
+      },
+      {
+        "fato": "val.BR_AUREN.wacc",
+        "rotulo": "WACC",
+        "valor": "9,11%"
+      },
+      {
+        "fato": "val.BR_AUREN.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_AUREN.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-33,92%"
+      },
+      {
+        "fato": "val.BR_AUREN.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-31,71%"
+      },
+      {
+        "fato": "val.BR_AUREN.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_AUREN.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,5x"
+      },
+      {
+        "fato": "val.BR_AUREN.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 14,62"
+      },
+      {
+        "fato": "val.BR_AUREN.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-27,43%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Auren Energia",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil institucional e negócios de energia",
+        "url": "https://www.aurenenergia.com.br/#institucional"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Auren Energia",
+        "publicado_em": "2026-08-05",
+        "tipo": "Relações com investidores",
+        "titulo": "Release de resultados, contratos, geração, integração e financiamento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/691c9da5-45e0-458f-a3da-41982b1730fc/dc5fdc3a-062b-e2db-c2c2-364fc1474185?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Auren Energia",
+        "publicado_em": "2026-06-24",
+        "tipo": "Relações com investidores",
+        "titulo": "Fato relevante de aprovação condicional da reorganização societária",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/691c9da5-45e0-458f-a3da-41982b1730fc/c13b0e33-1980-5af8-398a-cc4cdbba5f9b?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F4",
+        "instituicao": "Auren Energia",
+        "publicado_em": "2026-09-22",
+        "tipo": "Relações com investidores",
+        "titulo": "Protocolo de pedido de conversão do registro da CESP",
+        "url": "https://filemanager-cdn.mziq.com/published/691c9da5-45e0-458f-a3da-41982b1730fc/fa919008-cc35-4628-824f-538bd91c4894"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F5",
+        "instituicao": "Auren Energia",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário público de eventos futuros utilizado pelo RI",
+        "url": "https://api.mziq.com/mzevents/events/future/691c9da5-45e0-458f-a3da-41982b1730fc/pt-br"
+      }
+    ],
+    "gatilhos_revisao": [
+      "A recuperação hídrica não se traduz em margem realizada e caixa após compras de energia.",
+      "Recursos vinculados ou garantias de projetos limitam a distribuição à holding.",
+      "Compensações e etapas societárias estimadas não têm condições ou recebimento comprovados."
+    ],
+    "governanca": "A reorganização altera emissor de dívida, garantias e entidades; a holding assume compromissos que precisam conservar seus termos. A retirada temporária de determinados indicadores contratuais da operadora não elimina restrições dos projetos. O documento posterior registra pedido de conversão na CVM, sem comprovar conclusão das condições da etapa seguinte.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "Monitorar geração e compras por fonte, obrigações contratadas, modulação, margem realizada e risco de contraparte. Separar marcação de contratos, resultados das investidas e caixa recebido. Conferir dívida, garantias e restrições por entidade. Acompanhar condição de fechamento societário, operação comercial dos projetos e validação de eventual compensação por restrições.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_AUREN.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-33,92%"
+          },
+          {
+            "fato": "val.BR_AUREN.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,38%"
+          },
+          {
+            "fato": "val.BR_AUREN.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "n/d"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -33,92%, custo do capital 11,38% e dispersão entre métodos n/d quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A recuperação hídrica não se traduz em margem realizada e caixa após compras de energia. Recursos vinculados ou garantias de projetos limitam a distribuição à holding. Compensações e etapas societárias estimadas não têm condições ou recebimento comprovados.",
+        "titulo": "Evidência que muda a visão"
+      }
+    ],
+    "issuer_id": "BR_AUREN",
+    "lacunas_de_dados": [
+      "Demonstrações completas, contratos e fluxo livre não foram integralmente reconciliados.",
+      "Fechamento da etapa societária posterior ao protocolo da CESP não foi comprovado.",
+      "Recursos restritos, garantias e indicadores de dívida por projeto exigem documentação detalhada.",
+      "Geração física e participação econômica têm bases distintas, sem ajuste manual do modelo.",
+      "Operação comercial final e recebimento das compensações estimadas não foram confirmados.",
+      "Guidance, tom agregado da gestão, vantagem relativa e percepção do mercado não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Geradora de energia com portfólio hidrelétrico, eólico e solar e atividade de comercialização e soluções no mercado livre. A integração dos negócios adquiridos exige distinguir entidade operadora, holding e participações econômicas. Geração física divulgada pode incluir ativos de propriedade compartilhada em base diferente do resultado atribuível.",
+    "nome": "Auren Energia",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ALUPAR",
+        "nome": "Alupar"
+      },
+      {
+        "issuer_id": "BR_AXIA",
+        "nome": "Axia Energia (ex-Eletrobras)"
+      },
+      {
+        "issuer_id": "BR_CEMIG",
+        "nome": "Cemig"
+      },
+      {
+        "issuer_id": "BR_COMPASS",
+        "nome": "Compass Gás e Energia"
+      },
+      {
+        "issuer_id": "BR_COPASA",
+        "nome": "Copasa"
+      },
+      {
+        "issuer_id": "BR_COPEL",
+        "nome": "Copel"
+      },
+      {
+        "issuer_id": "BR_CPFL",
+        "nome": "CPFL Energia"
+      },
+      {
+        "issuer_id": "BR_ENERGISA",
+        "nome": "Energisa"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que portfólio e contratação reduzam o custo de atender clientes e gerem caixa recorrente após investimento e financiamento. A condição decisiva é margem realizada, com proteção e geração compatíveis com as obrigações. Receita maior, marcação de contratos e dividendos declarados por investidas não comprovam recuperação equivalente de caixa.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_AUREN.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 16,06"
+          },
+          {
+            "fato": "val.BR_AUREN.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 10,61"
+          },
+          {
+            "fato": "val.BR_AUREN.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-33,92%"
+          },
+          {
+            "fato": "val.BR_AUREN.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,38%"
+          },
+          {
+            "fato": "val.BR_AUREN.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-33,92%"
+          }
+        ],
+        "texto": "Preço de referência R$ 16,06 e alvo R$ 10,61, com potencial -33,92%. A hipótese de investimento deve ser confrontada com o custo do capital 11,38% e retorno esperado -33,92%.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Diversificação tem valor se a energia disponível atender os contratos após restrições, modulação e compras. A receita maior e a marcação de contratos não resolvem perdas na comercialização. O teste de recuperação é caixa recorrente depois do reinvestimento e serviço da dívida por entidade. Compensações potenciais e etapas societárias posteriores ao protocolo permanecem condições, sem antecipar recursos à holding.",
+        "titulo": "Margem contratada precisa tornar-se margem realizada"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Fontes e regiões distintas podem apoiar atendimento e modulação, mas hidrologia, vento, restrições e preço regional mantêm sensibilidades próprias. Escala de comercialização exige disciplina de risco e crédito; volume de energia e base de clientes não são margem. Integração societária planejada não comprova economia de custos já realizada.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T14:47:05.248002+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A receita cresce na comparação anual, enquanto o resultado operacional ajustado recua e o prejuízo permanece. A marcação de contratos futuros favorece a medida reportada, sem recebimento equivalente. Geração hídrica melhora, mas produção eólica é afetada por recurso e restrições. Comercialização tem resultado negativo mesmo após excluir efeito específico de contratos cedidos.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que portfólio e contratação reduzam o custo de atender clientes e gerem caixa recorrente após investimento e financiamento. A condição decisiva é margem realizada, com proteção e geração compatíveis com as obrigações. Receita maior, marcação de contratos e dividendos declarados por investidas não comprovam recuperação equivalente de caixa. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado -33,92%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Hidrologia, vento, restrições e preços regionais podem elevar compras ou reduzir margem. Dívida, garantias e integração exigem caixa. Marcação de contratos e compensações estimadas não comprovam recebimento ou liquidez livre."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_AUREN.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-27,43%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -27,43%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Utilidades públicas",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Auren — geração e comercialização convertidas em caixa após integração e dívida",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A contribuição por fonte, contratos e participações tem bases distintas. Dividendos declarados por investidas excedem os recebidos no período e não podem ser contados novamente como caixa livre. O projeto Cajuína tinha equipamentos em teste, com conclusão comercial estimada. A compensação por cortes de geração exigia validação, eventual contestação e adesão, sem antecipação de recebimento.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar geração e compras por fonte, obrigações contratadas, modulação, margem realizada e risco de contraparte. Separar marcação de contratos, resultados das investidas e caixa recebido. Conferir dívida, garantias e restrições por entidade. Acompanhar condição de fechamento societário, operação comercial dos projetos e validação de eventual compensação por restrições.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_AUREN.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,38%"
+          },
+          {
+            "fato": "val.BR_AUREN.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "n/d"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,38% e a dispersão entre métodos n/d. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

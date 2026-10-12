@@ -1,0 +1,217 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_BRADESPAR",
+  "data": "2026-10-12",
+  "tipo": "iniciacao",
+  "titulo": "Bradespar — valor da participação após recebimento, despesas e direitos de capital",
+  "resumo": "A hipótese é que recebimentos da participação e disciplina da holding sustentem retorno por ação depois de despesas, tributos e obrigações. A condição decisiva é transmissão efetiva do valor econômico ao titular. Desconto ao valor dos ativos é uma observação de data específica, sem garantir convergência, arbitragem ou acesso imediato ao patrimônio da investida. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_BRADESPAR.rating_codigo}}, com retorno esperado {{fact:val.BR_BRADESPAR.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Companhia de investimentos cuja participação está concentrada na Vale, com atuação em conselho e comitês da investida. Equivalência patrimonial, dividendos recebidos e valor de mercado da participação têm naturezas distintas. Ações ordinárias e preferenciais têm direitos próprios; exposição via holding não é intercambiável com propriedade direta da mineradora.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que recebimentos da participação e disciplina da holding sustentem retorno por ação depois de despesas, tributos e obrigações. A condição decisiva é transmissão efetiva do valor econômico ao titular. Desconto ao valor dos ativos é uma observação de data específica, sem garantir convergência, arbitragem ou acesso imediato ao patrimônio da investida.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_BRADESPAR.preco}} e alvo {{fact:val.BR_BRADESPAR.preco_alvo}}, com potencial {{fact:val.BR_BRADESPAR.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_BRADESPAR.ke}} e retorno esperado {{fact:val.BR_BRADESPAR.etr}}.",
+      "evidencias": [
+        "val.BR_BRADESPAR.preco",
+        "val.BR_BRADESPAR.preco_alvo",
+        "val.BR_BRADESPAR.upside",
+        "val.BR_BRADESPAR.ke",
+        "val.BR_BRADESPAR.etr"
+      ]
+    },
+    {
+      "titulo": "Recebimento e direitos determinam o retorno da holding",
+      "texto": "A representação na Vale oferece acompanhamento, sem controle sobre toda sua geração. A holding precisa demonstrar transmissão do caixa depois de gastos, tributos e obrigações de cada classe. O desconto observado pode persistir por liquidez e estrutura; não constitui arbitragem garantida. Dívida e reparação da investida concorrem com dividendos e precisam ser avaliadas antes de supor convergência.",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Monitorar participação econômica, resultado e recebimentos da Vale. Conferir despesas da holding, tributos, recursos livres e distribuição efetivamente paga. Conciliar classes, ações em tesouraria e valor dos ativos com preços da mesma data. Rever dívida e reparação da investida, separando equivalência, dividendos e caixa atribuível ao titular.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_BRADESPAR.ke}} e a dispersão entre métodos {{fact:val.BR_BRADESPAR.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_BRADESPAR.ke",
+        "val.BR_BRADESPAR.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Divulgação programada de resultados; rever equivalência, recebimentos da investida, despesas, capital e recursos distribuíveis.",
+      "data": "2026-11-12",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F4"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Concentração na Vale, ciclo mineral, obrigações da investida e despesas da holding podem reduzir retorno. Equivalência não comprova recebimento; desconto histórico, classes e proventos exigem preços, direitos e datas conciliados.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_BRADESPAR.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_BRADESPAR.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Recebimentos da participação, despesas disciplinadas e direitos claros sustentam retorno por ação, com negociação compatível com o valor econômico transmitido. O cenário otimista calculado pelo código é {{fact:val.BR_BRADESPAR.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_BRADESPAR.preco_alvo}}, com retorno esperado {{fact:val.BR_BRADESPAR.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Resultados e recebimentos da investida enfraquecem enquanto despesas, obrigações e desconto persistente limitam retorno do titular da holding. O cenário pessimista calculado pelo código é {{fact:val.BR_BRADESPAR.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_BRADESPAR.preco}} e alvo do modelo aberto {{fact:val.BR_BRADESPAR.preco_alvo}}, com potencial {{fact:val.BR_BRADESPAR.upside}}. Retorno total esperado {{fact:val.BR_BRADESPAR.etr}} e custo do capital próprio {{fact:val.BR_BRADESPAR.ke}}. A dispersão entre métodos é {{fact:val.BR_BRADESPAR.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_BRADESPAR.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_BRADESPAR.consenso_alvo}}; a diferença {{fact:val.BR_BRADESPAR.diff_consenso}} não constitui evidência de percepção do mercado. Valor líquido dos ativos exige participação econômica, tesouraria, preços do mesmo corte e obrigações da holding. O resultado de equivalência não é provento recebido. Comparação com investimento direto na Vale precisa preservar classes e liquidez; desconto histórico não deve ser aplicado novamente sobre um alvo que já contenha efeito estrutural sem demonstrar sua composição.",
+  "ultimo_resultado": "O informe descreve a queda da dívida expandida da Vale contra o ano anterior, enquanto o relatório da própria investida associa o mesmo movimento ao trimestre anterior; essa divergência de período foi preservada. O valor dos ativos usa preços e participação de uma data específica e exclui ações em tesouraria na base descrita. Não se recalculou desconto atual nem se tratou alvo do modelo como preço automaticamente realizável por soma das partes.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Ações ordinárias, preferenciais e recibos no exterior têm direitos e liquidez próprios. Participação na administração da Vale não equivale a controle nem recebimento de todo o resultado. A estrutura histórica do perfil não substitui documentos atuais de capital e acordos. Política indicativa de remuneração e pagamento passado não garantem distribuição futura ou elegibilidade de um novo comprador.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "A representação na administração superior permite acompanhar a investida, sem equivaler a controle integral de sua operação ou caixa. A concentração em mineração amplia a exposição ao mesmo ciclo e aos compromissos da Vale. Liquidez, estrutura de classes e custo da holding podem justificar diferença de negociação; não foi comprovada vantagem econômica frente ao investimento direto nem desconto atual por preço não reconciliado.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Equivalência patrimonial e lucro recuam no trimestre na comparação anual, enquanto os resultados acumulados do semestre melhoram. Menor receita financeira e maior despesa de pessoal têm contribuição própria. Lucro reconhecido da investida não é caixa recebido pela holding. O resultado financeiro inclui remuneração de aplicações e tributos a recuperar, que exige distinguir entrada efetiva, competência e recorrência.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "A companhia divulga ausência de endividamento financeiro, mas arrendamentos, distribuição a pagar e outras obrigações continuam existindo. Caixa líquido, valor contábil da participação e valor de mercado não são medidas iguais. A distribuição efetivamente paga pela holding tem comprovação no release; a remuneração posterior programada pela Vale não foi convertida em recebimento confirmado. Gastos, elegibilidade e direitos por classe precisam preceder a avaliação do retorno.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se desconto persistente reflete custos, direitos e menor liquidez, ou se a Vale retém caixa para dívida, investimento e reparação. Reconhecer lucro não assegura distribuição; a holding pode ter resultado positivo e recursos limitados. Uma avaliação adequada da mineradora não implica automaticamente valorização proporcional da classe negociada da holding.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Monitorar participação econômica, resultado e recebimentos da Vale. Conferir despesas da holding, tributos, recursos livres e distribuição efetivamente paga. Conciliar classes, ações em tesouraria e valor dos ativos com preços da mesma data. Rever dívida e reparação da investida, separando equivalência, dividendos e caixa atribuível ao titular.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_BRADESPAR.etr}}, custo do capital {{fact:val.BR_BRADESPAR.ke}} e dispersão entre métodos {{fact:val.BR_BRADESPAR.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_BRADESPAR.etr",
+        "val.BR_BRADESPAR.ke",
+        "val.BR_BRADESPAR.cv_metodos"
+      ]
+    },
+    {
+      "titulo": "Evidência que muda a visão",
+      "texto": "Proventos recebidos da Vale não sustentam custos e remuneração da holding. Compromissos da investida restringem distribuição apesar de equivalência positiva. Preço, participação, tesouraria ou direitos por classe mudam a base do desconto.",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Proventos recebidos da Vale não sustentam custos e remuneração da holding.",
+    "Compromissos da investida restringem distribuição apesar de equivalência positiva.",
+    "Preço, participação, tesouraria ou direitos por classe mudam a base do desconto."
+  ],
+  "lacunas_de_dados": [
+    "Fluxo de caixa completo, recebimentos e obrigações da holding não foram integralmente reconciliados.",
+    "O informe e o relatório da Vale usam períodos divergentes para a queda da dívida expandida.",
+    "Participação, tesouraria, classes e recibos exigem conciliação com o modelo.",
+    "Desconto atual e valor líquido dos ativos não foram recalculados com preços conciliados.",
+    "Recebimento da remuneração posterior programada pela Vale não foi confirmado.",
+    "Documentos completos de capital, acordos e política de distribuição permanecem a examinar.",
+    "Guidance, tom agregado, vantagem relativa e percepção do mercado não foram classificados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Bradespar",
+      "titulo": "Perfil da companhia de investimentos e atuação na Vale",
+      "url": "https://bradespar.bradesco/inicio/a-bradespar/quem-somos",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Bradespar",
+      "titulo": "Informe aos investidores, participação, resultado e valor líquido dos ativos",
+      "url": "https://bradespar.bradesco/content/dam/banco-bradesco/bradespar/staticfiles/assets/pdf/resultados-trimestrais/2026/RRI%2006.2026.pdf",
+      "publicado_em": "2026-08-13",
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Vale",
+      "titulo": "Relatório da investida, dívida expandida, caixa e reparação",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/53207d1c-63b4-48f1-96b7-19869fae19fe/5f4bd27d-7617-e113-75fb-a8bf16031963?origin=2",
+      "publicado_em": "2026-07-30",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F4",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Bradespar",
+      "titulo": "Portal com calendário de divulgação futura",
+      "url": "https://bradespar.bradesco/inicio",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

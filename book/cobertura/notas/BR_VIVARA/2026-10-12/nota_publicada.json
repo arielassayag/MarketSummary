@@ -1,0 +1,463 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "fd96ca26b98c26a1981472a8c51a69bbe519e59a12e7601fef7ba8ac7fd98393",
+    "factbook": "9b8c0b30dd8edb934944cc9aeaba0a635f3b67ae6876b73a5282702e0f68cb10",
+    "nota_json": "5f43592a101984f907915c37a6560a81d8ae581f41df11af0ebfa5d0bccfc373"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_VIVARA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T14:37:47.136830+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Novas lojas, reforma, produção e estoque competem com dívida e remuneração. O caixa gerencial considera aluguel e exclui juros de empréstimos; endividamento tem base sem passivo imobiliário de arrendamento. Dívida líquida diminuiu, mas créditos, metais e manutenção exigem ponte de capital empregado. Subvenção reconhecida não comprova caixa livre ao titular.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: conciliar lucro, recebíveis e retorno do capital empregado.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 32,88, com retorno esperado +16,19%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Coleções e produtividade remuneram capital, estoque e expansão; caixa após juros e ocupação reduz dívida sem depender de normalizações ou benefícios excepcionais. O cenário otimista calculado pelo código é R$ 39,17.",
+      "pessimista": "Metais, demanda e estoque comprimem margem; investimento e tributos consomem recursos e medidas ajustadas não se convertem em caixa recorrente. O cenário pessimista calculado pelo código é R$ 27,71."
+    },
+    "comentario_valuation": "Fluxo de caixa normalizado por bandeira é a lente principal, com custo de reposição de metais, estoque, manutenção e maturação de lojas. Lucro beneficiado por tributos ou recebíveis normalizados exige reconciliação antes de múltiplos. A dívida e o aluguel precisam de base consistente; estoque de joias não é caixa realizável ao valor contábil sem prova. Preço de referência R$ 28,90 e alvo do modelo aberto R$ 32,88, com potencial +13,77%. Retorno total esperado +16,19% e custo do capital próprio 11,78%. A dispersão entre métodos é 30,97%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 31,43; a diferença +4,61% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Marcas e receita crescente podem coexistir com menor margem e caixa trimestral. Redução de dias de estoque pode decorrer da base de custo, sem liberação equivalente de valor. Se tributos, metais e investimento absorverem produtividade, crescimento de lojas não confirmará retorno.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.BR_VIVARA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 28,90"
+      },
+      {
+        "fato": "val.BR_VIVARA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 32,88"
+      },
+      {
+        "fato": "val.BR_VIVARA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+13,77%"
+      },
+      {
+        "fato": "val.BR_VIVARA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_VIVARA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_VIVARA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 39,17"
+      },
+      {
+        "fato": "val.BR_VIVARA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "23,46%"
+      },
+      {
+        "fato": "val.BR_VIVARA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 27,71"
+      },
+      {
+        "fato": "val.BR_VIVARA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "44,63%"
+      },
+      {
+        "fato": "val.BR_VIVARA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,78%"
+      },
+      {
+        "fato": "val.BR_VIVARA.wacc",
+        "rotulo": "WACC",
+        "valor": "10,84%"
+      },
+      {
+        "fato": "val.BR_VIVARA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_VIVARA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+16,19%"
+      },
+      {
+        "fato": "val.BR_VIVARA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-3,98%"
+      },
+      {
+        "fato": "val.BR_VIVARA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "9,6x"
+      },
+      {
+        "fato": "val.BR_VIVARA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,1x"
+      },
+      {
+        "fato": "val.BR_VIVARA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 31,43"
+      },
+      {
+        "fato": "val.BR_VIVARA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+4,61%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Vivara",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://ri.vivara.com.br/"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Vivara",
+        "publicado_em": "2026-08-05",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/61a4df2d-a461-44d6-9128-da74058019db/cda0f39f-8ec4-4b0d-0db3-6f9a0395f592?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Vivara",
+        "publicado_em": "2026-08-05",
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/61a4df2d-a461-44d6-9128-da74058019db/0ef9b209-fd78-4a0a-073a-3560e1d38766?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Reposição de metais comprime margem sem compensação por preço, mix ou produtividade.",
+      "Dias de estoque caem sem redução correspondente do capital imobilizado ou das perdas de coleção.",
+      "Novas lojas Life e Vivara não demonstram retorno após estoque, aluguel e manutenção.",
+      "Tributos e normalização de recebíveis sustentam lucro sem caixa recorrente depois de juros."
+    ],
+    "governanca": "Resultado gerencial, subvenções e base sem arrendamento precisam de ponte ao ITR. Diferenças de saldos de lucro não foram corrigidas por inferência. Capital e decisões de expansão devem ser avaliados pelo retorno realizado, com leitura própria dos compromissos.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Vendas comparáveis, mix Vivara e Life, produtividade e maturação de lojas; estoque em valor, metal, volume e dias; subvenção, imposto diferido e perdas. Conciliar juros, aluguel, recebíveis antecipados e fluxo gerencial à demonstração original; acompanhar retorno de aberturas e dívida contratual.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_VIVARA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+16,19%"
+          },
+          {
+            "fato": "val.BR_VIVARA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,78%"
+          },
+          {
+            "fato": "val.BR_VIVARA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "30,97%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +16,19%, custo do capital 11,78% e dispersão entre métodos 30,97% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Na divulgação seguinte, acompanhar preço praticado, margem após reposição de metal, giro de coleções e capital por loja madura e nova. Conciliar estoque em quantidade e valor, descontos, provisões e recebíveis antecipados. Rever a tese se vendas e área crescerem enquanto caixa após aluguel, juros e manutenção enfraquecer, ou se a comparação de lucro depender de subvenções e normalizações não recorrentes.",
+        "titulo": "Reposição de metais e retorno por bandeira"
+      }
+    ],
+    "issuer_id": "BR_VIVARA",
+    "lacunas_de_dados": [
+      "Valores de lucro divergem entre reconciliações do release e exigem esclarecimento.",
+      "A ponte integral do ITR, juros e fluxos gerenciais permanece pendente.",
+      "Normalizações de recebíveis não comprovam entrada adicional de caixa.",
+      "Retorno por marca, loja, reforma e produção precisa de diligência.",
+      "Realização de subvenções e imposto diferido requer conciliação própria.",
+      "Guidance agregado, participação e posicionamento de mercado não foram comprovados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Varejista de joias e acessórios com marcas Vivara e Life, lojas, canais digitais e fabricação própria. Preço e custo dos metais, coleção e estoque influenciam margem e capital. A produção em Manaus e a distribuição possuem tratamento tributário próprio. A expansão precisa remunerar estoque e ocupação, além do investimento de abertura.",
+    "nome": "Vivara",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_AFYA",
+        "nome": "Afya"
+      },
+      {
+        "issuer_id": "BR_ALPARGATAS",
+        "nome": "Alpargatas"
+      },
+      {
+        "issuer_id": "BR_AZZAS",
+        "nome": "Azzas 2154"
+      },
+      {
+        "issuer_id": "BR_CEA",
+        "nome": "C&A Modas"
+      },
+      {
+        "issuer_id": "BR_COGNA",
+        "nome": "Cogna"
+      },
+      {
+        "issuer_id": "BR_CURY",
+        "nome": "Cury"
+      },
+      {
+        "issuer_id": "BR_CYRELA",
+        "nome": "Cyrela"
+      },
+      {
+        "issuer_id": "BR_DIRECIONAL",
+        "nome": "Direcional"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que marcas, produtividade e disciplina de estoque sustentem retorno depois do custo completo. A condição decisiva é converter demanda final em caixa sem depender de antecipações ou benefícios fiscais. Estoque menor em dias não comprova menor valor imobilizado, quando custo dos metais e base de consumo mudam.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_VIVARA.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 28,90"
+          },
+          {
+            "fato": "val.BR_VIVARA.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 32,88"
+          },
+          {
+            "fato": "val.BR_VIVARA.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+13,77%"
+          },
+          {
+            "fato": "val.BR_VIVARA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,78%"
+          },
+          {
+            "fato": "val.BR_VIVARA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+16,19%"
+          }
+        ],
+        "texto": "Preço de referência R$ 28,90 e alvo R$ 32,88, com potencial +13,77%. A hipótese de investimento deve ser confrontada com o custo do capital 11,78% e retorno esperado +16,19%.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O release distingue matéria-prima e produtos acabados, com movimentos próprios de custo médio e volume dos metais. A tese precisa demonstrar que coleção e preço conservam demanda sem imobilizar capital de forma crescente. Life e Vivara têm custos de abertura e maturação distintos; expansão conjunta não prova retorno homogêneo. Redução de dias de estoque deve ser acompanhada pelo valor e composição, sem transformar esse indicador em liberação de caixa presumida.",
+        "titulo": "Coleção e metal exigem leitura física e monetária"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Marca, coleção, presença física e integração podem apoiar preço e relacionamento. Life tem proposta e maturação distintas das lojas Vivara. Ouro e prata influenciam custo, preço percebido e giro. Escala de produção não assegura margem quando estoques e tributos mudam; participação relatada requer verificação independente.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T14:37:47.136830+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita cresceu, mas margens de EBITDA e lucro recuaram no comparável anual. Bases ajustadas excluem subvenção e itens próprios. Caixa operacional e livre gerenciais trimestrais foram positivos, porém menores anualmente, antes dos juros de empréstimos. Comparativos normalizados de recebíveis não são entrada adicional. O release apresenta saldos divergentes de lucro entre reconciliações.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que marcas, produtividade e disciplina de estoque sustentem retorno depois do custo completo. A condição decisiva é converter demanda final em caixa sem depender de antecipações ou benefícios fiscais. Estoque menor em dias não comprova menor valor imobilizado, quando custo dos metais e base de consumo mudam. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +16,19%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Consumo, metais e coleção podem reduzir giro e margem. Estoques, subvenções e antecipações alteram resultado e caixa. Expansão e ocupação exigem capital; diferenças internas das reconciliações limitam comparação antes de esclarecimento."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_VIVARA.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+4,61%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +4,61%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Consumo discricionário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Vivara — produtividade, metais e capital empregado",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "Receita aumentou anualmente, com margens menores. EBITDA comparável e lucro comparável usam ajustes distintos de subvenção, imposto diferido e itens pontuais. O caixa operacional e livre gerenciais trimestrais foram positivos e menores no comparável; a conversão normalizada trata recebíveis antecipados em outras datas. Dívida líquida diminuiu. Dias de estoque caíram enquanto seu valor aumentou anualmente, com custo e composição de metais. O release contém valores de lucro diferentes entre páginas e reconciliações, preservados como lacuna.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Vendas comparáveis, mix Vivara e Life, produtividade e maturação de lojas; estoque em valor, metal, volume e dias; subvenção, imposto diferido e perdas. Conciliar juros, aluguel, recebíveis antecipados e fluxo gerencial à demonstração original; acompanhar retorno de aberturas e dívida contratual.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_VIVARA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,78%"
+          },
+          {
+            "fato": "val.BR_VIVARA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "30,97%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,78% e a dispersão entre métodos 30,97%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

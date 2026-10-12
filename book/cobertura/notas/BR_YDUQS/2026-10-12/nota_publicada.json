@@ -1,0 +1,423 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "044d9747aeea27210898e06224b37a00bbdd3752a57f155343ec22f26d5d07de",
+    "factbook": "7063fbb55e881c1c04ed7836931c16c63d3f170b46878f9d869d4dbd5f781f0a",
+    "nota_json": "a1bc403196f63c32a53c59467ed783480a4311e5a5c54cd91f0b446dac2f3012"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_YDUQS",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-12",
+  "published_at": "2026-10-12T14:39:59.279465+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O acordo contém troca de ações, condições de aprovação e regras de preservação de valor até o fechamento. O valor presente de sinergias anunciado não equivale a caixa anual realizado. Distribuições e recompras precisam respeitar financiamento e compromissos; governança combinada ainda é futura.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 14,39, com retorno esperado +13,39%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Retenção e cobrança sustentam retorno do portfólio; eventual combinação demonstra benefícios depois de concluída. O cenário otimista calculado pelo código é R$ 18,48.",
+      "pessimista": "Captação e financiamento limitam caixa, enquanto integração e condições da combinação reduzem seu benefício econômico. O cenário pessimista calculado pelo código é R$ 10,90."
+    },
+    "comentario_valuation": "A avaliação deve separar caixa normalizado por modalidade da hipótese de combinação, preservando perímetro e ações atuais. Medicina, negócios e ensino de escala têm reinvestimento e retenção próprios. Sinergia estimada exige ponte para integração, tributos, dívida e diluição; valor presente anunciado não é caixa anual distribuível. Preço de referência R$ 13,54 e alvo do modelo aberto R$ 14,39, com potencial +6,30%. Retorno total esperado +13,39% e custo do capital próprio 13,23%. A dispersão entre métodos é 62,89%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 14,94; a diferença -3,64% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese enfraquece se eficiência e mix não se converterem em caixa ou se os benefícios propostos da combinação dependerem de premissas incompatíveis com sua execução.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.BR_YDUQS.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 13,54"
+      },
+      {
+        "fato": "val.BR_YDUQS.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 14,39"
+      },
+      {
+        "fato": "val.BR_YDUQS.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+6,30%"
+      },
+      {
+        "fato": "val.BR_YDUQS.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_YDUQS.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_YDUQS.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 18,48"
+      },
+      {
+        "fato": "val.BR_YDUQS.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "22,59%"
+      },
+      {
+        "fato": "val.BR_YDUQS.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 10,90"
+      },
+      {
+        "fato": "val.BR_YDUQS.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "37,49%"
+      },
+      {
+        "fato": "val.BR_YDUQS.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "13,23%"
+      },
+      {
+        "fato": "val.BR_YDUQS.wacc",
+        "rotulo": "WACC",
+        "valor": "9,58%"
+      },
+      {
+        "fato": "val.BR_YDUQS.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_YDUQS.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+13,39%"
+      },
+      {
+        "fato": "val.BR_YDUQS.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-7,68%"
+      },
+      {
+        "fato": "val.BR_YDUQS.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "6,5x"
+      },
+      {
+        "fato": "val.BR_YDUQS.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,2x"
+      },
+      {
+        "fato": "val.BR_YDUQS.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 14,94"
+      },
+      {
+        "fato": "val.BR_YDUQS.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-3,64%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "Yduqs",
+        "publicado_em": "2026-09-23",
+        "tipo": "Relações com investidores",
+        "titulo": "Fato relevante sobre combinação de negócios com a Afya",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1571031&numSequencia=1095737&numVersao=1"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Yduqs",
+        "publicado_em": "2026-08-13",
+        "tipo": "Relações com investidores",
+        "titulo": "Apresentação de resultados e reconciliações de caixa e dívida",
+        "url": "https://www.rad.cvm.gov.br/ENET/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=ext&descTipo=IPE&numProtocolo=1557236"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Captação e retenção por modalidade deixam de gerar recebimentos depois das provisões e do custo acadêmico.",
+      "Arrendamentos, financiamento estudantil e juros consomem a recuperação de caixa operacional.",
+      "Condições precedentes, consentimentos ou restrições alteram viabilidade econômica da combinação.",
+      "Custos de integração, tributos e direitos diluídos absorvem benefícios estimados da associação."
+    ],
+    "governanca": "O acordo contém troca de ações, condições de aprovação e regras de preservação de valor até o fechamento. O valor presente de sinergias anunciado não equivale a caixa anual realizado. Distribuições e recompras precisam respeitar financiamento e compromissos; governança combinada ainda é futura.",
+    "guidance": "mantido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar retenção, entrada de alunos, recebimento e provisões por modalidade. Confrontar resultados reportados e gerenciais com caixa depois de investimento, juros e arrendamentos. Na combinação, verificar aprovações, direitos, despesas de integração e evidência de sinergias efetivas.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_YDUQS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+13,39%"
+          },
+          {
+            "fato": "val.BR_YDUQS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "13,23%"
+          },
+          {
+            "fato": "val.BR_YDUQS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "62,89%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +13,39%, custo do capital 13,23% e dispersão entre métodos 62,89% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Na próxima divulgação, seguir alunos, retenção e recebimentos por modalidade, incluindo financiamento estudantil e arrendamentos. No evento, verificar aprovações efetivas, consentimentos, restrições de dívida e distribuições, antes de antecipar participação combinada. Rever a hipótese se caixa atual enfraquecer enquanto a expectativa de sinergias crescer, ou se custos e remédios alterarem o benefício líquido anunciado.",
+        "titulo": "Cobrança atual e preservação de valor até o fechamento"
+      }
+    ],
+    "issuer_id": "BR_YDUQS",
+    "lacunas_de_dados": [
+      "Apresentação recebida não substitui release completo, demonstrações e notas reconciliadas.",
+      "Financiamento estudantil, provisões, arrendamentos e efeitos de perímetro exigem conciliação com o modelo.",
+      "Acordo completo, base diluída, condições de fechamento e governança futura não foram integralmente conferidos.",
+      "Sinergias anunciadas não foram comprovadas como caixa realizado; seu valor presente não foi incorporado ao modelo.",
+      "Tom da gestão, percepção de mercado e catalisador futuro datado não estão concluídos."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "A Yduqs combina ensino superior presencial, digital e semipresencial com marcas de educação médica e de negócios. A combinação anunciada com a Afya não altera o perímetro atual até sua efetivação; participações projetadas não são a base vigente de ações.",
+    "nome": "Yduqs",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_AFYA",
+        "nome": "Afya"
+      },
+      {
+        "issuer_id": "BR_ALPARGATAS",
+        "nome": "Alpargatas"
+      },
+      {
+        "issuer_id": "BR_AZZAS",
+        "nome": "Azzas 2154"
+      },
+      {
+        "issuer_id": "BR_CEA",
+        "nome": "C&A Modas"
+      },
+      {
+        "issuer_id": "BR_COGNA",
+        "nome": "Cogna"
+      },
+      {
+        "issuer_id": "BR_CURY",
+        "nome": "Cury"
+      },
+      {
+        "issuer_id": "BR_CYRELA",
+        "nome": "Cyrela"
+      },
+      {
+        "issuer_id": "BR_DIRECIONAL",
+        "nome": "Direcional"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese é que retenção, cobrança e oferta acadêmica adequada sustentem caixa. A condição decisiva é remunerar investimento e obrigações depois de inadimplência e financiamento. A combinação proposta deve ser julgada separadamente, com custos e benefícios comprovados após condições de fechamento.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_YDUQS.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 13,54"
+          },
+          {
+            "fato": "val.BR_YDUQS.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 14,39"
+          },
+          {
+            "fato": "val.BR_YDUQS.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+6,30%"
+          },
+          {
+            "fato": "val.BR_YDUQS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "13,23%"
+          },
+          {
+            "fato": "val.BR_YDUQS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+13,39%"
+          }
+        ],
+        "texto": "Preço de referência R$ 13,54 e alvo R$ 14,39, com potencial +6,30%. A hipótese de investimento deve ser confrontada com o custo do capital 13,23% e retorno esperado +13,39%.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O fato relevante descreve complementaridade entre educação médica e portfólio diversificado, com sinergias estimadas e aprovações pendentes. A tese da empresa atual continua dependente de captação, retenção e cobrança por modalidade. A associação só fortalece retorno se benefícios líquidos sobreviverem a integração, tributos e condições de fechamento. Participação projetada, compromisso de voto e valor presente anunciado não comprovam fechamento ou caixa das ações atuais.",
+        "titulo": "Empresa atual e combinação proposta exigem teses distintas"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Testar qualidade acadêmica, diferenciação de marcas, acessibilidade e retenção em cada modalidade. Maior peso de produtos de maior valor não resolve automaticamente queda de alunos ou risco de cobrança. A vantagem da integração proposta ainda precisa ser demonstrada.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T14:39:59.279465+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A apresentação separa resultado reportado de ajustes ligados ao financiamento estudantil. Sua ponte de caixa usa bases gerenciais e exclusões de arrendamentos; conciliar com demonstrações e notas antes de comparar. Juros e decisões de capital podem limitar a transmissão de resultado ao acionista.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que retenção, cobrança e oferta acadêmica adequada sustentem caixa. A condição decisiva é remunerar investimento e obrigações depois de inadimplência e financiamento. A combinação proposta deve ser julgada separadamente, com custos e benefícios comprovados após condições de fechamento. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +13,39%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Pressões sobre captação, inadimplência e regulação podem restringir caixa. A combinação condicionada pode impor atraso, custos ou remédios concorrenciais. Hipóteses de sinergia e participações futuras não devem substituir avaliação da empresa atual."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_YDUQS.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-3,64%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -3,64%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Consumo discricionário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Yduqs: caixa da educação e disciplina na combinação proposta",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A apresentação pública reafirma a orientação de caixa ao acionista e lucro por ação. Mostra ajustes de financiamento estudantil e uma ponte gerencial de caixa, que exige conciliação. O fato relevante posterior descreve combinação condicionada; não comprova aprovação final, fechamento ou realização de sinergias.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar retenção, entrada de alunos, recebimento e provisões por modalidade. Confrontar resultados reportados e gerenciais com caixa depois de investimento, juros e arrendamentos. Na combinação, verificar aprovações, direitos, despesas de integração e evidência de sinergias efetivas.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_YDUQS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "13,23%"
+          },
+          {
+            "fato": "val.BR_YDUQS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "62,89%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 13,23% e a dispersão entre métodos 62,89%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,425 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "afd1538046096568a3fec3a64d709e3745164d4a7a1ce5becd71e6b3e231cc4b",
+    "factbook": "45b8392d1a1eae4b5fbb626836cbd864dd266eb3b9433e8c7f2287d26f0ea345",
+    "nota_json": "cafcd77505be7cc5d56eb0f11545c1c22c3becb89a52a79e84d88805e1d19a4a"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_QUALITAS",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-20",
+  "published_at": "2026-10-12T14:46:39.996959+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Solvência regulatória não constitui disponibilidade irrestrita. Reservas, passivos e recursos por subsidiária precisam ser conciliados antes de distribuir ou expandir. Ações em tesouraria e saldo de recompra não comprovam cancelamento ou retorno econômico. Capital deve remunerar risco da subscrição e dos investimentos.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em MXN 168,53, com retorno esperado +15,34%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Seleção e renovação preservam margem técnica, reservas e retorno por país, com capital suficiente e distribuição verificável. O cenário otimista calculado pelo código é MXN 194,48.",
+      "pessimista": "Preço e severidade deterioram subscrição enquanto investimentos e expansão pressionam solvência e distribuição. O cenário pessimista calculado pelo código é MXN 146,65."
+    },
+    "comentario_valuation": "Para seguros, priorizar lucro residual e patrimônio com reservas e capital prudencial reconciliados, distinguindo resultado técnico normalizado de retorno de investimentos. Caixa e títulos que respaldam passivos não são caixa excedente; múltiplo industrial de EBITDA seria inadequado. Preço de referência MXN 154,25 e alvo do modelo aberto MXN 168,53, com potencial +9,26%. Retorno total esperado +15,34% e custo do capital próprio 11,34%. A dispersão entre métodos é 7,03%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é MXN 176,54; a diferença -4,54% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se escala é defendida com preço insuficiente ou depende de liberação de reservas. Integração e expansão podem consumir capital sem reduzir custo de sinistro, enquanto ganhos financeiros não recorrentes sustentam o lucro.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.MX_QUALITAS.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 154,25"
+      },
+      {
+        "fato": "val.MX_QUALITAS.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 168,53"
+      },
+      {
+        "fato": "val.MX_QUALITAS.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+9,26%"
+      },
+      {
+        "fato": "val.MX_QUALITAS.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_QUALITAS.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_QUALITAS.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 194,48"
+      },
+      {
+        "fato": "val.MX_QUALITAS.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "22,78%"
+      },
+      {
+        "fato": "val.MX_QUALITAS.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 146,65"
+      },
+      {
+        "fato": "val.MX_QUALITAS.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "42,38%"
+      },
+      {
+        "fato": "val.MX_QUALITAS.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,34%"
+      },
+      {
+        "fato": "val.MX_QUALITAS.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_QUALITAS.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_QUALITAS.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+15,34%"
+      },
+      {
+        "fato": "val.MX_QUALITAS.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-26,47%"
+      },
+      {
+        "fato": "val.MX_QUALITAS.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "10,2x"
+      },
+      {
+        "fato": "val.MX_QUALITAS.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,4x"
+      },
+      {
+        "fato": "val.MX_QUALITAS.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 176,54"
+      },
+      {
+        "fato": "val.MX_QUALITAS.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-4,54%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "Quálitas Controladora",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Estrutura geográfica e integração vertical",
+        "url": "https://qinversionistas.qualitas.com.mx/ES/nuestra-estructura-corporativa"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Quálitas Controladora",
+        "publicado_em": "2026-07-21",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado semestral da seguradora",
+        "url": "https://qinversionistas.qualitas.com.mx/storage/informes/2026/trimestral/2T/mx/Q%20-%20Reporte%20Trimestral%202T26%20VFF2.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Renovação e crescimento do prêmio não remuneram severidade e desenvolvimento das reservas.",
+      "Integração vertical não melhora prazo ou custo completo do atendimento.",
+      "Expansão requer capital recorrente sem retorno suficiente por subsidiária.",
+      "Lucro depende de ganho de mercado ou liberação de reservas sem suporte de pagamentos e solvência."
+    ],
+    "governanca": "Revisar controle, decisões de reservas, investimentos e capital por país. Integração vertical exige avaliar transações relacionadas e retorno atribuído; a análise não presume que ganhos de investimentos sejam distribuíveis.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Revisar preço de renovação, retenção, prêmio ganho, frequência e severidade, distinguindo conta multianual e negócio recorrente. Acompanhar reservas, combinado por base e país, duration e caixa dos investimentos. Conciliar solvência, recompras e retorno por entidade após expansão.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_QUALITAS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+15,34%"
+          },
+          {
+            "fato": "val.MX_QUALITAS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,34%"
+          },
+          {
+            "fato": "val.MX_QUALITAS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "7,03%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +15,34%, custo do capital 11,34% e dispersão entre métodos 7,03% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar desenvolvimento das reservas por ano de ocorrência, pagamentos e frequência e severidade após renovação. Confrontar tempo de reparo, retenção e custo completo da rede própria com terceiros. Separar retorno recebido e marcado a mercado, liquidez dos ativos e vencimento dos passivos por país. Revisar excedente de capital após expansão; lucro contábil ou emissão multianual não estabelece dividendo suportável.",
+        "titulo": "Coortes, atendimento e capital distribuível"
+      }
+    ],
+    "issuer_id": "MX_QUALITAS",
+    "lacunas_de_dados": [
+      "Reservas e sinistros por coorte não foram integralmente conciliados.",
+      "Efeito tributário citado pela companhia exige conciliação normativa e contábil.",
+      "Bases do combinado e comparações setoriais têm cortes distintos.",
+      "Ganhos não realizados, recursos por país e recompras precisam de conciliação completa.",
+      "Mudança de guidance, tom da gestão e catalisador futuro datado não foram classificados.",
+      "Releitura financeira atual barrada; os achados anteriores permanecem históricos, sem reconciliação nova de reservas por coorte."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Seguradora com foco automotivo no México e operações internacionais, com rede de atendimento e integração ligada à gestão de sinistros. Emissão, retenção e prêmio ganho representam etapas distintas. Investimentos financiam obrigações técnicas; seu saldo não é presumido como caixa distribuível da controladora.",
+    "nome": "Quálitas",
+    "o_que_mudou": null,
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_BAJIO",
+        "nome": "Banco del Bajío"
+      },
+      {
+        "issuer_id": "MX_BANORTE",
+        "nome": "Grupo Financiero Banorte"
+      },
+      {
+        "issuer_id": "MX_BMV",
+        "nome": "Bolsa Mexicana de Valores"
+      },
+      {
+        "issuer_id": "MX_GENTERA",
+        "nome": "Gentera"
+      },
+      {
+        "issuer_id": "MX_INBURSA",
+        "nome": "Grupo Financiero Inbursa"
+      },
+      {
+        "issuer_id": "MX_REGIONAL",
+        "nome": "Regional (Banregio)"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que escala de atendimento e conhecimento de sinistros sustentem seleção e preço do risco, mesmo sob concorrência. Valor depende de subscrição rentável, reservas suficientes e investimentos coerentes com passivos. A expansão internacional deve remunerar capital depois de despesas e perdas, sem depender de ganhos financeiros temporários.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_QUALITAS.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "MXN 154,25"
+          },
+          {
+            "fato": "val.MX_QUALITAS.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "MXN 168,53"
+          },
+          {
+            "fato": "val.MX_QUALITAS.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+9,26%"
+          },
+          {
+            "fato": "val.MX_QUALITAS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,34%"
+          },
+          {
+            "fato": "val.MX_QUALITAS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+15,34%"
+          }
+        ],
+        "texto": "Preço de referência MXN 154,25 e alvo MXN 168,53, com potencial +9,26%. A hipótese de investimento deve ser confrontada com o custo do capital 11,34% e retorno esperado +15,34%.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A rede e a integração vertical descritas pela companhia são uma hipótese de melhor atendimento, não prova de reserva suficiente. Deve-se testar preço aceito na renovação contra custo final do sinistro e desenvolvimento das coortes já emitidas. Crescimento internacional só cria valor se remunera capital local e sustenta reservas sem aporte recorrente ou dependência de ganhos de mercado.",
+        "titulo": "Maturação da subscrição antes de expansão do prêmio"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Rede e integração vertical podem melhorar resposta e custo do sinistro. A vantagem exige comprovar retenção, tempo de atendimento e severidade, além do preço de renovação. Quantidade de veículos e liderança autodeclarada não bastam para demonstrar rentabilidade ou vantagem durável.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T14:46:39.996959+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A comparação da emissão é afetada por mudança de cobertura em conta multianual. Resultado técnico, investimentos e tributos precisam ser separados. Liberação de reservas e índice combinado ajustado usam bases próprias; ganhos não realizados e retorno marcado a mercado não equivalem ao retorno contabilizado ou caixa recebido.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que escala de atendimento e conhecimento de sinistros sustentem seleção e preço do risco, mesmo sob concorrência. Valor depende de subscrição rentável, reservas suficientes e investimentos coerentes com passivos. A expansão internacional deve remunerar capital depois de despesas e perdas, sem depender de ganhos financeiros temporários. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +15,34%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Competição de preço, custo de reparo e eventos climáticos podem deteriorar subscrição. Estimativas de reservas, reinvestimento com juros menores e expansão internacional podem pressionar capital. Retornos de mercado podem mascarar resultado técnico insuficiente."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_QUALITAS.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-4,54%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -4,54%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Quálitas — disciplina de subscrição e retorno do capital de seguros",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A leitura separa emissão e prêmio ganho, bases do combinado, resultado técnico e investimentos. Tributos e conta multianual limitam comparação; dados setoriais têm corte anterior. Objetivo de retorno divulgado não prova alteração de guidance ou sua realização, e permanece sujeito à diligência.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Revisar preço de renovação, retenção, prêmio ganho, frequência e severidade, distinguindo conta multianual e negócio recorrente. Acompanhar reservas, combinado por base e país, duration e caixa dos investimentos. Conciliar solvência, recompras e retorno por entidade após expansão.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.MX_QUALITAS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,34%"
+          },
+          {
+            "fato": "val.MX_QUALITAS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "7,03%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,34% e a dispersão entre métodos 7,03%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

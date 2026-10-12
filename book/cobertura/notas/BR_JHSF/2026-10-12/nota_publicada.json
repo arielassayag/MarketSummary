@@ -1,0 +1,536 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "6c611d5263487ed7ec879d83c036e11a9488ad9dc64c697258db130057495d59",
+    "factbook": "a51817d1edb1b172849869b176b19b87388e681bdc79a7f1cdc2fd669f0d3148",
+    "nota_json": "eb7453999197c84ef59ebbd480c846f5ee53a643ce134f9c62a2416334e4850f"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_JHSF",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T14:46:14.642669+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          }
+        ],
+        "texto": "A companhia mantém cotas subordinadas no fundo comprador e swap com empresa do controlador, considerados na análise de não consolidação. A segunda parcela do recebimento tem prazo e condições próprios. A captação posterior de debêntures foi concluída, mas a amortização integral do empréstimo-ponte exige comprovação. A oferta do fundo de recebíveis foi encerrada; recursos e ativos sob gestão pertencem ao fundo, sem equivalência automática a caixa da JHSF. Expansão, aquisição de direitos no exterior e dividendos precisam de ponte por entidade.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Conclusão prevista da tranche da alienação em dezembro de 2026, sujeita aos termos divulgados; dia exato de liquidação não confirmado.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "capital"
+      },
+      {
+        "data": null,
+        "descricao": "Resultados posteriores: conciliar renda recorrente, investimentos, juros, captação e operações com os fundos.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em Em revisão, com retorno esperado Em revisão. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Ativos e serviços sustentam demanda e caixa depois de investimentos e juros; contratos e fundos preservam direitos atribuíveis e disciplinam expansão. O cenário otimista calculado pelo código é Em revisão.",
+      "pessimista": "Expansão e financiamento absorvem recursos, receitas e recebimentos se desencontram e estruturas relacionadas limitam retorno e distribuição. O cenário pessimista calculado pelo código é Em revisão."
+    },
+    "comentario_valuation": "A soma das partes é uma lente adequada aos negócios heterogêneos: renda dos imóveis, operação de serviços, incorporação e gestora exigem bases próprias. Deduzir capital e direitos de terceiros sem contar duas vezes o fundo, as cotas retidas e os ativos. Valor justo e ativos sob gestão não substituem caixa normalizado atribuível. Preço de referência R$ 13,31 e alvo do modelo aberto Em revisão, com potencial Em revisão. Retorno total esperado Em revisão e custo do capital próprio 10,81%. A dispersão entre métodos é 4,16%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 12,22; a diferença Em revisão não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          }
+        ],
+        "texto": "A hipótese enfraquece se expansão cresce antes de caixa recorrente e receitas reconhecidas dependem de obrigações já financiadas pelo fundo. O swap altera exposição, mas exige avaliar contraparte, termos e conflitos. Contas a receber no caixa líquido não pagam dívida antes da liquidação. Integração de negócios pode elevar complexidade, custos e capital sem retorno por ação. Aumento de taxas ou ativos sob gestão não elimina risco dos empreendimentos nem demonstra independência econômica das transações.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.BR_JHSF.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 13,31"
+      },
+      {
+        "fato": "val.BR_JHSF.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_JHSF.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_JHSF.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_JHSF.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_JHSF.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_JHSF.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_JHSF.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_JHSF.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_JHSF.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,81%"
+      },
+      {
+        "fato": "val.BR_JHSF.wacc",
+        "rotulo": "WACC",
+        "valor": "8,72%"
+      },
+      {
+        "fato": "val.BR_JHSF.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_JHSF.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_JHSF.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_JHSF.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "4,1x"
+      },
+      {
+        "fato": "val.BR_JHSF.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,2x"
+      },
+      {
+        "fato": "val.BR_JHSF.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 12,22"
+      },
+      {
+        "fato": "val.BR_JHSF.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Em revisão"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "JHSF",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócios, estratégia e materiais públicos do grupo",
+        "url": "https://ri.jhsf.com.br/"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "JHSF",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado: renda recorrente, incorporação, capital e caixa",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/1389c06d-4b85-4082-ae2b-3cc3b67db647/eb507b65-aef9-704c-e6c9-cb0feae7c20e?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "JHSF",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: fundo comprador, cotas, swap e reconhecimento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/1389c06d-4b85-4082-ae2b-3cc3b67db647/54b849a0-d05d-a247-be87-b1f5d73c5907?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F4",
+        "instituicao": "JHSF",
+        "publicado_em": "2026-08-31",
+        "tipo": "Relações com investidores",
+        "titulo": "Conclusão da emissão de debêntures e condições de captação",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/1389c06d-4b85-4082-ae2b-3cc3b67db647/08b689f4-15f8-7942-cbee-19bfd67a2d05?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F5",
+        "instituicao": "JHSF",
+        "publicado_em": "2026-09-29",
+        "tipo": "Relações com investidores",
+        "titulo": "Conclusão da oferta do fundo de recebíveis e ativos sob gestão",
+        "url": "https://filemanager-cdn.mziq.com/published/1389c06d-4b85-4082-ae2b-3cc3b67db647/d54d5164-abc2-4770-ad53-afb425120319"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Caixa recorrente depois de investimentos e juros não sustenta expansão.",
+      "Condições e recebimentos do fundo divergem do cronograma divulgado.",
+      "Cotas, swap, contraparte ou consolidação alteram exposição econômica.",
+      "Alocação por negócio e direitos não sustentam retorno atribuível."
+    ],
+    "governanca": "A não consolidação do fundo considera poderes limitados, direitos dos cotistas seniores, cotas retidas e transferência de exposição por swap com empresa do controlador. A aprovação divulgada não encerra análise independente dos termos e conflitos. A revisão intermediária enfatiza política de reconhecimento, sem ressalvar a conclusão. O quadro gerencial de fluxo por segmento apresenta título e identificação de período divergentes; o fluxo semestral das demonstrações foi preservado como base distinta, sem corrigir a fonte.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          }
+        ],
+        "texto": "Separar receita e caixa recorrentes, valor justo e incorporação. Conciliar recebimentos do fundo, condições, cotas subordinadas e swap relacionado. Avaliar investimento, dívida, juros, expansão e capital por negócio. Monitorar ocupação, tarifas, utilização, taxas da gestora, sócios e recursos restritos.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_JHSF.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.BR_JHSF.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,81%"
+          },
+          {
+            "fato": "val.BR_JHSF.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "4,16%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado Em revisão, custo do capital 10,81% e dispersão entre métodos 4,16% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Na divulgação seguinte, acompanhar ocupação e renda dos ativos maduros separadamente de novas entregas, taxas da gestora e incorporação. Confrontar recebimentos com as condições da venda ao fundo, cotas retidas e obrigações relacionadas. Rever a tese se o crescimento do ecossistema requerer expansão contínua enquanto caixa recorrente atribuível ficar aquém do financiamento e manutenção.",
+        "titulo": "Retenção de exposição e retorno da expansão"
+      }
+    ],
+    "issuer_id": "BR_JHSF",
+    "lacunas_de_dados": [
+      "Fluxos gerenciais e contábeis não foram integralmente reconciliados por negócio e entidade.",
+      "O quadro gerencial por segmento tem identificação de período inconsistente; a diferença não foi corrigida arbitrariamente.",
+      "Termos completos do fundo, cotas, swap relacionado e risco de contraparte precisam de exame independente.",
+      "Recebimento da parcela futura e cumprimento de condições não foram comprovados.",
+      "Aplicação da captação e amortização integral do empréstimo-ponte permanecem a verificar.",
+      "Retorno da expansão e disponibilidade irrestrita de recursos exigem ponte completa.",
+      "Guidance agregado, tom e percepção do mercado não foram classificados.",
+      "A previsão de conclusão da tranche informa dezembro de 2026; o dia exato e a liquidação efetiva não foram comprovados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo de alta renda com shoppings, hospitalidade e gastronomia, aviação executiva, locação residencial e clubes, incorporação, varejo e gestão de fundos. O ecossistema pode integrar destinos e serviços, mas cada atividade tem capital, direitos e ciclo próprios. Renda recorrente gerencial exclui determinados negócios e a holding. Operação contratada, imóvel detido e taxa de gestão são exposições diferentes. Fundos compradores e sócios exigem avaliar consolidação, instrumentos financeiros e receitas efetivamente atribuíveis.",
+    "nome": "JHSF",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ALLOS",
+        "nome": "Allos"
+      },
+      {
+        "issuer_id": "BR_IGUATEMI",
+        "nome": "Iguatemi"
+      },
+      {
+        "issuer_id": "BR_MULTIPLAN",
+        "nome": "Multiplan"
+      },
+      {
+        "issuer_id": "CL_CENCOMALLS",
+        "nome": "Cencosud Shopping"
+      },
+      {
+        "issuer_id": "CL_MALLPLAZA",
+        "nome": "Plaza SA (Mallplaza)"
+      },
+      {
+        "issuer_id": "CL_PARAUCO",
+        "nome": "Parque Arauco"
+      },
+      {
+        "issuer_id": "MX_FIBRAPL",
+        "nome": "Fibra Prologis"
+      },
+      {
+        "issuer_id": "MX_VESTA",
+        "nome": "Corporación Inmobiliaria Vesta"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          }
+        ],
+        "texto": "A hipótese é que ativos diferenciados e serviços recorrentes remunerem expansão e financiamento, com integração comercial sustentando demanda. A condição decisiva é demonstrar caixa depois de investimentos e juros, sem depender de valorização contábil, receitas de incorporação antecipadamente recebidas ou liquidez de fundos relacionados. O retorno exige disciplina por negócio e direitos econômicos. Crescimento de ativos sob gestão não equivale a patrimônio ou caixa do grupo; a venda a fundo deve ser avaliada junto das cotas retidas, contratos e exposição transferida.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_JHSF.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 13,31"
+          },
+          {
+            "fato": "val.BR_JHSF.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.BR_JHSF.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.BR_JHSF.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,81%"
+          },
+          {
+            "fato": "val.BR_JHSF.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "Em revisão"
+          }
+        ],
+        "texto": "Preço de referência R$ 13,31 e alvo Em revisão, com potencial Em revisão. A hipótese de investimento deve ser confrontada com o custo do capital 10,81% e retorno esperado Em revisão.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A leitura por negócio deve separar imóvel detido, contrato de operação e taxa da gestora. O release exclui incorporação, varejo e holding da renda recorrente; essa base não é o grupo inteiro. O teste econômico consiste em demonstrar ocupação, tarifa e utilização que remunerem manutenção e expansão, depois de sócios e financiamento. Reconhecimento de estoques vendidos ao fundo pode ampliar resultado sem gerar novo recebimento na mesma data.",
+        "titulo": "Ecossistema e renda economicamente atribuível"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Localização, marca, operação e integração de serviços podem apoiar retenção e preço no público de alta renda. A proposta precisa de prova por ativo, ocupação, custo completo e rentabilidade. Gestão de hotel não implica propriedade do imóvel. Aviação executiva e negócios internacionais exigem capital, direitos de exploração e demanda próprios. A escala de fundos pode ampliar taxas, mas também intensifica conflitos e necessidade de independência. Potencial comercial e reputação declarados não substituem comparação com concorrentes.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T14:46:14.642669+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "O consolidado recebe contribuição da incorporação vendida ao fundo, com reconhecimento diferente de recebimento. Na renda recorrente, EBITDA ajustado e resultado contábil têm direções distintas por efeito de valor justo e financiamento. O fluxo operacional consolidado do semestre permanece negativo depois de juros, enquanto a expansão consome recursos. A medida gerencial de caixa líquido considera contas a receber e dívida conversível; não demonstra dinheiro livre. O quadro de fluxo por segmento contém identificação de período inconsistente, preservada como lacuna.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que ativos diferenciados e serviços recorrentes remunerem expansão e financiamento, com integração comercial sustentando demanda. A condição decisiva é demonstrar caixa depois de investimentos e juros, sem depender de valorização contábil, receitas de incorporação antecipadamente recebidas ou liquidez de fundos relacionados. O retorno exige disciplina por negócio e direitos econômicos. Crescimento de ativos sob gestão não equivale a patrimônio ou caixa do grupo; a venda a fundo deve ser avaliada junto das cotas retidas, contratos e exposição transferida. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Em revisão, com retorno esperado Em revisão. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Demanda de alta renda, expansão, juros e câmbio podem limitar retorno. Fundos, cotas e partes relacionadas exigem controle de direitos. Caixa líquido gerencial e valorização contábil não comprovam recursos distribuíveis."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_JHSF.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "Em revisão"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é Em revisão. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Imobiliário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "JHSF — ecossistema de alta renda, fundos e caixa depois da expansão",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O reconhecimento de estoques vendidos ao fundo e reclassificações de contratos contribui para incorporação; a nota explicativa esclarece que transferências de base não são novas vendas. Parte do recebimento ocorreu antes do reconhecimento, enquanto a parcela seguinte depende de formalização e desempenho. O lucro consolidado também inclui efeitos de valor justo e tributação. A renda recorrente tem perímetro próprio. A aquisição de direitos de aviação executiva nos Estados Unidos é contabilizada como ativos; contrato de gestão hoteleira não foi tratado como compra imobiliária.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Separar receita e caixa recorrentes, valor justo e incorporação. Conciliar recebimentos do fundo, condições, cotas subordinadas e swap relacionado. Avaliar investimento, dívida, juros, expansão e capital por negócio. Monitorar ocupação, tarifas, utilização, taxas da gestora, sócios e recursos restritos.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_JHSF.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,81%"
+          },
+          {
+            "fato": "val.BR_JHSF.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "4,16%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 10,81% e a dispersão entre métodos 4,16%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

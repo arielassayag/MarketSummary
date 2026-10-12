@@ -1,0 +1,255 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_JHSF",
+  "data": "2026-10-12",
+  "tipo": "iniciacao",
+  "titulo": "JHSF — ecossistema de alta renda, fundos e caixa depois da expansão",
+  "resumo": "A hipótese é que ativos diferenciados e serviços recorrentes remunerem expansão e financiamento, com integração comercial sustentando demanda. A condição decisiva é demonstrar caixa depois de investimentos e juros, sem depender de valorização contábil, receitas de incorporação antecipadamente recebidas ou liquidez de fundos relacionados. O retorno exige disciplina por negócio e direitos econômicos. Crescimento de ativos sob gestão não equivale a patrimônio ou caixa do grupo; a venda a fundo deve ser avaliada junto das cotas retidas, contratos e exposição transferida. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_JHSF.rating_codigo}}, com retorno esperado {{fact:val.BR_JHSF.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Grupo de alta renda com shoppings, hospitalidade e gastronomia, aviação executiva, locação residencial e clubes, incorporação, varejo e gestão de fundos. O ecossistema pode integrar destinos e serviços, mas cada atividade tem capital, direitos e ciclo próprios. Renda recorrente gerencial exclui determinados negócios e a holding. Operação contratada, imóvel detido e taxa de gestão são exposições diferentes. Fundos compradores e sócios exigem avaliar consolidação, instrumentos financeiros e receitas efetivamente atribuíveis.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que ativos diferenciados e serviços recorrentes remunerem expansão e financiamento, com integração comercial sustentando demanda. A condição decisiva é demonstrar caixa depois de investimentos e juros, sem depender de valorização contábil, receitas de incorporação antecipadamente recebidas ou liquidez de fundos relacionados. O retorno exige disciplina por negócio e direitos econômicos. Crescimento de ativos sob gestão não equivale a patrimônio ou caixa do grupo; a venda a fundo deve ser avaliada junto das cotas retidas, contratos e exposição transferida.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_JHSF.preco}} e alvo {{fact:val.BR_JHSF.preco_alvo}}, com potencial {{fact:val.BR_JHSF.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_JHSF.ke}} e retorno esperado {{fact:val.BR_JHSF.etr}}.",
+      "evidencias": [
+        "val.BR_JHSF.preco",
+        "val.BR_JHSF.preco_alvo",
+        "val.BR_JHSF.upside",
+        "val.BR_JHSF.ke",
+        "val.BR_JHSF.etr"
+      ]
+    },
+    {
+      "titulo": "Ecossistema e renda economicamente atribuível",
+      "texto": "A leitura por negócio deve separar imóvel detido, contrato de operação e taxa da gestora. O release exclui incorporação, varejo e holding da renda recorrente; essa base não é o grupo inteiro. O teste econômico consiste em demonstrar ocupação, tarifa e utilização que remunerem manutenção e expansão, depois de sócios e financiamento. Reconhecimento de estoques vendidos ao fundo pode ampliar resultado sem gerar novo recebimento na mesma data.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Separar receita e caixa recorrentes, valor justo e incorporação. Conciliar recebimentos do fundo, condições, cotas subordinadas e swap relacionado. Avaliar investimento, dívida, juros, expansão e capital por negócio. Monitorar ocupação, tarifas, utilização, taxas da gestora, sócios e recursos restritos.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_JHSF.ke}} e a dispersão entre métodos {{fact:val.BR_JHSF.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_JHSF.ke",
+        "val.BR_JHSF.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Conclusão prevista da tranche da alienação em dezembro de 2026, sujeita aos termos divulgados; dia exato de liquidação não confirmado.",
+      "data": null,
+      "tipo": "capital",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "descricao": "Resultados posteriores: conciliar renda recorrente, investimentos, juros, captação e operações com os fundos.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F4",
+        "F5"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Demanda de alta renda, expansão, juros e câmbio podem limitar retorno. Fundos, cotas e partes relacionadas exigem controle de direitos. Caixa líquido gerencial e valorização contábil não comprovam recursos distribuíveis.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F4",
+        "F5"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_JHSF.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_JHSF.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Ativos e serviços sustentam demanda e caixa depois de investimentos e juros; contratos e fundos preservam direitos atribuíveis e disciplinam expansão. O cenário otimista calculado pelo código é {{fact:val.BR_JHSF.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_JHSF.preco_alvo}}, com retorno esperado {{fact:val.BR_JHSF.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Expansão e financiamento absorvem recursos, receitas e recebimentos se desencontram e estruturas relacionadas limitam retorno e distribuição. O cenário pessimista calculado pelo código é {{fact:val.BR_JHSF.alvo_pessimista}}."
+  },
+  "comentario_valuation": "A soma das partes é uma lente adequada aos negócios heterogêneos: renda dos imóveis, operação de serviços, incorporação e gestora exigem bases próprias. Deduzir capital e direitos de terceiros sem contar duas vezes o fundo, as cotas retidas e os ativos. Valor justo e ativos sob gestão não substituem caixa normalizado atribuível. Preço de referência {{fact:val.BR_JHSF.preco}} e alvo do modelo aberto {{fact:val.BR_JHSF.preco_alvo}}, com potencial {{fact:val.BR_JHSF.upside}}. Retorno total esperado {{fact:val.BR_JHSF.etr}} e custo do capital próprio {{fact:val.BR_JHSF.ke}}. A dispersão entre métodos é {{fact:val.BR_JHSF.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_JHSF.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_JHSF.consenso_alvo}}; a diferença {{fact:val.BR_JHSF.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "O reconhecimento de estoques vendidos ao fundo e reclassificações de contratos contribui para incorporação; a nota explicativa esclarece que transferências de base não são novas vendas. Parte do recebimento ocorreu antes do reconhecimento, enquanto a parcela seguinte depende de formalização e desempenho. O lucro consolidado também inclui efeitos de valor justo e tributação. A renda recorrente tem perímetro próprio. A aquisição de direitos de aviação executiva nos Estados Unidos é contabilizada como ativos; contrato de gestão hoteleira não foi tratado como compra imobiliária.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "A não consolidação do fundo considera poderes limitados, direitos dos cotistas seniores, cotas retidas e transferência de exposição por swap com empresa do controlador. A aprovação divulgada não encerra análise independente dos termos e conflitos. A revisão intermediária enfatiza política de reconhecimento, sem ressalvar a conclusão. O quadro gerencial de fluxo por segmento apresenta título e identificação de período divergentes; o fluxo semestral das demonstrações foi preservado como base distinta, sem corrigir a fonte.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Localização, marca, operação e integração de serviços podem apoiar retenção e preço no público de alta renda. A proposta precisa de prova por ativo, ocupação, custo completo e rentabilidade. Gestão de hotel não implica propriedade do imóvel. Aviação executiva e negócios internacionais exigem capital, direitos de exploração e demanda próprios. A escala de fundos pode ampliar taxas, mas também intensifica conflitos e necessidade de independência. Potencial comercial e reputação declarados não substituem comparação com concorrentes.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "O consolidado recebe contribuição da incorporação vendida ao fundo, com reconhecimento diferente de recebimento. Na renda recorrente, EBITDA ajustado e resultado contábil têm direções distintas por efeito de valor justo e financiamento. O fluxo operacional consolidado do semestre permanece negativo depois de juros, enquanto a expansão consome recursos. A medida gerencial de caixa líquido considera contas a receber e dívida conversível; não demonstra dinheiro livre. O quadro de fluxo por segmento contém identificação de período inconsistente, preservada como lacuna.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "A companhia mantém cotas subordinadas no fundo comprador e swap com empresa do controlador, considerados na análise de não consolidação. A segunda parcela do recebimento tem prazo e condições próprios. A captação posterior de debêntures foi concluída, mas a amortização integral do empréstimo-ponte exige comprovação. A oferta do fundo de recebíveis foi encerrada; recursos e ativos sob gestão pertencem ao fundo, sem equivalência automática a caixa da JHSF. Expansão, aquisição de direitos no exterior e dividendos precisam de ponte por entidade.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F4",
+      "F5"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se expansão cresce antes de caixa recorrente e receitas reconhecidas dependem de obrigações já financiadas pelo fundo. O swap altera exposição, mas exige avaliar contraparte, termos e conflitos. Contas a receber no caixa líquido não pagam dívida antes da liquidação. Integração de negócios pode elevar complexidade, custos e capital sem retorno por ação. Aumento de taxas ou ativos sob gestão não elimina risco dos empreendimentos nem demonstra independência econômica das transações.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F4",
+      "F5"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Separar receita e caixa recorrentes, valor justo e incorporação. Conciliar recebimentos do fundo, condições, cotas subordinadas e swap relacionado. Avaliar investimento, dívida, juros, expansão e capital por negócio. Monitorar ocupação, tarifas, utilização, taxas da gestora, sócios e recursos restritos.",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F4",
+        "F5"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_JHSF.etr}}, custo do capital {{fact:val.BR_JHSF.ke}} e dispersão entre métodos {{fact:val.BR_JHSF.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_JHSF.etr",
+        "val.BR_JHSF.ke",
+        "val.BR_JHSF.cv_metodos"
+      ]
+    },
+    {
+      "titulo": "Retenção de exposição e retorno da expansão",
+      "texto": "Na divulgação seguinte, acompanhar ocupação e renda dos ativos maduros separadamente de novas entregas, taxas da gestora e incorporação. Confrontar recebimentos com as condições da venda ao fundo, cotas retidas e obrigações relacionadas. Rever a tese se o crescimento do ecossistema requerer expansão contínua enquanto caixa recorrente atribuível ficar aquém do financiamento e manutenção.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Caixa recorrente depois de investimentos e juros não sustenta expansão.",
+    "Condições e recebimentos do fundo divergem do cronograma divulgado.",
+    "Cotas, swap, contraparte ou consolidação alteram exposição econômica.",
+    "Alocação por negócio e direitos não sustentam retorno atribuível."
+  ],
+  "lacunas_de_dados": [
+    "Fluxos gerenciais e contábeis não foram integralmente reconciliados por negócio e entidade.",
+    "O quadro gerencial por segmento tem identificação de período inconsistente; a diferença não foi corrigida arbitrariamente.",
+    "Termos completos do fundo, cotas, swap relacionado e risco de contraparte precisam de exame independente.",
+    "Recebimento da parcela futura e cumprimento de condições não foram comprovados.",
+    "Aplicação da captação e amortização integral do empréstimo-ponte permanecem a verificar.",
+    "Retorno da expansão e disponibilidade irrestrita de recursos exigem ponte completa.",
+    "Guidance agregado, tom e percepção do mercado não foram classificados.",
+    "A previsão de conclusão da tranche informa dezembro de 2026; o dia exato e a liquidação efetiva não foram comprovados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "JHSF",
+      "titulo": "Negócios, estratégia e materiais públicos do grupo",
+      "url": "https://ri.jhsf.com.br/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "JHSF",
+      "titulo": "Resultado: renda recorrente, incorporação, capital e caixa",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/1389c06d-4b85-4082-ae2b-3cc3b67db647/eb507b65-aef9-704c-e6c9-cb0feae7c20e?origin=2",
+      "publicado_em": null,
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "JHSF",
+      "titulo": "Informações intermediárias: fundo comprador, cotas, swap e reconhecimento",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/1389c06d-4b85-4082-ae2b-3cc3b67db647/54b849a0-d05d-a247-be87-b1f5d73c5907?origin=2",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F4",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "JHSF",
+      "titulo": "Conclusão da emissão de debêntures e condições de captação",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/1389c06d-4b85-4082-ae2b-3cc3b67db647/08b689f4-15f8-7942-cbee-19bfd67a2d05?origin=2",
+      "publicado_em": "2026-08-31",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F5",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "JHSF",
+      "titulo": "Conclusão da oferta do fundo de recebíveis e ativos sob gestão",
+      "url": "https://filemanager-cdn.mziq.com/published/1389c06d-4b85-4082-ae2b-3cc3b67db647/d54d5164-abc2-4770-ad53-afb425120319",
+      "publicado_em": "2026-09-29",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

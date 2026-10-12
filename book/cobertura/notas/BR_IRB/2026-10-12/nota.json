@@ -1,0 +1,197 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_IRB",
+  "data": "2026-10-12",
+  "tipo": "iniciacao",
+  "titulo": "IRB Re — disciplina de subscrição após reservas, retrocessão e capital",
+  "resumo": "A hipótese é que seleção de riscos e encerramento de carteiras menos adequadas produzam retorno recorrente após sinistros e capital. A condição decisiva é qualidade das reservas e resultado de subscrição em diferentes anos de ocorrência. Menor emissão pode refletir disciplina, sem comprovar que reversão de provisão ou menor retrocessão tenha reduzido risco final. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_IRB.rating_codigo}}, com retorno esperado {{fact:val.BR_IRB.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Resseguradora que assume riscos cedidos por seguradoras no Brasil e no exterior e também usa retrocessão. Prêmio retido, exposição efetiva, reservas de sinistros e remuneração dos ativos têm funções distintas. Disciplina de contratos e seleção de riscos precisa ser avaliada após proteção adquirida, despesas e capital exigido.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que seleção de riscos e encerramento de carteiras menos adequadas produzam retorno recorrente após sinistros e capital. A condição decisiva é qualidade das reservas e resultado de subscrição em diferentes anos de ocorrência. Menor emissão pode refletir disciplina, sem comprovar que reversão de provisão ou menor retrocessão tenha reduzido risco final.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_IRB.preco}} e alvo {{fact:val.BR_IRB.preco_alvo}}, com potencial {{fact:val.BR_IRB.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_IRB.ke}} e retorno esperado {{fact:val.BR_IRB.etr}}.",
+      "evidencias": [
+        "val.BR_IRB.preco",
+        "val.BR_IRB.preco_alvo",
+        "val.BR_IRB.upside",
+        "val.BR_IRB.ke",
+        "val.BR_IRB.etr"
+      ]
+    },
+    {
+      "titulo": "Resultado de subscrição por ano de ocorrência",
+      "texto": "O relatório separa prêmio ganho, sinistro retido, retrocessão e resultado financeiro; o índice ampliado incorpora base diferente do combinado. A tese de disciplina exige que contratos renovados remunerem a perda final e o capital, sem depender de reversões de reservas antigas ou receitas financeiras. Reduzir prêmio pode proteger retorno, mas reduzir retrocessão aumenta a importância de examinar a exposição efetivamente retida e sua concentração.",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Monitorar reservas e sinistros por ocorrência e geografia, desenvolvimento adverso, preço nas renovações e retrocessão. Separar cessões operacionais e proteção efetiva, custo de subscrição, administração e tributos. Conferir solvência, ativos garantidores, dívida e dividendos efetivamente pagos. Rever autorização e custos dos projetos internacionais.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_IRB.ke}} e a dispersão entre métodos {{fact:val.BR_IRB.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_IRB.ke",
+        "val.BR_IRB.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Vencimento contratual informado de debênture; conferir liquidação e cobertura de obrigações em documentos atualizados.",
+      "data": "2026-10-15",
+      "tipo": "capital",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Reservas insuficientes, catástrofes e perdas externas podem consumir resultado e capital. Menor retrocessão pode elevar retenção de risco. Ativos garantidores, tributos diferidos e vencimentos de dívida têm liquidez e tratamento próprios.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_IRB.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_IRB.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Renovações e reservas confirmam disciplina de risco, com subscrição recorrente e capital suficiente após obrigações. O cenário otimista calculado pelo código é {{fact:val.BR_IRB.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_IRB.preco_alvo}}, com retorno esperado {{fact:val.BR_IRB.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Desenvolvimento de sinistros e perdas externas exigem provisões, proteção e financiamento adicional, absorvendo retorno ao acionista. O cenário pessimista calculado pelo código é {{fact:val.BR_IRB.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Para resseguro, patrimônio e lucro residual normalizado são lentes mais adequadas que EBITDA industrial. Reservas, ativos garantidores e base prudencial precisam sustentar retorno recorrente após o capital requerido. Relação preço/patrimônio não demonstra desconto econômico sem adequação das provisões e reconciliação das bases contábeis. Preço de referência {{fact:val.BR_IRB.preco}} e alvo do modelo aberto {{fact:val.BR_IRB.preco_alvo}}, com potencial {{fact:val.BR_IRB.upside}}. Retorno total esperado {{fact:val.BR_IRB.etr}} e custo do capital próprio {{fact:val.BR_IRB.ke}}. A dispersão entre métodos é {{fact:val.BR_IRB.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_IRB.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_IRB.consenso_alvo}}; a diferença {{fact:val.BR_IRB.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "O lucro trimestral melhora, mas a leitura semestral e os ajustes têm trajetórias próprias. Reversão de reserva doméstica, provisão de crédito de vida e baixa de tributos diferidos têm naturezas diferentes. Encerramento britânico e efeitos cambiais precisam conservar seu tratamento. O release apresenta percentuais divergentes para uma comparação de lucro; a fonte não foi corrigida e seus números não foram incorporados à mão.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Asseguração do relatório gerencial tem critérios e escopo expressos; não equivale a comprovação independente de eficácia dos controles ou adequação de todas as reservas. Encerramento de obrigações relatado pela emissora preserva essa atribuição. Autorizações suíça e maltesa permaneciam pendentes no release, sem antecipação como concedidas na pesquisa.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Conhecimento técnico, relacionamento com cedentes e capacidade podem apoiar seleção. A companhia descreve maior competição internacional e oferta de capital; preço e termos precisam remunerar o risco retido. A tese exige renovação rentável e perdas finais comparáveis, sem tratar prêmio menor ou retenção maior como vantagem demonstrada.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "A melhora da sinistralidade doméstica recebe contribuição de reversão de reserva, enquanto o exterior permanece com resultado de subscrição negativo. O resultado técnico tem escopo anterior a despesas administrativas e certos tributos. Câmbio operacional aparece no resultado financeiro; contribuição financeira não é rendimento de juros isolado.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Solvência e cobertura por ativos garantidores têm movimentos diferentes; redução de obrigações e desvinculação de ativos conservam seus estados. Tributos diferidos têm tratamento prudencial próprio. Recompra destinada a remuneração em ações não equivale a cancelamento permanente. Vencimentos de dívida posteriores à consulta exigem comprovação de liquidação.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se melhora doméstica depende de reversão de reserva enquanto anos antigos ou exterior deterioram. Menor prêmio e proteção podem elevar aparente margem antes da realização dos sinistros; lucro financeiro não substitui qualidade da subscrição.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Monitorar reservas e sinistros por ocorrência e geografia, desenvolvimento adverso, preço nas renovações e retrocessão. Separar cessões operacionais e proteção efetiva, custo de subscrição, administração e tributos. Conferir solvência, ativos garantidores, dívida e dividendos efetivamente pagos. Rever autorização e custos dos projetos internacionais.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_IRB.etr}}, custo do capital {{fact:val.BR_IRB.ke}} e dispersão entre métodos {{fact:val.BR_IRB.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_IRB.etr",
+        "val.BR_IRB.ke",
+        "val.BR_IRB.cv_metodos"
+      ]
+    },
+    {
+      "titulo": "Reservas, renovação e capital distribuível",
+      "texto": "Na divulgação seguinte, acompanhar desenvolvimento dos sinistros por ocorrência e geografia, custo da proteção e termos de renovação. Confrontar o resultado de subscrição com despesas e tributos, mantendo a ponte entre visão gerencial e norma de seguros. Verificar liquidação da debênture no vencimento e disponibilidade de ativos garantidores; suficiência prudencial não equivale a todo patrimônio livre para distribuição.",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Anos de ocorrência ou exterior exigem reforço de reservas e enfraquecem a subscrição recorrente.",
+    "Preço e retrocessão não remuneram exposição e capital efetivamente retidos.",
+    "Ativos garantidores e liquidação de dívida não confirmam cobertura das obrigações.",
+    "Novos documentos alteram autorizações, ajustes ou comparabilidade do resultado."
+  ],
+  "lacunas_de_dados": [
+    "Triângulos completos, perdas finais e reservas não foram reconciliados independentemente.",
+    "Relatório gerencial e demonstrações contábeis em normas diferentes exigem conciliação com o modelo recebido.",
+    "Percentuais divergentes no release foram preservados como inconsistência, sem correção da fonte.",
+    "Liquidação posterior da dívida e novas autorizações não foram comprovadas nesta consulta.",
+    "Retrocessão, garantias, tributos e operações internacionais exigem documentação detalhada.",
+    "Guidance, tom agregado da gestão e percepção do mercado não foram classificados.",
+    "A extração contém datas de relatório e apresentação distintas, além de resíduos antigos. Publicação exata não foi estabelecida; consulta atual não comprova posse histórica."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "IRB Re",
+      "titulo": "Perfil e estrutura do negócio",
+      "url": "https://www.irbre.com/o-que-fazemos/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "IRB Re",
+      "titulo": "Resultado gerencial, reservas, solvência e asseguração",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/0d797649-90df-4c56-aa01-6ee9c8a13d75/b41b5ae3-2660-80fc-03ca-a4f683e5b125?origin=2",
+      "publicado_em": null,
+      "consultado_em": "2026-10-12"
+    }
+  ],
+  "modelo_ia": null
+}

@@ -1,0 +1,433 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "b3882d41066402c7aec27b32e9552af2ac0caa3a11af58c1b519699ffef7d7d0",
+    "factbook": "dbeb5f5eb90c51d5d047724236071e9085619f648acee0f87223a65ecf15dd29",
+    "nota_json": "f631317f76d7ede22bbe3fd9f5efd893e314811ccfe5ab84ec49dcaf949f9e45"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_PENOLES",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-26",
+  "published_at": "2026-10-12T14:36:55.968664+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O fluxo de caixa distingue capex, dívida, arrendamentos e dividendos de participações não controladoras. Recursos consolidados não são caixa livre da holding. Desenvolvimento de minas, depósitos de rejeitos e manutenção exigem capital; tributos e fechamento precisam ser incorporados ao retorno do ciclo completo.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em MXN 913,55, com retorno esperado +6,42%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Continuidade industrial e desenvolvimento disciplinado preservam caixa atribuível depois de manutenção e obrigações. O cenário otimista calculado pelo código é MXN 1.212,06.",
+      "pessimista": "Metais, moeda e disponibilidade pressionam caixa enquanto reinvestimento e minoritários limitam retorno. O cenário pessimista calculado pelo código é MXN 622,82."
+    },
+    "comentario_valuation": "A diligência adequada é valor presente dos fluxos de minas de vida finita, com reservas verificadas, desenvolvimento, rejeitos e fechamento, somado ao refino e químicos sem duplicar Fresnillo ou minoritários. Lucro de um ciclo favorável não deve ser perpetuado; dívida e caixa atribuível são por entidade. Preço de referência MXN 876,80 e alvo do modelo aberto MXN 913,55, com potencial +4,19%. Retorno total esperado +6,42% e custo do capital próprio 12,81%. A dispersão entre métodos é 45,79%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é MXN 977,00; a diferença -6,49% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese enfraquece se integração não compensa paradas e custo de manutenção, ou se preços explicam a maior parte da melhora. Lucro consolidado e ajuste tributário podem não se converter em caixa recebido pelo acionista coberto.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.MX_PENOLES.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 876,80"
+      },
+      {
+        "fato": "val.MX_PENOLES.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 913,55"
+      },
+      {
+        "fato": "val.MX_PENOLES.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+4,19%"
+      },
+      {
+        "fato": "val.MX_PENOLES.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_PENOLES.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_PENOLES.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 1.212,06"
+      },
+      {
+        "fato": "val.MX_PENOLES.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "24,59%"
+      },
+      {
+        "fato": "val.MX_PENOLES.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 622,82"
+      },
+      {
+        "fato": "val.MX_PENOLES.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "25,67%"
+      },
+      {
+        "fato": "val.MX_PENOLES.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,81%"
+      },
+      {
+        "fato": "val.MX_PENOLES.wacc",
+        "rotulo": "WACC",
+        "valor": "11,97%"
+      },
+      {
+        "fato": "val.MX_PENOLES.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_PENOLES.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+6,42%"
+      },
+      {
+        "fato": "val.MX_PENOLES.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "0,00%"
+      },
+      {
+        "fato": "val.MX_PENOLES.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "8,8x"
+      },
+      {
+        "fato": "val.MX_PENOLES.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,8x"
+      },
+      {
+        "fato": "val.MX_PENOLES.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 977,00"
+      },
+      {
+        "fato": "val.MX_PENOLES.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-6,49%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "Industrias Peñoles",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário e materiais oficiais de resultados",
+        "url": "https://www.penoles.com.mx/inversionistas/reportes-y-presentaciones/"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Industrias Peñoles",
+        "publicado_em": "2026-08-04",
+        "tipo": "Relações com investidores",
+        "titulo": "Informe de resultados e fluxo de caixa",
+        "url": "https://www.penoles.com.mx/assets/files/reportes/BMV/informe/Informe_Director_2T26.pdf"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F3",
+        "instituicao": "Industrias Peñoles",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Demonstrações consolidadas semestrais em dólar",
+        "url": "https://www.penoles.com.mx/assets/files/reportes/BMV/trimestral/IPSAB_BMV_2T2026_USD.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Paradas ou deterioração de teor e recuperação impedem caixa após desenvolvimento e manutenção.",
+      "Melhora de margem depende de preço, estoque ou crédito de tratamento sem realização equivalente.",
+      "Rejeitos, fechamento ou reposição de reservas exigem capital não refletido nas premissas.",
+      "Caixa consolidado não chega à controladora após minoritários, tributos e obrigações."
+    ],
+    "governanca": "Revisar controle, direitos de minoritários e estruturas de Fresnillo e das demais participações. Dividendos para não controladores, transações relacionadas e capital necessário por entidade precisam ser conciliados.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar teor, recuperação e produção por mina e circuito de refino, manutenção e custo em moeda local. Revisar preços realizados, coberturas, estoques e capital de giro. Conciliar caixa depois de capex, dívida e minoritários, com reservas e obrigações ambientais.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_PENOLES.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+6,42%"
+          },
+          {
+            "fato": "val.MX_PENOLES.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,81%"
+          },
+          {
+            "fato": "val.MX_PENOLES.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "45,79%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +6,42%, custo do capital 12,81% e dispersão entre métodos 45,79% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Conciliar produção pagável e propriedade econômica, preço realizado, estoques físicos e créditos de tratamento. Verificar reinício e recorrência das paradas, capital para depósitos de rejeitos e obrigações de fechamento. Confrontar imposto pago com diferido e dividendos da subsidiária com caixa da controladora. A hipótese enfraquece se margens por estoque ou preços favoráveis ocultam deterioração operacional e reinvestimento insuficiente.",
+        "titulo": "Ponte entre mina, circuito metalúrgico e acionista"
+      }
+    ],
+    "issuer_id": "MX_PENOLES",
+    "lacunas_de_dados": [
+      "Minas, refino, materiais de terceiros e minoritários exigem reconciliação integral.",
+      "Teores, reservas e custo completo por operação permanecem a comprovar.",
+      "Manutenção, rejeitos e fechamento não foram integralmente avaliados.",
+      "Caixa disponível por entidade e efeitos tributários e cambiais precisam ser reconciliados.",
+      "Guidance, tom da gestão e catalisador futuro definitivo não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo de mineração, fundição, refino de metais não ferrosos e produtos químicos. Minas próprias, Fresnillo, metalurgia e materiais de terceiros têm economia distinta. Consolidação não torna toda produção e todo caixa atribuíveis: participações não controladoras e pagamentos às entidades precisam ser preservados.",
+    "nome": "Industrias Peñoles",
+    "o_que_mudou": null,
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_CEMEX",
+        "nome": "Cemex"
+      },
+      {
+        "issuer_id": "MX_ENDEAVOUR",
+        "nome": "Endeavour Silver"
+      },
+      {
+        "issuer_id": "MX_GCC",
+        "nome": "GCC"
+      },
+      {
+        "issuer_id": "MX_GMEXICO",
+        "nome": "Grupo México"
+      },
+      {
+        "issuer_id": "MX_ORBIA",
+        "nome": "Orbia"
+      },
+      {
+        "issuer_id": "MX_TERNIUM",
+        "nome": "Ternium"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que recursos minerais e integração sustentem caixa após desenvolvimento, manutenção e obrigações ambientais. Preços altos precisam se traduzir em retorno atribuível ao acionista, sem ocultar paradas e teores menores. A condição decisiva é continuidade remuneradora de operação e reposição de reservas.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_PENOLES.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "MXN 876,80"
+          },
+          {
+            "fato": "val.MX_PENOLES.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "MXN 913,55"
+          },
+          {
+            "fato": "val.MX_PENOLES.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+4,19%"
+          },
+          {
+            "fato": "val.MX_PENOLES.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,81%"
+          },
+          {
+            "fato": "val.MX_PENOLES.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+6,42%"
+          }
+        ],
+        "texto": "Preço de referência MXN 876,80 e alvo MXN 913,55, com potencial +4,19%. A hipótese de investimento deve ser confrontada com o custo do capital 12,81% e retorno esperado +6,42%.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "O informe distingue compra de material de terceiros, remuneração de tratamento e efeitos de preço em estoques. A hipótese de integração precisa mostrar margem recebida e disponibilidade do circuito, além do preço do metal. Crédito contábil no custo e menor carga processada podem favorecer margem sem elevar volume ou caixa sustentável; o retorno deve suportar desenvolvimento, rejeitos e fechamento por operação.",
+        "titulo": "Integração exige separar metal próprio e remuneração do processamento"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Base mineral e processamento podem apoiar captura de valor e aproveitamento de subprodutos. Essa vantagem exige comparar custo completo e disponibilidade industrial, sem usar escala de produção como prova de retorno. Comprar material de terceiros e extrair minério próprio têm margens e riscos diferentes.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T14:36:55.968664+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "O release mostra recuperação de Tizapa frente à paralisação da base anterior, mas menor produção de metais refinados e efeitos de manutenção. Preços apoiam lucro e custos em pesos sofrem com apreciação cambial. Impostos diferidos, coberturas, inventários e minoritários precisam ser separados do caixa recorrente.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que recursos minerais e integração sustentem caixa após desenvolvimento, manutenção e obrigações ambientais. Preços altos precisam se traduzir em retorno atribuível ao acionista, sem ocultar paradas e teores menores. A condição decisiva é continuidade remuneradora de operação e reposição de reservas. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +6,42%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Preços menores, teores e paradas podem reduzir margem. Moeda, manutenção, tributos e depósitos de rejeitos podem exigir capital adicional. Participações e caixa por entidade limitam distribuição, enquanto comparações contra uma base paralisada podem superestimar recuperação."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_PENOLES.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-6,49%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -6,49%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Peñoles — preço dos metais, manutenção e resultado atribuível",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A análise distingue mina, refino e processamento de terceiros, além de recuperação contra base paralisada. O informe separa efeitos de preços, moeda, imposto e participação. A página traz datas estimadas de calendário; previsão de divulgação não comprova publicação efetiva.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar teor, recuperação e produção por mina e circuito de refino, manutenção e custo em moeda local. Revisar preços realizados, coberturas, estoques e capital de giro. Conciliar caixa depois de capex, dívida e minoritários, com reservas e obrigações ambientais.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.MX_PENOLES.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,81%"
+          },
+          {
+            "fato": "val.MX_PENOLES.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "45,79%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 12,81% e a dispersão entre métodos 45,79%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

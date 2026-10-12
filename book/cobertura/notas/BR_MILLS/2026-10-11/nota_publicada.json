@@ -1,0 +1,441 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "e1652cfe51934a72906ae22dfe5cc2fdca0bdb8d021f342070fff6b9ec4d1b40",
+    "factbook": "199b4b1a5126edbcd415e3a57ffd39d5df14a9c6d02b5cc150c4c9c6f4a25fce",
+    "nota_json": "4ac2648922d561a79b6005f2b00af364a1215a45a141c47dac340ecb12c515f8"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_MILLS",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T03:12:48.135896+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Investimento caiu, principalmente em ativos de locação. O fluxo ajustado reconcilia frota e fornecedores; caixa para a firma não é caixa disponível após financiamento. Dívida bruta recuou no trimestre e dívida líquida aumentou. Texto e tabela diferem sobre estabilidade da alavancagem, sem correção da fonte.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar recorrência, crédito e caixa depois da reposição.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 31,40, com retorno esperado +98,83%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Utilização e produtividade sustentam margem recorrente e recebimento, com manutenção e reposição remuneradas depois dos juros. O cenário otimista calculado pelo código é R$ 40,48.",
+      "pessimista": "Obras e crédito pressionam utilização; benefícios temporários deixam de contribuir e reposição absorve caixa além do indicado pelos ajustes. O cenário pessimista calculado pelo código é R$ 23,45."
+    },
+    "comentario_valuation": "Preço de referência R$ 16,11 e alvo do modelo aberto R$ 31,40, com potencial +94,91%. Retorno total esperado +98,83% e custo do capital próprio 11,66%. A dispersão entre métodos é 25,41%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 16,72; a diferença +87,80% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Lucro contábil maior pode coexistir com lucro caixa menor. Se créditos e reversões sustentarem margem enquanto crédito piora, investimento reduzido poderá melhorar caixa apenas temporariamente, sem retorno estrutural da frota.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_MILLS.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 16,11"
+      },
+      {
+        "fato": "val.BR_MILLS.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 31,40"
+      },
+      {
+        "fato": "val.BR_MILLS.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+94,91%"
+      },
+      {
+        "fato": "val.BR_MILLS.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.BR_MILLS.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_MILLS.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 40,48"
+      },
+      {
+        "fato": "val.BR_MILLS.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_MILLS.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 23,45"
+      },
+      {
+        "fato": "val.BR_MILLS.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_MILLS.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,66%"
+      },
+      {
+        "fato": "val.BR_MILLS.wacc",
+        "rotulo": "WACC",
+        "valor": "9,68%"
+      },
+      {
+        "fato": "val.BR_MILLS.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_MILLS.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+98,83%"
+      },
+      {
+        "fato": "val.BR_MILLS.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+100,75%"
+      },
+      {
+        "fato": "val.BR_MILLS.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "8,2x"
+      },
+      {
+        "fato": "val.BR_MILLS.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,9x"
+      },
+      {
+        "fato": "val.BR_MILLS.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 16,72"
+      },
+      {
+        "fato": "val.BR_MILLS.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+87,80%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Mills",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://ri.mills.com.br/a-companhia/quem-somos/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Mills",
+        "publicado_em": "2026-08-05",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/5a4be2ff-b3a2-4792-b967-e745978e71f9/21e26ea1-3fbd-7a7a-db35-542a77442b04?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Mills",
+        "publicado_em": "2026-08-05",
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/5a4be2ff-b3a2-4792-b967-e745978e71f9/385b4d7e-8df6-8e66-588a-4b3ceab1b772?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+      "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+      "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+      "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+    ],
+    "governanca": "As medidas ajustadas preservam reconciliação com a demonstração original, sem eliminar economicamente juros ou investimento. A baixa de custos da Next Rental tem natureza não caixa. Divergência de alavancagem permanece explícita; reconhecimento institucional não substitui diligência de crédito e retorno.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Ocupação, preço, idade, manutenção e crédito por unidade. Separar tributos, Next Rental e geração original da ajustada. Conciliar frota, fornecedores, arrendamentos e juros; verificar cronograma de obras e retorno por equipamento.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_MILLS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+98,83%"
+          },
+          {
+            "fato": "val.BR_MILLS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,66%"
+          },
+          {
+            "fato": "val.BR_MILLS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "25,41%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +98,83%, custo do capital 11,66% e dispersão entre métodos 25,41% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_MILLS",
+    "lacunas_de_dados": [
+      "Texto e tabela divergem sobre a estabilidade da alavancagem.",
+      "A ponte integral do ITR, manutenção e caixa atribuível permanece pendente.",
+      "Recorrência de créditos e efeitos de Next Rental requer diligência.",
+      "Retorno por equipamento, crédito e cronograma de obras não foram comprovados integralmente.",
+      "Guidance agregado e comparação competitiva independente não foram comprovados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Locadora de plataformas elevatórias e máquinas pesadas, com soluções de formas e escoramentos. Ocupação, preço, crédito e manutenção determinam retorno por equipamento. Aquisições, projetos de infraestrutura e aluguel recorrente possuem bases de crescimento e necessidades de capital distintas.",
+    "nome": "Mills",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ECORODOVIAS",
+        "nome": "EcoRodovias"
+      },
+      {
+        "issuer_id": "BR_EMBRAER",
+        "nome": "Embraer"
+      },
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_LOCALIZA",
+        "nome": "Localiza"
+      },
+      {
+        "issuer_id": "BR_MOTIVA",
+        "nome": "Motiva (ex-CCR)"
+      },
+      {
+        "issuer_id": "BR_RANDON",
+        "nome": "Randoncorp"
+      },
+      {
+        "issuer_id": "BR_SIMPAR",
+        "nome": "Simpar"
+      },
+      {
+        "issuer_id": "BR_TUPY",
+        "nome": "Tupy"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que rede e produtividade sustentem retorno depois de reposição e juros. A condição decisiva é converter utilização em caixa sem depender de créditos fiscais, reversões ou redução indefinida de investimento. Frota, crédito e maturação de aquisições devem ser testados por negócio.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_MILLS.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 16,11"
+          },
+          {
+            "fato": "val.BR_MILLS.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 31,40"
+          },
+          {
+            "fato": "val.BR_MILLS.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+94,91%"
+          },
+          {
+            "fato": "val.BR_MILLS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,66%"
+          },
+          {
+            "fato": "val.BR_MILLS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+98,83%"
+          }
+        ],
+        "texto": "Preço de referência R$ 16,11 e alvo R$ 31,40, com potencial +94,91%. A hipótese de investimento deve ser confrontada com o custo do capital 11,66% e retorno esperado +98,83%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Disponibilidade, manutenção, segurança e rede podem apoiar relacionamento. A liderança informada pelo emissor exige definição e comparação independentes. Contratos de máquinas, trabalho em altura e obras complexas têm prazos e demanda distintos; backlog não equivale a margem realizada.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T03:12:48.135896+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita, EBITDA ajustado e lucro contábil cresceram, mas lucro caixa recuou com efeitos fiscais e de Next Rental. Crédito sofreu pressão. A geração original ficou positiva frente ao comparável negativo, enquanto o fluxo ajustado retira juros e rearranja investimento em frota. A ponte mostra efeito não caixa da aquisição.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que rede e produtividade sustentem retorno depois de reposição e juros. A condição decisiva é converter utilização em caixa sem depender de créditos fiscais, reversões ou redução indefinida de investimento. Frota, crédito e maturação de aquisições devem ser testados por negócio. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Compra, com retorno esperado +98,83%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Ciclo de obras, crédito e competição podem reduzir utilização e margem. Manutenção e reposição exigem caixa. Efeitos fiscais e de aquisição não garantem recorrência; medidas ajustadas podem divergir do retorno ao acionista."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_MILLS.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+87,80%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +87,80%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Mills — utilização, manutenção e qualidade da geração",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "Receita, EBITDA ajustado e lucro contábil aumentaram, mas o lucro caixa caiu. Next Rental e créditos fiscais influenciaram os ajustes; provisões de crédito cresceram. Investimento em equipamentos caiu. O fluxo original inclui juros e frota, enquanto a medida ajustada faz reconciliações próprias. Dívida líquida aumentou no trimestre; o texto de alavancagem difere da tabela. Não foi inferida geração distribuível a partir do fluxo para a firma.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Ocupação, preço, idade, manutenção e crédito por unidade. Separar tributos, Next Rental e geração original da ajustada. Conciliar frota, fornecedores, arrendamentos e juros; verificar cronograma de obras e retorno por equipamento.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_MILLS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,66%"
+          },
+          {
+            "fato": "val.BR_MILLS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "25,41%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,66% e a dispersão entre métodos 25,41%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,487 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "50abedf1b6611614a026ec5d00c25ab9b3f75b85df68bd9a65aa82565a4ae61f",
+    "factbook": "d28b2ab7ee62c8cbc6ccd5623e36e2f1528f473d80783fd35c52f46777863d11",
+    "nota_json": "58d8f9dd569ddc105d5e9632a41f1ea19b6323db9e3d4c3e9c2c8b72e4b7a13f"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_AURA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T03:14:43.068296+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          }
+        ],
+        "texto": "A dívida líquida aumenta sequencialmente com expansão, dividendos e recompra; sua medida deduz caixa restrito e inclui swap específico, sem tornar esses itens livremente disponíveis. O fluxo recorrente antecede expansão e distribuição. A venda de São Francisco foi concluída com recebimento parcial e saldo a receber. Crédito contratado depois do trimestre não comprova desembolso integral. O acordo de internalização da frota permanece condicional, com caixa, arrendamentos e parcelas contingentes distintos.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Transição prevista da frota internalizada, condicionada ao fechamento; conciliar desembolso, arrendamentos, contingências e eficiência realizada.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F4"
+          }
+        ],
+        "tipo": "m_a"
+      },
+      {
+        "data": null,
+        "descricao": "Resultados financeiros posteriores à produção preliminar; testar margem, custo completo e caixa por mina.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em Em revisão, com retorno esperado Em revisão. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Disponibilidade, recuperação e execução de projetos sustentam caixa depois de reposição e financiamento, com remuneração do investimento e retorno por ação. O cenário otimista calculado pelo código é Em revisão.",
+      "pessimista": "Teores e preços caem enquanto gargalos, desenvolvimento, proteção e obrigações da frota consomem caixa e aumentam financiamento. O cenário pessimista calculado pelo código é Em revisão."
+    },
+    "comentario_valuation": "Preço de referência US$ 82,49 e alvo do modelo aberto Em revisão, com potencial Em revisão. Retorno total esperado Em revisão e custo do capital próprio 11,77%. A dispersão entre métodos é 27,83%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é US$ 101,91; a diferença Em revisão não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "A hipótese enfraquece se produção maior depende de preço na conversão de GEO ou de aquisição sem melhoria econômica comparável. Teores menores, desenvolvimento subterrâneo e filtragem podem elevar custo completo. Proteção de ouro reduz caixa mesmo quando sua marcação favorece lucro. A internalização pode transferir custos, manutenção, pessoas e obrigações financeiras sem realizar a economia projetada.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_AURA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 82,49"
+      },
+      {
+        "fato": "val.BR_AURA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_AURA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_AURA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_AURA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_AURA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_AURA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_AURA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_AURA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_AURA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,77%"
+      },
+      {
+        "fato": "val.BR_AURA.wacc",
+        "rotulo": "WACC",
+        "valor": "11,34%"
+      },
+      {
+        "fato": "val.BR_AURA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.BR_AURA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_AURA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_AURA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "10,8x"
+      },
+      {
+        "fato": "val.BR_AURA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "15,2x"
+      },
+      {
+        "fato": "val.BR_AURA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 101,91"
+      },
+      {
+        "fato": "val.BR_AURA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Em revisão"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Aura Minerals",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e estratégia da mineradora; lista de ativos com atualização a conciliar",
+        "url": "https://www.auraminerals.com/quem-somos/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Aura Minerals",
+        "publicado_em": "2026-08-05",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado trimestral, custos, fluxo recorrente, dívida e projetos",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/7e088be0-b725-4cba-ab5e-4969a4ac92af/0d644c3a-5479-178c-a7a8-663a0cfac5f8?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Aura Minerals",
+        "publicado_em": "2026-10-09",
+        "tipo": "Relações com investidores",
+        "titulo": "Produção preliminar, vendas e andamento das minas",
+        "url": "https://filemanager-cdn.mziq.com/published/7e088be0-b725-4cba-ab5e-4969a4ac92af/0034dc7f-bed2-4cbb-a203-61c96b75d023"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F4",
+        "instituicao": "Aura Minerals",
+        "publicado_em": "2026-10-02",
+        "tipo": "Relações com investidores",
+        "titulo": "Acordo definitivo de frota sujeito a condições; estimativa prospectiva de custo",
+        "url": "https://filemanager-cdn.mziq.com/published/7e088be0-b725-4cba-ab5e-4969a4ac92af/f8b9a2a3-ca41-4c1b-a7ad-a850fc651abd"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F5",
+        "instituicao": "Aura Minerals",
+        "publicado_em": "2026-09-18",
+        "tipo": "Relações com investidores",
+        "titulo": "Contrato de financiamento da holding e destinação anunciada",
+        "url": "https://filemanager-cdn.mziq.com/published/7e088be0-b725-4cba-ab5e-4969a4ac92af/d2fd3aa0-5956-4d99-b882-dc93b7d4da16"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Produção e vendas comparáveis deixam de sustentar margem depois do custo completo.",
+      "Marcação de proteção diverge da liquidação e da geração de caixa.",
+      "Reposição, expansão e obrigações da frota não remuneram o capital.",
+      "Novos documentos alteram reservas, perímetro, direitos ou recursos atribuíveis por ação."
+    ],
+    "governanca": "Ações ordinárias e recibos têm direitos, conversão e elegibilidade próprios. Programa autorizado e recompra realizada são estados distintos. Internalização envolve equipe e manutenção próprias; aprovação concorrencial ainda é condição. Declarações de licenciamento, segurança e relação comunitária são da companhia, sem verificação independente integral. O perfil mantém uma lista de ativos que não acompanha todos os estados dos comunicados atuais.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          }
+        ],
+        "texto": "Acompanhar teor, recuperação, lavra, alimentação, filtragem e volume vendido por mina. Conciliar GEO, preços e perímetro comparável; separar sustentação, expansão e proteção liquidada. Verificar retorno de MSG e Borborema, financiamento, caixa restrito, recebíveis e obrigações da frota antes de inferir retorno por ação.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_AURA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.BR_AURA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,77%"
+          },
+          {
+            "fato": "val.BR_AURA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "27,83%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado Em revisão, custo do capital 11,77% e dispersão entre métodos 27,83% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_AURA",
+    "lacunas_de_dados": [
+      "Demonstrações completas, fechamento de mina e caixa atribuível por entidade não foram integralmente reconciliados.",
+      "A data de início comercial de Borborema diverge entre o resultado e a nota do comunicado preliminar.",
+      "Custos sobre produção e vendas e diferentes bases de GEO exigem conciliação determinística.",
+      "Desembolso do crédito e fechamento da frota não foram comprovados; economias são estimativas internas.",
+      "Reservas, licenças e retorno dos projetos não foram integralmente diligenciados.",
+      "A lista de ativos do perfil requer atualização frente aos comunicados atuais.",
+      "Guidance por indicador existe, mas direção agregada, tom e percepção do mercado não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Mineradora de ouro, cobre e outros metais nas Américas. O comunicado operacional atual apresenta Aranzazu, Apoena, Minosa, Almas, Borborema e Mineração Serra Grande em operação. Teor, recuperação, sequenciamento de lavra e disponibilidade determinam produção econômica; venda e recebimento também dependem de embarque e refino. Onça equivalente usa relações entre preços de metais e não substitui produção física por metal. Projetos em construção e expansão têm estados próprios.",
+    "nome": "Aura Minerals",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRADESPAR",
+        "nome": "Bradespar"
+      },
+      {
+        "issuer_id": "BR_CBA",
+        "nome": "Companhia Brasileira de Alumínio"
+      },
+      {
+        "issuer_id": "BR_CMIN",
+        "nome": "CSN Mineração"
+      },
+      {
+        "issuer_id": "BR_CSN",
+        "nome": "CSN Siderúrgica Nacional"
+      },
+      {
+        "issuer_id": "BR_ERO",
+        "nome": "Ero Copper"
+      },
+      {
+        "issuer_id": "BR_GERDAU",
+        "nome": "Gerdau"
+      },
+      {
+        "issuer_id": "BR_GOAU",
+        "nome": "Metalúrgica Gerdau"
+      },
+      {
+        "issuer_id": "BR_SUZANO",
+        "nome": "Suzano"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "A hipótese é que melhoria técnica e disciplina de capital nas minas sustentem caixa por ação ao longo do ciclo. A condição decisiva é retorno depois de sustentação, exploração, expansão, tributos, obrigações financeiras e proteção de preços. A carteira de projetos oferece caminhos de crescimento, mas capacidade e produção recorde não demonstram remuneração do investimento. A visão exige conciliar custos e caixa por mina, inclusive ativos em recuperação operacional.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_AURA.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "US$ 82,49"
+          },
+          {
+            "fato": "val.BR_AURA.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.BR_AURA.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.BR_AURA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,77%"
+          },
+          {
+            "fato": "val.BR_AURA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "Em revisão"
+          }
+        ],
+        "texto": "Preço de referência US$ 82,49 e alvo Em revisão, com potencial Em revisão. A hipótese de investimento deve ser confrontada com o custo do capital 11,77% e retorno esperado Em revisão.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Conhecimento geológico, execução industrial e infraestrutura podem apoiar produtividade, mas a comparação precisa controlar teor, recuperação, método de lavra, estágio e produto vendido. Custos por onça equivalente produzida e vendida, a preços correntes, constantes ou do guidance, não são intercambiáveis. A expansão da planta só cria valor se minério, filtragem, manutenção e logística sustentarem utilização econômica. Afirmações institucionais de sustentabilidade não comprovam vantagem financeira independente.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T03:14:43.068296+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Receita e EBITDA ajustado recuam sequencialmente e crescem na comparação anual. O lucro reportado aumenta com marcação não caixa de proteção, enquanto o ajustado cai no trimestre. Fluxo recorrente também recua sequencialmente, embora cresça na comparação anual, e incorpora perdas realizadas em proteção de ouro. O comunicado posterior mostra produção preliminar maior, com desempenho diferente entre minas e bases comparáveis próprias; não é resultado financeiro completo nem prova da margem seguinte.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que melhoria técnica e disciplina de capital nas minas sustentem caixa por ação ao longo do ciclo. A condição decisiva é retorno depois de sustentação, exploração, expansão, tributos, obrigações financeiras e proteção de preços. A carteira de projetos oferece caminhos de crescimento, mas capacidade e produção recorde não demonstram remuneração do investimento. A visão exige conciliar custos e caixa por mina, inclusive ativos em recuperação operacional. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Em revisão, com retorno esperado Em revisão. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Preços, teor, recuperação e gargalos podem reduzir caixa. Expansão, lavra, contingências e frota exigem capital. Marcação de proteção, crédito contratado e caixa restrito não equivalem a recursos distribuíveis."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_AURA.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "Em revisão"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é Em revisão. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Aura Minerals — produtividade por mina, reinvestimento e caixa depois da proteção",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O resultado mantém a orientação anual e apresenta aderência a bases de preços específicas. O comunicado posterior informa avanço da produção e afirma seguir no caminho da meta; não classifica revisão agregada. MSG melhora sequencialmente na produção preliminar, enquanto Minosa e Almas recuam; Apoena melhora no trimestre e permanece abaixo da comparação anual. Embarque em trânsito distingue produção e venda. As informações posteriores não foram incorporadas retrospectivamente ao modelo recebido.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar teor, recuperação, lavra, alimentação, filtragem e volume vendido por mina. Conciliar GEO, preços e perímetro comparável; separar sustentação, expansão e proteção liquidada. Verificar retorno de MSG e Borborema, financiamento, caixa restrito, recebíveis e obrigações da frota antes de inferir retorno por ação.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_AURA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,77%"
+          },
+          {
+            "fato": "val.BR_AURA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "27,83%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,77% e a dispersão entre métodos 27,83%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

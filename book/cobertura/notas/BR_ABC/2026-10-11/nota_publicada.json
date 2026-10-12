@@ -1,0 +1,426 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "78d11ef8a36b615a44f33bfe770bb74d0333637b4a497e9d302ea829bd924ebe",
+    "factbook": "038dc511f011581f7f2d67a2e793ed58e413d257b0d64a4aa0ee69644c6a2e9b",
+    "nota_json": "0485673706cfc7793a4d500af90e68edcae650a5dfe2f7458ef41e8cddfc5a3c"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_ABC",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T03:11:26.532957+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O capital declarado anteriormente e homologado no trimestre já integra os índices; a recapitalização anunciada no fim do semestre ainda aparecia como efeito futuro e pro forma. O caixa por vencimento inclui títulos públicos negociáveis, não excedente automaticamente distribuível. Patrimônio, instrumentos subordinados e captação de terceiros conservam naturezas distintas.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-05",
+        "descricao": "Divulgação programada de resultados; reavaliar margem de clientes, perdas e retorno por ação.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 46,69, com retorno esperado +71,95%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Relacionamentos ampliam receita recorrente com perdas controladas e retorno por ação suficiente após retenção prudencial. O cenário otimista calculado pelo código é R$ 55,98.",
+      "pessimista": "Migração de crédito e concentração exigem provisões, enquanto receitas de mercado e recuperação deixam de compensar capital e despesas. O cenário pessimista calculado pelo código é R$ 38,72."
+    },
+    "comentario_valuation": "Preço de referência R$ 28,72 e alvo do modelo aberto R$ 46,69, com potencial +62,59%. Retorno total esperado +71,95% e custo do capital próprio 11,85%. A dispersão entre métodos é 13,66%; a confiança quantitativa recebida é A. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 27,14; a diferença +72,03% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se a expansão é sustentada por remuneração financeira do patrimônio e recuperações, enquanto a margem comercial e o retorno por ação não avançam. Colaterais podem ter liquidez insuficiente justamente no ciclo adverso.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_ABC.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 28,72"
+      },
+      {
+        "fato": "val.BR_ABC.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 46,69"
+      },
+      {
+        "fato": "val.BR_ABC.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+62,59%"
+      },
+      {
+        "fato": "val.BR_ABC.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.BR_ABC.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "A"
+      },
+      {
+        "fato": "val.BR_ABC.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 55,98"
+      },
+      {
+        "fato": "val.BR_ABC.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_ABC.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 38,72"
+      },
+      {
+        "fato": "val.BR_ABC.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_ABC.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,85%"
+      },
+      {
+        "fato": "val.BR_ABC.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_ABC.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_ABC.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+71,95%"
+      },
+      {
+        "fato": "val.BR_ABC.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+43,95%"
+      },
+      {
+        "fato": "val.BR_ABC.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "6,6x"
+      },
+      {
+        "fato": "val.BR_ABC.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,0x"
+      },
+      {
+        "fato": "val.BR_ABC.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 27,14"
+      },
+      {
+        "fato": "val.BR_ABC.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+72,03%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Banco ABC Brasil",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e estrutura do negócio",
+        "url": "https://ri.abcbrasil.com.br/quem-somos/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Banco ABC Brasil",
+        "publicado_em": "2026-08-06",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado corporativo, reconciliação gerencial e capital",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/6298ef6f-2b75-43f8-b2ab-99e3fe33e809/8db543c9-499b-8f37-ccd9-1a66c8a81343?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Banco ABC Brasil",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário de eventos da emissora",
+        "url": "https://ri.abcbrasil.com.br/servicos-aos-investidores/calendario-de-eventos/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+      "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+      "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+      "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+    ],
+    "governanca": "O controle estrangeiro e a gestão local exigem examinar direitos por classe, remuneração, relacionadas e política de capital. Reclassificações fiscais e gerenciais não mudam o lucro final conciliado. Dados históricos de clientes foram reclassificados; períodos e denominadores precisam ser mantidos.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Monitorar margem com clientes, mercado e patrimônio separadamente, receitas de serviços e custo de crédito antes e depois de recuperações. Rever crédito problemático, renegociações, concentração e efetividade das garantias. Comparar lucro e capital por ação, retenção prudencial e homologação da recapitalização anunciada.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ABC.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+71,95%"
+          },
+          {
+            "fato": "val.BR_ABC.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,85%"
+          },
+          {
+            "fato": "val.BR_ABC.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "13,66%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +71,95%, custo do capital 11,85% e dispersão entre métodos 13,66% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_ABC",
+    "lacunas_de_dados": [
+      "Notas explicativas completas, garantias e recuperações não foram integralmente reconciliadas.",
+      "Conclusão e homologação da recapitalização posterior não foram comprovadas nesta pesquisa.",
+      "Retorno de tesouraria e risco por tomador exigem análise de ciclo e concentração.",
+      "Direitos por classe, relacionadas e distribuição precisam de conciliação documental.",
+      "Guidance e tom agregado da gestão não foram classificados; não há comprovação de vantagem relativa ou percepção do mercado."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Banco múltiplo controlado pelo Bank ABC, com foco em empresas, crédito, garantias, mercado de capitais, câmbio e soluções financeiras. A carteira expandida reúne empréstimos, títulos privados e garantias; não equivale somente a crédito desembolsado. Tesouraria proprietária e remuneração do patrimônio têm fontes diferentes da margem de relacionamento.",
+    "nome": "Banco ABC Brasil",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BB",
+        "nome": "Banco do Brasil"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      },
+      {
+        "issuer_id": "BR_INTER",
+        "nome": "Inter&Co"
+      },
+      {
+        "issuer_id": "BR_IRB",
+        "nome": "IRB Brasil RE"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que relações corporativas especializadas ampliem receitas por cliente sem assumir perdas ou capital excessivos. A condição decisiva é retorno recorrente por ação depois de provisões, despesas e retenção prudencial. Crescer a carteira ou o lucro agregado não basta se o capital empregado e a diluição crescem mais depressa.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ABC.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 28,72"
+          },
+          {
+            "fato": "val.BR_ABC.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 46,69"
+          },
+          {
+            "fato": "val.BR_ABC.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+62,59%"
+          },
+          {
+            "fato": "val.BR_ABC.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,85%"
+          },
+          {
+            "fato": "val.BR_ABC.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+71,95%"
+          }
+        ],
+        "texto": "Preço de referência R$ 28,72 e alvo R$ 46,69, com potencial +62,59%. A hipótese de investimento deve ser confrontada com o custo do capital 11,85% e retorno esperado +71,95%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Conhecimento do tomador, financiamento e serviços estruturados podem aprofundar o relacionamento. A seletividade relatada reduziu a base de clientes ativos enquanto a carteira avançou. O teste da franquia é margem de clientes e receita recorrente após perdas, com retenção e concentração compatíveis; a remuneração do patrimônio a CDI não demonstra vantagem comercial.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T03:11:26.532957+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O lucro cresceu nas comparações anual e sequencial, mas o retorno sobre patrimônio caiu na base anual e o lucro por ação recuou. A queda sequencial da provisão líquida teve forte contribuição de recuperações, enquanto a despesa antes delas aumentou. Crédito problemático e cobertura por estágio precisam ser lidos além da inadimplência em atraso.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que relações corporativas especializadas ampliem receitas por cliente sem assumir perdas ou capital excessivos. A condição decisiva é retorno recorrente por ação depois de provisões, despesas e retenção prudencial. Crescer a carteira ou o lucro agregado não basta se o capital empregado e a diluição crescem mais depressa. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Compra, com retorno esperado +71,95%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Crédito corporativo e agronegócio, concentração, liquidação de garantias e tesouraria podem consumir capital. Recuperações e juros elevados podem favorecer um trimestre sem sustentar retorno recorrente por ação."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ABC.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+72,03%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +72,03%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "ABC Brasil — retorno da franquia corporativa depois de crédito e capital",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A recuperação sequencial do lucro coexiste com menor retorno anual sobre patrimônio, serviços abaixo da base anual e maiores despesas. A redução da provisão líquida não é queda da constituição antes de recuperações. Carteira expandida, saldo em estágio problemático e atraso têm bases e significados diferentes.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar margem com clientes, mercado e patrimônio separadamente, receitas de serviços e custo de crédito antes e depois de recuperações. Rever crédito problemático, renegociações, concentração e efetividade das garantias. Comparar lucro e capital por ação, retenção prudencial e homologação da recapitalização anunciada.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_ABC.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,85%"
+          },
+          {
+            "fato": "val.BR_ABC.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "13,66%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,85% e a dispersão entre métodos 13,66%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

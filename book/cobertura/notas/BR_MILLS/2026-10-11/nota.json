@@ -1,0 +1,196 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_MILLS",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Mills — utilização, manutenção e qualidade da geração",
+  "resumo": "A hipótese é que rede e produtividade sustentem retorno depois de reposição e juros. A condição decisiva é converter utilização em caixa sem depender de créditos fiscais, reversões ou redução indefinida de investimento. Frota, crédito e maturação de aquisições devem ser testados por negócio. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_MILLS.rating_codigo}}, com retorno esperado {{fact:val.BR_MILLS.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Locadora de plataformas elevatórias e máquinas pesadas, com soluções de formas e escoramentos. Ocupação, preço, crédito e manutenção determinam retorno por equipamento. Aquisições, projetos de infraestrutura e aluguel recorrente possuem bases de crescimento e necessidades de capital distintas.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que rede e produtividade sustentem retorno depois de reposição e juros. A condição decisiva é converter utilização em caixa sem depender de créditos fiscais, reversões ou redução indefinida de investimento. Frota, crédito e maturação de aquisições devem ser testados por negócio.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_MILLS.preco}} e alvo {{fact:val.BR_MILLS.preco_alvo}}, com potencial {{fact:val.BR_MILLS.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_MILLS.ke}} e retorno esperado {{fact:val.BR_MILLS.etr}}.",
+      "evidencias": [
+        "val.BR_MILLS.preco",
+        "val.BR_MILLS.preco_alvo",
+        "val.BR_MILLS.upside",
+        "val.BR_MILLS.ke",
+        "val.BR_MILLS.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Ocupação, preço, idade, manutenção e crédito por unidade. Separar tributos, Next Rental e geração original da ajustada. Conciliar frota, fornecedores, arrendamentos e juros; verificar cronograma de obras e retorno por equipamento.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_MILLS.ke}} e a dispersão entre métodos {{fact:val.BR_MILLS.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_MILLS.ke",
+        "val.BR_MILLS.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Próximos resultados: testar recorrência, crédito e caixa depois da reposição.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Ciclo de obras, crédito e competição podem reduzir utilização e margem. Manutenção e reposição exigem caixa. Efeitos fiscais e de aquisição não garantem recorrência; medidas ajustadas podem divergir do retorno ao acionista.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_MILLS.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_MILLS.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Utilização e produtividade sustentam margem recorrente e recebimento, com manutenção e reposição remuneradas depois dos juros. O cenário otimista calculado pelo código é {{fact:val.BR_MILLS.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_MILLS.preco_alvo}}, com retorno esperado {{fact:val.BR_MILLS.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Obras e crédito pressionam utilização; benefícios temporários deixam de contribuir e reposição absorve caixa além do indicado pelos ajustes. O cenário pessimista calculado pelo código é {{fact:val.BR_MILLS.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_MILLS.preco}} e alvo do modelo aberto {{fact:val.BR_MILLS.preco_alvo}}, com potencial {{fact:val.BR_MILLS.upside}}. Retorno total esperado {{fact:val.BR_MILLS.etr}} e custo do capital próprio {{fact:val.BR_MILLS.ke}}. A dispersão entre métodos é {{fact:val.BR_MILLS.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_MILLS.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_MILLS.consenso_alvo}}; a diferença {{fact:val.BR_MILLS.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "Receita, EBITDA ajustado e lucro contábil aumentaram, mas o lucro caixa caiu. Next Rental e créditos fiscais influenciaram os ajustes; provisões de crédito cresceram. Investimento em equipamentos caiu. O fluxo original inclui juros e frota, enquanto a medida ajustada faz reconciliações próprias. Dívida líquida aumentou no trimestre; o texto de alavancagem difere da tabela. Não foi inferida geração distribuível a partir do fluxo para a firma.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "As medidas ajustadas preservam reconciliação com a demonstração original, sem eliminar economicamente juros ou investimento. A baixa de custos da Next Rental tem natureza não caixa. Divergência de alavancagem permanece explícita; reconhecimento institucional não substitui diligência de crédito e retorno.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Disponibilidade, manutenção, segurança e rede podem apoiar relacionamento. A liderança informada pelo emissor exige definição e comparação independentes. Contratos de máquinas, trabalho em altura e obras complexas têm prazos e demanda distintos; backlog não equivale a margem realizada.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Receita, EBITDA ajustado e lucro contábil cresceram, mas lucro caixa recuou com efeitos fiscais e de Next Rental. Crédito sofreu pressão. A geração original ficou positiva frente ao comparável negativo, enquanto o fluxo ajustado retira juros e rearranja investimento em frota. A ponte mostra efeito não caixa da aquisição.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Investimento caiu, principalmente em ativos de locação. O fluxo ajustado reconcilia frota e fornecedores; caixa para a firma não é caixa disponível após financiamento. Dívida bruta recuou no trimestre e dívida líquida aumentou. Texto e tabela diferem sobre estabilidade da alavancagem, sem correção da fonte.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "Lucro contábil maior pode coexistir com lucro caixa menor. Se créditos e reversões sustentarem margem enquanto crédito piora, investimento reduzido poderá melhorar caixa apenas temporariamente, sem retorno estrutural da frota.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Ocupação, preço, idade, manutenção e crédito por unidade. Separar tributos, Next Rental e geração original da ajustada. Conciliar frota, fornecedores, arrendamentos e juros; verificar cronograma de obras e retorno por equipamento.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_MILLS.etr}}, custo do capital {{fact:val.BR_MILLS.ke}} e dispersão entre métodos {{fact:val.BR_MILLS.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_MILLS.etr",
+        "val.BR_MILLS.ke",
+        "val.BR_MILLS.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+    "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+    "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+    "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "Texto e tabela divergem sobre a estabilidade da alavancagem.",
+    "A ponte integral do ITR, manutenção e caixa atribuível permanece pendente.",
+    "Recorrência de créditos e efeitos de Next Rental requer diligência.",
+    "Retorno por equipamento, crédito e cronograma de obras não foram comprovados integralmente.",
+    "Guidance agregado e comparação competitiva independente não foram comprovados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Mills",
+      "titulo": "Negócio e materiais públicos do emissor",
+      "url": "https://ri.mills.com.br/a-companhia/quem-somos/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Mills",
+      "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/5a4be2ff-b3a2-4792-b967-e745978e71f9/21e26ea1-3fbd-7a7a-db35-542a77442b04?origin=2",
+      "publicado_em": "2026-08-05",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Mills",
+      "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/5a4be2ff-b3a2-4792-b967-e745978e71f9/385b4d7e-8df6-8e66-588a-4b3ceab1b772?origin=2",
+      "publicado_em": "2026-08-05",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

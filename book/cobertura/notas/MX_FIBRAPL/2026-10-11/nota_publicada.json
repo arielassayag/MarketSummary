@@ -1,0 +1,440 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "53f65e1bd14c6d75c29a416aada9b9a616eb995922aaf21d5adb173bccf595ee",
+    "factbook": "916d85d1cc9eda4c6df225feabcf05f574701578de1ce9e8a5b591125cbcc204",
+    "nota_json": "0df22d44a1ff7d993e9318bd49aca62c621d73a1cc0519aafe8dc1d9a544b164"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_FIBRAPL",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-21",
+  "published_at": "2026-10-12T03:11:46.970683+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A liquidez divulgada inclui capacidade de crédito ainda não utilizada, diferente de caixa irrestrito. O comunicado de incentivo ao patrocinador previa pagamento em certificados ou dinheiro conforme deliberação, sem comprovar o desfecho nesta pesquisa. Aquisição e remuneração precisam preservar retorno depois de diluição e dívida.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-22",
+        "descricao": "Conferência de resultados prevista no calendário oficial; revisar retenção, caixa e capital.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F4"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em MXN 101,47, com retorno esperado +35,02%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Renovações e ocupação sustentam caixa após incentivos e manutenção, com aquisições e remuneração alinhadas ao cotista. O cenário otimista calculado pelo código é MXN 114,77.",
+      "pessimista": "Vacância e incentivos pressionam renda enquanto dívida, taxas e diluição limitam caixa por certificado. O cenário pessimista calculado pelo código é MXN 89,02."
+    },
+    "comentario_valuation": "Preço de referência MXN 75,85 e alvo do modelo aberto MXN 101,47, com potencial +33,78%. Retorno total esperado +35,02% e custo do capital próprio 11,09%. A dispersão entre métodos é 37,43%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é MXN 84,29; a diferença +20,39% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese enfraquece se reprecificação depende de menor retenção ou incentivos crescentes. Acesso ao patrocinador pode ampliar portfólio sem retorno por certificado, enquanto taxas e diluição consomem o caixa gerado.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.MX_FIBRAPL.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 75,85"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 101,47"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+33,78%"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 114,77"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 89,02"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,09%"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.wacc",
+        "rotulo": "WACC",
+        "valor": "9,84%"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+35,02%"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+37,25%"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "16,5x"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,0x"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 84,29"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+20,39%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "FIBRA Prologis",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e relação com o patrocinador",
+        "url": "https://www.fibraprologis.com/en-US/who-we-are"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "FIBRA Prologis",
+        "publicado_em": "2026-07-23",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado semestral do portfólio",
+        "url": "https://www.fibraprologis.com/en-US/news/news/detail/752/fibra-prologis-announces-second-quarter-2026-earnings"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "FIBRA Prologis",
+        "publicado_em": "2026-07-06",
+        "tipo": "Relações com investidores",
+        "titulo": "Convocação e formas previstas para pagamento do incentivo",
+        "url": "https://www.fibraprologis.com/en-US/news/news/detail/750/fibra-prologis-announces-upcoming-ordinary-holders-meeting"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F4",
+        "instituicao": "FIBRA Prologis",
+        "publicado_em": "2026-09-28",
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário de conferência de resultados",
+        "url": "https://www.fibraprologis.com/en-US/news/news/detail/756/fibra-prologis-to-host-third-quarter-2026-earnings"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+      "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+      "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+      "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+    ],
+    "governanca": "Revisar contrato de administração, aquisições relacionadas e remuneração do patrocinador. Alternativas de pagamento por emissão ou dinheiro exigem confirmar aprovação, execução e impacto por certificado.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar renovação, retenção, vacância e incentivos por mercado, separando aluguel efetivo e recebido. Revisar manutenção, taxas, FFO e caixa por certificado. Conciliar dívida, caixa, linhas disponíveis e o pagamento efetivo do incentivo, além de retorno das aquisições.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_FIBRAPL.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+35,02%"
+          },
+          {
+            "fato": "val.MX_FIBRAPL.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,09%"
+          },
+          {
+            "fato": "val.MX_FIBRAPL.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "37,43%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +35,02%, custo do capital 11,09% e dispersão entre métodos 37,43% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "MX_FIBRAPL",
+    "lacunas_de_dados": [
+      "Demonstração financeira integral não foi recebida; acesso ao documento retornou recusa.",
+      "Taxas, incentivo e deliberação efetiva não foram integralmente conciliados.",
+      "Bases de ocupação, NOI, incentivos e caixa por imóvel exigem diligência completa.",
+      "Linhas disponíveis, dívida e distribuição por certificado precisam ser reconciliadas.",
+      "Guidance e tom da gestão não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Fideicomisso imobiliário mexicano com logística e instalações industriais, além de ativos classificados como não estratégicos. Relação com Prologis oferece acesso a propriedades e administração, mas também exige avaliar remuneração e conflitos. Aluguel contratual, aluguel efetivo e caixa dos mesmos imóveis representam medidas distintas.",
+    "nome": "Fibra Prologis",
+    "o_que_mudou": null,
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "BR_ALLOS",
+        "nome": "Allos"
+      },
+      {
+        "issuer_id": "BR_IGUATEMI",
+        "nome": "Iguatemi"
+      },
+      {
+        "issuer_id": "BR_MULTIPLAN",
+        "nome": "Multiplan"
+      },
+      {
+        "issuer_id": "CL_CENCOMALLS",
+        "nome": "Cencosud Shopping"
+      },
+      {
+        "issuer_id": "CL_MALLPLAZA",
+        "nome": "Plaza SA (Mallplaza)"
+      },
+      {
+        "issuer_id": "CL_PARAUCO",
+        "nome": "Parque Arauco"
+      },
+      {
+        "issuer_id": "MX_VESTA",
+        "nome": "Corporación Inmobiliaria Vesta"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que localização e atendimento sustentem renovação rentável de contratos e caixa por certificado. Reprecificação só cria valor depois de vacância, incentivos e despesas, com capital disciplinado. Relação com o patrocinador precisa transmitir valor aos cotistas após taxas, aquisições e eventual emissão.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_FIBRAPL.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "MXN 75,85"
+          },
+          {
+            "fato": "val.MX_FIBRAPL.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "MXN 101,47"
+          },
+          {
+            "fato": "val.MX_FIBRAPL.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+33,78%"
+          },
+          {
+            "fato": "val.MX_FIBRAPL.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,09%"
+          },
+          {
+            "fato": "val.MX_FIBRAPL.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+35,02%"
+          }
+        ],
+        "texto": "Preço de referência MXN 75,85 e alvo MXN 101,47, com potencial +33,78%. A hipótese de investimento deve ser confrontada com o custo do capital 11,09% e retorno esperado +35,02%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Rede de propriedades e acesso ao conjunto de projetos do patrocinador podem facilitar expansão e atendimento. A vantagem exige testar retenção, ocupação e retorno do capital frente à oferta concorrente. Potencial de regionalização industrial não constitui contrato novo ou garantia de demanda.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T03:11:46.970683+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O resumo mostra crescimento de FFO por certificado, mas perda contábil e menor retenção anual. Ocupação média e final têm bases próprias, e melhora em mercados específicos não representa todo o portfólio. NOI em caixa e efetivo usam tratamentos distintos; a demonstração financeira integral não foi recebida nesta consulta.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que localização e atendimento sustentem renovação rentável de contratos e caixa por certificado. Reprecificação só cria valor depois de vacância, incentivos e despesas, com capital disciplinado. Relação com o patrocinador precisa transmitir valor aos cotistas após taxas, aquisições e eventual emissão. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Compra, com retorno esperado +35,02%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Oferta concorrente e menor retenção podem absorver aumentos de aluguel. Taxas, aquisições e emissão podem reduzir retorno por certificado. Juros, moeda e necessidades de manutenção podem limitar distribuição apesar de crescimento do NOI."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_FIBRAPL.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+20,39%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +20,39%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Imobiliário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "FIBRA Prologis — renovação de aluguéis e retorno por certificado",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O estudo distingue FFO, perda contábil, retenção e bases de ocupação e NOI. Liquidez inclui linha disponível. Incentivo ao patrocinador exige deliberação e comprovação de pagamento; nenhum desfecho é inferido da convocação. Guidance e tom da gestão não foram classificados.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar renovação, retenção, vacância e incentivos por mercado, separando aluguel efetivo e recebido. Revisar manutenção, taxas, FFO e caixa por certificado. Conciliar dívida, caixa, linhas disponíveis e o pagamento efetivo do incentivo, além de retorno das aquisições.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.MX_FIBRAPL.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,09%"
+          },
+          {
+            "fato": "val.MX_FIBRAPL.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "37,43%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,09% e a dispersão entre métodos 37,43%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

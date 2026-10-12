@@ -1,0 +1,177 @@
+{
+  "mind": "codex",
+  "issuer_id": "PE_CREDICORP",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Credicorp: monetização de relacionamentos após perdas e capital por negócio",
+  "resumo": "A hipótese é que relacionamento transacional e diversificação sustentem receita depois de perdas, reservas e capital necessário. A condição decisiva é retorno atribuível recorrente com monetização das iniciativas demonstrada. Crescimento de crédito ou uso digital não comprova contribuição econômica nem elimina sensibilidade à origem e maturação das carteiras. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.PE_CREDICORP.rating_codigo}}, com retorno esperado {{fact:val.PE_CREDICORP.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "A Credicorp reúne banco universal, microfinanças, seguros, previdência e gestão de investimentos, com base no Peru e presença regional. BCP, Mibanco, Pacífico e outras empresas atendem mercados e riscos diferentes. A holding também investe em iniciativas digitais. A análise deve distinguir contribuições atribuíveis, capital de cada subsidiária e recursos transferidos à companhia listada.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que relacionamento transacional e diversificação sustentem receita depois de perdas, reservas e capital necessário. A condição decisiva é retorno atribuível recorrente com monetização das iniciativas demonstrada. Crescimento de crédito ou uso digital não comprova contribuição econômica nem elimina sensibilidade à origem e maturação das carteiras.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.PE_CREDICORP.preco}} e alvo {{fact:val.PE_CREDICORP.preco_alvo}}, com potencial {{fact:val.PE_CREDICORP.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.PE_CREDICORP.ke}} e retorno esperado {{fact:val.PE_CREDICORP.etr}}.",
+      "evidencias": [
+        "val.PE_CREDICORP.preco",
+        "val.PE_CREDICORP.preco_alvo",
+        "val.PE_CREDICORP.upside",
+        "val.PE_CREDICORP.ke",
+        "val.PE_CREDICORP.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar margem após perdas, custo da captação, qualidade por origem da carteira e reservas de seguros. Separar contribuição digital e investimentos, reconciliar lucro atribuível e participações e conferir capital, liquidez e recursos transferidos à holding.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.PE_CREDICORP.ke}} e a dispersão entre métodos {{fact:val.PE_CREDICORP.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.PE_CREDICORP.ke",
+        "val.PE_CREDICORP.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Clima, crédito, captação e reservas podem afetar lucro e capital. Iniciativas digitais exigem medir contribuição depois de custos e risco. Participações e transferências à holding precisam ser conciliadas; capital de subsidiárias não é irrestritamente fungível.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.PE_CREDICORP.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.PE_CREDICORP.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Relacionamentos transacionais sustentam captação e receitas com risco administrável. Monetização digital demonstra contribuição após custos, e o retorno por negócio remunera capital sem depender de reversões ou de expansão desproporcional do risco. O cenário otimista calculado pelo código é {{fact:val.PE_CREDICORP.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.PE_CREDICORP.preco_alvo}}, com retorno esperado {{fact:val.PE_CREDICORP.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Crédito ou clima exige mais provisões e seguros absorvem contribuição. Captação, despesas e investimento digital pressionam retorno, enquanto capital por subsidiária limita crescimento e distribuição à holding. O cenário pessimista calculado pelo código é {{fact:val.PE_CREDICORP.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.PE_CREDICORP.preco}} e alvo do modelo aberto {{fact:val.PE_CREDICORP.preco_alvo}}, com potencial {{fact:val.PE_CREDICORP.upside}}. Retorno total esperado {{fact:val.PE_CREDICORP.etr}} e custo do capital próprio {{fact:val.PE_CREDICORP.ke}}. A dispersão entre métodos é {{fact:val.PE_CREDICORP.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.PE_CREDICORP.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.PE_CREDICORP.consenso_alvo}}; a diferença {{fact:val.PE_CREDICORP.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "O release consultado distingue a orientação anual reafirmada da expectativa de médio prazo revisada. Provisões climáticas, base de comparação dos seguros e atribuição de resultados exigem reconciliação. O relatório foi consultado no RI; sua leitura não representa incorporação financeira ao modelo nem comprovação de disponibilidade histórica de todos os documentos.",
+  "guidance": "mantido",
+  "tom_gestao": "nd",
+  "governanca": "BCP, Mibanco e seguros têm exigências próprias de capital e liquidez. Crescimento e iniciativas digitais precisam de financiamento e retorno depois dos riscos. A holding deve demonstrar disponibilidade por transferências e obrigações, sem tratar capital regulatório das subsidiárias ou ativos administrados de clientes como caixa livre.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Depósitos transacionais, distribuição e pagamentos podem influenciar captação e retenção. A pesquisa deve comparar risco, custo e retorno na mesma base econômica. Presença em várias atividades não comprova proteção ao ciclo se a expansão depende de crédito mais arriscado ou de investimento contínuo sem contribuição suficiente.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "O release distingue provisões ligadas ao risco de El Niño e efeitos de reversões na comparação de seguros. Também separa contribuição das subsidiárias do lucro individual, evitando dupla contagem. A análise exige conciliar medidas ajustadas, resultado atribuível e patrimônio; transações digitais e receitas de risco ajustado não substituem retorno sobre todo o capital empregado.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "BCP, Mibanco e seguros têm exigências próprias de capital e liquidez. Crescimento e iniciativas digitais precisam de financiamento e retorno depois dos riscos. A holding deve demonstrar disponibilidade por transferências e obrigações, sem tratar capital regulatório das subsidiárias ou ativos administrados de clientes como caixa livre.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "Monetização digital e crescimento de carteira podem melhorar receita enquanto provisões, reservas ou tecnologia absorvem a contribuição. Comparação favorável pode refletir base de reversões ou um ambiente de crédito temporário. Se o retorno atribuível depende de risco crescente ou de capital adicional sem remuneração, a hipótese enfraquece.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Acompanhar margem após perdas, custo da captação, qualidade por origem da carteira e reservas de seguros. Separar contribuição digital e investimentos, reconciliar lucro atribuível e participações e conferir capital, liquidez e recursos transferidos à holding.",
+      "evidencias": [
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.PE_CREDICORP.etr}}, custo do capital {{fact:val.PE_CREDICORP.ke}} e dispersão entre métodos {{fact:val.PE_CREDICORP.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.PE_CREDICORP.etr",
+        "val.PE_CREDICORP.ke",
+        "val.PE_CREDICORP.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+    "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+    "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+    "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "Resultado atribuível, patrimônio e contribuições não foram integralmente reconciliados com o modelo.",
+    "Capital e transferências por subsidiária exigem documentação completa.",
+    "Retorno das iniciativas digitais e maturação das carteiras permanecem a demonstrar.",
+    "Orientação anual e expectativa de médio prazo precisam permanecer distintas.",
+    "Percepção do mercado e comparação competitiva têm evidência insuficiente.",
+    "Não há catalisador futuro com data precisa adotado nesta pesquisa."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Credicorp",
+      "titulo": "Perfil e estrutura do negócio",
+      "url": "https://inversionistas.grupocredicorp.com/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Credicorp",
+      "titulo": "Informações financeiras e materiais de análise",
+      "url": "https://credicorp.gcs-web.com/node/19661/html",
+      "publicado_em": "2026-08-13",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Credicorp",
+      "titulo": "Governança e políticas corporativas",
+      "url": "https://inversionistas.grupocredicorp.com/corporate-governance/highlights",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

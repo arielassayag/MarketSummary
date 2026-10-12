@@ -1,0 +1,477 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "1bba4686eddd2c92f5ac7e21b82f1efd1d2a509e9f3c3ac8205468af4233d15e",
+    "factbook": "fe58a04288bb51ef85d8c95f2755d96735ef1768cf9e2efcbf0721d269abd9c7",
+    "nota_json": "b3e6bf6010b5d7361c0fc09ec40e319e70648f4a7ee5b5776d62ec0c7a4a5db4"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_GRENDENE",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-05",
+  "published_at": "2026-10-12T03:13:27.204109+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "O saldo gerencial de disponibilidades líquidas inclui participações imobiliárias; sua liquidez exige leitura própria. Distribuições reduziram aplicações e renda financeira. Manutenção e modernização precisam preservar capacidade e produto. O acordo de alienação da subsidiária norte-americana mantém comercialização das marcas, com pagamento contratual ainda a comprovar.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar margem industrial, caixa recorrente e liquidez dos ativos.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": null,
+        "descricao": "Comprovação das etapas e pagamentos da alienação norte-americana, sem prazo presumido.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F4"
+          }
+        ],
+        "tipo": "m_a"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 3,90, com retorno esperado +0,08%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Mix, demanda final e eficiência recuperam margem industrial; giro e manutenção disciplinados sustentam caixa, com ativos financeiros e contratos avaliados em suas bases próprias. O cenário otimista calculado pelo código é R$ 4,76.",
+      "pessimista": "Pressão de consumo e mix reduz contribuição; aplicações rendem menos e ativos imobiliários têm realização lenta, restringindo caixa e remuneração sustentável. O cenário pessimista calculado pelo código é R$ 3,15."
+    },
+    "comentario_valuation": "Preço de referência R$ 4,54 e alvo do modelo aberto R$ 3,90, com potencial -14,07%. Retorno total esperado +0,08% e custo do capital próprio 11,54%. A dispersão entre métodos é 42,36%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é n/d; a diferença n/d não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "Marcas e caixa podem coexistir com menor retorno industrial. Preço por par e receita podem cair apesar de volume estável. Se o resultado depender de juros, reclassificações ou ativos de realização lenta, dividendos elevados não provarão criação recorrente de valor.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_GRENDENE.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 4,54"
+      },
+      {
+        "fato": "val.BR_GRENDENE.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 3,90"
+      },
+      {
+        "fato": "val.BR_GRENDENE.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-14,07%"
+      },
+      {
+        "fato": "val.BR_GRENDENE.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_GRENDENE.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_GRENDENE.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 4,76"
+      },
+      {
+        "fato": "val.BR_GRENDENE.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "34,59%"
+      },
+      {
+        "fato": "val.BR_GRENDENE.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 3,15"
+      },
+      {
+        "fato": "val.BR_GRENDENE.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "15,54%"
+      },
+      {
+        "fato": "val.BR_GRENDENE.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,54%"
+      },
+      {
+        "fato": "val.BR_GRENDENE.wacc",
+        "rotulo": "WACC",
+        "valor": "11,42%"
+      },
+      {
+        "fato": "val.BR_GRENDENE.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_GRENDENE.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+0,08%"
+      },
+      {
+        "fato": "val.BR_GRENDENE.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-20,13%"
+      },
+      {
+        "fato": "val.BR_GRENDENE.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "7,1x"
+      },
+      {
+        "fato": "val.BR_GRENDENE.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,3x"
+      },
+      {
+        "fato": "val.BR_GRENDENE.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_GRENDENE.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "n/d"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Grendene",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://ri.grendene.com.br/PT/A-Empresa/Perfil"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Grendene",
+        "publicado_em": "2026-08-06",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://ri.grendene.com.br/Arquivos/releases/2588_PR_2T26.pdf"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Grendene",
+        "publicado_em": "2026-08-06",
+        "tipo": "Relações com investidores",
+        "titulo": "Anexos do release: resultado, balanço e fluxo de caixa",
+        "url": "https://ri.grendene.com.br/Arquivos/releases/2588_PR_2T26.pdf"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F4",
+        "instituicao": "Grendene",
+        "publicado_em": "2026-08-10",
+        "tipo": "Relações com investidores",
+        "titulo": "Contrato de alienação da subsidiária norte-americana",
+        "url": "https://ri.grendene.com.br/Arquivos/comunicados/2603_2026-08-10%20-%20Comunicado%20ao%20Mercado%20-%20Aliena%C3%A7%C3%A3o%20GGB%20USA.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+      "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+      "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+      "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+    ],
+    "governanca": "A apresentação distingue resultado industrial, financeiro e reclassificações gerenciais. O comunicado relata alienação contratada e descreve efeitos com a conclusão; o estado da transferência não foi presumido. A remuneração anunciada tem aprovação e pagamento específicos, sem inferência de realização pelo calendário. Partes relacionadas e ativos imobiliários exigem conciliação.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "Volume, receita por par, mix, sell-in e sell-out por divisão e região; margem industrial sem renda financeira, estoque e recebimento. Separar caixa e aplicações de participações imobiliárias, juros recebidos, manutenção e proventos pagos. Confirmar transferência, pagamentos e condições da operação norte-americana.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_GRENDENE.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+0,08%"
+          },
+          {
+            "fato": "val.BR_GRENDENE.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,54%"
+          },
+          {
+            "fato": "val.BR_GRENDENE.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "42,36%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +0,08%, custo do capital 11,54% e dispersão entre métodos 42,36% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_GRENDENE",
+    "lacunas_de_dados": [
+      "A conciliação integral do ITR e das notas explicativas permanece pendente.",
+      "Liquidez, avaliação e condições de saída das participações imobiliárias precisam de diligência.",
+      "Efetiva transferência e recebimento da alienação norte-americana não foram comprovados.",
+      "O crédito do provento programado não foi comprovado.",
+      "Retorno de produtos, canais e modernização exige avaliação própria.",
+      "Guidance agregado e posicionamento de mercado não foram comprovados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo de calçados com marcas como Melissa, Ipanema e Rider, produção industrial e distribuição doméstica e internacional. Mix, canal e giro do varejista influenciam pedidos e margem. Melissa possui posicionamento e canais próprios. Participações imobiliárias e aplicações financeiras têm risco, liquidez e rendimento distintos da fabricação e da venda de calçados.",
+    "nome": "Grendene",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_AFYA",
+        "nome": "Afya"
+      },
+      {
+        "issuer_id": "BR_ALPARGATAS",
+        "nome": "Alpargatas"
+      },
+      {
+        "issuer_id": "BR_AZZAS",
+        "nome": "Azzas 2154"
+      },
+      {
+        "issuer_id": "BR_CEA",
+        "nome": "C&A Modas"
+      },
+      {
+        "issuer_id": "BR_COGNA",
+        "nome": "Cogna"
+      },
+      {
+        "issuer_id": "BR_CURY",
+        "nome": "Cury"
+      },
+      {
+        "issuer_id": "BR_CYRELA",
+        "nome": "Cyrela"
+      },
+      {
+        "issuer_id": "BR_DIRECIONAL",
+        "nome": "Direcional"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "A hipótese é que marcas e eficiência industrial recuperem contribuição sem depender do rendimento do caixa ou de reclassificações financeiras. A condição decisiva é geração recorrente depois de manutenção e giro, preservando retorno ao acionista. Participações imobiliárias incluídas nas disponibilidades gerenciais não equivalem a caixa imediatamente livre.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_GRENDENE.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 4,54"
+          },
+          {
+            "fato": "val.BR_GRENDENE.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 3,90"
+          },
+          {
+            "fato": "val.BR_GRENDENE.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-14,07%"
+          },
+          {
+            "fato": "val.BR_GRENDENE.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,54%"
+          },
+          {
+            "fato": "val.BR_GRENDENE.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+0,08%"
+          }
+        ],
+        "texto": "Preço de referência R$ 4,54 e alvo R$ 3,90, com potencial -14,07%. A hipótese de investimento deve ser confrontada com o custo do capital 11,54% e retorno esperado +0,08%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Escala industrial, marcas e distribuição podem sustentar custo e renovação de produtos. O consumo seletivo e concorrentes nacionais e importados pressionam mix. Venda ao canal e ao consumidor divergem entre divisões; valorização da marca Melissa não comprova crescimento de volume ou giro nas lojas.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T03:13:27.204109+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita, EBIT ajustado e lucro recuaram anualmente. A contribuição financeira diminuiu após distribuições e menor rendimento; reclassificações de participações têm base própria. O caixa operacional semestral foi positivo, porém menor no comparável, beneficiado pelo recebimento de clientes. Resgates de aplicações e resultado imobiliário não são receita industrial recorrente.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que marcas e eficiência industrial recuperem contribuição sem depender do rendimento do caixa ou de reclassificações financeiras. A condição decisiva é geração recorrente depois de manutenção e giro, preservando retorno ao acionista. Participações imobiliárias incluídas nas disponibilidades gerenciais não equivalem a caixa imediatamente livre. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Venda, com retorno esperado +0,08%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Consumo, concorrência e mix podem reduzir contribuição industrial. Participações imobiliárias têm liquidez e risco próprios. Distribuição de caixa reduz renda financeira; contrato internacional e recebimento da alienação exigem comprovação antes de atribuir valor."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_GRENDENE.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "n/d"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é n/d. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Consumo discricionário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Grendene — marcas, rentabilidade industrial e liquidez efetiva",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O release aponta retração anual de receita, EBIT ajustado, lucro e resultado financeiro. Venda ao canal e ao consumidor variam por divisão; Melissa teve volume menor e receita trimestral maior, com preço por par. O caixa operacional semestral foi positivo, porém menor anualmente. As disponibilidades gerenciais incluem participações imobiliárias. O comunicado posterior registra contrato para alienação da subsidiária norte-americana e continuidade da distribuição das marcas; pagamento e efetiva transferência exigem confirmação própria. A data passada de provento programado não comprova crédito realizado.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Volume, receita por par, mix, sell-in e sell-out por divisão e região; margem industrial sem renda financeira, estoque e recebimento. Separar caixa e aplicações de participações imobiliárias, juros recebidos, manutenção e proventos pagos. Confirmar transferência, pagamentos e condições da operação norte-americana.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_GRENDENE.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,54%"
+          },
+          {
+            "fato": "val.BR_GRENDENE.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "42,36%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,54% e a dispersão entre métodos 42,36%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

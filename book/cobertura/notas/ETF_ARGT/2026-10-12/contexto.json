@@ -1,0 +1,70 @@
+{
+  "avisos_tecnicos": [],
+  "dados_ate": "2026-10-09",
+  "data": "2026-10-12",
+  "fontes_sugeridas": [
+    {
+      "instituicao": "CNV Argentina",
+      "tipo": "regulatorio",
+      "url": "https://www.cnv.gov.ar/"
+    },
+    {
+      "instituicao": "BYMA",
+      "tipo": "bolsa",
+      "url": "https://www.byma.com.ar/"
+    },
+    {
+      "instituicao": "BCRA",
+      "tipo": "banco_central",
+      "url": "https://www.bcra.gob.ar/"
+    },
+    {
+      "instituicao": "INDEC",
+      "tipo": "estatistica_oficial",
+      "url": "https://www.indec.gob.ar/"
+    },
+    {
+      "instituicao": "Damodaran Online (NYU Stern) — prêmios de risco, betas e múltiplos setoriais",
+      "tipo": "dados_publicos",
+      "url": "https://pages.stern.nyu.edu/~adamodar/"
+    },
+    {
+      "instituicao": "FRED (Federal Reserve Bank of St. Louis) — juros e indicadores dos EUA",
+      "tipo": "dados_publicos",
+      "url": "https://fred.stlouisfed.org/"
+    }
+  ],
+  "is_synthetic": false,
+  "issuer_id": "ETF_ARGT",
+  "lacunas": [
+    "Prospecto, regras de replicação e aderência ao índice exigem pesquisa específica.",
+    "Spread, prêmio ou desconto ao patrimônio e custos totais não são presumidos."
+  ],
+  "nome": "Global X MSCI Argentina ETF",
+  "nomes": {
+    "ETF_ARGT": "Global X MSCI Argentina ETF"
+  },
+  "nota_anterior": null,
+  "pais": "AR",
+  "pais_pt": "Argentina",
+  "pares": [],
+  "proximo_resultado": null,
+  "schema": "cdp.nota.contexto/v1",
+  "setor": "ETF",
+  "setor_pt": "Fundo de índice",
+  "snapshot": {
+    "as_of": "2026-10-09",
+    "indice": "MSCI All Argentina 25/50",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09",
+    "ticker": "ARGT",
+    "tipo_ativo": "etf",
+    "url_produto": "https://www.globalxetfs.com/funds/argt/"
+  },
+  "tem_linha_eua": false,
+  "termos": [],
+  "tickers": [
+    "ARGT"
+  ],
+  "tipo_esperado": "iniciacao"
+}

@@ -1,0 +1,111 @@
+{
+  "as_of": "2026-10-09",
+  "facts": {
+    "etf.EWW.cobertura": {
+      "fact_id": "etf.EWW.cobertura",
+      "formatted": "60,51%",
+      "formula": "Σ pesos com preço-alvo da casa",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_EWW.json"
+      ],
+      "issuer_id": null,
+      "name": "Peso coberto por modelos da casa no EWW",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.6051
+    },
+    "etf.EWW.preco": {
+      "fact_id": "etf.EWW.preco",
+      "formatted": "US$ 71,53",
+      "formula": "fechamento público na moeda da linha",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_EWW.json"
+      ],
+      "issuer_id": null,
+      "name": "Preço de referência do ETF",
+      "point_in_time": false,
+      "unit": "preco",
+      "value": 71.53
+    },
+    "etf.EWW.preco_alvo": {
+      "fact_id": "etf.EWW.preco_alvo",
+      "formatted": "US$ 72,20",
+      "formula": "TP_e = P_e × (1 + R_e − DY)",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_EWW.json"
+      ],
+      "issuer_id": null,
+      "name": "Preço-alvo de 12 meses do EWW",
+      "point_in_time": false,
+      "unit": "preco",
+      "value": 72.1962
+    },
+    "etf.EWW.r_bu": {
+      "fact_id": "etf.EWW.r_bu",
+      "formatted": "+6,01%",
+      "formula": "alvos da casa por posição",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_EWW.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno bottom-up do EWW",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.0600849
+    },
+    "etf.EWW.r_td": {
+      "fact_id": "etf.EWW.r_td",
+      "formatted": "+4,39%",
+      "formula": "P/L justificado e Grinold–Kroner",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_EWW.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno top-down do EWW",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.0438959
+    },
+    "etf.EWW.retorno_esperado": {
+      "fact_id": "etf.EWW.retorno_esperado",
+      "formatted": "+4,93%",
+      "formula": "R_e = ω × R_BU + (1 − ω) × R_TD",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_EWW.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno esperado de 12 meses do EWW",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.0493381
+    },
+    "etf.EWW.ter": {
+      "fact_id": "etf.EWW.ter",
+      "formatted": "0,50%",
+      "formula": "parâmetro público do produto; não inclui todos os custos de negociação",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_EWW.json"
+      ],
+      "issuer_id": null,
+      "name": "Taxa de administração declarada no retrato",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.005
+    },
+    "etf.EWW.visao_ilf": {
+      "fact_id": "etf.EWW.visao_ilf",
+      "formatted": "Neutra",
+      "formula": "IR = (R_e − R_ILF) ÷ TE",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_EWW.json"
+      ],
+      "issuer_id": null,
+      "name": "Visão do EWW relativa ao ILF",
+      "point_in_time": false,
+      "unit": "ratio",
+      "value": -0.0970331
+    }
+  },
+  "is_synthetic": false,
+  "snapshot_id": "store-2026-10-02+5-2026-10-09:etf:ETF_EWW:14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c"
+}

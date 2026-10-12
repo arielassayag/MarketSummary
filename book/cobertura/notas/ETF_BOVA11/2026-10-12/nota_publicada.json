@@ -1,0 +1,424 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "indice": "Ibovespa",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09",
+    "ticker": "BOVA11.SA",
+    "tipo_ativo": "etf",
+    "url_produto": "https://www.blackrock.com/br/products/251816/ishares-ibovespa-fundo-de-ndice-fund"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "4fe0c08eaed9742a514a3917e52d880105434a7337933cad015e7341a2bd489e",
+    "factbook": "ae58b0055b6a76f3b9ffed6b6ce732435d48219b8c9c85dd29ec8d53cb855aad",
+    "nota_json": "6dbfa1e5853a880ef6de903c53f84bbf231eee703622625277b458782060a64b"
+  },
+  "is_synthetic": false,
+  "issuer_id": "ETF_BOVA11",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T15:30:20.307019+00:00",
+  "rendered": {
+    "aderencia_indice_etf": [
+      {
+        "evidencias": [
+          {
+            "fato": "etf.BOVA11.visao_ilf",
+            "nome": "Visão do BOVA11 relativa ao ILF",
+            "valor": "Neutra"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A comparação frente ao ILF é Neutra. Ela se refere à referência regional do modelo, e não à qualidade de replicação. Aderência ao índice exige retorno total da cota e do índice contratual em bases equivalentes; o estudo não dispõe dessa série conferida. O teste contratual do Ibovespa requer retorno total em reais com reinvestimento; a comparação regional do mandato tem outra moeda e finalidade.",
+        "titulo": "Índice contratual e comparação regional"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Sem antecipar evento não confirmado, o caso central mantém a exposição da cesta e exige confirmação de caixa, custos e composição. O retorno esperado do código é +9,73%. Não há probabilidade de cenário qualitativo estimada.",
+      "otimista": "Lucro recorrente e caixa confirmam melhora do retorno do capital dos componentes. A exposição ao índice local atende ao risco estudado e a conversão cambial não absorve essa melhora. Hipótese qualitativa; não é cenário numérico calculado.",
+      "pessimista": "Deterioração de caixa ou concentração dos fatores econômicos enfraquece a cesta, enquanto câmbio reduz o resultado na base em dólares. A reavaliação por juros deixa de sustentar os preços. Não há perda numérica de cenário validada neste estudo."
+    },
+    "comentario_valuation": "Preço de referência R$ 203,08 e alvo do modelo aberto R$ 212,66. A leitura fundamental é +7,38% e a de mercado +11,09%, com retorno esperado +9,73%. A avaliação agrega insumos das participações e condições de mercado; não constitui estimativa do patrimônio líquido da cota. Cobertura 66,10% exige examinar componentes sem modelo e representatividade da composição. O alvo é do código, sem ajuste discricionário nesta nota. As hipóteses qualitativas de cenário não recebem preços ou probabilidades inventados. A classificação frente ao ILF é Neutra; não mede diferença ou erro de aderência ao índice contratual. A comparação com outro ETF brasileiro exige harmonizar índice, composição, moeda e reinvestimento. Patrimônio, preço negociado e alvo fundamental têm significados distintos; geração de caixa da cesta e concentração precisam sustentar a hipótese.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A tese falha se deterioração de caixa e concentração limitam a cesta, ou se câmbio absorve a valorização local. Reavaliação por juros pode ocorrer sem retorno operacional suficiente. Taxa de administração e volume aparente também não comprovam custo total, vigência contratual ou execução próxima do patrimônio; boa aderência ao Ibovespa não resolve inadequação da exposição.",
+        "titulo": "Retorno local não prova resultado na base em dólar"
+      }
+    ],
+    "conviccao": 1,
+    "custos_liquidez_etf": [
+      {
+        "evidencias": [
+          {
+            "fato": "etf.BOVA11.ter",
+            "nome": "Taxa de administração declarada no retrato",
+            "valor": "0,10%"
+          },
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Taxa recebida no retrato 0,10%. Separar despesa do fundo, giro, impostos, corretagem, spread e preço negociado versus NAV; não há série atual conferida no FactBook. Cestas de criação/resgate, empréstimo de ações e encargos descritos na versão histórica exigem vigência e operações efetivas conciliadas. Reinvestimento não é caixa periódico pago.",
+        "titulo": "Custo total e liquidez do mecanismo"
+      }
+    ],
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "estrutura_etf": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "O fundo brasileiro busca o Ibovespa de retorno total em reais; a seleção e os limites de ponderação vêm da bolsa, com revisão periódica. O regulamento recebido descreve criação e resgate em lotes por agentes autorizados, com cestas e direitos, além de empréstimo de ações. É versão histórica e não comprova administração e condições vigentes; carteira e contratos atuais precisam de reconciliação.",
+        "titulo": "Ibovespa, cesta de criação e regra histórica"
+      }
+    ],
+    "exposicao_etf": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Negociabilidade, presença em pregão e ações disponíveis definem a cesta, sem teste ativo de rentabilidade. Emissores financeiros, exportadores e empresas domésticas podem compartilhar fatores; classes devem ser agregadas por risco econômico. Reinvestimento distingue o produto dos que distribuem recursos. Retorno em reais e conversão em dólares são etapas próprias, sem hedge presumido.",
+        "titulo": "Elegibilidade não é seleção fundamental"
+      }
+    ],
+    "ficha": [
+      {
+        "fato": "etf.BOVA11.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 203,08"
+      },
+      {
+        "fato": "etf.BOVA11.preco_alvo",
+        "rotulo": "Preço-alvo do modelo",
+        "valor": "R$ 212,66"
+      },
+      {
+        "fato": "etf.BOVA11.retorno_esperado",
+        "rotulo": "Retorno esperado",
+        "valor": "+9,73%"
+      },
+      {
+        "fato": "etf.BOVA11.r_bu",
+        "rotulo": "Retorno pelas posições",
+        "valor": "+7,38%"
+      },
+      {
+        "fato": "etf.BOVA11.r_td",
+        "rotulo": "Retorno pelo índice",
+        "valor": "+11,09%"
+      },
+      {
+        "fato": "etf.BOVA11.cobertura",
+        "rotulo": "Cobertura pelas posições",
+        "valor": "66,10%"
+      },
+      {
+        "fato": "etf.BOVA11.ter",
+        "rotulo": "Taxa de administração declarada",
+        "valor": "0,10%"
+      },
+      {
+        "fato": "etf.BOVA11.visao_ilf",
+        "rotulo": "Visão frente ao ILF",
+        "valor": "Neutra"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "BlackRock",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Página oficial do produto, objetivo e composição",
+        "url": "https://www.blackrock.com/br/products/251816/ishares-ibovespa-fundo-de-ndice-fund"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "B3",
+        "publicado_em": null,
+        "tipo": "Bolsa",
+        "titulo": "Ibovespa — objetivo, seleção e retorno do índice",
+        "url": "https://b3.com.br/pt_br/market-data-e-indices/indices/indices-amplos/ibovespa-b3.htm"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F3",
+        "instituicao": "BlackRock",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Regulamento público — versão histórica recebida",
+        "url": "https://www.blackrock.com/br/literature/bylaws/ishares-bova11-brl-regulamento-ptbr.pdf"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F4",
+        "instituicao": "BlackRock",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Prospecto resumido da alternativa MSCI brasileira",
+        "url": "https://www.ishares.com/us/literature/summary-prospectus/sp-ishares-msci-brazil-capped-etf-8-31.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Cesta ou limites do índice alteram concentração e fatores econômicos.",
+      "Reinvestimento ou contrato atual diverge da versão documental recebida.",
+      "Caixa das participações não sustenta a reavaliação por condições de desconto.",
+      "Câmbio muda a adequação da exposição ao mandato em dólar.",
+      "Cestas, custos ou preço negociado deixam de ter comparação homogênea ao patrimônio."
+    ],
+    "governanca": "O regulamento recebido descreve administração pelo BNP Paribas e gestão pela BlackRock, empréstimo de ações e direitos de assembleia. A versão é histórica e não comprova vigência atual. Reinvestimento informado na página do produto não representa promessa de distribuição periódica em dinheiro. Alterações contratuais e adequação normativa permanecem abertas.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Separar rentabilidade de clientes dos bancos, caixa dos exportadores e negócios domésticos, agregando classes e fatores comuns. Conferir cesta e regra recebidas, reinvestimento e conversão para a moeda do mandato, sem confundir retorno das ações com efeito cambial.",
+        "titulo": "Economia da exposição"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "etf.BOVA11.cobertura",
+            "nome": "Peso coberto por modelos da casa no BOVA11",
+            "valor": "66,10%"
+          },
+          {
+            "fato": "etf.BOVA11.r_bu",
+            "nome": "Retorno bottom-up do BOVA11",
+            "valor": "+7,38%"
+          },
+          {
+            "fato": "etf.BOVA11.r_td",
+            "nome": "Retorno top-down do BOVA11",
+            "valor": "+11,09%"
+          }
+        ],
+        "texto": "Acompanhar composição, cobertura 66,10% e divergência entre leitura fundamental +7,38% e de mercado +11,09%. Mudança da composição exige reavaliar a representatividade dos insumos.",
+        "titulo": "Suficiência do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "etf.BOVA11.ter",
+            "nome": "Taxa de administração declarada no retrato",
+            "valor": "0,10%"
+          }
+        ],
+        "texto": "Obter custos de negociação, prêmio ou desconto ao patrimônio e retorno total do índice contratual; usar corte, moeda e convenção consistentes. A taxa recebida é 0,10%.",
+        "titulo": "Execução da exposição"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Comparar retorno total patrimonial líquido e Ibovespa total em reais, com reinvestimento e corte iguais. Separar preço de bolsa, cestas de criação e custos de empréstimo/negociação; comparação regional em dólar tem outra finalidade. Regulamento histórico não prova operações vigentes.",
+        "titulo": "Réplica, corte e direitos"
+      }
+    ],
+    "issuer_id": "ETF_BOVA11",
+    "lacunas_de_dados": [
+      "Regulamento público histórico recebido; versão vigente, alterações, suplementos e adequação normativa não foram comprovados.",
+      "Replicação diária efetiva, empréstimo de ativos, garantias e conflitos continuam sem reconciliação completa.",
+      "Spread e prêmio ou desconto ao patrimônio não estão no FactBook recebido.",
+      "Série de aderência ao índice contratual não foi calculada e conferida.",
+      "Percepção de mercado, posicionamento e interesse vendido não têm evidência suficiente.",
+      "Cenários qualitativos não têm preços ou probabilidades próprios calculados.",
+      "Posse histórica dos documentos do produto não está comprovada."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "O administrador descreve um fundo que busca acompanhar o Ibovespa. A cota é negociada em reais e representa uma cesta de ações do índice brasileiro. O fundo oferece acesso ao índice, sem escolher empresas por mérito fundamental. A análise de uma carteira cuja base é o dólar exige distinguir retorno do índice local e conversão cambial, mantendo a moeda de cada medida explícita.",
+    "nome": "iShares Ibovespa Fundo de Índice",
+    "o_que_mudou": "Página do produto, página da bolsa e regulamento histórico foram consultados novamente. A nota aprofunda moeda, retorno total, elegibilidade, criação/resgate e alternativa MSCI, sem promover a versão histórica a contrato vigente nem inserir custos ou desempenho externo.",
+    "pais": "Brasil",
+    "pares": [],
+    "percepcao_variante": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "O fundo MSCI brasileiro negociado nos Estados Unidos oferece outro universo, limites, horário e política de distribuição. Converter moedas não torna as cestas equivalentes. A escolha deve refletir a exposição econômica e o modo de negociação desejados, comparados a custos e direitos comprovados; não se presume superioridade ou intercambialidade entre os produtos.",
+        "titulo": "Ibovespa ou alternativa MSCI brasileira"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A cadeia é caixa e retorno do capital das empresas elegíveis → retorno total do índice em reais → patrimônio do fundo após custos → retorno da posição na moeda do mandato. A condição decisiva é coerência entre concentração, regra e moeda. Queda de juros pode reavaliar ações sem melhorar caixa; negociação local e reinvestimento não representam proteção cambial nem renda paga periodicamente.",
+        "titulo": "Cesta local e conversão para a moeda do mandato"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O ponto decisivo é separar resultado econômico da cesta, condições de desconto e câmbio da carteira de referência. A exposição ao índice só é adequada quando concentração, custos e moeda correspondem ao risco que se pretende representar.",
+        "titulo": "Condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "etf.BOVA11.cobertura",
+            "nome": "Peso coberto por modelos da casa no BOVA11",
+            "valor": "66,10%"
+          }
+        ],
+        "texto": "A cobertura fundamental recebida é 66,10%. Conclusões sobre a cesta dependem também das participações fora dessa cobertura; uma composição incompleta reduz o suporte à avaliação.",
+        "titulo": "Cobertura do modelo"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:30:20.307019+00:00",
+    "resumo": "A visão qualitativa permanece neutra, com convicção limitada pelas lacunas de diligência. O ponto decisivo é separar resultado econômico da cesta, condições de desconto e câmbio da carteira de referência. A exposição ao índice só é adequada quando concentração, custos e moeda correspondem ao risco que se pretende representar. O modelo aberto apresenta retorno esperado de +9,73% e leitura frente ao ILF Neutra. Esses resultados do código não substituem a pesquisa do produto nem comprovam uma percepção do mercado.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Risco de mercado das ações e concentração econômica permanecem na cesta. Para uma carteira em dólares, o real adiciona uma dimensão de retorno; negociação em reais não representa proteção cambial."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "etf.BOVA11.ter",
+            "nome": "Taxa de administração declarada no retrato",
+            "valor": "0,10%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "Custos e condições de negociação podem reduzir o resultado efetivo. A taxa declarada é 0,10%; ela não determina o spread nem todos os custos de transação."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "etf.BOVA11.cobertura",
+            "nome": "Peso coberto por modelos da casa no BOVA11",
+            "valor": "66,10%"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "A cobertura fundamental é 66,10%. Participações sem modelo e composição desatualizada podem enfraquecer a avaliação da cesta."
+      }
+    ],
+    "setor": "Fundo de índice",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Ibovespa: exposição local e leitura separada do câmbio",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": null,
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Confrontar caixa e política de capital dos componentes com concentração do índice; acompanhar retorno em reais, conversão cambial, custos e aderência ao Ibovespa em séries e moedas comparáveis.",
+        "vetor": "Geração de caixa das participações"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "etf.BOVA11.r_bu",
+            "nome": "Retorno bottom-up do BOVA11",
+            "valor": "+7,38%"
+          },
+          {
+            "fato": "etf.BOVA11.r_td",
+            "nome": "Retorno top-down do BOVA11",
+            "valor": "+11,09%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A leitura fundamental do código é +7,38%; a leitura de mercado é +11,09%. Os componentes dependem de premissas diferentes e não provam o comportamento do índice contratual.",
+        "vetor": "Qualidade da avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

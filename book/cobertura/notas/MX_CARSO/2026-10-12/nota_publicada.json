@@ -1,0 +1,493 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "20894ec371576355d9626f690979f7ee77676d8fdd257e5b3a27978b3d1eb481",
+    "factbook": "6a60b53116580e4c1a512a6e821a4b09de74e24510a038aee06d9bd1bd548dac",
+    "nota_json": "fba3f19855f0007eebb5727817138b6eeb8db3bba771cc76b6f156fdf9408c63"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_CARSO",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-02",
+  "published_at": "2026-10-12T15:28:07.887963+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Keystone teve venda concluída; os acordos para ampliar exposição a Zama e ao campo KAN mantinham condições para fechamento. O contrato com Pemex demanda examinar financiamento e recebimento. As associadas, arrendamentos e minoritários exigem análise de capital por entidade, sem somar participações ao caixa consolidado.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em Em revisão, com retorno esperado Em revisão. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "As unidades remuneram reinvestimento, projetos convertem contratos em caixa e a holding transmite valor sob direitos verificáveis. O cenário otimista calculado pelo código é Em revisão.",
+      "pessimista": "Investimentos e giro absorvem caixa enquanto atrasos, condições de aquisições e direitos de terceiros limitam retorno ao acionista. O cenário pessimista calculado pelo código é Em revisão."
+    },
+    "comentario_valuation": "Preço de referência MXN 145,10 e alvo do modelo aberto Em revisão, com potencial Em revisão. Retorno total esperado Em revisão e custo do capital próprio 11,97%. A dispersão entre métodos é 20,15%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é MXN 130,00; a diferença Em revisão não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota. Testar a coerência dos métodos com unidades heterogêneas e direitos atribuíveis. Uma soma das partes só seria útil com perímetros e dívida conciliados; não se calcula desconto de holding nem se atribui valor recebido a projetos condicionados.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se a diversidade de negócios oculta unidades que não remuneram capital. Carteira contratada, lucro de associadas e alienações podem sustentar a aparência de valor sem distribuição recorrente ao titular da ação.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.MX_CARSO.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 145,10"
+      },
+      {
+        "fato": "val.MX_CARSO.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_CARSO.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_CARSO.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_CARSO.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.MX_CARSO.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_CARSO.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_CARSO.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_CARSO.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_CARSO.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,97%"
+      },
+      {
+        "fato": "val.MX_CARSO.wacc",
+        "rotulo": "WACC",
+        "valor": "11,20%"
+      },
+      {
+        "fato": "val.MX_CARSO.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_CARSO.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_CARSO.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_CARSO.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "36,5x"
+      },
+      {
+        "fato": "val.MX_CARSO.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,4x"
+      },
+      {
+        "fato": "val.MX_CARSO.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 130,00"
+      },
+      {
+        "fato": "val.MX_CARSO.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Em revisão"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "Grupo Carso",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Estrutura de negócios e documentos da holding",
+        "url": "https://www.carso.com.mx/inversionistas/"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Grupo Carso",
+        "publicado_em": "2026-07-27",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado por segmento e posição financeira",
+        "url": "https://www.carso.com.mx/wp-content/uploads/2026/07/GCarso-2T26-ESP.pdf"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F3",
+        "instituicao": "Grupo Carso",
+        "publicado_em": "2026-07-16",
+        "tipo": "Relações com investidores",
+        "titulo": "Acordo vinculante condicionado para o campo KAN",
+        "url": "https://www.carso.com.mx/wp-content/uploads/2026/07/Detalle-ER-16jul2026.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Contratos financiados ampliam contas a receber sem retorno e recebimento compatíveis.",
+      "Condições de aquisições permanecem pendentes ou alteram direitos e capital comprometido.",
+      "A rentabilidade por unidade não sustenta caixa transferível à holding.",
+      "Resultados de associadas ou alienações sustentam lucro sem distribuição recorrente."
+    ],
+    "governanca": "Revisar direitos de minoritários, relacionadas e associadas por entidade. O evento do campo KAN explicita participação de outra sociedade em Zamajal e fechamento condicionado; participação contratada não é participação já incorporada ou produção recebida.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Monitorar retorno e caixa por unidade, giro e recebimento de contratos, custo de manutenção e investimento. Revisar maturação de projetos, transferências de controladas e relacionadas, dívida por moeda e vencimento. Confirmar etapas de aquisições condicionadas e direitos econômicos antes de rever a avaliação.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_CARSO.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.MX_CARSO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,97%"
+          },
+          {
+            "fato": "val.MX_CARSO.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "20,15%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado Em revisão, custo do capital 11,97% e dispersão entre métodos 20,15% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Conferir marcos físicos, faturamento, recebimento, adiantamentos e obrigações do contrato financiado com Pemex. O teste é retorno após o capital comprometido, preservando a diferença entre backlog, receita e recebimento.",
+        "titulo": "Ixachi, execução e financiamento"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Confirmar separadamente fechamento, autorizações e direitos econômicos de Zama e KAN. Acompanhar Centauro del Norte e os efeitos da produção restrita relatada em Ichalkil e Pokoch, sem presumir reversão ou conclusão posterior.",
+        "titulo": "Direitos de projetos e transmissão à holding"
+      }
+    ],
+    "issuer_id": "MX_CARSO",
+    "lacunas_de_dados": [
+      "Fluxo de caixa por unidade, manutenção e transferências para a holding não foram integralmente reconciliados.",
+      "Contratos financiados, recebimento e riscos de execução precisam de conciliação própria.",
+      "Condições e conclusão das aquisições anunciadas não estão comprovadas nesta pesquisa.",
+      "Direitos de associadas, minoritários e partes relacionadas exigem documentos completos.",
+      "Guidance, tom agregado da gestão e catalisador futuro datado não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Conglomerado mexicano com varejo, indústria, infraestrutura, materiais, energia e hidrocarbonetos. As controladas, associadas e negócios conjuntos têm direitos e perímetros distintos. Investimentos contabilizados na holding não são caixa automaticamente disponível para distribuição.",
+    "nome": "Grupo Carso",
+    "o_que_mudou": "Aprofundamento editorial com consulta pública nesta data. Hipóteses, condições de confirmação, caixa, capital e acompanhamento foram detalhados; o modelo recebido e seu corte histórico não foram recalculados.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "BR_ECORODOVIAS",
+        "nome": "EcoRodovias"
+      },
+      {
+        "issuer_id": "BR_EMBRAER",
+        "nome": "Embraer"
+      },
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_LOCALIZA",
+        "nome": "Localiza"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_MOTIVA",
+        "nome": "Motiva (ex-CCR)"
+      },
+      {
+        "issuer_id": "BR_RANDON",
+        "nome": "Randoncorp"
+      },
+      {
+        "issuer_id": "BR_SIMPAR",
+        "nome": "Simpar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que a disciplina de capital entre negócios produza retorno atribuível depois de reinvestimento e financiamento. A diversificação só agrega valor se as unidades remuneram capital e transferem recursos sob direitos claros. A condição decisiva é caixa da holding sem depender de vendas de ativos ou antecipação de ganhos de projetos.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_CARSO.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "MXN 145,10"
+          },
+          {
+            "fato": "val.MX_CARSO.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.MX_CARSO.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.MX_CARSO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,97%"
+          },
+          {
+            "fato": "val.MX_CARSO.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "Em revisão"
+          }
+        ],
+        "texto": "Preço de referência MXN 145,10 e alvo Em revisão, com potencial Em revisão. A hipótese de investimento deve ser confrontada com o custo do capital 11,97% e retorno esperado Em revisão.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese da holding depende de capital remunerado em cada unidade e caixa que pode subir até o titular da ação. Rentabilidade de varejo, indústria e projetos deve ser examinada separadamente. Participação contratada, lucro de associada e receita consolidada não têm a mesma relação com o caixa distribuível.",
+        "titulo": "Diversificação exige avaliação por direito econômico"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "O contrato de perfuração com Pemex combina execução e financiamento; exige acompanhar recebimento e recursos comprometidos. Os acordos de Zama e KAN divulgados mantêm condições de fechamento. Crescimento de backlog ou assinatura de acordo não substitui financiamento completo, autorização e caixa recebido.",
+        "titulo": "Projetos financiados e aquisições condicionadas"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A estrutura reúne canais de varejo, capacidade industrial e execução de contratos. Essas capacidades podem facilitar novos negócios, mas a vantagem precisa ser comprovada por contribuição recorrente e remuneração do capital, com comparação própria por segmento. Uma carteira de contratos não equivale a margem ou recebimento.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:28:07.887963+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "No release, receita e lucro atribuível crescem enquanto EBITDA e resultado operacional caem; a base anterior inclui efeitos extraordinários ligados a ativos cementícios. A melhora financeira e os resultados de associadas devem ser separados da operação. O avanço de hidrocarbonetos tem perímetro e contratos que limitam comparabilidade orgânica.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que a disciplina de capital entre negócios produza retorno atribuível depois de reinvestimento e financiamento. A diversificação só agrega valor se as unidades remuneram capital e transferem recursos sob direitos claros. A condição decisiva é caixa da holding sem depender de vendas de ativos ou antecipação de ganhos de projetos. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Em revisão, com retorno esperado Em revisão. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Execução, recebimento de contratos, moeda e consumo podem reduzir retorno. Projetos de energia e hidrocarbonetos exigem capital e autorizações. Minoritários, associadas e relacionadas podem limitar a transmissão do caixa à holding."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_CARSO.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "Em revisão"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é Em revisão. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Carso — retorno por negócio e transmissão de valor da holding",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O consolidado exige comparar cada unidade e a base extraordinária anterior. A apreciação do peso afeta conversão de receitas; custos de manutenção e arranque têm efeitos próprios. O crescimento de hidrocarbonetos não é automaticamente recorrente ou orgânico.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar retorno e caixa por unidade, giro e recebimento de contratos, custo de manutenção e investimento. Revisar maturação de projetos, transferências de controladas e relacionadas, dívida por moeda e vencimento. Confirmar etapas de aquisições condicionadas e direitos econômicos antes de rever a avaliação.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.MX_CARSO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,97%"
+          },
+          {
+            "fato": "val.MX_CARSO.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "20,15%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,97% e a dispersão entre métodos 20,15%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Examinar adiantamentos, contas a receber e marcos de execução dos contratos. Atribuir contribuição e financiamento às entidades responsáveis antes de supor que carteira contratada pode sustentar distribuição.",
+        "vetor": "Capital comprometido e recebimentos"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Separar efeito cambial da receita em dólares, hidrologia e transporte de gás. Produção de campos, contratos financiados e participações a adquirir exigem acompanhamento próprio e não devem ser agregados como crescimento orgânico.",
+        "vetor": "Perímetros da energia e dos hidrocarbonetos"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

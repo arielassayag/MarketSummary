@@ -1,0 +1,111 @@
+{
+  "as_of": "2026-10-09",
+  "facts": {
+    "etf.COLO.cobertura": {
+      "fact_id": "etf.COLO.cobertura",
+      "formatted": "44,77%",
+      "formula": "Σ pesos com preço-alvo da casa",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_COLO.json"
+      ],
+      "issuer_id": null,
+      "name": "Peso coberto por modelos da casa no COLO",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.447742
+    },
+    "etf.COLO.preco": {
+      "fact_id": "etf.COLO.preco",
+      "formatted": "US$ 48,47",
+      "formula": "fechamento público na moeda da linha",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_COLO.json"
+      ],
+      "issuer_id": null,
+      "name": "Preço de referência do ETF",
+      "point_in_time": false,
+      "unit": "preco",
+      "value": 48.47
+    },
+    "etf.COLO.preco_alvo": {
+      "fact_id": "etf.COLO.preco_alvo",
+      "formatted": "US$ 51,17",
+      "formula": "TP_e = P_e × (1 + R_e − DY)",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_COLO.json"
+      ],
+      "issuer_id": null,
+      "name": "Preço-alvo de 12 meses do COLO",
+      "point_in_time": false,
+      "unit": "preco",
+      "value": 51.1725
+    },
+    "etf.COLO.r_bu": {
+      "fact_id": "etf.COLO.r_bu",
+      "formatted": "+6,54%",
+      "formula": "alvos da casa por posição",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_COLO.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno bottom-up do COLO",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.065365
+    },
+    "etf.COLO.r_td": {
+      "fact_id": "etf.COLO.r_td",
+      "formatted": "+11,04%",
+      "formula": "P/L justificado e Grinold–Kroner",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_COLO.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno top-down do COLO",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.110359
+    },
+    "etf.COLO.retorno_esperado": {
+      "fact_id": "etf.COLO.retorno_esperado",
+      "formatted": "+9,92%",
+      "formula": "R_e = ω × R_BU + (1 − ω) × R_TD",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_COLO.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno esperado de 12 meses do COLO",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.0991671
+    },
+    "etf.COLO.ter": {
+      "fact_id": "etf.COLO.ter",
+      "formatted": "0,62%",
+      "formula": "parâmetro público do produto; não inclui todos os custos de negociação",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_COLO.json"
+      ],
+      "issuer_id": null,
+      "name": "Taxa de administração declarada no retrato",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.0062
+    },
+    "etf.COLO.visao_ilf": {
+      "fact_id": "etf.COLO.visao_ilf",
+      "formatted": "Neutra",
+      "formula": "IR = (R_e − R_ILF) ÷ TE",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_COLO.json"
+      ],
+      "issuer_id": null,
+      "name": "Visão do COLO relativa ao ILF",
+      "point_in_time": false,
+      "unit": "ratio",
+      "value": 0.179245
+    }
+  },
+  "is_synthetic": false,
+  "snapshot_id": "store-2026-10-02+5-2026-10-09:etf:ETF_COLO:14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c"
+}

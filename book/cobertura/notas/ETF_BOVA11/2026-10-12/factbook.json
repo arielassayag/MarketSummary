@@ -1,0 +1,111 @@
+{
+  "as_of": "2026-10-09",
+  "facts": {
+    "etf.BOVA11.cobertura": {
+      "fact_id": "etf.BOVA11.cobertura",
+      "formatted": "66,10%",
+      "formula": "Σ pesos com preço-alvo da casa",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_BOVA11.json"
+      ],
+      "issuer_id": null,
+      "name": "Peso coberto por modelos da casa no BOVA11",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.66104
+    },
+    "etf.BOVA11.preco": {
+      "fact_id": "etf.BOVA11.preco",
+      "formatted": "R$ 203,08",
+      "formula": "fechamento público na moeda da linha",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_BOVA11.json"
+      ],
+      "issuer_id": null,
+      "name": "Preço de referência do ETF",
+      "point_in_time": false,
+      "unit": "preco",
+      "value": 203.08
+    },
+    "etf.BOVA11.preco_alvo": {
+      "fact_id": "etf.BOVA11.preco_alvo",
+      "formatted": "R$ 212,66",
+      "formula": "TP_e = P_e × (1 + R_e − DY)",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_BOVA11.json"
+      ],
+      "issuer_id": null,
+      "name": "Preço-alvo de 12 meses do BOVA11",
+      "point_in_time": false,
+      "unit": "preco",
+      "value": 212.658
+    },
+    "etf.BOVA11.r_bu": {
+      "fact_id": "etf.BOVA11.r_bu",
+      "formatted": "+7,38%",
+      "formula": "alvos da casa por posição",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_BOVA11.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno bottom-up do BOVA11",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.0737689
+    },
+    "etf.BOVA11.r_td": {
+      "fact_id": "etf.BOVA11.r_td",
+      "formatted": "+11,09%",
+      "formula": "P/L justificado e Grinold–Kroner",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_BOVA11.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno top-down do BOVA11",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.110917
+    },
+    "etf.BOVA11.retorno_esperado": {
+      "fact_id": "etf.BOVA11.retorno_esperado",
+      "formatted": "+9,73%",
+      "formula": "R_e = ω × R_BU + (1 − ω) × R_TD",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_BOVA11.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno esperado de 12 meses do BOVA11",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.0972745
+    },
+    "etf.BOVA11.ter": {
+      "fact_id": "etf.BOVA11.ter",
+      "formatted": "0,10%",
+      "formula": "parâmetro público do produto; não inclui todos os custos de negociação",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_BOVA11.json"
+      ],
+      "issuer_id": null,
+      "name": "Taxa de administração declarada no retrato",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.001
+    },
+    "etf.BOVA11.visao_ilf": {
+      "fact_id": "etf.BOVA11.visao_ilf",
+      "formatted": "Neutra",
+      "formula": "IR = (R_e − R_ILF) ÷ TE",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_BOVA11.json"
+      ],
+      "issuer_id": null,
+      "name": "Visão do BOVA11 relativa ao ILF",
+      "point_in_time": false,
+      "unit": "ratio",
+      "value": 0.288092
+    }
+  },
+  "is_synthetic": false,
+  "snapshot_id": "store-2026-10-02+5-2026-10-09:etf:ETF_BOVA11:14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c"
+}

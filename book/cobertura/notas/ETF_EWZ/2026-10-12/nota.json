@@ -1,0 +1,236 @@
+{
+  "mind": "codex",
+  "issuer_id": "ETF_EWZ",
+  "data": "2026-10-12",
+  "tipo": "iniciacao",
+  "titulo": "Brasil em dólares: bancos, exportadores e disciplina de capital",
+  "resumo": "A visão qualitativa permanece neutra, com convicção limitada pelas lacunas de diligência. O ponto decisivo é a conversão do resultado dos componentes em caixa e remuneração do acionista sem fragilizar balanços. Distinguir efeito do câmbio, preços de commodities e decisões de capital evita confundir reavaliação financeira com melhora operacional. O modelo aberto apresenta retorno esperado de {{fact:etf.EWZ.retorno_esperado}} e leitura frente ao ILF {{fact:etf.EWZ.visao_ilf}}. Esses resultados do código não substituem a pesquisa do produto nem comprovam uma percepção do mercado.",
+  "negocio": "O administrador oferece exposição a ações brasileiras por um índice da família MSCI. O retrato recebido contém grupos financeiros, exportadores de materiais e energia, além de outros negócios. Classes de ações do mesmo emissor podem aparecer separadamente. A negociação em dólares não transforma a receita de cada componente em receita dolarizada nem elimina risco cambial.",
+  "pilares_tese": [
+    {
+      "titulo": "Retorno empresarial antes da conversão cambial",
+      "texto": "A cadeia é margem de clientes e perdas nos bancos, caixa após investimento nos exportadores → remuneração atribuível → cesta e câmbio → retorno líquido da cota. A condição decisiva é caixa e capital sustentáveis, com grupos e classes agregados. Queda de juros ou alta do real pode mover preços sem melhora operacional; negociar em dólar não protege as receitas locais.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Condição decisiva",
+      "texto": "O ponto decisivo é a conversão do resultado dos componentes em caixa e remuneração do acionista sem fragilizar balanços. Distinguir efeito do câmbio, preços de commodities e decisões de capital evita confundir reavaliação financeira com melhora operacional.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Cobertura do modelo",
+      "texto": "A cobertura fundamental recebida é {{fact:etf.EWZ.cobertura}}. Conclusões sobre a cesta dependem também das participações fora dessa cobertura; uma composição incompleta reduz o suporte à avaliação.",
+      "evidencias": [
+        "etf.EWZ.cobertura"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Geração de caixa das participações",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Confrontar qualidade do crédito e rentabilidade financeira com caixa após investimentos dos exportadores; revisar dividendos, concentração por emissor e efeito de câmbio separadamente do retorno das ações locais.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Qualidade da avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "A leitura fundamental do código é {{fact:etf.EWZ.r_bu}}; a leitura de mercado é {{fact:etf.EWZ.r_td}}. Os componentes dependem de premissas diferentes e não provam o comportamento do índice contratual.",
+      "evidencias": [
+        "etf.EWZ.r_bu",
+        "etf.EWZ.r_td"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Crédito, matérias-primas e políticas de capital podem gerar perdas simultâneas. A cotação em dólares transmite a oscilação cambial do investimento; classes distintas de ações não representam necessariamente riscos independentes.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "Custos e condições de negociação podem reduzir o resultado efetivo. A taxa declarada é {{fact:etf.EWZ.ter}}; ela não determina o spread nem todos os custos de transação.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "etf.EWZ.ter"
+      ]
+    },
+    {
+      "texto": "A cobertura fundamental é {{fact:etf.EWZ.cobertura}}. Participações sem modelo e composição desatualizada podem enfraquecer a avaliação da cesta.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "etf.EWZ.cobertura"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Crédito permanece saudável e exportadores convertem resultados em caixa disciplinado. Melhora das condições de desconto é acompanhada de desempenho operacional e políticas de capital sustentáveis. Hipótese qualitativa; não é cenário numérico calculado.",
+    "base": "Sem antecipar evento não confirmado, o caso central mantém a exposição da cesta e exige confirmação de caixa, custos e composição. O retorno esperado do código é {{fact:etf.EWZ.retorno_esperado}}. Não há probabilidade de cenário qualitativo estimada.",
+    "pessimista": "Perdas de crédito e queda do caixa dos exportadores coincidem com pressão cambial. Distribuições e investimentos comprometem balanços, impedindo que menor taxa de desconto sustente a avaliação. Não há perda numérica de cenário validada neste estudo."
+  },
+  "comentario_valuation": "Preço de referência {{fact:etf.EWZ.preco}} e alvo do modelo aberto {{fact:etf.EWZ.preco_alvo}}. A leitura fundamental é {{fact:etf.EWZ.r_bu}} e a de mercado {{fact:etf.EWZ.r_td}}, com retorno esperado {{fact:etf.EWZ.retorno_esperado}}. A avaliação agrega insumos das participações e condições de mercado; não constitui estimativa do patrimônio líquido da cota. Cobertura {{fact:etf.EWZ.cobertura}} exige examinar componentes sem modelo e representatividade da composição. O alvo é do código, sem ajuste discricionário nesta nota. As hipóteses qualitativas de cenário não recebem preços ou probabilidades inventados. A classificação frente ao ILF é {{fact:etf.EWZ.visao_ilf}}; não mede diferença ou erro de aderência ao índice contratual. Agregar bancos e exportadores com capital e moeda próprios, sem somar classes como negócios independentes. A comparação com Ibovespa requer cesta e reinvestimento coerentes; alvo do modelo não é NAV nem garantia de preço executável.",
+  "ultimo_resultado": null,
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "O prospecto resumido diferencia o índice e a gestão do fundo. Permissões de investimento não comprovam uso efetivo; negociação em bolsa não confere resgate individual direto ao valor patrimonial. Suplementos, custódia, garantias e operações com partes relacionadas continuam sujeitos à reconciliação documental.",
+  "posicao_competitiva": null,
+  "qualidade_resultados": null,
+  "alocacao_capital": null,
+  "percepcao_variante": {
+    "titulo": "MSCI brasileiro versus exposição local ao Ibovespa",
+    "texto": "O produto MSCI e o fundo local do Ibovespa diferem em seleção, limites, horário, distribuição e moeda de negociação. Ambos podem carregar risco do real; cota dolarizada não é hedge. Escolher entre eles exige correspondência da cesta e custos totais comprovados, sem presumir equivalência após simples conversão ou superioridade de retorno.",
+    "evidencias": [
+      "F1",
+      "F2",
+      "F3",
+      "F4"
+    ]
+  },
+  "contratese": {
+    "titulo": "Reavaliação pode coexistir com caixa frágil",
+    "texto": "A tese falha se juros menores ou moeda mais forte sustentam preços, enquanto perdas de crédito e reinvestimento comprimem caixa. Distribuições podem competir com capital necessário, e classes correlacionadas mantêm concentração. Um resultado melhor que a referência regional não comprova réplica superior nem retorno sustentável das empresas.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Economia da exposição",
+      "texto": "Separar margem e perdas dos bancos, preço e caixa após sustentação dos exportadores e remuneração das redes. Conferir distribuição, capital e grupos de controle junto a receitas e dívida por moeda; retorno da ação local e efeito cambial são etapas diferentes.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Suficiência do modelo",
+      "texto": "Acompanhar composição, cobertura {{fact:etf.EWZ.cobertura}} e divergência entre leitura fundamental {{fact:etf.EWZ.r_bu}} e de mercado {{fact:etf.EWZ.r_td}}. Mudança da composição exige reavaliar a representatividade dos insumos.",
+      "evidencias": [
+        "etf.EWZ.cobertura",
+        "etf.EWZ.r_bu",
+        "etf.EWZ.r_td"
+      ]
+    },
+    {
+      "titulo": "Execução da exposição",
+      "texto": "Obter custos de negociação, prêmio ou desconto ao patrimônio e retorno total do índice contratual; usar corte, moeda e convenção consistentes. A taxa recebida é {{fact:etf.EWZ.ter}}.",
+      "evidencias": [
+        "etf.EWZ.ter"
+      ]
+    },
+    {
+      "titulo": "Réplica, corte e direitos",
+      "texto": "Comparar NAV de retorno total líquido, índice contratual líquido e preço negociado em bases iguais, respeitando distribuição e impostos. Examinar valor justo versus preços do fornecedor, amostragem e caixa residual; desempenho relativo ao ILF tem finalidade regional.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "estrutura_etf": {
+    "titulo": "Objetivo e regras do produto",
+    "texto": "O prospecto identifica o índice MSCI de ações brasileiras de grande e média capitalização, ponderado pelo valor de mercado disponível à negociação e sujeito a limites por grupo econômico. O índice tem revisão trimestral. A gestora utiliza amostragem representativa e pode manter instrumentos diferentes dos componentes, dentro dos limites contratuais. A estratégia acompanha o índice antes de taxas e despesas; não busca seleção ativa nem proteção defensiva temporária em quedas.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "exposicao_etf": {
+    "titulo": "Grupos brasileiros e fatores compartilhados",
+    "texto": "Finanças, energia, materiais, redes e outros negócios têm sensibilidade diferente a crédito, preços externos e capital. Agregar classes de ações do mesmo grupo e examinar receitas, custos e dívida por moeda. A seleção MSCI de grande e média capitalização difere do Ibovespa; não representa toda a economia nem replica automaticamente outro fundo brasileiro.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "custos_liquidez_etf": {
+    "titulo": "Custo total e liquidez do mecanismo",
+    "texto": "Taxa recebida no retrato {{fact:etf.EWZ.ter}}. Separar despesa do fundo, giro, impostos, corretagem, spread e preço negociado versus NAV; não há série atual conferida no FactBook. Horário dos ativos brasileiros e da cota americana, moedas e dividendos podem criar diferenças de marcação. Volume de tela não demonstra custo de criar, resgatar ou liquidar a cesta.",
+    "evidencias": [
+      "etf.EWZ.ter",
+      "F1",
+      "F2"
+    ]
+  },
+  "aderencia_indice_etf": {
+    "titulo": "Índice contratual e comparação regional",
+    "texto": "A comparação frente ao ILF é {{fact:etf.EWZ.visao_ilf}}. Ela se refere à referência regional do modelo, e não à qualidade de replicação. Aderência ao índice exige retorno total da cota e do índice contratual em bases equivalentes; o estudo não dispõe dessa série conferida.",
+    "evidencias": [
+      "etf.EWZ.visao_ilf"
+    ]
+  },
+  "o_que_mudou": "Página e prospecto resumido foram recebidos novamente. A pesquisa aprofunda capital dos bancos e exportadores, concentração por grupo, moeda e diferença frente ao Ibovespa, sem inserir taxas atuais, spreads ou desempenho novos.",
+  "gatilhos_revisao": [
+    "Margem e caixa não acompanham a reavaliação por juros ou moeda.",
+    "Distribuições fragilizam capital ou competem com sustentação dos negócios.",
+    "Classes e controle mudam concentração e direitos atribuíveis.",
+    "Composição MSCI diverge da exposição brasileira desejada.",
+    "Moeda, distribuição ou marcação torna inadequada a comparação com outro fundo."
+  ],
+  "lacunas_de_dados": [
+    "Prospecto resumido recebido; documento estatutário completo, suplementos posteriores e metodologia integral vigente ainda exigem reconciliação.",
+    "Replicação diária efetiva, custódia, ativos emprestados e garantias não foram integralmente reconciliados.",
+    "As medidas públicas de spread e prêmio ou desconto não foram incorporadas ao FactBook; falta série comparável conferida.",
+    "Série de aderência ao índice contratual não foi calculada e conferida.",
+    "Percepção de mercado, posicionamento e interesse vendido não têm evidência suficiente.",
+    "Cenários qualitativos não têm preços ou probabilidades próprios calculados.",
+    "Posse histórica dos documentos do produto não está comprovada."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "BlackRock",
+      "titulo": "Página oficial do produto, objetivo e composição",
+      "url": "https://www.ishares.com/us/products/239612/ishares-msci-brazil-capped-etf",
+      "publicado_em": null,
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "BlackRock",
+      "titulo": "Prospecto resumido — estratégia e riscos do produto",
+      "url": "https://www.ishares.com/us/literature/summary-prospectus/sp-ishares-msci-brazil-capped-etf-8-31.pdf",
+      "publicado_em": null,
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F3",
+      "tipo": "bolsa",
+      "instituicao": "B3",
+      "titulo": "Ibovespa — seleção e retorno da alternativa local",
+      "url": "https://b3.com.br/pt_br/market-data-e-indices/indices/indices-amplos/ibovespa-b3.htm",
+      "publicado_em": null,
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F4",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "BlackRock",
+      "titulo": "Produto local do Ibovespa e reinvestimento",
+      "url": "https://www.blackrock.com/br/products/251816/ishares-ibovespa-fundo-de-ndice-fund",
+      "publicado_em": null,
+      "consultado_em": "2026-10-12"
+    }
+  ],
+  "modelo_ia": null
+}

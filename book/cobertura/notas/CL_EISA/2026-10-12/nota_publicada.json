@@ -1,0 +1,421 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "3e011e98aabd0feadada44bfe802644ce1181cc5a3fe96f9a5fd960e11df17bd",
+    "factbook": "93d9af71690fed52485aba6bf24f6ce7a3bd3eb07867aaa2d6be9a7eb63bf1d6",
+    "nota_json": "9c9b482c33ca87ce8db7368ccc7609581e349050ee3f403722c558d535b9f093"
+  },
+  "is_synthetic": false,
+  "issuer_id": "CL_EISA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T15:29:28.786645+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Equipamentos e capital de giro precisam ser avaliados junto a factoring, arrendamentos e financiamento dos projetos. Os indicadores de covenants usam uma base própria que exclui efeitos contábeis posteriores. A análise deve reconciliar essa definição e o período efetivamente medido antes de afirmar folga atual.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em CLP 517,04, com retorno esperado +0,68%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Seleção e execução preservam margem; medições se convertem em recebimento e os equipamentos sustentam retorno depois de financiamento. O cenário otimista calculado pelo código é CLP 812,97.",
+      "pessimista": "Revisão de custos e recebimento lento tornam a carteira de obras fonte de consumo de caixa e ampliam necessidade de financiamento. O cenário pessimista calculado pelo código é CLP 222,04."
+    },
+    "comentario_valuation": "Preço de referência CLP 528,00 e alvo do modelo aberto CLP 517,04, com potencial -2,08%. Retorno total esperado +0,68% e custo do capital próprio 10,90%. A dispersão entre métodos é 5,06%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é n/d; a diferença n/d não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota. Avaliar fluxo dos contratos após custo a concluir e giro, separando imóveis, equipamentos e associações. Margem estimada, pleitos e backlog não recebem valor de caixa contratado sem verificação; múltiplo de lucro exige perdas previstas e dívida coerentes.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A tese falha se lucro por avanço cresce antes da cobrança, com revisões desfavoráveis de custo a concluir e maior factoring. Retenções, pleitos não aprovados e garantias podem alongar o consumo de recursos. Obras de associações ampliam exposição sem receita consolidada equivalente; backlog maior não refuta esse risco.",
+        "titulo": "Carteira crescente pode antecipar perdas"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.CL_EISA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "CLP 528,00"
+      },
+      {
+        "fato": "val.CL_EISA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "CLP 517,04"
+      },
+      {
+        "fato": "val.CL_EISA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-2,08%"
+      },
+      {
+        "fato": "val.CL_EISA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.CL_EISA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.CL_EISA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "CLP 812,97"
+      },
+      {
+        "fato": "val.CL_EISA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "3,08%"
+      },
+      {
+        "fato": "val.CL_EISA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "CLP 222,04"
+      },
+      {
+        "fato": "val.CL_EISA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "0,00%"
+      },
+      {
+        "fato": "val.CL_EISA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,90%"
+      },
+      {
+        "fato": "val.CL_EISA.wacc",
+        "rotulo": "WACC",
+        "valor": "8,50%"
+      },
+      {
+        "fato": "val.CL_EISA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,09%"
+      },
+      {
+        "fato": "val.CL_EISA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+0,68%"
+      },
+      {
+        "fato": "val.CL_EISA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+0,86%"
+      },
+      {
+        "fato": "val.CL_EISA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "11,6x"
+      },
+      {
+        "fato": "val.CL_EISA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,7x"
+      },
+      {
+        "fato": "val.CL_EISA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CL_EISA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "n/d"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "Echeverría Izquierdo",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil de engenharia, construção e serviços",
+        "url": "https://ei.cl/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Echeverría Izquierdo",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Análise de resultados e contratos em execução",
+        "url": "https://ei.cl/wp-content/uploads/2026/10/Ei-Analisis-Razonado-30-jun-2026.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Revisões de custo ou pleitos não aprovados deterioram margem final.",
+      "Medições e lucro crescem enquanto retenções e cobrança consomem caixa.",
+      "Factoring e garantias ampliam financiamento sem geração proporcional.",
+      "Documentos originais mudam período, sinal de fluxo ou base dos covenants."
+    ],
+    "governanca": "Revisar controle, transações entre empresas, garantias cruzadas e alocação de recursos nas associações. A remuneração da gestão deve ser confrontada com margem final e cobrança, além de volume contratado.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Conferir custos restantes, perdas previstas, aprovação de medições e pleitos, faturamento, retenções e cobrança. Separar proporção em associações, receita consolidada e imóveis; acompanhar margem final até a entrega, não apenas resultado por avanço.",
+        "titulo": "Da medição ao caixa por contrato"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Reconciliar factoring, arrendamentos, equipamentos e garantias com a necessidade de financiamento das obras. Confirmar rótulos de período, sinal dos fluxos e data e definição dos covenants antes de afirmar folga. A nova consulta ao site não resolve o PDF bloqueado.",
+        "titulo": "Giro, garantias e definições da dívida"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_EISA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+0,68%"
+          },
+          {
+            "fato": "val.CL_EISA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,90%"
+          },
+          {
+            "fato": "val.CL_EISA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "5,06%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +0,68%, custo do capital 10,90% e dispersão entre métodos 5,06% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "CL_EISA",
+    "lacunas_de_dados": [
+      "Demonstrações originais e notas de receita, caixa e contratos não foram integralmente conciliadas.",
+      "Rótulos de período, sinal do financiamento e data dos covenants precisam de confirmação documental.",
+      "Custos a concluir, pleitos, garantias e perdas por contrato não têm abertura suficiente.",
+      "Participações, factoring e recursos necessários até a entrega exigem reconciliação.",
+      "Guidance, tom da gestão e evento futuro datado permanecem não classificados.",
+      "Percepção do mercado, posicionamento e interesse vendido não têm comprovação suficiente.",
+      "Disponibilidade histórica dos documentos e reconciliação integral ao modelo recebido não foram comprovadas."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo chileno de engenharia, construção e serviços industriais, com negócios imobiliários e participação em projetos no Chile e Peru. Contratos de obras e vendas de imóveis têm reconhecimento de receita, capital e risco de recebimento diferentes.",
+    "nome": "Echeverría Izquierdo",
+    "o_que_mudou": null,
+    "pais": "Chile",
+    "pares": [
+      {
+        "issuer_id": "BR_ECORODOVIAS",
+        "nome": "EcoRodovias"
+      },
+      {
+        "issuer_id": "BR_EMBRAER",
+        "nome": "Embraer"
+      },
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_LOCALIZA",
+        "nome": "Localiza"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_MOTIVA",
+        "nome": "Motiva (ex-CCR)"
+      },
+      {
+        "issuer_id": "BR_RANDON",
+        "nome": "Randoncorp"
+      },
+      {
+        "issuer_id": "BR_SIMPAR",
+        "nome": "Simpar"
+      }
+    ],
+    "percepcao_variante": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A alternativa à leitura pelo tamanho da carteira é acompanhar margem final e caixa recebido por obra. A combinação já identificada de resultado operacional positivo e consumo de giro torna esse teste relevante, sem provar insolvência ou percepção errada do mercado. A tabela de financiamento e os períodos ainda exigem conciliação documental.",
+        "titulo": "Conversão contratual como principal teste"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A cadeia é seleção e preço do contrato → execução e custo a concluir → medição aprovada → faturamento e cobrança → caixa após máquinas, giro e financiamento. A condição decisiva é preservação da margem final com recebimento, inclusive nas associações. Backlog e receita por avanço não provam caixa nem compensam obrigações onerosas de obras já contratadas.",
+        "titulo": "Margem estimada precisa chegar ao recebimento"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_EISA.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "CLP 528,00"
+          },
+          {
+            "fato": "val.CL_EISA.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "CLP 517,04"
+          },
+          {
+            "fato": "val.CL_EISA.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-2,08%"
+          },
+          {
+            "fato": "val.CL_EISA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,90%"
+          },
+          {
+            "fato": "val.CL_EISA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+0,68%"
+          }
+        ],
+        "texto": "Preço de referência CLP 528,00 e alvo CLP 517,04, com potencial -2,08%. A hipótese de investimento deve ser confrontada com o custo do capital 10,90% e retorno esperado +0,68%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Especialização em montagens, geotecnia e serviços industriais pode favorecer execução complexa. A vantagem deve aparecer em margem final, segurança, prazo e cobrança diante de concorrentes de cada especialidade. Premiações e nova adjudicação não demonstram rentabilidade contratada; crescer aceitando mais garantias ou risco de custo pode destruir o benefício técnico.",
+        "titulo": "Competência técnica com risco contratual disciplinado"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:29:28.786645+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O semestre apresenta EBITDA positivo e consumo de caixa operacional, com maior giro de projetos. O backlog inclui a parcela de contratos de associações e não equivale a receita consolidada já recebida. Há reconhecimento por avanço de obras e tratamento distinto de perda prevista e lucro estimado.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que seleção de contratos, execução técnica e cobrança preservem margem econômica depois de equipamentos, giro e financiamento. Uma carteira de obras maior só acrescenta valor se as estimativas de custo forem confiáveis e o caixa recebido remunere o capital empregado. A disciplina contratual é tão relevante quanto ganhar novos projetos. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +0,68%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Estimativas inadequadas, pleitos, atrasos ou inadimplência podem consumir margem e caixa de obras. Equipamentos, mão de obra e financiamento ampliam perdas em contratos mal precificados. Direitos e obrigações em associações exigem análise separada."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_EISA.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "n/d"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é n/d. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Echeverría Izquierdo — carteira de obras, estimativas e caixa contratado",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O resultado exige distinguir rentabilidade contábil, carteira futura e caixa consumido. A pesquisa encontrou rótulos de período e um sinal de financiamento em texto que precisam ser conciliados às tabelas e demonstrações originais; não corrige o emissor por inferência.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar margem contratada e final, revisão de custos, medição, faturamento, retenções e cobrança. Separar contratos consolidados, participações proporcionais e estoque imobiliário. Revisar financiamento, uso de factoring, garantias, equipamentos e caixa por projeto até a entrega.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.CL_EISA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,90%"
+          },
+          {
+            "fato": "val.CL_EISA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "5,06%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 10,90% e a dispersão entre métodos 5,06%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

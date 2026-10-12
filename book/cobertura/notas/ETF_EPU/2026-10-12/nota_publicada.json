@@ -1,0 +1,400 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "indice": "MSCI All Peru Capped",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09",
+    "ticker": "EPU",
+    "tipo_ativo": "etf",
+    "url_produto": "https://www.ishares.com/us/products/239606/ishares-msci-all-peru-capped-etf"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "3b52d599534d2e6f1efeece57a7622e929fb4ae73cf55ef6ca1919b2a96b23b0",
+    "factbook": "fba07d5294666ee5b2ea875eceffab248fd27bd5a5d050c8a04df646853cea35",
+    "nota_json": "f2e2c9c7391e9c2189c6f318db8b94bce6c932d0258e264135855de7ef72d970"
+  },
+  "is_synthetic": false,
+  "issuer_id": "ETF_EPU",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T15:31:33.745200+00:00",
+  "rendered": {
+    "aderencia_indice_etf": [
+      {
+        "evidencias": [
+          {
+            "fato": "etf.EPU.visao_ilf",
+            "nome": "Visão do EPU relativa ao ILF",
+            "valor": "Neutra"
+          }
+        ],
+        "texto": "A comparação frente ao ILF é Neutra. Ela se refere à referência regional do modelo, e não à qualidade de replicação. Aderência ao índice exige retorno total da cota e do índice contratual em bases equivalentes; o estudo não dispõe dessa série conferida.",
+        "titulo": "Índice contratual e comparação regional"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Sem antecipar evento não confirmado, o caso central mantém a exposição da cesta e exige confirmação de caixa, custos e composição. O retorno esperado do código é +5,82%. Não há probabilidade de cenário qualitativo estimada.",
+      "otimista": "Condições favoráveis para metais se traduzem em caixa após investimentos, com execução operacional estável. Os negócios financeiros preservam qualidade do crédito e retornos do capital. Hipótese qualitativa; não é cenário numérico calculado.",
+      "pessimista": "Deterioração do ciclo de metais coincide com custos ou interrupções operacionais, enquanto crédito perde qualidade. O caixa e a distribuição enfraquecem sem a compensação presumida entre setores. Não há perda numérica de cenário validada neste estudo."
+    },
+    "comentario_valuation": "Preço de referência US$ 88,66 e alvo do modelo aberto US$ 91,41. A leitura fundamental é +8,95% e a de mercado +4,96%, com retorno esperado +5,82%. A avaliação agrega insumos das participações e condições de mercado; não constitui estimativa do patrimônio líquido da cota. Cobertura 38,90% exige examinar componentes sem modelo e representatividade da composição. O alvo é do código, sem ajuste discricionário nesta nota. As hipóteses qualitativas de cenário não recebem preços ou probabilidades inventados. A classificação frente ao ILF é Neutra; não mede diferença ou erro de aderência ao índice contratual. A agregação requer retorno por mina e capital bancário, com jurisdições e cobertura próprias. Crédito de coprodutos e múltiplo setorial não avaliam toda a cesta; alvo fundamental não constitui valor patrimonial nem preço de oferta da cota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A tese falha se preço dos metais cresce, mas teor, paralisações, custo, tributos e sustentação impedem caixa. Bancos não protegem automaticamente esse risco quando crédito e financiamento também se deterioram. Participações globais ou amostragem podem deslocar a exposição pretendida; valorização da cota não comprova fortalecimento da economia peruana.",
+        "titulo": "Ciclo favorável pode ser absorvido pelo capital"
+      }
+    ],
+    "conviccao": 1,
+    "custos_liquidez_etf": [
+      {
+        "evidencias": [
+          {
+            "fato": "etf.EPU.ter",
+            "nome": "Taxa de administração declarada no retrato",
+            "valor": "0,59%"
+          },
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Taxa recebida no retrato 0,59%. Separar despesa do fundo, giro, impostos, corretagem, spread e preço negociado versus NAV; não há série atual conferida no FactBook. Mercados dos ativos e jurisdições têm liquidez e horários distintos. Material em carteira pode usar preço de fornecedor diferente da marcação patrimonial; geografia publicada não mede custo de saída.",
+        "titulo": "Custo total e liquidez do mecanismo"
+      }
+    ],
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "estrutura_etf": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O índice MSCI Peru Capped combina classificação peruana, vínculos relevantes e, quando requerido pela regra, exposição econômica, podendo incluir emissores globais. Ponderação por ações disponíveis e limites por grupo não eliminam concentração setorial. Revisão do universo e rebalanceamento têm funções próprias. O fundo usa amostragem e admite instrumentos auxiliares; autorização não prova carteira ou hedge efetivos.",
+        "titulo": "Universo ampliado e amostragem"
+      }
+    ],
+    "exposicao_etf": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A carteira combina materiais e finanças, com emissores classificados também fora do Peru. A página esclarece que localização se baseia principalmente no domicílio, podendo refletir atividade: não é mapa integral das receitas ou minas. Examinar ativos, moedas, direitos e grupos antes de atribuir retorno ao país. Mineração e bancos podem compartilhar o mesmo choque de financiamento.",
+        "titulo": "Metais, crédito e jurisdições efetivas"
+      }
+    ],
+    "ficha": [
+      {
+        "fato": "etf.EPU.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 88,66"
+      },
+      {
+        "fato": "etf.EPU.preco_alvo",
+        "rotulo": "Preço-alvo do modelo",
+        "valor": "US$ 91,41"
+      },
+      {
+        "fato": "etf.EPU.retorno_esperado",
+        "rotulo": "Retorno esperado",
+        "valor": "+5,82%"
+      },
+      {
+        "fato": "etf.EPU.r_bu",
+        "rotulo": "Retorno pelas posições",
+        "valor": "+8,95%"
+      },
+      {
+        "fato": "etf.EPU.r_td",
+        "rotulo": "Retorno pelo índice",
+        "valor": "+4,96%"
+      },
+      {
+        "fato": "etf.EPU.cobertura",
+        "rotulo": "Cobertura pelas posições",
+        "valor": "38,90%"
+      },
+      {
+        "fato": "etf.EPU.ter",
+        "rotulo": "Taxa de administração declarada",
+        "valor": "0,59%"
+      },
+      {
+        "fato": "etf.EPU.visao_ilf",
+        "rotulo": "Visão frente ao ILF",
+        "valor": "Neutra"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "BlackRock",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Página oficial do produto, objetivo e composição",
+        "url": "https://www.ishares.com/us/products/239606/ishares-msci-all-peru-capped-etf"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "BlackRock",
+        "publicado_em": "2025-12-30",
+        "tipo": "Relações com investidores",
+        "titulo": "Prospecto resumido — estratégia e riscos do produto",
+        "url": "https://www.ishares.com/us/literature/summary-prospectus/sp-ishares-msci-all-peru-etf-8-31.pdf"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F3",
+        "instituicao": "S&P Dow Jones Indices",
+        "publicado_em": null,
+        "tipo": "Dados públicos",
+        "titulo": "Metodologia da referência regional comparada",
+        "url": "https://www.spglobal.com/spdji/en/documents/methodologies/methodology-sp-latin-america-40.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Operações globais deixam de representar a exposição peruana pretendida.",
+      "Preços de metais não se convertem em caixa após sustentação e tributos.",
+      "Crédito e financiamento deterioram junto ao ciclo mineral.",
+      "Regras de vínculo ou grupos mudam composição e concentração.",
+      "Amostragem, moeda ou valor justo exige rever a série de aderência."
+    ],
+    "governanca": "O prospecto resumido diferencia o índice e a gestão do fundo. Permissões de investimento não comprovam uso efetivo; negociação em bolsa não confere resgate individual direto ao valor patrimonial. Suplementos, custódia, garantias e operações com partes relacionadas continuam sujeitos à reconciliação documental.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Examinar recuperação, custos, vida útil e capital de sustentação das minas, junto às perdas e capital dos grupos financeiros. Mapear jurisdição dos ativos, receita e moeda, distinguindo-as do domicílio publicado e das regras de vínculo ao Peru.",
+        "titulo": "Economia da exposição"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "etf.EPU.cobertura",
+            "nome": "Peso coberto por modelos da casa no EPU",
+            "valor": "38,90%"
+          },
+          {
+            "fato": "etf.EPU.r_bu",
+            "nome": "Retorno bottom-up do EPU",
+            "valor": "+8,95%"
+          },
+          {
+            "fato": "etf.EPU.r_td",
+            "nome": "Retorno top-down do EPU",
+            "valor": "+4,96%"
+          }
+        ],
+        "texto": "Acompanhar composição, cobertura 38,90% e divergência entre leitura fundamental +8,95% e de mercado +4,96%. Mudança da composição exige reavaliar a representatividade dos insumos.",
+        "titulo": "Suficiência do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "etf.EPU.ter",
+            "nome": "Taxa de administração declarada no retrato",
+            "valor": "0,59%"
+          }
+        ],
+        "texto": "Obter custos de negociação, prêmio ou desconto ao patrimônio e retorno total do índice contratual; usar corte, moeda e convenção consistentes. A taxa recebida é 0,59%.",
+        "titulo": "Execução da exposição"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Comparar NAV líquido, índice contratual de retorno total líquido e preço de bolsa com corte e moedas iguais. Reconciliar preços do fornecedor e valor justo, amostragem, instrumentos auxiliares e dividendos; não atribuir diferença pontual a erro sem essa ponte.",
+        "titulo": "Réplica, corte e direitos"
+      }
+    ],
+    "issuer_id": "ETF_EPU",
+    "lacunas_de_dados": [
+      "Prospecto resumido recebido; documento estatutário completo, suplementos posteriores e metodologia integral vigente ainda exigem reconciliação.",
+      "Replicação diária efetiva, custódia, ativos emprestados e garantias não foram integralmente reconciliados.",
+      "As medidas públicas de spread e prêmio ou desconto não foram incorporadas ao FactBook; falta série comparável conferida.",
+      "Série de aderência ao índice contratual não foi calculada e conferida.",
+      "Percepção de mercado, posicionamento e interesse vendido não têm evidência suficiente.",
+      "Cenários qualitativos não têm preços ou probabilidades próprios calculados.",
+      "Posse histórica dos documentos do produto não está comprovada."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "A página do administrador apresenta exposição ao Peru e a empresas com atividade global. A carteira inclui emissores de mineração e um grupo financeiro, e sua distribuição geográfica alcança outras jurisdições. O nome do fundo não define por si só a origem das receitas, os ativos produtivos ou a moeda econômica dos negócios. A tese deve examinar as participações e a regra do índice.",
+    "nome": "iShares MSCI Peru and Global Exposure ETF",
+    "o_que_mudou": "Página e prospecto resumido foram recebidos novamente; a data explícita do documento foi registrada. A pesquisa aprofunda vínculos peruanos, domicílio versus operação, capital de mineração e crédito, amostragem e alternativa regional; nenhuma medida externa foi incorporada.",
+    "pais": "Peru",
+    "pares": [],
+    "percepcao_variante": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A alternativa regional tem outra composição de metais, bancos e países. Este produto exige interesse na combinação efetiva de vínculos peruanos e negócios globais, não apenas no crescimento doméstico. Para uma hipótese específica sobre metal ou crédito, a cesta pode acrescentar riscos não desejados. Não se afirma que qualquer alternativa seja superior sem comparação recebida.",
+        "titulo": "Exposição ligada ao Peru ou cesta regional"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A cadeia é produção vendável, custo e sustentação das mineradoras, junto a crédito e capital → caixa por jurisdição → cesta e moeda → retorno líquido. A condição decisiva é a origem econômica dos recursos. A regra admite vínculos além da classificação peruana e exposição global; o nome do produto não prova aposta doméstica equilibrada nem proteção dos metais pelo setor financeiro.",
+        "titulo": "Vínculo peruano e caixa global não são equivalentes"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O ponto decisivo é identificar quais negócios e jurisdições determinam o caixa da cesta. A valorização deve ser sustentada por produção, disciplina de investimentos e qualidade do crédito, em vez de uma leitura genérica de crescimento do Peru.",
+        "titulo": "Condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "etf.EPU.cobertura",
+            "nome": "Peso coberto por modelos da casa no EPU",
+            "valor": "38,90%"
+          }
+        ],
+        "texto": "A cobertura fundamental recebida é 38,90%. Conclusões sobre a cesta dependem também das participações fora dessa cobertura; uma composição incompleta reduz o suporte à avaliação.",
+        "titulo": "Cobertura do modelo"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:31:33.745200+00:00",
+    "resumo": "A visão qualitativa permanece neutra, com convicção limitada pelas lacunas de diligência. O ponto decisivo é identificar quais negócios e jurisdições determinam o caixa da cesta. A valorização deve ser sustentada por produção, disciplina de investimentos e qualidade do crédito, em vez de uma leitura genérica de crescimento do Peru. O modelo aberto apresenta retorno esperado de +5,82% e leitura frente ao ILF Neutra. Esses resultados do código não substituem a pesquisa do produto nem comprovam uma percepção do mercado.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Queda de preços de metais, restrições operacionais ou projetos de alto investimento podem comprimir o caixa de mineradoras. Exposição global e jurisdições distintas exigem análise por ativo produtivo, sem atribuir todos os riscos ao Peru."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "etf.EPU.ter",
+            "nome": "Taxa de administração declarada no retrato",
+            "valor": "0,59%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "Custos e condições de negociação podem reduzir o resultado efetivo. A taxa declarada é 0,59%; ela não determina o spread nem todos os custos de transação."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "etf.EPU.cobertura",
+            "nome": "Peso coberto por modelos da casa no EPU",
+            "valor": "38,90%"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "A cobertura fundamental é 38,90%. Participações sem modelo e composição desatualizada podem enfraquecer a avaliação da cesta."
+      }
+    ],
+    "setor": "Fundo de índice",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Peru: mineração global e crédito na mesma cesta",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": null,
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Confrontar produção, custos e caixa após investimentos das mineradoras com a qualidade do crédito e os balanços financeiros; revisar jurisdições dos ativos e concentração econômica das participações.",
+        "vetor": "Geração de caixa das participações"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "etf.EPU.r_bu",
+            "nome": "Retorno bottom-up do EPU",
+            "valor": "+8,95%"
+          },
+          {
+            "fato": "etf.EPU.r_td",
+            "nome": "Retorno top-down do EPU",
+            "valor": "+4,96%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A leitura fundamental do código é +8,95%; a leitura de mercado é +4,96%. Os componentes dependem de premissas diferentes e não provam o comportamento do índice contratual.",
+        "vetor": "Qualidade da avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

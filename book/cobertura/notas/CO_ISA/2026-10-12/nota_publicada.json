@@ -1,0 +1,442 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "53f156f8b06b66837068f5559d7c2d7f5546b728be01b0dd50439b54ac7ea6c2",
+    "factbook": "34736b5450456b908e9045d52da0c9a8b3121d07d8d4db1b3c3ea7edd38b0943",
+    "nota_json": "24d2c00acab6c4cf03c2009aec1c922cbce4f175abf7713055527fc5f7d89699"
+  },
+  "is_synthetic": false,
+  "issuer_id": "CO_ISA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-02",
+  "published_at": "2026-10-12T15:27:41.332120+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A apresentação registra emissão de ações na subsidiária brasileira concluída depois do trimestre e preservação do controle, com destinação anunciada de recursos. Captação não comprova execução de cada destino. A avaliação deve conciliar diluição, participação econômica e projetos consolidados ou por equivalência.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em COP 30.542,70, com retorno esperado +11,02%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Concessões entregam disponibilidade e recebimento; obras entram em operação com retorno compatível e financiamento adequado. O cenário otimista calculado pelo código é COP 36.615,80.",
+      "pessimista": "Execução e regulação atrasam recebimento enquanto investimento e dívida indexada consomem recursos atribuíveis. O cenário pessimista calculado pelo código é COP 25.160,60."
+    },
+    "comentario_valuation": "Preço de referência COP 28.700,00 e alvo do modelo aberto COP 30.542,70, com potencial +6,42%. Retorno total esperado +11,02% e custo do capital próprio 11,05%. A dispersão entre métodos é 31,66%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é COP 26.750,00; a diferença +14,18% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota. Avaliar fluxo por concessão até o fim dos direitos, com manutenção, obras e financiamento coerentes. Separar RBSE, construção e receita de serviço sem duplicar ativo regulatório; associadas, minoritários e emissão posterior exigem participação atual conciliada.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A tese falha se ativos e receitas de construção crescem antes da cobrança, enquanto atraso e dívida indexada consomem o retorno. RBSE pode melhorar métricas gerenciais sem sustentar o fluxo recorrente após seu próprio calendário. Emissão na subsidiária preserva controle, mas pode mudar participação econômica; expansão não comprova valor por ação.",
+        "titulo": "Previsibilidade contábil sem caixa suficiente"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.CO_ISA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "COP 28.700,00"
+      },
+      {
+        "fato": "val.CO_ISA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "COP 30.542,70"
+      },
+      {
+        "fato": "val.CO_ISA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+6,42%"
+      },
+      {
+        "fato": "val.CO_ISA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.CO_ISA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.CO_ISA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "COP 36.615,80"
+      },
+      {
+        "fato": "val.CO_ISA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "26,35%"
+      },
+      {
+        "fato": "val.CO_ISA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "COP 25.160,60"
+      },
+      {
+        "fato": "val.CO_ISA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "40,35%"
+      },
+      {
+        "fato": "val.CO_ISA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,05%"
+      },
+      {
+        "fato": "val.CO_ISA.wacc",
+        "rotulo": "WACC",
+        "valor": "8,56%"
+      },
+      {
+        "fato": "val.CO_ISA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "6,00%"
+      },
+      {
+        "fato": "val.CO_ISA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+11,02%"
+      },
+      {
+        "fato": "val.CO_ISA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+5,85%"
+      },
+      {
+        "fato": "val.CO_ISA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "12,6x"
+      },
+      {
+        "fato": "val.CO_ISA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,9x"
+      },
+      {
+        "fato": "val.CO_ISA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "COP 26.750,00"
+      },
+      {
+        "fato": "val.CO_ISA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+14,18%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "Interconexión Eléctrica",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e negócios de infraestrutura",
+        "url": "https://isa.co/inversionistas/perfil-de-la-compania/"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Interconexión Eléctrica",
+        "publicado_em": "2026-08-03",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado de concessões, investimento e liquidez",
+        "url": "https://isa.co/wp-content/uploads/2026/08/2t-26-informe-resultados-financieros-isa.pdf"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F3",
+        "instituicao": "ISA",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Apresentação de projetos e evento de capital posterior",
+        "url": "https://isa.co/wp-content/uploads/2026/08/isa-webcast-2t-2026-espanol.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Obras atrasam a remuneração ou superam orçamento sem retorno equivalente.",
+      "Receita regulatória e construção não se convertem em caixa após manutenção.",
+      "Dívida indexada ou calendário RBSE altera a cobertura dos compromissos.",
+      "Emissão e destinação de recursos mudam participação atribuível sem conciliação."
+    ],
+    "governanca": "Revisar controle da Ecopetrol, decisões de investimento, garantias e relações com subsidiárias listadas. Distinguir preservação do controle de preservação da participação econômica e do acesso ao caixa.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Acompanhar licenças, orçamento, energização ou operação viária, disponibilidade, penalidades e cobrança. Separar contratos adjudicados de entrada comercial comprovada e confrontar construção, indexação e conversão cambial com caixa por país.",
+        "titulo": "Concessão da obra ao serviço remunerado"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Reconciliar calendário e caixa RBSE com definições de dívida e FFO, distinguindo recorrência e liquidez financeira. Manter emissão brasileira posterior ao trimestre separada, conferir diluição e uso efetivo dos recursos e distinguir controle de participação econômica.",
+        "titulo": "RBSE, dívida e emissão posterior"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CO_ISA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+11,02%"
+          },
+          {
+            "fato": "val.CO_ISA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,05%"
+          },
+          {
+            "fato": "val.CO_ISA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "31,66%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +11,02%, custo do capital 11,05% e dispersão entre métodos 31,66% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "CO_ISA",
+    "lacunas_de_dados": [
+      "Notas, caixa integral e definições de dívida e RBSE não foram integralmente conciliados.",
+      "Recebimento contratual, construção e ativos regulatórios exigem séries homogêneas.",
+      "Capital posterior, diluição e cumprimento da destinação anunciada permanecem a comprovar.",
+      "Licenças, garantias e retorno dos projetos e associadas requerem diligência específica.",
+      "Guidance, tom da gestão e evento futuro datado seguem não classificados.",
+      "Percepção do mercado, posicionamento e interesse vendido não têm comprovação suficiente.",
+      "Disponibilidade histórica dos documentos e reconciliação integral ao modelo recebido não foram comprovadas."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo de transmissão elétrica, concessões viárias e infraestrutura digital na América Latina, controlado por Ecopetrol. Contratos e participações determinam remuneração e caixa atribuível; receitas de construção exigem tratamento distinto das receitas de serviço.",
+    "nome": "Interconexión Eléctrica (ISA)",
+    "o_que_mudou": null,
+    "pais": "Colômbia",
+    "pares": [
+      {
+        "issuer_id": "AR_PAMPA",
+        "nome": "Pampa Energía"
+      },
+      {
+        "issuer_id": "BR_ALUPAR",
+        "nome": "Alupar"
+      },
+      {
+        "issuer_id": "BR_AUREN",
+        "nome": "Auren Energia"
+      },
+      {
+        "issuer_id": "BR_AXIA",
+        "nome": "Axia Energia (ex-Eletrobras)"
+      },
+      {
+        "issuer_id": "BR_CEMIG",
+        "nome": "Cemig"
+      },
+      {
+        "issuer_id": "BR_COMPASS",
+        "nome": "Compass Gás e Energia"
+      },
+      {
+        "issuer_id": "BR_COPASA",
+        "nome": "Copasa"
+      },
+      {
+        "issuer_id": "BR_COPEL",
+        "nome": "Copel"
+      }
+    ],
+    "percepcao_variante": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A alternativa à leitura por ativos contratados é testar caixa depois da obra e a participação que o acionista conserva. As definições de dívida e FFO incluem caixa RBSE de forma própria e devem ser harmonizadas. Não se infere que essa diferença seja desconhecida nem se toma o comparativo de pares do emissor como grupo econômico homogêneo.",
+        "titulo": "Prazo de recebimento e atribuição como teste"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A cadeia é adjudicação → obra e licenças → operação com disponibilidade → remuneração contratual e cobrança → caixa após manutenção e financiamento. A condição decisiva é retorno pelo capital e prazo efetivamente assumidos. Receita de construção, atualização regulatória e indexação não são recebimento livre; capital das subsidiárias e associadas precisa chegar à base atribuível.",
+        "titulo": "Entrada comercial e recebimento antes da expansão seguinte"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CO_ISA.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "COP 28.700,00"
+          },
+          {
+            "fato": "val.CO_ISA.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "COP 30.542,70"
+          },
+          {
+            "fato": "val.CO_ISA.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+6,42%"
+          },
+          {
+            "fato": "val.CO_ISA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,05%"
+          },
+          {
+            "fato": "val.CO_ISA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+11,02%"
+          }
+        ],
+        "texto": "Preço de referência COP 28.700,00 e alvo COP 30.542,70, com potencial +6,42%. A hipótese de investimento deve ser confrontada com o custo do capital 11,05% e retorno esperado +11,02%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Engenharia e experiência regulatória podem apoiar entrega e disponibilidade. A prova é entrada comercial com orçamento controlado, remuneração e penalidades compatíveis com retorno. Comparar concessões pelo prazo, regra de indexação e capital, não por extensão ou volume adjudicado. Vencer disputa com preço insuficiente pode ampliar ativos e reduzir valor.",
+        "titulo": "Execução em concessões sob comparação homogênea"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:27:41.332120+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O relatório separa receitas de construção, concessão, conversão cambial e efeito RBSE na comparação. Indicadores de dívida e FFO incorporam caixa RBSE em definições próprias. Liquidez inclui outros ativos financeiros; resultado de construção e atualização de ativos não equivale a caixa livre recebido.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que execução e disponibilidade sustentem recebimento contratual depois de manutenção, expansão e financiamento. Novas concessões criam valor quando remuneram o capital e respeitam prazo e risco assumido. A previsibilidade contratual deve ser demonstrada no caixa atribuível, sem promover indexação contábil a recebimento imediato. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +11,02%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Atrasos, penalidades, revisão regulatória e sobrecustos podem impedir retorno do capital. Dívida indexada e câmbio afetam o resultado. Controle estatal e relações entre empresas exigem análise de decisões, financiamento e proteção do minoritário."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CO_ISA.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+14,18%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +14,18%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Utilidades públicas",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "ISA — remuneração das concessões e caixa após expansão",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A pesquisa preserva resultado sem construção e bases de RBSE, além da passagem para caixa e financiamento. Eventos de capital posteriores ao trimestre permanecem separados das demonstrações daquele período. Não se recalculou alvo ou participação na mente.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar disponibilidade, remuneração permitida, cobrança, penalidades e manutenção por concessão. Revisar investimento até a entrada em operação, capital, indexação da dívida e caixa RBSE. Separar contratos adjudicados de ativos remunerados e direitos das associadas.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.CO_ISA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,05%"
+          },
+          {
+            "fato": "val.CO_ISA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "31,66%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,05% e a dispersão entre métodos 31,66%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

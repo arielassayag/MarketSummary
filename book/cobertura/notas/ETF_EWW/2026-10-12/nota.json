@@ -1,0 +1,226 @@
+{
+  "mind": "codex",
+  "issuer_id": "ETF_EWW",
+  "data": "2026-10-12",
+  "tipo": "iniciacao",
+  "titulo": "México: testar o crescimento além da narrativa industrial",
+  "resumo": "A visão qualitativa permanece neutra, com convicção limitada pelas lacunas de diligência. O ponto decisivo é a conexão entre demanda, investimentos e caixa dos grupos presentes na cesta. Crédito e consumo respondem a canais distintos dos exportadores. A reavaliação só se sustenta se os resultados confirmarem o crescimento atribuído ao país. O modelo aberto apresenta retorno esperado de {{fact:etf.EWW.retorno_esperado}} e leitura frente ao ILF {{fact:etf.EWW.visao_ilf}}. Esses resultados do código não substituem a pesquisa do produto nem comprovam uma percepção do mercado.",
+  "negocio": "O fundo oferece uma cesta de ações mexicanas da família de índices MSCI. O retrato recebido inclui grupos de mineração, finanças, consumo, telecomunicações e materiais. A exposição não corresponde exclusivamente a fábricas exportadoras ou relocalização industrial. Receitas domésticas, atividades internacionais e financiamento devem ser avaliados por componente.",
+  "pilares_tese": [
+    {
+      "titulo": "Narrativa industrial precisa alcançar a carteira",
+      "texto": "A cadeia é demanda doméstica e internacional → margem depois de concorrência e custo → caixa após investimento e crédito → retorno líquido da cesta. A condição decisiva é benefício nos negócios efetivamente presentes, não no país abstrato. Materiais, consumo, bancos e comunicação têm canais diferentes; relocalização industrial não demonstra geração uniforme nem escolha ativa pela gestora.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Condição decisiva",
+      "texto": "O ponto decisivo é a conexão entre demanda, investimentos e caixa dos grupos presentes na cesta. Crédito e consumo respondem a canais distintos dos exportadores. A reavaliação só se sustenta se os resultados confirmarem o crescimento atribuído ao país.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Cobertura do modelo",
+      "texto": "A cobertura fundamental recebida é {{fact:etf.EWW.cobertura}}. Conclusões sobre a cesta dependem também das participações fora dessa cobertura; uma composição incompleta reduz o suporte à avaliação.",
+      "evidencias": [
+        "etf.EWW.cobertura"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Geração de caixa das participações",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar caixa após investimentos, crescimento rentável e qualidade do crédito; documentar qual parcela da atividade de cada negócio relevante está ligada à demanda doméstica ou ao comércio internacional.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Qualidade da avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "A leitura fundamental do código é {{fact:etf.EWW.r_bu}}; a leitura de mercado é {{fact:etf.EWW.r_td}}. Os componentes dependem de premissas diferentes e não provam o comportamento do índice contratual.",
+      "evidencias": [
+        "etf.EWW.r_bu",
+        "etf.EWW.r_td"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Mudanças comerciais, de financiamento ou de câmbio podem alterar margens e investimento dos componentes. Exposição setorial diversa exige testar os canais de transmissão em vez de presumir benefício uniforme da integração econômica.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "Custos e condições de negociação podem reduzir o resultado efetivo. A taxa declarada é {{fact:etf.EWW.ter}}; ela não determina o spread nem todos os custos de transação.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "etf.EWW.ter"
+      ]
+    },
+    {
+      "texto": "A cobertura fundamental é {{fact:etf.EWW.cobertura}}. Participações sem modelo e composição desatualizada podem enfraquecer a avaliação da cesta.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "etf.EWW.cobertura"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Expansão rentável e investimentos disciplinados elevam o caixa da cesta. Benefícios comerciais são demonstrados nas empresas efetivamente detidas e coexistem com crédito saudável. Hipótese qualitativa; não é cenário numérico calculado.",
+    "base": "Sem antecipar evento não confirmado, o caso central mantém a exposição da cesta e exige confirmação de caixa, custos e composição. O retorno esperado do código é {{fact:etf.EWW.retorno_esperado}}. Não há probabilidade de cenário qualitativo estimada.",
+    "pessimista": "Mudanças comerciais ou custos maiores reduzem retorno do capital; investimentos não convertem crescimento em caixa. Crédito e consumo enfraquecem, retirando a sustentação doméstica da cesta. Não há perda numérica de cenário validada neste estudo."
+  },
+  "comentario_valuation": "Preço de referência {{fact:etf.EWW.preco}} e alvo do modelo aberto {{fact:etf.EWW.preco_alvo}}. A leitura fundamental é {{fact:etf.EWW.r_bu}} e a de mercado {{fact:etf.EWW.r_td}}, com retorno esperado {{fact:etf.EWW.retorno_esperado}}. A avaliação agrega insumos das participações e condições de mercado; não constitui estimativa do patrimônio líquido da cota. Cobertura {{fact:etf.EWW.cobertura}} exige examinar componentes sem modelo e representatividade da composição. O alvo é do código, sem ajuste discricionário nesta nota. As hipóteses qualitativas de cenário não recebem preços ou probabilidades inventados. A classificação frente ao ILF é {{fact:etf.EWW.visao_ilf}}; não mede diferença ou erro de aderência ao índice contratual. A cesta pede avaliações coerentes por materiais, consumo e bancos, não prêmio uniforme por narrativa industrial. Cobertura e reinvestimento determinam a representatividade da agregação; NAV, preço de negociação e alvo fundamental continuam distintos.",
+  "ultimo_resultado": null,
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "O prospecto resumido diferencia o índice e a gestão do fundo. Permissões de investimento não comprovam uso efetivo; negociação em bolsa não confere resgate individual direto ao valor patrimonial. Suplementos, custódia, garantias e operações com partes relacionadas continuam sujeitos à reconciliação documental.",
+  "posicao_competitiva": null,
+  "qualidade_resultados": null,
+  "alocacao_capital": null,
+  "percepcao_variante": {
+    "titulo": "México selecionado frente à alternativa regional",
+    "texto": "A escolha local precisa corresponder aos grupos e setores da cesta, em vez de uma narrativa de exportação industrial. A referência regional distribui outros países e riscos, com possível sobreposição de emissores. Não se presume exposição idêntica, diversificação adicional ou retorno superior; custos, moedas e instrumentos exigem comparação própria.",
+    "evidencias": [
+      "F1",
+      "F2",
+      "F3"
+    ]
+  },
+  "contratese": {
+    "titulo": "Investimento pode não remunerar a demanda adicional",
+    "texto": "A tese falha se crescimento e relocalização beneficiam negócios fora da cesta, enquanto componentes detidos enfrentam concorrência, custos ou crédito deteriorado. Investimento pode absorver margem e câmbio reduzir retorno na cota. Boa aderência ao índice não demonstra sucesso dessa hipótese fundamental, e amostragem não é seleção ativa de vencedores.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Economia da exposição",
+      "texto": "Mapear demanda doméstica, comércio, moeda e investimento dos grupos relevantes; confrontar margem após custos e concorrência, caixa e perdas de crédito. Conferir concentração por grupo e classe sem assumir vínculo industrial uniforme.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Suficiência do modelo",
+      "texto": "Acompanhar composição, cobertura {{fact:etf.EWW.cobertura}} e divergência entre leitura fundamental {{fact:etf.EWW.r_bu}} e de mercado {{fact:etf.EWW.r_td}}. Mudança da composição exige reavaliar a representatividade dos insumos.",
+      "evidencias": [
+        "etf.EWW.cobertura",
+        "etf.EWW.r_bu",
+        "etf.EWW.r_td"
+      ]
+    },
+    {
+      "titulo": "Execução da exposição",
+      "texto": "Obter custos de negociação, prêmio ou desconto ao patrimônio e retorno total do índice contratual; usar corte, moeda e convenção consistentes. A taxa recebida é {{fact:etf.EWW.ter}}.",
+      "evidencias": [
+        "etf.EWW.ter"
+      ]
+    },
+    {
+      "titulo": "Réplica, corte e direitos",
+      "texto": "Harmonizar NAV e índice contratual líquido com preço negociado, moedas, dividendos e corte. Separar amostragem, empréstimo autorizado e instrumentos auxiliares de uso efetivo; preços de fornecedor e marcação por valor justo têm bases distintas na página.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "estrutura_etf": {
+    "titulo": "Objetivo e regras do produto",
+    "texto": "O índice MSCI mexicano abrange empresas de grande, média e pequena capitalização e usa limites por grupo econômico. Sua revisão é trimestral. O prospecto prevê amostragem representativa, instrumentos auxiliares e possibilidade de empréstimo de ativos. A gestora acompanha o índice antes de taxas e despesas, sem objetivo de seleção ativa ou de posições defensivas temporárias. Autorização contratual não comprova uso efetivo de cada instrumento.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "exposicao_etf": {
+    "titulo": "Comércio e consumo sob riscos distintos",
+    "texto": "A composição inclui materiais, consumo, bancos, indústria e comunicação. Conferir receita internacional, custo importado, moeda e direitos de cada grupo; indústria mexicana e produtores detidos não são sinônimos. Classes com controle comum e cadeias de consumo podem compartilhar riscos. O preço em dólar não elimina os efeitos do peso nem transforma crescimento de receita em caixa.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "custos_liquidez_etf": {
+    "titulo": "Custo total e liquidez do mecanismo",
+    "texto": "Taxa recebida no retrato {{fact:etf.EWW.ter}}. Separar despesa do fundo, giro, impostos, corretagem, spread e preço negociado versus NAV; não há série atual conferida no FactBook. Mudanças de composição e instrumentos auxiliares podem gerar negociação adicional. Permissão de empréstimo não comprova receita atual nem elimina risco de contraparte.",
+    "evidencias": [
+      "etf.EWW.ter",
+      "F1",
+      "F2"
+    ]
+  },
+  "aderencia_indice_etf": {
+    "titulo": "Índice contratual e comparação regional",
+    "texto": "A comparação frente ao ILF é {{fact:etf.EWW.visao_ilf}}. Ela se refere à referência regional do modelo, e não à qualidade de replicação. Aderência ao índice exige retorno total da cota e do índice contratual em bases equivalentes; o estudo não dispõe dessa série conferida.",
+    "evidencias": [
+      "etf.EWW.visao_ilf"
+    ]
+  },
+  "o_que_mudou": "Página oficial e prospecto resumido foram consultados novamente. A nota aprofunda o vínculo entre narrativa industrial e negócios da cesta, grupos, moeda, custos e amostragem, preservando ausência de série de aderência e de prova sobre percepção de mercado.",
+  "gatilhos_revisao": [
+    "Benefício industrial ocorre fora dos negócios relevantes da cesta.",
+    "Crescimento consome capital sem caixa e retorno econômico suficientes.",
+    "Crédito, moeda e custo deterioram simultaneamente o resultado.",
+    "Grupos ou rebalanceamento mudam a exposição desejada.",
+    "Diferenças de marcação e instrumentos exigem nova comparação contratual."
+  ],
+  "lacunas_de_dados": [
+    "Prospecto resumido recebido; documento estatutário completo, suplementos posteriores e metodologia integral vigente ainda exigem reconciliação.",
+    "Replicação diária efetiva, custódia, ativos emprestados e garantias não foram integralmente reconciliados.",
+    "As medidas públicas de spread e prêmio ou desconto não foram incorporadas ao FactBook; falta série comparável conferida.",
+    "Série de aderência ao índice contratual não foi calculada e conferida.",
+    "Percepção de mercado, posicionamento e interesse vendido não têm evidência suficiente.",
+    "Cenários qualitativos não têm preços ou probabilidades próprios calculados.",
+    "Posse histórica dos documentos do produto não está comprovada."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "BlackRock",
+      "titulo": "Página oficial do produto, objetivo e composição",
+      "url": "https://www.ishares.com/us/products/239670/ishares-msci-mexico-capped-etf",
+      "publicado_em": null,
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "BlackRock",
+      "titulo": "Prospecto resumido — estratégia e riscos do produto",
+      "url": "https://www.ishares.com/us/literature/summary-prospectus/sp-ishares-msci-mexico-capped-etf-8-31.pdf",
+      "publicado_em": null,
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F3",
+      "tipo": "dados_publicos",
+      "instituicao": "S&P Dow Jones Indices",
+      "titulo": "Metodologia da referência regional comparada",
+      "url": "https://www.spglobal.com/spdji/en/documents/methodologies/methodology-sp-latin-america-40.pdf",
+      "publicado_em": null,
+      "consultado_em": "2026-10-12"
+    }
+  ],
+  "modelo_ia": null
+}

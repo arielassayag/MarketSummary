@@ -1,0 +1,96 @@
+{
+  "avisos_tecnicos": [],
+  "dados_ate": "2026-10-09",
+  "data": "2026-10-12",
+  "fontes_sugeridas": [
+    {
+      "instituicao": "Superintendencia Financiera de Colombia",
+      "tipo": "regulatorio",
+      "url": "https://www.superfinanciera.gov.co/"
+    },
+    {
+      "instituicao": "BVC Colombia",
+      "tipo": "bolsa",
+      "url": "https://www.bvc.com.co/"
+    },
+    {
+      "instituicao": "Banco de la República",
+      "tipo": "banco_central",
+      "url": "https://www.banrep.gov.co/"
+    },
+    {
+      "instituicao": "DANE",
+      "tipo": "estatistica_oficial",
+      "url": "https://www.dane.gov.co/"
+    },
+    {
+      "instituicao": "Damodaran Online (NYU Stern) — prêmios de risco, betas e múltiplos setoriais",
+      "tipo": "dados_publicos",
+      "url": "https://pages.stern.nyu.edu/~adamodar/"
+    },
+    {
+      "instituicao": "FRED (Federal Reserve Bank of St. Louis) — juros e indicadores dos EUA",
+      "tipo": "dados_publicos",
+      "url": "https://fred.stlouisfed.org/"
+    }
+  ],
+  "is_synthetic": false,
+  "issuer_id": "CO_ISA",
+  "lacunas": [],
+  "nome": "Interconexión Eléctrica (ISA)",
+  "nomes": {
+    "AR_PAMPA": "Pampa Energía",
+    "BR_ALUPAR": "Alupar",
+    "BR_AUREN": "Auren Energia",
+    "BR_AXIA": "Axia Energia (ex-Eletrobras)",
+    "BR_CEMIG": "Cemig",
+    "BR_COMPASS": "Compass Gás e Energia",
+    "BR_COPASA": "Copasa",
+    "BR_COPEL": "Copel",
+    "CO_ISA": "Interconexión Eléctrica (ISA)"
+  },
+  "nota_anterior": null,
+  "pais": "CO",
+  "pais_pt": "Colômbia",
+  "pares": [
+    "AR_PAMPA",
+    "BR_ALUPAR",
+    "BR_AUREN",
+    "BR_AXIA",
+    "BR_CEMIG",
+    "BR_COMPASS",
+    "BR_COPASA",
+    "BR_COPEL"
+  ],
+  "proximo_resultado": "2026-11-02",
+  "schema": "cdp.nota.contexto/v1",
+  "setor": "Utilities",
+  "setor_pt": "Utilidades públicas",
+  "snapshot": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "tem_linha_eua": false,
+  "termos": [
+    "ALUP11",
+    "ALUP11.SA",
+    "AURE3",
+    "AURE3.SA",
+    "AXIA3",
+    "AXIA3.SA",
+    "CMIG4",
+    "CMIG4.SA",
+    "CPLE3",
+    "CPLE3.SA",
+    "CSMG3",
+    "CSMG3.SA",
+    "PASS3",
+    "PASS3.SA"
+  ],
+  "tickers": [
+    "ISA.CL",
+    "ISA"
+  ],
+  "tipo_esperado": "iniciacao"
+}

@@ -1,0 +1,400 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "indice": "MSCI Chile IMI 25/50",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09",
+    "ticker": "ECH",
+    "tipo_ativo": "etf",
+    "url_produto": "https://www.ishares.com/us/products/239618/ishares-msci-chile-capped-etf"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "1e3724f744f75a23adbc3205f8ee1258387d3a33fdc7d893235c79d415f739e9",
+    "factbook": "282c89f1309e4b5c0fd54f1cd7187935d97a910741bf88d27eb16e78e8462118",
+    "nota_json": "3054a062d60529e56d13c742d554ea1a5b5c53608a835fc89211af7da607c941"
+  },
+  "is_synthetic": false,
+  "issuer_id": "ETF_ECH",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T15:31:09.113818+00:00",
+  "rendered": {
+    "aderencia_indice_etf": [
+      {
+        "evidencias": [
+          {
+            "fato": "etf.ECH.visao_ilf",
+            "nome": "Visão do ECH relativa ao ILF",
+            "valor": "Neutra"
+          }
+        ],
+        "texto": "A comparação frente ao ILF é Neutra. Ela se refere à referência regional do modelo, e não à qualidade de replicação. Aderência ao índice exige retorno total da cota e do índice contratual em bases equivalentes; o estudo não dispõe dessa série conferida.",
+        "titulo": "Índice contratual e comparação regional"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Sem antecipar evento não confirmado, o caso central mantém a exposição da cesta e exige confirmação de caixa, custos e composição. O retorno esperado do código é +7,34%. Não há probabilidade de cenário qualitativo estimada.",
+      "otimista": "Ganho operacional dos negócios domésticos coincide com disciplina de custos e investimentos dos exportadores. A melhora de caixa confirma o retorno do capital projetado, sem depender apenas de juros. Hipótese qualitativa; não é cenário numérico calculado.",
+      "pessimista": "Fraqueza de materiais ou maior perda de crédito absorve os benefícios do ciclo doméstico. Câmbio e investimentos pressionam o caixa e tornam insuficiente uma reavaliação apenas por taxa de desconto. Não há perda numérica de cenário validada neste estudo."
+    },
+    "comentario_valuation": "Preço de referência US$ 37,68 e alvo do modelo aberto US$ 39,36. A leitura fundamental é +1,05% e a de mercado +9,88%, com retorno esperado +7,34%. A avaliação agrega insumos das participações e condições de mercado; não constitui estimativa do patrimônio líquido da cota. Cobertura 51,70% exige examinar componentes sem modelo e representatividade da composição. O alvo é do código, sem ajuste discricionário nesta nota. As hipóteses qualitativas de cenário não recebem preços ou probabilidades inventados. A classificação frente ao ILF é Neutra; não mede diferença ou erro de aderência ao índice contratual. O alvo agregado requer cobertura representativa dos diferentes negócios e capital de reinvestimento. Nome geográfico e múltiplo médio não avaliam uniformemente bancos, exportadores e redes; comparação regional não substitui retorno total do índice contratado.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A tese falha se crédito ou consumo melhora, mas exportadores absorvem capital, ou se redução de juros sustenta preços sem caixa recorrente. Limites por grupo não eliminam fatores comuns. Divergência de marcação e amostragem exige exame próprio; diferença observada entre cota e índice não prova, sozinha, falha de gestão nem melhora fundamental.",
+        "titulo": "Reavaliação pode anteceder caixa sem se confirmar"
+      }
+    ],
+    "conviccao": 1,
+    "custos_liquidez_etf": [
+      {
+        "evidencias": [
+          {
+            "fato": "etf.ECH.ter",
+            "nome": "Taxa de administração declarada no retrato",
+            "valor": "0,59%"
+          },
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Taxa recebida no retrato 0,59%. Separar despesa do fundo, giro, impostos, corretagem, spread e preço negociado versus NAV; não há série atual conferida no FactBook. Amostragem e ativos menores podem afetar custo de réplica. Separar mercado aberto, marcação por valor justo e preço de fornecedor antes de interpretar prêmio/desconto.",
+        "titulo": "Custo total e liquidez do mecanismo"
+      }
+    ],
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "estrutura_etf": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O índice MSCI chileno abrange empresas de grande, média e pequena capitalização, com ponderação pelo valor de mercado disponível à negociação e limites por grupo econômico. A revisão é trimestral. O prospecto prevê amostragem representativa, que pode diferir da composição integral do índice. A exposição a empresas menores adiciona condições próprias de negociação. A estratégia passiva não implica retirada defensiva da carteira em mercados adversos.",
+        "titulo": "Objetivo e regras do produto"
+      }
+    ],
+    "exposicao_etf": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Bancos, materiais, varejo, transporte e redes respondem a crédito, consumo, preços externos e investimento próprios. Agregar grupos e classes e conferir receitas, ativos e moedas antes de avaliar diversificação. O universo inclui empresas menores, mas não todos os projetos minerais chilenos; país do emissor e cotação em dólar não definem a origem de todo caixa.",
+        "titulo": "Chile classificado não equivale a receita em pesos"
+      }
+    ],
+    "ficha": [
+      {
+        "fato": "etf.ECH.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 37,68"
+      },
+      {
+        "fato": "etf.ECH.preco_alvo",
+        "rotulo": "Preço-alvo do modelo",
+        "valor": "US$ 39,36"
+      },
+      {
+        "fato": "etf.ECH.retorno_esperado",
+        "rotulo": "Retorno esperado",
+        "valor": "+7,34%"
+      },
+      {
+        "fato": "etf.ECH.r_bu",
+        "rotulo": "Retorno pelas posições",
+        "valor": "+1,05%"
+      },
+      {
+        "fato": "etf.ECH.r_td",
+        "rotulo": "Retorno pelo índice",
+        "valor": "+9,88%"
+      },
+      {
+        "fato": "etf.ECH.cobertura",
+        "rotulo": "Cobertura pelas posições",
+        "valor": "51,70%"
+      },
+      {
+        "fato": "etf.ECH.ter",
+        "rotulo": "Taxa de administração declarada",
+        "valor": "0,59%"
+      },
+      {
+        "fato": "etf.ECH.visao_ilf",
+        "rotulo": "Visão frente ao ILF",
+        "valor": "Neutra"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "BlackRock",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Página oficial do produto, objetivo e composição",
+        "url": "https://www.ishares.com/us/products/239618/ishares-msci-chile-capped-etf"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "BlackRock",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Prospecto resumido — estratégia e riscos do produto",
+        "url": "https://www.ishares.com/us/literature/summary-prospectus/sp-ishares-msci-chile-capped-etf-8-31.pdf"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F3",
+        "instituicao": "S&P Dow Jones Indices",
+        "publicado_em": null,
+        "tipo": "Dados públicos",
+        "titulo": "Metodologia da referência regional comparada",
+        "url": "https://www.spglobal.com/spdji/en/documents/methodologies/methodology-sp-latin-america-40.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Caixa dos exportadores e retorno doméstico divergem da hipótese conjunta.",
+      "A cesta passa a representar fatores diferentes da exposição chilena pretendida.",
+      "Grupos e classes alteram a concentração econômica efetiva.",
+      "Amostragem, valor justo ou moedas impedem comparação homogênea ao índice.",
+      "Investimento das participações absorve a melhora de margem sem retorno."
+    ],
+    "governanca": "O prospecto resumido diferencia o índice e a gestão do fundo. Permissões de investimento não comprovam uso efetivo; negociação em bolsa não confere resgate individual direto ao valor patrimonial. Suplementos, custódia, garantias e operações com partes relacionadas continuam sujeitos à reconciliação documental.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Separar margem, custo e reinvestimento dos exportadores, perdas e capital dos bancos e recebimento nos negócios domésticos e regulados. Conferir composição por grupo, universo de capitalização e moedas; não inferir exposição mineral a partir do nome Chile.",
+        "titulo": "Economia da exposição"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "etf.ECH.cobertura",
+            "nome": "Peso coberto por modelos da casa no ECH",
+            "valor": "51,70%"
+          },
+          {
+            "fato": "etf.ECH.r_bu",
+            "nome": "Retorno bottom-up do ECH",
+            "valor": "+1,05%"
+          },
+          {
+            "fato": "etf.ECH.r_td",
+            "nome": "Retorno top-down do ECH",
+            "valor": "+9,88%"
+          }
+        ],
+        "texto": "Acompanhar composição, cobertura 51,70% e divergência entre leitura fundamental +1,05% e de mercado +9,88%. Mudança da composição exige reavaliar a representatividade dos insumos.",
+        "titulo": "Suficiência do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "etf.ECH.ter",
+            "nome": "Taxa de administração declarada no retrato",
+            "valor": "0,59%"
+          }
+        ],
+        "texto": "Obter custos de negociação, prêmio ou desconto ao patrimônio e retorno total do índice contratual; usar corte, moeda e convenção consistentes. A taxa recebida é 0,59%.",
+        "titulo": "Execução da exposição"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Conciliar retorno total do NAV e índice contratual líquido, preço negociado e corte de moedas. A página distingue preço do fornecedor da marcação patrimonial por valor justo: diferença pontual pode refletir essa base, não erro de réplica comprovado. Examinar amostragem e custos.",
+        "titulo": "Réplica, corte e direitos"
+      }
+    ],
+    "issuer_id": "ETF_ECH",
+    "lacunas_de_dados": [
+      "Prospecto resumido recebido; documento estatutário completo, suplementos posteriores e metodologia integral vigente ainda exigem reconciliação.",
+      "Replicação diária efetiva, custódia, ativos emprestados e garantias não foram integralmente reconciliados.",
+      "As medidas públicas de spread e prêmio ou desconto não foram incorporadas ao FactBook; falta série comparável conferida.",
+      "Série de aderência ao índice contratual não foi calculada e conferida.",
+      "Percepção de mercado, posicionamento e interesse vendido não têm evidência suficiente.",
+      "Cenários qualitativos não têm preços ou probabilidades próprios calculados.",
+      "Posse histórica dos documentos do produto não está comprovada."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "O administrador apresenta um fundo de ações chilenas, regido por um índice da família MSCI. A composição recebida contém negócios de materiais, bancos, transporte, varejo e outros setores. A origem chilena não implica receitas apenas em pesos nem sensibilidade uniforme à atividade doméstica. O produto implementa a exposição da cesta, sem avaliar o mérito individual dos projetos.",
+    "nome": "iShares MSCI Chile ETF",
+    "o_que_mudou": "Página oficial e prospecto resumido foram lidos novamente. A nota aprofunda distinção entre exportadores e negócios domésticos, concentração por grupo, amostragem e diferenças de marcação, sem calcular aderência ou inserir dados externos.",
+    "pais": "Chile",
+    "pares": [],
+    "percepcao_variante": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A escolha da exposição chilena exige querer sua combinação de bancos, exportadores e negócios domésticos, em vez do universo regional do ILF. A narrativa de minério ou recuperação local pode ser expressa inadequadamente pela cesta. A alternativa deve ser comparada por riscos, direitos e custos recebidos, sem afirmar ganho de diversificação ou superioridade de retorno não medidos.",
+        "titulo": "Cesta chilena frente à alternativa regional"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A cadeia é margem e capital dos exportadores, crédito e consumo locais → caixa das participações → cesta após limites por grupo → resultado da cota após moeda e custos. A condição decisiva é separar melhora operacional de reavaliação por juros. Amostragem e inclusão de empresas menores não tornam o fundo uma exposição pura a cobre, lítio ou atividade doméstica.",
+        "titulo": "Exportadores e demanda local exigem provas separadas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A condição decisiva é distinguir recuperação operacional de reavaliação por juros ou câmbio. A pesquisa das participações deve mostrar se margens, perdas de crédito e investimentos confirmam a hipótese, sem tratar exportadores e serviços domésticos como equivalentes.",
+        "titulo": "Condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "etf.ECH.cobertura",
+            "nome": "Peso coberto por modelos da casa no ECH",
+            "valor": "51,70%"
+          }
+        ],
+        "texto": "A cobertura fundamental recebida é 51,70%. Conclusões sobre a cesta dependem também das participações fora dessa cobertura; uma composição incompleta reduz o suporte à avaliação.",
+        "titulo": "Cobertura do modelo"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:31:09.113818+00:00",
+    "resumo": "A visão qualitativa permanece neutra, com convicção limitada pelas lacunas de diligência. A condição decisiva é distinguir recuperação operacional de reavaliação por juros ou câmbio. A pesquisa das participações deve mostrar se margens, perdas de crédito e investimentos confirmam a hipótese, sem tratar exportadores e serviços domésticos como equivalentes. O modelo aberto apresenta retorno esperado de +7,34% e leitura frente ao ILF Neutra. Esses resultados do código não substituem a pesquisa do produto nem comprovam uma percepção do mercado.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Materiais, crédito e consumo podem sofrer choques diferentes ou simultâneos; a cotação em dólares também transmite câmbio. A diversificação setorial não elimina concentração nas participações economicamente relevantes."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "etf.ECH.ter",
+            "nome": "Taxa de administração declarada no retrato",
+            "valor": "0,59%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "Custos e condições de negociação podem reduzir o resultado efetivo. A taxa declarada é 0,59%; ela não determina o spread nem todos os custos de transação."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "etf.ECH.cobertura",
+            "nome": "Peso coberto por modelos da casa no ECH",
+            "valor": "51,70%"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "A cobertura fundamental é 51,70%. Participações sem modelo e composição desatualizada podem enfraquecer a avaliação da cesta."
+      }
+    ],
+    "setor": "Fundo de índice",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Chile: separar negócios exportadores do ciclo doméstico",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": null,
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Distinguir margens e caixa dos exportadores, qualidade do crédito e recuperação dos negócios ligados ao consumo; verificar se investimentos e concentração da carteira preservam a hipótese de retorno do capital.",
+        "vetor": "Geração de caixa das participações"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "etf.ECH.r_bu",
+            "nome": "Retorno bottom-up do ECH",
+            "valor": "+1,05%"
+          },
+          {
+            "fato": "etf.ECH.r_td",
+            "nome": "Retorno top-down do ECH",
+            "valor": "+9,88%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A leitura fundamental do código é +1,05%; a leitura de mercado é +9,88%. Os componentes dependem de premissas diferentes e não provam o comportamento do índice contratual.",
+        "vetor": "Qualidade da avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

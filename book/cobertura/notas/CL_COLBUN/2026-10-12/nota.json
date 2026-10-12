@@ -1,0 +1,195 @@
+{
+  "mind": "codex",
+  "issuer_id": "CL_COLBUN",
+  "data": "2026-10-12",
+  "tipo": "iniciacao",
+  "titulo": "Colbún — contrato, disponibilidade física e retorno do armazenamento",
+  "resumo": "A hipótese é que disponibilidade das usinas e contratação prudente sustentem caixa depois de combustível, manutenção e capital. Renováveis e armazenamento podem melhorar a entrega nos horários remuneradores, desde que conexão, preço capturado e custo do investimento confirmem retorno. Diversificação tecnológica deve reduzir descalces físicos, sem presumir proteção completa contra seca ou falhas. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.CL_COLBUN.rating_codigo}}, com retorno esperado {{fact:val.CL_COLBUN.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Geradora e comercializadora de energia no Chile, com operação peruana por Fenix. O resultado depende do balanço entre energia própria, contratos, compras e vendas no mercado de curto prazo; capacidade instalada não mede margem econômica disponível.",
+  "pilares_tese": [
+    {
+      "titulo": "Contrato deve ser atendido com margem física",
+      "texto": "A cadeia é disponibilidade por fonte e horário → suprimento das obrigações contratadas → preço líquido de combustível e compras → caixa após manutenção. A condição decisiva é geração economicamente útil nos horários de entrega, não capacidade nominal. Armazenamento só melhora a tese se conexão, perdas, degradação e remuneração sustentarem retorno do capital depois dos testes.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.CL_COLBUN.preco}} e alvo {{fact:val.CL_COLBUN.preco_alvo}}, com potencial {{fact:val.CL_COLBUN.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.CL_COLBUN.ke}} e retorno esperado {{fact:val.CL_COLBUN.etr}}.",
+      "evidencias": [
+        "val.CL_COLBUN.preco",
+        "val.CL_COLBUN.preco_alvo",
+        "val.CL_COLBUN.upside",
+        "val.CL_COLBUN.ke",
+        "val.CL_COLBUN.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar disponibilidade, geração por fonte, posição física contratada, combustível e preço capturado por horário. Revisar caixa depois de manutenção, necessidade de compras e desempenho dos sistemas de armazenamento. Verificar conexão, degradação das baterias, obrigações de contratos e retorno atribuível de Fenix.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.CL_COLBUN.ke}} e a dispersão entre métodos {{fact:val.CL_COLBUN.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.CL_COLBUN.ke",
+        "val.CL_COLBUN.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Resultado previsto no calendário do emissor; revisar suprimento, caixa e estágio do armazenamento.",
+      "data": "2026-10-27",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Seca, falha de equipamento, interrupção de gás ou restrição de transmissão pode elevar o custo de cumprir contratos. Obras, licenciamento e financiamento podem consumir caixa antes da remuneração. A contratação deve ser avaliada junto à geração disponível em cada horário.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.CL_COLBUN.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.CL_COLBUN.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Disponibilidade e contratação equilibradas permitem entregar energia economicamente rentável; armazenamento entra em operação com caixa compatível com o capital investido. O cenário otimista calculado pelo código é {{fact:val.CL_COLBUN.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.CL_COLBUN.preco_alvo}}, com retorno esperado {{fact:val.CL_COLBUN.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Descalces físicos e restrições sistêmicas elevam compras e custos, enquanto atraso de projetos ou sobrecusto reduz o retorno do capital. O cenário pessimista calculado pelo código é {{fact:val.CL_COLBUN.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.CL_COLBUN.preco}} e alvo do modelo aberto {{fact:val.CL_COLBUN.preco_alvo}}, com potencial {{fact:val.CL_COLBUN.upside}}. Retorno total esperado {{fact:val.CL_COLBUN.etr}} e custo do capital próprio {{fact:val.CL_COLBUN.ke}}. A dispersão entre métodos é {{fact:val.CL_COLBUN.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.CL_COLBUN.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.CL_COLBUN.consenso_alvo}}; a diferença {{fact:val.CL_COLBUN.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota. Avaliar geração e contratos com hidrologia e custo de suprimento normalizados. Armazenamento requer fluxo líquido por horário, manutenção e reposição; projeto em teste não recebe economia de ativo maduro. Separar Fenix e dívida pela participação econômica.",
+  "ultimo_resultado": "A pesquisa distingue posição física, EBITDA e resultado atribuível, preservando fatores não recorrentes e bases de comparação. Comentário do emissor sobre tramitação legislativa não comprova promulgação nem autoriza incorporar efeito tributário ao modelo.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "A diligência deve conciliar controle, participações de subsidiárias e caixa distribuível por entidade. Políticas de contratação, cobertura e investimentos precisam proteger o acionista diante de risco físico e decisões de expansão.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Um portfólio de tecnologias e contratos pode apoiar continuidade de atendimento e flexibilidade de despacho. A vantagem precisa aparecer no preço líquido realizado e no custo de suprir cada obrigação. Crescer capacidade em uma região sujeita a restrição de transmissão pode acrescentar energia sem acrescentar caixa.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "O trimestre chileno passou de comprador a vendedor líquido no mercado de curto prazo, com retorno de Santa María e maior contribuição eólica, apesar da hidrologia fraca. O lucro inclui custos extraordinários de cancelamento de contratos de carvão; Fenix sofreu interrupção do transporte de gás no semestre. Comparar trimestre e semestre exige bases próprias.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Dos testes à remuneração do armazenamento",
+    "texto": "A análise anteriormente consultada registra pré-pagamento bancário e distribuição paga, mas não comprova caixa atual. Celda Solar estava em testes e outro armazenamento em construção naquele corte. Exigir entrada comercial, garantias, desempenho e caixa após desembolsos. Capital em Fenix, manutenção e novos projetos deve ser examinado com dívida e direitos por entidade.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "percepcao_variante": {
+    "titulo": "Valor da flexibilidade precisa ser demonstrado",
+    "texto": "A alternativa ao crescimento de capacidade é testar a margem física por horário e o custo completo da flexibilidade. Esse teste permite distinguir recuperação transitória de uma usina de contribuição recorrente do armazenamento. Não há evidência suficiente para afirmar que a diferença esteja ausente do preço.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "contratese": {
+    "titulo": "Flexibilidade pode não alcançar o horário valioso",
+    "texto": "A tese falha se renováveis aumentam geração em horários de preço deprimido ou com restrição de rede, enquanto contratos exigem compras caras. Baterias podem consumir capital sem corrigir esse descalce. Retorno de Santa María ou recuperação de hidrologia não demonstra melhora estrutural se manutenção, gás de Fenix e capital total continuam limitando caixa.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Balanço físico e custo de cumprir contratos",
+      "texto": "Separar Chile e Fenix, trimestre e semestre. Acompanhar geração disponível, hidrologia, gás, preço capturado e compras para entrega contratada, com efeitos de cancelamento de carvão isolados. Verificar se a recuperação de Santa María se sustenta após manutenção.",
+      "evidencias": [
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Armazenamento em operação econômica",
+      "texto": "Conferir passagem de testes ou construção para operação comercial, conexão, ciclos, degradação e garantias. Confrontar desembolsos e financiamento com receita líquida nos horários capturados; o calendário de resultado é uma ocasião de revisão, não confirmação prévia do avanço.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.CL_COLBUN.etr}}, custo do capital {{fact:val.CL_COLBUN.ke}} e dispersão entre métodos {{fact:val.CL_COLBUN.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.CL_COLBUN.etr",
+        "val.CL_COLBUN.ke",
+        "val.CL_COLBUN.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Geração disponível não cobre contratos sem compras de margem desfavorável.",
+    "Armazenamento opera sem remuneração que cubra capital, perdas e degradação.",
+    "Interrupções de gás ou manutenção comprometem caixa de Fenix ou Santa María.",
+    "Cronograma e orçamento dos projetos mudam sem financiamento conciliado."
+  ],
+  "lacunas_de_dados": [
+    "Notas financeiras, caixa consolidado e retorno por projeto não foram integralmente conciliados.",
+    "Preço e custo por horário, contratos e obrigações de transmissão exigem dados homogêneos.",
+    "Cronograma atualizado, garantias e economia de armazenamento permanecem a comprovar.",
+    "Guidance e tom da gestão não foram classificados em material integral.",
+    "Percepção do mercado, posicionamento e interesse vendido não têm comprovação suficiente.",
+    "Disponibilidade histórica dos documentos e reconciliação integral ao modelo recebido não foram comprovadas."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Colbún",
+      "titulo": "Resultados e calendário do emissor",
+      "url": "https://www.colbun.cl/corporativo/inversionistas/informacion-financiera/resultados-trimestrales",
+      "publicado_em": null,
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Colbún",
+      "titulo": "Análise de resultados, projetos e riscos",
+      "url": "https://www.colbun.cl/docs/default-source/resultados-trimestrales-2026/an%C3%A1lisis-razonado-2q26-(20260728-vf).pdf",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

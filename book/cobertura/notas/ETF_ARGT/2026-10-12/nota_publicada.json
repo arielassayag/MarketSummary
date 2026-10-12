@@ -1,0 +1,421 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "indice": "MSCI All Argentina 25/50",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09",
+    "ticker": "ARGT",
+    "tipo_ativo": "etf",
+    "url_produto": "https://www.globalxetfs.com/funds/argt/"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "970b45fcaafd7c605dad66e49d38e3e7e6790f3315a1aacc2b3b0087054a3ad4",
+    "factbook": "140b8312c8590517264977261bfac7fb565dc39a151589211024b4f2e57f44da",
+    "nota_json": "3a72977efa0abc216a0687055b86fa6eb3bfac2335b10ad19b6d46a34ac35556"
+  },
+  "is_synthetic": false,
+  "issuer_id": "ETF_ARGT",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T15:29:53.810189+00:00",
+  "rendered": {
+    "aderencia_indice_etf": [
+      {
+        "evidencias": [
+          {
+            "fato": "etf.ARGT.visao_ilf",
+            "nome": "Visão do ARGT relativa ao ILF",
+            "valor": "Negativa"
+          }
+        ],
+        "texto": "A comparação frente ao ILF é Negativa. Ela se refere à referência regional do modelo, e não à qualidade de replicação. Aderência ao índice exige retorno total da cota e do índice contratual em bases equivalentes; o estudo não dispõe dessa série conferida.",
+        "titulo": "Índice contratual e comparação regional"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Sem antecipar evento não confirmado, o caso central mantém a exposição da cesta e exige confirmação de caixa, custos e composição. O retorno esperado do código é -4,80%. Não há probabilidade de cenário qualitativo estimada.",
+      "otimista": "Melhora institucional acompanhada de resultados e caixa confirma a redução de risco nas empresas expostas. O crescimento dos negócios regionais reforça a cesta, sem depender de reavaliação indiscriminada. Hipótese qualitativa; não é cenário numérico calculado.",
+      "pessimista": "Instabilidade cambial e dificuldade de financiamento pressionam negócios locais; os componentes com receitas externas não compensam a deterioração. A hipótese de melhora generalizada deixa de explicar a carteira. Não há perda numérica de cenário validada neste estudo."
+    },
+    "comentario_valuation": "Preço de referência US$ 88,21 e alvo do modelo aberto US$ 82,92. A leitura fundamental é -1,83% e a de mercado -4,98%, com retorno esperado -4,80%. A avaliação agrega insumos das participações e condições de mercado; não constitui estimativa do patrimônio líquido da cota. Cobertura 10,45% exige examinar componentes sem modelo e representatividade da composição. O alvo é do código, sem ajuste discricionário nesta nota. As hipóteses qualitativas de cenário não recebem preços ou probabilidades inventados. A classificação frente ao ILF é Negativa; não mede diferença ou erro de aderência ao índice contratual. Avaliar representatividade da cesta e participação sem modelo antes de interpretar a agregação. Hipótese de reforma doméstica não autoriza avaliar receitas internacionais como argentinas; alvo fundamental não é NAV nem preço de resgate.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A tese falha se financiamento e restrições cambiais impedem o caixa dos negócios locais, ou se participações globais dominam a trajetória sem benefício econômico argentino. Amostragem, mudanças de regra e custos podem afastar o resultado da exposição pretendida. Subida do fundo ou boa réplica, isoladamente, não confirma recuperação fundamental do país.",
+        "titulo": "Reforma doméstica pode não explicar a cesta"
+      }
+    ],
+    "conviccao": 1,
+    "custos_liquidez_etf": [
+      {
+        "evidencias": [
+          {
+            "fato": "etf.ARGT.ter",
+            "nome": "Taxa de administração declarada no retrato",
+            "valor": "0,59%"
+          },
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Taxa recebida no retrato 0,59%. Separar despesa do fundo, giro, impostos, corretagem, spread e preço negociado versus NAV; não há série atual conferida no FactBook. Custos de recibos, restrições de mercado e horários dos ativos internacionais exigem exame próprio; o prospecto anterior não foi recebido novamente hoje.",
+        "titulo": "Custo total e liquidez do mecanismo"
+      }
+    ],
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "estrutura_etf": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "O índice MSCI amplo associado à Argentina seleciona por classificação e vínculo econômico, pondera ações disponíveis à negociação e limita grupos. O resumo recebido tem corte histórico e declara ser incompleto. O prospecto anteriormente recebido prevê réplica e amostragem em situações de custo ou restrição; não foi recebido novamente hoje. Mudanças de metodologia e instrumentos efetivos exigem documentos e carteira do mesmo corte.",
+        "titulo": "Índice amplo e replicação sob limites"
+      }
+    ],
+    "exposicao_etf": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A cesta inclui plataformas regionais, energia, bancos e mineradoras com atividades internacionais. Domicílio, bolsa, recibo e vínculo argentino não medem a parcela de caixa doméstica. Agregar classes e grupos econômicos, conferir moedas de receita, custo e dívida e separar resultado reexpresso por inflação de caixa transferível. Negociação em dólares não elimina exposição a essas moedas.",
+        "titulo": "País de vínculo não é moeda de toda receita"
+      }
+    ],
+    "ficha": [
+      {
+        "fato": "etf.ARGT.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 88,21"
+      },
+      {
+        "fato": "etf.ARGT.preco_alvo",
+        "rotulo": "Preço-alvo do modelo",
+        "valor": "US$ 82,92"
+      },
+      {
+        "fato": "etf.ARGT.retorno_esperado",
+        "rotulo": "Retorno esperado",
+        "valor": "-4,80%"
+      },
+      {
+        "fato": "etf.ARGT.r_bu",
+        "rotulo": "Retorno pelas posições",
+        "valor": "-1,83%"
+      },
+      {
+        "fato": "etf.ARGT.r_td",
+        "rotulo": "Retorno pelo índice",
+        "valor": "-4,98%"
+      },
+      {
+        "fato": "etf.ARGT.cobertura",
+        "rotulo": "Cobertura pelas posições",
+        "valor": "10,45%"
+      },
+      {
+        "fato": "etf.ARGT.ter",
+        "rotulo": "Taxa de administração declarada",
+        "valor": "0,59%"
+      },
+      {
+        "fato": "etf.ARGT.visao_ilf",
+        "rotulo": "Visão frente ao ILF",
+        "valor": "Negativa"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "Global X",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Página oficial do produto, objetivo e composição",
+        "url": "https://www.globalxetfs.com/funds/argt/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Global X",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Prospecto resumido — estratégia e riscos do produto",
+        "url": "https://assets.globalxetfs.com/funds/documents/argt/prospectus-regulatory/Summary-Prospectus_ARGT.pdf"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F3",
+        "instituicao": "Global X",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Resumo metodológico do índice — leitura parcial",
+        "url": "https://assets.globalxetfs.com/funds/documents/argt/Index-Methodology-Summary.pdf"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F4",
+        "instituicao": "S&P Dow Jones Indices",
+        "publicado_em": null,
+        "tipo": "Dados públicos",
+        "titulo": "Metodologia da referência regional comparada",
+        "url": "https://www.spglobal.com/spdji/en/documents/methodologies/methodology-sp-latin-america-40.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Caixa das empresas expostas não acompanha a hipótese de melhora institucional.",
+      "Composição passa a refletir principalmente fatores externos à hipótese doméstica.",
+      "Restrições cambiais ou financiamento limitam a transferência de recursos.",
+      "Regra, grupo econômico ou amostragem altera a exposição e sua série comparável.",
+      "Custos e condições de criação, resgate ou negociação divergem da exposição pretendida."
+    ],
+    "governanca": "O prospecto admite alteração de objetivo e índice sem aprovação dos cotistas, com aviso prévio para certas políticas de exposição. Admite empréstimo de ativos e concentração por emissor; autorização não prova operações efetivas. Histórico de regras e composição precisa de cortes próprios. O resumo metodológico não garante que permaneça vigente.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Acompanhar composição por grupo e classe, caixa e restrições dos negócios argentinos e receitas internacionais das plataformas e mineradoras. Conciliar resultado real, moedas e financiamento nas participações, sem somar linhas de recibos como exposições independentes.",
+        "titulo": "Economia da exposição"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "etf.ARGT.cobertura",
+            "nome": "Peso coberto por modelos da casa no ARGT",
+            "valor": "10,45%"
+          },
+          {
+            "fato": "etf.ARGT.r_bu",
+            "nome": "Retorno bottom-up do ARGT",
+            "valor": "-1,83%"
+          },
+          {
+            "fato": "etf.ARGT.r_td",
+            "nome": "Retorno top-down do ARGT",
+            "valor": "-4,98%"
+          }
+        ],
+        "texto": "Acompanhar composição, cobertura 10,45% e divergência entre leitura fundamental -1,83% e de mercado -4,98%. Mudança da composição exige reavaliar a representatividade dos insumos.",
+        "titulo": "Suficiência do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "etf.ARGT.ter",
+            "nome": "Taxa de administração declarada no retrato",
+            "valor": "0,59%"
+          }
+        ],
+        "texto": "Obter custos de negociação, prêmio ou desconto ao patrimônio e retorno total do índice contratual; usar corte, moeda e convenção consistentes. A taxa recebida é 0,59%.",
+        "titulo": "Execução da exposição"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Conferir retorno total patrimonial, preço negociado e índice contratual em moeda e corte homogêneos. Investigar caixa residual, réplica/amostragem, impostos e custos; a comparação com ILF não mede aderência. Resumo metodológico histórico não certifica regras atuais.",
+        "titulo": "Réplica, corte e direitos"
+      }
+    ],
+    "issuer_id": "ETF_ARGT",
+    "lacunas_de_dados": [
+      "Prospecto resumido recebido; documento estatutário completo, suplementos posteriores e metodologia integral vigente ainda exigem reconciliação.",
+      "Replicação diária efetiva, custódia, ativos emprestados e garantias não foram integralmente reconciliados.",
+      "As medidas públicas de spread e prêmio ou desconto não foram incorporadas ao FactBook; falta série comparável conferida.",
+      "Série de aderência ao índice contratual não foi calculada e conferida.",
+      "Percepção de mercado, posicionamento e interesse vendido não têm evidência suficiente.",
+      "Cenários qualitativos não têm preços ou probabilidades próprios calculados.",
+      "Posse histórica dos documentos do produto não está comprovada."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "O administrador define um fundo de ações associado à Argentina. A composição pública inclui MercadoLibre, YPF, Vista e grupos financeiros e de energia. A ligação econômica das empresas importa mais que o local de negociação: atividade regional e receitas internacionais podem afastar o retorno do fundo de uma leitura exclusivamente doméstica. O produto dá acesso à cesta do índice, sem escolher empresas por mérito fundamental.",
+    "nome": "Global X MSCI Argentina ETF",
+    "o_que_mudou": "A consulta atual recebeu a página do produto e o resumo metodológico histórico; o prospecto bloqueado mantém consulta anterior. A pesquisa aprofunda a ligação entre negócios argentinos e internacionais, concentração por grupo, moeda, replicação e alternativa regional, preservando valores e lacunas.",
+    "pais": "Argentina",
+    "pares": [],
+    "percepcao_variante": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "A escolha frente à referência regional exige interesse explícito nas empresas vinculadas à Argentina e nos negócios externos que a regra inclui. O índice regional do ILF tem outro universo; não é substituto equivalente dessa exposição. Uma visão apenas sobre reformas domésticas pode ser expressa de modo inadequado por esta composição. Não se afirma superioridade de retorno nem percepção errada do mercado.",
+        "titulo": "Quando a cesta local difere da alternativa regional"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A cadeia é melhora institucional → financiamento e condições operacionais das participações expostas → caixa após reinvestimento → valor da cesta depois de custos e moeda. A condição decisiva é identificar onde cada empresa gera recursos. MercadoLibre, mineração internacional e negócios locais podem seguir ciclos distintos; o rótulo Argentina e a regra do índice não demonstram recuperação doméstica uniforme.",
+        "titulo": "Exposição argentina deve atravessar os negócios"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A condição decisiva é distinguir exposição econômica argentina de domicílio ou associação ao país. Reavaliar resultados, fontes de receita e restrições cambiais de cada participação relevante antes de atribuir o retorno esperado do fundo a uma transformação doméstica.",
+        "titulo": "Condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "etf.ARGT.cobertura",
+            "nome": "Peso coberto por modelos da casa no ARGT",
+            "valor": "10,45%"
+          }
+        ],
+        "texto": "A cobertura fundamental recebida é 10,45%. Conclusões sobre a cesta dependem também das participações fora dessa cobertura; uma composição incompleta reduz o suporte à avaliação.",
+        "titulo": "Cobertura do modelo"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:29:53.810189+00:00",
+    "resumo": "A visão qualitativa permanece neutra, com convicção limitada pelas lacunas de diligência. A condição decisiva é distinguir exposição econômica argentina de domicílio ou associação ao país. Reavaliar resultados, fontes de receita e restrições cambiais de cada participação relevante antes de atribuir o retorno esperado do fundo a uma transformação doméstica. O modelo aberto apresenta retorno esperado de -4,80% e leitura frente ao ILF Negativa. Esses resultados do código não substituem a pesquisa do produto nem comprovam uma percepção do mercado.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Mudanças cambiais, políticas ou regulatórias podem prejudicar a conversão de caixa e a remuneração do acionista dos negócios argentinos. A hipótese requer confirmação nas participações, sem supor que todo componente tem a mesma exposição."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "etf.ARGT.ter",
+            "nome": "Taxa de administração declarada no retrato",
+            "valor": "0,59%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "Custos e condições de negociação podem reduzir o resultado efetivo. A taxa declarada é 0,59%; ela não determina o spread nem todos os custos de transação."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "etf.ARGT.cobertura",
+            "nome": "Peso coberto por modelos da casa no ARGT",
+            "valor": "10,45%"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "A cobertura fundamental é 10,45%. Participações sem modelo e composição desatualizada podem enfraquecer a avaliação da cesta."
+      }
+    ],
+    "setor": "Fundo de índice",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Argentina: exposição empresarial além da fronteira doméstica",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": null,
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Separar evolução dos negócios internacionais de resultados domésticos; confrontar geração de caixa, restrições cambiais e composição atualizada com a hipótese de redução do prêmio de risco.",
+        "vetor": "Geração de caixa das participações"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "etf.ARGT.r_bu",
+            "nome": "Retorno bottom-up do ARGT",
+            "valor": "-1,83%"
+          },
+          {
+            "fato": "etf.ARGT.r_td",
+            "nome": "Retorno top-down do ARGT",
+            "valor": "-4,98%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A leitura fundamental do código é -1,83%; a leitura de mercado é -4,98%. Os componentes dependem de premissas diferentes e não provam o comportamento do índice contratual.",
+        "vetor": "Qualidade da avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

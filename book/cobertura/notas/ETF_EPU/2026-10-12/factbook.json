@@ -1,0 +1,111 @@
+{
+  "as_of": "2026-10-09",
+  "facts": {
+    "etf.EPU.cobertura": {
+      "fact_id": "etf.EPU.cobertura",
+      "formatted": "38,90%",
+      "formula": "Σ pesos com preço-alvo da casa",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_EPU.json"
+      ],
+      "issuer_id": null,
+      "name": "Peso coberto por modelos da casa no EPU",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.388961
+    },
+    "etf.EPU.preco": {
+      "fact_id": "etf.EPU.preco",
+      "formatted": "US$ 88,66",
+      "formula": "fechamento público na moeda da linha",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_EPU.json"
+      ],
+      "issuer_id": null,
+      "name": "Preço de referência do ETF",
+      "point_in_time": false,
+      "unit": "preco",
+      "value": 88.66
+    },
+    "etf.EPU.preco_alvo": {
+      "fact_id": "etf.EPU.preco_alvo",
+      "formatted": "US$ 91,41",
+      "formula": "TP_e = P_e × (1 + R_e − DY)",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_EPU.json"
+      ],
+      "issuer_id": null,
+      "name": "Preço-alvo de 12 meses do EPU",
+      "point_in_time": false,
+      "unit": "preco",
+      "value": 91.4086
+    },
+    "etf.EPU.r_bu": {
+      "fact_id": "etf.EPU.r_bu",
+      "formatted": "+8,95%",
+      "formula": "alvos da casa por posição",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_EPU.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno bottom-up do EPU",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.089478
+    },
+    "etf.EPU.r_td": {
+      "fact_id": "etf.EPU.r_td",
+      "formatted": "+4,96%",
+      "formula": "P/L justificado e Grinold–Kroner",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_EPU.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno top-down do EPU",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.049628
+    },
+    "etf.EPU.retorno_esperado": {
+      "fact_id": "etf.EPU.retorno_esperado",
+      "formatted": "+5,82%",
+      "formula": "R_e = ω × R_BU + (1 − ω) × R_TD",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_EPU.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno esperado de 12 meses do EPU",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.0582392
+    },
+    "etf.EPU.ter": {
+      "fact_id": "etf.EPU.ter",
+      "formatted": "0,59%",
+      "formula": "parâmetro público do produto; não inclui todos os custos de negociação",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_EPU.json"
+      ],
+      "issuer_id": null,
+      "name": "Taxa de administração declarada no retrato",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.0059
+    },
+    "etf.EPU.visao_ilf": {
+      "fact_id": "etf.EPU.visao_ilf",
+      "formatted": "Neutra",
+      "formula": "IR = (R_e − R_ILF) ÷ TE",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_EPU.json"
+      ],
+      "issuer_id": null,
+      "name": "Visão do EPU relativa ao ILF",
+      "point_in_time": false,
+      "unit": "ratio",
+      "value": -0.0226853
+    }
+  },
+  "is_synthetic": false,
+  "snapshot_id": "store-2026-10-02+5-2026-10-09:etf:ETF_EPU:14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c"
+}

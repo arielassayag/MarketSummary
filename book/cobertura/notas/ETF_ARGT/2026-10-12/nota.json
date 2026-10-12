@@ -1,0 +1,239 @@
+{
+  "mind": "codex",
+  "issuer_id": "ETF_ARGT",
+  "data": "2026-10-12",
+  "tipo": "iniciacao",
+  "titulo": "Argentina: exposição empresarial além da fronteira doméstica",
+  "resumo": "A visão qualitativa permanece neutra, com convicção limitada pelas lacunas de diligência. A condição decisiva é distinguir exposição econômica argentina de domicílio ou associação ao país. Reavaliar resultados, fontes de receita e restrições cambiais de cada participação relevante antes de atribuir o retorno esperado do fundo a uma transformação doméstica. O modelo aberto apresenta retorno esperado de {{fact:etf.ARGT.retorno_esperado}} e leitura frente ao ILF {{fact:etf.ARGT.visao_ilf}}. Esses resultados do código não substituem a pesquisa do produto nem comprovam uma percepção do mercado.",
+  "negocio": "O administrador define um fundo de ações associado à Argentina. A composição pública inclui MercadoLibre, YPF, Vista e grupos financeiros e de energia. A ligação econômica das empresas importa mais que o local de negociação: atividade regional e receitas internacionais podem afastar o retorno do fundo de uma leitura exclusivamente doméstica. O produto dá acesso à cesta do índice, sem escolher empresas por mérito fundamental.",
+  "pilares_tese": [
+    {
+      "titulo": "Exposição argentina deve atravessar os negócios",
+      "texto": "A cadeia é melhora institucional → financiamento e condições operacionais das participações expostas → caixa após reinvestimento → valor da cesta depois de custos e moeda. A condição decisiva é identificar onde cada empresa gera recursos. MercadoLibre, mineração internacional e negócios locais podem seguir ciclos distintos; o rótulo Argentina e a regra do índice não demonstram recuperação doméstica uniforme.",
+      "evidencias": [
+        "F1",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Condição decisiva",
+      "texto": "A condição decisiva é distinguir exposição econômica argentina de domicílio ou associação ao país. Reavaliar resultados, fontes de receita e restrições cambiais de cada participação relevante antes de atribuir o retorno esperado do fundo a uma transformação doméstica.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Cobertura do modelo",
+      "texto": "A cobertura fundamental recebida é {{fact:etf.ARGT.cobertura}}. Conclusões sobre a cesta dependem também das participações fora dessa cobertura; uma composição incompleta reduz o suporte à avaliação.",
+      "evidencias": [
+        "etf.ARGT.cobertura"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Geração de caixa das participações",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Separar evolução dos negócios internacionais de resultados domésticos; confrontar geração de caixa, restrições cambiais e composição atualizada com a hipótese de redução do prêmio de risco.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Qualidade da avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "A leitura fundamental do código é {{fact:etf.ARGT.r_bu}}; a leitura de mercado é {{fact:etf.ARGT.r_td}}. Os componentes dependem de premissas diferentes e não provam o comportamento do índice contratual.",
+      "evidencias": [
+        "etf.ARGT.r_bu",
+        "etf.ARGT.r_td"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Mudanças cambiais, políticas ou regulatórias podem prejudicar a conversão de caixa e a remuneração do acionista dos negócios argentinos. A hipótese requer confirmação nas participações, sem supor que todo componente tem a mesma exposição.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "Custos e condições de negociação podem reduzir o resultado efetivo. A taxa declarada é {{fact:etf.ARGT.ter}}; ela não determina o spread nem todos os custos de transação.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "etf.ARGT.ter"
+      ]
+    },
+    {
+      "texto": "A cobertura fundamental é {{fact:etf.ARGT.cobertura}}. Participações sem modelo e composição desatualizada podem enfraquecer a avaliação da cesta.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "etf.ARGT.cobertura"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Melhora institucional acompanhada de resultados e caixa confirma a redução de risco nas empresas expostas. O crescimento dos negócios regionais reforça a cesta, sem depender de reavaliação indiscriminada. Hipótese qualitativa; não é cenário numérico calculado.",
+    "base": "Sem antecipar evento não confirmado, o caso central mantém a exposição da cesta e exige confirmação de caixa, custos e composição. O retorno esperado do código é {{fact:etf.ARGT.retorno_esperado}}. Não há probabilidade de cenário qualitativo estimada.",
+    "pessimista": "Instabilidade cambial e dificuldade de financiamento pressionam negócios locais; os componentes com receitas externas não compensam a deterioração. A hipótese de melhora generalizada deixa de explicar a carteira. Não há perda numérica de cenário validada neste estudo."
+  },
+  "comentario_valuation": "Preço de referência {{fact:etf.ARGT.preco}} e alvo do modelo aberto {{fact:etf.ARGT.preco_alvo}}. A leitura fundamental é {{fact:etf.ARGT.r_bu}} e a de mercado {{fact:etf.ARGT.r_td}}, com retorno esperado {{fact:etf.ARGT.retorno_esperado}}. A avaliação agrega insumos das participações e condições de mercado; não constitui estimativa do patrimônio líquido da cota. Cobertura {{fact:etf.ARGT.cobertura}} exige examinar componentes sem modelo e representatividade da composição. O alvo é do código, sem ajuste discricionário nesta nota. As hipóteses qualitativas de cenário não recebem preços ou probabilidades inventados. A classificação frente ao ILF é {{fact:etf.ARGT.visao_ilf}}; não mede diferença ou erro de aderência ao índice contratual. Avaliar representatividade da cesta e participação sem modelo antes de interpretar a agregação. Hipótese de reforma doméstica não autoriza avaliar receitas internacionais como argentinas; alvo fundamental não é NAV nem preço de resgate.",
+  "ultimo_resultado": null,
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "O prospecto admite alteração de objetivo e índice sem aprovação dos cotistas, com aviso prévio para certas políticas de exposição. Admite empréstimo de ativos e concentração por emissor; autorização não prova operações efetivas. Histórico de regras e composição precisa de cortes próprios. O resumo metodológico não garante que permaneça vigente.",
+  "posicao_competitiva": null,
+  "qualidade_resultados": null,
+  "alocacao_capital": null,
+  "percepcao_variante": {
+    "titulo": "Quando a cesta local difere da alternativa regional",
+    "texto": "A escolha frente à referência regional exige interesse explícito nas empresas vinculadas à Argentina e nos negócios externos que a regra inclui. O índice regional do ILF tem outro universo; não é substituto equivalente dessa exposição. Uma visão apenas sobre reformas domésticas pode ser expressa de modo inadequado por esta composição. Não se afirma superioridade de retorno nem percepção errada do mercado.",
+    "evidencias": [
+      "F1",
+      "F3",
+      "F4"
+    ]
+  },
+  "contratese": {
+    "titulo": "Reforma doméstica pode não explicar a cesta",
+    "texto": "A tese falha se financiamento e restrições cambiais impedem o caixa dos negócios locais, ou se participações globais dominam a trajetória sem benefício econômico argentino. Amostragem, mudanças de regra e custos podem afastar o resultado da exposição pretendida. Subida do fundo ou boa réplica, isoladamente, não confirma recuperação fundamental do país.",
+    "evidencias": [
+      "F1",
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Economia da exposição",
+      "texto": "Acompanhar composição por grupo e classe, caixa e restrições dos negócios argentinos e receitas internacionais das plataformas e mineradoras. Conciliar resultado real, moedas e financiamento nas participações, sem somar linhas de recibos como exposições independentes.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Suficiência do modelo",
+      "texto": "Acompanhar composição, cobertura {{fact:etf.ARGT.cobertura}} e divergência entre leitura fundamental {{fact:etf.ARGT.r_bu}} e de mercado {{fact:etf.ARGT.r_td}}. Mudança da composição exige reavaliar a representatividade dos insumos.",
+      "evidencias": [
+        "etf.ARGT.cobertura",
+        "etf.ARGT.r_bu",
+        "etf.ARGT.r_td"
+      ]
+    },
+    {
+      "titulo": "Execução da exposição",
+      "texto": "Obter custos de negociação, prêmio ou desconto ao patrimônio e retorno total do índice contratual; usar corte, moeda e convenção consistentes. A taxa recebida é {{fact:etf.ARGT.ter}}.",
+      "evidencias": [
+        "etf.ARGT.ter"
+      ]
+    },
+    {
+      "titulo": "Réplica, corte e direitos",
+      "texto": "Conferir retorno total patrimonial, preço negociado e índice contratual em moeda e corte homogêneos. Investigar caixa residual, réplica/amostragem, impostos e custos; a comparação com ILF não mede aderência. Resumo metodológico histórico não certifica regras atuais.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "estrutura_etf": {
+    "titulo": "Índice amplo e replicação sob limites",
+    "texto": "O índice MSCI amplo associado à Argentina seleciona por classificação e vínculo econômico, pondera ações disponíveis à negociação e limita grupos. O resumo recebido tem corte histórico e declara ser incompleto. O prospecto anteriormente recebido prevê réplica e amostragem em situações de custo ou restrição; não foi recebido novamente hoje. Mudanças de metodologia e instrumentos efetivos exigem documentos e carteira do mesmo corte.",
+    "evidencias": [
+      "F1",
+      "F2",
+      "F3"
+    ]
+  },
+  "exposicao_etf": {
+    "titulo": "País de vínculo não é moeda de toda receita",
+    "texto": "A cesta inclui plataformas regionais, energia, bancos e mineradoras com atividades internacionais. Domicílio, bolsa, recibo e vínculo argentino não medem a parcela de caixa doméstica. Agregar classes e grupos econômicos, conferir moedas de receita, custo e dívida e separar resultado reexpresso por inflação de caixa transferível. Negociação em dólares não elimina exposição a essas moedas.",
+    "evidencias": [
+      "F1",
+      "F3"
+    ]
+  },
+  "custos_liquidez_etf": {
+    "titulo": "Custo total e liquidez do mecanismo",
+    "texto": "Taxa recebida no retrato {{fact:etf.ARGT.ter}}. Separar despesa do fundo, giro, impostos, corretagem, spread e preço negociado versus NAV; não há série atual conferida no FactBook. Custos de recibos, restrições de mercado e horários dos ativos internacionais exigem exame próprio; o prospecto anterior não foi recebido novamente hoje.",
+    "evidencias": [
+      "etf.ARGT.ter",
+      "F1",
+      "F2"
+    ]
+  },
+  "aderencia_indice_etf": {
+    "titulo": "Índice contratual e comparação regional",
+    "texto": "A comparação frente ao ILF é {{fact:etf.ARGT.visao_ilf}}. Ela se refere à referência regional do modelo, e não à qualidade de replicação. Aderência ao índice exige retorno total da cota e do índice contratual em bases equivalentes; o estudo não dispõe dessa série conferida.",
+    "evidencias": [
+      "etf.ARGT.visao_ilf"
+    ]
+  },
+  "o_que_mudou": "A consulta atual recebeu a página do produto e o resumo metodológico histórico; o prospecto bloqueado mantém consulta anterior. A pesquisa aprofunda a ligação entre negócios argentinos e internacionais, concentração por grupo, moeda, replicação e alternativa regional, preservando valores e lacunas.",
+  "gatilhos_revisao": [
+    "Caixa das empresas expostas não acompanha a hipótese de melhora institucional.",
+    "Composição passa a refletir principalmente fatores externos à hipótese doméstica.",
+    "Restrições cambiais ou financiamento limitam a transferência de recursos.",
+    "Regra, grupo econômico ou amostragem altera a exposição e sua série comparável.",
+    "Custos e condições de criação, resgate ou negociação divergem da exposição pretendida."
+  ],
+  "lacunas_de_dados": [
+    "Prospecto resumido recebido; documento estatutário completo, suplementos posteriores e metodologia integral vigente ainda exigem reconciliação.",
+    "Replicação diária efetiva, custódia, ativos emprestados e garantias não foram integralmente reconciliados.",
+    "As medidas públicas de spread e prêmio ou desconto não foram incorporadas ao FactBook; falta série comparável conferida.",
+    "Série de aderência ao índice contratual não foi calculada e conferida.",
+    "Percepção de mercado, posicionamento e interesse vendido não têm evidência suficiente.",
+    "Cenários qualitativos não têm preços ou probabilidades próprios calculados.",
+    "Posse histórica dos documentos do produto não está comprovada."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Global X",
+      "titulo": "Página oficial do produto, objetivo e composição",
+      "url": "https://www.globalxetfs.com/funds/argt/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Global X",
+      "titulo": "Prospecto resumido — estratégia e riscos do produto",
+      "url": "https://assets.globalxetfs.com/funds/documents/argt/prospectus-regulatory/Summary-Prospectus_ARGT.pdf",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Global X",
+      "titulo": "Resumo metodológico do índice — leitura parcial",
+      "url": "https://assets.globalxetfs.com/funds/documents/argt/Index-Methodology-Summary.pdf",
+      "publicado_em": null,
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F4",
+      "tipo": "dados_publicos",
+      "instituicao": "S&P Dow Jones Indices",
+      "titulo": "Metodologia da referência regional comparada",
+      "url": "https://www.spglobal.com/spdji/en/documents/methodologies/methodology-sp-latin-america-40.pdf",
+      "publicado_em": null,
+      "consultado_em": "2026-10-12"
+    }
+  ],
+  "modelo_ia": null
+}

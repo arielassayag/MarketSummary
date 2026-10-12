@@ -1,0 +1,111 @@
+{
+  "as_of": "2026-10-09",
+  "facts": {
+    "etf.ECH.cobertura": {
+      "fact_id": "etf.ECH.cobertura",
+      "formatted": "51,70%",
+      "formula": "Σ pesos com preço-alvo da casa",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_ECH.json"
+      ],
+      "issuer_id": null,
+      "name": "Peso coberto por modelos da casa no ECH",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.516955
+    },
+    "etf.ECH.preco": {
+      "fact_id": "etf.ECH.preco",
+      "formatted": "US$ 37,68",
+      "formula": "fechamento público na moeda da linha",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_ECH.json"
+      ],
+      "issuer_id": null,
+      "name": "Preço de referência do ETF",
+      "point_in_time": false,
+      "unit": "preco",
+      "value": 37.68
+    },
+    "etf.ECH.preco_alvo": {
+      "fact_id": "etf.ECH.preco_alvo",
+      "formatted": "US$ 39,36",
+      "formula": "TP_e = P_e × (1 + R_e − DY)",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_ECH.json"
+      ],
+      "issuer_id": null,
+      "name": "Preço-alvo de 12 meses do ECH",
+      "point_in_time": false,
+      "unit": "preco",
+      "value": 39.3598
+    },
+    "etf.ECH.r_bu": {
+      "fact_id": "etf.ECH.r_bu",
+      "formatted": "+1,05%",
+      "formula": "alvos da casa por posição",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_ECH.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno bottom-up do ECH",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.0105257
+    },
+    "etf.ECH.r_td": {
+      "fact_id": "etf.ECH.r_td",
+      "formatted": "+9,88%",
+      "formula": "P/L justificado e Grinold–Kroner",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_ECH.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno top-down do ECH",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.0987976
+    },
+    "etf.ECH.retorno_esperado": {
+      "fact_id": "etf.ECH.retorno_esperado",
+      "formatted": "+7,34%",
+      "formula": "R_e = ω × R_BU + (1 − ω) × R_TD",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_ECH.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno esperado de 12 meses do ECH",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.0734462
+    },
+    "etf.ECH.ter": {
+      "fact_id": "etf.ECH.ter",
+      "formatted": "0,59%",
+      "formula": "parâmetro público do produto; não inclui todos os custos de negociação",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_ECH.json"
+      ],
+      "issuer_id": null,
+      "name": "Taxa de administração declarada no retrato",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.0059
+    },
+    "etf.ECH.visao_ilf": {
+      "fact_id": "etf.ECH.visao_ilf",
+      "formatted": "Neutra",
+      "formula": "IR = (R_e − R_ILF) ÷ TE",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_ECH.json"
+      ],
+      "issuer_id": null,
+      "name": "Visão do ECH relativa ao ILF",
+      "point_in_time": false,
+      "unit": "ratio",
+      "value": 0.0642199
+    }
+  },
+  "is_synthetic": false,
+  "snapshot_id": "store-2026-10-02+5-2026-10-09:etf:ETF_ECH:14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c"
+}

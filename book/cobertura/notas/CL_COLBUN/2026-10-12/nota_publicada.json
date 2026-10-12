@@ -1,0 +1,435 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "40849a7aebc302b0501cb0bee7c209980cd1741aa7ef4b657b569caac1aa568e",
+    "factbook": "6d08fe6b01286e29a57a5cc36d1cd3422cd81053afc9968a4f6722792cfe87b4",
+    "nota_json": "50d80e8db98ff5bba0d0d6d4b2eebb88287b8521069a35d8bc24c5e5631a5ecc"
+  },
+  "is_synthetic": false,
+  "issuer_id": "CL_COLBUN",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-27",
+  "published_at": "2026-10-12T15:28:34.433914+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A análise anteriormente consultada registra pré-pagamento bancário e distribuição paga, mas não comprova caixa atual. Celda Solar estava em testes e outro armazenamento em construção naquele corte. Exigir entrada comercial, garantias, desempenho e caixa após desembolsos. Capital em Fenix, manutenção e novos projetos deve ser examinado com dívida e direitos por entidade.",
+        "titulo": "Dos testes à remuneração do armazenamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-27",
+        "descricao": "Resultado previsto no calendário do emissor; revisar suprimento, caixa e estágio do armazenamento.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em CLP 219,73, com retorno esperado +51,65%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Disponibilidade e contratação equilibradas permitem entregar energia economicamente rentável; armazenamento entra em operação com caixa compatível com o capital investido. O cenário otimista calculado pelo código é CLP 268,89.",
+      "pessimista": "Descalces físicos e restrições sistêmicas elevam compras e custos, enquanto atraso de projetos ou sobrecusto reduz o retorno do capital. O cenário pessimista calculado pelo código é CLP 176,32."
+    },
+    "comentario_valuation": "Preço de referência CLP 150,53 e alvo do modelo aberto CLP 219,73, com potencial +45,97%. Retorno total esperado +51,65% e custo do capital próprio 8,89%. A dispersão entre métodos é 11,86%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é CLP 161,96; a diferença +35,67% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota. Avaliar geração e contratos com hidrologia e custo de suprimento normalizados. Armazenamento requer fluxo líquido por horário, manutenção e reposição; projeto em teste não recebe economia de ativo maduro. Separar Fenix e dívida pela participação econômica.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A tese falha se renováveis aumentam geração em horários de preço deprimido ou com restrição de rede, enquanto contratos exigem compras caras. Baterias podem consumir capital sem corrigir esse descalce. Retorno de Santa María ou recuperação de hidrologia não demonstra melhora estrutural se manutenção, gás de Fenix e capital total continuam limitando caixa.",
+        "titulo": "Flexibilidade pode não alcançar o horário valioso"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.CL_COLBUN.preco",
+        "rotulo": "Preço de referência",
+        "valor": "CLP 150,53"
+      },
+      {
+        "fato": "val.CL_COLBUN.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "CLP 219,73"
+      },
+      {
+        "fato": "val.CL_COLBUN.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+45,97%"
+      },
+      {
+        "fato": "val.CL_COLBUN.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.CL_COLBUN.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.CL_COLBUN.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "CLP 268,89"
+      },
+      {
+        "fato": "val.CL_COLBUN.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CL_COLBUN.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "CLP 176,32"
+      },
+      {
+        "fato": "val.CL_COLBUN.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CL_COLBUN.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "8,89%"
+      },
+      {
+        "fato": "val.CL_COLBUN.wacc",
+        "rotulo": "WACC",
+        "valor": "7,75%"
+      },
+      {
+        "fato": "val.CL_COLBUN.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,09%"
+      },
+      {
+        "fato": "val.CL_COLBUN.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+51,65%"
+      },
+      {
+        "fato": "val.CL_COLBUN.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+49,52%"
+      },
+      {
+        "fato": "val.CL_COLBUN.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "9,8x"
+      },
+      {
+        "fato": "val.CL_COLBUN.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,8x"
+      },
+      {
+        "fato": "val.CL_COLBUN.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "CLP 161,96"
+      },
+      {
+        "fato": "val.CL_COLBUN.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+35,67%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "Colbún",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Resultados e calendário do emissor",
+        "url": "https://www.colbun.cl/corporativo/inversionistas/informacion-financiera/resultados-trimestrales"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Colbún",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Análise de resultados, projetos e riscos",
+        "url": "https://www.colbun.cl/docs/default-source/resultados-trimestrales-2026/an%C3%A1lisis-razonado-2q26-(20260728-vf).pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Geração disponível não cobre contratos sem compras de margem desfavorável.",
+      "Armazenamento opera sem remuneração que cubra capital, perdas e degradação.",
+      "Interrupções de gás ou manutenção comprometem caixa de Fenix ou Santa María.",
+      "Cronograma e orçamento dos projetos mudam sem financiamento conciliado."
+    ],
+    "governanca": "A diligência deve conciliar controle, participações de subsidiárias e caixa distribuível por entidade. Políticas de contratação, cobertura e investimentos precisam proteger o acionista diante de risco físico e decisões de expansão.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Separar Chile e Fenix, trimestre e semestre. Acompanhar geração disponível, hidrologia, gás, preço capturado e compras para entrega contratada, com efeitos de cancelamento de carvão isolados. Verificar se a recuperação de Santa María se sustenta após manutenção.",
+        "titulo": "Balanço físico e custo de cumprir contratos"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Conferir passagem de testes ou construção para operação comercial, conexão, ciclos, degradação e garantias. Confrontar desembolsos e financiamento com receita líquida nos horários capturados; o calendário de resultado é uma ocasião de revisão, não confirmação prévia do avanço.",
+        "titulo": "Armazenamento em operação econômica"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_COLBUN.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+51,65%"
+          },
+          {
+            "fato": "val.CL_COLBUN.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "8,89%"
+          },
+          {
+            "fato": "val.CL_COLBUN.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "11,86%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +51,65%, custo do capital 8,89% e dispersão entre métodos 11,86% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "CL_COLBUN",
+    "lacunas_de_dados": [
+      "Notas financeiras, caixa consolidado e retorno por projeto não foram integralmente conciliados.",
+      "Preço e custo por horário, contratos e obrigações de transmissão exigem dados homogêneos.",
+      "Cronograma atualizado, garantias e economia de armazenamento permanecem a comprovar.",
+      "Guidance e tom da gestão não foram classificados em material integral.",
+      "Percepção do mercado, posicionamento e interesse vendido não têm comprovação suficiente.",
+      "Disponibilidade histórica dos documentos e reconciliação integral ao modelo recebido não foram comprovadas."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Geradora e comercializadora de energia no Chile, com operação peruana por Fenix. O resultado depende do balanço entre energia própria, contratos, compras e vendas no mercado de curto prazo; capacidade instalada não mede margem econômica disponível.",
+    "nome": "Colbún",
+    "o_que_mudou": null,
+    "pais": "Chile",
+    "pares": [
+      {
+        "issuer_id": "AR_PAMPA",
+        "nome": "Pampa Energía"
+      },
+      {
+        "issuer_id": "BR_ALUPAR",
+        "nome": "Alupar"
+      },
+      {
+        "issuer_id": "BR_AUREN",
+        "nome": "Auren Energia"
+      },
+      {
+        "issuer_id": "BR_AXIA",
+        "nome": "Axia Energia (ex-Eletrobras)"
+      },
+      {
+        "issuer_id": "BR_CEMIG",
+        "nome": "Cemig"
+      },
+      {
+        "issuer_id": "BR_COMPASS",
+        "nome": "Compass Gás e Energia"
+      },
+      {
+        "issuer_id": "BR_COPASA",
+        "nome": "Copasa"
+      },
+      {
+        "issuer_id": "BR_COPEL",
+        "nome": "Copel"
+      }
+    ],
+    "percepcao_variante": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A alternativa ao crescimento de capacidade é testar a margem física por horário e o custo completo da flexibilidade. Esse teste permite distinguir recuperação transitória de uma usina de contribuição recorrente do armazenamento. Não há evidência suficiente para afirmar que a diferença esteja ausente do preço.",
+        "titulo": "Valor da flexibilidade precisa ser demonstrado"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A cadeia é disponibilidade por fonte e horário → suprimento das obrigações contratadas → preço líquido de combustível e compras → caixa após manutenção. A condição decisiva é geração economicamente útil nos horários de entrega, não capacidade nominal. Armazenamento só melhora a tese se conexão, perdas, degradação e remuneração sustentarem retorno do capital depois dos testes.",
+        "titulo": "Contrato deve ser atendido com margem física"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_COLBUN.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "CLP 150,53"
+          },
+          {
+            "fato": "val.CL_COLBUN.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "CLP 219,73"
+          },
+          {
+            "fato": "val.CL_COLBUN.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+45,97%"
+          },
+          {
+            "fato": "val.CL_COLBUN.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "8,89%"
+          },
+          {
+            "fato": "val.CL_COLBUN.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+51,65%"
+          }
+        ],
+        "texto": "Preço de referência CLP 150,53 e alvo CLP 219,73, com potencial +45,97%. A hipótese de investimento deve ser confrontada com o custo do capital 8,89% e retorno esperado +51,65%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Um portfólio de tecnologias e contratos pode apoiar continuidade de atendimento e flexibilidade de despacho. A vantagem precisa aparecer no preço líquido realizado e no custo de suprir cada obrigação. Crescer capacidade em uma região sujeita a restrição de transmissão pode acrescentar energia sem acrescentar caixa.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:28:34.433914+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O trimestre chileno passou de comprador a vendedor líquido no mercado de curto prazo, com retorno de Santa María e maior contribuição eólica, apesar da hidrologia fraca. O lucro inclui custos extraordinários de cancelamento de contratos de carvão; Fenix sofreu interrupção do transporte de gás no semestre. Comparar trimestre e semestre exige bases próprias.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que disponibilidade das usinas e contratação prudente sustentem caixa depois de combustível, manutenção e capital. Renováveis e armazenamento podem melhorar a entrega nos horários remuneradores, desde que conexão, preço capturado e custo do investimento confirmem retorno. Diversificação tecnológica deve reduzir descalces físicos, sem presumir proteção completa contra seca ou falhas. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +51,65%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Seca, falha de equipamento, interrupção de gás ou restrição de transmissão pode elevar o custo de cumprir contratos. Obras, licenciamento e financiamento podem consumir caixa antes da remuneração. A contratação deve ser avaliada junto à geração disponível em cada horário."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_COLBUN.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+35,67%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +35,67%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Utilidades públicas",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Colbún — contrato, disponibilidade física e retorno do armazenamento",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A pesquisa distingue posição física, EBITDA e resultado atribuível, preservando fatores não recorrentes e bases de comparação. Comentário do emissor sobre tramitação legislativa não comprova promulgação nem autoriza incorporar efeito tributário ao modelo.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar disponibilidade, geração por fonte, posição física contratada, combustível e preço capturado por horário. Revisar caixa depois de manutenção, necessidade de compras e desempenho dos sistemas de armazenamento. Verificar conexão, degradação das baterias, obrigações de contratos e retorno atribuível de Fenix.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.CL_COLBUN.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "8,89%"
+          },
+          {
+            "fato": "val.CL_COLBUN.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "11,86%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 8,89% e a dispersão entre métodos 11,86%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

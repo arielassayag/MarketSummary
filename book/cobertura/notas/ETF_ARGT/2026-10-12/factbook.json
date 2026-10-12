@@ -1,0 +1,111 @@
+{
+  "as_of": "2026-10-09",
+  "facts": {
+    "etf.ARGT.cobertura": {
+      "fact_id": "etf.ARGT.cobertura",
+      "formatted": "10,45%",
+      "formula": "Σ pesos com preço-alvo da casa",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_ARGT.json"
+      ],
+      "issuer_id": null,
+      "name": "Peso coberto por modelos da casa no ARGT",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.104531
+    },
+    "etf.ARGT.preco": {
+      "fact_id": "etf.ARGT.preco",
+      "formatted": "US$ 88,21",
+      "formula": "fechamento público na moeda da linha",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_ARGT.json"
+      ],
+      "issuer_id": null,
+      "name": "Preço de referência do ETF",
+      "point_in_time": false,
+      "unit": "preco",
+      "value": 88.21
+    },
+    "etf.ARGT.preco_alvo": {
+      "fact_id": "etf.ARGT.preco_alvo",
+      "formatted": "US$ 82,92",
+      "formula": "TP_e = P_e × (1 + R_e − DY)",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_ARGT.json"
+      ],
+      "issuer_id": null,
+      "name": "Preço-alvo de 12 meses do ARGT",
+      "point_in_time": false,
+      "unit": "preco",
+      "value": 82.9219
+    },
+    "etf.ARGT.r_bu": {
+      "fact_id": "etf.ARGT.r_bu",
+      "formatted": "-1,83%",
+      "formula": "alvos da casa por posição",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_ARGT.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno bottom-up do ARGT",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": -0.0182532
+    },
+    "etf.ARGT.r_td": {
+      "fact_id": "etf.ARGT.r_td",
+      "formatted": "-4,98%",
+      "formula": "P/L justificado e Grinold–Kroner",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_ARGT.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno top-down do ARGT",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": -0.0498498
+    },
+    "etf.ARGT.retorno_esperado": {
+      "fact_id": "etf.ARGT.retorno_esperado",
+      "formatted": "-4,80%",
+      "formula": "R_e = ω × R_BU + (1 − ω) × R_TD",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_ARGT.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno esperado de 12 meses do ARGT",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": -0.0480149
+    },
+    "etf.ARGT.ter": {
+      "fact_id": "etf.ARGT.ter",
+      "formatted": "0,59%",
+      "formula": "parâmetro público do produto; não inclui todos os custos de negociação",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_ARGT.json"
+      ],
+      "issuer_id": null,
+      "name": "Taxa de administração declarada no retrato",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.0059
+    },
+    "etf.ARGT.visao_ilf": {
+      "fact_id": "etf.ARGT.visao_ilf",
+      "formatted": "Negativa",
+      "formula": "IR = (R_e − R_ILF) ÷ TE",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_ARGT.json"
+      ],
+      "issuer_id": null,
+      "name": "Visão do ARGT relativa ao ILF",
+      "point_in_time": false,
+      "unit": "ratio",
+      "value": -0.354869
+    }
+  },
+  "is_synthetic": false,
+  "snapshot_id": "store-2026-10-02+5-2026-10-09:etf:ETF_ARGT:14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c"
+}

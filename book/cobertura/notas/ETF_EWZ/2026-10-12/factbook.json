@@ -1,0 +1,111 @@
+{
+  "as_of": "2026-10-09",
+  "facts": {
+    "etf.EWZ.cobertura": {
+      "fact_id": "etf.EWZ.cobertura",
+      "formatted": "68,36%",
+      "formula": "Σ pesos com preço-alvo da casa",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_EWZ.json"
+      ],
+      "issuer_id": null,
+      "name": "Peso coberto por modelos da casa no EWZ",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.683595
+    },
+    "etf.EWZ.preco": {
+      "fact_id": "etf.EWZ.preco",
+      "formatted": "US$ 42,59",
+      "formula": "fechamento público na moeda da linha",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_EWZ.json"
+      ],
+      "issuer_id": null,
+      "name": "Preço de referência do ETF",
+      "point_in_time": false,
+      "unit": "preco",
+      "value": 42.59
+    },
+    "etf.EWZ.preco_alvo": {
+      "fact_id": "etf.EWZ.preco_alvo",
+      "formatted": "US$ 43,68",
+      "formula": "TP_e = P_e × (1 + R_e − DY)",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_EWZ.json"
+      ],
+      "issuer_id": null,
+      "name": "Preço-alvo de 12 meses do EWZ",
+      "point_in_time": false,
+      "unit": "preco",
+      "value": 43.6775
+    },
+    "etf.EWZ.r_bu": {
+      "fact_id": "etf.EWZ.r_bu",
+      "formatted": "+1,04%",
+      "formula": "alvos da casa por posição",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_EWZ.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno bottom-up do EWZ",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.010409
+    },
+    "etf.EWZ.r_td": {
+      "fact_id": "etf.EWZ.r_td",
+      "formatted": "+11,69%",
+      "formula": "P/L justificado e Grinold–Kroner",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_EWZ.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno top-down do EWZ",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.116923
+    },
+    "etf.EWZ.retorno_esperado": {
+      "fact_id": "etf.EWZ.retorno_esperado",
+      "formatted": "+7,65%",
+      "formula": "R_e = ω × R_BU + (1 − ω) × R_TD",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_EWZ.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno esperado de 12 meses do EWZ",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.0764715
+    },
+    "etf.EWZ.ter": {
+      "fact_id": "etf.EWZ.ter",
+      "formatted": "0,59%",
+      "formula": "parâmetro público do produto; não inclui todos os custos de negociação",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_EWZ.json"
+      ],
+      "issuer_id": null,
+      "name": "Taxa de administração declarada no retrato",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.0059
+    },
+    "etf.EWZ.visao_ilf": {
+      "fact_id": "etf.EWZ.visao_ilf",
+      "formatted": "Neutra",
+      "formula": "IR = (R_e − R_ILF) ÷ TE",
+      "inputs": [
+        "cobertura/2026-10-09/etfs/ETF_EWZ.json"
+      ],
+      "issuer_id": null,
+      "name": "Visão do EWZ relativa ao ILF",
+      "point_in_time": false,
+      "unit": "ratio",
+      "value": 0.151066
+    }
+  },
+  "is_synthetic": false,
+  "snapshot_id": "store-2026-10-02+5-2026-10-09:etf:ETF_EWZ:14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c"
+}

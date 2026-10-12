@@ -1,0 +1,458 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "6b046166f8c718f60fcdfddd9603e63e91a50260e50e8f593d777af7da4c7274",
+    "factbook": "1ebf585d0f1359debb96484619b2dfd2b89f75a706980336313ad42e677bdc70",
+    "nota_json": "7ce043b68a420ea6bd3a4510e596c2738dd10f92c6a806439b9006fe74931542"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_ENEVA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-11",
+  "published_at": "2026-10-12T03:19:56.750982+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "Caixa operacional aumenta, mas o saldo final diminui após investimento e financiamento. Liberação de garantias e recebimento de saldo anterior não demonstram recorrência. Antecipação de recebíveis, arrendamento e distribuição a minoritários têm obrigações próprias. A venda de Pecém foi concluída com pagamento de fechamento; a permuta de Itaqui continua sujeita a condições no documento posterior.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-11",
+        "descricao": "Divulgação programada de resultados; rever contratos iniciados, novo perímetro, disponibilidade, expansão e caixa.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F5"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 12,99, com retorno esperado -57,83%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Disponibilidade e integração sustentam margem contratual, os projetos entram em operação com retorno e o caixa remunera capital após obrigações. O cenário otimista calculado pelo código é R$ 16,30.",
+      "pessimista": "Compras, restrições, exploração e obras exigem recursos, enquanto financiamento e menor margem comercial reduzem caixa atribuível. O cenário pessimista calculado pelo código é R$ 10,42."
+    },
+    "comentario_valuation": "Preço de referência R$ 30,81 e alvo do modelo aberto R$ 12,99, com potencial -57,83%. Retorno total esperado -57,83% e custo do capital próprio 10,22%. A dispersão entre métodos é 24,48%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 31,82; a diferença -59,16% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "A hipótese enfraquece se disponibilidade e produção não sustentam contratos enquanto obras e serviço da dívida absorvem recursos. Maior receita pode acompanhar lucro menor e efeito comercial transitório. Venda de ativos e recebimentos extraordinários não substituem retorno dos projetos remanescentes nem resolvem eventual diluição por capital.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_ENEVA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 30,81"
+      },
+      {
+        "fato": "val.BR_ENEVA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 12,99"
+      },
+      {
+        "fato": "val.BR_ENEVA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-57,83%"
+      },
+      {
+        "fato": "val.BR_ENEVA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_ENEVA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_ENEVA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 16,30"
+      },
+      {
+        "fato": "val.BR_ENEVA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_ENEVA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 10,42"
+      },
+      {
+        "fato": "val.BR_ENEVA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_ENEVA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,22%"
+      },
+      {
+        "fato": "val.BR_ENEVA.wacc",
+        "rotulo": "WACC",
+        "valor": "9,15%"
+      },
+      {
+        "fato": "val.BR_ENEVA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_ENEVA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-57,83%"
+      },
+      {
+        "fato": "val.BR_ENEVA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-54,14%"
+      },
+      {
+        "fato": "val.BR_ENEVA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "40,0x"
+      },
+      {
+        "fato": "val.BR_ENEVA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,9x"
+      },
+      {
+        "fato": "val.BR_ENEVA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 31,82"
+      },
+      {
+        "fato": "val.BR_ENEVA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-59,16%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Eneva",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil integrado, modelos de gás, reservas e projetos",
+        "url": "https://ri.eneva.com.br/a-eneva/quem-somos/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Eneva",
+        "publicado_em": "2026-08-12",
+        "tipo": "Relações com investidores",
+        "titulo": "Release de resultados arquivado na CVM, segmentos, fluxo e financiamento",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1556606&numSequencia=1081312&numVersao=1"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Eneva",
+        "publicado_em": "2026-08-31",
+        "tipo": "Relações com investidores",
+        "titulo": "Fato relevante de conclusão e pagamento de fechamento da venda de Pecém",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/6c663f3b-ae5a-4692-81d3-ab23ee84c1de/d31b443d-df26-23c1-e4a1-218d953b9287?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F4",
+        "instituicao": "Eneva",
+        "publicado_em": "2026-09-02",
+        "tipo": "Relações com investidores",
+        "titulo": "Fato relevante de permuta condicional de Itaqui e cancelamento da opção no Hub Ceará",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/6c663f3b-ae5a-4692-81d3-ab23ee84c1de/dcfb9a21-2f61-38a1-ee16-86ab98a606dc?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F5",
+        "instituicao": "Eneva",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário público de eventos futuros utilizado pelo RI",
+        "url": "https://api.mziq.com/mzevents/events/future/6c663f3b-ae5a-4692-81d3-ab23ee84c1de/pt-br"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Disponibilidade, suprimento e compras deixam de sustentar margem depois das obrigações contratuais.",
+      "Desenvolvimento de reservas, manutenção e expansão consomem capital sem retorno suficiente.",
+      "Arbitragem, garantias e recebimentos extraordinários explicam caixa sem contribuição recorrente equivalente.",
+      "Novos documentos alteram fechamento da permuta, capital, direitos e recursos atribuíveis."
+    ],
+    "governanca": "Autorizações de capital para pagamentos de aquisição não comprovam emissão e crédito finais sem documentação. Contrato de financiamento assinado não demonstra saque integral. O fato posterior confirma venda e pagamento de Pecém, conservando preço adicional contingente. A permuta de Itaqui e participação no terminal exige condições precedentes; a opção de compra da Diamante no Hub Ceará foi cancelada sem exercício. Projetos operacionais e em construção preservam seus estados.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "Monitorar disponibilidade e remuneração fixa por usina, despacho e margem variável depois de combustível e compras. Conferir desenvolvimento de reservas, manutenção e projetos antes de produção e operação comercial. Separar volumes mínimos de contrato, entrega física e transações internas. Conciliar caixa, antecipações, arrendamentos, minoritários e novos direitos de capital.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ENEVA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-57,83%"
+          },
+          {
+            "fato": "val.BR_ENEVA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,22%"
+          },
+          {
+            "fato": "val.BR_ENEVA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "24,48%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -57,83%, custo do capital 10,22% e dispersão entre métodos 24,48% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_ENEVA",
+    "lacunas_de_dados": [
+      "Demonstrações completas, reservas por ativo e fluxo livre não foram integralmente reconciliados.",
+      "Contratos, antecipações, arrendamentos e participação de minoritários exigem conciliação detalhada.",
+      "Capital autorizado para pagamentos de aquisição não foi reconciliado com emissão e crédito finais.",
+      "Fechamento da permuta de Itaqui e recebimento dos preços contingentes não foram confirmados.",
+      "Custo final, condições de disponibilidade e retorno dos projetos em construção permanecem a comprovar.",
+      "Certificação de reservas, recursos contingentes e capacidade física têm datas e bases próprias.",
+      "Guidance, tom agregado, vantagem relativa e percepção do mercado não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Empresa integrada de produção de gás e condensado, geração termelétrica e solar e comercialização de energia e gás. Combina produção própria, combustível comprado, terminal de gás liquefeito e logística para clientes fora da malha. Capacidade operacional, contratada e em construção têm estados diferentes. Reservas certificadas e recursos contingentes não são produção nem recebimento corrente.",
+    "nome": "Eneva",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ALUPAR",
+        "nome": "Alupar"
+      },
+      {
+        "issuer_id": "BR_AUREN",
+        "nome": "Auren Energia"
+      },
+      {
+        "issuer_id": "BR_AXIA",
+        "nome": "Axia Energia (ex-Eletrobras)"
+      },
+      {
+        "issuer_id": "BR_CEMIG",
+        "nome": "Cemig"
+      },
+      {
+        "issuer_id": "BR_COMPASS",
+        "nome": "Compass Gás e Energia"
+      },
+      {
+        "issuer_id": "BR_COPASA",
+        "nome": "Copasa"
+      },
+      {
+        "issuer_id": "BR_COPEL",
+        "nome": "Copel"
+      },
+      {
+        "issuer_id": "BR_CPFL",
+        "nome": "CPFL Energia"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que contratos de capacidade e integração de gás sustentem margem realizada e retorno depois de manutenção, expansão e financiamento. A condição decisiva é disponibilidade remunerada com reservas, suprimento e capital suficientes. Despacho, receita e capacidade contratada não demonstram crescimento uniforme do caixa livre, e arbitragem comercial não foi tratada como contribuição permanente.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ENEVA.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 30,81"
+          },
+          {
+            "fato": "val.BR_ENEVA.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 12,99"
+          },
+          {
+            "fato": "val.BR_ENEVA.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-57,83%"
+          },
+          {
+            "fato": "val.BR_ENEVA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,22%"
+          },
+          {
+            "fato": "val.BR_ENEVA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-57,83%"
+          }
+        ],
+        "texto": "Preço de referência R$ 30,81 e alvo R$ 12,99, com potencial -57,83%. A hipótese de investimento deve ser confrontada com o custo do capital 10,22% e retorno esperado -57,83%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Produção, infraestrutura e logística podem apoiar soluções de suprimento, mas retorno depende de contrato, crédito, disponibilidade e custo do combustível. Usinas com remuneração fixa têm leitura diferente da geração e comercialização variáveis. Reservas precisam de desenvolvimento e reposição; escala física e projetos contratados não comprovam vantagem relativa ou retorno já realizado.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T03:19:56.750982+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Receita cresce na comparação anual, enquanto resultado operacional e lucro atribuível diminuem. O intervalo entre antigos e novos contratos de usinas a gás afeta a comparação; os novos contratos já haviam começado na data do release. Parnaíba e produção de gás melhoram, mas comercialização de gás na malha tem menor arbitragem, solar sofre compras e restrições, e o perímetro do carvão muda.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que contratos de capacidade e integração de gás sustentem margem realizada e retorno depois de manutenção, expansão e financiamento. A condição decisiva é disponibilidade remunerada com reservas, suprimento e capital suficientes. Despacho, receita e capacidade contratada não demonstram crescimento uniforme do caixa livre, e arbitragem comercial não foi tratada como contribuição permanente. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado -57,83%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Indisponibilidade, suprimento, reservas, restrições e crédito podem reduzir margem. Expansão e financiamento consomem caixa antes do retorno. Arbitragem, antecipação de recebíveis e preço contingente de alienação não são geração recorrente."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ENEVA.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-59,16%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -59,16%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Utilidades públicas",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Eneva — integração de gás e energia depois de disponibilidade, expansão e capital",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A geração pode ter margem fixa positiva mesmo sem despacho relevante, e penalidades de disponibilidade podem aparecer com defasagem. Produção e logística interna não foram somadas novamente ao consolidado. O encerramento antecipado do contrato de gás com a Vale teve compensação recebida depois do trimestre, sem equivaler a nova receita recorrente. Alteração de depreciação, proteção financeira e imposto diferido exigem bases próprias.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar disponibilidade e remuneração fixa por usina, despacho e margem variável depois de combustível e compras. Conferir desenvolvimento de reservas, manutenção e projetos antes de produção e operação comercial. Separar volumes mínimos de contrato, entrega física e transações internas. Conciliar caixa, antecipações, arrendamentos, minoritários e novos direitos de capital.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_ENEVA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,22%"
+          },
+          {
+            "fato": "val.BR_ENEVA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "24,48%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 10,22% e a dispersão entre métodos 24,48%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

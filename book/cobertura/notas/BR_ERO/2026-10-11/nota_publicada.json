@@ -1,0 +1,493 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "4b21ffb409a406f3ee527a30518558b5f241faf105cca4fd1e4c85fe1de26b5c",
+    "factbook": "9e5bde064bd3e79304e333b206ab07fe76ff6423b88c3c8c805d9ac25e914b77",
+    "nota_json": "d6722fc73620f5e14f5fabbdbce6de379873efff6c8858183476d26acf8e5b41"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_ERO",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-02",
+  "published_at": "2026-10-12T03:21:32.820527+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "Dívida líquida diminui no trimestre, e a companhia informa amortização adicional depois do período. A liquidez apresentada inclui linha disponível não sacada. Investimento, juros, arrendamentos e restituição de principal têm classificações próprias no fluxo. Streaming exige entregar parte do ouro a preços contratuais; caixa antecipado não é remuneração sem obrigação. Covenants podem limitar distribuição e investimento. Desenvolvimento de Furnas exige etapas antes da eventual aquisição de participação.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Evolução da infraestrutura, custos e resultados operacionais; separar produção minerada, estoque histórico e proteção cambial.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F5"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": null,
+        "descricao": "Estudos, licenciamento e etapas de Furnas; reavaliar viabilidade, financiamento e aquisição efetiva da participação.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          }
+        ],
+        "tipo": "outro"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em US$ 34,32, com retorno esperado -4,61%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Maior utilização e desenvolvimento melhoram produtividade, remuneram reposição e reduzem dívida, preservando retorno por ação depois de streaming e financiamento. O cenário otimista calculado pelo código é US$ 43,50.",
+      "pessimista": "Teores, preços e disponibilidade deterioram enquanto desenvolvimento e obrigações contratuais consomem caixa e exigem novo capital. O cenário pessimista calculado pelo código é US$ 24,57."
+    },
+    "comentario_valuation": "Preço de referência US$ 35,98 e alvo do modelo aberto US$ 34,32, com potencial -4,61%. Retorno total esperado -4,61% e custo do capital próprio 11,31%. A dispersão entre métodos é 10,72%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é US$ 40,73; a diferença -15,74% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "A hipótese enfraquece se ganhos dependem de metal mais caro, estoque histórico ou proteção, sem produtividade equivalente. Ampliação de alimentação com teor menor pode elevar custo completo. Infraestrutura e Furnas exigem capital antes de retorno; streaming e covenants podem restringir a transmissão de caixa mesmo com margem operacional favorável.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_ERO.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 35,98"
+      },
+      {
+        "fato": "val.BR_ERO.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 34,32"
+      },
+      {
+        "fato": "val.BR_ERO.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-4,61%"
+      },
+      {
+        "fato": "val.BR_ERO.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_ERO.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_ERO.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 43,50"
+      },
+      {
+        "fato": "val.BR_ERO.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "33,05%"
+      },
+      {
+        "fato": "val.BR_ERO.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 24,57"
+      },
+      {
+        "fato": "val.BR_ERO.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "32,31%"
+      },
+      {
+        "fato": "val.BR_ERO.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,31%"
+      },
+      {
+        "fato": "val.BR_ERO.wacc",
+        "rotulo": "WACC",
+        "valor": "10,47%"
+      },
+      {
+        "fato": "val.BR_ERO.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.BR_ERO.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-4,61%"
+      },
+      {
+        "fato": "val.BR_ERO.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-14,28%"
+      },
+      {
+        "fato": "val.BR_ERO.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "7,6x"
+      },
+      {
+        "fato": "val.BR_ERO.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "3,1x"
+      },
+      {
+        "fato": "val.BR_ERO.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 40,73"
+      },
+      {
+        "fato": "val.BR_ERO.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-15,74%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Ero",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Portfólio, infraestrutura e estratégia de crescimento",
+        "url": "https://www.ero.com/investors/investor-overview/why-invest-in-ero/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Ero",
+        "publicado_em": "2026-08-05",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultados, orientação por metal e conciliação das medidas gerenciais",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/1951db45-c927-4b21-b514-7cb902782309/85441fa1-7d82-bb52-816a-4a16e31e794a?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Ero",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "MD&A com resultado, caixa, dívida, covenants e compromisso de ouro",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/1951db45-c927-4b21-b514-7cb902782309/2f3a9cf0-aade-1f2e-e01f-f60e31caebad?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F4",
+        "instituicao": "Ero",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Furnas: propriedade atual, earn-in e limites da avaliação preliminar",
+        "url": "https://www.ero.com/what-we-do/furnas-project/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F5",
+        "instituicao": "Ero",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Apresentação do evento de investidores com custos e orientação por operação",
+        "url": "https://www.erocapitalmarketsday.com/_files/ugd/248aa8_6da8452489ac4e9a8f01718afb2ce8e3.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Produtividade não confirma margem depois de reposição e desenvolvimento.",
+      "Estoque histórico e proteção explicam caixa sem fonte recorrente equivalente.",
+      "Streaming, covenants e financiamento limitam retorno econômico por ação.",
+      "Novos estudos alteram recursos, viabilidade, participação ou necessidades de capital."
+    ],
+    "governanca": "A leitura separa lucro atribuído, consolidado e medidas ajustadas, com classes e diluição a conciliar. A administração afirma cumprimento dos covenants na data das demonstrações; isso não comprova condição futura. Furnas permanece de propriedade da Vale Base Metals, com direito de aquisição por etapas para a Ero. O perfil usa linguagem de construção do projeto, enquanto a página específica descreve estudo preliminar e viabilidade a demonstrar; prevalecem esses limites na tese.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          }
+        ],
+        "texto": "Monitorar teor, recuperação, alimentação e vendas por operação, separando ouro minerado e concentrado histórico. Conciliar custo completo, streaming, proteção liquidada, desenvolvimento e manutenção. Acompanhar dívida, juros, arrendamentos e covenants; testar infraestrutura e estudos de Furnas antes de atribuir caixa futuro.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ERO.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-4,61%"
+          },
+          {
+            "fato": "val.BR_ERO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,31%"
+          },
+          {
+            "fato": "val.BR_ERO.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "10,72%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -4,61%, custo do capital 11,31% e dispersão entre métodos 10,72% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_ERO",
+    "lacunas_de_dados": [
+      "Demonstrações completas, streaming e caixa atribuível por entidade não foram integralmente reconciliados.",
+      "Custos por metal e crédito de subprodutos precisam de comparação equivalente.",
+      "Vida de mina, reposição, fechamento e licenças não foram integralmente diligenciados.",
+      "Furnas tem recursos inferidos e obrigações de earn-in; viabilidade e aquisição não estão comprovadas.",
+      "A linguagem de construção do perfil diverge do estágio descrito na página específica de Furnas.",
+      "Guidance tem revisões por indicador, sem direção agregada, tom ou percepção do mercado classificados.",
+      "Datas futuras dos calendários dinâmicos não foram conciliadas em registro primário arquivado."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Produtora com operações de cobre em Caraíba e Tucumã e de ouro em Xavantina, no Brasil. Receita depende de teor, recuperação, volume vendido, preço e termos de refino. Ouro de concentrado histórico tem base distinta da extração corrente. Furnas é um projeto de cobre e ouro com direito de aquisição de participação por etapas, condicionado a estudos e obrigações; avaliação preliminar e recurso inferido não equivalem a reserva economicamente demonstrada ou mina produtiva.",
+    "nome": "Ero Copper",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRADESPAR",
+        "nome": "Bradespar"
+      },
+      {
+        "issuer_id": "BR_CBA",
+        "nome": "Companhia Brasileira de Alumínio"
+      },
+      {
+        "issuer_id": "BR_CMIN",
+        "nome": "CSN Mineração"
+      },
+      {
+        "issuer_id": "BR_CSN",
+        "nome": "CSN Siderúrgica Nacional"
+      },
+      {
+        "issuer_id": "BR_GERDAU",
+        "nome": "Gerdau"
+      },
+      {
+        "issuer_id": "BR_GOAU",
+        "nome": "Metalúrgica Gerdau"
+      },
+      {
+        "issuer_id": "BR_SUZANO",
+        "nome": "Suzano"
+      },
+      {
+        "issuer_id": "BR_UNIPAR",
+        "nome": "Unipar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que utilização industrial e produtividade subterrânea elevem caixa depois do reinvestimento e reduzam dependência de financiamento. A condição decisiva é conciliar reposição, desenvolvimento, streaming de ouro e capital por operação. Tucumã e infraestrutura de Caraíba podem apoiar escala, mas produção maior precisa remunerar custo de extração e investimento. Furnas oferece uma possibilidade condicionada, cujo valor não pode ser presumido integralmente atribuível ou executável.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ERO.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "US$ 35,98"
+          },
+          {
+            "fato": "val.BR_ERO.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "US$ 34,32"
+          },
+          {
+            "fato": "val.BR_ERO.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-4,61%"
+          },
+          {
+            "fato": "val.BR_ERO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,31%"
+          },
+          {
+            "fato": "val.BR_ERO.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-4,61%"
+          }
+        ],
+        "texto": "Preço de referência US$ 35,98 e alvo US$ 34,32, com potencial -4,61%. A hipótese de investimento deve ser confrontada com o custo do capital 11,31% e retorno esperado -4,61%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "Infraestrutura, conhecimento de depósitos e gestão integrada podem favorecer eficiência. A comparação exige distinguir teor, estágio, metal e custo depois de subprodutos, refino e transporte. Melhores termos comerciais e recuperação de concentrado antigo têm fontes diferentes de recorrência. Proximidade de Furnas a outras minas não comprova continuidade geológica; avaliação preliminar inclui recursos inferidos e não confirma viabilidade econômica nem participação adquirida.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T03:21:32.820527+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita, EBITDA ajustado e fluxo operacional crescem sequencialmente e na comparação anual. O lucro atribuído reportado recua no trimestre, enquanto o ajustado aumenta; câmbio, derivativos, tributação e remuneração em ações exigem conciliação própria. Recuperação de ouro em estoque histórico contribui para vendas e tem base distinta de produção minerada. Ganhos liquidados de proteção cambial mitigam custo em reais, sem demonstrar eficiência operacional permanente.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que utilização industrial e produtividade subterrânea elevem caixa depois do reinvestimento e reduzam dependência de financiamento. A condição decisiva é conciliar reposição, desenvolvimento, streaming de ouro e capital por operação. Tucumã e infraestrutura de Caraíba podem apoiar escala, mas produção maior precisa remunerar custo de extração e investimento. Furnas oferece uma possibilidade condicionada, cujo valor não pode ser presumido integralmente atribuível ou executável. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado -4,61%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Preço, câmbio, teor e disponibilidade podem reduzir caixa. Streaming, desenvolvimento, dívida e reposição limitam retorno ao acionista. Recursos inferidos e projeções de Furnas não comprovam reserva, participação adquirida ou execução."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ERO.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-15,74%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -15,74%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Ero — cobre e ouro depois de reposição, streaming e disciplina de capital",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O resultado mantém volumes de cobre e ouro e custos de cobre, eleva faixas de custos de ouro e aumenta investimento em infraestrutura. A apresentação posterior repete essas faixas e remete ao release; isso não é revisão agregada única. A orientação de ouro exclui concentrado histórico e prevê produção minerada perto do limite inferior. Estimativas de câmbio e proteção têm premissas explícitas. Os materiais posteriores não atualizam retrospectivamente o modelo recebido.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar teor, recuperação, alimentação e vendas por operação, separando ouro minerado e concentrado histórico. Conciliar custo completo, streaming, proteção liquidada, desenvolvimento e manutenção. Acompanhar dívida, juros, arrendamentos e covenants; testar infraestrutura e estudos de Furnas antes de atribuir caixa futuro.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_ERO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,31%"
+          },
+          {
+            "fato": "val.BR_ERO.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "10,72%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,31% e a dispersão entre métodos 10,72%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

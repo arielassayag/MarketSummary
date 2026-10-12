@@ -1,0 +1,457 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "2c19d6b249b1587f0bf28c9a9b0feb038ed9ba352a4b1f700810b9ca81eb72a4",
+    "factbook": "3d47365107bad3ab895324ac073cc15a4bd5b00ffe9d829d5515c31ac110cca2",
+    "nota_json": "c9904e4ca55a7b388039129aede3fbebcc64692ca30c375b49e9240e2b2e9af9"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_MAGALU",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-05",
+  "published_at": "2026-10-12T03:21:12.087275+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A dívida bruta diminuiu anualmente, mas a liquidez gerencial inclui recebíveis e difere do caixa com aplicações. O saldo líquido ajustado recuou sequencialmente, enquanto a dívida líquida convencional melhorou; as definições têm leituras próprias. Tecnologia, logística, crédito e expansão competem com juros, aluguel e proventos. Créditos fiscais e participações não são disponibilidade livre automática.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar contribuição por canal, retorno do crédito e caixa depois de financiamento.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": null,
+        "descricao": "Execução de expansão, serviços e tecnologia com conciliação de retorno e capital, sem conclusão ou data presumidos.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "outro"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 8,24, com retorno esperado -15,86%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Canais integrados e serviços sustentam contribuição e recebimento; estoques e crédito controlados permitem caixa depois do custo completo e menor dívida. O cenário otimista calculado pelo código é R$ 17,34.",
+      "pessimista": "Competição e consumo pressionam canais, perdas de crédito e tecnologia absorvem margem e a liquidez depende de recebíveis ou convênios. O cenário pessimista calculado pelo código é R$ 0,00."
+    },
+    "comentario_valuation": "Preço de referência R$ 10,25 e alvo do modelo aberto R$ 8,24, com potencial -19,61%. Retorno total esperado -15,86% e custo do capital próprio 13,17%. A dispersão entre métodos é 17,20%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 8,25; a diferença -0,12% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A recuperação física pode coexistir com perda digital e retorno insuficiente sobre capital. Serviços financeiros podem ampliar lucro e exposição a safras sem reduzir financiamento. Se a melhora de margem não cobrir juros, aluguel e reinvestimento, caixa ajustado e volume do ecossistema não confirmarão retorno ao acionista.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_MAGALU.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 10,25"
+      },
+      {
+        "fato": "val.BR_MAGALU.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 8,24"
+      },
+      {
+        "fato": "val.BR_MAGALU.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-19,61%"
+      },
+      {
+        "fato": "val.BR_MAGALU.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_MAGALU.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_MAGALU.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 17,34"
+      },
+      {
+        "fato": "val.BR_MAGALU.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "16,04%"
+      },
+      {
+        "fato": "val.BR_MAGALU.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 0,00"
+      },
+      {
+        "fato": "val.BR_MAGALU.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_MAGALU.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "13,17%"
+      },
+      {
+        "fato": "val.BR_MAGALU.wacc",
+        "rotulo": "WACC",
+        "valor": "9,55%"
+      },
+      {
+        "fato": "val.BR_MAGALU.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_MAGALU.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-15,86%"
+      },
+      {
+        "fato": "val.BR_MAGALU.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-38,18%"
+      },
+      {
+        "fato": "val.BR_MAGALU.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "13,3x"
+      },
+      {
+        "fato": "val.BR_MAGALU.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,7x"
+      },
+      {
+        "fato": "val.BR_MAGALU.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 8,25"
+      },
+      {
+        "fato": "val.BR_MAGALU.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-0,12%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Magazine Luiza",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://ri.magazineluiza.com.br/ShowCanal/Quem-Somos?=urUqu4hANldyCLgMRgOsTw=="
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Magazine Luiza",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://ri.magazineluiza.com.br/Download/Release-de-Resultado?=dL1FGoA0QI/SvcDvROsA7g=="
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Magazine Luiza",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+        "url": "https://ri.magazineluiza.com.br/Download/ITR-DFP?=Hu9OAlSBmXKWP4jZi8/XDw=="
+      }
+    ],
+    "gatilhos_revisao": [
+      "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+      "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+      "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+      "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+    ],
+    "governanca": "A revisão limitada sem modificação não abrange todas as medidas gerenciais do release. O ITR informa cumprimento contratual na data-base, com indicadores corporativos e da carteira de crédito distintos; isso não certifica condição posterior. Participações financeiras, obrigações de repasse e ativos tributários têm direitos próprios. Os documentos foram recebidos por conexão pública normal com TLS, preservando os erros anteriores sem contorno de bloqueio.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Contribuição e caixa por canal, estoques, devoluções, comissões e frete; perdas, recebimento e capital por financeira; fornecedores e convênios; juros, aluguel e investimento. Conciliar disponibilidade efetiva, recebíveis e dívida convencional com os saldos líquidos ajustados e o perímetro dos serviços.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_MAGALU.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-15,86%"
+          },
+          {
+            "fato": "val.BR_MAGALU.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "13,17%"
+          },
+          {
+            "fato": "val.BR_MAGALU.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "17,20%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -15,86%, custo do capital 13,17% e dispersão entre métodos 17,20% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_MAGALU",
+    "lacunas_de_dados": [
+      "A divergência de caixa operacional entre destaque e anexo não foi integralmente reconciliada.",
+      "A ponte entre dívida convencional, cartões, convênios e capital por financeira exige conciliação completa.",
+      "A realização dos créditos fiscais e o retorno econômico dos investimentos permanecem a comprovar.",
+      "As bases de rentabilidade e participação citadas pelo emissor não foram verificadas independentemente.",
+      "Guidance agregado e direção formal não foram qualificados em documentação integral.",
+      "Datas de publicação do release e do arquivo recebido não foram presumidas a partir da teleconferência.",
+      "Percepção do mercado, posicionamento e catalisadores datados atuais não foram comprovados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Plataforma de varejo com lojas físicas, venda digital de estoque próprio e marketplace, integrada a logística, publicidade, tecnologia e serviços financeiros. Netshoes, KaBuM e Época ampliam categorias, com riscos próprios de estoque e canais. Luizacred e Magalupay têm estruturas, direitos e capital distintos. Volume do ecossistema, receita reconhecida e caixa não são intercambiáveis; operações de crédito exigem separar provisão, financiamento e recebimento.",
+    "nome": "Magazine Luiza",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_AFYA",
+        "nome": "Afya"
+      },
+      {
+        "issuer_id": "BR_ALPARGATAS",
+        "nome": "Alpargatas"
+      },
+      {
+        "issuer_id": "BR_AZZAS",
+        "nome": "Azzas 2154"
+      },
+      {
+        "issuer_id": "BR_CEA",
+        "nome": "C&A Modas"
+      },
+      {
+        "issuer_id": "BR_COGNA",
+        "nome": "Cogna"
+      },
+      {
+        "issuer_id": "BR_CURY",
+        "nome": "Cury"
+      },
+      {
+        "issuer_id": "BR_CYRELA",
+        "nome": "Cyrela"
+      },
+      {
+        "issuer_id": "BR_DIRECIONAL",
+        "nome": "Direcional"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que a integração de canais e serviços melhore contribuição econômica sem depender de descontos e financiamento crescente. A condição decisiva é converter margem em caixa depois de juros, aluguel, tecnologia e perdas de crédito. Recebíveis incluídos na liquidez gerencial e participação financeira não equivalem a recursos irrestritos disponíveis ao acionista.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_MAGALU.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 10,25"
+          },
+          {
+            "fato": "val.BR_MAGALU.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 8,24"
+          },
+          {
+            "fato": "val.BR_MAGALU.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-19,61%"
+          },
+          {
+            "fato": "val.BR_MAGALU.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "13,17%"
+          },
+          {
+            "fato": "val.BR_MAGALU.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-15,86%"
+          }
+        ],
+        "texto": "Preço de referência R$ 10,25 e alvo R$ 8,24, com potencial -19,61%. A hipótese de investimento deve ser confrontada com o custo do capital 13,17% e retorno esperado -15,86%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Capilaridade física, logística integrada e capacidade digital podem reduzir fricção e custo de entrega. O benefício depende de utilização, sortimento, serviço e economia de cada canal. Marketplace e estoque próprio têm receita, margem e capital diferentes; concorrência digital e importados limitam preço. Afirmações de participação e liderança permanecem atribuídas ao emissor.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T03:21:12.087275+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Lojas físicas cresceram enquanto o digital recuou; foco declarado em rentabilidade não comprova manutenção de participação. EBITDA positivo coexistiu com prejuízo ajustado e contábil. A demonstração gerencial trata recebíveis de cartões como caixa e convênio de fornecedores como giro. Há divergência entre o caixa operacional destacado e o anexo gerencial, preservada sem conciliação inventada.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que a integração de canais e serviços melhore contribuição econômica sem depender de descontos e financiamento crescente. A condição decisiva é converter margem em caixa depois de juros, aluguel, tecnologia e perdas de crédito. Recebíveis incluídos na liquidez gerencial e participação financeira não equivalem a recursos irrestritos disponíveis ao acionista. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado -15,86%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Demanda de bens duráveis, concorrência e custo de aquisição podem reduzir contribuição. Crédito, convênios e antecipações ampliam risco de liquidez; tecnologia e expansão podem consumir caixa. Ativos fiscais e recebíveis dependem de realização, com direitos de terceiros."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_MAGALU.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-0,12%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -0,12%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Consumo discricionário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Magalu — canais, crédito e liquidez depois do custo completo",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "As lojas físicas e vendas comparáveis cresceram, enquanto o comércio digital recuou. O EBITDA ajustado ficou positivo e o resultado líquido ajustado e contábil permaneceu negativo. O capital de giro gerencial reflete menor estoque e fornecedores com convênio. O destaque de caixa operacional e o valor do anexo diferem; o estudo não presume reconciliação. O anexo gerencial antecede juros, arrendamentos e proventos e trata cartões como caixa. A dívida bruta recuou anualmente; o saldo líquido ajustado por recebíveis diminuiu sequencialmente, com comportamento diferente da dívida convencional. Migração de contratos de crédito para a financeira altera a apresentação de receitas e perímetro.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Contribuição e caixa por canal, estoques, devoluções, comissões e frete; perdas, recebimento e capital por financeira; fornecedores e convênios; juros, aluguel e investimento. Conciliar disponibilidade efetiva, recebíveis e dívida convencional com os saldos líquidos ajustados e o perímetro dos serviços.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_MAGALU.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "13,17%"
+          },
+          {
+            "fato": "val.BR_MAGALU.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "17,20%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 13,17% e a dispersão entre métodos 17,20%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

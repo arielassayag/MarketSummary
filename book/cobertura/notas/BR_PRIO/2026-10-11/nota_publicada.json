@@ -1,0 +1,446 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "eb5d8b980ac6e44d89e26ee132669a485ffb54ba4594da3ccfd42dbefd9728cc",
+    "factbook": "69945a150c338860b5a28860f6d431d795fb336f85b3e2db4076f78e1788c85a",
+    "nota_json": "3476f040c96eb8999766fa57d64c726f3401e115e3bdd01639d8ca81e67c5739"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_PRIO",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-04",
+  "published_at": "2026-10-12T03:18:01.511620+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "A dívida líquida diminui no trimestre, mas a leitura de covenants usa arrendamentos e efeito retrospectivo da participação adquirida no resultado de referência. Alongamento de vencimentos não implicou menor custo médio: taxa flutuante e quitação de obrigação mais barata têm efeito próprio. Recompras realizadas consomem caixa; saldo autorizado não comprova aquisição ou cancelamento. Novo bloco exploratório exige bônus, pesquisa e desenvolvimento antes de eventual produção.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-04",
+        "descricao": "Divulgação programada de resultados; rever produção atribuível, vendas, custo completo, dívida e caixa depois do investimento.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F5"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 82,19, com retorno esperado +28,93%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Instalações e poços sustentam produção, integração reduz custo econômico e caixa remunera capital depois de dívida, manutenção e exploração. O cenário otimista calculado pelo código é R$ 107,86.",
+      "pessimista": "Declínio, reparos e descontos reduzem receita realizada enquanto aquisição, desenvolvimento e financiamento absorvem a geração dos campos. O cenário pessimista calculado pelo código é R$ 59,48."
+    },
+    "comentario_valuation": "Preço de referência R$ 63,75 e alvo do modelo aberto R$ 82,19, com potencial +28,93%. Retorno total esperado +28,93% e custo do capital próprio 11,65%. A dispersão entre métodos é 20,66%; a confiança quantitativa recebida é A. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 69,21; a diferença +18,76% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese enfraquece se diluição de custos é transitória, disponibilidade recua ou o preço de aquisição e desenvolvimento absorve a margem. Produção maior não garante venda com desconto adequado nem reposição econômica de reservas. Crescimento de volume pode coexistir com financiamento mais caro e necessidade de reinvestimento que limite retorno por ação.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_PRIO.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 63,75"
+      },
+      {
+        "fato": "val.BR_PRIO.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 82,19"
+      },
+      {
+        "fato": "val.BR_PRIO.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+28,93%"
+      },
+      {
+        "fato": "val.BR_PRIO.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_PRIO.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "A"
+      },
+      {
+        "fato": "val.BR_PRIO.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 107,86"
+      },
+      {
+        "fato": "val.BR_PRIO.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "9,60%"
+      },
+      {
+        "fato": "val.BR_PRIO.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 59,48"
+      },
+      {
+        "fato": "val.BR_PRIO.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "37,19%"
+      },
+      {
+        "fato": "val.BR_PRIO.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,65%"
+      },
+      {
+        "fato": "val.BR_PRIO.wacc",
+        "rotulo": "WACC",
+        "valor": "9,76%"
+      },
+      {
+        "fato": "val.BR_PRIO.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_PRIO.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+28,93%"
+      },
+      {
+        "fato": "val.BR_PRIO.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+6,49%"
+      },
+      {
+        "fato": "val.BR_PRIO.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "6,4x"
+      },
+      {
+        "fato": "val.BR_PRIO.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,8x"
+      },
+      {
+        "fato": "val.BR_PRIO.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 69,21"
+      },
+      {
+        "fato": "val.BR_PRIO.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+18,76%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "PRIO",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Governança, ações ordinárias e segmento de listagem",
+        "url": "https://ri.prio3.com.br/governanca-corporativa/visao-geral/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "PRIO",
+        "publicado_em": "2026-08-04",
+        "tipo": "Relações com investidores",
+        "titulo": "Release de resultados, campos, custos, financiamento e investimento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/cecb3d3e-6bd6-4edd-b9b3-3cacde780cac/92a74c23-4a5f-3a21-9da2-72a4fbc7982c?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "PRIO",
+        "publicado_em": "2026-10-05",
+        "tipo": "Relações com investidores",
+        "titulo": "Dados operacionais preliminares de setembro, participação e interrupções",
+        "url": "https://filemanager-cdn.mziq.com/published/cecb3d3e-6bd6-4edd-b9b3-3cacde780cac/0026580e-aae9-4a41-b150-f8711d393639"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F4",
+        "instituicao": "PRIO",
+        "publicado_em": "2026-10-07",
+        "tipo": "Relações com investidores",
+        "titulo": "Fato relevante de resultado em leilão e avaliação prospectiva de blocos",
+        "url": "https://filemanager-cdn.mziq.com/published/cecb3d3e-6bd6-4edd-b9b3-3cacde780cac/c0f7092e-7e02-45ea-a6f4-17da01364fed"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F5",
+        "instituicao": "PRIO",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário público de eventos futuros utilizado pelo RI",
+        "url": "https://api.mziq.com/mzevents/events/future/cecb3d3e-6bd6-4edd-b9b3-3cacde780cac/pt-br"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Disponibilidade, declínio e manutenção impedem sustentar produção econômica por campo.",
+      "Preço realizado, estoque e custos completos reduzem caixa apesar do volume produzido.",
+      "Dívida, recompra e investimento absorvem recursos sem reposição econômica de reservas.",
+      "Novos documentos alteram participação, compromissos exploratórios e base por ação do modelo."
+    ],
+    "governanca": "A listagem e ações ordinárias exigem análise de direitos, incentivos e decisões de capital. O leilão de Magnetita e Hematita foi vencido, mas recursos são prospectivos e eventual conexão à instalação existente depende de sucesso exploratório. Não se equiparou vitória no leilão a contrato integralmente efetivado, reserva comprovada ou produção. O mensal não foi usado como demonstração financeira auditada.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "Monitorar disponibilidade, declínio e produtividade por campo, distinguindo participação econômica e volume total. Conferir reservas, novos poços e investimento antes de operação comercial. Separar produção, venda, estoques e desconto do petróleo. Conciliar custo completo, arrendamentos, dívida, base dos covenants e caixa por ação depois de recompra e exploração.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_PRIO.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+28,93%"
+          },
+          {
+            "fato": "val.BR_PRIO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,65%"
+          },
+          {
+            "fato": "val.BR_PRIO.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "20,66%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +28,93%, custo do capital 11,65% e dispersão entre métodos 20,66% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_PRIO",
+    "lacunas_de_dados": [
+      "Demonstrações completas, tabelas contábeis e fluxo livre não foram integralmente reconciliados.",
+      "Reservas certificadas, desmantelamento e retorno final dos projetos exigem documentação por campo.",
+      "Participação econômica, bases de covenants e arrendamentos requerem conciliação com o modelo.",
+      "O comunicado mensal é preliminar; não comprova resultado financeiro nem conclusão de todas as pendências de gás.",
+      "Assinatura dos novos contratos exploratórios e desenvolvimento dos blocos não foram confirmados.",
+      "Há estimativas de projetos, sem direção agregada de revisão de guidance classificada.",
+      "Tom agregado, vantagem relativa e percepção do mercado não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Produtora independente de petróleo em campos offshore, com aquisição, revitalização e integração de infraestrutura. Wahoo e Frade compartilham o complexo Valente; o portfólio inclui Bravo, Albacora Leste e participação em Peregrino. Produção atribuível, volume total do campo e petróleo vendido têm bases distintas. A expansão combina novas operações, recuperação de campos e aquisições, sem ser integralmente crescimento orgânico.",
+    "nome": "PRIO",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRAVA",
+        "nome": "Brava Energia"
+      },
+      {
+        "issuer_id": "BR_COSAN",
+        "nome": "Cosan"
+      },
+      {
+        "issuer_id": "BR_RECV",
+        "nome": "PetroRecôncavo"
+      },
+      {
+        "issuer_id": "BR_ULTRAPAR",
+        "nome": "Ultrapar"
+      },
+      {
+        "issuer_id": "BR_VIBRA",
+        "nome": "Vibra Energia"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que integração das instalações, novos poços e revitalização reduzam custo econômico e elevem caixa por ação depois de manutenção, dívida e reposição de reservas. A condição decisiva é produção comercial sustentada com retorno suficiente do capital empregado. Vazão inicial, aquisição e custo unitário de extração não comprovam rentabilidade completa nem eliminam risco de paradas e preço do petróleo.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_PRIO.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 63,75"
+          },
+          {
+            "fato": "val.BR_PRIO.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 82,19"
+          },
+          {
+            "fato": "val.BR_PRIO.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+28,93%"
+          },
+          {
+            "fato": "val.BR_PRIO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,65%"
+          },
+          {
+            "fato": "val.BR_PRIO.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+28,93%"
+          }
+        ],
+        "texto": "Preço de referência R$ 63,75 e alvo R$ 82,19, com potencial +28,93%. A hipótese de investimento deve ser confrontada com o custo do capital 11,65% e retorno esperado +28,93%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "Experiência em recuperação de campos e uso compartilhado de instalações pode diminuir investimento incremental, mas depende de compatibilidade, integridade e vida útil. O custo de extração não inclui todos os tributos, capital, comercialização e financiamento. Participação econômica e regime de cada campo determinam a parcela capturada. Tamanho e eficiência declarados pela companhia não constituem vantagem relativa independentemente comprovada.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T03:18:01.511620+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Produção, vendas e resultado operacional aumentam na comparação anual e sequencial, apoiados por Wahoo, integração de Peregrino e preço do petróleo. Menor custo unitário tem contribuição de diluição e operação; volume produzido não coincide com embarque vendido. Descontos comerciais, frete e entrega afetam preço realizado. Medidas ajustadas excluem arrendamentos, que continuam sendo compromissos econômicos. Lucro financeiro e câmbio não substituem conversão operacional em caixa.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que integração das instalações, novos poços e revitalização reduzam custo econômico e elevem caixa por ação depois de manutenção, dívida e reposição de reservas. A condição decisiva é produção comercial sustentada com retorno suficiente do capital empregado. Vazão inicial, aquisição e custo unitário de extração não comprovam rentabilidade completa nem eliminam risco de paradas e preço do petróleo. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +28,93%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Paradas, integridade, declínio, exploração e preço do petróleo podem reduzir retorno. Custo unitário de extração e medidas sem arrendamento não abrangem todas as obrigações; aquisição e recompra exigem caixa e conciliação por ação."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_PRIO.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+18,76%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +18,76%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Energia",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "PRIO — revitalização dos campos após eficiência, dívida e reposição de reservas",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O comunicado mensal posterior é preliminar e não auditado. Ele registra novo poço produtor em Frade, retomada de Albacora Leste após manutenção e interrupção de poço em Bravo para reparo de linha. Isso atualiza a leitura operacional sem comprovar resultado financeiro trimestral nem solucionar todas as pendências de gás de Peregrino. Bases de participação e volume do campo foram preservadas, sem recalcular o modelo com o comunicado posterior.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar disponibilidade, declínio e produtividade por campo, distinguindo participação econômica e volume total. Conferir reservas, novos poços e investimento antes de operação comercial. Separar produção, venda, estoques e desconto do petróleo. Conciliar custo completo, arrendamentos, dívida, base dos covenants e caixa por ação depois de recompra e exploração.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_PRIO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,65%"
+          },
+          {
+            "fato": "val.BR_PRIO.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "20,66%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,65% e a dispersão entre métodos 20,66%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

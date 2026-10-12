@@ -1,0 +1,394 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "a1330e9666f3ce136971834fa412f99d4a639d6b7d5870058785e9053546c8ff",
+    "factbook": "c60b9eefd363745f52a3bfe48cd93abe81b7274ec8559b4d08b29631e52a880c",
+    "nota_json": "d4d1dd4f77db9957144543875676c26e2675893cb5e8229c0a29bada396b445e"
+  },
+  "is_synthetic": false,
+  "issuer_id": "LA_COPA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-18",
+  "published_at": "2026-10-12T03:20:53.819173+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Confrontar frota, adiantamentos, manutenção e arrendamentos com dívida e distribuições. Recompras e classes alteram a leitura por ação; a base atual precisa de conciliação. O dividendo anunciado para data posterior não comprova pagamento realizado.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em US$ 282,52, com retorno esperado +115,45%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "A rede mantém demanda remunerada e disciplina de frota através de custos voláteis. O cenário otimista calculado pelo código é US$ 364,47.",
+      "pessimista": "Combustível e excesso de capacidade pressionam receita e caixa depois dos compromissos. O cenário pessimista calculado pelo código é US$ 207,23."
+    },
+    "comentario_valuation": "Preço de referência US$ 134,52 e alvo do modelo aberto US$ 282,52, com potencial +110,02%. Retorno total esperado +115,45% e custo do capital próprio 10,12%. A dispersão entre métodos é 15,54%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é US$ 178,73; a diferença +58,07% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese enfraquece se conectividade e crescimento de passageiros não remunerarem custo total, manutenção e compromissos da frota.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.LA_COPA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 134,52"
+      },
+      {
+        "fato": "val.LA_COPA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 282,52"
+      },
+      {
+        "fato": "val.LA_COPA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+110,02%"
+      },
+      {
+        "fato": "val.LA_COPA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.LA_COPA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.LA_COPA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 364,47"
+      },
+      {
+        "fato": "val.LA_COPA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.LA_COPA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 207,23"
+      },
+      {
+        "fato": "val.LA_COPA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.LA_COPA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,12%"
+      },
+      {
+        "fato": "val.LA_COPA.wacc",
+        "rotulo": "WACC",
+        "valor": "8,74%"
+      },
+      {
+        "fato": "val.LA_COPA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.LA_COPA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+115,45%"
+      },
+      {
+        "fato": "val.LA_COPA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+117,72%"
+      },
+      {
+        "fato": "val.LA_COPA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "7,3x"
+      },
+      {
+        "fato": "val.LA_COPA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,9x"
+      },
+      {
+        "fato": "val.LA_COPA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 178,73"
+      },
+      {
+        "fato": "val.LA_COPA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+58,07%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Copa Holdings",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e estrutura do negócio",
+        "url": "https://ir.copaair.com/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Copa Holdings",
+        "publicado_em": "2026-08-05",
+        "tipo": "Relações com investidores",
+        "titulo": "Release de resultados, frota e perspectiva operacional",
+        "url": "https://ir.copaair.com/static-files/2e6392d2-38f3-4a59-818f-407c171369a3"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+      "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+      "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+      "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+    ],
+    "governanca": "Confrontar frota, adiantamentos, manutenção e arrendamentos com dívida e distribuições. Recompras e classes alteram a leitura por ação; a base atual precisa de conciliação. O dividendo anunciado para data posterior não comprova pagamento realizado.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar capacidade, ocupação, receita unitária e custo total com combustível. Testar utilização, manutenção e entregas de frota contra caixa após investimento; observar se capacidade adicional é remunerada sem deterioração de preços.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.LA_COPA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+115,45%"
+          },
+          {
+            "fato": "val.LA_COPA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,12%"
+          },
+          {
+            "fato": "val.LA_COPA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "15,54%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +115,45%, custo do capital 10,12% e dispersão entre métodos 15,54% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "LA_COPA",
+    "lacunas_de_dados": [
+      "Demonstrações, investimentos financeiros e compromissos da frota não foram integralmente reconciliados com o modelo.",
+      "Orientação anterior não foi confrontada para classificar a direção da revisão.",
+      "Pagamento do dividendo posterior anunciado exige confirmação documental.",
+      "Classes, recompras e base plenamente diluída precisam de conciliação.",
+      "Vantagem competitiva, tom da gestão e percepção de mercado não estão concluídos.",
+      "Não há catalisador futuro com data exata confirmado neste estudo."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "A Copa Holdings reúne transporte de passageiros e cargas por Copa Airlines e Wingo. A conexão via Panamá e a utilização da frota sustentam a proposta comercial; demanda e capacidade precisam ser analisadas com custos e compromissos de aeronaves.",
+    "nome": "Copa Holdings",
+    "o_que_mudou": null,
+    "pais": "Panamá",
+    "pares": [
+      {
+        "issuer_id": "BR_ECORODOVIAS",
+        "nome": "EcoRodovias"
+      },
+      {
+        "issuer_id": "BR_EMBRAER",
+        "nome": "Embraer"
+      },
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_LOCALIZA",
+        "nome": "Localiza"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_MOTIVA",
+        "nome": "Motiva (ex-CCR)"
+      },
+      {
+        "issuer_id": "BR_RANDON",
+        "nome": "Randoncorp"
+      },
+      {
+        "issuer_id": "BR_SIMPAR",
+        "nome": "Simpar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese é que conectividade e disciplina operacional remunerem a frota ao longo do ciclo. A condição é conservar retorno depois de combustível, manutenção e expansão; ocupação elevada não assegura caixa disponível.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.LA_COPA.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "US$ 134,52"
+          },
+          {
+            "fato": "val.LA_COPA.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "US$ 282,52"
+          },
+          {
+            "fato": "val.LA_COPA.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+110,02%"
+          },
+          {
+            "fato": "val.LA_COPA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,12%"
+          },
+          {
+            "fato": "val.LA_COPA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+115,45%"
+          }
+        ],
+        "texto": "Preço de referência US$ 134,52 e alvo US$ 282,52, com potencial +110,02%. A hipótese de investimento deve ser confrontada com o custo do capital 10,12% e retorno esperado +115,45%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Testar conveniência de conexões, pontualidade e custos frente às alternativas de viagem. Localização favorável é hipótese de vantagem; exige demonstração de receita e retorno sem expansão excessiva de capacidade.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T03:20:53.819173+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O release descreve pressão do combustível apesar de crescimento de receita. Custo unitário sem combustível exclui um fator decisivo; separar caixa operacional semestral de adiantamentos de aeronaves, investimento e financiamento. Investimentos financeiros não são todos equivalentes a caixa imediato.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que conectividade e disciplina operacional remunerem a frota ao longo do ciclo. A condição é conservar retorno depois de combustível, manutenção e expansão; ocupação elevada não assegura caixa disponível. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +115,45%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Combustível e mudanças na demanda podem reduzir rentabilidade enquanto compromissos de frota permanecem. Reservas vendidas antes de choques de custo podem limitar recomposição de tarifa."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.LA_COPA.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+58,07%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +58,07%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Copa: conectividade, combustível e retorno da frota",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O release consultado apresenta pressão de combustível, demonstrações condensadas e perspectiva atualizada. A direção da revisão não foi classificada sem confronto com a orientação anterior. Mudança futura da estrutura de conexões foi anunciada por mês, sem data exata adotada como catalisador. A conciliação integral com o modelo permanece pendente.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar capacidade, ocupação, receita unitária e custo total com combustível. Testar utilização, manutenção e entregas de frota contra caixa após investimento; observar se capacidade adicional é remunerada sem deterioração de preços.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.LA_COPA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,12%"
+          },
+          {
+            "fato": "val.LA_COPA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "15,54%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 10,12% e a dispersão entre métodos 15,54%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,441 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "654349f4ea49d0c95af15c75ad0e8e5a96e9bc3b08f295750aa774668c7cdcf2",
+    "factbook": "5360d6a9ef1999d0a55bf25b023c42a9097f2acf9c57aa5caf4f4fffa47b8376",
+    "nota_json": "2e11b901d936c8b7ddb13e13c5695ea08cef33d1b76dd505a8d1396b62b765e4"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_WEG",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-21",
+  "published_at": "2026-10-12T03:18:20.421782+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Expansão de fábricas, desenvolvimento e aquisições exigem capital. Aumento de caixa inclui captação líquida; aplicações sem liquidez imediata não são equivalentes livres. A distribuição paga no semestre difere de lucro e remuneração declarada, exigindo leitura de calendário. Retorno divulgado precisa ser conciliado com maturação do capital.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar margem e retorno incremental depois da expansão.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 31,35, com retorno esperado -37,67%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Demanda e produtividade remuneram expansão, com margem e caixa depois de juros e investimento preservados em bases cambiais comparáveis. O cenário otimista calculado pelo código é R$ 38,74.",
+      "pessimista": "Solar, tarifas e materiais pressionam margem; expansão e giro absorvem recursos enquanto câmbio e adiantamentos sugerem melhora sem retorno incremental. O cenário pessimista calculado pelo código é R$ 25,52."
+    },
+    "comentario_valuation": "Preço de referência R$ 51,77 e alvo do modelo aberto R$ 31,35, com potencial -39,45%. Retorno total esperado -37,67% e custo do capital próprio 10,02%. A dispersão entre métodos é 34,94%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 56,08; a diferença -44,10% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Demanda externa e retorno divulgado podem melhorar com receita consolidada menor e caixa apoiado por adiantamentos. Se expansão e materiais consumirem margem, presença global e novos projetos não confirmarão retorno incremental suficiente.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_WEG.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 51,77"
+      },
+      {
+        "fato": "val.BR_WEG.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 31,35"
+      },
+      {
+        "fato": "val.BR_WEG.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-39,45%"
+      },
+      {
+        "fato": "val.BR_WEG.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_WEG.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_WEG.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 38,74"
+      },
+      {
+        "fato": "val.BR_WEG.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_WEG.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 25,52"
+      },
+      {
+        "fato": "val.BR_WEG.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_WEG.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,02%"
+      },
+      {
+        "fato": "val.BR_WEG.wacc",
+        "rotulo": "WACC",
+        "valor": "9,92%"
+      },
+      {
+        "fato": "val.BR_WEG.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_WEG.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-37,67%"
+      },
+      {
+        "fato": "val.BR_WEG.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-35,41%"
+      },
+      {
+        "fato": "val.BR_WEG.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "29,4x"
+      },
+      {
+        "fato": "val.BR_WEG.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "11,5x"
+      },
+      {
+        "fato": "val.BR_WEG.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 56,08"
+      },
+      {
+        "fato": "val.BR_WEG.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-44,10%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "WEG",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://ri.weg.net/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "WEG",
+        "publicado_em": "2026-07-22",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1546756&numSequencia=1071462&numVersao=1"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "WEG",
+        "publicado_em": "2026-07-22",
+        "tipo": "Relações com investidores",
+        "titulo": "Release com demonstração original resumida dos fluxos e investimentos",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1546756&numSequencia=1071462&numVersao=1"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+      "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+      "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+      "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+    ],
+    "governanca": "Indicadores de câmbio, aquisições e países com hiperinflação têm ajustes específicos. Retorno divulgado e investimentos de expansão não equivalem à diligência de vantagem independente. Demonstração resumida e calendário de remuneração possuem bases próprias; não se presume liquidez imediata de todas as aplicações.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Pedidos, entregas e margem por área e moeda, com solar e infraestrutura separados. Conciliar estoques, fornecedores, adiantamentos, juros e investimento. Monitorar maturação de fábricas, aquisições, dívida, aplicações restritas e pagamento efetivo da remuneração.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_WEG.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-37,67%"
+          },
+          {
+            "fato": "val.BR_WEG.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,02%"
+          },
+          {
+            "fato": "val.BR_WEG.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "34,94%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -37,67%, custo do capital 10,02% e dispersão entre métodos 34,94% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_WEG",
+    "lacunas_de_dados": [
+      "Notas completas, retorno incremental e maturação de capacidade não foram integralmente reconciliados.",
+      "A ponte de giro, adiantamentos e financiamento permanece pendente.",
+      "Aplicações sem liquidez imediata e calendário de remuneração exigem diligência.",
+      "Concorrência e comparabilidade cambial precisam de teste independente.",
+      "Guidance agregado e percepção do mercado não foram comprovados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Fabricante de motores, automação, geração, transmissão, distribuição elétrica e tintas, com operação internacional. Equipamentos industriais e projetos têm demanda e prazos distintos. Crescimento em moeda local ou dólar difere da receita consolidada em reais; expansão produtiva e aquisições utilizam capital antes da maturação.",
+    "nome": "WEG",
+    "o_que_mudou": "Nova versão documental com hipótese, posição competitiva, qualidade dos resultados, capital, contratese e monitoramento. Fontes públicas foram revistas na data da consulta; o histórico publicado e o retrato determinístico permanecem preservados.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ECORODOVIAS",
+        "nome": "EcoRodovias"
+      },
+      {
+        "issuer_id": "BR_EMBRAER",
+        "nome": "Embraer"
+      },
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_LOCALIZA",
+        "nome": "Localiza"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_MOTIVA",
+        "nome": "Motiva (ex-CCR)"
+      },
+      {
+        "issuer_id": "BR_RANDON",
+        "nome": "Randoncorp"
+      },
+      {
+        "issuer_id": "BR_SIMPAR",
+        "nome": "Simpar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que portfólio e eficiência sustentem retorno depois da expansão produtiva. A condição decisiva é converter demanda elétrica e industrial em margem e caixa após investimento, sem depender apenas de câmbio ou adiantamentos. Crescimento internacional precisa ser avaliado junto ao enfraquecimento dos projetos solares brasileiros.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_WEG.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 51,77"
+          },
+          {
+            "fato": "val.BR_WEG.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 31,35"
+          },
+          {
+            "fato": "val.BR_WEG.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-39,45%"
+          },
+          {
+            "fato": "val.BR_WEG.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,02%"
+          },
+          {
+            "fato": "val.BR_WEG.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-37,67%"
+          }
+        ],
+        "texto": "Preço de referência R$ 51,77 e alvo R$ 31,35, com potencial -39,45%. A hipótese de investimento deve ser confrontada com o custo do capital 10,02% e retorno esperado -37,67%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Integração industrial, engenharia e presença local podem apoiar atendimento e produtividade. A vantagem exige testar custo, prazo e retenção frente aos concorrentes. Demanda de redes e centros de dados não garante retorno de capacidade nova; declarações de margem superior precisam de comprovação independente.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T03:18:20.421782+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita, EBITDA e lucro consolidados recuaram anualmente, apesar de crescimento externo em outras moedas. Solar brasileiro pressionou receita; materiais e tarifas afetaram margem. O retorno divulgado aumentou. Caixa operacional semestral cresceu após juros, com contribuição de fornecedores e adiantamentos de clientes.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que portfólio e eficiência sustentem retorno depois da expansão produtiva. A condição decisiva é converter demanda elétrica e industrial em margem e caixa após investimento, sem depender apenas de câmbio ou adiantamentos. Crescimento internacional precisa ser avaliado junto ao enfraquecimento dos projetos solares brasileiros. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado -37,67%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Solar, câmbio, materiais e tarifas podem pressionar receita e margem. Capacidade nova exige capital antes do retorno; adiantamentos e fornecedores mudam conversão de caixa. Aplicações e calendário de dividendos limitam leitura de liquidez."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_WEG.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-44,10%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -44,10%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "WEG — infraestrutura elétrica, capacidade e retorno sobre o capital",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "Receita, EBITDA e lucro consolidados recuaram anualmente; demanda externa em dólar e moedas locais cresceu. Solar brasileiro, materiais e tarifas explicam pressões distintas. O retorno divulgado aumentou. O fluxo semestral original gerou mais caixa operacional após juros, com estoques, fornecedores e adiantamentos em movimentos próprios. Captação líquida contribuiu para caixa; aplicações sem liquidez imediata e distribuição paga conservam suas definições.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Pedidos, entregas e margem por área e moeda, com solar e infraestrutura separados. Conciliar estoques, fornecedores, adiantamentos, juros e investimento. Monitorar maturação de fábricas, aquisições, dívida, aplicações restritas e pagamento efetivo da remuneração.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_WEG.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,02%"
+          },
+          {
+            "fato": "val.BR_WEG.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "34,94%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 10,02% e a dispersão entre métodos 34,94%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -5,25 +5,99 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-## Aprofundamento dos pendentes — retomada em 12/10/2026
+## Aprofundamento dos 85 — conclusão em 12/10/2026
 
 Após o encerramento parcial abaixo, o humano determinou: “Conclua os 85 restantes
 em profundidade”. Esse pedido responde à extensão do orçamento solicitada e autoriza
 a continuidade desta sessão fora do corte anterior. Gates, trava, executor interno
 e limite de doze por execução permanecem obrigatórios, sem mudança de configuração.
 
-Os rascunhos pendentes são revisados no ramo de desenvolvimento com documentos
-primários públicos e data própria de 12/10. A revisão preserva os achados específicos,
-aprofundando mecanismos econômicos, adequação do valuation, contratese e gatilhos
-observáveis. Consultas anteriores conservam sua data quando a fonte não foi
-reaberta; recusa de acesso não comprova leitura. Os modelos e preços mantêm seu
-corte nativo. Os rascunhos anteriores são substituídos prospectivamente; notas
-oficiais, dados e relatórios imutáveis permanecem preservados. A pré-validação usa
-uma cópia privada do livro e não constitui publicação. A adoção e a validação
-oficiais continuam sendo do executor `.cdp/rotinas`.
+O aprofundamento documental dos 85 foi concluído: 77 empresas e oito ETFs,
+com rascunhos de 12/10 e originais anteriores preservados. As narrativas aprofundam
+mecanismos econômicos, concorrência, resultado versus caixa, capital, governança,
+adequação do valuation, contratese e gatilhos observáveis próprios de cada ativo.
+Os ETFs tratam estrutura, índice, exposição, custos, liquidez e tracking.
+O plugin Public Equity Investing orientou a iniciação de cobertura das empresas,
+mantendo as regras do CDP de fontes públicas e números determinísticos.
 
-Entrega ainda em execução. O registro abaixo é o checkpoint parcial anterior,
-incluindo sua antiga pendência de resposta, agora superada pelo pedido humano.
+A QA editorial recebeu os 85 corpos finais: 75 de outros autores e dez do próprio
+revisor, com essa limitação de independência explícita. Os oito ETFs receberam
+também revisão editorial independente. Não ficou achado material de coerência
+interna aberto no conjunto recebido. Ajustes dirigidos foram concluídos antes da
+adoção; duas ressalvas menores de apresentação de Iguatemi e Minerva permanecem
+documentadas nas notas imutáveis. A pré-validação final dos 85 rascunhos foi positiva;
+ela usou uma cópia privada do livro e não substituiu a validação oficial.
+
+O executor `.cdp/rotinas`, em `main`, adotou, validou e publicou os 85 em oito
+execuções, sete de doze notas e a última de uma, cada uma com seu gate e trava.
+Todos os lotes encerraram com `push: true`, `verify: ÍNTEGRO` e trava liberada.
+O último HEAD operacional, confirmado no executor e no remoto, é
+`a0cfdf46cd1ea196dc4155b6981e1e473895f918`. A agenda final confirmou zero
+rascunhos pendentes e nenhum obsoleto. Há 253 notas físicas, incluindo doze
+versões históricas preservadas; a contagem de ativos distintos é 241.
+O estado remoto confirmou executor designado, checkout limpo, livro íntegro
+e trava livre, com `id: null`. Nenhuma decisão, execução ou fechamento foi repetido.
+
+O Pages desse HEAD concluiu os três jobs com sucesso no run
+[38271312022](https://github.com/arielassayag/MarketSummary/actions/runs/38271312022).
+O artifact `11757287380` foi recebido pelo ZIP da API e pelo tar do download
+independente, com digests conferidos e duas passagens físicas sem divergência.
+O manifesto tem SHA-256
+`869237e003e2e7bb878292f56bca132070f4e00555d99a4aa844c0aa9a6dc36d`:
+3.665 arquivos físicos, 3.663 declarados, 241 narrativas publicadas,
+233 ações e oito ETFs; nenhum estado preliminar. A auditoria HTTP conferiu os
+3.663 arquivos declarados distintos: todos HTTP200, tamanho e SHA iguais ao
+artefato, com 209.044.510 bytes recebidos. Manifesto antes/depois e referências
+nativas permaneceram iguais. O recibo HTTP tem SHA-256
+`04485ed490803accaf40bfdfd7a0db23d7580956dfb9627c54731a40c72367e9`.
+
+A GUI desta versão concluiu 38 páginas em desktop e celular, 306 controles e
+146 capturas, sem erros JavaScript ou overflow. A amostra navegada recebeu nove
+empresas e os oito ETFs, incluindo textos, âncoras e downloads literais; não foi
+leitura GUI integral dos 241 textos. O inventário nativo conferiu os 241 estados
+e os hashes da coorte de 85. Cases, busca, filtros, ordenação, peers e vistas de
+risco foram conferidos; quatro guardas públicas do manifesto permaneceram iguais.
+A coluna Estado da linha NET foi identificada pelo cabeçalho real e ficou legível
+no celular. Os 14 checks de mandato tiveram confronto DOM × nativo × formatador,
+sem injeção. Dois enquadramentos de screenshots não mostram todas as linhas de
+commodity/mandato; a prova numérica desses controles é a recepção do DOM,
+conservando esse limite dos pixels. ROOT inspecionou sete imagens reais desta
+execução. O recibo GUI tem SHA-256
+`280a4ab46b376e3408bae8905c5d3627d9dcb7d95a029fcfe8320bc58644d7c8`.
+
+A recepção das 85 notas oficiais confrontou rascunhos, corpos da QA, JSONs
+adotados/publicados, FactBooks, contexto, Markdown e eventos da trilha.
+Identidade, autoria, datas, fontes, lacunas e hashes permaneceram vinculados;
+os placeholders foram resolvidos contra os valores formatados nativos,
+sem tokens pendentes no Markdown. Essa conferência de transformação e custódia
+é distinta de uma nova validação financeira ou de disponibilidade histórica.
+A leitura dirigida dos sinais e estados não localizou divergência material nova
+após a resolução dos fatos; visão qualitativa e leitura quantitativa permanecem
+distintas. O revisor desse confronto escreveu 31 rascunhos originais, com esse
+limite de independência registrado. O parecer tem SHA-256
+`eac1118778c2b860aa00632433137596cfdf50cd8dc97934a998e8517679cb0b`.
+
+Código, configuração, preços, relatórios, carteira inaugural e registro diário
+mantêm os corpos da versão qualificada `b07570e`; a retomada mudou pesquisa e
+suas notas. Consistência documental: 200 casos passaram e um skip anterior foi
+conservado. Ruff passou. As alterações locais do humano e os ambientes congelados
+foram preservados; a integração final usa avanço normal, sem reset ou rebase.
+
+Consultas efetivamente realizadas em 12/10 têm data própria; fontes bloqueadas,
+parcialmente recebidas ou não reabertas conservam datas e limitações anteriores.
+Os modelos mantêm o corte de 09/10 e os preços suas referências nativas.
+A revisão não recertifica disponibilidade PIT de 09/10, todas as fontes externas
+ou uma reconciliação financeira completa, nem elimina lacunas de caixa,
+financiamento, reservas, solvência, tracking e eventos condicionais.
+Não transforma prazo contratual em recebimento ou conclusão de negócio.
+O excesso NET inaugural permanece registrado; integridade não é conformidade.
+
+Os recibos privados desta retomada ficam em
+`.cdp/integracoes/risco-unidades/.cdp/estudos/APROFUNDAMENTO_85_12OUT/`;
+as provas do portal ficam em `.cdp/qa-dashboard-publica/`.
+O registro abaixo é o checkpoint parcial anterior, incluindo sua antiga
+pendência de resposta, superada pelo pedido humano. Seus resultados de 156/85
+permanecem históricos e não representam a entrega integral desta retomada.
 
 ## Dashboards e publicação das teses — checkpoint anterior em 12/10/2026
 

@@ -1,0 +1,116 @@
+{
+  "avisos_tecnicos": [],
+  "dados_ate": "2026-10-09",
+  "data": "2026-10-12",
+  "fontes_sugeridas": [
+    {
+      "instituicao": "CVM — RAD (fatos relevantes, ITR, DFP, formulário de referência)",
+      "tipo": "regulatorio",
+      "url": "https://www.rad.cvm.gov.br/ENET/frmConsultaExternaCVM.aspx"
+    },
+    {
+      "instituicao": "CVM — dados abertos (DFP, ITR, FRE, IPE)",
+      "tipo": "regulatorio",
+      "url": "https://dados.cvm.gov.br/"
+    },
+    {
+      "instituicao": "B3 — empresas listadas",
+      "tipo": "bolsa",
+      "url": "https://www.b3.com.br/"
+    },
+    {
+      "instituicao": "Banco Central do Brasil (Focus, SGS)",
+      "tipo": "banco_central",
+      "url": "https://www.bcb.gov.br/"
+    },
+    {
+      "instituicao": "IBGE",
+      "tipo": "estatistica_oficial",
+      "url": "https://www.ibge.gov.br/"
+    },
+    {
+      "instituicao": "SEC EDGAR — busca de documentos (20-F, 6-K, 10-K, 8-K)",
+      "tipo": "regulatorio",
+      "url": "https://www.sec.gov/edgar/search/"
+    },
+    {
+      "instituicao": "SEC EDGAR — dados XBRL por empresa (companyfacts)",
+      "tipo": "regulatorio",
+      "url": "https://www.sec.gov/search-filings/edgar-application-programming-interfaces"
+    },
+    {
+      "instituicao": "Damodaran Online (NYU Stern) — prêmios de risco, betas e múltiplos setoriais",
+      "tipo": "dados_publicos",
+      "url": "https://pages.stern.nyu.edu/~adamodar/"
+    },
+    {
+      "instituicao": "FRED (Federal Reserve Bank of St. Louis) — juros e indicadores dos EUA",
+      "tipo": "dados_publicos",
+      "url": "https://fred.stlouisfed.org/"
+    }
+  ],
+  "is_synthetic": false,
+  "issuer_id": "BR_AFYA",
+  "lacunas": [
+    "Probabilidade implícita do otimista: sem dado na data.",
+    "Probabilidade implícita do pessimista: sem dado na data."
+  ],
+  "nome": "Afya",
+  "nomes": {
+    "BR_AFYA": "Afya",
+    "BR_ALPARGATAS": "Alpargatas",
+    "BR_AZZAS": "Azzas 2154",
+    "BR_CEA": "C&A Modas",
+    "BR_COGNA": "Cogna",
+    "BR_CURY": "Cury",
+    "BR_CYRELA": "Cyrela",
+    "BR_DIRECIONAL": "Direcional",
+    "BR_EZTEC": "EZTec"
+  },
+  "nota_anterior": null,
+  "pais": "BR",
+  "pais_pt": "Brasil",
+  "pares": [
+    "BR_ALPARGATAS",
+    "BR_AZZAS",
+    "BR_CEA",
+    "BR_COGNA",
+    "BR_CURY",
+    "BR_CYRELA",
+    "BR_DIRECIONAL",
+    "BR_EZTEC"
+  ],
+  "proximo_resultado": "2026-11-12",
+  "schema": "cdp.nota.contexto/v1",
+  "setor": "Consumer Discretionary",
+  "setor_pt": "Consumo discricionário",
+  "snapshot": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "tem_linha_eua": true,
+  "termos": [
+    "ALPA4",
+    "ALPA4.SA",
+    "AZZA3",
+    "AZZA3.SA",
+    "Azzas 2154",
+    "CEAB3",
+    "CEAB3.SA",
+    "COGN3",
+    "COGN3.SA",
+    "CURY3",
+    "CURY3.SA",
+    "CYRE3",
+    "CYRE3.SA",
+    "DIRR3",
+    "DIRR3.SA",
+    "EZTC3",
+    "EZTC3.SA"
+  ],
+  "tickers": [
+    "AFYA"
+  ],
+  "tipo_esperado": "iniciacao"
+}

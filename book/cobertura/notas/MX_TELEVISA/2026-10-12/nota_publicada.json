@@ -1,0 +1,414 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "bacd23262d49e6cdb8ee0f1ba4f59d376a71d262b34cb8c3a794f51b7ef0b23f",
+    "factbook": "131e31a417fc79f6f5ce029b71fe6d6fd5923e6627fe9cc2e70332cb47ab3d23",
+    "nota_json": "7f433e03d8d760b0351ffaeb3ceab3aa60e41257d16ab7ea1bef99cd0490000c"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_TELEVISA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-28",
+  "published_at": "2026-10-12T15:09:28.062253+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A emissão conversível foi subscrita e paga, com classificação em patrimônio; conversão futura permanece sujeita a autorizações e exige análise da diluição. Dívida líquida desconta investimentos também não circulantes, enquanto obrigações de uso têm base própria. Recebimento da emissão não comprova retorno da destinação dos recursos.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em MXN 8,75, com retorno esperado +8,57%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Retenção e eficiência sustentam caixa depois da fibra, com capital bem alocado e transmissão verificável do valor das associadas. O cenário otimista calculado pelo código é MXN 11,01.",
+      "pessimista": "Perdas do satélite e reinvestimento consomem ganhos enquanto obrigações e diluição reduzem retorno por instrumento. O cenário pessimista calculado pelo código é MXN 6,69."
+    },
+    "comentario_valuation": "Separar fluxo de telecom após manutenção e migração, valor econômico da associada pelos direitos próprios e ativos não operacionais, com dívida e passivos coerentes. Não somar lucro de associada e seu valor novamente. A avaliação por instrumento exige base plenamente diluída e liquidez efetiva dos investimentos; caixa gerencial não substitui fluxo completo. Preço de referência MXN 8,06 e alvo do modelo aberto MXN 8,75, com potencial +8,57%. Retorno total esperado +8,57% e custo do capital próprio 14,71%. A dispersão entre métodos é 92,92%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é MXN 13,75; a diferença -36,38% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se eficiência melhora margem sem caixa depois de fibra e obrigações. Valor de associadas e recursos de emissão podem sustentar a liquidez aparente sem compensar perda operacional e diluição por instrumento.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.MX_TELEVISA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 8,06"
+      },
+      {
+        "fato": "val.MX_TELEVISA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 8,75"
+      },
+      {
+        "fato": "val.MX_TELEVISA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+8,57%"
+      },
+      {
+        "fato": "val.MX_TELEVISA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_TELEVISA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.MX_TELEVISA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 11,01"
+      },
+      {
+        "fato": "val.MX_TELEVISA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "27,05%"
+      },
+      {
+        "fato": "val.MX_TELEVISA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 6,69"
+      },
+      {
+        "fato": "val.MX_TELEVISA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "26,32%"
+      },
+      {
+        "fato": "val.MX_TELEVISA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "14,71%"
+      },
+      {
+        "fato": "val.MX_TELEVISA.wacc",
+        "rotulo": "WACC",
+        "valor": "11,13%"
+      },
+      {
+        "fato": "val.MX_TELEVISA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_TELEVISA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+8,57%"
+      },
+      {
+        "fato": "val.MX_TELEVISA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-5,59%"
+      },
+      {
+        "fato": "val.MX_TELEVISA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "16,1x"
+      },
+      {
+        "fato": "val.MX_TELEVISA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,2x"
+      },
+      {
+        "fato": "val.MX_TELEVISA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 13,75"
+      },
+      {
+        "fato": "val.MX_TELEVISA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-36,38%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Grupo Televisa",
+        "publicado_em": "2026-09-18",
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil atual e comunicado sobre negociação de certificados",
+        "url": "https://www.televisair.com/~/media/Files/T/Televisa-IR/press-releases/english/2026/09-18-2026-press-release-gtv-eng.pdf"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Grupo Televisa",
+        "publicado_em": "2026-07-23",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado, medidas gerenciais e instrumentos de capital",
+        "url": "https://www.televisair.com/~/media/Files/T/Televisa-IR/260723-gtv-pr-en-2q26.pdf"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Grupo Televisa",
+        "publicado_em": "2026-09-07",
+        "tipo": "Relações com investidores",
+        "titulo": "Comunicado sobre negociação e possível alteração do índice",
+        "url": "https://www.televisair.com/~/media/Files/T/Televisa-IR/press-releases/english/2026/09-07-2026-press-release-gtv-eng.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Perdas do satélite e desconexões superam contribuição da banda larga após atendimento e migração.",
+      "Eficiência de segmento não gera caixa após despesas corporativas, giro, juros e impostos.",
+      "Liquidez depende de emissão ou investimentos sem disponibilidade imediata.",
+      "Conversão futura ou destinação do capital reduz retorno por instrumento sem compensação operacional."
+    ],
+    "governanca": "Revisar controle, direitos por ação, certificado e recibo, partes relacionadas e conversão futura. O comunicado de negociação relata desconhecimento da causa; a possível mudança no índice descrita anteriormente não comprova seu resultado final nem tese fundamental alterada.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Monitorar retenção, realização, custo de atendimento e caixa após investimento na fibra. Revisar perdas do satélite, retorno das associadas e transferências à holding. Conciliar dívida, investimentos não circulantes, conversão futura e capital por certificado antes de revisar o preço por instrumento.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_TELEVISA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+8,57%"
+          },
+          {
+            "fato": "val.MX_TELEVISA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "14,71%"
+          },
+          {
+            "fato": "val.MX_TELEVISA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "92,92%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +8,57%, custo do capital 14,71% e dispersão entre métodos 92,92% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar desconexões por serviço, retenção residencial, custo de aquisição e atendimento e retorno da migração para fibra. Conciliar resultado do segmento com despesas corporativas, giro, juros, impostos e arrendamentos. Separar participação contábil e dividendos de TelevisaUnivision; verificar liquidez dos investimentos descontados da dívida. Reconciliar capital atual, tesouraria e conversão autorizada na unidade de ações, certificados e recibos.",
+        "titulo": "Migração, perdas do satélite e conversão econômica"
+      }
+    ],
+    "issuer_id": "MX_TELEVISA",
+    "lacunas_de_dados": [
+      "Release foi consultado na fonte pública; o download separado foi recusado, sem cópia local recebida.",
+      "Fluxo IFRS, capital de giro, juros e impostos não foram integralmente reconciliados ao caixa gerencial.",
+      "Direitos, diluição e autorizações da conversão futura precisam de documentos completos.",
+      "Resultados e transferências de associadas e minoritários exigem conciliação própria.",
+      "Resultado final da mudança possível de índice não foi comprovado nesta pesquisa.",
+      "Guidance, tom agregado da gestão e catalisador futuro datado não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo mexicano de telecomunicações com rede residencial, serviços empresariais e distribuição por satélite, além de participação em TelevisaUnivision. A associada de conteúdo não equivale à operação consolidada. Ações, certificados e recibos têm unidades e direitos próprios.",
+    "nome": "Grupo Televisa",
+    "o_que_mudou": null,
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "BR_TIM",
+        "nome": "TIM Brasil"
+      },
+      {
+        "issuer_id": "BR_VIVO",
+        "nome": "Telefônica Brasil (Vivo)"
+      },
+      {
+        "issuer_id": "MX_AMX",
+        "nome": "América Móvil"
+      },
+      {
+        "issuer_id": "MX_MEGACABLE",
+        "nome": "Megacable"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que eficiência e migração da rede sustentem caixa suficiente para compensar a perda do satélite e remunerar capital. A condição decisiva é retorno atribuível por instrumento depois de manutenção, financiamento e diluição. O valor da associada só beneficia o titular por direitos e transferências comprováveis.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_TELEVISA.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "MXN 8,06"
+          },
+          {
+            "fato": "val.MX_TELEVISA.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "MXN 8,75"
+          },
+          {
+            "fato": "val.MX_TELEVISA.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+8,57%"
+          },
+          {
+            "fato": "val.MX_TELEVISA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "14,71%"
+          },
+          {
+            "fato": "val.MX_TELEVISA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+8,57%"
+          }
+        ],
+        "texto": "Preço de referência MXN 8,06 e alvo MXN 8,75, com potencial +8,57%. A hipótese de investimento deve ser confrontada com o custo do capital 14,71% e retorno esperado +8,57%.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O ganho de margem atribuído à eficiência coexiste com perda de serviços de satélite, enquanto adições residenciais incluem móvel e voz. A tese deve testar retenção e contribuição da banda larga após migração, instalação e atendimento, sem usar serviços no pacote como clientes adicionais. Recursos de emissão ampliam liquidez hoje; só destinação rentável e direitos reconciliados podem compensar diluição futura.",
+        "titulo": "Eficiência precisa preservar o cliente e o capital por instrumento"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Rede, serviços combinados e atendimento podem sustentar retenção e realização. A posição precisa ser comprovada por economia do cliente e retorno da fibra. Participação em conteúdo pode acrescentar valor, mas sua disponibilidade para a holding não é presumida como caixa livre.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:09:28.062253+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A margem do segmento melhora com receita consolidada menor e prejuízo atribuível. Associadas, tributos e minoritários afetam o resultado. O caixa operacional gerencial é resultado de segmento menos capex; não equivale ao fluxo IFRS depois de giro, juros e impostos. As comparações de cabo e satélite foram reagrupadas.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que eficiência e migração da rede sustentem caixa suficiente para compensar a perda do satélite e remunerar capital. A condição decisiva é retorno atribuível por instrumento depois de manutenção, financiamento e diluição. O valor da associada só beneficia o titular por direitos e transferências comprováveis. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +8,57%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Perda de clientes do satélite e concorrência podem superar eficiência. Fibra exige investimento. Associadas, obrigações, autorizações e diluição podem limitar o retorno por instrumento mesmo com margem do segmento maior."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_TELEVISA.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-36,38%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -36,38%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Comunicações",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Televisa — caixa da rede, associadas e diluição futura",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O aumento do resultado operacional coexiste com receita menor e prejuízo do acionista. A base de associadas inclui evento anterior não recorrente; composição tributária e minoritários exigem leitura própria. Eficiência e caixa gerencial não são promovidos a geração atribuível após todas as obrigações.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar retenção, realização, custo de atendimento e caixa após investimento na fibra. Revisar perdas do satélite, retorno das associadas e transferências à holding. Conciliar dívida, investimentos não circulantes, conversão futura e capital por certificado antes de revisar o preço por instrumento.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.MX_TELEVISA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "14,71%"
+          },
+          {
+            "fato": "val.MX_TELEVISA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "92,92%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 14,71% e a dispersão entre métodos 92,92%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

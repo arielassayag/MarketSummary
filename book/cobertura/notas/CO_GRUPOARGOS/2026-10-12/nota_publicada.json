@@ -1,0 +1,415 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "5b601935d13cd663d764e4c37dfebb42fe49d0892fbbf8c24bf195476d80e8d7",
+    "factbook": "0803aed2d40ef47ad790b4d8e20392f06bbd83ccf89650e4354997afa86ae313",
+    "nota_json": "312ccdbf9b28821d74e34a01ac940f6754e3bed8d613337a4f1629c9c84ac224"
+  },
+  "is_synthetic": false,
+  "issuer_id": "CO_GRUPOARGOS",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T15:09:54.332257+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A venda de ações de Celsia ao programa de recompra produz efeito não recorrente e altera participação, não apenas liquidez. Confrontar preço e direitos remanescentes com destinação efetiva a dívida, recompra da holding ou novos projetos. Nas concessões e imóveis, examinar necessidade de aportes e restrições de distribuição antes de atribuir caixa das controladas ao acionista da holding.",
+        "titulo": "Participação vendida e destinação do recurso"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em COP 8.566,29, com retorno esperado -45,53%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Os negócios remuneram o capital e a holding recebe caixa suficiente para financiar obrigações e distribuir recursos com disciplina. O cenário otimista calculado pelo código é COP 9.116,31.",
+      "pessimista": "Menor distribuição e investimento nos veículos aumentam dependência de alienações e dívida, reduzindo retorno atribuível. O cenário pessimista calculado pelo código é COP 7.954,09."
+    },
+    "comentario_valuation": "Preço de referência COP 16.500,00 e alvo do modelo aberto COP 8.566,29, com potencial -48,08%. Retorno total esperado -45,53% e custo do capital próprio 12,29%. A dispersão entre métodos é n/d; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é COP 20.025,00; a diferença -57,22% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota. Soma das partes exige participações e classes atuais, sem somar valor das subsidiárias ao lucro que já representam. Deduzir obrigações e custo da holding em base coerente e testar transmissão; desconto observado em corte antigo não é catalisador atual.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A tese falha se dividendos recorrentes recebidos não cobrem estrutura, juros e compromissos, enquanto alienações e avaliações sustentam lucro. Desconto aparente pode persistir sem distribuição, recompra disciplinada ou outra transmissão econômica. Direitos por classe e alocação intragrupo podem limitar captura, mesmo com melhora operacional das subsidiárias.",
+        "titulo": "Valor dos ativos pode permanecer inacessível"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.CO_GRUPOARGOS.preco",
+        "rotulo": "Preço de referência",
+        "valor": "COP 16.500,00"
+      },
+      {
+        "fato": "val.CO_GRUPOARGOS.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "COP 8.566,29"
+      },
+      {
+        "fato": "val.CO_GRUPOARGOS.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-48,08%"
+      },
+      {
+        "fato": "val.CO_GRUPOARGOS.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.CO_GRUPOARGOS.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.CO_GRUPOARGOS.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "COP 9.116,31"
+      },
+      {
+        "fato": "val.CO_GRUPOARGOS.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CO_GRUPOARGOS.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "COP 7.954,09"
+      },
+      {
+        "fato": "val.CO_GRUPOARGOS.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CO_GRUPOARGOS.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,29%"
+      },
+      {
+        "fato": "val.CO_GRUPOARGOS.wacc",
+        "rotulo": "WACC",
+        "valor": "10,60%"
+      },
+      {
+        "fato": "val.CO_GRUPOARGOS.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "6,00%"
+      },
+      {
+        "fato": "val.CO_GRUPOARGOS.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-45,53%"
+      },
+      {
+        "fato": "val.CO_GRUPOARGOS.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-50,99%"
+      },
+      {
+        "fato": "val.CO_GRUPOARGOS.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "6,4x"
+      },
+      {
+        "fato": "val.CO_GRUPOARGOS.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,2x"
+      },
+      {
+        "fato": "val.CO_GRUPOARGOS.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "COP 20.025,00"
+      },
+      {
+        "fato": "val.CO_GRUPOARGOS.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-57,22%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "Grupo Argos",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Estrutura de relatórios e negócios",
+        "url": "https://www.grupoargos.com/relacion-con-el-inversionista/resultados-e-informes/reportes-financieros/"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Grupo Argos",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado separado, consolidado e dividendos recebidos",
+        "url": "https://files.grupoargos.com/uploads-grupo-argos/2026/08/004.01.-Reporte-Resultados-Trimestrales-2Q2026.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Dividendos recorrentes recebidos deixam de cobrir estrutura e compromissos.",
+      "Venda de participação muda direitos sem destinação disciplinada do caixa.",
+      "Aportes ou dívida crescem enquanto ganho contábil sustenta o resultado.",
+      "Mudanças de classes e acordos alteram a transmissão de valor aos minoritários."
+    ],
+    "governanca": "Revisar direitos por classe, controle, acordos e decisões entre holding e veículos listados. A avaliação precisa demonstrar proteção dos minoritários e destinação de recursos, além de mudanças de organização.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Conciliar dividendos recebidos com receitas reconhecidas e equivalência, observando a mudança da base que antes incluía Grupo SURA. Separar venda de Celsia, imóveis e avaliações. Conferir participações, preços de referência e classes sem duplicar consolidação e valor das ações.",
+        "titulo": "Fluxo separado e participação econômica"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar custos, juros, vencimentos, liquidez efetiva e compromissos de aporte. Conferir execução e termos das recompras, alienações e distribuição; manter lucro consolidado, recursos das subsidiárias e caixa separado em bases distintas.",
+        "titulo": "Obrigações e uso do capital na holding"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CO_GRUPOARGOS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-45,53%"
+          },
+          {
+            "fato": "val.CO_GRUPOARGOS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,29%"
+          },
+          {
+            "fato": "val.CO_GRUPOARGOS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "n/d"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -45,53%, custo do capital 12,29% e dispersão entre métodos n/d quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "CO_GRUPOARGOS",
+    "lacunas_de_dados": [
+      "Demonstrações, fluxo separado e notas de participações não foram integralmente conciliados.",
+      "Valor por partes, sobreposição e caixa disponível por entidade exigem revisão.",
+      "Direitos, acordos, recompras e base atual por ação permanecem a comprovar.",
+      "Retorno dos projetos e efeitos de alienação não foram reconciliados ao modelo.",
+      "Guidance, tom da gestão e evento futuro datado seguem não classificados.",
+      "Percepção do mercado, posicionamento e interesse vendido não têm comprovação suficiente.",
+      "Disponibilidade histórica dos documentos e reconciliação integral ao modelo recebido não foram comprovadas."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Holding de materiais de construção, energia, concessões e investimentos imobiliários, com participações em Cementos Argos, Celsia, Odinsa e outros veículos. Lucro consolidado, contribuição por equivalência e caixa efetivamente recebido na holding têm significado diferente.",
+    "nome": "Grupo Argos",
+    "o_que_mudou": null,
+    "pais": "Colômbia",
+    "pares": [
+      {
+        "issuer_id": "BR_BRADESPAR",
+        "nome": "Bradespar"
+      },
+      {
+        "issuer_id": "BR_CBA",
+        "nome": "Companhia Brasileira de Alumínio"
+      },
+      {
+        "issuer_id": "BR_CMIN",
+        "nome": "CSN Mineração"
+      },
+      {
+        "issuer_id": "BR_CSN",
+        "nome": "CSN Siderúrgica Nacional"
+      },
+      {
+        "issuer_id": "BR_ERO",
+        "nome": "Ero Copper"
+      },
+      {
+        "issuer_id": "BR_GERDAU",
+        "nome": "Gerdau"
+      },
+      {
+        "issuer_id": "BR_GOAU",
+        "nome": "Metalúrgica Gerdau"
+      },
+      {
+        "issuer_id": "BR_SUZANO",
+        "nome": "Suzano"
+      }
+    ],
+    "percepcao_variante": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A alternativa à narrativa de desconto é verificar geração e transmissão de caixa, com custo da holding e direitos eliminados da dupla contagem. O relatório separa recebimentos, equivalência e ganho de alienação, permitindo testar essa leitura. Não se afirma que o desconto exista hoje nem que seu fechamento esteja previsto pelo mercado.",
+        "titulo": "Desconto não equivale a catalisador"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A cadeia é geração após investimento nas participadas → distribuição recebida → pagamento de estrutura e dívida da holding → alocação e retorno ao acionista. A condição decisiva é caixa recorrente atribuível e disciplina no uso dele. Ganho na venda de Celsia e avaliações imobiliárias não substituem essa ponte; soma das partes deve eliminar dupla contagem e respeitar cada classe.",
+        "titulo": "Retorno dos ativos deve atravessar a holding"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CO_GRUPOARGOS.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "COP 16.500,00"
+          },
+          {
+            "fato": "val.CO_GRUPOARGOS.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "COP 8.566,29"
+          },
+          {
+            "fato": "val.CO_GRUPOARGOS.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-48,08%"
+          },
+          {
+            "fato": "val.CO_GRUPOARGOS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,29%"
+          },
+          {
+            "fato": "val.CO_GRUPOARGOS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-45,53%"
+          }
+        ],
+        "texto": "Preço de referência COP 16.500,00 e alvo COP 8.566,29, com potencial -48,08%. A hipótese de investimento deve ser confrontada com o custo do capital 12,29% e retorno esperado -45,53%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A holding pode estruturar capital e projetos de longo prazo, mas o benefício deve superar custo de estrutura e risco de decisões intragrupo diante do investimento direto nas subsidiárias. Cemento, energia, concessões e imóveis têm reinvestimento e direitos diferentes. Escala de portfólio e simplificação societária, isoladamente, não comprovam vantagem econômica.",
+        "titulo": "Alocação precisa superar acesso direto aos ativos"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:09:54.332257+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O resultado separado inclui ganho não recorrente com venda de ações de Celsia. O relatório distingue dividendos recebidos em caixa de receitas reconhecidas, e a base anterior ainda incluía recebimentos de Grupo SURA. Receitas imobiliárias combinam vendas, participações e avaliações.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que disciplina de portfólio preserve retorno nos negócios e transfira recursos ao acionista depois de dívida e custo da holding. A análise por partes precisa eliminar sobreposição, reconhecer participações e demonstrar acesso a dividendos. Desconto aparente ao valor de mercado dos ativos não comprova catalisador de realização. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado -45,53%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Dívida e necessidade de caixa da holding podem coincidir com menor distribuição das subsidiárias. Obras, regulação, energia e ciclo imobiliário podem afetar negócios simultaneamente. Alocação entre veículos e partes relacionadas exige controle de conflitos."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CO_GRUPOARGOS.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-57,22%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -57,22%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Grupo Argos — retorno do portfólio e caixa recebido pela holding",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A pesquisa separa resultado da holding, caixa por dividendos e desempenho consolidado. Ganho de venda de participação não é promovido a lucro recorrente. Rótulos do sumário e bases de comparação exigem confronto com as demonstrações completas.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar dividendos recebidos, custos, vencimentos e caixa separado da holding. Avaliar retorno dos negócios e veículos após investimento, eliminando consolidação duplicada. Revisar participação, classes de ações, recompras, alienações e direitos de acesso aos recursos.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.CO_GRUPOARGOS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,29%"
+          },
+          {
+            "fato": "val.CO_GRUPOARGOS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "n/d"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 12,29% e a dispersão entre métodos n/d. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

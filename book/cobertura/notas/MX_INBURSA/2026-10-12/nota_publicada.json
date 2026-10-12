@@ -1,0 +1,425 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "3713fa900db1f7b3070596faab142001e347a791fa17a70f88758040281f75f7",
+    "factbook": "45b8392d1a1eae4b5fbb626836cbd864dd266eb3b9433e8c7f2287d26f0ea345",
+    "nota_json": "f6f7d9450eb0a5e28c093d147ffd2ae85f998277050e3d72516226c8cda860e0"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_INBURSA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T15:10:49.800972+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Indicadores de capital e liquidez são preliminares. Mudanças de participação em STM Financial e Autoexpress afetam atribuição e comparação; patrimônio consolidado não equivale à disponibilidade de cada entidade. Dividendos, recompras e participações minoritárias precisam ser conciliados com caixa e exigências prudenciais.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em MXN 58,37, com retorno esperado +40,31%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Crédito disciplinado e funding estável sustentam retorno recorrente, com diversificação e distribuição verificável por entidade. O cenário otimista calculado pelo código é MXN 75,14.",
+      "pessimista": "Perdas, investimentos e restrições de capital pressionam lucro atribuível e transmissão de caixa. O cenário pessimista calculado pelo código é MXN 44,17."
+    },
+    "comentario_valuation": "A análise deve separar banco e crédito especializado por lucro residual sobre capital requerido, seguros por subscrição e reservas e demais participações pelos direitos econômicos. Somar caixa livre sem considerar exigências prudenciais e minoritários distorceria valor; EBITDA industrial não é referência apropriada. Preço de referência MXN 41,60 e alvo do modelo aberto MXN 58,37, com potencial +40,31%. Retorno total esperado +40,31% e custo do capital próprio 11,34%. A dispersão entre métodos é 14,13%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é MXN 44,14; a diferença +32,22% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se disciplina de despesas não compensa perdas e resultados de mercado, ou se o crescimento não remunera capital por entidade. Liquidez e patrimônio consolidados podem não se transformar em remuneração atribuível ao acionista.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.MX_INBURSA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 41,60"
+      },
+      {
+        "fato": "val.MX_INBURSA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 58,37"
+      },
+      {
+        "fato": "val.MX_INBURSA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+40,31%"
+      },
+      {
+        "fato": "val.MX_INBURSA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_INBURSA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_INBURSA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 75,14"
+      },
+      {
+        "fato": "val.MX_INBURSA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_INBURSA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 44,17"
+      },
+      {
+        "fato": "val.MX_INBURSA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_INBURSA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,34%"
+      },
+      {
+        "fato": "val.MX_INBURSA.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_INBURSA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_INBURSA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+40,31%"
+      },
+      {
+        "fato": "val.MX_INBURSA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "0,00%"
+      },
+      {
+        "fato": "val.MX_INBURSA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "7,6x"
+      },
+      {
+        "fato": "val.MX_INBURSA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,9x"
+      },
+      {
+        "fato": "val.MX_INBURSA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 44,14"
+      },
+      {
+        "fato": "val.MX_INBURSA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+32,22%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "Grupo Financiero Inbursa",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Controle, entidades e governança do grupo",
+        "url": "https://www.inbursa.com/sites/gfi/gobiernocorporativo"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Grupo Financiero Inbursa",
+        "publicado_em": "2026-07-22",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e demonstrações semestrais do grupo",
+        "url": "https://www.bmv.com.mx/docs-pub/infingps/infingps_1576013_2026-02_1.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Reestruturações não produzem amortização recebida e perdas por carteira persistem.",
+      "Captação mais cara e reprificação insuficiente comprimem retorno após perdas.",
+      "Lucro depende de investimentos sem geração recorrente atribuível ou capital distribuível.",
+      "Mudanças societárias e relacionadas limitam transmissão de valor ao acionista coberto."
+    ],
+    "governanca": "O portal identifica controle concentrado e entidades com governança própria. Revisar operações relacionadas, atribuição econômica após mudanças societárias e direitos da ação coberta, sem presumir garantia do controlador.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar margem depois de risco, reestruturações e recebimentos, perdas de consumo e reprificação. Separar seguros, investimentos e intermediação da franquia de crédito. Revisar funding, capital definitivo e lucro atribuível por entidade, com efeitos das mudanças societárias e fluxo para a holding.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_INBURSA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+40,31%"
+          },
+          {
+            "fato": "val.MX_INBURSA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,34%"
+          },
+          {
+            "fato": "val.MX_INBURSA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "14,13%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +40,31%, custo do capital 11,34% e dispersão entre métodos 14,13% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Verificar renovação e concentração de depósitos, custo marginal de captação e reprificação das carteiras. Acompanhar crédito reestruturado por contraparte, amortização recebida, migração de risco e perdas de consumo, sem tratar reversão de provisão como recuperação em caixa. Separar resultado de investimento, subscrição e crédito; confrontar capital definitivo, participações econômicas e dividendos recebidos pela holding.",
+        "titulo": "Custo de captação, migração do crédito e transferência de capital"
+      }
+    ],
+    "issuer_id": "MX_INBURSA",
+    "lacunas_de_dados": [
+      "Crédito reestruturado e recebimentos exigem diligência por contraparte.",
+      "Capital e liquidez definitivos por entidade permanecem a confirmar.",
+      "Mudanças societárias, minoritários e lucro atribuível não foram integralmente conciliados.",
+      "Distribuição para a holding e efeitos de investimentos precisam ser reconciliados.",
+      "Guidance, tom da gestão e catalisador futuro datado não foram classificados.",
+      "Releitura financeira na BMV barrada nesta data; não há reconciliação nova dos recebimentos ou do capital definitivo."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo mexicano com banco, financiamento especializado, seguros, pensões, corretora e gestão de fundos. Crédito empresarial, governo, automóveis e folha coexistem com investimentos e underwriting de seguros. Recursos administrados ou disponíveis em uma entidade não são presumidos como capital livre da holding.",
+    "nome": "Grupo Financiero Inbursa",
+    "o_que_mudou": null,
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_BAJIO",
+        "nome": "Banco del Bajío"
+      },
+      {
+        "issuer_id": "MX_BANORTE",
+        "nome": "Grupo Financiero Banorte"
+      },
+      {
+        "issuer_id": "MX_BMV",
+        "nome": "Bolsa Mexicana de Valores"
+      },
+      {
+        "issuer_id": "MX_GENTERA",
+        "nome": "Gentera"
+      },
+      {
+        "issuer_id": "MX_QUALITAS",
+        "nome": "Quálitas"
+      },
+      {
+        "issuer_id": "MX_REGIONAL",
+        "nome": "Regional (Banregio)"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que funding e controle de despesas sustentem crédito com retorno após perdas, enquanto seguros e investimentos diversifiquem receitas. O valor exige lucro atribuível e capital transferível, sem depender de resultados de mercado. Crescimento e mudanças nas subsidiárias precisam ser reconciliados com o retorno do acionista coberto.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_INBURSA.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "MXN 41,60"
+          },
+          {
+            "fato": "val.MX_INBURSA.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "MXN 58,37"
+          },
+          {
+            "fato": "val.MX_INBURSA.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+40,31%"
+          },
+          {
+            "fato": "val.MX_INBURSA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,34%"
+          },
+          {
+            "fato": "val.MX_INBURSA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+40,31%"
+          }
+        ],
+        "texto": "Preço de referência MXN 41,60 e alvo MXN 58,37, com potencial +40,31%. A hipótese de investimento deve ser confrontada com o custo do capital 11,34% e retorno esperado +40,31%.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A disciplina de crédito precisa ser demonstrada por recebimentos e perdas finais por carteira, separando reestruturação negociada de pagamento. Relacionamento comercial e estrutura de controle descritos no portal não garantem recuperação ou suporte do acionista. Diversificar banco, seguros e investimentos só cria valor se o retorno de cada entidade cobre seu risco e pode ser transferido depois das exigências próprias.",
+        "titulo": "Crédito cobrado e capital livre por entidade"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Oferta financeira e canais podem facilitar relacionamento e ampliar uso de produtos. A vantagem deve aparecer em funding estável, precificação por risco e custo de servir. A concentração de controle não comprova apoio irrestrito, e eficiência divulgada não estabelece superioridade atual sem comparação independente.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:10:49.800972+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O relatório relaciona pressão no lucro a risco de crédito, intermediação e seguros. Reestruturações comerciais e provisões de consumo exigem separar expectativa de recuperação de recebimento efetivo. Investimentos são mais sensíveis à queda dos juros; depósitos de varejo anuais e trimestrais não têm a mesma trajetória.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que funding e controle de despesas sustentem crédito com retorno após perdas, enquanto seguros e investimentos diversifiquem receitas. O valor exige lucro atribuível e capital transferível, sem depender de resultados de mercado. Crescimento e mudanças nas subsidiárias precisam ser reconciliados com o retorno do acionista coberto. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +40,31%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Concentração de crédito, reestruturações e provisões podem pressionar retorno. Juros e moeda alteram investimentos e seguros. Controle concentrado, partes relacionadas e requisitos de capital podem limitar transferência de caixa e alinhamento com minoritários."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_INBURSA.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+32,22%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +32,22%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Inbursa — crédito, investimentos e capital por entidade",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A análise distingue resultado de crédito, investimentos e seguros e considera mudanças societárias. Reestruturação em negociação não constitui perda resolvida. Capital preliminar e indicadores consolidados preservam limites de perímetro; guidance e tom da gestão não são classificados sem material suficiente.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar margem depois de risco, reestruturações e recebimentos, perdas de consumo e reprificação. Separar seguros, investimentos e intermediação da franquia de crédito. Revisar funding, capital definitivo e lucro atribuível por entidade, com efeitos das mudanças societárias e fluxo para a holding.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.MX_INBURSA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,34%"
+          },
+          {
+            "fato": "val.MX_INBURSA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "14,13%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,34% e a dispersão entre métodos 14,13%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

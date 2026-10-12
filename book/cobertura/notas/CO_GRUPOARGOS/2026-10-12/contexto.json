@@ -1,0 +1,101 @@
+{
+  "avisos_tecnicos": [],
+  "dados_ate": "2026-10-09",
+  "data": "2026-10-12",
+  "fontes_sugeridas": [
+    {
+      "instituicao": "Superintendencia Financiera de Colombia",
+      "tipo": "regulatorio",
+      "url": "https://www.superfinanciera.gov.co/"
+    },
+    {
+      "instituicao": "BVC Colombia",
+      "tipo": "bolsa",
+      "url": "https://www.bvc.com.co/"
+    },
+    {
+      "instituicao": "Banco de la República",
+      "tipo": "banco_central",
+      "url": "https://www.banrep.gov.co/"
+    },
+    {
+      "instituicao": "DANE",
+      "tipo": "estatistica_oficial",
+      "url": "https://www.dane.gov.co/"
+    },
+    {
+      "instituicao": "Damodaran Online (NYU Stern) — prêmios de risco, betas e múltiplos setoriais",
+      "tipo": "dados_publicos",
+      "url": "https://pages.stern.nyu.edu/~adamodar/"
+    },
+    {
+      "instituicao": "FRED (Federal Reserve Bank of St. Louis) — juros e indicadores dos EUA",
+      "tipo": "dados_publicos",
+      "url": "https://fred.stlouisfed.org/"
+    }
+  ],
+  "is_synthetic": false,
+  "issuer_id": "CO_GRUPOARGOS",
+  "lacunas": [
+    "Probabilidade implícita do otimista: sem dado na data.",
+    "Probabilidade implícita do pessimista: sem dado na data."
+  ],
+  "nome": "Grupo Argos",
+  "nomes": {
+    "BR_BRADESPAR": "Bradespar",
+    "BR_CBA": "Companhia Brasileira de Alumínio",
+    "BR_CMIN": "CSN Mineração",
+    "BR_CSN": "CSN Siderúrgica Nacional",
+    "BR_ERO": "Ero Copper",
+    "BR_GERDAU": "Gerdau",
+    "BR_GOAU": "Metalúrgica Gerdau",
+    "BR_SUZANO": "Suzano",
+    "CO_GRUPOARGOS": "Grupo Argos"
+  },
+  "nota_anterior": null,
+  "pais": "CO",
+  "pais_pt": "Colômbia",
+  "pares": [
+    "BR_BRADESPAR",
+    "BR_CBA",
+    "BR_CMIN",
+    "BR_CSN",
+    "BR_ERO",
+    "BR_GERDAU",
+    "BR_GOAU",
+    "BR_SUZANO"
+  ],
+  "proximo_resultado": null,
+  "schema": "cdp.nota.contexto/v1",
+  "setor": "Materials",
+  "setor_pt": "Materiais",
+  "snapshot": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "tem_linha_eua": false,
+  "termos": [
+    "BRAP4",
+    "BRAP4.SA",
+    "CBAV3",
+    "CBAV3.SA",
+    "CMIN3",
+    "CMIN3.SA",
+    "CSNA3",
+    "CSNA3.SA",
+    "GGBR4",
+    "GGBR4.SA",
+    "GOAU4",
+    "GOAU4.SA",
+    "SUZB3",
+    "SUZB3.SA"
+  ],
+  "tickers": [
+    "GRUPOARGOS.CL",
+    "GRUPOARGOS",
+    "PFGRUPOARG.CL",
+    "PFGRUPOARG"
+  ],
+  "tipo_esperado": "iniciacao"
+}

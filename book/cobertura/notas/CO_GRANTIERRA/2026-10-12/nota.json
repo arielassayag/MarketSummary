@@ -1,0 +1,211 @@
+{
+  "mind": "codex",
+  "issuer_id": "CO_GRANTIERRA",
+  "data": "2026-10-12",
+  "tipo": "iniciacao",
+  "titulo": "Gran Tierra — venda condicionada, caixa residual e reinvestimento",
+  "resumo": "A hipótese exige que a venda seja concluída em termos que preservem o caixa líquido do acionista e que o portfólio remanescente remunere seu reinvestimento. Até o fechamento, preço, ajustes, dívida e custos permanecem riscos. Depois dele, disciplina no Canadá e no Azerbaijão será decisiva para que recursos liberados não sejam consumidos por projetos sem retorno demonstrado. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.CO_GRANTIERRA.rating_codigo}}, com retorno esperado {{fact:val.CO_GRANTIERRA.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Produtora de petróleo e gás com operações no Canadá, Colômbia e Equador, e acordo exploratório no Azerbaijão. A venda dos negócios latino-americanos recebeu aprovação dos acionistas, mas ainda depende de condições; o perímetro atual e o perímetro projetado precisam permanecer separados.",
+  "pilares_tese": [
+    {
+      "titulo": "Da contraprestação ao caixa do acionista",
+      "texto": "A cadeia é cumprimento das condições → fechamento e ajustes → liquidação de dívida e custos → recebimento imediato e diferido → capital disponível e reinvestimento. A condição decisiva é preservar caixa líquido e retorno do portfólio retido, não o valor bruto anunciado. Aprovação dos acionistas e ratificação exploratória são etapas distintas; nenhuma comprova recebimento ou descoberta comercial.",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F4"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.CO_GRANTIERRA.preco}} e alvo {{fact:val.CO_GRANTIERRA.preco_alvo}}, com potencial {{fact:val.CO_GRANTIERRA.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.CO_GRANTIERRA.ke}} e retorno esperado {{fact:val.CO_GRANTIERRA.etr}}.",
+      "evidencias": [
+        "val.CO_GRANTIERRA.preco",
+        "val.CO_GRANTIERRA.preco_alvo",
+        "val.CO_GRANTIERRA.upside",
+        "val.CO_GRANTIERRA.ke",
+        "val.CO_GRANTIERRA.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar condições da venda, ajustes, impostos, dívida transferida, garantias e recebimento diferido. Revisar caixa e reinvestimento do portfólio retido, produtividade e passivos de abandono. Confrontar mudança geográfica com as regras de elegibilidade do mandato, sem alterar a cobertura por inferência.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.CO_GRANTIERRA.ke}} e a dispersão entre métodos {{fact:val.CO_GRANTIERRA.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.CO_GRANTIERRA.ke",
+        "val.CO_GRANTIERRA.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Atraso, ajuste ou não conclusão da venda pode modificar caixa e endividamento. Reinvestimento e exploração têm risco geológico e de execução. A distribuição esperada pode ser menor ou diferente da intenção comunicada, e o novo perímetro pode alterar elegibilidade no mandato.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F4"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.CO_GRANTIERRA.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.CO_GRANTIERRA.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Condições são cumpridas, o recebimento preserva retorno econômico e a destinação de capital equilibra remuneração ao acionista com projetos demonstráveis. O cenário otimista calculado pelo código é {{fact:val.CO_GRANTIERRA.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.CO_GRANTIERRA.preco_alvo}}, com retorno esperado {{fact:val.CO_GRANTIERRA.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Venda ou recebimento demora, custos e ajustes absorvem valor e o portfólio remanescente consome recursos sem retorno suficiente. O cenário pessimista calculado pelo código é {{fact:val.CO_GRANTIERRA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.CO_GRANTIERRA.preco}} e alvo do modelo aberto {{fact:val.CO_GRANTIERRA.preco_alvo}}, com potencial {{fact:val.CO_GRANTIERRA.upside}}. Retorno total esperado {{fact:val.CO_GRANTIERRA.etr}} e custo do capital próprio {{fact:val.CO_GRANTIERRA.ke}}. A dispersão entre métodos é {{fact:val.CO_GRANTIERRA.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.CO_GRANTIERRA.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.CO_GRANTIERRA.consenso_alvo}}; a diferença {{fact:val.CO_GRANTIERRA.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota. Confrontar ativo líquido por campo com royalties, declínio, abandono e reinvestimento. Separar venda, parcela diferida e negócio retido; modelo anterior não avalia automaticamente o novo perímetro. Recursos prospectivos não recebem valor de reservas comprovadas.",
+  "ultimo_resultado": "O trimestre antecede os eventos atuais da transação. O modelo recebido não foi recalculado para um fechamento futuro; seus alvos não constituem avaliação do perímetro projetado. Cabe reconciliar ambos antes de elevar convicção.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "A aprovação da venda permanece distinta do voto consultivo sobre remuneração relacionada à transação. Condições regulatórias e contratuais ainda são requeridas. Conferir conflitos, restrições durante a venda, recebimento diferido e decisão final de recompra; intenção de retorno ao acionista não é execução. O capital destinado ao Canadá e Azerbaijão deve ter critérios e prestação de contas próprios.",
+  "posicao_competitiva": {
+    "titulo": "Competência transferível precisa de prova por ativo",
+    "texto": "Experiência em recuperação secundária pode apoiar projetos canadenses, mas geologia, produto, logística e direitos retidos precisam confirmar produtividade e custo depois do declínio natural. Levantamento geofísico no Azerbaijão orienta exploração; não representa reserva comercial. Histórico colombiano não prova vantagem competitiva no novo perímetro.",
+    "evidencias": [
+      "F2",
+      "F4"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Produção antes de royalties, produção líquida e vendas têm bases distintas. Caixa livre gerencial parte de funds flow e exclui efeitos de giro. Recursos prospectivos e contingentes não são reservas comprovadas; a alienação Lodgepole alterou a base trimestral.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "A aprovação da venda não confirma fechamento nem recebimento. A contraprestação inclui assunção de dívida e parcela diferida, distinta do caixa líquido esperado. Recompra permanece condicionada e seus termos ainda serão definidos. Ratificação do acordo exploratório não comprova descoberta comercial.",
+    "evidencias": [
+      "F3",
+      "F4"
+    ]
+  },
+  "percepcao_variante": {
+    "titulo": "Transação e negócio retido são testes separados",
+    "texto": "A leitura alternativa separa realização da venda da rentabilidade futura do negócio retido. O primeiro teste é contratual e de caixa; o segundo exige ativos, custos, reposição e direitos. Uma contraprestação elevada não demonstra automaticamente valor por ação. Não há evidência de probabilidade de fechamento ou leitura de mercado a adotar.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F4"
+    ]
+  },
+  "contratese": {
+    "titulo": "Caixa liberado pode não chegar ao acionista",
+    "texto": "A tese falha se ajustes, impostos, obrigações ou atraso da parcela diferida consomem o valor líquido esperado, ou se recompra não ocorre nos termos ainda a definir. Canadá pode exigir reinvestimento para compensar declínio; exploração no Azerbaijão pode consumir recursos sem descoberta comercial. Redução de dívida projetada não refuta esses riscos antes do fechamento.",
+    "evidencias": [
+      "F3",
+      "F4"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Condições, ajustes e recebimento",
+      "texto": "Acompanhar autorizações, condições de fechamento, assunção efetiva da dívida, custos, impostos, garantias e parcela diferida. Conferir decisão de recompra e sua execução separadamente. Manter o trimestre anterior distinto dos eventos da transação e a divergência de data do release explícita.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Economia e elegibilidade do perímetro retido",
+      "texto": "Examinar produção e venda após royalties, preço líquido, declínio, reinvestimento e abandono no Canadá. No Azerbaijão, separar interpretação geofísica, direitos, perfuração e descoberta comercial. A eventual mudança geográfica exige conferência de elegibilidade pelo código, sem alterar mandato na nota.",
+      "evidencias": [
+        "F2",
+        "F4"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.CO_GRANTIERRA.etr}}, custo do capital {{fact:val.CO_GRANTIERRA.ke}} e dispersão entre métodos {{fact:val.CO_GRANTIERRA.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.CO_GRANTIERRA.etr",
+        "val.CO_GRANTIERRA.ke",
+        "val.CO_GRANTIERRA.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Condições ou ajustes mudam o caixa líquido e o prazo da transação.",
+    "Parcela diferida ou direitos não têm proteção e recebimento demonstrados.",
+    "Reinvestimento no portfólio retido consome recursos sem retorno comprovado.",
+    "Fechamento muda elegibilidade geográfica ou base do modelo sem conciliação."
+  ],
+  "lacunas_de_dados": [
+    "Contrato de venda, proxy definitivo, ajustes e garantias não foram integralmente revisados.",
+    "Fluxo, dívida assumida, impostos e recebimento diferido exigem reconciliação documental.",
+    "Elegibilidade do novo perímetro no mandato e avaliação prospectiva permanecem a conferir por código.",
+    "Custos, direitos e economia do portfólio retido e do acordo exploratório não foram integralmente comprovados.",
+    "A data do release trimestral apresenta divergência entre cabeçalho e corpo; guidance, tom e evento futuro com data exata seguem não classificados.",
+    "Percepção do mercado, posicionamento e interesse vendido não têm comprovação suficiente.",
+    "Disponibilidade histórica dos documentos e reconciliação integral ao modelo recebido não foram comprovadas."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Gran Tierra Energy",
+      "titulo": "Perfil e eventos corporativos atuais",
+      "url": "https://www.grantierra.com/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Gran Tierra Energy",
+      "titulo": "Resultado trimestral e recursos petrolíferos",
+      "url": "https://www.grantierra.com/news/gran-tierra-energy-inc-reports-second-quarter-2026-results/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Gran Tierra Energy",
+      "titulo": "Acionistas aprovam venda sujeita a condições",
+      "url": "https://www.grantierra.com/news/gran-tierra-energy-inc-stockholders-approve-sale-of-colombian-and-ecuadorian-businesses/",
+      "publicado_em": "2026-10-09",
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F4",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Gran Tierra Energy",
+      "titulo": "Comunicado sobre ratificação de acordo exploratório",
+      "url": "https://www.grantierra.com/news/gran-tierra-energy-inc-announces-ratification-of-its-onshore-exploration-development-and-production-sharing-agreement-in-azerbaijan/",
+      "publicado_em": "2026-10-05",
+      "consultado_em": "2026-10-12"
+    }
+  ],
+  "modelo_ia": null
+}

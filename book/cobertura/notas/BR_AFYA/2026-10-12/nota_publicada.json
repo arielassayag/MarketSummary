@@ -1,0 +1,438 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "a2bc9bf280a321d1daa094692b9fed96a4ddeb866f58ffe52a1ab4885d50fc7b",
+    "factbook": "19235e4243db5a23916452310db1d273e5c6ed5326dc74fe893075c1e03ee6d8",
+    "nota_json": "6c82d27364092e5434546cc4e6d9e075e3f2b798d282174008fed8e5750c7c92"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_AFYA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-12",
+  "published_at": "2026-10-12T15:11:16.101391+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A combinação depende de aprovações e condições. A relação de troca não muda com a evolução operacional, salvo ajustes aritméticos previstos. Elegibilidade pode determinar entrega de ações ou venda posterior com repasse líquido, sem valor nem prazo garantidos no anúncio. O mecanismo contratual de caixa anterior ao fechamento e proteção contra transferência de valor exige o acordo completo. Sinergias são hipóteses, não caixa realizado.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em US$ 24,82, com retorno esperado +80,38%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Qualidade acadêmica e retenção remuneram investimentos; eventual integração comprova benefícios depois do fechamento. O cenário otimista calculado pelo código é US$ 30,25.",
+      "pessimista": "Pressões acadêmicas e financeiras restringem caixa, enquanto a combinação impõe custos sem retorno demonstrado. O cenário pessimista calculado pelo código é US$ 20,07."
+    },
+    "comentario_valuation": "Preço de referência US$ 14,15 e alvo do modelo aberto US$ 24,82, com potencial +75,43%. Retorno total esperado +80,38% e custo do capital próprio 11,00%. A dispersão entre métodos é 15,95%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é US$ 17,70; a diferença +40,21% não constitui evidência de percepção do mercado. Mensalidades recebidas, ocupação e reinvestimento por escola devem sustentar a avaliação individual. A combinação exige uma ponte própria de capital diluído, obrigações e direitos por instrumento, sem somar sinergias não realizadas ao alvo recebido. Caixa operacional gerencial com impostos adicionados e distribuições pactuadas antes do fechamento não são substitutos do fluxo disponível ao titular.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese enfraquece se qualidade e retenção não remunerarem o reinvestimento ou se a combinação transferir riscos e custos sem benefícios demonstráveis ao acionista.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.BR_AFYA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 14,15"
+      },
+      {
+        "fato": "val.BR_AFYA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 24,82"
+      },
+      {
+        "fato": "val.BR_AFYA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+75,43%"
+      },
+      {
+        "fato": "val.BR_AFYA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_AFYA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_AFYA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 30,25"
+      },
+      {
+        "fato": "val.BR_AFYA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_AFYA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 20,07"
+      },
+      {
+        "fato": "val.BR_AFYA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_AFYA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,00%"
+      },
+      {
+        "fato": "val.BR_AFYA.wacc",
+        "rotulo": "WACC",
+        "valor": "8,98%"
+      },
+      {
+        "fato": "val.BR_AFYA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.BR_AFYA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+80,38%"
+      },
+      {
+        "fato": "val.BR_AFYA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+62,05%"
+      },
+      {
+        "fato": "val.BR_AFYA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "7,1x"
+      },
+      {
+        "fato": "val.BR_AFYA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,2x"
+      },
+      {
+        "fato": "val.BR_AFYA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 17,70"
+      },
+      {
+        "fato": "val.BR_AFYA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+40,21%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Afya",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e estrutura do negócio",
+        "url": "https://ir.afya.com.br/"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Afya",
+        "publicado_em": "2026-08-13",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado, guidance e reconciliação das métricas de caixa",
+        "url": "https://www.sec.gov/Archives/edgar/data/1771007/000129281426004218/ex99-1.htm"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F3",
+        "instituicao": "Afya",
+        "publicado_em": "2026-09-23",
+        "tipo": "Relações com investidores",
+        "titulo": "Acordo de combinação com a Yduqs, sujeito a condições",
+        "url": "https://www.sec.gov/Archives/edgar/data/1771007/000129281426004684/ex99-1.htm"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Retenção, recebimento ou utilização das vagas médicas deterioram apesar de reajustes.",
+      "A combinação exige financiamento ou integração sem retorno demonstrável ao acionista.",
+      "Elegibilidade ou mecânica de venda das ações da combinação altera o retorno realizável."
+    ],
+    "governanca": "A combinação assinada depende de aprovações e outras condições; assinatura não é fechamento. Troca de ações, governança futura e tratamento de determinados investidores exigem o acordo completo. Reconciliar distribuições e aquisições com caixa; sinergias projetadas não são caixa disponível.",
+    "guidance": "mantido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Acompanhar matrícula, retenção, qualidade acadêmica e recebimento de mensalidades. Examinar retorno das aquisições, adoção remunerada das ferramentas, investimentos e dívida. Atualizar a tese da combinação somente com documentos que comprovem condições satisfeitas e efeitos efetivos.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_AFYA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+80,38%"
+          },
+          {
+            "fato": "val.BR_AFYA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,00%"
+          },
+          {
+            "fato": "val.BR_AFYA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "15,95%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +80,38%, custo do capital 11,00% e dispersão entre métodos 15,95% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Retenção, recebimento ou utilização das vagas médicas deterioram apesar de reajustes. A combinação exige financiamento ou integração sem retorno demonstrável ao acionista. Elegibilidade ou mecânica de venda das ações da combinação altera o retorno realizável.",
+        "titulo": "Evidência que muda a visão"
+      }
+    ],
+    "issuer_id": "BR_AFYA",
+    "lacunas_de_dados": [
+      "Notas completas, fluxo contábil e base plenamente diluída não foram integralmente reconciliados.",
+      "Risco regulatório, retorno por unidade e efeitos das aquisições exigem diligência adicional.",
+      "Condições do acordo, direitos de cada classe e aprovações da combinação não estão integralmente conferidos.",
+      "Sinergias e custos da eventual integração não foram demonstrados como resultados realizados.",
+      "Calendário futuro não foi confirmado diretamente no material público acessível; não se adotou a data mostrada apenas na busca.",
+      "Tom da gestão e percepção de mercado não estão concluídos."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "A Afya atua na formação médica, educação continuada e ferramentas da prática profissional. A hipótese do ecossistema exige examinar cada atividade e o benefício de integração; usuários de produtos diferentes não devem ser tratados automaticamente como pessoas únicas.",
+    "nome": "Afya",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ALPARGATAS",
+        "nome": "Alpargatas"
+      },
+      {
+        "issuer_id": "BR_AZZAS",
+        "nome": "Azzas 2154"
+      },
+      {
+        "issuer_id": "BR_CEA",
+        "nome": "C&A Modas"
+      },
+      {
+        "issuer_id": "BR_COGNA",
+        "nome": "Cogna"
+      },
+      {
+        "issuer_id": "BR_CURY",
+        "nome": "Cury"
+      },
+      {
+        "issuer_id": "BR_CYRELA",
+        "nome": "Cyrela"
+      },
+      {
+        "issuer_id": "BR_DIRECIONAL",
+        "nome": "Direcional"
+      },
+      {
+        "issuer_id": "BR_EZTEC",
+        "nome": "EZTec"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que qualidade acadêmica e acompanhamento da carreira sustentem retenção e retorno. A condição é converter essa proposta em caixa após investimento e obrigações. A combinação anunciada com a Yduqs é um evento condicionado, sem perímetro combinado ou sinergia realizada incorporados à tese.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_AFYA.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "US$ 14,15"
+          },
+          {
+            "fato": "val.BR_AFYA.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "US$ 24,82"
+          },
+          {
+            "fato": "val.BR_AFYA.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+75,43%"
+          },
+          {
+            "fato": "val.BR_AFYA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,00%"
+          },
+          {
+            "fato": "val.BR_AFYA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+80,38%"
+          }
+        ],
+        "texto": "Preço de referência US$ 14,15 e alvo US$ 24,82, com potencial +75,43%. A hipótese de investimento deve ser confrontada com o custo do capital 11,00% e retorno esperado +80,38%.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "O negócio individual deve justificar retorno pela retenção acadêmica, recebimento e uso remunerado das ferramentas. O acordo de combinação introduz outro teste: elegibilidade para receber ações, nova jurisdição de negociação e proteção do caixa durante o período anterior ao fechamento. A relação de troca é contratual; melhora operacional não assegura revisão dessa relação. Benefícios da integração permanecem hipóteses.",
+        "titulo": "A franquia e a combinação exigem testes separados"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Testar resultados acadêmicos, ocupação, retenção e acessibilidade frente a alternativas locais. Uma base de vagas autorizadas não garante manutenção da autorização nem demonstra demanda rentável. Conveniência das ferramentas precisa ser comprovada por retenção e uso remunerado.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:11:16.101391+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O caixa operacional gerencial adiciona impostos pagos ao fluxo contábil. Caixa ao acionista deriva de mudanças de dívida e ajustes de aquisições e distribuições; não substitui o fluxo operacional. O comparativo de aquisições e possíveis efeitos regulatórios sobre vagas exigem análise própria.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que qualidade acadêmica e acompanhamento da carreira sustentem retenção e retorno. A condição é converter essa proposta em caixa após investimento e obrigações. A combinação anunciada com a Yduqs é um evento condicionado, sem perímetro combinado ou sinergia realizada incorporados à tese. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +80,38%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Mudanças regulatórias, deterioração acadêmica e inadimplência podem afetar o retorno da graduação. A combinação pode ser atrasada, modificada ou não concluída; projeções e integração futura podem consumir recursos antes de gerar benefícios."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_AFYA.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+40,21%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +40,21%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Consumo discricionário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Afya: economia da educação médica e combinação condicionada",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O release reafirma a orientação de receita, resultado operacional ajustado e investimento, sujeita à entrada de alunos e ao perímetro indicado. A projeção promocional de retorno ao acionista não foi adotada. O acordo posterior de combinação permanece condicionado; não substitui o desempenho individual apresentado.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar matrícula, retenção, qualidade acadêmica e recebimento de mensalidades. Examinar retorno das aquisições, adoção remunerada das ferramentas, investimentos e dívida. Atualizar a tese da combinação somente com documentos que comprovem condições satisfeitas e efeitos efetivos.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_AFYA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,00%"
+          },
+          {
+            "fato": "val.BR_AFYA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "15,95%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,00% e a dispersão entre métodos 15,95%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

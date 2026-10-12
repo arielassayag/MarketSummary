@@ -1,0 +1,486 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "8f2922466864efa75d144798e56f8f1ca90af65d8d8eefedbebbcf228aa5d367",
+    "factbook": "f3d6e062ad5ec04d82547b2b5444339c156fbcec7de8eb2e3b7385ae5071ec72",
+    "nota_json": "2ef9a187ef1b8d5165008754976e56f57a40dc7c040192a9e28853891df75d99"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_BIMBO",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-22",
+  "published_at": "2026-10-12T15:07:01.398005+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Integração, transformação e manutenção disputam recursos com dividendos e recompra. A queda da dívida inclui câmbio e capital de giro e precisa ser distinguida de amortização orgânica. Alavancagem sem efeito de arrendamentos e perfil que exclui parte da dívida de subsidiárias não representam todas as obrigações.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em MXN 58,59, com retorno esperado +6,57%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Marcas, distribuição e produtividade sustentam retorno depois de integração, manutenção e capital de giro. O cenário otimista calculado pelo código é MXN 85,27.",
+      "pessimista": "Demanda e custos reduzem margem enquanto integração, dívida e obrigações limitam retorno por ação. O cenário pessimista calculado pelo código é MXN 31,58."
+    },
+    "comentario_valuation": "Preço de referência MXN 55,97 e alvo do modelo aberto MXN 58,59, com potencial +4,69%. Retorno total esperado +6,57% e custo do capital próprio 10,20%. A dispersão entre métodos é 22,67%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é MXN 70,17; a diferença -16,50% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota. A diligência dos métodos deve usar margem sustentável por região, manutenção das rotas e obrigações previdenciárias. Comparáveis exigem igual tratamento de arrendamentos e aquisições; o fluxo atribuível é o teste econômico.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "O caso falha se ganhos de distribuição dependem de custos contínuos e não sustentam volume rentável. Integração e obrigações previdenciárias podem consumir os benefícios; nesse cenário, EBITDA ajustado maior e redução cambial da dívida não confirmam remuneração por ação.",
+        "titulo": "Escala pode exigir reinvestimento contínuo"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.MX_BIMBO.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 55,97"
+      },
+      {
+        "fato": "val.MX_BIMBO.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 58,59"
+      },
+      {
+        "fato": "val.MX_BIMBO.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+4,69%"
+      },
+      {
+        "fato": "val.MX_BIMBO.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_BIMBO.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_BIMBO.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 85,27"
+      },
+      {
+        "fato": "val.MX_BIMBO.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "9,00%"
+      },
+      {
+        "fato": "val.MX_BIMBO.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 31,58"
+      },
+      {
+        "fato": "val.MX_BIMBO.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "1,44%"
+      },
+      {
+        "fato": "val.MX_BIMBO.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,20%"
+      },
+      {
+        "fato": "val.MX_BIMBO.wacc",
+        "rotulo": "WACC",
+        "valor": "8,44%"
+      },
+      {
+        "fato": "val.MX_BIMBO.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_BIMBO.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+6,57%"
+      },
+      {
+        "fato": "val.MX_BIMBO.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+10,94%"
+      },
+      {
+        "fato": "val.MX_BIMBO.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "17,0x"
+      },
+      {
+        "fato": "val.MX_BIMBO.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,1x"
+      },
+      {
+        "fato": "val.MX_BIMBO.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 70,17"
+      },
+      {
+        "fato": "val.MX_BIMBO.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-16,50%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "Grupo Bimbo",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Índice de materiais trimestrais oficiais",
+        "url": "https://www.grupobimbo.com/en/investors/reports/quarterly-reports"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Grupo Bimbo",
+        "publicado_em": "2026-07-23",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado trimestral por território e medidas financeiras",
+        "url": "https://d2rwhogv2mrkk6.cloudfront.net/s3fs-public/reportes-2026/Grupo%20Bimbo%20Reports%202Q26%20Results_VF.pdf?VersionId=UZM8LqJBZjeqYQj1T1pdIE41TADT5hwz"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F3",
+        "instituicao": "Grupo Bimbo",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Demonstrações anuais, aquisições e obrigações previdenciárias",
+        "url": "https://d2rwhogv2mrkk6.cloudfront.net/2026-07/ING_IA25_GB_EEFF_V4_0.pdf?VersionId=o_wanATtt0Z3R6a9LCtYUoS4xcx0fA3t"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Produtividade não sustenta margem quando o estímulo de eventos de consumo termina.",
+      "Wickbold amplia vendas sem melhorar contribuição e caixa após integração.",
+      "Contribuições ou obrigações previdenciárias absorvem ganhos operacionais.",
+      "Caixa após aquisições, arrendamentos e manutenção diverge persistentemente das medidas ajustadas."
+    ],
+    "governanca": "Revisar controle, relacionadas, obrigações previdenciárias e capital por subsidiária. Direitos de distribuição e exposição cambial precisam ter a mesma base do instrumento avaliado.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar volume, preço e mistura de produtos por região, contribuição das rotas e ganhos recorrentes de produtividade. Revisar integração de Wickbold, capital de giro, manutenção, pensões e caixa depois de aquisições. Conciliar dívida por moeda e entidade, arrendamentos e remuneração por ação.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_BIMBO.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+6,57%"
+          },
+          {
+            "fato": "val.MX_BIMBO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,20%"
+          },
+          {
+            "fato": "val.MX_BIMBO.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "22,67%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +6,57%, custo do capital 10,20% e dispersão entre métodos 22,67% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Acompanhar volume e mistura de produtos em base comparável, contribuição das rotas e custo de distribuição. Examinar despesas de transformação recorrentes, integração, devoluções e capital de giro antes de tratar expansão de margem como ganho sustentável.",
+        "titulo": "Retorno da transformação e de Wickbold"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Conferir contribuições realizadas, provisões, situação dos planos e mudanças de exposição a retirada. Reconciliar caixa antes e depois de aquisições, capex, arrendamentos, dívida de subsidiárias e remuneração dos acionistas.",
+        "titulo": "Planos previdenciários e caixa disponível"
+      }
+    ],
+    "issuer_id": "MX_BIMBO",
+    "lacunas_de_dados": [
+      "Aquisições, pensões e arrendamentos exigem reconciliação integral.",
+      "Capital de giro, caixa depois de integração e retorno por rota permanecem a avaliar.",
+      "Participação por categoria e desempenho relativo precisam de fontes independentes.",
+      "Dívida por subsidiária e moeda e direitos de capital não foram integralmente reconciliados.",
+      "Guidance, tom da gestão e catalisador futuro datado não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo de panificação e alimentos com marcas, produção e distribuição na América do Norte, México, Europa, Ásia, África e América Latina. Produtos, canais e regiões têm economias diferentes. Aquisições e transações entre unidades requerem bases comparáveis; alcance de distribuição não demonstra sozinho retorno ao acionista.",
+    "nome": "Grupo Bimbo",
+    "o_que_mudou": "Aprofundamento editorial com consulta pública nesta data. Hipóteses, condições de confirmação, caixa, capital e acompanhamento foram detalhados; o modelo recebido e seu corte histórico não foram recalculados.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_AC",
+        "nome": "Arca Continental"
+      },
+      {
+        "issuer_id": "MX_CHEDRAUI",
+        "nome": "Grupo Comercial Chedraui"
+      },
+      {
+        "issuer_id": "MX_GRUMA",
+        "nome": "Gruma"
+      },
+      {
+        "issuer_id": "MX_KIMBER",
+        "nome": "Kimberly-Clark de México"
+      },
+      {
+        "issuer_id": "MX_KOF",
+        "nome": "Coca-Cola FEMSA"
+      },
+      {
+        "issuer_id": "MX_SIGMA",
+        "nome": "Sigma Foods (ex-Alfa)"
+      },
+      {
+        "issuer_id": "MX_WALMEX",
+        "nome": "Walmart de México"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que marcas e densidade de distribuição sustentem monetização e diluam custos. Transformação e aquisições precisam melhorar retorno depois de manutenção, capital de giro e obrigações previdenciárias. A condição decisiva é caixa atribuível ao acionista, com crescimento por volume e margem recorrentes além do efeito cambial.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_BIMBO.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "MXN 55,97"
+          },
+          {
+            "fato": "val.MX_BIMBO.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "MXN 58,59"
+          },
+          {
+            "fato": "val.MX_BIMBO.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+4,69%"
+          },
+          {
+            "fato": "val.MX_BIMBO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,20%"
+          },
+          {
+            "fato": "val.MX_BIMBO.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+6,57%"
+          }
+        ],
+        "texto": "Preço de referência MXN 55,97 e alvo MXN 58,59, com potencial +4,69%. A hipótese de investimento deve ser confrontada com o custo do capital 10,20% e retorno esperado +6,57%.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A distribuição direta e as marcas formam uma hipótese de escala local. O teste é vender de forma rentável, com menos perdas, devoluções e custo por atendimento, após investimento nas rotas. O crescimento precisa ser separado de câmbio, aquisição e consumo ligado a eventos; cobertura geográfica não é retorno econômico.",
+        "titulo": "Densidade das rotas como teste econômico"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A leitura do caixa deve incluir contribuições previdenciárias e potenciais obrigações dos planos multiempregadores. Ajustes gerenciais podem remover despesas que ainda demandam recursos. A condição para maior convicção é conciliar produtividade, aquisição e caixa depois de manutenção e obrigações completas.",
+        "titulo": "Obrigações além do EBITDA ajustado"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Marcas e presença no ponto de venda podem sustentar recompra e eficiência de rotas. A vantagem deve aparecer em volume rentável, realização e custo de distribuição. O ganho de participação relatado pela gestão precisa de verificação independente; o desempenho de categorias e geografias não é uniforme.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:07:01.398005+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A produtividade da América do Norte e a integração de Wickbold têm efeitos diferentes. O release exclui efeitos de planos multiempregadores das medidas ajustadas e define caixa livre antes de aquisições. As notas anuais descrevem contribuições e risco de obrigações adicionais desses planos; EBITDA ajustado não encerra o custo econômico.",
+        "titulo": "Produtividade recorrente e ajustes previdenciários"
+      }
+    ],
+    "resumo": "A hipótese é que marcas e densidade de distribuição sustentem monetização e diluam custos. Transformação e aquisições precisam melhorar retorno depois de manutenção, capital de giro e obrigações previdenciárias. A condição decisiva é caixa atribuível ao acionista, com crescimento por volume e margem recorrentes além do efeito cambial. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +6,57%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Consumo e insumos podem reduzir realização e margem. Distribuição, transformação e integração podem exigir capital sem retorno suficiente. Pensões, moeda e dívida de subsidiárias podem limitar caixa mesmo com EBITDA ajustado maior."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_BIMBO.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-16,50%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -16,50%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Consumo básico",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Bimbo — força das marcas, produtividade da distribuição e retorno após integração",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A melhora da margem consolidada tem contribuições distintas por território. Crescimento em moedas constantes, aquisições e efeito cambial são separados. Medidas ajustadas e caixa livre antes de aquisições não substituem resultado contábil e caixa atribuível.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar volume, preço e mistura de produtos por região, contribuição das rotas e ganhos recorrentes de produtividade. Revisar integração de Wickbold, capital de giro, manutenção, pensões e caixa depois de aquisições. Conciliar dívida por moeda e entidade, arrendamentos e remuneração por ação.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.MX_BIMBO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,20%"
+          },
+          {
+            "fato": "val.MX_BIMBO.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "22,67%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 10,20% e a dispersão entre métodos 22,67%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar densidade de atendimento, retorno das mudanças de distribuição e desempenho de Wickbold separado de crescimento orgânico. Conferir se benefícios operacionais persistem após eventos temporários de consumo.",
+        "vetor": "Produtividade e integração regional"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Confrontar caixa depois de aquisição, arrendamentos e contribuições previdenciárias com dividendos e recompras. O perfil de amortização divulgado tem exclusões por subsidiária; consolidação e financiamento precisam ser examinados no mesmo perímetro.",
+        "vetor": "Pensões, dívida e transmissão por ação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

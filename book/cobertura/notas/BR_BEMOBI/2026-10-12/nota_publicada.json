@@ -1,0 +1,442 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "afeaa5cd805c04fc5420f2f907b6d7c85cb44b0cf7505c6eb81fd1b868b12018",
+    "factbook": "6a76b6d196353b47aff91911608d3cc731b4a39aa97a528f1db4feb3c60def32",
+    "nota_json": "00695a35e32688f9baea7830680ac865402dbfbfcec3b2e21200d61958c8dcb3"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_BEMOBI",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T15:08:04.941395+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Desenvolvimento intangível concentra reinvestimento. Recebíveis das operadoras e repasses a estabelecimentos têm saldos e prazos próprios. Recompra e juros sobre capital consumiram caixa no trimestre. Recursos aplicados, empréstimos, parcelas de aquisições e minoritários precisam de ponte ao caixa disponível da controladora.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: confirmar monetização e caixa efetivo dos pagamentos.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 27,28, com retorno esperado -10,53%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Renovação e integração ampliam receita própria com giro disciplinado; caixa depois de desenvolvimento, tributos e direitos de terceiros sustenta retorno. O cenário otimista calculado pelo código é R$ 39,64.",
+      "pessimista": "Concentração e perda de clientes pressionam monetização, enquanto pagamentos, crédito e desenvolvimento absorvem recursos; ajustes não se tornam caixa distribuível. O cenário pessimista calculado pelo código é R$ 15,44."
+    },
+    "comentario_valuation": "Preço de referência R$ 32,34 e alvo do modelo aberto R$ 27,28, com potencial -15,64%. Retorno total esperado -10,53% e custo do capital próprio 11,25%. A dispersão entre métodos é 20,98%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 32,67; a diferença -16,48% não constitui evidência de percepção do mercado. Receita e margem por solução oferecem uma base melhor que volume processado para interpretar valor. Desenvolvimento capitalizado continua reinvestimento econômico. A ponte de caixa deve reconciliar recursos a receber e a repassar, aquisição, dívida e minoritários, para que EBITDA menos CAPEX não seja tratado como fluxo livre atribuível.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Volume processado e lucro ajustado podem crescer sem caixa operacional equivalente. Aquisições e financiamento do giro podem explicar escala. Se renovação e monetização não remunerarem desenvolvimento e crédito, integração não confirmará retorno sustentável.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.BR_BEMOBI.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 32,34"
+      },
+      {
+        "fato": "val.BR_BEMOBI.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 27,28"
+      },
+      {
+        "fato": "val.BR_BEMOBI.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-15,64%"
+      },
+      {
+        "fato": "val.BR_BEMOBI.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_BEMOBI.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_BEMOBI.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 39,64"
+      },
+      {
+        "fato": "val.BR_BEMOBI.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "27,96%"
+      },
+      {
+        "fato": "val.BR_BEMOBI.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 15,44"
+      },
+      {
+        "fato": "val.BR_BEMOBI.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "1,60%"
+      },
+      {
+        "fato": "val.BR_BEMOBI.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,25%"
+      },
+      {
+        "fato": "val.BR_BEMOBI.wacc",
+        "rotulo": "WACC",
+        "valor": "11,17%"
+      },
+      {
+        "fato": "val.BR_BEMOBI.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_BEMOBI.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-10,53%"
+      },
+      {
+        "fato": "val.BR_BEMOBI.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+8,93%"
+      },
+      {
+        "fato": "val.BR_BEMOBI.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "13,8x"
+      },
+      {
+        "fato": "val.BR_BEMOBI.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,8x"
+      },
+      {
+        "fato": "val.BR_BEMOBI.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 32,67"
+      },
+      {
+        "fato": "val.BR_BEMOBI.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-16,48%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Bemobi",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://ri.bemobi.com.br/a-bemobi/new-quem-somos/"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Bemobi",
+        "publicado_em": "2026-08-11",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/deed72f2-beae-4c6f-b423-db57178bae31/d57cb016-2a94-34a3-2b8a-4e9c77f77ea0?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Bemobi",
+        "publicado_em": "2026-08-11",
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/deed72f2-beae-4c6f-b423-db57178bae31/87491ab0-9e3c-bcb7-22fa-d9e94d1d2bd2?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Renovação ou monetização cai enquanto o volume processado cresce.",
+      "Desenvolvimento e giro absorvem a margem sem recuperação do fluxo após tributos e juros.",
+      "Recursos a repassar ou direitos de minoritários restringem o caixa da controladora."
+    ],
+    "governanca": "As informações intermediárias têm revisão limitada sem modificação. O arquivo contém release e demonstrações, examinados em suas seções próprias. Ajustes de remuneração, aquisições e derivativos não foram tratados como caixa. Recebíveis das operadoras, repasses e direitos de sócios precisam de conciliação por entidade.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita e margem por serviço, renovação, clientes e usuários; volume total e orgânico, taxa de monetização e concentração. Conciliar recebíveis, repasses, desenvolvimento, juros, tributos e caixa por entidade, com remuneração de minoritários e recompra.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_BEMOBI.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-10,53%"
+          },
+          {
+            "fato": "val.BR_BEMOBI.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,25%"
+          },
+          {
+            "fato": "val.BR_BEMOBI.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "20,98%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -10,53%, custo do capital 11,25% e dispersão entre métodos 20,98% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Renovação ou monetização cai enquanto o volume processado cresce. Desenvolvimento e giro absorvem a margem sem recuperação do fluxo após tributos e juros. Recursos a repassar ou direitos de minoritários restringem o caixa da controladora.",
+        "titulo": "Evidência que muda a visão"
+      }
+    ],
+    "issuer_id": "BR_BEMOBI",
+    "lacunas_de_dados": [
+      "A ponte integral de giro, repasses e caixa da controladora permanece pendente.",
+      "Monetização, concentração e renovação contratual exigem diligência independente.",
+      "Retorno do desenvolvimento e das aquisições precisa de avaliação própria.",
+      "A conciliação de ajustes, minoritários e resultado atribuível não foi concluída.",
+      "Guidance agregado e participação de mercado não foram comprovados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Empresa de serviços digitais, pagamentos, assinaturas e soluções para empresas e consumidores. Apps, microfinanças e pagamentos recorrentes possuem receitas e riscos distintos. O volume processado não equivale à receita própria; recursos a receber e a repassar aos estabelecimentos exigem conciliação de liquidez e direitos.",
+    "nome": "Bemobi",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "AR_GLOBANT",
+        "nome": "Globant"
+      },
+      {
+        "issuer_id": "BR_INTELBRAS",
+        "nome": "Intelbras"
+      },
+      {
+        "issuer_id": "BR_LOCAWEB",
+        "nome": "Locaweb (LWSA)"
+      },
+      {
+        "issuer_id": "BR_VTEX",
+        "nome": "VTEX"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que integração e serviços recorrentes sustentem margem e caixa após desenvolvimento e financiamento. A condição decisiva é remunerar o capital usado nos pagamentos, sem presumir que todo volume ou resultado ajustado pertença ao acionista. Crescimento orgânico e aquisições precisam de bases próprias.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_BEMOBI.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 32,34"
+          },
+          {
+            "fato": "val.BR_BEMOBI.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 27,28"
+          },
+          {
+            "fato": "val.BR_BEMOBI.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-15,64%"
+          },
+          {
+            "fato": "val.BR_BEMOBI.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,25%"
+          },
+          {
+            "fato": "val.BR_BEMOBI.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-10,53%"
+          }
+        ],
+        "texto": "Preço de referência R$ 32,34 e alvo R$ 27,28, com potencial -15,64%. A hipótese de investimento deve ser confrontada com o custo do capital 11,25% e retorno esperado -10,53%.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Integração pode aumentar recorrência se os clientes renovarem e o serviço produzir receita própria, além do volume processado. O teste é caixa após desenvolvimento, tributos e juros, conciliando recebíveis e repasses. Aquisição amplia o perímetro; crescimento orgânico e adquirido têm evidência separada. Recursos operacionais de pagamentos não são liquidez livre para recompra ou distribuição.",
+        "titulo": "Monetização e financiamento do processamento"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Integração com empresas de serviços essenciais, meios de pagamento e assinaturas pode elevar conveniência e custo de mudança. Renovação, concentração e capacidade de cobrança precisam ser testadas. Marketplaces e telecomunicações têm dinâmica distinta de software para pagamentos recorrentes; escala processada não comprova barreira sustentável.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:08:04.941395+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "O volume de pagamentos cresceu, com contribuição orgânica e de aquisição separadas. Lucro ajustado aumentou, enquanto o contábil trimestral ficou estável. EBITDA menos CAPEX é uma aproximação, diferente do caixa operacional. No semestre, o fluxo operacional após juros e tributos diminuiu, com maior consumo do giro de pagamentos.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que integração e serviços recorrentes sustentem margem e caixa após desenvolvimento e financiamento. A condição decisiva é remunerar o capital usado nos pagamentos, sem presumir que todo volume ou resultado ajustado pertença ao acionista. Crescimento orgânico e aquisições precisam de bases próprias. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado -10,53%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Concentração, churn e concorrência podem reduzir monetização. Pagamentos e crédito elevam giro e risco de liquidez. Desenvolvimento, aquisições e ajustes contábeis podem absorver a geração antes da distribuição ao acionista."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_BEMOBI.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-16,48%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -16,48%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Tecnologia",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Bemobi — pagamentos recorrentes e capital de giro",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O volume de pagamentos cresceu com componentes orgânico e adquirido distintos. A evolução do lucro ajustado não equivale à do contábil trimestral. O indicador EBITDA menos CAPEX diverge do caixa efetivo; o fluxo operacional semestral após juros e tributos diminuiu. Recompra e juros sobre capital foram pagos, e a liquidez gerencial trimestral caiu. Recursos de pagamentos e minoritários exigem leitura própria antes da atribuição ao acionista.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Receita e margem por serviço, renovação, clientes e usuários; volume total e orgânico, taxa de monetização e concentração. Conciliar recebíveis, repasses, desenvolvimento, juros, tributos e caixa por entidade, com remuneração de minoritários e recompra.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_BEMOBI.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,25%"
+          },
+          {
+            "fato": "val.BR_BEMOBI.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "20,98%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,25% e a dispersão entre métodos 20,98%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -17,6 +17,8 @@ from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo
 
+from .contracts import ContextoTaxasBrasilAPI
+
 DEFAULT_HEADERS = {"User-Agent": "Mozilla/5.0", "Accept": "application/json"}
 MARKET_TZ = ZoneInfo("America/Sao_Paulo")
 
@@ -38,17 +40,24 @@ def _positive(value: Any) -> float:
     return number
 
 
-def fetch_brasilapi_taxas() -> dict[str, float]:
-    """Obtém taxas da BrasilAPI; uma falha nunca vira uma taxa fixa."""
+def fetch_brasilapi_taxas_contexto() -> ContextoTaxasBrasilAPI:
+    """Recebe o retrato estruturado sem inventar sua publicação ou vigência."""
     try:
-        data = _get_json("https://brasilapi.com.br/api/taxas/v1")
-        taxas = {item["nome"].upper(): _positive(item["valor"]) for item in data}
-        for required in ("SELIC", "CDI"):
-            if required not in taxas:
-                raise ValueError(f"Taxa {required} ausente")
-        return taxas
+        endpoint = "https://brasilapi.com.br/api/taxas/v1"
+        req = urllib.request.Request(endpoint, headers=DEFAULT_HEADERS)
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            raw = resp.read().decode("utf-8")
+        return ContextoTaxasBrasilAPI(endpoint=endpoint, consultado_em=datetime.now(UTC), corpo_json=raw)
     except Exception as exc:
         raise RuntimeError(f"BrasilAPI: taxas indisponíveis ({exc}).") from exc
+
+
+def fetch_brasilapi_taxas() -> dict[str, float]:
+    """Interface de consulta da UI; taxas ausentes não recebem valores fixos."""
+    taxas = fetch_brasilapi_taxas_contexto().taxas()
+    if not {"SELIC", "CDI"}.issubset(taxas):
+        raise RuntimeError("BrasilAPI: taxas obrigatórias indisponíveis.")
+    return taxas
 
 
 def fetch_awesomeapi_usd_brl() -> dict[str, Any]:
@@ -127,6 +136,17 @@ def _news_id(prefix: str, title: str, link: str) -> str:
     return f"news_{prefix}_{digest}"
 
 
+def _url_noticia(link: str) -> urllib.parse.SplitResult:
+    """Mesmo ingresso HTTP(S) para as duas fontes, sem navegar o link recebido."""
+    if type(link) is not str or any(ord(c) < 32 or c.isspace() for c in link):
+        raise ValueError("URL de notícia inválida.")
+    parsed = urllib.parse.urlsplit(link)
+    if parsed.scheme not in {"http", "https"} or not parsed.hostname or parsed.username or parsed.password:
+        raise ValueError("URL de notícia deve declarar HTTP(S) e host, sem credenciais.")
+    _ = parsed.port
+    return parsed
+
+
 def _related_tickers(title: str) -> list[str]:
     normalized = title.upper()
     related = [
@@ -203,10 +223,7 @@ def fetch_gdelt_market_news(
         if dedupe_key in seen:
             continue
         try:
-            parsed_url = urllib.parse.urlsplit(link)
-            if parsed_url.scheme not in {"http", "https"} or not parsed_url.hostname:
-                continue
-            _ = parsed_url.port  # recusa porta/autoridade malformada sem abortar os outros registros
+            parsed_url = _url_noticia(link)
             observed_at = _parse_gdelt_date(published_raw)
         except ValueError:
             continue
@@ -253,6 +270,7 @@ def fetch_google_news_rss(query: str, max_items: int = 6) -> list[dict[str, Any]
                 if not title or not link or pub_date_elem is None or not pub_date_elem.text:
                     continue
                 try:
+                    _url_noticia(link)
                     published = parsedate_to_datetime(pub_date_elem.text)
                     if published.tzinfo is None:
                         raise ValueError("Manchete sem data com fuso")
@@ -321,17 +339,11 @@ def build_live_market_package(output_dir: str | Path, timeframe: str = "1d", tic
     if not news:
         notes.append("Nenhuma manchete coletada. Ausência de resultado não significa ausência de notícias.")
     try:
-        taxas = fetch_brasilapi_taxas()
+        taxas_contexto = fetch_brasilapi_taxas_contexto()
     except RuntimeError as exc:
-        taxas = {}
+        taxas_contexto = None
         notes.append(str(exc))
-    if taxas:
-        news.append({
-            "news_id": "brasilapi_taxas", "title": f"Taxas consultadas: Selic em {taxas['SELIC']}% e CDI em {taxas['CDI']}% ao ano",
-            "body": "Retrato das taxas na consulta, sem data de vigência informada neste endpoint; não é manchete jornalística.",
-            "published_at": datetime.now(UTC).isoformat(), "source": "BrasilAPI_Consulta",
-            "url": "https://brasilapi.com.br/api/taxas/v1", "related_tickers": [], "is_synthetic": False,
-        })
+    notes.append("Taxas são contexto estruturado da BrasilAPI, com hora da consulta; publicação e vigência não são informadas pelo endpoint.")
     cutoff = datetime.now(UTC).isoformat()
     sectors = {"PETR4": "Petróleo e Gás", "VALE3": "Materiais Básicos", "ITUB4": "Financeiro", "BBDC4": "Financeiro", "BBAS3": "Financeiro", "WEGE3": "Bens Industriais"}
     weights = [round(1 / len(quotes), 8)] * len(quotes)
@@ -356,7 +368,7 @@ def build_live_market_package(output_dir: str | Path, timeframe: str = "1d", tic
                 ticker = quote["ticker"]
                 writer.writerow([ticker, sectors.get(ticker, "Geral"), weight, ref_date, "True"])
         (stage / "news.jsonl").write_text("".join(json.dumps(n, ensure_ascii=False) + "\n" for n in news), encoding="utf-8")
-        (stage / "sources.json").write_text(json.dumps({"collected_at": cutoff, "quotes": [ibov, usd, *quotes], "taxas": taxas, "notes": notes}, ensure_ascii=False, indent=2), encoding="utf-8")
+        (stage / "sources.json").write_text(json.dumps({"collected_at": cutoff, "quotes": [ibov, usd, *quotes], "taxas": taxas_contexto.taxas() if taxas_contexto else {}, "taxas_contexto": taxas_contexto.model_dump(mode="json") if taxas_contexto else None, "notes": notes}, ensure_ascii=False, indent=2), encoding="utf-8")
         manifest = {
             "scenario_id": target.name, "reference_date": ref_date, "previous_session": previous_session,
             "cutoff_time": cutoff, "timezone": "America/Sao_Paulo", "is_synthetic": True,

@@ -6,9 +6,12 @@ evidências, FactBook, rascunhos, revisões e máquina de estados.
 
 from __future__ import annotations
 
+import json
+import math
+from dataclasses import dataclass
 from datetime import date, datetime
 from enum import StrEnum
-from typing import Any
+from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
@@ -175,6 +178,67 @@ class ManifestFileEntry(BaseModel):
     filename: str
     path: str
     sha256: str
+
+
+class ContextoTaxasBrasilAPI(BaseModel):
+    """Corpo recebido e hora da consulta; não informa publicação ou vigência."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    origem: Literal["BrasilAPI"] = "BrasilAPI"
+    endpoint: Literal["https://brasilapi.com.br/api/taxas/v1"]
+    consultado_em: datetime
+    corpo_json: str
+
+    @field_validator("consultado_em")
+    @classmethod
+    def check_consulta_tz(cls, value: datetime) -> datetime:
+        if value.tzinfo is None:
+            raise ValueError("Hora da consulta deve conter fuso horário.")
+        return value
+
+    @model_validator(mode="after")
+    def check_corpo(self) -> ContextoTaxasBrasilAPI:
+        self.taxas()
+        return self
+
+    def taxas(self) -> dict[str, float]:
+        """Lê apenas os campos estruturados, preservando ausências e corpo original."""
+        body = json.loads(self.corpo_json)
+        if type(body) is not list:
+            raise ValueError("Corpo de taxas deve ser uma lista JSON.")
+        received: dict[str, float] = {}
+        names: set[str] = set()
+        for item in body:
+            if type(item) is not dict or type(item.get("nome")) is not str:
+                raise ValueError("Registro de taxa sem nome textual.")
+            name = item["nome"].upper()
+            if name in names:
+                raise ValueError("Taxa duplicada no corpo recebido.")
+            names.add(name)
+            value = item.get("valor")
+            if type(value) not in (str, int, float):
+                raise ValueError("Valor de taxa inválido.")
+            number = float(value)
+            if not math.isfinite(number) or number <= 0:
+                raise ValueError("Taxa ausente, não finita ou não positiva.")
+            if name in {"SELIC", "CDI"}:
+                received[name] = number
+        return received
+
+
+@dataclass(frozen=True, slots=True)
+class TaxasRecebidas:
+    """Contexto nativo ligado aos bytes de sources.json conferidos no manifesto."""
+
+    contexto: ContextoTaxasBrasilAPI
+    arquivo_sha256: str
+
+    def __post_init__(self) -> None:
+        if type(self.contexto) is not ContextoTaxasBrasilAPI:
+            raise TypeError("Contexto deve usar o contrato nativo da BrasilAPI.")
+        if type(self.arquivo_sha256) is not str or len(self.arquivo_sha256) != 64 or any(c not in "0123456789abcdef" for c in self.arquivo_sha256):
+            raise ValueError("SHA-256 de sources.json inválido.")
 
 
 class Manifest(BaseModel):

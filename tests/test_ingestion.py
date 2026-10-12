@@ -1,6 +1,81 @@
 """Testes para o módulo de ingestão e validação estrita de dados."""
 
+import hashlib
+import json
+import shutil
+from datetime import datetime, timedelta
+from pathlib import Path
+
+import pytest
+
 from fechamento.ingestion import load_and_validate_package
+
+
+def _pacote_taxas(tmp_path, *, corpo='[{"nome":"Selic","valor":13.75}]', endpoint="https://brasilapi.com.br/api/taxas/v1", atraso=False, declarada=True):
+    package = tmp_path / "DADOS_SIMULADOS"
+    shutil.copytree(Path("data/demo/normal"), package)
+    manifest_path = package / "manifest.json"
+    manifest = json.loads(manifest_path.read_text())
+    cutoff = datetime.fromisoformat(manifest["cutoff_time"])
+    contexto = {"origem": "BrasilAPI", "endpoint": endpoint, "consultado_em":
+                (cutoff + timedelta(seconds=1) if atraso else cutoff).isoformat(), "corpo_json": corpo}
+    path = package / "sources.json"
+    path.write_text(json.dumps({"taxas_contexto": contexto}))
+    if declarada:
+        manifest["files"].append({"filename": "sources.json", "path": "sources.json",
+                                  "sha256": hashlib.sha256(path.read_bytes()).hexdigest()})
+    manifest_path.write_text(json.dumps(manifest))
+    return package
+
+
+def test_taxas_contexto_estruturado_preserva_ausencia_e_proveniencia(tmp_path):
+    from fechamento.evidence import build_factbook
+    from fechamento.metrics import compute_all_metrics
+
+    package = _pacote_taxas(tmp_path)
+    received = load_and_validate_package(package)
+    assert not received.is_blocked
+    assert received.taxas_contexto is not None
+    assert received.taxas_contexto.contexto.taxas() == {"SELIC": 13.75}
+    facts = build_factbook(compute_all_metrics(received.quotes, received.positions), received.manifest,
+                          received.eligible_news, taxas_contexto=received.taxas_contexto)
+    assert "macro.cdi.rate" not in facts.facts
+    assert "vigência não informada" in facts.facts["macro.selic.rate"].name
+    assert received.taxas_contexto.arquivo_sha256 in facts.facts["macro.selic.rate"].input_refs[0]
+
+
+@pytest.mark.parametrize("corpo", ['{}', '[{"nome":"Selic","valor":true}]', '[{"nome":"Selic","valor":null}]', '[{"nome":"Selic","valor":"NaN"}]', '[{"nome":"Selic","valor":13},{"nome":"SELIC","valor":14}]'])
+def test_taxas_contexto_malformado_bloqueia_sem_zero(tmp_path, corpo):
+    received = load_and_validate_package(_pacote_taxas(tmp_path, corpo=corpo))
+    assert received.is_blocked
+    assert received.taxas_contexto is None
+
+
+def test_taxas_origem_nao_brasilapi_recusada(tmp_path):
+    received = load_and_validate_package(_pacote_taxas(tmp_path, endpoint="https://exemplo.com/taxas"))
+    assert received.is_blocked
+    assert received.taxas_contexto is None
+
+
+def test_taxas_apos_corte_sao_ausentes(tmp_path):
+    received = load_and_validate_package(_pacote_taxas(tmp_path, atraso=True))
+    assert not received.is_blocked
+    assert received.taxas_contexto is None
+    assert any("consulta posterior" in a for a in received.alerts)
+
+
+def test_taxas_arquivo_nao_declarado_nao_e_autenticado(tmp_path):
+    received = load_and_validate_package(_pacote_taxas(tmp_path, declarada=False))
+    assert not received.is_blocked
+    assert received.taxas_contexto is None
+
+
+def test_taxas_alteradas_invalidam_manifesto(tmp_path):
+    package = _pacote_taxas(tmp_path)
+    (package / "sources.json").write_text('{}')
+    received = load_and_validate_package(package)
+    assert received.is_blocked
+    assert received.taxas_contexto is None
 
 
 def test_load_normal_package() -> None:

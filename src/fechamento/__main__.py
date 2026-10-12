@@ -110,7 +110,7 @@ def _saved_context(args: argparse.Namespace, storage: Storage):
     if inputs_hash != run.inputs_hash:
         raise ValueError("Dados diferentes dos utilizados na geração. Gere um novo rascunho.")
     metrics = compute_all_metrics(ingestion.quotes, ingestion.positions)
-    evidence = organize_evidence(metrics, ingestion.manifest, ingestion.eligible_news, ingestion.excluded_news)
+    evidence = organize_evidence(metrics, ingestion.manifest, ingestion.eligible_news, ingestion.excluded_news, taxas_contexto=ingestion.taxas_contexto)
     if compute_factbook_hash(evidence.factbook) != run.facts_hash:
         raise ValueError("FactBook diferente do utilizado na geração. Gere um novo rascunho.")
     revisions = storage.get_revisions(args.run_id)

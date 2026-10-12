@@ -24,6 +24,8 @@ Falhas em cotações obrigatórias interrompem a coleta. Taxas e notícias ausen
 
 Só `1d` é aceito. Não há implementação semanal/mensal. Como há carteira simulada, o manifesto é marcado como contendo dados sintéticos, embora cada preço coletado seja registrado como não sintético.
 
+O corpo JSON das taxas e a hora da consulta ficam em `sources.json`, conferido pelo SHA do manifesto. Esse retrato não é uma notícia nem confirma publicação ou vigência. O FactBook usa apenas os campos estruturados desse contexto; uma manchete citando Selic/CDI não cria uma taxa. Se um campo ou o contexto estiver ausente, o fato também permanece ausente.
+
 Fontes: [BrasilAPI](https://brasilapi.com.br/docs), [AwesomeAPI](https://docs.awesomeapi.com.br/api-de-moedas).
 
 ## Notícias da GDELT DOC 2.0 — Notícias de Mercado sem Chave

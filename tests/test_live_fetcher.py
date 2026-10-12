@@ -1,5 +1,6 @@
 """Testes unitários para o módulo live_fetcher (BrasilAPI, AwesomeAPI, B3)."""
 
+import json
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from unittest.mock import MagicMock, patch
@@ -170,6 +171,17 @@ def test_fetch_google_news_rss_preserves_pubdate() -> None:
     assert news[0]["related_tickers"] == ["VALE3", "IBOV"]
 
 
+@pytest.mark.parametrize("url", ["javascript:alert(1)", "https://[invalida", "https://", "https://exemplo.com:99999"])
+def test_rss_url_invalida_nao_elimina_proxima_noticia(url) -> None:
+    response = MagicMock()
+    response.__enter__.return_value = response
+    response.read.return_value = f'<rss><channel><item><title>Inválida</title><link>{url}</link><pubDate>Fri, 25 Sep 2026 18:00:00 GMT</pubDate></item><item><title>Válida</title><link>https://exemplo.com/valida</link><pubDate>Fri, 25 Sep 2026 18:00:00 GMT</pubDate></item></channel></rss>'.encode()
+    with patch("urllib.request.urlopen", return_value=response):
+        received = fetch_google_news_rss("Ibovespa", max_items=2)
+    assert len(received) == 1
+    assert received[0]["title"] == "Válida"
+
+
 def test_fetch_real_market_news_falls_back_to_rss() -> None:
     fallback = [{"news_id": "news_rss_example"}]
     with (
@@ -186,6 +198,20 @@ def test_build_live_market_package(tmp_path: Path) -> None:
     now = datetime.now(UTC)
     today = now.date().isoformat()
     previous = (now.date() - timedelta(days=1)).isoformat()
+    raw_taxas = '[{"nome": "Selic", "valor": 13.75}, {"nome": "CDI", "valor": 13.65}]'
+    article = {"title": "Selic em 99% e CDI em 98%", "url": "https://exemplo.com/noticia",
+               "seendate": now.strftime("%Y%m%dT%H%M%SZ"), "domain": "exemplo.com"}
+
+    def response(url):
+        received = MagicMock()
+        received.__enter__.return_value = received
+        if url.startswith("https://api.gdeltproject.org/"):
+            received.read.return_value = json.dumps({"articles": [article]}).encode()
+        else:
+            assert url == "https://brasilapi.com.br/api/taxas/v1"
+            received.read.return_value = raw_taxas.encode()
+        return received
+
     # Todas as chamadas externas substituídas; teste não depende da internet.
     with (
         patch("fechamento.live_fetcher.fetch_awesomeapi_usd_brl", return_value={
@@ -198,17 +224,7 @@ def test_build_live_market_package(tmp_path: Path) -> None:
             "currency": "POINTS" if "BVSP" in t else "BRL",
             "reference_date": today, "previous_session": previous, "observed_at": now.isoformat(),
         }),
-        patch("fechamento.live_fetcher.fetch_brasilapi_taxas", return_value={"SELIC": 13.75, "CDI": 13.65}),
-        patch("fechamento.live_fetcher.fetch_real_market_news", return_value=[{
-            "news_id": "news_gdelt_teste",
-            "title": "Petrobras impulsiona o Ibovespa",
-            "body": "Manchete coletada via GDELT.",
-            "published_at": now.isoformat(),
-            "url": "https://exemplo.com/noticia",
-            "source": "exemplo_com",
-            "related_tickers": ["PETR4", "IBOV"],
-            "is_synthetic": False,
-        }]),
+        patch("urllib.request.urlopen", side_effect=lambda req, **kw: response(req.full_url)),
     ):
         pkg_dir = build_live_market_package(out_dir, timeframe="1d", tickers=["PETR4.SA", "VALE3.SA"])
         assert pkg_dir.exists()
@@ -227,7 +243,21 @@ def test_build_live_market_package(tmp_path: Path) -> None:
         assert "Agencia_Mercado_Ao_Vivo" not in (pkg_dir / "news.jsonl").read_text()
         assert len(ingestion_res.quotes) == 4  # IBOV, USD/BRL, PETR4, VALE3
         assert len(ingestion_res.positions) == 2
-        assert {item.news_id for item in ingestion_res.eligible_news} == {
-            "brasilapi_taxas",
-            "news_gdelt_teste",
-        }
+        assert len(ingestion_res.eligible_news) == 1
+        item = ingestion_res.eligible_news[0]
+        assert item.published_at is None
+        assert item.observed_at is not None
+        assert item.source_timestamp == article["seendate"]
+        assert item.source_raw == article
+        assert "brasilapi_taxas" not in (pkg_dir / "news.jsonl").read_text()
+        rates = ingestion_res.taxas_contexto
+        assert rates is not None
+        assert rates.contexto.corpo_json == raw_taxas
+        assert rates.arquivo_sha256 == compute_sha256(pkg_dir / "sources.json")
+        from fechamento.evidence import build_factbook
+        from fechamento.metrics import compute_all_metrics
+        facts = build_factbook(compute_all_metrics(ingestion_res.quotes, ingestion_res.positions),
+                               ingestion_res.manifest, ingestion_res.eligible_news, taxas_contexto=rates)
+        assert facts.facts["macro.selic.rate"].value == 13.75 / 100
+        assert facts.facts["macro.cdi.rate"].value == 13.65 / 100
+        assert rates.arquivo_sha256 in facts.facts["macro.selic.rate"].input_refs[0]

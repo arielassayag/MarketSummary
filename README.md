@@ -54,7 +54,7 @@ A pasta precisa ser nova. Use outro nome para repetir; arquivos anteriores não 
 
 - Ações e índice: Yahoo Finance, com horários da fonte. A referência é a última sessão disponível; o preço atual pode ser intradiário.
 - Câmbio: bid e varBid da AwesomeAPI, cuja referência pode diferir da bolsa.
-- Taxas: BrasilAPI, na data da consulta; o endpoint não informa data de vigência.
+- Taxas: contexto estruturado da BrasilAPI, ligado ao SHA de `sources.json`, com hora da consulta. O endpoint não informa publicação ou vigência; taxas não são extraídas de manchetes.
 - Notícias: Google News RSS, com `pubDate` e link (possivelmente um redirecionamento). Manchetes não são fatos verificados nem prova de causalidade.
 - Carteira: pesos iguais **simulados**. O pacote inteiro é sinalizado como contendo simulação. Preços sem ajuste de dividendos/desdobramentos.
 

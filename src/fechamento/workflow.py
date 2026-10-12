@@ -73,7 +73,7 @@ def verify_context_integrity(ctx: WorkflowContext) -> None:
     if inputs_hash != ctx.run.inputs_hash:
         raise ValueError("Dados diferentes dos utilizados na geração. Gere uma nova execução.")
     metrics = compute_all_metrics(current.quotes, current.positions)
-    evidence = organize_evidence(metrics, current.manifest, current.eligible_news, current.excluded_news)
+    evidence = organize_evidence(metrics, current.manifest, current.eligible_news, current.excluded_news, taxas_contexto=current.taxas_contexto)
     if (
         compute_factbook_hash(evidence.factbook) != ctx.run.facts_hash
         or ctx.evidence is None
@@ -200,6 +200,7 @@ class WorkflowController:
             manifest=ingestion.manifest,
             eligible_news=ingestion.eligible_news,
             excluded_news=ingestion.excluded_news,
+            taxas_contexto=ingestion.taxas_contexto,
         )
         ctx.evidence = evidence
         facts_hash = compute_factbook_hash(evidence.factbook)

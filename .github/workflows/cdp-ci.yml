@@ -80,11 +80,16 @@ jobs:
     timeout-minutes: 30
     env:
       PYTHONDONTWRITEBYTECODE: "1"
-      UV_CACHE_DIR: ${{ runner.temp }}/cdp-pacote-cache
-      TMPDIR: ${{ runner.temp }}/cdp-pacote-tmp
-      TEMP: ${{ runner.temp }}/cdp-pacote-tmp
-      TMP: ${{ runner.temp }}/cdp-pacote-tmp
     steps:
+      - name: Preparar cache e temporários privados
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/cdp-pacote-cache" "$RUNNER_TEMP/cdp-pacote-tmp"
+          printf '%s\n' \
+            "UV_CACHE_DIR=$RUNNER_TEMP/cdp-pacote-cache" \
+            "TMPDIR=$RUNNER_TEMP/cdp-pacote-tmp" \
+            "TEMP=$RUNNER_TEMP/cdp-pacote-tmp" \
+            "TMP=$RUNNER_TEMP/cdp-pacote-tmp" >> "$GITHUB_ENV"
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -96,7 +101,6 @@ jobs:
           python-version: "3.12"
       - name: Ambiente próprio e backend explícito
         run: |
-          mkdir -p "$TMPDIR"
           uv --no-config sync --frozen --extra mcp --extra dev
           uv --no-config pip install --python .venv/bin/python --only-binary :all: --index-url https://pypi.org/simple setuptools==84.0.0
       - name: Build e instalação sem editable

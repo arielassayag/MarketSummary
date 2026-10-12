@@ -278,7 +278,7 @@ def test_publish_commits_only_task_paths_with_trailers_and_pushes_main(repos, mo
                                                                             "--porcelain")
     pushes = [c for c in chamadas if c and c[0] == "push"]
     assert pushes and all("--force" not in c and "-f" not in c for c in pushes)
-    assert any(c[-1] == "HEAD:refs/heads/main" for c in pushes)
+    assert any(c[-1] == out["commit"] + ":refs/heads/main" for c in pushes)
     code, out = ex.publicar(a, DIARIO, "CDP: de novo", rt=_RT(), env=ENV_PC, trava=trava)
     assert code == ex.OK and out["motivo"] == "nada a publicar"
 

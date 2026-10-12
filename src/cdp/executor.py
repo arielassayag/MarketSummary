@@ -658,7 +658,11 @@ def sincronizar(raiz: Path | str, *, executar: bool = False, env: Mapping[str, s
                     "motivo": "clone com código ou configuração alterados (desenvolvimento): as "
                               "rotinas precisam de um clone limpo"})
         return out
-    locais = _linhas(git(["log", "--format=", "--name-only", f"{remoto}..HEAD"], raiz).stdout)
+    try:
+        locais = _arquivos_pendentes(Path(raiz), remoto)
+    except ErroExecutor as exc:
+        out.update({"acao": "seguir_sem_push", "motivo": str(exc)})
+        return out
     fora = sorted({p for p in locais if not _no_livro(p, livro)})
     if fora:
         out.update({"acao": "parar", "arquivos": fora,
@@ -768,13 +772,49 @@ def _confirmar_trava(raiz: Path, trava_id: str | None, env: Mapping[str, str]
     return trava_renovar(raiz, trava_id, env=env)
 
 
+def _diff_pendente(raiz: Path, commit: str, pai: str | None) -> set[str]:
+    # Sem rename: origem e destino são dois caminhos, não só o destino de um par R/C.
+    args = ["diff-tree", "--no-commit-id", "--name-only", "--no-renames", "-r", "-z"]
+    args += [pai, commit] if pai is not None else ["--root", commit]
+    r = git(args, raiz)
+    if r.returncode:
+        raise ErroExecutor("não foi possível conferir um diff pendente: " + r.stderr)
+    return {p for p in r.stdout.split("\0") if p}
+
+
 def _arquivos_pendentes(raiz: Path, remoto: str, head: str = "HEAD") -> list[str]:
-    """Todos os caminhos dos commits a enviar, inclusive alterações depois revertidas."""
-    r = git(["log", "--format=", "--name-only", "--diff-merges=combined", "-z",
-             f"{remoto}..{head}"], raiz)
+    """Inventário por cada pai, sem rename nem omissões de diff combinado.
+
+    Um merge pode trazer código autorizado do remoto. Só exclui essa entrada fora do livro
+    quando há pai ancestral do remoto E o resultado é idêntico ao remoto pinado (inclusive
+    modo/tipo/ausência). Resolução diferente e história ordinária nunca recebem a exceção.
+    """
+    remoto_sha = _ok(git(["rev-parse", "--verify", remoto + "^{commit}"], raiz))
+    head_sha = _ok(git(["rev-parse", "--verify", head + "^{commit}"], raiz))
+    if not remoto_sha or not head_sha:
+        raise ErroExecutor("não foi possível receber as versões do inventário pendente")
+    r = git(["rev-list", "--parents", f"{remoto_sha}..{head_sha}"], raiz)
     if r.returncode:
         raise ErroExecutor("não foi possível conferir os commits pendentes: " + r.stderr)
-    return sorted({p for p in r.stdout.split("\0") if p})
+    caminhos: set[str] = set()
+    for linha in r.stdout.splitlines():
+        commit, *pais = linha.split()
+        locais: set[str] = set()
+        for pai in pais or [None]:
+            locais.update(_diff_pendente(raiz, commit, pai))
+        if len(pais) > 1:
+            ancestral_remoto = False
+            for pai in pais:
+                relacao = git(["merge-base", "--is-ancestor", pai, remoto_sha], raiz)
+                if relacao.returncode not in (0, 1):
+                    raise ErroExecutor("não foi possível conferir os pais do merge pendente")
+                ancestral_remoto |= relacao.returncode == 0
+            if ancestral_remoto:
+                diferente_remoto = _diff_pendente(raiz, commit, remoto_sha)
+                locais = {p for p in locais if _no_livro(p, _caminhos_livro())
+                          or p in diferente_remoto}
+        caminhos.update(locais)
+    return sorted(caminhos)
 
 
 def _exige_trava(path: str, tarefa: Tarefa) -> bool:

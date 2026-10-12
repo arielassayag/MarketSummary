@@ -1,0 +1,433 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "cb48e93eac96046038b456e582ebc1fb7e3a40afba1e8e16d877cf620339ba4a",
+    "factbook": "938729fed6b4516b00dc6cee56dce89fd42610c326884db408790a55950930c4",
+    "nota_json": "8d3ec9914133271a59999368ae576ab475208b2604745b270d8ac9e5e9b7eaea"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_TAESA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T02:58:33.737496+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A dívida bruta diminui na comparação sequencial, mas a redução maior do caixa eleva a dívida líquida. A leitura proporcional das participações tem perímetro próprio. Encargos, amortizações e aporte nos projetos precisam preceder a avaliação de distribuição. O pagamento futuro de dividendos e juros sobre capital exige elegibilidade na data de corte já passada, sem presumir direito de um novo comprador.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-11",
+        "descricao": "Divulgação programada de resultados; rever disponibilidade, liberação dos projetos, dívida e caixa atribuível.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": "2026-11-26",
+        "descricao": "Pagamento programado de dividendos e juros sobre capital próprio, sujeito à elegibilidade na data de corte já passada.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "dividendos"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 60,12, com retorno esperado +37,92%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Projetos são liberados com custo adequado, a disponibilidade preserva remuneração e o caixa após dívida permite retorno por unidade. O cenário otimista calculado pelo código é R$ 69,76.",
+      "pessimista": "Obras, penalidades e financiamento consomem recursos, enquanto reconhecimento contábil não se converte em retorno atribuível. O cenário pessimista calculado pelo código é R$ 52,19."
+    },
+    "comentario_valuation": "Preço de referência R$ 45,63 e alvo do modelo aberto R$ 60,12, com potencial +31,75%. Retorno total esperado +37,92% e custo do capital próprio 10,36%. A dispersão entre métodos é 26,88%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 37,81; a diferença +59,01% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se projetos contabilizados não recebem remuneração suficiente ou se dívida e penalidades absorvem o caixa. Reajuste contratual pode coexistir com lucro regulatório menor. Distribuição baseada em resultado regulatório não elimina reinvestimento, reservas e obrigações das concessionárias.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_TAESA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 45,63"
+      },
+      {
+        "fato": "val.BR_TAESA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 60,12"
+      },
+      {
+        "fato": "val.BR_TAESA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+31,75%"
+      },
+      {
+        "fato": "val.BR_TAESA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.BR_TAESA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_TAESA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 69,76"
+      },
+      {
+        "fato": "val.BR_TAESA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_TAESA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 52,19"
+      },
+      {
+        "fato": "val.BR_TAESA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_TAESA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,36%"
+      },
+      {
+        "fato": "val.BR_TAESA.wacc",
+        "rotulo": "WACC",
+        "valor": "8,51%"
+      },
+      {
+        "fato": "val.BR_TAESA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_TAESA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+37,92%"
+      },
+      {
+        "fato": "val.BR_TAESA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+41,36%"
+      },
+      {
+        "fato": "val.BR_TAESA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "11,6x"
+      },
+      {
+        "fato": "val.BR_TAESA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,9x"
+      },
+      {
+        "fato": "val.BR_TAESA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 37,81"
+      },
+      {
+        "fato": "val.BR_TAESA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+59,01%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Taesa",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil corporativo e estrutura das concessões",
+        "url": "https://ri.taesa.com.br/sobre-a-taesa/perfil-corporativo/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Taesa",
+        "publicado_em": "2026-08-11",
+        "tipo": "Relações com investidores",
+        "titulo": "Release de resultados, receita regulatória, ativos contratuais e financiamento",
+        "url": "https://ri.taesa.com.br/wp-content/uploads/2018/11/TAESA_Release-2T26.pdf"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Taesa",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Portal de RI e calendário de divulgação e reunião pública",
+        "url": "https://ri.taesa.com.br/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Penalidades e custos impedem converter disponibilidade em caixa regulatório.",
+      "Licenças, liberação ou revitalizações exigem capital e prazo além do previsto.",
+      "Encargos e investimento absorvem os recursos disponíveis depois de participações.",
+      "Reconciliação das classes, reservas e elegibilidade altera o retorno por unidade."
+    ],
+    "governanca": "Operação parcial de Ananaí, Tangará e Saíra conserva seu estado e não comprova remuneração integral. Reajuste, revisão e parcelas de ajuste têm naturezas diferentes. Benefícios fiscais dependem de entidade e vigência. A unidade e suas classes precisam ser conciliadas com o modelo; proventos declarados não são caixa recebido pelo investidor.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Monitorar disponibilidade, penalidades e receita regulatória por concessão. Separar inflação do ativo contratual, construção e recebimento. Conferir liberação parcial e total dos projetos, custos finais e retorno depois do financiamento. Conciliar dívida e caixa por entidade, participação econômica, reservas e direitos por unidade.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_TAESA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+37,92%"
+          },
+          {
+            "fato": "val.BR_TAESA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,36%"
+          },
+          {
+            "fato": "val.BR_TAESA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "26,88%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +37,92%, custo do capital 10,36% e dispersão entre métodos 26,88% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_TAESA",
+    "lacunas_de_dados": [
+      "Demonstrações completas, fluxo livre e dívida por concessão não foram integralmente reconciliados.",
+      "Disponibilidade e resultado têm alterações de metodologia e reapresentação de comparação.",
+      "Base proporcional das participações e composição da unidade exigem conciliação com o modelo.",
+      "Custo final, liberação integral e retorno dos projetos permanecem a comprovar.",
+      "Pagamento programado não comprova crédito futuro, e elegibilidade não foi individualmente conferida.",
+      "Há premissas de projetos no release, sem direção agregada de revisão de guidance classificada.",
+      "Tom agregado, vantagem relativa e percepção do mercado não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Transmissora de energia que constrói, opera e mantém instalações sob concessão. A receita remunera disponibilidade das redes e tem regras próprias de reajuste, revisão e penalidade. Controladas, participações de controle compartilhado e coligadas têm bases diferentes. A unidade negociada reúne classes de ações, exigindo atribuição do resultado e dos direitos ao titular.",
+    "nome": "Taesa",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ALUPAR",
+        "nome": "Alupar"
+      },
+      {
+        "issuer_id": "BR_AUREN",
+        "nome": "Auren Energia"
+      },
+      {
+        "issuer_id": "BR_AXIA",
+        "nome": "Axia Energia (ex-Eletrobras)"
+      },
+      {
+        "issuer_id": "BR_CEMIG",
+        "nome": "Cemig"
+      },
+      {
+        "issuer_id": "BR_COMPASS",
+        "nome": "Compass Gás e Energia"
+      },
+      {
+        "issuer_id": "BR_COPASA",
+        "nome": "Copasa"
+      },
+      {
+        "issuer_id": "BR_COPEL",
+        "nome": "Copel"
+      },
+      {
+        "issuer_id": "BR_CPFL",
+        "nome": "CPFL Energia"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que energização dos projetos e disponibilidade sustentem recebimento regulatório e retorno por unidade depois de investimento e dívida. A condição decisiva é caixa atribuível com remuneração suficiente do capital empregado. Inflação do ativo contratual, margem de construção e política de distribuição não substituem conciliação de recursos efetivamente disponíveis.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_TAESA.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 45,63"
+          },
+          {
+            "fato": "val.BR_TAESA.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 60,12"
+          },
+          {
+            "fato": "val.BR_TAESA.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+31,75%"
+          },
+          {
+            "fato": "val.BR_TAESA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,36%"
+          },
+          {
+            "fato": "val.BR_TAESA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+37,92%"
+          }
+        ],
+        "texto": "Preço de referência R$ 45,63 e alvo R$ 60,12, com potencial +31,75%. A hipótese de investimento deve ser confrontada com o custo do capital 10,36% e retorno esperado +37,92%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Experiência de construção, operação e financiamento pode apoiar a disputa por concessões, mas cada lote tem preço, prazo e obrigações próprios. Antecipação estimada de entrega e eficiência frente ao orçamento regulatório não são retorno já realizado. Reforços, revitalizações e novas linhas exigem licenças, liberação e desempenho que preservem a remuneração.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:58:33.737496+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Receita e resultado operacional regulatórios crescem na comparação anual, enquanto o lucro regulatório atribuível diminui. O lucro societário aumenta, com contribuição da correção do ativo contratual e equivalência patrimonial; receita societária recua com menor construção. A melhora contábil não tem a mesma composição da receita recebida, e penalidades por indisponibilidade aumentam.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que energização dos projetos e disponibilidade sustentem recebimento regulatório e retorno por unidade depois de investimento e dívida. A condição decisiva é caixa atribuível com remuneração suficiente do capital empregado. Inflação do ativo contratual, margem de construção e política de distribuição não substituem conciliação de recursos efetivamente disponíveis. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Compra, com retorno esperado +37,92%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Atrasos, penalidades, revisão de receita e financiamento podem reduzir o retorno das concessões. Lucro societário e receita de construção não demonstram caixa distribuível. Direitos por unidade e elegibilidade dos proventos exigem conciliação."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_TAESA.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+59,01%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +59,01%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Utilidades públicas",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Taesa — remuneração das concessões depois de obras, dívida e direitos por unidade",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A parcela variável cresce e a metodologia de disponibilidade passa a considerar o conjunto de instalações; comparações exigem a mesma base. Investidas têm encargos e impostos que reduzem o resultado regulatório, enquanto inflação e construção favorecem equivalência societária. A comparação anterior foi reapresentada por contabilização de proteção financeira; não se alterou o modelo retrospectivamente.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar disponibilidade, penalidades e receita regulatória por concessão. Separar inflação do ativo contratual, construção e recebimento. Conferir liberação parcial e total dos projetos, custos finais e retorno depois do financiamento. Conciliar dívida e caixa por entidade, participação econômica, reservas e direitos por unidade.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_TAESA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,36%"
+          },
+          {
+            "fato": "val.BR_TAESA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "26,88%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 10,36% e a dispersão entre métodos 26,88%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

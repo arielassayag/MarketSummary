@@ -1,0 +1,442 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "7483b3df5a2f2390c6a0dbcd8b06d6876eb9f76c8d9759c42358932b6ebd7ac5",
+    "factbook": "ffc722224cd870fa5ee851c09ea67abb8b973cd5a57871330c93d9a71b1fa6b8",
+    "nota_json": "f6ca74114d3445b067036cb05a019fcd7e970fccbec3226e9b3f9883a71ffba0"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_VULCABRAS",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T03:02:15.586928+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Modernização, produção e desenvolvimento competem com estoque, dívida e remuneração. O fluxo semestral mostra investimento e amortizações, com juros pagos nas operações. Garantias vinculam imóveis e equipamentos. Cumprimento contratual no trimestre não certifica períodos futuros, e benefícios tributários permanecem sujeitos a requisitos próprios.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar giro, margem e caixa depois do custo completo.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 19,23, com retorno esperado +38,23%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Produto e mix remuneram inovação e capacidade, com estoque disciplinado e caixa após investimento; contratos e incentivos preservam direitos economicamente demonstráveis. O cenário otimista calculado pelo código é R$ 22,48.",
+      "pessimista": "Concorrência, estoque e investimento absorvem margem; licenças, tributos ou financiamento limitam retorno, apesar do crescimento de faturamento. O cenário pessimista calculado pelo código é R$ 16,37."
+    },
+    "comentario_valuation": "Preço de referência R$ 15,46 e alvo do modelo aberto R$ 19,23, com potencial +24,41%. Retorno total esperado +38,23% e custo do capital próprio 11,81%. A dispersão entre métodos é 37,13%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 21,00; a diferença -8,41% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita crescente pode coexistir com margens e lucro recorrente menores. A produção integrada pode elevar custos fixos e estoque; inovação não garante giro. Se o retorno depender de incentivo ou capacidade ociosa, expansão e força de marca não confirmarão valor por ação.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_VULCABRAS.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 15,46"
+      },
+      {
+        "fato": "val.BR_VULCABRAS.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 19,23"
+      },
+      {
+        "fato": "val.BR_VULCABRAS.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+24,41%"
+      },
+      {
+        "fato": "val.BR_VULCABRAS.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.BR_VULCABRAS.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_VULCABRAS.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 22,48"
+      },
+      {
+        "fato": "val.BR_VULCABRAS.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_VULCABRAS.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 16,37"
+      },
+      {
+        "fato": "val.BR_VULCABRAS.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_VULCABRAS.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,81%"
+      },
+      {
+        "fato": "val.BR_VULCABRAS.wacc",
+        "rotulo": "WACC",
+        "valor": "10,78%"
+      },
+      {
+        "fato": "val.BR_VULCABRAS.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_VULCABRAS.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+38,23%"
+      },
+      {
+        "fato": "val.BR_VULCABRAS.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+17,69%"
+      },
+      {
+        "fato": "val.BR_VULCABRAS.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "7,2x"
+      },
+      {
+        "fato": "val.BR_VULCABRAS.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,8x"
+      },
+      {
+        "fato": "val.BR_VULCABRAS.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 21,00"
+      },
+      {
+        "fato": "val.BR_VULCABRAS.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-8,41%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Vulcabras",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://www.vulcabrasri.com/a-companhia/perfil/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Vulcabras",
+        "publicado_em": "2026-08-04",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/2a4ff98c-d670-4434-962c-10e11bafd659/e90df973-effc-4f68-7583-f7cdb51eee5e?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Vulcabras",
+        "publicado_em": "2026-08-04",
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/2a4ff98c-d670-4434-962c-10e11bafd659/94c7d527-8adf-a497-0289-8df55d2d0a63?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+      "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+      "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+      "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+    ],
+    "governanca": "O ITR contém revisão limitada sem modificação. Marcas próprias e de terceiros têm direitos distintos. Financiamentos possuem garantias e requisitos de destinação; a debênture usa índice contratual próprio. Conformidade relatada vale para a data analisada, sem certificação futura. Requisitos de incentivos e alocação de capital devem ser acompanhados por entidade.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Volume, mix, venda final, inovação, utilização e margem por marca; estoque e recebimento; caixa depois de juros, tributos, manutenção e expansão. Confirmar direitos das marcas de terceiros, garantias e índices contratuais, distinguindo incentivo reconhecido de recebimento e repetição.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_VULCABRAS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+38,23%"
+          },
+          {
+            "fato": "val.BR_VULCABRAS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,81%"
+          },
+          {
+            "fato": "val.BR_VULCABRAS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "37,13%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +38,23%, custo do capital 11,81% e dispersão entre métodos 37,13% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_VULCABRAS",
+    "lacunas_de_dados": [
+      "A leitura integral do release em imagem e a ponte completa de ajustes permanecem pendentes.",
+      "Participação de mercado e desempenho de concorrentes exigem confirmação independente.",
+      "Prazo, condições e renovação das marcas de terceiros precisam de diligência contratual.",
+      "Retorno de capacidade, desenvolvimento e investimento exige avaliação por projeto.",
+      "A ponte de incentivos, resultado recorrente e caixa atribuível permanece pendente.",
+      "Guidance agregado e posicionamento de mercado não foram comprovados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Fabricante e distribuidora de artigos esportivos, com operação industrial no Nordeste e marcas próprias e de terceiros. Olympikus tem desenvolvimento de produtos; Mizuno e Under Armour acrescentam relações contratuais distintas da propriedade da marca. Produção integrada, inovação e canais digitais exigem investimento, estoque e utilização das plantas.",
+    "nome": "Vulcabras",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_AFYA",
+        "nome": "Afya"
+      },
+      {
+        "issuer_id": "BR_ALPARGATAS",
+        "nome": "Alpargatas"
+      },
+      {
+        "issuer_id": "BR_AZZAS",
+        "nome": "Azzas 2154"
+      },
+      {
+        "issuer_id": "BR_CEA",
+        "nome": "C&A Modas"
+      },
+      {
+        "issuer_id": "BR_COGNA",
+        "nome": "Cogna"
+      },
+      {
+        "issuer_id": "BR_CURY",
+        "nome": "Cury"
+      },
+      {
+        "issuer_id": "BR_CYRELA",
+        "nome": "Cyrela"
+      },
+      {
+        "issuer_id": "BR_DIRECIONAL",
+        "nome": "Direcional"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que produto, marca e escala industrial sustentem contribuição econômica e caixa depois de reinvestimento. A condição decisiva é retorno por capacidade utilizada, sem depender apenas de incentivo fiscal ou crescimento da venda ao canal. Marcas de terceiros exigem prazo, custo e direitos contratuais coerentes com a avaliação.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_VULCABRAS.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 15,46"
+          },
+          {
+            "fato": "val.BR_VULCABRAS.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 19,23"
+          },
+          {
+            "fato": "val.BR_VULCABRAS.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+24,41%"
+          },
+          {
+            "fato": "val.BR_VULCABRAS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,81%"
+          },
+          {
+            "fato": "val.BR_VULCABRAS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+38,23%"
+          }
+        ],
+        "texto": "Preço de referência R$ 15,46 e alvo R$ 19,23, com potencial +24,41%. A hipótese de investimento deve ser confrontada com o custo do capital 11,81% e retorno esperado +38,23%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Desenvolvimento de calçados, produção integrada e relacionamento com atletas podem melhorar diferenciação e reposição. A posição de marca relatada pela gestão não comprova participação independente. Concorrentes globais, preço, inovação e acesso ao varejo podem exigir marketing e investimento antes da demanda.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T03:02:15.586928+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita, volume e EBITDA recorrente cresceram anualmente, mas margens bruta e recorrente recuaram e lucro recorrente diminuiu ligeiramente. O resultado semestral original tem comparação afetada por crédito fiscal anterior. Caixa operacional após juros e tributos cresceu no semestre; estoques continuaram consumindo recursos. Medidas recorrentes precisam de ponte aos demonstrativos.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que produto, marca e escala industrial sustentem contribuição econômica e caixa depois de reinvestimento. A condição decisiva é retorno por capacidade utilizada, sem depender apenas de incentivo fiscal ou crescimento da venda ao canal. Marcas de terceiros exigem prazo, custo e direitos contratuais coerentes com a avaliação. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Compra, com retorno esperado +38,23%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Demanda, inovação e competição podem exigir descontos ou marketing. Capacidade industrial e estoque elevam compromisso de capital. Marcas licenciadas, benefícios fiscais e garantias têm condições próprias; juros podem absorver crescimento operacional."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_VULCABRAS.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-8,41%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -8,41%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Consumo discricionário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Vulcabras — inovação, utilização industrial e custo completo",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A leitura visual das páginas de destaques e gestão mostra crescimento anual de volume, receita e EBITDA recorrente, com margens menores e lucro recorrente ligeiramente menor. O ITR apresenta caixa operacional semestral após juros e tributos maior anualmente, com consumo de estoques e investimentos. O lucro original tem base anterior influenciada por crédito fiscal. A debênture tem aferição trimestral e cumprimento relatado no trimestre; incentivos permanecem condicionados. O release integral contém páginas em imagem e não foi tratado como texto integralmente extraído.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Volume, mix, venda final, inovação, utilização e margem por marca; estoque e recebimento; caixa depois de juros, tributos, manutenção e expansão. Confirmar direitos das marcas de terceiros, garantias e índices contratuais, distinguindo incentivo reconhecido de recebimento e repetição.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_VULCABRAS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,81%"
+          },
+          {
+            "fato": "val.BR_VULCABRAS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "37,13%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,81% e a dispersão entre métodos 37,13%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

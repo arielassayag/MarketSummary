@@ -1,0 +1,416 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "159a5cf7e9cdf84673ced99523705acf6e3e336812575617edc7b4e2ad62b48d",
+    "factbook": "f3d6e062ad5ec04d82547b2b5444339c156fbcec7de8eb2e3b7385ae5071ec72",
+    "nota_json": "ee633335c819e063bb9303e60d9c57062476c129dfcdd6f8b911d17415f0cc63"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_KIMBER",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-20",
+  "published_at": "2026-10-12T03:01:56.448160+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Dividendos e recompras divulgados em janela anual não têm o mesmo período do fluxo semestral. Caixa, dívida, derivativos, arrendamentos e dividendos a pagar precisam ser conciliados. Remuneração sustentável exige recursos depois de manutenção e obrigações, sem presumir que toda liquidez seja excedente.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-20",
+        "descricao": "Divulgação programada de resultados após o fechamento; reavaliar produtividade e caixa após obrigações.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em MXN 43,31, com retorno esperado +19,90%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Marcas e produtividade sustentam contribuição e caixa depois de manutenção e obrigações, com distribuição compatível com a geração. O cenário otimista calculado pelo código é MXN 53,06.",
+      "pessimista": "Insumos e demanda deterioram margem enquanto obrigações e capital distribuído superam geração recorrente. O cenário pessimista calculado pelo código é MXN 34,06."
+    },
+    "comentario_valuation": "Preço de referência MXN 37,74 e alvo do modelo aberto MXN 43,31, com potencial +14,75%. Retorno total esperado +19,90% e custo do capital próprio 12,14%. A dispersão entre métodos é 15,13%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é MXN 43,59; a diferença -0,65% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se a melhora depende de câmbio e matérias-primas, sem volume rentável. Caixa ampliado por dívida e lucro por ação favorecido por recompra não comprovam retorno recorrente suficiente.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.MX_KIMBER.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 37,74"
+      },
+      {
+        "fato": "val.MX_KIMBER.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 43,31"
+      },
+      {
+        "fato": "val.MX_KIMBER.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+14,75%"
+      },
+      {
+        "fato": "val.MX_KIMBER.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.MX_KIMBER.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_KIMBER.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 53,06"
+      },
+      {
+        "fato": "val.MX_KIMBER.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "10,53%"
+      },
+      {
+        "fato": "val.MX_KIMBER.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 34,06"
+      },
+      {
+        "fato": "val.MX_KIMBER.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "27,32%"
+      },
+      {
+        "fato": "val.MX_KIMBER.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,14%"
+      },
+      {
+        "fato": "val.MX_KIMBER.wacc",
+        "rotulo": "WACC",
+        "valor": "10,85%"
+      },
+      {
+        "fato": "val.MX_KIMBER.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_KIMBER.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+19,90%"
+      },
+      {
+        "fato": "val.MX_KIMBER.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+23,29%"
+      },
+      {
+        "fato": "val.MX_KIMBER.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "13,8x"
+      },
+      {
+        "fato": "val.MX_KIMBER.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "28,2x"
+      },
+      {
+        "fato": "val.MX_KIMBER.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 43,59"
+      },
+      {
+        "fato": "val.MX_KIMBER.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-0,65%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Kimberly-Clark de México",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Índice oficial de resultados da emissora mexicana",
+        "url": "https://www.kimberly-clark.com.mx/finanzas/prensaf"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Kimberly-Clark de México",
+        "publicado_em": "2026-07-21",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado, balanço e fluxo intermediários",
+        "url": "https://www.kimberly-clark.com.mx/data/2026/PR2T26.pdf"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Kimberly-Clark de México",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário oficial de divulgação de resultados",
+        "url": "https://www.kimberly-clark.com.mx/finanzas/eventos"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+      "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+      "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+      "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+    ],
+    "governanca": "Revisar direitos de marcas, relacionadas, contratos e capital da emissora mexicana. Dividendos ainda a pagar, obrigações de uso e instrumentos financeiros conservam sua natureza até liquidação comprovada.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Monitorar volume e preço por categoria, custo de insumos, produtividade recorrente e retorno da manutenção. Conciliar caixa operacional, recebíveis, dívida e obrigações, separando janelas anuais e semestrais. Rever recompra por ação, pagamentos e direitos de marca e relacionadas.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_KIMBER.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+19,90%"
+          },
+          {
+            "fato": "val.MX_KIMBER.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,14%"
+          },
+          {
+            "fato": "val.MX_KIMBER.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "15,13%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +19,90%, custo do capital 12,14% e dispersão entre métodos 15,13% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "MX_KIMBER",
+    "lacunas_de_dados": [
+      "Fluxo operacional, dívida, derivativos e dividendos a pagar exigem reconciliação completa.",
+      "Contratos de marcas, relacionadas e direitos de capital não foram integralmente avaliados.",
+      "Volume, preço e participação independente por categoria precisam de evidência específica.",
+      "Retorno da manutenção e dos investimentos não foi comprovado.",
+      "Guidance e tom agregado da gestão não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Fabricante e comercializadora mexicana de produtos de higiene pessoal, familiar e institucional. Consumo doméstico, uso institucional e exportação têm trajetórias diferentes. Direitos de marcas e contratos com partes relacionadas precisam ser conciliados ao instrumento da emissora mexicana.",
+    "nome": "Kimberly-Clark de México",
+    "o_que_mudou": null,
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_AC",
+        "nome": "Arca Continental"
+      },
+      {
+        "issuer_id": "MX_BIMBO",
+        "nome": "Grupo Bimbo"
+      },
+      {
+        "issuer_id": "MX_CHEDRAUI",
+        "nome": "Grupo Comercial Chedraui"
+      },
+      {
+        "issuer_id": "MX_GRUMA",
+        "nome": "Gruma"
+      },
+      {
+        "issuer_id": "MX_KOF",
+        "nome": "Coca-Cola FEMSA"
+      },
+      {
+        "issuer_id": "MX_SIGMA",
+        "nome": "Sigma Foods (ex-Alfa)"
+      },
+      {
+        "issuer_id": "MX_WALMEX",
+        "nome": "Walmart de México"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que marcas e execução industrial preservem contribuição depois de insumos, distribuição e manutenção. A condição decisiva é produtividade recorrente que gere caixa suficiente para reinvestimento e remuneração do acionista. O retorno precisa sobreviver a um ciclo de insumos e moeda menos favorável.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_KIMBER.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "MXN 37,74"
+          },
+          {
+            "fato": "val.MX_KIMBER.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "MXN 43,31"
+          },
+          {
+            "fato": "val.MX_KIMBER.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+14,75%"
+          },
+          {
+            "fato": "val.MX_KIMBER.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,14%"
+          },
+          {
+            "fato": "val.MX_KIMBER.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+19,90%"
+          }
+        ],
+        "texto": "Preço de referência MXN 37,74 e alvo MXN 43,31, com potencial +14,75%. A hipótese de investimento deve ser confrontada com o custo do capital 12,14% e retorno esperado +19,90%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Marcas e acesso à distribuição podem sustentar demanda e realização. A vantagem precisa aparecer em volume rentável e custo de servir, com comparação independente. A leitura por categoria deve evitar atribuir o desempenho de consumo doméstico a exportações e ao mercado institucional.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T03:01:56.448160+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O resultado distingue melhora de margem e produtividade de insumos e câmbio favoráveis. Lucro por ação também reflete recompra. A posição de caixa cresce com emissão de dívida no semestre; essa origem financeira não é geração operacional. Pesos e IFRS têm base diferente da apresentação em dólares e US GAAP.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que marcas e execução industrial preservem contribuição depois de insumos, distribuição e manutenção. A condição decisiva é produtividade recorrente que gere caixa suficiente para reinvestimento e remuneração do acionista. O retorno precisa sobreviver a um ciclo de insumos e moeda menos favorável. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Compra, com retorno esperado +19,90%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Custos de fibras, resinas, moeda e demanda podem reduzir contribuição. Produtividade pode não compensar o ciclo. Dívida, dividendos a pagar e reinvestimento podem limitar recursos distribuíveis apesar do caixa bruto maior."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_KIMBER.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-0,65%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -0,65%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Consumo básico",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Kimberly-Clark de México — marcas, produtividade e capital distribuível",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O desempenho doméstico coexiste com queda institucional e de exportação. A melhora de lucro e fluxo exige separar produtividade, insumos, moeda e financiamento. A avaliação por ação não mistura medidas da emissora mexicana com bases contábeis e monetárias distintas.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar volume e preço por categoria, custo de insumos, produtividade recorrente e retorno da manutenção. Conciliar caixa operacional, recebíveis, dívida e obrigações, separando janelas anuais e semestrais. Rever recompra por ação, pagamentos e direitos de marca e relacionadas.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.MX_KIMBER.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,14%"
+          },
+          {
+            "fato": "val.MX_KIMBER.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "15,13%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 12,14% e a dispersão entre métodos 15,13%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

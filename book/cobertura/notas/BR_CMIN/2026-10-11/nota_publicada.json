@@ -1,0 +1,432 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "0764d21ccdc39a6aa27c964cb12b0dfd3b1679fefd99ea63e84273dddafb90d0",
+    "factbook": "9e5bde064bd3e79304e333b206ab07fe76ff6423b88c3c8c805d9ac25e914b77",
+    "nota_json": "80422b14bb980706c3179eecfb463b594c52b868b771ecb5878cd236f687f36c"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_CMIN",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T03:00:09.157027+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Disponibilidades diminuem e dívida líquida e alavancagem aumentam, com amortização de pré-pagamentos e recompras. A expansão e manutenção elevam investimento; parte das aquisições de ativos usa financiamento, exigindo separar competência e desembolso. Programa de recompra ampliado não equivale a execução integral ou cancelamento. A participação ferroviária tem direitos próprios, e recursos da mineradora não são caixa automaticamente disponível à controladora ou ao minoritário.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 7,10, com retorno esperado +48,20%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Qualidade, logística e disponibilidade sustentam realização, expansão remunera capital e caixa permanece suficiente após obrigações e manutenção. O cenário otimista calculado pelo código é R$ 9,94.",
+      "pessimista": "Frete, custos e qualidade comprimem margem enquanto menor volume econômico e investimento reduzem recursos por ação. O cenário pessimista calculado pelo código é R$ 4,52."
+    },
+    "comentario_valuation": "Preço de referência R$ 5,06 e alvo do modelo aberto R$ 7,10, com potencial +40,41%. Retorno total esperado +48,20% e custo do capital próprio 11,98%. A dispersão entre métodos é 35,76%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 5,22; a diferença +35,98% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese enfraquece se expansão e compras adicionam volume sem margem após transporte ou se liberação de giro explica caixa sem recorrência. Lucro financeiro e crédito tributário não comprovam produtividade. Decisão de limitar minério de baixa qualidade pode preservar margem, mas reduz volumes e diluição de custos; retorno ao minoritário depende de capital e direitos próprios.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_CMIN.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 5,06"
+      },
+      {
+        "fato": "val.BR_CMIN.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 7,10"
+      },
+      {
+        "fato": "val.BR_CMIN.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+40,41%"
+      },
+      {
+        "fato": "val.BR_CMIN.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.BR_CMIN.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_CMIN.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 9,94"
+      },
+      {
+        "fato": "val.BR_CMIN.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "4,25%"
+      },
+      {
+        "fato": "val.BR_CMIN.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 4,52"
+      },
+      {
+        "fato": "val.BR_CMIN.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "43,70%"
+      },
+      {
+        "fato": "val.BR_CMIN.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,98%"
+      },
+      {
+        "fato": "val.BR_CMIN.wacc",
+        "rotulo": "WACC",
+        "valor": "10,44%"
+      },
+      {
+        "fato": "val.BR_CMIN.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_CMIN.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+48,20%"
+      },
+      {
+        "fato": "val.BR_CMIN.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+38,47%"
+      },
+      {
+        "fato": "val.BR_CMIN.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "12,8x"
+      },
+      {
+        "fato": "val.BR_CMIN.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "3,7x"
+      },
+      {
+        "fato": "val.BR_CMIN.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 5,22"
+      },
+      {
+        "fato": "val.BR_CMIN.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+35,98%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "CSN Mineração",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil mineral, minas, processamento e logística",
+        "url": "https://ri.csnmineracao.com.br/a-companhia/historico-e-perfil-corporativo/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "CSN Mineração",
+        "publicado_em": "2026-08-12",
+        "tipo": "Relações com investidores",
+        "titulo": "Release de resultados, realização, custo, caixa e expansão",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/9e56a180-7ba5-412d-ab60-44ca855d1d3d/1a02e5fb-0331-5f51-8637-33ece813b87f?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "CSN",
+        "publicado_em": "2026-09-29",
+        "tipo": "Relações com investidores",
+        "titulo": "Comunicado da controladora sobre redução temporária e revisão de projeções minerais",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/29633c00-23f7-4765-9594-926012179477/0d206362-9998-0e13-5ee9-93a219df1d9a?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F4",
+        "instituicao": "CSN",
+        "publicado_em": "2026-08-12",
+        "tipo": "Relações com investidores",
+        "titulo": "Release do grupo com perímetro próprio do segmento de mineração",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/29633c00-23f7-4765-9594-926012179477/5ffaa693-869a-c253-6b5d-9d72a1e79070?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Qualidade e preço realizado deixam de sustentar margem após transporte e custo completo.",
+      "Pré-pagamentos e investimento absorvem recursos apesar do fluxo gerencial positivo.",
+      "Produção limitada e compras reduzem diluição sem preservar retorno econômico suficiente.",
+      "Documentos novos alteram reservas, barragens, participações e direitos por ação."
+    ],
+    "governanca": "Controle, contratos intragrupo e participação ferroviária exigem verificar transmissão de caixa ao minoritário. Recursos e reservas do perfil têm bases antigas e diferentes; não foram promovidos a certificação atual. Pré-pagamento é obrigação de fornecimento com efeitos próprios, mesmo quando excluído do giro e fluxo gerenciais. Redução reversível de produção não garante data nem condição econômica de retomada.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Monitorar produção própria, compras, qualidade e vendas por produto. Conferir frete, receita ajustada e custo completo depois de manutenção. Conciliar pré-pagamentos, giro, recompras, dívida e investimento por projeto. Acompanhar retomada econômica de Pires, retorno da expansão, reservas atualizadas e obrigações de barragens.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_CMIN.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+48,20%"
+          },
+          {
+            "fato": "val.BR_CMIN.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,98%"
+          },
+          {
+            "fato": "val.BR_CMIN.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "35,76%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +48,20%, custo do capital 11,98% e dispersão entre métodos 35,76% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_CMIN",
+    "lacunas_de_dados": [
+      "Demonstrações completas, pré-pagamentos e fluxo atribuível não foram integralmente reconciliados.",
+      "O texto de comparação da produção contém referência ao próprio trimestre; a inconsistência foi preservada.",
+      "Volumes e EBITDA da mineradora e do grupo têm perímetros próprios a conciliar.",
+      "Certificações antigas de reservas e recursos não substituem atualização técnica por mina.",
+      "Custo final, retorno da expansão e execução das obras de descaracterização permanecem a comprovar.",
+      "Retomada da produção limitada e execução final de recompra não foram confirmadas.",
+      "Volume e custo têm revisões diferentes; guidance agregado, tom e percepção do mercado não foram classificados.",
+      "Não há catalisador futuro com dia exato confirmado nesta pesquisa."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Mineradora de ferro com produção própria, compras de terceiros, beneficiamento e exportação apoiados em terminal e participação ferroviária. O volume divulgado como produção inclui compras; diferentes produtos têm qualidade e margem próprias. Receita ajustada exclui frete e seguro marítimo, exigindo separar preço de referência e realização econômica. A companhia é controlada pela CSN e tem direitos e obrigações distintos do consolidado do grupo.",
+    "nome": "CSN Mineração",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRADESPAR",
+        "nome": "Bradespar"
+      },
+      {
+        "issuer_id": "BR_CBA",
+        "nome": "Companhia Brasileira de Alumínio"
+      },
+      {
+        "issuer_id": "BR_CSN",
+        "nome": "CSN Siderúrgica Nacional"
+      },
+      {
+        "issuer_id": "BR_ERO",
+        "nome": "Ero Copper"
+      },
+      {
+        "issuer_id": "BR_GERDAU",
+        "nome": "Gerdau"
+      },
+      {
+        "issuer_id": "BR_GOAU",
+        "nome": "Metalúrgica Gerdau"
+      },
+      {
+        "issuer_id": "BR_SUZANO",
+        "nome": "Suzano"
+      },
+      {
+        "issuer_id": "BR_UNIPAR",
+        "nome": "Unipar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que processamento, qualidade e logística sustentem margem realizada e retorno por ação depois de manutenção e expansão. A condição decisiva é caixa suficiente após pré-pagamentos, dívida e capital empregado. Volume vendido e liquidez gerencial não comprovam melhoria do custo completo, reposição econômica de reservas ou proteção contra frete elevado.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_CMIN.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 5,06"
+          },
+          {
+            "fato": "val.BR_CMIN.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 7,10"
+          },
+          {
+            "fato": "val.BR_CMIN.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+40,41%"
+          },
+          {
+            "fato": "val.BR_CMIN.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,98%"
+          },
+          {
+            "fato": "val.BR_CMIN.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+48,20%"
+          }
+        ],
+        "texto": "Preço de referência R$ 5,06 e alvo R$ 7,10, com potencial +40,41%. A hipótese de investimento deve ser confrontada com o custo do capital 11,98% e retorno esperado +48,20%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Integração entre minas, beneficiamento, ferrovia e porto pode apoiar execução, mas custo depende de câmbio, qualidade e transporte. Reservas e recursos têm certificações e datas distintas; o perfil histórico não substitui atualização técnica. Competitividade declarada pelo emissor não foi validada como posição relativa. A redução temporária de minério de menor qualidade demonstra que nem todo volume remunera o capital em qualquer ambiente de frete.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T03:00:09.157027+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Receita ajustada, margem bruta e margem operacional recuam apesar de vendas sequencialmente maiores. Frete e apreciação cambial reduzem realização; custo unitário de extração sobe. Lucro aumenta na comparação anual com menor impacto financeiro e créditos tributários, sem equivaler a melhora operacional uniforme. A ponte de fluxo ajustado melhora com liberação de estoque, recebíveis e fornecedores, mas exclui efeitos de pré-pagamento e não substitui a demonstração completa.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que processamento, qualidade e logística sustentem margem realizada e retorno por ação depois de manutenção e expansão. A condição decisiva é caixa suficiente após pré-pagamentos, dívida e capital empregado. Volume vendido e liquidez gerencial não comprovam melhoria do custo completo, reposição econômica de reservas ou proteção contra frete elevado. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Compra, com retorno esperado +48,20%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Frete, qualidade, preço e câmbio podem reduzir margem mesmo com vendas maiores. Expansão, pré-pagamentos e recompra consomem caixa; reservas antigas, participação ferroviária e obrigações ambientais exigem atualização e conciliação."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_CMIN.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+35,98%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +35,98%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "CSN Mineração — margem após qualidade, frete, pré-pagamentos e expansão",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A revisão posterior reduz produção e compras previstas e eleva custo projetado após redução temporária em Pires, sem classificar uma direção agregada. O release tem uma comparação textual do crescimento da produção contra o próprio trimestre; o contexto sequencial não corrige a fonte. A mineradora e o grupo divulgam volumes e EBITDA com perímetros distintos. Projeto de descaracterização concluído não significa obra futura já executada.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar produção própria, compras, qualidade e vendas por produto. Conferir frete, receita ajustada e custo completo depois de manutenção. Conciliar pré-pagamentos, giro, recompras, dívida e investimento por projeto. Acompanhar retomada econômica de Pires, retorno da expansão, reservas atualizadas e obrigações de barragens.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_CMIN.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,98%"
+          },
+          {
+            "fato": "val.BR_CMIN.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "35,76%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,98% e a dispersão entre métodos 35,76%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

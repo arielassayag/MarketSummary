@@ -1,0 +1,224 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_MOURADUBEUX",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Moura Dubeux — condomínio, reconhecimento de terreno e capital no Nordeste",
+  "resumo": "A hipótese é que conhecimento regional e combinação de incorporação e serviços de condomínio sustentem retorno depois de terrenos, obras, crédito e financiamento. A condição decisiva é converter remuneração reconhecida e expansão de projetos em caixa atribuível sem depender de antecipação contínua de recebíveis. Construção financiada pelos condôminos pode reduzir determinadas necessidades de giro, mas não elimina capital em terrenos, cotas próprias e execução. O crescimento deve resistir a mix, distratos e absorção local, preservando retorno por participação. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_MOURADUBEUX.rating_codigo}}, com retorno esperado {{fact:val.BR_MOURADUBEUX.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Incorporadora e construtora concentrada no Nordeste, com produtos residenciais, comerciais e hoteleiros em faixas de renda diferentes. A incorporação tradicional reconhece receita pelo avanço da obra. No condomínio, clientes financiam a construção e a companhia recebe remuneração de terreno, consultoria e administração; também pode aderir a cotas e revendê-las. Vendas e adesões, VGV, receita e recebimento têm bases distintas. Engenharia, vendas próprias e novas marcas ampliam exigência de disciplina por produto e participação.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que conhecimento regional e combinação de incorporação e serviços de condomínio sustentem retorno depois de terrenos, obras, crédito e financiamento. A condição decisiva é converter remuneração reconhecida e expansão de projetos em caixa atribuível sem depender de antecipação contínua de recebíveis. Construção financiada pelos condôminos pode reduzir determinadas necessidades de giro, mas não elimina capital em terrenos, cotas próprias e execução. O crescimento deve resistir a mix, distratos e absorção local, preservando retorno por participação.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3",
+        "F4"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_MOURADUBEUX.preco}} e alvo {{fact:val.BR_MOURADUBEUX.preco_alvo}}, com potencial {{fact:val.BR_MOURADUBEUX.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_MOURADUBEUX.ke}} e retorno esperado {{fact:val.BR_MOURADUBEUX.etr}}.",
+      "evidencias": [
+        "val.BR_MOURADUBEUX.preco",
+        "val.BR_MOURADUBEUX.preco_alvo",
+        "val.BR_MOURADUBEUX.upside",
+        "val.BR_MOURADUBEUX.ke",
+        "val.BR_MOURADUBEUX.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Separar incorporação, condomínio e revenda de cotas. Conciliar formação, reconhecimento e recebimento de terreno, consultoria e administração. Avaliar distratos, safras, estoque, cessões, passivos retidos e terrenos a pagar. Monitorar capital das marcas e participações, fluxo contábil e distribuição efetiva.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_MOURADUBEUX.ke}} e a dispersão entre métodos {{fact:val.BR_MOURADUBEUX.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_MOURADUBEUX.ke",
+        "val.BR_MOURADUBEUX.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Resultados posteriores à prévia: reconciliar lançamentos, adesões, distratos e recebimentos por formato e marca.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F4"
+      ]
+    },
+    {
+      "descricao": "Conciliação dos passivos de cessão, terrenos e capital por projeto com a geração gerencial e contábil.",
+      "data": null,
+      "tipo": "capital",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Concentração regional, absorção, custos e distratos podem reduzir retorno. Terrenos e recebíveis consomem capital. Cessão retém exposição; geração gerencial não comprova caixa operacional nem elimina obrigações de projetos.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F4"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_MOURADUBEUX.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_MOURADUBEUX.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Seleção regional, obras e adesões convertem receitas em recebimentos, com terrenos e marcas remunerando capital depois de perdas e financiamento. O cenário otimista calculado pelo código é {{fact:val.BR_MOURADUBEUX.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_MOURADUBEUX.preco_alvo}}, com retorno esperado {{fact:val.BR_MOURADUBEUX.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Adesões e recebimentos desaceleram, distratos e custos crescem e terrenos e cessões restringem caixa, limitando retorno e distribuição. O cenário pessimista calculado pelo código é {{fact:val.BR_MOURADUBEUX.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_MOURADUBEUX.preco}} e alvo do modelo aberto {{fact:val.BR_MOURADUBEUX.preco_alvo}}, com potencial {{fact:val.BR_MOURADUBEUX.upside}}. Retorno total esperado {{fact:val.BR_MOURADUBEUX.etr}} e custo do capital próprio {{fact:val.BR_MOURADUBEUX.ke}}. A dispersão entre métodos é {{fact:val.BR_MOURADUBEUX.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_MOURADUBEUX.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_MOURADUBEUX.consenso_alvo}}; a diferença {{fact:val.BR_MOURADUBEUX.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "O release diferencia crescimento de condomínio e direção da receita de incorporação, com margens sequenciais distintas. A remuneração do terreno é reconhecida na formação do grupo e recebida durante a construção. A demonstração dos fluxos apresenta consumo operacional e entrada financeira por cessão, enquanto a medida gerencial registra geração. Na prévia posterior, lançamentos crescem e vendas e adesões líquidas recuam, com distratos maiores; parte dos lançamentos ocorreu perto do fim do trimestre. A prévia não foi incorporada retrospectivamente ao modelo.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "A revisão intermediária enfatiza reconhecimento de unidades não concluídas, sem modificar a conclusão, e tem alcance inferior à auditoria anual. A nota de cessões confirma exposição mantida e obrigações contratuais; o ativo não foi desreconhecido. Direitos de condomínio e participação societária não são equivalentes. Os índices divulgados incluem determinadas obrigações de imóveis e cobertura de garantias; a ausência de outros covenants declarada no documento não significa ausência de compromissos econômicos.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Marca, engenharia integrada, canais próprios e seleção de terrenos podem favorecer execução e absorção regional. Liderança declarada precisa de comparação independente. O condomínio modifica financiamento e reconhecimento, sem tornar a operação livre de risco ou de capital. Novas marcas têm faixa de renda, execução e crédito próprios. Receitas de terreno, consultoria e administração não são equivalentes ao VGV aderido pelos clientes. Produtos, praças e participações precisam de leitura própria antes de comparar margens com outras incorporadoras.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Receita e lucro crescem, com contribuição de remuneração de terreno reconhecida na formação de condomínios e recebida ao longo da construção. O resultado financeiro positivo inclui correções de recebíveis, distintas de recebimento imediato. EBITDA ajustado exclui juros capitalizados, que mantêm custo econômico. O trimestre apresenta consumo na demonstração dos fluxos operacionais e geração gerencial de caixa, com cessão classificada no financiamento. A prévia posterior registra menor venda e adesão líquida e maior distrato, preservando bases próprias.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F4"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Dívida líquida gerencial recua sequencialmente, enquanto terrenos e contas a receber absorvem recursos. As cessões de remuneração de terreno mantêm risco e obrigações, sem desreconhecer os ativos; a posição aparece em passivo próprio e requer ponte à medida gerencial. Permutas e aquisição de cotas são compromissos econômicos. Captação de ações no semestre não representa geração operacional. Recursos de sociedades, minoritários e dividendos têm direitos específicos; baixa alavancagem parcial não comprova disponibilidade irrestrita.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F4"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se reconhecimento de terrenos impulsiona lucro antes de recebimento e novos projetos exigem capital superior à conversão. Crescer em marcas e praças pode elevar estoque e despesas sem absorção. O modelo de condomínio transfere financiamento de obra, mas mantém riscos de execução, cotas próprias e terreno. Recebíveis antecipados com passivo podem melhorar liquidez e conservar exposição. A queda de adesões na prévia exige verificar safras e mix, sem presumir recuperação posterior.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F4"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Separar incorporação, condomínio e revenda de cotas. Conciliar formação, reconhecimento e recebimento de terreno, consultoria e administração. Avaliar distratos, safras, estoque, cessões, passivos retidos e terrenos a pagar. Monitorar capital das marcas e participações, fluxo contábil e distribuição efetiva.",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F4"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_MOURADUBEUX.etr}}, custo do capital {{fact:val.BR_MOURADUBEUX.ke}} e dispersão entre métodos {{fact:val.BR_MOURADUBEUX.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_MOURADUBEUX.etr",
+        "val.BR_MOURADUBEUX.ke",
+        "val.BR_MOURADUBEUX.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Receita de terreno e serviços não se converte em caixa depois de obrigações.",
+    "Adesões, distratos e margem por safra deterioram absorção econômica.",
+    "Terrenos, novas marcas e cotas próprias exigem capital sem retorno proporcional.",
+    "Cessões, garantias ou direitos modificam a leitura de liquidez e distribuição."
+  ],
+  "lacunas_de_dados": [
+    "Geração gerencial e demonstração dos fluxos não foram integralmente reconciliadas.",
+    "Cessões retidas e dívida líquida gerencial exigem ponte completa de obrigações.",
+    "Retorno das novas marcas, cotas próprias e sociedades não consolidadas permanece a comprovar.",
+    "Recebimentos por terreno, consultoria e administração precisam de acompanhamento por projeto.",
+    "Prévia posterior é preliminar; demonstrações do período ainda não foram avaliadas.",
+    "Acordos societários e partes relacionadas não foram integralmente examinados.",
+    "Guidance agregado, tom, participação relativa e percepção do mercado não foram classificados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Moura Dubeux",
+      "titulo": "Perfil, engenharia integrada e obras por administração",
+      "url": "https://ri.mouradubeux.com.br/a-companhia/perfil-corporativo/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Moura Dubeux",
+      "titulo": "Resultado: incorporação, condomínio, receitas de terreno e fluxo",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/0b55ea34-4419-4e98-859b-742720701ad7/46901920-45d1-517f-af04-bf4fd4ad79e4?origin=2",
+      "publicado_em": "2026-08-12",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Moura Dubeux",
+      "titulo": "Informações intermediárias: cessões sem desreconhecimento, garantias e revisão",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/0b55ea34-4419-4e98-859b-742720701ad7/d5bc1979-a10f-ced8-23a6-42a481027d20?origin=2",
+      "publicado_em": "2026-08-12",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F4",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Moura Dubeux",
+      "titulo": "Prévia posterior: lançamentos, adesões, distratos, marcas e participação",
+      "url": "https://filemanager-cdn.mziq.com/published/0b55ea34-4419-4e98-859b-742720701ad7/a265ee18-d454-4492-89d4-358fadc6ca35",
+      "publicado_em": "2026-10-08",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

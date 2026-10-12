@@ -1,0 +1,201 @@
+{
+  "mind": "codex",
+  "issuer_id": "CL_FALABELLA",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Falabella — integração comercial com retorno por negócio",
+  "resumo": "A hipótese é que conveniência e recorrência de clientes aumentem a monetização líquida após logística, perdas de crédito e capital de cada negócio. A integração deve gerar retorno incremental demonstrável, além da expansão de contatos e vendas. Uma análise por partes precisa eliminar sobreposição e preservar direitos dos minoritários. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.CL_FALABELLA.rating_codigo}}, com retorno esperado {{fact:val.CL_FALABELLA.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Grupo de varejo, serviços financeiros, comércio digital e imóveis comerciais na América Latina. Banco, varejo e participação imobiliária têm exigências diferentes de capital, financiamento e acesso ao caixa.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que conveniência e recorrência de clientes aumentem a monetização líquida após logística, perdas de crédito e capital de cada negócio. A integração deve gerar retorno incremental demonstrável, além da expansão de contatos e vendas. Uma análise por partes precisa eliminar sobreposição e preservar direitos dos minoritários.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.CL_FALABELLA.preco}} e alvo {{fact:val.CL_FALABELLA.preco_alvo}}, com potencial {{fact:val.CL_FALABELLA.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.CL_FALABELLA.ke}} e retorno esperado {{fact:val.CL_FALABELLA.etr}}.",
+      "evidencias": [
+        "val.CL_FALABELLA.preco",
+        "val.CL_FALABELLA.preco_alvo",
+        "val.CL_FALABELLA.upside",
+        "val.CL_FALABELLA.ke",
+        "val.CL_FALABELLA.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar vendas comparáveis, margem depois de logística, estoques e geração de caixa de varejo. No banco, revisar perdas, funding e capital regulatório. Confrontar monetização digital e capital imobiliário com retorno atribuível e condições efetivas das transações.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.CL_FALABELLA.ke}} e a dispersão entre métodos {{fact:val.CL_FALABELLA.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.CL_FALABELLA.ke",
+        "val.CL_FALABELLA.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Divulgação de resultado prevista no calendário do emissor; revisar caixa por negócio, crédito e reorganizações.",
+      "data": "2026-11-10",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F4"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Consumo, concorrência e crédito podem deteriorar negócios simultaneamente. Estoque, logística e reinvestimento podem consumir caixa; transações com subsidiárias listadas exigem avaliação de conflitos e distribuição de benefícios.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.CL_FALABELLA.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.CL_FALABELLA.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Retenção e execução comercial melhoram monetização depois dos custos; cada negócio remunera seu capital e preserva capacidade de distribuir caixa. O cenário otimista calculado pelo código é {{fact:val.CL_FALABELLA.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.CL_FALABELLA.preco_alvo}}, com retorno esperado {{fact:val.CL_FALABELLA.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Crédito e consumo enfraquecem enquanto rede e logística exigem capital; reorganizações transferem riscos sem retorno incremental comprovado. O cenário pessimista calculado pelo código é {{fact:val.CL_FALABELLA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.CL_FALABELLA.preco}} e alvo do modelo aberto {{fact:val.CL_FALABELLA.preco_alvo}}, com potencial {{fact:val.CL_FALABELLA.upside}}. Retorno total esperado {{fact:val.CL_FALABELLA.etr}} e custo do capital próprio {{fact:val.CL_FALABELLA.ke}}. A dispersão entre métodos é {{fact:val.CL_FALABELLA.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.CL_FALABELLA.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.CL_FALABELLA.consenso_alvo}}; a diferença {{fact:val.CL_FALABELLA.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "Os ajustes de apresentação e perímetro impedem comparação direta de todos os indicadores. A pesquisa preserva a distinção entre receita, GMV, carteira gerencial e resultado atribuível. Não se incorporou a reorganização condicionada ao modelo recebido.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "A avaliação por partes deve demonstrar retorno e direitos econômicos da holding e dos minoritários das subsidiárias. Aprovação preliminar e avaliação independente de memorandos não encerram a diligência das transações.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Rede física, meios de pagamento e oferta digital podem apoiar atendimento e retenção. A vantagem exige comparação de custo, serviço e rentabilidade; associação entre participação em programas e maior consumo não prova causalidade ou retorno incremental da integração.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "O release usa câmbio fixo de apresentação, reclassifica fidelidade e atividades de cartões e distingue lucro sem valor justo. A carteira gerencial inclui México fora da consolidação financeira. GMV de vendedores externos não equivale a receita; banco e varejo exigem bases próprias.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "A reorganização imobiliária com Mallplaza foi anunciada por memorandos não vinculantes, sujeita a diligência e acordos definitivos. Ela ainda não comprova novos direitos ou retorno. A avaliação deve eliminar sobreposição entre holding e subsidiária e verificar capital, dívida e distribuição por negócio.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se mais interações e GMV não aumentam caixa ou se o grupo usa capital rentável para sustentar operações fracas. Resultado sem reavaliação ainda precisa ser conciliado a perdas, giro e capital regulatório.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Acompanhar vendas comparáveis, margem depois de logística, estoques e geração de caixa de varejo. No banco, revisar perdas, funding e capital regulatório. Confrontar monetização digital e capital imobiliário com retorno atribuível e condições efetivas das transações.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.CL_FALABELLA.etr}}, custo do capital {{fact:val.CL_FALABELLA.ke}} e dispersão entre métodos {{fact:val.CL_FALABELLA.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.CL_FALABELLA.etr",
+        "val.CL_FALABELLA.ke",
+        "val.CL_FALABELLA.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+    "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+    "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+    "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "Demonstrações originais, caixa por negócio e capital bancário permanecem a reconciliar.",
+    "A cadeia atual de controle e acordos entre acionistas não foi integralmente comprovada.",
+    "Retorno incremental da integração exige evidência que controle diferenças entre clientes.",
+    "Termos definitivos, financiamento e conclusão das reorganizações seguem a comprovar.",
+    "Guidance e tom da gestão não foram classificados em material integral.",
+    "Não há suporte suficiente para percepção do mercado, posicionamento ou interesse vendido.",
+    "A reconciliação integral ao modelo e a disponibilidade histórica dos documentos no corte recebido não foram comprovadas."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo Falabella",
+      "titulo": "Perfil dos negócios do grupo",
+      "url": "https://investors.grupofalabella.com/english/about-us/who-we-are/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo Falabella",
+      "titulo": "Resultado trimestral, perímetros e reclassificações",
+      "url": "https://investors.grupofalabella.com/app/uploads/sites/2/2026/08/Earnings-Release-2Q26-ENG.pdf",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Falabella e Mallplaza",
+      "titulo": "Reorganização imobiliária condicionada",
+      "url": "https://corporativo.mallplaza.com/noticia/grupo-falabella-y-su-filial-mallplaza-reorganizan-activos-inmobiliarios-para-potenciar-crecimiento/",
+      "publicado_em": "2026-09-30",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F4",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo Falabella",
+      "titulo": "Calendário de informação financeira",
+      "url": "https://investors.grupofalabella.com/english/investors/financial-information/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

@@ -1,0 +1,398 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "8ecad6ccc04f521788f2a05b2dbd559bfd29b90f18502faa66e0f6f09406fde1",
+    "factbook": "3d592679a81cd879d86638c9d98c183e84b3990ddc71eb3fa87386d11e984bd7",
+    "nota_json": "3113c711b288664378e6a1e6ee9f0300ee21291883ad982ee5eed70006a8594c"
+  },
+  "is_synthetic": false,
+  "issuer_id": "CO_TECNOGLASS",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-05",
+  "published_at": "2026-10-12T02:59:10.070208+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O comunicado registra redomiciliação concluída nos Estados Unidos. A possível unidade americana ainda estava em estudo, com incentivos em negociação. Dividendos foram pagos; saldo autorizado de recompra não demonstra ações recompradas. Liquidez inclui crédito disponível, distinto de caixa.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em US$ 53,41, com retorno esperado +41,88%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Preço, serviço e produtividade preservam demanda e melhoram caixa após reinvestimento, com retorno incremental demonstrável. O cenário otimista calculado pelo código é US$ 68,09.",
+      "pessimista": "Custos e adiamento de projetos comprimem margens e recebimento, enquanto automação ou expansão exige capital adicional. O cenário pessimista calculado pelo código é US$ 38,94."
+    },
+    "comentario_valuation": "Preço de referência US$ 37,84 e alvo do modelo aberto US$ 53,41, com potencial +41,14%. Retorno total esperado +41,88% e custo do capital próprio 10,22%. A dispersão entre métodos é 23,88%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é US$ 55,75; a diferença -4,20% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A tese enfraquece se receita e carteira crescem, mas reajustes não compensam custos e o giro aumenta. Redomiciliação e acesso a investidores não substituem retorno industrial; capacidade adicional pode consumir caixa antes de demonstrar utilização rentável.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.CO_TECNOGLASS.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 37,84"
+      },
+      {
+        "fato": "val.CO_TECNOGLASS.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 53,41"
+      },
+      {
+        "fato": "val.CO_TECNOGLASS.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+41,14%"
+      },
+      {
+        "fato": "val.CO_TECNOGLASS.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.CO_TECNOGLASS.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.CO_TECNOGLASS.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 68,09"
+      },
+      {
+        "fato": "val.CO_TECNOGLASS.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CO_TECNOGLASS.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 38,94"
+      },
+      {
+        "fato": "val.CO_TECNOGLASS.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CO_TECNOGLASS.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,22%"
+      },
+      {
+        "fato": "val.CO_TECNOGLASS.wacc",
+        "rotulo": "WACC",
+        "valor": "9,56%"
+      },
+      {
+        "fato": "val.CO_TECNOGLASS.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.CO_TECNOGLASS.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+41,88%"
+      },
+      {
+        "fato": "val.CO_TECNOGLASS.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+42,54%"
+      },
+      {
+        "fato": "val.CO_TECNOGLASS.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "11,8x"
+      },
+      {
+        "fato": "val.CO_TECNOGLASS.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,1x"
+      },
+      {
+        "fato": "val.CO_TECNOGLASS.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 55,75"
+      },
+      {
+        "fato": "val.CO_TECNOGLASS.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-4,20%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Tecnoglass",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e informações ao investidor",
+        "url": "https://investors.tecnoglass.com/overview/default.aspx"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Tecnoglass",
+        "publicado_em": "2026-08-06",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado trimestral e alocação de capital",
+        "url": "https://www.sec.gov/Archives/edgar/data/1534675/000149315226036252/ex99-1.htm"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+      "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+      "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+      "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+    ],
+    "governanca": "Conciliar identidade jurídica, classe e direitos após redomiciliação, além de controle, partes relacionadas e remuneração. Mudança de domicílio ou elegibilidade potencial a índices não comprova mudança de propriedade nem retorno ao investidor.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar margem depois do custo entregue, reajuste realizado, volume, mix e giro por canal. Revisar caixa, estoques, automação e capital fabril. Verificar termos de projetos, estágio da possível unidade americana e direitos societários do emissor redomiciliado.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CO_TECNOGLASS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+41,88%"
+          },
+          {
+            "fato": "val.CO_TECNOGLASS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,22%"
+          },
+          {
+            "fato": "val.CO_TECNOGLASS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "23,88%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +41,88%, custo do capital 10,22% e dispersão entre métodos 23,88% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "CO_TECNOGLASS",
+    "lacunas_de_dados": [
+      "Demonstrações, notas e caixa integral permanecem a reconciliar.",
+      "Faixas anteriores de guidance e classificação por indicador não foram comprovadas.",
+      "Contrato da carteira, cancelamentos, reajustes e recebimento exigem revisão.",
+      "Estatutos atualizados, direitos após redomiciliação e partes relacionadas não foram integralmente examinados.",
+      "Retorno da automação, estudo da fábrica, incentivos e evento futuro datado seguem a comprovar.",
+      "Percepção do mercado, posicionamento e interesse vendido não têm comprovação suficiente.",
+      "Disponibilidade histórica dos documentos e reconciliação integral ao modelo recebido não foram comprovadas."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Fabricante de vidro arquitetônico e janelas de alumínio e vinil para mercados residenciais e comerciais, com operação produtiva colombiana e vendas relevantes nos Estados Unidos. A análise exige conciliar cadeia industrial, moeda funcional e direitos do emissor após redomiciliação.",
+    "nome": "Tecnoglass",
+    "o_que_mudou": null,
+    "pais": "Colômbia",
+    "pares": [
+      {
+        "issuer_id": "BR_ECORODOVIAS",
+        "nome": "EcoRodovias"
+      },
+      {
+        "issuer_id": "BR_EMBRAER",
+        "nome": "Embraer"
+      },
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_LOCALIZA",
+        "nome": "Localiza"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_MOTIVA",
+        "nome": "Motiva (ex-CCR)"
+      },
+      {
+        "issuer_id": "BR_RANDON",
+        "nome": "Randoncorp"
+      },
+      {
+        "issuer_id": "BR_SIMPAR",
+        "nome": "Simpar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que capacidade de execução e atendimento convertam crescimento em caixa depois de insumos, transporte, tributos e capital fabril. Preço e automação precisam compensar custos sem destruir demanda rentável. A vantagem econômica deve aparecer em retorno incremental e serviço, além de expansão de receita e carteira.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CO_TECNOGLASS.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "US$ 37,84"
+          },
+          {
+            "fato": "val.CO_TECNOGLASS.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "US$ 53,41"
+          },
+          {
+            "fato": "val.CO_TECNOGLASS.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+41,14%"
+          },
+          {
+            "fato": "val.CO_TECNOGLASS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,22%"
+          },
+          {
+            "fato": "val.CO_TECNOGLASS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+41,88%"
+          }
+        ],
+        "texto": "Preço de referência US$ 37,84 e alvo US$ 53,41, com potencial +41,14%. A hipótese de investimento deve ser confrontada com o custo do capital 10,22% e retorno esperado +41,88%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Integração produtiva, rede comercial e variedade podem apoiar prazo e especificação dos produtos. A vantagem precisa ser confrontada com concorrentes, dependência de canais e custo completo entregue. Crescimento de participação declarado pela gestão ainda exige comprovação independente.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:59:10.070208+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O trimestre combina receita recorde e pressão sobre margem por insumos, moeda e tarifas reportadas pelo emissor. O lucro inclui ganho cambial sem caixa; o fluxo foi afetado por impostos e estoque. Carteira de projetos não equivale a receita realizada nem recebimento garantido.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que capacidade de execução e atendimento convertam crescimento em caixa depois de insumos, transporte, tributos e capital fabril. Preço e automação precisam compensar custos sem destruir demanda rentável. A vantagem econômica deve aparecer em retorno incremental e serviço, além de expansão de receita e carteira. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Compra, com retorno esperado +41,88%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Insumos, moeda, comércio internacional e ciclo de construção podem pressionar margem e pedidos. Automação e nova capacidade exigem execução e capital. Carteira longa pode não proteger preço líquido ou recebimento, especialmente se clientes adiarem projetos."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CO_TECNOGLASS.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-4,20%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -4,20%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Tecnoglass — preço líquido, capital fabril e transmissão ao acionista",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O release atualiza a projeção anual e estreita a faixa de receita. A pesquisa não reconciliou integralmente a faixa anterior de cada indicador e mantém a direção do guidance não classificada. Receita recorde não é tratada como melhora equivalente de margem ou caixa.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar margem depois do custo entregue, reajuste realizado, volume, mix e giro por canal. Revisar caixa, estoques, automação e capital fabril. Verificar termos de projetos, estágio da possível unidade americana e direitos societários do emissor redomiciliado.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.CO_TECNOGLASS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,22%"
+          },
+          {
+            "fato": "val.CO_TECNOGLASS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "23,88%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 10,22% e a dispersão entre métodos 23,88%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

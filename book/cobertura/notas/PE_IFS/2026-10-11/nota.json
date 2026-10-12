@@ -1,0 +1,188 @@
+{
+  "mind": "codex",
+  "issuer_id": "PE_IFS",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Intercorp Financial Services — monetização por negócio e capital da holding",
+  "resumo": "A hipótese é que relações bancárias e pagamentos ampliem monetização sem deteriorar crédito, enquanto seguros e gestão diversificam receitas. Integração só cria valor se os retornos por atividade remuneram risco e capital e os recursos chegam à holding. Escala digital deve aparecer em contribuição recorrente depois do custo de atender. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.PE_IFS.rating_codigo}}, com retorno esperado {{fact:val.PE_IFS.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Grupo financeiro com Interbank, Interseguro, Inteligo e plataforma de pagamentos Izipay. Banco universal, seguros de vida e rendas, gestão patrimonial e pagamentos têm modelos e requisitos de capital próprios. Ativos administrados de clientes não são caixa ou patrimônio disponível da holding.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que relações bancárias e pagamentos ampliem monetização sem deteriorar crédito, enquanto seguros e gestão diversificam receitas. Integração só cria valor se os retornos por atividade remuneram risco e capital e os recursos chegam à holding. Escala digital deve aparecer em contribuição recorrente depois do custo de atender.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.PE_IFS.preco}} e alvo {{fact:val.PE_IFS.preco_alvo}}, com potencial {{fact:val.PE_IFS.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.PE_IFS.ke}} e retorno esperado {{fact:val.PE_IFS.etr}}.",
+      "evidencias": [
+        "val.PE_IFS.preco",
+        "val.PE_IFS.preco_alvo",
+        "val.PE_IFS.upside",
+        "val.PE_IFS.ke",
+        "val.PE_IFS.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar margem depois de perdas, funding por origem e custo, coortes de crédito e comissões bancárias. Em seguros, revisar serviço contratual, passivos e retorno dos investimentos. Na gestão, separar captação, taxas e carteira própria. Conferir caixa, obrigações e recebimentos efetivos da holding.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.PE_IFS.ke}} e a dispersão entre métodos {{fact:val.PE_IFS.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.PE_IFS.ke",
+        "val.PE_IFS.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Divulgação de resultados prevista no calendário oficial; revisar margem, capital e transmissão de recursos.",
+      "data": "2026-11-09",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Funding e perdas no varejo podem absorver margem. Inflação, ativos e estimativas de seguros podem alterar lucro e solvência. Investimento digital e restrições de distribuição podem reduzir retorno da holding mesmo com maior atividade nas subsidiárias.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.PE_IFS.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.PE_IFS.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Monetização e crédito disciplinado sustentam retorno por negócio e recebimentos da holding, com diversificação e capital preservados. O cenário otimista calculado pelo código é {{fact:val.PE_IFS.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.PE_IFS.preco_alvo}}, com retorno esperado {{fact:val.PE_IFS.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Funding, risco e volatilidade dos investimentos pressionam lucro, enquanto solvência e obrigações limitam distribuição. O cenário pessimista calculado pelo código é {{fact:val.PE_IFS.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.PE_IFS.preco}} e alvo do modelo aberto {{fact:val.PE_IFS.preco_alvo}}, com potencial {{fact:val.PE_IFS.upside}}. Retorno total esperado {{fact:val.PE_IFS.etr}} e custo do capital próprio {{fact:val.PE_IFS.ke}}. A dispersão entre métodos é {{fact:val.PE_IFS.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.PE_IFS.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.PE_IFS.consenso_alvo}}; a diferença {{fact:val.PE_IFS.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "A análise distingue comparações trimestral e anual, funding e provisões, reconhecimento em seguros e carteira própria da gestão. Existem divergências de bases e indicadores dentro do relatório que precisam ser conciliadas; a narrativa não as corrige por cálculo próprio.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Revisar controle do grupo, transações entre subsidiárias, restrições por jurisdição e distribuição para a holding. A ação coberta e o capital econômico de cada entidade não são tratados como recursos intercambiáveis.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Ecossistema e distribuição podem facilitar relacionamento primário e uso de produtos. A vantagem exige retenção, rentabilidade ajustada ao risco e custo total de servir. Crescimento de transações e ativos administrados não comprova receita incremental ou vantagem durável frente aos concorrentes.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Funding e normalização de provisões pressionam a comparação trimestral do banco. Seguros incluem inflação e mudança no padrão de liberação da margem de serviço contratual. A gestão patrimonial inclui marcação de carteira própria; crescimento dos ativos administrados não equivale ao lucro dessa carteira.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Capital prudencial do banco, solvência da seguradora e liquidez da holding precisam ser reconciliados separadamente. O relatório menciona recursos de dividendos ainda pendentes de distribuição ascendente. Ganhos cambiais de hedge não demonstram caixa livre entregue; patrimônio consolidado não garante disponibilidade irrestrita.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se engajamento e escala não elevam contribuição depois de risco e despesas. O lucro consolidado pode depender de tesouraria, efeitos de seguros e moeda sem capacidade proporcional de remunerar o acionista da holding.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Acompanhar margem depois de perdas, funding por origem e custo, coortes de crédito e comissões bancárias. Em seguros, revisar serviço contratual, passivos e retorno dos investimentos. Na gestão, separar captação, taxas e carteira própria. Conferir caixa, obrigações e recebimentos efetivos da holding.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.PE_IFS.etr}}, custo do capital {{fact:val.PE_IFS.ke}} e dispersão entre métodos {{fact:val.PE_IFS.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.PE_IFS.etr",
+        "val.PE_IFS.ke",
+        "val.PE_IFS.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+    "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+    "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+    "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "Notas financeiras e capital por entidade não foram integralmente conciliados.",
+    "Bases de ativos administrados, retorno e dados comparativos têm divergências a reconciliar.",
+    "Margem de serviço contratual e passivos de seguros exigem diligência das estimativas.",
+    "Fluxo de caixa, direitos por ação e distribuição à holding permanecem a comprovar.",
+    "Mudança de guidance e tom da gestão não foram classificados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Intercorp Financial Services",
+      "titulo": "Negócios bancários, seguros, gestão e pagamentos",
+      "url": "https://ifs.com.pe/businesses",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Intercorp Financial Services",
+      "titulo": "Resultado semestral por segmento",
+      "url": "https://ifs.com.pe/documents/d/ifs/earnings-report-2q26",
+      "publicado_em": "2026-08-11",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Intercorp Financial Services",
+      "titulo": "Calendário oficial de resultados",
+      "url": "https://ifs.com.pe/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

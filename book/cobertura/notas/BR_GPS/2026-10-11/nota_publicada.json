@@ -1,0 +1,441 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "2785ee2936be73b87699e93bd51aa526ad8119dca65c4dfd842c2fd17599558c",
+    "factbook": "199b4b1a5126edbcd415e3a57ffd39d5df14a9c6d02b5cc150c4c9c6f4a25fce",
+    "nota_json": "8f3b1bda92e5a66edd94b222d970d44c438be6d2b9360a429ed49d6a4704734b"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_GPS",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-12",
+  "published_at": "2026-10-12T02:59:29.561887+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Dívida líquida diminuiu com caixa maior, mas dívida bruta permaneceu acima do ano anterior. Aquisições, parcelas, tributos e direitos de vendedores exigem caixa. Geração antes de juros difere do fluxo líquido; arrendamento, dividendos e opções aparecem no financiamento. Reversão de provisão não é recebimento operacional.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar contratos e caixa depois do custo completo.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 22,88, com retorno esperado +37,47%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Renovação e reajustes sustentam qualidade e margem recorrente, com caixa depois de pessoal, juros e obrigações de aquisição. O cenário otimista calculado pelo código é R$ 28,53.",
+      "pessimista": "Custos e execução pressionam contratos; giro, contingências e aquisições absorvem geração e reversões deixam de contribuir. O cenário pessimista calculado pelo código é R$ 17,64."
+    },
+    "comentario_valuation": "Preço de referência R$ 17,00 e alvo do modelo aberto R$ 22,88, com potencial +34,57%. Retorno total esperado +37,47% e custo do capital próprio 11,90%. A dispersão entre métodos é 25,40%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 18,57; a diferença +23,18% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Lucro ajustado maior por reversão não garante melhora equivalente dos contratos. Se reajustes e recebimento não acompanharem pessoal e mobilização, escala e aquisição poderão elevar receita sem remunerar o capital.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_GPS.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 17,00"
+      },
+      {
+        "fato": "val.BR_GPS.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 22,88"
+      },
+      {
+        "fato": "val.BR_GPS.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+34,57%"
+      },
+      {
+        "fato": "val.BR_GPS.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.BR_GPS.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_GPS.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 28,53"
+      },
+      {
+        "fato": "val.BR_GPS.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_GPS.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 17,64"
+      },
+      {
+        "fato": "val.BR_GPS.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_GPS.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,90%"
+      },
+      {
+        "fato": "val.BR_GPS.wacc",
+        "rotulo": "WACC",
+        "valor": "9,92%"
+      },
+      {
+        "fato": "val.BR_GPS.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_GPS.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+37,47%"
+      },
+      {
+        "fato": "val.BR_GPS.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+37,19%"
+      },
+      {
+        "fato": "val.BR_GPS.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "11,4x"
+      },
+      {
+        "fato": "val.BR_GPS.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,8x"
+      },
+      {
+        "fato": "val.BR_GPS.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 18,57"
+      },
+      {
+        "fato": "val.BR_GPS.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+23,18%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Grupo GPS",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://ri.gpssa.com.br/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Grupo GPS",
+        "publicado_em": "2026-08-12",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/a35cc248-b835-4157-944e-86f7561fa441/b5bb0bc5-9518-e57f-e70f-a8aa5ae9471c?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Grupo GPS",
+        "publicado_em": "2026-08-12",
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/a35cc248-b835-4157-944e-86f7561fa441/acfe645f-11de-e6ac-c8f2-63763679d774?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+      "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+      "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+      "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+    ],
+    "governanca": "O perfil institucional recusou acesso, sem contorno; a análise usa RI e documentos recebidos. Lucro ajustado não é base de distribuição. Indenizações de aquisições, contingências e direitos de vendedores têm reconhecimento e liquidação próprios, sem realização presumida.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Renovação, reajuste, qualidade e margem por contrato; orgânico e aquisição separados. Conciliar salários, mobilização, recebíveis, reversões e juros. Monitorar contingências, indenizações de vendedores, parcelas de aquisição e satisfação em base comparável.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_GPS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+37,47%"
+          },
+          {
+            "fato": "val.BR_GPS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,90%"
+          },
+          {
+            "fato": "val.BR_GPS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "25,40%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +37,47%, custo do capital 11,90% e dispersão entre métodos 25,40% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_GPS",
+    "lacunas_de_dados": [
+      "O perfil institucional recusou acesso; nenhuma cópia foi obtida.",
+      "A ponte integral de contingências, aquisições e caixa atribuível permanece pendente.",
+      "Recorrência da margem sem reversões exige análise por contrato.",
+      "A pesquisa de satisfação tem metodologia alterada, a reconciliar.",
+      "Guidance agregado e vantagem competitiva independente não foram comprovados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Prestadora de facilities, segurança, alimentação, logística interna e serviços industriais. Contratos, mobilização, salários e recebimento determinam margem e giro. Aquisições acrescentam clientes, contingências e obrigações com vendedores; integração não equivale automaticamente a crescimento orgânico.",
+    "nome": "GPS Participações",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ECORODOVIAS",
+        "nome": "EcoRodovias"
+      },
+      {
+        "issuer_id": "BR_EMBRAER",
+        "nome": "Embraer"
+      },
+      {
+        "issuer_id": "BR_LOCALIZA",
+        "nome": "Localiza"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_MOTIVA",
+        "nome": "Motiva (ex-CCR)"
+      },
+      {
+        "issuer_id": "BR_RANDON",
+        "nome": "Randoncorp"
+      },
+      {
+        "issuer_id": "BR_SIMPAR",
+        "nome": "Simpar"
+      },
+      {
+        "issuer_id": "BR_TUPY",
+        "nome": "Tupy"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que relacionamento e execução sustentem renovação e retorno depois de custos de pessoal e capital. A condição decisiva é converter crescimento orgânico em caixa sem depender de reversões tributárias. Aquisições e reajustes precisam remunerar mobilização e obrigações contingentes.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_GPS.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 17,00"
+          },
+          {
+            "fato": "val.BR_GPS.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 22,88"
+          },
+          {
+            "fato": "val.BR_GPS.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+34,57%"
+          },
+          {
+            "fato": "val.BR_GPS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,90%"
+          },
+          {
+            "fato": "val.BR_GPS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+37,47%"
+          }
+        ],
+        "texto": "Preço de referência R$ 17,00 e alvo R$ 22,88, com potencial +34,57%. A hipótese de investimento deve ser confrontada com o custo do capital 11,90% e retorno esperado +37,47%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Cobertura e oferta de serviços podem apoiar contratos amplos e atendimento. Escala de empregados não garante qualidade ou poder de preço. Renovação, satisfação e margem por contrato exigem prova; menor número de clientes pode alterar o mix sem ser perda equivalente de receita.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:59:29.561887+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita e EBITDA ajustado cresceram, com contribuição orgânica, mas segmentos sofreram custos de alimentação e mobilização. Lucro ajustado inclui reversão do Sistema S; a medida sem esse efeito tem expansão menor. Caixa após juros e tributos cresceu no semestre. Pesquisa de satisfação mudou de plataforma e não tem comparável automaticamente equivalente.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que relacionamento e execução sustentem renovação e retorno depois de custos de pessoal e capital. A condição decisiva é converter crescimento orgânico em caixa sem depender de reversões tributárias. Aquisições e reajustes precisam remunerar mobilização e obrigações contingentes. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Compra, com retorno esperado +37,47%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Pessoal, alimentos, mobilização e contratos podem comprimir margem. Aquisições trazem passivos e indenizações incertas; juros e giro absorvem caixa. Reversões e metodologia de pesquisa alteram comparação sem provar qualidade recorrente."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_GPS.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+23,18%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +23,18%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "GPS — contratos, pessoal e recorrência depois dos ajustes",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "Receita e EBITDA ajustado cresceram, com contribuição orgânica e pressão de custos em algumas soluções. O lucro inclui reversão de provisão do Sistema S, sem caixa equivalente presumido. Caixa líquido após juros e tributos aumentou no semestre; dividendos e obrigações têm fluxos próprios. Dívida líquida recuou, mas a bruta aumentou anualmente. A mudança de plataforma da pesquisa de satisfação restringe a comparação direta.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Renovação, reajuste, qualidade e margem por contrato; orgânico e aquisição separados. Conciliar salários, mobilização, recebíveis, reversões e juros. Monitorar contingências, indenizações de vendedores, parcelas de aquisição e satisfação em base comparável.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_GPS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,90%"
+          },
+          {
+            "fato": "val.BR_GPS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "25,40%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,90% e a dispersão entre métodos 25,40%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

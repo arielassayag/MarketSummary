@@ -1,0 +1,461 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "efe2e458e8f79239d6e1c2db6446f5ad3ea624a73c2b4e0372a277ac21f62e23",
+    "factbook": "6a76b6d196353b47aff91911608d3cc731b4a39aa97a528f1db4feb3c60def32",
+    "nota_json": "6532a3af9c4151960de268507e35b1f500a24795a87a3bb3b80119b2c0e4e2c4"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_INTELBRAS",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T15:20:50.216113+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Caixa aumentou no trimestre e dívida bruta diminuiu. Investimento inclui terreno em Manaus; expansão prevista não é capacidade já operacional. Manutenção, componentes e tecnologia exigem capital contínuo. Dividendo aprovado com data passada programada não comprova crédito efetivo ao investidor.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar demanda, giro e normalização de margem.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": null,
+        "descricao": "Comprovação da expansão industrial e do retorno da nova capacidade.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "capital"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 18,73, com retorno esperado +1,73%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Distribuição e mix preservam demanda e margem após renovação do estoque; capacidade e capital de giro disciplinados sustentam caixa depois da manutenção. O cenário otimista calculado pelo código é R$ 21,76.",
+      "pessimista": "Custos e competição normalizam margem, demanda enfraquece e expansão absorve capital; ganhos temporários de estoque e proteção comercial deixam de contribuir. O cenário pessimista calculado pelo código é R$ 16,31."
+    },
+    "comentario_valuation": "O fluxo de caixa normalizado deve remover benefícios transitórios de estoque e conservar investimento industrial, giro e financiamento. Margens e reinvestimento distintos dos segmentos pedem leitura separada. Múltiplo de lucro de um trimestre favorecido por reposição não estabelece preço sustentado; capacidade anunciada não é retorno já gerado. Preço de referência R$ 19,03 e alvo do modelo aberto R$ 18,73, com potencial -1,59%. Retorno total esperado +1,73% e custo do capital próprio 11,42%. A dispersão entre métodos é 21,32%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 17,12; a diferença +9,39% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Margem pode melhorar temporariamente pela diferença entre preços de reposição e custo histórico. Proteção comercial e estoque menor não garantem receita recorrente. Se a nova capacidade chegar sem demanda suficiente, caixa forte no trimestre não provará retorno sustentável.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.BR_INTELBRAS.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 19,03"
+      },
+      {
+        "fato": "val.BR_INTELBRAS.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 18,73"
+      },
+      {
+        "fato": "val.BR_INTELBRAS.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-1,59%"
+      },
+      {
+        "fato": "val.BR_INTELBRAS.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_INTELBRAS.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_INTELBRAS.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 21,76"
+      },
+      {
+        "fato": "val.BR_INTELBRAS.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "36,99%"
+      },
+      {
+        "fato": "val.BR_INTELBRAS.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 16,31"
+      },
+      {
+        "fato": "val.BR_INTELBRAS.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "34,40%"
+      },
+      {
+        "fato": "val.BR_INTELBRAS.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,42%"
+      },
+      {
+        "fato": "val.BR_INTELBRAS.wacc",
+        "rotulo": "WACC",
+        "valor": "10,79%"
+      },
+      {
+        "fato": "val.BR_INTELBRAS.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_INTELBRAS.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+1,73%"
+      },
+      {
+        "fato": "val.BR_INTELBRAS.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+22,09%"
+      },
+      {
+        "fato": "val.BR_INTELBRAS.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "9,7x"
+      },
+      {
+        "fato": "val.BR_INTELBRAS.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,9x"
+      },
+      {
+        "fato": "val.BR_INTELBRAS.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 17,12"
+      },
+      {
+        "fato": "val.BR_INTELBRAS.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+9,39%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "Intelbras",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://ri.intelbras.com.br/"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Intelbras",
+        "publicado_em": "2026-07-29",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/660c9d23-3bb0-4bd4-9707-c9fe5ad308b4/94c5df34-3998-9f71-9d8c-7160ca6df70e?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Intelbras",
+        "publicado_em": "2026-07-29",
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/660c9d23-3bb0-4bd4-9707-c9fe5ad308b4/851f3820-6387-a65b-e586-6ca8f90d844f?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Margem de reposição recua quando componentes novos entram no estoque sem compensação de mix ou produtividade.",
+      "Demanda final e giro não confirmam as vendas ao canal por segmento.",
+      "Manaus exige capital antes de comprovar utilização e retorno depois da manutenção.",
+      "Dependência de proteção comercial ou competição reduz preço e retorno industrial."
+    ],
+    "governanca": "A data da capa e dos metadados públicos foi preservada, com divergência do texto explicitada. O perfil institucional recusou acesso, sem contorno; a análise usa RI e documentos financeiros recebidos. Investimento previsto e remuneração aprovada conservam estados próprios, sem realização inferida do calendário.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita e margem por segmento, demanda ao canal e consumidor, estoque e fornecedores. Distinguir preço e custo de reposição, proteção comercial e produtividade. Conciliar capacidade futura, manutenção, caixa após juros e pagamento efetivo de proventos.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_INTELBRAS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+1,73%"
+          },
+          {
+            "fato": "val.BR_INTELBRAS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,42%"
+          },
+          {
+            "fato": "val.BR_INTELBRAS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "21,32%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +1,73%, custo do capital 11,42% e dispersão entre métodos 21,32% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Na próxima divulgação, acompanhar custo médio renovado, preços praticados e margem por segmento, separando vendas ao canal e ao cliente final. Verificar implantação e utilização de Manaus, capital de giro e manutenção. Rever a hipótese se margem e caixa recuarem quando desaparecer o benefício do estoque antigo, ou se nova capacidade depender de restrição comercial sem demanda independente comprovada.",
+        "titulo": "Renovação do estoque e absorção industrial"
+      }
+    ],
+    "issuer_id": "BR_INTELBRAS",
+    "lacunas_de_dados": [
+      "A capa e o texto divergem sobre a data do release.",
+      "O perfil institucional recusou acesso; nenhuma cópia foi obtida.",
+      "Pagamento efetivo do dividendo programado não foi comprovado.",
+      "Capacidade, retorno industrial e margem após renovação do estoque exigem diligência.",
+      "A ponte integral do ITR, juros e caixa atribuível permanece pendente.",
+      "Guidance agregado e posição de mercado não foram comprovados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Fornecedor de segurança eletrônica, tecnologia da informação e comunicação e equipamentos de energia. Distribuição, suporte e portfólio conectam indústria e integradores. Componentes, câmbio e estoque influenciam custo; solar, redes e segurança têm ciclos e condições competitivas diferentes.",
+    "nome": "Intelbras",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "AR_GLOBANT",
+        "nome": "Globant"
+      },
+      {
+        "issuer_id": "BR_BEMOBI",
+        "nome": "Bemobi"
+      },
+      {
+        "issuer_id": "BR_LOCAWEB",
+        "nome": "Locaweb (LWSA)"
+      },
+      {
+        "issuer_id": "BR_VTEX",
+        "nome": "VTEX"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que portfólio e distribuição sustentem retorno industrial e caixa depois do reinvestimento. A condição decisiva é manter demanda e serviço sem depender de estoque comprado a custo menor ou de proteção comercial temporária. Expansão de capacidade deve remunerar manutenção, giro e financiamento.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_INTELBRAS.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 19,03"
+          },
+          {
+            "fato": "val.BR_INTELBRAS.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 18,73"
+          },
+          {
+            "fato": "val.BR_INTELBRAS.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-1,59%"
+          },
+          {
+            "fato": "val.BR_INTELBRAS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,42%"
+          },
+          {
+            "fato": "val.BR_INTELBRAS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+1,73%"
+          }
+        ],
+        "texto": "Preço de referência R$ 19,03 e alvo R$ 18,73, com potencial -1,59%. A hipótese de investimento deve ser confrontada com o custo do capital 11,42% e retorno esperado +1,73%.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O release atribui parte da margem ao estoque de custo anterior e distingue esse efeito do portfólio mais rentável. A tese precisa sobreviver à reposição dos componentes, sem depender de proteção comercial. Cabeamento e redes empresariais, segurança e energia têm demandas e custos próprios; o ganho de um segmento não demonstra melhoria de todos. Distribuição e suporte devem aparecer em demanda final, giro e retorno industrial depois da ampliação.",
+        "titulo": "Margem de reposição versus vantagem de canal"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Canal de distribuição, suporte e produção local podem apoiar disponibilidade e atendimento. Redes e cabeamento possuem exposição regulatória comercial própria; operação próxima da capacidade não prova vantagem permanente. A expansão de margem por preço de reposição precisa sobreviver à renovação do estoque e à reação da concorrência.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:20:50.216113+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita trimestral caiu anualmente, mas cresceu no semestre, com base anterior afetada pelo ERP. EBITDA e lucro cresceram. A margem inclui efeito temporário entre custo de reposição e estoque antigo. Energia mudou o mix para rentabilidade; TIC cresceu. Caixa operacional aumentou, com contribuição de estoque e fornecedores.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que portfólio e distribuição sustentem retorno industrial e caixa depois do reinvestimento. A condição decisiva é manter demanda e serviço sem depender de estoque comprado a custo menor ou de proteção comercial temporária. Expansão de capacidade deve remunerar manutenção, giro e financiamento. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +1,73%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Câmbio, componentes e concorrência podem reduzir margem e consumo. Estoque e distribuição absorvem giro. Mudanças comerciais e regulatórias alteram demanda, enquanto capacidade futura exige investimento antes do retorno."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_INTELBRAS.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+9,39%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +9,39%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Tecnologia",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Intelbras — distribuição, custo de reposição e retorno industrial",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "Receita trimestral recuou anualmente, com comparação anterior afetada pelo ERP, mas o semestre cresceu. EBITDA, lucro e caixa operacional aumentaram. O emissor explica expansão temporária de margem pelo preço de reposição; segurança, TIC e energia têm dinâmicas diferentes. Terreno adquirido antecede capacidade futura. Capa e texto do release divergem sobre a data de divulgação; provento programado não foi confirmado como pago.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Receita e margem por segmento, demanda ao canal e consumidor, estoque e fornecedores. Distinguir preço e custo de reposição, proteção comercial e produtividade. Conciliar capacidade futura, manutenção, caixa após juros e pagamento efetivo de proventos.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_INTELBRAS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,42%"
+          },
+          {
+            "fato": "val.BR_INTELBRAS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "21,32%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,42% e a dispersão entre métodos 21,32%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

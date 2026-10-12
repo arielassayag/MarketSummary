@@ -1,0 +1,559 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "71a33f124389e6ef3b0e0cd839f63fb808520eb0dc7da9f30accc15b6cee1e7f",
+    "factbook": "bb8ceb6b44821f5184e800c1d6a9d2fa7b723f61e283a855962da9e96e32639d",
+    "nota_json": "298ddc7e64b79b0bb2e6216be246a33915e8d12aca41ab145f67ed79568b32dd"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_LOGCP",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-29",
+  "published_at": "2026-10-12T15:23:32.928264+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          },
+          {
+            "fonte": "F6"
+          }
+        ],
+        "texto": "A reciclagem financia obras e distribuição, preservando risco de execução e comprador. A venda de Recife foi concluída posteriormente, com pagamento inicial dividido entre dinheiro e cotas do fundo e parcelas futuras; a administração imobiliária permanece. Recebimento diferido e cotas têm liquidez própria. Terrenos a pagar, minoritários, dividendos e instrumentos financeiros exigem ponte à dívida ajustada. A alienação de participação do controlador é negociação acionária declarada sem mudança de controle, distinta de captação pela companhia.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-12-30",
+        "descricao": "Recebimento da parcela futura de Recife prevista no comunicado, com verificação de correção, obrigações e caixa efetivo.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          }
+        ],
+        "tipo": "capital"
+      },
+      {
+        "data": null,
+        "descricao": "Resultados posteriores: testar locação, novas obras, reciclagem, cotas e financiamento regional em bases atribuíveis.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F5"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em Em revisão, com retorno esperado Em revisão. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Execução e locação sustentam retorno e recebimentos; reciclagem e financiamento confirmados remuneram capital depois de obras, juros e obrigações. O cenário otimista calculado pelo código é Em revisão.",
+      "pessimista": "Obras e crédito absorvem recursos, preços de venda ou liquidez das cotas deterioram e parcelas atrasam, restringindo retorno e distribuição. O cenário pessimista calculado pelo código é Em revisão."
+    },
+    "comentario_valuation": "A avaliação exige patrimônio por ativo com premissas verificáveis, renda líquida estabilizada e custo pendente de desenvolvimento. Ganhos de venda e taxas de administração não devem receber o mesmo tratamento da renda própria. Ponte para dívida, terrenos a pagar, sócios e recebíveis evita tratar valor patrimonial ou cotas como caixa livre. Preço de referência R$ 29,89 e alvo do modelo aberto Em revisão, com potencial Em revisão. Retorno total esperado Em revisão e custo do capital próprio 10,93%. A dispersão entre métodos é 3,26%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 30,31; a diferença Em revisão não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          },
+          {
+            "fonte": "F6"
+          }
+        ],
+        "texto": "A hipótese enfraquece se expansão e distribuição dependem de vendas e antecipações em condições que sacrificam renda futura ou retorno. Locação pode crescer com capital maior enquanto caixa operacional permanece insuficiente após juros. Valor justo é estimativa sensível a premissas; venda ao NAV não garante repetição. Receber cotas preserva exposição ao fundo e liquidez distinta. Pré-locação e baixa vacância de ativos estabilizados não eliminam risco de novas obras, compradores e parcelas a receber.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.BR_LOGCP.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 29,89"
+      },
+      {
+        "fato": "val.BR_LOGCP.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_LOGCP.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_LOGCP.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_LOGCP.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_LOGCP.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_LOGCP.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_LOGCP.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_LOGCP.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_LOGCP.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,93%"
+      },
+      {
+        "fato": "val.BR_LOGCP.wacc",
+        "rotulo": "WACC",
+        "valor": "8,57%"
+      },
+      {
+        "fato": "val.BR_LOGCP.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_LOGCP.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_LOGCP.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_LOGCP.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "4,9x"
+      },
+      {
+        "fato": "val.BR_LOGCP.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,7x"
+      },
+      {
+        "fato": "val.BR_LOGCP.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 30,31"
+      },
+      {
+        "fato": "val.BR_LOGCP.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Em revisão"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "LOG Commercial Properties",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Operação, desenvolvimento e documentos públicos de logística",
+        "url": "https://ri.logcp.com.br/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "LOG Commercial Properties",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado: aluguel, desenvolvimento, vendas, valor justo e fluxo",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/00a289ba-746d-4d34-9b24-94484fddb9b7/c6a6d82c-f4b8-4635-e284-30d135dd5e02?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "LOG",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: resultado, fluxo, avaliação e revisão",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/00a289ba-746d-4d34-9b24-94484fddb9b7/eb5920b6-334c-75b9-600b-44e9995bb32a?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F4",
+        "instituicao": "LOG",
+        "publicado_em": "2026-08-05",
+        "tipo": "Relações com investidores",
+        "titulo": "Recife: proposta inicial e condições precedentes da venda",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/00a289ba-746d-4d34-9b24-94484fddb9b7/147964bd-277a-7804-0d96-ef343232b36d?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F5",
+        "instituicao": "LOG",
+        "publicado_em": "2026-09-23",
+        "tipo": "Relações com investidores",
+        "titulo": "Recife: venda concluída, cotas e parcelas futuras",
+        "url": "https://filemanager-cdn.mziq.com/published/00a289ba-746d-4d34-9b24-94484fddb9b7/db8ff513-fdb2-4b28-aad6-9a436968148f"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F6",
+        "instituicao": "LOG",
+        "publicado_em": "2026-10-08",
+        "tipo": "Relações com investidores",
+        "titulo": "Alienação de participação e declaração do bloco de controle",
+        "url": "https://filemanager-cdn.mziq.com/published/00a289ba-746d-4d34-9b24-94484fddb9b7/2e06f74e-917a-43d3-a35f-16e4bfe6a431"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Locação e recebimentos não remuneram construção, juros e capital.",
+      "Reciclagem ou antecipações reduzem retorno ou ampliam exposição retida.",
+      "Cotas, parcelas e terrenos alteram disponibilidade e risco financeiro.",
+      "Novas obras e linhas de crédito não confirmam absorção e economia previstas."
+    ],
+    "governanca": "A revisão intermediária tem alcance inferior à auditoria anual. Avaliação patrimonial, TIR divulgada do projeto e preço de venda permanecem medidas da companhia, sem recalcular retorno na narrativa. O comunicado posterior confirma fechamento e termos de recebimento. A correspondência do fundo ligado ao controlador declara reorganização das participações sem mudança de controle ou administração; isso não equivale à análise integral dos acordos e direitos. A negociação secundária não injeta recursos na LOG.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          },
+          {
+            "fonte": "F6"
+          }
+        ],
+        "texto": "Conciliar locação, vacância estabilizada e obras, participação, preço e retorno por projeto. Separar valor justo, tributos, antecipações e recebimento das vendas. Verificar cotas, parcelas futuras, terrenos, dívida e financiamento regional. Avaliar caixa após capex, juros e distribuição, preservando direitos.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_LOGCP.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.BR_LOGCP.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,93%"
+          },
+          {
+            "fato": "val.BR_LOGCP.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "3,26%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado Em revisão, custo do capital 10,93% e dispersão entre métodos 3,26% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F5"
+          }
+        ],
+        "texto": "Separar ativos estabilizados, entregas recentes e obras, com participação, ocupação, aluguel e custo remanescente. Acompanhar o recebimento de Recife e a liquidez das cotas conservando os termos originais. Rever a hipótese se antecipar parcelas ou vender ativos for indispensável para sustentar distribuição e novas obras, sem demonstrar retorno líquido do capital reciclado.",
+        "titulo": "Coorte de entregas e recebimento da reciclagem"
+      }
+    ],
+    "issuer_id": "BR_LOGCP",
+    "lacunas_de_dados": [
+      "Dívida ajustada, antecipações e fluxo contábil não foram integralmente reconciliados.",
+      "Recebimentos futuros de Recife e liquidez das cotas não foram antecipados.",
+      "Retorno completo por projeto e fundamentos independentes do valor patrimonial precisam de comprovação.",
+      "Financiamento regional preliminar não demonstra contratação e desembolso efetivos.",
+      "Vacância estabilizada, área administrada e área econômica exigem ponte por ativo.",
+      "Direitos de sócios, acordo de controle e recursos restritos não foram integralmente examinados.",
+      "Pagamento dos dividendos previsto no release, guidance agregado, tom e percepção do mercado permanecem a verificar."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Desenvolvedora, proprietária, locadora e administradora de galpões logísticos, com ciclo de aquisição de terrenos, construção, locação e reciclagem. O negócio combina renda de ativos próprios, serviços de administração e venda de empreendimentos. A área administrada inclui ativos de terceiros e difere da área econômica detida. Pré-locação e ocupação estabilizada têm universos próprios. Participação nos projetos, contas a receber e cotas de fundos recebidas na venda modificam capital, risco e recursos disponíveis.",
+    "nome": "LOG Commercial Properties",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ALLOS",
+        "nome": "Allos"
+      },
+      {
+        "issuer_id": "BR_IGUATEMI",
+        "nome": "Iguatemi"
+      },
+      {
+        "issuer_id": "BR_MULTIPLAN",
+        "nome": "Multiplan"
+      },
+      {
+        "issuer_id": "CL_CENCOMALLS",
+        "nome": "Cencosud Shopping"
+      },
+      {
+        "issuer_id": "CL_MALLPLAZA",
+        "nome": "Plaza SA (Mallplaza)"
+      },
+      {
+        "issuer_id": "CL_PARAUCO",
+        "nome": "Parque Arauco"
+      },
+      {
+        "issuer_id": "MX_FIBRAPL",
+        "nome": "Fibra Prologis"
+      },
+      {
+        "issuer_id": "MX_VESTA",
+        "nome": "Corporación Inmobiliaria Vesta"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          },
+          {
+            "fonte": "F6"
+          }
+        ],
+        "texto": "A hipótese é que seleção de terrenos, execução e locação sustentem retorno ao longo do ciclo, permitindo reciclar ativos ou retê-los conforme a economia do projeto. A condição decisiva é que preço líquido realizado, recebimentos e renda remanescente remunerem construção, juros e capital por ação. Venda em linha com avaliação patrimonial não comprova recebimento integral nem valorização permanente. A expansão deve preservar absorção e custo, sem depender de antecipação contínua de parcelas ou equiparar cotas de fundos a dinheiro livre.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_LOGCP.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 29,89"
+          },
+          {
+            "fato": "val.BR_LOGCP.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.BR_LOGCP.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.BR_LOGCP.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,93%"
+          },
+          {
+            "fato": "val.BR_LOGCP.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "Em revisão"
+          }
+        ],
+        "texto": "Preço de referência R$ 29,89 e alvo Em revisão, com potencial Em revisão. A hipótese de investimento deve ser confrontada com o custo do capital 10,93% e retorno esperado Em revisão.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O RI descreve atuação desde terreno e construção até locação, administração e reciclagem. A vantagem alegada de integração deve ser comprovada no custo completo e no prazo de absorção de cada empreendimento. Renda do imóvel próprio, receita de serviços e ganho de venda remuneram capitais diferentes. A tese falha se entregas e área administrada crescerem sem locação economicamente detida e recebimentos suficientes para remunerar construção e juros.",
+        "titulo": "Desenvolvimento, renda própria e prestação de serviços"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Implantação, presença regional, velocidade de construção e serviços podem apoiar locação e retenção. Pré-locação das entregas reduz determinada incerteza comercial, mas não prova qualidade de crédito nem retorno de todas as obras. A vacância estabilizada não representa automaticamente o portfólio em implantação. Crescimento de aluguel deve ser comparado por cliente e participação. Linhas regionais aprovadas preliminarmente não são recursos já captados; acesso anunciado a financiamento precisa de confirmação de condições e desembolso.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:23:32.928264+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A renda de locação cresce, enquanto EBITDA e lucro trimestrais recuam em base anual, com efeito específico da venda de ativos e contribuição de desenvolvimento e tributos diferidos. Valor justo e resultado de desenvolvimento não são recebimento. A demonstração dos fluxos apresenta consumo operacional e entrada elevada por vendas no investimento. A geração com alienações e antecipação de parcelas não demonstra caixa estrutural da locação. A dívida líquida ajustada deduz recebíveis de venda, diferente de disponibilidade de caixa.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que seleção de terrenos, execução e locação sustentem retorno ao longo do ciclo, permitindo reciclar ativos ou retê-los conforme a economia do projeto. A condição decisiva é que preço líquido realizado, recebimentos e renda remanescente remunerem construção, juros e capital por ação. Venda em linha com avaliação patrimonial não comprova recebimento integral nem valorização permanente. A expansão deve preservar absorção e custo, sem depender de antecipação contínua de parcelas ou equiparar cotas de fundos a dinheiro livre. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Em revisão, com retorno esperado Em revisão. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          },
+          {
+            "fonte": "F6"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Vacância, crédito, custos, juros e preço de venda podem limitar retorno. Expansão e terrenos exigem capital. Recebíveis e cotas diferem de dinheiro; reciclagem, ajustes patrimoniais e tributos não comprovam caixa recorrente."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_LOGCP.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "Em revisão"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é Em revisão. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Imobiliário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "LOG — locação logística, reciclagem e caixa com recebimento diferido",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O resultado diferencia locação e desenvolvimento; o efeito específico da venda ao fundo reduz medidas trimestrais e a administração apresenta uma base sem esse efeito. A nota não a transforma em caixa recorrente. Recebíveis vendidos antecipadamente e recursos de alienação financiam capex e distribuição. A menor dívida ajustada deduz contas a receber; a venda posterior tem dinheiro, cotas e parcelas, com administração mantida. Esses eventos não foram incorporados retrospectivamente ao modelo recebido.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Conciliar locação, vacância estabilizada e obras, participação, preço e retorno por projeto. Separar valor justo, tributos, antecipações e recebimento das vendas. Verificar cotas, parcelas futuras, terrenos, dívida e financiamento regional. Avaliar caixa após capex, juros e distribuição, preservando direitos.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_LOGCP.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,93%"
+          },
+          {
+            "fato": "val.BR_LOGCP.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "3,26%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 10,93% e a dispersão entre métodos 3,26%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

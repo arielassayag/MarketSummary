@@ -1,0 +1,495 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "3eaa103c3ef953463987a6ca7c561b2682285551a47189d0fd5ac26608c7a9c3",
+    "factbook": "f3d6e062ad5ec04d82547b2b5444339c156fbcec7de8eb2e3b7385ae5071ec72",
+    "nota_json": "f6395a719488894fd7b0c4561f8d83c7caee169c7c45db8bb627fef2d12f653a"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_CHEDRAUI",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-20",
+  "published_at": "2026-10-12T15:24:52.724009+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Novas lojas e centros de distribuição precisam remunerar capex, estoque e contratos de uso. O objetivo de caixa bancário líquido exclui possibilidade de expansão inorgânica e não substitui dívida total. Dividendos têm etapas aprovadas e datas futuras próprias; anúncio ou cronograma não comprova pagamento posterior.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-27",
+        "descricao": "Resultado trimestral previsto no calendário oficial; revisar vendas, logística e caixa por país.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em MXN 92,57, com retorno esperado +8,31%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Preço, distribuição e produtividade sustentam caixa por território após expansão e obrigações completas. O cenário otimista calculado pelo código é MXN 122,76.",
+      "pessimista": "Tráfego e custos pressionam margem enquanto estoque, capex e contratos de loja absorvem caixa. O cenário pessimista calculado pelo código é MXN 63,62."
+    },
+    "comentario_valuation": "Preço de referência MXN 87,75 e alvo do modelo aberto MXN 92,57, com potencial +5,49%. Retorno total esperado +8,31% e custo do capital próprio 12,23%. A dispersão entre métodos é 17,03%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é MXN 122,50; a diferença -24,43% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota. Comparáveis de varejo exigem igual tratamento de arrendamentos e perímetros por país. No fluxo de caixa, testar manutenção, estoque e expansão das lojas; valor patrimonial de imóveis não equivale a caixa realizável.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese enfraquece se preço competitivo não sustenta produtividade das lojas e os benefícios logísticos são absorvidos por custos. EBITDA e caixa bancário líquido podem coexistir com obrigações de imóveis e giro que limitam retorno real do acionista.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.MX_CHEDRAUI.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 87,75"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 92,57"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+5,49%"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 122,76"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "11,96%"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 63,62"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "4,31%"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,23%"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.wacc",
+        "rotulo": "WACC",
+        "valor": "9,71%"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+8,31%"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+11,43%"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "11,3x"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,6x"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 122,50"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-24,43%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "Grupo Comercial Chedraui",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Identidade do emissor e registro oficial de demonstrações",
+        "url": "https://www.bmv.com.mx/es/emisoras/informacionfinanciera/CHDRAUI-5209-CGEN_CAPIT"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Grupo Comercial Chedraui",
+        "publicado_em": "2026-07-22",
+        "tipo": "Relações com investidores",
+        "titulo": "Demonstrações intermediárias em XBRL e comentário da administração",
+        "url": "https://www.bmv.com.mx/docs-pub/ifrsxbrl/ifrsxbrl_1575980_2026-02_1.zip"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F3",
+        "instituicao": "Grupo Comercial Chedraui",
+        "publicado_em": "2026-01-12",
+        "tipo": "Relações com investidores",
+        "titulo": "Perspectivas e calendário anual divulgados à BMV",
+        "url": "https://www.bmv.com.mx/docs-pub/eventemi/eventemi_1522661_1.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Preço competitivo atrai tráfego sem sustentar margem após logística e salários.",
+      "Expansão ou fornecedores consomem caixa e pioram produtividade das lojas.",
+      "Arrendamentos e demais obrigações mudam a leitura da liquidez bancária.",
+      "Séries reformuladas ou períodos misturados impedem validar a melhora recorrente."
+    ],
+    "governanca": "Revisar controle, relacionadas, arrendamentos, negócio conjunto e direitos da ação coberta. Dividendos aprovados, pagos e futuros são estados diferentes; caixa por subsidiária não é disponibilidade irrestrita da holding.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar tráfego, compra média e vendas comparáveis por formato e território, margem depois de logística e produtividade da expansão. Conciliar estoques, fornecedores, imóveis, arrendamentos e capex. Revisar séries reformuladas, participação no negócio conjunto, tributos e caixa distribuível.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_CHEDRAUI.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+8,31%"
+          },
+          {
+            "fato": "val.MX_CHEDRAUI.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,23%"
+          },
+          {
+            "fato": "val.MX_CHEDRAUI.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "17,03%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +8,31%, custo do capital 12,23% e dispersão entre métodos 17,03% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Acompanhar vendas comparáveis, tráfego, compra média, margem depois de logística e maturação das lojas. Confrontar México e Estados Unidos nas respectivas moedas e formatos, examinando consumo e pressão competitiva.",
+        "titulo": "Produtividade das mesmas lojas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Examinar estoque, fornecedores, investimento, arrendamentos e tesourarias por território. Conferir obrigações e fluxos no mesmo corte; mudança de política dos imóveis e dividendos agendados não demonstram caixa livre recebido.",
+        "titulo": "Caixa além da dívida bancária"
+      }
+    ],
+    "issuer_id": "MX_CHEDRAUI",
+    "lacunas_de_dados": [
+      "Site do emissor não foi recebido com HTTPS válido; fontes usadas são registro e arquivos públicos da BMV.",
+      "Notas de períodos distintos e séries reformuladas precisam de reconciliação integral.",
+      "Arrendamentos, estoques e caixa por território permanecem a avaliar.",
+      "Metas iniciais, logística e retorno da expansão não foram integralmente conciliados.",
+      "Pagamento posterior de dividendos, guidance agregado e tom da gestão não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo de autosserviço no México e Estados Unidos, com operação imobiliária e participação em negócio conjunto. Formatos, moedas, contratos de loja e centros de distribuição têm economia distinta. Caixa bancário líquido não inclui necessariamente todas as obrigações operacionais e de uso de imóveis.",
+    "nome": "Grupo Comercial Chedraui",
+    "o_que_mudou": "Aprofundamento editorial com consulta pública nesta data. Hipóteses, condições de confirmação, caixa, capital e acompanhamento foram detalhados; o modelo recebido e seu corte histórico não foram recalculados.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_AC",
+        "nome": "Arca Continental"
+      },
+      {
+        "issuer_id": "MX_BIMBO",
+        "nome": "Grupo Bimbo"
+      },
+      {
+        "issuer_id": "MX_GRUMA",
+        "nome": "Gruma"
+      },
+      {
+        "issuer_id": "MX_KIMBER",
+        "nome": "Kimberly-Clark de México"
+      },
+      {
+        "issuer_id": "MX_KOF",
+        "nome": "Coca-Cola FEMSA"
+      },
+      {
+        "issuer_id": "MX_SIGMA",
+        "nome": "Sigma Foods (ex-Alfa)"
+      },
+      {
+        "issuer_id": "MX_WALMEX",
+        "nome": "Walmart de México"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que proposta de preço e escala logística sustentem frequência e giro, financiando crescimento remunerador. A condição decisiva é caixa por território após estoque, expansão e obrigações de imóveis. Eficiência de distribuição e novas lojas devem elevar retorno, sem depender apenas de margem gerencial ou patrimônio contábil.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_CHEDRAUI.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "MXN 87,75"
+          },
+          {
+            "fato": "val.MX_CHEDRAUI.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "MXN 92,57"
+          },
+          {
+            "fato": "val.MX_CHEDRAUI.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+5,49%"
+          },
+          {
+            "fato": "val.MX_CHEDRAUI.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,23%"
+          },
+          {
+            "fato": "val.MX_CHEDRAUI.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+8,31%"
+          }
+        ],
+        "texto": "Preço de referência MXN 87,75 e alvo MXN 92,57, com potencial +5,49%. A hipótese de investimento deve ser confrontada com o custo do capital 12,23% e retorno esperado +8,31%.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese depende de tráfego e giro rentáveis, com disponibilidade de produto e custo logístico disciplinado. Comparar vendas por formato e território, preservando as bases cambiais e das mesmas lojas. Competição em preço pode conquistar frequência sem aumentar caixa depois de estoque, salários e contratos de imóveis.",
+        "titulo": "Proposta de preço precisa gerar produtividade"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Capital de giro financiado por fornecedores deve acompanhar venda e estoque, e não apenas apresentar saldo favorável no fechamento. A ponte de caixa precisa incorporar obrigações de arrendamento, manutenção e expansão. Tesourarias com moedas distintas e demonstrações de períodos diferentes exigem conciliação antes de concluir excedente distribuível.",
+        "titulo": "Fornecedores, lojas e liquidez completa"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Proposta de preço e distribuição podem sustentar tráfego e giro. O comentário compara vendas com o indicador setorial mexicano, mas não encerra a comparação por formato ou território. A expansão precisa mostrar produtividade e contribuição após custos logísticos, sem usar área de venda como prova de vantagem.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:24:52.724009+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O arquivo público reúne comentários e notas com cortes diferentes. A mudança das propriedades de investimento para custo histórico altera séries de patrimônio e resultado sem mudar caixa. Margens e vendas por território devem manter bases equivalentes; o teste econômico depende de recebimentos e obrigações completas.",
+        "titulo": "Períodos e políticas contábeis compatíveis"
+      }
+    ],
+    "resumo": "A hipótese é que proposta de preço e escala logística sustentem frequência e giro, financiando crescimento remunerador. A condição decisiva é caixa por território após estoque, expansão e obrigações de imóveis. Eficiência de distribuição e novas lojas devem elevar retorno, sem depender apenas de margem gerencial ou patrimônio contábil. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +8,31%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Consumo e políticas migratórias podem reduzir tráfego em mercados americanos. Salários, logística, estoque e expansão podem consumir margem. Contratos de uso, dividendos e participações podem limitar distribuição mesmo com caixa bancário líquido."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_CHEDRAUI.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-24,43%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -24,43%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Consumo básico",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Chedraui — proposta de preço, distribuição e caixa por território",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O comentário trimestral mostra melhora de margem e crescimento de vendas comparáveis mexicanas, com moedas e geografias próprias. As notas incluem mudança contábil retrospectiva sem efeito de caixa; séries e datas exigem conciliação. As perspectivas anuais iniciais não são presumidas realizadas ou mantidas.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar tráfego, compra média e vendas comparáveis por formato e território, margem depois de logística e produtividade da expansão. Conciliar estoques, fornecedores, imóveis, arrendamentos e capex. Revisar séries reformuladas, participação no negócio conjunto, tributos e caixa distribuível.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.MX_CHEDRAUI.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,23%"
+          },
+          {
+            "fato": "val.MX_CHEDRAUI.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "17,03%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 12,23% e a dispersão entre métodos 17,03%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar vendas comparáveis e produtividade por formato. Testar se frequência e mix remuneram logística e mão de obra, sem inferir ganho de participação de desempenho agregado.",
+        "vetor": "Preço, tráfego e custo logístico"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Conciliar prazos de fornecedores, estoque e desembolsos de lojas com arrendamentos e dívida bancária. A hipótese falha se expansão ou condições menos favoráveis de fornecimento absorvem a contribuição operacional.",
+        "vetor": "Capital de giro e contratos de uso"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

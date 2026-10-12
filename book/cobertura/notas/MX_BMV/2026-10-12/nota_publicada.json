@@ -1,0 +1,488 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "239f40bd2b808f53ce77dc42bcdf2710cd9286b92948966a57c659873dc3c7ba",
+    "factbook": "45b8392d1a1eae4b5fbb626836cbd864dd266eb3b9433e8c7f2287d26f0ea345",
+    "nota_json": "17cd87d029804d2499340834c18edab4cd5b221af1c10ea0cf60a6e8000c2789"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_BMV",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-20",
+  "published_at": "2026-10-12T15:23:58.889448+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Capex tecnológico, manutenção e intangíveis precisam ser separados de distribuição. O fluxo semestral registra dividendos e recompras e redução do caixa. Recebimentos de investimentos e venda de participação não são presumidos como recorrentes. Recursos operacionais, minoritários e obrigações devem ser reconciliados antes de avaliar excedente.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em MXN 40,00, com retorno esperado +21,11%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Serviços recorrentes e monetização de atividade sustentam caixa após reinvestimento, com disponibilidade e retorno dos projetos. O cenário otimista calculado pelo código é MXN 45,14.",
+      "pessimista": "Atividade e preço enfraquecem enquanto tecnologia, concorrência e incidentes consomem margem e caixa. O cenário pessimista calculado pelo código é MXN 35,98."
+    },
+    "comentario_valuation": "Preço de referência MXN 34,95 e alvo do modelo aberto MXN 40,00, com potencial +14,44%. Retorno total esperado +21,11% e custo do capital próprio 11,34%. A dispersão entre métodos é 12,64%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é MXN 42,12; a diferença -5,05% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota. A adequação dos métodos depende de separar receita transacional e subscrições, investimento tecnológico e caixa próprio. Múltiplos de bolsas exigem perímetros comparáveis; ativos em custódia não entram como patrimônio livre.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "O caso enfraquece se custos tecnológicos e de pessoal crescem mais que a monetização ou se incidentes reduzem confiança e retenção. Distribuição financiada por caixa acumulado, venda de participação ou rendimento financeiro não substitui geração recorrente após investimento.",
+        "titulo": "Mais atividade com menor caixa incremental"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.MX_BMV.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 34,95"
+      },
+      {
+        "fato": "val.MX_BMV.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 40,00"
+      },
+      {
+        "fato": "val.MX_BMV.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+14,44%"
+      },
+      {
+        "fato": "val.MX_BMV.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_BMV.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_BMV.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 45,14"
+      },
+      {
+        "fato": "val.MX_BMV.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_BMV.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 35,98"
+      },
+      {
+        "fato": "val.MX_BMV.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_BMV.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,34%"
+      },
+      {
+        "fato": "val.MX_BMV.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_BMV.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_BMV.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+21,11%"
+      },
+      {
+        "fato": "val.MX_BMV.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-20,37%"
+      },
+      {
+        "fato": "val.MX_BMV.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "10,7x"
+      },
+      {
+        "fato": "val.MX_BMV.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,7x"
+      },
+      {
+        "fato": "val.MX_BMV.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 42,12"
+      },
+      {
+        "fato": "val.MX_BMV.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-5,05%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Grupo BMV",
+        "publicado_em": "2026-07-21",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e comentários semestrais de Grupo BMV",
+        "url": "https://www.bmv.com.mx/docs-pub/reporteTrimestral/GBMV-doc-BMV_2T26_esp.pdf"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "Grupo BMV",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Serviços da cadeia de infraestrutura financeira",
+        "url": "https://www.bmv.com.mx/docs-dig/informeAnual/el-negocio.html"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F3",
+        "instituicao": "Grupo BMV",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Riscos de infraestrutura, tecnologia e continuidade",
+        "url": "https://www.bmv.com.mx/docs-dig/informeAnual/entorno-y-gestion-de-riesgos.html"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Receita por serviço ou retenção cai apesar de maior atividade nos mercados.",
+      "Despesas e intangíveis do programa digital não geram caixa incremental recorrente.",
+      "Falhas de continuidade ou segurança comprometem utilização e confiança.",
+      "A divergência do resultado financeiro impede conciliar resumo, tabelas e fluxo."
+    ],
+    "governanca": "Revisar decisões de infraestrutura, segurança e continuidade, além de transações relacionadas, minoritários e distribuição. Mudanças regulatórias exigem fonte normativa própria; objetivos comerciais não são tratados como autorização ou receita contratada.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar receita por transação e por subscrição, retenção e preço, com volume separado de monetização. Revisar disponibilidade dos sistemas, despesas e retorno dos projetos tecnológicos. Conciliar capex, intangíveis, caixa recorrente, distribuição e atribuição por subsidiária, incluindo moeda e juros.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_BMV.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+21,11%"
+          },
+          {
+            "fato": "val.MX_BMV.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,34%"
+          },
+          {
+            "fato": "val.MX_BMV.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "12,64%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +21,11%, custo do capital 11,34% e dispersão entre métodos 12,64% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Separar atividade, preço e subscrição de cada serviço. Conferir se custódia internacional, derivativos e informação geram receita repetível, sem usar ativos de clientes como patrimônio da bolsa.",
+        "titulo": "Receita por motor econômico"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Acompanhar disponibilidade, incidentes, gastos de operação e intangíveis. Reconciliar distribuição e recompra com fluxo da operação após investimento e arrendamentos, preservando a divergência interna do comentário financeiro até esclarecimento.",
+        "titulo": "Entrega digital e ponte de caixa"
+      }
+    ],
+    "issuer_id": "MX_BMV",
+    "lacunas_de_dados": [
+      "Resultado financeiro no resumo e corpo do release exige conciliação.",
+      "Receita por volume, retenção e preço não foram integralmente reconciliados.",
+      "Retorno de tecnologia, manutenção e intangíveis permanece a comprovar.",
+      "Caixa recorrente, investimentos e distribuição por subsidiária exigem diligência completa.",
+      "Guidance, tom da gestão e catalisador futuro datado não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo de infraestrutura financeira mexicana com listagem e negociação, derivativos, corretagem, depósito, compensação e informação de mercado. Receitas transacionais dependem de atividade, enquanto subscrições têm dinâmica própria. Volume negociado, interesse aberto e valores em custódia não são receita nem ativos livres do grupo.",
+    "nome": "Bolsa Mexicana de Valores",
+    "o_que_mudou": "Aprofundamento editorial com consulta pública nesta data. Hipóteses, condições de confirmação, caixa, capital e acompanhamento foram detalhados; o modelo recebido e seu corte histórico não foram recalculados.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_BAJIO",
+        "nome": "Banco del Bajío"
+      },
+      {
+        "issuer_id": "MX_BANORTE",
+        "nome": "Grupo Financiero Banorte"
+      },
+      {
+        "issuer_id": "MX_GENTERA",
+        "nome": "Gentera"
+      },
+      {
+        "issuer_id": "MX_INBURSA",
+        "nome": "Grupo Financiero Inbursa"
+      },
+      {
+        "issuer_id": "MX_QUALITAS",
+        "nome": "Quálitas"
+      },
+      {
+        "issuer_id": "MX_REGIONAL",
+        "nome": "Regional (Banregio)"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que infraestrutura integrada e serviços de informação sustentem receita recorrente e monetização da atividade. Investimento tecnológico precisa preservar disponibilidade e gerar retorno depois de custos e reinvestimento. Crescimento dos mercados só cria valor se melhora caixa atribuível, sem depender de moeda ou rendimento das disponibilidades.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_BMV.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "MXN 34,95"
+          },
+          {
+            "fato": "val.MX_BMV.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "MXN 40,00"
+          },
+          {
+            "fato": "val.MX_BMV.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+14,44%"
+          },
+          {
+            "fato": "val.MX_BMV.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,34%"
+          },
+          {
+            "fato": "val.MX_BMV.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+21,11%"
+          }
+        ],
+        "texto": "Preço de referência MXN 34,95 e alvo MXN 40,00, com potencial +14,44%. A hipótese de investimento deve ser confrontada com o custo do capital 11,34% e retorno esperado +21,11%.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Custódia, compensação, negociação e informação pertencem à mesma cadeia, mas respondem a motores diferentes. A hipótese exige retenção e receita por serviço, além do aumento da atividade. Recursos em custódia e garantias dos participantes não podem ser tratados como caixa do acionista.",
+        "titulo": "Infraestrutura integrada com monetização distinta"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A integração pode fortalecer continuidade e reduzir fricções, porém serviços administrados, pessoal e intangíveis exigem recursos. O caso melhora quando a implantação preserva disponibilidade e produz monetização recorrente após reinvestimento. Projeto executado não demonstra retorno nem substitui controles de segurança.",
+        "titulo": "Evolução tecnológica precisa pagar seu custo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "O relatório institucional apresenta uma cadeia que conecta listagem, negociação, compensação, custódia e informação. Essa conexão pode reduzir fricções para usuários. A vantagem precisa ser observada em retenção, continuidade e receita por serviço, sujeita à concorrência e regulação; integração declarada não é prova de poder de preço.",
+        "titulo": "Rede integrada e exigência de continuidade"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:23:58.889448+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Maior atividade e subscrições acompanham despesas de pessoal, tecnologia e depreciação. Moeda e juros afetam comparações. O resumo e o corpo do release descrevem o resultado financeiro de formas distintas; a análise preserva essa lacuna. EBITDA não equivale a caixa livre e perímetros trimestrais e acumulados não são intercambiáveis.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que infraestrutura integrada e serviços de informação sustentem receita recorrente e monetização da atividade. Investimento tecnológico precisa preservar disponibilidade e gerar retorno depois de custos e reinvestimento. Crescimento dos mercados só cria valor se melhora caixa atribuível, sem depender de moeda ou rendimento das disponibilidades. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +21,11%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Menor atividade, concorrência e pressão regulatória podem reduzir monetização. Incidentes operacionais e cibernéticos ameaçam retenção e custos. Investimento tecnológico, moeda e menor rendimento do caixa podem consumir margem e limitar remuneração."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_BMV.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-5,05%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -5,05%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Grupo BMV — infraestrutura de mercado, recorrência e investimento tecnológico",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A análise distingue serviços, atividade e monetização e preserva cortes trimestrais e acumulados. Resultado financeiro tem descrições divergentes dentro do release, que não são corrigidas pela narrativa. Capex e distribuição são lidos no fluxo, sem converter EBITDA ou volume em caixa livre.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar receita por transação e por subscrição, retenção e preço, com volume separado de monetização. Revisar disponibilidade dos sistemas, despesas e retorno dos projetos tecnológicos. Conciliar capex, intangíveis, caixa recorrente, distribuição e atribuição por subsidiária, incluindo moeda e juros.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.MX_BMV.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,34%"
+          },
+          {
+            "fato": "val.MX_BMV.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "12,64%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,34% e a dispersão entre métodos 12,64%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar separadamente receita por negociação, serviços pós-negociação e subscrição. Testar retenção e reajustes sem presumir que maior patrimônio em custódia gera proporcionalmente receita ou lucro.",
+        "vetor": "Mix transacional, custódia e informação"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Confrontar despesas de serviços administrados, intangíveis e manutenção com disponibilidade, uso e monetização. Benefícios de digitalização permanecem hipótese até aparecerem em caixa depois dos desembolsos.",
+        "vetor": "Retorno do programa tecnológico"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

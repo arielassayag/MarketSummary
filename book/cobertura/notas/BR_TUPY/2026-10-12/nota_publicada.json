@@ -1,0 +1,465 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "439965022bf69e42049aba9952d9c1b635b91094375cf558a260f488813bf732",
+    "factbook": "199b4b1a5126edbcd415e3a57ffd39d5df14a9c6d02b5cc150c4c9c6f4a25fce",
+    "nota_json": "84a540f51bc8d1a83367c3137a6b1c0d2d4b661ef0d94ea946fabad3cda61e02"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_TUPY",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T15:24:25.113136+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Dívida líquida diminuiu, mas a alavancagem aumentou com EBITDA acumulado menor. Manutenção, integração e tecnologia exigem investimento. Venda de energia futura e estoque menor liberam caixa com limites; financiamentos, juros e compromissos precisam ser conciliados antes de atribuir distribuição ao acionista.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar margem recorrente, giro e caixa depois de juros.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 37,50, com retorno esperado +96,69%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Ocupação, eficiência e integração recuperam margem com demanda diversificada; caixa depois da manutenção e dos juros sustenta capital e dívida. O cenário otimista calculado pelo código é R$ 42,36.",
+      "pessimista": "Câmbio e demanda restringem margem; a liberação de giro se esgota e projetos absorvem recursos, elevando o risco de financiamento. O cenário pessimista calculado pelo código é R$ 33,52."
+    },
+    "comentario_valuation": "O valuation pede caixa industrial normalizado pelo ciclo, com moedas, mix, manutenção e custo de capacidade por operação. MWM e projetos de energia precisam de economia contratual própria. Múltiplo de EBITDA deprimido ou favorecido por itens pontuais não encerra valor; monetização de energia futura e giro liberado não são perpetuidade operacional. Preço de referência R$ 19,68 e alvo do modelo aberto R$ 37,50, com potencial +90,53%. Retorno total esperado +96,69% e custo do capital próprio 11,76%. A dispersão entre métodos é 32,10%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 19,00; a diferença +97,35% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Recuperação sequencial e caixa maior podem coexistir com receita anual menor e prejuízo. Se o caixa depender de estoque e venda de energia futura, redução da dívida não comprovará retorno industrial recorrente.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.BR_TUPY.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 19,68"
+      },
+      {
+        "fato": "val.BR_TUPY.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 37,50"
+      },
+      {
+        "fato": "val.BR_TUPY.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+90,53%"
+      },
+      {
+        "fato": "val.BR_TUPY.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_TUPY.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_TUPY.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 42,36"
+      },
+      {
+        "fato": "val.BR_TUPY.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_TUPY.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 33,52"
+      },
+      {
+        "fato": "val.BR_TUPY.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_TUPY.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,76%"
+      },
+      {
+        "fato": "val.BR_TUPY.wacc",
+        "rotulo": "WACC",
+        "valor": "8,43%"
+      },
+      {
+        "fato": "val.BR_TUPY.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_TUPY.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+96,69%"
+      },
+      {
+        "fato": "val.BR_TUPY.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+98,36%"
+      },
+      {
+        "fato": "val.BR_TUPY.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "8,0x"
+      },
+      {
+        "fato": "val.BR_TUPY.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,1x"
+      },
+      {
+        "fato": "val.BR_TUPY.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 19,00"
+      },
+      {
+        "fato": "val.BR_TUPY.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+97,35%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "Tupy",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://ri.tupy.com.br/empresa/historia/"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Tupy",
+        "publicado_em": "2026-08-06",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/5ab6a371-dd2f-452a-b6b2-22c97ed0abbb/98ef4afe-d815-0240-1806-83df568b00e7?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Tupy",
+        "publicado_em": "2026-08-06",
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/5ab6a371-dd2f-452a-b6b2-22c97ed0abbb/53b59db0-54c5-6ad6-95c4-5884dda96887?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Produção e vendas recuperam sem absorção de custos fixos e margem industrial depois da manutenção.",
+      "Caixa depende novamente de redução de estoque, adiantamentos ou monetização de energia futura.",
+      "MWM e soluções novas exigem capital sem retorno contratual próprio demonstrado.",
+      "Moedas, concentração de clientes e substituição tecnológica enfraquecem o caixa após juros."
+    ],
+    "governanca": "As operações brasileiras, mexicanas e soluções de energia têm exposições próprias. O histórico corporativo não substitui o perímetro atual do resultado. Bases ajustadas, reversões e venda de energia futura exigem conciliação com o caixa e as obrigações originais.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Volume, preço, mix, ocupação e custos por país e aplicação; desempenho de MWM. Separar câmbio, reversões, estoque e venda de energia. Conciliar caixa após manutenção e juros, dívida absoluta e EBITDA acumulado, contratos e retorno das novas soluções.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_TUPY.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+96,69%"
+          },
+          {
+            "fato": "val.BR_TUPY.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,76%"
+          },
+          {
+            "fato": "val.BR_TUPY.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "32,10%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +96,69%, custo do capital 11,76% e dispersão entre métodos 32,10% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Na próxima divulgação, acompanhar produção e vendas por aplicação e país, utilização, custo de manutenção e margem sem efeitos cambiais pontuais. Separar redução de estoque e monetização de energia do caixa industrial recorrente. Rever a tese se volume recuperar sem absorção dos custos fixos ou se novas soluções exigirem capital enquanto o negócio tradicional não remunerar manutenção e juros.",
+        "titulo": "Absorção fabril sem benefício extraordinário de caixa"
+      }
+    ],
+    "issuer_id": "BR_TUPY",
+    "lacunas_de_dados": [
+      "A ponte integral de caixa, juros e compromissos permanece pendente.",
+      "Recorrência da liberação de estoque e da venda de energia exige teste específico.",
+      "Retorno da integração e contratos das novas soluções não foram comprovados.",
+      "Concentração, substituição tecnológica e comparação competitiva requerem diligência.",
+      "Guidance agregado não foi comprovado."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo industrial de componentes fundidos e usinados, com exposição a veículos comerciais, máquinas e aplicações de energia. Brasil, México e clientes externos possuem ciclos e moedas distintos. A MWM acrescenta motores, geração e serviços; soluções novas não têm maturação ou rentabilidade equivalentes às operações tradicionais.",
+    "nome": "Tupy",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ECORODOVIAS",
+        "nome": "EcoRodovias"
+      },
+      {
+        "issuer_id": "BR_EMBRAER",
+        "nome": "Embraer"
+      },
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_LOCALIZA",
+        "nome": "Localiza"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_MOTIVA",
+        "nome": "Motiva (ex-CCR)"
+      },
+      {
+        "issuer_id": "BR_RANDON",
+        "nome": "Randoncorp"
+      },
+      {
+        "issuer_id": "BR_SIMPAR",
+        "nome": "Simpar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que engenharia e eficiência sustentem recuperação do retorno depois de manutenção e juros. A condição decisiva é converter volume e produtividade em margem recorrente, sem depender de liberação indefinida de estoques ou alienação de energia contratada. Câmbio, ocupação e integração precisam remunerar todo o capital.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_TUPY.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 19,68"
+          },
+          {
+            "fato": "val.BR_TUPY.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 37,50"
+          },
+          {
+            "fato": "val.BR_TUPY.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+90,53%"
+          },
+          {
+            "fato": "val.BR_TUPY.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,76%"
+          },
+          {
+            "fato": "val.BR_TUPY.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+96,69%"
+          }
+        ],
+        "texto": "Preço de referência R$ 19,68 e alvo R$ 37,50, com potencial +90,53%. A hipótese de investimento deve ser confrontada com o custo do capital 11,76% e retorno esperado +96,69%.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O release distingue componentes tradicionais e atividades da MWM, com moedas e aplicações diferentes. Menor produção pode liberar estoque e simultaneamente prejudicar absorção fabril. A hipótese de recuperação exige volume, mix e eficiência suficientes para remunerar capacidade depois da manutenção, sem depender de reversões ou venda de excedente de energia futuro. Opções de descarbonização exigem contratos e retorno próprios; não são substituto automático da atividade tradicional.",
+        "titulo": "Produtividade precisa sobreviver ao ciclo e às moedas"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Conhecimento metalúrgico, usinagem e relacionamento industrial podem apoiar especificação e continuidade de fornecimento. Essas competências precisam ser confrontadas com preço, substituição tecnológica e concentração de clientes. Geração e descarbonização oferecem opções, mas contratos e retorno ainda exigem prova própria.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:24:25.113136+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita e EBITDA ajustado recuaram anualmente, embora tenham recuperado frente ao trimestre anterior. O lucro passou a prejuízo. A apreciação de moedas e o mix afetaram custos e margem. Caixa operacional cresceu, com liberação de estoque e venda de excedentes futuros de energia; essas contribuições não são recorrência assegurada.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que engenharia e eficiência sustentem recuperação do retorno depois de manutenção e juros. A condição decisiva é converter volume e produtividade em margem recorrente, sem depender de liberação indefinida de estoques ou alienação de energia contratada. Câmbio, ocupação e integração precisam remunerar todo o capital. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +96,69%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Ciclo industrial, câmbio e concentração de clientes podem reduzir margem. Transição tecnológica e integração exigem capital. Estoque menor e receitas pontuais não garantem caixa futuro; alavancagem pode subir com EBITDA menor."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_TUPY.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+97,35%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +97,35%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Tupy — recuperação industrial, câmbio e caixa recorrente",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "Receita e EBITDA ajustado caíram na comparação anual, com recuperação sequencial; o trimestre teve prejuízo. Caixa operacional aumentou com contribuição de estoque e venda de energia excedente futura. Dívida líquida recuou, mas a alavancagem cresceu pelo EBITDA acumulado menor. Receita, custos e reversões conservam bases próprias; melhora sequencial não foi promovida a recuperação anual completa.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Volume, preço, mix, ocupação e custos por país e aplicação; desempenho de MWM. Separar câmbio, reversões, estoque e venda de energia. Conciliar caixa após manutenção e juros, dívida absoluta e EBITDA acumulado, contratos e retorno das novas soluções.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_TUPY.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,76%"
+          },
+          {
+            "fato": "val.BR_TUPY.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "32,10%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,76% e a dispersão entre métodos 32,10%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

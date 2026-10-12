@@ -1,0 +1,384 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "972c38f0799d656ee11643ef042bf4127251d3c57aa7c63dbeca2f0bc4afb43f",
+    "factbook": "8357b3b2a09a2488cd17f4a45c8d6814f8ada714398516833c3cbb8870a3722d",
+    "nota_json": "8b718de0bb4ce0c91c4376dc68d594b4caed96f900fa7364ae6b310a8249805d"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_VOLARIS",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-26",
+  "published_at": "2026-10-12T15:25:45.210538+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Capex divulgado líquido de pagamentos de pré-entrega financiados não substitui obrigações brutas da frota. Caixa e investimentos de curto prazo têm composição própria. A formação do grupo com Viva tinha aprovação dos acionistas, mas continuava condicionada e sem efeito contábil nas demonstrações; sinergias e mudança de controle não são presumidas.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em Sem preço-alvo, com retorno esperado Sem preço-alvo. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Tarifa, serviços adicionais e disponibilidade sustentam caixa após manutenção, frota e obrigações completas. O cenário otimista calculado pelo código é Sem preço-alvo.",
+      "pessimista": "Custos e indisponibilidade superam monetização enquanto financiamento e mudanças societárias limitam retorno por instrumento. O cenário pessimista calculado pelo código é Sem preço-alvo."
+    },
+    "comentario_valuation": "A diligência é fluxo de companhia aérea com capacidade utilizável e normalização do ciclo, tratamento consistente de arrendamentos e obrigação de manutenção, pré-entregas e recebíveis comprometidos. EBITDAR sem aluguel não basta para remunerar frota; compensações temporárias e sinergia condicionada não devem ser perpetuadas. Preço de referência US$ 6,28 e alvo do modelo aberto Sem preço-alvo, com potencial Sem preço-alvo. Retorno total esperado Sem preço-alvo e custo do capital próprio 14,20%. A dispersão entre métodos é n/d; a confiança quantitativa recebida é Insuficiente. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é US$ 9,46; a diferença Sem preço-alvo não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se a tarifa maior apenas compensa parte dos custos e a ocupação não paga frota e manutenção. Benefícios tributários, compensações previstas e capex líquido de financiamento podem tornar a geração aparente melhor que o retorno integral.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.MX_VOLARIS.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 6,28"
+      },
+      {
+        "fato": "val.MX_VOLARIS.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Sem preço-alvo"
+      },
+      {
+        "fato": "val.MX_VOLARIS.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Sem preço-alvo"
+      },
+      {
+        "fato": "val.MX_VOLARIS.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Sem preço-alvo"
+      },
+      {
+        "fato": "val.MX_VOLARIS.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "Insuficiente"
+      },
+      {
+        "fato": "val.MX_VOLARIS.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Sem preço-alvo"
+      },
+      {
+        "fato": "val.MX_VOLARIS.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Sem preço-alvo"
+      },
+      {
+        "fato": "val.MX_VOLARIS.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Sem preço-alvo"
+      },
+      {
+        "fato": "val.MX_VOLARIS.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Sem preço-alvo"
+      },
+      {
+        "fato": "val.MX_VOLARIS.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "14,20%"
+      },
+      {
+        "fato": "val.MX_VOLARIS.wacc",
+        "rotulo": "WACC",
+        "valor": "10,61%"
+      },
+      {
+        "fato": "val.MX_VOLARIS.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.MX_VOLARIS.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Sem preço-alvo"
+      },
+      {
+        "fato": "val.MX_VOLARIS.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Sem preço-alvo"
+      },
+      {
+        "fato": "val.MX_VOLARIS.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_VOLARIS.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "10,6x"
+      },
+      {
+        "fato": "val.MX_VOLARIS.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 9,46"
+      },
+      {
+        "fato": "val.MX_VOLARIS.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Sem preço-alvo"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Volaris",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Materiais trimestrais e instrumentos oficiais",
+        "url": "https://ir.volaris.com/financial-information/quarterly-results/"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Volaris",
+        "publicado_em": "2026-07-21",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado, demonstrações e notas intermediárias apresentados à SEC",
+        "url": "https://www.sec.gov/Archives/edgar/data/1520504/000129281426003836/ex99-1.htm"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Receita por capacidade melhora sem cobrir aeronaves imobilizadas, manutenção e arrendamentos.",
+      "Compensações esperadas não são recebidas ou substituem contribuição recorrente das rotas.",
+      "Pagamentos financiados e cessão de recebíveis comprimem caixa livre após obrigações da frota.",
+      "Condições ou direitos da combinação societária reduzem retorno por instrumento sem execução comprovada."
+    ],
+    "governanca": "Revisar classes de capital, certificados, recibos, relacionadas e obrigações associadas às receitas futuras. A proposta com Viva precisa cumprir condições e aprovações; o documento consultado preserva operações e marcas independentes.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar realização e custo por capacidade, tarifa e receitas adicionais, disponibilidade de motores e utilização por rota. Revisar caixa após manutenção e arrendamentos, compensações efetivamente recebidas e pagamentos de pré-entrega. Confirmar condições e etapas da combinação com Viva e direitos por instrumento.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_VOLARIS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "Sem preço-alvo"
+          },
+          {
+            "fato": "val.MX_VOLARIS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "14,20%"
+          },
+          {
+            "fato": "val.MX_VOLARIS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "n/d"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado Sem preço-alvo, custo do capital 14,20% e dispersão entre métodos n/d quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar motores e aeronaves disponíveis, duração de inspeções, capacidade voada e custo por rota após combustível e moeda, mantendo bases de comparação equivalentes. Separar compensação esperada, reconhecida e recebida e depósitos e pagamentos de pré-entrega financiados. Conciliar caixa após arrendamentos e manutenção com recebíveis cedidos em financiamento e passivos de bilhetes vendidos. Verificar condições e direitos da combinação, sem incluir resultado futuro antes do fechamento.",
+        "titulo": "Motores, manutenção e recebíveis comprometidos"
+      }
+    ],
+    "issuer_id": "MX_VOLARIS",
+    "lacunas_de_dados": [
+      "Notas financeiras e release foram consultados na SEC, sem reconciliação integral com o FactBook.",
+      "Disponibilidade de motores, compensações recebidas e manutenção precisam ser conciliadas.",
+      "Capex bruto, pagamentos financiados e contratos de arrendamento exigem diligência.",
+      "Conclusão da combinação com Viva e novos direitos não foram comprovados.",
+      "Guidance agregado, tom da gestão e catalisador futuro datado não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Transportadora de baixo custo com rotas ponto a ponto no México, Estados Unidos, América Central e do Sul. Tarifa básica e serviços adicionais atendem públicos sensíveis ao preço. Frota, capacidade disponível e assentos vendidos têm bases diferentes, assim como ação, certificado de participação e recibo americano.",
+    "nome": "Volaris",
+    "o_que_mudou": null,
+    "pais": "México",
+    "pares": [],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que custo competitivo e venda seletiva de serviços ampliem o mercado e remunerem capacidade. A condição decisiva é gerar caixa após manutenção, arrendamentos e expansão, preservando demanda sensível ao preço. Receita por assento maior e voos com contribuição positiva precisam sustentar retorno da companhia inteira.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_VOLARIS.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "US$ 6,28"
+          },
+          {
+            "fato": "val.MX_VOLARIS.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "Sem preço-alvo"
+          },
+          {
+            "fato": "val.MX_VOLARIS.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "Sem preço-alvo"
+          },
+          {
+            "fato": "val.MX_VOLARIS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "14,20%"
+          },
+          {
+            "fato": "val.MX_VOLARIS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "Sem preço-alvo"
+          }
+        ],
+        "texto": "Preço de referência US$ 6,28 e alvo Sem preço-alvo, com potencial Sem preço-alvo. A hipótese de investimento deve ser confrontada com o custo do capital 14,20% e retorno esperado Sem preço-alvo.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O documento distingue frota total, capacidade ofertada e serviços adicionais, e inclui compensações esperadas de motores nas perspectivas. A tese precisa mostrar receita que cubra o custo completo das aeronaves disponíveis e imobilizadas, inclusive manutenção e obrigações. Direitos sobre receitas futuras usados em financiamento limitam a leitura do caixa livre; combinação societária anunciada não deve antecipar sinergia ou disponibilidade.",
+        "titulo": "Receita da capacidade disponível não mede caixa livre da frota"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Tarifa básica e escolhas adicionais podem ampliar acesso e sustentar utilização. A vantagem depende de custo completo e receita depois das obrigações de frota, sem presumir que serviços adicionais ou ocupação comprovem retorno. Inspeções de motores e oferta competitiva podem mudar a disponibilidade e a economia das rotas.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:25:45.210538+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O resultado apresenta receita e realização por capacidade maiores, mas perda operacional e líquida mais acentuada e EBITDAR menor. A contribuição positiva dos voos alegada pela gestão não inclui necessariamente todo custo corporativo. Manutenção, benefícios tributários, arrendamentos e compensações previstas de motores precisam ser separados do caixa recorrente.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que custo competitivo e venda seletiva de serviços ampliem o mercado e remunerem capacidade. A condição decisiva é gerar caixa após manutenção, arrendamentos e expansão, preservando demanda sensível ao preço. Receita por assento maior e voos com contribuição positiva precisam sustentar retorno da companhia inteira. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Sem preço-alvo, com retorno esperado Sem preço-alvo. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Combustível, moeda e cliente sensível ao preço podem impedir repasse integral. Inspeções e manutenção limitam frota e elevam custo. Compensações, arrendamentos e combinação condicionada podem absorver caixa ou alterar direitos econômicos."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_VOLARIS.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "Sem preço-alvo"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é Sem preço-alvo. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Volaris — tarifa acessível, disponibilidade de frota e custo completo",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O release reinstala orientação anual de margem gerencial e ajusta planos de capacidade. As perspectivas incluem compensações esperadas por inspeções de motores e capex líquido de pagamentos financiados. Essas premissas e a combinação condicionada não constituem caixa recebido ou resultado assegurado.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar realização e custo por capacidade, tarifa e receitas adicionais, disponibilidade de motores e utilização por rota. Revisar caixa após manutenção e arrendamentos, compensações efetivamente recebidas e pagamentos de pré-entrega. Confirmar condições e etapas da combinação com Viva e direitos por instrumento.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.MX_VOLARIS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "14,20%"
+          },
+          {
+            "fato": "val.MX_VOLARIS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "n/d"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 14,20% e a dispersão entre métodos n/d. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

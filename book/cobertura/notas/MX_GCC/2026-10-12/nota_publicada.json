@@ -1,0 +1,504 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "2bd2da2fedf77f3d91e46db1033b6605f53c55b7872bdb90a14c54eed26be53e",
+    "factbook": "dbeb5f5eb90c51d5d047724236071e9085619f648acee0f87223a65ecf15dd29",
+    "nota_json": "45bf50b1f5d69fe147dadf74a46c839fc8b18b0a94846dd6c7cabab1680e9b70"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_GCC",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-27",
+  "published_at": "2026-10-12T15:25:18.925438+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A expansão de Odessa entrou em operação segundo o release; aquisição e maturação continuam exigindo retorno realizado. Dívida contratual exclui comissões amortizáveis e deve ser conciliada com balanço. Distribuição e recompra precisam considerar capex de crescimento, compras de ativos e capital de giro, além do fluxo gerencial.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-27",
+        "descricao": "Divulgação de resultados prevista no calendário oficial; revisar ramp-up, integração e caixa após expansão.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em MXN 197,40, com retorno esperado +13,29%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Utilização e integração sustentam retorno e caixa após todos os investimentos, com dívida e distribuição conciliadas. O cenário otimista calculado pelo código é MXN 230,70.",
+      "pessimista": "Preço, custo e maturação absorvem volume enquanto expansão e capital de giro pressionam recursos distribuíveis. O cenário pessimista calculado pelo código é MXN 166,40."
+    },
+    "comentario_valuation": "Preço de referência MXN 175,68 e alvo do modelo aberto MXN 197,40, com potencial +12,36%. Retorno total esperado +13,29% e custo do capital próprio 12,06%. A dispersão entre métodos é 8,10%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é MXN 266,74; a diferença -26,00% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota. Testar margens normalizadas por mercado regional e caixa após toda manutenção e expansão. Múltiplos de cimento devem preservar dívida, arrendamentos e perímetros; iniciar um forno não comprova sua utilização ou retorno remunerador.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O caso falha se nova capacidade e integração elevam volume com preço ou custo entregue insuficientes. Fluxo livre antes do capex estratégico pode parecer favorável enquanto aquisição e manutenção consomem caixa; distribuição apoiada em recursos acumulados não comprova retorno da expansão.",
+        "titulo": "Expansão de volume sem remuneração suficiente"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.MX_GCC.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 175,68"
+      },
+      {
+        "fato": "val.MX_GCC.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 197,40"
+      },
+      {
+        "fato": "val.MX_GCC.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+12,36%"
+      },
+      {
+        "fato": "val.MX_GCC.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_GCC.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_GCC.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 230,70"
+      },
+      {
+        "fato": "val.MX_GCC.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "23,87%"
+      },
+      {
+        "fato": "val.MX_GCC.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 166,40"
+      },
+      {
+        "fato": "val.MX_GCC.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "32,88%"
+      },
+      {
+        "fato": "val.MX_GCC.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,06%"
+      },
+      {
+        "fato": "val.MX_GCC.wacc",
+        "rotulo": "WACC",
+        "valor": "11,09%"
+      },
+      {
+        "fato": "val.MX_GCC.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_GCC.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+13,29%"
+      },
+      {
+        "fato": "val.MX_GCC.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+7,81%"
+      },
+      {
+        "fato": "val.MX_GCC.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "9,2x"
+      },
+      {
+        "fato": "val.MX_GCC.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,3x"
+      },
+      {
+        "fato": "val.MX_GCC.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 266,74"
+      },
+      {
+        "fato": "val.MX_GCC.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-26,00%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "GCC",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e evolução do negócio",
+        "url": "https://ir.gcc.com/en/nosotros/compania/normal"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "GCC",
+        "publicado_em": "2026-07-28",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado semestral e perspectiva revisada",
+        "url": "https://cdn.investorcloud.net/gcc/InformacionFinanciera/InformacionTrimestral/GCC-2T2026-en.pdf"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F3",
+        "instituicao": "GCC",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário oficial de resultados",
+        "url": "https://ir.gcc.com/en"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Odessa e ativos adquiridos ampliam volume sem contribuição suficiente após maturação e logística.",
+      "Preço realizado ou energia reduzem o retorno do capital da capacidade nova.",
+      "Caixa após capex completo e aquisição diverge persistentemente do fluxo livre gerencial.",
+      "Obrigações, integração e distribuição comprometem financiamento dos projetos."
+    ],
+    "governanca": "Revisar controle, compras de partes relacionadas, decisões de expansão e incentivos. Caixa líquido contratual e recursos distribuíveis têm bases próprias; retorno de capacidade iniciada não é certificado pela data de entrada em operação.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Revisar utilização e ramp-up, preço e volume por região, custo entregue e frete. Conciliar margem, moeda, capital de giro e caixa após manutenção e expansão. Acompanhar integração, retorno das aquisições, dívida por base e remuneração efetiva do acionista.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_GCC.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+13,29%"
+          },
+          {
+            "fato": "val.MX_GCC.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,06%"
+          },
+          {
+            "fato": "val.MX_GCC.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "8,10%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +13,29%, custo do capital 12,06% e dispersão entre métodos 8,10% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar maturação do forno, utilização vendida, confiabilidade e custo de energia. Separar cimento e concreto por território, com preço realizado e frete; examinar se a contribuição melhora depois dos custos de partida.",
+        "titulo": "Odessa e mercados regionais"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Confrontar contribuição das aquisições do Texas com desembolsos, giro e investimento adicional. Reconciliar fluxo livre gerencial a capex estratégico, compra de ativos, arrendamentos e distribuição, mantendo bases contratuais da dívida distintas do balanço.",
+        "titulo": "Integração e financiamento completo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Confrontar os próximos resultados com as premissas por produto e país e com execução de investimento. O calendário distingue divulgação do resultado de teleconferência; a data prevista não é comprovação da publicação ou realização das metas.",
+        "titulo": "Acompanhamento da perspectiva e do evento anunciado"
+      }
+    ],
+    "issuer_id": "MX_GCC",
+    "lacunas_de_dados": [
+      "Caixa depois de todo capex e aquisições não foi integralmente conciliado.",
+      "Ramp-up e retorno das capacidades e negócios adquiridos permanecem a comprovar.",
+      "Bases contratuais e contábeis da dívida exigem reconciliação.",
+      "Comparabilidade por moeda, região e período exige diligência completa.",
+      "Direção agregada da perspectiva e tom da gestão não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Produtora de cimento, concreto e agregados com base nos Estados Unidos e México e rede logística. Preço, volume e moeda afetam segmentos de formas distintas. A nova capacidade e aquisições precisam ser avaliadas pelo uso e caixa recebido, além da produção ou do aumento do portfólio.",
+    "nome": "GCC",
+    "o_que_mudou": "Aprofundamento editorial com consulta pública nesta data. Hipóteses, condições de confirmação, caixa, capital e acompanhamento foram detalhados; o modelo recebido e seu corte histórico não foram recalculados.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_CEMEX",
+        "nome": "Cemex"
+      },
+      {
+        "issuer_id": "MX_ENDEAVOUR",
+        "nome": "Endeavour Silver"
+      },
+      {
+        "issuer_id": "MX_GMEXICO",
+        "nome": "Grupo México"
+      },
+      {
+        "issuer_id": "MX_ORBIA",
+        "nome": "Orbia"
+      },
+      {
+        "issuer_id": "MX_PENOLES",
+        "nome": "Industrias Peñoles"
+      },
+      {
+        "issuer_id": "MX_TERNIUM",
+        "nome": "Ternium"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que integração industrial e logística sustentem atendimento e retorno ao longo do ciclo. Entrada de capacidade e aquisições só criam valor se o ganho operacional cobre reinvestimento e financiamento. Caixa após crescimento, obrigações e manutenção é a condição decisiva para remuneração durável.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_GCC.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "MXN 175,68"
+          },
+          {
+            "fato": "val.MX_GCC.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "MXN 197,40"
+          },
+          {
+            "fato": "val.MX_GCC.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+12,36%"
+          },
+          {
+            "fato": "val.MX_GCC.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,06%"
+          },
+          {
+            "fato": "val.MX_GCC.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+13,29%"
+          }
+        ],
+        "texto": "Preço de referência MXN 175,68 e alvo MXN 197,40, com potencial +12,36%. A hipótese de investimento deve ser confrontada com o custo do capital 12,06% e retorno esperado +13,29%.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Produção e logística integradas podem favorecer custo entregue e confiabilidade regional. A nova capacidade precisa vender com contribuição suficiente após energia, frete e manutenção. A hipótese é local: avanço do volume consolidado não demonstra poder de preço nem utilização remuneradora em cada mercado.",
+        "titulo": "Cimento é competitivo no mercado atendido"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O emissor relata entrada do forno de Odessa e aquisições no Texas. A condição decisiva é geração após maturação e todos os investimentos, separando operação, manutenção, crescimento e compra de ativos. O fluxo livre apresentado antes do capex estratégico não demonstra sozinho a remuneração do capital aplicado.",
+        "titulo": "Capacidade iniciada precisa gerar retorno de capital"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Proximidade de mercados, produção e distribuição podem favorecer serviço e custo entregue. A vantagem exige utilização, confiabilidade, preço realizado e frete frente a concorrentes. Demanda de infraestrutura ou posição declarada não garante poder de preço ou retorno dos novos ativos.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:25:18.925438+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O release distingue aumento de volumes e preços de concreto de pressão sobre preço de cimento nos Estados Unidos. O fluxo livre cresce no trimestre e cai no semestre, com bases próprias; antecede capex de crescimento e compra de ativos. Moeda, capital de giro, arrendamentos e juros precisam permanecer separados de contribuição recorrente.",
+        "titulo": "Volume, preço e caixa em cortes diferentes"
+      }
+    ],
+    "resumo": "A hipótese é que integração industrial e logística sustentem atendimento e retorno ao longo do ciclo. Entrada de capacidade e aquisições só criam valor se o ganho operacional cobre reinvestimento e financiamento. Caixa após crescimento, obrigações e manutenção é a condição decisiva para remuneração durável. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +13,29%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Demanda cíclica, preços e energia podem pressionar margem. Ramp-up, frete e aquisições podem elevar custos antes dos benefícios. Capex e capital de giro podem consumir caixa apesar do EBITDA e limitar distribuição."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_GCC.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-26,00%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -26,00%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "A capacidade pode entrar no mercado antes de demanda rentável e exigir mais manutenção ou frete. Aquisições e capex estratégico, apresentados depois do fluxo livre gerencial, podem absorver a geração; saldo de caixa e alavancagem contratual não demonstram retorno dos projetos."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "GCC — capacidade industrial e caixa após expansão e aquisições",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A análise distingue trimestre e semestre e preserva a definição do fluxo livre antes de crescimento e capex estratégico. A perspectiva está marcada como revisada, com direções diferentes por indicador; não se presume alteração agregada ou realização das metas sem comparação e execução comprovadas.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Revisar utilização e ramp-up, preço e volume por região, custo entregue e frete. Conciliar margem, moeda, capital de giro e caixa após manutenção e expansão. Acompanhar integração, retorno das aquisições, dívida por base e remuneração efetiva do acionista.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.MX_GCC.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,06%"
+          },
+          {
+            "fato": "val.MX_GCC.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "8,10%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 12,06% e a dispersão entre métodos 8,10%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Revisar Odessa e operações adquiridas por mercado. Confrontar produção vendida, mistura de produtos, energia, frete e preço realizado. Crescimento de volume com preço de cimento pressionado exige testar contribuição, sem promover capacidade a lucro.",
+        "vetor": "Utilização, preço e custo entregue"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Separar manutenção, crescimento, compras de ativos, giro e remuneração dos acionistas. O uso de caixa e a dívida em base contratual devem ser conciliados ao balanço; capital investido precisa gerar retorno após maturação.",
+        "vetor": "Caixa após aquisições e capex completo"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

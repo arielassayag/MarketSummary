@@ -1,0 +1,462 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "ad90d9e3c1b24b979f14dbd13d4e63999ce89e04456de74e93042378f1422b7a",
+    "factbook": "6a76b6d196353b47aff91911608d3cc731b4a39aa97a528f1db4feb3c60def32",
+    "nota_json": "a3585542097a341f10ec77f3de689b4df8befc7422a0739c0c38d407ff8b97b1"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_LOCAWEB",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-12",
+  "published_at": "2026-10-12T15:22:39.068253+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Desenvolvimento, aquisições e parcelas de arrendamento competem com caixa. A geração gerencial após CAPEX precede pagamentos de aquisições e principal de arrendamento. Caixa líquido sem empréstimos difere do saldo após earn-outs e ocupação. Redução de capital e recompra tiveram pagamentos, sem presumir novos programas executados.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar retenção, monetização e caixa após obrigações.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 3,66, com retorno esperado -24,11%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Retenção e integração sustentam receita própria, com desenvolvimento e giro disciplinados; caixa após ocupação e aquisições remunera o capital. O cenário otimista calculado pelo código é R$ 4,22.",
+      "pessimista": "Concorrência e churn reduzem monetização; desenvolvimento e obrigações absorvem recursos, enquanto medidas gerenciais sugerem melhora sem caixa equivalente. O cenário pessimista calculado pelo código é R$ 3,13."
+    },
+    "comentario_valuation": "A soma de negócios exige separar assinaturas, pagamentos e intermediação, com lucro e caixa depois do desenvolvimento necessário. Múltiplo de receita de software não deve ser aplicado ao volume transacionado. Caixa líquido precisa conservar arrendamentos, earn-outs e perímetro das alienações; reclassificação de antecipações não cria valor econômico. Preço de referência R$ 5,21 e alvo do modelo aberto R$ 3,66, com potencial -29,82%. Retorno total esperado -24,11% e custo do capital próprio 12,54%. A dispersão entre métodos é 24,82%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 5,79; a diferença -36,85% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Volume e plataformas podem crescer enquanto outra base de clientes diminui. EBITDA pode mudar por reclassificação sem melhora econômica. Se integração e monetização não cobrirem desenvolvimento e obrigações, o saldo sem dívida bancária superestimará caixa distribuível.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.BR_LOCAWEB.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 5,21"
+      },
+      {
+        "fato": "val.BR_LOCAWEB.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 3,66"
+      },
+      {
+        "fato": "val.BR_LOCAWEB.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-29,82%"
+      },
+      {
+        "fato": "val.BR_LOCAWEB.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_LOCAWEB.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_LOCAWEB.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 4,22"
+      },
+      {
+        "fato": "val.BR_LOCAWEB.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_LOCAWEB.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 3,13"
+      },
+      {
+        "fato": "val.BR_LOCAWEB.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_LOCAWEB.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,54%"
+      },
+      {
+        "fato": "val.BR_LOCAWEB.wacc",
+        "rotulo": "WACC",
+        "valor": "12,38%"
+      },
+      {
+        "fato": "val.BR_LOCAWEB.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_LOCAWEB.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-24,11%"
+      },
+      {
+        "fato": "val.BR_LOCAWEB.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-5,77%"
+      },
+      {
+        "fato": "val.BR_LOCAWEB.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "14,4x"
+      },
+      {
+        "fato": "val.BR_LOCAWEB.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,2x"
+      },
+      {
+        "fato": "val.BR_LOCAWEB.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 5,79"
+      },
+      {
+        "fato": "val.BR_LOCAWEB.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-36,85%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "LWSA",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://ri.lwsa.tech/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "LWSA",
+        "publicado_em": "2026-08-13",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://ri.lwsa.tech/Download.aspx?Arquivo=TOmC3kVeAtsc/dWynHBGlg=="
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "LWSA",
+        "publicado_em": "2026-08-13",
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+        "url": "https://ri.lwsa.tech/Download.aspx?Arquivo=MmWw8PkNddMtVIyz5nk3uQ=="
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F4",
+        "instituicao": "LWSA",
+        "publicado_em": null,
+        "tipo": "Outra fonte pública",
+        "titulo": "Portfólio institucional de soluções e integração comercial",
+        "url": "https://lwsa.tech/nossas-solucoes/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Retenção ou receita por cliente se deteriora em plataformas integradas, em base de perímetro comparável.",
+      "Volume transacionado cresce sem monetização própria que cubra custos, suporte e desenvolvimento.",
+      "Capitalização de desenvolvimento ou reclassificação de antecipações eleva a margem sem caixa equivalente.",
+      "Earn-outs, arrendamentos e novas aquisições absorvem recursos antes de retorno comprovado."
+    ],
+    "governanca": "As bases contábeis e gerenciais do custo de antecipação são distintas, sem mudança do resultado final. Negócios vendidos têm datas próprias e os comparativos ajustados não substituem os registros originais. Caixa sem empréstimos e caixa depois de arrendamento e earn-outs preservam definições diferentes.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Retenção, receita, preço, clientes e monetização por plataforma; volume e taxa efetiva de pagamentos. Conciliar bases sem ativos vendidos, antecipações, giro, desenvolvimento, aluguel e earn-outs. Verificar caixa por entidade e retorno das integrações.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_LOCAWEB.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-24,11%"
+          },
+          {
+            "fato": "val.BR_LOCAWEB.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,54%"
+          },
+          {
+            "fato": "val.BR_LOCAWEB.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "24,82%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -24,11%, custo do capital 12,54% e dispersão entre métodos 24,82% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "Na próxima divulgação, seguir retenção, receita por cliente e monetização em bases com o mesmo perímetro. Confrontar desenvolvimento capitalizado com manutenção do produto e caixa depois de arrendamentos e parcelas de aquisição. Rever a tese se integração expandir serviços sem retenção ou se a melhora do EBITDA decorrer da reclassificação de antecipações, sem evolução equivalente de lucro e caixa.",
+        "titulo": "Coortes, monetização e obrigações pós-aquisição"
+      }
+    ],
+    "issuer_id": "BR_LOCAWEB",
+    "lacunas_de_dados": [
+      "A ponte integral do ITR, antecipações e caixa por entidade permanece pendente.",
+      "Receita, EBITDA e margem bruta possuem comparativos de perímetro diferentes.",
+      "Retorno das integrações, desenvolvimento e aquisição de clientes exige diligência.",
+      "Earn-outs, arrendamentos e base por ação precisam de conciliação.",
+      "Guidance agregado e participação de mercado não foram comprovados.",
+      "Os downloads financeiros e o RI não receberam corpo na nova consulta. A fonte institucional nova confirma categorias do negócio, sem comprovar resultados, retenção ou integração."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo de software e serviços digitais para comércio eletrônico e presença on-line. Commerce combina plataformas, logística, pagamentos e soluções para lojistas; BeOnline e SaaS possuem clientes e ciclos distintos. Volume vendido ou processado não equivale à receita própria, e alienações modificam o perímetro comparável.",
+    "nome": "Locaweb (LWSA)",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "AR_GLOBANT",
+        "nome": "Globant"
+      },
+      {
+        "issuer_id": "BR_BEMOBI",
+        "nome": "Bemobi"
+      },
+      {
+        "issuer_id": "BR_INTELBRAS",
+        "nome": "Intelbras"
+      },
+      {
+        "issuer_id": "BR_VTEX",
+        "nome": "VTEX"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que integração e monetização sustentem retenção e caixa depois de desenvolvimento e ocupação. A condição decisiva é remunerar aquisição de clientes e capital empregado sem confundir volume com receita. Reclassificação de custos financeiros e ajustes do perímetro precisam preservar a comparação econômica.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_LOCAWEB.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 5,21"
+          },
+          {
+            "fato": "val.BR_LOCAWEB.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 3,66"
+          },
+          {
+            "fato": "val.BR_LOCAWEB.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-29,82%"
+          },
+          {
+            "fato": "val.BR_LOCAWEB.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,54%"
+          },
+          {
+            "fato": "val.BR_LOCAWEB.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-24,11%"
+          }
+        ],
+        "texto": "Preço de referência R$ 5,21 e alvo R$ 3,66, com potencial -29,82%. A hipótese de investimento deve ser confrontada com o custo do capital 12,54% e retorno esperado -24,11%.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O portfólio institucional reúne lojas, gestão, presença digital, atendimento, pagamentos e logística. A hipótese de integração deve ser testada pela retenção e receita própria de cada serviço, não pelo volume que atravessa as plataformas. Venda cruzada pode reduzir esforço de aquisição, mas também exige suporte e desenvolvimento. O teste deve separar assinatura, transação e intermediação; conveniência declarada não comprova custo de migração ou vantagem sobre concorrentes.",
+        "titulo": "Integração útil precisa virar receita própria"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Ecossistema de lojas, pagamentos e logística pode elevar conveniência e integração. Concorrência, preço e custos de migração precisam de evidência de retenção e retorno. Plataformas, SaaS e hospedagem têm qualidade de recorrência distinta; número de clientes e volume não comprovam participação ou vantagem sustentável.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:22:39.068253+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Commerce cresceu, mas BeOnline e SaaS apresentaram menor receita e base de clientes. Comparativos de receita e EBITDA excluem negócios vendidos, enquanto margem bruta tem base distinta. Custo de antecipação foi reclassificado sem efeito em lucro ou caixa. Caixa gerencial após CAPEX caiu no trimestre, mas aumentou no semestre, com comparável próprio.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que integração e monetização sustentem retenção e caixa depois de desenvolvimento e ocupação. A condição decisiva é remunerar aquisição de clientes e capital empregado sem confundir volume com receita. Reclassificação de custos financeiros e ajustes do perímetro precisam preservar a comparação econômica. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado -24,11%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Churn, concorrência e monetização podem reduzir receita e margem. Desenvolvimento e aquisições absorvem caixa. Reclassificações financeiras, perímetro e antecipações alteram comparabilidade, enquanto aluguel e earn-outs restringem liquidez."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_LOCAWEB.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-36,85%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -36,85%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Tecnologia",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "LWSA — monetização, comparabilidade e caixa depois da integração",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "Commerce teve expansão, enquanto BeOnline e SaaS registraram queda de receita e clientes. Comparativos ajustados por alienações não têm a mesma base da margem bruta. O custo de antecipação foi reclassificado, sem alterar lucro ou caixa. Geração gerencial depois de CAPEX diminuiu no trimestre e cresceu no semestre; parcelas de aquisição e arrendamento vêm depois. A redução de capital e a recompra tiveram desembolsos no semestre.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Retenção, receita, preço, clientes e monetização por plataforma; volume e taxa efetiva de pagamentos. Conciliar bases sem ativos vendidos, antecipações, giro, desenvolvimento, aluguel e earn-outs. Verificar caixa por entidade e retorno das integrações.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_LOCAWEB.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,54%"
+          },
+          {
+            "fato": "val.BR_LOCAWEB.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "24,82%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 12,54% e a dispersão entre métodos 24,82%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

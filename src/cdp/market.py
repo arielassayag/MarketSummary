@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import date
+from typing import Any
 
 import pandas as pd
 
@@ -76,6 +77,7 @@ class MarketData:
     benchmarks: pd.DataFrame
     rates: pd.DataFrame
     news: tuple[NewsItem, ...] = field(default_factory=tuple)
+    contexto_bancario: Any = field(default=None, repr=False, compare=False)
 
     @property
     def as_of(self) -> date:
@@ -96,10 +98,14 @@ class MarketData:
         def cut(df: pd.DataFrame) -> pd.DataFrame:
             return df.loc[df.index <= ts]
 
-        return MarketData(
+        child = MarketData(
             manifest=self.manifest, universe=self.universe,
             close=cut(self.close), adj_close=cut(self.adj_close), volume=cut(self.volume),
             fx=cut(self.fx), fundamentals=self.fundamentals, short_interest=self.short_interest,
             lending=self.lending, benchmarks=cut(self.benchmarks), rates=cut(self.rates),
             news=tuple(n for n in self.news if n.published_at.date() <= end),
         )
+        if self.contexto_bancario is not None:
+            from .data.recepcao_bancaria import transferir
+            object.__setattr__(child, "contexto_bancario", transferir(self.contexto_bancario, self, child))
+        return child

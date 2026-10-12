@@ -44,6 +44,8 @@ from zoneinfo import ZoneInfo
 import yaml
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, field_validator
 
+from cdp.leitura_arquivos import ler_texto, recusar_escrita
+
 from .. import SIMULATED_DATA_NOTICE
 from ..contracts import HARNESS_MINDS, Fact, FactBook, mente_divergente
 from ..hashing import sha256_file, sha256_obj
@@ -175,8 +177,8 @@ def carregar_revisao(book_root: Path | str, data: date | None = None) -> dict[st
         return None
     pasta = pasta_revisao(book_root, data)
     try:
-        doc = json.loads((pasta / PUBLICADA_JSON).read_text(encoding="utf-8"))
-        md = (pasta / REVISAO_MD).read_text(encoding="utf-8")
+        doc = json.loads(ler_texto(pasta / PUBLICADA_JSON, encoding='utf-8'))
+        md = ler_texto(pasta / REVISAO_MD, encoding='utf-8')
     except (OSError, ValueError):
         return None
     return {"data": data, "markdown": md, "publicada": doc, "pasta": pasta.as_posix()}
@@ -933,7 +935,7 @@ def carregar_revisao_json(path: Path, fb: FactBook, pacote: Mapping[str, Any], *
     if not path.is_file():
         return None, [f"{REVISAO_JSON} ausente ({path.as_posix()})"]
     try:
-        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw = json.loads(ler_texto(path, encoding='utf-8'))
     except (OSError, ValueError) as exc:
         return None, [f"{REVISAO_JSON}: JSON inválido ({exc})"]
     try:
@@ -1211,8 +1213,8 @@ def preparar(rt: Runtime, d: date) -> dict[str, Any]:
 
 
 def _carregar_preparados(pasta: Path) -> tuple[dict[str, Any], FactBook]:
-    pacote = json.loads((pasta / PACOTE_JSON).read_text(encoding="utf-8"))
-    fb = FactBook.model_validate(json.loads((pasta / FACTBOOK_JSON).read_text(encoding="utf-8")))
+    pacote = json.loads(ler_texto(pasta / PACOTE_JSON, encoding='utf-8'))
+    fb = FactBook.model_validate(json.loads(ler_texto(pasta / FACTBOOK_JSON, encoding='utf-8')))
     return pacote, fb
 
 
@@ -1399,6 +1401,7 @@ def _payload(pub: Path, md: Path, pacote: Mapping[str, Any], autoria: str) -> di
 def publicar(rt: Runtime, d: date) -> dict[str, Any]:
     """Publica a revisão (imutável) e grava ``COVERAGE_MONTHLY_REVIEW``. O pacote é recalculado
     (nunca o do disco); falha no meio ⇒ arquivos removidos (nada publicado sem evento)."""
+    recusar_escrita()
     from ..research.pm_agent import _write_files
     from ..workflow.book import _write_exclusive
 
@@ -1410,7 +1413,7 @@ def publicar(rt: Runtime, d: date) -> dict[str, Any]:
     pacote, fb, texts = _textos_preparados(rt, d)
     notas: list[str] = []
     mudou = [n for n in (FACTBOOK_JSON, PACOTE_JSON) if (pasta / n).is_file()
-             and (pasta / n).read_text(encoding="utf-8") != texts[n]]
+             and ler_texto(pasta / n, encoding='utf-8') != texts[n]]
     if mudou:
         notas.append("Pacote no disco diferente do recálculo (" + ", ".join(mudou)
                      + "): regravado; a publicação usa o recálculo.")
@@ -1444,7 +1447,7 @@ def verificar_revisoes(book_root: Path | str) -> list[str]:
     for d in listar_revisoes(book_root):
         pasta = pasta_revisao(book_root, d)
         try:
-            doc = json.loads((pasta / PUBLICADA_JSON).read_text(encoding="utf-8"))
+            doc = json.loads(ler_texto(pasta / PUBLICADA_JSON, encoding='utf-8'))
             if not isinstance(doc, dict):
                 raise ValueError("a revisão publicada deve ser um objeto JSON")
             retrato = doc.get("retrato")

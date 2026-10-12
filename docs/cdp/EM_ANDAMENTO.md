@@ -5,6 +5,30 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
+## Consolidação do projeto — desenvolvimento em 12/10/2026
+
+Pedido humano: integrar o projeto e publicar, com revisão ROOT antes de main.
+O ramo `codex/cdp-consolidacao-ai-notes-12out`, no checkout interno
+`.cdp/integracoes/risco-unidades`, conserva a conclusão oficial241 abaixo.
+Fechamento foi recebido dos cinco diffs humanos sem alterar o checkout original:
+contratos distinguem data confirmada de publicação e horário retornado pela fonte,
+registros malformados são recusados por item e RSS permanece contingência.
+Os dezesseis arquivos de teste de Fechamento concluíram92 casos únicos aprovados,
+sem skip, falha ou erro; Ruff passou. Uma CI própria foi acrescentada sem retirar
+os jobs CDP. Negativos intermediários ficaram preservados; nenhuma fonte externa
+ou execução financeira foi certificada por esses testes.
+
+A composição CDP recebe a fonte privada0594f14, incluindo escritores NET,
+recepção bancária opt-in, diagnósticos P1 em sombra, técnicas e MCP1.7.
+São candidatos de fonte com focais anteriores; instalação final, STDIO e suíte
+conjunta da fonte composta ainda não foram concluídos. Não atribuir seus resultados
+anteriores ao novo pai. Os contratos/hard gates/configuração continuam preservados,
+sem integração financeira automática dos protótipos ou nova operação de09/10.
+O [registro privado histórico](HISTORICO_PRIVADO_2026-10-10_CONSOLIDACAO.md)
+conserva integralmente o corpo da passagem dessa frente e seus limites originais.
+Evidências novas ficam em `.cdp/estudos/CONSOLIDACAO_AI_NOTES_12OUT/`.
+Fonte não enviada nem integrada em main; ROOT recebe a entrega antes da publicação.
+
 ## Aprofundamento dos 85 — conclusão em 12/10/2026
 
 Após o encerramento parcial abaixo, o humano determinou: “Conclua os 85 restantes

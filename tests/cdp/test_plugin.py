@@ -29,6 +29,7 @@ from pathlib import Path
 import pytest
 import yaml
 
+from cdp import permissoes as pe
 from cdp import rotinas as ro
 from cdp.__main__ import build_parser
 
@@ -47,8 +48,8 @@ TESES = ROOT / "docs" / "cdp" / "teses"
 #: Versão do plugin e resumo das skills nessa versão. A instalação pelo marketplace do GitHub guarda
 #: uma cópia presa à ``version`` (docs/cdp/LOCAL.md): skills novas com a versão antiga nunca chegam
 #: às rotinas. Mudou uma skill ⇒ suba a ``version`` em plugin.json e atualize os dois valores.
-PLUGIN_VERSION = "1.5.3"
-SKILLS_SHA256 = "99c2d6a5c09a10a50c086950e456699900d960cf27eb5c870b815b4b60455cf2"
+PLUGIN_VERSION = "1.7.0"
+SKILLS_SHA256 = "6307e4ef355a8eebda82c20f4b65a610a411b4a28107688fea3bd3f4f4b39e88"
 #: Roteiro de cada skill do plugin e a família de tarefas de ``configs/cdp/rotinas.yaml``.
 ROTEIRO = {"semanal": "SEMANAL.md", "diario": "DIARIO.md", "cobertura": "COBERTURA.md",
            "risco": "RISCO.md", "status": "STATUS.md", "calibracao": "CALIBRACAO.md"}
@@ -66,7 +67,8 @@ def _skill_files() -> list[Path]:
 
 
 def _project_skill_files() -> list[Path]:
-    return sorted((ROOT / ".claude" / "skills").glob("*/SKILL.md"))
+    return sorted(p for p in (ROOT / ".claude" / "skills").glob("*/SKILL.md")
+                  if p.parent.name.startswith("cdp-"))
 
 
 def _playbook_files() -> list[Path]:
@@ -172,7 +174,7 @@ def _idx(texto: str, agulha: str, inicio: int = 0) -> int:
 def test_marketplace_manifest_points_to_plugin():
     m = json.loads(MARKETPLACE.read_text(encoding="utf-8"))
     assert ID_RE.match(m["name"]) and m["owner"]["name"] and m.get("description")
-    assert [p["name"] for p in m["plugins"]] == ["cdp"]
+    assert [p["name"] for p in m["plugins"]] == ["cdp", "cdp-tecnicas"]
     entry = m["plugins"][0]
     assert entry["source"].startswith("./") and ".." not in entry["source"]
     plugin_dir = (ROOT / entry["source"]).resolve()
@@ -216,7 +218,10 @@ def test_skill_frontmatter(path: Path):
     # nenhuma ferramenta de git que grave e nenhuma publicação de artifact numa rotina
     assert not any(GIT_GRAVA.search(t) for t in tools), tools
     assert "Artifact" not in tools
-    assert {"Bash(uv sync *)", "Bash(uv run python -m cdp *)"} <= set(tools)
+    assert "Bash(uv sync *)" in tools
+    assert {t for t in tools if pe._cdp(t)} == set(
+        pe.regras(ROT, path.parent.name, formas=(pe.FORMAS[0],)))
+    assert "Bash(uv run python -m cdp *)" not in tools
     body = _ler(path)
     assert "docs/cdp/METODOLOGIA.md" in body  # metodologia perene, fora do app
     assert "Resumo final" in body
@@ -278,7 +283,7 @@ def test_project_skills_are_the_generated_neutral_wrappers():
     """``.claude/skills`` é o espelho exato de ``.agents/skills`` (gerado de rotinas.yaml): a
     nuvem do Claude Code não instala plugins e usa essas skills."""
     gerado = ro.gerar_skills(ROT)
-    neutras = {p.parent.name: p for p in sorted((ROOT / ".agents" / "skills").glob("*/SKILL.md"))}
+    neutras = {p.parent.name: p for p in sorted((ROOT / ".agents" / "skills").glob("cdp-*/SKILL.md"))}
     espelho = {p.parent.name: p for p in _project_skill_files()}
     assert set(espelho) == set(neutras) == {Path(r).parent.name for r in gerado}
     for nome, path in espelho.items():
@@ -999,8 +1004,10 @@ def test_project_settings_permissions():
     perm = s["permissions"]
     assert perm["defaultMode"] in {"default", "acceptEdits", "plan", "auto", "dontAsk"}
     allow, ask, deny = perm["allow"], perm.get("ask", []), perm["deny"]
-    for needed in ("Bash(uv sync *)", "Bash(uv run python -m cdp *)", "WebSearch", "WebFetch"):
+    for needed in ("Bash(uv sync *)", "WebSearch", "WebFetch"):
         assert needed in allow, needed
+    assert {r for r in allow if pe._cdp(r)} == set(pe.regras(ROT))
+    assert "Bash(uv run python -m cdp *)" not in allow and "Bash(uv run cdp *)" not in allow
     assert "Bash" not in allow and "Bash(*)" not in allow and "Read" not in allow
     # as skills do CDP, nas formas documentadas (nome exato e nome com argumentos = a tarefa)
     for nome in sorted(SKILLS | {"retomar"}):
@@ -1124,19 +1131,11 @@ def test_settings_deny_every_code_written_coverage_file(tmp_path):
     """Todo arquivo que o retrato da cobertura grava no livro é bloqueado para a mente (o único
     arquivo editável da cobertura é ``nota.json``)."""
     import warnings
-    from datetime import datetime
+    from datetime import date, datetime
     from zoneinfo import ZoneInfo
 
     from cdp.config import load_config
-    from cdp.data.synthetic import make_synthetic_market
-    from cdp.workflow.demo import (
-        DEMO_FIRST_WEEK,
-        DEMO_HISTORY_START,
-        DEMO_SEED,
-        DemoStore,
-        demo_sessions,
-        run_demo,
-    )
+    from cdp.workflow.demo import run_demo
     from cdp.workflow.runtime import Runtime
 
     try:
@@ -1145,13 +1144,13 @@ def test_settings_deny_every_code_written_coverage_file(tmp_path):
         pytest.skip(f"cobertura indisponível: {exc!r}")
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        run_demo(tmp_path, days=1)
-    market = make_synthetic_market(seed=DEMO_SEED, start=DEMO_HISTORY_START,
-                                   as_of=demo_sessions(1)[-1])
-    rt = Runtime(load_config(), tmp_path / "book", tmp_path / "market", tmp_path / "reports",
-                 store_override=DemoStore(market), teses_root=None,
-                 clock=lambda: datetime(2024, 3, 4, 21, 30, tzinfo=ZoneInfo("America/Sao_Paulo")))
-    gerar(rt, [DEMO_FIRST_WEEK])
+        first = date(2026, 11, 13)
+        cfg = load_config(ROOT / "configs/cdp/fund.yaml")
+        run_demo(tmp_path, days=1, first_week=first, cfg=cfg)
+    rt = Runtime(cfg, tmp_path / "book", tmp_path / "market", tmp_path / "reports",
+                 teses_root=None,
+                 clock=lambda: datetime(2026, 11, 13, 21, 30, tzinfo=ZoneInfo("America/Sao_Paulo")))
+    gerar(rt, [first])
     written = sorted(p.relative_to(tmp_path).as_posix()
                      for p in (tmp_path / "book" / "cobertura").rglob("*") if p.is_file())
     assert written, "o retrato sintético não gravou nada"

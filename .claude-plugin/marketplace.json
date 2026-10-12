@@ -11,7 +11,24 @@
       "source": "./plugins/cdp",
       "description": "Skills do CDP — Cabra da Peste para tarefas agendadas no PC local: montagem semanal da carteira, fechamento diário com comentário, monitor de risco intradiário, saúde da trilha e calibração mensal.",
       "category": "finance",
-      "tags": ["cdp", "long-short", "latam", "paper-trading", "rotinas"]
+      "tags": [
+        "cdp",
+        "long-short",
+        "latam",
+        "paper-trading",
+        "rotinas"
+      ]
+    },
+    {
+      "name": "cdp-tecnicas",
+      "source": "./plugins/cdp-tecnicas",
+      "description": "Técnicas de pesquisa pública e cálculo determinístico em leitura ou rascunho privado.",
+      "category": "finance",
+      "tags": [
+        "cdp",
+        "pesquisa",
+        "tecnicas"
+      ]
     }
   ]
 }

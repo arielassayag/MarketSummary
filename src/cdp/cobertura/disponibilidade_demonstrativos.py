@@ -17,7 +17,8 @@ VERSAO = "cdp.disponibilidade_participantes/v3"
 GRAO = ("issuer_id", "origem", "item", "freq", "period_end", "uso")
 FREQUENCIAS = {"A", "Q", "TTM", "YTD", "H1", "9M", "FRE", "SNAPSHOT", "D"}
 IDENTIDADE = (*GRAO, "period_start", "entidade", "identidade_declarada", "contexto",
-              "tipo_grao", "grupo", "posicao", "valor", "coeficiente", "currency", "consolidado", *CAMPOS, "contexto_documental_sha256")
+              "tipo_grao", "grupo", "posicao", "valor", "coeficiente", "currency", "consolidado", *CAMPOS, "contexto_documental_sha256",
+              "recepcao_bancaria", "data_publicacao_estimada", "recepcao_fisica_utc", "vinculo_recepcao_bancaria", "grao_original")
 
 
 def _texto(value):
@@ -57,6 +58,11 @@ def participante(row, uso, *, issuer_id=None, origem="demonstrativos", fonte=Non
            "fonte": deepcopy(fonte) if fonte is not None else {
                k: _texto(row.get(k)) for k in ("fonte", "url", "documento", "sha256", "data_publicacao")}}
     out.update(dimensoes(row))
+    for key in ("recepcao_bancaria", "data_publicacao_estimada", "recepcao_fisica_utc"):
+        if isinstance(row.get(key), str):
+            out[key] = row[key]
+            if fonte is None:
+                out["fonte"][key] = row[key]
     contexto_doc = contexto_documental(row)
     out.update(contexto_doc)
     if fonte is None and contexto_doc:
@@ -132,16 +138,22 @@ def _destinos_financeiros(pac):
 class RegistroParticipantes:
     """Registro no ponto de uso; vínculo de completude, nunca autoridade documental/PIT."""
 
-    def __init__(self, issuer_id):
+    def __init__(self, issuer_id, *, contexto_bancario=None):
         self.issuer_id = issuer_id
         self.rows = []
         self.esperados = []
         self.vinculos = {}
+        self.contexto_bancario = contexto_bancario
+        if contexto_bancario is not None:
+            from ..data.recepcao_bancaria import autenticar
+            autenticar(contexto_bancario)
 
     def registrar(self, row, uso, destino=None, *, origem="demonstrativos", fonte=None):
         if row is None:
             return
         member = participante(row, uso, issuer_id=self.issuer_id, origem=origem, fonte=fonte)
+        if self.contexto_bancario is not None and member.get("recepcao_bancaria") is not None:
+            member.update(self.contexto_bancario.vincular(row, member))
         self.rows.append(member)
         self.esperados.append({**_identidade(member), "componentes": [
             _identidade(c) for c in member.get("componentes", [])],
@@ -154,6 +166,10 @@ class RegistroParticipantes:
             "participantes_esperados": deepcopy(self.esperados),
             "vinculos": {destino: {"usos": sorted(usos), "valor": deepcopy(_valor(pac, destino))}
                          for destino, usos in sorted(self.vinculos.items())}}
+        if self.contexto_bancario is not None:
+            from ..data.recepcao_bancaria import VERSAO_MANIFESTO
+            pac["manifesto_disponibilidade"].update(versao=VERSAO_MANIFESTO,
+                readset_bancario=self.contexto_bancario.readset())
 
 
 def _periodo(value):
@@ -248,7 +264,8 @@ def _conferir_componentes(row):
 
 def _conferir_manifesto(pac, rows):
     manifesto = pac.get("manifesto_disponibilidade")
-    if not isinstance(manifesto, Mapping) or manifesto.get("versao") != VERSAO:
+    from ..data.recepcao_bancaria import VERSAO_MANIFESTO
+    if not isinstance(manifesto, Mapping) or manifesto.get("versao") not in (VERSAO, VERSAO_MANIFESTO):
         return "manifesto de participantes ausente ou versão inválida"
     if not pac.get("issuer_id") or manifesto.get("issuer_id") != pac.get("issuer_id"):
         return "identidade do manifesto incompatível com o emissor"
@@ -321,8 +338,19 @@ def _conferir_manifesto(pac, rows):
     return None
 
 
-def conferir(pac):
+def conferir(pac, *, recepcao_bancaria=False, contexto_bancario=None):
     """Todos os participantes têm instante explícito <= corte; nenhum max omite NA."""
+    from ..data.recepcao_bancaria import VERSAO_MANIFESTO, conferir_participantes, opcao
+    opcao(recepcao_bancaria)
+    manifest = pac.get("manifesto_disponibilidade")
+    novo = isinstance(manifest, Mapping) and manifest.get("versao") == VERSAO_MANIFESTO
+    if recepcao_bancaria and not novo:
+        return False, "recepção bancária: manifesto prospectivo v4 obrigatório"
+    if novo:
+        try:
+            conferir_participantes(pac, contexto_bancario)
+        except (ValueError, TypeError, KeyError, AttributeError, OSError) as exc:
+            return False, f"recepção bancária não autenticada: {exc}"
     try:
         if not isinstance(pac.get("as_of"), str):
             raise ValueError("data do modelo ausente")

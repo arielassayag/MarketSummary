@@ -19,6 +19,8 @@ from zoneinfo import ZoneInfo
 import pandas as pd
 import yaml
 
+from cdp.leitura_arquivos import ler_bytes, ler_texto, recusar_escrita, validar_modo
+
 from ..audit import AuditLog
 from ..calendar import (
     chave_valida,
@@ -81,6 +83,7 @@ def _afastar_briefing_incompleto(briefing_dir: Path) -> Path | None:
     pasta parcial e travava a semana. A pasta vai para ``.briefing.incompleto-<carimbo>``
     (ignorada pelo git) e o ``prepare`` recomeça do zero.
     """
+    recusar_escrita()
     briefing_dir = Path(briefing_dir)
     if not briefing_dir.exists() or briefing_completo(briefing_dir):
         return None
@@ -114,6 +117,7 @@ def aviso_coleta(falhas: list[str], pregao_base: object = None) -> str | None:
 
 
 def _write_json(path: Path, obj) -> None:
+    recusar_escrita()
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(obj, ensure_ascii=False, indent=2, sort_keys=True, default=str),
                     encoding="utf-8")
@@ -132,6 +136,17 @@ class Runtime:
     expected_mind: str | None = None
     """Mente desta execução (``--mind`` ou ``CDP_HARNESS``): os validadores recusam arquivos da
     mente com outro ``mind`` (``None`` = sem conferência, ex.: demonstração)."""
+
+    somente_leitura: bool = field(default=False, kw_only=True)
+    leitura_parametros: object | None = field(default=None, kw_only=True, repr=False)
+    leitura_eventos_macro: dict | None = field(default=None, kw_only=True, repr=False)
+    leitura_publico_root: Path | None = field(default=None, kw_only=True, repr=False)
+    leitura_pc: datetime | None = field(default=None, kw_only=True, repr=False)
+
+    def __post_init__(self) -> None:
+        validar_modo(self.somente_leitura)
+        if self.somente_leitura and (self.store_override is not None or self.clock is None):
+            raise ValueError("Runtime readonly exige relógio próprio e recusa store_override")
 
     def now(self) -> datetime:
         """Relógio da rotina (UTC); a demonstração usa um relógio lógico determinístico."""
@@ -157,7 +172,7 @@ class Runtime:
         try:
             if (rascunho is not None and arquivo is not None and Path(rascunho).is_file()
                     and Path(arquivo).is_file()
-                    and Path(rascunho).read_bytes() == Path(arquivo).read_bytes()):
+                    and ler_bytes(Path(rascunho)) == ler_bytes(Path(arquivo))):
                 return None
         except OSError:
             pass
@@ -165,7 +180,8 @@ class Runtime:
 
     @property
     def book(self) -> Book:
-        return Book(self.book_root, config=self.cfg)
+        return Book(self.book_root, config=self.cfg, market_store=self.store,
+                    somente_leitura=self.somente_leitura)
 
     @property
     def store(self):
@@ -173,19 +189,21 @@ class Runtime:
             return self.store_override
         from ..data.store import MarketStore
 
-        return MarketStore(self.market_root, cfg=self.cfg)
+        return MarketStore(self.market_root, cfg=self.cfg, now=self.clock,
+                           somente_leitura=self.somente_leitura)
 
     def track(self, shadow: bool = False):
         from .track_record import TrackRecord
 
         name = "track_record_shadow" if shadow else "track_record"
-        return TrackRecord(self.book_root / name)
+        return TrackRecord(self.book_root / name, somente_leitura=self.somente_leitura)
 
     # ------------------------------------------------------------------ estado
     def kill_switch_active(self) -> bool:
         return (self.book_root / KILL_SWITCH_FILE).exists()
 
     def set_kill_switch(self, on: bool, reason: str, by: str) -> None:
+        recusar_escrita(self.somente_leitura)
         path = self.book_root / KILL_SWITCH_FILE
         audit = AuditLog(self.book_root / "audit_log.jsonl")
         at = self.now().isoformat()
@@ -204,6 +222,7 @@ class Runtime:
         ``{"arquivo", "sha256", "pedido"}``. Arquivo novo é mesclável: sai na publicação da
         rotina compartilhada mesmo quando o livro (``book/KILL_SWITCH`` e a trilha) fica retido
         por falta da trava exclusiva."""
+        recusar_escrita(self.somente_leitura)
         local = self.now().astimezone(_BRT)
         folder = self.reports_root / RISK_REPORTS_DIR / local.date().isoformat()
         folder.mkdir(parents=True, exist_ok=True)
@@ -224,6 +243,7 @@ class Runtime:
         """Registra na trilha que o pedido ``sha`` foi tratado (``efeito``: aplicado, já ligado ou
         superado por desligamento humano). O payload é só o hash do pedido, então qualquer clone
         reconhece o pedido como tratado pela trilha encadeada."""
+        recusar_escrita(self.somente_leitura)
         AuditLog(self.book_root / "audit_log.jsonl").append(
             KILL_SWITCH_REQUEST_EVENT, by, {"pedido_sha256": sha},
             summary=f"Pedido de kill switch {sha[:12]}: {efeito}.")
@@ -246,7 +266,7 @@ class Runtime:
             if sha256_obj({"pedido_sha256": sha}) in handled:
                 continue
             try:
-                pedido = yaml.safe_load(path.read_text(encoding="utf-8"))
+                pedido = yaml.safe_load(ler_texto(path, encoding='utf-8'))
                 at = datetime.fromisoformat(str(pedido["at"]))
                 reason = str(pedido["reason"])
             except (OSError, ValueError, KeyError, TypeError, yaml.YAMLError):
@@ -262,6 +282,7 @@ class Runtime:
         """Aplica no livro os pedidos de kill switch pendentes (só em execução exclusiva: semanal,
         diária). Pedido posterior ao último desligamento humano liga o kill switch (se ainda
         desligado) com o motivo do pedido; todo pedido tratado fica registrado na trilha."""
+        recusar_escrita(self.somente_leitura)
         done: list[dict] = []
         for r in self.kill_switch_requests():
             by = str(r["pedido"].get("by") or "CDP — pedido de kill switch")
@@ -379,13 +400,15 @@ class Runtime:
             save_slow_refresh,
         )
 
+        if live or record:
+            recusar_escrita(self.somente_leitura)
         store = self.store
         manifest_path = briefing_dir / PREPARE_MANIFEST
         prev = self.information_session(week)
         if not record and manifest_path.exists():
             # A reconstrução usa o pregão de dados gravado no prepare (nunca recalcula).
             try:
-                raw_prev = json.loads(manifest_path.read_text(encoding="utf-8")).get(
+                raw_prev = json.loads(ler_texto(manifest_path, encoding='utf-8')).get(
                     "previous_session")
                 if raw_prev:
                     prev = date.fromisoformat(str(raw_prev)[:10])
@@ -424,7 +447,7 @@ class Runtime:
             info["snapshot_hash"] = md.manifest.content_hash()
             _write_json(manifest_path, info)
             return md, info
-        info = json.loads(manifest_path.read_text(encoding="utf-8"))
+        info = json.loads(ler_texto(manifest_path, encoding='utf-8'))
         md = store.load(as_of=prev)
         if md.manifest.content_hash() != info["store_content_hash"]:
             raise ValueError("O histórico de mercado mudou desde o prepare (hash divergente).")
@@ -516,6 +539,7 @@ class Runtime:
         episódios de stop até o último registro diário (um stop posterior reabre o veto). Grava
         o evento :data:`cdp.risk.limites.SQUEEZE_REVIEW_EVENT` na trilha; o corte à metade
         pendente continua (é regra do código, não da revisão)."""
+        recusar_escrita(self.somente_leitura)
         from ..risk.limites import (
             SQUEEZE_REVIEW_EVENT,
             SQUEEZE_REVIEW_SUMMARY,
@@ -631,7 +655,7 @@ class Runtime:
         path = self.week_dir(prev) / "inputs" / PM_INPUT
         if path.exists():
             try:
-                out = PMDecisionOutput.model_validate_json(path.read_text(encoding="utf-8"))
+                out = PMDecisionOutput.model_validate_json(ler_texto(path, encoding='utf-8'))
             except ValueError:
                 out = None
         views = list(pack.views) if pack else []
@@ -739,6 +763,7 @@ class Runtime:
         return md, info, ctx, fb, pmctx
 
     def weekly_prepare(self, week: date, *, mind: str, live: bool = True) -> dict:
+        recusar_escrita(self.somente_leitura)
         from ..research.pm_agent import write_briefing_bundle
 
         if not chave_valida(week, self.cfg):
@@ -804,6 +829,7 @@ class Runtime:
                                only_research=so_pesquisa)
 
     def weekly_decide(self, week: date, *, mind: str) -> dict:
+        recusar_escrita(self.somente_leitura)
         from ..research.pm_agent import load_week_inputs, pm_factbook, to_bundle
         from .autonomy import make_autonomous_decision
         from .avaliacao import BINDING_FILE, FOLDER, bind, preregister
@@ -817,7 +843,7 @@ class Runtime:
             # Reconciliar anexos depois de uma queda não produz outra decisão/ordem.
             decision = b.load_decision(week)
             binding_path = self.week_dir(week) / FOLDER / BINDING_FILE
-            previous_path = (json.loads(binding_path.read_text(encoding="utf-8"))["path_taken"]
+            previous_path = (json.loads(ler_texto(binding_path, encoding='utf-8'))["path_taken"]
                              if binding_path.exists() else "recuperado")
             bind(b, decision, path_taken=previous_path, now=self.now())
             return {"semana": week, "status": "já decidido", "decisao": decision.approval_hash,
@@ -866,6 +892,19 @@ class Runtime:
         bundle = to_bundle(out, self.cfg, pm_ctx.drawdown, factbook=pfb)
         cohort = preregister(b, ctx, pack, bundle, mind=mind, cutoff=t_dec, now=self.now(),
                              deadline=self.decision_deadline(week), clock=self.now)
+        from .net_moc import archive_config
+
+        archive_config(self.book_root, self.cfg)
+        config_path = self.week_dir(week) / DECISION_CONFIG
+        from ..config import config_json
+        from .book import _write_exclusive
+
+        config_raw = config_json(self.cfg)
+        if config_path.exists():
+            if ler_texto(config_path, encoding='utf-8') != config_raw:
+                raise ValueError("configuração da decisão já arquivada com outros bytes")
+        else:
+            _write_exclusive(config_path, config_raw)
         outcome = run_weekly_decision(ctx, pack, bundle, version=b.next_version(week),
                                       live_weeks=self.live_weeks(),
                                       kill_switch=self.kill_switch_active(),
@@ -883,9 +922,6 @@ class Runtime:
         # carteira reconstrói a semana com ela mesmo após uma recalibração do mandato. Sem
         # ``sort_keys``: a ordem dos dicionários (ex.: pesos dos sinais) define a ordem das
         # somas, e a reconstrução precisa ser idêntica bit a bit.
-        (self.week_dir(week) / DECISION_CONFIG).write_text(
-            json.dumps(self.cfg.model_dump(mode="json"), ensure_ascii=False, indent=2) + "\n",
-            encoding="utf-8")
         b.audit.append("SHADOW_QUANT", "CDP", {"sha256": sha256_file(shadow_path)},
                        summary="Carteira-sombra só-quant gravada.", week=week)
         # A decisão é ancorada na trilha DEPOIS da proposta gravada (nunca retroativa).
@@ -1016,6 +1052,7 @@ class Runtime:
         Grava o registro diário encadeado e os insumos do comentário da mente
         (``reports/daily/<data>/facts.md``); a publicação vem depois (``daily publish``).
         """
+        recusar_escrita(self.somente_leitura)
         from ..research.commentary import factbook_json, write_daily_commentary_inputs
         from .avaliacao import resolve
         from .daily import NoBookError, NoSessionError
@@ -1138,6 +1175,7 @@ class Runtime:
 
     def daily_publish(self, session: date) -> dict:
         """Valida o comentário da mente e publica o relatório diário (imutável)."""
+        recusar_escrita(self.somente_leitura)
         from ..research.commentary import COMMENTARY_JSON, load_commentary_file
         from .reports import render_daily_report, write_report_files
 
@@ -1163,6 +1201,7 @@ class Runtime:
     # ------------------------------------------------------------------ tese da carteira
     def thesis_prepare(self, week: date) -> dict:
         """Fatos, análise e briefing da tese da carteira decidida (``book/<semana>/tese/``)."""
+        recusar_escrita(self.somente_leitura)
         from .tese import prepare_thesis
 
         return prepare_thesis(self, week)
@@ -1175,6 +1214,7 @@ class Runtime:
 
     def thesis_publish(self, week: date) -> dict:
         """Publica a tese (mente ou automática), imutável, com evento ``WEEKLY_THESIS``."""
+        recusar_escrita(self.somente_leitura)
         from .tese import publish_thesis
 
         return publish_thesis(self, week)
@@ -1191,6 +1231,8 @@ class Runtime:
             try:
                 t_ok, t_msgs = self.track(shadow).verify()
             except Exception as exc:  # noqa: BLE001
+                if self.somente_leitura:
+                    raise
                 t_ok, t_msgs = True, [f"sem track record ({exc.__class__.__name__})"]
             ok &= t_ok
             label = "sombra" if shadow else "track record"
@@ -1211,6 +1253,8 @@ class Runtime:
             ok &= s_ok
             msgs += [f"dados: {m}" for m in (s_msgs or ["íntegros"])]
         except Exception as exc:  # noqa: BLE001
+            if self.somente_leitura:
+                raise
             msgs.append(f"dados: sem base de mercado ({exc.__class__.__name__})")
         from .contrato_custos import verify as verify_execution_costs
 
@@ -1247,7 +1291,8 @@ class Runtime:
         from ..cobertura.ri_fluxo import livro_exige_ri
         ri_existente = livro_exige_ri(self.book_root)
         if ri_existente or ri_autoridade is not None or ri_cortes:
-            c_ok, c_msgs = verificar(self.book_root, ri_autoridade=ri_autoridade, ri_cortes=ri_cortes)
+            c_ok, c_msgs = verificar(self.book_root, ri_autoridade=ri_autoridade, ri_cortes=ri_cortes,
+                                    recalcular=not self.somente_leitura)
             ok &= c_ok
             msgs += [f"cobertura RI: {m}" for m in c_msgs]
         from .retificacao_semanal import status as status_editorial
@@ -1348,6 +1393,7 @@ class Runtime:
         return True, []
 
     def run_backtest(self, start: date, end: date | None, out: Path) -> dict:
+        recusar_escrita(self.somente_leitura)
         from ..backtest.engine import BacktestConfig, run_backtest
 
         md = self.store.load()

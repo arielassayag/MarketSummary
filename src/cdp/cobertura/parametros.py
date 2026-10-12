@@ -16,6 +16,8 @@ from typing import Any
 
 import yaml
 
+from cdp.leitura_arquivos import ler_texto
+
 from ..hashing import sha256_obj, sha256_text
 
 DEFAULT_VALUATION = Path("configs/cdp/valuation.yaml")
@@ -178,16 +180,22 @@ def carregar_parametros(valuation: Path | str | None = None,
     """Lê e valida os parâmetros; o sha256 do texto de cada arquivo vai em ``arquivos``."""
     vpath = Path(valuation) if valuation else DEFAULT_VALUATION
     pdir = Path(pasta) if pasta else (vpath.parent / "cobertura" if valuation else DEFAULT_COBERTURA_DIR)
-    textos: dict[str, str] = {"valuation.yaml": vpath.read_text(encoding="utf-8")}
+    textos: dict[str, str] = {"valuation.yaml": ler_texto(vpath, encoding='utf-8')}
     for nome in ("arquetipos.csv", "betas_setor.csv", "unidades.csv", "sotp.yaml", "etfs.yaml"):
         p = pdir / nome
-        textos[f"cobertura/{nome}"] = p.read_text(encoding="utf-8") if p.exists() else ""
+        textos[f"cobertura/{nome}"] = ler_texto(p, encoding='utf-8') if p.exists() else ""
     val = yaml.safe_load(textos["valuation.yaml"]) or {}
     if val.get("projecao", {}).get("normalizacao_resultado_metodo") == "eventos_evidenciados":
         catalogo = vpath.parent / "resultado_evidencias.json"
         if not catalogo.exists():
             catalogo = DEFAULT_VALUATION.parent / "resultado_evidencias.json"
-        textos["resultado_evidencias.json"] = catalogo.read_text(encoding="utf-8")
+        textos["resultado_evidencias.json"] = ler_texto(catalogo, encoding='utf-8')
+    return _parametros_de_textos(textos)
+
+
+def _parametros_de_textos(textos: dict[str, str]) -> ParametrosCobertura:
+    """Parser nativo de corpos recebidos; não procura arquivo, catálogo ou fonte."""
+    val = yaml.safe_load(textos["valuation.yaml"]) or {}
     arquivos = {k: sha256_text(v) for k, v in sorted(textos.items())}
 
     betas: dict[str, BetaSetor] = {}

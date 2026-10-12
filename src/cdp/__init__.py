@@ -13,6 +13,6 @@ Separação de responsabilidades (ver docs/cdp/ARQUITETURA.md e docs/cdp/METODOL
 """
 
 FUND_NAME = "CDP — Cabra da Peste"
-__version__ = "0.1.0"
+__version__ = "1.7.0"
 
 SIMULATED_DATA_NOTICE = "DADOS SIMULADOS"

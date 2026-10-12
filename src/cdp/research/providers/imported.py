@@ -28,6 +28,8 @@ from typing import Any
 
 from pydantic import BaseModel, ValidationError
 
+from cdp.leitura_arquivos import ler_texto
+
 from ...config import FundConfig
 from ...contracts import (
     EvidenceKind,
@@ -169,21 +171,29 @@ def load_imported_pack(path: Path, week: date, snapshot_id: str, factbook: FactB
     ``as_of`` é o último pregão permitido para as evidências: notícias publicadas depois
     dele tornam a nota inválida (look-ahead). Arquivo inexistente ⇒ ``FileNotFoundError``.
     """
-    from ..agents import merge_views, notes_to_views  # import tardio (evita ciclo)
-
     cfg = cfg or FundConfig()
     path = Path(path)
     if not path.exists():
         raise FileNotFoundError(f"Pacote de pesquisa importado não encontrado: {path}")
-    issues: list[str] = []
     empty = ResearchPack(week=week, snapshot_id=snapshot_id, provider=IMPORTED_PACK_PROVIDER,
                          is_synthetic=factbook.is_synthetic)
     try:
-        payload = json.loads(path.read_text(encoding="utf-8"))
+        payload = json.loads(ler_texto(path, encoding='utf-8'))
     except (UnicodeDecodeError, json.JSONDecodeError) as exc:
         return empty, [f"Arquivo importado ilegível (JSON inválido): {exc}"]
     if not isinstance(payload, dict):
         return empty, ["Arquivo importado precisa ser um objeto JSON com notes/macro/views."]
+    return parse_imported_pack(payload, week, snapshot_id, factbook, as_of, cfg=cfg, news=news)
+
+
+def parse_imported_pack(payload: dict, week: date, snapshot_id: str, factbook: FactBook,
+                        as_of: date, *, cfg: FundConfig | None = None,
+                        news: Iterable[NewsItem] | None = None) -> tuple[ResearchPack, list[str]]:
+    """Parser nativo em memória, sem arquivo temporário; mesmas verificações do loader."""
+    from ..agents import merge_views, notes_to_views
+
+    cfg = cfg or FundConfig()
+    issues: list[str] = []
     extra = sorted(set(payload) - {"notes", "macro", "views"})
     if extra:
         issues.append(f"Chaves desconhecidas ignoradas: {extra}")

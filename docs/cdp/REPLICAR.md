@@ -127,10 +127,11 @@ links para o portal original (já estão nas páginas) e não se apresente como 
    `uv run pytest tests/cdp -q`; faça o commit e o merge no seu `main`.
 4. **Escolha o app de IA e agende as rotinas dentro dele** (passo a passo em
    `docs/cdp/AUTOMACAO.md`):
-   - **Claude Code** (rotinas na nuvem em claude.ai/code; a escolha do CDP):
+   - **Codex** (o app atual das rotinas do CDP; tarefas agendadas num clone e numa conta
+     de usuário dedicados, com acesso total):
+     `uv run python -m cdp rotinas exportar --alvo codex --formato md`;
+   - **Claude Code** (alternativa com rotinas na nuvem em claude.ai/code):
      `uv run python -m cdp rotinas exportar --alvo claude-routines --formato md`;
-   - **Codex** (tarefas agendadas do app, num clone e numa conta de usuário dedicados, com
-     acesso total): `uv run python -m cdp rotinas exportar --alvo codex --formato md`;
    - **Gemini** (Antigravity — tarefas agendadas do app ou `agy` pelo agendador do sistema;
      Gemini CLI com chave paga): `uv run python -m cdp rotinas exportar --alvo gemini --formato md`
      ou `uv run python -m cdp rotinas exportar --alvo cron --harness agy`;

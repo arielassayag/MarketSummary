@@ -48,6 +48,8 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
+from cdp.leitura_arquivos import ler_texto, recusar_escrita, validar_modo
+
 from ..audit import GENESIS_HASH, AuditLog
 from ..config import FundConfig
 from ..contracts import DailyRecord
@@ -205,6 +207,7 @@ def _parse_record_name(path: Path) -> date | None:
 
 def write_exclusive(path: Path, text: str) -> None:
     """Cria ``path`` atomicamente; ``FileExistsError`` se já existir (nunca sobrescreve)."""
+    recusar_escrita()
     path.parent.mkdir(parents=True, exist_ok=True)
     if path.exists():
         raise FileExistsError(f"Arquivo imutável já existe: {path}")
@@ -239,14 +242,17 @@ class TrackRecord:
 
     def __init__(self, root: Path | str = DEFAULT_TRACK_ROOT, *,
                  audit_path: Path | str | None = None,
-                 audit_event: str | None = None, actor: str = TRACK_ACTOR) -> None:
+                 audit_event: str | None = None, actor: str = TRACK_ACTOR,
+                 somente_leitura: bool = False) -> None:
+        self.somente_leitura = validar_modo(somente_leitura)
         self.root = Path(root)
         self.records_dir = self.root / RECORDS_DIRNAME
         self.csv_path = self.root / CSV_NAME
         self.audit_event = audit_event or default_audit_event(self.root)
         self.actor = actor
         self.audit = AuditLog(Path(audit_path) if audit_path is not None
-                              else self.root.parent / "audit_log.jsonl")
+                              else self.root.parent / "audit_log.jsonl",
+                              somente_leitura=self.somente_leitura)
 
     # ---------------------------------------------- leitura
     def record_path(self, d: date) -> Path:
@@ -263,7 +269,7 @@ class TrackRecord:
         return [d for d, _ in self._record_files()]
 
     def _load(self, path: Path) -> DailyRecord:
-        return DailyRecord.model_validate_json(path.read_text(encoding="utf-8"))
+        return DailyRecord.model_validate_json(ler_texto(path, encoding='utf-8'))
 
     def get(self, d: date) -> DailyRecord | None:
         path = self.record_path(d)
@@ -325,6 +331,10 @@ class TrackRecord:
         violadas (:func:`record_consistency`), números não finitos, serialização instável e
         arquivo já existente.
         """
+        recusar_escrita(self.somente_leitura)
+        from .net_moc_prova import validate_record
+
+        validate_record(self, record)
         if record.record_hash != record.compute_hash():
             raise ValueError("record_hash não confere com o conteúdo do registro.")
         bad = non_finite_fields(record.model_dump(mode="json"))
@@ -375,7 +385,9 @@ class TrackRecord:
     def _csv_rows(self) -> list[dict[str, str]]:
         if not self.csv_path.exists():
             return []
-        with self.csv_path.open(encoding="utf-8", newline="") as f:
+        from cdp.leitura_arquivos import abrir_leitura
+
+        with abrir_leitura(self.csv_path, encoding="utf-8", newline="") as f:
             reader = csv.DictReader(f)
             if reader.fieldnames is not None and list(reader.fieldnames) != CSV_COLUMNS:
                 raise ValueError(f"Cabeçalho inesperado em {self.csv_path}: {reader.fieldnames}")
@@ -395,10 +407,12 @@ class TrackRecord:
         return df[cols]
 
     def returns(self) -> pd.Series:
+        recusar_escrita()
         return self.frame()["ret"].rename("ret")
 
     def nav_series(self) -> pd.Series:
         """NAV de fechamento por pregão (USD)."""
+        recusar_escrita()
         return self.frame()["nav"].rename("nav")
 
     def inception_nav(self) -> float | None:
@@ -409,6 +423,7 @@ class TrackRecord:
         return float(f["nav"].iloc[0] - f["pnl"].iloc[0])
 
     def drawdown_series(self) -> pd.Series:
+        recusar_escrita()
         f = self.frame()
         if f.empty:
             return pd.Series(dtype=float, name="drawdown")
@@ -529,6 +544,12 @@ class TrackRecord:
                                 f"({prev_date}).")
             problems += [f"Contas do NAV incoerentes — {m}"
                          for m in record_consistency(rec, prev_rec)]
+            from .net_moc_prova import load as load_net_proof
+
+            try:
+                load_net_proof(self, rec)
+            except (ValueError, OSError, KeyError, TypeError) as exc:
+                problems.append(f"{rec.date}: prova NET inválida ({str(exc)[:250]}).")
             prev_hash = rec.record_hash
             prev_date = rec.date
             prev_rec = rec

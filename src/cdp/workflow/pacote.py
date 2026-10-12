@@ -26,6 +26,8 @@ from datetime import UTC, date, datetime
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
+from cdp.leitura_arquivos import ler_texto, recusar_escrita
+
 if TYPE_CHECKING:  # pragma: no cover
     from .runtime import Runtime
 
@@ -97,7 +99,7 @@ def _ler(path: Path, prepare_cmd: str) -> str:
     if not path.is_file():
         raise PacoteIndisponivel(f"arquivo ausente: {path.as_posix()} — rode antes "
                                  f"`{prepare_cmd}`")
-    return path.read_text(encoding="utf-8")
+    return ler_texto(path, encoding='utf-8')
 
 
 def _cli(rt: Runtime) -> str:
@@ -316,7 +318,7 @@ def _comentario_diario(rt: Runtime, d: date, mente: str) -> Pacote:
     origem = [(p.as_posix(), _sha(p)) for p in (folder / FACTS_MD,
                                                  folder / COMMENTARY_SCHEMA_JSON)]
     if fb_path.is_file():
-        fb = FactBook.model_validate(json.loads(fb_path.read_text(encoding="utf-8")))
+        fb = FactBook.model_validate(json.loads(ler_texto(fb_path, encoding='utf-8')))
         exemplo = _com_mente(example_commentary(fb, mente), mente)
         origem.append((fb_path.as_posix(), _sha(fb_path)))
     papel = ("Você escreve o comentário diário de resultado de um fundo long/short de ações "
@@ -360,7 +362,7 @@ def _comentario_semanal(rt: Runtime, d: date, mente: str) -> Pacote:
         if exemplo_fn is not None and fb_path.is_file():
             from ..contracts import FactBook
 
-            fb = FactBook.model_validate(json.loads(fb_path.read_text(encoding="utf-8")))
+            fb = FactBook.model_validate(json.loads(ler_texto(fb_path, encoding='utf-8')))
             exemplo = _com_mente(exemplo_fn(fb, mente), mente)
     except ImportError:
         pass
@@ -422,7 +424,7 @@ def resumo_pesquisa(path: Path) -> str:
     o risco principal e a sentinela de squeeze; notas macro e visões restritivas. O texto integral e as
     evidências ficam no arquivo (anexável)."""
     try:
-        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw = json.loads(ler_texto(path, encoding='utf-8'))
     except (OSError, ValueError) as exc:
         return f"Arquivo ilegível ({exc.__class__.__name__}): {path.as_posix()}."
     if not isinstance(raw, dict):
@@ -634,6 +636,7 @@ def problema_saida(saida: Path, rt: Runtime) -> str | None:
 
 def cmd_pacote(args: argparse.Namespace) -> int:
     """``cdp mente pacote``: 0 = gravado; 1 = arquivos da etapa ausentes; 2 = argumentos."""
+    recusar_escrita()
     from .runtime import Runtime
 
     rt = Runtime.from_args(args)

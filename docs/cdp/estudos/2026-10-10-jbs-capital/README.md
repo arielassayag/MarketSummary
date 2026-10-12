@@ -98,3 +98,52 @@ A nota 20 anual distingue quantidades de ações e valores em milhares de USD. A
 Locador: [20-F anual SEC](https://www.sec.gov/Archives/edgar/data/1791942/000121390026034213/ea0282342-20f_jbsnv.htm), nota 20 a/c1, Item 16E, nota 23 para a definição da média de EPS e capa para outstanding. Não transportar moeda BRL do outro bloco do PDF composto nem converter legenda/scale por inferência. A data de referência é 31/12/2025; primeira publicação UTC e posse operacional não foram autenticadas por este estudo.
 
 Custódia deste adendo: ZIP DFP2025 SHA-256 `d7aec54e7c67998e4cd3ef94c463ab247f09a6baaa2254878d1e431f28130e2a`; membro composição de capital SHA-256 `f29b0e4bf6004cbb6d0758460d92cab5eb4807181786d668eb7c7cfe14593e6f`. O confronto final V2 conserva abertura numérica ausente e rollforward não autenticado; não foi reexecutado nesta passagem. Nenhuma adoção de quantidade, alteração financeira, OP, P0 ou PIT.
+
+## Adendo documental — Formulário de Referência v3
+
+O catálogo de RI apontou o [Formulário de Referência v3](https://api.mziq.com/mzfilemanager/v2/d/fdb59571-9620-473a-8f8d-a9c27ebf7d44/cf39a35e-3dec-44fa-70a3-12c54c36127c?origin=2), datado de 28/08/2026. Uma recepção HTTP200 em 10/10/2026, 17:39:05 UTC conservou o corpo completo de 16.777.216 bytes, SHA `b545894f3cc48b53cec119c2b1f06db8e5866259b36cc820842071d26b01833d`. Foram extraídas 460 páginas físicas; leitura humana delimitada, sem afirmar leitura integral do documento. O corpo contém preenchimento zero após o marcador PDF final, preservado sem alteração.
+
+Na página física 249 (245 impressa), a seção 6.3 define circulação excluindo controlador, vinculados, administradores e tesouraria, com data de última alteração 30/04/2026. Essa medida não substitui outstanding ou média de EPS. A seção 12.1, física 442 (438 impressa), informa capital emitido, subscrito e integralizado de 1.163.046.411 ações, com autorização em 20/05/2025; não reconcilia automaticamente os estoques de dezembro e junho já recebidos.
+
+As páginas físicas 443–444 distinguem classes A/B, com igualdade de distribuição e conversão 1:1, das Conversion Shares mantidas pela companhia. A quantidade por classe e seu grão ainda exigem ponte. Nenhum denominador foi selecionado, nem G13/PIT aprovado. Fonte, texto integral extraído, páginas lidas e recibos ficam em `.cdp/estudos/20261010-jbs-fre-v3-agosto/`.
+
+## Adendo documental — ponte EPS, 10/10/2026, 18:59 UTC
+
+O confronto fechado às 18:59 UTC reutilizou **sete corpos primários completos**
+e gerou **31 linhas de lexemas/contextos**, com origens intactas. As fontes e
+hashes dos sete corpos estão nos blocos acima. Não houve nova busca, HTTP,
+cálculo financeiro, modelo ou quantidade adotada.
+
+No [interino SEC](https://www.sec.gov/Archives/edgar/data/1791942/000179194226000004/jbsay-20260630.htm)
+(SHA `faa27c1738aa563eae86505480b55c5c408f458aeeb14e04bd15c6b7ea8692b9`),
+o EPS trimestral de 2026 é básico `(0.10)` e diluído `(0.09)`: tabela 14,
+`/html/body/div[174]/table`, fatos `f-239/f-241`, contexto `c-22`,
+01/04–30/06/2026, ambos sign−, USD/shares, scale0, decimals2. O
+[PDF interino USD](https://api.mziq.com/mzfilemanager/v2/d/fdb59571-9620-473a-8f8d-a9c27ebf7d44/7489b5dc-c4eb-2f17-9c08-4f7d33144a7e?origin=2)
+(SHA `966810f8629c3111053fbb370f93ab647f9d036e290f543950b97937806d37c7`)
+repete esses valores na página física 5, impressa 4. A causa da diferença e os
+denominadores básico/diluído permanecem pendentes, sem reconstrução por EPS.
+
+Os conflitos de unidade continuam preservados: nota 23 anual, tabela 1104,
+legenda “shares in thousands” versus WeightedAverageShares em shares/scale0,
+decimals0; capa Q2, `f-39/f-40`, lexemas de outstanding em shares/scale3,
+decimalsINF. No [20-F anual](https://www.sec.gov/Archives/edgar/data/1791942/000121390026034213/ea0282342-20f_jbsnv.htm)
+(SHA `c26b08196f75cab06ca9dd6202176dd36355471b7458a027903a9b88ba81948d`),
+a nota 20 também publica `2,218,116,370` common shares para 31/12/2024, mas o
+fato `ixv-91257`, `/html/body/div/ix:nonnumeric[25]/p[3]`, usa contexto
+`c1072` com eixo `ClassBCommonSharesMember`. Legenda, unidade e eixo devem
+ser conciliados primariamente antes de consumo.
+
+Denominadores interinos **não foram localizados na família ampla de QNames e
+labels dos corpos recebidos**, incluindo tags JBS e termos weighted, average,
+ordinary, share, diluted, basic e denominator, com contexto/unidade/decimals
+conservados. No PDF USD, as ocorrências de average nas físicas 22/26 tratam de
+arrendamentos e juros. A varredura usa texto extraível, sem OCR ou leitura visual
+humana integral; não demonstra ausência em todos os arquivos ou versões.
+
+Falta reconciliação primária de emitidas/tesouraria/outstanding A/B e Conversion
+Shares por data, unidade controladora e médias interinas por intervalo. O estudo
+local fica em `.cdp/estudos/20261010-jbs-eps-ponte-primary/`; esses arquivos
+ignorados não estão garantidos em outro clone. Retomar pelas URLs primárias,
+hashes completos e locadores acima, recebendo e conferindo os próprios corpos.
+Nenhuma quantidade, G13, P0, PIT ou posse operacional de 09/10 foi qualificada.

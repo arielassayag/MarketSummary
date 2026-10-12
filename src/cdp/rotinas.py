@@ -37,6 +37,8 @@ from zoneinfo import ZoneInfo
 
 import yaml
 
+from cdp.leitura_arquivos import ler_texto, recusar_escrita
+
 ROTINAS_PADRAO = Path("configs/cdp/rotinas.yaml")
 FUSO = "America/Sao_Paulo"
 #: Brasília sem horário de verão desde 2019: UTC = Brasília + 3 h (``verificar`` confere).
@@ -388,7 +390,7 @@ def carregar(caminho: Path | str | None = None) -> Rotinas:
     """Lê e expande ``rotinas.yaml`` (``herda`` e ``reservas`` viram tarefas completas)."""
     path = Path(caminho) if caminho is not None else ROTINAS_PADRAO
     try:
-        raw = yaml.safe_load(path.read_text(encoding="utf-8"))
+        raw = yaml.safe_load(ler_texto(path, encoding='utf-8'))
     except OSError as exc:
         raise ErroRotinas(f"não consegui ler {path}: {exc}") from exc
     except yaml.YAMLError as exc:
@@ -1423,13 +1425,18 @@ _COMPAT = ("Requer git, uv e rede para fontes públicas; qualquer harness com sh
            "Codex, Gemini CLI, Antigravity, Copilot, Cursor).")
 
 
-def _frontmatter(nome: str, descricao: str, metadados: Mapping[str, str]) -> str:
+def _frontmatter(nome: str, descricao: str, metadados: Mapping[str, str],
+                 ferramentas: Sequence[str]) -> str:
     meta = "\n".join(f"  {k}: {json.dumps(v, ensure_ascii=False)}" for k, v in metadados.items())
+    tools = "\n".join(f"  - {json.dumps(t, ensure_ascii=False)}" for t in ferramentas)
     return (f"---\nname: {nome}\ndescription: {json.dumps(descricao, ensure_ascii=False)}\n"
-            f"compatibility: {json.dumps(_COMPAT, ensure_ascii=False)}\nmetadata:\n{meta}\n---\n")
+            f"compatibility: {json.dumps(_COMPAT, ensure_ascii=False)}\nallowed-tools:\n{tools}\n"
+            f"metadata:\n{meta}\n---\n")
 
 
 def _skill_familia(rot: Rotinas, skill: str, tarefas: Sequence[Tarefa]) -> str:
+    from .permissoes import ferramentas_skill
+
     t0 = tarefas[0]
     ids = [t.id for t in tarefas]
     horarios = "; ".join(f"{t.id} {t.quando()}" for t in tarefas)
@@ -1439,7 +1446,8 @@ def _skill_familia(rot: Rotinas, skill: str, tarefas: Sequence[Tarefa]) -> str:
     if len(desc) > 1024:
         desc = desc[:1020].rstrip() + "…"
     fm = _frontmatter(skill, desc, {"gerado-por": GERADO_POR, "fonte": ROTINAS_PADRAO.as_posix(),
-                                    "playbook": t0.playbook, "tarefas": " ".join(ids)})
+                                    "playbook": t0.playbook, "tarefas": " ".join(ids)},
+                      ferramentas_skill(rot, skill.removeprefix("cdp-")))
     padrao = ids[0]
     corpo = [f"# CDP — {_titulo(t0)}", "",
              "Rotina sem supervisão: não pergunte; se algo impedir, pare e explique no resumo "
@@ -1490,6 +1498,8 @@ def _skill_familia(rot: Rotinas, skill: str, tarefas: Sequence[Tarefa]) -> str:
 
 
 def _skill_retomar(rot: Rotinas) -> str:
+    from .permissoes import ferramentas_skill
+
     desc = ("Retoma a operação ou o desenvolvimento do CDP — Cabra da Peste em qualquer harness: "
             "lê o estado (fase do fundo, executor, últimas execuções, pendências, incidentes, "
             "próximas rotinas) e indica o roteiro certo. Use ao abrir uma sessão neste "
@@ -1497,7 +1507,7 @@ def _skill_retomar(rot: Rotinas) -> str:
             "desenvolvimento do CDP.")
     fm = _frontmatter(SKILL_RETOMAR, desc, {"gerado-por": GERADO_POR,
                                             "playbook": "docs/cdp/playbooks/RETOMAR.md",
-                                            "tarefas": ""})
+                                            "tarefas": ""}, ferramentas_skill(rot, "retomar"))
     corpo = """# CDP — pegar o bonde andando
 
 1. `uv sync --extra dev --extra ai`
@@ -1523,16 +1533,24 @@ def gerar_skills(rot: Rotinas) -> dict[str, str]:
 
 
 def sincronizar_skills(rot: Rotinas, raiz: Path, *, verificar_apenas: bool = False,
-                       claude: bool = False) -> dict[str, Any]:
+                       claude: bool = False, permissoes: bool = False) -> dict[str, Any]:
     """Grava (ou só confere) as skills geradas; ``claude`` espelha em ``.claude/skills``."""
+    recusar_escrita()
     gerado = gerar_skills(rot)
     if claude:
         gerado.update({p.replace(SKILLS_DIR.as_posix(), SKILLS_CLAUDE_DIR.as_posix(), 1): txt
                        for p, txt in list(gerado.items())})
+    if permissoes:
+        from .permissoes import _destino, sincronizar_permissoes
+
+        # Política e todos os destinos existentes conferidos antes de gravar skills.
+        sincronizar_permissoes(rot, raiz, verificar_apenas=True)
+        for relative in gerado:
+            _destino(Path(raiz).absolute(), relative)
     diferentes, gravados = [], []
     for rel, txt in gerado.items():
         path = raiz / rel
-        atual = path.read_text(encoding="utf-8") if path.is_file() else None
+        atual = ler_texto(path, encoding='utf-8') if path.is_file() else None
         if atual == txt:
             continue
         diferentes.append(rel)
@@ -1547,9 +1565,16 @@ def sincronizar_skills(rot: Rotinas, raiz: Path, *, verificar_apenas: bool = Fal
             rel = f"{SKILLS_DIR.as_posix()}/{d.name}/SKILL.md"
             if d.is_dir() and d.name.startswith("cdp-") and rel not in gerado:
                 sobras.append(rel)
+    if permissoes:
+        out = sincronizar_permissoes(rot, raiz, verificar_apenas=verificar_apenas)
+        diferentes.extend(out["diferentes"])
+        gravados.extend(out["gravados"])
+        arquivos = [*gerado, *out["arquivos"]]
+    else:
+        arquivos = list(gerado)
     return {"ok": not diferentes and not sobras if verificar_apenas else not sobras,
             "diferentes": diferentes, "gravados": gravados, "sobras": sobras,
-            "arquivos": list(gerado)}
+            "arquivos": arquivos}
 
 
 # ==========================================================================================
@@ -1808,6 +1833,7 @@ def cmd_conferir(args: argparse.Namespace) -> int:
 
 
 def cmd_exportar(args: argparse.Namespace) -> int:
+    recusar_escrita()
     rot = _carregar(args)
     alvo = args.alvo
     modelos = _modelos(args.modelo)
@@ -1876,7 +1902,8 @@ def cmd_skills(args: argparse.Namespace) -> int:
     rot = _carregar(args)
     so_conferir = args.action == "verificar" or getattr(args, "verificar", False)
     out = sincronizar_skills(rot, Path(args.raiz), verificar_apenas=so_conferir,
-                             claude=getattr(args, "claude", False))
+                             claude=getattr(args, "claude", False),
+                             permissoes=getattr(args, "permissoes", False))
     _print(out)
     return 0 if out["ok"] else 1
 
@@ -1984,6 +2011,8 @@ def registrar(sub: argparse._SubParsersAction) -> None:
     s.add_argument("--verificar", action="store_true", help="só confere (1 = diferente)")
     s.add_argument("--claude", action="store_true",
                    help="espelha também em .claude/skills (Claude Code)")
+    s.add_argument("--permissoes", action="store_true",
+                   help="gera também blocos de permissões locais no checkout de desenvolvimento")
     s.set_defaults(func=cmd_skills)
     s = ksub.add_parser("verificar", help="confere se as skills estão em dia (1 = diferente)")
     _comuns(s)

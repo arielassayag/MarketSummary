@@ -41,6 +41,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+from cdp.leitura_arquivos import ler_bytes, ler_csv, recusar_escrita
+
 from ..universe import Universe
 
 logger = logging.getLogger(__name__)
@@ -165,8 +167,7 @@ def normalize_text(text: object) -> str:
 def read_cvm_csv(data: bytes | io.BytesIO, **kwargs) -> pd.DataFrame:
     """Lê um CSV da CVM (``;``, latin-1) mantendo tudo como texto (conversão explícita depois)."""
     buf = io.BytesIO(data) if isinstance(data, bytes) else data
-    return pd.read_csv(buf, sep=";", encoding="latin-1", dtype=str, keep_default_na=False,
-                       na_values=[""], **kwargs)
+    return ler_csv(buf, sep=';', encoding='latin-1', dtype=str, keep_default_na=False, na_values=[''], **kwargs)
 
 
 def sha256_bytes(data: bytes) -> str:
@@ -184,6 +185,7 @@ def sha256_path(path: str | Path) -> str:
 
 
 def _atomic_write(path: Path, data: bytes) -> None:
+    recusar_escrita()
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_name(path.name + ".part")
     tmp.write_bytes(data)
@@ -256,14 +258,14 @@ def fetch_cvm_fca(year: int, http_get: HttpGet | None = None,
     fname = f"fca_cia_aberta_{int(year)}.zip"
     path = Path(cache_dir) / fname if cache_dir is not None else None
     if path is not None and path.exists() and _cache_is_fresh(path, year, max_age_days, today):
-        return parse_fca_zip(path.read_bytes())
+        return parse_fca_zip(ler_bytes(path))
     try:
         data = (http_get or default_http_get)(fca_url(year), {"User-Agent": DEFAULT_USER_AGENT})
         df = parse_fca_zip(data)
     except (HttpError, ValueError, zipfile.BadZipFile) as exc:
         if path is not None and path.exists():
             logger.warning("Falha ao atualizar %s (%s); usando cache.", fname, exc)
-            return parse_fca_zip(path.read_bytes())
+            return parse_fca_zip(ler_bytes(path))
         if isinstance(exc, zipfile.BadZipFile):
             raise ValueError(f"ZIP do FCA inválido: {fca_url(year)}") from exc
         raise
@@ -346,7 +348,7 @@ def fetch_sec_company_tickers(http_get: HttpGet | None = None, user_agent: str |
     if path is not None and path.exists():
         age_days = (time.time() - path.stat().st_mtime) / 86400.0
         if age_days <= max_age_days:
-            return parse_sec_company_tickers(path.read_bytes())
+            return parse_sec_company_tickers(ler_bytes(path))
     try:
         data = _sec_get(SEC_TICKERS_URL, http_get, user_agent, limiter)
         # valida ANTES de gravar: resposta inválida (HTML de proxy, JSON truncado) nunca
@@ -355,7 +357,7 @@ def fetch_sec_company_tickers(http_get: HttpGet | None = None, user_agent: str |
     except (HttpError, ValueError) as exc:
         if path is not None and path.exists():
             logger.warning("Mapa ticker→CIK da SEC indisponível (%s); usando cache.", exc)
-            return parse_sec_company_tickers(path.read_bytes())
+            return parse_sec_company_tickers(ler_bytes(path))
         if fallback_tickers is None:
             raise
         return search_sec_ciks(fallback_tickers, http_get=http_get, user_agent=user_agent,

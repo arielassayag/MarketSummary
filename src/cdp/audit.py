@@ -11,6 +11,8 @@ from datetime import UTC, date, datetime
 from pathlib import Path
 from typing import Any
 
+from cdp.leitura_arquivos import em_leitura, ler_texto, recusar_escrita, validar_modo
+
 from .contracts import AuditEvent
 from .hashing import sha256_obj
 
@@ -26,21 +28,24 @@ def _event_hash(seq: int, ts: datetime, event_type: str, actor: str, week: date 
 
 
 class AuditLog:
-    def __init__(self, path: str | Path) -> None:
+    def __init__(self, path: str | Path, *, somente_leitura: bool = False) -> None:
+        self.somente_leitura = validar_modo(somente_leitura)
         self.path = Path(path)
-        self.path.parent.mkdir(parents=True, exist_ok=True)
+        if not em_leitura(self.somente_leitura):
+            self.path.parent.mkdir(parents=True, exist_ok=True)
 
     def events(self) -> list[AuditEvent]:
         if not self.path.exists():
             return []
         out: list[AuditEvent] = []
-        for line in self.path.read_text(encoding="utf-8").splitlines():
+        for line in ler_texto(self.path, encoding='utf-8').splitlines():
             if line.strip():
                 out.append(AuditEvent.model_validate_json(line))
         return out
 
     def append(self, event_type: str, actor: str, payload: Any, summary: str = "",
                week: date | None = None, ts: datetime | None = None) -> AuditEvent:
+        recusar_escrita(self.somente_leitura)
         existing = self.events()
         prev_hash = existing[-1].event_hash if existing else GENESIS_HASH
         seq = existing[-1].seq + 1 if existing else 0

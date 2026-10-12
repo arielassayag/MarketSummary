@@ -18,6 +18,8 @@ import numpy as np
 import pandas as pd
 from pydantic import BaseModel, ConfigDict, field_validator, model_validator
 
+from cdp.leitura_arquivos import ler_texto
+
 from ..alpha.views import is_autonomous_view
 from ..calendar import is_session, next_rebalance_after
 from ..contracts import Decision, ResearchPack, View, ViewSource
@@ -207,14 +209,14 @@ class Outcome(_Strict):
 
 
 def _read(path: Path, cls):
-    return cls.model_validate_json(path.read_text(encoding="utf-8"))
+    return cls.model_validate_json(ler_texto(path, encoding='utf-8'))
 
 
 def _write(path: Path, value: BaseModel) -> None:
     text = json.dumps(value.model_dump(mode="json"), ensure_ascii=False, sort_keys=True,
                       indent=2, allow_nan=False) + "\n"
     if path.exists():
-        if path.read_text(encoding="utf-8") != text:
+        if ler_texto(path, encoding='utf-8') != text:
             raise ValueError(f"conflito em anexo imutável: {path}")
         return
     _write_exclusive(path, text)
@@ -244,7 +246,7 @@ def input_authorship(week_dir: Path, mind: str) -> tuple[dict, dict]:
             continue
         hashes[name] = sha256_file(p)
         try:
-            raw = json.loads(p.read_text(encoding="utf-8"))
+            raw = json.loads(ler_texto(p, encoding='utf-8'))
             declared = raw.get("mind") if isinstance(raw, dict) else None
         except (ValueError, OSError):
             declared = None
@@ -293,7 +295,7 @@ def _enable(book: Book, week: date, now: datetime) -> None:
     path = book.root / ENABLE_FILE
     if not path.exists():
         _write_exclusive(path, json.dumps({"policy": POLICY, "first_week": str(week)}, sort_keys=True) + "\n")
-    payload = json.loads(path.read_text(encoding="utf-8"))
+    payload = json.loads(ler_texto(path, encoding='utf-8'))
     first = date.fromisoformat(payload["first_week"])
     if set(payload) != {"policy", "first_week"} or payload["policy"] != POLICY or first > week:
         raise ValueError("manifesto de avaliação incoerente")
@@ -330,7 +332,7 @@ def preregister(book: Book, ctx: WeekContext, pack: ResearchPack, pm: PMBundle, 
     notes = {n.note_id: n.model_dump(mode="json") for n in pack.notes}
     # Texto bruto preserva autoria e até uma entrada inválida sem aceitar seus números como
     # previsão; nunca substituir o provider/author original pelo nome do executor.
-    original_inputs = {name: (book.week_dir(ctx.week) / "inputs" / name).read_text(encoding="utf-8")
+    original_inputs = {name: ler_texto(book.week_dir(ctx.week) / 'inputs' / name, encoding='utf-8')
                        for name in hashes}
     original_json = {}
     for name, text in original_inputs.items():
@@ -397,7 +399,7 @@ def bind(book: Book, decision: Decision, *, path_taken: str, now: datetime) -> B
     path = folder / SIGNALS_FILE
     if not path.exists():
         marker = book.root / ENABLE_FILE
-        if marker.exists() and decision.week >= date.fromisoformat(json.loads(marker.read_text())["first_week"]):
+        if marker.exists() and decision.week >= date.fromisoformat(json.loads(ler_texto(marker))["first_week"]):
             raise ValueError("decisão sem pré-registro autenticado")
         return None  # livro legado, não preencher forecasts retrospectivamente
     cohort = _read(path, Cohort)
@@ -571,7 +573,7 @@ def verify(book: Book, track=None, market_root: Path | None = None) -> list[str]
     if not marker.exists():
         return ["manifesto de avaliação removido"] if enabled else []
     try:
-        raw = json.loads(marker.read_text(encoding="utf-8"))
+        raw = json.loads(ler_texto(marker, encoding='utf-8'))
         first = date.fromisoformat(raw["first_week"])
         if raw["policy"] != POLICY or len(enabled) != 1 or sha256_obj(raw) != enabled[0].payload_hash:
             problems.append("manifesto de avaliação divergente da trilha")

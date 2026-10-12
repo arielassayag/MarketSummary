@@ -45,6 +45,8 @@ import pandas as pd
 import pyarrow as pa
 import pyarrow.parquet as pq
 
+from cdp.leitura_arquivos import ler_bytes, ler_texto, recusar_escrita
+
 from ..config import DEFAULT_CONFIG_PATH, FundConfig, load_config
 from ..contracts import NewsItem, SnapshotFile, SnapshotManifest, SourceRecord
 from ..hashing import sha256_file
@@ -297,7 +299,9 @@ def _write_parquet(df: pd.DataFrame, path: Path) -> int:
 
 
 def _read_parquet(path: Path) -> pd.DataFrame:
-    df = pq.read_table(path).to_pandas()
+    from cdp.leitura_arquivos import fonte_arrow
+
+    df = pq.read_table(fonte_arrow(path)).to_pandas()
     if "date" in df.columns:
         df["date"] = pd.to_datetime(df["date"]).astype(DATETIME_DTYPE)
     return df
@@ -352,7 +356,7 @@ def read_news_jsonl(path: Path) -> tuple[NewsItem, ...]:
     if not path.exists():
         return ()
     out = []
-    for line in path.read_text(encoding="utf-8").splitlines():
+    for line in ler_texto(path, encoding='utf-8').splitlines():
         if line.strip():
             out.append(NewsItem.model_validate_json(line))
     return tuple(sorted(out, key=lambda n: (n.published_at, n.news_id)))
@@ -393,6 +397,7 @@ def _stage_file(staged: _Staged, root: Path, name: str, rows: int | None) -> Non
 def _write_dir(out_dir: Path, writer: Callable[[Path, _Staged], SnapshotManifest]
                ) -> SnapshotManifest:
     """Grava numa pasta temporária ao lado e renomeia atomicamente. Nunca sobrescreve."""
+    recusar_escrita()
     out_dir = Path(out_dir)
     if out_dir.exists():
         raise FileExistsError(f"Destino já existe (snapshots são imutáveis): {out_dir}")
@@ -441,6 +446,7 @@ def write_tables(out_dir: Path, *, manifest_fields: Mapping[str, Any],
     """Grava o layout completo e devolve o manifesto (``files`` com sha256 e linhas)."""
 
     def writer(root: Path, staged: _Staged) -> SnapshotManifest:
+        recusar_escrita()
         (root / FILE_UNIVERSE).write_bytes(universe_bytes)
         _stage_file(staged, root, FILE_UNIVERSE, None)
         tables: list[tuple[str, pd.DataFrame]] = [
@@ -476,7 +482,7 @@ def read_manifest(path: Path) -> SnapshotManifest:
     p = Path(path) / FILE_MANIFEST
     if not p.exists():
         raise SnapshotIntegrityError(f"Manifesto ausente: {p}")
-    return SnapshotManifest.model_validate_json(p.read_text(encoding="utf-8"))
+    return SnapshotManifest.model_validate_json(ler_texto(p, encoding='utf-8'))
 
 
 def verify_files(root: Path, manifest: SnapshotManifest) -> None:
@@ -500,7 +506,7 @@ def verify_files(root: Path, manifest: SnapshotManifest) -> None:
     if FILE_QA in names:
         # qa.json é coberto pelo hash; o manifesto em si não entra no content_hash do contrato.
         try:
-            qa = json.loads((root / FILE_QA).read_text(encoding="utf-8"))
+            qa = json.loads(ler_texto(root / FILE_QA, encoding='utf-8'))
         except (json.JSONDecodeError, UnicodeDecodeError) as exc:
             raise SnapshotIntegrityError(f"qa.json ilegível: {exc}") from exc
         if isinstance(qa, dict) and "is_synthetic" in qa \
@@ -527,7 +533,7 @@ def read_tables(path: Path, verify: bool = True) -> SnapshotTables:
     lh = opt(FILE_LENDING_HISTORY)
     qa: dict[str, Any] = {}
     if FILE_QA in names and (root / FILE_QA).exists():
-        qa = json.loads((root / FILE_QA).read_text(encoding="utf-8"))
+        qa = json.loads(ler_texto(root / FILE_QA, encoding='utf-8'))
     return SnapshotTables(
         path=root, manifest=manifest, universe=universe,
         prices=normalize_prices(opt(FILE_PRICES)), fx=normalize_fx(opt(FILE_FX)),
@@ -1069,7 +1075,7 @@ def build_snapshot(universe_path: Path, out_dir: Path, as_of: date, start: date 
         "data_notice": "Dados reais de fontes públicas gratuitas (Yahoo, FINRA, B3/BDI, BCB, "
                        "Google News); uso de pesquisa — não é feed licenciado.",
     }
-    return write_tables(out_dir, manifest_fields=fields, universe_bytes=universe_path.read_bytes(),
+    return write_tables(out_dir, manifest_fields=fields, universe_bytes=ler_bytes(universe_path),
                         prices=prices, fx=fx, benchmarks=bench, rates=rates, fundamentals=fund,
                         short_interest=si, lending=lend, lending_history=lh, news_items=items,
                         qa=qa)

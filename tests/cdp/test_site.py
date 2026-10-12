@@ -26,8 +26,28 @@ from cdp.workflow.runtime import Runtime
 ROOT = Path(__file__).resolve().parents[2]
 BRT = ZoneInfo("America/Sao_Paulo")
 AGORA = datetime(2026, 10, 9, 20, 0, tzinfo=BRT)
+DEMO_FIRST = date(2026, 11, 13)
 COMMIT = "a" * 40
 SHA_RE = re.compile(r"^[^@\s]+@[0-9a-f]{40}$")
+
+
+def test_site_demo_nao_oculta_warning_antes_de_falha(tmp_path, monkeypatch):
+    from cdp.workflow import demo as native
+
+    class InterromperEnsaio(RuntimeError):
+        pass
+
+    def observed(*args, **kwargs):
+        warnings.warn("Aviso nativo preservado", UserWarning, stacklevel=1)
+        raise InterromperEnsaio("Sem executar financeiro")
+
+    monkeypatch.setattr(native, "run_demo", observed)
+    rt = _rt(tmp_path / "origem")
+    op = st.Opcoes(saida=tmp_path / "site", raiz=ROOT, demo=True, commit=COMMIT, agora=AGORA)
+    with pytest.warns(UserWarning, match="Aviso nativo preservado"):
+        with pytest.raises(InterromperEnsaio, match="Sem executar financeiro"):
+            st.construir(rt, op)
+    assert not (tmp_path / "site").exists()
 
 
 @pytest.fixture(scope="module")
@@ -37,7 +57,7 @@ def demo(tmp_path_factory) -> Path:
     out = tmp_path_factory.mktemp("site_demo")
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        run_demo(out, days=2)
+        run_demo(out, days=2, first_week=DEMO_FIRST, cfg=load_config(ROOT / "configs/cdp/fund.yaml"))
     return out
 
 
@@ -62,7 +82,7 @@ def _build(rt, saida: Path, **kw) -> dict:
 def site_sintetico(demo, tmp_path_factory) -> Path:
     """Livro da demonstração tratado como livro real (data de início na primeira semana dele)."""
     saida = tmp_path_factory.mktemp("s1") / "_site"
-    _build(_rt(demo, _cfg_desde(date(2024, 3, 4))), saida)
+    _build(_rt(demo), saida)
     return saida
 
 
@@ -210,7 +230,7 @@ def test_page_data_is_uncut():
 
 
 def test_build_is_deterministic_and_read_only(demo, tmp_path):
-    rt = _rt(demo, _cfg_desde(date(2024, 3, 4)))
+    rt = _rt(demo)
     antes = _arvore(demo)
     _build(rt, tmp_path / "a")
     _build(rt, tmp_path / "b")
@@ -247,10 +267,21 @@ def test_demo_option_builds_from_the_offline_demonstration(demo, tmp_path, monke
     assert "<title>DADOS SIMULADOS — " in idx and 'class="site-sim"' in idx
 
 
-def test_guards_pending_book_and_broken_integrity(demo, tmp_path, monkeypatch):
+def test_guards_pending_book_and_broken_integrity(tmp_path, monkeypatch):
+    from demo_historica import run_historical_demo
+
+    # Corpus de formato legado produzido hoje, sem gênese nem autorização NET.
+    # A gênese da demo prospectiva permanece intacta na fixture positiva.
+    corpus = tmp_path / "corpus_pre_inicio"
+    legacy = Path(__file__).resolve().parent / "fixtures/fund_legado.yaml"
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        run_historical_demo(corpus, days=1, cfg=load_config(legacy))
+    assert not (corpus / "book/genese.json").exists()
     with pytest.raises(st.ErroSite) as exc:  # livro com chaves anteriores à data de início
-        _build(_rt(demo), tmp_path / "x")
+        _build(_rt(corpus, _cfg_desde(date(2026, 11, 17))), tmp_path / "x")
     assert exc.value.codigo == st.AGUARDANDO_ABERTURA
+    assert not (tmp_path / "x").exists()
     rt = _rt(tmp_path)
     mensagens = ["livro: íntegro", "track record: íntegro", "sombra: íntegro",
                  "risco diário: divergência de medidas"]

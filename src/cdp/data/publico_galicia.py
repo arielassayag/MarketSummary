@@ -23,6 +23,7 @@ from .publico_contexto_documental import (
     _instante,
     contexto_documental,
     dependencia,
+    periodo_civil_nativo,
 )
 from .publico_contexto_documental import (
     conferir_contexto_participantes as conferir_contexto_participantes,
@@ -369,7 +370,7 @@ def validar_celula(ctx, row, roles, presente):
             raise ExtracaoRecusada("Grão nativo contradiz célula documental")
     for key in ("period_start", "period_end"):
         if key in row and row[key] is not None:
-            native = row[key].date().isoformat() if hasattr(row[key], "date") else str(row[key])
+            native = periodo_civil_nativo(row[key])
             if native != cell.get(key):
                 raise ExtracaoRecusada("Período nativo contradiz célula documental")
     for key in ("value", "valor"):

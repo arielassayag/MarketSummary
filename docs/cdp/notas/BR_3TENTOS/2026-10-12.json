@@ -1,0 +1,221 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_3TENTOS",
+  "data": "2026-10-12",
+  "tipo": "iniciacao",
+  "titulo": "3tentos — integração agrícola, crédito e rentabilidade após expansão",
+  "resumo": "A hipótese é que relacionamento com produtores e integração de insumos, grãos e indústria sustentem retorno depois de giro, investimento, juros e crédito. A condição decisiva é o novo parque industrial converter utilização em margem e caixa sem depender de valor justo ou expansão contínua da dívida. Crescimento de receita com maior comércio de grãos pode reduzir rentabilidade. O teste deve preservar derivativos liquidados, juros capitalizados, risco da TentosCap e condições temporárias dos contratos de financiamento. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_3TENTOS.rating_codigo}}, com retorno esperado {{fact:val.BR_3TENTOS.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Ecossistema agrícola com venda de insumos, originação e comercialização de grãos, processamento de soja, biodiesel e etanol de milho. Lojas e consultores atendem produtores em diferentes estados, enquanto TentosCap fornece soluções de crédito e seguros. O giro do comércio, margem industrial e risco de crédito têm ciclos próprios. Expansão de plantas, portos e lojas exige investimento e maturação. Sociedade logística em implantação tem controle conjunto, sem consolidação automática de toda sua operação ou capacidade.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que relacionamento com produtores e integração de insumos, grãos e indústria sustentem retorno depois de giro, investimento, juros e crédito. A condição decisiva é o novo parque industrial converter utilização em margem e caixa sem depender de valor justo ou expansão contínua da dívida. Crescimento de receita com maior comércio de grãos pode reduzir rentabilidade. O teste deve preservar derivativos liquidados, juros capitalizados, risco da TentosCap e condições temporárias dos contratos de financiamento.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_3TENTOS.preco}} e alvo {{fact:val.BR_3TENTOS.preco_alvo}}, com potencial {{fact:val.BR_3TENTOS.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_3TENTOS.ke}} e retorno esperado {{fact:val.BR_3TENTOS.etr}}.",
+      "evidencias": [
+        "val.BR_3TENTOS.preco",
+        "val.BR_3TENTOS.preco_alvo",
+        "val.BR_3TENTOS.upside",
+        "val.BR_3TENTOS.ke",
+        "val.BR_3TENTOS.etr"
+      ]
+    },
+    {
+      "titulo": "Integração que remunera o capital",
+      "texto": "A leitura favorece acompanhamento até que a expansão industrial demonstre margem realizada e caixa após giro e financiamento. Relação com produtores pode conectar insumos, barter e originação, mas o ganho de grãos não substitui rentabilidade industrial. O teste é atravessar a maturação das plantas e o término da dispensa contratual sem depender de valor justo ou refinanciamento para sustentar a operação.",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Conciliar margens de insumos, grãos e indústria com derivativos liquidados. Monitorar estoque, adiantamentos, caixa após juros e capex, utilização industrial, juros capitalizados, crédito e perdas da TentosCap. Separar alavancagem consolidada e contratual e o fim da dispensa temporária.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_3TENTOS.ke}} e a dispersão entre métodos {{fact:val.BR_3TENTOS.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_3TENTOS.ke",
+        "val.BR_3TENTOS.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Último período coberto pela dispensa prévia declarada, com comprovação do teste, critérios e condições posteriores.",
+      "data": "2026-12-31",
+      "tipo": "capital",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "descricao": "Resultados posteriores: confirmar margem industrial realizada, giro, crédito e caixa depois de juros e expansão.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Clima, preços, crédito de produtores e regulação de combustíveis podem pressionar margem. Estoque e expansão ampliam dívida. Valor justo, juros capitalizados, derivativos e dispensa contratual podem ocultar pressão de caixa.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_3TENTOS.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_3TENTOS.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Rede e indústria sustentam margens realizadas e caixa depois de giro, juros e expansão; crédito, utilização e contratos preservam retorno atribuível. O cenário otimista calculado pelo código é {{fact:val.BR_3TENTOS.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_3TENTOS.preco_alvo}}, com retorno esperado {{fact:val.BR_3TENTOS.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Comércio de margem menor e indústria pressionada elevam giro, enquanto crédito, juros e expansão prolongam consumo e dependência de dívida. O cenário pessimista calculado pelo código é {{fact:val.BR_3TENTOS.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_3TENTOS.preco}} e alvo do modelo aberto {{fact:val.BR_3TENTOS.preco_alvo}}, com potencial {{fact:val.BR_3TENTOS.upside}}. Retorno total esperado {{fact:val.BR_3TENTOS.etr}} e custo do capital próprio {{fact:val.BR_3TENTOS.ke}}. A dispersão entre métodos é {{fact:val.BR_3TENTOS.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_3TENTOS.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_3TENTOS.consenso_alvo}}; a diferença {{fact:val.BR_3TENTOS.diff_consenso}} não constitui evidência de percepção do mercado. A avaliação deve separar insumos, originação e indústria, pois os ciclos de giro e os riscos de margem diferem. EBITDA com hedge liquidado precisa de ponte ao fluxo e ao custo integral do financiamento; a exclusão contratual da TentosCap não elimina seu risco econômico. Capacidade nominal não autoriza elevar o valor terminal antes da comprovação de utilização rentável.",
+  "ultimo_resultado": "Receita cresce com insumos e grãos; o EBITDA ajustado sem hedge e a medida com contratos liquidados têm sinais e bases diferentes. Lucro ajustado trimestral recua e o resultado semestral tem outra comparação. Caixa operacional semestral é negativo, com giro e investimento relevantes; juros pagos são classificados no financiamento. A indústria de etanol entrou em operação, sem contribuição trimestral relevante. A dispensa contratual cobre períodos definidos; sua existência não antecipa cumprimento depois do prazo.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "A revisão intermediária atual tem alcance inferior à auditoria anual. A API apresenta metadados divergentes em um arquivo alternativo; foi usado o ITR cujo formulário, período e revisão identificam o fechamento atual. Alguns cabeçalhos das notas mantêm referência ao período anterior, sem correção desta pesquisa. O portfólio institucional e o release têm contagens e momentos próprios. TentosCap, sociedade logística e partes relacionadas exigem exame de direitos e capital, sem promover declarações da companhia a diligência concluída.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Rede de lojas, assistência agronômica e conexão entre insumos, originação e indústria podem ampliar relacionamento e abastecimento. A vantagem exige prova de margem, retenção, custo e risco de crédito por praça. Expansão geográfica pode diversificar clima, sem eliminar correlação agrícola. Grãos têm margem e giro distintos da indústria. Novas plantas de etanol e soja precisam comprovar utilização e retorno. Crédito e seguros podem ampliar serviço ao produtor, com capital, perdas e direitos próprios.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Receita cresce com grãos, enquanto margens industriais e lucro ajustado trimestral recuam. EBITDA ajustado sem hedge é negativo; ao combinar contratos liquidados, fica positivo em outra base, ainda menor anualmente. Lucro recebe valor justo operacional e financeiro, sem equivalência a caixa. O fluxo operacional semestral é negativo, com estoque e adiantamentos consumindo recursos; juros pagos ficam no financiamento e juros capitalizados no ativo. TentosCap e medidas de alavancagem excluindo-a exigem ponte própria.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Expansão industrial, lojas e estoque ampliam dívida líquida. A companhia obteve dispensa prévia de teste contratual por períodos definidos, com acompanhamento por medida ajustada e exclusão da TentosCap; não se presumiu folga futura. Etanol entrou em operação e a capacidade nominal declarada depois do trimestre não prova margem plena. Logística portuária permanece em implantação nas notas. Financiamento ao produtor, derivativos e recursos vinculados precisam de exame completo antes de inferir caixa distribuível.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se integração cresce em volume antes de margem e caixa e o financiamento continua ampliando. Mais grãos pode elevar receita com menor retorno; utilização nominal de etanol não garante margem após insumos, proteção e dívida. Valor justo e capitalização de juros não extinguem custo econômico. A exclusão da TentosCap melhora comparabilidade contratual sem eliminar sua necessidade de capital ou crédito. Dispensa temporária de teste não é comprovação de cumprimento permanente ou garantia de refinanciamento.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Conciliar margens de insumos, grãos e indústria com derivativos liquidados. Monitorar estoque, adiantamentos, caixa após juros e capex, utilização industrial, juros capitalizados, crédito e perdas da TentosCap. Separar alavancagem consolidada e contratual e o fim da dispensa temporária.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_3TENTOS.etr}}, custo do capital {{fact:val.BR_3TENTOS.ke}} e dispersão entre métodos {{fact:val.BR_3TENTOS.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_3TENTOS.etr",
+        "val.BR_3TENTOS.ke",
+        "val.BR_3TENTOS.cv_metodos"
+      ]
+    },
+    {
+      "titulo": "Evidência que muda a visão",
+      "texto": "Margem industrial realizada e caixa após juros deixam de acompanhar a maturação das plantas. Perdas ou necessidade de capital da TentosCap aumentam sem remuneração correspondente. Termina a dispensa contratual sem comprovação de cumprimento dos termos subsequentes.",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Margem industrial realizada e caixa após juros deixam de acompanhar a maturação das plantas.",
+    "Perdas ou necessidade de capital da TentosCap aumentam sem remuneração correspondente.",
+    "Termina a dispensa contratual sem comprovação de cumprimento dos termos subsequentes."
+  ],
+  "lacunas_de_dados": [
+    "EBITDA sem hedge, com contratos liquidados e resultado contábil têm bases distintas a reconciliar.",
+    "Caixa após juros, capitalização, recursos vinculados e derivativos não foi integralmente conciliado.",
+    "Dispensa de teste e critério excluindo TentosCap têm prazo próprio; não se certificou folga posterior.",
+    "Crédito, perdas e necessidades de capital da TentosCap exigem diligência específica.",
+    "Metadados de arquivo alternativo e cabeçalhos anteriores divergem; a nota preserva o ITR atual e a limitação.",
+    "Utilização, retorno industrial e direitos da logística em implantação precisam de comprovação.",
+    "Guidance agregado, tom e percepção do mercado permanecem não determinados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "3tentos",
+      "titulo": "Negócio e materiais públicos do emissor",
+      "url": "https://ri.3tentos.com.br/a-companhia/quem-somos/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "3tentos",
+      "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/050fef26-7d75-4607-8a2b-bd8cd509d0c7/d4b27ac0-b355-9310-603c-1efb1a0c3307?origin=2",
+      "publicado_em": "2026-08-13",
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "3tentos",
+      "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/050fef26-7d75-4607-8a2b-bd8cd509d0c7/34968b79-de42-fb92-d150-f7867b4e4dea?origin=2",
+      "publicado_em": "2026-08-13",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

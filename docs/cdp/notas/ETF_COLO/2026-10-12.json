@@ -1,0 +1,241 @@
+{
+  "mind": "codex",
+  "issuer_id": "ETF_COLO",
+  "data": "2026-10-12",
+  "tipo": "iniciacao",
+  "titulo": "Colômbia: transmissão de crédito, energia e infraestrutura",
+  "resumo": "A visão qualitativa permanece neutra, com convicção limitada pelas lacunas de diligência. O ponto decisivo é a capacidade de converter atividade econômica em caixa distribuível, considerando risco de crédito, investimentos e regulação. Classes de ações e empresas com controle comum precisam ser agregadas na diligência para evitar uma falsa impressão de diversificação. O modelo aberto apresenta retorno esperado de {{fact:etf.COLO.retorno_esperado}} e leitura frente ao ILF {{fact:etf.COLO.visao_ilf}}. Esses resultados do código não substituem a pesquisa do produto nem comprovam uma percepção do mercado.",
+  "negocio": "O fundo busca acompanhar uma cesta de ações ligada à Colômbia. A página do administrador identifica participações em Grupo Cibest, Ecopetrol, ISA e outros emissores financeiros, de energia e infraestrutura. Há classes distintas de ações do mesmo grupo: linhas negociadas não equivalem necessariamente a negócios independentes. O produto concentra a seleção nas regras do índice.",
+  "pilares_tese": [
+    {
+      "titulo": "Crédito e redes precisam remunerar seu capital",
+      "texto": "A cadeia é crédito e atividade → margem após perdas, investimento e regulação → caixa atribuível das participações → retorno da cesta após moeda e custos. A condição decisiva é transmissão por negócio e grupo. Classes de Cibest ou de outros grupos não criam riscos independentes; diversificação de linhas pode coexistir com concentração bancária e decisões regulatórias comuns.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Condição decisiva",
+      "texto": "O ponto decisivo é a capacidade de converter atividade econômica em caixa distribuível, considerando risco de crédito, investimentos e regulação. Classes de ações e empresas com controle comum precisam ser agregadas na diligência para evitar uma falsa impressão de diversificação.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Cobertura do modelo",
+      "texto": "A cobertura fundamental recebida é {{fact:etf.COLO.cobertura}}. Conclusões sobre a cesta dependem também das participações fora dessa cobertura; uma composição incompleta reduz o suporte à avaliação.",
+      "evidencias": [
+        "etf.COLO.cobertura"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Geração de caixa das participações",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar qualidade do crédito, geração de caixa após investimentos e regras de remuneração dos negócios regulados; conferir grupos econômicos e classes de ações na composição atualizada.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Qualidade da avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "A leitura fundamental do código é {{fact:etf.COLO.r_bu}}; a leitura de mercado é {{fact:etf.COLO.r_td}}. Os componentes dependem de premissas diferentes e não provam o comportamento do índice contratual.",
+      "evidencias": [
+        "etf.COLO.r_bu",
+        "etf.COLO.r_td"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Exposição a grupos financeiros e energia pode gerar perdas correlacionadas quando crédito, câmbio ou decisões regulatórias se deterioram. A presença de classes distintas não elimina o risco econômico comum.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "Custos e condições de negociação podem reduzir o resultado efetivo. A taxa declarada é {{fact:etf.COLO.ter}}; ela não determina o spread nem todos os custos de transação.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "etf.COLO.ter"
+      ]
+    },
+    {
+      "texto": "A cobertura fundamental é {{fact:etf.COLO.cobertura}}. Participações sem modelo e composição desatualizada podem enfraquecer a avaliação da cesta.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "etf.COLO.cobertura"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Recuperação do crédito com perdas controladas e remuneração previsível dos negócios regulados aumenta o caixa dos componentes. A política de distribuição permanece compatível com investimentos e balanços. Hipótese qualitativa; não é cenário numérico calculado.",
+    "base": "Sem antecipar evento não confirmado, o caso central mantém a exposição da cesta e exige confirmação de caixa, custos e composição. O retorno esperado do código é {{fact:etf.COLO.retorno_esperado}}. Não há probabilidade de cenário qualitativo estimada.",
+    "pessimista": "Perdas de crédito, enfraquecimento do câmbio ou intervenção em energia comprimem resultados e dividendos. Concentração econômica entre classes de ações amplifica a deterioração. Não há perda numérica de cenário validada neste estudo."
+  },
+  "comentario_valuation": "Preço de referência {{fact:etf.COLO.preco}} e alvo do modelo aberto {{fact:etf.COLO.preco_alvo}}. A leitura fundamental é {{fact:etf.COLO.r_bu}} e a de mercado {{fact:etf.COLO.r_td}}, com retorno esperado {{fact:etf.COLO.retorno_esperado}}. A avaliação agrega insumos das participações e condições de mercado; não constitui estimativa do patrimônio líquido da cota. Cobertura {{fact:etf.COLO.cobertura}} exige examinar componentes sem modelo e representatividade da composição. O alvo é do código, sem ajuste discricionário nesta nota. As hipóteses qualitativas de cenário não recebem preços ou probabilidades inventados. A classificação frente ao ILF é {{fact:etf.COLO.visao_ilf}}; não mede diferença ou erro de aderência ao índice contratual. Classes e grupos precisam conservar direitos e evitar dupla contagem na agregação fundamental. Banco e concessão exigem capital próprio; valor da cesta, patrimônio da cota e preço executável não são equivalentes, sobretudo após custos de negociação.",
+  "ultimo_resultado": null,
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "O prospecto admite alteração de objetivo e índice sem aprovação dos cotistas, com aviso prévio para certas políticas de exposição. Admite empréstimo de ativos e concentração por emissor; autorização não prova operações efetivas. Histórico de regras e composição precisa de cortes próprios. O resumo metodológico não garante que permaneça vigente.",
+  "posicao_competitiva": null,
+  "qualidade_resultados": null,
+  "alocacao_capital": null,
+  "percepcao_variante": {
+    "titulo": "Exposição colombiana frente à referência regional",
+    "texto": "Uma cesta regional oferece outra combinação de países e emissores; não replica a concentração financeira e de infraestrutura colombiana. A alternativa local só faz sentido se esses riscos forem desejados e o caixa por grupo confirmar a hipótese. Sem séries harmonizadas, não se afirma diversificação superior, retorno maior nem erro de aderência a partir da comparação com ILF.",
+    "evidencias": [
+      "F1",
+      "F2",
+      "F4"
+    ]
+  },
+  "contratese": {
+    "titulo": "Crédito e energia podem deteriorar juntos",
+    "texto": "A tese falha se crescimento de crédito exige mais provisões e capital enquanto concessões e energia consomem caixa sob intervenção ou investimento. Classes correlacionadas ampliam a mesma exposição. Criações/resgates em dinheiro podem adicionar custos em mercados menos líquidos; bom desempenho do país ou correlação com o índice não prova retorno líquido adequado da cota.",
+    "evidencias": [
+      "F1",
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Economia da exposição",
+      "texto": "Acompanhar capital e perdas de crédito por grupo, retorno das redes e caixa de energia após investimento. Conferir classes, direitos e relações de controle da composição, sem contar linhas como negócios independentes nem usar concentração histórica como atual.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Suficiência do modelo",
+      "texto": "Acompanhar composição, cobertura {{fact:etf.COLO.cobertura}} e divergência entre leitura fundamental {{fact:etf.COLO.r_bu}} e de mercado {{fact:etf.COLO.r_td}}. Mudança da composição exige reavaliar a representatividade dos insumos.",
+      "evidencias": [
+        "etf.COLO.cobertura",
+        "etf.COLO.r_bu",
+        "etf.COLO.r_td"
+      ]
+    },
+    {
+      "titulo": "Execução da exposição",
+      "texto": "Obter custos de negociação, prêmio ou desconto ao patrimônio e retorno total do índice contratual; usar corte, moeda e convenção consistentes. A taxa recebida é {{fact:etf.COLO.ter}}.",
+      "evidencias": [
+        "etf.COLO.ter"
+      ]
+    },
+    {
+      "titulo": "Réplica, corte e direitos",
+      "texto": "Conciliar NAV líquido, preço e índice de retorno total no mesmo corte e moeda; separar custos de criações/resgates em dinheiro, impostos, caixa residual e amostragem. Preservar mudanças históricas de ticker/metodologia; ILF não é o teste contratual.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "estrutura_etf": {
+    "titulo": "Seleção colombiana e criações em dinheiro",
+    "texto": "O índice MSCI amplo colombiano seleciona por vínculo e liquidez, pondera ações disponíveis e limita grupos; o resumo mantém corte próprio. O prospecto prevê réplica com amostragem em certas condições e parte relevante de criação/resgate em dinheiro, que pode exigir negociação dos ativos. Passividade não prevê defesa temporária. Mudança de ticker e índices históricos não transforma toda a série numa regra única.",
+    "evidencias": [
+      "F1",
+      "F2",
+      "F3"
+    ]
+  },
+  "exposicao_etf": {
+    "titulo": "Grupos, classes e regulação compartilhada",
+    "texto": "A composição apresenta classes de grupos financeiros, Ecopetrol, ISA e outros negócios. Agregar controle e direitos antes de interpretar diversificação. Crédito, petróleo e concessões têm retorno e investimento distintos, mas podem compartilhar câmbio, financiamento e decisões públicas. Moeda da cota não torna receitas e dívida dolarizadas; o retrato do prospecto não define concentração atual.",
+    "evidencias": [
+      "F1",
+      "F2",
+      "F3"
+    ]
+  },
+  "custos_liquidez_etf": {
+    "titulo": "Custo total e liquidez do mecanismo",
+    "texto": "Taxa recebida no retrato {{fact:etf.COLO.ter}}. Separar despesa do fundo, giro, impostos, corretagem, spread e preço negociado versus NAV; não há série atual conferida no FactBook. O prospecto prevê criações/resgates relevantes em dinheiro: negociação, impostos e liquidez dos ativos podem adicionar custo. Autorizados não são obrigados a sustentar o mercado.",
+    "evidencias": [
+      "etf.COLO.ter",
+      "F1",
+      "F2"
+    ]
+  },
+  "aderencia_indice_etf": {
+    "titulo": "Índice contratual e comparação regional",
+    "texto": "A comparação frente ao ILF é {{fact:etf.COLO.visao_ilf}}. Ela se refere à referência regional do modelo, e não à qualidade de replicação. Aderência ao índice exige retorno total da cota e do índice contratual em bases equivalentes; o estudo não dispõe dessa série conferida.",
+    "evidencias": [
+      "etf.COLO.visao_ilf"
+    ]
+  },
+  "o_que_mudou": "Página, prospecto resumido e resumo metodológico foram recebidos novamente. A pesquisa aprofunda concentração por grupo, criações/resgates em dinheiro, moeda e retorno líquido, mantendo mudanças históricas e a falta de série de aderência conferida.",
+  "gatilhos_revisao": [
+    "Classes e relações de controle alteram a concentração econômica da cesta.",
+    "Crédito e concessões não convertem atividade em retorno após capital.",
+    "Criações ou resgates em dinheiro ampliam custos não capturados na taxa.",
+    "Mudança de índice, ticker ou réplica torna inadequada a comparação histórica.",
+    "Moeda, impostos ou liquidez dos ativos limitam o resultado efetivo da posição."
+  ],
+  "lacunas_de_dados": [
+    "Prospecto resumido recebido; documento estatutário completo, suplementos posteriores e metodologia integral vigente ainda exigem reconciliação.",
+    "Replicação diária efetiva, custódia, ativos emprestados e garantias não foram integralmente reconciliados.",
+    "As medidas públicas de spread e prêmio ou desconto não foram incorporadas ao FactBook; falta série comparável conferida.",
+    "Série de aderência ao índice contratual não foi calculada e conferida.",
+    "Percepção de mercado, posicionamento e interesse vendido não têm evidência suficiente.",
+    "Cenários qualitativos não têm preços ou probabilidades próprios calculados.",
+    "Posse histórica dos documentos do produto não está comprovada."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Global X",
+      "titulo": "Página oficial do produto, objetivo e composição",
+      "url": "https://www.globalxetfs.com/funds/colo/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Global X",
+      "titulo": "Prospecto resumido — estratégia e riscos do produto",
+      "url": "https://assets.globalxetfs.com/funds/documents/colo/prospectus-regulatory/Summary-Prospectus_COLO.pdf",
+      "publicado_em": "2026-03-01",
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Global X",
+      "titulo": "Resumo metodológico do índice — leitura parcial",
+      "url": "https://assets.globalxetfs.com/funds/documents/colo/Index-Methodology-Summary.pdf",
+      "publicado_em": null,
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F4",
+      "tipo": "dados_publicos",
+      "instituicao": "S&P Dow Jones Indices",
+      "titulo": "Metodologia da referência regional comparada",
+      "url": "https://www.spglobal.com/spdji/en/documents/methodologies/methodology-sp-latin-america-40.pdf",
+      "publicado_em": null,
+      "consultado_em": "2026-10-12"
+    }
+  ],
+  "modelo_ia": null
+}

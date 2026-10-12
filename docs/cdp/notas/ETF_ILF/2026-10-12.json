@@ -1,0 +1,230 @@
+{
+  "mind": "codex",
+  "issuer_id": "ETF_ILF",
+  "data": "2026-10-12",
+  "tipo": "iniciacao",
+  "titulo": "América Latina: referência regional com concentração econômica",
+  "resumo": "A visão qualitativa permanece neutra, com convicção limitada pelas lacunas de diligência. A condição decisiva é saber se a cesta representa o risco regional desejado. A hipótese de retorno deve ser confrontada com concentração por país, setor e emissor, além de geração de caixa das participações. A função de referência não constitui uma tese favorável de investimento. O modelo aberto apresenta retorno esperado de {{fact:etf.ILF.retorno_esperado}} e leitura frente ao ILF {{fact:etf.ILF.visao_ilf}}. Esses resultados do código não substituem a pesquisa do produto nem comprovam uma percepção do mercado.",
+  "negocio": "O fundo busca acompanhar um índice regional da S&P. A página do administrador mostra exposição a diferentes mercados, com presença relevante de Brasil e México, e setores financeiros, materiais e energia. Uma cesta regional não representa pesos econômicos iguais entre países. A seleção e a concentração decorrem das regras do índice, não de convicções fundamentais do gestor do produto.",
+  "pilares_tese": [
+    {
+      "titulo": "Referência regional sob teste de representatividade",
+      "texto": "A cadeia é caixa das grandes empresas elegíveis → pesos por mercado disponível e seleção do índice → retorno regional após moedas → cota líquida de custos. A condição decisiva é a cesta representar o risco desejado. Brasil, México e outros mercados não têm pesos iguais; função de benchmark não comprova neutralidade econômica nem uma tese favorável para comprar a referência.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Condição decisiva",
+      "texto": "A condição decisiva é saber se a cesta representa o risco regional desejado. A hipótese de retorno deve ser confrontada com concentração por país, setor e emissor, além de geração de caixa das participações. A função de referência não constitui uma tese favorável de investimento.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Cobertura do modelo",
+      "texto": "A cobertura fundamental recebida é {{fact:etf.ILF.cobertura}}. Conclusões sobre a cesta dependem também das participações fora dessa cobertura; uma composição incompleta reduz o suporte à avaliação.",
+      "evidencias": [
+        "etf.ILF.cobertura"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Geração de caixa das participações",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Verificar concentração econômica por país, setor e emissor; confrontar o retorno das participações e as moedas com a função de referência regional, sem interpretar essa função como recomendação.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Qualidade da avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "A leitura fundamental do código é {{fact:etf.ILF.r_bu}}; a leitura de mercado é {{fact:etf.ILF.r_td}}. Os componentes dependem de premissas diferentes e não provam o comportamento do índice contratual.",
+      "evidencias": [
+        "etf.ILF.r_bu",
+        "etf.ILF.r_td"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "A concentração geográfica e setorial pode dominar o benefício de diversificação. Choques comuns de financiamento, câmbio ou commodities podem afetar componentes em vários países e elevar perdas correlacionadas.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "Custos e condições de negociação podem reduzir o resultado efetivo. A taxa declarada é {{fact:etf.ILF.ter}}; ela não determina o spread nem todos os custos de transação.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "etf.ILF.ter"
+      ]
+    },
+    {
+      "texto": "A cobertura fundamental é {{fact:etf.ILF.cobertura}}. Participações sem modelo e composição desatualizada podem enfraquecer a avaliação da cesta.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "etf.ILF.cobertura"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Melhora de caixa e retorno do capital aparece em negócios de mercados distintos. A composição conserva exposição adequada ao risco regional estudado e não depende apenas de reavaliação dos fatores comuns. Hipótese qualitativa; não é cenário numérico calculado.",
+    "base": "Sem antecipar evento não confirmado, o caso central mantém a exposição da cesta e exige confirmação de caixa, custos e composição. O retorno esperado do código é {{fact:etf.ILF.retorno_esperado}}. Não há probabilidade de cenário qualitativo estimada.",
+    "pessimista": "Choques de financiamento e commodities pressionam simultaneamente países e setores dominantes. A concentração econômica reduz a diversificação e enfraquece a leitura de recuperação regional abrangente. Não há perda numérica de cenário validada neste estudo."
+  },
+  "comentario_valuation": "Preço de referência {{fact:etf.ILF.preco}} e alvo do modelo aberto {{fact:etf.ILF.preco_alvo}}. A leitura fundamental é {{fact:etf.ILF.r_bu}} e a de mercado {{fact:etf.ILF.r_td}}, com retorno esperado {{fact:etf.ILF.retorno_esperado}}. A avaliação agrega insumos das participações e condições de mercado; não constitui estimativa do patrimônio líquido da cota. Cobertura {{fact:etf.ILF.cobertura}} exige examinar componentes sem modelo e representatividade da composição. O alvo é do código, sem ajuste discricionário nesta nota. As hipóteses qualitativas de cenário não recebem preços ou probabilidades inventados. A classificação frente ao ILF é {{fact:etf.ILF.visao_ilf}}; não mede diferença ou erro de aderência ao índice contratual. A referência regional precisa de cobertura e pesos representativos dos riscos estudados. Uma soma fundamental não é NAV; diferentes variantes de retorno do índice e preço negociado exigem bases próprias. Ser benchmark não comprova valor nem neutralidade.",
+  "ultimo_resultado": null,
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "O prospecto resumido diferencia o índice e a gestão do fundo. Permissões de investimento não comprovam uso efetivo; negociação em bolsa não confere resgate individual direto ao valor patrimonial. Suplementos, custódia, garantias e operações com partes relacionadas continuam sujeitos à reconciliação documental.",
+  "posicao_competitiva": null,
+  "qualidade_resultados": null,
+  "alocacao_capital": null,
+  "percepcao_variante": {
+    "titulo": "Benchmark não é carteira regional neutra",
+    "texto": "Uma combinação explícita de exposições locais poderia representar outros países, setores ou pesos, mas exigiria regras, custos e séries próprias em código. Isso não autoriza mudar o benchmark do mandato. O ILF só é alternativa adequada quando sua seleção econômica é desejada; compará-lo consigo mesmo não comprova atratividade nem qualidade da réplica.",
+    "evidencias": [
+      "F1",
+      "F2",
+      "F3"
+    ]
+  },
+  "contratese": {
+    "titulo": "Diversificação nominal pode falhar economicamente",
+    "texto": "A tese falha se bancos, exportadores e moedas dos países dominantes deterioram juntos, ou se a seleção de grandes empresas não representa o risco regional desejado. Discricionariedade metodológica do comitê e amostragem da gestora têm objetos distintos; nenhuma seleciona ativamente empresas pelo mérito da tese. Papel de referência não assegura retorno atrativo.",
+    "evidencias": [
+      "F1",
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Economia da exposição",
+      "texto": "Acompanhar caixa, capital e fatores comuns por grupo, país e setor, identificando receitas transfronteiriças e moedas. Examinar representação do universo, classes e concentração, distinguindo pesos econômicos desejados da regra efetiva do índice.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Suficiência do modelo",
+      "texto": "Acompanhar composição, cobertura {{fact:etf.ILF.cobertura}} e divergência entre leitura fundamental {{fact:etf.ILF.r_bu}} e de mercado {{fact:etf.ILF.r_td}}. Mudança da composição exige reavaliar a representatividade dos insumos.",
+      "evidencias": [
+        "etf.ILF.cobertura",
+        "etf.ILF.r_bu",
+        "etf.ILF.r_td"
+      ]
+    },
+    {
+      "titulo": "Execução da exposição",
+      "texto": "Obter custos de negociação, prêmio ou desconto ao patrimônio e retorno total do índice contratual; usar corte, moeda e convenção consistentes. A taxa recebida é {{fact:etf.ILF.ter}}.",
+      "evidencias": [
+        "etf.ILF.ter"
+      ]
+    },
+    {
+      "titulo": "Réplica, corte e direitos",
+      "texto": "Identificar a variante líquida do índice regional e compará-la ao NAV total líquido e ao preço negociado em corte e moedas coerentes. Separar reinvestimento, retenção tributária, amostragem e marcação; a classificação frente ao próprio ILF não mede aderência.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "estrutura_etf": {
+    "titulo": "Índice regional e amostragem da gestora",
+    "texto": "O índice S&P seleciona grandes empresas líquidas de Brasil, Chile, Colômbia, México e Peru, com ponderação por ações disponíveis e critérios do comitê. Classes múltiplas podem ser elegíveis; país e setor são tratados no universo de referência, sem pesos iguais. O fundo usa amostragem e admite derivativos, caixa e empréstimo; isso não prova uso efetivo nem inclusão de toda a América Latina.",
+    "evidencias": [
+      "F1",
+      "F2",
+      "F3"
+    ]
+  },
+  "exposicao_etf": {
+    "titulo": "Países distintos podem compartilhar o mesmo choque",
+    "texto": "A composição regional combina finanças, materiais, energia e outros negócios. Classes, grupos e atividades transfronteiriças precisam ser agregados pelo risco econômico. Pesos do índice não equivalem a população ou produto de cada país; Argentina não integra o universo descrito. Moedas, crédito e commodities podem reduzir diversificação entre países sem mudar o nome regional do produto.",
+    "evidencias": [
+      "F1",
+      "F2",
+      "F3"
+    ]
+  },
+  "custos_liquidez_etf": {
+    "titulo": "Custo total e liquidez do mecanismo",
+    "texto": "Taxa recebida no retrato {{fact:etf.ILF.ter}}. Separar despesa do fundo, giro, impostos, corretagem, spread e preço negociado versus NAV; não há série atual conferida no FactBook. Mercados nacionais têm feriados e horários próprios; participantes autorizados e liquidez dos ativos importam além do volume da cota. Instrumentos auxiliares e custos têm corte próprio.",
+    "evidencias": [
+      "etf.ILF.ter",
+      "F1",
+      "F2"
+    ]
+  },
+  "aderencia_indice_etf": {
+    "titulo": "Índice contratual e comparação regional",
+    "texto": "A comparação frente ao ILF é {{fact:etf.ILF.visao_ilf}}. Ela se refere à referência regional do modelo, e não à qualidade de replicação. Aderência ao índice exige retorno total da cota e do índice contratual em bases equivalentes; o estudo não dispõe dessa série conferida.",
+    "evidencias": [
+      "etf.ILF.visao_ilf"
+    ]
+  },
+  "o_que_mudou": "Página, prospecto resumido e metodologia do provedor foram recebidos. A nota aprofunda seleção por universo, classes, moedas e variantes de retorno, distinguindo função de referência de hipótese de investimento e mantendo as lacunas de réplica efetiva.",
+  "gatilhos_revisao": [
+    "Concentração deixa de representar o risco regional desejado.",
+    "Países e setores compartilham deterioração de caixa, moeda ou financiamento.",
+    "Mudança do comitê altera universo, classes ou pesos da referência.",
+    "Amostragem, impostos ou marcação exige nova série de aderência.",
+    "Comparação ao próprio benchmark é usada indevidamente como prova de atratividade."
+  ],
+  "lacunas_de_dados": [
+    "Prospecto resumido recebido; documento estatutário completo, suplementos posteriores e metodologia integral vigente ainda exigem reconciliação.",
+    "Replicação diária efetiva, custódia, ativos emprestados e garantias não foram integralmente reconciliados.",
+    "As medidas públicas de spread e prêmio ou desconto não foram incorporadas ao FactBook; falta série comparável conferida.",
+    "Série de aderência ao índice contratual não foi calculada e conferida.",
+    "Percepção de mercado, posicionamento e interesse vendido não têm evidência suficiente.",
+    "Cenários qualitativos não têm preços ou probabilidades próprios calculados.",
+    "Posse histórica dos documentos do produto não está comprovada."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "BlackRock",
+      "titulo": "Página oficial do produto, objetivo e composição",
+      "url": "https://www.ishares.com/us/products/239761/ishares-latin-america-40-etf",
+      "publicado_em": null,
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "BlackRock",
+      "titulo": "Prospecto resumido — estratégia e riscos do produto",
+      "url": "https://www.ishares.com/us/literature/summary-prospectus/sp-ishares-latin-america-40-etf-3-31.pdf",
+      "publicado_em": "2026-07-31",
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F3",
+      "tipo": "dados_publicos",
+      "instituicao": "S&P Dow Jones Indices",
+      "titulo": "Metodologia do índice latino-americano",
+      "url": "https://www.spglobal.com/spdji/en/documents/methodologies/methodology-sp-latin-america-40.pdf",
+      "publicado_em": null,
+      "consultado_em": "2026-10-12"
+    }
+  ],
+  "modelo_ia": null
+}

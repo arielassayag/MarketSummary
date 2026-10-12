@@ -1,0 +1,183 @@
+{
+  "mind": "codex",
+  "issuer_id": "CO_GRUPOARGOS",
+  "data": "2026-10-12",
+  "tipo": "iniciacao",
+  "titulo": "Grupo Argos — retorno do portfólio e caixa recebido pela holding",
+  "resumo": "A hipótese é que disciplina de portfólio preserve retorno nos negócios e transfira recursos ao acionista depois de dívida e custo da holding. A análise por partes precisa eliminar sobreposição, reconhecer participações e demonstrar acesso a dividendos. Desconto aparente ao valor de mercado dos ativos não comprova catalisador de realização. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.CO_GRUPOARGOS.rating_codigo}}, com retorno esperado {{fact:val.CO_GRUPOARGOS.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Holding de materiais de construção, energia, concessões e investimentos imobiliários, com participações em Cementos Argos, Celsia, Odinsa e outros veículos. Lucro consolidado, contribuição por equivalência e caixa efetivamente recebido na holding têm significado diferente.",
+  "pilares_tese": [
+    {
+      "titulo": "Retorno dos ativos deve atravessar a holding",
+      "texto": "A cadeia é geração após investimento nas participadas → distribuição recebida → pagamento de estrutura e dívida da holding → alocação e retorno ao acionista. A condição decisiva é caixa recorrente atribuível e disciplina no uso dele. Ganho na venda de Celsia e avaliações imobiliárias não substituem essa ponte; soma das partes deve eliminar dupla contagem e respeitar cada classe.",
+      "evidencias": [
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.CO_GRUPOARGOS.preco}} e alvo {{fact:val.CO_GRUPOARGOS.preco_alvo}}, com potencial {{fact:val.CO_GRUPOARGOS.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.CO_GRUPOARGOS.ke}} e retorno esperado {{fact:val.CO_GRUPOARGOS.etr}}.",
+      "evidencias": [
+        "val.CO_GRUPOARGOS.preco",
+        "val.CO_GRUPOARGOS.preco_alvo",
+        "val.CO_GRUPOARGOS.upside",
+        "val.CO_GRUPOARGOS.ke",
+        "val.CO_GRUPOARGOS.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar dividendos recebidos, custos, vencimentos e caixa separado da holding. Avaliar retorno dos negócios e veículos após investimento, eliminando consolidação duplicada. Revisar participação, classes de ações, recompras, alienações e direitos de acesso aos recursos.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.CO_GRUPOARGOS.ke}} e a dispersão entre métodos {{fact:val.CO_GRUPOARGOS.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.CO_GRUPOARGOS.ke",
+        "val.CO_GRUPOARGOS.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Dívida e necessidade de caixa da holding podem coincidir com menor distribuição das subsidiárias. Obras, regulação, energia e ciclo imobiliário podem afetar negócios simultaneamente. Alocação entre veículos e partes relacionadas exige controle de conflitos.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.CO_GRUPOARGOS.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.CO_GRUPOARGOS.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Os negócios remuneram o capital e a holding recebe caixa suficiente para financiar obrigações e distribuir recursos com disciplina. O cenário otimista calculado pelo código é {{fact:val.CO_GRUPOARGOS.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.CO_GRUPOARGOS.preco_alvo}}, com retorno esperado {{fact:val.CO_GRUPOARGOS.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Menor distribuição e investimento nos veículos aumentam dependência de alienações e dívida, reduzindo retorno atribuível. O cenário pessimista calculado pelo código é {{fact:val.CO_GRUPOARGOS.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.CO_GRUPOARGOS.preco}} e alvo do modelo aberto {{fact:val.CO_GRUPOARGOS.preco_alvo}}, com potencial {{fact:val.CO_GRUPOARGOS.upside}}. Retorno total esperado {{fact:val.CO_GRUPOARGOS.etr}} e custo do capital próprio {{fact:val.CO_GRUPOARGOS.ke}}. A dispersão entre métodos é {{fact:val.CO_GRUPOARGOS.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.CO_GRUPOARGOS.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.CO_GRUPOARGOS.consenso_alvo}}; a diferença {{fact:val.CO_GRUPOARGOS.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota. Soma das partes exige participações e classes atuais, sem somar valor das subsidiárias ao lucro que já representam. Deduzir obrigações e custo da holding em base coerente e testar transmissão; desconto observado em corte antigo não é catalisador atual.",
+  "ultimo_resultado": "A pesquisa separa resultado da holding, caixa por dividendos e desempenho consolidado. Ganho de venda de participação não é promovido a lucro recorrente. Rótulos do sumário e bases de comparação exigem confronto com as demonstrações completas.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Revisar direitos por classe, controle, acordos e decisões entre holding e veículos listados. A avaliação precisa demonstrar proteção dos minoritários e destinação de recursos, além de mudanças de organização.",
+  "posicao_competitiva": {
+    "titulo": "Alocação precisa superar acesso direto aos ativos",
+    "texto": "A holding pode estruturar capital e projetos de longo prazo, mas o benefício deve superar custo de estrutura e risco de decisões intragrupo diante do investimento direto nas subsidiárias. Cemento, energia, concessões e imóveis têm reinvestimento e direitos diferentes. Escala de portfólio e simplificação societária, isoladamente, não comprovam vantagem econômica.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "O resultado separado inclui ganho não recorrente com venda de ações de Celsia. O relatório distingue dividendos recebidos em caixa de receitas reconhecidas, e a base anterior ainda incluía recebimentos de Grupo SURA. Receitas imobiliárias combinam vendas, participações e avaliações.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Participação vendida e destinação do recurso",
+    "texto": "A venda de ações de Celsia ao programa de recompra produz efeito não recorrente e altera participação, não apenas liquidez. Confrontar preço e direitos remanescentes com destinação efetiva a dívida, recompra da holding ou novos projetos. Nas concessões e imóveis, examinar necessidade de aportes e restrições de distribuição antes de atribuir caixa das controladas ao acionista da holding.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "percepcao_variante": {
+    "titulo": "Desconto não equivale a catalisador",
+    "texto": "A alternativa à narrativa de desconto é verificar geração e transmissão de caixa, com custo da holding e direitos eliminados da dupla contagem. O relatório separa recebimentos, equivalência e ganho de alienação, permitindo testar essa leitura. Não se afirma que o desconto exista hoje nem que seu fechamento esteja previsto pelo mercado.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "contratese": {
+    "titulo": "Valor dos ativos pode permanecer inacessível",
+    "texto": "A tese falha se dividendos recorrentes recebidos não cobrem estrutura, juros e compromissos, enquanto alienações e avaliações sustentam lucro. Desconto aparente pode persistir sem distribuição, recompra disciplinada ou outra transmissão econômica. Direitos por classe e alocação intragrupo podem limitar captura, mesmo com melhora operacional das subsidiárias.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Fluxo separado e participação econômica",
+      "texto": "Conciliar dividendos recebidos com receitas reconhecidas e equivalência, observando a mudança da base que antes incluía Grupo SURA. Separar venda de Celsia, imóveis e avaliações. Conferir participações, preços de referência e classes sem duplicar consolidação e valor das ações.",
+      "evidencias": [
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Obrigações e uso do capital na holding",
+      "texto": "Acompanhar custos, juros, vencimentos, liquidez efetiva e compromissos de aporte. Conferir execução e termos das recompras, alienações e distribuição; manter lucro consolidado, recursos das subsidiárias e caixa separado em bases distintas.",
+      "evidencias": [
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.CO_GRUPOARGOS.etr}}, custo do capital {{fact:val.CO_GRUPOARGOS.ke}} e dispersão entre métodos {{fact:val.CO_GRUPOARGOS.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.CO_GRUPOARGOS.etr",
+        "val.CO_GRUPOARGOS.ke",
+        "val.CO_GRUPOARGOS.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Dividendos recorrentes recebidos deixam de cobrir estrutura e compromissos.",
+    "Venda de participação muda direitos sem destinação disciplinada do caixa.",
+    "Aportes ou dívida crescem enquanto ganho contábil sustenta o resultado.",
+    "Mudanças de classes e acordos alteram a transmissão de valor aos minoritários."
+  ],
+  "lacunas_de_dados": [
+    "Demonstrações, fluxo separado e notas de participações não foram integralmente conciliados.",
+    "Valor por partes, sobreposição e caixa disponível por entidade exigem revisão.",
+    "Direitos, acordos, recompras e base atual por ação permanecem a comprovar.",
+    "Retorno dos projetos e efeitos de alienação não foram reconciliados ao modelo.",
+    "Guidance, tom da gestão e evento futuro datado seguem não classificados.",
+    "Percepção do mercado, posicionamento e interesse vendido não têm comprovação suficiente.",
+    "Disponibilidade histórica dos documentos e reconciliação integral ao modelo recebido não foram comprovadas."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo Argos",
+      "titulo": "Estrutura de relatórios e negócios",
+      "url": "https://www.grupoargos.com/relacion-con-el-inversionista/resultados-e-informes/reportes-financieros/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo Argos",
+      "titulo": "Resultado separado, consolidado e dividendos recebidos",
+      "url": "https://files.grupoargos.com/uploads-grupo-argos/2026/08/004.01.-Reporte-Resultados-Trimestrales-2Q2026.pdf",
+      "publicado_em": null,
+      "consultado_em": "2026-10-12"
+    }
+  ],
+  "modelo_ia": null
+}

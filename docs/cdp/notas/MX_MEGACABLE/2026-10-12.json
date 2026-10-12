@@ -1,0 +1,184 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_MEGACABLE",
+  "data": "2026-10-12",
+  "tipo": "iniciacao",
+  "titulo": "Megacable — ocupação da rede, realização e caixa após expansão",
+  "resumo": "A hipótese é que a maturação da rede e a conversão para fibra elevem realização e diluam custos. A condição decisiva é caixa atribuível depois de manutenção, aquisição de clientes e expansão. Adições e casas alcançadas precisam converter investimento em retorno, sem depender de promoção permanente. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.MX_MEGACABLE.rating_codigo}}, com retorno esperado {{fact:val.MX_MEGACABLE.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Operadora de conectividade, vídeo, telefonia e serviços empresariais, com rede própria e oferta móvel. Unidades geradoras de receita são serviços e não clientes únicos. A participação negociada em certificado conserva base diferente das ações que a compõem.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que a maturação da rede e a conversão para fibra elevem realização e diluam custos. A condição decisiva é caixa atribuível depois de manutenção, aquisição de clientes e expansão. Adições e casas alcançadas precisam converter investimento em retorno, sem depender de promoção permanente.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.MX_MEGACABLE.preco}} e alvo {{fact:val.MX_MEGACABLE.preco_alvo}}, com potencial {{fact:val.MX_MEGACABLE.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.MX_MEGACABLE.ke}} e retorno esperado {{fact:val.MX_MEGACABLE.etr}}.",
+      "evidencias": [
+        "val.MX_MEGACABLE.preco",
+        "val.MX_MEGACABLE.preco_alvo",
+        "val.MX_MEGACABLE.upside",
+        "val.MX_MEGACABLE.ke",
+        "val.MX_MEGACABLE.etr"
+      ]
+    },
+    {
+      "titulo": "Rede ocupada precisa sobreviver ao fim das promoções",
+      "texto": "A companhia atribui expansão à maturação de novos territórios e destaca migração à fibra, enquanto a realização média sofre com promoções anteriores. A hipótese requer retenção quando o preço contratado se normaliza e contribuição depois de instalar e atender o cliente. Mais serviços no mesmo pacote não equivalem a mais residências ocupadas; liderança tecnológica declarada não comprova retorno incremental da rede.",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Monitorar ocupação por área, adições, desconexões, receita média e contribuição depois de promoções. Separar clientes únicos, aplicativos e serviços. Conciliar manutenção, expansão, caixa e dívida depois de dividendos, avaliando retorno por certificado na mesma base do modelo.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.MX_MEGACABLE.ke}} e a dispersão entre métodos {{fact:val.MX_MEGACABLE.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.MX_MEGACABLE.ke",
+        "val.MX_MEGACABLE.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Concorrência e promoções podem reduzir realização. Migração, manutenção e atendimento exigem capital. Crescimento de serviços sem retorno da rede ou distribuição acima da geração podem pressionar caixa e financiamento.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.MX_MEGACABLE.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.MX_MEGACABLE.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "A ocupação da rede e a retenção sustentam realização depois de promoção, com caixa após manutenção e expansão disciplinada. O cenário otimista calculado pelo código é {{fact:val.MX_MEGACABLE.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.MX_MEGACABLE.preco_alvo}}, com retorno esperado {{fact:val.MX_MEGACABLE.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Promoções e concorrência reduzem contribuição enquanto rede, atendimento e capital distribuído absorvem a geração. O cenário pessimista calculado pelo código é {{fact:val.MX_MEGACABLE.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Priorizar fluxo de caixa da rede por coorte de maturação, com manutenção, instalação, aquisição e retenção de clientes e expansão ainda necessária. Reconciliação de arrendamentos deve ser consistente entre caixa e dívida; valor por certificado exige preservar a relação com ações e minoritários. Preço de referência {{fact:val.MX_MEGACABLE.preco}} e alvo do modelo aberto {{fact:val.MX_MEGACABLE.preco_alvo}}, com potencial {{fact:val.MX_MEGACABLE.upside}}. Retorno total esperado {{fact:val.MX_MEGACABLE.etr}} e custo do capital próprio {{fact:val.MX_MEGACABLE.ke}}. A dispersão entre métodos é {{fact:val.MX_MEGACABLE.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.MX_MEGACABLE.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.MX_MEGACABLE.consenso_alvo}}; a diferença {{fact:val.MX_MEGACABLE.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "A análise separa expansão anual, comparação sequencial e sazonalidade de investimento. A indicação gerencial de monetização precisa ser confrontada com fluxo completo após obrigações. Clientes únicos de vídeo, vídeo tradicional e aplicativos têm definições distintas; o índice histórico não substitui a conciliação.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Revisar controle, direitos por certificado, capital de minoritários e transações relacionadas. Receita, lucro e capital precisam preservar perímetro e unidade do instrumento, sem tratar todo serviço como cliente adicional.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Cobertura e serviços combinados podem sustentar captação e retenção. A vantagem deve aparecer em realização depois de promoção e custo de atendimento. Rede alcançada não é rede ocupada; assinaturas de aplicativos e serviços de vídeo precisam evitar dupla contagem de clientes.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "O trimestre mostra receita e lucro atribuível maiores, com margem UAFIDA menor e realização média pressionada por promoções. A definição de receita média exclui segmentos e usa assinantes de internet como base. A melhora financeira e o efeito de minoritários precisam ser separados da operação.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "A dívida líquida recua contra o ano anterior, mas aumenta sequencialmente após dividendos. O capex semestral menor desde o projeto de expansão não elimina sazonalidade nem crescimento trimestral. Caixa inclui investimentos temporários; arrendamentos entram na dívida apresentada. A distribuição precisa preservar manutenção e retorno da rede.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se novas conexões dependem de subsídio comercial e o capex adiado precisa retornar. Crescimento de serviços e margem gerencial elevada não encerram geração insuficiente depois de expansão e distribuição.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Monitorar ocupação por área, adições, desconexões, receita média e contribuição depois de promoções. Separar clientes únicos, aplicativos e serviços. Conciliar manutenção, expansão, caixa e dívida depois de dividendos, avaliando retorno por certificado na mesma base do modelo.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.MX_MEGACABLE.etr}}, custo do capital {{fact:val.MX_MEGACABLE.ke}} e dispersão entre métodos {{fact:val.MX_MEGACABLE.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.MX_MEGACABLE.etr",
+        "val.MX_MEGACABLE.ke",
+        "val.MX_MEGACABLE.cv_metodos"
+      ]
+    },
+    {
+      "titulo": "Coortes de conexão e custo completo da fibra",
+      "texto": "Acompanhar ocupação de áreas maduras e novas, renovação ao fim das promoções, inadimplência, desconexões e custo de instalação e atendimento. Conciliar cliente de internet com serviços de vídeo, aplicativos e telefonia; a receita média divulgada exclui negócios específicos. Separar expansão, migração e manutenção de rede, incluindo equipamento de cliente e arrendamentos, e verificar caixa após dividendos na unidade do certificado.",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "A normalização do preço após promoção eleva desconexões ou inadimplência sem contribuição suficiente.",
+    "Novas áreas exigem instalação e atendimento maiores sem retorno depois da maturação.",
+    "Menor capex decorre de postergação de manutenção ou migração ainda necessária.",
+    "Dividendos e arrendamentos absorvem caixa apesar de mais serviços vendidos."
+  ],
+  "lacunas_de_dados": [
+    "Fluxo de caixa completo depois de manutenção, expansão e distribuição não foi reconciliado nesta pesquisa.",
+    "Bases de vídeo tradicional, clientes únicos e aplicativos precisam de conciliação.",
+    "Realização por área, custo de captar clientes e retorno da fibra exigem evidência específica.",
+    "Direitos por certificado, minoritários e relacionadas não foram integralmente avaliados.",
+    "Guidance, tom agregado da gestão e catalisador futuro datado não foram classificados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Megacable Holdings",
+      "titulo": "Séries históricas e documentos de rede e serviços",
+      "url": "https://inversionistas.megacable.com.mx/informacion-financiera-trimestral",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Megacable Holdings",
+      "titulo": "Resultado, indicadores e posição financeira",
+      "url": "https://inversionistas.megacable.com.mx/pdf/trimestral/2t26.pdf",
+      "publicado_em": "2026-07-30",
+      "consultado_em": "2026-10-12"
+    }
+  ],
+  "modelo_ia": null
+}

@@ -136,7 +136,7 @@ class NewsItem(BaseModel):
     news_id: str = Field(..., description="Identificador único da notícia")
     title: str = Field(..., description="Título da notícia")
     body: str = Field(..., description="Corpo do texto da notícia")
-    published_at: datetime | None = Field(default=None, description="Data confirmada de publicação com fuso horário")
+    published_at: datetime | None = Field(default=None, description="Data de publicação informada pela fonte com fuso horário")
     observed_at: datetime | None = Field(default=None, description="Horário retornado pela fonte com fuso horário")
     source_timestamp: str | None = Field(default=None, description="Lexema temporal original da fonte")
     source_raw: dict[str, Any] | None = Field(default=None, description="Registro original, sem promover seu conteúdo a instruções")
@@ -169,7 +169,7 @@ class NewsItem(BaseModel):
     def time_label(self) -> str:
         if self.observed_at is not None and self.observed_at == self.evidence_time:
             return "Horário retornado pela fonte"
-        return "Data confirmada de publicação"
+        return "Data de publicação informada pela fonte"
 
 
 class ManifestFileEntry(BaseModel):

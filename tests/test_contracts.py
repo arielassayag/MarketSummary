@@ -96,6 +96,8 @@ def test_news_item_contract() -> None:
     )
     assert news.news_id == "news_1"
     assert "PETR4" in news.related_tickers
+    assert news.published_at == now
+    assert news.time_label == "Data de publicação informada pela fonte"
 
 
 def test_news_observada_nao_inventa_publicacao() -> None:
